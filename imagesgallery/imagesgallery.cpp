@@ -129,7 +129,7 @@ void ImagesGallery::writeSettings(void)
     m_config->writeEntry("PrintPageCreationDate", m_configDlg->printPageCreationDate());
     m_config->writeEntry("CreatePageForPhotos", m_configDlg->getCreatePageForPhotos());
     m_config->writeEntry("OpenInWebBrowser", m_configDlg->OpenGalleryInWebBrowser());
-    m_config->writeEntry("WebBrowserName", m_configDlg->getWebBrowserName());
+    m_config->writePathEntry("WebBrowserName", m_configDlg->getWebBrowserName());
     m_config->writeEntry("FontName", m_configDlg->getFontName());
     m_config->writeEntry("FontColor", m_configDlg->getForegroundColor());
     m_config->writeEntry("BackgroundColor", m_configDlg->getBackgroundColor());
@@ -138,7 +138,7 @@ void ImagesGallery::writeSettings(void)
 
     // ALBUM dialogbox setup tab
 
-    m_config->writeEntry("GalleryPath", m_configDlg->getImageName());
+    m_config->writePathEntry("GalleryPath", m_configDlg->getImageName());
     m_config->writeEntry("NotUseOriginalImageSize", m_configDlg->useNotOriginalImageSize());
     m_config->writeEntry("ImagesResize", m_configDlg->getImagesResize());
     m_config->writeEntry("TargetImagesCompressionSet", m_configDlg->useSpecificTargetimageCompression());
@@ -212,7 +212,7 @@ void ImagesGallery::readSettings(void)
   else
      m_configDlg->setOpenGalleryInWebBrowser( false );
 
-  m_configDlg->setWebBrowserName( m_config->readEntry("WebBrowserName", "Konqueror") );
+  m_configDlg->setWebBrowserName( m_config->readPathEntry("WebBrowserName", "Konqueror") );
 
   m_configDlg->setFontName( m_config->readEntry("FontName", "Helvetica") );
   m_configDlg->setFontSize( m_config->readEntry("FontSize", "14").toInt() );
@@ -230,7 +230,7 @@ void ImagesGallery::readSettings(void)
 
   // ALBUM dialogbox setup tab
 
-  m_configDlg->setImageName( m_config->readEntry("GalleryPath", KGlobalSettings::documentPath()) );
+  m_configDlg->setImageName( m_config->readPathEntry("GalleryPath", KGlobalSettings::documentPath()) );
 
   if (m_config->readEntry("NotUseOriginalImageSize", "true") == "true")
      m_configDlg->setNotUseOriginalImageSize( true );

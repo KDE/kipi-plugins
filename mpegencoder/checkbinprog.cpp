@@ -48,8 +48,8 @@ CheckBinProg::CheckBinProg(QObject *parent)
 {
   config = new KConfig("kipirc");
   config->setGroup("MPEGEncoder Settings");
-  ImageMagickPath = config->readEntry("ImageMagickBinFolder");
-  MjpegToolsPath = config->readEntry("MjpegToolsBinFolder");
+  ImageMagickPath = config->readPathEntry("ImageMagickBinFolder");
+  MjpegToolsPath = config->readPathEntry("MjpegToolsBinFolder");
 }
 
 

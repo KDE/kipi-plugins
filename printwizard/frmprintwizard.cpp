@@ -634,7 +634,7 @@ void FrmPrintWizard::loadSettings()
   GrpImageCaptions->setButton(captions);
 
   // set the last output path
-  QString outputPath = config.readEntry("OutputPath", EditOutputPath->text());
+  QString outputPath = config.readPathEntry("OutputPath", EditOutputPath->text());
   EditOutputPath->setText(outputPath);
 
   // set the proper radio button
@@ -642,7 +642,7 @@ void FrmPrintWizard::loadSettings()
   GrpOutputSettings->setButton(id);
 
   // photo size
-  QString photoSize = config.readEntry("PhotoSize", "");
+  QString photoSize = config.readEntry("PhotoSize");
   QListBoxItem *item = ListPhotoSizes->findItem(photoSize);
   if (item)
     ListPhotoSizes->setCurrentItem(item);
@@ -677,7 +677,7 @@ void FrmPrintWizard::saveSettings()
   config.writeEntry("ImageCaptions", buttonGroupSelectedId(GrpImageCaptions));
 
   // output path
-  config.writeEntry("OutputPath", EditOutputPath->text());
+  config.writePathEntry("OutputPath", EditOutputPath->text());
 
   // photo size
   config.writeEntry("PhotoSize", ListPhotoSizes->currentText());

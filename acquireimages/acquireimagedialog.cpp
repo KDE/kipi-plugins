@@ -163,7 +163,7 @@ void AcquireImageDialog::readSettings(void)
 
     m_config = new KConfig("kipirc");
     m_config->setGroup("AcquireImages Settings");
-    m_FileName->setText(m_config->readEntry("DefaultImageFileName", i18n("image")));
+    m_FileName->setText(m_config->readPathEntry("DefaultImageFileName", i18n("image")));
     m_imageCompression->setValue(m_config->readNumEntry("ImageCompression", 75));
     m_imagesFormat->setCurrentText(m_config->readEntry("ImageFormat", "TIFF"));
 
@@ -183,7 +183,7 @@ void AcquireImageDialog::writeSettings(void)
 
     m_config = new KConfig("kipirc");
     m_config->setGroup("AcquireImages Settings");
-    m_config->writeEntry("DefaultImageFileName", m_FileName->text());
+    m_config->writePathEntry("DefaultImageFileName", m_FileName->text());
     m_config->writeEntry("ImageCompression", m_imageCompression->value());
     m_config->writeEntry("ImageFormat", m_imagesFormat->currentText());
     m_config->sync();

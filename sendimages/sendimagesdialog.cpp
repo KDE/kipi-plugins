@@ -203,7 +203,7 @@ void SendImagesDialog::readSettings(void)
     m_config = new KConfig("kipirc");
     m_config->setGroup("SendImages Settings");
 
-    m_mailAgentName->setCurrentText(m_config->readEntry("MailAgentName", "Kmail"));
+    m_mailAgentName->setCurrentText(m_config->readPathEntry("MailAgentName", "Kmail"));
 
     if (m_config->readEntry("ImagesChangeProp", "true") == "true")
         m_changeImagesProp->setChecked( true );
@@ -231,7 +231,7 @@ void SendImagesDialog::writeSettings(void)
 
     m_config = new KConfig("kipirc");
     m_config->setGroup("SendImages Settings");
-    m_config->writeEntry("MailAgentName", m_mailAgentName->currentText());
+    m_config->writePathEntry("MailAgentName", m_mailAgentName->currentText());
     m_config->writeEntry("AddComments", m_addComments->isChecked());
     m_config->writeEntry("ImagesChangeProp", m_changeImagesProp->isChecked());
     m_config->writeEntry("ImageResize", m_imagesResize->currentItem());

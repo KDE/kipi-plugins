@@ -1212,13 +1212,13 @@ void KImg2mpgData::writeSettings()
   m_config->writeEntry("BackgroundColor", m_BackgroundColorConfig);
 
   m_AudioInputFileConfig = m_AudioInputEDITFilename->text();
-  m_config->writeEntry("AudioInputFile", m_AudioInputFileConfig);
+  m_config->writePathEntry("AudioInputFile", m_AudioInputFileConfig);
 
   m_MPEGOutputFileConfig = m_MPEGOutputEDITFilename->text();
-  m_config->writeEntry("MPEGOutputFile", m_MPEGOutputFileConfig);
+  m_config->writePathEntry("MPEGOutputFile", m_MPEGOutputFileConfig);
 
-  m_config->writeEntry("ImageMagickBinFolder", m_IMBinFolderConfig);
-  m_config->writeEntry("MjpegToolsBinFolder", m_MJBinFolderConfig);
+  m_config->writePathEntry("ImageMagickBinFolder", m_IMBinFolderConfig);
+  m_config->writePathEntry("MjpegToolsBinFolder", m_MJBinFolderConfig);
 
   m_config->sync();
   delete m_config;
@@ -1257,14 +1257,14 @@ void KImg2mpgData::readSettings()
   m_BackgroundColorConfig = m_config->readColorEntry("BackgroundColor", ColorB);
   m_BackgroundColorButton->setColor(m_BackgroundColorConfig);
 
-  m_AudioInputFileConfig = m_config->readEntry("AudioInputFile", "");
+  m_AudioInputFileConfig = m_config->readPathEntry("AudioInputFile");
   m_AudioInputEDITFilename->setText(m_AudioInputFileConfig);
 
-  m_MPEGOutputFileConfig = m_config->readEntry("MPEGOutputFile", KGlobalSettings::documentPath() + "output.mpg");
+  m_MPEGOutputFileConfig = m_config->readPathEntry("MPEGOutputFile", KGlobalSettings::documentPath() + "output.mpg");
   m_MPEGOutputEDITFilename->setText(m_MPEGOutputFileConfig);
 
-  m_IMBinFolderConfig = m_config->readEntry("ImageMagickBinFolder", "/usr/bin");
-  m_MJBinFolderConfig = m_config->readEntry("MjpegToolsBinFolder", "/usr/bin");
+  m_IMBinFolderConfig = m_config->readPathEntry("ImageMagickBinFolder", "/usr/bin");
+  m_MJBinFolderConfig = m_config->readPathEntry("MjpegToolsBinFolder", "/usr/bin");
 
   delete ColorB;
   delete m_config;
