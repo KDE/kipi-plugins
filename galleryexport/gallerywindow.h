@@ -35,6 +35,11 @@ namespace KIPI
 class Interface;
 }
 
+namespace KWallet
+{
+class Wallet;
+}
+
 namespace KIPIGalleryExportPlugin
 {
 
@@ -64,6 +69,7 @@ private:
     QString                   m_user;
     QString                   m_lastSelectedAlbum;
     KIPI::Interface          *m_interface;
+    KWallet::Wallet          *m_wallet;
 
     QProgressDialog                      *m_progressDlg;
     unsigned int                          m_uploadCount;

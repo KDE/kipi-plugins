@@ -61,14 +61,14 @@ void GAlbumViewItem::paintCell(QPainter * p, const QColorGroup & cg,
 
     int r = lv->itemMargin() + iconWidth;
     int h = lv->fontMetrics().height() + 2;
-    p->drawText(r, 0, width-r, h, Qt::AlignVCenter, album.name);
+    p->drawText(r, 0, width-r, h, Qt::AlignVCenter, album.title);
 
     QFont fn(lv->font());
     fn.setPointSize(fn.pointSize()-2);
     fn.setItalic(true);
     p->setFont(fn);
     p->setPen(isSelected() ? cg.highlightedText() : Qt::gray);
-    p->drawText(r, h, width-r, h, Qt::AlignVCenter, album.title);
+    p->drawText(r, h, width-r, h, Qt::AlignVCenter, album.name);
 }
 
 void GAlbumViewItem::setup()

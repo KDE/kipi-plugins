@@ -35,6 +35,11 @@
 #include <khtmlview.h>
 #include <krun.h>
 #include <kdebug.h>
+#include <kconfig.h>
+#include <kdeversion.h>
+#if KDE_IS_VERSION(3,2,0)
+#include <kwallet.h>
+#endif
 
 #include <libkipi/interface.h>
 #include <libkipi/imagedialog.h>
@@ -56,6 +61,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface)
     m_interface   = interface;
     m_uploadCount = 0;
     m_uploadTotal = 0;
+    m_wallet      = 0;
 
     GalleryWidget* widget = new GalleryWidget( this );
     setMainWidget( widget );
@@ -106,20 +112,65 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface)
     connect( m_addPhotoBtn, SIGNAL( clicked() ),
              SLOT( slotAddPhotos() ) );
 
+    // read config
+    KConfig config("kipirc");
+    config.setGroup("GalleryExport Settings");
+    m_url  = config.readEntry("URL");
+    m_user = config.readEntry("User");
     
     QTimer::singleShot( 0, this,  SLOT( slotDoLogin() ) );
 }
 
 GalleryWindow::~GalleryWindow()
 {
+#if KDE_IS_VERSION(3,2,0)
+    if (m_wallet)
+        delete m_wallet;
+#endif
+
+    // write config
+    KConfig config("kipirc");
+    config.setGroup("GalleryExport Settings");
+    config.writeEntry("URL",  m_url);
+    config.writeEntry("User", m_user);
+    
     delete m_progressDlg;
     delete m_talker;
 }
 
 void GalleryWindow::slotDoLogin()
 {
+    QString password;
+    
+#if KDE_IS_VERSION(3,2,0)
+    if (!m_wallet)
+        m_wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(),
+                                               winId(),
+                                               KWallet::Wallet::Synchronous );
+    if (!m_wallet)
+    {
+        kdWarning() << "Failed to open kwallet" << endl;
+    }
+    else
+    {
+        if (!m_wallet->hasFolder("KIPIGalleryExportPlugin"))
+        {
+            if (!m_wallet->createFolder("KIPIGalleryExportPlugin"))
+                kdWarning() << "Failed to create kwallet folder" << endl;
+        }
+
+        if (!m_wallet->setFolder("KIPIGalleryExportPlugin"))
+            kdWarning() << "Failed to set kwallet folder" << endl;
+        else
+        {
+            m_wallet->readPassword("password", password);
+        }
+    }
+#endif
+    
+        
     GalleryLogin dlg( this, i18n( "Login into remote gallery" ),
-                      m_url, m_user );
+                      m_url, m_user, password );
     if ( dlg.exec() != QDialog::Accepted )
     {
         close();
@@ -135,10 +186,16 @@ void GalleryWindow::slotDoLogin()
     if (!url.url().endsWith(".php"))
         url.addPath("gallery_remote2.php");
 
-    m_url  = url.url();
-    m_user = dlg.name();
+    m_url    = url.url();
+    m_user   = dlg.name();
+
+    QString newPassword = dlg.password();
+#if KDE_IS_VERSION(3,2,0)
+    if (newPassword != password && m_wallet)
+        m_wallet->writePassword("password", newPassword);
+#endif
     
-    m_talker->login( url.url(), dlg.name(), dlg.password() );
+    m_talker->login( url.url(), dlg.name(), newPassword );
 }
 
 void GalleryWindow::slotLoginFailed( const QString& msg )
