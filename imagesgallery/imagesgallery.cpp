@@ -682,7 +682,7 @@ void ImagesGallery::createBody(QTextStream& stream,
 
                 if ( m_useCommentFile )
                    {
-                   QString imgComment = (*m_commentMap)[imgName];
+                   QString imgComment = (*m_commentMap)[(*urlIt).prettyURL()];
 
                    if ( !imgComment.isEmpty() )
                       {
@@ -973,7 +973,7 @@ void ImagesGallery::loadComments(void)
 			if (!comment.isEmpty()) 
 				{
 				m_useCommentFile = true;
-				m_commentMap->insert(*urlIt, comment);
+				m_commentMap->insert((*urlIt).prettyURL(), comment);
                 }
 			kapp->processEvents();
             }

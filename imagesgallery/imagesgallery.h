@@ -54,7 +54,9 @@ class KProcess;
 class KIGPDialog;
 class ResizeImage;
 
-typedef QMap<KURL,QString> CommentMap;
+// First field is the URL, represented with KURL::prettyURL. We can't use KURL
+// directly because operator<(KURL,KURL) is not defined in KDE 3.1
+typedef QMap<QString,QString> CommentMap;
 
 class ImagesGallery : public QObject
 {
