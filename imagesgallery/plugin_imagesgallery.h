@@ -29,10 +29,14 @@
 
 class KAction;
 
+namespace KIPI
+{
+class BatchProgressDialog;
+}
+
 namespace KIPIImagesGalleryPlugin
 {
 class KIGPDialog;
-class BatchProgressDialog;
 class ResizeImage;
 }
 
@@ -58,7 +62,7 @@ private:
 
    KIPIImagesGalleryPlugin::ImagesGallery       *m_gallery;
    
-   KIPIImagesGalleryPlugin::BatchProgressDialog *m_progressDlg;
+   KIPI::BatchProgressDialog                    *m_progressDlg;
    KAction                                      *m_actionImagesGallery;
    
    void customEvent(QCustomEvent *event);

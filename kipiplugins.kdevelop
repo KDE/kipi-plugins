@@ -13,7 +13,10 @@
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
     <description/>
-    <ignoreparts/>
+    <ignoreparts>
+      <part>KDevClearCase</part>
+      <part>KDevPerforce</part>
+    </ignoreparts>
     <secondaryLanguages/>
   </general>
   <kdevfileview>
@@ -99,6 +102,10 @@
         <envvar value="1" name="WANT_AUTOCONF_2_5" />
         <envvar value="1" name="WANT_AUTOMAKE_1_6" />
       </envvars>
+      <abortonerror>false</abortonerror>
+      <numberofjobs>1</numberofjobs>
+      <dontact>false</dontact>
+      <makebin/>
     </make>
     <run>
       <directoryradio>executable</directoryradio>

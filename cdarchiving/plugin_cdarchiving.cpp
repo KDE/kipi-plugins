@@ -31,11 +31,14 @@
 #include <kconfig.h>
 #include <kdebug.h>
 
+// LibKipi includes.
+
+#include <libkipi/batchprogressdialog.h>
+
 // Local includes.
 
 #include "actions.h"
 #include "cdarchiving.h"
-#include "batchprogressdialog.h"
 #include "plugin_cdarchiving.h"
 
 typedef KGenericFactory<Plugin_CDArchiving> Factory;
@@ -117,7 +120,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
     
     if (!m_progressDlg)
         {
-        m_progressDlg = new KIPICDArchivingPlugin::BatchProgressDialog(0);
+        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Preparing Archive to CD"));
         
         connect(m_progressDlg, SIGNAL(cancelClicked()),
                 this, SLOT(slotCancel()));
@@ -185,7 +188,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
               }
            }
            
-        m_progressDlg->addedAction(text, KIPICDArchivingPlugin::StartingMessage);
+        m_progressDlg->addedAction(text, KIPI::StartingMessage);
         }
     else 
         {
@@ -225,7 +228,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   }
                }
 
-            m_progressDlg->addedAction(text, KIPICDArchivingPlugin::SucessMessage);
+            m_progressDlg->addedAction(text, KIPI::SucessMessage);
             ++m_current;   
             }
         else
@@ -235,7 +238,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                case(KIPICDArchivingPlugin::ResizeImages): 
                   {
                   text = i18n("Failed to create thumbnail for '%1'").arg(d->fileName);
-                  m_progressDlg->addedAction(text, KIPICDArchivingPlugin::WarningMessage);
+                  m_progressDlg->addedAction(text, KIPI::WarningMessage);
                   m_progressDlg->setProgress(m_current, m_total);
                   break;
                   }
@@ -244,7 +247,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   {
                   text = i18n("Failed to create HTML interface: %1")
                               .arg(d->message);
-                  m_progressDlg->addedAction(text, KIPICDArchivingPlugin::ErrorMessage);
+                  m_progressDlg->addedAction(text, KIPI::ErrorMessage);
                   m_progressDlg->setProgress(m_current, m_total);
                   slotCancel();
                   return;
@@ -255,7 +258,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   {
                   text = i18n("Failed to create HTML pages for Album '%1'")
                               .arg(d->albumName);
-                  m_progressDlg->addedAction(text, KIPICDArchivingPlugin::ErrorMessage);
+                  m_progressDlg->addedAction(text, KIPI::ErrorMessage);
                   m_progressDlg->setProgress(m_current, m_total);
                   slotCancel();
                   return;
@@ -265,7 +268,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                case(KIPICDArchivingPlugin::BuildK3bProject): 
                   {
                   text = i18n("Failed to create K3b project!");
-                  m_progressDlg->addedAction(text, KIPICDArchivingPlugin::ErrorMessage);
+                  m_progressDlg->addedAction(text, KIPI::ErrorMessage);
                   m_progressDlg->setProgress(m_current, m_total);
                   slotCancel();
                   return;
@@ -275,7 +278,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                case(KIPICDArchivingPlugin::Error): 
                   {
                   text = d->message;
-                  m_progressDlg->addedAction(text, KIPICDArchivingPlugin::ErrorMessage);
+                  m_progressDlg->addedAction(text, KIPI::ErrorMessage);
                   m_progressDlg->setProgress(m_current, m_total);
                   slotCancel();
                   return;
@@ -301,7 +304,8 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                 
            // Invoke K3b program.
            
-           m_progressDlg->addedAction(i18n("Starting K3b program..."), KIPICDArchivingPlugin::StartingMessage);
+           m_progressDlg->addedAction(i18n("Starting K3b program..."), 
+                                      KIPI::StartingMessage);
            m_cdarchiving->invokeK3b();
            }
         }

@@ -30,11 +30,14 @@
 #include <kdebug.h>
 #include <kapplication.h>
 
+// LibKIPI include.
+
+#include <libkipi/batchprogressdialog.h>
+
 // Local include files
 
 #include "actions.h"
 #include "imagesgallery.h"
-#include "batchprogressdialog.h"
 #include "plugin_imagesgallery.h"
 
 typedef KGenericFactory<Plugin_Imagesgallery> Factory;
@@ -114,7 +117,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
     
     if (!m_progressDlg)
         {
-        m_progressDlg = new KIPIImagesGalleryPlugin::BatchProgressDialog(0);
+        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Albums HTML Export process"));
         
         connect(m_progressDlg, SIGNAL(cancelClicked()),
                 this, SLOT(slotCancel()));
@@ -176,7 +179,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
               }
            }
 
-        m_progressDlg->addedAction(text, KIPIImagesGalleryPlugin::StartingMessage);
+        m_progressDlg->addedAction(text, KIPI::StartingMessage);
         }
     else 
         {
@@ -204,7 +207,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
                   }
                }
 
-            m_progressDlg->addedAction(text, KIPIImagesGalleryPlugin::SucessMessage);
+            m_progressDlg->addedAction(text, KIPI::SucessMessage);
             ++m_current;   
             }
         else
@@ -214,7 +217,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
                case(KIPIImagesGalleryPlugin::ResizeImages): 
                   {
                   text = i18n("Failed to create thumbnail for '%1'").arg(d->fileName);
-                  m_progressDlg->addedAction(text, KIPIImagesGalleryPlugin::WarningMessage);
+                  m_progressDlg->addedAction(text, KIPI::WarningMessage);
                   m_progressDlg->setProgress(m_current, m_total);
                   break;
                   }
@@ -223,7 +226,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
                   {
                   text = i18n("Failed to create HTML interface: %1")
                               .arg(d->message);
-                  m_progressDlg->addedAction(text, KIPIImagesGalleryPlugin::ErrorMessage);
+                  m_progressDlg->addedAction(text, KIPI::ErrorMessage);
                   m_progressDlg->setProgress(m_current, m_total);
                   slotCancel();
                   return;
@@ -234,7 +237,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
                   {
                   text = i18n("Failed to create HTML page for Album '%1'")
                               .arg(d->albumName);
-                  m_progressDlg->addedAction(text, KIPIImagesGalleryPlugin::ErrorMessage);
+                  m_progressDlg->addedAction(text, KIPI::ErrorMessage);
                   m_progressDlg->setProgress(m_current, m_total);
                   slotCancel();
                   return;
@@ -245,7 +248,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
                   {
                   text = i18n("Failed to create HTML page for image '%1'")
                               .arg(d->fileName);
-                  m_progressDlg->addedAction(text, KIPIImagesGalleryPlugin::ErrorMessage);
+                  m_progressDlg->addedAction(text, KIPI::ErrorMessage);
                   m_progressDlg->setProgress(m_current, m_total);
                   slotCancel();
                   return;
@@ -255,7 +258,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
                case(KIPIImagesGalleryPlugin::Error): 
                   {
                   text = d->message;
-                  m_progressDlg->addedAction(text, KIPIImagesGalleryPlugin::ErrorMessage);
+                  m_progressDlg->addedAction(text, KIPI::ErrorMessage);
                   m_progressDlg->setProgress(m_current, m_total);
                   slotCancel();
                   return;
@@ -284,7 +287,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
            // Invoke browser program.
            
            m_progressDlg->addedAction(i18n("Starting browser program..."),
-                                      KIPIImagesGalleryPlugin::StartingMessage);
+                                      KIPI::StartingMessage);
                
            m_gallery->invokeWebBrowser();
            }

@@ -1,6 +1,9 @@
 v1.0.0-beta1 
 ----------------------------------------------------------------------------
-        * <Gilles Caulier> Added Multithreading in CDArchiving and SendImages plugins.
+        * <Gilles Caulier> Improved batch operations in FindDuplicateImages 
+	  Plugins with using KIPI::BatchProgressDialog.
+        * <Gilles Caulier> Added full Multithreading support in CDArchiving,
+	  ImagesGallery, and SendImages plugins.
         * <Gilles Caulier> Fixed action enabled/disabled in according with current
 	  selection on JPEGLossLess, TimeAdjust, and WallPaPer plugins.
         * <Gilles Caulier> Added new method fileExtensions() for the images 
@@ -10,3 +13,5 @@ v1.0.0-beta1
         * <Gilles Caulier> Fixed plugins menu icons rendering in the host apps.
         * <Gilles Caulier> Re-added GammaCablibration plugin for old 
           MiscOperations Digikamplugins.
+        * <Renchi Raju> Ported SlideShow plugin to imlib2.
+	  

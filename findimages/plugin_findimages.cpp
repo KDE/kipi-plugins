@@ -23,7 +23,6 @@
 
 // Qt includes.
 
-#include <qprogressdialog.h>
 #include <qfileinfo.h>
 
 // KDE includes.
@@ -40,6 +39,7 @@
 // Lib KIPI includes.
 
 #include <libkipi/interface.h>
+#include <libkipi/batchprogressdialog.h>
 
 // Local include files
 
@@ -55,7 +55,7 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_findimages,
                             Factory("kipiplugin_findimages"));
 
 Plugin_FindImages::Plugin_FindImages(QObject *parent, const char*, const QStringList&)
-    : KIPI::Plugin( Factory::instance(), parent, "FindImages")
+                 : KIPI::Plugin( Factory::instance(), parent, "FindImages")
 {
     kdDebug( 51001 ) << "Plugin_FindImages plugin loaded" << endl;
 }
@@ -91,7 +91,7 @@ Plugin_FindImages::~Plugin_FindImages()
 
 void Plugin_FindImages::slotFindDuplicateImages()
 {
-    m_progressDlg=0;
+    m_progressDlg = 0;
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     
@@ -101,11 +101,11 @@ void Plugin_FindImages::slotFindDuplicateImages()
            return;
            }
     
-    findDuplicateOperation = new KIPIFindDupplicateImagesPlugin::FindDuplicateImages( interface, this);
+    m_findDuplicateOperation = new KIPIFindDupplicateImagesPlugin::FindDuplicateImages( interface, this);
     
-    if(findDuplicateOperation->showDialog())
+    if (m_findDuplicateOperation->showDialog())
        {
-       findDuplicateOperation->compareAlbums();
+       m_findDuplicateOperation->compareAlbums();
        }
        
     return;
@@ -116,8 +116,8 @@ void Plugin_FindImages::slotFindDuplicateImages()
 
 void Plugin_FindImages::slotCancel()
 {
-    findDuplicateOperation->terminate();
-    findDuplicateOperation->wait();
+    m_findDuplicateOperation->terminate();
+    m_findDuplicateOperation->wait();
     
     if (m_progressDlg) 
        {
@@ -132,15 +132,14 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
 {
     if (!event) return;
     
-    if(!m_progressDlg)
+    if (!m_progressDlg)
         {
-        m_progressDlg = new QProgressDialog (i18n("Comparisons"), i18n("&Cancel"), 0,
-                                             0, 0, true);
+        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Find Duplicate Images Operations"));
         
-        connect(m_progressDlg, SIGNAL(cancelled()),
-                SLOT(slotCancel()));
+        connect(m_progressDlg, SIGNAL(cancelClicked()),
+                this, SLOT(slotCancel()));
 
-        m_current=0;
+        m_current = 0;
         m_progressDlg->show();
         }
 
@@ -156,19 +155,19 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
            {
            case(KIPIFindDupplicateImagesPlugin::Similar): 
               {
-              text = i18n("Similar comparison for\n%1").arg(QFileInfo(d->fileName).fileName() );
+              text = i18n("Similar comparison for '%1'").arg(QFileInfo(d->fileName).fileName() );
               break;
               }
               
            case(KIPIFindDupplicateImagesPlugin::Exact): 
               {
-              text = i18n("Exact comparison for\n%1").arg(QFileInfo(d->fileName).fileName());
+              text = i18n("Exact comparison for '%1'").arg(QFileInfo(d->fileName).fileName());
               break;
               }
               
            case(KIPIFindDupplicateImagesPlugin::Matrix): 
               {
-              text = i18n("Creating fingerprint for\n%1").arg(QFileInfo(d->fileName).fileName());
+              text = i18n("Creating fingerprint for '%1'").arg(QFileInfo(d->fileName).fileName());
               break;
               }
               
@@ -176,8 +175,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
               {
               m_current=0;
               m_total = d->total;
-              text = i18n("Initialising %1 image(s)...").arg(d->total);
-              m_progressDlg->show();
+              text = i18n("Parsing %1 images...").arg(d->total);
               break;
               }
               
@@ -187,7 +185,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
               }
            }
            
-        m_progressDlg->setLabelText(text);
+        m_progressDlg->addedAction(text, KIPI::StartingMessage);
         }
     else 
         {
@@ -199,13 +197,13 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
                {
                case(KIPIFindDupplicateImagesPlugin::Similar): 
                   {
-                  text = i18n("Failed to find similar images");
+                  text = i18n("Failed to find similar images!");
                   break;
                   }
                   
                case(KIPIFindDupplicateImagesPlugin::Exact): 
                   {
-                  text = i18n("Failed to find exact image");
+                  text = i18n("Failed to find exact image!");
                   break;
                   }
                   
@@ -214,20 +212,18 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
                   kdWarning( 51000 ) << "Plugin_FindImages: Unknown event: " << d->action << endl;
                   }
                }
-
-            //Plugin_FindImages::MessageBox::showMsg(d->fileName, text);
+            
+            m_progressDlg->addedAction(text, KIPI::SucessMessage);
+            ++m_current;   
             }
 
-        ++m_current;
         m_progressDlg->setProgress(m_current, m_total);
         
         if( d->action == KIPIFindDupplicateImagesPlugin::Progress )
            {
-           m_current = 0;
-           m_progressDlg->reset();
-           findDuplicateOperation->showResult();
+           delete m_progressDlg;
+           m_findDuplicateOperation->showResult();
            }
-
         }
     
     kapp->processEvents();

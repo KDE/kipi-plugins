@@ -54,7 +54,6 @@ Jesper K. Pedersen <blackie at kde.org>
  - Add annotation images for copyrights (like Photoshop).
  - Add images gallery targets : kmail, war, zip, tar.gz, tar.bz2 (request by
    Achim Bohnet).
- - Add multithreading images and thumbnails generation .
 
 ----------------------------------------------------------------------------
 * COMMENTSEDITOR PLUGIN [Author: Renchi Raju]

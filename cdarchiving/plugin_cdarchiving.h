@@ -31,6 +31,11 @@ class QCustomEvent;
 
 class KAction;
 
+namespace KIPI
+{
+class BatchProgressDialog;
+}
+
 namespace KIPICDArchivingPlugin
 {
 class CDArchiving;
@@ -55,7 +60,7 @@ private:
    int                                         m_current;
    int                                         m_total;
    
-   KIPICDArchivingPlugin::BatchProgressDialog *m_progressDlg;
+   KIPI::BatchProgressDialog                  *m_progressDlg;
 
    KIPICDArchivingPlugin::CDArchiving         *m_cdarchiving;
    KAction                                    *m_action_cdarchiving;

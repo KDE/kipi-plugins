@@ -24,13 +24,19 @@
 #ifndef PLUGIN_FINDIMAGES_H
 #define PLUGIN_FINDIMAGES_H
 
+// LibKipi includes.
+
 #include <libkipi/plugin.h>
 
 class QCustomEvent;
-class QProgressDialog;
 
 class KActionMenu;
 class KAction;
+
+namespace KIPI
+{
+class BatchProgressDialog;
+}
 
 class FindDuplicateImages;
 
@@ -41,24 +47,27 @@ Q_OBJECT
 public:
    Plugin_FindImages(QObject *parent, const char* name, const QStringList &args);
    ~Plugin_FindImages();
+   
    virtual KIPI::Category category( KAction* action ) const;
    virtual void setup( QWidget* widget );
 
 private:
-   KActionMenu          *m_action_findImages;
-   KAction              *m_action_findDuplicateImagesAlbums;
+   KActionMenu                                         *m_action_findImages;
+   KAction                                             *m_action_findDuplicateImagesAlbums;
 
 protected:
-   void customEvent(QCustomEvent *event);
+   KIPIFindDupplicateImagesPlugin::FindDuplicateImages *m_findDuplicateOperation;
+   
+   KIPI::BatchProgressDialog                           *m_progressDlg;
+   
+   int                                                  m_current;
+   int                                                  m_total;
 
-   KIPIFindDupplicateImagesPlugin::FindDuplicateImages *findDuplicateOperation;
-   QProgressDialog *m_progressDlg;
-   int m_current, m_total;
+   void customEvent(QCustomEvent *event);
 
 private slots:
    void slotFindDuplicateImages();
    void slotCancel();
-
 };
 
 #endif   // PLUGIN_FINDIMAGES_H
