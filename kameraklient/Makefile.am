@@ -7,9 +7,9 @@ METASOURCES = AUTO
 kde_module_LTLIBRARIES = kipiplugin_kameraklient.la
 kipiplugin_kameraklient_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 
-kipiplugin_kameraklient_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) $(LIB_KDEUI)
+kipiplugin_kameraklient_la_LIBADD = $(LIB_KPARTS) $(LIB_KDEUI) $(LIBKIPI_LIBS) $(LIB_GPHOTO)
 
-kipiplugin_kameraklient_la_LDFLAGS = -module $(KDE_PLUGIN) $(LIB_GPHOTO) $(all_libraries)
+kipiplugin_kameraklient_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 
 kde_services_DATA = kipiplugin_kameraklient.desktop
 
