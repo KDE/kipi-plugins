@@ -91,7 +91,7 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     groupBox1->setTitle( i18n("Image Filtering Options") );
 
-    m_labelType->setText( i18n("Filter type:") );
+    m_labelType->setText( i18n("Filter:") );
 
     m_Type->insertItem(i18n("Add Noise"));       // 0
     m_Type->insertItem(i18n("Antialias"));

@@ -137,7 +137,6 @@ private slots:
 
    QLabel                 *m_labelOverWrite;
    QLabel                 *m_labelType;
-   QLabel                 *m_statusbar;
    QLabel                 *m_imageLabel;
 
    QComboBox              *m_overWriteMode;
@@ -217,7 +216,7 @@ private slots:
    // Called when ImageMagick process is done or stopped by user or for another re-implementation without
    // ImageMagick calls (like 'RenameImages' plugin).
 
-   virtual void endProcess(QString endMessage);
+   virtual void endProcess(void);
 
    //  Fonctions for ImageMagick implementation calls only.
 

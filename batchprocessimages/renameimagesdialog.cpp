@@ -301,7 +301,7 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
     if (m_listFile2Process_iterator->current())     // Next image ?
         copyItemOperations();
     else                                            // Copy is done...
-        endProcess(i18n("Process finished."));
+        endProcess();
 }
 
 
@@ -359,7 +359,7 @@ bool RenameImagesDialog::startProcess(void)
 {
     if ( m_convertStatus == STOP_PROCESS )
        {
-       endProcess(i18n("Process aborted by user."));
+       endProcess();
        return true;
        }
 
@@ -382,7 +382,7 @@ bool RenameImagesDialog::startProcess(void)
           }
        else
           {
-          endProcess(i18n("Process finished."));
+          endProcess();
           return true;
           }
        }
@@ -416,7 +416,7 @@ bool RenameImagesDialog::startProcess(void)
                    }
                 else
                    {
-                   endProcess(i18n("Process finished."));
+                   endProcess();
                    return true;
                    }
                 }
@@ -450,7 +450,7 @@ bool RenameImagesDialog::startProcess(void)
                    }
                 else
                    {
-                   endProcess(i18n("Process finished."));
+                   endProcess();
                    return true;
                    }
                 }
@@ -478,7 +478,7 @@ bool RenameImagesDialog::startProcess(void)
                 }
              else
                 {
-                endProcess(i18n("Process finished."));
+                endProcess();
                 return true;
                 }
              break;
@@ -489,7 +489,7 @@ bool RenameImagesDialog::startProcess(void)
 
           default:
              {
-             endProcess(i18n("Process finished."));
+             endProcess();
              return true;
              break;
              }

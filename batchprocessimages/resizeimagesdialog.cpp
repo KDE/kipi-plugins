@@ -91,7 +91,7 @@ ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     groupBox1->setTitle( i18n("Image Resizing Options") );
 
-    m_labelType->setText( i18n("Image resize type:") );
+    m_labelType->setText( i18n("Type:") );
 
     m_Type->insertItem(i18n("Proportional (1 dim.)"));  // 0
     m_Type->insertItem(i18n("Proportional (2 dim.)"));  // 1

@@ -143,23 +143,19 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     //---------------------------------------------
 
     QHBoxLayout *hlay = new QHBoxLayout( dvlay );
-    groupBox1 = new QGroupBox( 2, Qt::Horizontal, box );
-
+    groupBox1 = new QGroupBox( box );
+    QGridLayout* grid = new QGridLayout( groupBox1, 2, 3, 20, spacingHint());
     m_labelType = new QLabel( groupBox1 );
-
+    grid->addMultiCellWidget(m_labelType, 0, 0, 0, 0);
+    
     m_Type = new QComboBox(false, groupBox1);
-
-    m_labelType->setBuddy( m_Type );
+    grid->addMultiCellWidget(m_Type, 0, 0, 1, 1);
 
     m_optionsButton = new QPushButton (groupBox1, "OptionButton");
     m_optionsButton->setText(i18n("Options"));
     QWhatsThis::add( m_optionsButton, i18n("<p>You can choose here the options to use "
                                            "for the current process."));
-
-    m_previewButton = new QPushButton (groupBox1, "PreviewButton");
-    m_previewButton->setText(i18n("&Preview"));
-    QWhatsThis::add( m_previewButton, i18n("<p>This button builds a process "
-                                           "preview for the currently selected image on the list."));
+    grid->addMultiCellWidget(m_optionsButton, 0, 0, 2, 2);
 
     m_smallPreview = new QCheckBox(i18n("Small preview"), groupBox1);
     QWhatsThis::add( m_smallPreview, i18n("<p>If you enable this option, "
@@ -167,7 +163,14 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
                                           "of the image (300x300 pixels in the top left corner). "
                                           "Enable this option if you have a slow computer.") );
     m_smallPreview->setChecked( true );
+    grid->addMultiCellWidget(m_smallPreview, 1, 1, 0, 1);
 
+    m_previewButton = new QPushButton (groupBox1, "PreviewButton");
+    m_previewButton->setText(i18n("&Preview"));
+    QWhatsThis::add( m_previewButton, i18n("<p>This button builds a process "
+                                           "preview for the currently selected image on the list."));
+    grid->addMultiCellWidget(m_previewButton, 1, 1, 2, 2);
+    
     hlay->addWidget( groupBox1 );
 
     //---------------------------------------------
@@ -193,17 +196,20 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     //---------------------------------------------
 
-    groupBox3 = new QVGroupBox( i18n("Target Directory"), box );
+    groupBox3 = new QHGroupBox( i18n("Target Directory"), box );
 
     m_upload = new KIPI::UploadWidget( m_interface, groupBox3, "m_upload" );
-    m_upload->setFixedHeight( 150 );
+    QWhatsThis::add( m_upload, i18n("<p>Here, you can select the target directory who "
+                                    "will used by the process."));
+    m_upload->setFixedHeight( 130 );
 
     QWidget* add = new QWidget( groupBox3 );
-    QHBoxLayout* lay = new QHBoxLayout( add );
-    lay->addStretch( 1 );
+    QVBoxLayout* lay = new QVBoxLayout( add );
 
-    m_addNewAlbumButton = new QPushButton ( i18n( "&Add Directory..."), add, "PushButton_AddNewAlbum");
+    m_addNewAlbumButton = new QPushButton ( i18n( "&New..."), add, "PushButton_AddNewAlbum");
+    QWhatsThis::add( m_addNewAlbumButton, i18n("<p>With this button, you can create a new directory."));
     lay->addWidget( m_addNewAlbumButton );
+    lay->addStretch( 1 );
     
     connect( m_addNewAlbumButton, SIGNAL( clicked() ),
              m_upload, SLOT( mkdir() ) );
@@ -242,13 +248,6 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     dvlay->addWidget( groupBox4 );
 
     //---------------------------------------------
-
-    m_statusbar = new QLabel( box, "ProcessMessagesFrame" );
-    m_statusbar->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-    m_statusbar->setAlignment(AlignCenter|WordBreak|ExpandTabs);
-    QWhatsThis::add( m_statusbar, i18n("<p>This is the currently active task.") );
-
-    dvlay->addWidget( m_statusbar );
 
     m_progress = new KProgress( box, "Progress" );
     m_progress->setTotalSteps(100);
@@ -436,7 +435,6 @@ void BatchProcessImagesDialog::slotProcessStart( void )
            return;
         }
 
-    m_statusbar->setText(i18n("Performing process; please wait...."));
     m_convertStatus = UNDER_PROCESS;
     disconnect( this, SIGNAL(user1Clicked()), this, SLOT(slotProcessStart()));
     showButtonCancel( false );
@@ -469,7 +467,7 @@ bool BatchProcessImagesDialog::startProcess(void)
 {
     if ( m_convertStatus == STOP_PROCESS )
        {
-       endProcess(i18n("Process aborted by user."));
+       endProcess();
        return true;
        }
 
@@ -494,7 +492,7 @@ bool BatchProcessImagesDialog::startProcess(void)
           }
        else
           {
-          endProcess(i18n("Process finished."));
+          endProcess();
           return true;
           }
        }
@@ -531,7 +529,7 @@ bool BatchProcessImagesDialog::startProcess(void)
                    }
                 else
                    {
-                   endProcess(i18n("Process finished."));
+                   endProcess();
                    return true;
                    }
                 }
@@ -569,7 +567,7 @@ bool BatchProcessImagesDialog::startProcess(void)
                    }
                 else
                    {
-                   endProcess(i18n("Process finished."));
+                   endProcess();
                    return true;
                    }
                 }
@@ -597,7 +595,7 @@ bool BatchProcessImagesDialog::startProcess(void)
                 }
              else
                 {
-                endProcess(i18n("Process finished."));
+                endProcess();
                 return true;
                 }
              break;
@@ -609,7 +607,7 @@ bool BatchProcessImagesDialog::startProcess(void)
 
           default:
              {
-             endProcess(i18n("Process finished."));
+             endProcess();
              return true;
              break;
              }
@@ -749,7 +747,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
     if ( m_listFile2Process_iterator->current() )
         startProcess();
     else
-        endProcess(i18n("Process finished."));
+        endProcess();
 }
 
 
@@ -785,7 +783,6 @@ void BatchProcessImagesDialog::slotPreview(void)
        }
 
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFiles->currentItem() );
-    m_statusbar->setText(i18n("Preview under progress; please wait...."));
 
     m_listFiles->setEnabled(false);
     m_labelType->setEnabled(false);
@@ -895,7 +892,6 @@ void BatchProcessImagesDialog::slotPreviewProcessDone(KProcess* proc)
        }
 
     endPreview();
-    m_statusbar->setText("");
 }
 
 
@@ -907,7 +903,6 @@ void BatchProcessImagesDialog::slotPreviewStop( void )
     if ( m_PreviewProc->isRunning() == true ) m_PreviewProc->kill(SIGTERM);
 
     endPreview();
-    m_statusbar->setText("Preview aborted by user.");
 }
 
 
@@ -1069,15 +1064,14 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
 #endif  
        }
 
-    endProcess(i18n("Process aborted by user."));
+    endProcess();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void BatchProcessImagesDialog::endProcess(QString endMessage)
+void BatchProcessImagesDialog::endProcess(void)
 {
-    m_statusbar->setText(endMessage);
     m_convertStatus = PROCESS_DONE;
     setButtonText( User1, i18n("&Close") );
 

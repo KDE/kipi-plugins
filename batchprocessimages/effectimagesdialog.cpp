@@ -91,7 +91,7 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     groupBox1->setTitle( i18n("Image Effect Options") );
 
-    m_labelType->setText( i18n("Effect type:") );
+    m_labelType->setText( i18n("Effect:") );
 
     m_Type->insertItem(i18n("Adaptive Threshold"));  // 0
     m_Type->insertItem(i18n("Charcoal"));

@@ -55,7 +55,6 @@ Q_OBJECT
    QLabel          *m_labelPrefix;
    QLabel          *m_labelStart;
    QLabel          *m_labelSort;
-   QLabel          *m_statusbar;
 
    KLineEdit       *m_prefix;
    KIntSpinBox     *m_enumeratorStart;

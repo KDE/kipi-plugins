@@ -89,9 +89,9 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
     
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Bordering Images Options") );
+    groupBox1->setTitle( i18n("Images Bordering Options") );
 
-    m_labelType->setText( i18n("Border type:") );
+    m_labelType->setText( i18n("Border:") );
 
     m_Type->insertItem(i18n("Solid"));
     m_Type->insertItem(i18n("Niepce"));

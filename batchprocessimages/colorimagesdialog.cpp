@@ -88,9 +88,9 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Image Color Options") );
+    groupBox1->setTitle( i18n("Image Coloring Options") );
 
-    m_labelType->setText( i18n("Coloring enhancement type:") );
+    m_labelType->setText( i18n("Filter:") );
 
     m_Type->insertItem(i18n("Decrease Contrast"));
     m_Type->insertItem(i18n("Depth"));              // 1
