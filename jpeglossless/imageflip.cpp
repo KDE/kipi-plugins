@@ -22,6 +22,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kurl.h>
+#include <libkexif/kexifdata.h>
 
 #include <qimage.h>
 #include <qstring.h>
@@ -189,6 +190,11 @@ bool flipJPEG(const QString& src, const QString& dest,
     fclose(input_file);
     fclose(output_file);
 
+    // set the EXIF orientation to normal (top-left), assuming the user
+    // flipped the image to its correct orientation. 
+    KExifData *exifData = new KExifData;
+    exifData->writeOrientation(dest, KExifData::NORMAL);
+    delete exifData;
     return true;
 }
 
