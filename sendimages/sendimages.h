@@ -69,9 +69,6 @@ public:
    void invokeMailAgent(void);
    void removeTmpFiles(void);
 
-public slots:   
-  void slotOKconfigDlg(void);
-   
 private slots:   
    void slotMozillaTimeout(void);
    void slotMozillaExited(KProcess* proc);
