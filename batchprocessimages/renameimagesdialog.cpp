@@ -721,61 +721,15 @@ QString RenameImagesDialog::oldFileName2NewFileName(QFileInfo *fi, int id)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-// From ShowImg batch renamer
 
-bool RenameImagesDialog::changeDate(QString file)
+bool RenameImagesDialog::changeDate(KURL file)
 {
-    FILE * f;
-    struct utimbuf * t = new utimbuf();
-    struct tm tmp;
-    struct stat st;
-
-    time_t ti;
-
-    f = fopen(file.ascii (), "r");
-
-    if( f == NULL )
-       {
-       return false;
-       }
-
-    fclose( f );
-
-    tmp.tm_mday = m_newDate.day();
-    tmp.tm_mon = m_newDate.month() - 1;
-    tmp.tm_year = m_newDate.year() - 1900;
-
-    tmp.tm_hour = m_hour;
-    tmp.tm_min = m_minute;
-    tmp.tm_sec = m_second;
-    tmp.tm_isdst = -1;
-
-    ti = mktime( &tmp );
-
-    if( ti == -1 )
-       {
-       return false;
-       }
-
-    if( stat(file.ascii(), &st ) == -1 )
-       {
-       return false;
-       }
-
-    if(m_changeAccess)
-        t->actime = ti;
-    else
-        t->actime = st.st_atime;
-
-    if(m_changeModification)
-        t->modtime = ti;
-    else
-        t->modtime = st.st_mtime;
-
-    if(utime(file.ascii(), t ) != 0)
-       {
-       return false;
-       }
+    KIPI::ImageInfo info = m_interface->info( file );
+    QDateTime dateTime = info.time();
+    dateTime.setDate(m_newDate);
+    QTime newTime(m_hour, m_minute, m_second);
+    dateTime.setTime(newTime);
+    info.setTime( dateTime );
 
     return true;
 }

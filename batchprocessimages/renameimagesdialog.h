@@ -91,7 +91,7 @@ Q_OBJECT
    QString oldFileName2NewFileName(QFileInfo *fi, int id);
    void    copyItemOperations(void);
    void    updateOptions(void);
-   bool    changeDate(QString file);
+   bool    changeDate(KURL file);
    
 };
 
