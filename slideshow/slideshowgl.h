@@ -53,7 +53,7 @@ protected:
     void paintGL();
     void resizeGL(int w, int h);
     
-    void mousePressEvent(QMouseEvent *);
+    void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *);
     void closeEvent(QCloseEvent *);
     
@@ -95,6 +95,7 @@ private:
 
     void          paintTexture();
     void          advanceFrame();
+    void          previousFrame();
     void          loadImage();
     void          montage(QImage& top, QImage& bot);
     EffectMethod  getRandomEffect();

@@ -56,6 +56,7 @@ public:
 private:
 
     void          loadNextImage();
+    void          loadPrevImage();
     void          showCurrentImage();
     void          printFilename();
     EffectMethod  getRandomEffect();
@@ -94,7 +95,7 @@ private:
     
 protected:
 
-    void mousePressEvent(QMouseEvent *);
+    void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *);
     
     int effectNone(bool);

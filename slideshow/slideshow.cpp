@@ -261,6 +261,39 @@ void SlideShow::loadNextImage()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void SlideShow::loadPrevImage()
+{
+    if (nextImage_)
+        delete nextImage_;
+
+    nextImage_ = 0;
+
+    int num = fileList_.count();
+
+    fileIndex_--; // back from next to current
+    fileIndex_--; // back from current to previous
+
+    if (fileIndex_ < 0)
+        if (loop_)
+            fileIndex_ = num-1; //loop
+        else
+            return; // don't loop
+
+    QString file(fileList_[fileIndex_]);
+
+    nextImage_ = new ImImageSS(imIface_, file);
+    nextImage_->fitSize(width(), height());
+    nextImage_->render();
+
+    if (printName_)
+        printFilename();
+
+    fileIndex_++;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void SlideShow::showCurrentImage()
 {
     imIface_->paint(currImage_, 0, 0, 0, 0,
@@ -334,11 +367,57 @@ void SlideShow::showEndOfShow()
     p.end();
 }
 
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void SlideShow::mousePressEvent(QMouseEvent *)
+void SlideShow::mousePressEvent(QMouseEvent *event)
 {
-    close();
+    if (!event) return;
+    if (!effect_) return;                         // No effect -> bye !
+
+    int tmout = -1;
+
+    if (effectRunning_)                           // Effect under progress ?
+        {
+        tmout = (this->*effect_)(false);
+        }
+    else
+        {
+        if (event->button() == QMouseEvent::LeftButton)
+            {
+            loadNextImage();
+            event->accept();
+            }
+        if (event->button() == QMouseEvent::RightButton)
+           {
+           loadPrevImage();
+           event->accept();
+           }
+        currImage_ = nextImage_;
+
+	if (!currImage_ || fileList_.isEmpty())   // End of slideshow ?
+	    {
+            showEndOfShow();
+            return;
+            }
+
+        if (effectName_ == "Random")              // Take a random effect.
+{
+            effect_ = getRandomEffect();
+            if (!effect_) return;
+            }
+
+        effectRunning_ = true;
+        tmout = (this->*effect_)(true);
+        }
+
+    if (tmout <= 0)                               // Effect finished -> delay.
+        {
+        tmout = delay_;
+        effectRunning_ = false;
+        }
+
+    timer_->start(tmout, true);
 }
 
 

@@ -150,9 +150,56 @@ void SlideShowGL::resizeGL(int w, int h)
     glLoadIdentity();
 }
 
-void SlideShowGL::mousePressEvent(QMouseEvent *)
+void SlideShowGL::mousePressEvent(QMouseEvent *event)
 {
-    close();
+    qDebug("SlideShowGL::mousePressEvent");
+    if (!effect_) {
+        kdWarning() << "SlideShowGL: No transition method"
+                    << endl;
+        effect_ = &SlideShowGL::effectNone;
+    }
+
+    if (effectRunning_) {
+        timeout_ = 10;
+    }
+    else {
+        if (timeout_ == -1) {
+            // effect was running and is complete now
+            // run timer while showing current image
+            timeout_ = delay_;
+            m_i     = 0;
+        }
+        else {
+
+            // timed out after showing current image
+            // load next image and start effect
+            if (random_)
+                effect_ = getRandomEffect();
+
+            if (endOfShow_) {
+                updateGL();
+                return;
+            }
+
+            if (event->button() == QMouseEvent::LeftButton) {
+                advanceFrame();
+                event->accept();
+            } else if (event->button() == QMouseEvent::RightButton) {
+                previousFrame();
+                event->accept();
+            }
+
+            loadImage();
+
+            timeout_ = 10;
+            effectRunning_ = true;
+            m_i = 0;
+
+        }
+    }
+
+    updateGL();
+    timer_->start(timeout_, true);
 }
 
 void SlideShowGL::mouseMoveEvent(QMouseEvent *)
@@ -245,6 +292,19 @@ void SlideShowGL::advanceFrame()
     fileIndex_++;
     if (fileIndex_ >= (int)fileList_.count()) {
         fileIndex_ = 0;
+        if (!loop_)
+            endOfShow_ = true;
+    }
+
+    tex1First_ = !tex1First_;
+    curr_      = (curr_ == 0) ? 1 : 0;
+}
+
+void SlideShowGL::previousFrame()
+{
+    fileIndex_--;
+    if (fileIndex_ < 0) {
+        fileIndex_ = (int)fileList_.count()-1;
         if (!loop_)
             endOfShow_ = true;
     }
