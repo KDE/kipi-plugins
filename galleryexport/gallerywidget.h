@@ -23,6 +23,7 @@
 
 class QListView;
 class QPushButton;
+class QSpinBox;
 class KHTMLPart;
 
 namespace KIPIGalleryExportPlugin
@@ -41,6 +42,8 @@ private:
     KHTMLPart*    m_photoView;
     QPushButton*  m_newAlbumBtn;
     QPushButton*  m_addPhotoBtn;
+    QSpinBox*     m_widthSpinBox;
+    QSpinBox*     m_heightSpinBox;
 
     friend class GalleryWindow;
 };

@@ -26,6 +26,7 @@
 
 class QListView;
 class QPushButton;
+class QSpinBox;
 class QProgressDialog;
 class KHTMLPart;
 class KURL;
@@ -63,6 +64,8 @@ private:
     KHTMLPart                *m_photoView;
     QPushButton              *m_newAlbumBtn;
     QPushButton              *m_addPhotoBtn;
+    QSpinBox                 *m_widthSpinBox;
+    QSpinBox                 *m_heightSpinBox;
     GalleryTalker            *m_talker;
     QIntDict<GAlbumViewItem>  m_albumDict;
     QString                   m_url;

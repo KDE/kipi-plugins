@@ -65,7 +65,8 @@ public:
                       const QString& albumCaption );
     bool addPhoto( const QString& albumName,
                    const QString& photoPath,
-                   const QString& caption=QString() );
+                   const QString& caption=QString(),
+                   int maxWidth=600, int maxHeight=600 );
 
     void cancel();
     

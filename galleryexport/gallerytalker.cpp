@@ -22,11 +22,13 @@
 #include <qcstring.h>
 #include <qtextstream.h>
 #include <qfile.h>
+#include <qimage.h>
 
 #include <klocale.h>
 #include <kio/job.h>
 #include <kdebug.h>
 #include <kmimetype.h>
+#include <kstandarddirs.h>
 
 #include <cstring>
 #include <cstdio>
@@ -171,7 +173,8 @@ void GalleryTalker::createAlbum( const QString& parentAlbumName,
 
 bool GalleryTalker::addPhoto( const QString& albumName,
                               const QString& photoPath,
-                              const QString& caption )
+                              const QString& caption,
+                              int maxWidth, int maxHeight )
 {
     if (m_job)
     {
@@ -179,15 +182,30 @@ bool GalleryTalker::addPhoto( const QString& albumName,
         m_job = 0;
     }
 
+    QString path = photoPath;
+    
     GalleryMPForm form;
     form.addPair("cmd", "add-item");
     form.addPair("protocol_version", "2.3");
     form.addPair("set_albumName", albumName);
-    form.addPair("userfile_name", QFile::encodeName(KURL(photoPath).filename()));
+    form.addPair("userfile_name", QFile::encodeName(KURL(path).filename()));
     if (!albumName.isEmpty())
         form.addPair("caption", caption);
 
-    if (!form.addFile(photoPath))
+    QImage image(photoPath);
+    if (image.isNull())
+        return false;
+
+    if (image.width() > maxWidth || image.height() > maxHeight)
+    {
+        image = image.smoothScale(maxWidth, maxHeight, QImage::ScaleMin);
+        path = locateLocal("tmp", KURL(photoPath).filename());
+        image.save(path, QImageIO::imageFormat(photoPath));
+        kdDebug() << "Resizing and saving to temp file: "
+                  << path << endl;
+    }
+    
+    if (!form.addFile(path))
         return false;
 
     form.finish();

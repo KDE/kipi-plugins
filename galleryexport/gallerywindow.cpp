@@ -26,6 +26,7 @@
 #include <qcursor.h>
 #include <qlineedit.h>
 #include <qprogressdialog.h>
+#include <qspinbox.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -67,10 +68,12 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
     setMainWidget( widget );
     widget->setMinimumSize( 600, 400 );
 
-    m_albumView   = widget->m_albumView;
-    m_photoView   = widget->m_photoView;
-    m_newAlbumBtn = widget->m_newAlbumBtn;
-    m_addPhotoBtn = widget->m_addPhotoBtn;
+    m_albumView     = widget->m_albumView;
+    m_photoView     = widget->m_photoView;
+    m_newAlbumBtn   = widget->m_newAlbumBtn;
+    m_addPhotoBtn   = widget->m_addPhotoBtn;
+    m_widthSpinBox  = widget->m_widthSpinBox;
+    m_heightSpinBox = widget->m_heightSpinBox;
 
     m_albumView->setRootIsDecorated( true );
 
@@ -117,6 +120,8 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
     config.setGroup("GalleryExport Settings");
     m_url  = config.readEntry("URL");
     m_user = config.readEntry("User");
+    m_widthSpinBox->setValue(config.readNumEntry("Maximum Width", 1600));
+    m_heightSpinBox->setValue(config.readNumEntry("Maximum Height", 1600));
     
     QTimer::singleShot( 0, this,  SLOT( slotDoLogin() ) );
 }
@@ -133,6 +138,8 @@ GalleryWindow::~GalleryWindow()
     config.setGroup("GalleryExport Settings");
     config.writeEntry("URL",  m_url);
     config.writeEntry("User", m_user);
+    config.writeEntry("Maximum Width",  m_widthSpinBox->value());
+    config.writeEntry("Maximum Height", m_heightSpinBox->value());
     
     delete m_progressDlg;
     delete m_talker;
@@ -455,7 +462,9 @@ void GalleryWindow::slotAddPhotoNext()
     m_uploadQueue.pop_front();
 
     m_talker->addPhoto( m_lastSelectedAlbum, pathComments.first,
-                        pathComments.second );
+                        pathComments.second,
+                        m_widthSpinBox->value(),
+                        m_heightSpinBox->value() );
     
     m_progressDlg->setLabelText( i18n("Uploading file %1 ")
                                  .arg( KURL(pathComments.first).filename() ) );
