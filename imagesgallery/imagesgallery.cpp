@@ -80,42 +80,26 @@ extern "C"
 namespace KIPIImagesGalleryPlugin
 {
 
-static QString checkExtension(const QString& imageFilename, const QString& imageFormat)
-{
-  QString file (imageFilename);
-  QString ext;
-
-  if (imageFormat == QString::fromLatin1("PNG"))
-    ext = QString::fromLatin1(".png");
-  else if (imageFormat == QString::fromLatin1("JPEG"))
-    ext = QString::fromLatin1(".jpg");
-  
-  if (!file.endsWith(ext))
-    file += ext;
-
-  return file;
-}
-
 ImagesGallery::ImagesGallery( KIPI::Interface* interface, QObject *parent )
              : QObject(parent)
 {
-  KImageIO::registerFormats();
-  
-  const KAboutData *data = KApplication::kApplication()->aboutData();
-  m_hostName = QString::QString( data->appName() );
-  
-  m_hostURL = data->homepage();
-  
-  if (m_hostURL.isEmpty())
-  {
-    m_hostName = "Kipi";
-    m_hostURL = "http://extragear.kde.org/apps/kipi.php";
-  }
-  
-  m_interface = interface;
-  m_parent = parent;
-  m_commentMap = 0L;
-  m_albumsMap = 0L;
+    KImageIO::registerFormats();
+    
+    const KAboutData *data = KApplication::kApplication()->aboutData();
+    m_hostName = QString::QString( data->appName() );
+       
+    m_hostURL = data->homepage();
+    
+    if (m_hostURL.isEmpty())
+       {
+       m_hostName = "Kipi";
+       m_hostURL = "http://extragear.kde.org/apps/kipi.php";
+       }
+
+    m_interface = interface;
+    m_parent = parent;
+    m_commentMap = 0L;
+    m_albumsMap = 0L;
 }
 
 
@@ -123,9 +107,9 @@ ImagesGallery::ImagesGallery( KIPI::Interface* interface, QObject *parent )
 
 ImagesGallery::~ImagesGallery()
 {
-  delete m_commentMap;
-  delete m_albumsMap;
-  delete m_configDlg;
+    if (m_commentMap) delete m_commentMap;
+    if (m_albumsMap) delete m_albumsMap;
+    delete m_configDlg;
 }
 
 
@@ -133,52 +117,53 @@ ImagesGallery::~ImagesGallery()
 
 void ImagesGallery::writeSettings(void)
 {
-  KConfig config ("kipirc");
-  config.setGroup("ImagesGallery Settings");
+    m_config = new KConfig("kipirc");
+    m_config->setGroup("ImagesGallery Settings");
 
-  // HTML Look dialogbox setup tab
+    // HTML Look dialogbox setup tab
 
-  config.writeEntry("MainPageTitle", m_configDlg->getMainTitle());
-  config.writeEntry("ImagesPerRow", m_configDlg->getImagesPerRow());
-  config.writeEntry("PrintImageName", m_configDlg->printImageName());
-  config.writeEntry("PrintImageSize", m_configDlg->printImageSize());
-  config.writeEntry("PrintFileSize", m_configDlg->printImageProperty());
-  config.writeEntry("PrintPageCreationDate", m_configDlg->printPageCreationDate());
-  config.writeEntry("CreatePageForPhotos", m_configDlg->getCreatePageForPhotos());
-  config.writeEntry("OpenInWebBrowser", m_configDlg->OpenGalleryInWebBrowser());
-  config.writePathEntry("WebBrowserName", m_configDlg->getWebBrowserName());
-  config.writeEntry("FontName", m_configDlg->getFontName());
-  config.writeEntry("FontColor", m_configDlg->getForegroundColor());
-  config.writeEntry("BackgroundColor", m_configDlg->getBackgroundColor());
-  config.writeEntry("BordersImagesSize", m_configDlg->getBordersImagesSize());
-  config.writeEntry("BordersImagesColor", m_configDlg->getBordersImagesColor());
+    m_config->writeEntry("MainPageTitle", m_configDlg->getMainTitle());
+    m_config->writeEntry("ImagesPerRow", m_configDlg->getImagesPerRow());
+    m_config->writeEntry("PrintImageName", m_configDlg->printImageName());
+    m_config->writeEntry("PrintImageSize", m_configDlg->printImageSize());
+    m_config->writeEntry("PrintFileSize", m_configDlg->printImageProperty());
+    m_config->writeEntry("PrintPageCreationDate", m_configDlg->printPageCreationDate());
+    m_config->writeEntry("CreatePageForPhotos", m_configDlg->getCreatePageForPhotos());
+    m_config->writeEntry("OpenInWebBrowser", m_configDlg->OpenGalleryInWebBrowser());
+    m_config->writePathEntry("WebBrowserName", m_configDlg->getWebBrowserName());
+    m_config->writeEntry("FontName", m_configDlg->getFontName());
+    m_config->writeEntry("FontColor", m_configDlg->getForegroundColor());
+    m_config->writeEntry("BackgroundColor", m_configDlg->getBackgroundColor());
+    m_config->writeEntry("BordersImagesSize", m_configDlg->getBordersImagesSize());
+    m_config->writeEntry("BordersImagesColor", m_configDlg->getBordersImagesColor());
 
-  // ALBUM dialogbox setup tab
+    // ALBUM dialogbox setup tab
 
-  config.writePathEntry("GalleryPath", m_configDlg->getImageName());
-  config.writeEntry("NotUseOriginalImageSize", m_configDlg->useNotOriginalImageSize());
-  config.writeEntry("ImagesResize", m_configDlg->getImagesResize());
-  config.writeEntry("TargetImagesCompressionSet", m_configDlg->useSpecificTargetimageCompression());
-  config.writeEntry("TargetImagesCompression", m_configDlg->getTargetImagesCompression());
-  config.writeEntry("TargetImagesFormat", m_configDlg->getTargetImagesFormat());
-  config.writeEntry("TargetImagesColorDepthSet", m_configDlg->colorDepthSetTargetImages());
-  config.writeEntry("TargetImagesColorDepthValue", m_configDlg->getColorDepthTargetImages());
-  config.writeEntry("UseCommentFile", m_configDlg->useCommentFile());
-  config.writeEntry("UseCommentsAlbum", m_configDlg->useCommentsAlbum());
-  config.writeEntry("UseCollectionAlbum", m_configDlg->useCollectionAlbum());
-  config.writeEntry("UseDateAlbum", m_configDlg->useDateAlbum());
-  config.writeEntry("PrintImageNb", m_configDlg->useNbImagesAlbum());
+    m_config->writePathEntry("GalleryPath", m_configDlg->getImageName());
+    m_config->writeEntry("NotUseOriginalImageSize", m_configDlg->useNotOriginalImageSize());
+    m_config->writeEntry("ImagesResize", m_configDlg->getImagesResize());
+    m_config->writeEntry("TargetImagesCompressionSet", m_configDlg->useSpecificTargetimageCompression());
+    m_config->writeEntry("TargetImagesCompression", m_configDlg->getTargetImagesCompression());
+    m_config->writeEntry("TargetImagesFormat", m_configDlg->getTargetImagesFormat());
+    m_config->writeEntry("TargetImagesColorDepthSet", m_configDlg->colorDepthSetTargetImages());
+    m_config->writeEntry("TargetImagesColorDepthValue", m_configDlg->getColorDepthTargetImages());
+    m_config->writeEntry("UseCommentFile", m_configDlg->useCommentFile());
+    m_config->writeEntry("UseCommentsAlbum", m_configDlg->useCommentsAlbum());
+    m_config->writeEntry("UseCollectionAlbum", m_configDlg->useCollectionAlbum());
+    m_config->writeEntry("UseDateAlbum", m_configDlg->useDateAlbum());
+    m_config->writeEntry("PrintImageNb", m_configDlg->useNbImagesAlbum());
 
-  // THUMNAILS dialogbox setup tab
+    // THUMNAILS dialogbox setup tab
 
-  config.writeEntry("ThumbnailsSize", m_configDlg->getThumbnailsSize());
-  config.writeEntry("ThumbnailsCompressionSet", m_configDlg->useSpecificThumbsCompression());
-  config.writeEntry("ThumbnailsCompression", m_configDlg->getThumbsCompression());
-  config.writeEntry("ThumbnailsFormat", m_configDlg->getImageFormat());
-  config.writeEntry("ThumbnailsColorDepthSet", m_configDlg->colorDepthSetThumbnails());
-  config.writeEntry("ThumbnailsColorDepthValue", m_configDlg->getColorDepthThumbnails());
+    m_config->writeEntry("ThumbnailsSize", m_configDlg->getThumbnailsSize());
+    m_config->writeEntry("ThumbnailsCompressionSet", m_configDlg->useSpecificThumbsCompression());
+    m_config->writeEntry("ThumbnailsCompression", m_configDlg->getThumbsCompression());
+    m_config->writeEntry("ThumbnailsFormat", m_configDlg->getImageFormat());
+    m_config->writeEntry("ThumbnailsColorDepthSet", m_configDlg->colorDepthSetThumbnails());
+    m_config->writeEntry("ThumbnailsColorDepthValue", m_configDlg->getColorDepthThumbnails());
 
-  config.sync();
+    m_config->sync();
+    delete m_config;
 }
 
 
@@ -186,132 +171,140 @@ void ImagesGallery::writeSettings(void)
 
 void ImagesGallery::readSettings(void)
 {
-  KConfig config ("kipirc");
-  config.setGroup("ImagesGallery Settings");
+  QColor* ColorFont;
+  QColor* ColorBackground;
+  QColor* ColorBordersImages;
+
+  m_config = new KConfig("kipirc");
+  m_config->setGroup("ImagesGallery Settings");
 
   // HTML Look dialogbox setup tab
 
-  m_configDlg->setMainTitle( config.readEntry("MainPageTitle", i18n("KIPI Album Image Gallery")) );
-  m_configDlg->setImagesPerRow( config.readEntry("ImagesPerRow", "4").toInt() );
+  m_configDlg->setMainTitle( m_config->readEntry("MainPageTitle", i18n("KIPI Album Image Gallery")) );
+  m_configDlg->setImagesPerRow( m_config->readEntry("ImagesPerRow", "4").toInt() );
 
-  if (config.readEntry("PrintImageName", "true") == "true")
+  if (m_config->readEntry("PrintImageName", "true") == "true")
      m_configDlg->setPrintImageName( true );
   else
      m_configDlg->setPrintImageName( false );
 
-  if (config.readEntry("PrintImageSize", "true") == "true")
+  if (m_config->readEntry("PrintImageSize", "true") == "true")
      m_configDlg->setPrintImageSize( true );
   else
      m_configDlg->setPrintImageSize( false );
 
-  if (config.readEntry("PrintFileSize", "true") == "true")
+  if (m_config->readEntry("PrintFileSize", "true") == "true")
      m_configDlg->setPrintImageProperty( true );
   else
      m_configDlg->setPrintImageProperty( false );
 
-  if (config.readEntry("PrintPageCreationDate", "true") == "true")
+  if (m_config->readEntry("PrintPageCreationDate", "true") == "true")
      m_configDlg->setPrintPageCreationDate( true );
   else
      m_configDlg->setPrintPageCreationDate( false );
 
-  if(config.readEntry("CreatePageForPhotos", "true") == "true")
+  if(m_config->readEntry("CreatePageForPhotos", "true") == "true")
      m_configDlg->setCreatePageForPhotos( true );
   else
      m_configDlg->setCreatePageForPhotos( false );
 
-  if (config.readEntry("OpenInWebBrowser", "true") == "true")
+  if (m_config->readEntry("OpenInWebBrowser", "true") == "true")
      m_configDlg->setOpenGalleryInWebBrowser( true );
   else
      m_configDlg->setOpenGalleryInWebBrowser( false );
 
-  m_configDlg->setWebBrowserName( config.readPathEntry("WebBrowserName", "Konqueror") );
+  m_configDlg->setWebBrowserName( m_config->readPathEntry("WebBrowserName", "Konqueror") );
 
-  m_configDlg->setFontName( config.readEntry("FontName", "Helvetica") );
-  m_configDlg->setFontSize( config.readEntry("FontSize", "14").toInt() );
+  m_configDlg->setFontName( m_config->readEntry("FontName", "Helvetica") );
+  m_configDlg->setFontSize( m_config->readEntry("FontSize", "14").toInt() );
+  ColorFont = new QColor( 208, 255, 208 );
+  m_configDlg->setForegroundColor( m_config->readColorEntry("FontColor", ColorFont));
+  ColorBackground = new QColor( 51, 51, 51 );
+  m_configDlg->setBackgroundColor( m_config->readColorEntry("BackgroundColor", ColorBackground));
+  m_configDlg->setBordersImagesSize( m_config->readEntry("BordersImagesSize", "1").toInt() );
+  ColorBordersImages = new QColor( 208, 255, 208 );
+  m_configDlg->setBordersImagesColor( m_config->readColorEntry("BordersImagesColor", ColorBordersImages));
 
-  QColor colorFont ( 208, 255, 208 );
-  m_configDlg->setForegroundColor( config.readColorEntry("FontColor", &colorFont));
-  
-  QColor colorBackground ( 51, 51, 51 );
-  m_configDlg->setBackgroundColor( config.readColorEntry("BackgroundColor", &colorBackground));
-  m_configDlg->setBordersImagesSize( config.readEntry("BordersImagesSize", "1").toInt() );
-  
-  QColor colorBordersImages ( 208, 255, 208 );
-  m_configDlg->setBordersImagesColor( config.readColorEntry("BordersImagesColor", &colorBordersImages));
-
+  delete ColorFont;
+  delete ColorBackground;
+  delete ColorBordersImages;
 
   // ALBUM dialogbox setup tab
-  m_configDlg->setImageName( config.readPathEntry("GalleryPath", KGlobalSettings::documentPath()) );
 
-  if (config.readEntry("NotUseOriginalImageSize", "true") == "true")
+  m_configDlg->setImageName( m_config->readPathEntry("GalleryPath", KGlobalSettings::documentPath()) );
+
+  if (m_config->readEntry("NotUseOriginalImageSize", "true") == "true")
      m_configDlg->setNotUseOriginalImageSize( true );
   else
      m_configDlg->setNotUseOriginalImageSize( false );
 
-  m_configDlg->setImagesResizeFormat( config.readEntry("ImagesResize", "640").toInt() );
+  m_configDlg->setImagesResizeFormat( m_config->readEntry("ImagesResize", "640").toInt() );
 
-  if (config.readEntry("TargetImagesCompressionSet", "false") == "true")
+  if (m_config->readEntry("TargetImagesCompressionSet", "false") == "true")
      m_configDlg->setUseSpecificTargetimageCompression( true );
   else
      m_configDlg->setUseSpecificTargetimageCompression( false );
 
-  m_configDlg->setTargetImagesCompression( config.readEntry("TargetImagesCompression", "75").toInt() );
+  m_configDlg->setTargetImagesCompression( m_config->readEntry("TargetImagesCompression", "75").toInt() );
 
-  m_configDlg->setTargetImagesFormat( config.readEntry("TargetImagesFormat", "JPEG") );
+  m_configDlg->setTargetImagesFormat( m_config->readEntry("TargetImagesFormat", "JPEG") );
 
-  if (config.readEntry("TargetImagesColorDepthSet", "false") == "true")
+  if (m_config->readEntry("TargetImagesColorDepthSet", "false") == "true")
      m_configDlg->setColorDepthSetTargetImages( true );
   else
      m_configDlg->setColorDepthSetTargetImages( false );
 
-  m_configDlg->setColorDepthTargetImages( config.readEntry("TargetImagesColorDepthValue", "32") );
+  m_configDlg->setColorDepthTargetImages( m_config->readEntry("TargetImagesColorDepthValue", "32") );
 
-  if (config.readEntry("UseCommentFile", "true") == "true")
+  if (m_config->readEntry("UseCommentFile", "true") == "true")
      m_configDlg->setUseCommentFile( true );
   else
      m_configDlg->setUseCommentFile( false );
 
-  if (config.readEntry("UseCommentsAlbum", "true") == "true")
+  if (m_config->readEntry("UseCommentsAlbum", "true") == "true")
      m_configDlg->setUseCommentsAlbum( true );
   else
      m_configDlg->setUseCommentsAlbum( false );
 
-  if (config.readEntry("UseCollectionAlbum", "true") == "true")
+  if (m_config->readEntry("UseCollectionAlbum", "true") == "true")
      m_configDlg->setUseCollectionAlbum( true );
   else
      m_configDlg->setUseCollectionAlbum( false );
 
-  if (config.readEntry("UseDateAlbum", "true") == "true")
+  if (m_config->readEntry("UseDateAlbum", "true") == "true")
      m_configDlg->setUseDateAlbum( true );
   else
      m_configDlg->setUseDateAlbum( false );
 
-  if (config.readEntry("PrintImageNb", "true") == "true")
+  if (m_config->readEntry("PrintImageNb", "true") == "true")
      m_configDlg->setUseNbImagesAlbum( true );
   else
      m_configDlg->setUseNbImagesAlbum( false );
 
   // THUMNAILS dialogbox setup tab
 
-  m_configDlg->setThumbnailsSize( config.readEntry("ThumbnailsSize", "140").toInt() );
+  m_configDlg->setThumbnailsSize( m_config->readEntry("ThumbnailsSize", "140").toInt() );
 
-  if (config.readEntry("ThumbnailsCompressionSet", "false") == "true")
+  if (m_config->readEntry("ThumbnailsCompressionSet", "false") == "true")
      m_configDlg->setUseSpecificThumbsCompression( true );
   else
      m_configDlg->setUseSpecificThumbsCompression( false );
 
-  m_configDlg->setThumbsCompression( config.readEntry("ThumbnailsCompression", "75").toInt() );
+  m_configDlg->setThumbsCompression( m_config->readEntry("ThumbnailsCompression", "75").toInt() );
 
-  m_configDlg->setImageFormat( config.readEntry("ThumbnailsFormat", "JPEG") );
+  m_configDlg->setImageFormat( m_config->readEntry("ThumbnailsFormat", "JPEG") );
 
-  if (config.readEntry("ThumbnailsColorDepthSet", "false") == "true")
+  if (m_config->readEntry("ThumbnailsColorDepthSet", "false") == "true")
      m_configDlg->setColorDepthSetThumbnails( true );
   else
      m_configDlg->setColorDepthSetThumbnails( false );
 
-  m_configDlg->setColorDepthThumbnails( config.readEntry("ThumbnailsColorDepthValue", "32") );
+  m_configDlg->setColorDepthThumbnails( m_config->readEntry("ThumbnailsColorDepthValue", "32") );
 
+  delete m_config;
+    
   // Get the image files filters from the hosts app.
+     
   m_imagesFileFilter = m_interface->fileExtensions();
 }
 
@@ -320,16 +313,16 @@ void ImagesGallery::readSettings(void)
 
 bool ImagesGallery::showDialog()
 {
-  m_configDlg = new KIGPDialog( m_interface, 0 );
-  readSettings();
-  
-  if ( m_configDlg->exec() == QDialog::Accepted )
-  {
-    writeSettings();
-    return true;
-  }
-  
-  return false;
+    m_configDlg = new KIGPDialog( m_interface, 0 );
+    readSettings();
+
+    if ( m_configDlg->exec() == QDialog::Accepted )
+        {
+        writeSettings();
+        return true;
+        }
+       
+    return false;
 }
 
 
@@ -337,24 +330,24 @@ bool ImagesGallery::showDialog()
 
 bool ImagesGallery::removeTargetGalleryFolder(void)
 {
-  QDir TargetDir;
-  QString MainTPath = m_configDlg->getImageName() + "/KIPIHTMLExport";
-  
-  if (TargetDir.exists (MainTPath) == true)
-  {
-    if (KMessageBox::warningYesNo(0,
-        i18n("The target directory\n'%1'\nalready exists; do you want overwrite it? (all data "
-            "in this directory will be lost.)").arg(MainTPath)) == KMessageBox::Yes)
-      {
-      if ( DeleteDir(MainTPath) == false )
+    QDir TargetDir;
+    QString MainTPath = m_configDlg->getImageName() + "/KIPIHTMLExport";
+
+    if (TargetDir.exists (MainTPath) == true)
+       {
+       if (KMessageBox::warningYesNo(0,
+           i18n("The target directory\n'%1'\nalready exists; do you want overwrite it? (all data "
+                "in this directory will be lost.)").arg(MainTPath)) == KMessageBox::Yes)
           {
-          KMessageBox::error(0, i18n("Cannot remove folder '%1'.").arg(MainTPath));
-          return false;
+          if ( DeleteDir(MainTPath) == false )
+             {
+             KMessageBox::error(0, i18n("Cannot remove folder '%1'.").arg(MainTPath));
+             return false;
+             }
           }
-      }
-  }
-  
-  return true;
+       }
+       
+    return true;
 }
 
 
@@ -362,111 +355,111 @@ bool ImagesGallery::removeTargetGalleryFolder(void)
 
 bool ImagesGallery::prepare(void)
 {
-  QValueList<KIPI::ImageCollection> albumsList;
-  KIPIImagesGalleryPlugin::EventData *d;
-  
-  // This variable are used for the recursive sub directories parsing
-  // during the HTML pages creation. (TODO: Checked this mode)
-  
-  m_recurseSubDirectories = false;
-  m_LevelRecursion = 1;
-  
-  m_cancelled = false;
-  m_resizeImagesWithError.clear();
-  m_StreamMainPageAlbumPreview = "";
-  
-  // Get config from setup dialog.
-  
-  m_imagesPerRow = m_configDlg->getImagesPerRow();
-  albumsList = m_configDlg->getSelectedAlbums();
-  m_imageName = m_configDlg->getImageName();
-  m_useCommentFile = m_configDlg->useCommentFile();
-  m_imageFormat = m_configDlg->getImageFormat();
-  m_targetImagesFormat = m_configDlg->getTargetImagesFormat();
-  m_mainTitle = m_configDlg->getMainTitle();
-  m_backgroundColor = m_configDlg->getBackgroundColor();
-  m_foregroundColor = m_configDlg->getForegroundColor();
-  m_bordersImagesColor = m_configDlg->getBordersImagesColor();
-  m_fontName = m_configDlg->getFontName();
-  m_fontSize = m_configDlg->getFontSize();
-  m_bordersImagesSize = m_configDlg->getBordersImagesSize();
-  m_useCommentsAlbum = m_configDlg->useCommentsAlbum();
-  m_useCollectionAlbum = m_configDlg->useCollectionAlbum();
-  m_useDateAlbum = m_configDlg->useDateAlbum();
-  m_useNbImagesAlbum = m_configDlg->useNbImagesAlbum();
-  m_createPageForPhotos = m_configDlg->getCreatePageForPhotos();
-  m_printImageName = m_configDlg->printImageName();
-  m_printImageProperty = m_configDlg->printImageProperty();
-  m_printImageSize = m_configDlg->printImageSize();
-  m_printPageCreationDate = m_configDlg->printPageCreationDate();
-  m_useNotOriginalImageSize = m_configDlg->useNotOriginalImageSize();
-  m_imagesResize = m_configDlg->getImagesResize();
-  m_colorDepthSetTargetImages = m_configDlg->colorDepthSetTargetImages();
-  m_colorDepthTargetImages = m_configDlg->getColorDepthTargetImages();
-  m_useSpecificTargetimageCompression = m_configDlg->useSpecificTargetimageCompression();
-  m_targetImagesCompression = m_configDlg->getTargetImagesCompression();
-  m_thumbnailsSize = m_configDlg->getThumbnailsSize();
-  m_colorDepthSetThumbnails = m_configDlg->colorDepthSetThumbnails();
-  m_colorDepthThumbnails = m_configDlg->getColorDepthThumbnails();
-  m_useSpecificThumbsCompression = m_configDlg->useSpecificThumbsCompression();
-  m_thumbsCompression = m_configDlg->getThumbsCompression();
-  m_albumListSize = albumsList.count();
-  
-  // Estimate the number of actions for the KIPI progress dialog.
-  
-  int nbActions = m_albumListSize;
-  
-  for( QValueList<KIPI::ImageCollection>::Iterator it = albumsList.begin() ;
-        !m_cancelled && (it != albumsList.end()) ; ++it )
-      nbActions = nbActions + (*it).images().count();
-  
-  d = new KIPIImagesGalleryPlugin::EventData;
-  d->action = KIPIImagesGalleryPlugin::Initialize;
-  d->starting = true;
-  d->success = false;
-  d->total = nbActions;
-  QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
-  usleep(1000);
-  
-  
-  // Create the main target folder.
-  
-  m_mainTPath = m_imageName + "/KIPIHTMLExport";
-  
-  if (m_targetDir.mkdir( m_mainTPath ) == false)
-  {
+    QValueList<KIPI::ImageCollection> albumsList;  
+    KIPIImagesGalleryPlugin::EventData *d;
+    
+    // This variable are used for the recursive sub directories parsing
+    // during the HTML pages creation. (TODO: Checked this mode)
+    
+    m_recurseSubDirectories = false;
+    m_LevelRecursion = 1;
+
+    m_cancelled = false;
+    m_resizeImagesWithError.clear();
+    m_StreamMainPageAlbumPreview = "";
+    
+    // Get config from setup dialog.
+    
+    m_imagesPerRow = m_configDlg->getImagesPerRow();
+    albumsList = m_configDlg->getSelectedAlbums();
+    m_imageName = m_configDlg->getImageName();
+    m_useCommentFile = m_configDlg->useCommentFile();
+    m_imageFormat = m_configDlg->getImageFormat();
+    m_targetImagesFormat = m_configDlg->getTargetImagesFormat();
+    m_mainTitle = m_configDlg->getMainTitle();
+    m_backgroundColor = m_configDlg->getBackgroundColor();
+    m_foregroundColor = m_configDlg->getForegroundColor(); 
+    m_bordersImagesColor = m_configDlg->getBordersImagesColor();
+    m_fontName = m_configDlg->getFontName();    
+    m_fontSize = m_configDlg->getFontSize();
+    m_bordersImagesSize = m_configDlg->getBordersImagesSize();
+    m_useCommentsAlbum = m_configDlg->useCommentsAlbum();
+    m_useCollectionAlbum = m_configDlg->useCollectionAlbum();
+    m_useDateAlbum = m_configDlg->useDateAlbum();
+    m_useNbImagesAlbum = m_configDlg->useNbImagesAlbum();
+    m_createPageForPhotos = m_configDlg->getCreatePageForPhotos();   
+    m_printImageName = m_configDlg->printImageName();
+    m_printImageProperty = m_configDlg->printImageProperty();
+    m_printImageSize = m_configDlg->printImageSize();
+    m_printPageCreationDate = m_configDlg->printPageCreationDate();
+    m_useNotOriginalImageSize = m_configDlg->useNotOriginalImageSize();
+    m_imagesResize = m_configDlg->getImagesResize();
+    m_colorDepthSetTargetImages = m_configDlg->colorDepthSetTargetImages();
+    m_colorDepthTargetImages = m_configDlg->getColorDepthTargetImages();    
+    m_useSpecificTargetimageCompression = m_configDlg->useSpecificTargetimageCompression();
+    m_targetImagesCompression = m_configDlg->getTargetImagesCompression();            
+    m_thumbnailsSize = m_configDlg->getThumbnailsSize();
+    m_colorDepthSetThumbnails = m_configDlg->colorDepthSetThumbnails();
+    m_colorDepthThumbnails = m_configDlg->getColorDepthThumbnails();
+    m_useSpecificThumbsCompression = m_configDlg->useSpecificThumbsCompression();
+    m_thumbsCompression = m_configDlg->getThumbsCompression();
+    m_albumListSize = albumsList.count();
+                        
+    // Estimate the number of actions for the KIPI progress dialog. 
+    
+    int nbActions = m_albumListSize;
+    
+    for( QValueList<KIPI::ImageCollection>::Iterator it = albumsList.begin() ;
+         !m_cancelled && (it != albumsList.end()) ; ++it ) 
+       nbActions = nbActions + (*it).images().count();
+    
     d = new KIPIImagesGalleryPlugin::EventData;
-    d->action = KIPIImagesGalleryPlugin::Error;
-    d->starting = false;
+    d->action = KIPIImagesGalleryPlugin::Initialize;
+    d->starting = true;
     d->success = false;
-    d->message = i18n("Could not create directory '%1'").arg(m_mainTPath);
+    d->total = nbActions; 
     QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
     usleep(1000);
-  
-    return(false);
-  }
-  
-  // Create data maps to use in the thread.
-  
-  m_albumsMap = new AlbumsMap;
-  
-  for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albumsList.begin() ;
-        !m_cancelled && (albumIt != albumsList.end()) ; ++albumIt )
-  {
-    AlbumData data((*albumIt).name(),    (*albumIt).category(),
-                    (*albumIt).comment(), (*albumIt).date(),
-                    (*albumIt).path(),    (*albumIt).images());
-  
-    m_albumsMap->insert( (*albumIt).path().prettyURL(), data );
-    m_albumUrlList.append( (*albumIt).path() );
-  }
-  
-  // Load images comments if necessary.
-  
-  if ( m_useCommentFile )
-      loadComments();
-  
-  return(true);
+    
+    
+    // Create the main target folder.
+        
+    m_mainTPath = m_imageName + "/KIPIHTMLExport";
+
+    if (m_targetDir.mkdir( m_mainTPath ) == false)
+       {
+       d = new KIPIImagesGalleryPlugin::EventData;
+       d->action = KIPIImagesGalleryPlugin::Error;
+       d->starting = false;
+       d->success = false;
+       d->message = i18n("Could not create directory '%1'").arg(m_mainTPath);
+       QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       usleep(1000);
+       
+       return(false);
+       }
+
+    // Create data maps to use in the thread.
+
+    m_albumsMap = new AlbumsMap;
+        
+    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albumsList.begin() ;
+         !m_cancelled && (albumIt != albumsList.end()) ; ++albumIt )
+        {
+        AlbumData data((*albumIt).name(),    (*albumIt).category(),
+                       (*albumIt).comment(), (*albumIt).date(), 
+                       (*albumIt).path(),    (*albumIt).images());
+        
+        m_albumsMap->insert( (*albumIt).path().prettyURL(), data );
+        m_albumUrlList.append( (*albumIt).path() );
+        }
+    
+    // Load images comments if necessary.
+                          
+    if ( m_useCommentFile )
+       loadComments();
+           
+    return(true);
 }
 
 
@@ -474,7 +467,7 @@ bool ImagesGallery::prepare(void)
 
 void ImagesGallery::stop()
 {
-  m_cancelled = true;
+    m_cancelled = true;
 }
 
 
@@ -482,155 +475,161 @@ void ImagesGallery::stop()
 
 void ImagesGallery::run()
 {
-  KIPIImagesGalleryPlugin::EventData *d;
-  QString Path;
-  KURL SubUrl, MainUrl;
-  
-  // Build all Albums HTML export.
-  
-  if ( m_albumListSize > 1 )
-  {
-    KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
-    QString dir = KGlobal::dirs()->findResourceDir("kipi_data", "gohome.png");
-    dir = dir + "gohome.png";
-  
-    KURL srcURL(dir);
-    KURL destURL(m_imageName + "/KIPIHTMLExport/gohome.png");
-    KIO::file_copy(srcURL, destURL, -1, true, false, false);
-  }
+    KIPIImagesGalleryPlugin::EventData *d;
+    QString Path;
+    KURL SubUrl, MainUrl;
+       
+    // Build all Albums HTML export.
 
-  for( KURL::List::Iterator albumsUrlIt = m_albumUrlList.begin() ;
-      !m_cancelled && (albumsUrlIt != m_albumUrlList.end()) ; ++albumsUrlIt )
-  {
-    m_albumUrl = *albumsUrlIt;
-    AlbumData data = (*m_albumsMap)[m_albumUrl.prettyURL()];
-    KURL::List images = data.itemsUrl();
-  
-    for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt )
-      kdDebug( 51000 ) << "URL:" << (*urlIt).prettyURL() << endl;
+    if ( m_albumListSize > 1 )
+       {
+       KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
+       QString dir = KGlobal::dirs()->findResourceDir("kipi_data", "gohome.png");
+       dir = dir + "gohome.png";
 
-  
-    m_AlbumTitle      = data.albumName();
-    m_AlbumComments   = data.albumComments();
-    m_AlbumCollection = data.albumCategory();
-    m_AlbumDate       = data.albumDate().toString();
-    Path              = data.albumUrl().path();
-  
-    SubUrl = m_imageName + "/KIPIHTMLExport/" + m_AlbumTitle + "/" + "index.html";
-  
-    if ( !SubUrl.isEmpty() && SubUrl.isValid())
-    {
-      // Create the target sub folder for the current album.
-      QString SubTPath= m_imageName + "/KIPIHTMLExport/" + m_AlbumTitle;
-  
-      if (m_targetDir.mkdir( SubTPath ) == false)
-      {
-        d = new KIPIImagesGalleryPlugin::EventData;
-        d->action = KIPIImagesGalleryPlugin::Error;
-        d->starting = false;
-        d->success = false;
-        d->message = i18n("Could not create directory '%1'").arg(SubTPath);
-        QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
-        usleep(1000);
-        return;
-      }
-  
-      d = new KIPIImagesGalleryPlugin::EventData;
-      d->action = KIPIImagesGalleryPlugin::BuildAlbumHTMLPage;
-      d->starting = true;
-      d->success = false;
-      d->albumName = m_AlbumTitle;
-      QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
-      usleep(1000);
-  
-      if ( !createHtml( SubUrl, Path,
-                        m_LevelRecursion > 0 ? m_LevelRecursion + 1 : 0,
-                        m_imageFormat,
-                        m_targetImagesFormat) )
-      {
-        d = new KIPIImagesGalleryPlugin::EventData;
-        d->action = KIPIImagesGalleryPlugin::BuildAlbumHTMLPage;
-        d->starting = false;
-        d->success = false;
-        d->albumName = m_AlbumTitle;
-        QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
-        usleep(1000);
-  
-        if ( !DeleteDir(m_mainTPath) )
-        {
+       KURL srcURL(dir);
+       KURL destURL(m_imageName + "/KIPIHTMLExport/gohome.png");
+       KIO::file_copy(srcURL, destURL, -1, true, false, false);           
+       }
+
+       for( KURL::List::Iterator albumsUrlIt = m_albumUrlList.begin() ;
+            !m_cancelled && (albumsUrlIt != m_albumUrlList.end()) ; ++albumsUrlIt )
+          {
+          m_albumUrl = *albumsUrlIt;
+          AlbumData data = (*m_albumsMap)[m_albumUrl.prettyURL()];
+          KURL::List images = data.itemsUrl();
+
+          for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) 
+             {
+             kdDebug( 51000 ) << "URL:" << (*urlIt).prettyURL() << endl;
+             }
+
+          m_AlbumTitle      = data.albumName();
+          m_AlbumComments   = data.albumComments();
+          m_AlbumCollection = data.albumCategory();
+          m_AlbumDate       = data.albumDate().toString();
+          Path              = data.albumUrl().path();
+
+          SubUrl = m_imageName + "/KIPIHTMLExport/" + m_AlbumTitle + "/" + "index.html";
+
+          if ( !SubUrl.isEmpty() && SubUrl.isValid())
+             {
+             // Create the target sub folder for the current album.
+
+             QString SubTPath= m_imageName + "/KIPIHTMLExport/" + m_AlbumTitle;
+ 
+             if (m_targetDir.mkdir( SubTPath ) == false)
+                 {
+                 d = new KIPIImagesGalleryPlugin::EventData;
+                 d->action = KIPIImagesGalleryPlugin::Error;
+                 d->starting = false;
+                 d->success = false;
+                 d->message = i18n("Could not create directory '%1'").arg(SubTPath);
+                 QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                 usleep(1000);
+                 
+                 return;
+                 }
+
+             d = new KIPIImagesGalleryPlugin::EventData;
+             d->action = KIPIImagesGalleryPlugin::BuildAlbumHTMLPage;
+             d->starting = true;
+             d->success = false;
+             d->albumName = m_AlbumTitle;
+             QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+             usleep(1000);
+                         
+             if ( !createHtml( SubUrl, Path, 
+                               m_LevelRecursion > 0 ? m_LevelRecursion + 1 : 0,
+                               m_imageFormat,
+                               m_targetImagesFormat) )
+                {
+                d = new KIPIImagesGalleryPlugin::EventData;
+                d->action = KIPIImagesGalleryPlugin::BuildAlbumHTMLPage;
+                d->starting = false;
+                d->success = false;
+                d->albumName = m_AlbumTitle;
+                QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d)); 
+                usleep(1000);
+                
+                if ( !DeleteDir(m_mainTPath) )
+                   {
+                   d = new KIPIImagesGalleryPlugin::EventData;
+                   d->action = KIPIImagesGalleryPlugin::Error;
+                   d->starting = false;
+                   d->success = false;
+                   d->message = i18n("Cannot remove folder '%1'.").arg(m_mainTPath);
+                   QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                   usleep(1000);
+                   
+                   return;
+                   }
+
+                return;
+                }
+             else 
+                {
+                d = new KIPIImagesGalleryPlugin::EventData;
+                d->action = KIPIImagesGalleryPlugin::BuildAlbumHTMLPage;
+                d->starting = false;
+                d->success = true;
+                d->albumName = m_AlbumTitle;
+                QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                usleep(1000);
+                
+                }
+             }
+         }
+
+    // Create the main HTML page if many Albums selected.
+
+    d = new KIPIImagesGalleryPlugin::EventData;
+    d->action = KIPIImagesGalleryPlugin::BuildHTMLiface;
+    d->starting = true;
+    d->success = false;
+    QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    usleep(1000);
+    
+
+    if ( m_albumListSize > 1 )
+       {
+       MainUrl.setPath( m_imageName + "/KIPIHTMLExport/" + "index.html" );
+       QFile MainPageFile( MainUrl.path() );
+
+       if ( MainPageFile.open(IO_WriteOnly) )
+          {
+          QTextStream stream(&MainPageFile);
+          stream.setEncoding(QTextStream::UnicodeUTF8);
+          createHead(stream);
+          createBodyMainPage(stream, MainUrl);
+          MainPageFile.close();
+          m_url4browser = MainUrl.url();
+          }
+       else
+          {
           d = new KIPIImagesGalleryPlugin::EventData;
           d->action = KIPIImagesGalleryPlugin::Error;
           d->starting = false;
           d->success = false;
-          d->message = i18n("Cannot remove folder '%1'.").arg(m_mainTPath);
+          d->message = i18n("Couldn't open file '%1'").arg(MainUrl.path());
           QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
           usleep(1000);
-  
+          
           return;
-        }
-  
-        return;
-      }
-      else
-      {
-        d = new KIPIImagesGalleryPlugin::EventData;
-        d->action = KIPIImagesGalleryPlugin::BuildAlbumHTMLPage;
-        d->starting = false;
-        d->success = true;
-        d->albumName = m_AlbumTitle;
-        QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
-        usleep(1000);
-      
-      }
-    }
-  }
-
-  // Create the main HTML page if many Albums selected.
-  d = new KIPIImagesGalleryPlugin::EventData;
-  d->action = KIPIImagesGalleryPlugin::BuildHTMLiface;
-  d->starting = true;
-  d->success = false;
-  QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
-  usleep(1000);
-
-  if ( m_albumListSize > 1 )
-  {
-    MainUrl.setPath( m_imageName + "/KIPIHTMLExport/" + "index.html" );
-    QFile MainPageFile( MainUrl.path() );
-  
-    if ( MainPageFile.open(IO_WriteOnly) )
-    {
-      QTextStream stream(&MainPageFile);
-      stream.setEncoding(QTextStream::UnicodeUTF8);
-      createHead(stream);
-      createBodyMainPage(stream, MainUrl);
-      MainPageFile.close();
-      m_url4browser = MainUrl.url();
-    }
+          }
+       }
     else
-    {
-      d = new KIPIImagesGalleryPlugin::EventData;
-      d->action = KIPIImagesGalleryPlugin::Error;
-      d->starting = false;
-      d->success = false;
-      d->message = i18n("Couldn't open file '%1'").arg(MainUrl.path());
-      QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
-      usleep(1000);
-  
-      return;
-    }
-  }
-  else
-  {
-    m_url4browser = SubUrl.url();
-  }
-  
-  d = new KIPIImagesGalleryPlugin::EventData;
-  d->action = KIPIImagesGalleryPlugin::BuildHTMLiface;
-  d->success = true;
-  d->starting = false;
-  QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
-  usleep(1000);
+       {
+       m_url4browser = SubUrl.url();
+       }
+
+    d = new KIPIImagesGalleryPlugin::EventData;
+    d->action = KIPIImagesGalleryPlugin::BuildHTMLiface;
+    d->success = true;
+    d->starting = false;
+    QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    usleep(1000);
+    
 }
 
 
@@ -694,22 +693,37 @@ void ImagesGallery::createHead(QTextStream& stream)
 
 void ImagesGallery::createCSSSection(QTextStream& stream)
 {
-  QString backgroundColor = m_backgroundColor.name();
-  QString foregroundColor = m_foregroundColor.name();
-  QString bordersImagesColor = m_bordersImagesColor.name();
-  
-  // Adding a touch of style
-  
-  stream << "<style type='text/css'>\n";
-  stream << "BODY {color: " << foregroundColor << "; background: " << backgroundColor << ";" << endl;
-  stream << "          font-family: " << m_fontName << ", sans-serif;" << endl;
-  stream << "          font-size: " << m_fontSize << "pt; margin: 4%; }" << endl;
-  stream << "H1       {color: " << foregroundColor << ";}" << endl;
-  stream << "TABLE    {text-align: center; margin-left: auto; margin-right: auto;}" << endl;
-  stream << "TD       { color: " << foregroundColor << "; padding: 1em}" << endl;
-  stream << "IMG.photo      { border: " << m_bordersImagesSize << "px solid "
-          << bordersImagesColor << "; }" << endl;
-  stream << "</style>" << endl;
+    QString backgroundColor = m_backgroundColor.name();
+    QString foregroundColor = m_foregroundColor.name();
+    QString bordersImagesColor = m_bordersImagesColor.name();
+
+    // Adding a touch of style
+
+    stream << "<style type='text/css'>\n";
+    stream << "BODY {color: " << foregroundColor << "; background: " << backgroundColor << ";" << endl;
+    stream << "          font-family: " << m_fontName << ", sans-serif;" << endl;
+    stream << "          font-size: " << m_fontSize << "pt; margin: 4%; }" << endl;
+    stream << "H1       {color: " << foregroundColor << ";}" << endl;
+    stream << "TABLE    {text-align: center; margin-left: auto; margin-right: auto;}" << endl;
+    stream << "TD       { color: " << foregroundColor << "; padding: 1em}" << endl;
+    stream << "IMG.photo      { border: " << m_bordersImagesSize << "px solid "
+           << bordersImagesColor << "; }" << endl;
+    stream << "</style>" << endl;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+QString ImagesGallery::extension(const QString& imageFormat)
+{
+    if (imageFormat == "PNG")
+        return ".png";
+
+    if (imageFormat == "JPEG")
+        return ".jpg";
+
+    Q_ASSERT(false);
+    return "";
 }
 
 
@@ -824,7 +838,7 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
             {
             const QString imgName = (*urlIt).fileName();
 
-            const QString targetImgName = checkExtension(imgName, TargetimagesFormat);
+            const QString targetImgName = imgName + extension(TargetimagesFormat);
 
             QDir targetImagesDir( imgGalleryDir + QString::fromLatin1("/images/"));
 
@@ -853,8 +867,8 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
                    stream << "<a href=\"images/" << targetImgName << "\">";
 
                 const QString imgNameFormat = imgName;
-                const QString imgPath("thumbs/" + checkExtension(imgNameFormat, imageFormat));
-                
+
+                const QString imgPath("thumbs/" + imgNameFormat + extension(imageFormat));
                 stream << "<img class=\"photo\" src=\"" << imgPath << "\" width=\"" << m_imgWidth << "\" ";
                 stream << "height=\"" << m_imgHeight << "\" alt=\"" << imgPath;
 
@@ -990,7 +1004,7 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
         {
         const QString imgName = (*urlIt).fileName();
 
-        const QString targetImgName = checkExtension(imgName, TargetimagesFormat);
+        const QString targetImgName = imgName + extension(TargetimagesFormat);
 
         QString previousImgName = "";
 
@@ -999,7 +1013,7 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
            KURL::List::Iterator it = urlIt;
            --it;
            previousImgName = (*it).fileName();
-           previousImgName = checkExtension(previousImgName, TargetimagesFormat);
+           previousImgName = previousImgName + extension(TargetimagesFormat);
            }
 
         QString nextImgName = "" ;
@@ -1009,7 +1023,7 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
            KURL::List::Iterator it = urlIt;
            ++it;
            nextImgName = (*it).fileName();
-           nextImgName = checkExtension(nextImgName, TargetimagesFormat);
+           nextImgName = nextImgName + extension(TargetimagesFormat);
            }
 
         QString imgComment = "";
@@ -1274,8 +1288,13 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
 
     // Thumbs filenames
 
-    const QString previousThumb = QString::fromLatin1("../thumbs/") + previousImgName;
-    const QString nextThumb = QString::fromLatin1("../thumbs/") + nextImgName;
+    const QString previousThumb = QString::fromLatin1("../thumbs/")
+                                  + previousImgName.left( previousImgName.findRev('.', -1) )
+                                  + extension(m_imageFormat);
+
+    const QString nextThumb = QString::fromLatin1("../thumbs/")
+                              + nextImgName.left( nextImgName.findRev('.', -1) )
+                              + extension(m_imageFormat);
 
     QFile file( pageFilename );
 
@@ -1468,7 +1487,7 @@ int ImagesGallery::createThumb( const KURL& url, const QString& imgName,
 
     // Create the target images with resizing factor.
 
-    const QString TargetImageNameFormat = checkExtension(imgName, TargetimagesFormat);
+    const QString TargetImageNameFormat = imgName + extension(TargetimagesFormat);
     
     const QString TargetImagesbDir = imgGalleryDir + QString::fromLatin1("/images/");
     int extentTargetImages;
@@ -1512,9 +1531,8 @@ int ImagesGallery::createThumb( const KURL& url, const QString& imgName,
                      
     // Create the thumbnails.
 
-    const QString ImageNameFormat = checkExtension(imgName, imageFormat);
+    const QString ImageNameFormat = imgName + extension(imageFormat);
     const QString thumbDir = imgGalleryDir + QString::fromLatin1("/thumbs/");
-    
     int extent = m_thumbnailsSize;
 
     m_imgWidth = 120; // Setting the size of the images is
