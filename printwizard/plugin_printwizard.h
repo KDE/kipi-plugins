@@ -50,4 +50,4 @@ private:
     KIPI::Interface *m_interface;
 };
 
-#endif
+#endif // PLUGIN_PRINTWIZARD_H

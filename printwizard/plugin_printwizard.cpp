@@ -75,8 +75,7 @@ void Plugin_PrintWizard::setup( QWidget* widget )
     addAction( m_printAction );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
-    
-    
+        
     if ( !m_interface ) 
        {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
@@ -112,6 +111,7 @@ void Plugin_PrintWizard::slotActivate()
         return;
         }
 
+    //KIPIPrintWizardPlugin::FrmPrintWizard frm;
     FrmPrintWizard frm;
     KStandardDirs dir;
     QString tempPath = dir.saveLocation("tmp", "kipi-printwizard-" + QString::number(getpid()) + "/");

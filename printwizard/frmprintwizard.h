@@ -18,23 +18,29 @@
 #ifndef FRMPRINTWIZARD_H
 #define FRMPRINTWIZARD_H
 
+// Qt includes.
+
 #include <qwidget.h>
+
+// KDE includes.
 
 #include <kprinter.h>
 
-#include "frmprintwizardbase.h"
-#include "tphoto.h"
+// Local includes.
 
-/**
-  *@author Todd Shoemaker
-  */
+#include "tphoto.h"
+#include "frmprintwizardbase.h"
+
+/*namespace KIPIPrintWizardPlugin
+{*/
 
 typedef struct _TPhotoSize {
   QString label;
   QPtrList<QRect> layouts;  // first element is page size
 } TPhotoSize;
 
-class FrmPrintWizard : public FrmPrintWizardBase  {
+class FrmPrintWizard : public FrmPrintWizardBase  
+{
    Q_OBJECT
 
 private:
@@ -84,5 +90,8 @@ protected slots:
   void slotHelp();
 };
 
-#endif
+//}  // NameSpace KIPIPrintWizardPlugin
+
+
+#endif // FRMPRINTWIZARD_H
 

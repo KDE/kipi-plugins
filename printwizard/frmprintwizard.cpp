@@ -15,6 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
+// C Ansi includes.
 
 extern "C"
 {
@@ -53,6 +54,9 @@ extern "C"
 #include "frmprintwizard.h"
 #include "cropframe.h"
 
+/*namespace KIPIPrintWizardPlugin
+{*/
+
 FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
                : FrmPrintWizardBase(parent,name)
 {
@@ -85,8 +89,12 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
           this, SLOT(BtnBrowseOutputPath_clicked(void)));
 
   CmbPaperSize->setCurrentItem(0);
-  connect(CmbPaperSize, SIGNAL(activated(int)), this, SLOT(CmbPaperSize_activated(int)));
-  connect(this, SIGNAL(helpClicked()), this, SLOT(slotHelp()));
+  
+  connect(CmbPaperSize, SIGNAL(activated(int)), 
+          this, SLOT(CmbPaperSize_activated(int)));
+          
+  connect(this, SIGNAL(helpClicked()), 
+          this, SLOT(slotHelp()));
 
   loadSettings();
 }
@@ -797,5 +805,7 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     ListPhotoSizes->insertItem(s->label);
   ListPhotoSizes->setCurrentItem(0);
 }
+
+//}  // NameSpace KIPIPrintWizardPlugin
 
 #include "frmprintwizard.moc"

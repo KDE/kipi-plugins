@@ -18,25 +18,30 @@
 #ifndef TPHOTO_H
 #define TPHOTO_H
 
-
-/**
- *@author Todd Shoemaker
- */
+// Qt includes.
 
 #include <qstring.h>
 #include <qptrlist.h>
 #include <qrect.h>
 #include <qiconview.h>
+
+// KDE includes.
+
 #include <kurl.h>
 
-class KPrinter;
 class QImage;
 class QPixmap;
 
-class TPhoto {
+class KPrinter;
+
+/*namespace KIPIPrintWizardPlugin
+{*/
+
+class TPhoto 
+{
 public:
-	TPhoto(int thumbnailSize);
-	~TPhoto();
+    TPhoto(int thumbnailSize);
+    ~TPhoto();
 
     KURL filename; // full path
 
@@ -64,5 +69,7 @@ bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
 bool paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
                   unsigned int &current);
 
+//}  // NameSpace KIPIPrintWizardPlugin
+                  
+#endif // TPHOTO_H
 
-#endif

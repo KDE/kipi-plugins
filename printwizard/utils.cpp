@@ -37,6 +37,9 @@ extern "C"
 #include <kmessagebox.h>
 #include <kio/netaccess.h>
 
+/*namespace KIPIPrintWizardPlugin
+{*/
+
 int NINT(double n)
 {
   return (int)(n + 0.5);
@@ -102,4 +105,6 @@ bool checkTempPath(QWidget *parent, QString tempPath)
   }
   return true;
 }
+
+//}  // NameSpace KIPIPrintWizardPlugin
 

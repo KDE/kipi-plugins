@@ -15,17 +15,29 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "cropframe.h"
+// C Ansi includes.
+  
+extern "C"
+{
 #include <math.h>
+#include <stdio.h>
+}
+
+// Qt includes.
+
 #include <qpainter.h>
 #include <qimage.h>
-#include <stdio.h>
 
+// Local includes.
+
+#include "cropframe.h"
 #include "utils.h"
 
+/*namespace KIPIPrintWizardPlugin
+{*/
 
 CropFrame::CropFrame(QWidget *parent=0, const char *name=0)
-  : QWidget(parent, name)
+         : QWidget(parent, name)
 {
   m_mouseDown = false;
 }
@@ -295,5 +307,7 @@ QColor CropFrame::color()
 {
   return m_color;
 }
+
+//}  // NameSpace KIPIPrintWizardPlugin
 
 #include "cropframe.moc"

@@ -18,22 +18,29 @@
 #ifndef CROPFRAME_H
 #define CROPFRAME_H
 
+// Qt includes.
+
 #include <qwidget.h>
 #include <qpixmap.h>
+
+// Local includes.
+
 #include "tphoto.h"
 
-/**
-  *@author Todd Shoemaker
-  */
+/*namespace KIPIPrintWizardPlugin
+{*/
 
-class CropFrame : public QWidget  {
-   Q_OBJECT
-public:
+class CropFrame : public QWidget
+{
+  Q_OBJECT
+
+  public:
     CropFrame(QWidget *parent, const char *name);
-	  ~CropFrame();
+    ~CropFrame();
     void init(TPhoto *photo, int width, int height, bool paint = true);
     void setColor(QColor);
     QColor color();
+
   private:
     TPhoto *m_photo;
     bool m_mouseDown;
@@ -48,13 +55,15 @@ public:
 
     QRect _screenToPhotoRect(QRect r);
     QRect _photoToScreenRect(QRect r);
+  
   protected:
     void paintEvent (QPaintEvent *);
     void mousePressEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void keyPressEvent(QKeyEvent *);
-
 };
 
-#endif
+//}  // NameSpace KIPIPrintWizardPlugin
+
+#endif // CROPFRAME_H

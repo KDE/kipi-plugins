@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "tphoto.h"
-
+// Qt includes.
+ 
 #include <qpainter.h>
 #include <qdir.h>
 #include <qmessagebox.h>
@@ -25,16 +25,24 @@
 #include <qurl.h>
 #include <qstrlist.h>
 
+// KDE includes.
+
 #include <kprinter.h>
 #include <kdebug.h>
 
+// Local includes.
+
+#include "tphoto.h"
 #include "utils.h"
 
 #define IMAGE_FILE_MASK "*"
 //"*.jpg;*.jpeg;*.JPG;*.JPEG;*.png;*.PNG"
 
+/*namespace KIPIPrintWizardPlugin
+{*/
 
-TPhoto::TPhoto(int thumbnailSize){
+TPhoto::TPhoto(int thumbnailSize)
+{
   this->m_size = 0;
   this->cropRegion = QRect(-1, -1, -1, -1);
   this->rotation = 0;
@@ -46,6 +54,7 @@ TPhoto::TPhoto(int thumbnailSize){
 
   this->m_thumbnailSize = thumbnailSize;
 }
+
 TPhoto::~TPhoto()
 {
   if (m_thumbnail)
@@ -290,7 +299,7 @@ bool paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
   // did we print the last photo?
   return (current < photos.count());
 }
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
+
+//}  // NameSpace KIPIPrintWizardPlugin
 
 
