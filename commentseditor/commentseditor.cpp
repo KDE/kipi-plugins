@@ -222,7 +222,7 @@ void CommentsEditor::loadItems()
             viewItem = new CommentsListViewItem( info, *it, m_listView, prevItem );
 
 
-        viewItem->setText(1, info.name());
+        viewItem->setText(1, info.title());
         viewItem->setText(2, info.description());
         viewItem->setRenameEnabled(2, true);
 
