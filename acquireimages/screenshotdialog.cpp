@@ -62,7 +62,7 @@ namespace KIPIAcquireImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent, const char *name)
-                : KDialogBase(parent, name, false, i18n("KIPI Screenshot Images Plugin"),
+                : KDialogBase(parent, name, false, i18n("KIPI's 'Screenshot Images' Plugin"),
                               Help|User1|Close|User2, Close, true, i18n("&About"), i18n("&New snapshot")),
                   m_interface( interface )
 {
@@ -76,21 +76,21 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
 
     QLabel *label1 = new QLabel(i18n("This dialog will grab either your desktop or a single\n"
                                      "application window. If you grab a single window your mouse\n"
-                                     "cursor will change into crosshairs and simply select the\n"
+                                     "cursor will change into crosshairs; then, simply select the\n"
                                      "window with your mouse."), box);
     layout->addWidget(label1);
 
     //---------------------------------------------
 
     m_desktopCB = new QCheckBox(i18n("Grab the entire desktop."), box);
-    QWhatsThis::add( m_desktopCB, i18n( "<p>If you enable this option, the entire desktop will be grabbed, "
-                                        "else only the active windows." ) );
+    QWhatsThis::add( m_desktopCB, i18n( "<p>If you enable this option, the entire desktop will be grabbed; "
+                                        "otherwise, only the active windows." ) );
     layout->addWidget(m_desktopCB);
 
     //---------------------------------------------
 
     m_hideCB = new QCheckBox(i18n("Hide all host application windows."), box);
-    QWhatsThis::add( m_hideCB, i18n( "<p>If you enable this option, all host application windows will be hidden, "
+    QWhatsThis::add( m_hideCB, i18n( "<p>If you enable this option, all host application windows will be hidden "
                                      "during the grab operation." ) );
     layout->addWidget(m_hideCB);
 
@@ -99,7 +99,7 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
     QLabel *label2 = new QLabel(i18n("Delay:"), box);
     layout->addWidget(label2);
     m_delay = new KIntNumInput(box);
-    QWhatsThis::add( m_delay, i18n( "<p>The delay in seconds before to start the grab operation.") );
+    QWhatsThis::add( m_delay, i18n( "<p>The delay in seconds before the grab operation is started.") );
     m_delay->setRange(0, 60);
     layout->addWidget(m_delay);
     layout->addStretch(1);
@@ -158,11 +158,11 @@ ScreenGrabDialog::~ScreenGrabDialog()
 
 void ScreenGrabDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for grab images from screen\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin to grab images from screen\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "Based on Ksnapshot implementation from KDE project"),
-                                  i18n("About KIPI screenshot plugin"));
+                                  i18n("About KIPI's 'Screenshot' plugin"));
 }
 
 
@@ -241,7 +241,7 @@ void ScreenGrabDialog::slotPerformGrab()
 
     if (m_snapshot.isNull())
        {
-       KMessageBox::sorry(this, i18n("Unable to take snapshot!"),
+       KMessageBox::sorry(this, i18n("Unable to take snapshot."),
                           i18n("Screenshot Error"));
 
        endGrab();

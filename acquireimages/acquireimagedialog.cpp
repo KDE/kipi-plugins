@@ -183,9 +183,9 @@ void AcquireImageDialog::setupImageOptions(void)
     grid2->addMultiCellWidget(m_ImageFileName, 0, 0, 0, 3);
 
     m_FileName = new QLineEdit(i18n("acquired_image"), groupBox1);
-    QWhatsThis::add( m_FileName, i18n("<p>Enter here the target image file name without suffix. "
-                                      "It's will be automaticly added to the file name in according "
-                                      "with the file format option.") );
+    QWhatsThis::add( m_FileName, i18n("<p>Enter here the target image file name without suffix "
+                                      "(that will be automatically added to the file name according "
+                                      "to the file-format option.)") );
     m_ImageFileName->setBuddy(m_FileName);
     grid2->addMultiCellWidget(m_FileName, 1, 1, 0, 3);
 
@@ -194,7 +194,7 @@ void AcquireImageDialog::setupImageOptions(void)
 
     m_CommentsEdit = new QTextEdit(groupBox1);
     m_CommentsEdit->setMaximumHeight( 200 );
-    QWhatsThis::add( m_CommentsEdit, i18n("<p>Enter here the target image comments.") );
+    QWhatsThis::add( m_CommentsEdit, i18n("<p>Enter here the target image's comments.") );
     grid2->addMultiCellWidget(m_CommentsEdit, 3, 3, 0, 2);
 
     m_preview = new QLabel( groupBox1, "preview" );
@@ -245,24 +245,24 @@ void AcquireImageDialog::setupImageOptions(void)
     m_imagesFormat->insertItem("PPM");
     m_imagesFormat->insertItem("BMP");
     m_imagesFormat->setCurrentText ("TIFF");
-    whatsThis = i18n("<p>Select here the target image file format.<p>");
-    whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group "
-                "file format is a good Web file format but it use a compression with data lost.<p>"
+    whatsThis = i18n("<p>Select here the target image's file format.<p>");
+    whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts' Group "
+                "file format is a good Web file format but it uses lossy data compression.<p>"
                 "<b>PNG</b>: the Portable Network Graphics format is an extensible file format for "
                 "the lossless, portable, well-compressed storage of raster images. PNG provides a "
                 "patent-free replacement for GIF and can also replace many common uses of TIFF. PNG "
                 "is designed to work well in online viewing applications, such as the World Wide Web, "
                 "so it is fully streamable with a progressive display option. Also, PNG can store gamma "
                 "and chromaticity data for improved color matching on heterogeneous platforms.");
-    whatsThis = whatsThis + i18n("<p><b>TIFF</b>: the Tag Image File Format is a rather old standard "
+    whatsThis = whatsThis + i18n("<p><b>TIFF</b>: the Tagged Image File Format is a rather old standard "
                 "that is still very popular today. It is a highly flexible and platform-independent "
-                "format which is supported by numerous image processing applications and virtually all "
+                "format which is supported by numerous image processing applications and by virtually all "
                 "prepress software on the market.");
     whatsThis = whatsThis + i18n("<p><b>PPM</b>: the Portable Pixel Map file format is used as an "
-                "intermediate format for storing color bitmap informations. PPM files may be either "
-                "binary or ASCII and store pixel values up to 24 bits in size. This format generate "
-                "very biggest sized text files for encode images without losing quality");
-    whatsThis = whatsThis + i18n("<p><b>BMP</b>: the BitMaP file format is a popular image format from "
+                "intermediate format for storing color bitmap information. PPM files may be either "
+                "binary or ASCII and store pixel values up to 24 bits in size. This format generates "
+                "the biggest-sized text files for encoding images without losing quality.");
+    whatsThis = whatsThis + i18n("<p><b>BMP</b>: the BitMaP file format is a popular image format from the "
                 "Win32 environment. It efficiently stores mapped or unmapped RGB graphics data with pixels "
                 "1-, 4-, 8-, or 24-bits in size. Data may be stored raw or compressed using a 4-bit or "
                 "8-bit RLE data compression algorithm. BMP is an excellent choice for a simple bitmap "
@@ -299,7 +299,7 @@ void AcquireImageDialog::setupAlbumsList(void)
 
     //---------------------------------------------
 
-    QVGroupBox * groupBox1 = new QVGroupBox( i18n("Select folder for to save the target image"),
+    QVGroupBox * groupBox1 = new QVGroupBox( i18n("Select folder in which to save the target image"),
                                              page_setupAlbumsList );
     
     m_uploadPath = new KIPI::UploadWidget( m_interface, groupBox1, "m_uploadPath" );
@@ -366,12 +366,12 @@ void AcquireImageDialog::setupAlbumsList(void)
 
 void AcquireImageDialog::aboutPage(void)
 {
-    page_about = addPage( i18n("About"), i18n("About KIPI acquire images"),
+    page_about = addPage( i18n("About"), i18n("About KIPI's 'Acquire Images' plugin"),
                           BarIcon("kipi", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 
-    QLabel *label = new QLabel( i18n("A KIPI plugin for acquire images\n\n"
+    QLabel *label = new QLabel( i18n("A KIPI plugin to acquire images\n\n"
                                      "Author: Gilles Caulier\n\n"
                                      "Email: caulier dot gilles at free.fr\n\n"), page_about);
 
@@ -421,13 +421,13 @@ void AcquireImageDialog::slotAlbumSelected( const KURL &url )
     
     if (!url.isValid())
     {
-        KMessageBox::error(this, i18n("You must select a target album for this image!"));
+        KMessageBox::error(this, i18n("You must select a target album for this image."));
         return;
     }
 
     if (m_FileName->text().isEmpty())
     {
-        KMessageBox::error(this, i18n("You must give a file name for this image!"));
+        KMessageBox::error(this, i18n("You must provide a file name for this image."));
         return;
     }
 
@@ -478,14 +478,14 @@ void AcquireImageDialog::slotAlbumSelected( const KURL &url )
 
     if ( !ok )
     {
-       KMessageBox::error(this, i18n("Cannot write image file \"%1\"!").arg(imagePath));
+       KMessageBox::error(this, i18n("Cannot write image file \"%1\".").arg(imagePath));
        return;
     }
 
     // Upload the image if necessary
     if ( !url.isLocalFile()) {
         if (!KIO::NetAccess::upload(imagePath, url NETACCESS_WIDGET)) {
-           KMessageBox::error(this, i18n("Could not upload image to \"%1\"!").arg(url.prettyURL()));
+           KMessageBox::error(this, i18n("Could not upload image to \"%1\".").arg(url.prettyURL()));
            return;
         }
     }
@@ -494,7 +494,7 @@ void AcquireImageDialog::slotAlbumSelected( const KURL &url )
     QString err;
     ok = m_interface->addImage( url, err );
     if ( !ok ) {
-        KMessageBox::error(this, i18n("<qt>Error when telling the application about the new image. "
+        KMessageBox::error(this, i18n("<qt>Error when informing the application about the new image. "
                                   "The error was: %1</qt>" ).arg( err ) );
         return;
     }
