@@ -281,12 +281,15 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
 
         m_progressDlg->setProgress(m_current, m_total);
 
-           // TODO
-                
         if( d->action == KIPIImagesGalleryPlugin::BuildHTMLiface )
            {
            m_current = 0;
+
+#if KDE_VERSION >= 0x30200
            m_progressDlg->setButtonCancel( KStdGuiItem::close() );
+#else
+           m_progressDlg->setButtonCancelText( i18n("&Close") );
+#endif
                    
            disconnect(m_progressDlg, SIGNAL(cancelClicked()),
                       this, SLOT(slotCancel()));
