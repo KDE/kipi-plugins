@@ -100,7 +100,7 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
     setupAlbumPage();
     setupThumbnailPage();
     page_setupSelection->setFocus();
-    resize( 600, 400 );
+    resize( 650, 450 );
 
     // About data and help button.
 
@@ -160,7 +160,6 @@ void KIGPDialog::setupSelection(void)
     QVBoxLayout *layout = new QVBoxLayout(page_setupSelection, 0, spacingHint() );
     m_imageCollectionSelector = new KIPI::ImageCollectionSelector(page_setupSelection, m_interface);
     layout->addWidget(m_imageCollectionSelector);
-    layout->addStretch();
 }
 
 
@@ -736,8 +735,6 @@ void KIGPDialog::setCreatePageForPhotos(bool Value)
 {
     m_createPageForPhotos->setChecked(Value);
 }
-
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
