@@ -60,7 +60,7 @@ namespace KIPIBatchProcessImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                  : BatchProcessImagesDialog( urlList, interface, parent )
+                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image Filtering Options"), parent )
 {
     // About data and help button.
     
@@ -86,7 +86,6 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
     //---------------------------------------------
     
     m_nbItem = m_selectedImageFiles.count();
-    setCaption(i18n("Batch Image Filtering Options"));
 
     //---------------------------------------------
 

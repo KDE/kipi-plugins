@@ -90,7 +90,7 @@ Q_OBJECT
    // Don't forget to add the 'm_Type' and 'm_labelType' implementation in the constructor of
    // children dialog class.
 
-   BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent=0 );
+   BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface, QString caption, QWidget *parent=0 );
    ~BatchProcessImagesDialog();
 
 protected slots:

@@ -94,9 +94,10 @@ namespace KIPIBatchProcessImagesPlugin
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                        : KDialogBase( KDialogBase::Plain, "BatchProcessImagesDialog", Help|User1|Cancel,
-                                       Cancel, parent, "", false, false, i18n("&Start")),
+BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface,
+                                                    QString caption, QWidget *parent )
+                        : KDialogBase( KDialogBase::Plain, caption, Help|User1|Cancel,
+                                       Cancel, parent, "BatchProcessImagesDialog", false, false, i18n("&Start")),
                           m_selectedImageFiles( urlList), m_interface( interface )
 {
     // Init. Tmp folder
@@ -114,10 +115,33 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     QWidget* box = plainPage();
     QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
-    QHBoxLayout *hlay = new QHBoxLayout( dvlay );
+        
+    //---------------------------------------------
+   
+    QFrame *headerFrame = new QFrame( box );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( caption, headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    dvlay->addWidget( headerFrame );
+    
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
     //---------------------------------------------
 
+    QHBoxLayout *hlay = new QHBoxLayout( dvlay );
     groupBox1 = new QGroupBox( 2, Qt::Horizontal, box );
 
     m_labelType = new QLabel( groupBox1 );

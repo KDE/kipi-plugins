@@ -60,7 +60,7 @@ namespace KIPIBatchProcessImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                  : BatchProcessImagesDialog( urlList, interface, parent )
+                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch-Bordering Images Options"), parent )
 {
     // About data and help button.
     
@@ -86,8 +86,6 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
     //---------------------------------------------
 
     m_nbItem = m_selectedImageFiles.count();
-
-    setCaption(i18n("Batch-Bordering Images Options"));
     
     //---------------------------------------------
 
