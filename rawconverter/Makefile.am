@@ -31,4 +31,4 @@ kipirawconvertericon_ICON = AUTO
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_rawconverter.pot
 
-man_MANS = kipidcrawclient.1.gz
+man_MANS = kipidcrawclient.1
