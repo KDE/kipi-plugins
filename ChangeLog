@@ -1,21 +1,3896 @@
-v0.1.0-beta 
+v0.1.0-beta2                                                      2005-02-08
 ----------------------------------------------------------------------------
-        * <Gilles Caulier> SendImage plugin: fixed bug #87188.
-        * <Gilles Caulier> Added KAbout data on all plugins with a full 
-	  KDE bugs tracking support.
-        * <Gilles Caulier> Improved batch operations in FindDuplicateImages 
-	  Plugins with using KIPI::BatchProgressDialog.
-        * <Gilles Caulier> Added full Multithreading support in CDArchiving,
-	  ImagesGallery, and SendImages plugins.
-        * <Gilles Caulier> Fixed action enabled/disabled in according with current
-	  selection on JPEGLossLess, TimeAdjust, and WallPaPer plugins.
-        * <Gilles Caulier> Added new progress dialog for threaded plugins
-	* <Gilles Caulier> Added new method fileExtensions() for the images 
-	  files sorting in plugins instead all digikamrc parsing.  
-        * <Gilles Caulier> Changed category plugin for 'DirOperations' and 
-          'FindImages' to COLLECTIONSPLUGIN.
-        * <Gilles Caulier> Fixed plugins menu icons rendering in the host apps.
-        * <Gilles Caulier> Re-added GammaCablibration plugin for old 
-          MiscOperations Digikamplugins.
-        * <Renchi Raju> Ported SlideShow plugin to imlib2.
-	  
+
+2005-02-04 15:15  cgilles
+
+	* batchprocessimages/borderimagesdialog.cpp: Added comments
+
+2005-02-02 22:15  scherfa
+
+	* slideshow/: plugin_slideshow.cpp, slideshowconfig.cpp,
+	  slideshowgl.cpp, slideshowgl.h: Added Printfilename to GL
+	  Slideshow ..
+
+2005-02-01 16:29  luis_pedro
+
+	* calendar/caltemplate.cpp: Due to the auto-accelerators, the text
+	  got changed from "Top" to "&Top" (and "Left"->"&Left" and
+	  "Right"->"&Right") Use numeric ids instead of strings
+
+	  OKed by Renchi Raju
+
+2005-01-28 21:57  pahlibar
+
+	* configure.in.in:
+	  remove local pkg-config check (in kde-common now)
+
+2005-01-27 09:46  cgilles
+
+	* batchprocessimages/resizeimagesdialog.cpp: BugFix in
+	  BatchResizeImages kipi plugin: using ImageMagick "composite" do
+	  not preserve Exif informations per default.  Need to use
+	  "-profile" option for resolve this problem.  Note: ImageMagick
+	  "Convert" program preverve it! CCMAIL: kde-imaging@kde.org,
+	  digikam-devel@lists.sourceforge.net
+
+2005-01-25 12:57  cartman
+
+	* galleryexport/.cvsignore:
+	  CVS_SILENT Silence
+
+2005-01-25 11:52  adridg
+
+	* configure.in.in: Always use all_libraries, since it will have the
+	  --with-extra* stuff
+
+2005-01-24 15:49  cgilles
+
+	* batchprocessimages/: resizeimagesdialog.cpp,
+	  resizeimagesdialog.h, resizeoptionsdialog.cpp,
+	  resizeoptionsdialog.h: Kipi Batch Resize Image : Patch from
+	  Alfons Hoogervorst <alfons@proteus.demon.nl> for to use -quality
+	  IM option with JPEG images.  Adapting patch for Prepare to Print
+	  option too.  CCMAIL: kde-imaging@kde.org,
+	  digikam-devel@lists.sourceforge.net
+
+2005-01-22 01:03  pahlibar
+
+	* sendimages/sendimages.cpp:
+	  don't add the comments file if there are no comments BUG: 97069
+
+2005-01-18 18:58  pahlibar
+
+	* galleryexport/: gallerytalker.cpp, gallerywindow.cpp:
+	  enable uploading for movie (and other non-image files) to gallery
+	  BUG: 97298
+
+2005-01-14 21:21  adridg
+
+	* kameraklient/: gpcamera.cpp, gpiface.cpp: --enable-final: using
+	  namespaces confuses the definition of CameraList
+
+2005-01-13 21:28  pahlibar
+
+	* slideshow/plugin_slideshow.cpp:
+	  enable the slideshow plugin when an album is selected, to prevent
+	  confusing the user
+
+2005-01-13 16:51  cgilles
+
+	* sendimages/: plugin_sendimages.cpp, sendimages.cpp, sendimages.h:
+	  Fix thunderbird path url using in second stage
+
+2005-01-13 13:47  cgilles
+
+	* README, kipi-plugins.lsm, kipiplugins.kdevelop,
+	  acquireimages/acquireimagedialog.cpp,
+	  acquireimages/screenshotdialog.cpp,
+	  batchprocessimages/borderimagesdialog.cpp,
+	  batchprocessimages/colorimagesdialog.cpp,
+	  batchprocessimages/convertimagesdialog.cpp,
+	  batchprocessimages/effectimagesdialog.cpp,
+	  batchprocessimages/filterimagesdialog.cpp,
+	  batchprocessimages/imagepreview.cpp,
+	  batchprocessimages/outputdialog.cpp,
+	  batchprocessimages/recompressimagesdialog.cpp,
+	  batchprocessimages/renameimagesdialog.cpp,
+	  batchprocessimages/resizeimagesdialog.cpp,
+	  calendar/calwizard.cpp, cdarchiving/cdarchiving.cpp,
+	  cdarchiving/cdarchivingdialog.cpp, findimages/displaycompare.cpp,
+	  findimages/finddupplicatedialog.cpp,
+	  imagesgallery/imagesgallery.cpp,
+	  imagesgallery/imgallerydialog.cpp,
+	  kameraklient/cameraselection.cpp, kameraklient/cameraui.cpp,
+	  kameraklient/setupcamera.cpp, mpegencoder/kimg2mpg.cpp,
+	  printwizard/frmprintwizard.cpp, rawconverter/batchdialog.cpp,
+	  rawconverter/singledialog.cpp, sendimages/sendimagesdialog.cpp,
+	  slideshow/slideshowconfig.cpp, timeadjust/timeadjustdialog.cpp:
+	  Fixed project url
+
+2004-12-28 22:24  pahlibar
+
+	* INSTALL, Makefile.am, README, configure.in.bot, configure.in.in,
+	  acquireimages/Makefile.am, jpeglossless/Makefile.am,
+	  jpeglossless/jinclude.h, rawconverter/Makefile.am,
+	  rawconverter/batchdialog.cpp:
+	  * check for presence of libtiff before trying to compiling
+	  plugins which use   it (jpeglossless,acquireimages,rawconverter)
+	  * better info at the configure check bottom, as to whats missing
+	  * updated the README and INSTALL files with dependency
+	  requirements CCMAIL: kde-imaging@kde.org
+
+2004-12-28 20:36  pahlibar
+
+	* calendar/: calsettings.h, monthwidget.cpp, monthwidget.h:
+	  * the selection for the month url was being done only if a
+	  thumbnail could be generated. if the image size happens to be
+	  larger than the user setting for the preview data, the url was
+	  not being selected (as the thumbnail fails to generate). Fixed.
+	  * Also use a generic image icon for the selected url till the
+	  thumbnail is generated BUG: 95871
+
+2004-12-28 03:22  pahlibar
+
+	* galleryexport/: gallerytalker.cpp, gallerytalker.h,
+	  gallerywidget.cpp, gallerywidget.h, gallerywindow.cpp,
+	  gallerywindow.h:
+	  * put widgets into splitter * clean out the resize options and
+	  make it more unambiguous
+
+2004-12-28 01:38  pahlibar
+
+	* galleryexport/gallerywindow.cpp:
+	  bail out if user uses unallowed chars in the album name
+
+2004-12-27 23:02  pahlibar
+
+	* README, TODO:
+	  update
+
+2004-12-24 17:27  cgilles
+
+	* README, TODO: Fix
+
+2004-12-23 02:18  pahlibar
+
+	* galleryexport/: gallerytalker.cpp, gallerytalker.h,
+	  gallerywidget.cpp, gallerywidget.h, gallerywindow.cpp,
+	  gallerywindow.h:
+	  allow setting maximum image dimensions before uploading BUG:
+	  94493
+
+2004-12-22 07:12  pahlibar
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  batchprocessimagesdialog.h, borderimagesdialog.cpp,
+	  borderimagesdialog.h, colorimagesdialog.cpp, colorimagesdialog.h,
+	  convertimagesdialog.cpp, convertimagesdialog.h,
+	  effectimagesdialog.cpp, effectimagesdialog.h,
+	  filterimagesdialog.cpp, filterimagesdialog.h,
+	  recompressimagesdialog.cpp, recompressimagesdialog.h,
+	  resizeimagesdialog.cpp, resizeimagesdialog.h:
+	  * fix retrieving upload path from a virtual album
+	  (libkipi/uploadwidget) * fix crash in batchprocess plugin when no
+	  destination path is selected. the function   thinks its being
+	  called in preview mode, but the preview process is null there.
+	  its dangerous to make an assumption of a passed arg being null,
+	  when its being called    from multiple places in different modes.
+	  better use a separate explicit variable to	indicate that the
+	  function is being called in a different mode. good for the sanity
+	  of those reading the code as well	BUG: 94370
+
+2004-12-22 06:28  pahlibar
+
+	* cdarchiving/cdarchivingdialog.cpp:
+	  integer overflow when calculating total size. use a double to
+	  store the sum
+
+	  BUG: 94549
+
+2004-12-22 06:16  pahlibar
+
+	* cdarchiving/cdarchiving.cpp:
+	  respect host app settings and check for features before actually
+	  accessing them BUG: 88883
+
+2004-12-22 05:12  pahlibar
+
+	* imagesgallery/imagesgallery.cpp:
+	  use a simple hsv cycle algo to try and get contrasting colors for
+	  links. not perfect, but will do BUG: 88870
+
+2004-12-22 03:30  pahlibar
+
+	* sendimages/sendimages.cpp:
+	  fix issue with sending images with non-latin characters in
+	  filepath. Use QFile::encodeName() if you want to deal with a non
+	  qt/kde tool this code is a nightmare to read without proper
+	  indentation
+
+2004-12-21 20:46  pahlibar
+
+	* slideshow/: slideshow.cpp, slideshow.h, slideshowgl.cpp,
+	  slideshowgl.h:
+	  use xinerma specific settings to fill up only the screen occupied
+	  by the host app BUG: 95592
+
+2004-12-21 19:25  lukas
+
+	* batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/convertimagesdialog.cpp,
+	  batchprocessimages/effectimagesdialog.cpp,
+	  batchprocessimages/filterimagesdialog.cpp,
+	  batchprocessimages/imagepreview.cpp,
+	  batchprocessimages/outputdialog.cpp,
+	  batchprocessimages/recompressimagesdialog.cpp,
+	  batchprocessimages/resizeimagesdialog.cpp,
+	  findimages/finddupplicatedialog.cpp,
+	  galleryexport/gallerylogin.cpp,
+	  imagesgallery/imgallerydialog.cpp,
+	  kameraklient/cameraselection.cpp, kameraklient/cameraui.cpp,
+	  kameraklient/dmessagebox.cpp, kameraklient/gpcamera.cpp,
+	  kameraklient/gpfileiteminfo.cpp,
+	  kameraklient/gpfileiteminfodlg.cpp, mpegencoder/checkbinprog.cpp,
+	  mpegencoder/kimg2mpg.cpp, rawconverter/batchdialog.cpp,
+	  rawconverter/previewwidget.cpp,
+	  rawconverter/processcontroller.cpp,
+	  rawconverter/singledialog.cpp, sendimages/sendimages.cpp,
+	  sendimages/sendimagesdialog.cpp, timeadjust/timeadjustdialog.cpp,
+	  wallpaper/plugin_wallpaper.cpp: i18n fixes, enough for today :)
+
+2004-12-17 13:09  craig
+
+	* findimages/: finddupplicatedialog.cpp, finddupplicateimages.cpp,
+	  finddupplicateimages.h: Use KDE's standard dirs for cache
+	  information
+
+2004-12-17 12:23  craig
+
+	* batchprocessimages/batchprocessimagesdialog.cpp,
+	  cdarchiving/cdarchiving.cpp, imagesgallery/imagesgallery.cpp:
+	  Directory -> Folder
+
+2004-12-17 00:46  craig
+
+	* acquireimages/plugin_acquireimages.cpp,
+	  acquireimages/screenshotdialog.cpp, cdarchiving/cdarchiving.cpp,
+	  cdarchiving/plugin_cdarchiving.cpp,
+	  findimages/displaycompare.cpp,
+	  findimages/finddupplicatedialog.cpp,
+	  findimages/finddupplicateimages.cpp,
+	  findimages/plugin_findimages.cpp,
+	  galleryexport/gallerywindow.cpp, galleryexport/gallerywindow.h,
+	  galleryexport/plugin_galleryexport.cpp,
+	  imagesgallery/imagesgallery.cpp,
+	  imagesgallery/imgallerydialog.cpp,
+	  imagesgallery/plugin_imagesgallery.cpp,
+	  mpegencoder/checkbinprog.cpp, mpegencoder/kimg2mpg.cpp,
+	  mpegencoder/plugin_mpegencoder.cpp,
+	  printwizard/plugin_printwizard.cpp, rawconverter/batchdialog.cpp,
+	  rawconverter/batchdialog.h, rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/singledialog.cpp, rawconverter/singledialog.h,
+	  sendimages/plugin_sendimages.cpp, sendimages/sendimages.cpp,
+	  sendimages/sendimagesdialog.cpp, slideshow/plugin_slideshow.cpp,
+	  slideshow/slideshowconfig.cpp, slideshow/slideshowconfig.h,
+	  timeadjust/plugin_timeadjust.cpp, wallpaper/plugin_wallpaper.cpp:
+	  Give dialogs parents.
+
+2004-12-12 19:15  ach
+
+	* galleryexport/kipiplugin_galleryexport.desktop,
+	  imagesgallery/kipiplugin_imagesgallery.desktop: make it clear
+	  what does what
+
+2004-12-04 04:07  pahlibar
+
+	* slideshow/: plugin_slideshow.cpp, slideshowconfig.cpp,
+	  slideshowconfig.h:
+	  add an option to shuffle images in slideshow BUG: 91360
+
+2004-12-04 01:38  pahlibar
+
+	* galleryexport/TODO:
+	  update TODO
+
+2004-12-04 00:59  pahlibar
+
+	* galleryexport/TODO:
+	  updated todo
+
+2004-12-04 00:46  pahlibar
+
+	* galleryexport/: galleryviewitem.cpp, gallerywindow.cpp,
+	  gallerywindow.h:
+	  * kwallet integration for saving/restoring password (for kde >
+	  3.1). for kde <= 3.1,   only the url and username are saved
+	  restored.  * promote the album title as the main text (in the
+	  album treeview list)
+
+	  galleryexport to be considered feature-complete for kipi-plugins
+	  0.1 release, pending user input
+
+	  CCBUG: 88262
+
+2004-12-03 21:21  pahlibar
+
+	* galleryexport/: Makefile.am, TODO, galleryviewitem.cpp,
+	  galleryviewitem.h, gallerywindow.cpp:
+	  polish, polish: show the album title along with the name. improve
+	  the comments rendering under the thumbnail
+
+2004-12-03 08:14  pahlibar
+
+	* galleryexport/TODO:
+	  added mini TODO file for galleryexport
+
+2004-12-03 08:13  pahlibar
+
+	* galleryexport/: Makefile.am, galleryalbumdialog.ui,
+	  galleryitem.h, gallerylogin.cpp, gallerylogin.h,
+	  gallerympform.cpp, gallerympform.h, gallerytalker.cpp,
+	  gallerytalker.h, galleryviewitem.h, gallerywidget.cpp,
+	  gallerywidget.h, gallerywindow.cpp, gallerywindow.h,
+	  plugin_galleryexport.cpp:
+	  * implemented uploading photos (with host application provided
+	  captions)   into remote gallery * now, generate the upload form
+	  data using multipart.  * show captions under thumbnails
+
+	  Note to users: the code hasn't undergone a whole lot of testing.
+	  I would like reports back, if things are broken. Might be prudent
+	  to test on non-production remote gallery
+
+	  BUG: 88262
+
+2004-12-01 20:42  pahlibar
+
+	* galleryexport/: Makefile.am, galleryalbumdialog.ui,
+	  gallerylogin.h, gallerytalker.cpp, gallerytalker.h,
+	  gallerywindow.cpp, gallerywindow.h:
+	  * implemented creating new albums CCBUG: 88262
+
+2004-12-01 12:29  pahlibar
+
+	* Makefile.am, galleryexport/.cvsignore, galleryexport/Makefile.am,
+	  galleryexport/galleryitem.h, galleryexport/gallerylogin.cpp,
+	  galleryexport/gallerylogin.h, galleryexport/gallerytalker.cpp,
+	  galleryexport/gallerytalker.h, galleryexport/galleryviewitem.h,
+	  galleryexport/gallerywidget.cpp, galleryexport/gallerywidget.h,
+	  galleryexport/gallerywindow.cpp, galleryexport/gallerywindow.h,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  galleryexport/plugin_galleryexport.cpp,
+	  galleryexport/plugin_galleryexport.h:
+	  Initial implementation of remote gallery export kipi-plugin What
+	  works now: * logging into remote gallery * listing albums *
+	  listing photos in individual albums * showing thumbnails for
+	  photos * clicking on thumbnails will open up the actual image in
+	  kde standard imageviewer
+
+	  Things to do: * implement adding new albums * implement adding
+	  new photos * kwallet integration for saving/restoring
+	  remote-url/username/password
+
+	  So currently only read-only support. putting this in so that we
+	  can get some user testing done for remote url access and also
+	  modify the GUI based on user input.  Screenshot at:
+	  http://pooh.tam.uiuc.edu/gallery_export.png CCBUG: 88262
+
+2004-11-30 16:08  cgilles
+
+	* imagesgallery/imagesgallery.cpp: Added FireFox suppport
+
+2004-11-30 14:23  cgilles
+
+	* imagesgallery/: imagesgallery.cpp, imgallerydialog.cpp: Fixed
+	  bool read config entries
+
+2004-11-29 22:00  cgilles
+
+	* imagesgallery/: imagesgallery.cpp, imagesgallery.h: Revert source
+	  code.
+
+2004-11-29 21:42  cgilles
+
+	* findimages/: finddupplicatedialog.cpp, finddupplicatedialog.h,
+	  finddupplicateimages.cpp: Patch to fix bug #93065
+
+2004-11-29 12:25  cgilles
+
+	* Makefile.am, configure.in.in, kipiplugins.kdevelop,
+	  timeadjust/Makefile.am, timeadjust/timeadjustdialog.cpp,
+	  timeadjust/timeadjustdialog.h: Bug #89993 : TimeAdjust kipi
+	  plugin : apply patch for Renchi about to set date & time to that
+	  of file exif date.  CCMAIL: kde-imaging@kde.org
+
+2004-11-28 23:32  cgilles
+
+	* batchprocessimages/resizeimagesdialog.cpp: Bug #93065: using
+	  -resize instead -geometry IM option CCMAIL:kde-imaging@kde.org
+
+2004-11-26 18:29  cgilles
+
+	* cdarchiving/cdarchiving.cpp: Remove --nofork option.
+
+2004-11-26 17:40  cgilles
+
+	* cdarchiving/cdarchiving.cpp: CDArchiving kipi plugin: -Added
+	  '--nofork' option for k3b -Fix bool config option reading
+
+2004-11-23 13:24  faure
+
+	* jpeglossless/Makefile.am: local too ->  before all_includes
+
+2004-11-23 13:23  faure
+
+	* acquireimages/Makefile.am, batchprocessimages/Makefile.am,
+	  calendar/Makefile.am, cdarchiving/Makefile.am,
+	  findimages/Makefile.am, helloworld/Makefile.am,
+	  imagesgallery/Makefile.am, jpeglossless/Makefile.am,
+	  kameraklient/Makefile.am, printwizard/Makefile.am,
+	  rawconverter/Makefile.am, sendimages/Makefile.am,
+	  timeadjust/Makefile.am, wallpaper/Makefile.am: $(all_includeS)
+	  must be after $(LIBKIPI_CFLAGS) since that one is local (nice way
+	  to fool my script) :)
+
+2004-11-23 12:50  faure
+
+	* mpegencoder/Makefile.am: all_includes must be last
+
+2004-11-20 06:35  bmeyer
+
+	* jpeglossless/jinclude.h: Add ifndef/define/endif to prevent
+	  possible acidential double includes
+
+2004-11-13 20:05  adawit
+
+	* imagesgallery/: imagesgallery.cpp, imagesgallery.h: - Do not
+	  append a file extension if the file already ends with that
+	  extension.  - Use a locally declared KConfig object whenever it
+	  is short lived, i.e. deleted at   the end of the function.  - "if
+	  (object) delete object;" is not necessary if the object is
+	  already initialized properly.
+
+2004-11-11 18:52  pahlibar
+
+	* jpeglossless/utils.cpp:
+	  replaced mmap based file copy with regular readblock/writeblock.
+	  fixes issues with file copies on a nfs mounted partition
+
+2004-11-09 20:39  ach
+
+	* README, jpeglossless/libjpeg62.README: CVS_SILENT: This should be
+	  enough to fulfill the libjpeg62 distribution requirements (1) and
+	  (2).
+
+	  CCMAIL: kde-imaging@kde.org
+
+2004-11-09 16:50  pahlibar
+
+	* jpeglossless/: jpegtransform.cpp, jpegtransform.h:
+	  restore proper copyright owners
+
+2004-11-09 16:43  pahlibar
+
+	* jpeglossless/mtqueue.h:
+	  added copyright
+
+2004-11-09 16:42  pahlibar
+
+	* calendar/main.cpp:
+	  removed stale file
+
+2004-11-08 21:27  ach
+
+	* calendar/calpainter.cpp, calendar/calpainter.h,
+	  calendar/calprint.h, calendar/calselect.cpp,
+	  calendar/calselect.h, calendar/calsettings.cpp,
+	  calendar/calsettings.h, calendar/caltemplate.cpp,
+	  calendar/caltemplate.h, calendar/calwidget.cpp,
+	  calendar/calwidget.h, calendar/calwizard.cpp,
+	  calendar/calwizard.h, calendar/monthwidget.cpp,
+	  calendar/monthwidget.h, calendar/plugin_calendar.cpp,
+	  calendar/plugin_calendar.h, helloworld/plugin_helloworld.cpp,
+	  helloworld/plugin_helloworld.h, imagesgallery/exifrestorer.cpp,
+	  imagesgallery/exifrestorer.h, imagesgallery/jpegsection.h,
+	  jpeglossless/actions.h, jpeglossless/actionthread.cpp,
+	  jpeglossless/actionthread.h, jpeglossless/convert2grayscale.cpp,
+	  jpeglossless/convert2grayscale.h, jpeglossless/imageflip.cpp,
+	  jpeglossless/imageflip.h, jpeglossless/imagerotate.cpp,
+	  jpeglossless/imagerotate.h, jpeglossless/jpegtransform.cpp,
+	  jpeglossless/jpegtransform.h, jpeglossless/messagebox.cpp,
+	  jpeglossless/messagebox.h, jpeglossless/plugin_jpeglossless.cpp,
+	  jpeglossless/plugin_jpeglossless.h, jpeglossless/progressdlg.cpp,
+	  jpeglossless/progressdlg.h, jpeglossless/utils.cpp,
+	  jpeglossless/utils.h, kameraklient/camerafolderitem.cpp,
+	  kameraklient/camerafolderitem.h,
+	  kameraklient/camerafolderview.cpp,
+	  kameraklient/camerafolderview.h, kameraklient/cameraiconitem.cpp,
+	  kameraklient/cameraiconitem.h, kameraklient/cameraiconview.cpp,
+	  kameraklient/cameraiconview.h, kameraklient/cameralist.cpp,
+	  kameraklient/cameralist.h, kameraklient/cameratype.cpp,
+	  kameraklient/cameratype.h, kameraklient/cameraui.cpp,
+	  kameraklient/cameraui.h, kameraklient/dmessagebox.cpp,
+	  kameraklient/dmessagebox.h, kameraklient/gpcamera.cpp,
+	  kameraklient/gpcamera.h, kameraklient/gpcommand.h,
+	  kameraklient/gpcontroller.cpp, kameraklient/gpcontroller.h,
+	  kameraklient/gpeventfilter.cpp, kameraklient/gpeventfilter.h,
+	  kameraklient/gpevents.h, kameraklient/gpfileitemcontainer.cpp,
+	  kameraklient/gpfileitemcontainer.h,
+	  kameraklient/gpfileiteminfo.cpp, kameraklient/gpfileiteminfo.h,
+	  kameraklient/gpfileiteminfodlg.cpp,
+	  kameraklient/gpfileiteminfodlg.h, kameraklient/gpiface.cpp,
+	  kameraklient/gpiface.h, kameraklient/gpstatus.cpp,
+	  kameraklient/gpstatus.h, kameraklient/kameraklient.cpp,
+	  kameraklient/kameraklient.h, kameraklient/setupcamera.cpp,
+	  kameraklient/setupcamera.h, mpegencoder/plugin_mpegencoder.cpp,
+	  mpegencoder/plugin_mpegencoder.h,
+	  printwizard/plugin_printwizard.cpp,
+	  printwizard/plugin_printwizard.h, rawconverter/batchdialog.cpp,
+	  rawconverter/batchdialog.h, rawconverter/clistviewitem.h,
+	  rawconverter/cspinbox.h, rawconverter/dcrawprocess.cpp,
+	  rawconverter/dmessagebox.cpp, rawconverter/dmessagebox.h,
+	  rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/plugin_rawconverter.h,
+	  rawconverter/previewwidget.cpp, rawconverter/previewwidget.h,
+	  rawconverter/processcontroller.cpp,
+	  rawconverter/processcontroller.h, rawconverter/singledialog.cpp,
+	  rawconverter/singledialog.h, sendimages/exifrestorer.cpp,
+	  sendimages/exifrestorer.h, sendimages/jpegsection.h,
+	  slideshow/imlibiface.cpp, slideshow/imlibiface.h,
+	  slideshow/plugin_slideshow.cpp, slideshow/plugin_slideshow.h,
+	  slideshow/slideshow.cpp, slideshow/slideshow.h,
+	  slideshow/slideshowconfig.cpp, slideshow/slideshowconfig.h,
+	  slideshow/slideshowgl.cpp, slideshow/slideshowgl.h,
+	  slideshow/toolbar.cpp, slideshow/toolbar.h,
+	  timeadjust/plugin_timeadjust.cpp, timeadjust/plugin_timeadjust.h,
+	  timeadjust/timeadjustdialog.cpp, timeadjust/timeadjustdialog.h,
+	  wallpaper/plugin_wallpaper.cpp, wallpaper/plugin_wallpaper.h:
+	  CVS_SILENT: Fix typo s/bythe/by the/ in the distribution right
+	  header CCMAIL: kde-imaging@kde.org
+
+2004-11-07 13:02  coolo
+
+	* configure.in.in: works without installed libkexif
+
+2004-11-06 05:07  bmeyer
+
+	* acquireimages/acquireimagedialog.cpp,
+	  batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/batchprocessimagesitem.cpp,
+	  cdarchiving/cdarchiving.cpp, cdarchiving/cdarchivingdialog.cpp,
+	  findimages/displaycompare.cpp,
+	  findimages/finddupplicatedialog.cpp,
+	  findimages/finddupplicateimages.cpp,
+	  imagesgallery/imagesgallery.cpp,
+	  imagesgallery/imgallerydialog.cpp,
+	  kameraklient/cameraiconview.cpp, kameraklient/cameraui.cpp,
+	  kameraklient/kipiplugin_kameraklient.desktop,
+	  mpegencoder/checkbinprog.cpp, mpegencoder/kimg2mpg.cpp,
+	  mpegencoder/optionsdialog.cpp, printwizard/tphoto.cpp,
+	  rawconverter/batchdialog.cpp, sendimages/sendimages.cpp,
+	  sendimages/sendimagesdialog.cpp, slideshow/slideshowgl.cpp:
+	  header fixes "" comparisions changed to use .isEmpty() Added
+	  missing Encoding line to desktop file Fixed Build Build breakage
+
+2004-11-06 04:54  bmeyer
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  renameimagesdialog.cpp: remove QString::null and replace with
+	  .isNull()
+
+2004-11-06 04:10  bmeyer
+
+	* kameraklient/Makefile.am: fix broken build
+
+2004-11-03 23:38  binner
+
+	* batchprocessimages/batchprocessimagesdialog.cpp: fix layout
+
+2004-11-01 10:21  binner
+
+	* findimages/finddupplicatedialog.cpp,
+	  kameraklient/savefiledialog.cpp: CVS_SILENT i18n style guide
+	  fixes
+
+2004-10-27 23:10  gateau
+
+	* kipi-plugins.lsm: Initial import of .lsm files, needed to upload
+	  to upload.kde.org.
+
+2004-10-27 16:06  binner
+
+	* findimages/finddupplicatedialog.cpp,
+	  rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+	  CVS_SILENT i18n style guide fixes
+
+2004-10-24 22:54  cgilles
+
+	* TODO: CVS_SILENT Updated
+
+2004-10-24 05:40  pahlibar
+
+	* TODO, calendar/calpainter.cpp, calendar/caltemplate.cpp:
+	  * use only smoothly scalable fonts * remove
+	  kapp->processEvents(). no idea why i put it there in the first
+	  place * updated todo
+
+2004-10-22 02:18  pahlibar
+
+	* calendar/calwizard.cpp, printwizard/frmprintwizard.cpp:
+	  kde 3.1 compatiblity fixes
+
+2004-10-20 18:52  pahlibar
+
+	* calendar/calwizard.cpp, printwizard/frmprintwizard.cpp:
+	  force kprinter to use printer resolution
+
+2004-10-19 21:30  jahrens
+
+	* findimages/: finddupplicatedialog.cpp, finddupplicatedialog.h:
+	  Addition to #91548
+
+	  CCMAIL: 91548@bugs.kde.org, digikam-devel@lists.sourceforge.net
+
+2004-10-19 21:07  jahrens
+
+	* findimages/finddupplicatedialog.cpp:
+	  fixed in cvs
+
+	  CCMAIL: 91548-done@bugs.kde.org,
+	  digikam-devel@lists.sourceforge.net
+
+2004-10-19 17:36  jahrens
+
+	* mpegencoder/plugin_mpegencoder.cpp:
+	  fixed in cvs
+
+	  CCMAIL: 91547-done@bugs.kde.org,
+	  digikam-devel@lists.sourceforge.net
+
+2004-10-19 14:49  cgilles
+
+	* sendimages/sendimagesdialog.cpp: SendImages kipi-plugin : fixed
+	  bug #91596 CCMAIL: kde-imaging@kde.org,
+	  digikam-devel@lists.sourceforge.net
+
+2004-10-19 13:27  cgilles
+
+	* README: CVS_SILENT Added libtiff depency
+
+2004-10-18 15:57  mlaurent
+
+	* kameraklient/: cameraui.cpp, gpeventfilter.cpp,
+	  gpfileitemcontainer.cpp: it++ -> ++it
+
+2004-10-18 02:53  pahlibar
+
+	* slideshow/: plugin_slideshow.cpp, plugin_slideshow.h,
+	  slideshowconfig.cpp, slideshowconfig.h:
+	  cleaner implementation. (note to self: its difficult to sneak in
+	  hacks with the usability gurus watching ;) ). The slideshow
+	  action is enabled only if there is a current valid album and has
+	  images. also, if there is no current selection, the "selected
+	  images only" option is disabled.
+
+2004-10-18 02:27  pahlibar
+
+	* slideshow/plugin_slideshow.cpp:
+	  popup a sorry message if there are no images in current album and
+	  slideshow action is clicked. also popup sorry message if user
+	  selects slideshow with selected items only option and there are
+	  no selected items
+
+2004-10-17 23:00  cgilles
+
+	* tips: CVS_SILENT FIxed tip of day reported by Michał Kosmulski
+
+2004-10-13 21:33  pahlibar
+
+	* INSTALL:
+	  updated INSTALL file
+
+2004-10-12 17:30  coles
+
+	* tips:
+
+	  CVS_SILENT
+
+	  Corrected typos.
+
+2004-10-11 18:07  pahlibar
+
+	* kameraklient/Makefile.am:
+	  forgot the kameraklient on the update to the makefile.am
+
+2004-10-11 17:57  pahlibar
+
+	* configure.in.in, acquireimages/Makefile.am,
+	  batchprocessimages/Makefile.am, calendar/Makefile.am,
+	  cdarchiving/Makefile.am, findimages/Makefile.am,
+	  helloworld/Makefile.am, imagesgallery/Makefile.am,
+	  jpeglossless/Makefile.am, mpegencoder/Makefile.am,
+	  printwizard/Makefile.am, rawconverter/Makefile.am,
+	  sendimages/Makefile.am, slideshow/Makefile.am,
+	  timeadjust/Makefile.am, wallpaper/Makefile.am:
+	  fixed hardcoded libkipi path
+
+2004-10-11 14:07  cgilles
+
+	* sendimages/sendimagesdialog.cpp: CVS_SILENT Fixed default and
+	  standard thunderbird bin file name
+
+2004-10-11 13:57  cgilles
+
+	* Makefile.am: Fixed i18n extraction for tips
+
+2004-10-11 13:35  cgilles
+
+	* Makefile.am, README: Removed 'GammaCalibration' kipi plugin (must
+	  be implemented in the hosts) CCMAIL: kde-imaging@kde.org
+
+2004-10-11 13:12  cgilles
+
+	* README: CVS_SILENT Update
+
+2004-10-11 13:11  cgilles
+
+	* Makefile.am: Removed 'DirOperation' kipi-plugin This feature must
+	  been implemented in the hosts.  CCMAIL: kde-imaging@kde.org
+
+2004-10-11 10:33  cgilles
+
+	* tips: CVS_SILENT Fixed icon size
+
+2004-10-11 06:36  cgilles
+
+	* sendimages/sendimagesdialog.cpp: CVS_SILENT Fixed i18n
+
+2004-10-10 22:32  cgilles
+
+	* batchprocessimages/: borderimagesdialog.cpp,
+	  colorimagesdialog.cpp, effectimagesdialog.cpp,
+	  filterimagesdialog.cpp, recompressimagesdialog.cpp,
+	  resizeimagesdialog.cpp: Fixed bug relevant of a preview fix about
+	  embeded image conversion. The fix must be done only for
+	  BatchConvertImage
+
+2004-10-10 19:21  cgilles
+
+	* tips: CVS_SILENT Fixed i18n
+
+2004-10-09 19:12  binner
+
+	* acquireimages/acquireimagedialog.cpp,
+	  acquireimages/screenshotdialog.cpp,
+	  batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/borderimagesdialog.cpp,
+	  batchprocessimages/colorimagesdialog.cpp,
+	  batchprocessimages/convertimagesdialog.cpp,
+	  batchprocessimages/effectimagesdialog.cpp,
+	  batchprocessimages/filterimagesdialog.cpp,
+	  batchprocessimages/imagepreview.cpp,
+	  batchprocessimages/outputdialog.cpp,
+	  batchprocessimages/recompressimagesdialog.cpp,
+	  batchprocessimages/renameimagesdialog.cpp,
+	  batchprocessimages/resizeimagesdialog.cpp,
+	  calendar/calwizard.cpp, cdarchiving/cdarchivingdialog.cpp,
+	  findimages/displaycompare.cpp,
+	  findimages/finddupplicatedialog.cpp,
+	  imagesgallery/imgallerydialog.cpp,
+	  kameraklient/cameraselection.cpp, kameraklient/cameraui.cpp,
+	  kameraklient/gpfileiteminfodlg.cpp,
+	  kameraklient/savefiledialog.cpp, kameraklient/setupcamera.cpp,
+	  mpegencoder/kimg2mpg.cpp, printwizard/frmprintwizard.cpp,
+	  rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp,
+	  sendimages/plugin_sendimages.cpp,
+	  sendimages/sendimagesdialog.cpp, slideshow/slideshowconfig.cpp,
+	  timeadjust/timeadjustdialog.cpp: CVS_SILENT i18n style guide
+	  fixes
+
+2004-10-08 15:53  cgilles
+
+	* Makefile.am, tips: Moved kipiplugins tips to the plugins folder.
+	  CCMAIL: kde-imaging@kde.org
+
+2004-10-07 18:34  cgilles
+
+	* sendimages/: sendimages.cpp, sendimagesdialog.cpp,
+	  sendimagesdialog.h: SendImages Kipi plugin: Added Thunderbird bin
+	  path setup in dialog CCMAIL: digikam-devel@lists.sourceforge.net,
+	  kde-imaging@kde.org
+
+2004-10-07 15:29  cgilles
+
+	* batchprocessimages/batchprocessimagesdialog.cpp: Fixed header
+
+2004-10-06 18:36  pahlibar
+
+	* slideshow/: Makefile.am, pausetimer.cpp, pausetimer.h,
+	  slideshow.cpp, slideshow.h, slideshowgl.cpp, slideshowgl.h,
+	  toolbar.cpp, toolbar.h:
+	  * implemented mouse and keyboard control for slideshow * mouse
+	  control is with a toolbar which pops up when mouse is moved to
+	  any  of the four corners of the desktop * keyboard control:
+	  PageUp (previous), PageDown (next), Escape (close), SpaceBar
+	  (toggle play and pause) * fixed crash due to wierd mouseMoveEvent
+	  being called after closeEvent
+
+	  CCMAIL: 88600-done@bugs.kde.org
+
+2004-10-06 16:39  cgilles
+
+	* batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/imagepreview.cpp,
+	  batchprocessimages/renameimagesoptionsdialog.cpp,
+	  batchprocessimages/renameimagesoptionsdialog.h,
+	  cdarchiving/plugin_cdarchiving.cpp,
+	  findimages/plugin_findimages.cpp,
+	  imagesgallery/plugin_imagesgallery.cpp,
+	  sendimages/plugin_sendimages.cpp: Fixed KDE 3.1 compatibility
+
+2004-10-05 15:07  cgilles
+
+	* kipiplugins.kdevelop, cdarchiving/cdarchiving.cpp,
+	  imagesgallery/imagesgallery.cpp: Fixed crash when 'CDArchiving'
+	  and 'ImageGallery' kipi plugin are started and closed imediatly
+	  (reported by Renchi with Digikam) There is unvalid delete QMap at
+	  the destructor call.
+
+2004-10-05 04:17  pahlibar
+
+	* calendar/: calwizard.cpp, calwizard.h:
+	  if you are modifying working code, make sure to test it before
+	  you make the commits.  fixed broken calendar plugin CCMAIL:
+	  kde-imaging@kde.org
+
+2004-10-04 17:46  lunakl
+
+	* acquireimages/: screenshotdialog.cpp, screenshotdialog.h: Fix
+	  crash with Gwenview, which apparently doesn't have
+	  kapp->mainWidget() set for some reason. Just hiding and showing
+	  only the main window is not technically right anyway in case the
+	  app has more toplevel windows.  CCMAIL: kde-imaging@kde.org
+	  CCMAIL: gwenview-general@lists.sourceforge.net
+
+2004-10-02 20:09  deller
+
+	* acquireimages/acquireimagedialog.cpp,
+	  imagesgallery/imagesgallery.cpp, mpegencoder/checkbinprog.cpp,
+	  mpegencoder/kimg2mpg.cpp, printwizard/frmprintwizard.cpp,
+	  sendimages/sendimagesdialog.cpp: - roaming user fixes (user
+	  readPathEntry() and writePathEntry() instead of
+	  readEntry()/writeEntry() where it refers to file-paths)
+
+	  btw, those sources would benefit from a big cleanup with using
+	  readBoolEntry() instead of readEntry("true")=="true" and such....
+
+2004-09-30 23:31  pahlibar
+
+	* slideshow/slideshowgl.cpp:
+	  check for max texture value allowed before generating the
+	  textures. one user had a rather low texture size of 512. fixed
+	  problem over priv mail conversation.	CCMAIL:
+	  90183-done@bugs.kde.org
+
+2004-09-29 23:33  blackie
+
+	* batchprocessimages/batchprocessimagesdialog.cpp: angle was wrong
+	  due to some bugs I of course can't reproduce now
+
+2004-09-29 23:13  blackie
+
+	* batchprocessimages/batchprocessimagesdialog.cpp: man I hate when
+	  I forget to save before cvs ci
+
+2004-09-29 23:11  blackie
+
+	* batchprocessimages/batchprocessimagesdialog.cpp: slotGotPreview
+	  did just display the image it found on disk, which is not correct
+	  if the host application in memory has the image rotated (as in
+	  contrast to on disk). This change hopefully fixes this bug.
+
+	  Gilles, please verify that it still works for digikam - which I'm
+	  pretty convinced it does ;-)
+
+2004-09-27 16:55  cgilles
+
+	* cdarchiving/: cdarchiving.cpp, cdarchiving.h,
+	  plugin_cdarchiving.cpp: Disable QThread implementation in Kipi
+	  CDArchiving plugin.  CCMAIL: renchi@pooh.tam.uiuc.edu
+
+2004-09-27 16:30  cgilles
+
+	* imagesgallery/: imagesgallery.cpp, imagesgallery.h,
+	  plugin_imagesgallery.cpp: Disable QThread implementation in KIPI
+	  imagegallery plugin.	CCMAIL: renchi@pooh.tam.uiuc.edu
+
+2004-09-26 23:13  todd
+
+	* printwizard/frmprintwizard.cpp: - Added 11.5x15cm photo size to
+	  A4 - Added two new collage arrangements to Letter
+
+2004-09-26 18:27  mhunter
+
+	* printwizard/frmprintwizard.cpp: i18n fix
+
+2004-09-26 18:24  mhunter
+
+	* mpegencoder/kimg2mpg.cpp: CVS_SILENT Typographical corrections
+	  and changes
+
+2004-09-26 18:20  mhunter
+
+	* findimages/displaycompare.cpp: CVS_SILENT Typographical
+	  corrections and changes
+
+2004-09-26 18:16  mhunter
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  convertimagesdialog.cpp, renameimagesdialog.cpp: CVS_SILENT
+	  Typographical corrections and changes
+
+2004-09-25 23:34  todd
+
+	* printwizard/: frmprintwizard.cpp, frmprintwizard.h,
+	  frmprintwizardbase.ui, tphoto.cpp: - Added listbox for changing
+	  the order of printed photos.	- Added pager buttons to preview
+	  all pages
+
+2004-09-25 17:03  cgilles
+
+	* batchprocessimages/: renameimagesdialog.cpp,
+	  renameimagesoptionsdialog.cpp, renameimagesoptionsdialog.h: patch
+	  from Martin Laberge for KDE 3.1 compatibility.  CCMAIL:
+	  kde-imaging@kde.org, digikam-devel@lists.sourceforge.net
+
+2004-09-25 15:06  cgilles
+
+	* sendimages/: Makefile.am, exifrestorer.cpp, exifrestorer.h,
+	  jpegsection.h, sendimages.cpp: KIPI sendimages plugin : now,
+	  resized JPEG images don't lost the EXIF informations ! CCMAIL:
+	  kde-imaging@kde.org, digikam-users@lists.sourceforge.net
+
+2004-09-25 14:58  cgilles
+
+	* imagesgallery/imagesgallery.cpp: CVS_SILENT Fix header
+
+2004-09-24 15:50  cgilles
+
+	* imagesgallery/: Makefile.am, exifrestorer.cpp, exifrestorer.h,
+	  imagesgallery.cpp, jpegsection.h: Fixed bug #88939: - Resizing
+	  images have no effect if no resize images option enable.  - JPEG
+	  exif data stored to the JPEG target images.  CCMAIL:
+	  kde-imaging@kde.org, digikam-users@lists.sourceforge.net
+
+2004-09-24 15:46  cgilles
+
+	* cdarchiving/cdarchiving.cpp: CVS_SILENT Fixed
+
+2004-09-24 14:52  cgilles
+
+	* cdarchiving/cdarchiving.cpp: CVS_SILENT Fixed
+
+2004-09-24 14:46  cgilles
+
+	* cdarchiving/: cdarchiving.cpp, cdarchiving.h,
+	  cdarchivingdialog.h, plugin_cdarchiving.cpp: Kipi CDArchiving
+	  plugin: fixed threaded implementation ! CCMAIL:
+	  renchi@pooh.tam.uiuc.edu
+
+2004-09-24 13:34  cgilles
+
+	* imagesgallery/imagesgallery.cpp: CVS_SILENT Added comments
+
+2004-09-24 10:59  cgilles
+
+	* batchprocessimages/resizeoptionsdialog.cpp: Added 1400dpi support
+	  in Prepare to print (request by Richard Taylor) CCMAIL:
+	  rjt-digicam@thegrindstone.me.uk
+
+2004-09-24 10:29  cgilles
+
+	* imagesgallery/imagesgallery.cpp: CVS_SILENT Fixed
+
+2004-09-24 10:10  cgilles
+
+	* imagesgallery/imagesgallery.cpp: CVS_SILENT Fixed url and host
+	  name
+
+2004-09-24 10:03  cgilles
+
+	* imagesgallery/: imagesgallery.cpp, imagesgallery.h: CVS_SILENT
+	  Fixed header.
+
+2004-09-23 15:33  cgilles
+
+	* imagesgallery/: imagesgallery.cpp, imagesgallery.h,
+	  plugin_imagesgallery.cpp: Fixed threaded implementation about
+	  kipi interface call under thread.  Using QMap and a new class for
+	  to store the Albums data from the hosts.  All kipi interface call
+	  and GUI call run on 'prepare' unthreaded method.  Must be
+	  tested...  CCMAIL: renchi@pooh.tam.uiuc.edu
+
+2004-09-23 15:01  cgilles
+
+	* cdarchiving/: cdarchivingdialog.cpp, plugin_cdarchiving.cpp:
+	  CVS_SILENT Fixed i18n
+
+2004-09-23 14:55  cgilles
+
+	* findimages/plugin_findimages.cpp, mpegencoder/kimg2mpg.cpp,
+	  mpegencoder/plugin_mpegencoder.cpp: CVS_SILENT Fixed i18n
+
+2004-09-23 12:26  cgilles
+
+	* batchprocessimages/: renameimagesdialog.cpp,
+	  renameimagesdialog.h, renameimagesoptionsdialog.cpp,
+	  renameimagesoptionsdialog.h: Fixed BatchRenameImages KIPI plugin:
+	  - Using KDateTimeWidget instead KDateWidget.	- Fixed some
+	  problems with the implementation provide by the team during
+	  Digikamplugins port.
+
+2004-09-23 08:14  cgilles
+
+	* batchprocessimages/: renameimagesdialog.cpp,
+	  renameimagesdialog.h: KIPI BatchRenameImages : fixed files date
+	  correction using Qt API instead C ANSI (from Showimg).  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-09-22 16:43  cgilles
+
+	* batchprocessimages/renameimagesdialog.cpp: BatchRenameImage
+	  plugin : Restored old filter file name method. TODO support KURL.
+	  CCMAIL: kde-imaging@kde.org
+
+2004-09-22 16:03  cgilles
+
+	* imagesgallery/imagesgallery.cpp: Fixed kipi url and collection
+	  category
+
+2004-09-22 16:03  cgilles
+
+	* cdarchiving/cdarchiving.cpp: Fixed kipi url
+
+2004-09-22 15:47  cgilles
+
+	* calendar/caltemplate.cpp: KIPI calendar plugin : - Fixed layout.
+	  - Added i18n.  - Remove Framed line (no used and no necessary ?)
+	  CCMAIL: renchi@pooh.tam.uiuc.edu
+
+2004-09-22 14:56  cgilles
+
+	* findimages/: displaycompare.cpp, finddupplicatedialog.cpp,
+	  finddupplicateimages.cpp, plugin_findimages.cpp: Fixed tasks
+	  progress bar in Fast mode.  Fixed progress messages.	Fixed
+	  dialog.  CCMAIL: kde-imaging@kde.org
+
+2004-09-22 10:52  cgilles
+
+	* batchprocessimages/: borderimagesdialog.cpp,
+	  colorimagesdialog.cpp, convertimagesdialog.cpp,
+	  effectimagesdialog.cpp, filterimagesdialog.cpp,
+	  recompressimagesdialog.cpp, resizeimagesdialog.cpp: Kipi
+	  batchProcessimages plugins : fixed bug #89720 CCMAIL:
+	  kde-imaging@kde.org
+
+2004-09-22 10:44  cgilles
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  batchprocessimagesdialog.h, borderimagesdialog.cpp,
+	  colorimagesdialog.cpp, convertimagesdialog.cpp,
+	  effectimagesdialog.cpp, filterimagesdialog.cpp,
+	  renameimagesdialog.cpp, renameimagesoptionsdialog.h,
+	  resizeimagesdialog.cpp: Fixed batchprocessimages kipi plugins
+	  dialogs size.  CCMAIL: kde-imaging@kde.org
+
+2004-09-22 04:06  pahlibar
+
+	* batchprocessimages/plugin_batchprocessimages.cpp,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  mpegencoder/plugin_mpegencoder.cpp,
+	  printwizard/plugin_printwizard.cpp,
+	  rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/plugin_rawconverter.h,
+	  sendimages/plugin_sendimages.cpp, slideshow/plugin_slideshow.cpp,
+	  timeadjust/plugin_timeadjust.cpp:
+	  * remove currentScope() and currentScopeChanged() (signal) *
+	  plugins updated to reflect change * gentlemen, please update your
+	  apps CCMAIL: kde-imaging@kde.org
+
+2004-09-22 01:55  pahlibar
+
+	* configure.in.in:
+	  uhh... allow kipi-plugins to compile if detected from the same
+	  source tree
+
+2004-09-21 19:59  pahlibar
+
+	* configure.in.bot, configure.in.in:
+	  * pkg-configified libkipi * kipi-plugins configure.in.in updated
+	  to include tests for externally   installed libkipi CCMAIL:
+	  kde-imaging@kde.org
+
+2004-09-21 17:00  cgilles
+
+	* imagesgallery/imagesgallery.cpp: Fixed bug #88885 CCMAIL:
+	  kde-imaging@kde.org
+
+2004-09-21 16:13  cgilles
+
+	* calendar/: calselect.cpp, caltemplate.cpp, calwizard.cpp,
+	  calwizard.h: Added graphical banner to the kipi calendar wizard
+
+2004-09-21 14:57  cgilles
+
+	* kameraklient/: cameraselection.cpp, cameraui.cpp,
+	  setupcamera.cpp: Added graphical banner to the top of Kipi
+	  KameraKlient plugin dialogs.
+
+2004-09-21 13:19  cgilles
+
+	* sendimages/: listimageserrordialog.cpp, sendimages.cpp: Added
+	  graphical banner
+
+2004-09-21 13:07  cgilles
+
+	* batchprocessimages/outputdialog.cpp: Added Graphical banner
+
+2004-09-21 12:33  cgilles
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  batchprocessimagesdialog.h, borderimagesdialog.cpp,
+	  borderoptionsdialog.cpp, borderoptionsdialog.h,
+	  colorimagesdialog.cpp, colorimagesdialog.h,
+	  coloroptionsdialog.cpp, coloroptionsdialog.h,
+	  convertimagesdialog.cpp, convertimagesdialog.h,
+	  convertoptionsdialog.cpp, convertoptionsdialog.h,
+	  effectimagesdialog.cpp, effectoptionsdialog.cpp,
+	  effectoptionsdialog.h, filterimagesdialog.cpp,
+	  filterimagesdialog.h, filteroptionsdialog.cpp,
+	  filteroptionsdialog.h, imagepreview.cpp, renameimagesdialog.cpp,
+	  resizeimagesdialog.cpp, resizeoptionsdialog.cpp,
+	  resizeoptionsdialog.h: Fixed i18n problem withh all options in
+	  KIPI batchprocessimages plugins.  CCMAIL: kde-imaging@kde.org,
+	  rjt-digicam@thegrindstone.me.uk
+
+2004-09-21 09:15  cgilles
+
+	* rawconverter/: batchdialog.cpp, singledialog.cpp: Added graphical
+	  banner to the top of KIPI Raw converter dialogs.
+
+2004-09-20 22:47  cgilles
+
+	* acquireimages/screenshotdialog.cpp: Added graphical banner to the
+	  top of kipi screenshoot plugin dialog.
+
+2004-09-20 22:37  cgilles
+
+	* mpegencoder/kimg2mpg.cpp: Added graphical banner to the top of
+	  kipi MPEG encoder plugin dialog.
+
+2004-09-20 22:17  cgilles
+
+	* findimages/displaycompare.cpp: Added graphical banner to the kipi
+	  finduplicateimages plugin results dialog.
+
+2004-09-20 15:17  mueller
+
+	* jpeglossless/Makefile.am: oops. wasn't supposed to be committed
+
+2004-09-20 15:17  mueller
+
+	* jpeglossless/: Makefile.am, actions.h: fix compile
+
+2004-09-20 09:43  cgilles
+
+	* slideshow/slideshowconfig.cpp: Added kipi graphic titles on the
+	  dialog top.
+
+2004-09-20 09:42  cgilles
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  borderimagesdialog.cpp, colorimagesdialog.cpp,
+	  convertimagesdialog.cpp, effectimagesdialog.cpp,
+	  filterimagesdialog.cpp, recompressimagesdialog.cpp,
+	  renameimagesdialog.cpp, resizeimagesdialog.cpp: CVS_SILENT Fixed
+	  i18n
+
+2004-09-19 21:22  cgilles
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  batchprocessimagesdialog.h, borderimagesdialog.cpp,
+	  colorimagesdialog.cpp, convertimagesdialog.cpp,
+	  effectimagesdialog.cpp, filterimagesdialog.cpp,
+	  recompressimagesdialog.cpp, renameimagesdialog.cpp,
+	  resizeimagesdialog.cpp: BatchProcessImages kipi plugins : Added
+	  graphic border in dialog
+
+2004-09-19 18:50  mlaurent
+
+	* slideshow/slideshow.cpp, mpegencoder/optionsdialog.cpp:
+	  CVS_SILENT QString(i18n(...)) -> i18n(...)
+
+2004-09-18 23:38  gateau
+
+	* printwizard/frmprintwizard.cpp: Fixed compilation on KDE 3.1.
+
+2004-09-17 22:31  gateau
+
+	* cdarchiving/cdarchivingdialog.cpp: There is no need to prefix a
+	  signal with "signal".
+
+2004-09-17 10:12  cgilles
+
+	* findimages/: finddupplicatedialog.cpp, finddupplicatedialog.h,
+	  finddupplicateimages.cpp: KIPI findduplicateimages plugin: using
+	  ImageCollectionSelector widget from Renchi.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-09-16 18:00  cgilles
+
+	* imagesgallery/imgallerydialog.cpp: CVS_SILENT Fixed dialog
+
+2004-09-16 18:00  cgilles
+
+	* cdarchiving/: cdarchiving.cpp, cdarchivingdialog.cpp: CVS_SILENT
+	  FIxed dialog
+
+2004-09-16 16:10  cgilles
+
+	* imagesgallery/: imagesgallery.cpp, imagesgallery.h: CVS_SILENT
+	  Fixed
+
+2004-09-16 15:51  cgilles
+
+	* batchprocessimages/batchprocessimagesdialog.cpp: CVS_SILENT Fixed
+
+2004-09-16 14:39  cgilles
+
+	* imagesgallery/imagesgallery.cpp: Fixed partially kipi access in
+	  the thread.
+
+2004-09-16 14:22  cgilles
+
+	* imagesgallery/: imagesgallery.cpp, imagesgallery.h,
+	  plugin_imagesgallery.cpp: ImageGallery kip plugin: Fixed dialog
+	  acces under threaded implementation Todo : fix kipi interface
+	  access.  CCMAIL: kde-imageing@kde.org
+
+2004-09-16 12:35  cgilles
+
+	* sendimages/plugin_sendimages.cpp: CVS_SILENT Fix i18n
+
+2004-09-16 10:52  cgilles
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  imagepreview.cpp, renameimagesdialog.cpp: Fixed depreciate method
+	  in according with KDE version CCMAIL: oliver@doerr-privat.de
+
+2004-09-16 08:37  cgilles
+
+	* findimages/finddupplicateimages.cpp: CVS_SILENT Added comments
+
+2004-09-16 08:35  cgilles
+
+	* sendimages/: plugin_sendimages.cpp, plugin_sendimages.h,
+	  sendimages.cpp, sendimages.h, sendimagesdialog.cpp: Fixed
+	  dialog/kipi interface access in threaded operations.	CCMAIL:
+	  kde-imaging@kde.org, renchi@pooh.tam.uiuc.edu
+
+2004-09-16 04:44  todd
+
+	* printwizard/frmprintwizardbase.ui: Hopefully fixed compile errors
+	  for Qt 3.1.2 users.  Copied the XPM icons over the newer PNG
+	  icons generated by qt designer.
+
+2004-09-15 21:28  pahlibar
+
+	* slideshow/plugin_slideshow.cpp:
+	  return is urllist is empty
+
+2004-09-15 15:55  cgilles
+
+	* cdarchiving/: cdarchiving.cpp, cdarchivingdialog.cpp,
+	  cdarchivingdialog.h: CDArchiving Kipi plugin: support
+	  ImageCollection selector widget.  CCMAIL:kde-imaging@kde.org
+
+2004-09-15 14:09  cgilles
+
+	* imagesgallery/: imgallerydialog.cpp, imgallerydialog.h:
+	  CVS_SILENT Fixed indent
+
+2004-09-15 13:55  cgilles
+
+	* imagesgallery/imgallerydialog.cpp: CVS_SILENT Fixed indent
+
+2004-09-15 03:07  todd
+
+	* printwizard/frmprintwizard.cpp: Added thumbnails to A4 and A6
+	  sizes.
+
+2004-09-15 02:45  todd
+
+	* printwizard/: cropframe.cpp, cropframe.h, frmprintwizard.cpp,
+	  frmprintwizard.h, frmprintwizardbase.ui, tphoto.cpp, tphoto.h:
+	  Added thumbnail layouts (20 per sheet and 30 per sheet).  Added
+	  autoRotate override so thumbnails would not be rotated.  Added
+	  filename captions option, which places the image filename  in the
+	  lower left corner of the image in white sans font. Will  improve
+	  the font and give it a black border later.
+
+2004-09-14 16:34  cgilles
+
+	* findimages/kipiplugin_findimages.desktop: CVS_SILENT Fixed
+
+2004-09-14 16:11  cgilles
+
+	* batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/imagepreview.cpp,
+	  batchprocessimages/renameimagesdialog.cpp,
+	  sendimages/sendimagesdialog.cpp: BatchProcessImage Kipi plugin: -
+	  Fixed warning for depreceate KDE API methods.  - Using new
+	  getImageURLs method from Renchi.  SendImages Kipi plugin: - Using
+	  new getImageURLs method from Renchi.	CCMAIL: kde-imaging@kde.org
+
+2004-09-14 12:43  cgilles
+
+	* ChangeLog: CVS_SILENT Updated
+
+2004-09-14 12:35  cgilles
+
+	* sendimages/plugin_sendimages.cpp: SendImage plugin: Improve
+	  progress dialog messages CCMAIL: kde-imaging@kde.org
+
+2004-09-13 23:47  gateau
+
+	* kameraklient/: cameradragobject.cpp, cameradragobject.h,
+	  camerafolderitem.cpp, camerafolderitem.h, camerafolderview.cpp,
+	  camerafolderview.h, cameraiconitem.cpp, cameraiconitem.h,
+	  cameraiconview.cpp, cameraiconview.h, cameralist.cpp,
+	  cameralist.h, cameraselection.cpp, cameraselection.h,
+	  cameratype.cpp, cameratype.h, cameraui.cpp, cameraui.h,
+	  dmessagebox.cpp, dmessagebox.h, gpcamera.cpp, gpcamera.h,
+	  gpcommand.h, gpcontroller.cpp, gpcontroller.h, gpeventfilter.cpp,
+	  gpeventfilter.h, gpevents.h, gpfileitemcontainer.cpp,
+	  gpfileitemcontainer.h, gpfileiteminfo.cpp, gpfileiteminfo.h,
+	  gpfileiteminfodlg.cpp, gpfileiteminfodlg.h, gpiface.cpp,
+	  gpiface.h, gpmessages.cpp, gpmessages.h, gpstatus.cpp,
+	  gpstatus.h, kameraklient.cpp, kameraklient.h, mtlist.h,
+	  mtqueue.h, savefiledialog.cpp, savefiledialog.h, setupcamera.cpp,
+	  setupcamera.h, thumbitem.cpp, thumbitem.h, thumbview.cpp,
+	  thumbview.h: Patch by Tudor Calin to add back the namespace.
+
+2004-09-13 15:49  cgilles
+
+	* findimages/hi32-action-findcomments.png: CVS_SILENT remove
+
+2004-09-13 15:48  cgilles
+
+	* findimages/: displaycompare.cpp, displaycompare.h:
+	  Findduplicateimages plugin : fixed missing kipi::delImage call
+	  when the user remove a duplicate image to the list.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-09-10 15:52  pahlibar
+
+	* helloworld/plugin_helloworld.cpp:
+	  * removed AlbumEQDir feature from interface * added new virtual
+	  function to imagecollection(shared) isDirectory().	base
+	  implementation returns false.  CCMAIL: kde-imaging@kde.org
+
+2004-09-10 09:10  cgilles
+
+	* helloworld/Makefile.am: CVS_SILENT Remove i18n creation for
+	  helloworld. No need
+
+2004-09-09 20:57  pahlibar
+
+	* mpegencoder/kimg2mpg.cpp:
+	  * Image Selection Dialog now works in two modes: single url
+	  selection or	 multiple url selection (listview extended mode,
+	  shift/ctrl to make   multiple selections) * mpegencoder image
+	  selection changed to use the new multiple selection	mode, as an
+	  example CCMAIL: kde-imaging@kde.org
+
+2004-09-09 15:49  cgilles
+
+	* calendar/calwizard.cpp, cdarchiving/cdarchivingdialog.cpp,
+	  findimages/displaycompare.cpp,
+	  findimages/finddupplicatedialog.cpp,
+	  imagesgallery/imgallerydialog.cpp,
+	  kameraklient/cameraselection.cpp, kameraklient/cameraui.cpp,
+	  kameraklient/setupcamera.cpp, mpegencoder/kimg2mpg.cpp,
+	  printwizard/frmprintwizard.cpp, rawconverter/batchdialog.cpp,
+	  rawconverter/singledialog.cpp, sendimages/sendimagesdialog.cpp,
+	  slideshow/slideshowconfig.cpp, timeadjust/timeadjustdialog.cpp:
+	  CVS_SILENT Added common release ID
+
+2004-09-09 15:21  coles
+
+	* findimages/plugin_findimages.cpp:
+
+	  CVS_SILENT
+
+	  Corrected i18n plural-form usage.
+
+2004-09-09 15:02  cgilles
+
+	* acquireimages/acquireimagedialog.cpp,
+	  acquireimages/screenshotdialog.cpp,
+	  batchprocessimages/borderimagesdialog.cpp,
+	  batchprocessimages/colorimagesdialog.cpp,
+	  batchprocessimages/convertimagesdialog.cpp,
+	  batchprocessimages/effectimagesdialog.cpp,
+	  batchprocessimages/filterimagesdialog.cpp,
+	  batchprocessimages/imagepreview.cpp,
+	  batchprocessimages/outputdialog.cpp,
+	  batchprocessimages/recompressimagesdialog.cpp,
+	  batchprocessimages/renameimagesdialog.cpp,
+	  batchprocessimages/resizeimagesdialog.cpp: CVS_SILENT Common
+	  release ID
+
+2004-09-09 08:34  cgilles
+
+	* kipiplugins.kdevelop, acquireimages/acquireimagedialog.cpp,
+	  acquireimages/screenshotdialog.cpp,
+	  batchprocessimages/borderimagesdialog.cpp,
+	  batchprocessimages/colorimagesdialog.cpp,
+	  batchprocessimages/convertimagesdialog.cpp,
+	  batchprocessimages/effectimagesdialog.cpp,
+	  batchprocessimages/filterimagesdialog.cpp,
+	  batchprocessimages/recompressimagesdialog.cpp,
+	  batchprocessimages/renameimagesdialog.cpp,
+	  batchprocessimages/resizeimagesdialog.cpp,
+	  calendar/calwizard.cpp, findimages/displaycompare.cpp,
+	  findimages/finddupplicatedialog.cpp,
+	  imagesgallery/imgallerydialog.cpp,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  kameraklient/cameraselection.cpp, kameraklient/cameraui.cpp,
+	  kameraklient/setupcamera.cpp, mpegencoder/kimg2mpg.cpp,
+	  printwizard/frmprintwizard.cpp, rawconverter/batchdialog.cpp,
+	  rawconverter/singledialog.cpp, sendimages/sendimagesdialog.cpp,
+	  slideshow/slideshowconfig.cpp, timeadjust/timeadjustdialog.cpp:
+	  CVS_SILENT Fixed typo and i18n
+
+2004-09-08 17:35  adrian
+
+	* kameraklient/gpstatus.cpp: add missing return statement
+
+2004-09-08 15:50  cgilles
+
+	* ChangeLog: CVS_SILENT Update
+
+2004-09-08 15:40  cgilles
+
+	* findimages/: actions.h, displaycompare.cpp,
+	  finddupplicateimages.cpp, plugin_findimages.cpp:
+	  FindDuplicateImages KIPI plugin : - Fixed events.  - Fixed
+	  progress bar.  - Fixed dialog.
+
+	  Almost findduplicateimage method in album library results (with
+	  Digikam) :
+
+	  1234 images.	629 Mb (png, tiff, jpeg).  Matrix creation time:
+	  505773 us Comparison time: 28161 us 71 similar images found.
+	  Cache purged before.
+
+	  ==> no crash
+
+	  CCMAIL: kde-imaging@kde.org
+
+2004-09-08 12:27  coles
+
+	* calendar/calwizard.cpp, imagesgallery/imgallerydialog.cpp,
+	  printwizard/frmprintwizard.cpp:
+
+	  CVS_SILENT
+
+	  Corrected typos.
+
+2004-09-08 10:33  cgilles
+
+	* AUTHORS: CVS_SILENT Updated
+
+2004-09-08 08:09  cgilles
+
+	* cdarchiving/kipiplugin_cdarchiving.desktop,
+	  sendimages/kipiplugin_sendimages.desktop,
+	  timeadjust/kipiplugin_timeadjust.desktop: Fixed
+
+2004-09-07 19:40  pahlibar
+
+	* README, configure.in.in:
+	  use opengl configure check from amarok. lot cleaner and also
+	  makes it possible to enable the slideshow plugin build if qt is
+	  not linked with libGL, but loads it up dynamically (for qt >=
+	  3.2.0) CCMAIL: kde-imaging@kde.org
+
+2004-09-07 15:53  cgilles
+
+	* kipiplugins.kdevelop: CVS_SILENt Update
+
+2004-09-07 15:51  cgilles
+
+	* ChangeLog: CVS_SILENT Update
+
+2004-09-07 15:50  cgilles
+
+	* kameraklient/: cameraselection.cpp, cameraselection.h,
+	  cameraui.cpp, cameraui.h, setupcamera.cpp, setupcamera.h: Added
+	  About data in KameraKlient Kipi plugin.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-09-07 13:44  cgilles
+
+	* mpegencoder/: kimg2mpg.cpp, kimg2mpg.h, kshowdebuggingoutput.h:
+	  MPEGEncoder KIPI plugin : -Added About data.	-Fixed KURL support
+	  (partially: need to rewrite the plugin core for that.   Need to
+	  use a full C++ implementation instead the Bash script !)  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-09-07 12:40  cgilles
+
+	* imagesgallery/: imgallerydialog.cpp, imgallerydialog.h: Added
+	  About data in KIPI ImageGallery plugin.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-09-07 11:12  cgilles
+
+	* cdarchiving/cdarchivingdialog.cpp: CVS_SILENT Fixed email @
+
+2004-09-07 11:08  cgilles
+
+	* cdarchiving/cdarchivingdialog.h: CVS_SILENT Fixed
+
+2004-09-07 11:04  cgilles
+
+	* rawconverter/: batchdialog.cpp, batchdialog.h, singledialog.cpp,
+	  singledialog.h: KIPI RAW converter plugin : - Added About data.
+	  - Fixed bad slot for preview.  CCMAIL: kde-imaging@kde.org
+
+2004-09-07 10:23  cgilles
+
+	* timeadjust/: timeadjustdialog.cpp, timeadjustdialog.h: Added
+	  About data in KIPI TimeAdjust plugin.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-09-07 09:41  cgilles
+
+	* slideshow/: slideshowconfig.cpp, slideshowconfig.h: Added About
+	  data in KIPI Slideshow plugin.  CCMAIL: kde-imaging@kde.org
+
+2004-09-07 09:25  cgilles
+
+	* README: CVS_SLIENT Update
+
+2004-09-07 09:21  cgilles
+
+	* README: CVS_SILENT Update
+
+2004-09-07 09:17  cgilles
+
+	* sendimages/sendimages.cpp: SendImage KIPI plugin: - Fixed
+	  ReadWrite operations on comments file to WriteOnly.  - Added
+	  empty line in comments file.	CCMAIL: kde-imaging@kde.org
+
+2004-09-07 03:29  pahlibar
+
+	* Makefile.am, configure.in.in, jpeglossless/Makefile.am:
+	  * make use of pkg-config to distribute libkexif. makes it a lot
+	  easier   to do configure checking of installation and version *
+	  update libkipi/configure.in.in to use pkg-config checking for
+	  libkexif * jpeglossless compilation is now dependent on whether
+	  libkexif is	available or not * testing requested.  CCMAIL:
+	  digikam-devel@lists.sourceforge.net, kde-imaging@kde.org
+
+2004-09-06 18:59  cgilles
+
+	* findimages/: displaycompare.cpp, displaycompare.h,
+	  finddupplicatedialog.cpp, finddupplicatedialog.h,
+	  plugin_findimages.cpp, plugin_findimages.h: Added About data in
+	  FindDuplicateImages KIPI plugin Fixed menu entry : no need a
+	  sub-menu at this time.  CCMAIL: kde-imaging@kde.org
+
+2004-09-06 18:01  cgilles
+
+	* printwizard/: frmprintwizard.cpp, frmprintwizard.h: Added About
+	  data in PrintWizard KIPI plugin CCMAIL: kde-imaging@kde.org
+
+2004-09-06 15:53  cgilles
+
+	* calendar/: calwizard.cpp, calwizard.h: Added About data in
+	  Calendar KIPI plugin CCMAIL: kde-imaging@kde.org
+
+2004-09-06 15:49  gateau
+
+	* cdarchiving/plugin_cdarchiving.cpp,
+	  imagesgallery/plugin_imagesgallery.cpp,
+	  sendimages/plugin_sendimages.cpp: Fixed typo in enum.
+
+2004-09-06 15:12  cgilles
+
+	* sendimages/: sendimagesdialog.cpp, sendimagesdialog.h: Fixed
+	  slots
+
+
+v0.1.0-beta1                                                      2004-09-06
+----------------------------------------------------------------------------
+
+2004-09-06 14:26  cgilles
+
+	* sendimages/: sendimages.cpp, sendimages.h: SendImage plugin :
+	  fixed bug #87188 CCMAIL: kde-imaging@kde.org
+
+2004-09-06 13:30  cgilles
+
+	* kipiplugins.kdevelop,
+	  batchprocessimages/plugin_batchprocessimages.cpp: Fixed scope to
+	  test for batch actions.
+
+2004-09-06 12:53  cgilles
+
+	* sendimages/: listimageserrordialog.cpp, sendimagesdialog.cpp,
+	  sendimagesdialog.h: Added About data in 'SendImages' plugin.
+	  CCMAIL: kde-imaging@kde.org
+
+2004-09-04 16:12  pahlibar
+
+	* printwizard/: frmprintwizard.cpp, frmprintwizardbase.ui:
+	  applied patch from Treeve Jelbert for additional paper size
+	  (10x15cm).  need to add more layout options for this paper size
+
+2004-09-04 15:39  cgilles
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  batchprocessimagesdialog.h, borderimagesdialog.cpp,
+	  borderimagesdialog.h, colorimagesdialog.cpp, colorimagesdialog.h,
+	  convertimagesdialog.cpp, convertimagesdialog.h,
+	  effectimagesdialog.cpp, effectimagesdialog.h,
+	  filterimagesdialog.cpp, filterimagesdialog.h, imagepreview.cpp,
+	  imagepreview.h, outputdialog.cpp, outputdialog.h,
+	  recompressimagesdialog.cpp, recompressimagesdialog.h,
+	  renameimagesdialog.cpp, renameimagesdialog.h,
+	  resizeimagesdialog.cpp, resizeimagesdialog.h: Added about data
+	  for batch processes images plugins CCMAIL: kde-imaging@kde.org
+
+2004-09-03 16:48  cgilles
+
+	* kipiplugins.kdevelop, acquireimages/acquireimagedialog.cpp,
+	  acquireimages/acquireimagedialog.h,
+	  acquireimages/screenshotdialog.cpp,
+	  acquireimages/screenshotdialog.h,
+	  cdarchiving/cdarchivingdialog.cpp: Fixed about data in
+	  cdarchiving dialog Added about data in Acquire images plugins
+	  dialog CCMAIL: kdeimaging@kde.org
+
+2004-09-02 22:46  mlaurent
+
+	* kameraklient/: camerafolderview.cpp, cameraiconview.cpp,
+	  cameralist.cpp, cameraselection.cpp, dmessagebox.cpp,
+	  gpcontroller.cpp, gpeventfilter.cpp, gpfileitemcontainer.cpp,
+	  gpmessages.cpp, gpstatus.cpp, savefiledialog.cpp,
+	  setupcamera.cpp, thumbview.cpp: Includemoc
+
+2004-08-31 19:16  gateau
+
+	* kameraklient/: Makefile.am, camerafolderitem.cpp,
+	  camerafolderitem.h, camerafolderview.cpp, camerafolderview.h,
+	  cameraiconitem.cpp, cameraiconitem.h, cameraiconview.cpp,
+	  cameraiconview.h, cameralist.cpp, cameralist.h,
+	  cameraselection.cpp, cameraselection.h, cameratype.cpp,
+	  cameratype.h, cameraui.cpp, cameraui.h, dmessagebox.cpp,
+	  dmessagebox.h, gpcamera.cpp, gpcamera.h, gpcommand.h,
+	  gpcontroller.cpp, gpcontroller.h, gpeventfilter.cpp,
+	  gpeventfilter.h, gpevents.h, gpfileitemcontainer.cpp,
+	  gpfileitemcontainer.h, gpfileiteminfo.cpp, gpfileiteminfo.h,
+	  gpfileiteminfodlg.cpp, gpfileiteminfodlg.h, gpiface.cpp,
+	  gpiface.h, gpmessages.cpp, gpmessages.h, gpstatus.cpp,
+	  gpstatus.h, kameraklient.cpp, kameraklient.h, mtlist.h,
+	  mtqueue.h, savefiledialog.cpp, savefiledialog.h, setupcamera.cpp,
+	  setupcamera.h, thumbitem.cpp, thumbitem.h, thumbview.cpp,
+	  thumbview.h: Applied patch from Tudor Calin.
+
+2004-08-30 09:09  cgilles
+
+	* cdarchiving/cdarchivingdialog.cpp: Fixed bug report infos
+
+2004-08-29 16:28  cgilles
+
+	* cdarchiving/: cdarchivingdialog.cpp, cdarchivingdialog.h: Added
+	  kde bug report for testing
+
+2004-08-23 18:39  pahlibar
+
+	* findimages/finddupplicatedialog.cpp:
+	  check if the app has the required feature
+	  (date,collection,comment,...), before trying to use them CCMAIL:
+	  renchi@pooh.tam.uiuc.edu
+
+2004-08-15 02:43  pahlibar
+
+	* jpeglossless/: plugin_jpeglossless.cpp, plugin_jpeglossless.h:
+
+	  * make jpeglossless actions shallower in the menus * rename "exif
+	  adjustment" to more user friendly: "Auto Rotate/Flip Using Exif
+	  Information"
+
+	  CCMAIL: kde-imaging@kde.org, digikam-devel@lists.sourceforge.net
+
+2004-08-15 02:18  pahlibar
+
+	* jpeglossless/: actionthread.cpp, convert2grayscale.cpp,
+	  jpegtransform.cpp, messagebox.cpp, messagebox.h:
+	  * use qfile::encodename instead of latin1 * the messagebox got
+	  embedded in the mainwindow. fixed
+
+2004-08-15 00:34  jahrens
+
+	* slideshow/: pausetimer.h, slideshow.cpp: CVS_SILENT: Forgot
+	  deleting the old PauseTimer source
+
+2004-08-15 00:05  jahrens
+
+	* slideshow/: Makefile.am, pausetimer.cpp, pausetimer.h,
+	  slideshow.cpp, slideshowgl.cpp, slideshowgl.h: - Moved PauseTimer
+	  to pausetimer[.h|.cpp] to be able to use this timer in slideshow
+	  and slideshowGL as well - Added PauseTimer to slideshowGL - Both
+	  slideshows can now be interrupted by pressing the spacebar
+	  CCMAIL: digikam-devel@lists.sourceforge.net
+
+2004-08-14 11:19  jahrens
+
+	* slideshow/: slideshow.cpp, slideshow.h: When the spacebar is
+	  pressed, the slideshow is interrupted until the spacebar is
+	  pressed again.
+
+	  -> Additionally, it has to be added an info when the slideshow is
+	  paused, maybe an icon like this "||" or "paused" at the bottom
+	  line.
+
+	  CCMAIL: 87106@bugs.kde.org
+
+2004-08-08 12:13  mlaurent
+
+	* kameraklient/: camerafolderview.cpp, cameraiconview.cpp,
+	  cameralist.cpp, cameraselection.cpp, dmessagebox.cpp,
+	  gpcontroller.cpp, gpeventfilter.cpp, gpfileitemcontainer.cpp,
+	  gpmessages.cpp, gpstatus.cpp, savefiledialog.cpp,
+	  setupcamera.cpp, thumbview.cpp: Includemoc
+
+2004-08-06 12:31  cgilles
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  plugin_batchprocessimages.cpp: - Fixed modal mode of dialog
+	  (request for Drag/drop capability) ! (Jesper: warning, this
+	  feature have been removed during the port from Digikamplugins to
+	  KIPIplugin) Fixed selection mode ! CCMAIl: kdeimaging@kde.org
+
+2004-08-02 15:06  cgilles
+
+	* cdarchiving/cdarchiving.cpp: CDArchiving : fixed progress bar if
+	  no HTML interface CCMAIL: kde-imaging@kde.org
+
+2004-07-27 17:42  pahlibar
+
+	* mpegencoder/: Makefile.am, images2mpg.1, images2mpg.1.gz:
+	  moved manpages.1.gz to manpages.1
+
+2004-07-27 17:40  pahlibar
+
+	* rawconverter/: Makefile.am, kipidcrawclient.1,
+	  kipidcrawclient.1.gz:
+	  move manpage.1.gz to manpage.1
+
+2004-07-22 15:14  pahlibar
+
+	* batchprocessimages/batchprocessimagesdialog.cpp,
+	  mpegencoder/kimg2mpg.cpp, sendimages/sendimagesdialog.cpp:
+	  changed all instances of ImageCollectionDialog to ImageDialog
+
+2004-07-22 00:06  gateau
+
+	* calendar/monthwidget.cpp: Actually ImageDialog is more
+	  "KDE-like". Sorry for the double rename.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-07-21 23:56  gateau
+
+	* calendar/monthwidget.cpp: As discussed on the mailing-list,
+	  renamed ImageCollectionDialog to ImageChooser.
+	  CCMAIL:kde-imaging@kde.org
+
+2004-07-17 13:18  gateau
+
+	* imagesgallery/: imagesgallery.cpp, imgallerydialog.cpp,
+	  imgallerydialog.h: Make use of KIPI::ImageCollectionSelector.
+
+2004-07-17 12:05  pahlibar
+
+	* slideshow/plugin_slideshow.cpp:
+	  slideshow should use currentAlbumChanged not currentScopeChanged
+
+2004-07-14 23:14  cgilles
+
+	* kameraklient/: cameradragobject.cpp, cameradragobject.h,
+	  camerafolderitem.cpp, camerafolderitem.h, camerafolderview.cpp,
+	  camerafolderview.h, cameraiconitem.cpp, cameraiconitem.h,
+	  cameraiconview.cpp, cameraiconview.h, cameralist.cpp,
+	  cameralist.h, cameraselection.cpp, cameraselection.h,
+	  cameratype.cpp, cameratype.h, cameraui.cpp, cameraui.h,
+	  dmessagebox.cpp, dmessagebox.h, gpcamera.cpp, gpcamera.h,
+	  gpcommand.h, gpcontroller.cpp, gpcontroller.h, gpeventfilter.cpp,
+	  gpeventfilter.h, gpevents.h, gpfileitemcontainer.cpp,
+	  gpfileitemcontainer.h, gpfileiteminfo.cpp, gpfileiteminfo.h,
+	  gpfileiteminfodlg.cpp, gpfileiteminfodlg.h, gpiface.cpp,
+	  gpiface.h, gpmessages.cpp, gpmessages.h, gpstatus.cpp,
+	  gpstatus.h, kameraklient.cpp, kameraklient.h, mtlist.h,
+	  mtqueue.h, savefiledialog.cpp, savefiledialog.h, setupcamera.cpp,
+	  setupcamera.h, thumbitem.cpp, thumbitem.h, thumbview.cpp,
+	  thumbview.h: KameraKlient plugin: namespace wrapper CCMAIL:
+	  kde-imaging@kde.org
+
+2004-07-14 21:50  cgilles
+
+	* printwizard/: cropframe.cpp, cropframe.h, frmprintwizard.cpp,
+	  frmprintwizard.h, frmprintwizardbase.ui, plugin_printwizard.cpp,
+	  tphoto.cpp, tphoto.h, utils.cpp, utils.h: PrintWizard plugin:
+	  provide a full namespace wrapper (including the .ui file !!!)
+	  Nota: For provide a namespace in the ui. file, i have changed:
+	  <class>FrmPrintWizardBase</class> to:
+	  <class>KIPIPrintWizardPlugin::FrmPrintWizardBase</class> and
+	  <class>CropFrame</class> to:
+	  <class>KIPIPrintWizardPlugin::CropFrame</class> This way is
+	  undocumented but work fine (thanks to Wilfried Huss <Wilfried dot
+	  Huss at gmx.at> for this solution).  CCMAIL: kde-imaging@kde.org,
+	  renchi@pooh.tam.uiuc.edu
+
+2004-07-09 13:17  cgilles
+
+	* cdarchiving/: cdarchiving.cpp, plugin_cdarchiving.cpp: CVS_SILENt
+	  Fixed messages and comments
+
+2004-07-09 12:51  cgilles
+
+	* imagesgallery/: imagesgallery.cpp, imagesgallery.h: CVS_SILENT
+	  Added missing code for a possible subfolders support. untested.
+	  disable...
+
+2004-07-09 12:19  cgilles
+
+	* sendimages/: sendimages.cpp, sendimages.h: CVS_SILENT Fixed no
+	  void fonction
+
+2004-07-09 12:16  cgilles
+
+	* sendimages/sendimages.h: CVS_SILENt Fixed obsolete slot
+
+2004-07-09 09:45  gateau
+
+	* kameraklient/: cameradragobject.cpp, cameradragobject.h,
+	  camerafolderitem.cpp, camerafolderitem.h, camerafolderview.cpp,
+	  camerafolderview.h, cameraiconitem.cpp, cameraiconitem.h,
+	  cameraiconview.cpp, cameraiconview.h, cameralist.cpp,
+	  cameralist.h, cameratype.cpp, cameratype.h, cameraui.cpp,
+	  cameraui.h, dmessagebox.h, gpcamera.cpp, gpcamera.h, gpcommand.h,
+	  gpcontroller.cpp, gpcontroller.h, gpeventfilter.cpp,
+	  gpeventfilter.h, gpevents.h, gpfileitemcontainer.cpp,
+	  gpfileitemcontainer.h, gpfileiteminfo.cpp, gpfileiteminfo.h,
+	  gpiface.cpp, gpiface.h, gpmessages.cpp, gpstatus.cpp, gpstatus.h,
+	  kameraklient.cpp, kameraklient.h, mtlist.h, setupcamera.cpp,
+	  setupcamera.h: Added back the copyright lines
+
+2004-07-08 16:05  cgilles
+
+	* cdarchiving/plugin_cdarchiving.cpp,
+	  imagesgallery/plugin_imagesgallery.cpp: Fixed
+	  m_progressDlg->setButtonCancel( KStdGuiItem::close() ) in
+	  CDArchiving an ImageGallery plugins.	CCMAIL: kde-imaging@kde.org
+
+2004-07-08 15:46  cgilles
+
+	* sendimages/: plugin_sendimages.cpp, plugin_sendimages.h,
+	  sendimages.cpp, sendimages.h, sendimagesdialog.cpp,
+	  sendimagesdialog.h: Fixed drag and drop capability in sendImages
+	  plugin dialog.  CCMAil: kde-imaging@kde.org
+
+2004-07-08 14:33  cgilles
+
+	* imagesgallery/imgallerydialog.cpp: CVS_SILENT Fixed icons on
+	  dialog.
+
+2004-07-08 09:25  cgilles
+
+	* cdarchiving/cdarchivingdialog.cpp,
+	  cdarchiving/cdarchivingdialog.h,
+	  findimages/finddupplicatedialog.cpp,
+	  findimages/finddupplicatedialog.h,
+	  imagesgallery/imgallerydialog.cpp,
+	  imagesgallery/imgallerydialog.h: CVS_SILENT Using KListView
+	  instead QListView
+
+2004-07-08 08:39  cgilles
+
+	* cdarchiving/cdarchiving.cpp, cdarchiving/plugin_cdarchiving.cpp,
+	  findimages/plugin_findimages.cpp,
+	  imagesgallery/imagesgallery.cpp,
+	  imagesgallery/plugin_imagesgallery.cpp: Improved progress actions
+	  list for CDArchiving and ImagesGallery plugins : using now the
+	  thumbnailization process CCMAIL: kde-imaging@kde.org,
+	  digikam-devel@lists.sourceforge.net,
+	  digikam-users@lists.sourceforge.net
+
+2004-07-07 15:25  cgilles
+
+	* sendimages/: actions.h, listimageserrordialog.cpp,
+	  plugin_sendimages.cpp, plugin_sendimages.h, sendimages.cpp,
+	  sendimages.h: SendImages Plugin : using new KIPI batch progress
+	  dialog.  CCMAIL: kde-imaging@kde.org
+
+2004-07-07 09:04  cgilles
+
+	* ChangeLog, TODO, kipiplugins.kdevelop, cdarchiving/Makefile.am,
+	  cdarchiving/batchprogressdialog.cpp,
+	  cdarchiving/batchprogressdialog.h,
+	  cdarchiving/plugin_cdarchiving.cpp,
+	  cdarchiving/plugin_cdarchiving.h,
+	  findimages/plugin_findimages.cpp, findimages/plugin_findimages.h,
+	  imagesgallery/Makefile.am, imagesgallery/batchprogressdialog.cpp,
+	  imagesgallery/batchprogressdialog.h,
+	  imagesgallery/plugin_imagesgallery.cpp,
+	  imagesgallery/plugin_imagesgallery.h: Added new Batch Progress
+	  Dialog in KIPI nameSpace used by ImagesGallery, CDArchiving,
+	  FindDupplicateImages, and SendImages plugins.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-07-06 21:42  fawcett
+
+	* rawconverter/Makefile.am: fix linkage
+
+2004-07-06 17:57  cgilles
+
+	* findimages/: finddupplicatedialog.cpp, finddupplicatedialog.h,
+	  finddupplicateimages.cpp: Added progress dialog during Albums
+	  parsing.  CCMAIL: kde-imaging@kde.org
+
+2004-07-06 15:45  cgilles
+
+	* imagesgallery/: imagesgallery.cpp, imagesgallery.h: CVS_SILENT
+	  Fixed obsolote m_canceled variable !
+
+2004-07-06 15:36  cgilles
+
+	* imagesgallery/: imagesgallery.cpp, plugin_imagesgallery.cpp:
+	  CVS_SLIENT Fixed thumbs creation condition
+
+2004-07-06 15:35  cgilles
+
+	* cdarchiving/cdarchiving.cpp: CVS_SILENT Fixed thumbs creation
+	  condition.
+
+2004-07-06 15:10  cgilles
+
+	* imagesgallery/: Makefile.am, actions.h, batchprogressdialog.cpp,
+	  imagesgallery.cpp, imagesgallery.h, imgallerydialog.cpp,
+	  imgallerydialog.h, listimageserrordialog.cpp,
+	  listimageserrordialog.h, plugin_imagesgallery.cpp,
+	  plugin_imagesgallery.h, resizeimage.cpp, resizeimage.h:
+	  ImagesGallery plugin: - Complete rewriting from scratch with
+	  multithreading support based on JPEGLossLess implementation.	-
+	  Added an actions progress dialog.  - Removed obsolet source code
+	  (old dialog and old threaded thumbnail implementation).  CCMAIL:
+	  kde-imaging@kde.org, renchi@pooh.tam.uiuc.edu
+
+2004-07-06 15:05  cgilles
+
+	* cdarchiving/: cdarchiving.cpp, cdarchiving.h: Fixed coding style.
+	  Fixed broken image status during thumbnails creation.  CCMAIl:
+	  kde-imaging@kde.org
+
+2004-07-06 09:44  gateau
+
+	* kameraklient/Makefile.am: Fixed include directive, thanks to Jean
+	  Michel Fayard.
+
+2004-07-06 09:18  cgilles
+
+	* cdarchiving/: actions.h, cdarchiving.cpp, cdarchiving.h,
+	  cdarchivingdialog.h, plugin_cdarchiving.cpp: CVS_SILENT Fixed
+	  thread post event.  Fixed coding style.
+
+2004-07-05 16:13  cgilles
+
+	* imagesgallery/: Makefile.am, actions.h, batchprogressdialog.cpp,
+	  batchprogressdialog.h, imagesgallery.cpp, imagesgallery.h,
+	  imgallerydialog.cpp, imgallerydialog.h, plugin_imagesgallery.cpp,
+	  plugin_imagesgallery.h: CVS_SILENT Fixed depreciate.	Prepare to
+	  multithreading
+
+2004-07-05 16:06  cgilles
+
+	* cdarchiving/cdarchiving.h: CVS_SILENT Fixed #define by const int
+
+2004-07-05 15:46  cgilles
+
+	* cdarchiving/actions.h: CVS_SILENT Fix coding style.
+
+2004-07-05 14:10  cgilles
+
+	* cdarchiving/: batchprogressdialog.cpp, batchprogressdialog.h,
+	  cdarchiving.cpp, cdarchivingdialog.cpp, cdarchivingdialog.h,
+	  plugin_cdarchiving.cpp: Improved batchProgress dialog and thread
+	  post event.  CCMAIL: kde-imaging@kde.org
+
+2004-07-05 09:02  cgilles
+
+	* kameraklient/kipiplugin_kameraklient.desktop: CVS_SILENT Fixed
+	  comments
+
+2004-07-04 23:32  gateau
+
+	* Makefile.am, configure.in.in, kameraklient/.cvsignore,
+	  kameraklient/Makefile.am, kameraklient/cameradragobject.cpp,
+	  kameraklient/cameradragobject.h,
+	  kameraklient/camerafolderitem.cpp,
+	  kameraklient/camerafolderitem.h,
+	  kameraklient/camerafolderview.cpp,
+	  kameraklient/camerafolderview.h, kameraklient/cameraiconitem.cpp,
+	  kameraklient/cameraiconitem.h, kameraklient/cameraiconview.cpp,
+	  kameraklient/cameraiconview.h, kameraklient/cameralist.cpp,
+	  kameraklient/cameralist.h, kameraklient/cameraselection.cpp,
+	  kameraklient/cameraselection.h, kameraklient/cameratype.cpp,
+	  kameraklient/cameratype.h, kameraklient/cameraui.cpp,
+	  kameraklient/cameraui.h, kameraklient/dmessagebox.cpp,
+	  kameraklient/dmessagebox.h, kameraklient/gpcamera.cpp,
+	  kameraklient/gpcamera.h, kameraklient/gpcommand.h,
+	  kameraklient/gpcontroller.cpp, kameraklient/gpcontroller.h,
+	  kameraklient/gpeventfilter.cpp, kameraklient/gpeventfilter.h,
+	  kameraklient/gpevents.h, kameraklient/gpfileitemcontainer.cpp,
+	  kameraklient/gpfileitemcontainer.h,
+	  kameraklient/gpfileiteminfo.cpp, kameraklient/gpfileiteminfo.h,
+	  kameraklient/gpfileiteminfodlg.cpp,
+	  kameraklient/gpfileiteminfodlg.h, kameraklient/gpiface.cpp,
+	  kameraklient/gpiface.h, kameraklient/gpmessages.cpp,
+	  kameraklient/gpmessages.h, kameraklient/gpstatus.cpp,
+	  kameraklient/gpstatus.h, kameraklient/hi16-action-documents.png,
+	  kameraklient/hi16-action-generic.png,
+	  kameraklient/hi16-action-multimedia.png,
+	  kameraklient/hi16-action-new.png,
+	  kameraklient/hi16-action-pictures.png,
+	  kameraklient/hi16-action-sound.png,
+	  kameraklient/hi22-action-documents.png,
+	  kameraklient/hi22-action-generic.png,
+	  kameraklient/hi22-action-multimedia.png,
+	  kameraklient/hi22-action-new.png,
+	  kameraklient/hi22-action-pictures.png,
+	  kameraklient/hi22-action-sound.png,
+	  kameraklient/hi32-action-documents.png,
+	  kameraklient/hi32-action-generic.png,
+	  kameraklient/hi32-action-multimedia.png,
+	  kameraklient/hi32-action-new.png,
+	  kameraklient/hi32-action-pictures.png,
+	  kameraklient/hi32-action-sound.png,
+	  kameraklient/hi48-action-documents.png,
+	  kameraklient/hi48-action-generic.png,
+	  kameraklient/hi48-action-multimedia.png,
+	  kameraklient/hi48-action-new.png,
+	  kameraklient/hi48-action-pictures.png,
+	  kameraklient/hi48-action-sound.png,
+	  kameraklient/kameraklient.cpp, kameraklient/kameraklient.h,
+	  kameraklient/kipiplugin_kameraklient.desktop,
+	  kameraklient/mtlist.h, kameraklient/mtqueue.h,
+	  kameraklient/savefiledialog.cpp, kameraklient/savefiledialog.h,
+	  kameraklient/setupcamera.cpp, kameraklient/setupcamera.h,
+	  kameraklient/thumbitem.cpp, kameraklient/thumbitem.h,
+	  kameraklient/thumbview.cpp, kameraklient/thumbview.h: Initial
+	  import of KameraKlient. A KIPI plugin by Tudor Calin to import
+	  images from digital cameras. Based on Digikam code.
+
+2004-07-04 22:56  cgilles
+
+	* cdarchiving/: actions.h, batchprogressdialog.cpp,
+	  cdarchiving.cpp, cdarchivingdialog.cpp, cdarchivingdialog.h,
+	  plugin_cdarchiving.cpp: Updated dispach errors messages between
+	  thread and actions dialog.  Added progress dialog when Albums are
+	  parsing.  CCMAIL: kde-imaging@kde.org
+
+2004-07-03 23:18  cgilles
+
+	* cdarchiving/: batchprogressdialog.cpp, cdarchiving.cpp,
+	  plugin_cdarchiving.cpp: Fixed missing post envent when K3b is
+	  done.  Fixed disconnected signal when k3b is done.  Cdarchiving
+	  using multithreading capabilities done ! CCMAIL:
+	  kde-imaging@kde.org
+
+2004-07-03 01:12  cgilles
+
+	* cdarchiving/: actions.h, batchprogressdialog.cpp,
+	  batchprogressdialog.h, cdarchiving.cpp, plugin_cdarchiving.cpp:
+	  CVS_SILENT Fixed progess dialog. Done !
+
+2004-07-02 18:02  cgilles
+
+	* cdarchiving/: Makefile.am, actions.h, batchprogressdialog.cpp,
+	  batchprogressdialog.h, cdarchiving.cpp, cdarchiving.h,
+	  cdarchivingdialog.cpp, cdarchivingdialog.h,
+	  plugin_cdarchiving.cpp, plugin_cdarchiving.h: CDArchiving plugin:
+	  - Complete rewriting from scratch with multithreading support
+	  based on JPEGLossLess implementation.  - Added an actions
+	  progress dialog (uncomplete).  Work fine but must be improved!
+	  CCMAIL: kde-imaging@kde.org, renchi@pooh.tam.uiuc.edu
+
+2004-07-02 14:49  cgilles
+
+	* sendimages/sendimagesdialog.cpp: CVS_SILENT Fixed close event
+
+2004-07-02 08:53  cgilles
+
+	* sendimages/: plugin_sendimages.cpp, plugin_sendimages.h,
+	  sendimages.cpp, sendimages.h: CVS_SILENT Fixed coding style
+
+2004-07-01 17:50  cgilles
+
+	* sendimages/: plugin_sendimages.cpp, sendimages.cpp, sendimages.h:
+	  Fixed i18n message.  Fixed thread post event.
+
+2004-07-01 16:05  cgilles
+
+	* sendimages/: Makefile.am, actions.h, listimageserrordialog.cpp,
+	  listimageserrordialog.h, plugin_sendimages.cpp,
+	  plugin_sendimages.h, sendimages.cpp, sendimages.h,
+	  sendimagesdialog.cpp, sendimagesdialog.h: SendImages plugin :
+	  complete rewrite from scratch using multithreading capabilities
+	  (inspired from JPEGLossLess plugin).	100% Done ! Work fine, but
+	  can be certainly improved...	CCMAIL: kde-imaging@kde.org,
+	  renchi@pooh.tam.uiuc.edu
+
+2004-07-01 08:56  cgilles
+
+	* mpegencoder/: kimg2mpg.cpp, kimg2mpg.h: Fixed missing preview
+	  failed slot.
+
+2004-06-29 15:17  cgilles
+
+	* findimages/: actions.h, finddupplicateimages.cpp,
+	  plugin_findimages.cpp: CVS_SILENT Fixed NameSpace wrapper
+
+2004-06-29 14:12  cgilles
+
+	* mpegencoder/kimg2mpg.cpp, mpegencoder/kimg2mpg.h,
+	  sendimages/sendimagesdialog.cpp, sendimages/sendimagesdialog.h:
+	  Bugfix : image preview job is broken if the job instance isn't
+	  declared under the main class not in local (memory reference
+	  conflic ?) CCMAIL: kde-imaging@kde.org
+
+2004-06-29 13:25  cgilles
+
+	* sendimages/sendimagesdialog.cpp: Remove PENDING comments
+
+2004-06-29 13:23  cgilles
+
+	* acquireimages/: acquireimagedialog.cpp, acquireimagedialog.h,
+	  screenshotdialog.cpp, screenshotdialog.h: Fixed bug: infinte loop
+	  in find unique url code (provide during the kipi port).  Fixed
+	  PENDING tasks.  CCMAIl: kde-imaging@kde.org
+
+2004-06-29 12:53  cgilles
+
+	* cdarchiving/cdarchiving.h, cdarchiving/cdarchivingdialog.cpp,
+	  findimages/finddupplicatedialog.cpp,
+	  imagesgallery/imgallerydialog.cpp: Added
+	  'AlbumsUseFirstImagePreview' feature support (disable preview of
+	  current Album selected if this feature isn't supported by the
+	  host) CCMAIL: kde-imaging@kde.org
+
+2004-06-29 12:50  cgilles
+
+	* imagesgallery/imgallerydialog.cpp: Added
+	  'AlbumsUseFirstImagePreview' feature support in ImagesGallery
+	  dialog.  CCMAIL: kde-im
+
+2004-06-29 12:48  cgilles
+
+	* mpegencoder/kimg2mpg.cpp: Added ImageCollectionDialog support in
+	  MPEGEncoder plugin.  Fixed PENDING tasks.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-06-29 10:01  gateau
+
+	* TODO: Updated to what we agreed on the mailing list.
+
+2004-06-29 09:10  cgilles
+
+	* printwizard/frmprintwizardbase.ui: CVS_SILENT remove kipi name in
+	  labels
+
+2004-06-28 16:02  cgilles
+
+	* sendimages/: listimageserrordialog.cpp, listimageserrordialog.h,
+	  sendimagesdialog.cpp, sendimagesdialog.h: Fixed target images
+	  files name (resized before to E-mail) without double file
+	  extension (it's not really a bug).  Using '_' instead "." for the
+	  first file extension (like foo_png.jpg for example).	CCMAIL:
+	  kde-imaging@kde.org
+
+2004-06-28 13:56  cgilles
+
+	* acquireimages/plugin_acquireimages.cpp,
+	  batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/imagepreview.cpp, cdarchiving/cdarchiving.cpp,
+	  imagesgallery/resizeimage.cpp, jpeglossless/actions.h,
+	  jpeglossless/actionthread.cpp, jpeglossless/actionthread.h,
+	  jpeglossless/convert2grayscale.cpp,
+	  jpeglossless/convert2grayscale.h, jpeglossless/imageflip.cpp,
+	  jpeglossless/imageflip.h, jpeglossless/imagerotate.cpp,
+	  jpeglossless/imagerotate.h, jpeglossless/jpegtransform.cpp,
+	  jpeglossless/jpegtransform.h, jpeglossless/messagebox.cpp,
+	  jpeglossless/messagebox.h, jpeglossless/mtqueue.h,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  jpeglossless/plugin_jpeglossless.h, jpeglossless/progressdlg.cpp,
+	  jpeglossless/progressdlg.h, jpeglossless/utils.cpp,
+	  jpeglossless/utils.h, mpegencoder/kimg2mpg.cpp,
+	  printwizard/plugin_printwizard.cpp,
+	  sendimages/plugin_sendimages.cpp,
+	  sendimages/sendimagesdialog.cpp: Fixed namespace name in
+	  JPEGLosLess plugin in according with other plugins namespaces.
+	  Used kdDebug instead qDebug.	Fixed tmp folder name.
+
+2004-06-28 08:53  cgilles
+
+	* cdarchiving/: cdarchiving.cpp, cdarchivingdialog.cpp,
+	  cdarchivingdialog.h: Fixed missing Pending task provide by Jesper
+	  (problem during K3b project creation) CDArchiving work fine now.
+	  CCMAIL: kde-imaging@kde.org
+
+2004-06-24 23:31  cgilles
+
+	* cdarchiving/: cdarchiving.cpp, cdarchivingdialog.cpp,
+	  cdarchivingdialog.h: CDArchiving plugin : fixed all pending tasks
+	  !!! CCMAIL: kde-imaging@kde.org
+
+2004-06-24 23:10  cgilles
+
+	* imagesgallery/: listimageserrordialog.cpp,
+	  listimageserrordialog.h: CVS_SILENT Fix comments
+
+2004-06-24 15:56  cgilles
+
+	* findimages/: displaycompare.cpp, displaycompare.h,
+	  finddupplicatedialog.cpp, finddupplicatedialog.h,
+	  finddupplicateimages.cpp, finddupplicateimages.h:
+	  FindDuplicateImages plugin : All pending tasks done !!! CCMAIL:
+	  kde-imaging@kde.org
+
+2004-06-24 13:44  cgilles
+
+	* imagesgallery/: imagesgallery.cpp, imgallerydialog.cpp,
+	  imgallerydialog.h: Fixed all PENDING tasks in KIPI ImagesGallery
+	  plugin!!! CCMAIL: kde-imaging@kde.org
+
+2004-06-24 12:07  faure
+
+	* configure.in.in, mpegencoder/Makefile.am,
+	  mpegencoder/images2mpg.1.gz, mpegencoder/images2mpg.man.gz,
+	  rawconverter/Makefile.am, rawconverter/kipidcrawclient.1.gz,
+	  rawconverter/kipidcrawclient.man.gz: Install man pages properly,
+	  with man_MANS
+
+2004-06-24 11:50  faure
+
+	* cdarchiving/autorun/Makefile.am: What's simpler? broken
+	  install-data-local crap, or two-liner correct rules as documented
+	  on developer.kde.org? :/
+
+2004-06-24 11:42  faure
+
+	* Makefile.am, configure.in.in: If you want to conditionally
+	  compile a subdir, check the Makefile.am howto on
+	  developer.kde.org instead of breaking a perfectly ok Makefile.am.
+	  This fixes compilation with unsermake.  CCMAIL: Renchi Raju
+	  <renchi@pooh.tam.uiuc.edu>
+
+2004-06-24 11:23  cgilles
+
+	* helloworld/plugin_helloworld.cpp: In according with Jesper : -
+	  Added new KIPI features AlbumsHaveCategory and
+	  AlbumsHaveCreationDate requested for ImagesGallery an CDArchiving
+	  plugins.  - Added new virtuals methods in KIPI::ImageCollection
+	  and KIPI::ImageCollectionShared class in according with this new
+	  features.  CCMAIL: kde-imaging@kde.org
+
+2004-06-24 08:17  cgilles
+
+	* cdarchiving/cdarchivingdialog.cpp,
+	  findimages/finddupplicatedialog.cpp,
+	  imagesgallery/imgallerydialog.cpp: CVS_SILENT Fix icon in dialog
+
+2004-06-24 08:16  cgilles
+
+	* rawconverter/: batchdialog.cpp, batchdialog.h, clistviewitem.h,
+	  cspinbox.h, dmessagebox.cpp, dmessagebox.h,
+	  plugin_rawconverter.cpp, previewwidget.cpp, previewwidget.h,
+	  processcontroller.cpp, processcontroller.h, singledialog.cpp,
+	  singledialog.h: CVS_SILENT Fix namespace in according with others
+	  KIPI plugins namespace
+
+2004-06-23 15:57  cgilles
+
+	* printwizard/: cropframe.cpp, cropframe.h, frmprintwizard.cpp,
+	  frmprintwizard.h, plugin_printwizard.cpp, plugin_printwizard.h,
+	  tphoto.cpp, tphoto.h, utils.cpp, utils.h: CVS_SILENT Prepared to
+	  namespace
+
+2004-06-23 14:56  cgilles
+
+	* cdarchiving/cdarchiving.cpp, cdarchiving/cdarchiving.h,
+	  imagesgallery/imagesgallery.cpp, imagesgallery/imagesgallery.h:
+	  Added host application aboudata parsing used for provide to the
+	  HTML page a name and an URL in according with.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-06-23 10:25  cgilles
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  convertimagesdialog.cpp, renameimagesdialog.cpp: Fixed a missing
+	  statusbar refresh (probably removed during the KIPI port).
+
+2004-06-23 09:47  cgilles
+
+	* printwizard/frmprintwizardbase.ui: CVS_SILENT Remove Digikam name
+
+2004-06-23 09:36  cgilles
+
+	* calendar/: calpainter.cpp, calpainter.h, calselect.cpp,
+	  calselect.h, calsettings.cpp, calsettings.h, caltemplate.cpp,
+	  caltemplate.h, calwidget.cpp, calwidget.h, calwizard.cpp,
+	  calwizard.h, monthwidget.cpp, monthwidget.h, plugin_calendar.cpp:
+	  CVS_SILENT Fix namespace
+
+2004-06-23 08:49  cgilles
+
+	* batchprocessimages/renameimagesdialog.cpp,
+	  sendimages/plugin_sendimages.cpp, slideshow/plugin_slideshow.cpp,
+	  slideshow/plugin_slideshow.h, timeadjust/plugin_timeadjust.cpp,
+	  wallpaper/plugin_wallpaper.cpp: CVS_SILENT Fix indent.  Fix
+	  namespace.  Remove Digikam namespaces references
+
+2004-06-22 17:46  cgilles
+
+	* batchprocessimages/plugin_batchprocessimages.cpp,
+	  calendar/plugin_calendar.cpp, cdarchiving/cdarchivingdialog.h,
+	  cdarchiving/plugin_cdarchiving.cpp,
+	  imagesgallery/plugin_imagesgallery.cpp,
+	  mpegencoder/plugin_mpegencoder.cpp,
+	  printwizard/plugin_printwizard.cpp: In according with Renchi Raju
+	  : Fixed static_cast to dynamic_cast.	Added test if kipi
+	  interface is valid.
+
+2004-06-22 14:57  cgilles
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  batchprocessimagesitem.cpp: CVS_SILENT Added debug messages
+
+2004-06-22 13:49  cgilles
+
+	* batchprocessimages/batchprocessimagesdialog.cpp: Fixed widget
+	  size
+
+2004-06-22 12:33  cgilles
+
+	* batchprocessimages/batchprocessimagesdialog.cpp: BUGFIX : bad
+	  config instance delete CCMAIL: kde-imaging@kde.org
+
+2004-06-22 11:36  cgilles
+
+	* acquireimages/plugin_acquireimages.cpp,
+	  findimages/plugin_findimages.cpp,
+	  helloworld/plugin_helloworld.cpp,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  rawconverter/plugin_rawconverter.cpp,
+	  slideshow/plugin_slideshow.cpp, wallpaper/plugin_wallpaper.cpp:
+	  Fix static_cast by dynamic_cast pointer on host kipi interface
+
+2004-06-22 08:41  cgilles
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  borderimagesdialog.cpp, colorimagesdialog.cpp,
+	  convertimagesdialog.cpp, effectimagesdialog.cpp,
+	  filterimagesdialog.cpp, recompressimagesdialog.cpp,
+	  renameimagesdialog.cpp, resizeimagesdialog.cpp: CVS_SILENT Fix
+	  handbooks links
+
+2004-06-21 16:09  cgilles
+
+	* batchprocessimages/plugin_batchprocessimages.cpp: Fix static cast
+
+2004-06-21 08:53  cgilles
+
+	* kipiplugins.kdevelop, acquireimages/acquireimagedialog.cpp,
+	  acquireimages/screenshotdialog.cpp,
+	  batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/borderimagesdialog.cpp,
+	  batchprocessimages/colorimagesdialog.cpp,
+	  batchprocessimages/convertimagesdialog.cpp,
+	  batchprocessimages/effectimagesdialog.cpp,
+	  batchprocessimages/filterimagesdialog.cpp,
+	  batchprocessimages/recompressimagesdialog.cpp,
+	  batchprocessimages/renameimagesdialog.cpp,
+	  batchprocessimages/resizeimagesdialog.cpp,
+	  calendar/calwizard.cpp, cdarchiving/cdarchivingdialog.cpp,
+	  findimages/displaycompare.cpp,
+	  findimages/finddupplicatedialog.cpp,
+	  imagesgallery/imgallerydialog.cpp, mpegencoder/kimg2mpg.cpp,
+	  printwizard/frmprintwizard.cpp, rawconverter/batchdialog.cpp,
+	  rawconverter/singledialog.cpp, sendimages/sendimagesdialog.cpp,
+	  slideshow/slideshowconfig.cpp, timeadjust/timeadjustdialog.cpp:
+	  Update handbooks links
+
+2004-06-19 12:38  cgilles
+
+	* slideshow/: imlibiface.cpp, imlibiface.h, plugin_slideshow.cpp,
+	  slideshow.cpp, slideshow.h, slideshowconfig.cpp,
+	  slideshowconfig.h, slideshowgl.cpp, slideshowgl.h: Added
+	  namespace in SlideShow plugin.  CCMAIL: kde-imaging@kde.org
+
+2004-06-19 12:09  cgilles
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  batchprocessimagesdialog.h, batchprocessimagesitem.cpp,
+	  batchprocessimagesitem.h, batchprocessimageslist.cpp,
+	  batchprocessimageslist.h, borderimagesdialog.cpp,
+	  borderimagesdialog.h, borderoptionsdialog.cpp,
+	  borderoptionsdialog.h, colorimagesdialog.cpp,
+	  colorimagesdialog.h, coloroptionsdialog.cpp,
+	  coloroptionsdialog.h, convertimagesdialog.cpp,
+	  convertimagesdialog.h, convertoptionsdialog.cpp,
+	  convertoptionsdialog.h, effectimagesdialog.cpp,
+	  effectimagesdialog.h, effectoptionsdialog.cpp,
+	  effectoptionsdialog.h, filterimagesdialog.cpp,
+	  filterimagesdialog.h, filteroptionsdialog.cpp,
+	  filteroptionsdialog.h, imagepreview.cpp, imagepreview.h,
+	  outputdialog.cpp, outputdialog.h, plugin_batchprocessimages.cpp,
+	  plugin_batchprocessimages.h, recompressimagesdialog.cpp,
+	  recompressimagesdialog.h, recompressoptionsdialog.cpp,
+	  recompressoptionsdialog.h, renameimagesdialog.cpp,
+	  renameimagesdialog.h, renameimagesoptionsdialog.cpp,
+	  renameimagesoptionsdialog.h, resizeimagesdialog.cpp,
+	  resizeimagesdialog.h, resizeoptionsdialog.cpp,
+	  resizeoptionsdialog.h: Added namespace in batchProcessImages
+	  plugin.  CCMAIL: kde-imaging@kde.org
+
+2004-06-19 11:35  cgilles
+
+	* timeadjust/: plugin_timeadjust.cpp, plugin_timeadjust.h,
+	  timeadjustdialog.cpp, timeadjustdialog.h: Added namespace in
+	  TimeAdjust plugin.  CCMAIL: kde-imaging@kde.org
+
+2004-06-19 11:16  cgilles
+
+	* sendimages/: listimageserrordialog.cpp, listimageserrordialog.h,
+	  plugin_sendimages.cpp, plugin_sendimages.h, sendimagesdialog.cpp,
+	  sendimagesdialog.h: Added namespace in Sendimages plugin CCMAIL:
+	  kde-imaging@kde.org
+
+2004-06-19 11:08  cgilles
+
+	* mpegencoder/: checkbinprog.cpp, checkbinprog.h, kimg2mpg.cpp,
+	  kimg2mpg.h, kshowdebuggingoutput.cpp, kshowdebuggingoutput.h,
+	  optionsdialog.cpp, optionsdialog.h, plugin_mpegencoder.cpp: Added
+	  namespace in MPEGEncoder plugin CCMAIL: kde-imaging@kde.org
+
+2004-06-19 10:51  cgilles
+
+	* acquireimages/: acquireimagedialog.cpp, acquireimagedialog.h,
+	  plugin_acquireimages.cpp, plugin_acquireimages.h,
+	  screenshotdialog.cpp, screenshotdialog.h: Added namespace for
+	  AcquireImages plugins CCMAIL: kde-imaging@kde.org
+
+2004-06-19 10:50  cgilles
+
+	* kipiplugins.kdevelop: Added a basic kdevelop project for kipi
+	  plugins. Must be improved (config)
+
+2004-06-19 02:55  craig
+
+	* cdarchiving/: cdarchiving.cpp, cdarchivingdialog.cpp: Add parents
+	  to dialogs
+
+2004-06-19 02:48  craig
+
+	* calendar/: calwizard.cpp, calwizard.h, plugin_calendar.cpp: * Add
+	  parents to dialogs * Add caption
+
+2004-06-19 02:41  craig
+
+	* batchprocessimages/: plugin_batchprocessimages.cpp,
+	  resizeoptionsdialog.cpp: Add parents to dialogs
+
+2004-06-19 01:57  craig
+
+	* acquireimages/: acquireimagedialog.cpp, plugin_acquireimages.cpp,
+	  screenshotdialog.cpp: Add parents to dialogs
+
+2004-06-19 01:48  craig
+
+	* jpeglossless/: messagebox.cpp, progressdlg.cpp, progressdlg.h: *
+	  Add parents to dialogs * Use KPushButton and KStdGuiItem
+
+2004-06-19 00:07  craig
+
+	* jpeglossless/plugin_jpeglossless.cpp: Ask for confirmation before
+	  converting an image to black and white.
+
+2004-06-18 16:03  cgilles
+
+	* findimages/: displaycompare.cpp, displaycompare.h,
+	  finddupplicatedialog.cpp, finddupplicatedialog.h,
+	  finddupplicateimages.cpp, finddupplicateimages.h,
+	  plugin_findimages.cpp, plugin_findimages.h: Added namespace for
+	  FindDupplicateImages plugin.	CCMAIL: kde-imaging@kde.org
+
+2004-06-18 15:51  cgilles
+
+	* cdarchiving/: cdarchiving.cpp, cdarchiving.h,
+	  cdarchivingdialog.cpp, cdarchivingdialog.h,
+	  plugin_cdarchiving.cpp, plugin_cdarchiving.h: Added NameSpace in
+	  CDArchiving plugin.  CCMAIl: kde-imaging@kde.org
+
+2004-06-18 15:25  cgilles
+
+	* imagesgallery/: imagesgallery.cpp, imagesgallery.h,
+	  imgallerydialog.cpp, imgallerydialog.h,
+	  listimageserrordialog.cpp, listimageserrordialog.h,
+	  plugin_imagesgallery.cpp, plugin_imagesgallery.h,
+	  resizeimage.cpp, resizeimage.h: Added namespace for ImageGallery
+	  == Fix memory conflic with CDArchiving !!! CCMAIL:
+	  kde-imaging@kde.org
+
+2004-06-18 08:02  cgilles
+
+	* jpeglossless/plugin_jpeglossless.cpp,
+	  timeadjust/plugin_timeadjust.cpp, wallpaper/plugin_wallpaper.cpp:
+	  Fixed currentSelection to currentScope in according with Jesper.
+	  Nota : No Change in WallPaper plugin because there is no scence :
+	  only one image can be push on the desktop background at the same
+	  time.
+
+	  CCMAIL: kde-imaging@kde.org
+
+2004-06-17 20:04  pahlibar
+
+	* Makefile.am, configure.in.in:
+
+	  "fixed" configure to allow slideshow to be compiled. added test
+	  to check if qt has been compiled with opengl support if
+	  --enable-opengl is not specified. testing requested.
+
+	  CCMAIL: kde-imaging@kde.org
+
+2004-06-17 18:56  cgilles
+
+	* timeadjust/timeadjustdialog.cpp: Added handbook link
+
+2004-06-17 18:42  cgilles
+
+	* ChangeLog, jpeglossless/plugin_jpeglossless.cpp,
+	  jpeglossless/plugin_jpeglossless.h,
+	  timeadjust/plugin_timeadjust.cpp, wallpaper/plugin_wallpaper.cpp,
+	  wallpaper/plugin_wallpaper.h: Fixed actions enabled/disabled in
+	  according with current selection for JPEGLossLess, TimeAjust, and
+	  WallPaper plugins.  CCMAIL: kde-imaging@kde.org
+
+2004-06-17 12:45  cgilles
+
+	* ChangeLog, acquireimages/acquireimagedialog.cpp,
+	  acquireimages/acquireimagedialog.h,
+	  batchprocessimages/batchprocessimagesdialog.cpp,
+	  cdarchiving/cdarchiving.cpp, cdarchiving/cdarchiving.h,
+	  cdarchiving/cdarchivingdialog.cpp,
+	  cdarchiving/cdarchivingdialog.h,
+	  findimages/finddupplicatedialog.cpp,
+	  findimages/finddupplicateimages.cpp,
+	  imagesgallery/imagesgallery.cpp,
+	  imagesgallery/imgallerydialog.cpp, mpegencoder/kimg2mpg.cpp,
+	  mpegencoder/kimg2mpg.h, mpegencoder/plugin_mpegencoder.cpp,
+	  sendimages/sendimagesdialog.cpp: Added new method
+	  'fileExtensions()' for images files sorting in plugins instead
+	  digikamrc config file parsing.  CCMAIL: kde-imaging@kde.org
+
+2004-06-16 21:08  binner
+
+	* printwizard/frmprintwizardbase.ui: CVS_SILENT fixuifiles
+
+2004-06-16 15:29  cgilles
+
+	* acquireimages/acquireimagedialog.cpp,
+	  cdarchiving/cdarchivingdialog.cpp,
+	  imagesgallery/imgallerydialog.cpp, rawconverter/batchdialog.cpp,
+	  rawconverter/singledialog.cpp, timeadjust/timeadjustdialog.cpp:
+	  Added basic kipi icon. Change about plugins part in according.
+	  CCMAIL: kde-imaging@kde.org
+
+2004-06-16 14:33  cgilles
+
+	* acquireimages/: plugin_acquireimages.cpp, plugin_acquireimages.h:
+	  Remove KMenuAction (not necessary since this plugin is in
+	  IMPORTPLUGIN category) CCMAIL: kde-imaging@kde.org
+
+2004-06-16 13:01  cgilles
+
+	* acquireimages/plugin_acquireimages.cpp,
+	  acquireimages/plugin_acquireimages.h,
+	  batchprocessimages/plugin_batchprocessimages.cpp,
+	  batchprocessimages/plugin_batchprocessimages.h,
+	  calendar/plugin_calendar.cpp, calendar/plugin_calendar.h,
+	  cdarchiving/plugin_cdarchiving.cpp,
+	  cdarchiving/plugin_cdarchiving.h,
+	  findimages/plugin_findimages.cpp, findimages/plugin_findimages.h,
+	  helloworld/plugin_helloworld.cpp, helloworld/plugin_helloworld.h,
+	  imagesgallery/plugin_imagesgallery.cpp,
+	  imagesgallery/plugin_imagesgallery.h,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  jpeglossless/plugin_jpeglossless.h,
+	  mpegencoder/plugin_mpegencoder.cpp,
+	  mpegencoder/plugin_mpegencoder.h,
+	  printwizard/plugin_printwizard.cpp,
+	  printwizard/plugin_printwizard.h,
+	  rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/plugin_rawconverter.h,
+	  sendimages/plugin_sendimages.cpp, sendimages/plugin_sendimages.h,
+	  slideshow/plugin_slideshow.cpp, slideshow/plugin_slideshow.h,
+	  timeadjust/plugin_timeadjust.cpp, timeadjust/plugin_timeadjust.h,
+	  wallpaper/plugin_wallpaper.cpp, wallpaper/plugin_wallpaper.h:
+	  Removed 'category()' method for plugins category identification.
+	  CCMAIL: kde-imaging@kde.org
+
+2004-06-15 18:55  cgilles
+
+	* rawconverter/: plugin_rawconverter.cpp, plugin_rawconverter.h:
+	  New plugin category identification method based on KAction
+	  identification required for RawConverter plugin.
+
+	  CCMAIL: kde-imaging@kde.org
+
+2004-06-15 15:13  cgilles
+
+	* acquireimages/acquireimagedialog.cpp,
+	  acquireimages/plugin_acquireimages.cpp,
+	  acquireimages/screenshotdialog.cpp,
+	  batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/borderimagesdialog.cpp,
+	  batchprocessimages/colorimagesdialog.cpp,
+	  batchprocessimages/convertimagesdialog.cpp,
+	  batchprocessimages/effectimagesdialog.cpp,
+	  batchprocessimages/filterimagesdialog.cpp,
+	  batchprocessimages/imagepreview.cpp,
+	  batchprocessimages/recompressimagesdialog.cpp,
+	  batchprocessimages/renameimagesdialog.cpp,
+	  batchprocessimages/resizeimagesdialog.cpp,
+	  calendar/calwizard.cpp, cdarchiving/cdarchiving.cpp,
+	  cdarchiving/cdarchivingdialog.cpp,
+	  cdarchiving/plugin_cdarchiving.cpp,
+	  findimages/displaycompare.cpp,
+	  findimages/finddupplicatedialog.cpp,
+	  imagesgallery/imagesgallery.cpp,
+	  imagesgallery/imgallerydialog.cpp,
+	  imagesgallery/plugin_imagesgallery.cpp,
+	  imagesgallery/resizeimage.cpp, jpeglossless/actionthread.cpp,
+	  printwizard/frmprintwizard.cpp,
+	  printwizard/plugin_printwizard.cpp, rawconverter/batchdialog.cpp,
+	  rawconverter/processcontroller.cpp,
+	  rawconverter/singledialog.cpp, slideshow/plugin_slideshow.cpp,
+	  slideshow/slideshowconfig.cpp: Fix 'kipi' instead 'digikam': - In
+	  comments.  - In dialog text and title.  - In temporaly folders
+	  creation.  - In ressource loading path (specific icons, script,
+	  etc.) - Handbook page call (PENDING : the kipi handbook must be
+	  created - based on Digikam plugins sections handbook).
+
+	  IMPORTANT : There is a very important _PENDING_ task to do : the
+	  kipirc file must have a config line for the images files filter
+	  using in the plugins. Digikam rc file have this line from the
+	  Albums files filter config.
+
+	  For example, from the CDArchiving plugins, the pending
+	  implementation is :
+
+	    // PENDING (Gilles) : Using kipirc file!
+	    // Read File Filter settings in digikamrc file.
+
+	      m_config = new KConfig("digikamrc");
+	      m_config->setGroup("Album Settings");
+	      QString Temp = m_config->readEntry("File Filter", "*.jpg
+	  *.jpeg *.tif *.tiff *.gif *.png *.bmp");
+	      m_imagesFileFilter = Temp.lower() + " " + Temp.upper();
+
+2004-06-15 15:02  cgilles
+
+	* cdarchiving/autorun/Makefile.am: Fix 'kipi' installation folder
+	  instead 'digikam' CCMAIL: kde-imaging@kde.org
+
+2004-06-15 14:00  cgilles
+
+	* ChangeLog, findimages/plugin_findimages.cpp: Added new plugin
+	  category : COLLECTIONSPLUGIN.  Changed category plugin for
+	  'DirOperations' and 'FindImages' to COLLECTIONSPLUGIN.
+
+	  CCMAIL: kde-imaging@kde.org, digikam-devel@lists.sourceforge.net
+
+2004-06-15 04:57  pahlibar
+
+	* acquireimages/acquireimagedialog.cpp,
+	  batchprocessimages/batchprocessimagesdialog.cpp,
+	  cdarchiving/cdarchivingdialog.cpp,
+	  findimages/finddupplicatedialog.cpp:
+	  CCMAIL: kde-imaging@kde.org fix args for file preview job
+
+2004-06-15 04:24  pahlibar
+
+	* findimages/displaycompare.cpp, mpegencoder/kimg2mpg.cpp,
+	  rawconverter/batchdialog.cpp, sendimages/sendimagesdialog.cpp:
+	  CCMAIL: kde-imaging@kde.org attend to some pending tasks for me
+	  by jesper
+
+2004-06-15 00:31  pahlibar
+
+	* configure.in.in:
+	  forgot to fix ac_imlib_config to ac_imlib2_config
+
+2004-06-14 22:24  cgilles
+
+	* batchprocessimages/batchprocessimagesdialog.cpp: Fix indentation.
+
+2004-06-14 18:26  pahlibar
+
+	* README, configure.in.bot, configure.in.in, slideshow/Makefile.am,
+	  slideshow/imlibiface.cpp, slideshow/imlibiface.h,
+	  slideshow/plugin_slideshow.cpp, slideshow/slideshow.cpp,
+	  slideshow/slideshow.h, slideshow/slideshowconfig.cpp,
+	  slideshow/slideshowgl.cpp:
+	  CCMAIL: kde-imaging@kde.org ported the slideshow plugin to use
+	  imlib2. (requesting testing).  added include mocs
+
+2004-06-14 16:34  cgilles
+
+	* batchprocessimages/batchprocessimagesdialog.cpp: Fixed
+	  UploadWidget size !
+
+2004-06-14 10:41  cgilles
+
+	* rawconverter/: hi32-action-rawconverter.png,
+	  hi32-action-rawconverterbatch.png,
+	  hi32-action-rawconvertersingle.png, plugin_rawconverter.cpp:
+	  Added new icons for single and batch RawConverter actions CCMAIL:
+	  kde-imaging@kde.org
+
+2004-06-14 10:26  cgilles
+
+	* mpegencoder/plugin_mpegencoder.cpp: MPEGEncoder is now a
+	  'BATCHPLUGIN' category CCMAIL: kde-imaging@kde.org
+
+2004-06-13 22:26  blackie
+
+	* acquireimages/acquireimagedialog.cpp,
+	  acquireimages/acquireimagedialog.h,
+	  batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/batchprocessimagesdialog.h,
+	  calendar/monthwidget.cpp, calendar/monthwidget.h,
+	  cdarchiving/cdarchivingdialog.cpp,
+	  cdarchiving/cdarchivingdialog.h, findimages/displaycompare.cpp,
+	  findimages/displaycompare.h, findimages/finddupplicatedialog.cpp,
+	  findimages/finddupplicatedialog.h,
+	  imagesgallery/imgallerydialog.cpp,
+	  imagesgallery/imgallerydialog.h, mpegencoder/kimg2mpg.cpp,
+	  mpegencoder/kimg2mpg.h, rawconverter/batchdialog.cpp,
+	  rawconverter/batchdialog.h, sendimages/sendimagesdialog.cpp,
+	  sendimages/sendimagesdialog.h: CCMAIL: kde-imaging@kde.org
+	  CCMAIL: kimdaba@klaralvdalens-datakonsult.se
+
+	  Removed digikam dependencies through the KIPI::ThumbnailJob
+	  class.  The instances of this class has now been replaced with
+	  KIPI::filePreview.
+
+	  Renchi: Could you please go through each call in the source, and
+	  look at the comment I placed above the call. There were some
+	  arguments to ThumbnailJob I did not understand what did, but on
+	  the other hand they don't seem to be missed.
+
+	  Cheers Jesper.
+
+2004-06-13 17:33  cgilles
+
+	* batchprocessimages/: batchprocessimagesdialog.h,
+	  plugin_batchprocessimages.cpp, plugin_batchprocessimages.h:
+	  Remove 'Batch Proceses' menu
+
+2004-06-13 16:47  cgilles
+
+	* ChangeLog, calendar/plugin_calendar.cpp, findimages/Makefile.am,
+	  findimages/plugin_findimages.cpp, jpeglossless/Makefile.am,
+	  jpeglossless/plugin_jpeglossless.cpp, rawconverter/Makefile.am,
+	  rawconverter/plugin_rawconverter.cpp, slideshow/Makefile.am,
+	  slideshow/plugin_slideshow.cpp: Fix plugins menu icons rendering
+	  in the hosts apps.
+
+	  CCMAIL: kde-imaging@kde.org, digikam-devel@lists.sourceforge.net
+
+2004-06-13 15:45  cgilles
+
+	* batchprocessimages/Makefile.am: CVS_SILENT Fix indent
+
+2004-06-13 12:36  faure
+
+	* configure.in.bot, configure.in.in: No idea why AC_MSG_WARN fails
+	  for Jesper, but anyway this is better done with a
+	  configure.in.bot
+
+2004-06-11 22:56  gateau
+
+	* configure.in.in, jpeglossless/Makefile.am: Better detection of
+	  libkexif
+
+2004-06-11 22:56  gateau
+
+	* acquireimages/acquireimagedialog.cpp: Fix KDE3.1 compile
+
+2004-06-11 22:28  mlaurent
+
+	* jpeglossless/transupp.h: Fix --enable-final
+
+2004-06-11 22:25  mlaurent
+
+	* acquireimages/acquireimagedialog.cpp: Fix --enable-final
+
+2004-06-11 20:01  rhoezler
+
+	* jpeglossless/jpegtransform.cpp: Make it compile after libkexif
+	  changes.
+
+2004-06-11 18:49  rhoezler
+
+	* AUTHORS, README, TODO: Lots of little documentation updates.
+
+2004-06-11 15:00  cgilles
+
+	* batchprocessimages/plugin_batchprocessimages.cpp: Fix menu name
+
+2004-06-10 15:53  cgilles
+
+	* timeadjust/plugin_timeadjust.cpp: Added menu icon
+
+2004-06-10 14:24  cgilles
+
+	* mpegencoder/kimg2mpg.cpp: Bugfix : unknow slot name specified !
+
+2004-06-10 14:14  brade
+
+	* jpeglossless/Makefile.am: Fix compiling with srcdir != builddir
+	  and no preinstalled libkexif.
+
+2004-06-10 13:11  cgilles
+
+	* README, AUTHORS, COPYING: CVS_SILENT Update
+
+2004-06-10 12:56  cgilles
+
+	* ChangeLog: Update
+
+2004-06-10 11:17  cgilles
+
+	* batchprocessimages/data/Makefile.am: Fix name
+
+2004-06-10 10:58  cgilles
+
+	* Makefile.am: Remove HelloWorld plugins per default durring
+	  build/install process.
+
+2004-06-10 10:52  cgilles
+
+	* Makefile.am: Added GammaCalibration plugin
+
+2004-06-09 02:40  rhoezler
+
+	* jpeglossless/: actions.h, actionthread.cpp, imagerotate.cpp,
+	  jpegtransform.cpp, jpegtransform.h, plugin_jpeglossless.cpp: Add
+	  new option to JpegLossLess plugin, to rotate according to the
+	  EXIF orientation tag. For example, if the image is saved by the
+	  camera in landscape and the tag specifies rotating 90 degrees,
+	  this function will rotate the image and reset the EXIF
+	  orientation to normal, so every EXIF-unaware image viewer shows
+	  the image correctly.
+
+	  CCMAIL: digikam-devel@lists.sourceforge.net
+
+2004-06-08 23:19  rhoezler
+
+	* jpeglossless/: Makefile.am, actions.h, imageflip.cpp,
+	  imagerotate.cpp, jpegtransform.cpp, jpegtransform.h: Improved
+	  rotation/flipping based on EXIF orientation tag. The image is now
+	  rotated taking the current EXIF orientation into account. For
+	  example, if the image is rotated left 90 degrees, but the EXIF
+	  tag corrects the rotation, the user will see the thumbnail in the
+	  correct position. If the user now requests to rotate 90 degrees
+	  to the right, the image will actually be rotated 180 degrees to
+	  the right and the EXIF orientation will be reset to normal. This
+	  is based on Marcel Wiesweg's matrix transformation patch.
+
+	  CCMAIL: digikam-devel@lists.sourceforge.net
+
+2004-06-08 07:52  cgilles
+
+	* batchprocessimages/plugin_batchprocessimages.cpp: Fix category to
+	  BATCHPLUGIN
+
+2004-06-07 23:35  rhoezler
+
+	* rawconverter/.cvsignore: Ignore kipidcrawclient
+
+2004-06-07 23:15  rhoezler
+
+	* TODO: Update.
+
+2004-06-07 19:10  rhoezler
+
+	* jpeglossless/: Makefile.am, imageflip.cpp, imagerotate.cpp: - Use
+	  libkexif to reset EXIF orientation tag to normal, after rotates
+	  and flips
+
+2004-06-07 15:09  cgilles
+
+	* cdarchiving/plugin_cdarchiving.cpp: Fix cdarchiving plugin type
+	  like EXPORT plugins
+
+2004-06-06 21:09  blackie
+
+	* timeadjust/kipiplugin_timeadjust.desktop: ups a bit too much
+	  cut'n'paste
+
+2004-06-06 19:24  gateau
+
+	* wallpaper/plugin_wallpaper.cpp: Typo
+
+2004-06-06 19:21  gateau
+
+	* wallpaper/plugin_wallpaper.cpp: KURL support.
+
+2004-06-05 21:16  mlaurent
+
+	* findimages/: finddupplicatedialog.cpp, finddupplicateimages.cpp,
+	  plugin_findimages.cpp: Includemoc
+
+2004-06-04 00:09  blackie
+
+	* batchprocessimages/plugin_batchprocessimages.cpp,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  mpegencoder/plugin_mpegencoder.cpp,
+	  printwizard/plugin_printwizard.cpp,
+	  printwizard/plugin_printwizard.h,
+	  rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/plugin_rawconverter.h,
+	  sendimages/plugin_sendimages.cpp, slideshow/plugin_slideshow.cpp,
+	  timeadjust/plugin_timeadjust.cpp, wallpaper/plugin_wallpaper.cpp:
+	  CCMAIL: kde-imaging@kde.org
+
+	  - I realized that most of the plugins had code looking like this:
+	      ImageCollection images = interface->currentSelection();
+	  if ( !images.isValid() )	 images =
+	  interface->currentAlbum();   I therefore added a function called
+	  currentScope(), which does exactly   this. Its implementation is
+	  as simple as	   KIPI::ImageCollection
+	  KIPI::Interface::currentScope()     {       ImageCollection
+	  images = currentSelection();	     if ( images.isValid() )
+	     return images;	  else		 return currentAlbum();
+	   }
+
+	  - Added signals to KIPI::Interface. The host application may now
+	  emit one   of     void selectionChanged( bool hasSelection );
+	  void currentAlbumChanged( bool anyAlbum );   in addition the
+	  interface will itself emit	 void currentScopeChanged( bool
+	  asScope );   when one of the others are emitted.
+
+	  - Added all the, till now, commented out lines for
+	  enabling/disabling   actions based on selection/album
+
+2004-06-02 15:13  gateau
+
+	* findimages/finddupplicateimages.h: Do not declare methods as
+	  inline if they are not.
+
+2004-06-02 15:07  gateau
+
+	* rawconverter/Makefile.am: Do not link to digikam
+
+2004-06-02 00:16  blackie
+
+	* Makefile.am, findimages/displaycompare.cpp,
+	  findimages/displaycompare.h, findimages/finddupplicatedialog.cpp,
+	  findimages/finddupplicatedialog.h,
+	  findimages/finddupplicateimages.cpp,
+	  findimages/finddupplicateimages.h,
+	  findimages/plugin_findimages.cpp: almost done porting findimages
+	  plugin
+
+2004-05-31 23:53  mlaurent
+
+	* helloworld/plugin_helloworld.cpp: includemoc
+
+2004-05-31 22:55  blackie
+
+	* Makefile.am, rawconverter/batchdialog.cpp,
+	  rawconverter/batchdialog.h, rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/plugin_rawconverter.h: ported plugin
+
+2004-05-31 22:30  blackie
+
+	* acquireimages/plugin_acquireimages.cpp,
+	  acquireimages/plugin_acquireimages.h,
+	  batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/plugin_batchprocessimages.cpp,
+	  batchprocessimages/plugin_batchprocessimages.h,
+	  calendar/plugin_calendar.cpp, calendar/plugin_calendar.h,
+	  cdarchiving/plugin_cdarchiving.cpp,
+	  cdarchiving/plugin_cdarchiving.h,
+	  findimages/plugin_findimages.cpp, findimages/plugin_findimages.h,
+	  helloworld/plugin_helloworld.cpp, helloworld/plugin_helloworld.h,
+	  imagesgallery/plugin_imagesgallery.cpp,
+	  imagesgallery/plugin_imagesgallery.h,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  jpeglossless/plugin_jpeglossless.h,
+	  mpegencoder/plugin_mpegencoder.cpp,
+	  mpegencoder/plugin_mpegencoder.h,
+	  printwizard/plugin_printwizard.cpp,
+	  printwizard/plugin_printwizard.h,
+	  rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/plugin_rawconverter.h,
+	  sendimages/plugin_sendimages.cpp, sendimages/plugin_sendimages.h,
+	  slideshow/plugin_slideshow.cpp, slideshow/plugin_slideshow.h,
+	  timeadjust/plugin_timeadjust.cpp, timeadjust/plugin_timeadjust.h,
+	  wallpaper/plugin_wallpaper.cpp, wallpaper/plugin_wallpaper.h:
+	  CC-MAIL:kde-imaging@kde.org
+
+	  As an action may be located in several windows (e.g. in several
+	  image viewers), the actions are now setup in a setup() method
+	  which as argument take a widget which is the widget the
+	  accelerators of the actionCollection should work on.
+
+	  actionCollection() is now again public, so it is possible to
+	  configure keybindings.
+
+	  Host application must now call Plugin::setup( QWidget* ) after
+	  having loaded the plugins.
+
+2004-05-31 21:11  blackie
+
+	* Makefile.am: *really* minor API changes, plus documentation
+
+2004-05-31 19:27  blackie
+
+	* Makefile.am, helloworld/plugin_helloworld.cpp,
+	  slideshow/plugin_slideshow.cpp, slideshow/slideshowconfig.cpp:
+	  ported the slideshow plugin. It does, however, complain that I
+	  have not openGL compiled into Qt, and it does crash my X server
+	  if I start the plugin with OpenGL support
+
+2004-05-31 16:13  blackie
+
+	* Makefile.am, batchprocessimages/plugin_batchprocessimages.cpp,
+	  helloworld/plugin_helloworld.cpp,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  mpegencoder/plugin_mpegencoder.cpp,
+	  printwizard/plugin_printwizard.cpp,
+	  sendimages/plugin_sendimages.cpp,
+	  timeadjust/plugin_timeadjust.cpp, wallpaper/plugin_wallpaper.cpp:
+	  CCMAIL: kde-imaging@kde.org
+
+	  Readded the hello world plugin. Host apps, which do not want to
+	  see it, should simply ignore by adding it to the list given as
+	  first argument to PluginLoader.
+
+	  Added ImageCollection::isValid().  I realized that there was no
+	  way for applications like digikam to indicate that there were no
+	  album selected. So to indicate that an image collection is
+	  invalid, the host application should give 0 for
+	  ImageCollectionShared pointer on construction of ImageCollection.
+	   This will make ImageCollection::isValid() return false.  Plugins
+	  should now test for isValid() before using data from image
+	  collection.
+
+2004-05-31 14:11  blackie
+
+	* batchprocessimages/: batchprocessimagesdialog.h,
+	  renameimagesdialog.cpp: completed plugin
+
+2004-05-28 20:10  blackie
+
+	* acquireimages/plugin_acquireimages.cpp,
+	  batchprocessimages/Makefile.am,
+	  batchprocessimages/plugin_batchprocessimages.cpp,
+	  calendar/plugin_calendar.cpp, cdarchiving/plugin_cdarchiving.cpp,
+	  findimages/plugin_findimages.cpp,
+	  helloworld/plugin_helloworld.cpp,
+	  imagesgallery/plugin_imagesgallery.cpp,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  mpegencoder/plugin_mpegencoder.cpp,
+	  printwizard/plugin_printwizard.cpp,
+	  rawconverter/plugin_rawconverter.cpp,
+	  sendimages/plugin_sendimages.cpp, slideshow/plugin_slideshow.cpp,
+	  timeadjust/plugin_timeadjust.cpp, wallpaper/plugin_wallpaper.cpp:
+	  CCMAIL: kde-imaging@kde.org, dfaure@kde.org
+
+	  Together with David Faure I did yesterday make the necessary
+	  changes to allow icons local to each plugin.
+
+	  The basic point of all this was that the
+	  KIPI::Plugin::actionCollection() needed to know about the plugins
+	  KInstance - as it was till this change, it got the KInstance for
+	  the host application, and would thus look for icons in the host
+	  applications directory.
+
+	  Making this change did, however, reveal a conflict, namely that
+	  each and every action in the plugin must have the
+	  actionCollection as parent - which was not the case for items in
+	  KMenuActions.
+
+	  The way the host application finds actions right now is by
+	  querying the actionCollection(), which with the above change
+	  would also reveal those actions from menus.
+
+	  I therefore needed to add another way for the host application to
+	  get information about actions. I added a method called
+	  KIPI::Plugin::actions() which the host application must call to
+	  get information about actions. At the same time I made the
+	  actionCollection() method protected, so the host application
+	  can't get to that anymore.
+
+	  To tell KIPI about actions, then plugins must now call
+	  KIPI::Plugin::addAction() on each action they want to be in the
+	  topmost menu (thus not actions located in KActionMenu's).
+
+	  Let me summerize the changes - Host application now need to call
+	  actions() rather than   actionCollection() to get information
+	  about action in the plugin.  - plugins now need to give a pointer
+	  to KGenericFactory<..>::instance() in   the constructor of the
+	  Plugin superclass.  - the plugin must call addAction() for each
+	  toplevel action.
+
+	  And now to answer the question on how to get local icons.  In
+	  Makefile.am, you need a line similar to this:
+	  kipibatchprocessimagesicondir =
+	  $(kde_datadir)/kipiplugin_batchprocessimages/icons
+
+	  The name specified above (the "kipiplugin_batchprocessimages"),
+	  must be the same as what you specify to KGenericFactory in the
+	  plugin:
+
+	  typedef KGenericFactory<Plugin_BatchProcessImages> Factory;
+	  K_EXPORT_COMPONENT_FACTORY( kipiplugin_batchprocessimages,
+			       Factory("kipiplugin_batchprocessimages"));
+
+	  Cheers Jesper
+
+2004-05-27 11:39  blackie
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  batchprocessimagesdialog.h, batchprocessimagesitem.cpp,
+	  batchprocessimagesitem.h, batchprocessimageslist.cpp,
+	  borderimagesdialog.cpp, colorimagesdialog.cpp,
+	  convertimagesdialog.cpp, effectimagesdialog.cpp,
+	  filterimagesdialog.cpp, recompressimagesdialog.cpp,
+	  renameimagesdialog.cpp, resizeimagesdialog.cpp, data/Makefile.am:
+	  more steps towards a working plugin. Everything should work now
+	  except batch rename
+
+2004-05-27 01:08  gateau
+
+	* acquireimages/: acquireimagedialog.cpp, acquireimagedialog.h:
+	  Implemented network transparency.
+
+2004-05-25 23:43  blackie
+
+	* acquireimages/: acquireimagedialog.cpp, acquireimagedialog.h:
+	  completed the acquire plugin except some URL uncleanlyness.
+
+2004-05-25 09:12  blackie
+
+	* findimages/displaycompare.cpp, findimages/displaycompare.h,
+	  findimages/finddupplicatedialog.h,
+	  findimages/finddupplicateimages.cpp,
+	  helloworld/plugin_helloworld.cpp,
+	  imagesgallery/imgallerydialog.cpp, rawconverter/batchdialog.cpp,
+	  rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/plugin_rawconverter.h,
+	  slideshow/plugin_slideshow.cpp: removed the last few includes of
+	  digikam header files
+
+2004-05-24 00:28  blackie
+
+	* acquireimages/: acquireimagedialog.cpp, acquireimagedialog.h:
+	  more work on the acquire plugin.
+
+2004-05-23 23:47  gateau
+
+	* acquireimages/acquireimagedialog.cpp: AlbumsHaveDescriptions ->
+	  AlbumsHaveComments
+
+2004-05-23 23:14  blackie
+
+	* acquireimages/: acquireimagedialog.cpp, acquireimagedialog.h,
+	  plugin_acquireimages.cpp, screenshotdialog.cpp,
+	  screenshotdialog.h: CCMAIL: kde-imaging@kde.org
+
+	  Next try at solving the issue with uploading images.	I've now
+	  created a new widget (UploadWidget), which can be used to ask for
+	  a directory to upload to (upload say a scan image from
+	  acquireimage plugin, or a new image converted in batchprocessing
+	  plugin).
+
+	  The upload widget is a directory browser knowing about KURL's.
+	  To let the browser start somewhere, I've added a new method
+	  ImageCollection::uploadRoot.
+
+	  This isn't 100% complete yet, but I want to show it to Aurelien
+	  ;-)
+
+	  The acquireimage plugin has been changed to used this new class.
+
+	  I'd esp. like to get some input from the digikam team, as this
+	  "breaks" their work with albums, but on the other hand when they
+	  change to recursive albums, the current scheme will not work
+	  anyway.
+
+	  Cheers Jesper.
+
+2004-05-23 15:18  cgilles
+
+	* TODO: Update
+
+2004-05-20 23:49  mlaurent
+
+	* wallpaper/plugin_wallpaper.cpp: In this module, nobody want to
+	  "includemoc"...  I don't understand...
+
+2004-05-20 23:40  blackie
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  batchprocessimagesdialog.h, borderimagesdialog.cpp,
+	  borderimagesdialog.h, colorimagesdialog.cpp, colorimagesdialog.h,
+	  convertimagesdialog.cpp, convertimagesdialog.h,
+	  effectimagesdialog.cpp, effectimagesdialog.h,
+	  filterimagesdialog.cpp, filterimagesdialog.h,
+	  recompressimagesdialog.cpp, recompressimagesdialog.h,
+	  resizeimagesdialog.cpp, resizeimagesdialog.h: a bit more porting
+	  done
+
+2004-05-20 22:29  blackie
+
+	* imagesgallery/imagesgallery.cpp: index file was not correctly
+	  generated
+
+2004-05-20 16:53  blackie
+
+	* Makefile.am, wallpaper/.cvsignore, wallpaper/Makefile.am,
+	  wallpaper/kipiplugin_wallpaper.desktop,
+	  wallpaper/plugin_wallpaper.cpp, wallpaper/plugin_wallpaper.h:
+	  ported miscoperations - split it into wallpaper and
+	  diroperations, as they have diffferent requirements from host
+	  operations
+
+2004-05-20 14:32  mlaurent
+
+	* timeadjust/: plugin_timeadjust.cpp, timeadjustdialog.cpp:
+	  includemoc
+
+2004-05-20 12:57  blackie
+
+	* Makefile.am, timeadjust/.cvsignore, timeadjust/Makefile.am,
+	  timeadjust/kipiplugin_timeadjust.desktop,
+	  timeadjust/plugin_timeadjust.cpp, timeadjust/plugin_timeadjust.h,
+	  timeadjust/timeadjustdialog.cpp, timeadjust/timeadjustdialog.h:
+	  CCMAIL: kde-imaging@kde.org I forgot to change the clock on my
+	  digital camera to summer time, so I had a bunch of images with
+	  wrong time info...  So I did of course develop a KIPI plugin to
+	  fix this ;-)
+
+	  So now we have the first KIPI-only plugin, lets celebrate and get
+	  the rest of KIPI in shape soon.
+
+	  Cheers Jesper
+
+2004-05-13 16:02  gateau
+
+	* Makefile.am, configure.in.in, acquireimages/Makefile.am,
+	  batchprocessimages/Makefile.am, calendar/Makefile.am,
+	  cdarchiving/Makefile.am, findimages/Makefile.am,
+	  helloworld/Makefile.am, imagesgallery/Makefile.am,
+	  jpeglossless/Makefile.am, mpegencoder/Makefile.am,
+	  printwizard/Makefile.am, rawconverter/Makefile.am,
+	  sendimages/Makefile.am, slideshow/Makefile.am: Changed the way
+	  KIPI libs and includes are detected so that the whole
+	  kdeextragear-libs-1 can be build without having to install
+	  libkipi first.  Thanks to David Faure for his amazing autotool
+	  skills :-) CCMAIL: kde-imaging@kde.org
+
+	  Don't prevent the build if imlib is not found, just disable
+	  compilation of the slideshow plugin.
+
+2004-05-13 13:49  vkrause
+
+	* configure.in.in: Fix quoting.
+
+2004-05-13 12:27  mlaurent
+
+	* rawconverter/: Makefile.am, batchdialog.cpp, dmessagebox.cpp,
+	  plugin_rawconverter.cpp, plugin_rawconverter.h,
+	  previewwidget.cpp, processcontroller.cpp, singledialog.cpp:
+	  Includemoc fix compile
+
+2004-05-13 06:56  cgilles
+
+	* rawconverter/: kipidcrawclient.man.gz,
+	  kipiplugin_rawconverter.desktop: Fix
+
+2004-05-13 06:54  cgilles
+
+	* rawconverter/: Makefile.am, digikamdcrawclient.man.gz,
+	  digikamplugin_rawconverter.desktop, plugin_rawconverter.cpp,
+	  processcontroller.cpp: Fix Digikam name to Kipi
+
+2004-05-13 06:45  cgilles
+
+	* rawconverter/Makefile.am: Fix MakeFiles.am for a good i18n export
+
+2004-05-12 12:56  mlaurent
+
+	* batchprocessimages/: batchprocessimagesdialog.cpp,
+	  batchprocessimageslist.cpp, batchprocessimageslist.h,
+	  borderimagesdialog.cpp, borderoptionsdialog.cpp,
+	  colorimagesdialog.cpp, coloroptionsdialog.cpp,
+	  convertimagesdialog.cpp, convertoptionsdialog.cpp,
+	  effectimagesdialog.cpp, effectoptionsdialog.cpp,
+	  filterimagesdialog.cpp, filteroptionsdialog.cpp,
+	  imagepreview.cpp, outputdialog.cpp,
+	  plugin_batchprocessimages.cpp, recompressimagesdialog.cpp,
+	  recompressoptionsdialog.cpp, renameimagesdialog.cpp,
+	  renameimagesoptionsdialog.cpp, resizeimagesdialog.cpp,
+	  resizeoptionsdialog.cpp: Includemoc....  Includemoc....
+	  Includemoc....
+
+	  .....
+
+2004-05-12 10:14  blackie
+
+	* Makefile.am, batchprocessimages/Makefile.am,
+	  batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/batchprocessimagesdialog.h,
+	  batchprocessimages/borderimagesdialog.cpp,
+	  batchprocessimages/borderimagesdialog.h,
+	  batchprocessimages/colorimagesdialog.cpp,
+	  batchprocessimages/colorimagesdialog.h,
+	  batchprocessimages/convertimagesdialog.cpp,
+	  batchprocessimages/convertimagesdialog.h,
+	  batchprocessimages/digikamplugin_batchprocessimages.desktop,
+	  batchprocessimages/digikamplugin_batchprocessimages.rc,
+	  batchprocessimages/effectimagesdialog.cpp,
+	  batchprocessimages/effectimagesdialog.h,
+	  batchprocessimages/filterimagesdialog.cpp,
+	  batchprocessimages/filterimagesdialog.h,
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  batchprocessimages/plugin_batchprocessimages.cpp,
+	  batchprocessimages/plugin_batchprocessimages.h,
+	  batchprocessimages/recompressimagesdialog.cpp,
+	  batchprocessimages/recompressimagesdialog.h,
+	  batchprocessimages/renameimagesdialog.cpp,
+	  batchprocessimages/renameimagesdialog.h,
+	  batchprocessimages/resizeimagesdialog.cpp,
+	  batchprocessimages/resizeimagesdialog.h,
+	  batchprocessimages/data/Makefile.am: CCMAIL: kde-imaging@kde.org
+	  Implemented the KIPI::Features so plugins can query the features
+	  of the host application.  Also added a desktop entry called
+	  X-KIPI-ReqFeatures, so plugins will not be loaded at all if a
+	  hostapplication does not honor all those features.
+
+	  Also started porting the batchprocessimages, and ones again the
+	  problem is the destination directory.
+
+2004-05-10 15:25  cgilles
+
+	* NEWS, README, TODO: Sync with Digikamplugins SF.net CVS module
+
+2004-05-10 15:17  cgilles
+
+	* slideshow/: Makefile.am, slideshow.cpp, slideshow.h,
+	  slideshowgl.cpp, slideshowgl.h: Added openGL depency.  Patch for
+	  mouse navigation.  Sync from Digikamplugins SF.net CVS module.
+
+2004-05-10 15:15  cgilles
+
+	* configure.in.in: Added patch for OpenGL detection in according
+	  with Digikamplugins SF.net CVS module.  Added Imlib1 depency.
+
+2004-05-10 10:12  mlaurent
+
+	* acquireimages/acquireimagedialog.cpp,
+	  acquireimages/plugin_acquireimages.cpp,
+	  acquireimages/screenshotdialog.cpp, calendar/calpainter.cpp,
+	  calendar/calselect.cpp, calendar/caltemplate.cpp,
+	  calendar/calwizard.cpp, calendar/monthwidget.cpp,
+	  calendar/plugin_calendar.cpp, cdarchiving/cdarchivingdialog.cpp,
+	  cdarchiving/plugin_cdarchiving.cpp,
+	  imagesgallery/listimageserrordialog.cpp,
+	  imagesgallery/plugin_imagesgallery.cpp,
+	  jpeglossless/messagebox.cpp,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  jpeglossless/progressdlg.cpp, mpegencoder/checkbinprog.cpp,
+	  mpegencoder/optionsdialog.cpp,
+	  mpegencoder/plugin_mpegencoder.cpp, printwizard/cropframe.cpp,
+	  printwizard/frmprintwizard.cpp,
+	  printwizard/plugin_printwizard.cpp,
+	  sendimages/listimageserrordialog.cpp,
+	  sendimages/plugin_sendimages.cpp,
+	  sendimages/sendimagesdialog.cpp: Includemoc includemoc...  I hope
+	  that people will understand that it's important to include moc...
+
+2004-05-09 17:42  gateau
+
+	* AUTHORS, COPYING, ChangeLog, INSTALL, NEWS, README,
+	  configure.in.in: Added files necessary to create a tarball.
+
+2004-05-09 17:42  gateau
+
+	* acquireimages/Makefile.am, calendar/Makefile.am,
+	  cdarchiving/Makefile.am, findimages/Makefile.am,
+	  helloworld/Makefile.am, imagesgallery/Makefile.am,
+	  jpeglossless/Makefile.am, mpegencoder/Makefile.am,
+	  printwizard/Makefile.am, rawconverter/Makefile.am,
+	  sendimages/Makefile.am, slideshow/Makefile.am: Use the dynamic
+	  version of kipi. This is necessary to be able to release
+	  kipi-plugins as a separate tarball from libkipi. Unfortunately
+	  this means you need to "make install" libkipi to build the
+	  plugins.  CCMAIL:kde-imaging@kde.org
+
+2004-05-09 17:36  gateau
+
+	* printwizard/.cvsignore: Added frmprintwizardbase
+
+2004-05-08 11:19  blackie
+
+	* calendar/: calpainter.cpp, calpainter.h, calsettings.cpp,
+	  calsettings.h, calwizard.cpp, calwizard.h, monthwidget.cpp,
+	  monthwidget.h: handle images which are rotated in the host
+	  application. This included that I had to make the application
+	  much more KURL clean.
+
+2004-05-07 19:22  blackie
+
+	* Makefile.am, acquireimages/acquireimagedialog.cpp,
+	  acquireimages/plugin_acquireimages.cpp,
+	  batchprocessimages/plugin_batchprocessimages.cpp,
+	  cdarchiving/cdarchiving.cpp, cdarchiving/cdarchivingdialog.cpp,
+	  cdarchiving/plugin_cdarchiving.cpp,
+	  findimages/finddupplicateimages.cpp,
+	  findimages/plugin_findimages.cpp,
+	  helloworld/plugin_helloworld.cpp,
+	  imagesgallery/imagesgallery.cpp,
+	  imagesgallery/plugin_imagesgallery.cpp,
+	  imagesgallery/resizeimage.cpp, jpeglossless/actions.h,
+	  jpeglossless/actionthread.cpp, jpeglossless/actionthread.h,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  jpeglossless/plugin_jpeglossless.h, jpeglossless/utils.cpp,
+	  mpegencoder/plugin_mpegencoder.cpp,
+	  printwizard/frmprintwizard.cpp,
+	  printwizard/plugin_printwizard.cpp,
+	  sendimages/plugin_sendimages.cpp, slideshow/plugin_slideshow.cpp,
+	  slideshow/slideshowgl.cpp: CCMAIL: kde-imaging@kde.org
+	  Implemented jpeglossless.
+
+	  The following changes where made to the KIPI interface: - We now
+	  have two debug areas 51000 (general) and 51001 (loading
+	  information). Thus debug output should now be done as:   kdDebug(
+	  51000 ) << ...
+
+	  - new virtual function:   KIPI::Interface::refreshImages( const
+	  KURL::List& );   This function should be called from plugins when
+	  images has changed on   disk
+
+	  - New virtual functions in interface:   KIPI::ImageInfo::angle()
+	  and KIPI::ImageInfo::setAngle()   When the host application
+	  displays an image rotated, after having being   loaded from disk,
+	  the angle() method should return the angle.
+
+2004-05-07 12:22  cgilles
+
+	* slideshow/: slideshow.cpp, slideshowgl.cpp: Bugfix in according
+	  with Digikamplugins SF.net repository
+
+2004-05-07 11:59  blackie
+
+	* Makefile.am, acquireimages/acquireimagedialog.cpp,
+	  acquireimages/acquireimagedialog.h: some porting of the
+	  acquireimage plugin - still not complete
+
+2004-05-07 11:56  cgilles
+
+	* batchprocessimages/resizeimagesdialog.cpp: Bufix in 'Proportional
+	  (2 dim.) option in according with DigikamPlugins SF.net
+	  repository
+
+2004-05-06 12:18  gateau
+
+	* mpegencoder/kimg2mpg.cpp: Do not add the final '/', it seems to
+	  confuse images2mpg
+
+2004-05-05 23:45  blackie
+
+	* mpegencoder/kimg2mpg.cpp: strip file: of before calling encoder,
+	  someone please check if this now works I dont seem to have right
+	  tools installed.  Cheers Jesper CCMAIL: kde-imaging@kde.org
+
+2004-05-05 23:23  blackie
+
+	* acquireimages/: acquireimagedialog.cpp, plugin_acquireimages.cpp,
+	  plugin_acquireimages.h: a bit more work on porting, we still have
+	  some details to discuss here
+
+2004-05-04 13:36  blackie
+
+	* batchprocessimages/: .cvsignore, Makefile.am,
+	  batchprocessimagesdialog.cpp, batchprocessimagesdialog.h,
+	  batchprocessimagesitem.cpp, batchprocessimagesitem.h,
+	  batchprocessimageslist.cpp, batchprocessimageslist.h,
+	  borderimagesdialog.cpp, borderimagesdialog.h,
+	  borderoptionsdialog.cpp, borderoptionsdialog.h,
+	  colorimagesdialog.cpp, colorimagesdialog.h,
+	  coloroptionsdialog.cpp, coloroptionsdialog.h,
+	  convertimagesdialog.cpp, convertimagesdialog.h,
+	  convertoptionsdialog.cpp, convertoptionsdialog.h,
+	  digikamplugin_batchprocessimages.desktop,
+	  digikamplugin_batchprocessimages.rc, effectimagesdialog.cpp,
+	  effectimagesdialog.h, effectoptionsdialog.cpp,
+	  effectoptionsdialog.h, filterimagesdialog.cpp,
+	  filterimagesdialog.h, filteroptionsdialog.cpp,
+	  filteroptionsdialog.h, hi32-action-borderimages.png,
+	  hi32-action-colorimages.png, hi32-action-convertimages.png,
+	  hi32-action-effectimages.png, hi32-action-filterimages.png,
+	  hi32-action-recompressimages.png, hi32-action-renameimages.png,
+	  hi32-action-resizeimages.png, imagepreview.cpp, imagepreview.h,
+	  outputdialog.cpp, outputdialog.h, plugin_batchprocessimages.cpp,
+	  plugin_batchprocessimages.h, recompressimagesdialog.cpp,
+	  recompressimagesdialog.h, recompressoptionsdialog.cpp,
+	  recompressoptionsdialog.h, renameimagesdialog.cpp,
+	  renameimagesdialog.h, renameimagesoptionsdialog.cpp,
+	  renameimagesoptionsdialog.h, resizeimagesdialog.cpp,
+	  resizeimagesdialog.h, resizeoptionsdialog.cpp,
+	  resizeoptionsdialog.h, data/.cvsignore, data/Makefile.am,
+	  data/handcursor.png: added new files from Gilles
+
+2004-05-03 15:43  cgilles
+
+	* mpegencoder/kimg2mpg.cpp: Fix
+
+2004-05-03 15:39  cgilles
+
+	* cdarchiving/cdarchivingdialog.cpp,
+	  findimages/finddupplicatedialog.cpp,
+	  findimages/plugin_findimages.cpp, findimages/plugin_findimages.h,
+	  imagesgallery/imgallerydialog.cpp: Fix frame border in preview
+	  image in according with Digikamplugins SF.net module
+
+2004-05-03 15:32  cgilles
+
+	* mpegencoder/kimg2mpg.cpp: Fix frame style in according with
+	  Digikamplugins SF.net module
+
+2004-05-03 15:30  cgilles
+
+	* sendimages/sendimagesdialog.cpp: In according with Digikamplugins
+	  SF.net CVS module : Fix frame border Fix plurial i18n form.
+
+2004-05-03 00:36  adridg
+
+	* cdarchiving/cdarchiving.h: Needed for pid_t
+
+2004-05-02 23:04  gateau
+
+	* calendar/monthwidget.cpp: Make use of KIPI::ImageCollectionDialog
+	  CCMAIL: kde-imaging@kde.org
+
+2004-05-02 22:56  blackie
+
+	* sendimages/: Makefile.am, digikamplugin_sendimages.desktop,
+	  digikamplugin_sendimages.rc, kipiplugin_sendimages.desktop,
+	  plugin_sendimages.cpp, plugin_sendimages.h, sendimagesdialog.cpp,
+	  sendimagesdialog.h: CCMAIL: kde-imaging@kde.org Done porting
+	  sendimages plugin.
+
+2004-05-02 16:08  blackie
+
+	* Makefile.am, acquireimages/plugin_acquireimages.h,
+	  calendar/plugin_calendar.h, cdarchiving/plugin_cdarchiving.h,
+	  findimages/plugin_findimages.h, helloworld/plugin_helloworld.h,
+	  imagesgallery/plugin_imagesgallery.h,
+	  jpeglossless/plugin_jpeglossless.h,
+	  mpegencoder/plugin_mpegencoder.h,
+	  printwizard/plugin_printwizard.h,
+	  rawconverter/plugin_rawconverter.h, slideshow/plugin_slideshow.h:
+	  CCMAIL: kde-imaging@kde.org
+
+	  If you implement application for loading KIPI plugins, then
+	  please read carefully, there are  a number of changes that you
+	  need to make to your application.
+
+	  For this check in I implemented the comments editor.	This
+	  resulted in a number of changes to other parts:
+
+	  First, KimDaBa should not show this plugin, as it has better way
+	  built in for setting comments - likewise other tools may not want
+	  to show it because they might not have any way to support
+	  comments for images.
+
+	  Therefore KIPI::PluginLoader::PluginLoader does now as first
+	  argument take a QStringList of plugins not to load - the strings
+	  written there should be the Name attribute of the desktop file
+	  for the given plugin.
+
+	  Later today or tomorrow I anticipate to change the plugin loader
+	  class even more - currently it has these instance variables with
+	  accessor methods for them:	List	     m_pluginList;
+	  QStringList  m_pluginNames;	 QStringList  m_libraryNames;
+
+	  I need to add some extra information for each plugin, so I'd
+	  rather have all the information in a class like:
+
+	  class PluginInfo {   QString name;   QString comment;   QString
+	  path;   KIPI::Plugin* plugin;   // etc } This will result in just
+	  one list of PluginInfo's that the host apps will be able to get
+	  to, rather than a number of accessor methods as it is now.
+
+	  Let me know if you have any objections.
+
+	  Once I've fixed the above I'll make sure that the name is set
+	  during loading, so that we do not have to specify the name twice
+	  - which is why the KIPI::Plugin::id() was removed again (I added
+	  it a week ago)
+
+	  Finally, the comments editor plugin needed to set the
+	  description, which is why the ImageInfoShared classes that host
+	  apps implements has been changed to include a setComment(),
+	  setName(), clearAttributes() and addAttributes() methods.
+
+	  Cheers Jesper
+
+2004-04-30 09:57  cgilles
+
+	* sendimages/sendimagesdialog.cpp: Fix i18n messages in according
+	  with SF.net Digikam CVS
+
+2004-04-29 15:50  blackie
+
+	* sendimages/: .cvsignore, Makefile.am,
+	  digikamplugin_sendimages.desktop, digikamplugin_sendimages.rc,
+	  listimageserrordialog.cpp, listimageserrordialog.h,
+	  plugin_sendimages.cpp, plugin_sendimages.h, sendimagesdialog.cpp,
+	  sendimagesdialog.h: unported plugins added
+
+2004-04-26 10:31  gateau
+
+	* imagesgallery/: imagesgallery.cpp, imagesgallery.h: Make it build
+	  on KDE 3.1
+
+2004-04-26 10:21  gateau
+
+	* calendar/calselect.cpp, cdarchiving/plugin_cdarchiving.cpp:
+	  Removed Digikam include
+
+2004-04-26 00:51  gateau
+
+	* Makefile.am, imagesgallery/Makefile.am,
+	  imagesgallery/imagesgallery.cpp, imagesgallery/imagesgallery.h,
+	  imagesgallery/imgallerydialog.cpp,
+	  imagesgallery/imgallerydialog.h,
+	  imagesgallery/plugin_imagesgallery.cpp,
+	  imagesgallery/plugin_imagesgallery.h: Here is a rough port of the
+	  Digikam Image Gallery plugin.
+
+2004-04-25 22:23  blackie
+
+	* Makefile.am, printwizard/plugin_printwizard.cpp: more porting
+	  plus removed KIPI::Interface::currentView(), it was suggested by
+	  me, but I dont use it myself, so lets throw it out
+
+2004-04-25 20:19  gateau
+
+	* calendar/monthwidget.cpp, cdarchiving/cdarchiving.cpp,
+	  cdarchiving/cdarchivingdialog.cpp,
+	  helloworld/plugin_helloworld.cpp: No more 'root()' method
+
+2004-04-25 20:13  blackie
+
+	* acquireimages/plugin_acquireimages.cpp,
+	  calendar/plugin_calendar.cpp, mpegencoder/plugin_mpegencoder.cpp,
+	  rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/plugin_rawconverter.h,
+	  slideshow/plugin_slideshow.cpp: tried to categories the plugins,
+	  but that needs more work
+
+2004-04-25 17:58  blackie
+
+	* acquireimages/plugin_acquireimages.h, calendar/plugin_calendar.h,
+	  cdarchiving/plugin_cdarchiving.h, findimages/plugin_findimages.h,
+	  helloworld/plugin_helloworld.h,
+	  imagesgallery/plugin_imagesgallery.h,
+	  jpeglossless/plugin_jpeglossless.h,
+	  mpegencoder/plugin_mpegencoder.h,
+	  printwizard/plugin_printwizard.h,
+	  rawconverter/plugin_rawconverter.h, slideshow/plugin_slideshow.h:
+	  added an id() to the plugin class, so it is possible to write
+	  code in the host apps for handling certain plugins special. I'd
+	  for example like to put the print plugin in teh file menu
+
+2004-04-25 17:41  blackie
+
+	* calendar/monthwidget.cpp, cdarchiving/cdarchiving.cpp,
+	  cdarchiving/cdarchivingdialog.cpp,
+	  cdarchiving/cdarchivingdialog.h,
+	  helloworld/plugin_helloworld.cpp,
+	  mpegencoder/plugin_mpegencoder.cpp,
+	  printwizard/plugin_printwizard.cpp: added reference counting to
+	  ImageCollection
+
+2004-04-25 16:42  blackie
+
+	* cdarchiving/cdarchivingdialog.cpp: added reference counting to
+	  ImageInfo
+
+2004-04-25 15:26  blackie
+
+	* acquireimages/Makefile.am, calendar/Makefile.am,
+	  cdarchiving/Makefile.am, findimages/Makefile.am,
+	  helloworld/Makefile.am, imagesgallery/Makefile.am,
+	  jpeglossless/Makefile.am, mpegencoder/Makefile.am,
+	  printwizard/Makefile.am, rawconverter/Makefile.am: made it all
+	  compile without a make install inbetween
+
+2004-04-25 15:15  gateau
+
+	* .cvsignore, acquireimages/.cvsignore, calendar/.cvsignore,
+	  cdarchiving/autorun/.cvsignore, findimages/.cvsignore,
+	  helloworld/.cvsignore, jpeglossless/.cvsignore,
+	  mpegencoder/.cvsignore, printwizard/.cvsignore,
+	  rawconverter/.cvsignore, slideshow/.cvsignore: Added Makefile to
+	  .cvsignore where it was missing
+
+2004-04-24 20:20  blackie
+
+	* Makefile.am, acquireimages/.cvsignore, acquireimages/Makefile.am,
+	  acquireimages/acquireimagedialog.cpp,
+	  acquireimages/acquireimagedialog.h,
+	  acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/plugin_acquireimages.cpp,
+	  acquireimages/plugin_acquireimages.h,
+	  acquireimages/screenshotdialog.cpp,
+	  acquireimages/screenshotdialog.h, calendar/plugin_calendar.cpp,
+	  calendar/plugin_calendar.h, cdarchiving/.cvsignore,
+	  cdarchiving/Makefile.am, cdarchiving/cdarchiving.cpp,
+	  cdarchiving/cdarchiving.h, cdarchiving/cdarchivingdialog.cpp,
+	  cdarchiving/cdarchivingdialog.h, cdarchiving/image_broken.png,
+	  cdarchiving/kipiplugin_cdarchiving.desktop,
+	  cdarchiving/plugin_cdarchiving.cpp,
+	  cdarchiving/plugin_cdarchiving.h, cdarchiving/autorun/.cvsignore,
+	  cdarchiving/autorun/Makefile.am,
+	  cdarchiving/autorun/ShellExecute.bat,
+	  cdarchiving/autorun/cdalbums.ico, cdarchiving/autorun/index.htm,
+	  findimages/.cvsignore, findimages/Makefile.am,
+	  findimages/actions.h, findimages/displaycompare.cpp,
+	  findimages/displaycompare.h, findimages/finddupplicatedialog.cpp,
+	  findimages/finddupplicatedialog.h,
+	  findimages/finddupplicateimages.cpp,
+	  findimages/finddupplicateimages.h,
+	  findimages/hi32-action-findcomments.png,
+	  findimages/hi32-action-finddupplicateimages.png,
+	  findimages/kipiplugin_findimages.desktop,
+	  findimages/plugin_findimages.cpp, findimages/plugin_findimages.h,
+	  helloworld/plugin_helloworld.cpp, helloworld/plugin_helloworld.h,
+	  imagesgallery/.cvsignore, imagesgallery/Makefile.am,
+	  imagesgallery/gohome.png, imagesgallery/imagesgallery.cpp,
+	  imagesgallery/imagesgallery.h, imagesgallery/imgallerydialog.cpp,
+	  imagesgallery/imgallerydialog.h,
+	  imagesgallery/kipiplugin_imagesgallery.desktop,
+	  imagesgallery/listimageserrordialog.cpp,
+	  imagesgallery/listimageserrordialog.h,
+	  imagesgallery/plugin_imagesgallery.cpp,
+	  imagesgallery/plugin_imagesgallery.h,
+	  imagesgallery/resizeimage.cpp, imagesgallery/resizeimage.h,
+	  imagesgallery/up.png, imagesgallery/valid-html401.png,
+	  jpeglossless/.cvsignore, jpeglossless/Makefile.am,
+	  jpeglossless/actions.h, jpeglossless/actionthread.cpp,
+	  jpeglossless/actionthread.h, jpeglossless/convert2grayscale.cpp,
+	  jpeglossless/convert2grayscale.h,
+	  jpeglossless/hi32-action-flip_image.png,
+	  jpeglossless/hi32-action-grayscaleconvert.png,
+	  jpeglossless/imageflip.cpp, jpeglossless/imageflip.h,
+	  jpeglossless/imagerotate.cpp, jpeglossless/imagerotate.h,
+	  jpeglossless/jinclude.h, jpeglossless/jpegint.h,
+	  jpeglossless/kipiplugin_jpeglossless.desktop,
+	  jpeglossless/messagebox.cpp, jpeglossless/messagebox.h,
+	  jpeglossless/mtqueue.h, jpeglossless/plugin_jpeglossless.cpp,
+	  jpeglossless/plugin_jpeglossless.h, jpeglossless/progressdlg.cpp,
+	  jpeglossless/progressdlg.h, jpeglossless/transupp.c,
+	  jpeglossless/transupp.h, jpeglossless/utils.cpp,
+	  jpeglossless/utils.h, mpegencoder/images2mpg.man,
+	  mpegencoder/images2mpg.man.gz,
+	  mpegencoder/plugin_mpegencoder.cpp,
+	  mpegencoder/plugin_mpegencoder.h,
+	  printwizard/plugin_printwizard.cpp,
+	  printwizard/plugin_printwizard.h, rawconverter/.cvsignore,
+	  rawconverter/Makefile.am, rawconverter/batchdialog.cpp,
+	  rawconverter/batchdialog.h, rawconverter/clistviewitem.h,
+	  rawconverter/cspinbox.h, rawconverter/dcrawprocess.cpp,
+	  rawconverter/digikamdcrawclient.man.gz,
+	  rawconverter/digikamplugin_rawconverter.desktop,
+	  rawconverter/dmessagebox.cpp, rawconverter/dmessagebox.h,
+	  rawconverter/hi32-action-rawconverter.png,
+	  rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/plugin_rawconverter.h,
+	  rawconverter/previewwidget.cpp, rawconverter/previewwidget.h,
+	  rawconverter/processcontroller.cpp,
+	  rawconverter/processcontroller.h, rawconverter/singledialog.cpp,
+	  rawconverter/singledialog.h, slideshow/.cvsignore,
+	  slideshow/Makefile.am, slideshow/hi22-action-slideshow.png,
+	  slideshow/imlibiface.cpp, slideshow/imlibiface.h,
+	  slideshow/kipiplugin_slideshow.desktop,
+	  slideshow/plugin_slideshow.cpp, slideshow/plugin_slideshow.h,
+	  slideshow/slideshow.cpp, slideshow/slideshow.h,
+	  slideshow/slideshowconfig.cpp, slideshow/slideshowconfig.h,
+	  slideshow/slideshowgl.cpp, slideshow/slideshowgl.h: more porting,
+	  now added all plugins except two that Renchi wants to work more
+	  on before they are being ported. Note that not all added plugins
+	  has yet been ported, if a directory is not in Makefile.am, then
+	  it has not yet been ported. I have, however, done some general
+	  porting on all directories.
+
+2004-04-24 01:23  gateau
+
+	* calendar/plugin_calendar.cpp, calendar/plugin_calendar.h,
+	  mpegencoder/plugin_mpegencoder.cpp,
+	  mpegencoder/plugin_mpegencoder.h: KIPI::Category ->
+	  KIPI::Plugin::Category
+
+2004-04-24 01:10  gateau
+
+	* helloworld/plugin_helloworld.cpp, helloworld/plugin_helloworld.h,
+	  printwizard/plugin_printwizard.cpp,
+	  printwizard/plugin_printwizard.h: KIPI::Category ->
+	  KIPI::Plugin::Category
+
+2004-04-23 22:41  blackie
+
+	* .cvsignore, Makefile.am, calendar/.cvsignore,
+	  calendar/Makefile.am, calendar/calpainter.cpp,
+	  calendar/calpainter.h, calendar/calprint.h,
+	  calendar/calselect.cpp, calendar/calselect.h,
+	  calendar/calsettings.cpp, calendar/calsettings.h,
+	  calendar/caltemplate.cpp, calendar/caltemplate.h,
+	  calendar/calwidget.cpp, calendar/calwidget.h,
+	  calendar/calwizard.cpp, calendar/calwizard.h,
+	  calendar/kipiplugin_calendar.desktop, calendar/main.cpp,
+	  calendar/monthwidget.cpp, calendar/monthwidget.h,
+	  calendar/plugin_calendar.cpp, calendar/plugin_calendar.h,
+	  helloworld/.cvsignore, helloworld/Makefile.am,
+	  helloworld/kipiplugin_helloworld.desktop,
+	  helloworld/plugin_helloworld.cpp, helloworld/plugin_helloworld.h,
+	  mpegencoder/.cvsignore, mpegencoder/Makefile.am,
+	  mpegencoder/checkbinprog.cpp, mpegencoder/checkbinprog.h,
+	  mpegencoder/images2mpg, mpegencoder/images2mpg.man,
+	  mpegencoder/kimg2mpg.cpp, mpegencoder/kimg2mpg.h,
+	  mpegencoder/kipiplugin_mpegencoder.desktop,
+	  mpegencoder/kshowdebuggingoutput.cpp,
+	  mpegencoder/kshowdebuggingoutput.h,
+	  mpegencoder/optionsdialog.cpp, mpegencoder/optionsdialog.h,
+	  mpegencoder/plugin_mpegencoder.cpp,
+	  mpegencoder/plugin_mpegencoder.h, printwizard/.cvsignore,
+	  printwizard/Makefile.am, printwizard/cropframe.cpp,
+	  printwizard/cropframe.h, printwizard/frmprintwizard.cpp,
+	  printwizard/frmprintwizard.h, printwizard/frmprintwizardbase.ui,
+	  printwizard/kipiplugin_printwizard.desktop,
+	  printwizard/plugin_printwizard.cpp,
+	  printwizard/plugin_printwizard.h, printwizard/tphoto.cpp,
+	  printwizard/tphoto.h, printwizard/utils.cpp, printwizard/utils.h:
+	  started porting digikam plugins
+
