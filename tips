@@ -58,7 +58,7 @@ Did you know that Kipi library provide a scanner plugin that gives you direct ac
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that you can take a screenshoot with Kipi library and save the result to an Album with some comments?
+Did you know that you can take a screenshot with the Kipi library and save the result to an Album with some comments?
 </td>
 </tr>
 </table>
@@ -92,7 +92,7 @@ Did you know that you can use the <b>LZW</b> compression to reduce the size of t
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that all images operations in the batch processing images plugins run without losing the <b>Exif</b> informations in the <b>JPEG</b> files?
+Did you know that all image operations in the batch processing images plugins run without losing the <b>Exif</b> information in the <b>JPEG</b> files?
 </td>
 </tr>
 </table>
@@ -143,7 +143,7 @@ Did you know that you can use the drag and drop feature in e-mail images to add 
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that if you want reduce the space disk used by your images in the Albums database, you could try using the recompressImages plugin?
+Did you know that if you want reduce the space disk used by your images in the Albums database, you could try using the Recompress Images plugin?
 </td>
 </tr>
 </table>
@@ -160,7 +160,7 @@ Did you know that if you want reduce the space disk used by your images in the A
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that if you want to resize images to prepare them for printing on photographic paper sizes, you could use the resizeImages plugin?
+Did you know that if you want to resize images to prepare them for printing on photographic paper sizes, you could use the Resize Images plugin?
 </td>
 </tr>
 </table>
