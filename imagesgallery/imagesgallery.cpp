@@ -356,6 +356,7 @@ bool ImagesGallery::removeTargetGalleryFolder(void)
 
 bool ImagesGallery::prepare(void)
 {
+    QValueList<KIPI::ImageCollection> albumsList;  
     KIPIImagesGalleryPlugin::EventData *d;
     
     // This variable are used for the recursive sub directories parsing
@@ -368,7 +369,7 @@ bool ImagesGallery::prepare(void)
     m_StreamMainPageAlbumPreview = "";
     
     m_imagesPerRow = m_configDlg->getImagesPerRow();
-    m_albumsList = m_configDlg->getSelectedAlbums();
+    albumsList = m_configDlg->getSelectedAlbums();
     m_imageName = m_configDlg->getImageName();
     m_useCommentFile = m_configDlg->useCommentFile();
     m_imageFormat = m_configDlg->getImageFormat();
@@ -400,14 +401,14 @@ bool ImagesGallery::prepare(void)
     m_colorDepthThumbnails = m_configDlg->getColorDepthThumbnails();
     m_useSpecificThumbsCompression = m_configDlg->useSpecificThumbsCompression();
     m_thumbsCompression = m_configDlg->getThumbsCompression();
-    m_albumListSize = m_albumsList.count();
+    m_albumListSize = albumsList.count();
                         
     // Estimate the number of actions for the KIPI progress dialog. 
     
     int nbActions = m_albumListSize;
     
-    for( QValueList<KIPI::ImageCollection>::Iterator it = m_albumsList.begin() ;
-         it != m_albumsList.end() ; ++it ) 
+    for( QValueList<KIPI::ImageCollection>::Iterator it = albumsList.begin() ;
+         it != albumsList.end() ; ++it ) 
        nbActions = nbActions + (*it).images().count();
     
     d = new KIPIImagesGalleryPlugin::EventData;
@@ -432,6 +433,21 @@ bool ImagesGallery::prepare(void)
        return(false);
        }
 
+    // Create data maps to use in the thread.
+
+    m_albumsMap = new AlbumsMap;
+        
+    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albumsList.begin() ;
+         albumIt != albumsList.end() ; ++albumIt )
+        {
+        AlbumData data((*albumIt).name(),    (*albumIt).category(),
+                       (*albumIt).comment(), (*albumIt).date(), 
+                       (*albumIt).path(),    (*albumIt).images());
+        
+        m_albumsMap->insert( (*albumIt).path().prettyURL(), data );
+        m_albumUrlList.append( (*albumIt).path() );
+        }
+                  
     if ( m_useCommentFile )
        loadComments();
            
@@ -461,27 +477,23 @@ void ImagesGallery::run()
        KIO::file_copy(srcURL, destURL, -1, true, false, false);           
        }
 
-       for( QValueList<KIPI::ImageCollection>::Iterator albumIt = m_albumsList.begin() ;
-            albumIt != m_albumsList.end() ; ++albumIt )
+       for( KURL::List::Iterator albumsUrlIt = m_albumUrlList.begin() ;
+            albumsUrlIt != m_albumUrlList.end() ; ++albumsUrlIt )
           {
-          m_album = *albumIt;
-          QDateTime newestDate;
-          KURL::List images = m_album.images();
+          m_albumUrl = *albumsUrlIt;
+          AlbumData data = (*m_albumsMap)[m_albumUrl.prettyURL()];
+          KURL::List images = data.itemsUrl();
 
           for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) 
              {
              kdDebug( 51000 ) << "URL:" << (*urlIt).prettyURL() << endl;
-             KIPI::ImageInfo info = m_interface->info( *urlIt );                // TODO
-                   
-             if ( info.time() > newestDate )
-                newestDate = info.time();
              }
 
-          m_AlbumTitle      = m_album.name();
-          m_AlbumComments   = m_album.comment();
-          m_AlbumCollection = m_album.category();
-          m_AlbumDate       = newestDate.toString ( Qt::LocalDate ) ;
-          Path              = m_album.path().path();
+          m_AlbumTitle      = data.albumName();
+          m_AlbumComments   = data.albumComments();
+          m_AlbumCollection = data.albumCategory();
+          m_AlbumDate       = data.albumDate().toString();
+          Path              = data.albumUrl().path();
 
           SubUrl = m_imageName + "/KIPIHTMLExport/" + m_AlbumTitle + "/" + "index.html";
 
@@ -691,9 +703,10 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
                                const QString& TargetimagesFormat)
 {
     KIPIImagesGalleryPlugin::EventData *d;
-    int numOfImages = m_album.images().count();
+    AlbumData data = (*m_albumsMap)[m_albumUrl.prettyURL()];
+    int numOfImages = data.countItems();
     
-    kdDebug( 51000 ) << "Num of images in " << m_album.name().ascii() << " : " 
+    kdDebug( 51000 ) << "Num of images in " << data.albumName().ascii() << " : " 
                      << numOfImages << endl;
     
     const QString imgGalleryDir = url.directory();
@@ -781,7 +794,7 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
     QFileInfo imginfo;
     QPixmap imgProp;
 
-    KURL::List images = m_album.images();
+    KURL::List images = data.itemsUrl();
     
     for( KURL::List::Iterator urlIt = images.begin() ; urlIt != images.end() ; )
         {
@@ -946,7 +959,7 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
       KIO::file_copy(srcURL, destURL, -1, true, false, false);
 
       int imgIndex = 0;
-      KURL::List images = m_album.images();
+      KURL::List images = data.itemsUrl();
       
       for( KURL::List::Iterator urlIt = images.begin();
            urlIt != images.end() ; ++urlIt, ++imgIndex )

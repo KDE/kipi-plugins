@@ -52,7 +52,6 @@
 
 #include <libkipi/interface.h>
 
-class KURL;
 class KConfig;
 class KProcess;
 
@@ -61,12 +60,46 @@ namespace KIPIImagesGalleryPlugin
 
 class KIGPDialog;
 
+class AlbumData
+    {
+    public:
+        
+        AlbumData(){}
+        AlbumData( const QString& albumName,     const QString& albumCategory,
+                   const QString& albumComments, const QDate& albumDate,
+                   const KURL&    albumUrl,      const KURL::List& itemsUrl )
+                 : m_albumName(albumName), m_albumCategory(albumCategory),
+                   m_albumComments(albumComments), m_albumDate(albumDate),
+                   m_albumUrl(albumUrl), m_itemsUrl(itemsUrl)
+        {}
+
+        QString    albumName()     const { return m_albumName;        }
+        QString    albumCategory() const { return m_albumCategory;    }
+        QString    albumComments() const { return m_albumComments;    }
+        QDate      albumDate()     const { return m_albumDate;        }
+        KURL       albumUrl()      const { return m_albumUrl;         }        
+        KURL::List itemsUrl()      const { return m_itemsUrl;         }   
+        int        countItems()          { return m_itemsUrl.count(); }   
+        
+    private:
+        
+        QString    m_albumName;
+        QString    m_albumCategory;
+        QString    m_albumComments;
+        QDate      m_albumDate;
+        KURL       m_albumUrl;
+        KURL::List m_itemsUrl;
+    };
+
+
 const int NAV_THUMB_MAX_SIZE = 64;
 
 // First field is the URL, represented with KURL::prettyURL. We can't use KURL
 // directly because operator<(KURL,KURL) is not defined in KDE 3.1
 
-typedef QMap<QString,QString> CommentMap;
+typedef QMap<QString, QString>   CommentMap;  // List of Albums items comments.
+typedef QMap<QString, AlbumData> AlbumsMap;   // Albums data list.
+
 
 class ImagesGallery : public QObject, public QThread
 {
@@ -147,16 +180,17 @@ private:
   int                 m_thumbsCompression;
   int                 m_albumListSize;
   
+  KURL::List          m_albumUrlList; // Urls of Albums list from setup dialog.
+  KURL                m_albumUrl;     // Current album Url use in the thread.
+  
   CommentMap         *m_commentMap;
-
+  AlbumsMap          *m_albumsMap;
+  
   QObject            *m_parent;
 
   QDir                m_targetDir;    // Target directory from setup dialog.
   
   KIPIImagesGalleryPlugin::KIGPDialog  *m_configDlg;
-  
-  QValueList<KIPI::ImageCollection>     m_albumsList;        // Albums list from setup dialog.
-  KIPI::ImageCollection                 m_album;             // Current album use in the thread.
   
 
 private:

@@ -120,7 +120,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
     
     if (!m_progressDlg)
         {
-        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Album HTML Export process"));
+        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Album HTML Export"));
         
         connect(m_progressDlg, SIGNAL(cancelClicked()),
                 this, SLOT(slotCancel()));
