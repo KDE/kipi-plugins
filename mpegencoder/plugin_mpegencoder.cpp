@@ -91,13 +91,13 @@ void Plugin_Mpegencoder::slotActivate()
     KIPIMPEGEncoderPlugin::KImg2mpgData *MPEGconverterDialog = 
                            new KIPIMPEGEncoderPlugin::KImg2mpgData( interface );
                            
-    MPEGconverterDialog->show();
-
     KIPIMPEGEncoderPlugin::CheckBinProg* CheckExternalPrograms = 
                            new KIPIMPEGEncoderPlugin::CheckBinProg(this);
                            
     int ValRet = CheckExternalPrograms->findExecutables();
 
+    MPEGconverterDialog->show();
+    
     if (ValRet == 0)
         MPEGconverterDialog->m_Encodebutton->setEnabled(false);
 
