@@ -55,6 +55,7 @@ class KConfig;
 class KIntNumInput;
 class KListBox;
 class KSqueezedTextLabel;
+class KURLRequester;
 
 namespace KIPISendimagesPlugin
 {
@@ -98,6 +99,8 @@ public:
    QCheckBox      *m_addComments;
    QCheckBox      *m_changeImagesProp;
              
+   KURLRequester      *m_ThunderbirdBinPath;
+      
    KURL::List      m_images2send;
    
 public slots:
@@ -117,12 +120,15 @@ private slots:
    void slotFailedPreview(const KFileItem*);
    void slotImagesFilesButtonAdd(void);
    void slotImagesFilesButtonRem(void);
+   void slotThunderbirdBinPathChanged(const QString&);
+   void slotMailAgentChanged(int);
 
 protected:
    
    QLabel             *m_labelImageFormat;
    QLabel             *m_labelImageSize;
    QLabel             *m_mailAgentLabel;
+   QLabel             *m_labelThunderbirdBinPath;
       
    KConfig            *m_config;
 
@@ -146,6 +152,7 @@ protected:
 
    KSqueezedTextLabel *m_ImageComments;
    KSqueezedTextLabel *m_ImageAlbum;
+   
    KIPI::Interface    *m_interface;
    KIO::PreviewJob    *m_thumbJob;
 

@@ -50,6 +50,7 @@
 #include <kprocess.h>
 #include <kimageio.h>
 #include <knuminput.h>
+#include <kurlrequester.h>
 
 // Local include files
 
@@ -400,11 +401,13 @@ void SendImages::invokeMailAgent(void)
        {
        m_mailAgentProc = new KProcess;
 
+       QString ThunderbirdUrl = m_sendImagesDialog->m_ThunderbirdBinPath->url();
+              
        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" )
           *m_mailAgentProc << "mozilla" << "-remote";
        else
           if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
-             *m_mailAgentProc << "thunderbird" << "-remote";
+             *m_mailAgentProc << ThunderbirdUrl << "-remote";
           else
              *m_mailAgentProc << "netscape" << "-remote";
 

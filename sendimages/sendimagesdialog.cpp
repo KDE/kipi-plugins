@@ -63,6 +63,7 @@
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
+#include <kurlrequester.h>
 
 // Include files for KIPI
 
@@ -183,6 +184,8 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Send Image handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
+    
+    slotMailAgentChanged(m_mailAgentName->currentItem());
 }
 
 
@@ -204,6 +207,8 @@ void SendImagesDialog::readSettings(void)
     m_config->setGroup("SendImages Settings");
 
     m_mailAgentName->setCurrentText(m_config->readPathEntry("MailAgentName", "Kmail"));
+
+    m_ThunderbirdBinPath->setURL( m_config->readEntry("ThunderbirdBinPath", "/usr/bin/thunderbird"));
 
     if (m_config->readEntry("ImagesChangeProp", "true") == "true")
         m_changeImagesProp->setChecked( true );
@@ -232,6 +237,7 @@ void SendImagesDialog::writeSettings(void)
     m_config = new KConfig("kipirc");
     m_config->setGroup("SendImages Settings");
     m_config->writePathEntry("MailAgentName", m_mailAgentName->currentText());
+    m_config->writeEntry("ThunderbirdBinPath", m_ThunderbirdBinPath->url());
     m_config->writeEntry("AddComments", m_addComments->isChecked());
     m_config->writeEntry("ImagesChangeProp", m_changeImagesProp->isChecked());
     m_config->writeEntry("ImageResize", m_imagesResize->currentItem());
@@ -402,6 +408,23 @@ void SendImagesDialog::setupEmailOptions(void)
     hlay10->addWidget( m_mailAgentLabel );
     hlay10->addStretch( 1 );
     hlay10->addWidget( m_mailAgentName );
+    
+    connect(m_mailAgentName, SIGNAL(activated(int)),
+            this, SLOT(slotMailAgentChanged(int)));
+    
+    //---------------------------------------------
+    
+    m_labelThunderbirdBinPath = new QLabel(i18n("&Thunderbird binary path:"), page_setupEmailOptions);
+    vlay->addWidget( m_labelThunderbirdBinPath );
+
+    m_ThunderbirdBinPath = new KURLRequester( "/usr/bin/thunderbird", page_setupEmailOptions);
+    m_labelThunderbirdBinPath->setBuddy( m_ThunderbirdBinPath );
+    vlay->addWidget(m_ThunderbirdBinPath);
+
+    connect( m_ThunderbirdBinPath, SIGNAL(textChanged(const QString&)),
+             this, SLOT(slotThunderbirdBinPathChanged(const QString&)));
+
+    QWhatsThis::add( m_ThunderbirdBinPath, i18n("<p>The path name to the K3b binary program.") );
 
     //---------------------------------------------
 
@@ -522,8 +545,7 @@ void SendImagesDialog::setupEmailOptions(void)
             m_imagesFormat, SLOT(setEnabled(bool)));
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// SLOTS //////////////////////////////////////////////
 
 void SendImagesDialog::slotHelp()
 {
@@ -532,7 +554,31 @@ void SendImagesDialog::slotHelp()
 } 
 
 
-//////////////////////////////////////// SLOTS //////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+void SendImagesDialog::slotMailAgentChanged(int i)
+{
+    if ( i == 6 ) // Thunderbird
+       {
+       m_labelThunderbirdBinPath->setEnabled(true);
+       m_ThunderbirdBinPath->setEnabled(true);
+       }
+    else
+       {
+       m_labelThunderbirdBinPath->setEnabled(false);
+       m_ThunderbirdBinPath->setEnabled(false);
+       }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+void SendImagesDialog::slotThunderbirdBinPathChanged(const QString &url )
+{
+    enableButtonOK( !url.isEmpty());
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 void SendImagesDialog::slotAddDropItems(QStringList filesPath)
 {
@@ -630,6 +676,14 @@ void SendImagesDialog::slotOk()
        return;
        }
 
+    QFile fileThunderbird(m_ThunderbirdBinPath->url());
+
+    if (fileThunderbird.exists() == false)
+       {
+       KMessageBox::sorry(this, i18n("Thunderbird binary path is not valid. Please check it."));
+       return;
+       }
+       
     writeSettings();
 
     for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
