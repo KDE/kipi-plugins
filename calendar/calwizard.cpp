@@ -44,6 +44,7 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
+#include <kdeversion.h>
 
 // LibKipi includes.
 
@@ -252,7 +253,9 @@ void CalWizard::slotPageSelected(const QString&)
 
         if (!printer_)
             printer_ = new KPrinter(false);
+#if KDE_IS_VERSION(3,2,0)
         printer_->setUsePrinterResolution(true);
+#endif    
 
         // TODO: Let user choose resolutions
         //, QPrinter::HighResolution);

@@ -51,6 +51,7 @@ extern "C"
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
+#include <kdeversion.h>
 
 // Local includes
 
@@ -292,7 +293,9 @@ void FrmPrintWizard::FrmPrintWizardBaseSelected(const QString &)
     {
       KPrinter printer;
       printer.setPageSize(m_pageSize);
+#if KDE_IS_VERSION(3,2,0)
       printer.setUsePrinterResolution(true);
+#endif    
       if (printer.setup())
         printPhotos(m_photos, s->layouts, printer);
     }
