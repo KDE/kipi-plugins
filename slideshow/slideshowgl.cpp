@@ -23,6 +23,7 @@
 #include <kdebug.h>
 #include <kdeversion.h>
 #include <kglobalsettings.h>
+#include <kimageeffect.h>
 
 #include <qtimer.h>
 #include <qpixmap.h>
@@ -31,6 +32,8 @@
 #include <qcursor.h>
 #include <qimage.h>
 #include <qpainter.h>
+#include <qfileinfo.h>
+#include <qfontmetrics.h> 
 
 #include <math.h>
 #include <cstdlib>
@@ -42,7 +45,7 @@ namespace KIPISlideShowPlugin
 {
 
 SlideShowGL::SlideShowGL(const QStringList& fileList,
-                         int delay, bool loop,
+                         int delay, bool printName,bool loop,
                          const QString& effectName)
     : QGLWidget(0, 0, 0, WStyle_StaysOnTop | WType_Popup |
                 WX11BypassWM | WDestructiveClose)
@@ -92,6 +95,7 @@ SlideShowGL::SlideShowGL(const QStringList& fileList,
     delay_      = QMAX(delay, 1000);   // at least have 1 second delay
     loop_       = loop;
     effectName_ = effectName;
+    printName_  = printName;
 
     // ------------------------------------------------------------------
 
@@ -411,13 +415,17 @@ void SlideShowGL::loadImage()
 
         QImage black(width(), height(), 32);
         black.fill(Qt::black.rgb());
-
+	    
         image = image.smoothScale(width(), height(),
                                   QImage::ScaleMin);
         montage(image, black);
 
         black = black.smoothScale(width_, height_);
-        QImage t = convertToGLFormat(black);
+        
+	if (printName_)
+	    printFilename(black);
+	
+	QImage t = convertToGLFormat(black);
 
         /* create the texture */
         glGenTextures(1, &tex);
@@ -429,7 +437,10 @@ void SlideShowGL::loadImage()
         /* enable linear filtering  */
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+        
+	
     }
+    
 }
 
 void SlideShowGL::montage(QImage& top, QImage& bot)
@@ -458,6 +469,37 @@ void SlideShowGL::montage(QImage& top, QImage& bot)
         }
 
     }
+}
+
+void SlideShowGL::printFilename(QImage& layer)
+{ 
+    QFileInfo fileinfo(fileList_[fileIndex_]);
+    QString filename = fileinfo.fileName();
+    filename += " (";
+    filename += QString::number(fileIndex_ + 1);
+    filename += "/";
+    filename += QString::number(fileList_.count());
+    filename += ")";    
+       
+    QFont fn(font());
+    fn.setPointSize(fn.pointSize());
+    fn.setBold(true);
+   
+    QFontMetrics fm(fn);
+    QRect rect=fm.boundingRect(filename);
+    rect.addCoords( 0, 0, 2, 2 );
+    
+    QPixmap pix(rect.width(),rect.height());
+    pix.fill(Qt::black);    
+
+    QPainter p(&pix);
+    p.setPen(Qt::white);
+    p.setFont(fn);
+    p.drawText(1,fn.pointSize()+1 , filename);
+    p.end();
+   
+    QImage textimage(pix.convertToImage());
+    KImageEffect::blendOnLower(0,height_-rect.height(),textimage,layer);
 }
 
 void SlideShowGL::showEndOfShow()
@@ -549,7 +591,6 @@ void SlideShowGL::slotTimeOut()
             }
 
             loadImage();
-
             timeout_ = 10;
             effectRunning_ = true;
             m_i = 0;

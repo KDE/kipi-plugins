@@ -41,7 +41,7 @@ class SlideShowGL : public QGLWidget
 public:
 
     SlideShowGL(const QStringList& fileList,
-                int delay, bool loop,
+                int delay, bool printName, bool loop,
                 const QString& effectName);
     ~SlideShowGL();
 
@@ -67,6 +67,7 @@ private:
     int         delay_;
     QString     effectName_;
     bool        loop_;
+    bool        printName_;
 
     // -------------------------
     
@@ -111,7 +112,8 @@ private:
     void          montage(QImage& top, QImage& bot);
     EffectMethod  getRandomEffect();
     void          showEndOfShow();
-
+    void          printFilename(QImage& layer);
+    
     void          effectNone();
     void          effectBlend();
     void          effectFade();

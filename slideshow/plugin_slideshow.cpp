@@ -228,7 +228,7 @@ void Plugin_SlideShow::slotSlideShow()
             KMessageBox::error(kapp->activeWindow(), i18n("Sorry. OpenGL support not available on your system"));
         else {
             KIPISlideShowPlugin::SlideShowGL *slideShow =
-                new KIPISlideShowPlugin::SlideShowGL(fileList, delay, loop, effectName);
+                new KIPISlideShowPlugin::SlideShowGL(fileList, delay ,printFileName, loop, effectName);
             slideShow->show();
         }
     }

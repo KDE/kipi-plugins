@@ -339,11 +339,9 @@ void SlideShowConfig::slotOpenGLToggled()
 {
     if (openglCheckBox_->isChecked()) {
         loadEffectNamesGL();
-        printNameCheckBox_->setEnabled(false);
     }
     else {
         loadEffectNames();
-        printNameCheckBox_->setEnabled(true);
     }
 }
 
