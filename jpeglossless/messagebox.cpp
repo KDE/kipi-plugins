@@ -22,11 +22,12 @@
 #include <klocale.h>
 #include <kapplication.h>
 #include <kiconloader.h>
+#include <kpushbutton.h>
+#include <kstdguiitem.h>
 
 #include <qlistview.h>
 #include <qstring.h>
 #include <qlayout.h>
-#include <qpushbutton.h>
 #include <qlabel.h>
 
 #include "messagebox.h"
@@ -37,7 +38,7 @@ namespace JPEGLossLess
 MessageBox* MessageBox::m_instance = 0;
 
 MessageBox::MessageBox()
-    : QWidget(0,0,Qt::WDestructiveClose)
+    : QWidget(kapp->activeWindow(),0,Qt::WDestructiveClose)
 {
     m_instance = this;
 
@@ -70,7 +71,7 @@ MessageBox::MessageBox()
         QHBoxLayout *l = new QHBoxLayout(layout);
         l->addItem(new QSpacerItem(10,10, QSizePolicy::Expanding,
                                    QSizePolicy::Minimum));
-        QPushButton *btn = new QPushButton(i18n("&Close"), this);
+        KPushButton *btn = new KPushButton(KStdGuiItem::close(), this);
         l->addWidget(btn);
         l->addItem(new QSpacerItem(10,10, QSizePolicy::Expanding,
                                    QSizePolicy::Minimum));

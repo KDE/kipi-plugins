@@ -21,8 +21,10 @@
 
 #include <qlabel.h>
 #include <qprogressbar.h>
-#include <qpushbutton.h>
 #include <qlayout.h>
+#include <kpushbutton.h>
+#include <kapplication.h>
+#include <kstdguiitem.h>
 #include <klocale.h>
 
 #include "progressdlg.h"
@@ -31,6 +33,7 @@ namespace JPEGLossLess
 {
 
 ProgressDlg::ProgressDlg()
+           : QDialog(kapp->activeWindow())
 {
     QVBoxLayout *lay = new QVBoxLayout(this,6,11);
     label_ = new QLabel(this);
@@ -41,7 +44,7 @@ ProgressDlg::ProgressDlg()
     QHBoxLayout *hlay = new QHBoxLayout(lay);
     hlay->addItem(new QSpacerItem(10,10,QSizePolicy::Expanding,
                                   QSizePolicy::Minimum));
-    btn_ = new QPushButton(i18n("&Cancel"),this);
+    btn_ = new KPushButton(KStdGuiItem::cancel(),this);
     hlay->addWidget(btn_);
 
     connect(btn_, SIGNAL(clicked()),

@@ -26,7 +26,7 @@
 
 class QProgressBar;
 class QLabel;
-class QPushButton;
+class KPushButton;
 
 namespace JPEGLossLess
 {
@@ -50,7 +50,7 @@ signals:
     
 private:
 
-    QPushButton  *btn_;
+    KPushButton  *btn_;
     QProgressBar *bar_;
     QLabel       *label_;
     
