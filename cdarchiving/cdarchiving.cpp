@@ -1404,43 +1404,43 @@ int CDArchiving::ResizeImage( const QString Path, const QString Directory, const
        int w = img.width();
        int h = img.height();
 
-       if (SizeFactor == -1)      // Use original image size.
-            SizeFactor=w;
+       if (SizeFactor != -1)      // Use original image size ?
+          {
+          // scale to pixie size
+          // kdDebug( 51000 ) << "w: " << w << " h: " << h << endl;
+          // Resizing if to big
 
-       // scale to pixie size
-       // kdDebug( 51000 ) << "w: " << w << " h: " << h << endl;
-       // Resizing if to big
+          if( w > SizeFactor || h > SizeFactor )
+              {
+              if( w > h )
+                  {
+                  h = (int)( (double)( h * SizeFactor ) / w );
+  
+                  if ( h == 0 ) h = 1;
 
-       if( w > SizeFactor || h > SizeFactor )
-           {
-           if( w > h )
-               {
-               h = (int)( (double)( h * SizeFactor ) / w );
+                  w = SizeFactor;
+                  Q_ASSERT( h <= SizeFactor );
+                  }
+              else
+                  {
+                  w = (int)( (double)( w * SizeFactor ) / h );
 
-               if ( h == 0 ) h = 1;
+                  if ( w == 0 ) w = 1;
 
-               w = SizeFactor;
-               Q_ASSERT( h <= SizeFactor );
-               }
-           else
-               {
-               w = (int)( (double)( w * SizeFactor ) / h );
+                  h = SizeFactor;
+                  Q_ASSERT( w <= SizeFactor );
+                  }
+ 
+              const QImage scaleImg(img.smoothScale( w, h ));
 
-               if ( w == 0 ) w = 1;
+              if ( scaleImg.width() != w || scaleImg.height() != h )
+                  {
+                  kdDebug( 51000 ) << "Resizing failed. Aborting." << endl;
+                  return -1;
+                  }
 
-               h = SizeFactor;
-               Q_ASSERT( w <= SizeFactor );
-               }
-
-           const QImage scaleImg(img.smoothScale( w, h ));
-
-           if ( scaleImg.width() != w || scaleImg.height() != h )
-               {
-               kdDebug( 51000 ) << "Resizing failed. Aborting." << endl;
-               return -1;
-               }
-
-           img = scaleImg;
+              img = scaleImg;
+              }
 
            if ( ColorDepthChange == true )
                {
