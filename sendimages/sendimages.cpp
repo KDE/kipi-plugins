@@ -227,7 +227,7 @@ void SendImages::makeCommentsFile(void)
               commentItem = i18n("no comment");
 
           ImageCommentsText = ImageCommentsText +
-                              i18n("Comments for image \"%1\": %2\n")
+                              i18n("Comments for image \"%1\": %2\n\n")
                               .arg(targetFile)
                               .arg(commentItem);
           ++it;
@@ -235,7 +235,7 @@ void SendImages::makeCommentsFile(void)
 
        QFile commentsFile( m_tmp + i18n("comments.txt") );
        QTextStream stream( &commentsFile );
-       commentsFile.open( IO_ReadWrite );
+       commentsFile.open( IO_WriteOnly );
        stream << ImageCommentsText << "\n";
        commentsFile.close();
        m_filesSendList.append( m_tmp + i18n("comments.txt") );
