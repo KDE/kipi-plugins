@@ -1,24 +1,26 @@
-/* ============================================================
- * File  : cdarchiving.h
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
- * Date  : 2003-09-05
- * Description : Digikam Albums Cd Archiving
- *
- * Copyright 2003-2004 by Gregory Kokanosky <gregory dot kokanosky at free.fr>
- * for images navigation mode patchs.
- *
- * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published bythe Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * ============================================================ */
+//////////////////////////////////////////////////////////////////////////////
+//
+//    CDARCHIVING.H
+//
+//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2003-2004 by Gregory Kokanosky <gregory dot kokanosky at free.fr>
+//    for images navigation mode.
+//
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+//
+//////////////////////////////////////////////////////////////////////////////
 
 #ifndef CDARCHIVING_H
 #define CDARCHIVING_H
@@ -35,6 +37,7 @@ extern "C"
 #include <qobject.h>
 #include <qstring.h>
 #include <qdir.h>
+#include <qthread.h>
 
 // Include files for KDE
 
@@ -46,7 +49,6 @@ extern "C"
 
 #define NAV_THUMB_MAX_SIZE 64
 
-class QProgressDialog;
 class QTimer;
 
 class KURL;
@@ -61,7 +63,7 @@ class CDArchivingDialog;
 
 typedef QMap<QString,QString> CommentMap;
 
-class CDArchiving : public QObject
+class CDArchiving : public QObject, public QThread
 {
 Q_OBJECT
 
@@ -69,16 +71,20 @@ public:
   CDArchiving( KIPI::Interface* interface, QObject *parent=0, KAction *action_cdarchiving=0);
   virtual ~CDArchiving();
 
-  void writeSettings(void);
-  void readSettings(void);
+  virtual void run();
+
+  bool showDialog();
+  void invokeK3b();
+  void removeTmpFiles(void);
 
 public slots:
-  void Activate();
-  void slotCancelled();
-  void K3bDone(KProcess*);
+  void slotK3bDone(KProcess*);
   void slotK3bStartBurningProcess(void);
 
 private:
+                           
+  KIPI::Interface    *m_interface;
+
   KConfig            *m_config;
   CDArchivingDialog  *m_configDlg;
   
@@ -90,7 +96,6 @@ private:
   QTimer             *m_K3bTimer;
   pid_t               m_k3bPid;
 
-  bool                m_cancelled;
   bool                m_recurseSubDirectories;
   bool                m_copyFiles;
   bool                m_useCommentFile;
@@ -116,9 +121,10 @@ private:
   int                 m_targetImgWidth;
   int                 m_targetImgHeight;
 
-  QProgressDialog    *m_progressDlg;
   CommentMap         *m_commentMap;
 
+  QObject            *m_parent;
+  
   bool buildHTMLInterface (void);
 
   bool createDirectory(QDir thumb_dir, QString imgGalleryDir, QString dirName);
@@ -159,7 +165,8 @@ private:
   QString EscapeSgmlText(const QTextCodec* codec, const QString& strIn,
                          const bool quot = false, const bool apos = false );
 
-  KIPI::Interface* m_interface;
+  void writeSettings(void);
+  void readSettings(void);
 };
 
 }  // NameSpace KIPICDArchivingPlugin

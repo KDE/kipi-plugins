@@ -1,24 +1,26 @@
-/* ============================================================
- * File  : cdarchiving.cpp
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
- * Date  : 2003-09-05
- * Description : KIPI Albums Cd Archiving
- *
- * Copyright 2003-2004 by Gregory Kokanosky <gregory dot kokanosky at free.fr>
- * for images navigation mode patchs.
- *
- * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published bythe Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * ============================================================ */
+//////////////////////////////////////////////////////////////////////////////
+//
+//    CDARCHIVING.CPP
+//
+//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2003-2004 by Gregory Kokanosky <gregory dot kokanosky at free.fr>
+//    for images navigation mode.
+//
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+//
+//////////////////////////////////////////////////////////////////////////////
 
 // C Ansi includes
 
@@ -35,7 +37,6 @@ extern "C"
 #include <qfont.h>
 #include <qdatetime.h>
 #include <qimage.h>
-#include <qprogressdialog.h>
 #include <qtextcodec.h>
 #include <qstringlist.h>
 #include <qtimer.h>
@@ -44,7 +45,6 @@ extern "C"
 
 #include <kio/job.h>
 #include <kio/jobclasses.h>
-#include <kio/netaccess.h>
 #include <kio/global.h>
 #include <kinstance.h>
 #include <kconfig.h>
@@ -65,6 +65,7 @@ extern "C"
 
 // Local includes
 
+#include "actions.h"
 #include "cdarchiving.h"
 #include "cdarchivingdialog.h"
 #include "plugin_cdarchiving.h"
@@ -73,7 +74,7 @@ namespace KIPICDArchivingPlugin
 {
 
 CDArchiving::CDArchiving( KIPI::Interface* interface, QObject *parent, KAction *action_cdarchiving)
-           : QObject(parent)
+           : QObject(parent), QThread()
 {
     KImageIO::registerFormats();
     const KAboutData *data = KApplication::kApplication()->aboutData();
@@ -85,6 +86,7 @@ CDArchiving::CDArchiving( KIPI::Interface* interface, QObject *parent, KAction *
 
     m_actionCDArchiving = action_cdarchiving;
     m_interface = interface;
+    m_parent = parent;
 }
 
 
@@ -93,6 +95,7 @@ CDArchiving::CDArchiving( KIPI::Interface* interface, QObject *parent, KAction *
 CDArchiving::~CDArchiving()
 {
     delete m_configDlg;
+    wait();
 }
 
 
@@ -100,46 +103,46 @@ CDArchiving::~CDArchiving()
 
 void CDArchiving::writeSettings(void)
 {
-  m_config = new KConfig("kipirc");
-  m_config->setGroup("CDArchiving Settings");
+    m_config = new KConfig("kipirc");
+    m_config->setGroup("CDArchiving Settings");
 
-  // Albums selection dialogbox setup tab
+    // Albums selection dialogbox setup tab
 
-  m_config->writeEntry("MediaFormat", m_configDlg->getMediaFormat());
+    m_config->writeEntry("MediaFormat", m_configDlg->getMediaFormat());
 
-  // HTML interface Look dialogbox setup tab
+    // HTML interface Look dialogbox setup tab
 
-  m_config->writeEntry("UseHTMLInterface", m_configDlg->getUseHTMLInterface());
-  m_config->writeEntry("UseAutoRun", m_configDlg->getUseAutoRunWin32());
-  m_config->writeEntry("MainPageTitle", m_configDlg->getMainTitle());
-  m_config->writeEntry("ImagesPerRow", m_configDlg->getImagesPerRow());
-  m_config->writeEntry("FontName", m_configDlg->getFontName());
-  m_config->writeEntry("FontSize", m_configDlg->getFontSize());
-  m_config->writeEntry("FontColor", m_configDlg->getForegroundColor());
-  m_config->writeEntry("BackgroundColor", m_configDlg->getBackgroundColor());
-  m_config->writeEntry("ThumbnailsSize", m_configDlg->getThumbnailsSize());
-  m_config->writeEntry("ThumbnailsFormat", m_configDlg->getImageFormat());
-  m_config->writeEntry("BordersImagesSize", m_configDlg->getBordersImagesSize());
-  m_config->writeEntry("BordersImagesColor", m_configDlg->getBordersImagesColor());
+    m_config->writeEntry("UseHTMLInterface", m_configDlg->getUseHTMLInterface());
+    m_config->writeEntry("UseAutoRun", m_configDlg->getUseAutoRunWin32());
+    m_config->writeEntry("MainPageTitle", m_configDlg->getMainTitle());
+    m_config->writeEntry("ImagesPerRow", m_configDlg->getImagesPerRow());
+    m_config->writeEntry("FontName", m_configDlg->getFontName());
+    m_config->writeEntry("FontSize", m_configDlg->getFontSize());
+    m_config->writeEntry("FontColor", m_configDlg->getForegroundColor());
+    m_config->writeEntry("BackgroundColor", m_configDlg->getBackgroundColor());
+    m_config->writeEntry("ThumbnailsSize", m_configDlg->getThumbnailsSize());  
+    m_config->writeEntry("ThumbnailsFormat", m_configDlg->getImageFormat());
+    m_config->writeEntry("BordersImagesSize", m_configDlg->getBordersImagesSize());
+    m_config->writeEntry("BordersImagesColor", m_configDlg->getBordersImagesColor());
 
-  // CD Informations setup tab
+    // CD Informations setup tab
 
-  m_config->writeEntry("VolumeID", m_configDlg->getVolumeID());
-  m_config->writeEntry("VolumeSetID", m_configDlg->getVolumeSetID());
-  m_config->writeEntry("SystemID", m_configDlg->getSystemID());
-  m_config->writeEntry("ApplicationID", m_configDlg->getApplicationID());
-  m_config->writeEntry("Publisher", m_configDlg->getPublisher());
-  m_config->writeEntry("Preparer", m_configDlg->getPreparer());
+    m_config->writeEntry("VolumeID", m_configDlg->getVolumeID());
+    m_config->writeEntry("VolumeSetID", m_configDlg->getVolumeSetID());
+    m_config->writeEntry("SystemID", m_configDlg->getSystemID());
+    m_config->writeEntry("ApplicationID", m_configDlg->getApplicationID());
+    m_config->writeEntry("Publisher", m_configDlg->getPublisher());
+    m_config->writeEntry("Preparer", m_configDlg->getPreparer());
 
-  // Misc dialogbox setup tab
+    // Misc dialogbox setup tab
 
-  m_config->writeEntry("K3bBinPath", m_configDlg->getK3bBinPathName());
-  m_config->writeEntry("UseOnTheFly", m_configDlg->getUseOnTheFly());
-  m_config->writeEntry("UseCheckCD", m_configDlg->getUseCheckCD());
-  m_config->writeEntry("UseStartWrintingProcess", m_configDlg->getUseStartBurningProcess());
+    m_config->writeEntry("K3bBinPath", m_configDlg->getK3bBinPathName());
+    m_config->writeEntry("UseOnTheFly", m_configDlg->getUseOnTheFly());
+    m_config->writeEntry("UseCheckCD", m_configDlg->getUseCheckCD());
+    m_config->writeEntry("UseStartWrintingProcess", m_configDlg->getUseStartBurningProcess());
 
-  m_config->sync();
-  delete m_config;
+    m_config->sync();
+    delete m_config;
 }
 
 
@@ -147,166 +150,226 @@ void CDArchiving::writeSettings(void)
 
 void CDArchiving::readSettings(void)
 {
-  QColor* ColorFont;
-  QColor* ColorBackground;
-  QColor* ColorBordersImages;
+    QColor* ColorFont;
+    QColor* ColorBackground;
+    QColor* ColorBordersImages;
 
-  m_config = new KConfig("kipirc");
-  m_config->setGroup("CDArchiving Settings");
+    m_config = new KConfig("kipirc");
+    m_config->setGroup("CDArchiving Settings");
 
-  // Albums selection dialogbox setup tab
+    // Albums selection dialogbox setup tab
 
-  m_configDlg->setMediaFormat( m_config->readEntry("MediaFormat", i18n("CD (650Mb)")) );
+    m_configDlg->setMediaFormat( m_config->readEntry("MediaFormat", i18n("CD (650Mb)")) );
 
-  // HTML interface Look dialogbox setup tab
+    // HTML interface Look dialogbox setup tab
 
-  if (m_config->readEntry("UseHTMLInterface", "true") == "true")
-     m_configDlg->setUseHTMLInterface( true );
-  else
-     m_configDlg->setUseHTMLInterface( false );
+    if (m_config->readEntry("UseHTMLInterface", "true") == "true")
+       m_configDlg->setUseHTMLInterface( true );
+    else
+       m_configDlg->setUseHTMLInterface( false );
 
-  if (m_config->readEntry("UseAutoRun", "true") == "true")
-     m_configDlg->setUseAutoRunWin32( true );
-  else
-     m_configDlg->setUseAutoRunWin32( false );
+    if (m_config->readEntry("UseAutoRun", "true") == "true")
+       m_configDlg->setUseAutoRunWin32( true );
+    else
+       m_configDlg->setUseAutoRunWin32( false );
 
-  m_configDlg->setMainTitle( m_config->readEntry("MainPageTitle", i18n("KIPI Albums Archiving")) );
-  m_configDlg->setImagesPerRow( m_config->readEntry("ImagesPerRow", "4").toInt() );
-  m_configDlg->setFontName( m_config->readEntry("FontName", "Helvetica") );
-  m_configDlg->setFontSize( m_config->readEntry("FontSize", "14").toInt() );
-  ColorFont = new QColor( 208, 255, 208 );
-  m_configDlg->setForegroundColor( m_config->readColorEntry("FontColor", ColorFont));
-  ColorBackground = new QColor( 51, 51, 51 );
-  m_configDlg->setBackgroundColor( m_config->readColorEntry("BackgroundColor", ColorBackground));
-  m_configDlg->setThumbnailsSize( m_config->readEntry("ThumbnailsSize", "140").toInt() );
-  m_configDlg->setImageFormat( m_config->readEntry("ThumbnailsFormat", "JPEG") );
-  m_configDlg->setBordersImagesSize( m_config->readEntry("BordersImagesSize", "1").toInt() );
-  ColorBordersImages = new QColor( 208, 255, 208 );
-  m_configDlg->setBordersImagesColor( m_config->readColorEntry("BordersImagesColor", ColorBordersImages));
+    m_configDlg->setMainTitle( m_config->readEntry("MainPageTitle", i18n("KIPI Albums Archiving")) );
+    m_configDlg->setImagesPerRow( m_config->readEntry("ImagesPerRow", "4").toInt() );
+    m_configDlg->setFontName( m_config->readEntry("FontName", "Helvetica") );
+    m_configDlg->setFontSize( m_config->readEntry("FontSize", "14").toInt() );
+    ColorFont = new QColor( 208, 255, 208 );
+    m_configDlg->setForegroundColor( m_config->readColorEntry("FontColor", ColorFont));
+    ColorBackground = new QColor( 51, 51, 51 );
+    m_configDlg->setBackgroundColor( m_config->readColorEntry("BackgroundColor", ColorBackground));
+    m_configDlg->setThumbnailsSize( m_config->readEntry("ThumbnailsSize", "140").toInt() );
+    m_configDlg->setImageFormat( m_config->readEntry("ThumbnailsFormat", "JPEG") );
+    m_configDlg->setBordersImagesSize( m_config->readEntry("BordersImagesSize", "1").toInt() );
+    ColorBordersImages = new QColor( 208, 255, 208 );
+    m_configDlg->setBordersImagesColor( m_config->readColorEntry("BordersImagesColor", ColorBordersImages));
 
-  delete ColorFont;
-  delete ColorBackground;
-  delete ColorBordersImages;
+    delete ColorFont;
+    delete ColorBackground;
+    delete ColorBordersImages;
 
-  // CD Informations setup tab
+    // CD Informations setup tab
 
-  m_configDlg->setVolumeID( m_config->readEntry("VolumeID", i18n("CD Albums")) );
-  m_configDlg->setVolumeSetID( m_config->readEntry("VolumeSetIDeTitle", i18n("KIPI Albums CD archiving")) );
-  m_configDlg->setSystemID( m_config->readEntry("SystemID", i18n("LINUX")) );
-  m_configDlg->setApplicationID( m_config->readEntry("ApplicationID", i18n("K3b CD-DVD Burning application")) );
-  m_configDlg->setPublisher( m_config->readEntry("Publisher", m_hostName + " [" + m_hostURL + "]") );
-  m_configDlg->setPreparer( m_config->readEntry("Preparer", i18n("KIPI CD Archiving plugin")) );
+    m_configDlg->setVolumeID( m_config->readEntry("VolumeID", i18n("CD Albums")) );
+    m_configDlg->setVolumeSetID( m_config->readEntry("VolumeSetIDeTitle", i18n("KIPI Albums CD archiving")) );
+    m_configDlg->setSystemID( m_config->readEntry("SystemID", i18n("LINUX")) );
+    m_configDlg->setApplicationID( m_config->readEntry("ApplicationID", i18n("K3b CD-DVD Burning application")) );
+    m_configDlg->setPublisher( m_config->readEntry("Publisher", m_hostName + " [" + m_hostURL + "]") );
+    m_configDlg->setPreparer( m_config->readEntry("Preparer", i18n("KIPI CD Archiving plugin")) );
 
-  // Misc dialogbox setup tab
+    // Misc dialogbox setup tab
 
-  m_configDlg->setK3bBinPathName( m_config->readEntry("K3bBinPath", "/usr/bin/k3b") );
+    m_configDlg->setK3bBinPathName( m_config->readEntry("K3bBinPath", "/usr/bin/k3b") );
 
-  if (m_config->readEntry("UseOnTheFly", "true") == "false")
-     m_configDlg->setUseUseOnTheFly( false );
-  else
-     m_configDlg->setUseUseOnTheFly( true );
+    if (m_config->readEntry("UseOnTheFly", "true") == "false")
+       m_configDlg->setUseUseOnTheFly( false );
+    else
+       m_configDlg->setUseUseOnTheFly( true );
 
-  if (m_config->readEntry("UseCheckCD", "true") == "false")
-     m_configDlg->setUseCheckCD( false );
-  else
-     m_configDlg->setUseCheckCD( true );
+    if (m_config->readEntry("UseCheckCD", "true") == "false")
+       m_configDlg->setUseCheckCD( false );
+    else
+       m_configDlg->setUseCheckCD( true );
 
-  if (m_config->readEntry("UseStartWrintingProcess", "false") == "false")
-     m_configDlg->setUseStartBurningProcess( false );
-  else
-     m_configDlg->setUseStartBurningProcess( true );
+    if (m_config->readEntry("UseStartWrintingProcess", "false") == "false")
+       m_configDlg->setUseStartBurningProcess( false );
+    else
+       m_configDlg->setUseStartBurningProcess( true );
 
-  delete m_config;
+    delete m_config;
   
-  // Get the image files filters from the hosts app.
+    // Get the image files filters from the hosts app.
      
-  m_imagesFileFilter = m_interface->fileExtensions();
+    m_imagesFileFilter = m_interface->fileExtensions();
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
-void CDArchiving::Activate()
+bool CDArchiving::showDialog()
 {
     KStandardDirs dir;
     m_tmpFolder = dir.saveLocation("tmp", "kipi-cdarchivingplugin-" + QString::number(getpid()) + "/");
-
-    m_configDlg = new CDArchivingDialog( m_interface, kapp->activeWindow());
-    readSettings();
 
     m_HTMLInterfaceFolder = "";
     m_HTMLInterfaceIndex = "";
     m_HTMLInterfaceAutoRunInf = "";
     m_HTMLInterfaceAutoRunFolder = "";
 
+    m_configDlg = new CDArchivingDialog( m_interface, 0 );
+    readSettings();
+    
     if ( m_configDlg->exec() == QDialog::Accepted )
        {
        writeSettings();
+       return true;
+       }
 
-       if ( m_configDlg->getUseHTMLInterface() == true )
+    return false;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+// List of threaded operations.
+
+void CDArchiving::run()
+{
+    // Making HTML interface.
+    
+    KIPICDArchivingPlugin::EventData *d;
+    
+    if ( m_configDlg->getUseHTMLInterface() == true )
+       {
+       d = new KIPICDArchivingPlugin::EventData;
+       d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+       d->starting = true;
+       d->success = false;
+       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+
+       if ( buildHTMLInterface() == true )
           {
-          if ( buildHTMLInterface() == true )
-             {
-             m_HTMLInterfaceFolder = m_tmpFolder + "/HTMLInterface";
-             QString dir;
-             KGlobal::dirs()->addResourceType("kipi_autorun",
-                                              KGlobal::dirs()->kde_default("data") + "kipi/data");
-             dir = KGlobal::dirs()->findResourceDir("kipi_autorun", "index.htm");
-             m_HTMLInterfaceIndex = dir + "index.htm";
+          m_HTMLInterfaceFolder = m_tmpFolder + "/HTMLInterface";
+          QString dir;
+          KGlobal::dirs()->addResourceType("kipi_autorun",
+                                           KGlobal::dirs()->kde_default("data") + "kipi/data");
+          dir = KGlobal::dirs()->findResourceDir("kipi_autorun", "index.htm");
+          m_HTMLInterfaceIndex = dir + "index.htm";
 
-             if ( m_configDlg->getUseAutoRunWin32() == true )
-                {
-                CreateAutoRunInfFile();
-                m_HTMLInterfaceAutoRunInf = m_tmpFolder + "/autorun.inf";
-                m_HTMLInterfaceAutoRunFolder = dir + "/autorun";
-                }
-             }
-          else
-             {
-             if ( m_cancelled == false )
-                KMessageBox::error(kapp->activeWindow(), i18n("Cannot build HTML interface for this CD.\n"
-                                           "This option will be disabled!"));
-             else
-                return;
-             }
-          }
+          d = new KIPICDArchivingPlugin::EventData;
+          d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+          d->success = true;
+          d->starting = false;
+          QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
-       if ( BuildK3bXMLprojectfile(m_HTMLInterfaceFolder, m_HTMLInterfaceIndex,
-                                   m_HTMLInterfaceAutoRunInf, m_HTMLInterfaceAutoRunFolder) == false )
-          {
-          KMessageBox::error(kapp->activeWindow(), i18n("Cannot build K3b project file. CD archiving process canceled!"));
-          return;
-          }
-
-       m_Proc = new KProcess();
-
-       *m_Proc << m_configDlg->getK3bBinPathName();
-       *m_Proc << m_tmpFolder + "/KIPICDArchiving.xml";
-
-       QString K3bCommandLine = m_configDlg->getK3bBinPathName() + " " + m_tmpFolder + "/KIPICDArchiving.xml";
-       kdDebug(51000) << "K3b is started : " << K3bCommandLine.ascii() << endl;
-
-       connect(m_Proc, SIGNAL(processExited(KProcess *)),
-               this, SLOT(K3bDone(KProcess*)));
-
-       if ( !m_Proc->start(KProcess::NotifyOnExit, KProcess::All ) )
-          {
-          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start K3b program : fork failed !"));
-          return;
-          }
-
-       m_actionCDArchiving->setEnabled(false);
-
-       if ( m_configDlg->getUseStartBurningProcess() == true )
-          {
-          m_K3bTimer = new QTimer(this);
+          // Making AutoRun options.
           
-          connect(m_K3bTimer, SIGNAL(timeout()), 
-                  this, SLOT(slotK3bStartBurningProcess()));
-                  
-          m_K3bTimer->start(10000, true);
-          m_k3bPid = m_Proc->pid();
+          if ( m_configDlg->getUseAutoRunWin32() == true )
+             {
+             d = new KIPICDArchivingPlugin::EventData;
+             d->action = KIPICDArchivingPlugin::BuildAutoRuniface;
+             d->starting = true;
+             d->success = false;
+             QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       
+             CreateAutoRunInfFile();
+             m_HTMLInterfaceAutoRunInf = m_tmpFolder + "/autorun.inf";
+             m_HTMLInterfaceAutoRunFolder = dir + "/autorun";
+             
+             d = new KIPICDArchivingPlugin::EventData;
+             d->action = KIPICDArchivingPlugin::BuildAutoRuniface;
+             d->starting = false;
+             d->success = true;
+             QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+             }
           }
+       }
+
+    // Making K3b project file.
+       
+    d = new KIPICDArchivingPlugin::EventData;
+    d->action = KIPICDArchivingPlugin::BuildK3bProject;
+    d->starting = true;
+    d->success = false;
+    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+           
+    if ( BuildK3bXMLprojectfile(m_HTMLInterfaceFolder, m_HTMLInterfaceIndex,
+                                m_HTMLInterfaceAutoRunInf, m_HTMLInterfaceAutoRunFolder) == false )
+       {
+       d = new KIPICDArchivingPlugin::EventData;
+       d->action = KIPICDArchivingPlugin::BuildK3bProject;
+       d->starting = false;
+       d->success = false;
+       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+
+       
+       return;
+       }
+    else 
+       {
+       d = new KIPICDArchivingPlugin::EventData;
+       d->action = KIPICDArchivingPlugin::BuildK3bProject;
+       d->starting = false;
+       d->success = true;
+       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       }
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CDArchiving::invokeK3b()
+{
+    m_Proc = new KProcess();
+
+    *m_Proc << m_configDlg->getK3bBinPathName();
+    *m_Proc << m_tmpFolder + "/KIPICDArchiving.xml";
+
+    QString K3bCommandLine = m_configDlg->getK3bBinPathName() + " " + m_tmpFolder + "/KIPICDArchiving.xml";
+    kdDebug(51000) << "K3b is started : " << K3bCommandLine.ascii() << endl;
+
+    connect(m_Proc, SIGNAL(processExited(KProcess *)),
+            this, SLOT(slotK3bDone(KProcess*)));
+
+    if ( !m_Proc->start(KProcess::NotifyOnExit, KProcess::All ) )
+       {
+       KMessageBox::error(kapp->activeWindow(), i18n("Cannot start K3b program : fork failed !"));
+       return;
+       }
+
+    m_actionCDArchiving->setEnabled(false);
+
+    if ( m_configDlg->getUseStartBurningProcess() == true )
+       {
+       m_K3bTimer = new QTimer(this);
+        
+       connect(m_K3bTimer, SIGNAL(timeout()), 
+               this, SLOT(slotK3bStartBurningProcess()));
+                  
+       m_K3bTimer->start(10000, true);
+       m_k3bPid = m_Proc->pid();
        }
 }
 
@@ -315,24 +378,24 @@ void CDArchiving::Activate()
 
 void CDArchiving::slotK3bStartBurningProcess(void)
 {
-   QString temp, cmd;
-   temp.setNum(m_k3bPid);
-   cmd = "dcop k3b-" + temp + " K3bProject-0 burn";
+    QString temp, cmd;
+    temp.setNum(m_k3bPid);
+    cmd = "dcop k3b-" + temp + " K3bProject-0 burn";
 
-   KRun::runCommand(cmd);
+    KRun::runCommand(cmd);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CDArchiving::K3bDone(KProcess*)
+void CDArchiving::slotK3bDone(KProcess*)
 {
-   kdDebug(51000) << "K3b is done !!! Removing temporary folder..." << endl;
+    kdDebug(51000) << "K3b is done !!! Removing temporary folder..." << endl;
 
-   if (DeleteDir(m_tmpFolder) == false)
-       KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove temporary folder %1 !").arg(m_tmpFolder));
+    if (DeleteDir(m_tmpFolder) == false)
+        KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove temporary folder %1 !").arg(m_tmpFolder));
 
-   m_actionCDArchiving->setEnabled(true);
+    m_actionCDArchiving->setEnabled(true);
 }
 
 
@@ -341,12 +404,12 @@ void CDArchiving::K3bDone(KProcess*)
 bool CDArchiving::buildHTMLInterface (void)
 {
     QString Path;
-    m_progressDlg = 0L;
-
+    KIPICDArchivingPlugin::EventData *d;
     KURL SubUrl, MainUrl;
     m_recurseSubDirectories = false;
     m_LevelRecursion = 1;
     m_StreamMainPageAlbumPreview = "";
+    
     m_imagesPerRow = m_configDlg->getImagesPerRow();
     QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getAlbumsSelection());
 
@@ -355,16 +418,26 @@ bool CDArchiving::buildHTMLInterface (void)
     QDir TargetDir;
     QString MainTPath= m_tmpFolder + "/HTMLInterface";
 
-    if (TargetDir.exists (MainTPath) == TRUE)
+    if (TargetDir.exists (MainTPath) == true)
         if (DeleteDir (MainTPath) == false)
            {
-           KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove folder %1 !").arg(MainTPath));
+           d = new KIPICDArchivingPlugin::EventData;
+           d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+           d->starting = false;
+           d->success = false;
+           d->errString = i18n("Cannot remove folder %1 !").arg(MainTPath);
+           QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
            return false;
            }
 
-    if (TargetDir.mkdir( MainTPath ) == FALSE)
+    if (TargetDir.mkdir( MainTPath ) == false)
        {
-       KMessageBox::sorry(kapp->activeWindow(), i18n("Couldn't create directory '%1'").arg(MainTPath));
+       d = new KIPICDArchivingPlugin::EventData;
+       d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+       d->starting = false;
+       d->success = false;
+       d->errString = i18n("Couldn't create directory '%1'").arg(MainTPath);
+       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
        return false;
        }
 
@@ -376,7 +449,7 @@ bool CDArchiving::buildHTMLInterface (void)
     dir = dir + "gohome.png";
     KURL srcURL(dir);
     KURL destURL( MainTPath + "/gohome.png");
-    KIO::NetAccess::copy(srcURL, destURL);
+    KIO::file_copy(srcURL, destURL, -1, true, false, false);
 
     // Adding up icon
     KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
@@ -384,8 +457,7 @@ bool CDArchiving::buildHTMLInterface (void)
     dir = dir + "up.png";
     srcURL = dir;
     destURL = MainTPath + QString::fromLatin1("/up.png");
-    KIO::NetAccess::copy(srcURL, destURL);
-
+    KIO::file_copy(srcURL, destURL, -1, true, false, false);
 
     for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
         {
@@ -406,20 +478,22 @@ bool CDArchiving::buildHTMLInterface (void)
 
            if (TargetDir.mkdir( SubTPath ) == false)
                {
-               KMessageBox::sorry(kapp->activeWindow(), i18n("Couldn't create directory '%1'").arg(SubTPath));
+               d = new KIPICDArchivingPlugin::EventData;
+               d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+               d->starting = false;
+               d->success = false;
+               d->errString = i18n("Couldn't create directory '%1'").arg(SubTPath);
+               QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                return false;
                }
 
-           m_progressDlg = new QProgressDialog(0, "progressDlg", true );
+           d = new KIPICDArchivingPlugin::EventData;
+           d->action = KIPICDArchivingPlugin::Progress;
+           d->starting = true;
+           d->success = false;
+           d->errString = i18n("Parsing Album %1 ...").arg(m_AlbumTitle);
+           QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
            
-           QObject::connect(m_progressDlg, SIGNAL( cancelled() ),
-                            this, SLOT( slotCancelled() ) );
-
-           m_progressDlg->setCaption( i18n("Album \"%1\"").arg(m_AlbumTitle) );
-           m_progressDlg->setCancelButtonText(i18n("&Cancel"));
-           m_cancelled = false;
-           m_progressDlg->show();
-           kapp->processEvents();
            m_useCommentFile = true;
 
            if ( createHtml( SubUrl, Path, m_LevelRecursion > 0 ? m_LevelRecursion + 1 : 0,
@@ -427,16 +501,18 @@ bool CDArchiving::buildHTMLInterface (void)
                {
                if (DeleteDir (MainTPath) == false)
                    {
-                   KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove folder %1 !").arg(MainTPath));
+                   d = new KIPICDArchivingPlugin::EventData;
+                   d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+                   d->starting = false;
+                   d->success = false;
+                   d->errString = i18n("Cannot remove folder %1 !").arg(MainTPath);
+                   QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                    return false;
                    }
 
-               delete m_progressDlg;
                return false;
                }
            }
-
-        delete m_progressDlg;
         }
 
     // Create the main interface HTML page.
@@ -454,7 +530,12 @@ bool CDArchiving::buildHTMLInterface (void)
        }
     else
        {
-       KMessageBox::sorry(kapp->activeWindow(),i18n("Couldn't open file '%1'").arg(MainUrl.path(+1)));
+       d = new KIPICDArchivingPlugin::EventData;
+       d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+       d->starting = false;
+       d->success = false;
+       d->errString = i18n("Couldn't open file '%1'").arg(MainUrl.path(+1));
+       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
        return false;
        }
 
@@ -473,8 +554,13 @@ bool CDArchiving::createDirectory(QDir thumb_dir, QString imgGalleryDir, QString
 
         if (!(thumb_dir.mkdir(dirName, false)))
             {
-            KMessageBox::sorry(kapp->activeWindow(), i18n("Couldn't create directory '%1' in '%2'")
-                                       .arg(dirName).arg(imgGalleryDir));
+            KIPICDArchivingPlugin::EventData *d = new KIPICDArchivingPlugin::EventData;
+            d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+            d->starting = false;
+            d->success = false;
+            d->errString = i18n("Couldn't create directory '%1' in '%2'")
+                                .arg(dirName).arg(imgGalleryDir);
+            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
             return false;
             }
         else
@@ -554,9 +640,11 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
                              const QStringList& subDirList, const QDir& imageDir,
                              const KURL& url, const QString& imageFormat)
 {
-
+    KIPICDArchivingPlugin::EventData *d;
     int numOfImages = imageDir.count();
+    
     kdDebug(51000) << "Num of images in " << imageDir.path().ascii() << " : " << numOfImages << endl;
+    
     const QString imgGalleryDir = url.directory();
     const QString today(KGlobal::locale()->formatDate(QDate::currentDate()));
 
@@ -623,11 +711,11 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
     QFileInfo imginfo;
     QPixmap  imgProp;
 
-    for (imgIndex = 0 ; !m_cancelled && (imgIndex < numOfImages);)
+    for ( imgIndex = 0 ; imgIndex < numOfImages ; )
         {
         stream << "<tr>" << endl;
 
-        for (int col = 0 ; !m_cancelled && (col < m_imagesPerRow) && (imgIndex < numOfImages) ; ++col)
+        for (int col = 0 ; (col < m_imagesPerRow) && (imgIndex < numOfImages) ; ++col)
             {
             const QString imgName = imageDir[imgIndex];
 
@@ -704,15 +792,23 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
                    m_StreamMainPageAlbumPreview.append ( Temp2 );
                    }
 
-                m_progressDlg->setLabelText( i18n("Creating thumbnail for \n'%1'\nPlease wait!")
-                                             .arg(imgName) );
-                kapp->processEvents();
+                d = new KIPICDArchivingPlugin::EventData;
+                d->action = KIPICDArchivingPlugin::ResizeImages;
+                d->starting = true;
+                d->success = false;
+                d->fileName = imgName;
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                 }
             else
                 {
                 kdDebug(51000) << "Creating thumbnail for " << imgName.ascii() <<  "failed !" << endl;
-                m_progressDlg->setLabelText( i18n("Creating thumbnail for\n%1\nfailed!").arg(imgName) );
-                kapp->processEvents();
+                
+                d = new KIPICDArchivingPlugin::EventData;
+                d->action = KIPICDArchivingPlugin::ResizeImages;
+                d->starting = false;
+                d->success = false;
+                d->fileName = imgName;
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                 }
 
             stream << "</a>" << endl;
@@ -727,9 +823,11 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
 
             stream << "</td>" << endl;
 
-            m_progressDlg->setTotalSteps( numOfImages );
-            m_progressDlg->setProgress( imgIndex );
-            kapp->processEvents();
+            // TODO progress info dispatch !!!
+            
+            /*m_progressDlg->setTotalSteps( numOfImages );
+            m_progressDlg->setProgress( imgIndex );*/
+            
             ++imgIndex;
             }
         stream << "</tr>" << endl;
@@ -746,7 +844,7 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
 
     KURL srcURL(dir);
     KURL destURL(imgGalleryDir + QString::fromLatin1("/thumbs/valid-html401.png"));
-    KIO::NetAccess::copy(srcURL, destURL);
+    KIO::file_copy(srcURL, destURL, -1, true, false, false);
 
     stream << "<p>"  << endl;
     Temp = i18n("Valid HTML 4.01!");
@@ -786,7 +884,7 @@ void CDArchiving::createBodyMainPage(QTextStream& stream, KURL& url)
 
     KURL srcURL(dir);
     KURL destURL(url.directory() + QString::fromLatin1("/valid-html401.png"));
-    KIO::NetAccess::copy(srcURL, destURL);
+    KIO::file_copy(srcURL, destURL, -1, true, false, false);
 
     stream << "<p>"  << endl;
     Temp = i18n("Valid HTML 4.01!");
@@ -806,9 +904,7 @@ void CDArchiving::createBodyMainPage(QTextStream& stream, KURL& url)
 bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int recursionLevel,
                              const QString& imageFormat)
 {
-
-    if(m_cancelled) return false;
-
+    KIPICDArchivingPlugin::EventData *d;
     QStringList subDirList;
 
     if (m_recurseSubDirectories && (recursionLevel >= 0))  // RecursionLevel == 0 means endless
@@ -818,10 +914,9 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
         toplevel_dir.setFilter( QDir::Dirs | QDir::Readable | QDir::Writable );
         subDirList = toplevel_dir.entryList();
 
-        for (QStringList::ConstIterator it = subDirList.begin(); it != subDirList.end() && !m_cancelled; it++)
+        for (QStringList::ConstIterator it = subDirList.begin() ; it != subDirList.end() ; it++)
             {
             const QString currentDir = *it;
-            kapp->processEvents();
 
             if (currentDir == "." || currentDir == "..")   // Disregard the "." and ".." directories
                 continue;
@@ -834,8 +929,13 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
 
                 if (!(subDir.mkdir(currentDir, false)))
                     {
-                    KMessageBox::sorry(kapp->activeWindow(), i18n("Couldn't create directory '%1' in '%2'")
-                                       .arg(currentDir).arg(url.directory()));
+                    d = new KIPICDArchivingPlugin::EventData;
+                    d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+                    d->starting = false;
+                    d->success = false;
+                    d->errString = i18n("Couldn't create directory '%1' in '%2'")
+                                        .arg(currentDir).arg(url.directory());
+                    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                     continue;
                     }
                 else
@@ -885,11 +985,16 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
         createHead(stream);
         createBody(stream, sourceDirName, subDirList, imageDir, url, imageFormat);
         file.close();
-        return !m_cancelled;
+        return true;        // TODO check if it's right !!
         }
     else
         {
-        KMessageBox::sorry(kapp->activeWindow(),i18n("Couldn't open file '%1'").arg(url.path(+1)));
+        d = new KIPICDArchivingPlugin::EventData;
+        d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+        d->starting = false;
+        d->success = false;
+        d->errString = i18n("Couldn't open file '%1'").arg(url.path(+1));
+        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
         return false;
         }
 }
@@ -1105,8 +1210,6 @@ void CDArchiving::loadComments(void)
                m_useCommentFile = true;
                m_commentMap->insert((*urlIt).prettyURL(), comment);
                }
-            
-            kapp->processEvents();
             }
         }
 }
@@ -1136,15 +1239,14 @@ bool CDArchiving::createThumb( const QString& imgName, const QString& sourceDirN
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool CDArchiving::ResizeImage( const QString Path, const QString Directory, const QString ImageFormat,
-                                 const QString ImageNameFormat, int *Width, int *Height, int SizeFactor,
-                                 bool ColorDepthChange, int ColorDepthValue, bool CompressionSet,
-                                 int ImageCompression)
+                               const QString ImageNameFormat, int *Width, int *Height, int SizeFactor,
+                               bool ColorDepthChange, int ColorDepthValue, bool CompressionSet,
+                               int ImageCompression)
 {
 QImage img;
 bool ValRet;
 
 ValRet = img.load(Path);
-kapp->processEvents();
 
 if ( ValRet == false )        // Cannot load the src image.
    {
@@ -1190,7 +1292,6 @@ if ( ValRet == true )
            }
 
        const QImage scaleImg(img.smoothScale( w, h ));
-       kapp->processEvents();
 
        if ( scaleImg.width() != w || scaleImg.height() != h )
            {
@@ -1203,7 +1304,6 @@ if ( ValRet == true )
        if ( ColorDepthChange == true )
            {
            const QImage depthImg(img.convertDepth( ColorDepthValue ));
-           kapp->processEvents();
            img = depthImg;
            }
        }
@@ -1227,7 +1327,6 @@ if ( ValRet == true )
          }
       }
 
-   kapp->processEvents();
    *Width = w;
    *Height = h;
    return true;
@@ -1239,18 +1338,11 @@ return false;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void CDArchiving::slotCancelled()
-{
-    m_cancelled = true;
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString IndexHtm,
                                           QString AutoRunInf, QString AutorunFolder)
 {
     QString Temp;
+    KIPICDArchivingPlugin::EventData *d;
     QFile XMLK3bProjectFile;
     QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getAlbumsSelection());
     int progressValue = 0;
@@ -1261,22 +1353,13 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
 
     if ( XMLK3bProjectFile.open ( IO_WriteOnly | IO_Truncate ) == false )
         return false;
-
-    // Show progress dialog
-
-    m_progressDlg = new QProgressDialog(0, "progressDlg", true );
     
-    QObject::connect(m_progressDlg, SIGNAL( cancelled() ), 
-                     this, SLOT( slotCancelled() ) );
-    
-    m_progressDlg->setCaption( i18n("K3b project creation") );
-    m_progressDlg->setCancelButtonText(i18n("&Cancel"));
-    m_cancelled = false;
-    m_progressDlg->show();
-    m_progressDlg->setLabelText( i18n("Creating project header...") );
-    m_progressDlg->setTotalSteps( ListAlbums.size() + 1 );
-    m_progressDlg->setProgress( 0 );
-    kapp->processEvents();
+    d = new KIPICDArchivingPlugin::EventData;
+    d->action = KIPICDArchivingPlugin::Progress;
+    d->starting = true;
+    d->success = false;
+    d->errString = i18n("Creating project header...");
+    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
     // Build K3b XML project File.
 
@@ -1436,18 +1519,21 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     if ( HTMLinterfaceFolder.isEmpty() == false )
        AddFolderTreeToK3bXMLProjectFile(HTMLinterfaceFolder, &stream);
 
-    m_progressDlg->setProgress( ++progressValue );
-    kapp->processEvents();
+    // TODO : Added progress dispatch !
+    
+    //m_progressDlg->setProgress( ++progressValue );
 
     // Add Selected Albums paths List.
 
     for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
         {
-        m_progressDlg->setLabelText( i18n("Added Album\n'%1'\ninto project...").arg( (*it).name()) );
-        kapp->processEvents();
+        d = new KIPICDArchivingPlugin::EventData;
+        d->action = KIPICDArchivingPlugin::Progress;
+        d->starting = true;
+        d->success = false;
+        d->errString = i18n("Added Album '%1' into project...").arg( (*it).name());
+        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
         AddFolderTreeToK3bXMLProjectFile( (*it).path().path(), &stream); 
-        m_progressDlg->setProgress( ++progressValue );
-        kapp->processEvents();
         }
 
     Temp = "</files>\n";
@@ -1464,7 +1550,6 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     // Close K3b XML project File.
 
     XMLK3bProjectFile.close();
-    delete m_progressDlg;
     return true;
 }
 
@@ -1515,7 +1600,6 @@ bool CDArchiving::AddFolderTreeToK3bXMLProjectFile (QString dirname, QTextStream
           *stream << Temp;
           }
 
-     kapp->processEvents();
      ++it_files;
      }
 
@@ -1534,7 +1618,6 @@ bool CDArchiving::AddFolderTreeToK3bXMLProjectFile (QString dirname, QTextStream
           AddFolderTreeToK3bXMLProjectFile ( fi_folders->absFilePath(), stream );
           }
 
-     kapp->processEvents();
      ++it_folders;
      }
 
@@ -1572,30 +1655,38 @@ bool CDArchiving::CreateAutoRunInfFile(void)
    return true;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CDArchiving::removeTmpFiles(void)
+{
+    if (DeleteDir(m_tmpFolder) == false)
+       KMessageBox::error(0, i18n("Cannot remove temporary folder %1!").arg(m_tmpFolder));
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool CDArchiving::DeleteDir(QString dirname)
 {
-if (dirname != "")
-    {
-    QDir dir;
+    if (dirname != "")
+        {
+        QDir dir;
 
-    if (dir.exists ( dirname ) == true)
-       {
-       if (deldir(dirname) == false)
-           return false;
+        if (dir.exists ( dirname ) == true)
+           {
+           if (deldir(dirname) == false)
+               return false;
 
-       if (dir.rmdir( dirname ) == false )
+           if (dir.rmdir( dirname ) == false )
+               return false;
+           }
+        else
            return false;
-       }
+        }
     else
-       return false;
-    }
-else
-    return false;
+        return false;
 
-return true;
+    return true;
 }
 
 
@@ -1603,38 +1694,37 @@ return true;
 
 bool CDArchiving::deldir(QString dirname)
 {
-QDir *dir = new QDir(dirname);
-dir->setFilter ( QDir::Dirs | QDir::Files | QDir::NoSymLinks );
+    QDir *dir = new QDir(dirname);
+    dir->setFilter ( QDir::Dirs | QDir::Files | QDir::NoSymLinks );
 
-const QFileInfoList* fileinfolist = dir->entryInfoList();
-QFileInfoListIterator it(*fileinfolist);
-QFileInfo* fi;
+    const QFileInfoList* fileinfolist = dir->entryInfoList();
+    QFileInfoListIterator it(*fileinfolist);
+    QFileInfo* fi;
 
-while( (fi = it.current() ) )
-     {
-     if(fi->fileName() == "." || fi->fileName() == ".." )
-          {
-          ++it;
-          continue;
-          }
+    while( (fi = it.current() ) )
+         {
+         if(fi->fileName() == "." || fi->fileName() == ".." )
+              {
+              ++it;
+              continue;
+              }
 
-     if( fi->isDir() )
-          {
-          if (deldir( fi->absFilePath() ) == false)
-              return false;
-          if (dir->rmdir( fi->absFilePath() ) == false)
-              return false;
-          }
-     else
-          if( fi->isFile() )
-               if (dir->remove(fi->absFilePath() ) == false)
-                   return false;
+         if( fi->isDir() )
+              {
+              if (deldir( fi->absFilePath() ) == false)
+                  return false;
+              if (dir->rmdir( fi->absFilePath() ) == false)
+                  return false;
+              }
+         else
+              if( fi->isFile() )
+                   if (dir->remove(fi->absFilePath() ) == false)
+                       return false;
+         
+         ++it;
+         }
 
-     kapp->processEvents();
-     ++it;
-     }
-
-return true;
+    return true;
 }
 
 

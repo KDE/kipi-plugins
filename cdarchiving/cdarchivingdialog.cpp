@@ -1,24 +1,27 @@
-/* ============================================================
- * File  : cdarchivingdialog.cpp
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
- * Date  : 2003-09-05
- * Description : CD archiving dialog
- *
- * Copyright 2003-2004 by Gregory Kokanosky <gregory dot kokanosky at free.fr>
- * for images navigation mode patchs.
- *
- * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published bythe Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * ============================================================ */
+//////////////////////////////////////////////////////////////////////////////
+//
+//    CDARCHIVINGDILAOG.CPP
+//
+//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2003-2004 by Gregory Kokanosky <gregory dot kokanosky at free.fr>
+//    for images navigation mode.
+//
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+//
+//////////////////////////////////////////////////////////////////////////////
+
 
 // Include files for Qt
 
@@ -76,8 +79,8 @@ public:
     AlbumItem(QListView * parent, KIPI::ImageCollection album,
               QString const & collection, QDate const & date,
               KIO::filesize_t const & size)
-            : QCheckListItem( parent, album.name(), QCheckListItem::CheckBox), _album(album),
-              _collection(collection), _date (date), _size (size)
+            : QCheckListItem( parent, album.name(), QCheckListItem::CheckBox),
+              _album(album), _collection(collection), _date (date), _size (size)
     {}
     KIPI::ImageCollection album() { return _album;                  }
     QString comments()            { return _album.comment();        }
@@ -106,8 +109,8 @@ private:
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *parent)
-                 : KDialogBase( IconList, i18n("Configure"), Help|Ok|Cancel, Ok, parent,
-                                "CDArchivingDialog", true, true ), m_interface( interface )
+                 : KDialogBase( IconList, i18n("Configure"), Help|Ok|Cancel, Ok,
+                   parent, "CDArchivingDialog", true, true ), m_interface( interface )
 {
     setCaption(i18n("Albums CD archiving"));
     setupSelection();
@@ -149,7 +152,8 @@ void CDArchivingDialog::setupSelection(void)
     m_AlbumsList->setResizeMode( QListView::LastColumn );
     m_AlbumsList->addColumn("");
     m_AlbumsList->header()->hide();
-    QWhatsThis::add( m_AlbumsList, i18n("<p>Selected here the Albums to archive in CD.") );
+    QWhatsThis::add( m_AlbumsList, 
+                     i18n("<p>Selected here the Albums to archive in CD.") );
 
     grid->addMultiCellWidget(m_AlbumsList, 0, 2, 0, 1);
 
@@ -210,7 +214,8 @@ void CDArchivingDialog::setupSelection(void)
 
     //---------------------------------------------
 
-    QGroupBox * groupBox3 = new QGroupBox( 2, Qt::Horizontal, i18n("Target media informations"),
+    QGroupBox * groupBox3 = new QGroupBox( 2, Qt::Horizontal, 
+                                           i18n("Target media informations"),
                                            page_setupSelection );
     groupBox3->layout()->setSpacing( 6 );
     groupBox3->layout()->setMargin( 11 );
@@ -699,7 +704,9 @@ void CDArchivingDialog::albumSelected( QListViewItem * item )
     if ( !item ) return;
 
     AlbumItem *pitem = static_cast<AlbumItem*>( item );
+    
     if ( pitem == NULL ) return;
+    
     m_AlbumComments->setText( i18n("Comment: %1").arg(pitem->comments()) );
     m_AlbumCollection->setText( i18n("Collection: %1").arg(pitem->collection()) );
     m_AlbumDate->setText( i18n("Date: %1").arg( pitem->date().toString(( Qt::LocalDate ) ) ) );
