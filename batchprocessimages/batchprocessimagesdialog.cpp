@@ -826,7 +826,7 @@ void BatchProcessImagesDialog::slotPreview(void)
     m_previewOutput = "";
     m_PreviewProc = new KProcess;
 
-    m_previewOutput.append(makeProcess(m_PreviewProc, item));
+    m_previewOutput.append(makeProcess(m_PreviewProc, item, QString(), true));
 
     *m_PreviewProc << m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG";
     m_previewOutput.append( " "  + m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG\n\n");

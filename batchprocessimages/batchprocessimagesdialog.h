@@ -229,7 +229,8 @@ private slots:
    // If 'albumDest' = 0L ==> preview process.
 
     virtual QString makeProcess(KProcess* /*proc*/, BatchProcessImagesItem */*item*/,
-                                const QString& /*albumDest*/ = QString::null )
+                                const QString& /*albumDest*/ = QString::null,
+                                bool  /*previewMode*/ = false)
            { return QString::null; };
 
    // Fonctions used for to read and to save the settings in the configuration file.

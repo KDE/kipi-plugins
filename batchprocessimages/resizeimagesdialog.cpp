@@ -309,7 +309,7 @@ void ResizeImagesDialog::saveSettings(void)
 ////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
 QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                                        const QString& albumDest)
+                                        const QString& albumDest, bool )
 {
     QImage img;
 

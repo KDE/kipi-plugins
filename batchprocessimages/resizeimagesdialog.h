@@ -72,7 +72,7 @@ Q_OBJECT
    int                    m_fixedHeight;
 
    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                       const QString& albumDest);
+                       const QString& albumDest, bool previewMode);
 
    void readSettings(void);
    void saveSettings(void);

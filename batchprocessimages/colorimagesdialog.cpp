@@ -265,11 +265,11 @@ void ColorImagesDialog::saveSettings(void)
 ////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
 QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                                       const QString& albumDest)
+                                       const QString& albumDest, bool previewMode)
 {
     *proc << "convert";
 
-    if ( albumDest.isNull() && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
+    if ( previewMode && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
        {
        *m_PreviewProc << "-crop" << "300x300+0+0";
        m_previewOutput.append( " -crop 300x300+0+0 ");
@@ -341,7 +341,7 @@ QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *i
 
     *proc << item->pathSrc();
 
-    if ( !albumDest.isNull() )   // No preview mode !
+    if ( !previewMode )   // No preview mode !
        {
        *proc << albumDest + "/" + item->nameDest();
        }
