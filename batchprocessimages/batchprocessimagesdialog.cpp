@@ -101,7 +101,6 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 {
     // Init. Tmp folder
 
-    setHelp("batchprocessimages", "kipi-plugins");
     KStandardDirs dir;
     m_tmpFolder = dir.saveLocation("tmp");
 

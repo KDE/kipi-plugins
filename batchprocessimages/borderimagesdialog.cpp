@@ -56,7 +56,8 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Bordering Images options"));
-
+    setHelp("borderimages", "kipi-plugins");
+    
     //---------------------------------------------
 
     groupBox1->setTitle( i18n("Border images options") );

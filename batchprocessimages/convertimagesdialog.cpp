@@ -54,6 +54,7 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
                  : BatchProcessImagesDialog( urlList, interface, parent )
 {
     setCaption(i18n("Batch Convert Images options"));
+    setHelp("convertimages", "kipi-plugins");
 
     //---------------------------------------------
 

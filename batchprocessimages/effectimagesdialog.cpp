@@ -56,6 +56,7 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch FX transforming Images options"));
+    setHelp("effectimages", "kipi-plugins");
 
     //---------------------------------------------
 

@@ -56,6 +56,7 @@ ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* int
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Resizing Images options"));
+    setHelp("resizeimages", "kipi-plugins");
 
     //---------------------------------------------
 
