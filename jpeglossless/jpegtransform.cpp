@@ -21,6 +21,7 @@
 
 #include <qstring.h>
 #include <qwmatrix.h>
+#include <qfile.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -84,7 +85,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     FILE *input_file;
     FILE *output_file;
 
-    input_file = fopen(src.latin1(), "rb");
+    input_file = fopen(QFile::encodeName(src), "rb");
     if (!input_file)
     {
         kdError() << "ImageRotate/ImageFlip: Error in opening input file" << endl;
@@ -92,7 +93,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         return false;
     }
 
-    output_file = fopen(dest.latin1(), "wb");
+    output_file = fopen(QFile::encodeName(dest), "wb");
     if (!output_file)
     {
         fclose(input_file);
@@ -129,7 +130,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         dest=tempFile.name();
     }
 
-    output_file = fopen(dest.latin1(), "wb");
+    output_file = fopen(QFile::encodeName(dest), "wb");
     if (!output_file)
     {
         fclose(input_file);
@@ -190,7 +191,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         dstinfo.err = jpeg_std_error(&jdsterr);
         jpeg_create_compress(&dstinfo);
 
-        input_file = fopen(dest.latin1(), "rb");
+        input_file = fopen(QFile::encodeName(dest), "rb");
         if (!input_file)
         {
             kdError() << "ImageRotate/ImageFlip: Error in opening input file" << endl;
@@ -198,7 +199,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
             return false;
         }
 
-        output_file = fopen(destGiven.latin1(), "wb");
+        output_file = fopen(QFile::encodeName(destGiven), "wb");
         if (!output_file)
         {
             fclose(input_file);
@@ -253,7 +254,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         fclose(output_file);
 
         //unlink temp file
-        unlink(dest.latin1());
+        unlink(QFile::encodeName(dest));
     }
 
     KExifUtils::writeOrientation(destGiven, KExifData::NORMAL);

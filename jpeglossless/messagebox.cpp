@@ -38,7 +38,7 @@ namespace KIPIJPEGLossLessPlugin
 MessageBox* MessageBox::m_instance = 0;
 
 MessageBox::MessageBox()
-    : QWidget(kapp->activeWindow(),0,Qt::WDestructiveClose)
+    : QDialog(kapp->activeWindow(),0,Qt::WDestructiveClose)
 {
     m_instance = this;
 
@@ -83,6 +83,7 @@ MessageBox::MessageBox()
 
 MessageBox::~MessageBox()
 {
+    qWarning("deleted");
     m_instance = 0;    
 }
 

@@ -110,7 +110,7 @@ bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err)
     FILE *input_file;
     FILE *output_file;
 
-    input_file = fopen(src.latin1(), "rb");
+    input_file = fopen(QFile::encodeName(src), "rb");
     if (!input_file)
     {
         kdError() << "Image2GrayScale: Error in opening input file" << endl;
@@ -118,7 +118,7 @@ bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err)
         return false;
     }
 
-    output_file = fopen(dest.latin1(), "wb");
+    output_file = fopen(QFile::encodeName(dest), "wb");
     if (!output_file)
     {
         fclose(input_file);

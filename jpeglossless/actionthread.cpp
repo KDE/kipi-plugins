@@ -23,6 +23,7 @@
 #include <kstandarddirs.h>
 #include <qapplication.h>
 #include <qdir.h>
+#include <qdeepcopy.h>
 
 extern "C"
 {
@@ -88,7 +89,7 @@ void ActionThread::rotate(const KURL::List& urlList, RotateAction val)
             val = Rot0;
 
         Task *t      = new Task;
-        t->filePath  = (*it).path().latin1(); //deep copy
+        t->filePath  = QDeepCopy<QString>((*it).path()); //deep copy
         t->action    = Rotate;
         t->rotAction = val;
         taskQueue_.enqueue(t);
@@ -109,7 +110,7 @@ void ActionThread::flip(const KURL::List& urlList, FlipAction val)
         }
 
         Task *t       = new Task;
-        t->filePath   = (*it).path().latin1(); //deep copy
+        t->filePath   = QDeepCopy<QString>((*it).path()); //deep copy
         t->action     = Flip;
         t->flipAction = val;
         taskQueue_.enqueue(t);
@@ -121,7 +122,7 @@ void ActionThread::convert2grayscale(const KURL::List& urlList)
     for (KURL::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) {
         Task *t      = new Task;
-        t->filePath  = (*it).path().latin1(); //deep copy
+        t->filePath  = QDeepCopy<QString>((*it).path()); //deep copy
         t->action    = GrayScale;
         taskQueue_.enqueue(t);
     }

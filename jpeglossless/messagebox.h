@@ -22,7 +22,7 @@
 #ifndef MESSAGEBOX_H
 #define MESSAGEBOX_H
 
-#include <qwidget.h>
+#include <qdialog.h>
 
 class QListView;
 class QString;
@@ -30,7 +30,7 @@ class QString;
 namespace KIPIJPEGLossLessPlugin
 {
 
-class MessageBox : public QWidget
+class MessageBox : public QDialog
 {
     Q_OBJECT
 
