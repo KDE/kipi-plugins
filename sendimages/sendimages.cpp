@@ -340,105 +340,105 @@ void SendImages::invokeMailAgent(void)
     // Sylpheed mail agent call.
 
     if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed" )
-       {
-       m_mailAgentProc = new KProcess;
-       *m_mailAgentProc << "sylpheed" << "--compose";
-       *m_mailAgentProc << "--attach";
+    {
+        m_mailAgentProc = new KProcess;
+        *m_mailAgentProc << "sylpheed" << "--compose";
+        *m_mailAgentProc << "--attach";
 
-       for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
-           *m_mailAgentProc << (*it).path();
+        for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
+            *m_mailAgentProc << QFile::encodeName((*it).path());
 
-       if ( m_mailAgentProc->start() == false )
-          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
-                                     "check your installation.")
-                                     .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
-       }
+        if ( m_mailAgentProc->start() == false )
+            KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
+                                                          "check your installation.")
+                               .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+    }
 
     // Balsa mail agent call.
 
     if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Balsa" )
-       {
-       m_mailAgentProc = new KProcess;
-       *m_mailAgentProc << "balsa" << "-m" << "mailto:";
+    {
+        m_mailAgentProc = new KProcess;
+        *m_mailAgentProc << "balsa" << "-m" << "mailto:";
 
-       for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
-           {
-           *m_mailAgentProc << "-a";
-           *m_mailAgentProc << (*it).path();
-           }
+        for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
+        {
+            *m_mailAgentProc << "-a";
+            *m_mailAgentProc << QFile::encodeName((*it).path());
+        }
 
-       if ( m_mailAgentProc->start() == false )
-          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
-                                     "check your installation.")
-                                     .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
-       }
+        if ( m_mailAgentProc->start() == false )
+            KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
+                                                          "check your installation.")
+                               .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+    }
 
     if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Evolution" )    // Evolution mail agent call.
-       {
-       m_mailAgentProc = new KProcess;
-       *m_mailAgentProc << "evolution";
+    {
+        m_mailAgentProc = new KProcess;
+        *m_mailAgentProc << "evolution";
 
-       QString Temp = "mailto:?subject=";
+        QString Temp = "mailto:?subject=";
 
-       for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
-           {
-           Temp.append("&attach=");
-           Temp.append( (*it).path() );
-           }
+        for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
+        {
+            Temp.append("&attach=");
+            Temp.append( QFile::encodeName((*it).path()) );
+        }
 
-       *m_mailAgentProc << Temp;
+        *m_mailAgentProc << Temp;
 
-       if ( m_mailAgentProc->start() == false )
-          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
-                                     "check your installation.")
-                                     .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
-       }
+        if ( m_mailAgentProc->start() == false )
+            KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
+                                                          "check your installation.")
+                               .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+    }
 
     // Mozilla | Netscape | Thunderbird mail agent call.
 
     if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" ||
          m_sendImagesDialog->m_mailAgentName->currentText() == "Netscape" ||
          m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
-       {
-       m_mailAgentProc = new KProcess;
+    {
+        m_mailAgentProc = new KProcess;
 
-       QString ThunderbirdUrl = m_sendImagesDialog->m_ThunderbirdBinPath->url();
+        QString ThunderbirdUrl = m_sendImagesDialog->m_ThunderbirdBinPath->url();
 
-       if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" )
-          *m_mailAgentProc << "mozilla" << "-remote";
-       else
-          if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
-             *m_mailAgentProc << ThunderbirdUrl << "-remote";
-          else
-             *m_mailAgentProc << "netscape" << "-remote";
+        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" )
+            *m_mailAgentProc << "mozilla" << "-remote";
+        else
+            if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
+                *m_mailAgentProc << ThunderbirdUrl << "-remote";
+            else
+                *m_mailAgentProc << "netscape" << "-remote";
 
-       QString Temp = "xfeDoCommand(composeMessage,attachment='";
+        QString Temp = "xfeDoCommand(composeMessage,attachment='";
 
-       for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
-           {
-           Temp.append( "file://" );
-           Temp.append( (*it).path() );
-           Temp.append( "," );
-           }
+        for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
+        {
+            Temp.append( "file://" );
+            Temp.append( QFile::encodeName((*it).path()) );
+            Temp.append( "," );
+        }
 
-       Temp.append("')");
+        Temp.append("')");
 
-       *m_mailAgentProc << Temp;
+        *m_mailAgentProc << Temp;
 
-       connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)),
-               this, SLOT(slotMozillaExited(KProcess*)));
+        connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)),
+                this, SLOT(slotMozillaExited(KProcess*)));
 
-       connect(m_mailAgentProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
-               this, SLOT(slotMozillaReadStderr(KProcess*, char*, int)));
+        connect(m_mailAgentProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
+                this, SLOT(slotMozillaReadStderr(KProcess*, char*, int)));
 
-       kdDebug (51000) << Temp.ascii() << endl;
+        kdDebug (51000) << Temp.ascii() << endl;
 
-       if ( m_mailAgentProc->start(KProcess::NotifyOnExit , KProcess::All) == false )
-          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
-                                     "check your installation.")
-                                     .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
-       else return;
-       }
+        if ( m_mailAgentProc->start(KProcess::NotifyOnExit , KProcess::All) == false )
+            KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
+                                                          "check your installation.")
+                               .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+        else return;
+    }
 }
 
 
@@ -672,7 +672,7 @@ void SendImages::slotMozillaTimeout(void)
     for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
         {
         Temp.append( "file://" );
-        Temp.append( (*it).path() );
+        Temp.append( QFile::encodeName((*it).path()) );
         Temp.append( "," );
         }
 
