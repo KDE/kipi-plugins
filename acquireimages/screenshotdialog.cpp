@@ -40,6 +40,7 @@ extern "C"
 #include <qwhatsthis.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
+#include <qframe.h>
 
 // Include files for KDE
 
@@ -54,6 +55,7 @@ extern "C"
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
+#include <kstandarddirs.h>
 
 // Include files for libKipi.
 
@@ -70,7 +72,7 @@ namespace KIPIAcquireImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent, const char *name)
-                : KDialogBase(parent, name, false, i18n("KIPI's 'Screenshot Images' Plugin"),
+                : KDialogBase(parent, name, false, i18n("Screenshot"),
                               Help|User1|Close, Close, true, i18n("&New Snapshot")),
                   m_interface( interface )
 {
@@ -78,6 +80,29 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
     QWidget* box = new QWidget( this );
     setMainWidget(box);
     QVBoxLayout *layout = new QVBoxLayout(box, 4);
+
+    //---------------------------------------------
+   
+    QFrame *headerFrame = new QFrame( box );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout2 = new QHBoxLayout( headerFrame );
+    layout2->setMargin( 2 ); // to make sure the frame gets displayed
+    layout2->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout2->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( i18n("Screenshot"), headerFrame, "labelTitle" );
+    layout2->addWidget( labelTitle );
+    layout2->setStretchFactor( labelTitle, 1 );
+    layout->addWidget( headerFrame );
+    
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
     //---------------------------------------------
 
