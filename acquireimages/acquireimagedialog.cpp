@@ -371,7 +371,7 @@ void AcquireImageDialog::setupAlbumsList(void)
     groupBox2Layout->addWidget( m_AlbumItems );
 
     vlay->addWidget( groupBox2 );
-    if ( !m_interface->hasFeature( KIPI::AlbumsHaveDescriptions ) )
+    if ( !m_interface->hasFeature( KIPI::AlbumsHaveComments) )
         groupBox2->hide();
     else
         vlay->addStretch(1);
