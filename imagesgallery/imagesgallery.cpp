@@ -67,6 +67,12 @@ extern "C"
 #include <kglobalsettings.h>
 #include <kaboutdata.h>
 
+// LibKExif includes.
+
+/*#include <libkexif/kexif.h>
+#include <libkexif/kexifdata.h>
+#include <libkexif/kexifutils.h>
+*/
 // KIPI includes
 
 #include <libkipi/imagecollection.h>
@@ -75,6 +81,7 @@ extern "C"
 
 #include "actions.h"
 #include "imgallerydialog.h"
+#include "exifrestorer.h"
 #include "imagesgallery.h"
 
 namespace KIPIImagesGalleryPlugin
@@ -1453,13 +1460,35 @@ int ImagesGallery::createThumb( const KURL& url, const QString& imgName,
     m_targetImgWidth = 640;         // Default resize values.
     m_targetImgHeight = 480;
 
-    ResizeImage(pixPath, TargetImagesbDir, TargetimagesFormat, TargetImageNameFormat,
-                     &m_targetImgWidth, &m_targetImgHeight, extentTargetImages,
-                     m_colorDepthSetTargetImages,
-                     m_colorDepthTargetImages,
-                     m_useSpecificTargetimageCompression,
-                     m_targetImagesCompression);
+    int valRet = ResizeImage(pixPath, TargetImagesbDir, TargetimagesFormat, TargetImageNameFormat,
+                             &m_targetImgWidth, &m_targetImgHeight, extentTargetImages,
+                             m_colorDepthSetTargetImages,
+                             m_colorDepthTargetImages,
+                             m_useSpecificTargetimageCompression,
+                             m_targetImagesCompression);
 
+    // Only try to write Exif if both src and destination are JPEG files.
+    
+    if (valRet == 1 && 
+        QString(QImageIO::imageFormat(pixPath)).upper() == "JPEG" &&
+        TargetimagesFormat.upper() == "JPEG")
+       {
+       ExifRestorer exifHolder;
+       exifHolder.readFile(pixPath, ExifRestorer::ExifOnly);
+       
+       QString targetFile = TargetImagesbDir + TargetImageNameFormat;
+       
+       if (exifHolder.hasExif()) 
+          {
+          ExifRestorer restorer;
+          restorer.readFile(targetFile, ExifRestorer::EntireImage);
+          restorer.insertExifData(exifHolder.exifData());
+          restorer.writeFile(targetFile);
+          }
+       else 
+          kdWarning( 51000 ) << ("createThumb::No Exif Data Found") << endl;
+       }              
+                     
     // Create the thumbnails.
 
     const QString ImageNameFormat = imgName + extension(imageFormat);
@@ -1508,44 +1537,44 @@ int ImagesGallery::ResizeImage( const QString Path, const QString Directory, con
        int w = img.width();
        int h = img.height();
 
-       if (SizeFactor == -1)      // Use original image size.
-            SizeFactor=w;
+       if (SizeFactor != -1)      // Use original image size ?
+          {
+          // scale to pixie size
+          // kdDebug( 51000 ) << "w: " << w << " h: " << h << endl;
+          // Resizing if to big
 
-       // scale to pixie size
-       // kdDebug( 51000 ) << "w: " << w << " h: " << h << endl;
-       // Resizing if to big
+          if( w > SizeFactor || h > SizeFactor )
+              {
+              if( w > h )
+                  {
+                  h = (int)( (double)( h * SizeFactor ) / w );
+  
+                  if ( h == 0 ) h = 1;
 
-       if( w > SizeFactor || h > SizeFactor )
-           {
-           if( w > h )
-               {
-               h = (int)( (double)( h * SizeFactor ) / w );
+                  w = SizeFactor;
+                  Q_ASSERT( h <= SizeFactor );
+                  }
+              else
+                  {
+                  w = (int)( (double)( w * SizeFactor ) / h );
 
-               if ( h == 0 ) h = 1;
+                  if ( w == 0 ) w = 1;
 
-               w = SizeFactor;
-               Q_ASSERT( h <= SizeFactor );
-               }
-           else
-               {
-               w = (int)( (double)( w * SizeFactor ) / h );
+                  h = SizeFactor;
+                  Q_ASSERT( w <= SizeFactor );
+                  }
+ 
+              const QImage scaleImg(img.smoothScale( w, h ));
 
-               if ( w == 0 ) w = 1;
+              if ( scaleImg.width() != w || scaleImg.height() != h )
+                  {
+                  kdDebug( 51000 ) << "Resizing failed. Aborting." << endl;
+                  return -1;
+                  }
 
-               h = SizeFactor;
-               Q_ASSERT( w <= SizeFactor );
-               }
-
-           const QImage scaleImg(img.smoothScale( w, h ));
-
-           if ( scaleImg.width() != w || scaleImg.height() != h )
-               {
-               kdDebug( 51000 ) << "Resizing failed. Aborting." << endl;
-               return -1;
-               }
-
-           img = scaleImg;
-
+              img = scaleImg;
+              }
+              
            if ( ColorDepthChange == true )
                {
                const QImage depthImg(img.convertDepth( ColorDepthValue ));
