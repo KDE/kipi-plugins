@@ -3,14 +3,14 @@ METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_jpeglossless.la
-kipiplugin_jpeglossless_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
+kipiplugin_jpeglossless_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKEXIF_LIBS_DEP)
 kipiplugin_jpeglossless_la_SOURCES = plugin_jpeglossless.cpp \
 		actionthread.cpp utils.cpp transupp.c progressdlg.cpp \
 		imagerotate.cpp  convert2grayscale.cpp imageflip.cpp \
 		messagebox.cpp jpegtransform.cpp
 
 kipiplugin_jpeglossless_la_LIBADD = $(LIB_KPARTS) \
-					-ljpeg -ltiff ../../libkexif/libkexif.la $(LIBKIPI_LIBS)
+					-ljpeg -ltiff $(LIBKIPI_LIBS) $(LIBKEXIF_LIBS)
 
 kipiplugin_jpeglossless_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 

@@ -1,5 +1,3 @@
-#MIN_CONFIG(3.1)
-
 # ----------------------------------------------------------
 # 
 # General kipi-plugin tests
@@ -22,6 +20,21 @@ AC_SUBST(LIBKIPI_LIBS)
 AC_SUBST(LIBKIPI_LIBS_DEP)
 
 
+AC_MSG_CHECKING([for libkexif in our sources])
+if test -d $srcdir/libkexif; then
+    LIBKEXIF_CFLAGS='-I$(top_srcdir)/libkexif'
+    LIBKEXIF_LIBS='$(top_builddir)/libkexif/libkexif.la'
+    LIBKEXIF_LIBS_DEP='$(LIBKEXIF_LIBS)'
+    AC_MSG_RESULT([found])
+else
+    # FIXME: Write a real test
+    LIBKEXIF_CFLAGS=''
+    LIBKEXIF_LIBS='-lkexif'
+    AC_MSG_RESULT([not found])
+fi
+AC_SUBST(LIBKEXIF_CFLAGS)
+AC_SUBST(LIBKEXIF_LIBS)
+AC_SUBST(LIBKEXIF_LIBS_DEP)
 
 
 # ----------------------------------------------------------
