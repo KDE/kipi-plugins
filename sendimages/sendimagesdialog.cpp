@@ -2,7 +2,7 @@
 //
 //    SENDIMAGESDIALOG.CPP
 //
-//    Copyright (C) 2003 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2003-2005 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -74,8 +74,6 @@
 namespace KIPISendimagesPlugin
 {
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 class ImageItem : public QListBoxText
 {
 public:
@@ -94,9 +92,6 @@ private:
     KURL    _url;
 };
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 ListImageItems::ListImageItems(QWidget *parent, const char *name)
               : KListBox(parent, name)
 {
@@ -104,16 +99,10 @@ ListImageItems::ListImageItems(QWidget *parent, const char *name)
     setAcceptDrops(true);
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void ListImageItems::dragEnterEvent(QDragEnterEvent *e)
 {
     e->accept(QUriDrag::canDecode(e));
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void ListImageItems::dropEvent(QDropEvent *e)
 {
@@ -141,7 +130,7 @@ void ListImageItems::dropEvent(QDropEvent *e)
        emit addedDropItems(FilesPath);
 }
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
                                    const KIPI::ImageCollection& images )
@@ -168,7 +157,7 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
                                        kipi_version,
                                        I18N_NOOP("A Kipi plugin for emailing images"),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier",
+                                       "(c) 2003-2005, Gilles Caulier",
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
 
@@ -184,16 +173,10 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
     slotMailAgentChanged(m_mailAgentName->currentItem());
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 SendImagesDialog::~SendImagesDialog()
 {
     if ( m_thumbJob ) delete m_thumbJob;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void SendImagesDialog::readSettings(void)
 {
@@ -223,9 +206,6 @@ void SendImagesDialog::readSettings(void)
     delete m_config;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void SendImagesDialog::writeSettings(void)
 {
     // Write all settings in configuration file.
@@ -242,9 +222,6 @@ void SendImagesDialog::writeSettings(void)
     m_config->sync();
     delete m_config;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void SendImagesDialog::setupImagesList(void)
 {
@@ -322,9 +299,6 @@ void SendImagesDialog::setupImagesList(void)
             this, SLOT( slotAddDropItems(QStringList)));
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void SendImagesDialog::setImagesList( const KURL::List& Files )
 {
     if ( Files.count() == 0 ) return;
@@ -361,9 +335,6 @@ void SendImagesDialog::setImagesList( const KURL::List& Files )
     slotImageSelected(m_ImagesFilesListBox->item(m_ImagesFilesListBox->currentItem()));
     m_ImagesFilesListBox->centerCurrentItem();
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void SendImagesDialog::setupEmailOptions(void)
 {
@@ -440,7 +411,7 @@ void SendImagesDialog::setupEmailOptions(void)
     QVBoxLayout * groupBox2Layout = new QVBoxLayout( groupBox2->layout() );
     groupBox2Layout->setAlignment( Qt::AlignTop );
 
-    m_changeImagesProp = new QCheckBox(i18n("Change properties of images to send"), groupBox2);
+    m_changeImagesProp = new QCheckBox(i18n("Change properties of images"), groupBox2);
     QWhatsThis::add( m_changeImagesProp, i18n("<p>If you enable this option, "
                      "all images to send can be resized and recompressed.") );
     m_changeImagesProp->setChecked( true );
@@ -541,16 +512,11 @@ void SendImagesDialog::setupEmailOptions(void)
             m_imagesFormat, SLOT(setEnabled(bool)));
 }
 
-//////////////////////////////////////// SLOTS //////////////////////////////////////////////
-
 void SendImagesDialog::slotHelp()
 {
     KApplication::kApplication()->invokeHelp("sendimages",
                                              "kipi-plugins");
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void SendImagesDialog::slotMailAgentChanged(int i)
 {
@@ -566,24 +532,16 @@ void SendImagesDialog::slotMailAgentChanged(int i)
        }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void SendImagesDialog::slotThunderbirdBinPathChanged(const QString &url )
 {
     if ( m_mailAgentName->currentText() == "Thunderbird" )
        enableButtonOK( !url.isEmpty());
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void SendImagesDialog::slotAddDropItems(QStringList filesPath)
 {
     setImagesList( KURL::List( filesPath) );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void SendImagesDialog::slotImagesFilesButtonAdd( void )
 {
@@ -594,9 +552,6 @@ void SendImagesDialog::slotImagesFilesButtonAdd( void )
     setImagesList(urls);
     setNbItems();
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void SendImagesDialog::slotImagesFilesButtonRem( void )
 {
@@ -614,9 +569,6 @@ void SendImagesDialog::slotImagesFilesButtonRem( void )
     slotImageSelected(m_ImagesFilesListBox->item(m_ImagesFilesListBox->currentItem()));
     setNbItems();
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void SendImagesDialog::slotImageSelected( QListBoxItem * item )
 {
@@ -645,25 +597,16 @@ void SendImagesDialog::slotImageSelected( QListBoxItem * item )
             SLOT(slotFailedPreview(const KFileItem*)));
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void SendImagesDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap &pixmap)
+void SendImagesDialog::slotGotPreview(const KFileItem*, const QPixmap &pixmap)
 {
     m_imageLabel->setPixmap(pixmap);
     m_thumbJob = 0L;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void SendImagesDialog::slotFailedPreview(const KFileItem*)
 {
     m_thumbJob = 0L;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void SendImagesDialog::slotOk()
 {
@@ -695,9 +638,6 @@ void SendImagesDialog::slotOk()
     emit signalAccepted();
     accept();
 }
-
-
-////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////////
 
 void SendImagesDialog::setNbItems(void)
 {
