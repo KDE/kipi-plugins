@@ -1,3 +1,8 @@
+Somewhat immediate implementation needed:
+
+* return more sensible error strings
+* implement logging to backtrace problems
+
 For the lazy times:
 
 * polish the html code used to render the thumbnails, better
