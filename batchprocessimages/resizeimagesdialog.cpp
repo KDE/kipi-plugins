@@ -346,10 +346,10 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           Temp2.append(Temp.setNum( h ));
           *proc << Temp2;
 
-	  *proc << "-quality";
-	  QString Temp3;
-	  Temp3.setNum(m_quality);
-	  *proc << Temp3;
+          *proc << "-quality";
+          QString Temp3;
+          Temp3.setNum(m_quality);
+          *proc << Temp3;
 
           if ( IncDec == true )   // If the image is increased, enabled the filter.
              {
@@ -395,10 +395,10 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           Temp2.append(Temp.setNum( h ));
           *proc << Temp2;
 
-	  *proc << "-quality";
-	  QString Temp3;
-	  Temp3.setNum(m_quality);
-	  *proc << Temp3;
+          *proc << "-quality";
+          QString Temp3;
+          Temp3.setNum(m_quality);
+          *proc << Temp3;
 
           if ( IncDec == true )   // If the image is increased, enabled the filter.
              {
@@ -407,6 +407,11 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
           *proc << item->pathSrc() + "[0]";
 
+          // ImageMagick composite program do not preserve exif data from original. 
+          // Need to use "-profile" option for that.
+          
+          *proc << "-profile" << item->pathSrc();
+          
           Temp2 = "xc:rgb(" + Temp.setNum(m_bgColor.red()) + ",";
           Temp2.append(Temp.setNum(m_bgColor.green()) + ",");
           Temp2.append(Temp.setNum(m_bgColor.blue()) + ")");
@@ -431,11 +436,11 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
              {
              *proc << "-filter" << m_resizeFilter;
              }
-	     
-	  *proc << "-quality";
-	  QString Temp3;
-	  Temp3.setNum(m_quality);
-	  *proc << Temp3;
+            
+          *proc << "-quality";
+          QString Temp3;
+          Temp3.setNum(m_quality);
+          *proc << Temp3;
 
           *proc << "-verbose";
           *proc << item->pathSrc() + "[0]";
@@ -512,10 +517,10 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           Temp2.append(Temp.setNum( h ));
           *proc << Temp2;
 
-	  *proc << "-quality";
-	  QString Temp3;
-	  Temp3.setNum(m_quality);
-	  *proc << Temp3;
+          *proc << "-quality";
+          QString Temp3;
+          Temp3.setNum(m_quality);
+          *proc << Temp3;
 
           if ( IncDec == true )   // If the image is increased, enabled the filter.
              {
@@ -529,12 +534,17 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           Temp2.append(Temp.setNum(m_backgroundColor.blue()) + ")");
           *proc << Temp2;
 
+          // ImageMagick composite program do not preserve exif data from original. 
+          // Need to use "-profile" option for that.
+          
+          *proc << "-profile" << item->pathSrc();
+
           *proc << "-resize" << targetBackgroundSize + "!";
 
-	  *proc << "-quality";
-	  QString Temp4;
-	  Temp4.setNum(m_quality);
-	  *proc << Temp4;
+          *proc << "-quality";
+          QString Temp4;
+          Temp4.setNum(m_quality);
+          *proc << Temp4;
 
           *proc << albumDest + "/" + item->nameDest();
           }
