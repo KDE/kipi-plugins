@@ -246,7 +246,7 @@ void CDArchivingDialog::setupSelection(void)
     //---------------------------------------------
 
     QGroupBox * groupBox3 = new QGroupBox( 2, Qt::Horizontal, 
-                                           i18n("Target Media Informations"),
+                                           i18n("Target Media Information"),
                                            page_setupSelection );
     groupBox3->layout()->setSpacing( 6 );
     groupBox3->layout()->setMargin( 11 );
