@@ -46,9 +46,9 @@
 #include <qspinbox.h>
 #include <qlistview.h>
 #include <qheader.h>
-#include <qpushbutton.h>
 #include <qprogressdialog.h>
 #include <qdir.h>
+#include <qpushbutton.h>
 
 // Include files for KDE
 
@@ -70,8 +70,15 @@
 #include <kio/previewjob.h>
 #include <kmessagebox.h>
 #include <klistview.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
+
 
 // KIPI include files
+
 #include <libkipi/imagecollectionselector.h>
 
 // Local include files
@@ -96,9 +103,41 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
     setupLookPage();
     setupAlbumPage();
     setupThumbnailPage();
-    aboutPage();
     page_setupSelection->setFocus();
-    setHelp("imagesgallery", "kipi-plugins");
+    resize( 600, 400 );
+
+    // About data and help button.
+
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Image Gallery"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin for HTML album export.\n"
+                                                 "Based on KimgalleryPlugin implementation."),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Gilles Caulier", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                     "caulier dot gilles at free.fr");
+
+    about->addAuthor("Gregory Kokanosky", I18N_NOOP("Image navigation mode patches"),
+                     "gregory dot kokanosky at free.fr>");
+
+    about->addAuthor("Achim Bohnet", I18N_NOOP("HTML implementation patches"),
+                     "ach at mpe.mpg.de");
+                     
+    about->addAuthor("Lukas Tinkl", I18N_NOOP("Original HTML generator  implementation"),
+                     "lukas at kde.org");
+    
+    about->addAuthor("Andreas Schlapbach", I18N_NOOP("Original HTML generator implementation"),
+                     "schlpbch at iam.unibe.ch");
+                         
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Image Gallery handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
 }
 
 
@@ -108,9 +147,17 @@ KIGPDialog::~KIGPDialog()
 {
 }
 
+void KIGPDialog::slotHelp()
+{
+    KApplication::kApplication()->invokeHelp("imagesgallery",
+                                             "kipi-plugins");
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-void KIGPDialog::setupSelection(void) {
+
+void KIGPDialog::setupSelection(void) 
+{
     page_setupSelection = addPage(i18n("Selection"), i18n("Album Selection"),
                                   BarIcon("folder_image", KIcon::SizeMedium));
 
@@ -583,31 +630,6 @@ void KIGPDialog::setupThumbnailPage(void)
     //---------------------------------------------
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void KIGPDialog::aboutPage(void)
-{
-    page_about = addPage( i18n("About"), i18n("About Image Gallery"),
-                          BarIcon("kipi", KIcon::SizeMedium ) );
-
-    QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
-
-    QLabel *label = new QLabel( i18n("A KIPI plugin for HTML album export\n"
-                             "Author: Gilles Caulier\n"
-                             "Email: caulier dot gilles at free.fr\n\n"
-                             "Ported and improved from KimgalleryPlugin konqueror plugin to\n"
-                             "Digikam plugin architecture by Gilles Caulier.\n\n"
-                             "Thanks to Achim Bohnet <ach at mpe.mpg.de> for HTML implementation patches\n"
-                             "Thanks to Gregory Kokanosky <gregory dot kokanosky at free.fr> "
-                             "for image navigation mode patches\n\n"
-                             "KimgalleryPlugin is copyrighted 2001, 2003 by\n"
-                             "Lukas Tinkl <lukas at kde.org> and\n"
-                             "Andreas Schlapbach <schlpbch at iam.unibe.ch>"), page_about);
-
-    vlay->addWidget(label);
-    vlay->addStretch(1);
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -52,6 +52,7 @@ class QCheckBox;
 class QString;
 class QLineEdit;
 class QSpinBox;
+class QPushButton;
 
 class KFileItem;
 class KSqueezedTextLabel;
@@ -74,6 +75,7 @@ class KIGPDialog : public KDialogBase
  Q_OBJECT
 
  public:
+ 
   KIGPDialog( KIPI::Interface* interface, QWidget *parent=0);
   ~KIGPDialog();
 
@@ -182,10 +184,15 @@ class KIGPDialog : public KDialogBase
   QValueList<KIPI::ImageCollection> getSelectedAlbums() const { return m_selectedAlbums; }
 
  protected slots:
+ 
   void GalleryUrlChanged(const QString & );
   void slotOk();
+  void slotHelp();
 
  private:
+ 
+  QPushButton        *m_helpButton;
+ 
   KColorButton       *m_foregroundColor;
   KColorButton       *m_backgroundColor;
   KColorButton       *m_bordersImagesColor;
@@ -231,7 +238,6 @@ class KIGPDialog : public KDialogBase
   QFrame             *page_setupLook;
   QFrame             *page_setupAlbum;
   QFrame             *page_setupThumbnail;
-  QFrame             *page_about;
 
   KIPI::Interface*    m_interface;
   
@@ -239,11 +245,11 @@ class KIGPDialog : public KDialogBase
   KIPI::ImageCollectionSelector* m_imageCollectionSelector;
   
  private:
+ 
   void setupSelection(void);
   void setupLookPage(void);
   void setupAlbumPage(void);
   void setupThumbnailPage(void);
-  void aboutPage(void);
 };
 
 }  // NameSpace KIPIImagesGalleryPlugin
