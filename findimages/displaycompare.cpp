@@ -288,8 +288,8 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
     setCaption(i18n("1 Original Image with Duplicate Images Has Been Found",
                     "%n Original Images with Duplicate Images Have Been Found", n_id));
 
-    labelTitle->setText( i18n("Find Duplicate Images Results - 1 Dupplicate found",
-                              "Find Duplicate Images Results - %n Dupplicate Found", n_id));
+    labelTitle->setText( i18n("Find Duplicate Image Results - 1 Duplicate Found",
+                              "Find Duplicate Image Results - %n Duplicates Found", n_id));
                     
     // signals and slots connections
 

@@ -199,7 +199,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     groupBox3 = new QHGroupBox( i18n("Target Directory"), box );
 
     m_upload = new KIPI::UploadWidget( m_interface, groupBox3, "m_upload" );
-    QWhatsThis::add( m_upload, i18n("<p>Here, you can select the target directory who "
+    QWhatsThis::add( m_upload, i18n("<p>Here you can select the target directory which "
                                     "will used by the process."));
     m_upload->setFixedHeight( 130 );
 

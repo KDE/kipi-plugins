@@ -85,7 +85,7 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
     
     //---------------------------------------------
     
-    groupBox1->setTitle( i18n("Images Converting Options") );
+    groupBox1->setTitle( i18n("Image Conversion Options") );
 
     m_labelType->setText( i18n("Format:") );
 

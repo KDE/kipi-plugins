@@ -214,7 +214,7 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
     if (job->error())
         {
         item->changeResult(i18n("Failed."));
-        item->changeError(i18n("cannot copy or move original image file."));
+        item->changeError(i18n("Cannot copy or move original image file."));
         item->changeOutputMess(i18n("Check the file's access rights or the amount of disk space.\n"
                                     "The internal error is:\n\n%1")
                                     .arg(job->errorString()));
