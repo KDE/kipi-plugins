@@ -60,12 +60,10 @@ void Plugin_CommentsEditor::setup( QWidget* widget )
 
     addAction( action );
 
-#ifdef TEMPORARILY_REMOVED
-    action->setEnabled(false);
-    connect(Digikam::AlbumManager::instance(),
-            SIGNAL(signalAlbumCurrentChanged(Digikam::AlbumInfo*)),
-            SLOT(slotAlbumChanged(Digikam::AlbumInfo*)));
-#endif
+    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+    KIPI::ImageCollection images = interface->currentScope();
+    action->setEnabled( images.isValid() );
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), action, SLOT( setEnabled( bool ) ) );
 }
 
 Plugin_CommentsEditor::~Plugin_CommentsEditor()
@@ -76,9 +74,7 @@ Plugin_CommentsEditor::~Plugin_CommentsEditor()
 void Plugin_CommentsEditor::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
-    KIPI::ImageCollection images = interface->currentSelection();
-    if ( !images.isValid() )
-        images = interface->currentAlbum();
+    KIPI::ImageCollection images = interface->currentScope();
     if ( !images.isValid() )
         return;
 

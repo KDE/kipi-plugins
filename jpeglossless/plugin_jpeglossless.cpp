@@ -125,22 +125,19 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     m_action_Transform->insert(m_action_Convert2GrayScale);
     addAction( m_action_Transform );
 
-#ifdef TEMPORARILY_REMOVED
-    m_action_RotateImage->setEnabled(false);
-    m_action_FlipImage->setEnabled(false);
-    m_action_Convert2GrayScale->setEnabled(false);
-#endif
-
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
     m_thread      = new JPEGLossLess::ActionThread(interface, this);
     m_progressDlg = 0;
 
+    KIPI::ImageCollection images = interface->currentScope();
+    bool b = images.isValid();
+    m_action_RotateImage->setEnabled(b);
+    m_action_FlipImage->setEnabled(b);
+    m_action_Convert2GrayScale->setEnabled(b);
 
-#ifdef TEMPORARILY_REMOVED
-    connect(Digikam::AlbumManager::instance(),
-            SIGNAL(signalAlbumItemsSelected(bool)),
-            SLOT(slotItemsSelected(bool)));
-#endif
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), m_action_RotateImage, SLOT( setEnabled( bool ) ) );
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), m_action_FlipImage, SLOT( setEnabled( bool ) ) );
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), m_action_Convert2GrayScale, SLOT( setEnabled( bool ) ) );
 }
 
 
@@ -369,9 +366,7 @@ KIPI::Category Plugin_JPEGLossless::category() const
 KURL::List Plugin_JPEGLossless::images()
 {
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
-    KIPI::ImageCollection images = interface->currentSelection();
-    if ( !images.isValid() )
-        images = interface->currentAlbum();
+    KIPI::ImageCollection images = interface->currentScope();
     if ( !images.isValid() )
         return KURL::List();
 

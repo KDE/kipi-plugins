@@ -91,9 +91,7 @@ Plugin_SendImages::~Plugin_SendImages()
 void Plugin_SendImages::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-    KIPI::ImageCollection images = interface->currentSelection();
-    if ( !images.isValid() )
-        images = interface->currentAlbum();
+    KIPI::ImageCollection images = interface->currentScope();
     if ( !images.isValid() )
         return;
 

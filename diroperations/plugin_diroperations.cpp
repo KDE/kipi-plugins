@@ -79,17 +79,12 @@ void Plugin_DirOperations::setup( QWidget* widget )
 
     addAction( m_action_OpenIn );
 
-#ifdef TEMPORARILY_REMOVED
-    m_action_OpenIn->setEnabled(false);
 
-    connect(Digikam::AlbumManager::instance(),
-            SIGNAL(signalAlbumItemsSelected(bool)),
-            SLOT(slotItemsSelected(bool)));
+    KIPI::Interface *interface = dynamic_cast<KIPI::Interface*>( parent() );
+    KIPI::ImageCollection album = interface->currentAlbum();
+    m_action_OpenIn->setEnabled(album.isValid());
 
-    connect(Digikam::AlbumManager::instance(),
-            SIGNAL(signalAlbumCurrentChanged(Digikam::AlbumInfo *)),
-            SLOT(slotAlbumSelected(Digikam::AlbumInfo *)));
-#endif
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), this, SLOT(slotAlbumSelected( bool ) ) );
  }
 
 
@@ -98,10 +93,10 @@ void Plugin_DirOperations::setup( QWidget* widget )
 void Plugin_DirOperations::slotOpenInKonqui()
 {
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*>( parent() );
-    KIPI::ImageCollection images = interface->currentAlbum();
-    if (images.images().count() == 0) return;
+    KIPI::ImageCollection album = interface->currentAlbum();
+    if (album.images().count() == 0) return;
 
-    new KRun(images.path()); // KRun will delete itself.
+    new KRun(album.path()); // KRun will delete itself.
 }
 
 
@@ -128,12 +123,10 @@ void Plugin_DirOperations::slotOpenInNautilus()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef TEMPORARILY_REMOVED
-void Plugin_DirOperations::slotAlbumSelected(Digikam::AlbumInfo *album)
+void Plugin_DirOperations::slotAlbumSelected( bool b)
 {
-  m_action_OpenIn->setEnabled((album!=NULL));
+  m_action_OpenIn->setEnabled( b );
 }
-#endif
 
 
 KIPI::Category  Plugin_DirOperations::category() const

@@ -173,10 +173,7 @@ Plugin_BatchProcessImages::~Plugin_BatchProcessImages()
 void Plugin_BatchProcessImages::slotActivate()
 {
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
-    KIPI::ImageCollection images = interface->currentSelection();
-    if ( !images.isValid() )
-        images = interface->currentAlbum();
-
+    KIPI::ImageCollection images = interface->currentScope();
     if ( !images.isValid() )
         return;
 

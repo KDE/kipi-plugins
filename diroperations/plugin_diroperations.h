@@ -59,7 +59,7 @@
    void slotOpenInKonqui();
    void slotOpenInNautilus();
 
-      // void slotAlbumSelected(Digikam::AlbumInfo *album);
+   void slotAlbumSelected( bool b );
 
 
    private:

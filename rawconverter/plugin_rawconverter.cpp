@@ -58,7 +58,7 @@ Plugin_RawConverter::Plugin_RawConverter(QObject *parent,
 void Plugin_RawConverter::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    singleAction_ = new KAction (i18n("Raw Image Converter ..."),
+    singleAction_ = new KAction (i18n("Raw Image Converter (Single)..."),
                                  "rawconverter",
                                  0,
                                  this,
@@ -66,7 +66,7 @@ void Plugin_RawConverter::setup( QWidget* widget )
                                  actionCollection(),
                                  "raw_converter");
 
-    batchAction_ = new KAction (i18n("Raw Images Converter..."),
+    batchAction_ = new KAction (i18n("Raw Images Converter (Batch)..."),
                                  "rawconverter",
                                  0,
                                  this,
@@ -77,13 +77,10 @@ void Plugin_RawConverter::setup( QWidget* widget )
     addAction( singleAction_ );
     addAction( batchAction_ );
 
-#ifdef TEMPORARILY_REMOVED
-    connect(Digikam::AlbumManager::instance(),
-            SIGNAL(signalAlbumItemsSelected(bool)),
-            SLOT(slotItemsSelected(bool)));
-#endif
-
-    slotItemsSelected(false);
+    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    connect( interface, SIGNAL( selectionChanged( bool ) ), this, SLOT( slotSetActive() ) );
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), this, SLOT( slotSetActive() ) );
+    slotSetActive();
 }
 
 Plugin_RawConverter::~Plugin_RawConverter()
@@ -121,8 +118,6 @@ void Plugin_RawConverter::slotActivateSingle()
     KIPI::ImageCollection images;
     images = interface->currentSelection();
     if ( !images.isValid() )
-        images = interface->currentAlbum();
-    if ( !images.isValid() )
         return;
 
     if (!checkBinaries()) return;
@@ -136,9 +131,7 @@ void Plugin_RawConverter::slotActivateBatch()
 {
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
     KIPI::ImageCollection images;
-    images = interface->currentSelection();
-    if ( !images.isValid() )
-        images = interface->currentAlbum();
+    images = interface->currentScope();
     if ( !images.isValid() )
         return;
 
@@ -158,12 +151,18 @@ void Plugin_RawConverter::slotActivateBatch()
 }
 
 
-void Plugin_RawConverter::slotItemsSelected(bool val)
+void Plugin_RawConverter::slotSetActive()
 {
-#ifdef TEMPORARILY_REMOVED
-    singleAction_->setEnabled(val);
-    batchAction_->setEnabled(val);
-#endif
+    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::ImageCollection images;
+    images = interface->currentSelection();
+    bool single = images.isValid();
+    if ( !images.isValid() )
+        images = interface->currentAlbum();
+
+    bool multiple = images.isValid();
+    singleAction_->setEnabled( single );
+    batchAction_->setEnabled( multiple );
 }
 
 KIPI::Category Plugin_RawConverter::category() const

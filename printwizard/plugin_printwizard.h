@@ -41,7 +41,6 @@ public:
 public slots:
 
     void slotActivate();
-    void slotItemsSelected(bool selected);
     virtual KIPI::Category category() const;
 
 private:

@@ -48,7 +48,7 @@ private slots:
 
     void slotActivateSingle();
     void slotActivateBatch();
-    void slotItemsSelected(bool val);
+    void slotSetActive();
 
 };
 

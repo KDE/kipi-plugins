@@ -62,9 +62,7 @@ void Plugin_TimeAdjust::setup( QWidget* widget )
 void Plugin_TimeAdjust::slotActivate()
 {
     // Get the current/selected album
-    KIPI::ImageCollection images = m_interface->currentSelection();
-    if ( !images.isValid() )
-        images = m_interface->currentAlbum();
+    KIPI::ImageCollection images = m_interface->currentScope();
     if ( !images.isValid() )
         return;
 

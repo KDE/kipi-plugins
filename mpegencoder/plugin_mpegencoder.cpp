@@ -90,9 +90,7 @@ void Plugin_Mpegencoder::slotActivate()
     if (ValRet == 2)
         MPEGconverterDialog->m_AudioInputFilename->setEnabled(false);
 
-    KIPI::ImageCollection images = interface->currentSelection();
-    if ( !images.isValid() )
-        images = interface->currentAlbum();
+    KIPI::ImageCollection images = interface->currentScope();
     if ( !images.isValid() )
         return;
 

@@ -113,14 +113,12 @@ void Plugin_WallPaper::setup( QWidget* widget )
                          "images2desktop_centered_auto_fit"));
     addAction( m_action_Background );
 
-#ifdef TEMPORARILY_REMOVED
-    m_action_Background->setEnabled(false);
 
-    connect(Digikam::AlbumManager::instance(),
-            SIGNAL(signalAlbumItemsSelected(bool)),
-            SLOT(slotItemsSelected(bool)));
-#endif
+    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::ImageCollection selection = interface->currentSelection();
+    m_action_Background->setEnabled( selection.isValid() );
 
+    connect( interface, SIGNAL(selectionChanged(bool)), this, SLOT(slotItemsSelected(bool)));
  }
 
 

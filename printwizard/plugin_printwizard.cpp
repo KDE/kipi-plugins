@@ -73,15 +73,12 @@ void Plugin_PrintWizard::setup( QWidget* widget )
                                 "printwizard");
 
     addAction( printAction );
-#ifdef TEMPORARILY_REMOVED
-    printAction->setEnabled(false);
-
-    connect(Digikam::AlbumManager::instance(),
-            SIGNAL(signalAlbumItemsSelected(bool)),
-            SLOT(slotItemsSelected(bool)));
-#endif
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
+    KIPI::ImageCollection scope = m_interface->currentScope();
+    printAction->setEnabled( scope.isValid() );
+
+    connect( m_interface, SIGNAL( currentScopeChanged( bool ) ), printAction, SLOT( setEnabled( bool ) )  );
 }
 
 
@@ -92,9 +89,7 @@ Plugin_PrintWizard::~Plugin_PrintWizard()
 
 void Plugin_PrintWizard::slotActivate()
 {
-    KIPI::ImageCollection album = m_interface->currentSelection();
-    if ( !album.isValid() )
-        album = m_interface->currentAlbum();
+    KIPI::ImageCollection album = m_interface->currentScope();
     if ( !album.isValid() )
         return;
 
@@ -112,11 +107,6 @@ void Plugin_PrintWizard::slotActivate()
     QString tempPath = dir.saveLocation("tmp", "digikam-printwizard-" + QString::number(getpid()) + "/");
     frm.print(fileList, tempPath);
     frm.exec();
-}
-
-void Plugin_PrintWizard::slotItemsSelected(bool selected)
-{
-    printAction->setEnabled(selected);
 }
 
 KIPI::Category Plugin_PrintWizard::category() const
