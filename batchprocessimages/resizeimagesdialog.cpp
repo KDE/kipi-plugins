@@ -60,7 +60,7 @@ ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Images resizing options") );
+    groupBox1->setTitle( i18n("Image resizing options") );
 
     m_labelType->setText( i18n("Image-Resize type:") );
 
@@ -72,7 +72,7 @@ ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* int
     whatsThis = i18n("<p>Select here the image-resize type.");
     whatsThis = whatsThis + i18n("<p><b>Proportional (1 dim.)</b>: standard auto-resizing using one dimension. "
                                  "The width or the height of the images will be automatically "
-                                 "selected, depending on the images' orientation. "
+                                 "selected, depending on the images' orientations. "
                                  "The images' aspect ratios are preserved.");
     whatsThis = whatsThis + i18n("<p><b>Proportional (2 dim.)</b>: auto-resizing using two dimensions. "
                                  "The images' aspect ratio are preserved. You can use this, for example, "
