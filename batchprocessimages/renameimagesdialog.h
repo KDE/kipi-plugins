@@ -63,21 +63,18 @@ Q_OBJECT
 
  protected:
  
-   bool    m_addOriginalFileName;
-   bool    m_addImageFileDate;
-   bool    m_addImageFileSize;
-   bool    m_reverseOrder;
-   QString m_prefix;
-   int     m_sortType;
-   int     m_enumeratorStart;
-   bool    m_dateChange;
+   bool      m_addOriginalFileName;
+   bool      m_addImageFileDate;
+   bool      m_addImageFileSize;
+   bool      m_reverseOrder;
+   bool      m_dateChange;
 
-   QDate   m_newDate;
-   bool    m_changeModification;
-   bool    m_changeAccess;
-   int     m_hour;
-   int     m_minute;
-   int     m_second;
+   QString   m_prefix;
+   
+   int       m_sortType;
+   int       m_enumeratorStart;
+      
+   QDateTime m_newDateTime;
 
    RenameImagesOptionsDialog *optionsDialog;
 
@@ -91,8 +88,7 @@ Q_OBJECT
    QString oldFileName2NewFileName(QFileInfo *fi, int id);
    void    copyItemOperations(void);
    void    updateOptions(void);
-   bool    changeDate(KURL file);
-   
+  
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

@@ -37,7 +37,7 @@
 #include <klocale.h>
 #include <knuminput.h>
 #include <klineedit.h>
-#include <kdatewidget.h>
+#include <kdatetimewidget.h>
 
 // Local includes
 
@@ -49,8 +49,8 @@ namespace KIPIBatchProcessImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 RenameImagesOptionsDialog::RenameImagesOptionsDialog(QWidget *parent)
-                        : KDialogBase( parent, "RenameImagesOptionsDialog", true,
-                          i18n("Rename Image File Options"), Ok|Cancel, Ok, false)
+                         : KDialogBase( parent, "RenameImagesOptionsDialog", true,
+                                        i18n("Rename Image File Options"), Ok|Cancel, Ok, false)
 {
     QWidget* box = new QWidget( this );
     setMainWidget(box);
@@ -114,11 +114,12 @@ RenameImagesOptionsDialog::RenameImagesOptionsDialog(QWidget *parent)
                                         "the image files' dates can be changed.") );
     m_dateChange->setChecked( false );
 
-    m_kDatePicker = new KDateWidget(  QDate::currentDate(), groupBox3 );
+    m_kDatePicker = new KDateTimeWidget(  QDate::currentDate(), groupBox3 );
     m_kDatePicker->setEnabled( false );
     QWhatsThis::add( m_kDatePicker, i18n("<p>You can set here the time stamp of the image files.") );
 
-    connect( m_dateChange, SIGNAL( toggled(bool) ), m_kDatePicker, SLOT( setEnabled(bool) ) );
+    connect( m_dateChange, SIGNAL( toggled(bool) ),
+             m_kDatePicker, SLOT( setEnabled(bool) ) );
 
     dvlay->addWidget( groupBox3 );
 }

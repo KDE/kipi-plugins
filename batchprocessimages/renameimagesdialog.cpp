@@ -53,7 +53,7 @@ extern "C"
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 #include <kprogress.h>
-#include <kdatewidget.h>
+#include <kdatetimewidget.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <khelpmenu.h>
@@ -209,7 +209,7 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
     if (job->error())
         {
         item->changeResult(i18n("Failed."));
-        item->changeError(i18n("cannot copy original image file."));
+        item->changeError(i18n("cannot copy or move original image file."));
         item->changeOutputMess(i18n("Check the file's access rights or the amount of disk space.\n"
                                     "The internal error is:\n\n%1")
                                     .arg(job->errorString()));
@@ -235,8 +235,8 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
             if ( !ok ) 
                 {
                 int code = KMessageBox::warningContinueCancel( this,
-                                        i18n("<qt>Error adding image to application; error message was: "
-                                        "<b>%1</b></qt>").arg( errmsg ),
+                                        i18n("<qt>Error adding image to the host application; "
+                                        "error message was: <b>%1</b></qt>").arg( errmsg ),
                                         i18n("Error Adding Image to Application") );
                 if ( code == KMessageBox::Cancel ) 
                     {
@@ -255,36 +255,14 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
 
             if ( m_dateChange == true )
                 {
-                if ( changeDate( dest.path()) == false ) // PENDING(blackie) handle remote URL's
-                    {
-                    item->changeResult(i18n("Cannot change time stamp of destination file."));
-                    item->changeError(i18n("cannot change time stamp of destination file."));
-                    item->changeOutputMess(i18n("Check the file's access rights."));
-                    }
+                destInfo.setTime( m_newDateTime );
                 }
 
-            // Remove original image file if necessary.
+            // Remove original image file from the host app. if necessary.
 
             if ( m_removeOriginal->isChecked() == true )
                 {
                 m_interface->delImage( src );
-
-#if KDE_VERSION >= 0x30200
-                if ( KIO::NetAccess::del( src, kapp->activeWindow() ) == false )
-#else
-                if ( KIO::NetAccess::del( src ) == false )
-#endif                   
-                    {
-                    item->changeResult(i18n("Cannot delete original."));
-                    item->changeError(i18n("cannot remove original image file."));
-                    item->changeOutputMess(i18n("Check the file's access rights."));
-                    }
-                else
-                    {
-                    item->changeResult(i18n("OK"));
-                    item->changeError(i18n("no processing error"));
-                    item->changeOutputMess(i18n("None"));
-                    }
                 }
         else
            {
@@ -300,7 +278,7 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
 
     if (m_listFile2Process_iterator->current())     // Next image ?
         copyItemOperations();
-    else                                            // Copy is done...
+    else                                            // Copy/move is done...
         endProcess();
 }
 
@@ -344,13 +322,7 @@ void RenameImagesDialog::updateOptions(void)
     m_sortType = optionsDialog->m_sortType->currentItem();
     m_enumeratorStart = optionsDialog->m_enumeratorStart->value();
     m_dateChange = optionsDialog->m_dateChange->isChecked();
-    m_newDate = optionsDialog->m_kDatePicker->date();
-
-    m_changeModification = true;
-    m_changeAccess = true;
-    m_hour = 0;
-    m_minute = 0;
-    m_second = 0;
+    m_newDateTime = optionsDialog->m_kDatePicker->dateTime();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -367,6 +339,7 @@ bool RenameImagesDialog::startProcess(void)
     m_listFiles->setCurrentItem(item);
 
     QString targetAlbum = m_upload->path().path(); // PENDING(blackie) handle remote URLS.
+    
     if ( prepareStartProcess(item, targetAlbum) == false ) // If there is a problem during the
        {                                                                 //  preparation -> pass to the next item!
        ++*m_listFile2Process_iterator;
@@ -390,7 +363,11 @@ bool RenameImagesDialog::startProcess(void)
     KURL desturl(m_upload->path());
     desturl.addPath( item->nameDest() );
 
-
+#if KDE_VERSION >= 0x30200
+    if ( KIO::NetAccess::exists(desturl, false, kapp->activeWindow() ) == true )
+#else
+    if ( KIO::NetAccess::exists(desturl) == true )
+#endif                   
        {
        switch (overwriteMode())
           {
@@ -510,8 +487,12 @@ void RenameImagesDialog::copyItemOperations(void)
 
     KURL target = m_upload->path();
     target.addPath( item->nameDest() );
-
-    KIO::CopyJob* job = KIO::copy(item->pathSrc(), target, true);
+    KIO::CopyJob* job;
+    
+    if ( m_removeOriginal->isChecked() == true )
+       job = KIO::move(item->pathSrc(), target, false);
+    else
+       job = KIO::copy(item->pathSrc(), target, false);
 
     connect(job, SIGNAL(result(KIO::Job*)),
             this, SLOT(slotResult(KIO::Job*)));
@@ -717,21 +698,6 @@ QString RenameImagesDialog::oldFileName2NewFileName(QFileInfo *fi, int id)
     Temp = Temp + "." + fi->extension();                                      // Add file extension.
 
     return Temp;
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-bool RenameImagesDialog::changeDate(KURL file)
-{
-    KIPI::ImageInfo info = m_interface->info( file );
-    QDateTime dateTime = info.time();
-    dateTime.setDate(m_newDate);
-    QTime newTime(m_hour, m_minute, m_second);
-    dateTime.setTime(newTime);
-    info.setTime( dateTime );
-
-    return true;
 }
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

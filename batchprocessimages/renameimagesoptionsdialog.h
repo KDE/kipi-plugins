@@ -39,7 +39,7 @@ class QPushButton;
 
 class KIntSpinBox;
 class KLineEdit;
-class KDateWidget;
+class KDateTimeWidget;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -67,7 +67,7 @@ Q_OBJECT
    QCheckBox       *m_reverseOrder;
    QCheckBox       *m_dateChange;
 
-   KDateWidget     *m_kDatePicker;
+   KDateTimeWidget *m_kDatePicker;
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
