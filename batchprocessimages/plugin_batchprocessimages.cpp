@@ -2,7 +2,7 @@
 //
 //    PLUGIN_BATCHPROCESSIMAGES.CPP
 //
-//    Copyright (C) 2003-2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@ extern "C"
 #include <ktempfile.h>
 
 // KIPI includes
+
 #include <libkipi/interface.h>
 
 // Local includes
@@ -78,11 +79,6 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char
 void Plugin_BatchProcessImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-
-    KActionMenu* menu = new KActionMenu(i18n("Batch processes"),
-                                         actionCollection(),
-                                         "batch_progress");
-
 
     m_action_borderimages = new KAction (i18n("Border Images..."),           // Menu message.
                                         "borderimages",                      // Menu icon.
@@ -148,15 +144,14 @@ void Plugin_BatchProcessImages::setup( QWidget* widget )
                                         actionCollection(),
                                         "batch_resize_images");
 
-    menu->insert( m_action_borderimages );
-    menu->insert( m_action_colorimages );
-    menu->insert( m_action_convertimages );
-    menu->insert( m_action_effectimages );
-    menu->insert( m_action_filterimages );
-    menu->insert( m_action_renameimages );
-    menu->insert( m_action_recompressimages );
-    menu->insert( m_action_resizeimages );
-    addAction( menu );
+    addAction( m_action_borderimages );
+    addAction( m_action_colorimages );
+    addAction( m_action_convertimages );
+    addAction( m_action_effectimages );
+    addAction( m_action_filterimages );
+    addAction( m_action_renameimages );
+    addAction( m_action_recompressimages );
+    addAction( m_action_resizeimages );
 }
 
 

@@ -2,7 +2,7 @@
 //
 //    BATCHPROCESSIMAGESDIALOG.H
 //
-//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -91,6 +91,7 @@ Q_OBJECT
 
 protected slots:
     void slotProcessStop(void);
+    
 private slots:
 
    // --------------------------------------------------------------------------------------------------------
@@ -178,7 +179,7 @@ private slots:
 
    QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
 
-    KIPI::Interface       *m_interface;
+   KIPI::Interface       *m_interface;
 
    // --------------------------------------------------------------------------------------------------------
    // Standards fonctions
