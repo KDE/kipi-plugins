@@ -82,7 +82,7 @@ namespace KIPIImagesGalleryPlugin
 {
 
 ImagesGallery::ImagesGallery( KIPI::Interface* interface, QObject *parent )
-             : QObject(parent), QThread()
+             : QObject(parent)
 {
     KImageIO::registerFormats();
     
@@ -106,8 +106,9 @@ ImagesGallery::ImagesGallery( KIPI::Interface* interface, QObject *parent )
 
 ImagesGallery::~ImagesGallery()
 {
+    delete m_commentMap;
+    delete m_albumsMap;
     delete m_configDlg;
-    wait();
 }
 
 
@@ -115,54 +116,53 @@ ImagesGallery::~ImagesGallery()
 
 void ImagesGallery::writeSettings(void)
 {
-  m_config = new KConfig("kipirc");
-  m_config->setGroup("ImagesGallery Settings");
+    m_config = new KConfig("kipirc");
+    m_config->setGroup("ImagesGallery Settings");
 
-  // HTML Look dialogbox setup tab
+    // HTML Look dialogbox setup tab
 
-  m_config->writeEntry("MainPageTitle", m_configDlg->getMainTitle());
-  m_config->writeEntry("ImagesPerRow", m_configDlg->getImagesPerRow());
-  m_config->writeEntry("PrintImageName", m_configDlg->printImageName());
-  m_config->writeEntry("PrintImageSize", m_configDlg->printImageSize());
-  m_config->writeEntry("PrintFileSize", m_configDlg->printImageProperty());
-  m_config->writeEntry("PrintPageCreationDate", m_configDlg->printPageCreationDate());
-  m_config->writeEntry("CreatePageForPhotos", m_configDlg->getCreatePageForPhotos());
-  m_config->writeEntry("OpenInWebBrowser", m_configDlg->OpenGalleryInWebBrowser());
-  m_config->writeEntry("WebBrowserName", m_configDlg->getWebBrowserName());
-  m_config->writeEntry("FontName", m_configDlg->getFontName());
-  m_config->writeEntry("FontSize", m_configDlg->getFontSize());
-  m_config->writeEntry("FontColor", m_configDlg->getForegroundColor());
-  m_config->writeEntry("BackgroundColor", m_configDlg->getBackgroundColor());
-  m_config->writeEntry("BordersImagesSize", m_configDlg->getBordersImagesSize());
-  m_config->writeEntry("BordersImagesColor", m_configDlg->getBordersImagesColor());
+    m_config->writeEntry("MainPageTitle", m_configDlg->getMainTitle());
+    m_config->writeEntry("ImagesPerRow", m_configDlg->getImagesPerRow());
+    m_config->writeEntry("PrintImageName", m_configDlg->printImageName());
+    m_config->writeEntry("PrintImageSize", m_configDlg->printImageSize());
+    m_config->writeEntry("PrintFileSize", m_configDlg->printImageProperty());
+    m_config->writeEntry("PrintPageCreationDate", m_configDlg->printPageCreationDate());
+    m_config->writeEntry("CreatePageForPhotos", m_configDlg->getCreatePageForPhotos());
+    m_config->writeEntry("OpenInWebBrowser", m_configDlg->OpenGalleryInWebBrowser());
+    m_config->writeEntry("WebBrowserName", m_configDlg->getWebBrowserName());
+    m_config->writeEntry("FontName", m_configDlg->getFontName());
+    m_config->writeEntry("FontColor", m_configDlg->getForegroundColor());
+    m_config->writeEntry("BackgroundColor", m_configDlg->getBackgroundColor());
+    m_config->writeEntry("BordersImagesSize", m_configDlg->getBordersImagesSize());
+    m_config->writeEntry("BordersImagesColor", m_configDlg->getBordersImagesColor());
 
-  // ALBUM dialogbox setup tab
+    // ALBUM dialogbox setup tab
 
-  m_config->writeEntry("GalleryPath", m_configDlg->getImageName());
-  m_config->writeEntry("NotUseOriginalImageSize", m_configDlg->useNotOriginalImageSize());
-  m_config->writeEntry("ImagesResize", m_configDlg->getImagesResize());
-  m_config->writeEntry("TargetImagesCompressionSet", m_configDlg->useSpecificTargetimageCompression());
-  m_config->writeEntry("TargetImagesCompression", m_configDlg->getTargetImagesCompression());
-  m_config->writeEntry("TargetImagesFormat", m_configDlg->getTargetImagesFormat());
-  m_config->writeEntry("TargetImagesColorDepthSet", m_configDlg->colorDepthSetTargetImages());
-  m_config->writeEntry("TargetImagesColorDepthValue", m_configDlg->getColorDepthTargetImages());
-  m_config->writeEntry("UseCommentFile", m_configDlg->useCommentFile());
-  m_config->writeEntry("UseCommentsAlbum", m_configDlg->useCommentsAlbum());
-  m_config->writeEntry("UseCollectionAlbum", m_configDlg->useCollectionAlbum());
-  m_config->writeEntry("UseDateAlbum", m_configDlg->useDateAlbum());
-  m_config->writeEntry("PrintImageNb", m_configDlg->useNbImagesAlbum());
+    m_config->writeEntry("GalleryPath", m_configDlg->getImageName());
+    m_config->writeEntry("NotUseOriginalImageSize", m_configDlg->useNotOriginalImageSize());
+    m_config->writeEntry("ImagesResize", m_configDlg->getImagesResize());
+    m_config->writeEntry("TargetImagesCompressionSet", m_configDlg->useSpecificTargetimageCompression());
+    m_config->writeEntry("TargetImagesCompression", m_configDlg->getTargetImagesCompression());
+    m_config->writeEntry("TargetImagesFormat", m_configDlg->getTargetImagesFormat());
+    m_config->writeEntry("TargetImagesColorDepthSet", m_configDlg->colorDepthSetTargetImages());
+    m_config->writeEntry("TargetImagesColorDepthValue", m_configDlg->getColorDepthTargetImages());
+    m_config->writeEntry("UseCommentFile", m_configDlg->useCommentFile());
+    m_config->writeEntry("UseCommentsAlbum", m_configDlg->useCommentsAlbum());
+    m_config->writeEntry("UseCollectionAlbum", m_configDlg->useCollectionAlbum());
+    m_config->writeEntry("UseDateAlbum", m_configDlg->useDateAlbum());
+    m_config->writeEntry("PrintImageNb", m_configDlg->useNbImagesAlbum());
 
-  // THUMNAILS dialogbox setup tab
+    // THUMNAILS dialogbox setup tab
 
-  m_config->writeEntry("ThumbnailsSize", m_configDlg->getThumbnailsSize());
-  m_config->writeEntry("ThumbnailsCompressionSet", m_configDlg->useSpecificThumbsCompression());
-  m_config->writeEntry("ThumbnailsCompression", m_configDlg->getThumbsCompression());
-  m_config->writeEntry("ThumbnailsFormat", m_configDlg->getImageFormat());
-  m_config->writeEntry("ThumbnailsColorDepthSet", m_configDlg->colorDepthSetThumbnails());
-  m_config->writeEntry("ThumbnailsColorDepthValue", m_configDlg->getColorDepthThumbnails());
+    m_config->writeEntry("ThumbnailsSize", m_configDlg->getThumbnailsSize());
+    m_config->writeEntry("ThumbnailsCompressionSet", m_configDlg->useSpecificThumbsCompression());
+    m_config->writeEntry("ThumbnailsCompression", m_configDlg->getThumbsCompression());
+    m_config->writeEntry("ThumbnailsFormat", m_configDlg->getImageFormat());
+    m_config->writeEntry("ThumbnailsColorDepthSet", m_configDlg->colorDepthSetThumbnails());
+    m_config->writeEntry("ThumbnailsColorDepthValue", m_configDlg->getColorDepthThumbnails());
 
-  m_config->sync();
-  delete m_config;
+    m_config->sync();
+    delete m_config;
 }
 
 
@@ -351,7 +351,6 @@ bool ImagesGallery::removeTargetGalleryFolder(void)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// Execute the no threadable operations before the real thread.
 
 bool ImagesGallery::prepare(void)
 {
@@ -364,6 +363,7 @@ bool ImagesGallery::prepare(void)
     m_recurseSubDirectories = false;
     m_LevelRecursion = 1;
 
+    m_cancelled = false;
     m_resizeImagesWithError.clear();
     m_StreamMainPageAlbumPreview = "";
     
@@ -409,7 +409,7 @@ bool ImagesGallery::prepare(void)
     int nbActions = m_albumListSize;
     
     for( QValueList<KIPI::ImageCollection>::Iterator it = albumsList.begin() ;
-         it != albumsList.end() ; ++it ) 
+         !m_cancelled && (it != albumsList.end()) ; ++it ) 
        nbActions = nbActions + (*it).images().count();
     
     d = new KIPIImagesGalleryPlugin::EventData;
@@ -417,7 +417,9 @@ bool ImagesGallery::prepare(void)
     d->starting = true;
     d->success = false;
     d->total = nbActions; 
-    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    usleep(1000);
+    
     
     // Create the main target folder.
         
@@ -430,7 +432,9 @@ bool ImagesGallery::prepare(void)
        d->starting = false;
        d->success = false;
        d->message = i18n("Could not create directory '%1'").arg(m_mainTPath);
-       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       usleep(1000);
+       
        return(false);
        }
 
@@ -439,7 +443,7 @@ bool ImagesGallery::prepare(void)
     m_albumsMap = new AlbumsMap;
         
     for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albumsList.begin() ;
-         albumIt != albumsList.end() ; ++albumIt )
+         !m_cancelled && (albumIt != albumsList.end()) ; ++albumIt )
         {
         AlbumData data((*albumIt).name(),    (*albumIt).category(),
                        (*albumIt).comment(), (*albumIt).date(), 
@@ -459,7 +463,14 @@ bool ImagesGallery::prepare(void)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-// List of threaded operations.
+
+void ImagesGallery::stop()
+{
+    m_cancelled = true;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ImagesGallery::run()
 {
@@ -481,7 +492,7 @@ void ImagesGallery::run()
        }
 
        for( KURL::List::Iterator albumsUrlIt = m_albumUrlList.begin() ;
-            albumsUrlIt != m_albumUrlList.end() ; ++albumsUrlIt )
+            !m_cancelled && (albumsUrlIt != m_albumUrlList.end()) ; ++albumsUrlIt )
           {
           m_albumUrl = *albumsUrlIt;
           AlbumData data = (*m_albumsMap)[m_albumUrl.prettyURL()];
@@ -513,7 +524,9 @@ void ImagesGallery::run()
                  d->starting = false;
                  d->success = false;
                  d->message = i18n("Could not create directory '%1'").arg(SubTPath);
-                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                 QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                 usleep(1000);
+                 
                  return;
                  }
 
@@ -522,8 +535,9 @@ void ImagesGallery::run()
              d->starting = true;
              d->success = false;
              d->albumName = m_AlbumTitle;
-             QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-                            
+             QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+             usleep(1000);
+                         
              if ( !createHtml( SubUrl, Path, 
                                m_LevelRecursion > 0 ? m_LevelRecursion + 1 : 0,
                                m_imageFormat,
@@ -534,7 +548,8 @@ void ImagesGallery::run()
                 d->starting = false;
                 d->success = false;
                 d->albumName = m_AlbumTitle;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d)); 
+                QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d)); 
+                usleep(1000);
                 
                 if ( !DeleteDir(m_mainTPath) )
                    {
@@ -543,7 +558,9 @@ void ImagesGallery::run()
                    d->starting = false;
                    d->success = false;
                    d->message = i18n("Cannot remove folder '%1'.").arg(m_mainTPath);
-                   QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                   QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                   usleep(1000);
+                   
                    return;
                    }
 
@@ -556,7 +573,9 @@ void ImagesGallery::run()
                 d->starting = false;
                 d->success = true;
                 d->albumName = m_AlbumTitle;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                usleep(1000);
+                
                 }
              }
          }
@@ -567,7 +586,9 @@ void ImagesGallery::run()
     d->action = KIPIImagesGalleryPlugin::BuildHTMLiface;
     d->starting = true;
     d->success = false;
-    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    usleep(1000);
+    
 
     if ( m_albumListSize > 1 )
        {
@@ -590,7 +611,9 @@ void ImagesGallery::run()
           d->starting = false;
           d->success = false;
           d->message = i18n("Couldn't open file '%1'").arg(MainUrl.path());
-          QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+          QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+          usleep(1000);
+          
           return;
           }
        }
@@ -603,7 +626,9 @@ void ImagesGallery::run()
     d->action = KIPIImagesGalleryPlugin::BuildHTMLiface;
     d->success = true;
     d->starting = false;
-    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    usleep(1000);
+    
 }
 
 
@@ -623,7 +648,9 @@ bool ImagesGallery::createDirectory(QDir thumb_dir, QString imgGalleryDir, QStri
             d->success = false;
             d->message = i18n("Could not create directory '%1' in '%2'")
                          .arg(dirName).arg(imgGalleryDir);
-            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+            QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+            usleep(1000);
+            
             return false;
             }
         else
@@ -777,7 +804,8 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
           QString Temp = i18n("<i>Subdirectories:</i>");
           stream << Temp << "<br>" << endl;
 
-          for (QStringList::ConstIterator it = subDirList.begin(); it != subDirList.end(); it++)
+          for (QStringList::ConstIterator it = subDirList.begin() ; 
+               !m_cancelled && (it != subDirList.end()); it++)
               {
               if (*it == "." || *it == "..")
                   continue;                        // Disregard the "." and ".." directories
@@ -793,18 +821,18 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
 
     // Table with images
 
-    int imgIndex=0;
+    int imgIndex = 0;
     QFileInfo imginfo;
     QPixmap imgProp;
 
     KURL::List images = data.itemsUrl();
     
-    for( KURL::List::Iterator urlIt = images.begin() ; urlIt != images.end() ; )
+    for( KURL::List::Iterator urlIt = images.begin() ; !m_cancelled && (urlIt != images.end()) ; )
         {
         stream << "<tr>" << endl;
 
         for (int col = 0 ;
-             urlIt!=images.end() && col < m_imagesPerRow ;
+             !m_cancelled && (urlIt!=images.end()) && (col < m_imagesPerRow) ;
              ++col, ++urlIt, ++imgIndex)
             {
             const QString imgName = (*urlIt).fileName();
@@ -822,7 +850,9 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
             d->starting = true;
             d->success = false;
             d->fileName = imgName;
-            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+            QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+            usleep(1000);
+            
            
             int valRet = createThumb(*urlIt, imgName, imgGalleryDir, imageFormat, TargetimagesFormat);
             
@@ -907,7 +937,9 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
                 d->starting = false;
                 d->success = false;
                 d->fileName = imgName;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                usleep(1000);
+                
                 }
             else
                 {
@@ -916,7 +948,9 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
                 d->starting = false;
                 d->success = true;
                 d->fileName = imgName;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                usleep(1000);
+                
                 }
                 
             stream << "</a>" << endl;
@@ -965,7 +999,7 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
       KURL::List images = data.itemsUrl();
       
       for( KURL::List::Iterator urlIt = images.begin();
-           urlIt != images.end() ; ++urlIt, ++imgIndex )
+           !m_cancelled && (urlIt != images.end()) ; ++urlIt, ++imgIndex )
         {
         const QString imgName = (*urlIt).fileName();
 
@@ -1001,7 +1035,9 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
         d->starting = true;
         d->success = false;
         d->fileName = imgName;
-        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+        QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+        usleep(1000);
+        
 
         if ( createPage(imgGalleryDir,  targetImgName , previousImgName , nextImgName , imgComment) == false )
            {
@@ -1010,7 +1046,9 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
            d->starting = false;
            d->success = false;
            d->fileName = imgName;
-           QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+           QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+           usleep(1000);
+           
            }
         }
       }
@@ -1090,6 +1128,8 @@ void ImagesGallery::createBodyMainPage(QTextStream& stream, KURL& url)
 bool ImagesGallery::createHtml(const KURL& url, const QString& sourceDirName, int recursionLevel, 
                                const QString& imageFormat, const QString& TargetimagesFormat)
 {
+    if (m_cancelled) return false;
+    
     KIPIImagesGalleryPlugin::EventData *d;
     QStringList subDirList;
     
@@ -1099,7 +1139,8 @@ bool ImagesGallery::createHtml(const KURL& url, const QString& sourceDirName, in
         toplevel_dir.setFilter( QDir::Dirs | QDir::Readable | QDir::Writable );
         subDirList = toplevel_dir.entryList();
 
-        for (QStringList::ConstIterator it = subDirList.begin() ; it != subDirList.end() ; it++)
+        for (QStringList::ConstIterator it = subDirList.begin() ; 
+             !m_cancelled && (it != subDirList.end()) ; it++)
             {
             const QString currentDir = *it;
 
@@ -1120,7 +1161,9 @@ bool ImagesGallery::createHtml(const KURL& url, const QString& sourceDirName, in
                     d->success = false;
                     d->message = i18n("Could not create directory '%1' in '%2'.")
                                         .arg(currentDir).arg(url.directory());
-                    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                    QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                    usleep(1000);
+                    
                     continue;
                     }
                 else
@@ -1186,7 +1229,9 @@ bool ImagesGallery::createHtml(const KURL& url, const QString& sourceDirName, in
         d->starting = false;
         d->success = false;
         d->message = i18n("Could not open file '%1'").arg(url.path(+1));
-        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+        QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+        usleep(1000);
+        
         return false;
         }
 }
@@ -1204,7 +1249,7 @@ void ImagesGallery::loadComments(void)
     QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();       
 
     for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
-         albumIt != albums.end() ; ++albumIt )
+         !m_cancelled && (albumIt != albums.end()) ; ++albumIt )
         {
         KURL::List images = (*albumIt).images();
 
@@ -1612,6 +1657,8 @@ int ImagesGallery::ResizeImage( const QString Path, const QString Directory, con
 
 void ImagesGallery::invokeWebBrowser(void)
 {
+    if (m_cancelled) return;
+
     if (m_configDlg->OpenGalleryInWebBrowser() == false)
        return;
     
@@ -1777,7 +1824,7 @@ QString ImagesGallery::EscapeSgmlText(const QTextCodec* codec,
     QString strReturn;
     QChar ch;
 
-    for (uint i=0 ; i<strIn.length() ; ++i)
+    for (uint i = 0 ; i < strIn.length() ; ++i)
     {
         ch=strIn[i];
         switch (ch.unicode())

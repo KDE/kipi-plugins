@@ -42,7 +42,6 @@
 #include <qstringlist.h>
 #include <qdir.h>
 #include <qcolor.h>
-#include <qthread.h>
 #include <qdatetime.h>
 
 // Includes files for KDE.
@@ -102,7 +101,7 @@ typedef QMap<QString, QString>   CommentMap;  // List of Albums items comments.
 typedef QMap<QString, AlbumData> AlbumsMap;   // Albums data list.
 
 
-class ImagesGallery : public QObject, public QThread
+class ImagesGallery : public QObject
 {
 Q_OBJECT
 
@@ -111,10 +110,11 @@ public:
   ImagesGallery( KIPI::Interface* interface, QObject *parent=0 );
   ~ImagesGallery();
   
-  virtual void run();
-
   bool prepare(void);
-  bool showDialog();
+  void run(void);
+  void stop(void);
+  
+  bool showDialog(void);
   void invokeWebBrowser(void);
   bool removeTargetGalleryFolder(void);
   
@@ -125,7 +125,8 @@ private:
   KConfig            *m_config;
   KProcess           *m_webBrowserProc;
   KIPI::Interface    *m_interface;
-  
+
+  bool                m_cancelled;
   bool                m_recurseSubDirectories;
   bool                m_copyFiles;
   bool                m_useCommentFile;
