@@ -38,6 +38,16 @@ public:
         : QListViewItem(parent, name), album(_album) {}
 
     GAlbum album;
+
+    void paintCell(QPainter * p, const QColorGroup & cg,
+                   int column, int width, int );
+    void paintFocus (QPainter*, const QColorGroup&,
+                     const QRect&) {}
+
+protected:
+
+    void setup();
+    
 };
 
 }

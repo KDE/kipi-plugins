@@ -8,7 +8,8 @@ kipiplugin_galleryexport_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 
 kipiplugin_galleryexport_la_SOURCES = plugin_galleryexport.cpp \
 		gallerywindow.cpp gallerylogin.cpp gallerytalker.cpp \
-		gallerywidget.cpp gallerympform.cpp galleryalbumdialog.ui
+		gallerywidget.cpp gallerympform.cpp galleryalbumdialog.ui \
+		galleryviewitem.cpp
 
 kipiplugin_galleryexport_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) \
 				$(LIB_KHTML)

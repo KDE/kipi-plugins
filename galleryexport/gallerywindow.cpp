@@ -258,6 +258,10 @@ void GalleryWindow::slotPhotos( const QValueList<GPhoto>& photoList)
                            "text-decoration: none;}" )
                   .arg( pxSize )
                   .arg( colorGroup().text().name() );
+    styleSheet += QString( "i { font-size: %1px; color: %2; "
+                           "text-decoration: none;}" )
+                  .arg( pxSize-2 )
+                  .arg( QColor("steelblue").name() );
     
     m_photoView->begin();
     m_photoView->setUserStyleSheet( styleSheet );
