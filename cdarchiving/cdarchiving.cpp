@@ -72,7 +72,7 @@ extern "C"
 namespace KIPICDArchivingPlugin
 {
 
-CDArchiving::CDArchiving( KIPI::Interface* interface, QObject *parent, KAction *action_cdarchiving)
+CDArchiving::CDArchiving( KIPI::Interface* interface, QObject *parent, KAction *action_cdarchiving )
            : QObject(parent), QThread()
 {
     KImageIO::registerFormats();
@@ -534,6 +534,14 @@ bool CDArchiving::buildHTMLInterface (void)
            if ( createHtml( SubUrl, Path, m_LevelRecursion > 0 ? m_LevelRecursion + 1 : 0,
                             m_configDlg->getImageFormat()) == false )
                {
+               d = new KIPICDArchivingPlugin::EventData;
+               d->action = KIPICDArchivingPlugin::BuildAlbumHTMLPage;
+               d->starting = false;
+               d->success = false;
+               d->albumName = m_AlbumTitle;
+               QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));        
+               
+               
                if (DeleteDir (MainTPath) == false)
                    {
                    d = new KIPICDArchivingPlugin::EventData;
@@ -770,7 +778,6 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
             d->success = false;
             d->fileName = imgName;
             QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-
             
             if ( createThumb(imgName, sourceDirName, imgGalleryDir, imageFormat) )
                 {
@@ -844,7 +851,8 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
                 }
             else
                 {
-                kdDebug(51000) << "Creating thumbnail for " << imgName.ascii() <<  "failed !" << endl;
+                kdDebug(51000) << "Creating thumbnail for " << imgName.ascii() 
+                               <<  "failed !" << endl;
                 
                 d = new KIPICDArchivingPlugin::EventData;
                 d->action = KIPICDArchivingPlugin::ResizeImages;

@@ -251,6 +251,17 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   break;
                   }
 
+               case(KIPICDArchivingPlugin::BuildAlbumHTMLPage): 
+                  {
+                  text = i18n("Failed to create HTML pages for Album '%1'")
+                              .arg(d->albumName);
+                  m_progressDlg->addedAction(text, KIPICDArchivingPlugin::ErrorMessage);
+                  m_progressDlg->setProgress(m_current, m_total);
+                  slotCancel();
+                  return;
+                  break;
+                  }
+                  
                case(KIPICDArchivingPlugin::BuildK3bProject): 
                   {
                   text = i18n("Failed to create K3b project!");

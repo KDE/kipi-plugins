@@ -57,10 +57,9 @@ class KProcess;
 namespace KIPICDArchivingPlugin
 {
 
-const int NAV_THUMB_MAX_SIZE = 64;
-
-class KIGPDialog;
 class CDArchivingDialog;
+
+const int NAV_THUMB_MAX_SIZE = 64;
 
 typedef QMap<QString,QString> CommentMap;
 
@@ -69,7 +68,8 @@ class CDArchiving : public QObject, public QThread
 Q_OBJECT
 
 public:
-  CDArchiving( KIPI::Interface* interface, QObject *parent=0, KAction *action_cdarchiving=0);
+  CDArchiving( KIPI::Interface* interface, QObject *parent=0,
+               KAction *action_cdarchiving=0 );
   virtual ~CDArchiving();
 
   virtual void run();

@@ -65,7 +65,7 @@ class CDArchivingDialog : public KDialogBase
   CDArchivingDialog( KIPI::Interface* interface, QWidget *parent=0);
   ~CDArchivingDialog();
 
-  bool setAlbumsList(void);
+  bool  setAlbumsList(void);
     
   const QString getK3bBinPathName() const;
   void  setK3bBinPathName(QString Value);
