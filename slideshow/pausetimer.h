@@ -24,11 +24,11 @@
 #define PAUSETIMER_H
 
 #include <qtimer.h>
+
 extern "C"
 {
 #include <time.h>
 }
-
 
 namespace KIPISlideShowPlugin
 {
