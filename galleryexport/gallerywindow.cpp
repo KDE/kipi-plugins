@@ -406,6 +406,103 @@ void GalleryWindow::slotNewAlbum()
     QString title   = dlg.titleEdit->text();
     QString caption = dlg.captionEdit->text();
 
+    // check for prohibited chars in the album name
+    // \ / * ? " ' & < > | . + # ( ) or spaces
+    
+    QChar ch;
+    bool  clean = true;
+    for (uint i=0; i<name.length(); i++)
+    {
+        ch = name[i];
+        if (ch == '\\')
+        {
+            clean = false;
+            break;
+        }
+        else if (ch == '/')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == '*')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == '?')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == '"')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == '\'')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == '&')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == '<')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == '>')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == '|')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == '.')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == '+')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == '#')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == '(')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == ')')
+        {
+            clean = false;
+            break;
+        }            
+        else if (ch == ' ')
+        {
+            clean = false;
+            break;
+        }            
+    }
+
+    if (!clean)
+    {
+        KMessageBox::error( this, i18n("Sorry, these characters are not allowed in album name: %1")
+                            .arg("\\ / * ? \" \' & < > | . + # ( ) or spaces") );
+        return;
+    }
+    
     QString parentAlbumName;
     
     QListViewItem* item = m_albumView->selectedItem();
