@@ -568,10 +568,15 @@ void GalleryWindow::slotAddPhotoNext()
     Pair pathComments = m_uploadQueue.first();
     m_uploadQueue.pop_front();
 
-    m_talker->addPhoto( m_lastSelectedAlbum, pathComments.first,
-                        pathComments.second,
-                        m_resizeCheckBox->isChecked(),
-                        m_dimensionSpinBox->value() );
+    bool res = m_talker->addPhoto( m_lastSelectedAlbum, pathComments.first,
+                                   pathComments.second,
+                                   m_resizeCheckBox->isChecked(),
+                                   m_dimensionSpinBox->value() );
+    if (!res)
+    {
+        slotAddPhotoFailed( "" );
+        return;
+    }
     
     m_progressDlg->setLabelText( i18n("Uploading file %1 ")
                                  .arg( KURL(pathComments.first).filename() ) );

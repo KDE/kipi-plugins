@@ -193,16 +193,18 @@ bool GalleryTalker::addPhoto( const QString& albumName,
         form.addPair("caption", caption);
 
     QImage image(photoPath);
-    if (image.isNull())
-        return false;
 
-    if (rescale && (image.width() > maxDim || image.height() > maxDim))
+    if (!image.isNull())
     {
-        image = image.smoothScale(maxDim, maxDim, QImage::ScaleMin);
-        path = locateLocal("tmp", KURL(photoPath).filename());
-        image.save(path, QImageIO::imageFormat(photoPath));
-        kdDebug() << "Resizing and saving to temp file: "
-                  << path << endl;
+        // image file - see if we need to rescale it
+        if (rescale && (image.width() > maxDim || image.height() > maxDim))
+        {
+            image = image.smoothScale(maxDim, maxDim, QImage::ScaleMin);
+            path = locateLocal("tmp", KURL(photoPath).filename());
+            image.save(path, QImageIO::imageFormat(photoPath));
+            kdDebug() << "Resizing and saving to temp file: "
+                      << path << endl;
+        }
     }
     
     if (!form.addFile(path))
