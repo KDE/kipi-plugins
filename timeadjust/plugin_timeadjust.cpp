@@ -48,7 +48,7 @@ void Plugin_TimeAdjust::setup( QWidget* widget )
     KIPI::Plugin::setup( widget );
     // this is our action shown in the menubar/toolbar of the mainwindow
     KAction* action = new KAction (i18n("Adjust Time and Date"),
-                                   "",
+                                   "clock",
                                    0,	// or a shortcut like CTRL+SHIFT+Key_S,
                                    this,
                                    SLOT(slotActivate()),
