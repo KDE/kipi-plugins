@@ -2,7 +2,7 @@
 //
 //    KIMG2MPG.CPP
 //
-//    Copyright (C) 2003 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2003 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -86,6 +86,10 @@ extern "C"
 #include <kglobalsettings.h>
 #include <kio/previewjob.h>
 #include <kdebug.h>
+
+// libKipi includes.
+
+#include <libkipi/imagecollectiondialog.h>
 
 // Local includes
 
@@ -355,7 +359,6 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   m_ImageLabel = new QLabel( m_ImagesFilesGroup );
   m_ImageLabel->setMinimumWidth( 120 );
-  m_ImageLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
   m_ImageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
   m_ImageLabel->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
   QWhatsThis::add( m_ImageLabel, i18n( "Preview the current selected image." ) );
@@ -374,7 +377,9 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   QWhatsThis::add( m_Encodebutton, i18n( "Start the portfolio MPEG encoding. "
                                          "The program use the 'images2mpg' bash script. " ) );
 
-  connect(m_Encodebutton, SIGNAL(clicked()), this, SLOT(slotEncode()));
+  connect(m_Encodebutton, SIGNAL(clicked()), 
+          this, SLOT(slotEncode()));
+          
   v3->addWidget( m_Encodebutton );
   v3->addStretch( 1 );
 
@@ -382,21 +387,30 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   m_helpbutton = new QPushButton( this, "HelpButton_Options" );
   m_helpbutton->setText(i18n( "&Help") );
-  connect(m_helpbutton, SIGNAL(clicked()), this, SLOT(slotHelp()));
+  
+  connect(m_helpbutton, SIGNAL(clicked()),
+          this, SLOT(slotHelp()));
+          
   v3->addWidget( m_helpbutton );
 
   // Options button.
 
   m_optionsbutton = new QPushButton( this, "PushButton_Settings" );
   m_optionsbutton->setText(i18n( "&Settings") );
-  connect(m_optionsbutton, SIGNAL(clicked()), this, SLOT(slotOptions()));
+  
+  connect(m_optionsbutton, SIGNAL(clicked()), 
+          this, SLOT(slotOptions()));
+          
   v3->addWidget( m_optionsbutton );
 
   // About button.
 
   m_aboutbutton = new QPushButton( this, "PushButton_About" );
   m_aboutbutton->setText(i18n( "&About") );
-  connect(m_aboutbutton, SIGNAL(clicked()), this, SLOT(slotAbout()));
+  
+  connect(m_aboutbutton, SIGNAL(clicked()), 
+          this, SLOT(slotAbout()));
+          
   v3->addWidget( m_aboutbutton );
 
   // Quit push button.
@@ -404,7 +418,10 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_quitbutton = new QPushButton( this, "PushButton_Quit" );
   m_quitbutton->setText(i18n( "&Close") );
   m_quitbutton->setAutoRepeat( false );
-  connect(m_quitbutton, SIGNAL(clicked()), this, SLOT(slotClose()));
+  
+  connect(m_quitbutton, SIGNAL(clicked()), 
+          this, SLOT(slotClose()));
+  
   v3->addWidget( m_quitbutton );
   QWhatsThis::add( m_quitbutton, i18n( "Abort the current encoding and exit." ) );
 
@@ -496,14 +513,11 @@ void KImg2mpgData::slotAudioFilenameDialog( void )
 void KImg2mpgData::slotImagesFilesButtonAdd( void )
 {
   QStringList ImageFilesList;
+  KURL url = KIPI::ImageCollectionDialog::getImageURL( this, m_interface );
 
-  ImageFilesList = KFileDialog::getOpenFileNames( QString::null /*Digikam::AlbumManager::instance()->getLibraryPath()*/,
-                                                  m_ImagesFilesSort,
-                                                  this );
-
-  if( ImageFilesList.isEmpty() )
-    return;
-
+  if ( !url.isValid() ) return;
+  
+  ImageFilesList << url.path(); // PENDING(blackie) handle remote URLS
   addItems(ImageFilesList);
 }
 
@@ -1246,23 +1260,19 @@ void KImg2mpgData::addItems(const QStringList& fileList)
     for ( QStringList::Iterator it = Files.begin() ; it != Files.end() ; ++it )
       {
       QString currentFile = *it;
+      
       // PENDING(blackie) Fix this, when  this plugin handles real URLs.
       if ( currentFile.startsWith( "file:" ) )
           currentFile = currentFile.mid( 5 ); // remove file://
-
 
       QFileInfo fi(currentFile);
       QString Temp = fi.dirPath();
       QString albumName = Temp.section('/', -1);
 
-#ifdef TEMPORARILY_REMOVED
-      Digikam::AlbumInfo *Album = Digikam::AlbumManager::instance()->findAlbum( albumName );
-      Album->openDB();
-      QString comments = Album->getItemComments(fi.fileName());
-      Album->closeDB();
-#else
-      QString comments = "hello world";
-#endif
+      KURL url;
+      url.setPath(currentFile);
+      KIPI::ImageInfo info = m_interface->info(url);
+      QString comments = info.description();
 
       ImageItem *item = new ImageItem( m_ImagesFilesListBox,
                                              currentFile.section('/', -1 ),   // File name with extension.
