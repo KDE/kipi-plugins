@@ -327,14 +327,12 @@ void SlideShow::showEndOfShow()
     fn.setPointSize(fn.pointSize()+10);
     fn.setBold(true);
 
-    int x = 100;
-    int y = 100;
     p.setFont(fn);
     p.setPen(Qt::white);
-    p.drawText(x, y, i18n("SlideShow Completed.\nClick To Exit..."));
+    p.drawText(100, 100, i18n("SlideShow Completed!"));
+    p.drawText(100, 150, i18n("Click To Exit..."));
     p.end();
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
