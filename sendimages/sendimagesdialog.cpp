@@ -257,7 +257,7 @@ void SendImagesDialog::setupImagesList(void)
     QPushButton* m_addImagesButton = imagesListButtonBox->addButton ( i18n( "&Add images" ) );
     QWhatsThis::add( m_addImagesButton, i18n("<p>Add images to the list.") );
     QPushButton* m_remImagesButton = imagesListButtonBox->addButton ( i18n( "&Remove images" ));
-    QWhatsThis::add( m_remImagesButton, i18n("<p>Remove images from the list.") );
+    QWhatsThis::add( m_remImagesButton, i18n("<p>Remove images selected on the list.") );
     imagesListButtonBox->layout();
     grid->addMultiCellWidget(imagesListButtonBox, 0, 1, 2, 2);
 
@@ -266,7 +266,7 @@ void SendImagesDialog::setupImagesList(void)
     m_imageLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
     m_imageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_imageLabel->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    QWhatsThis::add( m_imageLabel, i18n( "<p>Preview of the selected image in the list." ) );
+    QWhatsThis::add( m_imageLabel, i18n( "<p>Preview of the current image of the list." ) );
     grid->addMultiCellWidget(m_imageLabel, 2, 2, 2, 2);
 
     vlay->addWidget( m_groupBoxImageList );
