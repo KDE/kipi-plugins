@@ -445,6 +445,7 @@ void FrmPrintWizard::previewPhotos()
   p.end();
   BmpFirstPagePreview->setPixmap(img);
   LblPreview->setText(i18n("Page ") + QString::number(m_currentPreviewPage + 1) + i18n(" of ") + QString::number(getPageCount()));
+  LblPreview->setText(i18n("Page %1 of %2").arg(m_currentPreviewPage + 1).arg(getPageCount()));
 }
 
 void FrmPrintWizard::ListPhotoSizes_highlighted ( int )
