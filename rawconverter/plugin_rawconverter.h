@@ -35,8 +35,10 @@ public:
                         const char* name,
                         const QStringList &args);
     ~Plugin_RawConverter();
-    KIPI::Category category() const;
+    
+    KIPI::Category category( KAction* action );
     virtual void setup( QWidget* widget );
+    
 private:
 
     bool checkBinaries();
@@ -49,7 +51,6 @@ private slots:
     void slotActivateSingle();
     void slotActivateBatch();
     void slotSetActive();
-
 };
 
 #endif /* PLUGIN_RAWCONVERTER_H */

@@ -103,6 +103,7 @@ bool Plugin_RawConverter::checkBinaries()
 
     process.clearArguments();
     process.addArgument("kipidcrawclient");
+    
     if (!process.start()) {
         KMessageBox::error(0, i18n("Failed to start Raw Converter Client\n"
                                    "Please check your installation"));
@@ -111,6 +112,7 @@ bool Plugin_RawConverter::checkBinaries()
 
     process.clearArguments();
     process.addArgument("dcraw");
+    
     if (!process.start()) {
         KMessageBox::error(0, i18n("dcraw is required for Raw Image Conversion\n"
                                    "Please install it"));
@@ -125,6 +127,7 @@ void Plugin_RawConverter::slotActivateSingle()
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
     KIPI::ImageCollection images;
     images = interface->currentSelection();
+    
     if ( !images.isValid() )
         return;
 
@@ -140,6 +143,7 @@ void Plugin_RawConverter::slotActivateBatch()
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
     KIPI::ImageCollection images;
     images = interface->currentScope();
+    
     if ( !images.isValid() )
         return;
 
@@ -165,6 +169,7 @@ void Plugin_RawConverter::slotSetActive()
     KIPI::ImageCollection images;
     images = interface->currentSelection();
     bool single = images.isValid();
+    
     if ( !images.isValid() )
         images = interface->currentAlbum();
 
@@ -173,9 +178,14 @@ void Plugin_RawConverter::slotSetActive()
     batchAction_->setEnabled( multiple );
 }
 
-KIPI::Category Plugin_RawConverter::category() const
+KIPI::Category Plugin_RawConverter::category( KAction* action )
 {
-    return KIPI::TOOLSPLUGIN;
+    if ( action == singleAction_ )
+       return KIPI::TOOLSPLUGIN;
+    else if ( action == batchAction_ )
+       return KIPI::BATCHPLUGIN;
+    else 
+       return KIPI::UNDEFINEDPLUGIN;
 }
 
 #include "plugin_rawconverter.moc"
