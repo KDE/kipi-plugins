@@ -148,9 +148,9 @@ void FindDuplicateDialog::setupPageMethod(void)
 
     QLabel *m_labelsearchMethod = new QLabel( i18n("Search method:"), groupBox1 );
     m_findMethod = new QComboBox(false, groupBox1);
-    m_findMethod->insertItem(i18n("Almost"));
-    m_findMethod->insertItem(i18n("Fast"));
-    m_findMethod->setCurrentText (i18n("Almost"));
+    m_findMethod->insertItem(i18n("Almost"), MethodAlmost);
+    m_findMethod->insertItem(i18n("Fast"), MethodFast);
+    m_findMethod->setCurrentItem ( MethodAlmost );
     QWhatsThis::add( m_findMethod, i18n("<p>Select here the search method used to find duplicate "
                      "images in the Albums database.<p>"
                      "<b>Almost</b>: the algorithm calculates an approximate difference between images. "
@@ -192,8 +192,8 @@ void FindDuplicateDialog::setupPageMethod(void)
 
     //---------------------------------------------
 
-    connect(m_findMethod, SIGNAL(activated(const QString &)),
-            this, SLOT(slotfindMethodChanged(const QString &)));
+    connect(m_findMethod, SIGNAL(activated(int)),
+            this, SLOT(slotfindMethodChanged(int)));
 
     connect(updateCache, SIGNAL(clicked()),
             this, SLOT(slotUpdateCache()));
@@ -204,7 +204,7 @@ void FindDuplicateDialog::setupPageMethod(void)
     connect(purgeAllCache, SIGNAL(clicked()),
             this, SLOT(slotPurgeAllCache()));
 
-    slotfindMethodChanged(m_findMethod->currentText());
+    slotfindMethodChanged(m_findMethod->currentItem());
 }
 
 
@@ -219,9 +219,9 @@ void FindDuplicateDialog::slotHelp()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void FindDuplicateDialog::slotfindMethodChanged(const QString &string)
+void FindDuplicateDialog::slotfindMethodChanged(int index)
 {
-    if ( string == i18n("Almost") )
+    if ( index == MethodAlmost )
        m_approximateThreshold->setEnabled(true);
     else
        m_approximateThreshold->setEnabled(false);
@@ -303,17 +303,17 @@ QValueList<KIPI::ImageCollection> FindDuplicateDialog::getSelectedAlbums() const
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-const QString FindDuplicateDialog::getFindMethod() const
+int FindDuplicateDialog::getFindMethod() const
 {
-    return m_findMethod->currentText();
+    return m_findMethod->currentItem();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void FindDuplicateDialog::setFindMethod(QString Value)
+void FindDuplicateDialog::setFindMethod(int method)
 {
-    return m_findMethod->setCurrentText( Value );
+    return m_findMethod->setCurrentItem( method );
 }
 
 

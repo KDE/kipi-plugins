@@ -52,7 +52,6 @@ namespace KIPI
 
 namespace KIPIFindDupplicateImagesPlugin
 {
-
 class FindDuplicateDialog : public KDialogBase
 {
  Q_OBJECT
@@ -62,13 +61,18 @@ class FindDuplicateDialog : public KDialogBase
   FindDuplicateDialog( KIPI::Interface* interface, QWidget *parent=0);
   ~FindDuplicateDialog();
 
-  const QString getFindMethod() const;
-  void setFindMethod(QString Value);
+  int getFindMethod() const;
+  void setFindMethod(int method);
 
   const int getApproximateThreeshold() const;
   void setApproximateThreeshold(int Value);
   
   QValueList<KIPI::ImageCollection> getSelectedAlbums() const;
+
+  enum FindDuplicateMethod {
+    MethodAlmost = 0,
+    MethodFast   = 1,
+  };
 
  signals:
   
@@ -82,7 +86,7 @@ class FindDuplicateDialog : public KDialogBase
   void slotUpdateCache(void);
   void slotPurgeCache(void);
   void slotPurgeAllCache(void);
-  void slotfindMethodChanged(const QString &string);
+  void slotfindMethodChanged(int method);
   void slotHelp();
 
  private:

@@ -144,7 +144,7 @@ void FindDuplicateImages::readSettings(void)
 
     // Method dialogbox setup tab
 
-    m_findDuplicateDialog->setFindMethod( config->readEntry("FindMethod", i18n("Almost")) );
+    m_findDuplicateDialog->setFindMethod( config->readNumEntry("FindMethod", FindDuplicateDialog::MethodAlmost ) );
     m_findDuplicateDialog->setApproximateThreeshold( config->readNumEntry("ApproximateThreeshold", 88) );
 
     delete config;
@@ -222,7 +222,7 @@ void FindDuplicateImages::compareAlbums(void)
         kapp->processEvents();
         }
 
-    if ( m_findDuplicateDialog->getFindMethod() == i18n("Almost") )
+    if ( m_findDuplicateDialog->getFindMethod() == FindDuplicateDialog::MethodAlmost )
         isCompareAlmost = true;
     else
         isCompareAlmost = false;
