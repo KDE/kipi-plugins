@@ -41,6 +41,8 @@
 
 #include "recompressoptionsdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -142,5 +144,6 @@ void RecompressOptionsDialog::slotCompressLossLessEnabled(bool val)
     m_label_JPEGimageCompression->setEnabled( !val );
 }
 
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "recompressoptionsdialog.moc"

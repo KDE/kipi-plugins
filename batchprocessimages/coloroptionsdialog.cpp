@@ -43,6 +43,8 @@
 
 #include "coloroptionsdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -111,7 +113,6 @@ ColorOptionsDialog::~ColorOptionsDialog()
 {
 }
 
-
-
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "coloroptionsdialog.moc"

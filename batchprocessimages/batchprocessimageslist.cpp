@@ -37,6 +37,8 @@
 
 #include "batchprocessimageslist.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -122,5 +124,7 @@ void BatchProcessImagesList::droppedImagesItems(QDropEvent *e)
     if (FilesPath.isEmpty() == false)
        emit addedDropItems(FilesPath);
 }
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "batchprocessimageslist.moc"

@@ -33,14 +33,14 @@
 
 class KAction;
 
-class BorderImagesDialog;
-class ColorImagesDialog;
-class ConvertImagesDialog;
-class EffectImagesDialog;
-class FilterImagesDialog;
-class RenameImagesDialog;
-class RecompressImagesDialog;
-class ResizeImagesDialog;
+class KIPIBatchProcessImagesPlugin::BorderImagesDialog;
+class KIPIBatchProcessImagesPlugin::ColorImagesDialog;
+class KIPIBatchProcessImagesPlugin::ConvertImagesDialog;
+class KIPIBatchProcessImagesPlugin::EffectImagesDialog;
+class KIPIBatchProcessImagesPlugin::FilterImagesDialog;
+class KIPIBatchProcessImagesPlugin::RenameImagesDialog;
+class KIPIBatchProcessImagesPlugin::RecompressImagesDialog;
+class KIPIBatchProcessImagesPlugin::ResizeImagesDialog;
 
 class Plugin_BatchProcessImages : public KIPI::Plugin
 {
@@ -66,14 +66,14 @@ private:
   KAction                *m_action_resizeimages;
 
 
-  BorderImagesDialog     *m_BorderImagesDialog;
-  ColorImagesDialog      *m_ColorImagesDialog;
-  ConvertImagesDialog    *m_ConvertImagesDialog;
-  EffectImagesDialog     *m_EffectImagesDialog;
-  FilterImagesDialog     *m_FilterImagesDialog;
-  RenameImagesDialog     *m_RenameImagesDialog;
-  RecompressImagesDialog *m_RecompressImagesDialog;
-  ResizeImagesDialog     *m_ResizeImagesDialog;
+  KIPIBatchProcessImagesPlugin::BorderImagesDialog     *m_BorderImagesDialog;
+  KIPIBatchProcessImagesPlugin::ColorImagesDialog      *m_ColorImagesDialog;
+  KIPIBatchProcessImagesPlugin::ConvertImagesDialog    *m_ConvertImagesDialog;
+  KIPIBatchProcessImagesPlugin::EffectImagesDialog     *m_EffectImagesDialog;
+  KIPIBatchProcessImagesPlugin::FilterImagesDialog     *m_FilterImagesDialog;
+  KIPIBatchProcessImagesPlugin::RenameImagesDialog     *m_RenameImagesDialog;
+  KIPIBatchProcessImagesPlugin::RecompressImagesDialog *m_RecompressImagesDialog;
+  KIPIBatchProcessImagesPlugin::ResizeImagesDialog     *m_ResizeImagesDialog;
 };
 
 

@@ -36,6 +36,9 @@ class QComboBox;
 
 class KIntNumInput;
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class FilterOptionsDialog : public KDialogBase
 {
 Q_OBJECT
@@ -61,5 +64,7 @@ Q_OBJECT
    KIntNumInput    *m_unsharpenPercent;
    KIntNumInput    *m_unsharpenThreshold;
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // FILTEROPTIONSDIALOG_H

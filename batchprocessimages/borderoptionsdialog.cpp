@@ -43,6 +43,8 @@
 
 #include "borderoptionsdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -161,5 +163,7 @@ void BorderOptionsDialog::slotFrameBorderWidthChanged (int value)
 {
    m_frameBevelBorderWidth->setMaxValue((int)(value / 2));
 }
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "borderoptionsdialog.moc"

@@ -33,6 +33,8 @@
 
 #include "batchprocessimagesitem.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -96,3 +98,4 @@ void BatchProcessImagesItem::setDidOverWrite( bool b )
     _overwrote = b;
 }
 
+}  // NameSpace KIPIBatchProcessImagesPlugin

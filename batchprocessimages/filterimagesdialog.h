@@ -28,6 +28,9 @@
 
 #include "batchprocessimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class BatchProcessImagesItem;
 
 class FilterImagesDialog : public BatchProcessImagesDialog
@@ -62,5 +65,7 @@ Q_OBJECT
    void readSettings(void);
    void saveSettings(void);
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // FILTERIMAGESDIALOG_H

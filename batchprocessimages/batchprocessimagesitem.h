@@ -35,6 +35,9 @@
 class QPainter;
 class QListView;
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class BatchProcessImagesItem : public KListViewItem
 {
 public:
@@ -68,5 +71,7 @@ private:
     QString _outputMess;
     bool    _overwrote;
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // BATCHPROCESSIMAGESITEM_H

@@ -40,6 +40,9 @@ class QSlider;
 
 class KProcess;
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class PixmapView : public QScrollView
@@ -109,6 +112,8 @@ protected:
     QLCDNumber *LCDZoomFactorValue;
     QSlider    *ZoomFactorSlider;
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // IMAGEPREVIEW_H
 

@@ -85,9 +85,12 @@ extern "C"
 
 // Local includes
 
-#include "batchprocessimagesdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
+#include "batchprocessimagesdialog.h"
+
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -1064,5 +1067,7 @@ QString BatchProcessImagesDialog::extractArguments(KProcess *proc)
 
     return (retArguments);
 }
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "batchprocessimagesdialog.moc"

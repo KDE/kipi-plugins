@@ -28,6 +28,9 @@
 
 #include "batchprocessimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class BatchProcessImagesItem;
 
 class RecompressImagesDialog : public BatchProcessImagesDialog
@@ -58,5 +61,7 @@ Q_OBJECT
     bool prepareStartProcess(BatchProcessImagesItem *item,
                              const QString& albumDest);
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // RECOMPRESSIMAGESDIALOG_H

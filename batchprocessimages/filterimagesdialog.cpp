@@ -40,10 +40,13 @@
 
 // Local includes
 
-#include "filterimagesdialog.h"
 #include "filteroptionsdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
+#include "filterimagesdialog.h"
+
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -359,5 +362,7 @@ QString FilterImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
     return(extractArguments(proc));
 }
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "filterimagesdialog.moc"

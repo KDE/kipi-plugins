@@ -43,6 +43,8 @@
 
 #include "renameimagesoptionsdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -127,5 +129,7 @@ RenameImagesOptionsDialog::RenameImagesOptionsDialog(QWidget *parent)
 RenameImagesOptionsDialog::~RenameImagesOptionsDialog()
 {
 }
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "renameimagesoptionsdialog.moc"

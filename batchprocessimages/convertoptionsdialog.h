@@ -38,6 +38,9 @@ class QComboBox;
 
 class KIntNumInput;
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class ConvertOptionsDialog : public KDialogBase
 {
 Q_OBJECT
@@ -55,5 +58,7 @@ Q_OBJECT
  public slots:
    void slotCompressLossLessEnabled(bool val);
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // CONVERTOPTIONSDIALOG_H

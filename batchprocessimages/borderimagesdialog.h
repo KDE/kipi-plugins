@@ -28,6 +28,9 @@
 
 #include "batchprocessimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class BatchProcessImagesItem;
 
 class BorderImagesDialog : public BatchProcessImagesDialog
@@ -63,6 +66,8 @@ Q_OBJECT
    void readSettings(void);
    void saveSettings(void);
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // BORDERIMAGESDIALOG_H
 

@@ -39,6 +39,9 @@ class QCheckBox;
 class KIntNumInput;
 class KColorButton;
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class ResizeOptionsDialog : public KDialogBase
 {
 Q_OBJECT
@@ -88,5 +91,7 @@ Q_OBJECT
  protected:
    QString          m_Type;
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // RESIZEOPTIONSDIALOG_H

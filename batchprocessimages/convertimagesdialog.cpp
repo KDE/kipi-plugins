@@ -41,10 +41,12 @@
 
 // Local includes
 
-#include "convertimagesdialog.h"
 #include "convertoptionsdialog.h"
 #include "outputdialog.h"
+#include "convertimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -336,5 +338,6 @@ QString ConvertImagesDialog::ImageFileExt(QString Ext)
        return (Ext.lower());
 }
 
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "convertimagesdialog.moc"

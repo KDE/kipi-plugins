@@ -42,6 +42,8 @@
 
 #include "filteroptionsdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -201,7 +203,6 @@ FilterOptionsDialog::~FilterOptionsDialog()
 {
 }
 
-
-
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "filteroptionsdialog.moc"

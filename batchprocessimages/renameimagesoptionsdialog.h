@@ -41,6 +41,9 @@ class KIntSpinBox;
 class KLineEdit;
 class KDateWidget;
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class RenameImagesOptionsDialog : public KDialogBase
 {
 Q_OBJECT
@@ -67,5 +70,7 @@ Q_OBJECT
 
    KDateWidget     *m_kDatePicker;
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // RENAMEIMAGESOPTIONSDIALOG_H

@@ -23,7 +23,6 @@
 #ifndef BATCHPROCESSIMAGE_H
 #define BATCHPROCESSIMAGE_H
 
-
 // Include files for Qt
 
 #include <qobject.h>
@@ -31,6 +30,9 @@
 // Include files for KDE
 
 #include <klistview.h>
+
+namespace KIPIBatchProcessImagesPlugin
+{
 
 class BatchProcessImagesList : public KListView
 {
@@ -49,5 +51,7 @@ protected:
     void contentsDropEvent(QDropEvent* e);
     void droppedImagesItems(QDropEvent *e);
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif

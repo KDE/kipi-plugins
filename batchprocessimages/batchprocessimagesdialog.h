@@ -51,6 +51,7 @@
 #include <kurl.h>
 
 // Include files for KIPI
+
 #include <libkipi/interface.h>
 
 class KFileItem;
@@ -77,6 +78,9 @@ class KProcess;
 class KConfig;
 class KProgress;
 class KURL;
+
+namespace KIPIBatchProcessImagesPlugin
+{
 
 class BatchProcessImagesDialog : public KDialogBase
 {
@@ -241,5 +245,7 @@ private slots:
    virtual QString oldFileName2NewFileName(QString fileName)
            { return (fileName); };
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // BATCHPROCESSIMAGESDIALOG_H

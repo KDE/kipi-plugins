@@ -39,10 +39,12 @@
 
 // Local includes
 
-#include "recompressimagesdialog.h"
 #include "recompressoptionsdialog.h"
 #include "outputdialog.h"
+#include "recompressimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -265,5 +267,7 @@ bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
 
     return true;
 }
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "recompressimagesdialog.moc"

@@ -40,11 +40,13 @@
 
 // Local includes
 
-#include "borderimagesdialog.h"
 #include "borderoptionsdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
+#include "borderimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -328,5 +330,7 @@ QString BorderImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
     return(extractArguments(proc));
 }
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "borderimagesdialog.moc"

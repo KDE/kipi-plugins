@@ -34,6 +34,8 @@
 
 #include "outputdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -74,5 +76,7 @@ void OutputDialog::slotCopyToCliboard( void )
   debugView->copy();
   debugView->selectAll(FALSE);
 }
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "outputdialog.moc"

@@ -42,6 +42,8 @@
 
 #include "effectoptionsdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -257,7 +259,6 @@ EffectOptionsDialog::~EffectOptionsDialog()
 {
 }
 
-
-
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "effectoptionsdialog.moc"

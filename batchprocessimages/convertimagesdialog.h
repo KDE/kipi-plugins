@@ -28,6 +28,9 @@
 
 #include "batchprocessimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class BatchProcessImagesItem;
 
 class ConvertImagesDialog : public BatchProcessImagesDialog
@@ -57,7 +60,8 @@ Q_OBJECT
 
    QString oldFileName2NewFileName(QString fileName);
    QString ImageFileExt(QString Ext);
-
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // CONVERTIMAGESDIALOG_H

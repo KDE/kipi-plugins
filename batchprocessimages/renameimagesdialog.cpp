@@ -56,13 +56,16 @@ extern "C"
 #include <kdatewidget.h>
 
 // Includes files for KIPI
+
 #include <libkipi/uploadwidget.h>
 
 // Locale includes
 
-#include "renameimagesdialog.h"
 #include "renameimagesoptionsdialog.h"
+#include "renameimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -763,5 +766,7 @@ bool RenameImagesDialog::changeDate(QString file)
 
     return true;
 }
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "renameimagesdialog.moc"

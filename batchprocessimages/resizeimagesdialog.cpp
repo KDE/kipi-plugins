@@ -41,10 +41,12 @@
 
 // Local includes
 
-#include "resizeimagesdialog.h"
 #include "resizeoptionsdialog.h"
 #include "outputdialog.h"
+#include "resizeimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -529,5 +531,7 @@ bool ResizeImagesDialog::ResizeImage( int &w, int &h, int SizeFactor)
 
     return (valRet);  // Return true is image increased, else true.
 }
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "resizeimagesdialog.moc"

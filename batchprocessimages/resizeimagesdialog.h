@@ -28,6 +28,9 @@
 
 #include "batchprocessimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class BatchProcessImagesItem;
 
 class ResizeImagesDialog : public BatchProcessImagesDialog
@@ -75,5 +78,7 @@ Q_OBJECT
 
    bool ResizeImage( int &w, int &h, int SizeFactor);
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // RESIZEIMAGESDIALOG_H

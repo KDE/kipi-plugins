@@ -40,16 +40,18 @@
 
 // Local includes
 
-#include "effectimagesdialog.h"
 #include "effectoptionsdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
+#include "effectimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                 : BatchProcessImagesDialog( urlList, interface, parent )
+                  : BatchProcessImagesDialog( urlList, interface, parent )
 {
     m_nbItem = m_selectedImageFiles.count();
 
@@ -435,5 +437,7 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
     return(extractArguments(proc));
 }
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "effectimagesdialog.moc"

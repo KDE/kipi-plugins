@@ -31,6 +31,8 @@
 class KIntNumInput;
 class KColorButton;
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 class BorderOptionsDialog : public KDialogBase
 {
@@ -57,5 +59,7 @@ Q_OBJECT
  private slots:
    void slotFrameBorderWidthChanged (int value);
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // BORDEROPTIONSDIALOG_H

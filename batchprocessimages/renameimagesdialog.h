@@ -36,6 +36,8 @@
 
 #include "batchprocessimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 class BatchProcessImagesItem;
 class RenameImagesOptionsDialog;
@@ -88,5 +90,7 @@ Q_OBJECT
    void    updateOptions(void);
    bool    changeDate(QString file);
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // RENAMEIMAGESDIALOG_H

@@ -34,6 +34,9 @@
 
 class KIntNumInput;
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class EffectOptionsDialog : public KDialogBase
 {
 Q_OBJECT
@@ -70,5 +73,7 @@ Q_OBJECT
    KIntNumInput    *m_waveAmplitude;
    KIntNumInput    *m_waveLenght;
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // EFFECTOPTIONSDIALOG_H

@@ -39,11 +39,13 @@
 
 // Local includes
 
-#include "colorimagesdialog.h"
 #include "coloroptionsdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
+#include "colorimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -317,5 +319,7 @@ QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *i
 
     return(extractArguments(proc));
 }
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "colorimagesdialog.moc"

@@ -36,6 +36,9 @@ class QComboBox;
 
 class KIntNumInput;
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class ColorOptionsDialog : public KDialogBase
 {
 Q_OBJECT
@@ -51,5 +54,7 @@ Q_OBJECT
    KIntNumInput    *m_segmentCluster;
    KIntNumInput    *m_segmentSmooth;
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // COLOROPTIONSDIALOG_H

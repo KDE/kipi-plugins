@@ -38,6 +38,9 @@ class QComboBox;
 
 class KIntNumInput;
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class RecompressOptionsDialog : public KDialogBase
 {
 Q_OBJECT
@@ -59,5 +62,7 @@ Q_OBJECT
  public slots:
    void slotCompressLossLessEnabled(bool val);
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // RECOMPRESSOPTIONSDIALOG_H

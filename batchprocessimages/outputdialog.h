@@ -34,6 +34,9 @@
 
 class QTextView;
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 class OutputDialog : public KDialogBase
 {
 Q_OBJECT
@@ -49,6 +52,8 @@ private slots:
 private:
   QTextView *debugView;
 };
+
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // OUTPUTDIALOG_H
 

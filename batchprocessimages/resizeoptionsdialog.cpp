@@ -44,6 +44,8 @@
 
 #include "resizeoptionsdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -353,5 +355,6 @@ void ResizeOptionsDialog::slotOk()
     accept();
 }
 
+}  // NameSpace KIPIBatchProcessImagesPlugin
 
 #include "resizeoptionsdialog.moc"
