@@ -279,4 +279,4 @@ fi
 dnl Check for Mesa (OpenGL) for slideshow plugin
 MDL_HAVE_OPENGL
 
-AM_CONDITIONAL(compile_SLIDESHOW, test -n "$ac_imlib_config" -a -n "$have_glut" )
+AM_CONDITIONAL(compile_SLIDESHOW, test -n "$ac_imlib2_config" -a -n "$have_gl" )
