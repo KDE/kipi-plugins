@@ -54,14 +54,13 @@ extern "C"
 #include <qfile.h>
 #include <qapplication.h>
 #include <qvgroupbox.h>
+#include <qpushbutton.h>
 
 // Include files for KDE
 
 #include <klocale.h>
 #include <klineedit.h>
-#include <kiconloader.h>
 #include <kfiledialog.h>
-#include <kiconloader.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kinstance.h>
@@ -75,6 +74,11 @@ extern "C"
 #include <kdeversion.h>
 #include <kdebug.h>
 #include <kfiletreeview.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // Include files for libKipi.
 
@@ -107,12 +111,30 @@ AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *par
 
     setupImageOptions();
     setupAlbumsList();
-    aboutPage();
     readSettings();
-    setHelp("acquireimages", "kipi-plugins");
     slotImageFormatChanged(m_imagesFormat->currentText());
     page_setupImageOptions->setFocus();
     resize( 600, 400 );
+    
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Acquire images"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin to acquire images"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Gilles Caulier", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                     "caulier dot gilles at free.fr");
+
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Acquire images handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
 }
 
 
@@ -121,6 +143,15 @@ AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *par
 AcquireImageDialog::~AcquireImageDialog()
 {
 }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+void AcquireImageDialog::slotHelp()
+{
+    KApplication::kApplication()->invokeHelp("acquireimages",
+                                             "kipi-plugins");
+}    
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -360,24 +391,6 @@ void AcquireImageDialog::setupAlbumsList(void)
                     
     slotAlbumSelected( m_uploadPath->path() );           
  }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void AcquireImageDialog::aboutPage(void)
-{
-    page_about = addPage( i18n("About"), i18n("About KIPI's 'Acquire Images' plugin"),
-                          BarIcon("kipi", KIcon::SizeMedium ) );
-
-    QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
-
-    QLabel *label = new QLabel( i18n("A KIPI plugin to acquire images\n\n"
-                                     "Author: Gilles Caulier\n\n"
-                                     "Email: caulier dot gilles at free.fr\n\n"), page_about);
-
-    vlay->addWidget(label);
-    vlay->addStretch(1);
-}
 
 
 //////////////////////////////////////// SLOTS //////////////////////////////////////////////

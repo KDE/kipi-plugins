@@ -35,21 +35,25 @@ extern "C"
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qpushbutton.h>
 #include <qfileinfo.h>
 #include <qapplication.h>
 #include <qwhatsthis.h>
 #include <qcheckbox.h>
+#include <qpushbutton.h>
 
 // Include files for KDE
 
-#include <kapplication.h>
 #include <klocale.h>
 #include <knotifyclient.h>
 #include <kdebug.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // Local includes
 
@@ -63,10 +67,9 @@ namespace KIPIAcquireImagesPlugin
 
 ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent, const char *name)
                 : KDialogBase(parent, name, false, i18n("KIPI's 'Screenshot Images' Plugin"),
-                              Help|User1|Close|User2, Close, true, i18n("&About"), i18n("&New Snapshot")),
+                              Help|User1|Close, Close, true, i18n("&New Snapshot")),
                   m_interface( interface )
 {
-    setHelp("acquireimages", "kipi-plugins");
     m_inSelect = false;
     QWidget* box = new QWidget( this );
     setMainWidget(box);
@@ -113,11 +116,8 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
     //---------------------------------------------
 
     connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotAbout()));
-
-    connect(this, SIGNAL(user2Clicked()),
             this, SLOT(slotGrab()));
-
+    
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
 
@@ -144,6 +144,26 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
     m_delay->setValue(m_config->readNumEntry("Delay", 1));
 
     delete m_config;
+    
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Acquire images"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin to acquire images"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Gilles Caulier", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                     "caulier dot gilles at free.fr");
+
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Acquire images handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
 };
 
 
@@ -156,14 +176,11 @@ ScreenGrabDialog::~ScreenGrabDialog()
 
 //////////////////////////////////////// SLOTS //////////////////////////////////////////////
 
-void ScreenGrabDialog::slotAbout( void )
+void ScreenGrabDialog::slotHelp()
 {
-    KMessageBox::about(this, i18n("A KIPI plugin to grab images from screen\n\n"
-                                  "Author: Gilles Caulier\n\n"
-                                  "Email: caulier dot gilles at free.fr\n\n"
-                                  "Based on Ksnapshot implementation from KDE project"),
-                                  i18n("About KIPI's 'Screenshot' plugin"));
-}
+    KApplication::kApplication()->invokeHelp("acquireimages",
+                                             "kipi-plugins");
+}    
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////

@@ -36,9 +36,9 @@
 #include <qspinbox.h>
 #include <qlistview.h>
 #include <qheader.h>
-#include <qpushbutton.h>
 #include <qfileinfo.h>
 #include <qprogressdialog.h>
+#include <qpushbutton.h>
 
 // Include files for KDE
 
@@ -56,10 +56,10 @@
 #include <kglobalsettings.h>
 #include <kmessagebox.h>
 #include <kbuttonbox.h>
-#include <kapplication.h>
 #include <ksqueezedtextlabel.h>
 #include <kio/previewjob.h>
 #include <klistview.h>
+#include <kapplication.h>
 #include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
@@ -124,19 +124,20 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     setupCDInfos();
     setupBurning();
     page_setupSelection->setFocus();
+    resize( 600, 400 );
     
     // About data and help button.
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("CD Archiving"), 
-                                       "1.0.0-cvs",
+                                       "0.1.0-cvs",
                                        I18N_NOOP("An Album CD Archiving Kipi plugin.\n"
                                                  "This plugin use K3b CD/DVD burning software available at\n"
                                                  "http://www.k3b.org"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 
                                        0,
-                                       "http://digikam.sourceforge.net");
+                                       "http://extragear.kde.org/apps/kipi.php");
     
     about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at free.fr");

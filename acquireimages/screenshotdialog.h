@@ -51,6 +51,7 @@ extern "C"
 
 class QWidget;
 class QCheckBox;
+class QPushButton;
 
 class KConfig;
 class KIntNumInput;
@@ -65,29 +66,43 @@ class ScreenGrabDialog : public KDialogBase
 Q_OBJECT
 
 public:
+
     ScreenGrabDialog( KIPI::Interface* interface, 
                       QWidget *parent=0, const char *name=0);
     ~ScreenGrabDialog();
 
 protected slots:
-    void slotAbout(void);
+
+    void slotHelp();
     void slotClose(void);
     void slotGrab(void);
     void slotPerformGrab(void);
 
 protected:
+
     KIPI::Interface    *m_interface;
+    
     bool                m_inSelect;
+    
     QCheckBox          *m_desktopCB;
     QCheckBox          *m_hideCB;
+    
     KIntNumInput       *m_delay;
+    
     AcquireImageDialog *m_acquireImageDialog;
+    
     QImage              m_screenshotImage;
+    
     KConfig            *m_config;
+    
     QWidget            *m_grabber;
+    
     QTimer              m_grabTimer;
+    
     QPixmap             m_snapshot;
-
+    
+    QPushButton        *m_helpButton;
+    
     bool eventFilter( QObject* o, QEvent* e);
     void endGrab(void);
 };

@@ -48,6 +48,7 @@ class QLabel;
 class QTextEdit;
 class QComboBox;
 class QFrame;
+class QPushButton;
 
 class KListBox;
 class KConfig;
@@ -62,19 +63,24 @@ class AcquireImageDialog : public KDialogBase
 Q_OBJECT
 
  public:
+ 
    AcquireImageDialog( KIPI::Interface* interface, QWidget *parent=0, const QImage &img=0);
    ~AcquireImageDialog();
 
  private slots:
+ 
+   void slotHelp();
    void slotOk();
    void slotAlbumSelected( const KURL &url );
    void slotImageFormatChanged(const QString &string);
 
  protected:
+ 
    KIPI::Interface    *m_interface;
    QImage              m_qimageScanned;
 
    QPushButton        *m_addNewAlbumButton;
+   QPushButton        *m_helpButton;
 
    KConfig            *m_config;
 
@@ -99,7 +105,6 @@ Q_OBJECT
 
    QFrame             *page_setupImageOptions;
    QFrame             *page_setupAlbumsList;
-   QFrame             *page_about;
 
    KSqueezedTextLabel *m_AlbumComments;
    KSqueezedTextLabel *m_AlbumCollection;
@@ -110,6 +115,7 @@ Q_OBJECT
    bool QImageToTiff(const QImage& image, const QString& dst);
 
  private:
+ 
    void setupImageOptions(void);
    void setupAlbumsList(void);
    void aboutPage(void);
