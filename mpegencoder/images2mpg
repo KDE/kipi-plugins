@@ -24,8 +24,7 @@
 # - 'mplex'     from MjpegTools for multiplexe the MPEG file and the MP2 sound and convert
 #               the final MPEG file to a DVD/XVCD/SVCD/VCD format compatible with vcdimager program.
 #
-# # PENDING(blackie) update URL to point to a kipi webpage.
-# You can use the 'KIPI' KDE frontend with this script. Look this URL : http://digikam.sourceforge.net
+# You can use the 'KIPI' KDE frontend with this script. Look this URL : http://extragear.kde.org/apps/kipi
 #
 # Return value : 0 -> Process finish succefuly.
 #                1 -> Error.
@@ -65,7 +64,7 @@
 #
 # -------------------------------------------------------------------------------------------------------
 #
-# AUTHOR : CAULIER gilles <caulier.gilles@free.fr>
+# AUTHOR : CAULIER gilles <caulier dot gilles at free.fr>
 #
 # -------------------------------------------------------------------------------------------------------
 #
@@ -455,7 +454,7 @@ Usage: images2mpg [options] -o <output MPEG file> -i <input image files>
 
 Options:
    -v <num>                    : verbose level [0:none=default, 1:infos+warnings, 2:debug].
-   --with-gui                  : running with 'KIPI' KDE GUI frontend [see http://digikam.sourceforge.net]. # PENDING(blackie) update URL
+   --with-gui                  : running with 'KIPI' KDE GUI frontend [see http://extragear.kde.org/apps/kipi]. 
    -t <num>                    : enable transition between images with the speed [1=slow, 2, 4, 5, 10, 20=fast].
    -T <Temporary folder>       : use a specific folder for creating the temporary files (ex: '/tmp').
    -f <Video format>           : video format  [DVD, XVCD=default, SVCD, VCD].
@@ -630,12 +629,14 @@ case $VIDEO_FORMAT in
       BIT_RATE=1150
       BUFFER_SIZE=46
       VIDEOFORMAT_MESSAGE="VCD"
+      AUDIO_WAVE_CONVERSION="-V"
       ;;
     SVCD)
       VIDEO_FORMAT_NUMBER=4
       BIT_RATE=2500
       BUFFER_SIZE=230
       VIDEOFORMAT_MESSAGE="SVCD"
+      AUDIO_WAVE_CONVERSION="-V"
       ;;
     XVCD)
       VIDEO_FORMAT_NUMBER=5
@@ -647,6 +648,7 @@ case $VIDEO_FORMAT in
       BIT_RATE=2500
       BUFFER_SIZE=230
       VIDEOFORMAT_MESSAGE="XVCD"
+      AUDIO_WAVE_CONVERSION="-V"      
       ;;
     DVD)
       VIDEO_FORMAT_NUMBER=8
@@ -658,6 +660,7 @@ case $VIDEO_FORMAT in
       BIT_RATE=8000
       BUFFER_SIZE=230
       VIDEOFORMAT_MESSAGE="DVD"
+      AUDIO_WAVE_CONVERSION="-b 224 -r 48000 -s"
       ;;
     *)
       echo "Video format '$VIDEO_FORMAT' not recognized..."
@@ -837,8 +840,8 @@ else
 	else 
 	    echo -e "\nEncoding audio file...\n" >&2
 	fi
-	cat "$AUDIO_WAV" | $MP2ENC_BIN -v $VERBOSE -V -o "$TMPFILENAME.tmp.mp2"
-        AUDIOFILENAME="$TMPFILENAME.tmp.mp2"
+	cat "$AUDIO_WAV" | $MP2ENC_BIN -v $VERBOSE $AUDIO_WAVE_CONVERSION -o "$TMPFILENAME.tmp.mp2"
+        AUDIOFILENAME="$TMPFILENAME.tmp.mp2"        
     fi
 fi
 
