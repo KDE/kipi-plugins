@@ -11,12 +11,13 @@
 #include <kdebug.h>
 
 TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent, const char* name )
-    :KDialogBase( IconList, i18n("Adjust time and date"), Ok|Cancel, Ok, parent, name ),
+    :KDialogBase( IconList, i18n("Adjust time and date"), Help|Ok|Cancel, Ok, parent, name ),
      m_interface( interface )
 {
     addInfoPage();
     addConfigPage();
     addAboutPage();
+    setHelp("plugin-timeadjust.anchor", "kipi");
     connect( this, SIGNAL( okClicked() ), this, SLOT( slotOK() ) );
 }
 
