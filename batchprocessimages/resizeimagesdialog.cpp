@@ -150,11 +150,13 @@ void ResizeImagesDialog::slotOptionsClicked(void)
 
     if (Type == 0) // Proportional (1 dim.)
        {
+       optionsDialog->m_quality->setValue(m_quality);
        optionsDialog->m_size->setValue(m_size);
        optionsDialog->m_resizeFilter->setCurrentText(m_resizeFilter);
        }
     if (Type == 1) // Proportional (2 dim.)
        {
+       optionsDialog->m_quality->setValue(m_quality);
        optionsDialog->m_Width->setValue(m_Width);
        optionsDialog->m_Height->setValue(m_Height);
        optionsDialog->m_button_bgColor->setColor(m_bgColor);
@@ -163,12 +165,14 @@ void ResizeImagesDialog::slotOptionsClicked(void)
        }
     if (Type == 2) // Non-proportional
        {
+       optionsDialog->m_quality->setValue(m_quality);
        optionsDialog->m_fixedWidth->setValue(m_fixedWidth);
        optionsDialog->m_fixedHeight->setValue(m_fixedHeight);
        optionsDialog->m_resizeFilter->setCurrentText(m_resizeFilter);
        }
     if (Type == 3) // Prepare to print
        {
+       optionsDialog->m_quality->setValue(m_quality);
        optionsDialog->m_paperSize->setCurrentText(m_paperSize);
        optionsDialog->m_printDpi->setCurrentText(m_printDpi);
        optionsDialog->m_customXSize->setValue(m_customXSize);
@@ -184,11 +188,13 @@ void ResizeImagesDialog::slotOptionsClicked(void)
        {
        if (Type == 0) // Proportional (1 dim.)
           {
+	  m_quality = optionsDialog->m_quality->value();	  
           m_size = optionsDialog->m_size->value();
           m_resizeFilter = optionsDialog->m_resizeFilter->currentText();
           }
        if (Type == 1) // Proportional (2 dim.)
           {
+	  m_quality = optionsDialog->m_quality->value();	  
           m_Width = optionsDialog->m_Width->value();
           m_Height = optionsDialog->m_Height->value();
           m_bgColor = optionsDialog->m_button_bgColor->color();
@@ -197,12 +203,14 @@ void ResizeImagesDialog::slotOptionsClicked(void)
           }
        if (Type == 2) // Non-proportional
           {
+	  m_quality = optionsDialog->m_quality->value();	  
           m_fixedWidth = optionsDialog->m_fixedWidth->value();
           m_fixedHeight = optionsDialog->m_fixedHeight->value();
           m_resizeFilter = optionsDialog->m_resizeFilter->currentText();
           }
        if (Type == 3) // Prepare to print
           {
+	  m_quality = optionsDialog->m_quality->value();	  
           m_paperSize = optionsDialog->m_paperSize->currentText();
           m_printDpi = optionsDialog->m_printDpi->currentText();
           m_customXSize = optionsDialog->m_customXSize->value();
@@ -242,6 +250,8 @@ void ResizeImagesDialog::readSettings(void)
     m_backgroundColor = m_config->readColorEntry("BackgroundColor", ColorWhite);
     m_marging = m_config->readNumEntry("MargingSize", 10);
 
+
+    m_quality = m_config->readNumEntry("Quality", 75);
     m_Width = m_config->readNumEntry("Width", 1024);
     m_Height = m_config->readNumEntry("Height", 768);
     m_Border = m_config->readNumEntry("Border", 100);
@@ -289,6 +299,7 @@ void ResizeImagesDialog::saveSettings(void)
     m_config->writeEntry("MargingSize", m_marging);
     m_config->writeEntry("CustomSettings", m_customSettings);
 
+    m_config->writeEntry("Quality", m_quality);
     m_config->writeEntry("Width", m_Width);
     m_config->writeEntry("Height", m_Height);
     m_config->writeEntry("Border", m_Border);
@@ -335,6 +346,11 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           Temp2.append(Temp.setNum( h ));
           *proc << Temp2;
 
+	  *proc << "-quality";
+	  QString Temp3;
+	  Temp3.setNum(m_quality);
+	  *proc << Temp3;
+
           if ( IncDec == true )   // If the image is increased, enabled the filter.
              {
              *proc << "-filter" << m_resizeFilter;
@@ -379,6 +395,11 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           Temp2.append(Temp.setNum( h ));
           *proc << Temp2;
 
+	  *proc << "-quality";
+	  QString Temp3;
+	  Temp3.setNum(m_quality);
+	  *proc << Temp3;
+
           if ( IncDec == true )   // If the image is increased, enabled the filter.
              {
              *proc << "-filter" << m_resizeFilter;
@@ -410,6 +431,11 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
              {
              *proc << "-filter" << m_resizeFilter;
              }
+	     
+	  *proc << "-quality";
+	  QString Temp3;
+	  Temp3.setNum(m_quality);
+	  *proc << Temp3;
 
           *proc << "-verbose";
           *proc << item->pathSrc() + "[0]";
@@ -486,6 +512,11 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           Temp2.append(Temp.setNum( h ));
           *proc << Temp2;
 
+	  *proc << "-quality";
+	  QString Temp3;
+	  Temp3.setNum(m_quality);
+	  *proc << Temp3;
+
           if ( IncDec == true )   // If the image is increased, enabled the filter.
              {
              *proc << "-filter" << m_resizeFilter;
@@ -499,6 +530,11 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           *proc << Temp2;
 
           *proc << "-resize" << targetBackgroundSize + "!";
+
+	  *proc << "-quality";
+	  QString Temp4;
+	  Temp4.setNum(m_quality);
+	  *proc << Temp4;
 
           *proc << albumDest + "/" + item->nameDest();
           }

@@ -70,6 +70,7 @@ Q_OBJECT
    int                    m_Border;
    int                    m_fixedWidth;
    int                    m_fixedHeight;
+   int			  m_quality;
 
    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                        const QString& albumDest, bool previewMode);

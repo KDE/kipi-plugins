@@ -68,6 +68,11 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_size->setLabel( i18n("New size (pixels):") );
        QWhatsThis::add( m_size, i18n("<p>The new images' size in pixels.") );
 
+       m_quality = new KIntNumInput(75, groupBox1);
+       m_quality->setRange(0, 100, 1, true);
+       m_quality->setLabel( i18n("Image quality (percent):") );
+       QWhatsThis::add( m_quality, i18n("<p>Quality for JPEG images.") );
+
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox1);
 
        m_resizeFilter = new QComboBox( false, groupBox1 );
@@ -117,6 +122,12 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_Height->setRange(100, 10000, 1, true );
        QWhatsThis::add( m_Height, i18n("<p>The new images' height in pixels."));
        m_label_Height->setBuddy( m_Height );
+
+       m_label_quality = new QLabel (i18n("Image quality (percent):"), groupBox1);
+       m_quality = new KIntNumInput(75, groupBox1);
+       m_quality->setRange(0, 100, 1, true);
+       QWhatsThis::add( m_quality, i18n("<p>Quality for JPEG images.") );
+       m_label_quality->setBuddy(m_quality);
 
        dvlay->addWidget( groupBox1 );
 
@@ -174,6 +185,11 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_fixedHeight->setRange(10, 10000, 1, true );
        m_fixedHeight->setLabel( i18n("New height (pixels):") );
        QWhatsThis::add( m_fixedHeight, i18n("<p>The new images' height in pixels.") );
+       
+       m_quality = new KIntNumInput(75, groupBox1);
+       m_quality->setRange(0, 100, 1, true);
+       m_quality->setLabel( i18n("Image quality (percent):") );
+       QWhatsThis::add( m_quality, i18n("<p>Quality for JPEG images.") );
 
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox1);
 
@@ -303,6 +319,11 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        QWhatsThis::add( m_marging, i18n("<p>The margin around the images in millimeters."));
        m_label_marging->setBuddy( m_marging );
 
+       m_label_quality = new QLabel (i18n("Image quality (percent):"), groupBox3);
+       m_quality = new KIntNumInput(75, groupBox3);
+       m_quality->setRange(0, 100, 1, true);
+       QWhatsThis::add( m_quality, i18n("<p>Quality for JPEG images.") );
+       m_label_quality->setBuddy(m_quality);
 
        dvlay->addWidget( groupBox3 );
 

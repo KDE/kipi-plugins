@@ -64,6 +64,7 @@ Q_OBJECT
    QLabel          *m_label_Height;
    QLabel          *m_label_bgColor;
    QLabel          *m_label_border;
+   QLabel	   *m_label_quality;
 
    KIntNumInput    *m_size;
    KIntNumInput    *m_customXSize;
@@ -75,6 +76,7 @@ Q_OBJECT
    KIntNumInput    *m_Border;
    KIntNumInput    *m_fixedWidth;
    KIntNumInput    *m_fixedHeight;
+   KIntNumInput	   *m_quality;
 
    QCheckBox       *m_customSettings;
 
