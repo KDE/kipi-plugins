@@ -524,13 +524,10 @@ void KImg2mpgData::slotAudioFilenameDialog( void )
 
 void KImg2mpgData::slotImagesFilesButtonAdd( void )
 {
-  KURL::List ImageFilesList;
-  KURL url = KIPI::ImageDialog::getImageURL( this, m_interface );
-
-  if ( !url.isValid() ) return;
-  
-  ImageFilesList << url;
-  addItems(ImageFilesList);
+    KURL::List ImageFilesList =
+        KIPI::ImageDialog::getImageURLs( this, m_interface );
+    if ( !ImageFilesList.isEmpty() )
+        addItems( ImageFilesList );
 }
 
 
