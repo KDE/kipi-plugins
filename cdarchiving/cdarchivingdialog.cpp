@@ -556,7 +556,7 @@ void CDArchivingDialog::setupBurning(void)
 void CDArchivingDialog::slotAlbumSelected()
 {
     QValueList<KIPI::ImageCollection> ListAlbums(m_imageCollectionSelector->selectedImageCollections());
-    int size = 0;
+    double size = 0;
 
     for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
        {
@@ -569,7 +569,7 @@ void CDArchivingDialog::slotAlbumSelected()
             }
        } 
     
-    TargetMediaSize = size/1024;
+    TargetMediaSize = (int)(size/1024.0);
           
     ShowMediaCapacity();
 }
