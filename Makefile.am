@@ -4,5 +4,5 @@ if compile_SLIDESHOW
 endif
 
 SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery commentseditor sendimages acquireimages \
-	jpeglossless batchprocessimages $(SLIDESHOWDIR)
+	jpeglossless batchprocessimages $(SLIDESHOWDIR) timeadjust
 # helloworld  <- dont compile any more please

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=HelloWorld
+Comment=KIPI Time/Date adjust
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_timeadjust
+author=Jesper K. Pedersen, blackie@kde.org
+X-KIPI-ReqFeatures=ImagesHasTime
