@@ -305,7 +305,7 @@ void KIGPDialog::slotStopParsingAlbums(void)
 void KIGPDialog::setupLookPage(void)
 {
     page_setupLook = addPage( i18n("Look"), i18n("Page Look"),
-                              BarIcon("colorize", KIcon::SizeMedium ) );
+                              BarIcon("html", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupLook, 0, spacingHint() );
 
@@ -508,7 +508,7 @@ void KIGPDialog::setupAlbumPage(void)
 {
     QString whatsThis;
     page_setupAlbum = addPage(i18n("Album"), i18n("Photo Album"),
-                              BarIcon("albumfoldercomment.png", KIcon::SizeMedium));
+                              BarIcon("image.png", KIcon::SizeMedium));
 
     QVBoxLayout *dvlay = new QVBoxLayout( page_setupAlbum, 0, spacingHint() );
     QLabel *label;
