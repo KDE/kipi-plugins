@@ -52,6 +52,7 @@ extern "C"
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
+#include <kstandarddirs.h>
 
 // KIPI include files
 
@@ -71,15 +72,38 @@ SingleDialog::SingleDialog(const QString& file)
             : QDialog(0, 0, false, Qt::WDestructiveClose)
 {
 
-    setCaption(i18n("KIPI Raw Image Converter"));
+    setCaption(i18n("Raw Image Converter"));
     
     // --------------------------------------------------------------
 
     inputFile_     = file;
     inputFileName_ = QFileInfo(file).fileName();
 
-    QGridLayout *mainLayout = new QGridLayout(this,5,2,5);
+    QGridLayout *mainLayout = new QGridLayout(this, 6, 2, 5);
         
+    // --------------------------------------------------------------
+
+    QFrame *headerFrame = new QFrame( this );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( i18n("Raw Image Converter"), headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    mainLayout->addMultiCellWidget(headerFrame, 0, 0, 0, 1);
+    
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    
     // --------------------------------------------------------------
 
     QGroupBox *lbox = new QGroupBox(i18n("Image Preview"), this);
@@ -92,7 +116,7 @@ SingleDialog::SingleDialog(const QString& file)
     previewWidget_ = new PreviewWidget(lbox);
     lboxLayout->addWidget(previewWidget_);
 
-    mainLayout->addMultiCellWidget(lbox, 0, 2, 0, 0);
+    mainLayout->addMultiCellWidget(lbox, 1, 3, 0, 0);
 
     // ---------------------------------------------------------------
     
@@ -203,25 +227,26 @@ SingleDialog::SingleDialog(const QString& file)
 
     // ---------------------------------------------------------------
 
-    mainLayout->addWidget(settingsBox, 0, 1);
-    mainLayout->addWidget(saveButtonGroup_, 1, 1);
+    mainLayout->addWidget(settingsBox, 1, 1);
+    mainLayout->addWidget(saveButtonGroup_, 2, 1);
     mainLayout->addItem(new QSpacerItem(10,10,
                                         QSizePolicy::Minimum,
-                                        QSizePolicy::Expanding), 2, 1);
+                                        QSizePolicy::Expanding), 3, 1);
     
     // ---------------------------------------------------------------
 
     QFrame *hline = new QFrame(this);
     hline->setFrameStyle(QFrame::HLine | QFrame::Sunken);
-    mainLayout->addMultiCellWidget(hline, 3, 3, 0, 1);
+    mainLayout->addMultiCellWidget(hline, 4, 4, 0, 1);
 
     // ---------------------------------------------------------------
 
-    hboxLayout = new QHBoxLayout(0,0,6);
+    hboxLayout = new QHBoxLayout(0, 0, 6);
 
     hboxLayout->addItem(new QSpacerItem(10,10,QSizePolicy::Expanding,
                                         QSizePolicy::Minimum));
-                                        
+    
+    // ---------------------------------------------------------------                                        
     // About data and help button.
                                         
     helpButton_ = new QPushButton(i18n("&Help"), this);
@@ -245,7 +270,9 @@ SingleDialog::SingleDialog(const QString& file)
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("RAW Image Converter handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     helpButton_->setPopup( helpMenu->menu() );
-
+    
+    // ---------------------------------------------------------------      
+    
     previewButton_ = new QPushButton(i18n("&Preview"), this);
     QToolTip::add(previewButton_,
                   i18n("Generate a Preview from current settings.\n"
@@ -268,7 +295,7 @@ SingleDialog::SingleDialog(const QString& file)
     hboxLayout->addWidget(closeButton_);
 
     
-    mainLayout->addMultiCellLayout(hboxLayout, 4, 4, 0, 1);
+    mainLayout->addMultiCellLayout(hboxLayout, 5, 5, 0, 1);
 
     // ---------------------------------------------------------------
 

@@ -43,6 +43,7 @@ extern "C"
 #include <qevent.h>
 #include <qpixmap.h>
 #include <qpushbutton.h>
+#include <qframe.h>
 
 // KDE includes.
 
@@ -60,6 +61,7 @@ extern "C"
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
+#include <kstandarddirs.h>
 
 // KIPI include files
 
@@ -79,10 +81,32 @@ namespace KIPIRawConverterPlugin
 BatchDialog::BatchDialog()
            : QDialog(0, 0, false, Qt::WDestructiveClose)
 {
-    setCaption(i18n("KIPI Raw Image Batch Converter"));
+    setCaption(i18n("Raw Images Batch Converter"));
+    QGridLayout *mainLayout = new QGridLayout(this, 6, 2, 6, 11);
 
-    QGridLayout *mainLayout = new QGridLayout(this,5,2,6,11);
-
+    //---------------------------------------------
+   
+    QFrame *headerFrame = new QFrame( this );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( i18n("Raw Images Batch Converter"), headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    mainLayout->addMultiCellWidget(headerFrame, 0, 0, 0, 1);
+    
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    
     // --------------------------------------------------------------
 
     listView_ = new KListView(this);
@@ -97,7 +121,7 @@ BatchDialog::BatchDialog()
                              QSizePolicy::Expanding);
     listView_->setSelectionMode(QListView::Single);
 
-    mainLayout->addMultiCellWidget(listView_, 0, 3, 0, 0);
+    mainLayout->addMultiCellWidget(listView_, 1, 4, 0, 0);
 
     // ---------------------------------------------------------------
 
@@ -219,17 +243,17 @@ BatchDialog::BatchDialog()
 
     // ---------------------------------------------------------------
 
-    mainLayout->addWidget(settingsBox, 0, 1);
-    mainLayout->addWidget(saveButtonGroup_, 1, 1);
-    mainLayout->addWidget(conflictButtonGroup_, 2, 1);
+    mainLayout->addWidget(settingsBox, 1, 1);
+    mainLayout->addWidget(saveButtonGroup_, 2, 1);
+    mainLayout->addWidget(conflictButtonGroup_, 3, 1);
     mainLayout->addItem(new QSpacerItem(10,10,QSizePolicy::Minimum,
-                                        QSizePolicy::Expanding), 3, 1);
+                                        QSizePolicy::Expanding), 4, 1);
 
     // ---------------------------------------------------------------
 
     QFrame *hline = new QFrame(this);
     hline->setFrameStyle(QFrame::HLine | QFrame::Sunken);
-    mainLayout->addMultiCellWidget(hline, 4, 4, 0, 1);
+    mainLayout->addMultiCellWidget(hline, 5, 5, 0, 1);
 
     // ---------------------------------------------------------------
 
@@ -240,16 +264,17 @@ BatchDialog::BatchDialog()
 
     hboxLayout->addItem(new QSpacerItem(10,10,QSizePolicy::Expanding,
                                         QSizePolicy::Minimum));
-
+    
+    // ---------------------------------------------------------------
     // About data and help button.
                                         
     helpButton_ = new QPushButton(i18n("&Help"), this);
     hboxLayout->addWidget(helpButton_);
 
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("RAW Image Converter"), 
+                                       I18N_NOOP("RAW Images Batch Converter"), 
                                        kipi_version,
-                                       I18N_NOOP("A Kipi plugin for RAW image conversion\n"
+                                       I18N_NOOP("A Kipi plugin for RAW images conversion\n"
                                                  "This plugin uses the Dave Coffin RAW photo "
                                                  "decoder program \"dcraw\""),
                                        KAboutData::License_GPL,
@@ -262,8 +287,10 @@ BatchDialog::BatchDialog()
 
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("RAW Image Converter handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpMenu->menu()->insertItem(i18n("RAW Images Batch Converter handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     helpButton_->setPopup( helpMenu->menu() );
+    
+    // ---------------------------------------------------------------
     
     processButton_ = new QPushButton(i18n("P&rocess"), this);
     QToolTip::add(processButton_,
@@ -279,7 +306,7 @@ BatchDialog::BatchDialog()
     hboxLayout->addWidget(closeButton_);
 
 
-    mainLayout->addMultiCellLayout(hboxLayout, 5, 5, 0, 1);
+    mainLayout->addMultiCellLayout(hboxLayout, 6, 6, 0, 1);
 
     // ---------------------------------------------------------------
 
