@@ -29,7 +29,6 @@
 #include <qfile.h>
 #include <qtextstream.h>
 #include <qlabel.h>
-#include <qpushbutton.h>
 #include <qgroupbox.h>
 #include <qwhatsthis.h>
 #include <qcombobox.h>
@@ -40,6 +39,7 @@
 #include <qdragobject.h>
 #include <qstrlist.h>
 #include <qfileinfo.h>
+#include <qpushbutton.h>
 
 // Include files for KDE
 

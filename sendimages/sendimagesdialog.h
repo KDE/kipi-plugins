@@ -103,7 +103,6 @@ public:
 public slots:
    
    void slotAddDropItems(QStringList filesPath);
-   void slotHelp();
 
 signals:
    
@@ -111,6 +110,7 @@ signals:
 
 private slots:
    
+   void slotHelp();
    void slotOk();
    void slotImageSelected( QListBoxItem * item );
    void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
