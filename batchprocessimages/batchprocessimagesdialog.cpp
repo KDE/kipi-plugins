@@ -78,6 +78,7 @@ extern "C"
 #include <kio/previewjob.h>
 #include <kbuttonbox.h>
 #include <kdiroperator.h>
+#include <kdeversion.h>
 
 // KIPI includes
 

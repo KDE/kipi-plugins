@@ -31,6 +31,7 @@
 // Include files for KDE
 
 #include <kdialogbase.h>
+#include <kdeversion.h>
 
 class QLabel;
 class QCheckBox;
@@ -39,7 +40,12 @@ class QPushButton;
 
 class KIntSpinBox;
 class KLineEdit;
+
+#if KDE_VERSION >= 0x30200
 class KDateTimeWidget;
+#else
+class KDateWidget;
+#endif
 
 namespace KIPIBatchProcessImagesPlugin
 {

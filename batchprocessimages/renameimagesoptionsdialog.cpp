@@ -37,6 +37,7 @@
 #include <klocale.h>
 #include <knuminput.h>
 #include <klineedit.h>
+#include <kdeversion.h>
 #if KDE_VERSION >= 0x30200
 #include <kdatetimewidget.h>
 #else

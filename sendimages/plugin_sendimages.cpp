@@ -43,6 +43,7 @@ extern "C"
 #include <kstandarddirs.h>
 #include <ktempfile.h>
 #include <kimageio.h>
+#include <kdeversion.h>
 
 // Lib KIPI includes.
 

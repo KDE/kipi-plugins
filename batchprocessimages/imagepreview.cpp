@@ -61,6 +61,7 @@ extern "C"
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
+#include <kdeversion.h>
 
 // Include files for libKipi.
 

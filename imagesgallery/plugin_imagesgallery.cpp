@@ -29,6 +29,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kapplication.h>
+#include <kdeversion.h>
 
 // LibKIPI include.
 

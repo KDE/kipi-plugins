@@ -30,6 +30,7 @@
 #include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kdeversion.h>
 
 // LibKipi includes.
 

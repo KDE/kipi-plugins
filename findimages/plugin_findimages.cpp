@@ -35,6 +35,7 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kapplication.h>
+#include <kdeversion.h>
 
 // Lib KIPI includes.
 
