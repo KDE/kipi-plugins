@@ -52,7 +52,6 @@
 
 #include <libkipi/interface.h>
 
-class KConfig;
 class KProcess;
 
 namespace KIPIImagesGalleryPlugin
@@ -122,7 +121,6 @@ private:
 
   KURL                m_url4browser;
 
-  KConfig            *m_config;
   KProcess           *m_webBrowserProc;
   KIPI::Interface    *m_interface;
 
@@ -224,7 +222,6 @@ private:
 
   void createBodyMainPage(QTextStream& stream, KURL& url);
   void loadComments(void);
-  static QString extension(const QString& imageFormat);
   
   bool DeleteDir(QString dirname);
   bool deldir(QString dirname);
