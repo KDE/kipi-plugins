@@ -43,14 +43,14 @@ namespace KIPIPrintWizardPlugin
 
 TPhoto::TPhoto(int thumbnailSize)
 {
-  this->m_size = 0;
-  this->cropRegion = QRect(-1, -1, -1, -1);
-  this->rotation = 0;
-  this->copies = 1;
+  m_size = 0;
+  cropRegion = QRect(-1, -1, -1, -1);
+  rotation = 0;
+  copies = 1;
 
-  this->filename = "";
+  filename = "";
 
-  this->m_thumbnail = 0;
+  m_thumbnail = 0;
 
   this->m_thumbnailSize = thumbnailSize;
 }

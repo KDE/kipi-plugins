@@ -62,7 +62,6 @@ extern "C"
 #include <kimageio.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
-#include <klocale.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
 #include <kaboutdata.h>
@@ -684,7 +683,7 @@ void ImagesGallery::createHead(QTextStream& stream)
            << endl;
     stream << "<title>" << m_mainTitle << "</title>" << endl;
     
-    this->createCSSSection(stream);
+    createCSSSection(stream);
     
     stream << "</head>" << endl;
 }
@@ -1317,7 +1316,7 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
                  + KGlobal::locale()->formatDate(QDate::currentDate()) + "\">" << endl;
        stream << "<title>" << m_mainTitle << " : "<< imgName <<"</title>" << endl;
        
-       this->createCSSSection(stream);
+       createCSSSection(stream);
        
        stream << "</head>" << endl;
        stream<<"<body>"<< endl;;
@@ -1383,7 +1382,7 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
        kdDebug( 51000 ) << previousImgName << ":"<<prevW<<"/"<<prevH << "       "
                         <<  nextImgName << ":"<<nextW<<"/"<<nextH<< endl;
 
-       if (previousImgName != "")
+       if ( !previousImgName.isEmpty() )
           {
           stream << "<a href=\"" << previousPageFilename << "\"><img class=\"photo\" src=\""
                  << previousThumb << "\" alt=\"" << i18n("Previous") <<  "\" title=\""
@@ -1401,7 +1400,7 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
                  << i18n("Albums list") << "\"></a>" <<endl;
           }
 
-       if (nextImgName != "")
+       if ( !nextImgName.isEmpty() )
           {
           stream << "&nbsp; | &nbsp;<a href=\"" << nextPageFilename << "\"><img class=\"photo\" src=\""
                  << nextThumb << "\" alt=\"" << i18n("Next") <<"\" title=\"" << i18n("Next")
@@ -1412,7 +1411,7 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
 
        // Add comment if it exists
 
-       if ( comment != "" )
+       if ( !comment.isEmpty() )
           {
           stream << "<div align=\"center\">"
                  << EscapeSgmlText(QTextCodec::codecForLocale(), comment, true, true)
@@ -1754,7 +1753,7 @@ void ImagesGallery::invokeWebBrowser(void)
 
 bool ImagesGallery::DeleteDir(QString dirname)
 {
-    if (dirname != "")
+    if ( !dirname.isEmpty() )
         {
         QDir dir;
 

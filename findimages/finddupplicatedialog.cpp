@@ -35,7 +35,6 @@
 #include <qheader.h>
 #include <qpushbutton.h>
 #include <qfileinfo.h>
-#include <qpushbutton.h>
 
 // Include files for KDE
 
@@ -56,10 +55,8 @@
 #include <ksqueezedtextlabel.h>
 #include <kio/global.h>
 #include <klistview.h>
-#include <kapplication.h>
 #include <kaboutdata.h>
 #include <khelpmenu.h>
-#include <kiconloader.h>
 #include <kpopupmenu.h>
 
 // Include files for KIPI

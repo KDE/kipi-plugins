@@ -912,7 +912,7 @@ void FindDuplicateImages::compareFast(QStringList filesList)
 
 bool FindDuplicateImages::DeleteDir(QString dirname)
 {
-if (dirname != "")
+if ( !dirname.isEmpty() )
     {
     QDir dir;
 

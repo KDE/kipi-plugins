@@ -62,7 +62,6 @@ extern "C"
 #include <qdatetime.h>
 #include <qlayout.h>
 #include <qdragobject.h>
-#include <qframe.h>
 
 // KDElib includes
 
@@ -73,7 +72,7 @@ extern "C"
 #include <kfiledialog.h>
 #include <kcolordialog.h>
 #include <klineedit.h>
-#include <kcolorbtn.h>
+#include <kcolorbutton.h>
 #include <klistbox.h>
 #include <kbuttonbox.h>
 #include <kurl.h>
@@ -1327,7 +1326,7 @@ void KImg2mpgData::addItems(const KURL::List& fileList)
 
 bool KImg2mpgData::DeleteDir(QString dirname)
 {
-if (dirname != "")
+if ( !dirname.isEmpty() )
     {
     QDir dir;
 

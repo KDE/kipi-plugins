@@ -25,15 +25,13 @@
 #include <qpixmap.h>
 #include <qrect.h>
 #include <qpalette.h>
-#include <qpainter.h>
-#include <qimage.h>
 #include <qpoint.h>
 #include <qpopupmenu.h>
 #include <qvaluevector.h>
 // KDE
 #include <klocale.h>
 #include <kiconloader.h>
-#include <kstddirs.h>
+#include <kstandarddirs.h>
 #include <ktrader.h>
 #include <kservice.h>
 // Local

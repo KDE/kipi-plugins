@@ -43,7 +43,6 @@ extern "C"
 #include <qevent.h>
 #include <qpixmap.h>
 #include <qpushbutton.h>
-#include <qframe.h>
 
 // KDE includes.
 
@@ -59,7 +58,6 @@ extern "C"
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <khelpmenu.h>
-#include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 

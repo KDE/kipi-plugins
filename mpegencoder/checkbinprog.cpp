@@ -33,10 +33,9 @@
 
 #include <klocale.h>
 #include <kconfig.h>
-#include <kapp.h>
+#include <kapplication.h>
 #include <kurl.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
 #include <kstandarddirs.h>
 
 namespace KIPIMPEGEncoderPlugin
@@ -116,7 +115,7 @@ if (MjpegToolsPath.isEmpty())
     ValRet = 2;
     }
 
-  if (str != "")
+  if ( !str.isEmpty() )
     {
     str=str+i18n("\nCheck your installation and this plugin's options settings."
                  "\n\nVisit these URLs for more information:"

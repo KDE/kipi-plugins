@@ -36,7 +36,6 @@
 #include <klineedit.h>
 #include <kiconloader.h>
 #include <kfiledialog.h>
-#include <kiconloader.h>
 
 // Local includes.
 

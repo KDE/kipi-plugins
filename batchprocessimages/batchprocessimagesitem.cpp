@@ -73,7 +73,7 @@ void BatchProcessImagesItem::paintCell (QPainter *p, const QColorGroup &cg, int 
 {
     QColorGroup _cg( cg );
 
-    if (text(3) != i18n("OK") && text(3) != "" )
+    if (text(3) != i18n("OK") && !text(3).isEmpty() )
        {
        _cg.setColor( QColorGroup::Text, Qt::red );
        KListViewItem::paintCell( p, _cg, column, width, alignment );

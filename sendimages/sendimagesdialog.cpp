@@ -47,21 +47,17 @@
 #include <klineedit.h>
 #include <kiconloader.h>
 #include <kfiledialog.h>
-#include <kiconloader.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kinstance.h>
 #include <kconfig.h>
-#include <knuminput.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
 #include <kdialogbase.h>
 #include <kbuttonbox.h>
 #include <ksqueezedtextlabel.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <khelpmenu.h>
-#include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <kurlrequester.h>
 

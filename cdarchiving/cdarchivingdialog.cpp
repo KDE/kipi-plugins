@@ -61,7 +61,6 @@
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <khelpmenu.h>
-#include <kiconloader.h>
 #include <kpopupmenu.h>
 
 // Include files for KIPI

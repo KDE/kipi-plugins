@@ -53,7 +53,6 @@ extern "C"
 #include <kimageio.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
-#include <klocale.h>
 #include <kstandarddirs.h>
 #include <kprocess.h>
 #include <krun.h>
@@ -752,7 +751,7 @@ void CDArchiving::createHead(QTextStream& stream)
     stream << "<meta name=\"date\" content=\"" + KGlobal::locale()->formatDate(QDate::currentDate())
            + "\">" << endl;
     stream << "<title>" << m_mainTitle << "</title>" << endl;
-    this->createCSSSection(stream);
+    createCSSSection(stream);
     stream << "</head>" << endl;
 }
 
@@ -1230,7 +1229,7 @@ bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgNa
                  + "\">" << endl;
        stream << "<title>" << m_mainTitle << " : "<< imgName <<"</title>" << endl;
 
-       this->createCSSSection(stream);
+       createCSSSection(stream);
 
        stream << "</head>" << endl;
        stream<<"<body>" << endl;;
@@ -1288,7 +1287,7 @@ bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgNa
           nextH = NAV_THUMB_MAX_SIZE;
           }
 
-       if (previousImgName != "")
+       if ( !previousImgName.isEmpty() )
           {
           stream << "<a href=\"" << previousPageFilename << "\"><img class=\"photo\" src=\""
                  << previousThumb<<"\" alt=\"" << i18n("Previous") <<  "\" title=\"" << i18n("Previous")
@@ -1300,7 +1299,7 @@ bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgNa
        stream << "&nbsp; | &nbsp;<a href=\"../../index.htm\"><img src=\"../../gohome.png\" border=\"0\" title=\""
               << i18n("Album list") << "\" alt=\"" << i18n("Album list") << "\"></a>" << endl;
 
-       if (nextImgName != "")
+       if ( !nextImgName.isEmpty() )
           {
           stream << "&nbsp; | &nbsp;<a href=\"" << nextPageFilename<<"\"><img class=\"photo\" src=\""
                  << nextThumb << "\" alt=\"" << i18n("Next") << "\" title=\"" << i18n("Next")
@@ -1311,7 +1310,7 @@ bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgNa
 
        // Add comment if it exists
 
-       if ( comment != "" )
+       if ( !comment.isEmpty() )
           {
           stream << "<div align=\"center\">"
                  << EscapeSgmlText(QTextCodec::codecForLocale(), comment, true, true)
@@ -1854,7 +1853,7 @@ void CDArchiving::removeTmpFiles(void)
 
 bool CDArchiving::DeleteDir(QString dirname)
 {
-    if (dirname != "")
+    if ( !dirname.isEmpty() )
         {
         QDir dir;
 

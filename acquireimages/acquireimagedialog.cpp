@@ -54,7 +54,6 @@ extern "C"
 #include <qfile.h>
 #include <qapplication.h>
 #include <qvgroupbox.h>
-#include <qpushbutton.h>
 
 // Include files for KDE
 

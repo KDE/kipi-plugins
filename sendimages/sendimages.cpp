@@ -454,7 +454,7 @@ void SendImages::removeTmpFiles(void)
 
 bool SendImages::DeleteDir(QString dirname)
 {
-    if (dirname != "")
+    if ( !dirname.isEmpty() )
         {
         QDir dir;
 

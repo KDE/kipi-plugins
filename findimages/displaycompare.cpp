@@ -36,7 +36,6 @@
 #include <qfileinfo.h>
 #include <qimage.h>
 #include <qpixmap.h>
-#include <qgroupbox.h>
 #include <qwhatsthis.h>
 #include <qpushbutton.h>
 #include <qframe.h>
@@ -56,10 +55,8 @@
 #include <kio/global.h>
 #include <kimageio.h>
 #include <kio/previewjob.h>
-#include <kapplication.h>
 #include <kaboutdata.h>
 #include <khelpmenu.h>
-#include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 

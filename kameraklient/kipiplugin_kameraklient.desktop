@@ -1,22 +1,25 @@
 [Desktop Entry]
 Name=KameraKlient
 Name[da]=Kameraklient
+Name[et]=Kaameraklient
 Name[nl]=Camera-client
 Name[pt]=ClienteKamera
-Name[pt_BR]=ClienteKamera
 Name[sv]=Kameraklient
+Name[ta]=கேமிரா க்ளையண்ட்
 Comment=KIPI Digital Camera Interface Plugin
 Comment[da]=KIPI Digitalkameragrænseflade-plugin
 Comment[de]=Ein KIPI Plugin als Schnittstelle für Digital Kameras
+Comment[et]=KIPI digikaamera liidese plugin
 Comment[fr]=Module externe Kipi pour la gestion des appareils photo
 Comment[it]=Plugin di interfaccia alle fotocamere digitali di KIPI
 Comment[nl]=Kipi-plugin voor de digitale camera-interface
 Comment[pt]='Plugin' KIPI de Interface com Máquinas Fotográficas Digitais
-Comment[pt_BR]='Plugin' KIPI de Interface com Máquinas Fotográficas Digitais
 Comment[sv]=KIPI-insticksprogram: Gränssnitt till digitalkamera
+Comment[ta]=கிபி டிஜிட்டல் காமிரா இடைமுக சொருகுப்பொருள்
+Comment[tr]=KIPI Dijital Fotoğraf Makinesi Arayüz Eklentisi
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_kameraklient
 X-KIPI-MergeMenu=true
-
+Encoding=UTF-8
 

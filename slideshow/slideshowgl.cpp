@@ -30,7 +30,6 @@
 #include <qcursor.h>
 #include <qimage.h>
 #include <qpainter.h>
-#include <qtimer.h>
 
 #include <math.h>
 #include <cstdlib>

@@ -68,12 +68,9 @@
 #include <kapplication.h>
 #include <ksqueezedtextlabel.h>
 #include <kio/previewjob.h>
-#include <kmessagebox.h>
 #include <klistview.h>
-#include <kapplication.h>
 #include <kaboutdata.h>
 #include <khelpmenu.h>
-#include <kiconloader.h>
 #include <kpopupmenu.h>
 
 // KIPI include files
