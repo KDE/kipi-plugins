@@ -30,6 +30,7 @@
  #include <klibloader.h>
  #include <kconfig.h>
  #include <kdebug.h>
+ #include <kdeversion.h>
  #include <krun.h>
  #include <kapplication.h>
  #include <kmessagebox.h>
@@ -117,6 +118,17 @@ void Plugin_WallPaper::setup( QWidget* widget )
                          actionCollection(),
                          "images2desktop_centered_auto_fit"));
 
+    //The Scale & crop code was available from Beta1 on
+    #if KDE_IS_VERSION(3,3,91)
+    m_action_Background->insert(new KAction (i18n("Scale && Crop"),
+			 0,
+			 this,
+			 SLOT(slotSetScaleAndCrop()),
+			 actionCollection(),
+			 "images2desktop_scale_and_crop"));
+
+   #endif
+    
     addAction( m_action_Background );
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
@@ -190,12 +202,18 @@ void Plugin_WallPaper::slotSetCenteredAutoFit()
    return setWallpaper(CENTERED_AUTOFIT);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Plugin_WallPaper::slotSetScaleAndCrop()
+{
+   return setWallpaper(SCALE_AND_CROP);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Plugin_WallPaper::setWallpaper(int layout)
 {
-   if (layout>CENTERED_AUTOFIT || layout < CENTER)
+   if (layout>SCALE_AND_CROP || layout < CENTER)
       return;
 
    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );

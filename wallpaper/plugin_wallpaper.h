@@ -58,6 +58,7 @@
    void slotSetTiledMaxpect();
    void slotSetScaled();
    void slotSetCenteredAutoFit();
+   void slotSetScaleAndCrop();
 
    private:
 
@@ -68,7 +69,8 @@
         CENTER_MAXPECT = 4,
         TILED_MAXPECT = 5,
         SCALED = 6,
-        CENTERED_AUTOFIT = 7
+        CENTERED_AUTOFIT = 7,
+	SCALE_AND_CROP = 8
         };
 
    KActionMenu    *m_action_Background;
