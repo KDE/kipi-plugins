@@ -58,9 +58,10 @@ extern "C"
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-ScreenGrabDialog::ScreenGrabDialog(QWidget *parent, const char *name)
+ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent, const char *name)
                 : KDialogBase(parent, name, false, i18n("Digikam Screenshot Images Plugin"),
-                  Help|User1|Close|User2, Close, true, i18n("&About"), i18n("&New snapshot"))
+                              Help|User1|Close|User2, Close, true, i18n("&About"), i18n("&New snapshot")),
+                  m_interface( interface )
 {
     setHelp("plugin-screenshotimages.anchor", "digikam");
     m_inSelect = false;
@@ -241,7 +242,7 @@ void ScreenGrabDialog::slotPerformGrab()
     KNotifyClient::beep();
 
     m_screenshotImage = m_snapshot.convertToImage();
-    m_acquireImageDialog = new AcquireImageDialog(0, m_screenshotImage);
+    m_acquireImageDialog = new AcquireImageDialog( m_interface, 0, m_screenshotImage);
     m_acquireImageDialog->setMinimumWidth(400);
     m_acquireImageDialog->exec();
 

@@ -45,6 +45,8 @@ extern "C"
 #include <X11/Xlib.h>
 }
 
+#include <libkipi/interface.h>
+
 class QWidget;
 class QCheckBox;
 
@@ -58,7 +60,7 @@ class ScreenGrabDialog : public KDialogBase
 Q_OBJECT
 
 public:
-    ScreenGrabDialog(QWidget *parent=0, const char *name=0);
+    ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent=0, const char *name=0);
     ~ScreenGrabDialog();
 
 protected slots:
@@ -68,6 +70,7 @@ protected slots:
     void slotPerformGrab(void);
 
 protected:
+    KIPI::Interface    *m_interface;
     bool                m_inSelect;
     QCheckBox          *m_desktopCB;
     QCheckBox          *m_hideCB;

@@ -39,6 +39,8 @@
 // Include files for KIPI
 
 #include <libkipi/thumbnailjob.h>
+#include <libkipi/interface.h>
+#include <libkipi/uploadwidget.h>
 
 class QPushButton;
 class QLineEdit;
@@ -57,7 +59,7 @@ class AcquireImageDialog : public KDialogBase
 Q_OBJECT
 
  public:
-   AcquireImageDialog(QWidget *parent=0, const QImage &img=0);
+   AcquireImageDialog( KIPI::Interface* interface, QWidget *parent=0, const QImage &img=0);
    ~AcquireImageDialog();
 
  private slots:
@@ -69,6 +71,7 @@ Q_OBJECT
    void slotGotPreview(const KURL &url, const QPixmap &pixmap);
 
  protected:
+   KIPI::Interface* m_interface;
    QImage              m_qimageScanned;
 
    QPushButton        *m_addNewAlbumButton;
@@ -78,7 +81,8 @@ Q_OBJECT
    QString             m_newDir;
    QString             m_ImagesFilesSort;
 
-   KListBox           *m_AlbumList;
+    KIPI::UploadWidget* m_uploadPath;
+    //KListBox           *m_AlbumList;
 
    KIntNumInput       *m_imageCompression;
 

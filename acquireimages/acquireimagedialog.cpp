@@ -75,6 +75,8 @@ extern "C"
 
 #include "acquireimagedialog.h"
 #include <kdebug.h>
+#include <kfiletreeview.h>
+#include <qapplication.h>
 
 
 class AlbumItem : public QListBoxText
@@ -109,9 +111,9 @@ private:
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-AcquireImageDialog::AcquireImageDialog(QWidget *parent, const QImage &img)
+AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *parent, const QImage &img)
                   : KDialogBase( IconList, i18n("Save target image options"), Help|Ok|Cancel,
-                    Ok, parent, "AcquireImageDialog", true, true ), m_dialogOk( false )
+                    Ok, parent, "AcquireImageDialog", true, true ), m_interface( interface ), m_dialogOk( false )
 {
     KImageIO::registerFormats();
     m_qimageScanned = img;
@@ -320,11 +322,9 @@ void AcquireImageDialog::setupAlbumsList(void)
     groupBox1->setTitle(i18n("Select Album for to save the target image"));
     QGridLayout* grid = new QGridLayout( groupBox1, 2, 2 , 20, 20);
 
-    m_AlbumList = new KListBox( groupBox1 );
-    m_AlbumList->setSelectionMode (QListBox::Single);
-    QWhatsThis::add( m_AlbumList, i18n( "<p>This is the Digikam Albums list. "
-                                        "Select one target Album for the target image.") );
-    grid->addMultiCellWidget(m_AlbumList, 0, 2, 0, 1);
+    m_uploadPath = new KIPI::UploadWidget( m_interface, groupBox1, "m_uploadPath" );
+    grid->addMultiCellWidget( m_uploadPath, 0, 2, 0, 1 );
+
 
     m_addNewAlbumButton = new QPushButton (groupBox1, "PushButton_AddNewAlbum");
     m_addNewAlbumButton->setText(i18n( "&Add new album") );
@@ -371,16 +371,21 @@ void AcquireImageDialog::setupAlbumsList(void)
     groupBox2Layout->addWidget( m_AlbumItems );
 
     vlay->addWidget( groupBox2 );
-    vlay->addStretch(1);
+    if ( !m_interface->hasFeature( KIPI::AlbumsHaveDescriptions ) )
+        groupBox2->hide();
+    else
+        vlay->addStretch(1);
 
     //---------------------------------------------
 
     connect(m_addNewAlbumButton, SIGNAL(clicked()),
             this, SLOT(slotAddNewAlbum()));
 
+#ifdef TEMPORARILY_REMOVED
     connect(m_AlbumList, SIGNAL( currentChanged( QListBoxItem * ) ),
             this, SLOT( albumSelected( QListBoxItem * )));
-}
+#endif
+    }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -481,7 +486,7 @@ void AcquireImageDialog::albumSelected( QListBoxItem * item )
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void AcquireImageDialog::slotGotPreview(const KURL &url, const QPixmap &pixmap)
+void AcquireImageDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixmap)
 {
     m_albumPreview->setPixmap(pixmap);
 }
@@ -524,13 +529,15 @@ void AcquireImageDialog::slot_onAlbumCreate(KIO::Job* job)
         job->showErrorDialog(this);
     else
         {
-        AlbumItem *item = new AlbumItem( m_AlbumList, m_newDir, "", "", "", "", QDate::currentDate(), 0);
+#ifdef TEMPORARILY_REMOVED
+            AlbumItem *item = new AlbumItem( m_AlbumList, m_newDir, "", "", "", "", QDate::currentDate(), 0);
         item->setName( m_newDir );
         albumSelected( item );
         m_AlbumList->sort (true);
         m_AlbumList->setSelected( item, true );
         m_AlbumList->setCurrentItem( item );
         m_AlbumList->centerCurrentItem();
+#endif
         }
 }
 
@@ -653,13 +660,13 @@ QString AcquireImageDialog::extension(const QString& imageFormat)
 
 void AcquireImageDialog::checkNewFileName(void)
 {
+#ifdef TEMPORARILY_REMOVED
     int albumSelectedId = m_AlbumList->currentItem();
     QString albumSelectedText = m_AlbumList->text(albumSelectedId);
 
     if ( albumSelectedText == QString::null)
        return;
 
-#ifdef TEMPORARILY_REMOVED
     Digikam::AlbumInfo *album = Digikam::AlbumManager::instance()->findAlbum(albumSelectedText);
     if (!album) return;
     QString targetAlbumPath = album->getPath();

@@ -96,6 +96,7 @@ Plugin_AcquireImages::~Plugin_AcquireImages()
 
 void Plugin_AcquireImages::slotActivate()
 {
+    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
     QString from(sender()->name());
 
     if (from == "scan_images")
@@ -121,7 +122,7 @@ void Plugin_AcquireImages::slotActivate()
        }
     else if (from == "screenshot_images")
        {
-       m_screenshotDialog = new ScreenGrabDialog(0, "Digikam ScreenshotImagesDialog");
+       m_screenshotDialog = new ScreenGrabDialog(interface, 0, "Digikam ScreenshotImagesDialog");
        m_screenshotDialog->show();
        }
     else
@@ -136,7 +137,8 @@ void Plugin_AcquireImages::slotActivate()
 
 void Plugin_AcquireImages::slotAcquireImageDone(const QImage &img)
 {
-    m_acquireImageDialog = new AcquireImageDialog(0, img);
+    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    m_acquireImageDialog = new AcquireImageDialog( interface, 0, img);
     m_acquireImageDialog->setMinimumWidth(400);
     m_acquireImageDialog->exec();
 }
