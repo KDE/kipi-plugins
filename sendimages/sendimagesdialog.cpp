@@ -574,7 +574,8 @@ void SendImagesDialog::slotMailAgentChanged(int i)
 
 void SendImagesDialog::slotThunderbirdBinPathChanged(const QString &url )
 {
-    enableButtonOK( !url.isEmpty());
+    if ( m_mailAgentName->currentText() == "Thunderbird" )
+       enableButtonOK( !url.isEmpty());
 }
 
 
@@ -676,14 +677,17 @@ void SendImagesDialog::slotOk()
        return;
        }
 
-    QFile fileThunderbird(m_ThunderbirdBinPath->url());
-
-    if (fileThunderbird.exists() == false)
+    if ( m_mailAgentName->currentText() == "Thunderbird" )
        {
-       KMessageBox::sorry(this, i18n("Thunderbird binary path is not valid. Please check it."));
-       return;
+       QFile fileThunderbird(m_ThunderbirdBinPath->url());
+
+       if (fileThunderbird.exists() == false)
+          {
+          KMessageBox::sorry(this, i18n("Thunderbird binary path is not valid. Please check it."));
+          return;
+          }
        }
-       
+           
     writeSettings();
 
     for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
