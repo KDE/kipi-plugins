@@ -1,5 +1,7 @@
-v1.0.0-beta1 
+v0.1.0-beta 
 ----------------------------------------------------------------------------
+        * <Gilles Caulier> Added KAbout data on all plugins with a full 
+	  KDE bugs tracking support.
         * <Gilles Caulier> Improved batch operations in FindDuplicateImages 
 	  Plugins with using KIPI::BatchProgressDialog.
         * <Gilles Caulier> Added full Multithreading support in CDArchiving,
