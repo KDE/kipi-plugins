@@ -205,6 +205,9 @@ void FindDuplicateImages::showResult()
 void FindDuplicateImages::compareAlbums(void)
 {
     writeSettings();
+
+    // Prepare the data for the threaded operations.
+    
     QValueList<KIPI::ImageCollection> ListAlbums(m_findDuplicateDialog->getAlbumsSelection());
     filesList.clear();
 
@@ -228,12 +231,13 @@ void FindDuplicateImages::compareAlbums(void)
     else
         isCompareAlmost = false;
 
-    start();
+    start();      // Starting the thread.
     return;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+// List of threaded operations.
 
 void FindDuplicateImages::run()
 {
