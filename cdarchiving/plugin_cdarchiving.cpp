@@ -234,7 +234,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   }
                }
 
-            m_progressDlg->addedAction(text, KIPI::SucessMessage);
+            m_progressDlg->addedAction(text, KIPI::SuccessMessage);
             ++m_current;
             }
         else
