@@ -85,10 +85,6 @@ private:
   QString             m_hostName;
   QString             m_hostURL;
   
-#ifdef TEMPORARILY_REMOVED
-    Digikam::AlbumInfo *m_album;
-#endif
-
   KAction            *m_actionCDArchiving;
   KProcess           *m_Proc;
   QTimer             *m_K3bTimer;

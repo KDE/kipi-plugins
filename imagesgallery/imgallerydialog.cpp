@@ -173,7 +173,7 @@ void KIGPDialog::setupSelection(void)
     layout->addWidget( groupBox1 );
     
     if ( !m_interface->hasFeature( KIPI::AlbumsUseFirstImagePreview) )
-        m_albumPreview->hide();
+         m_albumPreview->hide();
 
     //---------------------------------------------
 

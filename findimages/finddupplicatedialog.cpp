@@ -153,6 +153,9 @@ void FindDuplicateDialog::setupSelection(void)
 
     layout->addWidget( groupBox1 );
 
+    if ( !m_interface->hasFeature( KIPI::AlbumsUseFirstImagePreview) )
+        m_albumPreview->hide();
+        
     //---------------------------------------------
 
     QGroupBox * groupBox2 = new QGroupBox( i18n("Album description"), page_setupSelection );
