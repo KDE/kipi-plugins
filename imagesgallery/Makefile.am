@@ -15,10 +15,6 @@ kipiplugin_imagesgallery_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/libkipi/libki
 # LD flags for the plugin
 kipiplugin_imagesgallery_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 
-# Install the .rc file in the Part's directory
-pluginsdir = $(kde_datadir)/kipi/plugins
-plugins_DATA = kipiplugin_imagesgallery.rc
-
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = kipiplugin_imagesgallery.desktop
 

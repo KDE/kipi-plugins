@@ -83,9 +83,10 @@ extern "C"
 
 
 ImagesGallery::ImagesGallery( KIPI::Interface* interface )
+: m_interface(interface)
 {
     KImageIO::registerFormats();
-    Activate( interface );
+    Activate();
 }
 
 
@@ -298,12 +299,12 @@ void ImagesGallery::readSettings(void)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ImagesGallery::Activate( KIPI::Interface* interface )
+void ImagesGallery::Activate()
 {
     QString Path;
     m_progressDlg = 0L;
 
-    m_configDlg = new KIGPDialog( interface, 0);
+    m_configDlg = new KIGPDialog( m_interface, 0);
     readSettings();
 
     if ( m_configDlg->exec() == QDialog::Accepted )
@@ -315,7 +316,7 @@ void ImagesGallery::Activate( KIPI::Interface* interface )
         m_resizeImagesWithError.clear();
         m_StreamMainPageAlbumPreview = "";
         m_imagesPerRow = m_configDlg->getImagesPerRow();
-        QStringList ListAlbums(m_configDlg->getAlbumsSelection());
+        QValueList<KIPI::ImageCollection> albums(m_configDlg->getSelectedAlbums());
 
         // Create the main target folder.
 
@@ -346,7 +347,7 @@ void ImagesGallery::Activate( KIPI::Interface* interface )
 
         // Build all Albums HTML export.
 
-        if ( ListAlbums.count() > 1 )
+        if ( albums.count() > 1 )
            {
            KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
            QString dir = KGlobal::dirs()->findResourceDir("kipi_data", "gohome.png");
@@ -357,25 +358,31 @@ void ImagesGallery::Activate( KIPI::Interface* interface )
            KIO::NetAccess::copy(srcURL, destURL);
            }
 
-        for ( QStringList::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it )
+		for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt ) 
             {
-            m_album           = ->findAlbum( *it );
-            m_album->openDB();
-            Path              = m_album->getPath();
-            m_AlbumTitle      = m_album->getTitle();
-            m_AlbumComments   = m_album->getComments();
-            m_AlbumCollection = m_album->getCollection();
-            m_AlbumDate       = m_album->getDate().toString ( Qt::LocalDate ) ;
-            m_album->closeDB();
-            Path = Path + "/";
+            m_album           = *albumIt;
+			
+			QDateTime newestDate;
+			KURL::List images=m_album.images();
+			for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) {
+				kdDebug() << "URL:" << (*urlIt).prettyURL() << endl;
+				KIPI::ImageInfo info = m_interface->info( *urlIt );
+				if ( info.time() > newestDate )
+					newestDate = info.time();
+			}
 
-            SubUrl = m_configDlg->getImageName() + "/DigikamHTMLExport/" + m_AlbumTitle + "/" + "index.html";
+            m_AlbumTitle      = m_album.name();
+            m_AlbumComments   = m_album.comment();
+            m_AlbumCollection = QString::null;
+            m_AlbumDate       = newestDate.toString ( Qt::LocalDate ) ;
+
+            SubUrl = m_configDlg->getImageName() + "/KIPIHTMLExport/" + m_AlbumTitle + "/" + "index.html";
 
             if ( !SubUrl.isEmpty() && SubUrl.isValid())
                {
                // Create the target sub folder for the current album.
 
-               QString SubTPath= m_configDlg->getImageName() + "/DigikamHTMLExport/" + m_AlbumTitle;
+               QString SubTPath= m_configDlg->getImageName() + "/KIPIHTMLExport/" + m_AlbumTitle;
 
                if (TargetDir.mkdir( SubTPath ) == false)
                    {
@@ -395,7 +402,7 @@ void ImagesGallery::Activate( KIPI::Interface* interface )
                kapp->processEvents();
                m_useCommentFile = m_configDlg->useCommentFile();
 
-               if ( !createHtml( SubUrl, Path, m_LevelRecursion > 0 ? m_LevelRecursion + 1 : 0 ,
+               if ( !createHtml( SubUrl,
                                  m_configDlg->getImageFormat(), m_configDlg->getTargetImagesFormat()) )
                   {
                   delete m_progressDlg;
@@ -426,7 +433,7 @@ void ImagesGallery::Activate( KIPI::Interface* interface )
 
         // Create the main HTML page if many Albums selected.
 
-        if ( ListAlbums.count () > 1 )
+        if ( albums.count () > 1 )
            {
            MainUrl = m_configDlg->getImageName() + "/DigikamHTMLExport/" + "index.htm";
            QFile MainPageFile( MainUrl.path() );
@@ -543,13 +550,12 @@ QString ImagesGallery::extension(const QString& imageFormat)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ImagesGallery::createBody(QTextStream& stream, const QString& sourceDirName,
-                               const QStringList& subDirList, const QDir& imageDir,
+void ImagesGallery::createBody(QTextStream& stream,
                                const KURL& url, const QString& imageFormat,
                                const QString& TargetimagesFormat)
 {
-    int numOfImages = imageDir.count();
-    qDebug("Num of images in %s : %i", imageDir.path().ascii(), numOfImages);
+    int numOfImages = m_album.images().count();
+    qDebug("Num of images in %s : %i", m_album.name().ascii(), numOfImages);
     const QString imgGalleryDir = url.directory();
     const QString today(KGlobal::locale()->formatDate(QDate::currentDate()));
 
@@ -611,40 +617,24 @@ void ImagesGallery::createBody(QTextStream& stream, const QString& sourceDirName
     else
        stream << "<hr>\n" << endl;
 
-    if (m_recurseSubDirectories && subDirList.count() > 2)      // This Option is disable actually
-        {                                                       // (m_recurseSubDirectories always = 1).
-
-        // subDirList.count() is always >= 2 because of the "." and ".." directories
-
-        QString Temp = i18n("<i>Subdirectories:</i>");
-        stream << Temp << "<br>" << endl;
-
-        for (QStringList::ConstIterator it = subDirList.begin(); it != subDirList.end(); it++)
-            {
-            if (*it == "." || *it == "..")
-                continue;                            // Disregard the "." and ".." directories
-
-            stream << "<a href=\"" << *it << "/" << url.fileName() << "\">" << *it << "</a><br>" << endl;
-            }
-
-        stream << "<hr>" << endl;
-        }
-
     stream << "<table>" << endl;
 
     // Table with images
 
-    int imgIndex;
+    int imgIndex=0;
     QFileInfo imginfo;
     QPixmap imgProp;
 
-    for (imgIndex = 0; !m_cancelled && (imgIndex < numOfImages);)
+	KURL::List images=m_album.images();
+	for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end() && !m_cancelled; ) 
         {
         stream << "<tr>" << endl;
 
-        for (int col = 0 ; !m_cancelled && (col < m_imagesPerRow) && (imgIndex < numOfImages) ; ++col)
+        for (int col = 0 ;
+			!m_cancelled && urlIt!=images.end() && col < m_configDlg->getImagesPerRow() ;
+			++col, ++urlIt, ++imgIndex)
             {
-            const QString imgName = imageDir[imgIndex];
+            const QString imgName = (*urlIt).fileName();
 
             const QString targetImgName = imgName + extension(TargetimagesFormat);
 
@@ -652,14 +642,15 @@ void ImagesGallery::createBody(QTextStream& stream, const QString& sourceDirName
 
             qDebug("Creating thumbnail for %s", imgName.ascii());
 
-            if (createThumb(imgName, sourceDirName, imgGalleryDir, imageFormat, TargetimagesFormat))
+		    stream << "<td align='center'>\n";
+            if (createThumb(*urlIt, imgName, imgGalleryDir, imageFormat, TargetimagesFormat))
                 {
                 // user requested the creation of html pages for each photo
 
                 if ( m_configDlg->getCreatePageForPhotos() )
-                   stream << "<td align='center'>\n<a href=\"pages/" << targetImgName << ".html\">";
+				   stream << "<a href=\"pages/" << targetImgName << ".html\">";
                 else
-                   stream << "<td align='center'>\n<a href=\"images/" << targetImgName << "\">";
+                   stream << "<a href=\"images/" << targetImgName << "\">";
 
                 const QString imgNameFormat = imgName;
 
@@ -725,7 +716,6 @@ void ImagesGallery::createBody(QTextStream& stream, const QString& sourceDirName
                 m_progressDlg->setLabelText(
                                i18n("Creating target image and thumbnail for \n'%1'\nPlease wait!")
                                .arg(imgName) );
-                kapp->processEvents();
                 }
             else
                 {
@@ -733,7 +723,6 @@ void ImagesGallery::createBody(QTextStream& stream, const QString& sourceDirName
                 m_progressDlg->setLabelText(
                                i18n("Creating target image and thumbnail for\n%1\nfailed!")
                                .arg(imgName) );
-                kapp->processEvents();
                 }
 
             stream << "</a>" << endl;
@@ -758,7 +747,6 @@ void ImagesGallery::createBody(QTextStream& stream, const QString& sourceDirName
 
 
             stream << "</td>" << endl;
-            ++imgIndex;
             m_progressDlg->setTotalSteps( numOfImages );
             m_progressDlg->setProgress( imgIndex );
             kapp->processEvents();
@@ -782,10 +770,13 @@ void ImagesGallery::createBody(QTextStream& stream, const QString& sourceDirName
       KURL srcURL(dir);
       KURL destURL(imgGalleryDir + QString::fromLatin1("/up.png"));
       KIO::NetAccess::copy(srcURL, destURL);
-
-      for (imgIndex = 0 ; !m_cancelled && (imgIndex < numOfImages) ; )
+	  
+	  int imgIndex = 0;
+	  KURL::List images=m_album.images();
+	  for( KURL::List::Iterator urlIt = images.begin();
+		urlIt != images.end() && !m_cancelled; urlIt++, imgIndex++) 
         {
-        const QString imgName = imageDir[imgIndex];
+        const QString imgName = (*urlIt).fileName();
 
         const QString targetImgName = imgName + extension(TargetimagesFormat);
 
@@ -793,7 +784,9 @@ void ImagesGallery::createBody(QTextStream& stream, const QString& sourceDirName
 
         if ( imgIndex != 0 )
            {
-           previousImgName = imageDir[imgIndex - 1];
+		   KURL::List::Iterator it=urlIt;
+		   it--;
+           previousImgName = (*it).fileName();
            previousImgName = previousImgName + extension(TargetimagesFormat);
            }
 
@@ -801,7 +794,9 @@ void ImagesGallery::createBody(QTextStream& stream, const QString& sourceDirName
 
         if ( imgIndex != numOfImages -1)
            {
-           nextImgName = imageDir[imgIndex + 1];
+		   KURL::List::Iterator it=urlIt;
+		   it++;
+		   nextImgName = (*it).fileName();
            nextImgName = nextImgName + extension(TargetimagesFormat);
            }
 
@@ -822,12 +817,11 @@ void ImagesGallery::createBody(QTextStream& stream, const QString& sourceDirName
           kapp->processEvents();
           }
 
-      ++imgIndex;
-      m_progressDlg->setTotalSteps( numOfImages );
-      m_progressDlg->setProgress( imgIndex );
-      kapp->processEvents();
+        m_progressDlg->setTotalSteps( numOfImages );
+        m_progressDlg->setProgress( imgIndex );
+        kapp->processEvents();
+        }
       }
-    }
 
     if (m_configDlg->printPageCreationDate())
         {
@@ -899,59 +893,13 @@ void ImagesGallery::createBodyMainPage(QTextStream& stream, KURL& url)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool ImagesGallery::createHtml(const KURL& url, const QString& sourceDirName, int recursionLevel,
+bool ImagesGallery::createHtml(const KURL& url,
                                const QString& imageFormat, const QString& TargetimagesFormat)
 {
     if (m_cancelled) return false;
 
-    QStringList subDirList;
-
-    if (m_recurseSubDirectories && (recursionLevel >= 0))  // RecursionLevel == 0 means endless
-        {                                                  // Recursive subdirectories is not
-                                                           // used in Digikam actually.
-        QDir toplevel_dir = QDir( sourceDirName );
-        toplevel_dir.setFilter( QDir::Dirs | QDir::Readable | QDir::Writable );
-        subDirList = toplevel_dir.entryList();
-
-        for (QStringList::ConstIterator it = subDirList.begin(); it != subDirList.end() && !m_cancelled; it++)
-            {
-            const QString currentDir = *it;
-            kapp->processEvents();
-
-            if (currentDir == "." || currentDir == "..")   // Disregard the "." and ".." directories
-                continue;
-
-            QDir subDir = QDir( url.directory() + "/" + currentDir );
-
-            if (!subDir.exists())
-                {
-                subDir.setPath( url.directory() );
-
-                if (!(subDir.mkdir(currentDir, false)))
-                    {
-                    KMessageBox::sorry(0, i18n("Couldn't create directory '%1' in '%2'")
-                                       .arg(currentDir).arg(url.directory()));
-                    continue;
-                    }
-                else
-                    subDir.setPath( url.directory() + "/" + currentDir );
-                }
-
-            if (!createHtml( KURL( subDir.path() + "/" + url.fileName() ), sourceDirName + "/" + currentDir,
-                            recursionLevel > 1 ? recursionLevel - 1 : 0, imageFormat, TargetimagesFormat))
-               return false;
-            }
-       }
-
     if ( m_useCommentFile )
        loadComments();
-
-    kdDebug() << "sourceDirName: " << sourceDirName << endl;
-
-    // Sort the images files formats running with thumbnails construction.
-
-    QDir imageDir( sourceDirName, m_imagesFileFilter.latin1(),
-                   QDir::Name|QDir::IgnoreCase, QDir::Files|QDir::Readable);
 
     const QString imgGalleryDir = url.directory();
     kdDebug() << "imgGalleryDir: " << imgGalleryDir << endl;
@@ -984,14 +932,14 @@ bool ImagesGallery::createHtml(const KURL& url, const QString& sourceDirName, in
 
     QFile file( url.path() );
     kdDebug() << "url.path(): " << url.path() << ", thumb_dir: "<< thumb_dir.path()
-              << ", imageDir: "<< imageDir.path() << ", pagesDir: "<< pages_dir.path()<<endl;
+              << ", pagesDir: "<< pages_dir.path()<<endl;
 
-    if ( imageDir.exists() && file.open(IO_WriteOnly) )
+    if ( file.open(IO_WriteOnly) )
         {
         QTextStream stream(&file);
         stream.setEncoding(QTextStream::UnicodeUTF8);
         createHead(stream);
-        createBody(stream, sourceDirName, subDirList, imageDir, url, imageFormat, TargetimagesFormat);
+        createBody(stream, url, imageFormat, TargetimagesFormat);
         file.close();
         return !m_cancelled;
         }
@@ -1010,34 +958,26 @@ void ImagesGallery::loadComments(void)
     // We considering no default images comments for the current album.
 
     m_useCommentFile = false;
-
-    QDir currentAlbumDir(m_album->getPath());
-    currentAlbumDir.setSorting (QDir::Files|QDir::NoSymLinks);
-    QStringList AllAlbumItems = currentAlbumDir.entryList();
-
     m_commentMap = new CommentMap;
-    m_album->openDB();
+	
+    QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
 
-    for ( QStringList::Iterator it = AllAlbumItems.begin(); it != AllAlbumItems.end(); ++it )
+    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt ) 
         {
-        QString Item(*it);
-        kapp->processEvents();
-
-        if ( Item != "" && Item != "." && Item != ".." )
-           {
-           QString Comment(m_album->getItemComments(*it));
-
-           if (Comment != "")
-              {
-              // An image comment have been found in the current album !
-
-              m_useCommentFile = true;
-              m_commentMap->insert(Item, Comment);
-              }
-           }
+        KURL::List images = (*albumIt).images();
+        
+        for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt )
+			{
+            KIPI::ImageInfo info = m_interface->info( *urlIt );
+			QString comment=info.description();
+			if (!comment.isEmpty()) 
+				{
+				m_useCommentFile = true;
+				m_commentMap->insert(*urlIt, comment);
+                }
+			kapp->processEvents();
+            }
         }
-
-    m_album->closeDB();
 }
 
 
@@ -1245,14 +1185,14 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool ImagesGallery::createThumb( const QString& imgName, const QString& sourceDirName,
+bool ImagesGallery::createThumb( const KURL& url, const QString& imgName,
                                  const QString& imgGalleryDir, const QString& imageFormat,
                                  const QString& TargetimagesFormat)
 {
     bool threadDone = false;
     bool useBrokenImage = false;
 
-    const QString pixPath = sourceDirName + imgName;
+    const QString pixPath = url.path();
 
     // Create the target images with resizing factor.
 

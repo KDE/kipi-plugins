@@ -54,7 +54,7 @@ class KProcess;
 class KIGPDialog;
 class ResizeImage;
 
-typedef QMap<QString,QString> CommentMap;
+typedef QMap<KURL,QString> CommentMap;
 
 class ImagesGallery : public QObject
 {
@@ -70,6 +70,7 @@ protected slots:
 private:
   KConfig            *m_config;
   KProcess           *m_webBrowserProc;
+  KIPI::Interface    *m_interface;
 
   bool                m_cancelled;
   bool                m_recurseSubDirectories;
@@ -97,15 +98,14 @@ private:
   CommentMap         *m_commentMap;
   ResizeImage        *m_threadedImageResizing;
 
-  Digikam::AlbumInfo *m_album;
+  KIPI::ImageCollection m_album;
 
   bool createDirectory(QDir thumb_dir, QString imgGalleryDir, QString dirName);
 
   void createHead(QTextStream& stream);
   void createCSSSection(QTextStream& stream);
 
-  void createBody(QTextStream& stream, const QString& sourceDirName,
-                  const QStringList& subDirList, const QDir& imageDir,
+  void createBody(QTextStream& stream,
                   const KURL& url, const QString& imageFormat,
                   const QString& TargetimagesFormat);
 
@@ -113,18 +113,18 @@ private:
                    const QString& previousImgName , const QString& nextImgName,
                    const QString& comment);
 
-  bool createThumb( const QString& imgName, const QString& sourceDirName,
+  bool createThumb( const KURL& url, const QString& imgName,
                     const QString& imgGalleryDir, const QString& imageFormat,
                     const QString& TargetimagesFormat);
 
-  bool createHtml( const KURL& url, const QString& sourceDirName, int recursionLevel,
+  bool createHtml( const KURL& url,
                    const QString& imageFormat, const QString& TargetimagesFormat);
 
   void createBodyMainPage(QTextStream& stream, KURL& url);
   void loadComments(void);
   static QString extension(const QString& imageFormat);
   void invokeWebBrowser(KURL url);
-  void Activate( KIPI::Interface* interface );
+  void Activate();
   void writeSettings(void);
   void readSettings(void);
 

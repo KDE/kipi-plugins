@@ -232,30 +232,34 @@ void KIGPDialog::setupSelection(void)
 
 void KIGPDialog::setAlbumsList(void)
 {
-    AlbumItem *currentAlbum = 0;
+    //AlbumItem *currentAlbum = 0;
+    QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
 
-    for (Digikam::AlbumInfo *album=Digikam::AlbumManager::instance()->firstAlbum() ;
-         album ; album = album->nextAlbum())
+    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt ) 
         {
-        album->openDB();
-        QDir imageDir( album->getPath(), m_ImagesFilesSort.latin1(),
-                       QDir::Name|QDir::IgnoreCase, QDir::Files|QDir::Readable);
-
-        int nbfiles = imageDir.count();
-
-        if ( nbfiles < 0 ) nbfiles = 0;
-
+        KURL::List images = (*albumIt).images();
+        
+		QDateTime newestDate;
+        for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) {
+            KIPI::ImageInfo info = m_interface->info( *urlIt );
+            if ( info.time() > newestDate )
+                newestDate = info.time();
+        }
+		
+		// FIXME: Some info are missing in KIPI::ImageCollection
         AlbumItem *item = new AlbumItem( m_AlbumsList,
-                                         album->getTitle(),
-                                         album->getComments(),
-                                         album->getPath(),
-                                         album->getCollection(),
-                                         imageDir.entryList().first(),
-                                         album->getDate(),
-                                         nbfiles
+                                         (*albumIt).name(),
+                                         (*albumIt).comment(),
+                                         QString("NO PATH")/*album->getPath()*/,
+                                         QString("NO COLLECTION")/*album->getCollection()*/,
+                                         images.first().prettyURL(),
+                                         newestDate.date(),
+                                         images.size()
                                        );
+		m_albums[item]=*albumIt;
 
-        if (album == Digikam::AlbumManager::instance()->currentAlbum())
+		#ifdef TEMPORARILY_REMOVED
+		if (album == Digikam::AlbumManager::instance()->currentAlbum())
            {
            item->setOn(true);
            item->setSelected(true);
@@ -264,12 +268,13 @@ void KIGPDialog::setAlbumsList(void)
            }
         else
            item->setOn(false);
-
-        album->closeDB();
+		#endif
         }
 
+	#ifdef TEMPORARILY_REMOVED
     if (currentAlbum != 0)
        m_AlbumsList->ensureItemVisible(currentAlbum);
+	#endif
 }
 
 
@@ -783,7 +788,7 @@ void KIGPDialog::albumSelected( QListViewItem * item )
     QString IdemIndexed = "file:" + pitem->path() + "/" + pitem->firstImage();
     KURL url(IdemIndexed);
 
-    m_thumbJob = new Digikam::ThumbnailJob( url, m_albumPreview->height(), false, true );
+    m_thumbJob = new KIPI::ThumbnailJob( url, m_albumPreview->height(), false, true );
 
     connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
             SLOT(slotGotPreview(const KURL&, const QPixmap&)));
@@ -792,7 +797,7 @@ void KIGPDialog::albumSelected( QListViewItem * item )
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void KIGPDialog::slotGotPreview(const KURL &url, const QPixmap &pixmap)
+void KIGPDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixmap)
 {
     m_albumPreview->setPixmap(pixmap);
 }
@@ -810,7 +815,7 @@ void KIGPDialog::GalleryUrlChanged(const QString &url )
 
 void KIGPDialog::slotOk()
 {
-    if (getAlbumsSelection().isEmpty() == true)
+    if (getSelectedAlbums().size() == 0)
        {
        KMessageBox::sorry(0, i18n("You must selected at least an Album to export!"));
        return;
@@ -1414,22 +1419,25 @@ void  KIGPDialog::setPrintPageCreationDate(bool Value)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-QStringList KIGPDialog::getAlbumsSelection(void)
+QValueList<KIPI::ImageCollection> KIGPDialog::getSelectedAlbums(void) const
 {
-    QStringList AlbumsListSelected;
+	QValueList<KIPI::ImageCollection> list;
     QListViewItemIterator it( m_AlbumsList );
 
     while ( it.current() )
         {
         AlbumItem *item = static_cast<AlbumItem*>( it.current() );
 
-        if (item->isOn())
-            AlbumsListSelected.append( item->name() );
+        if (item->isOn()) {
+			Q_ASSERT(m_albums.contains(item));
+			KIPI::ImageCollection album=m_albums[item];
+            list.append(album);
+		}
 
         ++it;
         }
 
-    return (AlbumsListSelected);
+	return list;
 }
 
 

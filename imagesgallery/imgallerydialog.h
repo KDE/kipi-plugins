@@ -59,6 +59,8 @@ class KIntNumInput;
 class KColorButton;
 class KURLRequester;
 
+class AlbumItem;
+
 class KIGPDialog : public KDialogBase
 {
  Q_OBJECT
@@ -169,7 +171,7 @@ class KIGPDialog : public KDialogBase
   bool  printPageCreationDate() const;
   void  setPrintPageCreationDate(bool Value);
 
-  QStringList getAlbumsSelection(void);
+  QValueList<KIPI::ImageCollection> getSelectedAlbums() const;
 
  protected slots:
   void GalleryUrlChanged(const QString & );
@@ -241,8 +243,9 @@ class KIGPDialog : public KDialogBase
   QFrame             *page_setupThumbnail;
   QFrame             *page_about;
 
-  QGuardedPtr<Digikam::ThumbnailJob> m_thumbJob;
+  QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
   KIPI::Interface* m_interface;
+  QMap<AlbumItem*, KIPI::ImageCollection> m_albums;
 
 
  private:

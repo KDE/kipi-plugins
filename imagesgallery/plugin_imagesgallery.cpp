@@ -26,11 +26,6 @@
 #include <kconfig.h>
 #include <kdebug.h>
 
-// Include files for Digikam
-
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
-
 // Local include files
 
 #include "imagesgallery.h"
@@ -54,7 +49,6 @@ Plugin_Imagesgallery::Plugin_Imagesgallery(QObject *parent, const char*, const Q
                         SLOT(slotActivate()),
                         actionCollection(),
                         "images_gallery");
-
 }
 
 
@@ -72,3 +66,8 @@ void Plugin_Imagesgallery::slotActivate()
     ImagesGallery Gallery( dynamic_cast< KIPI::Interface* >( parent() ) );
 }
 
+
+KIPI::Category Plugin_Imagesgallery::category() const
+{
+	return KIPI::EXPORTPLUGIN;
+}
