@@ -310,7 +310,7 @@ void FindDuplicateDialog::setupPageMethod(void)
                      "This method is faster but is not as robust."));
     m_labelsearchMethod->setBuddy( m_findMethod );
 
-    QLabel *m_label_approximateThreeshold = new QLabel (i18n("Approximate threeshold:"), groupBox1);
+    QLabel *m_label_approximateThreeshold = new QLabel (i18n("Approximate threshold:"), groupBox1);
     vlay->addWidget( m_label_approximateThreeshold );
 
     m_approximateThreshold = new KIntNumInput(88, groupBox1);
