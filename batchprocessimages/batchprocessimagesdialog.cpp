@@ -138,7 +138,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     m_smallPreview = new QCheckBox(i18n("Small preview"), groupBox1);
     QWhatsThis::add( m_smallPreview, i18n("<p>If you enable this option, "
-                                          "all preview effects will be calculed on a small zone "
+                                          "all preview effects will be calculated on a small zone "
                                           "of the image (300x300 pixels in the top left corner). "
                                           "Enable this option if you have a slow computer.") );
     m_smallPreview->setChecked( true );
@@ -852,7 +852,7 @@ void BatchProcessImagesDialog::slotPreviewProcessDone(KProcess* proc)
                                                    i18n("Preview processing error"),
                                                    m_previewOutput,
                                                    i18n("Cannot process preview for image \"%1\"."
-                                                        "\nThe ouput messages are:\n")
+                                                        "\nThe output messages are:\n")
                                                         .arg(item->nameSrc())
                                                    );
        infoDialog->exec();

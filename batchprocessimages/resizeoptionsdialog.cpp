@@ -51,7 +51,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
                    : KDialogBase( parent, "ResizeOptionsDialog", true,
-                     i18n("Resize Images options"), Ok|Cancel, Ok, false)
+                     i18n("Image-Resize options"), Ok|Cancel, Ok, false)
 {
     m_Type = ResizeType;
     QWidget* box = new QWidget( this );
@@ -66,7 +66,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        m_size = new KIntNumInput(640, groupBox1);
        m_size->setRange(10, 10000, 1, true );
        m_size->setLabel( i18n("New size (pixels):") );
-       QWhatsThis::add( m_size, i18n("<p>The new images size in pixels.") );
+       QWhatsThis::add( m_size, i18n("<p>The new images' size in pixels.") );
 
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox1);
 
@@ -86,9 +86,9 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        m_resizeFilter->insertItem("Quadratic");
        m_resizeFilter->insertItem("Sinc");
        m_resizeFilter->insertItem("Triangle");
-       QWhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize image process. "
+       QWhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize-image process. "
                                              "This filter will be used like a kernel convolution process "
-                                             "during the increase image size rendering. The default filter "
+                                             "during the increased image size rendering. The default filter "
                                              "is 'Lanczos'.") );
        m_label_resizeFilter->setBuddy( m_resizeFilter );
 
@@ -98,7 +98,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
                                         "this size. The width or the height of the\n"
                                         "images will be automatically\n"
                                         "selected in depending of the images orientation.\n"
-                                        "The images aspect ratio are preserved."), box);
+                                        "The images' aspect ratios are preserved."), box);
        dvlay->addWidget( m_label_size );
        }
 
@@ -109,13 +109,13 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        m_label_Width = new QLabel (i18n("Width (pixels):"), groupBox1);
        m_Width = new KIntNumInput(1024, groupBox1);
        m_Width->setRange(100, 10000, 1, true );
-       QWhatsThis::add( m_Width, i18n("<p>The new images width in pixels."));
+       QWhatsThis::add( m_Width, i18n("<p>The new images' width in pixels."));
        m_label_Width->setBuddy( m_Width );
 
        m_label_Height = new QLabel (i18n("Height (pixels):"), groupBox1);
        m_Height = new KIntNumInput(768, groupBox1);
        m_Height->setRange(100, 10000, 1, true );
-       QWhatsThis::add( m_Height, i18n("<p>The new images height in pixels."));
+       QWhatsThis::add( m_Height, i18n("<p>The new images' height in pixels."));
        m_label_Height->setBuddy( m_Height );
 
        dvlay->addWidget( groupBox1 );
@@ -125,8 +125,8 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        m_label_bgColor = new QLabel(i18n("Background color:"), groupBox2);
        QColor bgColor = QColor( 0, 0, 0 );                         // Black per default.
        m_button_bgColor = new KColorButton( bgColor, groupBox2 );
-       QWhatsThis::add( m_button_bgColor, i18n( "<p>You can select here the background color who "
-                                                "will used during the adapting image size." ));
+       QWhatsThis::add( m_button_bgColor, i18n( "<p>You can select here the background color to "
+                                                "be used when adapting the images' sizes." ));
        m_label_bgColor->setBuddy( m_button_bgColor );
 
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox2);
@@ -146,9 +146,9 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        m_resizeFilter->insertItem("Quadratic");
        m_resizeFilter->insertItem("Sinc");
        m_resizeFilter->insertItem("Triangle");
-       QWhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize image process. "
+       QWhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize-image process. "
                                              "This filter will be used like a kernel convolution process "
-                                             "during the increase image size rendering. The default filter "
+                                             "during the increased image size rendering. The default filter "
                                              "is 'Lanczos'.") );
        m_label_resizeFilter->setBuddy( m_resizeFilter );
 
@@ -168,12 +168,12 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        m_fixedWidth = new KIntNumInput(640, groupBox1);
        m_fixedWidth->setRange(10, 10000, 1, true );
        m_fixedWidth->setLabel( i18n("New width (pixels):") );
-       QWhatsThis::add( m_fixedWidth, i18n("<p>The new images width in pixels.") );
+       QWhatsThis::add( m_fixedWidth, i18n("<p>The new images' width in pixels.") );
 
        m_fixedHeight = new KIntNumInput(480, groupBox1);
        m_fixedHeight->setRange(10, 10000, 1, true );
        m_fixedHeight->setLabel( i18n("New height (pixels):") );
-       QWhatsThis::add( m_fixedHeight, i18n("<p>The new images height in pixels.") );
+       QWhatsThis::add( m_fixedHeight, i18n("<p>The new images' height in pixels.") );
 
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox1);
 
@@ -193,9 +193,9 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        m_resizeFilter->insertItem("Quadratic");
        m_resizeFilter->insertItem("Sinc");
        m_resizeFilter->insertItem("Triangle");
-       QWhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize image process. "
+       QWhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize-image process. "
                                              "This filter will be used like a kernel convolution process "
-                                             "during the increase image size rendering. The default filter "
+                                             "during the increased image size rendering. The default filter "
                                              "is 'Lanczos'.") );
        m_label_resizeFilter->setBuddy( m_resizeFilter );
 
@@ -205,7 +205,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
     if (m_Type == i18n("Prepare to print"))
        {
        m_customSettings = new QCheckBox( i18n("Use custom settings"), box);
-       QWhatsThis::add( m_customSettings, i18n("<p>If this option is enable, "
+       QWhatsThis::add( m_customSettings, i18n("<p>If this option is enabled, "
                                                "all printing settings can be customized."));
        dvlay->addWidget( m_customSettings );
 
@@ -235,7 +235,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        m_printDpi->insertItem("600");
        m_printDpi->insertItem("1200");
        m_printDpi->insertItem("2400");
-       QWhatsThis::add( m_printDpi, i18n("<p>The standard print resolution in dots per inch."));
+       QWhatsThis::add( m_printDpi, i18n("<p>The standard print resolutions in dots per inch."));
        m_label_printDpi->setBuddy( m_printDpi );
 
        dvlay->addWidget( groupBox1 );
@@ -245,13 +245,13 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        m_label_customXSize = new QLabel (i18n("Paper width (cm):"), groupBox2);
        m_customXSize = new KIntNumInput(10, groupBox2);
        m_customXSize->setRange(1, 100, 1, true );
-       QWhatsThis::add( m_customXSize, i18n("<p>The customized width photographic paper size in centimeters."));
+       QWhatsThis::add( m_customXSize, i18n("<p>The customized width of the photographic paper size in centimeters."));
        m_label_customXSize->setBuddy( m_customXSize );
 
        m_label_customYSize = new QLabel (i18n("Paper height (cm):"), groupBox2);
        m_customYSize = new KIntNumInput(15, groupBox2);
        m_customYSize->setRange(1, 100, 1, true );
-       QWhatsThis::add( m_customYSize, i18n("<p>The customized height photographic paper size in centimeters."));
+       QWhatsThis::add( m_customYSize, i18n("<p>The customized height of the photographic paper size in centimeters."));
        m_label_customYSize->setBuddy( m_customYSize );
 
        m_label_customDpi = new QLabel (i18n("Print resolution (dpi):"), groupBox2);
@@ -267,8 +267,8 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        m_label_backgroundColor = new QLabel(i18n("Background color:"), groupBox3);
        QColor backgroundColor = QColor( 255, 255, 255 );                         // White per default.
        m_button_backgroundColor = new KColorButton( backgroundColor, groupBox3 );
-       QWhatsThis::add( m_button_backgroundColor, i18n( "<p>You can select here the background color who "
-                                                        "will used during the adapting image size." ));
+       QWhatsThis::add( m_button_backgroundColor, i18n( "<p>You can select here the background color to "
+                                                "be used when adapting the images' sizes." ));
        m_label_backgroundColor->setBuddy( m_button_backgroundColor );
 
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox3);
@@ -288,16 +288,16 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        m_resizeFilter->insertItem("Quadratic");
        m_resizeFilter->insertItem("Sinc");
        m_resizeFilter->insertItem("Triangle");
-       QWhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize image process. "
+       QWhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize-image process. "
                                              "This filter will be used like a kernel convolution process "
-                                             "during the increase image size rendering. The default filter "
+                                             "during the increased image size rendering. The default filter "
                                              "is 'Lanczos'.") );
        m_label_resizeFilter->setBuddy( m_resizeFilter );
 
-       m_label_marging = new QLabel (i18n("Marging size (mm):"), groupBox3);
+       m_label_marging = new QLabel (i18n("Margin size (mm):"), groupBox3);
        m_marging = new KIntNumInput(1, groupBox3);
        m_marging->setRange(0, 80, 1, true );
-       QWhatsThis::add( m_marging, i18n("<p>The marging around the image in millimeters."));
+       QWhatsThis::add( m_marging, i18n("<p>The margin around the images in millimeters."));
        m_label_marging->setBuddy( m_marging );
 
 
@@ -345,8 +345,8 @@ void ResizeOptionsDialog::slotOk()
           {
           if (m_customXSize > m_customYSize)
              {
-             KMessageBox::sorry(this, i18n("You must enter a custom height superior than custom width."
-                                     "The photographic paper must be verticaly oriented!"));
+             KMessageBox::sorry(this, i18n("You must enter a custom height greater than the custom width: "
+                                     "the photographic paper must be vertically orientated."));
              return;
              }
           }

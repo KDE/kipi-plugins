@@ -55,34 +55,34 @@ ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* int
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    setCaption(i18n("Batch Resizing Images options"));
+    setCaption(i18n("Batch Resize Images options"));
     setHelp("resizeimages", "kipi-plugins");
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Resize images options") );
+    groupBox1->setTitle( i18n("Images resizing options") );
 
-    m_labelType->setText( i18n("Resizing Image type:") );
+    m_labelType->setText( i18n("Image-Resize type:") );
 
     m_Type->insertItem(i18n("Proportional (1 dim.)"));
     m_Type->insertItem(i18n("Proportional (2 dim.)"));
-    m_Type->insertItem(i18n("Non proportional"));
+    m_Type->insertItem(i18n("Non-proportional"));
     m_Type->insertItem(i18n("Prepare to print"));
     m_Type->setCurrentText(i18n("Proportional (1 dim.)"));
-    whatsThis = i18n("<p>Select here the resizing image type.");
+    whatsThis = i18n("<p>Select here the image-resize type.");
     whatsThis = whatsThis + i18n("<p><b>Proportional (1 dim.)</b>: standard auto-resizing using one dimension. "
                                  "The width or the height of the images will be automatically "
-                                 "selected in depending of the images orientation. "
-                                 "The images aspect ratio are preserved.");
+                                 "selected, depending on the images' orientation. "
+                                 "The images' aspect ratios are preserved.");
     whatsThis = whatsThis + i18n("<p><b>Proportional (2 dim.)</b>: auto-resizing using two dimensions. "
-                                 "The images aspect ratio are preserved. For example, you can use that for "
-                                 "to adapt your images size to your screen size.");
-    whatsThis = whatsThis + i18n("<p><b>Non proportional</b>: non proportional resizing using two dimensions. "
-                                 "The images aspect ratio aren't preserved.");
-    whatsThis = whatsThis + i18n("<p><b>Prepare to print</b>: prepare the image for a photographic printing. "
+                                 "The images' aspect ratio are preserved. You can use this, for example, "
+                                 "to adapt your images' sizes to your screen size.");
+    whatsThis = whatsThis + i18n("<p><b>Non proportional</b>: non-proportional resizing using two dimensions. "
+                                 "The images' aspect ratios are not preserved.");
+    whatsThis = whatsThis + i18n("<p><b>Prepare to print</b>: prepare the image for photographic printing. "
                                  "The user can set the print resolution and the photographic paper size. "
-                                 "The target images will be adapted to the good dimensions "
-                                 "(included the background size, marging size, and background color).");
+                                 "The target images will be adapted to the specified dimensions "
+                                 "(included the background size, margin size, and background color).");
 
     QWhatsThis::add( m_Type, whatsThis );
 
@@ -107,12 +107,12 @@ ResizeImagesDialog::~ResizeImagesDialog()
 
 void ResizeImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for batch resize images\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin to batch-resize images\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" and \"composite\" programs "
                                   "from \"ImageMagick\" package.\n"),
-                                  i18n("About KIPI batch resize images"));
+                                  i18n("About KIPI's 'Batch Resize Images' plugin"));
 }
 
 
@@ -136,7 +136,7 @@ void ResizeImagesDialog::slotOptionsClicked(void)
        optionsDialog->m_resizeFilter->setCurrentText(m_resizeFilter);
        optionsDialog->m_Border->setValue(m_Border);
        }
-    if (Type == i18n("Non proportional"))
+    if (Type == i18n("Non-proportional"))
        {
        optionsDialog->m_fixedWidth->setValue(m_fixedWidth);
        optionsDialog->m_fixedHeight->setValue(m_fixedHeight);
@@ -170,7 +170,7 @@ void ResizeImagesDialog::slotOptionsClicked(void)
           m_resizeFilter = optionsDialog->m_resizeFilter->currentText();
           m_Border = optionsDialog->m_Border->value();
           }
-       if (Type == i18n("Non proportional"))
+       if (Type == i18n("Non-proportional"))
           {
           m_fixedWidth = optionsDialog->m_fixedWidth->value();
           m_fixedHeight = optionsDialog->m_fixedHeight->value();
@@ -371,7 +371,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           *proc << albumDest + "/" + item->nameDest();
           }
 
-    if (Type == i18n("Non proportional"))
+    if (Type == i18n("Non-proportional"))
           {
           *proc << "convert";
 

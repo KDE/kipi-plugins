@@ -138,7 +138,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, QString EffectType)
        dvlay->addWidget( m_label_embossDeviation );
        m_embossDeviation = new KIntNumInput(3, box);
        m_embossDeviation->setRange(0, 20, 1, true );
-       QWhatsThis::add( m_embossDeviation, i18n("<p>Select here the value whcih represents the standard "
+       QWhatsThis::add( m_embossDeviation, i18n("<p>Select here the value which represents the standard "
                                                 "deviation of the Gaussian, in pixels.") );
        m_label_embossDeviation->setBuddy( m_embossDeviation );
        dvlay->addWidget( m_embossDeviation );

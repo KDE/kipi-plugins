@@ -92,26 +92,26 @@ RenameImagesOptionsDialog::RenameImagesOptionsDialog(QWidget *parent)
 
     m_labelSort = new QLabel (i18n("Sort original list:"), groupBox2);
     m_sortType = new QComboBox( false, groupBox2 );
-    m_sortType->insertItem(i18n("by file Name"));
-    m_sortType->insertItem(i18n("by file Size"));
-    m_sortType->insertItem(i18n("by modification Date"));
-    m_sortType->setCurrentText (i18n("by file Name"));
-    QWhatsThis::add( m_sortType, i18n("<p>Select here the original files list sorting method.") );
+    m_sortType->insertItem(i18n("by File Name"));
+    m_sortType->insertItem(i18n("by File Size"));
+    m_sortType->insertItem(i18n("by Modification Date"));
+    m_sortType->setCurrentText (i18n("by File Name"));
+    QWhatsThis::add( m_sortType, i18n("<p>Select here the original file list sorting method.") );
 
     m_reverseOrder = new QCheckBox(i18n("Reverse order"), groupBox2);
     QWhatsThis::add( m_reverseOrder, i18n("<p>If you enable this option, "
-                     "all images files list will used in reverse order.") );
+                     "the order of images files in the list will be reversed.") );
     m_reverseOrder->setChecked( false );
 
     dvlay->addWidget( groupBox2 );
 
     //---------------------------------------------
 
-    QGroupBox * groupBox3 = new QGroupBox( 1, Qt::Horizontal, i18n("Files date"), box );
+    QGroupBox * groupBox3 = new QGroupBox( 1, Qt::Horizontal, i18n("Files' dates"), box );
 
-    m_dateChange = new QCheckBox( i18n("Change date images files"), groupBox3);
+    m_dateChange = new QCheckBox( i18n("Change date of image files"), groupBox3);
     QWhatsThis::add( m_dateChange, i18n("<p>If you enable this option, "
-                                        "the image files date can be changed.") );
+                                        "the image files' dates can be changed.") );
     m_dateChange->setChecked( false );
 
     m_kDatePicker = new KDateWidget(  QDate::currentDate(), groupBox3 );

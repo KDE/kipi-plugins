@@ -73,7 +73,7 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
                      "<b>Solid</b>: just surround the images with a line.<p>"
                      "<b>Niepce</b>: surround the images with a fine line and a large border "
                      "(ideal for black and white pictures).<p>"
-                     "<b>Raise</b>: creating a 3D effect arround the images.<p>"
+                     "<b>Raise</b>: creating a 3D effect around the images.<p>"
                      "<b>Frame</b>: surround the images with an ornamental border.<p>");
 
     QWhatsThis::add( m_Type, whatsThis );
