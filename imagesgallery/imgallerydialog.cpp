@@ -116,7 +116,7 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
           : KDialogBase( IconList, i18n("Configure"), Help|Ok|Cancel, Ok,
                          parent, "HTMLExportDialog", true, true ), m_interface( interface )
 {
-    setCaption(i18n("Create Images Galleries"));
+    setCaption(i18n("Create Image Galleries"));
     setupSelection();
     setupLookPage();
     setupAlbumPage();
@@ -138,7 +138,7 @@ KIGPDialog::~KIGPDialog()
 
 void KIGPDialog::setupSelection(void)
 {
-    page_setupSelection = addPage(i18n("Selection"), i18n("Albums selection"),
+    page_setupSelection = addPage(i18n("Selection"), i18n("Album selection"),
                                   BarIcon("folder_image", KIcon::SizeMedium));
 
     QVBoxLayout *layout = new QVBoxLayout(page_setupSelection, 0, spacingHint() );
@@ -161,11 +161,11 @@ void KIGPDialog::setupSelection(void)
 
     KButtonBox* albumSelectionButtonBox = new KButtonBox( groupBox1, Vertical );
     QPushButton* buttonSelectAll = albumSelectionButtonBox->addButton ( i18n( "&Select all" ) );
-    QWhatsThis::add( buttonSelectAll, i18n("<p>Select all Albums in the list.") );
+    QWhatsThis::add( buttonSelectAll, i18n("<p>Select all Albums on the list.") );
     QPushButton* buttonInvertSelection = albumSelectionButtonBox->addButton ( i18n( "&Invert selection" ));
-    QWhatsThis::add( buttonInvertSelection, i18n("<p>Invert the Albums selection in the list.") );
+    QWhatsThis::add( buttonInvertSelection, i18n("<p>Invert the Album selection on the list.") );
     QPushButton* buttonSelectNone = albumSelectionButtonBox->addButton ( i18n( "Select &none" ) );
-    QWhatsThis::add( buttonSelectNone, i18n("<p>Deselect all Albums in the list.") );
+    QWhatsThis::add( buttonSelectNone, i18n("<p>Deselect all Albums on the list.") );
     albumSelectionButtonBox->layout();
     grid->addMultiCellWidget(albumSelectionButtonBox, 0, 1, 2, 2);
 
@@ -173,7 +173,7 @@ void KIGPDialog::setupSelection(void)
     m_albumPreview->setFixedHeight( 120 );
     m_albumPreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_albumPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    QWhatsThis::add( m_albumPreview, i18n( "Preview of the first image in the current selected Album." ) );
+    QWhatsThis::add( m_albumPreview, i18n( "Preview of the first image in the currently selected Album." ) );
     grid->addMultiCellWidget(m_albumPreview, 2, 2, 2, 2);
 
     layout->addWidget( groupBox1 );
@@ -236,7 +236,7 @@ bool KIGPDialog::setAlbumsList(void)
     
     QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
 
-    m_progressDlg = new QProgressDialog (i18n("Parsing Albums. Please wait..."),
+    m_progressDlg = new QProgressDialog (i18n("Parsing Albums; please wait...."),
                                          i18n("&Cancel"), 0, 0, 0, true);
     
     connect(m_progressDlg, SIGNAL(cancelled()),
@@ -315,11 +315,11 @@ void KIGPDialog::setupLookPage(void)
     labelTitle = new QLabel( i18n("Main &page title:"), page_setupLook);
     vlay->addWidget(labelTitle);
 
-    m_title = new QLineEdit(i18n("Albums Images Galleries"), page_setupLook);
+    m_title = new QLineEdit(i18n("Album Image Galleries"), page_setupLook);
     vlay->addWidget( m_title );
     labelTitle->setBuddy(m_title);
     QWhatsThis::add( m_title, i18n("<p>Enter here the title of the main HTML page "
-                                   "(multiple Albums selection only).") );
+                                   "(multiple Album selection only).") );
 
     //---------------------------------------------
 
@@ -337,7 +337,7 @@ void KIGPDialog::setupLookPage(void)
 
     m_imageName = new QCheckBox( i18n("Show image file &name"), page_setupLook);
     QWhatsThis::add( m_imageName, i18n("<p>If you enable this option, "
-                                       "the image files name will be added in the Album page.") );
+                                       "the image filenames will be added to the Album page.") );
     m_imageName->setChecked( true );
     grid->addWidget( m_imageName, 0, 0 );
 
@@ -345,7 +345,7 @@ void KIGPDialog::setupLookPage(void)
 
     m_imageSize = new QCheckBox( i18n("Show image file &size"), page_setupLook);
     QWhatsThis::add( m_imageSize, i18n("<p>If you enable this option, "
-                                       "the image files size will be added in the Album page.") );
+                                       "the image file sizes will be added to the Album page.") );
     m_imageSize->setChecked( true );
     grid->addWidget( m_imageSize, 0, 1 );
 
@@ -353,7 +353,7 @@ void KIGPDialog::setupLookPage(void)
 
     m_imageProperty = new QCheckBox( i18n("Show image &dimensions"), page_setupLook);
     QWhatsThis::add( m_imageProperty, i18n("<p>If you enable this option, "
-                                           "the image dimensions will be added in the Album page.") );
+                                           "the image dimensions will be added to the Album page.") );
     m_imageProperty->setChecked( true );
     grid->addWidget( m_imageProperty, 1, 0 );
 
@@ -361,7 +361,7 @@ void KIGPDialog::setupLookPage(void)
 
     m_PageCreationDate = new QCheckBox( i18n("Show page creation date"), page_setupLook);
     QWhatsThis::add( m_PageCreationDate, i18n("<p>If you enable this option, "
-                                              "the creation date will be added in the Album page.") );
+                                              "the creation date will be added to the Album page.") );
     m_PageCreationDate->setChecked( true );
     grid->addWidget( m_PageCreationDate, 1, 1 );
 
@@ -369,7 +369,7 @@ void KIGPDialog::setupLookPage(void)
 
     m_createPageForPhotos = new QCheckBox(  i18n("Create pages for each image"), page_setupLook);
     QWhatsThis::add( m_createPageForPhotos, i18n("<p>If you enable this option, "
-                                                 "an HTML page will be added for each photo.") );
+                                                 "a HTML page will be added for each photo.") );
     m_createPageForPhotos->setChecked( true );
     grid->addWidget( m_createPageForPhotos, 2, 0 );
 
@@ -378,8 +378,8 @@ void KIGPDialog::setupLookPage(void)
     QHBoxLayout *hlay10  = new QHBoxLayout( );
     vlay->addLayout( hlay10 );
 
-    m_openInWebBrowser = new QCheckBox( i18n("Open Images Gallery in:"), page_setupLook);
-    QWhatsThis::add( m_openInWebBrowser, i18n("<p>Select here the application for preview or "
+    m_openInWebBrowser = new QCheckBox( i18n("Open Image Gallery in:"), page_setupLook);
+    QWhatsThis::add( m_openInWebBrowser, i18n("<p>Select here the application to preview or "
                                               "edit the HTML pages.") );
     m_openInWebBrowser->setChecked( true );
 
@@ -405,7 +405,7 @@ void KIGPDialog::setupLookPage(void)
     vlay->addLayout( hlay11 );
 
     m_fontName = new QComboBox( false, page_setupLook );
-    QWhatsThis::add( m_fontName, i18n("<p>Select here the font name used for the pages.") );
+    QWhatsThis::add( m_fontName, i18n("<p>Select here the font name to use for the pages.") );
     QStringList standardFonts;
     KFontChooser::getFontList(standardFonts, 0);
     m_fontName->insertStringList( standardFonts );
@@ -424,7 +424,7 @@ void KIGPDialog::setupLookPage(void)
 
     m_fontSize = new QSpinBox( 6, 15, 1, page_setupLook );
     m_fontSize->setValue( 14 );
-    QWhatsThis::add( m_fontSize, i18n("<p>Select here the font size used for the pages.") );
+    QWhatsThis::add( m_fontSize, i18n("<p>Select here the font size to use for the pages.") );
 
     label = new QLabel( i18n("Font si&ze:"), page_setupLook );
     label->setBuddy( m_fontSize );
@@ -439,7 +439,7 @@ void KIGPDialog::setupLookPage(void)
 
     m_foregroundColor = new KColorButton(page_setupLook);
     m_foregroundColor->setColor(QColor("#d0ffd0"));
-    QWhatsThis::add( m_foregroundColor, i18n("<p>Select here the foreground color used for the pages.") );
+    QWhatsThis::add( m_foregroundColor, i18n("<p>Select here the foreground color to use for the pages.") );
 
     label = new QLabel( i18n("&Foreground color:"), page_setupLook);
     label->setBuddy( m_foregroundColor );
@@ -454,7 +454,7 @@ void KIGPDialog::setupLookPage(void)
 
     m_backgroundColor = new KColorButton(page_setupLook);
     m_backgroundColor->setColor(QColor("#333333"));
-    QWhatsThis::add( m_backgroundColor, i18n("<p>Select here the background color used for the pages.") );
+    QWhatsThis::add( m_backgroundColor, i18n("<p>Select here the background color to use for the pages.") );
 
     label = new QLabel( i18n("&Background color:"), page_setupLook);
     hlay2->addWidget( label );
@@ -469,7 +469,7 @@ void KIGPDialog::setupLookPage(void)
 
     m_bordersImagesSize = new QSpinBox( 1, 20, 1, page_setupLook );
     m_bordersImagesSize->setValue( 1 );
-    QWhatsThis::add( m_bordersImagesSize, i18n("<p>Select here the images borders size in pixels.") );
+    QWhatsThis::add( m_bordersImagesSize, i18n("<p>Select here the image borders' size in pixels.") );
 
     label = new QLabel( i18n("Images borders s&ize:"), page_setupLook );
     label->setBuddy( m_bordersImagesSize );
@@ -484,10 +484,10 @@ void KIGPDialog::setupLookPage(void)
 
     m_bordersImagesColor = new KColorButton(page_setupLook);
     m_bordersImagesColor->setColor(QColor("#d0ffd0"));
-    QWhatsThis::add( m_bordersImagesColor, i18n("<p>Select here the color used "
-                                                "for the images borders.") );
+    QWhatsThis::add( m_bordersImagesColor, i18n("<p>Select here the color to use "
+                                                "for the image borders.") );
 
-    label = new QLabel( i18n("Images bo&rders color:"), page_setupLook);
+    label = new QLabel( i18n("Image bo&rders' color:"), page_setupLook);
     hlay3->addWidget( label );
     label->setBuddy( m_bordersImagesColor );
     hlay3->addStretch( 1 );
@@ -534,13 +534,13 @@ void KIGPDialog::setupAlbumPage(void)
 
     m_imagesresize = new KIntNumInput(640, page_setupAlbum);
     m_imagesresize->setRange(200, 2000, 1, true );
-    m_imagesresize->setLabel( i18n("Target images size:") );
+    m_imagesresize->setLabel( i18n("Target images' size:") );
     dvlay->addWidget( m_imagesresize );
-    QWhatsThis::add( m_imagesresize, i18n("<p>The new size of target images in pixels") );
+    QWhatsThis::add( m_imagesresize, i18n("<p>The new size of the target images in pixels") );
 
     //---------------------------------------------
 
-    m_useSpecificTargetimageCompression = new QCheckBox(i18n("Use a specific target images compression"),
+    m_useSpecificTargetimageCompression = new QCheckBox(i18n("Use a specific target image compression"),
                                                         page_setupAlbum);
     m_useSpecificTargetimageCompression->setChecked(true);
     dvlay->addWidget(m_useSpecificTargetimageCompression);
@@ -549,9 +549,9 @@ void KIGPDialog::setupAlbumPage(void)
 
     m_Targetimagescompression = new KIntNumInput(75, page_setupAlbum);
     m_Targetimagescompression->setRange(1, 100, 1, true );
-    m_Targetimagescompression->setLabel( i18n("Target images compression:") );
+    m_Targetimagescompression->setLabel( i18n("Target images' compression:") );
     dvlay->addWidget( m_Targetimagescompression );
-    whatsThis = i18n("<p>The compression value of target images :<p>");
+    whatsThis = i18n("<p>The compression value of the target images :<p>");
     whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
                                  "<b>25</b>: high compression<p>"
                                  "<b>50</b>: medium compression<p>"
@@ -569,9 +569,9 @@ void KIGPDialog::setupAlbumPage(void)
     m_targetimagesFormat->insertItem("JPEG");
     m_targetimagesFormat->insertItem("PNG");
     m_targetimagesFormat->setCurrentText ("JPEG");
-    whatsThis = i18n("<p>Select here the image file format for target images.<p>");
-    whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group file "
-                "format is a good Web file format but it use a compression with data lost.<p>"
+    whatsThis = i18n("<p>Select here the image file format for the target images.<p>");
+    whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group's file "
+                "format is a good Web file format but uses lossy data compression.<p>"
                 "<b>PNG</b>: the Portable Network Graphics format is an extensible file format "
                 "for the lossless, portable, well-compressed storage of raster images. PNG provides "
                 "a patent-free replacement for GIF and can also replace many common uses of TIFF. "
@@ -580,7 +580,7 @@ void KIGPDialog::setupAlbumPage(void)
                 "and chromaticity data for improved color matching on heterogeneous platforms.");
     QWhatsThis::add( m_targetimagesFormat, whatsThis );
 
-    label = new QLabel( i18n("Target images file format:"), page_setupAlbum);
+    label = new QLabel( i18n("Target images' file format:"), page_setupAlbum);
     hlay12->addWidget( label );
     label->setBuddy( m_targetimagesFormat );
     hlay12->addStretch( 1 );
@@ -593,7 +593,7 @@ void KIGPDialog::setupAlbumPage(void)
     m_colorDepthSetTargetImages = new QCheckBox(i18n("&Set different color depth:"), page_setupAlbum);
     m_colorDepthSetTargetImages->setChecked(false);
     QWhatsThis::add( m_colorDepthSetTargetImages, i18n("<p>Select here the color depth used for "
-                                                       "the target images rendering.") );
+                                                       "the target image rendering.") );
     hlay13->addWidget( m_colorDepthSetTargetImages );
 
     m_colorDepthTargetImages = new QComboBox(false, page_setupAlbum);
@@ -611,7 +611,7 @@ void KIGPDialog::setupAlbumPage(void)
     dvlay->addWidget(m_useCommentFile);
 
     QWhatsThis::add( m_useCommentFile, i18n("<p>If you enable this option, "
-                                            "the images Album comments will be used for generating "
+                                            "the images' Album comments will be used for generating "
                                             "subtitles for the images.") );
 
     //---------------------------------------------
@@ -620,7 +620,7 @@ void KIGPDialog::setupAlbumPage(void)
     m_useCommentsAlbum->setChecked(true);
     dvlay->addWidget(m_useCommentsAlbum);
     QWhatsThis::add( m_useCommentsAlbum, i18n("<p>If you enable this option, "
-                                              "the Album comments will be show in the gallery.") );
+                                              "the Album comments will be shown in the gallery.") );
 
     //---------------------------------------------
 
@@ -628,7 +628,7 @@ void KIGPDialog::setupAlbumPage(void)
     m_useCollectionAlbum->setChecked(false);
     dvlay->addWidget(m_useCollectionAlbum);
     QWhatsThis::add( m_useCollectionAlbum, i18n("<p>If you enable this option, "
-                                                "the Album collection will be show in the gallery.") );
+                                                "the Album collection will be shown in the gallery.") );
 
     //---------------------------------------------
 
@@ -636,7 +636,7 @@ void KIGPDialog::setupAlbumPage(void)
     m_useDateAlbum->setChecked(false);
     dvlay->addWidget(m_useDateAlbum);
     QWhatsThis::add( m_useDateAlbum, i18n("<p>If you enable this option, "
-                                          "the Album creation date will be show in the gallery.") );
+                                          "the Album creation date will be shown in the gallery.") );
 
     //---------------------------------------------
 
@@ -644,7 +644,7 @@ void KIGPDialog::setupAlbumPage(void)
     m_useNbImagesAlbum->setChecked(true);
     dvlay->addWidget(m_useNbImagesAlbum);
     QWhatsThis::add( m_useNbImagesAlbum, i18n("<p>If you enable this option, "
-                                              "the number of images in Album will be show in the gallery.") );
+                                              "the number of images in Album will be shown in the gallery.") );
     dvlay->addStretch(1);
 
     //---------------------------------------------
@@ -668,7 +668,7 @@ void KIGPDialog::setupAlbumPage(void)
 void KIGPDialog::setupThumbnailPage(void)
 {
     QString whatsThis;
-    page_setupThumbnail = addPage(i18n("Thumbnails"), i18n("Images thumbnails"),
+    page_setupThumbnail = addPage(i18n("Thumbnails"), i18n("Image thumbnails"),
                                   BarIcon("thumbnail", KIcon::SizeMedium));
 
     QLabel *label;
@@ -679,13 +679,13 @@ void KIGPDialog::setupThumbnailPage(void)
 
     m_thumbnailsSize = new KIntNumInput(140, page_setupThumbnail);
     m_thumbnailsSize->setRange(10, 1000, 1, true );
-    m_thumbnailsSize->setLabel( i18n("Thumbnails size:") );
+    m_thumbnailsSize->setLabel( i18n("Thumbnails' size:") );
     vlay->addWidget( m_thumbnailsSize );
-    QWhatsThis::add( m_thumbnailsSize, i18n("<p>The new size of thumbnails in pixels") );
+    QWhatsThis::add( m_thumbnailsSize, i18n("<p>The new size of the thumbnails in pixels") );
 
     //---------------------------------------------
 
-    m_useSpecificThumbsCompression = new QCheckBox(i18n("Use a specific thumbnails compression"),
+    m_useSpecificThumbsCompression = new QCheckBox(i18n("Use a specific thumbnail compression"),
                                                    page_setupThumbnail);
     m_useSpecificThumbsCompression->setChecked(true);
     vlay->addWidget(m_useSpecificThumbsCompression);
@@ -694,7 +694,7 @@ void KIGPDialog::setupThumbnailPage(void)
 
     m_thumbscompression = new KIntNumInput(75, page_setupThumbnail);
     m_thumbscompression->setRange(1, 100, 1, true );
-    m_thumbscompression->setLabel( i18n("Thumbnails compression:") );
+    m_thumbscompression->setLabel( i18n("Thumbnails' compression:") );
     vlay->addWidget( m_thumbscompression );
     whatsThis = i18n("<p>The compression value of thumbnails :<p>");
     whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
@@ -713,8 +713,8 @@ void KIGPDialog::setupThumbnailPage(void)
     m_imageFormat->insertItem("PNG");
     m_imageFormat->setCurrentText ("JPEG");
     whatsThis = i18n("<p>Select here the image file format for thumbnails.<p>");
-    whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group file format "
-                "is a good Web file format but it use a compression with data lost.<p>"
+    whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group's file format "
+                "is a good Web file format but uses lossy data compression.<p>"
                 "<b>PNG</b>: the Portable Network Graphics format is an extensible file format for "
                 "the lossless, portable, well-compressed storage of raster images. PNG provides a "
                 "patent-free replacement for GIF and can also replace many common uses of TIFF. "
@@ -723,7 +723,7 @@ void KIGPDialog::setupThumbnailPage(void)
                 "and chromaticity data for improved color matching on heterogeneous platforms.");
     QWhatsThis::add( m_imageFormat, whatsThis );
 
-    label = new QLabel( i18n("Thumbnails file format:"), page_setupThumbnail);
+    label = new QLabel( i18n("Thumbnails' file format:"), page_setupThumbnail);
     hlay3->addWidget( label );
     label->setBuddy( m_imageFormat );
     hlay3->addStretch( 1 );
@@ -738,7 +738,7 @@ void KIGPDialog::setupThumbnailPage(void)
     m_colorDepthSetThumbnails = new QCheckBox(i18n("&Set different color depth:"), page_setupThumbnail);
     m_colorDepthSetThumbnails->setChecked(false);
     QWhatsThis::add( m_colorDepthSetThumbnails, i18n("<p>Select here the color depth used for "
-                                                     "the thumbnails images rendering.") );
+                                                     "the thumbnail image rendering.") );
     hlay4->addWidget( m_colorDepthSetThumbnails );
 
     m_colorDepthThumbnails = new QComboBox(false, page_setupThumbnail);
@@ -772,14 +772,14 @@ void KIGPDialog::aboutPage(void)
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 
-    QLabel *label = new QLabel( i18n("A KIPI plugin for Albums HTML export\n"
+    QLabel *label = new QLabel( i18n("A KIPI plugin for HTML album export\n"
                              "Author: Gilles Caulier\n"
                              "Email: caulier dot gilles at free.fr\n\n"
                              "Ported and improved from KimgalleryPlugin konqueror plugin to\n"
                              "Digikam plugin architecture by Gilles Caulier.\n\n"
-                             "Thanks to Achim Bohnet <ach at mpe.mpg.de> for HTML implementation patchs\n"
+                             "Thanks to Achim Bohnet <ach at mpe.mpg.de> for HTML implementation patches\n"
                              "Thanks to Gregory Kokanosky <gregory dot kokanosky at free.fr> "
-                             "for images navigation mode patchs\n\n"
+                             "for image navigation mode patches\n\n"
                              "KimgalleryPlugin is copyrighted 2001, 2003 by\n"
                              "Lukas Tinkl <lukas at kde.org> and\n"
                              "Andreas Schlapbach <schlpbch at iam.unibe.ch>"), page_about);
@@ -835,7 +835,7 @@ void KIGPDialog::slotOk()
 {
     if (getSelectedAlbums().size() == 0)
        {
-       KMessageBox::sorry(0, i18n("You must selected at least an Album to export!"));
+       KMessageBox::sorry(0, i18n("You must selected at least one Album to export."));
        return;
        }
 
@@ -843,7 +843,7 @@ void KIGPDialog::slotOk()
 
     if (dirGallery.exists() == false)
        {
-       KMessageBox::sorry(0, i18n("Images gallery folder do not exist ! Please check it..."));
+       KMessageBox::sorry(0, i18n("Image gallery folder does not exist; please check it...."));
        return;
        }
        

@@ -117,7 +117,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
     
     if (!m_progressDlg)
         {
-        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Albums HTML Export process"));
+        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Album HTML Export process"));
         
         connect(m_progressDlg, SIGNAL(cancelClicked()),
                 this, SLOT(slotCancel()));
@@ -191,19 +191,19 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
                {
                case(KIPIImagesGalleryPlugin::BuildHTMLiface): 
                   {
-                  text = i18n("Main HTML interface creation done!");
+                  text = i18n("Main HTML interface creation completed.");
                   break;
                   }
                   
                case(KIPIImagesGalleryPlugin::BuildAlbumHTMLPage): 
                   {
-                  text = i18n("HTML pages creation for Album '%1' done!").arg(d->albumName);
+                  text = i18n("HTML pages creation for Album '%1' completed.").arg(d->albumName);
                   break;
                   }
 
               case(KIPIImagesGalleryPlugin::ResizeImages): 
                   {
-                  text = i18n("Creating thumbnail for '%1' done.").arg(d->fileName);
+                  text = i18n("Creating thumbnail for '%1' completed.").arg(d->fileName);
                   break;
                   }
                                  

@@ -176,7 +176,7 @@ void ImagesGallery::readSettings(void)
 
   // HTML Look dialogbox setup tab
 
-  m_configDlg->setMainTitle( m_config->readEntry("MainPageTitle", i18n("KIPI Albums Images Galleries")) );
+  m_configDlg->setMainTitle( m_config->readEntry("MainPageTitle", i18n("KIPI Album Image Gallery")) );
   m_configDlg->setImagesPerRow( m_config->readEntry("ImagesPerRow", "4").toInt() );
 
   if (m_config->readEntry("PrintImageName", "true") == "true")
@@ -335,12 +335,12 @@ bool ImagesGallery::removeTargetGalleryFolder(void)
     if (TargetDir.exists (MainTPath) == true)
        {
        if (KMessageBox::warningYesNo(0,
-           i18n("The target directory\n'%1'\nalready exist. Do you want overwrite it? (all data "
-                "in this directory will be lost!)").arg(MainTPath)) == KMessageBox::Yes)
+           i18n("The target directory\n'%1'\nalready exists; do you want overwrite it? (all data "
+                "in this directory will be lost.)").arg(MainTPath)) == KMessageBox::Yes)
           {
           if ( DeleteDir(MainTPath) == false )
              {
-             KMessageBox::error(0, i18n("Cannot remove folder '%1'!").arg(MainTPath));
+             KMessageBox::error(0, i18n("Cannot remove folder '%1'.").arg(MainTPath));
              return false;
              }
           }
@@ -391,7 +391,7 @@ void ImagesGallery::run()
        d->action = KIPIImagesGalleryPlugin::Error;
        d->starting = false;
        d->success = false;
-       d->message = i18n("Couldn't create directory '%1'").arg(MainTPath);
+       d->message = i18n("Could not create directory '%1'").arg(MainTPath);
        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
        return;
        }
@@ -444,7 +444,7 @@ void ImagesGallery::run()
                  d->action = KIPIImagesGalleryPlugin::Error;
                  d->starting = false;
                  d->success = false;
-                 d->message = i18n("Couldn't create directory '%1'").arg(SubTPath);
+                 d->message = i18n("Could not create directory '%1'").arg(SubTPath);
                  QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                  return;
                  }
@@ -475,7 +475,7 @@ void ImagesGallery::run()
                    d->action = KIPIImagesGalleryPlugin::Error;
                    d->starting = false;
                    d->success = false;
-                   d->message = i18n("Cannot remove folder '%1' !").arg(MainTPath);
+                   d->message = i18n("Cannot remove folder '%1'.").arg(MainTPath);
                    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                    return;
                    }
@@ -554,7 +554,7 @@ bool ImagesGallery::createDirectory(QDir thumb_dir, QString imgGalleryDir, QStri
             d->action = KIPIImagesGalleryPlugin::Error;
             d->starting = false;
             d->success = false;
-            d->message = i18n("Couldn't create directory '%1' in '%2'")
+            d->message = i18n("Could not create directory '%1' in '%2'")
                          .arg(dirName).arg(imgGalleryDir);
             QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
             return false;
@@ -654,11 +654,11 @@ void ImagesGallery::createBody(QTextStream& stream,
     if (QFile::exists(imgGalleryDir + QString::fromLatin1("/../gohome.png")))
        {
        stream << "<p><a href=\"../index.html\"><img src=\"../gohome.png\" border=\"0\"  title=\""
-              << i18n("Albums list") << "\" alt=\"" << i18n("Albums list") << "\"></a></p>"
+              << i18n("Album list") << "\" alt=\"" << i18n("Album list") << "\"></a></p>"
               << endl;
        }
 
-    stream << "<h1>" << i18n("Images Gallery for Album ") << "&quot;" << m_AlbumTitle << "&quot;"
+    stream << "<h1>" << i18n("Image Gallery for Album ") << "&quot;" << m_AlbumTitle << "&quot;"
            << "</h1>" << endl;
 
     if (m_configDlg->useCommentsAlbum() == true ||
@@ -944,10 +944,10 @@ void ImagesGallery::createBody(QTextStream& stream,
         KIO::file_copy(srcURL, destURL, -1, true, false, false);
         
         stream << "<p>"  << endl;
-        Temp = i18n("Valid HTML 4.01!");
+        Temp = i18n("Valid HTML 4.01");
         stream << "<img src=\"thumbs/valid-html401.png\" alt=\"" << Temp
                << "\" height=\"31\" width=\"88\"  title=\"" << Temp <<  "\" />" << endl;
-        Temp = i18n("Images gallery created with "
+        Temp = i18n("Image gallery created with "
                     "<a href=\"%1\">%2</a> on %3").arg(m_hostURL).arg(m_hostName).arg(today);
         stream << Temp << endl;
         stream << "</p>" << endl;
@@ -967,7 +967,7 @@ void ImagesGallery::createBodyMainPage(QTextStream& stream, KURL& url)
     Temp = m_configDlg->getMainTitle();
     stream << "<body>\n<h1>" << Temp << "</h1><p>\n" << endl;
 
-    Temp = i18n("<i>Albums list:</i>");
+    Temp = i18n("<i>Album list:</i>");
     stream << Temp << "<br>" << endl;
     stream << "<hr>" << endl;
 
@@ -987,11 +987,11 @@ void ImagesGallery::createBodyMainPage(QTextStream& stream, KURL& url)
         KIO::file_copy(srcURL, destURL, -1, true, false, false);
 
         stream << "<p>"  << endl;
-        Temp = i18n("Valid HTML 4.01!");
+        Temp = i18n("Valid HTML 4.01");
         stream << "<img src=\"valid-html401.png\" alt=\"" << Temp
                << "\" height=\"31\" width=\"88\" title=\"" << Temp <<  "\" />" << endl;
 
-        Temp = i18n("Images gallery created with "
+        Temp = i18n("Image gallery created with "
                     "<a href=\"%1\">%2</a> on %3").arg(m_hostURL).arg(m_hostName).arg(today);
                
         stream << Temp << endl;
@@ -1058,7 +1058,7 @@ bool ImagesGallery::createHtml(const KURL& url,
         d->action = KIPIImagesGalleryPlugin::Error;
         d->starting = false;
         d->success = false;
-        d->message = i18n("Couldn't open file '%1'").arg(url.path(+1));
+        d->message = i18n("Could not open file '%1'").arg(url.path(+1));
         QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
         return false;
         }
@@ -1284,12 +1284,12 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
        if (m_configDlg->printPageCreationDate())
           {
           stream << "<hr>" << endl;
-          QString valid = i18n("Valid HTML 4.01!");
+          QString valid = i18n("Valid HTML 4.01");
           const QString today(KGlobal::locale()->formatDate(QDate::currentDate()));
           stream << "<div><img src=\"../thumbs/valid-html401.png\" alt=\"" << valid
                  << "\" height=\"31\" width=\"88\"  title=\"" << valid <<  "\" />" << endl;
 
-          valid =  i18n("Images gallery created with "
+          valid =  i18n("Image gallery created with "
                         "<a href=\"%1\">%2</a> on %3").arg(m_hostURL).arg(m_hostName).arg(today);
           stream << valid << "</div>" << endl;
           }
@@ -1476,7 +1476,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'mozilla' web browser.\nPlease, check your installation!"));
+          KMessageBox::error(0, i18n("Cannot start 'mozilla' web browser;\nplease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Netscape")
@@ -1486,7 +1486,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'netscape' web browser.\nPlease, check your installation!"));
+          KMessageBox::error(0, i18n("Cannot start 'netscape' web browser;\nplease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Opera")
@@ -1496,7 +1496,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'opera' web browser.\nPlease, check your installation!"));
+          KMessageBox::error(0, i18n("Cannot start 'opera' web browser;\nplease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Dillo")
@@ -1506,7 +1506,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'dillo' web browser.\nPlease, check your installation!"));
+          KMessageBox::error(0, i18n("Cannot start 'dillo' web browser;\nplease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Galeon")
@@ -1516,7 +1516,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'galeon' web browser.\nPlease, check your installation!"));
+          KMessageBox::error(0, i18n("Cannot start 'galeon' web browser;\nplease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Amaya")
@@ -1526,7 +1526,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'amaya' web browser.\nPlease, check your installation!"));
+          KMessageBox::error(0, i18n("Cannot start 'amaya' web browser;\nplease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Quanta")
@@ -1536,7 +1536,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'quanta' web editor.\nPlease, check your installation!"));
+          KMessageBox::error(0, i18n("Cannot start 'quanta' web editor;\nplease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Screem")
@@ -1546,7 +1546,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'screem' web editor.\nPlease, check your installation!"));
+          KMessageBox::error(0, i18n("Cannot start 'screem' web editor;\nplease check your installation."));
        }
 }
 
