@@ -75,7 +75,7 @@ private:
 #ifdef TEMPORARILY_REMOVED
     Digikam::AlbumInfo *m_album;
 #endif
-    KAction            *m_actionCDArchiving;
+  KAction            *m_actionCDArchiving;
   KProcess           *m_Proc;
   QTimer             *m_K3bTimer;
   pid_t               m_k3bPid;

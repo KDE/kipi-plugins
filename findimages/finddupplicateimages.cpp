@@ -145,13 +145,11 @@ void FindDuplicateImages::readSettings(void)
     m_findDuplicateDialog->setFindMethod( config->readEntry("FindMethod", i18n("Almost")) );
     m_findDuplicateDialog->setApproximateThreeshold( config->readNumEntry("ApproximateThreeshold", 88) );
 
-    // Read File Filter settings in kipirc file.
-
-    config->setGroup("Album Settings");
-    QString Temp = config->readEntry("File Filter", "*.jpg *.jpeg *.tif *.tiff *.gif *.png *.bmp");
-    m_imagesFileFilter = Temp.lower() + " " + Temp.upper();
-
     delete config;
+
+    // Get the image files filters from the hosts app.
+     
+    m_imagesFileFilter = m_interface->fileExtensions();
 }
 
 

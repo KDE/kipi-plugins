@@ -38,6 +38,9 @@
 #include <qdatetime.h>
 #include <kprocess.h>
 
+// Include files for KIPI
+
+#include <libkipi/interface.h>
 
 class KFileItem;
 class QPushButton;
@@ -81,7 +84,7 @@ class KImg2mpgData : public KDialog
 Q_OBJECT
 
 public:
-  KImg2mpgData(QWidget* parent = 0, const char * name = 0);
+  KImg2mpgData( KIPI::Interface* interface, QWidget* parent = 0, const char * name = 0 );
   virtual ~KImg2mpgData();
 
   void show();
@@ -188,6 +191,8 @@ private:
   KListBox*             m_ImagesFilesListBox;
 
   KButtonBox*           m_ImagesFilesButtonBox;
+  
+  KIPI::Interface*      m_interface;
 
   class KShowDebuggingOutput* m_DebuggingDialog;
 

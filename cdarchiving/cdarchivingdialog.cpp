@@ -102,15 +102,13 @@ private:
 
 CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *parent)
                  : KDialogBase( IconList, i18n("Configure"), Help|Ok|Cancel, Ok, parent,
-                                "CDArchivingDialog", true, true ), m_dialogOk( false ), m_interface( interface )
+                                "CDArchivingDialog", true, true ), m_dialogOk( false ), 
+                                m_interface( interface )
 {
-    // Read File Filter settings in kipirc file.
-
-    KConfig config;
-    config.setGroup("Album Settings");
-    QString Temp = config.readEntry("File Filter", "*.jpg *.jpeg *.tif *.tiff *.gif *.png *.bmp");
-    m_ImagesFilesSort = Temp.lower() + " " + Temp.upper();
-
+    // Get the image files filters from the hosts app.
+     
+    m_ImagesFilesSort = m_interface->fileExtensions();
+  
     setCaption(i18n("Albums CD archiving"));
     setupSelection();
     setupLookPage();

@@ -208,15 +208,11 @@ void CDArchiving::readSettings(void)
   else
      m_configDlg->setUseStartBurningProcess( true );
 
-// PENDING (Gilles) : Using kipirc file!
-  // Read File Filter settings in digikamrc file.
-
-  m_config = new KConfig("digikamrc");
-  m_config->setGroup("Album Settings");
-  QString Temp = m_config->readEntry("File Filter", "*.jpg *.jpeg *.tif *.tiff *.gif *.png *.bmp");
-  m_imagesFileFilter = Temp.lower() + " " + Temp.upper();
-
   delete m_config;
+  
+  // Get the image files filters from the hosts app.
+     
+  m_imagesFileFilter = m_interface->fileExtensions();
 }
 
 

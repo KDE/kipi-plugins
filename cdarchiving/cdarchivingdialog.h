@@ -200,7 +200,7 @@ class CDArchivingDialog : public KDialogBase
 
   KIO::filesize_t     MaxMediaSize;
 
-  KIPI::Interface* m_interface;
+  KIPI::Interface    *m_interface;
 
  private:
   void setupSelection(void);

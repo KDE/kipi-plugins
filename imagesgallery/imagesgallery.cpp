@@ -83,7 +83,7 @@ extern "C"
 
 
 ImagesGallery::ImagesGallery( KIPI::Interface* interface )
-: m_interface(interface)
+             : m_interface(interface)
 {
     KImageIO::registerFormats();
     Activate();
@@ -287,13 +287,11 @@ void ImagesGallery::readSettings(void)
 
   m_configDlg->setColorDepthThumbnails( m_config->readEntry("ThumbnailsColorDepthValue", "32") );
 
-  // Read File Filter settings in kipirc file.
-
-  m_config->setGroup("Album Settings");
-  QString Temp = m_config->readEntry("File Filter", "*.jpg *.jpeg *.tif *.tiff *.gif *.png *.bmp");
-  m_imagesFileFilter = Temp.lower() + " " + Temp.upper();
-
   delete m_config;
+    
+  // Get the image files filters from the hosts app.
+     
+  m_imagesFileFilter = m_interface->fileExtensions();
 }
 
 

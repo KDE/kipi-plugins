@@ -151,16 +151,11 @@ void AcquireImageDialog::readSettings(void)
     m_imageCompression->setValue(m_config->readNumEntry("ImageCompression", 75));
     m_imagesFormat->setCurrentText(m_config->readEntry("ImageFormat", "TIFF"));
 
-
-// PENDING (gilles) : using kipirc file !
-    // Read File Filter settings in kipirc file.
-
-    m_config = new KConfig("digikamrc");
-    m_config->setGroup("Album Settings");
-    QString Temp = m_config->readEntry("File Filter", "*.jpg *.jpeg *.tif *.tiff *.gif *.png *.bmp");
-    m_ImagesFilesSort = Temp.lower() + " " + Temp.upper();
-
     delete m_config;
+    
+    // Get the image files filters from the hosts app.
+     
+    m_ImagesFilesSort = m_interface->fileExtensions();    
 }
 
 

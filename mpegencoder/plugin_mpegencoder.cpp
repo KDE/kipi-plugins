@@ -65,7 +65,7 @@ void Plugin_Mpegencoder::setup( QWidget* widget )
                                        SLOT(slotActivate()),
                                        actionCollection(),
                                        "mpeg_encoder");
-				       
+	       
     addAction( m_actionMPEGEncoder );
 }
 
@@ -79,8 +79,8 @@ Plugin_Mpegencoder::~Plugin_Mpegencoder()
 
 void Plugin_Mpegencoder::slotActivate()
 {
-    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
-    KImg2mpgData *MPEGconverterDialog = new KImg2mpgData();
+    KIPI::Interface* interface = static_cast< KIPI::Interface* >( parent() );
+    KImg2mpgData *MPEGconverterDialog = new KImg2mpgData( interface );
     MPEGconverterDialog->show();
 
     CheckBinProg* CheckExternalPrograms = new CheckBinProg(this);

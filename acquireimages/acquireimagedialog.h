@@ -70,7 +70,7 @@ Q_OBJECT
     void slotImageFormatChanged(const QString &string);
 
  protected:
-   KIPI::Interface* m_interface;
+   KIPI::Interface    *m_interface;
    QImage              m_qimageScanned;
 
    QPushButton        *m_addNewAlbumButton;
@@ -80,7 +80,7 @@ Q_OBJECT
    QString             m_newDir;
    QString             m_ImagesFilesSort;
 
-    KIPI::UploadWidget* m_uploadPath;
+   KIPI::UploadWidget* m_uploadPath;
     //KListBox           *m_AlbumList;
 
    KIntNumInput       *m_imageCompression;

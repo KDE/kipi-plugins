@@ -167,8 +167,8 @@ void ListImageItems::dropEvent(QDropEvent *e)
 
 /////////////////////////////// CONSTRUCTOR /////////////////////////////////////////////////
 
-KImg2mpgData::KImg2mpgData(QWidget *parent, const char *name)
-            : KDialog( parent, name, false, Qt::WDestructiveClose )
+KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const char *name)
+            : KDialog( parent, name, false, Qt::WDestructiveClose ), m_interface( interface )
 {
   // Init. Tmp folder
 
@@ -1213,13 +1213,11 @@ void KImg2mpgData::readSettings()
   m_MJBinFolderConfig = m_config->readEntry("MjpegToolsBinFolder", "/usr/bin");
 
   delete ColorB;
-
-  // Read File Filter settings in kipirc file.
-
-  m_config->setGroup("Album Settings");
-  m_ImagesFilesSort = m_config->readEntry("File Filter", "*.jpg *.jpeg *.tif *.tiff *.gif *.png *.bmp");
-
   delete m_config;
+
+  // Get the image files filters from the hosts app.
+     
+  m_ImagesFilesSort = m_interface->fileExtensions();
 }
 
 
