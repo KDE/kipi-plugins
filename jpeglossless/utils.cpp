@@ -27,13 +27,7 @@
 
 extern "C" {
 #include <tiffio.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/mman.h>
-#include <fcntl.h>
 }
 
 #include "utils.h"
@@ -97,74 +91,34 @@ bool isJPEG(const QString& file)
 
 bool CopyFile(const QString& src, const QString& dst)
 {
-    int fdin, fdout;
-    struct stat statbuf;
-    char *s, *d;
+    QFile sFile(src);
+    QFile dFile(dst);
 
-    // open the input file
-    if ((fdin = ::open(QFile::encodeName(src).data(), O_RDONLY)) < 0) {
-        kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:CopyFile: Failed to open input file"
-                    << endl;
-	return false;
-    }
+    if ( !sFile.open(IO_ReadOnly) )
+        return false;
 
-    // find size of input file
-    if (::fstat (fdin,&statbuf) < 0) {
-        kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:CopyFile: Failed to stat input file"
-                    << endl;
-	return false;
-    }
-
-    // open/create the output file
-    if ((fdout = ::open(QFile::encodeName(dst).data(), O_RDWR | O_CREAT | O_TRUNC,
-                       statbuf.st_mode)) < 0) {
-        kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:CopyFile: Failed to open output file"
-                    << endl;
-        ::close(fdin);
+    if ( !dFile.open(IO_WriteOnly) )
+    {
+        sFile.close();
         return false;
     }
 
+    const int MAX_IPC_SIZE = (1024*32);
+    char buffer[MAX_IPC_SIZE];
 
-    // go to the location corresponding to the last byte
-    if (::lseek(fdout, statbuf.st_size - 1, SEEK_SET) == -1) {
-        kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:CopyFile: lseek error"
-                    << endl;
-	return false;
+    Q_LONG len;
+    while ((len = sFile.readBlock(buffer, MAX_IPC_SIZE)) != 0)
+    {
+        if (len == -1 || dFile.writeBlock(buffer, (Q_ULONG)len) == -1)
+        {
+            sFile.close();
+            dFile.close();
+            return false;
+        }
     }
 
-    // write a dummy byte at the last location
-    if (::write(fdout, "", 1) != 1) {
-        kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:CopyFile: write error"
-                    << endl;
-	return false;
-    }
-
-    // mmap the input file
-    if ((s = (char*)::mmap(0, statbuf.st_size, PROT_READ, MAP_SHARED, fdin, 0))
-	== (caddr_t) -1) {
-        kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:CopyFile: mmap error for input"
-                    << endl;
-	return false;
-    }
-
-    // mmap the output file
-    if ((d = (char*)::mmap(0, statbuf.st_size, PROT_READ | PROT_WRITE,
-                           MAP_SHARED, fdout, 0)) == (caddr_t) -1) {
-        kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:CopyFile: mmap error for output"
-                    << endl;
-	return false;
-    }
-
-    // this copies the input file to the output file
-    ::memcpy (d, s, statbuf.st_size);
-
-    // munmap the input/ouput
-    ::munmap(s, statbuf.st_size);
-    ::munmap(d, statbuf.st_size);
-
-    // close the file descriptors
-    ::close(fdin);
-    ::close(fdout);
+    sFile.close();
+    dFile.close();
 
     return true;
 }
