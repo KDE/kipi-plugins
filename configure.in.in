@@ -111,7 +111,7 @@ fi
 AC_MSG_CHECKING([for libkexif in our sources])
 if test -d $srcdir/libkexif; then
     have_libkexif=yes
-    LIBKEXIF_CFLAGS='-I$(top_srcdir)/libkexif'
+    LIBKEXIF_CFLAGS='-I$(top_srcdir)'
     LIBKEXIF_LIBS='$(top_builddir)/libkexif/libkexif.la'
     LIBKEXIF_LIBS_DEP='$(LIBKEXIF_LIBS)'
     AC_MSG_RESULT([found])
