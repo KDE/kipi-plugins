@@ -62,6 +62,23 @@ extern "C"
 namespace KIPIPrintWizardPlugin
 {
 
+#if QT_VERSION<0x030200
+// This function emulates int QButtonGroup::selectedId() which does not exist
+// in Qt 3.1
+inline int buttonGroupSelectedId(const QButtonGroup* group)
+{
+  QButton* button=group->selected();
+  if (!button) return -1;
+  return group->id(button);
+}
+#else
+inline int buttonGroupSelectedId(const QButtonGroup* group)
+{
+  return group->selectedId();
+}
+#endif
+
+
 FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
               : FrmPrintWizardBase(parent, name)
 {
@@ -383,7 +400,7 @@ void FrmPrintWizard::previewPhotos()
   QPainter p;
   p.begin(&img);
   p.fillRect(0, 0, img.width(), img.height(), this->paletteBackgroundColor());
-  paintOnePage(p, m_photos, s->layouts, GrpImageCaptions->selectedId(), current, true);
+  paintOnePage(p, m_photos, s->layouts, buttonGroupSelectedId(GrpImageCaptions), current, true);
   p.end();
   BmpFirstPagePreview->setPixmap(img);
 }
@@ -461,7 +478,7 @@ void FrmPrintWizard::printPhotos(QPtrList<TPhoto> photos, QPtrList<QRect> layout
   bool printing = true;
   while(printing)
   {
-    printing = paintOnePage(p, photos, layouts, GrpImageCaptions->selectedId(), current);
+    printing = paintOnePage(p, photos, layouts, buttonGroupSelectedId(GrpImageCaptions), current);
     if (printing)
       printer.newPage();
     PrgPrintProgress->setProgress(current);
@@ -528,7 +545,7 @@ QStringList FrmPrintWizard::printPhotosToFile(QPtrList<TPhoto> photos, QString &
 
     // paint this page, even if we aren't saving it to keep the page
     // count accurate.
-    printing = paintOnePage(*img, photos, layouts->layouts, GrpImageCaptions->selectedId(), current);
+    printing = paintOnePage(*img, photos, layouts->layouts, buttonGroupSelectedId(GrpImageCaptions), current);
 
     if (saveFile)
     {
@@ -612,7 +629,7 @@ void FrmPrintWizard::saveSettings()
   config.writeEntry("PrintOutput", output);
 
   // image captions
-  config.writeEntry("ImageCaptions", GrpImageCaptions->selectedId());
+  config.writeEntry("ImageCaptions", buttonGroupSelectedId(GrpImageCaptions));
 
   // output path
   config.writeEntry("OutputPath", EditOutputPath->text());
