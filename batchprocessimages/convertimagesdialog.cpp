@@ -126,7 +126,7 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
                                  "bitmap file formats for storage of 24 and 32 bits truecolor images.  "
                                  "TGA supports colormaps, alpha channel, gamma value, postage stamp image, "
                                  "textual information, and developer-definable data.");
-    whatsThis = whatsThis + i18n("<p><b>EPS</b>: the  Adobe Encapsulated PostScript image file format. An EPS file "
+    whatsThis = whatsThis + i18n("<p><b>EPS</b>: the  Adobe Encapsulated PostScript image file format "
                                  "is a PostScript language program describing the appearance of a single page. "
                                  "Usually, the purpose of the EPS file is to be embedded inside another PostScript "
                                  "language page description.");
