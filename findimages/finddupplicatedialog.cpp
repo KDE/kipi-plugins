@@ -175,7 +175,7 @@ void FindDuplicateDialog::setupPageMethod(void)
 
     QGroupBox * groupBox2 = new QGroupBox( 1, Qt::Horizontal, i18n("Cache Maintenance"), page_setupMethod );
     new QLabel(i18n("The find-duplicate-images process uses a cache folder for images' fingerprints\n"
-                    "to speed up the analysis of Albums items. The cache location is \"~/.findduplicate\"."), groupBox2);
+                    "to speed up the analysis of Albums items."), groupBox2);
 
     QPushButton* updateCache = new QPushButton( groupBox2, "UpdateCache" );
     updateCache->setText(i18n( "&Update Cache" ));

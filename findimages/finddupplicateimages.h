@@ -102,6 +102,7 @@ protected:
    QObject *parent_;
    QDict < QPtrVector < QFile > > *res;
    KIPI::Interface* m_interface;
+   QString cacheDir;
 };
 
 }  // NameSpace KIPIFindDupplicateImagesPlugin

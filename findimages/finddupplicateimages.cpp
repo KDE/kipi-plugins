@@ -102,7 +102,8 @@ public:
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 FindDuplicateImages::FindDuplicateImages( KIPI::Interface* interface, QObject *parent)
-                    : QObject(parent), QThread(), m_interface( interface )
+                    : QObject(parent), QThread(), m_interface( interface ),
+                      cacheDir(KGlobal::dirs()->saveLocation("cache", "kipi-findduplicate/"))
 {
     KImageIO::registerFormats();
     parent_ = parent;
@@ -280,7 +281,7 @@ void FindDuplicateImages::slotClearCache(QStringList fromDirs)
 
     for ( QStringList::Iterator it = fromDirs.begin(); it != fromDirs.end(); ++it )
         {
-        QString deleteImage = QDir::homeDirPath() + "/.findduplicate/cache/" + *it ;
+        QString deleteImage = cacheDir + *it ;
 
         if ( DeleteDir(deleteImage) == false )
            delOk = false;
@@ -297,7 +298,7 @@ void FindDuplicateImages::slotClearCache(QStringList fromDirs)
 
 void FindDuplicateImages::slotClearAllCache(void)
 {
-    bool delOk = DeleteDir(QDir::homeDirPath() + "/.findduplicate/cache/");
+    bool delOk = DeleteDir(cacheDir);
 
     if ( delOk == true )
        KMessageBox::information(m_findDuplicateDialog, i18n("All cache purged successfully!"));
@@ -335,11 +336,11 @@ void FindDuplicateImages::updateCache(QString fromDir)
     
     kdDebug( 51000 ) << fromDir.ascii() << endl;
     pdCache->setLabelText(i18n("Updating in progress for:\n") + fromDir);
-    QDir d(QDir::homeDirPath() + "/.findduplicate/cache/" + fromDir);
-    int len = QString(QDir::homeDirPath() + "/.findduplicate/cache").length();
+    QDir d(cacheDir + fromDir);
+    int len = cacheDir.length()-1; // Remove trailing /
     bool delDir = false;
 
-    kdDebug( 51000 ) << QDir::homeDirPath() + "/.findduplicate/cache/" + fromDir.latin1() << endl;
+    kdDebug( 51000 ) << cacheDir + fromDir.latin1() << endl;
 
     if ( !QFileInfo(fromDir).exists() )
        delDir = true;      // If the source folder have been removed, remove also the cache...
@@ -375,7 +376,7 @@ void FindDuplicateImages::updateCache(QString fromDir)
        }
 
     if (delDir)
-        QDir().rmdir(QDir::homeDirPath()+"/.findduplicate/cache/" + fromDir);
+        QDir().rmdir(cacheDir + fromDir);
 }
 
 
@@ -491,11 +492,11 @@ ImageSimilarityData* FindDuplicateImages::image_sim_fill_data(QString filename)
     ImageSimilarityData *sd = new ImageSimilarityData();
     sd->filename=filename;
 
-    QFileInfo info(QDir::homeDirPath()+"/.findduplicate/cache/" + QFileInfo(filename).absFilePath()+".dat");
+    QFileInfo info(cacheDir + QFileInfo(filename).absFilePath()+".dat");
 
     if(info.exists())
         {
-        QFile f(QDir::homeDirPath () + "/.findduplicate/cache/"+QFileInfo(filename).absFilePath()+".dat");
+        QFile f(cacheDir+QFileInfo(filename).absFilePath()+".dat");
         if ( f.open(IO_ReadOnly) )
             {
             QDataStream s( &f );
@@ -570,7 +571,7 @@ ImageSimilarityData* FindDuplicateImages::image_sim_fill_data(QString filename)
 
     // Saving the data.
 
-    QFile f(QDir::homeDirPath () + "/.findduplicate/cache/"+QFileInfo(filename).absFilePath()+".dat");
+    QFile f(cacheDir+QFileInfo(filename).absFilePath()+".dat");
     KStandardDirs::makeDir(QFileInfo(f).dirPath(true));
 
     if ( f.open(IO_WriteOnly) )
