@@ -5,6 +5,7 @@ Gilles Caulier     <caulier dot gilles at free.fr>
 Gregory Kokanosky  <gregory dot kokanosky at free.fr>
 Todd Shoemaker     <todd at theshoemakers.net>
 Richard Groult     <Richard dot Groult at jalix.org>
+Ralf Holzer        <kde at ralfhoelzer.com>
 
 Port to LIBKIPI on KDE CVS :
 
@@ -26,6 +27,7 @@ Jesper K. Pedersen <blackie at kde.org>
  - Add preview Slideshow effects in dialogbox like Kcontrol
    screensavers settings.
  - Checked Xinerama fonctionality with OpenGL.
+ - Auto-rotate according to EXIF orientation tag
 
 ----------------------------------------------------------------------------
 * MPEGENCODER PLUGIN [Author: Gilles Caulier]
@@ -50,6 +52,8 @@ Jesper K. Pedersen <blackie at kde.org>
 * COMMENTSEDITOR PLUGIN [Author: Renchi Raju]
   (batch images comments editor)
 
+ - Write comments into JPEG COM field and EXIF UserComment
+
 ----------------------------------------------------------------------------
 * PRINTWIZARD PLUGIN [Author: Todd Shoemaker]
   (Multiples images printing wizzard)
@@ -60,6 +64,8 @@ Jesper K. Pedersen <blackie at kde.org>
 ----------------------------------------------------------------------------
 * JPEGLOSSLESS PLUGIN [Author: Renchi Raju]
   (Batch operations images with JPEG loss less)
+
+ - Add option to rotate according to EXIF orientation tag
 
 ----------------------------------------------------------------------------
 * CDARCHIVING PLUGIN [Author: Gilles Caulier]
