@@ -116,10 +116,9 @@ Notes :
 - More specific compilation and installation options can be used with the 'configure' script.
 Check this with './configure --help' command line.
 
-- The slideshow plugin needs OpenGL support to compile. By default it relies on OpenGL support
-compiled into your version of the Qt library. If this is not the case you can link against
-external OpenGL libraries with './configure --enable-opengl'. If you prefer to use Mesa instead
-use this: './configure --enable-opengl --with-mesa'.
+- The slideshow plugin needs OpenGL support to compile. If OpenGL support is not
+available or you don't want to compile the slideshow plugin use 
+'./configure --without-opengl'.
 
 - Some plugins can be disabled during the build process. Check the end of 'configure.in.in' file
 and decomment the plugin lines corresponding. Then start the installation procedure.
