@@ -4,7 +4,7 @@
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that you could brighten up your images using Batch Color Images plugin for increased contrast?
@@ -21,7 +21,7 @@ Did you know that you could brighten up your images using Batch Color Images plu
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that you could abort a slideshow using <b>ESC</b>?
@@ -38,7 +38,7 @@ Did you know that you could abort a slideshow using <b>ESC</b>?
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that Kipi library provide a scanner plugin that gives you direct access to your scanner?
@@ -55,7 +55,7 @@ Did you know that Kipi library provide a scanner plugin that gives you direct ac
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that you can take a screenshoot with Kipi library and save the result to an Album with some comments?
@@ -72,7 +72,7 @@ Did you know that you can take a screenshoot with Kipi library and save the resu
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that you can use the <b>LZW</b> compression to reduce the size of the <b>TIFF</b> image files in the Convert Images plugin?
@@ -89,7 +89,7 @@ Did you know that you can use the <b>LZW</b> compression to reduce the size of t
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that all images operations in the batch processing images plugins run without losing the <b>Exif</b> informations in the <b>JPEG</b> files?
@@ -106,7 +106,7 @@ Did you know that all images operations in the batch processing images plugins r
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that the <b>Noise Reduction</b> option in the <b>Filter Images</b> plugin can be used to improve the rendering of images taken with an analog camera?
@@ -123,7 +123,7 @@ Did you know that the <b>Noise Reduction</b> option in the <b>Filter Images</b> 
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that you can use the drag and drop feature in e-mail images to add some items to the list?
@@ -140,7 +140,7 @@ Did you know that you can use the drag and drop feature in e-mail images to add 
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that if you want reduce the space disk used by your images in the Albums database, you could try using the recompressImages plugin?
@@ -157,7 +157,7 @@ Did you know that if you want reduce the space disk used by your images in the A
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that if you want to resize images to prepare them for printing on photographic paper sizes, you could use the resizeImages plugin?
@@ -174,7 +174,7 @@ Did you know that if you want to resize images to prepare them for printing on p
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that you could use image files from different Albums in the 'batch-process images' 
@@ -192,7 +192,7 @@ plugin? The processed results will then be merged in the selected target Album.
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that you can change the time stamp of the target images files in the batch-rename images plugin?
@@ -209,7 +209,7 @@ Did you know that you can change the time stamp of the target images files in th
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that you can navigate on the slideshow with the left and right mouse buttons?
@@ -226,7 +226,7 @@ Did you know that you can navigate on the slideshow with the left and right mous
 <table border="0" cellpadding="0" cellspacing="10" align="center">
 <tr>
 <td>
-<img src="hicolor/48x48/apps/kipi.png">
+<img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
 Did you know that Kipi plugins who can be used also in Digikam, Kimdaba, Showimg, and Gwenview programs?
