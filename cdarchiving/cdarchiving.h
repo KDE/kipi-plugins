@@ -47,7 +47,6 @@ extern "C"
 
 #include <libkipi/interface.h>
 
-#define NAV_THUMB_MAX_SIZE 64
 
 class QTimer;
 
@@ -57,6 +56,8 @@ class KProcess;
 
 namespace KIPICDArchivingPlugin
 {
+
+const int NAV_THUMB_MAX_SIZE = 64;
 
 class KIGPDialog;
 class CDArchivingDialog;
