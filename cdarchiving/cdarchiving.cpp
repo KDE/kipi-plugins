@@ -310,14 +310,26 @@ bool CDArchiving::prepare(void)
         
     for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albumsList.begin() ;
          albumIt != albumsList.end() ; ++albumIt )
-        {
-        AlbumData data((*albumIt).name(),    (*albumIt).category(),
-                       (*albumIt).comment(), (*albumIt).date(), 
-                       (*albumIt).path(),    (*albumIt).images());
+    {
+        AlbumData data((*albumIt).name(),
+
+                       m_interface->hasFeature(KIPI::AlbumsHaveCategory) ?
+                       (*albumIt).category() : QString(),
+
+                       m_interface->hasFeature(KIPI::AlbumsHaveComments) ?
+                       (*albumIt).comment()  : QString(),
+
+                       m_interface->hasFeature(KIPI::AlbumsHaveCreationDate) ?
+                       (*albumIt).date() : QDate(),
+
+                       (*albumIt).isDirectory() ?
+                       (*albumIt).path() : QString(),
+
+                       (*albumIt).images());
         
         m_albumsMap->insert( (*albumIt).path().prettyURL(), data );
         m_albumUrlList.append( (*albumIt).path() );
-        }
+    }
     
     // Load images comments if necessary.
     
@@ -582,9 +594,12 @@ bool CDArchiving::buildHTMLInterface (void)
            }
 
         m_AlbumTitle      = data.albumName();
-        m_AlbumComments   = data.albumComments();
-        m_AlbumCollection = data.albumCategory();
-        m_AlbumDate       = data.albumDate().toString();
+        m_AlbumComments   = m_interface->hasFeature(KIPI::AlbumsHaveComments) ?
+                            data.albumComments() : QString();
+        m_AlbumCollection = m_interface->hasFeature(KIPI::AlbumsHaveCategory) ?
+                            data.albumCategory() : QString();
+        m_AlbumDate       = m_interface->hasFeature(KIPI::AlbumsHaveCreationDate) ?
+                            data.albumDate().toString() : QString();
         Path              = data.albumUrl().path();
         
         Path = Path + "/";
@@ -806,22 +821,29 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
     stream << "<col width=\"20%\"><col width=\"80%\">" << endl;
     stream << "<tr valign=top><td align=left>\n" << endl;
 
-    stream << i18n("<i>Comment:</i>") << "<br>\n" << endl;
+    if (m_interface->hasFeature(KIPI::AlbumsHaveComments))
+        stream << i18n("<i>Comment:</i>") << "<br>\n" << endl;
 
-    stream << i18n("<i>Collection:</i>") << "<br>\n" << endl;
+    if (m_interface->hasFeature(KIPI::AlbumsHaveCategory))        
+        stream << i18n("<i>Collection:</i>") << "<br>\n" << endl;
 
-    stream << i18n("<i>Date:</i>") << "<br>\n" << endl;
+    if (m_interface->hasFeature(KIPI::AlbumsHaveCreationDate))
+        stream << i18n("<i>Date:</i>") << "<br>\n" << endl;
 
     stream << i18n("<i>Images:</i>") << "\n" << endl;
 
     stream << "</td><td align=left>\n" << endl;
 
-    stream << EscapeSgmlText(QTextCodec::codecForLocale(), m_AlbumComments, true, true)
-           << "<br>\n" << endl;
+    if (m_interface->hasFeature(KIPI::AlbumsHaveComments))
+        stream << EscapeSgmlText(QTextCodec::codecForLocale(),
+                                 m_AlbumComments, true, true)
+               << "<br>\n" << endl;
 
-    stream << m_AlbumCollection << "<br>\n" << endl;
+    if (m_interface->hasFeature(KIPI::AlbumsHaveCategory))        
+        stream << m_AlbumCollection << "<br>\n" << endl;
 
-    stream << m_AlbumDate << "<br>\n" << endl;
+    if (m_interface->hasFeature(KIPI::AlbumsHaveCreationDate))
+        stream << m_AlbumDate << "<br>\n" << endl;
 
     stream << numOfImages << "\n" << endl;
 
