@@ -14,6 +14,8 @@
  * JPEG library.  Most applications need only include jpeglib.h.
  */
 
+#ifndef JINCLUDE_H
+#define JINCLUDE_H
 
 /* Include auto-config file to find out which system include files we need. */
 
@@ -89,3 +91,6 @@
   ((size_t) fread((void *) (buf), (size_t) 1, (size_t) (sizeofbuf), (file)))
 #define JFWRITE(file,buf,sizeofbuf)  \
   ((size_t) fwrite((const void *) (buf), (size_t) 1, (size_t) (sizeofbuf), (file)))
+
+#endif JINCLUDE_H
+
