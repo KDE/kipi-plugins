@@ -339,7 +339,7 @@ QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *i
 
     *proc << "-verbose";
 
-    *proc << item->pathSrc() + "[0]";
+    *proc << item->pathSrc();
 
     if ( !albumDest.isNull() )   // No preview mode !
        {

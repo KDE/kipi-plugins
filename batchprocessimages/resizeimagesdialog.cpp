@@ -491,7 +491,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
              *proc << "-filter" << m_resizeFilter;
              }
 
-          *proc << item->pathSrc() + "[0]";
+          *proc << item->pathSrc();
 
           Temp2 = "xc:rgb(" + Temp.setNum(m_backgroundColor.red()) + ",";
           Temp2.append(Temp.setNum(m_backgroundColor.green()) + ",");

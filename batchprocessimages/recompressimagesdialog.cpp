@@ -263,7 +263,7 @@ QString RecompressImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesIt
 
     *proc << "-verbose";
 
-    *proc << item->pathSrc() + "[0]";
+    *proc << item->pathSrc();
 
     if ( !albumDest.isNull() )   // No preview mode !
        {
