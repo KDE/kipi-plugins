@@ -484,9 +484,6 @@ Click the 'Next' button to begin.</string>
                                                 <property name="text">
                                                     <string>&amp;Browse...</string>
                                                 </property>
-                                                <property name="accel">
-                                                    <string>Alt+B</string>
-                                                </property>
                                             </widget>
                                         </hbox>
                                     </widget>
