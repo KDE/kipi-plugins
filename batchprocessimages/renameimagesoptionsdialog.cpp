@@ -127,3 +127,5 @@ RenameImagesOptionsDialog::RenameImagesOptionsDialog(QWidget *parent)
 RenameImagesOptionsDialog::~RenameImagesOptionsDialog()
 {
 }
+
+#include "renameimagesoptionsdialog.moc"

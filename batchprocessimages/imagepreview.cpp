@@ -378,3 +378,5 @@ void PixmapView::contentsMouseMoveEvent( QMouseEvent * e )
          m_ypos = newypos - (newypos-m_ypos);
      }
 }
+
+#include "imagepreview.moc"

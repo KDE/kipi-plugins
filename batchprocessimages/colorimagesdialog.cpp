@@ -320,3 +320,5 @@ QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *i
     return(extractArguments(proc));
 }
 #endif
+
+#include "colorimagesdialog.moc"

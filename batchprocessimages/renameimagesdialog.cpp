@@ -733,3 +733,5 @@ bool RenameImagesDialog::changeDate(QString file)
 
     return true;
 }
+
+#include "renameimagesdialog.moc"

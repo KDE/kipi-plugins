@@ -226,3 +226,5 @@ KIPI::Category Plugin_BatchProcessImages::category() const
 }
 
 
+
+#include "plugin_batchprocessimages.moc"

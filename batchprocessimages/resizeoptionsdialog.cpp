@@ -353,3 +353,5 @@ void ResizeOptionsDialog::slotOk()
     accept();
 }
 
+
+#include "resizeoptionsdialog.moc"

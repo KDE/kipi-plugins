@@ -142,3 +142,5 @@ void RecompressOptionsDialog::slotCompressLossLessEnabled(bool val)
     m_label_JPEGimageCompression->setEnabled( !val );
 }
 
+
+#include "recompressoptionsdialog.moc"

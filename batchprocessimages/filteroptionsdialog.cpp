@@ -203,3 +203,5 @@ FilterOptionsDialog::~FilterOptionsDialog()
 
 
 
+
+#include "filteroptionsdialog.moc"

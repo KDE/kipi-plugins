@@ -438,3 +438,5 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
     return(extractArguments(proc));
 }
 #endif
+
+#include "effectimagesdialog.moc"

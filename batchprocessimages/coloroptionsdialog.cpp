@@ -113,3 +113,5 @@ ColorOptionsDialog::~ColorOptionsDialog()
 
 
 
+
+#include "coloroptionsdialog.moc"

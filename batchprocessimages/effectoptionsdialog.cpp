@@ -259,3 +259,5 @@ EffectOptionsDialog::~EffectOptionsDialog()
 
 
 
+
+#include "effectoptionsdialog.moc"

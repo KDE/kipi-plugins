@@ -123,3 +123,5 @@ void ConvertOptionsDialog::slotCompressLossLessEnabled(bool val)
     m_label_imageCompression->setEnabled( !val );
 }
 
+
+#include "convertoptionsdialog.moc"

@@ -341,3 +341,6 @@ QString ConvertImagesDialog::ImageFileExt(QString Ext)
     else
        return (Ext.lower());
 }
+
+
+#include "convertimagesdialog.moc"

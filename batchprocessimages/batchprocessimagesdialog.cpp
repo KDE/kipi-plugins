@@ -1129,3 +1129,5 @@ QString BatchProcessImagesDialog::extractArguments(KProcess *proc)
 
     return (retArguments);
 }
+
+#include "batchprocessimagesdialog.moc"

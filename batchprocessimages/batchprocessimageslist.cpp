@@ -123,3 +123,5 @@ void BatchProcessImagesList::droppedImagesItems(QDropEvent *e)
     if (FilesPath.isEmpty() == false)
        emit addedDropItems(FilesPath);
 }
+
+#include "batchprocessimageslist.moc"

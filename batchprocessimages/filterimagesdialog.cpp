@@ -362,3 +362,5 @@ QString FilterImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
     return(extractArguments(proc));
 }
 #endif
+
+#include "filterimagesdialog.moc"

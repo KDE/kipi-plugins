@@ -74,3 +74,5 @@ void OutputDialog::slotCopyToCliboard( void )
   debugView->copy();
   debugView->selectAll(FALSE);
 }
+
+#include "outputdialog.moc"

@@ -161,3 +161,5 @@ void BorderOptionsDialog::slotFrameBorderWidthChanged (int value)
 {
    m_frameBevelBorderWidth->setMaxValue((int)(value / 2));
 }
+
+#include "borderoptionsdialog.moc"

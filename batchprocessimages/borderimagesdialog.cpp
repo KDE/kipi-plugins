@@ -331,3 +331,5 @@ QString BorderImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
     return(extractArguments(proc));
 }
 #endif
+
+#include "borderimagesdialog.moc"

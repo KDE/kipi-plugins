@@ -270,3 +270,5 @@ bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
     return true;
 }
 #endif
+
+#include "recompressimagesdialog.moc"
