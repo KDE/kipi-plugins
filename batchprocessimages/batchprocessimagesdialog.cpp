@@ -2,7 +2,7 @@
 //
 //    BATCHPROCESSIMAGESDIALOG.CPP
 //
-//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -744,7 +744,8 @@ void BatchProcessImagesDialog::slotListDoubleClicked(QListViewItem *itemClicked)
 
 void BatchProcessImagesDialog::slotPreview(void)
 {
-    qDebug("BatchProcessImagesDialog::slotPreview");
+    kdWarning() << "BatchProcessImagesDialog::slotPreview" << endl;
+    
     if ( m_listFiles->currentItem() == 0 )
        {
        KMessageBox::error(this, i18n("You must selected an item in the list for calculate the preview!"));
@@ -768,10 +769,14 @@ void BatchProcessImagesDialog::slotPreview(void)
     m_addImagesButton->setEnabled(false);
     m_remImagesButton->setEnabled(false);
 
-    disconnect( this, SIGNAL(user2Clicked()), this, SLOT(slotProcessStart()));
+    disconnect( this, SIGNAL(user2Clicked()), 
+                this, SLOT(slotProcessStart()));
+                
     showButtonCancel( false );
     setButtonText( User2, i18n("&Stop") );
-    connect(this, SIGNAL(user2Clicked()), this, SLOT(slotPreviewStop()));
+    
+    connect(this, SIGNAL(user2Clicked()), 
+            this, SLOT(slotPreviewStop()));
 
     m_previewOutput = "";
     m_PreviewProc = new KProcess;
@@ -816,7 +821,8 @@ void BatchProcessImagesDialog::slotPreviewProcessDone(KProcess* proc)
 {
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFiles->currentItem() );
     int ValRet = proc->exitStatus();
-    qDebug ("Convert exit (%i)", ValRet);
+
+    kdWarning() << "Convert exit (" << ValRet << ")" << endl;
 
     if ( ValRet == 0 )
        {
@@ -969,8 +975,12 @@ void BatchProcessImagesDialog::endPreview(void)
     slotTypeChanged(m_Type->currentText());
 
     setButtonText( User2, i18n("&Start") );
-    disconnect(this, SIGNAL(user2Clicked()), this, SLOT(slotPreviewStop()));
-    connect(this, SIGNAL(user2Clicked()), this, SLOT(slotProcessStart()));
+    
+    disconnect(this, SIGNAL(user2Clicked()), 
+               this, SLOT(slotPreviewStop()));
+               
+    connect(this, SIGNAL(user2Clicked()),
+            this, SLOT(slotProcessStart()));
 }
 
 
@@ -1000,7 +1010,7 @@ int BatchProcessImagesDialog::overwriteMode(void)
 
 void BatchProcessImagesDialog::processAborted(bool removeFlag)
 {
-    qDebug("BatchProcessImagesDialog::processAborted");
+    kdWarning() << "BatchProcessImagesDialog::processAborted" << endl;
 
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     m_listFiles->ensureItemVisible(m_listFiles->currentItem());
@@ -1024,12 +1034,15 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
 
 void BatchProcessImagesDialog::endProcess(QString endMessage)
 {
+    m_statusbar->setText(endMessage);
     m_convertStatus = PROCESS_DONE;
     setButtonText( User2, i18n("&Close") );
 
-    disconnect(this, SIGNAL(user2Clicked()), this, SLOT(slotProcessStop()));
+    disconnect(this, SIGNAL(user2Clicked()),
+               this, SLOT(slotProcessStop()));
 
-    connect(this, SIGNAL(user2Clicked()), this, SLOT(slotOk()));
+    connect(this, SIGNAL(user2Clicked()),
+            this, SLOT(slotOk()));
 }
 
 

@@ -2,7 +2,7 @@
 //
 //    RENAMEIMAGESDIALOG.CPP
 //
-//    Copyright (C) 2003-2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -208,15 +208,15 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
             m_interface->refreshImages( urlList );
 
             bool ok = m_interface->addImage( dest, errmsg );
-	    
+
             if ( !ok ) 
-	        {
+                {
                 int code = KMessageBox::warningContinueCancel( this,
-                                                               i18n("<qt>Error adding image to application. Error message was: "
-                                                                    "<b>%1</b></qt>").arg( errmsg ),
-                                                               i18n("Error adding image to application") );
+                                        i18n("<qt>Error adding image to application. Error message was: "
+                                        "<b>%1</b></qt>").arg( errmsg ),
+                                        i18n("Error adding image to application") );
                 if ( code == KMessageBox::Cancel ) 
-		    {
+                    {
                     slotProcessStop();
                     return;
                     }
@@ -575,20 +575,22 @@ void RenameImagesDialog::listImageFiles(void)
     BatchProcessImagesDialog::listImageFiles();
 
     KURL::List images;
-    for ( QListViewItem* it = m_listFiles->firstChild(); it; it = it->nextSibling() ) {
+    for ( QListViewItem* it = m_listFiles->firstChild(); it; it = it->nextSibling() ) 
+        {
         BatchProcessImagesItem *pitem = static_cast<BatchProcessImagesItem*>(it);
         images.append( pitem->pathSrc() );
-    }
+        }
 
     m_listFiles->clear();
 
     int imageIndex = 0;
-    for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) {
+    for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) 
+        {
         QFileInfo fi( (*urlIt).path() ); // PENDING(blackie) handle remote URLS
         new BatchProcessImagesItem(m_listFiles, fi.filePath(), fi.fileName(),
                                    oldFileName2NewFileName(&fi, imageIndex), "" );
         ++imageIndex;
-    }
+        }
 
     // PENDING(blackie) This is the old code for this function.
     // This code also includes sorting, but that needs some work to work with remote URL's
