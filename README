@@ -55,23 +55,16 @@ Currently implemented plugins are:
                             ResizeImages (Basic and Prepare to print images resizing).
                             RecompressImages (Recompress JPEG, TIFF, PNG, and TGA images).
 
-12) GammaCalibration   : KIPI integration of KDE control pannel Gamma Correction like a plugin.
-                         (by Gregory Kokanosky and Gilles Caulier).
-
-13) TimeAdjust         : Adjust image file Time and Date.
+12) TimeAdjust         : Adjust image file Time and Date.
                          (by Jesper K. Pedersen).
 
-14) WallPaper          : Image to KDE Desktop.
+13) WallPaper          : Image to KDE Desktop.
                          (by Gregory Kokanosky and Gilles Caulier).
 
-15) FindImages         : Find dupplicate images in albums
+14) FindImages         : Find dupplicate images in albums
                          (by Richard Grould and Gilles Caulier).
-                         This plugin include this parts:
-                            FindComments.
-                         ==> TODO.
-                            FindDupplicateImages.
 
-16) HelloWorld         : Tutorial plugin implementation 
+15) HelloWorld         : Tutorial plugin implementation 
                          (by Renchi Raju, Gilles Caulier, and Achim Bohnet).
 
 

@@ -15,7 +15,7 @@ endif
 SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery \
 	sendimages acquireimages batchprocessimages \
 	timeadjust wallpaper \
-	rawconverter findimages gammacalibration \
+	rawconverter findimages \
 	$(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(JPEGLOSSLESSDIR)
 
 rcdir = $(kde_datadir)/kipi
