@@ -2,7 +2,7 @@
 //
 //    CONVERTIMAGESDIALOG.CPP
 //
-//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2003-2005 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -95,6 +95,7 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
     m_Type->insertItem("PPM");
     m_Type->insertItem("BMP");
     m_Type->insertItem("TGA");
+    m_Type->insertItem("EPS");
     m_Type->setCurrentText("JPEG");
     whatsThis = i18n("<p>Select here the target image file format.<p>");
     whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group's file format is a "
@@ -125,6 +126,10 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
                                  "bitmap file formats for storage of 24 and 32 bits truecolor images.  "
                                  "TGA supports colormaps, alpha channel, gamma value, postage stamp image, "
                                  "textual information, and developer-definable data.");
+    whatsThis = whatsThis + i18n("<p><b>EPS</b>: the  Adobe Encapsulated PostScript image file format. An EPS file "
+                                 "is a PostScript language program describing the appearance of a single page. "
+                                 "Usually, the purpose of the EPS file is to be embedded inside another PostScript "
+                                 "language page description.");
 
     QWhatsThis::add( m_Type, whatsThis );
 
@@ -158,7 +163,7 @@ void ConvertImagesDialog::slotHelp( void )
 
 void ConvertImagesDialog::slotTypeChanged(int type)
 {
-    if ( type == 3 || type == 4 ) // PPM || BMP
+    if ( type == 3 || type == 4 || type == 6 ) // PPM || BMP || EPS
        m_optionsButton->setEnabled(false);
     else
        m_optionsButton->setEnabled(true);
@@ -320,7 +325,7 @@ QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem 
           *proc << m_TGACompressionAlgo;
           }
        }
-
+   
     *proc << "-verbose";
 
     *proc << item->pathSrc() + "[0]";
