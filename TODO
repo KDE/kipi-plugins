@@ -25,6 +25,7 @@ Jesper K. Pedersen <blackie at kde.org>
  - auto-hide Toolbar for manual control (fwd,back,pause,exit)
  - Add preview Slideshow effects in dialogbox like Kcontrol
    screensavers settings.
+ - Checked Xinerama fonctionality with OpenGL.
 
 ----------------------------------------------------------------------------
 * MPEGENCODER PLUGIN [Author: Gilles Caulier]
