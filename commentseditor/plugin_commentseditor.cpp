@@ -19,6 +19,8 @@
  *
  * ============================================================ */
 
+// KDE includes.
+
 #include <klocale.h>
 #include <kaction.h>
 #include <kgenericfactory.h>
@@ -27,31 +29,35 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
+// KIPI includes.
+
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
+
+// Local includes.
 
 #include "plugin_commentseditor.h"
 #include "commentseditor.h"
 
 typedef KGenericFactory<Plugin_CommentsEditor> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_commentseditor,
                             Factory("kipiplugin_commentseditor"));
 
-Plugin_CommentsEditor::Plugin_CommentsEditor(QObject *parent,
-                                             const char*,
+Plugin_CommentsEditor::Plugin_CommentsEditor(QObject *parent, const char*,
                                              const QStringList &)
-    : KIPI::Plugin( Factory::instance(), parent, "CommentsEditor")
+                     : KIPI::Plugin( Factory::instance(), parent, "CommentsEditor")
 {
-    kdDebug( 51001 ) << "Plugin_CommentsEditor plugin loaded"
-                     << endl;
+    kdDebug( 51001 ) << "Plugin_CommentsEditor plugin loaded" << endl;
 }
 
 
 void Plugin_CommentsEditor::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
+
     action = new KAction (i18n("Comments Editor..."),
-                          "imagecomment", // PENDING(blackie) where is this image comming from?!
+                          "editclear",
                           0,
                           this,
                           SLOT(slotActivate()),
