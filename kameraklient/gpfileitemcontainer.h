@@ -30,6 +30,10 @@
 
 
 class QString;
+
+namespace KIPIKameraKlientPlugin
+{
+
 class CameraFolderItem;
 class CameraFolderView;
 class CameraIconView;
@@ -88,5 +92,7 @@ private slots:
     void slotFolderViewCleared();
     void slotIconViewCleared();
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif /* GPFILEITEMCONTAINER_H */

@@ -6,6 +6,8 @@
 #include <qvaluelist.h>
 #include <qmutex.h>
 
+namespace KIPIKameraKlientPlugin
+{
 
 template<class Type> class MTList {
 
@@ -179,6 +181,8 @@ private:
     QMutex mutex_;
 
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif
 

@@ -28,6 +28,9 @@ class QListView;
 class QListViewItem;
 class QPushButton;
 
+namespace KIPIKameraKlientPlugin
+{
+
 class SetupCamera : public KDialogBase {
 	Q_OBJECT
 
@@ -54,6 +57,8 @@ class SetupCamera : public KDialogBase {
 		void slotEditedCamera(const QString& title, const QString& model, const QString& port,  const QString& path);
 		void slotOkClicked();
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif 
 

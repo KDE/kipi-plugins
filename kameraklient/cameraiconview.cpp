@@ -44,6 +44,9 @@
 #include "cameradragobject.h"
 #include "cameraui.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 const int MAXICONITEMS = 307;
 const int THUMBSIZE = 120;
 
@@ -152,3 +155,5 @@ void CameraIconView::startDrag() {
     drag->setPixmap(SmallIcon("image"));
     drag->dragCopy();
 }
+
+}  // NameSpace KIPIKameraKlientPlugin

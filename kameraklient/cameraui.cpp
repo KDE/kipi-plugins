@@ -82,6 +82,9 @@
 #include "savefiledialog.h"
 #include "setupcamera.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 CameraUI::CameraUI() : KDialogBase(Plain, i18n("KameraKlient"), Try | User1 | User2 | User3 | Ok | Help | Close, Close, 0, 0, false, true) {
 	resize(700, 440);
 	setButtonBoxOrientation(Vertical);
@@ -587,5 +590,7 @@ CameraUI* CameraUI::getInstance() {
 	static CameraUI inst;
 	return &inst;
 }
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #include "cameraui.moc"

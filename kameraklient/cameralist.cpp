@@ -28,6 +28,9 @@
 #include "cameralist.h"
 #include "cameratype.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 CameraList* CameraList::instance_ = 0;
 
 CameraList* CameraList::instance() {
@@ -167,4 +170,6 @@ void CameraList::clear() {
         ctype = d->clist.first();
     }
 }
+
+}  // NameSpace KIPIKameraKlientPlugin
 

@@ -26,10 +26,13 @@
 
 class QMimeSource;
 class QWidget;
+
+namespace KIPIKameraKlientPlugin
+{
 class CameraType;
 
 class CameraDragObject : public QStoredDrag {
-	
+
 public:
     CameraDragObject(const CameraType* ctype, QWidget* dragSource=0);
     ~CameraDragObject();
@@ -39,6 +42,8 @@ public:
 private:
     void setCameraType(const CameraType* ctype);
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif
 

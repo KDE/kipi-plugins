@@ -25,6 +25,9 @@
 #include <qstring.h>
 #include <qvaluelist.h>
 
+namespace KIPIKameraKlientPlugin
+{
+
 class GPFileItemInfo {
     
 public:
@@ -67,6 +70,8 @@ public:
 
 // Container for GPFileItemInfo
 typedef QValueList<GPFileItemInfo> GPFileItemInfoList;
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif 
 

@@ -37,6 +37,9 @@
 
 #include "dmessagebox.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 DMessageBox* DMessageBox::s_instance = 0;
 
 DMessageBox::DMessageBox()
@@ -142,3 +145,4 @@ void DMessageBox::showMsg(const QString& msg)
         msgBox->show();
 }
 
+}  // NameSpace KIPIKameraKlientPlugin

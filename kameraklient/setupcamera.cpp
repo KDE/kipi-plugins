@@ -35,6 +35,9 @@
 #include "cameratype.h"
 #include "gpiface.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 SetupCamera::SetupCamera(QWidget* parent, const char* name) : KDialogBase(parent, name, true, i18n("Setup Cameras"), Ok|Cancel, Ok, true) {
 	setWFlags(Qt::WDestructiveClose);
 	QWidget *page = new QWidget(this);
@@ -189,3 +192,4 @@ void SetupCamera::slotOkClicked() {
 	close();
 }
 
+}  // NameSpace KIPIKameraKlientPlugin

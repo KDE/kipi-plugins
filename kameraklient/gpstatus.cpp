@@ -23,6 +23,9 @@
 #include "gpstatus.h"
 #include "gpmessages.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 float GPStatus::target = 0.0;
 bool  GPStatus::cancel = false;
 
@@ -94,3 +97,4 @@ void  GPStatus::progress_stop_func(GPContext *, unsigned int, void *) {
   GPMessages::gpMessagesWrapper()->emit progressChanged(0);
 }
 
+}  // NameSpace KIPIKameraKlientPlugin

@@ -13,6 +13,8 @@ class QVButtonGroup;
 class QLabel;
 class QLineEdit;
 
+namespace KIPIKameraKlientPlugin
+{
 
 class CameraSelection : public KDialogBase {
     Q_OBJECT
@@ -55,5 +57,7 @@ private slots:
 signals:
     void signalOkClicked(const QString& title, const QString& model, const QString& port, const QString& path);
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif 

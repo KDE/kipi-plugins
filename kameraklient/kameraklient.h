@@ -24,8 +24,11 @@
 
 #include <libkipi/plugin.h>
 
+namespace KIPIKameraKlientPlugin
+{
 class CameraUI;
 class CameraType;
+}
 
 class Plugin_KameraKlient : public KIPI::Plugin {
 Q_OBJECT

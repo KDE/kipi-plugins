@@ -18,6 +18,9 @@
 // Local
 #include "gpmessages.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 GPMessages* GPMessages::gpMessages=0;
 
 GPMessages* GPMessages::gpMessagesWrapper() {
@@ -33,3 +36,5 @@ void GPMessages::deleteMessagesWrapper() {
         gpMessages=0;
     }
 }
+
+}  // NameSpace KIPIKameraKlientPlugin

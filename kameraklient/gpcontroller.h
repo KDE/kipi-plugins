@@ -32,6 +32,10 @@
 
 class QString;
 class QImage;
+
+namespace KIPIKameraKlientPlugin
+{
+
 class GPCamera;
 
 class GPController : public QObject, public QThread {
@@ -107,5 +111,7 @@ private slots:
     void slotProgressVal(int val);
     void slotErrorMsg(const QString& msg);
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif /* GPCONTROLLER_H */

@@ -12,6 +12,9 @@
 // Local
 #include "savefiledialog.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 SavefileDialog::SavefileDialog(const QString& file, QWidget *parent, const char* name, bool modal) : QDialog(parent, name, modal) {
     QFileInfo fileInfo(file);
     setCaption(i18n("File already exists"));
@@ -51,3 +54,4 @@ void SavefileDialog::slot_renameEnabled() {
     renameBtn->setDefault(true);
 }
 
+}  // NameSpace KIPIKameraKlientPlugin

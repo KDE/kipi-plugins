@@ -26,6 +26,8 @@
 #include "gpeventfilter.h"
 #include "gpevents.h"
 
+namespace KIPIKameraKlientPlugin
+{
 
 GPEventFilter::GPEventFilter(QObject* parent)
     : QObject(parent) {
@@ -119,3 +121,5 @@ bool GPEventFilter::eventFilter(QObject *, QEvent *e) {
     // eat this event
     return true;
 }
+
+}  // NameSpace KIPIKameraKlientPlugin

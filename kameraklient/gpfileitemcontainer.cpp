@@ -30,6 +30,9 @@
 #include "cameraiconitem.h"
 #include "gpfileitemcontainer.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 GPFileItemContainer::GPFileItemContainer(QObject *parent, CameraFolderView *folderView, CameraIconView   *iconView) : QObject(parent) {
     folderView_ = folderView;
     iconView_   = iconView;
@@ -233,3 +236,5 @@ void GPFileItemContainer::slotIconViewCleared() {
         }
     }
 }
+
+}  // NameSpace KIPIKameraKlientPlugin

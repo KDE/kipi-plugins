@@ -30,6 +30,9 @@ extern "C" {
 #include <gphoto2.h>
 }
 
+namespace KIPIKameraKlientPlugin
+{
+
 class GPStatus : public QObject {
 	Q_OBJECT
 		friend class GPCamera;
@@ -49,6 +52,8 @@ class GPStatus : public QObject {
 	static void progress_stop_func(GPContext *context, unsigned int id, void *data);
 	static float target;
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif /* GPSTATUS_H */
 

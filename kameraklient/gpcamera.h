@@ -30,6 +30,9 @@
 
 class QImage;
 
+namespace KIPIKameraKlientPlugin
+{
+
 class GPCameraPrivate;
 class GPStatus;
 
@@ -87,6 +90,8 @@ private:
     GPCameraPrivate *d;
     GPStatus        *status;
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif
 

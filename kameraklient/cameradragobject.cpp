@@ -29,6 +29,9 @@
 #include "cameratype.h"
 #include "cameradragobject.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 CameraDragObject::CameraDragObject(const CameraType* ctype, QWidget *dragSource) : QStoredDrag("camera/unknown", dragSource) {
     setCameraType(ctype);
 }
@@ -66,4 +69,6 @@ bool CameraDragObject::decode(const QMimeSource* e, CameraType& ctype) {
         return false;
     }
 }
+
+}  // NameSpace KIPIKameraKlientPlugin
 

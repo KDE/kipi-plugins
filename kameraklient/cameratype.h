@@ -24,6 +24,9 @@
 
 #include <qstring.h>
 
+namespace KIPIKameraKlientPlugin
+{
+
 class CameraType {
 public:
     CameraType();
@@ -49,6 +52,8 @@ private:
     QString path_;
     bool    valid_;
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif 
 

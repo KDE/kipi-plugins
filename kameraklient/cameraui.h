@@ -46,6 +46,13 @@ class KProgress;
 class KStatusBar;
 class KToggleAction;
 
+namespace KIO {
+	class Job;
+}
+
+namespace KIPIKameraKlientPlugin
+{
+
 class CameraList;
 class CameraType;
 class GPEventFilter;
@@ -56,9 +63,6 @@ class CameraIconView;
 class CameraFolderItem;
 class CameraFolderView;
 
-namespace KIO {
-	class Job;
-}
 class CameraUI : public KDialogBase {
     Q_OBJECT
 	
@@ -139,5 +143,7 @@ private:
 	QPushButton         *mChangeDownloadDirectoryButton;
 	QLineEdit           *mDownloadDirectoryEdit;
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif 

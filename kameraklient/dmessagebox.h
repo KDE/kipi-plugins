@@ -31,6 +31,9 @@
 class QLabel;
 class QTextEdit;
 
+namespace KIPIKameraKlientPlugin
+{
+
 class DMessageBox : public QWidget {
     Q_OBJECT
 
@@ -52,5 +55,7 @@ private:
 private slots:
     void slotOkClicked();
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif /* DMESSAGEBOX_H */

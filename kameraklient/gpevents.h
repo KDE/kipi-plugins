@@ -30,6 +30,9 @@
 #include "mtlist.h"
 #include "gpfileiteminfo.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 class GPEvent : public QCustomEvent {
 public:
     enum Type {
@@ -233,5 +236,7 @@ public:
 private:
     bool busy_;
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif /* GPEVENTS_H */

@@ -16,6 +16,9 @@
 #include "cameraselection.h"
 #include "gpiface.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 CameraSelection::CameraSelection( QWidget* parent )
     : KDialogBase(parent, 0, true, i18n("Camera Selection"), Ok|Cancel, Ok, true) {
     UMSCameraNameActual_ = QString("Directory Browse");
@@ -280,3 +283,4 @@ void CameraSelection::slotOkClicked() {
     emit signalOkClicked(currentTitle(), currentModel(), currentPortPath(), currentCameraPath());
 }
 
+}  // NameSpace KIPIKameraKlientPlugin
