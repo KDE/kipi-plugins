@@ -154,7 +154,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
                   
            case(KIPIImagesGalleryPlugin::BuildImageHTMLPage): 
               {
-              text = i18n("Making HTML pages for image '%1'...").arg(d->fileName);
+              text = i18n("Making HTML page for image '%1'...").arg(d->fileName);
               break;
               }
            

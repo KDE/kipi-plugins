@@ -734,7 +734,9 @@ void ImagesGallery::createBody(QTextStream& stream,
             d->fileName = imgName;
             QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
            
-            if ( createThumb(*urlIt, imgName, imgGalleryDir, imageFormat, TargetimagesFormat) != -1 )
+            int valRet = createThumb(*urlIt, imgName, imgGalleryDir, imageFormat, TargetimagesFormat);
+            
+            if ( valRet != -1 )
                 {
                 // user requested the creation of html pages for each photo
 
@@ -804,7 +806,8 @@ void ImagesGallery::createBody(QTextStream& stream,
                    m_StreamMainPageAlbumPreview.append ( Temp2 );
                    }
                 }
-            else
+            
+            if ( valRet == -1 || valRet == 0 )
                 {
                 kdDebug( 51000 ) << "Creating thumbnail for " << imgName.ascii() 
                                  << " failed !" << endl;
