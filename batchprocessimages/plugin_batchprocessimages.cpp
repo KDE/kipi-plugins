@@ -221,7 +221,13 @@ void Plugin_BatchProcessImages::slotActivate()
     
     if ( !images.isValid() )
         return;
+        
+    if ( images.images().isEmpty() )
+       images = interface->currentAlbum();
 
+    if ( !images.isValid() )
+        return;
+                   
     KURL::List urlList = images.images();
 
     QString from(sender()->name());
