@@ -123,3 +123,5 @@ bool GPEventFilter::eventFilter(QObject *, QEvent *e) {
 }
 
 }  // NameSpace KIPIKameraKlientPlugin
+
+#include "gpeventfilter.moc"

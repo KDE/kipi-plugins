@@ -55,3 +55,5 @@ void SavefileDialog::slot_renameEnabled() {
 }
 
 }  // NameSpace KIPIKameraKlientPlugin
+
+#include "savefiledialog.moc"

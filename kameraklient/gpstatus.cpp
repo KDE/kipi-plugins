@@ -98,3 +98,5 @@ void  GPStatus::progress_stop_func(GPContext *, unsigned int, void *) {
 }
 
 }  // NameSpace KIPIKameraKlientPlugin
+
+#include "gpstatus.moc"

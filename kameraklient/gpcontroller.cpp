@@ -523,3 +523,5 @@ void GPController::getInformation(QString& summary, QString& manual,
 }
 
 }  // NameSpace KIPIKameraKlientPlugin
+
+#include "gpcontroller.moc"

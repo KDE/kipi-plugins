@@ -193,3 +193,5 @@ void SetupCamera::slotOkClicked() {
 }
 
 }  // NameSpace KIPIKameraKlientPlugin
+
+#include "setupcamera.moc"

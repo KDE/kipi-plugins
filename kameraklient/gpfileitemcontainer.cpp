@@ -238,3 +238,5 @@ void GPFileItemContainer::slotIconViewCleared() {
 }
 
 }  // NameSpace KIPIKameraKlientPlugin
+
+#include "gpfileitemcontainer.moc"

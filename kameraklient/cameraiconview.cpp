@@ -157,3 +157,5 @@ void CameraIconView::startDrag() {
 }
 
 }  // NameSpace KIPIKameraKlientPlugin
+
+#include "cameraiconview.moc"

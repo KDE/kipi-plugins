@@ -146,3 +146,5 @@ void DMessageBox::showMsg(const QString& msg)
 }
 
 }  // NameSpace KIPIKameraKlientPlugin
+
+#include "dmessagebox.moc"

@@ -113,3 +113,5 @@ void CameraFolderView::clear() {
 
 }  // NameSpace KIPIKameraKlientPlugin
 
+
+#include "camerafolderview.moc"

@@ -173,3 +173,5 @@ void CameraList::clear() {
 
 }  // NameSpace KIPIKameraKlientPlugin
 
+
+#include "cameralist.moc"

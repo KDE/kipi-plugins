@@ -284,3 +284,5 @@ void CameraSelection::slotOkClicked() {
 }
 
 }  // NameSpace KIPIKameraKlientPlugin
+
+#include "cameraselection.moc"

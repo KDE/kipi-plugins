@@ -38,3 +38,5 @@ void GPMessages::deleteMessagesWrapper() {
 }
 
 }  // NameSpace KIPIKameraKlientPlugin
+
+#include "gpmessages.moc"

@@ -977,3 +977,5 @@ ThumbItem* ThumbView::findLastVisibleItem(const QRect &r ) const {
 }
 
 }  // NameSpace KIPIKameraKlientPlugin
+
+#include "thumbview.moc"
