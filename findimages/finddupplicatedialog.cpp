@@ -35,7 +35,6 @@
 #include <qheader.h>
 #include <qpushbutton.h>
 #include <qfileinfo.h>
-#include <qprogressdialog.h>
 #include <qpushbutton.h>
 
 // Include files for KDE
@@ -56,7 +55,6 @@
 #include <kapplication.h>
 #include <ksqueezedtextlabel.h>
 #include <kio/global.h>
-#include <kio/previewjob.h>
 #include <klistview.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
@@ -68,6 +66,7 @@
 
 #include <libkipi/version.h>
 #include <libkipi/imagecollection.h>
+#include <libkipi/imagecollectionselector.h>
 
 // Local include files
 
@@ -75,25 +74,6 @@
 
 namespace KIPIFindDupplicateImagesPlugin
 {
-
-class AlbumItem : public QCheckListItem
-{
-public:
-    AlbumItem(QListView * parent, const KIPI::ImageCollection& ic )
-            : QCheckListItem( parent, ic.name(), QCheckListItem::CheckBox), _ic(ic)
-    {}
-
-    QString comments()                      { return _ic.comment();        }
-    QString name()                          { return _ic.name();           }
-    int     items()                         { return _ic.images().count(); }
-    KIPI::ImageCollection imageCollection() { return _ic;                  }
-
-private:
-    KIPI::ImageCollection _ic;
-};
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *parent)
                    : KDialogBase( IconList, i18n("Configure"), Help|Ok|Cancel,
@@ -104,7 +84,7 @@ FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *p
     setupSelection();
     setupPageMethod();
     page_setupSelection->setFocus();
-    resize( 500, 500 );
+    resize( 650, 450 );
         
     // About data and help button.
         
@@ -148,164 +128,8 @@ void FindDuplicateDialog::setupSelection(void)
                                   BarIcon("folder_image", KIcon::SizeMedium));
 
     QVBoxLayout *layout = new QVBoxLayout(page_setupSelection, 0, spacingHint() );
-
-    //---------------------------------------------
-
-    QGroupBox * groupBox1 = new QGroupBox( page_setupSelection );
-    groupBox1->setFlat(false);
-    groupBox1->setTitle(i18n("Select Albums to Find Duplicate Images For"));
-    QGridLayout* grid = new QGridLayout( groupBox1, 2, 2 , 20, 20);
-
-    m_AlbumsList = new KListView( groupBox1 );
-    m_AlbumsList->setResizeMode( QListView::LastColumn );
-    m_AlbumsList->addColumn("");
-    m_AlbumsList->header()->hide();
-    m_AlbumsList->setSelectionModeExt(KListView::Single);
-    QWhatsThis::add( m_AlbumsList, i18n("<p>Selected here the Albums for which to find the "
-                                        "duplicate images in your Albums database.") );
-    grid->addMultiCellWidget(m_AlbumsList, 0, 2, 0, 1);
-
-    KButtonBox* albumSelectionButtonBox = new KButtonBox( groupBox1, Vertical );
-    QPushButton* buttonSelectAll = albumSelectionButtonBox->addButton ( i18n( "&Select All" ) );
-    QWhatsThis::add( buttonSelectAll, i18n("<p>Select all Albums on the list.") );
-    QPushButton* buttonInvertSelection = albumSelectionButtonBox->addButton ( i18n( "&Invert Selection" ));
-    QWhatsThis::add( buttonInvertSelection, i18n("<p>Invert the Album selection on the list.") );
-    QPushButton* buttonSelectNone = albumSelectionButtonBox->addButton ( i18n( "Select &None" ) );
-    QWhatsThis::add( buttonSelectNone, i18n("<p>Deselect all Albums on the list.") );
-    albumSelectionButtonBox->layout();
-    grid->addMultiCellWidget(albumSelectionButtonBox, 0, 1, 2, 2);
-
-    m_albumPreview = new QLabel( groupBox1 );
-    m_albumPreview->setFixedHeight( 120 );
-    m_albumPreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-    m_albumPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    QWhatsThis::add( m_albumPreview, i18n( "Preview of the first image in the currently selected Album." ) );
-    grid->addMultiCellWidget(m_albumPreview, 2, 2, 2, 2);
-
-    layout->addWidget( groupBox1 );
-
-    if ( !m_interface->hasFeature( KIPI::AlbumsUseFirstImagePreview) )
-        m_albumPreview->hide();
-
-    //---------------------------------------------
-
-    QGroupBox * groupBox2 = new QGroupBox( i18n("Album Description"), page_setupSelection );
-    groupBox2->setColumnLayout(0, Qt::Vertical );
-    groupBox2->layout()->setSpacing( 6 );
-    groupBox2->layout()->setMargin( 11 );
-    QWhatsThis::add( groupBox2, i18n("<p>The description of the current Album in the selection list.") );
-
-    QVBoxLayout * groupBox2Layout = new QVBoxLayout( groupBox2->layout() );
-    groupBox2Layout->setAlignment( Qt::AlignTop );
-
-    m_AlbumComments = 0;
-    if ( m_interface->hasFeature( KIPI::AlbumsHaveComments ) )
-    {
-        m_AlbumComments = new KSqueezedTextLabel( groupBox2 );
-        m_AlbumComments->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-        groupBox2Layout->addWidget( m_AlbumComments );
-    }
-
-    m_AlbumCollection = 0;
-    if ( m_interface->hasFeature( KIPI::AlbumsHaveCategory ) )
-    {
-        m_AlbumCollection = new KSqueezedTextLabel( groupBox2 );
-        m_AlbumCollection->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-        groupBox2Layout->addWidget( m_AlbumCollection );
-    }
-
-    m_AlbumDate = 0;
-    if ( m_interface->hasFeature( KIPI::AlbumsHaveCreationDate ) )
-    {
-        m_AlbumDate = new KSqueezedTextLabel( groupBox2 );
-        m_AlbumDate->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-        groupBox2Layout->addWidget( m_AlbumDate );
-    }
-
-    m_AlbumItems = new KSqueezedTextLabel( groupBox2 );
-    m_AlbumItems->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-    groupBox2Layout->addWidget( m_AlbumItems );
-
-    layout->addWidget( groupBox2 );
-    layout->addStretch(1);
-
-    //---------------------------------------------
-
-    connect( buttonSelectAll, SIGNAL( clicked() ),
-             this, SLOT( slotbuttonSelectAll() ) );
-
-    connect( buttonInvertSelection, SIGNAL( clicked() ),
-             this, SLOT( slotbuttonInvertSelection() ) );
-
-    connect( buttonSelectNone, SIGNAL( clicked() ),
-             this, SLOT( slotbuttonSelectNone() ) );
-
-    connect( m_AlbumsList, SIGNAL( currentChanged( QListViewItem * ) ),
-             this, SLOT( albumSelected( QListViewItem * ) ) );
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-bool FindDuplicateDialog::setAlbumsList(void)
-{
-    AlbumItem *currentAlbum = 0;
-    int current = 0;
-    m_stopParsingAlbum = false;
-
-    QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
-
-    m_progressDlg = new QProgressDialog (i18n("Parsing Albums; please wait...."),
-                                         i18n("&Cancel"), 0, 0, 0, true);
-
-    connect(m_progressDlg, SIGNAL(cancelled()),
-            this, SLOT(slotStopParsingAlbums()));
-
-    m_progressDlg->show();
-
-    for( QValueList<KIPI::ImageCollection>::ConstIterator it = albums.begin(); it != albums.end(); ++it )
-        {
-        if (m_stopParsingAlbum == true)
-           {
-           delete m_progressDlg;
-           return false;
-           }
-
-        m_progressDlg->setProgress(current, albums.count());
-        kapp->processEvents();
-        ++current;
-
-        KIPI::ImageCollection album = *it;
-
-        AlbumItem *item = new AlbumItem( m_AlbumsList, album );
-
-        if ( m_interface->currentAlbum().isValid() )
-           {
-           if ( (*it).name() == m_interface->currentAlbum().name() )
-              {
-              item->setOn(true);
-              item->setSelected(true);
-              albumSelected( item );
-              currentAlbum = item;
-              }
-           else
-              item->setOn(false);
-           }
-        }
-
-    if (currentAlbum != 0)
-       m_AlbumsList->ensureItemVisible(currentAlbum);
-
-    delete m_progressDlg;
-    return true;
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void FindDuplicateDialog::slotStopParsingAlbums(void)
-{
-    m_stopParsingAlbum = true;
+    m_imageCollectionSelector = new KIPI::ImageCollectionSelector(page_setupSelection, m_interface);
+    layout->addWidget(m_imageCollectionSelector);
 }
 
 
@@ -411,7 +235,7 @@ void FindDuplicateDialog::slotfindMethodChanged(const QString &string)
 
 void FindDuplicateDialog::slotUpdateCache(void)
 {
-    QValueList<KIPI::ImageCollection> albumsList = getAlbumsSelection();
+    QValueList<KIPI::ImageCollection> albumsList = getSelectedAlbums();
     QStringList albumsListPath;
 
     for( QValueList<KIPI::ImageCollection>::ConstIterator album = albumsList.begin() ;
@@ -432,7 +256,7 @@ void FindDuplicateDialog::slotUpdateCache(void)
 
 void FindDuplicateDialog::slotPurgeCache(void)
 {
-    QValueList<KIPI::ImageCollection> albumsList = getAlbumsSelection();
+    QValueList<KIPI::ImageCollection> albumsList = getSelectedAlbums();
     QStringList albumsListPath;
 
     for( QValueList<KIPI::ImageCollection>::ConstIterator album = albumsList.begin() ;
@@ -459,148 +283,17 @@ void FindDuplicateDialog::slotPurgeAllCache(void)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void FindDuplicateDialog::albumSelected( QListViewItem * item )
-{
-    if ( !item ) return;
-
-    AlbumItem *pitem = static_cast<AlbumItem*>( item );
-
-    if ( pitem == NULL ) return;
-
-    
-    if ( m_interface->hasFeature( KIPI::AlbumsHaveComments ) && m_AlbumComments )
-    {
-        m_AlbumComments->setText( i18n("Comment: %1").arg(pitem->comments()) );
-    }
-
-    if ( m_interface->hasFeature( KIPI::AlbumsHaveCategory ) && m_AlbumCollection )
-    {
-        m_AlbumCollection->setText( i18n("Collection: %1")
-                                    .arg(pitem->imageCollection().category()) );
-    }
-
-    if ( m_interface->hasFeature( KIPI::AlbumsHaveCreationDate ) && m_AlbumDate )
-    {
-        m_AlbumDate->setText( i18n("Date: %1")
-                              .arg( pitem->imageCollection().date()
-                                    .toString(Qt::LocalDate) ) );
-    }
-    
-    m_AlbumItems->setText( i18n("Items: %1").arg( pitem->items() ) );
-
-    m_albumPreview->clear();
-
-    KURL url = pitem->imageCollection().images()[0];
-
-    KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_albumPreview->height() );
-
-    connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void FindDuplicateDialog::slotGotPreview(const KFileItem*, const QPixmap &pixmap)
-{
-    m_albumPreview->setPixmap(pixmap);
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void FindDuplicateDialog::slotOk()
 {
-    if (getAlbumsSelection().isEmpty() == true)
+    m_selectedAlbums = m_imageCollectionSelector->selectedImageCollections();
+        
+    if (getSelectedAlbums().isEmpty() == true)
        {
        KMessageBox::sorry(0, i18n("You must selected at least one Album to find duplicate images for."));
        return;
        }
 
     accept();
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void FindDuplicateDialog::slotbuttonSelectAll(void)
-{
-    QListViewItemIterator it( m_AlbumsList );
-
-    while ( it.current() )
-        {
-        AlbumItem *item = static_cast<AlbumItem*>( it.current() );
-
-        if (!item->isOn())
-            item->setOn(true);
-
-        ++it;
-        }
-
-    albumSelected( m_AlbumsList->currentItem() );
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void FindDuplicateDialog::slotbuttonInvertSelection(void)
-{
-    QListViewItemIterator it( m_AlbumsList );
-
-    while ( it.current() )
-        {
-        AlbumItem *item = static_cast<AlbumItem*>( it.current() );
-
-        if (!item->isOn())
-            item->setOn(true);
-        else
-            item->setOn(false);
-
-        ++it;
-        }
-
-    albumSelected( m_AlbumsList->currentItem() );
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void FindDuplicateDialog::slotbuttonSelectNone(void)
-{
-    QListViewItemIterator it( m_AlbumsList );
-
-    while ( it.current() )
-        {
-        AlbumItem *item = static_cast<AlbumItem*>( it.current() );
-
-        if (item->isOn())
-            item->setOn(false);
-
-        ++it;
-        }
-
-    albumSelected( m_AlbumsList->currentItem() );
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-QValueList<KIPI::ImageCollection> FindDuplicateDialog::getAlbumsSelection(void)
-{
-    QValueList<KIPI::ImageCollection> AlbumsListSelected;
-    QListViewItemIterator it( m_AlbumsList );
-
-    while ( it.current() )
-        {
-        AlbumItem *item = static_cast<AlbumItem*>( it.current() );
-
-        if (item->isOn())
-            AlbumsListSelected.append( item->imageCollection() );
-
-        ++it;
-        }
-
-    return (AlbumsListSelected);
 }
 
 

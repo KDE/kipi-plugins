@@ -36,7 +36,6 @@
 
 #include <libkipi/interface.h>
 
-class QProgressDialog;
 class QComboBox;
 class QFrame;
 class QPushButton;
@@ -45,6 +44,11 @@ class KFileItem;
 class KIntNumInput;
 class KSqueezedTextLabel;
 class KListView;
+
+namespace KIPI
+{
+  class ImageCollectionSelector;
+}
 
 namespace KIPIFindDupplicateImagesPlugin
 {
@@ -63,10 +67,8 @@ class FindDuplicateDialog : public KDialogBase
 
   const int getApproximateThreeshold() const;
   void setApproximateThreeshold(int Value);
-
-  bool setAlbumsList(void);
-
-  QValueList<KIPI::ImageCollection> getAlbumsSelection(void);
+  
+  QValueList<KIPI::ImageCollection> getSelectedAlbums() const { return m_selectedAlbums; }
 
  signals:
   
@@ -76,46 +78,31 @@ class FindDuplicateDialog : public KDialogBase
 
  protected slots:
   
-  void albumSelected( QListViewItem * item );
   void slotOk();
-  void slotbuttonSelectAll(void);
-  void slotbuttonInvertSelection(void);
-  void slotbuttonSelectNone(void);
   void slotUpdateCache(void);
   void slotPurgeCache(void);
   void slotPurgeAllCache(void);
   void slotfindMethodChanged(const QString &string);
-  void slotGotPreview(const KFileItem* url, const QPixmap &pixmap);
-  void slotStopParsingAlbums(void);
   void slotHelp();
 
  private:
   
-  QComboBox          *m_findMethod;
+  QComboBox                     *m_findMethod;
 
-  QProgressDialog    *m_progressDlg;
+  QFrame                        *page_setupSelection;
+  QFrame                        *page_setupMethod;
 
-  KSqueezedTextLabel *m_AlbumComments;
-  KSqueezedTextLabel *m_AlbumCollection;
-  KSqueezedTextLabel *m_AlbumDate;
-  KSqueezedTextLabel *m_AlbumItems;
-
-  KListView          *m_AlbumsList;
-
-  QLabel             *m_albumPreview;
-
-  QFrame             *page_setupSelection;
-  QFrame             *page_setupMethod;
-  QFrame             *page_about;
-
-  QPushButton        *m_helpButton;
+  QPushButton                   *m_helpButton;
   
-  KIntNumInput       *m_approximateThreshold;
+  KIntNumInput                  *m_approximateThreshold;
 
-  KIPI::Interface    *m_interface;
+  KIPI::Interface               *m_interface;
+  
+  QValueList<KIPI::ImageCollection>  m_selectedAlbums;
+  KIPI::ImageCollectionSelector     *m_imageCollectionSelector;
 
-  bool                m_stopParsingAlbum;
-
+ private :
+ 
   void setupSelection(void);
   void setupPageMethod(void);
   

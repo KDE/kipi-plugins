@@ -162,26 +162,22 @@ bool FindDuplicateImages::showDialog()
     m_findDuplicateDialog = new FindDuplicateDialog( m_interface );
     readSettings();
     
-    if (m_findDuplicateDialog->setAlbumsList() == true)
+    connect( m_findDuplicateDialog, SIGNAL(updateCache(QStringList)),
+             this, SLOT(slotUpdateCache(QStringList)) );
+
+    connect( m_findDuplicateDialog, SIGNAL(clearCache(QStringList)),
+             this, SLOT(slotClearCache(QStringList)) );
+
+    connect( m_findDuplicateDialog, SIGNAL(clearAllCache()),
+             this, SLOT(slotClearAllCache()) );
+
+    if ( m_findDuplicateDialog->exec() == QDialog::Accepted )
        {
-       
-       connect( m_findDuplicateDialog, SIGNAL(updateCache(QStringList)),
-                this, SLOT(slotUpdateCache(QStringList)) );
-
-       connect( m_findDuplicateDialog, SIGNAL(clearCache(QStringList)),
-                this, SLOT(slotClearCache(QStringList)) );
-
-       connect( m_findDuplicateDialog, SIGNAL(clearAllCache()),
-                this, SLOT(slotClearAllCache()) );
-
-       if ( m_findDuplicateDialog->exec() == QDialog::Accepted )
-          {
-          // This is the value for approximate comparison level between 2 images.
-          m_approximateLevel = (float) m_findDuplicateDialog->getApproximateThreeshold() / (float)100;
+       // This is the value for approximate comparison level between 2 images.
+       m_approximateLevel = (float) m_findDuplicateDialog->getApproximateThreeshold() / (float)100;
           
-          writeSettings();
-          return true;
-          }
+       writeSettings();
+       return true;
        }
        
     return false;
@@ -208,7 +204,7 @@ void FindDuplicateImages::compareAlbums(void)
 
     // Prepare the data for the threaded operations.
     
-    QValueList<KIPI::ImageCollection> ListAlbums(m_findDuplicateDialog->getAlbumsSelection());
+    QValueList<KIPI::ImageCollection> ListAlbums(m_findDuplicateDialog->getSelectedAlbums());
     filesList.clear();
 
     for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
