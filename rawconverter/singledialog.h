@@ -57,29 +57,32 @@ private:
     void saveSettings();
     
     PreviewWidget* previewWidget_;
+    
     QCheckBox*     cameraWBCheckBox_;
     QCheckBox*     fourColorCheckBox_;
+    
     CSpinBox*      gammaSpinBox_;
     CSpinBox*      brightnessSpinBox_;
     CSpinBox*      redSpinBox_;
     CSpinBox*      blueSpinBox_;
+    
     QPushButton*   helpButton_;
-    QPushButton*   aboutButton_;
     QPushButton*   previewButton_;
     QPushButton*   processButton_;
     QPushButton*   closeButton_;
     QPushButton*   abortButton_;
+    
     QVButtonGroup* saveButtonGroup_;
 
     QString            inputFile_;
     QString            inputFileName_;
+    
     ProcessController* controller_;
 
 
 private slots:
 
     void slotHelp();
-    void slotAbout();
     void slotPreview();
     void slotProcess();
     void slotClose();

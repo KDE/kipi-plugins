@@ -22,15 +22,11 @@
 #ifndef BATCHDIALOG_H
 #define BATCHDIALOG_H
 
+// Qt includes.
+
 #include <qdialog.h>
 #include <qstringlist.h>
 #include <qdict.h>
-
-class KFileItem;
-class KListView;
-class KListViewItem;
-class KURL;
-class KProgress;
 
 class QListViewItem;
 class QCheckBox;
@@ -38,6 +34,12 @@ class QPushButton;
 class QVButtonGroup;
 class QLabel;
 class QPixmap;
+
+class KFileItem;
+class KListView;
+class KListViewItem;
+class KURL;
+class KProgress;
 
 namespace KIPI
 {
@@ -89,7 +91,6 @@ private:
     KProgress*     progressBar_;
 
     QPushButton*   helpButton_;
-    QPushButton*   aboutButton_;
     QPushButton*   processButton_;
     QPushButton*   closeButton_;
     QPushButton*   abortButton_;
@@ -108,7 +109,6 @@ private slots:
     void slotSaveFormatChanged();
 
     void slotHelp();
-    void slotAbout();
 
     void slotProcess();
     void slotAbort();

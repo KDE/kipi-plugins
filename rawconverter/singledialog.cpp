@@ -5,7 +5,7 @@
  * Description : 
  * 
  * Copyright 2003 by Renchi Raju
-
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published bythe Free Software Foundation;
@@ -19,7 +19,15 @@
  * 
  * ============================================================ */
 
-#include <qpushbutton.h>
+// C ansi includes.
+ 
+extern "C"
+{
+#include <stdio.h>
+}
+ 
+// Qt includes. 
+ 
 #include <qframe.h>
 #include <qgroupbox.h>
 #include <qvbuttongroup.h>
@@ -31,17 +39,21 @@
 #include <qtimer.h>
 #include <qfileinfo.h>
 #include <qevent.h>
+#include <qpushbutton.h>
+
+// KDE includes.
 
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
-extern "C"
-{
-#include <stdio.h>
-}
+// Local includes.
 
 #include "singledialog.h"
 #include "previewwidget.h"
@@ -52,7 +64,7 @@ namespace KIPIRawConverterPlugin
 {
 
 SingleDialog::SingleDialog(const QString& file)
-    : QDialog(0,0,false,Qt::WDestructiveClose)
+            : QDialog(0, 0, false, Qt::WDestructiveClose)
 {
 
     setCaption(i18n("KIPI Raw Image Converter"));
@@ -205,12 +217,30 @@ SingleDialog::SingleDialog(const QString& file)
 
     hboxLayout->addItem(new QSpacerItem(10,10,QSizePolicy::Expanding,
                                         QSizePolicy::Minimum));
-
+                                        
+    // About data and help button.
+                                        
     helpButton_ = new QPushButton(i18n("&Help"), this);
     hboxLayout->addWidget(helpButton_);
 
-    aboutButton_ = new QPushButton(i18n("About"), this);
-    hboxLayout->addWidget(aboutButton_);
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("RAW Image Converter"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin for RAW image conversion\n"
+                                                 "This plugin uses the Dave Coffin RAW photo "
+                                                 "decoder program \"dcraw\""),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Renchi Raju", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
+                     "renchi@pooh.tam.uiuc.edu");
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("RAW Image Converter handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpButton_->setPopup( helpMenu->menu() );
 
     previewButton_ = new QPushButton(i18n("&Preview"), this);
     QToolTip::add(previewButton_,
@@ -238,16 +268,15 @@ SingleDialog::SingleDialog(const QString& file)
 
     // ---------------------------------------------------------------
 
-    connect(helpButton_, SIGNAL(clicked()),
-            SLOT(slotHelp()));
-    connect(aboutButton_, SIGNAL(clicked()),
-            SLOT(slotAbout()));
     connect(previewButton_, SIGNAL(clicked()),
             SLOT(slotPreview()));
+    
     connect(processButton_, SIGNAL(clicked()),
             SLOT(slotProcess()));
+    
     connect(closeButton_, SIGNAL(clicked()),
             SLOT(slotClose()));
+    
     connect(abortButton_, SIGNAL(clicked()),
             SLOT(slotAbort()));
 
@@ -350,15 +379,6 @@ void SingleDialog::slotHelp()
                                              "kipi-plugins");
 }
 
-void SingleDialog::slotAbout()
-{
-    KMessageBox::about(this, i18n("A KIPI plugin for RAW image conversion\n\n"
-                                "Author: Renchi Raju\n\n"
-                                "Email: renchi@pooh.tam.uiuc.edu\n\n"
-                                "This plugin uses the Dave Coffin RAW photo decoder program \"dcraw\""),
-                                i18n("About RAW image converter"));
-}
-
 void SingleDialog::slotPreview()
 {
     Settings& s      = controller_->settings;
@@ -458,7 +478,6 @@ void SingleDialog::slotProcessed(const QString&, const QString& tmpFile_)
         KMessageBox::error(this, i18n("Failed to save image ")
                            + saveFile);
     }
-                                 
 }
 
 void SingleDialog::slotProcessingFailed(const QString&)

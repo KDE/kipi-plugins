@@ -19,18 +19,17 @@
  *
  * ============================================================ */
 
-#include <klistview.h>
-#include <klocale.h>
-#include <kurl.h>
-#include <kiconloader.h>
-#include <kprogress.h>
-#include <kfiledialog.h>
-#include <kmessagebox.h>
-#include <kconfig.h>
-#include <kapplication.h>
-#include <kio/previewjob.h>
-
-#include <qpushbutton.h>
+// C Ansi includes. 
+ 
+extern "C"
+{
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+}
+ 
+// Qt includes.
+ 
 #include <qframe.h>
 #include <qgroupbox.h>
 #include <qvbuttongroup.h>
@@ -43,13 +42,26 @@
 #include <qfileinfo.h>
 #include <qevent.h>
 #include <qpixmap.h>
+#include <qpushbutton.h>
 
-extern "C"
-{
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-}
+// KDE includes.
+
+#include <klistview.h>
+#include <klocale.h>
+#include <kurl.h>
+#include <kiconloader.h>
+#include <kprogress.h>
+#include <kfiledialog.h>
+#include <kmessagebox.h>
+#include <kconfig.h>
+#include <kio/previewjob.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
+
+// Local includes.
 
 #include "batchdialog.h"
 #include "cspinbox.h"
@@ -61,7 +73,7 @@ namespace KIPIRawConverterPlugin
 {
 
 BatchDialog::BatchDialog()
-    : QDialog(0,0,false,Qt::WDestructiveClose)
+           : QDialog(0, 0, false, Qt::WDestructiveClose)
 {
     setCaption(i18n("KIPI Raw Image Batch Converter"));
 
@@ -225,12 +237,30 @@ BatchDialog::BatchDialog()
     hboxLayout->addItem(new QSpacerItem(10,10,QSizePolicy::Expanding,
                                         QSizePolicy::Minimum));
 
+    // About data and help button.
+                                        
     helpButton_ = new QPushButton(i18n("&Help"), this);
     hboxLayout->addWidget(helpButton_);
 
-    aboutButton_ = new QPushButton(i18n("About"), this);
-    hboxLayout->addWidget(aboutButton_);
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("RAW Image Converter"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin for RAW image conversion\n"
+                                                 "This plugin uses the Dave Coffin RAW photo "
+                                                 "decoder program \"dcraw\""),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Renchi Raju", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
+                     "renchi@pooh.tam.uiuc.edu");
 
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("RAW Image Converter handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpButton_->setPopup( helpMenu->menu() );
+    
     processButton_ = new QPushButton(i18n("P&rocess"), this);
     QToolTip::add(processButton_,
                   i18n("Start converting the raw images from current settings."));
@@ -249,14 +279,12 @@ BatchDialog::BatchDialog()
 
     // ---------------------------------------------------------------
 
-    connect(helpButton_, SIGNAL(clicked()),
-            SLOT(slotHelp()));
-    connect(aboutButton_, SIGNAL(clicked()),
-            SLOT(slotAbout()));
     connect(processButton_, SIGNAL(clicked()),
             SLOT(slotProcess()));
+    
     connect(closeButton_, SIGNAL(clicked()),
             SLOT(close()));
+    
     connect(abortButton_, SIGNAL(clicked()),
             SLOT(slotAbort()));
 
@@ -323,7 +351,7 @@ void BatchDialog::addItems(const QStringList& itemList)
     if (!urlList.empty()) {
         KIO::PreviewJob* thumbnailJob = KIO::filePreview(urlList, 48 );
         connect(thumbnailJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-                SLOT(slotGotThumbnail(const KFileItem&, const QPixmap&)));
+                SLOT(slotGotThumbnail(const KFileItem*, const QPixmap&)));
     }
 
     QTimer::singleShot(0, this, SLOT(slotIdentify()));
@@ -385,22 +413,12 @@ void BatchDialog::slotSaveFormatChanged()
         item->setText(2,rawItem->dest);
         ++it;
     }
-
 }
 
 void BatchDialog::slotHelp()
 {
     KApplication::kApplication()->invokeHelp("rawconverter",
                                              "kipi-plugins");
-}
-
-void BatchDialog::slotAbout()
-{
-    KMessageBox::about(this, i18n("A KIPI plugin for batch RAW-image conversion\n\n"
-                                "Author: Renchi Raju\n\n"
-                                "Email: renchi@pooh.tam.uiuc.edu\n\n"
-                                "This plugin uses the Dave Coffin RAW photo decoder program \"dcraw\""),
-                                i18n("About Batch RAW-image converter"));
 }
 
 void BatchDialog::slotProcess()
