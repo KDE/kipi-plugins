@@ -115,7 +115,7 @@ void Plugin_DirOperations::slotOpenInNautilus()
 
 
    if (m_browserProc->start() == false)
-      KMessageBox::error(0, i18n("Cannot start 'nautilus' filemanager.\n"
+      KMessageBox::error(kapp->activeWindow(), i18n("Cannot start 'nautilus' filemanager.\n"
                                  "Please, check your installation!"));
 }
 

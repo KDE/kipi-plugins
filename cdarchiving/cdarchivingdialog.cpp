@@ -778,7 +778,7 @@ void CDArchivingDialog::slotOk()
 {
     if (getAlbumsSelection().isEmpty() == true)
        {
-       KMessageBox::sorry(0, i18n("You must selected at least an Album to archive!"));
+       KMessageBox::sorry(this, i18n("You must selected at least an Album to archive!"));
        return;
        }
 
@@ -786,13 +786,13 @@ void CDArchivingDialog::slotOk()
 
     if (fileK3b.exists() == false)
        {
-       KMessageBox::sorry(0, i18n("K3b binary path is not valid ! Please check it..."));
+       KMessageBox::sorry(this, i18n("K3b binary path is not valid ! Please check it..."));
        return;
        }
 
     if (TargetMediaSize >= MaxMediaSize)
        {
-       KMessageBox::sorry(0, i18n("Target media size is too big. Please, change your Albums selection!"));
+       KMessageBox::sorry(this, i18n("Target media size is too big. Please, change your Albums selection!"));
        return;
        }
 

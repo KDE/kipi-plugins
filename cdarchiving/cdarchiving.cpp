@@ -225,7 +225,7 @@ void CDArchiving::Activate()
     KStandardDirs dir;
     m_tmpFolder = dir.saveLocation("tmp", "kipi-cdarchiving-" + QString::number(getpid()) + "/");
 
-    m_configDlg = new CDArchivingDialog( m_interface, 0);
+    m_configDlg = new CDArchivingDialog( m_interface, kapp->activeWindow());
     readSettings();
 
     m_HTMLInterfaceFolder = "";
@@ -258,7 +258,7 @@ void CDArchiving::Activate()
           else
              {
              if ( m_cancelled == false )
-                KMessageBox::error(0, i18n("Cannot build HTML interface for this CD.\n"
+                KMessageBox::error(kapp->activeWindow(), i18n("Cannot build HTML interface for this CD.\n"
                                            "This option will be disabled!"));
              else
                 return;
@@ -268,7 +268,7 @@ void CDArchiving::Activate()
        if ( BuildK3bXMLprojectfile(m_HTMLInterfaceFolder, m_HTMLInterfaceIndex,
                                    m_HTMLInterfaceAutoRunInf, m_HTMLInterfaceAutoRunFolder) == false )
           {
-          KMessageBox::error(0, i18n("Cannot build K3b project file. CD archiving process canceled!"));
+          KMessageBox::error(kapp->activeWindow(), i18n("Cannot build K3b project file. CD archiving process canceled!"));
           return;
           }
 
@@ -284,7 +284,7 @@ void CDArchiving::Activate()
 
        if ( !m_Proc->start(KProcess::NotifyOnExit, KProcess::All ) )
           {
-          KMessageBox::error(0, i18n("Cannot start K3b program : fork failed !"));
+          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start K3b program : fork failed !"));
           return;
           }
 
@@ -320,7 +320,7 @@ void CDArchiving::K3bDone(KProcess*)
    qDebug("K3b is done !!! Removing temporary folder...");
 
    if (DeleteDir(m_tmpFolder) == false)
-       KMessageBox::error(0, i18n("Cannot remove temporary folder %1 !").arg(m_tmpFolder));
+       KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove temporary folder %1 !").arg(m_tmpFolder));
 
    m_actionCDArchiving->setEnabled(true);
 }
@@ -348,13 +348,13 @@ bool CDArchiving::buildHTMLInterface (void)
     if (TargetDir.exists (MainTPath) == TRUE)
         if (DeleteDir (MainTPath) == false)
            {
-           KMessageBox::error(0, i18n("Cannot remove folder %1 !").arg(MainTPath));
+           KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove folder %1 !").arg(MainTPath));
            return false;
            }
 
     if (TargetDir.mkdir( MainTPath ) == FALSE)
        {
-       KMessageBox::sorry(0, i18n("Couldn't create directory '%1'").arg(MainTPath));
+       KMessageBox::sorry(kapp->activeWindow(), i18n("Couldn't create directory '%1'").arg(MainTPath));
        return false;
        }
 
@@ -395,7 +395,7 @@ bool CDArchiving::buildHTMLInterface (void)
 
            if (TargetDir.mkdir( SubTPath ) == FALSE)
                {
-               KMessageBox::sorry(0, i18n("Couldn't create directory '%1'").arg(SubTPath));
+               KMessageBox::sorry(kapp->activeWindow(), i18n("Couldn't create directory '%1'").arg(SubTPath));
                return false;
                }
 
@@ -414,7 +414,7 @@ bool CDArchiving::buildHTMLInterface (void)
                {
                if (DeleteDir (MainTPath) == false)
                    {
-                   KMessageBox::error(0, i18n("Cannot remove folder %1 !").arg(MainTPath));
+                   KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove folder %1 !").arg(MainTPath));
                    return false;
                    }
 
@@ -441,7 +441,7 @@ bool CDArchiving::buildHTMLInterface (void)
        }
     else
        {
-       KMessageBox::sorry(0,i18n("Couldn't open file '%1'").arg(MainUrl.path(+1)));
+       KMessageBox::sorry(kapp->activeWindow(),i18n("Couldn't open file '%1'").arg(MainUrl.path(+1)));
        return false;
        }
 
@@ -460,7 +460,7 @@ bool CDArchiving::createDirectory(QDir thumb_dir, QString imgGalleryDir, QString
 
         if (!(thumb_dir.mkdir(dirName, false)))
             {
-            KMessageBox::sorry(0, i18n("Couldn't create directory '%1' in '%2'")
+            KMessageBox::sorry(kapp->activeWindow(), i18n("Couldn't create directory '%1' in '%2'")
                                        .arg(dirName).arg(imgGalleryDir));
             return false;
             }
@@ -820,7 +820,7 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
 
                 if (!(subDir.mkdir(currentDir, false)))
                     {
-                    KMessageBox::sorry(0, i18n("Couldn't create directory '%1' in '%2'")
+                    KMessageBox::sorry(kapp->activeWindow(), i18n("Couldn't create directory '%1' in '%2'")
                                        .arg(currentDir).arg(url.directory()));
                     continue;
                     }
@@ -875,7 +875,7 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
         }
     else
         {
-        KMessageBox::sorry(0,i18n("Couldn't open file '%1'").arg(url.path(+1)));
+        KMessageBox::sorry(kapp->activeWindow(),i18n("Couldn't open file '%1'").arg(url.path(+1)));
         return false;
         }
 }

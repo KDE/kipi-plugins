@@ -49,7 +49,7 @@ class CommentsEditor : public KDialogBase
 
 public:
 
-    CommentsEditor( KIPI::Interface* interface, KIPI::ImageCollection images );
+    CommentsEditor( KIPI::Interface* interface, KIPI::ImageCollection images, QWidget *parent=0L );
     ~CommentsEditor();
 
 private:

@@ -28,6 +28,8 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
+#include <kapplication.h>
+#include <kapplication.h>
 
 // KIPI includes.
 
@@ -86,7 +88,7 @@ void Plugin_CommentsEditor::slotActivate()
         return;
 
     if ( images.images().count() == 0 ) {
-        KMessageBox::sorry(0, i18n("Please select an album or a selection of images for editing comments !"));
+        KMessageBox::sorry(kapp->activeWindow(), i18n("Please select an album or a selection of images for editing comments !"));
         return;
     }
 
@@ -96,7 +98,7 @@ void Plugin_CommentsEditor::slotActivate()
     }
 
     CommentsPlugin::CommentsEditor* editor =
-        new CommentsPlugin::CommentsEditor( interface, images );
+        new CommentsPlugin::CommentsEditor( interface, images, kapp->activeWindow() );
     editor->show();
 
 }

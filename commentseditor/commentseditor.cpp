@@ -137,9 +137,9 @@ protected:
 
 // --------------------------------------------------------------------
 
-CommentsEditor::CommentsEditor( KIPI::Interface* interface, KIPI::ImageCollection images )
+CommentsEditor::CommentsEditor( KIPI::Interface* interface, KIPI::ImageCollection images, QWidget *parent )
     : KDialogBase(Plain, i18n("Edit Comments"), Help|User1|Ok|Cancel, Ok,
-                  0, 0, true, true, i18n("&About") )
+                  parent, 0, true, true, i18n("&About") )
 
 {
     setHelp("plugin-commentseditor.anchor", "kipi");
