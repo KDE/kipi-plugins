@@ -67,12 +67,6 @@ extern "C"
 #include <kglobalsettings.h>
 #include <kaboutdata.h>
 
-// LibKExif includes.
-
-/*#include <libkexif/kexif.h>
-#include <libkexif/kexifdata.h>
-#include <libkexif/kexifutils.h>
-*/
 // KIPI includes
 
 #include <libkipi/imagecollection.h>
