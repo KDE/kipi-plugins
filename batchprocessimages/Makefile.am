@@ -7,16 +7,16 @@ kde_module_LTLIBRARIES = kipiplugin_batchprocessimages.la
 kipiplugin_batchprocessimages_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 # Srcs for the plugin
 kipiplugin_batchprocessimages_la_SOURCES = plugin_batchprocessimages.cpp batchprocessimagesitem.cpp \
-					      outputdialog.cpp imagepreview.cpp renameimagesdialog.cpp \
-					      borderimagesdialog.cpp borderoptionsdialog.cpp \
-					      convertimagesdialog.cpp convertoptionsdialog.cpp \
-					      filterimagesdialog.cpp filteroptionsdialog.cpp \
-					      colorimagesdialog.cpp coloroptionsdialog.cpp \
-					      effectimagesdialog.cpp effectoptionsdialog.cpp \
-					      recompressimagesdialog.cpp recompressoptionsdialog.cpp \
-					      resizeimagesdialog.cpp resizeoptionsdialog.cpp \
-					      batchprocessimagesdialog.cpp renameimagesoptionsdialog.cpp \
-					      batchprocessimageslist.cpp
+			   	           outputdialog.cpp imagepreview.cpp renameimagesdialog.cpp \
+					   borderimagesdialog.cpp borderoptionsdialog.cpp \
+					   convertimagesdialog.cpp convertoptionsdialog.cpp \
+					   filterimagesdialog.cpp filteroptionsdialog.cpp \
+					   colorimagesdialog.cpp coloroptionsdialog.cpp \
+					   effectimagesdialog.cpp effectoptionsdialog.cpp \
+					   recompressimagesdialog.cpp recompressoptionsdialog.cpp \
+					   resizeimagesdialog.cpp resizeoptionsdialog.cpp \
+					   batchprocessimagesdialog.cpp renameimagesoptionsdialog.cpp \
+					   batchprocessimageslist.cpp
 
 # Libs needed by the plugin
 kipiplugin_batchprocessimages_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS)
