@@ -199,7 +199,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
 
 KIPI::Category Plugin_FindImages::category() const
 {
-    return KIPI::IMAGESPLUGIN;
+    return KIPI::COLLECTIONSPLUGIN;
 }
 
 

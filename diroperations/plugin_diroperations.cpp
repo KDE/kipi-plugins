@@ -130,7 +130,7 @@ void Plugin_DirOperations::slotAlbumSelected( bool b)
 
 KIPI::Category  Plugin_DirOperations::category() const
 {
-    return KIPI::IMAGESPLUGIN;
+    return KIPI::COLLECTIONSPLUGIN;
 }
 
 #include "plugin_diroperations.moc"
