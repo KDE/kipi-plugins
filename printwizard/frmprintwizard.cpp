@@ -678,8 +678,8 @@ void FrmPrintWizard::CmbPaperSize_activated( int index )
 
 // create a MxN grid of photos, fitting on the page
 TPhotoSize * createPhotoGrid(int pageWidth, int pageHeight, QString label, int rows, int columns) {
-  const int MARGIN = 500; 
-  const int GAP = 100;
+  int MARGIN = (int)((pageWidth + pageHeight) / 2 * 0.04 + 0.5); 
+  int GAP = MARGIN / 4;
   int photoWidth = (pageWidth - (MARGIN * 2) - ((columns-1) * GAP)) / columns;
   int photoHeight = (pageHeight - (MARGIN * 2) - ((rows-1) * GAP)) / rows;
 
@@ -875,6 +875,13 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
 
     // add to the list
     m_photoSizes.append(p);
+
+    // thumbnails
+    m_photoSizes.append(createPhotoGrid(2100, 2970, i18n("Thumbnails"), 5, 4));
+
+    // small thumbnails
+    m_photoSizes.append(createPhotoGrid(2100, 2970, i18n("Small Thumbnails"), 6, 5));
+
   } // A4
   else if (pageSize == KPrinter::A6)
   {
@@ -912,6 +919,12 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
       // add to the list
       m_photoSizes.append(p);
                                                          
+      // thumbnails
+      m_photoSizes.append(createPhotoGrid(1020, 1530, i18n("Thumbnails"), 5, 4));
+
+      // small thumbnails
+      m_photoSizes.append(createPhotoGrid(1020, 1530, i18n("Small Thumbnails"), 6, 5));
+
   } // A6
   else
   {
