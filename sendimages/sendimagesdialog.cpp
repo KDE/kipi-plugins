@@ -62,15 +62,15 @@
 #include <kimageio.h>
 #include <kbuttonbox.h>
 #include <ksqueezedtextlabel.h>
-
-// Include files for KIPI
-
+#include <kio/previewjob.h>
 
 // Local include files
 
 #include "sendimagesdialog.h"
 #include "listimageserrordialog.h"
-#include <kio/previewjob.h>
+
+namespace KIPISendimagesPlugin
+{
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1201,5 +1201,6 @@ while( (fi = it.current() ) )
 return true;
 }
 
+}  // NameSpace KIPISendimagesPlugin
 
 #include "sendimagesdialog.moc"

@@ -20,8 +20,6 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#include "listimageserrordialog.h"
-
 // Qt includes
 
 #include <qpushbutton.h>
@@ -35,6 +33,13 @@
 
 #include <klocale.h>
 #include <klistview.h>
+
+// Local includes.
+
+#include "listimageserrordialog.h"
+
+namespace KIPISendimagesPlugin
+{
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -86,6 +91,6 @@ listImagesErrorDialog::~listImagesErrorDialog()
 {
 }
 
-
+}  // NameSpace KIPISendimagesPlugin
 
 #include "listimageserrordialog.moc"

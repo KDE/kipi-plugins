@@ -2,7 +2,7 @@
  * File  : plugin_sendimages.h
  * Author: Gilles Caulier <caulier dot gilles at free.fr>
  * Date  : 2003-11-04
- * Description : KIPI Send Mail Images Plugin.
+ * Description : KIPI E-Mail Images Plugin.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,7 +25,7 @@
 #include <libkipi/plugin.h>
 
 class KAction;
-class SendImagesDialog;
+class KIPISendimagesPlugin::SendImagesDialog;
 
 class Plugin_SendImages : public KIPI::Plugin
 {
@@ -40,8 +40,8 @@ public slots:
   void slotActivate();
 
 private:
-  KAction            *m_action_sendimages;
-  SendImagesDialog   *m_sendImagesDialog;
+  KAction                                  *m_action_sendimages;
+  KIPISendimagesPlugin::SendImagesDialog   *m_sendImagesDialog;
 };
 
 

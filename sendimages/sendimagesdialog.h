@@ -35,6 +35,7 @@
 #include <klistbox.h>
 
 // Include files for KIPI
+
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
@@ -55,6 +56,9 @@ class KProcess;
 class KIntNumInput;
 class KListBox;
 class KSqueezedTextLabel;
+
+namespace KIPISendimagesPlugin
+{
 
 class ListImageItems : public KListBox
 {
@@ -160,5 +164,7 @@ protected:
    void readSettings(void);
    void setNbItems(void);
 };
+
+}  // NameSpace KIPISendimagesPlugin
 
 #endif  // SENDIMAGESDIALOG_H

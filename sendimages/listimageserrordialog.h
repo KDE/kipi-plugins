@@ -30,6 +30,9 @@
 
 class KListView;
 
+namespace KIPISendimagesPlugin
+{
+
 class listImagesErrorDialog : public KDialogBase
 {
 Q_OBJECT
@@ -43,6 +46,8 @@ public:
 private:
   KListView*     m_listFiles;
 };
+
+}  // NameSpace KIPISendimagesPlugin
 
 #endif  // LISTIMAGESERRORDIALOG_included
 

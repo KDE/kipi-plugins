@@ -2,7 +2,7 @@
  * File  : plugin_sendimages.cpp
  * Author: Gilles Caulier <caulier dot gilles at free.fr>
  * Date  : 2003-11-04
- * Description : KIPI Send Mail Images Plugin.
+ * Description : KIPI E-Mail Images Plugin.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -69,6 +69,7 @@ Plugin_SendImages::Plugin_SendImages(QObject *parent, const char*, const QString
 void Plugin_SendImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
+    
     m_action_sendimages = new KAction (i18n("E-mail Images..."),     // Menu message.
                                         "mail_new",                  // Menu icon.
                                         0,
@@ -93,13 +94,14 @@ void Plugin_SendImages::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     KIPI::ImageCollection images = interface->currentScope();
+    
     if ( !images.isValid() )
         return;
 
     KStandardDirs dir;
     QString Tmp = dir.saveLocation("tmp", "kipi-sendimages-" + QString::number(getpid()) + "/");
 
-    m_sendImagesDialog = new SendImagesDialog(0, Tmp, interface, images);
+    m_sendImagesDialog = new KIPISendimagesPlugin::SendImagesDialog(0, Tmp, interface, images);
     m_sendImagesDialog->show();
 }
 
