@@ -69,6 +69,7 @@ extern "C"
 #include <kio/netaccess.h>
 #include <kimageio.h>
 #include <ktempfile.h>
+#include <kdeversion.h>
 
 #include <libkipi/thumbnailjob.h>
 #include <libkipi/imageinfo.h>
@@ -457,6 +458,12 @@ void AcquireImageDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixm
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+#undef NETACCESS_WIDGET
+#if KDE_VERSION >= 0x30200
+#define NETACCESS_WIDGET , this
+#else
+#define NETACCESS_WIDGET
+#endif
   void AcquireImageDialog::slotOk()
 {
     // PENDING( aurelien)
@@ -488,10 +495,10 @@ void AcquireImageDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixm
     QString ext = extension(imageFormat);
     url.setFileName(fileName + ext);
 
-    if (KIO::NetAccess::exists(url, false, this)) {
+    if (KIO::NetAccess::exists(url, false NETACCESS_WIDGET)) {
         for (int idx=1;;idx++) {
             url.setFileName(QString("%1_%2%3").arg(fileName).arg(idx).arg(ext));
-            if (!KIO::NetAccess::exists(url, false, this)) break;
+            if (KIO::NetAccess::exists(url, false NETACCESS_WIDGET)) break;
         }
     }
 
@@ -524,7 +531,7 @@ void AcquireImageDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixm
     
     // Upload the image if necessary
     if ( !url.isLocalFile()) {
-        if (!KIO::NetAccess::upload(imagePath, url, this)) {
+        if (!KIO::NetAccess::upload(imagePath, url NETACCESS_WIDGET)) {
            KMessageBox::error(0, i18n("Could not upload image to \"%1\"!").arg(url.prettyURL()));
            return;
         }
