@@ -226,7 +226,7 @@ void SendImagesDialog::setupImagesList(void)
     QString whatsThis;
 
     page_setupImagesList = addPage( i18n("Images"),
-                                    i18n("Images list to e-mail"),
+                                    i18n("Image list to e-mail"),
                                     BarIcon("image", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupImagesList, 0, spacingHint() );
@@ -238,16 +238,16 @@ void SendImagesDialog::setupImagesList(void)
     QGridLayout* grid = new QGridLayout( m_groupBoxImageList, 2, 2 , 20, 20);
 
     m_ImagesFilesListBox = new ListImageItems( m_groupBoxImageList, "ListImageItems" );
-    QWhatsThis::add( m_ImagesFilesListBox, i18n( "<p>This is the images list to e-mail. "
-                                                 "If you want to add some images click on 'Add images' "
-                                                 "button or use the drag and drop."));
+    QWhatsThis::add( m_ImagesFilesListBox, i18n( "<p>This is the list of images  to e-mail. "
+                                                 "If you want to add some images click on the 'Add images' "
+                                                 "button or use the drag-and-drop."));
     grid->addMultiCellWidget(m_ImagesFilesListBox, 0, 2, 0, 1);
 
     KButtonBox* imagesListButtonBox = new KButtonBox( m_groupBoxImageList, Vertical );
     QPushButton* m_addImagesButton = imagesListButtonBox->addButton ( i18n( "&Add images" ) );
     QWhatsThis::add( m_addImagesButton, i18n("<p>Add images to the list.") );
     QPushButton* m_remImagesButton = imagesListButtonBox->addButton ( i18n( "&Remove images" ));
-    QWhatsThis::add( m_remImagesButton, i18n("<p>Remove images selected on the list.") );
+    QWhatsThis::add( m_remImagesButton, i18n("<p>Remove selected images from the list.") );
     imagesListButtonBox->layout();
     grid->addMultiCellWidget(imagesListButtonBox, 0, 1, 2, 2);
 
@@ -255,7 +255,7 @@ void SendImagesDialog::setupImagesList(void)
     m_imageLabel->setFixedHeight( 120 );
     m_imageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_imageLabel->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    QWhatsThis::add( m_imageLabel, i18n( "<p>Preview of the current image of the list." ) );
+    QWhatsThis::add( m_imageLabel, i18n( "<p>Preview of the currently selected image on the list." ) );
     grid->addMultiCellWidget(m_imageLabel, 2, 2, 2, 2);
 
     vlay->addWidget( m_groupBoxImageList );
@@ -266,7 +266,7 @@ void SendImagesDialog::setupImagesList(void)
     groupBox2->setColumnLayout(0, Qt::Vertical );
     groupBox2->layout()->setSpacing( 6 );
     groupBox2->layout()->setMargin( 11 );
-    QWhatsThis::add( groupBox2, i18n("<p>The description of the current image in the list.") );
+    QWhatsThis::add( groupBox2, i18n("<p>The description of the currently selected image on the list.") );
 
     QVBoxLayout * groupBox2Layout = new QVBoxLayout( groupBox2->layout() );
     groupBox2Layout->setAlignment( Qt::AlignTop );
@@ -366,7 +366,7 @@ void SendImagesDialog::setupEmailOptions(void)
     m_mailAgentName->insertItem( "Sylpheed" );
     m_mailAgentName->insertItem( "Thunderbird" );
     m_mailAgentName->setCurrentText( "Kmail" );
-    QWhatsThis::add( m_mailAgentName, i18n("<p>Select here your prefered external mail agent program."
+    QWhatsThis::add( m_mailAgentName, i18n("<p>Select here your preferred external mail agent program."
                                            "These mail agents version are supported:<p>"
                                            "<b>Balsa</b>: >= 2.x<p>"
                                            "<b>Evolution</b>: >= 1.4<p>"
@@ -384,7 +384,7 @@ void SendImagesDialog::setupEmailOptions(void)
 
     m_addComments = new QCheckBox( i18n("Add comments in attached file"), page_setupEmailOptions);
     QWhatsThis::add( m_addComments, i18n("<p>If you enable this option, all images comments "
-                                         "will be added like an attached file.") );
+                                         "will be added as an attached file.") );
     vlay->addWidget( m_addComments );
 
     //---------------------------------------------
@@ -398,7 +398,7 @@ void SendImagesDialog::setupEmailOptions(void)
     QVBoxLayout * groupBox2Layout = new QVBoxLayout( groupBox2->layout() );
     groupBox2Layout->setAlignment( Qt::AlignTop );
 
-    m_changeImagesProp = new QCheckBox(i18n("Change images properties to send"), groupBox2);
+    m_changeImagesProp = new QCheckBox(i18n("Change properties of images to send"), groupBox2);
     QWhatsThis::add( m_changeImagesProp, i18n("<p>If you enable this option, "
                      "all images to send can be resized and recompressed.") );
     m_changeImagesProp->setChecked( true );
@@ -415,15 +415,15 @@ void SendImagesDialog::setupEmailOptions(void)
     m_imagesResize->insertItem(i18n("very big (1280 pixels)"));
     m_imagesResize->setCurrentText (i18n("medium (800 pixels)"));
     whatsThis = i18n("<p>Select here the images size to send:<p>"
-                     "<b>%1</b>: used that if you have a very slow internet "
-                     "connexion and if the target mailling box size is very limited.<p>"
-                     "<b>%2</b>: used that if you have a slow internet connexion "
-                     "and if the target mailling box size is limited.<p>"
-                     "<b>%3</b>: this is the default value for a medium internet connexion "
-                     "and a target mailling box size.<p>"
-                     "<b>%4</b>: used that if you have a speed internet connexion "
-                     "and if the target mailling box size isn't limited.<p>"
-                     "<b>%5</b>: used that if you have none size and speed restriction.<p>")
+                     "<b>%1</b>: use this if you have a very slow internet "
+                     "connection or if the target mailbox size is very limited.<p>"
+                     "<b>%2</b>: use this if you have a slow internet connection "
+                     "and if the target mailbox size is limited.<p>"
+                     "<b>%3</b>: this is the default value for a medium internet connection "
+                     "and a target mailbox size.<p>"
+                     "<b>%4</b>: use this if you have a high-speed internet connection "
+                     "and if the target mailbox size is not limited.<p>"
+                     "<b>%5</b>: use this if you have no size or speed restrictions.<p>")
                      .arg(i18n("very small (320 pixels)"))
                      .arg(i18n("small (640 pixels)"))
                      .arg(i18n("medium (800 pixels)"))
@@ -431,7 +431,7 @@ void SendImagesDialog::setupEmailOptions(void)
                      .arg(i18n("very big (1280 pixels)"));
     QWhatsThis::add( m_imagesResize, whatsThis );
 
-    m_labelImageSize = new QLabel( i18n("New images size:"), groupBox2);
+    m_labelImageSize = new QLabel( i18n("New images' size:"), groupBox2);
     hlay12->addWidget( m_labelImageSize );
     m_labelImageSize->setBuddy( m_imagesResize );
     hlay12->addStretch( 1 );
@@ -441,7 +441,7 @@ void SendImagesDialog::setupEmailOptions(void)
 
     m_imageCompression = new KIntNumInput(75, groupBox2);
     m_imageCompression->setRange(1, 100, 1, true );
-    m_imageCompression->setLabel( i18n("New images compression:") );
+    m_imageCompression->setLabel( i18n("New images' compression:") );
     groupBox2Layout->addWidget( m_imageCompression );
     whatsThis = i18n("<p>The new compression value of images to send:<p>");
     whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
@@ -462,8 +462,8 @@ void SendImagesDialog::setupEmailOptions(void)
     m_imagesFormat->insertItem("PNG");
     m_imagesFormat->setCurrentText ("JPEG");
     whatsThis = i18n("<p>Select here the images files format to send.<p>");
-    whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group file format "
-                "is a good Web file format but it use a compression with data lost.<p>"
+    whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group's file format "
+                "is a good Web file format but it uses lossy compression.<p>"
                 "<b>PNG</b>: the Portable Network Graphics format is an extensible file format for "
                 "the lossless, portable, well-compressed storage of raster images. PNG provides a "
                 "patent-free replacement for GIF and can also replace many common uses of TIFF. "
@@ -472,7 +472,7 @@ void SendImagesDialog::setupEmailOptions(void)
                 "and chromaticity data for improved color matching on heterogeneous platforms.");
     QWhatsThis::add( m_imagesFormat, whatsThis );
 
-    m_labelImageFormat = new QLabel( i18n("Images file format:"), groupBox2);
+    m_labelImageFormat = new QLabel( i18n("Images' file format:"), groupBox2);
     hlay13->addWidget( m_labelImageFormat );
     m_labelImageFormat->setBuddy( m_imagesFormat );
     hlay13->addStretch( 1 );
@@ -504,12 +504,12 @@ void SendImagesDialog::setupEmailOptions(void)
 
 void SendImagesDialog::aboutPage(void)
 {
-    page_about = addPage( i18n("About"), i18n("About KIPI E-mail Images"),
+    page_about = addPage( i18n("About"), i18n("About KIPI's 'E-mail Images' Plugin"),
                           BarIcon("kipi", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 
-    QLabel *label = new QLabel( i18n("A KIPI plugin for e-mail images\n\n"
+    QLabel *label = new QLabel( i18n("A KIPI plugin for e-mailing images\n\n"
                                      "Author: Gilles Caulier\n\n"
                                      "Email: caulier dot gilles at free.fr\n\n"), page_about);
 
@@ -614,7 +614,7 @@ void SendImagesDialog::slotOk()
 {
     if ( m_ImagesFilesListBox->count() == 0 )
        {
-       KMessageBox::error(0, i18n("You must add some images to send!"));
+       KMessageBox::error(0, i18n("You must add some images to send."));
        return;
        }
 
@@ -634,9 +634,9 @@ void SendImagesDialog::slotOk()
 
 void SendImagesDialog::setNbItems(void)
 {
-    if ( m_ImagesFilesListBox->count() == 0 ) m_groupBoxImageList->setTitle(i18n("Images list"));
+    if ( m_ImagesFilesListBox->count() == 0 ) m_groupBoxImageList->setTitle(i18n("Image list"));
     else
-       m_groupBoxImageList->setTitle(i18n("Images list (1 item)", "Images list (%n items)",
+       m_groupBoxImageList->setTitle(i18n("Image list (1 item)", "Image list (%n items)",
                                      m_ImagesFilesListBox->count() ));
 }
 

@@ -232,9 +232,9 @@ bool SendImages::showErrors()
     if ( m_imagesResizedWithError.isEmpty() == false )
        {
        listImagesErrorDialog *ErrorImagesDialog = new listImagesErrorDialog(0,
-                                                  i18n("Error during resize images process"),
-                                                  i18n("Cannot resize this images files :"),
-                                                  i18n("Do you want added this images files like\nattachments "
+                                                  i18n("Error during resize images process."),
+                                                  i18n("Cannot resize the following image files:"),
+                                                  i18n("Do you want them to be added as\nattachments "
                                                        "(without resizing)?"),
                                                   m_imagesResizedWithError);
        
@@ -295,8 +295,8 @@ void SendImages::invokeMailAgent(void)
            *m_mailAgentProc << (*it).path();
 
        if ( m_mailAgentProc->start() == false )
-          KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
-                                     "check your installation!")
+          KMessageBox::error(0, i18n("Cannot start '%1' program;\nplease "
+                                     "check your installation.")
                                      .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
        }
 
@@ -314,8 +314,8 @@ void SendImages::invokeMailAgent(void)
            }
 
        if ( m_mailAgentProc->start() == false )
-          KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
-                                     "check your installation!")
+          KMessageBox::error(0, i18n("Cannot start '%1' program;\nplease "
+                                     "check your installation.")
                                      .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
        }
 
@@ -335,8 +335,8 @@ void SendImages::invokeMailAgent(void)
        *m_mailAgentProc << Temp;
 
        if ( m_mailAgentProc->start() == false )
-          KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
-                                     "check your installation!")
+          KMessageBox::error(0, i18n("Cannot start '%1' program;\nplease "
+                                     "check your installation.")
                                      .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
        }
 
@@ -378,8 +378,8 @@ void SendImages::invokeMailAgent(void)
        kdDebug (51000) << Temp.ascii() << endl;
 
        if ( m_mailAgentProc->start(KProcess::NotifyOnExit , KProcess::All) == false )
-          KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
-                                     "check your installation!")
+          KMessageBox::error(0, i18n("Cannot start '%1' program;\nplease "
+                                     "check your installation.")
                                      .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
        else return;
        }
@@ -391,7 +391,7 @@ void SendImages::invokeMailAgent(void)
 void SendImages::removeTmpFiles(void)
 {
     if (DeleteDir(m_tmp) == false)
-       KMessageBox::error(0, i18n("Cannot remove temporary folder %1!").arg(m_tmp));
+       KMessageBox::error(0, i18n("Cannot remove temporary folder %1.").arg(m_tmp));
 }
 
 
@@ -581,8 +581,8 @@ void SendImages::slotMozillaExited(KProcess*)
        
        if ( m_mailAgentProc2->start() == false )   
           {
-          KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
-                                     "check your installation!")
+          KMessageBox::error(0, i18n("Cannot start '%1' program;\nplease "
+                                     "check your installation.")
                                      .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
           }
        else
@@ -625,8 +625,8 @@ void SendImages::slotMozillaTimeout(void)
     *m_mailAgentProc3 << Temp;
 
     if ( m_mailAgentProc3->start() == false )
-       KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
-                                  "check your installation!")
+       KMessageBox::error(0, i18n("Cannot start '%1' program;\nplease "
+                                  "check your installation.")
                                   .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
 }
 

@@ -158,7 +158,7 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
            case(KIPISendimagesPlugin::Initialize): 
               {
               m_total = d->total;
-              text = i18n("Preparing %1 images to send...").arg(d->total);
+              text = i18n("Preparing 1 image to send....", "Preparing %n images to send....", d->total);
               break;
               }
 
@@ -194,7 +194,7 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
                {
                case(KIPISendimagesPlugin::ResizeImages): 
                   {
-                  text = i18n("failed to resize '%1' from Album '%2'")
+                  text = i18n("Failed to resize '%1' from Album '%2'")
                               .arg(d->fileName).arg(d->albumName);
                   break;
                   }
@@ -213,14 +213,14 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
                {
                case(KIPISendimagesPlugin::ResizeImages): 
                   {
-                  text = i18n("Resizing '%1' from Album '%2' done!")
+                  text = i18n("Resizing '%1' from Album '%2' completed.")
                               .arg(d->fileName).arg(d->albumName);
                   break;
                   }
 
                case(KIPISendimagesPlugin::Progress): 
                   {
-                  text = i18n("All preparing operations done!");
+                  text = i18n("All preparatory operations completed.");
                   break;
                   }
                                  
