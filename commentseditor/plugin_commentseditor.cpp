@@ -41,11 +41,6 @@ Plugin_CommentsEditor::Plugin_CommentsEditor(QObject *parent,
                                              const QStringList &)
     : KIPI::Plugin(parent, "CommentsEditor")
 {
-    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent );
-    if (!interface->hasFeature( KIPI::AlbumsHaveComments) ) {
-        kdDebug( 51001 ) << "Host app does not support image comments: Plugin_CommentsEditor plugin disabled" << endl;
-        return;
-    }
     KGlobal::locale()->insertCatalogue("kipiplugin_commentseditor");
 
     kdDebug( 51001 ) << "Plugin_CommentsEditor plugin loaded"
