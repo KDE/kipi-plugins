@@ -716,7 +716,7 @@ void CDArchivingDialog::albumSelected( QListViewItem * item )
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void CDArchivingDialog::slotGotPreview(const KFilePreview* /*url*/, const QPixmap &pixmap)
+void CDArchivingDialog::slotGotPreview(const KFileItem*, const QPixmap &pixmap)
 {
     m_albumPreview->setPixmap(pixmap);
 }

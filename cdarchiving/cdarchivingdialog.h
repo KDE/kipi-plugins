@@ -43,6 +43,7 @@ class QLineEdit;
 class QSpinBox;
 class QListView;
 
+class KFileItem;
 class KSqueezedTextLabel;
 class KURLRequester;
 class KURL;
@@ -140,7 +141,7 @@ class CDArchivingDialog : public KDialogBase
   void slotbuttonInvertSelection(void);
   void slotbuttonSelectNone(void);
   void UrlChanged(const QString &url );
-  void slotGotPreview(const KFilePreview*, const QPixmap &pixmap);
+  void slotGotPreview(const KFileItem*, const QPixmap &pixmap);
 
  private:
   QCheckBox          *m_useHTMLInterface;

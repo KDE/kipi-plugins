@@ -1440,13 +1440,14 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
 
     // Add Selected Albums paths List.
 
-    for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) {
+    for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
+        {
         m_progressDlg->setLabelText( i18n("Added Album\n'%1'\ninto project...").arg( (*it).name()) );
         kapp->processEvents();
-        AddFolderTreeToK3bXMLProjectFile( "", &stream); // PENDING(blackie)  I seriously doubt this is correct!
+        AddFolderTreeToK3bXMLProjectFile( (*it).path().path(), &stream); 
         m_progressDlg->setProgress( ++progressValue );
         kapp->processEvents();
-    }
+        }
 
     Temp = "</files>\n";
 
@@ -1481,7 +1482,8 @@ bool CDArchiving::AddFolderTreeToK3bXMLProjectFile (QString dirname, QTextStream
           + "\" >\n";
 
    *stream << Temp;
-   //qDebug("Directory: %s", dir->dirName().latin1 ());
+   
+   kdDebug( 51000 ) << "Directory: " << dir->dirName().latin1 () << endl;
 
    const QFileInfoList* fileinfolist = dir->entryInfoList();
    QFileInfoListIterator it_files(*fileinfolist);
@@ -1499,7 +1501,8 @@ bool CDArchiving::AddFolderTreeToK3bXMLProjectFile (QString dirname, QTextStream
 
      if( fi_files->isFile() )
           {
-          //qDebug("   Filename: %s", fi_files->fileName().latin1 ());
+          kdDebug( 51000 ) << "   Filename: " << fi_files->fileName().latin1() << endl;
+          
           Temp = "<file name=\""
                  + EscapeSgmlText(QTextCodec::codecForLocale(), fi_files->fileName(), true, true)
                  + "\" >\n"
@@ -1525,7 +1528,8 @@ bool CDArchiving::AddFolderTreeToK3bXMLProjectFile (QString dirname, QTextStream
 
      if ( fi_folders->isDir() )
           {
-          //qDebug("   folder: %s", fi_folders->fileName().latin1 ());
+          kdDebug( 51000 ) << "   folder: " << fi_folders->fileName().latin1() << endl;
+          
           AddFolderTreeToK3bXMLProjectFile ( fi_folders->absFilePath(), stream );
           }
 
