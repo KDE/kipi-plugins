@@ -200,25 +200,25 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                {
                case(KIPICDArchivingPlugin::BuildHTMLiface): 
                   {
-                  text = i18n("Main HTML interface creation done!");
+                  text = i18n("Main HTML interface creation completed.");
                   break;
                   }
                   
                case(KIPICDArchivingPlugin::BuildAlbumHTMLPage): 
                   {
-                  text = i18n("HTML pages creation for Album '%1' done!").arg(d->albumName);
+                  text = i18n("HTML page creation for Album '%1' completed.").arg(d->albumName);
                   break;
                   }
                
                case(KIPICDArchivingPlugin::BuildAutoRuniface): 
                   {
-                  text = i18n("AutoRun interface creation done!");
+                  text = i18n("AutoRun interface creation completed.");
                   break;
                   }
 
                case(KIPICDArchivingPlugin::BuildK3bProject): 
                   {
-                  text = i18n("K3b project creation done!");
+                  text = i18n("K3b project creation completed.");
                   break;
                   }
                                                      
@@ -267,7 +267,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   
                case(KIPICDArchivingPlugin::BuildK3bProject): 
                   {
-                  text = i18n("Failed to create K3b project!");
+                  text = i18n("Failed to create K3b project.");
                   m_progressDlg->addedAction(text, KIPI::ErrorMessage);
                   m_progressDlg->setProgress(m_current, m_total);
                   slotCancel();

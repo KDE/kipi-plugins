@@ -113,7 +113,7 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
                  : KDialogBase( IconList, i18n("Configure Archive to CD"), Help|Ok|Cancel, Ok,
                    parent, "CDArchivingDialog", true, true ), m_interface( interface )
 {
-    setCaption(i18n("Albums CD archiving"));
+    setCaption(i18n("Album CD archiving"));
     setupSelection();
     setupLookPage();
     setupCDInfos();
@@ -135,7 +135,7 @@ CDArchivingDialog::~CDArchivingDialog()
 
 void CDArchivingDialog::setupSelection(void)
 {
-    page_setupSelection = addPage(i18n("Selection"), i18n("Albums selection"),
+    page_setupSelection = addPage(i18n("Selection"), i18n("Album selection"),
                                   BarIcon("folder_image", KIcon::SizeMedium));
 
     QVBoxLayout *layout = new QVBoxLayout(page_setupSelection, 0, spacingHint() );
@@ -153,17 +153,17 @@ void CDArchivingDialog::setupSelection(void)
     m_AlbumsList->addColumn("");
     m_AlbumsList->header()->hide();
     QWhatsThis::add( m_AlbumsList, 
-                     i18n("<p>Selected here the Albums to archive in CD.") );
+                     i18n("<p>Selected here the Albums to archive to CD.") );
 
     grid->addMultiCellWidget(m_AlbumsList, 0, 2, 0, 1);
 
     KButtonBox* albumSelectionButtonBox = new KButtonBox( groupBox1, Vertical );
     QPushButton* buttonSelectAll = albumSelectionButtonBox->addButton ( i18n( "&Select all" ) );
-    QWhatsThis::add( buttonSelectAll, i18n("<p>Select all Albums in the list.") );
+    QWhatsThis::add( buttonSelectAll, i18n("<p>Select all Albums on the list.") );
     QPushButton* buttonInvertSelection = albumSelectionButtonBox->addButton ( i18n( "&Invert selection" ));
-    QWhatsThis::add( buttonInvertSelection, i18n("<p>Invert the Albums selection in the list.") );
+    QWhatsThis::add( buttonInvertSelection, i18n("<p>Invert the Album selection on the list.") );
     QPushButton* buttonSelectNone = albumSelectionButtonBox->addButton ( i18n( "Select &none" ) );
-    QWhatsThis::add( buttonSelectNone, i18n("<p>Deselect all Albums in the list.") );
+    QWhatsThis::add( buttonSelectNone, i18n("<p>Deselect all Albums on the list.") );
     albumSelectionButtonBox->layout();
     grid->addMultiCellWidget(albumSelectionButtonBox, 0, 1, 2, 2);
 
@@ -171,7 +171,7 @@ void CDArchivingDialog::setupSelection(void)
     m_albumPreview->setFixedHeight( 120 );
     m_albumPreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_albumPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    QWhatsThis::add( m_albumPreview, i18n( "Preview of the first image in the current selected Album." ) );
+    QWhatsThis::add( m_albumPreview, i18n( "Preview of the first image in the currently selected Album." ) );
     grid->addMultiCellWidget(m_albumPreview, 2, 2, 2, 2);
 
     layout->addWidget( groupBox1 );
@@ -219,7 +219,7 @@ void CDArchivingDialog::setupSelection(void)
                                            page_setupSelection );
     groupBox3->layout()->setSpacing( 6 );
     groupBox3->layout()->setMargin( 11 );
-    QWhatsThis::add( groupBox3, i18n("<p>The informations about the backup media.") );
+    QWhatsThis::add( groupBox3, i18n("<p>Information about the backup medium.") );
 
     m_mediaSize = new QLabel( groupBox3 );
     m_mediaSize->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
@@ -346,32 +346,32 @@ void CDArchivingDialog::setupLookPage(void)
     m_useHTMLInterface->setChecked( true );
     vlay->addWidget( m_useHTMLInterface );
     QWhatsThis::add( m_useHTMLInterface,
-                     i18n("<p>This option adding an HTML interface for browse the CD content.") );
+                     i18n("<p>This option adds a HTML interface to browse the CD's contents.") );
 
     //---------------------------------------------
 
-    m_useAutoRunWin32 = new QCheckBox( i18n("Add \"autorun\" fonctionality"), page_setupLook);
+    m_useAutoRunWin32 = new QCheckBox( i18n("Add \"autorun\" functionality"), page_setupLook);
     m_useAutoRunWin32->setChecked( true );
     vlay->addWidget( m_useAutoRunWin32 );
     QWhatsThis::add( m_useAutoRunWin32,
-                     i18n("<p>This option adding the Ms Windows(tm) autoruning capability in the CD.") );
+                     i18n("<p>This option adds MS Windows(tm) autorunning capability to the CD.") );
 
     //---------------------------------------------
 
-    m_labelTitle = new QLabel( i18n("Archiving title:"), page_setupLook);
+    m_labelTitle = new QLabel( i18n("Archive title:"), page_setupLook);
     vlay->addWidget( m_labelTitle );
 
-    m_title = new QLineEdit(i18n("Albums Archiving"), page_setupLook);
+    m_title = new QLineEdit(i18n("Album Archiving"), page_setupLook);
     vlay->addWidget( m_title );
     m_labelTitle->setBuddy(m_title);
-    QWhatsThis::add( m_title, i18n("<p>Enter here the title of the CD archiving.") );
+    QWhatsThis::add( m_title, i18n("<p>Enter here the title of the CD archive.") );
 
     //---------------------------------------------
 
     m_imagesPerRow = new KIntNumInput(4, page_setupLook);
     m_imagesPerRow->setRange(1, 8, 1, true );
     m_imagesPerRow->setLabel( i18n("I&mages per row:") );
-    QWhatsThis::add( m_imagesPerRow, i18n("<p>Enter here the number of images per row in the album page. "
+    QWhatsThis::add( m_imagesPerRow, i18n("<p>Enter here the number of images per row on the album page. "
                                           "A good value is '4'.") );
     vlay->addWidget( m_imagesPerRow );
 
@@ -382,7 +382,7 @@ void CDArchivingDialog::setupLookPage(void)
 
     m_thumbnailsSize = new KIntNumInput(140, page_setupLook);
     m_thumbnailsSize->setRange(10, 1000, 1, true );
-    m_thumbnailsSize->setLabel( i18n("Thumbnails size:") );
+    m_thumbnailsSize->setLabel( i18n("Thumbnail size:") );
     vlay->addWidget( m_thumbnailsSize );
     QWhatsThis::add( m_thumbnailsSize, i18n("<p>The new size of thumbnails in pixels") );
 
@@ -395,8 +395,8 @@ void CDArchivingDialog::setupLookPage(void)
     m_imageFormat->insertItem("PNG");
     m_imageFormat->setCurrentText ("JPEG");
     whatsThis = i18n("<p>Select here the image file format for thumbnails.<p>");
-    whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group file format is a "
-                "good Web file format but it use a compression with data lost.<p>"
+    whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group's file format is a "
+                "good Web file format but it uses lossy data compression.<p>"
                 "<b>PNG</b>: the Portable Network Graphics format is an extensible file format for "
                 "the lossless, portable, well-compressed storage of raster images. PNG provides a "
                 "patent-free replacement for GIF and can also replace many common uses of TIFF. "
@@ -406,7 +406,7 @@ void CDArchivingDialog::setupLookPage(void)
                 "heterogeneous platforms.");
     QWhatsThis::add( m_imageFormat, whatsThis );
 
-    m_labelThumbsFileFormat = new QLabel( i18n("Thumbnails file format:"), page_setupLook);
+    m_labelThumbsFileFormat = new QLabel( i18n("Thumbnail file format:"), page_setupLook);
     hlay3->addWidget( m_labelThumbsFileFormat );
     m_labelThumbsFileFormat->setBuddy( m_imageFormat );
     hlay3->addStretch( 1 );
@@ -481,9 +481,9 @@ void CDArchivingDialog::setupLookPage(void)
 
     m_bordersImagesSize = new QSpinBox( 1, 20, 1, page_setupLook );
     m_bordersImagesSize->setValue( 1 );
-    QWhatsThis::add( m_bordersImagesSize, i18n("<p>Select here the images borders size in pixels.") );
+    QWhatsThis::add( m_bordersImagesSize, i18n("<p>Select here the image border's size in pixels.") );
 
-    QLabel *label = new QLabel( i18n("Images borders s&ize:"), page_setupLook );
+    QLabel *label = new QLabel( i18n("Image border s&ize:"), page_setupLook );
     label->setBuddy( m_bordersImagesSize );
     hlay13->addWidget( label );
     hlay13->addStretch( 1 );
@@ -497,9 +497,9 @@ void CDArchivingDialog::setupLookPage(void)
     m_bordersImagesColor = new KColorButton(page_setupLook);
     m_bordersImagesColor->setColor(QColor("#d0ffd0"));
     QWhatsThis::add( m_bordersImagesColor, i18n("<p>Select here the color used "
-                                                "for the images borders.") );
+                                                "for the image borders.") );
 
-    label = new QLabel( i18n("Images bo&rders color:"), page_setupLook);
+    label = new QLabel( i18n("Image bo&rder color:"), page_setupLook);
     hlay4->addWidget( label );
     label->setBuddy( m_bordersImagesColor );
     hlay4->addStretch( 1 );
@@ -571,7 +571,7 @@ void CDArchivingDialog::setupCDInfos(void)
     label = new QLabel( i18n("Volume name:"), page_CDInfos);
     vlay->addWidget( label );
 
-    m_volume_id = new QLineEdit(i18n("CD Albums"), page_CDInfos);
+    m_volume_id = new QLineEdit(i18n("CD Album"), page_CDInfos);
     vlay->addWidget( m_volume_id );
     m_labelTitle->setBuddy(m_volume_id);
     m_volume_id->setMaxLength(32);
@@ -582,7 +582,7 @@ void CDArchivingDialog::setupCDInfos(void)
     label = new QLabel( i18n("Volume set name:"), page_CDInfos);
     vlay->addWidget( label );
 
-    m_volume_set_id = new QLineEdit(i18n("Albums CD archiving"), page_CDInfos);
+    m_volume_set_id = new QLineEdit(i18n("Album CD archive"), page_CDInfos);
     vlay->addWidget( m_volume_set_id );
     m_labelTitle->setBuddy(m_volume_set_id);
     m_volume_set_id->setMaxLength(128);
@@ -676,22 +676,22 @@ void CDArchivingDialog::setupBurning(void)
     QVBoxLayout * groupBoxAOLayout = new QVBoxLayout( groupBoxAdvancedOptions->layout() );
     groupBoxAOLayout->setAlignment( Qt::AlignTop );
 
-    m_burnOnTheFly = new QCheckBox( i18n("Media burning On The Fly"), groupBoxAdvancedOptions);
+    m_burnOnTheFly = new QCheckBox( i18n("Media burning On-The-Fly"), groupBoxAdvancedOptions);
     m_burnOnTheFly->setChecked( false );
-    QWhatsThis::add( m_burnOnTheFly, i18n("<p>This option use the \"On The Fly\" "
-                     "media burning capability. This burning mode do not use a media image.") );
+    QWhatsThis::add( m_burnOnTheFly, i18n("<p>This option uses the \"On-The-Fly\" "
+                     "media burning capability; this does not use a media image.") );
     groupBoxAOLayout->addWidget( m_burnOnTheFly );
 
     m_checkCDBurn = new QCheckBox( i18n("Check media"), groupBoxAdvancedOptions);
     m_checkCDBurn->setChecked( false );
-    QWhatsThis::add( m_checkCDBurn, i18n("<p>This option check the media after the burning process. "
+    QWhatsThis::add( m_checkCDBurn, i18n("<p>This option verifies the media after the burning process. "
                                          "You must use K3b release >= 0.10.0") );
     groupBoxAOLayout->addWidget( m_checkCDBurn );
 
-    m_startBurningProcess = new QCheckBox( i18n("Start burning process automaticly"), groupBoxAdvancedOptions);
+    m_startBurningProcess = new QCheckBox( i18n("Start burning process automatically"), groupBoxAdvancedOptions);
     m_startBurningProcess->setChecked( false );
     m_startBurningProcess->hide();
-    QWhatsThis::add( m_startBurningProcess, i18n("<p>This option start automaticly the burning process "
+    QWhatsThis::add( m_startBurningProcess, i18n("<p>This option start automatically the burning process "
                                          "when K3b is loaded.") );
     groupBoxAOLayout->addWidget( m_startBurningProcess );
 
@@ -705,17 +705,17 @@ void CDArchivingDialog::setupBurning(void)
 
 void CDArchivingDialog::aboutPage(void)
 {
-    page_about = addPage( i18n("About"), i18n("About KIPI Albums CD Archiving"),
+    page_about = addPage( i18n("About"), i18n("About KIPI Album CD Archiving"),
                           BarIcon("kipi", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 
-    QLabel *label = new QLabel( i18n("A KIPI plugin for Albums CD archiving\n\n"
+    QLabel *label = new QLabel( i18n("A KIPI plugin for Album CD archives\n\n"
                              "Author: Gilles Caulier\n\n"
                              "Email: caulier dot gilles at free.fr\n\n"
                              "Thanks to Gregory Kokanosky <gregory dot kokanosky at free.fr> "
-                             "for images navigation mode patchs\n\n"
-                             "This plugin use K3b CD/DVD burning software avialable at this URL:\n\n"
+                             "for image navigation mode patches\n\n"
+                             "This plugin use K3b CD/DVD burning software available at this URL:\n\n"
                              "http://www.k3b.org."), page_about);
 
     vlay->addWidget(label);
@@ -804,7 +804,7 @@ void CDArchivingDialog::slotOk()
 {
     if (getAlbumsSelection().isEmpty() == true)
        {
-       KMessageBox::sorry(this, i18n("You must selected at least an Album to archive!"));
+       KMessageBox::sorry(this, i18n("You must selected at least one Album to archive."));
        return;
        }
 
@@ -812,13 +812,13 @@ void CDArchivingDialog::slotOk()
 
     if (fileK3b.exists() == false)
        {
-       KMessageBox::sorry(this, i18n("K3b binary path is not valid ! Please check it..."));
+       KMessageBox::sorry(this, i18n("K3b binary path is not valid; please check it...."));
        return;
        }
 
     if (TargetMediaSize >= MaxMediaSize)
        {
-       KMessageBox::sorry(this, i18n("Target media size is too big. Please, change your Albums selection!"));
+       KMessageBox::sorry(this, i18n("Target media size is too big; please change your Album selection."));
        return;
        }
 

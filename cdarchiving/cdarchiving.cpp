@@ -193,11 +193,11 @@ void CDArchiving::readSettings(void)
     // CD Informations setup tab
 
     m_configDlg->setVolumeID( m_config->readEntry("VolumeID", i18n("CD Albums")) );
-    m_configDlg->setVolumeSetID( m_config->readEntry("VolumeSetIDeTitle", i18n("KIPI Albums CD archiving")) );
+    m_configDlg->setVolumeSetID( m_config->readEntry("VolumeSetIDeTitle", i18n("KIPI Album CD archiving")) );
     m_configDlg->setSystemID( m_config->readEntry("SystemID", i18n("LINUX")) );
     m_configDlg->setApplicationID( m_config->readEntry("ApplicationID", i18n("K3b CD-DVD Burning application")) );
     m_configDlg->setPublisher( m_config->readEntry("Publisher", m_hostName + " [" + m_hostURL + "]") );
-    m_configDlg->setPreparer( m_config->readEntry("Preparer", i18n("KIPI CD Archiving plugin")) );
+    m_configDlg->setPreparer( m_config->readEntry("Preparer", i18n("KIPI CD-Archiving plugin")) );
 
     // Misc dialogbox setup tab
 
@@ -375,7 +375,7 @@ void CDArchiving::invokeK3b()
        d->action = KIPICDArchivingPlugin::Error;
        d->starting = false;
        d->success = false;
-       d->message = i18n("Cannot start K3b program : fork failed!");
+       d->message = i18n("Cannot start K3b program : fork failed.");
        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
        return;
        }
@@ -417,7 +417,7 @@ void CDArchiving::slotK3bDone(KProcess*)
     d->action = KIPICDArchivingPlugin::Progress;
     d->starting = true;
     d->success = true;
-    d->message = i18n("K3b is done !!! Removing temporary folder...");
+    d->message = i18n("K3b is done; removing temporary folder....");
     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
     
     if (DeleteDir(m_tmpFolder) == false)
@@ -426,7 +426,7 @@ void CDArchiving::slotK3bDone(KProcess*)
         d->action = KIPICDArchivingPlugin::Error;
         d->starting = false;
         d->success = false;
-        d->message = i18n("Cannot remove temporary folder '%1' !").arg(m_tmpFolder);
+        d->message = i18n("Cannot remove temporary folder '%1'.").arg(m_tmpFolder);
         QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
         }
 
@@ -460,7 +460,7 @@ bool CDArchiving::buildHTMLInterface (void)
            d->action = KIPICDArchivingPlugin::Error;
            d->starting = false;
            d->success = false;
-           d->message = i18n("Cannot remove folder '%1' !").arg(MainTPath);
+           d->message = i18n("Cannot remove folder '%1'.").arg(MainTPath);
            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
            return false;
            }
@@ -471,7 +471,7 @@ bool CDArchiving::buildHTMLInterface (void)
        d->action = KIPICDArchivingPlugin::Error;
        d->starting = false;
        d->success = false;
-       d->message = i18n("Couldn't create directory '%1'").arg(MainTPath);
+       d->message = i18n("Could not create directory '%1'.").arg(MainTPath);
        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
        return false;
        }
@@ -517,7 +517,7 @@ bool CDArchiving::buildHTMLInterface (void)
                d->action = KIPICDArchivingPlugin::Error;
                d->starting = false;
                d->success = false;
-               d->message = i18n("Couldn't create directory '%1'").arg(SubTPath);
+               d->message = i18n("Could not create directory '%1'.").arg(SubTPath);
                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                return false;
                }
@@ -548,7 +548,7 @@ bool CDArchiving::buildHTMLInterface (void)
                    d->action = KIPICDArchivingPlugin::Error;
                    d->starting = false;
                    d->success = false;
-                   d->message = i18n("Cannot remove folder '%1' !").arg(MainTPath);
+                   d->message = i18n("Cannot remove folder '%1'.").arg(MainTPath);
                    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                    return false;
                    }
@@ -584,7 +584,7 @@ bool CDArchiving::buildHTMLInterface (void)
        d->action = KIPICDArchivingPlugin::Error;
        d->starting = false;
        d->success = false;
-       d->message = i18n("Couldn't open file '%1'").arg(MainUrl.path(+1));
+       d->message = i18n("Could not open file '%1'.").arg(MainUrl.path(+1));
        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
        return false;
        }
@@ -608,7 +608,7 @@ bool CDArchiving::createDirectory(QDir thumb_dir, QString imgGalleryDir, QString
             d->action = KIPICDArchivingPlugin::Error;
             d->starting = false;
             d->success = false;
-            d->message = i18n("Couldn't create directory '%1' in '%2'")
+            d->message = i18n("Could not create directory '%1' in '%2'.")
                                 .arg(dirName).arg(imgGalleryDir);
             QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
             return false;
@@ -701,7 +701,7 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
     stream << "<body>\n" << endl;
 
     stream << "<p><a href=\"../index.htm\"><img src=\"../gohome.png\" border=\"0\"  title=\""
-           << i18n("Albums list") << "\" alt=\"" << i18n("Albums list") << "\"></a></p>" << endl;
+           << i18n("Album list") << "\" alt=\"" << i18n("Album list") << "\"></a></p>" << endl;
 
 
     stream << "<h1>" << i18n("Archiving for Album ") << "&quot;" << m_AlbumTitle << "&quot;"
@@ -896,11 +896,11 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
     KIO::file_copy(srcURL, destURL, -1, true, false, false);
 
     stream << "<p>"  << endl;
-    Temp = i18n("Valid HTML 4.01!");
+    Temp = i18n("Valid HTML 4.01.");
     stream << "<img src=\"thumbs/valid-html401.png\" alt=\"" << Temp
            << "\" height=\"31\" width=\"88\" title=\"" << Temp << "\" />" << endl;
                 
-    Temp = i18n("Albums archiving created with "
+    Temp = i18n("Album archive created with "
                 "<a href=\"%1\">%2</a> on %3").arg(m_hostURL).arg(m_hostName).arg(today);
                 
     stream << Temp << endl;
@@ -919,7 +919,7 @@ void CDArchiving::createBodyMainPage(QTextStream& stream, KURL& url)
     Temp = m_configDlg->getMainTitle();
     stream << "<body>\n<h1>" << Temp << "</h1><p>\n" << endl;
 
-    Temp = i18n("<i>Albums list:</i>");
+    Temp = i18n("<i>Album list:</i>");
     stream << Temp << "<br>" << endl;
     stream << "<hr>" << endl;
 
@@ -936,11 +936,11 @@ void CDArchiving::createBodyMainPage(QTextStream& stream, KURL& url)
     KIO::file_copy(srcURL, destURL, -1, true, false, false);
 
     stream << "<p>"  << endl;
-    Temp = i18n("Valid HTML 4.01!");
+    Temp = i18n("Valid HTML 4.01.");
     stream << "<img src=\"valid-html401.png\" alt=\"" << Temp << "\" height=\"31\" width=\"88\" title=\""
            << Temp <<  "\" />" << endl;
            
-    Temp = i18n("Albums archiving created with "
+    Temp = i18n("Album archive created with "
                 "<a href=\"%1\">%2</a> on %3").arg(m_hostURL).arg(m_hostName).arg(today);                
     stream << Temp << endl;
     stream << "</p>" << endl;
@@ -982,7 +982,7 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
                     d->action = KIPICDArchivingPlugin::Error;
                     d->starting = false;
                     d->success = false;
-                    d->message = i18n("Couldn't create directory '%1' in '%2'")
+                    d->message = i18n("Could not create directory '%1' in '%2'.")
                                         .arg(currentDir).arg(url.directory());
                     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                     continue;
@@ -1042,7 +1042,7 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
         d->action = KIPICDArchivingPlugin::Error;
         d->starting = false;
         d->success = false;
-        d->message = i18n("Couldn't open file '%1'").arg(url.path(+1));
+        d->message = i18n("Could not open file '%1'.").arg(url.path(+1));
         QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
         return false;
         }
@@ -1164,7 +1164,7 @@ bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgNa
        stream << "<a href=\"../index.html\"><img src=\"../../up.png\" border=\"0\" title=\""
               << i18n("Album index") << "\" alt=\"" << i18n("Album index") << "\"></a>" << endl;
        stream << "&nbsp; | &nbsp;<a href=\"../../index.htm\"><img src=\"../../gohome.png\" border=\"0\" title=\""
-              << i18n("Albums list") << "\" alt=\"" << i18n("Albums list") << "\"></a>" << endl;
+              << i18n("Album list") << "\" alt=\"" << i18n("Album list") << "\"></a>" << endl;
 
        if (nextImgName != "")
           {
@@ -1210,13 +1210,13 @@ bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgNa
 
       // Footer
 
-      QString valid = i18n("Valid HTML 4.01!");
+      QString valid = i18n("Valid HTML 4.01.");
       const QString today(KGlobal::locale()->formatDate(QDate::currentDate()));
 
       stream << "<div align=\"center\"><hr><img src=\"../thumbs/valid-html401.png\" alt=\""
              << valid << "\" height=\"31\" width=\"88\"  title=\"" << valid <<  "\" />" << endl;
                     
-      valid =  i18n("Images gallery created with "
+      valid =  i18n("Image gallery created with "
                     "<a href=\"%1\">%2</a> on %3").arg(m_hostURL).arg(m_hostName).arg(today);
                     
       stream << valid << "</div>" << endl;
