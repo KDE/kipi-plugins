@@ -22,7 +22,12 @@
 #ifndef PLUGIN_TIMEADJUST_H
 #define PLUGIN_TIMEADJUST_H
 
+// LibKIPI includes.
+
 #include <libkipi/plugin.h>
+
+class KAction;
+
 class TimeAdjustDialog;
 
 class Plugin_TimeAdjust : public KIPI::Plugin
@@ -34,16 +39,16 @@ public:
                       const char* name,
                       const QStringList &args);
 
-    virtual KIPI::Category category() const;
+    virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* );
 
 protected slots:
     void slotActivate();
 
 private:
-    KIPI::Interface* m_interface;
-    TimeAdjustDialog* m_dialog;
-
+    KIPI::Interface  *m_interface;
+    TimeAdjustDialog *m_dialog;
+    KAction          *m_actionTimeAjust;
 };
 
 #endif

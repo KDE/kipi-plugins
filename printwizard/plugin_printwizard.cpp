@@ -40,14 +40,16 @@ extern "C"
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
+#include <kurl.h>
 
 // Local includes
 
 #include "plugin_printwizard.h"
 #include "frmprintwizard.h"
-#include <kurl.h>
+
 
 typedef KGenericFactory<Plugin_PrintWizard> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_printwizard,
                             Factory("kipiplugin_printwizard"));
 
@@ -62,21 +64,22 @@ void Plugin_PrintWizard::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    printAction =  new KAction (i18n("Print Wizard..."),
-                                "fileprint",
-                                0,
-                                this,
-                                SLOT(slotActivate()),
-                                actionCollection(),
-                                "printwizard");
+    m_printAction =  new KAction (i18n("Print Wizard..."),
+                                  "fileprint",
+                                  0,
+                                  this,
+                                  SLOT(slotActivate()),
+                                  actionCollection(),
+                                  "printwizard");
 
-    addAction( printAction );
+    addAction( m_printAction );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
     KIPI::ImageCollection scope = m_interface->currentScope();
-    printAction->setEnabled( scope.isValid() );
+    m_printAction->setEnabled( scope.isValid() );
 
-    connect( m_interface, SIGNAL( currentScopeChanged( bool ) ), printAction, SLOT( setEnabled( bool ) )  );
+    connect( m_interface, SIGNAL( currentScopeChanged( bool ) ), 
+             m_printAction, SLOT( setEnabled( bool ) )  );
 }
 
 
@@ -107,9 +110,13 @@ void Plugin_PrintWizard::slotActivate()
     frm.exec();
 }
 
-KIPI::Category Plugin_PrintWizard::category() const
+KIPI::Category Plugin_PrintWizard::category( KAction* action ) const
 {
-    return KIPI::EXPORTPLUGIN;
+    if ( action == m_printAction )
+       return KIPI::EXPORTPLUGIN;
+    
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::EXPORTPLUGIN; // no warning from compiler, please
 }
 
 #include "plugin_printwizard.moc"

@@ -22,10 +22,14 @@
 #ifndef PLUGIN_CALENDAR_H
 #define PLUGIN_CALENDAR_H
 
+// Lib KIPI includes.
+
 #include <libkipi/plugin.h>
 
 class QProgressDialog;
 class QTimer;
+
+class KAction;
 
 class Plugin_Calendar : public KIPI::Plugin
 {
@@ -37,9 +41,13 @@ public:
                     const char* name,
                     const QStringList &args);
     ~Plugin_Calendar();
-    virtual KIPI::Category category() const;
+    virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* widget );
 
+private:
+    
+    KAction* m_calendarAction;
+    
 private slots:
 
     void slotActivate();

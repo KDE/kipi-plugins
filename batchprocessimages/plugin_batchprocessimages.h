@@ -49,7 +49,7 @@ Q_OBJECT
 public:
   Plugin_BatchProcessImages(QObject *parent, const char* name, const QStringList &args);
   virtual ~Plugin_BatchProcessImages();
-  virtual KIPI::Category category() const;
+  virtual KIPI::Category category( KAction* action ) const;
   virtual void setup( QWidget* );
 
 public slots:

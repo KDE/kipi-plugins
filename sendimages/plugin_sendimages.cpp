@@ -54,6 +54,7 @@ extern "C"
 #include "plugin_sendimages.h"
 
 typedef KGenericFactory<Plugin_SendImages> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_sendimages,
                             Factory("kipiplugin_sendimages"));
 
@@ -102,9 +103,13 @@ void Plugin_SendImages::slotActivate()
     m_sendImagesDialog->show();
 }
 
-KIPI::Category Plugin_SendImages::category() const
+KIPI::Category Plugin_SendImages::category( KAction* action ) const
 {
-    return KIPI::IMAGESPLUGIN;
+    if ( action == m_action_sendimages )
+       return KIPI::IMAGESPLUGIN;
+    
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
 
 #include "plugin_sendimages.moc"

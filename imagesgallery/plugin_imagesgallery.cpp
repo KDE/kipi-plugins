@@ -32,12 +32,13 @@
 #include "plugin_imagesgallery.h"
 
 typedef KGenericFactory<Plugin_Imagesgallery> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_imagesgallery,
                             Factory("kipiplugin_imagesgallery"));
 
 // -----------------------------------------------------------
 Plugin_Imagesgallery::Plugin_Imagesgallery(QObject *parent, const char*, const QStringList&)
-            : KIPI::Plugin( Factory::instance(), parent, "ImagesGallery")
+                    : KIPI::Plugin( Factory::instance(), parent, "ImagesGallery")
 {
     kdDebug( 51001 ) << "Plugin_Imagesgallery plugin loaded" << endl;
 }
@@ -45,14 +46,15 @@ Plugin_Imagesgallery::Plugin_Imagesgallery(QObject *parent, const char*, const Q
 void Plugin_Imagesgallery::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    KAction* action = new KAction (i18n("HTML export..."),        // Menu message.
-                                   "www",                         // Menu icon.
-                                   0,
-                                   this,
-                                   SLOT(slotActivate()),
-                                   actionCollection(),
-                                   "images_gallery");
-    addAction( action );
+    m_actionImagesGallery = new KAction (i18n("HTML export..."),        // Menu message.
+                                         "www",                         // Menu icon.
+                                         0,
+                                         this,
+                                         SLOT(slotActivate()),
+                                         actionCollection(),
+                                        "images_gallery");
+
+    addAction( m_actionImagesGallery );
 }
 
 
@@ -71,9 +73,13 @@ void Plugin_Imagesgallery::slotActivate()
 }
 
 
-KIPI::Category Plugin_Imagesgallery::category() const
+KIPI::Category Plugin_Imagesgallery::category( KAction* action ) const
 {
-	return KIPI::EXPORTPLUGIN;
+    if ( action == m_actionImagesGallery )
+       return KIPI::EXPORTPLUGIN;
+    
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::EXPORTPLUGIN; // no warning from compiler, please
 }
 
 #include "plugin_imagesgallery.moc"

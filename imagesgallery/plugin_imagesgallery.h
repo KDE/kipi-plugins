@@ -20,8 +20,11 @@
 #ifndef PLUGIN_IMAGESGALLERY_H
 #define PLUGIN_IMAGESGALLERY_H
 
+// LibKIPI includes.
+
 #include <libkipi/plugin.h>
 
+class KAction;
 
 class Plugin_Imagesgallery : public KIPI::Plugin
 {
@@ -30,11 +33,14 @@ Q_OBJECT
 public:
   Plugin_Imagesgallery(QObject *parent, const char* name, const QStringList &args);
   virtual ~Plugin_Imagesgallery();
-  KIPI::Category category() const;
+  KIPI::Category category( KAction* action ) const;
   virtual void setup( QWidget* widget );
 
 public slots:
   void slotActivate();
+  
+private:
+  KAction* m_actionImagesGallery;
 };
 
 

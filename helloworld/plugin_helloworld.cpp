@@ -18,6 +18,8 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
+// KDE includes.
+  
 #include <klocale.h>
 #include <kaction.h>
 #include <kgenericfactory.h>
@@ -25,14 +27,21 @@
 #include <kconfig.h>
 #include <kdebug.h>
 
-#include "plugin_helloworld.h"
+// LibKIPi includes.
+
 #include <libkipi/imagecollection.h>
+
+// Local includes.
+
+#include "plugin_helloworld.h"
 
 // A macro from KDE KParts to export the symbols for this plugin and
 // create the factory for it. The first argument is the name of the
 // plugin library and the second is the genericfactory templated from
 // the class for your plugin
+
 typedef KGenericFactory<Plugin_HelloWorld> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_helloworld,
                             Factory("kipiplugin_helloworld"));
 
@@ -48,14 +57,14 @@ void Plugin_HelloWorld::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
     // this is our action shown in the menubar/toolbar of the mainwindow
-    KAction* action = new KAction (i18n("Hello World..."),
+    m_actionHelloWorld = new KAction (i18n("Hello World..."),
                                    "misc",
                                    0,	// do never set shortcuts from plugins.
                                    this,
                                    SLOT(slotActivate()),
                                    actionCollection(),
                                    "helloworld");
-    addAction( action );
+    addAction( m_actionHelloWorld );
 
     m_interface = static_cast< KIPI::Interface* >( parent() );
 }
@@ -117,9 +126,13 @@ void Plugin_HelloWorld::slotActivate()
     }
 }
 
-KIPI::Category Plugin_HelloWorld::category() const
+KIPI::Category Plugin_HelloWorld::category( KAction* action ) const
 {
-    return KIPI::IMAGESPLUGIN;
+    if ( action == m_actionHelloWorld )
+       return KIPI::IMAGESPLUGIN;
+    
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
 
 #include "plugin_helloworld.moc"

@@ -178,14 +178,15 @@ void Plugin_RawConverter::slotSetActive()
     batchAction_->setEnabled( multiple );
 }
 
-KIPI::Category Plugin_RawConverter::category( KAction* action )
+KIPI::Category Plugin_RawConverter::category( KAction* action ) const
 {
     if ( action == singleAction_ )
        return KIPI::TOOLSPLUGIN;
     else if ( action == batchAction_ )
        return KIPI::BATCHPLUGIN;
-    else 
-       return KIPI::UNDEFINEDPLUGIN;
+    
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::TOOLSPLUGIN; // no warning from compiler, please               
 }
 
 #include "plugin_rawconverter.moc"

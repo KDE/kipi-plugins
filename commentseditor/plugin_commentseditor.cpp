@@ -56,25 +56,26 @@ void Plugin_CommentsEditor::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    action = new KAction (i18n("Comments Editor..."),
-                          "editclear",
-                          0,
-                          this,
-                          SLOT(slotActivate()),
-                          actionCollection(),
-                          "commentseditor");
+    m_actionCommentsEditor = new KAction (i18n("Comments Editor..."),
+                                          "editclear",
+                                          0,
+                                          this,
+                                          SLOT(slotActivate()),
+                                          actionCollection(),
+                                          "commentseditor");
 
-    addAction( action );
+    addAction( m_actionCommentsEditor );
 
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
     KIPI::ImageCollection images = interface->currentScope();
-    action->setEnabled( images.isValid() );
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), action, SLOT( setEnabled( bool ) ) );
+    m_actionCommentsEditor->setEnabled( images.isValid() );
+    
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+             m_actionCommentsEditor, SLOT( setEnabled( bool ) ) );
 }
 
 Plugin_CommentsEditor::~Plugin_CommentsEditor()
 {
-
 }
 
 void Plugin_CommentsEditor::slotActivate()
@@ -103,14 +104,18 @@ void Plugin_CommentsEditor::slotActivate()
 void Plugin_CommentsEditor::slotAlbumChanged(Digikam::AlbumInfo* album)
 {
     if (!album)
-        action->setEnabled(false);
+        m_actionCommentsEditor->setEnabled(false);
     else
-        action->setEnabled(true);
+        m_actionCommentsEditor->setEnabled(true);
 }
 
-KIPI::Category Plugin_CommentsEditor::category() const
+KIPI::Category Plugin_CommentsEditor::category( KAction* action ) const
 {
-    return KIPI::BATCHPLUGIN;
+    if ( action == m_actionCommentsEditor )
+       return KIPI::BATCHPLUGIN;
+    
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;       
+    return KIPI::BATCHPLUGIN; // no warning from compiler, please           
 }
 
 #include "plugin_commentseditor.moc"

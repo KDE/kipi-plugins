@@ -2,7 +2,7 @@
 //
 //    PLUGIN_FINDIMAGES.H
 //
-//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
 //    Copyright (C) 2004 Richard Groult <rgroult at jalix.org>
 //
 //    This program is free software; you can redistribute it and/or modify
@@ -28,8 +28,10 @@
 
 class QCustomEvent;
 class QProgressDialog;
+
 class KActionMenu;
 class KAction;
+
 class FindDuplicateImages;
 
 class Plugin_FindImages : public KIPI::Plugin
@@ -39,7 +41,7 @@ Q_OBJECT
 public:
    Plugin_FindImages(QObject *parent, const char* name, const QStringList &args);
    ~Plugin_FindImages();
-   virtual KIPI::Category category() const;
+   virtual KIPI::Category category( KAction* action ) const;
    virtual void setup( QWidget* widget );
 
 private:

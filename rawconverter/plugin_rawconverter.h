@@ -22,7 +22,10 @@
 #ifndef PLUGIN_RAWCONVERTER_H
 #define PLUGIN_RAWCONVERTER_H
 
+// LibKIPi includes.
+
 #include <libkipi/plugin.h>
+
 class KAction;
 
 class Plugin_RawConverter : public KIPI::Plugin
@@ -36,7 +39,7 @@ public:
                         const QStringList &args);
     ~Plugin_RawConverter();
     
-    KIPI::Category category( KAction* action );
+    KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* widget );
     
 private:

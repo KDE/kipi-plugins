@@ -19,6 +19,13 @@
  *
  * ============================================================ */
 
+// Qt includes.
+  
+#include <qprogressdialog.h>
+#include <qtimer.h> 
+ 
+// KDE includes.
+
 #include <klocale.h>
 #include <kaction.h>
 #include <kgenericfactory.h>
@@ -28,13 +35,13 @@
 #include <kurl.h>
 #include <kmessagebox.h>
 
-#include <qprogressdialog.h>
-#include <qtimer.h>
+// Local includes.
 
 #include "plugin_calendar.h"
 #include "calwizard.h"
 
 typedef KGenericFactory<Plugin_Calendar> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_calendar,
                             Factory("kipiplugin_calendar"));
 
@@ -49,14 +56,15 @@ Plugin_Calendar::Plugin_Calendar(QObject *parent,
 void Plugin_Calendar::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    KAction* action = new KAction(i18n("Create Calendar..."),
-                                  "date",
-				  0,
-				  this,
-                                  SLOT(slotActivate()),
-                                  actionCollection(),
-                                  "calendar");
-    addAction( action );
+    m_calendarAction = new KAction(i18n("Create Calendar..."),
+                                   "date",
+                                   0,
+                                   this,
+                                   SLOT(slotActivate()),
+                                   actionCollection(),
+                                   "calendar");
+    
+    addAction( m_calendarAction );
 }
 
 Plugin_Calendar::~Plugin_Calendar()
@@ -70,9 +78,13 @@ void Plugin_Calendar::slotActivate()
     w->show();
 }
 
-KIPI::Category Plugin_Calendar::category() const
+KIPI::Category Plugin_Calendar::category( KAction* action ) const
 {
-    return KIPI::TOOLSPLUGIN;
+    if ( action == m_calendarAction )
+       return KIPI::TOOLSPLUGIN;
+
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::TOOLSPLUGIN; // no warning from compiler, please            
 }
 
 #include "plugin_calendar.moc"

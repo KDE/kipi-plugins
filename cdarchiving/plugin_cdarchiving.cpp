@@ -17,6 +17,8 @@
  *
  * ============================================================ */
 
+// KDE includes. 
+ 
 #include <klocale.h>
 #include <kaction.h>
 #include <kgenericfactory.h>
@@ -24,10 +26,13 @@
 #include <kconfig.h>
 #include <kdebug.h>
 
+// Local includes.
+
 #include "cdarchiving.h"
 #include "plugin_cdarchiving.h"
 
 typedef KGenericFactory<Plugin_CDArchiving> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_cdarchiving,
                             Factory("kipiplugin_cdarchiving"));
 
@@ -48,6 +53,7 @@ void Plugin_CDArchiving::setup( QWidget* widget )
                                         SLOT(slotActivate()),
                                         actionCollection(),
                                         "cd_archiving");
+    
     addAction( m_action_cdarchiving );
     m_cdarchiving = 0;
 }
@@ -72,9 +78,13 @@ void Plugin_CDArchiving::slotActivate()
     m_cdarchiving->Activate();
 }
 
-KIPI::Category Plugin_CDArchiving::category() const
+KIPI::Category Plugin_CDArchiving::category( KAction* action ) const
 {
-    return KIPI::EXPORTPLUGIN;
+    if ( action == m_action_cdarchiving )
+       return KIPI::EXPORTPLUGIN;
+    
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;    
+    return KIPI::EXPORTPLUGIN; // no warning from compiler, please    
 }
 
 

@@ -383,9 +383,19 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
     }
 }
 
-KIPI::Category Plugin_JPEGLossless::category() const
+KIPI::Category Plugin_JPEGLossless::category( KAction* action ) const
 {
-    return KIPI::IMAGESPLUGIN;
+    if ( action == m_action_Transform )
+       return KIPI::IMAGESPLUGIN;
+    else if ( action == m_action_RotateImage )
+       return KIPI::IMAGESPLUGIN;       
+    else if ( action == m_action_FlipImage )
+       return KIPI::IMAGESPLUGIN;       
+    else if ( action == m_action_Convert2GrayScale )
+       return KIPI::IMAGESPLUGIN;       
+           
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
 
 KURL::List Plugin_JPEGLossless::images()

@@ -58,20 +58,21 @@ Plugin_SlideShow::Plugin_SlideShow(QObject *parent,
 void Plugin_SlideShow::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    action = new KAction (i18n("SlideShow..."),
-                          "slideshow",
-                          0,
-                          this,
-                          SLOT(slotActivate()),
-                          actionCollection(),
-                          "slideshow");
+    m_actionSlideShow = new KAction (i18n("SlideShow..."),
+                                     "slideshow",
+                                     0,
+                                     this,
+                                     SLOT(slotActivate()),
+                                     actionCollection(),
+                                     "slideshow");
 
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
     KIPI::ImageCollection images = interface->currentScope();
-    action->setEnabled( images.isValid() );
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), action, SLOT( setEnabled( bool ) ) );
+    m_actionSlideShow->setEnabled( images.isValid() );
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ),
+             m_actionSlideShow, SLOT( setEnabled( bool ) ) );
 
-    addAction( action );
+    addAction( m_actionSlideShow );
 }
 
 
@@ -83,8 +84,10 @@ Plugin_SlideShow::~Plugin_SlideShow()
 void Plugin_SlideShow::slotActivate()
 {
     SlideShowConfig *slideShowConfig = new SlideShowConfig;
+    
     connect(slideShowConfig, SIGNAL(okClicked()),
             this, SLOT(slotSlideShow()));
+
     slideShowConfig->show();
 }
 
@@ -150,14 +153,18 @@ void Plugin_SlideShow::slotSlideShow()
 void Plugin_SlideShow::slotAlbumChanged(Digikam::AlbumInfo* album)
 {
     if (!album)
-        action->setEnabled(false);
+        m_actionSlideShow->setEnabled(false);
     else
-        action->setEnabled(true);
+        m_actionSlideShow->setEnabled(true);
 }
 
-KIPI::Category Plugin_SlideShow::category() const
+KIPI::Category Plugin_SlideShow::category( KAction* action ) const
 {
-    return KIPI::TOOLSPLUGIN;
+    if ( action == m_actionSlideShow )
+       return KIPI::TOOLSPLUGIN;
+    
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }
 
 #include "plugin_slideshow.moc"

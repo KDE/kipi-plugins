@@ -49,7 +49,7 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_diroperations,
 
  Plugin_DirOperations::Plugin_DirOperations(QObject *parent, const char*, const QStringList&)
                        : KIPI::Plugin( Factory::instance(), parent, "DirOperations")
- {
+{
     kdDebug( 51001 ) << "Plugin_DirOperations plugin loaded" << endl;
 }
 
@@ -128,9 +128,14 @@ void Plugin_DirOperations::slotAlbumSelected( bool b)
 }
 
 
-KIPI::Category  Plugin_DirOperations::category() const
+KIPI::Category  Plugin_DirOperations::category( KAction* action ) const
 {
-    return KIPI::COLLECTIONSPLUGIN;
+    if ( action == m_action_OpenIn )
+       return KIPI::COLLECTIONSPLUGIN;
+    
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::COLLECTIONSPLUGIN; // no warning from compiler, please
 }
+
 
 #include "plugin_diroperations.moc"

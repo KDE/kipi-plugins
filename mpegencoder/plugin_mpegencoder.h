@@ -36,11 +36,15 @@ public:
 
     Plugin_Mpegencoder(QObject *parent, const char* name, const QStringList &args);
     virtual ~Plugin_Mpegencoder();
-    virtual KIPI::Category category() const;
+    virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* widget );
+    
 public slots:
 
     void slotActivate();
+
+private:
+    KAction* m_actionMPEGEncoder;
 };
 
 

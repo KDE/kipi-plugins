@@ -48,6 +48,7 @@
  #include "plugin_wallpaper.h"
 
 typedef KGenericFactory<Plugin_WallPaper> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_wallpaper,
                             Factory("kipiplugin_wallpaper"));
 
@@ -62,6 +63,7 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_wallpaper,
 void Plugin_WallPaper::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
+    
     m_action_Background = new KActionMenu(i18n("&Set as Background"),
                          actionCollection(),
                          "images2desktop");
@@ -121,7 +123,8 @@ void Plugin_WallPaper::setup( QWidget* widget )
     KIPI::ImageCollection selection = interface->currentSelection();
     m_action_Background->setEnabled( selection.isValid() );
 
-    connect( interface, SIGNAL(selectionChanged(bool)), this, SLOT(slotItemsSelected(bool)));
+    connect( interface, SIGNAL(selectionChanged(bool)), 
+             this, SLOT(slotItemsSelected(bool)));
  }
 
 
@@ -228,9 +231,13 @@ void Plugin_WallPaper::slotItemsSelected(bool val)
    m_action_Background->setEnabled(val);
 }
 
-KIPI::Category  Plugin_WallPaper::category() const
+KIPI::Category  Plugin_WallPaper::category( KAction* action ) const
 {
-    return KIPI::IMAGESPLUGIN;
+    if ( action == m_action_Background )
+       return KIPI::IMAGESPLUGIN;
+    
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
 
 #include "plugin_wallpaper.moc"

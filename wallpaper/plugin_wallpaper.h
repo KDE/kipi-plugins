@@ -46,7 +46,7 @@
    Plugin_WallPaper(QObject *parent,
                       const char* name,
                       const QStringList &args);
-   virtual KIPI::Category category() const;
+   virtual KIPI::Category category( KAction* action ) const;
    virtual void setup( QWidget* );
 
    private slots:

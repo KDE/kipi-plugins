@@ -2,7 +2,7 @@
 //
 //    plugin_acquireimages.cpp
 //
-//    Copyright (C) 2003-2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    Description : KIPI Acquire Images Plugin.
 //
@@ -146,9 +146,17 @@ void Plugin_AcquireImages::slotAcquireImageDone(const QImage &img)
     m_acquireImageDialog->exec();
 }
 
-KIPI::Category Plugin_AcquireImages::category() const
+KIPI::Category Plugin_AcquireImages::category( KAction* action ) const
 {
-    return KIPI::TOOLSPLUGIN;
+    if ( action == m_action_acquire )
+       return KIPI::IMPORTPLUGIN;
+    else if ( action == m_action_scanimages )
+       return KIPI::IMPORTPLUGIN;
+    else if ( action == m_action_screenshotimages )
+       return KIPI::IMPORTPLUGIN;
+
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::IMPORTPLUGIN; // no warning from compiler, please   
 }
 
 

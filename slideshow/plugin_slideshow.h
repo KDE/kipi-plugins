@@ -22,6 +22,8 @@
 #ifndef PLUGIN_SLIDESHOW_H
 #define PLUGIN_SLIDESHOW_H
 
+// libKIPI includes.
+
 #include <libkipi/plugin.h>
 
 class KAction;
@@ -41,7 +43,7 @@ public:
                      const char* name,
                      const QStringList &args);
     ~Plugin_SlideShow();
-    virtual KIPI::Category category() const;
+    virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* );
 public slots:
 
@@ -54,7 +56,7 @@ private slots:
 
 private:
 
-    KAction *action;
+    KAction *m_actionSlideShow;
 };
 
 #endif

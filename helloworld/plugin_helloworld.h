@@ -22,7 +22,11 @@
 #ifndef PLUGIN_HELLOWORLD_H
 #define PLUGIN_HELLOWORLD_H
 
+// LibKIPI includes
+
 #include <libkipi/plugin.h>
+
+class KAction;
 
 class Plugin_HelloWorld : public KIPI::Plugin
 {
@@ -38,7 +42,7 @@ public:
                       const char* name,
                       const QStringList &args);
 
-    virtual KIPI::Category category() const;
+    virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* widget );
 
 private slots:
@@ -47,9 +51,8 @@ private slots:
     void slotActivate();
 
 private:
-    KIPI::Interface* m_interface;
-
-
+    KAction         *m_actionHelloWorld
+    KIPI::Interface *m_interface;
 };
 
 #endif

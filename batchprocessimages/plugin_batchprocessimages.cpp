@@ -223,11 +223,27 @@ void Plugin_BatchProcessImages::slotActivate()
         }
 }
 
-KIPI::Category Plugin_BatchProcessImages::category() const
+KIPI::Category Plugin_BatchProcessImages::category( KAction* action ) const
 {
-    return KIPI::BATCHPLUGIN;
+    if ( action == m_action_borderimages )
+       return KIPI::BATCHPLUGIN;
+    else if ( action == m_action_colorimages )
+       return KIPI::BATCHPLUGIN;
+    else if ( action == m_action_convertimages )
+       return KIPI::BATCHPLUGIN;       
+    else if ( action == m_action_effectimages )
+       return KIPI::BATCHPLUGIN;       
+    else if ( action == m_action_filterimages )
+       return KIPI::BATCHPLUGIN;       
+    else if ( action == m_action_renameimages )
+       return KIPI::BATCHPLUGIN;       
+    else if ( action == m_action_recompressimages )
+       return KIPI::BATCHPLUGIN;       
+    else if ( action == m_action_resizeimages )
+       return KIPI::BATCHPLUGIN;     
+
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::BATCHPLUGIN; // no warning from compiler, please
 }
-
-
 
 #include "plugin_batchprocessimages.moc"

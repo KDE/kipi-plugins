@@ -2,9 +2,9 @@
 //
 //    plugin_acquireimages.h
 //
-//    Copyright (C) 2003-2004 Gilles CAULIER <caulier.gilles at free.fr>
+//    Copyright (C) 2003-2004 Gilles Caulier <caulier.gilles at free.fr>
 //
-//    Description : Digikam Acquire Images Plugin.
+//    Description : KIPI Acquire Images Plugin.
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -25,12 +25,14 @@
 #ifndef PLUGIN_ACQUIREIMAGES_H
 #define PLUGIN_ACQUIREIMAGES_H
 
-#include <libkipi/plugin.h>
+// LibKIPI includes.
 
+#include <libkipi/plugin.h>
 
 class KScanDialog;
 class KAction;
 class KActionMenu;
+
 class AcquireImageDialog;
 class ScreenGrabDialog;
 
@@ -41,7 +43,7 @@ class Plugin_AcquireImages : public KIPI::Plugin
 public:
   Plugin_AcquireImages(QObject *parent, const char* name, const QStringList &args);
   virtual ~Plugin_AcquireImages();
-  virtual KIPI::Category category() const;
+  virtual KIPI::Category category( KAction* action ) const;
   virtual void setup( QWidget* widget );
 
 public slots:

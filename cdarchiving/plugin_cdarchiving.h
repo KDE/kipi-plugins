@@ -20,9 +20,11 @@
 #ifndef PLUGIN_CDARCHIVING_H
 #define PLUGIN_CDARCHIVING_H
 
-#include <libkipi/plugin.h>
-#include <kaction.h>
+// LibKIPI includes.
 
+#include <libkipi/plugin.h>
+
+class KAction;
 class CDArchiving;
 
 class Plugin_CDArchiving : public KIPI::Plugin
@@ -32,10 +34,8 @@ class Plugin_CDArchiving : public KIPI::Plugin
 public:
   Plugin_CDArchiving(QObject *parent, const char* name, const QStringList &args);
   virtual ~Plugin_CDArchiving();
-  virtual KIPI::Category category() const;
+  virtual KIPI::Category category( KAction* action ) const;
   virtual void setup( QWidget* widget );
-
-  KAction *m_action_cdarchiving;
 
 public slots:
 
@@ -44,6 +44,7 @@ public slots:
 private:
 
     CDArchiving *m_cdarchiving;
+    KAction     *m_action_cdarchiving;
 };
 
 

@@ -22,6 +22,8 @@
 #ifndef PLUGIN_PRINTWIZARD_H
 #define PLUGIN_PRINTWIZARD_H
 
+// LibKIPI includes.
+
 #include <libkipi/plugin.h>
 
 class KAction;
@@ -36,16 +38,16 @@ public:
                      const char* name,
                      const QStringList &args);
     ~Plugin_PrintWizard();
+    virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* widget );
 
 public slots:
 
     void slotActivate();
-    virtual KIPI::Category category() const;
 
 private:
-    KAction* printAction;
-    KIPI::Interface* m_interface;
+    KAction         *m_printAction;
+    KIPI::Interface *m_interface;
 };
 
 #endif

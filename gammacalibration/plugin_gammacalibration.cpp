@@ -77,9 +77,13 @@ void Plugin_GammaCalibration::slotActivate(void)
                                 "Please check your installation."));
 }
 
-KIPI::Category Plugin_GammaCalibration::category() const
+KIPI::Category Plugin_GammaCalibration::category( KAction* action ) const
 {
-    return KIPI::TOOLSPLUGIN;
+    if ( action == m_action_gammaCalibration )
+       return KIPI::TOOLSPLUGIN;
+    
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }
 
 #include "plugin_gammacalibration.moc"

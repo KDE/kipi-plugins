@@ -22,6 +22,8 @@
 #ifndef PLUGIN_COMMENTSEDITOR_H
 #define PLUGIN_COMMENTSEDITOR_H
 
+// LibKIPi includes.
+
 #include <libkipi/plugin.h>
 
 class KAction;
@@ -41,7 +43,7 @@ public:
                           const char* name,
                           const QStringList &args);
     ~Plugin_CommentsEditor();
-    virtual KIPI::Category category() const;
+    virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* widget );
 
 public slots:
@@ -51,7 +53,7 @@ public slots:
 
 private:
 
-    KAction *action;
+    KAction *m_actionCommentsEditor;
 
 };
 

@@ -23,6 +23,8 @@
 #ifndef PLUGIN_JPEGLOSSLESS_H
 #define PLUGIN_JPEGLOSSLESS_H
 
+// LibKIPi includes.
+
 #include <libkipi/plugin.h>
 #include <libkipi/imagecollection.h>
 
@@ -46,7 +48,7 @@ public:
                         const char* name,
                         const QStringList &args);
     ~Plugin_JPEGLossless();
-    virtual KIPI::Category category() const;
+    virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* widget );
 
 protected:

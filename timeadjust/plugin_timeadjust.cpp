@@ -18,6 +18,8 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
+// KDE includes. 
+ 
 #include <klocale.h>
 #include <kaction.h>
 #include <kgenericfactory.h>
@@ -25,11 +27,17 @@
 #include <kconfig.h>
 #include <kdebug.h>
 
-#include "plugin_timeadjust.h"
+// LibKIPI includes.
+
 #include <libkipi/imagecollection.h>
+
+// Local includes.
+
+#include "plugin_timeadjust.h"
 #include "timeadjustdialog.h"
 
 typedef KGenericFactory<Plugin_TimeAdjust> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_timeadjust,
                             Factory("kipiplugin_timeadjust"));
 
@@ -46,15 +54,17 @@ Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent,
 void Plugin_TimeAdjust::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
+    
     // this is our action shown in the menubar/toolbar of the mainwindow
-    KAction* action = new KAction (i18n("Adjust Time and Date"),
-                                   "clock",
-                                   0,	// or a shortcut like CTRL+SHIFT+Key_S,
-                                   this,
-                                   SLOT(slotActivate()),
-                                   actionCollection(),
-                                   "timeadjust");
-    addAction( action );
+    m_actionTimeAjust = new KAction (i18n("Adjust Time and Date"),
+                                     "clock",
+                                     0,     // or a shortcut like CTRL+SHIFT+Key_S,
+                                     this,
+                                     SLOT(slotActivate()),
+                                     actionCollection(),
+                                     "timeadjust");
+
+    addAction( m_actionTimeAjust );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
 }
@@ -73,9 +83,13 @@ void Plugin_TimeAdjust::slotActivate()
     m_dialog->show();
 }
 
-KIPI::Category Plugin_TimeAdjust::category() const
+KIPI::Category Plugin_TimeAdjust::category( KAction* action ) const
 {
-    return KIPI::IMAGESPLUGIN;
+    if ( action == m_actionTimeAjust )
+       return KIPI::IMAGESPLUGIN;
+    
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
 
 
