@@ -330,7 +330,7 @@ void ImagesGallery::Activate()
         QDir TargetDir;
         QString MainTPath= m_configDlg->getImageName() + "/KIPIHTMLExport";
 
-        if (TargetDir.exists (MainTPath) == TRUE)
+        if (TargetDir.exists (MainTPath) == true)
            {
            if (KMessageBox::warningYesNo(0,
                i18n("The target directory\n'%1'\nalready exist. Do you want overwrite it? (all data "
@@ -516,7 +516,9 @@ void ImagesGallery::createHead(QTextStream& stream)
     stream << "<meta name=\"date\" content=\"" + KGlobal::locale()->formatDate(QDate::currentDate()) + "\">"
            << endl;
     stream << "<title>" << m_configDlg->getMainTitle() << "</title>" << endl;
+    
     this->createCSSSection(stream);
+    
     stream << "</head>" << endl;
 }
 
@@ -566,7 +568,10 @@ void ImagesGallery::createBody(QTextStream& stream,
                                const QString& TargetimagesFormat)
 {
     int numOfImages = m_album.images().count();
-    qDebug("Num of images in %s : %i", m_album.name().ascii(), numOfImages);
+    
+    kdDebug( 51000 ) << "Num of images in " << m_album.name().ascii() << " : " 
+                     << numOfImages << endl;
+    
     const QString imgGalleryDir = url.directory();
     const QString today(KGlobal::locale()->formatDate(QDate::currentDate()));
 
@@ -636,14 +641,15 @@ void ImagesGallery::createBody(QTextStream& stream,
     QFileInfo imginfo;
     QPixmap imgProp;
 
-	KURL::List images=m_album.images();
-	for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end() && !m_cancelled; )
+    KURL::List images=m_album.images();
+    
+    for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end() && !m_cancelled; )
         {
         stream << "<tr>" << endl;
 
         for (int col = 0 ;
-			!m_cancelled && urlIt!=images.end() && col < m_configDlg->getImagesPerRow() ;
-			++col, ++urlIt, ++imgIndex)
+             !m_cancelled && urlIt!=images.end() && col < m_configDlg->getImagesPerRow() ;
+             ++col, ++urlIt, ++imgIndex)
             {
             const QString imgName = (*urlIt).fileName();
 
@@ -651,15 +657,16 @@ void ImagesGallery::createBody(QTextStream& stream,
 
             QDir targetImagesDir( imgGalleryDir + QString::fromLatin1("/images/"));
 
-            qDebug("Creating thumbnail for %s", imgName.ascii());
+            kdDebug( 51000 ) << "Creating thumbnail for " << imgName.ascii() << endl;
 
-		    stream << "<td align='center'>\n";
+            stream << "<td align='center'>\n";
+            
             if (createThumb(*urlIt, imgName, imgGalleryDir, imageFormat, TargetimagesFormat))
                 {
                 // user requested the creation of html pages for each photo
 
                 if ( m_configDlg->getCreatePageForPhotos() )
-				   stream << "<a href=\"pages/" << targetImgName << ".html\">";
+                   stream << "<a href=\"pages/" << targetImgName << ".html\">";
                 else
                    stream << "<a href=\"images/" << targetImgName << "\">";
 
@@ -730,7 +737,9 @@ void ImagesGallery::createBody(QTextStream& stream,
                 }
             else
                 {
-                qDebug("Creating thumbnail for %s failed !", imgName.ascii());
+                kdDebug( 51000 ) << "Creating thumbnail for " << imgName.ascii() 
+                                 << " failed !" << endl;
+                
                 m_progressDlg->setLabelText(
                                i18n("Creating target image and thumbnail for\n%1\nfailed!")
                                .arg(imgName) );
@@ -782,10 +791,11 @@ void ImagesGallery::createBody(QTextStream& stream,
       KURL destURL(imgGalleryDir + QString::fromLatin1("/up.png"));
       KIO::NetAccess::copy(srcURL, destURL);
 
-	  int imgIndex = 0;
-	  KURL::List images=m_album.images();
-	  for( KURL::List::Iterator urlIt = images.begin();
-		urlIt != images.end() && !m_cancelled; urlIt++, imgIndex++)
+      int imgIndex = 0;
+      KURL::List images = m_album.images();
+      
+      for( KURL::List::Iterator urlIt = images.begin();
+           urlIt != images.end() && !m_cancelled ; ++urlIt, ++imgIndex)
         {
         const QString imgName = (*urlIt).fileName();
 
@@ -795,8 +805,8 @@ void ImagesGallery::createBody(QTextStream& stream,
 
         if ( imgIndex != 0 )
            {
-		   KURL::List::Iterator it=urlIt;
-		   it--;
+           KURL::List::Iterator it=urlIt;
+           it--;
            previousImgName = (*it).fileName();
            previousImgName = previousImgName + extension(TargetimagesFormat);
            }
@@ -805,9 +815,9 @@ void ImagesGallery::createBody(QTextStream& stream,
 
         if ( imgIndex != numOfImages -1)
            {
-		   KURL::List::Iterator it=urlIt;
-		   it++;
-		   nextImgName = (*it).fileName();
+           KURL::List::Iterator it=urlIt;
+           it++;
+           nextImgName = (*it).fileName();
            nextImgName = nextImgName + extension(TargetimagesFormat);
            }
 
@@ -823,7 +833,8 @@ void ImagesGallery::createBody(QTextStream& stream,
            }
         else
           {
-          qDebug("Creating html page for %s failed !", imgName.ascii());
+          kdDebug( 51000 ) << "Creating html page for " <<  imgName.ascii() 
+                           <<  " failed !" << endl;
           m_progressDlg->setLabelText( i18n("Creating html page for\n%1\nfailed!").arg(imgName) );
           kapp->processEvents();
           }
@@ -945,7 +956,7 @@ bool ImagesGallery::createHtml(const KURL& url,
 
     QFile file( url.path() );
     kdDebug( 51000 ) << "url.path(): " << url.path() << ", thumb_dir: "<< thumb_dir.path()
-              << ", pagesDir: "<< pages_dir.path()<<endl;
+                     << ", pagesDir: "<< pages_dir.path()<<endl;
 
     if ( file.open(IO_WriteOnly) )
         {
@@ -975,20 +986,23 @@ void ImagesGallery::loadComments(void)
 
     QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
 
-    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt )
+    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
+         albumIt != albums.end() ; ++albumIt )
         {
         KURL::List images = (*albumIt).images();
 
         for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt )
-			{
+            {
             KIPI::ImageInfo info = m_interface->info( *urlIt );
-			QString comment=info.description();
-			if (!comment.isEmpty())
-				{
-				m_useCommentFile = true;
-				m_commentMap->insert((*urlIt).prettyURL(), comment);
-                }
-			kapp->processEvents();
+            QString comment=info.description();
+            
+            if (!comment.isEmpty())
+               {
+               m_useCommentFile = true;
+               m_commentMap->insert((*urlIt).prettyURL(), comment);
+               }
+            
+            kapp->processEvents();
             }
         }
 }
@@ -1040,7 +1054,9 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
        stream << "<meta name=\"date\" content=\""
                  + KGlobal::locale()->formatDate(QDate::currentDate()) + "\">" << endl;
        stream << "<title>" << m_configDlg->getMainTitle() << " : "<< imgName <<"</title>" << endl;
+       
        this->createCSSSection(stream);
+       
        stream << "</head>" << endl;
        stream<<"<body>"<< endl;;
 
@@ -1066,7 +1082,7 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
           }
 
        kdDebug( 51000 ) << previousImgName << ":"<<prevW<<"/"<<prevH << "       "
-                 <<  nextImgName << ":"<<nextW<<"/"<<nextH<< endl;
+                        <<  nextImgName << ":"<<nextW<<"/"<<nextH<< endl;
 
        // Navigation thumbs need to be 64x64 at most
 
@@ -1103,7 +1119,7 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
           }
 
        kdDebug( 51000 ) << previousImgName << ":"<<prevW<<"/"<<prevH << "       "
-                 <<  nextImgName << ":"<<nextW<<"/"<<nextH<< endl;
+                        <<  nextImgName << ":"<<nextW<<"/"<<nextH<< endl;
 
        if (previousImgName != "")
           {
@@ -1160,7 +1176,9 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
        if (m_configDlg->printImageProperty())
           {
           imgProp.load( targetImagesDir.absFilePath(imgName, true) );
+          
           kdDebug( 51000 ) << targetImagesDir.path() << "/" << imgName << endl;
+          
           stream << sep << imgProp.width() << "&nbsp;x&nbsp;" << imgProp.height();
           sep = ", ";
           }
@@ -1224,13 +1242,14 @@ bool ImagesGallery::createThumb( const KURL& url, const QString& imgName,
     m_targetImgWidth = 640;         // Default resize values.
     m_targetImgHeight = 480;
 
-    m_threadedImageResizing = new KIPIImagesGalleryPlugin::ResizeImage(this, pixPath, TargetImagesbDir, TargetimagesFormat,
-                                              TargetImageNameFormat, &m_targetImgWidth, &m_targetImgHeight,
-                                              extentTargetImages, m_configDlg->colorDepthSetTargetImages(),
-                                              m_configDlg->getColorDepthTargetImages(),
-                                              m_configDlg->useSpecificTargetimageCompression(),
-                                              m_configDlg->getTargetImagesCompression(), &threadDone,
-                                              &useBrokenImage);
+    m_threadedImageResizing = new KIPIImagesGalleryPlugin::ResizeImage(this, pixPath,
+                                  TargetImagesbDir, TargetimagesFormat,
+                                  TargetImageNameFormat, &m_targetImgWidth, &m_targetImgHeight,
+                                  extentTargetImages, m_configDlg->colorDepthSetTargetImages(),
+                                  m_configDlg->getColorDepthTargetImages(),
+                                  m_configDlg->useSpecificTargetimageCompression(),
+                                  m_configDlg->getTargetImagesCompression(), &threadDone,
+                                  &useBrokenImage);
 
     do            // TODO: added a queue like JPEGLossLess
        {

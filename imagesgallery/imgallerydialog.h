@@ -183,7 +183,7 @@ class KIGPDialog : public KDialogBase
   void slotbuttonSelectAll(void);
   void slotbuttonInvertSelection(void);
   void slotbuttonSelectNone(void);
-  void slotGotPreview(const KFileItem* url, const QPixmap &pixmap);
+  void slotGotPreview(const KFileItem*, const QPixmap &pixmap);
 
  private:
   KColorButton       *m_foregroundColor;
@@ -229,10 +229,6 @@ class KIGPDialog : public KDialogBase
 
   KURLRequester      *m_imageNameReq;
 
-  bool                m_dialogOk;
-
-  QString             m_ImagesFilesSort;
-
   QListView          *m_AlbumsList;
 
   KSqueezedTextLabel *m_AlbumComments;
@@ -246,7 +242,7 @@ class KIGPDialog : public KDialogBase
   QFrame             *page_setupThumbnail;
   QFrame             *page_about;
 
-  KIPI::Interface* m_interface;
+  KIPI::Interface*    m_interface;
   QMap<AlbumItem*, KIPI::ImageCollection> m_albums;
 
 

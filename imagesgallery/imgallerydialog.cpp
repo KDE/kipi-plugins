@@ -77,26 +77,28 @@ namespace KIPIImagesGalleryPlugin
 class AlbumItem : public QCheckListItem
 {
 public:
-    AlbumItem(QListView * parent, QString const & name, QString const & comments, QString const & path,
-              QString const & collection, QString const & firstImage, QDate const & date, int const & items)
-            : QCheckListItem( parent, name, QCheckListItem::CheckBox), _name(name), _comments(comments),
-              _path(path), _collection(collection), _firstImage(firstImage), _date (date), _items (items)
+    AlbumItem(QListView * parent, QString const & name, QString const & comments,
+              KURL const & path, QString const & collection, KURL const & firstImage,
+              QDate const & date, int const & items)
+            : QCheckListItem( parent, name, QCheckListItem::CheckBox), _name(name),
+              _comments(comments), _path(path), _collection(collection), _firstImage(firstImage),
+              _date (date), _items (items)
     {}
 
     QString comments()   { return _comments;   }
     QString name()       { return _name;       }
-    QString path()       { return _path;       }
+    KURL    path()       { return _path;       }
     QString collection() { return _collection; }
-    QString firstImage() { return _firstImage; }
+    KURL    firstImage() { return _firstImage; }
     QDate   date()       { return _date;       }
     int     items()      { return _items;      }
 
 private:
     QString _name;
     QString _comments;
-    QString _path;
+    KURL    _path;
     QString _collection;
-    QString _firstImage;
+    KURL    _firstImage;
     QDate   _date;
     int     _items;
 };
@@ -106,13 +108,8 @@ private:
 
 KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
           : KDialogBase( IconList, i18n("Configure"), Help|Ok|Cancel, Ok,
-                         parent, "HTMLExportDialog", true, true ), m_dialogOk( false ),
-                         m_interface( interface )
+                         parent, "HTMLExportDialog", true, true ), m_interface( interface )
 {
-    // Get the image files filters from the hosts app.
-     
-    m_ImagesFilesSort = m_interface->fileExtensions();
-    
     setCaption(i18n("Create Images Galleries"));
     setupSelection();
     setupLookPage();
@@ -224,49 +221,42 @@ void KIGPDialog::setupSelection(void)
 
 void KIGPDialog::setAlbumsList(void)
 {
-    //AlbumItem *currentAlbum = 0;
+    AlbumItem *currentAlbum = 0;
+    
     QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
 
-    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt )
+    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
+         albumIt != albums.end() ; ++albumIt )
         {
         KURL::List images = (*albumIt).images();
 
-		QDateTime newestDate;
-        for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) {
-            KIPI::ImageInfo info = m_interface->info( *urlIt );
-            if ( info.time() > newestDate )
-                newestDate = info.time();
-        }
-
-		// FIXME: Some info are missing in KIPI::ImageCollection
         AlbumItem *item = new AlbumItem( m_AlbumsList,
                                          (*albumIt).name(),
                                          (*albumIt).comment(),
-                                         QString("NO PATH")/*album->getPath()*/,
-                                         QString("NO COLLECTION")/*album->getCollection()*/,
-                                         images.first().prettyURL(),
-                                         newestDate.date(),
+                                         (*albumIt).path(),
+                                         (*albumIt).category(),
+                                         images.first(),
+                                         (*albumIt).date(),
                                          images.size()
                                        );
-		m_albums[item]=*albumIt;
+        m_albums[item]=*albumIt;
 
-		#ifdef TEMPORARILY_REMOVED
-		if (album == Digikam::AlbumManager::instance()->currentAlbum())
+        if ( m_interface->currentAlbum().isValid() )
            {
-           item->setOn(true);
-           item->setSelected(true);
-           albumSelected( item );
-           currentAlbum = item;
+           if ( (*albumIt).name() == m_interface->currentAlbum().name() )
+              {
+              item->setOn(true);
+              item->setSelected(true);
+              albumSelected( item );
+              currentAlbum = item;
+              }
+           else
+              item->setOn(false);
            }
-        else
-           item->setOn(false);
-		#endif
         }
 
-	#ifdef TEMPORARILY_REMOVED
     if (currentAlbum != 0)
        m_AlbumsList->ensureItemVisible(currentAlbum);
-	#endif
 }
 
 
@@ -766,7 +756,9 @@ void KIGPDialog::albumSelected( QListViewItem * item )
     if ( !item ) return;
 
     AlbumItem *pitem = static_cast<AlbumItem*>( item );
+    
     if ( pitem == NULL ) return;
+    
     m_AlbumComments->setText( i18n("Comment: %1").arg(pitem->comments()) );
     m_AlbumCollection->setText( i18n("Collection: %1").arg(pitem->collection()) );
     m_AlbumDate->setText( i18n("Date: %1").arg(pitem->date().toString(( Qt::LocalDate ))) );
@@ -774,22 +766,16 @@ void KIGPDialog::albumSelected( QListViewItem * item )
 
     m_albumPreview->clear();
 
-    QString IdemIndexed = "file:" + pitem->path() + "/" + pitem->firstImage();
-    KURL url(IdemIndexed);
-    KURL::List urls;
-    urls << url;
-
-    // PENDING(blackie) Renchi: The Thumbnail loader had true as the dir argument, what did that mean?
-    KIO::PreviewJob* thumbJob = KIO::filePreview( urls, m_albumPreview->height() );
+    KIO::PreviewJob* thumbJob = KIO::filePreview( pitem->firstImage(), m_albumPreview->height() );
 
     connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
+             SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void KIGPDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap &pixmap)
+void KIGPDialog::slotGotPreview(const KFileItem*, const QPixmap &pixmap)
 {
     m_albumPreview->setPixmap(pixmap);
 }
@@ -1413,23 +1399,24 @@ void  KIGPDialog::setPrintPageCreationDate(bool Value)
 
 QValueList<KIPI::ImageCollection> KIGPDialog::getSelectedAlbums(void) const
 {
-	QValueList<KIPI::ImageCollection> list;
+    QValueList<KIPI::ImageCollection> list;
     QListViewItemIterator it( m_AlbumsList );
 
     while ( it.current() )
         {
         AlbumItem *item = static_cast<AlbumItem*>( it.current() );
 
-        if (item->isOn()) {
-			Q_ASSERT(m_albums.contains(item));
-			KIPI::ImageCollection album=m_albums[item];
-            list.append(album);
-		}
+        if (item->isOn()) 
+           {
+           Q_ASSERT(m_albums.contains(item));
+           KIPI::ImageCollection album=m_albums[item];
+           list.append(album);
+           }
 
         ++it;
         }
 
-	return list;
+    return list;
 }
 
 
