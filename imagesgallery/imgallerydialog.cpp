@@ -639,7 +639,8 @@ void KIGPDialog::GalleryUrlChanged(const QString &url )
 
 void KIGPDialog::slotOk()
 {
-    m_selectedAlbums=m_imageCollectionSelector->selectedImageCollections();
+    m_selectedAlbums = m_imageCollectionSelector->selectedImageCollections();
+    
     if (m_selectedAlbums.size() == 0)
        {
        KMessageBox::sorry(0, i18n("You must select at least one album."));

@@ -239,10 +239,10 @@ class KIGPDialog : public KDialogBase
   QFrame             *page_setupAlbum;
   QFrame             *page_setupThumbnail;
 
-  KIPI::Interface*    m_interface;
+  KIPI::Interface    *m_interface;
   
-  QValueList<KIPI::ImageCollection> m_selectedAlbums;
-  KIPI::ImageCollectionSelector* m_imageCollectionSelector;
+  QValueList<KIPI::ImageCollection>  m_selectedAlbums;
+  KIPI::ImageCollectionSelector     *m_imageCollectionSelector;
   
  private:
  
