@@ -73,8 +73,8 @@ void Plugin_GammaCalibration::slotActivate(void)
    int ValRet = KApplication::kdeinitExec(QString::fromLatin1("kcmshell"), args, perror, ppid);
 
    if ( ValRet != 0 )
-     KMessageBox::error(0, i18n("Cannot start \"KGamma\" extension in KDE control centrer!\n"
-                                "Please check your installation."));
+     KMessageBox::error(0, i18n("Cannot start \"KGamma\" extension in KDE control center;\n"
+                                "please check your installation."));
 }
 
 KIPI::Category Plugin_GammaCalibration::category( KAction* action ) const
