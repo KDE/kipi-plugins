@@ -67,7 +67,11 @@ Q_OBJECT
    QCheckBox       *m_reverseOrder;
    QCheckBox       *m_dateChange;
 
+#if KDE_VERSION >= 0x30200
    KDateTimeWidget *m_kDatePicker;
+#else
+   KDateWidget *m_kDatePicker;
+#endif
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

@@ -37,7 +37,11 @@
 #include <klocale.h>
 #include <knuminput.h>
 #include <klineedit.h>
+#if KDE_VERSION >= 0x30200
 #include <kdatetimewidget.h>
+#else
+#include <kdatewidget.h>
+#endif
 
 // Local includes
 
@@ -114,7 +118,11 @@ RenameImagesOptionsDialog::RenameImagesOptionsDialog(QWidget *parent)
                                         "the image files' dates can be changed.") );
     m_dateChange->setChecked( false );
 
+#if KDE_VERSION >= 0x30200
     m_kDatePicker = new KDateTimeWidget(  QDate::currentDate(), groupBox3 );
+#else
+    m_kDatePicker = new KDateWidget(  QDate::currentDate(), groupBox3 );
+#endif
     m_kDatePicker->setEnabled( false );
     QWhatsThis::add( m_kDatePicker, i18n("<p>You can set here the time stamp of the image files.") );
 

@@ -53,7 +53,12 @@ extern "C"
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 #include <kprogress.h>
+#include <kdeversion.h>
+#if KDE_VERSION >= 0x30200
 #include <kdatetimewidget.h>
+#else
+#include <kdatewidget.h>
+#endif
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <khelpmenu.h>
@@ -322,7 +327,11 @@ void RenameImagesDialog::updateOptions(void)
     m_sortType = optionsDialog->m_sortType->currentItem();
     m_enumeratorStart = optionsDialog->m_enumeratorStart->value();
     m_dateChange = optionsDialog->m_dateChange->isChecked();
+#if KDE_VERSION >= 0x30200
     m_newDateTime = optionsDialog->m_kDatePicker->dateTime();
+#else
+    m_newDateTime = optionsDialog->m_kDatePicker->date();
+#endif
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
