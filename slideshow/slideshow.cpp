@@ -37,6 +37,7 @@ extern "C"
 
 #include "imlibiface.h"
 #include "slideshow.h"
+#include "pausetimer.h"
 
 namespace KIPISlideShowPlugin
 {
@@ -44,7 +45,7 @@ namespace KIPISlideShowPlugin
 /**
  * This Timer can be interrupted to pause a slideshow
  */
-class PauseTimer : public QTimer
+/*class PauseTimer : public QTimer
 {
 public:
     PauseTimer(QObject *parent=0, const char *name=0);
@@ -101,7 +102,7 @@ void PauseTimer::stop()
     m_paused = false;    
     QTimer::stop();
 }
-
+*/
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 SlideShow::SlideShow(const QStringList& fileList,

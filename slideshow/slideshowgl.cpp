@@ -35,6 +35,7 @@
 #include <cstdlib>
 
 #include "slideshowgl.h"
+#include "pausetimer.h"
 
 namespace KIPISlideShowPlugin
 {
@@ -87,7 +88,7 @@ SlideShowGL::SlideShowGL(const QStringList& fileList,
 
     // --------------------------------------------------
 
-    timer_ = new QTimer();
+    timer_ = new PauseTimer();
     connect(timer_, SIGNAL(timeout()),
             SLOT(slotTimeOut()));
     timer_->start(timeout_);
@@ -143,7 +144,6 @@ void SlideShowGL::paintGL()
     }
 }
 
-
 void SlideShowGL::resizeGL(int w, int h)
 {
     // Reset The Current Viewport And Perspective Transformation
@@ -151,6 +151,23 @@ void SlideShowGL::resizeGL(int w, int h)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+}
+
+void SlideShowGL::keyPressEvent(QKeyEvent *event)
+{
+    if(!event)
+        return;
+        
+    if(event->key() == Qt::Key_Space)
+    {
+        event->accept();
+        timer_->pause();
+    }
+    else
+    {
+        event->ignore();
+        QWidget::keyPressEvent(event);
+    }
 }
 
 void SlideShowGL::mousePressEvent(QMouseEvent *event)

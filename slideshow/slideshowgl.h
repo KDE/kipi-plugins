@@ -27,11 +27,9 @@
 #include <qmap.h>
 #include <qgl.h>
 
-class QTimer;
-
 namespace KIPISlideShowPlugin
 {
-
+class PauseTimer;
 class SlideShowGL;
 
 class SlideShowGL : public QGLWidget
@@ -59,7 +57,8 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *);
     void closeEvent(QCloseEvent *);
-    
+    void keyPressEvent(QKeyEvent *event);
+        
 private:
 
     // config ------------------
@@ -74,7 +73,7 @@ private:
     QMap<QString, EffectMethod> Effects;
 
     QStringList  fileList_;
-    QTimer      *timer_;
+    PauseTimer   *timer_;
     int          fileIndex_;
 
     GLuint       texture_[2];

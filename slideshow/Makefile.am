@@ -9,7 +9,7 @@ kipiplugin_slideshow_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 
 kipiplugin_slideshow_la_SOURCES = plugin_slideshow.cpp \
 	                          slideshow.cpp slideshowconfig.cpp imlibiface.cpp \
-	                          slideshowgl.cpp
+	                          slideshowgl.cpp pausetimer.cpp
 
 kipiplugin_slideshow_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) \
 				 $(LIB_IMLIB2) $(GL_LIBS) 
