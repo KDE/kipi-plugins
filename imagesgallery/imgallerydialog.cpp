@@ -137,7 +137,7 @@ KIGPDialog::~KIGPDialog()
 void KIGPDialog::setupSelection(void)
 {
     page_setupSelection = addPage(i18n("Selection"), i18n("Albums selection"),
-                                  BarIcon("endturn", KIcon::SizeMedium));
+                                  BarIcon("folder_image", KIcon::SizeMedium));
 
     QVBoxLayout *layout = new QVBoxLayout(page_setupSelection, 0, spacingHint() );
 

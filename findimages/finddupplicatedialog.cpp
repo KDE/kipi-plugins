@@ -2,7 +2,7 @@
 //
 //    FINDDUPPLICATEDIALOG.CPP
 //
-//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -119,7 +119,7 @@ void FindDuplicateDialog::setupSelection(void)
 {
     page_setupSelection = addPage(i18n("Selection"),
                                   i18n("Albums selection"),
-                                  BarIcon("endturn", KIcon::SizeMedium));
+                                  BarIcon("folder_image", KIcon::SizeMedium));
 
     QVBoxLayout *layout = new QVBoxLayout(page_setupSelection, 0, spacingHint() );
 
