@@ -30,6 +30,7 @@ Q_OBJECT
 public:
   Plugin_Imagesgallery(QObject *parent, const char* name, const QStringList &args);
   virtual ~Plugin_Imagesgallery();
+  QString id() const { return QString::fromLatin1("imagesgallery"); }
 
 public slots:
   void slotActivate();

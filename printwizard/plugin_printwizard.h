@@ -35,6 +35,7 @@ public:
     Plugin_PrintWizard(QObject *parent,
                      const char* name,
                      const QStringList &args);
+    QString id() const { return QString::fromLatin1("printwizard"); }
     ~Plugin_PrintWizard();
 
 public slots:

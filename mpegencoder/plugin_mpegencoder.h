@@ -37,6 +37,7 @@ public:
     Plugin_Mpegencoder(QObject *parent, const char* name, const QStringList &args);
     virtual ~Plugin_Mpegencoder();
     virtual KIPI::Category category() const;
+    QString id() const { return QString::fromLatin1("mpegencoder"); }
 
 public slots:
 
