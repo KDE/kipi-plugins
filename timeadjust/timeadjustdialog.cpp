@@ -176,3 +176,5 @@ QDateTime TimeAdjustDialog::updateTime( QDateTime time ) const
     time = time.addYears( sign * m_years->value() );
     return time;
 }
+
+#include "timeadjustdialog.moc"

@@ -73,3 +73,5 @@ KIPI::Category Plugin_TimeAdjust::category() const
     return KIPI::IMAGESPLUGIN;
 }
 
+
+#include "plugin_timeadjust.moc"
