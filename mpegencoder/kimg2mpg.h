@@ -2,7 +2,7 @@
 //
 //    KIMG2MPG.H
 //
-//    Copyright (C) 2003 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2003 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@
 #include <kdialog.h>
 #include <klistbox.h>
 #include <kprocess.h>
+#include <kio/previewjob.h>
 
 // Include files for KIPI
 
@@ -142,6 +143,8 @@ private:
   QColor                m_BackgroundColorConfig;
 
   KConfig*              m_config;
+  
+  KIO::PreviewJob*      m_thumbJob;
 
   QTime                 m_EncodingDuration;
   QTime                 m_DurationTime;

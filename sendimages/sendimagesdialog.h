@@ -33,6 +33,7 @@
 
 #include <kdialogbase.h>
 #include <klistbox.h>
+#include <kio/previewjob.h>
 
 // Include files for KIPI
 
@@ -147,7 +148,8 @@ protected:
 
    KSqueezedTextLabel *m_ImageComments;
    KSqueezedTextLabel *m_ImageAlbum;
-   KIPI::Interface *m_interface;
+   KIPI::Interface    *m_interface;
+   KIO::PreviewJob    *m_thumbJob;
 
    QString extension(const QString& imageFileFormat);
    void removeTmpFiles(void);

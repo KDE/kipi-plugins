@@ -84,7 +84,6 @@ extern "C"
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
-#include <kio/previewjob.h>
 #include <kdebug.h>
 
 // libKipi includes.
@@ -183,6 +182,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
                       QString::number(getpid()) );
 
   m_Proc = 0L;
+  m_thumbJob = 0L;
   m_Encoding = false;
   m_Abort = false;
 
@@ -350,10 +350,13 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   connect( m_ImagesFilesButtonAdd, SIGNAL( clicked() ),
            this, SLOT( slotImagesFilesButtonAdd() ) );
+           
   connect( m_ImagesFilesButtonDelete, SIGNAL( clicked() ),
            this, SLOT( slotImagesFilesButtonDelete() ) );
+           
   connect( m_ImagesFilesButtonUp, SIGNAL( clicked() ),
            this, SLOT( slotImagesFilesButtonUp() ) );
+           
   connect( m_ImagesFilesButtonDown, SIGNAL( clicked() ),
            this, SLOT( slotImagesFilesButtonDown() ) );
 
@@ -455,6 +458,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
 KImg2mpgData::~KImg2mpgData()
 {
+  if ( m_thumbJob ) delete m_thumbJob;
 }
 
 
@@ -592,18 +596,19 @@ void KImg2mpgData::slotImagesFilesSelected( QListBoxItem *item )
       }
 
   ImageItem *pitem = static_cast<ImageItem*>( item );
+  
   if ( !pitem ) return;
 
-  QString IdemIndexed = "file:" + pitem->path();
-
-  kdDebug (51000) << "Image selected: " << IdemIndexed.ascii() << endl;
-  KURL url(IdemIndexed);
-
+  KURL url;
+  url.setPath(pitem->path());
+    
+  if ( m_thumbJob ) delete m_thumbJob;
+    
   m_ImageLabel->clear();
 
-  KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_ImageLabel->width() );
+  m_thumbJob = KIO::filePreview( url, m_ImageLabel->width() );
 
-  connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+  connect( m_thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 
   int index = m_ImagesFilesListBox->index ( item );
@@ -616,6 +621,7 @@ void KImg2mpgData::slotImagesFilesSelected( QListBoxItem *item )
 void KImg2mpgData::slotGotPreview(const KFileItem*/*url*/, const QPixmap &pixmap)
 {
   m_ImageLabel->setPixmap(pixmap);
+  m_thumbJob = 0;
 }
 
 

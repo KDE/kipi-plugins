@@ -62,7 +62,6 @@
 #include <kimageio.h>
 #include <kbuttonbox.h>
 #include <ksqueezedtextlabel.h>
-#include <kio/previewjob.h>
 
 // Local include files
 
@@ -144,7 +143,8 @@ void ListImageItems::dropEvent(QDropEvent *e)
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-SendImagesDialog::SendImagesDialog(QWidget *parent, QString TmpPath, KIPI::Interface* interface, const KIPI::ImageCollection& images )
+SendImagesDialog::SendImagesDialog(QWidget *parent, QString TmpPath,
+                                   KIPI::Interface* interface, const KIPI::ImageCollection& images )
                 : KDialogBase( IconList, i18n("E-mail Images Options"), Help|Ok|Cancel,
                   Ok, parent, "SendImagesDialog", false, true )
 {
@@ -152,6 +152,7 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, QString TmpPath, KIPI::Inter
     m_mozillaTimer = new QTimer(this);
     m_tempPath = TmpPath;
     m_interface = interface;
+    m_thumbJob = 0L;
 
     setupImagesList();
     setupEmailOptions();
@@ -171,6 +172,7 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, QString TmpPath, KIPI::Inter
 
 SendImagesDialog::~SendImagesDialog()
 {
+    if ( m_thumbJob ) delete m_thumbJob;
 }
 
 
@@ -588,19 +590,20 @@ void SendImagesDialog::slotImageSelected( QListBoxItem * item )
        }
 
     ImageItem *pitem = static_cast<ImageItem*>( item );
+    
     if ( !pitem ) return;
 
     m_ImageComments->setText( i18n("Comments: %1").arg(pitem->comments()) );
     m_ImageAlbum->setText( i18n("Album: %1").arg(pitem->album()) );
-
     m_imageLabel->clear();
+    KURL url;
+    url.setPath(pitem->path());
+    
+    if ( m_thumbJob ) delete m_thumbJob;
+    
+    m_thumbJob = KIO::filePreview( url, m_imageLabel->height() );
 
-    QString IdemIndexed = "file:" + pitem->path();
-    KURL url(IdemIndexed);
-
-    KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_imageLabel->height() );
-
-    connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+    connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
             SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 }
 
@@ -610,6 +613,7 @@ void SendImagesDialog::slotImageSelected( QListBoxItem * item )
 void SendImagesDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap &pixmap)
 {
     m_imageLabel->setPixmap(pixmap);
+    m_thumbJob = 0L;
 }
 
 
