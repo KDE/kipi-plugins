@@ -40,7 +40,6 @@
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-class QProgressDialog;
 class QFile;
 class QTimer;
 class QCustomEvent;

@@ -56,7 +56,6 @@ private:
    KIPISendimagesPlugin::SendImages *m_sendImagesOperation;
 
    void customEvent(QCustomEvent *event);
-
 };
 
 

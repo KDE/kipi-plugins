@@ -29,8 +29,6 @@ extern "C"
 
 // Include files for Qt
 
-#include <qfileinfo.h>
-#include <qimage.h>
 #include <qprogressdialog.h>
 
 // Include files for KDE
@@ -48,7 +46,6 @@ extern "C"
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <ktempfile.h>
-#include <kscan.h>
 #include <kimageio.h>
 
 // Local includes
@@ -130,9 +127,7 @@ void Plugin_SendImages::slotCancel()
     m_sendImagesOperation->removeTmpFiles();
     
     if (m_progressDlg) 
-       {
        m_progressDlg->reset();
-       }
 }
 
 
