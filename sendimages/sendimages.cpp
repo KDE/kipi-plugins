@@ -260,7 +260,7 @@ bool SendImages::showErrors()
        listImagesErrorDialog *ErrorImagesDialog = new listImagesErrorDialog(0,
                                                   i18n("Error during resize images process."),
                                                   i18n("Cannot resize the following image files:"),
-                                                  i18n("Do you want them to be added as\nattachments "
+                                                  i18n("Do you want them to be added as attachments "
                                                        "(without resizing)?"),
                                                   m_imagesResizedWithError);
        

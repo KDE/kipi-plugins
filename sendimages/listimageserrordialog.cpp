@@ -28,12 +28,14 @@
 #include <qstring.h>
 #include <qlabel.h>
 #include <qfileinfo.h>
+#include <qframe.h>
 
 // KDElib includes
 
 #include <klocale.h>
 #include <klistview.h>
 #include <kurl.h>
+#include <kstandarddirs.h>
 
 // Local includes.
 
@@ -47,38 +49,64 @@ namespace KIPISendimagesPlugin
 listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption, 
                                              const QString &Mess1, const QString &Mess2,
                                              KURL::List ListOfiles)
-                     : KDialogBase( Caption, Help|Yes|No|Cancel, Yes, Cancel, parent,
+                     : KDialogBase( Caption, Yes|No|Cancel, Yes, Cancel, parent,
                                     "listImagesErrorDialog", true, false )
 {
-  QWidget* box = new QWidget( this );
-  setMainWidget(box);
-  QVBoxLayout* ml = new QVBoxLayout( box, 10 );
-  QHBoxLayout* h1 = new QHBoxLayout( ml );
-  QVBoxLayout* v1 = new QVBoxLayout( h1 );
-  h1->addSpacing( 5 );
-  QGridLayout* g1 = new QGridLayout( v1, 1, 3 );
+    QWidget* box = new QWidget( this );
+    setMainWidget(box);
+    QVBoxLayout* ml = new QVBoxLayout( box, 10 );
+  
+    //---------------------------------------------
+   
+    QFrame *headerFrame = new QFrame( box );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( Caption, headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    ml->addWidget( headerFrame );
+    
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
-  QLabel *labelMess1 = new QLabel ( Mess1, box);
-  m_listFiles = new KListView( box );
-  m_listFiles->addColumn(i18n("Image File Name"));
-  m_listFiles->addColumn(i18n("From Album"));
-  m_listFiles->setSorting(1);
-  m_listFiles->setItemMargin(3);
-  m_listFiles->setResizeMode(QListView::LastColumn);
-  QLabel *labelMess2 = new QLabel ( Mess2, box);
+    //---------------------------------------------
+  
+    QHBoxLayout* h1 = new QHBoxLayout( ml );
+    QVBoxLayout* v1 = new QVBoxLayout( h1 );
+    h1->addSpacing( 5 );
+    QGridLayout* g1 = new QGridLayout( v1, 1, 3 );
 
-  g1->addWidget (labelMess1, 1, 1);
-  g1->addWidget (m_listFiles, 2, 1);
-  g1->addWidget (labelMess2, 3, 1);
+    QLabel *labelMess1 = new QLabel ( Mess1, box);
+    m_listFiles = new KListView( box );
+    m_listFiles->addColumn(i18n("Image File Name"));
+    m_listFiles->addColumn(i18n("From Album"));
+    m_listFiles->setSorting(1);
+    m_listFiles->setItemMargin(3);
+    m_listFiles->setResizeMode(QListView::LastColumn);
+    QLabel *labelMess2 = new QLabel ( Mess2, box);
 
-  for ( KURL::List::Iterator it = ListOfiles.begin() ; it != ListOfiles.end() ; ++it )
-      {
-      new KListViewItem( m_listFiles,
-                         (*it).fileName(),    
-                         (*it).directory().section('/', -1) );
-      }
+    g1->addWidget (labelMess1, 1, 1);
+    g1->addWidget (m_listFiles, 2, 1);
+    g1->addWidget (labelMess2, 3, 1);
 
-  resize( 500, 350 );
+    for ( KURL::List::Iterator it = ListOfiles.begin() ; it != ListOfiles.end() ; ++it )
+       {
+       new KListViewItem( m_listFiles,
+                          (*it).fileName(),    
+                          (*it).directory().section('/', -1) );
+       }
+
+   resize( 500, 400 );
 }
 
 
