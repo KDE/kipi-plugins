@@ -121,7 +121,7 @@ void Plugin_PrintWizard::slotItemsSelected(bool selected)
     printAction->setEnabled(selected);
 }
 
-KIPI::Category Plugin_PrintWizard::category() const
+KIPI::Plugin::Category Plugin_PrintWizard::category() const
 {
-    return KIPI::IMAGESPLUGIN;
+    return KIPI::Plugin::IMAGESPLUGIN;
 }
