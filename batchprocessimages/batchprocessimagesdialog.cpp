@@ -371,11 +371,11 @@ void BatchProcessImagesDialog::slotGotPreview(const KFileItem* url, const QPixma
 {
     QPixmap pix( pixmap );
 
+    // Rotate the thumbnail compared to the angle the host application dictate
     KIPI::ImageInfo info = m_interface->info( url->url() );
     if ( info.angle() != 0 ) {
         QImage img = pix.convertToImage();
         QWMatrix matrix;
-        qDebug("%s: %d", url->url().path().latin1(), info.angle() );
 
         matrix.rotate( -info.angle() );
         img = img.xForm( matrix );
