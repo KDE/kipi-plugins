@@ -55,6 +55,9 @@ extern "C"
 #include <kprogress.h>
 #include <kdatewidget.h>
 
+// Includes files for KIPI
+#include <libkipi/uploadwidget.h>
+
 // Locale includes
 
 #include "renameimagesdialog.h"
@@ -175,12 +178,7 @@ void RenameImagesDialog::slotOptionsClicked(void)
 
 void RenameImagesDialog::slotResult( KIO::Job *job )
 {
-    qDebug("RenameImagesDialog::slotResult is commented out!");
-#ifdef TEMPORARILY_REMOVED
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
-    Digikam::AlbumInfo *sourceAlbum = Digikam::AlbumManager::instance()
-                                      ->findAlbum( item->pathSrc().section('/', -2, -2));
-    Digikam::AlbumInfo *targetAlbum = Digikam::AlbumManager::instance()->findAlbum( m_albumList->currentText() );
 
     if (job->error())
         {
@@ -194,46 +192,65 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
         {
         // Save the comments if current image taken from Album database.
 
-        if (sourceAlbum)
-           {
-           sourceAlbum->openDB();
-           QString comments = sourceAlbum->getItemComments(item->nameSrc());
-           sourceAlbum->closeDB();
+            KURL src;
+            src.setPath( item->pathSrc() );
+            KURL dest = m_upload->path();
+            dest.addPath( item->nameDest() );
 
-           targetAlbum->openDB();
-           targetAlbum->setItemComments(item->nameDest(), comments);
-           targetAlbum->closeDB();
-           }
+            QString errmsg;
 
-        // Change image file timestamp if necessary.
+            KURL::List urlList;
+            urlList.append(src);
+            urlList.append(dest);
+            m_interface->refreshImages( urlList );
 
-        if ( m_dateChange == true )
-           {
-           if ( changeDate(targetAlbum->getPath() + "/" +  item->nameDest()) == false )
-              {
-              item->changeResult(i18n("Cannot change time stamp of destination file!"));
-              item->changeError(i18n("cannot change time stamp of destination file!"));
-              item->changeOutputMess(i18n("Checked the file access right!"));
-              }
-           }
-
-        // Remove original image file if necessary.
-
-        if ( m_removeOriginal->isChecked() == true )
-           {
-           KURL deleteImage(item->pathSrc());
-
-           if ( KIO::NetAccess::del(deleteImage) == false )
-                {
-                item->changeResult(i18n("Cannot delete original !"));
-                item->changeError(i18n("cannot remove original image file!"));
-                item->changeOutputMess(i18n("Checked the file access right!"));
+            bool ok = m_interface->addImage( dest, errmsg );
+            if ( !ok ) {
+                int code = KMessageBox::warningContinueCancel( this,
+                                                               i18n("<qt>Error adding image to application. Error message was: "
+                                                                    "<b>%1</b></qt>").arg( errmsg ),
+                                                               i18n("Error adding image to application") );
+                if ( code == KMessageBox::Cancel ) {
+                    slotProcessStop();
+                    return;
                 }
-           else
+                else
+                    item->changeResult(i18n("Failed !!!"));
+            }
+
+            KIPI::ImageInfo srcInfo = m_interface->info( src );
+            KIPI::ImageInfo destInfo = m_interface->info( dest );
+            destInfo.cloneData( srcInfo );
+
+            // Change image file timestamp if necessary.
+
+            if ( m_dateChange == true )
+            {
+                if ( changeDate( dest.path()) == false ) // PENDING(blackie) handle remote URL's
                 {
-                item->changeResult(i18n("OK"));
-                item->changeError(i18n("no processing error"));
-                item->changeOutputMess(i18n("None"));
+                    item->changeResult(i18n("Cannot change time stamp of destination file!"));
+                    item->changeError(i18n("cannot change time stamp of destination file!"));
+                    item->changeOutputMess(i18n("Checked the file access right!"));
+                }
+            }
+
+            // Remove original image file if necessary.
+
+            if ( m_removeOriginal->isChecked() == true )
+            {
+                m_interface->delImage( src );
+
+                if ( KIO::NetAccess::del(src) == false )
+                {
+                    item->changeResult(i18n("Cannot delete original !"));
+                    item->changeError(i18n("cannot remove original image file!"));
+                    item->changeOutputMess(i18n("Checked the file access right!"));
+                }
+                else
+                {
+                    item->changeResult(i18n("OK"));
+                    item->changeError(i18n("no processing error"));
+                    item->changeOutputMess(i18n("None"));
                 }
            }
         else
@@ -252,7 +269,6 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
         copyItemOperations();
     else                                            // Copy is done...
         endProcess(i18n("Process finished!"));
-#endif
 }
 
 
@@ -308,18 +324,16 @@ void RenameImagesDialog::updateOptions(void)
 
 bool RenameImagesDialog::startProcess(void)
 {
-    qDebug("RenameImagesDialog::startProcess is commented out!");
-#ifdef TEMPORARILY_REMOVED
     if ( m_convertStatus == STOP_PROCESS )
        {
        endProcess(i18n("Process aborted by user!"));
        return true;
        }
 
-    Digikam::AlbumInfo *targetAlbum = Digikam::AlbumManager::instance()->findAlbum( m_albumList->currentText() );
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     m_listFiles->setCurrentItem(item);
 
+    QString targetAlbum = m_upload->path().path(); // PENDING(blackie) handle remote URLS.
     if ( prepareStartProcess(item, targetAlbum) == false ) // If there is a problem during the
        {                                                                 //  preparation -> pass to the next item!
        ++*m_listFile2Process_iterator;
@@ -340,7 +354,8 @@ bool RenameImagesDialog::startProcess(void)
           }
        }
 
-    KURL desturl(targetAlbum->getPath() + "/" + item->nameDest());
+    KURL desturl(m_upload->path());
+    desturl.addPath( item->nameDest() );
 
     if ( KIO::NetAccess::exists(desturl) == true )
        {
@@ -384,7 +399,7 @@ bool RenameImagesDialog::startProcess(void)
 
           case OVERWRITE_RENAME:
              {
-             QFileInfo *Target = new QFileInfo(targetAlbum->getPath() + "/" + item->nameDest());
+             QFileInfo *Target = new QFileInfo(desturl.path()); // handle remote URLS.
              QString newFileName = RenameTargetImageFile(Target);
 
              if ( newFileName == QString::null )
@@ -449,7 +464,6 @@ bool RenameImagesDialog::startProcess(void)
        }
 
     copyItemOperations();
-#endif
     return true;
 }
 
@@ -458,20 +472,16 @@ bool RenameImagesDialog::startProcess(void)
 
 void RenameImagesDialog::copyItemOperations(void)
 {
-    qDebug("RenameImagesDialog::copyItemOperations is commented out!");
-
-#ifdef TEMPORARILY_REMOVED
-    Digikam::AlbumInfo *targetAlbum = Digikam::AlbumManager::instance()->findAlbum( m_albumList->currentText() );
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     m_listFiles->setCurrentItem(item);
 
-    KIO::CopyJob* job = KIO::copy(item->pathSrc(),
-                                  targetAlbum->getPath() + "/" +  item->nameDest(),
-                                  true);
+    KURL target = m_upload->path();
+    target.addPath( item->nameDest() );
+
+    KIO::CopyJob* job = KIO::copy(item->pathSrc(), target, true);
 
     connect(job, SIGNAL(result(KIO::Job*)),
             this, SLOT(slotResult(KIO::Job*)));
-#endif
 }
 
 
@@ -558,6 +568,27 @@ void RenameImagesDialog::listImageFiles(void)
 {
     BatchProcessImagesDialog::listImageFiles();
 
+    KURL::List images;
+    for ( QListViewItem* it = m_listFiles->firstChild(); it; it = it->nextSibling() ) {
+        BatchProcessImagesItem *pitem = static_cast<BatchProcessImagesItem*>(it);
+        images.append( pitem->pathSrc() );
+    }
+
+    m_listFiles->clear();
+
+    int imageIndex = 0;
+    for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) {
+        QFileInfo fi( (*urlIt).path() ); // PENDING(blackie) handle remote URLS
+        new BatchProcessImagesItem(m_listFiles, fi.filePath(), fi.fileName(),
+                                   oldFileName2NewFileName(&fi, imageIndex), "" );
+        ++imageIndex;
+    }
+
+    // PENDING(blackie) This is the old code for this function.
+    // This code also includes sorting, but that needs some work to work with remote URL's
+#ifdef TEMPORARILY_REMOVED
+    BatchProcessImagesDialog::listImageFiles();
+
     int sortMethod;
 
     switch (m_sortType)
@@ -638,6 +669,7 @@ void RenameImagesDialog::listImageFiles(void)
           ++it;
           }
        }
+#endif
 }
 
 

@@ -89,7 +89,9 @@ Q_OBJECT
    BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent=0 );
    ~BatchProcessImagesDialog();
 
- private slots:
+protected slots:
+    void slotProcessStop(void);
+private slots:
 
    // --------------------------------------------------------------------------------------------------------
    // Standards slots
@@ -98,7 +100,6 @@ Q_OBJECT
    void slotOk( void );
 
    void slotProcessStart(void);
-   void slotProcessStop(void);
    void slotProcessDone(KProcess* proc);
    void slotReadStd(KProcess* proc, char *buffer, int buflen);
 
