@@ -122,6 +122,7 @@ public slots:
   void SlotPortfolioDurationChanged ( int );
   void slotOptionDlgOkClicked( void );
   void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
+  void slotFailedPreview(const KFileItem*);
   void slotAddDropItems(QStringList filesPath);
 
 private:

@@ -458,7 +458,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
 KImg2mpgData::~KImg2mpgData()
 {
-  if ( m_thumbJob ) delete m_thumbJob;
+  if ( m_thumbJob ) delete m_thumbJob; 
 }
 
 
@@ -602,14 +602,16 @@ void KImg2mpgData::slotImagesFilesSelected( QListBoxItem *item )
   KURL url;
   url.setPath(pitem->path());
     
-  if ( m_thumbJob ) delete m_thumbJob;
-    
   m_ImageLabel->clear();
 
+  if ( m_thumbJob ) delete m_thumbJob; 
+  
   m_thumbJob = KIO::filePreview( url, m_ImageLabel->width() );
 
-  connect( m_thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+  connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
+  connect(m_thumbJob, SIGNAL(failed(const KFileItem*)),
+           SLOT(slotFailedPreview(const KFileItem*)));           
 
   int index = m_ImagesFilesListBox->index ( item );
   m_label7->setText(i18n("Image no. %1").arg(index + 1));
@@ -618,10 +620,18 @@ void KImg2mpgData::slotImagesFilesSelected( QListBoxItem *item )
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void KImg2mpgData::slotGotPreview(const KFileItem*/*url*/, const QPixmap &pixmap)
+void KImg2mpgData::slotGotPreview(const KFileItem*, const QPixmap &pixmap)
 {
   m_ImageLabel->setPixmap(pixmap);
-  m_thumbJob = 0;
+  m_thumbJob = 0L;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+void KImg2mpgData::slotFailedPreview(const KFileItem*)
+{
+  m_thumbJob = 0L;
 }
 
 
