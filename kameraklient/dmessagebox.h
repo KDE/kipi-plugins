@@ -23,8 +23,7 @@
 #define DMESSAGEBOX_H
 
 // Digikam Message Box
-// If One Message Box is already open, and more messages are posted
-//  they will be appended to the open messagebox
+// If One Message Box is already open, and more messages are posted they will be appended to the open messagebox
 
 #include <qwidget.h>
 #include <qstring.h>
@@ -32,12 +31,10 @@
 class QLabel;
 class QTextEdit;
 
-class DMessageBox : public QWidget
-{
+class DMessageBox : public QWidget {
     Q_OBJECT
 
 public:
-
     DMessageBox();
     ~DMessageBox();
 
@@ -45,7 +42,6 @@ public:
     static void showMsg(const QString& msg);
     
 private:
-
     static DMessageBox* s_instance;
 
     int        count_;
@@ -54,9 +50,7 @@ private:
     QString    mainMsg_;
 
 private slots:
-
     void slotOkClicked();
-    
 };
 
 #endif /* DMESSAGEBOX_H */

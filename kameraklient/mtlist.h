@@ -1,3 +1,4 @@
+
 #ifndef LISTMT_H
 #define LISTMT_H
 
@@ -9,7 +10,6 @@
 template<class Type> class MTList {
 
 public:
-
     typedef typename QValueList<Type>::const_iterator const_iterator_type;
 
     MTList() {

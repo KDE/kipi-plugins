@@ -32,8 +32,7 @@
 
 class GPEvent : public QCustomEvent {
 public:
-    enum Type
-    {
+    enum Type {
         Init = QCustomEvent::User,
         GetSubFolders,
         MakeFolder,
@@ -59,8 +58,7 @@ public:
 
 class GPEventError : public GPEvent {
 public:
-    GPEventError(const QString errorMsg) : GPEvent(Error), errorMsg_(errorMsg)
-        {}
+    GPEventError(const QString errorMsg) : GPEvent(Error), errorMsg_(errorMsg) {}
     QString errorMsg() const { return errorMsg_; }
 
 private:

@@ -1,3 +1,35 @@
+/* ============================================================
+ * File  : cameraui.cpp
+ * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Date  : 2003-01-21
+ * Description :
+ *
+ * Copyright 2003 by Renchi Raju
+ * Copyright 2004 by Tudor Calin
+ *
+ * Update : 08/28/2003 - Gilles Caulier <caulier.gilles@free.fr>
+ *          Add standard shortcuts and toolbars KDE menu entry.
+ *          Add new toolbar icons.
+ *          Improve i18n messages.
+ *          17/09/2003 - Gilles Caulier <caulier.gilles@free.fr>
+ *          Add FullScreen mode.
+ *          19/09/2003 - Gilles Caulier <caulier.gilles@free.fr>
+ *          Add new default shortcuts.
+ *
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published bythe Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
 // Qt
 #include <qcombobox.h>
 #include <qdir.h>
