@@ -50,11 +50,12 @@ public slots:
   void slotAcquireImageDone(const QImage &img);
 
 private:
-  KAction            *m_action_scanimages;
-  KAction            *m_action_screenshotimages;
-  KScanDialog        *m_scanDialog;
-  AcquireImageDialog *m_acquireImageDialog;
-  ScreenGrabDialog   *m_screenshotDialog;
+  KAction                                     *m_action_scanimages;
+  KAction                                     *m_action_screenshotimages;
+  KScanDialog                                 *m_scanDialog;
+  
+  KIPIAcquireImagesPlugin::AcquireImageDialog *m_acquireImageDialog;
+  KIPIAcquireImagesPlugin::ScreenGrabDialog   *m_screenshotDialog;
 };
 
 

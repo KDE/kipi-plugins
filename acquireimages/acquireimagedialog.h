@@ -53,6 +53,9 @@ class KConfig;
 class KIntNumInput;
 class KSqueezedTextLabel;
 
+namespace KIPIAcquireImagesPlugin
+{
+
 class AcquireImageDialog : public KDialogBase
 {
 Q_OBJECT
@@ -119,5 +122,7 @@ Q_OBJECT
    void writeSettings(void);
    void readSettings(void);
 };
+
+}  // NameSpace KIPIAcquireImagesPlugin
 
 #endif  // ACQUIREIMAGEDIALOG_H

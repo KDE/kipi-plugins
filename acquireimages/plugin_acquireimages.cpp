@@ -44,9 +44,9 @@
 
 // Local includes
 
-#include "plugin_acquireimages.h"
 #include "screenshotdialog.h"
 #include "acquireimagedialog.h"
+#include "plugin_acquireimages.h"
 
 typedef KGenericFactory<Plugin_AcquireImages> Factory;
 
@@ -106,6 +106,7 @@ void Plugin_AcquireImages::slotActivate()
        if ( m_scanDialog )
            {
            m_scanDialog->setMinimumSize(400, 300);
+           
            connect(m_scanDialog, SIGNAL(finalImage(const QImage &, int)),
                    this, SLOT(slotAcquireImageDone(const QImage &)));
            }
@@ -122,7 +123,8 @@ void Plugin_AcquireImages::slotActivate()
        }
     else if (from == "screenshot_images")
        {
-       m_screenshotDialog = new ScreenGrabDialog(interface, kapp->activeWindow(), "KIPI ScreenshotImagesDialog");
+       m_screenshotDialog = new KIPIAcquireImagesPlugin::ScreenGrabDialog(interface,
+                                                         kapp->activeWindow(), "KIPI ScreenshotImagesDialog");
        m_screenshotDialog->show();
        }
     else
@@ -138,7 +140,7 @@ void Plugin_AcquireImages::slotActivate()
 void Plugin_AcquireImages::slotAcquireImageDone(const QImage &img)
 {
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
-    m_acquireImageDialog = new AcquireImageDialog( interface, 0, img);
+    m_acquireImageDialog = new KIPIAcquireImagesPlugin::AcquireImageDialog( interface, 0, img);
     m_acquireImageDialog->setMinimumWidth(400);
     m_acquireImageDialog->exec();
 }

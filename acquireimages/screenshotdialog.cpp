@@ -56,6 +56,9 @@ extern "C"
 #include "screenshotdialog.h"
 #include "acquireimagedialog.h"
 
+namespace KIPIAcquireImagesPlugin
+{
+
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent, const char *name)
@@ -284,5 +287,6 @@ bool ScreenGrabDialog::eventFilter( QObject* o, QEvent* e)
     return false;
 }
 
+}  // NameSpace KIPIAcquireImagesPlugin
 
 #include "screenshotdialog.moc"

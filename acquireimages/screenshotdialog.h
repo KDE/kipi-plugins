@@ -53,6 +53,9 @@ class QCheckBox;
 class KConfig;
 class KIntNumInput;
 
+namespace KIPIAcquireImagesPlugin
+{
+
 class AcquireImageDialog;
 
 class ScreenGrabDialog : public KDialogBase
@@ -85,5 +88,7 @@ protected:
     bool eventFilter( QObject* o, QEvent* e);
     void endGrab(void);
 };
+
+}  // NameSpace KIPIAcquireImagesPlugin
 
 #endif  // SCREENSHOOTDIALOG_H

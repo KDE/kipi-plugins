@@ -81,6 +81,8 @@ extern "C"
 #include <qapplication.h>
 #include <qvgroupbox.h>
 
+namespace KIPIAcquireImagesPlugin
+{
 
 class AlbumItem : public QListBoxText
 {
@@ -644,5 +646,6 @@ bool AcquireImageDialog::QImageToTiff(const QImage& image, const QString& dst)
     return false;
 }
 
+}  // NameSpace KIPIAcquireImagesPlugin
 
 #include "acquireimagedialog.moc"
