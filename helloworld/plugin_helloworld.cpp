@@ -66,7 +66,13 @@ void Plugin_HelloWorld::setup( QWidget* widget )
                                    "helloworld");
     addAction( m_actionHelloWorld );
 
-    m_interface = static_cast< KIPI::Interface* >( parent() );
+    m_interface = dynamic_cast< KIPI::Interface* >( parent() );
+    
+    if ( !m_interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
 }
 
 void Plugin_HelloWorld::slotActivate()

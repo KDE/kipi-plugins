@@ -119,7 +119,14 @@ void Plugin_WallPaper::setup( QWidget* widget )
 
     addAction( m_action_Background );
 
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
+    
     KIPI::ImageCollection selection = interface->currentSelection();
     m_action_Background->setEnabled( selection.isValid() );
 
@@ -191,7 +198,14 @@ void Plugin_WallPaper::setWallpaper(int layout)
    if (layout>CENTERED_AUTOFIT || layout < CENTER)
       return;
 
-   KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+   KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+   
+   if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
+   
    KIPI::ImageCollection images = interface->currentSelection();
 
    if (!images.isValid() ) return;

@@ -97,8 +97,14 @@ void Plugin_SlideShow::slotActivate()
 
 void Plugin_SlideShow::slotSlideShow()
 {
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
+    if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
+           
     KConfig config("kipirc");
 
     bool    opengl;

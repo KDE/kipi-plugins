@@ -85,9 +85,20 @@ void Plugin_RawConverter::setup( QWidget* widget )
     addAction( singleAction_ );
     addAction( batchAction_ );
 
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
-    connect( interface, SIGNAL( selectionChanged( bool ) ), this, SLOT( slotSetActive() ) );
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), this, SLOT( slotSetActive() ) );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
+           
+    connect( interface, SIGNAL( selectionChanged( bool ) ),
+             this, SLOT( slotSetActive() ) );
+             
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), 
+             this, SLOT( slotSetActive() ) );
+             
     slotSetActive();
 }
 
@@ -124,7 +135,14 @@ bool Plugin_RawConverter::checkBinaries()
 
 void Plugin_RawConverter::slotActivateSingle()
 {
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
+           
     KIPI::ImageCollection images;
     images = interface->currentSelection();
     

@@ -148,7 +148,14 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     m_action_Transform->insert(m_action_Convert2GrayScale);
     addAction( m_action_Transform );
 
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
+           
     KIPI::ImageCollection selection = interface->currentScope();
     m_action_Transform->setEnabled( selection.isValid() );
     
@@ -301,7 +308,14 @@ void Plugin_JPEGLossless::slotCancel()
         m_progressDlg->reset();
     }
 
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
+           
     interface->refreshImages( m_images );
 }
 
@@ -372,7 +386,13 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
     if (m_current >= m_total) {
         m_current     = 0;
         m_progressDlg->reset();
-        KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+        KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+        
+        if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
         interface->refreshImages( m_images );
     }
 }
@@ -394,7 +414,14 @@ KIPI::Category Plugin_JPEGLossless::category( KAction* action ) const
 
 KURL::List Plugin_JPEGLossless::images()
 {
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return KURL::List();
+           }
+           
     KIPI::ImageCollection images = interface->currentScope();
     if ( !images.isValid() )
         return KURL::List();

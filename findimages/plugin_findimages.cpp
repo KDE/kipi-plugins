@@ -93,7 +93,13 @@ void Plugin_FindImages::slotFindDuplicateImages()
 {
     m_progressDlg=0;
 
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
     
     findDuplicateOperation = new KIPIFindDupplicateImagesPlugin::FindDuplicateImages( interface, this);
     

@@ -96,7 +96,14 @@ Plugin_AcquireImages::~Plugin_AcquireImages()
 
 void Plugin_AcquireImages::slotActivate()
 {
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
+    
     QString from(sender()->name());
 
     if (from == "scan_images")
@@ -139,7 +146,14 @@ void Plugin_AcquireImages::slotActivate()
 
 void Plugin_AcquireImages::slotAcquireImageDone(const QImage &img)
 {
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
+           
     m_acquireImageDialog = new KIPIAcquireImagesPlugin::AcquireImageDialog( interface, 0, img);
     m_acquireImageDialog->setMinimumWidth(400);
     m_acquireImageDialog->exec();
