@@ -43,7 +43,6 @@ public:
 
 private:
    KActionMenu          *m_action_findImages;
-   KAction              *m_action_findComments;
    KAction              *m_action_findDuplicateImagesAlbums;
 
 protected:
@@ -54,7 +53,6 @@ protected:
    int m_current, m_total;
 
 private slots:
-   void slotFindComments();
    void slotFindDuplicateImages();
    void slotCancel();
 

@@ -175,7 +175,6 @@ void KIGPDialog::setupSelection(void)
 
     m_albumPreview = new QLabel( groupBox1 );
     m_albumPreview->setFixedHeight( 120 );
-    m_albumPreview->setFrameStyle( QFrame::Panel | QFrame::Sunken );
     m_albumPreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_albumPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
     QWhatsThis::add( m_albumPreview, i18n( "Preview of the first image in the current selected Album." ) );

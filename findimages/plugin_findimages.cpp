@@ -61,14 +61,6 @@ Plugin_FindImages::Plugin_FindImages(QObject *parent, const char*, const QString
                            actionCollection(),
                            "findimages");
 
-    m_action_findComments = new KAction(i18n("Find comments"),
-                           "findcomments",
-                           0,
-                           this,
-                           SLOT(slotFindComments()),
-                           m_action_findImages,
-                           "findcomments");
-
     m_action_findDuplicateImagesAlbums= new KAction(i18n("Find duplicate images"),
                            "finddupplicateimages",
                            0,
@@ -77,7 +69,6 @@ Plugin_FindImages::Plugin_FindImages(QObject *parent, const char*, const QString
                            m_action_findImages,
                            "findduplicateimagesalbums");
 
-    m_action_findImages->insert(m_action_findComments);
     m_action_findImages->insert(m_action_findDuplicateImagesAlbums);
 }
 
@@ -89,17 +80,7 @@ Plugin_FindImages::~Plugin_FindImages()
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void Plugin_FindImages::slotFindComments()
-{
-    // TODO by Grégory Kokanosky
-
-    KMessageBox::information(0, "Not yet implemented !!!");
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////// SLOTS ///////////////////////////////////////////////////////
 
 void Plugin_FindImages::slotFindDuplicateImages()
 {
