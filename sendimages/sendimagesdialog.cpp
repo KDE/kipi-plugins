@@ -160,18 +160,18 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
     slotImageSelected(m_ImagesFilesListBox->item(0));
     setNbItems();
     resize( 600, 400 );
-    
+
     // About data and help button.
-    
+
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Send Images"), 
+                                       I18N_NOOP("Send Images"),
                                        kipi_version,
                                        I18N_NOOP("A Kipi plugin for emailing images"),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier", 
+                                       "(c) 2003-2004, Gilles Caulier",
                                        0,
                                        "http://extragear.kde.org/apps/kipi.php");
-    
+
     about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at free.fr");
 
@@ -180,7 +180,7 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Send Image Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
-    
+
     slotMailAgentChanged(m_mailAgentName->currentItem());
 }
 
@@ -392,7 +392,7 @@ void SendImagesDialog::setupEmailOptions(void)
     m_mailAgentName->insertItem( "Thunderbird" );
     m_mailAgentName->setCurrentText( "Kmail" );
     QWhatsThis::add( m_mailAgentName, i18n("<p>Select here your preferred external mail agent program."
-                                           "These mail agents version are supported:<p>"
+                                           "These mail agent versions are supported:<p>"
                                            "<b>Balsa</b>: >= 2.x<p>"
                                            "<b>Evolution</b>: >= 1.4<p>"
                                            "<b>Kmail</b>: >= 1.3<p>"
@@ -404,12 +404,12 @@ void SendImagesDialog::setupEmailOptions(void)
     hlay10->addWidget( m_mailAgentLabel );
     hlay10->addStretch( 1 );
     hlay10->addWidget( m_mailAgentName );
-    
+
     connect(m_mailAgentName, SIGNAL(activated(int)),
             this, SLOT(slotMailAgentChanged(int)));
-    
+
     //---------------------------------------------
-    
+
     m_labelThunderbirdBinPath = new QLabel(i18n("&Thunderbird binary path:"), page_setupEmailOptions);
     vlay->addWidget( m_labelThunderbirdBinPath );
 
@@ -547,7 +547,7 @@ void SendImagesDialog::slotHelp()
 {
     KApplication::kApplication()->invokeHelp("sendimages",
                                              "kipi-plugins");
-} 
+}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -683,7 +683,7 @@ void SendImagesDialog::slotOk()
           return;
           }
        }
-           
+
     writeSettings();
 
     for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)

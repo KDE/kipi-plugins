@@ -85,22 +85,22 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
                            .arg(FileName), Help|Ok, Ok, true)
 {
     // About data and help button.
-    
+
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Batch processes images"), 
+                                       I18N_NOOP("Batch processes images"),
                                        kipi_version,
-                                       I18N_NOOP("An interface for to preview the batch processes images "
+                                       I18N_NOOP("An interface to preview the batch processes images "
                                                  "Kipi plugins\n"
-                                                 "This plugin use the \"convert\" program from \"ImageMagick\" "
+                                                 "This plugin uses the \"convert\" program from \"ImageMagick\" "
                                                  "package."),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier", 
+                                       "(c) 2003-2004, Gilles Caulier",
                                        0,
                                        "http://extragear.kde.org/apps/kipi.php");
-    
+
     about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at free.fr");
-                        
+
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
@@ -108,7 +108,7 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     m_helpButton->setPopup( helpMenu->menu() );
 
     //---------------------------------------------
-    
+
     QWidget* box = new QWidget( this );
     setMainWidget(box);
     resize(700, 400);
@@ -119,9 +119,9 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
         INIT_ZOOM_FACTOR = 5;
 
     QVBoxLayout* ml = new QVBoxLayout( box, 10 );
-    
+
     //---------------------------------------------
-   
+
     QFrame *headerFrame = new QFrame( box );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
@@ -135,17 +135,17 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
     ml->addWidget( headerFrame );
-    
+
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
     directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
     //---------------------------------------------
-    
+
     QHBoxLayout* h1 = new QHBoxLayout( ml );
     QVBoxLayout* v1 = new QVBoxLayout( h1 );
     h1->addSpacing( 5 );
@@ -365,12 +365,12 @@ void PixmapView::PreviewProcessDone(KProcess* proc)
           horizontalScrollBar()->setLineStep(1);
           verticalScrollBar()->setLineStep(1);
           KURL deletePreviewImage( m_previewFileName );
-       
+
 #if KDE_VERSION >= 0x30200
           KIO::NetAccess::del( deletePreviewImage, kapp->activeWindow() );
 #else
           KIO::NetAccess::del( deletePreviewImage );
-#endif            
+#endif
           }
        else
           {
@@ -452,9 +452,9 @@ void PixmapView::contentsMouseMoveEvent( QMouseEvent * e )
      {
          uint newxpos = e->x();
          uint newypos = e->y();
-      
+
          scrollBy (-(newxpos - m_xpos), -(newypos - m_ypos));
-      
+
          m_xpos = newxpos - (newxpos-m_xpos);
          m_ypos = newypos - (newypos-m_ypos);
      }

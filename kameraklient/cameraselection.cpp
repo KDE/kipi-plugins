@@ -35,22 +35,22 @@
 namespace KIPIKameraKlientPlugin
 {
 
-CameraSelection::CameraSelection(QWidget* parent) 
+CameraSelection::CameraSelection(QWidget* parent)
                : KDialogBase(parent, 0, true, i18n("Camera Selection"),
-                             Help|Ok|Cancel, Ok, true) 
+                             Help|Ok|Cancel, Ok, true)
 {
     // About data and help button.
-    
+
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("KameraKlient"), 
+                                       I18N_NOOP("KameraKlient"),
                                        kipi_version,
-                                       I18N_NOOP("An Digital camera interface Kipi plugin"),
+                                       I18N_NOOP("A Digital camera interface Kipi plugin"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Renchi Raju\n"
-                                       "(c) 2004, Tudor Calin", 
+                                       "(c) 2004, Tudor Calin",
                                        0,
                                        "http://extragear.kde.org/apps/kipi.php");
-    
+
     about->addAuthor("Renchi Raju", I18N_NOOP("Original author from Digikam project"),
                      "renchi@pooh.tam.uiuc.edu");
 
@@ -62,14 +62,14 @@ CameraSelection::CameraSelection(QWidget* parent)
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("KameraKlient Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     helpButton_->setPopup( helpMenu->menu() );
-    
+
     QWidget *page = new QWidget(this);
     setMainWidget(page);
-    
-    QVBoxLayout *topLayout = new QVBoxLayout(page, 5, 5); 
+
+    QVBoxLayout *topLayout = new QVBoxLayout(page, 5, 5);
 
     //---------------------------------------------
-   
+
     QFrame *headerFrame = new QFrame( page );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
@@ -82,17 +82,17 @@ CameraSelection::CameraSelection(QWidget* parent)
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
     topLayout->addWidget( headerFrame );
-    
+
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
     directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
     //---------------------------------------------
-    
+
     QGroupBox* mainBox = new QGroupBox(page);
     mainBox->setTitle(i18n("Camera Configuration"));
     mainBox->setColumnLayout(0, Qt::Vertical );
@@ -142,18 +142,18 @@ CameraSelection::CameraSelection(QWidget* parent)
     mainBoxLayout->addItem(spacer, 4, 1);
 
     topLayout->addWidget( mainBox );
-    
+
     // Connections --------------------------------------------------
-    
-    connect(listView_, SIGNAL(selectionChanged(QListViewItem *)), 
+
+    connect(listView_, SIGNAL(selectionChanged(QListViewItem *)),
             this, SLOT(slotSelectionChanged(QListViewItem *)));
-            
+
     connect(portButtonGroup_, SIGNAL(clicked(int)), this, SLOT(slotPortChanged()));
-    
+
     connect(this, SIGNAL(okClicked()), this, SLOT(slotOkClicked()));
-    
+
     // Initialize  --------------------------------------------------
-    
+
     getCameraList();
     getSerialPortList();
 }
@@ -165,7 +165,7 @@ void CameraSelection::slotHelp()
 {
     KApplication::kApplication()->invokeHelp("kameraklient",
                                              "kipi-plugins");
-} 
+}
 
 void CameraSelection::setCamera(const QString& model, const QString& port) {
     QString camModel(model);
@@ -175,7 +175,7 @@ void CameraSelection::setCamera(const QString& model, const QString& port) {
     }
     listView_->setSelected(item, true);
     listView_->ensureItemVisible(item);
-    
+
     if (port.contains("usb")) {
         usbButton_->setChecked(true);
     } else if (port.contains("serial")) {
@@ -259,7 +259,7 @@ QString CameraSelection::currentModel() {
     }
     QString model(item->text(0));
     return model;
-        
+
 }
 
 QString CameraSelection::currentPortPath() {

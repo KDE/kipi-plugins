@@ -65,7 +65,7 @@ namespace KIPISendimagesPlugin
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-SendImages::SendImages(KIPI::Interface* interface, const QString &tmpFolder, 
+SendImages::SendImages(KIPI::Interface* interface, const QString &tmpFolder,
                        const KIPI::ImageCollection& imagesCollection, QObject *parent)
           : QObject(parent), QThread(), m_interface( interface ), m_tmp( tmpFolder ),
             m_collection( imagesCollection )
@@ -73,7 +73,7 @@ SendImages::SendImages(KIPI::Interface* interface, const QString &tmpFolder,
     m_parent = parent;
     KImageIO::registerFormats();
     m_mozillaTimer = new QTimer(this);
-        
+
     connect(m_mozillaTimer, SIGNAL(timeout()),
             this, SLOT(slotMozillaTimeout()));
 }
@@ -95,7 +95,7 @@ void SendImages::showDialog()
     m_sendImagesDialog = new KIPISendimagesPlugin::SendImagesDialog(kapp->activeWindow(),
                              m_interface, m_collection);
     m_sendImagesDialog->show();
-        
+
     connect(m_sendImagesDialog, SIGNAL(signalAccepted()),
             m_parent, SLOT(slotAcceptedConfigDlg()));
 }
@@ -123,14 +123,14 @@ void SendImages::prepare(void)
 void SendImages::run()
 {
     KIPISendimagesPlugin::EventData *d;
-    
+
     d = new KIPISendimagesPlugin::EventData;
     d->action = KIPISendimagesPlugin::Initialize;
     d->starting = true;
     d->success = false;
     d->total = m_images.count();
     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-        
+
     for( KURL::List::Iterator it = m_images.begin() ; it != m_images.end() ; ++it )
         {
         QString imageName = (*it).path();
@@ -141,9 +141,9 @@ void SendImages::run()
         d->fileName = (*it).fileName();
         d->albumName = (*it).directory().section('/', -1);
         d->starting = true;
-        d->success = false;        
+        d->success = false;
         QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-        
+
         // Prepare resized target images to send.
 
         if ( m_changeProp == true )
@@ -151,13 +151,13 @@ void SendImages::run()
            // Prepare resizing images.
 
            QString imageFileName = ItemName;
-          
-           QString imageNameFormat = (*it).directory().section('/', -1) + "-" + 
-                                     imageFileName.replace(QChar('.'), "_") + 
+
+           QString imageNameFormat = (*it).directory().section('/', -1) + "-" +
+                                     imageFileName.replace(QChar('.'), "_") +
                                      extension(m_imageFormat);
-           
-           kdDebug (51000) << "Resizing ' " << imageName.ascii() << "-> '" 
-                           << m_tmp.ascii() << imageNameFormat.ascii() 
+
+           kdDebug (51000) << "Resizing ' " << imageName.ascii() << "-> '"
+                           << m_tmp.ascii() << imageNameFormat.ascii()
                            << "' (" << m_imageFormat.ascii() << ")" << endl;
 
            if ( resizeImageProcess( imageName, m_tmp, m_imageFormat, imageNameFormat,
@@ -170,42 +170,42 @@ void SendImages::run()
                d->fileName = (*it).fileName();
                d->albumName = (*it).directory().section('/', -1);
                d->starting = false;
-               d->success = false;               
+               d->success = false;
                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-                       
+
                m_imagesResizedWithError.append(*it);
                }
            else          // Resized images OK...
                {
                // Only try to write Exif if both src and destination are JPEG files.
-    
+
                if (QString(QImageIO::imageFormat(imageName)).upper() == "JPEG" &&
                    m_imageFormat.upper() == "JPEG")
                   {
                   ExifRestorer exifHolder;
                   exifHolder.readFile(imageName, ExifRestorer::ExifOnly);
-       
+
                   QString targetFile = m_tmp + imageNameFormat;
-       
-                  if (exifHolder.hasExif()) 
+
+                  if (exifHolder.hasExif())
                      {
                      ExifRestorer restorer;
                      restorer.readFile(targetFile, ExifRestorer::EntireImage);
                      restorer.insertExifData(exifHolder.exifData());
                      restorer.writeFile(targetFile);
                      }
-                  else 
+                  else
                      kdWarning( 51000 ) << ("createThumb::No Exif Data Found") << endl;
-                  }  
-       
+                  }
+
                d = new KIPISendimagesPlugin::EventData;
                d->action   = KIPISendimagesPlugin::ResizeImages;
                d->fileName = (*it).fileName();
                d->albumName = (*it).directory().section('/', -1);
                d->starting = false;
-               d->success = true;               
+               d->success = true;
                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-               
+
                m_filesSendList.append(m_tmp + imageNameFormat);
                m_imagesPackage.append(*it);
                m_imagesPackage.append(m_tmp + imageNameFormat);
@@ -218,19 +218,19 @@ void SendImages::run()
            d->fileName = (*it).fileName();
            d->albumName = (*it).directory().section('/', -1);
            d->starting = true;
-           d->success = false;             
+           d->success = false;
            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-           
+
            m_filesSendList.append(imageName);
            m_imagesPackage.append(imageName);
            m_imagesPackage.append(imageName);
            }
         }
-     
+
      d = new KIPISendimagesPlugin::EventData;
      d->action   = KIPISendimagesPlugin::Progress;
      d->starting = false;
-     d->success = true;             
+     d->success = true;
      QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 }
 
@@ -240,20 +240,20 @@ void SendImages::run()
 
 void SendImages::makeCommentsFile(void)
 {
-    if ( m_sendImagesDialog->m_addComments->isChecked() == true )    
+    if ( m_sendImagesDialog->m_addComments->isChecked() == true )
        {
        QString ImageCommentsText;
 
        KURL::List::Iterator it = m_imagesPackage.begin();
-       
-       while( it != m_imagesPackage.end() ) 
+
+       while( it != m_imagesPackage.end() )
           {
           KIPI::ImageInfo info = m_interface->info( *it );
-          
+
           QString commentItem = info.description();
           ++it;
           QString targetFile = (*it).filename();
-                    
+
           if ( commentItem.isEmpty() )
               commentItem = i18n("no comment");
 
@@ -262,10 +262,11 @@ void SendImages::makeCommentsFile(void)
                               .arg(targetFile)
                               .arg(commentItem);
           ++it;
-          } 
+          }
 
        QFile commentsFile( m_tmp + i18n("comments.txt") );
        QTextStream stream( &commentsFile );
+       stream.setEncoding( QTextStream::UnicodeUTF8 );
        commentsFile.open( IO_WriteOnly );
        stream << ImageCommentsText << "\n";
        commentsFile.close();
@@ -286,7 +287,7 @@ bool SendImages::showErrors()
                                                   i18n("Do you want them to be added as attachments "
                                                        "(without resizing)?"),
                                                   m_imagesResizedWithError);
-       
+
        int ValRet = ErrorImagesDialog->exec();
 
        switch (ValRet)
@@ -311,7 +312,7 @@ bool SendImages::showErrors()
              break;
           }
        }
-    
+
     return true;
 }
 
@@ -322,8 +323,8 @@ bool SendImages::showErrors()
 void SendImages::invokeMailAgent(void)
 {
     // Kmail agent call.
-    
-    if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Kmail" )     
+
+    if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Kmail" )
        {
        KApplication::kApplication()->invokeMailer(
                        QString::null,                     // Destination address.
@@ -335,7 +336,7 @@ void SendImages::invokeMailAgent(void)
                        m_filesSendList.toStringList());   // Images attachments (+ comments).
        }
 
-       
+
     // Sylpheed mail agent call.
 
     if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed" )
@@ -402,7 +403,7 @@ void SendImages::invokeMailAgent(void)
        m_mailAgentProc = new KProcess;
 
        QString ThunderbirdUrl = m_sendImagesDialog->m_ThunderbirdBinPath->url();
-              
+
        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" )
           *m_mailAgentProc << "mozilla" << "-remote";
        else
@@ -424,7 +425,7 @@ void SendImages::invokeMailAgent(void)
 
        *m_mailAgentProc << Temp;
 
-       connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)), 
+       connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)),
                this, SLOT(slotMozillaExited(KProcess*)));
 
        connect(m_mailAgentProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
@@ -633,8 +634,8 @@ void SendImages::slotMozillaExited(KProcess*)
              *m_mailAgentProc2 << "netscape" << "-mail";
 
        // Start an instance of mozilla mail agent before a remote call.
-       
-       if ( m_mailAgentProc2->start() == false )   
+
+       if ( m_mailAgentProc2->start() == false )
           {
           KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
                                      "check your installation.")
@@ -646,7 +647,7 @@ void SendImages::slotMozillaExited(KProcess*)
           // -> start a remote mail agent with multiple attachments after the env. is loaded !
 
           m_mozillaTimer->start(5000, true);
-          return; 
+          return;
           }
        }
 }

@@ -102,15 +102,15 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
     // About data and help button.
 
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Image Gallery"), 
+                                       I18N_NOOP("Image Gallery"),
                                        kipi_version,
                                        I18N_NOOP("A Kipi plugin for HTML album export.\n"
                                                  "Based on KimgalleryPlugin implementation."),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier", 
+                                       "(c) 2003-2004, Gilles Caulier",
                                        0,
                                        "http://extragear.kde.org/apps/kipi.php");
-    
+
     about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at free.fr");
 
@@ -119,13 +119,13 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
 
     about->addAuthor("Achim Bohnet", I18N_NOOP("HTML implementation patches"),
                      "ach at mpe.mpg.de");
-                     
-    about->addAuthor("Lukas Tinkl", I18N_NOOP("Original HTML generator implementation"),
+
+    about->addAuthor("Lukáš Tinkl", I18N_NOOP("Original HTML generator implementation"),
                      "lukas at kde.org");
-    
+
     about->addAuthor("Andreas Schlapbach", I18N_NOOP("Original HTML generator implementation"),
                      "schlpbch at iam.unibe.ch");
-                         
+
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
@@ -149,7 +149,7 @@ void KIGPDialog::slotHelp()
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void KIGPDialog::setupSelection(void) 
+void KIGPDialog::setupSelection(void)
 {
     page_setupSelection = addPage(i18n("Selection"), i18n("Album Selection"),
                                   BarIcon("folder_image", KIcon::SizeMedium));
@@ -636,7 +636,7 @@ void KIGPDialog::GalleryUrlChanged(const QString &url )
 void KIGPDialog::slotOk()
 {
     m_selectedAlbums = m_imageCollectionSelector->selectedImageCollections();
-    
+
     if (m_selectedAlbums.size() == 0)
        {
        KMessageBox::sorry(this, i18n("You must select at least one album."));

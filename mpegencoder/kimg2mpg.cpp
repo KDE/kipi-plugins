@@ -195,9 +195,9 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_NoneLabel = i18n ("none");
 
   QVBoxLayout* ml = new QVBoxLayout( this, 10 );
-  
+
   //---------------------------------------------
-   
+
   QFrame *headerFrame = new QFrame( this );
   headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
   QHBoxLayout* layout = new QHBoxLayout( headerFrame );
@@ -210,17 +210,17 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   layout->addWidget( labelTitle );
   layout->setStretchFactor( labelTitle, 1 );
   ml->addWidget( headerFrame );
-    
+
   QString directory;
   KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
   directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
   pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
   pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
   labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
   //---------------------------------------------
-    
+
   QHBoxLayout* h1 = new QHBoxLayout( ml );
   QVBoxLayout* v1 = new QVBoxLayout( h1 );
   h1->addSpacing( 5 );
@@ -381,13 +381,13 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   connect( m_ImagesFilesButtonAdd, SIGNAL( clicked() ),
            this, SLOT( slotImagesFilesButtonAdd() ) );
-           
+
   connect( m_ImagesFilesButtonDelete, SIGNAL( clicked() ),
            this, SLOT( slotImagesFilesButtonDelete() ) );
-           
+
   connect( m_ImagesFilesButtonUp, SIGNAL( clicked() ),
            this, SLOT( slotImagesFilesButtonUp() ) );
-           
+
   connect( m_ImagesFilesButtonDown, SIGNAL( clicked() ),
            this, SLOT( slotImagesFilesButtonDown() ) );
 
@@ -411,43 +411,43 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   QWhatsThis::add( m_Encodebutton, i18n( "Start the portfolio MPEG encoding. "
                                          "The program uses the 'images2mpg' bash script. " ) );
 
-  connect(m_Encodebutton, SIGNAL(clicked()), 
+  connect(m_Encodebutton, SIGNAL(clicked()),
           this, SLOT(slotEncode()));
-          
+
   v3->addWidget( m_Encodebutton );
   v3->addStretch( 1 );
 
   // About data and help button.
-  
+
   m_helpButton = new QPushButton( this, "HelpButton_Options" );
   m_helpButton->setText( i18n( "&Help") );
   v3->addWidget( m_helpButton );
-    
+
   KAboutData* about = new KAboutData("kipiplugins",
-                                     I18N_NOOP("MPEG Slideshow"), 
+                                     I18N_NOOP("MPEG Slideshow"),
                                      kipi_version,
                                      I18N_NOOP("A Kipi plugin for encoding images to an MPEG file."),
                                      KAboutData::License_GPL,
-                                     "(c) 2003-2004, Gilles Caulier", 
+                                     "(c) 2003-2004, Gilles Caulier",
                                      0,
                                      "http://extragear.kde.org/apps/kipi.php");
-    
+
   about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                    "caulier dot gilles at free.fr");
-                        
+
   KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
   helpMenu->menu()->removeItemAt(0);
   helpMenu->menu()->insertItem(i18n("MPEG SlideShow Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
   m_helpButton->setPopup( helpMenu->menu() );
-  
+
   // Options button.
 
   m_optionsbutton = new QPushButton( this, "PushButton_Settings" );
   m_optionsbutton->setText( i18n( "&Settings") );
-  
-  connect(m_optionsbutton, SIGNAL(clicked()), 
+
+  connect(m_optionsbutton, SIGNAL(clicked()),
           this, SLOT(slotOptions()));
-          
+
   v3->addWidget( m_optionsbutton );
 
   // Quit push button.
@@ -455,10 +455,10 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_quitbutton = new QPushButton( this, "PushButton_Quit" );
   m_quitbutton->setText(i18n( "&Close") );
   m_quitbutton->setAutoRepeat( false );
-  
-  connect(m_quitbutton, SIGNAL(clicked()), 
+
+  connect(m_quitbutton, SIGNAL(clicked()),
           this, SLOT(slotClose()));
-  
+
   v3->addWidget( m_quitbutton );
   QWhatsThis::add( m_quitbutton, i18n( "Abort the current encoding and exit." ) );
 
@@ -492,7 +492,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
 KImg2mpgData::~KImg2mpgData()
 {
-  if ( m_thumbJob ) delete m_thumbJob; 
+  if ( m_thumbJob ) delete m_thumbJob;
 }
 
 
@@ -521,7 +521,7 @@ void KImg2mpgData::slotMPEGFilenameDialog( void )
   temp = KFileDialog::getOpenFileName(KGlobalSettings::documentPath(),
                                       QString( "*.mpg" ),
                                       this,
-                                      QString( i18n("Select MPEG output file...")) );
+                                      i18n("Select MPEG output file...") );
   if( temp.isEmpty() )
     return;
 
@@ -538,7 +538,7 @@ void KImg2mpgData::slotAudioFilenameDialog( void )
   temp = KFileDialog::getOpenFileName(KGlobalSettings::documentPath(),
                                       QString( "*.wav *.mp2" ),
                                       this,
-                                      QString( i18n("Select audio input file...")) );
+                                      i18n("Select audio input file...") );
   if( temp.isEmpty() )
     return;
 
@@ -627,22 +627,22 @@ void KImg2mpgData::slotImagesFilesSelected( QListBoxItem *item )
       }
 
   ImageItem *pitem = static_cast<ImageItem*>( item );
-  
+
   if ( !pitem ) return;
 
   KURL url;
   url.setPath(pitem->path());
-    
+
   m_ImageLabel->clear();
 
-  if ( m_thumbJob ) delete m_thumbJob; 
-  
+  if ( m_thumbJob ) delete m_thumbJob;
+
   m_thumbJob = KIO::filePreview( url, m_ImageLabel->width() );
 
   connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
   connect(m_thumbJob, SIGNAL(failed(const KFileItem*)),
-           SLOT(slotFailedPreview(const KFileItem*)));           
+           SLOT(slotFailedPreview(const KFileItem*)));
 
   int index = m_ImagesFilesListBox->index ( item );
   m_label7->setText(i18n("Image no. %1").arg(index + 1));
@@ -1269,7 +1269,7 @@ void KImg2mpgData::readSettings()
   delete m_config;
 
   // Get the image files filters from the hosts app.
-     
+
   m_ImagesFilesSort = m_interface->fileExtensions();
 }
 
@@ -1297,7 +1297,7 @@ void KImg2mpgData::addItems(const KURL::List& fileList)
     for ( KURL::List::Iterator it = Files.begin() ; it != Files.end() ; ++it )
       {
       KURL currentFile = *it;
-      
+
       QFileInfo fi(currentFile.path());
       QString Temp = fi.dirPath();
       QString albumName = Temp.section('/', -1);

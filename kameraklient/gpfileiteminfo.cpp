@@ -2,8 +2,8 @@
  * File  : gpfileiteminfo.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-01-22
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2003 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -11,12 +11,12 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Local
@@ -37,7 +37,7 @@ GPFileItemInfo::GPFileItemInfo() {
     height = -1;
     readPermissions = -1;
     writePermissions = -1;
-    downloaded = -1;    
+    downloaded = -1;
     // ----------------------------------------------------------
     previewInfoAvailable = false;
     previewMime = "";
@@ -58,33 +58,28 @@ GPFileItemInfo::~GPFileItemInfo() {
 }
 
 GPFileItemInfo::GPFileItemInfo(const GPFileItemInfo& info) {
-    //name = QString(info.name.latin1());
-    //folder = QString(info.folder.latin1());
-    name.setLatin1(info.name.latin1());
-    folder.setLatin1(info.folder.latin1());
+    name = info.name;
+    folder = info.folder;
     // ----------------------------------------------------------
     fileInfoAvailable = info.fileInfoAvailable;
-    //mime = QString(info.mime.latin1());
-    //time = QString(info.time.latin1());
-    mime.setLatin1(info.mime.latin1());
-    time.setLatin1(info.time.latin1());
+    mime = info.mime;
+    time = info.time;
     size = info.size;
     width = info.width;
     height = info.height;
     readPermissions = info.readPermissions;
     writePermissions = info.writePermissions;
-    downloaded = info.downloaded;    
+    downloaded = info.downloaded;
     // ----------------------------------------------------------
     previewInfoAvailable = info.previewInfoAvailable;
-    //previewMime = QString(info.previewMime.latin1());
-    previewMime.setLatin1(info.previewMime.latin1());
+    previewMime = info.previewMime;
     previewSize = info.previewSize;
     previewWidth = info.previewWidth;
     previewHeight = info.previewHeight;
     previewDownloaded = info.previewDownloaded;
     // ----------------------------------------------------------
     audioInfoAvailable = info.audioInfoAvailable;
-    audioMime = QString(info.audioMime.latin1());
+    audioMime = info.audioMime;
     audioSize = info.audioSize;
     audioDownloaded = info.audioDownloaded;
     // ----------------------------------------------------------
@@ -93,33 +88,28 @@ GPFileItemInfo::GPFileItemInfo(const GPFileItemInfo& info) {
 
 GPFileItemInfo& GPFileItemInfo::operator=(const GPFileItemInfo& info) {
     if (this != &info) {
-        //name = QString(info.name.latin1());
-        //folder = QString(info.folder.latin1());
-        name.setLatin1(info.name.latin1());
-        folder.setLatin1(info.folder.latin1());
+        name = info.name;
+        folder = info.folder;
         // ----------------------------------------------------------
         fileInfoAvailable = info.fileInfoAvailable;
-        //mime = QString(info.mime.latin1());
-        //time = QString(info.time.latin1());
-        mime.setLatin1(info.mime.latin1());
-        time.setLatin1(info.time.latin1());
+        mime = info.mime;
+        time = info.time;
         size = info.size;
         width = info.width;
         height = info.height;
         readPermissions = info.readPermissions;
         writePermissions = info.writePermissions;
-        downloaded = info.downloaded;    
+        downloaded = info.downloaded;
         // ----------------------------------------------------------
         previewInfoAvailable = info.previewInfoAvailable;
-        //previewMime = QString(info.previewMime.latin1());
-        previewMime.setLatin1(info.previewMime.latin1());
+        previewMime = info.previewMime;
         previewSize = info.previewSize;
         previewWidth = info.previewWidth;
         previewHeight = info.previewHeight;
         previewDownloaded = info.previewDownloaded;
         // ----------------------------------------------------------
         audioInfoAvailable = info.audioInfoAvailable;
-        audioMime = QString(info.audioMime.latin1());
+        audioMime = info.audioMime;
         audioSize = info.audioSize;
         audioDownloaded = info.audioDownloaded;
         // ----------------------------------------------------------

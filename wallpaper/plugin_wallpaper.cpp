@@ -63,7 +63,7 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_wallpaper,
 void Plugin_WallPaper::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    
+
     m_action_Background = new KActionMenu(i18n("&Set as Background"),
                          actionCollection(),
                          "images2desktop");
@@ -120,17 +120,17 @@ void Plugin_WallPaper::setup( QWidget* widget )
     addAction( m_action_Background );
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-    
-    if ( !interface ) 
+
+    if ( !interface )
            {
            kdError( 51000 ) << "Kipi interface is null!" << endl;
            return;
            }
-    
+
     KIPI::ImageCollection selection = interface->currentSelection();
     m_action_Background->setEnabled( selection.isValid() );
 
-    connect( interface, SIGNAL(selectionChanged(bool)), 
+    connect( interface, SIGNAL(selectionChanged(bool)),
              m_action_Background, SLOT(setEnabled(bool)));
  }
 
@@ -199,33 +199,33 @@ void Plugin_WallPaper::setWallpaper(int layout)
       return;
 
    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-   
-   if ( !interface ) 
+
+   if ( !interface )
            {
            kdError( 51000 ) << "Kipi interface is null!" << endl;
            return;
            }
-   
+
    KIPI::ImageCollection images = interface->currentSelection();
 
    if (!images.isValid() ) return;
 
    KURL url=images.images()[0];
    QString path;
-   if (url.isLocalFile()) 
+   if (url.isLocalFile())
       {
       path=url.path();
-      } 
-   else 
+      }
+   else
       {
       // PENDING We need a way to get a parent widget
       // Sun, 06 Jun 2004 - Aurélien
-      
+
       KMessageBox::information( kapp->activeWindow(), i18n(
          "<qt><p>You selected a remote image. It needs to be saved to your local disk to be used as a wallpaper."
-         "</p><p>You will now be asked where to save the image.</p</qt>"));
+         "</p><p>You will now be asked where to save the image.</p></qt>"));
       path = KFileDialog::getSaveFileName(url.fileName(), QString::null, kapp->activeWindow());
-      
+
       if (path.isNull()) return;
 #if KDE_VERSION > 0x30200
       KIO::NetAccess::download(url, path, 0L);
@@ -247,7 +247,7 @@ KIPI::Category  Plugin_WallPaper::category( KAction* action ) const
 {
     if ( action == m_action_Background )
        return KIPI::IMAGESPLUGIN;
-    
+
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }

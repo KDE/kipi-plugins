@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
- 
+
 // Qt includes.
 
 #include <qlayout.h>
@@ -59,16 +59,16 @@ TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent,
                   m_interface( interface )
 {
     // About data and help button.
-    
+
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Time Adjust"), 
+                                       I18N_NOOP("Time Adjust"),
                                        kipi_version,
                                        I18N_NOOP("A Kipi plugin for adjusting dates and times"),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Jesper K. Pedersen", 
+                                       "(c) 2003-2004, Jesper K. Pedersen",
                                        0,
                                        "http://extragear.kde.org/apps/kipi.php");
-    
+
     about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Author and maintainer"),
                      "blackie@kde.org");
 
@@ -79,9 +79,9 @@ TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent,
     m_helpButton->setPopup( helpMenu->menu() );
 
     // ------------------------------------------------------------------
-    
+
     addConfigPage();
-    
+
     connect( this, SIGNAL( okClicked() ),
              this, SLOT( slotOK() ) );
 }
@@ -104,14 +104,14 @@ void TimeAdjustDialog::setImages( const KURL::List& images )
     }
 
     if ( inexactCount > 0 ) {
-    
-        QString tmpLabel = i18n("1 images will be changed; ",
+
+        QString tmpLabel = i18n("1 image will be changed; ",
                                 "%n images will be changed; ",
                                 exactCount)
-                         + i18n("1 image will be skipped due an inexact date.",
+                         + i18n("1 image will be skipped due to an inexact date.",
                                 "%n images will be skipped due to inexact dates.",
                                 inexactCount );
-        
+
         m_infoLabel->setText( tmpLabel );
     }
     else {
@@ -182,7 +182,7 @@ void TimeAdjustDialog::addConfigPage()
     gridLay->addWidget( label, 3, 0 );
     gridLay->addWidget( m_days, 3, 1 );
 
-    label = new QLabel( i18n("Month:"), grid );
+    label = new QLabel( i18n("Months:"), grid );
     m_months = new QSpinBox( 0, 1000, 1, grid );
     gridLay->addWidget( label, 4, 0 );
     gridLay->addWidget( m_months, 4, 1 );
@@ -201,20 +201,20 @@ void TimeAdjustDialog::addConfigPage()
 
     connect( m_secs, SIGNAL( valueChanged( int ) ), this,
              SLOT( updateExample() ) );
-             
+
     connect( m_minutes, SIGNAL( valueChanged( int ) ),
              this, SLOT( updateExample() ) );
-             
-    connect( m_hours, SIGNAL( valueChanged( int ) ), 
+
+    connect( m_hours, SIGNAL( valueChanged( int ) ),
              this, SLOT( updateExample() ) );
-             
-    connect( m_days, SIGNAL( valueChanged( int ) ), 
+
+    connect( m_days, SIGNAL( valueChanged( int ) ),
              this, SLOT( updateExample() ) );
-             
-    connect( m_months, SIGNAL( valueChanged( int ) ), 
+
+    connect( m_months, SIGNAL( valueChanged( int ) ),
              this, SLOT( updateExample() ) );
-             
-    connect( m_years, SIGNAL( valueChanged( int ) ), 
+
+    connect( m_years, SIGNAL( valueChanged( int ) ),
              this, SLOT( updateExample() ) );
 }
 

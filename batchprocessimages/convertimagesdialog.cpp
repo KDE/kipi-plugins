@@ -63,28 +63,28 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
                    : BatchProcessImagesDialog( urlList, interface, i18n("Batch Convert Images"), parent )
 {
     // About data and help button.
-    
+
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Batch convert images"), 
+                                       I18N_NOOP("Batch convert images"),
                                        kipi_version,
                                        I18N_NOOP("A Kipi plugin for batch converting images\n"
-                                                 "This plugin use the \"convert\" program from \"ImageMagick\" package."),
+                                                 "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier", 
+                                       "(c) 2003-2004, Gilles Caulier",
                                        0,
                                        "http://extragear.kde.org/apps/kipi.php");
-    
+
     about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at free.fr");
-                        
+
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Batch Convert Images Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
-    
+
     //---------------------------------------------
-    
+
     groupBox1->setTitle( i18n("Image Conversion Options") );
 
     m_labelType->setText( i18n("Format:") );
@@ -324,7 +324,7 @@ QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem 
     *proc << "-verbose";
 
     *proc << item->pathSrc() + "[0]";
-    
+
     if ( !albumDest.isNull() )   // No preview mode !
        {
        *proc << albumDest + "/" + item->nameDest();

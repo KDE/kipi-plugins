@@ -117,7 +117,7 @@ if (MjpegToolsPath.isEmpty())
 
   if ( !str.isEmpty() )
     {
-    str=str+i18n("\nCheck your installation and this plugin's options settings."
+    str += i18n("\nCheck your installation and this plugin's options settings."
                  "\n\nVisit these URLs for more information:"
                  "\nImageMagick package: http://www.imagemagick.org/"
                  "\nMjpegTools package: http://mjpeg.sourceforge.net/");

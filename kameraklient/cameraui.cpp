@@ -98,17 +98,17 @@
 namespace KIPIKameraKlientPlugin
 {
 
-CameraUI::CameraUI() : QWidget() 
+CameraUI::CameraUI() : QWidget()
 {
     setWFlags(Qt::WDestructiveClose);
     resize(700, 440);
     setMinimumSize(600, 400);
-    
+
     mCameraList = new CameraList(this, locateLocal("data", "kipi/cameras.xml"));
     mCameraType =  new CameraType();
-    
+
     //---------------------------------------------
-    
+
     QVBoxLayout *dvlay = new QVBoxLayout( this, 6 );
     QFrame *headerFrame = new QFrame( this );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
@@ -122,25 +122,25 @@ CameraUI::CameraUI() : QWidget()
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
     dvlay->addWidget( headerFrame );
-    
+
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
     directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
     //---------------------------------------------
-    
+
     QHBoxLayout* mMainBoxLayout = new QHBoxLayout(dvlay);
-    mMainBoxLayout->setResizeMode(QLayout::FreeResize);    
+    mMainBoxLayout->setResizeMode(QLayout::FreeResize);
     QVBoxLayout* mLeftBoxLayout = new QVBoxLayout(mMainBoxLayout, 0);
     QVBoxLayout* mBtnBoxLayout = new QVBoxLayout(mMainBoxLayout, 4);
     mBtnBoxLayout->setMargin(2);
-    
+
     // create Button Box ----------------------------------------------------------------------
-    
+
     mCameraSetupBtn = new QPushButton(i18n("Setup"), this);
     mCameraSetupBtn->setMinimumSize(QSize(100, 0));
     mBtnBoxLayout->addWidget(mCameraSetupBtn);
@@ -163,21 +163,21 @@ CameraUI::CameraUI() : QWidget()
     mBtnBoxLayout->addWidget(mDialogCloseBtn);
 
     // About data and help button ---------------------------------------------------
-    
+
     mhelpButton = new QPushButton(i18n("&Help"), this);
     mhelpButton->setMinimumSize(QSize(100, 0));
-    mBtnBoxLayout->addWidget(mhelpButton); 
-    
+    mBtnBoxLayout->addWidget(mhelpButton);
+
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("KameraKlient"), 
+                                       I18N_NOOP("KameraKlient"),
                                        kipi_version,
-                                       I18N_NOOP("An Digital camera interface Kipi plugin"),
+                                       I18N_NOOP("A Digital camera interface Kipi plugin"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Renchi Raju\n"
-                                       "(c) 2004, Tudor Calin", 
+                                       "(c) 2004, Tudor Calin",
                                        0,
                                        "http://extragear.kde.org/apps/kipi.php");
-    
+
     about->addAuthor("Renchi Raju", I18N_NOOP("Original author from Digikam project"),
                      "renchi@pooh.tam.uiuc.edu");
 
@@ -188,9 +188,9 @@ CameraUI::CameraUI() : QWidget()
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("KameraKlient Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     mhelpButton->setPopup( helpMenu->menu() );
-    
+
     // create Camera Box-----------------------------------------------------------------------
-    
+
     QHBoxLayout* mCameraBoxLayout = new QHBoxLayout(mLeftBoxLayout, 4);
     mCameraBoxLayout->setMargin(4);
     mCameraConnectBtn = new QPushButton(i18n("Connect"), this);
@@ -198,17 +198,17 @@ CameraUI::CameraUI() : QWidget()
     mCameraComboBox = new QComboBox(this, "camera");
     mCameraComboBox->setInsertionPolicy(QComboBox::AtBottom);
     mCameraComboBox->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
-    mCameraBoxLayout->addWidget(mCameraComboBox); 
-    
+    mCameraBoxLayout->addWidget(mCameraComboBox);
+
     // create Download Directory Camera Box ---------------------------------------------------
-    
+
     QHBoxLayout *mDownloadDirectoryBoxLayout = new QHBoxLayout(mLeftBoxLayout, 4);
     mDownloadDirectoryBoxLayout->setMargin(4);
     QLabel* mDownloadDirectoryLabel = new QLabel(i18n("Download to: "), this);
     mDownloadDirectoryBoxLayout->addWidget(mDownloadDirectoryLabel);
     mDownloadDirectoryEdit = new QLineEdit(this);
     mDownloadDirectoryEdit->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
-    mDownloadDirectoryEdit->setReadOnly("true");
+    mDownloadDirectoryEdit->setReadOnly(true);
     mDownloadDirectoryBoxLayout->addWidget(mDownloadDirectoryEdit);
     mChangeDownloadDirectoryBtn = new QPushButton(i18n("&Change"), this);
     mDownloadDirectoryBoxLayout->addWidget(mChangeDownloadDirectoryBtn); // -------------------------
@@ -225,9 +225,9 @@ CameraUI::CameraUI() : QWidget()
     controller_ = new GPController(this, *mCameraType);
     controller_->start();
     cameraConnected_ = false;
-    
+
     // create Status Bar -----------------------------------------------------------------------------
-    
+
     mStatusBar =  new KStatusBar(this);
     mLeftBoxLayout->addWidget(mStatusBar);
     mStatusLabel = new QLabel(mStatusBar);
@@ -235,10 +235,10 @@ CameraUI::CameraUI() : QWidget()
     mStatusBar->addWidget(mStatusLabel, 7, true);
     mProgressBar = new KProgress(mStatusBar);
     mProgressBar->setTotalSteps(100);
-    mStatusBar->addWidget(mProgressBar, 5, true); 
-    
-    // ------------------------------------------------- 
-    
+    mStatusBar->addWidget(mProgressBar, 5, true);
+
+    // -------------------------------------------------
+
     setupAccel();
     setupConnections();
     mCameraList->load();
@@ -258,7 +258,7 @@ void CameraUI::slotHelp()
 {
     KApplication::kApplication()->invokeHelp("kameraklient",
                                              "kipi-plugins");
-} 
+}
 
 const CameraType* CameraUI::cameraType() {
     return mCameraType;
@@ -266,17 +266,17 @@ const CameraType* CameraUI::cameraType() {
 
 void CameraUI::setupAccel() {
     mCameraUIAccel = new KAccel(this);
-    mCameraUIAccel->insert("Select All", i18n("Select All"), 
-	    		i18n("Select all the images from the camera."), 
+    mCameraUIAccel->insert("Select All", i18n("Select All"),
+	    		i18n("Select all the images from the camera."),
 			CTRL+Key_A, this, SLOT(slotSelectAll()));
-    mCameraUIAccel->insert("Select None", i18n("Select None"), 
-	    		i18n("Deselect all the images from the camera."), 
+    mCameraUIAccel->insert("Select None", i18n("Select None"),
+	    		i18n("Deselect all the images from the camera."),
 			CTRL+Key_U, this, SLOT(slotSelectNone()));
-    mCameraUIAccel->insert("Invert Selection", i18n("Invert Selection"), 
-	    		i18n("Invert the selection."), 
+    mCameraUIAccel->insert("Invert Selection", i18n("Invert Selection"),
+	    		i18n("Invert the selection."),
 			CTRL+Key_Asterisk, this, SLOT(slotSelectInvert()));
-    mCameraUIAccel->insert("Select New", i18n("Select New Items"), 
-	    		i18n("Select all the that were not previously downloaded."), 
+    mCameraUIAccel->insert("Select New", i18n("Select New Items"),
+	    		i18n("Select all the that were not previously downloaded."),
 			CTRL+Key_Slash, this, SLOT(slotSelectNew()));
     setCameraConnected(false);
 }
@@ -287,7 +287,7 @@ void CameraUI::setupConnections() {
     connect(this, SIGNAL(signalBusy(bool)), this, SLOT(slotBusy(bool)));
     connect(efilter_, SIGNAL(signalStatusMsg(const QString&)), this, SIGNAL(signalStatusMsg(const QString&)));
     connect(efilter_, SIGNAL(signalProgressVal(int)), this, SIGNAL(signalProgressVal(int)));
-    connect(efilter_, SIGNAL(signalBusy(bool)), this, SIGNAL(signalBusy(bool))); 
+    connect(efilter_, SIGNAL(signalBusy(bool)), this, SIGNAL(signalBusy(bool)));
     connect(mFolderView, SIGNAL(signalFolderChanged(CameraFolderItem*)), this, SLOT(slotFolderSelected(CameraFolderItem*)));
     connect(mIconView, SIGNAL(signalDownloadSelectedItems()), this, SLOT(slotCameraDownloadSelected()));
     connect(mIconView, SIGNAL(signalDeleteSelectedItems()), this, SLOT(slotCameraDeleteSelected()));
@@ -414,7 +414,7 @@ void CameraUI::cameraNewThumbnail(const QString& folder, const QString& itemName
     if (!iconItem) {
 	return;
     }
-    mIconView->setThumbnail(iconItem, thumbnail);    
+    mIconView->setThumbnail(iconItem, thumbnail);
 }
 
 void CameraUI::cameraDownloadedItem(const QString& folder, const QString& itemName) {
@@ -435,7 +435,7 @@ void CameraUI::cameraErrorMsg(const QString& msg) {
 
 void CameraUI::slotCameraConnectToggle() {
     if (mCameraComboBox->count() == 0) {
-	KMessageBox::error(0, i18n("There is no configured camera!"));
+	KMessageBox::error(this, i18n("There is no configured camera!"));
 	return;
     }
     mCameraType = mCameraList->find(mCameraComboBox->currentText());
@@ -460,7 +460,7 @@ void CameraUI::slotCameraDownloadSelected() {
     QString dir = mDownloadDirectoryEdit->text();
     QDir qdir(dir);
     if(!qdir.exists()) {
-        KMessageBox::error(0, i18n("'%1' directory does not exist.").arg(dir));
+        KMessageBox::error(this, i18n("'%1' directory does not exist.").arg(dir));
         return;
     }
     int count = 0;
@@ -542,15 +542,15 @@ void CameraUI::slotCameraUpload() {
 	    }
         }
         controller_->requestUploadItem(folderItem->folderPath(), info.absFilePath(), uploadName);
-    }    
+    }
 }
 
 void CameraUI::slotCameraCancel() {
-    controller_->cancel();    
+    controller_->cancel();
 }
 
 void CameraUI::slotSelectAll() {
-    mIconView->selectAll();    
+    mIconView->selectAll();
 }
 
 void CameraUI::slotSelectNone() {
@@ -640,7 +640,7 @@ void CameraUI::downloadOneItem(const QString& item, const QString& folder, const
 bool CameraUI::cameraReadyForUpload(QString& reason) {
     bool result = false;
     if (!cameraConnected_) {
-	reason = i18n("Camera Not Initialised");
+	reason = i18n("Camera Not Initialized");
 	return result;
     } /*
     if (!controller_->cameraSupportsUpload()) {
@@ -658,7 +658,7 @@ bool CameraUI::cameraReadyForUpload(QString& reason) {
 void CameraUI::slotChangeDownloadDirectory() {
     QString result = KFileDialog::getExistingDirectory(mDownloadDirectoryEdit->text(), this);
     if(!((new QFileInfo(result))->isWritable())) {
-	KMessageBox::sorry(0, i18n("Sorry! The directory is not writable!"));
+	KMessageBox::sorry(this, i18n("Sorry! The directory is not writable!"));
 	return;
     }
     if(!result.isEmpty()) {

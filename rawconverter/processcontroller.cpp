@@ -2,8 +2,8 @@
  * File  : processcontroller.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-10-24
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2003 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -11,16 +11,17 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include <qprocess.h>
 #include <qtimer.h>
+#include <qfile.h>
 
 extern "C"
 {
@@ -41,7 +42,7 @@ ProcessController::ProcessController(QObject *parent)
             SLOT(slotProcessFinished()));
 
     currTime_ = QString::number(::time(0));
-    
+
     state_ = NONE;
 }
 
@@ -50,7 +51,7 @@ ProcessController::~ProcessController()
     dcProcess_->tryTerminate();
     dcProcess_->kill();
     if (!tmpFile_.isNull())
-        ::unlink(tmpFile_.latin1());
+        ::unlink(QFile::encodeName( tmpFile_ ));
 }
 
 void ProcessController::identify(const QStringList& fileList)
@@ -63,11 +64,11 @@ void ProcessController::process(const QString& file)
 {
     dcProcess_->kill();
     fileList_.clear();
-    
+
     fileCurrent_ = file;
 
     emit signalBusy(true);
-    emit signalProcessing(fileCurrent_);    
+    emit signalProcessing(fileCurrent_);
 
     QFileInfo fi(fileCurrent_);
     tmpFile_ = fi.dirPath(true) + QString("/")
@@ -106,7 +107,7 @@ void ProcessController::preview(const QString& file)
     fileList_.clear();
 
     fileCurrent_ = file;
-    
+
     emit signalBusy(true);
     emit signalPreviewing(fileCurrent_);
 
@@ -149,10 +150,10 @@ void ProcessController::abort()
 void ProcessController::identifyOne()
 {
     if (fileList_.empty()) return;
-    
+
     fileCurrent_ = fileList_.first();
     fileList_.pop_front();
-    
+
     dcProcess_->clearArguments();
 
     dcProcess_->addArgument("kipidcrawclient");
@@ -198,7 +199,7 @@ void ProcessController::slotProcessFinished()
         }
         break;
     }
-        
+
     case (PREVIEW): {
 
         if (!dcProcess_->normalExit() || dcProcess_->exitStatus() != 0) {

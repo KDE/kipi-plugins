@@ -285,7 +285,7 @@ void FindDuplicateDialog::slotOk()
 {
     if (getSelectedAlbums().isEmpty() == true)
        {
-       KMessageBox::sorry(this, i18n("You must selected at least one Album to find duplicate images for."));
+       KMessageBox::sorry(this, i18n("You must select at least one Album to find duplicate images for."));
        return;
        }
 

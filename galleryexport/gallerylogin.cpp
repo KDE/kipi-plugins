@@ -25,6 +25,8 @@
 #include <qpushbutton.h>
 #include <qlayout.h>
 
+#include <klocale.h>
+
 #include "gallerylogin.h"
 
 namespace KIPIGalleryExportPlugin
@@ -65,15 +67,15 @@ GalleryLogin::GalleryLogin(QWidget* parent, const QString& header,
     centerLayout->addWidget(m_passwdEdit, 2, 1);
 
     QLabel* urlLabel = new QLabel(this);
-    urlLabel->setText("URL:");
+    urlLabel->setText(i18n( "URL:" ));
     centerLayout->addWidget(urlLabel, 0, 0);
 
     QLabel* nameLabel = new QLabel(this);
-    nameLabel->setText("Username:");
+    nameLabel->setText(i18n( "Username:" ));
     centerLayout->addWidget(nameLabel, 1, 0);
 
     QLabel* passwdLabel = new QLabel(this);
-    passwdLabel->setText("Password:");
+    passwdLabel->setText(i18n( "Password:" ));
     centerLayout->addWidget(passwdLabel, 2, 0);
 
     vbox->addLayout( centerLayout );
@@ -85,11 +87,11 @@ GalleryLogin::GalleryLogin(QWidget* parent, const QString& header,
     QPushButton *okBtn = new QPushButton( this );
     okBtn->setAutoDefault( true );
     okBtn->setDefault( true );
-    okBtn->setText( "&Ok" );
+    okBtn->setText( i18n( "&OK" ) );
     btnLayout->addWidget( okBtn );
 
     QPushButton *cancelBtn = new QPushButton( this );
-    cancelBtn->setText( "&Cancel" );
+    cancelBtn->setText( i18n( "&Cancel" ) );
     btnLayout->addWidget( cancelBtn );
 
     vbox->addLayout( btnLayout );
@@ -100,7 +102,7 @@ GalleryLogin::GalleryLogin(QWidget* parent, const QString& header,
     m_urlEdit->setText(_url);
     m_nameEdit->setText(_name);
     m_passwdEdit->setText(_passwd);
-    
+
     // signals and slots connections
     connect( okBtn, SIGNAL( clicked() ), this, SLOT( accept() ) );
     connect( cancelBtn, SIGNAL( clicked() ), this, SLOT( reject() ) );

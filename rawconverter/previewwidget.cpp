@@ -2,8 +2,8 @@
  * File  : previewwidget.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-10-22
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2003 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -11,12 +11,12 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include <qpainter.h>
@@ -24,6 +24,8 @@
 #include <qstring.h>
 #include <qevent.h>
 #include <qtimer.h>
+
+#include <klocale.h>
 
 #include "previewwidget.h"
 
@@ -52,7 +54,7 @@ PreviewWidget::~PreviewWidget()
 void PreviewWidget::load(const QString& file)
 {
     text_ = "";
-    
+
     pix_->fill(Qt::black);
 
     image_.load(file);
@@ -69,7 +71,7 @@ void PreviewWidget::load(const QString& file)
         p.end();
     }
     else {
-        setText("Failed to load image after processing");
+        setText(i18n( "Failed to load image after processing" ));
         return;
     }
 
@@ -79,7 +81,7 @@ void PreviewWidget::load(const QString& file)
 void PreviewWidget::setText(const QString& text)
 {
     text_ = text;
-    
+
     pix_->fill(Qt::black);
 
     QPainter p(pix_);
@@ -119,11 +121,11 @@ void PreviewWidget::slotResize()
     }
     else {
         if (!image_.isNull()) {
-            
+
             QImage img = image_.scale(width(),height(),QImage::ScaleMin);
             int x = pix_->width()/2 - img.width()/2;
             int y = pix_->height()/2 - img.height()/2;
-            
+
             QPainter p(pix_);
             p.drawImage(x, y, img);
             p.setPen(QPen(Qt::white));
@@ -131,7 +133,7 @@ void PreviewWidget::slotResize()
             p.end();
         }
     }
-    
+
     update();
 }
 

@@ -794,7 +794,7 @@ void BatchProcessImagesDialog::slotPreview(void)
 
     if ( m_listFiles->currentItem() == 0 )
        {
-       KMessageBox::error(this, i18n("You must selected an item from the list to calculate the preview."));
+       KMessageBox::error(this, i18n("You must select an item from the list to calculate the preview."));
        return;
        }
 

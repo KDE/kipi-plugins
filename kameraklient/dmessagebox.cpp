@@ -15,12 +15,12 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt
@@ -89,7 +89,7 @@ void DMessageBox::appendMsg(const QString& msg) {
         mainMsg_ = msg;
         msgBox_->setText(msg);
     } else {
-        QString text(i18n("More errors occurred and are show below:"));
+        QString text(i18n("More errors occurred and are shown below:"));
         msgBox_->setText(text);
         extraMsgBox_->append(msg);
         if (extraMsgBox_->isHidden()) {
@@ -100,7 +100,7 @@ void DMessageBox::appendMsg(const QString& msg) {
 }
 
 void DMessageBox::slotOkClicked() {
-    close();    
+    close();
 }
 
 void DMessageBox::showMsg(const QString& msg) {

@@ -2,8 +2,8 @@
  * File  : gpcamera.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-01-21
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2003 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -11,18 +11,19 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qimage.h>
+#include <qfile.h>
 // KDE
 #include <kdebug.h>
 // Standard
@@ -92,9 +93,9 @@ int GPCamera::setup() {
         delete status;
         status = 0;
     }
-            
+
     status = new GPStatus();
-    
+
     gp_abilities_list_new(&abilList);
     gp_abilities_list_load(abilList, status->context);
     gp_port_info_list_new(&infoList);
@@ -108,7 +109,7 @@ int GPCamera::setup() {
     portNum = gp_port_info_list_lookup_path (infoList, d->port.latin1());
 
     gp_abilities_list_get_abilities(abilList, modelNum, &d->cameraAbilities);
-    
+
     if (gp_camera_set_abilities(d->camera, d->cameraAbilities) != GP_OK) {
         gp_camera_unref(d->camera);
         d->camera = 0;
@@ -169,7 +170,7 @@ int GPCamera::initialize() {
     }
     delete status;
     status = 0;
-    d->cameraInitialized = true;    
+    d->cameraInitialized = true;
     return GPSuccess;
 }
 
@@ -181,7 +182,7 @@ void GPCamera::cancel() {
 }
 
 bool GPCamera::thumbnailSupport() {
-    return d->thumbnailSupport;    
+    return d->thumbnailSupport;
 }
 
 bool GPCamera::deleteSupport() {
@@ -278,7 +279,7 @@ int GPCamera::getItemsInfo(const QString& folder, GPFileItemInfoList& infoList) 
         if (gp_camera_file_get_info(d->camera, folder.latin1(), cname, &info, status->context) == GP_OK) {
             if (info.file.fields != GP_FILE_INFO_NONE) {
                 camFileInfo.fileInfoAvailable = true;
-                
+
                 if (info.file.fields & GP_FILE_INFO_TYPE) {
                     camFileInfo.mime = QString(info.file.type);
 		}
@@ -315,12 +316,12 @@ int GPCamera::getItemsInfo(const QString& folder, GPFileItemInfoList& infoList) 
                     time.truncate(time.length()-1);
                     camFileInfo.time = time;
                 }
-                    
+
             }
         }
         infoList.append(camFileInfo);
     }
-    gp_list_unref(clist);        
+    gp_list_unref(clist);
     delete status;
     status = 0;
     return GPSuccess;
@@ -424,13 +425,11 @@ int GPCamera::deleteAllItems(const QString& folder) {
 int GPCamera::uploadItem(const QString& folder, const QString& itemName, const QString& localFile) {
     CameraFile *cfile;
     gp_file_new(&cfile);
-    // PENDING(Aurélien) .ascii() is probably not the right way
-    if (gp_file_open(cfile, localFile.ascii()) != GP_OK) {
+    if (gp_file_open(cfile, QFile::encodeName( localFile )) != GP_OK) {
         gp_file_unref(cfile);
         return GPError;
     }
-    // PENDING(Aurélien) .ascii() is probably not the right way
-    gp_file_set_name(cfile, itemName.ascii());
+    gp_file_set_name(cfile, QFile::encodeName( itemName ));
     if (status) {
         delete status;
         status = 0;
@@ -497,7 +496,7 @@ void GPCamera::getSupportedCameras(int& count, QStringList& clist) {
     GPContext *context;
 
     context = gp_context_new ();
- 
+
     gp_abilities_list_new( &abilList );
     gp_abilities_list_load( abilList, context );
 

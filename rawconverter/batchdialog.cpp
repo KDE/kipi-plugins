@@ -43,6 +43,7 @@ extern "C"
 #include <qevent.h>
 #include <qpixmap.h>
 #include <qpushbutton.h>
+#include <qfile.h>
 
 // KDE includes.
 
@@ -579,7 +580,7 @@ void BatchDialog::slotProcessed(const QString& file,
     if (conflictButtonGroup_->selected()->text() != i18n("Overwrite"))
     {
         struct stat statBuf;
-        if (::stat(destFile.latin1(), &statBuf) == 0) {
+        if (::stat(QFile::encodeName(destFile), &statBuf) == 0) {
             QString filter("*.");
             filter += saveButtonGroup_->selected()->text().lower();
             destFile = KFileDialog::
@@ -591,10 +592,9 @@ void BatchDialog::slotProcessed(const QString& file,
     }
 
     if (!destFile.isEmpty()) {
-        if (::rename(tmpFile.latin1(), destFile.latin1()) != 0)
+        if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
-            KMessageBox::error(this, i18n("Failed to save image ")
-                               + destFile);
+            KMessageBox::error(this, i18n("Failed to save image %1").arg( destFile ));
         }
         else {
             rawItem->dest = QFileInfo(destFile).fileName();

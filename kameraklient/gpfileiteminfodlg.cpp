@@ -2,8 +2,8 @@
  * File  : gpfileiteminfodlg.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-02-19
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2003 by Renchi Raju
 
  * Update : 09/23/2003 - Gilles Caulier <caulier.gilles@free.fr>
@@ -14,12 +14,12 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include <qpixmap.h>
@@ -68,7 +68,7 @@ GPFileItemInfoDlg::GPFileItemInfoDlg(const GPFileItemInfo& info,
         thumbLabel->setPixmap(*pixmap);
 
     grid->addWidget( thumbLabel, 0, 0);
-            
+
     // ----------------------------------------------------
 
     QLabel *nameLabel = new QLabel( page );
@@ -102,7 +102,7 @@ GPFileItemInfoDlg::GPFileItemInfoDlg(const GPFileItemInfo& info,
     l = new QLabel(i18n("Size:"), page);
     grid->addWidget(l, currRow,  0);
     value = info.size <= 0 ? i18n("Unknown") : QString::number(info.size);
-    value += " bytes";
+    value += i18n( " bytes" );
     l = new QLabel(value, page);
     grid->addWidget(l, currRow++, 2);
 

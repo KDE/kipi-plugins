@@ -40,6 +40,7 @@ extern "C"
 #include <qfileinfo.h>
 #include <qevent.h>
 #include <qpushbutton.h>
+#include <qfile.h>
 
 // KDE includes.
 
@@ -504,10 +505,9 @@ void SingleDialog::slotProcessed(const QString&, const QString& tmpFile_)
 
     if (saveFile.isEmpty()) return;
 
-    if (::rename(tmpFile_.latin1(), saveFile.latin1()) != 0)
+    if (::rename(QFile::encodeName( tmpFile_ ), QFile::encodeName( saveFile )) != 0)
     {
-        KMessageBox::error(this, i18n("Failed to save image ")
-                           + saveFile);
+        KMessageBox::error(this, i18n("Failed to save image %1").arg( saveFile ));
     }
 }
 
