@@ -93,8 +93,8 @@ private:
    QListView*          listName;
    QListView*          listEq;
 
-   QGuardedPtr<Digikam::ThumbnailJob> m_thumbJob1;
-   QGuardedPtr<Digikam::ThumbnailJob> m_thumbJob2;
+   QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob1;
+   QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob2;
 };
 
 #endif   // __DISPLAYCOMPARE_H__

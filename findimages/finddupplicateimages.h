@@ -32,10 +32,11 @@
 
 #include <qobject.h>
 #include <qstring.h>
-#include <qthread.h> 
-#include <qstringlist.h> 
-#include <qptrvector.h> 
-#include <qdict.h> 
+#include <qthread.h>
+#include <qstringlist.h>
+#include <qptrvector.h>
+#include <qdict.h>
+#include <libkipi/interface.h>
 
 class QProgressDialog;
 class QFile;
@@ -47,16 +48,16 @@ class KConfig;
 class ImageSimilarityData;
 class FindDuplicateDialog;
 
-class FindDuplicateImages : public QObject, public QThread 
+class FindDuplicateImages : public QObject, public QThread
 {
 Q_OBJECT
 
 public:
-   FindDuplicateImages(QObject *parent=0);
+   FindDuplicateImages( KIPI::Interface* interface, QObject *parent=0);
    ~FindDuplicateImages();
-   
+
    virtual void run();
-   
+
    bool showDialog();
    void showResult();
    void compareAlbums();
@@ -90,12 +91,12 @@ protected:
    void updateCache(QString fromDir);
    bool DeleteDir(QString dirname);
    bool deldir(QString dirname);
-   
+
    QStringList filesList;
    bool isCompareAlmost;
    QObject *parent_;
    QDict < QPtrVector < QFile > > *res;
-
+   KIPI::Interface* m_interface;
 };
 
 #endif  // FINDDUPPLICATEIMAGES_H

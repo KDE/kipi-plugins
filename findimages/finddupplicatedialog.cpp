@@ -56,7 +56,7 @@
 #include <kio/global.h>
 
 // Include files for KIPI
-
+#include <libkipi/imagecollection.h>
 
 // Local include files
 
@@ -66,36 +66,25 @@
 class AlbumItem : public QCheckListItem
 {
 public:
-    AlbumItem(QListView * parent, QString const & name, QString const & comments, QString const & path,
-              QString const & collection, QString const & firstImage, QDate const & date, int const & items)
-            : QCheckListItem( parent, name, QCheckListItem::CheckBox), _name(name), _comments(comments),
-              _path(path), _collection(collection), _firstImage(firstImage), _date (date), _items (items)
+    AlbumItem(QListView * parent, const KIPI::ImageCollection& ic )
+            : QCheckListItem( parent, ic.name(), QCheckListItem::CheckBox), _ic(ic)
     {}
 
-    QString comments()     { return _comments;   }
-    QString name()         { return _name;       }
-    QString path()         { return _path;       }
-    QString collection()   { return _collection; }
-    QString firstImage()   { return _firstImage; }
-    QDate   date()         { return _date;       }
-    int     items()        { return _items;      }
+    QString comments()     { return _ic.comment(); }
+    QString name()         { return _ic.name();       }
+    KIPI::ImageCollection imageCollection() { return _ic; }
+    int     items()        { return _ic.images().count();      }
 
 private:
-    QString _name;
-    QString _comments;
-    QString _path;
-    QString _collection;
-    QString _firstImage;
-    QDate   _date;
-    int     _items;
+    KIPI::ImageCollection _ic;
 };
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-FindDuplicateDialog::FindDuplicateDialog(QWidget *parent)
+FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *parent)
                    : KDialogBase( IconList, i18n("Configure"), Help|Ok|Cancel,
-                     Ok, parent, "FindDuplicateDialog", true, true ), m_dialogOk( false )
+                                  Ok, parent, "FindDuplicateDialog", true, true ), m_dialogOk( false ), m_interface( interface )
 {
     // Read File Filter settings in kipirc file.
 
@@ -218,28 +207,15 @@ void FindDuplicateDialog::setupSelection(void)
 
 void FindDuplicateDialog::setAlbumsList(void)
 {
-    AlbumItem *currentAlbum = 0;
+    QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
 
-    for (Digikam::AlbumInfo *album=Digikam::AlbumManager::instance()->firstAlbum() ;
-         album ; album = album->nextAlbum())
-        {
-        album->openDB();
-        QDir imageDir( album->getPath(), m_ImagesFilesSort.latin1(),
-                       QDir::Name|QDir::IgnoreCase, QDir::Files|QDir::Readable);
-        int nbfiles = imageDir.count();
+    for( QValueList<KIPI::ImageCollection>::ConstIterator it = albums.begin(); it != albums.end(); ++it ) {
+        KIPI::ImageCollection album = *it;
 
-        if ( nbfiles < 0 ) nbfiles = 0;
+        /*AlbumItem *item = */new AlbumItem( m_AlbumsList, album );
 
-        AlbumItem *item = new AlbumItem( m_AlbumsList,
-                                         album->getTitle(),
-                                         album->getComments(),
-                                         album->getPath(),
-                                         album->getCollection(),
-                                         imageDir.entryList().first(),
-                                         album->getDate(),
-                                         nbfiles
-                                       );
-
+        // I have no idea how we handle this.  1 Jun. 2004 23:30 -- Jesper K. Pedersen
+#ifdef TEMPORARILY_REMOVED
         if (album == Digikam::AlbumManager::instance()->currentAlbum())
            {
            item->setOn(true);
@@ -249,12 +225,14 @@ void FindDuplicateDialog::setAlbumsList(void)
            }
         else
            item->setOn(false);
-
-        album->closeDB();
+#endif
         }
 
+        // I have no idea how we handle this.  1 Jun. 2004 23:30 -- Jesper K. Pedersen
+#ifdef TEMPORARILY_REMOVED
     if (currentAlbum != 0)
        m_AlbumsList->ensureItemVisible(currentAlbum);
+#endif
 }
 
 
@@ -302,9 +280,8 @@ void FindDuplicateDialog::setupPageMethod(void)
     //---------------------------------------------
 
     QGroupBox * groupBox2 = new QGroupBox( 1, Qt::Horizontal, i18n("Cache maintenance"), page_setupMethod );
-    QLabel *cacheInfos = new QLabel(
-           i18n("The find duplicate images process use a cache folder images fingerprint\n"
-           "for a speed Albums items analyse. The cache location is \"~/.findduplicate\"."), groupBox2);
+    new QLabel(i18n("The find duplicate images process use a cache folder images fingerprint\n"
+                    "for a speed Albums items analyse. The cache location is \"~/.findduplicate\"."), groupBox2);
 
     QPushButton* updateCache = new QPushButton( groupBox2, "UpdateCache" );
     updateCache->setText(i18n( "&Update cache" ));
@@ -372,18 +349,14 @@ void FindDuplicateDialog::slotfindMethodChanged(const QString &string)
 
 void FindDuplicateDialog::slotUpdateCache(void)
 {
-    QStringList albumsList = getAlbumsSelection();
+    QValueList<KIPI::ImageCollection> albumsList = getAlbumsSelection();
     QStringList albumsListPath;
 
-    for (Digikam::AlbumInfo *album=Digikam::AlbumManager::instance()->firstAlbum() ;
-         album ; album = album->nextAlbum())
-        {
-        album->openDB();
-        if (albumsList.find(album->getTitle()) != albumsList.end())
-           albumsListPath.append( album->getPath() );
+    for( QValueList<KIPI::ImageCollection>::ConstIterator album = albumsList.begin(); album != albumsList.end(); ++album ) {
+        if ( !albumsListPath.contains( (*album).path().path() ) )
+            albumsListPath.append( (*album).path().path() );
+    }
 
-        album->closeDB();
-        }
 
     if ( albumsListPath.isEmpty() == true )
        KMessageBox::sorry(0, i18n("You must selected at least an Album for update cache process!"));
@@ -396,18 +369,13 @@ void FindDuplicateDialog::slotUpdateCache(void)
 
 void FindDuplicateDialog::slotPurgeCache(void)
 {
-    QStringList albumsList = getAlbumsSelection();
+    QValueList<KIPI::ImageCollection> albumsList = getAlbumsSelection();
     QStringList albumsListPath;
 
-    for (Digikam::AlbumInfo *album=Digikam::AlbumManager::instance()->firstAlbum() ;
-         album ; album = album->nextAlbum())
-        {
-        album->openDB();
-        if (albumsList.find(album->getTitle()) != albumsList.end())
-           albumsListPath.append( album->getPath() );
-
-        album->closeDB();
-        }
+    for( QValueList<KIPI::ImageCollection>::ConstIterator album = albumsList.begin(); album != albumsList.end(); ++album ) {
+        if ( !albumsListPath.contains( (*album).path().path() ) )
+            albumsListPath.append( (*album).path().path() );
+    }
 
     if ( albumsListPath.isEmpty() == true )
        KMessageBox::sorry(0, i18n("You must selected at least an Album for purge cache process!"));
@@ -420,16 +388,6 @@ void FindDuplicateDialog::slotPurgeCache(void)
 
 void FindDuplicateDialog::slotPurgeAllCache(void)
 {
-    QStringList albumsListPath;
-
-    for (Digikam::AlbumInfo *album=Digikam::AlbumManager::instance()->firstAlbum() ;
-         album ; album = album->nextAlbum())
-        {
-        album->openDB();
-        albumsListPath.append( album->getPath() );
-        album->closeDB();
-        }
-
      emit clearAllCache();
 }
 
@@ -443,8 +401,10 @@ void FindDuplicateDialog::albumSelected( QListViewItem * item )
     AlbumItem *pitem = static_cast<AlbumItem*>( item );
     if ( pitem == NULL ) return;
     m_AlbumComments->setText( i18n("Comment: %1").arg(pitem->comments()) );
+#ifdef TEMPORARILY_REMOVED
     m_AlbumCollection->setText( i18n("Collection: %1").arg(pitem->collection()) );
     m_AlbumDate->setText( i18n("Date: %1").arg( pitem->date().toString(( Qt::LocalDate ) ) ) );
+#endif
     m_AlbumItems->setText( i18n("Items: %1").arg( pitem->items() ) );
 
     m_albumPreview->clear();
@@ -452,10 +412,9 @@ void FindDuplicateDialog::albumSelected( QListViewItem * item )
     if (!m_thumbJob.isNull())
        delete m_thumbJob;
 
-    QString IdemIndexed = "file:" + pitem->path() + "/" + pitem->firstImage();
-    KURL url(IdemIndexed);
+    KURL url = pitem->imageCollection().images()[0];
 
-    m_thumbJob = new Digikam::ThumbnailJob( url, m_albumPreview->height(), false, true );
+    m_thumbJob = new KIPI::ThumbnailJob( url, m_albumPreview->height(), false, true );
 
     connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
             SLOT(slotGotPreview(const KURL&, const QPixmap&)));
@@ -464,7 +423,7 @@ void FindDuplicateDialog::albumSelected( QListViewItem * item )
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void FindDuplicateDialog::slotGotPreview(const KURL &url, const QPixmap &pixmap)
+void FindDuplicateDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixmap)
 {
     m_albumPreview->setPixmap(pixmap);
 }
@@ -548,9 +507,9 @@ void FindDuplicateDialog::slotbuttonSelectNone(void)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-QStringList FindDuplicateDialog::getAlbumsSelection(void)
+QValueList<KIPI::ImageCollection> FindDuplicateDialog::getAlbumsSelection(void)
 {
-    QStringList AlbumsListSelected;
+    QValueList<KIPI::ImageCollection> AlbumsListSelected;
     QListViewItemIterator it( m_AlbumsList );
 
     while ( it.current() )
@@ -558,7 +517,7 @@ QStringList FindDuplicateDialog::getAlbumsSelection(void)
         AlbumItem *item = static_cast<AlbumItem*>( it.current() );
 
         if (item->isOn())
-            AlbumsListSelected.append( item->name() );
+            AlbumsListSelected.append( item->imageCollection() );
 
         ++it;
         }

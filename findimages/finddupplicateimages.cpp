@@ -99,8 +99,8 @@ public:
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-FindDuplicateImages::FindDuplicateImages(QObject *parent)
-                     : QObject(parent), QThread()
+FindDuplicateImages::FindDuplicateImages( KIPI::Interface* interface, QObject *parent)
+    : QObject(parent), QThread(), m_interface( interface )
 {
     KImageIO::registerFormats();
     parent_=parent;
@@ -159,7 +159,7 @@ void FindDuplicateImages::readSettings(void)
 
 bool FindDuplicateImages::showDialog()
 {
-    m_findDuplicateDialog = new FindDuplicateDialog();
+    m_findDuplicateDialog = new FindDuplicateDialog( m_interface );
     readSettings();
 
     // This is the value for approximate comparison level between 2 images.
@@ -194,31 +194,20 @@ void FindDuplicateImages::showResult()
 
 void FindDuplicateImages::compareAlbums(void)
 {
-
        writeSettings();
-       QStringList ListAlbums(m_findDuplicateDialog->getAlbumsSelection());
+       QValueList<KIPI::ImageCollection> ListAlbums(m_findDuplicateDialog->getAlbumsSelection());
        filesList.clear();
 
-       for ( QStringList::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it )
-           {
-           Digikam::AlbumInfo *album = Digikam::AlbumManager::instance()->findAlbum( *it );
-           album->openDB();
-           QDir currentAlbumDir(album->getPath(), m_imagesFileFilter.latin1(),
-                       QDir::Name|QDir::IgnoreCase, QDir::Files|QDir::Readable);
+       for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) {
+           KURL::List Files = (*it).images();
 
-           QStringList Files = currentAlbumDir.entryList();
-
-
-           for ( QStringList::Iterator it2 = Files.begin(); it2 != Files.end(); ++it2 )
-               {
-               QString Name = *it2;
-               *it2 = album->getPath() + "/" + Name;
-               }
-
-           filesList+=Files;
-           kapp->processEvents();
-           album->closeDB();
+           for( KURL::List::Iterator it2 = Files.begin(); it2 != Files.end(); ++it2 ) {
+               if ( !filesList.contains( (*it2).path() ) )
+                   filesList.append( (*it2).path() ); // PENDING(blackie) handle remote URLS
            }
+
+           kapp->processEvents();
+       }
 
        if ( m_findDuplicateDialog->getFindMethod() == i18n("Almost") )
 	   isCompareAlmost = true;
@@ -328,19 +317,22 @@ void FindDuplicateImages::slotUpdateCache(QStringList fromDirs)
 
 void FindDuplicateImages::updateCache(QString fromDir)
 {
+    // PENDING(blackie) this method doesn't seem to work.
     qDebug ("%s", fromDir.ascii());
     pdCache->setLabelText(i18n("Updating in progress for:\n") + fromDir);
     QDir d(QDir::homeDirPath() + "/.findduplicate/cache/" + fromDir);
     int len = QString(QDir::homeDirPath() + "/.findduplicate/cache").length();
     bool delDir = false;
 
+    qDebug("%s", (QDir::homeDirPath() + "/.findduplicate/cache/" + fromDir).latin1() );
+
     if ( !QFileInfo(fromDir).exists() )
        delDir = true;      // If the source folder have been removed, remove also the cache...
 
     d.setFilter( QDir::All | QDir::Hidden | QDir::NoSymLinks );
-    const QFileInfoList *list;
+    const QFileInfoList *list = d.entryInfoList();
 
-    if ( !(list = d.entryInfoList()) )
+    if ( !list )
        return;
 
     QFileInfoListIterator it( *list );

@@ -220,12 +220,11 @@ DisplayCompare::DisplayCompare(QWidget* parent, QDict < QPtrVector < QFile > >* 
         QString comments = "hello world";
 #endif
 
-        FindOriginalItem *item = new FindOriginalItem( listName,
-                                                       fi.fileName(),
-                                                       itres.currentKey(),
-                                                       albumName,
-                                                       comments
-                                                     );
+        /*FindOriginalItem *item = */ new FindOriginalItem( listName,
+                                                            fi.fileName(),
+                                                            itres.currentKey(),
+                                                            albumName,
+                                                            comments );
         ++itres;
         ++n_id;
         }
@@ -348,7 +347,7 @@ void DisplayCompare::slotDisplayLeft(QListViewItem * item)
     QString IdemIndexed = "file:" + pitem->fullpath();
     KURL url(IdemIndexed);
 
-    m_thumbJob1 = new Digikam::ThumbnailJob( url, preview1->height(), false, true );
+    m_thumbJob1 = new KIPI::ThumbnailJob( url, preview1->height(), false, true );
 
     connect(m_thumbJob1, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
             SLOT(slotGotPreview1(const KURL&, const QPixmap&)));
@@ -374,7 +373,7 @@ void DisplayCompare::slotDisplayLeft(QListViewItem * item)
           QString comments = Album->getItemComments(fi->fileName());
           Album->closeDB();
 #else
-          QString comment="hello world";
+          QString comments="hello world";
 #endif
 
           FindDuplicateItem *item = new FindDuplicateItem( listEq,
@@ -395,7 +394,7 @@ void DisplayCompare::slotDisplayLeft(QListViewItem * item)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void DisplayCompare::slotGotPreview1(const KURL &url, const QPixmap &pixmap)
+void DisplayCompare::slotGotPreview1(const KURL &/*url*/, const QPixmap &pixmap)
 {
     preview1->setPixmap(pixmap);
 }
@@ -428,7 +427,7 @@ void DisplayCompare::slotDisplayRight(QListViewItem * item)
     QString IdemIndexed = "file:" + pitem->fullpath();
     KURL url(IdemIndexed);
 
-    m_thumbJob2 = new Digikam::ThumbnailJob( url, preview2->height(), false, true );
+    m_thumbJob2 = new KIPI::ThumbnailJob( url, preview2->height(), false, true );
 
     connect(m_thumbJob2, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
             SLOT(slotGotPreview2(const KURL&, const QPixmap&)));
@@ -439,7 +438,7 @@ void DisplayCompare::slotDisplayRight(QListViewItem * item)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void DisplayCompare::slotGotPreview2(const KURL &url, const QPixmap &pixmap)
+void DisplayCompare::slotGotPreview2(const KURL &/*url*/, const QPixmap &pixmap)
 {
     preview2->setPixmap(pixmap);
 }

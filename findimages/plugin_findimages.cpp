@@ -69,7 +69,7 @@ void Plugin_FindImages::setup( QWidget* widget )
                                                     0,
                                                     this,
                                                     SLOT(slotFindDuplicateImages()),
-                                                    imagecollection(),
+                                                    actionCollection(),
                                                     "findduplicateimagesalbums");
 
     addAction( m_action_findImages );
@@ -90,7 +90,8 @@ void Plugin_FindImages::slotFindDuplicateImages()
 {
     m_progressDlg=0;
 
-    findDuplicateOperation = new FindDuplicateImages(this);
+    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    findDuplicateOperation = new FindDuplicateImages( interface, this);
     if(findDuplicateOperation->showDialog())
     {
     	findDuplicateOperation->compareAlbums();
@@ -152,7 +153,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
             break;
         }
         default: {
-            kdWarning( 51000 ) << "Plugin_FindImages: Unknown event" << endl;
+            kdWarning( 51000 ) << "Plugin_FindImages: Unknown event: " << d->action << endl;
         }
         }
         m_progressDlg->setLabelText(text);
@@ -172,7 +173,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
                 break;
             }
             default: {
-                kdWarning( 51000 ) << "Plugin_FindImages: Unknown event" << endl;
+                kdWarning( 51000 ) << "Plugin_FindImages: Unknown event: " << d->action << endl;
             }
             }
 

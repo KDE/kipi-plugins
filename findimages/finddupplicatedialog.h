@@ -35,6 +35,7 @@
 // Include files for Digikam
 
 #include <libkipi/thumbnailjob.h>
+#include <libkipi/interface.h>
 
 class QComboBox;
 class QListView;
@@ -48,7 +49,7 @@ class FindDuplicateDialog : public KDialogBase
  Q_OBJECT
 
  public:
-  FindDuplicateDialog(QWidget *parent=0);
+  FindDuplicateDialog( KIPI::Interface* interface, QWidget *parent=0);
   ~FindDuplicateDialog();
 
   const QString getFindMethod() const;
@@ -57,7 +58,7 @@ class FindDuplicateDialog : public KDialogBase
   const int getApproximateThreeshold() const;
   void setApproximateThreeshold(int Value);
 
-  QStringList getAlbumsSelection(void);
+  QValueList<KIPI::ImageCollection> getAlbumsSelection(void);
 
  signals:
   void updateCache(QStringList fromDir);
@@ -98,7 +99,9 @@ class FindDuplicateDialog : public KDialogBase
 
   bool                m_dialogOk;
 
-  QGuardedPtr<Digikam::ThumbnailJob> m_thumbJob;
+  QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
+  KIPI::Interface    *m_interface;
+
 
   void setupSelection(void);
   void setupPageMethod(void);
