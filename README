@@ -24,23 +24,24 @@ Currently implemented plugins are:
  4) ImagesGallery      : An Album to HTML gallery export 
                          (by Gilles Caulier and Gregory Kokanosky).
 
- 5) PrintWizard        : A print images wizard 
+ 5) PrintWizard        : Print multiple images/index pages in one page
                          (by Todd Shoemaker).
 
- 6) JpegLossLess       : Batch images processing without losing meta information embedded in the image
+ 6) JpegLossLess       : Batch images processing (rotation/flipping) without
+			losing meta information embedded in the image
                          and without recompression of the jpeg data.
                          (by Renchi Raju).
 
  7) CdArchiving        : Albums CD archiving via K3b cd burning program 
                          (by Gilles Caulier).
 
- 8) AcquireImages      : Digikam acquire images interface 
+ 8) AcquireImages      : Acquire images interface 
                          (by Gilles Caulier).
                          This plugin include these parts:
                             ScanImages (scanner management using Kooka).
                             ScreenshotImages (Snap Screen based on KSnapshot and adapted to Digikam).
 
- 9) Calendar           : A Calendar construction plugin using Digikam Album images 
+ 9) Calendar           : A Calendar construction plugin using Album images 
                          (by Renchi Raju)
 
 10) SendImages         : A plugin to send images by email, allowing resizing and recompressing before sending.
@@ -68,7 +69,7 @@ Currently implemented plugins are:
                          (by Richard Grould and Gilles Caulier).
 
 
-15) GalleryExport      : Plugin to export image collections on Web Gallery server 
+15) GalleryExport      : Plugin to export images to a remote Gallery (http://gallery.sf.net)
                          (by Renchi Raju).
 
 16) HelloWorld         : Tutorial plugin implementation 

@@ -13,13 +13,11 @@
 
 ----------------------------------------------------------------------------
 * SLIDESHOW PLUGIN [Author: Renchi Raju]
-  (Slide show an Album)
+  (SlideShow with snazzy effects)
 
  - Show comments in slideshow (configurable)
- - auto-hide Toolbar for manual control (fwd,back,pause,exit)
- - Add preview Slideshow effects in dialogbox like Kcontrol
+ - Add preview Slideshow effects in dialogbox similar Kcontrol
    screensavers settings.
- - Check Xinerama fonctionality with OpenGL.
  - Auto-rotate according to EXIF orientation tag
 
 ----------------------------------------------------------------------------
@@ -45,7 +43,6 @@
   (Multiples images printing wizzard)
 
  - Check for existence of Gimp and disable option if not available.
- - Add Images Comments.
 
 ----------------------------------------------------------------------------
 * CALENDAR PLUGIN [Author: Renchi Raju]
