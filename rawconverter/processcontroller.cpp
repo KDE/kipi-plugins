@@ -76,7 +76,7 @@ void ProcessController::process(const QString& file)
 
     dcProcess_->clearArguments();
 
-    dcProcess_->addArgument("digikamdcrawclient");
+    dcProcess_->addArgument("kipidcrawclient");
     dcProcess_->addArgument("-o");
     dcProcess_->addArgument(tmpFile_);
 
@@ -117,7 +117,7 @@ void ProcessController::preview(const QString& file)
 
     dcProcess_->clearArguments();
 
-    dcProcess_->addArgument("digikamdcrawclient");
+    dcProcess_->addArgument("kipidcrawclient");
     dcProcess_->addArgument("-q");
     dcProcess_->addArgument("-o");
     dcProcess_->addArgument(tmpFile_);
@@ -155,7 +155,7 @@ void ProcessController::identifyOne()
     
     dcProcess_->clearArguments();
 
-    dcProcess_->addArgument("digikamdcrawclient");
+    dcProcess_->addArgument("kipidcrawclient");
     dcProcess_->addArgument("-i");
 
     QFileInfo fi(fileCurrent_);

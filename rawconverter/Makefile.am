@@ -16,19 +16,15 @@ kipiplugin_rawconverter_la_LIBADD = $(LIB_KPARTS) -lkipi
 kipiplugin_rawconverter_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 
 # binary
-bin_PROGRAMS = digikamdcrawclient
+bin_PROGRAMS = kipidcrawclient
 
-digikamdcrawclient_SOURCES = dcrawprocess.cpp
-digikamdcrawclient_LDFLAGS = -lm -ljpeg -ltiff
-
-# Install the .rc file in the Part's directory 
-pluginsdir = $(kde_datadir)/digikam/plugins
-plugins_DATA = digikamplugin_rawconverter.rc
+kipidcrawclient_SOURCES = dcrawprocess.cpp
+kipidcrawclient_LDFLAGS = -lm -ljpeg -ltiff
 
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = kipiplugin_rawconverter.desktop
 
-kipirawconvertericondir = $(kde_datadir)/digikam/icons
+kipirawconvertericondir = $(kde_datadir)/kipi/icons
 kipirawconvertericon_ICON = AUTO
 
 messages: rc.cpp
@@ -36,7 +32,7 @@ messages: rc.cpp
 
 install-data-local:
 	$(mkinstalldirs) $(mandir)/man1/
-	$(INSTALL_DATA) $(srcdir)/digikamdcrawclient.man.gz $(mandir)/man1/digikamdcrawclient.1.gz
+	$(INSTALL_DATA) $(srcdir)/kipidcrawclient.man.gz $(mandir)/man1/kipidcrawclient.1.gz
 
 uninstall-local:
-	-rm -f $(DESTDIR)/$(mandir)/man1/digikamdcrawclient.1.gz
+	-rm -f $(DESTDIR)/$(mandir)/man1/kipidcrawclient.1.gz

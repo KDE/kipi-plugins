@@ -91,7 +91,7 @@ bool Plugin_RawConverter::checkBinaries()
     QProcess process;
 
     process.clearArguments();
-    process.addArgument("digikamdcrawclient");
+    process.addArgument("kipidcrawclient");
     if (!process.start()) {
         KMessageBox::error(0, i18n("Failed to start Raw Converter Client\n"
                                    "Please check your installation"));
