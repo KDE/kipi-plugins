@@ -94,7 +94,10 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
     m_labelType->setText( i18n("Border:") );
 
     m_Type->insertItem(i18n("Solid"));
+    
+    // Niepce is Real name. This is the first guy in the world to have build a camera.
     m_Type->insertItem("Niepce");
+
     m_Type->insertItem(i18n("Raise"));
     m_Type->insertItem(i18n("Frame"));
     m_Type->setCurrentText(i18n("Niepce"));
