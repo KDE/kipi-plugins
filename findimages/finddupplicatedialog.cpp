@@ -169,17 +169,29 @@ void FindDuplicateDialog::setupSelection(void)
     QVBoxLayout * groupBox2Layout = new QVBoxLayout( groupBox2->layout() );
     groupBox2Layout->setAlignment( Qt::AlignTop );
 
-    m_AlbumComments = new KSqueezedTextLabel( groupBox2 );
-    m_AlbumComments->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-    groupBox2Layout->addWidget( m_AlbumComments );
+    m_AlbumComments = 0;
+    if ( m_interface->hasFeature( KIPI::AlbumsHaveComments ) )
+    {
+        m_AlbumComments = new KSqueezedTextLabel( groupBox2 );
+        m_AlbumComments->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
+        groupBox2Layout->addWidget( m_AlbumComments );
+    }
 
-    m_AlbumCollection = new KSqueezedTextLabel( groupBox2 );
-    m_AlbumCollection->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-    groupBox2Layout->addWidget( m_AlbumCollection );
+    m_AlbumCollection = 0;
+    if ( m_interface->hasFeature( KIPI::AlbumsHaveCategory ) )
+    {
+        m_AlbumCollection = new KSqueezedTextLabel( groupBox2 );
+        m_AlbumCollection->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
+        groupBox2Layout->addWidget( m_AlbumCollection );
+    }
 
-    m_AlbumDate = new KSqueezedTextLabel( groupBox2 );
-    m_AlbumDate->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-    groupBox2Layout->addWidget( m_AlbumDate );
+    m_AlbumDate = 0;
+    if ( m_interface->hasFeature( KIPI::AlbumsHaveCreationDate ) )
+    {
+        m_AlbumDate = new KSqueezedTextLabel( groupBox2 );
+        m_AlbumDate->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
+        groupBox2Layout->addWidget( m_AlbumDate );
+    }
 
     m_AlbumItems = new KSqueezedTextLabel( groupBox2 );
     m_AlbumItems->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
@@ -437,9 +449,25 @@ void FindDuplicateDialog::albumSelected( QListViewItem * item )
 
     if ( pitem == NULL ) return;
 
-    m_AlbumComments->setText( i18n("Comment: %1").arg(pitem->comments()) );
-    m_AlbumCollection->setText( i18n("Collection: %1").arg(pitem->imageCollection().category()) );
-    m_AlbumDate->setText( i18n("Date: %1").arg( pitem->imageCollection().date().toString(Qt::LocalDate) ) );
+    
+    if ( m_interface->hasFeature( KIPI::AlbumsHaveComments ) && m_AlbumComments )
+    {
+        m_AlbumComments->setText( i18n("Comment: %1").arg(pitem->comments()) );
+    }
+
+    if ( m_interface->hasFeature( KIPI::AlbumsHaveCategory ) && m_AlbumCollection )
+    {
+        m_AlbumCollection->setText( i18n("Collection: %1")
+                                    .arg(pitem->imageCollection().category()) );
+    }
+
+    if ( m_interface->hasFeature( KIPI::AlbumsHaveCreationDate ) && m_AlbumDate )
+    {
+        m_AlbumDate->setText( i18n("Date: %1")
+                              .arg( pitem->imageCollection().date()
+                                    .toString(Qt::LocalDate) ) );
+    }
+    
     m_AlbumItems->setText( i18n("Items: %1").arg( pitem->items() ) );
 
     m_albumPreview->clear();
