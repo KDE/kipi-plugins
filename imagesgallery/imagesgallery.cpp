@@ -627,6 +627,23 @@ void ImagesGallery::createCSSSection(QTextStream& stream)
     QString foregroundColor = m_foregroundColor.name();
     QString bordersImagesColor = m_bordersImagesColor.name();
 
+    // Since the link colors are not set by the config, they can become invisible
+    // because of the choice of the background color set by user. Find
+    // contrasting color so that it becomes distinguishable
+
+    int h,s,v;
+    m_backgroundColor.getHsv(&h, &s, &v);
+
+    h = (h+180) % 360;
+    v = (v+128) % 256;
+    QColor linkRegColor;
+    linkRegColor.setHsv(h, s, v);
+
+    h = (h+60)  % 360;
+    s = QMAX(s-60, 0);
+    QColor linkVisColor;
+    linkVisColor.setHsv(h, s, v);        
+    
     // Adding a touch of style
 
     stream << "<style type='text/css'>\n";
@@ -638,6 +655,8 @@ void ImagesGallery::createCSSSection(QTextStream& stream)
     stream << "TD       { color: " << foregroundColor << "; padding: 1em}" << endl;
     stream << "IMG.photo      { border: " << m_bordersImagesSize << "px solid "
            << bordersImagesColor << "; }" << endl;
+    stream << "a:link    { color: " << linkRegColor.name() << "; }" << endl;
+    stream << "a:visited { color: " << linkVisColor.name() << "; }" << endl;
     stream << "</style>" << endl;
 }
 
