@@ -51,6 +51,7 @@ extern "C"
 #include <qhgroupbox.h>
 #include <qvgroupbox.h>
 #include <qframe.h>
+#include <qwmatrix.h>
 
 // Include files for KDE
 
@@ -90,7 +91,6 @@ extern "C"
 #include "outputdialog.h"
 #include "imagepreview.h"
 #include "batchprocessimagesdialog.h"
-#include <qwmatrix.h>
 
 namespace KIPIBatchProcessImagesPlugin
 {
