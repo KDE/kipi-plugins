@@ -46,9 +46,7 @@ Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent,
                                      const QStringList&)
     : KIPI::Plugin( Factory::instance(), parent, "TimeAdjust"), m_dialog( 0 )
 {
-    // Insert our translations into the global catalogue
     kdDebug( 51001 ) << "Plugin_TimeAdjust plugin loaded" << endl;
-
 }
 
 void Plugin_TimeAdjust::setup( QWidget* widget )
@@ -69,6 +67,12 @@ void Plugin_TimeAdjust::setup( QWidget* widget )
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
     
+    if ( !m_interface ) 
+       {
+       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       return;
+       }
+    
     KIPI::ImageCollection selection = m_interface->currentScope();
     m_actionTimeAjust->setEnabled( selection.isValid() );
 
@@ -84,10 +88,8 @@ void Plugin_TimeAdjust::slotActivate()
     if ( !images.isValid() )
         return;
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-    
     if ( m_dialog == 0 )
-        m_dialog = new KIPITimeAdjustPlugin::TimeAdjustDialog( interface, 0, "time adjust dialog" );
+        m_dialog = new KIPITimeAdjustPlugin::TimeAdjustDialog( m_interface, 0, "time adjust dialog" );
         
     m_dialog->setImages( images.images() );
     m_dialog->show();

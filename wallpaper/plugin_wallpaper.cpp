@@ -212,24 +212,27 @@ void Plugin_WallPaper::setWallpaper(int layout)
 
    KURL url=images.images()[0];
    QString path;
-   if (url.isLocalFile()) {
+   if (url.isLocalFile()) 
+      {
       path=url.path();
-   } else {
-      
+      } 
+   else 
+      {
       // PENDING We need a way to get a parent widget
       // Sun, 06 Jun 2004 - Aurélien
       
       KMessageBox::information( 0L, i18n(
-         "<qt><p>You selected a remote image. It needs to be saved to your local disk to be used as a wallpaper.</p><p>You will now be asked where to save the image.</p</qt>"
-         ));
-      path=KFileDialog::getSaveFileName(url.fileName(), QString::null, 0L);
+         "<qt><p>You selected a remote image. It needs to be saved to your local disk to be used as a wallpaper."
+         "</p><p>You will now be asked where to save the image.</p</qt>"));
+      path = KFileDialog::getSaveFileName(url.fileName(), QString::null, 0L);
+      
       if (path.isNull()) return;
 #if KDE_VERSION > 0x30200
       KIO::NetAccess::download(url, path, 0L);
 #else
       KIO::NetAccess::download(url, path);
 #endif
-   }
+      }
 
    QString cmd = QString("dcop kdesktop KBackgroundIface setWallpaper '%1' %2")
                          .arg(path).arg(layout);

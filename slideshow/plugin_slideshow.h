@@ -28,11 +28,6 @@
 
 class KAction;
 
-namespace Digikam
-{
-class AlbumInfo;
-}
-
 class Plugin_SlideShow : public KIPI::Plugin
 {
     Q_OBJECT
@@ -43,12 +38,13 @@ public:
                      const char* name,
                      const QStringList &args);
     ~Plugin_SlideShow();
+    
     virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* );
+
 public slots:
 
     void slotActivate();
-    void slotAlbumChanged(Digikam::AlbumInfo* album);
 
 private slots:
 

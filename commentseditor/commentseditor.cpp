@@ -19,10 +19,8 @@
  *
  * ============================================================ */
 
-#include <klocale.h>
-#include <kurl.h>
-#include <kmessagebox.h>
-
+// Qt includes.
+ 
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qlistview.h>
@@ -34,13 +32,23 @@
 #include <qfont.h>
 #include <qevent.h>
 
+// KDE includes.
+
+#include <klocale.h>
+#include <kurl.h>
+#include <kmessagebox.h>
+#include <kio/previewjob.h>
+
+// LibKipi includes.
+
 #include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
 
-#include "commentseditor.h"
-#include <kio/previewjob.h>
+// Local includes.
 
-namespace CommentsPlugin
+#include "commentseditor.h"
+
+namespace KIPICommentsEditorPlugin
 {
 
 // --------------------------------------------------------------------
@@ -300,6 +308,6 @@ void CommentsEditor::slotAboutClicked()
                                   i18n("About CommentsEditor"));
 }
 
-}
+} // NameSpace KIPICommentsEditorPlugin
 
 #include "commentseditor.moc"

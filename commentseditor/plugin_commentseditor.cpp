@@ -112,18 +112,10 @@ void Plugin_CommentsEditor::slotActivate()
         qDebug(">%s", (*it).path().latin1() );
     }
 
-    CommentsPlugin::CommentsEditor* editor =
-        new CommentsPlugin::CommentsEditor( interface, images, kapp->activeWindow() );
+    KIPICommentsEditorPlugin::CommentsEditor* editor =
+        new KIPICommentsEditorPlugin::CommentsEditor( interface, images, kapp->activeWindow() );
     editor->show();
 
-}
-
-void Plugin_CommentsEditor::slotAlbumChanged(Digikam::AlbumInfo* album)
-{
-    if (!album)
-        m_actionCommentsEditor->setEnabled(false);
-    else
-        m_actionCommentsEditor->setEnabled(true);
 }
 
 KIPI::Category Plugin_CommentsEditor::category( KAction* action ) const

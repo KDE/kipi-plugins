@@ -46,8 +46,6 @@ extern "C"
 #include <kscan.h>
 #include <kimageio.h>
 
-// KIPI includes
-
 // Local includes
 
 #include "sendimagesdialog.h"
@@ -93,6 +91,13 @@ Plugin_SendImages::~Plugin_SendImages()
 void Plugin_SendImages::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+       {
+       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       return;
+       }
+
     KIPI::ImageCollection images = interface->currentScope();
     
     if ( !images.isValid() )

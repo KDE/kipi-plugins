@@ -68,6 +68,13 @@ void Plugin_SlideShow::setup( QWidget* widget )
                                      "slideshow");
 
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+    
+    if ( !interface ) 
+       {
+       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       return;
+       }
+
     KIPI::ImageCollection images = interface->currentScope();
     m_actionSlideShow->setEnabled( images.isValid() );
     
@@ -157,14 +164,6 @@ void Plugin_SlideShow::slotSlideShow()
             slideShow->show();
         }
     }
-}
-
-void Plugin_SlideShow::slotAlbumChanged(Digikam::AlbumInfo* album)
-{
-    if (!album)
-        m_actionSlideShow->setEnabled(false);
-    else
-        m_actionSlideShow->setEnabled(true);
 }
 
 KIPI::Category Plugin_SlideShow::category( KAction* action ) const

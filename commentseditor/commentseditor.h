@@ -22,22 +22,26 @@
 #ifndef COMMENTSEDITOR_H
 #define COMMENTSEDITOR_H
 
-#include <kdialogbase.h>
+// Qt includes.
+
 #include <qguardedptr.h>
+
+// KDE includes.
+
+#include <kdialogbase.h>
+
+// LibKipi includes.
+
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-class KFileItem;
 class QListViewItem;
 class QPixmap;
+
+class KFileItem;
 class KURL;
 
-namespace KIPI
-{
-class ThumbnailJob;
-}
-
-namespace CommentsPlugin
+namespace KIPICommentsEditorPlugin
 {
 
 class CListView;
@@ -56,8 +60,8 @@ private:
 
     void loadItems();
 
-    CListView                         *m_listView;
-    CLineEdit                         *m_edit;
+    CListView                        *m_listView;
+    CLineEdit                        *m_edit;
     KIPI::ImageCollection             m_images;
     KIPI::Interface*                  m_interface;
 
@@ -71,6 +75,6 @@ private slots:
     void slotAboutClicked();
 };
 
-}
+} // NameSpace KIPICommentsEditorPlugin
 
-#endif
+#endif  // COMMENTSEDITOR_H

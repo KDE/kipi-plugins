@@ -208,18 +208,21 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
             m_interface->refreshImages( urlList );
 
             bool ok = m_interface->addImage( dest, errmsg );
-            if ( !ok ) {
+	    
+            if ( !ok ) 
+	        {
                 int code = KMessageBox::warningContinueCancel( this,
                                                                i18n("<qt>Error adding image to application. Error message was: "
                                                                     "<b>%1</b></qt>").arg( errmsg ),
                                                                i18n("Error adding image to application") );
-                if ( code == KMessageBox::Cancel ) {
+                if ( code == KMessageBox::Cancel ) 
+		    {
                     slotProcessStop();
                     return;
-                }
+                    }
                 else
                     item->changeResult(i18n("Failed !!!"));
-            }
+                }
 
             KIPI::ImageInfo srcInfo = m_interface->info( src );
             KIPI::ImageInfo destInfo = m_interface->info( dest );
@@ -228,34 +231,34 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
             // Change image file timestamp if necessary.
 
             if ( m_dateChange == true )
-            {
-                if ( changeDate( dest.path()) == false ) // PENDING(blackie) handle remote URL's
                 {
+                if ( changeDate( dest.path()) == false ) // PENDING(blackie) handle remote URL's
+                    {
                     item->changeResult(i18n("Cannot change time stamp of destination file!"));
                     item->changeError(i18n("cannot change time stamp of destination file!"));
                     item->changeOutputMess(i18n("Checked the file access right!"));
+                    }
                 }
-            }
 
             // Remove original image file if necessary.
 
             if ( m_removeOriginal->isChecked() == true )
-            {
+                {
                 m_interface->delImage( src );
 
                 if ( KIO::NetAccess::del(src) == false )
-                {
+                    {
                     item->changeResult(i18n("Cannot delete original !"));
                     item->changeError(i18n("cannot remove original image file!"));
                     item->changeOutputMess(i18n("Checked the file access right!"));
-                }
+                    }
                 else
-                {
+                    {
                     item->changeResult(i18n("OK"));
                     item->changeError(i18n("no processing error"));
                     item->changeOutputMess(i18n("None"));
+                    }
                 }
-           }
         else
            {
            item->changeResult(i18n("OK"));

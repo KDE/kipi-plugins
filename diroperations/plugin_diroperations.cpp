@@ -91,7 +91,8 @@ void Plugin_DirOperations::setup( QWidget* widget )
     KIPI::ImageCollection album = interface->currentAlbum();
     m_action_OpenIn->setEnabled(album.isValid());
 
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), this, SLOT(slotAlbumSelected( bool ) ) );
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), 
+             this, SLOT(slotAlbumSelected( bool ) ) );
  }
 
 
