@@ -166,7 +166,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
 
            case(KIPICDArchivingPlugin::ResizeImages): 
               {
-              text = i18n("Creating thumbnail for '%1'").arg(d->fileName);
+              text = i18n("Creating thumbnail for '%1'...").arg(d->fileName);
               break;
               }
                

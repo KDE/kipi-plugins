@@ -447,8 +447,13 @@ bool CDArchiving::buildHTMLInterface (void)
     QString Path;
     KIPICDArchivingPlugin::EventData *d;
     KURL SubUrl, MainUrl;
+    
+    // This variable are used for the recursive sub directories parsing
+    // during the HTML pages creation. (TODO: Checked this mode)
+        
     m_recurseSubDirectories = false;
     m_LevelRecursion = 1;
+    
     m_StreamMainPageAlbumPreview = "";
     
     m_imagesPerRow = m_configDlg->getImagesPerRow();
@@ -537,7 +542,8 @@ bool CDArchiving::buildHTMLInterface (void)
            
            m_useCommentFile = true;
 
-           if ( createHtml( SubUrl, Path, m_LevelRecursion > 0 ? m_LevelRecursion + 1 : 0,
+           if ( createHtml( SubUrl, Path,
+                            m_LevelRecursion > 0 ? m_LevelRecursion + 1 : 0,
                             m_configDlg->getImageFormat()) == false )
                {
                d = new KIPICDArchivingPlugin::EventData;
@@ -740,9 +746,8 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
 
     stream << "</td></tr></table>\n" << endl;
 
-    if (m_recurseSubDirectories && subDirList.count() > 2)  // This Option is disable actually
-        {                                                   // (m_recurseSubDirectories always = 1).
-
+    if (m_recurseSubDirectories && subDirList.count() > 2)  
+        {                                                   
         // subDirList.count() is always >= 2 because of the "." and ".." directories
 
         QString Temp = i18n("<i>Subdirectories:</i>");
@@ -755,10 +760,8 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
 
             stream << "<a href=\"" << *it << "/" << url.fileName() << "\">" << *it << "</a><br>" << endl;
             }
-
-        stream << "<hr>" << endl;
         }
-
+    
     stream << "<table>" << endl;
 
     // Table with images
@@ -971,9 +974,8 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
     KIPICDArchivingPlugin::EventData *d;
     QStringList subDirList;
 
-    if (m_recurseSubDirectories && (recursionLevel >= 0))  // RecursionLevel == 0 means endless
-        {                                                  // Recursive subdirectories is not used
-                                                           // in KIPI actually.
+    if (m_recurseSubDirectories && (recursionLevel >= 0))  
+        {                                                  
         QDir toplevel_dir = QDir( sourceDirName );
         toplevel_dir.setFilter( QDir::Dirs | QDir::Readable | QDir::Writable );
         subDirList = toplevel_dir.entryList();
@@ -1006,8 +1008,10 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
                     subDir.setPath( url.directory() + "/" + currentDir );
                 }
 
-            if (!createHtml( KURL( subDir.path() + "/" + url.fileName() ), sourceDirName + "/" + currentDir,
-                            recursionLevel > 1 ? recursionLevel - 1 : 0, imageFormat))
+            if (!createHtml( KURL( subDir.path() + "/" + url.fileName() ),
+                             sourceDirName + "/" + currentDir,
+                             recursionLevel > 1 ? recursionLevel - 1 : 0,
+                             imageFormat))
                return false;
             }
        }
@@ -1282,7 +1286,7 @@ void CDArchiving::loadComments(void)
 int CDArchiving::createThumb( const QString& imgName, const QString& sourceDirName,
                               const QString& imgGalleryDir, const QString& imageFormat)
 {
-    const QString pixPath = sourceDirName + imgName;
+    const QString pixPath = sourceDirName + "/" + imgName;
 
     // Create the thumbnails for the HTML interface.
 
