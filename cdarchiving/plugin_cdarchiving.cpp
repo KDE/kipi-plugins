@@ -209,6 +209,12 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   text = i18n("HTML page creation for Album '%1' completed.").arg(d->albumName);
                   break;
                   }
+                         
+              case(KIPICDArchivingPlugin::ResizeImages): 
+                  {
+                  text = i18n("Creating thumbnail for '%1' done.").arg(d->fileName);
+                  break;
+                  }
                
                case(KIPICDArchivingPlugin::BuildAutoRuniface): 
                   {
@@ -237,6 +243,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                {
                case(KIPICDArchivingPlugin::ResizeImages): 
                   {
+                  ++m_current;   
                   text = i18n("Failed to create thumbnail for '%1'").arg(d->fileName);
                   m_progressDlg->addedAction(text, KIPI::WarningMessage);
                   m_progressDlg->setProgress(m_current, m_total);

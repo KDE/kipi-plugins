@@ -200,7 +200,13 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
                   text = i18n("HTML pages creation for Album '%1' done!").arg(d->albumName);
                   break;
                   }
-               
+
+              case(KIPIImagesGalleryPlugin::ResizeImages): 
+                  {
+                  text = i18n("Creating thumbnail for '%1' done.").arg(d->fileName);
+                  break;
+                  }
+                                 
                default: 
                   {
                   kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Success' event: " << d->action << endl;
@@ -216,6 +222,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
                {
                case(KIPIImagesGalleryPlugin::ResizeImages): 
                   {
+                  ++m_current;   
                   text = i18n("Failed to create thumbnail for '%1'").arg(d->fileName);
                   m_progressDlg->addedAction(text, KIPI::WarningMessage);
                   m_progressDlg->setProgress(m_current, m_total);

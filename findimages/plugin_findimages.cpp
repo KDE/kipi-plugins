@@ -213,7 +213,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
                   }
                }
             
-            m_progressDlg->addedAction(text, KIPI::SucessMessage);
+            m_progressDlg->addedAction(text, KIPI::WarningMessage);
             ++m_current;   
             }
 

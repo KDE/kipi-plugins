@@ -262,6 +262,9 @@ void CDArchiving::run()
     KIPICDArchivingPlugin::EventData *d;
     
     QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getAlbumsSelection());
+    
+    // Estimate the number of actions for the KIPI progress dialog. 
+    
     int nbActions = 1;
     
     if ( m_configDlg->getUseHTMLInterface() == true )    
@@ -269,7 +272,10 @@ void CDArchiving::run()
     
     if ( m_configDlg->getUseAutoRunWin32() == true ) 
        ++nbActions;
-       
+
+    for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
+       nbActions = nbActions + (*it).images().count();
+    
     d = new KIPICDArchivingPlugin::EventData;
     d->action = KIPICDArchivingPlugin::Initialize;
     d->starting = true;
@@ -864,7 +870,16 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
                 d->fileName = imgName;
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                 }
-
+            else
+                {
+                d = new KIPICDArchivingPlugin::EventData;
+                d->action = KIPICDArchivingPlugin::ResizeImages;
+                d->starting = false;
+                d->success = true;
+                d->fileName = imgName;
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                }
+                
             stream << "</a>" << endl;
 
             stream << "<div>" << imgName << "</div>" << endl;

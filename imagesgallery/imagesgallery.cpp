@@ -365,8 +365,14 @@ void ImagesGallery::run()
     m_StreamMainPageAlbumPreview = "";
     m_imagesPerRow = m_configDlg->getImagesPerRow();
     QValueList<KIPI::ImageCollection> albums(m_configDlg->getSelectedAlbums());
+    
+    // Estimate the number of actions for the KIPI progress dialog. 
+    
     int nbActions = albums.count();
-
+    
+    for( QValueList<KIPI::ImageCollection>::Iterator it = albums.begin(); it != albums.end(); ++it ) 
+       nbActions = nbActions + (*it).images().count();
+    
     d = new KIPIImagesGalleryPlugin::EventData;
     d->action = KIPIImagesGalleryPlugin::Initialize;
     d->starting = true;
@@ -819,7 +825,16 @@ void ImagesGallery::createBody(QTextStream& stream,
                 d->fileName = imgName;
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                 }
-
+            else
+                {
+                d = new KIPIImagesGalleryPlugin::EventData;
+                d->action = KIPIImagesGalleryPlugin::ResizeImages;
+                d->starting = false;
+                d->success = true;
+                d->fileName = imgName;
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                }
+                
             stream << "</a>" << endl;
 
             if (m_configDlg->printImageName())
