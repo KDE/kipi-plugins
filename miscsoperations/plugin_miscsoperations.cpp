@@ -273,7 +273,7 @@ void Plugin_MiscsOperations::slotGammaCorrection(void)
    args << "kgamma";
    int ValRet = KApplication::kdeinitExec(QString::fromLatin1("kcmshell"), args, perror, ppid);
 
-   if ( ValRet != 0 || ppid == 0 )
+   if ( ValRet != 0 )
      KMessageBox::error(0, i18n("Cannot start \"KGamma\" extension in KDE control centrer!\n"
                                 "Please check your installation."));
 }
