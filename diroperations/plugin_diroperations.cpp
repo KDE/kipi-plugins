@@ -141,3 +141,5 @@ KIPI::Category  Plugin_DirOperations::category() const
 {
     return KIPI::IMAGESPLUGIN;
 }
+
+#include "plugin_diroperations.moc"
