@@ -179,3 +179,5 @@ void SetupCamera::slotOkClicked() {
     close();
 }
 
+
+#include "setupcamera.moc"

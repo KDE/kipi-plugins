@@ -449,3 +449,5 @@ void GPController::getInformation(QString& summary, QString& manual, QString& ab
     mutex_.unlock();
 }
 
+
+#include "gpcontroller.moc"

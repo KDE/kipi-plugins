@@ -234,3 +234,5 @@ void GPFileItemContainer::slotIconViewCleared() {
         }
     }
 }
+
+#include "gpfileitemcontainer.moc"

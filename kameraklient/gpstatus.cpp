@@ -94,3 +94,5 @@ void  GPStatus::progress_stop_func(GPContext *, unsigned int, void *) {
   GPMessages::gpMessagesWrapper()->emit progressChanged(0);
 }
 
+
+#include "gpstatus.moc"

@@ -120,3 +120,5 @@ bool GPEventFilter::eventFilter(QObject *, QEvent *e) {
     // eat this event
     return true;
 }
+
+#include "gpeventfilter.moc"

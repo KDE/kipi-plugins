@@ -51,3 +51,5 @@ void SavefileDialog::slot_renameEnabled() {
     renameBtn->setDefault(true);
 }
 
+
+#include "savefiledialog.moc"

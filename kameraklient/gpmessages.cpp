@@ -33,3 +33,5 @@ void GPMessages::deleteMessagesWrapper() {
         gpMessages=0;
     }
 }
+
+#include "gpmessages.moc"

@@ -107,3 +107,5 @@ void CameraFolderView::clear() {
     emit signalCleared();
 }
 
+
+#include "camerafolderview.moc"

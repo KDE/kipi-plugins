@@ -136,3 +136,5 @@ void CameraIconView::markDownloaded(CameraIconItem* iconItem) {
     fileInfo->downloaded = 1;
     iconItem->repaint();
 }
+
+#include "cameraiconview.moc"
