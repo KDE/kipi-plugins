@@ -974,8 +974,8 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
         QString imgComment = "";
 
         if ( m_useCommentFile )
-           imgComment = (*m_commentMap)[imgName];
-
+           imgComment = (*m_commentMap)[(*urlIt).prettyURL()];
+           
         d = new KIPIImagesGalleryPlugin::EventData;
         d->action = KIPIImagesGalleryPlugin::BuildImageHTMLPage;
         d->starting = true;
