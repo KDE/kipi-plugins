@@ -47,7 +47,7 @@ typedef KGenericFactory<Plugin_DirOperations> Factory;
  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
  Plugin_DirOperations::Plugin_DirOperations(QObject *parent, const char*, const QStringList&)
-                       : KIPI::Plugin( Factory::instance(), parent, "MiscsOperations")
+                       : KIPI::Plugin( Factory::instance(), parent, "DirOperations")
  {
     kdDebug( 51001 ) << "Plugin_DirOperations plugin loaded" << endl;
 }
