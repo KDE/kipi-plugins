@@ -19,19 +19,25 @@
  *
  * ============================================================ */
 
-#include <klocale.h>
-
+// Qt includes. 
+ 
 #include <qhgroupbox.h>
 #include <qlayout.h>
 #include <qspinbox.h>
 #include <qdatetime.h>
 #include <qlabel.h>
 
+// KDE includes.
+
+#include <klocale.h>
+
+// Local includes.
+
 #include "calselect.h"
 #include "calsettings.h"
 #include "monthwidget.h"
 
-namespace DKCalendar
+namespace KIPICalendarPlugin
 {
 
 CalSelect::CalSelect(KIPI::Interface* interface, QWidget *parent, const char* name)
@@ -112,6 +118,6 @@ void CalSelect::slotYearChanged(int year)
     CalSettings::instance()->setYear(year);
 }
 
-}
+}  // NameSpace KIPICalendarPlugin
 
 #include "calselect.moc"

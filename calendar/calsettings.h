@@ -22,13 +22,18 @@
 #ifndef CALSETTINGS_H
 #define CALSETTINGS_H
 
+// Qt includes.
+
 #include <qmap.h>
 #include <qstring.h>
-#include <kprinter.h>
 #include <qfont.h>
+
+// KDE includes.
+
+#include <kprinter.h>
 #include <kurl.h>
 
-namespace DKCalendar
+namespace KIPICalendarPlugin
 {
 
 class CalParams
@@ -78,6 +83,6 @@ private:
 
 };
 
-}
+}  // NameSpace KIPICalendarPlugin
 
 #endif /* CALSETTINGS_H */

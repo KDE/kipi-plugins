@@ -22,12 +22,14 @@
 #ifndef CALWIDGET_H
 #define CALWIDGET_H
 
+// Qt includes.
+
 #include <qwidget.h>
 
 class QPaintEvent;
 class QPixmap;
 
-namespace DKCalendar
+namespace KIPICalendarPlugin
 {
 
 class CalPainter;
@@ -52,7 +54,6 @@ private:
     
 };
 
-
-}
+}  // NameSpace KIPICalendarPlugin
 
 #endif /* CALWIDGET_H */

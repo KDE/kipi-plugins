@@ -22,13 +22,18 @@
 #ifndef CALSELECT_H
 #define CALSELECT_H
 
+// Qt includes.
+
 #include <qwidget.h>
 #include <qptrvector.h>
+
+// LibKIPi includes.
+
 #include <libkipi/interface.h>
 
 class QSpinBox;
 
-namespace DKCalendar
+namespace KIPICalendarPlugin
 {
 
 class MonthWidget;
@@ -55,6 +60,6 @@ private slots:
 
 };
 
-}
+}  // NameSpace KIPICalendarPlugin
 
 #endif /* CALSELECT_H */

@@ -22,18 +22,24 @@
 #ifndef MONTHWIDGET_H
 #define MONTHWIDGET_H
 
+// Qt includes.
+
 #include <qframe.h>
 
-class KFileItem;
+// LibKipi includes
+
+#include <libkipi/interface.h>
+
 class QPainter;
 class QPixmap;
 class QDragEnterEvent;
 class QDropEvent;
 class QMouseEvent;
-class KURL;
 
-#include <libkipi/interface.h>
-namespace DKCalendar
+class KURL;
+class KFileItem;
+
+namespace KIPICalendarPlugin
 {
 
 class MonthWidget : public QFrame
@@ -65,6 +71,6 @@ private slots:
    void slotGotThumbnaiL(const KFileItem* url, const QPixmap& pix);
 };
 
-}
+}  // NameSpace KIPICalendarPlugin
 
 #endif /* MONTHWIDGET_H */

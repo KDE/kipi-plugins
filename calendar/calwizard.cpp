@@ -19,10 +19,7 @@
  *
  * ============================================================ */
 
-#include <kglobal.h>
-#include <klocale.h>
-#include <kprinter.h>
-#include <kapplication.h>
+// Qt includes. 
 
 #include <qlabel.h>
 #include <qdatetime.h>
@@ -32,14 +29,26 @@
 #include <qprogressbar.h>
 #include <qlayout.h>
 
+// KDE includes.
+
+#include <kglobal.h>
+#include <klocale.h>
+#include <kprinter.h>
+#include <kapplication.h>
+
+// LibKipi includes.
+
+#include <libkipi/interface.h>
+
+// Local includes.
+
 #include "calwizard.h"
 #include "caltemplate.h"
 #include "calselect.h"
 #include "calsettings.h"
 #include "calpainter.h"
 
-#include <libkipi/interface.h>
-namespace DKCalendar
+namespace KIPICalendarPlugin
 {
 
 CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
@@ -246,7 +255,6 @@ void CalWizard::slotPrintOnePage()
             wFinishProgressCurrent_, SLOT(setProgress(int,int)));
 }
 
-}
-
+}  // NameSpace KIPICalendarPlugin
 
 #include "calwizard.moc"

@@ -1,5 +1,26 @@
-#include <klocale.h>
+/* ============================================================
+ * File  : caltemplate.cpp
+ * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Date  : 2003-11-04
+ * Description :
+ *
+ * Copyright 2003 by Renchi Raju
 
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published bythe Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
+// Qt includes.
+ 
 #include <qvariant.h>
 #include <qframe.h>
 #include <qgroupbox.h>
@@ -14,16 +35,21 @@
 #include <qtimer.h>
 #include <qfontdatabase.h>
 #include <qpaintdevicemetrics.h>
-
 #include <qpainter.h>
 #include <qprinter.h>
+
+// KDE includes.
+
+#include <klocale.h>
+
+// Local includes.
 
 #include "caltemplate.h"
 #include "calwidget.h"
 #include "calsettings.h"
 #include "calpainter.h"
 
-namespace DKCalendar
+namespace KIPICalendarPlugin
 {
 
 CalTemplate::CalTemplate(QWidget* parent, const char* name)
@@ -216,7 +242,6 @@ void CalTemplate::slotUpdatePreview()
     calWidget_->recreate();    
 }
 
-
-}
+}  // NameSpace KIPICalendarPlugin
 
 #include "caltemplate.moc"

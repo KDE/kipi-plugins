@@ -19,6 +19,8 @@
  *
  * ============================================================ */
 
+// Qt includes.
+ 
 #include <qpainter.h>
 #include <qrect.h>
 #include <qpaintdevice.h>
@@ -27,16 +29,20 @@
 #include <qstring.h>
 #include <qimage.h>
 #include <qtimer.h>
+#include <qwmatrix.h>
+
+// KDE includes.
 
 #include <kglobal.h>
 #include <klocale.h>
 #include <kapplication.h>
 
+// Local includes.
+
 #include "calpainter.h"
 #include "calsettings.h"
-#include <qwmatrix.h>
 
-namespace DKCalendar
+namespace KIPICalendarPlugin
 {
 
 CalPainter::CalPainter(QPaintDevice *pd)
@@ -756,6 +762,6 @@ void CalBlockPainter::slotPaintNextBlock()
 
 }
 
-}
+}  // NameSpace KIPICalendarPlugin
 
 #include "calpainter.moc"

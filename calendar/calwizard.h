@@ -22,9 +22,16 @@
 #ifndef CALWIZARD_H
 #define CALWIZARD_H
 
-#include <kwizard.h>
+// Qt includes.
+
 #include <qstringlist.h>
 #include <qguardedptr.h>
+
+// KDE includes.
+
+#include <kwizard.h>
+
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 
@@ -33,7 +40,7 @@ class QLabel;
 class QPainter;
 class QProgressBar;
 
-namespace DKCalendar
+namespace KIPICalendarPlugin
 {
 
 class CalTemplate;
@@ -78,6 +85,6 @@ private slots:
     void slotHelp();
 };
 
-}
+}  // NameSpace KIPICalendarPlugin
 
 #endif /* CALWIZARD_H */

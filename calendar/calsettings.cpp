@@ -19,9 +19,11 @@
  *
  * ============================================================ */
 
+// Local includes.
+ 
 #include "calsettings.h"
 
-namespace DKCalendar
+namespace KIPICalendarPlugin
 {
 
 CalSettings* CalSettings::instance_ = 0;
@@ -62,4 +64,5 @@ KURL CalSettings::getImage(int month) const
     return monthMap_.contains(month) ? monthMap_[month] : KURL();
 }
 
-}
+}  // NameSpace KIPICalendarPlugin
+

@@ -19,18 +19,24 @@
  * 
  * ============================================================ */
 
+// C++ includes.
+
+#include <iostream>
+
+// Qt includes.
+ 
 #include <qdatetime.h>
 #include <qpixmap.h>
 #include <qimage.h>
 #include <qpainter.h>
 
+// Local includes.
+
 #include "calwidget.h"
 #include "calpainter.h"
 #include "calsettings.h"
 
-#include <iostream>
-
-namespace DKCalendar
+namespace KIPICalendarPlugin
 {
 
 CalWidget::CalWidget(QWidget *parent)
@@ -72,4 +78,5 @@ void CalWidget::recreate()
     update();    
 }
 
-}
+}  // NameSpace KIPICalendarPlugin
+

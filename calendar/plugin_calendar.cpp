@@ -82,7 +82,7 @@ void Plugin_Calendar::slotActivate()
        return;
        }
 
-    DKCalendar::CalWizard* w = new DKCalendar::CalWizard( interface, kapp->activeWindow() );
+    KIPICalendarPlugin::CalWizard* w = new KIPICalendarPlugin::CalWizard( interface, kapp->activeWindow() );
     w->show();
 }
 

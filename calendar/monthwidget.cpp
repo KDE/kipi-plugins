@@ -19,12 +19,16 @@
  *
  * ============================================================ */
 
+// Qt includes.
+
 #include <qdatetime.h>
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qevent.h>
 #include <qdragobject.h>
 #include <qstrlist.h>
+
+// KDE includes.
 
 #include <kurl.h>
 #include <kurldrag.h>
@@ -35,11 +39,16 @@
 #include <kglobal.h>
 #include <kio/previewjob.h>
 
-#include "monthwidget.h"
-#include "calsettings.h"
+// LibKipi includes.
+
 #include <libkipi/imagecollectiondialog.h>
 
-namespace DKCalendar
+// Local includes.
+
+#include "monthwidget.h"
+#include "calsettings.h"
+
+namespace KIPICalendarPlugin
 {
 
 MonthWidget::MonthWidget( KIPI::Interface* interface, QWidget *parent, int month)
@@ -143,7 +152,6 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* e)
     }
 }
 
-}
-
+}  // NameSpace KIPICalendarPlugin
 
 #include "monthwidget.moc"

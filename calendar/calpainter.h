@@ -22,8 +22,13 @@
 #ifndef CALPAINTER_H
 #define CALPAINTER_H
 
+// Qt includes.
+
 #include <qobject.h>
 #include <qvaluelist.h>
+
+// KDE includes.
+
 #include <kurl.h>
 
 class QPaintDevice;
@@ -32,12 +37,11 @@ class QString;
 class QTimer;
 class QImage;
 
-namespace DKCalendar
+namespace KIPICalendarPlugin
 {
 
 class CalPainter
 {
-
 public:
 
     CalPainter(QPaintDevice *pd);
@@ -93,7 +97,7 @@ private slots:
 
 };
 
-}
+}  // NameSpace KIPICalendarPlugin
 
 #endif /* CALPAINTER_H */
 
