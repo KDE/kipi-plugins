@@ -31,9 +31,4 @@ kipirawconvertericon_ICON = AUTO
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_rawconverter.pot
 
-install-data-local:
-	$(mkinstalldirs) $(mandir)/man1/
-	$(INSTALL_DATA) $(srcdir)/kipidcrawclient.man.gz $(mandir)/man1/kipidcrawclient.1.gz
-
-uninstall-local:
-	-rm -f $(DESTDIR)/$(mandir)/man1/kipidcrawclient.1.gz
+man_MANS = kipidcrawclient.1.gz

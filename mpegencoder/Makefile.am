@@ -22,14 +22,7 @@ kde_services_DATA = kipiplugin_mpegencoder.desktop
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_mpegencoder.pot
 
-install-data-local:
-	$(mkinstalldirs) $(mandir)/man1/
-	$(INSTALL_DATA) $(srcdir)/images2mpg.man.gz $(mandir)/man1/images2mpg.1.gz
+####### This script name should probably be more 'namespaced'. Think about distros putting everything in /usr/bin...
+bin_SCRIPTS = images2mpg
+man_MANS = images2mpg.1.gz
 
-install-exec-local:
-	$(mkinstalldirs) $(kde_bindir)/
-	$(INSTALL_SCRIPT) $(srcdir)/images2mpg $(kde_bindir)/images2mpg
-
-uninstall-local:
-	-rm -f $(DESTDIR)$(kde_bindir)/images2mpg
-	-rm -f $(DESTDIR)$(mandir)/man1/images2mpg.1
