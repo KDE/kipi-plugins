@@ -100,7 +100,7 @@ void Plugin_CDArchiving::slotActivate()
     if ( m_cdarchiving->showDialog() )
        {
        m_cdarchiving->prepare();
-       m_cdarchiving->start();
+       m_cdarchiving->run();
        }
 }
 
@@ -109,8 +109,7 @@ void Plugin_CDArchiving::slotActivate()
 
 void Plugin_CDArchiving::slotCancel()
 {
-    m_cdarchiving->terminate();
-    m_cdarchiving->wait();
+    m_cdarchiving->stop();
     m_cdarchiving->removeTmpFiles();
 }
 

@@ -70,7 +70,7 @@ namespace KIPICDArchivingPlugin
 {
 
 CDArchiving::CDArchiving( KIPI::Interface* interface, QObject *parent, KAction *action_cdarchiving )
-           : QObject(parent), QThread()
+           : QObject(parent)
 {
     KImageIO::registerFormats();
     const KAboutData *data = KApplication::kApplication()->aboutData();
@@ -94,8 +94,9 @@ CDArchiving::CDArchiving( KIPI::Interface* interface, QObject *parent, KAction *
 
 CDArchiving::~CDArchiving()
 {
+    delete m_commentMap;
+    delete m_albumsMap;
     delete m_configDlg;
-    wait();
 }
 
 
@@ -252,7 +253,6 @@ bool CDArchiving::showDialog()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// Execute the no threadable operations before the real thread.
 
 bool CDArchiving::prepare(void)
 {
@@ -266,7 +266,7 @@ bool CDArchiving::prepare(void)
     m_LevelRecursion = 1;
     
     m_useCommentFile = true;                          // Always use the images comments (no option in dialog).
-    
+    m_cancelled = false;
     m_StreamMainPageAlbumPreview = "";
         
     // Get config from setup dialog.
@@ -320,7 +320,8 @@ bool CDArchiving::prepare(void)
     d->starting = true;
     d->success = false;
     d->total = nbActions; 
-    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    usleep(1000);
 
     // Create data maps to use in the thread.
 
@@ -346,8 +347,16 @@ bool CDArchiving::prepare(void)
 }
 
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CDArchiving::stop()
+{
+    m_cancelled = true;
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////
-// List of threaded operations.
 
 void CDArchiving::run()
 {
@@ -361,8 +370,9 @@ void CDArchiving::run()
        d->action = KIPICDArchivingPlugin::BuildHTMLiface;
        d->starting = true;
        d->success = false;
-       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-
+       QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       usleep(1000);
+       
        if ( buildHTMLInterface() == true )
           {
           m_HTMLInterfaceFolder = m_tmpFolder + "/HTMLInterface";
@@ -376,7 +386,8 @@ void CDArchiving::run()
           d->action = KIPICDArchivingPlugin::BuildHTMLiface;
           d->success = true;
           d->starting = false;
-          QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+          QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+          usleep(1000);
 
           // Making AutoRun options.
           
@@ -386,7 +397,8 @@ void CDArchiving::run()
              d->action = KIPICDArchivingPlugin::BuildAutoRuniface;
              d->starting = true;
              d->success = false;
-             QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+             QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+             usleep(1000);
        
              CreateAutoRunInfFile();
              m_HTMLInterfaceAutoRunInf = m_tmpFolder + "/autorun.inf";
@@ -396,7 +408,8 @@ void CDArchiving::run()
              d->action = KIPICDArchivingPlugin::BuildAutoRuniface;
              d->starting = false;
              d->success = true;
-             QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+             QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+             usleep(1000);
              }
           }
        }
@@ -407,7 +420,8 @@ void CDArchiving::run()
     d->action = KIPICDArchivingPlugin::BuildK3bProject;
     d->starting = true;
     d->success = false;
-    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    usleep(1000);
            
     if ( BuildK3bXMLprojectfile(m_HTMLInterfaceFolder, m_HTMLInterfaceIndex,
                                 m_HTMLInterfaceAutoRunInf, m_HTMLInterfaceAutoRunFolder) == false )
@@ -416,7 +430,8 @@ void CDArchiving::run()
        d->action = KIPICDArchivingPlugin::BuildK3bProject;
        d->starting = false;
        d->success = false;
-       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       usleep(1000);
        return;
        }
     else 
@@ -425,7 +440,8 @@ void CDArchiving::run()
        d->action = KIPICDArchivingPlugin::BuildK3bProject;
        d->starting = false;
        d->success = true;
-       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       usleep(1000);
        }
 }
 
@@ -434,6 +450,8 @@ void CDArchiving::run()
 
 void CDArchiving::invokeK3b()
 {
+    if (m_cancelled) return;
+
     m_Proc = new KProcess();
 
     *m_Proc << m_K3bBinPathName;;
@@ -452,7 +470,8 @@ void CDArchiving::invokeK3b()
        d->starting = false;
        d->success = false;
        d->message = i18n("Cannot start K3b program : fork failed.");
-       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       usleep(1000);
        return;
        }
 
@@ -494,7 +513,8 @@ void CDArchiving::slotK3bDone(KProcess*)
     d->starting = true;
     d->success = true;
     d->message = i18n("K3b is done; removing temporary folder....");
-    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    usleep(1000);
     
     if (DeleteDir(m_tmpFolder) == false)
         {
@@ -503,7 +523,8 @@ void CDArchiving::slotK3bDone(KProcess*)
         d->starting = false;
         d->success = false;
         d->message = i18n("Cannot remove temporary folder '%1'.").arg(m_tmpFolder);
-        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+        QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+        usleep(1000);
         }
 
     m_actionCDArchiving->setEnabled(true);
@@ -531,7 +552,8 @@ bool CDArchiving::buildHTMLInterface (void)
            d->starting = false;
            d->success = false;
            d->message = i18n("Cannot remove folder '%1'.").arg(MainTPath);
-           QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+           QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+           usleep(1000);
            return false;
            }
 
@@ -542,7 +564,8 @@ bool CDArchiving::buildHTMLInterface (void)
        d->starting = false;
        d->success = false;
        d->message = i18n("Could not create directory '%1'.").arg(MainTPath);
-       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       usleep(1000);
        return false;
        }
 
@@ -565,13 +588,14 @@ bool CDArchiving::buildHTMLInterface (void)
     KIO::file_copy(srcURL, destURL, -1, true, false, false);
 
     for( KURL::List::Iterator albumsUrlIt = m_albumUrlList.begin() ;
-         albumsUrlIt != m_albumUrlList.end() ; ++albumsUrlIt )
+         !m_cancelled && (albumsUrlIt != m_albumUrlList.end()) ; ++albumsUrlIt )
         {
         m_albumUrl = *albumsUrlIt;
         AlbumData data = (*m_albumsMap)[m_albumUrl.prettyURL()];
         KURL::List images = data.itemsUrl();
 
-        for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) 
+        for( KURL::List::Iterator urlIt = images.begin(); 
+             !m_cancelled && (urlIt != images.end()); ++urlIt ) 
            {
            kdDebug( 51000 ) << "URL:" << (*urlIt).prettyURL() << endl;
            }
@@ -599,7 +623,8 @@ bool CDArchiving::buildHTMLInterface (void)
                d->starting = false;
                d->success = false;
                d->message = i18n("Could not create directory '%1'.").arg(SubTPath);
-               QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+               QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+               usleep(1000);
                return false;
                }
 
@@ -608,7 +633,8 @@ bool CDArchiving::buildHTMLInterface (void)
            d->starting = true;
            d->success = false;
            d->albumName = m_AlbumTitle;
-           QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+           QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+           usleep(1000);
            
            if ( createHtml( SubUrl, Path,
                             m_LevelRecursion > 0 ? m_LevelRecursion + 1 : 0,
@@ -619,8 +645,8 @@ bool CDArchiving::buildHTMLInterface (void)
                d->starting = false;
                d->success = false;
                d->albumName = m_AlbumTitle;
-               QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));        
-               
+               QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));        
+               usleep(1000);               
                
                if (DeleteDir (MainTPath) == false)
                    {
@@ -629,7 +655,8 @@ bool CDArchiving::buildHTMLInterface (void)
                    d->starting = false;
                    d->success = false;
                    d->message = i18n("Cannot remove folder '%1'.").arg(MainTPath);
-                   QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                   QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                   usleep(1000);
                    return false;
                    }
 
@@ -641,7 +668,8 @@ bool CDArchiving::buildHTMLInterface (void)
            d->starting = false;
            d->success = true;
            d->albumName = m_AlbumTitle;
-           QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));        
+           QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));        
+           usleep(1000);
            }
         }
 
@@ -665,7 +693,8 @@ bool CDArchiving::buildHTMLInterface (void)
        d->starting = false;
        d->success = false;
        d->message = i18n("Could not open file '%1'.").arg(MainUrl.path(+1));
-       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       usleep(1000);
        return false;
        }
 
@@ -690,7 +719,8 @@ bool CDArchiving::createDirectory(QDir thumb_dir, QString imgGalleryDir, QString
             d->success = false;
             d->message = i18n("Could not create directory '%1' in '%2'.")
                                 .arg(dirName).arg(imgGalleryDir);
-            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+            QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+            usleep(1000);
             return false;
             }
         else
@@ -823,7 +853,8 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
         QString Temp = i18n("<i>Subdirectories:</i>");
         stream << Temp << "<br>" << endl;
 
-        for (QStringList::ConstIterator it = subDirList.begin(); it != subDirList.end(); it++)
+        for (QStringList::ConstIterator it = subDirList.begin(); 
+             !m_cancelled && (it != subDirList.end()); it++)
             {
             if (*it == "." || *it == "..")
                 continue;                        // Disregard the "." and ".." directories
@@ -842,12 +873,13 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
 
     KURL::List images = data.itemsUrl();
     
-    for( KURL::List::Iterator urlIt = images.begin() ; urlIt != images.end() ; )
+    for( KURL::List::Iterator urlIt = images.begin() ; 
+         !m_cancelled && (urlIt != images.end()) ; )
         {
         stream << "<tr>" << endl;
         
         for (int col = 0 ;
-             urlIt!=images.end() && col < m_imagesPerRow ;
+             !m_cancelled && (urlIt!=images.end()) && (col < m_imagesPerRow) ;
              ++col, ++urlIt, ++imgIndex)
             {
             const QString imgName = (*urlIt).fileName();
@@ -860,7 +892,8 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
             d->starting = true;
             d->success = false;
             d->fileName = imgName;
-            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+            QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+            usleep(1000);
             
             int valRet = createThumb(imgName, sourceDirName, imgGalleryDir, imageFormat);
             
@@ -947,7 +980,8 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
                 d->starting = false;
                 d->success = false;
                 d->fileName = imgName;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                usleep(1000);
                 }
             else
                 {
@@ -956,7 +990,8 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
                 d->starting = false;
                 d->success = true;
                 d->fileName = imgName;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                usleep(1000);
                 }
                 
             stream << "</a>" << endl;
@@ -1046,6 +1081,8 @@ void CDArchiving::createBodyMainPage(QTextStream& stream, KURL& url)
 bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int recursionLevel,
                              const QString& imageFormat)
 {
+    if (m_cancelled) return false;
+    
     KIPICDArchivingPlugin::EventData *d;
     QStringList subDirList;
 
@@ -1055,7 +1092,8 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
         toplevel_dir.setFilter( QDir::Dirs | QDir::Readable | QDir::Writable );
         subDirList = toplevel_dir.entryList();
 
-        for (QStringList::ConstIterator it = subDirList.begin() ; it != subDirList.end() ; it++)
+        for (QStringList::ConstIterator it = subDirList.begin() ; 
+             !m_cancelled && (it != subDirList.end()) ; it++)
             {
             const QString currentDir = *it;
 
@@ -1076,7 +1114,8 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
                     d->success = false;
                     d->message = i18n("Could not create directory '%1' in '%2'.")
                                         .arg(currentDir).arg(url.directory());
-                    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                    QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                    usleep(1000);
                     continue;
                     }
                 else
@@ -1135,7 +1174,8 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
         d->starting = false;
         d->success = false;
         d->message = i18n("Could not open file '%1'.").arg(url.path(+1));
-        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+        QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+        usleep(1000);
         return false;
         }
 }
@@ -1335,11 +1375,12 @@ void CDArchiving::loadComments(void)
     QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
 
     for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
-         albumIt != albums.end() ; ++albumIt )
+         !m_cancelled && (albumIt != albums.end()) ; ++albumIt )
         {
         KURL::List images = (*albumIt).images();
 
-        for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt )
+        for( KURL::List::Iterator urlIt = images.begin() ; 
+             !m_cancelled && (urlIt != images.end()) ; ++urlIt )
             {
             KIPI::ImageInfo info = m_interface->info( *urlIt );
             QString comment=info.description();
@@ -1502,7 +1543,8 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     d->starting = true;
     d->success = false;
     d->message = i18n("Creating project header...");
-    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    usleep(1000);
 
     // Build K3b XML project File.
 
@@ -1665,7 +1707,7 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     // Add Selected Albums paths List.
 
     for( KURL::List::Iterator albumsUrlIt = m_albumUrlList.begin() ;
-         albumsUrlIt != m_albumUrlList.end() ; ++albumsUrlIt )
+         !m_cancelled && (albumsUrlIt != m_albumUrlList.end()) ; ++albumsUrlIt )
         {
         AlbumData data = (*m_albumsMap)[(*albumsUrlIt).prettyURL()];
         d = new KIPICDArchivingPlugin::EventData;
@@ -1673,7 +1715,8 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
         d->starting = true;
         d->success = false;
         d->message = i18n("Added Album '%1' into project...").arg( data.albumName());
-        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+        QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+        usleep(1000);
         AddFolderTreeToK3bXMLProjectFile( data.albumUrl().path(), &stream); 
         }
 
@@ -1718,7 +1761,7 @@ bool CDArchiving::AddFolderTreeToK3bXMLProjectFile (QString dirname, QTextStream
    QFileInfo* fi_files;
    QFileInfo* fi_folders;
 
-   while( ( fi_files = it_files.current() ) )                              // Check all files in folder.
+   while( (fi_files = it_files.current()) && !m_cancelled )      // Check all files in folder.
      {
      if ( fi_files->fileName() == "." || fi_files->fileName() == ".." )
           {
@@ -1744,7 +1787,7 @@ bool CDArchiving::AddFolderTreeToK3bXMLProjectFile (QString dirname, QTextStream
      ++it_files;
      }
 
-   while( ( fi_folders = it_folders.current() ) )                              // Check all sub-folders in folder.
+   while( (fi_folders = it_folders.current()) && !m_cancelled )           // Check all sub-folders in folder.
      {
      if ( fi_folders->fileName() == "." || fi_folders->fileName() == ".." )
           {

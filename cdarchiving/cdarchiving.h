@@ -39,7 +39,6 @@ extern "C"
 #include <qstringlist.h>
 #include <qdir.h>
 #include <qcolor.h>
-#include <qthread.h>
 #include <qdatetime.h>
 
 // Include files for KDE
@@ -100,7 +99,7 @@ const int NAV_THUMB_MAX_SIZE = 64;
 typedef QMap<QString, QString>   CommentMap;  // List of Albums items comments.
 typedef QMap<QString, AlbumData> AlbumsMap;   // Albums data list.
 
-class CDArchiving : public QObject, public QThread
+class CDArchiving : public QObject
 {
 Q_OBJECT
 
@@ -110,9 +109,10 @@ public:
                KAction *action_cdarchiving=0 );
   ~CDArchiving();
 
-  virtual void run();
-
   bool prepare(void);
+  void run(void);
+  void stop(void);
+  
   bool showDialog();
   void invokeK3b();
   void removeTmpFiles(void);
@@ -137,6 +137,7 @@ private:
   QTimer             *m_K3bTimer;
   pid_t               m_k3bPid;
 
+  bool                m_cancelled;
   bool                m_useHTMLInterface;
   bool                m_useAutoRunWin32;
   bool                m_useStartBurningProcess;
