@@ -177,7 +177,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
               {
               m_current = 0;
               m_total = d->total;
-              text = i18n("Checking %1 images...").arg(d->total);
+              text = i18n("Checking 1 image...", "Checking %n images...", d->total);
               break;
               }
 
@@ -219,7 +219,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
                case(KIPIFindDupplicateImagesPlugin::Progress):
                   {
                   m_total = d->total;
-                  text = i18n("Failed to check %1 images...").arg((int)(d->total/2));
+                  text = i18n("Failed to check 1 image...", "Failed to check %n images...", ((int)(d->total/2)));
                   break;
                   }
                   
@@ -269,7 +269,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
                case(KIPIFindDupplicateImagesPlugin::Progress):
                   {
                   m_total = d->total;
-                  text = i18n("Checking %1 images complete...").arg((int)(d->total/2));
+                  text = i18n("Checking 1 image complete...", "Checking %n images complete...", ((int)(d->total/2)));
                   break;
                   }
                                     
