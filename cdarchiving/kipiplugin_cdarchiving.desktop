@@ -1,15 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=CDArchiving
-Comment=KIPI Albums CD/DVD Archiving Plugin
-Comment[de]=Ein KIPI Modul um Alben auf CD/DVD zu archivieren
-Comment[es]=Complemento de KIPI para el archivado en CD/DVD de álbumes de KIPI
-Comment[fr]=Module externe de KIPI pour l'archivage sur CD/DVD des albums de KIPI
-Comment[da]=KIPI plugin til CD/DVD-arkivering af billeder
-Comment[it]=Modulo esterno di KIPI per l'archiviazione su CD/DVD degli album di KIPI
-Comment[pl]=Wtyczka do archiwizacji albumów na CD/DVD dla programu KIPI
-Comment[nl]=KIPI plugin om Albums te archiveren naar CD/DVD
-Comment[hu]=KIPI album archiváló plugin
+Comment=KIPI Albums CD and DVD Archiving Plugin
 Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service

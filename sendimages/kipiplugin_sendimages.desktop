@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=SendImages
-Comment=KIPI Send Mail Images Plugin
+Comment=KIPI EMail Images Plugin
 Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service
