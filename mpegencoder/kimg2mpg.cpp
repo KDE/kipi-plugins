@@ -1253,6 +1253,11 @@ void KImg2mpgData::addItems(const QStringList& fileList)
     for ( QStringList::Iterator it = Files.begin() ; it != Files.end() ; ++it )
       {
       QString currentFile = *it;
+      // PENDING(blackie) Fix this, when  this plugin handles real URLs.
+      if ( currentFile.startsWith( "file:" ) )
+          currentFile = currentFile.mid( 5 ); // remove file://
+
+
       QFileInfo fi(currentFile);
       QString Temp = fi.dirPath();
       QString albumName = Temp.section('/', -1);
