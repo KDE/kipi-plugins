@@ -1,0 +1,17 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=BatchProcessImages
+Comment=Digikam Batch Processing Images Plugin
+Comment[de]=Ein Digikam Modul zum bearbeiten mehrerer Bilder
+Comment[es]=Complemento de Digikam para el tratamiento por lotes de las imágenes
+Comment[fr]=Module externe de Digikam pour les traitements par lots des images
+Comment[da]=En Digikam plugin ti lsætvis konvertering af billeder
+Comment[it]=Modulo esterno di Digikam per la scansione di immagini
+Comment[pl]=Wtyczka do operacji grupowych na zdjęciach
+Comment[nl]=Digikam plugin om meerdere afbeeldingen te bewerken
+Comment[hu]=Digikam Csoportos műveletek plugin
+Icon=
+ServiceTypes=Digikam/Plugin
+Type=Service
+X-KDE-Library=digikamplugin_batchprocessimages
+author=Gilles Caulier, caulier dot gilles at free.fr

@@ -1,0 +1,17 @@
+<!DOCTYPE kpartgui>
+<kpartplugin name="batchprocesstimages" library="digikamplugin_batchprocessimages" version="1">
+<MenuBar>
+  <Menu name="Tools"><text>&amp;Tools</text>
+   <Menu name="Batch" ><text>&amp;Batch</text>
+      <Action name="batch_border_images"/>
+      <Action name="batch_convert_images"/>
+      <Action name="batch_color_images"/>
+      <Action name="batch_effect_images"/>
+      <Action name="batch_filter_images"/>
+      <Action name="batch_rename_images"/>
+      <Action name="batch_recompress_images"/>
+      <Action name="batch_resize_images"/>
+   </Menu>
+  </Menu>
+</MenuBar>
+</kpartplugin>
