@@ -104,7 +104,6 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
     readSettings();
     listImageFiles();
     slotTypeChanged(m_Type->currentText());
-    slotOverWriteModeActived(m_overWriteMode->currentText());
 }
 
 

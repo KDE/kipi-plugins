@@ -84,7 +84,6 @@ RenameImagesDialog::RenameImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     readSettings();
     listImageFiles();
-    slotOverWriteModeActived(m_overWriteMode->currentText());
 }
 
 
@@ -259,7 +258,7 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void RenameImagesDialog::slotTemplateSortListChanged(int index)
+void RenameImagesDialog::slotTemplateSortListChanged(int /*index*/)
 {
     updateOptions();
     listImageFiles();
@@ -268,7 +267,7 @@ void RenameImagesDialog::slotTemplateSortListChanged(int index)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void RenameImagesDialog::slotTemplateSortListChanged(bool on)
+void RenameImagesDialog::slotTemplateSortListChanged(bool /*on*/)
 {
     updateOptions();
     listImageFiles();
@@ -277,7 +276,7 @@ void RenameImagesDialog::slotTemplateSortListChanged(bool on)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void RenameImagesDialog::slotTemplateSortListChanged(const QString &text)
+void RenameImagesDialog::slotTemplateSortListChanged(const QString &/*text*/)
 {
     updateOptions();
     listImageFiles();
@@ -450,9 +449,8 @@ bool RenameImagesDialog::startProcess(void)
        }
 
     copyItemOperations();
-
-    return true;
 #endif
+    return true;
 }
 
 
@@ -628,12 +626,12 @@ void RenameImagesDialog::listImageFiles(void)
 
           if ( m_selectedImageFiles.find(fi->filePath()) != m_selectedImageFiles.end() )
              {
-             BatchProcessImagesItem *item = new BatchProcessImagesItem(m_listFiles,
-                                                                       fi->filePath(),
-                                                                       fi->fileName(),
-                                                                       oldFileName2NewFileName(fi, imageIndex),
-                                                                       ""
-                                                                       );
+                 /*BatchProcessImagesItem *item = */new BatchProcessImagesItem(m_listFiles,
+                                                                               fi->filePath(),
+                                                                               fi->fileName(),
+                                                                               oldFileName2NewFileName(fi, imageIndex),
+                                                                               ""
+                     );
              ++imageIndex;
              }
 

@@ -1,2 +1,2 @@
-digikambatchprocessimagespicdir = $(kde_datadir)/kipi/data
+digikambatchprocessimagespicdir = $(kde_datadir)/kipiplugin_batchprocessimages/data
 digikambatchprocessimagespic_DATA = handcursor.png

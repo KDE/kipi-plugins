@@ -54,6 +54,11 @@
 #include <libkipi/thumbnailjob.h>
 #include <libkipi/interface.h>
 
+namespace KIPI
+{
+    class UploadWidget;
+}
+
 // Local includes
 
 #include "batchprocessimagesitem.h"
@@ -73,7 +78,6 @@ class KConfig;
 class KProgress;
 class KURL;
 
-
 class BatchProcessImagesDialog : public KDialogBase
 {
 Q_OBJECT
@@ -84,10 +88,6 @@ Q_OBJECT
 
    BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent=0 );
    ~BatchProcessImagesDialog();
-
- public slots:
-
-   void slotOverWriteModeActived( const QString &string );
 
  private slots:
 
@@ -109,9 +109,6 @@ Q_OBJECT
 
    void slotListDoubleClicked(QListViewItem *itemClicked);
 
-   void slotAddNewAlbum( void );
-   void slot_onAlbumCreate( KIO::Job* job );
-
    void slotAddDropItems(QStringList filesPath);
 
    void slotImageSelected( QListViewItem * item );
@@ -125,7 +122,7 @@ Q_OBJECT
 
    virtual void slotAbout(void){};                          // Called when 'About' button is clicked.
    virtual void slotOptionsClicked(void){};                 // Called when 'Options' button is clicked.
-   virtual void slotTypeChanged(const QString &string){};   // Called when the current type option is changed.
+   virtual void slotTypeChanged(const QString &/*string*/){};   // Called when the current type option is changed.
 
  protected:
 
@@ -138,7 +135,7 @@ Q_OBJECT
    QLabel                 *m_imageLabel;
 
    QComboBox              *m_overWriteMode;
-   QComboBox              *m_albumList;
+   KIPI::UploadWidget     *m_upload;
    QComboBox              *m_Type;
 
    BatchProcessImagesList *m_listFiles;
@@ -221,13 +218,13 @@ Q_OBJECT
    // Called by 'startProcess' fonction at start. You can checking here some things about the current
    // 'item' before the 'startprocess' fonction execution.
 
-    virtual bool prepareStartProcess(BatchProcessImagesItem *item, const QString& albumDest) { return true; };
+    virtual bool prepareStartProcess(BatchProcessImagesItem */*item*/, const QString& /*albumDest*/) { return true; };
 
    // Called for to contruct the ImageMagick command line used for to process or preview the image traitements.
    // If 'albumDest' = 0L ==> preview process.
 
-    virtual QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                                const QString& albumDest = QString::null )
+    virtual QString makeProcess(KProcess* /*proc*/, BatchProcessImagesItem */*item*/,
+                                const QString& /*albumDest*/ = QString::null )
            { return QString::null; };
 
    // Fonctions used for to read and to save the settings in the configuration file.

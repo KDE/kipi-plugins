@@ -49,6 +49,8 @@ public:
     QString result();
     QString error();
     QString outputMess();
+    bool overWrote();
+    void setDidOverWrite( bool b );
 
     void changeResult(QString text);
     void changeError(QString text);
@@ -64,6 +66,7 @@ private:
     QString _result;
     QString _error;
     QString _outputMess;
+    bool    _overwrote;
 };
 
 #endif  // BATCHPROCESSIMAGESITEM_H

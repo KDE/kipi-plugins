@@ -51,7 +51,6 @@ BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char *name
     addColumn(i18n("Result"));
     setSorting(3);
     setItemMargin(3);
-    setMaximumHeight( 150 );
     setResizeMode(QListView::LastColumn);
     setSelectionMode(QListView::Single);
     setAllColumnsShowFocus ( true );

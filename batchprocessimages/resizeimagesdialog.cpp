@@ -91,7 +91,6 @@ ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     readSettings();
     listImageFiles();
-    slotOverWriteModeActived(m_overWriteMode->currentText());
 }
 
 
@@ -484,7 +483,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool ResizeImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
-                                             const QString& albumDest)
+                                             const QString& /*albumDest*/)
 {
     QImage img;
 

@@ -106,7 +106,6 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
 
     readSettings();
     slotTypeChanged(m_Type->currentText());
-    slotOverWriteModeActived(m_overWriteMode->currentText());
 }
 
 

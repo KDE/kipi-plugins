@@ -90,7 +90,6 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
     readSettings();
     listImageFiles();
     slotTypeChanged(m_Type->currentText());
-    slotOverWriteModeActived(m_overWriteMode->currentText());
 }
 
 

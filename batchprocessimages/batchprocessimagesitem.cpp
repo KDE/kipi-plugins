@@ -39,7 +39,7 @@
 BatchProcessImagesItem::BatchProcessImagesItem(QListView * parent, QString const & pathSrc,
                         QString const & nameSrc, QString const & nameDest, QString const & result)
                       : KListViewItem( parent, "", nameSrc, nameDest, result),
-                        _pathSrc(pathSrc), _nameSrc(nameSrc), _nameDest(nameDest), _result(result)
+                        _pathSrc(pathSrc), _nameSrc(nameSrc), _nameDest(nameDest), _result(result), _overwrote( false )
 {
     setText(0, pathSrc.section('/', -2, -2));
 }
@@ -84,5 +84,15 @@ void BatchProcessImagesItem::paintCell (QPainter *p, const QColorGroup &cg, int 
        }
 
     KListViewItem::paintCell( p, cg, column, width, alignment );
+}
+
+bool BatchProcessImagesItem::overWrote()
+{
+    return _overwrote;
+}
+
+void BatchProcessImagesItem::setDidOverWrite( bool b )
+{
+    _overwrote = b;
 }
 

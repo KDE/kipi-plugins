@@ -67,7 +67,6 @@ RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interf
 
     readSettings();
     listImageFiles();
-    slotOverWriteModeActived(m_overWriteMode->currentText());
 }
 
 
@@ -250,7 +249,7 @@ QString RecompressImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesIt
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
-                                                 const QString& albumDest)
+                                                 const QString& /*albumDest*/)
 {
     QString imageExt = item->nameSrc().section('.', -1 );
 

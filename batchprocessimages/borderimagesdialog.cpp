@@ -80,7 +80,6 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     readSettings();
     listImageFiles();
-    slotOverWriteModeActived(m_overWriteMode->currentText());
 }
 
 
