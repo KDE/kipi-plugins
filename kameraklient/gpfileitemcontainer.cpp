@@ -82,7 +82,7 @@ void GPFileItemContainer::addFiles(const QString& folder, const GPFileItemInfoLi
     }
     GPFileDict* fileDict = folderItem->fileDict;
     GPFileItemInfoList::const_iterator it;
-    for (it = infoList.begin(); it != infoList.end(); it++) {
+    for (it = infoList.begin(); it != infoList.end(); ++it) {
         GPFileItemInfo *fileInfo = fileDict->find((*it).name);
         if (!fileInfo) {
             // Hmm... Totally New file
@@ -110,7 +110,7 @@ void GPFileItemContainer::addFiles(const GPFileItemInfoList& infoList) {
         return;
     }
     GPFileItemInfoList::const_iterator it;
-    for (it = infoList.begin(); it != infoList.end(); it++) {
+    for (it = infoList.begin(); it != infoList.end(); ++it) {
         GPFileItemInfo info(*it);
 
         GPFolder *folderItem = folderDict_.find(info.folder);

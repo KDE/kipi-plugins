@@ -385,7 +385,7 @@ void CameraUI::cameraNewItems(const QString& folder, const GPFileItemInfoList& i
     }
     container_->addFiles(folder, infoList);
     GPFileItemInfoList::const_iterator it;
-    for (it = infoList.begin(); it != infoList.end(); it++) {
+    for (it = infoList.begin(); it != infoList.end(); ++it) {
         if ((*it).mime.contains("image")) {
             controller_->requestGetThumbnail(folder, (*it).name);
 	}
@@ -403,7 +403,7 @@ void CameraUI::cameraNewItems(const GPFileItemInfoList& infoList) {
     }
     container_->addFiles(infoList);
     GPFileItemInfoList::const_iterator it;
-    for (it = infoList.begin(); it != infoList.end(); it++) {
+    for (it = infoList.begin(); it != infoList.end(); ++it) {
         if ((*it).mime.contains("image")) {
             controller_->requestGetThumbnail((*it).folder, (*it).name);
 	}
