@@ -71,7 +71,7 @@ void Plugin_SendImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_sendimages = new KAction (i18n("Email Images..."),    // Menu message.
+    m_action_sendimages = new KAction (i18n("E-mail Images..."),    // Menu message.
                                        "mail_new",                  // Menu icon.
                                        0,
                                        this,
