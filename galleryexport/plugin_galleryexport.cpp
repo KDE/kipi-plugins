@@ -53,7 +53,6 @@ void Plugin_GalleryExport::setup(QWidget* widget)
     KIPI::Plugin::setup(widget);
     
     m_action = new KAction(i18n("Export to Remote Gallery..."),
-                           "galleryexport",
                            0,
                            this,
                            SLOT(slotActivate()),
@@ -65,6 +64,7 @@ void Plugin_GalleryExport::setup(QWidget* widget)
     if (!interface) 
     {
         kdError( 51000 ) << "Kipi interface is null!" << endl;
+        m_action->setEnabled(false);
         return;
     }
 
@@ -80,7 +80,14 @@ Plugin_GalleryExport::~Plugin_GalleryExport()
 
 void Plugin_GalleryExport::slotActivate()
 {
-    GalleryWindow dlg;
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    if (!interface) 
+    {
+        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        return;
+    }
+
+    KIPIGalleryExportPlugin::GalleryWindow dlg(interface);
     dlg.exec();
 }
 

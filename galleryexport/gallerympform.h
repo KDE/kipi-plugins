@@ -1,7 +1,7 @@
 /* ============================================================
- * File  : gallerywidget.h
+ * File  : gallerympform.h
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2004-12-01
+ * Date  : 2004-12-02
  * Copyright 2004 by Renchi Raju
  *
  * This program is free software; you can redistribute it
@@ -16,35 +16,40 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#ifndef GALLERYWIDGET_H
-#define GALLERYWIDGET_H
+#ifndef GALLERYMPFORM_H
+#define GALLERYMPFORM_H
 
-#include <qwidget.h>
+#include <qcstring.h>
+#include <qstring.h>
 
-class QListView;
-class QPushButton;
-class KHTMLPart;
+class KURL;
 
 namespace KIPIGalleryExportPlugin
 {
 
-class GalleryWidget : public QWidget
+class GalleryMPForm
 {
 public:
 
-    GalleryWidget( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
-    ~GalleryWidget();
+    GalleryMPForm();
+    ~GalleryMPForm();
 
+    void finish();
+    void reset();
+
+    bool addPair(const QString& name, const QString& value);
+    bool addFile(const QString& path);
+
+    QString    contentType() const;
+    QByteArray formData()    const;
+    QString    boundary()    const;
+    
 private:
 
-    QListView*    m_albumView;
-    KHTMLPart*    m_photoView;
-    QPushButton*  m_newAlbumBtn;
-    QPushButton*  m_addPhotoBtn;
-
-    friend class GalleryWindow;
+    QByteArray m_buffer;
+    QCString   m_boundary;
 };
 
 }
 
-#endif // GALLERYWIDGET_H
+#endif /* GALLERYMPFORM_H */

@@ -23,6 +23,9 @@
 
 #include "galleryitem.h"
 
+namespace KIPIGalleryExportPlugin
+{
+
 class GAlbumViewItem : public QListViewItem
 {
 public:
@@ -36,5 +39,7 @@ public:
 
     GAlbum album;
 };
+
+}
 
 #endif /* GALLERYVIEWITEM_H */

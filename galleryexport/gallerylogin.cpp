@@ -27,6 +27,9 @@
 
 #include "gallerylogin.h"
 
+namespace KIPIGalleryExportPlugin
+{
+
 GalleryLogin::GalleryLogin(QWidget* parent, const QString& header,
                            const QString& _url,
                            const QString& _name,
@@ -121,4 +124,6 @@ QString GalleryLogin::name() const
 QString GalleryLogin::password() const
 {
     return m_passwdEdit->text();
+}
+
 }

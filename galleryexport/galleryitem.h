@@ -24,6 +24,9 @@
 
 #include <qstring.h>
 
+namespace KIPIGalleryExportPlugin
+{
+
 class GPhoto
 {
 public:
@@ -72,5 +75,6 @@ public:
     bool               create_sub;
 };
 
+}
 
 #endif /* GALLERYITEM_H */

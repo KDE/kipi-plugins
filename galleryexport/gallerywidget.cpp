@@ -35,6 +35,9 @@
 
 #include "gallerywidget.h"
 
+namespace KIPIGalleryExportPlugin
+{
+
 GalleryWidget::GalleryWidget( QWidget* parent, const char* name, WFlags fl )
     : QWidget( parent, name, fl )
 {
@@ -98,3 +101,4 @@ GalleryWidget::~GalleryWidget()
 {
 }
 
+}

@@ -28,9 +28,13 @@ namespace KIO
 }
 
 class KURL;
+template <class T> class QValueList;
+
+namespace KIPIGalleryExportPlugin
+{
+
 class GAlbum;
 class GPhoto;
-template <class T> class QValueList;
 
 class GalleryTalker : public QObject
 {
@@ -59,7 +63,12 @@ public:
                       const QString& albumName,
                       const QString& albumTitle,
                       const QString& albumCaption );
+    bool addPhoto( const QString& albumName,
+                   const QString& photoPath,
+                   const QString& caption=QString() );
 
+    void cancel();
+    
 private:
 
     QWidget*   m_parent;
@@ -76,6 +85,7 @@ private:
     void parseResponseListAlbums(const QByteArray &data);
     void parseResponseListPhotos(const QByteArray &data);
     void parseResponseCreateAlbum(const QByteArray &data);
+    void parseResponseAddPhoto(const QByteArray &data);
 
 signals:
 
@@ -84,6 +94,8 @@ signals:
     void signalBusy( bool val );
     void signalAlbums( const QValueList<GAlbum>& albumList );
     void signalPhotos( const QValueList<GPhoto>& photoList );
+    void signalAddPhotoSucceeded( );
+    void signalAddPhotoFailed( const QString& msg );
 
 private slots:
 
@@ -91,6 +103,6 @@ private slots:
     void slotResult (KIO::Job *job);
 };
 
-
+}
 
 #endif /* GALLERYTALKER_H */

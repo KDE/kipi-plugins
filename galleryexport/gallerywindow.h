@@ -20,17 +20,28 @@
 #define GALLERYWINDOW_H
 
 #include <kdialogbase.h>
+#include <qvaluelist.h>
+#include <qpair.h>
 #include <qintdict.h>
 
 class QListView;
 class QPushButton;
+class QProgressDialog;
 class KHTMLPart;
 class KURL;
+
+namespace KIPI
+{
+class Interface;
+}
+
+namespace KIPIGalleryExportPlugin
+{
+
 class GalleryTalker;
 class GAlbum;
 class GPhoto;
 class GAlbumViewItem;
-template <class T> class QValueList;
 
 class GalleryWindow : public KDialogBase
 {
@@ -38,7 +49,7 @@ class GalleryWindow : public KDialogBase
 
 public:
 
-    GalleryWindow();
+    GalleryWindow(KIPI::Interface *interface);
     ~GalleryWindow();
 
 private:
@@ -52,6 +63,12 @@ private:
     QString                   m_url;
     QString                   m_user;
     QString                   m_lastSelectedAlbum;
+    KIPI::Interface          *m_interface;
+
+    QProgressDialog                      *m_progressDlg;
+    unsigned int                          m_uploadCount;
+    unsigned int                          m_uploadTotal;
+    QValueList< QPair<QString,QString> >  m_uploadQueue;
 
 private slots:
 
@@ -65,6 +82,12 @@ private slots:
     void slotOpenPhoto( const KURL& url );
     void slotNewAlbum();
     void slotAddPhotos();
+    void slotAddPhotoNext();
+    void slotAddPhotoSucceeded();
+    void slotAddPhotoFailed( const QString& msg );
+    void slotAddPhotoCancel();
 };
+
+}
 
 #endif /* GALLERYWINDOW_H */

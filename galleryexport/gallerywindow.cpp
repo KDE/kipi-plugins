@@ -25,6 +25,7 @@
 #include <qpixmap.h>
 #include <qcursor.h>
 #include <qlineedit.h>
+#include <qprogressdialog.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -35,6 +36,9 @@
 #include <krun.h>
 #include <kdebug.h>
 
+#include <libkipi/interface.h>
+#include <libkipi/imagedialog.h>
+
 #include "gallerytalker.h"
 #include "galleryitem.h"
 #include "galleryviewitem.h"
@@ -43,9 +47,16 @@
 #include "galleryalbumdialog.h"
 #include "gallerywindow.h"
 
-GalleryWindow::GalleryWindow()
+namespace KIPIGalleryExportPlugin
+{
+
+GalleryWindow::GalleryWindow(KIPI::Interface* interface)
     : KDialogBase(0, 0, true, i18n( "Gallery Export" ), Close, Close, false)
 {
+    m_interface   = interface;
+    m_uploadCount = 0;
+    m_uploadTotal = 0;
+
     GalleryWidget* widget = new GalleryWidget( this );
     setMainWidget( widget );
     widget->setMinimumSize( 600, 400 );
@@ -71,7 +82,18 @@ GalleryWindow::GalleryWindow()
              SLOT( slotAlbums( const QValueList<GAlbum>& ) ) );
     connect( m_talker, SIGNAL( signalPhotos( const QValueList<GPhoto>& ) ),
              SLOT( slotPhotos( const QValueList<GPhoto>& ) ) );
+    connect( m_talker, SIGNAL( signalAddPhotoSucceeded() ),
+             SLOT( slotAddPhotoSucceeded() ) );
+    connect( m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
+             SLOT( slotAddPhotoFailed( const QString& ) ) );
 
+    m_progressDlg = new QProgressDialog( this, 0, true );
+    m_progressDlg->setAutoReset( true );
+    m_progressDlg->setAutoClose( true );
+
+    connect( m_progressDlg, SIGNAL( canceled() ),
+             SLOT( slotAddPhotoCancel() ) );
+    
     connect( m_albumView, SIGNAL( selectionChanged() ),
              SLOT( slotAlbumSelected() ) );
     connect( m_photoView->browserExtension(),
@@ -83,12 +105,14 @@ GalleryWindow::GalleryWindow()
              SLOT( slotNewAlbum() ) );
     connect( m_addPhotoBtn, SIGNAL( clicked() ),
              SLOT( slotAddPhotos() ) );
+
     
     QTimer::singleShot( 0, this,  SLOT( slotDoLogin() ) );
 }
 
 GalleryWindow::~GalleryWindow()
 {
+    delete m_progressDlg;
     delete m_talker;
 }
 
@@ -260,7 +284,10 @@ void GalleryWindow::slotPhotos( const QValueList<GPhoto>& photoList)
                             + QString("<img border=1 src=%1><br>")
                             .arg(thumburl.url())
                             + photo.name
-                            + "</a></td></tr>");
+                            + ( photo.caption.isEmpty() ? QString() :
+                                QString("<br><i>%1<i>")
+                                .arg(photo.caption) )
+                            + "</a></td></tr>" );
     }
 
     m_photoView->write("</table>");
@@ -301,7 +328,7 @@ void GalleryWindow::slotOpenPhoto( const KURL& url )
 void GalleryWindow::slotNewAlbum()
 {
     GalleryAlbumDialog dlg;
-    dlg.nameEdit->setFocus( );
+    dlg.titleEdit->setFocus( );
     if ( dlg.exec() != QDialog::Accepted )
     {
         return;
@@ -329,7 +356,97 @@ void GalleryWindow::slotNewAlbum()
 
 void GalleryWindow::slotAddPhotos()
 {
+    QListViewItem* item = m_albumView->selectedItem();
+    if (!item)
+        return;
+
+    KURL::List urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
+    if (urls.isEmpty())
+        return;
+
+    typedef QPair<QString,QString> Pair;
     
+    m_uploadQueue.clear();
+    for (KURL::List::iterator it = urls.begin(); it != urls.end(); ++it)
+    {
+        KIPI::ImageInfo info = m_interface->info( *it );
+        m_uploadQueue.append( Pair( (*it).path(), info.description() ) );
+    }
+
+    m_uploadTotal = m_uploadQueue.count();
+    m_uploadCount = 0;
+    m_progressDlg->reset();
+    slotAddPhotoNext();
+}
+
+void GalleryWindow::slotAddPhotoNext()
+{
+    if ( m_uploadQueue.isEmpty() )
+    {
+        m_progressDlg->reset();
+        m_progressDlg->hide();
+        slotAlbumSelected();
+        return;
+    }
+    
+    typedef QPair<QString,QString> Pair;
+    Pair pathComments = m_uploadQueue.first();
+    m_uploadQueue.pop_front();
+
+    m_talker->addPhoto( m_lastSelectedAlbum, pathComments.first,
+                        pathComments.second );
+    
+    m_progressDlg->setLabelText( i18n("Uploading file %1 ")
+                                 .arg( KURL(pathComments.first).filename() ) );
+
+    if (m_progressDlg->isHidden())
+        m_progressDlg->show();
+}
+
+void GalleryWindow::slotAddPhotoSucceeded()
+{
+    m_uploadCount++;
+    m_progressDlg->setProgress( m_uploadCount, m_uploadTotal );
+    slotAddPhotoNext();
+}
+
+void GalleryWindow::slotAddPhotoFailed( const QString& msg )
+{
+    if ( KMessageBox::warningContinueCancel( this,
+                                             i18n( "Failed to upload photo into "
+                                                   "remote gallery. " )
+                                             + msg
+                                             + i18n("\nDo you want to continue?" ) )
+         != KMessageBox::Continue )
+    {
+        m_uploadQueue.clear();
+        m_progressDlg->reset();
+        m_progressDlg->hide();
+
+        // refresh the thumbnails
+        slotAlbumSelected();
+    }
+    else
+    {
+        m_uploadTotal--;
+        m_progressDlg->setProgress( m_uploadCount, m_uploadTotal );
+        slotAddPhotoNext();
+    }
+}
+
+void GalleryWindow::slotAddPhotoCancel()
+{
+    m_uploadQueue.clear();
+    m_progressDlg->reset();
+    m_progressDlg->hide();
+
+    m_talker->cancel();
+    
+    // refresh the thumbnails
+    slotAlbumSelected();
+}
+
 }
 
 #include "gallerywindow.moc"
+

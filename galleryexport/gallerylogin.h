@@ -27,6 +27,9 @@
 class QLabel;
 class QLineEdit;
 
+namespace KIPIGalleryExportPlugin
+{
+
 class GalleryLogin : public QDialog
 {
 public:
@@ -48,5 +51,7 @@ private:
     QLineEdit* m_nameEdit;
     QLineEdit* m_passwdEdit;
 };
+
+}
 
 #endif 

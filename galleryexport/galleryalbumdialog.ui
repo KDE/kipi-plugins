@@ -1,5 +1,5 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>GalleryAlbumDialog</class>
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>KIPIGalleryExportPlugin::GalleryAlbumDialog</class>
 <widget class="QDialog">
     <property name="name">
         <cstring>GalleryAlbumDialog</cstring>
@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>338</width>
-            <height>188</height>
+            <width>342</width>
+            <height>180</height>
         </rect>
     </property>
     <property name="caption">
@@ -52,16 +52,13 @@
         </widget>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>gridLayout</cstring>
+                <cstring>layout3</cstring>
             </property>
             <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <property name="margin">
-                    <number>5</number>
-                </property>
-                <widget class="QLabel" row="1" column="0">
+                <widget class="QLabel" row="0" column="0">
                     <property name="name">
                         <cstring>titleLabel</cstring>
                     </property>
@@ -69,19 +66,12 @@
                         <string>Title (Optional):</string>
                     </property>
                 </widget>
-                <widget class="QLineEdit" row="2" column="1">
+                <widget class="QLabel" row="1" column="0">
                     <property name="name">
-                        <cstring>captionEdit</cstring>
+                        <cstring>nameLabel</cstring>
                     </property>
-                </widget>
-                <widget class="QLineEdit" row="1" column="1">
-                    <property name="name">
-                        <cstring>titleEdit</cstring>
-                    </property>
-                </widget>
-                <widget class="QLineEdit" row="0" column="1">
-                    <property name="name">
-                        <cstring>nameEdit</cstring>
+                    <property name="text">
+                        <string>Name (Optional):</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="2" column="0">
@@ -92,12 +82,19 @@
                         <string>Caption (Optional):</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="0" column="0">
+                <widget class="QLineEdit" row="0" column="1">
                     <property name="name">
-                        <cstring>nameLabel</cstring>
+                        <cstring>titleEdit</cstring>
                     </property>
-                    <property name="text">
-                        <string>Name (Optional):</string>
+                </widget>
+                <widget class="QLineEdit" row="1" column="1">
+                    <property name="name">
+                        <cstring>nameEdit</cstring>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="2" column="1">
+                    <property name="name">
+                        <cstring>captionEdit</cstring>
                     </property>
                 </widget>
             </grid>
