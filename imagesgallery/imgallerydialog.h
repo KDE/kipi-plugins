@@ -52,7 +52,6 @@ class QCheckBox;
 class QString;
 class QLineEdit;
 class QSpinBox;
-class QListView;
 
 class KFileItem;
 class KSqueezedTextLabel;
@@ -60,6 +59,7 @@ class KURL;
 class KIntNumInput;
 class KColorButton;
 class KURLRequester;
+class KListView;
 
 namespace KIPIImagesGalleryPlugin
 {
@@ -236,7 +236,7 @@ class KIGPDialog : public KDialogBase
 
   KURLRequester      *m_imageNameReq;
 
-  QListView          *m_AlbumsList;
+  KListView          *m_AlbumsList;
 
   KSqueezedTextLabel *m_AlbumComments;
   KSqueezedTextLabel *m_AlbumCollection;

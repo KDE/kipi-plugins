@@ -38,12 +38,12 @@
 
 class QProgressDialog;
 class QComboBox;
-class QListView;
 class QFrame;
 
 class KFileItem;
 class KIntNumInput;
 class KSqueezedTextLabel;
+class KListView;
 
 namespace KIPIFindDupplicateImagesPlugin
 {
@@ -94,7 +94,7 @@ class FindDuplicateDialog : public KDialogBase
   KSqueezedTextLabel *m_AlbumDate;
   KSqueezedTextLabel *m_AlbumItems;
 
-  QListView          *m_AlbumsList;
+  KListView          *m_AlbumsList;
 
   QLabel             *m_albumPreview;
 

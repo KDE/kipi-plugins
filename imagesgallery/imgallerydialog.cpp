@@ -69,6 +69,7 @@
 #include <ksqueezedtextlabel.h>
 #include <kio/previewjob.h>
 #include <kmessagebox.h>
+#include <klistview.h>
 
 // Local include files
 
@@ -149,10 +150,11 @@ void KIGPDialog::setupSelection(void)
     groupBox1->setTitle(i18n("Select Albums to export"));
     QGridLayout* grid = new QGridLayout( groupBox1, 2, 2 , 20, 20);
 
-    m_AlbumsList = new QListView( groupBox1 );
+    m_AlbumsList = new KListView( groupBox1 );
     m_AlbumsList->setResizeMode( QListView::LastColumn );
     m_AlbumsList->addColumn("");
     m_AlbumsList->header()->hide();
+    m_AlbumsList->setSelectionModeExt(KListView::Single);
     QWhatsThis::add( m_AlbumsList, i18n("<p>Selected here the Albums to export in the HTML gallery.") );
 
     grid->addMultiCellWidget(m_AlbumsList, 0, 2, 0, 1);

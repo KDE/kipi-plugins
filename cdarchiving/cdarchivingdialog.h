@@ -44,7 +44,6 @@ class QString;
 class QCheckBox;
 class QLineEdit;
 class QSpinBox;
-class QListView;
 class QProgressDialog;
 
 class KFileItem;
@@ -53,6 +52,7 @@ class KURLRequester;
 class KURL;
 class KIntNumInput;
 class KColorButton;
+class KListView;
 
 namespace KIPICDArchivingPlugin
 {
@@ -198,7 +198,7 @@ class CDArchivingDialog : public KDialogBase
 
   KURLRequester      *m_K3bBinPath;
 
-  QListView          *m_AlbumsList;
+  KListView          *m_AlbumsList;
 
   QFrame             *page_setupSelection;
   QFrame             *page_setupLook;
