@@ -41,7 +41,7 @@
 
 // LibKipi includes.
 
-#include <libkipi/imagecollectiondialog.h>
+#include <libkipi/imagechooser.h>
 
 // Local includes.
 
@@ -130,7 +130,7 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* e)
     if (!contentsRect().contains(e->pos())) return;
 
     if (e->button() == Qt::LeftButton) {
-        KURL url = KIPI::ImageCollectionDialog::getImageURL(this, interface_);
+        KURL url = KIPI::ImageChooser::getImageURL(this, interface_);
         if (url.isValid()) {
             KURL::List urls;
             urls << url;
