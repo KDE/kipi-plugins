@@ -544,13 +544,11 @@ void SendImagesDialog::slotAddDropItems(QStringList filesPath)
 
 void SendImagesDialog::slotImagesFilesButtonAdd( void )
 {
-    KURL::List ImageFilesList;
-    KURL url = KIPI::ImageDialog::getImageURL( this, m_interface );
+    KURL::List urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
 
-    if ( !url.isValid() ) return;
+    if ( urls.isEmpty() ) return;
 
-    ImageFilesList << url.path();
-    setImagesList(ImageFilesList);
+    setImagesList(urls);
     setNbItems();
 }
 

@@ -231,7 +231,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     dvlay->addWidget( m_statusbar );
 
     m_progress = new KProgress( box, "Progress" );
-    m_progress->setRange(0, 100);
+    m_progress->setTotalSteps(100);
     m_progress->setValue(0);
     QWhatsThis::add( m_progress, i18n("<p>This is the current percentage of the task completed.") );
 
@@ -287,9 +287,13 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd( void )
 {
     QStringList ImageFilesList;
 
-    KURL url = KIPI::ImageDialog::getImageURL( this, m_interface );
+    KURL::List urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
 
-    ImageFilesList << url.path(); // PENDING(blackie) handle remote URLS
+    for ( KURL::List::Iterator it = urls.begin() ; it != urls.end() ; ++it )
+        ImageFilesList << (*it).path(); // PENDING(blackie) handle remote URLS
+    
+    if ( urls.isEmpty() ) return;
+            
     slotAddDropItems(ImageFilesList);
 }
 
@@ -477,7 +481,7 @@ bool BatchProcessImagesDialog::startProcess(void)
 
     KURL desturl(targetAlbum + "/" + item->nameDest());
 
-    if ( KIO::NetAccess::exists(desturl) == true )
+    if ( KIO::NetAccess::exists(desturl, false, kapp->activeWindow() ) == true )
        {
        switch (overwriteMode())
           {
@@ -687,7 +691,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
             {
             KURL deleteImage(item->pathSrc());
 
-            if ( KIO::NetAccess::del(deleteImage) == false )
+            if ( KIO::NetAccess::del( deleteImage, kapp->activeWindow() ) == false )
                 {
                 item->changeResult(i18n("Warning:"));
                 item->changeError(i18n("cannot remove original image file."));
@@ -843,7 +847,7 @@ void BatchProcessImagesDialog::slotPreviewProcessDone(KProcess* proc)
        previewDialog->exec();
 
        KURL deletePreviewImage(m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG");
-       KIO::NetAccess::del(deletePreviewImage);
+       KIO::NetAccess::del( deletePreviewImage, kapp->activeWindow() );
        }
     else
        {
@@ -936,12 +940,12 @@ void BatchProcessImagesDialog::listImageFiles(void)
          QString oldFileName = fi->fileName();
          QString newFileName = oldFileName2NewFileName(oldFileName);
 
-         /*BatchProcessImagesItem *item =*/ new BatchProcessImagesItem(m_listFiles,
-                                                                       currentFile.section('/', 0, -1),
-                                                                       oldFileName,
-                                                                       newFileName,
-                                                                       ""
-             );
+         new BatchProcessImagesItem(m_listFiles,
+                                    currentFile.section('/', 0, -1),
+                                    oldFileName,
+                                    newFileName,
+                                    ""
+                                    );
          }
 
        delete fi;
@@ -1022,8 +1026,8 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
        {
        KURL deleteImage = m_upload->path();
        deleteImage.addPath(item->nameDest());
-       if ( KIO::NetAccess::exists(deleteImage) == true )
-          KIO::NetAccess::del(deleteImage);
+       if ( KIO::NetAccess::exists( deleteImage, false, kapp->activeWindow() ) == true )
+          KIO::NetAccess::del( deleteImage, kapp->activeWindow() );
        }
 
     endProcess(i18n("Process aborted by user."));
@@ -1061,7 +1065,7 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
        NewDestUrl = fi->filePath().left( fi->filePath().findRev('.', -1)) + "_" + Temp
                     + "." + fi->filePath().section('.', -1 );
        }
-    while ( Enumerator < 100 && KIO::NetAccess::exists(NewDestUrl) == true );
+    while ( Enumerator < 100 && KIO::NetAccess::exists( NewDestUrl, true, kapp->activeWindow() ) == true );
 
     if (Enumerator == 100) return QString::null;
 

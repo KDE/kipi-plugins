@@ -270,7 +270,7 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
                 {
                 m_interface->delImage( src );
 
-                if ( KIO::NetAccess::del(src) == false )
+                if ( KIO::NetAccess::del(src, kapp->activeWindow()) == false )
                     {
                     item->changeResult(i18n("Cannot delete original."));
                     item->changeError(i18n("cannot remove original image file."));
@@ -387,7 +387,7 @@ bool RenameImagesDialog::startProcess(void)
     KURL desturl(m_upload->path());
     desturl.addPath( item->nameDest() );
 
-    if ( KIO::NetAccess::exists(desturl) == true )
+    if ( KIO::NetAccess::exists( desturl, false, kapp->activeWindow() ) == true )
        {
        switch (overwriteMode())
           {

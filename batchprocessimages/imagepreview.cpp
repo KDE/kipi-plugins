@@ -334,7 +334,7 @@ void PixmapView::PreviewProcessDone(KProcess* proc)
           horizontalScrollBar()->setLineStep(1);
           verticalScrollBar()->setLineStep(1);
           KURL deletePreviewImage( m_previewFileName );
-          KIO::NetAccess::del(deletePreviewImage);
+          KIO::NetAccess::del( deletePreviewImage, kapp->activeWindow() );
           }
        else
           {
