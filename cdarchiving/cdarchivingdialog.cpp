@@ -74,20 +74,20 @@ class AlbumItem : public QCheckListItem
 {
 public:
     AlbumItem(QListView * parent, KIPI::ImageCollection album,
-              QString const & collection,  QDate const & date,
+              QString const & collection, QDate const & date,
               KIO::filesize_t const & size)
             : QCheckListItem( parent, album.name(), QCheckListItem::CheckBox), _album(album),
               _collection(collection), _date (date), _size (size)
     {}
-    KIPI::ImageCollection album() { return _album; }
-    QString comments()     { return _album.comment();   }
-    QString name()         { return _album.name();       }
-    QString path()         { return "";  } // PENDING(blackie) handle URLS
-    QString collection()   { return _collection; }
-    QString firstImage()   { return _album.images()[0].path(); }  // PENDING(blackie) handle URLS
-    QDate   date()         { return _date;       }
-    KIO::filesize_t size() { return _size;       }
-    int     items()        { return _album.images().count();      }
+    KIPI::ImageCollection album() { return _album;                  }
+    QString comments()            { return _album.comment();        }
+    QString name()                { return _album.name();           }
+    KURL    path()                { return _album.path();           }
+    QString collection()          { return _album.category();       }
+    KURL    firstImage()          { return _album.images().first(); }
+    QDate   date()                { return _date;                   }
+    KIO::filesize_t size()        { return _size;                   }
+    int     items()               { return _album.images().count(); }
 
     void stateChange ( bool )
        {
@@ -97,9 +97,9 @@ public:
 
 private:
     KIPI::ImageCollection _album;
-    QString         _collection;
-    QDate           _date;
-    KIO::filesize_t _size;
+    QString               _collection;
+    QDate                 _date;
+    KIO::filesize_t       _size;
 };
 
 
@@ -107,13 +107,8 @@ private:
 
 CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *parent)
                  : KDialogBase( IconList, i18n("Configure"), Help|Ok|Cancel, Ok, parent,
-                                "CDArchivingDialog", true, true ), m_dialogOk( false ), 
-                                m_interface( interface )
+                                "CDArchivingDialog", true, true ), m_interface( interface )
 {
-    // Get the image files filters from the hosts app.
-     
-    m_ImagesFilesSort = m_interface->fileExtensions();
-  
     setCaption(i18n("Albums CD archiving"));
     setupSelection();
     setupLookPage();
@@ -256,50 +251,48 @@ void CDArchivingDialog::setupSelection(void)
 
 void CDArchivingDialog::setAlbumsList(void)
 {
-    // AlbumItem *currentAlbum = 0; // PENDING(blackie) See comment below
+    AlbumItem *currentAlbum = 0; 
 
     QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
 
-    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt ) {
-
+    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
+         albumIt != albums.end() ; ++albumIt ) 
+        {
         KURL::List images = (*albumIt).images();
         int size = 0;
         QDateTime newestDate;
-        for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) {
+        
+        for( KURL::List::Iterator urlIt = images.begin() ; urlIt != images.end() ; ++urlIt ) 
+            {
             KIPI::ImageInfo info = m_interface->info( *urlIt );
             size += info.size();
+            
             if ( info.time() > newestDate )
                 newestDate = info.time();
+            }
+
+        AlbumItem *item = new AlbumItem( m_AlbumsList, 
+                                         *albumIt,
+                                         (*albumIt).category(),
+                                         newestDate.date(),
+                                         size/1024 );
+
+        if ( m_interface->currentAlbum().isValid() )
+           {
+           if ( (*albumIt).name() == m_interface->currentAlbum().name() )
+              {
+              item->setOn(true);
+              item->setSelected(true);
+              albumSelected( item );
+              currentAlbum = item;
+              }
+           else
+              item->setOn(false);
+           }
         }
 
-        // PENDING(blackie) handle uncommented items below
-        AlbumItem *item = new AlbumItem( m_AlbumsList, *albumIt,
-            QString::null /*album->getCollection()*/,
-            newestDate.date(),
-            size/1024 );
-
-        // PENDING(blackie) current album now is a pointer that might be created on the fly, so I the code
-        // below might likely not work.
-        kdWarning( 51000 ) << "Please look at this Pending!\n";
-#ifdef TEMPORARILY_REMOVED
-        if (album == Digikam::AlbumManager::instance()->currentAlbum())
-        {
-            item->setOn(true);
-            item->setSelected(true);
-            albumSelected( item );
-            currentAlbum = item;
-        }
-        else
-            item->setOn(false);
-#endif
-
-    }
-
-    // PENDING(blackie) see comment above
-#ifdef TEMPORARILY_REMOVED
     if (currentAlbum != 0)
         m_AlbumsList->ensureItemVisible(currentAlbum);
-#endif
 }
 
 
@@ -714,11 +707,8 @@ void CDArchivingDialog::albumSelected( QListViewItem * item )
 
     m_albumPreview->clear();
 
-    QString IdemIndexed = "file:" + pitem->path() + "/" + pitem->firstImage();
-    KURL url(IdemIndexed);
-
-    KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_albumPreview->height() );
-
+    KIO::PreviewJob* thumbJob = KIO::filePreview( pitem->firstImage(), m_albumPreview->height() );
+    
     connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
             this, SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 }

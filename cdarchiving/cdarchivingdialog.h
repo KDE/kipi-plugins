@@ -199,8 +199,6 @@ class CDArchivingDialog : public KDialogBase
   QString             m_ImagesFilesSort;
   QString             m_TempFolder;
 
-  bool                m_dialogOk;
-
   KIO::filesize_t     MaxMediaSize;
 
   KIPI::Interface    *m_interface;

@@ -284,9 +284,10 @@ void CDArchiving::Activate()
        *m_Proc << m_tmpFolder + "/KIPICDArchiving.xml";
 
        QString K3bCommandLine = m_configDlg->getK3bBinPathName() + " " + m_tmpFolder + "/KIPICDArchiving.xml";
-       qDebug("K3b is started : %s", K3bCommandLine.ascii());
+       kdWarning(51000) << "K3b is started : " << K3bCommandLine.ascii() << endl;
 
-       connect(m_Proc, SIGNAL(processExited(KProcess *)), this, SLOT(K3bDone(KProcess*)));
+       connect(m_Proc, SIGNAL(processExited(KProcess *)),
+               this, SLOT(K3bDone(KProcess*)));
 
        if ( !m_Proc->start(KProcess::NotifyOnExit, KProcess::All ) )
           {
@@ -299,7 +300,10 @@ void CDArchiving::Activate()
        if ( m_configDlg->getUseStartBurningProcess() == true )
           {
           m_K3bTimer = new QTimer(this);
-          connect(m_K3bTimer, SIGNAL(timeout()), this, SLOT(slotK3bStartBurningProcess()));
+          
+          connect(m_K3bTimer, SIGNAL(timeout()), 
+                  this, SLOT(slotK3bStartBurningProcess()));
+                  
           m_K3bTimer->start(10000, true);
           m_k3bPid = m_Proc->pid();
           }
@@ -323,7 +327,7 @@ void CDArchiving::slotK3bStartBurningProcess(void)
 
 void CDArchiving::K3bDone(KProcess*)
 {
-   qDebug("K3b is done !!! Removing temporary folder...");
+   kdWarning(51000) << "K3b is done !!! Removing temporary folder..." << endl;
 
    if (DeleteDir(m_tmpFolder) == false)
        KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove temporary folder %1 !").arg(m_tmpFolder));
@@ -366,7 +370,7 @@ bool CDArchiving::buildHTMLInterface (void)
 
     // Build all Albums interface HTML.
 
-    // adding go home icon if there is more than
+    // Adding go home icon if there is more than
     KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
     QString dir = KGlobal::dirs()->findResourceDir("kipi_data", "gohome.png");
     dir = dir + "gohome.png";
@@ -374,7 +378,7 @@ bool CDArchiving::buildHTMLInterface (void)
     KURL destURL( MainTPath + "/gohome.png");
     KIO::NetAccess::copy(srcURL, destURL);
 
-    // adding up icon
+    // Adding up icon
     KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
     dir = KGlobal::dirs()->findResourceDir("kipi_data", "up.png");
     dir = dir + "up.png";
@@ -385,11 +389,11 @@ bool CDArchiving::buildHTMLInterface (void)
 
     for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
         {
-        Path              = ""; // PENDING(blackie) Is this correct?
+        Path              = (*it).path().path();
         m_AlbumTitle      = (*it).name();
         m_AlbumComments   = (*it).comment();
-        m_AlbumCollection = QString::null; // (*it)->getCollection(); // PENDING(blackie) what is this collection thingie?
-        m_AlbumDate       = QString(); // (*it)->getDate().toString ( Qt::LocalDate ) ; // // PENDING(blackie) what is this date?
+        m_AlbumCollection = (*it).category();
+        m_AlbumDate       = (*it).date().toString ( Qt::LocalDate ) ; 
         Path = Path + "/";
 
         SubUrl = m_tmpFolder + "/HTMLInterface/" + m_AlbumTitle + "/" + "index.html";
@@ -400,14 +404,16 @@ bool CDArchiving::buildHTMLInterface (void)
 
            QString SubTPath= m_tmpFolder + "/HTMLInterface/" + m_AlbumTitle;
 
-           if (TargetDir.mkdir( SubTPath ) == FALSE)
+           if (TargetDir.mkdir( SubTPath ) == false)
                {
                KMessageBox::sorry(kapp->activeWindow(), i18n("Couldn't create directory '%1'").arg(SubTPath));
                return false;
                }
 
            m_progressDlg = new QProgressDialog(0, "progressDlg", true );
-           QObject::connect(m_progressDlg, SIGNAL( cancelled() ), this, SLOT( slotCancelled() ) );
+           
+           QObject::connect(m_progressDlg, SIGNAL( cancelled() ),
+                            this, SLOT( slotCancelled() ) );
 
            m_progressDlg->setCaption( i18n("Album \"%1\"").arg(m_AlbumTitle) );
            m_progressDlg->setCancelButtonText(i18n("&Cancel"));
@@ -550,7 +556,7 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
 {
 
     int numOfImages = imageDir.count();
-    qDebug("Num of images in %s : %i", imageDir.path().ascii(), numOfImages);
+    kdWarning(51000) << "Num of images in " << imageDir.path().ascii() << " : " << numOfImages << endl;
     const QString imgGalleryDir = url.directory();
     const QString today(KGlobal::locale()->formatDate(QDate::currentDate()));
 
@@ -626,7 +632,7 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
             const QString imgName = imageDir[imgIndex];
 
             stream << "<td align='center'>\n<a href=\"pages/"  << imgName << ".html\">";
-            qDebug("Creating thumbnail for %s", imgName.ascii());
+            kdWarning(51000) << "Creating thumbnail for " << imgName.ascii() << endl;
 
             if ( createThumb(imgName, sourceDirName, imgGalleryDir, imageFormat) )
                 {
@@ -870,7 +876,7 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
 
     QFile file( url.path() );
     kdDebug( 51000 ) << "url.path(): " << url.path() << ", thumb_dir: "<< thumb_dir.path()
-              << ", imageDir: "<< imageDir.path() << endl;
+                     << ", imageDir: "<< imageDir.path() << endl;
 
     if ( imageDir.exists() && file.open(IO_WriteOnly) )
         {
@@ -1053,7 +1059,7 @@ bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgNa
 
       QString valid = i18n("Valid HTML 4.01!");
       const QString today(KGlobal::locale()->formatDate(QDate::currentDate()));
-      // PENDING(blackie) Update URL
+
       stream << "<div align=\"center\"><hr><img src=\"../thumbs/valid-html401.png\" alt=\""
              << valid << "\" height=\"31\" width=\"88\"  title=\"" << valid <<  "\" />" << endl;
                     
@@ -1077,35 +1083,32 @@ bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgNa
 
 void CDArchiving::loadComments(void)
 {
-#ifdef TEMPORARILY_REMOVED
-    m_useCommentFile = false;                // We considering no default images comments for the current album.
+    // We considering no default images comments for the current album.
 
-    QDir currentAlbumDir(m_album->getPath());
-    currentAlbumDir.setSorting (QDir::Files|QDir::NoSymLinks);
-    QStringList AllAlbumItems = currentAlbumDir.entryList();
-
+    m_useCommentFile = false;
     m_commentMap = new CommentMap;
-    m_album->openDB();
 
-    for ( QStringList::Iterator it = AllAlbumItems.begin(); it != AllAlbumItems.end(); ++it )
+    QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
+
+    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
+         albumIt != albums.end() ; ++albumIt )
         {
-        QString Item(*it);
-        kapp->processEvents();
+        KURL::List images = (*albumIt).images();
 
-        if ( Item != "" && Item != "." && Item != ".." )
-           {
-           QString Comment(m_album->getItemComments(*it));
-
-           if (Comment != "")
-              {
-              m_useCommentFile = true;       // An image comment have been found in the current album !
-              m_commentMap->insert(Item, Comment);
-              }
-           }
+        for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt )
+            {
+            KIPI::ImageInfo info = m_interface->info( *urlIt );
+            QString comment=info.description();
+            
+            if (!comment.isEmpty())
+               {
+               m_useCommentFile = true;
+               m_commentMap->insert((*urlIt).prettyURL(), comment);
+               }
+            
+            kapp->processEvents();
+            }
         }
-
-    m_album->closeDB();
-#endif
 }
 
 
@@ -1210,7 +1213,7 @@ if ( ValRet == true )
       {
       if ( !img.save(Directory + ImageNameFormat, ImageFormat.latin1(), ImageCompression) )
          {
-         qDebug("Saving failed with specific compression value. Aborting.");
+         kdDebug( 51000 ) << "Saving failed with specific compression value. Aborting." << endl;
          return false;
          }
       }
@@ -1218,7 +1221,7 @@ if ( ValRet == true )
       {
       if ( !img.save(Directory + ImageNameFormat, ImageFormat.latin1(), -1) )
          {
-         qDebug("Saving failed with no compression value. Aborting.");
+         kdDebug( 51000 ) << "Saving failed with no compression value. Aborting." << endl;
          return false;
          }
       }
@@ -1261,7 +1264,10 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     // Show progress dialog
 
     m_progressDlg = new QProgressDialog(0, "progressDlg", true );
-    QObject::connect(m_progressDlg, SIGNAL( cancelled() ), this, SLOT( slotCancelled() ) );
+    
+    QObject::connect(m_progressDlg, SIGNAL( cancelled() ), 
+                     this, SLOT( slotCancelled() ) );
+    
     m_progressDlg->setCaption( i18n("K3b project creation") );
     m_progressDlg->setCancelButtonText(i18n("&Cancel"));
     m_cancelled = false;
