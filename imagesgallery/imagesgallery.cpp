@@ -396,10 +396,11 @@ bool ImagesGallery::prepare(void)
     m_colorDepthThumbnails = m_configDlg->getColorDepthThumbnails();
     m_useSpecificThumbsCompression = m_configDlg->useSpecificThumbsCompression();
     m_thumbsCompression = m_configDlg->getThumbsCompression();
-                    
+    m_albumListSize = m_albumsList.count();
+                        
     // Estimate the number of actions for the KIPI progress dialog. 
     
-    int nbActions = m_albumsList.count();
+    int nbActions = m_albumListSize;
     
     for( QValueList<KIPI::ImageCollection>::Iterator it = m_albumsList.begin() ;
          it != m_albumsList.end() ; ++it ) 
@@ -445,7 +446,7 @@ void ImagesGallery::run()
        
     // Build all Albums HTML export.
 
-    if ( m_albumsList.count() > 1 )
+    if ( m_albumListSize > 1 )
        {
        KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
        QString dir = KGlobal::dirs()->findResourceDir("kipi_data", "gohome.png");
@@ -549,7 +550,7 @@ void ImagesGallery::run()
     d->success = false;
     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
-    if ( m_albumsList.count() > 1 )
+    if ( m_albumListSize > 1 )
        {
        MainUrl.setPath( m_imageName + "/KIPIHTMLExport/" + "index.html" );
        QFile MainPageFile( MainUrl.path() );

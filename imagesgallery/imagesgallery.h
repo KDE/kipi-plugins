@@ -145,6 +145,7 @@ private:
   int                 m_colorDepthSetThumbnails;
   int                 m_colorDepthThumbnails;
   int                 m_thumbsCompression;
+  int                 m_albumListSize;
   
   CommentMap         *m_commentMap;
 
