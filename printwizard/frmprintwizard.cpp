@@ -115,8 +115,10 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
 
   // turn off unimplemented controls
   LblCopies->hide();
+  LineCopies->hide();
   EditCopies->hide();
 
+  m_currentPreviewPage = 0;
   m_pageSize = KPrinter::A1; // select a different page to force a refresh in initPhotoSizes.
   initPhotoSizes(KPrinter::Letter); // default to letter for now.
 
@@ -139,6 +141,14 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
   connect(CmbPaperSize, SIGNAL(activated(int)), 
           this, SLOT(CmbPaperSize_activated(int)));
           
+  connect(BtnPrintOrderDown, SIGNAL(clicked(void)),
+          this, SLOT(BtnPrintOrderDown_clicked(void)));
+  connect(BtnPrintOrderUp, SIGNAL(clicked(void)),
+          this, SLOT(BtnPrintOrderUp_clicked(void)));
+  connect(BtnPreviewPageUp, SIGNAL(clicked(void)),
+          this, SLOT(BtnPreviewPageUp_clicked(void)));
+  connect(BtnPreviewPageDown, SIGNAL(clicked(void)),
+          this, SLOT(BtnPreviewPageDown_clicked(void)));
   loadSettings();
 }
 
@@ -158,13 +168,17 @@ void FrmPrintWizard::slotHelp()
 void FrmPrintWizard::print( KURL::List fileList, QString tempPath)
 {
   m_photos.clear();
+  ListPrintOrder->clear();
 
   for(unsigned int i=0; i < fileList.count(); i++)
   {
     TPhoto *photo = new TPhoto(150);
     photo->filename = fileList[i];
     m_photos.append(photo);
+    // load the print order listbox
+    ListPrintOrder->insertItem(photo->filename.filename());
   }
+  ListPrintOrder->setCurrentItem(0);
 
   m_tempPath = tempPath;
   LblPhotoCount->setText(QString::number(m_photos.count()));
@@ -356,6 +370,24 @@ QRect * FrmPrintWizard::getLayout(int photoIndex)
   return s->layouts.at(retVal);
 }
 
+int FrmPrintWizard::getPageCount() {
+  // get the selected layout
+  TPhotoSize *s = m_photoSizes.at(ListPhotoSizes->currentItem());
+
+  int photoCopies = EditCopies->value();
+  int photoCount  = photoCopies * m_photos.count();
+  // how many pages?  Recall that the first layout item is the paper size
+  int photosPerPage = s->layouts.count() - 1;
+  int remainder = photoCount % photosPerPage;
+  int emptySlots = 0;
+  if (remainder > 0)
+    emptySlots = photosPerPage - remainder;
+  int pageCount = photoCount / photosPerPage;
+  if (emptySlots > 0)
+    pageCount++;
+  return pageCount;
+}
+
 // update the pages to be printed and preview first/last pages
 void FrmPrintWizard::previewPhotos()
 {
@@ -382,20 +414,29 @@ void FrmPrintWizard::previewPhotos()
   // preview the first page.
   // find the first page of photos
   int count = 0;
+  int page = 0;
+  unsigned int current = 0;
   for (TPhoto *photo = m_photos.first(); photo != 0; photo = m_photos.next())
     {
-    photo->cropRegion.setRect(-1, -1, -1, -1);
-    photo->rotation = 0;
-    int w = s->layouts.at(count+1)->width();
-    int h = s->layouts.at(count+1)->height();
-    cropFrame->init(photo, w, h, s->autoRotate, false);
+      if (page == m_currentPreviewPage) {
+      photo->cropRegion.setRect(-1, -1, -1, -1);
+      photo->rotation = 0;
+      int w = s->layouts.at(count+1)->width();
+      int h = s->layouts.at(count+1)->height();
+      cropFrame->init(photo, w, h, s->autoRotate, false);
+    }
     count++;
     if (count >= photosPerPage)
-      break;
+    {
+      if (page == m_currentPreviewPage)
+        break;
+      page++;
+      current += photosPerPage;
+      count = 0;
     }
+  }
 
   // send this photo list to the painter
-  unsigned int current = 0;
   QPixmap img(BmpFirstPagePreview->width(), BmpFirstPagePreview->height());
   QPainter p;
   p.begin(&img);
@@ -403,10 +444,12 @@ void FrmPrintWizard::previewPhotos()
   paintOnePage(p, m_photos, s->layouts, buttonGroupSelectedId(GrpImageCaptions), current, true);
   p.end();
   BmpFirstPagePreview->setPixmap(img);
+  LblPreview->setText(i18n("Page ") + QString::number(m_currentPreviewPage + 1) + i18n(" of ") + QString::number(getPageCount()));
 }
 
 void FrmPrintWizard::ListPhotoSizes_highlighted ( int )
 {
+  m_currentPreviewPage = 0;
   for (TPhoto *photo = m_photos.first(); photo != 0; photo = m_photos.next())
   {
     photo->cropRegion.setRect(-1, -1, -1, -1);
@@ -414,6 +457,7 @@ void FrmPrintWizard::ListPhotoSizes_highlighted ( int )
   }
   previewPhotos();
 }
+
 void FrmPrintWizard::ListPhotoSizes_selected( QListBoxItem * )
 {
   previewPhotos();
@@ -691,6 +735,63 @@ void FrmPrintWizard::CmbPaperSize_activated( int index )
              break;
   }
   initPhotoSizes(pageSize);
+}
+
+void FrmPrintWizard::BtnPrintOrderUp_clicked() {
+  if (ListPrintOrder->currentItem() == 0)
+    return;
+
+  int currentIndex = ListPrintOrder->currentItem();
+  QString item1 = ListPrintOrder->selectedItem()->text();
+  QString item2 = ListPrintOrder->item(currentIndex - 1)->text();
+
+  // swap these items
+  ListPrintOrder->changeItem(item2, currentIndex);
+  ListPrintOrder->changeItem(item1, currentIndex - 1);
+
+  // the list box items are swapped, now swap the items in the photo list
+  TPhoto *photo1 = m_photos.at(currentIndex);
+  TPhoto *photo2 = m_photos.at(currentIndex - 1);
+  m_photos.remove(currentIndex - 1);
+  m_photos.remove(currentIndex - 1);
+  m_photos.insert(currentIndex - 1, photo2);
+  m_photos.insert(currentIndex - 1, photo1);
+  previewPhotos();
+}
+
+void FrmPrintWizard::BtnPrintOrderDown_clicked() {
+  if (ListPrintOrder->currentItem() == (signed int)ListPrintOrder->count() - 1)
+    return;
+
+  int currentIndex = ListPrintOrder->currentItem();
+  QString item1 = ListPrintOrder->selectedItem()->text();
+  QString item2 = ListPrintOrder->item(currentIndex + 1)->text();
+
+  // swap these items
+  ListPrintOrder->changeItem(item2, currentIndex);
+  ListPrintOrder->changeItem(item1, currentIndex + 1);
+
+  // the list box items are swapped, now swap the items in the photo list
+  TPhoto *photo1 = m_photos.at(currentIndex);
+  TPhoto *photo2 = m_photos.at(currentIndex + 1);
+  m_photos.remove(currentIndex);
+  m_photos.remove(currentIndex);
+  m_photos.insert(currentIndex, photo1);
+  m_photos.insert(currentIndex, photo2);
+  previewPhotos();
+}
+                                                                           
+void FrmPrintWizard::BtnPreviewPageDown_clicked() {
+  if (m_currentPreviewPage == 0)
+    return;
+  m_currentPreviewPage--;
+  previewPhotos();
+}
+void FrmPrintWizard::BtnPreviewPageUp_clicked() {
+  if (m_currentPreviewPage == getPageCount() - 1)
+    return;
+  m_currentPreviewPage++;
+  previewPhotos();
 }
 
 // create a MxN grid of photos, fitting on the page

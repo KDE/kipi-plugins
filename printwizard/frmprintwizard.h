@@ -58,6 +58,7 @@ private:
 
   QString      m_tempPath;
 
+  int m_currentPreviewPage;
   QStringList  m_gimpFiles;
 
   QPushButton *m_helpButton;
@@ -74,6 +75,7 @@ private:
   void loadSettings();
   void saveSettings();
 
+  int getPageCount();
 public:
   
   FrmPrintWizard(QWidget *parent=0, const char *name=0);
@@ -94,6 +96,12 @@ public slots:
   void EditOutputPath_textChanged(const QString &);
   void BtnBrowseOutputPath_clicked();
   void CmbPaperSize_activated( int );
+
+  void BtnPrintOrderUp_clicked();
+  void BtnPrintOrderDown_clicked();
+
+  void BtnPreviewPageDown_clicked();
+  void BtnPreviewPageUp_clicked();
 
 protected slots:
   

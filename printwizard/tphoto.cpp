@@ -71,7 +71,7 @@ void TPhoto::loadCache()
 
   QImage photo;
   photo.load(filename.path()); // PENDING(blackie) handle URL
-  m_thumbnail = new QPixmap(QImage( photo.smoothScale(m_thumbnailSize, m_thumbnailSize, QImage::ScaleMin) ));
+  m_thumbnail = new QPixmap(QImage( photo.scale(m_thumbnailSize, m_thumbnailSize, QImage::ScaleMin) ));
 
   if (m_size)
     delete m_size;
