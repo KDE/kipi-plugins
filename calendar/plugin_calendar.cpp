@@ -50,7 +50,9 @@ void Plugin_Calendar::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
     KAction* action = new KAction(i18n("Create Calendar..."),
-                                  "date", 0, this,
+                                  "date",
+				  0,
+				  this,
                                   SLOT(slotActivate()),
                                   actionCollection(),
                                   "calendar");

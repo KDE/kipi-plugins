@@ -21,8 +21,12 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
+// Qt includes.
 
-// Include files for KDE
+#include <qprogressdialog.h>
+#include <qfileinfo.h>
+
+// KDE includes.
 
 #include <klocale.h>
 #include <kaction.h>
@@ -33,10 +37,8 @@
 #include <kmessagebox.h>
 #include <kapplication.h>
 
-#include <qprogressdialog.h>
-#include <qfileinfo.h>
+// Lib KIPI includes.
 
-// Include files for KIPI
 #include <libkipi/interface.h>
 
 // Local include files
@@ -48,6 +50,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 typedef KGenericFactory<Plugin_FindImages> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_findimages,
                             Factory("kipiplugin_findimages"));
 

@@ -19,6 +19,12 @@
  *
  * ============================================================ */
 
+// Qt Includes. 
+ 
+#include <qprocess.h>
+ 
+// KDE includes.
+ 
 #include <klocale.h>
 #include <kaction.h>
 #include <kgenericfactory.h>
@@ -27,7 +33,7 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
-#include <qprocess.h>
+// C ANSI Includes.
 
 extern "C"
 {
@@ -37,14 +43,16 @@ extern "C"
 #include <unistd.h>
 }
 
+// Local includes.
+
 #include "plugin_rawconverter.h"
 #include "singledialog.h"
 #include "batchdialog.h"
 
 typedef KGenericFactory<Plugin_RawConverter> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_rawconverter,
                             Factory("kipiplugin_rawconverter"));
-
 
 Plugin_RawConverter::Plugin_RawConverter(QObject *parent,
                                          const char*,

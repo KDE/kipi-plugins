@@ -41,8 +41,9 @@
  #include "plugin_diroperations.h"
 
 typedef KGenericFactory<Plugin_DirOperations> Factory;
- K_EXPORT_COMPONENT_FACTORY( kipiplugin_diroperations,
-                             Factory("kipiplugin_diroperations"));
+
+K_EXPORT_COMPONENT_FACTORY( kipiplugin_diroperations,
+                            Factory("kipiplugin_diroperations"));
 
  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -56,22 +57,24 @@ void Plugin_DirOperations::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
     m_action_OpenIn = new KActionMenu(i18n("&Open Album in ..."),
-                         actionCollection(),
-                         "miscoperations_open_in");
+                                      actionCollection(),
+                                     "miscoperations_open_in");
 
     m_action_OpenIn->insert(new KAction ("Konqueror",
-                         0,
-                         this,
-                         SLOT(slotOpenInKonqui()),
-                         actionCollection(),
-                         "miscoperations_open_in_konqui"));
+                                         "konqueror",
+                                         0,
+                                         this,
+                                         SLOT(slotOpenInKonqui()),
+                                         actionCollection(),
+                                         "miscoperations_open_in_konqui"));
 
     m_action_OpenIn->insert(new KAction ("Nautilus",
-                         0,
-                         this,
-                         SLOT(slotOpenInNautilus()),
-                         actionCollection(),
-                         "miscoperations_open_in_nautilus"));
+                                         "kfm",
+                                         0,
+                                         this,
+                                         SLOT(slotOpenInNautilus()),
+                                         actionCollection(),
+                                         "miscoperations_open_in_nautilus"));
 
     addAction( m_action_OpenIn );
 

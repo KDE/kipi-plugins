@@ -47,6 +47,7 @@
    Plugin_DirOperations(QObject *parent,
                       const char* name,
                       const QStringList &args);
+
    virtual KIPI::Category category() const;
    virtual void setup( QWidget* widget );
 

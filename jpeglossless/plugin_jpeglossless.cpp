@@ -20,7 +20,15 @@
  *
  * ============================================================ */
 
+// C++ includes.
+
 #include <iostream>
+
+// Qt includes.
+
+#include <qdir.h>
+
+// KDE includes.
 
 #include <klocale.h>
 #include <kaction.h>
@@ -30,9 +38,12 @@
 #include <kdebug.h>
 #include <kurl.h>
 
-#include <qdir.h>
+// Lib KIPI includes.
 
 #include <libkipi/interface.h>
+
+// Local includes.
+
 #include "actions.h"
 #include "actionthread.h"
 #include "progressdlg.h"
@@ -40,6 +51,7 @@
 #include "plugin_jpeglossless.h"
 
 typedef KGenericFactory<Plugin_JPEGLossless> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_jpeglossless,
                             Factory("kipiplugin_jpeglossless"));
 

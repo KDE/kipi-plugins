@@ -19,6 +19,8 @@
  *
  * ============================================================ */
 
+ // KDE includes.
+ 
 #include <klocale.h>
 #include <kaction.h>
 #include <kgenericfactory.h>
@@ -27,15 +29,20 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
+// Local includes.
+
 #include "plugin_slideshow.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowconfig.h"
 
+// Lib KIPI includes.
+
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
 typedef KGenericFactory<Plugin_SlideShow> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_slideshow,
                             Factory("kipiplugin_slideshow"));
 
