@@ -8,7 +8,8 @@ v0.1.0-beta
 	  ImagesGallery, and SendImages plugins.
         * <Gilles Caulier> Fixed action enabled/disabled in according with current
 	  selection on JPEGLossLess, TimeAdjust, and WallPaPer plugins.
-        * <Gilles Caulier> Added new method fileExtensions() for the images 
+        * <Gilles Caulier> Added new progress dialog for threaded plugins
+	* <Gilles Caulier> Added new method fileExtensions() for the images 
 	  files sorting in plugins instead all digikamrc parsing.  
         * <Gilles Caulier> Changed category plugin for 'DirOperations' and 
           'FindImages' to COLLECTIONSPLUGIN.
