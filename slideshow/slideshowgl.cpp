@@ -49,8 +49,8 @@ SlideShowGL::SlideShowGL(const QStringList& fileList,
     move(0, 0);
     resize(QApplication::desktop()->size());
 
-    width_  = QMIN( 1024, 1 << (int)ceil(log((float)width())/log((float)2)) );
-    height_ = QMIN( 1024, 1 << (int)ceil(log((float)height())/log((float)2)) );
+    width_  = 64;
+    height_ = 64;
 
     // --------------------------------------------------
 
@@ -117,6 +117,24 @@ void SlideShowGL::initializeGL()
 
     // Enable perspective vision
     glClearDepth(1.0f);
+
+    // get the maximum texture value.
+    GLint maxTexVal;
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexVal);
+
+    // allow only maximum texture value of 1024. anything bigger and things slow down
+    maxTexVal = QMIN(1024, maxTexVal);
+
+    width_  = QApplication::desktop()->width();
+    height_ = QApplication::desktop()->height();
+
+    width_  = 1 << (int)ceil(log((float)width_)/log((float)2)) ;
+    height_ = 1 << (int)ceil(log((float)height_)/log((float)2));
+    
+    width_  = QMIN( maxTexVal, width_ );
+    height_ = QMIN( maxTexVal, height_ );
+
+    // load the first image
 
     loadImage();
 }
