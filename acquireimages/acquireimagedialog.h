@@ -121,7 +121,6 @@ Q_OBJECT
    void setupImageOptions(void);
    void setupAlbumsList(void);
    void aboutPage(void);
-   void setAlbumsList(void);
    void writeSettings(void);
    void readSettings(void);
 };

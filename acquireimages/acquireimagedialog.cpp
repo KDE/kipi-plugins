@@ -70,6 +70,7 @@ extern "C"
 #include <kimageio.h>
 
 #include <libkipi/thumbnailjob.h>
+#include <libkipi/imageinfo.h>
 
 // Local includes
 
@@ -123,7 +124,6 @@ AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *par
     aboutPage();
     readSettings();
     setHelp("plugin-acquireimages.anchor", "digikam");
-    setAlbumsList();
     slotImageFormatChanged(m_imagesFormat->currentText());
     page_setupImageOptions->setFocus();
     resize( 600, 400 );
@@ -319,7 +319,7 @@ void AcquireImageDialog::setupAlbumsList(void)
 
     QGroupBox * groupBox1 = new QGroupBox( page_setupAlbumsList );
     groupBox1->setFlat(false);
-    groupBox1->setTitle(i18n("Select Album for to save the target image"));
+    groupBox1->setTitle(i18n("Select folder for to save the target image"));
     QGridLayout* grid = new QGridLayout( groupBox1, 2, 2 , 20, 20);
 
     m_uploadPath = new KIPI::UploadWidget( m_interface, groupBox1, "m_uploadPath" );
@@ -386,53 +386,6 @@ void AcquireImageDialog::setupAlbumsList(void)
             this, SLOT( albumSelected( QListBoxItem * )));
 #endif
     }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void AcquireImageDialog::setAlbumsList(void)
-{
-#ifdef TEMPORARILY_REMOVED
-    QString CurrentAlbum;
-
-    for (Digikam::AlbumInfo *album=Digikam::AlbumManager::instance()->firstAlbum() ;
-         album ; album = album->nextAlbum())
-        {
-        album->openDB();
-        QDir imageDir( album->getPath(), m_ImagesFilesSort.latin1(),
-                       QDir::Name|QDir::IgnoreCase, QDir::Files|QDir::Readable);
-
-        int nbfiles = imageDir.count();
-
-        if ( nbfiles < 0 ) nbfiles = 0;
-
-        AlbumItem *item = new AlbumItem( m_AlbumList,
-                                         album->getTitle(),
-                                         album->getComments(),
-                                         album->getPath(),
-                                         album->getCollection(),
-                                         imageDir.entryList().first(),
-                                         album->getDate(),
-                                         nbfiles
-                                        );
-
-        item->setName( album->getTitle() );
-
-        if (album == Digikam::AlbumManager::instance()->currentAlbum())
-           {
-           CurrentAlbum = album->getTitle();
-           albumSelected( item );
-           }
-
-        album->closeDB();
-        }
-
-    m_AlbumList->sort (true);
-    m_AlbumList->setSelected( m_AlbumList->findItem(CurrentAlbum), true );
-    m_AlbumList->setCurrentItem(m_AlbumList->findItem(CurrentAlbum));
-    m_AlbumList->centerCurrentItem();
-#endif
-}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -546,27 +499,30 @@ void AcquireImageDialog::slot_onAlbumCreate(KIO::Job* job)
 
   void AcquireImageDialog::slotOk()
 {
-#ifdef TEMPORARILY_REMOVED
-    if (m_AlbumList->currentText().isEmpty())
-        {
+    KURL path = m_uploadPath->path();
+    if (!path.isValid())
+    {
         KMessageBox::error(0, i18n("You must select a target album for this image!"));
         return;
-        }
+    }
 
     if (m_FileName->text().isEmpty())
-        {
+    {
         KMessageBox::error(0, i18n("You must give a file name for this image!"));
         return;
-        }
+    }
 
     writeSettings();
 
     // Get all scanned image informations.
+    QString targetAlbumPath = path.path(); // handle real URLS.
 
+#ifdef TEMPORARILY_REMOVED
     int albumSelectedId = m_AlbumList->currentItem();
     QString albumSelectedText = m_AlbumList->text(albumSelectedId);
     Digikam::AlbumInfo *album = Digikam::AlbumManager::instance()->findAlbum(albumSelectedText);
     QString targetAlbumPath = album->getPath();
+#endif
     QString imageFileName = m_FileName->text();
     QString imageFormat = m_imagesFormat->currentText();
     int imageCompression = m_imageCompression->value();
@@ -602,10 +558,19 @@ void AcquireImageDialog::slot_onAlbumCreate(KIO::Job* job)
        }
 
     // Save the comments for this image.
+    QString err;
+    KURL url; url.setPath( imagePath ); // PENDING(blackie) change to real URL handling.
+    bool ok = m_interface->addImage( url, err );
+    if ( !ok ) {
+        KMessageBox::error( 0, i18n("<qt>Error when telling the application about the new image. "
+                                  "The error was: %1</qt>" ).arg( err ) );
+        return;
+    }
 
-    album->openDB();
-    album->setItemComments(imageFileName + extension(imageFormat), Commentsimg);
-    album->closeDB();
+    KIPI::ImageInfo info = m_interface->info( url );
+    info.setDescription( Commentsimg );
+
+#ifdef TEMPORARILY_REMOVED
 
     // Update the items number for the selected Album
     // in the case if another image is scanned during the plugin session.
@@ -613,9 +578,9 @@ void AcquireImageDialog::slot_onAlbumCreate(KIO::Job* job)
     AlbumItem *pitem = static_cast<AlbumItem*>( m_AlbumList->item( albumSelectedId ));
     pitem->incItem();
     Digikam::AlbumManager::instance()->refreshItemHandler(albumSelectedText);
+#endif
     close();
     delete this;
-#endif
 }
 
 
