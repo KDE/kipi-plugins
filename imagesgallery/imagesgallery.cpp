@@ -783,7 +783,6 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
             d->fileName = imgName;
             QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
             usleep(1000);
-            
            
             int valRet = createThumb(*urlIt, imgName, imgGalleryDir, imageFormat, TargetimagesFormat);
             
@@ -1629,7 +1628,7 @@ void ImagesGallery::invokeWebBrowser(void)
     if (m_configDlg->getWebBrowserName() == "Firefox")
        {
        m_webBrowserProc = new KProcess;
-       *m_webBrowserProc << "firefox";
+       *m_webBrowserProc << "mozilla-firefox";
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
