@@ -44,16 +44,15 @@
 
  #include "plugin_wallpaper.h"
 
+typedef KGenericFactory<Plugin_WallPaper> Factory;
  K_EXPORT_COMPONENT_FACTORY( kipiplugin_wallpaper,
-                             KGenericFactory<Plugin_WallPaper>("kipiplugin_wallpaper"));
+                             Factory("kipiplugin_wallpaper"));
 
  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
  Plugin_WallPaper::Plugin_WallPaper(QObject *parent, const char*, const QStringList&)
-                       : KIPI::Plugin(parent, "WallPaper")
+                       : KIPI::Plugin( Factory::instance(), parent, "WallPaper")
  {
-    KGlobal::locale()->insertCatalogue("kipiplugin_wallpaper");
-
     kdDebug( 51001 ) << "Plugin_WallPaper plugin loaded" << endl;
 
     m_action_Background = new KActionMenu(i18n("&Set as Background"),
@@ -64,51 +63,51 @@
                          0,
                          this,
                          SLOT(slotSetCenter()),
-                         m_action_Background,
+                         actionCollection(),
                          "images2desktop_center"));
 
     m_action_Background->insert(new KAction (i18n("Tiled"),
                          0,
                          this,
                          SLOT(slotSetTiled()),
-                         m_action_Background,
+                         actionCollection(),
                          "images2desktop_tiled"));
 
     m_action_Background->insert(new KAction (i18n("Centered Tiled"),
                          0,
                          this,
                          SLOT(slotSetCenterTiled()),
-                         m_action_Background,
+                         actionCollection(),
                          "images2desktop_center_tiled"));
 
     m_action_Background->insert(new KAction (i18n("Centered Max-Aspect"),
                          0,
                          this,
                          SLOT(slotSetCenteredMaxpect()),
-                         m_action_Background,
+                         actionCollection(),
                          "images2desktop_center_maxpect"));
 
     m_action_Background->insert(new KAction (i18n("Tiled Max-Aspect"),
                          0,
                          this,
                          SLOT(slotSetTiledMaxpect()),
-                         m_action_Background,
+                         actionCollection(),
                          "images2desktop_tiled_maxpect"));
 
     m_action_Background->insert(new KAction (i18n("Scaled"),
                          0,
                          this,
                          SLOT(slotSetScaled()),
-                         m_action_Background,
+                         actionCollection(),
                          "images2desktop_scaled"));
 
     m_action_Background->insert(new KAction (i18n("Centered Auto Fit"),
                          0,
                          this,
                          SLOT(slotSetCenteredAutoFit()),
-                         m_action_Background,
+                         actionCollection(),
                          "images2desktop_centered_auto_fit"));
-
+    addAction( m_action_Background );
 
 #ifdef TEMPORARILY_REMOVED
     m_action_Background->setEnabled(false);

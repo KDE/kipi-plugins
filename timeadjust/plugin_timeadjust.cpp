@@ -29,27 +29,27 @@
 #include <libkipi/imagecollection.h>
 #include "timeadjustdialog.h"
 
+typedef KGenericFactory<Plugin_TimeAdjust> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_timeadjust,
-                            KGenericFactory<Plugin_TimeAdjust>("kipiplugin_timeadjust"));
+                            Factory("kipiplugin_timeadjust"));
 
 Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent,
                                      const char*,
                                      const QStringList&)
-    : KIPI::Plugin(parent, "TimeAdjust"), m_dialog( 0 )
+    : KIPI::Plugin( Factory::instance(), parent, "TimeAdjust"), m_dialog( 0 )
 {
     // Insert our translations into the global catalogue
-    KGlobal::locale()->insertCatalogue("digikamplugin_timeadjust");
-
     kdDebug( 51001 ) << "Plugin_TimeAdjust plugin loaded" << endl;
 
     // this is our action shown in the menubar/toolbar of the mainwindow
-    (void) new KAction (i18n("Adjust Time and Date"),
-                        "",
-                        0,	// or a shortcut like CTRL+SHIFT+Key_S,
-                        this,
-                        SLOT(slotActivate()),
-                        actionCollection(),
-                        "timeadjust");
+    KAction* action = new KAction (i18n("Adjust Time and Date"),
+                                   "",
+                                   0,	// or a shortcut like CTRL+SHIFT+Key_S,
+                                   this,
+                                   SLOT(slotActivate()),
+                                   actionCollection(),
+                                   "timeadjust");
+    addAction( action );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent );
 }

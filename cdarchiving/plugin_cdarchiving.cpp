@@ -27,15 +27,14 @@
 #include "cdarchiving.h"
 #include "plugin_cdarchiving.h"
 
-
+typedef KGenericFactory<Plugin_CDArchiving> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_cdarchiving,
-                            KGenericFactory<Plugin_CDArchiving>("kipiplugin_cdarchiving"));
+                            Factory("kipiplugin_cdarchiving"));
 
 // -----------------------------------------------------------
 Plugin_CDArchiving::Plugin_CDArchiving(QObject *parent, const char*, const QStringList&)
-            : KIPI::Plugin(parent, "CDArchiving")
+            : KIPI::Plugin( Factory::instance(), parent, "CDArchiving")
 {
-    KGlobal::locale()->insertCatalogue("kipiplugin_cdarchiving");
     kdDebug( 51001 ) << "Plugin_CDArchiving plugin loaded" << endl;
 
     m_action_cdarchiving = new KAction (i18n("Archive to CD ..."),        // Menu message.
@@ -45,7 +44,7 @@ Plugin_CDArchiving::Plugin_CDArchiving(QObject *parent, const char*, const QStri
                                         SLOT(slotActivate()),
                                         actionCollection(),
                                         "cd_archiving");
-
+    addAction( m_action_cdarchiving );
     m_cdarchiving = 0;
 }
 

@@ -47,14 +47,13 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+typedef KGenericFactory<Plugin_FindImages> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_findimages,
-                            KGenericFactory<Plugin_FindImages>("kipiplugin_findimages"));
+                            Factory("kipiplugin_findimages"));
 
 Plugin_FindImages::Plugin_FindImages(QObject *parent, const char*, const QStringList&)
-    : KIPI::Plugin(parent, "FindImages")
+    : KIPI::Plugin( Factory::instance(), parent, "FindImages")
 {
-    KGlobal::locale()->insertCatalogue("kipiplugin_findimages");
-
     kdDebug( 51001 ) << "Plugin_FindImages plugin loaded" << endl;
 
     m_action_findImages = new KActionMenu(i18n("&Find images..."),
@@ -62,13 +61,14 @@ Plugin_FindImages::Plugin_FindImages(QObject *parent, const char*, const QString
                            "findimages");
 
     m_action_findDuplicateImagesAlbums= new KAction(i18n("Find duplicate images"),
-                           "finddupplicateimages",
-                           0,
-                           this,
-                           SLOT(slotFindDuplicateImages()),
-                           m_action_findImages,
-                           "findduplicateimagesalbums");
+                                                    "finddupplicateimages",
+                                                    0,
+                                                    this,
+                                                    SLOT(slotFindDuplicateImages()),
+                                                    imagecollection(),
+                                                    "findduplicateimagesalbums");
 
+    addAction( m_action_findImages );
     m_action_findImages->insert(m_action_findDuplicateImagesAlbums);
 }
 

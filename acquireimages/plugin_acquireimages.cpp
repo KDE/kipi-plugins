@@ -47,15 +47,14 @@
 #include "screenshotdialog.h"
 #include "acquireimagedialog.h"
 
-
+typedef KGenericFactory<Plugin_AcquireImages> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_acquireimages,
-                            KGenericFactory<Plugin_AcquireImages>("kipiplugin_acquireimages"));
+                            Factory("kipiplugin_acquireimages"));
 
 // -----------------------------------------------------------
 Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const char*, const QStringList&)
-            : KIPI::Plugin(parent, "AcquireImages")
+            : KIPI::Plugin( Factory::instance(), parent, "AcquireImages")
 {
-    KGlobal::locale()->insertCatalogue("kipiplugin_acquireimages");
     kdDebug( 51001 ) << "Plugin_AcquireImages plugin loaded" << endl;
 
 
@@ -68,7 +67,7 @@ Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const char*, const Q
                                             0,                         // default shortcut.
                                             this,
                                             SLOT(slotActivate()),
-                                            m_action_acquire,
+                                            actionCollection(),
                                             "scan_images");
 
     m_action_acquire->insert(m_action_scanimages);
@@ -78,10 +77,11 @@ Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const char*, const Q
                                             0,                         // default shortcut.
                                             this,
                                             SLOT(slotActivate()),
-                                            m_action_acquire,
+                                            actionCollection(),
                                             "screenshot_images");
 
     m_action_acquire->insert(m_action_screenshotimages);
+    addAction( m_action_acquire );
 }
 
 

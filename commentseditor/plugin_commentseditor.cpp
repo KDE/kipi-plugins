@@ -33,26 +33,27 @@
 #include "plugin_commentseditor.h"
 #include "commentseditor.h"
 
+typedef KGenericFactory<Plugin_CommentsEditor> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_commentseditor,
-                            KGenericFactory<Plugin_CommentsEditor>("kipiplugin_commentseditor"));
+                            Factory("kipiplugin_commentseditor"));
 
 Plugin_CommentsEditor::Plugin_CommentsEditor(QObject *parent,
                                              const char*,
                                              const QStringList &)
-    : KIPI::Plugin(parent, "CommentsEditor")
+    : KIPI::Plugin( Factory::instance(), parent, "CommentsEditor")
 {
-    KGlobal::locale()->insertCatalogue("kipiplugin_commentseditor");
-
     kdDebug( 51001 ) << "Plugin_CommentsEditor plugin loaded"
               << endl;
 
     action = new KAction (i18n("Comments Editor..."),
-                          "imagecomment",
+                          "imagecomment", // PENDING(blackie) where is this image comming from?!
                           0,
                           this,
                           SLOT(slotActivate()),
                           actionCollection(),
                           "commentseditor");
+
+    addAction( action );
 
 #ifdef TEMPORARILY_REMOVED
     action->setEnabled(false);

@@ -42,26 +42,25 @@
 #include "plugin_mpegencoder.h"
 #include "kimg2mpg.h"
 
-
+typedef KGenericFactory<Plugin_Mpegencoder> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_mpegencoder,
-                            KGenericFactory<Plugin_Mpegencoder>("kipiplugin_mpegencoder"));
+                            Factory("kipiplugin_mpegencoder"));
 
 // -----------------------------------------------------------
 
 Plugin_Mpegencoder::Plugin_Mpegencoder(QObject *parent, const char*, const QStringList&)
-    : KIPI::Plugin(parent, "MPEGEncoder")
+    : KIPI::Plugin( Factory::instance(), parent, "MPEGEncoder")
 {
-    KGlobal::locale()->insertCatalogue("kipiplugin_mpegencoder");
-
     kdDebug( 51001 ) << "Plugin_Mpegencoder plugin loaded" << endl;
 
-    (void) new KAction (i18n("MPEG Encoder..."),
-                        "video",
-                        0,
-                        this,
-                        SLOT(slotActivate()),
-                        actionCollection(),
-                        "mpeg_encoder");
+    KAction* action = new KAction (i18n("MPEG Encoder..."),
+                                   "video",
+                                   0,
+                                   this,
+                                   SLOT(slotActivate()),
+                                   actionCollection(),
+                                   "mpeg_encoder");
+    addAction( action );
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////

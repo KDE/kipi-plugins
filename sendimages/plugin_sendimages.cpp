@@ -53,15 +53,14 @@ extern "C"
 #include "sendimagesdialog.h"
 #include "plugin_sendimages.h"
 
-
+typedef KGenericFactory<Plugin_SendImages> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_sendimages,
-                            KGenericFactory<Plugin_SendImages>("kipiplugin_sendimages"));
+                            Factory("kipiplugin_sendimages"));
 
 // -----------------------------------------------------------
 Plugin_SendImages::Plugin_SendImages(QObject *parent, const char*, const QStringList&)
-                 : KIPI::Plugin(parent, "SendImages")
+                 : KIPI::Plugin( Factory::instance(), parent, "SendImages")
 {
-    KGlobal::locale()->insertCatalogue("kipilugin_sendimages");
     kdDebug( 51001 ) << "Plugin_SendImages plugin loaded" << endl;
 
     m_action_sendimages = new KAction (i18n("E-mail Images..."),     // Menu message.
@@ -71,6 +70,7 @@ Plugin_SendImages::Plugin_SendImages(QObject *parent, const char*, const QString
                                         SLOT(slotActivate()),
                                         actionCollection(),
                                         "send_images");
+    addAction( m_action_sendimages );
 }
 
 

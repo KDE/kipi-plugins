@@ -40,8 +40,6 @@ Plugin_SlideShow::Plugin_SlideShow(QObject *parent,
                                    const QStringList&)
     : KIPI::Plugin(parent, "SlideShow")
 {
-    KGlobal::locale()->insertCatalogue("kipiplugin_slideshow");
-
     kdDebug( 51001 ) << "Plugin_SlideShow plugin loaded"
               << endl;
 
@@ -53,6 +51,7 @@ Plugin_SlideShow::Plugin_SlideShow(QObject *parent,
                           actionCollection(),
                           "slideshow");
     action->setEnabled(false);
+    addAction( action );
 
     connect(Digikam::AlbumManager::instance(),
             SIGNAL(signalAlbumCurrentChanged(Digikam::AlbumInfo*)),

@@ -39,8 +39,9 @@
 #include "messagebox.h"
 #include "plugin_jpeglossless.h"
 
+typedef KGenericFactory<Plugin_JPEGLossless> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_jpeglossless,
-                            KGenericFactory<Plugin_JPEGLossless>("kipiplugin_jpeglossless"));
+                            Factory("kipiplugin_jpeglossless"));
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,10 +49,8 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_jpeglossless,
 Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
                                          const char*,
                                          const QStringList &)
-    : KIPI::Plugin(parent, "JPEGLossless")
+    : KIPI::Plugin( Factory::instance(), parent, "JPEGLossless")
 {
-    KGlobal::locale()->insertCatalogue("kipiplugin_jpeglossless");
-
     kdDebug( 51001 ) << "Plugin_JPEGLossless plugin loaded" << endl;
 
     // Main submenu for JPEGLossLess plugin transform actions.
@@ -62,7 +61,7 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
 
     m_action_RotateImage = new KActionMenu(i18n("Rotate"),
                            "rotate_cw",
-                           m_action_Transform,
+                           actionCollection(),
                            "jpeglossless_rotate");
 
     m_action_RotateImage->insert( new KAction(i18n("90 degrees"),
@@ -70,7 +69,7 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
                                 Key_1,
                                 this,
                                 SLOT(slotRotate()),
-                                m_action_RotateImage,
+                                actionCollection(),
                                 "rotate_90") );
 
     m_action_RotateImage->insert( new KAction(i18n("180 degrees"),
@@ -78,7 +77,7 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
                                 Key_2,
                                 this,
                                 SLOT(slotRotate()),
-                                m_action_RotateImage,
+                                actionCollection(),
                                 "rotate_180") );
 
     m_action_RotateImage->insert( new KAction(i18n("270 degrees"),
@@ -86,26 +85,26 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
                                 Key_3,
                                 this,
                                 SLOT(slotRotate()),
-                                m_action_RotateImage,
+                                actionCollection(),
                                 "rotate_270") );
 
     m_action_FlipImage = new KActionMenu(i18n("Flip"),
                            "flip_image",
-                           m_action_Transform,
+                           actionCollection(),
                            "jpeglossless_flip");
 
     m_action_FlipImage->insert( new KAction(i18n("Horizontally"),
                                 0,
                                 this,
                                 SLOT(slotFlip()),
-                                m_action_FlipImage,
+                                actionCollection(),
                                 "flip_horizontal") );
 
     m_action_FlipImage->insert( new KAction(i18n("Vertically"),
                                 0,
                                 this,
                                 SLOT(slotFlip()),
-                                m_action_FlipImage,
+                                actionCollection(),
                                 "flip_vertical") );
 
     m_action_Convert2GrayScale = new KAction(i18n("Convert to Black and White"),
@@ -113,12 +112,13 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
                                              0,
                                              this,
                                              SLOT(slotConvert2GrayScale()),
-                                             m_action_Transform,
+                                             actionCollection(),
                                              "jpeglossless_convert2grayscale");
 
     m_action_Transform->insert(m_action_RotateImage);
     m_action_Transform->insert(m_action_FlipImage);
     m_action_Transform->insert(m_action_Convert2GrayScale);
+    addAction( m_action_Transform );
 
 #ifdef TEMPORARILY_REMOVED
     m_action_RotateImage->setEnabled(false);

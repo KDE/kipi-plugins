@@ -49,18 +49,13 @@ extern "C"
 #include "frmprintwizard.h"
 #include <kurl.h>
 
+typedef KGenericFactory<Plugin_PrintWizard> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_printwizard,
-                            KGenericFactory<Plugin_PrintWizard>("kipiplugin_printwizard"));
+                            Factory("kipiplugin_printwizard"));
 
 Plugin_PrintWizard::Plugin_PrintWizard(QObject *parent, const char*, const QStringList&)
-    : KIPI::Plugin(parent, "PrintWizard")
+    : KIPI::Plugin(Factory::instance(), parent, "PrintWizard")
 {
-#ifdef TEMPORARILY_REMOVED
-    setInstance(KGenericFactory<Plugin_PrintWizard>::instance());
-    setXMLFile("plugins/digikamplugin_printwizard.rc");
-#endif
-    KGlobal::locale()->insertCatalogue("digikamplugin_printwizard");
-
     kdDebug( 51001 ) << "Plugin_PrintWizard plugin loaded"
               << endl;
 
@@ -72,6 +67,7 @@ Plugin_PrintWizard::Plugin_PrintWizard(QObject *parent, const char*, const QStri
                                 actionCollection(),
                                 "printwizard");
 
+    addAction( printAction );
 #ifdef TEMPORARILY_REMOVED
     printAction->setEnabled(false);
 

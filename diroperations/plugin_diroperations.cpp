@@ -44,16 +44,15 @@
 
  #include "plugin_diroperations.h"
 
+typedef KGenericFactory<Plugin_DirOperations> Factory;
  K_EXPORT_COMPONENT_FACTORY( kipiplugin_diroperations,
-                             KGenericFactory<Plugin_DirOperations>("kipiplugin_diroperations"));
+                             Factory("kipiplugin_diroperations"));
 
  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
  Plugin_DirOperations::Plugin_DirOperations(QObject *parent, const char*, const QStringList&)
-                       : KIPI::Plugin(parent, "MiscsOperations")
+                       : KIPI::Plugin( Factory::instance(), parent, "MiscsOperations")
  {
-    KGlobal::locale()->insertCatalogue("kipiplugin_miscsoperations");
-
     kdDebug( 51001 ) << "Plugin_DirOperations plugin loaded" << endl;
 
     m_action_OpenIn = new KActionMenu(i18n("&Open Album in ..."),
@@ -64,16 +63,17 @@
                          0,
                          this,
                          SLOT(slotOpenInKonqui()),
-                         m_action_OpenIn,
+                         actionCollection(),
                          "miscoperations_open_in_konqui"));
 
     m_action_OpenIn->insert(new KAction ("Nautilus",
                          0,
                          this,
                          SLOT(slotOpenInNautilus()),
-                         m_action_OpenIn,
+                         actionCollection(),
                          "miscoperations_open_in_nautilus"));
 
+    addAction( m_action_OpenIn );
 
 #ifdef TEMPORARILY_REMOVED
     m_action_OpenIn->setEnabled(false);

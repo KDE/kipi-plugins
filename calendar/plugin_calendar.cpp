@@ -34,22 +34,21 @@
 #include "plugin_calendar.h"
 #include "calwizard.h"
 
+typedef KGenericFactory<Plugin_Calendar> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_calendar,
-                            KGenericFactory<Plugin_Calendar>("kipiplugin_calendar"));
+                            Factory("kipiplugin_calendar"));
 
 Plugin_Calendar::Plugin_Calendar(QObject *parent,
                                  const char*,
                                  const QStringList &)
-    : KIPI::Plugin(parent, "Calendar")
+    : KIPI::Plugin(Factory::instance(), parent, "Calendar")
 {
-    KGlobal::locale()->insertCatalogue("kipiplugin_calendar");
-
-
-    new KAction(i18n("Create Calendar..."),
-                "date", 0, this,
-                SLOT(slotActivate()),
-                actionCollection(),
-                "calendar");
+    KAction* action = new KAction(i18n("Create Calendar..."),
+                                  "date", 0, this,
+                                  SLOT(slotActivate()),
+                                  actionCollection(),
+                                  "calendar");
+    addAction( action );
 }
 
 Plugin_Calendar::~Plugin_Calendar()

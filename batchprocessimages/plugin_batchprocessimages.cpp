@@ -62,14 +62,15 @@ extern "C"
 #include "recompressimagesdialog.h"
 #include "resizeimagesdialog.h"
 
+typedef KGenericFactory<Plugin_BatchProcessImages> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_batchprocessimages,
-                            KGenericFactory<Plugin_BatchProcessImages>("kipiplugin_batchprocessimages"));
+                            Factory("kipiplugin_batchprocessimages"));
 
 // -----------------------------------------------------------
 Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char*, const QStringList&)
-            : KIPI::Plugin(parent, "BatchProcessImages")
+            : KIPI::Plugin( Factory::instance(), parent, "BatchProcessImages")
 {
-    KGlobal::locale()->insertCatalogue("kipiplugin_batchprocessimages");
     kdDebug( 51001 ) << "Plugin_BatchProcessImages plugin loaded" << endl;
 
     KActionMenu* menu = new KActionMenu(i18n("batch processes"),
@@ -82,7 +83,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char
                                         0,                                   // default shortcut.
                                         this,
                                         SLOT(slotActivate()),
-                                        menu,
+                                        actionCollection(),
                                         "batch_border_images");
 
     m_action_colorimages = new KAction (i18n("Color Images..."),             // Menu message.
@@ -90,7 +91,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char
                                         0,                                   // default shortcut.
                                         this,
                                         SLOT(slotActivate()),
-                                        menu,
+                                        actionCollection(),
                                         "batch_color_images");
 
     m_action_convertimages = new KAction (i18n("Convert Images..."),         // Menu message.
@@ -98,7 +99,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char
                                         0,                                   // default shortcut.
                                         this,
                                         SLOT(slotActivate()),
-                                        menu,
+                                        actionCollection(),
                                         "batch_convert_images");
 
     m_action_effectimages = new KAction (i18n("Effect Images..."),           // Menu message.
@@ -106,7 +107,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char
                                         0,                                   // default shortcut.
                                         this,
                                         SLOT(slotActivate()),
-                                        menu,
+                                        actionCollection(),
                                         "batch_effect_images");
 
     m_action_filterimages = new KAction (i18n("Filter Images..."),           // Menu message.
@@ -114,7 +115,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char
                                         0,                                   // default shortcut.
                                         this,
                                         SLOT(slotActivate()),
-                                        menu,
+                                        actionCollection(),
                                         "batch_filter_images");
 
     m_action_renameimages = new KAction (i18n("Rename Images..."),           // Menu message.
@@ -122,7 +123,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char
                                         0,                                   // default shortcut.
                                         this,
                                         SLOT(slotActivate()),
-                                        menu,
+                                        actionCollection(),
                                         "batch_rename_images");
 
     m_action_recompressimages = new KAction (i18n("Recompress Images..."),   // Menu message.
@@ -130,7 +131,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char
                                         0,                                   // default shortcut.
                                         this,
                                         SLOT(slotActivate()),
-                                        menu,
+                                        actionCollection(),
                                         "batch_recompress_images");
 
     m_action_resizeimages = new KAction (i18n("Resize Images..."),           // Menu message.
@@ -138,7 +139,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char
                                         0,                                   // default shortcut.
                                         this,
                                         SLOT(slotActivate()),
-                                        menu,
+                                        actionCollection(),
                                         "batch_resize_images");
 
     menu->insert( m_action_borderimages );
@@ -149,7 +150,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char
     menu->insert( m_action_renameimages );
     menu->insert( m_action_recompressimages );
     menu->insert( m_action_resizeimages );
-
+    addAction( menu );
 }
 
 

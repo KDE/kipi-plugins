@@ -40,28 +40,17 @@ Plugin_HelloWorld::Plugin_HelloWorld(QObject *parent,
                                      const QStringList&)
     : KIPI::Plugin(parent, "HelloWorld")
 {
-#ifdef TEMPORARILY_REMOVED
-    // Set the instance of this to generic factory instance
-    // created using the macro above
-    setInstance(KGenericFactory<Plugin_HelloWorld>::instance());
-
-    // Set the xml file which will be merged with the mainwindow's gui
-    setXMLFile("plugins/digikamplugin_helloworld.rc");
-#endif
-
-    // Insert our translations into the global catalogue
-    KGlobal::locale()->insertCatalogue("digikamplugin_helloworld");
-
     kdDebug( 51001 ) << "Plugin_HelloWorld plugin loaded" << endl;
 
     // this is our action shown in the menubar/toolbar of the mainwindow
-    (void) new KAction (i18n("Hello World..."),
-                        "misc",
-                        0,	// or a shortcut like CTRL+SHIFT+Key_S,
-                        this,
-                        SLOT(slotActivate()),
-                        actionCollection(),
-                        "helloworld");
+    KAction* action = new KAction (i18n("Hello World..."),
+                                   "misc",
+                                   0,	// or a shortcut like CTRL+SHIFT+Key_S,
+                                   this,
+                                   SLOT(slotActivate()),
+                                   actionCollection(),
+                                   "helloworld");
+    addAction( action );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent );
 }

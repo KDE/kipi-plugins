@@ -31,7 +31,7 @@ kde_services_DATA = kipiplugin_batchprocessimages.desktop
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_batchprocessimages.pot
 
-kipibatchprocessimagesicondir = $(kde_datadir)/kipi/icons
+kipibatchprocessimagesicondir = $(kde_datadir)/kipiplugin_batchprocessimages/icons
 kipibatchprocessimagesicon_ICON = AUTO
 
 

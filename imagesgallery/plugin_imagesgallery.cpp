@@ -31,24 +31,24 @@
 #include "imagesgallery.h"
 #include "plugin_imagesgallery.h"
 
-
+typedef KGenericFactory<Plugin_Imagesgallery> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_imagesgallery,
-                            KGenericFactory<Plugin_Imagesgallery>("kipiplugin_imagesgallery"));
+                            Factory("kipiplugin_imagesgallery"));
 
 // -----------------------------------------------------------
 Plugin_Imagesgallery::Plugin_Imagesgallery(QObject *parent, const char*, const QStringList&)
-            : KIPI::Plugin(parent, "ImagesGallery")
+            : KIPI::Plugin( Factory::instance(), parent, "ImagesGallery")
 {
-    KGlobal::locale()->insertCatalogue("kipiplugin_imagesgallery");
     kdDebug( 51001 ) << "Plugin_Imagesgallery plugin loaded" << endl;
 
-    (void) new KAction (i18n("HTML export..."),        // Menu message.
-                        "www",                         // Menu icon.
-                        0,
-                        this,
-                        SLOT(slotActivate()),
-                        actionCollection(),
-                        "images_gallery");
+    KAction* action = new KAction (i18n("HTML export..."),        // Menu message.
+                                   "www",                         // Menu icon.
+                                   0,
+                                   this,
+                                   SLOT(slotActivate()),
+                                   actionCollection(),
+                                   "images_gallery");
+    addAction( action );
 }
 
 

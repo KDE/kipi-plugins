@@ -41,19 +41,16 @@ extern "C"
 #include "singledialog.h"
 #include "batchdialog.h"
 
+typedef KGenericFactory<Plugin_RawConverter> Factory;
 K_EXPORT_COMPONENT_FACTORY( digikamplugin_rawconverter,
-                            KGenericFactory<Plugin_RawConverter>("digikam"));
+                            Factory("digikam"));
 
 
 Plugin_RawConverter::Plugin_RawConverter(QObject *parent,
                                          const char*,
                                          const QStringList&)
-    : Digikam::Plugin(parent, "RawConverter")
+    : Digikam::Plugin( Factory::instance(), parent, "RawConverter")
 {
-    setInstance(KGenericFactory<Plugin_RawConverter>::instance());
-    setXMLFile("plugins/digikamplugin_rawconverter.rc");
-    KGlobal::locale()->insertCatalogue("digikamplugin_rawconverter");
-
     singleAction_ = new KAction (i18n("Raw Image Converter ..."),
                                  "rawconverter",
                                  0,
@@ -69,6 +66,9 @@ Plugin_RawConverter::Plugin_RawConverter(QObject *parent,
                                  SLOT(slotActivateBatch()),
                                  actionCollection(),
                                  "raw_converter_batch");
+
+    addAction( singleAction_ );
+    addAction( batchAction_ );
 
     connect(Digikam::AlbumManager::instance(),
             SIGNAL(signalAlbumItemsSelected(bool)),
