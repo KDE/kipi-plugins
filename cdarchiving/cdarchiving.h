@@ -23,6 +23,8 @@
 #ifndef CDARCHIVING_H
 #define CDARCHIVING_H
 
+#include <unistd.h>
+
 // Include files for Qt
 
 #include <qobject.h>
