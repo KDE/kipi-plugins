@@ -227,7 +227,6 @@ class CDArchivingDialog : public KDialogBase
   void setupLookPage(void);
   void setupCDInfos(void);
   void setupBurning(void);
-  void aboutPage(void);
 };
 
 }  // NameSpace KIPICDArchivingPlugin
