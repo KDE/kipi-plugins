@@ -83,6 +83,7 @@ unsigned int GPStatus::progress_start_func(GPContext *, float _target, const cha
     QString prog;
     prog = prog.fromLocal8Bit(buf);
     target = _target;
+    return GP_OK;
 }
 
 void GPStatus::progress_update_func(GPContext *, unsigned int, float current, void *) {
