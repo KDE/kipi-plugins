@@ -61,6 +61,10 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
+// Include files for KIPI
+
+#include <libkipi/version.h>
+
 // Local include files
 
 #include "displaycompare.h"
@@ -131,7 +135,7 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
         
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Find Duplicate Images"), 
-                                       "0.1.0-cvs",
+                                       kipi_version,
                                        I18N_NOOP("A Kipi plugin to find duplicate images\n"
                                                  "This plugin is based on ShowImg implementation algorithm"),
                                        KAboutData::License_GPL,

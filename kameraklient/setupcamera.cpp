@@ -37,6 +37,10 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
+// Include files for KIPI
+
+#include <libkipi/version.h>
+
 // Local includes.
 
 #include "setupcamera.h"
@@ -53,7 +57,7 @@ SetupCamera::SetupCamera(QWidget* parent, const char* name)
     
         KAboutData* about = new KAboutData("kipiplugins",
                                            I18N_NOOP("KameraKlient"), 
-                                           "0.1.0-cvs",
+                                           kipi_version,
                                            I18N_NOOP("An Digital camera interface Kipi plugin"),
                                            KAboutData::License_GPL,
                                            "(c) 2003-2004, Renchi Raju\n"

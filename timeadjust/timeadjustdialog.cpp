@@ -39,8 +39,9 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
-// LibKIPI includes.
+// LibKipi includes.
 
+#include <libkipi/version.h>
 #include <libkipi/imageinfo.h>
 
 // Local includes.
@@ -58,7 +59,7 @@ TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent,
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Time Adjust"), 
-                                       "0.1.0-cvs",
+                                       kipi_version,
                                        I18N_NOOP("A Kipi plugin for adjusting dates and times"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Jesper K. Pedersen", 

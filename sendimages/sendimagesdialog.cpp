@@ -64,8 +64,9 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
-// libKipi includes.
+// Include files for KIPI
 
+#include <libkipi/version.h>
 #include <libkipi/imagedialog.h>
 
 // Local include files
@@ -167,7 +168,7 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Send Images"), 
-                                       "0.1.0-cvs",
+                                       kipi_version,
                                        I18N_NOOP("A Kipi plugin for emailing images"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 

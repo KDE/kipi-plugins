@@ -67,6 +67,7 @@
 
 // Include files for KIPI
 
+#include <libkipi/version.h>
 #include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
 
@@ -130,7 +131,7 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("CD Archiving"), 
-                                       "0.1.0-cvs",
+                                       kipi_version,
                                        I18N_NOOP("An Album CD Archiving Kipi plugin.\n"
                                                  "This plugin use K3b CD/DVD burning software available at\n"
                                                  "http://www.k3b.org"),

@@ -87,8 +87,9 @@ extern "C"
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
-// libKipi includes.
+// KIPI include files
 
+#include <libkipi/version.h>
 #include <libkipi/imagedialog.h>
 
 // Local includes
@@ -398,7 +399,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
     
   KAboutData* about = new KAboutData("kipiplugins",
                                      I18N_NOOP("MPEG Image Encoder"), 
-                                     "0.1.0-cvs",
+                                     kipi_version,
                                      I18N_NOOP("A Kipi plugin for MPEG image encoding."),
                                      KAboutData::License_GPL,
                                      "(c) 2003-2004, Gilles Caulier", 

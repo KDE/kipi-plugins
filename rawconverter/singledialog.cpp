@@ -53,6 +53,10 @@ extern "C"
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
+// KIPI include files
+
+#include <libkipi/version.h>
+
 // Local includes.
 
 #include "singledialog.h"
@@ -225,7 +229,7 @@ SingleDialog::SingleDialog(const QString& file)
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("RAW Image Converter"), 
-                                       "0.1.0-cvs",
+                                       kipi_version,
                                        I18N_NOOP("A Kipi plugin for RAW image conversion\n"
                                                  "This plugin uses the Dave Coffin RAW photo "
                                                  "decoder program \"dcraw\""),
