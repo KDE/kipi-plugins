@@ -41,6 +41,7 @@ extern "C"
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 #include <qframe.h>
+#include <qwidgetlist.h>
 
 // Include files for KDE
 
@@ -238,9 +239,23 @@ void ScreenGrabDialog::slotGrab()
     hide();
 
     // Hiding the Host windows
-
+    m_hiddenWindows.clear();
     if (m_hideCB->isChecked())
-       kapp->mainWidget()->hide();
+        {
+        QWidgetList  *list = QApplication::topLevelWidgets();
+        QWidgetListIt it( *list );
+        QWidget * w;
+        while ( (w=it.current()) != 0 )
+            {
+            ++it;
+            if ( w->isVisible())
+                {
+                m_hiddenWindows.append( w );
+                w->hide();
+                }
+            }
+        delete list;
+        }
 
     kapp->processEvents();
     QApplication::syncX();
@@ -314,7 +329,10 @@ void ScreenGrabDialog::endGrab(void)
 
     if (m_hideCB->isChecked())
        {
-       kapp->mainWidget()->show();
+       for( QValueList< QWidget* >::ConstIterator it = m_hiddenWindows.begin();
+            it != m_hiddenWindows.end();
+            ++it )
+           (*it)->show();
        QApplication::syncX();
        }
 

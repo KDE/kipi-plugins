@@ -103,6 +103,8 @@ protected:
     
     QPushButton        *m_helpButton;
     
+    QValueList< QWidget* > m_hiddenWindows;
+    
     bool eventFilter( QObject* o, QEvent* e);
     void endGrab(void);
 };
