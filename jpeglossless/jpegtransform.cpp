@@ -4,8 +4,9 @@
  *          Ralf Hoelzer
  * Date   : 2004-06-08
  * 
- * Copyright 2004 by Renchi Raju
-
+ * Copyright 2004 by Marcel Wiesweg
+ * Copyright 2004 by  Ralf Hoelzer
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
