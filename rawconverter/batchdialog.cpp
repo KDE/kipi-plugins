@@ -155,17 +155,6 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    hboxLayout = new QHBoxLayout(0,0,6,"layout1");
-    gammaSpinBox_ = new CSpinBox(settingsBox);
-    gammaSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-
-    hboxLayout->addWidget(gammaSpinBox_);
-    hboxLayout->addWidget(new QLabel(i18n("Gamma"), settingsBox));
-    QToolTip::add(gammaSpinBox_,
-                    i18n("Specify the gamma value"));
-    settingsBoxLayout->addLayout(hboxLayout);
-
-    // ---------------------------------------------------------------
 
     hboxLayout = new QHBoxLayout(0,0,6,"layout2");
     brightnessSpinBox_ = new CSpinBox(settingsBox);
@@ -208,22 +197,21 @@ BatchDialog::BatchDialog(QWidget *parent)
     saveButtonGroup_ = new QVButtonGroup(i18n("Save Format"),this);
     saveButtonGroup_->setRadioButtonExclusive(true);
 
-    QRadioButton *radioButton;
-    radioButton = new QRadioButton("JPEG",saveButtonGroup_);
-    QToolTip::add(radioButton,
+    jpegButton_ = new QRadioButton("JPEG",saveButtonGroup_);
+    QToolTip::add(jpegButton_,
                     i18n("Output the processed images in JPEG Format.\n"
                          "This is a lossy format, but will give\n"
                          "smaller-sized files"));
-    radioButton->setChecked(true);
+    jpegButton_->setChecked(true);
 
-    radioButton = new QRadioButton("TIFF",saveButtonGroup_);
-    QToolTip::add(radioButton,
+    tiffButton_ = new QRadioButton("TIFF",saveButtonGroup_);
+    QToolTip::add(tiffButton_,
                     i18n("Output the processed images in TIFF Format.\n"
                          "This generates large files, without\n"
                          "losing quality"));
 
-    radioButton = new QRadioButton("PPM",saveButtonGroup_);
-    QToolTip::add(radioButton,
+    ppmButton_ = new QRadioButton("PPM",saveButtonGroup_);
+    QToolTip::add(ppmButton_,
                     i18n("Output the processed images in PPM Format.\n"
                          "This generates the largest files, without\n"
                          "losing quality"));
@@ -236,9 +224,9 @@ BatchDialog::BatchDialog(QWidget *parent)
     conflictButtonGroup_ = new QVButtonGroup(i18n("If Target File Exists"),this);
     conflictButtonGroup_->setRadioButtonExclusive(true);
 
-    radioButton = new QRadioButton(i18n("Overwrite"),conflictButtonGroup_);
-    radioButton->setChecked(true);
-    radioButton = new QRadioButton(i18n("Open file dialog"),conflictButtonGroup_);
+    overwriteButton_ = new QRadioButton(i18n("Overwrite"),conflictButtonGroup_);
+    overwriteButton_->setChecked(true);
+    promptButton_ = new QRadioButton(i18n("Open file dialog"),conflictButtonGroup_);
 
     // ---------------------------------------------------------------
 
@@ -286,7 +274,8 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("RAW Images Batch Converter Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpMenu->menu()->insertItem(i18n("RAW Images Batch Converter Handbook"),
+                                 this, SLOT(slotHelp()), 0, -1, 0);
     helpButton_->setPopup( helpMenu->menu() );
 
     // ---------------------------------------------------------------
@@ -356,8 +345,12 @@ void BatchDialog::addItems(const QStringList& itemList)
 {
     QString ext;
 
-    QButton *btn = saveButtonGroup_->selected();
-    if (btn) ext = btn->text().lower();
+    if (saveButtonGroup_->selected() == jpegButton_)
+        ext  = "JPEG";
+    else if (saveButtonGroup_->selected() == tiffButton_)
+        ext  = "TIFF";
+    else
+        ext  = "PPM";
 
     KURL::List urlList;
 
@@ -393,7 +386,6 @@ void BatchDialog::readSettings()
 
     config->setGroup("RawConverter Settings");
 
-    gammaSpinBox_->setValue(config->readNumEntry("Gamma", 8));
     brightnessSpinBox_->setValue(config->readNumEntry("Brightness",10));
 
     redSpinBox_->setValue(config->readNumEntry("Red Scale",10));
@@ -412,7 +404,6 @@ void BatchDialog::saveSettings()
 
     config->setGroup("RawConverter Settings");
 
-    config->writeEntry("Gamma", gammaSpinBox_->value());
     config->writeEntry("Brightness", brightnessSpinBox_->value());
 
     config->writeEntry("Red Scale", redSpinBox_->value());
@@ -431,9 +422,15 @@ void BatchDialog::saveSettings()
 
 void BatchDialog::slotSaveFormatChanged()
 {
-    QString ext = saveButtonGroup_->selected()->text().lower();
-    if (ext.isEmpty()) return;
+    QString ext;
 
+    if (saveButtonGroup_->selected() == jpegButton_)
+        ext  = "JPEG";
+    else if (saveButtonGroup_->selected() == tiffButton_)
+        ext  = "TIFF";
+    else
+        ext  = "PPM";
+    
     QListViewItemIterator it( listView_ );
     while ( it.current() ) {
         CListViewItem *item = (CListViewItem*) it.current();
@@ -470,11 +467,15 @@ void BatchDialog::slotProcess()
     Settings& s      = controller_->settings;
     s.cameraWB       = cameraWBCheckBox_->isChecked();
     s.fourColorRGB   = fourColorCheckBox_->isChecked();
-    s.gamma          = gammaSpinBox_->value()/10.0;
     s.brightness     = brightnessSpinBox_->value()/10.0;
     s.redMultiplier  = redSpinBox_->value()/10.0;
     s.blueMultiplier = blueSpinBox_->value()/10.0;
-    s.outputFormat   = saveButtonGroup_->selected()->text();
+    if (saveButtonGroup_->selected() == jpegButton_)
+        s.outputFormat  = "JPEG";
+    else if (saveButtonGroup_->selected() == tiffButton_)
+        s.outputFormat  = "TIFF";
+    else
+        s.outputFormat  = "PPM";
 
     processOne();
 }
@@ -509,7 +510,6 @@ void BatchDialog::slotBusy(bool busy)
     conflictButtonGroup_->setEnabled(!busy);
     cameraWBCheckBox_->setEnabled(!busy);
     fourColorCheckBox_->setEnabled(!busy);
-    gammaSpinBox_->setEnabled(!busy);
     brightnessSpinBox_->setEnabled(!busy);
     redSpinBox_->setEnabled(!busy);
     blueSpinBox_->setEnabled(!busy);
@@ -577,15 +577,13 @@ void BatchDialog::slotProcessed(const QString& file,
     QString destFile(rawItem->directory + QString("/") +
                      rawItem->dest);
 
-    if (conflictButtonGroup_->selected()->text() != i18n("Overwrite"))
+    if (conflictButtonGroup_->selected() != overwriteButton_)
     {
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0) {
-            QString filter("*.");
-            filter += saveButtonGroup_->selected()->text().lower();
             destFile = KFileDialog::
-                       getSaveFileName(rawItem->directory,
-                                       filter, this,
+                       getSaveFileName(rawItem->directory, QString(),
+                                       this,
                                        i18n("Save Raw Image converted "
                                             "from '%1' as").arg(rawItem->src));
         }

@@ -34,7 +34,6 @@ struct Settings
 {
     bool    cameraWB;
     bool    fourColorRGB;
-    float   gamma;
     float   brightness;
     float   redMultiplier;
     float   blueMultiplier;
@@ -94,6 +93,7 @@ private:
 private slots:
 
     void slotProcessFinished();
+    void slotProcessStdErr();
 };
 
 } // NameSpace KIPIRawConverterPlugin

@@ -31,6 +31,7 @@
 class QListViewItem;
 class QCheckBox;
 class QPushButton;
+class QRadioButton;
 class QVButtonGroup;
 class QLabel;
 class QPixmap;
@@ -80,7 +81,6 @@ private:
     KListView*     listView_;
     QCheckBox*     cameraWBCheckBox_;
     QCheckBox*     fourColorCheckBox_;
-    CSpinBox*      gammaSpinBox_;
     CSpinBox*      brightnessSpinBox_;
     CSpinBox*      redSpinBox_;
     CSpinBox*      blueSpinBox_;
@@ -95,6 +95,13 @@ private:
     QPushButton*   closeButton_;
     QPushButton*   abortButton_;
 
+    QRadioButton*  jpegButton_;
+    QRadioButton*  tiffButton_;
+    QRadioButton*  ppmButton_;
+
+    QRadioButton*  overwriteButton_;
+    QRadioButton*  promptButton_;
+    
     QDict<RawItem>         itemDict_;
     ProcessController     *controller_;
     bool                   busy_;

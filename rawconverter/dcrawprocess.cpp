@@ -47,7 +47,6 @@ struct
     bool        quick;
     std::string red;
     std::string blue;
-    std::string gamma;
     std::string brightness;
     bool        jpeg;
     bool        tiff;
@@ -121,10 +120,8 @@ void forkDcraw()
                 argl[index++] = "-d";
             
             if (dcParams.quick)
-                argl[index++] = "-q";
+                argl[index++] = "-h";
 
-            argl[index++] = "-g";
-            argl[index++] = dcParams.gamma.c_str();
             argl[index++] = "-b";
             argl[index++] = dcParams.brightness.c_str();
             argl[index++] = "-r";
@@ -136,8 +133,7 @@ void forkDcraw()
         argl[index++]  = dcParams.inFile.c_str();
         argl[index] = 0;
 
-
-         if (execvp("dcraw", (char* const*) argl) == -1) {
+        if (execvp("dcraw", (char* const*) argl) == -1) {
             std::cerr << "Failed to start dcraw process" << std::endl;
             exit(EXIT_FAILURE);
         }
@@ -165,7 +161,6 @@ int main(int argc, char *argv[])
     dcParams.cameraWB  = false;
     dcParams.documentMode = false;
     dcParams.quick = false;
-    dcParams.gamma = "0.8";
     dcParams.brightness = "1.0";
     dcParams.red  = "1.0";
     dcParams.blue = "1.0";
@@ -176,7 +171,7 @@ int main(int argc, char *argv[])
 
     int c;
 
-    while ((c = getopt(argc, argv, "ifwdqg:b:r:l:o:F:Q:D:")) != -1) {
+    while ((c = getopt(argc, argv, "ifwdhg:b:r:l:o:F:Q:D:")) != -1) {
         switch (c) {
 
         case 'i': {
@@ -199,15 +194,11 @@ int main(int argc, char *argv[])
             break;
         }
 
-        case 'q': {
+        case 'h': {
             dcParams.quick = true;
             break;
         }
 
-        case 'g': {
-            dcParams.gamma = optarg;
-            break;
-        }
     
         case 'b': {
             dcParams.brightness = optarg;
@@ -236,7 +227,10 @@ int main(int argc, char *argv[])
             else if (format == "TIFF")
                 dcParams.tiff = true;
             else if (format != "PPM")
+            {
+                std::cerr << "Exiting: wrong format: " << format << std::endl;
                 printUsage();
+            }
             break;
         }
 
@@ -251,6 +245,7 @@ int main(int argc, char *argv[])
         }
             
         default: {
+            std::cerr << "Exiting: Unknown option: " << c  << std::endl;
             printUsage();
             break;
         }

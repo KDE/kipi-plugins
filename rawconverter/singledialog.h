@@ -29,6 +29,7 @@ class QFrame;
 class QCheckBox;
 class QPushButton;
 class QVButtonGroup;
+class QRadioButton;
 class QCloseEvent;
 
 namespace KIPIRawConverterPlugin
@@ -61,7 +62,6 @@ private:
     QCheckBox*     cameraWBCheckBox_;
     QCheckBox*     fourColorCheckBox_;
     
-    CSpinBox*      gammaSpinBox_;
     CSpinBox*      brightnessSpinBox_;
     CSpinBox*      redSpinBox_;
     CSpinBox*      blueSpinBox_;
@@ -71,6 +71,10 @@ private:
     QPushButton*   processButton_;
     QPushButton*   closeButton_;
     QPushButton*   abortButton_;
+
+    QRadioButton*  jpegButton_;
+    QRadioButton*  tiffButton_;
+    QRadioButton*  ppmButton_;
     
     QVButtonGroup* saveButtonGroup_;
 

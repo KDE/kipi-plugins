@@ -22,6 +22,7 @@
 #include <qprocess.h>
 #include <qtimer.h>
 #include <qfile.h>
+#include <kdebug.h>
 
 extern "C"
 {
@@ -40,6 +41,8 @@ ProcessController::ProcessController(QObject *parent)
     dcProcess_ = new QProcess(this);
     connect(dcProcess_, SIGNAL(processExited()),
             SLOT(slotProcessFinished()));
+    connect(dcProcess_, SIGNAL(readyReadStderr()),
+            SLOT(slotProcessStdErr()));
 
     currTime_ = QString::number(::time(0));
 
@@ -85,8 +88,6 @@ void ProcessController::process(const QString& file)
         dcProcess_->addArgument("-w");
     if (settings.fourColorRGB)
         dcProcess_->addArgument("-f");
-    dcProcess_->addArgument("-g");
-    dcProcess_->addArgument(QString::number(settings.gamma));
     dcProcess_->addArgument("-b");
     dcProcess_->addArgument(QString::number(settings.brightness));
     dcProcess_->addArgument("-r");
@@ -119,7 +120,7 @@ void ProcessController::preview(const QString& file)
     dcProcess_->clearArguments();
 
     dcProcess_->addArgument("kipidcrawclient");
-    dcProcess_->addArgument("-q");
+    dcProcess_->addArgument("-h");
     dcProcess_->addArgument("-o");
     dcProcess_->addArgument(tmpFile_);
 
@@ -127,14 +128,14 @@ void ProcessController::preview(const QString& file)
         dcProcess_->addArgument("-w");
     if (settings.fourColorRGB)
         dcProcess_->addArgument("-f");
-    dcProcess_->addArgument("-g");
-    dcProcess_->addArgument(QString::number(settings.gamma));
     dcProcess_->addArgument("-b");
     dcProcess_->addArgument(QString::number(settings.brightness));
     dcProcess_->addArgument("-r");
     dcProcess_->addArgument(QString::number(settings.redMultiplier));
     dcProcess_->addArgument("-l");
     dcProcess_->addArgument(QString::number(settings.blueMultiplier));
+    dcProcess_->addArgument("-F");
+    dcProcess_->addArgument(settings.outputFormat);
     dcProcess_->addArgument(fileCurrent_);
     dcProcess_->start();
 
@@ -213,6 +214,15 @@ void ProcessController::slotProcessFinished()
 
     default:
         break;
+    }
+}
+
+void ProcessController::slotProcessStdErr()
+{
+    QByteArray ba = dcProcess_->readStderr();
+    if (!ba.isEmpty())
+    {
+        kdWarning() << "ProcessController: stderr: " << ba << endl;
     }
 }
 

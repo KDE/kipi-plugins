@@ -151,17 +151,6 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     QHBoxLayout *hboxLayout;
 
-    // ---------------------------------------------------------------
-
-    hboxLayout = new QHBoxLayout(0,0,6,"layout1");
-    gammaSpinBox_ = new CSpinBox(settingsBox);
-    gammaSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-
-    hboxLayout->addWidget(gammaSpinBox_);
-    hboxLayout->addWidget(new QLabel(i18n("Gamma"), settingsBox));
-    QToolTip::add(gammaSpinBox_,
-                  i18n("Specify the gamma value"));
-    settingsBoxLayout->addLayout(hboxLayout);
 
     // ---------------------------------------------------------------
 
@@ -206,22 +195,21 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     saveButtonGroup_ = new QVButtonGroup(i18n("Save Format"),this);
     saveButtonGroup_->setRadioButtonExclusive(true);
 
-    QRadioButton *radioButton;
-    radioButton = new QRadioButton("JPEG",saveButtonGroup_);
-    QToolTip::add(radioButton,
+    jpegButton_ = new QRadioButton("JPEG",saveButtonGroup_);
+    QToolTip::add(jpegButton_,
                   i18n("Output the processed image in JPEG Format.\n"
                        "This is a lossy format, but will give\n"
                        "smaller-sized files"));
-    radioButton->setChecked(true);
+    jpegButton_->setChecked(true);
 
-    radioButton = new QRadioButton("TIFF",saveButtonGroup_);
-    QToolTip::add(radioButton,
+    tiffButton_ = new QRadioButton("TIFF",saveButtonGroup_);
+    QToolTip::add(tiffButton_,
                   i18n("Output the processed image in TIFF Format.\n"
                        "This generates larges, without\n"
                        "losing quality"));
 
-    radioButton = new QRadioButton("PPM",saveButtonGroup_);
-    QToolTip::add(radioButton,
+    ppmButton_ = new QRadioButton("PPM",saveButtonGroup_);
+    QToolTip::add(ppmButton_,
                   i18n("Output the processed image in PPM Format.\n"
                        "This generates the largest files, without\n"
                        "losing quality"));
@@ -372,7 +360,6 @@ void SingleDialog::readSettings()
 
     config->setGroup("RawConverter Settings");
 
-    gammaSpinBox_->setValue(config->readNumEntry("Gamma", 8));
     brightnessSpinBox_->setValue(config->readNumEntry("Brightness",10));
 
     redSpinBox_->setValue(config->readNumEntry("Red Scale",10));
@@ -390,7 +377,6 @@ void SingleDialog::saveSettings()
 
     config->setGroup("RawConverter Settings");
 
-    config->writeEntry("Gamma", gammaSpinBox_->value());
     config->writeEntry("Brightness", brightnessSpinBox_->value());
 
     config->writeEntry("Red Scale", redSpinBox_->value());
@@ -416,11 +402,10 @@ void SingleDialog::slotPreview()
     Settings& s      = controller_->settings;
     s.cameraWB       = cameraWBCheckBox_->isChecked();
     s.fourColorRGB   = fourColorCheckBox_->isChecked();
-    s.gamma          = gammaSpinBox_->value()/10.0;
     s.brightness     = brightnessSpinBox_->value()/10.0;
     s.redMultiplier  = redSpinBox_->value()/10.0;
     s.blueMultiplier = blueSpinBox_->value()/10.0;
-    s.outputFormat   = saveButtonGroup_->selected()->text();
+    s.outputFormat   = "PPM";
 
     controller_->preview(inputFile_);
 }
@@ -430,11 +415,15 @@ void SingleDialog::slotProcess()
     Settings& s      = controller_->settings;
     s.cameraWB       = cameraWBCheckBox_->isChecked();
     s.fourColorRGB   = fourColorCheckBox_->isChecked();
-    s.gamma          = gammaSpinBox_->value()/10.0;
     s.brightness     = brightnessSpinBox_->value()/10.0;
     s.redMultiplier  = redSpinBox_->value()/10.0;
     s.blueMultiplier = blueSpinBox_->value()/10.0;
-    s.outputFormat   = saveButtonGroup_->selected()->text();
+    if (saveButtonGroup_->selected() == jpegButton_)
+        s.outputFormat  = "JPEG";
+    else if (saveButtonGroup_->selected() == tiffButton_)
+        s.outputFormat  = "TIFF";
+    else
+        s.outputFormat  = "PPM";
 
     controller_->process(inputFile_);
 }
@@ -497,11 +486,9 @@ void SingleDialog::slotProcessing(const QString&)
 void SingleDialog::slotProcessed(const QString&, const QString& tmpFile_)
 {
     previewWidget_->load(tmpFile_);
-    QString filter("*.");
-    filter += saveButtonGroup_->selected()->text().lower();
     QString saveFile =
         KFileDialog::getSaveFileName(QFileInfo(inputFile_).dirPath(true),
-                                     filter, this);
+                                     QString(), this);
 
     if (saveFile.isEmpty()) return;
 
