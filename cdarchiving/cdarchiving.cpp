@@ -268,14 +268,19 @@ void CDArchiving::run()
     int nbActions = 1;
     
     if ( m_configDlg->getUseHTMLInterface() == true )    
+       {
        nbActions = nbActions + ListAlbums.count() + 1;
     
-    if ( m_configDlg->getUseAutoRunWin32() == true ) 
-       ++nbActions;
-
-    for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
-       nbActions = nbActions + (*it).images().count();
-    
+       if ( m_configDlg->getUseAutoRunWin32() == true ) 
+           ++nbActions;
+       
+       for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin() ;
+            it != ListAlbums.end() ; ++it ) 
+          {
+          nbActions = nbActions + (*it).images().count();
+          }
+       }
+          
     d = new KIPICDArchivingPlugin::EventData;
     d->action = KIPICDArchivingPlugin::Initialize;
     d->starting = true;
