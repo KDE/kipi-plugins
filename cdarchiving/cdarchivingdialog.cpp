@@ -266,9 +266,9 @@ void CDArchivingDialog::setAlbumsList(void)
         QDateTime newestDate;
         for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) {
             KIPI::ImageInfo info = m_interface->info( *urlIt );
-            size += info.size;
-            if ( info.time > newestDate )
-                newestDate = info.time;
+            size += info.size();
+            if ( info.time() > newestDate )
+                newestDate = info.time();
         }
 
         // PENDING(blackie) handle uncommented items below
@@ -279,7 +279,7 @@ void CDArchivingDialog::setAlbumsList(void)
 
         // PENDING(blackie) current album now is a pointer that might be created on the fly, so I the code
         // below might likely not work.
-        kdWarning() << "Please look at this Pending!";
+        kdWarning() << "Please look at this Pending!\n";
 #ifdef TEMPORARILY_REMOVED
         if (album == Digikam::AlbumManager::instance()->currentAlbum())
         {
