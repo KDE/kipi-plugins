@@ -92,7 +92,10 @@ bool SendImages::showDialog()
 {
     m_sendImagesDialog = new KIPISendimagesPlugin::SendImagesDialog(0,
                              m_interface, m_collection);
-    return (m_sendImagesDialog->exec()== QDialog::Accepted);
+    m_sendImagesDialog->show();
+        
+    connect(m_sendImagesDialog, SIGNAL(signalAccepted()),
+            m_parent, SLOT(slotAcceptedConfigDlg()));
 }
 
 

@@ -99,6 +99,9 @@ public:
 public slots:
    void slotAddDropItems(QStringList filesPath);
 
+signals:
+   void signalAccepted(void);   
+
 private slots:
    void slotOk();
    void slotImageSelected( QListBoxItem * item );

@@ -114,9 +114,17 @@ void Plugin_SendImages::slotActivate()
 
     m_sendImagesOperation = new KIPISendimagesPlugin::SendImages( interface, Tmp, images, this );
     
-    if ( m_sendImagesOperation->showDialog() )
-       m_sendImagesOperation->start();
-  }
+    m_sendImagesOperation->showDialog();
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Plugin_SendImages::slotAcceptedConfigDlg()
+{
+    m_sendImagesOperation->start();
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 

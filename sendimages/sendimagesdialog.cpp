@@ -625,7 +625,8 @@ void SendImagesDialog::slotOk()
         ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(i) );
         m_images2send << pitem->url();
         }
-    
+
+    emit signalAccepted();
     accept();
 }
 

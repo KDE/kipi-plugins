@@ -68,6 +68,9 @@ public:
    void makeCommentsFile(void);
    void invokeMailAgent(void);
    void removeTmpFiles(void);
+
+public slots:   
+  void slotOKconfigDlg(void);
    
 private slots:   
    void slotMozillaTimeout(void);

@@ -51,6 +51,7 @@ public:
 public slots:
    void slotActivate();
    void slotCancel();
+   void slotAcceptedConfigDlg();
    
 private:
    int                               m_current;
