@@ -60,8 +60,8 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch processes images"),
                                        kipi_version,
-                                       I18N_NOOP("An interface to show the output of batch processes "
-                                                 "images Kipi plugins\n"
+                                       I18N_NOOP("An interface to show the output of the \"Batch Process "
+                                                 "Images\" Kipi plugin.\n"
                                                  "This plugin uses the \"convert\" program from \"ImageMagick\" "
                                                  "package."),
                                        KAboutData::License_GPL,

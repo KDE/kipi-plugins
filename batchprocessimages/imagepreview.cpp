@@ -87,10 +87,10 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     // About data and help button.
 
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Batch processes images"),
+                                       I18N_NOOP("Batch process images"),
                                        kipi_version,
-                                       I18N_NOOP("An interface to preview the batch processes images "
-                                                 "Kipi plugins\n"
+                                       I18N_NOOP("An interface to preview the \"Batch Process Images\" "
+                                                 "Kipi plugin.\n"
                                                  "This plugin uses the \"convert\" program from \"ImageMagick\" "
                                                  "package."),
                                        KAboutData::License_GPL,
