@@ -118,9 +118,11 @@ void Plugin_FindImages::slotCancel()
 {
     findDuplicateOperation->terminate();
     findDuplicateOperation->wait();
-    if (m_progressDlg) {
-        m_progressDlg->reset();
-    }
+    
+    if (m_progressDlg) 
+       {
+       m_progressDlg->reset();
+       }
 }
 
 
@@ -129,79 +131,105 @@ void Plugin_FindImages::slotCancel()
 void Plugin_FindImages::customEvent(QCustomEvent *event)
 {
     if (!event) return;
+    
     if(!m_progressDlg)
-    {
-    	m_progressDlg = new QProgressDialog (i18n("Comparisons"), i18n("&Cancel"), 0,
-                                                     0, 0, true);
+        {
+        m_progressDlg = new QProgressDialog (i18n("Comparisons"), i18n("&Cancel"), 0,
+                                             0, 0, true);
+        
         connect(m_progressDlg, SIGNAL(cancelled()),
                 SLOT(slotCancel()));
 
-    	m_current=0;
-    	m_progressDlg->show();
-    }
+        m_current=0;
+        m_progressDlg->show();
+        }
 
-    FindImages::EventData *d = (FindImages::EventData*) event->data();
+    KIPIFindDupplicateImagesPlugin::EventData *d = (KIPIFindDupplicateImagesPlugin::EventData*) event->data();
+    
     if (!d) return;
-    if (d->starting) {
+    
+    if (d->starting) 
+        {
         QString text;
-        switch (d->action) {
-        case(FindImages::Similar): {
-            text = i18n("Similar comparison for\n%1").arg(QFileInfo(d->fileName).fileName() );
-            break;
-        }
-        case(FindImages::Exact): {
-            text = i18n("Exact comparison for\n%1").arg(QFileInfo(d->fileName).fileName());
-            break;
-        }
-        case(FindImages::Matrix): {
-            text = i18n("Creating fingerprint for\n%1").arg(QFileInfo(d->fileName).fileName());
-            break;
-        }
-        case(FindImages::Progress): {
-            m_current=0;
-	    m_total = d->total;
-	    text = i18n("Initialising %1 image(s)...").arg(d->total);
-    	    m_progressDlg->show();
-            break;
-        }
-        default: {
-            kdWarning( 51000 ) << "Plugin_FindImages: Unknown event: " << d->action << endl;
-        }
-        }
+        
+        switch (d->action) 
+           {
+           case(KIPIFindDupplicateImagesPlugin::Similar): 
+              {
+              text = i18n("Similar comparison for\n%1").arg(QFileInfo(d->fileName).fileName() );
+              break;
+              }
+              
+           case(KIPIFindDupplicateImagesPlugin::Exact): 
+              {
+              text = i18n("Exact comparison for\n%1").arg(QFileInfo(d->fileName).fileName());
+              break;
+              }
+              
+           case(KIPIFindDupplicateImagesPlugin::Matrix): 
+              {
+              text = i18n("Creating fingerprint for\n%1").arg(QFileInfo(d->fileName).fileName());
+              break;
+              }
+              
+           case(KIPIFindDupplicateImagesPlugin::Progress): 
+              {
+              m_current=0;
+              m_total = d->total;
+              text = i18n("Initialising %1 image(s)...").arg(d->total);
+              m_progressDlg->show();
+              break;
+              }
+              
+           default: 
+              {
+              kdWarning( 51000 ) << "Plugin_FindImages: Unknown event: " << d->action << endl;
+              }
+           }
+           
         m_progressDlg->setLabelText(text);
-    }
-    else {
-
-        if (!d->success) {
-
+        }
+    else 
+        {
+        if (!d->success) 
+            {
             QString text;
-            switch (d->action) {
-            case(FindImages::Similar): {
-                text = i18n("Failed to find similar images");
-                break;
-            }
-            case(FindImages::Exact): {
-                text = i18n("Failed to find exact image");
-                break;
-            }
-            default: {
-                kdWarning( 51000 ) << "Plugin_FindImages: Unknown event: " << d->action << endl;
-            }
-            }
+            
+            switch (d->action) 
+               {
+               case(KIPIFindDupplicateImagesPlugin::Similar): 
+                  {
+                  text = i18n("Failed to find similar images");
+                  break;
+                  }
+                  
+               case(KIPIFindDupplicateImagesPlugin::Exact): 
+                  {
+                  text = i18n("Failed to find exact image");
+                  break;
+                  }
+                  
+               default: 
+                  {
+                  kdWarning( 51000 ) << "Plugin_FindImages: Unknown event: " << d->action << endl;
+                  }
+               }
 
             //Plugin_FindImages::MessageBox::showMsg(d->fileName, text);
-        }
+            }
 
-        m_current++;
+        ++m_current;
         m_progressDlg->setProgress(m_current, m_total);
-	if(d->action==FindImages::Progress)
-	{
-		m_current     = 0;
-        	m_progressDlg->reset();
-		findDuplicateOperation->showResult();
-	}
+        
+        if( d->action == KIPIFindDupplicateImagesPlugin::Progress )
+           {
+           m_current = 0;
+           m_progressDlg->reset();
+           findDuplicateOperation->showResult();
+           }
 
-    }
+        }
+    
     kapp->processEvents();
     delete d;
 }
