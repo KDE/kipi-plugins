@@ -217,17 +217,24 @@ void Plugin_BatchProcessImages::slotActivate()
            return;
            }
            
-    KIPI::ImageCollection images = interface->currentScope();
+    KIPI::ImageCollection images = interface->currentAlbum();
     
     if ( !images.isValid() )
         return;
         
     if ( images.images().isEmpty() )
-       images = interface->currentAlbum();
+       images = interface->currentSelection();
 
     if ( !images.isValid() )
         return;
-                   
+
+    if ( images.images().isEmpty() ) 
+        {
+        KMessageBox::sorry(kapp->activeWindow(),
+                           i18n("Please select an album or a selection of images."));
+        return;
+        }
+                                   
     KURL::List urlList = images.images();
 
     QString from(sender()->name());

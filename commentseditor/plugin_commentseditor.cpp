@@ -97,20 +97,30 @@ void Plugin_CommentsEditor::slotActivate()
        return;
        }
 
-    KIPI::ImageCollection images = interface->currentScope();
+    KIPI::ImageCollection images = interface->currentAlbum();
     
     if ( !images.isValid() )
         return;
+        
+    if ( images.images().isEmpty() )
+       images = interface->currentSelection();
 
-    if ( images.images().count() == 0 ) {
-        KMessageBox::sorry(kapp->activeWindow(), i18n("Please select an album or a selection of images for editing comments."));
+    if ( !images.isValid() )
         return;
-    }
+
+    if ( images.images().isEmpty() ) 
+        {
+        KMessageBox::sorry(kapp->activeWindow(),
+                           i18n("Please select an album or a selection of images."));
+        return;
+        }
 
     KURL::List imgs = images.images();
-    for( KURL::List::Iterator it = imgs.begin(); it != imgs.end(); ++it ) {
+    
+    for( KURL::List::Iterator it = imgs.begin(); it != imgs.end(); ++it )
+        {
         kdDebug (51000) << ">" << (*it).path().latin1() << endl;
-    }
+        }
 
     KIPICommentsEditorPlugin::CommentsEditor* editor =
         new KIPICommentsEditorPlugin::CommentsEditor( interface, images, kapp->activeWindow() );
