@@ -64,12 +64,15 @@ class ListImageItems : public KListBox
 Q_OBJECT
 
 public:
+
     ListImageItems(QWidget *parent=0, const char *name=0);
 
 signals:
+
     void addedDropItems(QStringList filesPath);
 
 protected:
+
     void dragEnterEvent(QDragEnterEvent *e);
     void dropEvent(QDropEvent *e);
 };
@@ -80,6 +83,7 @@ class SendImagesDialog : public KDialogBase
 Q_OBJECT
 
 public:
+   
    SendImagesDialog(QWidget *parent, 
                     KIPI::Interface* interface, 
                     const KIPI::ImageCollection& images );
@@ -93,16 +97,20 @@ public:
 
    QCheckBox      *m_addComments;
    QCheckBox      *m_changeImagesProp;
-     
+             
    KURL::List      m_images2send;
    
 public slots:
+   
    void slotAddDropItems(QStringList filesPath);
+   void slotHelp();
 
 signals:
+   
    void signalAccepted(void);   
 
 private slots:
+   
    void slotOk();
    void slotImageSelected( QListBoxItem * item );
    void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
@@ -111,6 +119,7 @@ private slots:
    void slotImagesFilesButtonRem(void);
 
 protected:
+   
    QLabel             *m_labelImageFormat;
    QLabel             *m_labelImageSize;
    QLabel             *m_mailAgentLabel;
@@ -119,7 +128,8 @@ protected:
 
    QPushButton        *m_addImageButton;
    QPushButton        *m_remImagesButton;
-
+   QPushButton        *m_helpButton;
+     
    ListImageItems     *m_ImagesFilesListBox;
    
    bool                m_cancelled;
@@ -140,9 +150,9 @@ protected:
    KIO::PreviewJob    *m_thumbJob;
 
  private:
+   
    void setupImagesList(void);
    void setupEmailOptions(void);
-   void aboutPage(void);
    void setImagesList( const KURL::List& images );
    void writeSettings(void);
    void readSettings(void);

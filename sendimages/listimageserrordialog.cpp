@@ -47,7 +47,7 @@ namespace KIPISendimagesPlugin
 listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption, 
                                              const QString &Mess1, const QString &Mess2,
                                              KURL::List ListOfiles)
-                     : KDialogBase( Caption, Yes|No|Cancel, Yes, Cancel, parent,
+                     : KDialogBase( Caption, Help|Yes|No|Cancel, Yes, Cancel, parent,
                                     "listImagesErrorDialog", true, false )
 {
   QWidget* box = new QWidget( this );
@@ -73,9 +73,9 @@ listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption,
 
   for ( KURL::List::Iterator it = ListOfiles.begin() ; it != ListOfiles.end() ; ++it )
       {
-      KListViewItem *item = new KListViewItem( m_listFiles,
-                                              (*it).fileName(),    
-                                              (*it).directory().section('/', -1) );
+      new KListViewItem( m_listFiles,
+                         (*it).fileName(),    
+                         (*it).directory().section('/', -1) );
       }
 
   resize( 500, 350 );

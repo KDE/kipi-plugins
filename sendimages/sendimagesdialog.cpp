@@ -52,13 +52,17 @@
 #include <knuminput.h>
 #include <kinstance.h>
 #include <kconfig.h>
-#include <kapplication.h>
 #include <knuminput.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kdialogbase.h>
 #include <kbuttonbox.h>
 #include <ksqueezedtextlabel.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // libKipi includes.
 
@@ -151,15 +155,33 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
 
     setupImagesList();
     setupEmailOptions();
-    aboutPage();
     readSettings();
-    setHelp("sendimages", "kipi-plugins");
     setImagesList( images.images() );
     page_setupImagesList->setFocus();
     m_ImagesFilesListBox->setSelected(0, true);
     slotImageSelected(m_ImagesFilesListBox->item(0));
     setNbItems();
     resize( 600, 400 );
+    
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Send Images"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin for emailing images"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Gilles Caulier", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                     "caulier dot gilles at free.fr");
+
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Send Image handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
 }
 
 
@@ -502,20 +524,11 @@ void SendImagesDialog::setupEmailOptions(void)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void SendImagesDialog::aboutPage(void)
+void SendImagesDialog::slotHelp()
 {
-    page_about = addPage( i18n("About"), i18n("About KIPI's 'Email Images Plugin"),
-                          BarIcon("kipi", KIcon::SizeMedium ) );
-
-    QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
-
-    QLabel *label = new QLabel( i18n("A KIPI plugin for emailing images\n\n"
-                                     "Author: Gilles Caulier\n\n"
-                                     "Email: caulier dot gilles at free.fr\n\n"), page_about);
-
-    vlay->addWidget(label);
-    vlay->addStretch(1);
-}
+    KApplication::kApplication()->invokeHelp("sendimages",
+                                             "kipi-plugins");
+} 
 
 
 //////////////////////////////////////// SLOTS //////////////////////////////////////////////
