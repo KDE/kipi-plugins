@@ -138,7 +138,7 @@ void FindDuplicateDialog::setupSelection(void)
 void FindDuplicateDialog::setupPageMethod(void)
 {
     QString whatsThis;
-    page_setupMethod = addPage( i18n("Method & Cache"), i18n("Find-Duplicates Method && Cache Configuration"),
+    page_setupMethod = addPage( i18n("Method & Cache"), i18n("Find-Duplicates Method & Cache Configuration"),
                                 BarIcon("run", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupMethod, 0, spacingHint() );

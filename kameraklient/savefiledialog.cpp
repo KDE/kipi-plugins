@@ -29,7 +29,7 @@ SavefileDialog::SavefileDialog(const QString& file, QWidget *parent, const char*
     bbox->addButton(i18n("Skip All"), this, SLOT(slot_skipAll()), true);
     bbox->addButton(i18n("Overwrite"), this, SLOT(slot_overwrite()), true);
     bbox->addButton(i18n("Overwrite All"), this, SLOT(slot_overwriteAll()), true);
-    QPushButton *cancelBtn = bbox->addButton(i18n("Cancel"), this, SLOT(reject()), true);
+    QPushButton *cancelBtn = bbox->addButton(i18n("&Cancel"), this, SLOT(reject()), true);
     cancelBtn->setDefault(true);
     bbox->layout();
     QGridLayout *layout = new QGridLayout(this, 0, 0, 15);
