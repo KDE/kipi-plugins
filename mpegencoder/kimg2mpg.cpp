@@ -352,6 +352,7 @@ KImg2mpgData::KImg2mpgData(QWidget *parent, const char *name)
 
   m_ImageLabel = new QLabel( m_ImagesFilesGroup );
   m_ImageLabel->setMinimumWidth( 120 );
+  m_ImageLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
   m_ImageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
   m_ImageLabel->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
   QWhatsThis::add( m_ImageLabel, i18n( "Preview the current selected image." ) );
