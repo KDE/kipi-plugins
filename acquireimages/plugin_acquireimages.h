@@ -31,7 +31,6 @@
 
 class KScanDialog;
 class KAction;
-class KActionMenu;
 
 class AcquireImageDialog;
 class ScreenGrabDialog;
@@ -51,7 +50,6 @@ public slots:
   void slotAcquireImageDone(const QImage &img);
 
 private:
-  KActionMenu        *m_action_acquire;
   KAction            *m_action_scanimages;
   KAction            *m_action_screenshotimages;
   KScanDialog        *m_scanDialog;

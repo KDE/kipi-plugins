@@ -48,6 +48,7 @@
 #include "acquireimagedialog.h"
 
 typedef KGenericFactory<Plugin_AcquireImages> Factory;
+
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_acquireimages,
                             Factory("kipiplugin_acquireimages"));
 
@@ -61,9 +62,6 @@ Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const char*, const Q
 void Plugin_AcquireImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    m_action_acquire = new KActionMenu(i18n("&Acquire images"),
-                                             actionCollection(),
-                                             "acquire");
 
     m_action_scanimages = new KAction (i18n("Scan Images..."),         // Menu message.
                                             "scanner",                 // Menu icon.
@@ -73,8 +71,6 @@ void Plugin_AcquireImages::setup( QWidget* widget )
                                             actionCollection(),
                                             "scan_images");
 
-    m_action_acquire->insert(m_action_scanimages);
-
     m_action_screenshotimages =  new KAction (i18n("Screenshot..."),   // Menu message.
                                             "ksnapshot",               // Menu icon.
                                             0,                         // default shortcut.
@@ -83,8 +79,8 @@ void Plugin_AcquireImages::setup( QWidget* widget )
                                             actionCollection(),
                                             "screenshot_images");
 
-    m_action_acquire->insert(m_action_screenshotimages);
-    addAction( m_action_acquire );
+    addAction( m_action_scanimages );
+    addAction( m_action_screenshotimages );
 }
 
 
@@ -146,11 +142,12 @@ void Plugin_AcquireImages::slotAcquireImageDone(const QImage &img)
     m_acquireImageDialog->exec();
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 KIPI::Category Plugin_AcquireImages::category( KAction* action ) const
 {
-    if ( action == m_action_acquire )
-       return KIPI::IMPORTPLUGIN;
-    else if ( action == m_action_scanimages )
+    if ( action == m_action_scanimages )
        return KIPI::IMPORTPLUGIN;
     else if ( action == m_action_screenshotimages )
        return KIPI::IMPORTPLUGIN;
