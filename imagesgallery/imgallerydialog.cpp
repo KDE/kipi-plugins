@@ -727,13 +727,13 @@ void KIGPDialog::setOpenGalleryInWebBrowser(bool Value)
 
 bool KIGPDialog::getCreatePageForPhotos() const
 {
-	return m_createPageForPhotos->isChecked();
+    return m_createPageForPhotos->isChecked();
 }
 
 
 void KIGPDialog::setCreatePageForPhotos(bool Value)
 {
-	m_createPageForPhotos->setChecked(Value);
+    m_createPageForPhotos->setChecked(Value);
 }
 
 
