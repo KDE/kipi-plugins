@@ -40,3 +40,4 @@ messages: rc.cpp
 		$(XGETTEXT) $$LIST -o $(podir)/kipiplugins.pot; \
 	fi
 	rm -f tips.cpp
+
