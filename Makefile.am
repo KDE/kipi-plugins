@@ -16,11 +16,18 @@ if compile_TIMEADJUST
 TIMEADJUSTDIR = timeadjust
 endif
 
+if compile_ACQUIREIMAGES
+ACQUIREIMAGESDIR = acquireimages
+endif
+
+if compile_RAWCONVERTER
+RAWCONVERTERDIR = rawconverter
+endif
+
 SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery \
-	sendimages acquireimages batchprocessimages \
-	wallpaper rawconverter findimages galleryexport \
+	sendimages batchprocessimages wallpaper findimages galleryexport \
 	$(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(JPEGLOSSLESSDIR) \
-	$(TIMEADJUSTDIR)
+	$(TIMEADJUSTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR)
 
 rcdir = $(kde_datadir)/kipi
 rc_DATA = tips

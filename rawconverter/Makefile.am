@@ -20,7 +20,7 @@ bin_PROGRAMS = kipidcrawclient
 
 kipidcrawclient_SOURCES = dcrawprocess.cpp
 
-kipidcrawclient_LDFLAGS = -lm -ljpeg -ltiff $(all_libraries)
+kipidcrawclient_LDFLAGS = -lm -ljpeg $(LIB_TIFF) $(all_libraries)
 
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = kipiplugin_rawconverter.desktop

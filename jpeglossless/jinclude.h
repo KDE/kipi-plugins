@@ -92,5 +92,5 @@
 #define JFWRITE(file,buf,sizeofbuf)  \
   ((size_t) fwrite((const void *) (buf), (size_t) 1, (size_t) (sizeofbuf), (file)))
 
-#endif JINCLUDE_H
+#endif /*JINCLUDE_H*/
 

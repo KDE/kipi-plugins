@@ -1,3 +1,10 @@
+if test "x$have_libkipi" != "xyes"; then
+  echo ""
+  echo "You're missing libkipi. kipi-plugins will not be compiled."
+  echo ""
+  all_tests=bad
+fi
+
 if test -z "$ac_imlib2_config"; then
   echo ""
   echo "You're missing Imlib2. The slideshow plugin won't be compiled without Imlib2."
@@ -5,9 +12,23 @@ if test -z "$ac_imlib2_config"; then
   all_tests=bad
 fi
 
-if test "x$have_libkipi" != "xyes"; then
+if test "x$have_tiff" != "xyes"; then
   echo ""
-  echo "You're missing libkipi. kipi-plugins will not be compiled."
+  echo "You're missing libtiff. The acquireimages, jpeglossless and rawconverter plugins will not be compiled."
+  echo ""
+  all_tests=bad
+fi
+
+if test "x$have_GL" != "xyes"; then
+  echo ""
+  echo "You're missing OpenGL support. The slideshow plugin will not be compiled."
+  echo ""
+  all_tests=bad
+fi
+
+if test "x$have_gphoto" != "xyes"; then
+  echo ""
+  echo "You're missing libgphoto2. The kameraklient plugin will not be compiled."
   echo ""
   all_tests=bad
 fi

@@ -95,7 +95,13 @@ at this url :
 http://bugs.kde.org/buglist.cgi?product=kipiplugins&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED
 
 
-Depencies :
+Notes :
+------------------------------------------------------------------------
+
+- More specific compilation and installation options can be used with the 'configure' script.
+Check this with './configure --help' command line.
+
+Dependencies :
 -----------------------------------------------------------------------
 AutoConf >= 2.5
 AutoMake >= 1.7.0
@@ -108,17 +114,20 @@ MJPEGTools >= 1.6.0
 dcRAW >= 5.02
 libtiff >= 3.5.x
 
-Notes :
-------------------------------------------------------------------------
+Plugin Specific Dependencies (for compiling and for running) :
+-------------------------------------------------------------------------
 
-- More specific compilation and installation options can be used with the 'configure' script.
-Check this with './configure --help' command line.
-
-- The slideshow plugin needs OpenGL support to compile. If OpenGL support is not
-available or you don't want to compile the slideshow plugin use 
-'./configure --without-opengl'.
-
-- Some plugins can be disabled during the build process. Check the end of 'configure.in.in' file
-and decomment the plugin lines corresponding. Then start the installation procedure.
+Requirements: kde >= 3.1.x, libkipi >= 0.1
+specific plugin specific requirements:
+jpeglossless : libkexif >= 0.1, libtiff >= 3.0
+slideshow    : libimlib2 >= 1.0.x, OpenGL support for libqt
+batchprocessimages : imagemagick (runtime dependency)
+cdarchiving   : k3b (runtime dependency)
+kameraklient  : libgphoto2 >= 2.x
+mpegenconder  : mjpegtools (runtime dependency)
+wallpaper     : kdebase >= 3.1.x (runtime dependency)
+rawconverter  : libtiff >= 3.0
+acquireimages : libtiff >= 3.0
+timeadjust    : libkexif >= 0.1
 
 
