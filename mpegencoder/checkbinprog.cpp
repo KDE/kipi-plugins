@@ -69,13 +69,13 @@ int CheckBinProg::findExecutables( void )
 
   if (ImageMagickPath.isEmpty())
         {
-        KMessageBox::error(0, i18n("Your 'ImageMagick' binary programs path is empty.\nSetting to default value. Check options settings!"));
+        KMessageBox::error(0, i18n("Your 'ImageMagick' binary program path is empty;\nsetting to default value. Check option's setting."));
         return (ValRet);
         }
 
 if (MjpegToolsPath.isEmpty())
         {
-        KMessageBox::error(0, i18n("Your 'MjpegTools' binary programs path is empty.\nSetting to default value. Check options settings!"));
+        KMessageBox::error(0, i18n("Your 'MjpegTools' binary programs path is empty;\nsetting to default value. Check option's setting."));
         return (ValRet);
         }
 
@@ -84,44 +84,44 @@ if (MjpegToolsPath.isEmpty())
   // ImageMagick external programs.
 
   if (montage.exists(QString (ImageMagickPath+"/montage")) == FALSE)
-    str = i18n("Cannot find 'montage' binary program from ImageMagick package ! Please install it...");
+    str = i18n("Cannot find 'montage' binary program from ImageMagick package; please install it....");
 
   if (composite.exists(QString (ImageMagickPath+"/composite")) == FALSE)
-    str = i18n("Cannot find 'composite' binary program from ImageMagick package ! Please install it...");
+    str = i18n("Cannot find 'composite' binary program from ImageMagick package; please install it....");
 
   if (convert.exists(QString (ImageMagickPath+"/convert")) == FALSE)
-    str = i18n("Cannot find 'convert' binary program from ImageMagick package ! Please install it...");
+    str = i18n("Cannot find 'convert' binary program from ImageMagick package; please install it....");
 
   if (identify.exists(QString (ImageMagickPath+"/identify")) == FALSE)
-    str = i18n("Cannot find 'identify' binary program from ImageMagick package ! Please install it...");
+    str = i18n("Cannot find 'identify' binary program from ImageMagick package; please install it....");
 
   // MjpegTools external programs.
 
   if (ppmtoy4m.exists(QString (MjpegToolsPath+"/ppmtoy4m")) == FALSE)
-    str = i18n("Cannot find 'ppmtoy4m' binary program from MjpegTools package ! Please install it...");
+    str = i18n("Cannot find 'ppmtoy4m' binary program from MjpegTools package; please install it....");
 
   if (yuvscaler.exists(QString (MjpegToolsPath+"/yuvscaler")) == FALSE)
-    str = i18n("Cannot find 'yuvscaler' binary program from MjpegTools package ! Please install it...");
+    str = i18n("Cannot find 'yuvscaler' binary program from MjpegTools package; please install it....");
 
   if (mpeg2enc.exists(QString (MjpegToolsPath+"/mpeg2enc")) == FALSE)
-    str = i18n("Cannot find 'mpeg2enc' binary program from MjpegTools package ! Please install it...");
+    str = i18n("Cannot find 'mpeg2enc' binary program from MjpegTools package; please install it....");
 
   if (  mplex.exists(QString (MjpegToolsPath+"/mplex")) == FALSE)
-    str = i18n("Cannot find 'mplex' binary program from MjpegTools package ! Please install it...");
+    str = i18n("Cannot find 'mplex' binary program from MjpegTools package; please install it....");
 
   if (mp2enc.exists(QString (MjpegToolsPath+"/mp2enc")) == FALSE)
     {
-    str = i18n("Cannot find 'mp2enc' binary program from MjpegTools package ! Please install it...\n"
+    str = i18n("Cannot find 'mp2enc' binary program from MjpegTools package; please install it...\n"
                "Audio capabilities will be disable !");
     ValRet = 2;
     }
 
   if (str != "")
     {
-    str=str+i18n("\nCheck your installation and this plugin options settings."
-                 "\n\nPlease, visit this URLs for more informations:"
-                 "\nImageMagick package : http://www.imagemagick.org/"
-                 "\nMjpegTools package : http://mjpeg.sourceforge.net/");
+    str=str+i18n("\nCheck your installation and this plugin's options settings."
+                 "\n\nVisit these URLs for more information:"
+                 "\nImageMagick package: http://www.imagemagick.org/"
+                 "\nMjpegTools package: http://mjpeg.sourceforge.net/");
     KMessageBox::error(0, str);
     return (ValRet);
     }

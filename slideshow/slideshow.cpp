@@ -364,7 +364,7 @@ void SlideShow::showEndOfShow()
 
     p.setFont(fn);
     p.setPen(Qt::white);
-    p.drawText(100, 100, i18n("SlideShow Completed!"));
+    p.drawText(100, 100, i18n("SlideShow Completed."));
     p.drawText(100, 150, i18n("Click To Exit..."));
     p.end();
 }

@@ -197,7 +197,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   // Video format selection.
 
-  m_label1 = new QLabel(i18n("Video format and type :"), this);
+  m_label1 = new QLabel(i18n("Video format and type:"), this);
   g1->addWidget( m_label1, 0, 0, AlignLeft );
 
   m_VideoFormatComboBox = new QComboBox( false, this, "Video_Format_ComboBox" );
@@ -207,12 +207,12 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_VideoFormatComboBox->insertItem("VCD");
   m_VideoFormatComboBox->insertItem("DVD");
   QWhatsThis::add( m_VideoFormatComboBox,
-     i18n( "This option specify the video format for your MPEG file. "
-     "For a very good photographic restitution on TV screen, select "
-     "'XVCD' (it's the same DVD resolution), "
-     "but some old DVD players can't read this format. "
-     "'VCD'/'SVCD' are more compatible with the DVD player, "
-     "but the are a medium photographic restitution on TV screen "
+     i18n( "This option specifies the video format for your MPEG file. "
+     "For a high photographic resolution on a TV screen, select "
+     "'XVCD' (it is the same DVD resolution); "
+     "although some old DVD players cannot read this format. "
+     "'VCD'/'SVCD' are more compatible with DVD players, "
+     "but they are only medium resolution. "
      "DVD is an experimental option." ) );
 
   // Video type selection.
@@ -223,8 +223,8 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_VideoTypeComboBox->insertItem("NTSC");
   m_VideoTypeComboBox->insertItem("SECAM");
   QWhatsThis::add( m_VideoTypeComboBox,
-     i18n( "This option specify the video type for your MPEG file. "
-     "NTSC is an american TV standard, PAL/SECAM is European." ) );
+     i18n( "This option specifies the video type for your MPEG file. "
+     "NTSC is an American TV standard; PAL/SECAM is European." ) );
 
   connect( m_VideoTypeComboBox, SIGNAL( activated(int ) ),
            this, SLOT( SlotPortfolioDurationChanged (int) ) );
@@ -237,9 +237,9 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_DurationImageSpinBox = new QSpinBox( 1, 999, 1 , this, "Duration_Image_SpinBox" );
   g1->addWidget( m_DurationImageSpinBox, 2, 1, AlignLeft );
   QWhatsThis::add( m_DurationImageSpinBox,
-     i18n( "This option specify the duration for each image in your MPEG file. "
-     "10 seconds is a good value for an images portfolio. "
-     "Warning : you can have some problems with your DVD player if "
+     i18n( "This option specifies the duration for each image in your MPEG file. "
+     "10 seconds is a good value for an image portfolio. "
+     "Warning: you may have some problems with your DVD player if the "
      "total MPEG duration is under 3 seconds."));
 
   connect( m_DurationImageSpinBox, SIGNAL( valueChanged(int ) ),
@@ -260,16 +260,16 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_TransitionComboBox->insertItem("10");
   m_TransitionComboBox->insertItem("20");
   QWhatsThis::add( m_TransitionComboBox,
-     i18n( "This option specify the transition speed between images in your MPEG file. "
-     "'1' is a slow transition and '20' is very fast transition. "
-     "'2' is a good value for an images portofio." ) );
+     i18n( "This option specifies the transition speed between images in your MPEG file. "
+     "'1' is a slow transition and '20' is a very fast transition. "
+     "'2' is a good value for an image portfolio." ) );
 
   connect( m_TransitionComboBox, SIGNAL( activated(int ) ),
            this, SLOT( SlotPortfolioDurationChanged (int) ) );
 
   // Background color selection.
 
-  m_label5 = new QLabel(i18n("Background color :"), this);
+  m_label5 = new QLabel(i18n("Background color:"), this);
   g1->addWidget( m_label5, 4, 0, AlignLeft );
 
   // Black (default background color).
@@ -280,8 +280,8 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   g1->addWidget( m_BackgroundColorButton, 4, 1, AlignLeft );
   QWhatsThis::add( m_BackgroundColorButton,
      i18n( "You can select here the background color for your portfolio. "
-     "This color is used for adapt the image size with the TV screen size. "
-     "Black color is a good value for this. " ));
+     "This color is used to pad the image size to fit the TV screen size. "
+     "Black is a good value for this. " ));
 
   // MPEG output filename selection.
 
@@ -293,9 +293,9 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_MPEGOutputBUTTONFilename = new QPushButton( m_MPEGOutputFilename );
   m_MPEGOutputBUTTONFilename->setPixmap( LoadIcon( QString( "fileopen" ), KIcon::Toolbar ) );
   QWhatsThis::add( m_MPEGOutputEDITFilename,
-     i18n( "You can specify here the output MPEG file name. "
-     "Warning : MPEG files are very big files (when you use many images in your portfolio). "
-     "Select a folder with a big space disk. ") );
+     i18n( "You can specify here the output MPEG filename. "
+     "Warning : MPEG files are very big (if you have many images in your portfolio). "
+     "Select a folder with a sufficient free disk space. ") );
 
   connect( m_MPEGOutputBUTTONFilename, SIGNAL( clicked() ),
            this, SLOT( slotMPEGFilenameDialog() ) );
@@ -311,25 +311,25 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_AudioInputBUTTONFilename->setPixmap( LoadIcon( QString( "fileopen" ), KIcon::Toolbar ) );
   QWhatsThis::add( m_AudioInputEDITFilename,
      i18n( "You can specify here the input audio file name. "
-     "This audio file name will be multiplexed with the portfolio video flux. "
-     "Warning : if the audio duration is too long, it will be truncated." ) );
+     "This audio file name will be multiplexed with the portfolio video. "
+     "Warning: if the audio duration is too long, it will be truncated." ) );
 
   connect( m_AudioInputBUTTONFilename, SIGNAL( clicked() ),
            this, SLOT( slotAudioFilenameDialog() ) );
 
   // Images files list and the control buttons.
 
-  m_ImagesFilesGroup = new QGroupBox(3, Qt::Horizontal, i18n( "Images files portfolio" ), this );
+  m_ImagesFilesGroup = new QGroupBox(3, Qt::Horizontal, i18n( "Image files in portfolio" ), this );
   v1->addWidget( m_ImagesFilesGroup );
 
   m_ImagesFilesListBox = new ListImageItems( m_ImagesFilesGroup, "ListImageItems");
   m_ImagesFilesListBox->setSelectionMode (QListBox::Extended);
   m_ImagesFilesListBox->setMinimumWidth( 300 );
   QWhatsThis::add( m_ImagesFilesListBox,
-     i18n( "This is the list of images files for your portfolio. "
-     "The portfolio first image is on the top, the last image is on the bottom. "
-     "If you want to add some images click on 'Add' "
-     "button or use the drag and drop." ) );
+     i18n( "This is the list of the image files for your portfolio. "
+     "The portfolio's first image is on the top; the last image is on the bottom. "
+     "If you want to add some images, click on the 'Add' "
+     "button or use the drag-and-drop." ) );
 
   connect( m_ImagesFilesListBox, SIGNAL( currentChanged( QListBoxItem * ) ),
            this, SLOT( slotImagesFilesSelected(QListBoxItem *) ) );
@@ -339,13 +339,13 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   m_ImagesFilesButtonBox = new KButtonBox( m_ImagesFilesGroup, Vertical );
   m_ImagesFilesButtonAdd = m_ImagesFilesButtonBox->addButton( i18n( "&Add..." ) );
-  QWhatsThis::add( m_ImagesFilesButtonAdd, i18n( "Add some images files on the portfolio list." ) );
+  QWhatsThis::add( m_ImagesFilesButtonAdd, i18n( "Add some image files to the portfolio list." ) );
   m_ImagesFilesButtonDelete = m_ImagesFilesButtonBox->addButton( i18n( "&Delete" ) );
-  QWhatsThis::add( m_ImagesFilesButtonDelete, i18n( "Remove some images files on the portfolio list." ) );
-  m_ImagesFilesButtonUp = m_ImagesFilesButtonBox->addButton( i18n( "&Up image" ) );
-  QWhatsThis::add( m_ImagesFilesButtonUp, i18n( "Moving up the current image on the portfolio list." ) );
-  m_ImagesFilesButtonDown = m_ImagesFilesButtonBox->addButton( i18n( "D&own image" ) );
-  QWhatsThis::add( m_ImagesFilesButtonDown, i18n( "Moving down the current image on the portfolio list." ) );
+  QWhatsThis::add( m_ImagesFilesButtonDelete, i18n( "Remove some image files from the portfolio list." ) );
+  m_ImagesFilesButtonUp = m_ImagesFilesButtonBox->addButton( i18n( "Image &Up" ) );
+  QWhatsThis::add( m_ImagesFilesButtonUp, i18n( "Moving the current image up on the portfolio list." ) );
+  m_ImagesFilesButtonDown = m_ImagesFilesButtonBox->addButton( i18n( "Image D&own" ) );
+  QWhatsThis::add( m_ImagesFilesButtonDown, i18n( "Moving the current image down on the portfolio list." ) );
   m_ImagesFilesButtonBox->layout();
 
   connect( m_ImagesFilesButtonAdd, SIGNAL( clicked() ),
@@ -364,12 +364,12 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_ImageLabel->setMinimumWidth( 120 );
   m_ImageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
   m_ImageLabel->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-  QWhatsThis::add( m_ImageLabel, i18n( "Preview the current selected image." ) );
+  QWhatsThis::add( m_ImageLabel, i18n( "Preview the currently selected image." ) );
 
   m_label6 = new QLabel(m_ImagesFilesGroup);
   QWhatsThis::add( m_label6, i18n( "Total number of images in the portfolio and sequence duration." ) );
   m_label7 = new QLabel(m_ImagesFilesGroup);
-  QWhatsThis::add( m_label7, i18n( "Current selected image in the portfolio list." ) );
+  QWhatsThis::add( m_label7, i18n( "Currently selected image in the portfolio list." ) );
 
   // Encode push button.
 
@@ -378,7 +378,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_Encodebutton->setText(i18n( "&Encode") );
   m_Encodebutton->setAutoRepeat( false );
   QWhatsThis::add( m_Encodebutton, i18n( "Start the portfolio MPEG encoding. "
-                                         "The program use the 'images2mpg' bash script. " ) );
+                                         "The program uses the 'images2mpg' bash script. " ) );
 
   connect(m_Encodebutton, SIGNAL(clicked()), 
           this, SLOT(slotEncode()));
@@ -561,7 +561,7 @@ void KImg2mpgData::slotImagesFilesButtonUp( void )
 
   if  (Cpt > 1)
     {
-    KMessageBox::error(this, i18n("You can just moving up one selected image file name !"));
+    KMessageBox::error(this, i18n("You can only move up one image file at once."));
     return;
     }
 
@@ -650,7 +650,7 @@ void KImg2mpgData::slotImagesFilesButtonDown( void )
 
   if (Cpt > 1)
     {
-    KMessageBox::error(this, i18n("You can just moving down one selected image file name !"));
+    KMessageBox::error(this, i18n("You can only move down one image file at once."));
     return;
     }
 
@@ -696,7 +696,7 @@ void KImg2mpgData::slotEncode( void )
     {
     int Ret = KMessageBox::questionYesNo(this,
         i18n("Do you really abort this encoding process ?\n\n"
-             "Warning : all works will be lost ! "));
+             "Warning: all work so-far will be lost."));
     if (Ret == KMessageBox::Yes)
       {
       m_Abort = true;
@@ -712,20 +712,20 @@ void KImg2mpgData::slotEncode( void )
 
   if (OutputFileName.isEmpty())
     {
-    KMessageBox::error(this, i18n("You must specify an MPEG output file name !"));
+    KMessageBox::error(this, i18n("You must specify an MPEG output file name."));
     return;
     }
 
   if (m_ImagesFilesListBox->count() == 0)
     {
-    KMessageBox::error(this, i18n("You must specify some input images files in the portfolio !"));
+    KMessageBox::error(this, i18n("You must specify some input images files in the portfolio."));
     return;
     }
 
   if (QFile::exists(OutputFileName))
     {
-    int Ret=KMessageBox::questionYesNo(this, i18n("The output MPEG file '%1' already exist !\n"
-                                                  "Do you want overwrite this file ?").arg(OutputFileName));
+    int Ret=KMessageBox::questionYesNo(this, i18n("The output MPEG file '%1' already exists.\n"
+                                                  "Do you want overwrite this file?").arg(OutputFileName));
     if (Ret == KMessageBox::No)
       return;
     }
@@ -733,7 +733,7 @@ void KImg2mpgData::slotEncode( void )
   m_ImagesFilesListBox->clearSelection();
   m_Encodebutton->setText(i18n("A&bort"));
   QWhatsThis::add( m_Encodebutton, i18n( "Abort the portfolio MPEG encoding. "
-                                         "Warning : all works will be lost..." ) );
+                                         "Warning: all work so-far will be lost...." ) );
 
   m_optionsbutton->setEnabled(false);
   m_VideoFormatComboBox->setEnabled(false);
@@ -900,10 +900,10 @@ void KImg2mpgData::slotOptionDlgOkClicked( void )
 
 void KImg2mpgData::slotAbout( void )
 {
-  KMessageBox::about(this, i18n("A KIPI plugin for MPEG images encoding\n\n"
+  KMessageBox::about(this, i18n("A KIPI plugin for MPEG image encoding.\n\n"
                                 "Author: Gilles Caulier\n\n"
                                 "Email: caulier dot gilles at free.fr"),
-                                i18n("About MPEG encoder"));
+                                i18n("About the MPEG Image Encoder"));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -980,7 +980,7 @@ void KImg2mpgData::readStderr(KProcess *, char *buffer, int buflen)
       if (ImgNum == 0)
         ImgNum = 1;
 
-      m_frame->setText(i18n("Encoding images files [%1/%2]...")
+      m_frame->setText(i18n("Encoding image file [%1/%2]...")
                        .arg(ImgNum).arg(m_ImagesFilesListBox->count()));
 
       if (ImgNum > 1)
@@ -1020,16 +1020,16 @@ void KImg2mpgData::readStderr(KProcess *, char *buffer, int buflen)
       m_Abort = true;
       reset();
       int Ret=KMessageBox::warningYesNo(this,
-                                 i18n("The 'images2mpg' script has returned an error during the MPEG encoding !\n"
-                                      "The processus has been aborted !\n\n"
+                                 i18n("The 'images2mpg' script has returned an error during the MPEG encoding;\n"
+                                      "the process has been aborted.\n\n"
                                       "Send a mail to the author..."),
-                                 i18n("'images2mpg' script execution problem"),
+                                 i18n("'images2mpg' script-execution problem"),
                                  i18n("OK"),
                                  i18n("Show debugging output"));
       if (Ret == KMessageBox::No)
         {
         m_DebuggingDialog = new KShowDebuggingOutput(m_DebugOuputMessages, m_CommandLine,
-                            i18n ("\nEXIT STATUS : error during encoding process !!!"), this);
+                            i18n ("\nEXIT STATUS : error during encoding process."), this);
         m_DebuggingDialog->exec();
         }
       }
@@ -1052,16 +1052,16 @@ void KImg2mpgData::EncodeDone(KProcess*)
     {
     m_frame->setText(i18n("Encoding terminated..."));
     int Ret=KMessageBox::warningYesNo(this,
-                         i18n("The encoding process is terminated...\n\n"
-                         "Encoding duration : %1").arg(Encoding),
+                         i18n("The encoding process has terminated...\n\n"
+                         "Encoding duration: %1").arg(Encoding),
                          i18n("'images2mpg' script execution terminated"),
                          i18n("OK"),
-                         i18n("Show processus messages"));
+                         i18n("Show process messages"));
 
     if (Ret == KMessageBox::No)
       {
       m_DebuggingDialog = new KShowDebuggingOutput(m_DebugOuputMessages, m_CommandLine,
-                          i18n ("\nEXIT STATUS : encoding process finished successfully !!!"),
+                          i18n ("\nEXIT STATUS : encoding process finished successfully."),
                           this);
       m_DebuggingDialog->exec();
       }
@@ -1070,16 +1070,16 @@ void KImg2mpgData::EncodeDone(KProcess*)
     {
     m_frame->setText(i18n("Encoding aborted..."));
     int Ret=KMessageBox::warningYesNo(this,
-                         i18n("The encoding process have been aborted...\n\n"
-                         "Encoding duration : %1").arg(Encoding),
+                         i18n("The encoding process has been aborted...\n\n"
+                         "Encoding duration: %1").arg(Encoding),
                          i18n("'images2mpg' script execution aborted"),
                          i18n("OK"),
-                         i18n("Show processus messages"));
+                         i18n("Show process messages"));
 
     if (Ret == KMessageBox::No)
       {
       m_DebuggingDialog = new KShowDebuggingOutput(m_DebugOuputMessages, m_CommandLine,
-                        i18n ("\nEXIT STATUS : encoding process aborted by user !!!"), this);
+                        i18n ("\nEXIT STATUS : encoding process aborted by user."), this);
       m_DebuggingDialog->exec();
       }
     }
@@ -1105,8 +1105,8 @@ void KImg2mpgData::closeEvent(QCloseEvent* e)
     if (m_Encoding)
     {
         int Ret =
-            KMessageBox::questionYesNo(this, i18n("An encoding process is active !\n"
-                                                  "Abort this process and exit ?"));
+            KMessageBox::questionYesNo(this, i18n("An encoding process is active;\n"
+                                                  "abort this process and exit ?"));
         if (Ret == KMessageBox::Yes)
         {
             m_Abort = true;
@@ -1129,7 +1129,7 @@ void KImg2mpgData::closeEvent(QCloseEvent* e)
 
 void KImg2mpgData::show()
 {
-  setCaption(i18n("MPEG encoder KIPI plugin"));
+  setCaption(i18n("MPEG Encoder KIPI Plugin"));
   KDialog::show();
 }
 

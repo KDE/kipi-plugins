@@ -263,8 +263,7 @@ void FrmPrintWizard::FrmPrintWizardBaseSelected(const QString &)
           args << (*it);
       if (!launchExternalApp(args))
       {
-        KMessageBox::sorry(this, i18n("There was an error launching Gimp.  Please make sure Gimp is properly installed."), i18n("KIPI"));
-        return;
+        KMessageBox::sorry(this, i18n("There was an error launching the Gimp; please make sure it is properly installed."), i18n("KIPI"));         return;
       }
 
     }
@@ -391,7 +390,7 @@ void FrmPrintWizard::removeGimpFiles()
       {
         if (QFile::remove(*it) == false)
         {
-          KMessageBox::sorry(this, i18n("I could not remove the gimp temp files."));
+          KMessageBox::sorry(this, i18n("Could not remove the Gimp's temporary files."));
           break;
         }
       }

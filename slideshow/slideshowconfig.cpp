@@ -286,7 +286,7 @@ void SlideShowConfig::slotOkClicked()
 
 void SlideShowConfig::slotAboutClicked()
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for images slideshow\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for image slideshows\n\n"
                                   "Author: Renchi Raju\n\n"
                                   "Email: renchi@pooh.tam.uiuc.edu"),
                                   i18n("About SlideShow"));

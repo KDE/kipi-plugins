@@ -98,8 +98,8 @@ bool checkTempPath(QWidget *parent, QString tempPath)
         if (!tempDir.mkdir(tempDir.path()))
         {
         KMessageBox::sorry(parent,
-          i18n("I could not create the temp directory. "
-               "Please make sure you have proper permissions to this directory and try again."));
+          i18n("Unable to create a temporary directory; "
+               "please make sure you have proper permissions to this directory and try again."));
         return false;
         }
   }

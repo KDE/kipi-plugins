@@ -425,7 +425,7 @@ Click the 'Next' button to begin.</string>
                                                     <bool>false</bool>
                                                 </property>
                                                 <property name="text">
-                                                    <string>THis wizard will output each page to this folder with the filename kipi_printwizard_1, kipi_printwizard_2, etc.</string>
+                                                    <string>This wizard will output each page to this folder with the filename kipi_printwizard_1, kipi_printwizard_2, etc.</string>
                                                 </property>
                                                 <property name="alignment">
                                                     <set>WordBreak|AlignVCenter</set>
