@@ -1,7 +1,23 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Calendar
+Name[br]=Deiziadur
+Name[cy]=Calendr
+Name[da]=Kalender
+Name[it]=Calendario
+Name[nl]=Kalender
+Name[pt]=Calendário
+Name[pt_BR]=Calendário
+Name[sv]=Kalender
 Comment=KIPI Calendar Creation Wizard Plugin
+Comment[da]=KIPI Kalenderfremstillingsguide-plugin
+Comment[de]=Ein KIPI Plugin zum Erstellen von Kalendern
+Comment[fr]=Module externe Kipi pour la création d'un calendrier
+Comment[it]=Plugin assistente per la creazione di calendari di KIPI
+Comment[nl]=Kipi-plugin voor het maken van een kalender
+Comment[pt]='Plugin' KIPI de Assistente de Criação de Imagens
+Comment[pt_BR]='Plugin' KIPI de Assistente de Criação de Imagens
+Comment[sv]=KIPI-insticksprogram: Guide för att skapa kalender
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_calendar

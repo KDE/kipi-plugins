@@ -1,7 +1,21 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=CDArchiving
+Name[da]=CD-arkivering
+Name[it]=ArchiviazioneSuCD
+Name[nl]=CD-archievering
+Name[pt]=ArquivoCD
+Name[pt_BR]=ArquivoCD
+Name[sv]=Cd-arkivering
 Comment=KIPI Albums CD and DVD Archiving Plugin
+Comment[da]=KIPI Albumarkivering på CD og DVD-plugin
+Comment[de]=Ein KIPI Plugin zur CD und DVD Archivierung von Alben
+Comment[fr]=Module externe Kipi pour l'archivage sur CD et DVD
+Comment[it]=Plugin di archiviazione degli album su CD e DVD di KIPI
+Comment[nl]=Kipi-plugin voor het maken van een cd/dvd-archief
+Comment[pt]='Plugin' KIPI de Arquivo de Álbuns em CDs e DVDs
+Comment[pt_BR]='Plugin' KIPI de Arquivo de Álbuns em CDs e DVDs
+Comment[sv]=KIPI-insticksprogram: Arkivering av album på cd eller dvd
 Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service

@@ -1,14 +1,20 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=HelloWorld
+Name[da]=Hej verden
+Name[it]=CiaoMondo
+Name[nl]=Hallo wereld
+Name[pt]=OláMundo
+Name[pt_BR]=OláMundo
+Name[sv]=Hello world
 Comment=KIPI Hello World Plugin
-Comment[de]=Ein Tutorial zur Erstellung von KIPI Modulen
-Comment[es]=Tutorial para escribir un complemento de KIPI
-Comment[fr]=Un tutoriel pour l'écriture d'un module externe de KIPI
-Comment[da]=KIPI plugin tutorial
-Comment[pl]=Wtyczka szkoleniowa dla programu KIPI
-Comment[nl]=Handleiding voor het schrijven van KIPI plugins
-Comment[hu]=KIPI Hello Világ plugin
+Comment[da]=KIPI Hej verden-plugin
+Comment[fr]=Module externe Kipi « HelloWorld »
+Comment[it]=Plugin ciao mondo di KIPI
+Comment[nl]=Kipi-plugin voor "Hallo wereld"
+Comment[pt]='Plugin' KIPI Olá Mundo
+Comment[pt_BR]='Plugin' KIPI Olá Mundo
+Comment[sv]=KIPI-insticksprogram: Hello world
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_helloworld

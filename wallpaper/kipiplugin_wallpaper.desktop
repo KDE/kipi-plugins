@@ -1,7 +1,21 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=WallPaper
+Name[da]=Baggrundsbillede
+Name[it]=Sfondo
+Name[nl]=Bureaubladachtergrond
+Name[pt]=Papel de Parede
+Name[pt_BR]=Papel de Parede
+Name[sv]=Skrivbordsunderlägg
 Comment=KIPI Set Wall Paper Plugin
+Comment[da]=KIPI Sæt baggrundsbillede-plugin
+Comment[de]=Ein KIPI Plugin, um das Hintergrundbild zu setzen
+Comment[fr]=Module externe Kipi pour placer des images en fond d'écran
+Comment[it]=Plugin di impostazione dello sfondo di KIPI
+Comment[nl]=Kipi-plugin voor het instellen van de bureaubladachtergrond
+Comment[pt]='Plugin' para Mudar o Papel de Parede do KIPI
+Comment[pt_BR]='Plugin' para Mudar o Papel de Parede do KIPI
+Comment[sv]=KIPI-insticksprogram: Ange skrivbordsunderlägg
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_wallpaper

@@ -1,7 +1,21 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=SendImages
+Name[da]=Send billeder
+Name[it]=InviaImmagini
+Name[nl]=Afbeeldingen verzenden
+Name[pt]=EnviarImagens
+Name[pt_BR]=EnviarImagens
+Name[sv]=Skicka bilder
 Comment=KIPI EMail Images Plugin
+Comment[da]=KIPI Send billeder-plugin
+Comment[de]=Ein KIPI Plugin zum Senden von Bildern
+Comment[fr]=Module externe Kipi pour envoyer des images par E-mail
+Comment[it]=Plugin di invio immagini di KIPI
+Comment[nl]=Kipi-plugin voor het verzenden van afbeeldingen via e-mail
+Comment[pt]='Plugin' para Envio de Imagens por E-mail do KIPI
+Comment[pt_BR]='Plugin' para Envio de Imagens por E-mail do KIPI
+Comment[sv]=KIPI-insticksprogram: Skicka bilder med e-post
 Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service

@@ -1,7 +1,21 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=TimeDateAdjust
+Name[da]=Tid- og datojustering
+Name[it]=RegolazioneDataOra
+Name[nl]=Tijd/datum bijstellen
+Name[pt]=AjusteHoraData
+Name[pt_BR]=AjusteHoraData
+Name[sv]=Justera datum och tid
 Comment=KIPI Time and Date Adjust
+Comment[da]=KIPI Tid- og datojusterings-plugin
+Comment[de]=Ein KIPI Plugin zum Ändern von Zeit und Datum
+Comment[fr]=Module externe Kipi pour ajuster la date
+Comment[it]=Regolazione di data e ora di KIPI
+Comment[nl]=Kipi-plugin voor het bijstellen van de datum/tijd
+Comment[pt]='Plugin' KIPI de Ajuste de Hora e Data
+Comment[pt_BR]='Plugin' KIPI de Ajuste de Hora e Data
+Comment[sv]=KIPI-insticksprogram: Justera datum och tid
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_timeadjust

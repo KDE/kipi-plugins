@@ -1,7 +1,21 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=JPEGLossless
+Name[da]=Tabsfri JPEG
+Name[it]=JPEGSenzaPerdita
+Name[nl]=JPEG-lossless
+Name[pt]=JPEGSemPercas
+Name[pt_BR]=JPEGSemPercas
+Name[sv]=Förlustfri JPEG
 Comment=KIPI JPEG Lossless Plugin
+Comment[da]=KIPI Tabsfri JPEG-plugin
+Comment[de]=Ein KIPI für verlustfreie Änderungen von JPEG Bildern
+Comment[fr]=Module externe Kipi pour les opérations JPEG sans perte
+Comment[it]=Plugin JPEG senza perdita di KIPI
+Comment[nl]=Kipi-plugin voor lossless-JPEG
+Comment[pt]='Plugin' KIPI para JPEG Sem Percas
+Comment[pt_BR]='Plugin' KIPI para JPEG Sem Percas
+Comment[sv]=KIPI-insticksprogram: Förlustfri JPEG
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_jpeglossless

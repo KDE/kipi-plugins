@@ -1,7 +1,21 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=MPEGEncoder
+Name[da]=MPEG-indkoder
+Name[it]=CodificaMPEG
+Name[nl]=MPEG-diavoorstelling
+Name[pt]=CodificadorMPEG
+Name[pt_BR]=CodificadorMPEG
+Name[sv]=MPEG-kodning
 Comment=KIPI Images MPEG Encoder Plugin
+Comment[da]=KIPI MPEG-indkoder-plugin
+Comment[de]=Ein KIPI Plugin um Bilder nach MPEG zu kodieren
+Comment[fr]=Module externe Kipi pour l'encodage MPEG d'images
+Comment[it]=Plugin di codifica MPEG delle immagini di KIPI
+Comment[nl]=Kipi-plugin voor het maken van MPEG-diavoorstellingen
+Comment[pt]='Plugin' KIPI de Codificação de Imagens em MPEG
+Comment[pt_BR]='Plugin' KIPI de Codificação de Imagens em MPEG
+Comment[sv]=KIPI-insticksprogram: MPEG-kodning
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_mpegencoder
