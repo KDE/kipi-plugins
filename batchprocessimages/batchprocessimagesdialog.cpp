@@ -481,7 +481,11 @@ bool BatchProcessImagesDialog::startProcess(void)
 
     KURL desturl(targetAlbum + "/" + item->nameDest());
 
-    if ( KIO::NetAccess::exists(desturl, false, kapp->activeWindow() ) == true )
+#if KDE_VERSION >= 0x30200
+    if ( KIO::NetAccess::exists( desturl, false, kapp->activeWindow() ) == true )
+#else
+    if ( KIO::NetAccess::exists( desturl ) == true )
+#endif
        {
        switch (overwriteMode())
           {
@@ -691,7 +695,11 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
             {
             KURL deleteImage(item->pathSrc());
 
+#if KDE_VERSION >= 0x30200
             if ( KIO::NetAccess::del( deleteImage, kapp->activeWindow() ) == false )
+#else
+            if ( KIO::NetAccess::del( deleteImage ) == false )
+#endif              
                 {
                 item->changeResult(i18n("Warning:"));
                 item->changeError(i18n("cannot remove original image file."));
@@ -847,7 +855,12 @@ void BatchProcessImagesDialog::slotPreviewProcessDone(KProcess* proc)
        previewDialog->exec();
 
        KURL deletePreviewImage(m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG");
+
+#if KDE_VERSION >= 0x30200
        KIO::NetAccess::del( deletePreviewImage, kapp->activeWindow() );
+#else
+       KIO::NetAccess::del( deletePreviewImage );
+#endif                
        }
     else
        {
@@ -1026,8 +1039,14 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
        {
        KURL deleteImage = m_upload->path();
        deleteImage.addPath(item->nameDest());
+       
+#if KDE_VERSION >= 0x30200
        if ( KIO::NetAccess::exists( deleteImage, false, kapp->activeWindow() ) == true )
           KIO::NetAccess::del( deleteImage, kapp->activeWindow() );
+#else
+       if ( KIO::NetAccess::exists( deleteImage ) == true )
+          KIO::NetAccess::del( deleteImage );
+#endif  
        }
 
     endProcess(i18n("Process aborted by user."));
@@ -1065,7 +1084,13 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
        NewDestUrl = fi->filePath().left( fi->filePath().findRev('.', -1)) + "_" + Temp
                     + "." + fi->filePath().section('.', -1 );
        }
-    while ( Enumerator < 100 && KIO::NetAccess::exists( NewDestUrl, true, kapp->activeWindow() ) == true );
+    while ( Enumerator < 100 && 
+#if KDE_VERSION >= 0x30200
+            KIO::NetAccess::exists( NewDestUrl, true, kapp->activeWindow() )
+#else
+            KIO::NetAccess::exists( NewDestUrl )
+#endif  
+            == true );
 
     if (Enumerator == 100) return QString::null;
 
