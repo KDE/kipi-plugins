@@ -42,6 +42,7 @@ class Plugin_SendImages : public KIPI::Plugin
 Q_OBJECT
 
 public:
+
    Plugin_SendImages(QObject *parent, const char* name, const QStringList &args);
    ~Plugin_SendImages();
    
@@ -49,11 +50,13 @@ public:
    virtual void setup( QWidget* );
   
 public slots:
+
    void slotActivate();
    void slotCancel();
    void slotAcceptedConfigDlg();
    
 private:
+
    int                               m_current;
    int                               m_total;
    

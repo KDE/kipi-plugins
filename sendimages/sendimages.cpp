@@ -100,25 +100,36 @@ void SendImages::showDialog()
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// List of threaded operations.
+// Execute the no threadable operations before the real thread.
 
-void SendImages::run()
+void SendImages::prepare(void)
 {
     m_filesSendList.clear();
     m_imagesResizedWithError.clear();
     m_imagesPackage.clear();
-    
-    KIPISendimagesPlugin::EventData *d;
-    KURL::List images = m_sendImagesDialog->m_images2send;
+    m_images = m_sendImagesDialog->m_images2send;
+    m_changeProp = m_sendImagesDialog->m_changeImagesProp->isChecked();
+    m_imageFormat = m_sendImagesDialog->m_imagesFormat->currentText();
+    m_sizeFactor = getSize( m_sendImagesDialog->m_imagesResize->currentItem() );
+    m_imageCompression = m_sendImagesDialog->m_imageCompression->value();
+}
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+// List of threaded operations.
+
+void SendImages::run()
+{
+    KIPISendimagesPlugin::EventData *d;
+    
     d = new KIPISendimagesPlugin::EventData;
     d->action = KIPISendimagesPlugin::Initialize;
     d->starting = true;
     d->success = false;
-    d->total = images.count();
+    d->total = m_images.count();
     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
         
-    for( KURL::List::Iterator it = images.begin() ; it != images.end() ; ++it )
+    for( KURL::List::Iterator it = m_images.begin() ; it != m_images.end() ; ++it )
         {
         QString imageName = (*it).path();
         QString ItemName = imageName.section( '/', -1 );
@@ -133,25 +144,22 @@ void SendImages::run()
         
         // Prepare resized target images to send.
 
-        if ( m_sendImagesDialog->m_changeImagesProp->isChecked() == true )
+        if ( m_changeProp == true )
            {
            // Prepare resizing images.
 
-           QString imageFormat = m_sendImagesDialog->m_imagesFormat->currentText();
            QString imageFileName = ItemName;
           
            QString imageNameFormat = (*it).directory().section('/', -1) + "-" + 
                                      imageFileName.replace(QChar('.'), "_") + 
-                                     extension(imageFormat);
-           int sizeFactor = getSize( m_sendImagesDialog->m_imagesResize->currentItem() );
-           int imageCompression = m_sendImagesDialog->m_imageCompression->value();
-
+                                     extension(m_imageFormat);
+           
            kdDebug (51000) << "Resizing ' " << imageName.ascii() << "-> '" 
                            << m_tmp.ascii() << imageNameFormat.ascii() 
-                           << "' (" << imageFormat.ascii() << ")" << endl;
+                           << "' (" << m_imageFormat.ascii() << ")" << endl;
 
-           if ( resizeImageProcess( imageName, m_tmp, imageFormat, imageNameFormat,
-                                    sizeFactor, imageCompression) == false )
+           if ( resizeImageProcess( imageName, m_tmp, m_imageFormat, imageNameFormat,
+                                    m_sizeFactor, m_imageCompression) == false )
                {
                // Resized images failed...
 

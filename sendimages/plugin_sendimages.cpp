@@ -122,6 +122,7 @@ void Plugin_SendImages::slotActivate()
 
 void Plugin_SendImages::slotAcceptedConfigDlg()
 {
+    m_sendImagesOperation->prepare();
     m_sendImagesOperation->start();
 }
 

@@ -56,6 +56,7 @@ class SendImages : public QObject, public QThread
 Q_OBJECT
 
 public:
+
    SendImages(KIPI::Interface* interface, const QString &tmpFolder, 
               const KIPI::ImageCollection& imagesCollection, QObject *parent=0);
                
@@ -63,18 +64,21 @@ public:
 
    virtual void run();
 
-   void showDialog();
-   bool showErrors();
+   void showDialog(void);
+   void prepare(void);
+   bool showErrors(void);
    void makeCommentsFile(void);
    void invokeMailAgent(void);
    void removeTmpFiles(void);
 
 private slots:   
+
    void slotMozillaTimeout(void);
    void slotMozillaExited(KProcess* proc);
    void slotMozillaReadStderr(KProcess* proc, char *buffer, int buflen);
    
 protected:
+
    KIPI::Interface       *m_interface;
 
    SendImagesDialog      *m_sendImagesDialog;
@@ -90,6 +94,14 @@ protected:
    QString                m_mozillaStdErr;
    QString                m_tmp;
 
+   bool                   m_changeProp;                // Change image properties options in setup dialog.
+   
+   QString                m_imageFormat;               // Image format option in the setup dialog.
+   
+   int                    m_sizeFactor;                // Image size factor in the setup dialog.
+   int                    m_imageCompression;          // Image compression factor in the setup dialog.
+   
+   KURL::List             m_images;                    // List of images in the setup dialog.
    KURL::List             m_filesSendList;             // KURL of resized images.
    KURL::List             m_imagesResizedWithError;    // KURL of orignal images that cannot be resized.
    KURL::List             m_imagesPackage;             // KURL of orignal images than have been resized 

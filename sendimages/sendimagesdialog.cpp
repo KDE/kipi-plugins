@@ -367,8 +367,8 @@ void SendImagesDialog::setupEmailOptions(void)
 {
     QString whatsThis;
 
-    page_setupEmailOptions = addPage( i18n("Email"),
-                                      i18n("Email Options"),
+    page_setupEmailOptions = addPage( i18n("Mail"),
+                                      i18n("Mail Options"),
                                       BarIcon("mail_generic", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupEmailOptions, 0, spacingHint() );
