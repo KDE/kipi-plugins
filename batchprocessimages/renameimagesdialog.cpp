@@ -2,7 +2,7 @@
 //
 //    RENAMEIMAGESDIALOG.CPP
 //
-//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2003-2005 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -268,7 +268,8 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
             if ( m_removeOriginal->isChecked() == true )
                 {
                 m_interface->delImage( src );
-                KIO::Job* job = KIO::del( src );
+                KIO::Job* job;
+		job = KIO::del( src );
                 }
         else
            {
@@ -497,7 +498,8 @@ void RenameImagesDialog::copyItemOperations(void)
 
     KURL target = m_upload->path();
     target.addPath( item->nameDest() );
-    KIO::CopyJob* job = KIO::copy(item->pathSrc(), target, false);
+    KIO::CopyJob* job;
+    job = KIO::copy(item->pathSrc(), target, false);
 
     connect(job, SIGNAL(result(KIO::Job*)),
             this, SLOT(slotResult(KIO::Job*)));
