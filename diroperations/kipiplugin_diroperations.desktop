@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=MiscsOperations
+Name=DirOperations
 Comment=KIPI Directory operations Plugin
 Type=Service
 ServiceTypes=KIPI/Plugin
