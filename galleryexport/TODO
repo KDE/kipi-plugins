@@ -1,0 +1,11 @@
+Immediate todo:
+
+* kwallet integration to save/restore url, name, password
+* show album title along with album name in the treeview.
+  (preferably show album title as the main text and album
+   name italicized under it)
+
+For the lazy times:
+
+* polish the html code used to render the thumbnails, better
+  fonts sizes and layout
