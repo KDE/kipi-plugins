@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=KameraKlient
+Comment=KameraKlient plugin for kipi
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_kameraklient
+X-KIPI-MergeMenu=true
+
+
