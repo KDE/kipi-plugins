@@ -27,6 +27,7 @@
 #include <qevent.h>
 #include <qdragobject.h>
 #include <qstrlist.h>
+#include <qimage.h>
 
 // KDE includes.
 
@@ -37,6 +38,9 @@
 #include <kimageio.h>
 #include <klocale.h>
 #include <kglobal.h>
+#include <kapplication.h>
+#include <kiconloader.h>
+#include <kdebug.h>
 #include <kio/previewjob.h>
 
 // LibKipi includes.
@@ -98,21 +102,46 @@ void MonthWidget::dragEnterEvent(QDragEnterEvent* event)
 void MonthWidget::dropEvent(QDropEvent* event)
 {
     KURL::List srcURLs;
-    KURLDrag::decode(event, srcURLs);
+    if ( !KURLDrag::decode(event, srcURLs) )
+        return;
 
-    KIO::PreviewJob* thumbJob_ =
-        KIO::filePreview( srcURLs,64);
-    connect(thumbJob_, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-            SLOT(slotGotThumbnaiL(const KFileItem*, const QPixmap&)));
+    if ( srcURLs.isEmpty() )
+        return;
+
+    KURL url = srcURLs.first();
+
+    // check if the file is an image
+    if ( QImageIO::imageFormat( url.path() ) )
+    {
+        imagePath_ = url;
+        CalSettings::instance()->setImage(month_, imagePath_);
+
+        KIconLoader* iconLoader = KApplication::kApplication()->iconLoader();
+        QPixmap pix = iconLoader->loadIcon("image", KIcon::NoGroup, 64 );
+        if ( pixmap_ )
+            delete pixmap_;
+        pixmap_ = new QPixmap( pix );
+        update();
+
+        KURL::List urls;
+        urls << url;
+
+        KIO::PreviewJob* thumbJob_ =
+            KIO::filePreview( urls,64);
+        connect(thumbJob_, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+                SLOT(slotGotThumbnaiL(const KFileItem*, const QPixmap&)));
+    }
+    else
+    {
+        kdWarning( 51001 ) << "Unknown image format for: "
+                           << url.prettyURL() << endl;
+    }
 }
 
-void MonthWidget::slotGotThumbnaiL(const KFileItem* item, const QPixmap& pix)
+void MonthWidget::slotGotThumbnaiL(const KFileItem* , const QPixmap& pix)
 {
-    imagePath_ = item->url();
-
-    CalSettings::instance()->setImage(month_,imagePath_);
-
-    delete pixmap_;
+    if ( pixmap_ )
+        delete pixmap_;
     QPixmap image = pix;
     int angle = interface_->info( imagePath_ ).angle();
     if ( angle != 0 ) {
@@ -131,14 +160,34 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* e)
 
     if (e->button() == Qt::LeftButton) {
         KURL url = KIPI::ImageDialog::getImageURL(this, interface_);
-        if (url.isValid()) {
-            KURL::List urls;
-            urls << url;
+        if (url.isValid())
+	{
+            // check if the file is an image
+            if ( QImageIO::imageFormat( url.path() ) )
+            {
+                imagePath_ = url;
+                CalSettings::instance()->setImage(month_, imagePath_);
 
-            KIO::PreviewJob* thumbJob_ =
-                KIO::filePreview( urls,64);
-            connect(thumbJob_, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-                    SLOT(slotGotThumbnaiL(const KFileItem*, const QPixmap&)));
+                KIconLoader* iconLoader = KApplication::kApplication()->iconLoader();
+                QPixmap pix = iconLoader->loadIcon("image", KIcon::NoGroup, 64 );
+                if ( pixmap_ )
+                    delete pixmap_;
+                pixmap_ = new QPixmap( pix );
+                update();
+
+                KURL::List urls;
+                urls << url;
+
+                KIO::PreviewJob* thumbJob_ =
+                    KIO::filePreview( urls,64);
+                connect(thumbJob_, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+                        SLOT(slotGotThumbnaiL(const KFileItem*, const QPixmap&)));
+            }
+            else
+            {
+                kdWarning( 51001 ) << "Unknown image format for: "
+                                   << url.prettyURL() << endl;
+            }
         }
     }
     else if (e->button() == Qt::RightButton) {

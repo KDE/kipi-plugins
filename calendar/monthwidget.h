@@ -63,7 +63,7 @@ protected:
 private:
 
     int      month_;
-    KURL  imagePath_;
+    KURL     imagePath_;
     QPixmap *pixmap_;
     KIPI::Interface* interface_;
 private slots:

@@ -68,7 +68,7 @@ public:
     void    setYear(int year);
     int     getYear() const;
     void    setImage(int month, const KURL& url);
-    KURL getImage(int month) const;
+    KURL    getImage(int month) const;
 
     CalParams calParams;
 
