@@ -72,19 +72,13 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    // Main submenu for KIPI JPEGLossLess plugin transform actions.
-
-    m_action_Transform = new KActionMenu(i18n("&Transform"),
-                         actionCollection(),
-                         "jpeglossless_transform");
-    
-    m_action_Transform->insert( new KAction(i18n("EXIF Rotate/Flip adjustment"),
-                                0,
-                                0,
-                                this,
-                                SLOT(slotRotate()),
-                                actionCollection(),
-                                "rotate_exif") );
+    m_action_AutoExif =  new KAction(i18n("Auto Rotate/Flip using EXIF Information"),
+                                     0,
+                                     0,
+                                     this,
+                                     SLOT(slotRotate()),
+                                     actionCollection(),
+                                     "rotate_exif") ;    
 
 
     m_action_RotateImage = new KActionMenu(i18n("Rotate"),
@@ -143,10 +137,10 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
                                              actionCollection(),
                                              "jpeglossless_convert2grayscale");
 
-    m_action_Transform->insert(m_action_RotateImage);
-    m_action_Transform->insert(m_action_FlipImage);
-    m_action_Transform->insert(m_action_Convert2GrayScale);
-    addAction( m_action_Transform );
+    addAction( m_action_AutoExif );
+    addAction( m_action_RotateImage );
+    addAction( m_action_FlipImage );
+    addAction( m_action_Convert2GrayScale );
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     
@@ -157,13 +151,22 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
            }
            
     KIPI::ImageCollection selection = interface->currentScope();
-    m_action_Transform->setEnabled( selection.isValid() );
+    m_action_AutoExif->setEnabled( selection.isValid() );
+    m_action_RotateImage->setEnabled( selection.isValid() );
+    m_action_FlipImage->setEnabled( selection.isValid() );
+    m_action_Convert2GrayScale->setEnabled( selection.isValid() );
     
     m_thread = new KIPIJPEGLossLessPlugin::ActionThread(interface, this);
     m_progressDlg = 0;
-    
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
-             m_action_Transform, SLOT( setEnabled( bool ) ) );
+
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ),
+             m_action_AutoExif, SLOT( setEnabled( bool ) ) );
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ),
+             m_action_RotateImage, SLOT( setEnabled( bool ) ) );
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ),
+             m_action_FlipImage, SLOT( setEnabled( bool ) ) );
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ),
+             m_action_Convert2GrayScale, SLOT( setEnabled( bool ) ) );
 }
 
 
@@ -399,8 +402,8 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
 
 KIPI::Category Plugin_JPEGLossless::category( KAction* action ) const
 {
-    if ( action == m_action_Transform )
-       return KIPI::IMAGESPLUGIN;
+    if (action == m_action_AutoExif)
+        return KIPI::IMAGESPLUGIN;
     else if ( action == m_action_RotateImage )
        return KIPI::IMAGESPLUGIN;       
     else if ( action == m_action_FlipImage )

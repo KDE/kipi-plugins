@@ -65,10 +65,10 @@ private slots:
 
 private:
 
-    KActionMenu *m_action_Transform;
     KActionMenu *m_action_RotateImage;
     KActionMenu *m_action_FlipImage;
     KAction     *m_action_Convert2GrayScale;
+    KAction     *m_action_AutoExif;
 
     KIPIJPEGLossLessPlugin::ProgressDlg  *m_progressDlg;
     KIPIJPEGLossLessPlugin::ActionThread *m_thread;
