@@ -35,6 +35,7 @@ extern "C"
 }
 
 // Include files for Qt
+
 #undef Unsorted // x headers suck - make qdir.h work with --enable-final
 #include <qvbox.h>
 #include <qlayout.h>
@@ -70,6 +71,8 @@ extern "C"
 #include <kimageio.h>
 #include <ktempfile.h>
 #include <kdeversion.h>
+
+// Include files for libKipi.
 
 #include <libkipi/imageinfo.h>
 
@@ -127,7 +130,7 @@ AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *par
     setupAlbumsList();
     aboutPage();
     readSettings();
-    setHelp("plugin-acquireimages.anchor", "kipi");
+    setHelp("acquireimages", "kipi-plugins");
     slotImageFormatChanged(m_imagesFormat->currentText());
     page_setupImageOptions->setFocus();
     resize( 600, 400 );

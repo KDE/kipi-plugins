@@ -390,8 +390,8 @@ void BatchDialog::slotSaveFormatChanged()
 
 void BatchDialog::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("plugin-rawconverter.anchor",
-                                             "kipi");
+    KApplication::kApplication()->invokeHelp("rawconverter",
+                                             "kipi-plugins");
 }
 
 void BatchDialog::slotAbout()

@@ -55,7 +55,6 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Coloring Images options"));
-    setHelp("plugin-colorimages.anchor", "kipi");
 
     //---------------------------------------------
 

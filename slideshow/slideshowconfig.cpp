@@ -49,7 +49,7 @@ SlideShowConfig::SlideShowConfig()
 {
     config_ = 0;
 
-    setHelp("plugin-slideshow.anchor", "kipi");
+    setHelp("slideshow", "kipi-plugins");
     QWidget *page = new QWidget( this );
     setMainWidget( page );
 

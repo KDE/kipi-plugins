@@ -75,7 +75,6 @@ RenameImagesDialog::RenameImagesDialog( KURL::List urlList, KIPI::Interface* int
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Rename Images options"));
-    setHelp("plugin-renameimages.anchor", "kipi");
 
     //---------------------------------------------
 

@@ -879,8 +879,8 @@ void KImg2mpgData::slotAbout( void )
 
 void KImg2mpgData::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("plugin-mpegencoder.anchor",
-                                             "kipi");
+    KApplication::kApplication()->invokeHelp("mpegencoder",
+                                             "kipi-plugins");
 }
 
 

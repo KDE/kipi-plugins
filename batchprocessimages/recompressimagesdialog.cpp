@@ -54,7 +54,6 @@ RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interf
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Recompress Images options"));
-    setHelp("plugin-recompressimages.anchor", "kipi");
 
     //---------------------------------------------
 

@@ -346,8 +346,8 @@ void SingleDialog::saveSettings()
 
 void SingleDialog::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("plugin-rawconverter.anchor",
-                                             "kipi");
+    KApplication::kApplication()->invokeHelp("rawconverter",
+                                             "kipi-plugins");
 }
 
 void SingleDialog::slotAbout()

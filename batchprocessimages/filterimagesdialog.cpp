@@ -56,7 +56,6 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Filtering Images options"));
-    setHelp("plugin-filterimages.anchor", "kipi");
 
     //---------------------------------------------
 

@@ -52,7 +52,7 @@ TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent,
     addInfoPage();
     addConfigPage();
     addAboutPage();
-    setHelp("plugin-timeadjust.anchor", "kipi");
+    setHelp("timeadjust", "kipi-plugins");
     connect( this, SIGNAL( okClicked() ), this, SLOT( slotOK() ) );
 }
 

@@ -66,7 +66,7 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
                               Help|User1|Close|User2, Close, true, i18n("&About"), i18n("&New snapshot")),
                   m_interface( interface )
 {
-    setHelp("plugin-screenshotimages.anchor", "kipi");
+    setHelp("acquireimages", "kipi-plugins");
     m_inSelect = false;
     QWidget* box = new QWidget( this );
     setMainWidget(box);

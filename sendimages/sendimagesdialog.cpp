@@ -157,7 +157,7 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, QString TmpPath, KIPI::Inter
     setupEmailOptions();
     aboutPage();
     readSettings();
-    setHelp("plugin-sendimages.anchor", "kipi");
+    setHelp("sendimages", "kipi-plugins");
     setImagesList( images.images() );
     page_setupImagesList->setFocus();
     m_ImagesFilesListBox->setSelected(0, true);

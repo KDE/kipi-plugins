@@ -120,7 +120,7 @@ DisplayCompare::DisplayCompare(QWidget* parent, QDict < QPtrVector < QFile > >* 
 {
     KImageIO::registerFormats();
     this->cmp = cmp;
-    setHelp("plugin-findduplicateimages.anchor", "kipi");
+    setHelp("findimages", "kipi-plugins");
 
     QWidget* box = new QWidget( this );
     setMainWidget(box);

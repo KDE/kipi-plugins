@@ -121,7 +121,7 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     setupBurning();
     aboutPage();
     page_setupSelection->setFocus();
-    setHelp("plugin-cdarchiving.anchor", "kipi");
+    setHelp("cdarchiving", "kipi-plugins");
     setAlbumsList();
 }
 

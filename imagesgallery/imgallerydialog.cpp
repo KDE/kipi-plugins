@@ -120,7 +120,7 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
     setupThumbnailPage();
     aboutPage();
     page_setupSelection->setFocus();
-    setHelp("plugin-imagesgallery.anchor", "kipi");
+    setHelp("imagesgallery", "kipi-plugins");
     setAlbumsList();
 }
 

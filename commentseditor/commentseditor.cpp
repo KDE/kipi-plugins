@@ -142,7 +142,7 @@ CommentsEditor::CommentsEditor( KIPI::Interface* interface, KIPI::ImageCollectio
                   parent, 0, true, true, i18n("&About") )
 
 {
-    setHelp("plugin-commentseditor.anchor", "kipi");
+    setHelp("commentseditor", "kipi-plugins");
     m_images    = images;
     m_interface = interface;
 

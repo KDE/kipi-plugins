@@ -100,7 +100,7 @@ FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *p
     setupPageMethod();
     aboutPage();
     page_setupSelection->setFocus();
-    setHelp("plugin-findduplicateimages.anchor", "kipi");
+    setHelp("findimages", "kipi-plugins");
     setAlbumsList();
     resize( 500, 500 );
 }

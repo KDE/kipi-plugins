@@ -101,7 +101,7 @@ FrmPrintWizard::~FrmPrintWizard()
 
 void FrmPrintWizard::slotHelp()
 {
-  KApplication::kApplication()->invokeHelp("plugin-printwizard.anchor","kipi");
+  KApplication::kApplication()->invokeHelp("printwizard","kipi-plugins");
 }
 
 void FrmPrintWizard::print( KURL::List fileList, QString tempPath)
