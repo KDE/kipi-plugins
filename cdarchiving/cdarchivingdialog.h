@@ -140,7 +140,7 @@ class CDArchivingDialog : public KDialogBase
   void slotbuttonInvertSelection(void);
   void slotbuttonSelectNone(void);
   void UrlChanged(const QString &url );
-  void slotGotPreview(const KFilePreview* url, const QPixmap &pixmap);
+  void slotGotPreview(const KFilePreview*, const QPixmap &pixmap);
 
  private:
   QCheckBox          *m_useHTMLInterface;

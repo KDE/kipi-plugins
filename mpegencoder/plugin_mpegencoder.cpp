@@ -58,6 +58,7 @@ Plugin_Mpegencoder::Plugin_Mpegencoder(QObject *parent, const char*, const QStri
 void Plugin_Mpegencoder::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
+
     m_actionMPEGEncoder = new KAction (i18n("MPEG Encoder..."),
                                        "video",
                                        0,
@@ -79,7 +80,14 @@ Plugin_Mpegencoder::~Plugin_Mpegencoder()
 
 void Plugin_Mpegencoder::slotActivate()
 {
-    KIPI::Interface* interface = static_cast< KIPI::Interface* >( parent() );
+    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+   
+    if ( !interface ) 
+       {
+       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       return;
+       }
+    
     KIPIMPEGEncoderPlugin::KImg2mpgData *MPEGconverterDialog = 
                            new KIPIMPEGEncoderPlugin::KImg2mpgData( interface );
                            

@@ -56,6 +56,7 @@ Plugin_Calendar::Plugin_Calendar(QObject *parent,
 void Plugin_Calendar::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
+    
     m_calendarAction = new KAction(i18n("Create Calendar..."),
                                    "date",
                                    0,
@@ -74,6 +75,13 @@ Plugin_Calendar::~Plugin_Calendar()
 void Plugin_Calendar::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+    
+    if ( !interface ) 
+       {
+       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       return;
+       }
+
     DKCalendar::CalWizard* w = new DKCalendar::CalWizard( interface, kapp->activeWindow() );
     w->show();
 }

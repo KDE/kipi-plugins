@@ -56,6 +56,7 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_diroperations,
 void Plugin_DirOperations::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
+    
     m_action_OpenIn = new KActionMenu(i18n("&Open Album in ..."),
                                       actionCollection(),
                                      "miscoperations_open_in");
@@ -80,6 +81,13 @@ void Plugin_DirOperations::setup( QWidget* widget )
 
 
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+       {
+       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       return;
+       }
+
     KIPI::ImageCollection album = interface->currentAlbum();
     m_action_OpenIn->setEnabled(album.isValid());
 
@@ -92,6 +100,12 @@ void Plugin_DirOperations::setup( QWidget* widget )
 void Plugin_DirOperations::slotOpenInKonqui()
 {
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*>( parent() );
+    if ( !interface ) 
+       {
+       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       return;
+       }
+    
     KIPI::ImageCollection album = interface->currentAlbum();
     if (album.images().count() == 0) return;
 
@@ -104,6 +118,13 @@ void Plugin_DirOperations::slotOpenInKonqui()
 void Plugin_DirOperations::slotOpenInNautilus()
 {
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+       {
+       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       return;
+       }
+    
     KIPI::ImageCollection images = interface->currentAlbum();
 
    if (images.images().count() == 0) return;

@@ -152,6 +152,49 @@ void Plugin_BatchProcessImages::setup( QWidget* widget )
     addAction( m_action_renameimages );
     addAction( m_action_recompressimages );
     addAction( m_action_resizeimages );
+
+    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+    
+    if ( !interface ) 
+       {
+       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       return;
+       }
+    
+    KIPI::ImageCollection images = interface->currentScope();
+    
+    m_action_borderimages->setEnabled( images.isValid() );
+    m_action_colorimages->setEnabled( images.isValid() );
+    m_action_convertimages->setEnabled( images.isValid() );
+    m_action_effectimages->setEnabled( images.isValid() );
+    m_action_filterimages->setEnabled( images.isValid() );
+    m_action_renameimages->setEnabled( images.isValid() );
+    m_action_recompressimages->setEnabled( images.isValid() );
+    m_action_resizeimages->setEnabled( images.isValid() );
+    
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+             m_action_borderimages, SLOT( setEnabled( bool ) ) );
+    
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+             m_action_colorimages, SLOT( setEnabled( bool ) ) );
+    
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+             m_action_convertimages, SLOT( setEnabled( bool ) ) );
+    
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+             m_action_effectimages, SLOT( setEnabled( bool ) ) );
+    
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+             m_action_filterimages, SLOT( setEnabled( bool ) ) );
+    
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+             m_action_renameimages, SLOT( setEnabled( bool ) ) );
+    
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+             m_action_recompressimages, SLOT( setEnabled( bool ) ) );
+    
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+             m_action_resizeimages, SLOT( setEnabled( bool ) ) );
 }
 
 

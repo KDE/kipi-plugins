@@ -75,6 +75,14 @@ void Plugin_PrintWizard::setup( QWidget* widget )
     addAction( m_printAction );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
+    
+    
+    if ( !m_interface ) 
+       {
+       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       return;
+       }
+    
     KIPI::ImageCollection scope = m_interface->currentScope();
     m_printAction->setEnabled( scope.isValid() );
 
@@ -91,17 +99,18 @@ Plugin_PrintWizard::~Plugin_PrintWizard()
 void Plugin_PrintWizard::slotActivate()
 {
     KIPI::ImageCollection album = m_interface->currentScope();
+    
     if ( !album.isValid() )
         return;
 
     KURL::List fileList = album.images();
 
     if (fileList.count() == 0)
-    {
+        {
         KMessageBox::sorry(0, i18n("Please select one or more photos to print."),
                            i18n("Print Wizard"));
         return;
-    }
+        }
 
     FrmPrintWizard frm;
     KStandardDirs dir;

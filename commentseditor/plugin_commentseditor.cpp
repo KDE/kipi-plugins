@@ -69,6 +69,13 @@ void Plugin_CommentsEditor::setup( QWidget* widget )
     addAction( m_actionCommentsEditor );
 
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+    
+    if ( !interface ) 
+       {
+       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       return;
+       }
+    
     KIPI::ImageCollection images = interface->currentScope();
     m_actionCommentsEditor->setEnabled( images.isValid() );
     
@@ -83,7 +90,15 @@ Plugin_CommentsEditor::~Plugin_CommentsEditor()
 void Plugin_CommentsEditor::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+    
+    if ( !interface ) 
+       {
+       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       return;
+       }
+
     KIPI::ImageCollection images = interface->currentScope();
+    
     if ( !images.isValid() )
         return;
 

@@ -46,6 +46,7 @@ Plugin_CDArchiving::Plugin_CDArchiving(QObject *parent, const char*, const QStri
 void Plugin_CDArchiving::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
+
     m_action_cdarchiving = new KAction (i18n("Archive to CD ..."),        // Menu message.
                                         "cd",                             // Menu icon.
                                         0,
@@ -74,8 +75,16 @@ void Plugin_CDArchiving::slotActivate()
 {
     if (!m_cdarchiving) 
         {
+        KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+    
+        if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
+        
         m_cdarchiving = new KIPICDArchivingPlugin::CDArchiving( 
-                            dynamic_cast<KIPI::Interface*>( parent() ),
+                            interface,
                             this, m_action_cdarchiving);
         }
         
