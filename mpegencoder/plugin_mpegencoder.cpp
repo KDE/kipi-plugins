@@ -100,7 +100,7 @@ void Plugin_Mpegencoder::slotActivate()
 
 KIPI::Category Plugin_Mpegencoder::category() const
 {
-    return KIPI::TOOLSPLUGIN;
+    return KIPI::BATCHPLUGIN;
 }
 
 
