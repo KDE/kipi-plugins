@@ -21,11 +21,14 @@
 
 #include <qcstring.h>
 #include <qtextstream.h>
+#include <qfile.h>
 
 #include <klocale.h>
 #include <kio/job.h>
+#include <kdebug.h>
 
 #include <cstring>
+#include <cstdio>
 
 #include "galleryitem.h"
 #include "gallerytalker.h"
@@ -53,6 +56,7 @@ void GalleryTalker::login( const KURL& url, const QString& name,
 
     QByteArray postData;
     QTextStream ts(postData, IO_WriteOnly);
+    ts.setEncoding(QTextStream::UnicodeUTF8);
     ts << "cmd=login";
     ts << "&protocol_version=2.4";
     ts << QString( "&uname=%1" ).arg( name );
@@ -73,6 +77,30 @@ void GalleryTalker::login( const KURL& url, const QString& name,
     emit signalBusy( true );
 }
 
+void GalleryTalker::listAlbums()
+{
+    QByteArray postData;
+    QTextStream ts(postData, IO_WriteOnly);
+    ts.setEncoding(QTextStream::UnicodeUTF8);
+    ts << "cmd=fetch-albums";
+    ts << "&protocol_version=2.3";
+
+    KIO::TransferJob* job = KIO::http_post(m_url, postData, false);
+    job->addMetaData("content-type",
+                     "Content-Type: application/x-www-form-urlencoded" );
+    job->addMetaData("cookies", "manual");
+    job->addMetaData("setcookies", m_cookie);
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(result(KIO::Job *)),
+            SLOT(slotResult(KIO::Job *)));
+
+    m_state = GE_LISTALBUMS;
+    m_job   = job;
+    m_buffer.resize(0);
+    emit signalBusy( true );
+}
+
 void GalleryTalker::listPhotos( const QString& albumName )
 {
     if (m_job)
@@ -83,9 +111,11 @@ void GalleryTalker::listPhotos( const QString& albumName )
         
     QByteArray postData;
     QTextStream ts(postData, IO_WriteOnly);
+    ts.setEncoding(QTextStream::UnicodeUTF8);
     ts << "cmd=fetch-album-images";
     ts << "&protocol_version=2.3";
-    ts << QString("&set_albumName=%1").arg(albumName);
+    ts << QString("&set_albumName=%1")
+        .arg(QFile::encodeName(albumName));
 
     KIO::TransferJob* job = KIO::http_post(m_url, postData, false);
     job->addMetaData("content-type",
@@ -98,6 +128,50 @@ void GalleryTalker::listPhotos( const QString& albumName )
             SLOT(slotResult(KIO::Job *)));
 
     m_state = GE_LISTPHOTOS;
+    m_job   = job;
+    m_buffer.resize(0);
+    emit signalBusy( true );
+}
+
+void GalleryTalker::createAlbum( const QString& parentAlbumName,
+                                 const QString& albumName,
+                                 const QString& albumTitle,
+                                 const QString& albumCaption )
+{
+    if (m_job)
+    {
+        m_job->kill();
+        m_job = 0;
+    }
+        
+    QByteArray postData;
+    QTextStream ts(postData, IO_WriteOnly);
+    ts.setEncoding(QTextStream::UnicodeUTF8);
+    ts << "cmd=new-album";
+    ts << "&protocol_version=2.3";
+    ts << QString("&set_albumName=%1")
+        .arg(QFile::encodeName(parentAlbumName));
+    if (!albumName.isEmpty())
+        ts << QString("&newAlbumName=%1")
+            .arg(QFile::encodeName(albumName));
+    if (!albumTitle.isEmpty())
+        ts << QString("&newAlbumTitle=%1")
+            .arg(QFile::encodeName(albumTitle));
+    if (!albumCaption.isEmpty())
+        ts << QString("&newAlbumDesc=%1")
+            .arg(QFile::encodeName(albumCaption));
+
+    KIO::TransferJob* job = KIO::http_post(m_url, postData, false);
+    job->addMetaData("content-type",
+                     "Content-Type: application/x-www-form-urlencoded" );
+    job->addMetaData("cookies", "manual");
+    job->addMetaData("setcookies", m_cookie);
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(result(KIO::Job *)),
+            SLOT(slotResult(KIO::Job *)));
+
+    m_state = GE_CREATEALBUM;
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy( true );
@@ -122,7 +196,7 @@ void GalleryTalker::slotResult(KIO::Job *job)
     {
         if ( m_state == GE_LOGIN )
             emit signalLoginFailed( job->errorString() );
-        else if ( m_state != GE_GETTHUMB )
+        else
             job->showErrorDialog( m_parent );
         return;
     }
@@ -138,6 +212,9 @@ void GalleryTalker::slotResult(KIO::Job *job)
     case(GE_LISTPHOTOS):
         parseResponseListPhotos(m_buffer);
         break;
+    case(GE_CREATEALBUM):
+        parseResponseCreateAlbum(m_buffer);
+        break;
     default:
         break;
     }
@@ -151,37 +228,21 @@ void GalleryTalker::slotResult(KIO::Job *job)
         m_cookie = m_cookie.section(";", 0, 0);
         m_cookie = "Cookie:" + m_cookie;
 
-        QByteArray postData;
-        QTextStream ts(postData, IO_WriteOnly);
-        ts << "cmd=fetch-albums";
-        ts << "&protocol_version=2.3";
-
-        KIO::TransferJob* job = KIO::http_post(m_url, postData, false);
-        job->addMetaData("content-type",
-                         "Content-Type: application/x-www-form-urlencoded" );
-        job->addMetaData("cookies", "manual");
-        job->addMetaData("setcookies", m_cookie);
-        connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-                SLOT(data(KIO::Job*, const QByteArray&)));
-        connect(job, SIGNAL(result(KIO::Job *)),
-                SLOT(slotResult(KIO::Job *)));
-
-        m_state = GE_LISTALBUMS;
-        m_job   = job;
-        m_buffer.resize(0);
-        emit signalBusy( true );
+        listAlbums();
     }
 }
 
 void GalleryTalker::parseResponseLogin(const QByteArray &data)
 {
     QTextStream ts(data, IO_ReadOnly );
+    ts.setEncoding(QTextStream::UnicodeUTF8);
     QString     line;
     bool foundResponse = false;
 
     while (!ts.atEnd())
     {
-        ts >> line;
+        line = ts.readLine();
+
         if (!foundResponse)
         {
             foundResponse = line.startsWith("#__GR2PROTO__");
@@ -214,6 +275,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
 void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 {
     QTextStream ts(data, IO_ReadOnly );
+    ts.setEncoding(QTextStream::UnicodeUTF8);
     QString     line;
     bool foundResponse = false;
     bool success       = false;
@@ -224,7 +286,7 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 
     while (!ts.atEnd())
     {
-        ts >> line;
+        line = ts.readLine();
         if (!foundResponse)
         {
             foundResponse = line.startsWith("#__GR2PROTO__");
@@ -310,6 +372,7 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 {
     QTextStream ts(data, IO_ReadOnly );
+    ts.setEncoding(QTextStream::UnicodeUTF8);
     QString     line;
     bool foundResponse = false;
     bool success       = false;
@@ -322,7 +385,8 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
     
     while (!ts.atEnd())
     {
-        ts >> line;
+        line = ts.readLine();
+
         if (!foundResponse)
         {
             foundResponse = line.startsWith("#__GR2PROTO__");
@@ -383,3 +447,58 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
     
     emit signalPhotos( photoList );
 }
+
+void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
+{
+    QTextStream ts(data, IO_ReadOnly );
+    ts.setEncoding(QTextStream::UnicodeUTF8);
+    QString     line;
+    bool foundResponse = false;
+    bool success       = false;
+
+    while (!ts.atEnd())
+    {
+        line = ts.readLine();
+
+        if (!foundResponse)
+        {
+            foundResponse = line.startsWith("#__GR2PROTO__");
+        }
+        else
+        {
+            QStringList strlist = QStringList::split("=", line);
+            if (strlist.count() == 2)
+            {
+                QString key   = strlist[0];
+                QString value = strlist[1];
+
+                if (key == "status")
+                {
+                    success = (value == "0");
+                }
+                else if (key.startsWith("status_text"))
+                {
+                    kdDebug() << "STATUS: Create Album: " << value << endl;
+                }
+                         
+            }
+        }
+    }
+
+    if (!foundResponse)
+    {
+        emit signalError(i18n("Invalid response received from remote Gallery"));
+        return;
+    }
+
+    if (!success)
+    {
+        emit signalError(i18n("Failed to create new album"));
+        return;
+    }
+
+    listAlbums();
+}
+
+#include "gallerytalker.moc"
+

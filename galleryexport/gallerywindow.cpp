@@ -24,6 +24,7 @@
 #include <qtimer.h>
 #include <qpixmap.h>
 #include <qcursor.h>
+#include <qlineedit.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -39,6 +40,7 @@
 #include "galleryviewitem.h"
 #include "gallerylogin.h"
 #include "gallerywidget.h"
+#include "galleryalbumdialog.h"
 #include "gallerywindow.h"
 
 GalleryWindow::GalleryWindow()
@@ -77,6 +79,11 @@ GalleryWindow::GalleryWindow()
                                      const KParts::URLArgs& ) ),
              SLOT( slotOpenPhoto( const KURL& ) ) );
 
+    connect( m_newAlbumBtn, SIGNAL( clicked() ),
+             SLOT( slotNewAlbum() ) );
+    connect( m_addPhotoBtn, SIGNAL( clicked() ),
+             SLOT( slotAddPhotos() ) );
+    
     QTimer::singleShot( 0, this,  SLOT( slotDoLogin() ) );
 }
 
@@ -103,7 +110,7 @@ void GalleryWindow::slotDoLogin()
     }
     if (!url.url().endsWith(".php"))
         url.addPath("gallery_remote2.php");
-    
+
     m_url  = url.url();
     m_user = dlg.name();
     
@@ -149,6 +156,12 @@ void GalleryWindow::slotError( const QString& msg )
 
 void GalleryWindow::slotAlbums( const QValueList<GAlbum>& albumList )
 {
+    m_albumDict.clear();
+    m_albumView->clear();
+    m_photoView->begin();
+    m_photoView->write( "<html></html>" );
+    m_photoView->end();
+    
     KIconLoader* iconLoader = KApplication::kApplication()->iconLoader();
     QPixmap pix = iconLoader->loadIcon( "folder", KIcon::NoGroup, 32 );
 
@@ -181,6 +194,28 @@ void GalleryWindow::slotAlbums( const QValueList<GAlbum>& albumList )
                             << album.name
                             << "with id " << album.ref_num;
             }
+        }
+    }
+
+
+    // find and select the last selected album
+    int lastSelectedID = 0;
+    for ( iter = albumList.begin(); iter != albumList.end(); ++iter )
+    {
+        if ((*iter).name == m_lastSelectedAlbum)
+        {
+            lastSelectedID = (*iter).ref_num;
+            break;
+        }
+    }
+
+    if (lastSelectedID > 0)
+    {
+        GAlbumViewItem* lastSelectedItem = m_albumDict.find( lastSelectedID );
+        if (lastSelectedItem)
+        {
+            m_albumView->setSelected( lastSelectedItem, true );
+            m_albumView->ensureItemVisible( lastSelectedItem );
         }
     }
 }
@@ -253,6 +288,7 @@ void GalleryWindow::slotAlbumSelected()
             
             GAlbumViewItem* viewItem = static_cast<GAlbumViewItem*>(item);
             m_talker->listPhotos(viewItem->album.name);
+            m_lastSelectedAlbum = viewItem->album.name;
         }
     }
 }
@@ -261,3 +297,39 @@ void GalleryWindow::slotOpenPhoto( const KURL& url )
 {
     new KRun(url);
 }
+
+void GalleryWindow::slotNewAlbum()
+{
+    GalleryAlbumDialog dlg;
+    dlg.nameEdit->setFocus( );
+    if ( dlg.exec() != QDialog::Accepted )
+    {
+        return;
+    }
+
+    QString name    = dlg.nameEdit->text();
+    QString title   = dlg.titleEdit->text();
+    QString caption = dlg.captionEdit->text();
+
+    QString parentAlbumName;
+    
+    QListViewItem* item = m_albumView->selectedItem();
+    if (item)
+    {
+        GAlbumViewItem* viewItem = static_cast<GAlbumViewItem*>(item);
+        parentAlbumName = viewItem->album.name;
+    }
+    else
+    {
+        parentAlbumName = "0";
+    }
+
+    m_talker->createAlbum(parentAlbumName, name, title, caption);
+}
+
+void GalleryWindow::slotAddPhotos()
+{
+    
+}
+
+#include "gallerywindow.moc"

@@ -51,6 +51,7 @@ private:
     QIntDict<GAlbumViewItem>  m_albumDict;
     QString                   m_url;
     QString                   m_user;
+    QString                   m_lastSelectedAlbum;
 
 private slots:
 
@@ -62,6 +63,8 @@ private slots:
     void slotPhotos( const QValueList<GPhoto>& photoList );
     void slotAlbumSelected();
     void slotOpenPhoto( const KURL& url );
+    void slotNewAlbum();
+    void slotAddPhotos();
 };
 
 #endif /* GALLERYWINDOW_H */

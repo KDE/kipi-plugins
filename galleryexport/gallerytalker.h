@@ -42,7 +42,8 @@ public:
         GE_LOGIN = 0,
         GE_LISTALBUMS,
         GE_LISTPHOTOS,
-        GE_GETTHUMB
+        GE_CREATEALBUM,
+        GE_ADDPHOTO
     };
 
     GalleryTalker(QWidget* parent);
@@ -52,7 +53,12 @@ public:
 
     void login( const KURL& url, const QString& name,
                 const QString& passwd );
+    void listAlbums();
     void listPhotos( const QString& albumName );
+    void createAlbum( const QString& parentAlbumName,
+                      const QString& albumName,
+                      const QString& albumTitle,
+                      const QString& albumCaption );
 
 private:
 
@@ -69,6 +75,7 @@ private:
     void parseResponseLogin(const QByteArray &data);
     void parseResponseListAlbums(const QByteArray &data);
     void parseResponseListPhotos(const QByteArray &data);
+    void parseResponseCreateAlbum(const QByteArray &data);
 
 signals:
 

@@ -29,8 +29,6 @@ class QLineEdit;
 
 class GalleryLogin : public QDialog
 {
-    Q_OBJECT
-
 public:
     
     GalleryLogin(QWidget* parent, const QString& header,
