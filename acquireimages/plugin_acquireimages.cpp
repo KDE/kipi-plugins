@@ -100,7 +100,7 @@ void Plugin_AcquireImages::slotActivate()
 
     if (from == "scan_images")
        {
-       m_scanDialog = KScanDialog::getScanDialog(0, i18n("Digikam Scan Images Plugin"));
+       m_scanDialog = KScanDialog::getScanDialog(0, "Digikam Scan Images Plugin");
 
        if ( m_scanDialog )
            {

@@ -69,14 +69,12 @@ extern "C"
 #include <kio/netaccess.h>
 #include <kimageio.h>
 
-// Digikam includes
-
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
+#include <libkipi/thumbnailjob.h>
 
 // Local includes
 
 #include "acquireimagedialog.h"
+#include <kdebug.h>
 
 
 class AlbumItem : public QListBoxText
@@ -472,7 +470,7 @@ void AcquireImageDialog::albumSelected( QListBoxItem * item )
     QString IdemIndexed = "file:" + pitem->path() + "/" + pitem->firstImage();
     KURL url(IdemIndexed);
 
-    m_thumbJob = new Digikam::ThumbnailJob( url, m_albumPreview->height(), false, true );
+    m_thumbJob = new KIPI::ThumbnailJob( url, m_albumPreview->height(), false, true );
 
     connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
             SLOT(slotGotPreview(const KURL&, const QPixmap&)));
@@ -491,7 +489,11 @@ void AcquireImageDialog::slotGotPreview(const KURL &url, const QPixmap &pixmap)
 
 void AcquireImageDialog::slotAddNewAlbum( void )
 {
-    QDir libraryDir( Digikam::AlbumManager::instance()->getLibraryPath());
+    kdWarning() << "AcquireImageDialog::slotAddNewAlbum is commented out, what should we do?\n";
+
+// PENDING(blackie) How do we handle this without a library path?
+#ifdef TEMPORARILY_REMOVED
+    QDir libraryDir( Digikam::AlbumManager::instance()->getLibraryPath() );
     if (!libraryDir.exists())
         {
         KMessageBox::error(0, i18n("Album Library has not been set correctly\n"
@@ -508,6 +510,7 @@ void AcquireImageDialog::slotAddNewAlbum( void )
 
     KIO::SimpleJob* job = KIO::mkdir(newAlbumURL);
     connect(job, SIGNAL(result(KIO::Job*)), this, SLOT(slot_onAlbumCreate(KIO::Job*)));
+#endif
 }
 
 
@@ -574,10 +577,10 @@ void AcquireImageDialog::slot_onAlbumCreate(KIO::Job* job)
     bool ValRet = false;
 
     if ( imageFormat == "JPEG" || imageFormat == "PNG" )
-       ValRet = m_qimageScanned.save(imagePath, imageFormat, imageCompression);
+       ValRet = m_qimageScanned.save(imagePath, imageFormat.latin1(), imageCompression);
 
     if ( imageFormat == "PPM" || imageFormat == "BMP" )
-       ValRet = m_qimageScanned.save(imagePath, imageFormat);
+       ValRet = m_qimageScanned.save(imagePath, imageFormat.latin1());
 
     if ( imageFormat == "TIFF" )
        ValRet = QImageToTiff(m_qimageScanned, imagePath);

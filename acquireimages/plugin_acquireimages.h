@@ -25,10 +25,6 @@
 #ifndef PLUGIN_ACQUIREIMAGES_H
 #define PLUGIN_ACQUIREIMAGES_H
 
-#ifdef TEMPORARILY_REMOVED
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
-#endif
 #include <libkipi/plugin.h>
 
 
