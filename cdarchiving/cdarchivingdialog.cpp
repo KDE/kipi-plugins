@@ -714,10 +714,10 @@ void CDArchivingDialog::albumSelected( QListViewItem * item )
     QString IdemIndexed = "file:" + pitem->path() + "/" + pitem->firstImage();
     KURL url(IdemIndexed);
 
-    KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_albumPreview->height(), false, true );
+    KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_albumPreview->height() );
 
-    connect(thumbJob, SIGNAL(gotPreview(const KFilePreview* , const QPixmap&)),
-            SLOT(slotGotPreview(const KFilePreview* , const QPixmap&)));
+    connect(thumbJob, SIGNAL(gotPreview(const KFileItem* , const QPixmap&)),
+            SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
 }
 
 

@@ -410,7 +410,7 @@ void FindDuplicateDialog::albumSelected( QListViewItem * item )
 
     KURL url = pitem->imageCollection().images()[0];
 
-    KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_albumPreview->height(), false, true );
+    KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_albumPreview->height() );
 
     connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
             SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));

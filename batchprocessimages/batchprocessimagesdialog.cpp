@@ -335,7 +335,7 @@ void BatchProcessImagesDialog::slotImageSelected( QListViewItem * item )
 
     KURL url(IdemIndexed);
 
-    KIO::PreviewJob* m_thumbJob = KIO::filePreview( url, m_imageLabel->height(), false, true );
+    KIO::PreviewJob* m_thumbJob = KIO::filePreview( url, m_imageLabel->height() );
 
     connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
             SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
