@@ -34,6 +34,7 @@
 #include <kdialogbase.h>
 #include <klistbox.h>
 #include <kio/previewjob.h>
+#include <kurl.h>
 
 // Include files for KIPI
 
@@ -41,19 +42,16 @@
 #include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
 
-class KFileItem;
 class QComboBox;
 class QGroupBox;
-class QProgressDialog;
 class QLabel;
 class QCheckBox;
-class QTimer;
 class QFrame;
 class QPushButton;
 class QFileInfo;
 
+class KFileItem;
 class KConfig;
-class KProcess;
 class KIntNumInput;
 class KListBox;
 class KSqueezedTextLabel;
@@ -82,63 +80,50 @@ class SendImagesDialog : public KDialogBase
 Q_OBJECT
 
 public:
-   SendImagesDialog(QWidget *parent, QString TmpPath,
+   SendImagesDialog(QWidget *parent, 
                     KIPI::Interface* interface, 
                     const KIPI::ImageCollection& images );
    ~SendImagesDialog();
 
-   KIntNumInput *m_imageCompression;
+   KIntNumInput   *m_imageCompression;
 
-   QComboBox    *m_imagesFormat;
-   QComboBox    *m_imagesResize;
-   QComboBox    *m_mailAgentName;
+   QComboBox      *m_imagesFormat;
+   QComboBox      *m_imagesResize;
+   QComboBox      *m_mailAgentName;
 
-   QLabel       *m_labelImageFormat;
-   QLabel       *m_labelImageSize;
-   QLabel       *m_mailAgentLabel;
-
-   QCheckBox    *m_addComments;
-   QCheckBox    *m_changeImagesProp;
-
+   QCheckBox      *m_addComments;
+   QCheckBox      *m_changeImagesProp;
+     
+   KURL::List      m_images2send;
+   
 public slots:
    void slotAddDropItems(QStringList filesPath);
 
 private slots:
    void slotOk();
-   void slotCancelled();
-   void slotMozillaTimeout(void);
-   void slotMozillaExited(KProcess* proc);
-   void slotMozillaReadStderr(KProcess* proc, char *buffer, int buflen);
    void slotImageSelected( QListBoxItem * item );
    void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
+   void slotFailedPreview(const KFileItem*);
    void slotImagesFilesButtonAdd(void);
    void slotImagesFilesButtonRem(void);
 
 protected:
+   QLabel             *m_labelImageFormat;
+   QLabel             *m_labelImageSize;
+   QLabel             *m_mailAgentLabel;
+      
    KConfig            *m_config;
 
    QPushButton        *m_addImageButton;
    QPushButton        *m_remImagesButton;
 
+   ListImageItems     *m_ImagesFilesListBox;
+   
    bool                m_cancelled;
 
    QProgressDialog    *m_progressDlg;
 
    QGroupBox          *m_groupBoxImageList;
-
-   QStringList         m_imagesSendList;
-
-   KProcess           *m_mailAgentProc;
-   KProcess           *m_mailAgentProc2;
-   KProcess           *m_mailAgentProc3;
-
-   ListImageItems     *m_ImagesFilesListBox;
-
-   QTimer             *m_mozillaTimer;
-
-   QString             m_mozillaStdErr;
-   QString             m_tempPath;
-   QString             m_ImagesFilesSort;
 
    QLabel             *m_imageLabel;
 
@@ -150,15 +135,6 @@ protected:
    KSqueezedTextLabel *m_ImageAlbum;
    KIPI::Interface    *m_interface;
    KIO::PreviewJob    *m_thumbJob;
-
-   QString extension(const QString& imageFileFormat);
-   void removeTmpFiles(void);
-   bool DeleteDir(QString dirname);
-   bool deldir(QString dirname);
-   int  getSize ( int choice );
-   bool ResizeImage( const QString &SourcePath, const QString &DestPath,
-                     const QString &ImageFormat, const QString &ImageName,
-                     int SizeFactor, int ImageCompression);
 
  private:
    void setupImagesList(void);

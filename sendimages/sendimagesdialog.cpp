@@ -35,7 +35,6 @@
 #include <qcombobox.h>
 #include <qcheckbox.h>
 #include <qprogressdialog.h>
-#include <qtimer.h>
 #include <qimage.h>
 #include <qevent.h>
 #include <qdragobject.h>
@@ -58,10 +57,12 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kdialogbase.h>
-#include <kprocess.h>
-#include <kimageio.h>
 #include <kbuttonbox.h>
 #include <ksqueezedtextlabel.h>
+
+// libKipi includes.
+
+#include <libkipi/imagecollectiondialog.h>
 
 // Local include files
 
@@ -76,22 +77,19 @@ namespace KIPISendimagesPlugin
 class ImageItem : public QListBoxText
 {
 public:
-    ImageItem(QListBox * parent, QString const & name, QString const & comments, QString const & path,
-              QString const & album)
-            : QListBoxText(parent), _name(name), _comments(comments), _path(path), _album(album)
+    ImageItem(QListBox * parent, QString const & comments, KURL const & url)
+            : QListBoxText(parent), _comments(comments), _url(url)
     {}
 
-    QString comments()                   { return _comments; }
-    QString name()                       { return _name;     }
-    QString path()                       { return _path;     }
-    QString album()                      { return _album;    }
-    void setName(const QString &newName) { setText(newName); }
+    QString comments()                   { return _comments;                         }
+    QString name()                       { return _url.fileName();                   }
+    KURL    url()                        { return _url;                              }
+    QString album()                      { return _url.directory().section('/', -1); }
+    void setName(const QString &newName) { setText(newName);                         }
 
 private:
-    QString _name;
     QString _comments;
-    QString _path;
-    QString _album;
+    KURL    _url;    
 };
 
 
@@ -143,14 +141,11 @@ void ListImageItems::dropEvent(QDropEvent *e)
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-SendImagesDialog::SendImagesDialog(QWidget *parent, QString TmpPath,
-                                   KIPI::Interface* interface, const KIPI::ImageCollection& images )
+SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface, 
+                                   const KIPI::ImageCollection& images )
                 : KDialogBase( IconList, i18n("E-mail Images Options"), Help|Ok|Cancel,
                   Ok, parent, "SendImagesDialog", false, true )
 {
-    KImageIO::registerFormats();
-    m_mozillaTimer = new QTimer(this);
-    m_tempPath = TmpPath;
     m_interface = interface;
     m_thumbJob = 0L;
 
@@ -172,7 +167,7 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, QString TmpPath,
 
 SendImagesDialog::~SendImagesDialog()
 {
-    if ( m_thumbJob ) delete m_thumbJob;
+    if ( m_thumbJob ) delete m_thumbJob; 
 }
 
 
@@ -202,10 +197,6 @@ void SendImagesDialog::readSettings(void)
         m_addComments->setChecked( false );
 
     delete m_config;
-    
-    // Get the image files filters from the hosts app.
-     
-    m_ImagesFilesSort = m_interface->fileExtensions();
 }
 
 
@@ -313,11 +304,8 @@ void SendImagesDialog::setImagesList( const KURL::List& Files )
 {
     if ( Files.count() == 0 ) return;
 
-    for( KURL::List::ConstIterator it = Files.begin(); it != Files.end(); ++it ) {
-      QString currentFile = (*it).path(); // PENDING(blackie) handle real URLS
-      QFileInfo fi(currentFile);
-      QString Temp = fi.dirPath();
-      QString albumName = Temp.section('/', -1);
+    for( KURL::List::ConstIterator it = Files.begin(); it != Files.end(); ++it ) 
+      {
       KIPI::ImageInfo imageInfo = m_interface->info( *it );
       QString comments = imageInfo.description();
 
@@ -329,20 +317,18 @@ void SendImagesDialog::setImagesList( const KURL::List& Files )
           {
           ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(i) );
 
-          if (pitem->path() == currentFile.section('/', 0, -1))
+          if (pitem->url() == (*it))
              findItem = true;
           }
 
       if (findItem == false)
          {
          ImageItem *item = new ImageItem( m_ImagesFilesListBox,
-                                          currentFile.section('/', -1 ),   // File name with extension.
-                                          comments,                        // Image comments.
-                                          currentFile.section('/', 0, -1), // Complete path with file name.
-                                          albumName                        // Album name.
+                                          comments,                   // Image comments.
+                                          *it                         // Complete url (path & file name).
                                         );
 
-         item->setName( currentFile.section('/', -1) );
+         item->setName( (*it).fileName() );
          }
       }
 
@@ -497,9 +483,6 @@ void SendImagesDialog::setupEmailOptions(void)
 
     //---------------------------------------------
 
-    connect(m_mozillaTimer, SIGNAL(timeout()),
-            this, SLOT(slotMozillaTimeout()));
-
     connect(m_changeImagesProp, SIGNAL(toggled(bool)),
             m_labelImageSize, SLOT(setEnabled(bool)));
 
@@ -547,13 +530,12 @@ void SendImagesDialog::slotAddDropItems(QStringList filesPath)
 
 void SendImagesDialog::slotImagesFilesButtonAdd( void )
 {
-    KURL::List ImageFilesList = KFileDialog::getOpenURLs( QString::null,
-                                                    m_ImagesFilesSort,
-                                                    this );
+    KURL::List ImageFilesList;
+    KURL url = KIPI::ImageCollectionDialog::getImageURL( this, m_interface );
 
-    if ( ImageFilesList.isEmpty() )
-       return;
-
+    if ( !url.isValid() ) return;
+  
+    ImageFilesList << url.path();
     setImagesList(ImageFilesList);
     setNbItems();
 }
@@ -596,15 +578,16 @@ void SendImagesDialog::slotImageSelected( QListBoxItem * item )
     m_ImageComments->setText( i18n("Comments: %1").arg(pitem->comments()) );
     m_ImageAlbum->setText( i18n("Album: %1").arg(pitem->album()) );
     m_imageLabel->clear();
-    KURL url;
-    url.setPath(pitem->path());
     
-    if ( m_thumbJob ) delete m_thumbJob;
-    
-    m_thumbJob = KIO::filePreview( url, m_imageLabel->height() );
+    if ( m_thumbJob ) delete m_thumbJob; 
+  
+    m_thumbJob = KIO::filePreview( pitem->url(), m_imageLabel->height() );
 
     connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
             SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
+            
+    connect(m_thumbJob, SIGNAL(failed(const KFileItem*)),
+            SLOT(slotFailedPreview(const KFileItem*)));            
 }
 
 
@@ -619,10 +602,9 @@ void SendImagesDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap &p
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void SendImagesDialog::slotCancelled()
+void SendImagesDialog::slotFailedPreview(const KFileItem*)
 {
-    m_cancelled = true;
-    removeTmpFiles();
+    m_thumbJob = 0L;
 }
 
 
@@ -638,505 +620,18 @@ void SendImagesDialog::slotOk()
 
     close();
     writeSettings();
-
-    // Prepare data to send.
-
-    QStringList imagesfileList;
-    QString ImageCommentsText = "";
-    QStringList imagesResizedWithError;
-    m_cancelled = false;
-
-    m_progressDlg = new QProgressDialog(0, "progressDlg", true );
-    m_progressDlg->setCaption( i18n("Creating images"));
-    m_progressDlg->setCancelButtonText(i18n("&Cancel"));
-    m_progressDlg->show();
-
-    connect(m_progressDlg, SIGNAL( cancelled() ),
-            this, SLOT( slotCancelled() ) );
-
-    m_progressDlg->setTotalSteps( m_ImagesFilesListBox->count() );
-    int imgIndex = 0;
-
-    // Main loop for data send creation.
-
-    for (uint i = 0 ; !m_cancelled && i < m_ImagesFilesListBox->count() ; ++i)
+    
+    for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
         {
         ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(i) );
-        QString imageName = pitem->path();
-        imagesfileList.append (imageName);
-
-        QString ItemName = imageName.section( '/', -1 );
-
-        m_progressDlg->setLabelText( i18n("Creating image \"%1\" to send").arg(ItemName) );
-        m_progressDlg->setProgress( imgIndex );
-        kapp->processEvents();
-        ++imgIndex;
-
-        // Prepare resized target images to send.
-
-        if ( m_changeImagesProp->isChecked() == true )
-           {
-           // Prepare resizing images and items comments.
-
-           QString imageFormat = m_imagesFormat->currentText();
-           QString imageFileName = ItemName;
-          
-           QString imageNameFormat = pitem->album() + "-" + 
-                                     imageFileName.replace(QChar('.'), "_") + 
-                                     extension(imageFormat);
-           int sizeFactor = getSize( m_imagesResize->currentItem() );
-           int imageCompression = m_imageCompression->value();
-
-           kdDebug (51000) << "Resizing ' " << imageName.ascii() << "-> '" 
-                           << m_tempPath.ascii() << imageNameFormat.ascii() 
-                           << "' (" << imageFormat.ascii() << ")" << endl;
-
-           if ( ResizeImage( imageName, m_tempPath, imageFormat, imageNameFormat,
-                             sizeFactor, imageCompression) == false )
-               {
-               // Resized images failed...
-
-               m_progressDlg->setLabelText( i18n("Creating image \"%1\" failed").arg(ItemName) );
-               kapp->processEvents();
-               imagesResizedWithError.append(imageName);
-               }
-           else          // Resized images OK...
-               {
-               // List of files to send.
-
-               m_imagesSendList.append (m_tempPath + imageNameFormat);
-
-               // Prepare items comments.
-
-               if ( m_addComments->isChecked() == true )
-                  {
-                  QString commentItem;
-
-                  if ( pitem->comments() != "" )
-                     commentItem = pitem->comments();
-                  else
-                     commentItem = i18n("no comment");
-
-                  ImageCommentsText = ImageCommentsText
-                                      + i18n("Comments for image \"%1\" from Album \"%2\": %3\n")
-                                      .arg(imageNameFormat).arg(pitem->album()).arg(commentItem);
-                  }
-               }
-           }
-        else     // No resize images operations...
-           {
-           // List of files to send.
-
-           m_imagesSendList.append (imageName);
-
-           // Prepare items comments.
-
-           if ( m_addComments->isChecked() == true )
-              {
-              QString ItemName2 = imageName;
-              ItemName2 = ItemName2.section( '/', -1 );
-              QString commentItem;
-
-              if ( pitem->comments() != "" )
-                 pitem->comments();
-              else
-                 commentItem = i18n("no comment");
-
-              ImageCommentsText = ImageCommentsText +
-                                  i18n("Comments for image \"%1\" from Album \"%2\": %3\n")
-                                  .arg(ItemName2).arg(pitem->album()).arg(commentItem);
-              }
-           }
+        m_images2send << pitem->url();
         }
-
-    // End of the main loop.
-
-    delete m_progressDlg;
-
-    if ( m_cancelled == true ) // Resizing images process canceled by user
-       {                       // -> bye without removed tmp folder (already done!)...
-       delete this;
-       return;
-       }
-
-    if ( imagesResizedWithError.isEmpty() == false )
-       {
-       // If we have some errors during resized images process...
-
-       listImagesErrorDialog *ErrorImagesDialog = new listImagesErrorDialog(0,
-                                                  i18n("Error during resize images process"),
-                                                  i18n("Cannot resize this images files :"),
-                                                  i18n("Do you want added this images files like\nattachments "
-                                                       "(not resizing)?"),
-                                                  imagesResizedWithError);
-       int ValRet = ErrorImagesDialog->exec();
-
-       switch (ValRet)
-         {
-         case KDialogBase::Yes :         // Added source image files instead resized images...
-
-            for ( QStringList::Iterator it = imagesResizedWithError.begin();
-                                        it != imagesResizedWithError.end(); ++it )
-                {
-                m_imagesSendList.append (*it);
-                kapp->processEvents();
-                if ( m_addComments->isChecked() == true )
-                   {
-                   QString ItemName = *it;
-                   ItemName = ItemName.section( '/', -1 );
-                   QString commentItem;
-
-                   ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->findItem(*it) );
-
-                   if (pitem)
-                      {
-                      if ( pitem->comments() != "" )
-                         commentItem = pitem->comments();
-                      else
-                         commentItem = i18n("no comment");
-
-                      ImageCommentsText = ImageCommentsText
-                                          + i18n("Comments for image \"%1\" from Album \"%2\": %3\n")
-                                          .arg(ItemName).arg(pitem->album()).arg(commentItem);
-                      }
-                   }
-                }
-
-            break;
-
-         case KDialogBase::No :         // Do nothing...
-            break;
-
-         case KDialogBase::Cancel :     // Stop process...
-            removeTmpFiles();
-            delete this;
-            return;
-            break;
-         }
-       }
-
-    // Create a text file with the comments.
-
-    if ( m_addComments->isChecked() == true )
-       {
-       QFile commentsFile( m_tempPath + i18n("comments.txt") );
-       QTextStream stream( &commentsFile );
-       commentsFile.open( IO_ReadWrite );
-       stream << ImageCommentsText << "\n";
-       commentsFile.close();
-       m_imagesSendList.append( m_tempPath + i18n("comments.txt") );
-       }
-
-    // Invoke mailer agent.
-
-    if ( m_mailAgentName->currentText() == "Kmail" )      // Kmail agent call.
-       {
-       KApplication::kApplication()->invokeMailer(
-                       QString::null,                     // Destination address.
-                       QString::null,                     // Carbon Copy address.
-                       QString::null,                     // Blind Carbon Copy address
-                       QString::null,                     // Message Subject.
-                       QString::null,                     // Message Body.
-                       QString::null,                     // Message Body File.
-                       m_imagesSendList);                 // Images attachments (+ comments).
-       }
-
-    // Sylpheed mail agent call.
-
-    if ( m_mailAgentName->currentText() == "Sylpheed" )
-       {
-       m_mailAgentProc = new KProcess;
-       *m_mailAgentProc << "sylpheed" << "--compose";
-       *m_mailAgentProc << "--attach";
-
-       for ( QStringList::Iterator it = m_imagesSendList.begin() ; it != m_imagesSendList.end() ; ++it )
-           *m_mailAgentProc << *it;
-
-       if (m_mailAgentProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
-                                     "check your installation!").arg(m_mailAgentName->currentText()));
-       }
-
-    // Balsa mail agent call.
-
-    if ( m_mailAgentName->currentText() == "Balsa" )
-       {
-       m_mailAgentProc = new KProcess;
-       *m_mailAgentProc << "balsa" << "-m" << "mailto:";
-
-       for ( QStringList::Iterator it = m_imagesSendList.begin() ; it != m_imagesSendList.end() ; ++it )
-           {
-           *m_mailAgentProc << "-a";
-           *m_mailAgentProc << *it;
-           }
-
-       if (m_mailAgentProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
-                                     "check your installation!").arg(m_mailAgentName->currentText()));
-       }
-
-    if ( m_mailAgentName->currentText() == "Evolution" )    // Evolution mail agent call.
-       {
-       m_mailAgentProc = new KProcess;
-       *m_mailAgentProc << "evolution";
-
-       QString Temp = "mailto:?subject=";
-
-       for ( QStringList::Iterator it = m_imagesSendList.begin() ; it != m_imagesSendList.end() ; ++it )
-           {
-           Temp.append("&attach=");
-           Temp.append( *it );
-           }
-
-       *m_mailAgentProc << Temp;
-
-       if (m_mailAgentProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
-                                     "check your installation!").arg(m_mailAgentName->currentText()));
-       }
-
-    // Mozilla | Netscape | Thunderbird mail agent call.
-
-    if ( m_mailAgentName->currentText() == "Mozilla" || m_mailAgentName->currentText() == "Netscape" ||
-         m_mailAgentName->currentText() == "Thunderbird" )
-       {
-       m_mailAgentProc = new KProcess;
-
-       if (m_mailAgentName->currentText() == "Mozilla")
-          *m_mailAgentProc << "mozilla" << "-remote";
-       else
-          if (m_mailAgentName->currentText() == "Thunderbird")
-             *m_mailAgentProc << "thunderbird" << "-remote";
-          else
-             *m_mailAgentProc << "netscape" << "-remote";
-
-       QString Temp = "xfeDoCommand(composeMessage,attachment='";
-
-       for ( QStringList::Iterator it = m_imagesSendList.begin() ; it != m_imagesSendList.end() ; ++it )
-           {
-           Temp.append( "file://" );
-           Temp.append( *it );
-           Temp.append( "," );
-           }
-
-       Temp.append("')");
-
-       *m_mailAgentProc << Temp;
-
-       connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)), 
-               this, SLOT(slotMozillaExited(KProcess*)));
-
-       connect(m_mailAgentProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
-               this, SLOT(slotMozillaReadStderr(KProcess*, char*, int)));
-
-       kdDebug (51000) << Temp.ascii() << endl;
-
-       if (m_mailAgentProc->start(KProcess::NotifyOnExit , KProcess::All) == false)
-          KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
-                                     "check your installation!").arg(m_mailAgentName->currentText()));
-       else return;
-       }
-
-    // Close this dialog.
-
-    delete this;
+    
+    accept();
 }
 
 
 ////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////////
-
-int SendImagesDialog::getSize ( int choice )
-{
-    switch (choice)
-       {
-       case 0:
-          return (320);
-          break;
-       case 1:
-          return (640);
-          break;
-       case 2:
-          return (800);
-          break;
-       case 3:
-          return (1024);
-          break;
-       case 4:
-          return (1280);
-          break;
-       default:
-          return (800); // Default value...
-          break;
-       }
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void SendImagesDialog::slotMozillaExited(KProcess* /*proc*/)
-{
-    if ( m_mozillaStdErr.contains("No running window found.") == true )   // No remote Mozilla | Netscape |
-       {                                                                  // Thunderbird env. loaded !
-       m_mailAgentProc2 = new KProcess;                                   // Init a new env.
-
-       if (m_mailAgentName->currentText() == "Mozilla")
-          *m_mailAgentProc2 << "mozilla" << "-mail";
-       else
-          if (m_mailAgentName->currentText() == "Thunderbird")
-             *m_mailAgentProc2 << "thunderbird" << "-mail";
-          else
-             *m_mailAgentProc2 << "netscape" << "-mail";
-
-       // Start an instance of mozilla mail agent before a remote call.
-       
-       if (m_mailAgentProc2->start() == false)   
-          {
-          KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
-                                     "check your installation!").arg(m_mailAgentName->currentText()));
-          delete this;
-          }
-       else
-          {
-          // Mozilla | Netscape | Thunderbird mail agent started correctly
-          // -> start a remote mail agent with multiple attachments after the env. is loaded !
-
-          m_mozillaTimer->start(5000, true);
-          return; // Don't close this dialog -> will be closed by the end timer slot.
-          }
-       }
-    else
-       delete this;
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void SendImagesDialog::slotMozillaTimeout(void)
-{
-    m_mailAgentProc3 = new KProcess;
-
-    if (m_mailAgentName->currentText() == "Mozilla")
-       *m_mailAgentProc3 << "mozilla" << "-remote";
-    else
-       if (m_mailAgentName->currentText() == "Thunderbird")
-          *m_mailAgentProc3 << "thunderbird" << "-remote";
-       else
-          *m_mailAgentProc3 << "netscape" << "-remote";
-
-    QString Temp = "xfeDoCommand(composeMessage,attachment='";
-
-    for ( QStringList::Iterator it = m_imagesSendList.begin() ; it != m_imagesSendList.end() ; ++it )
-        {
-        Temp.append( "file://" );
-        Temp.append( *it );
-        Temp.append( "," );
-        }
-
-    Temp.append("')");
-
-    *m_mailAgentProc3 << Temp;
-
-    if (m_mailAgentProc3->start() == false)
-       KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
-                                  "check your installation!").arg(m_mailAgentName->currentText()));
-
-    // Close this dialog.
-
-    delete this;
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void SendImagesDialog::slotMozillaReadStderr(KProcess* /*proc*/, char *buffer, int buflen)
-{
-    m_mozillaStdErr = QString::fromLocal8Bit(buffer, buflen);
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-bool SendImagesDialog::ResizeImage( const QString &SourcePath, const QString &DestPath,
-                                    const QString &ImageFormat, const QString &ImageName,
-                                    int SizeFactor, int ImageCompression)
-{
-    QImage img;
-
-    if ( img.load(SourcePath) == true )
-       {
-       int w = img.width();
-       int h = img.height();
-
-       if( w > SizeFactor || h > SizeFactor )
-           {
-           if( w > h )
-               {
-               h = (int)( (double)( h * SizeFactor ) / w );
-
-               if ( h == 0 ) h = 1;
-
-               w = SizeFactor;
-               Q_ASSERT( h <= SizeFactor );
-               }
-           else
-               {
-               w = (int)( (double)( w * SizeFactor ) / h );
-
-               if ( w == 0 ) w = 1;
-
-               h = SizeFactor;
-               Q_ASSERT( w <= SizeFactor );
-               }
-
-           const QImage scaleImg(img.smoothScale( w, h ));
-
-           if ( scaleImg.width() != w || scaleImg.height() != h )
-               {
-               kdDebug (51000) << "Resizing failed. Aborting." << endl;
-               return false;
-               }
-
-           img = scaleImg;
-           }
-
-        if ( !img.save(DestPath + ImageName, ImageFormat.latin1(), ImageCompression) )
-           {
-           kdDebug (51000) << "Saving failed with specific compression value. Aborting." << endl;
-           return false;
-           }
-
-        return true;
-        }
-
-    return false;
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-QString SendImagesDialog::extension(const QString& imageFileFormat)
-{
-    if (imageFileFormat == "PNG")
-        return ".png";
-
-    if (imageFileFormat == "JPEG")
-        return ".jpg";
-
-    Q_ASSERT(false);
-    return "";
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void SendImagesDialog::removeTmpFiles(void)
-{
-    if (DeleteDir(m_tempPath) == false)
-       KMessageBox::error(0, i18n("Cannot remove temporary folder %1!").arg(m_tempPath));
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void SendImagesDialog::setNbItems(void)
 {
@@ -1144,70 +639,6 @@ void SendImagesDialog::setNbItems(void)
     else
        m_groupBoxImageList->setTitle(i18n("Images list (1 item)", "Images list (%n items)",
                                      m_ImagesFilesListBox->count() ));
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-bool SendImagesDialog::DeleteDir(QString dirname)
-{
-if (dirname != "")
-    {
-    QDir dir;
-
-    if (dir.exists ( dirname ) == true)
-       {
-       if (deldir(dirname) == false)
-           return false;
-
-       if (dir.rmdir( dirname ) == false )
-           return false;
-       }
-    else
-       return false;
-    }
-else
-    return false;
-
-return true;
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-bool SendImagesDialog::deldir(QString dirname)
-{
-QDir *dir = new QDir(dirname);
-dir->setFilter ( QDir::Dirs | QDir::Files | QDir::NoSymLinks );
-
-const QFileInfoList* fileinfolist = dir->entryInfoList();
-QFileInfoListIterator it(*fileinfolist);
-QFileInfo* fi;
-
-while( (fi = it.current() ) )
-     {
-     if(fi->fileName() == "." || fi->fileName() == ".." )
-          {
-          ++it;
-          continue;
-          }
-
-     if( fi->isDir() )
-          {
-          if (deldir( fi->absFilePath() ) == false)
-              return false;
-          if (dir->rmdir( fi->absFilePath() ) == false)
-              return false;
-          }
-     else
-          if( fi->isFile() )
-               if (dir->remove(fi->absFilePath() ) == false)
-                   return false;
-
-     kapp->processEvents();
-     ++it;
-     }
-
-return true;
 }
 
 }  // NameSpace KIPISendimagesPlugin

@@ -33,6 +33,7 @@
 
 #include <klocale.h>
 #include <klistview.h>
+#include <kurl.h>
 
 // Local includes.
 
@@ -43,10 +44,11 @@ namespace KIPISendimagesPlugin
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption, const QString &Mess1,
-                                             const QString &Mess2, QStringList ListOfiles)
-                     : KDialogBase( Caption, Yes|No|Cancel, Yes, Cancel, parent, "listImagesErrorDialog",
-                                    true, true )
+listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption, 
+                                             const QString &Mess1, const QString &Mess2,
+                                             KURL::List ListOfiles)
+                     : KDialogBase( Caption, Yes|No|Cancel, Yes, Cancel, parent,
+                                    "listImagesErrorDialog", true, true )
 {
   QWidget* box = new QWidget( this );
   setMainWidget(box);
@@ -69,15 +71,11 @@ listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption, c
   g1->addWidget (m_listFiles, 2, 1);
   g1->addWidget (labelMess2, 3, 1);
 
-  for ( QStringList::Iterator it = ListOfiles.begin() ; it != ListOfiles.end() ; ++it )
+  for ( KURL::List::Iterator it = ListOfiles.begin() ; it != ListOfiles.end() ; ++it )
       {
-      QString currentFile = *it;
-      QFileInfo fi(currentFile);
-      QString Temp = fi.dirPath();
-
       QListViewItem *item = new QListViewItem( m_listFiles,
-                                               fi.fileName(),             // Filename.
-                                               Temp.section('/', -1)      // Album.
+                                              (*it).fileName(),    
+                                              (*it).directory().section('/', -1)
                                              );
       }
 

@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//    LISTIMAGESERRORDIALOG.H
+//    ACTIONS.H
 //
-//    Copyright (C) 2003 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -21,34 +21,38 @@
 //////////////////////////////////////////////////////////////////////////////
 
 
-#ifndef LISTIMAGESERRORDIALOG_included
-#define LISTIMAGESERRORDIALOG_included
-
-// KDElib includes
-
-#include <kdialogbase.h>
-
-class KListView;
-class KURL::List;
+#ifndef ACTIONS_H
+#define ACTIONS_H
 
 namespace KIPISendimagesPlugin
 {
 
-class listImagesErrorDialog : public KDialogBase
+enum Action
 {
-Q_OBJECT
+    ResizeImages = 0,
+    ResizeFailed,
+    Progress
+};
+    
 
+class EventData
+{
 public:
-  listImagesErrorDialog(QWidget* parent, QString Caption,
-                        const QString &Mess1, const QString &Mess2,
-                        KURL::List ListOfiles);
-  ~listImagesErrorDialog();
-
-private:
-  KListView*     m_listFiles;
+    EventData() 
+       {
+       starting = false;
+       success  = false;
+       }
+    
+    QString fileName;
+    QString albumName;
+    QString errString;
+    int     total;
+    bool    starting;
+    bool    success;
+    Action  action;
 };
 
 }  // NameSpace KIPISendimagesPlugin
 
-#endif  // LISTIMAGESERRORDIALOG_included
-
+#endif  // ACTIONS_H 

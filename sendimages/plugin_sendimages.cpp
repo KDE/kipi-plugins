@@ -1,21 +1,24 @@
-/* ============================================================
- * File  : plugin_sendimages.cpp
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
- * Date  : 2003-11-04
- * Description : KIPI E-Mail Images Plugin.
- *
- * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published bythe Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * ============================================================ */
+//////////////////////////////////////////////////////////////////////////////
+//
+//    PLUGIN_SENDIMAGES.CPP
+//
+//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
+//
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+//
+//////////////////////////////////////////////////////////////////////////////
 
  // C Ansi includes
 
@@ -26,7 +29,9 @@ extern "C"
 
 // Include files for Qt
 
+#include <qfileinfo.h>
 #include <qimage.h>
+#include <qprogressdialog.h>
 
 // Include files for KDE
 
@@ -48,7 +53,8 @@ extern "C"
 
 // Local includes
 
-#include "sendimagesdialog.h"
+#include "actions.h"
+#include "sendimages.h"
 #include "plugin_sendimages.h"
 
 typedef KGenericFactory<Plugin_SendImages> Factory;
@@ -68,13 +74,14 @@ void Plugin_SendImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
     
-    m_action_sendimages = new KAction (i18n("E-mail Images..."),     // Menu message.
-                                        "mail_new",                  // Menu icon.
-                                        0,
-                                        this,
-                                        SLOT(slotActivate()),
-                                        actionCollection(),
-                                        "send_images");
+    m_action_sendimages = new KAction (i18n("E-mail Images..."),    // Menu message.
+                                       "mail_new",                  // Menu icon.
+                                       0,
+                                       this,
+                                       SLOT(slotActivate()),
+                                       actionCollection(),
+                                       "send_images");
+                                       
     addAction( m_action_sendimages );
 }
 
@@ -90,6 +97,8 @@ Plugin_SendImages::~Plugin_SendImages()
 
 void Plugin_SendImages::slotActivate()
 {
+    m_progressDlg = 0;
+    
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     
     if ( !interface ) 
@@ -106,9 +115,136 @@ void Plugin_SendImages::slotActivate()
     KStandardDirs dir;
     QString Tmp = dir.saveLocation("tmp", "kipi-sendimagesplugin-" + QString::number(getpid()) + "/");
 
-    m_sendImagesDialog = new KIPISendimagesPlugin::SendImagesDialog(0, Tmp, interface, images);
-    m_sendImagesDialog->show();
+    m_sendImagesOperation = new KIPISendimagesPlugin::SendImages( interface, Tmp, images, this );
+    
+    if ( m_sendImagesOperation->showDialog() )
+       m_sendImagesOperation->start();
+  }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Plugin_SendImages::slotCancel()
+{
+    m_sendImagesOperation->terminate();
+    m_sendImagesOperation->wait();
+    m_sendImagesOperation->removeTmpFiles();
+    
+    if (m_progressDlg) 
+       {
+       m_progressDlg->reset();
+       }
 }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Plugin_SendImages::customEvent(QCustomEvent *event)
+{
+    if (!event) return;
+    
+    if (!m_progressDlg)
+        {
+        m_progressDlg = new QProgressDialog (i18n("Resize image"), i18n("&Cancel"), 0,
+                                             0, 0, true);
+        
+        connect(m_progressDlg, SIGNAL(cancelled()),
+                SLOT(slotCancel()));
+
+        m_current = 0;
+        m_progressDlg->show();
+        }
+
+    KIPISendimagesPlugin::EventData *d = (KIPISendimagesPlugin::EventData*) event->data();
+    
+    if (!d) return;
+    
+    if (d->starting) 
+        {
+        QString text;
+        
+        switch (d->action) 
+           {
+           case(KIPISendimagesPlugin::ResizeImages): 
+              {
+              text = i18n("Resizing for\n%1\n%1\nfrom Album\n%2")
+                          .arg(d->fileName).arg(d->albumName);
+              break;
+              }
+              
+           case(KIPISendimagesPlugin::ResizeFailed): 
+              {
+              text = i18n("Resizing failed for\n%1\nfrom Album\n%2")
+                          .arg(d->fileName).arg(d->albumName);
+              break;
+              }
+           
+           case(KIPISendimagesPlugin::Progress): 
+              {
+              m_current = 0;
+              m_total = d->total;
+              text = i18n("Parsing %1 image(s) to send...").arg(d->total);
+              m_progressDlg->show();
+              break;
+              }
+              
+           default: 
+              {
+              kdWarning( 51000 ) << "Plugin_SendImages: Unknown event: " << d->action << endl;
+              }
+           }
+           
+        m_progressDlg->setLabelText(text);
+        }
+    else 
+        {
+        if (!d->success) 
+            {
+            QString text;
+            
+            switch (d->action) 
+               {
+               case(KIPISendimagesPlugin::ResizeImages): 
+                  {
+                  text = i18n("Failed to resize images!");
+                  break;
+                  }
+                                   
+               default: 
+                  {
+                  kdWarning( 51000 ) << "Plugin_SendImages: Unknown event: " << d->action << endl;
+                  }
+               }
+            }
+
+        ++m_current;
+        m_progressDlg->setProgress(m_current, m_total);
+        
+        if( d->action == KIPISendimagesPlugin::Progress )
+           {
+           m_current = 0;
+           m_progressDlg->reset();
+           
+           // If we have some errors during the resizing images process, show an error dialog.
+           
+           if ( m_sendImagesOperation->showErrors() == false )
+              return;
+
+           // Create a text file with images comments if necessary.
+           
+           m_sendImagesOperation->makeCommentsFile();
+
+           // Invoke mailer agent call.
+           
+           m_sendImagesOperation->invokeMailAgent();
+           }
+        }
+    
+    kapp->processEvents();
+    delete d;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 KIPI::Category Plugin_SendImages::category( KAction* action ) const
 {

@@ -5,7 +5,8 @@ METASOURCES = AUTO
 kde_module_LTLIBRARIES = kipiplugin_sendimages.la
 kipiplugin_sendimages_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 # Srcs for the plugin
-kipiplugin_sendimages_la_SOURCES = plugin_sendimages.cpp sendimagesdialog.cpp listimageserrordialog.cpp
+kipiplugin_sendimages_la_SOURCES = plugin_sendimages.cpp sendimagesdialog.cpp \
+                                   listimageserrordialog.cpp sendimages.cpp
 
 # Libs needed by the plugin
 kipiplugin_sendimages_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS)
