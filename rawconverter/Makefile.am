@@ -2,15 +2,18 @@ INCLUDES    = -I$(top_srcdir)/libkipi $(all_includes)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
-kde_module_LTLIBRARIES = digikamplugin_rawconverter.la
+kde_module_LTLIBRARIES = kipiplugin_rawconverter.la
 
-digikamplugin_rawconverter_la_SOURCES = plugin_rawconverter.cpp \
+# Srcs for the plugin
+kipiplugin_rawconverter_la_SOURCES = plugin_rawconverter.cpp \
 	batchdialog.cpp singledialog.cpp previewwidget.cpp \
 	processcontroller.cpp dmessagebox.cpp 
 
-digikamplugin_rawconverter_la_LIBADD = $(LIB_KPARTS) -lkipi
+# Libs needed by the plugin
+kipiplugin_rawconverter_la_LIBADD = $(LIB_KPARTS) -lkipi
 
-digikamplugin_rawconverter_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+# LD flags for the plugin
+kipiplugin_rawconverter_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 
 # binary
 bin_PROGRAMS = digikamdcrawclient
@@ -22,13 +25,14 @@ digikamdcrawclient_LDFLAGS = -lm -ljpeg -ltiff
 pluginsdir = $(kde_datadir)/digikam/plugins
 plugins_DATA = digikamplugin_rawconverter.rc
 
-kde_services_DATA = digikamplugin_rawconverter.desktop
+# Install the desktop file needed to detect the plugin
+kde_services_DATA = kipiplugin_rawconverter.desktop
 
-digikamrawconvertericondir = $(kde_datadir)/digikam/icons
-digikamrawconvertericon_ICON = AUTO
+kipirawconvertericondir = $(kde_datadir)/digikam/icons
+kipirawconvertericon_ICON = AUTO
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp *.h -o $(podir)/digikamplugin_rawconverter.pot
+	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_rawconverter.pot
 
 install-data-local:
 	$(mkinstalldirs) $(mandir)/man1/
