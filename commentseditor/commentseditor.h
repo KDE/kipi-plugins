@@ -37,6 +37,7 @@
 
 class QListViewItem;
 class QPixmap;
+class QPushButton;
 
 class KFileItem;
 class KURL;
@@ -60,9 +61,14 @@ private:
 
     void loadItems();
 
+    QPushButton                      *m_helpButton;
+    
     CListView                        *m_listView;
+    
     CLineEdit                        *m_edit;
+    
     KIPI::ImageCollection             m_images;
+    
     KIPI::Interface*                  m_interface;
 
 private slots:
@@ -72,7 +78,8 @@ private slots:
     void slotSelectionChanged();
     void slotCommentChanged(const QString& newComment);
     void slotOkClicked();
-    void slotAboutClicked();
+    void slotHelp();
+    
 };
 
 } // NameSpace KIPICommentsEditorPlugin

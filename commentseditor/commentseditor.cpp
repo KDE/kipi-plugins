@@ -31,6 +31,7 @@
 #include <qbrush.h>
 #include <qfont.h>
 #include <qevent.h>
+#include <qpushbutton.h>
 
 // KDE includes.
 
@@ -38,6 +39,11 @@
 #include <kurl.h>
 #include <kmessagebox.h>
 #include <kio/previewjob.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // LibKipi includes.
 
@@ -146,11 +152,32 @@ protected:
 // --------------------------------------------------------------------
 
 CommentsEditor::CommentsEditor( KIPI::Interface* interface, KIPI::ImageCollection images, QWidget *parent )
-    : KDialogBase(Plain, i18n("Edit Comments"), Help|User1|Ok|Cancel, Ok,
-                  parent, 0, true, true, i18n("&About") )
+              : KDialogBase(Plain, i18n("Edit Comments"), Help|Ok|Cancel, Ok,
+                            parent, 0, true, true, i18n("&About") )
 
 {
-    setHelp("commentseditor", "kipi-plugins");
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Comments Editor"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin for commenting images"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Renchi Raju", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
+                     "renchi@pooh.tam.uiuc.edu");
+
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Comments Editor handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
+
+    // ------------------------------------------
+        
     m_images    = images;
     m_interface = interface;
 
@@ -197,11 +224,10 @@ CommentsEditor::CommentsEditor( KIPI::Interface* interface, KIPI::ImageCollectio
 
     connect(m_listView, SIGNAL(selectionChanged()),
             this, SLOT(slotSelectionChanged()));
+            
     connect(m_edit, SIGNAL(textChanged(const QString&)),
             this, SLOT(slotCommentChanged(const QString&)));
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotAboutClicked()));
-
+            
     // ----------------------------------------------------------
 
     setInitialSize(configDialogSize("CommentsEditor Settings"));
@@ -212,6 +238,12 @@ CommentsEditor::CommentsEditor( KIPI::Interface* interface, KIPI::ImageCollectio
 CommentsEditor::~CommentsEditor()
 {
 }
+
+void CommentsEditor::slotHelp()
+{
+    KApplication::kApplication()->invokeHelp("commentseditor",
+                                             "kipi-plugins");
+} 
 
 void CommentsEditor::loadItems()
 {
@@ -236,6 +268,7 @@ void CommentsEditor::loadItems()
     }
 
     KIO::PreviewJob* thumbJob = KIO::filePreview( urlList, 64);
+    
     connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
             SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 }
@@ -298,14 +331,6 @@ void CommentsEditor::slotOkClicked()
     }
 
     saveDialogSize("CommentsEditor Settings");
-}
-
-void CommentsEditor::slotAboutClicked()
-{
-    KMessageBox::about(this, i18n("A KIPI plugin for commenting images\n\n"
-                                  "Author: Renchi Raju\n\n"
-                                  "Email: renchi@pooh.tam.uiuc.edu"),
-                                  i18n("About 'Comments Editor'"));
 }
 
 } // NameSpace KIPICommentsEditorPlugin
