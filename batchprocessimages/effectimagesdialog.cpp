@@ -93,17 +93,17 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     m_labelType->setText( i18n("Effect type:") );
 
-    m_Type->insertItem(i18n("Adaptive Threshold"));
+    m_Type->insertItem(i18n("Adaptive Threshold"));  // 0
     m_Type->insertItem(i18n("Charcoal"));
     m_Type->insertItem(i18n("Detect Edges"));
     m_Type->insertItem(i18n("Emboss"));
     m_Type->insertItem(i18n("Implode"));
-    m_Type->insertItem(i18n("Paint"));
+    m_Type->insertItem(i18n("Paint"));               // 5
     m_Type->insertItem(i18n("Shade Light"));
     m_Type->insertItem(i18n("Solarize"));
     m_Type->insertItem(i18n("Spread"));
     m_Type->insertItem(i18n("Swirl"));
-    m_Type->insertItem(i18n("Wave"));
+    m_Type->insertItem(i18n("Wave"));                // 10
     m_Type->setCurrentText(i18n("Emboss"));
     whatsThis = i18n("<p>Select here the effect type for your images:<p>"
                      "<b>Adaptive threshold</b>: perform local adaptive thresholding. The algorithm "
@@ -157,53 +157,53 @@ void EffectImagesDialog::slotHelp( void )
 
 void EffectImagesDialog::slotOptionsClicked(void)
 {
-    QString Type = m_Type->currentText();
+    int Type = m_Type->currentItem();
     EffectOptionsDialog *optionsDialog = new EffectOptionsDialog(this, Type);
 
-    if ( Type == i18n("Adaptive threshold") )
+    if ( Type == 0) // Adaptive threshold
        {
        optionsDialog->m_latWidth->setValue(m_latWidth);
        optionsDialog->m_latHeight->setValue(m_latHeight);
        optionsDialog->m_latOffset->setValue(m_latOffset);
        }
 
-    if ( Type == i18n("Charcoal") )
+    if ( Type == 1) // Charcoal
        {
        optionsDialog->m_charcoalRadius->setValue(m_charcoalRadius);
        optionsDialog->m_charcoalDeviation->setValue(m_charcoalDeviation);
        }
 
-    if ( Type == i18n("Detect edges") )
+    if ( Type == 2) // Detect edges
        optionsDialog->m_edgeRadius->setValue(m_edgeRadius);
 
-    if ( Type == i18n("Emboss") )
+    if ( Type == 3) // Emboss
        {
        optionsDialog->m_embossRadius->setValue(m_embossRadius);
        optionsDialog->m_embossDeviation->setValue(m_embossDeviation);
        }
 
-    if ( Type == i18n("Implode") )
+    if ( Type == 4) // Implode
        optionsDialog->m_implodeFactor->setValue(m_implodeFactor);
 
-    if ( Type == i18n("Paint") )
+    if ( Type == 5) // Paint
        optionsDialog->m_paintRadius->setValue(m_paintRadius);
 
-    if ( Type == i18n("Shade light") )
+    if ( Type == 6) // Shade light
        {
        optionsDialog->m_shadeAzimuth->setValue(m_shadeAzimuth);
        optionsDialog->m_shadeElevation->setValue(m_shadeElevation);
        }
 
-    if ( Type == i18n("Solarize") )
+    if ( Type == 7) // Solarize
        optionsDialog->m_solarizeFactor->setValue(m_solarizeFactor);
 
-    if ( Type == i18n("Spread") )
+    if ( Type == 8) // Spread
        optionsDialog->m_spreadRadius->setValue(m_spreadRadius);
 
-    if ( Type == i18n("Swirl") )
+    if ( Type == 9) // Swirl
        optionsDialog->m_swirlDegrees->setValue(m_swirlDegrees);
 
-    if ( Type == i18n("Wave") )
+    if ( Type == 10) // Wave
        {
        optionsDialog->m_waveAmplitude->setValue(m_waveAmplitude);
        optionsDialog->m_waveLenght->setValue(m_waveLenght);
@@ -211,50 +211,50 @@ void EffectImagesDialog::slotOptionsClicked(void)
 
     if ( optionsDialog->exec() == KMessageBox::Ok )
        {
-       if ( Type == i18n("Adaptive threshold") )
+       if ( Type == 0) // Adaptive threshold
           {
           m_latWidth = optionsDialog->m_latWidth->value();
           m_latHeight = optionsDialog->m_latHeight->value();
           m_latOffset = optionsDialog->m_latOffset->value();
           }
 
-       if ( Type == i18n("Charcoal") )
+       if ( Type == 1) // Charcoal
           {
           m_charcoalRadius = optionsDialog->m_charcoalRadius->value();
           m_charcoalDeviation = optionsDialog->m_charcoalDeviation->value();
           }
 
-       if ( Type == i18n("Detect edges") )
+       if ( Type == 2) // Detect edges
           m_edgeRadius = optionsDialog->m_edgeRadius->value();
 
-       if ( Type == i18n("Emboss") )
+       if ( Type == 3) // Emboss
           {
           m_embossRadius = optionsDialog->m_embossRadius->value();
           m_embossDeviation = optionsDialog->m_embossDeviation->value();
           }
 
-       if ( Type == i18n("Implode") )
+       if ( Type == 4) // Implode
           m_implodeFactor = optionsDialog->m_implodeFactor->value();
 
-       if ( Type == i18n("Paint") )
+       if ( Type == 5) // Paint
           m_paintRadius = optionsDialog->m_paintRadius->value();
 
-       if ( Type == i18n("Shade light") )
+       if ( Type == 6) // Shade light
           {
           m_shadeAzimuth = optionsDialog->m_shadeAzimuth->value();
           m_shadeElevation = optionsDialog->m_shadeElevation->value();
           }
 
-       if ( Type == i18n("Solarize") )
+       if ( Type == 7) // Solarize
           m_solarizeFactor = optionsDialog->m_solarizeFactor->value();
 
-       if ( Type == i18n("Spread") )
+       if ( Type == 8) // Spread
           m_spreadRadius = optionsDialog->m_spreadRadius->value();
 
-       if ( Type == i18n("Swirl") )
+       if ( Type == 9) // Swirl
           m_swirlDegrees = optionsDialog->m_swirlDegrees->value();
 
-       if ( Type == i18n("Wave") )
+       if ( Type == 10) // Wave
           {
           m_waveAmplitude = optionsDialog->m_waveAmplitude->value();
           m_waveLenght = optionsDialog->m_waveLenght->value();
@@ -272,7 +272,7 @@ void EffectImagesDialog::readSettings(void)
 m_config = new KConfig("kipirc");
     m_config->setGroup("EffectImages Settings");
 
-    m_Type->setCurrentText(m_config->readEntry("EffectType", i18n("Normalize")));
+    m_Type->setCurrentItem(m_config->readNumEntry("EffectType", 3));   // Emboss per default.
     m_latWidth = m_config->readNumEntry("LatWidth", 50);
     m_latHeight = m_config->readNumEntry("LatHeight", 50);
     m_latOffset = m_config->readNumEntry("LatOffset", 1);
@@ -315,7 +315,7 @@ void EffectImagesDialog::saveSettings(void)
 
     m_config = new KConfig("kipirc");
     m_config->setGroup("EffectImages Settings");
-    m_config->writeEntry("EffectType", m_Type->currentText());
+    m_config->writeEntry("EffectType", m_Type->currentItem());
 
     m_config->writeEntry("LatWidth", m_latWidth);
     m_config->writeEntry("LatHeight", m_latHeight);
@@ -358,7 +358,7 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        m_previewOutput.append( " -crop 300x300+0+0 ");
        }
 
-    if (m_Type->currentText() == i18n("Adaptive threshold"))
+    if (m_Type->currentItem() == 0) // Adaptive threshold
        {
        *proc << "-lat";
        QString Temp, Temp2;
@@ -368,7 +368,7 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Charcoal"))
+    if (m_Type->currentItem() == 1) // Charcoal
        {
        *proc << "-charcoal";
        QString Temp, Temp2;
@@ -377,7 +377,7 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Detect edges"))
+    if (m_Type->currentItem() == 2) // Detect edges
        {
        *proc << "-edge";
        QString Temp, Temp2;
@@ -385,7 +385,7 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Emboss"))
+    if (m_Type->currentItem() == 3) // Emboss
        {
        *proc << "-emboss";
        QString Temp, Temp2;
@@ -394,7 +394,7 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Implode"))
+    if (m_Type->currentItem() == 4) // Implode
        {
        *proc << "-implode";
        QString Temp, Temp2;
@@ -402,7 +402,7 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Paint"))
+    if (m_Type->currentItem() == 5) // Paint
        {
        *proc << "-paint";
        QString Temp, Temp2;
@@ -410,7 +410,7 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Shade light"))
+    if (m_Type->currentItem() == 6) // Shade light
        {
        *proc << "-shade";
        QString Temp, Temp2;
@@ -419,7 +419,7 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Solarize"))
+    if (m_Type->currentItem() == 7) // Solarize
        {
        *proc << "-solarize";
        QString Temp, Temp2;
@@ -427,7 +427,7 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Spread"))
+    if (m_Type->currentItem() == 8) // Spread
        {
        *proc << "-spread";
        QString Temp, Temp2;
@@ -435,7 +435,7 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-   if (m_Type->currentText() == i18n("Swirl"))
+   if (m_Type->currentItem() == 9) // Swirl
        {
        *proc << "-swirl";
        QString Temp, Temp2;
@@ -443,7 +443,7 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Wave"))
+    if (m_Type->currentItem() == 10) // Wave
        {
        *proc << "-wave";
        QString Temp, Temp2;

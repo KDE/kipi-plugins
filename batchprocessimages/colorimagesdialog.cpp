@@ -93,15 +93,15 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
     m_labelType->setText( i18n("Coloring enhancement type:") );
 
     m_Type->insertItem(i18n("Decrease Contrast"));
-    m_Type->insertItem(i18n("Depth"));
+    m_Type->insertItem(i18n("Depth"));              // 1
     m_Type->insertItem(i18n("Equalize"));
-    m_Type->insertItem(i18n("Fuzz"));
+    m_Type->insertItem(i18n("Fuzz"));               // 3
     m_Type->insertItem(i18n("Gray Scales"));
     m_Type->insertItem(i18n("Increase Contrast"));
     m_Type->insertItem(i18n("Monochrome"));
     m_Type->insertItem(i18n("Negate"));
     m_Type->insertItem(i18n("Normalize"));
-    m_Type->insertItem(i18n("Segment"));
+    m_Type->insertItem(i18n("Segment"));            // 9
     m_Type->insertItem(i18n("Trim"));
     m_Type->setCurrentText(i18n("Normalize"));
     whatsThis = i18n("<p>Select here the color enhancement type for your images:<p>"
@@ -134,7 +134,7 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
 
     readSettings();
     listImageFiles();
-    slotTypeChanged(m_Type->currentText());
+    slotTypeChanged(m_Type->currentItem());
 }
 
 
@@ -156,9 +156,12 @@ void ColorImagesDialog::slotHelp( void )
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void ColorImagesDialog::slotTypeChanged(const QString &string)
+void ColorImagesDialog::slotTypeChanged(int type)
 {
-    if ( string == i18n("Depth") || string == i18n("Fuzz") || string == i18n("Segment") )
+    if ( type == 1 || // Depth
+         type == 3 || // Fuzz
+         type == 9    // Segment
+       )
        m_optionsButton->setEnabled(true);
     else
        m_optionsButton->setEnabled(false);
@@ -169,16 +172,16 @@ void ColorImagesDialog::slotTypeChanged(const QString &string)
 
 void ColorImagesDialog::slotOptionsClicked(void)
 {
-    QString Type = m_Type->currentText();
+    int Type = m_Type->currentItem();
     ColorOptionsDialog *optionsDialog = new ColorOptionsDialog(this, Type);
 
-    if ( Type == i18n("Depth") )
+    if ( Type == 1) // Depth
        optionsDialog->m_depthValue->setCurrentText(m_depthValue);
 
-    if ( Type == i18n("Fuzz") )
+    if ( Type == 3) // Fuzz
        optionsDialog->m_fuzzDistance->setValue(m_fuzzDistance);
 
-    if ( Type == i18n("Segment") )
+    if ( Type == 9) // Segment
        {
        optionsDialog->m_segmentCluster->setValue(m_segmentCluster);
        optionsDialog->m_segmentSmooth->setValue(m_segmentSmooth);
@@ -186,13 +189,13 @@ void ColorImagesDialog::slotOptionsClicked(void)
 
     if ( optionsDialog->exec() == KMessageBox::Ok )
        {
-       if ( Type == i18n("Depth") )
+       if ( Type == 1) // Depth
           m_depthValue = optionsDialog->m_depthValue->currentText();
 
-       if ( Type == i18n("Fuzz") )
+       if ( Type == 3) // Fuzz
           m_fuzzDistance = optionsDialog->m_fuzzDistance->value();
 
-       if ( Type == i18n("Segment") )
+       if ( Type == 9) // Segment
           {
           m_segmentCluster = optionsDialog->m_segmentCluster->value();
           m_segmentSmooth = optionsDialog->m_segmentSmooth->value();
@@ -212,7 +215,7 @@ void ColorImagesDialog::readSettings(void)
     m_config = new KConfig("kipirc");
     m_config->setGroup("ColorImages Settings");
 
-    m_Type->setCurrentText(m_config->readEntry("ColorType", i18n("Normalize")));
+    m_Type->setCurrentItem(m_config->readNumEntry("ColorType", 8)); // Normalize per default.
     m_depthValue = m_config->readEntry("DepthValue", "32");
     m_fuzzDistance = m_config->readNumEntry("FuzzDistance", 3);
     m_segmentCluster = m_config->readNumEntry("SegmentCluster", 3);
@@ -243,7 +246,7 @@ void ColorImagesDialog::saveSettings(void)
     m_config = new KConfig("kipirc");
     m_config->setGroup("ColorImages Settings");
 
-    m_config->writeEntry("ColorType", m_Type->currentText());
+    m_config->writeEntry("ColorType", m_Type->currentItem());
     m_config->writeEntry("DepthValue", m_depthValue);
     m_config->writeEntry("FuzzDistance", m_fuzzDistance);
     m_config->writeEntry("SegmentCluster", m_segmentCluster);
@@ -272,55 +275,55 @@ QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *i
        m_previewOutput.append( " -crop 300x300+0+0 ");
        }
 
-    if (m_Type->currentText() == i18n("Decrease contrast"))
+    if (m_Type->currentItem() == 0) // Decrease contrast"
        {
        *proc << "-contrast";
        }
 
-    if (m_Type->currentText() == i18n("Depth"))
+    if (m_Type->currentItem() == 1) // Depth
        {
        *proc << "-depth" << m_depthValue;
        }
 
-    if (m_Type->currentText() == i18n("Equalize"))
+    if (m_Type->currentItem() == 2) // Equalize
        {
        *proc << "-equalize";
        }
 
-    if (m_Type->currentText() == i18n("Fuzz"))
+    if (m_Type->currentItem() == 3) // Fuzz
        {
        QString Temp, Temp2;
        Temp2 = Temp.setNum( m_fuzzDistance );
        *proc << "-fuzz" << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Gray scales"))
+    if (m_Type->currentItem() == 4) // Gray scales
        {
        *proc << "-type";
        *proc << "Grayscale";
        }
 
-    if (m_Type->currentText() == i18n("Increase contrast"))
+    if (m_Type->currentItem() == 5) // Increase contrast
        {
        *proc << "+contrast";
        }
 
-    if (m_Type->currentText() == i18n("Monochrome"))
+    if (m_Type->currentItem() == 6) // Monochrome
        {
        *proc << "-monochrome";
        }
 
-    if (m_Type->currentText() == i18n("Negate"))
+    if (m_Type->currentItem() == 7) // Negate
        {
        *proc << "-negate";
        }
 
-    if (m_Type->currentText() == i18n("Normalize"))
+    if (m_Type->currentItem() == 8) // Normalize
        {
        *proc << "-normalize";
        }
 
-    if (m_Type->currentText() == i18n("Segment"))
+    if (m_Type->currentItem() == 9) // Segment
        {
        *proc << "-segment";
        QString Temp, Temp2;
@@ -329,7 +332,7 @@ QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *i
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Trim"))
+    if (m_Type->currentItem() == 10) // Trim
        {
        *proc << "-trim";
        }

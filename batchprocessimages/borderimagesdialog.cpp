@@ -134,26 +134,26 @@ void BorderImagesDialog::slotHelp( void )
 
 void BorderImagesDialog::slotOptionsClicked(void)
 {
-    QString Type = m_Type->currentText();
+    int Type = m_Type->currentItem();
     BorderOptionsDialog *optionsDialog = new BorderOptionsDialog(this, Type);
 
-    if ( Type == i18n("Solid") )
+    if ( Type == 0 )  // Solid
        {
        optionsDialog->m_solidBorderWidth->setValue(m_solidWidth);
        optionsDialog->m_button_solidBorderColor->setColor(m_solidColor);
        }
-    if ( Type == i18n("Niepce") )
+    if ( Type == 1 ) // Niepce
        {
        optionsDialog->m_lineNiepceBorderWidth->setValue(m_lineNiepceWidth);
        optionsDialog->m_button_lineNiepceBorderColor->setColor(m_lineNiepceColor);
        optionsDialog->m_NiepceBorderWidth->setValue(m_NiepceWidth);
        optionsDialog->m_button_NiepceBorderColor->setColor(m_NiepceColor);
        }
-    if ( Type == i18n("Raise") )
+    if ( Type == 2 ) // Raise
        {
        optionsDialog->m_raiseBorderWidth->setValue(m_raiseWidth);
        }
-    if ( Type == i18n("Frame") )
+    if ( Type == 3 ) // Frame
        {
        optionsDialog->m_frameBorderWidth->setValue(m_frameWidth);
        optionsDialog->m_frameBevelBorderWidth->setValue(m_bevelWidth);
@@ -162,23 +162,23 @@ void BorderImagesDialog::slotOptionsClicked(void)
 
     if ( optionsDialog->exec() == KMessageBox::Ok )
        {
-       if ( Type == i18n("Solid") )
+       if ( Type == 0 ) // Solid
           {
           m_solidWidth = optionsDialog->m_solidBorderWidth->value();
           m_solidColor = optionsDialog->m_button_solidBorderColor->color();
           }
-       if ( Type == i18n("Niepce") )
+       if ( Type == 1 ) // Niepce
           {
           m_lineNiepceWidth = optionsDialog->m_lineNiepceBorderWidth->value();
           m_lineNiepceColor = optionsDialog->m_button_lineNiepceBorderColor->color();
           m_NiepceWidth = optionsDialog->m_NiepceBorderWidth->value();
           m_NiepceColor = optionsDialog->m_button_NiepceBorderColor->color();
           }
-       if ( Type == i18n("Raise") )
+       if ( Type == 2 ) // Raise
           {
           m_raiseWidth = optionsDialog->m_raiseBorderWidth->value();
           }
-       if ( Type == i18n("Frame") )
+       if ( Type == 3 ) // Frame
           {
           m_frameWidth = optionsDialog->m_frameBorderWidth->value();
           m_bevelWidth = optionsDialog->m_frameBevelBorderWidth->value();
@@ -199,7 +199,7 @@ void BorderImagesDialog::readSettings(void)
     m_config = new KConfig("kipirc");
     m_config->setGroup("BorderImages Settings");
 
-    m_Type->setCurrentText(m_config->readEntry("BorderType", "Niepce"));
+    m_Type->setCurrentItem(m_config->readNumEntry("BorderType", 1));     // Niepce per default.
     QColor *ColorBlack = new QColor( 0, 0, 0 );
     QColor *ColorWhite = new QColor( 255, 255, 255 );
     m_solidWidth = m_config->readNumEntry("SolidWidth", 25);
@@ -242,7 +242,7 @@ void BorderImagesDialog::saveSettings(void)
 
     m_config = new KConfig("kipirc");
     m_config->setGroup("BorderImages Settings");
-    m_config->writeEntry("BorderType", m_Type->currentText());
+    m_config->writeEntry("BorderType", m_Type->currentItem());
 
     m_config->writeEntry("SolidWidth", m_solidWidth);
     m_config->writeEntry("SolidColor", m_solidColor);
@@ -281,7 +281,7 @@ QString BorderImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        m_previewOutput.append( " -crop 300x300+0+0 ");
        }
 
-    if (m_Type->currentText() == i18n("Solid"))
+    if (m_Type->currentItem() == 0) // Solid
        {
        *proc << "-border";
        QString Temp, Temp2;
@@ -295,7 +295,7 @@ QString BorderImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Niepce"))
+    if (m_Type->currentItem() == 1) // Niepce
        {
        QString Temp, Temp2;
 
@@ -322,7 +322,7 @@ QString BorderImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Raise"))
+    if (m_Type->currentItem() == 2) // Raise
        {
        *proc << "-raise";
        QString Temp, Temp2;
@@ -331,7 +331,7 @@ QString BorderImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Frame"))
+    if (m_Type->currentItem() == 3) // Frame
        {
        *proc << "-frame";
        QString Temp, Temp2;

@@ -46,7 +46,7 @@ Q_OBJECT
  
    void slotHelp(void);
    void slotOptionsClicked(void);
-   void slotTypeChanged(const QString &string);
+   void slotTypeChanged(int type);
 
  protected:
  
@@ -55,8 +55,8 @@ Q_OBJECT
    int                    m_segmentCluster;
    int                    m_segmentSmooth;
 
-    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                        const QString& albumDest);
+   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+                       const QString& albumDest);
 
    void readSettings(void);
    void saveSettings(void);

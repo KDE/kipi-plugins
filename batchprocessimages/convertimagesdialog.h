@@ -46,7 +46,7 @@ Q_OBJECT
  
    void slotHelp(void);
    void slotOptionsClicked(void);
-   void slotTypeChanged(const QString &string);
+   void slotTypeChanged(int type);
 
  protected:
  

@@ -47,7 +47,8 @@ class ResizeOptionsDialog : public KDialogBase
 Q_OBJECT
 
  public:
-   ResizeOptionsDialog(QWidget *parent=0, QString ResizeType = 0);
+ 
+   ResizeOptionsDialog(QWidget *parent=0, int ResizeType = 0);
    ~ResizeOptionsDialog();
 
    QLabel          *m_label_size;
@@ -85,11 +86,13 @@ Q_OBJECT
    QComboBox       *m_printDpi;
 
  protected slots:
+ 
    void slotCustomSettingsEnabled(bool val);
    void slotOk();
 
  protected:
-   QString          m_Type;
+ 
+   int              m_Type;
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

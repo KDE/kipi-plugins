@@ -42,7 +42,7 @@ class EffectOptionsDialog : public KDialogBase
 Q_OBJECT
 
  public:
-   EffectOptionsDialog(QWidget *parent=0, QString EffectType = 0);
+   EffectOptionsDialog(QWidget *parent=0, int EffectType = 0);
    ~EffectOptionsDialog();
 
    KIntNumInput    *m_latWidth;

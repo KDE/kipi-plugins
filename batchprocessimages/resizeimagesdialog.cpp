@@ -93,10 +93,10 @@ ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     m_labelType->setText( i18n("Image resize type:") );
 
-    m_Type->insertItem(i18n("Proportional (1 dim.)"));
-    m_Type->insertItem(i18n("Proportional (2 dim.)"));
-    m_Type->insertItem(i18n("Non-Proportional"));
-    m_Type->insertItem(i18n("Prepare to Print"));
+    m_Type->insertItem(i18n("Proportional (1 dim.)"));  // 0
+    m_Type->insertItem(i18n("Proportional (2 dim.)"));  // 1
+    m_Type->insertItem(i18n("Non-Proportional"));       // 2
+    m_Type->insertItem(i18n("Prepare to Print"));       // 3
     m_Type->setCurrentText(i18n("Proportional (1 dim.)"));
     whatsThis = i18n("<p>Select here the image-resize type.");
     whatsThis = whatsThis + i18n("<p><b>Proportional (1 dim.)</b>: standard auto-resizing using one dimension. "
@@ -145,15 +145,15 @@ void ResizeImagesDialog::slotHelp( void )
 
 void ResizeImagesDialog::slotOptionsClicked(void)
 {
-    QString Type = m_Type->currentText();
+    int Type = m_Type->currentItem();
     ResizeOptionsDialog *optionsDialog = new ResizeOptionsDialog(this, Type);
 
-    if (Type == i18n("Proportional (1 dim.)"))
+    if (Type == 0) // Proportional (1 dim.)
        {
        optionsDialog->m_size->setValue(m_size);
        optionsDialog->m_resizeFilter->setCurrentText(m_resizeFilter);
        }
-    if (Type == i18n("Proportional (2 dim.)"))
+    if (Type == 1) // Proportional (2 dim.)
        {
        optionsDialog->m_Width->setValue(m_Width);
        optionsDialog->m_Height->setValue(m_Height);
@@ -161,13 +161,13 @@ void ResizeImagesDialog::slotOptionsClicked(void)
        optionsDialog->m_resizeFilter->setCurrentText(m_resizeFilter);
        optionsDialog->m_Border->setValue(m_Border);
        }
-    if (Type == i18n("Non-proportional"))
+    if (Type == 2) // Non-proportional
        {
        optionsDialog->m_fixedWidth->setValue(m_fixedWidth);
        optionsDialog->m_fixedHeight->setValue(m_fixedHeight);
        optionsDialog->m_resizeFilter->setCurrentText(m_resizeFilter);
        }
-    if (Type == i18n("Prepare to print"))
+    if (Type == 3) // Prepare to print
        {
        optionsDialog->m_paperSize->setCurrentText(m_paperSize);
        optionsDialog->m_printDpi->setCurrentText(m_printDpi);
@@ -182,12 +182,12 @@ void ResizeImagesDialog::slotOptionsClicked(void)
 
     if ( optionsDialog->exec() == KMessageBox::Ok )
        {
-       if (Type == i18n("Proportional (1 dim.)"))
+       if (Type == 0) // Proportional (1 dim.)
           {
           m_size = optionsDialog->m_size->value();
           m_resizeFilter = optionsDialog->m_resizeFilter->currentText();
           }
-       if (Type == i18n("Proportional (2 dim.)"))
+       if (Type == 1) // Proportional (2 dim.)
           {
           m_Width = optionsDialog->m_Width->value();
           m_Height = optionsDialog->m_Height->value();
@@ -195,13 +195,13 @@ void ResizeImagesDialog::slotOptionsClicked(void)
           m_resizeFilter = optionsDialog->m_resizeFilter->currentText();
           m_Border = optionsDialog->m_Border->value();
           }
-       if (Type == i18n("Non-proportional"))
+       if (Type == 2) // Non-proportional
           {
           m_fixedWidth = optionsDialog->m_fixedWidth->value();
           m_fixedHeight = optionsDialog->m_fixedHeight->value();
           m_resizeFilter = optionsDialog->m_resizeFilter->currentText();
           }
-       if (Type == i18n("Prepare to print"))
+       if (Type == 3) // Prepare to print
           {
           m_paperSize = optionsDialog->m_paperSize->currentText();
           m_printDpi = optionsDialog->m_printDpi->currentText();
@@ -230,7 +230,7 @@ void ResizeImagesDialog::readSettings(void)
     m_config = new KConfig("kipirc");
     m_config->setGroup("ResizeImages Settings");
 
-    m_Type->setCurrentText(m_config->readEntry("ResiseType", i18n("Proportional (1 dim.)")));
+    m_Type->setCurrentItem(m_config->readNumEntry("ResiseType", 3)); // Prepare to print per default.
     m_size = m_config->readNumEntry("Size", 640);
     m_resizeFilter = m_config->readEntry("ResizeFilter", "Lanczos");
 
@@ -276,7 +276,7 @@ void ResizeImagesDialog::saveSettings(void)
 
     m_config = new KConfig("kipirc");
     m_config->setGroup("ResizeImages Settings");
-    m_config->writeEntry("ResiseType", m_Type->currentText());
+    m_config->writeEntry("ResiseType", m_Type->currentItem());
     m_config->writeEntry("Size", m_size);
     m_config->writeEntry("ResizeFilter", m_resizeFilter);
 
@@ -320,11 +320,11 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
     int w = img.width();
     int h = img.height();
 
-    QString Type = m_Type->currentText();
+    int Type = m_Type->currentItem();
     bool IncDec;
     int MargingSize;
 
-    if (Type == i18n("Proportional (1 dim.)"))
+    if (Type == 0) // Proportional (1 dim.)
           {
           *proc << "convert";
           IncDec = ResizeImage( w, h, m_size);
@@ -345,7 +345,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           *proc << albumDest + "/" + item->nameDest();
           }
 
-    if (Type == i18n("Proportional (2 dim.)"))
+    if (Type == 1) // Proportional (2 dim.)
           {
           QString targetBackgroundSize;
           int ResizeCoeff;
@@ -396,7 +396,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           *proc << albumDest + "/" + item->nameDest();
           }
 
-    if (Type == i18n("Non-proportional"))
+    if (Type == 2) // Non-proportional
           {
           *proc << "convert";
 
@@ -416,7 +416,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           *proc << albumDest + "/" + item->nameDest();
           }
 
-    if (Type == i18n("Prepare to print"))
+    if (Type == 3) // Prepare to print
           {
           if ( m_customSettings == true )
              {

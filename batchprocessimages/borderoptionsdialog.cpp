@@ -48,7 +48,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, QString BorderType)
+BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
                         : KDialogBase( parent, "BorderOptionsDialog", true,
                           i18n("Border Options"), Ok|Cancel, Ok, false)
 {
@@ -57,7 +57,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, QString BorderType)
     QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
     QString whatsThis;
 
-    if (BorderType == i18n("Solid"))
+    if (BorderType == 0) // Solid
        {
        QLabel *m_label_solidBorderWidth = new QLabel (i18n("Border width:"), box);
        dvlay->addWidget( m_label_solidBorderWidth );
@@ -75,7 +75,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, QString BorderType)
        dvlay->addWidget( m_button_solidBorderColor );
        }
 
-    if (BorderType == i18n("Niepce"))
+    if (BorderType == 1) // Niepce
        {
        QLabel *m_label_lineNiepceBorderWidth = new QLabel (i18n("Line border width:"), box);
        dvlay->addWidget( m_label_lineNiepceBorderWidth );
@@ -108,7 +108,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, QString BorderType)
        dvlay->addWidget( m_button_NiepceBorderColor );
        }
 
-    if (BorderType == i18n("Raise"))
+    if (BorderType == 2) // Raise
        {
        QLabel *m_label_raiseBorderWidth = new QLabel (i18n("Border width:"), box);
        dvlay->addWidget( m_label_raiseBorderWidth );
@@ -119,7 +119,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, QString BorderType)
        dvlay->addWidget( m_raiseBorderWidth );
        }
 
-    if (BorderType == i18n("Frame"))
+    if (BorderType == 3) // Frame
        {
        QLabel *m_label_frameBorderWidth = new QLabel (i18n("Border width:"), box);
        dvlay->addWidget( m_label_frameBorderWidth );

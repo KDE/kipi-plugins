@@ -47,7 +47,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
+FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
                         : KDialogBase( parent, "FilterOptionsDialog", true,
                           i18n("Filter Options"), Ok|Cancel, Ok, false)
 {
@@ -56,7 +56,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
     QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
     QString whatsThis;
 
-    if (FilterType == i18n("Add noise"))
+    if (FilterType == 0) // Add noise
        {
        QLabel *m_label_noiseType = new QLabel (i18n("Noise algorithm:"), box);
        dvlay->addWidget( m_label_noiseType );
@@ -73,7 +73,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
        dvlay->addWidget( m_noiseType );
        }
 
-    if (FilterType == i18n("Blur"))
+    if (FilterType == 2) // Blur
        {
        QLabel *m_label_blurRadius = new QLabel (i18n("Radius:"), box);
        dvlay->addWidget( m_label_blurRadius );
@@ -96,7 +96,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
        dvlay->addWidget( m_blurDeviation );
        }
 
-    if (FilterType == i18n("Median"))
+    if (FilterType == 5) // Median
        {
        QLabel *m_label_medianRadius = new QLabel (i18n("Radius:"), box);
        dvlay->addWidget( m_label_medianRadius );
@@ -111,7 +111,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
        }
 
 
-    if (FilterType == i18n("Noise reduction"))
+    if (FilterType == 6) // Noise reduction
        {
        QLabel *m_label_noiseRadius = new QLabel (i18n("Radius:"), box);
        dvlay->addWidget( m_label_noiseRadius );
@@ -127,7 +127,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
        dvlay->addWidget( m_noiseRadius );
        }
 
-    if (FilterType == i18n("Sharpen"))
+    if (FilterType == 7) // Sharpen
        {
        QLabel *m_label_sharpenRadius = new QLabel (i18n("Radius:"), box);
        dvlay->addWidget( m_label_sharpenRadius );
@@ -151,7 +151,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
        dvlay->addWidget( m_sharpenDeviation );
        }
 
-    if (FilterType == i18n("Unsharp"))
+    if (FilterType == 8) // Unsharp
        {
        QLabel *m_label_unsharpenRadius = new QLabel (i18n("Radius:"), box);
        dvlay->addWidget( m_label_unsharpenRadius );

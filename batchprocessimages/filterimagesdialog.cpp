@@ -93,15 +93,15 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     m_labelType->setText( i18n("Filter type:") );
 
-    m_Type->insertItem(i18n("Add Noise"));
+    m_Type->insertItem(i18n("Add Noise"));       // 0
     m_Type->insertItem(i18n("Antialias"));
     m_Type->insertItem(i18n("Blur"));
     m_Type->insertItem(i18n("Despeckle"));
-    m_Type->insertItem(i18n("Enhance"));
+    m_Type->insertItem(i18n("Enhance"));         // 4
     m_Type->insertItem(i18n("Median"));
     m_Type->insertItem(i18n("Noise Reduction"));
     m_Type->insertItem(i18n("Sharpen"));
-    m_Type->insertItem(i18n("Unsharp"));
+    m_Type->insertItem(i18n("Unsharp"));         // 8
     m_Type->setCurrentText(i18n("Sharpen"));
     whatsThis = i18n("<p>Select here the filter type for your images:<p>"
                      "<b>Add noise</b>: add artificial noise to an image.<p>"
@@ -121,7 +121,7 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     readSettings();
     listImageFiles();
-    slotTypeChanged(m_Type->currentText());
+    slotTypeChanged(m_Type->currentItem());
 }
 
 
@@ -143,9 +143,11 @@ void FilterImagesDialog::slotHelp( void )
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void FilterImagesDialog::slotTypeChanged(const QString &string)
+void FilterImagesDialog::slotTypeChanged(int type)
 {
-    if ( string == i18n("Antialias") || string == i18n("Despeckle") || string == i18n("Enhance") )
+    if ( type == 1 ||      // Antialias
+         type == 3 ||      // Despeckle
+         type == 4 )       // Enhance
        m_optionsButton->setEnabled(false);
     else
        m_optionsButton->setEnabled(true);
@@ -156,31 +158,31 @@ void FilterImagesDialog::slotTypeChanged(const QString &string)
 
 void FilterImagesDialog::slotOptionsClicked(void)
 {
-    QString Type = m_Type->currentText();
+    int Type = m_Type->currentItem();
     FilterOptionsDialog *optionsDialog = new FilterOptionsDialog(this, Type);
 
-    if ( Type == i18n("Add noise") )
+    if ( Type == 0) // Add noise
        optionsDialog->m_noiseType->setCurrentText(m_noiseType);
 
-    if ( Type == i18n("Blur") )
+    if ( Type == 2) // Blur
        {
        optionsDialog->m_blurRadius->setValue(m_blurRadius);
        optionsDialog->m_blurDeviation->setValue(m_blurDeviation);
        }
 
-    if ( Type == i18n("Median") )
+    if ( Type == 5) // Median
        optionsDialog->m_medianRadius->setValue(m_medianRadius);
 
-    if ( Type == i18n("Noise reduction") )
+    if ( Type == 6) // Noise reduction
        optionsDialog->m_noiseRadius->setValue(m_noiseRadius);
 
-    if ( Type == i18n("Sharpen") )
+    if ( Type == 7) // Sharpen
        {
        optionsDialog->m_sharpenRadius->setValue(m_sharpenRadius);
        optionsDialog->m_sharpenDeviation->setValue(m_sharpenDeviation);
        }
 
-    if ( Type == i18n("Unsharp") )
+    if ( Type == 8) // Unsharp
        {
        optionsDialog->m_unsharpenRadius->setValue(m_unsharpenRadius);
        optionsDialog->m_unsharpenDeviation->setValue(m_unsharpenDeviation);
@@ -190,28 +192,28 @@ void FilterImagesDialog::slotOptionsClicked(void)
 
     if ( optionsDialog->exec() == KMessageBox::Ok )
        {
-       if ( Type == i18n("Add noise") )
+       if ( Type == 0) // Add noise
           m_noiseType = optionsDialog->m_noiseType->currentText();
 
-       if ( Type == i18n("Blur") )
+       if ( Type == 2) // Blur
           {
           m_blurRadius = optionsDialog->m_blurRadius->value();
           m_blurDeviation = optionsDialog->m_blurDeviation->value();
           }
 
-       if ( Type == i18n("Median") )
+       if ( Type == 5) // Median
           m_medianRadius = optionsDialog->m_medianRadius->value();
 
-       if ( Type == i18n("Noise reduction") )
+       if ( Type == 6) // Noise reduction
           m_noiseRadius = optionsDialog->m_noiseRadius->value();
 
-       if ( Type == i18n("Sharpen") )
+       if ( Type == 7) // Sharpen
           {
           m_sharpenRadius = optionsDialog->m_sharpenRadius->value();
           m_sharpenDeviation = optionsDialog->m_sharpenDeviation->value();
           }
 
-       if ( Type == i18n("Unsharp") )
+       if ( Type == 8) // Unsharp
           {
           m_unsharpenRadius = optionsDialog->m_unsharpenRadius->value();
           m_unsharpenDeviation = optionsDialog->m_unsharpenDeviation->value();
@@ -233,7 +235,7 @@ void FilterImagesDialog::readSettings(void)
     m_config = new KConfig("kipirc");
     m_config->setGroup("FilterImages Settings");
 
-    m_Type->setCurrentText(m_config->readEntry("FilterType", i18n("Sharpen")));
+    m_Type->setCurrentItem(m_config->readNumEntry("FilterType", 7));      // Sharpen per default
     m_noiseType = m_config->readEntry("NoiseType", i18n("Gaussian"));
     m_blurRadius = m_config->readNumEntry("BlurRadius", 3);
     m_blurDeviation = m_config->readNumEntry("BlurDeviation", 1);
@@ -271,7 +273,7 @@ void FilterImagesDialog::saveSettings(void)
     m_config = new KConfig("kipirc");
     m_config->setGroup("FilterImages Settings");
 
-    m_config->writeEntry("FilterType", m_Type->currentText());
+    m_config->writeEntry("FilterType", m_Type->currentItem());
     m_config->writeEntry("NoiseType", m_noiseType);
     m_config->writeEntry("BlurRadius", m_blurRadius);
     m_config->writeEntry("BlurDeviation", m_blurDeviation);
@@ -307,7 +309,7 @@ QString FilterImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        m_previewOutput.append( " -crop 300x300+0+0 ");
        }
 
-    if (m_Type->currentText() == i18n("Add noise"))
+    if (m_Type->currentItem() == 0) // Add noise
        {
        QString Temp;
        if ( m_noiseType == i18n("Uniform") ) Temp = "Uniform";
@@ -319,12 +321,12 @@ QString FilterImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << "+noise" << Temp;
        }
 
-    if (m_Type->currentText() == i18n("Antialias"))
+    if (m_Type->currentItem() == 1) // Antialias
        {
        *proc << "-antialias";
        }
 
-    if (m_Type->currentText() == i18n("Blur"))
+    if (m_Type->currentItem() == 2) // Blur
        {
        *proc << "-blur";
        QString Temp, Temp2;
@@ -333,31 +335,31 @@ QString FilterImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Despeckle"))
+    if (m_Type->currentItem() == 3) // Despeckle
        {
        *proc << "-despeckle";
        }
 
-    if (m_Type->currentText() == i18n("Enhance"))
+    if (m_Type->currentItem() == 4) // Enhance
        {
        *proc << "-enhance";
        }
 
-    if (m_Type->currentText() == i18n("Median"))
+    if (m_Type->currentItem() == 5) // Median
        {
        QString Temp, Temp2;
        Temp2 = Temp.setNum( m_medianRadius );
        *proc << "-median" << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Noise reduction"))
+    if (m_Type->currentItem() == 6) // Noise reduction
        {
        QString Temp, Temp2;
        Temp2 = Temp.setNum( m_noiseRadius );
        *proc << "-noise" << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Sharpen"))
+    if (m_Type->currentItem() == 7) // Sharpen
        {
        *proc << "-sharpen";
        QString Temp, Temp2;
@@ -366,7 +368,7 @@ QString FilterImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        *proc << Temp2;
        }
 
-    if (m_Type->currentText() == i18n("Unsharp"))
+    if (m_Type->currentItem() == 8) // Unsharp
        {
        *proc << "-unsharp";
        QString Temp, Temp2;

@@ -128,7 +128,7 @@ private slots:
 
    virtual void slotHelp(void){};                             // Called when 'Help' menu option is actived.
    virtual void slotOptionsClicked(void){};                   // Called when 'Options' button is clicked.
-   virtual void slotTypeChanged(const QString &/*string*/){}; // Called when the current type option is changed.
+   virtual void slotTypeChanged(int){};                       // Called when the current type option is changed.
 
  protected:
 

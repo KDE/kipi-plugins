@@ -83,7 +83,7 @@ RenameImagesDialog::RenameImagesDialog( KURL::List urlList, KIPI::Interface* int
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch-rename images"), 
                                        kipi_version,
-                                       I18N_NOOP("A Kipi plugin to batch-rename images\n"),
+                                       I18N_NOOP("A Kipi plugin to batch-rename images"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 
                                        0,
@@ -307,7 +307,7 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void RenameImagesDialog::slotTemplateSortListChanged(int /*index*/)
+void RenameImagesDialog::slotTemplateSortListChanged(int)
 {
     updateOptions();
     listImageFiles();
@@ -316,7 +316,7 @@ void RenameImagesDialog::slotTemplateSortListChanged(int /*index*/)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void RenameImagesDialog::slotTemplateSortListChanged(bool /*on*/)
+void RenameImagesDialog::slotTemplateSortListChanged(bool)
 {
     updateOptions();
     listImageFiles();
@@ -325,7 +325,7 @@ void RenameImagesDialog::slotTemplateSortListChanged(bool /*on*/)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void RenameImagesDialog::slotTemplateSortListChanged(const QString &/*text*/)
+void RenameImagesDialog::slotTemplateSortListChanged(const QString &)
 {
     updateOptions();
     listImageFiles();

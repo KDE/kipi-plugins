@@ -48,7 +48,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, QString ColorType)
+ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
                         : KDialogBase( parent, "ColorOptionsDialog", true,
                           i18n("Color Options"), Ok|Cancel, Ok, false)
 {
@@ -57,7 +57,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, QString ColorType)
     QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
     QString whatsThis;
 
-    if (ColorType == i18n("Depth"))
+    if (ColorType == 1) // Depth
        {
        QLabel *m_label_depthValue = new QLabel (i18n("Depth value:"), box);
        dvlay->addWidget( m_label_depthValue );
@@ -70,7 +70,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, QString ColorType)
        dvlay->addWidget( m_depthValue );
        }
 
-    if (ColorType == i18n("Fuzz"))
+    if (ColorType == 3) // Fuzz
        {
        QLabel *m_label_fuzzDistance = new QLabel (i18n("Distance:"), box);
        dvlay->addWidget( m_label_fuzzDistance );
@@ -82,7 +82,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, QString ColorType)
        dvlay->addWidget( m_fuzzDistance );
        }
 
-    if (ColorType == i18n("Segment"))
+    if (ColorType == 9) // Segment
        {
        QLabel *m_label_segmentCluster = new QLabel (i18n("Cluster threshold:"), box);
        dvlay->addWidget( m_label_segmentCluster );

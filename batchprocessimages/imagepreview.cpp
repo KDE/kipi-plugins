@@ -35,6 +35,7 @@ extern "C"
 #include <qvbox.h>
 #include <qlayout.h>
 #include <qgroupbox.h>
+#include <qlabel.h>
 #include <qslider.h>
 #include <qlcdnumber.h>
 #include <qpainter.h>
@@ -87,8 +88,10 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch processes images"), 
                                        kipi_version,
-                                       I18N_NOOP("An interface for to preview the batch processes images Kipi plugins\n"
-                                                 "This plugin use the \"convert\" program from \"ImageMagick\" package."),
+                                       I18N_NOOP("An interface for to preview the batch processes images "
+                                                 "Kipi plugins\n"
+                                                 "This plugin use the \"convert\" program from \"ImageMagick\" "
+                                                 "package."),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 
                                        0,
@@ -115,6 +118,33 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
         INIT_ZOOM_FACTOR = 5;
 
     QVBoxLayout* ml = new QVBoxLayout( box, 10 );
+    
+    //---------------------------------------------
+   
+    QFrame *headerFrame = new QFrame( box );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( i18n("Batch Process Preview (%1 - %2)")
+                                     .arg(EffectName).arg(FileName), headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    ml->addWidget( headerFrame );
+    
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+
+    //---------------------------------------------
+    
     QHBoxLayout* h1 = new QHBoxLayout( ml );
     QVBoxLayout* v1 = new QVBoxLayout( h1 );
     h1->addSpacing( 5 );

@@ -134,7 +134,7 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
     //---------------------------------------------
 
     readSettings();
-    slotTypeChanged(m_Type->currentText());
+    slotTypeChanged(m_Type->currentItem());
 }
 
 
@@ -156,9 +156,9 @@ void ConvertImagesDialog::slotHelp( void )
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void ConvertImagesDialog::slotTypeChanged(const QString &string)
+void ConvertImagesDialog::slotTypeChanged(int type)
 {
-    if ( string == "BMP" || string == "PPM" )
+    if ( type == 3 || type == 4 ) // PPM || BMP
        m_optionsButton->setEnabled(false);
     else
        m_optionsButton->setEnabled(true);
@@ -172,35 +172,33 @@ void ConvertImagesDialog::slotTypeChanged(const QString &string)
 
 void ConvertImagesDialog::slotOptionsClicked(void)
 {
-    QString Type = m_Type->currentText();
+    int Type = m_Type->currentItem();
     ConvertOptionsDialog *optionsDialog = new ConvertOptionsDialog(this, Type);
 
-    if (Type == "JPEG")
+    if (Type == 0) // JPEG
        {
        optionsDialog->m_JPEGPNGCompression->setValue(m_JPEGPNGCompression);
        optionsDialog->m_compressLossLess->setChecked(m_compressLossLess);
        }
-    if (Type == "PNG")
-       {
+    if (Type == 1) // PNG
        optionsDialog->m_JPEGPNGCompression->setValue(m_JPEGPNGCompression);
-       }
-    if (Type == "TIFF")
+    if (Type == 2) // TIFF
        optionsDialog->m_TIFFCompressionAlgo->setCurrentText(m_TIFFCompressionAlgo);
-    if (Type == "TGA")
+    if (Type == 5) // TGA
        optionsDialog->m_TGACompressionAlgo->setCurrentText(m_TGACompressionAlgo);
 
     if ( optionsDialog->exec() == KMessageBox::Ok )
        {
-       if (Type == "JPEG")
+       if (Type == 0) // JPEG
           {
           m_JPEGPNGCompression = optionsDialog->m_JPEGPNGCompression->value();
           m_compressLossLess = optionsDialog->m_compressLossLess->isChecked();
           }
-       if (Type == "PNG")
+       if (Type == 1) // PNG
           m_JPEGPNGCompression = optionsDialog->m_JPEGPNGCompression->value();
-       if (Type == "TIFF")
+       if (Type == 2) // TIFF
           m_TIFFCompressionAlgo = optionsDialog->m_TIFFCompressionAlgo->currentText();
-       if (Type == "TGA")
+       if (Type == 5) // TGA
           m_TGACompressionAlgo = optionsDialog->m_TGACompressionAlgo->currentText();
        }
 
@@ -217,7 +215,7 @@ void ConvertImagesDialog::readSettings(void)
     m_config = new KConfig("kipirc");
     m_config->setGroup("ConvertImages Settings");
 
-    m_Type->setCurrentText(m_config->readEntry("ImagesFormat", "JPEG"));
+    m_Type->setCurrentItem(m_config->readNumEntry("ImagesFormat", 0));  // JPEG per default
     if ( m_config->readEntry("CompressLossLess", "false") == "true")
        m_compressLossLess = true;
     else
@@ -247,7 +245,7 @@ void ConvertImagesDialog::saveSettings(void)
     m_config = new KConfig("kipirc");
     m_config->setGroup("ConvertImages Settings");
 
-    m_config->writeEntry("ImagesFormat", m_Type->currentText());
+    m_config->writeEntry("ImagesFormat", m_Type->currentItem());
     m_config->writeEntry("JPEGPNGCompression", m_JPEGPNGCompression);
     m_config->writeEntry("CompressLossLess", m_compressLossLess);
     m_config->writeEntry("TIFFCompressionAlgo", m_TIFFCompressionAlgo);
@@ -274,7 +272,7 @@ QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem 
        m_previewOutput.append( " -crop 300x300+0+0 ");
        }
 
-    if (m_Type->currentText() == "JPEG")
+    if (m_Type->currentItem() == 0) // JPEG
        {
        if (m_compressLossLess == true)
           {
@@ -288,14 +286,14 @@ QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem 
           }
        }
 
-    if (m_Type->currentText() == "PNG")
+    if (m_Type->currentItem() == 1) // PNG
        {
        *proc << "-quality";
        QString Temp;
        *proc << Temp.setNum( m_JPEGPNGCompression );
        }
 
-    if (m_Type->currentText() == "TIFF")
+    if (m_Type->currentItem() == 2) // TIFF
        {
        *proc << "-compress";
 
@@ -309,7 +307,7 @@ QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem 
           }
        }
 
-    if (m_Type->currentText() == "TGA")
+    if (m_Type->currentItem() == 5) // TGA
        {
        *proc << "-compress";
 

@@ -271,8 +271,8 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     connect(m_previewButton, SIGNAL(clicked()),
             this, SLOT(slotPreview()));
 
-    connect(m_Type, SIGNAL(activated(const QString &)),
-            this, SLOT(slotTypeChanged(const QString &)));
+    connect(m_Type, SIGNAL(activated(int)),
+            this, SLOT(slotTypeChanged(int)));
 
     connect(m_listFiles, SIGNAL( addedDropItems(QStringList) ),
             this, SLOT( slotAddDropItems(QStringList)));
@@ -1009,7 +1009,7 @@ void BatchProcessImagesDialog::endPreview(void)
     showButtonCancel( true );
 
     m_optionsButton->setEnabled(true);          // Default status if 'slotTypeChanged' isn't re-implemented.
-    slotTypeChanged(m_Type->currentText());
+    slotTypeChanged(m_Type->currentItem());
 
     setButtonText( User1, i18n("&Start") );
 

@@ -49,7 +49,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
+ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
                    : KDialogBase( parent, "ResizeOptionsDialog", true,
                      i18n("Image-Resize Options"), Ok|Cancel, Ok, false)
 {
@@ -59,7 +59,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
     QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
     QString whatsThis;
 
-    if (m_Type == i18n("Proportional (1 dim.)"))
+    if (m_Type == 0) // Proportional (1 dim.)
        {
        QGroupBox * groupBox1 = new QGroupBox( 1, Qt::Horizontal, i18n("Resize Options"), box );
 
@@ -102,7 +102,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        dvlay->addWidget( m_label_size );
        }
 
-    if (m_Type == i18n("Proportional (2 dim.)"))
+    if (m_Type == 1) // Proportional (2 dim.)
        {
        QGroupBox * groupBox1 = new QGroupBox( 2, Qt::Horizontal, i18n("Size Settings"), box );
 
@@ -161,7 +161,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        dvlay->addWidget( groupBox2 );
        }
 
-    if (m_Type == i18n("Non proportional"))
+    if (m_Type == 2) // Non proportional
        {
        QGroupBox * groupBox1 = new QGroupBox( 1, Qt::Horizontal, i18n("Resize Options"), box );
 
@@ -202,7 +202,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        dvlay->addWidget( groupBox1 );
        }
 
-    if (m_Type == i18n("Prepare to print"))
+    if (m_Type == 3) // Prepare to print
        {
        m_customSettings = new QCheckBox( i18n("Use custom settings"), box);
        QWhatsThis::add( m_customSettings, i18n("<p>If this option is enabled, "
@@ -245,13 +245,15 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
        m_label_customXSize = new QLabel (i18n("Paper width (cm):"), groupBox2);
        m_customXSize = new KIntNumInput(10, groupBox2);
        m_customXSize->setRange(1, 100, 1, true );
-       QWhatsThis::add( m_customXSize, i18n("<p>The customized width of the photographic paper size in centimeters."));
+       QWhatsThis::add( m_customXSize, i18n("<p>The customized width of the photographic paper size "
+                                            "in centimeters."));
        m_label_customXSize->setBuddy( m_customXSize );
 
        m_label_customYSize = new QLabel (i18n("Paper height (cm):"), groupBox2);
        m_customYSize = new KIntNumInput(15, groupBox2);
        m_customYSize->setRange(1, 100, 1, true );
-       QWhatsThis::add( m_customYSize, i18n("<p>The customized height of the photographic paper size in centimeters."));
+       QWhatsThis::add( m_customYSize, i18n("<p>The customized height of the photographic paper size "
+                                            "in centimeters."));
        m_label_customYSize->setBuddy( m_customYSize );
 
        m_label_customDpi = new QLabel (i18n("Print resolution (dpi):"), groupBox2);
@@ -339,14 +341,14 @@ void ResizeOptionsDialog::slotCustomSettingsEnabled(bool val)
 
 void ResizeOptionsDialog::slotOk()
 {
-    if (m_Type == i18n("Prepare to print"))
+    if (m_Type == 3) // Prepare to print
        {
        if (m_customSettings->isChecked() == true)
           {
           if (m_customXSize > m_customYSize)
              {
              KMessageBox::sorry(this, i18n("You must enter a custom height greater than the custom width: "
-                                     "the photographic paper must be vertically orientated."));
+                                           "the photographic paper must be vertically orientated."));
              return;
              }
           }

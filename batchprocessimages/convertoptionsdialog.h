@@ -46,7 +46,7 @@ class ConvertOptionsDialog : public KDialogBase
 Q_OBJECT
 
  public:
-   ConvertOptionsDialog(QWidget *parent=0, QString ImageFormatType = 0);
+   ConvertOptionsDialog(QWidget *parent=0, int ImageFormatType = 0);
    ~ConvertOptionsDialog();
 
    QLabel          *m_label_imageCompression;

@@ -44,7 +44,7 @@ class FilterOptionsDialog : public KDialogBase
 Q_OBJECT
 
  public:
-   FilterOptionsDialog(QWidget *parent=0, QString FilterType = 0);
+   FilterOptionsDialog(QWidget *parent=0, int FilterType = 0);
    ~FilterOptionsDialog();
 
    QComboBox       *m_noiseType;

@@ -46,7 +46,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, QString ImageFormatType)
+ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
                         : KDialogBase( parent, "ConvertOptionsDialog", true,
                           i18n("Image File Format Options"), Ok|Cancel, Ok, false)
 {
@@ -55,7 +55,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, QString ImageFormatT
     QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
     QString whatsThis;
 
-    if (ImageFormatType == "JPEG" || ImageFormatType == "PNG")
+    if (ImageFormatType == 0 || ImageFormatType == 1) // JPEG || PNG
        {
        m_label_imageCompression = new QLabel (i18n("Image compression level:"), box);
        dvlay->addWidget( m_label_imageCompression );
@@ -72,7 +72,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, QString ImageFormatT
        m_label_imageCompression->setBuddy( m_JPEGPNGCompression );
        dvlay->addWidget( m_JPEGPNGCompression );
 
-       if (ImageFormatType == "JPEG")
+       if (ImageFormatType == 0) // JPEG
           {
           m_compressLossLess = new QCheckBox( i18n("Use lossless compression"), box);
           QWhatsThis::add( m_compressLossLess, i18n("<p>If this option is enabled, "
@@ -83,7 +83,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, QString ImageFormatT
           }
        }
 
-    if (ImageFormatType == "TIFF")
+    if (ImageFormatType == 2) // TIFF
        {
        QLabel *m_label_imageCompression = new QLabel (i18n("Image compression algorithm:"), box);
        dvlay->addWidget( m_label_imageCompression );
@@ -96,7 +96,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, QString ImageFormatT
        dvlay->addWidget( m_TIFFCompressionAlgo );
        }
 
-    if (ImageFormatType == "TGA")
+    if (ImageFormatType == 5) // TGA
        {
        QLabel *m_label_imageCompression = new QLabel (i18n("Image compression algorithm:"), box);
        dvlay->addWidget( m_label_imageCompression );
