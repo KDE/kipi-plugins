@@ -143,7 +143,7 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
                      "caulier dot gilles at free.fr");
 
     about->addAuthor("Gregory Kokanosky", I18N_NOOP("Image navigation mode patches"),
-                     "caulier dot gilles at free.fr");
+                     "gregory dot kokanosky at free.fr>");
                          
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
