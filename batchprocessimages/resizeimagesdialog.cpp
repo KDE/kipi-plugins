@@ -282,9 +282,8 @@ void ResizeImagesDialog::saveSettings(void)
 
 ////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
-#ifdef TEMPORARILY_REMOVED
 QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                                        Digikam::AlbumInfo *albumDest)
+                                        const QString& albumDest)
 {
     QImage img;
 
@@ -317,7 +316,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
           *proc << "-verbose";
           *proc << item->pathSrc();
-          *proc << albumDest->getPath() + "/" + item->nameDest();
+          *proc << albumDest + "/" + item->nameDest();
           }
 
     if (Type == i18n("Proportional (2 dim.)"))
@@ -368,7 +367,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
           *proc << "-resize" << targetBackgroundSize + "!";
 
-          *proc << albumDest->getPath() + "/" + item->nameDest();
+          *proc << albumDest + "/" + item->nameDest();
           }
 
     if (Type == i18n("Non proportional"))
@@ -388,7 +387,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
           *proc << "-verbose";
           *proc << item->pathSrc();
-          *proc << albumDest->getPath() + "/" + item->nameDest();
+          *proc << albumDest + "/" + item->nameDest();
           }
 
     if (Type == i18n("Prepare to print"))
@@ -475,19 +474,17 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
           *proc << "-resize" << targetBackgroundSize + "!";
 
-          *proc << albumDest->getPath() + "/" + item->nameDest();
+          *proc << albumDest + "/" + item->nameDest();
           }
 
     return(extractArguments(proc));
 }
-#endif
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef TEMPORARILY_REMOVED
 bool ResizeImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
-                                             Digikam::AlbumInfo *albumDest)
+                                             const QString& albumDest)
 {
     QImage img;
 
@@ -500,7 +497,7 @@ bool ResizeImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
 
     return true;
 }
-#endif
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 

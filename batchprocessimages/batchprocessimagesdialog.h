@@ -221,20 +221,14 @@ Q_OBJECT
    // Called by 'startProcess' fonction at start. You can checking here some things about the current
    // 'item' before the 'startprocess' fonction execution.
 
-#ifdef TEMPORARILY_REMOVED
-    virtual bool prepareStartProcess(BatchProcessImagesItem *item,
-                                    Digikam::AlbumInfo *albumDest)
-                { return true; };
-#endif
+    virtual bool prepareStartProcess(BatchProcessImagesItem *item, const QString& albumDest) { return true; };
 
    // Called for to contruct the ImageMagick command line used for to process or preview the image traitements.
    // If 'albumDest' = 0L ==> preview process.
 
-#ifdef TEMPORARILY_REMOVED
     virtual QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                               Digikam::AlbumInfo *albumDest=0L)
+                                const QString& albumDest = QString::null )
            { return QString::null; };
-#endif
 
    // Fonctions used for to read and to save the settings in the configuration file.
 

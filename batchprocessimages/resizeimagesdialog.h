@@ -65,17 +65,13 @@ Q_OBJECT
    int                    m_fixedWidth;
    int                    m_fixedHeight;
 
-#ifdef TEMPORARILY_REMOVED
     QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                       Digikam::AlbumInfo *albumDest);
-#endif
+                        const QString& albumDest);
 
    void readSettings(void);
    void saveSettings(void);
-#ifdef TEMPORARILY_REMOVED
     bool prepareStartProcess(BatchProcessImagesItem *item,
-                            Digikam::AlbumInfo *albumDest);
-#endif
+                             const QString& albumDest);
 
    bool ResizeImage( int &w, int &h, int SizeFactor);
 };

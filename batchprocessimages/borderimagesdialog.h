@@ -57,10 +57,8 @@ Q_OBJECT
    int                    m_bevelWidth;
    QColor                 m_frameColor;
 
-#ifdef TEMPORARILY_REMOVED
     QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                       Digikam::AlbumInfo *albumDest);
-#endif
+                       const QString& albumDest);
 
    void readSettings(void);
    void saveSettings(void);

@@ -49,10 +49,8 @@ Q_OBJECT
    QString                m_TIFFCompressionAlgo;
    QString                m_TGACompressionAlgo;
 
-#ifdef TEMPORARILY_REMOVED
     QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                       Digikam::AlbumInfo *albumDest);
-#endif
+                        const QString& albumDest);
 
    void readSettings(void);
    void saveSettings(void);

@@ -234,13 +234,12 @@ void ColorImagesDialog::saveSettings(void)
 
 ////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
-#ifdef TEMPORARILY_REMOVED
 QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                                       Digikam::AlbumInfo *albumDest)
+                                       const QString& albumDest)
 {
     *proc << "convert";
 
-    if ( albumDest == 0L && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
+    if ( albumDest.isNull() && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
        {
        *m_PreviewProc << "-crop" << "300x300+0+0";
        m_previewOutput.append( " -crop 300x300+0+0 ");
@@ -312,13 +311,12 @@ QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *i
 
     *proc << item->pathSrc();
 
-    if ( albumDest != 0L )   // No preview mode !
+    if ( !albumDest.isNull() )   // No preview mode !
        {
-       *proc << albumDest->getPath() + "/" + item->nameDest();
+       *proc << albumDest + "/" + item->nameDest();
        }
 
     return(extractArguments(proc));
 }
-#endif
 
 #include "colorimagesdialog.moc"

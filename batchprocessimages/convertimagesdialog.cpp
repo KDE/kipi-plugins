@@ -238,13 +238,12 @@ void ConvertImagesDialog::saveSettings(void)
 
 ////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
-#ifdef TEMPORARILY_REMOVED
 QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                                         Digikam::AlbumInfo *albumDest)
+                                         const QString& albumDest)
 {
     *proc << "convert";
 
-    if ( albumDest == 0L && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
+    if ( albumDest.isNull() && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
        {
        *m_PreviewProc << "-crop" << "300x300+0+0";
        m_previewOutput.append( " -crop 300x300+0+0 ");
@@ -303,30 +302,26 @@ QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem 
 
     *proc << item->pathSrc();
 
-    if ( albumDest != 0L )   // No preview mode !
+    if ( !albumDest.isNull() )   // No preview mode !
        {
-       *proc << albumDest->getPath() + "/" + item->nameDest();
+       *proc << albumDest + "/" + item->nameDest();
        }
 
 
     return(extractArguments(proc));
 }
-#endif
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QString ConvertImagesDialog::oldFileName2NewFileName(QString fileName)
 {
-    qDebug("ConvertImagesDialog::oldFileName2NewFileName is commented out!");
-#ifdef TEMPORARILY_REMOVED
     QString Temp;
 
     Temp = fileName.left( fileName.findRev('.', -1) );             // The source file name without extension.
     Temp = Temp + "." + ImageFileExt(m_Type->currentText());       // Added new file extension.
 
     return Temp;
-#endif
 }
 
 

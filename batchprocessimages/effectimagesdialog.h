@@ -61,10 +61,8 @@ Q_OBJECT
    int  m_waveAmplitude;
    int  m_waveLenght;
 
-#ifdef TEMPORARILY_REMOVED
     QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                       Digikam::AlbumInfo *albumDest);
-#endif
+                        const QString& albumDest);
 
    void readSettings(void);
    void saveSettings(void);

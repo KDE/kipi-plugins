@@ -518,15 +518,17 @@ void BatchProcessImagesDialog::slotProcessStart( void )
 
 bool BatchProcessImagesDialog::startProcess(void)
 {
-    qDebug("BatchProcessImagesDialog::startProcess commented out");
-#ifdef TEMPORARILY_REMOVED
     if ( m_convertStatus == STOP_PROCESS )
        {
        endProcess(i18n("Process aborted by user!"));
        return true;
        }
 
+#ifdef TEMPORARILY_REMOVED
     Digikam::AlbumInfo *targetAlbum = Digikam::AlbumManager::instance()->findAlbum( m_albumList->currentText() );
+#endif
+    QString targetAlbum = "/tmp/jkp";
+
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     m_listFiles->setCurrentItem(item);
 
@@ -550,7 +552,7 @@ bool BatchProcessImagesDialog::startProcess(void)
           }
        }
 
-    KURL desturl(targetAlbum->getPath() + "/" + item->nameDest());
+    KURL desturl(targetAlbum + "/" + item->nameDest());
 
     if ( KIO::NetAccess::exists(desturl) == true )
        {
@@ -594,7 +596,7 @@ bool BatchProcessImagesDialog::startProcess(void)
 
           case OVERWRITE_RENAME:
              {
-             QFileInfo *Target = new QFileInfo(targetAlbum->getPath() + "/" + item->nameDest());
+             QFileInfo *Target = new QFileInfo(targetAlbum + "/" + item->nameDest());
              QString newFileName = RenameTargetImageFile(Target);
 
              if ( newFileName == QString::null )
@@ -683,7 +685,6 @@ bool BatchProcessImagesDialog::startProcess(void)
        }
 
     return true;
-#endif
 }
 
 
@@ -700,15 +701,15 @@ void BatchProcessImagesDialog::slotReadStd(KProcess* proc, char *buffer, int buf
 
 void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
 {
-    qDebug("BatchProcessImagesDialog::slotProcessDone commented out");
-#ifdef TEMPORARILY_REMOVED
     int ValRet = proc->exitStatus();
     qDebug ("Convert exit (%i)", ValRet);
 
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
+#ifdef TEMPORARILY_REMOVED
     Digikam::AlbumInfo *sourceAlbum = Digikam::AlbumManager::instance()
                                       ->findAlbum( item->pathSrc().section('/', -2, -2));
     Digikam::AlbumInfo *targetAlbum = Digikam::AlbumManager::instance()->findAlbum( m_albumList->currentText() );
+#endif
     m_listFiles->ensureItemVisible(m_listFiles->currentItem());
 
     switch (ValRet)
@@ -720,6 +721,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
 
           // Save the comments for the converted image if current image taken from Album database.
 
+#ifdef TEMPORARILY_REMOVED
           if (sourceAlbum)
              {
              sourceAlbum->openDB();
@@ -730,6 +732,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
              targetAlbum->setItemComments(item->nameDest(), comments);
              targetAlbum->closeDB();
              }
+#endif
 
           if ( m_removeOriginal->isChecked() == true )
              {
@@ -764,7 +767,6 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
        startProcess();
     else
        endProcess(i18n("Process finished!"));
-#endif
 }
 
 
@@ -792,7 +794,6 @@ void BatchProcessImagesDialog::slotListDoubleClicked(QListViewItem *itemClicked)
 void BatchProcessImagesDialog::slotPreview(void)
 {
     qDebug("BatchProcessImagesDialog::slotPreview");
-#ifdef TEMPORARILY_REMOVED
     if ( m_listFiles->currentItem() == 0 )
        {
        KMessageBox::error(this, i18n("You must selected an item in the list for calculate the preview!"));
@@ -847,7 +848,6 @@ void BatchProcessImagesDialog::slotPreview(void)
        m_previewButton->setEnabled(true);
        return;
        }
-#endif
 }
 
 
@@ -1084,12 +1084,12 @@ void BatchProcessImagesDialog::endProcess(QString endMessage)
     Digikam::AlbumInfo *targetAlbum = Digikam::AlbumManager::instance()->findAlbum( m_albumList->currentText() );
     Digikam::AlbumManager::instance()->refreshItemHandler(targetAlbum->getTitle());
     m_convertStatus = PROCESS_DONE;
+#endif
     setButtonText( User2, i18n("&Close") );
 
     disconnect(this, SIGNAL(user2Clicked()), this, SLOT(slotProcessStop()));
 
     connect(this, SIGNAL(user2Clicked()), this, SLOT(slotOk()));
-#endif
 }
 
 

@@ -56,10 +56,8 @@ Q_OBJECT
    int                    m_unsharpenPercent;
    int                    m_unsharpenThreshold;
 
-#ifdef TEMPORARILY_REMOVED
     QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                       Digikam::AlbumInfo *albumDest);
-#endif
+                        const QString& albumDest);
 
    void readSettings(void);
    void saveSettings(void);

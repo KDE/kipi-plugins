@@ -172,13 +172,12 @@ void RecompressImagesDialog::saveSettings(void)
 
 ////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
-#ifdef TEMPORARILY_REMOVED
 QString RecompressImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                                            Digikam::AlbumInfo *albumDest)
+                                            const QString& albumDest)
 {
     *proc << "convert";
 
-    if ( albumDest == 0L && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
+    if ( albumDest.isNull() && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
        {
        *m_PreviewProc << "-crop" << "300x300+0+0";
        m_previewOutput.append( " -crop 300x300+0+0 ");
@@ -239,21 +238,19 @@ QString RecompressImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesIt
 
     *proc << item->pathSrc();
 
-    if ( albumDest != 0L )   // No preview mode !
+    if ( !albumDest.isNull() )   // No preview mode !
        {
-       *proc << albumDest->getPath() + "/" + item->nameDest();
+       *proc << albumDest + "/" + item->nameDest();
        }
 
     return(extractArguments(proc));
 }
-#endif
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef TEMPORARILY_REMOVED
 bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
-                                                 Digikam::AlbumInfo *albumDest)
+                                                 const QString& albumDest)
 {
     QString imageExt = item->nameSrc().section('.', -1 );
 
@@ -269,6 +266,5 @@ bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
 
     return true;
 }
-#endif
 
 #include "recompressimagesdialog.moc"
