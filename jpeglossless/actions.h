@@ -29,7 +29,7 @@ enum Action
 {
     Rotate = 0,
     Flip,
-    GrayScale,
+    GrayScale
 };
 
 enum RotateAction
