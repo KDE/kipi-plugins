@@ -618,7 +618,6 @@ void SendImagesDialog::slotOk()
        return;
        }
 
-    close();
     writeSettings();
     
     for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
