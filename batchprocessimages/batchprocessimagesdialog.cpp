@@ -377,7 +377,7 @@ void BatchProcessImagesDialog::slotGotPreview(const KFileItem* url, const QPixma
         QImage img = pix.convertToImage();
         QWMatrix matrix;
 
-        matrix.rotate( -info.angle() );
+        matrix.rotate( info.angle() );
         img = img.xForm( matrix );
         pix.convertFromImage( img );
     }
