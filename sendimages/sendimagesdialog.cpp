@@ -738,8 +738,6 @@ void SendImagesDialog::slotOk()
               else
                  commentItem = i18n("no comment");
 
-              // PENDING(blackie) in KIMDABA %1 below result in something like img012.jpg.jpg
-              // Shouldn't the exension be stripped of imageName above?
               ImageCommentsText = ImageCommentsText +
                                   i18n("Comments for image \"%1\" from Album \"%2\": %3\n")
                                   .arg(ItemName2).arg(pitem->album()).arg(commentItem);
