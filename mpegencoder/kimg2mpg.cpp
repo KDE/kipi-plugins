@@ -173,7 +173,7 @@ KImg2mpgData::KImg2mpgData(QWidget *parent, const char *name)
 
   KStandardDirs dir;
   m_TmpFolderConfig = dir.saveLocation("tmp", "kipi-mpegencoder-" +
-                      QString::number(getpid()) + "/");
+                      QString::number(getpid()) );
 
   m_Proc = 0L;
   m_Encoding = false;
