@@ -896,3 +896,5 @@ while( (fi = it.current() ) )
 
 return true;
 }
+
+#include "finddupplicateimages.moc"

@@ -556,3 +556,5 @@ void FindDuplicateDialog::setApproximateThreeshold(int Value)
 {
     return m_approximateThreshold->setValue( Value );
 }
+
+#include "finddupplicatedialog.moc"

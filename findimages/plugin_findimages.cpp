@@ -199,3 +199,5 @@ KIPI::Category Plugin_FindImages::category() const
     return KIPI::IMAGESPLUGIN;
 }
 
+
+#include "plugin_findimages.moc"
