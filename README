@@ -2,48 +2,46 @@ LIBKIPIPLUGINS
 
 Note : LibKipiPlugins are taken from Digikamplugins
 
-Authors :
-----------------------------------------------------------------------
-- Renchi Raju       <renchi at pooh.tam.uiuc.edu>
-- Gilles Caulier    <caulier dot gilles at free.fr>
-- Todd Shoemaker    <todd at theshoemakers.net>
-- Gregory Kokanosky <gregory dot kokanosky at free.fr>
-- Richard Groult    <Richard dot Groult at jalix.org>
-
-Port to LIBKIPI on KDE CVS :
-
-Aurelien Gateau    <aurelien dot gateau at free.fr>
-Jesper K. Pedersen <blackie at kde.org>
-
 Resume :
 ----------------------------------------------------------------------
 Digikam uses a plugin architecture for additional functionality.
 Currently implemented plugins are:
 
- 1) RawConverter       : A Raw Image Converter for digital cameras (by Renchi Raju).
+ 1) RawConverter       : A Raw Image Converter for digital cameras 
+                         (by Renchi Raju).
 
- 2) SlideShow          : Slideshow with effects ripped out from kslideshow and 3D effect using OpenGL (by Renchi Raju).
+ 2) SlideShow          : Slideshow with effects ripped out from kslideshow and 3D effect using OpenGL 
+                         (by Renchi Raju).
 
- 3) MpegEncoder        : An images to MPEG flux encoder for build a video file with many images (by Gilles Caulier).
+ 3) MpegEncoder        : An images to MPEG flux encoder for build a video file with many images 
+                         (by Gilles Caulier).
 
- 4) ImagesGallery      : An Album to HTML gallery export (by Gilles Caulier and Gregory Kokanosky).
+ 4) ImagesGallery      : An Album to HTML gallery export 
+                         (by Gilles Caulier and Gregory Kokanosky).
 
- 5) PrintWizard        : A print wizard (by Todd Shoemaker).
+ 5) PrintWizard        : A print images wizard 
+                         (by Todd Shoemaker).
 
- 6) JpegLossLess       : Batch images processing without less meta informations (by Renchi Raju).
+ 6) JpegLossLess       : Batch images processing without less meta informations 
+                         (by Renchi Raju).
 
- 7) CdArchiving        : Albums CD archiving via K3b cd burning program (by Gilles Caulier).
+ 7) CdArchiving        : Albums CD archiving via K3b cd burning program 
+                         (by Gilles Caulier).
 
- 8) AcquireImages      : Digikam acquire images interface (by Gilles Caulier).
+ 8) AcquireImages      : Digikam acquire images interface 
+                         (by Gilles Caulier).
                          This plugin include this parts:
                             ScanImages (scanner management using Kooka).
                             ScreenshotImages (Snap Screen based on KSnapshot and adapted to Digikam).
 
- 9) Calendar           : A Calendar construction plugin using Digikam Albums images (by Renchi Raju)
+ 9) Calendar           : A Calendar construction plugin using Digikam Albums images 
+                         (by Renchi Raju)
 
-10) SendImages         : An Email images plugin (by Gilles Caulier).
+10) SendImages         : An E-mail images plugin 
+                         (by Gilles Caulier).
 
-11) BatchProcessImages : A batch process images plugin (by Gilles Caulier).
+11) BatchProcessImages : A batch process images plugin.
+                         (by Gilles Caulier).
                          This plugin include this parts:
                             RenameImages (Image files names renaming).
                             ConvertImages (Images files format converting).
@@ -52,21 +50,29 @@ Currently implemented plugins are:
                             ColorImages (Images colors enhancement).
                             EffectImages (FX images transforming).
                             ResizeImages (Basic and Prepare to print images resizing).
-                            RecompressImages (Recompressing JPEG, TIFF, PNg, and TGA images).
+                            RecompressImages (Recompressing JPEG, TIFF, PNG, and TGA images).
 
-12) MiscOperations     : Misc operations plugins (by Gregory Kokanosky and Gilles Caulier).
-                         This plugin include this parts:
-                            Image2Desktop.
-                            Album2FileManager.
-                            KDE control pannel Gamma Correction.
+12) GammaCalibration   : Integration in KIPI of KDE control pannel Gamma Correction like a plugin.
+                         (by Gregory Kokanosky and Gilles Caulier).
 
-13) FindImages         : Find dupplicate images/comments in albums library (by Richard Grould and Gilles Caulier).
+13) TimeAdjust         : Adjust image file Time and Date.
+                         (by Jesper K. Pedersen).
+
+14) WallPaper          : Image to KDE Desktop.
+                         (by Gregory Kokanosky and Gilles Caulier).
+
+15) DirOperations      : Open an Album to Konqueror or Nautilus.
+                         (by Gregory Kokanosky and Gilles Caulier).
+  
+16) FindImages         : Find dupplicate images/comments in albums library 
+                         (by Richard Grould and Gilles Caulier).
                          This plugin include this parts:
                             FindComments.
-                         ==> Under construction.
+                         ==> TODO.
                             FindDupplicateImages.
 
-14) HelloWorld         : Tutorial plugin implementation (by Renchi Raju, Gilles Caulier, and Achim Bohnet).
+17) HelloWorld         : Tutorial plugin implementation 
+                         (by Renchi Raju, Gilles Caulier, and Achim Bohnet).
 
 
 Contact :
