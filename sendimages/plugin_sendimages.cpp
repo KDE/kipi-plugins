@@ -166,7 +166,7 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
            {
            case(KIPISendimagesPlugin::ResizeImages): 
               {
-              text = i18n("Resizing for\n%1\n%1\nfrom Album\n%2")
+              text = i18n("Resizing for\n%1\nfrom Album\n%2")
                           .arg(d->fileName).arg(d->albumName);
               break;
               }
@@ -189,7 +189,7 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
               
            default: 
               {
-              kdWarning( 51000 ) << "Plugin_SendImages: Unknown event: " << d->action << endl;
+              kdWarning( 51000 ) << "Plugin_SendImages: Unknown 'Starting' event: " << d->action << endl;
               }
            }
            
@@ -211,7 +211,7 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
                                    
                default: 
                   {
-                  kdWarning( 51000 ) << "Plugin_SendImages: Unknown event: " << d->action << endl;
+                  kdWarning( 51000 ) << "Plugin_SendImages: Unknown 'Failed' event: " << d->action << endl;
                   }
                }
             }

@@ -172,13 +172,6 @@ void SendImages::resizeImages(void)
         d->starting = false;
         QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
         }
-    
-    d = new KIPISendimagesPlugin::EventData;
-    d->action = KIPISendimagesPlugin::Progress;
-    d->total = images.count();
-    d->starting = false;
-    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-    
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////

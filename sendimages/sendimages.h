@@ -76,11 +76,11 @@ private slots:
    void slotMozillaReadStderr(KProcess* proc, char *buffer, int buflen);
    
 protected:
-   SendImagesDialog      *m_sendImagesDialog;
-   QObject               *m_parent;
-   
    KIPI::Interface       *m_interface;
-   KIPI::ImageCollection  m_collection;
+
+   SendImagesDialog      *m_sendImagesDialog;
+   
+   QObject               *m_parent;
    
    KProcess              *m_mailAgentProc;
    KProcess              *m_mailAgentProc2;
@@ -93,6 +93,8 @@ protected:
 
    KURL::List             m_filesSendList;
    KURL::List             m_imagesResizedWithError;
+
+   KIPI::ImageCollection  m_collection;
    
    void resizeImages();
    
