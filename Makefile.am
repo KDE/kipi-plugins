@@ -18,3 +18,14 @@ SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery \
 	rawconverter findimages gammacalibration \
 	$(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(JPEGLOSSLESSDIR)
 
+rcdir = $(kde_datadir)/kipi
+rc_DATA = tips
+
+# i18n translation tips messages
+messages: rc.cpp
+	$(PREPARETIPS) >> tips.cpp
+	LIST=`find . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name \*.cxx -o -name \*.ecpp -o -name \*.C`; \
+	if test -n "$$LIST"; then \
+		$(XGETTEXT) $$LIST -o $(podir)/kipiplugins.pot; \
+	fi
+	rm -f tips.cpp
