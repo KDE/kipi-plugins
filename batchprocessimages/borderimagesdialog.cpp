@@ -94,7 +94,7 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
     m_labelType->setText( i18n("Border:") );
 
     m_Type->insertItem(i18n("Solid"));
-    m_Type->insertItem(i18n("Niepce"));
+    m_Type->insertItem("Niepce");
     m_Type->insertItem(i18n("Raise"));
     m_Type->insertItem(i18n("Frame"));
     m_Type->setCurrentText(i18n("Niepce"));
