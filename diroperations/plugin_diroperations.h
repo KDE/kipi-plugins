@@ -34,69 +34,36 @@
 
   #include <kprocess.h>
 
-  // Digikam includes
+  // KIPI includes
 
   #include <libkipi/plugin.h>
 
   class KActionMenu;
   class KAction;
 
-  namespace Digikam
-  {
-     class AlbumInfo;
-  }
 
-
-  class Plugin_MiscsOperations : public KIPI::Plugin
+  class Plugin_DirOperations : public KIPI::Plugin
   {
   Q_OBJECT
 
    public:
 
-   Plugin_MiscsOperations(QObject *parent,
+   Plugin_DirOperations(QObject *parent,
                       const char* name,
                       const QStringList &args);
    virtual KIPI::Category category() const;
 
    private slots:
 
-   void slotSetCenter();
-   void slotSetTiled();
-   void slotSetCenterTiled();
-   void slotSetCenteredMaxpect();
-   void slotSetTiledMaxpect();
-   void slotSetScaled();
-   void slotSetCenteredAutoFit();
-
    void slotOpenInKonqui();
    void slotOpenInNautilus();
 
-   void slotItemsSelected(bool val);
-   void slotAlbumSelected(Digikam::AlbumInfo *album);
+      // void slotAlbumSelected(Digikam::AlbumInfo *album);
 
-   void slotGammaCorrection(void);
 
    private:
-
-   enum {
-        CENTER = 1,
-        TILED = 2,
-        CENTER_TILED = 3,
-        CENTER_MAXPECT = 4,
-        TILED_MAXPECT = 5,
-        SCALED = 6,
-        CENTERED_AUTOFIT = 7
-        };
-
-   KAction        *m_action_Tipsofday;
-   KAction        *m_action_gammaCorrection;
-
-   KActionMenu    *m_action_Background;
    KActionMenu    *m_action_OpenIn;
-
    KProcess       *m_browserProc;
-
-   void setWallpaper( int layout );
   };
 
   #endif // PLUGIN_IMAGES2DESKTOP_H

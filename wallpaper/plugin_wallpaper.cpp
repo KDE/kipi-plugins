@@ -1,16 +1,12 @@
 /* ============================================================
- * File   : plugin_miscsoperations.cpp
+ * File   : plugin_wallpaper.cpp
  *
  * Authors: Gregory KOKANOSKY <gregory dot kokanosky at free.fr>
  *          Gilles Caulier <caulier dot gilles at free.fr>
  *
  * Date   : 01/2004
  *
- * Description : Miscs operations plugin parts for Digikam
- *               - KDE Gamma correction call.
- *               - Images to KDE desktop.
- *               - Tip of day.
- *               - Open Album in Konqueror/Nautilus
+ * Description : Set Wall paper plugin for KIPI
  *
  * Copyright 2004 by Gregory KOKANOSKY and Gilles CAULIER
  *
@@ -39,45 +35,26 @@
  #include <kmessagebox.h>
  #include <ktextbrowser.h>
 
-// Digikam includes
+// KIPI includes
 
- #include <digikam/albummanager.h>
- #include <digikam/albuminfo.h>
+ #include <libkipi/interface.h>
+ #include <libkipi/imagecollection.h>
 
 // Local includes
 
- #include "plugin_miscsoperations.h"
+ #include "plugin_wallpaper.h"
 
- K_EXPORT_COMPONENT_FACTORY( kipiplugin_miscsoperations,
-                             KGenericFactory<Plugin_MiscsOperations>("kipiplugin_miscsoperations"));
+ K_EXPORT_COMPONENT_FACTORY( kipiplugin_wallpaper,
+                             KGenericFactory<Plugin_WallPaper>("kipiplugin_wallpaper"));
 
  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
- Plugin_MiscsOperations::Plugin_MiscsOperations(QObject *parent, const char*, const QStringList&)
-                       : KIPI::Plugin(parent, "MiscsOperations")
+ Plugin_WallPaper::Plugin_WallPaper(QObject *parent, const char*, const QStringList&)
+                       : KIPI::Plugin(parent, "WallPaper")
  {
-    KGlobal::locale()->insertCatalogue("kipiplugin_miscsoperations");
+    KGlobal::locale()->insertCatalogue("kipiplugin_wallpaper");
 
-    kdDebug( 51001 ) << "Plugin_MiscsOperations plugin loaded" << endl;
-
-    m_action_OpenIn = new KActionMenu(i18n("&Open Album in ..."),
-                         actionCollection(),
-                         "miscoperations_open_in");
-
-    m_action_OpenIn->insert(new KAction ("Konqueror",
-                         0,
-                         this,
-                         SLOT(slotOpenInKonqui()),
-                         m_action_OpenIn,
-                         "miscoperations_open_in_konqui"));
-
-    m_action_OpenIn->insert(new KAction ("Nautilus",
-                         0,
-                         this,
-                         SLOT(slotOpenInNautilus()),
-                         m_action_OpenIn,
-                         "miscoperations_open_in_nautilus"));
-
+    kdDebug( 51001 ) << "Plugin_WallPaper plugin loaded" << endl;
 
     m_action_Background = new KActionMenu(i18n("&Set as Background"),
                          actionCollection(),
@@ -132,30 +109,21 @@
                          m_action_Background,
                          "images2desktop_centered_auto_fit"));
 
-    m_action_gammaCorrection = new KAction (i18n("Gamma correction..."),
-                         "kgamma",
-                         0,
-                         this,
-                         SLOT(slotGammaCorrection()),
-                         actionCollection(),
-                         "gamma_correction");
 
+#ifdef TEMPORARILY_REMOVED
     m_action_Background->setEnabled(false);
-    m_action_OpenIn->setEnabled(false);
 
     connect(Digikam::AlbumManager::instance(),
             SIGNAL(signalAlbumItemsSelected(bool)),
             SLOT(slotItemsSelected(bool)));
+#endif
 
-    connect(Digikam::AlbumManager::instance(),
-            SIGNAL(signalAlbumCurrentChanged(Digikam::AlbumInfo *)),
-            SLOT(slotAlbumSelected(Digikam::AlbumInfo *)));
  }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Plugin_MiscsOperations::slotSetCenter()
+void Plugin_WallPaper::slotSetCenter()
 {
    return setWallpaper(CENTER);
 }
@@ -163,7 +131,7 @@ void Plugin_MiscsOperations::slotSetCenter()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Plugin_MiscsOperations::slotSetTiled()
+void Plugin_WallPaper::slotSetTiled()
 {
    return setWallpaper(TILED);
 }
@@ -171,7 +139,7 @@ void Plugin_MiscsOperations::slotSetTiled()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Plugin_MiscsOperations::slotSetCenterTiled()
+void Plugin_WallPaper::slotSetCenterTiled()
 {
    return  setWallpaper(CENTER_TILED);
 }
@@ -179,7 +147,7 @@ void Plugin_MiscsOperations::slotSetCenterTiled()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Plugin_MiscsOperations::slotSetCenteredMaxpect()
+void Plugin_WallPaper::slotSetCenteredMaxpect()
 {
    return setWallpaper(CENTER_MAXPECT);
 }
@@ -187,7 +155,7 @@ void Plugin_MiscsOperations::slotSetCenteredMaxpect()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Plugin_MiscsOperations::slotSetTiledMaxpect()
+void Plugin_WallPaper::slotSetTiledMaxpect()
 {
    return setWallpaper(TILED_MAXPECT);
 }
@@ -195,7 +163,7 @@ void Plugin_MiscsOperations::slotSetTiledMaxpect()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Plugin_MiscsOperations::slotSetScaled()
+void Plugin_WallPaper::slotSetScaled()
 {
    return setWallpaper(SCALED);
 }
@@ -203,7 +171,7 @@ void Plugin_MiscsOperations::slotSetScaled()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Plugin_MiscsOperations::slotSetCenteredAutoFit()
+void Plugin_WallPaper::slotSetCenteredAutoFit()
 {
    return setWallpaper(CENTERED_AUTOFIT);
 }
@@ -211,18 +179,19 @@ void Plugin_MiscsOperations::slotSetCenteredAutoFit()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Plugin_MiscsOperations::setWallpaper(int layout)
+void Plugin_WallPaper::setWallpaper(int layout)
 {
    if (layout>CENTERED_AUTOFIT || layout < CENTER)
       return;
 
-   Digikam::AlbumInfo *album =
-      Digikam::AlbumManager::instance()->currentAlbum();
+   KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+   KIPI::ImageCollection images = interface->currentSelection();
 
-   if (!album) return;
+   if (images.images().count() == 0 ) return;
 
+   // PENDING(blackie) make this support real URLS.
    QString cmd = QString("dcop kdesktop KBackgroundIface setWallpaper '%1' %2")
-                         .arg(album->getSelectedItemsPath().first()).arg(layout);
+                         .arg( images.images()[0].path() ).arg(layout);
 
    KRun::runCommand(cmd);
 }
@@ -230,71 +199,12 @@ void Plugin_MiscsOperations::setWallpaper(int layout)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Plugin_MiscsOperations::slotOpenInKonqui()
-{
-   Digikam::AlbumInfo *album =
-        Digikam::AlbumManager::instance()->currentAlbum();
-
-   if (!album) return;
-
-   kapp->invokeBrowser(album->getPath());
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void Plugin_MiscsOperations::slotOpenInNautilus()
-{
-   Digikam::AlbumInfo *album =
-      Digikam::AlbumManager::instance()->currentAlbum();
-
-   if (!album) return;
-
-   m_browserProc = new KProcess;
-
-   *m_browserProc << "nautilus";
-   *m_browserProc << album->getPath();
-
-
-   if (m_browserProc->start() == false)
-      KMessageBox::error(0, i18n("Cannot start 'nautilus' filemanager.\n"
-                                 "Please, check your installation!"));
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void Plugin_MiscsOperations::slotGammaCorrection(void)
-{
-   QStringList args;
-   QString *perror = 0;
-   int *ppid = 0;
-
-   args << "kgamma";
-   int ValRet = KApplication::kdeinitExec(QString::fromLatin1("kcmshell"), args, perror, ppid);
-
-   if ( ValRet != 0 )
-     KMessageBox::error(0, i18n("Cannot start \"KGamma\" extension in KDE control centrer!\n"
-                                "Please check your installation."));
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void Plugin_MiscsOperations::slotItemsSelected(bool val)
+void Plugin_WallPaper::slotItemsSelected(bool val)
 {
    m_action_Background->setEnabled(val);
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void Plugin_MiscsOperations::slotAlbumSelected(Digikam::AlbumInfo *album)
-{
-  m_action_OpenIn->setEnabled((album!=NULL));
-}
-
-
-KIPI::Category  Plugin_MiscsOperations::category() const
+KIPI::Category  Plugin_WallPaper::category() const
 {
     return KIPI::IMAGESPLUGIN;
 }
