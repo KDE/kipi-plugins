@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=HelloWorld
+Name=TimeDateAdjust
 Comment=KIPI Time/Date adjust
 Type=Service
 ServiceTypes=KIPI/Plugin
