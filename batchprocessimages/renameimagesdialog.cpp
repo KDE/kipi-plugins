@@ -601,29 +601,6 @@ void RenameImagesDialog::listImageFiles(void)
 {
     BatchProcessImagesDialog::listImageFiles();
 
-    KURL::List images;
-    for ( QListViewItem* it = m_listFiles->firstChild(); it; it = it->nextSibling() ) 
-        {
-        BatchProcessImagesItem *pitem = static_cast<BatchProcessImagesItem*>(it);
-        images.append( pitem->pathSrc() );
-        }
-
-    m_listFiles->clear();
-
-    int imageIndex = 0;
-    for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) 
-        {
-        QFileInfo fi( (*urlIt).path() ); // PENDING(blackie) handle remote URLS
-        new BatchProcessImagesItem(m_listFiles, fi.filePath(), fi.fileName(),
-                                   oldFileName2NewFileName(&fi, imageIndex), "" );
-        ++imageIndex;
-        }
-
-    // PENDING(blackie) This is the old code for this function.
-    // This code also includes sorting, but that needs some work to work with remote URL's
-#ifdef TEMPORARILY_REMOVED
-    BatchProcessImagesDialog::listImageFiles();
-
     int sortMethod;
 
     switch (m_sortType)
@@ -650,23 +627,28 @@ void RenameImagesDialog::listImageFiles(void)
           sortMethod = QDir::Name;
           break;
        }
-
+    
     QStringList AlbumItemListed;
-    QListViewItemIterator it2( m_listFiles );
-    int imageIndex = 0;
+    KURL::List images;
+    
+    for ( QListViewItem* it = m_listFiles->firstChild(); it; it = it->nextSibling() ) 
+        {
+        BatchProcessImagesItem *pitem = static_cast<BatchProcessImagesItem*>(it);
+        images.append( pitem->pathSrc() );
+        QString currentAlbumName = pitem->pathSrc().section('/', 0, -2);
 
-    while ( it2.current() )
-       {
-       BatchProcessImagesItem *pitem = static_cast<BatchProcessImagesItem*>(it2.current());
-       QString currentAlbumName = pitem->pathSrc().section('/', 0, -2);
-
-       if ( AlbumItemListed.find(currentAlbumName) == AlbumItemListed.end() )
-          AlbumItemListed.append(currentAlbumName);
-
-       ++it2;
-       }
+        if ( AlbumItemListed.find(currentAlbumName) == AlbumItemListed.end() )
+           AlbumItemListed.append(currentAlbumName);
+        }
 
     m_listFiles->clear();
+
+    int imageIndex = 0;
+    
+    QStringList selectedImageFiles;
+    
+    for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt )
+        selectedImageFiles.append( (*urlIt).path() ); // PENDING(blackie) handle remote URLS
 
     for( QStringList::Iterator itAlbum = AlbumItemListed.begin() ; itAlbum != AlbumItemListed.end() ; ++itAlbum )
        {
@@ -690,21 +672,20 @@ void RenameImagesDialog::listImageFiles(void)
              continue;
              }
 
-          if ( m_selectedImageFiles.find(fi->filePath()) != m_selectedImageFiles.end() )
+          if ( selectedImageFiles.find(fi->filePath()) != selectedImageFiles.end() )
              {
-                 /*BatchProcessImagesItem *item = */new BatchProcessImagesItem(m_listFiles,
-                                                                               fi->filePath(),
-                                                                               fi->fileName(),
-                                                                               oldFileName2NewFileName(fi, imageIndex),
-                                                                               ""
-                     );
+             new BatchProcessImagesItem(m_listFiles,
+                                        fi->filePath(),
+                                        fi->fileName(),
+                                        oldFileName2NewFileName(fi, imageIndex),
+                                        ""
+                                        );
              ++imageIndex;
              }
 
           ++it;
           }
        }
-#endif
 }
 
 
