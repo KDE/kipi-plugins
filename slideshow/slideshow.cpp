@@ -2,8 +2,8 @@
  * File  : slideshow.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-02-16
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2003 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -11,12 +11,12 @@
  * Public License as published bythe Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include <klocale.h>
@@ -169,20 +169,20 @@ QMap<QString,QString> SlideShow::effectNamesI18N()
 {
     QMap<QString,QString> effects;
 
-    effects["None"] = QString(i18n("None"));
-    effects["Chess Board"] = QString(i18n("Chess Board"));
-    effects["Melt Down"] = QString(i18n("Melt Down"));
-    effects["Sweep"] = QString(i18n("Sweep"));
-    effects["Noise"] = QString(i18n("Noise"));
-    effects["Growing"] = QString(i18n("Growing"));
-    effects["Incoming Edges"] = QString(i18n("Incoming Edges"));
-    effects["Horizontal Lines"] = QString(i18n("Horizontal Lines"));
-    effects["Vertical Lines"] = QString(i18n("Vertical Lines"));
-    effects["Circle Out"] = QString(i18n("Circle Out"));
-    effects["MultiCircle Out"] = QString(i18n("MultiCircle Out"));
-    effects["Spiral In"] = QString(i18n("Spiral In"));
-    effects["Blobs"] = QString(i18n("Blobs"));
-    effects["Random"] = QString(i18n("Random"));
+    effects["None"] = i18n("None");
+    effects["Chess Board"] = i18n("Chess Board");
+    effects["Melt Down"] = i18n("Melt Down");
+    effects["Sweep"] = i18n("Sweep");
+    effects["Noise"] = i18n("Noise");
+    effects["Growing"] = i18n("Growing");
+    effects["Incoming Edges"] = i18n("Incoming Edges");
+    effects["Horizontal Lines"] = i18n("Horizontal Lines");
+    effects["Vertical Lines"] = i18n("Vertical Lines");
+    effects["Circle Out"] = i18n("Circle Out");
+    effects["MultiCircle Out"] = i18n("MultiCircle Out");
+    effects["Spiral In"] = i18n("Spiral In");
+    effects["Blobs"] = i18n("Blobs");
+    effects["Random"] = i18n("Random");
 
     return effects;
 }
@@ -376,7 +376,7 @@ void SlideShow::keyPressEvent(QKeyEvent *event)
 {
     if(!event)
         return;
-        
+
     if(event->key() == Qt::Key_Space)
     {
         event->accept();

@@ -107,7 +107,7 @@ void OptionsDialog::slotIMBinFolderFilenameDialog( void )
 
   temp = KFileDialog::getExistingDirectory(IMBinFolderEditFilename->text(),
                                            this,
-                                           QString(i18n("Select path to ImageMagick binary programs...")));
+                                           i18n("Select path to ImageMagick binary programs..."));
 
   if( temp.isEmpty() )
     return;
@@ -122,7 +122,7 @@ void OptionsDialog::slotMJBinFolderFilenameDialog( void )
 
   temp = KFileDialog::getExistingDirectory(MJBinFolderEditFilename->text(),
                                            this,
-                                           QString(i18n("Select path to MjpegTools binary programs...")));
+                                           i18n("Select path to MjpegTools binary programs..."));
 
   if( temp.isEmpty() )
     return;
