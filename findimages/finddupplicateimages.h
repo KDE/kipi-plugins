@@ -3,7 +3,7 @@
 //    FINDDUPPLICATEIMAGES.H
 //
 //    Copyright (C) 2001 Richard Groult <rgroult at jalix.org> (from ShowImg project)
-//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
 //    Copyright (C) 2004 Richard Groult <rgroult at jalix.org>
 //
 //    This program is free software; you can redistribute it and/or modify
@@ -66,7 +66,8 @@ public:
 
    bool showDialog();
    void showResult();
-   void compareAlbums();
+   void compareAlbums();                                   // Launch the dialog box for Albums selection
+                                                           // before comparison.
 
 public slots:
   void slotUpdateCache(QStringList fromDirs);
@@ -83,9 +84,7 @@ protected:
    bool equals(QFile*, QFile*);                            // Return true if the 2 files are the sames.
    void compareFast(QStringList filesList);                // Launch the exact comparison.
    void compareAlmost(QStringList filesList);              // Launch the approximative comparison.
-   //void compareAlbums(void);                             // Launch the dialog box for Albums selection
-                                                           // before comparison.
-
+   
    char getRed(QImage *im, int x, int y);
    char getGreen(QImage *im, int x, int y);
    char getBlue(QImage *im, int x, int y);

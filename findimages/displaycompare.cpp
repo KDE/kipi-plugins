@@ -3,7 +3,7 @@
 //    DISPLAYCOMPARE.CPP
 //
 //    Copyright (C) 2001 Richard Groult <rgroult at jalix.org> (from ShowImg project)
-//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -114,9 +114,11 @@ private:
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-DisplayCompare::DisplayCompare(QWidget* parent, QDict < QPtrVector < QFile > >* cmp )
+DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface, 
+                               QDict < QPtrVector < QFile > >* cmp )
                :KDialogBase( parent, "DisplayCompare", true, 0,
-                Help|User1|User2|Close, Close, true, i18n("&About"), i18n("Delete"))
+                Help|User1|User2|Close, Close, true, i18n("&About"), i18n("Delete")),
+                m_interface( interface )
 {
     KImageIO::registerFormats();
     this->cmp = cmp;
@@ -214,20 +216,13 @@ DisplayCompare::DisplayCompare(QWidget* parent, QDict < QPtrVector < QFile > >* 
         QFileInfo fi(itres.currentKey());
         QString Temp = fi.dirPath();
         QString albumName = Temp.section('/', -1);
-#ifdef TEMPORARILY_REMOVED
-        Digikam::AlbumInfo *Album = Digikam::AlbumManager::instance()->findAlbum( albumName );
-        Album->openDB();
-        QString comments = Album->getItemComments(fi.fileName());
-        Album->closeDB();
-#else
-        QString comments = "hello world";
-#endif
 
-        /*FindOriginalItem *item = */ new FindOriginalItem( listName,
-                                                            fi.fileName(),
-                                                            itres.currentKey(),
-                                                            albumName,
-                                                            comments );
+        KURL url;
+        url.setPath(fi.fileName());
+        KIPI::ImageInfo info = m_interface->info(url);
+        QString comments = info.description();
+
+        new FindOriginalItem( listName, fi.fileName(), itres.currentKey(), albumName, comments );
         ++itres;
         ++n_id;
         }
@@ -362,14 +357,11 @@ void DisplayCompare::slotDisplayLeft(QListViewItem * item)
           {
           QString Temp = fi->dirPath();
           QString albumName = Temp.section('/', -1);
-#ifdef TEMPORARILY_REMOVED
-          Digikam::AlbumInfo *Album = Digikam::AlbumManager::instance()->findAlbum( albumName );
-          Album->openDB();
-          QString comments = Album->getItemComments(fi->fileName());
-          Album->closeDB();
-#else
-          QString comments="hello world";
-#endif
+
+          KURL url;
+          url.setPath(fi->fileName());
+          KIPI::ImageInfo info = m_interface->info(url);
+          QString comments = info.description();
 
           FindDuplicateItem *item = new FindDuplicateItem( listEq,
                                                            fi->fileName(),
@@ -377,7 +369,8 @@ void DisplayCompare::slotDisplayLeft(QListViewItem * item)
                                                            albumName,
                                                            comments
                                                            );
-          if (!last) last = item;
+          if (!last) 
+             last = item;
           }
        }
 
@@ -408,8 +401,9 @@ void DisplayCompare::slotDisplayRight(QListViewItem * item)
        similarNameLabel->setText(pitem->name());
        similarInfoLabel1->setText(i18n("Image size: %1x%2 pixels").arg(im.width()).arg(im.height()));
        similarInfoLabel2->setText(i18n("File size: %1 bytes").arg(QFileInfo(pitem->fullpath()).size()));
-       similarInfoLabel3->setText(i18n("Modified: %1").arg(KLocale(NULL).formatDateTime(QFileInfo(pitem->fullpath())
-                                  .lastModified())));
+       similarInfoLabel3->setText(i18n("Modified: %1").arg(KLocale(NULL)
+                                                      .formatDateTime(QFileInfo(pitem->fullpath())
+                                                      .lastModified())));
        similarInfoLabel4->setText(i18n("Album: %1").arg(pitem->album()));
        similarInfoLabel5->setText(i18n("Comments: %1").arg(pitem->comments()));
        }

@@ -3,7 +3,7 @@
 //    FINDDUPPLICATEIMAGES.CPP
 //
 //    Copyright (C) 2001 Richard Groult <rgroult at jalix.org> (from ShowImg project)
-//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
 //    Copyright (C) 2004 Richard Groult <rgroult at jalix.org>
 //
 //    This program is free software; you can redistribute it and/or modify
@@ -102,10 +102,10 @@ public:
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 FindDuplicateImages::FindDuplicateImages( KIPI::Interface* interface, QObject *parent)
-    : QObject(parent), QThread(), m_interface( interface )
+                    : QObject(parent), QThread(), m_interface( interface )
 {
     KImageIO::registerFormats();
-    parent_=parent;
+    parent_ = parent;
 }
 
 
@@ -183,7 +183,7 @@ bool FindDuplicateImages::showDialog()
 void FindDuplicateImages::showResult()
 {
     if( !res->isEmpty() )
-        DisplayCompare(0, res).exec();
+        DisplayCompare(0, m_interface, res).exec();
     else
         KMessageBox::information(0, i18n("No identical files found"));
     delete(res);
@@ -203,20 +203,20 @@ void FindDuplicateImages::compareAlbums(void)
            KURL::List Files = (*it).images();
 
            for( KURL::List::Iterator it2 = Files.begin(); it2 != Files.end(); ++it2 ) 
-	       {
+               {
                if ( !filesList.contains( (*it2).path() ) )
-	           {
-		   filesList.append( (*it2).path() ); // PENDING(blackie) handle remote URLS
-		   }
+                   {
+                   filesList.append( (*it2).path() ); // PENDING(blackie) handle remote URLS
+                   }
                }
 
            kapp->processEvents();
            }
 
        if ( m_findDuplicateDialog->getFindMethod() == i18n("Almost") )
-	   isCompareAlmost = true;
+           isCompareAlmost = true;
        else
-	   isCompareAlmost = false;
+           isCompareAlmost = false;
 
     start();
     return;
@@ -322,13 +322,14 @@ void FindDuplicateImages::slotUpdateCache(QStringList fromDirs)
 void FindDuplicateImages::updateCache(QString fromDir)
 {
     // PENDING(blackie) this method doesn't seem to work.
-    qDebug ("%s", fromDir.ascii());
+    
+    kdDebug( 51000 ) << fromDir.ascii() << endl;
     pdCache->setLabelText(i18n("Updating in progress for:\n") + fromDir);
     QDir d(QDir::homeDirPath() + "/.findduplicate/cache/" + fromDir);
     int len = QString(QDir::homeDirPath() + "/.findduplicate/cache").length();
     bool delDir = false;
 
-    qDebug("%s", (QDir::homeDirPath() + "/.findduplicate/cache/" + fromDir).latin1() );
+    kdDebug( 51000 ) << QDir::homeDirPath() + "/.findduplicate/cache/" + fromDir.latin1() << endl;
 
     if ( !QFileInfo(fromDir).exists() )
        delDir = true;      // If the source folder have been removed, remove also the cache...
@@ -582,10 +583,10 @@ ImageSimilarityData* FindDuplicateImages::image_sim_fill_data(QString filename)
 void FindDuplicateImages::compareAlmost(QStringList filesList)
 {
     FindImages::EventData *p = new FindImages::EventData;
-    	p->action   = FindImages::Progress;
-        p->total = filesList.count();
-        p->starting = true;
-        QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, p));
+    p->action   = FindImages::Progress;
+    p->total = filesList.count();
+    p->starting = true;
+    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, p));
 
     res = new QDict < QPtrVector < QFile > >;
 
@@ -606,12 +607,12 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
         QString albumName = Temp.section('/', -1);
 
         FindImages::EventData *d = new FindImages::EventData;
-            d->action   = FindImages::Matrix;
-            d->fileName = itemName;
-            d->starting = true;
-            QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+        d->action   = FindImages::Matrix;
+        d->fileName = itemName;
+        d->starting = true;
+        QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
 
-	if( (is = image_sim_fill_data( itemName )) != NULL )
+        if( (is = image_sim_fill_data( itemName )) != NULL )
            {
            if ( is->ratio > 1 )
               list = listRatW;
@@ -622,13 +623,12 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
            list->insert (list->size () - 1, is );
            }
 
-	FindImages::EventData *r = new FindImages::EventData;
-            r->action    = FindImages::Matrix;
-            r->fileName  = itemName;
-            r->success   = true;
-            r->errString = "";
-	    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
-
+        FindImages::EventData *r = new FindImages::EventData;
+        r->action    = FindImages::Matrix;
+        r->fileName  = itemName;
+        r->success   = true;
+        r->errString = "";
+        QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
         }
 
     kdDebug( 51000 ) << "Matrix creation time:" << debut.msecsTo(QTime::currentTime()) << endl;
@@ -639,10 +639,10 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
     bool done=false;
 
     p = new FindImages::EventData;
-    	p->action   = FindImages::Progress;
-        p->total = filesList.count();
-        p->starting = true;
-        QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, p));
+    p->action   = FindImages::Progress;
+    p->total = filesList.count();
+    p->starting = true;
+    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, p));
 
     while( list != NULL )
         {
@@ -655,18 +655,18 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
 
                 if (i1 && !fait->find(i1->filename))
                 {
-		   FindImages::EventData *d = new FindImages::EventData;
-            		d->action   = FindImages::Similar;
-            		d->fileName = i1->filename;
-            		d->starting = true;
-            		QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+                FindImages::EventData *d = new FindImages::EventData;
+                d->action   = FindImages::Similar;
+                d->fileName = i1->filename;
+                d->starting = true;
+                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
 
-                    for (unsigned int j = i + 1; j < list->size (); j++)
+                for (unsigned int j = i + 1; j < list->size (); j++)
                         {
                         // Create the 'ImageSimilarityData' data for the second image.
                         ImageSimilarityData *i2 = list->at(j);
 
-			// Real images file comparison calculation.
+                        // Real images file comparison calculation.
                         float eq = image_sim_compare_fast(i1, i2, m_approximateLevel);
 
                         if (eq >= m_approximateLevel)   // the files are the same !
@@ -689,11 +689,12 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
                             }
                         }
                     }
- 		    FindImages::EventData *e = new FindImages::EventData;
-            		e->action   = FindImages::Similar;
-            		e->fileName = i1->filename;
-            		e->starting = false;
-            		QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, e));
+
+               FindImages::EventData *e = new FindImages::EventData;
+               e->action   = FindImages::Similar;
+               e->fileName = i1->filename;
+               e->starting = false;
+               QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, e));
                }
            }
 
@@ -715,9 +716,9 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
     delete(listRatW);
 
     FindImages::EventData *e = new FindImages::EventData;
-        e->action   = FindImages::Progress;
-        e->starting = false;
-        QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, e));
+    e->action   = FindImages::Progress;
+    e->starting = false;
+    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, e));
 }
 
 
@@ -727,7 +728,7 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
 void FindDuplicateImages::compareFast(QStringList filesList)
 {
     QDict < QPtrVector < QFile > >*dict = new QDict < QPtrVector < QFile > >;
-    dict->setAutoDelete(TRUE);
+    dict->setAutoDelete(true);
     res = new QDict < QPtrVector < QFile > >;
     QPtrVector < QFile > *list;
 
@@ -766,10 +767,10 @@ void FindDuplicateImages::compareFast(QStringList filesList)
     QDictIterator < QPtrVector < QFile > >it (*dict);        // iterator for dict
 
     FindImages::EventData *p = new FindImages::EventData;
-    	p->action   = FindImages::Progress;
-        p->total = filesList.count();
-        p->starting = true;
-        QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, p));
+    p->action   = FindImages::Progress;
+    p->total = filesList.count();
+    p->starting = true;
+    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, p));
 
     while (it.current ())
         {
@@ -782,11 +783,11 @@ void FindDuplicateImages::compareFast(QStringList filesList)
                 {
                 QFile *file1 = (QFile *) (list->at (i));
 
-		FindImages::EventData *d = new FindImages::EventData;
-            	    d->action   = FindImages::Exact;
-            	    d->fileName = file1->name();
-            	    d->starting = true;
-            	    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+                FindImages::EventData *d = new FindImages::EventData;
+                d->action   = FindImages::Exact;
+                d->fileName = file1->name();
+                d->starting = true;
+                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
 
                 if (!fait->find (file1->name()))
                     {
@@ -804,7 +805,7 @@ void FindDuplicateImages::compareFast(QStringList filesList)
                             if (!res->find (file1->name ()))
                                 {
                                 vect = new QPtrVector < QFile >;
-                                vect->setAutoDelete(TRUE);
+                                vect->setAutoDelete(true);
                                 res->insert (file1->name (), vect);
                                 }
                             else
@@ -817,11 +818,11 @@ void FindDuplicateImages::compareFast(QStringList filesList)
                             }
                         }
                     }
-		    FindImages::EventData *e = new FindImages::EventData;
-            		e->action   = FindImages::Exact;
-            		e->fileName = file1->name();
-            		e->starting = false;
-            		QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, e));
+                FindImages::EventData *e = new FindImages::EventData;
+                e->action   = FindImages::Exact;
+                e->fileName = file1->name();
+                e->starting = false;
+                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, e));
                 }
             }
         delete(fait);
@@ -831,9 +832,9 @@ void FindDuplicateImages::compareFast(QStringList filesList)
     delete (it);
 
     FindImages::EventData *e = new FindImages::EventData;
-        e->action   = FindImages::Progress;
-        e->starting = false;
-        QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, e));
+    e->action   = FindImages::Progress;
+    e->starting = false;
+    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, e));
 }
 
 

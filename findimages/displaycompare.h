@@ -3,7 +3,7 @@
 //    DISPLAYCOMPARE.H
 //
 //    Copyright (C) 2001 Richard Groult <rgroult at jalix.org> (from ShowImg project)
-//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -34,6 +34,10 @@
 
 #include <kdialogbase.h>
 
+// Includes file for libKIPI.
+
+#include <libkipi/interface.h>
+
 class QVBoxLayout;
 class QHBoxLayout;
 class QGridLayout;
@@ -56,7 +60,7 @@ class  DisplayCompare : public KDialogBase
 Q_OBJECT
 
 public:
-   DisplayCompare(QWidget* parent, QDict < QPtrVector < QFile > >* cmp);
+   DisplayCompare(QWidget* parent, KIPI::Interface* interface, QDict < QPtrVector < QFile > >* cmp);
    ~DisplayCompare();
 
 private slots :
@@ -92,6 +96,8 @@ private:
 
    QListView*          listName;
    QListView*          listEq;
+   
+   KIPI::Interface* m_interface;
 };
 
 }  // NameSpace KIPIFindDupplicateImagesPlugin
