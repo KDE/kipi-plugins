@@ -2,7 +2,7 @@
 //
 //    ACQUIREIMAGEDIALOG.H
 //
-//    Copyright (C) 2003 Gilles CAULIER <caulier.gilles at free.fr>
+//    Copyright (C) 2003 Gilles Caulier <caulier.gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@
 
 #include <kdialogbase.h>
 #include <kio/job.h>
+#include <kurl.h>
 
 // Include files for KIPI
 
@@ -66,11 +67,8 @@ Q_OBJECT
 
  private slots:
    void slotOk();
-
-// // PENDING(blackie) see implementation of these methods to see why this was removed.
-//    void albumSelected( QListBoxItem * item );
-//   void slotGotPreview(const KURL &url, const QPixmap &pixmap);
-    void slotImageFormatChanged(const QString &string);
+   void slotAlbumSelected( const KURL &url );
+   void slotImageFormatChanged(const QString &string);
 
  protected:
    KIPI::Interface    *m_interface;
@@ -84,7 +82,6 @@ Q_OBJECT
    QString             m_ImagesFilesSort;
 
    KIPI::UploadWidget* m_uploadPath;
-    //KListBox           *m_AlbumList;
 
    KIntNumInput       *m_imageCompression;
 
@@ -99,7 +96,6 @@ Q_OBJECT
    QLabel             *m_labelImageFormat;
    QLabel             *m_ImageFileName;
    QLabel             *m_preview;
-   QLabel             *m_albumPreview;
 
    QFrame             *page_setupImageOptions;
    QFrame             *page_setupAlbumsList;
@@ -109,8 +105,6 @@ Q_OBJECT
    KSqueezedTextLabel *m_AlbumCollection;
    KSqueezedTextLabel *m_AlbumDate;
    KSqueezedTextLabel *m_AlbumItems;
-
-   bool                m_dialogOk;
 
    QString extension(const QString& imageFormat);
    bool QImageToTiff(const QImage& image, const QString& dst);

@@ -6,7 +6,7 @@
 //    Copyright (C) Matthias Ettrich 2000 from KSnapshot
 //    Copyright (C) Aaron J. Seigo 2002 from KSnapshot
 //
-//    Copyright (C) 2004 Gilles CAULIER <caulier.gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier.gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -45,6 +45,8 @@ extern "C"
 #include <X11/Xlib.h>
 }
 
+// Include files for libKipi.
+
 #include <libkipi/interface.h>
 
 class QWidget;
@@ -63,7 +65,8 @@ class ScreenGrabDialog : public KDialogBase
 Q_OBJECT
 
 public:
-    ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent=0, const char *name=0);
+    ScreenGrabDialog( KIPI::Interface* interface, 
+                      QWidget *parent=0, const char *name=0);
     ~ScreenGrabDialog();
 
 protected slots:

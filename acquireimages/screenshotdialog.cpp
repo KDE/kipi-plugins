@@ -6,7 +6,7 @@
 //    Copyright (C) Matthias Ettrich 2000 from KSnapshot
 //    Copyright (C) Aaron J. Seigo 2002 from KSnapshot
 //
-//    Copyright (C) 2004 Gilles CAULIER <caulier.gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier.gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -112,10 +112,17 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
 
     //---------------------------------------------
 
-    connect(this, SIGNAL(user1Clicked()), this, SLOT(slotAbout()));
-    connect(this, SIGNAL(user2Clicked()), this, SLOT(slotGrab()));
-    connect(this, SIGNAL(closeClicked()), this, SLOT(slotClose()));
-    connect( &m_grabTimer, SIGNAL(timeout()), this, SLOT(slotPerformGrab()));
+    connect(this, SIGNAL(user1Clicked()), 
+            this, SLOT(slotAbout()));
+            
+    connect(this, SIGNAL(user2Clicked()), 
+            this, SLOT(slotGrab()));
+            
+    connect(this, SIGNAL(closeClicked()), 
+            this, SLOT(slotClose()));
+            
+    connect( &m_grabTimer, SIGNAL(timeout()), 
+             this, SLOT(slotPerformGrab()));
 
     //---------------------------------------------
 

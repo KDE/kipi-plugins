@@ -2,7 +2,7 @@
 //
 //    ACQUIREIMAGEDIALOG.CPP
 //
-//    Copyright (C) 2003 Gilles CAULIER <caulier.gilles at free.fr>
+//    Copyright (C) 2003 Gilles Caulier <caulier.gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -52,6 +52,8 @@ extern "C"
 #include <qcombobox.h>
 #include <qlistbox.h>
 #include <qfile.h>
+#include <qapplication.h>
+#include <qvgroupbox.h>
 
 // Include files for KDE
 
@@ -71,6 +73,8 @@ extern "C"
 #include <kimageio.h>
 #include <ktempfile.h>
 #include <kdeversion.h>
+#include <kdebug.h>
+#include <kfiletreeview.h>
 
 // Include files for libKipi.
 
@@ -79,49 +83,24 @@ extern "C"
 // Local includes
 
 #include "acquireimagedialog.h"
-#include <kdebug.h>
-#include <kfiletreeview.h>
-#include <qapplication.h>
-#include <qvgroupbox.h>
 
 namespace KIPIAcquireImagesPlugin
 {
 
-class AlbumItem : public QListBoxText
-{
-public:
-    AlbumItem(QListBox * parent, QString const & name, QString const & comments, QString const & path,
-              QString const & collection, QString const & firstImage, QDate const & date, int const & items)
-            : QListBoxText( parent), _name(name), _comments(comments), _path(path), _collection(collection),
-              _firstImage(firstImage), _date (date), _items (items)
-    {}
+// Used by slotOK() method.
 
-    QString comments()                   { return _comments;   }
-    QString name()                       { return _name;       }
-    QString path()                       { return _path;       }
-    QString collection()                 { return _collection; }
-    QString firstImage()                 { return _firstImage; }
-    QDate   date()                       { return _date;       }
-    int     items()                      { return _items;      }
-    void setName(const QString &newName) { setText(newName);   }
-    void incItem ()                      { ++_items;           }
-
-private:
-    QString _name;
-    QString _comments;
-    QString _path;
-    QString _collection;
-    QString _firstImage;
-    QDate   _date;
-    int     _items;
-};
-
+#undef NETACCESS_WIDGET
+#if KDE_VERSION >= 0x30200
+#define NETACCESS_WIDGET , this
+#else
+#define NETACCESS_WIDGET
+#endif
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *parent, const QImage &img)
                   : KDialogBase( IconList, i18n("Save target image options"), Help|Ok|Cancel,
-                    Ok, parent, "AcquireImageDialog", true, true ), m_interface( interface ), m_dialogOk( false )
+                    Ok, parent, "AcquireImageDialog", true, true ), m_interface( interface )
 {
     KImageIO::registerFormats();
     m_qimageScanned = img;
@@ -314,15 +293,15 @@ void AcquireImageDialog::setupAlbumsList(void)
 
     page_setupAlbumsList = addPage( i18n("Selection"),
                                     i18n("Album selection"),
-                                    BarIcon("endturn", KIcon::SizeMedium ) );
+                                    BarIcon("folder_image", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupAlbumsList, 0, spacingHint() );
 
     //---------------------------------------------
 
-    QVGroupBox * groupBox1 = new QVGroupBox( i18n("Select folder for to save the target image"), page_setupAlbumsList );
-    groupBox1->setTitle(i18n("Select folder for to save the target image"));
-
+    QVGroupBox * groupBox1 = new QVGroupBox( i18n("Select folder for to save the target image"),
+                                             page_setupAlbumsList );
+    
     m_uploadPath = new KIPI::UploadWidget( m_interface, groupBox1, "m_uploadPath" );
 
     QWidget* w = new QWidget( groupBox1 );
@@ -332,20 +311,7 @@ void AcquireImageDialog::setupAlbumsList(void)
     m_addNewAlbumButton = new QPushButton (i18n( "&Add new folder"), w, "PushButton_AddNewAlbum");
     hlay->addWidget( m_addNewAlbumButton );
     QWhatsThis::add( m_addNewAlbumButton, i18n( "<p>Add a new folder."));
-
-
-#ifdef TEMPORARILY_REMOVED
-    // This code is from when this plugin offered a preview of the album.
-    // Now this has been changed to folder rather than album, this code has to go.
-    m_albumPreview = new QLabel( w );
-    m_albumPreview->setFixedHeight( 120 );
-    m_albumPreview->setFrameStyle( QFrame::Panel | QFrame::Sunken );
-    m_albumPreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-    m_albumPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    QWhatsThis::add( m_albumPreview, i18n( "<p>Preview of the first image in the current selected Album." ) );
-    grid->addMultiCellWidget(m_albumPreview, 2, 2, 2, 2);
-#endif
-
+    
     vlay->addWidget( groupBox1 );
 
     //---------------------------------------------
@@ -376,22 +342,24 @@ void AcquireImageDialog::setupAlbumsList(void)
     groupBox2Layout->addWidget( m_AlbumItems );
 
     vlay->addWidget( groupBox2 );
+    
     if ( !m_interface->hasFeature( KIPI::AlbumsHaveComments) )
         groupBox2->hide();
     else
         vlay->addStretch(1);
-
+            
     //---------------------------------------------
 
     connect(m_addNewAlbumButton, SIGNAL(clicked()),
             m_uploadPath, SLOT(mkdir()));
 
-#ifdef TEMPORARILY_REMOVED
-    // see comment for albumSelected
-    connect(m_AlbumList, SIGNAL( currentChanged( QListBoxItem * ) ),
-            this, SLOT( albumSelected( QListBoxItem * )));
-#endif
-    }
+    connect(m_uploadPath, SIGNAL( folderItemSelected( const KURL & ) ),
+            this, SLOT( slotAlbumSelected( const KURL & )));
+    
+    //---------------------------------------------
+                    
+    slotAlbumSelected( m_uploadPath->path() );           
+ }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -414,53 +382,35 @@ void AcquireImageDialog::aboutPage(void)
 
 //////////////////////////////////////// SLOTS //////////////////////////////////////////////
 
-
-// This doesn't make much more sence anymore now that we have a directory browser
-// rather than an album browser - 25 May. 2004 23:15 -- Jesper K. Pedersen
-#ifdef TEMPORARILY_REMOVED
-void AcquireImageDialog::albumSelected( QListBoxItem * item )
+void AcquireImageDialog::slotAlbumSelected( const KURL &url )
 {
-    if ( !item ) return;
-
-    AlbumItem *pitem = static_cast<AlbumItem*>( item );
-    if ( pitem == NULL ) return;
-    m_AlbumComments->setText( i18n("Comment: %1").arg(pitem->comments()) );
-    m_AlbumCollection->setText( i18n("Collection: %1").arg(pitem->collection()) );
-    m_AlbumDate->setText( i18n("Date: %1").arg(pitem->date().toString(( Qt::LocalDate ))) );
-    m_AlbumItems->setText( i18n("Items: %1").arg( pitem->items() ) );
-
-    checkNewFileName();
-
-    m_albumPreview->clear();
-
-    QString IdemIndexed = "file:" + pitem->path() + "/" + pitem->firstImage();
-    KURL url(IdemIndexed);
-
-    KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_albumPreview->height());
-
-    connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
+    QString comments, category, date, items;
+    QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
+    QValueList<KIPI::ImageCollection>::Iterator albumIt;
+    
+    for( albumIt = albums.begin() ; albumIt != albums.end() ; ++albumIt )
+       {
+       if ( (*albumIt).path() == url ) 
+          break;
+       }
+    
+    if (albumIt != albums.end())
+       { 
+       comments = (*albumIt).comment();
+       category = (*albumIt).category();
+       date     = (*albumIt).date().toString( Qt::LocalDate );
+       items.setNum((*albumIt).images().count());
+       }
+        
+    m_AlbumComments->setText( i18n("Comment: %1").arg(comments) );
+    m_AlbumCollection->setText( i18n("Collection: %1").arg(category) );
+    m_AlbumDate->setText( i18n("Date: %1").arg(date) );
+    m_AlbumItems->setText( i18n("Items: %1").arg( items ) );
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void AcquireImageDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap &pixmap)
-{
-    m_albumPreview->setPixmap(pixmap);
-}
-#endif
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-#undef NETACCESS_WIDGET
-#if KDE_VERSION >= 0x30200
-#define NETACCESS_WIDGET , this
-#else
-#define NETACCESS_WIDGET
-#endif
   void AcquireImageDialog::slotOk()
 {
     // PENDING( aurelien)
@@ -468,6 +418,7 @@ void AcquireImageDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap 
     KURL url = m_uploadPath->path();
     url.adjustPath(1);
     kdDebug(51001) << k_funcinfo << "path:" << url.prettyURL() << endl;
+    
     if (!url.isValid())
     {
         KMessageBox::error(this, i18n("You must select a target album for this image!"));
@@ -487,17 +438,22 @@ void AcquireImageDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap 
     int imageCompression = m_imageCompression->value();
     QString Commentsimg = m_CommentsEdit->text();
 
-    // Find a unique url
+    // Find an unique url
     QString fileName = m_FileName->text();
     QString ext = extension(imageFormat);
     url.setFileName(fileName + ext);
 
-    if (KIO::NetAccess::exists(url, false NETACCESS_WIDGET)) {
-        for (int idx=1;;idx++) {
+    if (KIO::NetAccess::exists(url, false NETACCESS_WIDGET)) 
+        {
+        for (int idx = 1; idx < 100 ; ++idx) 
+            {
             url.setFileName(QString("%1_%2%3").arg(fileName).arg(idx).arg(ext));
-            if (KIO::NetAccess::exists(url, false NETACCESS_WIDGET)) break;
+            kdDebug(51001) << "File already exist. Try to fixed target Url to: " << url.prettyURL() << endl;
+            
+            if (!KIO::NetAccess::exists(url, false NETACCESS_WIDGET)) 
+               break;
+            }
         }
-    }
 
     kdDebug(51001) << k_funcinfo << "Saving image as " << url.prettyURL() << endl;
 
@@ -534,7 +490,6 @@ void AcquireImageDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap 
         }
     }
 
-
     // Save the comments for this image.
     QString err;
     ok = m_interface->addImage( url, err );
@@ -544,20 +499,11 @@ void AcquireImageDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap 
         return;
     }
 
-
     KIPI::ImageInfo info = m_interface->info( url );
     info.setDescription( Commentsimg );
 
-    // I have no idea what this code is supposed to do
-    // 25 May. 2004 23:19 -- Jesper K. Pedersen
-#ifdef TEMPORARILY_REMOVED
-    // Update the items number for the selected Album
-    // in the case if another image is scanned during the plugin session.
-
-    AlbumItem *pitem = static_cast<AlbumItem*>( m_AlbumList->item( albumSelectedId ));
-    pitem->incItem();
-    Digikam::AlbumManager::instance()->refreshItemHandler(albumSelectedText);
-#endif
+    m_interface->refreshImages( KURL::List(url) );
+    
     close();
     delete this;
 }
