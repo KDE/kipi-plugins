@@ -241,13 +241,10 @@ bool CDArchiving::showDialog()
     m_configDlg = new CDArchivingDialog( m_interface, 0 );
     readSettings();
     
-    if (m_configDlg->setAlbumsList() == true)
+    if ( m_configDlg->exec() == QDialog::Accepted )
        {
-       if ( m_configDlg->exec() == QDialog::Accepted )
-          {
-          writeSettings();
-          return true;
-          }
+       writeSettings();
+       return true;
        }
        
     return false;
@@ -261,7 +258,7 @@ void CDArchiving::run()
 {
     KIPICDArchivingPlugin::EventData *d;
     
-    QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getAlbumsSelection());
+    QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getSelectedAlbums());
     
     // Estimate the number of actions for the KIPI progress dialog. 
     
@@ -462,7 +459,7 @@ bool CDArchiving::buildHTMLInterface (void)
     m_StreamMainPageAlbumPreview = "";
     
     m_imagesPerRow = m_configDlg->getImagesPerRow();
-    QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getAlbumsSelection());
+    QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getSelectedAlbums());
 
     // Create the main target folder.
 
@@ -1421,7 +1418,7 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     QString Temp;
     KIPICDArchivingPlugin::EventData *d;
     QFile XMLK3bProjectFile;
-    QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getAlbumsSelection());
+    QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getSelectedAlbums());
 
     // open the K3b XML project file.
 

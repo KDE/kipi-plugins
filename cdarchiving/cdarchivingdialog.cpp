@@ -57,7 +57,6 @@
 #include <kmessagebox.h>
 #include <kbuttonbox.h>
 #include <ksqueezedtextlabel.h>
-#include <kio/previewjob.h>
 #include <klistview.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
@@ -70,6 +69,7 @@
 #include <libkipi/version.h>
 #include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
+#include <libkipi/imagecollectionselector.h>
 
 // Local include files
 
@@ -79,39 +79,6 @@ namespace KIPICDArchivingPlugin
 {
 
 KIO::filesize_t TargetMediaSize;
-
-class AlbumItem : public QCheckListItem
-{
-public:
-    AlbumItem(QListView * parent, KIPI::ImageCollection album,
-              QString const & collection, QDate const & date,
-              KIO::filesize_t const & size)
-            : QCheckListItem( parent, album.name(), QCheckListItem::CheckBox),
-              _album(album), _collection(collection), _date (date), _size (size)
-    {}
-    KIPI::ImageCollection album() { return _album;                  }
-    QString comments()            { return _album.comment();        }
-    QString name()                { return _album.name();           }
-    KURL    path()                { return _album.path();           }
-    QString collection()          { return _album.category();       }
-    KURL    firstImage()          { return _album.images().first(); }
-    QDate   date()                { return _date;                   }
-    KIO::filesize_t size()        { return _size;                   }
-    int     items()               { return _album.images().count(); }
-
-    void stateChange ( bool )
-       {
-       if ( AlbumItem::isOn() == true ) TargetMediaSize = TargetMediaSize + _size;
-       else TargetMediaSize = TargetMediaSize - _size;
-       }
-
-private:
-    KIPI::ImageCollection _album;
-    QString               _collection;
-    QDate                 _date;
-    KIO::filesize_t       _size;
-};
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -153,15 +120,22 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     m_helpButton->setPopup( helpMenu->menu() );
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 CDArchivingDialog::~CDArchivingDialog()
 {
 }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 void CDArchivingDialog::slotHelp()
 {
     KApplication::kApplication()->invokeHelp("cdarchiving",
                                              "kipi-plugins");
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -171,80 +145,9 @@ void CDArchivingDialog::setupSelection(void)
                                   BarIcon("folder_image", KIcon::SizeMedium));
 
     QVBoxLayout *layout = new QVBoxLayout(page_setupSelection, 0, spacingHint() );
-    TargetMediaSize = 0L;
-
-    //---------------------------------------------
-
-    QGroupBox * groupBox1 = new QGroupBox( page_setupSelection );
-    groupBox1->setFlat(false);
-    groupBox1->setTitle(i18n("Select Albums to Archive"));
-    QGridLayout* grid = new QGridLayout( groupBox1, 2, 2 , 20, 20);
-
-    m_AlbumsList = new KListView( groupBox1 );
-    m_AlbumsList->setResizeMode( QListView::LastColumn );
-    m_AlbumsList->addColumn("");
-    m_AlbumsList->header()->hide();
-    m_AlbumsList->setSelectionModeExt(KListView::Single);
-    QWhatsThis::add( m_AlbumsList, 
-                     i18n("<p>Selected here the Albums to archive to CD.") );
-
-    grid->addMultiCellWidget(m_AlbumsList, 0, 2, 0, 1);
-
-    KButtonBox* albumSelectionButtonBox = new KButtonBox( groupBox1, Vertical );
-    QPushButton* buttonSelectAll = albumSelectionButtonBox->addButton ( i18n( "&Select All" ) );
-    QWhatsThis::add( buttonSelectAll, i18n("<p>Select all Albums on the list.") );
-    QPushButton* buttonInvertSelection = albumSelectionButtonBox->addButton ( i18n( "&Invert Selection" ));
-    QWhatsThis::add( buttonInvertSelection, i18n("<p>Invert the Album selection on the list.") );
-    QPushButton* buttonSelectNone = albumSelectionButtonBox->addButton ( i18n( "Select &None" ) );
-    QWhatsThis::add( buttonSelectNone, i18n("<p>Deselect all Albums on the list.") );
-    albumSelectionButtonBox->layout();
-    grid->addMultiCellWidget(albumSelectionButtonBox, 0, 1, 2, 2);
-
-    m_albumPreview = new QLabel( groupBox1 );
-    m_albumPreview->setFixedHeight( 120 );
-    m_albumPreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-    m_albumPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    QWhatsThis::add( m_albumPreview, i18n( "Preview of the first image in the currently selected album." ) );
-    grid->addMultiCellWidget(m_albumPreview, 2, 2, 2, 2);
-
-    layout->addWidget( groupBox1 );
-
-    if ( !m_interface->hasFeature( KIPI::AlbumsUseFirstImagePreview) )
-        m_albumPreview->hide();
+    m_imageCollectionSelector = new KIPI::ImageCollectionSelector(page_setupSelection, m_interface);
+    layout->addWidget(m_imageCollectionSelector);
     
-    //---------------------------------------------
-
-    QGroupBox * groupBox2 = new QGroupBox( i18n("Album Description"), page_setupSelection );
-    groupBox2->setColumnLayout(0, Qt::Vertical );
-    groupBox2->layout()->setSpacing( 6 );
-    groupBox2->layout()->setMargin( 11 );
-    QWhatsThis::add( groupBox2, i18n("<p>The description of the current Album in the selection list.") );
-
-    QVBoxLayout * groupBox2Layout = new QVBoxLayout( groupBox2->layout() );
-    groupBox2Layout->setAlignment( Qt::AlignTop );
-
-    m_AlbumComments = new KSqueezedTextLabel( groupBox2 );
-    m_AlbumComments->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-    groupBox2Layout->addWidget( m_AlbumComments );
-
-    m_AlbumCollection = new KSqueezedTextLabel( groupBox2 );
-    m_AlbumCollection->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-    groupBox2Layout->addWidget( m_AlbumCollection );
-
-    m_AlbumDate = new KSqueezedTextLabel( groupBox2 );
-    m_AlbumDate->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-    groupBox2Layout->addWidget( m_AlbumDate );
-
-    m_AlbumItems = new KSqueezedTextLabel( groupBox2 );
-    m_AlbumItems->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-    groupBox2Layout->addWidget( m_AlbumItems );
-
-    m_AlbumSize = new KSqueezedTextLabel( groupBox2 );
-    m_AlbumSize->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-    groupBox2Layout->addWidget( m_AlbumSize );
-
-    layout->addWidget( groupBox2 );
-
     //---------------------------------------------
 
     QGroupBox * groupBox3 = new QGroupBox( 2, Qt::Horizontal, 
@@ -271,97 +174,13 @@ void CDArchivingDialog::setupSelection(void)
 
     //---------------------------------------------
 
-    connect( buttonSelectAll, SIGNAL( clicked() ),
-             this, SLOT( slotbuttonSelectAll() ) );
-
-    connect( buttonInvertSelection, SIGNAL( clicked() ),
-             this, SLOT( slotbuttonInvertSelection() ) );
-
-    connect( buttonSelectNone, SIGNAL( clicked() ),
-             this, SLOT( slotbuttonSelectNone() ) );
-
     connect( m_mediaFormat, SIGNAL( highlighted( const QString & ) ),
              this, SLOT( mediaFormatActived( const QString & ) ) );
 
-    connect( m_AlbumsList, SIGNAL( currentChanged( QListViewItem * ) ),
-             this, SLOT( albumSelected( QListViewItem * ) ) );
+    connect( m_imageCollectionSelector, SIGNAL( signalSelectionChanged() ),
+             this, SLOT( slotAlbumSelected() ) );
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-bool CDArchivingDialog::setAlbumsList(void)
-{
-    AlbumItem *currentAlbum = 0; 
-    int current = 0;
-    m_stopParsingAlbum = false;
-    QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
-    
-    m_progressDlg = new QProgressDialog (i18n("Parsing Albums. Please wait..."),
-                                         i18n("&Cancel"), 0, 0, 0, true);
-    
-    connect(m_progressDlg, SIGNAL(cancelled()),
-            this, SLOT(slotStopParsingAlbums()));
-                
-    m_progressDlg->show();
-    
-    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
-         albumIt != albums.end() ; ++albumIt ) 
-        {
-        if (m_stopParsingAlbum == true)
-           {
-           delete m_progressDlg;
-           return false;
-           }
-           
-        m_progressDlg->setProgress(current, albums.count());
-        kapp->processEvents();
-        ++current;
-        
-        KURL::List images = (*albumIt).images();
-        int size = 0;
-        QDateTime newestDate;
-        
-        for( KURL::List::Iterator urlIt = images.begin() ; urlIt != images.end() ; ++urlIt ) 
-            {
-            KIPI::ImageInfo info = m_interface->info( *urlIt );
-            size += info.size();
-            
-            if ( info.time() > newestDate )
-                newestDate = info.time();
-            }
-
-        AlbumItem *item = new AlbumItem( m_AlbumsList, 
-                                         *albumIt,
-                                         (*albumIt).category(),
-                                         newestDate.date(),
-                                         size/1024 );
-
-        if ( m_interface->currentAlbum().isValid() )
-           {
-           if ( (*albumIt).name() == m_interface->currentAlbum().name() )
-              {
-              item->setOn(true);
-              item->setSelected(true);
-              albumSelected( item );
-              currentAlbum = item;
-              }
-           else
-              item->setOn(false);
-           }
-        }
-
-    if (currentAlbum != 0)
-        m_AlbumsList->ensureItemVisible(currentAlbum);
-    
-    delete m_progressDlg;
-    return true;
-}
-
-void CDArchivingDialog::slotStopParsingAlbums(void)
-{
-    m_stopParsingAlbum = true;
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -736,36 +555,25 @@ void CDArchivingDialog::setupBurning(void)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void CDArchivingDialog::albumSelected( QListViewItem * item )
+void CDArchivingDialog::slotAlbumSelected()
 {
-    if ( !item ) return;
+    QValueList<KIPI::ImageCollection> ListAlbums(m_imageCollectionSelector->selectedImageCollections());
+    int size = 0;
 
-    AlbumItem *pitem = static_cast<AlbumItem*>( item );
+    for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
+       {
+       KURL::List images = (*it).images();
+        
+       for( KURL::List::Iterator urlIt = images.begin() ; urlIt != images.end() ; ++urlIt ) 
+            {
+            KIPI::ImageInfo info = m_interface->info( *urlIt );
+            size += info.size();
+            }
+       } 
     
-    if ( pitem == NULL ) return;
-    
-    m_AlbumComments->setText( i18n("Comment: %1").arg(pitem->comments()) );
-    m_AlbumCollection->setText( i18n("Collection: %1").arg(pitem->collection()) );
-    m_AlbumDate->setText( i18n("Date: %1").arg( pitem->date().toString(( Qt::LocalDate ) ) ) );
-    m_AlbumItems->setText( i18n("Items: %1").arg( pitem->items() ) );
-    m_AlbumSize->setText( i18n("Size: %1").arg( KIO::convertSizeFromKB (pitem->size()) ) );
-
+    TargetMediaSize = size/1024;
+          
     ShowMediaCapacity();
-
-    m_albumPreview->clear();
-
-    KIO::PreviewJob* thumbJob = KIO::filePreview( pitem->firstImage(), m_albumPreview->height() );
-    
-    connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-            this, SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void CDArchivingDialog::slotGotPreview(const KFileItem*, const QPixmap &pixmap)
-{
-    m_albumPreview->setPixmap(pixmap);
 }
 
 
@@ -813,7 +621,9 @@ void CDArchivingDialog::ShowMediaCapacity(void)
 
 void CDArchivingDialog::slotOk()
 {
-    if (getAlbumsSelection().isEmpty() == true)
+    m_selectedAlbums = m_imageCollectionSelector->selectedImageCollections();
+    
+    if (m_selectedAlbums.size() == 0)
        {
        KMessageBox::sorry(this, i18n("You must selected at least one Album to archive."));
        return;
@@ -837,66 +647,6 @@ void CDArchivingDialog::slotOk()
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void CDArchivingDialog::slotbuttonSelectAll(void)
-{
-    QListViewItemIterator it( m_AlbumsList );
-
-    while ( it.current() )
-        {
-        AlbumItem *item = static_cast<AlbumItem*>( it.current() );
-
-        if (!item->isOn())
-            item->setOn(true);
-
-        ++it;
-        }
-
-    albumSelected( m_AlbumsList->currentItem() );
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void CDArchivingDialog::slotbuttonInvertSelection(void)
-{
-    QListViewItemIterator it( m_AlbumsList );
-
-    while ( it.current() )
-        {
-        AlbumItem *item = static_cast<AlbumItem*>( it.current() );
-
-        if (!item->isOn())
-            item->setOn(true);
-        else
-            item->setOn(false);
-
-        ++it;
-        }
-
-    albumSelected( m_AlbumsList->currentItem() );
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void CDArchivingDialog::slotbuttonSelectNone(void)
-{
-    QListViewItemIterator it( m_AlbumsList );
-
-    while ( it.current() )
-        {
-        AlbumItem *item = static_cast<AlbumItem*>( it.current() );
-
-        if (item->isOn())
-            item->setOn(false);
-
-        ++it;
-        }
-
-    albumSelected( m_AlbumsList->currentItem() );
-}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -1078,27 +828,6 @@ bool CDArchivingDialog::getUseAutoRunWin32() const
 void CDArchivingDialog::setUseAutoRunWin32(bool Value)
 {
     m_useAutoRunWin32->setChecked(Value);
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-QValueList<KIPI::ImageCollection> CDArchivingDialog::getAlbumsSelection(void)
-{
-    QValueList<KIPI::ImageCollection> AlbumsListSelected;
-    QListViewItemIterator it( m_AlbumsList );
-
-    while ( it.current() )
-        {
-        AlbumItem *item = static_cast<AlbumItem*>( it.current() );
-
-        if (item->isOn())
-            AlbumsListSelected.append( item->album() );
-
-        ++it;
-        }
-
-    return (AlbumsListSelected);
 }
 
 

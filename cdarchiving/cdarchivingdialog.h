@@ -55,6 +55,11 @@ class KIntNumInput;
 class KColorButton;
 class KListView;
 
+namespace KIPI
+{
+  class ImageCollectionSelector;
+}
+
 namespace KIPICDArchivingPlugin
 {
 
@@ -67,8 +72,6 @@ class CDArchivingDialog : public KDialogBase
   CDArchivingDialog( KIPI::Interface* interface, QWidget *parent=0);
   ~CDArchivingDialog();
 
-  bool  setAlbumsList(void);
-    
   const QString getK3bBinPathName() const;
   void  setK3bBinPathName(QString Value);
 
@@ -138,21 +141,17 @@ class CDArchivingDialog : public KDialogBase
   bool  getUseStartBurningProcess() const;
   void  setUseStartBurningProcess(bool Value);
 
-  QValueList<KIPI::ImageCollection> getAlbumsSelection(void);
+  QValueList<KIPI::ImageCollection> getSelectedAlbums() const { return m_selectedAlbums; }
+  
   void ShowMediaCapacity(void);
 
  protected slots:
   
   void slotHelp();
-  void albumSelected( QListViewItem * item );
+  void slotAlbumSelected(void);
   void mediaFormatActived( const QString& item );
   void slotOk();
-  void slotbuttonSelectAll(void);
-  void slotbuttonInvertSelection(void);
-  void slotbuttonSelectNone(void);
   void UrlChanged(const QString &url );
-  void slotGotPreview(const KFileItem*, const QPixmap &pixmap);
-  void slotStopParsingAlbums(void);
   
  private:
  
@@ -219,8 +218,9 @@ class CDArchivingDialog : public KDialogBase
 
   KIPI::Interface    *m_interface;
 
-  bool                m_stopParsingAlbum;
-  
+  QValueList<KIPI::ImageCollection>  m_selectedAlbums;
+  KIPI::ImageCollectionSelector     *m_imageCollectionSelector;
+
  private:
  
   void setupSelection(void);
