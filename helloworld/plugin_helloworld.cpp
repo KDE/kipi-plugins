@@ -89,7 +89,6 @@ void Plugin_HelloWorld::slotActivate()
     kdDebug() << "The current album collection is " << album.getCollection() << endl;
     kdDebug() << "The current album date is " << album.date().toString() << endl;
 #endif
-    kdDebug() << "The current album path is " << album.root() << endl;
 
     // see the comments in the album
 

@@ -378,11 +378,11 @@ bool CDArchiving::buildHTMLInterface (void)
 
 
     for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) {
-        Path              = (*it).root().path(); // PENDING(blackie) Is this correct?
+        Path              = ""; // PENDING(blackie) Is this correct?
         m_AlbumTitle      = (*it).name();
         m_AlbumComments   = (*it).comment();
-        m_AlbumCollection = QString::null; // (*it).getCollection(); // PENDING(blackie) what is this collection thingie?
-        m_AlbumDate       = QString(); // (*it).getDate().toString ( Qt::LocalDate ) ; // // PENDING(blackie) what is this date?
+        m_AlbumCollection = QString::null; // (*it)->getCollection(); // PENDING(blackie) what is this collection thingie?
+        m_AlbumDate       = QString(); // (*it)->getDate().toString ( Qt::LocalDate ) ; // // PENDING(blackie) what is this date?
         Path = Path + "/";
 
         SubUrl = m_tmpFolder + "/HTMLInterface/" + m_AlbumTitle + "/" + "index.html";
@@ -1426,7 +1426,7 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) {
         m_progressDlg->setLabelText( i18n("Added Album\n'%1'\ninto project...").arg( (*it).name()) );
         kapp->processEvents();
-        AddFolderTreeToK3bXMLProjectFile( (*it).root().path(), &stream); // PENDING(blackie)  I seriously doubt this is correct!
+        AddFolderTreeToK3bXMLProjectFile( "", &stream); // PENDING(blackie)  I seriously doubt this is correct!
         m_progressDlg->setProgress( ++progressValue );
         kapp->processEvents();
     }

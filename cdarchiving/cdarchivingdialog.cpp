@@ -76,7 +76,7 @@ public:
     KIPI::ImageCollection album() { return _album; }
     QString comments()     { return _album.comment();   }
     QString name()         { return _album.name();       }
-    QString path()         { return _album.root().path();  } // PENDING(blackie) handle URLS
+    QString path()         { return "";  } // PENDING(blackie) handle URLS
     QString collection()   { return _collection; }
     QString firstImage()   { return _album.images()[0].path(); }  // PENDING(blackie) handle URLS
     QDate   date()         { return _date;       }
