@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//    PLUGIN_IMAGESGALLERY.H
+//    ACTIONS.H
 //
-//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -20,37 +20,44 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef PLUGIN_IMAGESGALLERY_H
-#define PLUGIN_IMAGESGALLERY_H
 
-// LibKIPI includes.
-
-#include <libkipi/plugin.h>
-
-class KAction;
+#ifndef ACTIONS_H
+#define ACTIONS_H
 
 namespace KIPIImagesGalleryPlugin
 {
-class KIGPDialog;
-class ResizeImage;
-}
 
-class Plugin_Imagesgallery : public KIPI::Plugin
+enum Action
 {
-Q_OBJECT
+    Initialize = 0,
+    BuildHTMLiface,
+    BuildAlbumHTMLPage,
+    BuildAutoRuniface,
+    BuildK3bProject,
+    ResizeImages,
+    Progress,
+    Error
+};
+    
 
+class EventData
+{
 public:
-  Plugin_Imagesgallery(QObject *parent, const char* name, const QStringList &args);
-  virtual ~Plugin_Imagesgallery();
-  KIPI::Category category( KAction* action ) const;
-  virtual void setup( QWidget* widget );
-
-public slots:
-  void slotActivate();
-  
-private:
-  KAction* m_actionImagesGallery;
+    EventData() 
+       {
+       starting = false;
+       success  = false;
+       }
+    
+    QString fileName;
+    QString albumName;
+    QString message;
+    int     total;
+    bool    starting;
+    bool    success;
+    Action  action;
 };
 
+}  // NameSpace KIPIImagesGalleryPlugin
 
-#endif // PLUGIN_IMAGESGALLERY_H
+#endif  // ACTIONS_H 

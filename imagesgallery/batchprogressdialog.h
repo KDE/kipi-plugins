@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//    PLUGIN_IMAGESGALLERY.H
+//    BATCHPROGRESSDIALOG.H
 //
-//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -20,37 +20,51 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef PLUGIN_IMAGESGALLERY_H
-#define PLUGIN_IMAGESGALLERY_H
 
-// LibKIPI includes.
+#ifndef BATCHPROGRESSDIALOG_H
+#define BATCHPROGRESSDIALOG_H
 
-#include <libkipi/plugin.h>
+// Include files for KDE
 
-class KAction;
+#include <kdialogbase.h>
+
+class QGroupBox;
+
+class KListView;
+class KProgress;
 
 namespace KIPIImagesGalleryPlugin
 {
-class KIGPDialog;
-class ResizeImage;
-}
 
-class Plugin_Imagesgallery : public KIPI::Plugin
+enum ActionMessageType
+{
+    StartingMessage = 0,
+    SucessMessage,
+    WarningMessage,
+    ErrorMessage,
+    ProgressMessage
+};
+
+class BatchProgressDialog : public KDialogBase
 {
 Q_OBJECT
 
-public:
-  Plugin_Imagesgallery(QObject *parent, const char* name, const QStringList &args);
-  virtual ~Plugin_Imagesgallery();
-  KIPI::Category category( KAction* action ) const;
-  virtual void setup( QWidget* widget );
+ public:
 
-public slots:
-  void slotActivate();
-  
-private:
-  KAction* m_actionImagesGallery;
+   BatchProgressDialog( QWidget *parent=0 );
+   ~BatchProgressDialog();
+
+   void addedAction(QString text, int type);
+   void reset();
+   void setProgress(int current, int total);
+   
+ protected:
+
+   KListView *m_actionsList;
+   KProgress *m_progress;
+   QGroupBox *groupBox1;
 };
 
+}  // NameSpace KIPIImagesGalleryPlugin
 
-#endif // PLUGIN_IMAGESGALLERY_H
+#endif  // BATCHPROGRESSDIALOG_H

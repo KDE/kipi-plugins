@@ -1,34 +1,36 @@
-/* ============================================================
- * File  : imagesgallery.h
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
- * Date  : 2003-09-05
- * Description : Images gallery HTML export
- *
- * Adapted and improved for DigikamPlugins from the konqueror plugin
- * 'kdeaddons/konq-plugins/kimgalleryplugin/' by Gilles Caulier.
- *
- * Copyright 2001, 2003 by Lukas Tinkl <lukas at kde.org> and
- * Andreas Schlapbach <schlpbch at iam.unibe.ch> for orginal source
- * of 'kimgalleryplugin' from KDE CVS
- *
- * Copyright 2003-2004 by Gilles Caulier <caulier dot gilles at free.fr> for
- * DigikamPlugins port.
- *
- * Copyright 2003-2004 by Gregory Kokanosky <gregory dot kokanosky at free.fr>
- * for images navigation mode patchs.
- *
- * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published bythe Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * ============================================================ */
+//////////////////////////////////////////////////////////////////////////////
+//
+//    IMAGESGALLERY.H
+//
+//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2003-2004 by Gregory Kokanosky <gregory dot kokanosky at free.fr>
+//    for images navigation mode.
+//
+//    Adapted and improved for DigikamPlugins from the konqueror plugin
+//    'kdeaddons/konq-plugins/kimgalleryplugin/' by Gilles Caulier.
+//
+//    Copyright 2001, 2003 by Lukas Tinkl <lukas at kde.org> and
+//    Andreas Schlapbach <schlpbch at iam.unibe.ch> for orginal source
+//    of 'kimgalleryplugin' from KDE CVS
+//
+//    Copyright 2003-2004 by Gilles Caulier <caulier dot gilles at free.fr> for
+//    DigikamPlugins port.
+//
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+//
+//////////////////////////////////////////////////////////////////////////////
 
 #ifndef IMAGESGALLERY_H
 #define IMAGESGALLERY_H
@@ -44,8 +46,6 @@
 
 #include <libkipi/interface.h>
 
-#define NAV_THUMB_MAX_SIZE 64
-
 class QProgressDialog;
 
 class KURL;
@@ -56,6 +56,8 @@ class ResizeImage;
 
 namespace KIPIImagesGalleryPlugin
 {
+
+const int NAV_THUMB_MAX_SIZE = 64;
 
 // First field is the URL, represented with KURL::prettyURL. We can't use KURL
 // directly because operator<(KURL,KURL) is not defined in KDE 3.1

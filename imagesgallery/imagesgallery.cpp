@@ -1,34 +1,36 @@
-/* ============================================================
- * File  : imagesgallery.cpp
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
- * Date  : 2003-09-05
- * Description : Images gallery HTML export
- *
- * Adapted and improved for DigikamPlugins from the konqueror plugin
- * 'kdeaddons/konq-plugins/kimgalleryplugin/' by Gilles Caulier.
- *
- * Copyright 2001, 2003 by Lukas Tinkl <lukas at kde.org> and
- * Andreas Schlapbach <schlpbch at iam.unibe.ch> for orginal source
- * of 'kimgalleryplugin' from KDE CVS
- *
- * Copyright 2003-2004 by Gilles Caulier <caulier dot gilles at free.fr> for
- * DigikamPlugins port.
- *
- * Copyright 2003-2004 by Gregory Kokanosky <gregory dot kokanosky at free.fr>
- * for images navigation mode patchs.
- *
- * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * ============================================================ */
+//////////////////////////////////////////////////////////////////////////////
+//
+//    IMAGESGALLERY.CPP
+//
+//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2003-2004 by Gregory Kokanosky <gregory dot kokanosky at free.fr>
+//    for images navigation mode.
+//
+//    Adapted and improved for DigikamPlugins from the konqueror plugin
+//    'kdeaddons/konq-plugins/kimgalleryplugin/' by Gilles Caulier.
+//
+//    Copyright 2001, 2003 by Lukas Tinkl <lukas at kde.org> and
+//    Andreas Schlapbach <schlpbch at iam.unibe.ch> for orginal source
+//    of 'kimgalleryplugin' from KDE CVS
+//
+//    Copyright 2003-2004 by Gilles Caulier <caulier dot gilles at free.fr> for
+//    DigikamPlugins port.
+//
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+//
+//////////////////////////////////////////////////////////////////////////////
 
 extern "C"
 {
@@ -50,8 +52,8 @@ extern "C"
 
 #include <kio/job.h>
 #include <kio/jobclasses.h>
-#include <kio/netaccess.h>
 #include <kio/global.h>
+#include <kio/netaccess.h>
 #include <kinstance.h>
 #include <kconfig.h>
 #include <kaction.h>
@@ -336,7 +338,7 @@ void ImagesGallery::Activate()
                i18n("The target directory\n'%1'\nalready exist. Do you want overwrite it? (all data "
                     "in this directory will be lost!)").arg(MainTPath)) == KMessageBox::Yes)
               {
-              if (!KIO::NetAccess::del(KURL(MainTPath)))
+              if (!KIO::NetAccess::del(KURL(MainTPath), NULL))
                  {
                  KMessageBox::error(0, i18n("Cannot remove folder '%1'!").arg(MainTPath));
                  return;
@@ -362,7 +364,7 @@ void ImagesGallery::Activate()
 
            KURL srcURL(dir);
            KURL destURL(m_configDlg->getImageName() + "/KIPIHTMLExport/gohome.png");
-           KIO::NetAccess::copy(srcURL, destURL);
+           KIO::file_copy(srcURL, destURL, -1, true, false, false);           
            }
 
            for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
@@ -417,7 +419,7 @@ void ImagesGallery::Activate()
                   {
                   delete m_progressDlg;
 
-                  if (!KIO::NetAccess::del(KURL(MainTPath)))
+                  if (!KIO::NetAccess::del(KURL(MainTPath), NULL))
                      {
                      KMessageBox::error(0, i18n("Cannot remove folder %1 !").arg(MainTPath));
                      return;
@@ -789,7 +791,7 @@ void ImagesGallery::createBody(QTextStream& stream,
 
       KURL srcURL(dir);
       KURL destURL(imgGalleryDir + QString::fromLatin1("/up.png"));
-      KIO::NetAccess::copy(srcURL, destURL);
+      KIO::file_copy(srcURL, destURL, -1, true, false, false);
 
       int imgIndex = 0;
       KURL::List images = m_album.images();
@@ -854,8 +856,8 @@ void ImagesGallery::createBody(QTextStream& stream,
 
         KURL srcURL(dir);
         KURL destURL(imgGalleryDir + QString::fromLatin1("/thumbs/valid-html401.png"));
-        KIO::NetAccess::copy(srcURL, destURL);
-
+        KIO::file_copy(srcURL, destURL, -1, true, false, false);
+        
         stream << "<p>"  << endl;
         Temp = i18n("Valid HTML 4.01!");
         stream << "<img src=\"thumbs/valid-html401.png\" alt=\"" << Temp
@@ -897,7 +899,7 @@ void ImagesGallery::createBodyMainPage(QTextStream& stream, KURL& url)
 
         KURL srcURL(dir);
         KURL destURL(url.directory() + QString::fromLatin1("/valid-html401.png"));
-        KIO::NetAccess::copy(srcURL, destURL);
+        KIO::file_copy(srcURL, destURL, -1, true, false, false);
 
         stream << "<p>"  << endl;
         Temp = i18n("Valid HTML 4.01!");

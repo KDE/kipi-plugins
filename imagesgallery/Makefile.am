@@ -6,8 +6,8 @@ kde_module_LTLIBRARIES = kipiplugin_imagesgallery.la
 kipiplugin_imagesgallery_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 # Srcs for the plugin
 kipiplugin_imagesgallery_la_SOURCES = plugin_imagesgallery.cpp imgallerydialog.cpp \
-                                         imagesgallery.cpp resizeimage.cpp \
-                                         listimageserrordialog.cpp
+                                      imagesgallery.cpp resizeimage.cpp \
+                                      listimageserrordialog.cpp batchprogressdialog.cpp
 
 # Libs needed by the plugin
 kipiplugin_imagesgallery_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS)
