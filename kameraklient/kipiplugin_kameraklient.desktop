@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=KameraKlient
-Comment=KameraKlient plugin for kipi
+Comment=KIPI Digital Camera Interface Plugin
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_kameraklient
