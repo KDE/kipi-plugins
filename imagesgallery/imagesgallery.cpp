@@ -68,6 +68,7 @@ extern "C"
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
+#include <kaboutdata.h>
 
 // KIPI includes
 
@@ -87,6 +88,13 @@ ImagesGallery::ImagesGallery( KIPI::Interface* interface )
              : m_interface(interface)
 {
     KImageIO::registerFormats();
+    const KAboutData *data = KApplication::kApplication()->aboutData();
+    m_hostName = QString::QString( data->appName() );
+    m_hostURL = data->homepage();
+    
+    if (m_hostURL.isEmpty())
+       m_hostURL = "http://www.kde.org";
+
     Activate();
 }
 
@@ -357,52 +365,55 @@ void ImagesGallery::Activate()
            KIO::NetAccess::copy(srcURL, destURL);
            }
 
-		for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt )
-            {
-            m_album           = *albumIt;
+           for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
+                albumIt != albums.end(); ++albumIt )
+             {
+             m_album = *albumIt;
+             QDateTime newestDate;
+             KURL::List images=m_album.images();
 
-			QDateTime newestDate;
-			KURL::List images=m_album.images();
-			for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) {
-				kdDebug( 51000 ) << "URL:" << (*urlIt).prettyURL() << endl;
-				KIPI::ImageInfo info = m_interface->info( *urlIt );
-				if ( info.time() > newestDate )
-					newestDate = info.time();
-			}
+             for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) 
+                {
+                kdDebug( 51000 ) << "URL:" << (*urlIt).prettyURL() << endl;
+                KIPI::ImageInfo info = m_interface->info( *urlIt );
+                   
+                if ( info.time() > newestDate )
+                   newestDate = info.time();
+                }
 
-            m_AlbumTitle      = m_album.name();
-            m_AlbumComments   = m_album.comment();
-            m_AlbumCollection = QString::null;
-            m_AlbumDate       = newestDate.toString ( Qt::LocalDate ) ;
+             m_AlbumTitle      = m_album.name();
+             m_AlbumComments   = m_album.comment();
+             m_AlbumCollection = QString::null;
+             m_AlbumDate       = newestDate.toString ( Qt::LocalDate ) ;
 
-            SubUrl = m_configDlg->getImageName() + "/KIPIHTMLExport/" + m_AlbumTitle + "/" + "index.html";
+             SubUrl = m_configDlg->getImageName() + "/KIPIHTMLExport/" + m_AlbumTitle + "/" + "index.html";
 
-            if ( !SubUrl.isEmpty() && SubUrl.isValid())
-               {
-               // Create the target sub folder for the current album.
+             if ( !SubUrl.isEmpty() && SubUrl.isValid())
+                {
+                // Create the target sub folder for the current album.
 
-               QString SubTPath= m_configDlg->getImageName() + "/KIPIHTMLExport/" + m_AlbumTitle;
+                QString SubTPath= m_configDlg->getImageName() + "/KIPIHTMLExport/" + m_AlbumTitle;
+ 
+                if (TargetDir.mkdir( SubTPath ) == false)
+                    {
+                    KMessageBox::sorry(0, i18n("Couldn't create directory '%1'").arg(SubTPath));
+                    return;
+                    }
 
-               if (TargetDir.mkdir( SubTPath ) == false)
-                   {
-                   KMessageBox::sorry(0, i18n("Couldn't create directory '%1'").arg(SubTPath));
-                   return;
-                   }
+                m_progressDlg = new QProgressDialog(0, "progressDlg", true );
 
-               m_progressDlg = new QProgressDialog(0, "progressDlg", true );
+                connect(m_progressDlg, SIGNAL( cancelled() ),
+                        this, SLOT( slotCancelled() ) );
 
-               connect(m_progressDlg, SIGNAL( cancelled() ),
-                       this, SLOT( slotCancelled() ) );
+                m_progressDlg->setCaption( i18n("Album \"%1\"").arg(m_AlbumTitle) );
+                m_progressDlg->setCancelButtonText(i18n("&Cancel"));
+                m_cancelled = false;
+                m_progressDlg->show();
+                kapp->processEvents();
+                m_useCommentFile = m_configDlg->useCommentFile();
 
-               m_progressDlg->setCaption( i18n("Album \"%1\"").arg(m_AlbumTitle) );
-               m_progressDlg->setCancelButtonText(i18n("&Cancel"));
-               m_cancelled = false;
-               m_progressDlg->show();
-               kapp->processEvents();
-               m_useCommentFile = m_configDlg->useCommentFile();
-
-               if ( !createHtml( SubUrl,
-                                 m_configDlg->getImageFormat(), m_configDlg->getTargetImagesFormat()) )
+                if ( !createHtml( SubUrl,
+                                  m_configDlg->getImageFormat(), m_configDlg->getTargetImagesFormat()) )
                   {
                   delete m_progressDlg;
 
@@ -417,7 +428,7 @@ void ImagesGallery::Activate()
                }
 
             delete m_progressDlg;
-          }
+            }
 
         // Lauch an error dialog if some resize images operations failed.
 
@@ -500,9 +511,8 @@ void ImagesGallery::createHead(QTextStream& stream)
     stream << "<head>" << endl;
     stream << "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">" << endl;
 
-    // PENDING (Gilles) : Updated URL !
-    stream << "<meta name=\"Generator\" content=\"Albums Images gallery generated by KIPI "
-              "[http://digikam.sourceforge.net]\">"  << endl;
+    stream << "<meta name=\"Generator\" content=\"Albums Images gallery generated by "
+           << m_hostName << " [" << m_hostURL << "]\">"  << endl;
     stream << "<meta name=\"date\" content=\"" + KGlobal::locale()->formatDate(QDate::currentDate()) + "\">"
            << endl;
     stream << "<title>" << m_configDlg->getMainTitle() << "</title>" << endl;
@@ -839,9 +849,8 @@ void ImagesGallery::createBody(QTextStream& stream,
         Temp = i18n("Valid HTML 4.01!");
         stream << "<img src=\"thumbs/valid-html401.png\" alt=\"" << Temp
                << "\" height=\"31\" width=\"88\"  title=\"" << Temp <<  "\" />" << endl;
-// PENDING (Gilles) : Updated URL !
         Temp = i18n("Images gallery created with "
-                    "<a href=\"http://digikam.sourceforge.net\">KIPI</a> on %1").arg(today);
+                    "<a href=\"%1\">%2</a> on %3").arg(m_hostURL).arg(m_hostName).arg(today);
         stream << Temp << endl;
         stream << "</p>" << endl;
         }
@@ -884,9 +893,9 @@ void ImagesGallery::createBodyMainPage(QTextStream& stream, KURL& url)
         stream << "<img src=\"valid-html401.png\" alt=\"" << Temp
                << "\" height=\"31\" width=\"88\" title=\"" << Temp <<  "\" />" << endl;
 
-// PENDING (Gilles) : Updated URL !
         Temp = i18n("Images gallery created with "
-                    "<a href=\"http://digikam.sourceforge.net\">KIPI</a> on %1").arg(today);
+                    "<a href=\"%1\">%2</a> on %3").arg(m_hostURL).arg(m_hostName).arg(today);
+               
         stream << Temp << endl;
         stream << "</p>" << endl;
         }
@@ -1026,9 +1035,8 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
        stream << "<head>" << endl;
        stream << "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">" << endl;
 
-// PENDING (gilles) : Updated URL !
-       stream << "<meta name=\"Generator\" content=\"Albums Images gallery generated by KIPI "
-                 "[http://digikam.sourceforge.net]\">"  << endl;
+       stream << "<meta name=\"Generator\" content=\"Albums Images gallery generated by "
+              << m_hostName << " [" << m_hostURL << "]\">"  << endl;
        stream << "<meta name=\"date\" content=\""
                  + KGlobal::locale()->formatDate(QDate::currentDate()) + "\">" << endl;
        stream << "<title>" << m_configDlg->getMainTitle() << " : "<< imgName <<"</title>" << endl;
@@ -1175,9 +1183,8 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
           stream << "<div><img src=\"../thumbs/valid-html401.png\" alt=\"" << valid
                  << "\" height=\"31\" width=\"88\"  title=\"" << valid <<  "\" />" << endl;
 
-// PENDING (Gilles) : Updated URL !
           valid =  i18n("Images gallery created with "
-                        "<a href=\"http://digikam.sourceforge.net\">KIPI</a> on %1").arg(today);
+                        "<a href=\"%1\">%2</a> on %3").arg(m_hostURL).arg(m_hostName).arg(today);
           stream << valid << "</div>" << endl;
           }
 

@@ -23,7 +23,12 @@
 #ifndef CDARCHIVING_H
 #define CDARCHIVING_H
 
+// C Ansi includes.
+
+extern "C"
+{
 #include <unistd.h>
+}
 
 // Include files for Qt
 
@@ -36,6 +41,7 @@
 #include <kaction.h>
 
 // KIPI includes
+
 #include <libkipi/interface.h>
 
 #define NAV_THUMB_MAX_SIZE 64
@@ -75,9 +81,14 @@ public slots:
 private:
   KConfig            *m_config;
   CDArchivingDialog  *m_configDlg;
+  
+  QString             m_hostName;
+  QString             m_hostURL;
+  
 #ifdef TEMPORARILY_REMOVED
     Digikam::AlbumInfo *m_album;
 #endif
+
   KAction            *m_actionCDArchiving;
   KProcess           *m_Proc;
   QTimer             *m_K3bTimer;

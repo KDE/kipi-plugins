@@ -76,7 +76,10 @@ private:
   KConfig            *m_config;
   KProcess           *m_webBrowserProc;
   KIPI::Interface    *m_interface;
-
+  
+  QString             m_hostName;
+  QString             m_hostURL;
+  
   bool                m_cancelled;
   bool                m_recurseSubDirectories;
   bool                m_copyFiles;
