@@ -128,19 +128,19 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     m_optionsButton = new QPushButton (groupBox1, "OptionButton");
     m_optionsButton->setText(i18n("Options"));
-    QWhatsThis::add( m_optionsButton, i18n("<p>You can choose here the current options type "
-                                           "using for the process."));
+    QWhatsThis::add( m_optionsButton, i18n("<p>You can choose here the options to use "
+                                           "for the current process."));
 
     m_previewButton = new QPushButton (groupBox1, "PreviewButton");
     m_previewButton->setText(i18n("&Preview"));
-    QWhatsThis::add( m_previewButton, i18n("<p>You can build with this button an process "
-                                           "preview for the current selected image in the list."));
+    QWhatsThis::add( m_previewButton, i18n("<p>This button builds a process "
+                                           "preview for the currently selected image on the list."));
 
     m_smallPreview = new QCheckBox(i18n("Small preview"), groupBox1);
     QWhatsThis::add( m_smallPreview, i18n("<p>If you enable this option, "
                                           "all preview effects will be calculed on a small zone "
-                                          "of the image (300x300 pixels on the top left corner). "
-                                          "Enabled this option if you have a slow computer.") );
+                                          "of the image (300x300 pixels in the top left corner). "
+                                          "Enable this option if you have a slow computer.") );
     m_smallPreview->setChecked( true );
 
     hlay->addWidget( groupBox1 );
@@ -156,12 +156,12 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     m_overWriteMode->insertItem(i18n("Rename"));
     m_overWriteMode->insertItem(i18n("Skip"));
     m_overWriteMode->setCurrentText (i18n("Rename"));
-    QWhatsThis::add( m_overWriteMode, i18n("<p>Select here the overwrite mode if your targets image "
+    QWhatsThis::add( m_overWriteMode, i18n("<p>Select here the overwrite mode used if your target's image "
                                            "files already exist.") );
 
     m_removeOriginal = new QCheckBox(i18n("Remove original"), groupBox2);
     QWhatsThis::add( m_removeOriginal, i18n("<p>If you enable this option, "
-                                            "all originals images files will be removed.") );
+                                            "all original image files will be removed after processing.") );
     m_removeOriginal->setChecked( false );
 
     hlay->addWidget( groupBox2 );
@@ -207,14 +207,14 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     m_remImagesButton = new QPushButton ( i18n( "&Remove" ), box41 );
     lay3->addWidget( m_remImagesButton );
-    QWhatsThis::add( m_remImagesButton, i18n("<p>Remove selected image on the list.") );
+    QWhatsThis::add( m_remImagesButton, i18n("<p>Remove selected image from the list.") );
 
     m_imageLabel = new QLabel( box41 );
     m_imageLabel->setFixedHeight( 80 );
     m_imageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_imageLabel->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
     lay3->addWidget( m_imageLabel );
-    QWhatsThis::add( m_imageLabel, i18n( "<p>The preview of the selected image in the list." ) );
+    QWhatsThis::add( m_imageLabel, i18n( "<p>The preview of the selected image on the list." ) );
     lay3->addStretch( 1 );
 
     dvlay->addWidget( groupBox4 );
@@ -224,14 +224,14 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     m_statusbar = new QLabel( box, "ProcessMessagesFrame" );
     m_statusbar->setFrameStyle(QFrame::Panel | QFrame::Sunken);
     m_statusbar->setAlignment(AlignCenter|WordBreak|ExpandTabs);
-    QWhatsThis::add( m_statusbar, i18n("<p>This is the current active task.") );
+    QWhatsThis::add( m_statusbar, i18n("<p>This is the currently active task.") );
 
     dvlay->addWidget( m_statusbar );
 
     m_progress = new KProgress( box, "Progress" );
     m_progress->setRange(0, 100);
     m_progress->setValue(0);
-    QWhatsThis::add( m_progress, i18n("<p>This is the current percent task released.") );
+    QWhatsThis::add( m_progress, i18n("<p>This is the current percentage of the task completed.") );
 
     dvlay->addWidget( m_progress );
 
@@ -311,7 +311,7 @@ void BatchProcessImagesDialog::slotImagesFilesButtonRem( void )
 
         if (m_nbItem == 0) groupBox4->setTitle(i18n("Image files list"));
         else
-           groupBox4->setTitle(i18n("Image files list (1 item)", "Image files list (%n items)", m_nbItem));
+           groupBox4->setTitle(i18n("Image file list (1 item)", "Image file list (%n items)", m_nbItem));
         }
 }
 
@@ -407,13 +407,13 @@ void BatchProcessImagesDialog::slotProcessStart( void )
     if ( m_removeOriginal->isChecked() == true )
         {
         if ( KMessageBox::warningContinueCancel(this,
-             i18n("All original images files will be removed from the source Album!\nDo you want to continue?"),
-             i18n("Delete original images files"), KStdGuiItem::cont(),
+             i18n("All original image files will be removed from the source Album;\ndo you want to continue?"),
+             i18n("Delete original image files"), KStdGuiItem::cont(),
              "KIPIplugin-BatchProcessImages-AlwaysRemomveOriginalFiles") != KMessageBox::Continue )
            return;
         }
 
-    m_statusbar->setText(i18n("Process under progress. Please wait..."));
+    m_statusbar->setText(i18n("Performing process; please wait...."));
     m_convertStatus = UNDER_PROCESS;
     disconnect( this, SIGNAL(user2Clicked()), this, SLOT(slotProcessStart()));
     showButtonCancel( false );
@@ -485,8 +485,8 @@ bool BatchProcessImagesDialog::startProcess(void)
           case OVERWRITE_ASK:
              {
              int ValRet = KMessageBox::warningYesNoCancel(this,
-                          i18n("The destination file \"%1\" already exists!\n"
-                          "Do you want overwrite it?").arg(item->nameDest()),
+                          i18n("The destination file \"%1\" already exists;\n"
+                          "do you want overwrite it?").arg(item->nameDest()),
                           i18n("Overwrite destination image file"), KStdGuiItem::cont());
 
              if ( ValRet == KMessageBox::No )
@@ -663,7 +663,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
             if ( !ok ) 
                 {
                 int code = KMessageBox::warningContinueCancel( this,
-                                        i18n("<qt>Error adding image to application. Error message was: "
+                                        i18n("<qt>Error adding image to application; error message was: "
                                         "<b>%1</b></qt>").arg( errmsg ),
                                         i18n("Error adding image to application") );
                                         
@@ -731,9 +731,9 @@ void BatchProcessImagesDialog::slotListDoubleClicked(QListViewItem *itemClicked)
     if (m_convertStatus == PROCESS_DONE)
        {
        OutputDialog *infoDialog = new OutputDialog(this,
-                                                   i18n("Image error processing"),
+                                                   i18n("Image processing error"),
                                                    item->outputMess(),
-                                                   i18n("Image \"%1\": %2\n\nThe ouput messages are:\n")
+                                                   i18n("Image \"%1\": %2\n\nThe output messages are:\n")
                                                         .arg(item->nameSrc()).arg(item->error())
                                                    );
        infoDialog->exec();
@@ -754,7 +754,7 @@ void BatchProcessImagesDialog::slotPreview(void)
        }
 
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFiles->currentItem() );
-    m_statusbar->setText(i18n("Preview under progress. Please wait..."));
+    m_statusbar->setText(i18n("Preview under progress; please wait...."));
 
     m_listFiles->setEnabled(false);
     m_labelType->setEnabled(false);
@@ -849,7 +849,7 @@ void BatchProcessImagesDialog::slotPreviewProcessDone(KProcess* proc)
     else
        {
        OutputDialog *infoDialog = new OutputDialog(this,
-                                                   i18n("Preview error processing"),
+                                                   i18n("Preview processing error"),
                                                    m_previewOutput,
                                                    i18n("Cannot process preview for image \"%1\"."
                                                         "\nThe ouput messages are:\n")
@@ -905,9 +905,9 @@ void BatchProcessImagesDialog::listImageFiles(void)
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    if (m_nbItem == 0) groupBox4->setTitle(i18n("Image files list"));
+    if (m_nbItem == 0) groupBox4->setTitle(i18n("Image file list"));
     else
-       groupBox4->setTitle(i18n("Image files list (1 item)", "Image files list (%n items)", m_nbItem));
+       groupBox4->setTitle(i18n("Image file list (1 item)", "Image file list (%n items)", m_nbItem));
 
     if (m_selectedImageFiles.isEmpty()) return;
 

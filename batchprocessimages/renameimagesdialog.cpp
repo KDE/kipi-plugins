@@ -79,7 +79,7 @@ RenameImagesDialog::RenameImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Renaming images options") );
+    groupBox1->setTitle( i18n("Image-renaming options") );
 
     m_labelType->hide();
     m_Type->hide();
@@ -104,10 +104,10 @@ RenameImagesDialog::~RenameImagesDialog()
 
 void RenameImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for batch rename images\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin to batch-rename images\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n"),
-                                  i18n("About KIPI batch rename images"));
+                                  i18n("About KIPI's 'Batch-rename Images' plugin"));
 }
 
 
@@ -186,8 +186,8 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
     if (job->error())
         {
         item->changeResult(i18n("Failed !!!"));
-        item->changeError(i18n("cannot copy original image file!"));
-        item->changeOutputMess(i18n("Checked the file access right or the space disk!\n"
+        item->changeError(i18n("cannot copy original image file."));
+        item->changeOutputMess(i18n("Check the file's access rights or the amount of disk space.\n"
                                     "The internal error is:\n\n%1")
                                     .arg(job->errorString()));
         }
@@ -212,7 +212,7 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
             if ( !ok ) 
                 {
                 int code = KMessageBox::warningContinueCancel( this,
-                                        i18n("<qt>Error adding image to application. Error message was: "
+                                        i18n("<qt>Error adding image to application; error message was: "
                                         "<b>%1</b></qt>").arg( errmsg ),
                                         i18n("Error adding image to application") );
                 if ( code == KMessageBox::Cancel ) 
@@ -221,7 +221,7 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
                     return;
                     }
                 else
-                    item->changeResult(i18n("Failed !!!"));
+                    item->changeResult(i18n("Failed."));
                 }
 
             KIPI::ImageInfo srcInfo = m_interface->info( src );
@@ -234,9 +234,9 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
                 {
                 if ( changeDate( dest.path()) == false ) // PENDING(blackie) handle remote URL's
                     {
-                    item->changeResult(i18n("Cannot change time stamp of destination file!"));
-                    item->changeError(i18n("cannot change time stamp of destination file!"));
-                    item->changeOutputMess(i18n("Checked the file access right!"));
+                    item->changeResult(i18n("Cannot change time stamp of destination file."));
+                    item->changeError(i18n("cannot change time stamp of destination file."));
+                    item->changeOutputMess(i18n("Check the file's access rights."));
                     }
                 }
 
@@ -248,9 +248,9 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
 
                 if ( KIO::NetAccess::del(src) == false )
                     {
-                    item->changeResult(i18n("Cannot delete original !"));
-                    item->changeError(i18n("cannot remove original image file!"));
-                    item->changeOutputMess(i18n("Checked the file access right!"));
+                    item->changeResult(i18n("Cannot delete original."));
+                    item->changeError(i18n("cannot remove original image file."));
+                    item->changeOutputMess(i18n("Check the file's access rights."));
                     }
                 else
                     {
@@ -274,7 +274,7 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
     if (m_listFile2Process_iterator->current())     // Next image ?
         copyItemOperations();
     else                                            // Copy is done...
-        endProcess(i18n("Process finished!"));
+        endProcess(i18n("Process finished."));
 }
 
 
@@ -332,7 +332,7 @@ bool RenameImagesDialog::startProcess(void)
 {
     if ( m_convertStatus == STOP_PROCESS )
        {
-       endProcess(i18n("Process aborted by user!"));
+       endProcess(i18n("Process aborted by user."));
        return true;
        }
 
@@ -355,7 +355,7 @@ bool RenameImagesDialog::startProcess(void)
           }
        else
           {
-          endProcess(i18n("Process finished!"));
+          endProcess(i18n("Process finished."));
           return true;
           }
        }
@@ -370,14 +370,14 @@ bool RenameImagesDialog::startProcess(void)
           case OVERWRITE_ASK:
              {
              int ValRet = KMessageBox::warningYesNoCancel(this,
-                          i18n("The destination file \"%1\" already exists!\n"
-                          "Do you want overwrite it?").arg(item->nameDest()),
+                          i18n("The destination file \"%1\" already exists;\n"
+                          "do you want overwrite it?").arg(item->nameDest()),
                           i18n("Overwrite destination image file"), KStdGuiItem::cont());
 
              if ( ValRet == KMessageBox::No )
                 {
-                item->changeResult(i18n("Skipped !"));
-                item->changeError(i18n("destination image file already exists (skipped by user)!"));
+                item->changeResult(i18n("Skipped."));
+                item->changeError(i18n("destination image file already exists (skipped by user)."));
                 ++*m_listFile2Process_iterator;
                 ++m_progressStatus;
                 m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
@@ -389,7 +389,7 @@ bool RenameImagesDialog::startProcess(void)
                    }
                 else
                    {
-                   endProcess(i18n("Process finished!"));
+                   endProcess(i18n("Process finished."));
                    return true;
                    }
                 }
@@ -410,8 +410,8 @@ bool RenameImagesDialog::startProcess(void)
 
              if ( newFileName == QString::null )
                 {
-                item->changeResult(i18n("Failed !"));
-                item->changeError(i18n("destination image file already exists and cannot be renamed!"));
+                item->changeResult(i18n("Failed."));
+                item->changeError(i18n("destination image file already exists and cannot be renamed."));
                 ++*m_listFile2Process_iterator;
                 ++m_progressStatus;
                 m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
@@ -423,7 +423,7 @@ bool RenameImagesDialog::startProcess(void)
                    }
                 else
                    {
-                   endProcess(i18n("Process finished!"));
+                   endProcess(i18n("Process finished."));
                    return true;
                    }
                 }
@@ -438,8 +438,8 @@ bool RenameImagesDialog::startProcess(void)
 
           case OVERWRITE_SKIP:
              {
-             item->changeResult(i18n("Skipped !"));
-             item->changeError(i18n("destination image file already exists (skipped automaticly)!"));
+             item->changeResult(i18n("Skipped."));
+             item->changeError(i18n("destination image file already exists (skipped automatically)."));
              ++*m_listFile2Process_iterator;
              ++m_progressStatus;
              m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
@@ -451,7 +451,7 @@ bool RenameImagesDialog::startProcess(void)
                 }
              else
                 {
-                endProcess(i18n("Process finished!"));
+                endProcess(i18n("Process finished."));
                 return true;
                 }
              break;
@@ -462,7 +462,7 @@ bool RenameImagesDialog::startProcess(void)
 
           default:
              {
-             endProcess(i18n("Process finished!"));
+             endProcess(i18n("Process finished."));
              return true;
              break;
              }

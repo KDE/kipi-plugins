@@ -55,12 +55,12 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    setCaption(i18n("Batch Bordering Images options"));
+    setCaption(i18n("Batch-Bordering Images options"));
     setHelp("borderimages", "kipi-plugins");
     
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Border images options") );
+    groupBox1->setTitle( i18n("Bordering images options") );
 
     m_labelType->setText( i18n("Border type:") );
 
@@ -100,7 +100,7 @@ void BorderImagesDialog::slotAbout( void )
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About KIPI batch bordering images"));
+                                  i18n("About KIPI's 'Batch Bordering Images' plugin"));
 }
 
 

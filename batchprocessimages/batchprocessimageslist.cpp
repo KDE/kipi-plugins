@@ -56,13 +56,13 @@ BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char *name
     setResizeMode(QListView::LastColumn);
     setSelectionMode(QListView::Single);
     setAllColumnsShowFocus ( true );
-    QWhatsThis::add( this, i18n("<p>You can see here the operations results "
-                                "during the process. Double click on one item for more "
-                                "informations after the process end. "
-                                "<p>You can use the \"Add\" button or drag and drop "
-                                "for to add some new items in the list. "
-                                "<p>If the items are taken from differents Albums "
-                                "the process results will be merged on the target Album.") );
+    QWhatsThis::add( this, i18n("<p>You can see here the operations' results "
+                                "during the process. Double-click on an item for more "
+                                "information once the process has ended. "
+                                "<p>You can use the \"Add\" button or drag-and-drop "
+                                "to add some new items to the list. "
+                                "<p>If the items are taken from different Albums "
+                                "the process' results will be merged to the target Album.") );
 }
 
 

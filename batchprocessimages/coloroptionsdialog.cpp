@@ -88,7 +88,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, QString ColorType)
        dvlay->addWidget( m_label_segmentCluster );
        m_segmentCluster = new KIntNumInput(3, box);
        m_segmentCluster->setRange(0, 20, 1, true );
-       QWhatsThis::add( m_segmentCluster, i18n("<p>Select here the value who represents the minimum "
+       QWhatsThis::add( m_segmentCluster, i18n("<p>Select here the value which represents the minimum "
                                                "number of pixels contained in a hexahedra before it can "
                                                "be considered valid.") );
        m_label_segmentCluster->setBuddy( m_segmentCluster );
@@ -98,7 +98,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, QString ColorType)
        dvlay->addWidget( m_label_segmentSmooth );
        m_segmentSmooth = new KIntNumInput(3, box);
        m_segmentSmooth->setRange(0, 20, 1, true );
-       QWhatsThis::add( m_segmentSmooth, i18n("<p>Select here the value who eliminates noise in the "
+       QWhatsThis::add( m_segmentSmooth, i18n("<p>Select here the value which eliminates noise in the "
                                               "second derivative of the histogram. As the value is increased, "
                                               "you can expect a smoother second derivative.") );
        m_label_segmentSmooth->setBuddy( m_segmentSmooth );

@@ -54,12 +54,12 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    setCaption(i18n("Batch Coloring Images options"));
+    setCaption(i18n("Batch image-color processing options"));
     setHelp("colorimages", "kipi-plugins");
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Color images options") );
+    groupBox1->setTitle( i18n("Image color options") );
 
     m_labelType->setText( i18n("Coloring enhancement type:") );
 
@@ -75,15 +75,15 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
     m_Type->insertItem(i18n("Segment"));
     m_Type->insertItem(i18n("Trim"));
     m_Type->setCurrentText(i18n("Normalize"));
-    whatsThis = i18n("<p>Select here the colors enhancement type for your images:<p>"
+    whatsThis = i18n("<p>Select here the color enhancement type for your images:<p>"
                      "<b>Decrease contrast</b>: reduce the image contrast. The algorithm "
-                     "reduce the intensity differences between the lighter and darker elements "
+                     "reduces the intensity difference between the lighter and darker elements "
                      "of the image.<p>"
                      "<b>Depth</b>: change the color depth of the image.<p>"
                      "<b>Equalize</b>: perform histogram equalization to the image.<p>"
-                     "<b>Fuzz</b>: merging colors within a distance are considered equal.<p>"
-                     "<b>Gray scales</b>: convert colors image to gray scales image.<p>"
-                     "<b>Increase contrast</b>: enhance the image contrast. The algorithm enhance "
+                     "<b>Fuzz</b>: merging colors within a distance, i.e. consider them to be equal.<p>"
+                     "<b>Gray scales</b>: convert color images to grayscale images.<p>"
+                     "<b>Increase contrast</b>: enhance the image contrast. The algorithm enhances "
                      "the intensity differences between the lighter and darker elements of the image.<p>"
                      "<b>Monochrome</b>: transform the image to black and white.<p>"
                      "<b>Negate</b>: replace every pixel with its complementary color. The red, green, "
@@ -120,11 +120,11 @@ ColorImagesDialog::~ColorImagesDialog()
 
 void ColorImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for batch colors images enhancement\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for batch image-color enhancement\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About KIPI batch colors images enhancement"));
+                                  i18n("About KIPI's 'Batch Image-Color Enhancement' plugin"));
 }
 
 
