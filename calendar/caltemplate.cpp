@@ -126,11 +126,17 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
     btnGroupImagePos_ = new QVButtonGroup(i18n("Image Position"), gbox);
     btnGroupImagePos_->setRadioButtonExclusive(true);
 
+    // Insert the buttons in the order Top, Left, Right so that they
+    // get the corresponding ids
     QRadioButton* radioBtn = new QRadioButton(i18n("Top"), btnGroupImagePos_);
     radioBtn->setChecked(true);
+    Q_ASSERT(btnGroupImagePos_->id( radioBtn ) == CalParams::Top);
 
     radioBtn = new QRadioButton(i18n("Left"), btnGroupImagePos_);
+    Q_ASSERT(btnGroupImagePos_->id( radioBtn ) == CalParams::Left);
+
     radioBtn = new QRadioButton(i18n("Right"), btnGroupImagePos_);
+    Q_ASSERT(btnGroupImagePos_->id( radioBtn ) == CalParams::Right);
 
     gboxLayout->addWidget( btnGroupImagePos_ );
 
@@ -231,10 +237,9 @@ void CalTemplate::slotUpdatePreview()
         params.pageSize    = KPrinter::Letter;
     }
 
-    QString imgPos =
-        btnGroupImagePos_->selected()->text();
+    const int imgPos = btnGroupImagePos_->selectedId();
 
-    if (imgPos == i18n("Top")) {
+    if (imgPos == CalParams::Top) {
         params.imgPos = CalParams::Top;
 
         float zoom = QMIN((float)previewSize_/params.paperWidth,
@@ -243,7 +248,7 @@ void CalTemplate::slotUpdatePreview()
         params.height = (int)(params.paperHeight * zoom);
 
     }
-    else if (imgPos == i18n("Left")) {
+    else if (imgPos == CalParams::Left) {
         params.imgPos = CalParams::Left;
 
         float zoom = QMIN((float)previewSize_/params.paperWidth,
