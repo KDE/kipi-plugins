@@ -107,8 +107,9 @@ bool rotateJPEG(const QString& src, const QString& dest,
         transform = Matrix::rotate270;
         break;
     }
-    case (RotExif):
+    case (Rot0):
     {
+        transform = Matrix::none;
         break;
     }
     default:
@@ -145,6 +146,10 @@ bool rotateQImage(const QString& src, const QString& dest,
     case (Rot270):
     {
         m.rotate(270);
+        break;
+    }
+    case (Rot0):
+    {
         break;
     }
     default:

@@ -63,6 +63,15 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     m_action_Transform = new KActionMenu(i18n("&Transform"),
                          actionCollection(),
                          "jpeglossless_transform");
+    
+    m_action_Transform->insert( new KAction(i18n("EXIF Rotate/Flip"),
+                                0,
+                                0,
+                                this,
+                                SLOT(slotRotate()),
+                                actionCollection(),
+                                "rotate_exif") );
+
 
     m_action_RotateImage = new KActionMenu(i18n("Rotate"),
                            "rotate_cw",
@@ -218,6 +227,10 @@ void Plugin_JPEGLossless::slotRotate()
     }
     else if (from == "rotate_270") {
         m_thread->rotate(items, JPEGLossLess::Rot270);
+        proceed = true;
+    }
+    else if (from == "rotate_exif") {
+        m_thread->rotate(items, JPEGLossLess::Rot0);
         proceed = true;
     }
     else {

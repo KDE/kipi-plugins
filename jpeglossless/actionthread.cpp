@@ -152,8 +152,7 @@ void ActionThread::run()
             QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
 
             bool result = true;
-            if ( t->rotAction != Rot0 )
-                result = JPEGLossLess::rotate(t->filePath, t->rotAction,
+            result = JPEGLossLess::rotate(t->filePath, t->rotAction,
                                               tmpFolder_, errString);
 
             EventData *r = new EventData;

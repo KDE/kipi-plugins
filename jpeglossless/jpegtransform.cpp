@@ -265,7 +265,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
    Converts the mathematically correct description
    into the primitive operations that can be carried out losslessly.
 */
-static void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate) {
+void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate) {
    flip=JXFORM_NONE;
    rotate=JXFORM_NONE;
 
@@ -291,7 +291,7 @@ static void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rot
 }
 
 
-static void getExifAction(Matrix &action, KExifData::ImageOrientation exifOrientation) {
+void getExifAction(Matrix &action, KExifData::ImageOrientation exifOrientation) {
     switch (exifOrientation) {
         case KExifData::NORMAL:
             break;

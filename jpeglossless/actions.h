@@ -37,7 +37,6 @@ enum RotateAction
     Rot90 = 0,
     Rot180,
     Rot270,
-    RotExif,
     Rot0
 };
 

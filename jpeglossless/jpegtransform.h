@@ -105,8 +105,8 @@ protected:
 
 bool transformJPEG(const QString& src, const QString& dest,
                    Matrix &action, QString& err);
-static void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate);
-static void getExifAction(Matrix &action, KExifData::ImageOrientation exifOrientation);
+void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate);
+void getExifAction(Matrix &action, KExifData::ImageOrientation exifOrientation);
 
 }
 
