@@ -29,6 +29,7 @@
 #include <qspinbox.h>
 #include <qlayout.h>
 #include <qmap.h>
+#include <qframe.h>
 #include <qpushbutton.h>
 
 // Kde includes.
@@ -41,6 +42,7 @@
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
+#include <kstandarddirs.h>
 
 // Include files for KIPI
 
@@ -85,8 +87,30 @@ SlideShowConfig::SlideShowConfig()
 
     QWidget *page = new QWidget( this );
     setMainWidget( page );
-
     QGridLayout *grid = new QGridLayout( page, 1, 1, 6, 6);
+    
+    // ------------------------------------------------------------------
+   
+    QFrame *headerFrame = new QFrame( page );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( i18n("SlideShow"), headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    grid->addMultiCellWidget( headerFrame, 0, 0, 0, 2 );
+    
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
     // ------------------------------------------------------------------
 
@@ -110,51 +134,51 @@ SlideShowConfig::SlideShowConfig()
     selectedFilesButton_->setText( i18n( "Show Only Selected Images" ) );
     FileSrcButtonGroupLayout->addWidget( selectedFilesButton_ );
 
-    grid->addMultiCellWidget( FileSrcButtonGroup_, 0, 0, 0, 2 );
+    grid->addMultiCellWidget( FileSrcButtonGroup_, 1, 1, 0, 2 );
 
     // ------------------------------------------------------------------
 
     openglCheckBox_ = new QCheckBox( page );
     openglCheckBox_->setText( i18n( "Use OpenGL Slideshow Transitions" ) );
-    grid->addMultiCellWidget( openglCheckBox_, 1, 1, 0, 2 );
+    grid->addMultiCellWidget( openglCheckBox_, 2, 2, 0, 2 );
 
     // ------------------------------------------------------------------
 
     printNameCheckBox_ = new QCheckBox( page );
     printNameCheckBox_->setText( i18n( "Print Filename" ) );
-    grid->addMultiCellWidget( printNameCheckBox_, 2, 2, 0, 2 );
+    grid->addMultiCellWidget( printNameCheckBox_, 3, 3, 0, 2 );
 
     // ------------------------------------------------------------------
 
     loopCheckBox_ = new QCheckBox( page );
     loopCheckBox_->setText( i18n( "Loop" ) );
-    grid->addMultiCellWidget( loopCheckBox_, 3, 3, 0, 2 );
+    grid->addMultiCellWidget( loopCheckBox_, 4, 4, 0, 2 );
 
     // ------------------------------------------------------------------
 
     QLabel* label1 = new QLabel( page);
     label1->setText( i18n( "Delay between images (ms):" ) );
-    grid->addWidget( label1, 4, 0 );
+    grid->addWidget( label1, 5, 0 );
 
     // ------------------------------------------------------------------
 
     delaySpinBox_ = new QSpinBox( 1000, 10000, 10, page );
     delaySpinBox_->setSizePolicy(QSizePolicy( (QSizePolicy::SizeType)0,
                                               (QSizePolicy::SizeType)0));
-    grid->addWidget( delaySpinBox_, 4, 1 );
+    grid->addWidget( delaySpinBox_, 5, 1 );
 
     // ------------------------------------------------------------------
 
     QLabel* label2 = new QLabel( page, "label2" );
     label2->setText( i18n( "Transition effect:" ) );
-    grid->addWidget( label2, 5, 0 );
+    grid->addWidget( label2, 6, 0 );
 
     // ------------------------------------------------------------------
 
     effectsComboBox_ = new QComboBox( FALSE, page, "effectsComboBox_" );
     effectsComboBox_->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7,
                                                   (QSizePolicy::SizeType)0 ) );
-    grid->addMultiCellWidget( effectsComboBox_, 5, 5, 1, 2 );
+    grid->addMultiCellWidget( effectsComboBox_, 6, 6, 1, 2 );
 
     // ------------------------------------------------------------------
 
