@@ -74,7 +74,7 @@ void Plugin_CDArchiving::slotActivate()
 
 KIPI::Category Plugin_CDArchiving::category() const
 {
-    return KIPI::IMAGESPLUGIN;
+    return KIPI::EXPORTPLUGIN;
 }
 
 
