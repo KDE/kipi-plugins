@@ -167,7 +167,10 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     m_upload = new KIPI::UploadWidget( m_interface, groupBox3, "m_upload" );
     // This line is needed to ensure that the dialog do get a decent minimum size
     // I believe it is a bug in Qt somewhere - 27 May. 2004 10:55 -- Jesper K. Pedersen
-    m_upload->setFixedHeight( m_upload->sizeHint().height() );
+
+    //m_upload->setFixedHeight( m_upload->sizeHint().height() );
+
+    m_upload->setFixedHeight( 150 );
 
     QWidget* add = new QWidget( groupBox3 );
     QHBoxLayout* lay = new QHBoxLayout( add );
