@@ -36,6 +36,7 @@
 
 #include "monthwidget.h"
 #include "calsettings.h"
+#include <libkipi/imagecollectiondialog.h>
 #include <libkipi/thumbnailjob.h>
 
 namespace DKCalendar
@@ -112,11 +113,7 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* e)
     if (!contentsRect().contains(e->pos())) return;
 
     if (e->button() == Qt::LeftButton) {
-        KURL url =
-            KFileDialog::getOpenURL("",
-                                    KImageIO::pattern( KImageIO::Reading),
-                                    this,
-                                    i18n("Select Image"));
+        KURL url = KIPI::ImageCollectionDialog::getImageURL(this, interface_);
         if (url.isValid()) {
             KIPI::ThumbnailJob* thumbJob_ =
                 new KIPI::ThumbnailJob(url,64);
