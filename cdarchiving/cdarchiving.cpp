@@ -165,16 +165,8 @@ void CDArchiving::readSettings(void)
 
     // HTML interface Look dialogbox setup tab
 
-    if (m_config->readEntry("UseHTMLInterface", "true") == "true")
-       m_configDlg->setUseHTMLInterface( true );
-    else
-       m_configDlg->setUseHTMLInterface( false );
-
-    if (m_config->readEntry("UseAutoRun", "true") == "true")
-       m_configDlg->setUseAutoRunWin32( true );
-    else
-       m_configDlg->setUseAutoRunWin32( false );
-
+    m_configDlg->setUseHTMLInterface( m_config->readBoolEntry("UseHTMLInterface", "true") );
+    m_configDlg->setUseAutoRunWin32( m_config->readBoolEntry("UseAutoRun", "true") );
     m_configDlg->setMainTitle( m_config->readEntry("MainPageTitle", i18n("KIPI Albums Archiving")) );
     m_configDlg->setImagesPerRow( m_config->readEntry("ImagesPerRow", "4").toInt() );
     m_configDlg->setFontName( m_config->readEntry("FontName", "Helvetica") );
@@ -205,21 +197,9 @@ void CDArchiving::readSettings(void)
     // Misc dialogbox setup tab
 
     m_configDlg->setK3bBinPathName( m_config->readEntry("K3bBinPath", "/usr/bin/k3b") );
-
-    if (m_config->readEntry("UseOnTheFly", "true") == "false")
-       m_configDlg->setUseUseOnTheFly( false );
-    else
-       m_configDlg->setUseUseOnTheFly( true );
-
-    if (m_config->readEntry("UseCheckCD", "true") == "false")
-       m_configDlg->setUseCheckCD( false );
-    else
-       m_configDlg->setUseCheckCD( true );
-
-    if (m_config->readEntry("UseStartWrintingProcess", "false") == "false")
-       m_configDlg->setUseStartBurningProcess( false );
-    else
-       m_configDlg->setUseStartBurningProcess( true );
+    m_configDlg->setUseUseOnTheFly( m_config->readBoolEntry("UseOnTheFly", "true") );
+    m_configDlg->setUseCheckCD( m_config->readBoolEntry("UseCheckCD", "true") );
+    m_configDlg->setUseStartBurningProcess( m_config->readBoolEntry("UseStartWrintingProcess", "false") );
 
     delete m_config;
   
@@ -458,7 +438,7 @@ void CDArchiving::invokeK3b()
     *m_Proc << m_K3bBinPathName;;
     *m_Proc << m_tmpFolder + "/KIPICDArchiving.xml";
 
-    QString K3bCommandLine = m_K3bBinPathName + " " + m_tmpFolder + "/KIPICDArchiving.xml";
+    QString K3bCommandLine = m_K3bBinPathName + " --nofork " + m_tmpFolder + "/KIPICDArchiving.xml";
     kdDebug(51000) << "K3b is started : " << K3bCommandLine.ascii() << endl;
 
     connect(m_Proc, SIGNAL(processExited(KProcess *)),
