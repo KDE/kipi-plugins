@@ -70,7 +70,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Renchi Raju", 
                                        0,
-                                       "http://extragear.kde.org/apps/kipi.php");
+                                       "http://extragear.kde.org/apps/kipi");
     
     about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
                      "renchi@pooh.tam.uiuc.edu");

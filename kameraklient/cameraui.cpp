@@ -176,7 +176,7 @@ CameraUI::CameraUI() : QWidget()
                                        "(c) 2003-2004, Renchi Raju\n"
                                        "(c) 2004, Tudor Calin",
                                        0,
-                                       "http://extragear.kde.org/apps/kipi.php");
+                                       "http://extragear.kde.org/apps/kipi");
 
     about->addAuthor("Renchi Raju", I18N_NOOP("Original author from Digikam project"),
                      "renchi@pooh.tam.uiuc.edu");

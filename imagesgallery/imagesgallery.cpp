@@ -93,7 +93,7 @@ ImagesGallery::ImagesGallery( KIPI::Interface* interface, QObject *parent )
     if (m_hostURL.isEmpty())
        {
        m_hostName = "Kipi";
-       m_hostURL = "http://extragear.kde.org/apps/kipi.php";
+       m_hostURL = "http://extragear.kde.org/apps/kipi";
        }
 
     m_interface = interface;

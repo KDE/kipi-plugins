@@ -98,7 +98,7 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
                                      KAboutData::License_GPL,
                                      "(c) 2003-2004, Todd Shoemaker", 
                                      0,
-                                     "http://extragear.kde.org/apps/kipi.php");
+                                     "http://extragear.kde.org/apps/kipi");
     
   about->addAuthor("Todd Shoemaker", I18N_NOOP("Author"),
                    "todd@theshoemakers.net");

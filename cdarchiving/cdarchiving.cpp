@@ -80,7 +80,7 @@ CDArchiving::CDArchiving( KIPI::Interface* interface, QObject *parent, KAction *
     if (m_hostURL.isEmpty())
        {
        m_hostName = "Kipi";
-       m_hostURL = "http://extragear.kde.org/apps/kipi.php";
+       m_hostURL = "http://extragear.kde.org/apps/kipi";
        }
 
     m_actionCDArchiving = action_cdarchiving;

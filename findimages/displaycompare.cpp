@@ -140,7 +140,7 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 
                                        0,
-                                       "http://extragear.kde.org/apps/kipi.php");
+                                       "http://extragear.kde.org/apps/kipi");
     
     about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at free.fr");
