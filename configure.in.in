@@ -7,7 +7,7 @@ AC_CHECK_PROG(PKGCONFIGFOUND, pkg-config,[yes])
 
 
 # ----------------------------------------------------------
-# 
+#
 # General kipi-plugin tests
 #
 # ----------------------------------------------------------
@@ -42,7 +42,7 @@ else
         LIBKIPI_CFLAGS=""
 	LIBKIPI_LIBS=""
         AC_MSG_RESULT([not found])
-     fi 
+     fi
      AC_SUBST(LIBKIPI_CFLAGS)
      AC_SUBST(LIBKIPI_LIBS)
 fi
@@ -66,7 +66,7 @@ if test -d $srcdir/libkexif; then
     AC_SUBST(LIBKEXIF_LIBS)
     AC_SUBST(LIBKEXIF_LIBS_DEP)
 else
-    
+
     if test "$PKGCONFIGFOUND" = "yes" ; then
         # check for libkexif
         have_libkexif=no
@@ -85,7 +85,7 @@ else
         LIBKEXIF_CFLAGS=""
 	LIBKEXIF_LIBS=""
         AC_MSG_RESULT([not found])
-     fi 
+     fi
      AC_SUBST(LIBKEXIF_CFLAGS)
      AC_SUBST(LIBKEXIF_LIBS)
 fi
@@ -95,7 +95,6 @@ if test x$have_libkexif != xyes; then
 	[libkexif not installed. disabling jpeglossless plugin])
 fi
 
-AM_CONDITIONAL(compile_TIMEADJUST,   [test x$have_libkexif = xyes])
 
 #---------------------------------------------------------
 #
@@ -122,7 +121,7 @@ AM_CONDITIONAL(compile_KAMERAKLIENT, test -n "${GPHOTO_CONFIG}")
 
 
 # ----------------------------------------------------------
-# 
+#
 # Slideshow plugin tests
 #
 # ----------------------------------------------------------
@@ -173,7 +172,7 @@ if test "$build_opengl" != "no"; then
        GL_LIBS="-lGL"
     else
        have_GL="no"
-       GL_LIBS=""	
+       GL_LIBS=""
     fi
 
     AC_SUBST(GL_LIBS)
@@ -256,7 +255,7 @@ fi
 have_tiff=no
 AC_CHECK_LIB(tiff, TIFFWriteScanline,
   have_tiff=yes,
-  AC_MSG_WARN([TIFF library not found]), 
+  AC_MSG_WARN([TIFF library not found]),
   $all_libraries -ljpeg -lz -lm)
 
 if test "x$have_tiff" = "xyes"; then
@@ -272,6 +271,5 @@ fi
 
 AM_CONDITIONAL(compile_ACQUIREIMAGES, [test x$have_tiff = xyes])
 AM_CONDITIONAL(compile_RAWCONVERTER,  [test x$have_tiff = xyes])
-AM_CONDITIONAL(compile_JPEGLOSSLESS,  [test x$have_libkexif = xyes -a x$have_tiff = xyes])
 
 
