@@ -1,8 +1,7 @@
 /* ============================================================
  * File   : plugin_gammacalibration.cpp
  *
- * Authors: Gregory KOKANOSKY <gregory dot kokanosky at free.fr>
- *          Gilles Caulier <caulier dot gilles at free.fr>
+ * Authors: Gilles Caulier <caulier dot gilles at free.fr>
  *
  * Date   : 01/2004
  *
@@ -38,31 +37,33 @@
  #include "plugin_gammacalibration.h"
 
 typedef KGenericFactory<Plugin_GammaCalibration> Factory;
- K_EXPORT_COMPONENT_FACTORY( kipiplugin_gammacalibration,
-                             Factory("kipiplugin_gammacalibration"));
 
- /////////////////////////////////////////////////////////////////////////////////////////////////////
+K_EXPORT_COMPONENT_FACTORY( kipiplugin_gammacalibration,
+                            Factory("kipiplugin_gammacalibration"));
 
- Plugin_GammaCalibration::Plugin_GammaCalibration(QObject *parent, const char*, const QStringList&)
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Plugin_GammaCalibration::Plugin_GammaCalibration(QObject *parent, const char*, const QStringList&)
                         : KIPI::Plugin( Factory::instance(), parent, "GammaCalibration")
 {
     kdDebug( 51001 ) << "Plugin_GammaCalibration plugin loaded" << endl;
 }
 
-void Plugin_DiPlugin_GammaCalibration::setup( QWidget* widget )
+void Plugin_GammaCalibration::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_gammaCorrection = new KAction (i18n("Gamma correction..."),
-                         "kgamma",
-                         0,
-                         this,
-                         SLOT(slotGammaCorrection()),
-                         actionCollection(),
-                         "gamma_correction");    
+    m_action_gammaCalibration = new KAction (i18n("Gamma calibration..."),
+                                                  "kgamma",
+                                                  0,
+                                                  this,
+                                                  SLOT(slotActivate()),
+                                                  actionCollection(),
+                                                  "gamma_correction");   
+    addAction( m_action_gammaCalibration ); 
 }
 
-void Plugin_GammaCalibration::slotGammaCorrection(void)
+void Plugin_GammaCalibration::slotActivate(void)
 {
    QStringList args;
    QString *perror = 0;
@@ -78,7 +79,7 @@ void Plugin_GammaCalibration::slotGammaCorrection(void)
 
 KIPI::Category Plugin_GammaCalibration::category() const
 {
-    return KIPI::TOOLPLUGIN;
+    return KIPI::TOOLSPLUGIN;
 }
 
 #include "plugin_gammacalibration.moc"

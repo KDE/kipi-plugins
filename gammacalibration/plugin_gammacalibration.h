@@ -1,8 +1,7 @@
 /* ============================================================
  * File   : plugin_gammacalibration.h
  *
- * Authors: Gregory KOKANOSKY <gregory dot kokanosky at free.fr>
- *          Gilles Caulier <caulier dot gilles at free.fr>
+ * Authors: Gilles Caulier <caulier dot gilles at free.fr>
  *
  * Date   : 01/2004
  *
@@ -29,7 +28,6 @@
 
   #include <libkipi/plugin.h>
 
-  class KActionMenu;
   class KAction;
 
 
@@ -40,19 +38,18 @@
    public:
 
    Plugin_GammaCalibration(QObject *parent,
-                      const char* name,
-                      const QStringList &args);
+                           const char* name,
+                           const QStringList &args);
    virtual KIPI::Category category() const;
    virtual void setup( QWidget* widget );
 
    private slots:
 
-   void slotGammaCorrection(void);
+   void slotActivate(void);
    
    private:
    
-   KActionMenu    *m_action_gammaCorrection;
-
+   KAction *m_action_gammaCalibration;
   };
 
   #endif // PLUGIN_GAMMACALIBRATION_H
