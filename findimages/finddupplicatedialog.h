@@ -68,7 +68,7 @@ class FindDuplicateDialog : public KDialogBase
   const int getApproximateThreeshold() const;
   void setApproximateThreeshold(int Value);
   
-  QValueList<KIPI::ImageCollection> getSelectedAlbums() const { return m_selectedAlbums; }
+  QValueList<KIPI::ImageCollection> getSelectedAlbums() const;
 
  signals:
   
@@ -98,7 +98,6 @@ class FindDuplicateDialog : public KDialogBase
 
   KIPI::Interface               *m_interface;
   
-  QValueList<KIPI::ImageCollection>  m_selectedAlbums;
   KIPI::ImageCollectionSelector     *m_imageCollectionSelector;
 
  private :

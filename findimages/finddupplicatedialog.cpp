@@ -256,8 +256,8 @@ void FindDuplicateDialog::slotUpdateCache(void)
 
 void FindDuplicateDialog::slotPurgeCache(void)
 {
-    QValueList<KIPI::ImageCollection> albumsList = 
-        m_imageCollectionSelector->selectedImageCollections();
+    QValueList<KIPI::ImageCollection> albumsList = getSelectedAlbums();
+
     QStringList albumsListPath;
 
     for( QValueList<KIPI::ImageCollection>::ConstIterator album = albumsList.begin() ;
@@ -286,8 +286,6 @@ void FindDuplicateDialog::slotPurgeAllCache(void)
 
 void FindDuplicateDialog::slotOk()
 {
-    m_selectedAlbums = m_imageCollectionSelector->selectedImageCollections();
-        
     if (getSelectedAlbums().isEmpty() == true)
        {
        KMessageBox::sorry(0, i18n("You must selected at least one Album to find duplicate images for."));
@@ -295,6 +293,14 @@ void FindDuplicateDialog::slotOk()
        }
 
     accept();
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+QValueList<KIPI::ImageCollection> FindDuplicateDialog::getSelectedAlbums() const 
+{ 
+    return m_imageCollectionSelector->selectedImageCollections();
 }
 
 
