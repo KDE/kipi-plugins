@@ -36,9 +36,9 @@
 #include <kdialogbase.h>
 #include <kio/job.h>
 
-// Include files for Digikam
+// Include files for KIPI
 
-#include <digikam/thumbnailjob.h>
+#include <libkipi/thumbnailjob.h>
 
 class QPushButton;
 class QLineEdit;
@@ -106,7 +106,7 @@ Q_OBJECT
 
    bool                m_dialogOk;
 
-   QGuardedPtr<Digikam::ThumbnailJob> m_thumbJob;
+   QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
 
    QString extension(const QString& imageFormat);
    void checkNewFileName(void);

@@ -387,6 +387,7 @@ void AcquireImageDialog::setupAlbumsList(void)
 
 void AcquireImageDialog::setAlbumsList(void)
 {
+#ifdef TEMPORARILY_REMOVED
     QString CurrentAlbum;
 
     for (Digikam::AlbumInfo *album=Digikam::AlbumManager::instance()->firstAlbum() ;
@@ -425,6 +426,7 @@ void AcquireImageDialog::setAlbumsList(void)
     m_AlbumList->setSelected( m_AlbumList->findItem(CurrentAlbum), true );
     m_AlbumList->setCurrentItem(m_AlbumList->findItem(CurrentAlbum));
     m_AlbumList->centerCurrentItem();
+#endif
 }
 
 
@@ -537,6 +539,7 @@ void AcquireImageDialog::slot_onAlbumCreate(KIO::Job* job)
 
   void AcquireImageDialog::slotOk()
 {
+#ifdef TEMPORARILY_REMOVED
     if (m_AlbumList->currentText().isEmpty())
         {
         KMessageBox::error(0, i18n("You must select a target album for this image!"));
@@ -605,6 +608,7 @@ void AcquireImageDialog::slot_onAlbumCreate(KIO::Job* job)
     Digikam::AlbumManager::instance()->refreshItemHandler(albumSelectedText);
     close();
     delete this;
+#endif
 }
 
 
@@ -655,6 +659,7 @@ void AcquireImageDialog::checkNewFileName(void)
     if ( albumSelectedText == QString::null)
        return;
 
+#ifdef TEMPORARILY_REMOVED
     Digikam::AlbumInfo *album = Digikam::AlbumManager::instance()->findAlbum(albumSelectedText);
     if (!album) return;
     QString targetAlbumPath = album->getPath();
@@ -667,6 +672,7 @@ void AcquireImageDialog::checkNewFileName(void)
 
     if ( newFileName != QString::null )
        m_FileName->setText( newFileName );
+#endif
 }
 
 
