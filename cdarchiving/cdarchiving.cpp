@@ -779,7 +779,7 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
             d->fileName = imgName;
             QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
             
-            if ( createThumb(imgName, sourceDirName, imgGalleryDir, imageFormat) )
+            if ( createThumb(imgName, sourceDirName, imgGalleryDir, imageFormat) != -1 )
                 {
                 const QString imgNameFormat = imgName;
                 const QString imgPath("thumbs/" + imgNameFormat + extension(imageFormat));
@@ -1261,8 +1261,8 @@ void CDArchiving::loadComments(void)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool CDArchiving::createThumb( const QString& imgName, const QString& sourceDirName,
-                               const QString& imgGalleryDir, const QString& imageFormat)
+int CDArchiving::createThumb( const QString& imgName, const QString& sourceDirName,
+                              const QString& imgGalleryDir, const QString& imageFormat)
 {
     const QString pixPath = sourceDirName + imgName;
 
@@ -1282,104 +1282,107 @@ bool CDArchiving::createThumb( const QString& imgName, const QString& sourceDirN
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool CDArchiving::ResizeImage( const QString Path, const QString Directory, const QString ImageFormat,
-                               const QString ImageNameFormat, int *Width, int *Height, int SizeFactor,
-                               bool ColorDepthChange, int ColorDepthValue, bool CompressionSet,
-                               int ImageCompression)
+int CDArchiving::ResizeImage( const QString Path, const QString Directory, const QString ImageFormat,
+                              const QString ImageNameFormat, int *Width, int *Height, int SizeFactor,
+                              bool ColorDepthChange, int ColorDepthValue, bool CompressionSet,
+                              int ImageCompression)
 {
-QImage img;
-bool ValRet;
-bool usingBrokenImage = false;
+    QImage img;
+    bool ValRet;
+    bool usingBrokenImage = false;
 
-ValRet = img.load(Path);
+    ValRet = img.load(Path);
 
-if ( ValRet == false )        // Cannot load the src image.
-   {
-   KGlobal::dirs()->addResourceType("kipi_imagebroken", KGlobal::dirs()->kde_default("data") + "kipi/data");
-   QString dir = KGlobal::dirs()->findResourceDir("kipi_imagebroken", "image_broken.png");
-   dir = dir + "image_broken.png";
-   kdDebug ( 51000 ) << "Loading " << Path.ascii() << " failed ! Using " << dir.ascii() 
-                     << " instead..." << endl;
-   ValRet = img.load(dir);    // Try broken image icon...
-   usingBrokenImage = true;
-   }
-
-if ( ValRet == true )
-   {
-   int w = img.width();
-   int h = img.height();
-
-   if (SizeFactor == -1)      // Use original image size.
-        SizeFactor=w;
-
-   // scale to pixie size
-   // kdDebug( 51000 ) << "w: " << w << " h: " << h << endl;
-   // Resizing if to big
-
-   if( w > SizeFactor || h > SizeFactor )
+    if ( ValRet == false )        // Cannot load the src image.
        {
-       if( w > h )
-           {
-           h = (int)( (double)( h * SizeFactor ) / w );
-
-           if ( h == 0 ) h = 1;
-
-           w = SizeFactor;
-           Q_ASSERT( h <= SizeFactor );
-           }
-       else
-           {
-           w = (int)( (double)( w * SizeFactor ) / h );
-
-           if ( w == 0 ) w = 1;
-
-           h = SizeFactor;
-           Q_ASSERT( w <= SizeFactor );
-           }
-
-       const QImage scaleImg(img.smoothScale( w, h ));
-
-       if ( scaleImg.width() != w || scaleImg.height() != h )
-           {
-           kdDebug( 51000 ) << "Resizing failed. Aborting." << endl;
-           return false;
-           }
-
-       img = scaleImg;
-
-       if ( ColorDepthChange == true )
-           {
-           const QImage depthImg(img.convertDepth( ColorDepthValue ));
-           img = depthImg;
-           }
+       KGlobal::dirs()->addResourceType("kipi_imagebroken", KGlobal::dirs()->kde_default("data") + "kipi/data");
+       QString dir = KGlobal::dirs()->findResourceDir("kipi_imagebroken", "image_broken.png");
+       dir = dir + "image_broken.png";
+       kdDebug ( 51000 ) << "Loading " << Path.ascii() << " failed ! Using " << dir.ascii() 
+                         << " instead..." << endl;
+       ValRet = img.load(dir);    // Try broken image icon...
+       usingBrokenImage = true;
        }
 
-   kdDebug( 51000 ) << "Saving resized image to: " << Directory + ImageFormat  << endl;
+    if ( ValRet == true )
+       {
+       int w = img.width();
+       int h = img.height();
 
-   if ( CompressionSet == true )
-      {
-      if ( !img.save(Directory + ImageNameFormat, ImageFormat.latin1(), ImageCompression) )
-         {
-         kdDebug( 51000 ) << "Saving failed with specific compression value. Aborting." << endl;
-         return false;
-         }
-      }
-   else
-      {
-      if ( !img.save(Directory + ImageNameFormat, ImageFormat.latin1(), -1) )
-         {
-         kdDebug( 51000 ) << "Saving failed with no compression value. Aborting." << endl;
-         return false;
-         }
-      }
+       if (SizeFactor == -1)      // Use original image size.
+            SizeFactor=w;
 
-   *Width = w;
-   *Height = h;
+       // scale to pixie size
+       // kdDebug( 51000 ) << "w: " << w << " h: " << h << endl;
+       // Resizing if to big
+
+       if( w > SizeFactor || h > SizeFactor )
+           {
+           if( w > h )
+               {
+               h = (int)( (double)( h * SizeFactor ) / w );
+
+               if ( h == 0 ) h = 1;
+
+               w = SizeFactor;
+               Q_ASSERT( h <= SizeFactor );
+               }
+           else
+               {
+               w = (int)( (double)( w * SizeFactor ) / h );
+
+               if ( w == 0 ) w = 1;
+
+               h = SizeFactor;
+               Q_ASSERT( w <= SizeFactor );
+               }
+
+           const QImage scaleImg(img.smoothScale( w, h ));
+
+           if ( scaleImg.width() != w || scaleImg.height() != h )
+               {
+               kdDebug( 51000 ) << "Resizing failed. Aborting." << endl;
+               return -1;
+               }
+
+           img = scaleImg;
+
+           if ( ColorDepthChange == true )
+               {
+               const QImage depthImg(img.convertDepth( ColorDepthValue ));
+               img = depthImg;
+               }
+           }
+
+       kdDebug( 51000 ) << "Saving resized image to: " << Directory + ImageFormat  << endl;
+
+       if ( CompressionSet == true )
+          {
+          if ( !img.save(Directory + ImageNameFormat, ImageFormat.latin1(), ImageCompression) )
+             {
+             kdDebug( 51000 ) << "Saving failed with specific compression value. Aborting." << endl;
+             return -1;
+             }
+          }
+       else
+          {
+          if ( !img.save(Directory + ImageNameFormat, ImageFormat.latin1(), -1) )
+             {
+             kdDebug( 51000 ) << "Saving failed with no compression value. Aborting." << endl;
+             return -1;
+             }
+          }
+
+       *Width = w;
+       *Height = h;
    
-   return ( ! usingBrokenImage );   // If usingBrokenImage=false ==> return true else return false.
-   }
+       if ( usingBrokenImage == true )
+          return 0;
+       else 
+          return 1;
+       }
 
-return false;
+    return -1;
 }
 
 
@@ -1706,6 +1709,7 @@ void CDArchiving::removeTmpFiles(void)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+// This code can be multithreaded (in opposite to KIO::netaccess::delete().
 
 bool CDArchiving::DeleteDir(QString dirname)
 {
@@ -1732,6 +1736,7 @@ bool CDArchiving::DeleteDir(QString dirname)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+// This code can be multithreaded (in opposite to KIO::netaccess::delete().
 
 bool CDArchiving::deldir(QString dirname)
 {

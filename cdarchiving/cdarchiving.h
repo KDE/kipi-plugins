@@ -137,10 +137,10 @@ private:
                   const QStringList& subDirList, const QDir& imageDir,
                   const KURL& url, const QString& imageFormat);
 
-  bool createThumb( const QString& imgName, const QString& sourceDirName,
+  int  createThumb( const QString& imgName, const QString& sourceDirName,
                     const QString& imgGalleryDir, const QString& imageFormat);
 
-  bool ResizeImage( const QString Path, const QString Directory, const QString ImageFormat,
+  int  ResizeImage( const QString Path, const QString Directory, const QString ImageFormat,
                     const QString ImageNameFormat, int *Width, int *Height, int SizeFactor,
                     bool ColorDepthChange, int ColorDepthValue, bool CompressionSet, int ImageCompression);
 
