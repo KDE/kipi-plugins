@@ -2,7 +2,7 @@
 //
 //    SENDIMAGESDIALOG.H
 //
-//    Copyright (C) 2003 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2003 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -81,7 +81,9 @@ class SendImagesDialog : public KDialogBase
 Q_OBJECT
 
 public:
-   SendImagesDialog(QWidget *parent, QString TmpPath, KIPI::Interface* interface, const KIPI::ImageCollection& images );
+   SendImagesDialog(QWidget *parent, QString TmpPath,
+                    KIPI::Interface* interface, 
+                    const KIPI::ImageCollection& images );
    ~SendImagesDialog();
 
    KIntNumInput *m_imageCompression;
@@ -152,8 +154,9 @@ protected:
    bool DeleteDir(QString dirname);
    bool deldir(QString dirname);
    int  getSize ( int choice );
-   bool ResizeImage( const QString &SourcePath, const QString &DestPath, const QString &ImageFormat,
-                     const QString &ImageName, int SizeFactor, int ImageCompression);
+   bool ResizeImage( const QString &SourcePath, const QString &DestPath,
+                     const QString &ImageFormat, const QString &ImageName,
+                     int SizeFactor, int ImageCompression);
 
  private:
    void setupImagesList(void);

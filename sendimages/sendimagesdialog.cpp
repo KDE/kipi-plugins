@@ -2,7 +2,7 @@
 //
 //    SENDIMAGESDIALOG.CPP
 //
-//    Copyright (C) 2003 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2003 Gilles Caulier <caulier dot gilles at free.fr>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -676,7 +676,10 @@ void SendImagesDialog::slotOk()
 
            QString imageFormat = m_imagesFormat->currentText();
            QString imageFileName = ItemName;
-           QString imageNameFormat = pitem->album() + "-" + imageFileName + extension(imageFormat);
+          
+           QString imageNameFormat = pitem->album() + "-" + 
+                                     imageFileName.replace(QChar('.'), "_") + 
+                                     extension(imageFormat);
            int sizeFactor = getSize( m_imagesResize->currentItem() );
            int imageCompression = m_imageCompression->value();
 
@@ -982,7 +985,9 @@ void SendImagesDialog::slotMozillaExited(KProcess* /*proc*/)
           else
              *m_mailAgentProc2 << "netscape" << "-mail";
 
-       if (m_mailAgentProc2->start() == false)     // Start an instance of mozilla mail agent before a remote call.
+       // Start an instance of mozilla mail agent before a remote call.
+       
+       if (m_mailAgentProc2->start() == false)   
           {
           KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
                                      "check your installation!").arg(m_mailAgentName->currentText()));
