@@ -97,6 +97,7 @@ protected:
    bool                   m_changeProp;                // Change image properties options in setup dialog.
    
    QString                m_imageFormat;               // Image format option in the setup dialog.
+   QString                m_thunderbirdUrl;
    
    int                    m_sizeFactor;                // Image size factor in the setup dialog.
    int                    m_imageCompression;          // Image compression factor in the setup dialog.

@@ -402,13 +402,16 @@ void SendImages::invokeMailAgent(void)
     {
         m_mailAgentProc = new KProcess;
 
-        QString ThunderbirdUrl = m_sendImagesDialog->m_ThunderbirdBinPath->url();
+        m_thunderbirdUrl = m_sendImagesDialog->m_ThunderbirdBinPath->url();
 
         if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" )
             *m_mailAgentProc << "mozilla" << "-remote";
         else
             if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
-                *m_mailAgentProc << ThunderbirdUrl << "-remote";
+                {
+                *m_mailAgentProc << m_thunderbirdUrl << "-remote";
+                kdDebug (51000) << m_thunderbirdUrl << endl;
+                }
             else
                 *m_mailAgentProc << "netscape" << "-remote";
 
@@ -431,7 +434,7 @@ void SendImages::invokeMailAgent(void)
         connect(m_mailAgentProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
                 this, SLOT(slotMozillaReadStderr(KProcess*, char*, int)));
 
-        kdDebug (51000) << Temp.ascii() << endl;
+        kdDebug (51000) << Temp << endl;
 
         if ( m_mailAgentProc->start(KProcess::NotifyOnExit , KProcess::All) == false )
             KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
@@ -629,7 +632,7 @@ void SendImages::slotMozillaExited(KProcess*)
           *m_mailAgentProc2 << "mozilla" << "-mail";
        else
           if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
-             *m_mailAgentProc2 << "thunderbird" << "-mail";
+             *m_mailAgentProc2 << m_thunderbirdUrl << "-mail";
           else
              *m_mailAgentProc2 << "netscape" << "-mail";
 
@@ -663,7 +666,7 @@ void SendImages::slotMozillaTimeout(void)
        *m_mailAgentProc3 << "mozilla" << "-remote";
     else
        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
-          *m_mailAgentProc3 << "thunderbird" << "-remote";
+          *m_mailAgentProc3 << m_thunderbirdUrl << "-remote";
        else
           *m_mailAgentProc3 << "netscape" << "-remote";
 

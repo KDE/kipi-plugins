@@ -276,6 +276,8 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
            m_sendImagesOperation->invokeMailAgent();
            m_progressDlg->addedAction(i18n("Starting mailer agent..."),
                                       KIPI::StartingMessage);
+           
+           m_progressDlg->setProgress(m_total, m_total);                                      
            }
         }
 
