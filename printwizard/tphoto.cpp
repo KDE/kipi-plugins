@@ -102,9 +102,10 @@ int TPhoto::height()
   return size().height();
 };
 
+const float FONT_HEIGHT_RATIO = 0.08;
 
 bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
-  unsigned int &current, bool useThumbnails)
+  int captionType, unsigned int &current, bool useThumbnails)
 {
     Q_ASSERT(layouts.count() > 1);
 
@@ -198,6 +199,67 @@ bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
     img = img.smoothScale(w, h, QImage::ScaleFree);
     p.drawImage(x1 + left, y1 + top, img);
 
+    if (captionType > 0)
+    {
+      p.save();
+      QString caption;
+      if (captionType == 1)
+      {
+        QFileInfo fi(photo->filename.path());
+        caption = fi.fileName();
+      }
+      // draw the text at (0,0), but we will translate and rotate the world
+      // before drawing so the text will be in the correct location
+      // next, do we rotate?
+      int captionW = w-2;
+      int captionH = (int)(QMIN(w, h) * FONT_HEIGHT_RATIO);
+      if (photo->rotation == 90 || photo->rotation == 270)
+      {
+        captionW = h;
+      }
+      p.rotate(photo->rotation);
+
+      int tx = left;
+      int ty = top;
+
+      switch(photo->rotation) {
+        case 0 : { 
+                   tx += x1 + 1;
+                   ty += y1 + (h - captionH - 1);
+                   break;
+                 }
+        case 90 : { 
+                   tx = top + y1 + 1;
+                   ty = -left - x1 - captionH - 1;
+                   break;
+                 }
+        case 180 : { 
+                   tx = -left - x1 - w + 1;
+                   ty = -top -y1 - (captionH + 1);
+                   break;
+                 }
+        case 270 : { 
+                   tx = -top - y1 - h + 1;
+                   ty = left + x1 + (w - captionH)- 1;
+                   break;
+                 }
+      }
+      p.translate(tx, ty);
+
+      // Now draw the caption
+      QFont font;
+      font.setStyleHint(QFont::SansSerif);
+      font.setPixelSize( (int)(captionH * 0.8) );
+      font.setWeight(QFont::Normal);
+
+      p.setFont(font);
+      p.setPen(Qt::white);
+
+      QRect r(0, 0, captionW, captionH);
+      p.drawText(r, Qt::AlignLeft, caption, -1, &r);
+      p.restore();
+    } // caption
+
     // iterate to the next position
     layout = layouts.next();
     if (layout == 0)
@@ -213,8 +275,12 @@ bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
 
 // Like above, but outputs to an initialized QImage.  UseThumbnails is
 // not an option.
+// We have to use QImage for saving to a file, otherwise we would have
+// to use a QPixmap, which will have the same bit depth as the display.
+// So someone with an 8-bit display would not be able to save 24-bit
+// images!
 bool paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
-  unsigned int &current)
+  int captionType, unsigned int &current)
 {
     Q_ASSERT(layouts.count() > 1);
 
@@ -287,6 +353,68 @@ bool paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
       {
         p.setPixel(x1 + left + srcX, y1 + top + srcY, img.pixel(srcX, srcY));
       }
+
+    if (captionType > 0)
+    {
+      // Now draw the caption
+      QString caption;
+      if (captionType == 1)
+      {
+        QFileInfo fi(photo->filename.path());
+        caption = fi.fileName();
+      }
+      int captionW = w-2;
+      int captionH = (int)(QMIN(w, h) * FONT_HEIGHT_RATIO);
+      if (photo->rotation == 90 || photo->rotation == 270)
+      {
+        captionW = h;
+      }
+      QFont font;
+      font.setStyleHint(QFont::SansSerif);
+      font.setPixelSize( (int)(captionH * 0.8) );
+      font.setWeight(QFont::Normal);
+
+      QPixmap pixmap(w, captionH);
+      pixmap.fill(Qt::black);
+      QPainter painter;
+      painter.begin(&pixmap);
+      painter.setFont(font);
+
+      painter.setPen(Qt::white);
+      QRect r(1, 1, w-2, captionH - 2);
+      painter.drawText(r, Qt::AlignLeft, caption, -1, &r);
+      painter.end();
+      QImage fontImage = pixmap.convertToImage();
+      QRgb black = QColor(0, 0, 0).rgb();
+      for(int srcY = 0; srcY < fontImage.height(); srcY++)
+        for(int srcX = 0; srcX < fontImage.width(); srcX++)
+        {
+          int destX = x1 + left + srcX;
+          int destY = y1 + top + h - (captionH + 1) + srcY;
+
+          // adjust the destination coordinates for rotation
+          switch(photo->rotation) {
+            case 90 : { 
+                       destX = left + x1 + (captionH - srcY);
+                       destY = top + y1 + srcX;
+                       break;
+                     }
+            case 180 : { 
+                       destX = left + x1 + w - srcX;
+                       destY = top + y1 + (captionH - srcY);
+                       break;
+                     }
+            case 270 : { 
+                       destX = left + x1 + (w - captionH) + srcY;
+                       destY = top + y1 + h - srcX;
+                       break;
+                     }
+          }
+
+          if (fontImage.pixel(srcX, srcY) != black)
+            p.setPixel(destX, destY, fontImage.pixel(srcX, srcY));
+        }
+    } // caption
 
     // iterate to the next position
     layout = layouts.next();

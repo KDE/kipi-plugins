@@ -64,10 +64,10 @@ private:
 };
 
 bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
-                  unsigned int &current, bool useThumbnails = false);
+                  int captionType, unsigned int &current, bool useThumbnails = false);
 
 bool paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
-                  unsigned int &current);
+                  int captionType, unsigned int &current);
 
 }  // NameSpace KIPIPrintWizardPlugin
                   

@@ -37,7 +37,7 @@ class CropFrame : public QWidget
   public:
     CropFrame(QWidget *parent, const char *name);
     ~CropFrame();
-    void init(TPhoto *photo, int width, int height, bool paint = true);
+    void init(TPhoto *photo, int width, int height, bool autoRotate, bool paint = true);
     void setColor(QColor);
     QColor color();
 

@@ -52,10 +52,6 @@ extern "C"
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
-// Include files for KIPI
-
-#include <libkipi/version.h>
-
 // Local includes
 
 #include "utils.h"
@@ -79,8 +75,8 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
     
   KAboutData* about = new KAboutData("kipiplugins",
                                      I18N_NOOP("Print Wizard"), 
-                                     kipi_version,
-                                     I18N_NOOP("A Kipi plugin to print images"),
+                                     "0.1.0-cvs",
+                                     I18N_NOOP("A KIPI plugin to print images"),
                                      KAboutData::License_GPL,
                                      "(c) 2003-2004, Todd Shoemaker", 
                                      0,
@@ -205,7 +201,8 @@ void FrmPrintWizard::BtnCropNext_clicked()
 
 void FrmPrintWizard::updateCropFrame(TPhoto *photo, int photoIndex)
 {
-  cropFrame->init(photo, getLayout(photoIndex)->width(), getLayout(photoIndex)->height());
+  TPhotoSize *s = m_photoSizes.at(ListPhotoSizes->currentItem());
+  cropFrame->init(photo, getLayout(photoIndex)->width(), getLayout(photoIndex)->height(), s->autoRotate);
   LblCropPhoto->setText(i18n("Photo %1 of %2").arg( QString::number(m_photos.at() + 1) ).arg( QString::number(m_photos.count()) ));
 }
 
@@ -251,15 +248,15 @@ void FrmPrintWizard::FrmPrintWizardBaseSelected(const QString &)
     this->finishButton()->setEnabled(true);
 
     // set the default crop regions if not already set
+    TPhotoSize *s = m_photoSizes.at(ListPhotoSizes->currentItem());
     int i = 0;
     for (TPhoto *photo = m_photos.first(); photo != 0; photo = m_photos.next())
     {
       if (photo->cropRegion == QRect(-1, -1, -1, -1))
-        cropFrame->init(photo, getLayout(i)->width(), getLayout(i)->height());
+        cropFrame->init(photo, getLayout(i)->width(), getLayout(i)->height(), s->autoRotate);
       i++;
     }
 
-    TPhotoSize *s = m_photoSizes.at(ListPhotoSizes->currentItem());
     if (RdoOutputPrinter->isChecked())
     {
       KPrinter printer;
@@ -275,7 +272,7 @@ void FrmPrintWizard::FrmPrintWizardBaseSelected(const QString &)
       if (path.right(1) != "/")
         path = path + "/";
       path = path + "kipi_printwizard_";
-      printPhotosToFile(m_photos, path, s->layouts);
+      printPhotosToFile(m_photos, path, s);
     } else
     if (RdoOutputGimp->isChecked())
     {
@@ -286,7 +283,7 @@ void FrmPrintWizard::FrmPrintWizardBaseSelected(const QString &)
       path = path + "kipi_tmp_";
       if (m_gimpFiles.count() > 0)
         removeGimpFiles();
-      m_gimpFiles = printPhotosToFile(m_photos, path, s->layouts);
+      m_gimpFiles = printPhotosToFile(m_photos, path, s);
       QStringList args;
       args << "gimp";
       for(QStringList::Iterator it = m_gimpFiles.begin(); it != m_gimpFiles.end(); ++it)
@@ -374,7 +371,7 @@ void FrmPrintWizard::previewPhotos()
     photo->rotation = 0;
     int w = s->layouts.at(count+1)->width();
     int h = s->layouts.at(count+1)->height();
-    cropFrame->init(photo, w, h, false);
+    cropFrame->init(photo, w, h, s->autoRotate, false);
     count++;
     if (count >= photosPerPage)
       break;
@@ -386,7 +383,7 @@ void FrmPrintWizard::previewPhotos()
   QPainter p;
   p.begin(&img);
   p.fillRect(0, 0, img.width(), img.height(), this->paletteBackgroundColor());
-  paintOnePage(p, m_photos, s->layouts, current, true);
+  paintOnePage(p, m_photos, s->layouts, GrpImageCaptions->selectedId(), current, true);
   p.end();
   BmpFirstPagePreview->setPixmap(img);
 }
@@ -464,7 +461,7 @@ void FrmPrintWizard::printPhotos(QPtrList<TPhoto> photos, QPtrList<QRect> layout
   bool printing = true;
   while(printing)
   {
-    printing = paintOnePage(p, photos, layouts, current);
+    printing = paintOnePage(p, photos, layouts, GrpImageCaptions->selectedId(), current);
     if (printing)
       printer.newPage();
     PrgPrintProgress->setProgress(current);
@@ -481,9 +478,9 @@ void FrmPrintWizard::printPhotos(QPtrList<TPhoto> photos, QPtrList<QRect> layout
   LblPrintProgress->setText(i18n("Complete.  Click Finish to exit the Print Wizard."));
 }
 
-QStringList FrmPrintWizard::printPhotosToFile(QPtrList<TPhoto> photos, QString &baseFilename, QPtrList<QRect> layouts)
+QStringList FrmPrintWizard::printPhotosToFile(QPtrList<TPhoto> photos, QString &baseFilename, TPhotoSize* layouts)
 {
-    Q_ASSERT(layouts.count() > 1);
+    Q_ASSERT(layouts->layouts.count() > 1);
 
   m_cancelPrinting = false;
   LblPrintProgress->setText("");
@@ -497,13 +494,15 @@ QStringList FrmPrintWizard::printPhotosToFile(QPtrList<TPhoto> photos, QString &
   bool printing = true;
   QStringList files;
 
-  QRect *srcPage = layouts.at(0);
+  QRect *srcPage = layouts->layouts.at(0);
 
   while (printing)
   {
     // make a pixmap to save to file.  Make it just big enough to show the
     // highest-dpi image on the page without losing data.
-    double dpi = getMaxDPI(photos, layouts, current) * 1.1;
+    double dpi = layouts->dpi;
+    if (dpi == 0.0)
+      dpi = getMaxDPI(photos, layouts->layouts, current) * 1.1;
     int w = NINT(srcPage->width() / 1000.0 * dpi);
     int h = NINT(srcPage->height()  / 1000.0 * dpi);
     QImage *img = new QImage(w, h, 32);
@@ -529,7 +528,7 @@ QStringList FrmPrintWizard::printPhotosToFile(QPtrList<TPhoto> photos, QString &
 
     // paint this page, even if we aren't saving it to keep the page
     // count accurate.
-    printing = paintOnePage(*img, photos, layouts, current);
+    printing = paintOnePage(*img, photos, layouts->layouts, GrpImageCaptions->selectedId(), current);
 
     if (saveFile)
     {
@@ -567,6 +566,10 @@ void FrmPrintWizard::loadSettings()
       CmbPaperSize->setCurrentItem(1);      
   else
       CmbPaperSize->setCurrentItem(0);
+
+  // captions
+  int captions = config.readNumEntry("ImageCaptions", 0);
+  GrpImageCaptions->setButton(captions);
 
   // set the last output path
   QString outputPath = config.readEntry("OutputPath", EditOutputPath->text());
@@ -607,6 +610,9 @@ void FrmPrintWizard::saveSettings()
       if (RdoOutputGimp->isChecked())
         output = GrpOutputSettings->id(RdoOutputGimp);
   config.writeEntry("PrintOutput", output);
+
+  // image captions
+  config.writeEntry("ImageCaptions", GrpImageCaptions->selectedId());
 
   // output path
   config.writeEntry("OutputPath", EditOutputPath->text());
@@ -670,6 +676,31 @@ void FrmPrintWizard::CmbPaperSize_activated( int index )
   initPhotoSizes(pageSize);
 }
 
+// create a MxN grid of photos, fitting on the page
+TPhotoSize * createPhotoGrid(int pageWidth, int pageHeight, QString label, int rows, int columns) {
+  const int MARGIN = 500; 
+  const int GAP = 100;
+  int photoWidth = (pageWidth - (MARGIN * 2) - ((columns-1) * GAP)) / columns;
+  int photoHeight = (pageHeight - (MARGIN * 2) - ((rows-1) * GAP)) / rows;
+
+  TPhotoSize *p = new TPhotoSize;
+  p->label = label;
+  p->dpi = 100;
+  p->autoRotate = false;
+  p->layouts.append(new QRect(0, 0, pageWidth, pageHeight));
+
+  int row = 0;
+  for(int y=MARGIN; row < rows && y < pageHeight - MARGIN; y += photoHeight + GAP) {
+    int col = 0;
+    for(int x=MARGIN; col < columns && x < pageWidth - MARGIN; x += photoWidth + GAP) {
+      p->layouts.append(new QRect(x, y, photoWidth, photoHeight));
+      col++;
+    }
+    row++;
+  }
+  return p;
+}
+
 void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
 {
   // don't refresh anything if we haven't changed page sizes.
@@ -684,6 +715,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     // ========== 5 x 3.5
     p = new TPhotoSize;
     p->label = i18n("3.5 x 5\"");
+    p->dpi = 0;
+    p->autoRotate = true;
     // page size
     p->layouts.append(new QRect(0, 0, 8500, 11000));
 
@@ -699,6 +732,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     // ========== 4 x 6
     p = new TPhotoSize;
     p->label = i18n("4 x 6\"");
+    p->dpi = 0;
+    p->autoRotate = true;
     // page size
     p->layouts.append(new QRect(0, 0, 8500, 11000));
 
@@ -713,6 +748,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     // ========== 4 x 6 Album
     p = new TPhotoSize;
     p->label = i18n("4 x 6\" Album");
+    p->dpi = 0;
+    p->autoRotate = true;
     // page size
     p->layouts.append(new QRect(0, 0, 8500, 11000));
 
@@ -726,6 +763,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     // ========== 5 x 7
     p = new TPhotoSize;
     p->label = i18n("5 x 7\"");
+    p->dpi = 0;
+    p->autoRotate = true;
     // page size
     p->layouts.append(new QRect(0, 0, 8500, 11000));
 
@@ -739,6 +778,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     // ========== 8 x 10
     p = new TPhotoSize;
     p->label = i18n("8 x 10\"");
+    p->dpi = 0;
+    p->autoRotate = true;
     // page size
     p->layouts.append(new QRect(0, 0, 8500, 11000));
 
@@ -748,6 +789,12 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     // add to the list
     m_photoSizes.append(p);
 
+    // thumbnails
+    m_photoSizes.append(createPhotoGrid(8500, 11000, i18n("Thumbnails"), 5, 4));
+
+    // small thumbnails
+    m_photoSizes.append(createPhotoGrid(8500, 11000, i18n("Small Thumbnails"), 6, 5));
+
   } // letter
 
   else if (pageSize == KPrinter::A4)
@@ -756,6 +803,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     TPhotoSize *p;
     // ========== 9x13
     p = new TPhotoSize;
+    p->dpi = 0;
+    p->autoRotate = true;
     p->label = i18n("9 x 13cm");
     // page size
     p->layouts.append(new QRect(0, 0, 2100, 2970));
@@ -771,6 +820,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
 
     // ========== 10x15cm
     p = new TPhotoSize;
+    p->dpi = 0;
+    p->autoRotate = true;
     p->label = i18n("10 x 15cm");
     // page size
     p->layouts.append(new QRect(0, 0, 2100, 2970));
@@ -785,6 +836,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
 
     // ========== 10x15cm album
     p = new TPhotoSize;
+    p->dpi = 0;
+    p->autoRotate = true;
     p->label = i18n("10 x 15cm Album");
     // page size
     p->layouts.append(new QRect(0, 0, 2100, 2970));
@@ -797,6 +850,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     m_photoSizes.append(p);
     // ========== 13x18cm
     p = new TPhotoSize;
+    p->dpi = 0;
+    p->autoRotate = true;
     p->label = i18n("13 x 18cm");
     // page size
     p->layouts.append(new QRect(0, 0, 2100, 2970));
@@ -809,6 +864,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     m_photoSizes.append(p);
     // ========== 20x25cm
     p = new TPhotoSize;
+    p->dpi = 0;
+    p->autoRotate = true;
     p->label = i18n("20 x 25cm");
     // page size
     p->layouts.append(new QRect(0, 0, 2100, 2970));
@@ -826,6 +883,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
       TPhotoSize *p;
       // ========== 9x13
       p = new TPhotoSize;
+      p->dpi = 0;
+      p->autoRotate = true;
       p->label = i18n("9 x 13cm");
       // page size
       //    p->layouts.append(new QRect(0, 0, 1050, 1480));
@@ -839,6 +898,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
                              
       // ========== 10x15cm
       p = new TPhotoSize;
+      p->dpi = 0;
+      p->autoRotate = true;
       p->label = i18n("10 x 15cm");
       // page size
       //     p->layouts.append(new
@@ -858,6 +919,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     // We don't support this page size yet.  Just create a default page.
     TPhotoSize *p;
     p = new TPhotoSize;
+    p->dpi = 0;
+    p->autoRotate = false;
     p->label = i18n("Unsupported Paper Size");
     // page size
     p->layouts.append(new QRect(0, 0, 8500, 11000));

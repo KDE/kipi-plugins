@@ -46,7 +46,7 @@ CropFrame::CropFrame(QWidget *parent=0, const char *name=0)
 // should be a TPhoto method, and should not require the scaling of
 // pixmaps to get the desired effect, which are too slow.
 
-void CropFrame::init(TPhoto *photo, int width, int height, bool paint)
+void CropFrame::init(TPhoto *photo, int width, int height, bool autoRotate, bool paint)
 {
   m_photo = photo;
   QImage scaledImg = m_photo->thumbnail().convertToImage();
@@ -56,13 +56,15 @@ void CropFrame::init(TPhoto *photo, int width, int height, bool paint)
   if (resetCropRegion) 
   {
     // first, let's see if we should rotate
-    if (m_photo->rotation == 0 && ((width > height &&
-        m_photo->thumbnail().height() > m_photo->thumbnail().width()) ||
-        (height > width &&
-        m_photo->thumbnail().width() > m_photo->thumbnail().height())) )
-    {
-      // rotate
-      m_photo->rotation = 90;
+    if (autoRotate) {
+      if (m_photo->rotation == 0 && ((width > height &&
+          m_photo->thumbnail().height() > m_photo->thumbnail().width()) ||
+          (height > width &&
+          m_photo->thumbnail().width() > m_photo->thumbnail().height())) )
+      {
+        // rotate
+        m_photo->rotation = 90;
+      }
     }
   }
   else

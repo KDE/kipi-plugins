@@ -40,6 +40,8 @@ class FrmPrintWizardBase;
 
 typedef struct _TPhotoSize {
   QString label;
+  int dpi;
+  bool autoRotate;
   QPtrList<QRect> layouts;  // first element is page size
 } TPhotoSize;
 
@@ -68,7 +70,7 @@ private:
   void initPhotoSizes(KPrinter::PageSize);
   void previewPhotos();
   void printPhotos(QPtrList<TPhoto> photos, QPtrList<QRect> layouts, KPrinter &printer);
-  QStringList printPhotosToFile(QPtrList<TPhoto> photos, QString &baseFilename, QPtrList<QRect> layouts);
+  QStringList printPhotosToFile(QPtrList<TPhoto> photos, QString &baseFilename, TPhotoSize *layouts);
   void loadSettings();
   void saveSettings();
 
