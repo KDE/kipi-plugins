@@ -38,28 +38,31 @@ class RecompressImagesDialog : public BatchProcessImagesDialog
 Q_OBJECT
 
  public:
+ 
    RecompressImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~RecompressImagesDialog();
 
  private slots:
-   void slotAbout(void);
+ 
    void slotOptionsClicked(void);
+   void slotHelp(void);
 
  protected:
+ 
    int     m_JPEGCompression;
    int     m_PNGCompression;
    bool    m_compressLossLess;
    QString m_TIFFCompressionAlgo;
    QString m_TGACompressionAlgo;
 
-    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                        const QString& albumDest);
+   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+                       const QString& albumDest);
 
    void readSettings(void);
    void saveSettings(void);
 
-    bool prepareStartProcess(BatchProcessImagesItem *item,
-                             const QString& albumDest);
+   bool prepareStartProcess(BatchProcessImagesItem *item,
+                            const QString& albumDest);
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

@@ -54,6 +54,11 @@ extern "C"
 #include <kio/netaccess.h>
 #include <kprogress.h>
 #include <kdatewidget.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // Includes files for KIPI
 
@@ -70,12 +75,32 @@ namespace KIPIBatchProcessImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 RenameImagesDialog::RenameImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                 : BatchProcessImagesDialog( urlList, interface, parent )
+                  : BatchProcessImagesDialog( urlList, interface, parent )
 {
-    m_nbItem = m_selectedImageFiles.count();
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Batch-rename images"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin to batch-rename images\n"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Gilles Caulier", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                     "caulier dot gilles at free.fr");
+                        
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Batch-rename images handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
 
+    //---------------------------------------------
+    
+    m_nbItem = m_selectedImageFiles.count();
     setCaption(i18n("Batch Rename Images Options"));
-    setHelp("renameimages", "kipi-plugins");
 
     //---------------------------------------------
 
@@ -102,12 +127,10 @@ RenameImagesDialog::~RenameImagesDialog()
 
 //////////////////////////////////////// SLOTS //////////////////////////////////////////////
 
-void RenameImagesDialog::slotAbout( void )
+void RenameImagesDialog::slotHelp( void )
 {
-    KMessageBox::about(this, i18n("A KIPI plugin to batch-rename images\n\n"
-                                  "Author: Gilles Caulier\n\n"
-                                  "Email: caulier dot gilles at free.fr\n"),
-                                  i18n("About KIPI's 'Batch-rename Images' plugin"));
+    KApplication::kApplication()->invokeHelp("renameimages",
+                                             "kipi-plugins");
 }
 
 

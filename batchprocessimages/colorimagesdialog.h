@@ -38,15 +38,18 @@ class ColorImagesDialog : public BatchProcessImagesDialog
 Q_OBJECT
 
  public:
+ 
    ColorImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~ColorImagesDialog();
 
  private slots:
-   void slotAbout(void);
+ 
+   void slotHelp(void);
    void slotOptionsClicked(void);
    void slotTypeChanged(const QString &string);
 
  protected:
+ 
    QString                m_depthValue;
    int                    m_fuzzDistance;
    int                    m_segmentCluster;

@@ -38,14 +38,17 @@ class BorderImagesDialog : public BatchProcessImagesDialog
 Q_OBJECT
 
  public:
+ 
    BorderImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~BorderImagesDialog();
 
  private slots:
-   void slotAbout(void);
+ 
+   void slotHelp(void);
    void slotOptionsClicked(void);
 
  protected:
+ 
    int                    m_solidWidth;
    QColor                 m_solidColor;
 
@@ -60,7 +63,7 @@ Q_OBJECT
    int                    m_bevelWidth;
    QColor                 m_frameColor;
 
-    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                        const QString& albumDest);
 
    void readSettings(void);

@@ -38,6 +38,11 @@
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kprocess.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // Local includes
 
@@ -51,13 +56,32 @@ namespace KIPIBatchProcessImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                 : BatchProcessImagesDialog( urlList, interface, parent )
+                   : BatchProcessImagesDialog( urlList, interface, parent )
 {
-    setCaption(i18n("Batch Convert Images Options"));
-    setHelp("convertimages", "kipi-plugins");
-
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Batch convert images"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin for batch converting images\n"
+                                                 "This plugin use the \"convert\" program from \"ImageMagick\" package."),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Gilles Caulier", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                     "caulier dot gilles at free.fr");
+                        
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Batch convert images handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
+    
     //---------------------------------------------
-
+    
+    setCaption(i18n("Batch Convert Images Options"));
     groupBox1->setTitle( i18n("Convert Images Options") );
 
     m_labelType->setText( i18n("Target image files' format:") );
@@ -120,13 +144,10 @@ ConvertImagesDialog::~ConvertImagesDialog()
 
 //////////////////////////////////////// SLOTS //////////////////////////////////////////////
 
-void ConvertImagesDialog::slotAbout( void )
+void ConvertImagesDialog::slotHelp( void )
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for batch converting images\n\n"
-                                  "Author: Gilles Caulier\n\n"
-                                  "Email: caulier dot gilles at free.fr\n\n"
-                                  "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About KIPI's 'Batch Convert Images' plugin"));
+    KApplication::kApplication()->invokeHelp("convertimages",
+                                             "kipi-plugins");
 }
 
 

@@ -55,6 +55,11 @@ extern "C"
 #include <kstandarddirs.h>
 #include <kcursor.h>
 #include <kdebug.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // Local includes
 
@@ -71,8 +76,31 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
                            bool cropActionOrig, bool cropActionDest, const QString &EffectName,
                            const QString &FileName, QWidget *parent)
             : KDialogBase( parent, "PreviewDialog", true, i18n("Batch Process Preview (%1 - %2)").arg(EffectName)
-                           .arg(FileName), Ok, Ok, true)
+                           .arg(FileName), Help|Ok, Ok, true)
 {
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Batch processes images"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("An interface for to preview the batch processes images Kipi plugins\n"
+                                                 "This plugin use the \"convert\" program from \"ImageMagick\" package."),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Gilles Caulier", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                     "caulier dot gilles at free.fr");
+                        
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Kipi plugins handbooks"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
+
+    //---------------------------------------------
+    
     QWidget* box = new QWidget( this );
     setMainWidget(box);
     resize(700, 400);
@@ -136,6 +164,15 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
 
 ImagePreview::~ImagePreview()
 {
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+void ImagePreview::slotHelp( void )
+{
+    KApplication::kApplication()->invokeHelp("",
+                                             "kipi-plugins");
 }
 
 
@@ -325,7 +362,7 @@ void PixmapView::resizeImage(int ZoomFactor)
     QImage imgTmp = m_img.scale(w, h);
     m_pix->convertFromImage(imgTmp);
     resizeContents(w, h);
-    repaintContents();
+    repaintContents(false);
 }
 
 

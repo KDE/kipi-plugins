@@ -54,12 +54,6 @@
 
 #include <libkipi/interface.h>
 
-class KFileItem;
-namespace KIPI
-{
-    class UploadWidget;
-}
-
 // Local includes
 
 #include "batchprocessimagesitem.h"
@@ -78,6 +72,12 @@ class KProcess;
 class KConfig;
 class KProgress;
 class KURL;
+class KFileItem;
+
+namespace KIPI
+{
+    class UploadWidget;
+}
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -126,9 +126,9 @@ private slots:
    // --------------------------------------------------------------------------------------------------------
    // Standards virtuals slots for re-implementation
 
-   virtual void slotAbout(void){};                          // Called when 'About' button is clicked.
-   virtual void slotOptionsClicked(void){};                 // Called when 'Options' button is clicked.
-   virtual void slotTypeChanged(const QString &/*string*/){};   // Called when the current type option is changed.
+   virtual void slotHelp(void){};                             // Called when 'Help' menu option is actived.
+   virtual void slotOptionsClicked(void){};                   // Called when 'Options' button is clicked.
+   virtual void slotTypeChanged(const QString &/*string*/){}; // Called when the current type option is changed.
 
  protected:
 
@@ -141,8 +141,9 @@ private slots:
    QLabel                 *m_imageLabel;
 
    QComboBox              *m_overWriteMode;
-   KIPI::UploadWidget     *m_upload;
    QComboBox              *m_Type;
+      
+   KIPI::UploadWidget     *m_upload;
 
    BatchProcessImagesList *m_listFiles;
    KProgress              *m_progress;
@@ -161,7 +162,8 @@ private slots:
    QPushButton            *m_addNewAlbumButton;
    QPushButton            *m_addImagesButton;
    QPushButton            *m_remImagesButton;
-
+   QPushButton            *m_helpButton;
+   
    KConfig                *m_config;
 
    int                     m_convertStatus;

@@ -37,6 +37,11 @@
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kprocess.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // Local includes
 
@@ -53,10 +58,31 @@ namespace KIPIBatchProcessImagesPlugin
 EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
                   : BatchProcessImagesDialog( urlList, interface, parent )
 {
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Batch image effects"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin for batch image-effect transformations\n"
+                                                 "This plugin use the \"convert\" program from \"ImageMagick\" package."),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Gilles Caulier", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                     "caulier dot gilles at free.fr");
+                        
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Batch image effects handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
+        
+    //---------------------------------------------
+    
     m_nbItem = m_selectedImageFiles.count();
-
     setCaption(i18n("Batch Image Effects Options"));
-    setHelp("effectimages", "kipi-plugins");
 
     //---------------------------------------------
 
@@ -117,13 +143,10 @@ EffectImagesDialog::~EffectImagesDialog()
 
 //////////////////////////////////////// SLOTS //////////////////////////////////////////////
 
-void EffectImagesDialog::slotAbout( void )
+void EffectImagesDialog::slotHelp( void )
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for batch image-effect transformations\n\n"
-                                  "Author: Gilles Caulier\n\n"
-                                  "Email: caulier dot gilles at free.fr\n\n"
-                                  "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About KIPI's 'Batch Image Effects' plugin"));
+    KApplication::kApplication()->invokeHelp("effectimages",
+                                             "kipi-plugins");
 }
 
 

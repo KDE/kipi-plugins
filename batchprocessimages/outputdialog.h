@@ -33,6 +33,7 @@
 #include <kdialogbase.h>
 
 class QTextView;
+class QPushButton;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -42,15 +43,21 @@ class OutputDialog : public KDialogBase
 Q_OBJECT
 
 public:
+
   OutputDialog( QWidget* parent=0, QString caption=QString::null,
                 QString Messages=QString::null, QString Header=QString::null );
   ~OutputDialog();
 
 private slots:
+
+  void slotHelp(void);
   void slotCopyToCliboard( void );
 
 private:
+  
+  QPushButton *m_helpButton;
   QTextView *debugView;
+
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

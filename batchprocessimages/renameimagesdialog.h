@@ -47,11 +47,13 @@ class RenameImagesDialog : public BatchProcessImagesDialog
 Q_OBJECT
 
  public:
+ 
    RenameImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0);
    ~RenameImagesDialog();
 
  private slots:
-   void slotAbout(void);
+ 
+   void slotHelp(void);
    void slotOptionsClicked(void);
 
    void slotResult( KIO::Job *job );
@@ -60,6 +62,7 @@ Q_OBJECT
    void slotTemplateSortListChanged(bool on);
 
  protected:
+ 
    bool    m_addOriginalFileName;
    bool    m_addImageFileDate;
    bool    m_addImageFileSize;
@@ -89,6 +92,7 @@ Q_OBJECT
    void    copyItemOperations(void);
    void    updateOptions(void);
    bool    changeDate(QString file);
+   
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

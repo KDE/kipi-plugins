@@ -95,9 +95,9 @@ namespace KIPIBatchProcessImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-    : KDialogBase( KDialogBase::Plain, "BatchProcessImagesDialog", Help|User1|User2|Cancel,
-                   Cancel, parent, "", false, false, i18n("&About"), i18n("&Start")),
-                   m_selectedImageFiles( urlList), m_interface( interface )
+                        : KDialogBase( KDialogBase::Plain, "BatchProcessImagesDialog", Help|User1|Cancel,
+                                       Cancel, parent, "", false, false, i18n("&Start")),
+                          m_selectedImageFiles( urlList), m_interface( interface )
 {
     // Init. Tmp folder
 
@@ -184,7 +184,9 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     m_addNewAlbumButton = new QPushButton ( i18n( "&Add Directory..."), add, "PushButton_AddNewAlbum");
     lay->addWidget( m_addNewAlbumButton );
-    connect( m_addNewAlbumButton, SIGNAL( clicked() ), m_upload, SLOT( mkdir() ) );
+    
+    connect( m_addNewAlbumButton, SIGNAL( clicked() ),
+             m_upload, SLOT( mkdir() ) );
 
     dvlay->addWidget( groupBox3 );
 
@@ -241,9 +243,6 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
             this, SLOT(slotListDoubleClicked(QListViewItem *)));
 
     connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotAbout()));
-
-    connect(this, SIGNAL(user2Clicked()),
             this, SLOT(slotProcessStart()));
 
     connect(m_optionsButton, SIGNAL(clicked()),
@@ -415,10 +414,10 @@ void BatchProcessImagesDialog::slotProcessStart( void )
 
     m_statusbar->setText(i18n("Performing process; please wait...."));
     m_convertStatus = UNDER_PROCESS;
-    disconnect( this, SIGNAL(user2Clicked()), this, SLOT(slotProcessStart()));
+    disconnect( this, SIGNAL(user1Clicked()), this, SLOT(slotProcessStart()));
     showButtonCancel( false );
-    setButtonText( User2, i18n("&Stop") );
-    connect(this, SIGNAL(user2Clicked()), this, SLOT(slotProcessStop()));
+    setButtonText( User1, i18n("&Stop") );
+    connect(this, SIGNAL(user1Clicked()), this, SLOT(slotProcessStop()));
 
     m_labelType->setEnabled(false);
     m_Type->setEnabled(false);
@@ -770,13 +769,13 @@ void BatchProcessImagesDialog::slotPreview(void)
     m_addImagesButton->setEnabled(false);
     m_remImagesButton->setEnabled(false);
 
-    disconnect( this, SIGNAL(user2Clicked()),
+    disconnect( this, SIGNAL(user1Clicked()),
                 this, SLOT(slotProcessStart()));
 
     showButtonCancel( false );
-    setButtonText( User2, i18n("&Stop") );
+    setButtonText( User1, i18n("&Stop") );
 
-    connect(this, SIGNAL(user2Clicked()),
+    connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotPreviewStop()));
 
     m_previewOutput = "";
@@ -975,12 +974,12 @@ void BatchProcessImagesDialog::endPreview(void)
     m_optionsButton->setEnabled(true);          // Default status if 'slotTypeChanged' isn't re-implemented.
     slotTypeChanged(m_Type->currentText());
 
-    setButtonText( User2, i18n("&Start") );
+    setButtonText( User1, i18n("&Start") );
 
-    disconnect(this, SIGNAL(user2Clicked()),
+    disconnect(this, SIGNAL(user1Clicked()),
                this, SLOT(slotPreviewStop()));
 
-    connect(this, SIGNAL(user2Clicked()),
+    connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotProcessStart()));
 }
 
@@ -1037,12 +1036,12 @@ void BatchProcessImagesDialog::endProcess(QString endMessage)
 {
     m_statusbar->setText(endMessage);
     m_convertStatus = PROCESS_DONE;
-    setButtonText( User2, i18n("&Close") );
+    setButtonText( User1, i18n("&Close") );
 
-    disconnect(this, SIGNAL(user2Clicked()),
+    disconnect(this, SIGNAL(user1Clicked()),
                this, SLOT(slotProcessStop()));
 
-    connect(this, SIGNAL(user2Clicked()),
+    connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotOk()));
 }
 

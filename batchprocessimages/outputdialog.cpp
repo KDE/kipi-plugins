@@ -25,10 +25,16 @@
 #include <qtextview.h>
 #include <qlayout.h>
 #include <qlabel.h>
+#include <qpushbutton.h>
 
 // KDElib includes
 
 #include <klocale.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // Local includes
 
@@ -40,24 +46,47 @@ namespace KIPIBatchProcessImagesPlugin
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, QString Header )
-            : KDialogBase( parent, "OutputDialog", true, caption, User1|Ok, Ok, false,
+            : KDialogBase( parent, "OutputDialog", true, caption, Help|User1|Ok, Ok, false,
                            i18n("Copy to Clip&board"))
 {
-  QWidget* box = new QWidget( this );
-  setMainWidget(box);
-  QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Batch processes images"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("An interface for to show the output of batch processes images Kipi plugins\n"
+                                                 "This plugin use the \"convert\" program from \"ImageMagick\" package."),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Gilles Caulier", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                     "caulier dot gilles at free.fr");
+                        
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Kipi plugins handbooks"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
 
-  QLabel *labelHeader = new QLabel( Header, box);
-  dvlay->addWidget( labelHeader );
+    //---------------------------------------------
+  
+    QWidget* box = new QWidget( this );
+    setMainWidget(box);
+    QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
 
-  debugView = new QTextView( box );
-  debugView->append( Messages );
-  dvlay->addWidget( debugView );
+    QLabel *labelHeader = new QLabel( Header, box);
+    dvlay->addWidget( labelHeader );
 
-  connect(this, SIGNAL(user1Clicked()),
-          this, SLOT(slotCopyToCliboard()));
+    debugView = new QTextView( box );
+    debugView->append( Messages );
+    dvlay->addWidget( debugView );
 
-  resize( 600, 400 );
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotCopyToCliboard()));
+
+    resize( 600, 400 );
 }
 
 
@@ -70,11 +99,20 @@ OutputDialog::~OutputDialog()
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+void OutputDialog::slotHelp( void )
+{
+    KApplication::kApplication()->invokeHelp("",
+                                             "kipi-plugins");
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 void OutputDialog::slotCopyToCliboard( void )
 {
-  debugView->selectAll(TRUE);
-  debugView->copy();
-  debugView->selectAll(FALSE);
+    debugView->selectAll(true);
+    debugView->copy();
+    debugView->selectAll(false);
 }
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

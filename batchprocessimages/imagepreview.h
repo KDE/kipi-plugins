@@ -37,6 +37,7 @@ class QPixmap;
 class QCursor;
 class QLCDNumber;
 class QSlider;
+class QPushButton;
 
 class KProcess;
 
@@ -50,6 +51,7 @@ class PixmapView : public QScrollView
 Q_OBJECT
 
 public:
+
     PixmapView(bool cropAction, QWidget *parent=0, const char *name=0);
     ~PixmapView();
 
@@ -57,6 +59,7 @@ public:
     void resizeImage(int ZoomFactor);
 
 private slots:
+    
     void slotPreviewReadStd(KProcess* proc, char *buffer, int buflen);
     void PreviewProcessDone(KProcess* proc);
     void contentsWheelEvent( QWheelEvent * e );
@@ -65,29 +68,33 @@ private slots:
     void contentsMouseMoveEvent( QMouseEvent * e );
 
 signals:
+
     void wheelEvent( int delta );
 
 protected:
-    QPixmap   *m_pix;
-    QImage     m_img;
 
-    int        m_w;
-    int        m_h;
-    int        m_xpos;
-    int        m_ypos;
+    QPixmap     *m_pix;
+    
+    QImage       m_img;
 
-    KProcess  *m_PreviewProc;
+    int          m_w;
+    int          m_h;
+    int          m_xpos;
+    int          m_ypos;
 
-    QString    m_previewOutput;
-    QString    m_previewFileName;
+    KProcess    *m_PreviewProc;
 
-    bool       m_validPreview;
-    bool       m_cropAction;
+    QString      m_previewOutput;
+    QString      m_previewFileName;
 
-    QCursor   *m_handCursor;
+    bool         m_validPreview;
+    bool         m_cropAction;
+
+    QCursor     *m_handCursor;
 
     void drawContents(QPainter *p, int x, int y, int w, int h);
     void PreviewCal(const QString &ImagePath, const QString &tmpPath);
+    
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,20 +104,29 @@ class ImagePreview : public KDialogBase
 Q_OBJECT
 
 public:
+    
     ImagePreview(const QString &fileOrig, const QString &fileDest, const QString &tmpPath,
                  bool cropActionOrig, bool cropActionDest, const QString &EffectName,
                  const QString &FileName, QWidget *parent=0);
     ~ImagePreview();
 
 private slots:
+    
     void slotZoomFactorValueChanged( int ZoomFactorValue );
     void slotWheelChanged( int delta );
-
+    void slotHelp(void);
+    
 protected:
-    PixmapView *m_previewOrig;
-    PixmapView *m_previewDest;
-    QLCDNumber *LCDZoomFactorValue;
-    QSlider    *ZoomFactorSlider;
+    
+    PixmapView  *m_previewOrig;
+    PixmapView  *m_previewDest;
+    
+    QLCDNumber  *LCDZoomFactorValue;
+    
+    QSlider     *ZoomFactorSlider;
+    
+    QPushButton *m_helpButton;
+    
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

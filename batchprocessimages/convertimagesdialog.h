@@ -38,22 +38,25 @@ class ConvertImagesDialog : public BatchProcessImagesDialog
 Q_OBJECT
 
  public:
+ 
    ConvertImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~ConvertImagesDialog();
 
  private slots:
-   void slotAbout(void);
+ 
+   void slotHelp(void);
    void slotOptionsClicked(void);
    void slotTypeChanged(const QString &string);
 
  protected:
+ 
    int                    m_JPEGPNGCompression;
    bool                   m_compressLossLess;
    QString                m_TIFFCompressionAlgo;
    QString                m_TGACompressionAlgo;
 
-    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                        const QString& albumDest);
+   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+                       const QString& albumDest);
 
    void readSettings(void);
    void saveSettings(void);

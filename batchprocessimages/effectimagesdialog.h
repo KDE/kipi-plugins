@@ -38,14 +38,17 @@ class EffectImagesDialog : public BatchProcessImagesDialog
 Q_OBJECT
 
  public:
+   
    EffectImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~EffectImagesDialog();
 
  private slots:
-   void slotAbout(void);
+   
+   void slotHelp(void);
    void slotOptionsClicked(void);
 
  protected:
+   
    int  m_latWidth;
    int  m_latHeight;
    int  m_latOffset;
@@ -64,8 +67,8 @@ Q_OBJECT
    int  m_waveAmplitude;
    int  m_waveLenght;
 
-    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
-                        const QString& albumDest);
+   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+                       const QString& albumDest);
 
    void readSettings(void);
    void saveSettings(void);
