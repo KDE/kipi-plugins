@@ -63,12 +63,12 @@ Q_OBJECT
    ~AcquireImageDialog();
 
  private slots:
-   void slotAddNewAlbum( void );
-   void slot_onAlbumCreate(KIO::Job* job);
    void slotOk();
-   void albumSelected( QListBoxItem * item );
-   void slotImageFormatChanged(const QString &string);
-   void slotGotPreview(const KURL &url, const QPixmap &pixmap);
+
+// // PENDING(blackie) see implementation of these methods to see why this was removed.
+//    void albumSelected( QListBoxItem * item );
+//   void slotGotPreview(const KURL &url, const QPixmap &pixmap);
+    void slotImageFormatChanged(const QString &string);
 
  protected:
    KIPI::Interface* m_interface;

@@ -78,6 +78,7 @@ extern "C"
 #include <kdebug.h>
 #include <kfiletreeview.h>
 #include <qapplication.h>
+#include <qvgroupbox.h>
 
 
 class AlbumItem : public QListBoxText
@@ -317,29 +318,31 @@ void AcquireImageDialog::setupAlbumsList(void)
 
     //---------------------------------------------
 
-    QGroupBox * groupBox1 = new QGroupBox( page_setupAlbumsList );
-    groupBox1->setFlat(false);
+    QVGroupBox * groupBox1 = new QVGroupBox( i18n("Select folder for to save the target image"), page_setupAlbumsList );
     groupBox1->setTitle(i18n("Select folder for to save the target image"));
-    QGridLayout* grid = new QGridLayout( groupBox1, 2, 2 , 20, 20);
 
     m_uploadPath = new KIPI::UploadWidget( m_interface, groupBox1, "m_uploadPath" );
-    grid->addMultiCellWidget( m_uploadPath, 0, 2, 0, 1 );
+
+    QWidget* w = new QWidget( groupBox1 );
+    QHBoxLayout* hlay = new QHBoxLayout( w, 6 );
+    hlay->addStretch( 1 );
+
+    m_addNewAlbumButton = new QPushButton (i18n( "&Add new folder"), w, "PushButton_AddNewAlbum");
+    hlay->addWidget( m_addNewAlbumButton );
+    QWhatsThis::add( m_addNewAlbumButton, i18n( "<p>Add a new folder."));
 
 
-    m_addNewAlbumButton = new QPushButton (groupBox1, "PushButton_AddNewAlbum");
-    m_addNewAlbumButton->setText(i18n( "&Add new album") );
-    m_addNewAlbumButton->setAutoRepeat( false );
-    QWhatsThis::add( m_addNewAlbumButton, i18n( "<p>Add a new Album in the Digikam Albums library."));
-
-    grid->addMultiCellWidget(m_addNewAlbumButton, 0, 1, 2, 2);
-
-    m_albumPreview = new QLabel( groupBox1 );
+#ifdef TEMPORARILY_REMOVED
+    // This code is from when this plugin offered a preview of the album.
+    // Now this has been changed to folder rather than album, this code has to go.
+    m_albumPreview = new QLabel( w );
     m_albumPreview->setFixedHeight( 120 );
     m_albumPreview->setFrameStyle( QFrame::Panel | QFrame::Sunken );
     m_albumPreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_albumPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
     QWhatsThis::add( m_albumPreview, i18n( "<p>Preview of the first image in the current selected Album." ) );
     grid->addMultiCellWidget(m_albumPreview, 2, 2, 2, 2);
+#endif
 
     vlay->addWidget( groupBox1 );
 
@@ -379,9 +382,10 @@ void AcquireImageDialog::setupAlbumsList(void)
     //---------------------------------------------
 
     connect(m_addNewAlbumButton, SIGNAL(clicked()),
-            this, SLOT(slotAddNewAlbum()));
+            m_uploadPath, SLOT(mkdir()));
 
 #ifdef TEMPORARILY_REMOVED
+    // see comment for albumSelected
     connect(m_AlbumList, SIGNAL( currentChanged( QListBoxItem * ) ),
             this, SLOT( albumSelected( QListBoxItem * )));
 #endif
@@ -409,6 +413,9 @@ void AcquireImageDialog::aboutPage(void)
 //////////////////////////////////////// SLOTS //////////////////////////////////////////////
 
 
+// This doesn't make much more sence anymore now that we have a directory browser
+// rather than an album browser - 25 May. 2004 23:15 -- Jesper K. Pedersen
+#ifdef TEMPORARILY_REMOVED
 void AcquireImageDialog::albumSelected( QListBoxItem * item )
 {
     if ( !item ) return;
@@ -443,56 +450,8 @@ void AcquireImageDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixm
 {
     m_albumPreview->setPixmap(pixmap);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void AcquireImageDialog::slotAddNewAlbum( void )
-{
-    kdWarning( 51000 ) << "AcquireImageDialog::slotAddNewAlbum is commented out, what should we do?\n";
-
-// PENDING(blackie) How do we handle this without a library path?
-#ifdef TEMPORARILY_REMOVED
-    QDir libraryDir( Digikam::AlbumManager::instance()->getLibraryPath() );
-    if (!libraryDir.exists())
-        {
-        KMessageBox::error(0, i18n("Album Library has not been set correctly\n"
-                                   "Please run Setup"));
-        return;
-        }
-
-    bool ok;
-    m_newDir = KLineEditDlg::getText(i18n("Enter New Album Name: "), "", &ok, this);
-    if (!ok) return;
-
-    KURL newAlbumURL(Digikam::AlbumManager::instance()->getLibraryPath());
-    newAlbumURL.addPath(m_newDir);
-
-    KIO::SimpleJob* job = KIO::mkdir(newAlbumURL);
-    connect(job, SIGNAL(result(KIO::Job*)), this, SLOT(slot_onAlbumCreate(KIO::Job*)));
 #endif
-}
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void AcquireImageDialog::slot_onAlbumCreate(KIO::Job* job)
-{
-    if (job->error())
-        job->showErrorDialog(this);
-    else
-        {
-#ifdef TEMPORARILY_REMOVED
-            AlbumItem *item = new AlbumItem( m_AlbumList, m_newDir, "", "", "", "", QDate::currentDate(), 0);
-        item->setName( m_newDir );
-        albumSelected( item );
-        m_AlbumList->sort (true);
-        m_AlbumList->setSelected( item, true );
-        m_AlbumList->setCurrentItem( item );
-        m_AlbumList->centerCurrentItem();
-#endif
-        }
-}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -516,13 +475,6 @@ void AcquireImageDialog::slot_onAlbumCreate(KIO::Job* job)
 
     // Get all scanned image informations.
     QString targetAlbumPath = path.path(); // handle real URLS.
-
-#ifdef TEMPORARILY_REMOVED
-    int albumSelectedId = m_AlbumList->currentItem();
-    QString albumSelectedText = m_AlbumList->text(albumSelectedId);
-    Digikam::AlbumInfo *album = Digikam::AlbumManager::instance()->findAlbum(albumSelectedText);
-    QString targetAlbumPath = album->getPath();
-#endif
     QString imageFileName = m_FileName->text();
     QString imageFormat = m_imagesFormat->currentText();
     int imageCompression = m_imageCompression->value();
@@ -570,8 +522,9 @@ void AcquireImageDialog::slot_onAlbumCreate(KIO::Job* job)
     KIPI::ImageInfo info = m_interface->info( url );
     info.setDescription( Commentsimg );
 
+    // I have no idea what this code is supposed to do
+    // 25 May. 2004 23:19 -- Jesper K. Pedersen
 #ifdef TEMPORARILY_REMOVED
-
     // Update the items number for the selected Album
     // in the case if another image is scanned during the plugin session.
 
@@ -625,6 +578,7 @@ QString AcquireImageDialog::extension(const QString& imageFormat)
 
 void AcquireImageDialog::checkNewFileName(void)
 {
+    // PENDING(blackie) this code needs to be rewritten to handle URL's rather than just local files.
 #ifdef TEMPORARILY_REMOVED
     int albumSelectedId = m_AlbumList->currentItem();
     QString albumSelectedText = m_AlbumList->text(albumSelectedId);
