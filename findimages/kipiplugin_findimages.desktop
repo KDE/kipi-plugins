@@ -1,7 +1,15 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=FindImages
-Comment=KIPI Plugin for Finding Images in Albums Database
+Name[it]=TrovaImmagini
+Name[nl]=Afbeeldingen zoeken
+Name[pt]=ProcurarImagens
+Name[pt_BR]=ProcurarImagens
+Comment=KIPI Plugin for Finding Images
+Comment[it]=Plugin di KIPI per trovare immagini nella banca dati degli album
+Comment[nl]=Kipi-plugin voor het zoeken van afbeeldingen in de albumsdatabase
+Comment[pt]='Plugin' KIPI para Procurar Imagens na Base de Dados de Álbuns
+Comment[pt_BR]='Plugin' KIPI para Procurar Imagens na Base de Dados de Álbuns
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_findimages
