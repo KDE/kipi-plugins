@@ -67,7 +67,11 @@ Currently implemented plugins are:
 14) FindImages         : Find dupplicate images in albums
                          (by Richard Grould and Gilles Caulier).
 
-15) HelloWorld         : Tutorial plugin implementation 
+
+15) GalleryExport      : Plugin to export image collections on Web Gallery server 
+                         (by Renchi Raju).
+
+16) HelloWorld         : Tutorial plugin implementation 
                          (by Renchi Raju, Gilles Caulier, and Achim Bohnet).
 
 

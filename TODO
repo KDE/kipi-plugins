@@ -48,29 +48,6 @@
  - Add Images Comments.
 
 ----------------------------------------------------------------------------
-* JPEGLOSSLESS PLUGIN [Author: Renchi Raju]
-  (Batch operations images with JPEG loss less)
-
- - Add option to rotate according to EXIF orientation tag
-
-----------------------------------------------------------------------------
-* CDARCHIVING PLUGIN [Author: Gilles Caulier]
-  (Archive Albums to CD/DVD with K3b)
-
- - Add XML cdarchiving info file in target media (for future CDRestoring plugin).
-
-----------------------------------------------------------------------------
-* ACQUIREIMAGES PLUGIN GROUP
-
-  ==> SCANIMAGES PLUGIN [Author: Gilles Caulier]
-    (Scan images acquisitions)
-
-  ==> SCREENSHOTIMAGES PLUGIN [Author: Gilles Caulier]
-    (Screenshot images acquisitions)
-
- - Support of TGA file format.
-
-----------------------------------------------------------------------------
 * CALENDAR PLUGIN [Author: Renchi Raju]
   (Calendar creation wizzard)
 
@@ -88,45 +65,13 @@
 -----------------------------------------------------------------------------
 * BATCHPROCESSIMAGES PLUGINS GROUP
 
- ==> RENAMEIMAGES PLUGIN [Author: Gilles Caulier]
-     (batch auto remaning image files)
-
- ==> CONVERTIMAGES PLUGIN [Author: Gilles Caulier]
-     (batch Convert images files format plugin using ImageMagick)
-
- ==> BORDERIMAGES PLUGIN [Author: Gilles Caulier]
-     (batch Images bordering plugin using ImageMagick)
-
- ==> FILTERIMAGES PLUGIN [Author: Gilles Caulier]
-     (batch filtering images plugin using ImageMagick)
-
- ==> COLORSIMAGES PLUGIN [Author: Gilles Caulier]
-     (batch images colors enhancement with ImageMagick)
-
- ==> EFFECTSIMAGES PLUGIN [Author: Gilles Caulier]
-     (batch images visual effects changing with ImageMagick)
-
- ==> RECOMPRESSIMAGES PLUGIN [Author: Gilles Caulier]
-     (batch auto recompressing image files)
-
- ==> RESIZEIMAGES PLUGIN [Author: Gilles Caulier]
-     (batch images size changing with ImageMagick)
-
  ==> ANNOTATEIMAGES PLUGIN
      (batch images annotation with ImageMagick)
      -> TODO
 
- ==> MOBILEEXPORT PLUGIN
-     (pda graphic formats export)
-     -> TODO (planned by Bastian <style at wtal.de>)
-
  ==> STEGIMAGES PLUGIN
      (Images Steganography plugin)
      -> TODO
-
- ==> METAINFO2COMMENTS PLUGIN
-    (Exif/Comments meta-informations extraction to Digikam images comments plugin)
-    -> TODO
 
  ==> IMAGEINTERPOLATOR PLUGIN
      (Interpolate bad pixels in images based on JpegPixi program)
@@ -136,12 +81,6 @@
 ----------------------------------------------------------------------------
 * CDRESTORINGWIZZARD PLUGIN
 
--> TODO (planed by Gilles Caulier)
-
-----------------------------------------------------------------------------
-* WALLPAPER PLUGIN [Author: Gregory Kokanosky]
-     (Put an image in desktop background based on ShowImg source code)
-
 ----------------------------------------------------------------------------
 * EXTERNALRUNNING PLUGIN
     (allows to start programs with the current selection of images. This
@@ -149,9 +88,6 @@
      slideshow program, image editor, HTML Gallery generators etc.)
     -> TODO
 
-----------------------------------------------------------------------------
-*  FINDDUPPLICATEIMAGES PLUGIN [Authors: Gilles Caulier and Richard Grould]
-    (Find duplicates images into Digikam library using ShowImg code source)
 
 
 
