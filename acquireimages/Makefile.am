@@ -8,7 +8,7 @@ kde_module_LTLIBRARIES = kipiplugin_acquireimages.la
 kipiplugin_acquireimages_la_SOURCES = plugin_acquireimages.cpp acquireimagedialog.cpp screenshotdialog.cpp
 
 # Libs needed by the plugin
-kipiplugin_acquireimages_la_LIBADD = $(LIB_KPARTS) -ltiff  $(top_builddir)/libkipi/libkipi/libkipi.la
+kipiplugin_acquireimages_la_LIBADD = $(LIB_KPARTS) -ltiff  -lkipi
 
 # LD flags for the plugin
 kipiplugin_acquireimages_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

@@ -8,7 +8,7 @@ digikamplugin_rawconverter_la_SOURCES = plugin_rawconverter.cpp \
 	batchdialog.cpp singledialog.cpp previewwidget.cpp \
 	processcontroller.cpp dmessagebox.cpp 
 
-digikamplugin_rawconverter_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/libkipi/libkipi/libkipi.la
+digikamplugin_rawconverter_la_LIBADD = $(LIB_KPARTS) -lkipi
 
 digikamplugin_rawconverter_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 

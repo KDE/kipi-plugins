@@ -10,7 +10,7 @@ kipiplugin_calendar_la_SOURCES = plugin_calendar.cpp \
 		monthwidget.cpp
 
 kipiplugin_calendar_la_LIBADD = $(LIB_KPARTS) \
-				-lkdeprint $(top_builddir)/libkipi/libkipi/libkipi.la
+				-lkdeprint -lkipi
 
 kipiplugin_calendar_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 

@@ -10,7 +10,7 @@ kipiplugin_imagesgallery_la_SOURCES = plugin_imagesgallery.cpp imgallerydialog.c
                                          listimageserrordialog.cpp
 
 # Libs needed by the plugin
-kipiplugin_imagesgallery_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/libkipi/libkipi/libkipi.la
+kipiplugin_imagesgallery_la_LIBADD = $(LIB_KPARTS) -lkipi
 
 # LD flags for the plugin
 kipiplugin_imagesgallery_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

@@ -9,7 +9,7 @@ kipiplugin_slideshow_la_SOURCES = plugin_slideshow.cpp \
 	slideshowgl.cpp
 
 kipiplugin_slideshow_la_LIBADD = $(LIB_KPARTS) -lkipi \
-				$(LIB_IMLIB)  $(top_builddir)/libkipi/libkipi/libkipi.la
+				$(LIB_IMLIB)  -lkipi
 
 kipiplugin_slideshow_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 

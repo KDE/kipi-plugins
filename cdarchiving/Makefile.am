@@ -9,7 +9,7 @@ kde_module_LTLIBRARIES = kipiplugin_cdarchiving.la
 kipiplugin_cdarchiving_la_SOURCES = plugin_cdarchiving.cpp cdarchivingdialog.cpp cdarchiving.cpp 
 
 # Libs needed by the plugin
-kipiplugin_cdarchiving_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/libkipi/libkipi/libkipi.la
+kipiplugin_cdarchiving_la_LIBADD = $(LIB_KPARTS) -lkipi
 
 # LD flags for the plugin
 kipiplugin_cdarchiving_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

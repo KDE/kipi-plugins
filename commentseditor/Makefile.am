@@ -8,7 +8,7 @@ kipiplugin_commentseditor_la_SOURCES = plugin_commentseditor.cpp \
 				commentseditor.cpp
 
 kipiplugin_commentseditor_la_LIBADD = $(LIB_KPARTS) \
-					$(LIB_IMLIB)  $(top_builddir)/libkipi/libkipi/libkipi.la
+					$(LIB_IMLIB)  -lkipi
 
 kipiplugin_commentseditor_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 

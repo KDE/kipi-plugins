@@ -10,7 +10,7 @@ kipiplugin_jpeglossless_la_SOURCES = plugin_jpeglossless.cpp \
 		messagebox.cpp
 
 kipiplugin_jpeglossless_la_LIBADD = $(LIB_KPARTS) \
-					-ljpeg -ltiff  $(top_builddir)/libkipi/libkipi/libkipi.la
+					-ljpeg -ltiff  -lkipi
 
 kipiplugin_jpeglossless_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 
