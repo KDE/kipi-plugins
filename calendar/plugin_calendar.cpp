@@ -33,7 +33,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kurl.h>
-#include <kmessagebox.h>
+#include <kapplication.h>
 
 // Local includes.
 
@@ -74,7 +74,7 @@ Plugin_Calendar::~Plugin_Calendar()
 void Plugin_Calendar::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
-    DKCalendar::CalWizard* w = new DKCalendar::CalWizard( interface );
+    DKCalendar::CalWizard* w = new DKCalendar::CalWizard( interface, kapp->activeWindow() );
     w->show();
 }
 

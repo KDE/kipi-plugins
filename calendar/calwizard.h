@@ -47,7 +47,7 @@ class CalWizard : public KWizard
 
 public:
 
-    CalWizard( KIPI::Interface* interface );
+    CalWizard( KIPI::Interface* interface, QWidget *parent=0L );
     ~CalWizard();
 
 private:

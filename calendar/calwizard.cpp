@@ -42,8 +42,8 @@
 namespace DKCalendar
 {
 
-CalWizard::CalWizard( KIPI::Interface* interface )
-    : KWizard(0,0,false,Qt::WDestructiveClose), interface_( interface )
+CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
+    : KWizard(parent,0,false,Qt::WDestructiveClose), interface_( interface )
 {
     cSettings_ = new CalSettings();
 
@@ -101,6 +101,7 @@ CalWizard::CalWizard( KIPI::Interface* interface )
             SLOT(slotPageSelected(const QString&)));
     connect(this, SIGNAL(helpClicked()),
             this, SLOT(slotHelp()));
+    setCaption(i18n("Create Calendar"));
 }
 
 CalWizard::~CalWizard()
