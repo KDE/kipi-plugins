@@ -435,7 +435,7 @@ void ImagesGallery::Activate()
 
         if ( albums.count () > 1 )
            {
-           MainUrl = m_configDlg->getImageName() + "/DigikamHTMLExport/" + "index.htm";
+           MainUrl.setPath( m_configDlg->getImageName() + "/KIPIHTMLExport/" + "index.html" );
            QFile MainPageFile( MainUrl.path() );
 
            if ( MainPageFile.open(IO_WriteOnly) )
@@ -451,7 +451,7 @@ void ImagesGallery::Activate()
               }
            else
               {
-              KMessageBox::sorry(0,i18n("Couldn't open file '%1'").arg(MainUrl.path(+1)));
+              KMessageBox::sorry(0,i18n("Couldn't open file '%1'").arg(MainUrl.path()));
               return;
               }
            }
@@ -565,7 +565,7 @@ void ImagesGallery::createBody(QTextStream& stream,
 
     if (QFile::exists(imgGalleryDir + QString::fromLatin1("/../gohome.png")))
        {
-       stream << "<p><a href=\"../index.htm\"><img src=\"../gohome.png\" border=\"0\"  title=\""
+       stream << "<p><a href=\"../index.html\"><img src=\"../gohome.png\" border=\"0\"  title=\""
               << i18n("Albums list") << "\" alt=\"" << i18n("Albums list") << "\"></a></p>"
               << endl;
        }
@@ -1104,7 +1104,7 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
 
        if (QFile::exists(imgGalleryDir + QString::fromLatin1("/../gohome.png")))
           {
-          stream << "&nbsp; | &nbsp;<a href=\"../../index.htm\"><img src=\"../../gohome.png\" "
+          stream << "&nbsp; | &nbsp;<a href=\"../../index.html\"><img src=\"../../gohome.png\" "
                     "border=\"0\" title=\"" << i18n("Albums list") << "\" alt=\""
                  << i18n("Albums list") << "\"></a>" <<endl;
           }
