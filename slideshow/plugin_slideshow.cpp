@@ -78,7 +78,7 @@ void Plugin_SlideShow::setup( QWidget* widget )
     m_actionSlideShow->setEnabled( false );
     
     connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
-             m_actionSlideShow, SLOT( setEnabled( bool ) ) );
+             SLOT( slotAlbumChanged( bool ) ) );
 
     addAction( m_actionSlideShow );
 }
@@ -95,27 +95,20 @@ void Plugin_SlideShow::slotActivate()
 
     if ( !interface ) 
     {
-           kdError( 51000 ) << "Kipi interface is null!" << endl;
-           return;
-    }
-
-    KIPI::ImageCollection currAlbum = interface->currentAlbum();
-    if ( !currAlbum.isValid() )
-    {
-        KMessageBox::error(0, i18n("Current image collection is not valid. "
-                                   "Please report this bug to the developers"));
+        kdError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
-    if ( currAlbum.images().isEmpty() )
+    bool allowSelectedOnly = true;
+    
+    KIPI::ImageCollection currSel = interface->currentSelection();
+    if ( !currSel.isValid() || currSel.images().isEmpty() )
     {
-        KMessageBox::sorry(0, i18n("There are no images to show "
-                                   "in the current album."));
-	return;
+        allowSelectedOnly = false;
     }
 
     KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
-        = new KIPISlideShowPlugin::SlideShowConfig;
+        = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly );
     
     connect(slideShowConfig, SIGNAL(okClicked()),
             this, SLOT(slotSlideShow()));
@@ -123,7 +116,32 @@ void Plugin_SlideShow::slotActivate()
     slideShowConfig->show();
 }
 
+void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
+{
+    if (!anyAlbum)
+    {
+        m_actionSlideShow->setEnabled( false );
+        return;
+    }
 
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    if ( !interface ) 
+    {
+        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        m_actionSlideShow->setEnabled( false );
+        return;
+    }
+
+    KIPI::ImageCollection currAlbum = interface->currentAlbum();
+    if ( !currAlbum.isValid() )
+    {
+        kdError( 51000 ) << "Current image collection is not valid." << endl;
+        m_actionSlideShow->setEnabled( false );
+        return;
+    }
+
+    m_actionSlideShow->setEnabled(!currAlbum.images().isEmpty());
+}
 
 void Plugin_SlideShow::slotSlideShow()
 {

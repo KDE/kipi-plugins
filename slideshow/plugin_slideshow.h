@@ -48,6 +48,7 @@ public slots:
 
 private slots:
 
+    void slotAlbumChanged(bool anyAlbum);
     void slotSlideShow();
 
 private:

@@ -57,7 +57,7 @@
 namespace KIPISlideShowPlugin
 {
 
-SlideShowConfig::SlideShowConfig()
+SlideShowConfig::SlideShowConfig(bool allowSelectedOnly)
                : KDialogBase(0, "", true, i18n("SlideShow"),
                              Help|Ok|Cancel, Ok, true)
 {
@@ -132,6 +132,7 @@ SlideShowConfig::SlideShowConfig()
 
     selectedFilesButton_ = new QRadioButton( FileSrcButtonGroup_);
     selectedFilesButton_->setText( i18n( "Show Only Selected Images" ) );
+    selectedFilesButton_->setEnabled( allowSelectedOnly );
     FileSrcButtonGroupLayout->addWidget( selectedFilesButton_ );
 
     grid->addMultiCellWidget( FileSrcButtonGroup_, 1, 1, 0, 2 );
@@ -269,7 +270,7 @@ void SlideShowConfig::readSettings()
 
     loopCheckBox_->setChecked(loop);
 
-    if (showSelectedFilesOnly)
+    if (showSelectedFilesOnly && selectedFilesButton_->isEnabled() )
         selectedFilesButton_->setChecked(true);
     else
         allFilesButton_->setChecked(true);

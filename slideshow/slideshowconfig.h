@@ -48,7 +48,7 @@ class SlideShowConfig : public KDialogBase
 
 public:
 
-    SlideShowConfig();
+    SlideShowConfig(bool allowSelectedOnly);
     ~SlideShowConfig();
 
 private:
