@@ -39,6 +39,8 @@
 #include <kapplication.h>
 #include <kstandarddirs.h>
 
+namespace KIPIMPEGEncoderPlugin
+{
 
 ///////////////////////////////// CONSTRUCTOR ///////////////////////////////////////////////
 
@@ -127,5 +129,6 @@ if (MjpegToolsPath.isEmpty())
   return (1);
 }
 
+}  // NameSpace KIPIMPEGEncoderPlugin
 
 #include "checkbinprog.moc"

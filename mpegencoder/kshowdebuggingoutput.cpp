@@ -20,9 +20,12 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#include "kshowdebuggingoutput.h"
-#include "kshowdebuggingoutput.moc"
+// Local includes.
 
+#include "kshowdebuggingoutput.h"
+
+namespace KIPIMPEGEncoderPlugin
+{
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -73,3 +76,7 @@ void KShowDebuggingOutput::slotCopyToCliboard( void )
   debugView->copy();
   debugView->selectAll(FALSE);
 }
+
+}  // NameSpace KIPIMPEGEncoderPlugin
+
+#include "kshowdebuggingoutput.moc"

@@ -21,7 +21,6 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include "kimg2mpg.h"
-#include "kimg2mpg.moc"
 
 // C Ansi includes
 
@@ -85,14 +84,16 @@ extern "C"
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
+#include <kio/previewjob.h>
 
 // Local includes
 
 #include "kshowdebuggingoutput.h"
 #include "optionsdialog.h"
 #include "checkbinprog.h"
-#include <kio/previewjob.h>
 
+namespace KIPIMPEGEncoderPlugin
+{
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1343,3 +1344,6 @@ while( (fi = it.current() ) )
 return true;
 }
 
+}  // NameSpace KIPIMPEGEncoderPlugin
+
+#include "kimg2mpg.moc"

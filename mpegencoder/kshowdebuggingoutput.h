@@ -30,12 +30,13 @@
 #include <qtextview.h>
 #include <qlayout.h>
 
-
 // KDElib includes
 
 #include <kdialog.h>
 #include <klocale.h>
 
+namespace KIPIMPEGEncoderPlugin
+{
 
 class KShowDebuggingOutput : public KDialog
 {
@@ -54,6 +55,8 @@ private:
   QTextView*    debugView;
   QGridLayout*  grid;
 };
+
+}  // NameSpace KIPIMPEGEncoderPlugin
 
 #endif  // KShowDebuggingOutput_included
 

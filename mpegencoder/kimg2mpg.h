@@ -30,12 +30,12 @@
 #include <qcolor.h>
 #include <qtimer.h>
 #include <qguardedptr.h>
+#include <qdatetime.h>
 
 // Include files for KDE
 
 #include <kdialog.h>
 #include <klistbox.h>
-#include <qdatetime.h>
 #include <kprocess.h>
 
 // Include files for KIPI
@@ -60,6 +60,9 @@ class KColorButton;
 class KListBox;
 class KButtonBox;
 class KProgress;
+
+namespace KIPIMPEGEncoderPlugin
+{
 
 class KShowDebuggingOutput;
 class OptionsDialog;
@@ -200,5 +203,7 @@ private:
   bool DeleteDir(QString dirname);
   bool deldir(QString dirname);
 };
+
+}  // NameSpace KIPIMPEGEncoderPlugin
 
 #endif // KImg2mpgData_included

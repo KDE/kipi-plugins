@@ -20,9 +20,6 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#include "optionsdialog.h"
-#include "kimg2mpg.h"
-
 // Include files for Qt
 
 #include <qvbox.h>
@@ -41,6 +38,13 @@
 #include <kfiledialog.h>
 #include <kiconloader.h>
 
+// Local includes.
+
+#include "optionsdialog.h"
+#include "kimg2mpg.h"
+
+namespace KIPIMPEGEncoderPlugin
+{
 
 ////////////////////////////////// CONSTRUCTOR //////////////////////////////////////////////
 
@@ -126,6 +130,6 @@ void OptionsDialog::slotMJBinFolderFilenameDialog( void )
   MJBinFolderEditFilename->setText( temp );
 }
 
-
+}  // NameSpace KIPIMPEGEncoderPlugin
 
 #include "optionsdialog.moc"

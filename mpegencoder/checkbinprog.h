@@ -28,6 +28,9 @@
 
 class KConfig;
 
+namespace KIPIMPEGEncoderPlugin
+{
+
 class CheckBinProg : public QObject
 {
 Q_OBJECT
@@ -42,6 +45,8 @@ private:
     QString  ImageMagickPath;
     QString  MjpegToolsPath;
 };
+
+}  // NameSpace KIPIMPEGEncoderPlugin
 
 #endif // CheckBinProg_included
 

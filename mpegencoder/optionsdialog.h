@@ -24,13 +24,19 @@
 #ifndef OptionsDialog_H
 #define OptionsDialog_H
 
+// Qt includes.
 
 #include <qpixmap.h>
+
+// KDE includes.
+
 #include <kdialogbase.h>
 
 class KLineEdit;
 class KIconLoader;
 
+namespace KIPIMPEGEncoderPlugin
+{
 
 class OptionsDialog : public KDialogBase
 {
@@ -51,5 +57,7 @@ Q_OBJECT
    KIconLoader* Icons;
    QPixmap LoadIcon( QString Name, int Group );
 };
+
+}  // NameSpace KIPIMPEGEncoderPlugin
 
 #endif  // OptionsDialog.H

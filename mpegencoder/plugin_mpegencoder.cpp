@@ -39,8 +39,8 @@
 // Local includes
 
 #include "checkbinprog.h"
-#include "plugin_mpegencoder.h"
 #include "kimg2mpg.h"
+#include "plugin_mpegencoder.h"
 
 typedef KGenericFactory<Plugin_Mpegencoder> Factory;
 
@@ -65,7 +65,7 @@ void Plugin_Mpegencoder::setup( QWidget* widget )
                                        SLOT(slotActivate()),
                                        actionCollection(),
                                        "mpeg_encoder");
-	       
+       
     addAction( m_actionMPEGEncoder );
 }
 
@@ -80,10 +80,14 @@ Plugin_Mpegencoder::~Plugin_Mpegencoder()
 void Plugin_Mpegencoder::slotActivate()
 {
     KIPI::Interface* interface = static_cast< KIPI::Interface* >( parent() );
-    KImg2mpgData *MPEGconverterDialog = new KImg2mpgData( interface );
+    KIPIMPEGEncoderPlugin::KImg2mpgData *MPEGconverterDialog = 
+                           new KIPIMPEGEncoderPlugin::KImg2mpgData( interface );
+                           
     MPEGconverterDialog->show();
 
-    CheckBinProg* CheckExternalPrograms = new CheckBinProg(this);
+    KIPIMPEGEncoderPlugin::CheckBinProg* CheckExternalPrograms = 
+                           new KIPIMPEGEncoderPlugin::CheckBinProg(this);
+                           
     int ValRet = CheckExternalPrograms->findExecutables();
 
     if (ValRet == 0)
@@ -93,6 +97,7 @@ void Plugin_Mpegencoder::slotActivate()
         MPEGconverterDialog->m_AudioInputFilename->setEnabled(false);
 
     KIPI::ImageCollection images = interface->currentScope();
+    
     if ( !images.isValid() )
         return;
 
