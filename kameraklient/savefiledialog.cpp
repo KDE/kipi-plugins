@@ -17,7 +17,7 @@ namespace KIPIKameraKlientPlugin
 
 SavefileDialog::SavefileDialog(const QString& file, QWidget *parent, const char* name, bool modal) : QDialog(parent, name, modal) {
     QFileInfo fileInfo(file);
-    setCaption(i18n("File already exists"));
+    setCaption(i18n("File Already Exists"));
     QLabel *descLbl = new QLabel(i18n("The file '%1' already exists!").arg(fileInfo.absFilePath()), this);
     renameEdit = new QLineEdit(this);
     renameEdit->setText(fileInfo.fileName());

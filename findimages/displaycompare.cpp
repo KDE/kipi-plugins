@@ -135,7 +135,7 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
 
     //---------------------------------------------
 
-    GroupBox1 = new QGroupBox( 1, Qt::Horizontal, i18n("Original files"), box );
+    GroupBox1 = new QGroupBox( 1, Qt::Horizontal, i18n("Original Files"), box );
     GroupBox1->layout()->setSpacing( 6 );
     GroupBox1->layout()->setMargin( 11 );
 
@@ -170,7 +170,7 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
 
     //---------------------------------------------
 
-    GroupBox2 = new QGroupBox( 1, Qt::Horizontal, i18n("Similar files"), box );
+    GroupBox2 = new QGroupBox( 1, Qt::Horizontal, i18n("Similar Files"), box );
     GroupBox2->layout()->setSpacing( 6 );
     GroupBox2->layout()->setMargin( 11 );
 
@@ -198,7 +198,7 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
     listEq = new KListView( GroupBox2, "listEq" );
     listEq->header()->setLabel( 0, i18n( "Files" ) );
     QWhatsThis::add( listEq, i18n( "<p>This list contains all duplicates files." ) );
-    listEq->addColumn( i18n( "Identical to" ) );
+    listEq->addColumn( i18n( "Identical To" ) );
     listEq->setResizeMode(QListView::AllColumns);
 
     g1->addWidget( GroupBox2 , 0, 1);
@@ -227,8 +227,8 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
         ++n_id;
         }
 
-    setCaption(i18n(	"1 original image with duplicate images has been found",
-			"%n original images with duplicate images have been found", n_id));
+    setCaption(i18n(	"1 Original Image with Duplicate Images Has Been Found",
+			"%n Original Images with Duplicate Images Have Been Found", n_id));
 
     // signals and slots connections
 

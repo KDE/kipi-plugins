@@ -19,12 +19,12 @@
  *
  * ============================================================ */
 
-// Qt Includes. 
- 
+// Qt Includes.
+
 #include <qprocess.h>
- 
+
 // KDE includes.
- 
+
 #include <klocale.h>
 #include <kaction.h>
 #include <kgenericfactory.h>
@@ -86,19 +86,19 @@ void Plugin_RawConverter::setup( QWidget* widget )
     addAction( batchAction_ );
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-    
-    if ( !interface ) 
+
+    if ( !interface )
            {
            kdError( 51000 ) << "Kipi interface is null!" << endl;
            return;
            }
-           
+
     connect( interface, SIGNAL( selectionChanged( bool ) ),
              this, SLOT( slotSetActive() ) );
-             
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), 
+
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
              this, SLOT( slotSetActive() ) );
-             
+
     slotSetActive();
 }
 
@@ -113,19 +113,19 @@ bool Plugin_RawConverter::checkBinaries()
 
     process.clearArguments();
     process.addArgument("kipidcrawclient");
-    
+
     if (!process.start()) {
-        KMessageBox::error(0, i18n("Failed to start Raw Converter Client;\n"
-                                   "please check your installation."));
+        KMessageBox::error(0, i18n("Failed to start raw converter client.\n"
+                                   "Please check your installation."));
         return false;
     }
 
     process.clearArguments();
     process.addArgument("dcraw");
-    
+
     if (!process.start()) {
-        KMessageBox::error(0, i18n("dcraw is required for Raw Image Conversion;\n"
-                                   "please install it."));
+        KMessageBox::error(0, i18n("dcraw is required for raw image conversion.\n"
+                                   "Please install it."));
         return false;
     }
 
@@ -135,16 +135,16 @@ bool Plugin_RawConverter::checkBinaries()
 void Plugin_RawConverter::slotActivateSingle()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-    
-    if ( !interface ) 
+
+    if ( !interface )
            {
            kdError( 51000 ) << "Kipi interface is null!" << endl;
            return;
            }
-           
+
     KIPI::ImageCollection images;
     images = interface->currentSelection();
-    
+
     if ( !images.isValid() )
         return;
 
@@ -152,23 +152,23 @@ void Plugin_RawConverter::slotActivateSingle()
 
     KIPIRawConverterPlugin::SingleDialog *converter =
         new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path()); // PENDING(blackie) handle remote URLS
-    
+
     converter->show();
 }
 
 void Plugin_RawConverter::slotActivateBatch()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-    
-    if ( !interface ) 
+
+    if ( !interface )
            {
            kdError( 51000 ) << "Kipi interface is null!" << endl;
            return;
            }
-        
+
     KIPI::ImageCollection images;
     images = interface->currentScope();
-    
+
     if ( !images.isValid() )
         return;
 
@@ -191,17 +191,17 @@ void Plugin_RawConverter::slotActivateBatch()
 void Plugin_RawConverter::slotSetActive()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-    
-    if ( !interface ) 
+
+    if ( !interface )
            {
            kdError( 51000 ) << "Kipi interface is null!" << endl;
            return;
            }
-        
+
     KIPI::ImageCollection images;
     images = interface->currentSelection();
     bool single = images.isValid();
-    
+
     if ( !images.isValid() )
         images = interface->currentAlbum();
 
@@ -216,9 +216,9 @@ KIPI::Category Plugin_RawConverter::category( KAction* action ) const
        return KIPI::TOOLSPLUGIN;
     else if ( action == batchAction_ )
        return KIPI::BATCHPLUGIN;
-    
+
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
-    return KIPI::TOOLSPLUGIN; // no warning from compiler, please               
+    return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }
 
 #include "plugin_rawconverter.moc"

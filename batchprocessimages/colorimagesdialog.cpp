@@ -54,21 +54,21 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    setCaption(i18n("Batch image-color processing options"));
+    setCaption(i18n("Batch Image-Color Processing Options"));
     setHelp("colorimages", "kipi-plugins");
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Image color options") );
+    groupBox1->setTitle( i18n("Image Color Options") );
 
     m_labelType->setText( i18n("Coloring enhancement type:") );
 
-    m_Type->insertItem(i18n("Decrease contrast"));
+    m_Type->insertItem(i18n("Decrease Contrast"));
     m_Type->insertItem(i18n("Depth"));
     m_Type->insertItem(i18n("Equalize"));
     m_Type->insertItem(i18n("Fuzz"));
-    m_Type->insertItem(i18n("Gray scales"));
-    m_Type->insertItem(i18n("Increase contrast"));
+    m_Type->insertItem(i18n("Gray Scales"));
+    m_Type->insertItem(i18n("Increase Contrast"));
     m_Type->insertItem(i18n("Monochrome"));
     m_Type->insertItem(i18n("Negate"));
     m_Type->insertItem(i18n("Normalize"));

@@ -265,7 +265,7 @@ Click the 'Next' button to begin.</string>
                                     </sizepolicy>
                                 </property>
                                 <property name="text">
-                                    <string>Paper Size</string>
+                                    <string>Paper size:</string>
                                 </property>
                             </widget>
                             <widget class="KComboBox">

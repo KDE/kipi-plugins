@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=GammaCalibration
-Comment=KIPI Gamma calibration Plugin
+Comment=KIPI Gamma Calibration Plugin
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_gammacalibration

@@ -1,15 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=SendImages
-Comment=KIPI Send mail Images Plugin
-Comment[de]=Ein KIPI Modul um Bilder per Mail zu versenden
-Comment[es]=Complemento de KIPI para el envío de imágenes por correo electrónico
-Comment[fr]=Module externe de KIPI pour l'envoie d'images par courrier électronique
-Comment[da]=KIPI plugin til at sende billeder via e-post
-Comment[it]=Modulo esterno di KIPI per l'invio delle immagini con posta elettronica
-Comment[pl]=Wtyczka do wysyłania zdjęć emailem dla programu KIPI
-Comment[nl]=KIPI plugin voor het versturen van afbeeldingen per e-mail
-Comment[hu]=KIPI képküldő plugin
+Comment=KIPI Send Mail Images Plugin
 Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service

@@ -74,12 +74,12 @@ RenameImagesDialog::RenameImagesDialog( KURL::List urlList, KIPI::Interface* int
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    setCaption(i18n("Batch Rename Images options"));
+    setCaption(i18n("Batch Rename Images Options"));
     setHelp("renameimages", "kipi-plugins");
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Image-renaming options") );
+    groupBox1->setTitle( i18n("Image-Renaming Options") );
 
     m_labelType->hide();
     m_Type->hide();
@@ -214,7 +214,7 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
                 int code = KMessageBox::warningContinueCancel( this,
                                         i18n("<qt>Error adding image to application; error message was: "
                                         "<b>%1</b></qt>").arg( errmsg ),
-                                        i18n("Error adding image to application") );
+                                        i18n("Error Adding Image to Application") );
                 if ( code == KMessageBox::Cancel ) 
                     {
                     slotProcessStop();
@@ -370,9 +370,9 @@ bool RenameImagesDialog::startProcess(void)
           case OVERWRITE_ASK:
              {
              int ValRet = KMessageBox::warningYesNoCancel(this,
-                          i18n("The destination file \"%1\" already exists;\n"
-                          "do you want overwrite it?").arg(item->nameDest()),
-                          i18n("Overwrite destination image file"), KStdGuiItem::cont());
+                          i18n("The destination file \"%1\" already exists.\n"
+                          "Do you want overwrite it?").arg(item->nameDest()),
+                          i18n("Overwrite Destination Image File"), KStdGuiItem::cont());
 
              if ( ValRet == KMessageBox::No )
                 {

@@ -20,8 +20,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-// KDE includes. 
- 
+// KDE includes.
+
 #include <kapplication.h>
 #include <kinstance.h>
 #include <klocale.h>
@@ -57,14 +57,14 @@ void Plugin_CDArchiving::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_cdarchiving = new KAction (i18n("Archive to CD ..."),        // Menu message.
+    m_action_cdarchiving = new KAction (i18n("Archive to CD..."),        // Menu message.
                                         "cd",                             // Menu icon.
                                         0,
                                         this,
                                         SLOT(slotActivate()),
                                         actionCollection(),
                                         "cd_archiving");
-    
+
     addAction( m_action_cdarchiving );
     m_cdarchiving = 0;
 }
@@ -86,17 +86,17 @@ void Plugin_CDArchiving::slotActivate()
     m_progressDlg = 0;
 
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
-    
-    if ( !interface ) 
+
+    if ( !interface )
        {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
        return;
        }
 
-    m_cdarchiving = new KIPICDArchivingPlugin::CDArchiving( 
+    m_cdarchiving = new KIPICDArchivingPlugin::CDArchiving(
                         interface,
                         this, m_action_cdarchiving);
-    
+
     if ( m_cdarchiving->showDialog() )
        m_cdarchiving->start();
 }
@@ -117,11 +117,11 @@ void Plugin_CDArchiving::slotCancel()
 void Plugin_CDArchiving::customEvent(QCustomEvent *event)
 {
     if (!event) return;
-    
+
     if (!m_progressDlg)
         {
         m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Preparing Archive to CD"));
-        
+
         connect(m_progressDlg, SIGNAL(cancelClicked()),
                 this, SLOT(slotCancel()));
 
@@ -130,127 +130,127 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
         }
 
     KIPICDArchivingPlugin::EventData *d = (KIPICDArchivingPlugin::EventData*) event->data();
-    
+
     if (!d) return;
-    
-    if (d->starting) 
+
+    if (d->starting)
         {
         QString text;
-        
-        switch (d->action) 
+
+        switch (d->action)
            {
-           case(KIPICDArchivingPlugin::Initialize): 
+           case(KIPICDArchivingPlugin::Initialize):
               {
               text = i18n("Initialising...");
               m_total = d->total;
               break;
               }
-           
-           case(KIPICDArchivingPlugin::BuildHTMLiface): 
+
+           case(KIPICDArchivingPlugin::BuildHTMLiface):
               {
               text = i18n("Making main HTML interface...");
               break;
               }
-              
-           case(KIPICDArchivingPlugin::BuildAlbumHTMLPage): 
+
+           case(KIPICDArchivingPlugin::BuildAlbumHTMLPage):
               {
               text = i18n("Making HTML pages for Album '%1'...").arg(d->albumName);
               break;
               }
-                  
-           case(KIPICDArchivingPlugin::BuildAutoRuniface): 
+
+           case(KIPICDArchivingPlugin::BuildAutoRuniface):
               {
               text = i18n("Making AutoRun interface...");
               break;
               }
 
-           case(KIPICDArchivingPlugin::ResizeImages): 
+           case(KIPICDArchivingPlugin::ResizeImages):
               {
               text = i18n("Creating thumbnail for '%1'...").arg(d->fileName);
               break;
               }
-               
-           case(KIPICDArchivingPlugin::BuildK3bProject): 
+
+           case(KIPICDArchivingPlugin::BuildK3bProject):
               {
               text = i18n("Making K3b project...");
               break;
               }
-                                
-           case(KIPICDArchivingPlugin::Progress): 
+
+           case(KIPICDArchivingPlugin::Progress):
               {
               text = d->message;
               break;
               }
-              
-           default: 
+
+           default:
               {
               kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Starting' event: " << d->action << endl;
               }
            }
-           
+
         m_progressDlg->addedAction(text, KIPI::StartingMessage);
         }
-    else 
+    else
         {
         QString text;
 
-        if (d->success) 
+        if (d->success)
             {
-            switch (d->action) 
+            switch (d->action)
                {
-               case(KIPICDArchivingPlugin::BuildHTMLiface): 
+               case(KIPICDArchivingPlugin::BuildHTMLiface):
                   {
                   text = i18n("Main HTML interface creation completed.");
                   break;
                   }
-                  
-               case(KIPICDArchivingPlugin::BuildAlbumHTMLPage): 
+
+               case(KIPICDArchivingPlugin::BuildAlbumHTMLPage):
                   {
                   text = i18n("HTML page creation for Album '%1' completed.").arg(d->albumName);
                   break;
                   }
-                         
-              case(KIPICDArchivingPlugin::ResizeImages): 
+
+              case(KIPICDArchivingPlugin::ResizeImages):
                   {
                   text = i18n("Creating thumbnail for '%1' done.").arg(d->fileName);
                   break;
                   }
-               
-               case(KIPICDArchivingPlugin::BuildAutoRuniface): 
+
+               case(KIPICDArchivingPlugin::BuildAutoRuniface):
                   {
                   text = i18n("AutoRun interface creation completed.");
                   break;
                   }
 
-               case(KIPICDArchivingPlugin::BuildK3bProject): 
+               case(KIPICDArchivingPlugin::BuildK3bProject):
                   {
                   text = i18n("K3b project creation completed.");
                   break;
                   }
-                                                     
-               default: 
+
+               default:
                   {
                   kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Success' event: " << d->action << endl;
                   }
                }
 
             m_progressDlg->addedAction(text, KIPI::SucessMessage);
-            ++m_current;   
+            ++m_current;
             }
         else
             {
-            switch (d->action) 
+            switch (d->action)
                {
-               case(KIPICDArchivingPlugin::ResizeImages): 
+               case(KIPICDArchivingPlugin::ResizeImages):
                   {
-                  ++m_current;   
+                  ++m_current;
                   text = i18n("Failed to create thumbnail for '%1'").arg(d->fileName);
                   m_progressDlg->addedAction(text, KIPI::WarningMessage);
                   m_progressDlg->setProgress(m_current, m_total);
                   break;
                   }
-               
-               case(KIPICDArchivingPlugin::BuildHTMLiface): 
+
+               case(KIPICDArchivingPlugin::BuildHTMLiface):
                   {
                   text = i18n("Failed to create HTML interface: %1")
                               .arg(d->message);
@@ -261,7 +261,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   break;
                   }
 
-               case(KIPICDArchivingPlugin::BuildAlbumHTMLPage): 
+               case(KIPICDArchivingPlugin::BuildAlbumHTMLPage):
                   {
                   text = i18n("Failed to create HTML pages for Album '%1'")
                               .arg(d->albumName);
@@ -271,8 +271,8 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   return;
                   break;
                   }
-                  
-               case(KIPICDArchivingPlugin::BuildK3bProject): 
+
+               case(KIPICDArchivingPlugin::BuildK3bProject):
                   {
                   text = i18n("Failed to create K3b project.");
                   m_progressDlg->addedAction(text, KIPI::ErrorMessage);
@@ -282,7 +282,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   break;
                   }
 
-               case(KIPICDArchivingPlugin::Error): 
+               case(KIPICDArchivingPlugin::Error):
                   {
                   text = d->message;
                   m_progressDlg->addedAction(text, KIPI::ErrorMessage);
@@ -290,9 +290,9 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   slotCancel();
                   return;
                   break;
-                  }                  
-                           
-               default: 
+                  }
+
+               default:
                   {
                   kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Failed' event: " << d->action << endl;
                   }
@@ -300,7 +300,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
             }
 
         m_progressDlg->setProgress(m_current, m_total);
-        
+
         if( d->action == KIPICDArchivingPlugin::BuildK3bProject )
            {
            m_current = 0;
@@ -310,18 +310,18 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
 #else
            m_progressDlg->setButtonCancelText( i18n("&Close") );
 #endif
-                   
+
            disconnect(m_progressDlg, SIGNAL(cancelClicked()),
                       this, SLOT(slotCancel()));
-                
+
            // Invoke K3b program.
-           
-           m_progressDlg->addedAction(i18n("Starting K3b program..."), 
+
+           m_progressDlg->addedAction(i18n("Starting K3b program..."),
                                       KIPI::StartingMessage);
            m_cdarchiving->invokeK3b();
            }
         }
-    
+
     kapp->processEvents();
     delete d;
 }
@@ -333,9 +333,9 @@ KIPI::Category Plugin_CDArchiving::category( KAction* action ) const
 {
     if ( action == m_action_cdarchiving )
        return KIPI::EXPORTPLUGIN;
-    
-    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;    
-    return KIPI::EXPORTPLUGIN; // no warning from compiler, please    
+
+    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::EXPORTPLUGIN; // no warning from compiler, please
 }
 
 

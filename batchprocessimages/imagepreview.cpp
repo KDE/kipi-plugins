@@ -102,14 +102,14 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     g1->addWidget( groupBoxZoomFactor, 0, 0);
 
     QGridLayout* g2 = new QGridLayout( v1, 1, 2 );
-    QGroupBox * groupBox1 = new QGroupBox( 1, Qt::Horizontal, i18n("Original image"), box );
+    QGroupBox * groupBox1 = new QGroupBox( 1, Qt::Horizontal, i18n("Original Image"), box );
     m_previewOrig = new PixmapView(cropActionOrig, groupBox1);
     QWhatsThis::add( m_previewOrig, i18n("<p>This is the original image preview. You can use the mouse "
                                          "wheel to change the zoom factor. Click in and use the mouse "
                                          "to move the image."));
     g2->addWidget( groupBox1 , 0, 0);
 
-    QGroupBox * groupBox2 = new QGroupBox( 1, Qt::Horizontal, i18n("Destination image"), box );
+    QGroupBox * groupBox2 = new QGroupBox( 1, Qt::Horizontal, i18n("Destination Image"), box );
     m_previewDest = new PixmapView(cropActionDest, groupBox2);
     QWhatsThis::add( m_previewDest, i18n("<p>This is the destination image preview. You can use the "
                                          "mouse wheel to change the zoom factor. Click in and use the "

@@ -264,7 +264,7 @@ void FrmPrintWizard::FrmPrintWizardBaseSelected(const QString &)
           args << (*it);
       if (!launchExternalApp(args))
       {
-        KMessageBox::sorry(this, i18n("There was an error launching the Gimp; please make sure it is properly installed."), i18n("KIPI"));         return;
+        KMessageBox::sorry(this, i18n("There was an error launching the Gimp. Please make sure it is properly installed."), i18n("KIPI"));         return;
       }
 
     }
@@ -487,7 +487,7 @@ QStringList FrmPrintWizard::printPhotosToFile(QPtrList<TPhoto> photos, QString &
     if (QFile::exists(filename))
     {
       int result = KMessageBox::warningYesNoCancel( this,
-          i18n("The following file will be overwritten.  Do you want to overwrite this file?") +
+          i18n("The following file will be overwritten. Do you want to overwrite this file?") +
           "\n\n" + filename);
       if (result == KMessageBox::No)
         saveFile = false;

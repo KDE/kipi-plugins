@@ -18,8 +18,8 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-// KDE includes. 
- 
+// KDE includes.
+
 #include <klocale.h>
 #include <kaction.h>
 #include <kgenericfactory.h>
@@ -52,10 +52,10 @@ Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent,
 void Plugin_TimeAdjust::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    
+
     // this is our action shown in the menubar/toolbar of the mainwindow
 
-    m_actionTimeAjust = new KAction (i18n("Adjust Time and Date"),
+    m_actionTimeAjust = new KAction (i18n("Adjust Time && Date..."),
                                      "clock",
                                      0,     // or a shortcut like CTRL+SHIFT+Key_S,
                                      this,
@@ -66,17 +66,17 @@ void Plugin_TimeAdjust::setup( QWidget* widget )
     addAction( m_actionTimeAjust );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
-    
-    if ( !m_interface ) 
+
+    if ( !m_interface )
        {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
        return;
        }
-    
+
     KIPI::ImageCollection selection = m_interface->currentScope();
     m_actionTimeAjust->setEnabled( selection.isValid() );
 
-    connect( m_interface, SIGNAL(currentScopeChanged(bool)), 
+    connect( m_interface, SIGNAL(currentScopeChanged(bool)),
              m_actionTimeAjust, SLOT(setEnabled(bool)));
 }
 
@@ -84,13 +84,13 @@ void Plugin_TimeAdjust::slotActivate()
 {
     // Get the current/selected album
     KIPI::ImageCollection images = m_interface->currentScope();
-    
+
     if ( !images.isValid() )
         return;
 
     if ( m_dialog == 0 )
         m_dialog = new KIPITimeAdjustPlugin::TimeAdjustDialog( m_interface, 0, "time adjust dialog" );
-        
+
     m_dialog->setImages( images.images() );
     m_dialog->show();
 }
@@ -99,7 +99,7 @@ KIPI::Category Plugin_TimeAdjust::category( KAction* action ) const
 {
     if ( action == m_actionTimeAjust )
        return KIPI::IMAGESPLUGIN;
-    
+
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }

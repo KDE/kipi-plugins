@@ -55,22 +55,22 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    setCaption(i18n("Batch Image Filtering options"));
+    setCaption(i18n("Batch Image Filtering Options"));
     setHelp("filterimages", "kipi-plugins");
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Image filtering options") );
+    groupBox1->setTitle( i18n("Image Filtering Options") );
 
     m_labelType->setText( i18n("Filter type:") );
 
-    m_Type->insertItem(i18n("Add noise"));
+    m_Type->insertItem(i18n("Add Noise"));
     m_Type->insertItem(i18n("Antialias"));
     m_Type->insertItem(i18n("Blur"));
     m_Type->insertItem(i18n("Despeckle"));
     m_Type->insertItem(i18n("Enhance"));
     m_Type->insertItem(i18n("Median"));
-    m_Type->insertItem(i18n("Noise reduction"));
+    m_Type->insertItem(i18n("Noise Reduction"));
     m_Type->insertItem(i18n("Sharpen"));
     m_Type->insertItem(i18n("Unsharp"));
     m_Type->setCurrentText(i18n("Sharpen"));

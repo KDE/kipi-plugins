@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=DirOperations
-Comment=KIPI Directory operations Plugin
+Comment=KIPI Directory Operations Plugin
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_diroperations

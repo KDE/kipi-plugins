@@ -96,7 +96,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
     : KDialogBase( KDialogBase::Plain, "BatchProcessImagesDialog", Help|User1|User2|Cancel,
-                   Cancel, parent, "", false, false, i18n("&About"), i18n("&Start")), 
+                   Cancel, parent, "", false, false, i18n("&About"), i18n("&Start")),
                    m_selectedImageFiles( urlList), m_interface( interface )
 {
     // Init. Tmp folder
@@ -147,7 +147,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     //---------------------------------------------
 
-    groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("File operations"), box );
+    groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("File Operations"), box );
 
     m_labelOverWrite = new QLabel (i18n("Overwrite mode:"), groupBox2);
     m_overWriteMode = new QComboBox( false, groupBox2 );
@@ -182,7 +182,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     QHBoxLayout* lay = new QHBoxLayout( add );
     lay->addStretch( 1 );
 
-    m_addNewAlbumButton = new QPushButton ( i18n( "&Add directory"), add, "PushButton_AddNewAlbum");
+    m_addNewAlbumButton = new QPushButton ( i18n( "&Add Directory..."), add, "PushButton_AddNewAlbum");
     lay->addWidget( m_addNewAlbumButton );
     connect( m_addNewAlbumButton, SIGNAL( clicked() ), m_upload, SLOT( mkdir() ) );
 
@@ -201,7 +201,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     m_listFiles->setFixedHeight( m_listFiles->sizeHint().height() );
 
     QVBoxLayout* lay3 = new QVBoxLayout( lay2 );
-    m_addImagesButton = new QPushButton ( i18n( "&Add" ), box41 );
+    m_addImagesButton = new QPushButton ( i18n( "&Add..." ), box41 );
     lay3->addWidget( m_addImagesButton );
     QWhatsThis::add( m_addImagesButton, i18n("<p>Add images to the list.") );
 
@@ -268,7 +268,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
             this, SLOT(slotImagesFilesButtonRem()));
 
    // Get the image files filters from the hosts app.
-     
+
     m_ImagesFilesSort = m_interface->fileExtensions();
 
     dvlay->activate();
@@ -309,9 +309,9 @@ void BatchProcessImagesDialog::slotImagesFilesButtonRem( void )
         delete pitem;
         m_nbItem = m_selectedImageFiles.count();
 
-        if (m_nbItem == 0) groupBox4->setTitle(i18n("Image files list"));
+        if (m_nbItem == 0) groupBox4->setTitle(i18n("Image Files List"));
         else
-           groupBox4->setTitle(i18n("Image file list (1 item)", "Image file list (%n items)", m_nbItem));
+           groupBox4->setTitle(i18n("Image File List (1 item)", "Image File List (%n items)", m_nbItem));
         }
 }
 
@@ -407,8 +407,8 @@ void BatchProcessImagesDialog::slotProcessStart( void )
     if ( m_removeOriginal->isChecked() == true )
         {
         if ( KMessageBox::warningContinueCancel(this,
-             i18n("All original image files will be removed from the source Album;\ndo you want to continue?"),
-             i18n("Delete original image files"), KStdGuiItem::cont(),
+             i18n("All original image files will be removed from the source Album.\nDo you want to continue?"),
+             i18n("Delete Original Image Files"), KStdGuiItem::cont(),
              "KIPIplugin-BatchProcessImages-AlwaysRemomveOriginalFiles") != KMessageBox::Continue )
            return;
         }
@@ -655,29 +655,29 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
         urlList.append(dest);
         m_interface->refreshImages( urlList );
 
-        if ( !item->overWrote() ) 
+        if ( !item->overWrote() )
             {
             // Do not add an entry if there was an image at the location already.
             bool ok = m_interface->addImage( dest, errmsg );
-            
-            if ( !ok ) 
+
+            if ( !ok )
                 {
                 int code = KMessageBox::warningContinueCancel( this,
                                         i18n("<qt>Error adding image to application; error message was: "
                                         "<b>%1</b></qt>").arg( errmsg ),
-                                        i18n("Error adding image to application") );
-                                        
-                if ( code == KMessageBox::Cancel ) 
+                                        i18n("Error Adding Image to Application") );
+
+                if ( code == KMessageBox::Cancel )
                    {
                    slotProcessStop();
                    break;
-                   } 
+                   }
                 else
                    item->changeResult(i18n("Failed."));
                 }
             }
 
-        if ( src != dest ) 
+        if ( src != dest )
             {
             KIPI::ImageInfo srcInfo = m_interface->info( src );
             KIPI::ImageInfo destInfo = m_interface->info( dest );
@@ -746,7 +746,7 @@ void BatchProcessImagesDialog::slotListDoubleClicked(QListViewItem *itemClicked)
 void BatchProcessImagesDialog::slotPreview(void)
 {
     kdWarning() << "BatchProcessImagesDialog::slotPreview" << endl;
-    
+
     if ( m_listFiles->currentItem() == 0 )
        {
        KMessageBox::error(this, i18n("You must selected an item from the list to calculate the preview."));
@@ -770,13 +770,13 @@ void BatchProcessImagesDialog::slotPreview(void)
     m_addImagesButton->setEnabled(false);
     m_remImagesButton->setEnabled(false);
 
-    disconnect( this, SIGNAL(user2Clicked()), 
+    disconnect( this, SIGNAL(user2Clicked()),
                 this, SLOT(slotProcessStart()));
-                
+
     showButtonCancel( false );
     setButtonText( User2, i18n("&Stop") );
-    
-    connect(this, SIGNAL(user2Clicked()), 
+
+    connect(this, SIGNAL(user2Clicked()),
             this, SLOT(slotPreviewStop()));
 
     m_previewOutput = "";
@@ -905,9 +905,9 @@ void BatchProcessImagesDialog::listImageFiles(void)
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    if (m_nbItem == 0) groupBox4->setTitle(i18n("Image file list"));
+    if (m_nbItem == 0) groupBox4->setTitle(i18n("Image File List"));
     else
-       groupBox4->setTitle(i18n("Image file list (1 item)", "Image file list (%n items)", m_nbItem));
+       groupBox4->setTitle(i18n("Image File List (1 item)", "Image File List (%n items)", m_nbItem));
 
     if (m_selectedImageFiles.isEmpty()) return;
 
@@ -976,10 +976,10 @@ void BatchProcessImagesDialog::endPreview(void)
     slotTypeChanged(m_Type->currentText());
 
     setButtonText( User2, i18n("&Start") );
-    
-    disconnect(this, SIGNAL(user2Clicked()), 
+
+    disconnect(this, SIGNAL(user2Clicked()),
                this, SLOT(slotPreviewStop()));
-               
+
     connect(this, SIGNAL(user2Clicked()),
             this, SLOT(slotProcessStart()));
 }

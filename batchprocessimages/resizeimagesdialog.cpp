@@ -55,19 +55,19 @@ ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* int
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    setCaption(i18n("Batch Resize Images options"));
+    setCaption(i18n("Batch Resize Images Options"));
     setHelp("resizeimages", "kipi-plugins");
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Image resizing options") );
+    groupBox1->setTitle( i18n("Image Resizing Options") );
 
-    m_labelType->setText( i18n("Image-Resize type:") );
+    m_labelType->setText( i18n("Image resize type:") );
 
     m_Type->insertItem(i18n("Proportional (1 dim.)"));
     m_Type->insertItem(i18n("Proportional (2 dim.)"));
-    m_Type->insertItem(i18n("Non-proportional"));
-    m_Type->insertItem(i18n("Prepare to print"));
+    m_Type->insertItem(i18n("Non-Proportional"));
+    m_Type->insertItem(i18n("Prepare to Print"));
     m_Type->setCurrentText(i18n("Proportional (1 dim.)"));
     whatsThis = i18n("<p>Select here the image-resize type.");
     whatsThis = whatsThis + i18n("<p><b>Proportional (1 dim.)</b>: standard auto-resizing using one dimension. "

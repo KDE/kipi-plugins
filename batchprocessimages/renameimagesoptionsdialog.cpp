@@ -50,7 +50,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 RenameImagesOptionsDialog::RenameImagesOptionsDialog(QWidget *parent)
                         : KDialogBase( parent, "RenameImagesOptionsDialog", true,
-                          i18n("Rename Image file options"), Ok|Cancel, Ok, false)
+                          i18n("Rename Image File Options"), Ok|Cancel, Ok, false)
 {
     QWidget* box = new QWidget( this );
     setMainWidget(box);
@@ -59,7 +59,7 @@ RenameImagesOptionsDialog::RenameImagesOptionsDialog(QWidget *parent)
 
     //---------------------------------------------
 
-    QGroupBox * groupBox1 = new QGroupBox( 2, Qt::Horizontal, i18n("Template to use for renaming images"), box );
+    QGroupBox * groupBox1 = new QGroupBox( 2, Qt::Horizontal, i18n("Template to Use for Renaming Images"), box );
 
     m_labelPrefix = new QLabel( i18n("Prefix string:"), groupBox1);
     m_prefix = new KLineEdit(groupBox1);
@@ -88,14 +88,14 @@ RenameImagesOptionsDialog::RenameImagesOptionsDialog(QWidget *parent)
 
     //---------------------------------------------
 
-    QGroupBox * groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("File list order"), box );
+    QGroupBox * groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("File List Order"), box );
 
     m_labelSort = new QLabel (i18n("Sort original list:"), groupBox2);
     m_sortType = new QComboBox( false, groupBox2 );
-    m_sortType->insertItem(i18n("by File Name"));
-    m_sortType->insertItem(i18n("by File Size"));
-    m_sortType->insertItem(i18n("by Modification Date"));
-    m_sortType->setCurrentText (i18n("by File Name"));
+    m_sortType->insertItem(i18n("By File Name"));
+    m_sortType->insertItem(i18n("By File Size"));
+    m_sortType->insertItem(i18n("By Modification Date"));
+    m_sortType->setCurrentText (i18n("By File Name"));
     QWhatsThis::add( m_sortType, i18n("<p>Select here the original file list sorting method.") );
 
     m_reverseOrder = new QCheckBox(i18n("Reverse order"), groupBox2);
@@ -107,7 +107,7 @@ RenameImagesOptionsDialog::RenameImagesOptionsDialog(QWidget *parent)
 
     //---------------------------------------------
 
-    QGroupBox * groupBox3 = new QGroupBox( 1, Qt::Horizontal, i18n("Files' dates"), box );
+    QGroupBox * groupBox3 = new QGroupBox( 1, Qt::Horizontal, i18n("Files' Dates"), box );
 
     m_dateChange = new QCheckBox( i18n("Change date of image files"), groupBox3);
     QWhatsThis::add( m_dateChange, i18n("<p>If you enable this option, "

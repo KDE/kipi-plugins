@@ -72,7 +72,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_AutoExif =  new KAction(i18n("Auto Rotate/Flip using EXIF Information"),
+    m_action_AutoExif =  new KAction(i18n("Auto Rotate/Flip Using EXIF Information"),
                                      0,
                                      0,
                                      this,
@@ -86,7 +86,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
                            actionCollection(),
                            "jpeglossless_rotate");
 
-    m_action_RotateImage->insert( new KAction(i18n("90 degrees"),
+    m_action_RotateImage->insert( new KAction(i18n("90 Degrees"),
                                 0,
                                 0,
                                 this,
@@ -94,7 +94,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
                                 actionCollection(),
                                 "rotate_90") );
 
-    m_action_RotateImage->insert( new KAction(i18n("180 degrees"),
+    m_action_RotateImage->insert( new KAction(i18n("180 Degrees"),
                                 0,
                                 0,
                                 this,
@@ -102,7 +102,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
                                 actionCollection(),
                                 "rotate_180") );
 
-    m_action_RotateImage->insert( new KAction(i18n("270 degrees"),
+    m_action_RotateImage->insert( new KAction(i18n("270 Degrees"),
                                 0,
                                 0,
                                 this,
@@ -129,7 +129,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
                                 actionCollection(),
                                 "flip_vertical") );
 
-    m_action_Convert2GrayScale = new KAction(i18n("Convert to Black and White"),
+    m_action_Convert2GrayScale = new KAction(i18n("Convert to Black && White"),
                                              "grayscaleconvert",
                                              0,
                                              this,

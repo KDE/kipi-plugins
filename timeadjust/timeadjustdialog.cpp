@@ -46,7 +46,7 @@ namespace KIPITimeAdjustPlugin
 {
 
 TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent, const char* name )
-    :KDialogBase( IconList, i18n("Adjust time and date"), Help|Ok|Cancel, Ok, parent, name ),
+    :KDialogBase( IconList, i18n("Adjust Time & Date"), Help|Ok|Cancel, Ok, parent, name ),
      m_interface( interface )
 {
     addInfoPage();

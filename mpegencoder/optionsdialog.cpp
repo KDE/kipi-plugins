@@ -50,7 +50,7 @@ namespace KIPIMPEGEncoderPlugin
 
 OptionsDialog::OptionsDialog(QWidget *parent)
                  : KDialogBase( parent, "MPEGEncoderOptionsDialog", true,
-                 i18n("MPEG Encoder plugin settings"), Ok|Cancel, Ok, false)
+                 i18n("MPEG Encoder Plugin Settings"), Ok|Cancel, Ok, false)
 {
   Icons = new KIconLoader( QString( "MenuDlg" ) );
 
@@ -64,7 +64,7 @@ OptionsDialog::OptionsDialog(QWidget *parent)
 
   // ImageMagick binary programs folder
 
-  QGroupBox* IMBinFolderGroup = new QGroupBox( 3, Qt::Horizontal, i18n( "ImageMagick binary programs path" ), box);
+  QGroupBox* IMBinFolderGroup = new QGroupBox( 3, Qt::Horizontal, i18n( "ImageMagick Binary Programs Path" ), box);
   g1->addWidget( IMBinFolderGroup, 1, 1, Qt::AlignLeft);
   IMBinFolderEditFilename = new KLineEdit( IMBinFolderGroup );
   IMBinFolderEditFilename->setMinimumWidth( 300 );
@@ -74,7 +74,7 @@ OptionsDialog::OptionsDialog(QWidget *parent)
 
   // MjpegTools binary programs folder
 
-  QGroupBox* MJBinFolderGroup = new QGroupBox( 3, Qt::Horizontal, i18n( "MjpegTools binary programs path" ), box);
+  QGroupBox* MJBinFolderGroup = new QGroupBox( 3, Qt::Horizontal, i18n( "MjpegTools Binary Programs Path" ), box);
   g1->addWidget( MJBinFolderGroup, 2, 1, Qt::AlignLeft);
   MJBinFolderEditFilename = new KLineEdit( MJBinFolderGroup );
   MJBinFolderEditFilename->setMinimumWidth( 300 );

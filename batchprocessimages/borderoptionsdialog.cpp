@@ -50,7 +50,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, QString BorderType)
                         : KDialogBase( parent, "BorderOptionsDialog", true,
-                          i18n("Border options"), Ok|Cancel, Ok, false)
+                          i18n("Border Options"), Ok|Cancel, Ok, false)
 {
     QWidget* box = new QWidget( this );
     setMainWidget(box);

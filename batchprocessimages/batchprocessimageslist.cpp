@@ -48,8 +48,8 @@ BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char *name
     setAcceptDrops(true);
     setDropVisualizer(false);
     addColumn(i18n("Source Album"));
-    addColumn(i18n("Source image"));
-    addColumn(i18n("Target image"));
+    addColumn(i18n("Source Image"));
+    addColumn(i18n("Target Image"));
     addColumn(i18n("Result"));
     setSorting(3);
     setItemMargin(3);

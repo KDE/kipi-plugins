@@ -94,14 +94,14 @@ BatchDialog::BatchDialog()
 
     // ---------------------------------------------------------------
 
-    cameraWBCheckBox_ = new QCheckBox(i18n("Use Camera White Balance"), settingsBox);
+    cameraWBCheckBox_ = new QCheckBox(i18n("Use camera white balance"), settingsBox);
     QToolTip::add(cameraWBCheckBox_,
                     i18n("Use the camera's custom white-balance settings.\n"
                          "The default  is to use fixed daylight values,\n"
                          "calculated from sample images."));
     settingsBoxLayout->addWidget(cameraWBCheckBox_);
 
-    fourColorCheckBox_ = new QCheckBox(i18n("Four Color RGBG"), settingsBox);
+    fourColorCheckBox_ = new QCheckBox(i18n("Four color RGBG"), settingsBox);
     QToolTip::add(fourColorCheckBox_,
                     i18n("Interpolate RGB as four colors. \n"
                          "The default is to assume that all green \n"
@@ -199,7 +199,7 @@ BatchDialog::BatchDialog()
 
     radioButton = new QRadioButton(i18n("Overwrite"),conflictButtonGroup_);
     radioButton->setChecked(true);
-    radioButton = new QRadioButton(i18n("Open File Dialog"),conflictButtonGroup_);
+    radioButton = new QRadioButton(i18n("Open file dialog"),conflictButtonGroup_);
 
     // ---------------------------------------------------------------
 
@@ -233,7 +233,7 @@ BatchDialog::BatchDialog()
 
     processButton_ = new QPushButton(i18n("P&rocess"), this);
     QToolTip::add(processButton_,
-                  i18n("Start converting the Raw Images from current settings."));
+                  i18n("Start converting the raw images from current settings."));
     hboxLayout->addWidget(processButton_);
 
     abortButton_ = new QPushButton(i18n("&Abort"), this);
@@ -241,7 +241,7 @@ BatchDialog::BatchDialog()
     hboxLayout->addWidget(abortButton_);
 
     closeButton_ = new QPushButton(i18n("&Close"), this);
-    QToolTip::add(closeButton_, i18n("Exit Raw Converter"));
+    QToolTip::add(closeButton_, i18n("Exit raw converter"));
     hboxLayout->addWidget(closeButton_);
 
 

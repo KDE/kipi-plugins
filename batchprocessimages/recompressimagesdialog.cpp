@@ -53,12 +53,12 @@ RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interf
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    setCaption(i18n("'Batch Recompress Images' options"));
+    setCaption(i18n("Batch Recompress Images Options"));
     setHelp("recompressimages", "kipi-plugins");
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Image recompression options") );
+    groupBox1->setTitle( i18n("Image Recompression Options") );
 
     m_labelType->hide();
     m_Type->hide();

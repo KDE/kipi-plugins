@@ -60,7 +60,7 @@ listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption,
 
   QLabel *labelMess1 = new QLabel ( Mess1, box);
   m_listFiles = new KListView( box );
-  m_listFiles->addColumn(i18n("Image file name"));
+  m_listFiles->addColumn(i18n("Image File Name"));
   m_listFiles->addColumn(i18n("From Album"));
   m_listFiles->setSorting(1);
   m_listFiles->setItemMargin(3);

@@ -32,10 +32,10 @@ namespace KIPIMPEGEncoderPlugin
 KShowDebuggingOutput::KShowDebuggingOutput(QString Messages, QString Header, QString Foot, QWidget* parent )
   : KDialog( parent, "debugViewDialog", true )
 {
-  setCaption( i18n("Debugging output") );
+  setCaption( i18n("Debugging Output") );
 
   okButton = new QPushButton( i18n("&OK"), this );
-  ClipBoardCopy = new QPushButton( i18n("Copy to clip&board"), this );
+  ClipBoardCopy = new QPushButton( i18n("Copy to Clip&board"), this );
   debugView = new QTextView( this );
   grid = new QGridLayout( this );
 

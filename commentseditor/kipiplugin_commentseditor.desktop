@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=CommentsEditor
-Comment=KIPI batch comments editor plugin
+Comment=KIPI Batch Comments Editor Plugin
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_commentseditor

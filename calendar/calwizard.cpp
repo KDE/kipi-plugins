@@ -19,7 +19,7 @@
  *
  * ============================================================ */
 
-// Qt includes. 
+// Qt includes.
 
 #include <qlabel.h>
 #include <qdatetime.h>
@@ -59,13 +59,13 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
     // ---------------------------------------------------------------
 
     wTemplate_ = new CalTemplate(this, "wTemplate");
-    addPage(wTemplate_, i18n("Create Template for the Calendar"));
+    addPage(wTemplate_, i18n("Create Template for Calendar"));
     setHelpEnabled(wTemplate_, true);
 
     // ---------------------------------------------------------------
 
     wSelect_ = new CalSelect( interface, this, "wSelect");
-    addPage(wSelect_, i18n("Select Year and Images"));
+    addPage(wSelect_, i18n("Select Year & Images"));
     setHelpEnabled(wSelect_, true);
 
     // ---------------------------------------------------------------

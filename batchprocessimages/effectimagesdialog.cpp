@@ -55,22 +55,22 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    setCaption(i18n("Batch Image Effects options"));
+    setCaption(i18n("Batch Image Effects Options"));
     setHelp("effectimages", "kipi-plugins");
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Image Effect options") );
+    groupBox1->setTitle( i18n("Image Effect Options") );
 
     m_labelType->setText( i18n("Effect type:") );
 
-    m_Type->insertItem(i18n("Adaptive threshold"));
+    m_Type->insertItem(i18n("Adaptive Threshold"));
     m_Type->insertItem(i18n("Charcoal"));
-    m_Type->insertItem(i18n("Detect edges"));
+    m_Type->insertItem(i18n("Detect Edges"));
     m_Type->insertItem(i18n("Emboss"));
     m_Type->insertItem(i18n("Implode"));
     m_Type->insertItem(i18n("Paint"));
-    m_Type->insertItem(i18n("Shade light"));
+    m_Type->insertItem(i18n("Shade Light"));
     m_Type->insertItem(i18n("Solarize"));
     m_Type->insertItem(i18n("Spread"));
     m_Type->insertItem(i18n("Swirl"));

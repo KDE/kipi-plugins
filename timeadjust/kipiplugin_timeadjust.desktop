@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=TimeDateAdjust
-Comment=KIPI Time/Date adjust
+Comment=KIPI Time/Date Adjust
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_timeadjust

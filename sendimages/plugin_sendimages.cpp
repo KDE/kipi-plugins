@@ -70,15 +70,15 @@ Plugin_SendImages::Plugin_SendImages(QObject *parent, const char*, const QString
 void Plugin_SendImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    
-    m_action_sendimages = new KAction (i18n("E-mail Images..."),    // Menu message.
+
+    m_action_sendimages = new KAction (i18n("Email Images..."),    // Menu message.
                                        "mail_new",                  // Menu icon.
                                        0,
                                        this,
                                        SLOT(slotActivate()),
                                        actionCollection(),
                                        "send_images");
-                                       
+
     addAction( m_action_sendimages );
 }
 
@@ -95,17 +95,17 @@ Plugin_SendImages::~Plugin_SendImages()
 void Plugin_SendImages::slotActivate()
 {
     m_progressDlg = 0;
-    
+
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-    
-    if ( !interface ) 
+
+    if ( !interface )
        {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
        return;
        }
 
     KIPI::ImageCollection images = interface->currentScope();
-    
+
     if ( !images.isValid() )
         return;
 
@@ -113,7 +113,7 @@ void Plugin_SendImages::slotActivate()
     QString Tmp = dir.saveLocation("tmp", "kipi-sendimagesplugin-" + QString::number(getpid()) + "/");
 
     m_sendImagesOperation = new KIPISendimagesPlugin::SendImages( interface, Tmp, images, this );
-    
+
     m_sendImagesOperation->showDialog();
 }
 
@@ -141,11 +141,11 @@ void Plugin_SendImages::slotCancel()
 void Plugin_SendImages::customEvent(QCustomEvent *event)
 {
     if (!event) return;
-    
+
     if (!m_progressDlg)
         {
         m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Preparing images to send"));
-        
+
         connect(m_progressDlg, SIGNAL(cancelClicked()),
                 this, SLOT(slotCancel()));
 
@@ -154,85 +154,85 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
         }
 
     KIPISendimagesPlugin::EventData *d = (KIPISendimagesPlugin::EventData*) event->data();
-    
+
     if (!d) return;
-    
-    if (d->starting) 
+
+    if (d->starting)
         {
         QString text;
-        
-        switch (d->action) 
+
+        switch (d->action)
            {
-           case(KIPISendimagesPlugin::Initialize): 
+           case(KIPISendimagesPlugin::Initialize):
               {
               m_total = d->total;
               text = i18n("Preparing 1 image to send....", "Preparing %n images to send....", d->total);
               break;
               }
 
-           case(KIPISendimagesPlugin::ResizeImages): 
+           case(KIPISendimagesPlugin::ResizeImages):
               {
               text = i18n("Resizing '%1' from Album '%2'...")
                           .arg(d->fileName).arg(d->albumName);
               break;
               }
 
-           case(KIPISendimagesPlugin::Progress): 
+           case(KIPISendimagesPlugin::Progress):
               {
               text = i18n("Using '%1' from Album '%2' without resizing...")
                           .arg(d->fileName).arg(d->albumName);
               break;
-              }                                          
-              
-           default: 
+              }
+
+           default:
               {
               kdWarning( 51000 ) << "Plugin_SendImages: Unknown 'Starting' event: " << d->action << endl;
               }
            }
-        
+
         m_progressDlg->addedAction(text, KIPI::StartingMessage);
         }
-    else 
+    else
         {
         QString text;
 
-        if (!d->success) 
+        if (!d->success)
             {
-            switch (d->action) 
+            switch (d->action)
                {
-               case(KIPISendimagesPlugin::ResizeImages): 
+               case(KIPISendimagesPlugin::ResizeImages):
                   {
                   text = i18n("Failed to resize '%1' from Album '%2'")
                               .arg(d->fileName).arg(d->albumName);
                   break;
                   }
-                                   
-               default: 
+
+               default:
                   {
                   kdWarning( 51000 ) << "Plugin_SendImages: Unknown 'Failed' event: " << d->action << endl;
                   }
                }
-            
+
             m_progressDlg->addedAction(text, KIPI::WarningMessage);
             }
         else
             {
-            switch (d->action) 
+            switch (d->action)
                {
-               case(KIPISendimagesPlugin::ResizeImages): 
+               case(KIPISendimagesPlugin::ResizeImages):
                   {
                   text = i18n("Resizing '%1' from Album '%2' completed.")
                               .arg(d->fileName).arg(d->albumName);
                   break;
                   }
 
-               case(KIPISendimagesPlugin::Progress): 
+               case(KIPISendimagesPlugin::Progress):
                   {
                   text = i18n("All preparatory operations completed.");
                   break;
                   }
-                                 
-               default: 
+
+               default:
                   {
                   kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Success' event: " << d->action << endl;
                   }
@@ -240,29 +240,29 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
 
             m_progressDlg->addedAction(text, KIPI::SucessMessage);
             }
-        
+
         ++m_current;
         m_progressDlg->setProgress(m_current, m_total);
-        
+
         if( d->action == KIPISendimagesPlugin::Progress )
            {
            delete m_progressDlg;
-           
+
            // If we have some errors during the resizing images process, show an error dialog.
 
            if ( m_sendImagesOperation->showErrors() == false )
               return;
 
            // Create a text file with images comments if necessary.
-           
+
            m_sendImagesOperation->makeCommentsFile();
 
            // Invoke mailer agent call.
-           
+
            m_sendImagesOperation->invokeMailAgent();
            }
         }
-    
+
     kapp->processEvents();
     delete d;
 }
@@ -274,7 +274,7 @@ KIPI::Category Plugin_SendImages::category( KAction* action ) const
 {
     if ( action == m_action_sendimages )
        return KIPI::IMAGESPLUGIN;
-    
+
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }

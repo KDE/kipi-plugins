@@ -35,7 +35,7 @@
  #include <kmessagebox.h>
  #include <ktextbrowser.h>
  #include <kurl.h>
- 
+
 // Local includes
 
  #include "plugin_diroperations.h"
@@ -56,8 +56,8 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_diroperations,
 void Plugin_DirOperations::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    
-    m_action_OpenIn = new KActionMenu(i18n("&Open Album in ..."),
+
+    m_action_OpenIn = new KActionMenu(i18n("&Open Album In"),
                                       actionCollection(),
                                      "miscoperations_open_in");
 
@@ -81,8 +81,8 @@ void Plugin_DirOperations::setup( QWidget* widget )
 
 
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*>( parent() );
-    
-    if ( !interface ) 
+
+    if ( !interface )
        {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
        return;
@@ -91,7 +91,7 @@ void Plugin_DirOperations::setup( QWidget* widget )
     KIPI::ImageCollection album = interface->currentAlbum();
     m_action_OpenIn->setEnabled(album.isValid());
 
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), 
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
              this, SLOT(slotAlbumSelected( bool ) ) );
  }
 
@@ -101,12 +101,12 @@ void Plugin_DirOperations::setup( QWidget* widget )
 void Plugin_DirOperations::slotOpenInKonqui()
 {
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*>( parent() );
-    if ( !interface ) 
+    if ( !interface )
        {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
        return;
        }
-    
+
     KIPI::ImageCollection album = interface->currentAlbum();
     if (album.images().count() == 0) return;
 
@@ -119,13 +119,13 @@ void Plugin_DirOperations::slotOpenInKonqui()
 void Plugin_DirOperations::slotOpenInNautilus()
 {
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*>( parent() );
-    
-    if ( !interface ) 
+
+    if ( !interface )
        {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
        return;
        }
-    
+
     KIPI::ImageCollection images = interface->currentAlbum();
 
    if (images.images().count() == 0) return;
@@ -154,7 +154,7 @@ KIPI::Category  Plugin_DirOperations::category( KAction* action ) const
 {
     if ( action == m_action_OpenIn )
        return KIPI::COLLECTIONSPLUGIN;
-    
+
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::COLLECTIONSPLUGIN; // no warning from compiler, please
 }

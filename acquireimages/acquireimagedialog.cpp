@@ -99,7 +99,7 @@ namespace KIPIAcquireImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *parent, const QImage &img)
-                  : KDialogBase( IconList, i18n("Save target image options"), Help|Ok|Cancel,
+                  : KDialogBase( IconList, i18n("Save Target Image Options"), Help|Ok|Cancel,
                     Ok, parent, "AcquireImageDialog", true, true ), m_interface( interface )
 {
     KImageIO::registerFormats();
@@ -165,8 +165,8 @@ void AcquireImageDialog::setupImageOptions(void)
 {
     QString whatsThis;
 
-    page_setupImageOptions = addPage( i18n("Target image"),
-                                      i18n("Target image options"),
+    page_setupImageOptions = addPage( i18n("Target Image"),
+                                      i18n("Target Image Options"),
                                       BarIcon("image", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupImageOptions, 0, spacingHint() );
@@ -175,7 +175,7 @@ void AcquireImageDialog::setupImageOptions(void)
 
     QGroupBox * groupBox1 = new QGroupBox( page_setupImageOptions );
     groupBox1->setFlat(false);
-    groupBox1->setTitle(i18n("File name and comments"));
+    groupBox1->setTitle(i18n("File Name && Comments"));
     QWhatsThis::add( groupBox1, i18n("<p>The target image preview with the file name and comments.") );
     QGridLayout* grid2 = new QGridLayout( groupBox1, 3, 3 , 20, 10);
 
@@ -213,7 +213,7 @@ void AcquireImageDialog::setupImageOptions(void)
 
     //---------------------------------------------
 
-    QGroupBox * groupBox2 = new QGroupBox( i18n("Saving options"), page_setupImageOptions );
+    QGroupBox * groupBox2 = new QGroupBox( i18n("Saving Options"), page_setupImageOptions );
     groupBox2->setColumnLayout(0, Qt::Vertical );
     groupBox2->layout()->setSpacing( 6 );
     groupBox2->layout()->setMargin( 11 );
@@ -299,7 +299,7 @@ void AcquireImageDialog::setupAlbumsList(void)
 
     //---------------------------------------------
 
-    QVGroupBox * groupBox1 = new QVGroupBox( i18n("Select folder in which to save the target image"),
+    QVGroupBox * groupBox1 = new QVGroupBox( i18n("Select Folder in Which to Save Target Image"),
                                              page_setupAlbumsList );
     
     m_uploadPath = new KIPI::UploadWidget( m_interface, groupBox1, "m_uploadPath" );
@@ -308,7 +308,7 @@ void AcquireImageDialog::setupAlbumsList(void)
     QHBoxLayout* hlay = new QHBoxLayout( w, 6 );
     hlay->addStretch( 1 );
 
-    m_addNewAlbumButton = new QPushButton (i18n( "&Add new folder"), w, "PushButton_AddNewAlbum");
+    m_addNewAlbumButton = new QPushButton (i18n( "&Add New Folder"), w, "PushButton_AddNewAlbum");
     hlay->addWidget( m_addNewAlbumButton );
     QWhatsThis::add( m_addNewAlbumButton, i18n( "<p>Add a new folder."));
     
@@ -316,7 +316,7 @@ void AcquireImageDialog::setupAlbumsList(void)
 
     //---------------------------------------------
 
-    QGroupBox * groupBox2 = new QGroupBox( i18n("Album description"), page_setupAlbumsList );
+    QGroupBox * groupBox2 = new QGroupBox( i18n("Album Description"), page_setupAlbumsList );
     groupBox2->setColumnLayout(0, Qt::Vertical );
     groupBox2->layout()->setSpacing( 6 );
     groupBox2->layout()->setMargin( 11 );

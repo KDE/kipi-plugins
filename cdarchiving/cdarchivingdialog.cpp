@@ -114,7 +114,7 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
                  : KDialogBase( IconList, i18n("Configure Archive to CD"), Help|Ok|Cancel, Ok,
                    parent, "CDArchivingDialog", true, true ), m_interface( interface )
 {
-    setCaption(i18n("Album CD archiving"));
+    setCaption(i18n("Album CD Archiving"));
     setupSelection();
     setupLookPage();
     setupCDInfos();
@@ -136,7 +136,7 @@ CDArchivingDialog::~CDArchivingDialog()
 
 void CDArchivingDialog::setupSelection(void)
 {
-    page_setupSelection = addPage(i18n("Selection"), i18n("Album selection"),
+    page_setupSelection = addPage(i18n("Selection"), i18n("Album Selection"),
                                   BarIcon("folder_image", KIcon::SizeMedium));
 
     QVBoxLayout *layout = new QVBoxLayout(page_setupSelection, 0, spacingHint() );
@@ -146,7 +146,7 @@ void CDArchivingDialog::setupSelection(void)
 
     QGroupBox * groupBox1 = new QGroupBox( page_setupSelection );
     groupBox1->setFlat(false);
-    groupBox1->setTitle(i18n("Select Albums to archive"));
+    groupBox1->setTitle(i18n("Select Albums to Archive"));
     QGridLayout* grid = new QGridLayout( groupBox1, 2, 2 , 20, 20);
 
     m_AlbumsList = new KListView( groupBox1 );
@@ -160,11 +160,11 @@ void CDArchivingDialog::setupSelection(void)
     grid->addMultiCellWidget(m_AlbumsList, 0, 2, 0, 1);
 
     KButtonBox* albumSelectionButtonBox = new KButtonBox( groupBox1, Vertical );
-    QPushButton* buttonSelectAll = albumSelectionButtonBox->addButton ( i18n( "&Select all" ) );
+    QPushButton* buttonSelectAll = albumSelectionButtonBox->addButton ( i18n( "&Select All" ) );
     QWhatsThis::add( buttonSelectAll, i18n("<p>Select all Albums on the list.") );
-    QPushButton* buttonInvertSelection = albumSelectionButtonBox->addButton ( i18n( "&Invert selection" ));
+    QPushButton* buttonInvertSelection = albumSelectionButtonBox->addButton ( i18n( "&Invert Selection" ));
     QWhatsThis::add( buttonInvertSelection, i18n("<p>Invert the Album selection on the list.") );
-    QPushButton* buttonSelectNone = albumSelectionButtonBox->addButton ( i18n( "Select &none" ) );
+    QPushButton* buttonSelectNone = albumSelectionButtonBox->addButton ( i18n( "Select &None" ) );
     QWhatsThis::add( buttonSelectNone, i18n("<p>Deselect all Albums on the list.") );
     albumSelectionButtonBox->layout();
     grid->addMultiCellWidget(albumSelectionButtonBox, 0, 1, 2, 2);
@@ -173,7 +173,7 @@ void CDArchivingDialog::setupSelection(void)
     m_albumPreview->setFixedHeight( 120 );
     m_albumPreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_albumPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    QWhatsThis::add( m_albumPreview, i18n( "Preview of the first image in the currently selected Album." ) );
+    QWhatsThis::add( m_albumPreview, i18n( "Preview of the first image in the currently selected album." ) );
     grid->addMultiCellWidget(m_albumPreview, 2, 2, 2, 2);
 
     layout->addWidget( groupBox1 );
@@ -183,7 +183,7 @@ void CDArchivingDialog::setupSelection(void)
     
     //---------------------------------------------
 
-    QGroupBox * groupBox2 = new QGroupBox( i18n("Album description"), page_setupSelection );
+    QGroupBox * groupBox2 = new QGroupBox( i18n("Album Description"), page_setupSelection );
     groupBox2->setColumnLayout(0, Qt::Vertical );
     groupBox2->layout()->setSpacing( 6 );
     groupBox2->layout()->setMargin( 11 );
@@ -217,7 +217,7 @@ void CDArchivingDialog::setupSelection(void)
     //---------------------------------------------
 
     QGroupBox * groupBox3 = new QGroupBox( 2, Qt::Horizontal, 
-                                           i18n("Target media informations"),
+                                           i18n("Target Media Informations"),
                                            page_setupSelection );
     groupBox3->layout()->setSpacing( 6 );
     groupBox3->layout()->setMargin( 11 );
@@ -337,7 +337,7 @@ void CDArchivingDialog::slotStopParsingAlbums(void)
 void CDArchivingDialog::setupLookPage(void)
 {
     QString whatsThis;
-    page_setupLook = addPage( i18n("HTML interface"), i18n("HTML interface Look"),
+    page_setupLook = addPage( i18n("HTML Interface"), i18n("HTML Interface Look"),
                               BarIcon("html", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupLook, 0, spacingHint() );
@@ -561,7 +561,7 @@ void CDArchivingDialog::setupLookPage(void)
 
 void CDArchivingDialog::setupCDInfos(void)
 {
-    page_CDInfos = addPage( i18n("Volume descriptor"), i18n("Media Volume descriptor"),
+    page_CDInfos = addPage( i18n("Volume Descriptor"), i18n("Media Volume Descriptor"),
                             BarIcon("cd", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_CDInfos, 0, spacingHint() );
@@ -647,7 +647,7 @@ void CDArchivingDialog::setupCDInfos(void)
 void CDArchivingDialog::setupBurning(void)
 {
     page_burning = addPage( i18n("Media Burning"),
-                            i18n("CD/DVD burning Setup"),
+                            i18n("CD/DVD Burning Setup"),
                             BarIcon("cdwriter_unmount", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_burning, 0, spacingHint() );
@@ -656,7 +656,7 @@ void CDArchivingDialog::setupBurning(void)
 
     //---------------------------------------------
 
-    label = new QLabel(i18n("&K3b Binary path:"), page_burning);
+    label = new QLabel(i18n("&K3b binary path:"), page_burning);
     vlay->addWidget( label );
 
     m_K3bBinPath = new KURLRequester( "/usr/bin/k3b", page_burning);
@@ -670,7 +670,7 @@ void CDArchivingDialog::setupBurning(void)
 
     //---------------------------------------------
 
-    QGroupBox * groupBoxAdvancedOptions = new QGroupBox( i18n("Advanced burning options"), page_burning );
+    QGroupBox * groupBoxAdvancedOptions = new QGroupBox( i18n("Advanced Burning Options"), page_burning );
     groupBoxAdvancedOptions->setColumnLayout(0, Qt::Vertical );
     groupBoxAdvancedOptions->layout()->setSpacing( 6 );
     groupBoxAdvancedOptions->layout()->setMargin( 11 );
@@ -814,13 +814,13 @@ void CDArchivingDialog::slotOk()
 
     if (fileK3b.exists() == false)
        {
-       KMessageBox::sorry(this, i18n("K3b binary path is not valid; please check it...."));
+       KMessageBox::sorry(this, i18n("K3b binary path is not valid. Please check it."));
        return;
        }
 
     if (TargetMediaSize >= MaxMediaSize)
        {
-       KMessageBox::sorry(this, i18n("Target media size is too big; please change your Album selection."));
+       KMessageBox::sorry(this, i18n("Target media size is too big. Please change your album selection."));
        return;
        }
 

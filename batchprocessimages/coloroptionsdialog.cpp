@@ -50,7 +50,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, QString ColorType)
                         : KDialogBase( parent, "ColorOptionsDialog", true,
-                          i18n("Color options"), Ok|Cancel, Ok, false)
+                          i18n("Color Options"), Ok|Cancel, Ok, false)
 {
     QWidget* box = new QWidget( this );
     setMainWidget(box);

@@ -49,7 +49,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, QString EffectType)
                         : KDialogBase( parent, "EffectOptionsDialog", true,
-                          i18n("Effect options"), Ok|Cancel, Ok, false)
+                          i18n("Effect Options"), Ok|Cancel, Ok, false)
 {
     QWidget* box = new QWidget( this );
     setMainWidget(box);

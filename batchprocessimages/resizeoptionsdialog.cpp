@@ -51,7 +51,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
                    : KDialogBase( parent, "ResizeOptionsDialog", true,
-                     i18n("Image-Resize options"), Ok|Cancel, Ok, false)
+                     i18n("Image-Resize Options"), Ok|Cancel, Ok, false)
 {
     m_Type = ResizeType;
     QWidget* box = new QWidget( this );
@@ -61,7 +61,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
 
     if (m_Type == i18n("Proportional (1 dim.)"))
        {
-       QGroupBox * groupBox1 = new QGroupBox( 1, Qt::Horizontal, i18n("Resize options"), box );
+       QGroupBox * groupBox1 = new QGroupBox( 1, Qt::Horizontal, i18n("Resize Options"), box );
 
        m_size = new KIntNumInput(640, groupBox1);
        m_size->setRange(10, 10000, 1, true );
@@ -104,7 +104,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
 
     if (m_Type == i18n("Proportional (2 dim.)"))
        {
-       QGroupBox * groupBox1 = new QGroupBox( 2, Qt::Horizontal, i18n("Size settings"), box );
+       QGroupBox * groupBox1 = new QGroupBox( 2, Qt::Horizontal, i18n("Size Settings"), box );
 
        m_label_Width = new QLabel (i18n("Width (pixels):"), groupBox1);
        m_Width = new KIntNumInput(1024, groupBox1);
@@ -120,7 +120,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
 
        dvlay->addWidget( groupBox1 );
 
-       QGroupBox * groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("Rendering settings"), box );
+       QGroupBox * groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("Rendering Settings"), box );
 
        m_label_bgColor = new QLabel(i18n("Background color:"), groupBox2);
        QColor bgColor = QColor( 0, 0, 0 );                         // Black per default.
@@ -163,7 +163,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
 
     if (m_Type == i18n("Non proportional"))
        {
-       QGroupBox * groupBox1 = new QGroupBox( 1, Qt::Horizontal, i18n("Resize options"), box );
+       QGroupBox * groupBox1 = new QGroupBox( 1, Qt::Horizontal, i18n("Resize Options"), box );
 
        m_fixedWidth = new KIntNumInput(640, groupBox1);
        m_fixedWidth->setRange(10, 10000, 1, true );
@@ -209,7 +209,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
                                                "all printing settings can be customized."));
        dvlay->addWidget( m_customSettings );
 
-       QGroupBox * groupBox1 = new QGroupBox( 2, Qt::Horizontal, i18n("Printing standard settings"), box );
+       QGroupBox * groupBox1 = new QGroupBox( 2, Qt::Horizontal, i18n("Printing Standard Settings"), box );
 
        m_label_paperSize = new QLabel (i18n("Paper size (cm):"), groupBox1);
        m_paperSize = new QComboBox( false, groupBox1 );
@@ -240,7 +240,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
 
        dvlay->addWidget( groupBox1 );
 
-       QGroupBox * groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("Printing custom settings"), box );
+       QGroupBox * groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("Printing Custom Settings"), box );
 
        m_label_customXSize = new QLabel (i18n("Paper width (cm):"), groupBox2);
        m_customXSize = new KIntNumInput(10, groupBox2);
@@ -262,7 +262,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, QString ResizeType)
 
        dvlay->addWidget( groupBox2 );
 
-       QGroupBox * groupBox3 = new QGroupBox( 2, Qt::Horizontal, i18n("Rendering settings"), box );
+       QGroupBox * groupBox3 = new QGroupBox( 2, Qt::Horizontal, i18n("Rendering Settings"), box );
 
        m_label_backgroundColor = new QLabel(i18n("Background color:"), groupBox3);
        QColor backgroundColor = QColor( 255, 255, 255 );                         // White per default.

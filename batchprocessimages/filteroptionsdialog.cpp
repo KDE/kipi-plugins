@@ -49,7 +49,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
                         : KDialogBase( parent, "FilterOptionsDialog", true,
-                          i18n("Filter options"), Ok|Cancel, Ok, false)
+                          i18n("Filter Options"), Ok|Cancel, Ok, false)
 {
     QWidget* box = new QWidget( this );
     setMainWidget(box);

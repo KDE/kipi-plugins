@@ -48,7 +48,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
                         : KDialogBase( parent, "RecompressOptionsDialog", true,
-                          i18n("Recompression options"), Ok|Cancel, Ok, false)
+                          i18n("Recompression Options"), Ok|Cancel, Ok, false)
 {
     QWidget* box = new QWidget( this );
     setMainWidget(box);
@@ -57,7 +57,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
 
     // JPEG file format.
 
-    QGroupBox * groupBox1 = new QGroupBox( 2, Qt::Horizontal, i18n("JPEG file format"), box );
+    QGroupBox * groupBox1 = new QGroupBox( 2, Qt::Horizontal, i18n("JPEG File Format"), box );
 
     m_label_JPEGimageCompression = new QLabel (i18n("Image compression level:"), groupBox1);
     m_JPEGCompression = new KIntNumInput(75, groupBox1);
@@ -83,7 +83,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
 
     // PNG File format.
 
-    QGroupBox * groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("PNG file format"), box );
+    QGroupBox * groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("PNG File Format"), box );
 
     m_label_PNGimageCompression = new QLabel (i18n("Image compression level:"), groupBox2);
     m_PNGCompression = new KIntNumInput(75, groupBox2);
@@ -102,7 +102,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
 
     // TIFF File format.
 
-    QGroupBox * groupBox3 = new QGroupBox( 2, Qt::Horizontal, i18n("TIFF file format"), box );
+    QGroupBox * groupBox3 = new QGroupBox( 2, Qt::Horizontal, i18n("TIFF File Format"), box );
 
     m_label_TIFFimageCompression = new QLabel (i18n("Image compression algorithm:"), groupBox3);
     m_TIFFCompressionAlgo = new QComboBox( false, groupBox3 );
@@ -116,7 +116,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
 
     // TGA File format.
 
-    QGroupBox * groupBox4 = new QGroupBox( 2, Qt::Horizontal, i18n("TGA file format"), box );
+    QGroupBox * groupBox4 = new QGroupBox( 2, Qt::Horizontal, i18n("TGA File Format"), box );
 
     m_label_TGAimageCompression = new QLabel (i18n("Image compression algorithm:"), groupBox4);
     m_TGACompressionAlgo = new QComboBox( false, groupBox4 );

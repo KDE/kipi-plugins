@@ -89,7 +89,7 @@ SingleDialog::SingleDialog(const QString& file)
 
     // ---------------------------------------------------------------
 
-    cameraWBCheckBox_ = new QCheckBox(i18n("Use Camera White Balance"),
+    cameraWBCheckBox_ = new QCheckBox(i18n("Use camera white balance"),
                                       settingsBox);
     QToolTip::add(cameraWBCheckBox_,
                   i18n("Use the camera's custom white-balance settings.\n"
@@ -97,7 +97,7 @@ SingleDialog::SingleDialog(const QString& file)
                        "calculated from sample images."));
     settingsBoxLayout->addWidget(cameraWBCheckBox_);
 
-    fourColorCheckBox_ = new QCheckBox(i18n("Four Color RGBG"), settingsBox);
+    fourColorCheckBox_ = new QCheckBox(i18n("Four color RGBG"), settingsBox);
     QToolTip::add(fourColorCheckBox_,
                   i18n("Interpolate RGB as four colors.\n"
                        "The default is to assume that all green\n"

@@ -63,11 +63,11 @@ Plugin_FindImages::Plugin_FindImages(QObject *parent, const char*, const QString
 void Plugin_FindImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    m_action_findImages = new KActionMenu(i18n("&Find images..."),
+    m_action_findImages = new KActionMenu(i18n("&Find Images"),
                            actionCollection(),
                            "findimages");
 
-    m_action_findDuplicateImagesAlbums= new KAction(i18n("Find duplicate images"),
+    m_action_findDuplicateImagesAlbums= new KAction(i18n("Find Duplicate Images"),
                                                     "finddupplicateimages",
                                                     0,
                                                     this,
@@ -94,20 +94,20 @@ void Plugin_FindImages::slotFindDuplicateImages()
     m_progressDlg = 0;
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-    
-    if ( !interface ) 
+
+    if ( !interface )
            {
            kdError( 51000 ) << "Kipi interface is null!" << endl;
            return;
            }
-    
+
     m_findDuplicateOperation = new KIPIFindDupplicateImagesPlugin::FindDuplicateImages( interface, this);
-    
+
     if (m_findDuplicateOperation->showDialog())
        {
        m_findDuplicateOperation->compareAlbums();
        }
-       
+
     return;
 }
 
@@ -118,8 +118,8 @@ void Plugin_FindImages::slotCancel()
 {
     m_findDuplicateOperation->terminate();
     m_findDuplicateOperation->wait();
-    
-    if (m_progressDlg) 
+
+    if (m_progressDlg)
        {
        m_progressDlg->reset();
        }
@@ -131,11 +131,11 @@ void Plugin_FindImages::slotCancel()
 void Plugin_FindImages::customEvent(QCustomEvent *event)
 {
     if (!event) return;
-    
+
     if (!m_progressDlg)
         {
         m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Find Duplicate Images Operations"));
-        
+
         connect(m_progressDlg, SIGNAL(cancelClicked()),
                 this, SLOT(slotCancel()));
 
@@ -144,88 +144,88 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
         }
 
     KIPIFindDupplicateImagesPlugin::EventData *d = (KIPIFindDupplicateImagesPlugin::EventData*) event->data();
-    
+
     if (!d) return;
-    
-    if (d->starting) 
+
+    if (d->starting)
         {
         QString text;
-        
-        switch (d->action) 
+
+        switch (d->action)
            {
-           case(KIPIFindDupplicateImagesPlugin::Similar): 
+           case(KIPIFindDupplicateImagesPlugin::Similar):
               {
               text = i18n("Similar comparison for '%1'").arg(QFileInfo(d->fileName).fileName() );
               break;
               }
-              
-           case(KIPIFindDupplicateImagesPlugin::Exact): 
+
+           case(KIPIFindDupplicateImagesPlugin::Exact):
               {
               text = i18n("Exact comparison for '%1'").arg(QFileInfo(d->fileName).fileName());
               break;
               }
-              
-           case(KIPIFindDupplicateImagesPlugin::Matrix): 
+
+           case(KIPIFindDupplicateImagesPlugin::Matrix):
               {
               text = i18n("Creating fingerprint for '%1'").arg(QFileInfo(d->fileName).fileName());
               break;
               }
-              
-           case(KIPIFindDupplicateImagesPlugin::Progress): 
+
+           case(KIPIFindDupplicateImagesPlugin::Progress):
               {
               m_current=0;
               m_total = d->total;
               text = i18n("Parsing %1 images...").arg(d->total);
               break;
               }
-              
-           default: 
+
+           default:
               {
               kdWarning( 51000 ) << "Plugin_FindImages: Unknown event: " << d->action << endl;
               }
            }
-           
+
         m_progressDlg->addedAction(text, KIPI::StartingMessage);
         }
-    else 
+    else
         {
-        if (!d->success) 
+        if (!d->success)
             {
             QString text;
-            
-            switch (d->action) 
+
+            switch (d->action)
                {
-               case(KIPIFindDupplicateImagesPlugin::Similar): 
+               case(KIPIFindDupplicateImagesPlugin::Similar):
                   {
                   text = i18n("Failed to find similar images.");
                   break;
                   }
-                  
-               case(KIPIFindDupplicateImagesPlugin::Exact): 
+
+               case(KIPIFindDupplicateImagesPlugin::Exact):
                   {
                   text = i18n("Failed to find exact image.");
                   break;
                   }
-                  
-               default: 
+
+               default:
                   {
                   kdWarning( 51000 ) << "Plugin_FindImages: Unknown event: " << d->action << endl;
                   }
                }
-            
+
             m_progressDlg->addedAction(text, KIPI::WarningMessage);
-            ++m_current;   
+            ++m_current;
             }
 
         m_progressDlg->setProgress(m_current, m_total);
-        
+
         if( d->action == KIPIFindDupplicateImagesPlugin::Progress )
            {
            delete m_progressDlg;
            m_findDuplicateOperation->showResult();
            }
         }
-    
+
     kapp->processEvents();
     delete d;
 }
@@ -235,8 +235,8 @@ KIPI::Category Plugin_FindImages::category( KAction* action ) const
     if ( action == m_action_findImages )
        return KIPI::COLLECTIONSPLUGIN;
     else if ( action == m_action_findDuplicateImagesAlbums )
-       return KIPI::COLLECTIONSPLUGIN;       
-             
+       return KIPI::COLLECTIONSPLUGIN;
+
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::COLLECTIONSPLUGIN; // no warning from compiler, please
 }

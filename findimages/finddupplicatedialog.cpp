@@ -115,7 +115,7 @@ FindDuplicateDialog::~FindDuplicateDialog()
 void FindDuplicateDialog::setupSelection(void)
 {
     page_setupSelection = addPage(i18n("Selection"),
-                                  i18n("Album's selection"),
+                                  i18n("Album's Selection"),
                                   BarIcon("folder_image", KIcon::SizeMedium));
 
     QVBoxLayout *layout = new QVBoxLayout(page_setupSelection, 0, spacingHint() );
@@ -124,7 +124,7 @@ void FindDuplicateDialog::setupSelection(void)
 
     QGroupBox * groupBox1 = new QGroupBox( page_setupSelection );
     groupBox1->setFlat(false);
-    groupBox1->setTitle(i18n("Select Albums to find duplicate images for"));
+    groupBox1->setTitle(i18n("Select Albums to Find Duplicate Images For"));
     QGridLayout* grid = new QGridLayout( groupBox1, 2, 2 , 20, 20);
 
     m_AlbumsList = new KListView( groupBox1 );
@@ -137,11 +137,11 @@ void FindDuplicateDialog::setupSelection(void)
     grid->addMultiCellWidget(m_AlbumsList, 0, 2, 0, 1);
 
     KButtonBox* albumSelectionButtonBox = new KButtonBox( groupBox1, Vertical );
-    QPushButton* buttonSelectAll = albumSelectionButtonBox->addButton ( i18n( "&Select all" ) );
+    QPushButton* buttonSelectAll = albumSelectionButtonBox->addButton ( i18n( "&Select All" ) );
     QWhatsThis::add( buttonSelectAll, i18n("<p>Select all Albums on the list.") );
-    QPushButton* buttonInvertSelection = albumSelectionButtonBox->addButton ( i18n( "&Invert selection" ));
+    QPushButton* buttonInvertSelection = albumSelectionButtonBox->addButton ( i18n( "&Invert Selection" ));
     QWhatsThis::add( buttonInvertSelection, i18n("<p>Invert the Album selection on the list.") );
-    QPushButton* buttonSelectNone = albumSelectionButtonBox->addButton ( i18n( "Select &none" ) );
+    QPushButton* buttonSelectNone = albumSelectionButtonBox->addButton ( i18n( "Select &None" ) );
     QWhatsThis::add( buttonSelectNone, i18n("<p>Deselect all Albums on the list.") );
     albumSelectionButtonBox->layout();
     grid->addMultiCellWidget(albumSelectionButtonBox, 0, 1, 2, 2);
@@ -157,10 +157,10 @@ void FindDuplicateDialog::setupSelection(void)
 
     if ( !m_interface->hasFeature( KIPI::AlbumsUseFirstImagePreview) )
         m_albumPreview->hide();
-        
+
     //---------------------------------------------
 
-    QGroupBox * groupBox2 = new QGroupBox( i18n("Album description"), page_setupSelection );
+    QGroupBox * groupBox2 = new QGroupBox( i18n("Album Description"), page_setupSelection );
     groupBox2->setColumnLayout(0, Qt::Vertical );
     groupBox2->layout()->setSpacing( 6 );
     groupBox2->layout()->setMargin( 11 );
@@ -216,24 +216,24 @@ bool FindDuplicateDialog::setAlbumsList(void)
 
     m_progressDlg = new QProgressDialog (i18n("Parsing Albums; please wait...."),
                                          i18n("&Cancel"), 0, 0, 0, true);
-    
+
     connect(m_progressDlg, SIGNAL(cancelled()),
             this, SLOT(slotStopParsingAlbums()));
-                
+
     m_progressDlg->show();
 
-    for( QValueList<KIPI::ImageCollection>::ConstIterator it = albums.begin(); it != albums.end(); ++it ) 
+    for( QValueList<KIPI::ImageCollection>::ConstIterator it = albums.begin(); it != albums.end(); ++it )
         {
         if (m_stopParsingAlbum == true)
            {
            delete m_progressDlg;
            return false;
            }
-        
+
         m_progressDlg->setProgress(current, albums.count());
         kapp->processEvents();
         ++current;
-        
+
         KIPI::ImageCollection album = *it;
 
         AlbumItem *item = new AlbumItem( m_AlbumsList, album );
@@ -249,7 +249,7 @@ bool FindDuplicateDialog::setAlbumsList(void)
               }
            else
               item->setOn(false);
-           }           
+           }
         }
 
     if (currentAlbum != 0)
@@ -273,7 +273,7 @@ void FindDuplicateDialog::slotStopParsingAlbums(void)
 void FindDuplicateDialog::setupPageMethod(void)
 {
     QString whatsThis;
-    page_setupMethod = addPage( i18n("Method and cache"), i18n("Find-duplicates method, and cache configuration"),
+    page_setupMethod = addPage( i18n("Method & Cache"), i18n("Find-Duplicates Method and Cache Configuration"),
                                 BarIcon("run", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupMethod, 0, spacingHint() );
@@ -298,7 +298,7 @@ void FindDuplicateDialog::setupPageMethod(void)
                      "This method is faster but is not as robust."));
     m_labelsearchMethod->setBuddy( m_findMethod );
 
-    QLabel *m_label_approximateThreeshold = new QLabel (i18n("Approximate Threeshold:"), groupBox1);
+    QLabel *m_label_approximateThreeshold = new QLabel (i18n("Approximate threeshold:"), groupBox1);
     vlay->addWidget( m_label_approximateThreeshold );
 
     m_approximateThreshold = new KIntNumInput(88, groupBox1);
@@ -311,18 +311,18 @@ void FindDuplicateDialog::setupPageMethod(void)
 
     //---------------------------------------------
 
-    QGroupBox * groupBox2 = new QGroupBox( 1, Qt::Horizontal, i18n("Cache maintenance"), page_setupMethod );
+    QGroupBox * groupBox2 = new QGroupBox( 1, Qt::Horizontal, i18n("Cache Maintenance"), page_setupMethod );
     new QLabel(i18n("The find-duplicate-images process uses a cache folder for images' fingerprints\n"
                     "to speed up the analysis of Albums items. The cache location is \"~/.findduplicate\"."), groupBox2);
 
     QPushButton* updateCache = new QPushButton( groupBox2, "UpdateCache" );
-    updateCache->setText(i18n( "&Update cache" ));
+    updateCache->setText(i18n( "&Update Cache" ));
     QWhatsThis::add( updateCache, i18n("<p>Update the cache data for the selected Albums.") );
     QPushButton* purgeCache = new QPushButton( groupBox2, "PurgeCacheAlbumsSelected" );
-    purgeCache->setText(i18n( "&Purge cache (Albums selected)" ));
+    purgeCache->setText(i18n( "&Purge Cache (albums selected)" ));
     QWhatsThis::add( purgeCache, i18n("<p>Purge the cache data for the selected Albums.") );
     QPushButton* purgeAllCache = new QPushButton( groupBox2, "PurgeAllCache" );
-    purgeAllCache->setText(i18n( "&Purge all cache" ));
+    purgeAllCache->setText(i18n( "&Purge All Caches" ));
     QWhatsThis::add( purgeAllCache, i18n("<p>Purge the cache data for all Albums.") );
     vlay->addWidget( groupBox2 );
 
@@ -385,7 +385,7 @@ void FindDuplicateDialog::slotUpdateCache(void)
     QStringList albumsListPath;
 
     for( QValueList<KIPI::ImageCollection>::ConstIterator album = albumsList.begin() ;
-         album != albumsList.end() ; ++album ) 
+         album != albumsList.end() ; ++album )
         {
         if ( !albumsListPath.contains( (*album).path().path() ) )
             albumsListPath.append( (*album).path().path() );
@@ -406,7 +406,7 @@ void FindDuplicateDialog::slotPurgeCache(void)
     QStringList albumsListPath;
 
     for( QValueList<KIPI::ImageCollection>::ConstIterator album = albumsList.begin() ;
-         album != albumsList.end() ; ++album ) 
+         album != albumsList.end() ; ++album )
         {
         if ( !albumsListPath.contains( (*album).path().path() ) )
             albumsListPath.append( (*album).path().path() );
@@ -434,9 +434,9 @@ void FindDuplicateDialog::albumSelected( QListViewItem * item )
     if ( !item ) return;
 
     AlbumItem *pitem = static_cast<AlbumItem*>( item );
-    
+
     if ( pitem == NULL ) return;
-    
+
     m_AlbumComments->setText( i18n("Comment: %1").arg(pitem->comments()) );
     m_AlbumCollection->setText( i18n("Collection: %1").arg(pitem->imageCollection().category()) );
     m_AlbumDate->setText( i18n("Date: %1").arg( pitem->imageCollection().date().toString(Qt::LocalDate) ) );

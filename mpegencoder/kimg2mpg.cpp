@@ -231,7 +231,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   // Image duration.
 
-  m_label3 = new QLabel(i18n("Image duration (seconds) :"), this);
+  m_label3 = new QLabel(i18n("Image duration (seconds):"), this);
   g1->addWidget( m_label3, 2, 0, AlignLeft );
 
   m_DurationImageSpinBox = new QSpinBox( 1, 999, 1 , this, "Duration_Image_SpinBox" );
@@ -247,7 +247,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   // Transition between images selection.
 
-  m_label4 = new QLabel(i18n("Transition speed between images :"), this);
+  m_label4 = new QLabel(i18n("Transition speed between images:"), this);
   g1->addWidget( m_label4, 3, 0, AlignLeft );
 
   m_TransitionComboBox = new QComboBox( false, this, "Transition_ComboBox" );
@@ -285,7 +285,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   // MPEG output filename selection.
 
-  m_MPEGOutputFilename = new QGroupBox( 2, Qt::Horizontal, i18n( "MPEG output filename" ), this);
+  m_MPEGOutputFilename = new QGroupBox( 2, Qt::Horizontal, i18n( "MPEG Output Filename" ), this);
   v1->addWidget( m_MPEGOutputFilename );
 
   m_MPEGOutputEDITFilename = new KLineEdit( m_MPEGOutputFilename );
@@ -302,7 +302,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   // Audio input filename selection.
 
-  m_AudioInputFilename = new QGroupBox( 2, Qt::Horizontal, i18n( "Audio input filename" ), this);
+  m_AudioInputFilename = new QGroupBox( 2, Qt::Horizontal, i18n( "Audio Input Filename" ), this);
   v1->addWidget( m_AudioInputFilename );
 
   m_AudioInputEDITFilename = new KLineEdit( m_AudioInputFilename );
@@ -319,7 +319,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   // Images files list and the control buttons.
 
-  m_ImagesFilesGroup = new QGroupBox(3, Qt::Horizontal, i18n( "Image files in portfolio" ), this );
+  m_ImagesFilesGroup = new QGroupBox(3, Qt::Horizontal, i18n( "Image Files in Portfolio" ), this );
   v1->addWidget( m_ImagesFilesGroup );
 
   m_ImagesFilesListBox = new ListImageItems( m_ImagesFilesGroup, "ListImageItems");
@@ -1023,9 +1023,9 @@ void KImg2mpgData::readStderr(KProcess *, char *buffer, int buflen)
                                  i18n("The 'images2mpg' script has returned an error during the MPEG encoding;\n"
                                       "the process has been aborted.\n\n"
                                       "Send a mail to the author..."),
-                                 i18n("'images2mpg' script-execution problem"),
-                                 i18n("OK"),
-                                 i18n("Show debugging output"));
+                                 i18n("'images2mpg' Script-Execution Problem"),
+                                 i18n("&OK"),
+                                 i18n("Show Debugging Output"));
       if (Ret == KMessageBox::No)
         {
         m_DebuggingDialog = new KShowDebuggingOutput(m_DebugOuputMessages, m_CommandLine,
@@ -1054,9 +1054,9 @@ void KImg2mpgData::EncodeDone(KProcess*)
     int Ret=KMessageBox::warningYesNo(this,
                          i18n("The encoding process has terminated...\n\n"
                          "Encoding duration: %1").arg(Encoding),
-                         i18n("'images2mpg' script execution terminated"),
-                         i18n("OK"),
-                         i18n("Show process messages"));
+                         i18n("'images2mpg' Script Execution Terminated"),
+                         i18n("&OK"),
+                         i18n("Show Process Messages"));
 
     if (Ret == KMessageBox::No)
       {
@@ -1072,9 +1072,9 @@ void KImg2mpgData::EncodeDone(KProcess*)
     int Ret=KMessageBox::warningYesNo(this,
                          i18n("The encoding process has been aborted...\n\n"
                          "Encoding duration: %1").arg(Encoding),
-                         i18n("'images2mpg' script execution aborted"),
-                         i18n("OK"),
-                         i18n("Show process messages"));
+                         i18n("'images2mpg' Script Execution Aborted"),
+                         i18n("&OK"),
+                         i18n("Show Process Messages"));
 
     if (Ret == KMessageBox::No)
       {

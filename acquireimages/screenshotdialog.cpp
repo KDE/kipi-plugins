@@ -63,7 +63,7 @@ namespace KIPIAcquireImagesPlugin
 
 ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent, const char *name)
                 : KDialogBase(parent, name, false, i18n("KIPI's 'Screenshot Images' Plugin"),
-                              Help|User1|Close|User2, Close, true, i18n("&About"), i18n("&New snapshot")),
+                              Help|User1|Close|User2, Close, true, i18n("&About"), i18n("&New Snapshot")),
                   m_interface( interface )
 {
     setHelp("acquireimages", "kipi-plugins");
@@ -82,14 +82,14 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
 
     //---------------------------------------------
 
-    m_desktopCB = new QCheckBox(i18n("Grab the entire desktop."), box);
+    m_desktopCB = new QCheckBox(i18n("Grab the entire desktop"), box);
     QWhatsThis::add( m_desktopCB, i18n( "<p>If you enable this option, the entire desktop will be grabbed; "
                                         "otherwise, only the active windows." ) );
     layout->addWidget(m_desktopCB);
 
     //---------------------------------------------
 
-    m_hideCB = new QCheckBox(i18n("Hide all host application windows."), box);
+    m_hideCB = new QCheckBox(i18n("Hide all host application windows"), box);
     QWhatsThis::add( m_hideCB, i18n( "<p>If you enable this option, all host application windows will be hidden "
                                      "during the grab operation." ) );
     layout->addWidget(m_hideCB);
@@ -112,16 +112,16 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
 
     //---------------------------------------------
 
-    connect(this, SIGNAL(user1Clicked()), 
+    connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotAbout()));
-            
-    connect(this, SIGNAL(user2Clicked()), 
+
+    connect(this, SIGNAL(user2Clicked()),
             this, SLOT(slotGrab()));
-            
-    connect(this, SIGNAL(closeClicked()), 
+
+    connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
-            
-    connect( &m_grabTimer, SIGNAL(timeout()), 
+
+    connect( &m_grabTimer, SIGNAL(timeout()),
              this, SLOT(slotPerformGrab()));
 
     //---------------------------------------------

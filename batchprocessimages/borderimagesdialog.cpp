@@ -55,12 +55,12 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    setCaption(i18n("Batch-Bordering Images options"));
+    setCaption(i18n("Batch-Bordering Images Options"));
     setHelp("borderimages", "kipi-plugins");
     
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Bordering images options") );
+    groupBox1->setTitle( i18n("Bordering Images Options") );
 
     m_labelType->setText( i18n("Border type:") );
 

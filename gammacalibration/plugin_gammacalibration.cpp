@@ -53,7 +53,7 @@ void Plugin_GammaCalibration::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_gammaCalibration = new KAction (i18n("Gamma calibration..."),
+    m_action_gammaCalibration = new KAction (i18n("Gamma Calibration..."),
                                                   "kgamma",
                                                   0,
                                                   this,

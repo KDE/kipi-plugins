@@ -48,7 +48,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, QString ImageFormatType)
                         : KDialogBase( parent, "ConvertOptionsDialog", true,
-                          i18n("Image file format options"), Ok|Cancel, Ok, false)
+                          i18n("Image File Format Options"), Ok|Cancel, Ok, false)
 {
     QWidget* box = new QWidget( this );
     setMainWidget(box);

@@ -89,7 +89,7 @@ public:
 
 private:
     QString _comments;
-    KURL    _url;    
+    KURL    _url;
 };
 
 
@@ -141,9 +141,9 @@ void ListImageItems::dropEvent(QDropEvent *e)
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface, 
+SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
                                    const KIPI::ImageCollection& images )
-                : KDialogBase( IconList, i18n("E-mail Images Options"), Help|Ok|Cancel,
+                : KDialogBase( IconList, i18n("Email Images Options"), Help|Ok|Cancel,
                   Ok, parent, "SendImagesDialog", false, true )
 {
     m_interface = interface;
@@ -167,7 +167,7 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
 
 SendImagesDialog::~SendImagesDialog()
 {
-    if ( m_thumbJob ) delete m_thumbJob; 
+    if ( m_thumbJob ) delete m_thumbJob;
 }
 
 
@@ -226,7 +226,7 @@ void SendImagesDialog::setupImagesList(void)
     QString whatsThis;
 
     page_setupImagesList = addPage( i18n("Images"),
-                                    i18n("Image list to e-mail"),
+                                    i18n("Image List to Email"),
                                     BarIcon("image", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupImagesList, 0, spacingHint() );
@@ -238,15 +238,15 @@ void SendImagesDialog::setupImagesList(void)
     QGridLayout* grid = new QGridLayout( m_groupBoxImageList, 2, 2 , 20, 20);
 
     m_ImagesFilesListBox = new ListImageItems( m_groupBoxImageList, "ListImageItems" );
-    QWhatsThis::add( m_ImagesFilesListBox, i18n( "<p>This is the list of images  to e-mail. "
-                                                 "If you want to add some images click on the 'Add images' "
+    QWhatsThis::add( m_ImagesFilesListBox, i18n( "<p>This is the list of images  to email. "
+                                                 "If you want to add some images click on the 'Add Images...' "
                                                  "button or use the drag-and-drop."));
     grid->addMultiCellWidget(m_ImagesFilesListBox, 0, 2, 0, 1);
 
     KButtonBox* imagesListButtonBox = new KButtonBox( m_groupBoxImageList, Vertical );
-    QPushButton* m_addImagesButton = imagesListButtonBox->addButton ( i18n( "&Add images" ) );
+    QPushButton* m_addImagesButton = imagesListButtonBox->addButton ( i18n( "&Add Images..." ) );
     QWhatsThis::add( m_addImagesButton, i18n("<p>Add images to the list.") );
-    QPushButton* m_remImagesButton = imagesListButtonBox->addButton ( i18n( "&Remove images" ));
+    QPushButton* m_remImagesButton = imagesListButtonBox->addButton ( i18n( "&Remove Images" ));
     QWhatsThis::add( m_remImagesButton, i18n("<p>Remove selected images from the list.") );
     imagesListButtonBox->layout();
     grid->addMultiCellWidget(imagesListButtonBox, 0, 1, 2, 2);
@@ -262,7 +262,7 @@ void SendImagesDialog::setupImagesList(void)
 
     //---------------------------------------------
 
-    QGroupBox * groupBox2 = new QGroupBox( i18n("Image description"), page_setupImagesList );
+    QGroupBox * groupBox2 = new QGroupBox( i18n("Image Description"), page_setupImagesList );
     groupBox2->setColumnLayout(0, Qt::Vertical );
     groupBox2->layout()->setSpacing( 6 );
     groupBox2->layout()->setMargin( 11 );
@@ -304,7 +304,7 @@ void SendImagesDialog::setImagesList( const KURL::List& Files )
 {
     if ( Files.count() == 0 ) return;
 
-    for( KURL::List::ConstIterator it = Files.begin(); it != Files.end(); ++it ) 
+    for( KURL::List::ConstIterator it = Files.begin(); it != Files.end(); ++it )
       {
       KIPI::ImageInfo imageInfo = m_interface->info( *it );
       QString comments = imageInfo.description();
@@ -344,8 +344,8 @@ void SendImagesDialog::setupEmailOptions(void)
 {
     QString whatsThis;
 
-    page_setupEmailOptions = addPage( i18n("E-mail"),
-                                      i18n("E-mail options"),
+    page_setupEmailOptions = addPage( i18n("Email"),
+                                      i18n("Email Options"),
                                       BarIcon("mail_generic", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupEmailOptions, 0, spacingHint() );
@@ -389,7 +389,7 @@ void SendImagesDialog::setupEmailOptions(void)
 
     //---------------------------------------------
 
-    QGroupBox * groupBox2 = new QGroupBox( i18n("Images properties"), page_setupEmailOptions );
+    QGroupBox * groupBox2 = new QGroupBox( i18n("Images Properties"), page_setupEmailOptions );
     groupBox2->setColumnLayout(0, Qt::Vertical );
     groupBox2->layout()->setSpacing( 6 );
     groupBox2->layout()->setMargin( 11 );
@@ -408,12 +408,12 @@ void SendImagesDialog::setupEmailOptions(void)
     groupBox2Layout->addLayout( hlay12 );
 
     m_imagesResize = new QComboBox(false, groupBox2);
-    m_imagesResize->insertItem(i18n("very small (320 pixels)"));
-    m_imagesResize->insertItem(i18n("small (640 pixels)"));
-    m_imagesResize->insertItem(i18n("medium (800 pixels)"));
-    m_imagesResize->insertItem(i18n("big (1024 pixels)"));
-    m_imagesResize->insertItem(i18n("very big (1280 pixels)"));
-    m_imagesResize->setCurrentText (i18n("medium (800 pixels)"));
+    m_imagesResize->insertItem(i18n("Very Small (320 pixels)"));
+    m_imagesResize->insertItem(i18n("Small (640 pixels)"));
+    m_imagesResize->insertItem(i18n("Medium (800 pixels)"));
+    m_imagesResize->insertItem(i18n("Big (1024 pixels)"));
+    m_imagesResize->insertItem(i18n("Very Big (1280 pixels)"));
+    m_imagesResize->setCurrentText (i18n("Medium (800 pixels)"));
     whatsThis = i18n("<p>Select here the images size to send:<p>"
                      "<b>%1</b>: use this if you have a very slow internet "
                      "connection or if the target mailbox size is very limited.<p>"
@@ -431,7 +431,7 @@ void SendImagesDialog::setupEmailOptions(void)
                      .arg(i18n("very big (1280 pixels)"));
     QWhatsThis::add( m_imagesResize, whatsThis );
 
-    m_labelImageSize = new QLabel( i18n("New images' size:"), groupBox2);
+    m_labelImageSize = new QLabel( i18n("New images size:"), groupBox2);
     hlay12->addWidget( m_labelImageSize );
     m_labelImageSize->setBuddy( m_imagesResize );
     hlay12->addStretch( 1 );
@@ -441,7 +441,7 @@ void SendImagesDialog::setupEmailOptions(void)
 
     m_imageCompression = new KIntNumInput(75, groupBox2);
     m_imageCompression->setRange(1, 100, 1, true );
-    m_imageCompression->setLabel( i18n("New images' compression:") );
+    m_imageCompression->setLabel( i18n("New images compression:") );
     groupBox2Layout->addWidget( m_imageCompression );
     whatsThis = i18n("<p>The new compression value of images to send:<p>");
     whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
@@ -472,7 +472,7 @@ void SendImagesDialog::setupEmailOptions(void)
                 "and chromaticity data for improved color matching on heterogeneous platforms.");
     QWhatsThis::add( m_imagesFormat, whatsThis );
 
-    m_labelImageFormat = new QLabel( i18n("Images' file format:"), groupBox2);
+    m_labelImageFormat = new QLabel( i18n("Images file format:"), groupBox2);
     hlay13->addWidget( m_labelImageFormat );
     m_labelImageFormat->setBuddy( m_imagesFormat );
     hlay13->addStretch( 1 );
@@ -504,12 +504,12 @@ void SendImagesDialog::setupEmailOptions(void)
 
 void SendImagesDialog::aboutPage(void)
 {
-    page_about = addPage( i18n("About"), i18n("About KIPI's 'E-mail Images' Plugin"),
+    page_about = addPage( i18n("About"), i18n("About KIPI's 'Email Images Plugin"),
                           BarIcon("kipi", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 
-    QLabel *label = new QLabel( i18n("A KIPI plugin for e-mailing images\n\n"
+    QLabel *label = new QLabel( i18n("A KIPI plugin for emailing images\n\n"
                                      "Author: Gilles Caulier\n\n"
                                      "Email: caulier dot gilles at free.fr\n\n"), page_about);
 
@@ -534,7 +534,7 @@ void SendImagesDialog::slotImagesFilesButtonAdd( void )
     KURL url = KIPI::ImageDialog::getImageURL( this, m_interface );
 
     if ( !url.isValid() ) return;
-  
+
     ImageFilesList << url.path();
     setImagesList(ImageFilesList);
     setNbItems();
@@ -572,22 +572,22 @@ void SendImagesDialog::slotImageSelected( QListBoxItem * item )
        }
 
     ImageItem *pitem = static_cast<ImageItem*>( item );
-    
+
     if ( !pitem ) return;
 
     m_ImageComments->setText( i18n("Comments: %1").arg(pitem->comments()) );
     m_ImageAlbum->setText( i18n("Album: %1").arg(pitem->album()) );
     m_imageLabel->clear();
-    
-    if ( m_thumbJob ) delete m_thumbJob; 
-  
+
+    if ( m_thumbJob ) delete m_thumbJob;
+
     m_thumbJob = KIO::filePreview( pitem->url(), m_imageLabel->height() );
 
     connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
             SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
-            
+
     connect(m_thumbJob, SIGNAL(failed(const KFileItem*)),
-            SLOT(slotFailedPreview(const KFileItem*)));            
+            SLOT(slotFailedPreview(const KFileItem*)));
 }
 
 
@@ -619,7 +619,7 @@ void SendImagesDialog::slotOk()
        }
 
     writeSettings();
-    
+
     for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
         {
         ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(i) );
@@ -635,9 +635,9 @@ void SendImagesDialog::slotOk()
 
 void SendImagesDialog::setNbItems(void)
 {
-    if ( m_ImagesFilesListBox->count() == 0 ) m_groupBoxImageList->setTitle(i18n("Image list"));
+    if ( m_ImagesFilesListBox->count() == 0 ) m_groupBoxImageList->setTitle(i18n("Image List"));
     else
-       m_groupBoxImageList->setTitle(i18n("Image list (1 item)", "Image list (%n items)",
+       m_groupBoxImageList->setTitle(i18n("Image List (1 item)", "Image List (%n items)",
                                      m_ImagesFilesListBox->count() ));
 }
 

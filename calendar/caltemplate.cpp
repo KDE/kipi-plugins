@@ -20,7 +20,7 @@
  * ============================================================ */
 
 // Qt includes.
- 
+
 #include <qvariant.h>
 #include <qframe.h>
 #include <qgroupbox.h>
@@ -60,7 +60,7 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
     // ---------------------------------------------------------------
 
     previewSize_ = 300;
-    
+
     QGroupBox *boxPreview_ = new QGroupBox( i18n("Preview"), this );
     boxPreview_->setColumnLayout(0, Qt::Vertical);
     boxPreview_->layout()->setMargin( 5 );
@@ -68,7 +68,7 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
     QVBoxLayout *previewLayout = new QVBoxLayout(boxPreview_->layout());
     calWidget_ = new CalWidget(boxPreview_);
     previewLayout->addWidget(calWidget_, 0, Qt::AlignCenter);
-    
+
     mainLayout->addWidget( boxPreview_, 0, 0 );
 
     // ---------------------------------------------------------------
@@ -81,8 +81,8 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
 
     // ---------------------------------------------------------------
 
-    QHBoxLayout *hlayout = new QHBoxLayout( 0, 0, 5 ); 
-    hlayout->addWidget( new QLabel(i18n("Paper Size"), gbox) );
+    QHBoxLayout *hlayout = new QHBoxLayout( 0, 0, 5 );
+    hlayout->addWidget( new QLabel(i18n("Paper size:"), gbox) );
 
     comboPaperSize_ = new QComboBox(false, gbox);
     hlayout->addWidget(comboPaperSize_);
@@ -95,9 +95,9 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
 
     connect(comboPaperSize_, SIGNAL(activated(int)),
             SLOT(slotParamsChanged()));
-    
+
     // ---------------------------------------------------------------
-    
+
     btnGroupImagePos_ = new QVButtonGroup(i18n("Image Position"), gbox);
     btnGroupImagePos_->setRadioButtonExclusive(true);
 
@@ -111,10 +111,10 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
 
     connect(btnGroupImagePos_, SIGNAL(clicked(int)),
             SLOT(slotParamsChanged()));
-    
+
     // ---------------------------------------------------------------
 
-    checkBoxDrawLines_ = new QCheckBox(i18n("Draw lines in Calendar"), gbox);
+    checkBoxDrawLines_ = new QCheckBox(i18n("Draw lines in calendar"), gbox);
     gboxLayout->addWidget( checkBoxDrawLines_ );
 
     connect(checkBoxDrawLines_, SIGNAL(toggled(bool)),
@@ -124,7 +124,7 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
 
     hlayout = new QHBoxLayout( 0, 0, 5 );
 
-    hlayout->addWidget(new QLabel(i18n("Image to Text Ratio :"), gbox));
+    hlayout->addWidget(new QLabel(i18n("Image to text ratio:"), gbox));
 
     sliderRatio_ = new QSlider(50,300,5,100,Qt::Horizontal,gbox);
     hlayout->addWidget( sliderRatio_ );
@@ -133,7 +133,7 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
 
     connect(sliderRatio_, SIGNAL(valueChanged(int)),
             SLOT(slotParamsChanged()));
-    
+
     // ---------------------------------------------------------------
 
     hlayout = new QHBoxLayout( 0, 0, 5 );
@@ -145,19 +145,19 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
 
     QFontDatabase fontDB;
     comboFont_->insertStringList(fontDB.families());
-    
+
 
     gboxLayout->addLayout( hlayout );
 
     connect(comboFont_, SIGNAL(activated(int)),
             SLOT(slotParamsChanged()));
-    
+
 
     // ---------------------------------------------------------------
 
     gboxLayout->addItem(new QSpacerItem(5,10,QSizePolicy::Minimum,
                                         QSizePolicy::Expanding));
-    
+
     mainLayout->addWidget( gbox, 0, 1 );
 
 
@@ -166,7 +166,7 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
     QFrame* hline = new QFrame( this );
     hline->setFrameShape( QFrame::HLine );
     hline->setFrameShadow( QFrame::Sunken );
-    
+
     mainLayout->addMultiCellWidget( hline, 1, 1, 0, 1 );
 
     // ---------------------------------------------------------------
@@ -193,7 +193,7 @@ void CalTemplate::slotUpdatePreview()
     if (timer_->isActive()) return;
 
     CalParams& params = CalSettings::instance()->calParams;
-    
+
     QString paperSize = comboPaperSize_->currentText();
     if (paperSize == "A4") {
         params.paperWidth  = 210;
@@ -205,10 +205,10 @@ void CalTemplate::slotUpdatePreview()
         params.paperHeight = 279;
         params.pageSize    = KPrinter::Letter;
     }
-    
+
     QString imgPos =
         btnGroupImagePos_->selected()->text();
-    
+
     if (imgPos == i18n("Top")) {
         params.imgPos = CalParams::Top;
 
@@ -235,11 +235,11 @@ void CalTemplate::slotUpdatePreview()
         params.width  = (int)(params.paperHeight  * zoom);
         params.height = (int)(params.paperWidth   * zoom);
     }
-    
+
     params.drawLines = checkBoxDrawLines_->isChecked();
     params.ratio     = sliderRatio_->value();
     params.baseFont  = QFont(comboFont_->currentText());
-    calWidget_->recreate();    
+    calWidget_->recreate();
 }
 
 }  // NameSpace KIPICalendarPlugin

@@ -365,7 +365,7 @@ void CameraUI::slotCameraDownloadSelected() {
     QString dir = mDownloadDirectoryEdit->text();
     QDir qdir(dir);
     if(!qdir.exists()) {
-        KMessageBox::error(0, i18n("'%1' Directory does not exist").arg(dir));
+        KMessageBox::error(0, i18n("'%1' directory does not exist.").arg(dir));
         return;
     }
     int count = 0;
@@ -408,7 +408,7 @@ void CameraUI::slotCameraDeleteSelected() {
 	if (deleteList.isEmpty()) {
 		return;
 	}
-	QString warnMsg(i18n("About to delete these Image(s)\n" "Are you sure?"));
+	QString warnMsg(i18n("About to delete these image(s).\n" "Are you sure?"));
 	if(KMessageBox::warningContinueCancelList(this, warnMsg, deleteList, i18n("Warning"), i18n("Delete")) ==  KMessageBox::Continue) {
 		CameraIconItem *item = static_cast<CameraIconItem*>(mIconView->firstItem());
         while(item) {

@@ -41,7 +41,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, QString Header )
             : KDialogBase( parent, "OutputDialog", true, caption, User1|Ok, Ok, false,
-                           i18n("Copy to clip&board"))
+                           i18n("Copy to Clip&board"))
 {
   QWidget* box = new QWidget( this );
   setMainWidget(box);
