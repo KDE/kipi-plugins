@@ -366,6 +366,8 @@ bool ImagesGallery::prepare(void)
     m_resizeImagesWithError.clear();
     m_StreamMainPageAlbumPreview = "";
     
+    // Get config from setup dialog.
+    
     m_imagesPerRow = m_configDlg->getImagesPerRow();
     albumsList = m_configDlg->getSelectedAlbums();
     m_imageName = m_configDlg->getImageName();
