@@ -357,10 +357,14 @@ void ImagesGallery::run()
 {
     KIPIImagesGalleryPlugin::EventData *d;
     QString Path;
-
     KURL SubUrl, MainUrl;
+        
+    // This variable are used for the recursive sub directories parsing
+    // during the HTML pages creation. (TODO: Checked this mode)
+    
     m_recurseSubDirectories = false;
     m_LevelRecursion = 1;
+    
     m_resizeImagesWithError.clear();
     m_StreamMainPageAlbumPreview = "";
     m_imagesPerRow = m_configDlg->getImagesPerRow();
@@ -429,6 +433,7 @@ void ImagesGallery::run()
           m_AlbumComments   = m_album.comment();
           m_AlbumCollection = QString::null;
           m_AlbumDate       = newestDate.toString ( Qt::LocalDate ) ;
+          Path              = m_album.path().path();
 
           SubUrl = m_configDlg->getImageName() + "/KIPIHTMLExport/" + m_AlbumTitle + "/" + "index.html";
 
@@ -458,7 +463,8 @@ void ImagesGallery::run()
                             
              m_useCommentFile = m_configDlg->useCommentFile();
 
-             if ( !createHtml( SubUrl,
+             if ( !createHtml( SubUrl, Path, 
+                               m_LevelRecursion > 0 ? m_LevelRecursion + 1 : 0,
                                m_configDlg->getImageFormat(),
                                m_configDlg->getTargetImagesFormat()) )
                 {
@@ -634,7 +640,7 @@ QString ImagesGallery::extension(const QString& imageFormat)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ImagesGallery::createBody(QTextStream& stream,
+void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirList,
                                const KURL& url, const QString& imageFormat,
                                const QString& TargetimagesFormat)
 {
@@ -701,6 +707,22 @@ void ImagesGallery::createBody(QTextStream& stream,
            stream << numOfImages << "\n" << endl;
 
        stream << "</td></tr></table>\n" << endl;
+       
+       if (m_recurseSubDirectories && subDirList.count() > 2)  
+          {                                                   
+          // subDirList.count() is always >= 2 because of the "." and ".." directories
+
+          QString Temp = i18n("<i>Subdirectories:</i>");
+          stream << Temp << "<br>" << endl;
+
+          for (QStringList::ConstIterator it = subDirList.begin(); it != subDirList.end(); it++)
+              {
+              if (*it == "." || *it == "..")
+                  continue;                        // Disregard the "." and ".." directories
+
+              stream << "<a href=\"" << *it << "/" << url.fileName() << "\">" << *it << "</a><br>" << endl;
+              }
+          }
        }
     else
        stream << "<hr>\n" << endl;
@@ -1004,9 +1026,56 @@ void ImagesGallery::createBodyMainPage(QTextStream& stream, KURL& url)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool ImagesGallery::createHtml(const KURL& url,
+bool ImagesGallery::createHtml(const KURL& url, const QString& sourceDirName, int recursionLevel, 
                                const QString& imageFormat, const QString& TargetimagesFormat)
 {
+    KIPIImagesGalleryPlugin::EventData *d;
+    QStringList subDirList;
+    
+    if (m_recurseSubDirectories && (recursionLevel >= 0))  
+        {                                                  
+        QDir toplevel_dir = QDir( sourceDirName );
+        toplevel_dir.setFilter( QDir::Dirs | QDir::Readable | QDir::Writable );
+        subDirList = toplevel_dir.entryList();
+
+        for (QStringList::ConstIterator it = subDirList.begin() ; it != subDirList.end() ; it++)
+            {
+            const QString currentDir = *it;
+
+            if (currentDir == "." || currentDir == "..")   // Disregard the "." and ".." directories
+                continue;
+
+            QDir subDir = QDir( url.directory() + "/" + currentDir );
+
+            if (!subDir.exists())
+                {
+                subDir.setPath( url.directory() );
+
+                if (!(subDir.mkdir(currentDir, false)))
+                    {
+                    d = new KIPIImagesGalleryPlugin::EventData;
+                    d->action = KIPIImagesGalleryPlugin::Error;
+                    d->starting = false;
+                    d->success = false;
+                    d->message = i18n("Could not create directory '%1' in '%2'.")
+                                        .arg(currentDir).arg(url.directory());
+                    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                    continue;
+                    }
+                else
+                    subDir.setPath( url.directory() + "/" + currentDir );
+                }
+
+            if (!createHtml( KURL( subDir.path() + "/" + url.fileName() ),
+                             sourceDirName + "/" + currentDir,
+                             recursionLevel > 1 ? recursionLevel - 1 : 0,
+                             imageFormat,
+                             TargetimagesFormat
+                             ))
+               return false;
+            }
+       }
+
     if ( m_useCommentFile )
        loadComments();
 
@@ -1048,13 +1117,13 @@ bool ImagesGallery::createHtml(const KURL& url,
         QTextStream stream(&file);
         stream.setEncoding(QTextStream::UnicodeUTF8);
         createHead(stream);
-        createBody(stream, url, imageFormat, TargetimagesFormat);
+        createBody(stream, subDirList, url, imageFormat, TargetimagesFormat);
         file.close();
         return true;
         }
     else
         {
-        KIPIImagesGalleryPlugin::EventData* d = new KIPIImagesGalleryPlugin::EventData;
+        d = new KIPIImagesGalleryPlugin::EventData;
         d->action = KIPIImagesGalleryPlugin::Error;
         d->starting = false;
         d->success = false;

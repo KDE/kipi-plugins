@@ -124,7 +124,7 @@ private:
   void createHead(QTextStream& stream);
   void createCSSSection(QTextStream& stream);
 
-  void createBody(QTextStream& stream,
+  void createBody(QTextStream& stream, const QStringList& subDirList,
                   const KURL& url, const QString& imageFormat,
                   const QString& TargetimagesFormat);
 
@@ -141,7 +141,7 @@ private:
                     bool ColorDepthChange, int ColorDepthValue, bool CompressionSet,
                     int ImageCompression);                    
 
-  bool createHtml( const KURL& url,
+  bool createHtml( const KURL& url, const QString& sourceDirName, int recursionLevel, 
                    const QString& imageFormat, const QString& TargetimagesFormat);
 
   void createBodyMainPage(QTextStream& stream, KURL& url);
