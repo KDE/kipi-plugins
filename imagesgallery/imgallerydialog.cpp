@@ -127,7 +127,7 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
     about->addAuthor("Achim Bohnet", I18N_NOOP("HTML implementation patches"),
                      "ach at mpe.mpg.de");
                      
-    about->addAuthor("Lukas Tinkl", I18N_NOOP("Original HTML generator  implementation"),
+    about->addAuthor("Lukas Tinkl", I18N_NOOP("Original HTML generator implementation"),
                      "lukas at kde.org");
     
     about->addAuthor("Andreas Schlapbach", I18N_NOOP("Original HTML generator implementation"),

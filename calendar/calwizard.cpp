@@ -113,7 +113,7 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Calendar"), 
                                        "0.1.0-cvs",
-                                       I18N_NOOP("A KIPI plugin for to create a calendar"),
+                                       I18N_NOOP("A KIPI plugin to create a calendar"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Renchi Raju", 
                                        0,
