@@ -36,6 +36,7 @@
 #include <libkipi/interface.h>
 
 class QLabel;
+class QVBox;
 class QPainter;
 class QProgressBar;
 class QPushButton;
@@ -64,7 +65,8 @@ private:
     CalSettings  *cSettings_;
     CalTemplate  *wTemplate_;
     CalSelect    *wSelect_;
-    QLabel       *wPrint_;
+    QVBox        *wPrint_;
+    QLabel       *wPrintLabel_;
     QWidget      *wFinish_;
     QLabel       *wFinishLabel_;
     QProgressBar *wFinishProgressTotal_;

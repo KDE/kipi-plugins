@@ -31,6 +31,7 @@
 #include <qpushbutton.h>
 #include <qframe.h>
 #include <qpixmap.h>
+#include <qvbox.h>
 
 // KDE includes.
 
@@ -84,12 +85,9 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     // ---------------------------------------------------------------
 
-    QWidget *printWidget = new QWidget(this, "printWidget");
+    wPrint_ = new QVBox(this, "wPrint");
     
-    QVBoxLayout *wprintLayout =
-        new QVBoxLayout(printWidget, 6, 11);
-
-    QFrame *headerFrame = new QFrame( printWidget );
+    QFrame *headerFrame = new QFrame( wPrint_ );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
     layout->setMargin( 2 ); // to make sure the frame gets displayed
@@ -100,19 +98,18 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
     QLabel *labelTitle = new QLabel( i18n("Create Calendar"), headerFrame, "labelTitle" );
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
-    wprintLayout->addWidget( headerFrame );
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
     
-    wPrint_ = new QLabel(printWidget, "wPrint");
-    wPrint_->setIndent(20);
-    wprintLayout->addWidget(wPrint_);
+    wPrintLabel_ = new QLabel(wPrint_, "wPrint");
+    wPrintLabel_->setIndent(20);
+
+    wPrint_->setStretchFactor(headerFrame, 0);
+    wPrint_->setStretchFactor(wPrintLabel_, 2);
     
-    wprintLayout->addStretch();
-    
-    addPage(printWidget, i18n("Print"));
-    setHelpEnabled(printWidget, true);
+    addPage(wPrint_, i18n("Print"));
+    setHelpEnabled(wPrint_, true);
 
     // ---------------------------------------------------------------
 
@@ -229,15 +226,15 @@ void CalWizard::slotPageSelected(const QString&)
 
         if (!monthNumbers_.empty()) {
             QString year = QString::number(cSettings_->getYear());
-            wPrint_->setText(i18n("Click Next to start Printing\n\n"
-                                  "Following months will be printed for year %1:").arg(year)
-                             + QString("\n")
+            wPrintLabel_->setText(i18n("Click Next to start Printing\n\n"
+                                       "Following months will be printed for year %1:").arg(year)
+                                  + QString("\n")
                              + printList.join("\n"));
             setNextEnabled(wPrint_, true);
         }
         else {
-            wPrint_->setText(i18n("No valid images selected for months\n"
-                                  "Click Back to select images"));
+            wPrintLabel_->setText(i18n("No valid images selected for months\n"
+                                       "Click Back to select images"));
             setNextEnabled(wPrint_, false);
         }
     }
