@@ -268,6 +268,7 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
             if ( m_removeOriginal->isChecked() == true )
                 {
                 m_interface->delImage( src );
+                KIO::Job* job = KIO::del( src );
                 }
         else
            {
@@ -496,12 +497,7 @@ void RenameImagesDialog::copyItemOperations(void)
 
     KURL target = m_upload->path();
     target.addPath( item->nameDest() );
-    KIO::CopyJob* job;
-    
-    if ( m_removeOriginal->isChecked() == true )
-       job = KIO::move(item->pathSrc(), target, false);
-    else
-       job = KIO::copy(item->pathSrc(), target, false);
+    KIO::CopyJob* job = KIO::copy(item->pathSrc(), target, false);
 
     connect(job, SIGNAL(result(KIO::Job*)),
             this, SLOT(slotResult(KIO::Job*)));
