@@ -56,8 +56,11 @@ Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const char*, const Q
             : KIPI::Plugin( Factory::instance(), parent, "AcquireImages")
 {
     kdDebug( 51001 ) << "Plugin_AcquireImages plugin loaded" << endl;
+}
 
-
+void Plugin_AcquireImages::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     m_action_acquire = new KActionMenu(i18n("&Acquire images"),
                                              actionCollection(),
                                              "acquire");
@@ -147,5 +150,6 @@ KIPI::Category Plugin_AcquireImages::category() const
 {
     return KIPI::TOOLSPLUGIN;
 }
+
 
 #include "plugin_acquireimages.moc"

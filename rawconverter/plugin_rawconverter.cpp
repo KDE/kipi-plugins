@@ -51,6 +51,13 @@ Plugin_RawConverter::Plugin_RawConverter(QObject *parent,
                                          const QStringList&)
     : Digikam::Plugin( Factory::instance(), parent, "RawConverter")
 {
+    kdDebug( 51001 ) << "Loaded RawConverter" << endl;
+}
+
+
+void Plugin_RawConverter::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     singleAction_ = new KAction (i18n("Raw Image Converter ..."),
                                  "rawconverter",
                                  0,

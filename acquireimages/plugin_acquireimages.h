@@ -42,6 +42,7 @@ public:
   Plugin_AcquireImages(QObject *parent, const char* name, const QStringList &args);
   virtual ~Plugin_AcquireImages();
   virtual KIPI::Category category() const;
+  virtual void setup( QWidget* widget );
 
 public slots:
   void slotActivate();

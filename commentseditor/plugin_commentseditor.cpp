@@ -43,8 +43,13 @@ Plugin_CommentsEditor::Plugin_CommentsEditor(QObject *parent,
     : KIPI::Plugin( Factory::instance(), parent, "CommentsEditor")
 {
     kdDebug( 51001 ) << "Plugin_CommentsEditor plugin loaded"
-              << endl;
+                     << endl;
+}
 
+
+void Plugin_CommentsEditor::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     action = new KAction (i18n("Comments Editor..."),
                           "imagecomment", // PENDING(blackie) where is this image comming from?!
                           0,

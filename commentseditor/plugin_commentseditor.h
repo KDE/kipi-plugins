@@ -42,6 +42,7 @@ public:
                           const QStringList &args);
     ~Plugin_CommentsEditor();
     virtual KIPI::Category category() const;
+    virtual void setup( QWidget* widget );
 
 public slots:
 

@@ -45,16 +45,20 @@
  #include "plugin_wallpaper.h"
 
 typedef KGenericFactory<Plugin_WallPaper> Factory;
- K_EXPORT_COMPONENT_FACTORY( kipiplugin_wallpaper,
-                             Factory("kipiplugin_wallpaper"));
+K_EXPORT_COMPONENT_FACTORY( kipiplugin_wallpaper,
+                            Factory("kipiplugin_wallpaper"));
 
  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
  Plugin_WallPaper::Plugin_WallPaper(QObject *parent, const char*, const QStringList&)
                        : KIPI::Plugin( Factory::instance(), parent, "WallPaper")
  {
-    kdDebug( 51001 ) << "Plugin_WallPaper plugin loaded" << endl;
+     kdDebug( 51001 ) << "Plugin_WallPaper plugin loaded" << endl;
+ }
 
+void Plugin_WallPaper::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     m_action_Background = new KActionMenu(i18n("&Set as Background"),
                          actionCollection(),
                          "images2desktop");

@@ -52,6 +52,11 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
     : KIPI::Plugin( Factory::instance(), parent, "JPEGLossless")
 {
     kdDebug( 51001 ) << "Plugin_JPEGLossless plugin loaded" << endl;
+}
+
+void Plugin_JPEGLossless::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
 
     // Main submenu for JPEGLossLess plugin transform actions.
 
@@ -66,7 +71,7 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
 
     m_action_RotateImage->insert( new KAction(i18n("90 degrees"),
                                 0,
-                                Key_1,
+                                0,
                                 this,
                                 SLOT(slotRotate()),
                                 actionCollection(),
@@ -74,7 +79,7 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
 
     m_action_RotateImage->insert( new KAction(i18n("180 degrees"),
                                 0,
-                                Key_2,
+                                0,
                                 this,
                                 SLOT(slotRotate()),
                                 actionCollection(),
@@ -82,7 +87,7 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
 
     m_action_RotateImage->insert( new KAction(i18n("270 degrees"),
                                 0,
-                                Key_3,
+                                0,
                                 this,
                                 SLOT(slotRotate()),
                                 actionCollection(),
@@ -126,7 +131,7 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
     m_action_Convert2GrayScale->setEnabled(false);
 #endif
 
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent );
+    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
     m_thread      = new JPEGLossLess::ActionThread(interface, this);
     m_progressDlg = 0;
 

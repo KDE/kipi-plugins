@@ -40,7 +40,11 @@ Plugin_Imagesgallery::Plugin_Imagesgallery(QObject *parent, const char*, const Q
             : KIPI::Plugin( Factory::instance(), parent, "ImagesGallery")
 {
     kdDebug( 51001 ) << "Plugin_Imagesgallery plugin loaded" << endl;
+}
 
+void Plugin_Imagesgallery::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     KAction* action = new KAction (i18n("HTML export..."),        // Menu message.
                                    "www",                         // Menu icon.
                                    0,
@@ -71,4 +75,5 @@ KIPI::Category Plugin_Imagesgallery::category() const
 {
 	return KIPI::EXPORTPLUGIN;
 }
+
 #include "plugin_imagesgallery.moc"

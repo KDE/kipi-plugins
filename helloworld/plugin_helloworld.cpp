@@ -42,7 +42,11 @@ Plugin_HelloWorld::Plugin_HelloWorld(QObject *parent,
     : KIPI::Plugin( Factory::instance(), parent, "HelloWorld")
 {
     kdDebug( 51001 ) << "Plugin_HelloWorld plugin loaded" << endl;
+}
 
+void Plugin_HelloWorld::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     // this is our action shown in the menubar/toolbar of the mainwindow
     KAction* action = new KAction (i18n("Hello World..."),
                                    "misc",
@@ -53,7 +57,7 @@ Plugin_HelloWorld::Plugin_HelloWorld(QObject *parent,
                                    "helloworld");
     addAction( action );
 
-    m_interface = static_cast< KIPI::Interface* >( parent );
+    m_interface = static_cast< KIPI::Interface* >( parent() );
 }
 
 void Plugin_HelloWorld::slotActivate()

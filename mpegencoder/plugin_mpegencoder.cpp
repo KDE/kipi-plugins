@@ -52,7 +52,11 @@ Plugin_Mpegencoder::Plugin_Mpegencoder(QObject *parent, const char*, const QStri
     : KIPI::Plugin( Factory::instance(), parent, "MPEGEncoder")
 {
     kdDebug( 51001 ) << "Plugin_Mpegencoder plugin loaded" << endl;
+}
 
+void Plugin_Mpegencoder::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     KAction* action = new KAction (i18n("MPEG Encoder..."),
                                    "video",
                                    0,

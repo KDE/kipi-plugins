@@ -38,6 +38,7 @@ public:
                     const QStringList &args);
     ~Plugin_Calendar();
     virtual KIPI::Category category() const;
+    virtual void setup( QWidget* widget );
 
 private slots:
 

@@ -45,8 +45,12 @@ Plugin_SlideShow::Plugin_SlideShow(QObject *parent,
     : KIPI::Plugin( Factory::instance(), parent, "SlideShow")
 {
     kdDebug( 51001 ) << "Plugin_SlideShow plugin loaded"
-              << endl;
+                     << endl;
+}
 
+void Plugin_SlideShow::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     action = new KAction (i18n("SlideShow..."),
                           "slideshow",
                           0,
@@ -151,3 +155,4 @@ KIPI::Category Plugin_SlideShow::category() const
 {
     return KIPI::TOOLSPLUGIN;
 }
+

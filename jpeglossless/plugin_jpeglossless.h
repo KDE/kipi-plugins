@@ -47,6 +47,7 @@ public:
                         const QStringList &args);
     ~Plugin_JPEGLossless();
     virtual KIPI::Category category() const;
+    virtual void setup( QWidget* widget );
 
 protected:
     void customEvent(QCustomEvent *event);

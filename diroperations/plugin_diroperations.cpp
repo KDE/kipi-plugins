@@ -54,7 +54,11 @@ typedef KGenericFactory<Plugin_DirOperations> Factory;
                        : KIPI::Plugin( Factory::instance(), parent, "MiscsOperations")
  {
     kdDebug( 51001 ) << "Plugin_DirOperations plugin loaded" << endl;
+}
 
+void Plugin_DirOperations::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     m_action_OpenIn = new KActionMenu(i18n("&Open Album in ..."),
                          actionCollection(),
                          "miscoperations_open_in");

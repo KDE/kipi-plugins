@@ -47,6 +47,7 @@
                       const char* name,
                       const QStringList &args);
    virtual KIPI::Category category() const;
+   virtual void setup( QWidget* );
 
    private slots:
 

@@ -55,7 +55,11 @@ Plugin_FindImages::Plugin_FindImages(QObject *parent, const char*, const QString
     : KIPI::Plugin( Factory::instance(), parent, "FindImages")
 {
     kdDebug( 51001 ) << "Plugin_FindImages plugin loaded" << endl;
+}
 
+void Plugin_FindImages::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     m_action_findImages = new KActionMenu(i18n("&Find images..."),
                            actionCollection(),
                            "findimages");
@@ -193,3 +197,4 @@ KIPI::Category Plugin_FindImages::category() const
 {
     return KIPI::IMAGESPLUGIN;
 }
+

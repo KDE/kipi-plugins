@@ -35,7 +35,7 @@ public:
   Plugin_SendImages(QObject *parent, const char* name, const QStringList &args);
   virtual ~Plugin_SendImages();
   virtual KIPI::Category category() const;
-
+  virtual void setup( QWidget* );
 public slots:
   void slotActivate();
 

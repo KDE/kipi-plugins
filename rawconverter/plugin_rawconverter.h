@@ -36,7 +36,7 @@ public:
                         const QStringList &args);
     ~Plugin_RawConverter();
     KIPI::Category category() const;
-
+    virtual void setup( QWidget* widget );
 private:
 
     bool checkBinaries();

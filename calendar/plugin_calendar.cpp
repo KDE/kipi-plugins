@@ -43,6 +43,12 @@ Plugin_Calendar::Plugin_Calendar(QObject *parent,
                                  const QStringList &)
     : KIPI::Plugin(Factory::instance(), parent, "Calendar")
 {
+    kdDebug( 51001 ) << "Loaded Plugin_Calendar" << endl;
+}
+
+void Plugin_Calendar::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     KAction* action = new KAction(i18n("Create Calendar..."),
                                   "date", 0, this,
                                   SLOT(slotActivate()),

@@ -33,6 +33,7 @@ public:
   Plugin_CDArchiving(QObject *parent, const char* name, const QStringList &args);
   virtual ~Plugin_CDArchiving();
   virtual KIPI::Category category() const;
+  virtual void setup( QWidget* widget );
 
   KAction *m_action_cdarchiving;
 

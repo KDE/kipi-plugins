@@ -57,7 +57,12 @@ Plugin_PrintWizard::Plugin_PrintWizard(QObject *parent, const char*, const QStri
     : KIPI::Plugin(Factory::instance(), parent, "PrintWizard")
 {
     kdDebug( 51001 ) << "Plugin_PrintWizard plugin loaded"
-              << endl;
+                     << endl;
+}
+
+void Plugin_PrintWizard::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
 
     printAction =  new KAction (i18n("Print Wizard..."),
                                 "fileprint",
@@ -76,7 +81,7 @@ Plugin_PrintWizard::Plugin_PrintWizard(QObject *parent, const char*, const QStri
             SLOT(slotItemsSelected(bool)));
 #endif
 
-    m_interface = dynamic_cast< KIPI::Interface* >( parent );
+    m_interface = dynamic_cast< KIPI::Interface* >( parent() );
 }
 
 

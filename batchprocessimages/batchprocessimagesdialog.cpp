@@ -267,7 +267,6 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     delete m_config;
 
     dvlay->activate();
-    qDebug("%d,%d", box->minimumSize().width(), box->minimumSize().height() );
 }
 
 

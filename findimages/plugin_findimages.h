@@ -40,6 +40,7 @@ public:
    Plugin_FindImages(QObject *parent, const char* name, const QStringList &args);
    ~Plugin_FindImages();
    virtual KIPI::Category category() const;
+   virtual void setup( QWidget* widget );
 
 private:
    KActionMenu          *m_action_findImages;

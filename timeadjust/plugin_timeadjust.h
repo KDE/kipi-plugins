@@ -35,6 +35,7 @@ public:
                       const QStringList &args);
 
     virtual KIPI::Category category() const;
+    virtual void setup( QWidget* );
 
 protected slots:
     void slotActivate();

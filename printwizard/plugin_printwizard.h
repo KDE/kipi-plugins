@@ -36,6 +36,7 @@ public:
                      const char* name,
                      const QStringList &args);
     ~Plugin_PrintWizard();
+    virtual void setup( QWidget* widget );
 
 public slots:
 

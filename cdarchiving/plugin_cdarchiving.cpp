@@ -36,7 +36,11 @@ Plugin_CDArchiving::Plugin_CDArchiving(QObject *parent, const char*, const QStri
             : KIPI::Plugin( Factory::instance(), parent, "CDArchiving")
 {
     kdDebug( 51001 ) << "Plugin_CDArchiving plugin loaded" << endl;
+}
 
+void Plugin_CDArchiving::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     m_action_cdarchiving = new KAction (i18n("Archive to CD ..."),        // Menu message.
                                         "cd",                             // Menu icon.
                                         0,
@@ -72,5 +76,6 @@ KIPI::Category Plugin_CDArchiving::category() const
 {
     return KIPI::IMAGESPLUGIN;
 }
+
 
 #include "plugin_cdarchiving.moc"

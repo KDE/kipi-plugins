@@ -42,7 +42,7 @@ public:
                      const QStringList &args);
     ~Plugin_SlideShow();
     virtual KIPI::Category category() const;
-
+    virtual void setup( QWidget* );
 public slots:
 
     void slotActivate();

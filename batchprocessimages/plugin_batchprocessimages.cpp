@@ -73,6 +73,12 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char
 {
     kdDebug( 51001 ) << "Plugin_BatchProcessImages plugin loaded" << endl;
 
+}
+
+void Plugin_BatchProcessImages::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
+
     KActionMenu* menu = new KActionMenu(i18n("batch processes"),
                                          actionCollection(),
                                          "batch_progress");
@@ -152,6 +158,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char
     menu->insert( m_action_resizeimages );
     addAction( menu );
 }
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -41,6 +41,11 @@ Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent,
     // Insert our translations into the global catalogue
     kdDebug( 51001 ) << "Plugin_TimeAdjust plugin loaded" << endl;
 
+}
+
+void Plugin_TimeAdjust::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     // this is our action shown in the menubar/toolbar of the mainwindow
     KAction* action = new KAction (i18n("Adjust Time and Date"),
                                    "",
@@ -51,7 +56,7 @@ Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent,
                                    "timeadjust");
     addAction( action );
 
-    m_interface = dynamic_cast< KIPI::Interface* >( parent );
+    m_interface = dynamic_cast< KIPI::Interface* >( parent() );
 }
 
 void Plugin_TimeAdjust::slotActivate()

@@ -63,6 +63,11 @@ Plugin_SendImages::Plugin_SendImages(QObject *parent, const char*, const QString
 {
     kdDebug( 51001 ) << "Plugin_SendImages plugin loaded" << endl;
 
+}
+
+void Plugin_SendImages::setup( QWidget* widget )
+{
+    KIPI::Plugin::setup( widget );
     m_action_sendimages = new KAction (i18n("E-mail Images..."),     // Menu message.
                                         "mail_new",                  // Menu icon.
                                         0,
