@@ -1,4 +1,4 @@
-INCLUDES    = $(all_includes) $(LIBKIPI_CFLAGS)
+INCLUDES    = $(LIBKIPI_CFLAGS) $(all_includes)
 METASOURCES = AUTO
 
 kde_module_LTLIBRARIES = kipiplugin_wallpaper.la

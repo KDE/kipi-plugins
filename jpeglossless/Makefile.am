@@ -1,4 +1,4 @@
-INCLUDES    = $(all_includes) $(LIBKIPI_CFLAGS) $(LIBKEXIF_CFLAGS)
+INCLUDES    = $(LIBKIPI_CFLAGS) $(all_includes) $(LIBKEXIF_CFLAGS)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory

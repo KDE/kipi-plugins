@@ -1,5 +1,5 @@
 ## Makefile.am for kameraklient
-INCLUDES = $(GPHOTO_CFLAGS) $(all_includes) $(LIBKIPI_CFLAGS)
+INCLUDES = $(GPHOTO_CFLAGS) $(LIBKIPI_CFLAGS) $(all_includes)
 
 METASOURCES = AUTO
 
