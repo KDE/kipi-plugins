@@ -55,7 +55,7 @@ namespace KIPICDArchivingPlugin
 
 BatchProgressDialog::BatchProgressDialog( QWidget *parent )
                    : KDialogBase( KDialogBase::Plain, i18n("Preparing archive to CD"), Cancel,
-                                  Cancel, parent, "ArchiveToCDActionsDialog", true, true )
+                                  Cancel, parent, "ArchiveToCDActionsDialog", true )
 {
     QWidget* box = plainPage();
     QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );

@@ -406,6 +406,13 @@ void CDArchiving::slotK3bDone(KProcess*)
 {
     kdDebug(51000) << "K3b is done !!! Removing temporary folder..." << endl;
 
+    KIPICDArchivingPlugin::EventData *d = new KIPICDArchivingPlugin::EventData;
+    d->action = KIPICDArchivingPlugin::Progress;
+    d->starting = true;
+    d->success = true;
+    d->errString = i18n("K3b is done !!! Removing temporary folder...");
+    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    
     if (DeleteDir(m_tmpFolder) == false)
         KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove temporary folder '%1' !").arg(m_tmpFolder));
 
@@ -844,11 +851,6 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
 
             stream << "</td>" << endl;
 
-            // TODO progress info dispatch !!!
-            
-            /*m_progressDlg->setTotalSteps( numOfImages );
-            m_progressDlg->setProgress( imgIndex );*/
-            
             ++imgIndex;
             }
         stream << "</tr>" << endl;
@@ -1022,7 +1024,6 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgName,
                              const QString& previousImgName, const QString& nextImgName,
@@ -1201,7 +1202,6 @@ bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgNa
       }
 
     return false;
-
 }
 
 
@@ -1538,10 +1538,6 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
 
     if ( HTMLinterfaceFolder.isEmpty() == false )
        AddFolderTreeToK3bXMLProjectFile(HTMLinterfaceFolder, &stream);
-
-    // TODO : Added progress dispatch !
-    
-    //m_progressDlg->setProgress( ++progressValue );
 
     // Add Selected Albums paths List.
 

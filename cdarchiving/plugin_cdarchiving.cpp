@@ -123,7 +123,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
         m_progressDlg = new KIPICDArchivingPlugin::BatchProgressDialog(0);
         
         connect(m_progressDlg, SIGNAL(cancelClicked()),
-                SLOT(slotCancel()));
+                this, SLOT(slotCancel()));
 
         m_current = 0;
         m_progressDlg->show();
@@ -268,7 +268,10 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
            {
            m_current = 0;
            m_progressDlg->setButtonCancel( KStdGuiItem::close() );
-           
+                   
+           disconnect(m_progressDlg, SIGNAL(cancelClicked()),
+                      this, SLOT(slotCancel()));
+                
            // Invoke K3b program.
            
            m_progressDlg->addedAction(i18n("Starting K3b program..."));
