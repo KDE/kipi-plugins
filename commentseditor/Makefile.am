@@ -1,4 +1,4 @@
-INCLUDES    = $(all_includes)
+INCLUDES    = -I$(top_srcdir)/libkipi $(all_includes)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
@@ -7,7 +7,7 @@ kde_module_LTLIBRARIES = kipiplugin_commentseditor.la
 kipiplugin_commentseditor_la_SOURCES = plugin_commentseditor.cpp \
 				commentseditor.cpp
 
-kipiplugin_commentseditor_la_LIBADD = $(LIB_KPARTS) -lkipi \
+kipiplugin_commentseditor_la_LIBADD = $(LIB_KPARTS) \
 					$(LIB_IMLIB)  $(top_builddir)/libkipi/libkipi/libkipi.la
 
 kipiplugin_commentseditor_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

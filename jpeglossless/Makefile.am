@@ -1,4 +1,4 @@
-INCLUDES    = $(all_includes)
+INCLUDES    = -I$(top_srcdir)/libkipi $(all_includes)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
@@ -9,7 +9,7 @@ kipiplugin_jpeglossless_la_SOURCES = plugin_jpeglossless.cpp \
 		imagerotate.cpp  convert2grayscale.cpp imageflip.cpp \
 		messagebox.cpp
 
-kipiplugin_jpeglossless_la_LIBADD = $(LIB_KPARTS) -lkipi \
+kipiplugin_jpeglossless_la_LIBADD = $(LIB_KPARTS) \
 					-ljpeg -ltiff  $(top_builddir)/libkipi/libkipi/libkipi.la
 
 kipiplugin_jpeglossless_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

@@ -1,4 +1,4 @@
-INCLUDES    = $(all_includes)
+INCLUDES    = -I$(top_srcdir)/libkipi $(all_includes)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
@@ -10,7 +10,7 @@ kipiplugin_mpegencoder_la_SOURCES = plugin_mpegencoder.cpp \
                                        optionsdialog.cpp checkbinprog.cpp
 
 # Libs needed by the plugin
-kipiplugin_mpegencoder_la_LIBADD = $(LIB_KPARTS) -lkipi $(top_builddir)/libkipi/libkipi/libkipi.la
+kipiplugin_mpegencoder_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/libkipi/libkipi/libkipi.la
 
 # LD flags for the plugin
 kipiplugin_mpegencoder_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

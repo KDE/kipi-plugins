@@ -1,4 +1,4 @@
-INCLUDES    = $(all_includes)
+INCLUDES    = -I$(top_srcdir)/libkipi $(all_includes)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
@@ -9,7 +9,7 @@ kipiplugin_calendar_la_SOURCES = plugin_calendar.cpp \
 		calwidget.cpp calpainter.cpp calselect.cpp \
 		monthwidget.cpp
 
-kipiplugin_calendar_la_LIBADD = $(LIB_KPARTS) -lkipi \
+kipiplugin_calendar_la_LIBADD = $(LIB_KPARTS) \
 				-lkdeprint $(top_builddir)/libkipi/libkipi/libkipi.la
 
 kipiplugin_calendar_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

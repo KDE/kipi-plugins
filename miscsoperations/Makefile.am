@@ -1,11 +1,11 @@
-INCLUDES    = $(all_includes)
+INCLUDES    = -I$(top_srcdir)/libkipi $(all_includes)
 METASOURCES = AUTO
 
 kde_module_LTLIBRARIES = kipiplugin_miscsoperations.la
 
 kipiplugin_miscsoperations_la_SOURCES = plugin_miscsoperations.cpp
 
-kipiplugin_miscsoperations_la_LIBADD = $(LIB_KPARTS) -lkipi  $(top_builddir)/libkipi/libkipi/libkipi.la
+kipiplugin_miscsoperations_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/libkipi/libkipi/libkipi.la
 
 kipiplugin_miscsoperations_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 

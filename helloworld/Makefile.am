@@ -1,4 +1,4 @@
-INCLUDES    = $(all_includes)
+INCLUDES    = -I$(top_srcdir)/libkipi $(all_includes)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
@@ -8,7 +8,7 @@ kde_module_LTLIBRARIES = kipiplugin_helloworld.la
 kipiplugin_helloworld_la_SOURCES = plugin_helloworld.cpp 
 
 # Libs needed by the plugin
-kipiplugin_helloworld_la_LIBADD = $(LIB_KPARTS) -lkipi $(top_builddir)/libkipi/libkipi/libkipi.la
+kipiplugin_helloworld_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/libkipi/libkipi/libkipi.la
 
 # LD flags for the plugin
 kipiplugin_helloworld_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
