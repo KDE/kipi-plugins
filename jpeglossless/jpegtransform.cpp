@@ -26,6 +26,7 @@
 #include <klocale.h>
 #include <ktempfile.h>
 #include <libkexif/kexifdata.h>
+#include <libkexif/kexifutils.h>
 
 extern "C" {
 #include <stdio.h>
@@ -110,6 +111,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
 
     getExifAction(exifAction, exifData->getImageOrientation());
 
+    delete exifData;
 
     // Compose actions: first exif, then user
     action*=exifAction;
@@ -254,9 +256,8 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         unlink(dest.latin1());
     }
 
-    exifData->writeOrientation(destGiven, KExifData::NORMAL);
+    KExifUtils::writeOrientation(destGiven, KExifData::NORMAL);
 
-    delete exifData;
 
     return true;
 }
