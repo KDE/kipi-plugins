@@ -1,10 +1,10 @@
 LIBKIPIPLUGINS
 
-Note : LibKipiPlugins are taken from Digikamplugins
+Note : Most of the LibKipiPlugins have previously been Digikamplugins
 
-Resume :
+Summary:
 ----------------------------------------------------------------------
-Digikam uses a plugin architecture for additional functionality.
+Libkipi allows image applications to use a plugin architecture for additional functionality.
 Currently implemented plugins are:
 
  1) RawConverter       : A Raw Image Converter for digital cameras 
@@ -22,7 +22,8 @@ Currently implemented plugins are:
  5) PrintWizard        : A print images wizard 
                          (by Todd Shoemaker).
 
- 6) JpegLossLess       : Batch images processing without less meta informations 
+ 6) JpegLossLess       : Batch images processing without losing meta information embedded in the image
+                         and without recompression of the jpeg data.
                          (by Renchi Raju).
 
  7) CdArchiving        : Albums CD archiving via K3b cd burning program 
@@ -30,29 +31,29 @@ Currently implemented plugins are:
 
  8) AcquireImages      : Digikam acquire images interface 
                          (by Gilles Caulier).
-                         This plugin include this parts:
+                         This plugin include these parts:
                             ScanImages (scanner management using Kooka).
                             ScreenshotImages (Snap Screen based on KSnapshot and adapted to Digikam).
 
- 9) Calendar           : A Calendar construction plugin using Digikam Albums images 
+ 9) Calendar           : A Calendar construction plugin using Digikam Album images 
                          (by Renchi Raju)
 
-10) SendImages         : An E-mail images plugin 
+10) SendImages         : A plugin to send images by email, allowing resizing and recompressing before sending.
                          (by Gilles Caulier).
 
 11) BatchProcessImages : A batch process images plugin.
                          (by Gilles Caulier).
-                         This plugin include this parts:
-                            RenameImages (Image files names renaming).
-                            ConvertImages (Images files format converting).
-                            BorderImages (Added border to images).
-                            FilterImages (Images enhancement using digital filters).
-                            ColorImages (Images colors enhancement).
-                            EffectImages (FX images transforming).
+                         This plugin includes these parts:
+                            RenameImages (Image file names renaming).
+                            ConvertImages (Image files format converting).
+                            BorderImages (Add border to images).
+                            FilterImages (Image enhancements using digital filters).
+                            ColorImages (Image color enhancement).
+                            EffectImages (Image transformation effects).
                             ResizeImages (Basic and Prepare to print images resizing).
-                            RecompressImages (Recompressing JPEG, TIFF, PNG, and TGA images).
+                            RecompressImages (Recompress JPEG, TIFF, PNG, and TGA images).
 
-12) GammaCalibration   : Integration in KIPI of KDE control pannel Gamma Correction like a plugin.
+12) GammaCalibration   : KIPI integration of KDE control pannel Gamma Correction like a plugin.
                          (by Gregory Kokanosky and Gilles Caulier).
 
 13) TimeAdjust         : Adjust image file Time and Date.
@@ -61,10 +62,10 @@ Currently implemented plugins are:
 14) WallPaper          : Image to KDE Desktop.
                          (by Gregory Kokanosky and Gilles Caulier).
 
-15) DirOperations      : Open an Album to Konqueror or Nautilus.
+15) DirOperations      : Open an Album in Konqueror or Nautilus.
                          (by Gregory Kokanosky and Gilles Caulier).
   
-16) FindImages         : Find dupplicate images/comments in albums library 
+16) FindImages         : Find dupplicate images/comments in albums
                          (by Richard Grould and Gilles Caulier).
                          This plugin include this parts:
                             FindComments.
@@ -99,15 +100,15 @@ dcRAW >= 5.02
 Notes :
 ------------------------------------------------------------------------
 
-- More specifics compilation and installation options can be used with '.configure' script.
-Checked this with './configure --help' command line.
+- More specific compilation and installation options can be used with the 'configure' script.
+Check this with './configure --help' command line.
 
 - The slideshow plugin needs OpenGL support to compile. By default it relies on OpenGL support
 compiled into your version of the Qt library. If this is not the case you can link against
 external OpenGL libraries with './configure --enable-opengl'. If you prefer to use Mesa instead
 use this: './configure --enable-opengl --with-mesa'.
 
-- Some plugins can be disabled during the build process. Checked the end of 'configure.in.in' file
-and decomments the plugins lines corresponding. Then start the installation procedure.
+- Some plugins can be disabled during the build process. Check the end of 'configure.in.in' file
+and decomment the plugin lines corresponding. Then start the installation procedure.
 
 
