@@ -25,7 +25,7 @@
 #include <libkipi/plugin.h>
 
 class KAction;
-class CDArchiving;
+class KIPICDArchivingPlugin::CDArchiving;
 
 class Plugin_CDArchiving : public KIPI::Plugin
 {
@@ -43,8 +43,8 @@ public slots:
 
 private:
 
-    CDArchiving *m_cdarchiving;
-    KAction     *m_action_cdarchiving;
+    KIPICDArchivingPlugin::CDArchiving *m_cdarchiving;
+    KAction                            *m_action_cdarchiving;
 };
 
 

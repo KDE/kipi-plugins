@@ -66,9 +66,11 @@ extern "C"
 // Local includes
 
 #include "cdarchiving.h"
-#include "cdarchiving.moc"
 #include "cdarchivingdialog.h"
 #include "plugin_cdarchiving.h"
+
+namespace KIPICDArchivingPlugin
+{
 
 CDArchiving::CDArchiving( KIPI::Interface* interface, QObject *parent, KAction *action_cdarchiving)
     : QObject(parent)
@@ -1683,3 +1685,6 @@ QString CDArchiving::EscapeSgmlText(const QTextCodec* codec,
     return strReturn;
 }
 
+}  // NameSpace KIPICDArchivingPlugin
+
+#include "cdarchiving.moc"

@@ -49,6 +49,9 @@ class KURL;
 class KIntNumInput;
 class KColorButton;
 
+namespace KIPICDArchivingPlugin
+{
+
 class CDArchivingDialog : public KDialogBase
 {
  Q_OBJECT
@@ -210,5 +213,7 @@ class CDArchivingDialog : public KDialogBase
   void aboutPage(void);
   void setAlbumsList(void);
 };
+
+}  // NameSpace KIPICDArchivingPlugin
 
 #endif /* CDARCHIVINGDIALOG_H */

@@ -54,14 +54,19 @@
 #include <kbuttonbox.h>
 #include <kapplication.h>
 #include <ksqueezedtextlabel.h>
+#include <kio/previewjob.h>
 
 // Include files for KIPI
+
 #include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
+
 // Local include files
 
 #include "cdarchivingdialog.h"
-#include <kio/previewjob.h>
+
+namespace KIPICDArchivingPlugin
+{
 
 KIO::filesize_t TargetMediaSize;
 
@@ -714,8 +719,8 @@ void CDArchivingDialog::albumSelected( QListViewItem * item )
 
     KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_albumPreview->height() );
 
-    connect(thumbJob, SIGNAL(gotPreview(const KFileItem* , const QPixmap&)),
-            SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
+    connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+            this, SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 }
 
 
@@ -1245,5 +1250,7 @@ void CDArchivingDialog::setBordersImagesSize(int Value)
 {
     m_bordersImagesSize->setValue( Value );
 }
+
+}  // NameSpace KIPICDArchivingPlugin
 
 #include "cdarchivingdialog.moc"

@@ -47,6 +47,9 @@ class KURL;
 class KConfig;
 class KProcess;
 
+namespace KIPICDArchivingPlugin
+{
+
 class KIGPDialog;
 class CDArchivingDialog;
 
@@ -151,5 +154,7 @@ private:
 
   KIPI::Interface* m_interface;
 };
+
+}  // NameSpace KIPICDArchivingPlugin
 
 #endif // CDARCHIVING_H

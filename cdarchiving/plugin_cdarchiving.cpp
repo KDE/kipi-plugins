@@ -72,9 +72,13 @@ Plugin_CDArchiving::~Plugin_CDArchiving()
 
 void Plugin_CDArchiving::slotActivate()
 {
-    if (!m_cdarchiving) {
-        m_cdarchiving = new CDArchiving( dynamic_cast<KIPI::Interface*>( parent() ), this, m_action_cdarchiving);
-    }
+    if (!m_cdarchiving) 
+        {
+        m_cdarchiving = new KIPICDArchivingPlugin::CDArchiving( 
+                            dynamic_cast<KIPI::Interface*>( parent() ),
+                            this, m_action_cdarchiving);
+        }
+        
     m_cdarchiving->Activate();
 }
 
