@@ -266,9 +266,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     connect(m_remImagesButton, SIGNAL(clicked()),
             this, SLOT(slotImagesFilesButtonRem()));
 
-    delete m_config;
-            
-    // Get the image files filters from the hosts app.
+   // Get the image files filters from the hosts app.
      
     m_ImagesFilesSort = m_interface->fileExtensions();
 
