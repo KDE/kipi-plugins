@@ -120,7 +120,11 @@ void Plugin_HelloWorld::slotActivate()
     kdDebug( 51000 ) << "  AlbumsHaveCreationDate: " 
                      << (m_interface->hasFeature( KIPI::AlbumsHaveCreationDate ) ? "Yes" : "No") 
                      << endl;
-    
+
+    kdDebug( 51000 ) << "  AlbumsUseFirstImagePreview: " 
+                     << (m_interface->hasFeature( KIPI::AlbumsUseFirstImagePreview ) ? "Yes" : "No") 
+                     << endl;
+                         
 
     // ================================================== Selection
     
