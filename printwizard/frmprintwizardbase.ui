@@ -13,7 +13,7 @@
         </rect>
     </property>
     <property name="caption">
-        <string>Kipi Print Wizard</string>
+        <string>Print Wizard</string>
     </property>
     <property name="titleFont">
         <font>
@@ -25,7 +25,7 @@
             <cstring>pgWelcome</cstring>
         </property>
         <attribute name="title">
-            <string>Welcome to the Kipi Print Wizard</string>
+            <string>Welcome to the Print Wizard</string>
         </attribute>
         <hbox>
             <property name="name">
@@ -130,7 +130,7 @@
                             <cstring>TextLabel1</cstring>
                         </property>
                         <property name="text">
-                            <string>Welcome to the Kipi Print Wizard.  This wizard will walk you through the process of printing your photos.
+                            <string>Welcome to the Print Wizard.  This wizard will walk you through the process of printing your photos.
 
 Click the 'Next' button to begin.</string>
                         </property>
@@ -425,7 +425,7 @@ Click the 'Next' button to begin.</string>
                                                     <bool>false</bool>
                                                 </property>
                                                 <property name="text">
-                                                    <string>Kipi will output each page to this folder with the filename kipi_printwizard_1, kipi_printwizard_2, etc.</string>
+                                                    <string>THis wizard will output each page to this folder with the filename kipi_printwizard_1, kipi_printwizard_2, etc.</string>
                                                 </property>
                                                 <property name="alignment">
                                                     <set>WordBreak|AlignVCenter</set>
@@ -970,7 +970,7 @@ Click the 'Next' button to begin.</string>
                             </sizepolicy>
                         </property>
                         <property name="text">
-                            <string>Move the box below to tell Kipi how to crop the photos to fit inside the photo sizes you have given.  You can crop each image differently, or just click 'Next' to use the default center cropping for each photo.</string>
+                            <string>Move the box below to tell to this wizard how to crop the photos to fit inside the photo sizes you have given.  You can crop each image differently, or just click 'Next' to use the default center cropping for each photo.</string>
                         </property>
                         <property name="textFormat">
                             <enum>AutoText</enum>
