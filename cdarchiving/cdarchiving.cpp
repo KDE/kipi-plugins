@@ -257,10 +257,26 @@ bool CDArchiving::showDialog()
 
 void CDArchiving::run()
 {
-    // Making HTML interface.
-    
     KIPICDArchivingPlugin::EventData *d;
     
+    QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getAlbumsSelection());
+    int nbActions = 1;
+    
+    if ( m_configDlg->getUseHTMLInterface() == true )    
+       nbActions = nbActions + ListAlbums.count() + 1;
+    
+    if ( m_configDlg->getUseAutoRunWin32() == true ) 
+       ++nbActions;
+       
+    d = new KIPICDArchivingPlugin::EventData;
+    d->action = KIPICDArchivingPlugin::Initialize;
+    d->starting = true;
+    d->success = false;
+    d->total = nbActions; 
+    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    
+    // Making HTML interface.
+        
     if ( m_configDlg->getUseHTMLInterface() == true )
        {
        d = new KIPICDArchivingPlugin::EventData;
@@ -323,8 +339,6 @@ void CDArchiving::run()
        d->starting = false;
        d->success = false;
        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-
-       
        return;
        }
     else 
@@ -393,7 +407,7 @@ void CDArchiving::slotK3bDone(KProcess*)
     kdDebug(51000) << "K3b is done !!! Removing temporary folder..." << endl;
 
     if (DeleteDir(m_tmpFolder) == false)
-        KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove temporary folder %1 !").arg(m_tmpFolder));
+        KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove temporary folder '%1' !").arg(m_tmpFolder));
 
     m_actionCDArchiving->setEnabled(true);
 }
@@ -425,7 +439,7 @@ bool CDArchiving::buildHTMLInterface (void)
            d->action = KIPICDArchivingPlugin::BuildHTMLiface;
            d->starting = false;
            d->success = false;
-           d->errString = i18n("Cannot remove folder %1 !").arg(MainTPath);
+           d->errString = i18n("Cannot remove folder '%1' !").arg(MainTPath);
            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
            return false;
            }
@@ -488,10 +502,10 @@ bool CDArchiving::buildHTMLInterface (void)
                }
 
            d = new KIPICDArchivingPlugin::EventData;
-           d->action = KIPICDArchivingPlugin::Progress;
+           d->action = KIPICDArchivingPlugin::BuildAlbumHTMLPage;
            d->starting = true;
            d->success = false;
-           d->errString = i18n("Parsing Album %1 ...").arg(m_AlbumTitle);
+           d->albumName = m_AlbumTitle;
            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
            
            m_useCommentFile = true;
@@ -505,13 +519,20 @@ bool CDArchiving::buildHTMLInterface (void)
                    d->action = KIPICDArchivingPlugin::BuildHTMLiface;
                    d->starting = false;
                    d->success = false;
-                   d->errString = i18n("Cannot remove folder %1 !").arg(MainTPath);
+                   d->errString = i18n("Cannot remove folder '%1' !").arg(MainTPath);
                    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                    return false;
                    }
 
                return false;
                }
+           
+           d = new KIPICDArchivingPlugin::EventData;
+           d->action = KIPICDArchivingPlugin::BuildAlbumHTMLPage;
+           d->starting = false;
+           d->success = true;
+           d->albumName = m_AlbumTitle;
+           QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));        
            }
         }
 
@@ -985,7 +1006,7 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
         createHead(stream);
         createBody(stream, sourceDirName, subDirList, imageDir, url, imageFormat);
         file.close();
-        return true;        // TODO check if it's right !!
+        return true;        
         }
     else
         {
@@ -1345,7 +1366,6 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     KIPICDArchivingPlugin::EventData *d;
     QFile XMLK3bProjectFile;
     QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getAlbumsSelection());
-    int progressValue = 0;
 
     // open the K3b XML project file.
 
@@ -1659,8 +1679,7 @@ bool CDArchiving::CreateAutoRunInfFile(void)
 
 void CDArchiving::removeTmpFiles(void)
 {
-    if (DeleteDir(m_tmpFolder) == false)
-       KMessageBox::error(0, i18n("Cannot remove temporary folder %1!").arg(m_tmpFolder));
+    DeleteDir(m_tmpFolder);
 }
 
 

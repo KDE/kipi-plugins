@@ -139,12 +139,25 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
         
         switch (d->action) 
            {
+           case(KIPICDArchivingPlugin::Initialize): 
+              {
+              text = i18n("Initialising...");
+              m_total = d->total;
+              break;
+              }
+           
            case(KIPICDArchivingPlugin::BuildHTMLiface): 
               {
-              text = i18n("Making HTML interface...");
+              text = i18n("Making main HTML interface...");
               break;
               }
               
+           case(KIPICDArchivingPlugin::BuildAlbumHTMLPage): 
+              {
+              text = i18n("Making HTML pages for Album '%1'...").arg(d->albumName);
+              break;
+              }
+                  
            case(KIPICDArchivingPlugin::BuildAutoRuniface): 
               {
               text = i18n("Making AutoRun interface...");
@@ -156,11 +169,15 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
               text = i18n("Creating thumbnail for '%1'").arg(d->fileName);
               break;
               }
-              
+               
+           case(KIPICDArchivingPlugin::BuildK3bProject): 
+              {
+              text = i18n("Making K3b project...");
+              break;
+              }
+                                
            case(KIPICDArchivingPlugin::Progress): 
               {
-              m_current = 0;
-              m_total = d->total;
               text = d->errString;
               m_progressDlg->show();
               break;
@@ -184,7 +201,13 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                {
                case(KIPICDArchivingPlugin::BuildHTMLiface): 
                   {
-                  text = i18n("HTML interface creation done!");
+                  text = i18n("Main HTML interface creation done!");
+                  break;
+                  }
+                  
+               case(KIPICDArchivingPlugin::BuildAlbumHTMLPage): 
+                  {
+                  text = i18n("HTML pages creation for Album '%1' done!").arg(d->albumName);
                   break;
                   }
                
@@ -205,6 +228,8 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Success' event: " << d->action << endl;
                   }
                }
+               
+            ++m_current;   
             }
         else
             {
@@ -237,7 +262,6 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
             }
 
         m_progressDlg->addedAction(text);
-        ++m_current;
         m_progressDlg->setProgress(m_current, m_total);
         
         if( d->action == KIPICDArchivingPlugin::BuildK3bProject )

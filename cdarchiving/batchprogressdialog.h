@@ -29,7 +29,6 @@
 #include <kdialogbase.h>
 
 class QGroupBox;
-class QLabel;
 
 class KListView;
 class KProgress;
@@ -54,7 +53,6 @@ Q_OBJECT
 
    KListView *m_actionsList;
    KProgress *m_progress;
-   QLabel    *m_statusbar;
    QGroupBox *groupBox1;
 };
 

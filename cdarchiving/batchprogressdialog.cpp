@@ -27,7 +27,6 @@
 #include <qlayout.h>
 #include <qdir.h>
 #include <qwidget.h>
-#include <qlabel.h>
 #include <qgroupbox.h>
 #include <qwhatsthis.h>
 #include <qcolor.h>
@@ -75,13 +74,6 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent )
     
     //---------------------------------------------
 
-    m_statusbar = new QLabel( box, "ProcessMessagesFrame" );
-    m_statusbar->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-    m_statusbar->setAlignment(AlignCenter|WordBreak|ExpandTabs);
-    QWhatsThis::add( m_statusbar, i18n("<p>This is the current active task.") );
-
-    dvlay->addWidget( m_statusbar );
-
     m_progress = new KProgress( box, "Progress" );
     m_progress->setTotalSteps(100);
     m_progress->setValue(0);
@@ -118,7 +110,6 @@ void BatchProgressDialog::addedAction(QString text)
 void BatchProgressDialog::reset()
 {
     m_actionsList->clear();
-    m_statusbar->clear();
     m_progress->setValue(0);
 }
 

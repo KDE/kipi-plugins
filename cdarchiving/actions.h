@@ -29,7 +29,9 @@ namespace KIPICDArchivingPlugin
 
 enum Action
 {
-    BuildHTMLiface = 0,
+    Initialize = 0,
+    BuildHTMLiface,
+    BuildAlbumHTMLPage,
     BuildAutoRuniface,
     BuildK3bProject,
     ResizeImages,
