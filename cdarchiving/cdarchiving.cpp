@@ -274,7 +274,7 @@ void CDArchiving::run()
        for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin() ;
             it != ListAlbums.end() ; ++it ) 
           {
-          nbActions = nbActions + (*it).images().count();
+          nbActions = ++nbActions;// + (*it).images().count();
           }
        }
           

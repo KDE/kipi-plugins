@@ -92,7 +92,7 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     setupCDInfos();
     setupBurning();
     page_setupSelection->setFocus();
-    resize( 600, 400 );
+    resize(650, 450);
     
     // About data and help button.
     
@@ -170,7 +170,6 @@ void CDArchivingDialog::setupSelection(void)
     QWhatsThis::add( m_mediaFormat, i18n("<p>Select here the backup media format."));
 
     layout->addWidget( groupBox3 );
-    layout->addStretch(1);
 
     //---------------------------------------------
 
