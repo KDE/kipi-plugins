@@ -90,8 +90,11 @@ protected:
    QString                m_mozillaStdErr;
    QString                m_tmp;
 
-   KURL::List             m_filesSendList;
-   KURL::List             m_imagesResizedWithError;
+   KURL::List             m_filesSendList;             // KURL of resized images.
+   KURL::List             m_imagesResizedWithError;    // KURL of orignal images that cannot be resized.
+   KURL::List             m_imagesPackage;             // KURL of orignal images than have been resized 
+                                                       // and KURL of resized images (used for to create 
+                                                       // the comments file).
 
    KIPI::ImageCollection  m_collection;
    

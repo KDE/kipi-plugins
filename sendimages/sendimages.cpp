@@ -104,6 +104,10 @@ void SendImages::showDialog()
 
 void SendImages::run()
 {
+    m_filesSendList.clear();
+    m_imagesResizedWithError.clear();
+    m_imagesPackage.clear();
+    
     KIPISendimagesPlugin::EventData *d;
     KURL::List images = m_sendImagesDialog->m_images2send;
 
@@ -171,7 +175,9 @@ void SendImages::run()
                d->success = true;               
                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                
-               m_filesSendList.append (m_tmp + imageNameFormat);
+               m_filesSendList.append(m_tmp + imageNameFormat);
+               m_imagesPackage.append(*it);
+               m_imagesPackage.append(m_tmp + imageNameFormat);
                }
            }
         else     // No resize images operations...
@@ -184,7 +190,9 @@ void SendImages::run()
            d->success = false;             
            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
            
-           m_filesSendList.append (imageName);
+           m_filesSendList.append(imageName);
+           m_imagesPackage.append(imageName);
+           m_imagesPackage.append(imageName);
            }
         }
      
@@ -205,17 +213,24 @@ void SendImages::makeCommentsFile(void)
        {
        QString ImageCommentsText;
 
-       for( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
+       KURL::List::Iterator it = m_imagesPackage.begin();
+       
+       while( it != m_imagesPackage.end() ) 
           {
-          QString commentItem = m_interface->info( *it ).description();
-
+          KIPI::ImageInfo info = m_interface->info( *it );
+          
+          QString commentItem = info.description();
+          ++it;
+          QString targetFile = (*it).filename();
+                    
           if ( commentItem.isEmpty() )
               commentItem = i18n("no comment");
 
           ImageCommentsText = ImageCommentsText +
                               i18n("Comments for image \"%1\": %2\n")
-                              .arg((*it).fileName())
+                              .arg(targetFile)
                               .arg(commentItem);
+          ++it;
           } 
 
        QFile commentsFile( m_tmp + i18n("comments.txt") );
@@ -249,7 +264,11 @@ bool SendImages::showErrors()
 
              for ( KURL::List::Iterator it = m_imagesResizedWithError.begin();
                                        it != m_imagesResizedWithError.end(); ++it )
+                 {
                  m_filesSendList.append (*it);
+                 m_imagesPackage.append(*it);
+                 m_imagesPackage.append(*it);
+                 }
              break;
 
           case KDialogBase::No :         // Do nothing...
