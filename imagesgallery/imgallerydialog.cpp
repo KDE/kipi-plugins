@@ -171,6 +171,9 @@ void KIGPDialog::setupSelection(void)
     grid->addMultiCellWidget(m_albumPreview, 2, 2, 2, 2);
 
     layout->addWidget( groupBox1 );
+    
+    if ( !m_interface->hasFeature( KIPI::AlbumsUseFirstImagePreview) )
+        m_albumPreview->hide();
 
     //---------------------------------------------
 
