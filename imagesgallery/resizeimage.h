@@ -29,6 +29,9 @@
 
 class QObject;
 
+namespace KIPIImagesGalleryPlugin
+{
+
 class ResizeImage : public QThread
 {
 public:
@@ -61,5 +64,7 @@ private:
     bool     *threadDone_;
     bool     *useBrokenImage_;
 };
+
+}  // NameSpace KIPIImagesGalleryPlugin
 
 #endif // RESIZE_IMAGE_H

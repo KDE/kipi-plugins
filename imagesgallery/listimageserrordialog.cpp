@@ -36,7 +36,8 @@
 #include <klocale.h>
 #include <klistview.h>
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+namespace KIPIImagesGalleryPlugin
+{
 
 listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption, const QString &Mess1,
                                              QStringList ListOfiles)
@@ -84,6 +85,6 @@ listImagesErrorDialog::~listImagesErrorDialog()
 {
 }
 
-
+}  // NameSpace KIPIImagesGalleryPlugin
 
 #include "listimageserrordialog.moc"

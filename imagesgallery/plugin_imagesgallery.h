@@ -26,6 +26,12 @@
 
 class KAction;
 
+namespace KIPIImagesGalleryPlugin
+{
+class KIGPDialog;
+class ResizeImage;
+}
+
 class Plugin_Imagesgallery : public KIPI::Plugin
 {
 Q_OBJECT

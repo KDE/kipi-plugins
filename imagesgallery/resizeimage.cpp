@@ -36,7 +36,8 @@
 
 #include "resizeimage.h"
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+namespace KIPIImagesGalleryPlugin
+{
 
 ResizeImage::ResizeImage(QObject *parent,
                          const QString Path, const QString Directory,
@@ -174,3 +175,4 @@ void ResizeImage::run(void)
     return;
 }
 
+}  // NameSpace KIPIImagesGalleryPlugin

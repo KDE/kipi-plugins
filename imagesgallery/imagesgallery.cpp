@@ -76,11 +76,12 @@ extern "C"
 // Local includes
 
 #include "imgallerydialog.h"
-#include "imagesgallery.h"
 #include "resizeimage.h"
 #include "listimageserrordialog.h"
-#include "imagesgallery.moc"
+#include "imagesgallery.h"
 
+namespace KIPIImagesGalleryPlugin
+{
 
 ImagesGallery::ImagesGallery( KIPI::Interface* interface )
              : m_interface(interface)
@@ -1216,7 +1217,7 @@ bool ImagesGallery::createThumb( const KURL& url, const QString& imgName,
     m_targetImgWidth = 640;         // Default resize values.
     m_targetImgHeight = 480;
 
-    m_threadedImageResizing = new ResizeImage(this, pixPath, TargetImagesbDir, TargetimagesFormat,
+    m_threadedImageResizing = new KIPIImagesGalleryPlugin::ResizeImage(this, pixPath, TargetImagesbDir, TargetimagesFormat,
                                               TargetImageNameFormat, &m_targetImgWidth, &m_targetImgHeight,
                                               extentTargetImages, m_configDlg->colorDepthSetTargetImages(),
                                               m_configDlg->getColorDepthTargetImages(),
@@ -1435,3 +1436,6 @@ QString ImagesGallery::EscapeSgmlText(const QTextCodec* codec,
     return strReturn;
 }
 
+}  // NameSpace KIPIImagesGalleryPlugin
+
+#include "imagesgallery.moc"

@@ -71,6 +71,9 @@
 #include "imgallerydialog.moc"
 
 
+namespace KIPIImagesGalleryPlugin
+{
+
 class AlbumItem : public QCheckListItem
 {
 public:
@@ -1444,4 +1447,6 @@ void KIGPDialog::setWebBrowserName(QString Value)
 {
     return m_webBrowserName->setCurrentText( Value );
 }
+
+}  // NameSpace KIPIImagesGalleryPlugin
 

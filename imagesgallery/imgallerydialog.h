@@ -45,7 +45,6 @@
 
 #include <libkipi/interface.h>
 
-class KFileItem;
 class QProgressDialog;
 class QCheckBox;
 class QString;
@@ -53,13 +52,17 @@ class QLineEdit;
 class QSpinBox;
 class QListView;
 
+class KFileItem;
 class KSqueezedTextLabel;
 class KURL;
 class KIntNumInput;
 class KColorButton;
 class KURLRequester;
 
+namespace KIPIImagesGalleryPlugin
+{
 class AlbumItem;
+
 
 class KIGPDialog : public KDialogBase
 {
@@ -256,4 +259,7 @@ class KIGPDialog : public KDialogBase
   void setAlbumsList(void);
 };
 
+}  // NameSpace KIPIImagesGalleryPlugin
+
 #endif /* IMGALLERYDIALOG_H */
+

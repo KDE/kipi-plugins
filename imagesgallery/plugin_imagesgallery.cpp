@@ -28,8 +28,8 @@
 
 // Local include files
 
-#include "imagesgallery.h"
 #include "plugin_imagesgallery.h"
+#include "imagesgallery.h"
 
 typedef KGenericFactory<Plugin_Imagesgallery> Factory;
 
@@ -69,7 +69,7 @@ Plugin_Imagesgallery::~Plugin_Imagesgallery()
 
 void Plugin_Imagesgallery::slotActivate()
 {
-    ImagesGallery Gallery( dynamic_cast< KIPI::Interface* >( parent() ) );
+    KIPIImagesGalleryPlugin::ImagesGallery Gallery( dynamic_cast< KIPI::Interface* >( parent() ) );
 }
 
 

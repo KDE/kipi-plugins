@@ -54,6 +54,9 @@ class KProcess;
 class KIGPDialog;
 class ResizeImage;
 
+namespace KIPIImagesGalleryPlugin
+{
+
 // First field is the URL, represented with KURL::prettyURL. We can't use KURL
 // directly because operator<(KURL,KURL) is not defined in KDE 3.1
 typedef QMap<QString,QString> CommentMap;
@@ -96,9 +99,10 @@ private:
   int                 m_targetImgHeight;
 
   QProgressDialog    *m_progressDlg;
-  KIGPDialog         *m_configDlg;
   CommentMap         *m_commentMap;
-  ResizeImage        *m_threadedImageResizing;
+  
+  KIPIImagesGalleryPlugin::KIGPDialog  *m_configDlg;
+  KIPIImagesGalleryPlugin::ResizeImage *m_threadedImageResizing;
 
   KIPI::ImageCollection m_album;
 
@@ -134,5 +138,6 @@ private:
                          const bool quot = false, const bool apos = false );
 };
 
+}  // NameSpace KIPIImagesGalleryPlugin
 
 #endif // IMAGESGALLERY_H
