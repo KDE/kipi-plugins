@@ -544,7 +544,7 @@ bool CDArchiving::buildHTMLInterface (void)
        d->action = KIPICDArchivingPlugin::Error;
        d->starting = false;
        d->success = false;
-       d->message = i18n("Could not create directory '%1'.").arg(MainTPath);
+       d->message = i18n("Could not create folder '%1'.").arg(MainTPath);
        QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
        usleep(1000);
        return false;
@@ -603,7 +603,7 @@ bool CDArchiving::buildHTMLInterface (void)
                d->action = KIPICDArchivingPlugin::Error;
                d->starting = false;
                d->success = false;
-               d->message = i18n("Could not create directory '%1'.").arg(SubTPath);
+               d->message = i18n("Could not create folder '%1'.").arg(SubTPath);
                QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
                usleep(1000);
                return false;
@@ -698,7 +698,7 @@ bool CDArchiving::createDirectory(QDir thumb_dir, QString imgGalleryDir, QString
             d->action = KIPICDArchivingPlugin::Error;
             d->starting = false;
             d->success = false;
-            d->message = i18n("Could not create directory '%1' in '%2'.")
+            d->message = i18n("Could not create folder '%1' in '%2'.")
                                 .arg(dirName).arg(imgGalleryDir);
             QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
             usleep(1000);
@@ -1093,7 +1093,7 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
                     d->action = KIPICDArchivingPlugin::Error;
                     d->starting = false;
                     d->success = false;
-                    d->message = i18n("Could not create directory '%1' in '%2'.")
+                    d->message = i18n("Could not create folder '%1' in '%2'.")
                                         .arg(currentDir).arg(url.directory());
                     QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
                     usleep(1000);

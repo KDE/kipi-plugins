@@ -266,8 +266,8 @@ bool ImagesGallery::removeTargetGalleryFolder(void)
     if (TargetDir.exists (MainTPath) == true)
        {
        if (KMessageBox::warningYesNo(kapp->activeWindow(),
-           i18n("The target directory\n'%1'\nalready exists; do you want overwrite it? (all data "
-                "in this directory will be lost.)").arg(MainTPath)) == KMessageBox::Yes)
+           i18n("The target folder\n'%1'\nalready exists; do you want overwrite it? (all data "
+                "in this folder will be lost.)").arg(MainTPath)) == KMessageBox::Yes)
           {
           if ( DeleteDir(MainTPath) == false )
              {
@@ -362,7 +362,7 @@ bool ImagesGallery::prepare(void)
        d->action = KIPIImagesGalleryPlugin::Error;
        d->starting = false;
        d->success = false;
-       d->message = i18n("Could not create directory '%1'").arg(m_mainTPath);
+       d->message = i18n("Could not create folder '%1'").arg(m_mainTPath);
        QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
        usleep(1000);
        
@@ -454,7 +454,7 @@ void ImagesGallery::run()
                  d->action = KIPIImagesGalleryPlugin::Error;
                  d->starting = false;
                  d->success = false;
-                 d->message = i18n("Could not create directory '%1'").arg(SubTPath);
+                 d->message = i18n("Could not create folder '%1'").arg(SubTPath);
                  QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
                  usleep(1000);
                  
@@ -577,7 +577,7 @@ bool ImagesGallery::createDirectory(QDir thumb_dir, QString imgGalleryDir, QStri
             d->action = KIPIImagesGalleryPlugin::Error;
             d->starting = false;
             d->success = false;
-            d->message = i18n("Could not create directory '%1' in '%2'")
+            d->message = i18n("Could not create folder '%1' in '%2'")
                          .arg(dirName).arg(imgGalleryDir);
             QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
             usleep(1000);
@@ -1089,7 +1089,7 @@ bool ImagesGallery::createHtml(const KURL& url, const QString& sourceDirName, in
                     d->action = KIPIImagesGalleryPlugin::Error;
                     d->starting = false;
                     d->success = false;
-                    d->message = i18n("Could not create directory '%1' in '%2'.")
+                    d->message = i18n("Could not create folder '%1' in '%2'.")
                                         .arg(currentDir).arg(url.directory());
                     QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
                     usleep(1000);
