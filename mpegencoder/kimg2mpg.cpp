@@ -88,7 +88,7 @@ extern "C"
 
 // libKipi includes.
 
-#include <libkipi/imagecollectiondialog.h>
+#include <libkipi/imagedialog.h>
 
 // Local includes
 
@@ -517,7 +517,7 @@ void KImg2mpgData::slotAudioFilenameDialog( void )
 void KImg2mpgData::slotImagesFilesButtonAdd( void )
 {
   QStringList ImageFilesList;
-  KURL url = KIPI::ImageCollectionDialog::getImageURL( this, m_interface );
+  KURL url = KIPI::ImageDialog::getImageURL( this, m_interface );
 
   if ( !url.isValid() ) return;
   

@@ -81,7 +81,7 @@ extern "C"
 // KIPI includes
 
 #include <libkipi/uploadwidget.h>
-#include <libkipi/imagecollectiondialog.h>
+#include <libkipi/imagedialog.h>
 
 // Local includes
 
@@ -288,7 +288,7 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd( void )
 {
     QStringList ImageFilesList;
 
-    KURL url = KIPI::ImageCollectionDialog::getImageURL( this, m_interface );
+    KURL url = KIPI::ImageDialog::getImageURL( this, m_interface );
 
     ImageFilesList << url.path(); // PENDING(blackie) handle remote URLS
     slotAddDropItems(ImageFilesList);

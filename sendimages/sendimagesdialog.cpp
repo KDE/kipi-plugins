@@ -62,7 +62,7 @@
 
 // libKipi includes.
 
-#include <libkipi/imagecollectiondialog.h>
+#include <libkipi/imagedialog.h>
 
 // Local include files
 
@@ -531,7 +531,7 @@ void SendImagesDialog::slotAddDropItems(QStringList filesPath)
 void SendImagesDialog::slotImagesFilesButtonAdd( void )
 {
     KURL::List ImageFilesList;
-    KURL url = KIPI::ImageCollectionDialog::getImageURL( this, m_interface );
+    KURL url = KIPI::ImageDialog::getImageURL( this, m_interface );
 
     if ( !url.isValid() ) return;
   
