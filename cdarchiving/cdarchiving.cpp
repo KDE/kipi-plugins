@@ -779,7 +779,9 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
             d->fileName = imgName;
             QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
             
-            if ( createThumb(imgName, sourceDirName, imgGalleryDir, imageFormat) != -1 )
+            int valRet = createThumb(imgName, sourceDirName, imgGalleryDir, imageFormat);
+            
+            if ( valRet != -1 )
                 {
                 const QString imgNameFormat = imgName;
                 const QString imgPath("thumbs/" + imgNameFormat + extension(imageFormat));
@@ -849,7 +851,8 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
                    m_StreamMainPageAlbumPreview.append ( Temp2 );
                    }
                 }
-            else
+            
+            if ( valRet == -1 || valRet == 0 )
                 {
                 kdDebug(51000) << "Creating thumbnail for " << imgName.ascii() 
                                <<  "failed !" << endl;
