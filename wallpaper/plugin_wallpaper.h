@@ -59,8 +59,6 @@
    void slotSetScaled();
    void slotSetCenteredAutoFit();
 
-   void slotItemsSelected(bool val);
-
    private:
 
    enum {

@@ -67,18 +67,27 @@ void Plugin_TimeAdjust::setup( QWidget* widget )
     addAction( m_actionTimeAjust );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
+    
+    KIPI::ImageCollection selection = m_interface->currentSelection();
+    m_actionTimeAjust->setEnabled( selection.isValid() );
+
+    connect( m_interface, SIGNAL(selectionChanged(bool)), 
+             m_actionTimeAjust, SLOT(setEnabled(bool)));
 }
 
 void Plugin_TimeAdjust::slotActivate()
 {
     // Get the current/selected album
     KIPI::ImageCollection images = m_interface->currentScope();
+    
     if ( !images.isValid() )
         return;
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
     if ( m_dialog == 0 )
         m_dialog = new TimeAdjustDialog( interface, 0, "time adjust dialog" );
+        
     m_dialog->setImages( images.images() );
     m_dialog->show();
 }

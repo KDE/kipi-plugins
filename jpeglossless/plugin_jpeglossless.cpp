@@ -76,7 +76,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
                          actionCollection(),
                          "jpeglossless_transform");
     
-    m_action_Transform->insert( new KAction(i18n("EXIF Rotate/Flip"),
+    m_action_Transform->insert( new KAction(i18n("EXIF Rotate/Flip adjustment"),
                                 0,
                                 0,
                                 this,
@@ -147,18 +147,14 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     addAction( m_action_Transform );
 
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
-    m_thread      = new JPEGLossLess::ActionThread(interface, this);
+    KIPI::ImageCollection selection = interface->currentSelection();
+    m_action_Transform->setEnabled( selection.isValid() );
+    
+    m_thread = new JPEGLossLess::ActionThread(interface, this);
     m_progressDlg = 0;
-
-    KIPI::ImageCollection images = interface->currentScope();
-    bool b = images.isValid();
-    m_action_RotateImage->setEnabled(b);
-    m_action_FlipImage->setEnabled(b);
-    m_action_Convert2GrayScale->setEnabled(b);
-
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), m_action_RotateImage, SLOT( setEnabled( bool ) ) );
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), m_action_FlipImage, SLOT( setEnabled( bool ) ) );
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), m_action_Convert2GrayScale, SLOT( setEnabled( bool ) ) );
+    
+    connect( interface, SIGNAL( selectionChanged( bool ) ), 
+             m_action_Transform, SLOT( setEnabled( bool ) ) );
 }
 
 
@@ -305,14 +301,6 @@ void Plugin_JPEGLossless::slotCancel()
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void Plugin_JPEGLossless::slotItemsSelected(bool val)
-{
-    m_action_Transform->setEnabled(val);
-    m_action_FlipImage->setEnabled(val);
-    m_action_RotateImage->setEnabled(val);
-    m_action_Convert2GrayScale->setEnabled(val);
-}
 
 void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
 {

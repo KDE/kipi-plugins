@@ -52,6 +52,7 @@ public:
     virtual void setup( QWidget* widget );
 
 protected:
+
     void customEvent(QCustomEvent *event);
     KURL::List images();
 
@@ -61,7 +62,6 @@ private slots:
     void slotFlip();
     void slotConvert2GrayScale();
     void slotCancel();
-    void slotItemsSelected(bool val);
 
 private:
 

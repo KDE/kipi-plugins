@@ -1,5 +1,7 @@
 v1.0.0-beta1 
 ----------------------------------------------------------------------------
+        * <Gilles Caulier> Fixed action enabled/disabled in according with current
+	  selection on JPEGLossLess, TimeAdjust, and WallPaPer plugins.
         * <Gilles Caulier> Added new method fileExtensions() for the images 
 	  files sorting in plugins instead all digikamrc parsing.  
         * <Gilles Caulier> Changed category plugin for 'DirOperations' and 

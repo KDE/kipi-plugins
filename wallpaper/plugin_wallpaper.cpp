@@ -118,13 +118,12 @@ void Plugin_WallPaper::setup( QWidget* widget )
                          "images2desktop_centered_auto_fit"));
     addAction( m_action_Background );
 
-
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
     KIPI::ImageCollection selection = interface->currentSelection();
     m_action_Background->setEnabled( selection.isValid() );
 
     connect( interface, SIGNAL(selectionChanged(bool)), 
-             this, SLOT(slotItemsSelected(bool)));
+             m_action_Background, SLOT(setEnabled(bool)));
  }
 
 
@@ -225,11 +224,6 @@ void Plugin_WallPaper::setWallpaper(int layout)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void Plugin_WallPaper::slotItemsSelected(bool val)
-{
-   m_action_Background->setEnabled(val);
-}
 
 KIPI::Category  Plugin_WallPaper::category( KAction* action ) const
 {
