@@ -24,6 +24,7 @@
 class QListView;
 class QPushButton;
 class QSpinBox;
+class QCheckBox;
 class KHTMLPart;
 
 namespace KIPIGalleryExportPlugin
@@ -31,10 +32,16 @@ namespace KIPIGalleryExportPlugin
 
 class GalleryWidget : public QWidget
 {
+    Q_OBJECT
+    
 public:
 
     GalleryWidget( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
     ~GalleryWidget();
+
+private slots:
+
+    void slotResizeChecked();
 
 private:
 
@@ -42,8 +49,8 @@ private:
     KHTMLPart*    m_photoView;
     QPushButton*  m_newAlbumBtn;
     QPushButton*  m_addPhotoBtn;
-    QSpinBox*     m_widthSpinBox;
-    QSpinBox*     m_heightSpinBox;
+    QCheckBox*    m_resizeCheckBox;
+    QSpinBox*     m_dimensionSpinBox;
 
     friend class GalleryWindow;
 };

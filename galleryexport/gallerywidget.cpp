@@ -29,10 +29,12 @@
 #include <qheader.h>
 #include <qlistview.h>
 #include <qbuttongroup.h>
-#include <qhgroupbox.h>
+#include <qgroupbox.h>
 #include <qspinbox.h>
+#include <qcheckbox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
+#include <qsplitter.h>
 #include <qwhatsthis.h>
 
 #include "gallerywidget.h"
@@ -45,7 +47,7 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, WFlags fl )
 {
     if ( !name )
 	setName( "GalleryWidget" );
-    QVBoxLayout*  GalleryWidgetLayout
+    QVBoxLayout*  galleryWidgetLayout
         = new QVBoxLayout( this, 5, 5, "GalleryWidgetLayout"); 
 
     // ------------------------------------------------------------------------
@@ -54,25 +56,24 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, WFlags fl )
     QFrame*       headerLine;
 
     headerLabel = new QLabel( this, "headerLabel" );
-    GalleryWidgetLayout->addWidget( headerLabel );
+    galleryWidgetLayout->addWidget( headerLabel, 0 );
     headerLine = new QFrame( this, "headerLine" );
     headerLine->setFrameShape( QFrame::HLine );
     headerLine->setFrameShadow( QFrame::Sunken );
-    GalleryWidgetLayout->addWidget( headerLine );
+    galleryWidgetLayout->addWidget( headerLine, 0 );
 
     // ------------------------------------------------------------------------
 
-    QHBoxLayout*  hbox = new QHBoxLayout( 0, 0, 5, "hbox"); 
+    QSplitter* splitter = new QSplitter(this);
+    galleryWidgetLayout->addWidget( splitter, 5 );
 
-    m_albumView = new QListView( this, "m_albumView" );
+    m_albumView = new QListView( splitter, "m_albumView" );
     m_albumView->addColumn( i18n( "Albums" ) );
     m_albumView->setResizeMode( QListView::AllColumns );
-    hbox->addWidget( m_albumView );
 
     // ------------------------------------------------------------------------
 
-    m_photoView = new KHTMLPart( this, "m_photoView" );
-    hbox->addWidget( m_photoView->view() );
+    m_photoView = new KHTMLPart( splitter, "m_photoView" );
 
     // ------------------------------------------------------------------------
     
@@ -80,7 +81,7 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, WFlags fl )
     QSpacerItem*  spacer;
     QButtonGroup* rightButtonGroup;
 
-    rightButtonGroup = new QButtonGroup( this, "rightButtonGroup" );
+    rightButtonGroup = new QButtonGroup( splitter, "rightButtonGroup" );
     rightButtonGroupLayout = new QVBoxLayout( rightButtonGroup );
     rightButtonGroupLayout->setSpacing( 5 );
     rightButtonGroupLayout->setMargin( 5 );
@@ -94,27 +95,40 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, WFlags fl )
     rightButtonGroupLayout->addWidget( m_addPhotoBtn, 0, Qt::AlignHCenter );
 
     // ------------------------------------------------------------------------
-    
-    QHGroupBox* scaleBox = new QHGroupBox(i18n("Maximum Photo Size"),
-                                          rightButtonGroup);
-    m_widthSpinBox  = new QSpinBox(0, 5000, 10, scaleBox);
-    QLabel* filler  = new QLabel("x", scaleBox);
-    m_heightSpinBox = new QSpinBox(0, 5000, 10, scaleBox);
-    m_widthSpinBox->setValue(600);
-    m_heightSpinBox->setValue(600);
-    filler->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    m_widthSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    m_heightSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    rightButtonGroupLayout->addWidget(scaleBox);
+    QGroupBox* optionsBox = new QGroupBox(i18n("Override Default Options"),
+                                          rightButtonGroup);
+    optionsBox->setColumnLayout(0, Qt::Vertical);
+    optionsBox->layout()->setSpacing(5);
+    optionsBox->layout()->setMargin(5);
+    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout());
+
+    // ------------------------------------------------------------------------
+
+    m_resizeCheckBox = new QCheckBox(optionsBox);
+    m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
+    optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox, 0, 0, 0, 1);
+
+    m_dimensionSpinBox  = new QSpinBox(0, 5000, 10, optionsBox);
+    m_dimensionSpinBox->setValue(600);
+    m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    optionsBoxLayout->addWidget(m_dimensionSpinBox, 1, 0);
+
+    QLabel* resizeLabel = new QLabel(i18n("Maximum Dimension"), optionsBox);
+    optionsBoxLayout->addWidget(resizeLabel, 1, 1);
+
+    m_resizeCheckBox->setChecked(false);
+    m_dimensionSpinBox->setEnabled(false);
+    connect(m_resizeCheckBox, SIGNAL(clicked()), SLOT(slotResizeChecked()));
+    
+    // ------------------------------------------------------------------------
+    
+    rightButtonGroupLayout->addWidget(optionsBox);
 
     // ------------------------------------------------------------------------
     
     spacer = new QSpacerItem( 20, 100, QSizePolicy::Minimum, QSizePolicy::Expanding );
     rightButtonGroupLayout->addItem( spacer );
-
-    hbox->addWidget( rightButtonGroup );
-    GalleryWidgetLayout->addLayout( hbox );
 
     // ------------------------------------------------------------------------
     
@@ -131,6 +145,11 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, WFlags fl )
 
 GalleryWidget::~GalleryWidget()
 {
+}
+
+void GalleryWidget::slotResizeChecked()
+{
+    m_dimensionSpinBox->setEnabled(m_resizeCheckBox->isChecked());    
 }
 
 }

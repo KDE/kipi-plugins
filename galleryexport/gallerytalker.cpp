@@ -174,7 +174,7 @@ void GalleryTalker::createAlbum( const QString& parentAlbumName,
 bool GalleryTalker::addPhoto( const QString& albumName,
                               const QString& photoPath,
                               const QString& caption,
-                              int maxWidth, int maxHeight )
+                              bool  rescale, int maxDim )
 {
     if (m_job)
     {
@@ -196,9 +196,9 @@ bool GalleryTalker::addPhoto( const QString& albumName,
     if (image.isNull())
         return false;
 
-    if (image.width() > maxWidth || image.height() > maxHeight)
+    if (rescale && (image.width() > maxDim || image.height() > maxDim))
     {
-        image = image.smoothScale(maxWidth, maxHeight, QImage::ScaleMin);
+        image = image.smoothScale(maxDim, maxDim, QImage::ScaleMin);
         path = locateLocal("tmp", KURL(photoPath).filename());
         image.save(path, QImageIO::imageFormat(photoPath));
         kdDebug() << "Resizing and saving to temp file: "
