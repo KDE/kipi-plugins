@@ -320,51 +320,32 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           *proc << albumDest->getPath() + "/" + item->nameDest();
           }
 
-    if (Type == i18n("Non proportional"))
-          {
-          *proc << "convert";
-
-          *proc << "-geometry";
-          QString Temp, Temp2;
-          Temp2 = Temp.setNum( m_fixedWidth ) + "x";
-          Temp2.append(Temp.setNum( m_fixedHeight ) + "!");
-          *proc << Temp2;
-
-          if ( m_fixedWidth > w || m_fixedHeight > h ) // If the image is increased, enabled the filter.
-             {
-             *proc << "-filter" << m_resizeFilter;
-             }
-
-          *proc << "-verbose";
-          *proc << item->pathSrc();
-          *proc << albumDest->getPath() + "/" + item->nameDest();
-          }
-
     if (Type == i18n("Proportional (2 dim.)"))
           {
           QString targetBackgroundSize;
           int ResizeCoeff;
-          float RFactor;
           *proc << "composite";
+          
+          // Get the target image resizing dimensions with using the target size.
 
-          // Get the target image resizing dimensions with using the target paper size.
-
-          if ( w < h )
+          if ( m_Width < m_Height )  // Vertically resizing
              {
-             RFactor = (float)m_Height / (float)h;
-             if (RFactor > 1.0) RFactor = (float)m_Width / (float)w;
-             ResizeCoeff = (int)((float)w * RFactor);
+             if ( w < h )                // Original size vertically oriented.
+                ResizeCoeff = m_Height;
+             else                        // Original size horizontally oriented.
+                ResizeCoeff = m_Width;
              }
-          else
+          else                       // Horizontally resizing
              {
-             RFactor = (float)m_Width / (float)w;
-             if (RFactor > 1.0) RFactor = (float)m_Height / (float)h;
-             ResizeCoeff = (int)((float)h * RFactor);
+             if ( w < h )                // Original size vertically oriented.
+                ResizeCoeff = m_Height;
+             else                        // Original size horizontally oriented.
+                ResizeCoeff = m_Width;
              }
 
           IncDec = ResizeImage( w, h, ResizeCoeff - m_Border);
           targetBackgroundSize = QString::number(m_Width) + "x" + QString::number(m_Height);
-
+         
           *proc << "-verbose" << "-gravity" << "Center";
 
           *proc << "-geometry";
@@ -387,6 +368,26 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
           *proc << "-resize" << targetBackgroundSize + "!";
 
+          *proc << albumDest->getPath() + "/" + item->nameDest();
+          } 
+  
+    if (Type == i18n("Non proportional"))
+          {
+          *proc << "convert";
+
+          *proc << "-geometry";
+          QString Temp, Temp2;
+          Temp2 = Temp.setNum( m_fixedWidth ) + "x";
+          Temp2.append(Temp.setNum( m_fixedHeight ) + "!");
+          *proc << Temp2;
+
+          if ( m_fixedWidth > w || m_fixedHeight > h ) // If the image is increased, enabled the filter.
+             {
+             *proc << "-filter" << m_resizeFilter;
+             }
+
+          *proc << "-verbose";
+          *proc << item->pathSrc();
           *proc << albumDest->getPath() + "/" + item->nameDest();
           }
 
