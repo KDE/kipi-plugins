@@ -79,7 +79,7 @@ void Plugin_BatchProcessImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    KActionMenu* menu = new KActionMenu(i18n("batch processes"),
+    KActionMenu* menu = new KActionMenu(i18n("Batch processes"),
                                          actionCollection(),
                                          "batch_progress");
 
