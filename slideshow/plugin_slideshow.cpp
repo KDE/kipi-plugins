@@ -32,13 +32,17 @@
 #include "slideshowgl.h"
 #include "slideshowconfig.h"
 
+#include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
+
+typedef KGenericFactory<Plugin_SlideShow> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_slideshow,
-                            KGenericFactory<Plugin_SlideShow>("kipiplugin_slideshow"));
+                            Factory("kipiplugin_slideshow"));
 
 Plugin_SlideShow::Plugin_SlideShow(QObject *parent,
                                    const char*,
                                    const QStringList&)
-    : KIPI::Plugin(parent, "SlideShow")
+    : KIPI::Plugin( Factory::instance(), parent, "SlideShow")
 {
     kdDebug( 51001 ) << "Plugin_SlideShow plugin loaded"
               << endl;
@@ -50,12 +54,16 @@ Plugin_SlideShow::Plugin_SlideShow(QObject *parent,
                           SLOT(slotActivate()),
                           actionCollection(),
                           "slideshow");
+#ifdef TEMPORARILY_REMOVED
     action->setEnabled(false);
+#endif
     addAction( action );
 
+#ifdef TEMPORARILY_REMOVED
     connect(Digikam::AlbumManager::instance(),
             SIGNAL(signalAlbumCurrentChanged(Digikam::AlbumInfo*)),
             SLOT(slotAlbumChanged(Digikam::AlbumInfo*)));
+#endif
 }
 
 
@@ -76,10 +84,7 @@ void Plugin_SlideShow::slotActivate()
 
 void Plugin_SlideShow::slotSlideShow()
 {
-    Digikam::AlbumInfo *album =
-        Digikam::AlbumManager::instance()->currentAlbum();
-
-    if (!album) return;
+    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
 
     KConfig config("digikamrc");
 
@@ -101,15 +106,21 @@ void Plugin_SlideShow::slotSlideShow()
     else
         effectName        = config.readEntry("Effect Name (OpenGL)");
 
-    QStringList fileList;
-
+    KIPI::ImageCollection images;
     if (showSelectedFilesOnly)
-        fileList = album->getSelectedItemsPath();
+        images = interface->currentSelection();
     else
-        fileList = album->getAllItemsPath();
-
-    if (fileList.empty())
+        images = interface->currentAlbum();
+    if ( !images.isValid() )
         return;
+
+    KURL::List urlList = images.images();
+
+    // PENDING(blackie) handle real URLS
+    QStringList fileList;
+    for( KURL::List::Iterator urlIt = urlList.begin(); urlIt != urlList.end(); ++urlIt ) {
+        fileList.append( (*urlIt).path() );
+    }
 
     if (!opengl) {
         SlideShow *slideShow =

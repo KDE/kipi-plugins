@@ -41,7 +41,7 @@
 #include "slideshowconfig.h"
 
 SlideShowConfig::SlideShowConfig()
-    : KDialogBase(0, QString::null, true, i18n("SlideShow"),
+    : KDialogBase(0, "", true, i18n("SlideShow"),
                   Help|User1|Ok|Cancel, Ok, true, i18n("&About"))
 {
     config_ = 0;
@@ -83,7 +83,7 @@ SlideShowConfig::SlideShowConfig()
     grid->addMultiCellWidget( openglCheckBox_, 1, 1, 0, 2 );
 
     // ------------------------------------------------------------------
-    
+
     printNameCheckBox_ = new QCheckBox( page );
     printNameCheckBox_->setText( i18n( "Print Filename" ) );
     grid->addMultiCellWidget( printNameCheckBox_, 2, 2, 0, 2 );
@@ -203,7 +203,7 @@ void SlideShowConfig::readSettings()
     // -- Apply Settings to widgets ------------------------------
 
     openglCheckBox_->setChecked(opengl);
-    
+
     delaySpinBox_->setValue(delay);
 
     printNameCheckBox_->setChecked(printFileName);
@@ -245,7 +245,7 @@ void SlideShowConfig::saveSettings()
 
     }
     else {
-        
+
         QString effect;
         QMap<QString,QString> effectNames = SlideShowGL::effectNamesI18N();
         QMap<QString,QString>::Iterator it;
@@ -260,7 +260,7 @@ void SlideShowConfig::saveSettings()
         config_->writeEntry("Effect Name (OpenGL)", effect);
 
     }
-    
+
     config_->sync();
 }
 

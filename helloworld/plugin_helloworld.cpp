@@ -53,7 +53,7 @@ Plugin_HelloWorld::Plugin_HelloWorld(QObject *parent,
                                    "helloworld");
     addAction( action );
 
-    m_interface = dynamic_cast< KIPI::Interface* >( parent );
+    m_interface = static_cast< KIPI::Interface* >( parent );
 }
 
 void Plugin_HelloWorld::slotActivate()
