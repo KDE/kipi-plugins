@@ -28,10 +28,14 @@
 #include <libkipi/plugin.h>
 
 class QCustomEvent;
-class QProgressDialog;
 
 class KAction;
 class KIPISendimagesPlugin::SendImages;
+
+namespace KIPI
+{
+class BatchProgressDialog;
+}
 
 class Plugin_SendImages : public KIPI::Plugin
 {
@@ -51,7 +55,9 @@ public slots:
 private:
    int                               m_current;
    int                               m_total;
-   QProgressDialog                  *m_progressDlg;
+   
+   KIPI::BatchProgressDialog        *m_progressDlg;
+   
    KAction                          *m_action_sendimages;
    KIPISendimagesPlugin::SendImages *m_sendImagesOperation;
 

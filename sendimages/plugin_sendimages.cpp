@@ -27,10 +27,6 @@ extern "C"
 #include <unistd.h>
 }
 
-// Include files for Qt
-
-#include <qprogressdialog.h>
-
 // Include files for KDE
 
 #include <klocale.h>
@@ -47,6 +43,10 @@ extern "C"
 #include <kstandarddirs.h>
 #include <ktempfile.h>
 #include <kimageio.h>
+
+// Lib KIPI includes.
+
+#include <libkipi/batchprogressdialog.h>
 
 // Local includes
 
@@ -125,9 +125,6 @@ void Plugin_SendImages::slotCancel()
     m_sendImagesOperation->terminate();
     m_sendImagesOperation->wait();
     m_sendImagesOperation->removeTmpFiles();
-    
-    if (m_progressDlg) 
-       m_progressDlg->reset();
 }
 
 
@@ -139,11 +136,10 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
     
     if (!m_progressDlg)
         {
-        m_progressDlg = new QProgressDialog (i18n("Resize image"), i18n("&Cancel"), 0,
-                                             0, 0, true);
+        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Preparing images to send"));
         
-        connect(m_progressDlg, SIGNAL(cancelled()),
-                SLOT(slotCancel()));
+        connect(m_progressDlg, SIGNAL(cancelClicked()),
+                this, SLOT(slotCancel()));
 
         m_current = 0;
         m_progressDlg->show();
@@ -159,48 +155,47 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
         
         switch (d->action) 
            {
+           case(KIPISendimagesPlugin::Initialize): 
+              {
+              m_total = d->total;
+              text = i18n("Preparing %1 images to send...").arg(d->total);
+              break;
+              }
+
            case(KIPISendimagesPlugin::ResizeImages): 
               {
-              text = i18n("Resizing for\n%1\nfrom Album\n%2")
+              text = i18n("Resizing '%1' from Album '%2'...")
                           .arg(d->fileName).arg(d->albumName);
               break;
               }
-              
-           case(KIPISendimagesPlugin::ResizeFailed): 
-              {
-              text = i18n("Resizing failed for\n%1\nfrom Album\n%2")
-                          .arg(d->fileName).arg(d->albumName);
-              break;
-              }
-           
+
            case(KIPISendimagesPlugin::Progress): 
               {
-              m_current = 0;
-              m_total = d->total;
-              text = i18n("Parsing %1 image(s) to send...").arg(d->total);
-              m_progressDlg->show();
+              text = i18n("Using '%1' from Album '%2' without resizing...")
+                          .arg(d->fileName).arg(d->albumName);
               break;
-              }
+              }                                          
               
            default: 
               {
               kdWarning( 51000 ) << "Plugin_SendImages: Unknown 'Starting' event: " << d->action << endl;
               }
            }
-           
-        m_progressDlg->setLabelText(text);
+        
+        m_progressDlg->addedAction(text, KIPI::StartingMessage);
         }
     else 
         {
+        QString text;
+
         if (!d->success) 
             {
-            QString text;
-            
             switch (d->action) 
                {
                case(KIPISendimagesPlugin::ResizeImages): 
                   {
-                  text = i18n("Failed to resize images!");
+                  text = i18n("failed to resize '%1' from Album '%2'")
+                              .arg(d->fileName).arg(d->albumName);
                   break;
                   }
                                    
@@ -209,18 +204,44 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
                   kdWarning( 51000 ) << "Plugin_SendImages: Unknown 'Failed' event: " << d->action << endl;
                   }
                }
+            
+            m_progressDlg->addedAction(text, KIPI::WarningMessage);
             }
+        else
+            {
+            switch (d->action) 
+               {
+               case(KIPISendimagesPlugin::ResizeImages): 
+                  {
+                  text = i18n("Resizing '%1' from Album '%2' done!")
+                              .arg(d->fileName).arg(d->albumName);
+                  break;
+                  }
 
+               case(KIPISendimagesPlugin::Progress): 
+                  {
+                  text = i18n("All preparing operations done!");
+                  break;
+                  }
+                                 
+               default: 
+                  {
+                  kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Success' event: " << d->action << endl;
+                  }
+               }
+
+            m_progressDlg->addedAction(text, KIPI::SucessMessage);
+            }
+        
         ++m_current;
         m_progressDlg->setProgress(m_current, m_total);
         
         if( d->action == KIPISendimagesPlugin::Progress )
            {
-           m_current = 0;
-           m_progressDlg->reset();
+           delete m_progressDlg;
            
            // If we have some errors during the resizing images process, show an error dialog.
-           
+
            if ( m_sendImagesOperation->showErrors() == false )
               return;
 

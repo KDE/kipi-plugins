@@ -90,7 +90,8 @@ SendImages::~SendImages()
 
 bool SendImages::showDialog()
 {
-    m_sendImagesDialog = new KIPISendimagesPlugin::SendImagesDialog(0, m_interface, m_collection);
+    m_sendImagesDialog = new KIPISendimagesPlugin::SendImagesDialog(0,
+                             m_interface, m_collection);
     return (m_sendImagesDialog->exec()== QDialog::Accepted);
 }
 
@@ -100,22 +101,14 @@ bool SendImages::showDialog()
 
 void SendImages::run()
 {
-    // Resize all images in the list from dialog.
-    resizeImages();
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void SendImages::resizeImages(void)
-{
-    int imgIndex = 0;
+    KIPISendimagesPlugin::EventData *d;
     KURL::List images = m_sendImagesDialog->m_images2send;
 
-    KIPISendimagesPlugin::EventData *d = new KIPISendimagesPlugin::EventData;
-    d->action = KIPISendimagesPlugin::Progress;
-    d->total = images.count();
+    d = new KIPISendimagesPlugin::EventData;
+    d->action = KIPISendimagesPlugin::Initialize;
     d->starting = true;
+    d->success = false;
+    d->total = images.count();
     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
         
     for( KURL::List::Iterator it = images.begin() ; it != images.end() ; ++it )
@@ -128,10 +121,9 @@ void SendImages::resizeImages(void)
         d->fileName = (*it).fileName();
         d->albumName = (*it).directory().section('/', -1);
         d->starting = true;
+        d->success = false;        
         QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
         
-        ++imgIndex;
-
         // Prepare resized target images to send.
 
         if ( m_sendImagesDialog->m_changeImagesProp->isChecked() == true )
@@ -157,32 +149,49 @@ void SendImages::resizeImages(void)
                // Resized images failed...
 
                d = new KIPISendimagesPlugin::EventData;
-               d->action   = KIPISendimagesPlugin::ResizeFailed;
+               d->action   = KIPISendimagesPlugin::ResizeImages;
                d->fileName = (*it).fileName();
                d->albumName = (*it).directory().section('/', -1);
-               d->starting = true;
+               d->starting = false;
+               d->success = false;               
                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                        
                m_imagesResizedWithError.append(*it);
                }
            else          // Resized images OK...
                {
+               d = new KIPISendimagesPlugin::EventData;
+               d->action   = KIPISendimagesPlugin::ResizeImages;
+               d->fileName = (*it).fileName();
+               d->albumName = (*it).directory().section('/', -1);
+               d->starting = false;
+               d->success = true;               
+               QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+               
                m_filesSendList.append (m_tmp + imageNameFormat);
                }
            }
         else     // No resize images operations...
            {
+           d = new KIPISendimagesPlugin::EventData;
+           d->action   = KIPISendimagesPlugin::Progress;
+           d->fileName = (*it).fileName();
+           d->albumName = (*it).directory().section('/', -1);
+           d->starting = true;
+           d->success = false;             
+           QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+           
            m_filesSendList.append (imageName);
            }
-        
-        d = new KIPISendimagesPlugin::EventData;
-        d->action   = KIPISendimagesPlugin::ResizeImages;
-        d->fileName = (*it).fileName();
-        d->albumName = (*it).directory().section('/', -1);
-        d->starting = false;
-        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
         }
+     
+     d = new KIPISendimagesPlugin::EventData;
+     d->action   = KIPISendimagesPlugin::Progress;
+     d->starting = false;
+     d->success = true;             
+     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Create a text file with the images comments.
@@ -226,7 +235,7 @@ bool SendImages::showErrors()
                                                   i18n("Error during resize images process"),
                                                   i18n("Cannot resize this images files :"),
                                                   i18n("Do you want added this images files like\nattachments "
-                                                       "(not resizing)?"),
+                                                       "(without resizing)?"),
                                                   m_imagesResizedWithError);
        
        int ValRet = ErrorImagesDialog->exec();

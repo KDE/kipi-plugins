@@ -29,9 +29,10 @@ namespace KIPISendimagesPlugin
 
 enum Action
 {
-    ResizeImages = 0,
-    ResizeFailed,
-    Progress
+    Initialize = 0,
+    Progress,
+    Error,
+    ResizeImages
 };
     
 

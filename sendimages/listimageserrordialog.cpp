@@ -48,7 +48,7 @@ listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption,
                                              const QString &Mess1, const QString &Mess2,
                                              KURL::List ListOfiles)
                      : KDialogBase( Caption, Yes|No|Cancel, Yes, Cancel, parent,
-                                    "listImagesErrorDialog", true, true )
+                                    "listImagesErrorDialog", true, false )
 {
   QWidget* box = new QWidget( this );
   setMainWidget(box);
@@ -61,7 +61,7 @@ listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption,
   QLabel *labelMess1 = new QLabel ( Mess1, box);
   m_listFiles = new KListView( box );
   m_listFiles->addColumn(i18n("Image file name"));
-  m_listFiles->addColumn(i18n("Album"));
+  m_listFiles->addColumn(i18n("From Album"));
   m_listFiles->setSorting(1);
   m_listFiles->setItemMargin(3);
   m_listFiles->setResizeMode(QListView::LastColumn);
@@ -73,13 +73,12 @@ listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption,
 
   for ( KURL::List::Iterator it = ListOfiles.begin() ; it != ListOfiles.end() ; ++it )
       {
-      QListViewItem *item = new QListViewItem( m_listFiles,
+      KListViewItem *item = new KListViewItem( m_listFiles,
                                               (*it).fileName(),    
-                                              (*it).directory().section('/', -1)
-                                             );
+                                              (*it).directory().section('/', -1) );
       }
 
-  resize( 500, 200 );
+  resize( 500, 350 );
 }
 
 
