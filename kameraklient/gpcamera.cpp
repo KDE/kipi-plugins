@@ -202,7 +202,7 @@ bool GPCamera::delDirSupport() {
 }
 
 int GPCamera::getSubFolders(const QString& folder, QValueList<QString>& subFolderList) {
-    CameraList *clist;
+    ::CameraList *clist;
     gp_list_new(&clist);
     if (status) {
         delete status;
@@ -250,7 +250,7 @@ void GPCamera::getAllItemsInfo(const QString& folder, GPFileItemInfoList& infoLi
 }
 
 int GPCamera::getItemsInfo(const QString& folder, GPFileItemInfoList& infoList) {
-    CameraList *clist;
+    ::CameraList *clist;
     const char *cname;
     if (status) {
         delete status;
@@ -561,7 +561,7 @@ void GPCamera::getCameraSupportedPorts(const QString& model, QStringList& plist)
 }
 
 int GPCamera::autoDetect(QString& model, QString& port) {
-    CameraList camList;
+    ::CameraList camList;
     CameraAbilitiesList *abilList;
     GPPortInfoList *infoList;
     const char *camModel_, *camPort_;

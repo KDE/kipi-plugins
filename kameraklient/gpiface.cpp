@@ -33,7 +33,7 @@ namespace KIPIKameraKlientPlugin
 {
 
 int GPIface::autoDetect(QString& model, QString& port) {
-    CameraList camList;
+    ::CameraList camList;
     CameraAbilitiesList *abilList;
     GPPortInfoList *infoList;
     const char *camModel_, *camPort_;
