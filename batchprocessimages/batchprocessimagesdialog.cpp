@@ -145,8 +145,10 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     //---------------------------------------------
 
     QHBoxLayout *hlay = new QHBoxLayout( dvlay );
-    groupBox1 = new QGroupBox( box );
-    QGridLayout* grid = new QGridLayout( groupBox1, 2, 3, 20, spacingHint());
+    groupBox1 = new QGroupBox( 0, Qt::Vertical, box );
+    groupBox1->layout()->setSpacing(KDialog::spacingHint());
+    groupBox1->layout()->setMargin(KDialog::marginHint());
+    QGridLayout* grid = new QGridLayout( groupBox1->layout(), 2, 3);
     m_labelType = new QLabel( groupBox1 );
     grid->addMultiCellWidget(m_labelType, 0, 0, 0, 0);
 
