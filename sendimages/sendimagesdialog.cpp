@@ -599,7 +599,6 @@ void SendImagesDialog::slotImageSelected( QListBoxItem * item )
     QString IdemIndexed = "file:" + pitem->path();
     KURL url(IdemIndexed);
 
-    // PENDING(blackie) Renchi: true as forth parameter
     KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_imageLabel->height() );
 
     connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),

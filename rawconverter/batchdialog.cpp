@@ -321,7 +321,6 @@ void BatchDialog::addItems(const QStringList& itemList)
     }
 
     if (!urlList.empty()) {
-        // PENDING(blackie) Renchi: third parameter was true, what does that mean?
         KIO::PreviewJob* thumbnailJob = KIO::filePreview(urlList, 48 );
         connect(thumbnailJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
                 SLOT(slotGotThumbnail(const KFileItem&, const QPixmap&)));

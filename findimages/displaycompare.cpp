@@ -340,7 +340,6 @@ void DisplayCompare::slotDisplayLeft(QListViewItem * item)
     QString IdemIndexed = "file:" + pitem->fullpath();
     KURL url(IdemIndexed);
 
-    // PENDING(blackie) Renchi: true as forth parameter
     KIO::PreviewJob* thumbJob1 = KIO::filePreview( url, preview1->height() );
 
     connect(thumbJob1, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
@@ -418,7 +417,6 @@ void DisplayCompare::slotDisplayRight(QListViewItem * item)
     QString IdemIndexed = "file:" + pitem->fullpath();
     KURL url(IdemIndexed);
 
-    // PENDING(blackie) Renchi: It had true as 4th parameter, what does that mean?
     KIO::PreviewJob* thumbJob2 = KIO::filePreview( url, preview2->height() );
 
     connect(thumbJob2, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),

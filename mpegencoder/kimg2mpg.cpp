@@ -585,7 +585,6 @@ void KImg2mpgData::slotImagesFilesSelected( QListBoxItem *item )
 
   m_ImageLabel->clear();
 
-  // PENDING(blackie) Renchi: thumbnail job had true as forth parameter, what did that mean?
   KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_ImageLabel->width() );
 
   connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
