@@ -73,12 +73,14 @@ void TimeAdjustDialog::setImages( const KURL::List& images )
             inexactCount++;
     }
 
-    if ( inexactCount > 0 )
-        m_infoLabel->setText( i18n("%1 images will be changed (%2 images will be skipped due to inexact dates)")
-                              .arg( exactCount ).arg( inexactCount ) );
-    else
-        m_infoLabel->setText( i18n("%1 images will be changed").arg( m_images.count() ) );
-
+    if ( inexactCount > 0 ) {
+    
+    	QString tmpLabel =   	  i18n("1 images will be changed; ", "%n images will be changed; ", exactCount)
+			 	+ i18n("1 image will be skipped due an inexact date.", "%n images will be skipped due to inexact dates.", inexactCount );
+        m_infoLabel->setText( tmpLabel );
+    } else {
+        m_infoLabel->setText( i18n("1 image will be changed", "%n images will be changed", m_images.count() ) );
+	}
     // PENDING(blackie) handle all images being inexact.
 
     updateExample();
@@ -90,7 +92,7 @@ void TimeAdjustDialog::addAboutPage()
                                   BarIcon("kipi", KIcon::SizeMedium ) );
     QVBoxLayout *vlay = new QVBoxLayout( pageAbout, 6 );
 
-    QLabel *label = new QLabel( i18n("<qt><p>A KIPI plugin for adjusting dates and time<br/>"
+    QLabel *label = new QLabel( i18n("<qt><p>A KIPI plugin for adjusting dates and times<br/>"
                                      "Author: Jesper K. Pedersen<br/>"
                                      "Email: blackie@kde.org</p></qt>"), pageAbout);
     vlay->addWidget(label);
@@ -107,7 +109,7 @@ void TimeAdjustDialog::addConfigPage()
     // Adjustment type
     QVButtonGroup* grp = new QVButtonGroup( i18n("Adjustment Type"), page, "adjustment type" );
     m_add = new QRadioButton( i18n("Add"), grp );
-    new QRadioButton( i18n("Substract" ), grp );
+    new QRadioButton( i18n("Subtract" ), grp );
     vlay->addWidget( grp );
     m_add->setChecked( true );
     connect( grp, SIGNAL( clicked(int) ), this, SLOT( updateExample() ) );
@@ -182,10 +184,10 @@ void TimeAdjustDialog::addInfoPage()
     QVBoxLayout *vlay = new QVBoxLayout( pageAbout, 6 );
 
     QLabel *label = new QLabel( i18n("<qt><p>Sometimes it happens that the "
-                                     "time on your digital cameral is set incorrect, and the dates of all "
+                                     "time on your digital cameral is set incorrectly, and the dates of all "
                                      "your images are therefore incorrect.</p>"
-                                     "<p>Using this plugin you may adjust the time of several images at one time, "
-                                     "i.e. add or substract a certain amount of minutes, hours, or days to each image.</p></qt>"),
+                                     "<p>Using this plugin you can adjust the time of several images at once, "
+                                     "i.e. add or substract a certain amount of time (in minutes, hours, or days) to each image.</p></qt>"),
                                 pageAbout);
     vlay->addWidget(label); vlay->addStretch(1);
 
@@ -197,7 +199,7 @@ void TimeAdjustDialog::updateExample()
     QString oldDate = m_exampleDate.toString();
     QDateTime date = updateTime( m_exampleDate );
     QString newDate = date.toString();
-    m_exampleAdj->setText( i18n( "%1 would for example change into %2").arg(oldDate).arg(newDate) );
+    m_exampleAdj->setText( i18n( "%1 would, for example, change into %2").arg(oldDate).arg(newDate) );
 }
 
 void TimeAdjustDialog::slotOK()
