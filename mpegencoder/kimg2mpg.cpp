@@ -833,7 +833,7 @@ void KImg2mpgData::slotOptions( void )
   m_OptionDlg->show();
 
   connect( m_OptionDlg, SIGNAL( okClicked () ),
-           this, SLOT( slotm_OptionDlgOkClicked() ));
+           this, SLOT( slotOptionDlgOkClicked() ));
 }
 
 
@@ -867,7 +867,7 @@ void KImg2mpgData::slotOptionDlgOkClicked( void )
       m_AudioInputFilename->setEnabled(false);
 
   disconnect( m_OptionDlg, SIGNAL( okClicked() ),
-              this, SLOT( slotm_OptionDlgOkClicked() ));
+              this, SLOT( slotOptionDlgOkClicked() ));
 }
 
 
