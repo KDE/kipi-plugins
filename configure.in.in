@@ -64,21 +64,44 @@ AC_CHECK_PROG(PKGCONFIGFOUND, pkg-config,[yes])
 # General kipi-plugin tests
 #
 # ----------------------------------------------------------
-AC_MSG_CHECKING([for libkipi in our sources])
+
 if test -d $srcdir/libkipi; then
+    AC_MSG_CHECKING([for libkipi in our sources])
     LIBKIPI_CFLAGS='-I$(top_srcdir)/libkipi/libkipi'
     LIBKIPI_LIBS='$(top_builddir)/libkipi/libkipi/libkipi.la'
     LIBKIPI_LIBS_DEP='$(LIBKIPI_LIBS)'
     AC_MSG_RESULT([found])
+    AC_SUBST(LIBKIPI_CFLAGS)
+    AC_SUBST(LIBKIPI_LIBS)
+    AC_SUBST(LIBKIPI_LIBS_DEP)
 else
-    # FIXME: Write a real test
-    LIBKIPI_CFLAGS=''
-    LIBKIPI_LIBS='-lkipi'
-    AC_MSG_RESULT([not found])
+
+    if test "$PKGCONFIGFOUND" = "yes" ; then
+        # check for libkipi
+        have_libkipi=no
+
+	KDE_PKG_CHECK_MODULES(LIBKIPI, libkipi >= 0.1,
+		have_libkipi=yes, have_libkipi=no)
+
+	if test "x$have_libkipi" = "xno"; then
+	   LIBKIPI_CFLAGS=""
+	   LIBKIPI_LIBS=""
+           AC_MSG_RESULT([not found])
+	else
+	   AC_MSG_RESULT([found])
+	fi
+     else
+        LIBKIPI_CFLAGS=""
+	LIBKIPI_LIBS=""
+        AC_MSG_RESULT([not found])
+     fi 
+     AC_SUBST(LIBKIPI_CFLAGS)
+     AC_SUBST(LIBKIPI_LIBS)
 fi
-AC_SUBST(LIBKIPI_CFLAGS)
-AC_SUBST(LIBKIPI_LIBS)
-AC_SUBST(LIBKIPI_LIBS_DEP)
+
+if test "x$have_libkipi" != "xyes"; then
+     DO_NOT_COMPILE="$DO_NOT_COMPILE kipi-plugins"
+fi
 
 # --------------------------------------------------------------------
 # Check for libkexif
@@ -121,7 +144,7 @@ fi
 
 if test x$have_libkexif != xyes; then
    AC_MSG_RESULT(
-	[libkexif not installded. disabling jpeglossless plugin])
+	[libkexif not installed. disabling jpeglossless plugin])
 fi
 
 AM_CONDITIONAL(compile_JPEGLOSSLESS, [test x$have_libkexif = xyes])

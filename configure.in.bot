@@ -4,3 +4,10 @@ if test -z "$ac_imlib2_config"; then
   echo ""
   all_tests=bad
 fi
+
+if test "x$have_libkipi" != "xyes"; then
+  echo ""
+  echo "You're missing libkipi. kipi-plugins will not be compiled."
+  echo ""
+  all_tests=bad
+fi
