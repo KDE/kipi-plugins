@@ -103,7 +103,7 @@ void Plugin_CommentsEditor::slotActivate()
         return;
 
     if ( images.images().count() == 0 ) {
-        KMessageBox::sorry(kapp->activeWindow(), i18n("Please select an album or a selection of images for editing comments !"));
+        KMessageBox::sorry(kapp->activeWindow(), i18n("Please select an album or a selection of images for editing comments."));
         return;
     }
 

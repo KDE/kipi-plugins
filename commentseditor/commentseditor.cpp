@@ -302,10 +302,10 @@ void CommentsEditor::slotOkClicked()
 
 void CommentsEditor::slotAboutClicked()
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for comments images edition\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for commenting images\n\n"
                                   "Author: Renchi Raju\n\n"
                                   "Email: renchi@pooh.tam.uiuc.edu"),
-                                  i18n("About CommentsEditor"));
+                                  i18n("About 'Comments Editor'"));
 }
 
 } // NameSpace KIPICommentsEditorPlugin
