@@ -85,25 +85,25 @@ FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *p
     setupPageMethod();
     page_setupSelection->setFocus();
     resize( 650, 500 );
-        
+
     // About data and help button.
-        
+
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Find Duplicate Images"), 
+                                       I18N_NOOP("Find Duplicate Images"),
                                        kipi_version,
                                        I18N_NOOP("A Kipi plugin to find duplicate images\n"
                                                  "This plugin is based on ShowImg implementation algorithm"),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier", 
+                                       "(c) 2003-2004, Gilles Caulier",
                                        0,
                                        "http://extragear.kde.org/apps/kipi.php");
-    
+
     about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at free.fr");
 
     about->addAuthor("Richard Groult", I18N_NOOP("Find duplicate images algorithm"),
                      "rgroult at jalix.org");
-                         
+
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
@@ -138,7 +138,7 @@ void FindDuplicateDialog::setupSelection(void)
 void FindDuplicateDialog::setupPageMethod(void)
 {
     QString whatsThis;
-    page_setupMethod = addPage( i18n("Method & Cache"), i18n("Find-Duplicates Method and Cache Configuration"),
+    page_setupMethod = addPage( i18n("Method & Cache"), i18n("Find-Duplicates Method && Cache Configuration"),
                                 BarIcon("run", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupMethod, 0, spacingHint() );
@@ -298,8 +298,8 @@ void FindDuplicateDialog::slotOk()
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-QValueList<KIPI::ImageCollection> FindDuplicateDialog::getSelectedAlbums() const 
-{ 
+QValueList<KIPI::ImageCollection> FindDuplicateDialog::getSelectedAlbums() const
+{
     return m_imageCollectionSelector->selectedImageCollections();
 }
 

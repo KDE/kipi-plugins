@@ -2,8 +2,8 @@
  * File  : singledialog.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-10-22
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2003 by Renchi Raju
  *
  * This program is free software; you can redistribute it
@@ -11,23 +11,23 @@
  * Public License as published bythe Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C ansi includes.
- 
+
 extern "C"
 {
 #include <stdio.h>
 }
- 
-// Qt includes. 
- 
+
+// Qt includes.
+
 #include <qframe.h>
 #include <qgroupbox.h>
 #include <qvbuttongroup.h>
@@ -73,14 +73,14 @@ SingleDialog::SingleDialog(const QString& file)
 {
 
     setCaption(i18n("Raw Image Converter"));
-    
+
     // --------------------------------------------------------------
 
     inputFile_     = file;
     inputFileName_ = QFileInfo(file).fileName();
 
     QGridLayout *mainLayout = new QGridLayout(this, 6, 2, 5);
-        
+
     // --------------------------------------------------------------
 
     QFrame *headerFrame = new QFrame( this );
@@ -95,15 +95,15 @@ SingleDialog::SingleDialog(const QString& file)
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
     mainLayout->addMultiCellWidget(headerFrame, 0, 0, 0, 1);
-    
+
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
     directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    
+
     // --------------------------------------------------------------
 
     QGroupBox *lbox = new QGroupBox(i18n("Image Preview"), this);
@@ -112,14 +112,14 @@ SingleDialog::SingleDialog(const QString& file)
     lbox->layout()->setMargin( 11 );
     QVBoxLayout* lboxLayout =
         new QVBoxLayout(lbox->layout());
-    
+
     previewWidget_ = new PreviewWidget(lbox);
     lboxLayout->addWidget(previewWidget_);
 
     mainLayout->addMultiCellWidget(lbox, 1, 3, 0, 0);
 
     // ---------------------------------------------------------------
-    
+
     QGroupBox *settingsBox = new QGroupBox(i18n("Settings"), this);
     settingsBox->setColumnLayout(0, Qt::Vertical);
     settingsBox->layout()->setSpacing( 6 );
@@ -151,7 +151,7 @@ SingleDialog::SingleDialog(const QString& file)
     QHBoxLayout *hboxLayout;
 
     // ---------------------------------------------------------------
-    
+
     hboxLayout = new QHBoxLayout(0,0,6,"layout1");
     gammaSpinBox_ = new CSpinBox(settingsBox);
     gammaSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -161,7 +161,7 @@ SingleDialog::SingleDialog(const QString& file)
     QToolTip::add(gammaSpinBox_,
                   i18n("Specify the gamma value"));
     settingsBoxLayout->addLayout(hboxLayout);
-    
+
     // ---------------------------------------------------------------
 
     hboxLayout = new QHBoxLayout(0,0,6,"layout2");
@@ -184,11 +184,11 @@ SingleDialog::SingleDialog(const QString& file)
                        "multiply the red channel by this value"));
 
     hboxLayout->addWidget(redSpinBox_);
-    hboxLayout->addWidget(new QLabel(i18n("Red Multiplier"), settingsBox));
+    hboxLayout->addWidget(new QLabel(i18n("Red multiplier"), settingsBox));
     settingsBoxLayout->addLayout(hboxLayout);
 
     // ---------------------------------------------------------------
-    
+
     hboxLayout = new QHBoxLayout(0,0,6,"layout4");
     blueSpinBox_ = new CSpinBox(settingsBox);
     blueSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -197,7 +197,7 @@ SingleDialog::SingleDialog(const QString& file)
                        "multiply the blue channel by this value"));
 
     hboxLayout->addWidget(blueSpinBox_);
-    hboxLayout->addWidget(new QLabel(i18n("Blue Multiplier"), settingsBox));
+    hboxLayout->addWidget(new QLabel(i18n("Blue multiplier"), settingsBox));
     settingsBoxLayout->addLayout(hboxLayout);
 
     // ---------------------------------------------------------------
@@ -232,7 +232,7 @@ SingleDialog::SingleDialog(const QString& file)
     mainLayout->addItem(new QSpacerItem(10,10,
                                         QSizePolicy::Minimum,
                                         QSizePolicy::Expanding), 3, 1);
-    
+
     // ---------------------------------------------------------------
 
     QFrame *hline = new QFrame(this);
@@ -245,24 +245,24 @@ SingleDialog::SingleDialog(const QString& file)
 
     hboxLayout->addItem(new QSpacerItem(10,10,QSizePolicy::Expanding,
                                         QSizePolicy::Minimum));
-    
-    // ---------------------------------------------------------------                                        
+
+    // ---------------------------------------------------------------
     // About data and help button.
-                                        
+
     helpButton_ = new QPushButton(i18n("&Help"), this);
     hboxLayout->addWidget(helpButton_);
 
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("RAW Image Converter"), 
+                                       I18N_NOOP("RAW Image Converter"),
                                        kipi_version,
                                        I18N_NOOP("A Kipi plugin for RAW image conversion\n"
                                                  "This plugin uses the Dave Coffin RAW photo "
                                                  "decoder program \"dcraw\""),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Renchi Raju", 
+                                       "(c) 2003-2004, Renchi Raju",
                                        0,
                                        "http://extragear.kde.org/apps/kipi.php");
-    
+
     about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
                      "renchi@pooh.tam.uiuc.edu");
 
@@ -270,9 +270,9 @@ SingleDialog::SingleDialog(const QString& file)
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("RAW Image Converter Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     helpButton_->setPopup( helpMenu->menu() );
-    
-    // ---------------------------------------------------------------      
-    
+
+    // ---------------------------------------------------------------
+
     previewButton_ = new QPushButton(i18n("&Preview"), this);
     QToolTip::add(previewButton_,
                   i18n("Generate a Preview from current settings.\n"
@@ -294,20 +294,20 @@ SingleDialog::SingleDialog(const QString& file)
     QToolTip::add(closeButton_, i18n("Exit Raw Converter"));
     hboxLayout->addWidget(closeButton_);
 
-    
+
     mainLayout->addMultiCellLayout(hboxLayout, 5, 5, 0, 1);
 
     // ---------------------------------------------------------------
 
     connect(previewButton_, SIGNAL(clicked()),
             SLOT(slotPreview()));
-    
+
     connect(processButton_, SIGNAL(clicked()),
             SLOT(slotProcess()));
-    
+
     connect(closeButton_, SIGNAL(clicked()),
             SLOT(slotClose()));
-    
+
     connect(abortButton_, SIGNAL(clicked()),
             SLOT(slotAbort()));
 
@@ -388,7 +388,7 @@ void SingleDialog::saveSettings()
     KConfig* config=kapp->config();
 
     config->setGroup("RawConverter Settings");
-    
+
     config->writeEntry("Gamma", gammaSpinBox_->value());
     config->writeEntry("Brightness", brightnessSpinBox_->value());
 
@@ -400,7 +400,7 @@ void SingleDialog::saveSettings()
 
     config->writeEntry("Output Format",
                        saveButtonGroup_->id(saveButtonGroup_->selected()));
-    
+
     config->sync();
 }
 
@@ -445,7 +445,7 @@ void SingleDialog::slotIdentify()
 
 void SingleDialog::slotClose()
 {
-    close();    
+    close();
 }
 
 void SingleDialog::slotAbort()
@@ -501,7 +501,7 @@ void SingleDialog::slotProcessed(const QString&, const QString& tmpFile_)
     QString saveFile =
         KFileDialog::getSaveFileName(QFileInfo(inputFile_).dirPath(true),
                                      filter, this);
-    
+
     if (saveFile.isEmpty()) return;
 
     if (::rename(tmpFile_.latin1(), saveFile.latin1()) != 0)

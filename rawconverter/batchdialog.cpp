@@ -19,17 +19,17 @@
  *
  * ============================================================ */
 
-// C Ansi includes. 
- 
+// C Ansi includes.
+
 extern "C"
 {
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 }
- 
+
 // Qt includes.
- 
+
 #include <qframe.h>
 #include <qgroupbox.h>
 #include <qvbuttongroup.h>
@@ -85,7 +85,7 @@ BatchDialog::BatchDialog()
     QGridLayout *mainLayout = new QGridLayout(this, 6, 2, 6, 11);
 
     //---------------------------------------------
-   
+
     QFrame *headerFrame = new QFrame( this );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
@@ -98,15 +98,15 @@ BatchDialog::BatchDialog()
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
     mainLayout->addMultiCellWidget(headerFrame, 0, 0, 0, 1);
-    
+
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
     directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    
+
     // --------------------------------------------------------------
 
     listView_ = new KListView(this);
@@ -188,7 +188,7 @@ BatchDialog::BatchDialog()
                          "multiply the red channel by this value"));
 
     hboxLayout->addWidget(redSpinBox_);
-    hboxLayout->addWidget(new QLabel(i18n("Red Multiplier"), settingsBox));
+    hboxLayout->addWidget(new QLabel(i18n("Red multiplier"), settingsBox));
     settingsBoxLayout->addLayout(hboxLayout);
 
     // ---------------------------------------------------------------
@@ -201,7 +201,7 @@ BatchDialog::BatchDialog()
                          "multiply the blue channel by this value"));
 
     hboxLayout->addWidget(blueSpinBox_);
-    hboxLayout->addWidget(new QLabel(i18n("Blue Multiplier"), settingsBox));
+    hboxLayout->addWidget(new QLabel(i18n("Blue multiplier"), settingsBox));
     settingsBoxLayout->addLayout(hboxLayout);
 
     // ---------------------------------------------------------------
@@ -264,24 +264,24 @@ BatchDialog::BatchDialog()
 
     hboxLayout->addItem(new QSpacerItem(10,10,QSizePolicy::Expanding,
                                         QSizePolicy::Minimum));
-    
+
     // ---------------------------------------------------------------
     // About data and help button.
-                                        
+
     helpButton_ = new QPushButton(i18n("&Help"), this);
     hboxLayout->addWidget(helpButton_);
 
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("RAW Images Batch Converter"), 
+                                       I18N_NOOP("RAW Images Batch Converter"),
                                        kipi_version,
                                        I18N_NOOP("A Kipi plugin for RAW images conversion\n"
                                                  "This plugin uses the Dave Coffin RAW photo "
                                                  "decoder program \"dcraw\""),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Renchi Raju", 
+                                       "(c) 2003-2004, Renchi Raju",
                                        0,
                                        "http://extragear.kde.org/apps/kipi.php");
-    
+
     about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
                      "renchi@pooh.tam.uiuc.edu");
 
@@ -289,9 +289,9 @@ BatchDialog::BatchDialog()
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("RAW Images Batch Converter Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     helpButton_->setPopup( helpMenu->menu() );
-    
+
     // ---------------------------------------------------------------
-    
+
     processButton_ = new QPushButton(i18n("P&rocess"), this);
     QToolTip::add(processButton_,
                   i18n("Start converting the raw images from current settings."));
@@ -312,10 +312,10 @@ BatchDialog::BatchDialog()
 
     connect(processButton_, SIGNAL(clicked()),
             SLOT(slotProcess()));
-    
+
     connect(closeButton_, SIGNAL(clicked()),
             SLOT(close()));
-    
+
     connect(abortButton_, SIGNAL(clicked()),
             SLOT(slotAbort()));
 
