@@ -230,7 +230,7 @@ void Plugin_BatchProcessImages::slotActivate()
 
 KIPI::Category Plugin_BatchProcessImages::category() const
 {
-    return KIPI::TOOLSPLUGIN;
+    return KIPI::BATCHPLUGIN;
 }
 
 

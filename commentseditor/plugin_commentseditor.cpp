@@ -104,7 +104,7 @@ void Plugin_CommentsEditor::slotAlbumChanged(Digikam::AlbumInfo* album)
 
 KIPI::Category Plugin_CommentsEditor::category() const
 {
-    return KIPI::TOOLSPLUGIN;
+    return KIPI::BATCHPLUGIN;
 }
 
 #include "plugin_commentseditor.moc"
