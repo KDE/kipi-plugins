@@ -828,6 +828,7 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
 
   m_pageSize = pageSize;
   m_photoSizes.clear();
+  // ====================== LETTER SIZE =====================
   if (pageSize == KPrinter::Letter)
   {
     TPhotoSize *p;
@@ -838,13 +839,11 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     p->autoRotate = true;
     // page size
     p->layouts.append(new QRect(0, 0, 8500, 11000));
-
     // photo layouts
     p->layouts.append(new QRect( 700,  500, 3500, 5000));
     p->layouts.append(new QRect(4300,  500, 3500, 5000));
     p->layouts.append(new QRect( 700, 5600, 3500, 5000));
     p->layouts.append(new QRect(4300, 5600, 3500, 5000));
-
     // add to the list
     m_photoSizes.append(p);
 
@@ -855,12 +854,10 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     p->autoRotate = true;
     // page size
     p->layouts.append(new QRect(0, 0, 8500, 11000));
-
     // photo layouts
     p->layouts.append(new QRect( 225,  500, 4000, 6000));
     p->layouts.append(new QRect(4275,  500, 4000, 6000));
     p->layouts.append(new QRect(1250, 6600, 6000, 4000));
-
     // add to the list
     m_photoSizes.append(p);
 
@@ -871,11 +868,9 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     p->autoRotate = true;
     // page size
     p->layouts.append(new QRect(0, 0, 8500, 11000));
-
     // photo layouts
     p->layouts.append(new QRect( 1250,  1000, 6000, 4000));
     p->layouts.append(new QRect( 1250,  6000, 6000, 4000));
-
     // add to the list
     m_photoSizes.append(p);
 
@@ -886,11 +881,9 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     p->autoRotate = true;
     // page size
     p->layouts.append(new QRect(0, 0, 8500, 11000));
-
     // photo layouts
     p->layouts.append(new QRect( 750,  500, 7000, 5000));
     p->layouts.append(new QRect( 750, 5750, 7000, 5000));
-
     // add to the list
     m_photoSizes.append(p);
 
@@ -901,10 +894,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     p->autoRotate = true;
     // page size
     p->layouts.append(new QRect(0, 0, 8500, 11000));
-
     // photo layouts
     p->layouts.append(new QRect(250, 500, 8000, 10000));
-
     // add to the list
     m_photoSizes.append(p);
 
@@ -914,8 +905,48 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     // small thumbnails
     m_photoSizes.append(createPhotoGrid(8500, 11000, i18n("Small Thumbnails"), 6, 5));
 
+    // album collage 1
+    p = new TPhotoSize;
+    p->label = i18n("Album Collage 1 (9 photos)");
+    p->dpi = 0;
+    p->autoRotate = false;
+    // page size
+    p->layouts.append(new QRect(0, 0, 8500, 11000));
+    // photo layouts
+    // photo 1 is in the center, 3x4.5
+    p->layouts.append(new QRect(2750, 3250, 3000, 4500));
+    // the remaining 1.5x2 photos begin with upper left and circle around
+    // top row
+    p->layouts.append(new QRect(750, 750, 1500, 2000));
+    p->layouts.append(new QRect(3500, 750, 1500, 2000));
+    p->layouts.append(new QRect(6250, 750, 1500, 2000));
+    p->layouts.append(new QRect(6250, 4500, 1500, 2000));
+    p->layouts.append(new QRect(6250, 8250, 1500, 2000));
+    p->layouts.append(new QRect(3500, 8250, 1500, 2000));
+    p->layouts.append(new QRect(750, 8250, 1500, 2000));
+    p->layouts.append(new QRect(750, 4500, 1500, 2000));
+    m_photoSizes.append(p);
+    
+    // album collage 2
+    p = new TPhotoSize;
+    p->label = i18n("Album Collage 2 (6 photos)");
+    p->dpi = 0;
+    p->autoRotate = false;
+    // page size
+    p->layouts.append(new QRect(0, 0, 8500, 11000));
+    // photo layouts
+    p->layouts.append(new QRect(1000, 1000, 3000, 3000));
+    p->layouts.append(new QRect(5000, 1000, 2500, 1250));
+    p->layouts.append(new QRect(5000, 2750, 2500, 1250));
+    p->layouts.append(new QRect(1000, 5000, 1500, 2000));
+    p->layouts.append(new QRect(2750, 5000, 4750, 2000));
+    p->layouts.append(new QRect(1000, 8000, 6500, 2000));
+    m_photoSizes.append(p);
+    
+
   } // letter
 
+  // ====================== A4 SIZE =====================
   else if (pageSize == KPrinter::A4)
   {
     // A4 is 21 x 29.7cm
@@ -927,13 +958,11 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     p->label = i18n("9 x 13cm");
     // page size
     p->layouts.append(new QRect(0, 0, 2100, 2970));
-
     // photo layouts
     p->layouts.append(new QRect( 100,  100, 900, 1300));
     p->layouts.append(new QRect(1100,  100, 900, 1300));
     p->layouts.append(new QRect( 100, 1500, 900, 1300));
     p->layouts.append(new QRect(1100, 1500, 900, 1300));
-
     // add to the list
     m_photoSizes.append(p);
 
@@ -944,12 +973,10 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     p->label = i18n("10 x 15cm");
     // page size
     p->layouts.append(new QRect(0, 0, 2100, 2970));
-
     // photo layouts
     p->layouts.append(new QRect(  50,  150, 1000, 1500));
     p->layouts.append(new QRect(1060,  150, 1000, 1500));
     p->layouts.append(new QRect( 300, 1750, 1500, 1000));
-
     // add to the list
     m_photoSizes.append(p);
 
@@ -960,13 +987,25 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     p->label = i18n("10 x 15cm Album");
     // page size
     p->layouts.append(new QRect(0, 0, 2100, 2970));
-
     // photo layouts
     p->layouts.append(new QRect( 300, 350, 1500, 1000));
     p->layouts.append(new QRect( 300, 1620, 1500, 1000));
-
     // add to the list
     m_photoSizes.append(p);
+
+    // ========== 11.5x15cm album
+    p = new TPhotoSize;
+    p->dpi = 0;
+    p->autoRotate = true;
+    p->label = i18n("11.5 x 15cm Album");
+    // page size
+    p->layouts.append(new QRect(0, 0, 2100, 2970));
+    // photo layouts
+    p->layouts.append(new QRect( 300, 250, 1500, 1100));
+    p->layouts.append(new QRect( 300, 1570, 1500, 1100));
+    // add to the list
+    m_photoSizes.append(p);
+
     // ========== 13x18cm
     p = new TPhotoSize;
     p->dpi = 0;
@@ -974,13 +1013,12 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     p->label = i18n("13 x 18cm");
     // page size
     p->layouts.append(new QRect(0, 0, 2100, 2970));
-
     // photo layouts
     p->layouts.append(new QRect( 150, 150, 1800, 1300));
     p->layouts.append(new QRect( 150, 1520, 1800, 1300));
-
     // add to the list
     m_photoSizes.append(p);
+    
     // ========== 20x25cm
     p = new TPhotoSize;
     p->dpi = 0;
@@ -988,10 +1026,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     p->label = i18n("20 x 25cm");
     // page size
     p->layouts.append(new QRect(0, 0, 2100, 2970));
-
     // photo layouts
     p->layouts.append(new QRect( 50, 230, 2000, 2500));
-
     // add to the list
     m_photoSizes.append(p);
 
@@ -1002,6 +1038,7 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     m_photoSizes.append(createPhotoGrid(2100, 2970, i18n("Small Thumbnails"), 6, 5));
 
   } // A4
+  // ====================== A6 SIZE =====================
   else if (pageSize == KPrinter::A6)
   {
       // A6 is 10.5 x 14.8 cm
@@ -1015,10 +1052,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
       // page size
       //    p->layouts.append(new QRect(0, 0, 1050, 1480));
       p->layouts.append(new QRect(0, 0, 1020, 1530));
-                     
       // photo layouts
       p->layouts.append(new QRect( 50,  100, 900, 1300));
-                         
       // add to the list
       m_photoSizes.append(p);
                              
@@ -1031,10 +1066,8 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
       //     p->layouts.append(new
       //     QRect(0, 0, 1050, 1480));
       p->layouts.append(new QRect(0, 0, 1020, 1530));
-                                                 
       // photo layouts
       p->layouts.append(new QRect( 0, 0, 1020, 1530));
-                                                     
       // add to the list
       m_photoSizes.append(p);
                                                          
@@ -1045,6 +1078,7 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
       m_photoSizes.append(createPhotoGrid(1020, 1530, i18n("Small Thumbnails"), 6, 5));
 
   } // A6
+  // ====================== UNSUPPORTED SIZE =====================
   else
   {
     kdDebug( 51000 ) << "Initializing Unsupported page layouts\n";
