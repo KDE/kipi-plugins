@@ -27,12 +27,17 @@
 #include <qradiobutton.h>
 #include <qspinbox.h>
 #include <qgrid.h>
+#include <qpushbutton.h>
 
 // KDE includes.
 
 #include <kdebug.h>
-#include <kiconloader.h>
 #include <klocale.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // LibKIPI includes.
 
@@ -46,14 +51,36 @@ namespace KIPITimeAdjustPlugin
 {
 
 TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent, const char* name )
-    :KDialogBase( IconList, i18n("Adjust Time & Date"), Help|Ok|Cancel, Ok, parent, name ),
-     m_interface( interface )
+                : KDialogBase( IconList, i18n("Adjust Time & Date"), Help|Ok|Cancel, Ok, parent, name ),
+                  m_interface( interface )
 {
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Time Adjust"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin for adjusting dates and times"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Jesper K. Pedersen", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Author and maintainer"),
+                     "blackie@kde.org");
+
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Time Adjust handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
+
+    // ------------------------------------------------------------------
+    
     addInfoPage();
     addConfigPage();
-    addAboutPage();
-    setHelp("timeadjust", "kipi-plugins");
-    connect( this, SIGNAL( okClicked() ), this, SLOT( slotOK() ) );
+    
+    connect( this, SIGNAL( okClicked() ),
+             this, SLOT( slotOK() ) );
 }
 
 void TimeAdjustDialog::setImages( const KURL::List& images )
@@ -75,29 +102,21 @@ void TimeAdjustDialog::setImages( const KURL::List& images )
 
     if ( inexactCount > 0 ) {
     
-    	QString tmpLabel =   	  i18n("1 images will be changed; ", "%n images will be changed; ", exactCount)
-			 	+ i18n("1 image will be skipped due an inexact date.", "%n images will be skipped due to inexact dates.", inexactCount );
+        QString tmpLabel = i18n("1 images will be changed; ", "%n images will be changed; ", exactCount)
+                         + i18n("1 image will be skipped due an inexact date.", "%n images will be skipped due to inexact dates.", inexactCount );
         m_infoLabel->setText( tmpLabel );
     } else {
         m_infoLabel->setText( i18n("1 image will be changed", "%n images will be changed", m_images.count() ) );
-	}
+        }
     // PENDING(blackie) handle all images being inexact.
 
     updateExample();
 }
 
-void TimeAdjustDialog::addAboutPage()
+void TimeAdjustDialog::slotHelp()
 {
-    QWidget* pageAbout = addPage( i18n("About"), i18n("About KIPI Plugin"),
-                                  BarIcon("kipi", KIcon::SizeMedium ) );
-    QVBoxLayout *vlay = new QVBoxLayout( pageAbout, 6 );
-
-    QLabel *label = new QLabel( i18n("<qt><p>A KIPI plugin for adjusting dates and times<br/>"
-                                     "Author: Jesper K. Pedersen<br/>"
-                                     "Email: blackie@kde.org</p></qt>"), pageAbout);
-    vlay->addWidget(label);
-    vlay->addStretch(1);
-
+    KApplication::kApplication()->invokeHelp("timeadjust",
+                                             "kipi-plugins");
 }
 
 void TimeAdjustDialog::addConfigPage()

@@ -33,39 +33,52 @@
 
 class QSpinBox;
 class QRadioButton;
+class QPushButton;
 
 namespace KIPITimeAdjustPlugin
 {
 
-class TimeAdjustDialog :public KDialogBase {
+class TimeAdjustDialog :public KDialogBase 
+{
     Q_OBJECT
 
 public:
+
     TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent, const char* name = 0 );
     void setImages( const KURL::List& images );
 
 protected slots:
+
     void updateExample();
     void slotOK();
+    void slotHelp();
 
 protected:
+
     void addInfoPage();
     void addConfigPage();
-    void addAboutPage();
     QDateTime updateTime( QDateTime time ) const;
 
 private:
+
     KIPI::Interface* m_interface;
+    
     KURL::List m_images;
+    
     QRadioButton* m_add;
+    
     QLabel* m_infoLabel;
+    QLabel* m_exampleAdj;
+    
+    QPushButton* m_helpButton;
+    
     QSpinBox* m_secs;
     QSpinBox* m_minutes;
     QSpinBox* m_hours;
     QSpinBox* m_days;
     QSpinBox* m_months;
     QSpinBox* m_years;
-    QLabel* m_exampleAdj;
+    
     QDateTime m_exampleDate;
 
 };
