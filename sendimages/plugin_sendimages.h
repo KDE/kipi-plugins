@@ -2,7 +2,7 @@
  * File  : plugin_sendimages.h
  * Author: Gilles Caulier <caulier dot gilles at free.fr>
  * Date  : 2003-11-04
- * Description : Digikam Send Mail Images Plugin.
+ * Description : KIPI Send Mail Images Plugin.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,20 +20,21 @@
 #ifndef PLUGIN_SENDIMAGES_H
 #define PLUGIN_SENDIMAGES_H
 
-// Digikam includes
+// KIPI includes
 
-#include <digikam/plugin.h>
+#include <libkipi/plugin.h>
 
 class KAction;
 class SendImagesDialog;
 
-class Plugin_SendImages : public Digikam::Plugin
+class Plugin_SendImages : public KIPI::Plugin
 {
 Q_OBJECT
 
 public:
   Plugin_SendImages(QObject *parent, const char* name, const QStringList &args);
   virtual ~Plugin_SendImages();
+  virtual KIPI::Category category() const;
 
 public slots:
   void slotActivate();

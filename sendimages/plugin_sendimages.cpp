@@ -2,7 +2,7 @@
  * File  : plugin_sendimages.cpp
  * Author: Gilles Caulier <caulier dot gilles at free.fr>
  * Date  : 2003-11-04
- * Description : Digikam Send Mail Images Plugin.
+ * Description : KIPI Send Mail Images Plugin.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -18,7 +18,7 @@
  * ============================================================ */
 
  // C Ansi includes
- 
+
 extern "C"
 {
 #include <unistd.h>
@@ -46,10 +46,7 @@ extern "C"
 #include <kscan.h>
 #include <kimageio.h>
 
-// Digikam includes
-
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
+// KIPI includes
 
 // Local includes
 
@@ -57,16 +54,14 @@ extern "C"
 #include "plugin_sendimages.h"
 
 
-K_EXPORT_COMPONENT_FACTORY( digikamplugin_sendimages,
-                            KGenericFactory<Plugin_SendImages>("digikam"));
+K_EXPORT_COMPONENT_FACTORY( kipiplugin_sendimages,
+                            KGenericFactory<Plugin_SendImages>("kipiplugin_sendimages"));
 
 // -----------------------------------------------------------
 Plugin_SendImages::Plugin_SendImages(QObject *parent, const char*, const QStringList&)
-                 : Digikam::Plugin(parent, "SendImages")
+                 : KIPI::Plugin(parent, "SendImages")
 {
-    setInstance(KGenericFactory<Plugin_SendImages>::instance());
-    setXMLFile("plugins/digikamplugin_sendimages.rc");
-    KGlobal::locale()->insertCatalogue("digikamplugin_sendimages");
+    KGlobal::locale()->insertCatalogue("kipilugin_sendimages");
     kdDebug() << "Plugin_SendImages plugin loaded" << endl;
 
     m_action_sendimages = new KAction (i18n("E-mail Images..."),     // Menu message.
@@ -90,20 +85,19 @@ Plugin_SendImages::~Plugin_SendImages()
 
 void Plugin_SendImages::slotActivate()
 {
-    QStringList imagesfileList;
-    Digikam::AlbumInfo *album = Digikam::AlbumManager::instance()->currentAlbum();
-
-    if (album)
-        {
-        if (album->getSelectedItemsPath().isEmpty())
-             imagesfileList = album->getAllItemsPath();
-        else
-             imagesfileList = album->getSelectedItemsPath();
-        }
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    KIPI::ImageCollection images = interface->currentSelection();
+    if ( images.images().count() == 0 )
+        images = interface->currentAlbum();
 
     KStandardDirs dir;
-    QString Tmp = dir.saveLocation("tmp", "digikam-sendimages-" + QString::number(getpid()) + "/");
+    QString Tmp = dir.saveLocation("tmp", "kipi-sendimages-" + QString::number(getpid()) + "/");
 
-    m_sendImagesDialog = new SendImagesDialog(0, Tmp, imagesfileList);
+    m_sendImagesDialog = new SendImagesDialog(0, Tmp, interface, images);
     m_sendImagesDialog->show();
+}
+
+KIPI::Category Plugin_SendImages::category() const
+{
+    return KIPI::IMAGESPLUGIN;
 }

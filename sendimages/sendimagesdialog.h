@@ -34,9 +34,12 @@
 #include <kdialogbase.h>
 #include <klistbox.h>
 
-// Include files for Digikam
+// Include files for KIPI
 
-#include <digikam/thumbnailjob.h>
+#include <libkipi/thumbnailjob.h>
+#include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
+#include <libkipi/imageinfo.h>
 
 class QComboBox;
 class QGroupBox;
@@ -75,7 +78,7 @@ class SendImagesDialog : public KDialogBase
 Q_OBJECT
 
 public:
-   SendImagesDialog(QWidget *parent = 0, QString TmpPath = 0, QStringList imagesfileList = 0);
+   SendImagesDialog(QWidget *parent, QString TmpPath, KIPI::Interface* interface, const KIPI::ImageCollection& images );
    ~SendImagesDialog();
 
    KIntNumInput *m_imageCompression;
@@ -139,8 +142,9 @@ protected:
 
    KSqueezedTextLabel *m_ImageComments;
    KSqueezedTextLabel *m_ImageAlbum;
+   KIPI::Interface *m_interface;
 
-   QGuardedPtr<Digikam::ThumbnailJob> m_thumbJob;
+   QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
 
    QString extension(const QString& imageFileFormat);
    void removeTmpFiles(void);
@@ -154,7 +158,7 @@ protected:
    void setupImagesList(void);
    void setupEmailOptions(void);
    void aboutPage(void);
-   void setImagesList(QStringList Files);
+   void setImagesList( const KURL::List& images );
    void writeSettings(void);
    void readSettings(void);
    void setNbItems(void);

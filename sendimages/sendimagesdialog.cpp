@@ -63,10 +63,8 @@
 #include <kbuttonbox.h>
 #include <ksqueezedtextlabel.h>
 
-// Include files for Digikam
+// Include files for KIPI
 
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
 
 // Local include files
 
@@ -145,20 +143,21 @@ void ListImageItems::dropEvent(QDropEvent *e)
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-SendImagesDialog::SendImagesDialog(QWidget *parent, QString TmpPath, QStringList imagesfileList)
+SendImagesDialog::SendImagesDialog(QWidget *parent, QString TmpPath, KIPI::Interface* interface, const KIPI::ImageCollection& images )
                 : KDialogBase( IconList, i18n("E-mail Images Options"), Help|Ok|Cancel,
                   Ok, parent, "SendImagesDialog", false, true )
 {
     KImageIO::registerFormats();
     m_mozillaTimer = new QTimer(this);
     m_tempPath = TmpPath;
+    m_interface = interface;
 
     setupImagesList();
     setupEmailOptions();
     aboutPage();
     readSettings();
-    setHelp("plugin-sendimages.anchor", "digikam");
-    setImagesList(imagesfileList);
+    setHelp("plugin-sendimages.anchor", "kipi");
+    setImagesList( images.images() );
     page_setupImagesList->setFocus();
     m_ImagesFilesListBox->setSelected(0, true);
     slotImageSelected(m_ImagesFilesListBox->item(0));
@@ -182,7 +181,7 @@ void SendImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("SendImages Settings");
 
     m_mailAgentName->setCurrentText(m_config->readEntry("MailAgentName", "Kmail"));
@@ -201,7 +200,7 @@ void SendImagesDialog::readSettings(void)
     else
         m_addComments->setChecked( false );
 
-    // Read File Filter settings in digikamrc file.
+    // Read File Filter settings in kipirc file.
 
     m_config->setGroup("Album Settings");
     m_ImagesFilesSort = m_config->readEntry("File Filter", "*.jpg *.jpeg *.tif *.tiff *.gif *.png *.bmp");
@@ -216,7 +215,7 @@ void SendImagesDialog::writeSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("SendImages Settings");
     m_config->writeEntry("MailAgentName", m_mailAgentName->currentText());
     m_config->writeEntry("AddComments", m_addComments->isChecked());
@@ -311,20 +310,17 @@ void SendImagesDialog::setupImagesList(void)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void SendImagesDialog::setImagesList(QStringList Files)
+void SendImagesDialog::setImagesList( const KURL::List& Files )
 {
-    if (Files.isEmpty()) return;
+    if ( Files.count() == 0 ) return;
 
-    for ( QStringList::Iterator it = Files.begin() ; it != Files.end() ; ++it )
-      {
-      QString currentFile = *it;
+    for( KURL::List::ConstIterator it = Files.begin(); it != Files.end(); ++it ) {
+      QString currentFile = (*it).path(); // PENDING(blackie) handle real URLS
       QFileInfo fi(currentFile);
       QString Temp = fi.dirPath();
       QString albumName = Temp.section('/', -1);
-      Digikam::AlbumInfo *Album = Digikam::AlbumManager::instance()->findAlbum( albumName );
-      Album->openDB();
-      QString comments = Album->getItemComments(fi.fileName());
-      Album->closeDB();
+      KIPI::ImageInfo imageInfo = m_interface->info( *it );
+      QString comments = imageInfo.description();
 
       // Check if the new item already exist in the list.
 
@@ -526,12 +522,12 @@ void SendImagesDialog::setupEmailOptions(void)
 
 void SendImagesDialog::aboutPage(void)
 {
-    page_about = addPage( i18n("About"), i18n("About Digikam E-mail Images"),
-                          BarIcon("digikam", KIcon::SizeMedium ) );
+    page_about = addPage( i18n("About"), i18n("About KIPI E-mail Images"),
+                          BarIcon("kipi", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 
-    QLabel *label = new QLabel( i18n("A Digikam plugin for e-mail images\n\n"
+    QLabel *label = new QLabel( i18n("A KIPI plugin for e-mail images\n\n"
                                      "Author: Gilles Caulier\n\n"
                                      "Email: caulier dot gilles at free.fr\n\n"), page_about);
 
@@ -544,7 +540,7 @@ void SendImagesDialog::aboutPage(void)
 
 void SendImagesDialog::slotAddDropItems(QStringList filesPath)
 {
-    setImagesList(filesPath);
+    setImagesList( KURL::List( filesPath) );
 }
 
 
@@ -552,9 +548,7 @@ void SendImagesDialog::slotAddDropItems(QStringList filesPath)
 
 void SendImagesDialog::slotImagesFilesButtonAdd( void )
 {
-    QStringList ImageFilesList;
-
-    ImageFilesList = KFileDialog::getOpenFileNames( Digikam::AlbumManager::instance()->getLibraryPath(),
+    KURL::List ImageFilesList = KFileDialog::getOpenURLs( QString::null,
                                                     m_ImagesFilesSort,
                                                     this );
 
@@ -610,7 +604,7 @@ void SendImagesDialog::slotImageSelected( QListBoxItem * item )
     QString IdemIndexed = "file:" + pitem->path();
     KURL url(IdemIndexed);
 
-    m_thumbJob = new Digikam::ThumbnailJob( url, m_imageLabel->height(), false, true );
+    m_thumbJob = new KIPI::ThumbnailJob( url, m_imageLabel->height(), false, true );
 
     connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
             SLOT(slotGotPreview(const KURL&, const QPixmap&)));
@@ -619,7 +613,7 @@ void SendImagesDialog::slotImageSelected( QListBoxItem * item )
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void SendImagesDialog::slotGotPreview(const KURL &url, const QPixmap &pixmap)
+void SendImagesDialog::slotGotPreview(const KURL & /*url*/, const QPixmap &pixmap)
 {
     m_imageLabel->setPixmap(pixmap);
 }
@@ -746,6 +740,8 @@ void SendImagesDialog::slotOk()
               else
                  commentItem = i18n("no comment");
 
+              // PENDING(blackie) in KIMDABA %1 below result in something like img012.jpg.jpg
+              // Shouldn't the exension be stripped of imageName above?
               ImageCommentsText = ImageCommentsText +
                                   i18n("Comments for image \"%1\" from Album \"%2\": %3\n")
                                   .arg(ItemName2).arg(pitem->album()).arg(commentItem);
@@ -976,7 +972,7 @@ int SendImagesDialog::getSize ( int choice )
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void SendImagesDialog::slotMozillaExited(KProcess* proc)
+void SendImagesDialog::slotMozillaExited(KProcess* /*proc*/)
 {
     if ( m_mozillaStdErr.contains("No running window found.") == true )   // No remote Mozilla | Netscape |
        {                                                                  // Thunderbird env. loaded !
@@ -1049,7 +1045,7 @@ void SendImagesDialog::slotMozillaTimeout(void)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void SendImagesDialog::slotMozillaReadStderr(KProcess* proc, char *buffer, int buflen)
+void SendImagesDialog::slotMozillaReadStderr(KProcess* /*proc*/, char *buffer, int buflen)
 {
     m_mozillaStdErr = QString::fromLocal8Bit(buffer, buflen);
 }
