@@ -80,9 +80,9 @@ protected:
    //void compareAlbums(void);                             // Launch the dialog box for Albums selection
                                                            // before comparison.
 
-   inline char getRed(QImage *im, int x, int y);
-   inline char getGreen(QImage *im, int x, int y);
-   inline char getBlue(QImage *im, int x, int y);
+   char getRed(QImage *im, int x, int y);
+   char getGreen(QImage *im, int x, int y);
+   char getBlue(QImage *im, int x, int y);
    ImageSimilarityData* image_sim_fill_data(QString filename);
    float image_sim_compare(ImageSimilarityData *a, ImageSimilarityData *b);
    float image_sim_compare_fast(ImageSimilarityData *a, ImageSimilarityData *b, float min);
