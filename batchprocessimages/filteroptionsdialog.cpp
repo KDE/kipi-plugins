@@ -179,9 +179,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        dvlay->addWidget( m_label_unsharpenPercent );
        m_unsharpenPercent = new KIntNumInput(3, box);
        m_unsharpenPercent->setRange(1, 100, 1, true );
-       QWhatsThis::add( m_unsharpenPercent, i18n("<p>Select here the percentage of the difference "
-                                                 "between the original and the blur image who should be added "
-                                                 "to the original.") );
+       QWhatsThis::add( m_unsharpenPercent, i18n("<p>Select here the percentage difference between original "
+                                                 "and blurred image which should be added to original.") );
        m_label_unsharpenPercent->setBuddy( m_unsharpenPercent );
        dvlay->addWidget( m_unsharpenPercent );
 
