@@ -71,3 +71,4 @@ KIPI::Category Plugin_Imagesgallery::category() const
 {
 	return KIPI::EXPORTPLUGIN;
 }
+#include "plugin_imagesgallery.moc"

@@ -752,3 +752,5 @@ bool AcquireImageDialog::QImageToTiff(const QImage& image, const QString& dst)
     return false;
 }
 
+
+#include "acquireimagedialog.moc"

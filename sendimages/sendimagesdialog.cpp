@@ -1206,3 +1206,5 @@ while( (fi = it.current() ) )
 return true;
 }
 
+
+#include "sendimagesdialog.moc"

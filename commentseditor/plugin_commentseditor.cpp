@@ -102,3 +102,5 @@ KIPI::Category Plugin_CommentsEditor::category() const
 {
     return KIPI::TOOLSPLUGIN;
 }
+
+#include "plugin_commentseditor.moc"

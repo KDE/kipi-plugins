@@ -127,3 +127,5 @@ void OptionsDialog::slotMJBinFolderFilenameDialog( void )
 }
 
 
+
+#include "optionsdialog.moc"

@@ -101,3 +101,5 @@ KIPI::Category Plugin_SendImages::category() const
 {
     return KIPI::IMAGESPLUGIN;
 }
+
+#include "plugin_sendimages.moc"

@@ -248,3 +248,5 @@ void CalWizard::slotPrintOnePage()
 
 }
 
+
+#include "calwizard.moc"

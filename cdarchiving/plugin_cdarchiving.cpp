@@ -73,3 +73,5 @@ KIPI::Category Plugin_CDArchiving::category() const
 {
     return KIPI::IMAGESPLUGIN;
 }
+
+#include "plugin_cdarchiving.moc"

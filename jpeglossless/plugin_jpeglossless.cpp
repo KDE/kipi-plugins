@@ -371,3 +371,5 @@ KURL::List Plugin_JPEGLossless::images()
     m_images = images.images();
     return images.images();
 }
+
+#include "plugin_jpeglossless.moc"

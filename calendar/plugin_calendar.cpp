@@ -67,3 +67,5 @@ KIPI::Category Plugin_Calendar::category() const
 {
     return KIPI::TOOLSPLUGIN;
 }
+
+#include "plugin_calendar.moc"

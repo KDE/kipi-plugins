@@ -102,3 +102,5 @@ KIPI::Category Plugin_Mpegencoder::category() const
 
 
 
+
+#include "plugin_mpegencoder.moc"

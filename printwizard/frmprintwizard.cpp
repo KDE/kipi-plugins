@@ -798,3 +798,5 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     ListPhotoSizes->insertItem(s->label);
   ListPhotoSizes->setCurrentItem(0);
 }
+
+#include "frmprintwizard.moc"

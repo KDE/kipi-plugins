@@ -295,3 +295,5 @@ QColor CropFrame::color()
 {
   return m_color;
 }
+
+#include "cropframe.moc"

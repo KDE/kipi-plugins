@@ -1251,3 +1251,5 @@ void CDArchivingDialog::setBordersImagesSize(int Value)
 {
     m_bordersImagesSize->setValue( Value );
 }
+
+#include "cdarchivingdialog.moc"

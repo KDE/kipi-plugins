@@ -127,3 +127,5 @@ if (MjpegToolsPath.isEmpty())
   return (1);
 }
 
+
+#include "checkbinprog.moc"

@@ -142,3 +142,5 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* e)
 
 }
 
+
+#include "monthwidget.moc"

@@ -757,3 +757,5 @@ void CalBlockPainter::slotPaintNextBlock()
 }
 
 }
+
+#include "calpainter.moc"

@@ -303,3 +303,5 @@ void CommentsEditor::slotAboutClicked()
 }
 
 }
+
+#include "commentseditor.moc"

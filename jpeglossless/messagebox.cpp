@@ -113,3 +113,5 @@ MessageBox* MessageBox::instance()
 }
 
 }
+
+#include "messagebox.moc"

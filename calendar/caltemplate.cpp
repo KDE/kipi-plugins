@@ -218,3 +218,5 @@ void CalTemplate::slotUpdatePreview()
 
 
 }
+
+#include "caltemplate.moc"

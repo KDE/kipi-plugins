@@ -87,3 +87,5 @@ listImagesErrorDialog::~listImagesErrorDialog()
 }
 
 
+
+#include "listimageserrordialog.moc"

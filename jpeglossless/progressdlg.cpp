@@ -72,3 +72,5 @@ void ProgressDlg::reset()
 }
 
 }
+
+#include "progressdlg.moc"

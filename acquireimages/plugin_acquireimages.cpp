@@ -145,3 +145,5 @@ KIPI::Category Plugin_AcquireImages::category() const
 {
     return KIPI::TOOLSPLUGIN;
 }
+
+#include "plugin_acquireimages.moc"

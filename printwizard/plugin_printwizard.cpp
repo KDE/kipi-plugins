@@ -120,3 +120,5 @@ KIPI::Category Plugin_PrintWizard::category() const
 {
     return KIPI::EXPORTPLUGIN;
 }
+
+#include "plugin_printwizard.moc"

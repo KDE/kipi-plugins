@@ -283,3 +283,5 @@ bool ScreenGrabDialog::eventFilter( QObject* o, QEvent* e)
     return false;
 }
 
+
+#include "screenshotdialog.moc"

@@ -113,3 +113,5 @@ void CalSelect::slotYearChanged(int year)
 }
 
 }
+
+#include "calselect.moc"
