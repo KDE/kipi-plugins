@@ -35,7 +35,8 @@ enum Action
     BuildAutoRuniface,
     BuildK3bProject,
     ResizeImages,
-    Progress
+    Progress,
+    Error
 };
     
 
@@ -50,7 +51,7 @@ public:
     
     QString fileName;
     QString albumName;
-    QString errString;
+    QString message;
     int     total;
     bool    starting;
     bool    success;

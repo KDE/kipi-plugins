@@ -45,6 +45,7 @@ class QCheckBox;
 class QLineEdit;
 class QSpinBox;
 class QListView;
+class QProgressDialog;
 
 class KFileItem;
 class KSqueezedTextLabel;
@@ -145,7 +146,7 @@ class CDArchivingDialog : public KDialogBase
   void slotbuttonSelectNone(void);
   void UrlChanged(const QString &url );
   void slotGotPreview(const KFileItem*, const QPixmap &pixmap);
-
+  
  private:
   QCheckBox          *m_useHTMLInterface;
   QCheckBox          *m_useAutoRunWin32;
@@ -153,6 +154,8 @@ class CDArchivingDialog : public KDialogBase
   QCheckBox          *m_checkCDBurn;
   QCheckBox          *m_startBurningProcess;
 
+  QProgressDialog    *m_progressDlg;
+  
   QSpinBox           *m_fontSize;
   QSpinBox           *m_bordersImagesSize;
 

@@ -69,7 +69,7 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent )
     m_actionsList->setSorting(-1);
     m_actionsList->setItemMargin(1);
     m_actionsList->setResizeMode(QListView::LastColumn);
-
+    QWhatsThis::add( m_progress, i18n("<p>This is the current tasks list released.") );
     dvlay->addWidget( groupBox1 );
     
     //---------------------------------------------
@@ -77,8 +77,7 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent )
     m_progress = new KProgress( box, "Progress" );
     m_progress->setTotalSteps(100);
     m_progress->setValue(0);
-    QWhatsThis::add( m_progress, i18n("<p>This is the current percent task released.") );
-
+    QWhatsThis::add( m_actionsList, i18n("<p>This is the list current percent task released.") );
     dvlay->addWidget( m_progress );
     resize( 600, 400 );
 }

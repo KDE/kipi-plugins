@@ -38,6 +38,7 @@
 #include <qheader.h>
 #include <qpushbutton.h>
 #include <qfileinfo.h>
+#include <qprogressdialog.h>
 
 // Include files for KDE
 
@@ -260,12 +261,25 @@ void CDArchivingDialog::setupSelection(void)
 void CDArchivingDialog::setAlbumsList(void)
 {
     AlbumItem *currentAlbum = 0; 
-
+    int current = 0;
+    
     QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
-
+    
+    m_progressDlg = new QProgressDialog (i18n("Parsing Albums. Please wait..."),
+                                         i18n("&Cancel"), 0, 0, 0, true);
+    
+    connect(m_progressDlg, SIGNAL(cancelled()),
+            this, SLOT(reject()));
+                
+    m_progressDlg->show();
+    
     for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
          albumIt != albums.end() ; ++albumIt ) 
         {
+        m_progressDlg->setProgress(current, albums.count());
+        kapp->processEvents();
+        ++current;
+        
         KURL::List images = (*albumIt).images();
         int size = 0;
         QDateTime newestDate;
@@ -301,6 +315,8 @@ void CDArchivingDialog::setAlbumsList(void)
 
     if (currentAlbum != 0)
         m_AlbumsList->ensureItemVisible(currentAlbum);
+    
+    delete m_progressDlg;
 }
 
 

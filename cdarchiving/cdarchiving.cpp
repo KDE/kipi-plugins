@@ -51,7 +51,6 @@ extern "C"
 #include <kglobal.h>
 #include <klocale.h>
 #include <kcharsets.h>
-#include <kmessagebox.h>
 #include <kurl.h>
 #include <kapplication.h>
 #include <kimageio.h>
@@ -369,7 +368,12 @@ void CDArchiving::invokeK3b()
 
     if ( !m_Proc->start(KProcess::NotifyOnExit, KProcess::All ) )
        {
-       KMessageBox::error(kapp->activeWindow(), i18n("Cannot start K3b program : fork failed !"));
+       KIPICDArchivingPlugin::EventData *d = new KIPICDArchivingPlugin::EventData;
+       d->action = KIPICDArchivingPlugin::Error;
+       d->starting = false;
+       d->success = false;
+       d->message = i18n("Cannot start K3b program : fork failed!");
+       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
        return;
        }
 
@@ -410,11 +414,18 @@ void CDArchiving::slotK3bDone(KProcess*)
     d->action = KIPICDArchivingPlugin::Progress;
     d->starting = true;
     d->success = true;
-    d->errString = i18n("K3b is done !!! Removing temporary folder...");
+    d->message = i18n("K3b is done !!! Removing temporary folder...");
     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
     
     if (DeleteDir(m_tmpFolder) == false)
-        KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove temporary folder '%1' !").arg(m_tmpFolder));
+        {
+        d = new KIPICDArchivingPlugin::EventData;
+        d->action = KIPICDArchivingPlugin::Error;
+        d->starting = false;
+        d->success = false;
+        d->message = i18n("Cannot remove temporary folder '%1' !").arg(m_tmpFolder);
+        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+        }
 
     m_actionCDArchiving->setEnabled(true);
 }
@@ -443,10 +454,10 @@ bool CDArchiving::buildHTMLInterface (void)
         if (DeleteDir (MainTPath) == false)
            {
            d = new KIPICDArchivingPlugin::EventData;
-           d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+           d->action = KIPICDArchivingPlugin::Error;
            d->starting = false;
            d->success = false;
-           d->errString = i18n("Cannot remove folder '%1' !").arg(MainTPath);
+           d->message = i18n("Cannot remove folder '%1' !").arg(MainTPath);
            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
            return false;
            }
@@ -454,10 +465,10 @@ bool CDArchiving::buildHTMLInterface (void)
     if (TargetDir.mkdir( MainTPath ) == false)
        {
        d = new KIPICDArchivingPlugin::EventData;
-       d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+       d->action = KIPICDArchivingPlugin::Error;
        d->starting = false;
        d->success = false;
-       d->errString = i18n("Couldn't create directory '%1'").arg(MainTPath);
+       d->message = i18n("Couldn't create directory '%1'").arg(MainTPath);
        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
        return false;
        }
@@ -500,10 +511,10 @@ bool CDArchiving::buildHTMLInterface (void)
            if (TargetDir.mkdir( SubTPath ) == false)
                {
                d = new KIPICDArchivingPlugin::EventData;
-               d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+               d->action = KIPICDArchivingPlugin::Error;
                d->starting = false;
                d->success = false;
-               d->errString = i18n("Couldn't create directory '%1'").arg(SubTPath);
+               d->message = i18n("Couldn't create directory '%1'").arg(SubTPath);
                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                return false;
                }
@@ -523,10 +534,10 @@ bool CDArchiving::buildHTMLInterface (void)
                if (DeleteDir (MainTPath) == false)
                    {
                    d = new KIPICDArchivingPlugin::EventData;
-                   d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+                   d->action = KIPICDArchivingPlugin::Error;
                    d->starting = false;
                    d->success = false;
-                   d->errString = i18n("Cannot remove folder '%1' !").arg(MainTPath);
+                   d->message = i18n("Cannot remove folder '%1' !").arg(MainTPath);
                    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                    return false;
                    }
@@ -559,10 +570,10 @@ bool CDArchiving::buildHTMLInterface (void)
     else
        {
        d = new KIPICDArchivingPlugin::EventData;
-       d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+       d->action = KIPICDArchivingPlugin::Error;
        d->starting = false;
        d->success = false;
-       d->errString = i18n("Couldn't open file '%1'").arg(MainUrl.path(+1));
+       d->message = i18n("Couldn't open file '%1'").arg(MainUrl.path(+1));
        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
        return false;
        }
@@ -583,10 +594,10 @@ bool CDArchiving::createDirectory(QDir thumb_dir, QString imgGalleryDir, QString
         if (!(thumb_dir.mkdir(dirName, false)))
             {
             KIPICDArchivingPlugin::EventData *d = new KIPICDArchivingPlugin::EventData;
-            d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+            d->action = KIPICDArchivingPlugin::Error;
             d->starting = false;
             d->success = false;
-            d->errString = i18n("Couldn't create directory '%1' in '%2'")
+            d->message = i18n("Couldn't create directory '%1' in '%2'")
                                 .arg(dirName).arg(imgGalleryDir);
             QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
             return false;
@@ -953,10 +964,10 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
                 if (!(subDir.mkdir(currentDir, false)))
                     {
                     d = new KIPICDArchivingPlugin::EventData;
-                    d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+                    d->action = KIPICDArchivingPlugin::Error;
                     d->starting = false;
                     d->success = false;
-                    d->errString = i18n("Couldn't create directory '%1' in '%2'")
+                    d->message = i18n("Couldn't create directory '%1' in '%2'")
                                         .arg(currentDir).arg(url.directory());
                     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                     continue;
@@ -1013,10 +1024,10 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
     else
         {
         d = new KIPICDArchivingPlugin::EventData;
-        d->action = KIPICDArchivingPlugin::BuildHTMLiface;
+        d->action = KIPICDArchivingPlugin::Error;
         d->starting = false;
         d->success = false;
-        d->errString = i18n("Couldn't open file '%1'").arg(url.path(+1));
+        d->message = i18n("Couldn't open file '%1'").arg(url.path(+1));
         QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
         return false;
         }
@@ -1378,7 +1389,7 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     d->action = KIPICDArchivingPlugin::Progress;
     d->starting = true;
     d->success = false;
-    d->errString = i18n("Creating project header...");
+    d->message = i18n("Creating project header...");
     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
     // Build K3b XML project File.
@@ -1547,7 +1558,7 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
         d->action = KIPICDArchivingPlugin::Progress;
         d->starting = true;
         d->success = false;
-        d->errString = i18n("Added Album '%1' into project...").arg( (*it).name());
+        d->message = i18n("Added Album '%1' into project...").arg( (*it).name());
         QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
         AddFolderTreeToK3bXMLProjectFile( (*it).path().path(), &stream); 
         }

@@ -106,9 +106,6 @@ void Plugin_CDArchiving::slotCancel()
     m_cdarchiving->terminate();
     m_cdarchiving->wait();
     m_cdarchiving->removeTmpFiles();
-    
-    if (m_progressDlg) 
-       m_progressDlg->reset();
 }
 
 
@@ -178,8 +175,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                                 
            case(KIPICDArchivingPlugin::Progress): 
               {
-              text = d->errString;
-              m_progressDlg->show();
+              text = d->message;
               break;
               }
               
@@ -238,7 +234,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                case(KIPICDArchivingPlugin::BuildHTMLiface): 
                   {
                   text = i18n("Failed to create HTML interface: %1")
-                              .arg(d->errString);
+                              .arg(d->message);
                   break;
                   }
 
@@ -253,12 +249,23 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   text = i18n("Failed to create thumbnail for '%1'").arg(d->fileName);
                   break;
                   }
+
+               case(KIPICDArchivingPlugin::Error): 
+                  {
+                  text = d->message;
+                  break;
+                  }                  
                            
                default: 
                   {
                   kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Failed' event: " << d->action << endl;
                   }
                }
+
+            m_progressDlg->addedAction(text);
+            m_progressDlg->setProgress(m_current, m_total);
+            slotCancel();
+            return;
             }
 
         m_progressDlg->addedAction(text);
