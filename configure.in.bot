@@ -1,14 +1,14 @@
-for i in x $DO_NOT_COMPILE ; do
-  if test "x$i" = "xlibkexif" ; then
-    echo ""
-    echo "libkexif is available, but won't be compiled. The jpeglossless and timeadjust plugins will not be compiled."
-    echo ""
-    have_libkexif=no
-  fi
-done
-
-AM_CONDITIONAL(compile_TIMEADJUST,   [test x$have_libkexif = xyes])
-AM_CONDITIONAL(compile_JPEGLOSSLESS,  [test x$have_libkexif = xyes -a x$have_tiff = xyes])
+##for i in x $DO_NOT_COMPILE ; do
+##  if test "x$i" = "xlibkexif" ; then
+##    echo ""
+##    echo "libkexif is available, but won't be compiled. The jpeglossless and timeadjust plugins will not be compiled."
+##    echo ""
+##    have_libkexif=no
+##  fi
+##done
+##
+##AM_CONDITIONAL(compile_TIMEADJUST,   [test x$have_libkexif = xyes])
+##AM_CONDITIONAL(compile_JPEGLOSSLESS,  [test x$have_libkexif = xyes -a x$have_tiff = xyes])
 
 if test "x$have_libkipi" != "xyes"; then
   echo ""

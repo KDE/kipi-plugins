@@ -9,12 +9,18 @@ KAMERAKLIENTDIR = kameraklient
 endif
 
 if compile_JPEGLOSSLESS
-JPEGLOSSLESSDIR = jpeglossless
+jpeglosslessdir = jpeglossless
 endif
 
 if compile_TIMEADJUST
-TIMEADJUSTDIR = timeadjust
+timeadjustdir = timeadjust
 endif
+
+if compile_LIBKEXIF
+JPEGLOSSLESSDIR = $(jpeglosslessdir)
+TIMEADJUSTDIR = $(timeadjustdir)
+endif
+
 
 if compile_ACQUIREIMAGES
 ACQUIREIMAGESDIR = acquireimages

@@ -273,3 +273,5 @@ AM_CONDITIONAL(compile_ACQUIREIMAGES, [test x$have_tiff = xyes])
 AM_CONDITIONAL(compile_RAWCONVERTER,  [test x$have_tiff = xyes])
 
 
+AM_CONDITIONAL(compile_TIMEADJUST,   [test x$have_libkexif = xyes])
+AM_CONDITIONAL(compile_JPEGLOSSLESS,  [test x$have_libkexif = xyes -a x$have_tiff = xyes])
