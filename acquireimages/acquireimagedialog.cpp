@@ -35,7 +35,7 @@ extern "C"
 }
 
 // Include files for Qt
-
+#undef Unsorted // x headers suck - make qdir.h work with --enable-final
 #include <qvbox.h>
 #include <qlayout.h>
 #include <qdir.h>
