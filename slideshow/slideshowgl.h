@@ -96,6 +96,9 @@ private:
 
     ToolBar*     toolBar_;
     QTimer*      mouseMoveTimer_;
+
+    int          deskX_;
+    int          deskY_;
     int          deskWidth_;
     int          deskHeight_;
     

@@ -88,17 +88,20 @@ private:
     bool         effectRunning_;
 
     // values for state of various effects:
-    int mx, my, mw, mh, mdx, mdy, mix, miy, mi, mj, mSubType;
-    int mx0, my0, mx1, my1, mwait;
-    double mfx, mfy, mAlpha, mfd;
-    int* mIntArray;
+    int      mx, my, mw, mh, mdx, mdy, mix, miy, mi, mj, mSubType;
+    int      mx0, my0, mx1, my1, mwait;
+    double   mfx, mfy, mAlpha, mfd;
+    int*     mIntArray;
     QPainter mPainter;
 
     ToolBar*     toolBar_;
     QTimer*      mouseMoveTimer_;
+    bool         endOfShow_;
+    
+    int          deskX_;
+    int          deskY_;
     int          deskWidth_;
     int          deskHeight_;
-    bool         endOfShow_;
     
 protected:
 

@@ -20,10 +20,13 @@
  * ============================================================ */
 
 #include <klocale.h>
+#include <kdeversion.h>
+#include <kglobalsettings.h>
 
 #include <qtimer.h>
 #include <qpixmap.h>
 #include <qapplication.h>
+#include <qdesktopwidget.h>
 #include <qevent.h>
 #include <qcursor.h>
 
@@ -50,12 +53,23 @@ SlideShow::SlideShow(const QStringList& fileList,
                      : QWidget(0, 0, WStyle_StaysOnTop | WType_Popup |
                                WX11BypassWM | WDestructiveClose)
 {
-    move(0, 0);
-    resize(QApplication::desktop()->size());
+#if KDE_IS_VERSION(3,2,0)
+    QRect deskRect = KGlobalSettings::desktopGeometry(this);
+    deskX_      = deskRect.x();
+    deskY_      = deskRect.y();
+    deskWidth_  = deskRect.width();
+    deskHeight_ = deskRect.height();
+#else
+    QRect deskRect = QApplication::desktop()->screenGeometry(this);
+    deskX_      = deskRect.x();
+    deskY_      = deskRect.y();
+    deskWidth_  = deskRect.width();
+    deskHeight_ = deskRect.height();
+#endif    
+    
+    move(deskX_, deskY_);
+    resize(deskWidth_, deskHeight_);
     setPaletteBackgroundColor(black);
-
-    deskWidth_  = QApplication::desktop()->size().width();
-    deskHeight_ = QApplication::desktop()->size().height();
 
     toolBar_ = new ToolBar(this);
     toolBar_->hide();
@@ -447,7 +461,8 @@ void SlideShow::mouseMoveEvent(QMouseEvent *e)
     
     QPoint pos(e->pos());
     
-    if (pos.y() > 20 && pos.y() < (deskHeight_-20-1))
+    if ((pos.y() > (deskY_+20)) &&
+        (pos.y() < (deskY_+deskHeight_-20-1)))
     {
         if (toolBar_->isHidden())
             return;
@@ -459,23 +474,23 @@ void SlideShow::mouseMoveEvent(QMouseEvent *e)
     int w = toolBar_->width();
     int h = toolBar_->height();
     
-    if (pos.y() < 20)
+    if (pos.y() < (deskY_+20))
     {
-        if (pos.x() <= deskWidth_/2)
+        if (pos.x() <= (deskX_+deskWidth_/2))
             // position top left
-            toolBar_->move(0,0);
+            toolBar_->move(deskX_, deskY_);
         else
             // position top right
-            toolBar_->move(deskWidth_-w-1,0);
+            toolBar_->move(deskX_+deskWidth_-w-1, deskY_);
     }
     else
     {
-        if (pos.x() <= deskWidth_/2)
+        if (pos.x() <= (deskX_+deskWidth_/2))
             // position bot left
-            toolBar_->move(0,deskHeight_-h-1);
+            toolBar_->move(deskX_, deskY_+deskHeight_-h-1);
         else
             // position bot right
-            toolBar_->move(deskWidth_-w-1,deskHeight_-h-1);
+            toolBar_->move(deskX_+deskWidth_-w-1, deskY_+deskHeight_-h-1);
     }
     toolBar_->show();
 }
@@ -486,7 +501,8 @@ void SlideShow::mouseMoveEvent(QMouseEvent *e)
 void SlideShow::slotMouseMoveTimeOut()
 {
     QPoint pos(QCursor::pos());
-    if (pos.y() < 20 || pos.y() > ( deskHeight_-20-1))
+    if ((pos.y() < (deskY_+20)) ||
+        (pos.y() > (deskY_+deskHeight_-20-1)))
         return;
     
     setCursor(QCursor(Qt::BlankCursor));
