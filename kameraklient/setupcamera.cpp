@@ -49,6 +49,9 @@
 #include "cameratype.h"
 #include "gpiface.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 SetupCamera::SetupCamera(QWidget* parent, const char* name) 
            : KDialogBase(parent, name, true, i18n("Setup Cameras"), 
                          Help|Ok|Cancel, Ok, true) 
@@ -226,5 +229,6 @@ void SetupCamera::slotOkClicked() {
     close();
 }
 
+}  // NameSpace KIPIKameraKlientPlugin
 
 #include "setupcamera.moc"

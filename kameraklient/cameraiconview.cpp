@@ -43,6 +43,9 @@
 #include "cameraiconview.h"
 #include "cameraui.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 const int MAXICONITEMS = 307;
 const int THUMBSIZE = 120;
 
@@ -136,5 +139,7 @@ void CameraIconView::markDownloaded(CameraIconItem* iconItem) {
     fileInfo->downloaded = 1;
     iconItem->repaint();
 }
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #include "cameraiconview.moc"

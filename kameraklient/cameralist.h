@@ -26,6 +26,10 @@
 #include <qobject.h>
 
 class QString;
+
+namespace KIPIKameraKlientPlugin
+{
+
 class CameraType;
 class CameraListPrivate;
 
@@ -53,6 +57,8 @@ class CameraList : public QObject {
 signals:
 	void signalCameraListChanged();
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif 
 

@@ -60,7 +60,7 @@ void Plugin_KameraKlient::setup(QWidget* widget) {
 }
 
 void Plugin_KameraKlient::slotActivate() {
-    CameraUI *mCameraUI = new CameraUI();
+    KIPIKameraKlientPlugin::CameraUI *mCameraUI = new KIPIKameraKlientPlugin::CameraUI();
     mCameraUI->show(); 
 }
 

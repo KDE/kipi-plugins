@@ -27,6 +27,9 @@
 // KDE
 #include <klistview.h>
 
+namespace KIPIKameraKlientPlugin
+{
+
 class CameraFolderItem;
 
 class CameraFolderView : public KListView {
@@ -58,6 +61,8 @@ signals:
     void signalFolderChanged(CameraFolderItem*);
     void signalCleared();
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif
 

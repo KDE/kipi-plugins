@@ -95,6 +95,9 @@
 #include "savefiledialog.h"
 #include "setupcamera.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 CameraUI::CameraUI() : QWidget() 
 {
     setWFlags(Qt::WDestructiveClose);
@@ -656,5 +659,7 @@ void CameraUI::readSettings() {
     mSplitter->setSizes(mConfig->readIntListEntry("SplitterSizes"));
     delete mConfig;
 }
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #include "cameraui.moc"

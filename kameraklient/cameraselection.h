@@ -19,6 +19,9 @@ class QLabel;
 class QLineEdit;
 class QPushButton;
 
+namespace KIPIKameraKlientPlugin
+{
+
 class CameraSelection : public KDialogBase 
 {
     Q_OBJECT
@@ -63,5 +66,7 @@ signals:
     
     void signalOkClicked(const QString& model, const QString& port);
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif 

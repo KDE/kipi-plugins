@@ -30,6 +30,9 @@ class QImage;
 class QPainter;
 class QColorGroup;
 
+namespace KIPIKameraKlientPlugin
+{
+
 class GPFileItemInfo;
 class ThumbView;
 
@@ -49,6 +52,8 @@ private:
     static QPixmap* newEmblem;
     static const char* new_xpm[];
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif 
 

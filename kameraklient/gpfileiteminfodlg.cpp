@@ -34,6 +34,8 @@
 #include "gpfileiteminfo.h"
 #include "gpfileiteminfodlg.h"
 
+namespace KIPIKameraKlientPlugin
+{
 
 GPFileItemInfoDlg::GPFileItemInfoDlg(const GPFileItemInfo& info,
                                      QPixmap *pixmap )
@@ -157,3 +159,5 @@ GPFileItemInfoDlg::~GPFileItemInfoDlg()
 {
 
 }
+
+}  // NameSpace KIPIKameraKlientPlugin

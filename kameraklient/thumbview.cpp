@@ -30,6 +30,9 @@ extern "C" {
 
 #define RECT_EXTENSION 300
 
+namespace KIPIKameraKlientPlugin
+{
+
 class ThumbViewPrivate {
 
 public:
@@ -1005,5 +1008,6 @@ ThumbItem* ThumbView::findLastVisibleItem(const QRect &r ) const {
     return i;
 }
 
+}  // NameSpace KIPIKameraKlientPlugin
 
 #include "thumbview.moc"

@@ -30,6 +30,9 @@
 #include "cameraselection.h"
 #include "gpiface.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 CameraSelection::CameraSelection(QWidget* parent) 
                : KDialogBase(parent, 0, true, i18n("Camera Selection"),
                              Help|Ok|Cancel, Ok, true) 
@@ -240,5 +243,6 @@ void CameraSelection::slotOkClicked() {
     emit signalOkClicked(currentModel(), currentPortPath());
 }
 
+}  // NameSpace KIPIKameraKlientPlugin
 
 #include "cameraselection.moc"

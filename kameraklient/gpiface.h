@@ -25,6 +25,9 @@
 class QString;
 class QStringList;
 
+namespace KIPIKameraKlientPlugin
+{
+
 class GPIface {
 
 public:
@@ -33,5 +36,7 @@ public:
     static void getSupportedPorts(QStringList& plist);
     static void getCameraSupportedPorts(const QString& model, QStringList& plist);
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif /* GPIFACE_H */

@@ -26,6 +26,9 @@
 #include "camerafolderitem.h"
 #include "camerafolderview.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 CameraFolderView::CameraFolderView(QWidget* parent) : KListView(parent) {
     addColumn(i18n("Camera Folders"));
     setFullWidth(true);
@@ -107,5 +110,6 @@ void CameraFolderView::clear() {
     emit signalCleared();
 }
 
+}  // NameSpace KIPIKameraKlientPlugin
 
 #include "camerafolderview.moc"

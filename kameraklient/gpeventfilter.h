@@ -30,6 +30,9 @@ class QEvent;
 class QImage;
 class QString;
 
+namespace KIPIKameraKlientPlugin
+{
+
 class CameraUI;
 
 class GPEventFilter : public QObject {
@@ -52,6 +55,8 @@ signals:
     void signalBusy(bool);
     
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif
 

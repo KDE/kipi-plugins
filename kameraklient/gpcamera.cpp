@@ -35,6 +35,9 @@ extern "C" {
 #include "gpstatus.h"
 #include "gpcamera.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 class GPCameraPrivate {
 public:
     Camera *camera;
@@ -591,3 +594,4 @@ int GPCamera::autoDetect(QString& model, QString& port) {
     return 0;
 }
 
+}  // NameSpace KIPIKameraKlientPlugin

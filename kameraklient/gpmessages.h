@@ -20,6 +20,9 @@
 
 #include <qobject.h>
 
+namespace KIPIKameraKlientPlugin
+{
+
 class GPMessages : public QObject {
 
     Q_OBJECT
@@ -42,8 +45,8 @@ private:
     GPMessages() : QObject() { };
 
     static GPMessages* gpMessages;
-
-
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif

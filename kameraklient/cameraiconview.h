@@ -30,6 +30,9 @@ class QImage;
 class QPixmap;
 class QPoint;
 
+namespace KIPIKameraKlientPlugin
+{
+
 class GPFileItemInfo;
 class ThumbItem;
 class CameraIconItem;
@@ -60,5 +63,7 @@ signals:
     void signalDownloadSelectedItems();
     void signalDeleteSelectedItems();
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif 

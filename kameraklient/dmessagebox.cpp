@@ -38,6 +38,9 @@
 // Local
 #include "dmessagebox.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 DMessageBox* DMessageBox::s_instance = 0;
 
 DMessageBox::DMessageBox() : QWidget(0, 0, WShowModal | WStyle_DialogBorder| WDestructiveClose) {
@@ -111,5 +114,6 @@ void DMessageBox::showMsg(const QString& msg) {
     }
 }
 
+}  // NameSpace KIPIKameraKlientPlugin
 
 #include "dmessagebox.moc"

@@ -22,6 +22,9 @@
 // Local
 #include "cameratype.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 CameraType::CameraType() {
     valid_  = false;    
 }
@@ -74,3 +77,4 @@ void CameraType::setValid(bool valid) {
     valid_ = valid;    
 }
 
+}  // NameSpace KIPIKameraKlientPlugin

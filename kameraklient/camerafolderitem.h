@@ -25,6 +25,9 @@
 #include <klistview.h>
 #include <qstring.h>
 
+namespace KIPIKameraKlientPlugin
+{
+
 class CameraFolderItem : public KListViewItem {
 public:
     CameraFolderItem(KListView* parent, const QString& name);
@@ -44,6 +47,8 @@ private:
     bool    virtualFolder_;
     int     count_;
 };
+
+}  // NameSpace KIPIKameraKlientPlugin
 
 #endif 
 

@@ -40,6 +40,9 @@
 #include "gpmessages.h"
 #include "gpcontroller.h"
 
+namespace KIPIKameraKlientPlugin
+{
+
 GPController::GPController(QObject *parent, const CameraType& ctype) : QObject(parent) {
     parent_ = parent;
     camera_ = new GPCamera(QString(ctype.model().latin1()), QString(ctype.port().latin1()));
@@ -449,5 +452,6 @@ void GPController::getInformation(QString& summary, QString& manual, QString& ab
     mutex_.unlock();
 }
 
+}  // NameSpace KIPIKameraKlientPlugin
 
 #include "gpcontroller.moc"
