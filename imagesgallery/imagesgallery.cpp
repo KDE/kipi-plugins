@@ -447,7 +447,9 @@ bool ImagesGallery::prepare(void)
         m_albumsMap->insert( (*albumIt).path().prettyURL(), data );
         m_albumUrlList.append( (*albumIt).path() );
         }
-                  
+    
+    // Load images comments if necessary.
+                          
     if ( m_useCommentFile )
        loadComments();
            
