@@ -31,6 +31,8 @@
 #include "tphoto.h"
 #include "frmprintwizardbase.h"
 
+class QPushButton;
+
 namespace KIPIPrintWizardPlugin
 {
 
@@ -46,16 +48,19 @@ class FrmPrintWizard : public FrmPrintWizardBase
    Q_OBJECT
 
 private:
+  
   QPtrList<TPhoto> m_photos;
   QPtrList<TPhotoSize> m_photoSizes;
 
   KPrinter::PageSize m_pageSize;
 
-  QString m_tempPath;
+  QString      m_tempPath;
 
-  QStringList m_gimpFiles;
+  QStringList  m_gimpFiles;
 
-  bool m_cancelPrinting;
+  QPushButton *m_helpButton;
+  
+  bool         m_cancelPrinting;
 
   void updateCropFrame(TPhoto *, int);
   void setBtnCropEnabled();
@@ -68,12 +73,14 @@ private:
   void saveSettings();
 
 public:
+  
   FrmPrintWizard(QWidget *parent=0, const char *name=0);
   ~FrmPrintWizard();
   void print( KURL::List fileList, QString tempPath);
   QRect * getLayout(int photoIndex);
 
 public slots:
+  
   void BtnCropRotate_clicked();
   void BtnCropNext_clicked();
   void BtnCropPrev_clicked();
@@ -87,6 +94,7 @@ public slots:
   void CmbPaperSize_activated( int );
 
 protected slots:
+  
   void accept();
   void reject();
   void slotHelp();

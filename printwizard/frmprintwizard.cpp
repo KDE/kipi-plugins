@@ -34,7 +34,6 @@ extern "C"
 
 // Include files for KDE
 
-#include <kapplication.h>
 #include <ksimpleconfig.h>
 #include <klistbox.h>
 #include <kprinter.h>
@@ -47,6 +46,11 @@ extern "C"
 #include <kurllabel.h>
 #include <kfiledialog.h>
 #include <kpushbutton.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // Local includes
 
@@ -65,6 +69,30 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
   for(int i = 0; i < pageCount(); ++i)
      setHelpEnabled(page(i), true);
 
+  // ---------------------------------------------------------------
+
+  // About data and help button.
+    
+  KAboutData* about = new KAboutData("kipiplugins",
+                                     I18N_NOOP("Print Wizard"), 
+                                     "0.1.0-cvs",
+                                     I18N_NOOP("A KIPI plugin for to print images"),
+                                     KAboutData::License_GPL,
+                                     "(c) 2003-2004, Todd Shoemaker", 
+                                     0,
+                                     "http://extragear.kde.org/apps/kipi.php");
+    
+  about->addAuthor("Todd Shoemaker", I18N_NOOP("Author"),
+                   "todd@theshoemakers.net");
+
+  m_helpButton = helpButton();
+  KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+  helpMenu->menu()->removeItemAt(0);
+  helpMenu->menu()->insertItem(i18n("Print Wizard handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+  m_helpButton->setPopup( helpMenu->menu() );
+
+  // ---------------------------------------------------------------
+     
   // turn off back button for first and last page
   setBackEnabled(page(0), false);
 
@@ -94,9 +122,6 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
   connect(CmbPaperSize, SIGNAL(activated(int)), 
           this, SLOT(CmbPaperSize_activated(int)));
           
-  connect(this, SIGNAL(helpClicked()), 
-          this, SLOT(slotHelp()));
-
   loadSettings();
 }
 
