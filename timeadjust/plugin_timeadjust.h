@@ -28,7 +28,7 @@
 
 class KAction;
 
-class TimeAdjustDialog;
+class KIPITimeAdjustPlugin::TimeAdjustDialog;
 
 class Plugin_TimeAdjust : public KIPI::Plugin
 {
@@ -46,9 +46,9 @@ protected slots:
     void slotActivate();
 
 private:
-    KIPI::Interface  *m_interface;
-    TimeAdjustDialog *m_dialog;
-    KAction          *m_actionTimeAjust;
+    KIPI::Interface                        *m_interface;
+    KIPITimeAdjustPlugin::TimeAdjustDialog *m_dialog;
+    KAction                                *m_actionTimeAjust;
 };
 
 #endif

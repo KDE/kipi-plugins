@@ -1,14 +1,49 @@
-#include "timeadjustdialog.h"
-#include <klocale.h>
+/* ============================================================
+ * File  : timeadjustdialog.cpp
+ * Author: Jesper K. Pedersen <blackie@kde.org>
+ * Date  : 2004-05-16
+ * Description :
+ *
+ * Copyright 2003 by Jesper Pedersen
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published bythe Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+ 
+// Qt includes.
+
 #include <qlayout.h>
 #include <qlabel.h>
-#include <kiconloader.h>
 #include <qvbuttongroup.h>
 #include <qradiobutton.h>
 #include <qspinbox.h>
 #include <qgrid.h>
-#include <libkipi/imageinfo.h>
+
+// KDE includes.
+
 #include <kdebug.h>
+#include <kiconloader.h>
+#include <klocale.h>
+
+// LibKIPI includes.
+
+#include <libkipi/imageinfo.h>
+
+// Local includes.
+
+#include "timeadjustdialog.h"
+
+namespace KIPITimeAdjustPlugin
+{
 
 TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent, const char* name )
     :KDialogBase( IconList, i18n("Adjust time and date"), Help|Ok|Cancel, Ok, parent, name ),
@@ -20,8 +55,6 @@ TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent,
     setHelp("plugin-timeadjust.anchor", "kipi");
     connect( this, SIGNAL( okClicked() ), this, SLOT( slotOK() ) );
 }
-
-
 
 void TimeAdjustDialog::setImages( const KURL::List& images )
 {
@@ -123,12 +156,23 @@ void TimeAdjustDialog::addConfigPage()
     m_infoLabel = new QLabel( grp );
     m_exampleAdj = new QLabel( grp );
 
-    connect( m_secs, SIGNAL( valueChanged( int ) ), this, SLOT( updateExample() ) );
-    connect( m_minutes, SIGNAL( valueChanged( int ) ), this, SLOT( updateExample() ) );
-    connect( m_hours, SIGNAL( valueChanged( int ) ), this, SLOT( updateExample() ) );
-    connect( m_days, SIGNAL( valueChanged( int ) ), this, SLOT( updateExample() ) );
-    connect( m_months, SIGNAL( valueChanged( int ) ), this, SLOT( updateExample() ) );
-    connect( m_years, SIGNAL( valueChanged( int ) ), this, SLOT( updateExample() ) );
+    connect( m_secs, SIGNAL( valueChanged( int ) ), this,
+             SLOT( updateExample() ) );
+             
+    connect( m_minutes, SIGNAL( valueChanged( int ) ),
+             this, SLOT( updateExample() ) );
+             
+    connect( m_hours, SIGNAL( valueChanged( int ) ), 
+             this, SLOT( updateExample() ) );
+             
+    connect( m_days, SIGNAL( valueChanged( int ) ), 
+             this, SLOT( updateExample() ) );
+             
+    connect( m_months, SIGNAL( valueChanged( int ) ), 
+             this, SLOT( updateExample() ) );
+             
+    connect( m_years, SIGNAL( valueChanged( int ) ), 
+             this, SLOT( updateExample() ) );
 }
 
 void TimeAdjustDialog::addInfoPage()
@@ -177,5 +221,7 @@ QDateTime TimeAdjustDialog::updateTime( QDateTime time ) const
     time = time.addYears( sign * m_years->value() );
     return time;
 }
+
+}  // NameSpace KIPITimeAdjustPlugin
 
 #include "timeadjustdialog.moc"

@@ -33,8 +33,8 @@
 
 // Local includes.
 
-#include "plugin_timeadjust.h"
 #include "timeadjustdialog.h"
+#include "plugin_timeadjust.h"
 
 typedef KGenericFactory<Plugin_TimeAdjust> Factory;
 
@@ -56,6 +56,7 @@ void Plugin_TimeAdjust::setup( QWidget* widget )
     KIPI::Plugin::setup( widget );
     
     // this is our action shown in the menubar/toolbar of the mainwindow
+
     m_actionTimeAjust = new KAction (i18n("Adjust Time and Date"),
                                      "clock",
                                      0,     // or a shortcut like CTRL+SHIFT+Key_S,
@@ -86,7 +87,7 @@ void Plugin_TimeAdjust::slotActivate()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     
     if ( m_dialog == 0 )
-        m_dialog = new TimeAdjustDialog( interface, 0, "time adjust dialog" );
+        m_dialog = new KIPITimeAdjustPlugin::TimeAdjustDialog( interface, 0, "time adjust dialog" );
         
     m_dialog->setImages( images.images() );
     m_dialog->show();
