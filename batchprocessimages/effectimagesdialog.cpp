@@ -63,7 +63,7 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch image effects"), 
                                        "0.1.0-cvs",
-                                       I18N_NOOP("A KIPI plugin for batch image-effect transformations\n"
+                                       I18N_NOOP("A Kipi plugin for batch image-effect transformations\n"
                                                  "This plugin use the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 

@@ -72,7 +72,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_AutoExif =  new KAction(i18n("Auto Rotate/Flip Using EXIF Information"),
+    m_action_AutoExif =  new KAction(i18n("Auto Rotate/Flip Using Exif Information"),
                                      0,
                                      0,
                                      this,

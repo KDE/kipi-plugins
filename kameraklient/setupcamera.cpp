@@ -54,7 +54,7 @@ SetupCamera::SetupCamera(QWidget* parent, const char* name)
         KAboutData* about = new KAboutData("kipiplugins",
                                            I18N_NOOP("KameraKlient"), 
                                            "0.1.0-cvs",
-                                           I18N_NOOP("An Digital camera interface KIPI plugin"),
+                                           I18N_NOOP("An Digital camera interface Kipi plugin"),
                                            KAboutData::License_GPL,
                                            "(c) 2003-2004, Renchi Raju\n"
                                            "(c) 2004, Tudor Calin", 

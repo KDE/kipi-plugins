@@ -62,7 +62,7 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch image-color enhancement"), 
                                        "0.1.0-cvs",
-                                       I18N_NOOP("A KIPI plugin for batch image-color enhancement\n"
+                                       I18N_NOOP("A Kipi plugin for batch image-color enhancement\n"
                                                  "This plugin use the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 

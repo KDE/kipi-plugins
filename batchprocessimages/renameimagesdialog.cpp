@@ -82,7 +82,7 @@ RenameImagesDialog::RenameImagesDialog( KURL::List urlList, KIPI::Interface* int
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch-rename images"), 
                                        "0.1.0-cvs",
-                                       I18N_NOOP("A KIPI plugin to batch-rename images\n"),
+                                       I18N_NOOP("A Kipi plugin to batch-rename images\n"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 
                                        0,

@@ -121,7 +121,7 @@ AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *par
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Acquire images"), 
                                        "0.1.0-cvs",
-                                       I18N_NOOP("A KIPI plugin to acquire images"),
+                                       I18N_NOOP("A Kipi plugin to acquire images"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 
                                        0,

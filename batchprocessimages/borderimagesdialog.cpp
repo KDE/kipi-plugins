@@ -63,7 +63,7 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch Image-bordering"), 
                                        "0.1.0-cvs",
-                                       I18N_NOOP("A KIPI plugin for batch bordering images\n"
+                                       I18N_NOOP("A Kipi plugin for batch bordering images\n"
                                                  "This plugin use the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 

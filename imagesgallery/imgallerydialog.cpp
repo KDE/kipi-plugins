@@ -111,7 +111,7 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Image Gallery"), 
                                        "0.1.0-cvs",
-                                       I18N_NOOP("A KIPI plugin for HTML album export.\n"
+                                       I18N_NOOP("A Kipi plugin for HTML album export.\n"
                                                  "Based on KimgalleryPlugin implementation."),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 

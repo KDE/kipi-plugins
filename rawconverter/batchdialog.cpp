@@ -245,7 +245,7 @@ BatchDialog::BatchDialog()
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("RAW Image Converter"), 
                                        "0.1.0-cvs",
-                                       I18N_NOOP("A KIPI plugin for RAW image conversion\n"
+                                       I18N_NOOP("A Kipi plugin for RAW image conversion\n"
                                                  "This plugin uses the Dave Coffin RAW photo "
                                                  "decoder program \"dcraw\""),
                                        KAboutData::License_GPL,

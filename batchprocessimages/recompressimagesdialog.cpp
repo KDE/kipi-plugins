@@ -61,7 +61,7 @@ RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interf
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch recompress images"), 
                                        "0.1.0-cvs",
-                                       I18N_NOOP("A KIPI plugin to batch recompress images\n"
+                                       I18N_NOOP("A Kipi plugin to batch recompress images\n"
                                                  "This plugin use the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 

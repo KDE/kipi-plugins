@@ -399,7 +399,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   KAboutData* about = new KAboutData("kipiplugins",
                                      I18N_NOOP("MPEG Image Encoder"), 
                                      "0.1.0-cvs",
-                                     I18N_NOOP("A KIPI plugin for MPEG image encoding."),
+                                     I18N_NOOP("A Kipi plugin for MPEG image encoding."),
                                      KAboutData::License_GPL,
                                      "(c) 2003-2004, Gilles Caulier", 
                                      0,
@@ -1126,7 +1126,7 @@ void KImg2mpgData::closeEvent(QCloseEvent* e)
 
 void KImg2mpgData::show()
 {
-  setCaption(i18n("MPEG Encoder KIPI Plugin"));
+  setCaption(i18n("MPEG Encoder Kipi Plugin"));
   KDialog::show();
 }
 
