@@ -98,7 +98,10 @@ void Plugin_CDArchiving::slotActivate()
                         this, m_action_cdarchiving);
 
     if ( m_cdarchiving->showDialog() )
+       {
+       m_cdarchiving->prepare();
        m_cdarchiving->start();
+       }
 }
 
 

@@ -35,10 +35,8 @@ extern "C"
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qfont.h>
-#include <qdatetime.h>
 #include <qimage.h>
 #include <qtextcodec.h>
-#include <qstringlist.h>
 #include <qtimer.h>
 
 // Include files for KDE
@@ -51,7 +49,6 @@ extern "C"
 #include <kglobal.h>
 #include <klocale.h>
 #include <kcharsets.h>
-#include <kurl.h>
 #include <kapplication.h>
 #include <kimageio.h>
 #include <kdebug.h>
@@ -79,13 +76,13 @@ CDArchiving::CDArchiving( KIPI::Interface* interface, QObject *parent, KAction *
     const KAboutData *data = KApplication::kApplication()->aboutData();
     m_hostName = QString::QString( data->appName() );
     
-    if (m_hostName.isEmpty())
-       m_hostName = "Kipi";
-       
     m_hostURL = data->homepage();
     
     if (m_hostURL.isEmpty())
+       {
+       m_hostName = "Kipi";
        m_hostURL = "http://extragear.kde.org/apps/kipi.php";
+       }
 
     m_actionCDArchiving = action_cdarchiving;
     m_interface = interface;
@@ -254,6 +251,100 @@ bool CDArchiving::showDialog()
     return false;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+// Execute the no threadable operations before the real thread.
+
+bool CDArchiving::prepare(void)
+{
+    QValueList<KIPI::ImageCollection> albumsList;  
+    KIPICDArchivingPlugin::EventData *d;
+    
+    // This variable are used for the recursive sub directories parsing
+    // during the HTML pages creation. (TODO: Checked this mode)
+        
+    m_recurseSubDirectories = false;
+    m_LevelRecursion = 1;
+    
+    m_useCommentFile = true;                          // Always use the images comments (no option in dialog).
+    
+    m_StreamMainPageAlbumPreview = "";
+        
+    // Get config from setup dialog.
+    
+    albumsList = m_configDlg->getSelectedAlbums();
+    m_useHTMLInterface = m_configDlg->getUseHTMLInterface();
+    m_useAutoRunWin32 = m_configDlg->getUseAutoRunWin32();
+    m_K3bBinPathName = m_configDlg->getK3bBinPathName();
+    m_useStartBurningProcess = m_configDlg->getUseStartBurningProcess();
+    m_imagesPerRow = m_configDlg->getImagesPerRow();
+    m_imageFormat = m_configDlg->getImageFormat();
+    m_mainTitle = m_configDlg->getMainTitle();
+    m_backgroundColor = m_configDlg->getBackgroundColor();
+    m_foregroundColor = m_configDlg->getForegroundColor(); 
+    m_bordersImagesColor = m_configDlg->getBordersImagesColor();
+    m_fontName = m_configDlg->getFontName();    
+    m_fontSize = m_configDlg->getFontSize();
+    m_bordersImagesSize = m_configDlg->getBordersImagesSize();
+    m_thumbnailsSize = m_configDlg->getThumbnailsSize();
+    m_mediaFormat = m_configDlg->getMediaFormat();
+    m_useOnTheFly = m_configDlg->getUseOnTheFly();
+    m_useCheckCD = m_configDlg->getUseCheckCD();
+    m_volumeID = m_configDlg->getVolumeID();
+    m_volumeSetID = m_configDlg->getVolumeSetID();
+    m_systemID = m_configDlg->getSystemID();
+    m_applicationID = m_configDlg->getApplicationID();
+    m_publisher = m_configDlg->getPublisher();
+    m_preparer = m_configDlg->getPreparer();
+    m_albumListSize = albumsList.count();
+                        
+    // Estimate the number of actions for the KIPI progress dialog. 
+    
+    int nbActions = 1;
+    
+    if ( m_useHTMLInterface == true )    
+       {
+       nbActions = nbActions + m_albumListSize + 1;
+    
+       if ( m_useAutoRunWin32 == true ) 
+           ++nbActions;
+       
+       for( QValueList<KIPI::ImageCollection>::Iterator it = albumsList.begin() ;
+            it != albumsList.end() ; ++it ) 
+          {
+          nbActions = ++nbActions;// + (*it).images().count();
+          }
+       }
+
+    d = new KIPICDArchivingPlugin::EventData;
+    d->action = KIPICDArchivingPlugin::Initialize;
+    d->starting = true;
+    d->success = false;
+    d->total = nbActions; 
+    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+
+    // Create data maps to use in the thread.
+
+    m_albumsMap = new AlbumsMap;
+        
+    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albumsList.begin() ;
+         albumIt != albumsList.end() ; ++albumIt )
+        {
+        AlbumData data((*albumIt).name(),    (*albumIt).category(),
+                       (*albumIt).comment(), (*albumIt).date(), 
+                       (*albumIt).path(),    (*albumIt).images());
+        
+        m_albumsMap->insert( (*albumIt).path().prettyURL(), data );
+        m_albumUrlList.append( (*albumIt).path() );
+        }
+    
+    // Load images comments if necessary.
+    
+    if ( m_useCommentFile ) 
+       loadComments();
+                      
+    return(true);
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 // List of threaded operations.
@@ -262,36 +353,9 @@ void CDArchiving::run()
 {
     KIPICDArchivingPlugin::EventData *d;
     
-    QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getSelectedAlbums());
-    
-    // Estimate the number of actions for the KIPI progress dialog. 
-    
-    int nbActions = 1;
-    
-    if ( m_configDlg->getUseHTMLInterface() == true )    
-       {
-       nbActions = nbActions + ListAlbums.count() + 1;
-    
-       if ( m_configDlg->getUseAutoRunWin32() == true ) 
-           ++nbActions;
-       
-       for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin() ;
-            it != ListAlbums.end() ; ++it ) 
-          {
-          nbActions = ++nbActions;// + (*it).images().count();
-          }
-       }
-          
-    d = new KIPICDArchivingPlugin::EventData;
-    d->action = KIPICDArchivingPlugin::Initialize;
-    d->starting = true;
-    d->success = false;
-    d->total = nbActions; 
-    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-    
     // Making HTML interface.
         
-    if ( m_configDlg->getUseHTMLInterface() == true )
+    if ( m_useHTMLInterface == true )
        {
        d = new KIPICDArchivingPlugin::EventData;
        d->action = KIPICDArchivingPlugin::BuildHTMLiface;
@@ -316,7 +380,7 @@ void CDArchiving::run()
 
           // Making AutoRun options.
           
-          if ( m_configDlg->getUseAutoRunWin32() == true )
+          if ( m_useAutoRunWin32 == true )
              {
              d = new KIPICDArchivingPlugin::EventData;
              d->action = KIPICDArchivingPlugin::BuildAutoRuniface;
@@ -372,10 +436,10 @@ void CDArchiving::invokeK3b()
 {
     m_Proc = new KProcess();
 
-    *m_Proc << m_configDlg->getK3bBinPathName();
+    *m_Proc << m_K3bBinPathName;;
     *m_Proc << m_tmpFolder + "/KIPICDArchiving.xml";
 
-    QString K3bCommandLine = m_configDlg->getK3bBinPathName() + " " + m_tmpFolder + "/KIPICDArchiving.xml";
+    QString K3bCommandLine = m_K3bBinPathName + " " + m_tmpFolder + "/KIPICDArchiving.xml";
     kdDebug(51000) << "K3b is started : " << K3bCommandLine.ascii() << endl;
 
     connect(m_Proc, SIGNAL(processExited(KProcess *)),
@@ -394,7 +458,7 @@ void CDArchiving::invokeK3b()
 
     m_actionCDArchiving->setEnabled(false);
 
-    if ( m_configDlg->getUseStartBurningProcess() == true )
+    if ( m_useStartBurningProcess == true )
        {
        m_K3bTimer = new QTimer(this);
         
@@ -453,17 +517,6 @@ bool CDArchiving::buildHTMLInterface (void)
     QString Path;
     KIPICDArchivingPlugin::EventData *d;
     KURL SubUrl, MainUrl;
-    
-    // This variable are used for the recursive sub directories parsing
-    // during the HTML pages creation. (TODO: Checked this mode)
-        
-    m_recurseSubDirectories = false;
-    m_LevelRecursion = 1;
-    
-    m_StreamMainPageAlbumPreview = "";
-    
-    m_imagesPerRow = m_configDlg->getImagesPerRow();
-    QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getSelectedAlbums());
 
     // Create the main target folder.
 
@@ -511,13 +564,24 @@ bool CDArchiving::buildHTMLInterface (void)
     destURL = MainTPath + QString::fromLatin1("/up.png");
     KIO::file_copy(srcURL, destURL, -1, true, false, false);
 
-    for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
+    for( KURL::List::Iterator albumsUrlIt = m_albumUrlList.begin() ;
+         albumsUrlIt != m_albumUrlList.end() ; ++albumsUrlIt )
         {
-        Path              = (*it).path().path();
-        m_AlbumTitle      = (*it).name();
-        m_AlbumComments   = (*it).comment();
-        m_AlbumCollection = (*it).category();
-        m_AlbumDate       = (*it).date().toString ( Qt::LocalDate ) ; 
+        m_albumUrl = *albumsUrlIt;
+        AlbumData data = (*m_albumsMap)[m_albumUrl.prettyURL()];
+        KURL::List images = data.itemsUrl();
+
+        for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) 
+           {
+           kdDebug( 51000 ) << "URL:" << (*urlIt).prettyURL() << endl;
+           }
+
+        m_AlbumTitle      = data.albumName();
+        m_AlbumComments   = data.albumComments();
+        m_AlbumCollection = data.albumCategory();
+        m_AlbumDate       = data.albumDate().toString();
+        Path              = data.albumUrl().path();
+        
         Path = Path + "/";
 
         SubUrl = m_tmpFolder + "/HTMLInterface/" + m_AlbumTitle + "/" + "index.html";
@@ -546,11 +610,9 @@ bool CDArchiving::buildHTMLInterface (void)
            d->albumName = m_AlbumTitle;
            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
            
-           m_useCommentFile = true;
-
            if ( createHtml( SubUrl, Path,
                             m_LevelRecursion > 0 ? m_LevelRecursion + 1 : 0,
-                            m_configDlg->getImageFormat()) == false )
+                            m_imageFormat) == false )
                {
                d = new KIPICDArchivingPlugin::EventData;
                d->action = KIPICDArchivingPlugin::BuildAlbumHTMLPage;
@@ -657,7 +719,7 @@ void CDArchiving::createHead(QTextStream& stream)
            << m_hostName << " [" << m_hostURL << "]\">"  << endl;
     stream << "<meta name=\"date\" content=\"" + KGlobal::locale()->formatDate(QDate::currentDate())
            + "\">" << endl;
-    stream << "<title>" << m_configDlg->getMainTitle() << "</title>" << endl;
+    stream << "<title>" << m_mainTitle << "</title>" << endl;
     this->createCSSSection(stream);
     stream << "</head>" << endl;
 }
@@ -667,21 +729,21 @@ void CDArchiving::createHead(QTextStream& stream)
 
 void CDArchiving::createCSSSection(QTextStream& stream)
 {
-    QString backgroundColor = m_configDlg->getBackgroundColor().name();
-    QString foregroundColor = m_configDlg->getForegroundColor().name();
-    QString bordersImagesColor = m_configDlg->getBordersImagesColor().name();
+    QString backgroundColor = m_backgroundColor.name();
+    QString foregroundColor = m_foregroundColor.name();
+    QString bordersImagesColor = m_bordersImagesColor.name();
 
     // Adding a touch of style
 
     stream << "<style type='text/css'>\n";
     stream << "BODY {color: " << foregroundColor << "; background: " << backgroundColor << ";" << endl;
-    stream << "          font-family: " << m_configDlg->getFontName() << ", sans-serif;" << endl;
-    stream << "          font-size: " << m_configDlg->getFontSize() << "pt; margin: 8%; }" << endl;
+    stream << "          font-family: " << m_fontName << ", sans-serif;" << endl;
+    stream << "          font-size: " << m_fontSize << "pt; margin: 8%; }" << endl;
     stream << "H1       {color: " << foregroundColor << ";}" << endl;
     stream << "TABLE    {text-align: center; margin-left: auto; margin-right: auto;}" << endl;
     stream << "TD       { color: " << foregroundColor << "; padding: 1em}" << endl;
     stream << "IMG      { border: 0px ; }" << endl;
-    stream << "IMG.photo      { border: " << m_configDlg->getBordersImagesSize() << "px solid "
+    stream << "IMG.photo      { border: " << m_bordersImagesSize << "px solid "
            << bordersImagesColor << "; }" << endl;
     stream << "</style>" << endl;
 }
@@ -709,9 +771,11 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
                              const KURL& url, const QString& imageFormat)
 {
     KIPICDArchivingPlugin::EventData *d;
-    int numOfImages = imageDir.count();
+    AlbumData data = (*m_albumsMap)[m_albumUrl.prettyURL()];
+    int numOfImages = data.countItems();
     
-    kdDebug(51000) << "Num of images in " << imageDir.path().ascii() << " : " << numOfImages << endl;
+    kdDebug( 51000 ) << "Num of images in " << data.albumName().ascii() << " : " 
+                     << numOfImages << endl;
     
     const QString imgGalleryDir = url.directory();
     const QString today(KGlobal::locale()->formatDate(QDate::currentDate()));
@@ -754,7 +818,7 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
 
     if (m_recurseSubDirectories && subDirList.count() > 2)  
         {                                                   
-        // subDirList.count() is always >= 2 because of the "." and ".." directories
+        // Nota : subDirList.count() is always >= 2 because of the "." and ".." directories
 
         QString Temp = i18n("<i>Subdirectories:</i>");
         stream << Temp << "<br>" << endl;
@@ -772,17 +836,21 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
 
     // Table with images
 
-    int imgIndex;
+    int imgIndex = 0;
     QFileInfo imginfo;
     QPixmap  imgProp;
 
-    for ( imgIndex = 0 ; imgIndex < numOfImages ; )
+    KURL::List images = data.itemsUrl();
+    
+    for( KURL::List::Iterator urlIt = images.begin() ; urlIt != images.end() ; )
         {
         stream << "<tr>" << endl;
-
-        for (int col = 0 ; (col < m_imagesPerRow) && (imgIndex < numOfImages) ; ++col)
+        
+        for (int col = 0 ;
+             urlIt!=images.end() && col < m_imagesPerRow ;
+             ++col, ++urlIt, ++imgIndex)
             {
-            const QString imgName = imageDir[imgIndex];
+            const QString imgName = (*urlIt).fileName();
 
             stream << "<td align='center'>\n<a href=\"pages/"  << imgName << ".html\">";
             kdDebug(51000) << "Creating thumbnail for " << imgName.ascii() << endl;
@@ -818,7 +886,7 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
 
                 if ( m_useCommentFile )
                    {
-                   QString imgComment = (*m_commentMap)[imgName];
+                   QString imgComment = (*m_commentMap)[(*urlIt).prettyURL()];
 
                    if ( !imgComment.isEmpty() )
                       {
@@ -845,9 +913,11 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
                    imgPageComment = (*m_commentMap)[imgName];
 
                 createPage(imgGalleryDir, imgName, previousImgName, nextImgName, imgPageComment,
-                           imageFormat, m_AlbumTitle, sourceDirName);
+                           m_AlbumTitle, sourceDirName);
 
-                if ( imgIndex == 0) // For each first image of current Album we add a preview in main HTML page.
+                // For each first image of current Album we add a preview in main HTML page.      
+                
+                if ( imgIndex == 0) 
                    {
                    QString Temp, Temp2;
                    Temp2 = "<a href=\"" + m_AlbumTitle + "/" + "index.html" + "\">";
@@ -900,9 +970,8 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
             stream << "<div>(" << (imginfo.size() / 1024) << " " <<  i18n("KB") << ") " << "</div>" << endl;
 
             stream << "</td>" << endl;
-
-            ++imgIndex;
             }
+            
         stream << "</tr>" << endl;
         }
 
@@ -940,7 +1009,7 @@ void CDArchiving::createBodyMainPage(QTextStream& stream, KURL& url)
     QString Temp;
     const QString today(KGlobal::locale()->formatDate(QDate::currentDate()));
 
-    Temp = m_configDlg->getMainTitle();
+    Temp = m_mainTitle;
     stream << "<body>\n<h1>" << Temp << "</h1><p>\n" << endl;
 
     Temp = i18n("<i>Album list:</i>");
@@ -1022,8 +1091,6 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
             }
        }
 
-    if ( m_useCommentFile ) loadComments();
-
     kdDebug( 51000 ) << "sourceDirName: " << sourceDirName << endl;
 
     // Sort the images files formats running with thumbnails construction.
@@ -1078,7 +1145,7 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
 
 bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgName,
                              const QString& previousImgName, const QString& nextImgName,
-                             const QString& comment, const QString& imageFormat,
+                             const QString& comment,
                              const QString& m_AlbumTitle, const QString& sourceDirName){
 
     const QDir pagesDir(imgGalleryDir + QString::fromLatin1("/pages/"));
@@ -1095,10 +1162,10 @@ bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgNa
     // Thumbs filenames
 
     const QString previousThumb = QString::fromLatin1("../thumbs/")
-                                  + previousImgName + extension(m_configDlg->getImageFormat());
+                                  + previousImgName + extension(m_imageFormat);
 
     const QString nextThumb = QString::fromLatin1("../thumbs/")
-                              + nextImgName + extension(m_configDlg->getImageFormat());
+                              + nextImgName + extension(m_imageFormat);
 
     QFile file( pageFilename );
 
@@ -1119,7 +1186,7 @@ bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgNa
                  
        stream << "<meta name=\"date\" content=\"" + KGlobal::locale()->formatDate(QDate::currentDate())
                  + "\">" << endl;
-       stream << "<title>" << m_configDlg->getMainTitle() << " : "<< imgName <<"</title>" << endl;
+       stream << "<title>" << m_mainTitle << " : "<< imgName <<"</title>" << endl;
 
        this->createCSSSection(stream);
 
@@ -1298,7 +1365,7 @@ int CDArchiving::createThumb( const QString& imgName, const QString& sourceDirNa
 
     const QString ImageNameFormat = imgName + extension(imageFormat);
     const QString thumbDir = imgGalleryDir + QString::fromLatin1("/thumbs/");
-    int extent = m_configDlg->getThumbnailsSize();
+    int extent = m_thumbnailsSize;
 
     m_imgWidth = 120; // Setting the size of the images is
     m_imgHeight = 90; // required to generate faster 'loading' pages
@@ -1422,7 +1489,6 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     QString Temp;
     KIPICDArchivingPlugin::EventData *d;
     QFile XMLK3bProjectFile;
-    QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getSelectedAlbums());
 
     // open the K3b XML project file.
 
@@ -1449,7 +1515,7 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
 
     stream << Temp;
 
-    if (m_configDlg->getMediaFormat() == i18n("DVD (4,7Gb)"))
+    if (m_mediaFormat == i18n("DVD (4,7Gb)"))
         Temp = "<!DOCTYPE k3b_dvd_project>\n"
                "<k3b_dvd_project>\n";                                     // Build a Data DVD project file.
     else
@@ -1466,7 +1532,7 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
 
     stream << Temp;
 
-    if (m_configDlg->getUseOnTheFly() == false)                          // Burning CD On The Fly ?
+    if (m_useOnTheFly == false)                          // Burning CD On The Fly ?
        Temp = "<on_the_fly activated=\"no\" />\n";
     else
        Temp = "<on_the_fly activated=\"yes\" />\n";
@@ -1487,7 +1553,7 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
 
     stream << Temp;
 
-    if (m_configDlg->getMediaFormat() == i18n("DVD (4,7Gb)"))
+    if (m_mediaFormat == i18n("DVD (4,7Gb)"))
         Temp = "<udf activated=\"yes\" />\n";                             // Need this option for DVDR/RW.
     else
         Temp = "<udf activated=\"no\" />\n";                              // Don't need this option for CDR/RW
@@ -1520,7 +1586,7 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
 
     stream << Temp;
 
-    if (m_configDlg->getUseCheckCD() == false)                           // Checking CD after burning process ?
+    if (m_useCheckCD == false)                           // Checking CD after burning process ?
        Temp = "<verify_data activated=\"no\" />\n";
     else
        Temp = "<verify_data activated=\"yes\" />\n";
@@ -1535,24 +1601,24 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
 
     Temp = "<header>\n"
            "<volume_id>"
-           + EscapeSgmlText(QTextCodec::codecForLocale(), m_configDlg->getVolumeID(), true, true)
+           + EscapeSgmlText(QTextCodec::codecForLocale(), m_volumeID, true, true)
            + "</volume_id>\n"
            "<volume_set_id>"
-           + EscapeSgmlText(QTextCodec::codecForLocale(), m_configDlg->getVolumeSetID(), true, true)
+           + EscapeSgmlText(QTextCodec::codecForLocale(), m_volumeSetID, true, true)
            + "</volume_set_id>\n"
            "<volume_set_size>1</volume_set_size>\n"
            "<volume_set_number>1</volume_set_number>\n"
            "<system_id>"
-           + EscapeSgmlText(QTextCodec::codecForLocale(), m_configDlg->getSystemID(), true, true)
+           + EscapeSgmlText(QTextCodec::codecForLocale(), m_systemID, true, true)
            + "</system_id>\n"
            "<application_id>"
-           + EscapeSgmlText(QTextCodec::codecForLocale(), m_configDlg->getApplicationID(), true, true)
+           + EscapeSgmlText(QTextCodec::codecForLocale(), m_applicationID, true, true)
            + "</application_id>\n"
            "<publisher>"
-           + EscapeSgmlText(QTextCodec::codecForLocale(), m_configDlg->getPublisher(), true, true)
+           + EscapeSgmlText(QTextCodec::codecForLocale(), m_publisher, true, true)
            + "</publisher>\n"
            "<preparer>"
-           + EscapeSgmlText(QTextCodec::codecForLocale(), m_configDlg->getPreparer(), true, true)
+           + EscapeSgmlText(QTextCodec::codecForLocale(), m_preparer, true, true)
            + "</preparer>\n"
            "</header>\n";
 
@@ -1598,22 +1664,24 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
 
     // Add Selected Albums paths List.
 
-    for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
+    for( KURL::List::Iterator albumsUrlIt = m_albumUrlList.begin() ;
+         albumsUrlIt != m_albumUrlList.end() ; ++albumsUrlIt )
         {
+        AlbumData data = (*m_albumsMap)[(*albumsUrlIt).prettyURL()];
         d = new KIPICDArchivingPlugin::EventData;
         d->action = KIPICDArchivingPlugin::Progress;
         d->starting = true;
         d->success = false;
-        d->message = i18n("Added Album '%1' into project...").arg( (*it).name());
+        d->message = i18n("Added Album '%1' into project...").arg( data.albumName());
         QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-        AddFolderTreeToK3bXMLProjectFile( (*it).path().path(), &stream); 
+        AddFolderTreeToK3bXMLProjectFile( data.albumUrl().path(), &stream); 
         }
 
     Temp = "</files>\n";
 
     stream << Temp;
 
-    if (m_configDlg->getMediaFormat() == i18n("DVD (4,7Gb)"))
+    if (m_mediaFormat == i18n("DVD (4,7Gb)"))
         Temp = "</k3b_dvd_project>\n";                                     // Close the Data DVD project file.
     else
         Temp = "</k3b_data_project>\n";                                    // Close the Data CD project file.
@@ -1721,7 +1789,7 @@ bool CDArchiving::CreateAutoRunInfFile(void)
 
    stream << Temp;
 
-   Temp = "LABEL=" + m_configDlg->getVolumeID() + "\r\n";
+   Temp = "LABEL=" + m_volumeID + "\r\n";
    stream << Temp;
 
    AutoRunInf.close();

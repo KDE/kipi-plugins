@@ -39,7 +39,6 @@
 
 #include <libkipi/interface.h>
 
-class KFilePreview;
 class QString;
 class QCheckBox;
 class QLineEdit;
@@ -54,6 +53,7 @@ class KURL;
 class KIntNumInput;
 class KColorButton;
 class KListView;
+class KFilePreview;
 
 namespace KIPI
 {

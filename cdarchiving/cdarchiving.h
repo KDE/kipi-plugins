@@ -36,21 +36,23 @@ extern "C"
 
 #include <qobject.h>
 #include <qstring.h>
+#include <qstringlist.h>
 #include <qdir.h>
+#include <qcolor.h>
 #include <qthread.h>
+#include <qdatetime.h>
 
 // Include files for KDE
 
 #include <kaction.h>
+#include <kurl.h>
 
 // KIPI includes
 
 #include <libkipi/interface.h>
 
-
 class QTimer;
 
-class KURL;
 class KConfig;
 class KProcess;
 
@@ -59,26 +61,64 @@ namespace KIPICDArchivingPlugin
 
 class CDArchivingDialog;
 
+class AlbumData
+    {
+    public:
+        
+        AlbumData(){}
+        AlbumData( const QString& albumName,     const QString& albumCategory,
+                   const QString& albumComments, const QDate& albumDate,
+                   const KURL&    albumUrl,      const KURL::List& itemsUrl )
+                 : m_albumName(albumName), m_albumCategory(albumCategory),
+                   m_albumComments(albumComments), m_albumDate(albumDate),
+                   m_albumUrl(albumUrl), m_itemsUrl(itemsUrl)
+        {}
+
+        QString    albumName()     const { return m_albumName;        }
+        QString    albumCategory() const { return m_albumCategory;    }
+        QString    albumComments() const { return m_albumComments;    }
+        QDate      albumDate()     const { return m_albumDate;        }
+        KURL       albumUrl()      const { return m_albumUrl;         }        
+        KURL::List itemsUrl()      const { return m_itemsUrl;         }   
+        int        countItems()          { return m_itemsUrl.count(); }   
+        
+    private:
+        
+        QString    m_albumName;
+        QString    m_albumCategory;
+        QString    m_albumComments;
+        QDate      m_albumDate;
+        KURL       m_albumUrl;
+        KURL::List m_itemsUrl;
+    };
+    
 const int NAV_THUMB_MAX_SIZE = 64;
 
-typedef QMap<QString,QString> CommentMap;
+// First field is the URL, represented with KURL::prettyURL. We can't use KURL
+// directly because operator<(KURL,KURL) is not defined in KDE 3.1
+
+typedef QMap<QString, QString>   CommentMap;  // List of Albums items comments.
+typedef QMap<QString, AlbumData> AlbumsMap;   // Albums data list.
 
 class CDArchiving : public QObject, public QThread
 {
 Q_OBJECT
 
 public:
+
   CDArchiving( KIPI::Interface* interface, QObject *parent=0,
                KAction *action_cdarchiving=0 );
-  virtual ~CDArchiving();
+  ~CDArchiving();
 
   virtual void run();
 
+  bool prepare(void);
   bool showDialog();
   void invokeK3b();
   void removeTmpFiles(void);
 
 public slots:
+
   void slotK3bDone(KProcess*);
   void slotK3bStartBurningProcess(void);
 
@@ -97,34 +137,62 @@ private:
   QTimer             *m_K3bTimer;
   pid_t               m_k3bPid;
 
+  bool                m_useHTMLInterface;
+  bool                m_useAutoRunWin32;
+  bool                m_useStartBurningProcess;
   bool                m_recurseSubDirectories;
   bool                m_copyFiles;
   bool                m_useCommentFile;
-
+  bool                m_useOnTheFly;
+  bool                m_useCheckCD;
+  
+  QString             m_K3bBinPathName;
   QString             m_AlbumTitle;
   QString             m_AlbumComments;
   QString             m_AlbumCollection;
   QString             m_AlbumDate;
   QString             m_StreamMainPageAlbumPreview;
   QString             m_imagesFileFilter;
-
+  QString             m_imageFormat;
   QString             m_HTMLInterfaceFolder;
   QString             m_HTMLInterfaceIndex;
   QString             m_HTMLInterfaceAutoRunInf;
   QString             m_HTMLInterfaceAutoRunFolder;
   QString             m_tmpFolder;
-
+  QString             m_mainTitle;
+  QString             m_fontName;
+  QString             m_fontSize;
+  QString             m_bordersImagesSize;
+  QString             m_mediaFormat;
+  QString             m_volumeID;
+  QString             m_volumeSetID;
+  QString             m_systemID;
+  QString             m_applicationID;
+  QString             m_publisher;
+  QString             m_preparer;
+  
+  QColor              m_backgroundColor;
+  QColor              m_foregroundColor;
+  QColor              m_bordersImagesColor;
+  
   int                 m_imgWidth;
   int                 m_imgHeight;
   int                 m_imagesPerRow;
   int                 m_LevelRecursion;
-
   int                 m_targetImgWidth;
   int                 m_targetImgHeight;
-
+  int                 m_thumbnailsSize;
+  int                 m_albumListSize;
+  
+  KURL::List          m_albumUrlList; // Urls of Albums list from setup dialog.
+  KURL                m_albumUrl;     // Current album Url use in the thread.
+  
   CommentMap         *m_commentMap;
-
+  AlbumsMap          *m_albumsMap;
+  
   QObject            *m_parent;
+  
+private:
   
   bool buildHTMLInterface (void);
 
@@ -148,7 +216,7 @@ private:
                    const QString& imageFormat);
 
   bool createPage(const QString& imgGalleryDir , const QString& imgName, const QString& previousImgName,
-                  const QString& nextImgName, const QString& comment, const QString& imageFormat,
+                  const QString& nextImgName, const QString& comment, 
                   const QString& AlbumTitle, const QString& sourceDirName);
 
   void createBodyMainPage(QTextStream& stream, KURL& url);
