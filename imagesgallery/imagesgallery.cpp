@@ -426,7 +426,10 @@ bool ImagesGallery::prepare(void)
        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
        return(false);
        }
-    
+
+    if ( m_useCommentFile )
+       loadComments();
+           
     return(true);
 }
 
@@ -1113,9 +1116,6 @@ bool ImagesGallery::createHtml(const KURL& url, const QString& sourceDirName, in
             }
        }
 
-    if ( m_useCommentFile )
-       loadComments();
-
     const QString imgGalleryDir = url.directory();
     kdDebug( 51000 ) << "imgGalleryDir: " << imgGalleryDir << endl;
 
@@ -1180,7 +1180,7 @@ void ImagesGallery::loadComments(void)
     m_useCommentFile = false;
     m_commentMap = new CommentMap;
 
-    QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();       // TODO
+    QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();       
 
     for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
          albumIt != albums.end() ; ++albumIt )
@@ -1189,7 +1189,7 @@ void ImagesGallery::loadComments(void)
 
         for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt )
             {
-            KIPI::ImageInfo info = m_interface->info( *urlIt );                         // TODO
+            KIPI::ImageInfo info = m_interface->info( *urlIt );                
             QString comment=info.description();
             
             if (!comment.isEmpty())
