@@ -259,8 +259,8 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &tmpPath)
 
     if(!result)
        {
-       KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package.\n"
-                                     "Please, check your installation!"));
+       KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
+                                     "please check your installation."));
        return;
        }
 }
@@ -303,7 +303,7 @@ void PixmapView::PreviewProcessDone(KProcess* proc)
           p.fillRect(0, 0, m_pix->width(), m_pix->height(), Qt::white);
           p.setPen(Qt::red);
           p.drawText(0, 0, m_pix->width(), m_pix->height(), Qt::AlignCenter,
-                     i18n("Cannot\nprocessing\npreview\nimage!"));
+                     i18n("Cannot\nprocess\npreview\nimage."));
           p.end();
           repaintContents();
           m_validPreview = false;

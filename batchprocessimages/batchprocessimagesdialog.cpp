@@ -446,7 +446,7 @@ bool BatchProcessImagesDialog::startProcess(void)
 {
     if ( m_convertStatus == STOP_PROCESS )
        {
-       endProcess(i18n("Process aborted by user!"));
+       endProcess(i18n("Process aborted by user."));
        return true;
        }
 
@@ -471,7 +471,7 @@ bool BatchProcessImagesDialog::startProcess(void)
           }
        else
           {
-          endProcess(i18n("Process finished!"));
+          endProcess(i18n("Process finished."));
           return true;
           }
        }
@@ -491,8 +491,8 @@ bool BatchProcessImagesDialog::startProcess(void)
 
              if ( ValRet == KMessageBox::No )
                 {
-                item->changeResult(i18n("Skipped !"));
-                item->changeError(i18n("destination image file already exists (skipped by user)!"));
+                item->changeResult(i18n("Skipped."));
+                item->changeError(i18n("destination image file already exists (skipped by user)."));
                 ++*m_listFile2Process_iterator;
                 ++m_progressStatus;
                 m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
@@ -504,7 +504,7 @@ bool BatchProcessImagesDialog::startProcess(void)
                    }
                 else
                    {
-                   endProcess(i18n("Process finished!"));
+                   endProcess(i18n("Process finished."));
                    return true;
                    }
                 }
@@ -529,8 +529,8 @@ bool BatchProcessImagesDialog::startProcess(void)
 
              if ( newFileName == QString::null )
                 {
-                item->changeResult(i18n("Failed !"));
-                item->changeError(i18n("destination image file already exists and cannot be renamed!"));
+                item->changeResult(i18n("Failed."));
+                item->changeError(i18n("destination image file already exists and cannot be renamed."));
                 ++*m_listFile2Process_iterator;
                 ++m_progressStatus;
                 m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
@@ -542,7 +542,7 @@ bool BatchProcessImagesDialog::startProcess(void)
                    }
                 else
                    {
-                   endProcess(i18n("Process finished!"));
+                   endProcess(i18n("Process finished."));
                    return true;
                    }
                 }
@@ -557,8 +557,8 @@ bool BatchProcessImagesDialog::startProcess(void)
 
           case OVERWRITE_SKIP:
              {
-             item->changeResult(i18n("Skipped !"));
-             item->changeError(i18n("destination image file already exists (skipped automaticly)!"));
+             item->changeResult(i18n("Skipped."));
+             item->changeError(i18n("destination image file already exists (skipped automatically)."));
              ++*m_listFile2Process_iterator;
              ++m_progressStatus;
              m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
@@ -570,7 +570,7 @@ bool BatchProcessImagesDialog::startProcess(void)
                 }
              else
                 {
-                endProcess(i18n("Process finished!"));
+                endProcess(i18n("Process finished."));
                 return true;
                 }
              break;
@@ -582,7 +582,7 @@ bool BatchProcessImagesDialog::startProcess(void)
 
           default:
              {
-             endProcess(i18n("Process finished!"));
+             endProcess(i18n("Process finished."));
              return true;
              break;
              }
@@ -608,8 +608,8 @@ bool BatchProcessImagesDialog::startProcess(void)
 
     if(!result)
        {
-       KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package.\n"
-                                     "Please, check your installation!"));
+       KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
+                                     "please check your installation."));
        return false;
        }
 
@@ -673,7 +673,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
                    break;
                    } 
                 else
-                   item->changeResult(i18n("Failed !!!"));
+                   item->changeResult(i18n("Failed."));
                 }
             }
 
@@ -690,8 +690,8 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
 
             if ( KIO::NetAccess::del(deleteImage) == false )
                 {
-                item->changeResult(i18n("Warning !"));
-                item->changeError(i18n("cannot remove original image file!"));
+                item->changeResult(i18n("Warning:"));
+                item->changeError(i18n("cannot remove original image file."));
                 }
             else
                 m_interface->delImage( item->pathSrc() );
@@ -705,8 +705,8 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
         }
     default : // Processing error !
         {
-        item->changeResult(i18n("Failed !!!"));
-        item->changeError(i18n("cannot process original image file!"));
+        item->changeResult(i18n("Failed."));
+        item->changeError(i18n("cannot process original image file."));
         break;
         }
     }
@@ -718,7 +718,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
     if ( m_listFile2Process_iterator->current() )
         startProcess();
     else
-        endProcess(i18n("Process finished!"));
+        endProcess(i18n("Process finished."));
 }
 
 
@@ -749,7 +749,7 @@ void BatchProcessImagesDialog::slotPreview(void)
     
     if ( m_listFiles->currentItem() == 0 )
        {
-       KMessageBox::error(this, i18n("You must selected an item in the list for calculate the preview!"));
+       KMessageBox::error(this, i18n("You must selected an item from the list to calculate the preview."));
        return;
        }
 
@@ -800,8 +800,8 @@ void BatchProcessImagesDialog::slotPreview(void)
 
     if(!result)
        {
-       KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package.\n"
-                                     "Please, check your installation!"));
+       KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
+                                     "please check your installation."));
        m_previewButton->setEnabled(true);
        return;
        }
@@ -871,7 +871,7 @@ void BatchProcessImagesDialog::slotPreviewStop( void )
     if ( m_PreviewProc->isRunning() == true ) m_PreviewProc->kill(SIGTERM);
 
     endPreview();
-    m_statusbar->setText("Preview aborted by user!");
+    m_statusbar->setText("Preview aborted by user.");
 }
 
 
@@ -1016,7 +1016,7 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     m_listFiles->ensureItemVisible(m_listFiles->currentItem());
 
-    item->changeResult(i18n("Aborted !"));
+    item->changeResult(i18n("Aborted."));
     item->changeError(i18n("process aborted by user"));
 
     if (removeFlag == true) // Try to delete de destination !
@@ -1027,7 +1027,7 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
           KIO::NetAccess::del(deleteImage);
        }
 
-    endProcess(i18n("Process aborted by user!"));
+    endProcess(i18n("Process aborted by user."));
 }
 
 
