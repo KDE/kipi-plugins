@@ -26,6 +26,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
+#include <qframe.h>
 
 // KDElib includes
 
@@ -35,6 +36,7 @@
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
+#include <kstandarddirs.h>
 
 // Include files for libKipi.
 
@@ -58,8 +60,10 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch processes images"), 
                                        kipi_version,
-                                       I18N_NOOP("An interface for to show the output of batch processes images Kipi plugins\n"
-                                                 "This plugin use the \"convert\" program from \"ImageMagick\" package."),
+                                       I18N_NOOP("An interface for to show the output of batch processes "
+                                                 "images Kipi plugins\n"
+                                                 "This plugin use the \"convert\" program from \"ImageMagick\" "
+                                                 "package."),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 
                                        0,
@@ -80,6 +84,31 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
     setMainWidget(box);
     QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
 
+    //---------------------------------------------
+   
+    QFrame *headerFrame = new QFrame( box );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( caption, headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    dvlay->addWidget( headerFrame );
+    
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+
+    //---------------------------------------------
+    
     QLabel *labelHeader = new QLabel( Header, box);
     dvlay->addWidget( labelHeader );
 
