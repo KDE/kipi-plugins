@@ -197,13 +197,13 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
                {
                case(KIPIFindDupplicateImagesPlugin::Similar): 
                   {
-                  text = i18n("Failed to find similar images!");
+                  text = i18n("Failed to find similar images.");
                   break;
                   }
                   
                case(KIPIFindDupplicateImagesPlugin::Exact): 
                   {
-                  text = i18n("Failed to find exact image!");
+                  text = i18n("Failed to find exact image.");
                   break;
                   }
                   

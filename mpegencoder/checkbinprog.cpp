@@ -111,8 +111,8 @@ if (MjpegToolsPath.isEmpty())
 
   if (mp2enc.exists(QString (MjpegToolsPath+"/mp2enc")) == FALSE)
     {
-    str = i18n("Cannot find 'mp2enc' binary program from MjpegTools package; please install it...\n"
-               "Audio capabilities will be disable !");
+    str = i18n("Cannot find 'mp2enc' binary program from MjpegTools package; please install it....\n"
+               "Audio capabilities will be disabled.");
     ValRet = 2;
     }
 
