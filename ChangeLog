@@ -1,5 +1,6 @@
 v1.0.0-beta1 
 ----------------------------------------------------------------------------
+        * <Gilles Caulier> Added Multithreading in CDArchiving and SendImages plugins.
         * <Gilles Caulier> Fixed action enabled/disabled in according with current
 	  selection on JPEGLossLess, TimeAdjust, and WallPaPer plugins.
         * <Gilles Caulier> Added new method fileExtensions() for the images 

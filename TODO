@@ -79,7 +79,6 @@ Jesper K. Pedersen <blackie at kde.org>
 * CDARCHIVING PLUGIN [Author: Gilles Caulier]
   (Archive Albums to CD/DVD with K3b)
 
- - Add multithreading images and thumbnails generation.
  - Add XML cdarchiving info file in target media (for future CDRestoring plugin).
 
 ----------------------------------------------------------------------------
@@ -106,7 +105,6 @@ Jesper K. Pedersen <blackie at kde.org>
 * SENDIMAGES PLUGIN [Author: Gilles Caulier]
   (E-mail images)
 
- - Add multithreading images and thumbnails generation.
  - Add tarball, zip, bz2, gz generation.
  - Add support of 'Aethera' and 'Opera' mail agents.
 
