@@ -4,8 +4,8 @@
  * Date  : 2003-02-17
  * Description : Digikam slideshow plugin.
  * 
- * Copyright 2003 by Renchi Raju
-
+ * Copyright 2003-2004 by Renchi Raju
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published bythe Free Software Foundation;
@@ -22,14 +22,20 @@
 #ifndef SLIDESHOWCONFIG_H
 #define SLIDESHOWCONFIG_H
 
-#include <kdialogbase.h>
+// Qt includes.
+
 #include <qstring.h>
+
+// KDE includes.
+
+#include <kdialogbase.h>
 
 class QButtonGroup;
 class QCheckBox;
 class QComboBox;
 class QRadioButton;
 class QSpinBox;
+class QPushButton;
 
 class KConfig;
 
@@ -55,19 +61,26 @@ private:
 private slots:
 
     void slotOkClicked();
-    void slotAboutClicked();
+    void slotHelp();
     void slotOpenGLToggled();
 
 private:
     
+    QPushButton*  m_helpButton;
+
     QButtonGroup* FileSrcButtonGroup_;
+    
     QRadioButton* allFilesButton_;
     QRadioButton* selectedFilesButton_;
+    
     QCheckBox*    openglCheckBox_;
     QCheckBox*    printNameCheckBox_;
     QCheckBox*    loopCheckBox_;
+    
     QSpinBox*     delaySpinBox_;
+    
     QComboBox*    effectsComboBox_;
+    
     QString       effectName_;
     QString       effectNameGL_;
 

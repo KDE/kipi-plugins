@@ -4,11 +4,7 @@
  * Date  : 2003-02-17
  * Description : KIPI slideshow plugin.
  *
- * Copyright 2003 by Renchi Raju
- *
- * Update: 09/07/2003 - Gilles Caulier <caulier dot gilles at free.fr>
-                        Some changes in Dialog box.
-                        Add about informations.
+ * Copyright 2003-2004 by Renchi Raju
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,6 +19,8 @@
  *
  * ============================================================ */
 
+// Qt includes.
+ 
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
@@ -31,10 +29,20 @@
 #include <qspinbox.h>
 #include <qlayout.h>
 #include <qmap.h>
+#include <qpushbutton.h>
+
+// Kde includes.
 
 #include <klocale.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
+
+// Local includes.
 
 #include "slideshow.h"
 #include "slideshowgl.h"
@@ -44,12 +52,33 @@ namespace KIPISlideShowPlugin
 {
 
 SlideShowConfig::SlideShowConfig()
-    : KDialogBase(0, "", true, i18n("SlideShow"),
-                  Help|User1|Ok|Cancel, Ok, true, i18n("&About"))
+               : KDialogBase(0, "", true, i18n("SlideShow"),
+                             Help|Ok|Cancel, Ok, true)
 {
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("SlideShow"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin for image slideshows"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Renchi Raju", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
+                     "renchi@pooh.tam.uiuc.edu");
+
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("SlideShow handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
+
+    // ------------------------------------------------------------------
+
     config_ = 0;
 
-    setHelp("slideshow", "kipi-plugins");
     QWidget *page = new QWidget( this );
     setMainWidget( page );
 
@@ -127,7 +156,6 @@ SlideShowConfig::SlideShowConfig()
 
     connect(openglCheckBox_, SIGNAL(toggled(bool)), SLOT(slotOpenGLToggled()));
     connect(this, SIGNAL(okClicked()), this, SLOT(slotOkClicked()));
-    connect(this, SIGNAL(user1Clicked()), this, SLOT(slotAboutClicked()));
 
     // ------------------------------------------------------------------
 
@@ -284,12 +312,10 @@ void SlideShowConfig::slotOkClicked()
     saveSettings();
 }
 
-void SlideShowConfig::slotAboutClicked()
+void SlideShowConfig::slotHelp()
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for image slideshows\n\n"
-                                  "Author: Renchi Raju\n\n"
-                                  "Email: renchi@pooh.tam.uiuc.edu"),
-                                  i18n("About SlideShow"));
+    KApplication::kApplication()->invokeHelp("slideshow",
+                                             "kipi-plugins");
 }
 
 }  // NameSpace KIPISlideShowPlugin
