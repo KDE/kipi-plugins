@@ -34,6 +34,9 @@
  #include <kapplication.h>
  #include <kmessagebox.h>
  #include <ktextbrowser.h>
+ #include <kdeversion.h>
+ #include <kfiledialog.h>
+ #include <kio/netaccess.h>
 
 // KIPI includes
 
@@ -190,9 +193,29 @@ void Plugin_WallPaper::setWallpaper(int layout)
 
    if (!images.isValid() ) return;
 
-   // PENDING(blackie) make this support real URLS.
+   KURL url=images.images()[0];
+   QString path;
+   if (url.isLocalFile()) {
+      path=url.path();
+   } else {
+      
+      // PENDING We need a way to get a parent widget
+      // Sun, 06 Jun 2004 - Aurélien
+      
+      KMessageBox::information( 0L, i18n(
+         "<qt><p>You selected a remote image, which need to be saved on your local disk to be used as a wallpaper.</p><p>You will now be asked where to save the image.</p</qt>"
+         ));
+      path=KFileDialog::getSaveFileName(url.fileName(), QString::null, 0L);
+      if (path.isNull()) return;
+#if KDE_VERSION > 0x30200
+      KIO::NetAccess::download(url, path, 0L);
+#else
+      KIO::NetAccess::download(url, path);
+#endif
+   }
+
    QString cmd = QString("dcop kdesktop KBackgroundIface setWallpaper '%1' %2")
-                         .arg( images.images()[0].path() ).arg(layout);
+                         .arg(path).arg(layout);
 
    KRun::runCommand(cmd);
 }
