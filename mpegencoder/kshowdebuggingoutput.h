@@ -44,7 +44,7 @@ Q_OBJECT
 
 public:
   KShowDebuggingOutput( QString Messages, QString Header, QString Foot, QWidget* parent );
-	~KShowDebuggingOutput();
+  ~KShowDebuggingOutput();
 
 public slots:
   void slotCopyToCliboard( void );

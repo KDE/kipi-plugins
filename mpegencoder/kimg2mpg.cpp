@@ -71,20 +71,21 @@ extern "C"
 #include <kconfig.h>
 #include <kfiledialog.h>
 #include <kcolordialog.h>
-#include <khelpmenu.h>
-#include <kpopupmenu.h>
 #include <klineedit.h>
-#include <kiconloader.h>
 #include <kcolorbtn.h>
 #include <klistbox.h>
 #include <kbuttonbox.h>
 #include <kurl.h>
 #include <kimageio.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // libKipi includes.
 
@@ -146,7 +147,7 @@ void ListImageItems::dragEnterEvent(QDragEnterEvent *e)
 void ListImageItems::dropEvent(QDropEvent *e)
 {
     QStrList strList;
-    QStringList FilesPath;
+    KURL::List filesUrl;
 
     if ( !QUriDrag::decode(e, strList) ) return;
 
@@ -160,13 +161,16 @@ void ListImageItems::dropEvent(QDropEvent *e)
        QFileInfo fileInfo(filePath);
 
        if (fileInfo.isFile() && fileInfo.exists())
-          FilesPath.append(fileInfo.filePath());
+          {
+          KURL url(fileInfo.filePath());
+          filesUrl.append(url);
+          }
 
        ++it;
        }
 
-    if (FilesPath.isEmpty() == false)
-       emit addedDropItems(FilesPath);
+    if (filesUrl.isEmpty() == false)
+       emit addedDropItems(filesUrl);
 }
 
 
@@ -334,8 +338,8 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   connect( m_ImagesFilesListBox, SIGNAL( currentChanged( QListBoxItem * ) ),
            this, SLOT( slotImagesFilesSelected(QListBoxItem *) ) );
 
-  connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(QStringList) ),
-          this, SLOT( slotAddDropItems(QStringList)));
+  connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(KURL::List) ),
+          this, SLOT( slotAddDropItems(KURL::List)));
 
   m_ImagesFilesButtonBox = new KButtonBox( m_ImagesFilesGroup, Vertical );
   m_ImagesFilesButtonAdd = m_ImagesFilesButtonBox->addButton( i18n( "&Add..." ) );
@@ -386,35 +390,38 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   v3->addWidget( m_Encodebutton );
   v3->addStretch( 1 );
 
-  // Help button.
-
-  m_helpbutton = new QPushButton( this, "HelpButton_Options" );
-  m_helpbutton->setText(i18n( "&Help") );
+  // About data and help button.
   
-  connect(m_helpbutton, SIGNAL(clicked()),
-          this, SLOT(slotHelp()));
-          
-  v3->addWidget( m_helpbutton );
-
+  m_helpButton = new QPushButton( this, "HelpButton_Options" );
+  m_helpButton->setText( i18n( "&Help") );
+  v3->addWidget( m_helpButton );
+    
+  KAboutData* about = new KAboutData("kipiplugins",
+                                     I18N_NOOP("MPEG Image Encoder"), 
+                                     "0.1.0-cvs",
+                                     I18N_NOOP("A KIPI plugin for MPEG image encoding."),
+                                     KAboutData::License_GPL,
+                                     "(c) 2003-2004, Gilles Caulier", 
+                                     0,
+                                     "http://extragear.kde.org/apps/kipi.php");
+    
+  about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                   "caulier dot gilles at free.fr");
+                        
+  KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+  helpMenu->menu()->removeItemAt(0);
+  helpMenu->menu()->insertItem(i18n("MPEG Image Encoder handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+  m_helpButton->setPopup( helpMenu->menu() );
+  
   // Options button.
 
   m_optionsbutton = new QPushButton( this, "PushButton_Settings" );
-  m_optionsbutton->setText(i18n( "&Settings") );
+  m_optionsbutton->setText( i18n( "&Settings") );
   
   connect(m_optionsbutton, SIGNAL(clicked()), 
           this, SLOT(slotOptions()));
           
   v3->addWidget( m_optionsbutton );
-
-  // About button.
-
-  m_aboutbutton = new QPushButton( this, "PushButton_About" );
-  m_aboutbutton->setText(i18n( "&About") );
-  
-  connect(m_aboutbutton, SIGNAL(clicked()), 
-          this, SLOT(slotAbout()));
-          
-  v3->addWidget( m_aboutbutton );
 
   // Quit push button.
 
@@ -472,9 +479,9 @@ void KImg2mpgData::SlotPortfolioDurationChanged ( int )
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void KImg2mpgData::slotAddDropItems(QStringList filesPath)
+void KImg2mpgData::slotAddDropItems(KURL::List filesUrl)
 {
-  addItems(filesPath);
+  addItems(filesUrl);
 }
 
 
@@ -516,12 +523,12 @@ void KImg2mpgData::slotAudioFilenameDialog( void )
 
 void KImg2mpgData::slotImagesFilesButtonAdd( void )
 {
-  QStringList ImageFilesList;
+  KURL::List ImageFilesList;
   KURL url = KIPI::ImageDialog::getImageURL( this, m_interface );
 
   if ( !url.isValid() ) return;
   
-  ImageFilesList << url.path(); // PENDING(blackie) handle remote URLS
+  ImageFilesList << url;
   addItems(ImageFilesList);
 }
 
@@ -751,7 +758,7 @@ void KImg2mpgData::slotEncode( void )
   m_Abort = false;
   m_Encoding = true;
 
-  m_progress->setRange(0, 100);
+  m_progress->setTotalSteps(100);
   m_progress->setValue(0);
 
   BackGroundColor = m_BackgroundColorButton->color();
@@ -895,16 +902,6 @@ void KImg2mpgData::slotOptionDlgOkClicked( void )
               this, SLOT( slotOptionDlgOkClicked() ));
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void KImg2mpgData::slotAbout( void )
-{
-  KMessageBox::about(this, i18n("A KIPI plugin for MPEG image encoding.\n\n"
-                                "Author: Gilles Caulier\n\n"
-                                "Email: caulier dot gilles at free.fr"),
-                                i18n("About the MPEG Image Encoder"));
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1267,37 +1264,31 @@ void KImg2mpgData::RemoveTmpFiles(void)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void KImg2mpgData::addItems(const QStringList& fileList)
+void KImg2mpgData::addItems(const KURL::List& fileList)
 {
     if (fileList.isEmpty()) return;
 
-    QStringList Files = fileList;
+    KURL::List Files = fileList;
 
-    for ( QStringList::Iterator it = Files.begin() ; it != Files.end() ; ++it )
+    for ( KURL::List::Iterator it = Files.begin() ; it != Files.end() ; ++it )
       {
-      QString currentFile = *it;
+      KURL currentFile = *it;
       
-      // PENDING(blackie) Fix this, when  this plugin handles real URLs.
-      if ( currentFile.startsWith( "file:" ) )
-          currentFile = currentFile.mid( 5 ); // remove file://
-
-      QFileInfo fi(currentFile);
+      QFileInfo fi(currentFile.path());
       QString Temp = fi.dirPath();
       QString albumName = Temp.section('/', -1);
 
-      KURL url;
-      url.setPath(currentFile);
-      KIPI::ImageInfo info = m_interface->info(url);
+      KIPI::ImageInfo info = m_interface->info(currentFile);
       QString comments = info.description();
 
       ImageItem *item = new ImageItem( m_ImagesFilesListBox,
-                                             currentFile.section('/', -1 ),   // File name with extension.
-                                             comments,                        // Image comments.
-                                             currentFile.section('/', 0, -1), // Complete path with file name.
-                                             albumName                        // Album name.
-                                           );
+                                       currentFile.path().section('/', -1 ),   // File name with extension.
+                                       comments,                               // Image comments.
+                                       currentFile.path().section('/', 0, -1), // Complete path with file name.
+                                       albumName                               // Album name.
+                                      );
 
-      item->setName( currentFile.section('/', -1) );
+      item->setName( currentFile.path().section('/', -1) );
       }
 
     ShowNumberImages( m_ImagesFilesListBox->count() );

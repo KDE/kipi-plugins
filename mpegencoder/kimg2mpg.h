@@ -61,6 +61,7 @@ class KColorButton;
 class KListBox;
 class KButtonBox;
 class KProgress;
+class KURL::List;
 
 namespace KIPIMPEGEncoderPlugin
 {
@@ -76,18 +77,20 @@ public:
     ListImageItems(QWidget *parent=0, const char *name=0);
 
 signals:
-    void addedDropItems(QStringList filesPath);
+    void addedDropItems(KURL::List filesUrl);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *e);
     void dropEvent(QDropEvent *e);
 };
 
+
 class KImg2mpgData : public KDialog
 {
 Q_OBJECT
 
 public:
+
   KImg2mpgData( KIPI::Interface* interface, QWidget* parent = 0, const char * name = 0 );
   virtual ~KImg2mpgData();
 
@@ -95,7 +98,7 @@ public:
   void ShowNumberImages( int Number );
   void closeEvent(QCloseEvent*);
   QPixmap LoadIcon( QString Name, int Group );
-  void addItems(const QStringList& fileList);
+  void addItems(const KURL::List& fileList);
   void writeSettings();
   void readSettings();
 
@@ -104,6 +107,7 @@ public:
   QGroupBox*     m_AudioInputFilename;
 
 public slots:
+  
   void reset();
   void readStderr(KProcess *proc, char *buffer, int buflen);
   void EncodeDone(KProcess* );
@@ -116,16 +120,16 @@ public slots:
   void slotEncode( void );
   void slotOptions( void );
   void slotClose( void );
-  void slotAbout( void );
   void slotHelp( void );
   void slotImagesFilesSelected( QListBoxItem *item );
   void SlotPortfolioDurationChanged ( int );
   void slotOptionDlgOkClicked( void );
   void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
   void slotFailedPreview(const KFileItem*);
-  void slotAddDropItems(QStringList filesPath);
+  void slotAddDropItems(KURL::List filesUrl);
 
 private:
+  
   QString               m_VideoFormatConfig;
   QString               m_VideoTypeConfig;
   QString               m_ImageDurationConfig;
@@ -169,9 +173,8 @@ private:
   KProgress*            m_progress;
 
   QPushButton*          m_quitbutton;
-  QPushButton*          m_aboutbutton;
   QPushButton*          m_optionsbutton;
-  QPushButton*          m_helpbutton;
+  QPushButton*          m_helpButton;
   QPushButton*          m_MPEGOutputBUTTONFilename;
   QPushButton*          m_AudioInputBUTTONFilename;
   QPushButton*          m_ImagesFilesButtonAdd;
