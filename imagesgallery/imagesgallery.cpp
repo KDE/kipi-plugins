@@ -311,15 +311,12 @@ bool ImagesGallery::showDialog()
 {
     m_configDlg = new KIGPDialog( m_interface, 0 );
     readSettings();
-    
-    if (m_configDlg->setAlbumsList() == true)
-       {
-       if ( m_configDlg->exec() == QDialog::Accepted )
-          {
-          writeSettings();
-          return true;
-          }
-       }
+
+    if ( m_configDlg->exec() == QDialog::Accepted )
+        {
+        writeSettings();
+        return true;
+        }
        
     return false;
 }

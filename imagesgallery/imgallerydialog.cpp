@@ -71,6 +71,9 @@
 #include <kmessagebox.h>
 #include <klistview.h>
 
+// KIPI include files
+#include <libkipi/imagecollectionselector.h>
+
 // Local include files
 
 #include "imgallerydialog.h"
@@ -80,34 +83,6 @@
 namespace KIPIImagesGalleryPlugin
 {
 
-class AlbumItem : public QCheckListItem
-{
-public:
-    AlbumItem(QListView * parent, QString const & name, QString const & comments,
-              KURL const & path, QString const & collection, KURL const & firstImage,
-              QDate const & date, int const & items)
-            : QCheckListItem( parent, name, QCheckListItem::CheckBox), _name(name),
-              _comments(comments), _path(path), _collection(collection), _firstImage(firstImage),
-              _date (date), _items (items)
-    {}
-
-    QString comments()   { return _comments;   }
-    QString name()       { return _name;       }
-    KURL    path()       { return _path;       }
-    QString collection() { return _collection; }
-    KURL    firstImage() { return _firstImage; }
-    QDate   date()       { return _date;       }
-    int     items()      { return _items;      }
-
-private:
-    QString _name;
-    QString _comments;
-    KURL    _path;
-    QString _collection;
-    KURL    _firstImage;
-    QDate   _date;
-    int     _items;
-};
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,168 +110,14 @@ KIGPDialog::~KIGPDialog()
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-
-void KIGPDialog::setupSelection(void)
-{
+void KIGPDialog::setupSelection(void) {
     page_setupSelection = addPage(i18n("Selection"), i18n("Album selection"),
                                   BarIcon("folder_image", KIcon::SizeMedium));
 
     QVBoxLayout *layout = new QVBoxLayout(page_setupSelection, 0, spacingHint() );
-
-    //---------------------------------------------
-
-    QGroupBox * groupBox1 = new QGroupBox( page_setupSelection );
-    groupBox1->setFlat(false);
-    groupBox1->setTitle(i18n("Select Albums to export"));
-    QGridLayout* grid = new QGridLayout( groupBox1, 2, 2 , 20, 20);
-
-    m_AlbumsList = new KListView( groupBox1 );
-    m_AlbumsList->setResizeMode( QListView::LastColumn );
-    m_AlbumsList->addColumn("");
-    m_AlbumsList->header()->hide();
-    m_AlbumsList->setSelectionModeExt(KListView::Single);
-    QWhatsThis::add( m_AlbumsList, i18n("<p>Selected here the Albums to export in the HTML gallery.") );
-
-    grid->addMultiCellWidget(m_AlbumsList, 0, 2, 0, 1);
-
-    KButtonBox* albumSelectionButtonBox = new KButtonBox( groupBox1, Vertical );
-    QPushButton* buttonSelectAll = albumSelectionButtonBox->addButton ( i18n( "&Select all" ) );
-    QWhatsThis::add( buttonSelectAll, i18n("<p>Select all Albums on the list.") );
-    QPushButton* buttonInvertSelection = albumSelectionButtonBox->addButton ( i18n( "&Invert selection" ));
-    QWhatsThis::add( buttonInvertSelection, i18n("<p>Invert the Album selection on the list.") );
-    QPushButton* buttonSelectNone = albumSelectionButtonBox->addButton ( i18n( "Select &none" ) );
-    QWhatsThis::add( buttonSelectNone, i18n("<p>Deselect all Albums on the list.") );
-    albumSelectionButtonBox->layout();
-    grid->addMultiCellWidget(albumSelectionButtonBox, 0, 1, 2, 2);
-
-    m_albumPreview = new QLabel( groupBox1 );
-    m_albumPreview->setFixedHeight( 120 );
-    m_albumPreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-    m_albumPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    QWhatsThis::add( m_albumPreview, i18n( "Preview of the first image in the currently selected Album." ) );
-    grid->addMultiCellWidget(m_albumPreview, 2, 2, 2, 2);
-
-    layout->addWidget( groupBox1 );
-    
-    if ( !m_interface->hasFeature( KIPI::AlbumsUseFirstImagePreview) )
-         m_albumPreview->hide();
-
-    //---------------------------------------------
-
-    QGroupBox * groupBox2 = new QGroupBox( i18n("Description"), page_setupSelection );
-    groupBox2->setColumnLayout(0, Qt::Vertical );
-    groupBox2->layout()->setSpacing( 6 );
-    groupBox2->layout()->setMargin( 11 );
-    QWhatsThis::add( groupBox2, i18n("<p>The description of the current Album in the selection list.") );
-
-    QVBoxLayout * groupBox2Layout = new QVBoxLayout( groupBox2->layout() );
-    groupBox2Layout->setAlignment( Qt::AlignTop );
-
-    m_AlbumComments = new KSqueezedTextLabel( groupBox2 );
-    m_AlbumComments->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-    groupBox2Layout->addWidget( m_AlbumComments );
-
-    m_AlbumCollection = new KSqueezedTextLabel( groupBox2 );
-    m_AlbumCollection->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-    groupBox2Layout->addWidget( m_AlbumCollection );
-
-    m_AlbumDate = new KSqueezedTextLabel( groupBox2 );
-    m_AlbumDate->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-    groupBox2Layout->addWidget( m_AlbumDate );
-
-    m_AlbumItems = new KSqueezedTextLabel( groupBox2 );
-    m_AlbumItems->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
-    groupBox2Layout->addWidget( m_AlbumItems );
-
-    layout->addWidget( groupBox2 );
-    layout->addStretch(1);
-
-    //---------------------------------------------
-
-    connect( buttonSelectAll, SIGNAL( clicked() ),
-             this, SLOT( slotbuttonSelectAll() ) );
-
-    connect( buttonInvertSelection, SIGNAL( clicked() ),
-             this, SLOT( slotbuttonInvertSelection() ) );
-
-    connect( buttonSelectNone, SIGNAL( clicked() ),
-             this, SLOT( slotbuttonSelectNone() ) );
-
-    connect( m_AlbumsList, SIGNAL( currentChanged( QListViewItem * ) ),
-             this, SLOT( albumSelected( QListViewItem * ) ) );
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-bool KIGPDialog::setAlbumsList(void)
-{
-    AlbumItem *currentAlbum = 0;
-    int current = 0;
-    m_stopParsingAlbum = false;
-    
-    QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
-
-    m_progressDlg = new QProgressDialog (i18n("Parsing Albums; please wait...."),
-                                         i18n("&Cancel"), 0, 0, 0, true);
-    
-    connect(m_progressDlg, SIGNAL(cancelled()),
-            this, SLOT(slotStopParsingAlbums()));
-                
-    m_progressDlg->show();
-        
-    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
-         albumIt != albums.end() ; ++albumIt )
-        {
-        if (m_stopParsingAlbum == true)
-           {
-           delete m_progressDlg;
-           return false;
-           }
-        
-        m_progressDlg->setProgress(current, albums.count());
-        kapp->processEvents();
-        ++current;
-                
-        KURL::List images = (*albumIt).images();
-
-        AlbumItem *item = new AlbumItem( m_AlbumsList,
-                                         (*albumIt).name(),
-                                         (*albumIt).comment(),
-                                         (*albumIt).path(),
-                                         (*albumIt).category(),
-                                         images.first(),
-                                         (*albumIt).date(),
-                                         images.size()
-                                       );
-        m_albums[item]=*albumIt;
-
-        if ( m_interface->currentAlbum().isValid() )
-           {
-           if ( (*albumIt).name() == m_interface->currentAlbum().name() )
-              {
-              item->setOn(true);
-              item->setSelected(true);
-              albumSelected( item );
-              currentAlbum = item;
-              }
-           else
-              item->setOn(false);
-           }
-        }
-
-    if (currentAlbum != 0)
-       m_AlbumsList->ensureItemVisible(currentAlbum);
-       
-    delete m_progressDlg;
-    return true;
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void KIGPDialog::slotStopParsingAlbums(void)
-{
-    m_stopParsingAlbum = true;
+    m_imageCollectionSelector = new KIPI::ImageCollectionSelector(page_setupSelection, m_interface);
+    layout->addWidget(m_imageCollectionSelector);
+    layout->addStretch();
 }
 
 
@@ -788,39 +609,6 @@ void KIGPDialog::aboutPage(void)
     vlay->addStretch(1);
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void KIGPDialog::albumSelected( QListViewItem * item )
-{
-    if ( !item ) return;
-
-    AlbumItem *pitem = static_cast<AlbumItem*>( item );
-    
-    if ( pitem == NULL ) return;
-    
-    m_AlbumComments->setText( i18n("Comment: %1").arg(pitem->comments()) );
-    m_AlbumCollection->setText( i18n("Collection: %1").arg(pitem->collection()) );
-    m_AlbumDate->setText( i18n("Date: %1").arg(pitem->date().toString(( Qt::LocalDate ))) );
-    m_AlbumItems->setText( i18n("Items: %1").arg( pitem->items() ) );
-
-    m_albumPreview->clear();
-
-    KIO::PreviewJob* thumbJob = KIO::filePreview( pitem->firstImage(), m_albumPreview->height() );
-
-    connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-             SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void KIGPDialog::slotGotPreview(const KFileItem*, const QPixmap &pixmap)
-{
-    m_albumPreview->setPixmap(pixmap);
-}
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 void KIGPDialog::GalleryUrlChanged(const QString &url )
@@ -833,9 +621,10 @@ void KIGPDialog::GalleryUrlChanged(const QString &url )
 
 void KIGPDialog::slotOk()
 {
-    if (getSelectedAlbums().size() == 0)
+    m_selectedAlbums=m_imageCollectionSelector->selectedImageCollections();
+    if (m_selectedAlbums.size() == 0)
        {
-       KMessageBox::sorry(0, i18n("You must selected at least one Album to export."));
+       KMessageBox::sorry(0, i18n("You must select at least one album."));
        return;
        }
 
@@ -843,68 +632,13 @@ void KIGPDialog::slotOk()
 
     if (dirGallery.exists() == false)
        {
-       KMessageBox::sorry(0, i18n("Image gallery folder does not exist; please check it...."));
+       KMessageBox::sorry(0, i18n("Image gallery folder does not exist; please check it..."));
        return;
        }
        
     accept();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void KIGPDialog::slotbuttonSelectAll(void)
-{
-    QListViewItemIterator it( m_AlbumsList );
-
-    while ( it.current() )
-        {
-        AlbumItem *item = static_cast<AlbumItem*>( it.current() );
-
-        if (!item->isOn())
-            item->setOn(true);
-
-        ++it;
-        }
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void KIGPDialog::slotbuttonInvertSelection(void)
-{
-    QListViewItemIterator it( m_AlbumsList );
-
-    while ( it.current() )
-        {
-        AlbumItem *item = static_cast<AlbumItem*>( it.current() );
-
-        if (!item->isOn())
-            item->setOn(true);
-        else
-            item->setOn(false);
-
-        ++it;
-        }
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void KIGPDialog::slotbuttonSelectNone(void)
-{
-    QListViewItemIterator it( m_AlbumsList );
-
-    while ( it.current() )
-        {
-        AlbumItem *item = static_cast<AlbumItem*>( it.current() );
-
-        if (item->isOn())
-            item->setOn(false);
-
-        ++it;
-        }
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1432,31 +1166,6 @@ bool  KIGPDialog::printPageCreationDate() const
 void  KIGPDialog::setPrintPageCreationDate(bool Value)
 {
     m_PageCreationDate->setChecked(Value);
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-QValueList<KIPI::ImageCollection> KIGPDialog::getSelectedAlbums(void) const
-{
-    QValueList<KIPI::ImageCollection> list;
-    QListViewItemIterator it( m_AlbumsList );
-
-    while ( it.current() )
-        {
-        AlbumItem *item = static_cast<AlbumItem*>( it.current() );
-
-        if (item->isOn()) 
-           {
-           Q_ASSERT(m_albums.contains(item));
-           KIPI::ImageCollection album=m_albums[item];
-           list.append(album);
-           }
-
-        ++it;
-        }
-
-    return list;
 }
 
 

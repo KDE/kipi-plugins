@@ -61,10 +61,13 @@ class KColorButton;
 class KURLRequester;
 class KListView;
 
+namespace KIPI
+{
+  class ImageCollectionSelector;
+}
+
 namespace KIPIImagesGalleryPlugin
 {
-
-class AlbumItem;
 
 class KIGPDialog : public KDialogBase
 {
@@ -73,8 +76,6 @@ class KIGPDialog : public KDialogBase
  public:
   KIGPDialog( KIPI::Interface* interface, QWidget *parent=0);
   ~KIGPDialog();
-
-  bool  setAlbumsList(void);
 
   const QString getImageName() const;
   void  setImageName(QString Value);
@@ -178,17 +179,11 @@ class KIGPDialog : public KDialogBase
   bool  printPageCreationDate() const;
   void  setPrintPageCreationDate(bool Value);
 
-  QValueList<KIPI::ImageCollection> getSelectedAlbums() const;
+  QValueList<KIPI::ImageCollection> getSelectedAlbums() const { return m_selectedAlbums; }
 
  protected slots:
   void GalleryUrlChanged(const QString & );
-  void albumSelected( QListViewItem * item );
   void slotOk();
-  void slotbuttonSelectAll(void);
-  void slotbuttonInvertSelection(void);
-  void slotbuttonSelectNone(void);
-  void slotGotPreview(const KFileItem*, const QPixmap &pixmap);
-  void slotStopParsingAlbums(void);
 
  private:
   KColorButton       *m_foregroundColor;
@@ -206,10 +201,6 @@ class KIGPDialog : public KDialogBase
   QSpinBox           *m_fontSize;
   QSpinBox           *m_bordersImagesSize;
 
-  QLabel             *m_albumPreview;
-  
-  QProgressDialog    *m_progressDlg;
-  
   QCheckBox          *m_imageName;
   QCheckBox          *m_imageSize;
   QCheckBox          *m_imageProperty;
@@ -236,13 +227,6 @@ class KIGPDialog : public KDialogBase
 
   KURLRequester      *m_imageNameReq;
 
-  KListView          *m_AlbumsList;
-
-  KSqueezedTextLabel *m_AlbumComments;
-  KSqueezedTextLabel *m_AlbumCollection;
-  KSqueezedTextLabel *m_AlbumDate;
-  KSqueezedTextLabel *m_AlbumItems;
-
   QFrame             *page_setupSelection;
   QFrame             *page_setupLook;
   QFrame             *page_setupAlbum;
@@ -251,9 +235,8 @@ class KIGPDialog : public KDialogBase
 
   KIPI::Interface*    m_interface;
   
-  QMap<AlbumItem*, KIPI::ImageCollection> m_albums;
-
-  bool                m_stopParsingAlbum;
+  QValueList<KIPI::ImageCollection> m_selectedAlbums;
+  KIPI::ImageCollectionSelector* m_imageCollectionSelector;
   
  private:
   void setupSelection(void);
