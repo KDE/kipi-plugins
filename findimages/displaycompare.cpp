@@ -162,7 +162,7 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
 
     listName = new KListView( GroupBox1, "listName" );
     listName->header()->setLabel( 0, i18n( "Files" ) );
-    QWhatsThis::add( listName, i18n( "<p>This list launch all files with many duplicates." ) );
+    QWhatsThis::add( listName, i18n( "<p>This list contains all files with many duplicates." ) );
     listName->addColumn( i18n( "Files" ) );
     listName->setResizeMode(QListView::AllColumns);
 
@@ -182,7 +182,7 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
     preview2->setFixedHeight( 120 );
     preview2->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     preview2->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    QWhatsThis::add( preview2, i18n( "<p>The preview of duplicates files." ) );
+    QWhatsThis::add( preview2, i18n( "<p>The preview of duplicate files." ) );
 
     similarInfoLabel1 = new KSqueezedTextLabel( GroupBox2, "similarInfoLabel1" );
     similarInfoLabel1->setAlignment( int( QLabel::AlignCenter ) );
@@ -197,8 +197,8 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
 
     listEq = new KListView( GroupBox2, "listEq" );
     listEq->header()->setLabel( 0, i18n( "Files" ) );
-    QWhatsThis::add( listEq, i18n( "<p>This list launch all duplicates files." ) );
-    listEq->addColumn( i18n( "Identic to" ) );
+    QWhatsThis::add( listEq, i18n( "<p>This list contains all duplicates files." ) );
+    listEq->addColumn( i18n( "Identical to" ) );
     listEq->setResizeMode(QListView::AllColumns);
 
     g1->addWidget( GroupBox2 , 0, 1);
@@ -227,7 +227,8 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
         ++n_id;
         }
 
-    setCaption(i18n("%1 original images with duplicate images have been founded").arg(n_id));
+    setCaption(i18n(	"1 original image with duplicate images has been found",
+			"%n original images with duplicate images have been found", n_id));
 
     // signals and slots connections
 
@@ -259,12 +260,12 @@ DisplayCompare::~DisplayCompare()
 
 void DisplayCompare::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for find duplicate images\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin to find duplicate images\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin is based on ShowImg implementation\n"
                                   "by Richard Groult <rgroult at jalix.org>\n"),
-                                  i18n("About KIPI find duplicate images"));
+                                  i18n("About KIPI's 'Find Duplicate Images'"));
 }
 
 
@@ -324,7 +325,7 @@ void DisplayCompare::slotDisplayLeft(QListViewItem * item)
        {
        OriginalNameLabel->setText(pitem->name());
        originalInfoLabel1->setText(i18n("Image size: %1x%2 pixels").arg(im.width()).arg(im.height()));
-       originalInfoLabel2->setText(i18n("File size: %1 bytes").arg(QFileInfo(pitem->fullpath()).size()));
+       originalInfoLabel2->setText(i18n("File size: 1 byte", "File size: %n bytes",QFileInfo(pitem->fullpath()).size()));
        originalInfoLabel3->setText(i18n("Modified: %1").arg(KLocale(NULL)
                                    .formatDateTime(QFileInfo(pitem->fullpath())
                                    .lastModified())));
@@ -400,7 +401,7 @@ void DisplayCompare::slotDisplayRight(QListViewItem * item)
        {
        similarNameLabel->setText(pitem->name());
        similarInfoLabel1->setText(i18n("Image size: %1x%2 pixels").arg(im.width()).arg(im.height()));
-       similarInfoLabel2->setText(i18n("File size: %1 bytes").arg(QFileInfo(pitem->fullpath()).size()));
+       similarInfoLabel2->setText(i18n("File size: 1 byte", "File size: %n bytes", QFileInfo(pitem->fullpath()).size()));
        similarInfoLabel3->setText(i18n("Modified: %1").arg(KLocale(NULL)
                                                       .formatDateTime(QFileInfo(pitem->fullpath())
                                                       .lastModified())));

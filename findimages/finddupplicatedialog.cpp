@@ -114,7 +114,7 @@ FindDuplicateDialog::~FindDuplicateDialog()
 void FindDuplicateDialog::setupSelection(void)
 {
     page_setupSelection = addPage(i18n("Selection"),
-                                  i18n("Albums selection"),
+                                  i18n("Album's selection"),
                                   BarIcon("folder_image", KIcon::SizeMedium));
 
     QVBoxLayout *layout = new QVBoxLayout(page_setupSelection, 0, spacingHint() );
@@ -123,24 +123,24 @@ void FindDuplicateDialog::setupSelection(void)
 
     QGroupBox * groupBox1 = new QGroupBox( page_setupSelection );
     groupBox1->setFlat(false);
-    groupBox1->setTitle(i18n("Select Albums for to find duplicate images"));
+    groupBox1->setTitle(i18n("Select Albums to find duplicate images for"));
     QGridLayout* grid = new QGridLayout( groupBox1, 2, 2 , 20, 20);
 
     m_AlbumsList = new QListView( groupBox1 );
     m_AlbumsList->setResizeMode( QListView::LastColumn );
     m_AlbumsList->addColumn("");
     m_AlbumsList->header()->hide();
-    QWhatsThis::add( m_AlbumsList, i18n("<p>Selected here the Albums for to find the "
+    QWhatsThis::add( m_AlbumsList, i18n("<p>Selected here the Albums for which to find the "
                                         "duplicate images in your Albums database.") );
     grid->addMultiCellWidget(m_AlbumsList, 0, 2, 0, 1);
 
     KButtonBox* albumSelectionButtonBox = new KButtonBox( groupBox1, Vertical );
     QPushButton* buttonSelectAll = albumSelectionButtonBox->addButton ( i18n( "&Select all" ) );
-    QWhatsThis::add( buttonSelectAll, i18n("<p>Select all Albums in the list.") );
+    QWhatsThis::add( buttonSelectAll, i18n("<p>Select all Albums on the list.") );
     QPushButton* buttonInvertSelection = albumSelectionButtonBox->addButton ( i18n( "&Invert selection" ));
-    QWhatsThis::add( buttonInvertSelection, i18n("<p>Invert the Albums selection in the list.") );
+    QWhatsThis::add( buttonInvertSelection, i18n("<p>Invert the Album selection on the list.") );
     QPushButton* buttonSelectNone = albumSelectionButtonBox->addButton ( i18n( "Select &none" ) );
-    QWhatsThis::add( buttonSelectNone, i18n("<p>Deselect all Albums in the list.") );
+    QWhatsThis::add( buttonSelectNone, i18n("<p>Deselect all Albums on the list.") );
     albumSelectionButtonBox->layout();
     grid->addMultiCellWidget(albumSelectionButtonBox, 0, 1, 2, 2);
 
@@ -148,7 +148,7 @@ void FindDuplicateDialog::setupSelection(void)
     m_albumPreview->setFixedHeight( 120 );
     m_albumPreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_albumPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    QWhatsThis::add( m_albumPreview, i18n( "Preview of the first image in the current selected Album." ) );
+    QWhatsThis::add( m_albumPreview, i18n( "Preview of the first image in the currently selected Album." ) );
     grid->addMultiCellWidget(m_albumPreview, 2, 2, 2, 2);
 
     layout->addWidget( groupBox1 );
@@ -212,7 +212,7 @@ bool FindDuplicateDialog::setAlbumsList(void)
 
     QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
 
-    m_progressDlg = new QProgressDialog (i18n("Parsing Albums. Please wait..."),
+    m_progressDlg = new QProgressDialog (i18n("Parsing Albums; please wait...."),
                                          i18n("&Cancel"), 0, 0, 0, true);
     
     connect(m_progressDlg, SIGNAL(cancelled()),
@@ -271,7 +271,7 @@ void FindDuplicateDialog::slotStopParsingAlbums(void)
 void FindDuplicateDialog::setupPageMethod(void)
 {
     QString whatsThis;
-    page_setupMethod = addPage( i18n("Method and cache"), i18n("Find duplicate method and cache configuration"),
+    page_setupMethod = addPage( i18n("Method and cache"), i18n("Find-duplicates method, and cache configuration"),
                                 BarIcon("run", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupMethod, 0, spacingHint() );
@@ -287,13 +287,13 @@ void FindDuplicateDialog::setupPageMethod(void)
     m_findMethod->insertItem(i18n("Almost"));
     m_findMethod->insertItem(i18n("Fast"));
     m_findMethod->setCurrentText (i18n("Almost"));
-    QWhatsThis::add( m_findMethod, i18n("<p>Select here the search method of duplicate "
-                     "images in Albums database.<p>"
-                     "<b>Almost</b>: the algorithm calculate an approximate difference between images. "
-                     "This method is a slower method but robust. You can affine the threesholding by the "
-                     "\"Approximate Threeshold\" parameter.<p>"
-                     "<b>Fast</b>: the algorithm compare bit per bit the files for a fast images parsing. "
-                     "This method is a faster method but not robust."));
+    QWhatsThis::add( m_findMethod, i18n("<p>Select here the search method used to find duplicate "
+                     "images in the Albums database.<p>"
+                     "<b>Almost</b>: the algorithm calculates an approximate difference between images. "
+                     "This method is slower but robust. You can affine the thresholding using the "
+                     "\"Approximate Threshold\" parameter.<p>"
+                     "<b>Fast</b>: the algorithm compares bit-by-bit the files for fast image parsing. "
+                     "This method is faster but is not as robust."));
     m_labelsearchMethod->setBuddy( m_findMethod );
 
     QLabel *m_label_approximateThreeshold = new QLabel (i18n("Approximate Threeshold:"), groupBox1);
@@ -301,21 +301,21 @@ void FindDuplicateDialog::setupPageMethod(void)
 
     m_approximateThreshold = new KIntNumInput(88, groupBox1);
     m_approximateThreshold->setRange(60, 100, 1, true );
-    QWhatsThis::add( m_approximateThreshold, i18n("<p>Select here the approximate threeshold "
-                                                  "value in percent for the almost find duplicate method. "
-                                                  "This value is used by the algorithm to distinguish 2 "
+    QWhatsThis::add( m_approximateThreshold, i18n("<p>Select here the approximate threshold "
+                                                  "value, as a percentage, for the 'Almost' find-duplicates method. "
+                                                  "This value is used by the algorithm to distinguish two "
                                                   "similar images. The default value is 88.") );
     vlay->addWidget( groupBox1 );
 
     //---------------------------------------------
 
     QGroupBox * groupBox2 = new QGroupBox( 1, Qt::Horizontal, i18n("Cache maintenance"), page_setupMethod );
-    new QLabel(i18n("The find duplicate images process use a cache folder images fingerprint\n"
-                    "for a speed Albums items analyse. The cache location is \"~/.findduplicate\"."), groupBox2);
+    new QLabel(i18n("The find-duplicate-images process uses a cache folder for images' fingerprints\n"
+                    "to speed up the analysis of Albums items. The cache location is \"~/.findduplicate\"."), groupBox2);
 
     QPushButton* updateCache = new QPushButton( groupBox2, "UpdateCache" );
     updateCache->setText(i18n( "&Update cache" ));
-    QWhatsThis::add( updateCache, i18n("<p>Updating the cache data for the selected Albums.") );
+    QWhatsThis::add( updateCache, i18n("<p>Update the cache data for the selected Albums.") );
     QPushButton* purgeCache = new QPushButton( groupBox2, "PurgeCacheAlbumsSelected" );
     purgeCache->setText(i18n( "&Purge cache (Albums selected)" ));
     QWhatsThis::add( purgeCache, i18n("<p>Purge the cache data for the selected Albums.") );
@@ -348,12 +348,12 @@ void FindDuplicateDialog::setupPageMethod(void)
 
 void FindDuplicateDialog::aboutPage(void)
 {
-    page_about = addPage( i18n("About"), i18n("About kipi find duplicate images"),
+    page_about = addPage( i18n("About"), i18n("About KIPI's 'Find Duplicate Images'"),
                           BarIcon("kipi", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 
-    QLabel *label = new QLabel( i18n("A KIPI plugin for find duplicate images\n\n"
+    QLabel *label = new QLabel( i18n("A KIPI plugin to find duplicate images\n\n"
                                      "Author: Gilles Caulier\n\n"
                                      "Email: caulier dot gilles at free.fr\n\n"
                                      "This plugin is based on ShowImg implementation\n"
@@ -390,7 +390,7 @@ void FindDuplicateDialog::slotUpdateCache(void)
         }
 
     if ( albumsListPath.isEmpty() == true )
-       KMessageBox::sorry(0, i18n("You must selected at least an Album for update cache process!"));
+       KMessageBox::sorry(0, i18n("You must select at least one Album for the update cache process."));
     else
        emit updateCache(albumsListPath);
 }
@@ -411,7 +411,7 @@ void FindDuplicateDialog::slotPurgeCache(void)
         }
 
     if ( albumsListPath.isEmpty() == true )
-       KMessageBox::sorry(0, i18n("You must selected at least an Album for purge cache process!"));
+       KMessageBox::sorry(0, i18n("You must select at least one Album for the purge cache process."));
     else
        emit clearCache(albumsListPath);
 }
@@ -465,7 +465,7 @@ void FindDuplicateDialog::slotOk()
 {
     if (getAlbumsSelection().isEmpty() == true)
        {
-       KMessageBox::sorry(0, i18n("You must selected at least an Album for to find duplicate images!"));
+       KMessageBox::sorry(0, i18n("You must selected at least one Album to find duplicate images for."));
        return;
        }
 
