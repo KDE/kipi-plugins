@@ -166,7 +166,14 @@ Plugin_BatchProcessImages::~Plugin_BatchProcessImages()
 
 void Plugin_BatchProcessImages::slotActivate()
 {
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
+           
     KIPI::ImageCollection images = interface->currentScope();
     
     if ( !images.isValid() )
