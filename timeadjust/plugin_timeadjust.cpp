@@ -22,6 +22,7 @@
 
 #include <klocale.h>
 #include <kaction.h>
+#include <kapplication.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
@@ -90,7 +91,7 @@ void Plugin_TimeAdjust::slotActivate()
         return;
 
     if ( m_dialog == 0 )
-        m_dialog = new KIPITimeAdjustPlugin::TimeAdjustDialog( m_interface, 0, "time adjust dialog" );
+        m_dialog = new KIPITimeAdjustPlugin::TimeAdjustDialog( m_interface, kapp->activeWindow(), "time adjust dialog" );
 
     m_dialog->setImages( images.images() );
     m_dialog->show();

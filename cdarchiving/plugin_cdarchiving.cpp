@@ -123,7 +123,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
 
     if (!m_progressDlg)
         {
-        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Archive to CD/DVD"));
+        m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), i18n("Archive to CD/DVD"));
 
         connect(m_progressDlg, SIGNAL(cancelClicked()),
                 this, SLOT(slotCancel()));

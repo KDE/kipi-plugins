@@ -68,13 +68,13 @@ int CheckBinProg::findExecutables( void )
 
   if (ImageMagickPath.isEmpty())
         {
-        KMessageBox::error(0, i18n("Your 'ImageMagick' binary program path is empty.\nSetting to default value. Check option's setting."));
+        KMessageBox::error(kapp->activeWindow(), i18n("Your 'ImageMagick' binary program path is empty.\nSetting to default value. Check option's setting."));
         return (ValRet);
         }
 
 if (MjpegToolsPath.isEmpty())
         {
-        KMessageBox::error(0, i18n("Your 'MjpegTools' binary programs path is empty.\nSetting to default value. Check option's setting."));
+        KMessageBox::error(kapp->activeWindow(), i18n("Your 'MjpegTools' binary programs path is empty.\nSetting to default value. Check option's setting."));
         return (ValRet);
         }
 
@@ -121,7 +121,7 @@ if (MjpegToolsPath.isEmpty())
                  "\n\nVisit these URLs for more information:"
                  "\nImageMagick package: http://www.imagemagick.org/"
                  "\nMjpegTools package: http://mjpeg.sourceforge.net/");
-    KMessageBox::error(0, str);
+    KMessageBox::error(kapp->activeWindow(), str);
     return (ValRet);
     }
 

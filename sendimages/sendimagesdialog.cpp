@@ -669,7 +669,7 @@ void SendImagesDialog::slotOk()
 {
     if ( m_ImagesFilesListBox->count() == 0 )
        {
-       KMessageBox::error(0, i18n("You must add some images to send."));
+       KMessageBox::error(this, i18n("You must add some images to send."));
        return;
        }
 

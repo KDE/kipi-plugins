@@ -221,10 +221,10 @@ void Plugin_WallPaper::setWallpaper(int layout)
       // PENDING We need a way to get a parent widget
       // Sun, 06 Jun 2004 - Aurélien
       
-      KMessageBox::information( 0L, i18n(
+      KMessageBox::information( kapp->activeWindow(), i18n(
          "<qt><p>You selected a remote image. It needs to be saved to your local disk to be used as a wallpaper."
          "</p><p>You will now be asked where to save the image.</p</qt>"));
-      path = KFileDialog::getSaveFileName(url.fileName(), QString::null, 0L);
+      path = KFileDialog::getSaveFileName(url.fileName(), QString::null, kapp->activeWindow());
       
       if (path.isNull()) return;
 #if KDE_VERSION > 0x30200

@@ -44,7 +44,7 @@ class SingleDialog : public QDialog
 
 public:
 
-    SingleDialog(const QString& file);
+    SingleDialog(const QString& file, QWidget *parent);
     ~SingleDialog();
 
 protected:

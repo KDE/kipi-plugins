@@ -23,6 +23,7 @@
  
 #include <klocale.h>
 #include <kaction.h>
+#include <kapplication.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
@@ -112,7 +113,7 @@ void Plugin_SlideShow::slotActivate()
     }
 
     KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
-        = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly );
+        = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, kapp->activeWindow() );
     
     connect(slideShowConfig, SIGNAL(okClicked()),
             this, SLOT(slotSlideShow()));
@@ -187,7 +188,7 @@ void Plugin_SlideShow::slotSlideShow()
 
     if ( urlList.isEmpty() )
     {
-        KMessageBox::sorry(0, i18n("There are no images to show."));
+        KMessageBox::sorry(kapp->activeWindow(), i18n("There are no images to show."));
 	return;
     }
 
@@ -224,7 +225,7 @@ void Plugin_SlideShow::slotSlideShow()
     }
     else {
         if (!QGLFormat::hasOpenGL())
-            KMessageBox::error(0, i18n("Sorry. OpenGL support not available on your system"));
+            KMessageBox::error(kapp->activeWindow(), i18n("Sorry. OpenGL support not available on your system"));
         else {
             KIPISlideShowPlugin::SlideShowGL *slideShow =
                 new KIPISlideShowPlugin::SlideShowGL(fileList, delay, loop, effectName);

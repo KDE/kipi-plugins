@@ -313,7 +313,7 @@ void ScreenGrabDialog::slotPerformGrab()
     KNotifyClient::beep();
 
     m_screenshotImage = m_snapshot.convertToImage();
-    m_acquireImageDialog = new AcquireImageDialog( m_interface, 0, m_screenshotImage);
+    m_acquireImageDialog = new AcquireImageDialog( m_interface, this, m_screenshotImage);
     m_acquireImageDialog->setMinimumWidth(400);
     m_acquireImageDialog->exec();
 

@@ -243,7 +243,7 @@ void ImagesGallery::readSettings(void)
 
 bool ImagesGallery::showDialog()
 {
-    m_configDlg = new KIGPDialog( m_interface, 0 );
+    m_configDlg = new KIGPDialog( m_interface, kapp->activeWindow() );
     readSettings();
 
     if ( m_configDlg->exec() == QDialog::Accepted )
@@ -265,13 +265,13 @@ bool ImagesGallery::removeTargetGalleryFolder(void)
 
     if (TargetDir.exists (MainTPath) == true)
        {
-       if (KMessageBox::warningYesNo(0,
+       if (KMessageBox::warningYesNo(kapp->activeWindow(),
            i18n("The target directory\n'%1'\nalready exists; do you want overwrite it? (all data "
                 "in this directory will be lost.)").arg(MainTPath)) == KMessageBox::Yes)
           {
           if ( DeleteDir(MainTPath) == false )
              {
-             KMessageBox::error(0, i18n("Cannot remove folder '%1'.").arg(MainTPath));
+             KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove folder '%1'.").arg(MainTPath));
              return false;
              }
           }
@@ -1602,7 +1602,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'mozilla' web browser.\nPlease check your installation."));
+          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start 'mozilla' web browser.\nPlease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Netscape")
@@ -1612,7 +1612,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'netscape' web browser.\nPlease check your installation."));
+          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start 'netscape' web browser.\nPlease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Opera")
@@ -1622,7 +1622,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'opera' web browser.\nPlease check your installation."));
+          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start 'opera' web browser.\nPlease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Firefox")
@@ -1632,7 +1632,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'firefox' web browser.\nPlease check your installation."));
+          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start 'firefox' web browser.\nPlease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Galeon")
@@ -1642,7 +1642,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'galeon' web browser.\nPlease check your installation."));
+          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start 'galeon' web browser.\nPlease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Amaya")
@@ -1652,7 +1652,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'amaya' web browser.\nPlease check your installation."));
+          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start 'amaya' web browser.\nPlease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Quanta")
@@ -1662,7 +1662,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'quanta' web editor.\nPlease check your installation."));
+          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start 'quanta' web editor.\nPlease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Screem")
@@ -1672,7 +1672,7 @@ void ImagesGallery::invokeWebBrowser(void)
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'screem' web editor.\nPlease check your installation."));
+          KMessageBox::error(kapp->activeWindow(), i18n("Cannot start 'screem' web editor.\nPlease check your installation."));
        }
 }
 

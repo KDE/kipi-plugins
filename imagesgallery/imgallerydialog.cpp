@@ -639,7 +639,7 @@ void KIGPDialog::slotOk()
     
     if (m_selectedAlbums.size() == 0)
        {
-       KMessageBox::sorry(0, i18n("You must select at least one album."));
+       KMessageBox::sorry(this, i18n("You must select at least one album."));
        return;
        }
 
@@ -647,7 +647,7 @@ void KIGPDialog::slotOk()
 
     if (dirGallery.exists() == false)
        {
-       KMessageBox::sorry(0, i18n("Image gallery folder does not exist; please check it..."));
+       KMessageBox::sorry(this, i18n("Image gallery folder does not exist; please check it..."));
        return;
        }
 

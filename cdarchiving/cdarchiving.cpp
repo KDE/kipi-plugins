@@ -221,7 +221,7 @@ bool CDArchiving::showDialog()
     m_HTMLInterfaceAutoRunInf = "";
     m_HTMLInterfaceAutoRunFolder = "";
 
-    m_configDlg = new CDArchivingDialog( m_interface, 0 );
+    m_configDlg = new CDArchivingDialog( m_interface, kapp->activeWindow() );
     readSettings();
     
     if ( m_configDlg->exec() == QDialog::Accepted )

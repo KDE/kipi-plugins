@@ -27,6 +27,7 @@
 
 #include <klocale.h>
 #include <kaction.h>
+#include <kapplication.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
@@ -113,7 +114,7 @@ bool Plugin_RawConverter::checkBinaries()
     process.addArgument("kipidcrawclient");
 
     if (!process.start()) {
-        KMessageBox::error(0, i18n("Failed to start raw converter client.\n"
+        KMessageBox::error(kapp->activeWindow(), i18n("Failed to start raw converter client.\n"
                                    "Please check your installation."));
         return false;
     }
@@ -122,7 +123,7 @@ bool Plugin_RawConverter::checkBinaries()
     process.addArgument("dcraw");
 
     if (!process.start()) {
-        KMessageBox::error(0, i18n("dcraw is required for raw image conversion.\n"
+        KMessageBox::error(kapp->activeWindow(), i18n("dcraw is required for raw image conversion.\n"
                                    "Please install it."));
         return false;
     }
@@ -149,7 +150,7 @@ void Plugin_RawConverter::slotActivateSingle()
     if (!checkBinaries()) return;
 
     KIPIRawConverterPlugin::SingleDialog *converter =
-        new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path()); // PENDING(blackie) handle remote URLS
+        new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), kapp->activeWindow()); // PENDING(blackie) handle remote URLS
 
     converter->show();
 }
@@ -173,7 +174,7 @@ void Plugin_RawConverter::slotActivateBatch()
     if (!checkBinaries()) return;
 
     KIPIRawConverterPlugin::BatchDialog *converter =
-        new KIPIRawConverterPlugin::BatchDialog();
+        new KIPIRawConverterPlugin::BatchDialog(kapp->activeWindow());
 
     KURL::List urls = images.images();
     QStringList files;

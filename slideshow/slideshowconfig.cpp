@@ -57,8 +57,8 @@
 namespace KIPISlideShowPlugin
 {
 
-SlideShowConfig::SlideShowConfig(bool allowSelectedOnly)
-               : KDialogBase(0, "", true, i18n("SlideShow"),
+SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
+               : KDialogBase(parent, "", true, i18n("SlideShow"),
                              Help|Ok|Cancel, Ok, true)
 {
     // About data and help button.

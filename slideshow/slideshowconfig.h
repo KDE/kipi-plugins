@@ -48,7 +48,7 @@ class SlideShowConfig : public KDialogBase
 
 public:
 
-    SlideShowConfig(bool allowSelectedOnly);
+    SlideShowConfig(bool allowSelectedOnly, QWidget *parent);
     ~SlideShowConfig();
 
 private:

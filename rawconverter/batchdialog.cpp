@@ -76,8 +76,8 @@ extern "C"
 namespace KIPIRawConverterPlugin
 {
 
-BatchDialog::BatchDialog()
-           : QDialog(0, 0, false, Qt::WDestructiveClose)
+BatchDialog::BatchDialog(QWidget *parent)
+           : QDialog(kapp->activeWindow(), 0, false, Qt::WDestructiveClose)
 {
     setCaption(i18n("Raw Images Batch Converter"));
     QGridLayout *mainLayout = new QGridLayout(this, 6, 2, 6, 11);

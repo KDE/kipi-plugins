@@ -26,6 +26,7 @@
 #include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kapplication.h>
 
 // libkipi includes.
 #include <libkipi/interface.h>
@@ -87,7 +88,7 @@ void Plugin_GalleryExport::slotActivate()
         return;
     }
 
-    KIPIGalleryExportPlugin::GalleryWindow dlg(interface);
+    KIPIGalleryExportPlugin::GalleryWindow dlg(interface, kapp->activeWindow());
     dlg.exec();
 }
 

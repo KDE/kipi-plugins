@@ -243,7 +243,7 @@ void FindDuplicateDialog::slotUpdateCache(void)
         }
 
     if ( albumsListPath.isEmpty() == true )
-       KMessageBox::sorry(0, i18n("You must select at least one Album for the update cache process."));
+       KMessageBox::sorry(this, i18n("You must select at least one Album for the update cache process."));
     else
        emit updateCache(albumsListPath);
 }
@@ -265,7 +265,7 @@ void FindDuplicateDialog::slotPurgeCache(void)
         }
 
     if ( albumsListPath.isEmpty() == true )
-       KMessageBox::sorry(0, i18n("You must select at least one Album for the purge cache process."));
+       KMessageBox::sorry(this, i18n("You must select at least one Album for the purge cache process."));
     else
        emit clearCache(albumsListPath);
 }
@@ -285,7 +285,7 @@ void FindDuplicateDialog::slotOk()
 {
     if (getSelectedAlbums().isEmpty() == true)
        {
-       KMessageBox::sorry(0, i18n("You must selected at least one Album to find duplicate images for."));
+       KMessageBox::sorry(this, i18n("You must selected at least one Album to find duplicate images for."));
        return;
        }
 

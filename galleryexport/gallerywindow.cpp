@@ -55,8 +55,8 @@
 namespace KIPIGalleryExportPlugin
 {
 
-GalleryWindow::GalleryWindow(KIPI::Interface* interface)
-    : KDialogBase(0, 0, true, i18n( "Gallery Export" ), Close, Close, false)
+GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
+    : KDialogBase(parent, 0, true, i18n( "Gallery Export" ), Close, Close, false)
 {
     m_interface   = interface;
     m_uploadCount = 0;

@@ -30,6 +30,7 @@
 
 #include <klocale.h>
 #include <kaction.h>
+#include <kapplication.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
@@ -89,7 +90,7 @@ void Plugin_Mpegencoder::slotActivate()
        }
     
     KIPIMPEGEncoderPlugin::KImg2mpgData *MPEGconverterDialog = 
-                           new KIPIMPEGEncoderPlugin::KImg2mpgData( interface );
+                           new KIPIMPEGEncoderPlugin::KImg2mpgData( interface, kapp->activeWindow() );
                            
     KIPIMPEGEncoderPlugin::CheckBinProg* CheckExternalPrograms = 
                            new KIPIMPEGEncoderPlugin::CheckBinProg(this);

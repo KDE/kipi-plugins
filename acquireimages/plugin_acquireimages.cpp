@@ -154,7 +154,7 @@ void Plugin_AcquireImages::slotAcquireImageDone(const QImage &img)
            return;
            }
            
-    m_acquireImageDialog = new KIPIAcquireImagesPlugin::AcquireImageDialog( interface, 0, img);
+    m_acquireImageDialog = new KIPIAcquireImagesPlugin::AcquireImageDialog( interface, kapp->activeWindow(), img);
     m_acquireImageDialog->setMinimumWidth(400);
     m_acquireImageDialog->exec();
 }

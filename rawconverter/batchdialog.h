@@ -65,7 +65,7 @@ public:
         OPENFILEDIALOG
     };
 
-    BatchDialog();
+    BatchDialog(QWidget *parent);
     ~BatchDialog();
 
     void addItems(const QStringList& itemList);

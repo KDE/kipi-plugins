@@ -159,7 +159,7 @@ void FindDuplicateImages::readSettings(void)
 
 bool FindDuplicateImages::showDialog()
 {
-    m_findDuplicateDialog = new FindDuplicateDialog( m_interface );
+    m_findDuplicateDialog = new FindDuplicateDialog( m_interface, kapp->activeWindow() );
     readSettings();
     
     connect( m_findDuplicateDialog, SIGNAL(updateCache(QStringList)),
@@ -189,9 +189,9 @@ bool FindDuplicateImages::showDialog()
 void FindDuplicateImages::showResult()
 {
     if( !res->isEmpty() )
-        DisplayCompare(0, m_interface, res).exec();
+        DisplayCompare((QWidget *)(kapp->activeWindow()), m_interface, res).exec();
     else
-        KMessageBox::information(0, i18n("No identical files found"));
+        KMessageBox::information(kapp->activeWindow(), i18n("No identical files found"));
     delete(res);
 }
 
@@ -287,9 +287,9 @@ void FindDuplicateImages::slotClearCache(QStringList fromDirs)
         }
 
     if ( delOk == true )
-       KMessageBox::information(0, i18n("Selected Albums cache purged successfully!"));
+       KMessageBox::information(m_findDuplicateDialog, i18n("Selected Albums cache purged successfully!"));
     else
-       KMessageBox::error(0, i18n("Cannot purge selected Albums cache!"));
+       KMessageBox::error(m_findDuplicateDialog, i18n("Cannot purge selected Albums cache!"));
 }
 
 
@@ -300,9 +300,9 @@ void FindDuplicateImages::slotClearAllCache(void)
     bool delOk = DeleteDir(QDir::homeDirPath() + "/.findduplicate/cache/");
 
     if ( delOk == true )
-       KMessageBox::information(0, i18n("All cache purged successfully!"));
+       KMessageBox::information(m_findDuplicateDialog, i18n("All cache purged successfully!"));
     else
-       KMessageBox::error(0, i18n("Cannot purge all cache!"));
+       KMessageBox::error(m_findDuplicateDialog, i18n("Cannot purge all cache!"));
 }
 
 
@@ -311,7 +311,7 @@ void FindDuplicateImages::slotClearAllCache(void)
 
 void FindDuplicateImages::slotUpdateCache(QStringList fromDirs)
 {
-    pdCache = new QProgressDialog (0, "tmppb", true);
+    pdCache = new QProgressDialog (m_findDuplicateDialog, "tmppb", true);
     pdCache->setLabelText(i18n("Updating in progress..."));
     pdCache->setTotalSteps(2);
     pdCache->show();
@@ -322,7 +322,7 @@ void FindDuplicateImages::slotUpdateCache(QStringList fromDirs)
 
     pdCache->close();
     delete(pdCache);
-    KMessageBox::information(0, i18n("Selected Albums cache updated successfully!"));
+    KMessageBox::information(m_findDuplicateDialog, i18n("Selected Albums cache updated successfully!"));
 }
 
 

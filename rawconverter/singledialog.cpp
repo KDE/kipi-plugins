@@ -68,8 +68,8 @@ extern "C"
 namespace KIPIRawConverterPlugin
 {
 
-SingleDialog::SingleDialog(const QString& file)
-            : QDialog(0, 0, false, Qt::WDestructiveClose)
+SingleDialog::SingleDialog(const QString& file, QWidget *parent)
+            : QDialog(parent, 0, false, Qt::WDestructiveClose)
 {
 
     setCaption(i18n("Raw Image Converter"));

@@ -146,7 +146,7 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
 
     if (!m_progressDlg)
         {
-        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Preparing images to send"));
+        m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), i18n("Preparing images to send"));
 
         connect(m_progressDlg, SIGNAL(cancelClicked()),
                 this, SLOT(slotCancel()));

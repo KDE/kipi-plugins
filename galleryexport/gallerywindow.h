@@ -54,7 +54,7 @@ class GalleryWindow : public KDialogBase
 
 public:
 
-    GalleryWindow(KIPI::Interface *interface);
+    GalleryWindow(KIPI::Interface *interface, QWidget *parent);
     ~GalleryWindow();
 
 private:

@@ -335,7 +335,7 @@ void DisplayCompare::slotDelete( void )
            KURL deleteImage(item->fullpath());
 
            if ( KIO::NetAccess::del(deleteImage) == false )
-              KMessageBox::error(0, i18n("Cannot remove duplicate file:\n%1").arg(item->fullpath()));
+              KMessageBox::error(this, i18n("Cannot remove duplicate file:\n%1").arg(item->fullpath()));
            else
               m_interface->delImage( deleteImage );
 
@@ -356,7 +356,7 @@ void DisplayCompare::slotDelete( void )
            KURL deleteImage(item->fullpath());
 
            if ( KIO::NetAccess::del(deleteImage) == false )
-              KMessageBox::error(0, i18n("Cannot remove original file:\n%1").arg(item->fullpath()));
+              KMessageBox::error(this, i18n("Cannot remove original file:\n%1").arg(item->fullpath()));
 
            item->setOn( false );
            }

@@ -1282,7 +1282,7 @@ void KImg2mpgData::RemoveTmpFiles(void)
 
     if (m_TmpFolderConfig.isEmpty() != true && tmpFolder.exists() == true)
        if (DeleteDir(m_TmpFolderConfig) == false)
-          KMessageBox::error(0, i18n("Cannot remove temporary folder %1!").arg(m_TmpFolderConfig));
+          KMessageBox::error(this, i18n("Cannot remove temporary folder %1!").arg(m_TmpFolderConfig));
 }
 
 

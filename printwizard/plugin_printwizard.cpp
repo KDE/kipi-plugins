@@ -34,6 +34,7 @@ extern "C"
 
 #include <klocale.h>
 #include <kaction.h>
+#include <kapplication.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
@@ -107,12 +108,12 @@ void Plugin_PrintWizard::slotActivate()
 
     if (fileList.count() == 0)
         {
-        KMessageBox::sorry(0, i18n("Please select one or more photos to print."),
+        KMessageBox::sorry(kapp->activeWindow(), i18n("Please select one or more photos to print."),
                            i18n("Print Wizard"));
         return;
         }
 
-    KIPIPrintWizardPlugin::FrmPrintWizard frm;
+    KIPIPrintWizardPlugin::FrmPrintWizard frm(kapp->activeWindow());
     KStandardDirs dir;
     QString tempPath = dir.saveLocation("tmp", "kipi-printwizardplugin-" + QString::number(getpid()) + "/");
     frm.print(fileList, tempPath);
