@@ -343,7 +343,7 @@ void ResizeOptionsDialog::slotOk()
           {
           if (m_customXSize > m_customYSize)
              {
-             KMessageBox::sorry(0, i18n("You must enter a custom height superior than custom width."
+             KMessageBox::sorry(this, i18n("You must enter a custom height superior than custom width."
                                      "The photographic paper must be verticaly oriented!"));
              return;
              }
