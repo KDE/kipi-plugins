@@ -1,0 +1,17 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Calendar
+Comment=KIPI Calendar creation wizard Plugin
+Comment[de]=Ein KIPI Modul um Kalender aus den Albenfotos zu erstellen
+Comment[es]=Complemento de KIPI para la creación de calendarios a partir de álbumes de fotografías
+Comment[fr]=Module externe de KIPI pour la création de calendrier �  partir d'albums photo
+Comment[da]=KIPI plugin til kalenderfremstilling
+Comment[it]=Modulo esterno di KIPI per la creazione di calendati partendo dagli album
+Comment[pl]=Wtyczka do tworzenia kalendarza dla progamu KIPI
+Comment[nl]=KIPI plugin om een kalender van afbeeldingen te maken
+Comment[hu]=KIPI naptár plugin
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_calendar
+X-KIPI-MergeMenu=false
+author=Renchi Raju, renchi@pooh.tam.uiuc.edu

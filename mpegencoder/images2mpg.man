@@ -1,0 +1,192 @@
+.\" MPEG portfolio images multiplexer from Digikam package
+.TH "images2mpg" "1" "29 September 2003" "Gilles CAULIER" "Digikam tools manual"
+.SH "NAME"
+.LP 
+images2mpg \- MPEG portfolio images multiplexer
+.SH "SYNTAX"
+.LP 
+images2mpg [\fI options \fP] \fB\-o\fR <\fIoutput MPEG file\fP> \fB\-i\fR <\fIinput image files\fP>
+.SH "REQUIREMENTS"
+.LP 
+This script use this packages :
+.LP   
+ImageMagick version >= 5.4.8 [ http://www.imagemagick.org/ ]
+.br 
+MjpegTools  version >= 1.6.0 [ http://mjpeg.sourceforge.net/ ]
+.LP 
+With this packages, 'images2mpg' use this externals binary programs :
+
+\- 'montage' from ImageMagick for resize the images for the TV screen size.
+.br 
+\- 'composite' from ImageMagick for make the transition between images.
+.br 
+\- 'convert' from ImageMagick for convert the images before MPEG encoding.
+.br 
+\- 'identify' from ImageMagick for check the background image file size.
+.br 
+\- 'ppmtoy4m' from MjpegTools for create a video stream from the image.
+.br 
+\- 'yuvscaler' from MjpegTools for adapt the video stream size before MPEG encoding.
+.br 
+\- 'mpeg2enc' from MjpegTools for encode the video stream in MPEG file.
+.br 
+\- 'mp2enc' from MjpegTools for encode on a MP2 file a WAV sound file if necessary.
+.br 
+\- 'mplex' from MjpegTools for multiplex the MPEG file and the MP2 sound and convert the final MPEG file to a DVD/XVCD/SVCD/VCD format compatible with vcdimager program.
+.SH "DESCRIPTION"
+.LP 
+The 'images2mpg' bash script convert some images on MPEG sequences with a specific duration and merge all images on an single MPEG file. It use the MjpegTools and ImageMagick packages.
+.LP 
+Between the images, you can insert a basic transition. You can also add an audio track on the images sequence with a MP2 or WAV file.
+.LP 
+All images will be automatically scaling to the good size for the video format. Also a specific background color or a image file could be used.
+.LP 
+You can use this for to build some DVD/XVCD/SVCD/VCD portfolios for your home DVD player. Use 'vcdimager' for create this...
+.LP 
+The video types and formats supported by this script are :
+.LP 
+\fBVCD\fR :
+.LP 
+  Resolution : 352x288 (PAL/SECAM) / 352x240 (NTSC).
+  Frames / s : 25 (PAL/SECAM) / 30 (NTSC).
+  MPEG type : MPEG\-1.
+  Video CDR duration (650Mb) : 74 minutes.
+  Video bitrate : 1,150 kbit/s.
+  Sound format : MP2.
+  Audio bitrate : 224 kbit/s.
+  DVD player compatibility : medium.
+  Image restitution : medium.
+.LP 
+\fBSVCD\fR :
+.LP 
+  Resolution : 576x480 (PAL/SECAM) / 480x480 (NTSC).
+  Frames / s : 25 (PAL/SECAM) / 30 (NTSC).
+  MPEG type : MPEG\-2.
+  Video CDR duration (650Mb): 60 minutes.
+  Video bitrate : 2,500 kbit/s.
+  Sound format : MP2.
+  Audio bitrate : 224 kbit/s.
+  DVD player compatibility : good.
+  Image restitution : good.
+.LP 
+\fBXVCD\fR :
+.LP 
+  Resolution : 720x576 (PAL/SECAM) / 720x480 (NTSC).
+  Frames / s : 25 (PAL/SECAM) / 30 (NTSC).
+  MPEG type : MPEG\-2.
+  Video CDR duration (650Mb) : 50 minutes.
+  Video bitrate : 2,500 kbit/s.
+  Sound format : MP2.
+  Audio bitrate : 224 kbit/s.
+  DVD player compatibility : medium.
+  Image restitution : excelent.
+.LP 
+\fBDVD\fR :
+.LP 
+  Resolution : 720x576 (PAL/SECAM) / 720x480 (NTSC).
+  Frames / s : 25 (PAL/SECAM) / 30 (NTSC).
+  MPEG type : MPEG\-2.
+  Video CDR duration (650Mb) : 15 minutes.
+  Video bitrate : 8,000 kbit/s.
+  Sound format : MP2.
+  Audio bitrate : 224 kbit/s.
+  DVD player compatibility : excelent.
+  Image restitution : excelent.
+
+Note : The XVCD resolution is the same of DVD !
+.SH "OPTIONS"
+.LP 
+\fB\-v\fR <\fInum\fP> : verbose level on the console. The possible values are  '0' for none (default), '1' for informations and warnings, or '2' for debug messages.
+
+\fB\-\-with\-gui\fR : running with the 'Digikam' KDE GUI frontend. Specifics messages will be showing on the console. For more informations about Digikam, see this URL : http://digikam.sourceforge.net
+
+\fB\-t\fR <\fInum\fP> : enable transition between images with a specific speed. The possible speed values are '1' for slow, '2', '4', '5', '10', or '20' for fast. When you enable this option, the script make with ImageMagick package a beautiful merging transition between images. Warning : it's a long calculating process.
+
+The transitions durations are :
+
+Speed  '1' : PAL/SECAM (25 f/s) = 4000 ms | NTSC (30 f/s) = 3333 ms.
+.br 
+Speed  '2' : PAL/SECAM (25 f/s) = 2000 ms | NTSC (30 f/s) = 1666 ms.
+.br 
+Speed  '4' : PAL/SECAM (25 f/s) = 1000 ms | NTSC (30 f/s) = 0833 ms.
+.br 
+Speed  '5' : PAL/SECAM (25 f/s) = 0800 ms | NTSC (30 f/s) = 0666 ms.
+.br 
+Speed '10' : PAL/SECAM (25 f/s) = 0400 ms | NTSC (30 f/s) = 0333 ms.
+.br 
+Speed '20' : PAL/SECAM (25 f/s) = 0200 ms | NTSC (30 f/s) = 0166 ms.
+
+\fB\-T\fR <\fITemporary folder\fP> : use a specific folder for create the temporary files ('/tmp' for example). If you don't use this option, all temporary files will be created in the current active folder.
+
+\fB\-f\fR <\fIVideo format\fP> : MPEG video format. The possible values are 'DVD', 'XVCD' (default), 'SVCD', or 'VCD'. See the DESCRIPTION section for more details.
+
+\fB\-n\fR <\fIVideo type\fP> : video type for your TV screen. The possible values are 'PAL' (default), 'NTSC', or 'SECAM'.
+
+\fB\-b\fR <\fIbackground file\fP> : specify the 768x576 pixels background image file name. If you don't use this option, a default temporary black image file will be used.
+
+\fB\-c\fR <\fIRGB color\fP> : if you don't use the background image file, you can change the default background color (black = default). Use an hexadecimal RGB color value (example : AA001F).
+
+\fB\-d\fR <\fInum\fP> : duration for each image in MPEG file. The default value is 10 secondes. The minimal value is 1 secondes.
+
+\fB\-a\fR <\fIMPEG audio file\fP> : MP2 audio file to merge with the video sequence.
+
+\fB\-w\fR <\fIwav audio file\fP> : WAV audio file will be converted in MP2 file and merging with the video sequence.
+
+\fB\-o\fR <\fIoutput MPEG file\fP> : the ouput MPEG file name. If you don't use this option, a temporary file will be created.
+
+\fB\-i\fR <\fIinput images files\fP> : images files name to merge in MPEG.
+
+\fB\-I\fR <\fIImageMagick bin folder\fP> : folder for ImageMagick binary programs.
+
+\fB\-M\fR <\fIMjpegtools bin folder\fP> : folder for MjpegTools binary programs.
+
+\fB\-h | \-\-help\fR : output help information and exit.
+
+Notes : 
+
+\- The \fB\-i\fR option must be the last option in the command line.
+.br 
+\- If you use some whitespaces in the path folders/files, use '"' around the complete path string.
+.br 
+.SH "RETURN VALUES"
+.LP 
+0 \-> Process finish succefuly.
+.br 
+1 \-> Error.
+.SH "EXAMPLES"
+.LP 
+\fB# images2mpg \-f SVCD \-d 15 \-w Music.wav \-o MyPortfolio.mpg \-i 01.jpg 02.jpg 03.jpg 04.jpg\fR
+
+Build PAL (default) SVCD MPEG file with the 'Music.wav' sound file and this image files sequence :
+
+01.jpg
+02.jpg
+03.jpg
+04.jpg
+
+For each image on the portfolio, the screen show duration is 15 seconds. The output file is 'MyPortfolio.mpg'.
+There isn't transition between images.
+.LP 
+\fB# images2mpg \-n NTSC \-t 2 \-o MyPortfolio.mpg \-i *.png\fR
+
+Build XVCD (default) NTSC MPEG file with a transition between images (speed 2) with  all local PNG image files.
+The image files sequence use the local filesystem sort.
+.LP 
+.SH "AUTHORS"
+.LP 
+This man page was written by Gilles CAULIER.
+.br 
+If you have questions, remarks, problems or you just want to contact
+the author :
+  \fIcaulier.gilles@free.fr\fP
+
+The main mailing list for the Digikam project is:
+  \fIdigikam\-users@lists.sourceforge.net\fP
+
+For more info, see our website at
+  \fIhttp://digikam.sourceforge.net\fP
+.SH "SEE ALSO"
+.LP 
+ImageMagick(1), mjpegtools(1), vcdimager(1)
+.LP 
+Digikam GUI WEB site project : http://digikam.sourceforge.net

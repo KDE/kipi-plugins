@@ -1,0 +1,17 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=MPEGEncoder
+Comment=KIPI images MPEG encoder Plugin
+Comment[de]=Ein KIPI Modul um die Bilder als MPEG Film zu kodieren
+Comment[es]=Complemento de KIPI para codificar las imágenes en un fichero MPEG
+Comment[fr]=Module externe de KIPI pour encoder des images dans un fichier MPEG
+Comment[da]=KIPI plugin til MPEG-billedindkodning
+Comment[it]=Modulo esterno di KIPI per la codifica MPEG di immagini
+Comment[pl]=Wtyczka do tworzenia filmów MPEG dla programu KIPI
+Comment[nl]=KIPI plugin voor het maken van een MPEG bestand van afbeeldingen (VCD)
+Comment[hu]=KIPI MPEG videó plugin
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_mpegencoder
+author=Gilles Caulier, caulier dot gilles at free.fr
+X-KIPI-MergeMenu=true

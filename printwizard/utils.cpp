@@ -1,0 +1,105 @@
+/***************************************************************************
+                          utils.cpp  -  description
+                             -------------------
+    begin                : Fri Jan 31 2003
+    copyright            : (C) 2003 by Todd Shoemaker
+    email                : jtshoe11@yahoo.com
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+// C Ansi includes
+
+extern "C"
+{
+#include <unistd.h>
+#include <stdio.h>
+}
+
+// Include files for Qt
+
+#include <qstringlist.h>
+#include <qwidget.h>
+#include <qdir.h>
+#include <qprocess.h>
+
+// Include files for KDE
+
+#include <kurl.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kio/netaccess.h>
+
+int NINT(double n)
+{
+  return (int)(n + 0.5);
+}
+
+int MIN(int a, int b)
+{
+  if (a < b)
+    return a;
+  else
+    return b;
+}
+
+int MAX(int a, int b)
+{
+  if (a > b)
+    return a;
+  else
+    return b;
+}
+
+bool copyFile(QString src, QString dest)
+{
+  return KIO::NetAccess::copy(src, dest);
+}
+
+bool moveFile(QString src, QString dest)
+{
+  if (copyFile(src, dest))
+  {
+    return KIO::NetAccess::del(src);
+  }
+  else
+    return false;
+}
+
+// given a list of args, launch this app as a separate thread.
+// args[0] is the application to run.
+bool launchExternalApp(QStringList &args)
+{
+  QProcess process;
+  for(QStringList::Iterator it = args.begin(); it != args.end(); ++it)
+  {
+    process.addArgument(*it);
+  }
+
+  return process.start();
+}
+
+bool checkTempPath(QWidget *parent, QString tempPath)
+{
+  // does the temp path exist?
+  QDir tempDir(tempPath);
+  if (!tempDir.exists())
+  {
+        if (!tempDir.mkdir(tempDir.path()))
+        {
+        KMessageBox::sorry(parent,
+          i18n("I could not create the temp directory. "
+               "Please make sure you have proper permissions to this directory and try again."));
+        return false;
+        }
+  }
+  return true;
+}
+

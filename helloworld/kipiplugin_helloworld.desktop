@@ -1,0 +1,15 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=HelloWorld
+Comment=KIPI Hello World Plugin
+Comment[de]=Ein Tutorial zur Erstellung von KIPI Modulen
+Comment[es]=Tutorial para escribir un complemento de KIPI
+Comment[fr]=Un tutoriel pour l'écriture d'un module externe de KIPI
+Comment[da]=KIPI plugin tutorial
+Comment[pl]=Wtyczka szkoleniowa dla programu KIPI
+Comment[nl]=Handleiding voor het schrijven van KIPI plugins
+Comment[hu]=KIPI Hello Világ plugin
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_helloworld
+author=John Doe, johndoe@somewhere.com
