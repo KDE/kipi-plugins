@@ -12,11 +12,15 @@ if compile_JPEGLOSSLESS
 JPEGLOSSLESSDIR = jpeglossless
 endif
 
+if compile_TIMEADJUST
+TIMEADJUSTDIR = timeadjust
+endif
+
 SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery \
 	sendimages acquireimages batchprocessimages \
-	timeadjust wallpaper \
-	rawconverter findimages \
-	$(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(JPEGLOSSLESSDIR)
+	wallpaper rawconverter findimages \
+	$(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(JPEGLOSSLESSDIR) \
+	$(TIMEADJUSTDIR)
 
 rcdir = $(kde_datadir)/kipi
 rc_DATA = tips

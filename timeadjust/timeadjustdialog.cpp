@@ -24,10 +24,12 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qvbuttongroup.h>
+#include <qvgroupbox.h>
 #include <qradiobutton.h>
 #include <qspinbox.h>
 #include <qgrid.h>
 #include <qpushbutton.h>
+#include <qframe.h>
 
 // KDE includes.
 
@@ -43,6 +45,7 @@
 
 #include <libkipi/version.h>
 #include <libkipi/imageinfo.h>
+#include <libkexif/kexifdata.h>
 
 // Local includes.
 
@@ -52,7 +55,7 @@ namespace KIPITimeAdjustPlugin
 {
 
 TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent, const char* name )
-                : KDialogBase( IconList, i18n("Adjust Time & Date"), Help|Ok|Cancel, Ok, parent, name ),
+                : KDialogBase( Plain, i18n("Adjust Time & Date"), Help|Ok|Cancel, Ok, parent, name ),
                   m_interface( interface )
 {
     // About data and help button.
@@ -77,7 +80,6 @@ TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent,
 
     // ------------------------------------------------------------------
     
-    addInfoPage();
     addConfigPage();
     
     connect( this, SIGNAL( okClicked() ),
@@ -103,12 +105,20 @@ void TimeAdjustDialog::setImages( const KURL::List& images )
 
     if ( inexactCount > 0 ) {
     
-        QString tmpLabel = i18n("1 images will be changed; ", "%n images will be changed; ", exactCount)
-                         + i18n("1 image will be skipped due an inexact date.", "%n images will be skipped due to inexact dates.", inexactCount );
+        QString tmpLabel = i18n("1 images will be changed; ",
+                                "%n images will be changed; ",
+                                exactCount)
+                         + i18n("1 image will be skipped due an inexact date.",
+                                "%n images will be skipped due to inexact dates.",
+                                inexactCount );
+        
         m_infoLabel->setText( tmpLabel );
-    } else {
-        m_infoLabel->setText( i18n("1 image will be changed", "%n images will be changed", m_images.count() ) );
-        }
+    }
+    else {
+        m_infoLabel->setText( i18n("1 image will be changed",
+                                   "%n images will be changed",
+                                   m_images.count() ) );
+    }
     // PENDING(blackie) handle all images being inexact.
 
     updateExample();
@@ -122,22 +132,33 @@ void TimeAdjustDialog::slotHelp()
 
 void TimeAdjustDialog::addConfigPage()
 {
-    QWidget* page = addPage( i18n("Configure"), i18n("Adjust Time and Dates"),
-                             BarIcon("config", KIcon::SizeMedium ) );
-    QVBoxLayout *vlay = new QVBoxLayout( page, 6 );
+    QVBoxLayout *vlay = new QVBoxLayout( plainPage(), 6 );
+
+    QLabel* header = new QLabel( plainPage() );
+    header->setText( i18n("Adjust Time and Dates") );
+    vlay->addWidget( header );
+
+    QFrame* hline = new QFrame( plainPage() );
+    hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
+    vlay->addWidget( hline );
 
     // Adjustment type
-    QVButtonGroup* grp = new QVButtonGroup( i18n("Adjustment Type"), page, "adjustment type" );
-    m_add = new QRadioButton( i18n("Add"), grp );
-    new QRadioButton( i18n("Subtract" ), grp );
-    vlay->addWidget( grp );
+    m_adjustTypeGrp = new QVButtonGroup( i18n("Adjustment Type"),
+                                         plainPage(), "adjustment type" );
+    m_adjustTypeGrp->setRadioButtonExclusive( true );
+    m_add      = new QRadioButton( i18n("Add"), m_adjustTypeGrp );
+    m_subtract = new QRadioButton( i18n("Subtract" ), m_adjustTypeGrp );
+    m_exif     = new QRadioButton( i18n("Set file date to camera provided (EXIF) date"),
+                                   m_adjustTypeGrp );
+    vlay->addWidget( m_adjustTypeGrp );
     m_add->setChecked( true );
-    connect( grp, SIGNAL( clicked(int) ), this, SLOT( updateExample() ) );
+    connect( m_adjustTypeGrp, SIGNAL( clicked(int) ),
+             SLOT( adjustmentTypeChanged() ) );
 
     // Adjustment
-    grp = new QVButtonGroup( i18n("Adjustment"), page, "adjustment" );
-    vlay->addWidget( grp );
-    QWidget* grid = new QWidget( grp );
+    m_adjustValGrp = new QVButtonGroup( i18n("Adjustment"), plainPage(), "adjustment" );
+    vlay->addWidget( m_adjustValGrp );
+    QWidget* grid = new QWidget( m_adjustValGrp );
     QGridLayout* gridLay = new QGridLayout( grid, 0, 3 );
     gridLay->setColStretch( 2, 1 );
 
@@ -172,11 +193,11 @@ void TimeAdjustDialog::addConfigPage()
     gridLay->addWidget( m_years, 5, 1 );
 
     // Example page
-    grp = new QVButtonGroup( i18n( "Example" ), page, "example" );
-    vlay->addWidget( grp );
+    m_exampleBox = new QVGroupBox( i18n( "Example" ), plainPage(), "example" );
+    vlay->addWidget( m_exampleBox );
 
-    m_infoLabel = new QLabel( grp );
-    m_exampleAdj = new QLabel( grp );
+    m_infoLabel = new QLabel( m_exampleBox );
+    m_exampleAdj = new QLabel( m_exampleBox );
 
     connect( m_secs, SIGNAL( valueChanged( int ) ), this,
              SLOT( updateExample() ) );
@@ -197,51 +218,64 @@ void TimeAdjustDialog::addConfigPage()
              this, SLOT( updateExample() ) );
 }
 
-void TimeAdjustDialog::addInfoPage()
-{
-    QWidget* pageAbout = addPage( i18n("Description"), i18n("Description"),
-                                  BarIcon("contents", KIcon::SizeMedium ) );
-    QVBoxLayout *vlay = new QVBoxLayout( pageAbout, 6 );
-
-    QLabel *label = new QLabel( i18n("<qt><p>Sometimes it happens that the "
-                                     "time on your digital cameral is set incorrectly, and the dates of all "
-                                     "your images are therefore incorrect.</p>"
-                                     "<p>Using this plugin you can adjust the time of several images at once, "
-                                     "i.e. add or substract a certain amount of time (in minutes, hours, or days) to each image.</p></qt>"),
-                                pageAbout);
-    vlay->addWidget(label); vlay->addStretch(1);
-
-
-}
-
 void TimeAdjustDialog::updateExample()
 {
     QString oldDate = m_exampleDate.toString();
-    QDateTime date = updateTime( m_exampleDate );
+    QDateTime date = updateTime( KURL(), m_exampleDate );
     QString newDate = date.toString();
-    m_exampleAdj->setText( i18n( "%1 would, for example, change into %2").arg(oldDate).arg(newDate) );
+    m_exampleAdj->setText( i18n( "%1 would, for example, change into %2")
+                           .arg(oldDate).arg(newDate) );
+}
+
+void TimeAdjustDialog::adjustmentTypeChanged()
+{
+    QButton* btn = m_adjustTypeGrp->selected();
+    if ( !btn )
+        return;
+
+    m_exampleBox->setEnabled( btn != m_exif );
+    m_adjustValGrp->setEnabled( btn != m_exif );
 }
 
 void TimeAdjustDialog::slotOK()
 {
-    for( KURL::List::ConstIterator it = m_images.begin(); it != m_images.end(); ++it ) {
+    for( KURL::List::ConstIterator it = m_images.begin(); it != m_images.end(); ++it )
+    {
         KIPI::ImageInfo info = m_interface->info( *it );
         QDateTime time = info.time();
-        time = updateTime( time );
+        time = updateTime( info.path(), info.time() );
         info.setTime( time );
     }
 }
 
-QDateTime TimeAdjustDialog::updateTime( QDateTime time ) const
+QDateTime TimeAdjustDialog::updateTime( const KURL& url, const QDateTime& time ) const
 {
-    int sign = -1;
-    if ( m_add->isChecked() )
-        sign = 1;
+    if ( m_exif->isChecked() )
+    {
+        KExifData exifData;
+        if ( !exifData.readFromFile(url.path()) )
+            return time;
 
-    time = time.addSecs( sign * ( m_secs->value() + 60*m_minutes->value() + 60*60*m_hours->value() + 24*60*60*m_days->value() ) );
-    time = time.addMonths( sign * m_months->value() );
-    time = time.addYears( sign * m_years->value() );
-    return time;
+        QDateTime newTime = exifData.getExifDateTime();
+        if (newTime.isValid())
+            return newTime;
+        else
+            return time;
+    }
+    else
+    {
+        int sign = -1;
+        if ( m_add->isChecked() )
+            sign = 1;
+
+        QDateTime newTime = time.addSecs( sign * ( m_secs->value()
+                                                   + 60*m_minutes->value()
+                                                   + 60*60*m_hours->value()
+                                                   + 24*60*60*m_days->value() ) );
+        newTime = newTime.addMonths( sign * m_months->value() );
+        newTime = newTime.addYears( sign * m_years->value() );
+        return newTime;
+    }
 }
 
 }  // NameSpace KIPITimeAdjustPlugin

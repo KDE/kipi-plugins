@@ -149,7 +149,7 @@ if test x$have_libkexif != xyes; then
 fi
 
 AM_CONDITIONAL(compile_JPEGLOSSLESS, [test x$have_libkexif = xyes])
-
+AM_CONDITIONAL(compile_TIMEADJUST,   [test x$have_libkexif = xyes])
 
 #---------------------------------------------------------
 #
