@@ -32,6 +32,7 @@ enum Action
     Similar = 0,
     Exact,
     Matrix,
+    FastParsing,
     Progress
 };
     

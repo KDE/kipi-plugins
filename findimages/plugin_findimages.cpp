@@ -167,17 +167,23 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
               break;
               }
 
+           case(KIPIFindDupplicateImagesPlugin::FastParsing):
+              {
+              text = i18n("Fast parsing for '%1'").arg(QFileInfo(d->fileName).fileName());
+              break;
+              }
+
            case(KIPIFindDupplicateImagesPlugin::Progress):
               {
-              m_current=0;
+              m_current = 0;
               m_total = d->total;
-              text = i18n("Parsing %1 images...").arg(d->total);
+              text = i18n("Checking %1 images...").arg(d->total);
               break;
               }
 
            default:
               {
-              kdWarning( 51000 ) << "Plugin_FindImages: Unknown event: " << d->action << endl;
+              kdWarning( 51000 ) << "Plugin_FindImages: Unknown starting event: " << d->action << endl;
               }
            }
 
@@ -191,6 +197,13 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
 
             switch (d->action)
                {
+               case(KIPIFindDupplicateImagesPlugin::Matrix):
+                  {
+                  text = i18n("Failed to create fingerprint for '%1'")
+                             .arg(QFileInfo(d->fileName).fileName());
+                  break;
+                  }
+               
                case(KIPIFindDupplicateImagesPlugin::Similar):
                   {
                   text = i18n("Failed to find similar images.");
@@ -203,16 +216,73 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
                   break;
                   }
 
+               case(KIPIFindDupplicateImagesPlugin::Progress):
+                  {
+                  m_total = d->total;
+                  text = i18n("Failed to check %1 images...").arg((int)(d->total/2));
+                  break;
+                  }
+                  
                default:
                   {
-                  kdWarning( 51000 ) << "Plugin_FindImages: Unknown event: " << d->action << endl;
+                  kdWarning( 51000 ) << "Plugin_FindImages: Unknown failed event: " << d->action << endl;
                   }
                }
 
             m_progressDlg->addedAction(text, KIPI::WarningMessage);
             ++m_current;
             }
+        else 
+            {
+            QString text;
+            
+            switch (d->action)
+               {
+               case(KIPIFindDupplicateImagesPlugin::Matrix):
+                  {
+                  text = i18n("Fingerprint created for '%1'")
+                             .arg(QFileInfo(d->fileName).fileName());
+                  break;
+                  }
+                  
+               case(KIPIFindDupplicateImagesPlugin::FastParsing):
+                  {
+                  text = i18n("Fast parsing completed for '%1'")
+                             .arg(QFileInfo(d->fileName).fileName());
+                  break;
+                  }
+                  
+               case(KIPIFindDupplicateImagesPlugin::Similar):
+                  {
+                  text = i18n("Finding similar images for '%1' completed.")
+                             .arg(QFileInfo(d->fileName).fileName());
+                  break;
+                  }
 
+               case(KIPIFindDupplicateImagesPlugin::Exact):
+                  {
+                  text = i18n("Finding exact images for '%1' completed.")
+                             .arg(QFileInfo(d->fileName).fileName());
+                  break;
+                  }
+                  
+               case(KIPIFindDupplicateImagesPlugin::Progress):
+                  {
+                  m_total = d->total;
+                  text = i18n("Checking %1 images complete...").arg((int)(d->total/2));
+                  break;
+                  }
+                                    
+               default:
+                  {
+                  kdWarning( 51000 ) << "Plugin_FindImages: Unknown success event: " << d->action << endl;
+                  }
+               }
+            
+            m_progressDlg->addedAction(text, KIPI::SuccessMessage);
+            ++m_current;
+            }
+            
         m_progressDlg->setProgress(m_current, m_total);
 
         if( d->action == KIPIFindDupplicateImagesPlugin::Progress )

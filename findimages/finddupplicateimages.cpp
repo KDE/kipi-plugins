@@ -204,29 +204,29 @@ void FindDuplicateImages::showResult()
 
 void FindDuplicateImages::compareAlbums(void)
 {
-       writeSettings();
-       QValueList<KIPI::ImageCollection> ListAlbums(m_findDuplicateDialog->getAlbumsSelection());
-       filesList.clear();
+    writeSettings();
+    QValueList<KIPI::ImageCollection> ListAlbums(m_findDuplicateDialog->getAlbumsSelection());
+    filesList.clear();
 
-       for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
-           {
-           KURL::List Files = (*it).images();
+    for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
+        {
+        KURL::List Files = (*it).images();
+           
+        for( KURL::List::Iterator it2 = Files.begin(); it2 != Files.end(); ++it2 ) 
+            {
+            if ( !filesList.contains( (*it2).path() ) )
+                {
+                filesList.append( (*it2).path() ); // PENDING(blackie) handle remote URLS
+                }
+            }
 
-           for( KURL::List::Iterator it2 = Files.begin(); it2 != Files.end(); ++it2 ) 
-               {
-               if ( !filesList.contains( (*it2).path() ) )
-                   {
-                   filesList.append( (*it2).path() ); // PENDING(blackie) handle remote URLS
-                   }
-               }
+        kapp->processEvents();
+        }
 
-           kapp->processEvents();
-           }
-
-       if ( m_findDuplicateDialog->getFindMethod() == i18n("Almost") )
-           isCompareAlmost = true;
-       else
-           isCompareAlmost = false;
+    if ( m_findDuplicateDialog->getFindMethod() == i18n("Almost") )
+        isCompareAlmost = true;
+    else
+        isCompareAlmost = false;
 
     start();
     return;
@@ -237,10 +237,10 @@ void FindDuplicateImages::compareAlbums(void)
 
 void FindDuplicateImages::run()
 {
-       if ( isCompareAlmost )
-           compareAlmost(filesList);
-       else
-           compareFast(filesList);
+    if ( isCompareAlmost )
+        compareAlmost(filesList);
+    else
+        compareFast(filesList);
 }
 
 
@@ -280,9 +280,9 @@ void FindDuplicateImages::slotClearCache(QStringList fromDirs)
 
     for ( QStringList::Iterator it = fromDirs.begin(); it != fromDirs.end(); ++it )
         {
-        KURL deleteImage( QDir::homeDirPath() + "/.findduplicate/cache/" + *it );
+        QString deleteImage = QDir::homeDirPath() + "/.findduplicate/cache/" + *it ;
 
-        if ( KIO::NetAccess::del(deleteImage) == false )
+        if ( DeleteDir(deleteImage) == false )
            delOk = false;
         }
 
@@ -506,7 +506,7 @@ ImageSimilarityData* FindDuplicateImages::image_sim_fill_data(QString filename)
             f.close();
             }
 
-        sd->filled = TRUE;
+        sd->filled = true;
         return sd;
         }
 
@@ -564,7 +564,7 @@ ImageSimilarityData* FindDuplicateImages::image_sim_fill_data(QString filename)
         j += y_inc;
         }
 
-    sd->filled = TRUE;
+    sd->filled = true;
     sd->ratio=((float)w)/h;
     delete(pixbuf);
 
@@ -592,11 +592,11 @@ ImageSimilarityData* FindDuplicateImages::image_sim_fill_data(QString filename)
 
 void FindDuplicateImages::compareAlmost(QStringList filesList)
 {
-    KIPIFindDupplicateImagesPlugin::EventData *p = new KIPIFindDupplicateImagesPlugin::EventData;
-    p->action   = KIPIFindDupplicateImagesPlugin::Progress;
-    p->total = filesList.count();
-    p->starting = true;
-    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, p));
+    KIPIFindDupplicateImagesPlugin::EventData *d = new KIPIFindDupplicateImagesPlugin::EventData;
+    d->action = KIPIFindDupplicateImagesPlugin::Progress;
+    d->total = filesList.count()*2;
+    d->starting = true;
+    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
 
     res = new QDict < QPtrVector < QFile > >;
 
@@ -609,15 +609,15 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
     QTime debut=QTime::currentTime ();
     ImageSimilarityData *is;
 
-    for ( QStringList::Iterator item = filesList.begin(); item != filesList.end(); ++item )
+    for ( QStringList::Iterator item = filesList.begin() ; item != filesList.end() ; ++item )
         {
         QString itemName(*item);
         QFileInfo fi(itemName);
         QString Temp = fi.dirPath();
         QString albumName = Temp.section('/', -1);
 
-        KIPIFindDupplicateImagesPlugin::EventData *d = new KIPIFindDupplicateImagesPlugin::EventData;
-        d->action   = KIPIFindDupplicateImagesPlugin::Matrix;
+        d = new KIPIFindDupplicateImagesPlugin::EventData;
+        d->action = KIPIFindDupplicateImagesPlugin::Matrix;
         d->fileName = itemName;
         d->starting = true;
         QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
@@ -631,28 +631,33 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
 
            list->resize (list->size () + 1);
            list->insert (list->size () - 1, is );
-           }
 
-        KIPIFindDupplicateImagesPlugin::EventData *r = new KIPIFindDupplicateImagesPlugin::EventData;
-        r->action    = KIPIFindDupplicateImagesPlugin::Matrix;
-        r->fileName  = itemName;
-        r->success   = true;
-        r->errString = "";
-        QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
+           d = new KIPIFindDupplicateImagesPlugin::EventData;
+           d->action = KIPIFindDupplicateImagesPlugin::Matrix;
+           d->fileName = itemName;
+           d->starting = false;
+           d->success = true;
+           d->errString = "";
+           QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+           }
+        else 
+           {
+           d = new KIPIFindDupplicateImagesPlugin::EventData;
+           d->action = KIPIFindDupplicateImagesPlugin::Matrix;
+           d->fileName = itemName;
+           d->starting = false;
+           d->success = false;
+           d->errString = "";
+           QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+           }
         }
 
     kdDebug( 51000 ) << "Matrix creation time:" << debut.msecsTo(QTime::currentTime()) << endl;
-    debut=QTime::currentTime ();
+    debut = QTime::currentTime ();
 
     QDict < QFile > *fait = new QDict < QFile >;
     list = listRatW;
-    bool done=false;
-
-    p = new KIPIFindDupplicateImagesPlugin::EventData;
-    p->action   = KIPIFindDupplicateImagesPlugin::Progress;
-    p->total = filesList.count();
-    p->starting = true;
-    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, p));
+    bool done = false;
 
     while( list != NULL )
         {
@@ -664,14 +669,15 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
                 ImageSimilarityData *i1 = list->at(i);
 
                 if (i1 && !fait->find(i1->filename))
-                {
-                KIPIFindDupplicateImagesPlugin::EventData *d = new KIPIFindDupplicateImagesPlugin::EventData;
-                d->action   = KIPIFindDupplicateImagesPlugin::Similar;
-                d->fileName = i1->filename;
-                d->starting = true;
-                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+                   {
+                   d = new KIPIFindDupplicateImagesPlugin::EventData;
+                   d->action = KIPIFindDupplicateImagesPlugin::Similar;
+                   d->fileName = i1->filename;
+                   d->starting = true;
+                   d->success = false;
+                   QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
 
-                for (unsigned int j = i + 1; j < list->size (); j++)
+                   for (unsigned int j = i + 1; j < list->size (); j++)
                         {
                         // Create the 'ImageSimilarityData' data for the second image.
                         ImageSimilarityData *i2 = list->at(j);
@@ -687,7 +693,7 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
                             if (!res->find (i1->filename))
                                 {
                                 vect = new QPtrVector < QFile >;
-                                vect->setAutoDelete(TRUE);
+                                vect->setAutoDelete(true);
                                 res->insert (i1->filename, vect);
                                 }
                             else
@@ -698,23 +704,24 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
                             fait->insert(i2->filename, new QFile(i2->filename));
                             }
                         }
-                    }
+                   }
 
-               KIPIFindDupplicateImagesPlugin::EventData *e = new KIPIFindDupplicateImagesPlugin::EventData;
-               e->action   = KIPIFindDupplicateImagesPlugin::Similar;
-               e->fileName = i1->filename;
-               e->starting = false;
-               QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, e));
+               d = new KIPIFindDupplicateImagesPlugin::EventData;
+               d->action = KIPIFindDupplicateImagesPlugin::Similar;
+               d->fileName = i1->filename;
+               d->starting = false;
+               d->success = true;
+               QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
                }
            }
 
         if(!done)
            {
            list = listRatH;
-           done=true;
+           done = true;
            }
         else
-            list=NULL;
+           list = NULL;
         }
 
     kdDebug( 51000 ) << "Comparison time: " << debut.msecsTo(QTime::currentTime()) << endl;
@@ -725,10 +732,11 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
     delete(listRatH);
     delete(listRatW);
 
-    KIPIFindDupplicateImagesPlugin::EventData *e = new KIPIFindDupplicateImagesPlugin::EventData;
-    e->action   = KIPIFindDupplicateImagesPlugin::Progress;
-    e->starting = false;
-    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, e));
+    d = new KIPIFindDupplicateImagesPlugin::EventData;
+    d->action = KIPIFindDupplicateImagesPlugin::Progress;
+    d->starting = false;
+    d->success = true;
+    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
 }
 
 
@@ -744,12 +752,26 @@ void FindDuplicateImages::compareFast(QStringList filesList)
 
     QString size;
     QFile *file;
-    int nbrF=0;
+    int nbrF = 0;
 
+    KIPIFindDupplicateImagesPlugin::EventData *d = new KIPIFindDupplicateImagesPlugin::EventData;
+    d->action = KIPIFindDupplicateImagesPlugin::Progress;
+    d->total = filesList.count()*2;
+    d->starting = true;
+    d->success = false;
+    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+    
     for ( QStringList::Iterator item = filesList.begin(); item != filesList.end(); ++item )
         {
         QString itemName(*item);
         nbrF++;
+
+        d = new KIPIFindDupplicateImagesPlugin::EventData;
+        d->action = KIPIFindDupplicateImagesPlugin::FastParsing;
+        d->fileName = itemName;
+        d->starting = true;
+        d->success = false;
+        QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
 
         // Create a file
         file = new QFile( itemName );
@@ -771,16 +793,17 @@ void FindDuplicateImages::compareFast(QStringList filesList)
         //Add the file
         list->resize (list->size () + 1);
         list->insert (list->size () - 1, file);
+        
+        d = new KIPIFindDupplicateImagesPlugin::EventData;
+        d->action = KIPIFindDupplicateImagesPlugin::FastParsing;
+        d->fileName = itemName;
+        d->starting = false;
+        d->success = true;
+        QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
         }
 
     // Files comparison
-    QDictIterator < QPtrVector < QFile > >it (*dict);        // iterator for dict
-
-    KIPIFindDupplicateImagesPlugin::EventData *p = new KIPIFindDupplicateImagesPlugin::EventData;
-    p->action   = KIPIFindDupplicateImagesPlugin::Progress;
-    p->total = filesList.count();
-    p->starting = true;
-    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, p));
+    QDictIterator < QPtrVector < QFile > >it (*dict);        // Iterator for dict.
 
     while (it.current ())
         {
@@ -793,10 +816,11 @@ void FindDuplicateImages::compareFast(QStringList filesList)
                 {
                 QFile *file1 = (QFile *) (list->at (i));
 
-                KIPIFindDupplicateImagesPlugin::EventData *d = new KIPIFindDupplicateImagesPlugin::EventData;
+                d = new KIPIFindDupplicateImagesPlugin::EventData;
                 d->action   = KIPIFindDupplicateImagesPlugin::Exact;
                 d->fileName = file1->name();
                 d->starting = true;
+                d->success = false;
                 QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
 
                 if (!fait->find (file1->name()))
@@ -804,13 +828,14 @@ void FindDuplicateImages::compareFast(QStringList filesList)
                     for (unsigned int j = i + 1; j < list->size (); j++)
                         {
                         QFile *file2 = (QFile *) (list->at (j));
-                        // The files are equals
+                        
+                        // The files are equals ?
 
                         if (equals (file1, file2))
                             {
                             QPtrVector < QFile > *vect;
 
-                            // Add the file
+                            // Add the file.
 
                             if (!res->find (file1->name ()))
                                 {
@@ -828,23 +853,26 @@ void FindDuplicateImages::compareFast(QStringList filesList)
                             }
                         }
                     }
-                KIPIFindDupplicateImagesPlugin::EventData *e = new KIPIFindDupplicateImagesPlugin::EventData;
-                e->action   = KIPIFindDupplicateImagesPlugin::Exact;
-                e->fileName = file1->name();
-                e->starting = false;
-                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, e));
+                    
+                d = new KIPIFindDupplicateImagesPlugin::EventData;
+                d->action = KIPIFindDupplicateImagesPlugin::Exact;
+                d->fileName = file1->name();
+                d->starting = false;
+                d->success = true;
+                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
                 }
             }
+            
         delete(fait);
         ++it;
         }
 
     delete (it);
 
-    KIPIFindDupplicateImagesPlugin::EventData *e = new KIPIFindDupplicateImagesPlugin::EventData;
-    e->action   = KIPIFindDupplicateImagesPlugin::Progress;
-    e->starting = false;
-    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, e));
+    d = new KIPIFindDupplicateImagesPlugin::EventData;
+    d->action   = KIPIFindDupplicateImagesPlugin::Progress;
+    d->starting = false;
+    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
 }
 
 

@@ -121,7 +121,7 @@ private:
 DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface, 
                                QDict < QPtrVector < QFile > >* cmp )
               : KDialogBase( parent, "DisplayCompare", true, 0,
-                Help|User1|User2|Close, Close, true, i18n("&About"), i18n("Delete")),
+                Help|User1|Close, Close, true, i18n("Delete")),
                 m_interface( interface )
 {
     KImageIO::registerFormats();
@@ -262,9 +262,6 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
     // signals and slots connections
 
     connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotAbout()));
-
-    connect(this, SIGNAL(user2Clicked()),
             this, SLOT(slotDelete()));
 
     connect(listName, SIGNAL(selectionChanged ( QListViewItem * )),
