@@ -206,7 +206,20 @@ dnl Print a warning/notice message because
 dnl the slideshow plug-in needs OpenGL!
 dnl
 [
-	AC_MSG_NOTICE([The slideshow plugin requires OpenGL support compiled into Qt!])
+
+dnl
+dnl configure didn't specify to use external opengl library
+dnl check if qt has been compiled with opengl
+dnl
+
+    AC_CHECK_LIB( $qtlib-mt, glAccum,  have_GL=yes,   have_GL=no)
+    if test $have_GL = "yes"; then
+	AC_MSG_RESULT(
+	[qt compiled with opengl support. using built in opengl])
+    else
+	AC_MSG_WARN(
+	[qt not compiled with opengl support. disabling slideshow plugin])
+    fi	 
 ])
 
 ])
@@ -268,15 +281,15 @@ fi
 
 dnl Check if Imlib2 is installed properly
 KDE_FIND_IMLIB2_CONFIG
-     
-if test -z "$ac_imlib2_config"; then
-  AC_MSG_WARN([Imlib2 not found.])
-  SLIDESHOWDIR=""
-else
-  SLIDESHOWDIR=slideshow
-fi
 
 dnl Check for Mesa (OpenGL) for slideshow plugin
 MDL_HAVE_OPENGL
 
-AM_CONDITIONAL(compile_SLIDESHOW, test -n "$ac_imlib2_config" -a -n "$have_gl" )
+
+AC_SUBST(SLIDESHOWDIR)
+if test -n "$ac_imlib2_config" -a "$have_GL" = yes; then
+	SLIDESHOWDIR='slideshow'
+else
+	SLIDESHOWDIR=''
+	AC_MSG_WARN([Slideshow plugin will not be compiled])
+fi
