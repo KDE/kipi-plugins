@@ -256,7 +256,8 @@ void FindDuplicateDialog::slotUpdateCache(void)
 
 void FindDuplicateDialog::slotPurgeCache(void)
 {
-    QValueList<KIPI::ImageCollection> albumsList = getSelectedAlbums();
+    QValueList<KIPI::ImageCollection> albumsList = 
+        m_imageCollectionSelector->selectedImageCollections();
     QStringList albumsListPath;
 
     for( QValueList<KIPI::ImageCollection>::ConstIterator album = albumsList.begin() ;
