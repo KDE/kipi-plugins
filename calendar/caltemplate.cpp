@@ -169,7 +169,14 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
     hlayout->addWidget( comboFont_ );
 
     QFontDatabase fontDB;
-    comboFont_->insertStringList(fontDB.families());
+    QStringList families(fontDB.families());
+    QStringList smoothScalableFamilies;
+    for (QStringList::iterator it=families.begin(); it != families.end();
+         ++it)
+    {
+        smoothScalableFamilies.append(*it);
+    }
+    comboFont_->insertStringList(smoothScalableFamilies);
 
 
     gboxLayout->addLayout( hlayout );

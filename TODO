@@ -95,8 +95,7 @@ Jesper K. Pedersen <blackie at kde.org>
 * CALENDAR PLUGIN [Author: Renchi Raju]
   (Calendar creation wizzard)
 
- - Add option for choosing resolution.
- - Fix corrupted pdf file when printing to pdf (fairly sure this is a kprinter bug).
+ - Use QSimpleRichText to render the calendar text
  - Add more options for controlling the appearance.
  - Work on beautifying the calendar layout.
 

@@ -35,7 +35,6 @@
 
 #include <kglobal.h>
 #include <klocale.h>
-#include <kapplication.h>
 
 // Local includes.
 
@@ -753,7 +752,6 @@ void CalBlockPainter::slotPaintNextBlock()
     if (currBlock_ < numBlocks_) {
         QTimer::singleShot(10, this, SLOT(slotPaintNextBlock()));
         emit signalProgress(currBlock_+1, numBlocks_);
-        kapp->processEvents();
     }
     else {
         emit signalCompleted();
