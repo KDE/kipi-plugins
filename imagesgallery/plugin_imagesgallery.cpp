@@ -40,7 +40,7 @@ Plugin_Imagesgallery::Plugin_Imagesgallery(QObject *parent, const char*, const Q
             : KIPI::Plugin(parent, "ImagesGallery")
 {
     KGlobal::locale()->insertCatalogue("kipiplugin_imagesgallery");
-    kdDebug() << "Plugin_Imagesgallery plugin loaded" << endl;
+    kdDebug( 51001 ) << "Plugin_Imagesgallery plugin loaded" << endl;
 
     (void) new KAction (i18n("HTML export..."),        // Menu message.
                         "www",                         // Menu icon.

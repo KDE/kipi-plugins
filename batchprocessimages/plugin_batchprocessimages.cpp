@@ -74,7 +74,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char
     setInstance(KGenericFactory<Plugin_BatchProcessImages>::instance());
     setXMLFile("plugins/digikamplugin_batchprocessimages.rc");
     KGlobal::locale()->insertCatalogue("digikamplugin_batchprocessimages");
-    kdDebug() << "Plugin_BatchProcessImages plugin loaded" << endl;
+    kdDebug( 51001 ) << "Plugin_BatchProcessImages plugin loaded" << endl;
 
     m_action_borderimages = new KAction (i18n("Border Images..."),           // Menu message.
                                         "borderimages",                      // Menu icon.
@@ -208,7 +208,7 @@ void Plugin_BatchProcessImages::slotActivate()
         }
     else
         {
-        kdWarning() << "The impossible happened... unknown batch action specified" << endl;
+        kdWarning( 51000 ) << "The impossible happened... unknown batch action specified" << endl;
         return;
         }
 }

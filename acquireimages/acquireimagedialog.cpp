@@ -491,7 +491,7 @@ void AcquireImageDialog::slotGotPreview(const KURL &url, const QPixmap &pixmap)
 
 void AcquireImageDialog::slotAddNewAlbum( void )
 {
-    kdWarning() << "AcquireImageDialog::slotAddNewAlbum is commented out, what should we do?\n";
+    kdWarning( 51000 ) << "AcquireImageDialog::slotAddNewAlbum is commented out, what should we do?\n";
 
 // PENDING(blackie) How do we handle this without a library path?
 #ifdef TEMPORARILY_REMOVED

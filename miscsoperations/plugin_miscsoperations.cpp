@@ -58,7 +58,7 @@
  {
     KGlobal::locale()->insertCatalogue("kipiplugin_miscsoperations");
 
-    kdDebug() << "Plugin_MiscsOperations plugin loaded" << endl;
+    kdDebug( 51001 ) << "Plugin_MiscsOperations plugin loaded" << endl;
 
     m_action_OpenIn = new KActionMenu(i18n("&Open Album in ..."),
                          actionCollection(),

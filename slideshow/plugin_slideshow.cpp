@@ -45,7 +45,7 @@ Plugin_SlideShow::Plugin_SlideShow(QObject *parent,
 {
     KGlobal::locale()->insertCatalogue("kipiplugin_slideshow");
 
-    kdDebug() << "Plugin_SlideShow plugin loaded"
+    kdDebug( 51001 ) << "Plugin_SlideShow plugin loaded"
               << endl;
 
     action = new KAction (i18n("SlideShow..."),

@@ -55,7 +55,7 @@ Plugin_FindImages::Plugin_FindImages(QObject *parent, const char*, const QString
 {
     KGlobal::locale()->insertCatalogue("kipiplugin_findimages");
 
-    kdDebug() << "Plugin_FindImages plugin loaded" << endl;
+    kdDebug( 51001 ) << "Plugin_FindImages plugin loaded" << endl;
 
     m_action_findImages = new KActionMenu(i18n("&Find images..."),
                            actionCollection(),
@@ -148,7 +148,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
             break;
         }
         default: {
-            kdWarning() << "Plugin_FindImages: Unknown event" << endl;
+            kdWarning( 51000 ) << "Plugin_FindImages: Unknown event" << endl;
         }
         }
         m_progressDlg->setLabelText(text);
@@ -168,7 +168,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
                 break;
             }
             default: {
-                kdWarning() << "Plugin_FindImages: Unknown event" << endl;
+                kdWarning( 51000 ) << "Plugin_FindImages: Unknown event" << endl;
             }
             }
 

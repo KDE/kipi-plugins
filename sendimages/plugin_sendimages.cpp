@@ -62,7 +62,7 @@ Plugin_SendImages::Plugin_SendImages(QObject *parent, const char*, const QString
                  : KIPI::Plugin(parent, "SendImages")
 {
     KGlobal::locale()->insertCatalogue("kipilugin_sendimages");
-    kdDebug() << "Plugin_SendImages plugin loaded" << endl;
+    kdDebug( 51001 ) << "Plugin_SendImages plugin loaded" << endl;
 
     m_action_sendimages = new KAction (i18n("E-mail Images..."),     // Menu message.
                                         "mail_new",                  // Menu icon.

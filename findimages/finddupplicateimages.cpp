@@ -643,7 +643,7 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
 
         }
 
-    kdDebug() << "Matrix creation time:" << debut.msecsTo(QTime::currentTime()) << endl;
+    kdDebug( 51000 ) << "Matrix creation time:" << debut.msecsTo(QTime::currentTime()) << endl;
     debut=QTime::currentTime ();
 
     QDict < QFile > *fait = new QDict < QFile >;
@@ -718,7 +718,7 @@ void FindDuplicateImages::compareAlmost(QStringList filesList)
             list=NULL;
         }
 
-    kdDebug() << "Comparison time: " << debut.msecsTo(QTime::currentTime()) << endl;
+    kdDebug( 51000 ) << "Comparison time: " << debut.msecsTo(QTime::currentTime()) << endl;
 
     // End of comparison process.
 

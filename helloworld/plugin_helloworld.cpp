@@ -55,7 +55,7 @@ Plugin_HelloWorld::Plugin_HelloWorld(QObject *parent,
     // Insert our translations into the global catalogue
     KGlobal::locale()->insertCatalogue("digikamplugin_helloworld");
 
-    kdDebug() << "Plugin_HelloWorld plugin loaded" << endl;
+    kdDebug( 51001 ) << "Plugin_HelloWorld plugin loaded" << endl;
 
     // this is our action shown in the menubar/toolbar of the mainwindow
     (void) new KAction (i18n("Hello World..."),
@@ -71,7 +71,7 @@ Plugin_HelloWorld::Plugin_HelloWorld(QObject *parent,
 
 void Plugin_HelloWorld::slotActivate()
 {
-    kdDebug() << "Plugin_HelloWorld slot activated" << endl;
+    kdDebug( 51000 ) << "Plugin_HelloWorld slot activated" << endl;
 
     // Get the current/selected album
     KIPI::ImageCollection album = m_interface->currentAlbum();
@@ -84,10 +84,10 @@ void Plugin_HelloWorld::slotActivate()
 #endif
 
     // Now get some properties of the album
-    kdDebug() << "The current album title is " << album.name() << endl;
+    kdDebug( 51000 ) << "The current album title is " << album.name() << endl;
 #ifdef TEMPORARILY_REMOVED
-    kdDebug() << "The current album collection is " << album.getCollection() << endl;
-    kdDebug() << "The current album date is " << album.date().toString() << endl;
+    kdDebug( 51000 ) << "The current album collection is " << album.getCollection() << endl;
+    kdDebug( 51000 ) << "The current album date is " << album.date().toString() << endl;
 #endif
 
     // see the comments in the album
@@ -97,7 +97,7 @@ void Plugin_HelloWorld::slotActivate()
     album->openDB();
 
     // get the comments for this particular item
-    kdDebug() << album->getItemComments("IMG_100.JPG") << endl;
+    kdDebug( 51000 ) << album->getItemComments("IMG_100.JPG") << endl;
 
     // Close the album database once you are done
     album->closeDB();
@@ -105,7 +105,7 @@ void Plugin_HelloWorld::slotActivate()
     // Get all the Albums in the current library path
     for (Digikam::AlbumInfo *a = Digikam::AlbumManager::instance()->firstAlbum();
          a; a = a->nextAlbum()) {
-        kdDebug() << "Album title: " << a->getTitle() << endl;
+        kdDebug( 51000 ) << "Album title: " << a->getTitle() << endl;
     }
 #endif
 }

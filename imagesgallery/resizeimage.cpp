@@ -101,7 +101,7 @@ void ResizeImage::run(void)
             SizeFactor_= w;
 
        // scale to pixie size
-       // kdDebug() << "w: " << w << " h: " << h << endl;
+       // kdDebug( 51000 ) << "w: " << w << " h: " << h << endl;
        // Resizing if to big
 
        if( w > SizeFactor_ || h > SizeFactor_ )
@@ -129,7 +129,7 @@ void ResizeImage::run(void)
 
            if ( scaleImg.width() != w || scaleImg.height() != h )
                {
-               kdDebug() << "Resizing failed. Aborting." << endl;
+               kdDebug( 51000 ) << "Resizing failed. Aborting." << endl;
                *threadDone_ = false;
                return;
                }
@@ -143,7 +143,7 @@ void ResizeImage::run(void)
                }
            }
 
-       kdDebug() << "Saving resized image to: " << Directory_ + ImageFormat_  << endl;
+       kdDebug( 51000 ) << "Saving resized image to: " << Directory_ + ImageFormat_  << endl;
 
        if ( CompressionSet_ == true )
           {

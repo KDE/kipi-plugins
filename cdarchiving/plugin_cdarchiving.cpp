@@ -36,7 +36,7 @@ Plugin_CDArchiving::Plugin_CDArchiving(QObject *parent, const char*, const QStri
             : KIPI::Plugin(parent, "CDArchiving")
 {
     KGlobal::locale()->insertCatalogue("kipiplugin_cdarchiving");
-    kdDebug() << "Plugin_CDArchiving plugin loaded" << endl;
+    kdDebug( 51001 ) << "Plugin_CDArchiving plugin loaded" << endl;
 
     m_action_cdarchiving = new KAction (i18n("Archive to CD ..."),        // Menu message.
                                         "cd",                             // Menu icon.

@@ -24,10 +24,7 @@
 #define PLUGIN_JPEGLOSSLESS_H
 
 #include <libkipi/plugin.h>
-#ifdef TEMPORARILY_REMOVED
-#include <digikam/albuminfo.h>
-#include <digikam/albummanager.h>
-#endif
+#include <libkipi/imagecollection.h>
 
 class QCustomEvent;
 class KActionMenu;
@@ -52,8 +49,8 @@ public:
     virtual KIPI::Category category() const;
 
 protected:
-
     void customEvent(QCustomEvent *event);
+    KURL::List images();
 
 private slots:
 
@@ -74,6 +71,7 @@ private:
     JPEGLossLess::ActionThread *m_thread;
     int                         m_total;
     int                         m_current;
+    KURL::List                  m_images;
 };
 
 #endif /* PLUGIN_JPEGLOSSLESS_H */

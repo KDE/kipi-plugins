@@ -780,7 +780,7 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
   } // A4
   else
   {
-    kdDebug() << "Initializing Unsupported page layouts\n";
+    kdDebug( 51000 ) << "Initializing Unsupported page layouts\n";
     // We don't support this page size yet.  Just create a default page.
     TPhotoSize *p;
     p = new TPhotoSize;

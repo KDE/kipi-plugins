@@ -53,7 +53,7 @@ Plugin_Mpegencoder::Plugin_Mpegencoder(QObject *parent, const char*, const QStri
 {
     KGlobal::locale()->insertCatalogue("kipiplugin_mpegencoder");
 
-    kdDebug() << "Plugin_Mpegencoder plugin loaded" << endl;
+    kdDebug( 51001 ) << "Plugin_Mpegencoder plugin loaded" << endl;
 
     (void) new KAction (i18n("MPEG Encoder..."),
                         "video",

@@ -43,7 +43,7 @@ Plugin_CommentsEditor::Plugin_CommentsEditor(QObject *parent,
 {
     KGlobal::locale()->insertCatalogue("kipiplugin_commentseditor");
 
-    kdDebug() << "Plugin_CommentsEditor plugin loaded"
+    kdDebug( 51001 ) << "Plugin_CommentsEditor plugin loaded"
               << endl;
 
     action = new KAction (i18n("Comments Editor..."),

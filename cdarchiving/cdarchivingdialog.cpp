@@ -278,7 +278,7 @@ void CDArchivingDialog::setAlbumsList(void)
 
         // PENDING(blackie) current album now is a pointer that might be created on the fly, so I the code
         // below might likely not work.
-        kdWarning() << "Please look at this Pending!\n";
+        kdWarning( 51000 ) << "Please look at this Pending!\n";
 #ifdef TEMPORARILY_REMOVED
         if (album == Digikam::AlbumManager::instance()->currentAlbum())
         {

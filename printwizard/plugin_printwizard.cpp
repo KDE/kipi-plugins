@@ -61,7 +61,7 @@ Plugin_PrintWizard::Plugin_PrintWizard(QObject *parent, const char*, const QStri
 #endif
     KGlobal::locale()->insertCatalogue("digikamplugin_printwizard");
 
-    kdDebug() << "Plugin_PrintWizard plugin loaded"
+    kdDebug( 51001 ) << "Plugin_PrintWizard plugin loaded"
               << endl;
 
     printAction =  new KAction (i18n("Print Wizard..."),

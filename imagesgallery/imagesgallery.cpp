@@ -358,14 +358,14 @@ void ImagesGallery::Activate()
            KIO::NetAccess::copy(srcURL, destURL);
            }
 
-		for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt ) 
+		for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt )
             {
             m_album           = *albumIt;
-			
+
 			QDateTime newestDate;
 			KURL::List images=m_album.images();
 			for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) {
-				kdDebug() << "URL:" << (*urlIt).prettyURL() << endl;
+				kdDebug( 51000 ) << "URL:" << (*urlIt).prettyURL() << endl;
 				KIPI::ImageInfo info = m_interface->info( *urlIt );
 				if ( info.time() > newestDate )
 					newestDate = info.time();
@@ -626,7 +626,7 @@ void ImagesGallery::createBody(QTextStream& stream,
     QPixmap imgProp;
 
 	KURL::List images=m_album.images();
-	for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end() && !m_cancelled; ) 
+	for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end() && !m_cancelled; )
         {
         stream << "<tr>" << endl;
 
@@ -770,11 +770,11 @@ void ImagesGallery::createBody(QTextStream& stream,
       KURL srcURL(dir);
       KURL destURL(imgGalleryDir + QString::fromLatin1("/up.png"));
       KIO::NetAccess::copy(srcURL, destURL);
-	  
+
 	  int imgIndex = 0;
 	  KURL::List images=m_album.images();
 	  for( KURL::List::Iterator urlIt = images.begin();
-		urlIt != images.end() && !m_cancelled; urlIt++, imgIndex++) 
+		urlIt != images.end() && !m_cancelled; urlIt++, imgIndex++)
         {
         const QString imgName = (*urlIt).fileName();
 
@@ -902,7 +902,7 @@ bool ImagesGallery::createHtml(const KURL& url,
        loadComments();
 
     const QString imgGalleryDir = url.directory();
-    kdDebug() << "imgGalleryDir: " << imgGalleryDir << endl;
+    kdDebug( 51000 ) << "imgGalleryDir: " << imgGalleryDir << endl;
 
     // Create the "thumbs" subdirectory
 
@@ -922,7 +922,7 @@ bool ImagesGallery::createHtml(const KURL& url,
 
     if (m_configDlg->getCreatePageForPhotos())
        {
-       kdDebug() << "Create photos :" << m_configDlg->getCreatePageForPhotos() << endl;
+       kdDebug( 51000 ) << "Create photos :" << m_configDlg->getCreatePageForPhotos() << endl;
 
        if (createDirectory(pages_dir, imgGalleryDir, "pages") == false)
          return false;
@@ -931,7 +931,7 @@ bool ImagesGallery::createHtml(const KURL& url,
     // Create HTML page.
 
     QFile file( url.path() );
-    kdDebug() << "url.path(): " << url.path() << ", thumb_dir: "<< thumb_dir.path()
+    kdDebug( 51000 ) << "url.path(): " << url.path() << ", thumb_dir: "<< thumb_dir.path()
               << ", pagesDir: "<< pages_dir.path()<<endl;
 
     if ( file.open(IO_WriteOnly) )
@@ -959,18 +959,18 @@ void ImagesGallery::loadComments(void)
 
     m_useCommentFile = false;
     m_commentMap = new CommentMap;
-	
+
     QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
 
-    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt ) 
+    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt )
         {
         KURL::List images = (*albumIt).images();
-        
+
         for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt )
 			{
             KIPI::ImageInfo info = m_interface->info( *urlIt );
 			QString comment=info.description();
-			if (!comment.isEmpty()) 
+			if (!comment.isEmpty())
 				{
 				m_useCommentFile = true;
 				m_commentMap->insert((*urlIt).prettyURL(), comment);
@@ -1051,7 +1051,7 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
           nextH = imgProp.height();
           }
 
-       kdDebug() << previousImgName << ":"<<prevW<<"/"<<prevH << "       "
+       kdDebug( 51000 ) << previousImgName << ":"<<prevW<<"/"<<prevH << "       "
                  <<  nextImgName << ":"<<nextW<<"/"<<nextH<< endl;
 
        // Navigation thumbs need to be 64x64 at most
@@ -1088,7 +1088,7 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
           nextH = NAV_THUMB_MAX_SIZE;
           }
 
-       kdDebug() << previousImgName << ":"<<prevW<<"/"<<prevH << "       "
+       kdDebug( 51000 ) << previousImgName << ":"<<prevW<<"/"<<prevH << "       "
                  <<  nextImgName << ":"<<nextW<<"/"<<nextH<< endl;
 
        if (previousImgName != "")
@@ -1146,7 +1146,7 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
        if (m_configDlg->printImageProperty())
           {
           imgProp.load( targetImagesDir.absFilePath(imgName, true) );
-          kdDebug() << targetImagesDir.path() << "/" << imgName << endl;
+          kdDebug( 51000 ) << targetImagesDir.path() << "/" << imgName << endl;
           stream << sep << imgProp.width() << "&nbsp;x&nbsp;" << imgProp.height();
           sep = ", ";
           }

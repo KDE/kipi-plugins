@@ -32,9 +32,7 @@
 
 #include <qdir.h>
 
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
-
+#include <libkipi/interface.h>
 #include "actions.h"
 #include "actionthread.h"
 #include "progressdlg.h"
@@ -54,7 +52,7 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
 {
     KGlobal::locale()->insertCatalogue("kipiplugin_jpeglossless");
 
-    kdDebug() << "Plugin_JPEGLossless plugin loaded" << endl;
+    kdDebug( 51001 ) << "Plugin_JPEGLossless plugin loaded" << endl;
 
     // Main submenu for JPEGLossLess plugin transform actions.
 
@@ -122,17 +120,22 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
     m_action_Transform->insert(m_action_FlipImage);
     m_action_Transform->insert(m_action_Convert2GrayScale);
 
+#ifdef TEMPORARILY_REMOVED
     m_action_RotateImage->setEnabled(false);
     m_action_FlipImage->setEnabled(false);
     m_action_Convert2GrayScale->setEnabled(false);
+#endif
 
-    m_thread      = new JPEGLossLess::ActionThread(this);
+    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent );
+    m_thread      = new JPEGLossLess::ActionThread(interface, this);
     m_progressDlg = 0;
 
 
+#ifdef TEMPORARILY_REMOVED
     connect(Digikam::AlbumManager::instance(),
             SIGNAL(signalAlbumItemsSelected(bool)),
             SLOT(slotItemsSelected(bool)));
+#endif
 }
 
 
@@ -157,11 +160,7 @@ Plugin_JPEGLossless::~Plugin_JPEGLossless()
 
 void Plugin_JPEGLossless::slotFlip()
 {
-    Digikam::AlbumInfo* album =
-        Digikam::AlbumManager::instance()->currentAlbum();
-    if (!album) return;
-
-    QStringList items(album->getSelectedItemsPath());
+    KURL::List items = images();
     if (items.count() <= 0) return;
 
     QString from(sender()->name());
@@ -177,7 +176,7 @@ void Plugin_JPEGLossless::slotFlip()
         proceed = true;
     }
     else {
-        kdWarning() << "The impossible happened... unknown flip specified" << endl;
+        kdWarning( 51000 ) << "The impossible happened... unknown flip specified" << endl;
         return;
     }
 
@@ -200,10 +199,7 @@ void Plugin_JPEGLossless::slotFlip()
 
 void Plugin_JPEGLossless::slotRotate()
 {
-    Digikam::AlbumInfo* album = Digikam::AlbumManager::instance()->currentAlbum();
-    if (!album) return;
-
-    QStringList items(album->getSelectedItemsPath());
+    KURL::List items = images();
     if (items.count() <= 0) return;
 
     QString from(sender()->name());
@@ -223,7 +219,7 @@ void Plugin_JPEGLossless::slotRotate()
         proceed = true;
     }
     else {
-        kdWarning() << "The impossible happened... unknown rotation angle specified" << endl;
+        kdWarning( 51000 ) << "The impossible happened... unknown rotation angle specified" << endl;
         return;
     }
 
@@ -247,10 +243,7 @@ void Plugin_JPEGLossless::slotRotate()
 
 void Plugin_JPEGLossless::slotConvert2GrayScale()
 {
-    Digikam::AlbumInfo* album = Digikam::AlbumManager::instance()->currentAlbum();
-    if (!album) return;
-
-    QStringList items(album->getSelectedItemsPath());
+    KURL::List items = images();
     if (items.count() <= 0) return;
 
     QString from(sender()->name());
@@ -279,9 +272,8 @@ void Plugin_JPEGLossless::slotCancel()
         m_progressDlg->reset();
     }
 
-    Digikam::AlbumManager* man = Digikam::AlbumManager::instance();
-    if (!man->currentAlbum()) return;
-    man->refreshItemHandler(man->currentAlbum()->getSelectedItems());
+    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    interface->refreshImages( m_images );
 }
 
 
@@ -317,7 +309,7 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
             break;
         }
         default: {
-            kdWarning() << "Plugin_JPEGLossLess: Unknown event" << endl;
+            kdWarning( 51000 ) << "Plugin_JPEGLossLess: Unknown event" << endl;
         }
         }
 
@@ -342,7 +334,7 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
                 break;
             }
             default: {
-                kdWarning() << "Plugin_JPEGLossLess: Unknown event" << endl;
+                kdWarning( 51000 ) << "Plugin_JPEGLossLess: Unknown event" << endl;
             }
             }
 
@@ -359,13 +351,23 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
     if (m_current >= m_total) {
         m_current     = 0;
         m_progressDlg->reset();
-        Digikam::AlbumManager* man = Digikam::AlbumManager::instance();
-        if (!man->currentAlbum()) return;
-        man->refreshItemHandler(man->currentAlbum()->getSelectedItems());
+        KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+        interface->refreshImages( m_images );
     }
 }
 
 KIPI::Category Plugin_JPEGLossless::category() const
 {
     return KIPI::IMAGESPLUGIN;
+}
+
+KURL::List Plugin_JPEGLossless::images()
+{
+    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::ImageCollection images = interface->currentSelection();
+    if ( images.images().count() == 0 )
+        images = interface->currentAlbum();
+    // We don't want the set of images to change before we are done and tells the host app to refresh the images.
+    m_images = images.images();
+    return images.images();
 }

@@ -56,7 +56,7 @@ Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const char*, const Q
             : KIPI::Plugin(parent, "AcquireImages")
 {
     KGlobal::locale()->insertCatalogue("kipiplugin_acquireimages");
-    kdDebug() << "Plugin_AcquireImages plugin loaded" << endl;
+    kdDebug( 51001 ) << "Plugin_AcquireImages plugin loaded" << endl;
 
 
     m_action_acquire = new KActionMenu(i18n("&Acquire images"),
@@ -126,7 +126,7 @@ void Plugin_AcquireImages::slotActivate()
        }
     else
        {
-       kdWarning() << "The impossible happened... unknown flip specified" << endl;
+       kdWarning( 51000 ) << "The impossible happened... unknown flip specified" << endl;
        return;
        }
 }

@@ -836,7 +836,7 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
 
     if ( m_useCommentFile ) loadComments();
 
-    kdDebug() << "sourceDirName: " << sourceDirName << endl;
+    kdDebug( 51000 ) << "sourceDirName: " << sourceDirName << endl;
 
     // Sort the images files formats running with thumbnails construction.
 
@@ -844,7 +844,7 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
                    QDir::Name|QDir::IgnoreCase, QDir::Files|QDir::Readable);
 
     const QString imgGalleryDir = url.directory();
-    kdDebug() << "imgGalleryDir: " << imgGalleryDir << endl;
+    kdDebug( 51000 ) << "imgGalleryDir: " << imgGalleryDir << endl;
 
     // Create the "thumbs" subdirectory
 
@@ -861,7 +861,7 @@ bool CDArchiving::createHtml(const KURL& url, const QString& sourceDirName, int 
     // Create HTML page.
 
     QFile file( url.path() );
-    kdDebug() << "url.path(): " << url.path() << ", thumb_dir: "<< thumb_dir.path()
+    kdDebug( 51000 ) << "url.path(): " << url.path() << ", thumb_dir: "<< thumb_dir.path()
               << ", imageDir: "<< imageDir.path() << endl;
 
     if ( imageDir.exists() && file.open(IO_WriteOnly) )
@@ -1030,7 +1030,7 @@ bool CDArchiving::createPage(const QString& imgGalleryDir , const QString& imgNa
       sep = ", ";
 
       imgProp.load( targetImagesDir.absFilePath(imgName, true) );
-      kdDebug() << targetImagesDir.path() << "/" << imgName << endl;
+      kdDebug( 51000 ) << targetImagesDir.path() << "/" << imgName << endl;
 
       stream << sep << imgProp.width() << "&nbsp;x&nbsp;" << imgProp.height();
       sep = ", ";
@@ -1150,7 +1150,7 @@ if ( ValRet == true )
         SizeFactor=w;
 
    // scale to pixie size
-   // kdDebug() << "w: " << w << " h: " << h << endl;
+   // kdDebug( 51000 ) << "w: " << w << " h: " << h << endl;
    // Resizing if to big
 
    if( w > SizeFactor || h > SizeFactor )
@@ -1179,7 +1179,7 @@ if ( ValRet == true )
 
        if ( scaleImg.width() != w || scaleImg.height() != h )
            {
-           kdDebug() << "Resizing failed. Aborting." << endl;
+           kdDebug( 51000 ) << "Resizing failed. Aborting." << endl;
            return false;
            }
 
@@ -1193,7 +1193,7 @@ if ( ValRet == true )
            }
        }
 
-   kdDebug() << "Saving resized image to: " << Directory + ImageFormat  << endl;
+   kdDebug( 51000 ) << "Saving resized image to: " << Directory + ImageFormat  << endl;
 
    if ( CompressionSet == true )
       {

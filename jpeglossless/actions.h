@@ -2,8 +2,8 @@
  * File  : actions.h
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-12-05
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2003 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -11,12 +11,12 @@
  * Public License as published bythe Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #ifndef ACTIONS_H
@@ -29,20 +29,21 @@ enum Action
 {
     Rotate = 0,
     Flip,
-    GrayScale
+    GrayScale,
 };
-    
+
 enum RotateAction
 {
     Rot90 = 0,
     Rot180,
-    Rot270
+    Rot270,
+    Rot0
 };
 
 enum FlipAction
 {
     FlipHorizontal = 0,
-    FlipVertical
+    FlipVertical = 1
 };
 
 class EventData
@@ -52,7 +53,7 @@ public:
         starting = false;
         success  = false;
     }
-    
+
     QString fileName;
     QString errString;
     bool    starting;
