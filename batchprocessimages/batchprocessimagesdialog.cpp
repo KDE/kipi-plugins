@@ -191,7 +191,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     groupBox4 = new QHGroupBox( box );
     QWidget* box41 = new QWidget( groupBox4 );
-    QHBoxLayout* lay2 = new QHBoxLayout( box41 );
+    QHBoxLayout* lay2 = new QHBoxLayout( box41, 0, spacingHint() );
     m_listFiles = new BatchProcessImagesList( box41 );
     lay2->addWidget( m_listFiles );
 
