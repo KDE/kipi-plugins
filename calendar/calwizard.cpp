@@ -28,6 +28,7 @@
 #include <qpainter.h>
 #include <qprogressbar.h>
 #include <qlayout.h>
+#include <qpushbutton.h>
 
 // KDE includes.
 
@@ -35,6 +36,10 @@
 #include <klocale.h>
 #include <kprinter.h>
 #include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // LibKipi includes.
 
@@ -103,13 +108,34 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     // ---------------------------------------------------------------
 
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Calendar"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin for to create a calendar"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Renchi Raju", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
+                     "renchi@pooh.tam.uiuc.edu");
+
+    m_helpButton = helpButton();
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Calendar handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
+
+    // ------------------------------------------
+    
     printer_  = 0;
     painter_  = 0;
 
     connect(this, SIGNAL(selected(const QString&)),
             SLOT(slotPageSelected(const QString&)));
-    connect(this, SIGNAL(helpClicked()),
-            this, SLOT(slotHelp()));
+            
     setCaption(i18n("Create Calendar"));
 }
 

@@ -35,10 +35,12 @@
 
 #include <libkipi/interface.h>
 
-class KPrinter;
 class QLabel;
 class QPainter;
 class QProgressBar;
+class QPushButton;
+
+class KPrinter;
 
 namespace KIPICalendarPlugin
 {
@@ -68,8 +70,10 @@ private:
     QProgressBar *wFinishProgressTotal_;
     QProgressBar *wFinishProgressCurrent_;
 
-    KPrinter    *printer_;
-    QPainter    *painter_;
+    QPushButton  *m_helpButton;
+    
+    KPrinter     *printer_;
+    QPainter     *painter_;
 
     QValueList<int>   monthNumbers_;
     KURL::List        monthImages_;
