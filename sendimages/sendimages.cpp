@@ -241,37 +241,44 @@ void SendImages::run()
 void SendImages::makeCommentsFile(void)
 {
     if ( m_sendImagesDialog->m_addComments->isChecked() == true )
-       {
-       QString ImageCommentsText;
+    {
+        QString ImageCommentsText;
 
-       KURL::List::Iterator it = m_imagesPackage.begin();
+        KURL::List::Iterator it = m_imagesPackage.begin();
 
-       while( it != m_imagesPackage.end() )
-          {
-          KIPI::ImageInfo info = m_interface->info( *it );
+        bool anyCommentsPresent = false;
+       
+        while( it != m_imagesPackage.end() )
+        {
+            KIPI::ImageInfo info = m_interface->info( *it );
 
-          QString commentItem = info.description();
-          ++it;
-          QString targetFile = (*it).filename();
+            QString commentItem = info.description();
+            ++it;
+            QString targetFile = (*it).filename();
 
-          if ( commentItem.isEmpty() )
-              commentItem = i18n("no comment");
+            if ( commentItem.isEmpty() )
+                commentItem = i18n("no comment");
+            else
+                anyCommentsPresent = true;
 
-          ImageCommentsText = ImageCommentsText +
-                              i18n("Comments for image \"%1\": %2\n\n")
-                              .arg(targetFile)
-                              .arg(commentItem);
-          ++it;
-          }
+            ImageCommentsText = ImageCommentsText +
+                                i18n("Comments for image \"%1\": %2\n\n")
+                                .arg(targetFile)
+                                .arg(commentItem);
+            ++it;
+        }
 
-       QFile commentsFile( m_tmp + i18n("comments.txt") );
-       QTextStream stream( &commentsFile );
-       stream.setEncoding( QTextStream::UnicodeUTF8 );
-       commentsFile.open( IO_WriteOnly );
-       stream << ImageCommentsText << "\n";
-       commentsFile.close();
-       m_filesSendList.append( m_tmp + i18n("comments.txt") );
-       }
+        if ( anyCommentsPresent )
+        {
+            QFile commentsFile( m_tmp + i18n("comments.txt") );
+            QTextStream stream( &commentsFile );
+            stream.setEncoding( QTextStream::UnicodeUTF8 );
+            commentsFile.open( IO_WriteOnly );
+            stream << ImageCommentsText << "\n";
+            commentsFile.close();
+            m_filesSendList.append( m_tmp + i18n("comments.txt") );
+        }
+    }
 }
 
 
