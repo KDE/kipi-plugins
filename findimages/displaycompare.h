@@ -102,7 +102,7 @@ private:
    
    QPushButton        *m_helpButton;
    
-   KIPI::Interface* m_interface;
+   KIPI::Interface    *m_interface;
 };
 
 }  // NameSpace KIPIFindDupplicateImagesPlugin

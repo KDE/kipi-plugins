@@ -311,6 +311,8 @@ void DisplayCompare::slotDelete( void )
 
            if ( KIO::NetAccess::del(deleteImage) == false )
               KMessageBox::error(0, i18n("Cannot remove duplicate file:\n%1").arg(item->fullpath()));
+           else
+              m_interface->delImage( deleteImage );
 
            listEq->takeItem (item);
            item = itemTmp;
@@ -351,7 +353,8 @@ void DisplayCompare::slotDisplayLeft(QListViewItem * item)
        {
        OriginalNameLabel->setText(pitem->name());
        originalInfoLabel1->setText(i18n("Image size: %1x%2 pixels").arg(im.width()).arg(im.height()));
-       originalInfoLabel2->setText(i18n("File size: 1 byte", "File size: %n bytes",QFileInfo(pitem->fullpath()).size()));
+       originalInfoLabel2->setText(i18n("File size: 1 byte",
+                                        "File size: %n bytes",QFileInfo(pitem->fullpath()).size()));
        originalInfoLabel3->setText(i18n("Modified: %1").arg(KLocale(NULL)
                                    .formatDateTime(QFileInfo(pitem->fullpath())
                                    .lastModified())));
@@ -427,7 +430,8 @@ void DisplayCompare::slotDisplayRight(QListViewItem * item)
        {
        similarNameLabel->setText(pitem->name());
        similarInfoLabel1->setText(i18n("Image size: %1x%2 pixels").arg(im.width()).arg(im.height()));
-       similarInfoLabel2->setText(i18n("File size: 1 byte", "File size: %n bytes", QFileInfo(pitem->fullpath()).size()));
+       similarInfoLabel2->setText(i18n("File size: 1 byte",
+                                       "File size: %n bytes", QFileInfo(pitem->fullpath()).size()));
        similarInfoLabel3->setText(i18n("Modified: %1").arg(KLocale(NULL)
                                                       .formatDateTime(QFileInfo(pitem->fullpath())
                                                       .lastModified())));
