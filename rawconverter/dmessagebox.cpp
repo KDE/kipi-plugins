@@ -37,7 +37,7 @@
 
 #include "dmessagebox.h"
 
-namespace RawConverter
+namespace KIPIRawConverterPlugin
 {
 
 DMessageBox* DMessageBox::s_instance = 0;
@@ -135,6 +135,6 @@ void DMessageBox::showMsg(const QString& msg, const QString& mainMsg,
         msgBox->show();
 }
 
-}
+} // NameSpace KIPIRawConverterPlugin
 
 #include "dmessagebox.moc"

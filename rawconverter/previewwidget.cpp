@@ -27,7 +27,7 @@
 
 #include "previewwidget.h"
 
-namespace RawConverter
+namespace KIPIRawConverterPlugin
 {
 
 PreviewWidget::PreviewWidget(QWidget *parent)
@@ -135,7 +135,6 @@ void PreviewWidget::slotResize()
     update();
 }
 
-}
-
+} // NameSpace KIPIRawConverterPlugin
 
 #include "previewwidget.moc"

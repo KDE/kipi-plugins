@@ -31,7 +31,7 @@ class QPixmap;
 class QImage;
 class QTimer;
 
-namespace RawConverter
+namespace KIPIRawConverterPlugin
 {
 
 class PreviewWidget : public QWidget
@@ -64,6 +64,6 @@ private:
     
 };
 
-}
+} // NameSpace KIPIRawConverterPlugin
 
 #endif /* PREVIEWWIDGET_H */

@@ -44,7 +44,7 @@ namespace KIPI
 class ThumbnailJob;
 }
 
-namespace RawConverter
+namespace KIPIRawConverterPlugin
 {
 
 class  CSpinBox;
@@ -125,6 +125,6 @@ private slots:
     void slotGotThumbnail(const KFileItem* url, const QPixmap& pix);
 };
 
-}
+} // NameSpace KIPIRawConverterPlugin
 
 #endif /* BATCHDIALOG_H */

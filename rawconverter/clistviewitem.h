@@ -27,7 +27,7 @@
 
 class QPixmap;
 
-namespace RawConverter
+namespace KIPIRawConverterPlugin
 {
 
 class CListViewItem;
@@ -64,5 +64,6 @@ public:
 
 };
 
-}
+} // NameSpace KIPIRawConverterPlugin
+
 #endif /* CLISTVIEWITEM_H */

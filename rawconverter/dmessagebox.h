@@ -24,7 +24,7 @@
 
 // Digikam Message Box
 // If One Message Box is already open, and more messages are posted
-//  they will be appended to the open messagebox
+// they will be appended to the open messagebox
 /* Should make this a utility class for plugins */
 
 #include <qdialog.h>
@@ -33,7 +33,7 @@
 class QLabel;
 class KListBox;
 
-namespace RawConverter
+namespace KIPIRawConverterPlugin
 {
 
 class DMessageBox : public QDialog
@@ -63,6 +63,6 @@ private slots:
     
 };
 
-}
+} // NameSpace KIPIRawConverterPlugin
 
 #endif /* DMESSAGEBOX_H */

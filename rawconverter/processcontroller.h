@@ -27,7 +27,7 @@
 
 class QProcess;
 
-namespace RawConverter
+namespace KIPIRawConverterPlugin
 {
 
 struct Settings
@@ -96,6 +96,6 @@ private slots:
     void slotProcessFinished();
 };
 
-}
+} // NameSpace KIPIRawConverterPlugin
 
 #endif /* PROCESSCONTROLLER_H */

@@ -104,7 +104,6 @@ void Plugin_RawConverter::setup( QWidget* widget )
 
 Plugin_RawConverter::~Plugin_RawConverter()
 {
-
 }
 
 bool Plugin_RawConverter::checkBinaries()
@@ -151,14 +150,22 @@ void Plugin_RawConverter::slotActivateSingle()
 
     if (!checkBinaries()) return;
 
-    RawConverter::SingleDialog *converter =
-        new RawConverter::SingleDialog(images.images()[0].path()); // PENDING(blackie) handle remote URLS
+    KIPIRawConverterPlugin::SingleDialog *converter =
+        new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path()); // PENDING(blackie) handle remote URLS
+    
     converter->show();
 }
 
 void Plugin_RawConverter::slotActivateBatch()
 {
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
+        
     KIPI::ImageCollection images;
     images = interface->currentScope();
     
@@ -167,8 +174,8 @@ void Plugin_RawConverter::slotActivateBatch()
 
     if (!checkBinaries()) return;
 
-    RawConverter::BatchDialog *converter =
-        new RawConverter::BatchDialog();
+    KIPIRawConverterPlugin::BatchDialog *converter =
+        new KIPIRawConverterPlugin::BatchDialog();
 
     KURL::List urls = images.images();
     QStringList files;
@@ -183,7 +190,14 @@ void Plugin_RawConverter::slotActivateBatch()
 
 void Plugin_RawConverter::slotSetActive()
 {
-    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    
+    if ( !interface ) 
+           {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+           }
+        
     KIPI::ImageCollection images;
     images = interface->currentSelection();
     bool single = images.isValid();

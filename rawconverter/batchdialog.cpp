@@ -28,6 +28,7 @@
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <kapplication.h>
+#include <kio/previewjob.h>
 
 #include <qpushbutton.h>
 #include <qframe.h>
@@ -55,9 +56,8 @@ extern "C"
 #include "processcontroller.h"
 #include "clistviewitem.h"
 #include "dmessagebox.h"
-#include <kio/previewjob.h>
 
-namespace RawConverter
+namespace KIPIRawConverterPlugin
 {
 
 BatchDialog::BatchDialog()
@@ -580,7 +580,6 @@ void BatchDialog::slotGotThumbnail(const KFileItem* url,
     }
 }
 
-}
-
+} // NameSpace KIPIRawConverterPlugin
 
 #include "batchdialog.moc"

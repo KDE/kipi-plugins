@@ -48,7 +48,7 @@ extern "C"
 #include "cspinbox.h"
 #include "processcontroller.h"
 
-namespace RawConverter
+namespace KIPIRawConverterPlugin
 {
 
 SingleDialog::SingleDialog(const QString& file)
@@ -466,6 +466,6 @@ void SingleDialog::slotProcessingFailed(const QString&)
     previewWidget_->setText(i18n("Failed to convert raw image"));
 }
 
-}
+} // NameSpace KIPIRawConverterPlugin
 
 #include "singledialog.moc"

@@ -31,7 +31,7 @@ class QPushButton;
 class QVButtonGroup;
 class QCloseEvent;
 
-namespace RawConverter
+namespace KIPIRawConverterPlugin
 {
 
 class CSpinBox;
@@ -98,6 +98,6 @@ private slots:
 
 };
 
-}
+} // NameSpace KIPIRawConverterPlugin
 
 #endif // SINGLEDIALOG_H

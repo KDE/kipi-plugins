@@ -30,7 +30,7 @@ extern "C"
 
 #include "processcontroller.h"
 
-namespace RawConverter
+namespace KIPIRawConverterPlugin
 {
 
 ProcessController::ProcessController(QObject *parent)
@@ -215,7 +215,6 @@ void ProcessController::slotProcessFinished()
     }
 }
 
-}
-
+} // NameSpace KIPIRawConverterPlugin
 
 #include "processcontroller.moc"

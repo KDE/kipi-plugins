@@ -25,7 +25,7 @@
 #include <qspinbox.h>
 #include <stdlib.h>
 
-namespace RawConverter
+namespace KIPIRawConverterPlugin
 {
 
 class CSpinBox : public QSpinBox {
@@ -51,6 +51,6 @@ public:
 
 };
 
-}
+} // NameSpace KIPIRawConverterPlugin
 
 #endif /* CSPINBOX_H */
