@@ -42,10 +42,8 @@ extern "C"
 #include <qtextstream.h>
 #include <qfile.h>
 #include <qfont.h>
-#include <qdatetime.h>
 #include <qimage.h>
 #include <qtextcodec.h>
-#include <qstringlist.h>
 
 // Include files for KDE
 

@@ -43,6 +43,7 @@
 #include <qdir.h>
 #include <qcolor.h>
 #include <qthread.h>
+#include <qdatetime.h>
 
 // Includes files for KDE.
 
