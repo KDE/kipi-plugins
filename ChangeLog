@@ -1,5 +1,6 @@
 v0.1.0-beta 
 ----------------------------------------------------------------------------
+        * <Gilles Caulier> SendImage plugin: fixed bug #87188.
         * <Gilles Caulier> Added KAbout data on all plugins with a full 
 	  KDE bugs tracking support.
         * <Gilles Caulier> Improved batch operations in FindDuplicateImages 
