@@ -25,6 +25,9 @@
 class QWidget;
 class QString;
 
+namespace KIPISlideShowPlugin
+{
+
 class ImImageSSPrivate;
 class ImlibIface;
 class ImlibIfacePrivate;
@@ -68,5 +71,6 @@ private:
     ImlibIfacePrivate *d;
 };
 
+}  // NameSpace KIPISlideShowPlugin
 
 #endif /* IMLIBIFACE_H */

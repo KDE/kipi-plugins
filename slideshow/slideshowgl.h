@@ -29,6 +29,9 @@
 
 class QTimer;
 
+namespace KIPISlideShowPlugin
+{
+
 class SlideShowGL;
 
 class SlideShowGL : public QGLWidget
@@ -118,6 +121,6 @@ private slots:
     void slotMouseMoveTimeOut();
 };
 
-
+}  // NameSpace KIPISlideShowPlugin
 
 #endif /* SLIDESHOWGL_H */

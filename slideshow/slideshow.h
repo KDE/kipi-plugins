@@ -31,10 +31,14 @@
 class QTimer;
 class QMouseEvent;
 
+namespace KIPISlideShowPlugin
+{
+
 class ImlibIface;
 class ImImageSS;
 
 class SlideShow;
+
 typedef int (SlideShow::*EffectMethod)(bool);
 
 class SlideShow : public QWidget
@@ -119,5 +123,7 @@ private slots:
     void slotTimeOut();
     void slotMouseMoveTimeOut();
 };
+
+}  // NameSpace KIPISlideShowPlugin
 
 #endif /* SLIDESHOW_H */

@@ -30,6 +30,9 @@
 
 #include "imlibiface.h"
 
+namespace KIPISlideShowPlugin
+{
+
 // ---------------------------------------------------------------
 
 class ImImageSSPrivate
@@ -204,4 +207,5 @@ ImlibIface::~ImlibIface()
     delete d;
 }
 
+}  // NameSpace KIPISlideShowPlugin
 

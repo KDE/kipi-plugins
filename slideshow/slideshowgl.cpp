@@ -36,6 +36,9 @@
 
 #include "slideshowgl.h"
 
+namespace KIPISlideShowPlugin
+{
+
 SlideShowGL::SlideShowGL(const QStringList& fileList,
                          int delay, bool loop,
                          const QString& effectName)
@@ -1128,5 +1131,7 @@ void SlideShowGL::effectCube()
 
     m_i++;
 }
+
+}  // NameSpace KIPISlideShowPlugin
 
 #include "slideshowgl.moc"

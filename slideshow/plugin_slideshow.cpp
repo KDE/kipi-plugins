@@ -31,10 +31,10 @@
 
 // Local includes.
 
-#include "plugin_slideshow.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowconfig.h"
+#include "plugin_slideshow.h"
 
 // Lib KIPI includes.
 
@@ -58,6 +58,7 @@ Plugin_SlideShow::Plugin_SlideShow(QObject *parent,
 void Plugin_SlideShow::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
+    
     m_actionSlideShow = new KAction (i18n("SlideShow..."),
                                      "slideshow",
                                      0,
@@ -69,6 +70,7 @@ void Plugin_SlideShow::setup( QWidget* widget )
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
     KIPI::ImageCollection images = interface->currentScope();
     m_actionSlideShow->setEnabled( images.isValid() );
+    
     connect( interface, SIGNAL( currentScopeChanged( bool ) ),
              m_actionSlideShow, SLOT( setEnabled( bool ) ) );
 
@@ -83,7 +85,7 @@ Plugin_SlideShow::~Plugin_SlideShow()
 
 void Plugin_SlideShow::slotActivate()
 {
-    SlideShowConfig *slideShowConfig = new SlideShowConfig;
+    KIPISlideShowPlugin::SlideShowConfig *slideShowConfig = new KIPISlideShowPlugin::SlideShowConfig;
     
     connect(slideShowConfig, SIGNAL(okClicked()),
             this, SLOT(slotSlideShow()));
@@ -129,13 +131,14 @@ void Plugin_SlideShow::slotSlideShow()
 
     // PENDING(blackie) handle real URLS
     QStringList fileList;
+    
     for( KURL::List::Iterator urlIt = urlList.begin(); urlIt != urlList.end(); ++urlIt ) {
         fileList.append( (*urlIt).path() );
     }
 
     if (!opengl) {
-        SlideShow *slideShow =
-            new SlideShow(fileList, delay, printFileName,
+        KIPISlideShowPlugin::SlideShow *slideShow =
+            new KIPISlideShowPlugin::SlideShow(fileList, delay, printFileName,
                           loop, effectName);
         slideShow->show();
     }
@@ -143,8 +146,8 @@ void Plugin_SlideShow::slotSlideShow()
         if (!QGLFormat::hasOpenGL())
             KMessageBox::error(0, i18n("Sorry. OpenGL support not available on your system"));
         else {
-            SlideShowGL *slideShow =
-                new SlideShowGL(fileList, delay, loop, effectName);
+            KIPISlideShowPlugin::SlideShowGL *slideShow =
+                new KIPISlideShowPlugin::SlideShowGL(fileList, delay, loop, effectName);
             slideShow->show();
         }
     }
@@ -166,5 +169,6 @@ KIPI::Category Plugin_SlideShow::category( KAction* action ) const
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }
+
 
 #include "plugin_slideshow.moc"

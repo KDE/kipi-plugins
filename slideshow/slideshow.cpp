@@ -38,6 +38,8 @@ extern "C"
 #include "imlibiface.h"
 #include "slideshow.h"
 
+namespace KIPISlideShowPlugin
+{
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -959,5 +961,7 @@ void SlideShow::startPainter(Qt::PenStyle aPen)
     mPainter.setBrush(brush);
     mPainter.setPen(aPen);
 }
+
+}  // NameSpace KIPISlideShowPlugin
 
 #include "slideshow.moc"

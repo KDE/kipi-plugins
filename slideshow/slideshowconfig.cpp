@@ -40,6 +40,9 @@
 #include "slideshowgl.h"
 #include "slideshowconfig.h"
 
+namespace KIPISlideShowPlugin
+{
+
 SlideShowConfig::SlideShowConfig()
     : KDialogBase(0, "", true, i18n("SlideShow"),
                   Help|User1|Ok|Cancel, Ok, true, i18n("&About"))
@@ -288,5 +291,7 @@ void SlideShowConfig::slotAboutClicked()
                                   "Email: renchi@pooh.tam.uiuc.edu"),
                                   i18n("About SlideShow"));
 }
+
+}  // NameSpace KIPISlideShowPlugin
 
 #include "slideshowconfig.moc"

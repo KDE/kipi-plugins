@@ -30,7 +30,11 @@ class QCheckBox;
 class QComboBox;
 class QRadioButton;
 class QSpinBox;
+
 class KConfig;
+
+namespace KIPISlideShowPlugin
+{
 
 class SlideShowConfig : public KDialogBase
 {
@@ -69,5 +73,7 @@ private:
 
     KConfig*      config_;    
 };
+
+}  // NameSpace KIPISlideShowPlugin
 
 #endif
