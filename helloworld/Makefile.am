@@ -16,7 +16,8 @@ kipiplugin_helloworld_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = kipiplugin_helloworld.desktop
 
-# i18n translation messages
-messages: rc.cpp
-	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_helloworld.pot
+# i18n translation messages 
+#Nota : no need a translation file for this plugin.
+#messages: rc.cpp
+#	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_helloworld.pot
 
