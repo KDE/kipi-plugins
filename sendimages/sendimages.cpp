@@ -207,9 +207,9 @@ void SendImages::makeCommentsFile(void)
 
        for( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
           {
-       QString commentItem = m_interface->info( *it ).description();
+          QString commentItem = m_interface->info( *it ).description();
 
-          if ( commentItem == "" )
+          if ( commentItem.isEmpty() )
               commentItem = i18n("no comment");
 
           ImageCommentsText = ImageCommentsText +
