@@ -40,11 +40,6 @@
  #include <kmessagebox.h>
  #include <ktextbrowser.h>
 
-// Digikam includes
-
- #include <digikam/albummanager.h>
- #include <digikam/albuminfo.h>
-
 // Local includes
 
  #include "plugin_diroperations.h"

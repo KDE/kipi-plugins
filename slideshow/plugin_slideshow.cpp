@@ -27,9 +27,6 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
-
 #include "plugin_slideshow.h"
 #include "slideshow.h"
 #include "slideshowgl.h"

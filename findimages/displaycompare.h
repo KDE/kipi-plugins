@@ -36,7 +36,7 @@
 
 // Include files for Digikam
 
-#include <digikam/thumbnailjob.h>
+#include <libkipi/thumbnailjob.h>
 
 class QVBoxLayout;
 class QHBoxLayout;
@@ -94,7 +94,7 @@ private:
    QListView*          listEq;
 
    QGuardedPtr<Digikam::ThumbnailJob> m_thumbJob1;
-   QGuardedPtr<Digikam::ThumbnailJob> m_thumbJob2;   
+   QGuardedPtr<Digikam::ThumbnailJob> m_thumbJob2;
 };
 
 #endif   // __DISPLAYCOMPARE_H__

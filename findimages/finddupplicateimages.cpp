@@ -57,14 +57,6 @@ extern "C"
 #include <kio/global.h>
 #include <kimageio.h>
 
-// Include files for Digikam
-
-#ifdef TEMPORARILY_REMOVED
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
-#include <digikam/digikamio.h>
-#endif
-
 // Local include files
 
 #include "finddupplicateimages.h"

@@ -29,9 +29,6 @@
 
 #include <qprocess.h>
 
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
-
 extern "C"
 {
 #include <stdlib.h>

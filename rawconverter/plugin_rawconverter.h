@@ -22,7 +22,6 @@
 #ifndef PLUGIN_RAWCONVERTER_H
 #define PLUGIN_RAWCONVERTER_H
 
-#include <digikam/plugin.h>
 #include <libkipi/plugin.h>
 class KAction;
 

@@ -64,13 +64,6 @@
 #include <kapplication.h>
 #include <ksqueezedtextlabel.h>
 
-// Include files for KIPI
-
-#ifdef TEMPORARILY_REMOVED
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
-#endif
-
 // Local include files
 
 #include "imgallerydialog.h"
@@ -234,17 +227,17 @@ void KIGPDialog::setAlbumsList(void)
     //AlbumItem *currentAlbum = 0;
     QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
 
-    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt ) 
+    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt )
         {
         KURL::List images = (*albumIt).images();
-        
+
 		QDateTime newestDate;
         for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) {
             KIPI::ImageInfo info = m_interface->info( *urlIt );
             if ( info.time() > newestDate )
                 newestDate = info.time();
         }
-		
+
 		// FIXME: Some info are missing in KIPI::ImageCollection
         AlbumItem *item = new AlbumItem( m_AlbumsList,
                                          (*albumIt).name(),

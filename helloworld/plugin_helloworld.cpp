@@ -25,9 +25,6 @@
 #include <kconfig.h>
 #include <kdebug.h>
 
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
-
 #include "plugin_helloworld.h"
 #include <libkipi/imagecollection.h>
 

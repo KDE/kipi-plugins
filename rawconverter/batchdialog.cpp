@@ -2,8 +2,8 @@
  * File  : batchdialog.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-10-24
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2003 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -11,12 +11,12 @@
  * Public License as published bythe Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include <klistview.h>
@@ -43,7 +43,7 @@
 #include <qevent.h>
 #include <qpixmap.h>
 
-#include <digikam/thumbnailjob.h>
+#include <libkipi/thumbnailjob.h>
 
 extern "C"
 {
@@ -65,9 +65,9 @@ BatchDialog::BatchDialog()
     : QDialog(0,0,false,Qt::WDestructiveClose)
 {
     setCaption(i18n("Digikam Raw Image Batch Converter"));
-    
+
     QGridLayout *mainLayout = new QGridLayout(this,5,2,6,11);
-        
+
     // --------------------------------------------------------------
 
     listView_ = new KListView(this);
@@ -85,7 +85,7 @@ BatchDialog::BatchDialog()
     mainLayout->addMultiCellWidget(listView_, 0, 3, 0, 0);
 
     // ---------------------------------------------------------------
-    
+
     QGroupBox *settingsBox = new QGroupBox(i18n("Settings"), this);
     settingsBox->setColumnLayout(0, Qt::Vertical);
     settingsBox->layout()->setSpacing( 6 );
@@ -116,7 +116,7 @@ BatchDialog::BatchDialog()
     QHBoxLayout *hboxLayout;
 
     // ---------------------------------------------------------------
-    
+
     hboxLayout = new QHBoxLayout(0,0,6,"layout1");
     gammaSpinBox_ = new CSpinBox(settingsBox);
     gammaSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -126,7 +126,7 @@ BatchDialog::BatchDialog()
     QToolTip::add(gammaSpinBox_,
                     i18n("Specify the gamma value"));
     settingsBoxLayout->addLayout(hboxLayout);
-    
+
     // ---------------------------------------------------------------
 
     hboxLayout = new QHBoxLayout(0,0,6,"layout2");
@@ -153,7 +153,7 @@ BatchDialog::BatchDialog()
     settingsBoxLayout->addLayout(hboxLayout);
 
     // ---------------------------------------------------------------
-    
+
     hboxLayout = new QHBoxLayout(0,0,6,"layout4");
     blueSpinBox_ = new CSpinBox(settingsBox);
     blueSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -192,7 +192,7 @@ BatchDialog::BatchDialog()
 
     connect(saveButtonGroup_, SIGNAL(clicked(int)),
             SLOT(slotSaveFormatChanged()));
-    
+
     // ---------------------------------------------------------------
 
     conflictButtonGroup_ = new QVButtonGroup(i18n("If Target File Exists"),this);
@@ -209,7 +209,7 @@ BatchDialog::BatchDialog()
     mainLayout->addWidget(conflictButtonGroup_, 2, 1);
     mainLayout->addItem(new QSpacerItem(10,10,QSizePolicy::Minimum,
                                         QSizePolicy::Expanding), 3, 1);
-    
+
     // ---------------------------------------------------------------
 
     QFrame *hline = new QFrame(this);
@@ -245,7 +245,7 @@ BatchDialog::BatchDialog()
     QToolTip::add(closeButton_, i18n("Exit Raw Converter"));
     hboxLayout->addWidget(closeButton_);
 
-    
+
     mainLayout->addMultiCellLayout(hboxLayout, 5, 5, 0, 1);
 
     // ---------------------------------------------------------------
@@ -301,7 +301,7 @@ BatchDialog::~BatchDialog()
 void BatchDialog::addItems(const QStringList& itemList)
 {
     QString ext;
-    
+
     QButton *btn = saveButtonGroup_->selected();
     if (btn) ext = btn->text().lower();
 
@@ -338,7 +338,7 @@ void BatchDialog::readSettings()
     KConfig* config=kapp->config();
 
     config->setGroup("RawConverter Settings");
-    
+
     gammaSpinBox_->setValue(config->readNumEntry("Gamma", 8));
     brightnessSpinBox_->setValue(config->readNumEntry("Brightness",10));
 
@@ -357,7 +357,7 @@ void BatchDialog::saveSettings()
     KConfig* config=kapp->config();
 
     config->setGroup("RawConverter Settings");
-    
+
     config->writeEntry("Gamma", gammaSpinBox_->value());
     config->writeEntry("Brightness", brightnessSpinBox_->value());
 
@@ -371,7 +371,7 @@ void BatchDialog::saveSettings()
                        saveButtonGroup_->id(saveButtonGroup_->selected()));
     config->writeEntry("Conflict",
                        conflictButtonGroup_->id(conflictButtonGroup_->selected()));
-    
+
     config->sync();
 }
 
@@ -389,7 +389,7 @@ void BatchDialog::slotSaveFormatChanged()
         item->setText(2,rawItem->dest);
         ++it;
     }
-    
+
 }
 
 void BatchDialog::slotHelp()
@@ -409,7 +409,7 @@ void BatchDialog::slotAbout()
 
 void BatchDialog::slotProcess()
 {
-    fileList_.clear();    
+    fileList_.clear();
 
     QListViewItemIterator it( listView_ );
     while ( it.current() ) {
@@ -422,7 +422,7 @@ void BatchDialog::slotProcess()
 
     progressBar_->setTotalSteps(fileList_.count());
     progressBar_->setProgress(0);
-                       
+
     Settings& s      = controller_->settings;
     s.cameraWB       = cameraWBCheckBox_->isChecked();
     s.fourColorRGB   = fourColorCheckBox_->isChecked();
@@ -518,7 +518,7 @@ void BatchDialog::slotProcessing(const QString& file)
     if (item) {
         item->viewItem->setPixmap(1,SmallIcon("player_play"));
         listView_->setSelected(item->viewItem, true);
-    }    
+    }
 }
 
 void BatchDialog::slotProcessed(const QString& file,
@@ -532,7 +532,7 @@ void BatchDialog::slotProcessed(const QString& file,
 
     QString destFile(rawItem->directory + QString("/") +
                      rawItem->dest);
-    
+
     if (conflictButtonGroup_->selected()->text() != i18n("Overwrite"))
     {
         struct stat statBuf;
@@ -558,8 +558,8 @@ void BatchDialog::slotProcessed(const QString& file,
             rawItem->viewItem->setText(2, rawItem->dest);
         }
     }
-    
-    
+
+
     progressBar_->advance(1);
     processOne();
 }
@@ -570,7 +570,7 @@ void BatchDialog::slotProcessingFailed(const QString& file)
     RawItem *item = itemDict_.find(filename);
     if (item) {
         item->viewItem->setPixmap(1,SmallIcon("no"));
-    }    
+    }
     progressBar_->advance(1);
     processOne();
 }

@@ -34,7 +34,7 @@
 
 // Include files for Digikam
 
-#include <digikam/thumbnailjob.h>
+#include <libkipi/thumbnailjob.h>
 
 class QComboBox;
 class QListView;
@@ -95,7 +95,7 @@ class FindDuplicateDialog : public KDialogBase
   QString             m_ImagesFilesSort;
 
   KIntNumInput       *m_approximateThreshold;
-  
+
   bool                m_dialogOk;
 
   QGuardedPtr<Digikam::ThumbnailJob> m_thumbJob;
