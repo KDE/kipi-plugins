@@ -91,6 +91,29 @@ Plugin_SlideShow::~Plugin_SlideShow()
 
 void Plugin_SlideShow::slotActivate()
 {
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+
+    if ( !interface ) 
+    {
+           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           return;
+    }
+
+    KIPI::ImageCollection currAlbum = interface->currentAlbum();
+    if ( !currAlbum.isValid() )
+    {
+        KMessageBox::error(0, i18n("Current image collection is not valid. "
+                                   "Please report this bug to the developers"));
+        return;
+    }
+
+    if ( currAlbum.images().isEmpty() )
+    {
+        KMessageBox::sorry(0, i18n("There are no images to show "
+                                   "in the current album."));
+	return;
+    }
+
     KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
         = new KIPISlideShowPlugin::SlideShowConfig;
     
@@ -107,11 +130,11 @@ void Plugin_SlideShow::slotSlideShow()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
     if ( !interface ) 
-           {
+    {
            kdError( 51000 ) << "Kipi interface is null!" << endl;
            return;
-           }
-           
+    }
+
     KConfig config("kipirc");
 
     bool    opengl;
@@ -132,17 +155,17 @@ void Plugin_SlideShow::slotSlideShow()
     else
         effectName        = config.readEntry("Effect Name (OpenGL)");
 
-    KIPI::ImageCollection images;
+    KURL::List urlList;
     if (showSelectedFilesOnly)
-        images = interface->currentSelection();
+        urlList = interface->currentSelection().images();
     else
-        images = interface->currentAlbum();
-    if ( !images.isValid() )
-        return;
+        urlList = interface->currentAlbum().images();
 
-    KURL::List urlList = images.images();
     if ( urlList.isEmpty() )
+    {
+        KMessageBox::sorry(0, i18n("There are no images to show."));
 	return;
+    }
 
     // PENDING(blackie) handle real URLS
     QStringList fileList;
