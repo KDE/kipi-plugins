@@ -229,7 +229,7 @@ void CDArchiving::readSettings(void)
 void CDArchiving::Activate()
 {
     KStandardDirs dir;
-    m_tmpFolder = dir.saveLocation("tmp", "kipi-cdarchiving-" + QString::number(getpid()) + "/");
+    m_tmpFolder = dir.saveLocation("tmp", "kipi-cdarchivingplugin-" + QString::number(getpid()) + "/");
 
     m_configDlg = new CDArchivingDialog( m_interface, kapp->activeWindow());
     readSettings();
@@ -284,7 +284,7 @@ void CDArchiving::Activate()
        *m_Proc << m_tmpFolder + "/KIPICDArchiving.xml";
 
        QString K3bCommandLine = m_configDlg->getK3bBinPathName() + " " + m_tmpFolder + "/KIPICDArchiving.xml";
-       kdWarning(51000) << "K3b is started : " << K3bCommandLine.ascii() << endl;
+       kdDebug(51000) << "K3b is started : " << K3bCommandLine.ascii() << endl;
 
        connect(m_Proc, SIGNAL(processExited(KProcess *)),
                this, SLOT(K3bDone(KProcess*)));
@@ -327,7 +327,7 @@ void CDArchiving::slotK3bStartBurningProcess(void)
 
 void CDArchiving::K3bDone(KProcess*)
 {
-   kdWarning(51000) << "K3b is done !!! Removing temporary folder..." << endl;
+   kdDebug(51000) << "K3b is done !!! Removing temporary folder..." << endl;
 
    if (DeleteDir(m_tmpFolder) == false)
        KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove temporary folder %1 !").arg(m_tmpFolder));
@@ -556,7 +556,7 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
 {
 
     int numOfImages = imageDir.count();
-    kdWarning(51000) << "Num of images in " << imageDir.path().ascii() << " : " << numOfImages << endl;
+    kdDebug(51000) << "Num of images in " << imageDir.path().ascii() << " : " << numOfImages << endl;
     const QString imgGalleryDir = url.directory();
     const QString today(KGlobal::locale()->formatDate(QDate::currentDate()));
 
@@ -632,7 +632,7 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
             const QString imgName = imageDir[imgIndex];
 
             stream << "<td align='center'>\n<a href=\"pages/"  << imgName << ".html\">";
-            kdWarning(51000) << "Creating thumbnail for " << imgName.ascii() << endl;
+            kdDebug(51000) << "Creating thumbnail for " << imgName.ascii() << endl;
 
             if ( createThumb(imgName, sourceDirName, imgGalleryDir, imageFormat) )
                 {
@@ -710,7 +710,7 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
                 }
             else
                 {
-                qDebug("Creating thumbnail for %s failed !", imgName.ascii());
+                kdDebug(51000) << "Creating thumbnail for " << imgName.ascii() <<  "failed !" << endl;
                 m_progressDlg->setLabelText( i18n("Creating thumbnail for\n%1\nfailed!").arg(imgName) );
                 kapp->processEvents();
                 }
@@ -1146,12 +1146,13 @@ bool ValRet;
 ValRet = img.load(Path);
 kapp->processEvents();
 
-if ( ValRet == false )        // cannot load the src image.
+if ( ValRet == false )        // Cannot load the src image.
    {
    KGlobal::dirs()->addResourceType("kipi_imagebroken", KGlobal::dirs()->kde_default("data") + "kipi/data");
    QString dir = KGlobal::dirs()->findResourceDir("kipi_imagebroken", "image_broken.png");
    dir = dir + "image_broken.png";
-   qDebug("Loading %s failed ! Using %s instead...", Path.ascii(), dir.ascii() );
+   kdDebug ( 51000 ) << "Loading " << Path.ascii() << " failed ! Using " << dir.ascii() 
+                     << " instead..." << endl;
    ValRet = img.load(dir);   // Try broken image icon...
    }
 

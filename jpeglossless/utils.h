@@ -25,7 +25,7 @@
 class QString;
 class QImage;
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 /* Write a QImage to a TIFF File
@@ -48,6 +48,6 @@ bool CopyFile(const QString& src, const QString& dst);
 
 bool MoveFile(const QString& src, const QString& dst);
 
-}
+}  // NameSpace KIPIJPEGLossLessPlugin
 
 #endif /* UTILS_H */

@@ -680,8 +680,9 @@ void SendImagesDialog::slotOk()
            int sizeFactor = getSize( m_imagesResize->currentItem() );
            int imageCompression = m_imageCompression->value();
 
-           qDebug("Resizing '%s' -> '%s%s' (%s)", imageName.ascii(),
-                  m_tempPath.ascii(), imageNameFormat.ascii(), imageFormat.ascii());
+           kdDebug (51000) << "Resizing ' " << imageName.ascii() << "-> '" 
+                           << m_tempPath.ascii() << imageNameFormat.ascii() 
+                           << "' (" << imageFormat.ascii() << ")" << endl;
 
            if ( ResizeImage( imageName, m_tempPath, imageFormat, imageNameFormat,
                              sizeFactor, imageCompression) == false )
@@ -917,12 +918,13 @@ void SendImagesDialog::slotOk()
 
        *m_mailAgentProc << Temp;
 
-       connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)), this, SLOT(slotMozillaExited(KProcess*)));
+       connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)), 
+               this, SLOT(slotMozillaExited(KProcess*)));
 
        connect(m_mailAgentProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
                this, SLOT(slotMozillaReadStderr(KProcess*, char*, int)));
 
-       qDebug ("%s", Temp.ascii());
+       kdDebug (51000) << Temp.ascii() << endl;
 
        if (m_mailAgentProc->start(KProcess::NotifyOnExit , KProcess::All) == false)
           KMessageBox::error(0, i18n("Cannot start '%1' program.\nPlease, "
@@ -1083,7 +1085,7 @@ bool SendImagesDialog::ResizeImage( const QString &SourcePath, const QString &De
 
            if ( scaleImg.width() != w || scaleImg.height() != h )
                {
-               qDebug("Resizing failed. Aborting.");
+               kdDebug (51000) << "Resizing failed. Aborting." << endl;
                return false;
                }
 
@@ -1092,7 +1094,7 @@ bool SendImagesDialog::ResizeImage( const QString &SourcePath, const QString &De
 
         if ( !img.save(DestPath + ImageName, ImageFormat.latin1(), ImageCompression) )
            {
-           qDebug("Saving failed with specific compression value. Aborting.");
+           kdDebug (51000) << "Saving failed with specific compression value. Aborting." << endl;
            return false;
            }
 

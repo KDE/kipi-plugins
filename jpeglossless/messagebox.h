@@ -27,7 +27,7 @@
 class QListView;
 class QString;
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 class MessageBox : public QWidget
@@ -58,6 +58,6 @@ private slots:
     
 };
 
-}
+}  // NameSpace KIPIJPEGLossLessPlugin
 
 #endif /* MESSAGEBOX_H */

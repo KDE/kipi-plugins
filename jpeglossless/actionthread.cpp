@@ -34,15 +34,15 @@ extern "C"
 #include "convert2grayscale.h"
 #include "actionthread.h"
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 ActionThread::ActionThread( KIPI::Interface* interface, QObject *parent)
     : QThread(), parent_(parent), interface_( interface )
 {
-    // Create a JPEGLossLess plugin temporary folder in KDE tmp directory.
+    // Create a KIPI JPEGLossLess plugin temporary folder in KDE tmp directory.
     KStandardDirs dir;
-    tmpFolder_ = dir.saveLocation("tmp", "kipi-jpeglossless-" +
+    tmpFolder_ = dir.saveLocation("tmp", "kipi-jpeglosslessplugin-" +
                                   QString::number(getpid()) + "/");
 }
 
@@ -152,7 +152,7 @@ void ActionThread::run()
             QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
 
             bool result = true;
-            result = JPEGLossLess::rotate(t->filePath, t->rotAction,
+            result = KIPIJPEGLossLessPlugin::rotate(t->filePath, t->rotAction,
                                               tmpFolder_, errString);
 
             EventData *r = new EventData;
@@ -169,7 +169,7 @@ void ActionThread::run()
             d->starting = true;
             QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
 
-            bool result = JPEGLossLess::flip(t->filePath, t->flipAction,
+            bool result = KIPIJPEGLossLessPlugin::flip(t->filePath, t->flipAction,
                                                tmpFolder_, errString);
 
             EventData *r = new EventData;
@@ -186,7 +186,7 @@ void ActionThread::run()
             d->starting = true;
             QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
 
-            bool result = JPEGLossLess::image2GrayScale(t->filePath,
+            bool result = KIPIJPEGLossLessPlugin::image2GrayScale(t->filePath,
                                                         tmpFolder_, errString);
 
             EventData *r = new EventData;
@@ -199,7 +199,7 @@ void ActionThread::run()
         }
 
         default: {
-            kdWarning( 51000 ) << "JPEGLossLess:ActionThread: "
+            kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:ActionThread: "
                         << "Unknown action specified"
                         << endl;
             delete d;
@@ -238,4 +238,4 @@ void ActionThread::deleteDir(const QString& dirPath)
     dir.rmdir(dir.absPath());
 }
 
-}
+}  // NameSpace KIPIJPEGLossLessPlugin

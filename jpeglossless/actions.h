@@ -22,7 +22,7 @@
 #ifndef ACTIONS_H
 #define ACTIONS_H
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 enum Action
@@ -62,6 +62,6 @@ public:
 };
 
 
-}
+}  // NameSpace KIPIJPEGLossLessPlugin
 
 #endif /* ACTIONS_H */

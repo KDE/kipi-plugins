@@ -4,7 +4,7 @@
 #include <qptrqueue.h>
 #include <qmutex.h>
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 template<class Type> class MTQueue
@@ -59,6 +59,6 @@ private:
 
 };
 
-}
+}  // NameSpace KIPIJPEGLossLessPlugin
 
 #endif

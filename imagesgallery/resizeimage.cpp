@@ -82,14 +82,15 @@ void ResizeImage::run(void)
 
     ValRet = img.load(Path_);
 
-    if ( ValRet == false )        // cannot load the src image.
+    if ( ValRet == false )        // Cannot load the src image.
        {
        KGlobal::dirs()->addResourceType("kipi_imagebroken", KGlobal::dirs()->kde_default("data")
                                         + "kipi/data");
        QString dir = KGlobal::dirs()->findResourceDir("kipi_imagebroken", "image_broken.png");
        dir = dir + "image_broken.png";
-       qDebug("Loading %s failed ! Using %s instead...", Path_.ascii(), dir.ascii() );
-       ValRet = img.load(dir);   // load broken image icon...
+       kdDebug ( 51000 ) << "Loading " << Path_.ascii() << " failed ! Using " 
+                         << dir.ascii() << " instead..." << endl;
+       ValRet = img.load(dir);   // Load broken image icon...
        *useBrokenImage_ = true;
        }
 
@@ -150,7 +151,7 @@ void ResizeImage::run(void)
           {
           if ( !img.save(Directory_ + ImageNameFormat_, ImageFormat_.latin1(), ImageCompression_) )
              {
-             qDebug("Saving failed with specific compression value. Aborting.");
+             kdDebug(51000) << "Saving failed with specific compression value. Aborting." << endl;
              *threadDone_ = false;
              return;
              }
@@ -159,7 +160,7 @@ void ResizeImage::run(void)
           {
           if ( !img.save(Directory_ + ImageNameFormat_, ImageFormat_.latin1(), -1) )
              {
-             qDebug("Saving failed with no compression value. Aborting.");
+             kdDebug (51000) << "Saving failed with no compression value. Aborting." << endl;
              *threadDone_ = false;
              return;
              }

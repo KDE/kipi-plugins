@@ -29,7 +29,7 @@
 
 #include "progressdlg.h"
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 ProgressDlg::ProgressDlg()
@@ -74,6 +74,6 @@ void ProgressDlg::reset()
     hide();
 }
 
-}
+}  // NameSpace KIPIJPEGLossLessPlugin
 
 #include "progressdlg.moc"

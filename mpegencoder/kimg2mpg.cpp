@@ -85,6 +85,7 @@ extern "C"
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
 #include <kio/previewjob.h>
+#include <kdebug.h>
 
 // Local includes
 
@@ -174,7 +175,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   // Init. Tmp folder
 
   KStandardDirs dir;
-  m_TmpFolderConfig = dir.saveLocation("tmp", "kipi-mpegencoder-" +
+  m_TmpFolderConfig = dir.saveLocation("tmp", "kipi-mpegencoderplugin-" +
                       QString::number(getpid()) );
 
   m_Proc = 0L;
@@ -581,7 +582,7 @@ void KImg2mpgData::slotImagesFilesSelected( QListBoxItem *item )
 
   QString IdemIndexed = "file:" + pitem->path();
 
-  qDebug ("Image selected: %s", IdemIndexed.ascii());
+  kdDebug (51000) << "Image selected: " << IdemIndexed.ascii() << endl;
   KURL url(IdemIndexed);
 
   m_ImageLabel->clear();
@@ -589,7 +590,7 @@ void KImg2mpgData::slotImagesFilesSelected( QListBoxItem *item )
   KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_ImageLabel->width() );
 
   connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-          SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
+           SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 
   int index = m_ImagesFilesListBox->index ( item );
   m_label7->setText(i18n("Image no. %1").arg(index + 1));

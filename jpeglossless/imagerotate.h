@@ -27,7 +27,7 @@
 class QString;
 class QImage;
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 bool rotate(const QString& src, RotateAction angle,
@@ -37,6 +37,6 @@ bool rotateJPEG(const QString& src, const QString& dest,
 bool rotateQImage(const QString& src, const QString& dest,
                   RotateAction angle, QString& err);
 
-}
+}  // NameSpace KIPIJPEGLossLessPlugin
 
 #endif /* IMAGEROTATE_H */

@@ -72,7 +72,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    // Main submenu for JPEGLossLess plugin transform actions.
+    // Main submenu for KIPI JPEGLossLess plugin transform actions.
 
     m_action_Transform = new KActionMenu(i18n("&Transform"),
                          actionCollection(),
@@ -159,7 +159,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     KIPI::ImageCollection selection = interface->currentScope();
     m_action_Transform->setEnabled( selection.isValid() );
     
-    m_thread = new JPEGLossLess::ActionThread(interface, this);
+    m_thread = new KIPIJPEGLossLessPlugin::ActionThread(interface, this);
     m_progressDlg = 0;
     
     connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
@@ -171,15 +171,15 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
 Plugin_JPEGLossless::~Plugin_JPEGLossless()
 {
-    // Remove JPEGLossLess plugin temporary folder in KDE tmp directory.
+    // Remove KIPI JPEGLossLess plugin temporary folder in KDE tmp directory.
 
     delete m_thread;
 
     if (m_progressDlg)
         delete m_progressDlg;
 
-    if (JPEGLossLess::MessageBox::instance())
-        delete JPEGLossLess::MessageBox::instance();
+    if (KIPIJPEGLossLessPlugin::MessageBox::instance())
+        delete KIPIJPEGLossLessPlugin::MessageBox::instance();
 
 }
 
@@ -196,11 +196,11 @@ void Plugin_JPEGLossless::slotFlip()
     bool proceed = false;
 
     if (from == "flip_horizontal") {
-        m_thread->flip(items, JPEGLossLess::FlipHorizontal);
+        m_thread->flip(items, KIPIJPEGLossLessPlugin::FlipHorizontal);
         proceed = true;
     }
     else if (from == "flip_vertical") {
-        m_thread->flip(items, JPEGLossLess::FlipVertical);
+        m_thread->flip(items, KIPIJPEGLossLessPlugin::FlipVertical);
         proceed = true;
     }
     else {
@@ -213,7 +213,7 @@ void Plugin_JPEGLossless::slotFlip()
     m_current = 0;
 
     if (!m_progressDlg) {
-        m_progressDlg = new JPEGLossLess::ProgressDlg;
+        m_progressDlg = new KIPIJPEGLossLessPlugin::ProgressDlg;
         connect(m_progressDlg, SIGNAL(signalCanceled()),
                 SLOT(slotCancel()));
     }
@@ -235,19 +235,19 @@ void Plugin_JPEGLossless::slotRotate()
     bool proceed = false;
 
     if (from == "rotate_90") {
-        m_thread->rotate(items, JPEGLossLess::Rot90);
+        m_thread->rotate(items, KIPIJPEGLossLessPlugin::Rot90);
         proceed = true;
     }
     else if (from == "rotate_180") {
-        m_thread->rotate(items, JPEGLossLess::Rot180);
+        m_thread->rotate(items, KIPIJPEGLossLessPlugin::Rot180);
         proceed = true;
     }
     else if (from == "rotate_270") {
-        m_thread->rotate(items, JPEGLossLess::Rot270);
+        m_thread->rotate(items, KIPIJPEGLossLessPlugin::Rot270);
         proceed = true;
     }
     else if (from == "rotate_exif") {
-        m_thread->rotate(items, JPEGLossLess::Rot0);
+        m_thread->rotate(items, KIPIJPEGLossLessPlugin::Rot0);
         proceed = true;
     }
     else {
@@ -260,7 +260,7 @@ void Plugin_JPEGLossless::slotRotate()
     m_current = 0;
 
     if (!m_progressDlg) {
-        m_progressDlg = new JPEGLossLess::ProgressDlg;
+        m_progressDlg = new KIPIJPEGLossLessPlugin::ProgressDlg;
         connect(m_progressDlg, SIGNAL(signalCanceled()),
                 SLOT(slotCancel()));
     }
@@ -288,7 +288,7 @@ void Plugin_JPEGLossless::slotConvert2GrayScale()
     m_current = 0;
 
     if (!m_progressDlg) {
-        m_progressDlg = new JPEGLossLess::ProgressDlg;
+        m_progressDlg = new KIPIJPEGLossLessPlugin::ProgressDlg;
         connect(m_progressDlg, SIGNAL(signalCanceled()),
                 SLOT(slotCancel()));
     }
@@ -326,25 +326,25 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
 {
     if (!event) return;
 
-    JPEGLossLess::EventData *d = (JPEGLossLess::EventData*) event->data();
+    KIPIJPEGLossLessPlugin::EventData *d = (KIPIJPEGLossLessPlugin::EventData*) event->data();
     if (!d) return;
     if (d->starting) {
         QString text;
         switch (d->action) {
-        case(JPEGLossLess::Rotate): {
+        case(KIPIJPEGLossLessPlugin::Rotate): {
             text = i18n("Rotating Image\n%1").arg(d->fileName);
             break;
         }
-        case(JPEGLossLess::Flip): {
+        case(KIPIJPEGLossLessPlugin::Flip): {
             text = i18n("Flipping Image\n%1").arg(d->fileName);
             break;
         }
-        case(JPEGLossLess::GrayScale): {
+        case(KIPIJPEGLossLessPlugin::GrayScale): {
             text = i18n("Converting to Black & White\n%1").arg(d->fileName);
             break;
         }
         default: {
-            kdWarning( 51000 ) << "Plugin_JPEGLossLess: Unknown event" << endl;
+            kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event" << endl;
         }
         }
 
@@ -356,24 +356,24 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
 
             QString text;
             switch (d->action) {
-            case(JPEGLossLess::Rotate): {
+            case(KIPIJPEGLossLessPlugin::Rotate): {
                 text = i18n("Failed to Rotate");
                 break;
             }
-            case(JPEGLossLess::Flip): {
+            case(KIPIJPEGLossLessPlugin::Flip): {
                 text = i18n("Failed to flip Image");
                 break;
             }
-            case(JPEGLossLess::GrayScale): {
+            case(KIPIJPEGLossLessPlugin::GrayScale): {
                 text = i18n("Failed to convert to Black & White");
                 break;
             }
             default: {
-                kdWarning( 51000 ) << "Plugin_JPEGLossLess: Unknown event" << endl;
+                kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event" << endl;
             }
             }
 
-            JPEGLossLess::MessageBox::showMsg(d->fileName, text);
+            KIPIJPEGLossLessPlugin::MessageBox::showMsg(d->fileName, text);
         }
 
         m_current++;

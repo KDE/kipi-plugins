@@ -32,7 +32,7 @@
 
 class QObject;
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 class ActionThread : public QThread
@@ -70,6 +70,6 @@ private:
     KIPI::Interface* interface_;
 };
 
-}
+}  // NameSpace KIPIJPEGLossLessPlugin
 
 #endif /* ACTIONTHREAD_H */

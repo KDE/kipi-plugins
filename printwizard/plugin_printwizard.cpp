@@ -114,7 +114,7 @@ void Plugin_PrintWizard::slotActivate()
     //KIPIPrintWizardPlugin::FrmPrintWizard frm;
     FrmPrintWizard frm;
     KStandardDirs dir;
-    QString tempPath = dir.saveLocation("tmp", "kipi-printwizard-" + QString::number(getpid()) + "/");
+    QString tempPath = dir.saveLocation("tmp", "kipi-printwizardplugin-" + QString::number(getpid()) + "/");
     frm.print(fileList, tempPath);
     frm.exec();
 }

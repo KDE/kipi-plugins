@@ -27,7 +27,7 @@
 class QString;
 class QImage;
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 bool flip(const QString& src, FlipAction action,
@@ -36,6 +36,7 @@ bool flipJPEG(const QString& src, const QString& dest,
               FlipAction action, QString& err);
 bool flipQImage(const QString& src, const QString& dest,
                 FlipAction action, QString& err);
-}
+
+}  // NameSpace KIPIJPEGLossLessPlugin
 
 #endif /* IMAGEFLIP_H */

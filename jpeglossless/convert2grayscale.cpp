@@ -44,7 +44,7 @@ extern "C" {
 #include "transupp.h"
 }
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,4 +197,4 @@ bool image2GrayScaleQImage(const QString& src, const QString& dest,
     return true;
 }
 
-}
+}  // NameSpace KIPIJPEGLossLessPlugin

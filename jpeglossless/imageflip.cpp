@@ -44,7 +44,7 @@ extern "C" {
 #include "jpegtransform.h"
 }
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -187,5 +187,5 @@ bool flipQImage(const QString& src, const QString& dest,
     return true;
 }
 
+}  // NameSpace KIPIJPEGLossLessPlugin
 
-}

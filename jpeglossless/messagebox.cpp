@@ -32,7 +32,7 @@
 
 #include "messagebox.h"
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 MessageBox* MessageBox::m_instance = 0;
@@ -113,6 +113,6 @@ MessageBox* MessageBox::instance()
     return m_instance;    
 }
 
-}
+}  // NameSpace KIPIJPEGLossLessPlugin
 
 #include "messagebox.moc"

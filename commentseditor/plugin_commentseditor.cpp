@@ -109,7 +109,7 @@ void Plugin_CommentsEditor::slotActivate()
 
     KURL::List imgs = images.images();
     for( KURL::List::Iterator it = imgs.begin(); it != imgs.end(); ++it ) {
-        qDebug(">%s", (*it).path().latin1() );
+        kdDebug (51000) << ">" << (*it).path().latin1() << endl;
     }
 
     KIPICommentsEditorPlugin::CommentsEditor* editor =

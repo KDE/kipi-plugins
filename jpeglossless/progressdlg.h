@@ -28,7 +28,7 @@ class QProgressBar;
 class QLabel;
 class KPushButton;
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 class ProgressDlg : public QDialog
@@ -56,6 +56,6 @@ private:
     
 };
 
-}
+} // NameSpace KIPIJPEGLossLessPlugin
 
 #endif /* PROGRESSDLG_H */

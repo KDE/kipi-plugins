@@ -32,7 +32,7 @@ class QCustomEvent;
 class KActionMenu;
 class KAction;
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 class ActionThread;
 class ProgressDlg;
@@ -70,8 +70,8 @@ private:
     KActionMenu *m_action_FlipImage;
     KAction     *m_action_Convert2GrayScale;
 
-    JPEGLossLess::ProgressDlg  *m_progressDlg;
-    JPEGLossLess::ActionThread *m_thread;
+    KIPIJPEGLossLessPlugin::ProgressDlg  *m_progressDlg;
+    KIPIJPEGLossLessPlugin::ActionThread *m_thread;
     int                         m_total;
     int                         m_current;
     KURL::List                  m_images;

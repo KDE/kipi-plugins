@@ -25,7 +25,7 @@
 class QString;
 class QImage;
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 bool image2GrayScale(const QString& src, const QString& TmpFolder,
                      QString& err);
@@ -33,6 +33,7 @@ bool image2GrayScaleJPEG(const QString& src, const QString& dest,
                          QString& err);
 bool image2GrayScaleQImage(const QString& src, const QString& dest,
                            QString& err);
-}
+
+}  // NameSpace KIPIJPEGLossLessPlugin
 
 #endif /* convert2grayscale_H */

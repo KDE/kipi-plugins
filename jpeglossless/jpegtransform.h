@@ -23,7 +23,7 @@
 #define JPEGTRANSFORM_H
 
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 /* 
@@ -108,6 +108,6 @@ bool transformJPEG(const QString& src, const QString& dest,
 void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate);
 void getExifAction(Matrix &action, KExifData::ImageOrientation exifOrientation);
 
-}
+}  // NameSpace KIPIJPEGLossLessPlugin
 
 #endif

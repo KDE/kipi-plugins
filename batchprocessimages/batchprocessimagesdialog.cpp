@@ -102,7 +102,8 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     // Init. Tmp folder
 
     KStandardDirs dir;
-    m_tmpFolder = dir.saveLocation("tmp");
+    m_tmpFolder = dir.saveLocation("tmp", "kipi-batchprocessimagesplugin-" +
+                                   QString::number(getpid()) );
 
     m_convertStatus = NO_PROCESS;
     m_progressStatus = 0;

@@ -104,7 +104,7 @@ void Plugin_SendImages::slotActivate()
         return;
 
     KStandardDirs dir;
-    QString Tmp = dir.saveLocation("tmp", "kipi-sendimages-" + QString::number(getpid()) + "/");
+    QString Tmp = dir.saveLocation("tmp", "kipi-sendimagesplugin-" + QString::number(getpid()) + "/");
 
     m_sendImagesDialog = new KIPISendimagesPlugin::SendImagesDialog(0, Tmp, interface, images);
     m_sendImagesDialog->show();

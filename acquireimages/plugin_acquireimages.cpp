@@ -121,7 +121,7 @@ void Plugin_AcquireImages::slotActivate()
            {
            KMessageBox::sorry(kapp->activeWindow(), i18n("No KDE scan-service available. Check your system!"),
                               i18n("KIPI Scan Images Plugin"));
-           qDebug("No Scan-service available, aborting!");
+           kdDebug ( 51000 ) << "No Scan-service available, aborting!" << endl;
            return;
            }
 

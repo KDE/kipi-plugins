@@ -54,6 +54,7 @@ extern "C"
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kcursor.h>
+#include <kdebug.h>
 
 // Local includes
 
@@ -278,7 +279,7 @@ void PixmapView::slotPreviewReadStd(KProcess* proc, char *buffer, int buflen)
 void PixmapView::PreviewProcessDone(KProcess* proc)
 {
     int ValRet = proc->exitStatus();
-    qDebug ("Convert exit (%i)", ValRet);
+    kdDebug (51000) << "Convert exit (" << ValRet << ")" << endl;
 
     if ( ValRet == 0 )
        {

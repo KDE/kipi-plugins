@@ -39,7 +39,7 @@ extern "C" {
 }
 
 
-namespace JPEGLossLess
+namespace KIPIJPEGLossLessPlugin
 {
 
 Matrix Matrix::none                   (1, 0, 0, 1);
@@ -330,6 +330,4 @@ void getExifAction(Matrix &action, KExifData::ImageOrientation exifOrientation) 
     }
 }
 
-
-
-}
+}  // NameSpace KIPIJPEGLossLessPlugin
