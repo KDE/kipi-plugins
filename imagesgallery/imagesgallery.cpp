@@ -709,12 +709,12 @@ void ImagesGallery::createBody(QTextStream& stream,
 
     KURL::List images=m_album.images();
     
-    for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end() && !m_cancelled; )
+    for( KURL::List::Iterator urlIt = images.begin() ; urlIt != images.end() ; )
         {
         stream << "<tr>" << endl;
 
         for (int col = 0 ;
-             !m_cancelled && urlIt!=images.end() && col < m_configDlg->getImagesPerRow() ;
+             urlIt!=images.end() && col < m_configDlg->getImagesPerRow() ;
              ++col, ++urlIt, ++imgIndex)
             {
             const QString imgName = (*urlIt).fileName();
@@ -867,7 +867,7 @@ void ImagesGallery::createBody(QTextStream& stream,
       KURL::List images = m_album.images();
       
       for( KURL::List::Iterator urlIt = images.begin();
-           urlIt != images.end() && !m_cancelled ; ++urlIt, ++imgIndex)
+           urlIt != images.end() ; ++urlIt, ++imgIndex )
         {
         const QString imgName = (*urlIt).fileName();
 
@@ -877,8 +877,8 @@ void ImagesGallery::createBody(QTextStream& stream,
 
         if ( imgIndex != 0 )
            {
-           KURL::List::Iterator it=urlIt;
-           it--;
+           KURL::List::Iterator it = urlIt;
+           --it;
            previousImgName = (*it).fileName();
            previousImgName = previousImgName + extension(TargetimagesFormat);
            }
@@ -887,8 +887,8 @@ void ImagesGallery::createBody(QTextStream& stream,
 
         if ( imgIndex != numOfImages -1)
            {
-           KURL::List::Iterator it=urlIt;
-           it++;
+           KURL::List::Iterator it = urlIt;
+           ++it;
            nextImgName = (*it).fileName();
            nextImgName = nextImgName + extension(TargetimagesFormat);
            }
@@ -992,8 +992,6 @@ void ImagesGallery::createBodyMainPage(QTextStream& stream, KURL& url)
 bool ImagesGallery::createHtml(const KURL& url,
                                const QString& imageFormat, const QString& TargetimagesFormat)
 {
-    if (m_cancelled) return false;
-
     if ( m_useCommentFile )
        loadComments();
 
@@ -1037,7 +1035,7 @@ bool ImagesGallery::createHtml(const KURL& url,
         createHead(stream);
         createBody(stream, url, imageFormat, TargetimagesFormat);
         file.close();
-        return !m_cancelled;
+        return true;
         }
     else
         {

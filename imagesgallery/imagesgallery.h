@@ -91,7 +91,6 @@ private:
   QString             m_hostName;
   QString             m_hostURL;
   
-  bool                m_cancelled;
   bool                m_recurseSubDirectories;
   bool                m_copyFiles;
   bool                m_useCommentFile;
