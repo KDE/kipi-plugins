@@ -60,7 +60,7 @@ namespace KIPIBatchProcessImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch-Bordering Images Options"), parent )
+                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch-Bordering Images"), parent )
 {
     // About data and help button.
     

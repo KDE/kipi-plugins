@@ -60,7 +60,7 @@ namespace KIPIBatchProcessImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                 : BatchProcessImagesDialog( urlList, interface, i18n("Batch Resize Images Options"), parent )
+                 : BatchProcessImagesDialog( urlList, interface, i18n("Batch Resize Images"), parent )
 {
     // About data and help button.
     

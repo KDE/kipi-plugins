@@ -59,7 +59,7 @@ namespace KIPIBatchProcessImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                 : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image-Color Processing Options"), parent )
+                 : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image-Color Processing"), parent )
 {
     // About data and help button.
     

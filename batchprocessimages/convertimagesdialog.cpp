@@ -60,7 +60,7 @@ namespace KIPIBatchProcessImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                   : BatchProcessImagesDialog( urlList, interface, i18n("Batch Convert Images Options"), parent )
+                   : BatchProcessImagesDialog( urlList, interface, i18n("Batch Convert Images"), parent )
 {
     // About data and help button.
     

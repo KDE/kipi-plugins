@@ -58,7 +58,7 @@ namespace KIPIBatchProcessImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                      : BatchProcessImagesDialog( urlList, interface, i18n("Batch Recompress Images Options"), parent )
+                      : BatchProcessImagesDialog( urlList, interface, i18n("Batch Recompress Images"), parent )
 {
     // About data and help button.
     

@@ -76,7 +76,7 @@ namespace KIPIBatchProcessImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 RenameImagesDialog::RenameImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch Rename Images Options"), parent )
+                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch Rename Images"), parent )
 {
     // About data and help button.
     

@@ -50,6 +50,7 @@ extern "C"
 #include <qfileinfo.h>
 #include <qhgroupbox.h>
 #include <qvgroupbox.h>
+#include <qframe.h>
 
 // Include files for KDE
 

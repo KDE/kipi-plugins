@@ -60,7 +60,7 @@ namespace KIPIBatchProcessImagesPlugin
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image Effects Options"), parent )
+                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image Effects"), parent )
 {
     // About data and help button.
     
