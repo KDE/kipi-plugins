@@ -58,6 +58,6 @@ public:
     Action  action;
 };
 
-}  // NameSpace KIPISendimagesPlugin
+}  // NameSpace KIPICDArchivingPlugin
 
 #endif  // ACTIONS_H 
