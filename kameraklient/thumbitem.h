@@ -8,9 +8,6 @@ class QPixmap;
 class QPainter;
 class QColorGroup;
 
-namespace KIPIKameraKlientPlugin
-{
-
 class ThumbView;
 class ThumbItemLineEdit;
 class ThumbItemPrivate;
@@ -80,7 +77,5 @@ private:
 
 
 };
-
-}  // NameSpace KIPIKameraKlientPlugin
 
 #endif

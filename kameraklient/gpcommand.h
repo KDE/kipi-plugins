@@ -24,9 +24,6 @@
 
 #include <qstring.h>
 
-namespace KIPIKameraKlientPlugin
-{
-
 class GPCommand {
 public:
     enum Type {
@@ -252,8 +249,6 @@ private:
     QString folder_;
     QString itemName_;
 };
-
-}  // NameSpace KIPIKameraKlientPlugin
 
 #endif /* GPCOMMAND_H */
 

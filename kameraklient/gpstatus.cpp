@@ -23,9 +23,6 @@
 #include "gpstatus.h"
 #include "gpmessages.h"
 
-namespace KIPIKameraKlientPlugin
-{
-
 float GPStatus::target = 0.0;
 bool  GPStatus::cancel = false;
 
@@ -39,9 +36,9 @@ GPStatus::GPStatus() : QObject() {
 }
 
 GPStatus::~GPStatus() {
-	if(context) {
-		gp_context_unref(context);
-	}
+    if(context) {
+	gp_context_unref(context);
+    }
 }
 
 void GPStatus::cancelOperation() {
@@ -56,8 +53,8 @@ void GPStatus::error_func(GPContext *, const char *format, va_list args, void *)
     char buf[4096] = "";
     int nSize = vsnprintf( buf, 4096, format, args );
     if(nSize > 4094) {
-		nSize = 4094;
-	}
+	nSize = 4094;
+    }
     buf[nSize] = '\0';
     QString error;
     error = error.fromLocal8Bit(buf);
@@ -68,8 +65,8 @@ void GPStatus::status_func (GPContext *, const char *format, va_list args, void 
     char buf[4096] = "";
     int nSize = vsnprintf( buf, 4096, format, args );
     if(nSize > 4094) {
-		nSize = 4094;
-	}
+	nSize = 4094;
+    }
     buf[nSize] = '\0';
     QString status;
     status = status.fromLocal8Bit(buf);
@@ -77,15 +74,15 @@ void GPStatus::status_func (GPContext *, const char *format, va_list args, void 
 }
 
 unsigned int GPStatus::progress_start_func(GPContext *, float _target, const char *format, va_list args, void *) {
-	char buf[4096] = "";
-	int nSize = vsnprintf( buf, 4096, format, args );
-	if(nSize > 4094) {
-		nSize = 4094;
-	}
-	buf[nSize] = '\0';
-	QString prog;
-	prog = prog.fromLocal8Bit(buf);
-	target = _target;
+    char buf[4096] = "";
+    int nSize = vsnprintf( buf, 4096, format, args );
+    if(nSize > 4094) {
+	nSize = 4094;
+    }
+    buf[nSize] = '\0';
+    QString prog;
+    prog = prog.fromLocal8Bit(buf);
+    target = _target;
 }
 
 void GPStatus::progress_update_func(GPContext *, unsigned int, float current, void *) {
@@ -97,6 +94,3 @@ void  GPStatus::progress_stop_func(GPContext *, unsigned int, void *) {
   GPMessages::gpMessagesWrapper()->emit progressChanged(0);
 }
 
-}  // NameSpace KIPIKameraKlientPlugin
-
-#include "gpstatus.moc"

@@ -30,14 +30,10 @@
 #include "cameraiconitem.h"
 #include "gpfileitemcontainer.h"
 
-namespace KIPIKameraKlientPlugin
-{
-
 GPFileItemContainer::GPFileItemContainer(QObject *parent, CameraFolderView *folderView, CameraIconView   *iconView) : QObject(parent) {
     folderView_ = folderView;
     iconView_   = iconView;
     folderDict_.setAutoDelete(true);
-
     connect(folderView_, SIGNAL(signalCleared()), this, SLOT(slotFolderViewCleared()));
     connect(iconView_, SIGNAL(signalCleared()), this, SLOT(slotIconViewCleared()));
 }
@@ -60,17 +56,18 @@ void GPFileItemContainer::addRootFolder(const QString& folder) {
 
 void GPFileItemContainer::addFolder(const QString& folder, const QString& subfolder) {
     QString path(folder);
-    if (!path.endsWith("/"))
+    if (!path.endsWith("/")) {
         path += "/";
+    }
     path += subfolder;
     kdDebug() << "GPFileItemContainer: Adding folder " << path << endl;
     if (!folderDict_.find(path)) {
         GPFolder *item = new GPFolder;
         folderDict_.insert(path, item);
-        item->viewItem = folderView_->addFolder(folder,
-                                                subfolder);
-	if (item->viewItem)
-        	item->viewItem->setCount(0);
+        item->viewItem = folderView_->addFolder(folder, subfolder);
+	if (item->viewItem) {
+	    item->viewItem->setCount(0);
+	}
     }
 }
 
@@ -95,9 +92,7 @@ void GPFileItemContainer::addFiles(const QString& folder, const GPFileItemInfoLi
             if (folderView_->virtualFolder()) 
                 folderView_->virtualFolder()->changeCount(1);
         }
-        // Have to check here: as when changing thumbnailsize,
-        // we cannot cancel the controller and so might end up
-        // having two items of the same type in the iconview
+        // Have to check here: as when changing thumbnailsize, we cannot cancel the controller and so might end up having two items of the same type in the iconview
         if (!fileInfo->viewItem) {
             CameraIconItem *iconItem = iconView_->addItem(fileInfo);
             fileInfo->viewItem = iconItem;
@@ -153,11 +148,13 @@ void GPFileItemContainer::addFile(const QString& folder, const GPFileItemInfo& i
         fileInfo = new GPFileItemInfo(info);
         fileDict->insert(info.name, fileInfo);
         // Update the count for the correspong folderviewitem
-        if (folderItem->viewItem) 
+        if (folderItem->viewItem) {
             folderItem->viewItem->changeCount(1);
+	}
         // Also update the count of the virtual folder
-        if (folderView_->virtualFolder()) 
+        if (folderView_->virtualFolder()) {
             folderView_->virtualFolder()->changeCount(1);
+	}
     }
     if (!fileInfo->viewItem) {
         CameraIconItem *iconItem = iconView_->addItem(fileInfo);
@@ -171,7 +168,6 @@ void GPFileItemContainer::delFile(const QString& folder, const QString& name) {
         kdWarning() << "GPFileItemContainer: " << "Couldn't find Folder in Dict: " << folder << endl;
         return;
     }
-
     GPFileDict* fileDict = folderItem->fileDict;
     GPFileItemInfo* fileInfo = fileDict->find(name);
     if (!fileInfo) {
@@ -184,11 +180,13 @@ void GPFileItemContainer::delFile(const QString& folder, const QString& name) {
     }
     fileDict->remove(name);
     // Update the count for the correspong folderviewitem
-    if (folderItem->viewItem) 
+    if (folderItem->viewItem) {
         folderItem->viewItem->changeCount(-1);
+    }
     // Also update the count of the virtual folder
-    if (folderView_->virtualFolder()) 
+    if (folderView_->virtualFolder()) { 
         folderView_->virtualFolder()->changeCount(-1);
+    }
 }
 
 CameraIconItem* GPFileItemContainer::findItem(const QString& folder, const QString& name) {
@@ -236,7 +234,3 @@ void GPFileItemContainer::slotIconViewCleared() {
         }
     }
 }
-
-}  // NameSpace KIPIKameraKlientPlugin
-
-#include "gpfileitemcontainer.moc"

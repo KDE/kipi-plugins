@@ -34,8 +34,6 @@
 #include "gpfileiteminfo.h"
 #include "gpfileiteminfodlg.h"
 
-namespace KIPIKameraKlientPlugin
-{
 
 GPFileItemInfoDlg::GPFileItemInfoDlg(const GPFileItemInfo& info,
                                      QPixmap *pixmap )
@@ -119,7 +117,7 @@ GPFileItemInfoDlg::GPFileItemInfoDlg(const GPFileItemInfo& info,
     l = new QLabel(value, page);
     grid->addWidget(l, currRow++, 2);
 
-    l = new QLabel(i18n("Read permissions:"), page);
+    l = new QLabel(i18n("Read Permissions:"), page);
     grid->addWidget(l, currRow,  0);
     if (info.readPermissions == 0)
         value = i18n("No");
@@ -130,7 +128,7 @@ GPFileItemInfoDlg::GPFileItemInfoDlg(const GPFileItemInfo& info,
     l = new QLabel(value, page);
     grid->addWidget(l, currRow++, 2);
 
-    l = new QLabel(i18n("Write permissions:"), page);
+    l = new QLabel(i18n("Write Permissions:"), page);
     grid->addWidget(l, currRow,  0);
     if (info.writePermissions == 0)
         value = i18n("No");
@@ -159,5 +157,3 @@ GPFileItemInfoDlg::~GPFileItemInfoDlg()
 {
 
 }
-
-}  // NameSpace KIPIKameraKlientPlugin

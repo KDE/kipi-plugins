@@ -4,9 +4,6 @@
 #include <qptrqueue.h>
 #include <qmutex.h>
 
-namespace KIPIKameraKlientPlugin
-{
-
 template<class Type> class MTQueue
 {
 
@@ -58,7 +55,5 @@ private:
   QMutex mutex_;
 
 };
-
-}  // NameSpace KIPIKameraKlientPlugin
 
 #endif

@@ -26,9 +26,9 @@
 // Qt
 #include <qdict.h>
 #include <qstring.h>
+#include <qwidget.h>
 // KDE
 #include <kfileitem.h>
-#include <kdialogbase.h>
 // Local
 #include "gpfileiteminfo.h"
 #include "cameratype.h"
@@ -38,20 +38,14 @@ class QImage;
 class QLabel;
 class QLineEdit;
 class QPushButton;
+class QSplitter;
 
-class KAction;
+class KAccel;
 class KComboBox;
 class KDirLister;
 class KProgress;
 class KStatusBar;
 class KToggleAction;
-
-namespace KIO {
-	class Job;
-}
-
-namespace KIPIKameraKlientPlugin
-{
 
 class CameraList;
 class CameraType;
@@ -63,14 +57,16 @@ class CameraIconView;
 class CameraFolderItem;
 class CameraFolderView;
 
-class CameraUI : public KDialogBase {
+namespace KIO {
+	class Job;
+}
+class CameraUI : public QWidget {
     Q_OBJECT
 	
 public:
     CameraUI();
     ~CameraUI();
     void setCameraConnected(bool val);
-    static CameraUI* getInstance();
     const CameraType* cameraType();
     void setCameraType(const CameraType& ctype);
     void cameraInitialized(bool val);
@@ -83,7 +79,7 @@ public:
     void cameraErrorMsg(const QString& msg);
    
 private:
-    void setupActions();
+    void setupAccel();
     void setupConnections();
     bool cameraReadyForUpload(QString& reason);
     void downloadOneItem(const QString& item, const QString& folder, const QString& downloadDir, bool& proceedFurther, bool& overwriteAll);
@@ -105,7 +101,6 @@ public slots:
     void slotSelectNew();
    
 private slots:
-	void slotClose();
     void slotSetStatusMsg(const QString& msg);
     void slotSetProgressVal(int val);
     void slotResetStatusBar();
@@ -113,37 +108,38 @@ private slots:
     void slotSetupCamera();
     void slotSyncCameraComboBox();
     void slotFolderSelected(CameraFolderItem *item);
-	void slotChangeDownloadDirectory();
-	void writeSettings();
-	void readSettings();
+    void slotChangeDownloadDirectory();
+    void writeSettings();
+    void readSettings();
     
 private:
     QLabel              *mStatusLabel;
     KProgress           *mProgressBar;
     QComboBox           *mCameraComboBox;
-    QPushButton         *mCameraConnectButton;
-    QPushButton         *mCameraSetupButton;
-	QPushButton         *mCameraCancelButton;
-    KAction             *mSelectAllAction;
-    KAction             *mSelectNoneAction;
-    KAction             *mSelectInvertAction;
-    KAction             *mSelectNewAction;
+    QPushButton         *mCameraConnectBtn;
+    QPushButton         *mCameraSetupBtn;
+    QPushButton         *mCameraStopBtn;
+    QPushButton         *mCameraDownloadBtn;
+    QPushButton         *mCameraUploadBtn;
+    QPushButton         *mCameraDeleteBtn;
+    QPushButton         *mDialogCloseBtn;
+    QPushButton         *mPluginAboutBtn;
+    KAccel              *mCameraUIAccel;
     KToggleAction       *mCameraConnectAction;
-	CameraType          *mCameraType;
+    CameraType          *mCameraType;
     CameraList       	*mCameraList;
-	KStatusBar        	*mStatusBar;
-	KConfig             *mConfig; 
+    KStatusBar        	*mStatusBar;
+    KConfig             *mConfig; 
     GPEventFilter       *efilter_;
     GPController        *controller_;
     GPFileItemContainer *container_;
+    QSplitter           *mSplitter;   
     CameraFolderView    *mFolderView;
     CameraIconView      *mIconView;
     QString             cameraPath_;
     bool                cameraConnected_;
-	QPushButton         *mChangeDownloadDirectoryButton;
-	QLineEdit           *mDownloadDirectoryEdit;
+    QPushButton         *mChangeDownloadDirectoryBtn;
+    QLineEdit           *mDownloadDirectoryEdit;
 };
-
-}  // NameSpace KIPIKameraKlientPlugin
 
 #endif 

@@ -35,9 +35,6 @@
 #include "cameratype.h"
 #include "gpiface.h"
 
-namespace KIPIKameraKlientPlugin
-{
-
 SetupCamera::SetupCamera(QWidget* parent, const char* name) : KDialogBase(parent, name, true, i18n("Setup Cameras"), Ok|Cancel, Ok, true) {
 	setWFlags(Qt::WDestructiveClose);
 	QWidget *page = new QWidget(this);
@@ -50,10 +47,8 @@ SetupCamera::SetupCamera(QWidget* parent, const char* name) : KDialogBase(parent
 	QGridLayout* groupBoxLayout = new QGridLayout(groupBox->layout());
 	groupBoxLayout->setAlignment( Qt::AlignTop );
 	listView_ = new QListView( groupBox );
-	listView_->addColumn(i18n("Title"));
 	listView_->addColumn(i18n("Model"));
 	listView_->addColumn(i18n("Port"));
-	listView_->addColumn(i18n("Path"));
 	listView_->setAllColumnsShowFocus(true); 
 	groupBoxLayout->addMultiCellWidget(listView_, 0, 4, 0, 0);
 	addButton_ = new QPushButton(groupBox);
@@ -73,25 +68,19 @@ SetupCamera::SetupCamera(QWidget* parent, const char* name) : KDialogBase(parent
 	vbox->addWidget(groupBox);
 	removeButton_->setEnabled(false);
 	editButton_->setEnabled(false);
-	connect(listView_, SIGNAL(selectionChanged()), 
-			this, SLOT(slotSelectionChanged()));
-	connect(addButton_, SIGNAL(clicked()), 
-			this, SLOT(slotAddCamera()));
-	connect(removeButton_, SIGNAL(clicked()), 
-			this, SLOT(slotRemoveCamera()));
-	connect(editButton_, SIGNAL(clicked()), 
-			this, SLOT(slotEditCamera()));
-	connect(autoDetectButton_, SIGNAL(clicked()), 
-			this, SLOT(slotAutoDetectCamera()));
+	connect(listView_, SIGNAL(selectionChanged()), this, SLOT(slotSelectionChanged()));
+	connect(addButton_, SIGNAL(clicked()), this, SLOT(slotAddCamera()));
+	connect(removeButton_, SIGNAL(clicked()), this, SLOT(slotRemoveCamera()));
+	connect(editButton_, SIGNAL(clicked()), this, SLOT(slotEditCamera()));
+	connect(autoDetectButton_, SIGNAL(clicked()), this, SLOT(slotAutoDetectCamera()));
 	CameraList* clist = CameraList::instance();
 	if(clist) {
-		QPtrList<CameraType>* cl = clist->cameraList();
-		for (CameraType *ctype = cl->first(); ctype; ctype = cl->next()) {
-			new QListViewItem(listView_, ctype->title(), ctype->model(), ctype->port(), ctype->path());
-		}
+	    QPtrList<CameraType>* cl = clist->cameraList();
+	    for (CameraType *ctype = cl->first(); ctype; ctype = cl->next()) {
+		new QListViewItem(listView_, ctype->model(), ctype->port());
+	    }
 	}
-	connect(this, SIGNAL(okClicked()), 
-			this, SLOT(slotOkClicked()));
+	connect(this, SIGNAL(okClicked()), this, SLOT(slotOkClicked()));
 	show();
 	int W=SetupCamera::width (), H=SetupCamera::height();
 	move(QApplication::desktop()->width ()/2-(W/2), QApplication::desktop()->height()/2-(H/2));
@@ -101,27 +90,27 @@ SetupCamera::~SetupCamera() {
 }
 
 void SetupCamera::slotSelectionChanged() {
-	QListViewItem *item = listView_->selectedItem();
-	if (!item) {
-		removeButton_->setEnabled(false);
-		editButton_->setEnabled(false);
-		return;
-	}
-	removeButton_->setEnabled(true);
-	editButton_->setEnabled(true);
+    QListViewItem *item = listView_->selectedItem();
+    if (!item) {
+	removeButton_->setEnabled(false);
+	editButton_->setEnabled(false);
+	return;
+    }
+    removeButton_->setEnabled(true);
+    editButton_->setEnabled(true);
 }
 
 void SetupCamera::slotAddCamera() {
 	CameraSelection *select = new CameraSelection;
-	connect(select, SIGNAL(signalOkClicked(const QString&, const QString&, const QString&, const QString&)),
-			this, SLOT(slotAddedCamera(const QString&, const QString&, const QString&, const QString&)));
+	connect(select, SIGNAL(signalOkClicked(const QString&, const QString&)),
+			this, SLOT(slotAddedCamera(const QString&, const QString&)));
 	select->show();
 }
 
 void SetupCamera::slotRemoveCamera() {
 	QListViewItem *item = listView_->currentItem();
 	if (!item) {
-		return;
+	    return;
 	}
 	delete item;
 }
@@ -129,69 +118,64 @@ void SetupCamera::slotRemoveCamera() {
 void SetupCamera::slotEditCamera() {
 	QListViewItem *item = listView_->currentItem();
 	if (!item) {
-		return;
+	    return;
 	}
 	CameraSelection *select = new CameraSelection;
-	select->setCamera(item->text(0), item->text(1), item->text(2), item->text(3));
-	connect(select, SIGNAL(signalOkClicked(const QString&, const QString&, const QString&, const QString&)),
-			this, SLOT(slotEditedCamera(const QString&, const QString&, const QString&, const QString&)));
+	select->setCamera(item->text(0), item->text(1));
+	connect(select, SIGNAL(signalOkClicked(const QString&, const QString&)),
+			this, SLOT(slotEditedCamera(const QString&, const QString&)));
 	select->show();
 }
 
 void SetupCamera::slotAutoDetectCamera() {
-	QString model, port;
-	if (GPIface::autoDetect(model, port) != 0) {
-		KMessageBox::error(this, i18n("Failed to auto-detect camera!\n" "Please retry or try setting manually."));
-		return;
+    QString model, port;
+    if (GPIface::autoDetect(model, port) != 0) {
+	KMessageBox::error(this, i18n("Failed to auto-detect camera!\n" "Please retry or try setting manually."));
+	return;
+    }
+    bool found = false;
+    CameraList* clist = CameraList::instance();
+    if (clist) {
+	if (clist->find(model)) {
+	    found = true;
 	}
-	bool found = false;
-	CameraList* clist = CameraList::instance();
-	if (clist) {
-		if (clist->find(model)) {
-			found = true;
-		}
-	}
-	if (found) {
-		KMessageBox::information(this, i18n("Already added camera: ") + model + " (" + port + ")");
-	} else {
-		KMessageBox::information(this, i18n("Found camera: ") + model + " (" + port + ")");
-		new QListViewItem(listView_, model, model, port, "/");
-	}
+    }
+    if (found) {
+	KMessageBox::information(this, i18n("Already added camera: ") + model + " (" + port + ")");
+    } else {
+	KMessageBox::information(this, i18n("Found camera: ") + model + " (" + port + ")");
+	new QListViewItem(listView_, model, port, "/");
+    }
 }
 
-void SetupCamera::slotAddedCamera(const QString& title, const QString& model, const QString& port, const QString& path) {
-	new QListViewItem(listView_, title, model, port, path);
+void SetupCamera::slotAddedCamera(const QString& model, const QString& port) {
+    new QListViewItem(listView_, model, port);
 }
 
-void SetupCamera::slotEditedCamera(const QString& title, const QString& model, const QString& port, const QString& path) {
-	QListViewItem *item = listView_->currentItem();
-	if (!item) {
-		return;
-	}
-	item->setText(0, title);
-	item->setText(1, model);
-	item->setText(2, port);
-	item->setText(3, path);
+void SetupCamera::slotEditedCamera(const QString& model, const QString& port) {
+    QListViewItem *item = listView_->currentItem();
+    if (!item) {
+	return;
+    }
+    item->setText(0, model);
+    item->setText(1, port);
 }
 
 void SetupCamera::applySettings() {
-	CameraList* clist = CameraList::instance();
-	if(clist) {
-		clist->clear();
-		QListViewItemIterator it(listView_);
-		for( ; it.current(); ++it ) {
-			QListViewItem *item = it.current();
-			CameraType *ctype = new CameraType(item->text(0), item->text(1), item->text(2), item->text(3));
-			clist->insert(ctype);
-		}
+    CameraList* clist = CameraList::instance();
+    if(clist) {
+	clist->clear();
+	QListViewItemIterator it(listView_);
+	for( ; it.current(); ++it ) {
+	    QListViewItem *item = it.current();
+	    CameraType *ctype = new CameraType(item->text(0), item->text(1));
+	    clist->insert(ctype);
 	}
+    }
 }
 
 void SetupCamera::slotOkClicked() {
-	applySettings();
-	close();
+    applySettings();
+    close();
 }
 
-}  // NameSpace KIPIKameraKlientPlugin
-
-#include "setupcamera.moc"

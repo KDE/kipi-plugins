@@ -44,7 +44,7 @@
 #include <qvaluelist.h>
 #include <qvbox.h>
 // KDE
-#include <kaction.h>
+#include <kaccel.h>
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -82,72 +82,91 @@
 #include "savefiledialog.h"
 #include "setupcamera.h"
 
-namespace KIPIKameraKlientPlugin
-{
-
-CameraUI::CameraUI() : KDialogBase(Plain, i18n("KameraKlient"), Try | User1 | User2 | User3 | Ok | Help | Close, Close, 0, 0, false, true) {
-	resize(700, 440);
-	setButtonBoxOrientation(Vertical);
-	setButtonText(Try, i18n("Stop"));
-	mCameraCancelButton = actionButton(Try);
-	setButtonText(User1, i18n("Download"));
-	setButtonText(User2, i18n("Upload"));
-	setButtonText(User3, i18n("Delete"));
-	setButtonText(Ok, i18n("Setup"));
-	mCameraSetupButton = actionButton(Ok);
+CameraUI::CameraUI() : QWidget() {
+    setWFlags(Qt::WDestructiveClose);
+    resize(700, 440);
+    setMinimumSize(600, 400);
     mCameraList = new CameraList(this, locateLocal("data", "kipi/cameras.xml"));
-	mCameraType =  new CameraType(0, 0, 0, 0);
-	QFrame* mFrame =  plainPage(); 
-	QVBoxLayout* mMainBox = new QVBoxLayout(mFrame);
-	QHBox* mCameraBox = new QHBox(mFrame);
-	mMainBox->addWidget(mCameraBox);
-	mCameraConnectButton = new QPushButton(i18n("Connect"), mCameraBox);
-	mCameraComboBox = new QComboBox(mCameraBox, "camera");
-	mCameraComboBox->setInsertionPolicy(QComboBox::AtBottom);
+    mCameraType =  new CameraType();
+    QHBoxLayout* mMainBoxLayout = new QHBoxLayout(this, 0, 4);
+    mMainBoxLayout->setResizeMode(QLayout::FreeResize);
+    QVBoxLayout* mLeftBoxLayout = new QVBoxLayout(mMainBoxLayout, 0);
+    QVBoxLayout* mBtnBoxLayout = new QVBoxLayout(mMainBoxLayout, 4);
+    mBtnBoxLayout->setMargin(2);
+    // create Button Box ----------------------------------------------------------------------
+    mCameraSetupBtn = new QPushButton(i18n("Setup"), this);
+    mCameraSetupBtn->setMinimumSize(QSize(100, 0));
+    mBtnBoxLayout->addWidget(mCameraSetupBtn);
+    mCameraStopBtn = new QPushButton(i18n("Stop"), this);
+    mCameraStopBtn->setMinimumSize(QSize(100, 0));
+    mBtnBoxLayout->addWidget(mCameraStopBtn);
+    mCameraDownloadBtn = new QPushButton(i18n("Download"), this);
+    mCameraDownloadBtn->setMinimumSize(QSize(100, 0));
+    mBtnBoxLayout->addWidget(mCameraDownloadBtn);
+    mCameraUploadBtn = new QPushButton(i18n("Upload"), this);
+    mCameraUploadBtn->setMinimumSize(QSize(100, 0));
+    mBtnBoxLayout->addWidget(mCameraUploadBtn);
+    mCameraDeleteBtn = new QPushButton(i18n("Delete"), this);
+    mCameraDeleteBtn->setMinimumSize(QSize(100, 0));
+    mBtnBoxLayout->addWidget(mCameraDeleteBtn);
+    QSpacerItem* mBtnSpacer = new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    mBtnBoxLayout->addItem(mBtnSpacer);
+    mDialogCloseBtn = new QPushButton(i18n("Close"), this);
+    mDialogCloseBtn->setMinimumSize(QSize(100, 0));
+    mBtnBoxLayout->addWidget(mDialogCloseBtn);
+    mPluginAboutBtn = new QPushButton(i18n("About"), this);
+    mPluginAboutBtn->setMinimumSize(QSize(100, 0));
+    mBtnBoxLayout->addWidget(mPluginAboutBtn); //----------------------------------------------
+    // create Camera Box-----------------------------------------------------------------------
+    QHBoxLayout* mCameraBoxLayout = new QHBoxLayout(mLeftBoxLayout, 4);
+    mCameraBoxLayout->setMargin(4);
+    mCameraConnectBtn = new QPushButton(i18n("Connect"), this);
+    mCameraBoxLayout->addWidget(mCameraConnectBtn);
+    mCameraComboBox = new QComboBox(this, "camera");
+    mCameraComboBox->setInsertionPolicy(QComboBox::AtBottom);
     mCameraComboBox->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
-	QHBox *bottomBox = new QHBox(mFrame);
-	mMainBox->addWidget(bottomBox);
-    bottomBox->setFrameShape(QFrame::NoFrame);
-    bottomBox->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum));
-    (void) new QLabel(i18n("Download to: "), bottomBox);
-    mDownloadDirectoryEdit = new QLineEdit(bottomBox);
+    mCameraBoxLayout->addWidget(mCameraComboBox); // ------------------------------------------
+    // create Download Directory Camera Box ---------------------------------------------------
+    QHBoxLayout *mDownloadDirectoryBoxLayout = new QHBoxLayout(mLeftBoxLayout, 4);
+    mDownloadDirectoryBoxLayout->setMargin(4);
+    QLabel* mDownloadDirectoryLabel = new QLabel(i18n("Download to: "), this);
+    mDownloadDirectoryBoxLayout->addWidget(mDownloadDirectoryLabel);
+    mDownloadDirectoryEdit = new QLineEdit(this);
     mDownloadDirectoryEdit->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
     mDownloadDirectoryEdit->setReadOnly("true");
-    mChangeDownloadDirectoryButton = new QPushButton(i18n("&Change"), bottomBox);
-    QSplitter *splitter = new QSplitter(mFrame);
-	mMainBox->addWidget(splitter);
-    splitter->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
-    mFolderView = new CameraFolderView(splitter);
-    mIconView   = new CameraIconView(splitter);
-    splitter->setOpaqueResize(true);
-    splitter->setResizeMode(mFolderView,  QSplitter::Stretch);
-    splitter->setResizeMode(mIconView,  QSplitter::Stretch);
-    QValueList<int> sizeList;
-    sizeList.push_back(2);
-    sizeList.push_back(5);
-    splitter->setSizes (sizeList);
-	container_  = new GPFileItemContainer(this, mFolderView, mIconView);
+    mDownloadDirectoryBoxLayout->addWidget(mDownloadDirectoryEdit);
+    mChangeDownloadDirectoryBtn = new QPushButton(i18n("&Change"), this);
+    mDownloadDirectoryBoxLayout->addWidget(mChangeDownloadDirectoryBtn); // -------------------------
+    mSplitter = new QSplitter(this);
+    mLeftBoxLayout->addWidget(mSplitter);
+    mSplitter->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+    mFolderView   = new CameraFolderView(mSplitter);
+    mIconView   = new CameraIconView(mSplitter);
+    mSplitter->setOpaqueResize(true);
+    mSplitter->setResizeMode(mFolderView, QSplitter::Stretch);
+    mSplitter->setResizeMode(mIconView, QSplitter::Stretch);
+    container_  = new GPFileItemContainer(this, mFolderView, mIconView);
     efilter_    = new GPEventFilter(this);
     controller_ = new GPController(this, *mCameraType);
     controller_->start();
     cameraConnected_ = false;
-	mIconView->setThumbnailSize();
-	mStatusBar =  new KStatusBar(mFrame); 
-	mMainBox->addWidget(mStatusBar);
+    // create Status Bar -----------------------------------------------------------------------------
+    mStatusBar =  new KStatusBar(this);
+    mLeftBoxLayout->addWidget(mStatusBar);
     mStatusLabel = new QLabel(mStatusBar);
     mStatusLabel->setText(i18n("Ready"));
     mStatusBar->addWidget(mStatusLabel, 7, true);
     mProgressBar = new KProgress(mStatusBar);
     mProgressBar->setTotalSteps(100);
-    mStatusBar->addWidget(mProgressBar, 5, true);
-    setupActions();
+    mStatusBar->addWidget(mProgressBar, 5, true); // ------------------------------------------------- 
+    setupAccel();
     setupConnections();
     mCameraList->load();
-	readSettings();
+    readSettings();
 }
 
 CameraUI::~CameraUI() {
-	writeSettings();
+    writeSettings();
     delete controller_;
     delete container_;
     mFolderView->clear();
@@ -158,70 +177,55 @@ const CameraType* CameraUI::cameraType() {
     return mCameraType;
 }
 
-void CameraUI::setupActions() {
-	mSelectAllAction = new KAction(i18n("Select All"), 0, CTRL+Key_A,
-											this, SLOT(slotSelectAll()));
-    mSelectNoneAction = new KAction(i18n("Select None"), 0, CTRL+Key_U,
-											this, SLOT(slotSelectNone()));
-    mSelectInvertAction = new KAction(i18n("Invert Selection"), 0, CTRL+Key_Asterisk,
-											this, SLOT(slotSelectInvert()));
-    mSelectNewAction = new KAction(i18n("Select New Items"), 0, CTRL+Key_Slash,
-											this, SLOT(slotSelectNew()));
+void CameraUI::setupAccel() {
+    mCameraUIAccel = new KAccel(this);
+    mCameraUIAccel->insert("Select All", i18n("Select All"), 
+	    		i18n("Select all the images from the camera."), 
+			CTRL+Key_A, this, SLOT(slotSelectAll()));
+    mCameraUIAccel->insert("Select None", i18n("Select None"), 
+	    		i18n("Deselect all the images from the camera."), 
+			CTRL+Key_U, this, SLOT(slotSelectNone()));
+    mCameraUIAccel->insert("Invert selection", i18n("Invert selection"), 
+	    		i18n("Invert the selection."), 
+			CTRL+Key_Asterisk, this, SLOT(slotSelectInvert()));
+    mCameraUIAccel->insert("Select New", i18n("Select New Items"), 
+	    		i18n("Select all the that were not previously downloaded."), 
+			CTRL+Key_Slash, this, SLOT(slotSelectNew()));
     setCameraConnected(false);
 }
 
 void CameraUI::setupConnections() {
-    connect(this, SIGNAL(signalStatusMsg(const QString&)), 
-			this, SLOT(slotSetStatusMsg(const QString&)));
-    connect(this, SIGNAL(signalProgressVal(int)), 
-			this, SLOT(slotSetProgressVal(int)));
-    connect(this, SIGNAL(signalBusy(bool)), 
-			this, SLOT(slotBusy(bool)));
-    connect(efilter_, SIGNAL(signalStatusMsg(const QString&)),
-			this, SIGNAL(signalStatusMsg(const QString&)));
-    connect(efilter_, SIGNAL(signalProgressVal(int)),
-            this, SIGNAL(signalProgressVal(int)));
-    connect(efilter_, SIGNAL(signalBusy(bool)),
-            this, SIGNAL(signalBusy(bool))); 
-    connect(mFolderView, SIGNAL(signalFolderChanged(CameraFolderItem*)),
-            this, SLOT(slotFolderSelected(CameraFolderItem*)));
-    connect(mIconView, SIGNAL(signalDownloadSelectedItems()),
-            this, SLOT(slotCameraDownloadSelected()));
-    connect(mIconView, SIGNAL(signalDeleteSelectedItems()),
-            this, SLOT(slotCameraDeleteSelected()));
-    connect(mChangeDownloadDirectoryButton, SIGNAL(pressed()),
-			this, SLOT(slotChangeDownloadDirectory()));
-    connect(mCameraList, SIGNAL(signalCameraListChanged()), 
-			this, SLOT(slotSyncCameraComboBox()));
-	connect(mCameraConnectButton, SIGNAL(pressed()), 
-			this, SLOT(slotCameraConnectToggle()));
-	connect(mCameraSetupButton, SIGNAL(pressed()), 
-			this, SLOT(slotSetupCamera()));
-	connect(mCameraCancelButton, SIGNAL(pressed()),
-			this, SLOT(slotCameraCancel()));
-    connect(this, SIGNAL(user1Clicked()),
-			this, SLOT(slotCameraDownloadSelected()));
-    connect(this, SIGNAL(user2Clicked()),
-			this, SLOT(slotCameraUpload()));
-	connect(this, SIGNAL(user3Clicked()),
-			this, SLOT(slotCameraDeleteSelected()));
+    connect(this, SIGNAL(signalStatusMsg(const QString&)), this, SLOT(slotSetStatusMsg(const QString&)));
+    connect(this, SIGNAL(signalProgressVal(int)), this, SLOT(slotSetProgressVal(int)));
+    connect(this, SIGNAL(signalBusy(bool)), this, SLOT(slotBusy(bool)));
+    connect(efilter_, SIGNAL(signalStatusMsg(const QString&)), this, SIGNAL(signalStatusMsg(const QString&)));
+    connect(efilter_, SIGNAL(signalProgressVal(int)), this, SIGNAL(signalProgressVal(int)));
+    connect(efilter_, SIGNAL(signalBusy(bool)), this, SIGNAL(signalBusy(bool))); 
+    connect(mFolderView, SIGNAL(signalFolderChanged(CameraFolderItem*)), this, SLOT(slotFolderSelected(CameraFolderItem*)));
+    connect(mIconView, SIGNAL(signalDownloadSelectedItems()), this, SLOT(slotCameraDownloadSelected()));
+    connect(mIconView, SIGNAL(signalDeleteSelectedItems()), this, SLOT(slotCameraDeleteSelected()));
+    connect(mChangeDownloadDirectoryBtn, SIGNAL(pressed()), this, SLOT(slotChangeDownloadDirectory()));
+    connect(mCameraList, SIGNAL(signalCameraListChanged()), this, SLOT(slotSyncCameraComboBox()));
+    connect(mCameraConnectBtn, SIGNAL(pressed()), this, SLOT(slotCameraConnectToggle()));
+    connect(mCameraSetupBtn, SIGNAL(pressed()), this, SLOT(slotSetupCamera()));
+    connect(mCameraStopBtn, SIGNAL(pressed()), this, SLOT(slotCameraCancel()));
+    connect(mCameraDownloadBtn, SIGNAL(pressed()), this, SLOT(slotCameraDownloadSelected()));
+    connect(mCameraUploadBtn, SIGNAL(pressed()), this, SLOT(slotCameraUpload()));
+    connect(mCameraDeleteBtn, SIGNAL(pressed()), this, SLOT(slotCameraDeleteSelected()));
+    connect(mDialogCloseBtn, SIGNAL(pressed()), this, SLOT(close()));
 }
 
 void CameraUI::setCameraConnected(bool val) {
-    enableButton(User1, val);
-    enableButton(User2, val);
-    enableButton(User3, val);
+    mCameraDownloadBtn->setEnabled(val);
+    mCameraUploadBtn->setEnabled(val);
+    mCameraDeleteBtn->setEnabled(val);
     if(val) {
-		mStatusLabel->setText(i18n("Connected"));
-		mCameraConnectButton->setText(i18n("Disconnect"));
+	mStatusLabel->setText(i18n("Connected"));
+	mCameraConnectBtn->setText(i18n("Disconnect"));
     } else {
-		mStatusLabel->setText(i18n("Disconnected"));
-		mCameraConnectButton->setText(i18n("Connect"));
+	mStatusLabel->setText(i18n("Disconnected"));
+	mCameraConnectBtn->setText(i18n("Connect"));
     }
-}
-
-void CameraUI::slotClose() {
-	this->~CameraUI();
 }
 
 void CameraUI::slotSetStatusMsg(const QString& msg) {
@@ -230,7 +234,7 @@ void CameraUI::slotSetStatusMsg(const QString& msg) {
 
 void CameraUI::slotSetProgressVal(int val) {
     if(val >= 0 && val <= 100) {
-		mProgressBar->setProgress(val);
+	mProgressBar->setProgress(val);
     }
 }
 
@@ -241,9 +245,9 @@ void CameraUI::slotResetStatusBar() {
 
 void CameraUI::slotBusy(bool val) {
     if(!val) {
-		slotResetStatusBar();
+	slotResetStatusBar();
     }
-    mCameraCancelButton->setEnabled(val);
+    mCameraStopBtn->setEnabled(val);
 }
 
 void CameraUI::slotSetupCamera() {
@@ -252,11 +256,11 @@ void CameraUI::slotSetupCamera() {
 }
 
 void CameraUI::slotSyncCameraComboBox() {
-	mCameraComboBox->clear();
-	QPtrList<CameraType>* mCameraTypeList = mCameraList->cameraList();
-	for(mCameraTypeList->first(); mCameraTypeList->current(); mCameraTypeList->next()) {
-		mCameraComboBox->insertItem(mCameraTypeList->current()->title());
-	}
+    mCameraComboBox->clear();
+    QPtrList<CameraType>* mCameraTypeList = mCameraList->cameraList();
+    for(mCameraTypeList->first(); mCameraTypeList->current(); mCameraTypeList->next()) {
+	mCameraComboBox->insertItem(mCameraTypeList->current()->model());
+    }
 }
 
 void CameraUI::setCameraType(const CameraType& ctype) {
@@ -270,10 +274,10 @@ void CameraUI::cameraInitialized(bool val) {
     if(val) {
         cameraConnected_ = true;
         setCameraConnected(true);
-        container_->addVirtualFolder(mCameraType->title());
-        container_->addRootFolder(mCameraType->path());
-        controller_->requestGetSubFolders(mCameraType->path());
-        controller_->requestGetAllItemsInfo(mCameraType->path());
+        container_->addVirtualFolder(mCameraType->model());
+        container_->addRootFolder("/");
+        controller_->requestGetSubFolders("/");
+        controller_->requestGetAllItemsInfo("/");
         mFolderView->virtualFolder()->setSelected(true);
     }
 }
@@ -285,7 +289,7 @@ void CameraUI::cameraSubFolder(const QString& folder, const QString& subFolder) 
 void CameraUI::cameraNewItems(const QString& folder, const GPFileItemInfoList& infoList) {
     QListViewItem *item = mFolderView->currentItem();
     if (!item) {
-		return;
+	return;
     }
     CameraFolderItem *folderItem = static_cast<CameraFolderItem *>(item);
     if (folderItem->folderPath() != folder && !folderItem->isVirtualFolder()) {
@@ -296,14 +300,14 @@ void CameraUI::cameraNewItems(const QString& folder, const GPFileItemInfoList& i
     for (it = infoList.begin(); it != infoList.end(); it++) {
         if ((*it).mime.contains("image")) {
             controller_->requestGetThumbnail(folder, (*it).name);
-		}
+	}
     }
 }
 
 void CameraUI::cameraNewItems(const GPFileItemInfoList& infoList) {
     QListViewItem *item = mFolderView->currentItem();
     if (!item) {
-		return;
+	return;
     }
     CameraFolderItem *folderItem = static_cast<CameraFolderItem *>(item);
     if (!folderItem->isVirtualFolder()){
@@ -314,14 +318,14 @@ void CameraUI::cameraNewItems(const GPFileItemInfoList& infoList) {
     for (it = infoList.begin(); it != infoList.end(); it++) {
         if ((*it).mime.contains("image")) {
             controller_->requestGetThumbnail((*it).folder, (*it).name);
-		}
+	}
     }
 }
 
 void CameraUI::cameraNewThumbnail(const QString& folder, const QString& itemName, const QImage& thumbnail) {
     CameraIconItem *iconItem = container_->findItem(folder, itemName);
     if (!iconItem) {
-		return;
+	return;
     }
     mIconView->setThumbnail(iconItem, thumbnail);    
 }
@@ -329,8 +333,8 @@ void CameraUI::cameraNewThumbnail(const QString& folder, const QString& itemName
 void CameraUI::cameraDownloadedItem(const QString& folder, const QString& itemName) {
     CameraIconItem *iconItem = container_->findItem(folder, itemName);
     if(!iconItem) {
-		return;
-	}
+	return;
+    }
     mIconView->markDownloaded(iconItem);
 }
 
@@ -343,7 +347,11 @@ void CameraUI::cameraErrorMsg(const QString& msg) {
 }
 
 void CameraUI::slotCameraConnectToggle() {
-	mCameraType = mCameraList->find(mCameraComboBox->currentText());
+    if (mCameraComboBox->count() == 0) {
+	KMessageBox::error(0, i18n("There is no configured camera!"));
+	return;
+    }
+    mCameraType = mCameraList->find(mCameraComboBox->currentText());
     setCameraType(*mCameraType);
     setCameraConnected(false);
     if(!cameraConnected_) {
@@ -360,35 +368,35 @@ void CameraUI::slotCameraConnectToggle() {
 
 void CameraUI::slotCameraDownloadSelected() {
     if(!cameraConnected_) {
-		return;
+	return;
     }
     QString dir = mDownloadDirectoryEdit->text();
     QDir qdir(dir);
     if(!qdir.exists()) {
-        KMessageBox::error(0, i18n("'%1' directory does not exist.").arg(dir));
+        KMessageBox::error(0, i18n("'%1' Directory does not exist").arg(dir));
         return;
     }
     int count = 0;
     for(ThumbItem *i = mIconView->firstItem(); i; i=i->nextItem() ) {
         if (i->isSelected()) {
-			++count;
-		}
+	    ++count;
+	}
     }
     if(count == 0) {
-		return;
-	}
+	return;
+    }
     bool proceed = true;
     bool overwriteAll = false;
     for(ThumbItem *i = mIconView->firstItem(); i; i=i->nextItem()) {
         if(i->isSelected()) {
             CameraIconItem *item = static_cast<CameraIconItem*>(i);
             if(!item) {
-				continue;
-			}
+		continue;
+	    }
             downloadOneItem(item->fileInfo()->name, item->fileInfo()->folder, dir, proceed, overwriteAll);
             if(!proceed) {
-				return;
-			}
+		return;
+	    }
         }
     }
 }
@@ -397,28 +405,28 @@ void CameraUI::slotCameraDeleteSelected() {
     if(!cameraConnected_) {
        return;
     }
-	QStringList deleteList;
-	for (ThumbItem *i = mIconView->firstItem(); i;
-		i=i->nextItem()) {
-			if(i->isSelected()) {
-				CameraIconItem *item = static_cast<CameraIconItem*>(i);
-				deleteList.append(item->fileInfo()->name);
+    QStringList deleteList;
+    for (ThumbItem *i = mIconView->firstItem(); i;
+	i=i->nextItem()) {
+	if(i->isSelected()) {
+	    CameraIconItem *item = static_cast<CameraIconItem*>(i);
+	    deleteList.append(item->fileInfo()->name);
         }
     }
-	if (deleteList.isEmpty()) {
-		return;
-	}
-	QString warnMsg(i18n("About to delete these image(s).\n" "Are you sure?"));
-	if(KMessageBox::warningContinueCancelList(this, warnMsg, deleteList, i18n("Warning"), i18n("Delete")) ==  KMessageBox::Continue) {
-		CameraIconItem *item = static_cast<CameraIconItem*>(mIconView->firstItem());
+    if (deleteList.isEmpty()) {
+	return;
+    }
+    QString warnMsg(i18n("About to delete these Image(s)\n" "Are you sure?"));
+    if(KMessageBox::warningContinueCancelList(this, warnMsg, deleteList, i18n("Warning"), i18n("Delete")) ==  KMessageBox::Continue) {
+	CameraIconItem *item = static_cast<CameraIconItem*>(mIconView->firstItem());
         while(item) {
             CameraIconItem *nextItem = static_cast<CameraIconItem *>(item->nextItem());
             if (item->isSelected()) {
                 controller_->requestDeleteItem(item->fileInfo()->folder, item->fileInfo()->name);
-			}
+	    }
             item = nextItem;
         }
-   }
+    }
 }
 
 void CameraUI::slotCameraUpload() {
@@ -433,18 +441,18 @@ void CameraUI::slotCameraUpload() {
     for (QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
         QFileInfo info(*it);
         if(!info.exists()) {
-			continue;
-		}
+	    continue;
+	}
         if(info.isDir()) {
-			continue;
-		}
+	    continue;
+	}
         QString uploadName = info.fileName();
         while (container_->findItem(folderItem->folderPath(), uploadName)) {
             QString msg(i18n("Camera Folder '%1' contains item '%2'\n Please, enter New Name").arg(folderItem->folderName()).arg(uploadName));
             uploadName = KLineEditDlg::getText(msg,uploadName,&ok,this);
             if(!ok){
-				return;
-			}
+		return;
+	    }
         }
         controller_->requestUploadItem(folderItem->folderPath(), info.absFilePath(), uploadName);
     }    
@@ -472,18 +480,18 @@ void CameraUI::slotSelectNew() {
         CameraIconItem *item = static_cast<CameraIconItem *>(it);
         if (item->fileInfo()->downloaded == 0) {
             item->setSelected(true, false);
-		}
+	}
     }
 }
 
 void CameraUI::slotFolderSelected(CameraFolderItem *folderItem) {
     if (!folderItem) {
-		return;
+	return;
     }
     controller_->cancel();
     mIconView->clear();
     if (folderItem->isVirtualFolder()) {
-        controller_->requestGetAllItemsInfo(mCameraType->path());
+        controller_->requestGetAllItemsInfo("/");
     } else {
         controller_->requestGetItemsInfo(folderItem->folderPath());
     }
@@ -505,39 +513,39 @@ void CameraUI::downloadOneItem(const QString& item, const QString& folder, const
             return;
         }
         switch(dlg->saveFileOperation()) {
-			case (SavefileDialog::Skip): {
-				delete dlg;
-				return;
-			}
-			case (SavefileDialog::SkipAll): {
-				delete dlg;
-				proceedFurther = false;
-				return;
-			}
-			case (SavefileDialog::Overwrite): {
-				overwrite = true;
-				delete dlg;
-				break;
-			}
-			case (SavefileDialog::OverwriteAll): {
-				overwriteAll = true;
-				delete dlg;
-				break;
-			}
-			case (SavefileDialog::Rename): {
-				saveFile = downloadDir+"/"+dlg->renameFile();
-				delete dlg;
-				break;
-			}
-			default:  {
-				delete dlg;
-				proceedFurther = false;
-				return;
-			}
+	    case (SavefileDialog::Skip): {
+		delete dlg;
+		return;
+	    }
+	    case (SavefileDialog::SkipAll): {
+		delete dlg;
+		proceedFurther = false;
+		return;
+	    }
+	    case (SavefileDialog::Overwrite): {
+		overwrite = true;
+		delete dlg;
+		break;
+	    }
+	    case (SavefileDialog::OverwriteAll): {
+		overwriteAll = true;
+		delete dlg;
+		break;
+	    }
+	    case (SavefileDialog::Rename): {
+		saveFile = downloadDir+"/"+dlg->renameFile();
+		delete dlg;
+		break;
+	    }
+	    default:  {
+		delete dlg;
+		proceedFurther = false;
+		return;
+	    }
         }
         if (overwrite) {
-			break;
-		}
+	    break;
+	}
     }
     controller_->requestDownloadItem(folder, item, saveFile);
 }
@@ -545,16 +553,16 @@ void CameraUI::downloadOneItem(const QString& item, const QString& folder, const
 bool CameraUI::cameraReadyForUpload(QString& reason) {
     bool result = false;
     if (!cameraConnected_) {
-		reason = i18n("Camera Not Initialised");
-		return result;
+	reason = i18n("Camera Not Initialised");
+	return result;
     } /*
     if (!controller_->cameraSupportsUpload()) {
 	reason = i18n("Camera does not support Uploads");
 	return result;
     } */
     if (!mFolderView->selectedItem() || mFolderView->selectedItem() == mFolderView->firstChild()) {
-		reason = i18n("Please Select a Folder on Camera to Upload");
-		return result;
+	reason = i18n("Please Select a Folder on Camera to Upload");
+	return result;
     }
     result = true;
     return result;
@@ -563,11 +571,11 @@ bool CameraUI::cameraReadyForUpload(QString& reason) {
 void CameraUI::slotChangeDownloadDirectory() {
     QString result = KFileDialog::getExistingDirectory(mDownloadDirectoryEdit->text(), this);
     if(!((new QFileInfo(result))->isWritable())) {
-		KMessageBox::sorry(0, i18n("Sorry! The directory is not writable!"));
-		return;
+	KMessageBox::sorry(0, i18n("Sorry! The directory is not writable!"));
+	return;
     }
     if(!result.isEmpty()) {
-		mDownloadDirectoryEdit->setText(result);
+	mDownloadDirectoryEdit->setText(result);
     }
 }
 
@@ -575,22 +583,22 @@ void CameraUI::writeSettings() {
     mConfig = new KConfig("kipirc");
     mConfig->setGroup("KameraKlient Settings");
     mConfig->writePathEntry("DownloadDirectory", mDownloadDirectoryEdit->text());
-	mConfig->sync();
-	delete mConfig;
+    mConfig->writeEntry("DialogSize", frameSize());
+    mConfig->writeEntry("DialogXPos", x());
+    mConfig->writeEntry("DialogYPos", y());
+    mConfig->writeEntry("SplitterSizes", mSplitter->sizes());
+    mConfig->sync();
+    delete mConfig;
 }
 
 void CameraUI::readSettings() {
     mConfig = new KConfig("kipirc");
     mConfig->setGroup("KameraKlient Settings");
     mDownloadDirectoryEdit->setText(mConfig->readPathEntry("DownloadDirectory", "$HOME"));
-	delete mConfig;
+    resize(mConfig->readSizeEntry("DialogSize"));
+    move(mConfig->readNumEntry("DialogXPos"), mConfig->readNumEntry("DialogYPos"));
+    mSplitter->setSizes(mConfig->readIntListEntry("SplitterSizes"));
+    delete mConfig;
 }
-
-CameraUI* CameraUI::getInstance() {
-	static CameraUI inst;
-	return &inst;
-}
-
-}  // NameSpace KIPIKameraKlientPlugin
 
 #include "cameraui.moc"

@@ -22,9 +22,6 @@
 // Local
 #include "gpfileiteminfo.h"
 
-namespace KIPIKameraKlientPlugin
-{
-
 GPFileItemInfo::GPFileItemInfo() {
     name = "";
     folder = "";
@@ -127,5 +124,3 @@ GPFileItemInfo& GPFileItemInfo::operator=(const GPFileItemInfo& info) {
     }
     return *this;
 }
-
-}  // NameSpace KIPIKameraKlientPlugin

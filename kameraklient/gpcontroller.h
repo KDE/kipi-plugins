@@ -32,17 +32,12 @@
 
 class QString;
 class QImage;
-
-namespace KIPIKameraKlientPlugin
-{
-
 class GPCamera;
 
 class GPController : public QObject, public QThread {
     Q_OBJECT
 
 public:
-
     GPController(QObject *parent, const CameraType& ctype);
     ~GPController();
 
@@ -62,43 +57,27 @@ public:
     void getInformation(QString& summary, QString& manual, QString& about);
 
 protected:
-
     void run();
 
 private:
-
     void initialize();
     void getSubFolders(const QString& folder);
-    void makeFolder(const QString& folder,
-                    const QString& newFolder);
+    void makeFolder(const QString& folder, const QString& newFolder);
     void deleteFolder(const QString& folder);
     void getItemsInfo(const QString& folder);
     void getAllItemsInfo(const QString& folder);
-    void getThumbnail(const QString& folder,
-                      const QString& imageName);
-    void downloadItem(const QString& folder,
-                      const QString& itemName,
-                      const QString& saveFile);
-    void deleteItem(const QString& folder,
-                    const QString& itemName);
-    void uploadItem(const QString& folder,
-                    const QString& uploadName,
-                    const QString& localFile);
-    void openItem(const QString& folder,
-                  const QString& itemName,
-                  const QString& saveFile);
-    void openItemWithService(const QString& folder,
-                             const QString& itemName,
-                             const QString& saveFile,
-                             const QString& serviceName);
-    void exifInfo(const QString& folder,
-                  const QString& itemName);
+    void getThumbnail(const QString& folder, const QString& imageName);
+    void downloadItem(const QString& folder, const QString& itemName, const QString& saveFile);
+    void deleteItem(const QString& folder, const QString& itemName);
+    void uploadItem(const QString& folder, const QString& uploadName, const QString& localFile);
+    void openItem(const QString& folder, const QString& itemName, const QString& saveFile);
+    void openItemWithService(const QString& folder, const QString& itemName, const QString& saveFile, const QString& serviceName);
+    void exifInfo(const QString& folder, const QString& itemName);
     void error(const QString& errorMsg);
 
     void scaleHighlightThumbnail(QImage& thumbnail);
     void showBusy(bool val);
     
-
     QObject  *parent_;
     GPCamera *camera_;
     QMutex    mutex_;
@@ -106,12 +85,9 @@ private:
     bool      close_;
 
 private slots:
-
     void slotStatusMsg(const QString& msg);
     void slotProgressVal(int val);
     void slotErrorMsg(const QString& msg);
 };
-
-}  // NameSpace KIPIKameraKlientPlugin
 
 #endif /* GPCONTROLLER_H */

@@ -25,10 +25,6 @@
 #include <kdialogbase.h>
 
 class QPixmap;
-
-namespace KIPIKameraKlientPlugin
-{
-
 class GPFileItemInfo;
 
 class GPFileItemInfoDlg : public KDialogBase
@@ -41,6 +37,5 @@ public:
 
 };
 
-}  // NameSpace KIPIKameraKlientPlugin
 
 #endif /* GPFILEITEMINFODLG_H */

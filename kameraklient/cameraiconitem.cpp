@@ -30,8 +30,6 @@
 #include "cameraiconview.h"
 #include "cameraiconitem.h"
 
-namespace KIPIKameraKlientPlugin
-{
 
 const char* CameraIconItem::new_xpm[] = {
 "13 13 8 1",
@@ -95,6 +93,4 @@ void CameraIconItem::setPixmap(const QImage& thumb) {
     painter.end();
     repaint();
 }
-
-}  // NameSpace KIPIKameraKlientPlugin
 

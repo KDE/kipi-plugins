@@ -40,15 +40,9 @@
 #include "gpmessages.h"
 #include "gpcontroller.h"
 
-namespace KIPIKameraKlientPlugin
-{
-
-GPController::GPController(QObject *parent, const CameraType& ctype)
-    : QObject(parent) {
+GPController::GPController(QObject *parent, const CameraType& ctype) : QObject(parent) {
     parent_ = parent;
-    camera_ = new GPCamera(QString(ctype.model().latin1()),
-                           QString(ctype.port().latin1()),
-                           QString(ctype.path().latin1()));
+    camera_ = new GPCamera(QString(ctype.model().latin1()), QString(ctype.port().latin1()));
     close_ = false;
     connect(GPMessages::gpMessagesWrapper(), SIGNAL(statusChanged(const QString&)),
             this, SLOT(slotStatusMsg(const QString&)) );
@@ -111,14 +105,8 @@ void GPController::requestOpenItem(const QString& folder, const QString& itemNam
     cmdQueue_.enqueue(new GPCommandOpenItem(folder, itemName, saveFile));    
 }
 
-void GPController::requestOpenItemWithService(const QString& folder,
-                                              const QString& itemName,
-                                              const QString& saveFile,
-                                              const QString& serviceName) {
-    cmdQueue_.enqueue(new GPCommandOpenItemWithService(folder,
-                                                       itemName,
-                                                       saveFile,
-                                                       serviceName));
+void GPController::requestOpenItemWithService(const QString& folder, const QString& itemName, const QString& saveFile, const QString& serviceName) {
+    cmdQueue_.enqueue(new GPCommandOpenItemWithService(folder, itemName, saveFile, serviceName));
 }
 
 void GPController::cancel() {
@@ -221,8 +209,9 @@ void GPController::run() {
             qWarning("GPController: Unknown Command");
             break;
         }
-        if (cmd)
+        if (cmd) {
             delete cmd;
+	}
     }
 }
 
@@ -230,18 +219,14 @@ void GPController::initialize() {
     mutex_.lock();
     int result = camera_->initialize();
     mutex_.unlock();
-
     if (result == GPCamera::GPSuccess) {
 		QApplication::postEvent(parent_, new GPEvent(GPEvent::Init));
     }
     else if (result == GPCamera::GPSetup) {
-        QString msg(i18n("Camera Model or Port not specified correctly.\n"
-                         "Please run Setup"));
+        QString msg(i18n("Camera Model or Port not specified correctly.\n" "Please run Setup"));
         error(msg);
-    }
-    else {
-        QString msg(i18n("Failed to initialize camera.\n"
-                         "Please ensure camera is connected properly and turned on"));
+    } else {
+        QString msg(i18n("Failed to initialize camera.\n" "Please ensure camera is connected properly and turned on"));
         error(msg);
     }
 }
@@ -249,12 +234,11 @@ void GPController::initialize() {
 void GPController::getSubFolders(const QString& folder) {
     QValueList<QString> subFolderList;
     subFolderList.clear();
-
     mutex_.lock();
     int result = camera_->getSubFolders(folder, subFolderList);
     mutex_.unlock();
     if (result == GPCamera::GPSuccess) {
-		QApplication::postEvent(parent_, new GPEventGetSubFolders(folder, subFolderList));
+	QApplication::postEvent(parent_, new GPEventGetSubFolders(folder, subFolderList));
         if (subFolderList.count() > 0) {
             for (unsigned int i=0; i<subFolderList.count(); i++) {
                 QString subFolder(folder);
@@ -286,8 +270,7 @@ void GPController::getItemsInfo(const QString& folder) {
     int result = camera_->getItemsInfo(folder, infoList);
     mutex_.unlock();
     if (result == GPCamera::GPSuccess) {
-		QApplication::postEvent(parent_, new GPEventGetItemsInfo(folder,
-                                                   infoList));
+	QApplication::postEvent(parent_, new GPEventGetItemsInfo(folder, infoList));
     } else {
         QString msg(i18n("Failed to get images information from '%1'\n").arg(folder));
         error(msg);
@@ -297,224 +280,168 @@ void GPController::getItemsInfo(const QString& folder) {
 void GPController::getAllItemsInfo(const QString& folder) {
     GPFileItemInfoList infoList;
     infoList.clear();
-
     mutex_.lock();
     camera_->getAllItemsInfo(folder, infoList);
     mutex_.unlock();
-	QApplication::postEvent(parent_, new GPEventGetAllItemsInfo(infoList));
-    
+    QApplication::postEvent(parent_, new GPEventGetAllItemsInfo(infoList));
 }
 
 void GPController::getThumbnail(const QString& folder, const QString& imageName) {
     QImage thumbnail;
-
     mutex_.lock();
     int result = camera_->getThumbnail(folder, imageName, thumbnail);
     mutex_.unlock();
-
     if (result == GPCamera::GPSuccess) {
         scaleHighlightThumbnail(thumbnail);
-		QApplication::postEvent(parent_, new GPEventGetThumbnail(folder, imageName, thumbnail));
+	QApplication::postEvent(parent_, new GPEventGetThumbnail(folder, imageName, thumbnail));
     } else {
         kdWarning() << i18n("Failed to get preview for '%1/%2'").arg(folder).arg(imageName) << endl;
     }
-
 }
 
-void GPController::downloadItem(const QString& folder,
-                                const QString& itemName,
-                                const QString& saveFile) {
+void GPController::downloadItem(const QString& folder, const QString& itemName, const QString& saveFile) {
     mutex_.lock();
     int result = camera_->downloadItem(folder, itemName, saveFile);
     mutex_.unlock();
-
     if (result != GPCamera::GPSuccess) {
         QString msg(i18n("Failed to download '%1' from '%2'").arg(itemName).arg(folder));
         error(msg);
+    } else {
+	QApplication::postEvent(parent_, new GPEventDownloadItem(folder, itemName));
     }
-    else {
-		QApplication::postEvent(parent_, new GPEventDownloadItem(folder,
-                                                   itemName));
-    }
-
 }
 
-void GPController::openItem(const QString& folder,
-                            const QString& itemName,
-                            const QString& saveFile)
-{
+void GPController::openItem(const QString& folder, const QString& itemName, const QString& saveFile) {
     mutex_.lock();
-    int result = camera_->downloadItem(folder, itemName,
-                                       saveFile);
+    int result = camera_->downloadItem(folder, itemName, saveFile);
     mutex_.unlock();
-
     if (result != GPCamera::GPSuccess) {
         QString msg(i18n("Failed to open '%1'").arg(itemName));
         error(msg);
-    }
-    else {
-		QApplication::postEvent(parent_, new GPEventOpenItem(saveFile));
+    } else {
+	QApplication::postEvent(parent_, new GPEventOpenItem(saveFile));
     }
 }
 
-void GPController::openItemWithService(const QString& folder,
-                                       const QString& itemName,
-                                       const QString& saveFile,
-                                       const QString& serviceName)
-{
+void GPController::openItemWithService(const QString& folder, const QString& itemName, const QString& saveFile, const QString& serviceName) {
     mutex_.lock();
-    int result = camera_->downloadItem(folder, itemName,
-                                       saveFile);
+    int result = camera_->downloadItem(folder, itemName, saveFile);
     mutex_.unlock();
-
     if (result != GPCamera::GPSuccess) {
         QString msg(i18n("Failed to open '%1'").arg(itemName));
         error(msg);
-    }
-    else {
-		QApplication::postEvent(parent_,
-                  new GPEventOpenItemWithService(saveFile,
-                                                 serviceName));
+    } else {
+	QApplication::postEvent(parent_, new GPEventOpenItemWithService(saveFile, serviceName));
     }
 }
 
-void GPController::deleteItem(const QString& folder,
-                              const QString& itemName)
-{
+void GPController::deleteItem(const QString& folder, const QString& itemName) {
    mutex_.lock();
    int result = camera_->deleteItem(folder, itemName);
    mutex_.unlock();
-
    if (result != GPCamera::GPSuccess) {
        QString msg(i18n("Failed to delete '%1'").arg(itemName));
        error(msg);
-   }
-   else {
-	   QApplication::postEvent(parent_,
-                 new GPEventDeleteItem(folder, itemName));
+   } else {
+       QApplication::postEvent(parent_, new GPEventDeleteItem(folder, itemName));
    }
 }
 
-void GPController::uploadItem(const QString& folder,
-                              const QString& uploadName,
-                              const QString& localFile)
-{
+void GPController::uploadItem(const QString& folder, const QString& uploadName, const QString& localFile) {
     mutex_.lock();
-    int result = camera_->uploadItem(folder, uploadName,
-                                     localFile);
+    int result = camera_->uploadItem(folder, uploadName, localFile);
     mutex_.unlock();
-
     if (result != GPCamera::GPSuccess) {
         QString msg(i18n("Failed to upload '%1'").arg(localFile));
         error(msg);
-    }
-    else {
-
+    } else {
         GPFileItemInfoList infoList;
         GPFileItemInfoList infoList2;
         infoList.clear();
         infoList2.clear();
-
         mutex_.lock();
         int result = camera_->getItemsInfo(folder, infoList);
         mutex_.unlock();
-
         if (result == GPCamera::GPSuccess) {
-
             while ( !(infoList.isEmpty()) ) {
-
                 GPFileItemInfo info( infoList.first() );
                 infoList.pop_front();
-
                 if (info.name == uploadName) {
                     infoList2.push_back(info);
                     break;
                 }
-
             }
-
-            if (!infoList2.isEmpty())
-                QApplication::postEvent(parent_, new GPEventGetItemsInfo(folder,
-                                                  infoList2));
-
+            if (!infoList2.isEmpty()) {
+                QApplication::postEvent(parent_, new GPEventGetItemsInfo(folder, infoList2));
+	    }
         }
-
     }
 }
 
 void GPController::error(const QString& errorMsg) {
     kdWarning() << errorMsg;
-	QApplication::postEvent(parent_, new GPEventError(errorMsg));
+    QApplication::postEvent(parent_, new GPEventError(errorMsg));
 }
 
 void GPController::scaleHighlightThumbnail(QImage& thumbnail) {
-
     thumbnail = thumbnail.smoothScale(100, 100, QImage::ScaleMin);
-
     QColor darkColor(48, 48, 48);
     QColor lightColor(215, 215, 215);
-
     int w = thumbnail.width();
     int h = thumbnail.height();
-
     // Right
     for (int y=0; y<h; y++) {
-        if (y > 1 && y < h-2)
-             thumbnail.setPixel(w-3, y, lightColor.rgb());
+        if (y > 1 && y < h-2) {
+	    thumbnail.setPixel(w-3, y, lightColor.rgb());
+	}
         thumbnail.setPixel(w-1, y, darkColor.rgb());
         thumbnail.setPixel(w-2, y, darkColor.rgb());
     }
-
     // Bottom
     for (int x=0; x<w; x++) {
-         if (x > 1 && x < w-2)
-             thumbnail.setPixel(x, h-3, lightColor.rgb());
+	if (x > 1 && x < w-2) {
+	    thumbnail.setPixel(x, h-3, lightColor.rgb());
+	}
         thumbnail.setPixel(x, h-1, darkColor.rgb());
         thumbnail.setPixel(x, h-2, darkColor.rgb());
     }
-
     // Top
     for (int x=0; x<w; x++) {
-        if (x > 1 && x < w-2)
+        if (x > 1 && x < w-2) {
              thumbnail.setPixel(x, 2, lightColor.rgb());
+	}
         thumbnail.setPixel(x, 0, darkColor.rgb());
         thumbnail.setPixel(x, 1, darkColor.rgb());
     }
-
     // Left
     for (int y=0; y<h; y++) {
-         if (y > 1 && y < h-2)
+	if (y > 1 && y < h-2) {
              thumbnail.setPixel(2, y, lightColor.rgb());
+	}
         thumbnail.setPixel(0, y, darkColor.rgb());
         thumbnail.setPixel(1, y, darkColor.rgb());
     }
-
 }
 
-void GPController::slotStatusMsg(const QString& msg)
-{
-    if (!msg.isEmpty())
+void GPController::slotStatusMsg(const QString& msg) {
+    if (!msg.isEmpty()) {
         QApplication::postEvent(parent_, new GPEventStatusMsg(msg));
+    }
 }
 
-void GPController::slotProgressVal(int val)
-{
-	QApplication::postEvent(parent_, new GPEventProgress(val));
+void GPController::slotProgressVal(int val) {
+    QApplication::postEvent(parent_, new GPEventProgress(val));
 }
 
-void GPController::slotErrorMsg(const QString& msg)
-{
+void GPController::slotErrorMsg(const QString& msg) {
     error(msg);
 }
 
-void GPController::showBusy(bool val)
-{
+void GPController::showBusy(bool val) {
 	QApplication::postEvent(parent_, new GPEventBusy(val));
 }
 
-void GPController::getInformation(QString& summary, QString& manual,
-                                  QString& about)
-{
+void GPController::getInformation(QString& summary, QString& manual, QString& about) {
     mutex_.lock();
     camera_->cameraSummary(summary);
     camera_->cameraManual(manual);
@@ -522,6 +449,3 @@ void GPController::getInformation(QString& summary, QString& manual,
     mutex_.unlock();
 }
 
-}  // NameSpace KIPIKameraKlientPlugin
-
-#include "gpcontroller.moc"

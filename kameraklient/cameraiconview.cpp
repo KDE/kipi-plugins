@@ -41,11 +41,7 @@
 #include "gpfileiteminfodlg.h"
 #include "cameraiconitem.h"
 #include "cameraiconview.h"
-#include "cameradragobject.h"
 #include "cameraui.h"
-
-namespace KIPIKameraKlientPlugin
-{
 
 const int MAXICONITEMS = 307;
 const int THUMBSIZE = 120;
@@ -70,7 +66,7 @@ CameraIconView::~CameraIconView() {
 void CameraIconView::setThumbnailSize() {
     int w = THUMBSIZE;
     int h = THUMBSIZE;
-    QString iconfile = locate("data", "/icons/documents.png");
+    QString iconfile = locate("data", "documents");
     QImage image(iconfile);
     double scale = double(w-10) / double(image.width());
     image = image.smoothScale(w-10, h-10, QImage::ScaleMin);
@@ -83,13 +79,13 @@ void CameraIconView::setThumbnailSize() {
     }
     p.end();
     d->imagePix = pix;
-    createPixmap(d->imagePix, "icons/pictures.png", scale);
+    createPixmap(d->imagePix, "image", scale);
     d->audioPix = pix;
-    createPixmap(d->audioPix, "icons/sound.png", scale);
+    createPixmap(d->audioPix, "sound", scale);
     d->videoPix = pix;
-    createPixmap(d->videoPix, "icons/multimedia.png", scale);
+    createPixmap(d->videoPix, "video", scale);
     d->unknownPix = pix;
-    createPixmap(d->unknownPix, "icons/documents.png", scale);
+    createPixmap(d->unknownPix, "document", scale);
 }
 
 void CameraIconView::createPixmap(QPixmap& pix, const QString& icon, double scale) {
@@ -127,35 +123,16 @@ void CameraIconView::clear() {
 
 void CameraIconView::setThumbnail(CameraIconItem* iconItem, const QImage& thumbnail) {
     if (!iconItem) {
-		return;
+	return;
     }
     iconItem->setPixmap(thumbnail);
 }
 
 void CameraIconView::markDownloaded(CameraIconItem* iconItem) {
     if (!iconItem) {
-		return;
+	return;
     }
     GPFileItemInfo *fileInfo = const_cast<GPFileItemInfo*>(iconItem->fileInfo());
     fileInfo->downloaded = 1;
     iconItem->repaint();
 }
-
-void CameraIconView::startDrag() {
-    int count = 0;
-    for (ThumbItem *it=firstItem(); it; it=it->nextItem()) {
-        if (it->isSelected()) {
-            count++;
-		}
-    }
-    if (count == 0) {
-		return;
-    }
-    CameraDragObject* drag = new CameraDragObject(CameraUI::getInstance()->cameraType(), this);
-    drag->setPixmap(SmallIcon("image"));
-    drag->dragCopy();
-}
-
-}  // NameSpace KIPIKameraKlientPlugin
-
-#include "cameraiconview.moc"

@@ -30,9 +30,6 @@ class QImage;
 class QPixmap;
 class QPoint;
 
-namespace KIPIKameraKlientPlugin
-{
-
 class GPFileItemInfo;
 class ThumbItem;
 class CameraIconItem;
@@ -50,9 +47,6 @@ public:
     void markDownloaded(CameraIconItem* iconItem);
     virtual void clear();
 
-protected:
-    void startDrag();
-
 private:
     void createPixmap(QPixmap& pix, const QString& icon, double scale);
 
@@ -66,7 +60,5 @@ signals:
     void signalDownloadSelectedItems();
     void signalDeleteSelectedItems();
 };
-
-}  // NameSpace KIPIKameraKlientPlugin
 
 #endif 

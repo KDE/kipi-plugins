@@ -26,8 +26,6 @@
 #include "gpeventfilter.h"
 #include "gpevents.h"
 
-namespace KIPIKameraKlientPlugin
-{
 
 GPEventFilter::GPEventFilter(QObject* parent)
     : QObject(parent) {
@@ -78,8 +76,9 @@ bool GPEventFilter::eventFilter(QObject *, QEvent *e) {
 	    MTList<GPFileItemInfo> mtList(event->infoList());
 	    GPFileItemInfoList infoList;
 	    GPFileItemInfoList::const_iterator it;
-	    for (it = mtList.begin(); it != mtList.end(); it++)
+	    for (it = mtList.begin(); it != mtList.end(); it++) {
 		infoList.append(*it);
+	    }
 	    view_->cameraNewItems(infoList);
 	    break;
 	}
@@ -121,7 +120,3 @@ bool GPEventFilter::eventFilter(QObject *, QEvent *e) {
     // eat this event
     return true;
 }
-
-}  // NameSpace KIPIKameraKlientPlugin
-
-#include "gpeventfilter.moc"

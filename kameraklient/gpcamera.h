@@ -30,9 +30,6 @@
 
 class QImage;
 
-namespace KIPIKameraKlientPlugin
-{
-
 class GPCameraPrivate;
 class GPStatus;
 
@@ -47,7 +44,7 @@ public:
     } Errors;
     
 
-    GPCamera(const QString& model, const QString& port, const QString& path);
+    GPCamera(const QString& model, const QString& port);
     ~GPCamera();
 
     bool thumbnailSupport();
@@ -56,7 +53,6 @@ public:
     bool mkDirSupport();
     bool delDirSupport();
 
-    
     int  initialize();
 
     void cancel();
@@ -71,13 +67,10 @@ public:
 
     // recursively delete all items
     int deleteAllItems(const QString& folder);
-
     int uploadItem(const QString& folder, const QString& itemName, const QString& localFile);
-
     void cameraSummary(QString& summary);
     void cameraManual(QString& manual);
     void cameraAbout(QString& about);
-
     
     // Static Functions
     static void getSupportedCameras(int& count, QStringList& clist);
@@ -90,8 +83,6 @@ private:
     GPCameraPrivate *d;
     GPStatus        *status;
 };
-
-}  // NameSpace KIPIKameraKlientPlugin
 
 #endif
 

@@ -26,9 +26,6 @@
 #include "camerafolderitem.h"
 #include "camerafolderview.h"
 
-namespace KIPIKameraKlientPlugin
-{
-
 CameraFolderView::CameraFolderView(QWidget* parent) : KListView(parent) {
     addColumn(i18n("Camera Folders"));
     setFullWidth(true);
@@ -47,8 +44,7 @@ CameraFolderView::~CameraFolderView() {
 }
 
 void CameraFolderView::setupConnections() {
-    connect(this, SIGNAL(selectionChanged(QListViewItem*)),
-            this, SLOT(slotSelectionChanged(QListViewItem*)));
+    connect(this, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(slotSelectionChanged(QListViewItem*)));
 }
 
 void CameraFolderView::addVirtualFolder(const QString& name) {
@@ -68,7 +64,7 @@ CameraFolderItem* CameraFolderView::addFolder(const QString& folder, const QStri
         QString path(folder);
         if (!folder.endsWith("/")) {
             path += "/";
-		}
+	}
         path += subFolder;
         CameraFolderItem* item = new CameraFolderItem(parentItem, subFolder, path);
         item->setOpen(true);
@@ -84,14 +80,14 @@ CameraFolderItem* CameraFolderView::findFolder(const QString& folderPath) {
         CameraFolderItem* item = static_cast<CameraFolderItem*>(it.current());
         if (item->folderPath() == folderPath) {
             return item;
-		}
+	}
     }
     return 0;
 }
 
 void CameraFolderView::slotSelectionChanged(QListViewItem* item) {
     if (!item) {
-		return;
+	return;
     }
     emit signalFolderChanged(static_cast<CameraFolderItem *>(item));
 }
@@ -111,7 +107,3 @@ void CameraFolderView::clear() {
     emit signalCleared();
 }
 
-}  // NameSpace KIPIKameraKlientPlugin
-
-
-#include "camerafolderview.moc"

@@ -7,9 +7,6 @@ class QString;
 class QLineEdit;
 class QPushButton;
 
-namespace KIPIKameraKlientPlugin
-{
-
 class SavefileDialog : public QDialog {
 Q_OBJECT
 	
@@ -43,8 +40,6 @@ private:
 	QPushButton *renameBtn;
 	Operation op;
 };
-
-}  // NameSpace KIPIKameraKlientPlugin
 
 #endif
 

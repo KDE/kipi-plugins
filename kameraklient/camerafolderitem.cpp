@@ -24,9 +24,6 @@
 // Local
 #include "camerafolderitem.h"
 
-namespace KIPIKameraKlientPlugin
-{
-
 CameraFolderItem::CameraFolderItem(KListView* parent, const QString& name) : KListViewItem(parent, name) {
     setPixmap(0, SmallIcon("folder"));
     virtualFolder_ = true;
@@ -71,6 +68,4 @@ void CameraFolderItem::setCount(int val) {
 int CameraFolderItem::count() {
     return count_;    
 }
-
-}  // NameSpace KIPIKameraKlientPlugin
 

@@ -26,17 +26,13 @@
 #include <qobject.h>
 
 class QString;
-
-namespace KIPIKameraKlientPlugin
-{
-
 class CameraType;
 class CameraListPrivate;
 
 class CameraList : public QObject {
-	Q_OBJECT
+    Q_OBJECT
 
-public:
+    public:
 	CameraList(QObject *parent, const QString& file);
 	~CameraList();
 	bool load();
@@ -48,7 +44,7 @@ public:
 	QPtrList<CameraType>* cameraList();
 	static CameraList* instance();
 
-private:
+    private:
 	static CameraList* instance_;
 	CameraListPrivate *d;
 	void insertPrivate(CameraType* ctype);
@@ -57,8 +53,6 @@ private:
 signals:
 	void signalCameraListChanged();
 };
-
-}  // NameSpace KIPIKameraKlientPlugin
 
 #endif 
 

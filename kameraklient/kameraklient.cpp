@@ -49,8 +49,8 @@ Plugin_KameraKlient::~Plugin_KameraKlient() {
 
 void Plugin_KameraKlient::setup(QWidget* widget) {
 	KIPI::Plugin::setup(widget);
-	mKameraKlientAction = new KAction(i18n("Kamera Klient"),
-							"camera",
+	mKameraKlientAction = new KAction(i18n("Digital Camera"),
+							"camera_unmount",
 							KShortcut(),
 							this,
 							SLOT(slotActivate()),
@@ -60,9 +60,8 @@ void Plugin_KameraKlient::setup(QWidget* widget) {
 }
 
 void Plugin_KameraKlient::slotActivate() {
-    KIPIKameraKlientPlugin::CameraUI *mCameraUI =
-                            KIPIKameraKlientPlugin::CameraUI::getInstance();
-    mCameraUI->exec(); 
+    CameraUI *mCameraUI = new CameraUI();
+    mCameraUI->show(); 
 }
 
 KIPI::Category Plugin_KameraKlient::category(KAction* action) const {

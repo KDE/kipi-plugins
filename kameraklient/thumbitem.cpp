@@ -10,9 +10,6 @@
 #include "thumbview.h"
 #include "thumbitem.h"
 
-namespace KIPIKameraKlientPlugin
-{
-
 class ThumbItemLineEdit : public QTextEdit {
 
 public:
@@ -365,4 +362,3 @@ QString ThumbItem::key() const {
     return d->key;    
 }
 
-}  // NameSpace KIPIKameraKlientPlugin

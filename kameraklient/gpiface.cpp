@@ -29,8 +29,6 @@ extern "C" {
 // Local
 #include "gpiface.h"
 
-namespace KIPIKameraKlientPlugin
-{
 
 int GPIface::autoDetect(QString& model, QString& port) {
     CameraList camList;
@@ -133,4 +131,3 @@ void GPIface::getCameraSupportedPorts(const QString& model, QStringList& plist) 
     gp_context_unref( context );
 }
 
-}  // NameSpace KIPIKameraKlientPlugin

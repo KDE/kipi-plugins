@@ -9,9 +9,6 @@ class QPaintEvent;
 class QDropEvent;
 class QPoint;
 
-namespace KIPIKameraKlientPlugin
-{
-
 class ThumbItem;
 class ThumbViewPrivate;
 
@@ -103,7 +100,5 @@ public slots:
     void slotUpdate();
     
 };
-
-}  // NameSpace KIPIKameraKlientPlugin
 
 #endif

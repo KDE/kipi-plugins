@@ -22,11 +22,10 @@
 #ifndef CAMERAFOLDERVIEW_H
 #define CAMERAFOLDERVIEW_H
 
-#include <klistview.h>
+// Qt
 #include <qstring.h>
-
-namespace KIPIKameraKlientPlugin
-{
+// KDE
+#include <klistview.h>
 
 class CameraFolderItem;
 
@@ -36,16 +35,12 @@ class CameraFolderView : public KListView {
 public:
     CameraFolderView(QWidget* parent);
     ~CameraFolderView();
-
     void addVirtualFolder(const QString& name);
     void addRootFolder(const QString& folder);
     CameraFolderItem* addFolder(const QString& folder, const QString& subFolder);
-
     CameraFolderItem* findFolder(const QString& folderPath);
-
     CameraFolderItem* virtualFolder();
     CameraFolderItem* rootFolder();
-
     virtual void clear();
     
 private:
@@ -63,8 +58,6 @@ signals:
     void signalFolderChanged(CameraFolderItem*);
     void signalCleared();
 };
-
-}  // NameSpace KIPIKameraKlientPlugin
 
 #endif
 
