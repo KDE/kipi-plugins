@@ -42,14 +42,14 @@ extern "C"
 #include "batchdialog.h"
 
 typedef KGenericFactory<Plugin_RawConverter> Factory;
-K_EXPORT_COMPONENT_FACTORY( digikamplugin_rawconverter,
-                            Factory("digikam"));
+K_EXPORT_COMPONENT_FACTORY( kipiplugin_rawconverter,
+                            Factory("kipiplugin_rawconverter"));
 
 
 Plugin_RawConverter::Plugin_RawConverter(QObject *parent,
                                          const char*,
                                          const QStringList&)
-    : Digikam::Plugin( Factory::instance(), parent, "RawConverter")
+    : KIPI::Plugin( Factory::instance(), parent, "RawConverter")
 {
     kdDebug( 51001 ) << "Loaded RawConverter" << endl;
 }
@@ -77,9 +77,11 @@ void Plugin_RawConverter::setup( QWidget* widget )
     addAction( singleAction_ );
     addAction( batchAction_ );
 
+#ifdef TEMPORARILY_REMOVED
     connect(Digikam::AlbumManager::instance(),
             SIGNAL(signalAlbumItemsSelected(bool)),
             SLOT(slotItemsSelected(bool)));
+#endif
 
     slotItemsSelected(false);
 }
@@ -115,31 +117,42 @@ bool Plugin_RawConverter::checkBinaries()
 
 void Plugin_RawConverter::slotActivateSingle()
 {
-    Digikam::AlbumInfo *album =
-        Digikam::AlbumManager::instance()->currentAlbum();
-
-    if (!album) return;
+    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::ImageCollection images;
+    images = interface->currentSelection();
+    if ( !images.isValid() )
+        images = interface->currentAlbum();
+    if ( !images.isValid() )
+        return;
 
     if (!checkBinaries()) return;
 
     RawConverter::SingleDialog *converter =
-        new RawConverter::SingleDialog(album->getSelectedItemsPath().first());
+        new RawConverter::SingleDialog(images.images()[0].path()); // PENDING(blackie) handle remote URLS
     converter->show();
 }
 
 void Plugin_RawConverter::slotActivateBatch()
 {
-    Digikam::AlbumInfo *album =
-        Digikam::AlbumManager::instance()->currentAlbum();
-
-    if (!album) return;
+    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
+    KIPI::ImageCollection images;
+    images = interface->currentSelection();
+    if ( !images.isValid() )
+        images = interface->currentAlbum();
+    if ( !images.isValid() )
+        return;
 
     if (!checkBinaries()) return;
 
     RawConverter::BatchDialog *converter =
         new RawConverter::BatchDialog();
 
-    converter->addItems(album->getSelectedItemsPath());
+    KURL::List urls = images.images();
+    QStringList files;
+    for( KURL::List::Iterator it = urls.begin(); it != urls.end(); ++it ) {
+        files.append( (*it).path() ); // PENDING(blackie) handle remote URLs
+    }
+    converter->addItems(files);
 
     converter->show();
 }
@@ -147,8 +160,10 @@ void Plugin_RawConverter::slotActivateBatch()
 
 void Plugin_RawConverter::slotItemsSelected(bool val)
 {
+#ifdef TEMPORARILY_REMOVED
     singleAction_->setEnabled(val);
     batchAction_->setEnabled(val);
+#endif
 }
 
 KIPI::Category Plugin_RawConverter::category() const

@@ -25,7 +25,7 @@
 #include <libkipi/plugin.h>
 class KAction;
 
-class Plugin_RawConverter : public Digikam::Plugin
+class Plugin_RawConverter : public KIPI::Plugin
 {
     Q_OBJECT
 

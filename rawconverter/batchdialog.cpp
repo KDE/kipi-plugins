@@ -325,7 +325,7 @@ void BatchDialog::addItems(const QStringList& itemList)
     }
 
     if (!urlList.empty()) {
-        thumbnailJob_ = new Digikam::ThumbnailJob(urlList, 48, true);
+        thumbnailJob_ = new KIPI::ThumbnailJob(urlList, 48, true);
         connect(thumbnailJob_, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
                 SLOT(slotGotThumbnail(const KURL&, const QPixmap&)));
     }
