@@ -141,6 +141,8 @@ void Plugin_SlideShow::slotSlideShow()
         return;
 
     KURL::List urlList = images.images();
+    if ( urlList.isEmpty() )
+	return;
 
     // PENDING(blackie) handle real URLS
     QStringList fileList;
