@@ -56,6 +56,7 @@
 #include "sendimages.h"
 #include "sendimagesdialog.h"
 #include "listimageserrordialog.h"
+#include "exifrestorer.h"
 #include "actions.h"
 
 namespace KIPISendimagesPlugin
@@ -175,6 +176,27 @@ void SendImages::run()
                }
            else          // Resized images OK...
                {
+               // Only try to write Exif if both src and destination are JPEG files.
+    
+               if (QString(QImageIO::imageFormat(imageName)).upper() == "JPEG" &&
+                   m_imageFormat.upper() == "JPEG")
+                  {
+                  ExifRestorer exifHolder;
+                  exifHolder.readFile(imageName, ExifRestorer::ExifOnly);
+       
+                  QString targetFile = m_tmp + imageNameFormat;
+       
+                  if (exifHolder.hasExif()) 
+                     {
+                     ExifRestorer restorer;
+                     restorer.readFile(targetFile, ExifRestorer::EntireImage);
+                     restorer.insertExifData(exifHolder.exifData());
+                     restorer.writeFile(targetFile);
+                     }
+                  else 
+                     kdWarning( 51000 ) << ("createThumb::No Exif Data Found") << endl;
+                  }  
+       
                d = new KIPISendimagesPlugin::EventData;
                d->action   = KIPISendimagesPlugin::ResizeImages;
                d->fileName = (*it).fileName();
