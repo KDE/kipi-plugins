@@ -234,6 +234,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_printDpi->insertItem("300");
        m_printDpi->insertItem("600");
        m_printDpi->insertItem("1200");
+       m_printDpi->insertItem("1400");
        m_printDpi->insertItem("2400");
        QWhatsThis::add( m_printDpi, i18n("<p>The standard print resolutions in dots per inch."));
        m_label_printDpi->setBuddy( m_printDpi );
