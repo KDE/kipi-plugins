@@ -78,7 +78,7 @@ void Plugin_SlideShow::setup( QWidget* widget )
     KIPI::ImageCollection images = interface->currentScope();
     m_actionSlideShow->setEnabled( images.isValid() );
     
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ),
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
              m_actionSlideShow, SLOT( setEnabled( bool ) ) );
 
     addAction( m_actionSlideShow );
