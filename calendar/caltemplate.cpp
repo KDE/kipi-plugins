@@ -98,7 +98,7 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
 
     // ---------------------------------------------------------------
 
-    QGroupBox *gbox = new QGroupBox( this );
+    QGroupBox *gbox = new QGroupBox( i18n("Settings"), this );
     gbox->setColumnLayout(0, Qt::Vertical );
     gbox->layout()->setSpacing( 11 );
     gbox->layout()->setMargin( 6 );
@@ -184,15 +184,6 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
                                         QSizePolicy::Expanding));
 
     mainLayout->addWidget( gbox, 1, 1 );
-
-
-    // ---------------------------------------------------------------
-
-    QFrame* hline = new QFrame( this );
-    hline->setFrameShape( QFrame::HLine );
-    hline->setFrameShadow( QFrame::Sunken );
-
-    mainLayout->addMultiCellWidget( hline, 2, 1, 0, 1 );
 
     // ---------------------------------------------------------------
 
