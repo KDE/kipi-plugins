@@ -186,7 +186,7 @@ void Plugin_WallPaper::setWallpaper(int layout)
    KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
    KIPI::ImageCollection images = interface->currentSelection();
 
-   if (images.images().count() == 0 ) return;
+   if (!images.isValid() ) return;
 
    // PENDING(blackie) make this support real URLS.
    QString cmd = QString("dcop kdesktop KBackgroundIface setWallpaper '%1' %2")

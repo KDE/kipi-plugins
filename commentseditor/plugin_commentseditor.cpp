@@ -72,8 +72,10 @@ void Plugin_CommentsEditor::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
     KIPI::ImageCollection images = interface->currentSelection();
-    if ( images.images().count() == 0 )
+    if ( !images.isValid() )
         images = interface->currentAlbum();
+    if ( !images.isValid() )
+        return;
 
     if ( images.images().count() == 0 ) {
         KMessageBox::sorry(0, i18n("Please select an album or a selection of images for editing comments !"));

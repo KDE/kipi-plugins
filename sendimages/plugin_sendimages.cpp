@@ -87,8 +87,10 @@ void Plugin_SendImages::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     KIPI::ImageCollection images = interface->currentSelection();
-    if ( images.images().count() == 0 )
+    if ( !images.isValid() )
         images = interface->currentAlbum();
+    if ( !images.isValid() )
+        return;
 
     KStandardDirs dir;
     QString Tmp = dir.saveLocation("tmp", "kipi-sendimages-" + QString::number(getpid()) + "/");

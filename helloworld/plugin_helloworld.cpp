@@ -32,20 +32,21 @@
 // create the factory for it. The first argument is the name of the
 // plugin library and the second is the genericfactory templated from
 // the class for your plugin
+typedef KGenericFactory<Plugin_HelloWorld> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_helloworld,
-                            KGenericFactory<Plugin_HelloWorld>("kipiplugin_helloworld"));
+                            Factory("kipiplugin_helloworld"));
 
 Plugin_HelloWorld::Plugin_HelloWorld(QObject *parent,
                                      const char*,
                                      const QStringList&)
-    : KIPI::Plugin(parent, "HelloWorld")
+    : KIPI::Plugin( Factory::instance(), parent, "HelloWorld")
 {
     kdDebug( 51001 ) << "Plugin_HelloWorld plugin loaded" << endl;
 
     // this is our action shown in the menubar/toolbar of the mainwindow
     KAction* action = new KAction (i18n("Hello World..."),
                                    "misc",
-                                   0,	// or a shortcut like CTRL+SHIFT+Key_S,
+                                   0,	// do never set shortcuts from plugins.
                                    this,
                                    SLOT(slotActivate()),
                                    actionCollection(),
@@ -59,41 +60,57 @@ void Plugin_HelloWorld::slotActivate()
 {
     kdDebug( 51000 ) << "Plugin_HelloWorld slot activated" << endl;
 
-    // Get the current/selected album
-    KIPI::ImageCollection album = m_interface->currentAlbum();
+    // Print some information about the capabilities of the host application.
+    kdDebug( 51000 ) << "Features supported by the host application:" << endl;
+    kdDebug( 51000 ) << "  AlbumsHaveComments:  " << (m_interface->hasFeature( KIPI::AlbumsHaveComments ) ? "Yes" : "No") << endl;
+    kdDebug( 51000 ) << "  AlbumEQDir:          " << (m_interface->hasFeature( KIPI::AlbumEQDir ) ? "Yes" : "No") << endl;
+    kdDebug( 51000 ) << "  ImagesHasComments:   " << (m_interface->hasFeature( KIPI::ImagesHasComments ) ? "Yes" : "No") << endl;
+    kdDebug( 51000 ) << "  ImagesHasTime:       " << (m_interface->hasFeature( KIPI::ImagesHasTime ) ? "Yes" : "No") << endl;
+    kdDebug( 51000 ) << "  SupportsDateRanges:  " << (m_interface->hasFeature( KIPI::SupportsDateRanges ) ? "Yes" : "No") << endl;
+    kdDebug( 51000 ) << "  AcceptNewImages:     " << (m_interface->hasFeature( KIPI::AcceptNewImages ) ? "Yes" : "No") << endl;
+    kdDebug( 51000 ) << "  ImageTitlesWritable: " << (m_interface->hasFeature( KIPI::ImageTitlesWritable ) ? "Yes" : "No") << endl;
 
 
-    // Now how do we check if there was an album selected?
-#ifdef TEMPORARILY_REMOVED
-    // Make sure to check that we have a selected album
-    if (!album) return;
-#endif
-
-    // Now get some properties of the album
-    kdDebug( 51000 ) << "The current album title is " << album.name() << endl;
-#ifdef TEMPORARILY_REMOVED
-    kdDebug( 51000 ) << "The current album collection is " << album.getCollection() << endl;
-    kdDebug( 51000 ) << "The current album date is " << album.date().toString() << endl;
-#endif
-
-    // see the comments in the album
-
-#ifdef TEMPORARILY_REMOVED
-    // First open the album database
-    album->openDB();
-
-    // get the comments for this particular item
-    kdDebug( 51000 ) << album->getItemComments("IMG_100.JPG") << endl;
-
-    // Close the album database once you are done
-    album->closeDB();
-
-    // Get all the Albums in the current library path
-    for (Digikam::AlbumInfo *a = Digikam::AlbumManager::instance()->firstAlbum();
-         a; a = a->nextAlbum()) {
-        kdDebug( 51000 ) << "Album title: " << a->getTitle() << endl;
+    // ================================================== Selection
+    kdDebug( 51000 ) << endl
+                     << "==================================================" << endl
+                     << "                    Selection                     " << endl
+                     << "==================================================" << endl;
+    KIPI::ImageCollection selection = m_interface->currentSelection();
+    if ( !selection.isValid() ) {
+        kdDebug( 51000) << "No Selection!" << endl;
     }
-#endif
+    else {
+        KURL::List images = selection.images();
+        for( KURL::List::Iterator selIt = images.begin(); selIt != images.end(); ++selIt ) {
+            kdDebug( 51000 ) <<  *selIt << endl;
+            KIPI::ImageInfo info = m_interface->info( *selIt );
+            kdDebug( 51000 ) << "\ttitle: " << info.title() << endl;
+            if ( m_interface->hasFeature( KIPI::ImagesHasComments ) )
+                kdDebug( 51000 ) << "\tdescription: " << info.description() << endl;
+        }
+    }
+
+    // ================================================== Current Album
+    kdDebug( 51000 ) << endl
+                     << "==================================================" << endl
+                     << "                    Current Album                 " << endl
+                     << "==================================================" << endl;
+    KIPI::ImageCollection album = m_interface->currentAlbum();
+    if ( !album.isValid() ) {
+        kdDebug( 51000 ) << "No album!" << endl;
+    }
+    else {
+        KURL::List images = album.images();
+        for( KURL::List::Iterator albumIt = images.begin(); albumIt != images.end(); ++albumIt ) {
+            kdDebug( 51000 ) <<  *albumIt << endl;
+        }
+
+        kdDebug( 51000 ) << "Album name: " << album.name() << endl;
+        if ( m_interface->hasFeature( KIPI::AlbumsHaveComments ) ) {
+            kdDebug( 51000 ) << "Album Comment: " << album.comment() << endl;
+        }
+    }
 }
 
 KIPI::Category Plugin_HelloWorld::category() const

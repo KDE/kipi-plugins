@@ -365,8 +365,11 @@ KURL::List Plugin_JPEGLossless::images()
 {
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
     KIPI::ImageCollection images = interface->currentSelection();
-    if ( images.images().count() == 0 )
+    if ( !images.isValid() )
         images = interface->currentAlbum();
+    if ( !images.isValid() )
+        return KURL::List();
+
     // We don't want the set of images to change before we are done and tells the host app to refresh the images.
     m_images = images.images();
     return images.images();

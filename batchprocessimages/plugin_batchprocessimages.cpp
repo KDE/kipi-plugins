@@ -167,8 +167,11 @@ void Plugin_BatchProcessImages::slotActivate()
 {
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
     KIPI::ImageCollection images = interface->currentSelection();
-    if ( images.images().count() == 0 )
+    if ( !images.isValid() )
         images = interface->currentAlbum();
+
+    if ( !images.isValid() )
+        return;
 
     KURL::List urlList = images.images();
 

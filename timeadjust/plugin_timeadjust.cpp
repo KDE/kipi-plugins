@@ -58,8 +58,10 @@ void Plugin_TimeAdjust::slotActivate()
 {
     // Get the current/selected album
     KIPI::ImageCollection images = m_interface->currentSelection();
-    if ( images.images().count() == 0 )
+    if ( !images.isValid() )
         images = m_interface->currentAlbum();
+    if ( !images.isValid() )
+        return;
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( m_dialog == 0 )

@@ -88,8 +88,10 @@ Plugin_PrintWizard::~Plugin_PrintWizard()
 void Plugin_PrintWizard::slotActivate()
 {
     KIPI::ImageCollection album = m_interface->currentSelection();
-    if ( album.images().count() == 0 )
+    if ( !album.isValid() )
         album = m_interface->currentAlbum();
+    if ( !album.isValid() )
+        return;
 
     KURL::List fileList = album.images();
 
