@@ -104,9 +104,9 @@ void Plugin_SendImages::slotActivate()
        return;
        }
 
-    KIPI::ImageCollection images = interface->currentScope();
+    KIPI::ImageCollection images = interface->currentSelection();
 
-    if ( !images.isValid() )
+    if ( !images.isValid() || images.images().isEmpty() )
         return;
 
     KStandardDirs dir;

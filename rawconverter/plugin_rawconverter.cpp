@@ -88,18 +88,16 @@ void Plugin_RawConverter::setup( QWidget* widget )
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
     if ( !interface )
-           {
+    {
            kdError( 51000 ) << "Kipi interface is null!" << endl;
            return;
-           }
+    }
 
     connect( interface, SIGNAL( selectionChanged( bool ) ),
-             this, SLOT( slotSetActive() ) );
+             singleAction_, SLOT( setEnabled( bool ) ) );
 
     connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
-             this, SLOT( slotSetActive() ) );
-
-    slotSetActive();
+             batchAction_, SLOT( setEnabled( bool ) ) );
 }
 
 Plugin_RawConverter::~Plugin_RawConverter()
@@ -167,7 +165,7 @@ void Plugin_RawConverter::slotActivateBatch()
            }
 
     KIPI::ImageCollection images;
-    images = interface->currentScope();
+    images = interface->currentSelection();
 
     if ( !images.isValid() )
         return;
@@ -185,29 +183,6 @@ void Plugin_RawConverter::slotActivateBatch()
     converter->addItems(files);
 
     converter->show();
-}
-
-
-void Plugin_RawConverter::slotSetActive()
-{
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-
-    if ( !interface )
-           {
-           kdError( 51000 ) << "Kipi interface is null!" << endl;
-           return;
-           }
-
-    KIPI::ImageCollection images;
-    images = interface->currentSelection();
-    bool single = images.isValid();
-
-    if ( !images.isValid() )
-        images = interface->currentAlbum();
-
-    bool multiple = images.isValid();
-    singleAction_->setEnabled( single );
-    batchAction_->setEnabled( multiple );
 }
 
 KIPI::Category Plugin_RawConverter::category( KAction* action ) const

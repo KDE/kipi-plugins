@@ -53,7 +53,6 @@ private slots:
 
     void slotActivateSingle();
     void slotActivateBatch();
-    void slotSetActive();
 };
 
 #endif /* PLUGIN_RAWCONVERTER_H */

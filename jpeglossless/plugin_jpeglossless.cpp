@@ -150,22 +150,21 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
            return;
            }
            
-    KIPI::ImageCollection selection = interface->currentScope();
-    m_action_AutoExif->setEnabled( selection.isValid() );
-    m_action_RotateImage->setEnabled( selection.isValid() );
-    m_action_FlipImage->setEnabled( selection.isValid() );
-    m_action_Convert2GrayScale->setEnabled( selection.isValid() );
+    m_action_AutoExif->setEnabled( false );
+    m_action_RotateImage->setEnabled( false );
+    m_action_FlipImage->setEnabled( false );
+    m_action_Convert2GrayScale->setEnabled( false );
     
     m_thread = new KIPIJPEGLossLessPlugin::ActionThread(interface, this);
     m_progressDlg = 0;
 
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ),
+    connect( interface, SIGNAL( selectionChanged( bool ) ),
              m_action_AutoExif, SLOT( setEnabled( bool ) ) );
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ),
+    connect( interface, SIGNAL( selectionChanged( bool ) ),
              m_action_RotateImage, SLOT( setEnabled( bool ) ) );
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ),
+    connect( interface, SIGNAL( selectionChanged( bool ) ),
              m_action_FlipImage, SLOT( setEnabled( bool ) ) );
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ),
+    connect( interface, SIGNAL( selectionChanged( bool ) ),
              m_action_Convert2GrayScale, SLOT( setEnabled( bool ) ) );
 }
 
@@ -420,16 +419,17 @@ KURL::List Plugin_JPEGLossless::images()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     
     if ( !interface ) 
-           {
-           kdError( 51000 ) << "Kipi interface is null!" << endl;
-           return KURL::List();
-           }
+    {
+        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        return KURL::List();
+    }
            
-    KIPI::ImageCollection images = interface->currentScope();
+    KIPI::ImageCollection images = interface->currentSelection();
     if ( !images.isValid() )
         return KURL::List();
 
-    // We don't want the set of images to change before we are done and tells the host app to refresh the images.
+    // We don't want the set of images to change before we are done
+    // and tells the host app to refresh the images.
     m_images = images.images();
     return images.images();
 }

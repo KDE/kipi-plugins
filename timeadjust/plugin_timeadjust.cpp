@@ -73,19 +73,20 @@ void Plugin_TimeAdjust::setup( QWidget* widget )
        return;
        }
 
-    KIPI::ImageCollection selection = m_interface->currentScope();
-    m_actionTimeAjust->setEnabled( selection.isValid() );
+    KIPI::ImageCollection selection = m_interface->currentSelection();
+    m_actionTimeAjust->setEnabled( selection.isValid() &&
+                                   !selection.images().isEmpty() );
 
-    connect( m_interface, SIGNAL(currentScopeChanged(bool)),
+    connect( m_interface, SIGNAL(selectionChanged(bool)),
              m_actionTimeAjust, SLOT(setEnabled(bool)));
 }
 
 void Plugin_TimeAdjust::slotActivate()
 {
     // Get the current/selected album
-    KIPI::ImageCollection images = m_interface->currentScope();
+    KIPI::ImageCollection images = m_interface->currentSelection();
 
-    if ( !images.isValid() )
+    if ( !images.isValid() || images.images().isEmpty() )
         return;
 
     if ( m_dialog == 0 )

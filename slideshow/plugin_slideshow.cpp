@@ -70,13 +70,12 @@ void Plugin_SlideShow::setup( QWidget* widget )
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
     
     if ( !interface ) 
-       {
+    {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
        return;
-       }
+    }
 
-    KIPI::ImageCollection images = interface->currentScope();
-    m_actionSlideShow->setEnabled( images.isValid() );
+    m_actionSlideShow->setEnabled( false );
     
     connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
              m_actionSlideShow, SLOT( setEnabled( bool ) ) );
@@ -92,7 +91,8 @@ Plugin_SlideShow::~Plugin_SlideShow()
 
 void Plugin_SlideShow::slotActivate()
 {
-    KIPISlideShowPlugin::SlideShowConfig *slideShowConfig = new KIPISlideShowPlugin::SlideShowConfig;
+    KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
+        = new KIPISlideShowPlugin::SlideShowConfig;
     
     connect(slideShowConfig, SIGNAL(okClicked()),
             this, SLOT(slotSlideShow()));

@@ -104,9 +104,9 @@ void Plugin_Mpegencoder::slotActivate()
     if (ValRet == 2)
         MPEGconverterDialog->m_AudioInputFilename->setEnabled(false);
 
-    KIPI::ImageCollection images = interface->currentScope();
+    KIPI::ImageCollection images = interface->currentSelection();
     
-    if ( !images.isValid() )
+    if ( !images.isValid() || images.images().isEmpty() )
         return;
 
     // PENDING(blackie) extend this plugin to handle URLS rather than just strings

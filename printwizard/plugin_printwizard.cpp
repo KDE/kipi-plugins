@@ -82,10 +82,11 @@ void Plugin_PrintWizard::setup( QWidget* widget )
        return;
        }
     
-    KIPI::ImageCollection scope = m_interface->currentScope();
-    m_printAction->setEnabled( scope.isValid() );
+    KIPI::ImageCollection selection = m_interface->currentSelection();
+    m_printAction->setEnabled( selection.isValid() &&
+                               !selection.images().isEmpty() );
 
-    connect( m_interface, SIGNAL( currentScopeChanged( bool ) ), 
+    connect( m_interface, SIGNAL( selectionChanged( bool ) ), 
              m_printAction, SLOT( setEnabled( bool ) )  );
 }
 
@@ -97,7 +98,7 @@ Plugin_PrintWizard::~Plugin_PrintWizard()
 
 void Plugin_PrintWizard::slotActivate()
 {
-    KIPI::ImageCollection album = m_interface->currentScope();
+    KIPI::ImageCollection album = m_interface->currentSelection();
     
     if ( !album.isValid() )
         return;

@@ -161,39 +161,40 @@ void Plugin_BatchProcessImages::setup( QWidget* widget )
        return;
        }
     
-    KIPI::ImageCollection images = interface->currentScope();
+    KIPI::ImageCollection images = interface->currentAlbum();
+    bool enable = images.isValid() && !images.images().isEmpty();
     
-    m_action_borderimages->setEnabled( images.isValid() );
-    m_action_colorimages->setEnabled( images.isValid() );
-    m_action_convertimages->setEnabled( images.isValid() );
-    m_action_effectimages->setEnabled( images.isValid() );
-    m_action_filterimages->setEnabled( images.isValid() );
-    m_action_renameimages->setEnabled( images.isValid() );
-    m_action_recompressimages->setEnabled( images.isValid() );
-    m_action_resizeimages->setEnabled( images.isValid() );
+    m_action_borderimages->setEnabled( enable );
+    m_action_colorimages->setEnabled( enable );
+    m_action_convertimages->setEnabled( enable );
+    m_action_effectimages->setEnabled( enable );
+    m_action_filterimages->setEnabled( enable );
+    m_action_renameimages->setEnabled( enable );
+    m_action_recompressimages->setEnabled( enable );
+    m_action_resizeimages->setEnabled( enable );
     
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), 
              m_action_borderimages, SLOT( setEnabled( bool ) ) );
     
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), 
              m_action_colorimages, SLOT( setEnabled( bool ) ) );
     
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), 
              m_action_convertimages, SLOT( setEnabled( bool ) ) );
     
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), 
              m_action_effectimages, SLOT( setEnabled( bool ) ) );
     
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), 
              m_action_filterimages, SLOT( setEnabled( bool ) ) );
     
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), 
              m_action_renameimages, SLOT( setEnabled( bool ) ) );
     
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), 
              m_action_recompressimages, SLOT( setEnabled( bool ) ) );
     
-    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
+    connect( interface, SIGNAL( currentAlbumChanged( bool ) ), 
              m_action_resizeimages, SLOT( setEnabled( bool ) ) );
 }
 
@@ -217,13 +218,13 @@ void Plugin_BatchProcessImages::slotActivate()
            return;
            }
            
-    KIPI::ImageCollection images = interface->currentAlbum();
+    KIPI::ImageCollection images = interface->currentSelection();
     
     if ( !images.isValid() )
         return;
         
     if ( images.images().isEmpty() )
-       images = interface->currentSelection();
+       images = interface->currentAlbum();
 
     if ( !images.isValid() )
         return;
