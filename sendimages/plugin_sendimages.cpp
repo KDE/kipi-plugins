@@ -246,20 +246,34 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
 
         if( d->action == KIPISendimagesPlugin::Progress )
            {
-           delete m_progressDlg;
-
            // If we have some errors during the resizing images process, show an error dialog.
 
            if ( m_sendImagesOperation->showErrors() == false )
+              {
+              delete m_progressDlg;
               return;
+              }
 
+#if KDE_VERSION >= 0x30200
+           m_progressDlg->setButtonCancel( KStdGuiItem::close() );
+#else
+           m_progressDlg->setButtonCancelText( i18n("&Close") );
+#endif
+
+           disconnect(m_progressDlg, SIGNAL(cancelClicked()),
+                      this, SLOT(slotCancel()));
+                                                  
            // Create a text file with images comments if necessary.
 
            m_sendImagesOperation->makeCommentsFile();
-
+           m_progressDlg->addedAction(i18n("Creating comments file if necessary..."),
+                                      KIPI::StartingMessage);
+                                      
            // Invoke mailer agent call.
 
            m_sendImagesOperation->invokeMailAgent();
+           m_progressDlg->addedAction(i18n("Starting mailer agent..."),
+                                      KIPI::StartingMessage);
            }
         }
 
