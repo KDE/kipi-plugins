@@ -64,17 +64,14 @@ Currently implemented plugins are:
 14) WallPaper          : Image to KDE Desktop.
                          (by Gregory Kokanosky and Gilles Caulier).
 
-15) DirOperations      : Open an Album in Konqueror or Nautilus.
-                         (by Gregory Kokanosky and Gilles Caulier).
-  
-16) FindImages         : Find dupplicate images in albums
+15) FindImages         : Find dupplicate images in albums
                          (by Richard Grould and Gilles Caulier).
                          This plugin include this parts:
                             FindComments.
                          ==> TODO.
                             FindDupplicateImages.
 
-17) HelloWorld         : Tutorial plugin implementation 
+16) HelloWorld         : Tutorial plugin implementation 
                          (by Renchi Raju, Gilles Caulier, and Achim Bohnet).
 
 
