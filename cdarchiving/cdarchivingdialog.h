@@ -45,6 +45,7 @@ class QCheckBox;
 class QLineEdit;
 class QSpinBox;
 class QProgressDialog;
+class QPushButton;
 
 class KFileItem;
 class KSqueezedTextLabel;
@@ -62,6 +63,7 @@ class CDArchivingDialog : public KDialogBase
  Q_OBJECT
 
  public:
+ 
   CDArchivingDialog( KIPI::Interface* interface, QWidget *parent=0);
   ~CDArchivingDialog();
 
@@ -140,6 +142,8 @@ class CDArchivingDialog : public KDialogBase
   void ShowMediaCapacity(void);
 
  protected slots:
+  
+  void slotHelp();
   void albumSelected( QListViewItem * item );
   void mediaFormatActived( const QString& item );
   void slotOk();
@@ -151,6 +155,9 @@ class CDArchivingDialog : public KDialogBase
   void slotStopParsingAlbums(void);
   
  private:
+ 
+  QPushButton        *m_helpButton;
+     
   QCheckBox          *m_useHTMLInterface;
   QCheckBox          *m_useAutoRunWin32;
   QCheckBox          *m_burnOnTheFly;
@@ -204,7 +211,6 @@ class CDArchivingDialog : public KDialogBase
   QFrame             *page_setupLook;
   QFrame             *page_CDInfos;
   QFrame             *page_burning;
-  QFrame             *page_about;
 
   QString             m_ImagesFilesSort;
   QString             m_TempFolder;
@@ -216,6 +222,7 @@ class CDArchivingDialog : public KDialogBase
   bool                m_stopParsingAlbum;
   
  private:
+ 
   void setupSelection(void);
   void setupLookPage(void);
   void setupCDInfos(void);

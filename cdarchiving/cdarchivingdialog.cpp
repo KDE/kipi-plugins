@@ -60,6 +60,10 @@
 #include <ksqueezedtextlabel.h>
 #include <kio/previewjob.h>
 #include <klistview.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // Include files for KIPI
 
@@ -119,18 +123,43 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     setupLookPage();
     setupCDInfos();
     setupBurning();
-    aboutPage();
     page_setupSelection->setFocus();
-    setHelp("cdarchiving", "kipi-plugins");
+    
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipi",
+                                       I18N_NOOP("CD Archiving"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("An Album CD Archiving Kipi plugin.\n"
+                                                 "This plugin use K3b CD/DVD burning software available at\n"
+                                                 "http://www.k3b.org"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Gilles Caulier", 
+                                       0,
+                                       "http://digikam.sourceforge.net");
+    
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                     "caulier dot gilles at free.fr");
+
+    about->addAuthor("Gregory Kokanosky", I18N_NOOP("Image navigation mode patches"),
+                     "caulier dot gilles at free.fr");
+                         
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("CD Archiving handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 CDArchivingDialog::~CDArchivingDialog()
 {
 }
 
+void CDArchivingDialog::slotHelp()
+{
+    KApplication::kApplication()->invokeHelp("cdarchiving",
+                                             "kipi-plugins");
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -699,28 +728,6 @@ void CDArchivingDialog::setupBurning(void)
 
     vlay->addWidget( groupBoxAdvancedOptions );
 
-    vlay->addStretch(1);
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void CDArchivingDialog::aboutPage(void)
-{
-    page_about = addPage( i18n("About"), i18n("About KIPI Album CD Archiving"),
-                          BarIcon("kipi", KIcon::SizeMedium ) );
-
-    QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
-
-    QLabel *label = new QLabel( i18n("A KIPI plugin for Album CD archives\n\n"
-                             "Author: Gilles Caulier\n\n"
-                             "Email: caulier dot gilles at free.fr\n\n"
-                             "Thanks to Gregory Kokanosky <gregory dot kokanosky at free.fr> "
-                             "for image navigation mode patches\n\n"
-                             "This plugin use K3b CD/DVD burning software available at this URL:\n\n"
-                             "http://www.k3b.org."), page_about);
-
-    vlay->addWidget(label);
     vlay->addStretch(1);
 }
 
