@@ -34,8 +34,6 @@
 
 #include <kdialogbase.h>
 
-
-class KFileItem;
 class QVBoxLayout;
 class QHBoxLayout;
 class QGridLayout;
@@ -48,6 +46,10 @@ class QPrtList;
 class QFile;
 
 class KSqueezedTextLabel;
+class KFileItem;
+
+namespace KIPIFindDupplicateImagesPlugin
+{
 
 class  DisplayCompare : public KDialogBase
 {
@@ -91,6 +93,8 @@ private:
    QListView*          listName;
    QListView*          listEq;
 };
+
+}  // NameSpace KIPIFindDupplicateImagesPlugin
 
 #endif   // __DISPLAYCOMPARE_H__
 

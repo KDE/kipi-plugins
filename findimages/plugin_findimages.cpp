@@ -43,9 +43,9 @@
 
 // Local include files
 
-#include "plugin_findimages.h"
 #include "finddupplicateimages.h"
 #include "actions.h"
+#include "plugin_findimages.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -94,11 +94,14 @@ void Plugin_FindImages::slotFindDuplicateImages()
     m_progressDlg=0;
 
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
-    findDuplicateOperation = new FindDuplicateImages( interface, this);
+    
+    findDuplicateOperation = new KIPIFindDupplicateImagesPlugin::FindDuplicateImages( interface, this);
+    
     if(findDuplicateOperation->showDialog())
-    {
-    	findDuplicateOperation->compareAlbums();
-    }
+       {
+       findDuplicateOperation->compareAlbums();
+       }
+       
     return;
 }
 

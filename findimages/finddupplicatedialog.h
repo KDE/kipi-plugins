@@ -33,6 +33,7 @@
 #include <kdialogbase.h>
 
 // Include files for KIPI
+
 #include <libkipi/interface.h>
 
 class KFileItem;
@@ -42,6 +43,9 @@ class QFrame;
 
 class KIntNumInput;
 class KSqueezedTextLabel;
+
+namespace KIPIFindDupplicateImagesPlugin
+{
 
 class FindDuplicateDialog : public KDialogBase
 {
@@ -106,5 +110,7 @@ class FindDuplicateDialog : public KDialogBase
   void aboutPage(void);
   void setAlbumsList(void);
 };
+
+}  // NameSpace KIPIFindDupplicateImagesPlugin
 
 #endif // FINDDUPPLICATEDIALOG_H

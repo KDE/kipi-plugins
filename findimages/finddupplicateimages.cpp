@@ -64,6 +64,8 @@ extern "C"
 #include "displaycompare.h"
 #include "actions.h"
 
+namespace KIPIFindDupplicateImagesPlugin
+{
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Nota: original source code from ShowImg !
@@ -196,16 +198,20 @@ void FindDuplicateImages::compareAlbums(void)
        QValueList<KIPI::ImageCollection> ListAlbums(m_findDuplicateDialog->getAlbumsSelection());
        filesList.clear();
 
-       for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) {
+       for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
+           {
            KURL::List Files = (*it).images();
 
-           for( KURL::List::Iterator it2 = Files.begin(); it2 != Files.end(); ++it2 ) {
+           for( KURL::List::Iterator it2 = Files.begin(); it2 != Files.end(); ++it2 ) 
+	       {
                if ( !filesList.contains( (*it2).path() ) )
-                   filesList.append( (*it2).path() ); // PENDING(blackie) handle remote URLS
-           }
+	           {
+		   filesList.append( (*it2).path() ); // PENDING(blackie) handle remote URLS
+		   }
+               }
 
            kapp->processEvents();
-       }
+           }
 
        if ( m_findDuplicateDialog->getFindMethod() == i18n("Almost") )
 	   isCompareAlmost = true;
@@ -894,5 +900,7 @@ while( (fi = it.current() ) )
 
 return true;
 }
+
+}  // NameSpace KIPIFindDupplicateImagesPlugin
 
 #include "finddupplicateimages.moc"

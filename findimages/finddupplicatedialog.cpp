@@ -54,15 +54,18 @@
 #include <kapplication.h>
 #include <ksqueezedtextlabel.h>
 #include <kio/global.h>
+#include <kio/previewjob.h>
 
 // Include files for KIPI
+
 #include <libkipi/imagecollection.h>
 
 // Local include files
 
 #include "finddupplicatedialog.h"
-#include <kio/previewjob.h>
 
+namespace KIPIFindDupplicateImagesPlugin
+{
 
 class AlbumItem : public QCheckListItem
 {
@@ -550,5 +553,7 @@ void FindDuplicateDialog::setApproximateThreeshold(int Value)
 {
     return m_approximateThreshold->setValue( Value );
 }
+
+}  // NameSpace KIPIFindDupplicateImagesPlugin
 
 #include "finddupplicatedialog.moc"

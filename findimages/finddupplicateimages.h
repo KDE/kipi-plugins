@@ -36,6 +36,9 @@
 #include <qstringlist.h>
 #include <qptrvector.h>
 #include <qdict.h>
+
+// Includes file for libKIPI.
+
 #include <libkipi/interface.h>
 
 class QProgressDialog;
@@ -44,6 +47,9 @@ class QCustomEvent;
 class QMutex;
 
 class KConfig;
+
+namespace KIPIFindDupplicateImagesPlugin
+{
 
 class ImageSimilarityData;
 class FindDuplicateDialog;
@@ -98,6 +104,8 @@ protected:
    QDict < QPtrVector < QFile > > *res;
    KIPI::Interface* m_interface;
 };
+
+}  // NameSpace KIPIFindDupplicateImagesPlugin
 
 #endif  // FINDDUPPLICATEIMAGES_H
 

@@ -51,7 +51,7 @@ private:
 protected:
    void customEvent(QCustomEvent *event);
 
-   FindDuplicateImages *findDuplicateOperation;
+   KIPIFindDupplicateImagesPlugin::FindDuplicateImages *findDuplicateOperation;
    QProgressDialog *m_progressDlg;
    int m_current, m_total;
 

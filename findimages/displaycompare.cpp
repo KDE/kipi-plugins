@@ -55,12 +55,14 @@
 #include <kio/netaccess.h>
 #include <kio/global.h>
 #include <kimageio.h>
+#include <kio/previewjob.h>
 
 // Local include files
 
 #include "displaycompare.h"
-#include <kio/previewjob.h>
-#include "displaycompare.moc"
+
+namespace KIPIFindDupplicateImagesPlugin
+{
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -433,3 +435,6 @@ void DisplayCompare::slotGotPreview2(const KFileItem* /*url*/, const QPixmap &pi
     preview2->setPixmap(pixmap);
 }
 
+}  // NameSpace KIPIFindDupplicateImagesPlugin
+
+#include "displaycompare.moc"
