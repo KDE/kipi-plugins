@@ -55,12 +55,6 @@ extern "C"
 #include <kprogress.h>
 #include <kdatewidget.h>
 
-// Digikam includes
-
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
-#include <digikam/digikamio.h>
-
 // Locale includes
 
 #include "renameimagesdialog.h"
@@ -69,10 +63,9 @@ extern "C"
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-RenameImagesDialog::RenameImagesDialog(QWidget *parent, QStringList filesList)
-                 : BatchProcessImagesDialog( parent )
+RenameImagesDialog::RenameImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+                 : BatchProcessImagesDialog( urlList, interface, parent )
 {
-    m_selectedImageFiles = filesList;
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Rename Images options"));
@@ -183,6 +176,8 @@ void RenameImagesDialog::slotOptionsClicked(void)
 
 void RenameImagesDialog::slotResult( KIO::Job *job )
 {
+    qDebug("RenameImagesDialog::slotResult is commented out!");
+#ifdef TEMPORARILY_REMOVED
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     Digikam::AlbumInfo *sourceAlbum = Digikam::AlbumManager::instance()
                                       ->findAlbum( item->pathSrc().section('/', -2, -2));
@@ -258,6 +253,7 @@ void RenameImagesDialog::slotResult( KIO::Job *job )
         copyItemOperations();
     else                                            // Copy is done...
         endProcess(i18n("Process finished!"));
+#endif
 }
 
 
@@ -313,6 +309,8 @@ void RenameImagesDialog::updateOptions(void)
 
 bool RenameImagesDialog::startProcess(void)
 {
+    qDebug("RenameImagesDialog::startProcess is commented out!");
+#ifdef TEMPORARILY_REMOVED
     if ( m_convertStatus == STOP_PROCESS )
        {
        endProcess(i18n("Process aborted by user!"));
@@ -454,6 +452,7 @@ bool RenameImagesDialog::startProcess(void)
     copyItemOperations();
 
     return true;
+#endif
 }
 
 
@@ -461,6 +460,9 @@ bool RenameImagesDialog::startProcess(void)
 
 void RenameImagesDialog::copyItemOperations(void)
 {
+    qDebug("RenameImagesDialog::copyItemOperations is commented out!");
+
+#ifdef TEMPORARILY_REMOVED
     Digikam::AlbumInfo *targetAlbum = Digikam::AlbumManager::instance()->findAlbum( m_albumList->currentText() );
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     m_listFiles->setCurrentItem(item);
@@ -471,6 +473,7 @@ void RenameImagesDialog::copyItemOperations(void)
 
     connect(job, SIGNAL(result(KIO::Job*)),
             this, SLOT(slotResult(KIO::Job*)));
+#endif
 }
 
 

@@ -1,3 +1,3 @@
 SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery commentseditor sendimages acquireimages \
-	jpeglossless
+	jpeglossless batchprocessimages
 # helloworld  <- dont compile any more please

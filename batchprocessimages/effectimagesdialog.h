@@ -35,7 +35,7 @@ class EffectImagesDialog : public BatchProcessImagesDialog
 Q_OBJECT
 
  public:
-   EffectImagesDialog(QWidget *parent=0, QStringList filesList=0);
+   EffectImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~EffectImagesDialog();
 
  private slots:
@@ -61,9 +61,11 @@ Q_OBJECT
    int  m_waveAmplitude;
    int  m_waveLenght;
 
-   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+#ifdef TEMPORARILY_REMOVED
+    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                        Digikam::AlbumInfo *albumDest);
-                       
+#endif
+
    void readSettings(void);
    void saveSettings(void);
 };

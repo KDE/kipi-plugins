@@ -35,7 +35,7 @@ class ColorImagesDialog : public BatchProcessImagesDialog
 Q_OBJECT
 
  public:
-   ColorImagesDialog(QWidget *parent=0, QStringList filesList=0);
+   ColorImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~ColorImagesDialog();
 
  private slots:
@@ -49,9 +49,11 @@ Q_OBJECT
    int                    m_segmentCluster;
    int                    m_segmentSmooth;
 
-   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+#ifdef TEMPORARILY_REMOVED
+    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                        Digikam::AlbumInfo *albumDest);
-                       
+#endif
+
    void readSettings(void);
    void saveSettings(void);
 };

@@ -35,7 +35,7 @@ class BorderImagesDialog : public BatchProcessImagesDialog
 Q_OBJECT
 
  public:
-   BorderImagesDialog(QWidget *parent=0, QStringList filesList=0);
+   BorderImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~BorderImagesDialog();
 
  private slots:
@@ -57,9 +57,11 @@ Q_OBJECT
    int                    m_bevelWidth;
    QColor                 m_frameColor;
 
-   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+#ifdef TEMPORARILY_REMOVED
+    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                        Digikam::AlbumInfo *albumDest);
-                       
+#endif
+
    void readSettings(void);
    void saveSettings(void);
 };

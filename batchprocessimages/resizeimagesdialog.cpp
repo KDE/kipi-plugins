@@ -48,14 +48,13 @@
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-ResizeImagesDialog::ResizeImagesDialog(QWidget *parent, QStringList filesList)
-                 : BatchProcessImagesDialog( parent )
+ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+                 : BatchProcessImagesDialog( urlList, interface, parent )
 {
-    m_selectedImageFiles = filesList;
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Resizing Images options"));
-    setHelp("plugin-resizeimages.anchor", "digikam");
+    setHelp("plugin-resizeimages.anchor", "kipi");
 
     //---------------------------------------------
 
@@ -202,7 +201,7 @@ void ResizeImagesDialog::readSettings(void)
 
     QColor *ColorWhite = new QColor( 255, 255, 255 );
     QColor *ColorBlack = new QColor( 0, 0, 0 );
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("ResizeImages Settings");
 
     m_Type->setCurrentText(m_config->readEntry("ResiseType", i18n("Proportional (1 dim.)")));
@@ -249,7 +248,7 @@ void ResizeImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("ResizeImages Settings");
     m_config->writeEntry("ResiseType", m_Type->currentText());
     m_config->writeEntry("Size", m_size);
@@ -283,6 +282,7 @@ void ResizeImagesDialog::saveSettings(void)
 
 ////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
+#ifdef TEMPORARILY_REMOVED
 QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                                         Digikam::AlbumInfo *albumDest)
 {
@@ -325,7 +325,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           QString targetBackgroundSize;
           int ResizeCoeff;
           *proc << "composite";
-          
+
           // Get the target image resizing dimensions with using the target size.
 
           if ( m_Width < m_Height )  // Vertically resizing
@@ -345,7 +345,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
           IncDec = ResizeImage( w, h, ResizeCoeff - m_Border);
           targetBackgroundSize = QString::number(m_Width) + "x" + QString::number(m_Height);
-         
+
           *proc << "-verbose" << "-gravity" << "Center";
 
           *proc << "-geometry";
@@ -369,8 +369,8 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           *proc << "-resize" << targetBackgroundSize + "!";
 
           *proc << albumDest->getPath() + "/" + item->nameDest();
-          } 
-  
+          }
+
     if (Type == i18n("Non proportional"))
           {
           *proc << "convert";
@@ -480,10 +480,12 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
     return(extractArguments(proc));
 }
+#endif
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifdef TEMPORARILY_REMOVED
 bool ResizeImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
                                              Digikam::AlbumInfo *albumDest)
 {
@@ -498,6 +500,7 @@ bool ResizeImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
 
     return true;
 }
+#endif
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 

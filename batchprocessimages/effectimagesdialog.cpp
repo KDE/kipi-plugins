@@ -48,10 +48,9 @@
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-EffectImagesDialog::EffectImagesDialog(QWidget *parent, QStringList filesList)
-                 : BatchProcessImagesDialog( parent )
+EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+                 : BatchProcessImagesDialog( urlList, interface, parent )
 {
-    m_selectedImageFiles = filesList;
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch FX transforming Images options"));
@@ -321,6 +320,7 @@ void EffectImagesDialog::saveSettings(void)
 
 ////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
+#ifdef TEMPORARILY_REMOVED
 QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                                         Digikam::AlbumInfo *albumDest)
 {
@@ -437,3 +437,4 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
     return(extractArguments(proc));
 }
+#endif

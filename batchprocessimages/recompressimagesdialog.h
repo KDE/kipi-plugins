@@ -35,7 +35,7 @@ class RecompressImagesDialog : public BatchProcessImagesDialog
 Q_OBJECT
 
  public:
-   RecompressImagesDialog(QWidget *parent=0, QStringList filesList=0);
+   RecompressImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~RecompressImagesDialog();
 
  private slots:
@@ -49,14 +49,18 @@ Q_OBJECT
    QString m_TIFFCompressionAlgo;
    QString m_TGACompressionAlgo;
 
-   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+#ifdef TEMPORARILY_REMOVED
+    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                        Digikam::AlbumInfo *albumDest);
-                       
+#endif
+
    void readSettings(void);
    void saveSettings(void);
 
-   bool prepareStartProcess(BatchProcessImagesItem *item,
+#ifdef TEMPORARILY_REMOVED
+    bool prepareStartProcess(BatchProcessImagesItem *item,
                             Digikam::AlbumInfo *albumDest);
+#endif
 };
 
 #endif  // RECOMPRESSIMAGESDIALOG_H

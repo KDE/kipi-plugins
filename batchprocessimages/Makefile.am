@@ -1,12 +1,12 @@
-INCLUDES    = $(all_includes)
+INCLUDES    = -I$(top_srcdir)/libkipi $(all_includes)
 METASOURCES = AUTO
 SUBDIRS = data
 
 # Install this plugin in the KDE modules directory
-kde_module_LTLIBRARIES = digikamplugin_batchprocessimages.la
+kde_module_LTLIBRARIES = kipiplugin_batchprocessimages.la
 
 # Srcs for the plugin
-digikamplugin_batchprocessimages_la_SOURCES = plugin_batchprocessimages.cpp batchprocessimagesitem.cpp \
+kipiplugin_batchprocessimages_la_SOURCES = plugin_batchprocessimages.cpp batchprocessimagesitem.cpp \
 					      outputdialog.cpp imagepreview.cpp renameimagesdialog.cpp \
 					      borderimagesdialog.cpp borderoptionsdialog.cpp \
 					      convertimagesdialog.cpp convertoptionsdialog.cpp \
@@ -19,23 +19,19 @@ digikamplugin_batchprocessimages_la_SOURCES = plugin_batchprocessimages.cpp batc
 					      batchprocessimageslist.cpp
 
 # Libs needed by the plugin
-digikamplugin_batchprocessimages_la_LIBADD = $(LIB_KPARTS) -ldigikam
+kipiplugin_batchprocessimages_la_LIBADD = $(LIB_KPARTS) -lkipi
 
 # LD flags for the plugin
-digikamplugin_batchprocessimages_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-
-# Install the .rc file in the Part's directory
-pluginsdir = $(kde_datadir)/digikam/plugins
-plugins_DATA = digikamplugin_batchprocessimages.rc
+kipiplugin_batchprocessimages_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 
 # Install the desktop file needed to detect the plugin
-kde_services_DATA = digikamplugin_batchprocessimages.desktop
+kde_services_DATA = kipiplugin_batchprocessimages.desktop
 
 # i18n translation messages
 messages: rc.cpp
-	$(XGETTEXT) *.cpp *.h -o $(podir)/digikamplugin_batchprocessimages.pot
+	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_batchprocessimages.pot
 
-digikambatchprocessimagesicondir = $(kde_datadir)/digikam/icons
-digikambatchprocessimagesicon_ICON = AUTO
+kipibatchprocessimagesicondir = $(kde_datadir)/kipi/icons
+kipibatchprocessimagesicon_ICON = AUTO
 
 

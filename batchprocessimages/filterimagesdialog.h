@@ -35,7 +35,7 @@ class FilterImagesDialog : public BatchProcessImagesDialog
 Q_OBJECT
 
  public:
-   FilterImagesDialog(QWidget *parent=0, QStringList filesList=0);
+   FilterImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~FilterImagesDialog();
 
  private slots:
@@ -56,8 +56,10 @@ Q_OBJECT
    int                    m_unsharpenPercent;
    int                    m_unsharpenThreshold;
 
-   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+#ifdef TEMPORARILY_REMOVED
+    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                        Digikam::AlbumInfo *albumDest);
+#endif
 
    void readSettings(void);
    void saveSettings(void);

@@ -48,10 +48,9 @@
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-BorderImagesDialog::BorderImagesDialog(QWidget *parent, QStringList filesList)
-                 : BatchProcessImagesDialog( parent )
+BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+                 : BatchProcessImagesDialog( urlList, interface, parent )
 {
-    m_selectedImageFiles = filesList;
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Bordering Images options"));
@@ -244,6 +243,7 @@ void BorderImagesDialog::saveSettings(void)
 
 ////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
+#ifdef TEMPORARILY_REMOVED
 QString BorderImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                                         Digikam::AlbumInfo *albumDest)
 {
@@ -330,3 +330,4 @@ QString BorderImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
     return(extractArguments(proc));
 }
+#endif

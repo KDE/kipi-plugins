@@ -47,10 +47,9 @@
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-ColorImagesDialog::ColorImagesDialog(QWidget *parent, QStringList filesList)
-                 : BatchProcessImagesDialog( parent )
+ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+                 : BatchProcessImagesDialog( urlList, interface, parent )
 {
-    m_selectedImageFiles = filesList;
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Coloring Images options"));
@@ -235,6 +234,7 @@ void ColorImagesDialog::saveSettings(void)
 
 ////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
+#ifdef TEMPORARILY_REMOVED
 QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                                        Digikam::AlbumInfo *albumDest)
 {
@@ -319,3 +319,4 @@ QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *i
 
     return(extractArguments(proc));
 }
+#endif

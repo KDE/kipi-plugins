@@ -14,3 +14,4 @@ Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_commentseditor
 author=Renchi Raju, renchi@pooh.tam.uiuc.edu
+X-KIPI-ReqFeatures=ImagesHasComments,AlbumHaveDescriptions

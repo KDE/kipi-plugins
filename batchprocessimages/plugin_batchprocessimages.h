@@ -29,7 +29,7 @@
 
 // Include files for KDE
 
-#include <digikam/plugin.h>
+#include <libkipi/plugin.h>
 
 class KAction;
 
@@ -42,13 +42,14 @@ class RenameImagesDialog;
 class RecompressImagesDialog;
 class ResizeImagesDialog;
 
-class Plugin_BatchProcessImages : public Digikam::Plugin
+class Plugin_BatchProcessImages : public KIPI::Plugin
 {
 Q_OBJECT
 
 public:
   Plugin_BatchProcessImages(QObject *parent, const char* name, const QStringList &args);
   virtual ~Plugin_BatchProcessImages();
+  KIPI::Category category() const;
 
 public slots:
   void slotActivate();

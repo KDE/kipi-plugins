@@ -45,7 +45,7 @@ class RenameImagesDialog : public BatchProcessImagesDialog
 Q_OBJECT
 
  public:
-   RenameImagesDialog(QWidget *parent=0, QStringList filesList=0);
+   RenameImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0);
    ~RenameImagesDialog();
 
  private slots:

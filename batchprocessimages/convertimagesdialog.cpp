@@ -39,12 +39,6 @@
 #include <knuminput.h>
 #include <kprocess.h>
 
-// Digikam includes
-
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
-#include <digikam/digikamio.h>
-
 // Local includes
 
 #include "convertimagesdialog.h"
@@ -54,13 +48,11 @@
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-ConvertImagesDialog::ConvertImagesDialog(QWidget *parent, QStringList filesList)
-                 : BatchProcessImagesDialog( parent )
+ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+                 : BatchProcessImagesDialog( urlList, interface, parent )
 {
-    m_selectedImageFiles = filesList;
-
     setCaption(i18n("Batch Convert Images options"));
-    setHelp("plugin-convertimages.anchor", "digikam");
+    setHelp("plugin-convertimages.anchor", "kipi");
 
     //---------------------------------------------
 
@@ -246,6 +238,7 @@ void ConvertImagesDialog::saveSettings(void)
 
 ////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
+#ifdef TEMPORARILY_REMOVED
 QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                                          Digikam::AlbumInfo *albumDest)
 {
@@ -305,7 +298,7 @@ QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem 
           *proc << m_TGACompressionAlgo;
           }
        }
-       
+
     *proc << "-verbose";
 
     *proc << item->pathSrc();
@@ -318,18 +311,22 @@ QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem 
 
     return(extractArguments(proc));
 }
+#endif
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QString ConvertImagesDialog::oldFileName2NewFileName(QString fileName)
 {
+    qDebug("ConvertImagesDialog::oldFileName2NewFileName is commented out!");
+#ifdef TEMPORARILY_REMOVED
     QString Temp;
 
     Temp = fileName.left( fileName.findRev('.', -1) );             // The source file name without extension.
     Temp = Temp + "." + ImageFileExt(m_Type->currentText());       // Added new file extension.
 
     return Temp;
+#endif
 }
 
 

@@ -46,10 +46,9 @@
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-RecompressImagesDialog::RecompressImagesDialog(QWidget *parent, QStringList filesList)
-                 : BatchProcessImagesDialog( parent )
+RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+                 : BatchProcessImagesDialog( urlList, interface, parent )
 {
-    m_selectedImageFiles = filesList;
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Recompress Images options"));
@@ -173,6 +172,7 @@ void RecompressImagesDialog::saveSettings(void)
 
 ////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
+#ifdef TEMPORARILY_REMOVED
 QString RecompressImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                                             Digikam::AlbumInfo *albumDest)
 {
@@ -246,10 +246,12 @@ QString RecompressImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesIt
 
     return(extractArguments(proc));
 }
+#endif
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifdef TEMPORARILY_REMOVED
 bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
                                                  Digikam::AlbumInfo *albumDest)
 {
@@ -267,3 +269,4 @@ bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
 
     return true;
 }
+#endif

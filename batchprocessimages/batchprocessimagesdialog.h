@@ -48,11 +48,11 @@
 #include <kio/job.h>
 #include <kdialogbase.h>
 #include <kdebug.h>
+#include <kurl.h>
 
-// Include files for Digikam
-
-#include <digikam/albuminfo.h>
-#include <digikam/thumbnailjob.h>
+// Include files for KIPI
+#include <libkipi/thumbnailjob.h>
+#include <libkipi/interface.h>
 
 // Local includes
 
@@ -82,7 +82,7 @@ Q_OBJECT
    // Don't forget to add the 'm_Type' and 'm_labelType' implementation in the constructor of
    // children dialog class.
 
-   BatchProcessImagesDialog(QWidget *parent=0, QStringList filesList=0);
+   BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent=0 );
    ~BatchProcessImagesDialog();
 
  public slots:
@@ -176,9 +176,11 @@ Q_OBJECT
    QString                 m_commandLine;
    QString                 m_tmpFolder;
    QString                 m_previewOutput;
-   QStringList             m_selectedImageFiles;
+   KURL::List              m_selectedImageFiles;
 
-   QGuardedPtr<Digikam::ThumbnailJob> m_thumbJob;
+   QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
+
+    KIPI::Interface       *m_interface;
 
    // --------------------------------------------------------------------------------------------------------
    // Standards fonctions
@@ -219,16 +221,20 @@ Q_OBJECT
    // Called by 'startProcess' fonction at start. You can checking here some things about the current
    // 'item' before the 'startprocess' fonction execution.
 
-   virtual bool prepareStartProcess(BatchProcessImagesItem *item,
+#ifdef TEMPORARILY_REMOVED
+    virtual bool prepareStartProcess(BatchProcessImagesItem *item,
                                     Digikam::AlbumInfo *albumDest)
                 { return true; };
+#endif
 
    // Called for to contruct the ImageMagick command line used for to process or preview the image traitements.
    // If 'albumDest' = 0L ==> preview process.
 
-   virtual QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+#ifdef TEMPORARILY_REMOVED
+    virtual QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                                Digikam::AlbumInfo *albumDest=0L)
            { return QString::null; };
+#endif
 
    // Fonctions used for to read and to save the settings in the configuration file.
 

@@ -74,24 +74,22 @@ extern "C"
 #include <kio/global.h>
 #include <kbuttonbox.h>
 
-// Digikam includes
-
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
-#include <digikam/digikamio.h>
+// KIPI includes
+#include <libkipi/thumbnailjob.h>
 
 // Local includes
 
 #include "batchprocessimagesdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
+#include <kdiroperator.h>
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-BatchProcessImagesDialog::BatchProcessImagesDialog(QWidget *parent, QStringList filesList)
-                 : KDialogBase( parent, "BatchProcessImagesDialog", false,
+BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+    : KDialogBase( parent, "BatchProcessImagesDialog", false,
                    "", Help|User1|User2|Cancel,
-                   Cancel, true, i18n("&About"), i18n("&Start"))
+                   Cancel, true, i18n("&About"), i18n("&Start")), m_selectedImageFiles( urlList), m_interface( interface )
 {
     // Init. Tmp folder
 
@@ -140,11 +138,19 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(QWidget *parent, QStringList 
 
     //---------------------------------------------
 
-    groupBox3 = new QGroupBox( 2, Qt::Horizontal, i18n("Target Album"), box );
+    QString title;
+    if ( m_interface->hasFeature( KIPI::AlbumEQDir ) )
+        title = i18n("Target Album");
+    else
+        title = i18n("Target Directory");
+
+    groupBox3 = new QGroupBox( 2, Qt::Horizontal, title, box );
 
     m_albumList = new QComboBox( false, groupBox3 );
     QStringList albumsList;
 
+
+#ifdef TEMPORARILY_REMOVED
     for (Digikam::AlbumInfo *album=Digikam::AlbumManager::instance()->firstAlbum() ;
          album ; album = album->nextAlbum())
         {
@@ -152,12 +158,15 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(QWidget *parent, QStringList 
         albumsList.append (album->getTitle());
         album->closeDB();
         }
+#endif
 
     albumsList.sort();
     m_albumList->insertStringList(albumsList);
 
+#ifdef TEMPORARILY_REMOVED
     if ( Digikam::AlbumManager::instance()->currentAlbum() )
        m_albumList->setCurrentText (Digikam::AlbumManager::instance()->currentAlbum()->getTitle());
+#endif
 
     QWhatsThis::add( m_albumList, i18n("<p>Select here the target Album used by the process.") );
 
@@ -288,9 +297,11 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd( void )
 {
     QStringList ImageFilesList;
 
+#ifdef TEMPORARILY_REMOVED
     ImageFilesList = KFileDialog::getOpenFileNames( Digikam::AlbumManager::instance()->getLibraryPath(),
                                                     m_ImagesFilesSort,
                                                     this );
+#endif
 
     slotAddDropItems(ImageFilesList);
 }
@@ -339,7 +350,7 @@ void BatchProcessImagesDialog::slotImageSelected( QListViewItem * item )
 
     KURL url(IdemIndexed);
 
-    m_thumbJob = new Digikam::ThumbnailJob( url, m_imageLabel->height(), false, true );
+    m_thumbJob = new KIPI::ThumbnailJob( url, m_imageLabel->height(), false, true );
 
     connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
             SLOT(slotGotPreview(const KURL&, const QPixmap&)));
@@ -368,9 +379,9 @@ void BatchProcessImagesDialog::slotAddDropItems(QStringList filesPath)
 
       bool findItem = false;
 
-      for ( QStringList::Iterator it2 = m_selectedImageFiles.begin() ; it2 != m_selectedImageFiles.end() ; ++it2 )
+      for ( KURL::List::Iterator it2 = m_selectedImageFiles.begin() ; it2 != m_selectedImageFiles.end() ; ++it2 )
          {
-         QString currentFile = *it2;
+             QString currentFile = (*it2).path(); // PENDING(blackie) Handle URL's
 
          if ( currentFile == currentDropFile )
              findItem = true;
@@ -418,6 +429,8 @@ void BatchProcessImagesDialog::slotOverWriteModeActived( const QString &string )
 
 void BatchProcessImagesDialog::slotAddNewAlbum( void )
 {
+    qDebug("BatchProcessImagesDialog::slotAddNewAlbum commented out");
+#ifdef TEMPORARILY_REMOVED
     QDir libraryDir( Digikam::AlbumManager::instance()->getLibraryPath());
 
     if (!libraryDir.exists())
@@ -438,6 +451,7 @@ void BatchProcessImagesDialog::slotAddNewAlbum( void )
 
     connect(job, SIGNAL(result(KIO::Job*)),
             this, SLOT(slot_onAlbumCreate(KIO::Job*)));
+#endif
 }
 
 
@@ -504,6 +518,8 @@ void BatchProcessImagesDialog::slotProcessStart( void )
 
 bool BatchProcessImagesDialog::startProcess(void)
 {
+    qDebug("BatchProcessImagesDialog::startProcess commented out");
+#ifdef TEMPORARILY_REMOVED
     if ( m_convertStatus == STOP_PROCESS )
        {
        endProcess(i18n("Process aborted by user!"));
@@ -667,6 +683,7 @@ bool BatchProcessImagesDialog::startProcess(void)
        }
 
     return true;
+#endif
 }
 
 
@@ -683,6 +700,8 @@ void BatchProcessImagesDialog::slotReadStd(KProcess* proc, char *buffer, int buf
 
 void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
 {
+    qDebug("BatchProcessImagesDialog::slotProcessDone commented out");
+#ifdef TEMPORARILY_REMOVED
     int ValRet = proc->exitStatus();
     qDebug ("Convert exit (%i)", ValRet);
 
@@ -745,6 +764,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
        startProcess();
     else
        endProcess(i18n("Process finished!"));
+#endif
 }
 
 
@@ -771,6 +791,8 @@ void BatchProcessImagesDialog::slotListDoubleClicked(QListViewItem *itemClicked)
 
 void BatchProcessImagesDialog::slotPreview(void)
 {
+    qDebug("BatchProcessImagesDialog::slotPreview");
+#ifdef TEMPORARILY_REMOVED
     if ( m_listFiles->currentItem() == 0 )
        {
        KMessageBox::error(this, i18n("You must selected an item in the list for calculate the preview!"));
@@ -825,6 +847,7 @@ void BatchProcessImagesDialog::slotPreview(void)
        m_previewButton->setEnabled(true);
        return;
        }
+#endif
 }
 
 
@@ -930,9 +953,9 @@ void BatchProcessImagesDialog::listImageFiles(void)
 
     if (m_selectedImageFiles.isEmpty()) return;
 
-    for ( QStringList::Iterator it = m_selectedImageFiles.begin() ; it != m_selectedImageFiles.end() ; ++it )
+    for ( KURL::List::Iterator it = m_selectedImageFiles.begin() ; it != m_selectedImageFiles.end() ; ++it )
       {
-      QString currentFile = *it;
+      QString currentFile = (*it).path(); // PENDING(blackie) Handle URLS
       QFileInfo *fi = new QFileInfo(currentFile);
 
       // Check if the new item already exist in the list.
@@ -1027,6 +1050,9 @@ int BatchProcessImagesDialog::overwriteMode(void)
 
 void BatchProcessImagesDialog::processAborted(bool removeFlag)
 {
+    qDebug("BatchProcessImagesDialog::processAborted");
+
+#ifdef TEMPORARILY_REMOVED
     Digikam::AlbumInfo *targetAlbum = Digikam::AlbumManager::instance()->findAlbum( m_albumList->currentText() );
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     m_listFiles->ensureItemVisible(m_listFiles->currentItem());
@@ -1042,6 +1068,7 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
        }
 
     endProcess(i18n("Process aborted by user!"));
+#endif
 }
 
 
@@ -1049,6 +1076,8 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
 
 void BatchProcessImagesDialog::endProcess(QString endMessage)
 {
+    qDebug("BatchProcessImagesDialog::endProcess");
+#ifdef TEMPORARILY_REMOVED
     m_statusbar->setText(endMessage);
     Digikam::AlbumInfo *currentAlbum = Digikam::AlbumManager::instance()->currentAlbum();
     Digikam::AlbumManager::instance()->refreshItemHandler(currentAlbum->getTitle());
@@ -1060,6 +1089,7 @@ void BatchProcessImagesDialog::endProcess(QString endMessage)
     disconnect(this, SIGNAL(user2Clicked()), this, SLOT(slotProcessStop()));
 
     connect(this, SIGNAL(user2Clicked()), this, SLOT(slotOk()));
+#endif
 }
 
 
