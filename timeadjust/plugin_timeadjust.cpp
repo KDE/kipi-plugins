@@ -68,10 +68,10 @@ void Plugin_TimeAdjust::setup( QWidget* widget )
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
     
-    KIPI::ImageCollection selection = m_interface->currentSelection();
+    KIPI::ImageCollection selection = m_interface->currentScope();
     m_actionTimeAjust->setEnabled( selection.isValid() );
 
-    connect( m_interface, SIGNAL(selectionChanged(bool)), 
+    connect( m_interface, SIGNAL(currentScopeChanged(bool)), 
              m_actionTimeAjust, SLOT(setEnabled(bool)));
 }
 

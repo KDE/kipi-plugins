@@ -147,13 +147,13 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     addAction( m_action_Transform );
 
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
-    KIPI::ImageCollection selection = interface->currentSelection();
+    KIPI::ImageCollection selection = interface->currentScope();
     m_action_Transform->setEnabled( selection.isValid() );
     
     m_thread = new JPEGLossLess::ActionThread(interface, this);
     m_progressDlg = 0;
     
-    connect( interface, SIGNAL( selectionChanged( bool ) ), 
+    connect( interface, SIGNAL( currentScopeChanged( bool ) ), 
              m_action_Transform, SLOT( setEnabled( bool ) ) );
 }
 

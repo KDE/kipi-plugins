@@ -116,6 +116,7 @@ void Plugin_WallPaper::setup( QWidget* widget )
                          SLOT(slotSetCenteredAutoFit()),
                          actionCollection(),
                          "images2desktop_centered_auto_fit"));
+
     addAction( m_action_Background );
 
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
