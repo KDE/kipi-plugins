@@ -737,7 +737,7 @@ void KIGPDialog::setupThumbnailPage(void)
 void KIGPDialog::aboutPage(void)
 {
     page_about = addPage( i18n("About"), i18n("About Image Gallery"),
-                          BarIcon("digikam", KIcon::SizeMedium ) );
+                          BarIcon("kipi", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 

@@ -391,7 +391,7 @@ void BatchDialog::slotSaveFormatChanged()
 void BatchDialog::slotHelp()
 {
     KApplication::kApplication()->invokeHelp("plugin-rawconverter.anchor",
-                                             "digikam");
+                                             "kipi");
 }
 
 void BatchDialog::slotAbout()

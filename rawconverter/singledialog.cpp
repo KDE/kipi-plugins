@@ -347,7 +347,7 @@ void SingleDialog::saveSettings()
 void SingleDialog::slotHelp()
 {
     KApplication::kApplication()->invokeHelp("plugin-rawconverter.anchor",
-                                             "digikam");
+                                             "kipi");
 }
 
 void SingleDialog::slotAbout()

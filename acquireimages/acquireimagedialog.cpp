@@ -398,8 +398,8 @@ void AcquireImageDialog::setupAlbumsList(void)
 
 void AcquireImageDialog::aboutPage(void)
 {
-    page_about = addPage( i18n("About"), i18n("About Digikam acquire images"),
-                          BarIcon("digikam", KIcon::SizeMedium ) );
+    page_about = addPage( i18n("About"), i18n("About KIPI acquire images"),
+                          BarIcon("kipi", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 

@@ -675,8 +675,8 @@ void CDArchivingDialog::setupBurning(void)
 
 void CDArchivingDialog::aboutPage(void)
 {
-    page_about = addPage( i18n("About"), i18n("About Albums CD Archiving"),
-                          BarIcon("digikam", KIcon::SizeMedium ) );
+    page_about = addPage( i18n("About"), i18n("About KIPI Albums CD Archiving"),
+                          BarIcon("kipi", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 

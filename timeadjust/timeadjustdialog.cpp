@@ -52,8 +52,8 @@ void TimeAdjustDialog::setImages( const KURL::List& images )
 
 void TimeAdjustDialog::addAboutPage()
 {
-    QWidget* pageAbout = addPage( i18n("About"), i18n("About Plugin"),
-                                  BarIcon("messagebox_info", KIcon::SizeMedium ) );
+    QWidget* pageAbout = addPage( i18n("About"), i18n("About KIPI Plugin"),
+                                  BarIcon("kipi", KIcon::SizeMedium ) );
     QVBoxLayout *vlay = new QVBoxLayout( pageAbout, 6 );
 
     QLabel *label = new QLabel( i18n("<qt><p>A KIPI plugin for adjusting dates and time<br/>"
