@@ -48,6 +48,8 @@ extern "C"
 #include <qevent.h>
 #include <qdragobject.h>
 #include <qfileinfo.h>
+#include <qhgroupbox.h>
+#include <qvgroupbox.h>
 
 // Include files for KDE
 
@@ -72,11 +74,12 @@ extern "C"
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 #include <kio/global.h>
+#include <kio/previewjob.h>
 #include <kbuttonbox.h>
 #include <kdiroperator.h>
-#include <qvgroupbox.h>
 
 // KIPI includes
+
 #include <libkipi/uploadwidget.h>
 #include <libkipi/imagecollectiondialog.h>
 
@@ -85,14 +88,13 @@ extern "C"
 #include "batchprocessimagesdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
-#include <qhgroupbox.h>
-#include <kio/previewjob.h>
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
     : KDialogBase( KDialogBase::Plain, "BatchProcessImagesDialog", Help|User1|User2|Cancel,
-                   Cancel, parent, "", true, false, i18n("&About"), i18n("&Start")), m_selectedImageFiles( urlList), m_interface( interface )
+                   Cancel, parent, "", true, false, i18n("&About"), i18n("&Start")), 
+		   m_selectedImageFiles( urlList), m_interface( interface )
 {
     // Init. Tmp folder
 
