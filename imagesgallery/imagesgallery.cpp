@@ -183,36 +183,12 @@ void ImagesGallery::readSettings(void)
   m_configDlg->setMainTitle( m_config->readEntry("MainPageTitle", i18n("KIPI Album Image Gallery")) );
   m_configDlg->setImagesPerRow( m_config->readEntry("ImagesPerRow", "4").toInt() );
 
-  if (m_config->readEntry("PrintImageName", "true") == "true")
-     m_configDlg->setPrintImageName( true );
-  else
-     m_configDlg->setPrintImageName( false );
-
-  if (m_config->readEntry("PrintImageSize", "true") == "true")
-     m_configDlg->setPrintImageSize( true );
-  else
-     m_configDlg->setPrintImageSize( false );
-
-  if (m_config->readEntry("PrintFileSize", "true") == "true")
-     m_configDlg->setPrintImageProperty( true );
-  else
-     m_configDlg->setPrintImageProperty( false );
-
-  if (m_config->readEntry("PrintPageCreationDate", "true") == "true")
-     m_configDlg->setPrintPageCreationDate( true );
-  else
-     m_configDlg->setPrintPageCreationDate( false );
-
-  if(m_config->readEntry("CreatePageForPhotos", "true") == "true")
-     m_configDlg->setCreatePageForPhotos( true );
-  else
-     m_configDlg->setCreatePageForPhotos( false );
-
-  if (m_config->readEntry("OpenInWebBrowser", "true") == "true")
-     m_configDlg->setOpenGalleryInWebBrowser( true );
-  else
-     m_configDlg->setOpenGalleryInWebBrowser( false );
-
+  m_configDlg->setPrintImageName( m_config->readBoolEntry("PrintImageName", true) );
+  m_configDlg->setPrintImageSize( m_config->readBoolEntry("PrintImageSize", true) );
+  m_configDlg->setPrintImageProperty( m_config->readBoolEntry("PrintFileSize", true) );
+  m_configDlg->setPrintPageCreationDate( m_config->readBoolEntry("PrintPageCreationDate", true) );
+  m_configDlg->setCreatePageForPhotos( m_config->readBoolEntry("CreatePageForPhotos", true) );
+  m_configDlg->setOpenGalleryInWebBrowser( m_config->readBoolEntry("OpenInWebBrowser", true) );
   m_configDlg->setWebBrowserName( m_config->readPathEntry("WebBrowserName", "Konqueror") );
 
   m_configDlg->setFontName( m_config->readEntry("FontName", "Helvetica") );
@@ -232,73 +208,27 @@ void ImagesGallery::readSettings(void)
   // ALBUM dialogbox setup tab
 
   m_configDlg->setImageName( m_config->readPathEntry("GalleryPath", KGlobalSettings::documentPath()) );
-
-  if (m_config->readEntry("NotUseOriginalImageSize", "true") == "true")
-     m_configDlg->setNotUseOriginalImageSize( true );
-  else
-     m_configDlg->setNotUseOriginalImageSize( false );
-
+  m_configDlg->setNotUseOriginalImageSize( m_config->readBoolEntry("NotUseOriginalImageSize", true) );
   m_configDlg->setImagesResizeFormat( m_config->readEntry("ImagesResize", "640").toInt() );
-
-  if (m_config->readEntry("TargetImagesCompressionSet", "false") == "true")
-     m_configDlg->setUseSpecificTargetimageCompression( true );
-  else
-     m_configDlg->setUseSpecificTargetimageCompression( false );
-
+  m_configDlg->setUseSpecificTargetimageCompression( m_config->readBoolEntry("TargetImagesCompressionSet",
+                                                                             false) );
   m_configDlg->setTargetImagesCompression( m_config->readEntry("TargetImagesCompression", "75").toInt() );
-
   m_configDlg->setTargetImagesFormat( m_config->readEntry("TargetImagesFormat", "JPEG") );
-
-  if (m_config->readEntry("TargetImagesColorDepthSet", "false") == "true")
-     m_configDlg->setColorDepthSetTargetImages( true );
-  else
-     m_configDlg->setColorDepthSetTargetImages( false );
-
+  m_configDlg->setColorDepthSetTargetImages( m_config->readBoolEntry("TargetImagesColorDepthSet", false) );
   m_configDlg->setColorDepthTargetImages( m_config->readEntry("TargetImagesColorDepthValue", "32") );
-
-  if (m_config->readEntry("UseCommentFile", "true") == "true")
-     m_configDlg->setUseCommentFile( true );
-  else
-     m_configDlg->setUseCommentFile( false );
-
-  if (m_config->readEntry("UseCommentsAlbum", "true") == "true")
-     m_configDlg->setUseCommentsAlbum( true );
-  else
-     m_configDlg->setUseCommentsAlbum( false );
-
-  if (m_config->readEntry("UseCollectionAlbum", "true") == "true")
-     m_configDlg->setUseCollectionAlbum( true );
-  else
-     m_configDlg->setUseCollectionAlbum( false );
-
-  if (m_config->readEntry("UseDateAlbum", "true") == "true")
-     m_configDlg->setUseDateAlbum( true );
-  else
-     m_configDlg->setUseDateAlbum( false );
-
-  if (m_config->readEntry("PrintImageNb", "true") == "true")
-     m_configDlg->setUseNbImagesAlbum( true );
-  else
-     m_configDlg->setUseNbImagesAlbum( false );
+  m_configDlg->setUseCommentFile( m_config->readBoolEntry("UseCommentFile", true) );
+  m_configDlg->setUseCommentsAlbum( m_config->readBoolEntry("UseCommentsAlbum", true) );
+  m_configDlg->setUseCollectionAlbum( m_config->readBoolEntry("UseCollectionAlbum", "true") );
+  m_configDlg->setUseDateAlbum( m_config->readBoolEntry("UseDateAlbum", true) );
+  m_configDlg->setUseNbImagesAlbum( m_config->readBoolEntry("PrintImageNb", true) );
 
   // THUMNAILS dialogbox setup tab
 
   m_configDlg->setThumbnailsSize( m_config->readEntry("ThumbnailsSize", "140").toInt() );
-
-  if (m_config->readEntry("ThumbnailsCompressionSet", "false") == "true")
-     m_configDlg->setUseSpecificThumbsCompression( true );
-  else
-     m_configDlg->setUseSpecificThumbsCompression( false );
-
+  m_configDlg->setUseSpecificThumbsCompression( m_config->readBoolEntry("ThumbnailsCompressionSet", false) );
   m_configDlg->setThumbsCompression( m_config->readEntry("ThumbnailsCompression", "75").toInt() );
-
   m_configDlg->setImageFormat( m_config->readEntry("ThumbnailsFormat", "JPEG") );
-
-  if (m_config->readEntry("ThumbnailsColorDepthSet", "false") == "true")
-     m_configDlg->setColorDepthSetThumbnails( true );
-  else
-     m_configDlg->setColorDepthSetThumbnails( false );
-
+  m_configDlg->setColorDepthSetThumbnails( m_config->readBoolEntry("ThumbnailsColorDepthSet", false) );
   m_configDlg->setColorDepthThumbnails( m_config->readEntry("ThumbnailsColorDepthValue", "32") );
 
   delete m_config;
@@ -1696,14 +1626,14 @@ void ImagesGallery::invokeWebBrowser(void)
           KMessageBox::error(0, i18n("Cannot start 'opera' web browser.\nPlease check your installation."));
        }
 
-    if (m_configDlg->getWebBrowserName() == "Dillo")
+    if (m_configDlg->getWebBrowserName() == "Firefox")
        {
        m_webBrowserProc = new KProcess;
-       *m_webBrowserProc << "dillo";
+       *m_webBrowserProc << "firefox";
        *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
-          KMessageBox::error(0, i18n("Cannot start 'dillo' web browser.\nPlease check your installation."));
+          KMessageBox::error(0, i18n("Cannot start 'firefox' web browser.\nPlease check your installation."));
        }
 
     if (m_configDlg->getWebBrowserName() == "Galeon")

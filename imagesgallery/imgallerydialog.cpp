@@ -245,7 +245,7 @@ void KIGPDialog::setupLookPage(void)
 
     m_webBrowserName = new QComboBox( false, page_setupLook );
     m_webBrowserName->insertItem( "Amaya" );
-    m_webBrowserName->insertItem( "Dillo" );
+    m_webBrowserName->insertItem( "Firefox" );
     m_webBrowserName->insertItem( "Galeon" );
     m_webBrowserName->insertItem( "Konqueror" );
     m_webBrowserName->insertItem( "Mozilla" );
