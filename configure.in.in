@@ -68,7 +68,7 @@ AC_CHECK_PROG(PKGCONFIGFOUND, pkg-config,[yes])
 if test -d $srcdir/libkipi; then
     have_libkipi=yes
     AC_MSG_CHECKING([for libkipi in our sources])
-    LIBKIPI_CFLAGS='-I$(top_srcdir)/libkipi/libkipi'
+    LIBKIPI_CFLAGS='-I$(top_srcdir)/libkipi'
     LIBKIPI_LIBS='$(top_builddir)/libkipi/libkipi/libkipi.la'
     LIBKIPI_LIBS_DEP='$(LIBKIPI_LIBS)'
     AC_MSG_RESULT([found])

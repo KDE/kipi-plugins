@@ -1,5 +1,4 @@
-INCLUDES    = $(IMLIB2_CFLAGS)  -I$(top_srcdir) -I$(top_srcdir)/libkipi \
-	$(all_includes)
+INCLUDES    = $(IMLIB2_CFLAGS)  $(LIBKIPI_CFLAGS) $(all_includes)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory

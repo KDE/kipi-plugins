@@ -1,4 +1,4 @@
-INCLUDES    = -I$(top_srcdir)/libkipi $(all_includes)
+INCLUDES    = $(all_includes) $(LIBKIPI_CFLAGS)
 METASOURCES = AUTO
 SUBDIRS = data
 
