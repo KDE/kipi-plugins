@@ -207,7 +207,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
   pixmapLabelLeft->setScaledContents( false );
   layout->addWidget( pixmapLabelLeft );
-  QLabel *labelTitle = new QLabel( i18n("MPEG Image Encoder"), headerFrame, "labelTitle" );
+  QLabel *labelTitle = new QLabel( i18n("Create MPEG Slideshow"), headerFrame, "labelTitle" );
   layout->addWidget( labelTitle );
   layout->setStretchFactor( labelTitle, 1 );
   ml->addWidget( headerFrame );
@@ -425,9 +425,9 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   v3->addWidget( m_helpButton );
     
   KAboutData* about = new KAboutData("kipiplugins",
-                                     I18N_NOOP("MPEG Image Encoder"), 
+                                     I18N_NOOP("MPEG Slideshow"), 
                                      kipi_version,
-                                     I18N_NOOP("A Kipi plugin for MPEG image encoding."),
+                                     I18N_NOOP("A Kipi plugin for encode images to MPEG file."),
                                      KAboutData::License_GPL,
                                      "(c) 2003-2004, Gilles Caulier", 
                                      0,
@@ -438,7 +438,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
                         
   KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
   helpMenu->menu()->removeItemAt(0);
-  helpMenu->menu()->insertItem(i18n("MPEG Image Encoder handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+  helpMenu->menu()->insertItem(i18n("MPEG SlideShow handbook"), this, SLOT(slotHelp()), 0, -1, 0);
   m_helpButton->setPopup( helpMenu->menu() );
   
   // Options button.
@@ -1151,7 +1151,7 @@ void KImg2mpgData::closeEvent(QCloseEvent* e)
 
 void KImg2mpgData::show()
 {
-  setCaption(i18n("MPEG Encoder Kipi Plugin"));
+  setCaption(i18n("Create MPEG Slideshow"));
   KDialog::show();
 }
 

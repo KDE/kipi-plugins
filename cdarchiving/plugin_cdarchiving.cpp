@@ -57,7 +57,7 @@ void Plugin_CDArchiving::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_cdarchiving = new KAction (i18n("Archive to CD..."),        // Menu message.
+    m_action_cdarchiving = new KAction (i18n("Archive to CD/DVD..."),     // Menu message.
                                         "cd",                             // Menu icon.
                                         0,
                                         this,
@@ -120,7 +120,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
 
     if (!m_progressDlg)
         {
-        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Preparing Archive to CD"));
+        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Archive to CD/DVD"));
 
         connect(m_progressDlg, SIGNAL(cancelClicked()),
                 this, SLOT(slotCancel()));

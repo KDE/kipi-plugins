@@ -7,7 +7,7 @@
  *               (http://kvcdtools.free.fr)
  *
  * Copyright 2003 by Gilles Caulier
-
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published bythe Free Software Foundation;
@@ -50,7 +50,7 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_mpegencoder,
 // -----------------------------------------------------------
 
 Plugin_Mpegencoder::Plugin_Mpegencoder(QObject *parent, const char*, const QStringList&)
-    : KIPI::Plugin( Factory::instance(), parent, "MPEGEncoder")
+                  : KIPI::Plugin( Factory::instance(), parent, "MPEGEncoder")
 {
     kdDebug( 51001 ) << "Plugin_Mpegencoder plugin loaded" << endl;
 }
@@ -59,7 +59,7 @@ void Plugin_Mpegencoder::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_actionMPEGEncoder = new KAction (i18n("MPEG Encoder..."),
+    m_actionMPEGEncoder = new KAction (i18n("Create MPEG SlideShow..."),
                                        "video",
                                        0,
                                        this,

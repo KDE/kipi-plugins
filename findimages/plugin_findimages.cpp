@@ -130,7 +130,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
 
     if (!m_progressDlg)
         {
-        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Find Duplicate Images Operations"));
+        m_progressDlg = new KIPI::BatchProgressDialog(0, i18n("Find Duplicate Images"));
 
         connect(m_progressDlg, SIGNAL(cancelClicked()),
                 this, SLOT(slotCancel()));

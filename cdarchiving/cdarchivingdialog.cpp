@@ -86,7 +86,7 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
                  : KDialogBase( IconList, i18n("Configure Archive to CD"), Help|Ok|Cancel, Ok,
                    parent, "CDArchivingDialog", true, true ), m_interface( interface )
 {
-    setCaption(i18n("Album CD Archiving"));
+    setCaption(i18n("Create CD/DVD Archive"));
     setupSelection();
     setupLookPage();
     setupCDInfos();
@@ -97,9 +97,9 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     // About data and help button.
     
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("CD Archiving"), 
+                                       I18N_NOOP("CD/DVD Archiving"), 
                                        kipi_version,
-                                       I18N_NOOP("An Album CD Archiving Kipi plugin.\n"
+                                       I18N_NOOP("An Album CD/DVD Archiving Kipi plugin.\n"
                                                  "This plugin use K3b CD/DVD burning software available at\n"
                                                  "http://www.k3b.org"),
                                        KAboutData::License_GPL,
@@ -116,7 +116,7 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("CD Archiving handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpMenu->menu()->insertItem(i18n("CD/DVD Archiving handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
 }
 
