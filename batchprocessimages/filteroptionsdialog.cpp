@@ -67,8 +67,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
        m_noiseType->insertItem(i18n("Impulse"));
        m_noiseType->insertItem(i18n("Laplacian"));
        m_noiseType->insertItem(i18n("Poisson"));
-       QWhatsThis::add( m_noiseType, i18n("<p>Select here the algorithm method who will used "
-                                          "for add a random noise to the images.") );
+       QWhatsThis::add( m_noiseType, i18n("<p>Select here the algorithm method which will used "
+                                          "to add random noise to the images.") );
        m_label_noiseType->setBuddy( m_noiseType );
        dvlay->addWidget( m_noiseType );
        }
@@ -81,8 +81,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
        m_blurRadius->setRange(0, 20, 1, true );
        QWhatsThis::add( m_blurRadius, i18n("<p>Select here the blur radius of the Gaussian, in pixels, "
                                            "not counting the center pixel. For reasonable results, the "
-                                           "radius should be larger than deviation. Use a radius of 0 and "
-                                           "the blur operations selects a suitable radius for you.") );
+                                           "radius should be larger than deviation. If you use a radius of 0 "
+                                           "the blur operations selects a suitable radius.") );
        m_label_blurRadius->setBuddy( m_blurRadius );
        dvlay->addWidget( m_blurRadius );
 
@@ -90,7 +90,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
        dvlay->addWidget( m_label_blurDeviation );
        m_blurDeviation = new KIntNumInput(1, box);
        m_blurDeviation->setRange(0, 20, 1, true );
-       QWhatsThis::add( m_blurDeviation, i18n("<p>Select here the blur standard deviation of the Gaussian, "
+       QWhatsThis::add( m_blurDeviation, i18n("<p>Select here the standard deviation of the blur Gaussian, "
                                               "in pixels.") );
        m_label_blurDeviation->setBuddy( m_blurDeviation );
        dvlay->addWidget( m_blurDeviation );
@@ -103,9 +103,9 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
        m_medianRadius = new KIntNumInput(3, box);
        m_medianRadius->setRange(0, 20, 1, true );
        QWhatsThis::add( m_medianRadius, i18n("<p>Select here the median radius of the pixel neighborhood. "
-                                             "The algorithm apply a digital filter that improves the quality "
-                                             "of a noisy image. Each pixel is replaced by the median in a "
-                                             "set of neighboring pixels as defined by radius.") );
+                                             "The algorithm applies a digital filter that improves the quality "
+                                             "of noisy images. Each pixel is replaced by the median in a "
+                                             "set of neighboring pixels as defined by the radius.") );
        m_label_medianRadius->setBuddy( m_medianRadius );
        dvlay->addWidget( m_medianRadius );
        }
@@ -121,8 +121,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
                                             "The algorithm smooths the contours of an image while still "
                                             "preserving edge information. The algorithm works by replacing "
                                             "each pixel with its neighbor closest in value. A neighbor is "
-                                            "defined by the radius. Use a radius of 0 and the algorithm "
-                                            "selects a suitable radius for you.") );
+                                            "defined by the radius. If you use a radius of 0 the algorithm "
+                                            "selects a suitable radius.") );
        m_label_noiseRadius->setBuddy( m_noiseRadius );
        dvlay->addWidget( m_noiseRadius );
        }
@@ -133,11 +133,11 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
        dvlay->addWidget( m_label_sharpenRadius );
        m_sharpenRadius = new KIntNumInput(3, box);
        m_sharpenRadius->setRange(0, 20, 1, true );
-       QWhatsThis::add( m_sharpenRadius, i18n("<p>Select here the sharpen radius of the Gaussian, in "
+       QWhatsThis::add( m_sharpenRadius, i18n("<p>Select here the radius of the sharpen Gaussian, in "
                                               "pixels, not counting the center pixel. For reasonable "
                                               "results, the radius should be larger than deviation. "
-                                              "Use a radius of 0 and the sharpen operations selects a "
-                                              "suitable radius for you.") );
+                                              "if you use a radius of 0 the sharpen operation selects a "
+                                              "suitable radius.") );
        m_label_sharpenRadius->setBuddy( m_sharpenRadius );
        dvlay->addWidget( m_sharpenRadius );
 
@@ -157,12 +157,12 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
        dvlay->addWidget( m_label_unsharpenRadius );
        m_unsharpenRadius = new KIntNumInput(3, box);
        m_unsharpenRadius->setRange(0, 20, 1, true );
-       QWhatsThis::add( m_unsharpenRadius, i18n("<p>Select here the unsharpen radius of the Gaussian, "
+       QWhatsThis::add( m_unsharpenRadius, i18n("<p>Select here the radius of the unsharpen Gaussian, "
                                                 "in pixels, not counting the center pixel. The algorithm "
                                                 "convolve the image with a Gaussian operator of the given "
                                                 "radius and standard deviation. For reasonable results, "
-                                                "radius should be larger than sigma. Use a radius of 0 "
-                                                "and the algorithm selects a suitable radius for you.") );
+                                                "radius should be larger than sigma. If you use a radius of 0 "
+                                                "the algorithm selects a suitable radius.") );
        m_label_unsharpenRadius->setBuddy( m_unsharpenRadius );
        dvlay->addWidget( m_unsharpenRadius );
 
@@ -179,9 +179,9 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
        dvlay->addWidget( m_label_unsharpenPercent );
        m_unsharpenPercent = new KIntNumInput(3, box);
        m_unsharpenPercent->setRange(1, 100, 1, true );
-       QWhatsThis::add( m_unsharpenPercent, i18n("<p>Select here the percentage of the difference "
-                                                 "between the original and the blur image that is added "
-                                                 "back into the original.") );
+       QWhatsThis::add( m_unsharpenPercent, i18n("<p>Select here the what percentage of the difference "
+                                                 "between the original and the blur image should be added "
+                                                 "to the original.") );
        m_label_unsharpenPercent->setBuddy( m_unsharpenPercent );
        dvlay->addWidget( m_unsharpenPercent );
 
@@ -189,8 +189,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, QString FilterType)
        dvlay->addWidget( m_label_unsharpenThreshold );
        m_unsharpenThreshold = new KIntNumInput(1, box);
        m_unsharpenThreshold->setRange(0, 20, 1, true );
-       QWhatsThis::add( m_unsharpenThreshold, i18n("<p>Select here the unsharpen threshold value in "
-                                                   "pixels needed to apply the diffence amount."));
+       QWhatsThis::add( m_unsharpenThreshold, i18n("<p>Select here the unsharpen threshold value, in "
+                                                   "pixels, needed to apply the diffence amount."));
        m_label_unsharpenThreshold->setBuddy( m_unsharpenThreshold );
        dvlay->addWidget( m_unsharpenThreshold );
        }

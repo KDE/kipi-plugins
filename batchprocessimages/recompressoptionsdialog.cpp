@@ -48,7 +48,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
                         : KDialogBase( parent, "RecompressOptionsDialog", true,
-                          i18n("Recompress options"), Ok|Cancel, Ok, false)
+                          i18n("Recompression options"), Ok|Cancel, Ok, false)
 {
     QWidget* box = new QWidget( this );
     setMainWidget(box);
@@ -59,10 +59,10 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
 
     QGroupBox * groupBox1 = new QGroupBox( 2, Qt::Horizontal, i18n("JPEG file format"), box );
 
-    m_label_JPEGimageCompression = new QLabel (i18n("Images compression level:"), groupBox1);
+    m_label_JPEGimageCompression = new QLabel (i18n("Image compression level:"), groupBox1);
     m_JPEGCompression = new KIntNumInput(75, groupBox1);
     m_JPEGCompression->setRange(1, 100, 1, true );
-    whatsThis = i18n("<p>The compression values of JPEG target images:<p>");
+    whatsThis = i18n("<p>The compression value for JPEG target images:<p>");
     whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
                                  "<b>25</b>: high compression<p>"
                                  "<b>50</b>: medium compression<p>"
@@ -72,9 +72,9 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     QWhatsThis::add( m_JPEGCompression, whatsThis);
     m_label_JPEGimageCompression->setBuddy( m_JPEGCompression );
 
-    m_compressLossLess = new QCheckBox( i18n("Use loss less compression"), groupBox1);
-    QWhatsThis::add( m_compressLossLess, i18n("<p>If this option is enable, "
-                                              "all JPEG operations will use a loss less compression."));
+    m_compressLossLess = new QCheckBox( i18n("Use lossless compression"), groupBox1);
+    QWhatsThis::add( m_compressLossLess, i18n("<p>If this option is enabled, "
+                                              "all JPEG operations will use lossless compression."));
 
     connect(m_compressLossLess, SIGNAL( toggled(bool) ),
             this, SLOT( slotCompressLossLessEnabled(bool) ) );
@@ -85,10 +85,10 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
 
     QGroupBox * groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("PNG file format"), box );
 
-    m_label_PNGimageCompression = new QLabel (i18n("Images compression level:"), groupBox2);
+    m_label_PNGimageCompression = new QLabel (i18n("Image compression level:"), groupBox2);
     m_PNGCompression = new KIntNumInput(75, groupBox2);
     m_PNGCompression->setRange(1, 100, 1, true );
-    whatsThis = i18n("<p>The compression values of PNG target images:<p>");
+    whatsThis = i18n("<p>The compression value for PNG target images:<p>");
     whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
                                  "<b>25</b>: high compression<p>"
                                  "<b>50</b>: medium compression<p>"

@@ -491,8 +491,8 @@ bool ResizeImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
 
     if ( img.load( item->pathSrc() ) == false )
        {
-       item->changeResult(i18n("Skipped !"));
-       item->changeError(i18n("image file format unsupported!"));
+       item->changeResult(i18n("Skipped."));
+       item->changeError(i18n("image file format unsupported."));
        return false;
        }
 

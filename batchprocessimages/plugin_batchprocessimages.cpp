@@ -104,7 +104,7 @@ void Plugin_BatchProcessImages::setup( QWidget* widget )
                                         actionCollection(),
                                         "batch_convert_images");
 
-    m_action_effectimages = new KAction (i18n("Effect Images..."),           // Menu message.
+    m_action_effectimages = new KAction (i18n("Image Effects..."),           // Menu message.
                                         "effectimages",                      // Menu icon.
                                         0,                                   // default shortcut.
                                         this,

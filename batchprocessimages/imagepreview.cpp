@@ -92,28 +92,28 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     LCDZoomFactorValue = new QLCDNumber (4, groupBoxZoomFactor, "ZoomFactorLCDvalue");
     LCDZoomFactorValue->setSegmentStyle ( QLCDNumber::Flat );
     LCDZoomFactorValue->display( QString::number(INIT_ZOOM_FACTOR * 5) );
-    QWhatsThis::add( LCDZoomFactorValue, i18n("<p>The zoom factor value in percent."));
+    QWhatsThis::add( LCDZoomFactorValue, i18n("<p>The zoom factor value, as a percentage."));
 
     ZoomFactorSlider = new QSlider (1, 20, 1, INIT_ZOOM_FACTOR, Qt::Horizontal,
                                     groupBoxZoomFactor, "ZoomFactorSlider");
     ZoomFactorSlider->setTracking ( false );
     ZoomFactorSlider->setTickInterval ( 5 );
-    QWhatsThis::add( ZoomFactorSlider, i18n("<p>Moving this slider for to change the zoom factor value."));
+    QWhatsThis::add( ZoomFactorSlider, i18n("<p>Moving this slider changes the zoom factor value."));
     g1->addWidget( groupBoxZoomFactor, 0, 0);
 
     QGridLayout* g2 = new QGridLayout( v1, 1, 2 );
     QGroupBox * groupBox1 = new QGroupBox( 1, Qt::Horizontal, i18n("Original image"), box );
     m_previewOrig = new PixmapView(cropActionOrig, groupBox1);
     QWhatsThis::add( m_previewOrig, i18n("<p>This is the original image preview. You can use the mouse "
-                                         "wheel for to change the zoom factor. Click in and use the mouse "
-                                         "for to move the image."));
+                                         "wheel to change the zoom factor. Click in and use the mouse "
+                                         "to move the image."));
     g2->addWidget( groupBox1 , 0, 0);
 
     QGroupBox * groupBox2 = new QGroupBox( 1, Qt::Horizontal, i18n("Destination image"), box );
     m_previewDest = new PixmapView(cropActionDest, groupBox2);
     QWhatsThis::add( m_previewDest, i18n("<p>This is the destination image preview. You can use the "
-                                         "mouse wheel for to change the zoom factor. Click in and use the "
-                                         "mouse for to move the image."));
+                                         "mouse wheel to change the zoom factor. Click in and use the "
+                                         "mouse to move the image."));
     g2->setColStretch(0,1);
     g2->setColStretch(1,1);
     g2->addWidget( groupBox2 , 0, 1);
@@ -228,7 +228,7 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &tmpPath)
     p.fillRect(0, 0, m_pix->width(), m_pix->height(), Qt::white);
     p.setPen(Qt::green);
     p.drawText(0, 0, m_pix->width(), m_pix->height(), Qt::AlignCenter,
-               i18n("Processing\npreview\nimage\nunder\nprogress..."));
+               i18n("Preview\nimage\nprocessing\nin\nprogress..."));
     p.end();
 
     m_previewOutput ="convert";

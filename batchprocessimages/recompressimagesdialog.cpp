@@ -53,12 +53,12 @@ RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interf
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    setCaption(i18n("Batch Recompress Images options"));
+    setCaption(i18n("'Batch Recompress Images' options"));
     setHelp("recompressimages", "kipi-plugins");
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Recompress images options") );
+    groupBox1->setTitle( i18n("Image recompression options") );
 
     m_labelType->hide();
     m_Type->hide();
@@ -83,11 +83,11 @@ RecompressImagesDialog::~RecompressImagesDialog()
 
 void RecompressImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for batch recompress images\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin to batch recompress images\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About KIPI batch recompress images"));
+                                  i18n("About KIPI's 'Batch Recompress Images' plugin"));
 }
 
 
@@ -260,8 +260,8 @@ bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
         imageExt != "TIFF" && imageExt != "tiff" && imageExt != "TIF" && imageExt != "tif" &&
         imageExt != "TGA" && imageExt != "tga")
         {
-        item->changeResult(i18n("Skipped !"));
-        item->changeError(i18n("image file format unsupported!"));
+        item->changeResult(i18n("Skipped."));
+        item->changeError(i18n("image file format unsupported."));
         return false;
         }
 

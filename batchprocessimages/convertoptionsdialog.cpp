@@ -57,11 +57,11 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, QString ImageFormatT
 
     if (ImageFormatType == "JPEG" || ImageFormatType == "PNG")
        {
-       m_label_imageCompression = new QLabel (i18n("Images compression level:"), box);
+       m_label_imageCompression = new QLabel (i18n("Image compression level:"), box);
        dvlay->addWidget( m_label_imageCompression );
        m_JPEGPNGCompression = new KIntNumInput(75, box);
        m_JPEGPNGCompression->setRange(1, 100, 1, true );
-       whatsThis = i18n("<p>The compression values of target images:<p>");
+       whatsThis = i18n("<p>The compression value for the target images:<p>");
        whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
                                     "<b>25</b>: high compression<p>"
                                     "<b>50</b>: medium compression<p>"
@@ -74,9 +74,9 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, QString ImageFormatT
 
        if (ImageFormatType == "JPEG")
           {
-          m_compressLossLess = new QCheckBox( i18n("Use loss less compression"), box);
-          QWhatsThis::add( m_compressLossLess, i18n("<p>If this option is enable, "
-                                                    "all JPEG operations will use a loss less compression."));
+          m_compressLossLess = new QCheckBox( i18n("Use lossless compression"), box);
+          QWhatsThis::add( m_compressLossLess, i18n("<p>If this option is enabled, "
+                                                    "all JPEG operations will use a lossless compression."));
           dvlay->addWidget( m_compressLossLess );
 
           connect(m_compressLossLess, SIGNAL( toggled(bool) ), this, SLOT( slotCompressLossLessEnabled(bool) ) );

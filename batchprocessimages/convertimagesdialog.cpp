@@ -60,7 +60,7 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
 
     groupBox1->setTitle( i18n("Convert images options") );
 
-    m_labelType->setText( i18n("Target Image files format:") );
+    m_labelType->setText( i18n("Target image files' format:") );
 
     m_Type->insertItem("JPEG");
     m_Type->insertItem("PNG");
@@ -70,8 +70,8 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
     m_Type->insertItem("TGA");
     m_Type->setCurrentText("JPEG");
     whatsThis = i18n("<p>Select here the target image file format.<p>");
-    whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group file format is a "
-                                 "good Web file format but it use a compression with data lost.<p>"
+    whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group's file format is a "
+                                 "good Web file format but it uses lossy data compression.<p>"
                                  "<b>PNG</b>: the Portable Network Graphics format is an extensible file "
                                  "format for the lossless, portable, well-compressed storage of raster images. "
                                  "PNG provides a patent-free replacement for GIF and can also replace many common "
@@ -84,9 +84,9 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
                                  "format which is supported by numerous image processing applications and "
                                  "virtually all prepress software on the market.");
     whatsThis = whatsThis + i18n("<p><b>PPM</b>: the Portable Pixel Map file format is used as an "
-                                 "intermediate format for storing color bitmap informations. PPM files "
+                                 "intermediate format for storing color bitmap information. PPM files "
                                  "may be either binary or ASCII and store pixel values up to 24 bits in size. "
-                                 "This format generate very biggest sized text files for encode images without "
+                                 "This format generate the largest-sized text files to encode images without "
                                  "losing quality");
     whatsThis = whatsThis + i18n("<p><b>BMP</b>: the BitMaP file format is a popular image format from Win32 "
                                  "environment. It efficiently stores mapped or unmapped RGB graphics data with "
@@ -122,11 +122,11 @@ ConvertImagesDialog::~ConvertImagesDialog()
 
 void ConvertImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for batch convert images\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for batch converting images\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About KIPI batch convert images"));
+                                  i18n("About KIPI's 'Batch Convert Images' plugin"));
 }
 
 

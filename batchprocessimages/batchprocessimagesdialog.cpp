@@ -147,12 +147,12 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     //---------------------------------------------
 
-    groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("Files operations"), box );
+    groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("File operations"), box );
 
     m_labelOverWrite = new QLabel (i18n("Overwrite mode:"), groupBox2);
     m_overWriteMode = new QComboBox( false, groupBox2 );
     m_overWriteMode->insertItem(i18n("Ask"));
-    m_overWriteMode->insertItem(i18n("Always OverWrite"));
+    m_overWriteMode->insertItem(i18n("Always Overwrite"));
     m_overWriteMode->insertItem(i18n("Rename"));
     m_overWriteMode->insertItem(i18n("Skip"));
     m_overWriteMode->setCurrentText (i18n("Rename"));

@@ -55,16 +55,16 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    setCaption(i18n("Batch FX transforming Images options"));
+    setCaption(i18n("Batch Image Effects options"));
     setHelp("effectimages", "kipi-plugins");
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("FX transforming images options") );
+    groupBox1->setTitle( i18n("Image Effect options") );
 
-    m_labelType->setText( i18n("FX type:") );
+    m_labelType->setText( i18n("Effect type:") );
 
-    m_Type->insertItem(i18n("Adaptative threshold"));
+    m_Type->insertItem(i18n("Adaptive threshold"));
     m_Type->insertItem(i18n("Charcoal"));
     m_Type->insertItem(i18n("Detect edges"));
     m_Type->insertItem(i18n("Emboss"));
@@ -76,15 +76,15 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
     m_Type->insertItem(i18n("Swirl"));
     m_Type->insertItem(i18n("Wave"));
     m_Type->setCurrentText(i18n("Emboss"));
-    whatsThis = i18n("<p>Select here the FX type for your images:<p>"
-                     "<b>Adaptative threshold</b>: perform local adaptive thresholding. The algorithm "
+    whatsThis = i18n("<p>Select here the effect type for your images:<p>"
+                     "<b>Adaptive threshold</b>: perform local adaptive thresholding. The algorithm "
                      "selects an individual threshold for each pixel based on the range of intensity "
                      "values in its local neighborhood. This allows for thresholding of an image whose "
-                     "global intensity histogram doesn't contain distinctive peaks.<p>"
+                     "global intensity histogram does not contain distinctive peaks.<p>"
                      "<b>Charcoal</b>: simulate a charcoal drawing.<p>"
                      "<b>Detect edges</b>: detect edges within an image.<p>"
                      "<b>Emboss</b>: returns a grayscale image with a three-dimensional effect. The "
-                     "algorithm convolve the image with a Gaussian operator of the given radius and "
+                     "algorithm convolves the image with a Gaussian operator of the given radius and "
                      "standard deviation.<p>"
                      "<b>Implode</b>: implode image pixels about the center.<p>"
                      "<b>Paint</b>: applies a special effect filter that simulates an oil painting.<p>"
@@ -93,7 +93,7 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
                      "<b>Solarize</b>: negate all pixels above the threshold level. This algorithm produces a "
                      "solarization effect seen when exposing a photographic film to light during the development "
                      "process.<p>"
-                     "<b>Spread</b>: this is a special effects method that randomly displaces each pixel in a "
+                     "<b>Spread</b>: this is a special-effect method that randomly displaces each pixel in a "
                      "block defined by the radius parameter.<p>"
                      "<b>Swirl</b>: swirls the pixels about the center of the image. <p>"
                      "<b>Wave</b>: creates a \"ripple\" effect in the image by shifting the pixels vertically "
@@ -119,11 +119,11 @@ EffectImagesDialog::~EffectImagesDialog()
 
 void EffectImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for batch images FX transformations\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for batch image-effect transformations\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About KIPI batch images FX transformations"));
+                                  i18n("About KIPI's 'Batch Image Effects' plugin"));
 }
 
 
@@ -134,7 +134,7 @@ void EffectImagesDialog::slotOptionsClicked(void)
     QString Type = m_Type->currentText();
     EffectOptionsDialog *optionsDialog = new EffectOptionsDialog(this, Type);
 
-    if ( Type == i18n("Adaptative threshold") )
+    if ( Type == i18n("Adaptive threshold") )
        {
        optionsDialog->m_latWidth->setValue(m_latWidth);
        optionsDialog->m_latHeight->setValue(m_latHeight);
@@ -185,7 +185,7 @@ void EffectImagesDialog::slotOptionsClicked(void)
 
     if ( optionsDialog->exec() == KMessageBox::Ok )
        {
-       if ( Type == i18n("Adaptative threshold") )
+       if ( Type == i18n("Adaptive threshold") )
           {
           m_latWidth = optionsDialog->m_latWidth->value();
           m_latHeight = optionsDialog->m_latHeight->value();
@@ -332,7 +332,7 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
        m_previewOutput.append( " -crop 300x300+0+0 ");
        }
 
-    if (m_Type->currentText() == i18n("Adaptative threshold"))
+    if (m_Type->currentText() == i18n("Adaptive threshold"))
        {
        *proc << "-lat";
        QString Temp, Temp2;

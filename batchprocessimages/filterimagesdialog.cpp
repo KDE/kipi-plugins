@@ -55,12 +55,12 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
 {
     m_nbItem = m_selectedImageFiles.count();
 
-    setCaption(i18n("Batch Filtering Images options"));
+    setCaption(i18n("Batch Image Filtering options"));
     setHelp("filterimages", "kipi-plugins");
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Filter images options") );
+    groupBox1->setTitle( i18n("Image filtering options") );
 
     m_labelType->setText( i18n("Filter type:") );
 
@@ -75,7 +75,7 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
     m_Type->insertItem(i18n("Unsharp"));
     m_Type->setCurrentText(i18n("Sharpen"));
     whatsThis = i18n("<p>Select here the filter type for your images:<p>"
-                     "<b>Add noise</b>: add noise in an image.<p>"
+                     "<b>Add noise</b>: add artificial noise to an image.<p>"
                      "<b>Antialias</b>: remove pixel aliasing.<p>"
                      "<b>Blur</b>: blur the image with a Gaussian operator.<p>"
                      "<b>Despeckle</b>: reduces the speckle noise in an image while perserving the "
@@ -107,11 +107,11 @@ FilterImagesDialog::~FilterImagesDialog()
 
 void FilterImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for batch filtering images\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin to batch filter images\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About KIPI batch filtering images"));
+                                  i18n("About KIPI's 'Batch Image Filtering' plugin"));
 }
 
 
