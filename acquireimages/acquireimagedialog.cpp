@@ -465,13 +465,13 @@ void AcquireImageDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap 
     kdDebug(51001) << k_funcinfo << "path:" << url.prettyURL() << endl;
     if (!url.isValid())
     {
-        KMessageBox::error(0, i18n("You must select a target album for this image!"));
+        KMessageBox::error(this, i18n("You must select a target album for this image!"));
         return;
     }
 
     if (m_FileName->text().isEmpty())
     {
-        KMessageBox::error(0, i18n("You must give a file name for this image!"));
+        KMessageBox::error(this, i18n("You must give a file name for this image!"));
         return;
     }
 
@@ -517,14 +517,14 @@ void AcquireImageDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap 
 
     if ( !ok )
     {
-       KMessageBox::error(0, i18n("Cannot write image file \"%1\"!").arg(imagePath));
+       KMessageBox::error(this, i18n("Cannot write image file \"%1\"!").arg(imagePath));
        return;
     }
 
     // Upload the image if necessary
     if ( !url.isLocalFile()) {
         if (!KIO::NetAccess::upload(imagePath, url NETACCESS_WIDGET)) {
-           KMessageBox::error(0, i18n("Could not upload image to \"%1\"!").arg(url.prettyURL()));
+           KMessageBox::error(this, i18n("Could not upload image to \"%1\"!").arg(url.prettyURL()));
            return;
         }
     }
@@ -534,7 +534,7 @@ void AcquireImageDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap 
     QString err;
     ok = m_interface->addImage( url, err );
     if ( !ok ) {
-        KMessageBox::error( 0, i18n("<qt>Error when telling the application about the new image. "
+        KMessageBox::error(this, i18n("<qt>Error when telling the application about the new image. "
                                   "The error was: %1</qt>" ).arg( err ) );
         return;
     }

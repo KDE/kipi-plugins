@@ -40,6 +40,7 @@
 #include <kstandarddirs.h>
 #include <ktempfile.h>
 #include <kscan.h>
+#include <kapplication.h>
 
 // Local includes
 
@@ -100,7 +101,7 @@ void Plugin_AcquireImages::slotActivate()
 
     if (from == "scan_images")
        {
-       m_scanDialog = KScanDialog::getScanDialog(0, "KIPI Scan Images Plugin");
+       m_scanDialog = KScanDialog::getScanDialog(kapp->activeWindow(), "KIPI Scan Images Plugin");
 
        if ( m_scanDialog )
            {
@@ -110,7 +111,7 @@ void Plugin_AcquireImages::slotActivate()
            }
        else
            {
-           KMessageBox::sorry(0, i18n("No KDE scan-service available. Check your system!"),
+           KMessageBox::sorry(kapp->activeWindow(), i18n("No KDE scan-service available. Check your system!"),
                               i18n("KIPI Scan Images Plugin"));
            qDebug("No Scan-service available, aborting!");
            return;
@@ -121,7 +122,7 @@ void Plugin_AcquireImages::slotActivate()
        }
     else if (from == "screenshot_images")
        {
-       m_screenshotDialog = new ScreenGrabDialog(interface, 0, "KIPI ScreenshotImagesDialog");
+       m_screenshotDialog = new ScreenGrabDialog(interface, kapp->activeWindow(), "KIPI ScreenshotImagesDialog");
        m_screenshotDialog->show();
        }
     else

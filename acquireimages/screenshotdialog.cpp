@@ -231,7 +231,7 @@ void ScreenGrabDialog::slotPerformGrab()
 
     if (m_snapshot.isNull())
        {
-       KMessageBox::sorry(0, i18n("Unable to take snapshot!"),
+       KMessageBox::sorry(this, i18n("Unable to take snapshot!"),
                           i18n("Screenshot Error"));
 
        endGrab();
