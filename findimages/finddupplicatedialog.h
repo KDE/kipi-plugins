@@ -36,11 +36,12 @@
 
 #include <libkipi/interface.h>
 
-class KFileItem;
+class QProgressDialog;
 class QComboBox;
 class QListView;
 class QFrame;
 
+class KFileItem;
 class KIntNumInput;
 class KSqueezedTextLabel;
 
@@ -61,6 +62,8 @@ class FindDuplicateDialog : public KDialogBase
   const int getApproximateThreeshold() const;
   void setApproximateThreeshold(int Value);
 
+  bool setAlbumsList(void);
+
   QValueList<KIPI::ImageCollection> getAlbumsSelection(void);
 
  signals:
@@ -79,9 +82,12 @@ class FindDuplicateDialog : public KDialogBase
   void slotPurgeAllCache(void);
   void slotfindMethodChanged(const QString &string);
   void slotGotPreview(const KFileItem* url, const QPixmap &pixmap);
+  void slotStopParsingAlbums(void);
 
  private:
   QComboBox          *m_findMethod;
+
+  QProgressDialog    *m_progressDlg;
 
   KSqueezedTextLabel *m_AlbumComments;
   KSqueezedTextLabel *m_AlbumCollection;
@@ -100,11 +106,11 @@ class FindDuplicateDialog : public KDialogBase
 
   KIPI::Interface    *m_interface;
 
+  bool                m_stopParsingAlbum;
 
   void setupSelection(void);
   void setupPageMethod(void);
   void aboutPage(void);
-  void setAlbumsList(void);
 };
 
 }  // NameSpace KIPIFindDupplicateImagesPlugin

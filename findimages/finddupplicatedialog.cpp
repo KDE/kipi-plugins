@@ -35,6 +35,7 @@
 #include <qheader.h>
 #include <qpushbutton.h>
 #include <qfileinfo.h>
+#include <qprogressdialog.h>
 
 // Include files for KDE
 
@@ -97,7 +98,6 @@ FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *p
     aboutPage();
     page_setupSelection->setFocus();
     setHelp("findimages", "kipi-plugins");
-    setAlbumsList();
     resize( 500, 500 );
 }
 
@@ -204,13 +204,34 @@ void FindDuplicateDialog::setupSelection(void)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void FindDuplicateDialog::setAlbumsList(void)
+bool FindDuplicateDialog::setAlbumsList(void)
 {
     AlbumItem *currentAlbum = 0;
+    int current = 0;
+    m_stopParsingAlbum = false;
+
     QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
+
+    m_progressDlg = new QProgressDialog (i18n("Parsing Albums. Please wait..."),
+                                         i18n("&Cancel"), 0, 0, 0, true);
+    
+    connect(m_progressDlg, SIGNAL(cancelled()),
+            this, SLOT(slotStopParsingAlbums()));
+                
+    m_progressDlg->show();
 
     for( QValueList<KIPI::ImageCollection>::ConstIterator it = albums.begin(); it != albums.end(); ++it ) 
         {
+        if (m_stopParsingAlbum == true)
+           {
+           delete m_progressDlg;
+           return false;
+           }
+        
+        m_progressDlg->setProgress(current, albums.count());
+        kapp->processEvents();
+        ++current;
+        
         KIPI::ImageCollection album = *it;
 
         AlbumItem *item = new AlbumItem( m_AlbumsList, album );
@@ -231,6 +252,17 @@ void FindDuplicateDialog::setAlbumsList(void)
 
     if (currentAlbum != 0)
        m_AlbumsList->ensureItemVisible(currentAlbum);
+
+    delete m_progressDlg;
+    return true;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+void FindDuplicateDialog::slotStopParsingAlbums(void)
+{
+    m_stopParsingAlbum = true;
 }
 
 
