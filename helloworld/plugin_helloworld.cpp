@@ -74,18 +74,22 @@ void Plugin_HelloWorld::slotActivate()
     kdDebug() << "Plugin_HelloWorld slot activated" << endl;
 
     // Get the current/selected album
-    KIPI::ImageCollection *album = m_interface->currentAlbum();
+    KIPI::ImageCollection album = m_interface->currentAlbum();
 
+
+    // Now how do we check if there was an album selected?
+#ifdef TEMPORARILY_REMOVED
     // Make sure to check that we have a selected album
     if (!album) return;
+#endif
 
     // Now get some properties of the album
-    kdDebug() << "The current album title is " << album->name() << endl;
+    kdDebug() << "The current album title is " << album.name() << endl;
 #ifdef TEMPORARILY_REMOVED
-    kdDebug() << "The current album collection is " << album->getCollection() << endl;
-    kdDebug() << "The current album date is " << album->getDate().toString() << endl;
-    kdDebug() << "The current album path is " << album->getPath() << endl;
+    kdDebug() << "The current album collection is " << album.getCollection() << endl;
+    kdDebug() << "The current album date is " << album.date().toString() << endl;
 #endif
+    kdDebug() << "The current album path is " << album.root() << endl;
 
     // see the comments in the album
 

@@ -126,7 +126,7 @@ class CDArchivingDialog : public KDialogBase
   bool  getUseStartBurningProcess() const;
   void  setUseStartBurningProcess(bool Value);
 
-  QValueList<KIPI::ImageCollection*> getAlbumsSelection(void);
+  QValueList<KIPI::ImageCollection> getAlbumsSelection(void);
   void ShowMediaCapacity(void);
 
  protected slots:

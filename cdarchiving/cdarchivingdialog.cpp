@@ -67,21 +67,21 @@ KIO::filesize_t TargetMediaSize;
 class AlbumItem : public QCheckListItem
 {
 public:
-    AlbumItem(QListView * parent, KIPI::ImageCollection* album,
+    AlbumItem(QListView * parent, KIPI::ImageCollection album,
               QString const & collection,  QDate const & date,
               KIO::filesize_t const & size)
-            : QCheckListItem( parent, album->name(), QCheckListItem::CheckBox), _album(album),
+            : QCheckListItem( parent, album.name(), QCheckListItem::CheckBox), _album(album),
               _collection(collection), _date (date), _size (size)
     {}
-    KIPI::ImageCollection* album() { return _album; }
-    QString comments()     { return _album->comment();   }
-    QString name()         { return _album->name();       }
-    QString path()         { return _album->root().path();  } // PENDING(blackie) handle URLS
+    KIPI::ImageCollection album() { return _album; }
+    QString comments()     { return _album.comment();   }
+    QString name()         { return _album.name();       }
+    QString path()         { return _album.root().path();  } // PENDING(blackie) handle URLS
     QString collection()   { return _collection; }
-    QString firstImage()   { return _album->images()[0].path(); }  // PENDING(blackie) handle URLS
+    QString firstImage()   { return _album.images()[0].path(); }  // PENDING(blackie) handle URLS
     QDate   date()         { return _date;       }
     KIO::filesize_t size() { return _size;       }
-    int     items()        { return _album->images().count();      }
+    int     items()        { return _album.images().count();      }
 
     void stateChange ( bool )
        {
@@ -90,7 +90,7 @@ public:
        }
 
 private:
-    KIPI::ImageCollection* _album;
+    KIPI::ImageCollection _album;
     QString         _collection;
     QDate           _date;
     KIO::filesize_t _size;
@@ -257,11 +257,11 @@ void CDArchivingDialog::setAlbumsList(void)
 {
     // AlbumItem *currentAlbum = 0; // PENDING(blackie) See comment below
 
-    QValueList<KIPI::ImageCollection*> albums = m_interface->allAlbums();
+    QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
 
-    for( QValueList<KIPI::ImageCollection*>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt ) {
+    for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin(); albumIt != albums.end(); ++albumIt ) {
 
-        KURL::List images = (*albumIt)->images();
+        KURL::List images = (*albumIt).images();
         int size = 0;
         QDateTime newestDate;
         for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) {
@@ -1048,9 +1048,9 @@ void CDArchivingDialog::setUseAutoRunWin32(bool Value)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-QValueList<KIPI::ImageCollection*> CDArchivingDialog::getAlbumsSelection(void)
+QValueList<KIPI::ImageCollection> CDArchivingDialog::getAlbumsSelection(void)
 {
-    QValueList<KIPI::ImageCollection*> AlbumsListSelected;
+    QValueList<KIPI::ImageCollection> AlbumsListSelected;
     QListViewItemIterator it( m_AlbumsList );
 
     while ( it.current() )

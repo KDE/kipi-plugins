@@ -113,7 +113,7 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* e)
 
     if (e->button() == Qt::LeftButton) {
         KURL url =
-            KFileDialog::getOpenURL( interface_->currentAlbum()->root().path(),
+            KFileDialog::getOpenURL( interface_->currentAlbum().root().path(),
                                     KImageIO::pattern( KImageIO::Reading),
                                     this,
                                     i18n("Select Image"));

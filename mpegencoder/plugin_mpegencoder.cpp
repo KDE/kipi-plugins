@@ -87,12 +87,12 @@ void Plugin_Mpegencoder::slotActivate()
     if (ValRet == 2)
         MPEGconverterDialog->m_AudioInputFilename->setEnabled(false);
 
-    KIPI::ImageCollection* images = interface->currentSelection();
-    if ( !images || images->images().count() == 0 )
+    KIPI::ImageCollection images = interface->currentSelection();
+    if ( images.images().count() == 0 )
         images = interface->currentAlbum();
 
     // PENDING(blackie) extend this plugin to handle URLS rather than just strings
-    MPEGconverterDialog->addItems( images->images().toStringList());
+    MPEGconverterDialog->addItems( images.images().toStringList());
 }
 
 KIPI::Category Plugin_Mpegencoder::category() const

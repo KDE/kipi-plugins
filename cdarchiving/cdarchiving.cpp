@@ -338,7 +338,7 @@ bool CDArchiving::buildHTMLInterface (void)
     m_LevelRecursion = 1;
     m_StreamMainPageAlbumPreview = "";
     m_imagesPerRow = m_configDlg->getImagesPerRow();
-    QValueList<KIPI::ImageCollection*> ListAlbums(m_configDlg->getAlbumsSelection());
+    QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getAlbumsSelection());
 
     // Create the main target folder.
 
@@ -377,12 +377,12 @@ bool CDArchiving::buildHTMLInterface (void)
     KIO::NetAccess::copy(srcURL, destURL);
 
 
-    for( QValueList<KIPI::ImageCollection*>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) {
-        Path              = (*it)->root().path(); // PENDING(blackie) Is this correct?
-        m_AlbumTitle      = (*it)->name();
-        m_AlbumComments   = (*it)->comment();
-        m_AlbumCollection = QString::null; // (*it)->getCollection(); // PENDING(blackie) what is this collection thingie?
-        m_AlbumDate       = QString(); // (*it)->getDate().toString ( Qt::LocalDate ) ; // // PENDING(blackie) what is this date?
+    for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) {
+        Path              = (*it).root().path(); // PENDING(blackie) Is this correct?
+        m_AlbumTitle      = (*it).name();
+        m_AlbumComments   = (*it).comment();
+        m_AlbumCollection = QString::null; // (*it).getCollection(); // PENDING(blackie) what is this collection thingie?
+        m_AlbumDate       = QString(); // (*it).getDate().toString ( Qt::LocalDate ) ; // // PENDING(blackie) what is this date?
         Path = Path + "/";
 
         SubUrl = m_tmpFolder + "/HTMLInterface/" + m_AlbumTitle + "/" + "index.html";
@@ -1237,7 +1237,7 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
 {
     QString Temp;
     QFile XMLK3bProjectFile;
-    QValueList<KIPI::ImageCollection*> ListAlbums(m_configDlg->getAlbumsSelection());
+    QValueList<KIPI::ImageCollection> ListAlbums(m_configDlg->getAlbumsSelection());
     int progressValue = 0;
 
     // open the K3b XML project file.
@@ -1423,10 +1423,10 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
 
     // Add Selected Albums paths List.
 
-    for( QValueList<KIPI::ImageCollection*>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) {
-        m_progressDlg->setLabelText( i18n("Added Album\n'%1'\ninto project...").arg( (*it)->name()) );
+    for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) {
+        m_progressDlg->setLabelText( i18n("Added Album\n'%1'\ninto project...").arg( (*it).name()) );
         kapp->processEvents();
-        AddFolderTreeToK3bXMLProjectFile( (*it)->root().path(), &stream); // PENDING(blackie)  I seriously doubt this is correct!
+        AddFolderTreeToK3bXMLProjectFile( (*it).root().path(), &stream); // PENDING(blackie)  I seriously doubt this is correct!
         m_progressDlg->setProgress( ++progressValue );
         kapp->processEvents();
     }
