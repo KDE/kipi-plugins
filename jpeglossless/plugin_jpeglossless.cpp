@@ -37,6 +37,8 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kurl.h>
+#include <kmessagebox.h>
+#include <kapplication.h>
 
 // Lib KIPI includes.
 
@@ -267,7 +269,11 @@ void Plugin_JPEGLossless::slotRotate()
 void Plugin_JPEGLossless::slotConvert2GrayScale()
 {
     KURL::List items = images();
-    if (items.count() <= 0) return;
+    if (items.count() <= 0 ||
+        KMessageBox::No==KMessageBox::warningYesNo(kapp->activeWindow(),
+                                                   i18n("<p>Are you sure you wish to convert the selected image(s) to "
+                                                        "black and white? This operation <b>cannot</b> be undone.</p>")))
+        return;
 
     QString from(sender()->name());
 
