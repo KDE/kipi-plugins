@@ -208,7 +208,7 @@ void SendImagesDialog::readSettings(void)
 
     m_mailAgentName->setCurrentText(m_config->readPathEntry("MailAgentName", "Kmail"));
 
-    m_ThunderbirdBinPath->setURL( m_config->readEntry("ThunderbirdBinPath", "/usr/bin/thunderbird"));
+    m_ThunderbirdBinPath->setURL( m_config->readEntry("ThunderbirdBinPath", "/usr/bin/mozilla-thunderbird"));
 
     if (m_config->readEntry("ImagesChangeProp", "true") == "true")
         m_changeImagesProp->setChecked( true );
@@ -417,14 +417,14 @@ void SendImagesDialog::setupEmailOptions(void)
     m_labelThunderbirdBinPath = new QLabel(i18n("&Thunderbird binary path:"), page_setupEmailOptions);
     vlay->addWidget( m_labelThunderbirdBinPath );
 
-    m_ThunderbirdBinPath = new KURLRequester( "/usr/bin/thunderbird", page_setupEmailOptions);
+    m_ThunderbirdBinPath = new KURLRequester( "/usr/bin/mozilla-thunderbird", page_setupEmailOptions);
     m_labelThunderbirdBinPath->setBuddy( m_ThunderbirdBinPath );
     vlay->addWidget(m_ThunderbirdBinPath);
 
     connect( m_ThunderbirdBinPath, SIGNAL(textChanged(const QString&)),
              this, SLOT(slotThunderbirdBinPathChanged(const QString&)));
 
-    QWhatsThis::add( m_ThunderbirdBinPath, i18n("<p>The path name to the K3b binary program.") );
+    QWhatsThis::add( m_ThunderbirdBinPath, i18n("<p>The path name to the Thunderbird binary program.") );
 
     //---------------------------------------------
 
