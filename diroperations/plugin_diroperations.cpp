@@ -1,17 +1,12 @@
-#include <kurl.h>
 /* ============================================================
- * File   : plugin_miscsoperations.cpp
+ * File   : plugin_diroperations.cpp
  *
  * Authors: Gregory KOKANOSKY <gregory dot kokanosky at free.fr>
  *          Gilles Caulier <caulier dot gilles at free.fr>
  *
  * Date   : 01/2004
  *
- * Description : Miscs operations plugin parts for Digikam
- *               - KDE Gamma correction call.
- *               - Images to KDE desktop.
- *               - Tip of day.
- *               - Open Album in Konqueror/Nautilus
+ * Description : Open Album in Konqueror/Nautilus
  *
  * Copyright 2004 by Gregory KOKANOSKY and Gilles CAULIER
  *
@@ -39,7 +34,8 @@
  #include <kapplication.h>
  #include <kmessagebox.h>
  #include <ktextbrowser.h>
-
+ #include <kurl.h>
+ 
 // Local includes
 
  #include "plugin_diroperations.h"

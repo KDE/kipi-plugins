@@ -1,16 +1,12 @@
-/* ============================================================
- * File   : plugin_miscsoperations.h
+/* ===========================================================
+ * File   : plugin_diroperation.h
  *
  * Authors: Gregory KOKANOSKY <gregory dot kokanosky at free.fr>
  *          Gilles Caulier <caulier dot gilles at free.fr>
  *
  * Date   : 01/2004
  *
- * Description : Miscs operations plugin parts for Digikam
- *               - KDE Gamma correction call.
- *               - Images to KDE desktop.
- *               - Tip of day.
- *               - Open Album in Konqueror/Nautilus
+ * Description : Open Album in Konqueror/Nautilus
  *
  * Copyright 2004 by Gregory KOKANOSKY and Gilles CAULIER
  *
@@ -27,8 +23,8 @@
  *
  * ============================================================ */
 
-  #ifndef PLUGIN_IMAGES2DESKTOP_H
-  #define PLUGIN_IMAGES2DESKTOP_H
+  #ifndef PLUGIN_DIROPERATION_H
+  #define PLUGIN_DIROPERATION_H
 
   // Include files for KDE
 
@@ -67,4 +63,4 @@
    KProcess       *m_browserProc;
   };
 
-  #endif // PLUGIN_IMAGES2DESKTOP_H
+  #endif // PLUGIN_DIROPERATION_H
