@@ -2,8 +2,8 @@
  * File  : calpainter.h
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-11-02
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2003 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -11,12 +11,12 @@
  * Public License as published bythe Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #ifndef CALPAINTER_H
@@ -24,6 +24,7 @@
 
 #include <qobject.h>
 #include <qvaluelist.h>
+#include <kurl.h>
 
 class QPaintDevice;
 class QPainter;
@@ -34,9 +35,9 @@ class QImage;
 namespace DKCalendar
 {
 
-class CalPainter 
+class CalPainter
 {
-    
+
 public:
 
     CalPainter(QPaintDevice *pd);
@@ -59,11 +60,11 @@ void paintCalendar(int year, int month, const QString& imagePath,
 class CalBlockPainter : public QObject
 {
     Q_OBJECT
-    
+
 public:
 
     CalBlockPainter(QObject *parent, int year, int month,
-                    const QString& imagePath, QPainter *painter);
+                    const KURL& imagePath, int angle, QPainter *painter);
     ~CalBlockPainter();
 
 signals:

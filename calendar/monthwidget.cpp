@@ -60,7 +60,7 @@ MonthWidget::~MonthWidget()
     if (pixmap_) delete pixmap_;
 }
 
-QString MonthWidget::imagePath()
+KURL MonthWidget::imagePath()
 {
     return imagePath_;
 }
@@ -99,12 +99,20 @@ void MonthWidget::dropEvent(QDropEvent* event)
 
 void MonthWidget::slotGotThumbnaiL(const KURL& url, const QPixmap& pix)
 {
-    imagePath_ = url.path();
+    imagePath_ = url;
 
     CalSettings::instance()->setImage(month_,imagePath_);
 
     delete pixmap_;
-    pixmap_ = new QPixmap(pix);
+    QPixmap image = pix;
+    int angle = interface_->info( url ).angle();
+    if ( angle != 0 ) {
+        QWMatrix matrix;
+        matrix.rotate( angle );
+        image = image.xForm( matrix );
+    }
+
+    pixmap_ = new QPixmap(image);
     update();
 }
 

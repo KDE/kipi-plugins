@@ -44,7 +44,7 @@ public:
     MonthWidget( KIPI::Interface* interface, QWidget *parent, int month);
     ~MonthWidget();
 
-    QString imagePath();
+    KURL imagePath();
 
 protected:
 
@@ -56,7 +56,7 @@ protected:
 private:
 
     int      month_;
-    QString  imagePath_;
+    KURL  imagePath_;
     QPixmap *pixmap_;
     KIPI::Interface* interface_;
 private slots:

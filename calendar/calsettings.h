@@ -2,8 +2,8 @@
  * File  : calsettings.h
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-11-04
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2003 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -11,12 +11,12 @@
  * Public License as published bythe Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #ifndef CALSETTINGS_H
@@ -26,6 +26,7 @@
 #include <qstring.h>
 #include <kprinter.h>
 #include <qfont.h>
+#include <kurl.h>
 
 namespace DKCalendar
 {
@@ -61,8 +62,8 @@ public:
 
     void    setYear(int year);
     int     getYear() const;
-    void    setImage(int month, const QString& path);
-    QString getImage(int month) const;
+    void    setImage(int month, const KURL& url);
+    KURL getImage(int month) const;
 
     CalParams calParams;
 
@@ -72,7 +73,7 @@ private:
 
     static CalSettings* instance_;
 
-    QMap<int,QString> monthMap_;
+    QMap<int,KURL> monthMap_;
     int                   year_;
 
 };

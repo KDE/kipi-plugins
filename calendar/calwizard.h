@@ -65,10 +65,11 @@ private:
     QPainter    *painter_;
 
     QValueList<int>   monthNumbers_;
-    QStringList       monthImages_;
+    KURL::List        monthImages_;
     int               totPages_;
     int               currPage_;
     QGuardedPtr<CalBlockPainter> cb_;
+    KIPI::Interface* interface_;
 
 private slots:
 

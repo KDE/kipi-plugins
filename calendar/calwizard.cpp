@@ -38,11 +38,12 @@
 #include "calsettings.h"
 #include "calpainter.h"
 
+#include <libkipi/interface.h>
 namespace DKCalendar
 {
 
 CalWizard::CalWizard( KIPI::Interface* interface )
-    : KWizard(0,0,false,Qt::WDestructiveClose)
+    : KWizard(0,0,false,Qt::WDestructiveClose), interface_( interface )
 {
     cSettings_ = new CalSettings();
 
@@ -127,7 +128,8 @@ void CalWizard::slotPageSelected(const QString&)
         monthNumbers_.clear();
         monthImages_.clear();
 
-        QString image, month;
+        KURL image;
+        QString month;
         QStringList printList;
         for (int i=1; i<=12; i++) {
             month =  KGlobal::locale()->monthName(i);
@@ -219,7 +221,7 @@ void CalWizard::slotPrintOnePage()
     }
 
     int     month(monthNumbers_.first());
-    QString image(monthImages_.first());
+    KURL image(monthImages_.first());
     monthNumbers_.pop_front();
     monthImages_.pop_front();
 
@@ -234,8 +236,10 @@ void CalWizard::slotPrintOnePage()
         printer_->newPage();
     wFinishProgressTotal_->setProgress(currPage_,totPages_);
 
+    int angle = interface_->info( image ).angle();
+
     cb_ = new CalBlockPainter(this, cSettings_->getYear(), month,
-                              image, painter_);
+                              image, angle, painter_);
     connect(cb_, SIGNAL(signalCompleted()),
             SLOT(slotPrintOnePage()));
     connect(cb_, SIGNAL(signalProgress(int,int)),
