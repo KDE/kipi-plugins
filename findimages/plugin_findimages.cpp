@@ -157,6 +157,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
 
            case(KIPIFindDupplicateImagesPlugin::Exact):
               {
+              m_total = d->total;      // Needed because the total can change in this mode !
               text = i18n("Exact comparison for '%1'").arg(QFileInfo(d->fileName).fileName());
               break;
               }
@@ -177,7 +178,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
               {
               m_current = 0;
               m_total = d->total;
-              text = i18n("Checking 1 image...", "Checking %n images...", d->total);
+              text = i18n("Checking 1 image...", "Checking %n images...", (int)(d->total/2));
               break;
               }
 
@@ -219,7 +220,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
                case(KIPIFindDupplicateImagesPlugin::Progress):
                   {
                   m_total = d->total;
-                  text = i18n("Failed to check 1 image...", "Failed to check %n images...", ((int)(d->total/2)));
+                  text = i18n("Failed to check images...");
                   break;
                   }
                   
@@ -269,7 +270,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
                case(KIPIFindDupplicateImagesPlugin::Progress):
                   {
                   m_total = d->total;
-                  text = i18n("Checking 1 image complete...", "Checking %n images complete...", ((int)(d->total/2)));
+                  text = i18n("Checking images complete...");
                   break;
                   }
                                     
@@ -287,7 +288,18 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
 
         if( d->action == KIPIFindDupplicateImagesPlugin::Progress )
            {
-           delete m_progressDlg;
+#if KDE_VERSION >= 0x30200
+           m_progressDlg->setButtonCancel( KStdGuiItem::close() );
+#else
+           m_progressDlg->setButtonCancelText( i18n("&Close") );
+#endif
+
+           disconnect(m_progressDlg, SIGNAL(cancelClicked()),
+                      this, SLOT(slotCancel()));
+           
+           m_progressDlg->addedAction(i18n("Displaying results..."),
+                                      KIPI::StartingMessage); 
+                                                           
            m_findDuplicateOperation->showResult();
            }
         }

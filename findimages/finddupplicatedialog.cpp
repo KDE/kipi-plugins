@@ -84,7 +84,7 @@ FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *p
     setupSelection();
     setupPageMethod();
     page_setupSelection->setFocus();
-    resize( 650, 450 );
+    resize( 650, 500 );
         
     // About data and help button.
         

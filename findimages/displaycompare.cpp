@@ -171,7 +171,7 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
     QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
     pixmapLabelLeft->setScaledContents( false );
     layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Find Duplicate Images Results"), headerFrame, "labelTitle" );
+    QLabel *labelTitle = new QLabel( headerFrame, "labelTitle" );
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
     ml->addWidget( headerFrame );
@@ -288,6 +288,9 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
     setCaption(i18n("1 Original Image with Duplicate Images Has Been Found",
                     "%n Original Images with Duplicate Images Have Been Found", n_id));
 
+    labelTitle->setText( i18n("Find Duplicate Images Results - 1 Dupplicate found",
+                              "Find Duplicate Images Results - %n Dupplicate Found", n_id));
+                    
     // signals and slots connections
 
     connect(this, SIGNAL(user1Clicked()),
