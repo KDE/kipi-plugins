@@ -349,7 +349,7 @@ QString BorderImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
     *proc << "-verbose";
 
-    *proc << item->pathSrc();
+    *proc << item->pathSrc() + "[0]";
 
     if ( !albumDest.isNull() )   // No preview mode !
        *proc << albumDest + "/" + item->nameDest();

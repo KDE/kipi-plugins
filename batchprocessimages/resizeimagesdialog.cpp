@@ -341,7 +341,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
              }
 
           *proc << "-verbose";
-          *proc << item->pathSrc();
+          *proc << item->pathSrc() + "[0]";
           *proc << albumDest + "/" + item->nameDest();
           }
 
@@ -384,7 +384,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
              *proc << "-filter" << m_resizeFilter;
              }
 
-          *proc << item->pathSrc();
+          *proc << item->pathSrc() + "[0]";
 
           Temp2 = "xc:rgb(" + Temp.setNum(m_bgColor.red()) + ",";
           Temp2.append(Temp.setNum(m_bgColor.green()) + ",");
@@ -412,7 +412,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
              }
 
           *proc << "-verbose";
-          *proc << item->pathSrc();
+          *proc << item->pathSrc() + "[0]";
           *proc << albumDest + "/" + item->nameDest();
           }
 
@@ -491,7 +491,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
              *proc << "-filter" << m_resizeFilter;
              }
 
-          *proc << item->pathSrc();
+          *proc << item->pathSrc() + "[0]";
 
           Temp2 = "xc:rgb(" + Temp.setNum(m_backgroundColor.red()) + ",";
           Temp2.append(Temp.setNum(m_backgroundColor.green()) + ",");
