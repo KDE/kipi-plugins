@@ -4,7 +4,7 @@ SUBDIRS = data
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_batchprocessimages.la
-
+kipiplugin_batchprocessimages_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 # Srcs for the plugin
 kipiplugin_batchprocessimages_la_SOURCES = plugin_batchprocessimages.cpp batchprocessimagesitem.cpp \
 					      outputdialog.cpp imagepreview.cpp renameimagesdialog.cpp \
@@ -19,7 +19,7 @@ kipiplugin_batchprocessimages_la_SOURCES = plugin_batchprocessimages.cpp batchpr
 					      batchprocessimageslist.cpp
 
 # Libs needed by the plugin
-kipiplugin_batchprocessimages_la_LIBADD = $(LIB_KPARTS) -lkipi
+kipiplugin_batchprocessimages_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS)
 
 # LD flags for the plugin
 kipiplugin_batchprocessimages_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

@@ -1,5 +1,36 @@
 #MIN_CONFIG(3.1)
 
+# ----------------------------------------------------------
+# 
+# General kipi-plugin tests
+#
+# ----------------------------------------------------------
+AC_MSG_CHECKING([for libkipi in our sources])
+if test -d $srcdir/libkipi; then
+    LIBKIPI_CFLAGS='-I$(top_srcdir)/libkipi/libkipi'
+    LIBKIPI_LIBS='$(top_builddir)/libkipi/libkipi/libkipi.la'
+    LIBKIPI_LIBS_DEP='$(LIBKIPI_LIBS)'
+    AC_MSG_RESULT([found])
+else
+    # FIXME: Write a real test
+    LIBKIPI_CFLAGS=''
+    LIBKIPI_LIBS='-lkipi'
+    AC_MSG_RESULT([not found])
+fi
+AC_SUBST(LIBKIPI_CFLAGS)
+AC_SUBST(LIBKIPI_LIBS)
+AC_SUBST(LIBKIPI_LIBS_DEP)
+
+
+
+
+# ----------------------------------------------------------
+# 
+# Slideshow plugin tests
+#
+# ----------------------------------------------------------
+
+
 # ---------------------------------------------------------------------------------
 # Check for OpenGL libs and Mesa
 # The Slideshow plugin needs OpenGL to compile (either external or compiled in Qt)
@@ -226,11 +257,13 @@ dnl Check if Imlib is installed properly
 KDE_FIND_IMLIB_CONFIG
 
 if test -z "$ac_imlib_config"; then
- AC_MSG_ERROR([You need to install Imlib 1.x, e.g. http://freshmeat.net/redir/imlib/4385/url_tgz/imlib-1.9.10.tar.gz if your distributor doesn't have a package])
- exit 1
+ AC_MSG_WARN([The slideshow plugin needs Imlib 1.x, e.g. http://freshmeat.net/redir/imlib/4385/url_tgz/imlib-1.9.10.tar.gz if your distributor doesn't have a package])
+ SLIDESHOWDIR=""
+else
+ SLIDESHOWDIR=slideshow
 fi
 
 dnl Check for Mesa (OpenGL) for slideshow plugin
 MDL_HAVE_OPENGL
 
-DO_NOT_COMPILE = batchprocessimages findimages helloworld miscsoperations rawconverter slideshow
+AM_CONDITIONAL(compile_SLIDESHOW, test -n "$ac_imlib_config" -a -n "$have_glut" )

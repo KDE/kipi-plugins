@@ -3,12 +3,12 @@ METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_commentseditor.la
-
+kipiplugin_commentseditor_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 kipiplugin_commentseditor_la_SOURCES = plugin_commentseditor.cpp \
 				commentseditor.cpp
 
 kipiplugin_commentseditor_la_LIBADD = $(LIB_KPARTS) \
-					$(LIB_IMLIB)  -lkipi
+					$(LIB_IMLIB)  $(LIBKIPI_LIBS)
 
 kipiplugin_commentseditor_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 

@@ -3,14 +3,14 @@ METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_rawconverter.la
-
+kipiplugin_rawconverter_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 # Srcs for the plugin
 kipiplugin_rawconverter_la_SOURCES = plugin_rawconverter.cpp \
 	batchdialog.cpp singledialog.cpp previewwidget.cpp \
 	processcontroller.cpp dmessagebox.cpp 
 
 # Libs needed by the plugin
-kipiplugin_rawconverter_la_LIBADD = $(LIB_KPARTS) -lkipi -ldigikam
+kipiplugin_rawconverter_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) -ldigikam
 
 # LD flags for the plugin
 kipiplugin_rawconverter_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

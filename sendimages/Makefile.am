@@ -3,12 +3,12 @@ METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_sendimages.la
-
+kipiplugin_sendimages_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 # Srcs for the plugin
 kipiplugin_sendimages_la_SOURCES = plugin_sendimages.cpp sendimagesdialog.cpp listimageserrordialog.cpp
 
 # Libs needed by the plugin
-kipiplugin_sendimages_la_LIBADD = $(LIB_KPARTS) -lkipi
+kipiplugin_sendimages_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS)
 
 # LD flags for the plugin
 kipiplugin_sendimages_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

@@ -3,14 +3,14 @@ METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_mpegencoder.la
-
+kipiplugin_mpegencoder_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 # Srcs for the plugin
 kipiplugin_mpegencoder_la_SOURCES = plugin_mpegencoder.cpp \
                                        kimg2mpg.cpp kshowdebuggingoutput.cpp \
                                        optionsdialog.cpp checkbinprog.cpp
 
 # Libs needed by the plugin
-kipiplugin_mpegencoder_la_LIBADD = $(LIB_KPARTS) -lkipi
+kipiplugin_mpegencoder_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS)
 
 # LD flags for the plugin
 kipiplugin_mpegencoder_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

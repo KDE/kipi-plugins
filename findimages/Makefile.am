@@ -3,13 +3,13 @@ METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_findimages.la
-
+kipiplugin_findimages_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 # Srcs for the plugin
 kipiplugin_findimages_la_SOURCES = plugin_findimages.cpp displaycompare.cpp \
                                       finddupplicateimages.cpp finddupplicatedialog.cpp
 
 # Libs needed by the plugin
-kipiplugin_findimages_la_LIBADD = $(LIB_KPARTS) -lkipi
+kipiplugin_findimages_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS)
 
 # LD flags for the plugin
 kipiplugin_findimages_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
