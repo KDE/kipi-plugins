@@ -63,20 +63,16 @@ Plugin_FindImages::Plugin_FindImages(QObject *parent, const char*, const QString
 void Plugin_FindImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    m_action_findImages = new KActionMenu(i18n("&Find Images"),
-                           actionCollection(),
-                           "findimages");
 
-    m_action_findDuplicateImagesAlbums= new KAction(i18n("Find Duplicate Images"),
+    m_action_findDuplicateImages = new KAction(i18n("&Find Duplicate Images..."),
                                                     "finddupplicateimages",
                                                     0,
                                                     this,
                                                     SLOT(slotFindDuplicateImages()),
                                                     actionCollection(),
-                                                    "findduplicateimagesalbums");
+                                                    "findduplicateimages");
 
-    addAction( m_action_findImages );
-    m_action_findImages->insert(m_action_findDuplicateImagesAlbums);
+    addAction( m_action_findDuplicateImages );
 }
 
 
@@ -232,9 +228,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
 
 KIPI::Category Plugin_FindImages::category( KAction* action ) const
 {
-    if ( action == m_action_findImages )
-       return KIPI::COLLECTIONSPLUGIN;
-    else if ( action == m_action_findDuplicateImagesAlbums )
+    if ( action == m_action_findDuplicateImages )
        return KIPI::COLLECTIONSPLUGIN;
 
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;

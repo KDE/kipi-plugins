@@ -36,13 +36,12 @@
 #include <qfileinfo.h>
 #include <qimage.h>
 #include <qpixmap.h>
-#include <qpushbutton.h>
 #include <qgroupbox.h>
 #include <qwhatsthis.h>
+#include <qpushbutton.h>
 
 // Include files for KDE
 
-#include <kapplication.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
@@ -56,6 +55,11 @@
 #include <kio/global.h>
 #include <kimageio.h>
 #include <kio/previewjob.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // Local include files
 
@@ -116,14 +120,39 @@ private:
 
 DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface, 
                                QDict < QPtrVector < QFile > >* cmp )
-               :KDialogBase( parent, "DisplayCompare", true, 0,
+              : KDialogBase( parent, "DisplayCompare", true, 0,
                 Help|User1|User2|Close, Close, true, i18n("&About"), i18n("Delete")),
                 m_interface( interface )
 {
     KImageIO::registerFormats();
     this->cmp = cmp;
-    setHelp("findimages", "kipi-plugins");
+    
+    // About data and help button.
+        
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Find Duplicate Images"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin to find duplicate images\n"
+                                                 "This plugin is based on ShowImg implementation algorithm"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Gilles Caulier", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                     "caulier dot gilles at free.fr");
 
+    about->addAuthor("Richard Groult", I18N_NOOP("Find duplicate images algorithm"),
+                     "rgroult at jalix.org");
+                         
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Find Duplicate Images handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
+
+    // ----------------------------------------------------
+        
     QWidget* box = new QWidget( this );
     setMainWidget(box);
 
@@ -227,8 +256,8 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
         ++n_id;
         }
 
-    setCaption(i18n(	"1 Original Image with Duplicate Images Has Been Found",
-			"%n Original Images with Duplicate Images Have Been Found", n_id));
+    setCaption(i18n("1 Original Image with Duplicate Images Has Been Found",
+                    "%n Original Images with Duplicate Images Have Been Found", n_id));
 
     // signals and slots connections
 
@@ -258,14 +287,10 @@ DisplayCompare::~DisplayCompare()
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void DisplayCompare::slotAbout( void )
+void DisplayCompare::slotHelp()
 {
-    KMessageBox::about(this, i18n("A KIPI plugin to find duplicate images\n\n"
-                                  "Author: Gilles Caulier\n\n"
-                                  "Email: caulier dot gilles at free.fr\n\n"
-                                  "This plugin is based on ShowImg implementation\n"
-                                  "by Richard Groult <rgroult at jalix.org>\n"),
-                                  i18n("About KIPI's 'Find Duplicate Images'"));
+    KApplication::kApplication()->invokeHelp("findduplicateimages",
+                                             "kipi-plugins");
 }
 
 

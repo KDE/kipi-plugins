@@ -36,6 +36,7 @@
 #include <qpushbutton.h>
 #include <qfileinfo.h>
 #include <qprogressdialog.h>
+#include <qpushbutton.h>
 
 // Include files for KDE
 
@@ -57,6 +58,11 @@
 #include <kio/global.h>
 #include <kio/previewjob.h>
 #include <klistview.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
 // Include files for KIPI
 
@@ -96,10 +102,32 @@ FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *p
     setCaption(i18n("Find Duplicate Images"));
     setupSelection();
     setupPageMethod();
-    aboutPage();
     page_setupSelection->setFocus();
-    setHelp("findimages", "kipi-plugins");
     resize( 500, 500 );
+        
+    // About data and help button.
+        
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Find Duplicate Images"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("A KIPI plugin to find duplicate images\n"
+                                                 "This plugin is based on ShowImg implementation algorithm"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Gilles Caulier", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                     "caulier dot gilles at free.fr");
+
+    about->addAuthor("Richard Groult", I18N_NOOP("Find duplicate images algorithm"),
+                     "rgroult at jalix.org");
+                         
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Find Duplicate Images handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
 }
 
 
@@ -360,21 +388,10 @@ void FindDuplicateDialog::setupPageMethod(void)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void FindDuplicateDialog::aboutPage(void)
+void FindDuplicateDialog::slotHelp()
 {
-    page_about = addPage( i18n("About"), i18n("About KIPI's 'Find Duplicate Images'"),
-                          BarIcon("kipi", KIcon::SizeMedium ) );
-
-    QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
-
-    QLabel *label = new QLabel( i18n("A KIPI plugin to find duplicate images\n\n"
-                                     "Author: Gilles Caulier\n\n"
-                                     "Email: caulier dot gilles at free.fr\n\n"
-                                     "This plugin is based on ShowImg implementation\n"
-                                     "by Richard Groult <rgroult at jalix.org>\n"), page_about);
-
-    vlay->addWidget(label);
-    vlay->addStretch(1);
+    KApplication::kApplication()->invokeHelp("findduplicateimages",
+                                             "kipi-plugins");
 }
 
 

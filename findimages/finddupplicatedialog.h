@@ -39,6 +39,7 @@
 class QProgressDialog;
 class QComboBox;
 class QFrame;
+class QPushButton;
 
 class KFileItem;
 class KIntNumInput;
@@ -53,6 +54,7 @@ class FindDuplicateDialog : public KDialogBase
  Q_OBJECT
 
  public:
+  
   FindDuplicateDialog( KIPI::Interface* interface, QWidget *parent=0);
   ~FindDuplicateDialog();
 
@@ -67,11 +69,13 @@ class FindDuplicateDialog : public KDialogBase
   QValueList<KIPI::ImageCollection> getAlbumsSelection(void);
 
  signals:
+  
   void updateCache(QStringList fromDir);
   void clearCache(QStringList fromDir);
   void clearAllCache(void);
 
  protected slots:
+  
   void albumSelected( QListViewItem * item );
   void slotOk();
   void slotbuttonSelectAll(void);
@@ -83,8 +87,10 @@ class FindDuplicateDialog : public KDialogBase
   void slotfindMethodChanged(const QString &string);
   void slotGotPreview(const KFileItem* url, const QPixmap &pixmap);
   void slotStopParsingAlbums(void);
+  void slotHelp();
 
  private:
+  
   QComboBox          *m_findMethod;
 
   QProgressDialog    *m_progressDlg;
@@ -102,6 +108,8 @@ class FindDuplicateDialog : public KDialogBase
   QFrame             *page_setupMethod;
   QFrame             *page_about;
 
+  QPushButton        *m_helpButton;
+  
   KIntNumInput       *m_approximateThreshold;
 
   KIPI::Interface    *m_interface;
@@ -110,7 +118,7 @@ class FindDuplicateDialog : public KDialogBase
 
   void setupSelection(void);
   void setupPageMethod(void);
-  void aboutPage(void);
+  
 };
 
 }  // NameSpace KIPIFindDupplicateImagesPlugin
