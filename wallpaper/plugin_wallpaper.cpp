@@ -208,3 +208,5 @@ KIPI::Category  Plugin_WallPaper::category() const
 {
     return KIPI::IMAGESPLUGIN;
 }
+
+#include "plugin_wallpaper.moc"
