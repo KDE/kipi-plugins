@@ -187,7 +187,7 @@ CameraUI::CameraUI() : QWidget()
 
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("KameraKlient handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpMenu->menu()->insertItem(i18n("KameraKlient Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     mhelpButton->setPopup( helpMenu->menu() );
     
     // create Camera Box-----------------------------------------------------------------------
@@ -273,7 +273,7 @@ void CameraUI::setupAccel() {
     mCameraUIAccel->insert("Select None", i18n("Select None"), 
 	    		i18n("Deselect all the images from the camera."), 
 			CTRL+Key_U, this, SLOT(slotSelectNone()));
-    mCameraUIAccel->insert("Invert selection", i18n("Invert selection"), 
+    mCameraUIAccel->insert("Invert Selection", i18n("Invert Selection"), 
 	    		i18n("Invert the selection."), 
 			CTRL+Key_Asterisk, this, SLOT(slotSelectInvert()));
     mCameraUIAccel->insert("Select New", i18n("Select New Items"), 
@@ -461,7 +461,7 @@ void CameraUI::slotCameraDownloadSelected() {
     QString dir = mDownloadDirectoryEdit->text();
     QDir qdir(dir);
     if(!qdir.exists()) {
-        KMessageBox::error(0, i18n("'%1' Directory does not exist").arg(dir));
+        KMessageBox::error(0, i18n("'%1' directory does not exist.").arg(dir));
         return;
     }
     int count = 0;

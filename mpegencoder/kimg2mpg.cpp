@@ -438,7 +438,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
                         
   KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
   helpMenu->menu()->removeItemAt(0);
-  helpMenu->menu()->insertItem(i18n("MPEG SlideShow handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+  helpMenu->menu()->insertItem(i18n("MPEG SlideShow Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
   m_helpButton->setPopup( helpMenu->menu() );
   
   // Options button.

@@ -527,7 +527,7 @@ bool BatchProcessImagesDialog::startProcess(void)
              int ValRet = KMessageBox::warningYesNoCancel(this,
                           i18n("The destination file \"%1\" already exists;\n"
                           "do you want overwrite it?").arg(item->nameDest()),
-                          i18n("Overwrite destination image file"), KStdGuiItem::cont());
+                          i18n("Overwrite Destination Image File"), KStdGuiItem::cont());
 
              if ( ValRet == KMessageBox::No )
                 {

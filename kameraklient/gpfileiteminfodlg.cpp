@@ -119,7 +119,7 @@ GPFileItemInfoDlg::GPFileItemInfoDlg(const GPFileItemInfo& info,
     l = new QLabel(value, page);
     grid->addWidget(l, currRow++, 2);
 
-    l = new QLabel(i18n("Read Permissions:"), page);
+    l = new QLabel(i18n("Read permissions:"), page);
     grid->addWidget(l, currRow,  0);
     if (info.readPermissions == 0)
         value = i18n("No");
@@ -130,7 +130,7 @@ GPFileItemInfoDlg::GPFileItemInfoDlg(const GPFileItemInfo& info,
     l = new QLabel(value, page);
     grid->addWidget(l, currRow++, 2);
 
-    l = new QLabel(i18n("Write Permissions:"), page);
+    l = new QLabel(i18n("Write permissions:"), page);
     grid->addWidget(l, currRow,  0);
     if (info.writePermissions == 0)
         value = i18n("No");

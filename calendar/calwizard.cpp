@@ -173,7 +173,7 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
     m_helpButton = helpButton();
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("Calendar handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpMenu->menu()->insertItem(i18n("Calendar Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
 
     // ------------------------------------------
