@@ -5,7 +5,7 @@
  * Description :
  *
  * Copyright 2003 by Renchi Raju
-
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published bythe Free Software Foundation;
@@ -26,10 +26,13 @@
 #include <qspinbox.h>
 #include <qdatetime.h>
 #include <qlabel.h>
+#include <qframe.h>
+#include <qpixmap.h>
 
 // KDE includes.
 
 #include <klocale.h>
+#include <kstandarddirs.h>
 
 // Local includes.
 
@@ -41,7 +44,7 @@ namespace KIPICalendarPlugin
 {
 
 CalSelect::CalSelect(KIPI::Interface* interface, QWidget *parent, const char* name)
-    : QWidget(parent, name)
+         : QWidget(parent, name)
 {
     mwVector_ = new QPtrVector<MonthWidget>(12);
     setupView( interface );
@@ -57,6 +60,29 @@ void CalSelect::setupView( KIPI::Interface* interface )
     QVBoxLayout *mainLayout = new QVBoxLayout(this, 6, 11);
 
     // ----------------------------------------------------------------
+   
+    QFrame *headerFrame = new QFrame( this );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( i18n("Create Calendar"), headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    mainLayout->addWidget( headerFrame );
+    
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    
+    // ----------------------------------------------------------------
 
     QHGroupBox *yearBox = new QHGroupBox(i18n("Select Year"), this);
     yearBox->layout()->addItem(new QSpacerItem(5,5,
@@ -70,7 +96,6 @@ void CalSelect::setupView( KIPI::Interface* interface )
             SLOT(slotYearChanged(int)));
 
     mainLayout->addWidget(yearBox);
-
 
     // ----------------------------------------------------------------
 
@@ -103,7 +128,6 @@ void CalSelect::setupView( KIPI::Interface* interface )
                                 monthBox);
 
     monthBoxLayout->addMultiCellWidget(tLabel, 2, 2, 0, 5);
-
 
     mainLayout->addWidget(monthBox);
 

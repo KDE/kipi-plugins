@@ -5,7 +5,7 @@
  * Description :
  *
  * Copyright 2003 by Renchi Raju
-
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published bythe Free Software Foundation;
@@ -29,6 +29,8 @@
 #include <qprogressbar.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
+#include <qframe.h>
+#include <qpixmap.h>
 
 // KDE includes.
 
@@ -40,6 +42,7 @@
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
+#include <kstandarddirs.h>
 
 // LibKipi includes.
 
@@ -58,10 +61,15 @@ namespace KIPICalendarPlugin
 {
 
 CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
-    : KWizard(parent,0,false,Qt::WDestructiveClose), interface_( interface )
+         : KWizard(parent, 0, false, Qt::WDestructiveClose),
+           interface_( interface )
 {
     cSettings_ = new CalSettings();
-
+    
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
     // ---------------------------------------------------------------
 
     wTemplate_ = new CalTemplate(this, "wTemplate");
@@ -76,17 +84,59 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     // ---------------------------------------------------------------
 
-    wPrint_ = new QLabel(this, "wPrint");
+    QWidget *printWidget = new QWidget(this, "printWidget");
+    
+    QVBoxLayout *wprintLayout =
+        new QVBoxLayout(printWidget, 6, 11);
+
+    QFrame *headerFrame = new QFrame( printWidget );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( i18n("Create Calendar"), headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    wprintLayout->addWidget( headerFrame );
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    
+    wPrint_ = new QLabel(printWidget, "wPrint");
     wPrint_->setIndent(20);
-    addPage(wPrint_, i18n("Print"));
-    setHelpEnabled(wPrint_, true);
+    wprintLayout->addWidget(wPrint_);
+    
+    wprintLayout->addStretch();
+    
+    addPage(printWidget, i18n("Print"));
+    setHelpEnabled(printWidget, true);
 
     // ---------------------------------------------------------------
 
     wFinish_ = new QWidget(this, "wFinish");
+
     QVBoxLayout *wFinishLayout =
         new QVBoxLayout(wFinish_, 6, 11);
 
+    QFrame *headerFrame2 = new QFrame( wFinish_ );
+    headerFrame2->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout2 = new QHBoxLayout( headerFrame2 );
+    layout2->setMargin( 2 ); // to make sure the frame gets displayed
+    layout2->setSpacing( 0 );
+    QLabel *pixmapLabelLeft2 = new QLabel( headerFrame2, "pixmapLabelLeft" );
+    pixmapLabelLeft2->setScaledContents( false );
+    layout2->addWidget( pixmapLabelLeft2 );
+    QLabel *labelTitle2 = new QLabel( i18n("Create Calendar"), headerFrame2, "labelTitle" );
+    layout2->addWidget( labelTitle2 );
+    layout2->setStretchFactor( labelTitle2, 1 );
+    wFinishLayout->addWidget( headerFrame2 );
+    pixmapLabelLeft2->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft2->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle2->setPaletteBackgroundColor( QColor(201, 208, 255) );
+        
     wFinishLabel_ = new QLabel(wFinish_);
     wFinishLayout->addWidget(wFinishLabel_);
 
