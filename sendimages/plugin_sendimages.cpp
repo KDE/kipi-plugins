@@ -81,6 +81,22 @@ void Plugin_SendImages::setup( QWidget* widget )
                                        "send_images");
 
     addAction( m_action_sendimages );
+
+    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+
+    if ( !interface )
+    {
+        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        return;
+    }
+
+    KIPI::ImageCollection selection = interface->currentSelection();
+    m_action_sendimages->setEnabled( selection.isValid() &&
+                                   !selection.images().isEmpty() );
+
+    connect( interface, SIGNAL(selectionChanged(bool)),
+             m_action_sendimages, SLOT(setEnabled(bool)));
+
 }
 
 
