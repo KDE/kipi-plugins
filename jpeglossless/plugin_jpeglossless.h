@@ -50,7 +50,6 @@ public:
                         const QStringList &args);
     ~Plugin_JPEGLossless();
     virtual KIPI::Category category() const;
-    QString id() const { return QString::fromLatin1("jpeglossless"); }
 
 protected:
 

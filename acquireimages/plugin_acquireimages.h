@@ -46,7 +46,6 @@ public:
   Plugin_AcquireImages(QObject *parent, const char* name, const QStringList &args);
   virtual ~Plugin_AcquireImages();
   virtual KIPI::Category category() const;
-  QString id() const { return QString::fromLatin1("acquireimages"); }
 
 public slots:
   void slotActivate();

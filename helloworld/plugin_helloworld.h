@@ -39,7 +39,6 @@ public:
                       const QStringList &args);
 
     virtual KIPI::Category category() const;
-    QString id() const { return QString::fromLatin1("helloworld"); }
 
 
 private slots:

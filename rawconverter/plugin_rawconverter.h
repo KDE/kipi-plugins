@@ -35,7 +35,6 @@ public:
     Plugin_RawConverter(QObject *parent,
                         const char* name,
                         const QStringList &args);
-    QString id() const { return QString::fromLatin1("rawconverter") }
     ~Plugin_RawConverter();
     KIPI::Category category() const;
 

@@ -38,7 +38,6 @@ public:
                     const QStringList &args);
     ~Plugin_Calendar();
     virtual KIPI::Category category() const;
-    QString id() const { return QString::fromLatin1("calender"); }
 
 private slots:
 

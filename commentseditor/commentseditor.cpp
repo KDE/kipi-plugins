@@ -2,8 +2,8 @@
  * File  : commentseditor.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-09-26
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2003 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -11,12 +11,12 @@
  * Public License as published bythe Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include <klocale.h>
@@ -34,9 +34,9 @@
 #include <qfont.h>
 #include <qevent.h>
 
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
-#include <digikam/thumbnailjob.h>
+#include <libkipi/imagecollection.h>
+#include <libkipi/thumbnailjob.h>
+#include <libkipi/imageinfo.h>
 
 #include "commentseditor.h"
 
@@ -49,12 +49,12 @@ class CommentsListViewItem : public QListViewItem
 {
 public:
 
-    CommentsListViewItem(QListView *parent)
-        : QListViewItem(parent)
+    CommentsListViewItem( const KIPI::ImageInfo& info, const KURL& url, QListView *parent)
+        : QListViewItem(parent), info( info ), url(url)
         { modified = false; }
 
-    CommentsListViewItem(QListView *parent, QListViewItem* after)
-        : QListViewItem(parent, after)
+    CommentsListViewItem(const KIPI::ImageInfo& info, const KURL& url, QListView *parent, QListViewItem* after)
+        : QListViewItem(parent, after), info( info ), url(url)
         { modified = false; }
 
     void paintCell(QPainter *p, const QColorGroup &cg,
@@ -84,6 +84,8 @@ public:
     }
 
     bool modified;
+    KIPI::ImageInfo info;
+    KURL url;
 };
 
 // --------------------------------------------------------------------
@@ -128,20 +130,21 @@ protected:
         }
 
     }
-    
+
     CListView *m_keyReceiver;
-    
+
 };
 
 // --------------------------------------------------------------------
 
-CommentsEditor::CommentsEditor(Digikam::AlbumInfo *album)
+CommentsEditor::CommentsEditor( KIPI::Interface* interface, KIPI::ImageCollection images )
     : KDialogBase(Plain, i18n("Edit Comments"), Help|User1|Ok|Cancel, Ok,
                   0, 0, true, true, i18n("&About") )
 
 {
     setHelp("plugin-commentseditor.anchor", "digikam");
-    m_album    = album;
+    m_images    = images;
+    m_interface = interface;
 
     connect(this, SIGNAL(okClicked()),
             this, SLOT(slotOkClicked()));
@@ -151,7 +154,7 @@ CommentsEditor::CommentsEditor(Digikam::AlbumInfo *album)
 
     QLabel *topLabel = new QLabel( plainPage() );
     topLabel->setText( i18n( "Edit '%1' Album Comments").
-                       arg(m_album->getTitle()));
+                       arg(m_images.name()));
     topLayout->addWidget( topLabel  );
 
     // --------------------------------------------------------
@@ -162,7 +165,7 @@ CommentsEditor::CommentsEditor(Digikam::AlbumInfo *album)
     topLayout->addWidget( topLine );
 
     // --------------------------------------------------------
-    
+
     m_listView = new CListView(plainPage());
     topLayout->addWidget(m_listView);
 
@@ -181,9 +184,9 @@ CommentsEditor::CommentsEditor(Digikam::AlbumInfo *album)
     m_edit = new CLineEdit(vbox, m_listView);
 
     topLayout->addWidget(vbox);
-    
+
     // setup connections ----------------------------------------
-    
+
     connect(m_listView, SIGNAL(selectionChanged()),
             this, SLOT(slotSelectionChanged()));
     connect(m_edit, SIGNAL(textChanged(const QString&)),
@@ -192,7 +195,7 @@ CommentsEditor::CommentsEditor(Digikam::AlbumInfo *album)
             this, SLOT(slotAboutClicked()));
 
     // ----------------------------------------------------------
-    
+
     setInitialSize(configDialogSize("CommentsEditor Settings"));
 
     loadItems();
@@ -206,31 +209,27 @@ CommentsEditor::~CommentsEditor()
 
 void CommentsEditor::loadItems()
 {
-    m_album->openDB();
-
     CommentsListViewItem *prevItem = 0;
     CommentsListViewItem *viewItem = 0;
 
-    KURL::List urlList;
-    
-    QStringList itemList(m_album->getAllItems());
-    for (QStringList::Iterator it = itemList.begin();
-         it != itemList.end(); ++it) {
-        if (!prevItem) 
-            viewItem = new CommentsListViewItem(m_listView);
+    KURL::List urlList = m_images.images();
+
+    for( KURL::List::Iterator it = urlList.begin(); it != urlList.end(); ++it ) {
+        KIPI::ImageInfo info = m_interface->info( *it );
+        if (!prevItem)
+            viewItem = new CommentsListViewItem( info, *it, m_listView );
         else
-            viewItem = new CommentsListViewItem(m_listView, prevItem);
-        viewItem->setText(1,*it);
-        viewItem->setText(2,m_album->getItemComments(*it));
+            viewItem = new CommentsListViewItem( info, *it, m_listView, prevItem );
+
+
+        viewItem->setText(1, info.name());
+        viewItem->setText(2, info.description());
         viewItem->setRenameEnabled(2, true);
 
         prevItem = viewItem;
-
-        urlList.append(KURL(m_album->getPath() + QString("/") + *it));
     }
-    m_album->closeDB();
 
-    m_thumbJob = new Digikam::ThumbnailJob(urlList, 64);
+    m_thumbJob = new KIPI::ThumbnailJob( urlList, 64);
     connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
             SLOT(slotGotPreview(const KURL&, const QPixmap&)));
 }
@@ -247,12 +246,14 @@ void CommentsEditor::slotGotPreview(const KURL& url,
                QBrush(m_listView->colorGroup().base()));
     p.drawPixmap(xoffset, yoffset, pixmap);
     p.end();
-    
-    
+
+
     QListViewItemIterator it(m_listView);
     while ( it.current() ) {
-        if (it.current()->text(1) == url.filename())
-            it.current()->setPixmap(0,pix);
+        CommentsListViewItem *viewItem =
+            (CommentsListViewItem*)it.current();
+        if ( viewItem->url == url )
+            viewItem->setPixmap(0,pix);
         ++it;
     }
 }
@@ -278,25 +279,18 @@ void CommentsEditor::slotCommentChanged(const QString& newComment)
 void CommentsEditor::slotOkClicked()
 {
     bool changed = false;
-    
-    m_album->openDB();
+
     QListViewItemIterator it(m_listView);
     while ( it.current() ) {
         CommentsListViewItem *viewItem =
             (CommentsListViewItem*)it.current();
         if (viewItem->modified) {
-            m_album->setItemComments(viewItem->text(1),
-                                     viewItem->text(2));
+            viewItem->info.setDescription( viewItem->text(2) );
             changed = true;
         }
         ++it;
     }
-    m_album->closeDB();
 
-    if (changed) {
-        Digikam::AlbumManager::instance()->refreshItemHandler();
-    }
-    
     saveDialogSize("CommentsEditor Settings");
 }
 
