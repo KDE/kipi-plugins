@@ -630,7 +630,7 @@ void BatchProcessImagesDialog::slotReadStd(KProcess* /*proc*/, char *buffer, int
 void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
 {
     int ValRet = proc->exitStatus();
-    qDebug ("Convert exit (%i)", ValRet);
+    kdWarning() << "Convert exit (" << ValRet << ")" << endl;
 
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     m_listFiles->ensureItemVisible(m_listFiles->currentItem());
@@ -638,7 +638,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
     switch (ValRet)
     {
     case 0:  // Process finished successfully !
-    {
+        {
         item->changeResult(i18n("OK"));
         item->changeError(i18n("no processing error"));
 
@@ -654,56 +654,60 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
         urlList.append(dest);
         m_interface->refreshImages( urlList );
 
-        if ( !item->overWrote() ) {
+        if ( !item->overWrote() ) 
+            {
             // Do not add an entry if there was an image at the location already.
             bool ok = m_interface->addImage( dest, errmsg );
-            if ( !ok ) {
+            
+            if ( !ok ) 
+                {
                 int code = KMessageBox::warningContinueCancel( this,
-                                                               i18n("<qt>Error adding image to application. Error message was: "
-                                                                    "<b>%1</b></qt>").arg( errmsg ),
-                                                               i18n("Error adding image to application") );
-                if ( code == KMessageBox::Cancel ) {
-                    slotProcessStop();
-                    break;
-                }
+                                        i18n("<qt>Error adding image to application. Error message was: "
+                                        "<b>%1</b></qt>").arg( errmsg ),
+                                        i18n("Error adding image to application") );
+                                        
+                if ( code == KMessageBox::Cancel ) 
+                   {
+                   slotProcessStop();
+                   break;
+                   } 
                 else
-                    item->changeResult(i18n("Failed !!!"));
+                   item->changeResult(i18n("Failed !!!"));
+                }
             }
 
-        }
-
-        if ( src != dest ) {
+        if ( src != dest ) 
+            {
             KIPI::ImageInfo srcInfo = m_interface->info( src );
             KIPI::ImageInfo destInfo = m_interface->info( dest );
             destInfo.cloneData( srcInfo );
-        }
-
+            }
 
         if ( m_removeOriginal->isChecked() && src != dest )
-        {
+            {
             KURL deleteImage(item->pathSrc());
 
             if ( KIO::NetAccess::del(deleteImage) == false )
-            {
+                {
                 item->changeResult(i18n("Warning !"));
                 item->changeError(i18n("cannot remove original image file!"));
-            }
+                }
             else
                 m_interface->delImage( item->pathSrc() );
-        }
+            }
         break;
-    }
+        }
     case 15: //  process aborted !
-    {
+        {
         processAborted(true);
         break;
-    }
+        }
     default : // Processing error !
-    {
+        {
         item->changeResult(i18n("Failed !!!"));
         item->changeError(i18n("cannot process original image file!"));
         break;
-    }
+        }
     }
 
     ++*m_listFile2Process_iterator;

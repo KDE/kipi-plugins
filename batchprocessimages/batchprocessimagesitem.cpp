@@ -41,7 +41,8 @@ namespace KIPIBatchProcessImagesPlugin
 BatchProcessImagesItem::BatchProcessImagesItem(QListView * parent, QString const & pathSrc,
                         QString const & nameSrc, QString const & nameDest, QString const & result)
                       : KListViewItem( parent, "", nameSrc, nameDest, result),
-                        _pathSrc(pathSrc), _nameSrc(nameSrc), _nameDest(nameDest), _result(result), _overwrote( false )
+                        _pathSrc(pathSrc), _nameSrc(nameSrc), _nameDest(nameDest), _result(result),
+                        _overwrote( false )
 {
     setText(0, pathSrc.section('/', -2, -2));
 }
