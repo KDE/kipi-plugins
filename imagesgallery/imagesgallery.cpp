@@ -44,7 +44,6 @@ extern "C"
 #include <qfont.h>
 #include <qdatetime.h>
 #include <qimage.h>
-#include <qprogressdialog.h>
 #include <qtextcodec.h>
 #include <qstringlist.h>
 
@@ -53,15 +52,13 @@ extern "C"
 #include <kio/job.h>
 #include <kio/jobclasses.h>
 #include <kio/global.h>
-#include <kio/netaccess.h>
+#include <kmessagebox.h>
 #include <kinstance.h>
 #include <kconfig.h>
 #include <kaction.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kcharsets.h>
-#include <kmessagebox.h>
-#include <kurl.h>
 #include <kapplication.h>
 #include <kprocess.h>
 #include <kimageio.h>
@@ -78,18 +75,18 @@ extern "C"
 
 // Local includes
 
+#include "actions.h"
 #include "imgallerydialog.h"
-#include "resizeimage.h"
-#include "listimageserrordialog.h"
 #include "imagesgallery.h"
 
 namespace KIPIImagesGalleryPlugin
 {
 
-ImagesGallery::ImagesGallery( KIPI::Interface* interface )
-             : m_interface(interface)
+ImagesGallery::ImagesGallery( KIPI::Interface* interface, QObject *parent )
+             : QObject(parent), QThread()
 {
     KImageIO::registerFormats();
+    
     const KAboutData *data = KApplication::kApplication()->aboutData();
     m_hostName = QString::QString( data->appName() );
     m_hostURL = data->homepage();
@@ -97,7 +94,8 @@ ImagesGallery::ImagesGallery( KIPI::Interface* interface )
     if (m_hostURL.isEmpty())
        m_hostURL = "http://www.kde.org";
 
-    Activate();
+    m_interface = interface;
+    m_parent = parent;
 }
 
 
@@ -106,6 +104,7 @@ ImagesGallery::ImagesGallery( KIPI::Interface* interface )
 ImagesGallery::~ImagesGallery()
 {
     delete m_configDlg;
+    wait();
 }
 
 
@@ -306,173 +305,232 @@ void ImagesGallery::readSettings(void)
 }
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+bool ImagesGallery::showDialog()
+{
+    m_configDlg = new KIGPDialog( m_interface, 0 );
+    readSettings();
+    
+    if (m_configDlg->setAlbumsList() == true)
+       {
+       if ( m_configDlg->exec() == QDialog::Accepted )
+          {
+          writeSettings();
+          return true;
+          }
+       }
+       
+    return false;
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ImagesGallery::Activate()
+bool ImagesGallery::removeTargetGalleryFolder(void)
 {
+    QDir TargetDir;
+    QString MainTPath = m_configDlg->getImageName() + "/KIPIHTMLExport";
+
+    if (TargetDir.exists (MainTPath) == true)
+       {
+       if (KMessageBox::warningYesNo(0,
+           i18n("The target directory\n'%1'\nalready exist. Do you want overwrite it? (all data "
+                "in this directory will be lost!)").arg(MainTPath)) == KMessageBox::Yes)
+          {
+          if ( DeleteDir(MainTPath) == false )
+             {
+             KMessageBox::error(0, i18n("Cannot remove folder '%1'!").arg(MainTPath));
+             return false;
+             }
+          }
+       }
+       
+    return true;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// List of threaded operations.
+
+void ImagesGallery::run()
+{
+    KIPIImagesGalleryPlugin::EventData *d;
     QString Path;
-    m_progressDlg = 0L;
 
-    m_configDlg = new KIGPDialog( m_interface, 0);
-    readSettings();
+    KURL SubUrl, MainUrl;
+    m_recurseSubDirectories = false;
+    m_LevelRecursion = 1;
+    m_resizeImagesWithError.clear();
+    m_StreamMainPageAlbumPreview = "";
+    m_imagesPerRow = m_configDlg->getImagesPerRow();
+    QValueList<KIPI::ImageCollection> albums(m_configDlg->getSelectedAlbums());
+    int nbActions = albums.count();
 
-    if ( m_configDlg->exec() == QDialog::Accepted )
-        {
-        KURL SubUrl, MainUrl;
-        writeSettings();
-        m_recurseSubDirectories = false;
-        m_LevelRecursion = 1;
-        m_resizeImagesWithError.clear();
-        m_StreamMainPageAlbumPreview = "";
-        m_imagesPerRow = m_configDlg->getImagesPerRow();
-        QValueList<KIPI::ImageCollection> albums(m_configDlg->getSelectedAlbums());
+    d = new KIPIImagesGalleryPlugin::EventData;
+    d->action = KIPIImagesGalleryPlugin::Initialize;
+    d->starting = true;
+    d->success = false;
+    d->total = nbActions; 
+    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    
+    // Create the main target folder.
+        
+    QDir TargetDir;
+    QString MainTPath = m_configDlg->getImageName() + "/KIPIHTMLExport";
 
-        // Create the main target folder.
+    if (TargetDir.mkdir( MainTPath ) == false)
+       {
+       d = new KIPIImagesGalleryPlugin::EventData;
+       d->action = KIPIImagesGalleryPlugin::Error;
+       d->starting = false;
+       d->success = false;
+       d->message = i18n("Couldn't create directory '%1'").arg(MainTPath);
+       QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+       return;
+       }
 
-        QDir TargetDir;
-        QString MainTPath= m_configDlg->getImageName() + "/KIPIHTMLExport";
+    // Build all Albums HTML export.
 
-        if (TargetDir.exists (MainTPath) == true)
-           {
-           if (KMessageBox::warningYesNo(0,
-               i18n("The target directory\n'%1'\nalready exist. Do you want overwrite it? (all data "
-                    "in this directory will be lost!)").arg(MainTPath)) == KMessageBox::Yes)
-              {
-              if (!KIO::NetAccess::del(KURL(MainTPath), NULL))
+    if ( albums.count() > 1 )
+       {
+       KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
+       QString dir = KGlobal::dirs()->findResourceDir("kipi_data", "gohome.png");
+       dir = dir + "gohome.png";
+
+       KURL srcURL(dir);
+       KURL destURL(m_configDlg->getImageName() + "/KIPIHTMLExport/gohome.png");
+       KIO::file_copy(srcURL, destURL, -1, true, false, false);           
+       }
+
+       for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
+            albumIt != albums.end(); ++albumIt )
+          {
+          m_album = *albumIt;
+          QDateTime newestDate;
+          KURL::List images = m_album.images();
+
+          for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) 
+             {
+             kdDebug( 51000 ) << "URL:" << (*urlIt).prettyURL() << endl;
+             KIPI::ImageInfo info = m_interface->info( *urlIt );
+                   
+             if ( info.time() > newestDate )
+                newestDate = info.time();
+             }
+
+          m_AlbumTitle      = m_album.name();
+          m_AlbumComments   = m_album.comment();
+          m_AlbumCollection = QString::null;
+          m_AlbumDate       = newestDate.toString ( Qt::LocalDate ) ;
+
+          SubUrl = m_configDlg->getImageName() + "/KIPIHTMLExport/" + m_AlbumTitle + "/" + "index.html";
+
+          if ( !SubUrl.isEmpty() && SubUrl.isValid())
+             {
+             // Create the target sub folder for the current album.
+
+             QString SubTPath= m_configDlg->getImageName() + "/KIPIHTMLExport/" + m_AlbumTitle;
+ 
+             if (TargetDir.mkdir( SubTPath ) == false)
                  {
-                 KMessageBox::error(0, i18n("Cannot remove folder '%1'!").arg(MainTPath));
+                 d = new KIPIImagesGalleryPlugin::EventData;
+                 d->action = KIPIImagesGalleryPlugin::Error;
+                 d->starting = false;
+                 d->success = false;
+                 d->message = i18n("Couldn't create directory '%1'").arg(SubTPath);
+                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                  return;
                  }
-              }
-           else
-              return;
-           }
 
-        if (TargetDir.mkdir( MainTPath ) == false)
-           {
-           KMessageBox::sorry(0, i18n("Couldn't create directory '%1'").arg(MainTPath));
-           return;
-           }
+             d = new KIPIImagesGalleryPlugin::EventData;
+             d->action = KIPIImagesGalleryPlugin::BuildAlbumHTMLPage;
+             d->starting = true;
+             d->success = false;
+             d->albumName = m_AlbumTitle;
+             QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                            
+             m_useCommentFile = m_configDlg->useCommentFile();
 
-        // Build all Albums HTML export.
-
-        if ( albums.count() > 1 )
-           {
-           KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
-           QString dir = KGlobal::dirs()->findResourceDir("kipi_data", "gohome.png");
-           dir = dir + "gohome.png";
-
-           KURL srcURL(dir);
-           KURL destURL(m_configDlg->getImageName() + "/KIPIHTMLExport/gohome.png");
-           KIO::file_copy(srcURL, destURL, -1, true, false, false);           
-           }
-
-           for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
-                albumIt != albums.end(); ++albumIt )
-             {
-             m_album = *albumIt;
-             QDateTime newestDate;
-             KURL::List images=m_album.images();
-
-             for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) 
+             if ( !createHtml( SubUrl,
+                               m_configDlg->getImageFormat(),
+                               m_configDlg->getTargetImagesFormat()) )
                 {
-                kdDebug( 51000 ) << "URL:" << (*urlIt).prettyURL() << endl;
-                KIPI::ImageInfo info = m_interface->info( *urlIt );
-                   
-                if ( info.time() > newestDate )
-                   newestDate = info.time();
+                d = new KIPIImagesGalleryPlugin::EventData;
+                d->action = KIPIImagesGalleryPlugin::BuildAlbumHTMLPage;
+                d->starting = false;
+                d->success = false;
+                d->albumName = m_AlbumTitle;
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d)); 
+                
+                if ( !DeleteDir(MainTPath) )
+                   {
+                   d = new KIPIImagesGalleryPlugin::EventData;
+                   d->action = KIPIImagesGalleryPlugin::Error;
+                   d->starting = false;
+                   d->success = false;
+                   d->message = i18n("Cannot remove folder '%1' !").arg(MainTPath);
+                   QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                   return;
+                   }
+
+                return;
                 }
-
-             m_AlbumTitle      = m_album.name();
-             m_AlbumComments   = m_album.comment();
-             m_AlbumCollection = QString::null;
-             m_AlbumDate       = newestDate.toString ( Qt::LocalDate ) ;
-
-             SubUrl = m_configDlg->getImageName() + "/KIPIHTMLExport/" + m_AlbumTitle + "/" + "index.html";
-
-             if ( !SubUrl.isEmpty() && SubUrl.isValid())
+             else 
                 {
-                // Create the target sub folder for the current album.
+                d = new KIPIImagesGalleryPlugin::EventData;
+                d->action = KIPIImagesGalleryPlugin::BuildAlbumHTMLPage;
+                d->starting = false;
+                d->success = true;
+                d->albumName = m_AlbumTitle;
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                }
+             }
+         }
 
-                QString SubTPath= m_configDlg->getImageName() + "/KIPIHTMLExport/" + m_AlbumTitle;
- 
-                if (TargetDir.mkdir( SubTPath ) == false)
-                    {
-                    KMessageBox::sorry(0, i18n("Couldn't create directory '%1'").arg(SubTPath));
-                    return;
-                    }
+    // Create the main HTML page if many Albums selected.
 
-                m_progressDlg = new QProgressDialog(0, "progressDlg", true );
+    d = new KIPIImagesGalleryPlugin::EventData;
+    d->action = KIPIImagesGalleryPlugin::BuildHTMLiface;
+    d->starting = true;
+    d->success = false;
+    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
-                connect(m_progressDlg, SIGNAL( cancelled() ),
-                        this, SLOT( slotCancelled() ) );
+    if ( albums.count () > 1 )
+       {
+       MainUrl.setPath( m_configDlg->getImageName() + "/KIPIHTMLExport/" + "index.html" );
+       QFile MainPageFile( MainUrl.path() );
 
-                m_progressDlg->setCaption( i18n("Album \"%1\"").arg(m_AlbumTitle) );
-                m_progressDlg->setCancelButtonText(i18n("&Cancel"));
-                m_cancelled = false;
-                m_progressDlg->show();
-                kapp->processEvents();
-                m_useCommentFile = m_configDlg->useCommentFile();
+       if ( MainPageFile.open(IO_WriteOnly) )
+          {
+          QTextStream stream(&MainPageFile);
+          stream.setEncoding(QTextStream::UnicodeUTF8);
+          createHead(stream);
+          createBodyMainPage(stream, MainUrl);
+          MainPageFile.close();
+          m_url4browser = MainUrl.url();
+          }
+       else
+          {
+          d = new KIPIImagesGalleryPlugin::EventData;
+          d->action = KIPIImagesGalleryPlugin::Error;
+          d->starting = false;
+          d->success = false;
+          d->message = i18n("Couldn't open file '%1'").arg(MainUrl.path());
+          QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+          return;
+          }
+       }
+    else
+       {
+       m_url4browser = SubUrl.url();
+       }
 
-                if ( !createHtml( SubUrl,
-                                  m_configDlg->getImageFormat(), m_configDlg->getTargetImagesFormat()) )
-                  {
-                  delete m_progressDlg;
-
-                  if (!KIO::NetAccess::del(KURL(MainTPath), NULL))
-                     {
-                     KMessageBox::error(0, i18n("Cannot remove folder %1 !").arg(MainTPath));
-                     return;
-                     }
-
-                  return;
-                  }
-               }
-
-            delete m_progressDlg;
-            }
-
-        // Lauch an error dialog if some resize images operations failed.
-
-        if ( m_resizeImagesWithError.isEmpty() == false )
-           {
-           listImagesErrorDialog *ErrorImagesDialog = new listImagesErrorDialog(0,
-                                                  i18n("Error during resize images process"),
-                                                  i18n("Cannot resized or thumnailized this images files :"),
-                                                  m_resizeImagesWithError);
-           ErrorImagesDialog->exec();
-           }
-
-        // Create the main HTML page if many Albums selected.
-
-        if ( albums.count () > 1 )
-           {
-           MainUrl.setPath( m_configDlg->getImageName() + "/KIPIHTMLExport/" + "index.html" );
-           QFile MainPageFile( MainUrl.path() );
-
-           if ( MainPageFile.open(IO_WriteOnly) )
-              {
-              QTextStream stream(&MainPageFile);
-              stream.setEncoding(QTextStream::UnicodeUTF8);
-              createHead(stream);
-              createBodyMainPage(stream, MainUrl);
-              MainPageFile.close();
-
-              if (m_configDlg->OpenGalleryInWebBrowser() == true)
-                 invokeWebBrowser(MainUrl.url());
-              }
-           else
-              {
-              KMessageBox::sorry(0,i18n("Couldn't open file '%1'").arg(MainUrl.path()));
-              return;
-              }
-           }
-        else
-           {
-           if (m_configDlg->OpenGalleryInWebBrowser() == true)
-              invokeWebBrowser(SubUrl.url());
-           }
-        }
+    d = new KIPIImagesGalleryPlugin::EventData;
+    d->action = KIPIImagesGalleryPlugin::BuildHTMLiface;
+    d->success = true;
+    d->starting = false;
+    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 }
 
 
@@ -486,8 +544,13 @@ bool ImagesGallery::createDirectory(QDir thumb_dir, QString imgGalleryDir, QStri
 
         if (!(thumb_dir.mkdir(dirName, false)))
             {
-            KMessageBox::sorry(0, i18n("Couldn't create directory '%1' in '%2'")
-                                  .arg(dirName).arg(imgGalleryDir));
+            KIPIImagesGalleryPlugin::EventData* d = new KIPIImagesGalleryPlugin::EventData;
+            d->action = KIPIImagesGalleryPlugin::Error;
+            d->starting = false;
+            d->success = false;
+            d->message = i18n("Couldn't create directory '%1' in '%2'")
+                         .arg(dirName).arg(imgGalleryDir);
+            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
             return false;
             }
         else
@@ -569,6 +632,7 @@ void ImagesGallery::createBody(QTextStream& stream,
                                const KURL& url, const QString& imageFormat,
                                const QString& TargetimagesFormat)
 {
+    KIPIImagesGalleryPlugin::EventData *d;
     int numOfImages = m_album.images().count();
     
     kdDebug( 51000 ) << "Num of images in " << m_album.name().ascii() << " : " 
@@ -663,7 +727,14 @@ void ImagesGallery::createBody(QTextStream& stream,
 
             stream << "<td align='center'>\n";
             
-            if (createThumb(*urlIt, imgName, imgGalleryDir, imageFormat, TargetimagesFormat))
+            d = new KIPIImagesGalleryPlugin::EventData;
+            d->action = KIPIImagesGalleryPlugin::ResizeImages;
+            d->starting = true;
+            d->success = false;
+            d->fileName = imgName;
+            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+           
+            if ( createThumb(*urlIt, imgName, imgGalleryDir, imageFormat, TargetimagesFormat) != -1 )
                 {
                 // user requested the creation of html pages for each photo
 
@@ -732,19 +803,18 @@ void ImagesGallery::createBody(QTextStream& stream,
                            + " [ " + Temp.setNum(numOfImages) + i18n(" images") + " ]" + "<br>\n";
                    m_StreamMainPageAlbumPreview.append ( Temp2 );
                    }
-
-                m_progressDlg->setLabelText(
-                               i18n("Creating target image and thumbnail for \n'%1'\nPlease wait!")
-                               .arg(imgName) );
                 }
             else
                 {
                 kdDebug( 51000 ) << "Creating thumbnail for " << imgName.ascii() 
                                  << " failed !" << endl;
                 
-                m_progressDlg->setLabelText(
-                               i18n("Creating target image and thumbnail for\n%1\nfailed!")
-                               .arg(imgName) );
+                d = new KIPIImagesGalleryPlugin::EventData;
+                d->action = KIPIImagesGalleryPlugin::ResizeImages;
+                d->starting = false;
+                d->success = false;
+                d->fileName = imgName;
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                 }
 
             stream << "</a>" << endl;
@@ -769,9 +839,6 @@ void ImagesGallery::createBody(QTextStream& stream,
 
 
             stream << "</td>" << endl;
-            m_progressDlg->setTotalSteps( numOfImages );
-            m_progressDlg->setProgress( imgIndex );
-            kapp->processEvents();
             }
 
         stream << "</tr>" << endl;
@@ -828,22 +895,22 @@ void ImagesGallery::createBody(QTextStream& stream,
         if ( m_useCommentFile )
            imgComment = (*m_commentMap)[imgName];
 
-        if ( createPage(imgGalleryDir,  targetImgName , previousImgName , nextImgName , imgComment) )
-           {
-           m_progressDlg->setLabelText( i18n("Creating html page for \n'%1'\nPlease wait!").arg(imgName) );
-           kapp->processEvents();
-           }
-        else
-          {
-          kdDebug( 51000 ) << "Creating html page for " <<  imgName.ascii() 
-                           <<  " failed !" << endl;
-          m_progressDlg->setLabelText( i18n("Creating html page for\n%1\nfailed!").arg(imgName) );
-          kapp->processEvents();
-          }
+        d = new KIPIImagesGalleryPlugin::EventData;
+        d->action = KIPIImagesGalleryPlugin::BuildImageHTMLPage;
+        d->starting = true;
+        d->success = false;
+        d->fileName = imgName;
+        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
-        m_progressDlg->setTotalSteps( numOfImages );
-        m_progressDlg->setProgress( imgIndex );
-        kapp->processEvents();
+        if ( createPage(imgGalleryDir,  targetImgName , previousImgName , nextImgName , imgComment) == false )
+           {
+           d = new KIPIImagesGalleryPlugin::EventData;
+           d->action = KIPIImagesGalleryPlugin::BuildImageHTMLPage;
+           d->starting = false;
+           d->success = false;
+           d->fileName = imgName;
+           QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+           }
         }
       }
 
@@ -890,7 +957,7 @@ void ImagesGallery::createBodyMainPage(QTextStream& stream, KURL& url)
 
     stream << "<hr>" << endl;
 
-    if (m_configDlg->printPageCreationDate())
+    if ( m_configDlg->printPageCreationDate() )
         {
         QString Temp;
         KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
@@ -971,7 +1038,12 @@ bool ImagesGallery::createHtml(const KURL& url,
         }
     else
         {
-        KMessageBox::sorry(0,i18n("Couldn't open file '%1'").arg(url.path(+1)));
+        KIPIImagesGalleryPlugin::EventData* d = new KIPIImagesGalleryPlugin::EventData;
+        d->action = KIPIImagesGalleryPlugin::Error;
+        d->starting = false;
+        d->success = false;
+        d->message = i18n("Couldn't open file '%1'").arg(url.path(+1));
+        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
         return false;
         }
 }
@@ -1003,8 +1075,6 @@ void ImagesGallery::loadComments(void)
                m_useCommentFile = true;
                m_commentMap->insert((*urlIt).prettyURL(), comment);
                }
-            
-            kapp->processEvents();
             }
         }
 }
@@ -1220,19 +1290,16 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool ImagesGallery::createThumb( const KURL& url, const QString& imgName,
-                                 const QString& imgGalleryDir, const QString& imageFormat,
-                                 const QString& TargetimagesFormat)
+int ImagesGallery::createThumb( const KURL& url, const QString& imgName,
+                                const QString& imgGalleryDir, const QString& imageFormat,
+                                const QString& TargetimagesFormat)
 {
-    bool threadDone = false;
-    bool useBrokenImage = false;
-
     const QString pixPath = url.path();
 
     // Create the target images with resizing factor.
 
     const QString TargetImageNameFormat = imgName + extension(TargetimagesFormat);
-
+    
     const QString TargetImagesbDir = imgGalleryDir + QString::fromLatin1("/images/");
     int extentTargetImages;
 
@@ -1244,32 +1311,14 @@ bool ImagesGallery::createThumb( const KURL& url, const QString& imgName,
     m_targetImgWidth = 640;         // Default resize values.
     m_targetImgHeight = 480;
 
-    m_threadedImageResizing = new KIPIImagesGalleryPlugin::ResizeImage(this, pixPath,
-                                  TargetImagesbDir, TargetimagesFormat,
-                                  TargetImageNameFormat, &m_targetImgWidth, &m_targetImgHeight,
-                                  extentTargetImages, m_configDlg->colorDepthSetTargetImages(),
-                                  m_configDlg->getColorDepthTargetImages(),
-                                  m_configDlg->useSpecificTargetimageCompression(),
-                                  m_configDlg->getTargetImagesCompression(), &threadDone,
-                                  &useBrokenImage);
-
-    do            // TODO: added a queue like JPEGLossLess
-       {
-       usleep (100);
-       }
-    while  ( m_threadedImageResizing->running() == true );
-
-    delete m_threadedImageResizing;
-
-    if ( threadDone == false || useBrokenImage == true )
-        m_resizeImagesWithError.append(pixPath);
-
-    if ( threadDone == false ) return false;
+    ResizeImage(pixPath, TargetImagesbDir, TargetimagesFormat, TargetImageNameFormat,
+                     &m_targetImgWidth, &m_targetImgHeight, extentTargetImages,
+                     m_configDlg->colorDepthSetTargetImages(),
+                     m_configDlg->getColorDepthTargetImages(),
+                     m_configDlg->useSpecificTargetimageCompression(),
+                     m_configDlg->getTargetImagesCompression());
 
     // Create the thumbnails.
-
-    threadDone = false;
-    useBrokenImage = false;
 
     const QString ImageNameFormat = imgName + extension(imageFormat);
     const QString thumbDir = imgGalleryDir + QString::fromLatin1("/thumbs/");
@@ -1278,46 +1327,137 @@ bool ImagesGallery::createThumb( const KURL& url, const QString& imgName,
     m_imgWidth = 120; // Setting the size of the images is
     m_imgHeight = 90; // required to generate faster 'loading' pages
 
-    m_threadedImageResizing = new ResizeImage(this, pixPath, thumbDir, imageFormat, ImageNameFormat,
-                                              &m_imgWidth, &m_imgHeight, extent,
-                                              m_configDlg->colorDepthSetThumbnails(),
-                                              m_configDlg->getColorDepthThumbnails(),
-                                              m_configDlg->useSpecificThumbsCompression(),
-                                              m_configDlg->getThumbsCompression(), &threadDone,
-                                              &useBrokenImage);
+    return (ResizeImage(pixPath, thumbDir, imageFormat, ImageNameFormat,
+                        &m_imgWidth, &m_imgHeight, extent,
+                        m_configDlg->colorDepthSetThumbnails(),
+                        m_configDlg->getColorDepthThumbnails(),
+                        m_configDlg->useSpecificThumbsCompression(),
+                        m_configDlg->getThumbsCompression()));
+}
 
-    do            // TODO: added a queue like JPEGLossLess
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// Return -1 if failed, 0 if used Broken image, 1 if done !
+
+int ImagesGallery::ResizeImage( const QString Path, const QString Directory, const QString ImageFormat,
+                                const QString ImageNameFormat, int *Width, int *Height, int SizeFactor,
+                                bool ColorDepthChange, int ColorDepthValue, bool CompressionSet,
+                                int ImageCompression)
+{
+    QImage img;
+    bool ValRet;
+    bool usingBrokenImage = false;
+
+    ValRet = img.load(Path);
+
+    if ( ValRet == false )        // Cannot load the src image.
        {
-       usleep (100);
+       KGlobal::dirs()->addResourceType("kipi_imagebroken", KGlobal::dirs()->kde_default("data") + "kipi/data");
+       QString dir = KGlobal::dirs()->findResourceDir("kipi_imagebroken", "image_broken.png");
+       dir = dir + "image_broken.png";
+       kdDebug ( 51000 ) << "Loading " << Path.ascii() << " failed ! Using " << dir.ascii() 
+                         << " instead..." << endl;
+       ValRet = img.load(dir);    // Try broken image icon...
+       usingBrokenImage = true;
        }
-    while  ( m_threadedImageResizing->running() == true );
 
-    delete m_threadedImageResizing;
+    if ( ValRet == true )
+       {
+       int w = img.width();
+       int h = img.height();
 
-    return (threadDone);
+       if (SizeFactor == -1)      // Use original image size.
+            SizeFactor=w;
+
+       // scale to pixie size
+       // kdDebug( 51000 ) << "w: " << w << " h: " << h << endl;
+       // Resizing if to big
+
+       if( w > SizeFactor || h > SizeFactor )
+           {
+           if( w > h )
+               {
+               h = (int)( (double)( h * SizeFactor ) / w );
+
+               if ( h == 0 ) h = 1;
+
+               w = SizeFactor;
+               Q_ASSERT( h <= SizeFactor );
+               }
+           else
+               {
+               w = (int)( (double)( w * SizeFactor ) / h );
+
+               if ( w == 0 ) w = 1;
+
+               h = SizeFactor;
+               Q_ASSERT( w <= SizeFactor );
+               }
+
+           const QImage scaleImg(img.smoothScale( w, h ));
+
+           if ( scaleImg.width() != w || scaleImg.height() != h )
+               {
+               kdDebug( 51000 ) << "Resizing failed. Aborting." << endl;
+               return -1;
+               }
+
+           img = scaleImg;
+
+           if ( ColorDepthChange == true )
+               {
+               const QImage depthImg(img.convertDepth( ColorDepthValue ));
+               img = depthImg;
+               }
+           }
+
+       kdDebug( 51000 ) << "Saving resized image to: " << Directory + ImageFormat  << endl;
+
+       if ( CompressionSet == true )
+          {
+          if ( !img.save(Directory + ImageNameFormat, ImageFormat.latin1(), ImageCompression) )
+             {
+             kdDebug( 51000 ) << "Saving failed with specific compression value. Aborting." << endl;
+             return -1;
+             }
+          }
+       else
+          {
+          if ( !img.save(Directory + ImageNameFormat, ImageFormat.latin1(), -1) )
+             {
+             kdDebug( 51000 ) << "Saving failed with no compression value. Aborting." << endl;
+             return -1;
+             }
+          }
+
+       *Width = w;
+       *Height = h;
+   
+       if ( usingBrokenImage == true )
+          return 0;
+       else 
+          return 1;
+       }
+
+    return -1;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ImagesGallery::slotCancelled()
+void ImagesGallery::invokeWebBrowser(void)
 {
-    m_cancelled = true;
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void ImagesGallery::invokeWebBrowser(KURL url)
-{
+    if (m_configDlg->OpenGalleryInWebBrowser() == false)
+       return;
+    
     if (m_configDlg->getWebBrowserName() == "Konqueror")
-       kapp->invokeBrowser(url.url());       // Open Konqueror browser to show the main HTML page.
+       kapp->invokeBrowser(m_url4browser.url());       // Open Konqueror browser to show the main HTML page.
 
     if (m_configDlg->getWebBrowserName() == "Mozilla")
        {
        m_webBrowserProc = new KProcess;
        *m_webBrowserProc << "mozilla";
-       *m_webBrowserProc << url.url();
+       *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
           KMessageBox::error(0, i18n("Cannot start 'mozilla' web browser.\nPlease, check your installation!"));
@@ -1327,7 +1467,7 @@ void ImagesGallery::invokeWebBrowser(KURL url)
        {
        m_webBrowserProc = new KProcess;
        *m_webBrowserProc << "netscape";
-       *m_webBrowserProc << url.url();
+       *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
           KMessageBox::error(0, i18n("Cannot start 'netscape' web browser.\nPlease, check your installation!"));
@@ -1337,7 +1477,7 @@ void ImagesGallery::invokeWebBrowser(KURL url)
        {
        m_webBrowserProc = new KProcess;
        *m_webBrowserProc << "opera";
-       *m_webBrowserProc << url.url();
+       *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
           KMessageBox::error(0, i18n("Cannot start 'opera' web browser.\nPlease, check your installation!"));
@@ -1347,7 +1487,7 @@ void ImagesGallery::invokeWebBrowser(KURL url)
        {
        m_webBrowserProc = new KProcess;
        *m_webBrowserProc << "dillo";
-       *m_webBrowserProc << url.url();
+       *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
           KMessageBox::error(0, i18n("Cannot start 'dillo' web browser.\nPlease, check your installation!"));
@@ -1357,7 +1497,7 @@ void ImagesGallery::invokeWebBrowser(KURL url)
        {
        m_webBrowserProc = new KProcess;
        *m_webBrowserProc << "galeon";
-       *m_webBrowserProc << url.url();
+       *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
           KMessageBox::error(0, i18n("Cannot start 'galeon' web browser.\nPlease, check your installation!"));
@@ -1367,7 +1507,7 @@ void ImagesGallery::invokeWebBrowser(KURL url)
        {
        m_webBrowserProc = new KProcess;
        *m_webBrowserProc << "amaya";
-       *m_webBrowserProc << url.url();
+       *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
           KMessageBox::error(0, i18n("Cannot start 'amaya' web browser.\nPlease, check your installation!"));
@@ -1377,7 +1517,7 @@ void ImagesGallery::invokeWebBrowser(KURL url)
        {
        m_webBrowserProc = new KProcess;
        *m_webBrowserProc << "quanta";
-       *m_webBrowserProc << url.url();
+       *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
           KMessageBox::error(0, i18n("Cannot start 'quanta' web editor.\nPlease, check your installation!"));
@@ -1387,11 +1527,77 @@ void ImagesGallery::invokeWebBrowser(KURL url)
        {
        m_webBrowserProc = new KProcess;
        *m_webBrowserProc << "screem";
-       *m_webBrowserProc << url.url();
+       *m_webBrowserProc << m_url4browser.url();
 
        if (m_webBrowserProc->start() == false)
           KMessageBox::error(0, i18n("Cannot start 'screem' web editor.\nPlease, check your installation!"));
        }
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// This code can be multithreaded (in opposite to KIO::netaccess::delete().
+
+bool ImagesGallery::DeleteDir(QString dirname)
+{
+    if (dirname != "")
+        {
+        QDir dir;
+
+        if (dir.exists ( dirname ) == true)
+           {
+           if (deldir(dirname) == false)
+               return false;
+
+           if (dir.rmdir( dirname ) == false )
+               return false;
+           }
+        else
+           return false;
+        }
+    else
+        return false;
+
+    return true;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// This code can be multithreaded (in opposite to KIO::netaccess::delete().
+
+bool ImagesGallery::deldir(QString dirname)
+{
+    QDir *dir = new QDir(dirname);
+    dir->setFilter ( QDir::Dirs | QDir::Files | QDir::NoSymLinks );
+
+    const QFileInfoList* fileinfolist = dir->entryInfoList();
+    QFileInfoListIterator it(*fileinfolist);
+    QFileInfo* fi;
+
+    while( (fi = it.current() ) )
+         {
+         if(fi->fileName() == "." || fi->fileName() == ".." )
+              {
+              ++it;
+              continue;
+              }
+
+         if( fi->isDir() )
+              {
+              if (deldir( fi->absFilePath() ) == false)
+                  return false;
+              if (dir->rmdir( fi->absFilePath() ) == false)
+                  return false;
+              }
+         else
+              if( fi->isFile() )
+                   if (dir->remove(fi->absFilePath() ) == false)
+                       return false;
+         
+         ++it;
+         }
+
+    return true;
 }
 
 

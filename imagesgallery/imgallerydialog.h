@@ -63,8 +63,8 @@ class KURLRequester;
 
 namespace KIPIImagesGalleryPlugin
 {
-class AlbumItem;
 
+class AlbumItem;
 
 class KIGPDialog : public KDialogBase
 {
@@ -73,6 +73,8 @@ class KIGPDialog : public KDialogBase
  public:
   KIGPDialog( KIPI::Interface* interface, QWidget *parent=0);
   ~KIGPDialog();
+
+  bool  setAlbumsList(void);
 
   const QString getImageName() const;
   void  setImageName(QString Value);
@@ -186,6 +188,7 @@ class KIGPDialog : public KDialogBase
   void slotbuttonInvertSelection(void);
   void slotbuttonSelectNone(void);
   void slotGotPreview(const KFileItem*, const QPixmap &pixmap);
+  void slotStopParsingAlbums(void);
 
  private:
   KColorButton       *m_foregroundColor;
@@ -204,7 +207,9 @@ class KIGPDialog : public KDialogBase
   QSpinBox           *m_bordersImagesSize;
 
   QLabel             *m_albumPreview;
-
+  
+  QProgressDialog    *m_progressDlg;
+  
   QCheckBox          *m_imageName;
   QCheckBox          *m_imageSize;
   QCheckBox          *m_imageProperty;
@@ -245,16 +250,17 @@ class KIGPDialog : public KDialogBase
   QFrame             *page_about;
 
   KIPI::Interface*    m_interface;
+  
   QMap<AlbumItem*, KIPI::ImageCollection> m_albums;
 
-
+  bool                m_stopParsingAlbum;
+  
  private:
   void setupSelection(void);
   void setupLookPage(void);
   void setupAlbumPage(void);
   void setupThumbnailPage(void);
   void aboutPage(void);
-  void setAlbumsList(void);
 };
 
 }  // NameSpace KIPIImagesGalleryPlugin

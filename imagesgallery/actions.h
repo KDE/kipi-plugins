@@ -30,13 +30,12 @@ namespace KIPIImagesGalleryPlugin
 enum Action
 {
     Initialize = 0,
+    Progress,
+    Error,
+    ResizeImages,
     BuildHTMLiface,
     BuildAlbumHTMLPage,
-    BuildAutoRuniface,
-    BuildK3bProject,
-    ResizeImages,
-    Progress,
-    Error
+    BuildImageHTMLPage
 };
     
 

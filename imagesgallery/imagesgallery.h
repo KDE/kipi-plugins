@@ -41,40 +41,49 @@
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qdir.h>
+#include <qthread.h>
+
+// Includes files for KDE.
+
+#include <kurl.h>
 
 // KIPI includes
 
 #include <libkipi/interface.h>
 
-class QProgressDialog;
-
 class KURL;
 class KConfig;
 class KProcess;
-class KIGPDialog;
-class ResizeImage;
 
 namespace KIPIImagesGalleryPlugin
 {
+
+class KIGPDialog;
 
 const int NAV_THUMB_MAX_SIZE = 64;
 
 // First field is the URL, represented with KURL::prettyURL. We can't use KURL
 // directly because operator<(KURL,KURL) is not defined in KDE 3.1
+
 typedef QMap<QString,QString> CommentMap;
 
-class ImagesGallery : public QObject
+class ImagesGallery : public QObject, public QThread
 {
 Q_OBJECT
 
 public:
-  ImagesGallery( KIPI::Interface* interface );
+  ImagesGallery( KIPI::Interface* interface, QObject *parent=0 );
   ~ImagesGallery();
+  
+  virtual void run();
 
-protected slots:
-  void slotCancelled();
-
+  bool showDialog();
+  void invokeWebBrowser(void);
+  bool removeTargetGalleryFolder(void);
+  
 private:
+  KURL                m_url4browser;
+
   KConfig            *m_config;
   KProcess           *m_webBrowserProc;
   KIPI::Interface    *m_interface;
@@ -103,11 +112,11 @@ private:
   int                 m_targetImgWidth;
   int                 m_targetImgHeight;
 
-  QProgressDialog    *m_progressDlg;
   CommentMap         *m_commentMap;
-  
+
+  QObject            *m_parent;
+    
   KIPIImagesGalleryPlugin::KIGPDialog  *m_configDlg;
-  KIPIImagesGalleryPlugin::ResizeImage *m_threadedImageResizing;
 
   KIPI::ImageCollection m_album;
 
@@ -124,9 +133,14 @@ private:
                    const QString& previousImgName , const QString& nextImgName,
                    const QString& comment);
 
-  bool createThumb( const KURL& url, const QString& imgName,
+  int  createThumb( const KURL& url, const QString& imgName,
                     const QString& imgGalleryDir, const QString& imageFormat,
                     const QString& TargetimagesFormat);
+                    
+  int  ResizeImage( const QString Path, const QString Directory, const QString ImageFormat,
+                    const QString ImageNameFormat, int *Width, int *Height, int SizeFactor,
+                    bool ColorDepthChange, int ColorDepthValue, bool CompressionSet,
+                    int ImageCompression);                    
 
   bool createHtml( const KURL& url,
                    const QString& imageFormat, const QString& TargetimagesFormat);
@@ -134,8 +148,10 @@ private:
   void createBodyMainPage(QTextStream& stream, KURL& url);
   void loadComments(void);
   static QString extension(const QString& imageFormat);
-  void invokeWebBrowser(KURL url);
-  void Activate();
+  
+  bool DeleteDir(QString dirname);
+  bool deldir(QString dirname);
+
   void writeSettings(void);
   void readSettings(void);
 

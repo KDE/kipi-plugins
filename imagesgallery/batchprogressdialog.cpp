@@ -116,7 +116,7 @@ private:
 /////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 BatchProgressDialog::BatchProgressDialog( QWidget *parent )
-                   : KDialogBase( KDialogBase::Plain, i18n("Preparing HTML Export"), Cancel,
+                   : KDialogBase( KDialogBase::Plain, i18n("Albums HTML Export process"), Cancel,
                                   Cancel, parent, "HTMLExportActionsDialog", true )
 {
     QWidget* box = plainPage();

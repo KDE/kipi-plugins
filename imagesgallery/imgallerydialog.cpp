@@ -47,6 +47,8 @@
 #include <qlistview.h>
 #include <qheader.h>
 #include <qpushbutton.h>
+#include <qprogressdialog.h>
+#include <qdir.h>
 
 // Include files for KDE
 
@@ -66,6 +68,7 @@
 #include <kapplication.h>
 #include <ksqueezedtextlabel.h>
 #include <kio/previewjob.h>
+#include <kmessagebox.h>
 
 // Local include files
 
@@ -120,7 +123,6 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
     aboutPage();
     page_setupSelection->setFocus();
     setHelp("imagesgallery", "kipi-plugins");
-    setAlbumsList();
 }
 
 
@@ -224,15 +226,35 @@ void KIGPDialog::setupSelection(void)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void KIGPDialog::setAlbumsList(void)
+bool KIGPDialog::setAlbumsList(void)
 {
     AlbumItem *currentAlbum = 0;
+    int current = 0;
+    m_stopParsingAlbum = false;
     
     QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
 
+    m_progressDlg = new QProgressDialog (i18n("Parsing Albums. Please wait..."),
+                                         i18n("&Cancel"), 0, 0, 0, true);
+    
+    connect(m_progressDlg, SIGNAL(cancelled()),
+            this, SLOT(slotStopParsingAlbums()));
+                
+    m_progressDlg->show();
+        
     for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
          albumIt != albums.end() ; ++albumIt )
         {
+        if (m_stopParsingAlbum == true)
+           {
+           delete m_progressDlg;
+           return false;
+           }
+        
+        m_progressDlg->setProgress(current, albums.count());
+        kapp->processEvents();
+        ++current;
+                
         KURL::List images = (*albumIt).images();
 
         AlbumItem *item = new AlbumItem( m_AlbumsList,
@@ -262,6 +284,17 @@ void KIGPDialog::setAlbumsList(void)
 
     if (currentAlbum != 0)
        m_AlbumsList->ensureItemVisible(currentAlbum);
+       
+    delete m_progressDlg;
+    return true;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+void KIGPDialog::slotStopParsingAlbums(void)
+{
+    m_stopParsingAlbum = true;
 }
 
 
@@ -811,7 +844,7 @@ void KIGPDialog::slotOk()
        KMessageBox::sorry(0, i18n("Images gallery folder do not exist ! Please check it..."));
        return;
        }
-
+       
     accept();
 }
 

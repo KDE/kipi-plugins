@@ -32,24 +32,36 @@ class KAction;
 namespace KIPIImagesGalleryPlugin
 {
 class KIGPDialog;
+class BatchProgressDialog;
 class ResizeImage;
 }
 
+
 class Plugin_Imagesgallery : public KIPI::Plugin
 {
-Q_OBJECT
+   Q_OBJECT
 
 public:
-  Plugin_Imagesgallery(QObject *parent, const char* name, const QStringList &args);
-  virtual ~Plugin_Imagesgallery();
-  KIPI::Category category( KAction* action ) const;
-  virtual void setup( QWidget* widget );
+   Plugin_Imagesgallery(QObject *parent, const char* name, const QStringList &args);
+   virtual ~Plugin_Imagesgallery();
+   
+   KIPI::Category category( KAction* action ) const;
+   virtual void setup( QWidget* widget );
 
 public slots:
-  void slotActivate();
-  
+   void slotActivate();
+   void slotCancel();
+
 private:
-  KAction* m_actionImagesGallery;
+   int                                           m_current;
+   int                                           m_total;
+
+   KIPIImagesGalleryPlugin::ImagesGallery       *m_gallery;
+   
+   KIPIImagesGalleryPlugin::BatchProgressDialog *m_progressDlg;
+   KAction                                      *m_actionImagesGallery;
+   
+   void customEvent(QCustomEvent *event);
 };
 
 
