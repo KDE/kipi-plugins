@@ -63,7 +63,7 @@ public:
 
    virtual void run();
 
-   bool showDialog();
+   void showDialog();
    bool showErrors();
    void makeCommentsFile(void);
    void invokeMailAgent(void);

@@ -88,7 +88,7 @@ SendImages::~SendImages()
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-bool SendImages::showDialog()
+void SendImages::showDialog()
 {
     m_sendImagesDialog = new KIPISendimagesPlugin::SendImagesDialog(0,
                              m_interface, m_collection);
