@@ -99,6 +99,8 @@ ImagesGallery::ImagesGallery( KIPI::Interface* interface, QObject *parent )
 
     m_interface = interface;
     m_parent = parent;
+    m_commentMap = 0L;
+    m_albumsMap = 0L;
 }
 
 
@@ -106,8 +108,8 @@ ImagesGallery::ImagesGallery( KIPI::Interface* interface, QObject *parent )
 
 ImagesGallery::~ImagesGallery()
 {
-    delete m_commentMap;
-    delete m_albumsMap;
+    if (m_commentMap) delete m_commentMap;
+    if (m_albumsMap) delete m_albumsMap;
     delete m_configDlg;
 }
 

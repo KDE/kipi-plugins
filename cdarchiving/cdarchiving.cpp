@@ -87,6 +87,8 @@ CDArchiving::CDArchiving( KIPI::Interface* interface, QObject *parent, KAction *
     m_actionCDArchiving = action_cdarchiving;
     m_interface = interface;
     m_parent = parent;
+    m_commentMap = 0L;
+    m_albumsMap = 0L;
 }
 
 
@@ -94,8 +96,8 @@ CDArchiving::CDArchiving( KIPI::Interface* interface, QObject *parent, KAction *
 
 CDArchiving::~CDArchiving()
 {
-    delete m_commentMap;
-    delete m_albumsMap;
+    if (m_commentMap) delete m_commentMap;
+    if (m_albumsMap) delete m_albumsMap;
     delete m_configDlg;
 }
 
