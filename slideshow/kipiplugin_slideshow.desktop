@@ -1,0 +1,17 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=SlideShow
+Comment=KIPI SlideShow Plugin
+Comment[de]=Ein KIPI Modul zum Anzeigen der Bilder in einer Diashow
+Comment[es]=Complemento de KIPI para mostrar las imágenes en un carrusel
+Comment[fr]=Module externe de KIPI pour les diaporamas
+Comment[da]=KIPI plugin til diasshow
+Comment[it]=Modulo esterno di KIPI per la carrellata di immagini
+Comment[pl]=Wtyczka do pokazu slajdów dla programu KIPI
+Comment[nl]=KIPI plugin voor het maken van een diavoorstelling
+Comment[hu]=KIPI diavetítő plugin
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_slideshow
+X-KIPI-MergeMenu=true
+author=Renchi Raju, renchi@pooh.tam.uiuc.edu

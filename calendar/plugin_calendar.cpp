@@ -63,7 +63,7 @@ void Plugin_Calendar::slotActivate()
     w->show();
 }
 
-KIPI::Plugin::Category Plugin_Calendar::category() const
+KIPI::Category Plugin_Calendar::category() const
 {
-    return KIPI::Plugin::IMAGESPLUGIN;
+    return KIPI::IMAGESPLUGIN;
 }

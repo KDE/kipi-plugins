@@ -1,0 +1,42 @@
+/* ============================================================
+ * File  : imagerotate.h
+ * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Date  : 2003-10-14
+ * Description : batch image rotation
+ * 
+ * Copyright 2003 by Renchi Raju
+
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published bythe Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * ============================================================ */
+
+#ifndef IMAGEROTATE_H
+#define IMAGEROTATE_H
+
+#include "actions.h"
+
+class QString;
+class QImage;
+
+namespace JPEGLossLess
+{
+
+bool rotate(const QString& src, RotateAction angle,
+            const QString& TmpFolder, QString& err);
+bool rotateJPEG(const QString& src, const QString& dest,
+                RotateAction angle, QString& err);
+bool rotateQImage(const QString& src, const QString& dest,
+                  RotateAction angle, QString& err);
+
+}
+
+#endif /* IMAGEROTATE_H */

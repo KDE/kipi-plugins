@@ -1,0 +1,17 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=JPEGLossless
+Comment=KIPI JPEG lossless Plugin
+Comment[de]=Ein KIPI Modul zur verlustfreien Manipulation von JPEG Bildern
+Comment[es]=Complemento de KIPI para el tratamiento de JPEG sin pérdida
+Comment[fr]=Module externe de KIPI pour les traitements JPEG sans perte
+Comment[da]=KIPI plugin til tabsfri manipulering af JPEG-billeder
+Comment[it]=Modulo esterno di KIPI per il trattamento JPEG senza perdita di dati
+Comment[pl]=Wtyczka do bezstratnych operacji na plikach JPEG dla programu KIPI
+Comment[nl]=DIgikam plugin voor het bewerken van JPEG afbeeldingen
+Comment[hu]=KIPI JPEG Plugin
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_jpeglossless
+author=Renchi Raju, renchi@pooh.tam.uiuc.edu
+X-KIPI-MergeMenu=true

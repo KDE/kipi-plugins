@@ -1,2 +1,2 @@
-SUBDIRS = helloworld printwizard calendar mpegencoder
-#imagesgallery - phew this is difficult ;-)
+SUBDIRS = helloworld printwizard calendar mpegencoder cdarchiving
+

@@ -1,0 +1,16 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=FindImages
+Comment=KIPI Plugin for find images in Albums database
+Comment[de]=Ein KIPI Modul zum Finden von Fotos in der Albendatenbank
+Comment[es]=Complemento de KIPI para la búsqueda de imágenes en la base de datos de álbumes
+Comment[fr]=Module externe de KIPI pour la recherche d'images dans les albums photo
+Comment[da]=KIPI plugin til billedsøgning i albumdatabasen
+Comment[it]=Modulo esterno di KIPI per la ricerca di immagini all'interno degli album
+Comment[pl]=Wtyczka do szukania zdjeć w albumach dla programu KIPI
+Comment[nl]=KIPI plugin om afbeeldingen te vinden in de albums
+Comment[hu]=KIPI képkereső plugin
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_findimages
+author=Caulier Gilles, caulier dot gilles at free.fr

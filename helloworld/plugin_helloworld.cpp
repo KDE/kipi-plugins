@@ -107,8 +107,8 @@ void Plugin_HelloWorld::slotActivate()
 #endif
 }
 
-KIPI::Plugin::Category Plugin_HelloWorld::category() const
+KIPI::Category Plugin_HelloWorld::category() const
 {
-    return KIPI::Plugin::IMAGESPLUGIN;
+    return KIPI::IMAGESPLUGIN;
 }
 

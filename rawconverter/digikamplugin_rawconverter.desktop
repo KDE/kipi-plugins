@@ -1,0 +1,16 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=RawConverter
+Comment=Digikam Raw Image Converter
+Comment[de]=Ein Digikam Modul um Bilder aus dem RAW Format zu konvertieren
+Comment[es]=Complemento de Digikam para convertir las imágenes a formato RAW
+Comment[fr]=Module externe de Digikam pour convertir des images au format RAW
+Comment[da]=Digikam plugin til konvertering af billeder i RAW-format
+Comment[it]=Modulo esterno di Digikam per la conversioni di immagini RAW
+Comment[pl]=Wtyczka do konwersji zdjęć z formatu RAW dla programu Digikam
+Comment[nl]=Digikam plugin voor het omzetten van afbeeldingen uit het RAW formaat
+Comment[hu]=Digikam raw kép konvertáló plugin
+Type=Service
+ServiceTypes=Digikam/Plugin
+X-KDE-Library=digikamplugin_rawconverter
+author=Renchi Raju, renchi@pooh.tam.uiuc.edu

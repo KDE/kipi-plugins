@@ -1,0 +1,16 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=CommentsEditor
+Comment=KIPI batch comments editor plugin
+Comment[de]=Ein KIPI Modul zum editieren von mehreren Kommentaren
+Comment[es]=Complemento de KIPI para la edición por lotes de los comentarios
+Comment[fr]=Module externe de KIPI pour l'édition par lôts des commentaires
+Comment[da]=KIPI plugin til sætvis kommentarredigering
+Comment[it]=Modulo esterno di KIPI per la modifica batch dei commenti
+Comment[pl]=Wtyczka do grupowej edycji komentarzy dla programu KIPI
+Comment[nl]=KIPI plugin om meerdere commentaren te bewerken
+Comment[hu]=KIPI megjegyzés szerkesztő plugin
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_commentseditor
+author=Renchi Raju, renchi@pooh.tam.uiuc.edu

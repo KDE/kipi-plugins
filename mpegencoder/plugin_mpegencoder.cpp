@@ -95,9 +95,9 @@ void Plugin_Mpegencoder::slotActivate()
     MPEGconverterDialog->addItems( images->images().toStringList());
 }
 
-KIPI::Plugin::Category Plugin_Mpegencoder::category() const
+KIPI::Category Plugin_Mpegencoder::category() const
 {
-    return KIPI::Plugin::IMAGESPLUGIN;
+    return KIPI::IMAGESPLUGIN;
 }
 
 

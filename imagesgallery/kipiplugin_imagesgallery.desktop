@@ -1,0 +1,17 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=ImagesGallery
+Comment=KIPI Images Gallery Export Plugin
+Comment[de]=Ein KIPI Modul zum Exportieren von Albenfotos als HTML Seiten
+Comment[es]=Complemento de KIPI para exportar los álbumes de fotos a una página HTML
+Comment[fr]=Module externe de KIPI pour l'exportation dans une page HTML des albums photo
+Comment[da]=KIPI plugin til oprettelse af billedgallerier
+Comment[it]=Modulo esterno di KIPI per l'esportazione su pagine HTML degli album
+Comment[pl]=Wtyczka do tworzenia galerii zdjęć w htmlu dla programu KIPI
+Comment[nl]=KIPI plugin voor het exporteren van afbeeldingen naar HTML pagina's
+Comment[hu]=KIPI képgaléria plugin
+Icon=
+ServiceTypes=KIPI/Plugin
+Type=Service
+X-KDE-Library=kipiplugin_imagesgallery
+author=Gilles Caulier, caulier dot gilles at free.fr

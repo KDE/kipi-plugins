@@ -38,7 +38,7 @@ public:
                       const char* name,
                       const QStringList &args);
 
-    virtual KIPI::Plugin::Category category() const;
+    virtual KIPI::Category category() const;
 
 
 private slots:
