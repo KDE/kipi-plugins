@@ -62,6 +62,7 @@ extern "C"
 #include <qdatetime.h>
 #include <qlayout.h>
 #include <qdragobject.h>
+#include <qframe.h>
 
 // KDElib includes
 
@@ -195,6 +196,32 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_NoneLabel = i18n ("none");
 
   QVBoxLayout* ml = new QVBoxLayout( this, 10 );
+  
+  //---------------------------------------------
+   
+  QFrame *headerFrame = new QFrame( this );
+  headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+  QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+  layout->setMargin( 2 ); // to make sure the frame gets displayed
+  layout->setSpacing( 0 );
+  QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+  pixmapLabelLeft->setScaledContents( false );
+  layout->addWidget( pixmapLabelLeft );
+  QLabel *labelTitle = new QLabel( i18n("MPEG Image Encoder"), headerFrame, "labelTitle" );
+  layout->addWidget( labelTitle );
+  layout->setStretchFactor( labelTitle, 1 );
+  ml->addWidget( headerFrame );
+    
+  QString directory;
+  KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+  directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+  pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+  pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+  labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+
+  //---------------------------------------------
+    
   QHBoxLayout* h1 = new QHBoxLayout( ml );
   QVBoxLayout* v1 = new QVBoxLayout( h1 );
   h1->addSpacing( 5 );
