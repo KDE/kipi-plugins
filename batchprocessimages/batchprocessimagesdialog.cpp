@@ -89,6 +89,7 @@ extern "C"
 #include "outputdialog.h"
 #include "imagepreview.h"
 #include "batchprocessimagesdialog.h"
+#include <qwmatrix.h>
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -116,9 +117,9 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     QWidget* box = plainPage();
     QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
-        
+
     //---------------------------------------------
-   
+
     QFrame *headerFrame = new QFrame( box );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
@@ -131,11 +132,11 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
     dvlay->addWidget( headerFrame );
-    
+
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
     directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
@@ -147,7 +148,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     QGridLayout* grid = new QGridLayout( groupBox1, 2, 3, 20, spacingHint());
     m_labelType = new QLabel( groupBox1 );
     grid->addMultiCellWidget(m_labelType, 0, 0, 0, 0);
-    
+
     m_Type = new QComboBox(false, groupBox1);
     grid->addMultiCellWidget(m_Type, 0, 0, 1, 1);
 
@@ -170,7 +171,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     QWhatsThis::add( m_previewButton, i18n("<p>This button builds a process "
                                            "preview for the currently selected image on the list."));
     grid->addMultiCellWidget(m_previewButton, 1, 1, 2, 2);
-    
+
     hlay->addWidget( groupBox1 );
 
     //---------------------------------------------
@@ -210,7 +211,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     QWhatsThis::add( m_addNewAlbumButton, i18n("<p>With this button, you can create a new directory."));
     lay->addWidget( m_addNewAlbumButton );
     lay->addStretch( 1 );
-    
+
     connect( m_addNewAlbumButton, SIGNAL( clicked() ),
              m_upload, SLOT( mkdir() ) );
 
@@ -310,9 +311,9 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd( void )
 
     for ( KURL::List::Iterator it = urls.begin() ; it != urls.end() ; ++it )
         ImageFilesList << (*it).path(); // PENDING(blackie) handle remote URLS
-    
+
     if ( urls.isEmpty() ) return;
-            
+
     slotAddDropItems(ImageFilesList);
 }
 
@@ -366,9 +367,22 @@ void BatchProcessImagesDialog::slotImageSelected( QListViewItem * item )
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void BatchProcessImagesDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap &pixmap)
+void BatchProcessImagesDialog::slotGotPreview(const KFileItem* url, const QPixmap &pixmap)
 {
-    m_imageLabel->setPixmap(pixmap);
+    QPixmap pix( pixmap );
+
+    KIPI::ImageInfo info = m_interface->info( url->url() );
+    if ( info.angle() != 0 ) {
+        QImage img = pix.convertToImage();
+        QWMatrix matrix;
+        qDebug("%s: %d", url->url().path().latin1(), info.angle() );
+
+        matrix.rotate( -info.angle() );
+        img = img.xForm( matrix );
+        pix.convertFromImage( img );
+    }
+
+    m_imageLabel->setPixmap(pix);
 }
 
 
@@ -717,7 +731,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
             if ( KIO::NetAccess::del( deleteImage, kapp->activeWindow() ) == false )
 #else
             if ( KIO::NetAccess::del( deleteImage ) == false )
-#endif              
+#endif
                 {
                 item->changeResult(i18n("Warning:"));
                 item->changeError(i18n("cannot remove original image file."));
@@ -877,7 +891,7 @@ void BatchProcessImagesDialog::slotPreviewProcessDone(KProcess* proc)
        KIO::NetAccess::del( deletePreviewImage, kapp->activeWindow() );
 #else
        KIO::NetAccess::del( deletePreviewImage );
-#endif                
+#endif
        }
     else
        {
@@ -938,7 +952,7 @@ void BatchProcessImagesDialog::listImageFiles(void)
 
     if (m_nbItem == 0) groupBox4->setTitle(i18n("Image File List"));
     else
-       groupBox4->setTitle(i18n("Image File List (1 item)", "Image File List (%n items)", m_nbItem));
+        groupBox4->setTitle(i18n("Image File List (1 item)", "Image File List (%n items)", m_nbItem));
 
     if (m_selectedImageFiles.isEmpty()) return;
 
@@ -1054,14 +1068,14 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
        {
        KURL deleteImage = m_upload->path();
        deleteImage.addPath(item->nameDest());
-       
+
 #if KDE_VERSION >= 0x30200
        if ( KIO::NetAccess::exists( deleteImage, false, kapp->activeWindow() ) == true )
           KIO::NetAccess::del( deleteImage, kapp->activeWindow() );
 #else
        if ( KIO::NetAccess::exists( deleteImage ) == true )
           KIO::NetAccess::del( deleteImage );
-#endif  
+#endif
        }
 
     endProcess();
@@ -1098,12 +1112,12 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
        NewDestUrl = fi->filePath().left( fi->filePath().findRev('.', -1)) + "_" + Temp
                     + "." + fi->filePath().section('.', -1 );
        }
-    while ( Enumerator < 100 && 
+    while ( Enumerator < 100 &&
 #if KDE_VERSION >= 0x30200
             KIO::NetAccess::exists( NewDestUrl, true, kapp->activeWindow() )
 #else
             KIO::NetAccess::exists( NewDestUrl )
-#endif  
+#endif
             == true );
 
     if (Enumerator == 100) return QString::null;
