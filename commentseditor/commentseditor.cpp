@@ -35,10 +35,10 @@
 #include <qevent.h>
 
 #include <libkipi/imagecollection.h>
-#include <libkipi/thumbnailjob.h>
 #include <libkipi/imageinfo.h>
 
 #include "commentseditor.h"
+#include <kio/previewjob.h>
 
 namespace CommentsPlugin
 {
@@ -203,8 +203,6 @@ CommentsEditor::CommentsEditor( KIPI::Interface* interface, KIPI::ImageCollectio
 
 CommentsEditor::~CommentsEditor()
 {
-    if (!m_thumbJob.isNull())
-        delete m_thumbJob;
 }
 
 void CommentsEditor::loadItems()
@@ -229,12 +227,12 @@ void CommentsEditor::loadItems()
         prevItem = viewItem;
     }
 
-    m_thumbJob = new KIPI::ThumbnailJob( urlList, 64);
-    connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-            SLOT(slotGotPreview(const KURL&, const QPixmap&)));
+    KIO::PreviewJob* thumbJob = KIO::filePreview( urlList, 64);
+    connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 }
 
-void CommentsEditor::slotGotPreview(const KURL& url,
+void CommentsEditor::slotGotPreview(const KFileItem* url,
                                     const QPixmap &pixmap)
 {
     QPixmap pix(70,70);
@@ -252,7 +250,7 @@ void CommentsEditor::slotGotPreview(const KURL& url,
     while ( it.current() ) {
         CommentsListViewItem *viewItem =
             (CommentsListViewItem*)it.current();
-        if ( viewItem->url == url )
+        if ( viewItem->url == url->url() )
             viewItem->setPixmap(0,pix);
         ++it;
     }

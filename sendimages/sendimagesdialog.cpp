@@ -70,6 +70,7 @@
 
 #include "sendimagesdialog.h"
 #include "listimageserrordialog.h"
+#include <kio/previewjob.h>
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -170,8 +171,6 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, QString TmpPath, KIPI::Inter
 
 SendImagesDialog::~SendImagesDialog()
 {
-    if (!m_thumbJob.isNull())
-       delete m_thumbJob;
 }
 
 
@@ -583,9 +582,6 @@ void SendImagesDialog::slotImagesFilesButtonRem( void )
 
 void SendImagesDialog::slotImageSelected( QListBoxItem * item )
 {
-    if (!m_thumbJob.isNull())
-       delete m_thumbJob;
-
     if ( !item || m_ImagesFilesListBox->count() == 0 )
        {
        m_imageLabel->clear();
@@ -603,16 +599,17 @@ void SendImagesDialog::slotImageSelected( QListBoxItem * item )
     QString IdemIndexed = "file:" + pitem->path();
     KURL url(IdemIndexed);
 
-    m_thumbJob = new KIPI::ThumbnailJob( url, m_imageLabel->height(), false, true );
+    // PENDING(blackie) Renchi: true as forth parameter
+    KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_imageLabel->height() );
 
-    connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-            SLOT(slotGotPreview(const KURL&, const QPixmap&)));
+    connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void SendImagesDialog::slotGotPreview(const KURL & /*url*/, const QPixmap &pixmap)
+void SendImagesDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap &pixmap)
 {
     m_imageLabel->setPixmap(pixmap);
 }

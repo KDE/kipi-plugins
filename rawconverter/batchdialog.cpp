@@ -43,8 +43,6 @@
 #include <qevent.h>
 #include <qpixmap.h>
 
-#include <libkipi/thumbnailjob.h>
-
 extern "C"
 {
 #include <sys/types.h>
@@ -57,6 +55,7 @@ extern "C"
 #include "processcontroller.h"
 #include "clistviewitem.h"
 #include "dmessagebox.h"
+#include <kio/previewjob.h>
 
 namespace RawConverter
 {
@@ -285,7 +284,6 @@ BatchDialog::BatchDialog()
     // ---------------------------------------------------------------
 
     itemDict_.setAutoDelete(true);
-    thumbnailJob_ = 0;
     slotBusy(false);
 
     readSettings();
@@ -293,8 +291,6 @@ BatchDialog::BatchDialog()
 
 BatchDialog::~BatchDialog()
 {
-    if (thumbnailJob_)
-        delete thumbnailJob_;
     saveSettings();
 }
 
@@ -325,9 +321,10 @@ void BatchDialog::addItems(const QStringList& itemList)
     }
 
     if (!urlList.empty()) {
-        thumbnailJob_ = new KIPI::ThumbnailJob(urlList, 48, true);
-        connect(thumbnailJob_, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-                SLOT(slotGotThumbnail(const KURL&, const QPixmap&)));
+        // PENDING(blackie) Renchi: third parameter was true, what does that mean?
+        KIO::PreviewJob* thumbnailJob = KIO::filePreview(urlList, 48 );
+        connect(thumbnailJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+                SLOT(slotGotThumbnail(const KFileItem&, const QPixmap&)));
     }
 
     QTimer::singleShot(0, this, SLOT(slotIdentify()));
@@ -575,10 +572,10 @@ void BatchDialog::slotProcessingFailed(const QString& file)
     processOne();
 }
 
-void BatchDialog::slotGotThumbnail(const KURL& url,
+void BatchDialog::slotGotThumbnail(const KFileItem* url,
                                    const QPixmap& pix)
 {
-    RawItem *item = itemDict_.find(url.filename());
+    RawItem *item = itemDict_.find(url->url().filename());
     if (item) {
         item->viewItem->setThumbnail(pix);
     }

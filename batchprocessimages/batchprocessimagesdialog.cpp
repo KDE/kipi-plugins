@@ -77,7 +77,6 @@ extern "C"
 #include <qvgroupbox.h>
 
 // KIPI includes
-#include <libkipi/thumbnailjob.h>
 #include <libkipi/uploadwidget.h>
 #include <libkipi/imagecollectiondialog.h>
 
@@ -87,6 +86,7 @@ extern "C"
 #include "outputdialog.h"
 #include "imagepreview.h"
 #include <qhgroupbox.h>
+#include <kio/previewjob.h>
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
@@ -315,9 +315,6 @@ void BatchProcessImagesDialog::slotImagesFilesButtonRem( void )
 
 void BatchProcessImagesDialog::slotImageSelected( QListViewItem * item )
 {
-    if (!m_thumbJob.isNull())
-       delete m_thumbJob;
-
     if ( !item || m_listFiles->childCount() == 0 )
        {
        m_imageLabel->clear();
@@ -333,16 +330,16 @@ void BatchProcessImagesDialog::slotImageSelected( QListViewItem * item )
 
     KURL url(IdemIndexed);
 
-    m_thumbJob = new KIPI::ThumbnailJob( url, m_imageLabel->height(), false, true );
+    KIO::PreviewJob* m_thumbJob = KIO::filePreview( url, m_imageLabel->height(), false, true );
 
-    connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-            SLOT(slotGotPreview(const KURL&, const QPixmap&)));
+    connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void BatchProcessImagesDialog::slotGotPreview(const KURL & /*url*/, const QPixmap &pixmap)
+void BatchProcessImagesDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap &pixmap)
 {
     m_imageLabel->setPixmap(pixmap);
 }

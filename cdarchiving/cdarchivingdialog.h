@@ -34,9 +34,9 @@
 
 // Include files for KIPI
 
-#include <libkipi/thumbnailjob.h>
 #include <libkipi/interface.h>
 
+class KFilePreview;
 class QString;
 class QCheckBox;
 class QLineEdit;
@@ -137,7 +137,7 @@ class CDArchivingDialog : public KDialogBase
   void slotbuttonInvertSelection(void);
   void slotbuttonSelectNone(void);
   void UrlChanged(const QString &url );
-  void slotGotPreview(const KURL &url, const QPixmap &pixmap);
+  void slotGotPreview(const KFilePreview* url, const QPixmap &pixmap);
 
  private:
   QCheckBox          *m_useHTMLInterface;
@@ -200,7 +200,6 @@ class CDArchivingDialog : public KDialogBase
 
   KIO::filesize_t     MaxMediaSize;
 
-  QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
   KIPI::Interface* m_interface;
 
  private:

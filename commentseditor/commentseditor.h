@@ -27,6 +27,7 @@
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
+class KFileItem;
 class QListViewItem;
 class QPixmap;
 class KURL;
@@ -59,11 +60,10 @@ private:
     CLineEdit                         *m_edit;
     KIPI::ImageCollection             m_images;
     KIPI::Interface*                  m_interface;
-    QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
 
 private slots:
 
-    void slotGotPreview(const KURL &url,
+    void slotGotPreview(const KFileItem* url,
                         const QPixmap &pixmap);
     void slotSelectionChanged();
     void slotCommentChanged(const QString& newComment);

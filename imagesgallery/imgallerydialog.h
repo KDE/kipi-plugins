@@ -43,9 +43,9 @@
 
 // Include files for KIPI
 
-#include <libkipi/thumbnailjob.h>
 #include <libkipi/interface.h>
 
+class KFileItem;
 class QProgressDialog;
 class QCheckBox;
 class QString;
@@ -180,7 +180,7 @@ class KIGPDialog : public KDialogBase
   void slotbuttonSelectAll(void);
   void slotbuttonInvertSelection(void);
   void slotbuttonSelectNone(void);
-  void slotGotPreview(const KURL &url, const QPixmap &pixmap);
+  void slotGotPreview(const KFileItem* url, const QPixmap &pixmap);
 
  private:
   KColorButton       *m_foregroundColor;
@@ -243,7 +243,6 @@ class KIGPDialog : public KDialogBase
   QFrame             *page_setupThumbnail;
   QFrame             *page_about;
 
-  QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
   KIPI::Interface* m_interface;
   QMap<AlbumItem*, KIPI::ImageCollection> m_albums;
 

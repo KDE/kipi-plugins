@@ -59,6 +59,7 @@
 // Local include files
 
 #include "displaycompare.h"
+#include <kio/previewjob.h>
 #include "displaycompare.moc"
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -254,11 +255,6 @@ DisplayCompare::DisplayCompare(QWidget* parent, QDict < QPtrVector < QFile > >* 
 
 DisplayCompare::~DisplayCompare()
 {
-    if (!m_thumbJob1.isNull())
-       delete m_thumbJob1;
-
-    if (!m_thumbJob2.isNull())
-       delete m_thumbJob2;
 }
 
 
@@ -341,16 +337,14 @@ void DisplayCompare::slotDisplayLeft(QListViewItem * item)
 
     preview1->clear();
 
-    if (!m_thumbJob1.isNull())
-       delete m_thumbJob1;
-
     QString IdemIndexed = "file:" + pitem->fullpath();
     KURL url(IdemIndexed);
 
-    m_thumbJob1 = new KIPI::ThumbnailJob( url, preview1->height(), false, true );
+    // PENDING(blackie) Renchi: true as forth parameter
+    KIO::PreviewJob* thumbJob1 = KIO::filePreview( url, preview1->height() );
 
-    connect(m_thumbJob1, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-            SLOT(slotGotPreview1(const KURL&, const QPixmap&)));
+    connect(thumbJob1, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+            SLOT(slotGotPreview1(const KFileItem*, const QPixmap&)));
 
     FindDuplicateItem *last = NULL;
     QFile *f = NULL;
@@ -394,7 +388,7 @@ void DisplayCompare::slotDisplayLeft(QListViewItem * item)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void DisplayCompare::slotGotPreview1(const KURL &/*url*/, const QPixmap &pixmap)
+void DisplayCompare::slotGotPreview1(const KFileItem* /*url*/, const QPixmap &pixmap)
 {
     preview1->setPixmap(pixmap);
 }
@@ -421,16 +415,14 @@ void DisplayCompare::slotDisplayRight(QListViewItem * item)
 
     preview2->clear();
 
-    if (!m_thumbJob2.isNull())
-       delete m_thumbJob2;
-
     QString IdemIndexed = "file:" + pitem->fullpath();
     KURL url(IdemIndexed);
 
-    m_thumbJob2 = new KIPI::ThumbnailJob( url, preview2->height(), false, true );
+    // PENDING(blackie) Renchi: It had true as 4th parameter, what does that mean?
+    KIO::PreviewJob* thumbJob2 = KIO::filePreview( url, preview2->height() );
 
-    connect(m_thumbJob2, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-            SLOT(slotGotPreview2(const KURL&, const QPixmap&)));
+    connect(thumbJob2, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+            SLOT(slotGotPreview2(const KFileItem*, const QPixmap&)));
 
     KApplication::restoreOverrideCursor();
     }
@@ -438,7 +430,7 @@ void DisplayCompare::slotDisplayRight(QListViewItem * item)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void DisplayCompare::slotGotPreview2(const KURL &/*url*/, const QPixmap &pixmap)
+void DisplayCompare::slotGotPreview2(const KFileItem* /*url*/, const QPixmap &pixmap)
 {
     preview2->setPixmap(pixmap);
 }

@@ -38,7 +38,6 @@
 
 // Include files for KIPI
 
-#include <libkipi/thumbnailjob.h>
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 
@@ -109,8 +108,6 @@ Q_OBJECT
    KSqueezedTextLabel *m_AlbumItems;
 
    bool                m_dialogOk;
-
-   QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
 
    QString extension(const QString& imageFormat);
    bool QImageToTiff(const QImage& image, const QString& dst);

@@ -61,6 +61,7 @@
 // Local include files
 
 #include "cdarchivingdialog.h"
+#include <kio/previewjob.h>
 
 KIO::filesize_t TargetMediaSize;
 
@@ -126,8 +127,6 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
 
 CDArchivingDialog::~CDArchivingDialog()
 {
-    if (!m_thumbJob.isNull())
-       delete m_thumbJob;
 }
 
 
@@ -712,22 +711,19 @@ void CDArchivingDialog::albumSelected( QListViewItem * item )
 
     m_albumPreview->clear();
 
-    if (!m_thumbJob.isNull())
-       delete m_thumbJob;
-
     QString IdemIndexed = "file:" + pitem->path() + "/" + pitem->firstImage();
     KURL url(IdemIndexed);
 
-    m_thumbJob = new KIPI::ThumbnailJob( url, m_albumPreview->height(), false, true );
+    KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_albumPreview->height(), false, true );
 
-    connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-            SLOT(slotGotPreview(const KURL&, const QPixmap&)));
+    connect(thumbJob, SIGNAL(gotPreview(const KFilePreview* , const QPixmap&)),
+            SLOT(slotGotPreview(const KFilePreview* , const QPixmap&)));
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void CDArchivingDialog::slotGotPreview(const KURL& /*url*/, const QPixmap &pixmap)
+void CDArchivingDialog::slotGotPreview(const KFilePreview* /*url*/, const QPixmap &pixmap)
 {
     m_albumPreview->setPixmap(pixmap);
 }

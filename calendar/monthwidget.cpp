@@ -33,11 +33,11 @@
 #include <kimageio.h>
 #include <klocale.h>
 #include <kglobal.h>
+#include <kio/previewjob.h>
 
 #include "monthwidget.h"
 #include "calsettings.h"
 #include <libkipi/imagecollectiondialog.h>
-#include <libkipi/thumbnailjob.h>
 
 namespace DKCalendar
 {
@@ -91,21 +91,21 @@ void MonthWidget::dropEvent(QDropEvent* event)
     KURL::List srcURLs;
     KURLDrag::decode(event, srcURLs);
 
-    KIPI::ThumbnailJob* thumbJob_ =
-        new KIPI::ThumbnailJob(srcURLs.first(),64);
-    connect(thumbJob_, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-            SLOT(slotGotThumbnaiL(const KURL&, const QPixmap&)));
+    KIO::PreviewJob* thumbJob_ =
+        KIO::filePreview( srcURLs,64);
+    connect(thumbJob_, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+            SLOT(slotGotThumbnaiL(const KFileItem*, const QPixmap&)));
 }
 
-void MonthWidget::slotGotThumbnaiL(const KURL& url, const QPixmap& pix)
+void MonthWidget::slotGotThumbnaiL(const KFileItem* item, const QPixmap& pix)
 {
-    imagePath_ = url;
+    imagePath_ = item->url();
 
     CalSettings::instance()->setImage(month_,imagePath_);
 
     delete pixmap_;
     QPixmap image = pix;
-    int angle = interface_->info( url ).angle();
+    int angle = interface_->info( imagePath_ ).angle();
     if ( angle != 0 ) {
         QWMatrix matrix;
         matrix.rotate( angle );
@@ -123,10 +123,13 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* e)
     if (e->button() == Qt::LeftButton) {
         KURL url = KIPI::ImageCollectionDialog::getImageURL(this, interface_);
         if (url.isValid()) {
-            KIPI::ThumbnailJob* thumbJob_ =
-                new KIPI::ThumbnailJob(url,64);
-            connect(thumbJob_, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-                    SLOT(slotGotThumbnaiL(const KURL&, const QPixmap&)));
+            KURL::List urls;
+            urls << url;
+
+            KIO::PreviewJob* thumbJob_ =
+                KIO::filePreview( urls,64);
+            connect(thumbJob_, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+                    SLOT(slotGotThumbnaiL(const KFileItem*, const QPixmap&)));
         }
     }
     else if (e->button() == Qt::RightButton) {

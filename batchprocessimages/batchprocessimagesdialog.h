@@ -51,9 +51,9 @@
 #include <kurl.h>
 
 // Include files for KIPI
-#include <libkipi/thumbnailjob.h>
 #include <libkipi/interface.h>
 
+class KFileItem;
 namespace KIPI
 {
     class UploadWidget;
@@ -91,7 +91,7 @@ Q_OBJECT
 
 protected slots:
     void slotProcessStop(void);
-    
+
 private slots:
 
    // --------------------------------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ private slots:
    void slotAddDropItems(QStringList filesPath);
 
    void slotImageSelected( QListViewItem * item );
-   void slotGotPreview(const KURL &url, const QPixmap &pixmap);
+   void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
 
    void slotImagesFilesButtonAdd( void );
    void slotImagesFilesButtonRem( void );
@@ -176,8 +176,6 @@ private slots:
    QString                 m_tmpFolder;
    QString                 m_previewOutput;
    KURL::List              m_selectedImageFiles;
-
-   QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
 
    KIPI::Interface       *m_interface;
 

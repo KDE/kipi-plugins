@@ -61,6 +61,7 @@
 // Local include files
 
 #include "finddupplicatedialog.h"
+#include <kio/previewjob.h>
 
 
 class AlbumItem : public QCheckListItem
@@ -108,8 +109,6 @@ FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *p
 
 FindDuplicateDialog::~FindDuplicateDialog()
 {
-    if (!m_thumbJob.isNull())
-       delete m_thumbJob;
 }
 
 
@@ -409,21 +408,18 @@ void FindDuplicateDialog::albumSelected( QListViewItem * item )
 
     m_albumPreview->clear();
 
-    if (!m_thumbJob.isNull())
-       delete m_thumbJob;
-
     KURL url = pitem->imageCollection().images()[0];
 
-    m_thumbJob = new KIPI::ThumbnailJob( url, m_albumPreview->height(), false, true );
+    KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_albumPreview->height(), false, true );
 
-    connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-            SLOT(slotGotPreview(const KURL&, const QPixmap&)));
+    connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void FindDuplicateDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixmap)
+void FindDuplicateDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap &pixmap)
 {
     m_albumPreview->setPixmap(pixmap);
 }

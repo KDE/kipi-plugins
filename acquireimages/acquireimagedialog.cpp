@@ -71,7 +71,6 @@ extern "C"
 #include <ktempfile.h>
 #include <kdeversion.h>
 
-#include <libkipi/thumbnailjob.h>
 #include <libkipi/imageinfo.h>
 
 // Local includes
@@ -137,8 +136,6 @@ AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *par
 
 AcquireImageDialog::~AcquireImageDialog()
 {
-    if (!m_thumbJob.isNull())
-       delete m_thumbJob;
 }
 
 
@@ -433,22 +430,19 @@ void AcquireImageDialog::albumSelected( QListBoxItem * item )
 
     m_albumPreview->clear();
 
-    if (!m_thumbJob.isNull())
-       delete m_thumbJob;
-
     QString IdemIndexed = "file:" + pitem->path() + "/" + pitem->firstImage();
     KURL url(IdemIndexed);
 
-    m_thumbJob = new KIPI::ThumbnailJob( url, m_albumPreview->height(), false, true );
+    KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_albumPreview->height(), false, true );
 
-    connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-            SLOT(slotGotPreview(const KURL&, const QPixmap&)));
+    connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void AcquireImageDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixmap)
+void AcquireImageDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap &pixmap)
 {
     m_albumPreview->setPixmap(pixmap);
 }
@@ -503,7 +497,7 @@ void AcquireImageDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixm
     }
 
     kdDebug(51001) << k_funcinfo << "Saving image as " << url.prettyURL() << endl;
-    
+
     // Save file
     KTempFile tmp;
     tmp.setAutoDelete(true);
@@ -528,7 +522,7 @@ void AcquireImageDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixm
        KMessageBox::error(0, i18n("Cannot write image file \"%1\"!").arg(imagePath));
        return;
     }
-    
+
     // Upload the image if necessary
     if ( !url.isLocalFile()) {
         if (!KIO::NetAccess::upload(imagePath, url NETACCESS_WIDGET)) {

@@ -91,6 +91,7 @@ extern "C"
 #include "kshowdebuggingoutput.h"
 #include "optionsdialog.h"
 #include "checkbinprog.h"
+#include <kio/previewjob.h>
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -435,8 +436,6 @@ KImg2mpgData::KImg2mpgData(QWidget *parent, const char *name)
 
 KImg2mpgData::~KImg2mpgData()
 {
-  if (!m_thumbJob.isNull())
-     delete m_thumbJob;
 }
 
 
@@ -569,9 +568,6 @@ void KImg2mpgData::slotImagesFilesButtonUp( void )
 
 void KImg2mpgData::slotImagesFilesSelected( QListBoxItem *item )
 {
-  if (!m_thumbJob.isNull())
-      delete m_thumbJob;
-
   if ( !item || m_ImagesFilesListBox->count() == 0 )
       {
       m_label7->setText("");
@@ -589,13 +585,11 @@ void KImg2mpgData::slotImagesFilesSelected( QListBoxItem *item )
 
   m_ImageLabel->clear();
 
-  if (!m_thumbJob.isNull())
-     delete m_thumbJob;
+  // PENDING(blackie) Renchi: thumbnail job had true as forth parameter, what did that mean?
+  KIO::PreviewJob* thumbJob = KIO::filePreview( url, m_ImageLabel->width() );
 
-  m_thumbJob = new KIPI::ThumbnailJob( url, m_ImageLabel->width(), false, true );
-
-  connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-          SLOT(slotGotPreview(const KURL&, const QPixmap&)));
+  connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+          SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 
   int index = m_ImagesFilesListBox->index ( item );
   m_label7->setText(i18n("Image no. %1").arg(index + 1));
@@ -604,7 +598,7 @@ void KImg2mpgData::slotImagesFilesSelected( QListBoxItem *item )
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void KImg2mpgData::slotGotPreview(const KURL &/*url*/, const QPixmap &pixmap)
+void KImg2mpgData::slotGotPreview(const KFileItem*/*url*/, const QPixmap &pixmap)
 {
   m_ImageLabel->setPixmap(pixmap);
 }

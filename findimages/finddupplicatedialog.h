@@ -32,11 +32,10 @@
 
 #include <kdialogbase.h>
 
-// Include files for Digikam
-
-#include <libkipi/thumbnailjob.h>
+// Include files for KIPI
 #include <libkipi/interface.h>
 
+class KFileItem;
 class QComboBox;
 class QListView;
 class QFrame;
@@ -75,7 +74,7 @@ class FindDuplicateDialog : public KDialogBase
   void slotPurgeCache(void);
   void slotPurgeAllCache(void);
   void slotfindMethodChanged(const QString &string);
-  void slotGotPreview(const KURL &url, const QPixmap &pixmap);
+  void slotGotPreview(const KFileItem* url, const QPixmap &pixmap);
 
  private:
   QComboBox          *m_findMethod;
@@ -99,7 +98,6 @@ class FindDuplicateDialog : public KDialogBase
 
   bool                m_dialogOk;
 
-  QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
   KIPI::Interface    *m_interface;
 
 

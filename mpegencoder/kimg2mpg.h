@@ -35,11 +35,11 @@
 
 #include <kdialog.h>
 #include <klistbox.h>
+#include <qdatetime.h>
+#include <kprocess.h>
 
-// Include files for KIPI
-#include <libkipi/thumbnailjob.h>
 
-
+class KFileItem;
 class QPushButton;
 class QComboBox;
 class QSpinBox;
@@ -114,7 +114,7 @@ public slots:
   void slotImagesFilesSelected( QListBoxItem *item );
   void SlotPortfolioDurationChanged ( int );
   void slotOptionDlgOkClicked( void );
-  void slotGotPreview(const KURL &url, const QPixmap &pixmap);
+  void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
   void slotAddDropItems(QStringList filesPath);
 
 private:
@@ -188,8 +188,6 @@ private:
   KListBox*             m_ImagesFilesListBox;
 
   KButtonBox*           m_ImagesFilesButtonBox;
-
-  QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
 
   class KShowDebuggingOutput* m_DebuggingDialog;
 

@@ -63,6 +63,7 @@
 #include <kbuttonbox.h>
 #include <kapplication.h>
 #include <ksqueezedtextlabel.h>
+#include <kio/previewjob.h>
 
 // Local include files
 
@@ -127,8 +128,6 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
 
 KIGPDialog::~KIGPDialog()
 {
-    if (!m_thumbJob.isNull())
-       delete m_thumbJob;
 }
 
 
@@ -774,22 +773,22 @@ void KIGPDialog::albumSelected( QListViewItem * item )
 
     m_albumPreview->clear();
 
-    if (!m_thumbJob.isNull())
-       delete m_thumbJob;
-
     QString IdemIndexed = "file:" + pitem->path() + "/" + pitem->firstImage();
     KURL url(IdemIndexed);
+    KURL::List urls;
+    urls << url;
 
-    m_thumbJob = new KIPI::ThumbnailJob( url, m_albumPreview->height(), false, true );
+    // PENDING(blackie) Renchi: The Thumbnail loader had true as the dir argument, what did that mean?
+    KIO::PreviewJob* thumbJob = KIO::filePreview( urls, m_albumPreview->height() );
 
-    connect(m_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-            SLOT(slotGotPreview(const KURL&, const QPixmap&)));
+    connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void KIGPDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixmap)
+void KIGPDialog::slotGotPreview(const KFileItem* /*url*/, const QPixmap &pixmap)
 {
     m_albumPreview->setPixmap(pixmap);
 }

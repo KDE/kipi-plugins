@@ -34,10 +34,8 @@
 
 #include <kdialogbase.h>
 
-// Include files for Digikam
 
-#include <libkipi/thumbnailjob.h>
-
+class KFileItem;
 class QVBoxLayout;
 class QHBoxLayout;
 class QGridLayout;
@@ -64,8 +62,8 @@ private slots :
    void slotDisplayLeft(QListViewItem *);
    void slotAbout( void );
    void slotDelete( void );
-   void slotGotPreview1(const KURL &url, const QPixmap &pixmap);
-   void slotGotPreview2(const KURL &url, const QPixmap &pixmap);
+   void slotGotPreview1(const KFileItem* url, const QPixmap &pixmap);
+   void slotGotPreview2(const KFileItem* url, const QPixmap &pixmap);
 
 private:
    QDict < QPtrVector < QFile > >* cmp;
@@ -92,9 +90,6 @@ private:
 
    QListView*          listName;
    QListView*          listEq;
-
-   QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob1;
-   QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob2;
 };
 
 #endif   // __DISPLAYCOMPARE_H__

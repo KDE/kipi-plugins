@@ -26,6 +26,7 @@
 #include <qstringlist.h>
 #include <qdict.h>
 
+class KFileItem;
 class KListView;
 class KListViewItem;
 class KURL;
@@ -94,7 +95,6 @@ private:
     QPushButton*   abortButton_;
 
     QDict<RawItem>         itemDict_;
-    KIPI::ThumbnailJob *thumbnailJob_;
     ProcessController     *controller_;
     bool                   busy_;
     QStringList            fileList_;
@@ -122,7 +122,7 @@ private slots:
     void slotProcessingFailed(const QString& file);
 
     void slotBusy(bool busy);
-    void slotGotThumbnail(const KURL& url, const QPixmap& pix);
+    void slotGotThumbnail(const KFileItem* url, const QPixmap& pix);
 };
 
 }

@@ -35,12 +35,11 @@
 #include <klistbox.h>
 
 // Include files for KIPI
-
-#include <libkipi/thumbnailjob.h>
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
 
+class KFileItem;
 class QComboBox;
 class QGroupBox;
 class QProgressDialog;
@@ -104,7 +103,7 @@ private slots:
    void slotMozillaExited(KProcess* proc);
    void slotMozillaReadStderr(KProcess* proc, char *buffer, int buflen);
    void slotImageSelected( QListBoxItem * item );
-   void slotGotPreview(const KURL &url, const QPixmap &pixmap);
+   void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
    void slotImagesFilesButtonAdd(void);
    void slotImagesFilesButtonRem(void);
 
@@ -143,8 +142,6 @@ protected:
    KSqueezedTextLabel *m_ImageComments;
    KSqueezedTextLabel *m_ImageAlbum;
    KIPI::Interface *m_interface;
-
-   QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
 
    QString extension(const QString& imageFileFormat);
    void removeTmpFiles(void);

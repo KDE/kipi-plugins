@@ -24,6 +24,7 @@
 
 #include <qframe.h>
 
+class KFileItem;
 class QPainter;
 class QPixmap;
 class QDragEnterEvent;
@@ -61,7 +62,7 @@ private:
     KIPI::Interface* interface_;
 private slots:
 
-   void slotGotThumbnaiL(const KURL& url, const QPixmap& pix);
+   void slotGotThumbnaiL(const KFileItem* url, const QPixmap& pix);
 };
 
 }
