@@ -1,0 +1,25 @@
+INCLUDES    = $(LIBKIPI_CFLAGS) $(all_includes)
+METASOURCES = AUTO
+
+# Install this plugin in the KDE modules directory
+kde_module_LTLIBRARIES = kipiplugin_galleryexport.la
+
+kipiplugin_galleryexport_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
+
+kipiplugin_galleryexport_la_SOURCES = plugin_galleryexport.cpp \
+		gallerywindow.cpp gallerylogin.cpp gallerytalker.cpp \
+		gallerywidget.cpp
+
+kipiplugin_galleryexport_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) \
+				$(LIB_KHTML)
+
+kipiplugin_galleryexport_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+
+kde_services_DATA = kipiplugin_galleryexport.desktop
+
+#kipiplugin_galleryexporticondir = $(kde_datadir)/kipiplugin_galleryexport/icons
+#kipiplugin_galleryexporticon_ICON = AUTO
+
+messages: rc.cpp
+	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_galleryexport.pot
+

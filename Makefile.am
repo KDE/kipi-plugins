@@ -18,7 +18,7 @@ endif
 
 SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery \
 	sendimages acquireimages batchprocessimages \
-	wallpaper rawconverter findimages \
+	wallpaper rawconverter findimages galleryexport \
 	$(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(JPEGLOSSLESSDIR) \
 	$(TIMEADJUSTDIR)
 
