@@ -24,7 +24,7 @@ rc_DATA = tips
 # i18n translation tips messages
 messages: rc.cpp
 	$(PREPARETIPS) >> tips.cpp
-	LIST=`find . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name \*.cxx -o -name \*.ecpp -o -name \*.C`; \
+	LIST=`find . -name \tips.cpp`; \
 	if test -n "$$LIST"; then \
 		$(XGETTEXT) $$LIST -o $(podir)/kipiplugins.pot; \
 	fi
