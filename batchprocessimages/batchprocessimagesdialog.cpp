@@ -569,7 +569,7 @@ bool BatchProcessImagesDialog::startProcess(void)
              QFileInfo *Target = new QFileInfo(targetAlbum + "/" + item->nameDest());
              QString newFileName = RenameTargetImageFile(Target);
 
-             if ( newFileName == QString::null )
+             if ( newFileName.isNull() )
                 {
                 item->changeResult(i18n("Failed."));
                 item->changeError(i18n("destination image file already exists and cannot be renamed."));
