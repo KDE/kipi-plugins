@@ -531,10 +531,13 @@ void FrmPrintWizard::loadSettings()
 
   int pageSize = config.readNumEntry("PageSize", (int)m_pageSize);
   initPhotoSizes((KPrinter::PageSize)pageSize);
-  if (m_pageSize == KPrinter::A4)
-    CmbPaperSize->setCurrentItem(1);
+
+  if (m_pageSize == KPrinter::A6)
+      CmbPaperSize->setCurrentItem(2);
+  else if (m_pageSize == KPrinter::A4)
+      CmbPaperSize->setCurrentItem(1);      
   else
-    CmbPaperSize->setCurrentItem(0);
+      CmbPaperSize->setCurrentItem(0);
 
   // set the last output path
   QString outputPath = config.readEntry("OutputPath", EditOutputPath->text());
@@ -631,6 +634,8 @@ void FrmPrintWizard::CmbPaperSize_activated( int index )
     case 0 : pageSize = KPrinter::Letter;
              break;
     case 1 : pageSize = KPrinter::A4;
+             break;
+    case 2 : pageSize = KPrinter::A6;
              break;
   }
   initPhotoSizes(pageSize);
@@ -785,6 +790,39 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     // add to the list
     m_photoSizes.append(p);
   } // A4
+  else if (pageSize == KPrinter::A6)
+  {
+      // A6 is 10.5 x 14.8 cm
+      // but let's pretend it is 10.2 x 15.3 cm
+      TPhotoSize *p;
+      // ========== 9x13
+      p = new TPhotoSize;
+      p->label = i18n("9 x 13cm");
+      // page size
+      //    p->layouts.append(new QRect(0, 0, 1050, 1480));
+      p->layouts.append(new QRect(0, 0, 1020, 1530));
+                     
+      // photo layouts
+      p->layouts.append(new QRect( 50,  100, 900, 1300));
+                         
+      // add to the list
+      m_photoSizes.append(p);
+                             
+      // ========== 10x15cm
+      p = new TPhotoSize;
+      p->label = i18n("10 x 15cm");
+      // page size
+      //     p->layouts.append(new
+      //     QRect(0, 0, 1050, 1480));
+      p->layouts.append(new QRect(0, 0, 1020, 1530));
+                                                 
+      // photo layouts
+      p->layouts.append(new QRect( 0, 0, 1020, 1530));
+                                                     
+      // add to the list
+      m_photoSizes.append(p);
+                                                         
+  } // A6
   else
   {
     kdDebug( 51000 ) << "Initializing Unsupported page layouts\n";

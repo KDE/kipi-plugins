@@ -279,6 +279,11 @@ Click the 'Next' button to begin.</string>
                                         <string>A4</string>
                                     </property>
                                 </item>
+                                <item>
+                                    <property name="text">
+                                        <string>10x15cm</string>
+                                    </property>
+                                </item>
                                 <property name="name">
                                     <cstring>CmbPaperSize</cstring>
                                 </property>
