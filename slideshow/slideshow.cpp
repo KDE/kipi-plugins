@@ -41,6 +41,67 @@ extern "C"
 namespace KIPISlideShowPlugin
 {
 
+/**
+ * This Timer can be interrupted to pause a slideshow
+ */
+class PauseTimer : public QTimer
+{
+public:
+    PauseTimer(QObject *parent=0, const char *name=0);
+    
+    int start(int msec, bool sshot=FALSE);
+    void stop();
+    bool pause();
+    
+private:
+    time_t  m_startTime;
+    int     m_msecRest;
+    int     m_msec;
+    bool    m_paused;
+};
+
+PauseTimer::PauseTimer(QObject *parent, const char *name) :
+    QTimer(parent, name)
+{
+    m_startTime = 0;
+    m_msecRest = 0;
+    m_paused = false;
+}
+
+int PauseTimer::start(int msec, bool sshot)
+{
+    m_startTime = time(0);
+    m_msec = msec;
+    return QTimer::start(msec, sshot);
+}
+
+bool PauseTimer::pause()
+{
+    if(!m_paused)
+    {
+        m_msecRest = m_msec - time(0) - m_startTime;
+        stop();
+    }
+    else
+    {
+        if(m_msecRest < 0)
+            start(0, true);
+        else
+            start(m_msecRest, true);
+    }
+    
+    m_paused = !m_paused;
+    return m_paused;
+}
+
+void PauseTimer::stop()
+{
+    m_startTime = 0;
+    m_msecRest = 0;
+    m_paused = false;    
+    QTimer::stop();
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 SlideShow::SlideShow(const QStringList& fileList,
@@ -59,7 +120,7 @@ SlideShow::SlideShow(const QStringList& fileList,
     fileIndex_ = 0;
     effect_        = 0;
     effectRunning_ = false;
-    timer_ = new QTimer(this);
+    timer_ = new PauseTimer(this);
     connect(timer_, SIGNAL(timeout()), SLOT(slotTimeOut()));
     mIntArray = 0;
     mouseMoveTimer_ = new QTimer(this);
@@ -116,7 +177,6 @@ SlideShow::~SlideShow()
     if (imIface_)
         delete imIface_;
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -369,6 +429,25 @@ void SlideShow::showEndOfShow()
     p.end();
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void SlideShow::keyPressEvent(QKeyEvent *event)
+{
+    if(!event)
+        return;
+        
+    if(event->key() == Qt::Key_Space)
+    {
+        event->accept();
+        timer_->pause();
+    }
+    else
+    {
+        event->ignore();
+        QWidget::keyPressEvent(event);
+    }
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 

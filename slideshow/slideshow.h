@@ -28,12 +28,12 @@
 #include <qpainter.h>
 #include <qmap.h>
 
-class QTimer;
 class QMouseEvent;
 
 namespace KIPISlideShowPlugin
 {
 
+class PauseTimer;
 class ImlibIface;
 class ImImageSS;
 
@@ -82,7 +82,7 @@ private:
     ImImageSS    *nextImage_;
     
     QStringList fileList_;
-    QTimer     *timer_;
+    PauseTimer *timer_;
     QTimer     *mouseMoveTimer_;
     int         fileIndex_;
 
@@ -101,6 +101,7 @@ protected:
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *);
+    void keyPressEvent(QKeyEvent *event);
     
     int effectNone(bool);
     int effectChessboard(bool doInit);
