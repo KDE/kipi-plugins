@@ -137,3 +137,5 @@ void PreviewWidget::slotResize()
 
 }
 
+
+#include "previewwidget.moc"

@@ -467,3 +467,5 @@ void SingleDialog::slotProcessingFailed(const QString&)
 }
 
 }
+
+#include "singledialog.moc"

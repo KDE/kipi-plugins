@@ -586,3 +586,5 @@ void BatchDialog::slotGotThumbnail(const KURL& url,
 
 }
 
+
+#include "batchdialog.moc"

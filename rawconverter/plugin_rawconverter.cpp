@@ -149,5 +149,7 @@ void Plugin_RawConverter::slotItemsSelected(bool val)
 
 KIPI::Category Plugin_RawConverter::category() const
 {
-    return KIPI::ToolsPlugin;
+    return KIPI::TOOLSPLUGIN;
 }
+
+#include "plugin_rawconverter.moc"

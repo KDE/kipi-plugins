@@ -217,3 +217,5 @@ void ProcessController::slotProcessFinished()
 
 }
 
+
+#include "processcontroller.moc"

@@ -10,7 +10,7 @@ kipiplugin_rawconverter_la_SOURCES = plugin_rawconverter.cpp \
 	processcontroller.cpp dmessagebox.cpp 
 
 # Libs needed by the plugin
-kipiplugin_rawconverter_la_LIBADD = $(LIB_KPARTS) -lkipi
+kipiplugin_rawconverter_la_LIBADD = $(LIB_KPARTS) -lkipi -ldigikam
 
 # LD flags for the plugin
 kipiplugin_rawconverter_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
