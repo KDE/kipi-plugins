@@ -241,12 +241,15 @@ bool CDArchiving::showDialog()
     m_configDlg = new CDArchivingDialog( m_interface, 0 );
     readSettings();
     
-    if ( m_configDlg->exec() == QDialog::Accepted )
+    if (m_configDlg->setAlbumsList() == true)
        {
-       writeSettings();
-       return true;
+       if ( m_configDlg->exec() == QDialog::Accepted )
+          {
+          writeSettings();
+          return true;
+          }
        }
-
+       
     return false;
 }
 
@@ -760,7 +763,15 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
 
             stream << "<td align='center'>\n<a href=\"pages/"  << imgName << ".html\">";
             kdDebug(51000) << "Creating thumbnail for " << imgName.ascii() << endl;
+            
+            d = new KIPICDArchivingPlugin::EventData;
+            d->action = KIPICDArchivingPlugin::ResizeImages;
+            d->starting = true;
+            d->success = false;
+            d->fileName = imgName;
+            QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
+            
             if ( createThumb(imgName, sourceDirName, imgGalleryDir, imageFormat) )
                 {
                 const QString imgNameFormat = imgName;
@@ -830,13 +841,6 @@ void CDArchiving::createBody(QTextStream& stream, const QString& sourceDirName,
                            + " ]" + "<br>\n";
                    m_StreamMainPageAlbumPreview.append ( Temp2 );
                    }
-
-                d = new KIPICDArchivingPlugin::EventData;
-                d->action = KIPICDArchivingPlugin::ResizeImages;
-                d->starting = true;
-                d->success = false;
-                d->fileName = imgName;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                 }
             else
                 {
@@ -1277,6 +1281,7 @@ bool CDArchiving::ResizeImage( const QString Path, const QString Directory, cons
 {
 QImage img;
 bool ValRet;
+bool usingBrokenImage = false;
 
 ValRet = img.load(Path);
 
@@ -1287,7 +1292,8 @@ if ( ValRet == false )        // Cannot load the src image.
    dir = dir + "image_broken.png";
    kdDebug ( 51000 ) << "Loading " << Path.ascii() << " failed ! Using " << dir.ascii() 
                      << " instead..." << endl;
-   ValRet = img.load(dir);   // Try broken image icon...
+   ValRet = img.load(dir);    // Try broken image icon...
+   usingBrokenImage = true;
    }
 
 if ( ValRet == true )
@@ -1361,7 +1367,8 @@ if ( ValRet == true )
 
    *Width = w;
    *Height = h;
-   return true;
+   
+   return ( ! usingBrokenImage );   // If usingBrokenImage=false ==> return true else return false.
    }
 
 return false;

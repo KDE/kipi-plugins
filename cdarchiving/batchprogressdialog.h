@@ -36,6 +36,15 @@ class KProgress;
 namespace KIPICDArchivingPlugin
 {
 
+enum ActionMessageType
+{
+    StartingMessage = 0,
+    SucessMessage,
+    WarningMessage,
+    ErrorMessage,
+    ProgressMessage
+};
+
 class BatchProgressDialog : public KDialogBase
 {
 Q_OBJECT
@@ -45,7 +54,7 @@ Q_OBJECT
    BatchProgressDialog( QWidget *parent=0 );
    ~BatchProgressDialog();
 
-   void addedAction(QString text);
+   void addedAction(QString text, int type);
    void reset();
    void setProgress(int current, int total);
    

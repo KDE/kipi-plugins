@@ -185,7 +185,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
               }
            }
            
-        m_progressDlg->addedAction(text);
+        m_progressDlg->addedAction(text, KIPICDArchivingPlugin::StartingMessage);
         }
     else 
         {
@@ -224,35 +224,50 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Success' event: " << d->action << endl;
                   }
                }
-               
+
+            m_progressDlg->addedAction(text, KIPICDArchivingPlugin::SucessMessage);
             ++m_current;   
             }
         else
             {
             switch (d->action) 
                {
+               case(KIPICDArchivingPlugin::ResizeImages): 
+                  {
+                  text = i18n("Failed to create thumbnail for '%1'").arg(d->fileName);
+                  m_progressDlg->addedAction(text, KIPICDArchivingPlugin::WarningMessage);
+                  m_progressDlg->setProgress(m_current, m_total);
+                  break;
+                  }
+               
                case(KIPICDArchivingPlugin::BuildHTMLiface): 
                   {
                   text = i18n("Failed to create HTML interface: %1")
                               .arg(d->message);
+                  m_progressDlg->addedAction(text, KIPICDArchivingPlugin::ErrorMessage);
+                  m_progressDlg->setProgress(m_current, m_total);
+                  slotCancel();
+                  return;
                   break;
                   }
 
                case(KIPICDArchivingPlugin::BuildK3bProject): 
                   {
                   text = i18n("Failed to create K3b project!");
-                  break;
-                  }
-
-               case(KIPICDArchivingPlugin::ResizeImages): 
-                  {
-                  text = i18n("Failed to create thumbnail for '%1'").arg(d->fileName);
+                  m_progressDlg->addedAction(text, KIPICDArchivingPlugin::ErrorMessage);
+                  m_progressDlg->setProgress(m_current, m_total);
+                  slotCancel();
+                  return;
                   break;
                   }
 
                case(KIPICDArchivingPlugin::Error): 
                   {
                   text = d->message;
+                  m_progressDlg->addedAction(text, KIPICDArchivingPlugin::ErrorMessage);
+                  m_progressDlg->setProgress(m_current, m_total);
+                  slotCancel();
+                  return;
                   break;
                   }                  
                            
@@ -261,14 +276,8 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                   kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Failed' event: " << d->action << endl;
                   }
                }
-
-            m_progressDlg->addedAction(text);
-            m_progressDlg->setProgress(m_current, m_total);
-            slotCancel();
-            return;
             }
 
-        m_progressDlg->addedAction(text);
         m_progressDlg->setProgress(m_current, m_total);
         
         if( d->action == KIPICDArchivingPlugin::BuildK3bProject )
@@ -281,7 +290,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                 
            // Invoke K3b program.
            
-           m_progressDlg->addedAction(i18n("Starting K3b program..."));
+           m_progressDlg->addedAction(i18n("Starting K3b program..."), KIPICDArchivingPlugin::StartingMessage);
            m_cdarchiving->invokeK3b();
            }
         }

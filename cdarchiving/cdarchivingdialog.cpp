@@ -110,7 +110,7 @@ private:
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *parent)
-                 : KDialogBase( IconList, i18n("Configure"), Help|Ok|Cancel, Ok,
+                 : KDialogBase( IconList, i18n("Configure Archive to CD"), Help|Ok|Cancel, Ok,
                    parent, "CDArchivingDialog", true, true ), m_interface( interface )
 {
     setCaption(i18n("Albums CD archiving"));
@@ -121,7 +121,6 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     aboutPage();
     page_setupSelection->setFocus();
     setHelp("cdarchiving", "kipi-plugins");
-    setAlbumsList();
 }
 
 
@@ -258,24 +257,30 @@ void CDArchivingDialog::setupSelection(void)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void CDArchivingDialog::setAlbumsList(void)
+bool CDArchivingDialog::setAlbumsList(void)
 {
     AlbumItem *currentAlbum = 0; 
     int current = 0;
-    
+    m_stopParsingAlbum = false;
     QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
     
     m_progressDlg = new QProgressDialog (i18n("Parsing Albums. Please wait..."),
                                          i18n("&Cancel"), 0, 0, 0, true);
     
     connect(m_progressDlg, SIGNAL(cancelled()),
-            this, SLOT(reject()));
+            this, SLOT(slotStopParsingAlbums()));
                 
     m_progressDlg->show();
     
     for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
          albumIt != albums.end() ; ++albumIt ) 
         {
+        if (m_stopParsingAlbum == true)
+           {
+           delete m_progressDlg;
+           return false;
+           }
+           
         m_progressDlg->setProgress(current, albums.count());
         kapp->processEvents();
         ++current;
@@ -317,8 +322,13 @@ void CDArchivingDialog::setAlbumsList(void)
         m_AlbumsList->ensureItemVisible(currentAlbum);
     
     delete m_progressDlg;
+    return true;
 }
 
+void CDArchivingDialog::slotStopParsingAlbums(void)
+{
+    m_stopParsingAlbum = true;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 

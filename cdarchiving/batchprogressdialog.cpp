@@ -32,6 +32,7 @@
 #include <qcolor.h>
 #include <qhgroupbox.h>
 #include <qvgroupbox.h>
+#include <qheader.h>
 
 // Include files for KDE
 
@@ -43,6 +44,7 @@
 #include <kdebug.h>
 #include <kdialogbase.h>
 #include <klistview.h>
+#include <kiconloader.h>
 
 // Local includes
 
@@ -51,7 +53,67 @@
 namespace KIPICDArchivingPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
+class BatchProgressItem : public KListViewItem
+{
+public:
+   BatchProgressItem(QListView * parent, QListViewItem *after, QString message, int messageType)
+                   : KListViewItem( parent, after), m_messagetype(messageType)
+   {
+   // Set the icon.
+   
+   switch( messageType ) 
+     {
+     case KIPICDArchivingPlugin::StartingMessage:
+        setPixmap( 0, SmallIcon( "run" ) );
+        break;
+     case KIPICDArchivingPlugin::SucessMessage:
+        setPixmap( 0, SmallIcon( "ok" ) );
+        break;
+     case KIPICDArchivingPlugin::WarningMessage:
+        setPixmap( 0, SmallIcon( "flag" ) );
+        break;
+     case KIPICDArchivingPlugin::ErrorMessage:
+        setPixmap( 0, SmallIcon( "stop" ) );
+        break;
+     case KIPICDArchivingPlugin::ProgressMessage:
+        setPixmap( 0, SmallIcon( "info" ) );
+        break;
+     default:
+        setPixmap( 0, SmallIcon( "info" ) );
+     }
+
+   // Set the message text.
+           
+   setText(1, message);
+   }
+
+private:
+   int m_messagetype;   
+    
+   void paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
+      {
+      QColorGroup _cg( cg );
+
+      if ( m_messagetype == KIPICDArchivingPlugin::ErrorMessage )
+          {
+          _cg.setColor( QColorGroup::Text, Qt::red );
+          KListViewItem::paintCell( p, _cg, column, width, alignment );
+          return;
+          }
+
+      if ( m_messagetype == KIPICDArchivingPlugin::WarningMessage )
+          {
+          _cg.setColor( QColorGroup::Text, Qt::darkYellow );
+          KListViewItem::paintCell( p, _cg, column, width, alignment );
+          return;
+          }
+              
+      KListViewItem::paintCell( p, cg, column, width, alignment );
+      }
+};
+
+
+/////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 BatchProgressDialog::BatchProgressDialog( QWidget *parent )
                    : KDialogBase( KDialogBase::Plain, i18n("Preparing archive to CD"), Cancel,
@@ -65,11 +127,14 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent )
     groupBox1 = new QGroupBox( 2, Qt::Horizontal, box );
     
     m_actionsList = new KListView( groupBox1 );
-    m_actionsList->addColumn(i18n("Current actions"));
+    m_actionsList->addColumn("Status");
+    m_actionsList->addColumn("Current actions");
     m_actionsList->setSorting(-1);
     m_actionsList->setItemMargin(1);
+    //m_actionsList->setShowSortIndicator(false);
+    m_actionsList->header()->hide();
     m_actionsList->setResizeMode(QListView::LastColumn);
-    QWhatsThis::add( m_progress, i18n("<p>This is the current tasks list released.") );
+    QWhatsThis::add( m_actionsList, i18n("<p>This is the current tasks list released.") );
     dvlay->addWidget( groupBox1 );
     
     //---------------------------------------------
@@ -77,7 +142,7 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent )
     m_progress = new KProgress( box, "Progress" );
     m_progress->setTotalSteps(100);
     m_progress->setValue(0);
-    QWhatsThis::add( m_actionsList, i18n("<p>This is the list current percent task released.") );
+    QWhatsThis::add( m_progress, i18n("<p>This is the list current percent task released.") );
     dvlay->addWidget( m_progress );
     resize( 600, 400 );
 }
@@ -92,16 +157,12 @@ BatchProgressDialog::~BatchProgressDialog()
 
 ///////////////////////////////////// FONCTIONS /////////////////////////////////////////////
 
-void BatchProgressDialog::addedAction(QString text)
+void BatchProgressDialog::addedAction(QString text, int type)
 {
-    QListViewItem *item;
+    BatchProgressItem *item = new BatchProgressItem(m_actionsList, 
+                                                    m_actionsList->lastItem(),
+                                                    text, type);
     
-    if ( !m_actionsList->lastItem() )
-        item = new QListViewItem(m_actionsList);
-    else 
-        item = new QListViewItem(m_actionsList, m_actionsList->lastItem());
-    
-    item->setText(0, text);
     m_actionsList->ensureItemVisible(item);
 }
 

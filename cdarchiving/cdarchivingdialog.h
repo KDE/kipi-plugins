@@ -65,6 +65,8 @@ class CDArchivingDialog : public KDialogBase
   CDArchivingDialog( KIPI::Interface* interface, QWidget *parent=0);
   ~CDArchivingDialog();
 
+  bool setAlbumsList(void);
+    
   const QString getK3bBinPathName() const;
   void  setK3bBinPathName(QString Value);
 
@@ -146,6 +148,7 @@ class CDArchivingDialog : public KDialogBase
   void slotbuttonSelectNone(void);
   void UrlChanged(const QString &url );
   void slotGotPreview(const KFileItem*, const QPixmap &pixmap);
+  void slotStopParsingAlbums(void);
   
  private:
   QCheckBox          *m_useHTMLInterface;
@@ -210,13 +213,14 @@ class CDArchivingDialog : public KDialogBase
 
   KIPI::Interface    *m_interface;
 
+  bool                m_stopParsingAlbum;
+  
  private:
   void setupSelection(void);
   void setupLookPage(void);
   void setupCDInfos(void);
   void setupBurning(void);
   void aboutPage(void);
-  void setAlbumsList(void);
 };
 
 }  // NameSpace KIPICDArchivingPlugin
