@@ -41,8 +41,6 @@ extern "C"
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 
-// Digikam includes
-
 // Local includes
 
 #include "plugin_printwizard.h"
@@ -104,7 +102,7 @@ void Plugin_PrintWizard::slotActivate()
 
     FrmPrintWizard frm;
     KStandardDirs dir;
-    QString tempPath = dir.saveLocation("tmp", "digikam-printwizard-" + QString::number(getpid()) + "/");
+    QString tempPath = dir.saveLocation("tmp", "kipi-printwizard-" + QString::number(getpid()) + "/");
     frm.print(fileList, tempPath);
     frm.exec();
 }

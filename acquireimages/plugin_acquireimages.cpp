@@ -4,7 +4,7 @@
 //
 //    Copyright (C) 2003-2004 Gilles CAULIER <caulier dot gilles at free.fr>
 //
-//    Description : Digikam Acquire Images Plugin.
+//    Description : KIPI Acquire Images Plugin.
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -104,7 +104,7 @@ void Plugin_AcquireImages::slotActivate()
 
     if (from == "scan_images")
        {
-       m_scanDialog = KScanDialog::getScanDialog(0, "Digikam Scan Images Plugin");
+       m_scanDialog = KScanDialog::getScanDialog(0, "KIPI Scan Images Plugin");
 
        if ( m_scanDialog )
            {
@@ -115,7 +115,7 @@ void Plugin_AcquireImages::slotActivate()
        else
            {
            KMessageBox::sorry(0, i18n("No KDE scan-service available. Check your system!"),
-                              i18n("Digikam Scan Images Plugin"));
+                              i18n("KIPI Scan Images Plugin"));
            qDebug("No Scan-service available, aborting!");
            return;
            }
@@ -125,7 +125,7 @@ void Plugin_AcquireImages::slotActivate()
        }
     else if (from == "screenshot_images")
        {
-       m_screenshotDialog = new ScreenGrabDialog(interface, 0, "Digikam ScreenshotImagesDialog");
+       m_screenshotDialog = new ScreenGrabDialog(interface, 0, "KIPI ScreenshotImagesDialog");
        m_screenshotDialog->show();
        }
     else

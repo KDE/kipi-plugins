@@ -53,7 +53,7 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Coloring Images options"));
-    setHelp("plugin-colorimages.anchor", "digikam");
+    setHelp("plugin-colorimages.anchor", "kipi");
 
     //---------------------------------------------
 
@@ -118,11 +118,11 @@ ColorImagesDialog::~ColorImagesDialog()
 
 void ColorImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for batch colors images enhancement\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for batch colors images enhancement\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About Digikam batch colors images enhancement"));
+                                  i18n("About KIPI batch colors images enhancement"));
 }
 
 
@@ -181,7 +181,7 @@ void ColorImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("ColorImages Settings");
 
     m_Type->setCurrentText(m_config->readEntry("ColorType", i18n("Normalize")));
@@ -212,7 +212,7 @@ void ColorImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("ColorImages Settings");
 
     m_config->writeEntry("ColorType", m_Type->currentText());

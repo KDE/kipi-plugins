@@ -331,7 +331,7 @@ void CDArchivingDialog::setupLookPage(void)
     m_labelTitle = new QLabel( i18n("Archiving title:"), page_setupLook);
     vlay->addWidget( m_labelTitle );
 
-    m_title = new QLineEdit(i18n("Digikam Albums Archiving"), page_setupLook);
+    m_title = new QLineEdit(i18n("Albums Archiving"), page_setupLook);
     vlay->addWidget( m_title );
     m_labelTitle->setBuddy(m_title);
     QWhatsThis::add( m_title, i18n("<p>Enter here the title of the CD archiving.") );
@@ -552,7 +552,7 @@ void CDArchivingDialog::setupCDInfos(void)
     label = new QLabel( i18n("Volume set name:"), page_CDInfos);
     vlay->addWidget( label );
 
-    m_volume_set_id = new QLineEdit(i18n("Digikam Albums CD archiving"), page_CDInfos);
+    m_volume_set_id = new QLineEdit(i18n("Albums CD archiving"), page_CDInfos);
     vlay->addWidget( m_volume_set_id );
     m_labelTitle->setBuddy(m_volume_set_id);
     m_volume_set_id->setMaxLength(128);
@@ -588,7 +588,7 @@ void CDArchivingDialog::setupCDInfos(void)
     label = new QLabel( i18n("Publisher:"), page_CDInfos);
     vlay->addWidget( label );
 
-    m_publisher = new QLineEdit(i18n("Digikam [digikam.sourceforge.net]"), page_CDInfos);
+    m_publisher = new QLineEdit(i18n("KIPI [KDE Images Program Interface]"), page_CDInfos);
     vlay->addWidget( m_publisher );
     m_labelTitle->setBuddy(m_publisher);
     m_publisher->setMaxLength(128);
@@ -600,7 +600,7 @@ void CDArchivingDialog::setupCDInfos(void)
     label = new QLabel( i18n("Preparer:"), page_CDInfos);
     vlay->addWidget( label );
 
-    m_preparer = new QLineEdit(i18n("Digikam CD Archiving plugin"), page_CDInfos);
+    m_preparer = new QLineEdit(i18n("KIPI CD Archiving plugin"), page_CDInfos);
     vlay->addWidget( m_preparer );
     m_labelTitle->setBuddy(m_preparer);
     m_preparer->setMaxLength(128);
@@ -680,7 +680,7 @@ void CDArchivingDialog::aboutPage(void)
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 
-    QLabel *label = new QLabel( i18n("A Digikam plugin for Albums CD archiving\n\n"
+    QLabel *label = new QLabel( i18n("A KIPI plugin for Albums CD archiving\n\n"
                              "Author: Gilles Caulier\n\n"
                              "Email: caulier dot gilles at free.fr\n\n"
                              "Thanks to Gregory Kokanosky <gregory dot kokanosky at free.fr> "

@@ -63,7 +63,7 @@ namespace RawConverter
 BatchDialog::BatchDialog()
     : QDialog(0,0,false,Qt::WDestructiveClose)
 {
-    setCaption(i18n("Digikam Raw Image Batch Converter"));
+    setCaption(i18n("KIPI Raw Image Batch Converter"));
 
     QGridLayout *mainLayout = new QGridLayout(this,5,2,6,11);
 
@@ -396,7 +396,7 @@ void BatchDialog::slotHelp()
 
 void BatchDialog::slotAbout()
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for batch RAW images converting\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for batch RAW images converting\n\n"
                                 "Author: Renchi Raju\n\n"
                                 "Email: renchi@pooh.tam.uiuc.edu\n\n"
                                 "This plugin uses the Dave Coffin RAW photo decoder program \"dcraw\""),

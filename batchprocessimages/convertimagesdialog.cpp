@@ -120,11 +120,11 @@ ConvertImagesDialog::~ConvertImagesDialog()
 
 void ConvertImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for batch convert images\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for batch convert images\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About Digikam batch convert images"));
+                                  i18n("About KIPI batch convert images"));
 }
 
 
@@ -188,7 +188,7 @@ void ConvertImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("ConvertImages Settings");
 
     m_Type->setCurrentText(m_config->readEntry("ImagesFormat", "JPEG"));
@@ -218,7 +218,7 @@ void ConvertImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("ConvertImages Settings");
 
     m_config->writeEntry("ImagesFormat", m_Type->currentText());

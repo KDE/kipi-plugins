@@ -52,7 +52,7 @@ RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interf
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Recompress Images options"));
-    setHelp("plugin-recompressimages.anchor", "digikam");
+    setHelp("plugin-recompressimages.anchor", "kipi");
 
     //---------------------------------------------
 
@@ -81,11 +81,11 @@ RecompressImagesDialog::~RecompressImagesDialog()
 
 void RecompressImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for batch recompress images\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for batch recompress images\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About Digikam batch recompress images"));
+                                  i18n("About KIPI batch recompress images"));
 }
 
 
@@ -120,7 +120,7 @@ void RecompressImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("RecompressImages Settings");
 
     m_JPEGCompression = m_config->readNumEntry("JPEGCompression", 75);
@@ -151,7 +151,7 @@ void RecompressImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("RecompressImages Settings");
 
     m_config->writeEntry("JPEGCompression", m_JPEGCompression);

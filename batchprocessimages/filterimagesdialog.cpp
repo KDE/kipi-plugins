@@ -53,7 +53,7 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Filtering Images options"));
-    setHelp("plugin-filterimages.anchor", "digikam");
+    setHelp("plugin-filterimages.anchor", "kipi");
 
     //---------------------------------------------
 
@@ -104,11 +104,11 @@ FilterImagesDialog::~FilterImagesDialog()
 
 void FilterImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for batch filtering images\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for batch filtering images\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About Digikam batch filtering images"));
+                                  i18n("About KIPI batch filtering images"));
 }
 
 
@@ -201,7 +201,7 @@ void FilterImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("FilterImages Settings");
 
     m_Type->setCurrentText(m_config->readEntry("FilterType", i18n("Sharpen")));
@@ -239,7 +239,7 @@ void FilterImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("FilterImages Settings");
 
     m_config->writeEntry("FilterType", m_Type->currentText());

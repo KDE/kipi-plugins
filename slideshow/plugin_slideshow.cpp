@@ -94,7 +94,7 @@ void Plugin_SlideShow::slotSlideShow()
 {
     KIPI::Interface* interface = static_cast<KIPI::Interface*>( parent() );
 
-    KConfig config("digikamrc");
+    KConfig config("kipirc");
 
     bool    opengl;
     int     delay;

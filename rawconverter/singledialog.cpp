@@ -55,7 +55,7 @@ SingleDialog::SingleDialog(const QString& file)
     : QDialog(0,0,false,Qt::WDestructiveClose)
 {
 
-    setCaption(i18n("Digikam Raw Image Converter"));
+    setCaption(i18n("KIPI Raw Image Converter"));
     
     // --------------------------------------------------------------
 
@@ -352,7 +352,7 @@ void SingleDialog::slotHelp()
 
 void SingleDialog::slotAbout()
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for RAW image converting\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for RAW image converting\n\n"
                                 "Author: Renchi Raju\n\n"
                                 "Email: renchi@pooh.tam.uiuc.edu\n\n"
                                 "This plugin uses the Dave Coffin RAW photo decoder program \"dcraw\""),

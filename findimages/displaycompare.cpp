@@ -262,12 +262,12 @@ DisplayCompare::~DisplayCompare()
 
 void DisplayCompare::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for find duplicate images\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for find duplicate images\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin is based on ShowImg implementation\n"
                                   "by Richard Groult <rgroult at jalix.org>\n"),
-                                  i18n("About Digikam find duplicate images"));
+                                  i18n("About KIPI find duplicate images"));
 }
 
 

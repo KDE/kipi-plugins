@@ -317,12 +317,12 @@ void FindDuplicateDialog::setupPageMethod(void)
 
 void FindDuplicateDialog::aboutPage(void)
 {
-    page_about = addPage( i18n("About"), i18n("About Digikam find duplicate images"),
+    page_about = addPage( i18n("About"), i18n("About kipi find duplicate images"),
                           BarIcon("kipi", KIcon::SizeMedium ) );
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 
-    QLabel *label = new QLabel( i18n("A Digikam plugin for find duplicate images\n\n"
+    QLabel *label = new QLabel( i18n("A KIPI plugin for find duplicate images\n\n"
                                      "Author: Gilles Caulier\n\n"
                                      "Email: caulier dot gilles at free.fr\n\n"
                                      "This plugin is based on ShowImg implementation\n"

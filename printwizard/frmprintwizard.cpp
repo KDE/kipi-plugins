@@ -101,8 +101,7 @@ FrmPrintWizard::~FrmPrintWizard()
 
 void FrmPrintWizard::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("plugin-printwizard.anchor",
-                                             "digikam");
+  KApplication::kApplication()->invokeHelp("plugin-printwizard.anchor","kipi");
 }
 
 void FrmPrintWizard::print( KURL::List fileList, QString tempPath)
@@ -237,7 +236,7 @@ void FrmPrintWizard::FrmPrintWizardBaseSelected(const QString &)
       QString path = EditOutputPath->text();
       if (path.right(1) != "/")
         path = path + "/";
-      path = path + "digikam_printwizard_";
+      path = path + "kipi_printwizard_";
       printPhotosToFile(m_photos, path, s->layouts);
     } else
     if (RdoOutputGimp->isChecked())
@@ -246,7 +245,7 @@ void FrmPrintWizard::FrmPrintWizardBaseSelected(const QString &)
       QString path = m_tempPath;
       if (!checkTempPath(this, path))
         return;
-      path = path + "digikam_tmp_";
+      path = path + "kipi_tmp_";
       if (m_gimpFiles.count() > 0)
         removeGimpFiles();
       m_gimpFiles = printPhotosToFile(m_photos, path, s->layouts);
@@ -256,7 +255,7 @@ void FrmPrintWizard::FrmPrintWizardBaseSelected(const QString &)
           args << (*it);
       if (!launchExternalApp(args))
       {
-        KMessageBox::sorry(this, i18n("There was an error launching Gimp.  Please make sure Gimp is properly installed."), i18n("Digikam"));
+        KMessageBox::sorry(this, i18n("There was an error launching Gimp.  Please make sure Gimp is properly installed."), i18n("KIPI"));
         return;
       }
 
@@ -519,7 +518,7 @@ QStringList FrmPrintWizard::printPhotosToFile(QPtrList<TPhoto> photos, QString &
 
 void FrmPrintWizard::loadSettings()
 {
-  KSimpleConfig config("digikamrc");
+  KSimpleConfig config("kipirc");
   config.setGroup("PrintWizard");
 
   int pageSize = config.readNumEntry("PageSize", (int)m_pageSize);
@@ -552,7 +551,7 @@ void FrmPrintWizard::loadSettings()
 // save the current wizard settings
 void FrmPrintWizard::saveSettings()
 {
-  KSimpleConfig config("digikamrc");
+  KSimpleConfig config("kipirc");
   config.setGroup("PrintWizard");
 
   config.writeEntry("PageSize", (int)m_pageSize);

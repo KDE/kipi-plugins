@@ -54,7 +54,7 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Bordering Images options"));
-    setHelp("plugin-borderimages.anchor", "digikam");
+    setHelp("plugin-borderimages.anchor", "kipi");
 
     //---------------------------------------------
 
@@ -94,11 +94,11 @@ BorderImagesDialog::~BorderImagesDialog()
 
 void BorderImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for batch bordering images\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for batch bordering images\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About Digikam batch bordering images"));
+                                  i18n("About KIPI batch bordering images"));
 }
 
 
@@ -168,7 +168,7 @@ void BorderImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("BorderImages Settings");
 
     m_Type->setCurrentText(m_config->readEntry("BorderType", "Niepce"));
@@ -212,7 +212,7 @@ void BorderImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("BorderImages Settings");
     m_config->writeEntry("BorderType", m_Type->currentText());
 

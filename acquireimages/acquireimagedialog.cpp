@@ -125,7 +125,7 @@ AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *par
     setupAlbumsList();
     aboutPage();
     readSettings();
-    setHelp("plugin-acquireimages.anchor", "digikam");
+    setHelp("plugin-acquireimages.anchor", "kipi");
     slotImageFormatChanged(m_imagesFormat->currentText());
     page_setupImageOptions->setFocus();
     resize( 600, 400 );
@@ -145,14 +145,17 @@ void AcquireImageDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("AcquireImages Settings");
     m_FileName->setText(m_config->readEntry("DefaultImageFileName", i18n("image")));
     m_imageCompression->setValue(m_config->readNumEntry("ImageCompression", 75));
     m_imagesFormat->setCurrentText(m_config->readEntry("ImageFormat", "TIFF"));
 
-    // Read File Filter settings in digikamrc file.
 
+// PENDING (gilles) : using kipirc file !
+    // Read File Filter settings in kipirc file.
+
+    m_config = new KConfig("digikamrc");
     m_config->setGroup("Album Settings");
     QString Temp = m_config->readEntry("File Filter", "*.jpg *.jpeg *.tif *.tiff *.gif *.png *.bmp");
     m_ImagesFilesSort = Temp.lower() + " " + Temp.upper();
@@ -167,7 +170,7 @@ void AcquireImageDialog::writeSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("AcquireImages Settings");
     m_config->writeEntry("DefaultImageFileName", m_FileName->text());
     m_config->writeEntry("ImageCompression", m_imageCompression->value());
@@ -400,7 +403,7 @@ void AcquireImageDialog::aboutPage(void)
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 
-    QLabel *label = new QLabel( i18n("A Digikam plugin for acquire images\n\n"
+    QLabel *label = new QLabel( i18n("A KIPI plugin for acquire images\n\n"
                                      "Author: Gilles Caulier\n\n"
                                      "Email: caulier dot gilles at free.fr\n\n"), page_about);
 

@@ -2,7 +2,7 @@
  * File  : plugin_imagesgallery.cpp
  * Author: Gilles Caulier <caulier dot gilles at free.fr>
  * Date  : 2003-09-05
- * Description : Images gallery HTML export Digikam plugin
+ * Description : Images gallery HTML export KIPI plugin
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

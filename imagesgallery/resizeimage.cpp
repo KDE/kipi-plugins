@@ -83,9 +83,9 @@ void ResizeImage::run(void)
 
     if ( ValRet == false )        // cannot load the src image.
        {
-       KGlobal::dirs()->addResourceType("digikam_imagebroken", KGlobal::dirs()->kde_default("data")
-                                        + "digikam/data");
-       QString dir = KGlobal::dirs()->findResourceDir("digikam_imagebroken", "image_broken.png");
+       KGlobal::dirs()->addResourceType("kipi_imagebroken", KGlobal::dirs()->kde_default("data")
+                                        + "kipi/data");
+       QString dir = KGlobal::dirs()->findResourceDir("kipi_imagebroken", "image_broken.png");
        dir = dir + "image_broken.png";
        qDebug("Loading %s failed ! Using %s instead...", Path_.ascii(), dir.ascii() );
        ValRet = img.load(dir);   // load broken image icon...

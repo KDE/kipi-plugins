@@ -114,8 +114,7 @@ CalWizard::~CalWizard()
 
 void CalWizard::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("plugin-calendar.anchor",
-                                             "kipi");
+    KApplication::kApplication()->invokeHelp("plugin-calendar.anchor", "kipi");
 }
 
 void CalWizard::slotPageSelected(const QString&)

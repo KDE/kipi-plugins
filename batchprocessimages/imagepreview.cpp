@@ -172,9 +172,9 @@ PixmapView::PixmapView(bool cropAction, QWidget *parent, const char *name)
     horizontalScrollBar()->setPageStep( 1 );
     verticalScrollBar()->setLineStep( 1 );
     verticalScrollBar()->setPageStep( 1 );
-    KGlobal::dirs()->addResourceType("digikam_handcursor", KGlobal::dirs()->kde_default("data")
-                   + "digikam/data");
-    m_handCursor = new QCursor( KGlobal::dirs()->findResourceDir("digikam_handcursor", "handcursor.png")
+    KGlobal::dirs()->addResourceType("kipi_handcursor", KGlobal::dirs()->kde_default("data")
+                   + "kipi/data");
+    m_handCursor = new QCursor( KGlobal::dirs()->findResourceDir("kipi_handcursor", "handcursor.png")
                    + "handcursor.png" );
 }
 

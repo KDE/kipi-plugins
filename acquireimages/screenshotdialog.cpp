@@ -59,11 +59,11 @@ extern "C"
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent, const char *name)
-                : KDialogBase(parent, name, false, i18n("Digikam Screenshot Images Plugin"),
+                : KDialogBase(parent, name, false, i18n("KIPI Screenshot Images Plugin"),
                               Help|User1|Close|User2, Close, true, i18n("&About"), i18n("&New snapshot")),
                   m_interface( interface )
 {
-    setHelp("plugin-screenshotimages.anchor", "digikam");
+    setHelp("plugin-screenshotimages.anchor", "kipi");
     m_inSelect = false;
     QWidget* box = new QWidget( this );
     setMainWidget(box);
@@ -86,8 +86,8 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
 
     //---------------------------------------------
 
-    m_hideCB = new QCheckBox(i18n("Hide all Digikam windows."), box);
-    QWhatsThis::add( m_hideCB, i18n( "<p>If you enable this option, all Digikam windows will be hidden, "
+    m_hideCB = new QCheckBox(i18n("Hide all host application windows."), box);
+    QWhatsThis::add( m_hideCB, i18n( "<p>If you enable this option, all host application windows will be hidden, "
                                      "during the grab operation." ) );
     layout->addWidget(m_hideCB);
 
@@ -118,7 +118,7 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
 
     // Read all settings from configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("ScreenshotImages Settings");
 
     if (m_config->readEntry("GrabDesktop", "true") == "true")
@@ -126,7 +126,7 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
     else
         m_desktopCB->setChecked( false );
 
-    if (m_config->readEntry("HideDigikam", "true") == "true")
+    if (m_config->readEntry("HideHostWin", "true") == "true")
         m_hideCB->setChecked( true );
     else
         m_hideCB->setChecked( false );
@@ -148,11 +148,11 @@ ScreenGrabDialog::~ScreenGrabDialog()
 
 void ScreenGrabDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for grab images from screen\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for grab images from screen\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "Based on Ksnapshot implementation from KDE project"),
-                                  i18n("About Digikam screenshot plugin"));
+                                  i18n("About KIPI screenshot plugin"));
 }
 
 
@@ -162,10 +162,10 @@ void ScreenGrabDialog::slotClose( void )
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("ScreenshotImages Settings");
     m_config->writeEntry("GrabDesktop", m_desktopCB->isChecked());
-    m_config->writeEntry("HideDigikam", m_hideCB->isChecked());
+    m_config->writeEntry("HideHostWin", m_hideCB->isChecked());
     m_config->writeEntry("Delay", m_delay->value());
     m_config->sync();
     delete m_config;
@@ -181,7 +181,7 @@ void ScreenGrabDialog::slotGrab()
 {
     hide();
 
-    // Hiding the Digikam windows
+    // Hiding the Host windows
 
     if (m_hideCB->isChecked())
        kapp->mainWidget()->hide();
@@ -254,7 +254,7 @@ void ScreenGrabDialog::slotPerformGrab()
 
 void ScreenGrabDialog::endGrab(void)
 {
-    // Restore the Digikam windows
+    // Restore the Host windows
 
     if (m_hideCB->isChecked())
        {

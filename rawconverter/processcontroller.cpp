@@ -71,7 +71,7 @@ void ProcessController::process(const QString& file)
 
     QFileInfo fi(fileCurrent_);
     tmpFile_ = fi.dirPath(true) + QString("/")
-               + ".digikam-rawconverter-tmp-"
+               + ".kipi-rawconverter-tmp-"
                + currTime_;
 
     dcProcess_->clearArguments();
@@ -112,7 +112,7 @@ void ProcessController::preview(const QString& file)
 
     QFileInfo fi(fileCurrent_);
     tmpFile_ = fi.dirPath(true) + QString("/")
-               + ".digikam-rawconverter-tmp-"
+               + ".kipi-rawconverter-tmp-"
                + currTime_;
 
     dcProcess_->clearArguments();

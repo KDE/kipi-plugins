@@ -72,7 +72,7 @@ RenameImagesDialog::RenameImagesDialog( KURL::List urlList, KIPI::Interface* int
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch Rename Images options"));
-    setHelp("plugin-renameimages.anchor", "digikam");
+    setHelp("plugin-renameimages.anchor", "kipi");
 
     //---------------------------------------------
 
@@ -101,10 +101,10 @@ RenameImagesDialog::~RenameImagesDialog()
 
 void RenameImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for batch rename images\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for batch rename images\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n"),
-                                  i18n("About Digikam batch rename images"));
+                                  i18n("About KIPI batch rename images"));
 }
 
 
@@ -491,7 +491,7 @@ void RenameImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("RenameImages Settings");
 
     m_prefix = m_config->readEntry("PrefixString", "");
@@ -541,7 +541,7 @@ void RenameImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("RenameImages Settings");
 
     m_config->writeEntry("PrefixString", m_prefix);

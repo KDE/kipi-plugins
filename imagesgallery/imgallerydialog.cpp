@@ -284,7 +284,7 @@ void KIGPDialog::setupLookPage(void)
     labelTitle = new QLabel( i18n("Main &page title:"), page_setupLook);
     vlay->addWidget(labelTitle);
 
-    m_title = new QLineEdit(i18n("Digikam Albums Images Galleries"), page_setupLook);
+    m_title = new QLineEdit(i18n("Albums Images Galleries"), page_setupLook);
     vlay->addWidget( m_title );
     labelTitle->setBuddy(m_title);
     QWhatsThis::add( m_title, i18n("<p>Enter here the title of the main HTML page "
@@ -741,7 +741,7 @@ void KIGPDialog::aboutPage(void)
 
     QVBoxLayout *vlay = new QVBoxLayout( page_about, 0, spacingHint() );
 
-    QLabel *label = new QLabel( i18n("A Digikam plugin for Albums HTML export\n"
+    QLabel *label = new QLabel( i18n("A KIPI plugin for Albums HTML export\n"
                              "Author: Gilles Caulier\n"
                              "Email: caulier dot gilles at free.fr\n\n"
                              "Ported and improved from KimgalleryPlugin konqueror plugin to\n"

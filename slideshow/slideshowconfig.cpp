@@ -2,7 +2,7 @@
  * File  : slideshowconfig.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-02-17
- * Description : Digikam slideshow plugin.
+ * Description : KIPI slideshow plugin.
  *
  * Copyright 2003 by Renchi Raju
  *
@@ -46,7 +46,7 @@ SlideShowConfig::SlideShowConfig()
 {
     config_ = 0;
 
-    setHelp("plugin-slideshow.anchor", "digikam");
+    setHelp("plugin-slideshow.anchor", "kipi");
     QWidget *page = new QWidget( this );
     setMainWidget( page );
 
@@ -128,7 +128,7 @@ SlideShowConfig::SlideShowConfig()
 
     // ------------------------------------------------------------------
 
-    config_ = new KConfig("digikamrc");
+    config_ = new KConfig("kipirc");
     config_->setGroup("SlideShow Settings");
 
     readSettings();
@@ -283,7 +283,7 @@ void SlideShowConfig::slotOkClicked()
 
 void SlideShowConfig::slotAboutClicked()
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for images slideshow\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for images slideshow\n\n"
                                   "Author: Renchi Raju\n\n"
                                   "Email: renchi@pooh.tam.uiuc.edu"),
                                   i18n("About SlideShow"));

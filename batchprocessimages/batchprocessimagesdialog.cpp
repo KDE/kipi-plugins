@@ -263,6 +263,8 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     connect(m_remImagesButton, SIGNAL(clicked()),
             this, SLOT(slotImagesFilesButtonRem()));
 
+// PENDING (Gilles) : using kipirc file.
+
     // Read File Filter settings in digikamrc file.
 
     m_config = new KConfig("digikamrc");
@@ -409,7 +411,7 @@ void BatchProcessImagesDialog::slotProcessStart( void )
         if ( KMessageBox::warningContinueCancel(this,
              i18n("All original images files will be removed from the source Album!\nDo you want to continue?"),
              i18n("Delete original images files"), KStdGuiItem::cont(),
-             "Digikamplugin-BatchProcessImages-AlwaysRemomveOriginalFiles") != KMessageBox::Continue )
+             "KIPIplugin-BatchProcessImages-AlwaysRemomveOriginalFiles") != KMessageBox::Continue )
            return;
         }
 

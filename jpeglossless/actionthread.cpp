@@ -42,7 +42,7 @@ ActionThread::ActionThread( KIPI::Interface* interface, QObject *parent)
 {
     // Create a JPEGLossLess plugin temporary folder in KDE tmp directory.
     KStandardDirs dir;
-    tmpFolder_ = dir.saveLocation("tmp", "digikam-jpeglossless-" +
+    tmpFolder_ = dir.saveLocation("tmp", "kipi-jpeglossless-" +
                                   QString::number(getpid()) + "/");
 }
 

@@ -54,7 +54,7 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
     m_nbItem = m_selectedImageFiles.count();
 
     setCaption(i18n("Batch FX transforming Images options"));
-    setHelp("plugin-effectimages.anchor", "digikam");
+    setHelp("plugin-effectimages.anchor", "kipi");
 
     //---------------------------------------------
 
@@ -117,11 +117,11 @@ EffectImagesDialog::~EffectImagesDialog()
 
 void EffectImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for batch images FX transformations\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for batch images FX transformations\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" program from \"ImageMagick\" package.\n"),
-                                  i18n("About Digikam batch images FX transformations"));
+                                  i18n("About KIPI batch images FX transformations"));
 }
 
 
@@ -241,7 +241,7 @@ void EffectImagesDialog::slotOptionsClicked(void)
 
 void EffectImagesDialog::readSettings(void)
 {
-m_config = new KConfig("digikamrc");
+m_config = new KConfig("kipirc");
     m_config->setGroup("EffectImages Settings");
 
     m_Type->setCurrentText(m_config->readEntry("EffectType", i18n("Normalize")));
@@ -285,7 +285,7 @@ void EffectImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("digikamrc");
+    m_config = new KConfig("kipirc");
     m_config->setGroup("EffectImages Settings");
     m_config->writeEntry("EffectType", m_Type->currentText());
 

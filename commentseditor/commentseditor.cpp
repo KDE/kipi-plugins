@@ -142,7 +142,7 @@ CommentsEditor::CommentsEditor( KIPI::Interface* interface, KIPI::ImageCollectio
                   0, 0, true, true, i18n("&About") )
 
 {
-    setHelp("plugin-commentseditor.anchor", "digikam");
+    setHelp("plugin-commentseditor.anchor", "kipi");
     m_images    = images;
     m_interface = interface;
 
@@ -294,7 +294,7 @@ void CommentsEditor::slotOkClicked()
 
 void CommentsEditor::slotAboutClicked()
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for comments images edition\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for comments images edition\n\n"
                                   "Author: Renchi Raju\n\n"
                                   "Email: renchi@pooh.tam.uiuc.edu"),
                                   i18n("About CommentsEditor"));

@@ -105,12 +105,12 @@ ResizeImagesDialog::~ResizeImagesDialog()
 
 void ResizeImagesDialog::slotAbout( void )
 {
-    KMessageBox::about(this, i18n("A Digikam plugin for batch resize images\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for batch resize images\n\n"
                                   "Author: Gilles Caulier\n\n"
                                   "Email: caulier dot gilles at free.fr\n\n"
                                   "This plugin use the \"convert\" and \"composite\" programs "
                                   "from \"ImageMagick\" package.\n"),
-                                  i18n("About Digikam batch resize images"));
+                                  i18n("About KIPI batch resize images"));
 }
 
 
