@@ -115,8 +115,8 @@ bool Plugin_RawConverter::checkBinaries()
     process.addArgument("kipidcrawclient");
     
     if (!process.start()) {
-        KMessageBox::error(0, i18n("Failed to start Raw Converter Client\n"
-                                   "Please check your installation"));
+        KMessageBox::error(0, i18n("Failed to start Raw Converter Client;\n"
+                                   "please check your installation."));
         return false;
     }
 
@@ -124,8 +124,8 @@ bool Plugin_RawConverter::checkBinaries()
     process.addArgument("dcraw");
     
     if (!process.start()) {
-        KMessageBox::error(0, i18n("dcraw is required for Raw Image Conversion\n"
-                                   "Please install it"));
+        KMessageBox::error(0, i18n("dcraw is required for Raw Image Conversion;\n"
+                                   "please install it."));
         return false;
     }
 

@@ -100,11 +100,11 @@ SingleDialog::SingleDialog(const QString& file)
     fourColorCheckBox_ = new QCheckBox(i18n("Four Color RGBG"), settingsBox);
     QToolTip::add(fourColorCheckBox_,
                   i18n("Interpolate RGB as four colors.\n"
-                       "The default is to  assume  that all  green\n"
-                       "pixels  are  the same.  If even-row green\n"
+                       "The default is to assume that all green\n"
+                       "pixels are the same. If even-row green\n"
                        "pixels are more sensitive to ultraviolet light\n"
                        "than odd-row this difference causes a mesh\n"
-                       "pattern in the output. Using this option solves\n"
+                       "pattern in the output; using this option solves\n"
                        "this problem with minimal loss of detail."));
     settingsBoxLayout->addWidget(fourColorCheckBox_);
 
@@ -169,20 +169,20 @@ SingleDialog::SingleDialog(const QString& file)
     radioButton = new QRadioButton("JPEG",saveButtonGroup_);
     QToolTip::add(radioButton,
                   i18n("Output the processed image in JPEG Format.\n"
-                       "This is a lossy format, but will give smaller\n"
-                       "sized files"));
+                       "This is a lossy format, but will give\n"
+                       "smaller-sized files"));
     radioButton->setChecked(true);
 
     radioButton = new QRadioButton("TIFF",saveButtonGroup_);
     QToolTip::add(radioButton,
                   i18n("Output the processed image in TIFF Format.\n"
-                       "This is generates big sized files without\n"
+                       "This generates larges, without\n"
                        "losing quality"));
 
     radioButton = new QRadioButton("PPM",saveButtonGroup_);
     QToolTip::add(radioButton,
                   i18n("Output the processed image in PPM Format.\n"
-                       "This is generates biggest sized files without\n"
+                       "This generates the largest files, without\n"
                        "losing quality"));
 
     // ---------------------------------------------------------------
@@ -222,7 +222,7 @@ SingleDialog::SingleDialog(const QString& file)
     processButton_ = new QPushButton(i18n("P&rocess"), this);
     QToolTip::add(processButton_,
                   i18n("Convert the Raw Image from current settings.\n"
-                       "This uses a high-quality adaptive algorithm"));
+                       "This uses a high-quality adaptive algorithm."));
     hboxLayout->addWidget(processButton_);
 
     abortButton_ = new QPushButton(i18n("&Abort"), this);
@@ -352,7 +352,7 @@ void SingleDialog::slotHelp()
 
 void SingleDialog::slotAbout()
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for RAW image converting\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for RAW image conversion\n\n"
                                 "Author: Renchi Raju\n\n"
                                 "Email: renchi@pooh.tam.uiuc.edu\n\n"
                                 "This plugin uses the Dave Coffin RAW photo decoder program \"dcraw\""),

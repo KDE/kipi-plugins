@@ -104,11 +104,11 @@ BatchDialog::BatchDialog()
     fourColorCheckBox_ = new QCheckBox(i18n("Four Color RGBG"), settingsBox);
     QToolTip::add(fourColorCheckBox_,
                     i18n("Interpolate RGB as four colors. \n"
-                         "The default is to  assume  that all  green \n"
-                         "pixels  are  the same.  If even-row green \n"
+                         "The default is to assume that all green \n"
+                         "pixels are the same. If even-row green \n"
                          "pixels are more sensitive to ultraviolet light \n"
                          "than odd-row this difference causes a mesh \n"
-                         "pattern in the output. Using this option solves \n"
+                         "pattern in the output; using this option solves \n"
                          "this problem with minimal loss of detail.\n"));
     settingsBoxLayout->addWidget(fourColorCheckBox_);
 
@@ -172,21 +172,21 @@ BatchDialog::BatchDialog()
     QRadioButton *radioButton;
     radioButton = new QRadioButton("JPEG",saveButtonGroup_);
     QToolTip::add(radioButton,
-                    i18n("Output the processed image in JPEG Format.\n"
-                         "This is a lossy format, but will give smaller\n"
-                         "sized files"));
+                    i18n("Output the processed images in JPEG Format.\n"
+                         "This is a lossy format, but will give\n"
+                         "smaller-sized files"));
     radioButton->setChecked(true);
 
     radioButton = new QRadioButton("TIFF",saveButtonGroup_);
     QToolTip::add(radioButton,
-                    i18n("Output the processed image in TIFF Format.\n"
-                         "This is generates big sized files without \n"
+                    i18n("Output the processed images in TIFF Format.\n"
+                         "This generates large files, without\n"
                          "losing quality"));
 
     radioButton = new QRadioButton("PPM",saveButtonGroup_);
     QToolTip::add(radioButton,
-                    i18n("Output the processed image in PPM Format.\n"
-                         "This is generates biggest sized files without\n"
+                    i18n("Output the processed images in PPM Format.\n"
+                         "This generates the largest files, without\n"
                          "losing quality"));
 
     connect(saveButtonGroup_, SIGNAL(clicked(int)),
@@ -396,11 +396,11 @@ void BatchDialog::slotHelp()
 
 void BatchDialog::slotAbout()
 {
-    KMessageBox::about(this, i18n("A KIPI plugin for batch RAW images converting\n\n"
+    KMessageBox::about(this, i18n("A KIPI plugin for batch RAW-image conversion\n\n"
                                 "Author: Renchi Raju\n\n"
                                 "Email: renchi@pooh.tam.uiuc.edu\n\n"
                                 "This plugin uses the Dave Coffin RAW photo decoder program \"dcraw\""),
-                                i18n("About batch RAW images converter"));
+                                i18n("About Batch RAW-image converter"));
 }
 
 void BatchDialog::slotProcess()
