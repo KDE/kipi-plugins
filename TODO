@@ -1,20 +1,5 @@
-Authors:
-
-Renchi Raju        <renchi at pooh.tam.uiuc.edu>
-Gilles Caulier     <caulier dot gilles at free.fr>
-Gregory Kokanosky  <gregory dot kokanosky at free.fr>
-Todd Shoemaker     <todd at theshoemakers.net>
-Richard Groult     <Richard dot Groult at jalix.org>
-Ralf Holzer        <kde at ralfhoelzer.com>
-
-Port to LIBKIPI on KDE CVS :
-
-Aurelien Gateau    <aurelien dot gateau at free.fr>
-Jesper K. Pedersen <blackie at kde.org>
-
 ----------------------------------------------------------------------------
 * General
- - All dialog based plugins should use KIPI::ImageCollectionSelector.
  - All dialog less plugins which modify images should only use
    currentSelection().
  - All dialog less plugins which do not modify images should use either
@@ -54,12 +39,6 @@ Jesper K. Pedersen <blackie at kde.org>
  - Add annotation images for copyrights (like Photoshop).
  - Add images gallery targets : kmail, war, zip, tar.gz, tar.bz2 (request by
    Achim Bohnet).
-
-----------------------------------------------------------------------------
-* COMMENTSEDITOR PLUGIN [Author: Renchi Raju]
-  (batch images comments editor)
-
- - Write comments into JPEG COM field and EXIF UserComment
 
 ----------------------------------------------------------------------------
 * PRINTWIZARD PLUGIN [Author: Todd Shoemaker]
@@ -160,38 +139,20 @@ Jesper K. Pedersen <blackie at kde.org>
 -> TODO (planed by Gilles Caulier)
 
 ----------------------------------------------------------------------------
-* MISCSOPERATIONS PLUGINS GROUP
-
- ==> IMAGE2DESKTOP PLUGIN [Author: Gregory Kokanosky]
+* WALLPAPER PLUGIN [Author: Gregory Kokanosky]
      (Put an image in desktop background based on ShowImg source code)
 
- ==> ALBUM2FILEMANAGER PLUGIN [Author: Gregory Kokanosky]
-     (open an Album path in a file manager (konqueror and nautilus))
-
- ==> KGAMMACALL PLUGIN [Author: Gilles Caulier]
-     (KDE Gamma correction call)
-
- ==> EXTERNALRUNNING PLUGIN
+----------------------------------------------------------------------------
+* EXTERNALRUNNING PLUGIN
     (allows to start programs with the current selection of images. This
      would allow to define in the plugins config the users prefered
      slideshow program, image editor, HTML Gallery generators etc.)
     -> TODO
 
 ----------------------------------------------------------------------------
-* FINDIMAGES PLUGIN GROUP
+*  FINDDUPPLICATEIMAGES PLUGIN [Authors: Gilles Caulier and Richard Grould]
+    (Find duplicates images into Digikam library using ShowImg code source)
 
- ==> FINDCOMMENTS PLUGIN [Author: Gregory Kokanosky]
-     (Find comments into Digikam library)
-     -> TODO
-
- ==> FINDDUPPLICATEIMAGES PLUGIN [Authors: Gilles Caulier and Richard Grould]
-     (Find duplicates images into Digikam library using ShowImg code source)
-
-----------------------------------------------------------------------------
-* IMPORT2ALBUM PLUGIN
-  (Wizard for import Images/Folders/PhotoCD/CD with images to an Album)
-
--> TODO
 
 
 
