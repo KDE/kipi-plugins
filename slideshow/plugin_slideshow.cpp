@@ -29,6 +29,10 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
+#include <cstdlib>
+#include <sys/time.h>
+#include <time.h>
+
 // Local includes.
 
 #include "slideshow.h"
@@ -159,6 +163,7 @@ void Plugin_SlideShow::slotSlideShow()
     int     delay;
     bool    printFileName;
     bool    loop;
+    bool    shuffle;
     bool    showSelectedFilesOnly;
     QString effectName;
 
@@ -167,6 +172,7 @@ void Plugin_SlideShow::slotSlideShow()
     delay                 = config.readNumEntry("Delay");
     printFileName         = config.readBoolEntry("Print Filename");
     loop                  = config.readBoolEntry("Loop");
+    shuffle               = config.readBoolEntry("Shuffle");
     showSelectedFilesOnly = config.readBoolEntry("Show Selected Files Only");
     if (!opengl)
         effectName        = config.readEntry("Effect Name");
@@ -190,6 +196,24 @@ void Plugin_SlideShow::slotSlideShow()
     
     for( KURL::List::Iterator urlIt = urlList.begin(); urlIt != urlList.end(); ++urlIt ) {
         fileList.append( (*urlIt).path() );
+    }
+
+    if (shuffle)
+    {
+        struct timeval tv;
+        gettimeofday(&tv, 0);
+        srand(tv.tv_sec);
+
+        QStringList::iterator it  = fileList.begin();
+        QStringList::iterator it1;
+        
+        for (uint i=0; i<fileList.size(); i++)
+        {
+            int inc = (int) (float(fileList.count())*rand()/(RAND_MAX+1.0));
+            it1 = fileList.begin();
+            it1 += inc;
+            qSwap(*(it++), *(it1));
+        }
     }
 
     if (!opengl) {

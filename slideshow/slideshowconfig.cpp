@@ -157,29 +157,35 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly)
 
     // ------------------------------------------------------------------
 
+    shuffleCheckBox_ = new QCheckBox( page );
+    shuffleCheckBox_->setText( i18n( "Shuffle images" ) );
+    grid->addMultiCellWidget( shuffleCheckBox_, 5, 5, 0, 2 );
+    
+    // ------------------------------------------------------------------
+    
     QLabel* label1 = new QLabel( page);
     label1->setText( i18n( "Delay between images (ms):" ) );
-    grid->addWidget( label1, 5, 0 );
+    grid->addWidget( label1, 6, 0 );
 
     // ------------------------------------------------------------------
 
     delaySpinBox_ = new QSpinBox( 1000, 10000, 10, page );
     delaySpinBox_->setSizePolicy(QSizePolicy( (QSizePolicy::SizeType)0,
                                               (QSizePolicy::SizeType)0));
-    grid->addWidget( delaySpinBox_, 5, 1 );
+    grid->addWidget( delaySpinBox_, 6, 1 );
 
     // ------------------------------------------------------------------
 
     QLabel* label2 = new QLabel( page, "label2" );
     label2->setText( i18n( "Transition effect:" ) );
-    grid->addWidget( label2, 6, 0 );
+    grid->addWidget( label2, 7, 0 );
 
     // ------------------------------------------------------------------
 
     effectsComboBox_ = new QComboBox( FALSE, page, "effectsComboBox_" );
     effectsComboBox_->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7,
                                                   (QSizePolicy::SizeType)0 ) );
-    grid->addMultiCellWidget( effectsComboBox_, 6, 6, 1, 2 );
+    grid->addMultiCellWidget( effectsComboBox_, 7, 7, 1, 2 );
 
     // ------------------------------------------------------------------
 
@@ -250,12 +256,14 @@ void SlideShowConfig::readSettings()
     int   delay;
     bool  printFileName;
     bool  loop;
+    bool  shuffle;
     bool  showSelectedFilesOnly;
 
     opengl                = config_->readBoolEntry("OpenGL", false);
     delay                 = config_->readNumEntry("Delay", 1500);
     printFileName         = config_->readBoolEntry("Print Filename", true);
     loop                  = config_->readBoolEntry("Loop", false);
+    shuffle               = config_->readBoolEntry("Shuffle", false);
     showSelectedFilesOnly = config_->readBoolEntry("Show Selected Files Only", false);
     effectName_           = config_->readEntry("Effect Name", "Random");
     effectNameGL_         = config_->readEntry("Effect Name (OpenGL)", "Random");
@@ -269,6 +277,8 @@ void SlideShowConfig::readSettings()
     printNameCheckBox_->setChecked(printFileName);
 
     loopCheckBox_->setChecked(loop);
+
+    shuffleCheckBox_->setChecked(shuffle);
 
     if (showSelectedFilesOnly && selectedFilesButton_->isEnabled() )
         selectedFilesButton_->setChecked(true);
@@ -286,6 +296,7 @@ void SlideShowConfig::saveSettings()
     config_->writeEntry("Delay", delaySpinBox_->value());
     config_->writeEntry("Print Filename", printNameCheckBox_->isChecked());
     config_->writeEntry("Loop", loopCheckBox_->isChecked());
+    config_->writeEntry("Shuffle", shuffleCheckBox_->isChecked());
     config_->writeEntry("Show Selected Files Only", selectedFilesButton_->isChecked());
 
     if (!openglCheckBox_->isChecked()) {

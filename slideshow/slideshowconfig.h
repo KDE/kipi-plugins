@@ -76,6 +76,7 @@ private:
     QCheckBox*    openglCheckBox_;
     QCheckBox*    printNameCheckBox_;
     QCheckBox*    loopCheckBox_;
+    QCheckBox*    shuffleCheckBox_;
     
     QSpinBox*     delaySpinBox_;
     
