@@ -145,7 +145,7 @@ void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
         return;
     }
 
-    m_actionSlideShow->setEnabled(!currAlbum.images().isEmpty());
+    m_actionSlideShow->setEnabled(true);
 }
 
 void Plugin_SlideShow::slotSlideShow()
