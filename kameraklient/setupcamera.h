@@ -5,7 +5,7 @@
  * Description : 
  * 
  * Copyright 2003 by Renchi Raju
-
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published bythe Free Software Foundation;
@@ -22,36 +22,46 @@
 #ifndef SETUPCAMERA_H
 #define SETUPCAMERA_H
 
+// KDE includes.
+
 #include <kdialogbase.h>
 
 class QListView;
 class QListViewItem;
 class QPushButton;
 
-class SetupCamera : public KDialogBase {
+class SetupCamera : public KDialogBase 
+{
     Q_OBJECT
 
-    public:
-	SetupCamera(QWidget* parent = 0, const char* name = 0);
-	~SetupCamera();
-	void applySettings();
+public:
+    
+    SetupCamera(QWidget* parent = 0, const char* name = 0);
+    ~SetupCamera();
+    
+    void applySettings();
 
-    private:
-	QListView*    listView_;
-	QPushButton* addButton_;
-	QPushButton* removeButton_;
-	QPushButton* editButton_;
-	QPushButton* autoDetectButton_;
+private:
+    
+    QListView*   listView_;
+    
+    QPushButton* addButton_;
+    QPushButton* removeButton_;
+    QPushButton* editButton_;
+    QPushButton* autoDetectButton_;
+    QPushButton* helpButton_;
 
-    private slots:
-	void slotSelectionChanged();
-	void slotAddCamera();
-	void slotRemoveCamera();
-	void slotEditCamera();
-	void slotAutoDetectCamera();
-	void slotAddedCamera(const QString& model, const QString& port);
-	void slotEditedCamera(const QString& model, const QString& port);
-	void slotOkClicked();
+private slots:
+        
+    void slotHelp();    
+    void slotSelectionChanged();
+    void slotAddCamera();
+    void slotRemoveCamera();
+    void slotEditCamera();
+    void slotAutoDetectCamera();
+    void slotAddedCamera(const QString& model, const QString& port);
+    void slotEditedCamera(const QString& model, const QString& port);
+    void slotOkClicked();
 };
 
 #endif 

@@ -30,20 +30,23 @@
  *
  * ============================================================ */
 
-// Qt
+// Qt includes.
+
 #include <qcombobox.h>
 #include <qdir.h>
 #include <qfileinfo.h>
 #include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qpushbutton.h>
 #include <qsplitter.h>
 #include <qstringlist.h>
 #include <qtooltip.h>
 #include <qvaluelist.h>
 #include <qvbox.h>
-// KDE
+#include <qpushbutton.h>
+
+// KDE includes
+
 #include <kaccel.h>
 #include <kcombobox.h>
 #include <kconfig.h>
@@ -53,7 +56,6 @@
 #include <kfileitem.h>
 #include <klocale.h>
 #include <kedittoolbar.h>
-#include <kiconloader.h>
 #include <kio/job.h>
 #include <kkeydialog.h>
 #include <klineeditdlg.h>
@@ -66,7 +68,14 @@
 #include <kstatusbar.h>
 #include <kstdaccel.h>
 #include <kurl.h>
-// Local
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
+
+// Local includes.
+
 #include "camerafolderitem.h"
 #include "cameraiconview.h"
 #include "camerafolderview.h"
@@ -82,7 +91,8 @@
 #include "savefiledialog.h"
 #include "setupcamera.h"
 
-CameraUI::CameraUI() : QWidget() {
+CameraUI::CameraUI() : QWidget() 
+{
     setWFlags(Qt::WDestructiveClose);
     resize(700, 440);
     setMinimumSize(600, 400);
@@ -93,7 +103,9 @@ CameraUI::CameraUI() : QWidget() {
     QVBoxLayout* mLeftBoxLayout = new QVBoxLayout(mMainBoxLayout, 0);
     QVBoxLayout* mBtnBoxLayout = new QVBoxLayout(mMainBoxLayout, 4);
     mBtnBoxLayout->setMargin(2);
+    
     // create Button Box ----------------------------------------------------------------------
+    
     mCameraSetupBtn = new QPushButton(i18n("Setup"), this);
     mCameraSetupBtn->setMinimumSize(QSize(100, 0));
     mBtnBoxLayout->addWidget(mCameraSetupBtn);
@@ -114,10 +126,36 @@ CameraUI::CameraUI() : QWidget() {
     mDialogCloseBtn = new QPushButton(i18n("Close"), this);
     mDialogCloseBtn->setMinimumSize(QSize(100, 0));
     mBtnBoxLayout->addWidget(mDialogCloseBtn);
-    mPluginAboutBtn = new QPushButton(i18n("About"), this);
-    mPluginAboutBtn->setMinimumSize(QSize(100, 0));
-    mBtnBoxLayout->addWidget(mPluginAboutBtn); //----------------------------------------------
+
+    // About data and help button ---------------------------------------------------
+    
+    mhelpButton = new QPushButton(i18n("&Help"), this);
+    mhelpButton->setMinimumSize(QSize(100, 0));
+    mBtnBoxLayout->addWidget(mhelpButton); 
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("KameraKlient"), 
+                                       "0.1.0-cvs",
+                                       I18N_NOOP("An Digital camera interface KIPI plugin"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Renchi Raju\n"
+                                       "(c) 2004, Tudor Calin", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    about->addAuthor("Renchi Raju", I18N_NOOP("Original author from Digikam project"),
+                     "renchi@pooh.tam.uiuc.edu");
+
+    about->addAuthor("Tudor Calin", I18N_NOOP("Porting the Digikam GPhoto2 interface to Kipi. Maintainer"),
+                     "tudor@1xtech.com");
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("KameraKlient handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    mhelpButton->setPopup( helpMenu->menu() );
+    
     // create Camera Box-----------------------------------------------------------------------
+    
     QHBoxLayout* mCameraBoxLayout = new QHBoxLayout(mLeftBoxLayout, 4);
     mCameraBoxLayout->setMargin(4);
     mCameraConnectBtn = new QPushButton(i18n("Connect"), this);
@@ -125,8 +163,10 @@ CameraUI::CameraUI() : QWidget() {
     mCameraComboBox = new QComboBox(this, "camera");
     mCameraComboBox->setInsertionPolicy(QComboBox::AtBottom);
     mCameraComboBox->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
-    mCameraBoxLayout->addWidget(mCameraComboBox); // ------------------------------------------
+    mCameraBoxLayout->addWidget(mCameraComboBox); 
+    
     // create Download Directory Camera Box ---------------------------------------------------
+    
     QHBoxLayout *mDownloadDirectoryBoxLayout = new QHBoxLayout(mLeftBoxLayout, 4);
     mDownloadDirectoryBoxLayout->setMargin(4);
     QLabel* mDownloadDirectoryLabel = new QLabel(i18n("Download to: "), this);
@@ -150,7 +190,9 @@ CameraUI::CameraUI() : QWidget() {
     controller_ = new GPController(this, *mCameraType);
     controller_->start();
     cameraConnected_ = false;
+    
     // create Status Bar -----------------------------------------------------------------------------
+    
     mStatusBar =  new KStatusBar(this);
     mLeftBoxLayout->addWidget(mStatusBar);
     mStatusLabel = new QLabel(mStatusBar);
@@ -158,7 +200,10 @@ CameraUI::CameraUI() : QWidget() {
     mStatusBar->addWidget(mStatusLabel, 7, true);
     mProgressBar = new KProgress(mStatusBar);
     mProgressBar->setTotalSteps(100);
-    mStatusBar->addWidget(mProgressBar, 5, true); // ------------------------------------------------- 
+    mStatusBar->addWidget(mProgressBar, 5, true); 
+    
+    // ------------------------------------------------- 
+    
     setupAccel();
     setupConnections();
     mCameraList->load();
@@ -172,6 +217,13 @@ CameraUI::~CameraUI() {
     mFolderView->clear();
     mIconView->clear();
 }
+
+
+void CameraUI::slotHelp()
+{
+    KApplication::kApplication()->invokeHelp("kameraklient",
+                                             "kipi-plugins");
+} 
 
 const CameraType* CameraUI::cameraType() {
     return mCameraType;

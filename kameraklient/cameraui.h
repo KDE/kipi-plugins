@@ -23,13 +23,18 @@
 #ifndef CAMERAUI_H
 #define CAMERAUI_H
 
-// Qt
+// Qt includes.
+
 #include <qdict.h>
 #include <qstring.h>
 #include <qwidget.h>
-// KDE
+
+// KDE includes.
+
 #include <kfileitem.h>
-// Local
+
+// Local includes.
+
 #include "gpfileiteminfo.h"
 #include "cameratype.h"
 
@@ -57,13 +62,17 @@ class CameraIconView;
 class CameraFolderItem;
 class CameraFolderView;
 
-namespace KIO {
-	class Job;
+namespace KIO 
+{
+class Job;
 }
-class CameraUI : public QWidget {
+
+class CameraUI : public QWidget 
+{
     Q_OBJECT
-	
+
 public:
+
     CameraUI();
     ~CameraUI();
     void setCameraConnected(bool val);
@@ -79,17 +88,21 @@ public:
     void cameraErrorMsg(const QString& msg);
    
 private:
+
     void setupAccel();
     void setupConnections();
     bool cameraReadyForUpload(QString& reason);
-    void downloadOneItem(const QString& item, const QString& folder, const QString& downloadDir, bool& proceedFurther, bool& overwriteAll);
+    void downloadOneItem(const QString& item, const QString& folder,
+                         const QString& downloadDir, bool& proceedFurther, bool& overwriteAll);
     
 signals:
+
     void signalStatusMsg(const QString&);
     void signalProgressVal(int);
     void signalBusy(bool);
 
 public slots:
+
     void slotCameraConnectToggle();
     void slotCameraDownloadSelected();
     void slotCameraDeleteSelected();
@@ -101,6 +114,7 @@ public slots:
     void slotSelectNew();
    
 private slots:
+
     void slotSetStatusMsg(const QString& msg);
     void slotSetProgressVal(int val);
     void slotResetStatusBar();
@@ -111,11 +125,16 @@ private slots:
     void slotChangeDownloadDirectory();
     void writeSettings();
     void readSettings();
+    void slotHelp();  
     
 private:
+
     QLabel              *mStatusLabel;
+    
     KProgress           *mProgressBar;
+    
     QComboBox           *mCameraComboBox;
+    
     QPushButton         *mCameraConnectBtn;
     QPushButton         *mCameraSetupBtn;
     QPushButton         *mCameraStopBtn;
@@ -123,22 +142,37 @@ private:
     QPushButton         *mCameraUploadBtn;
     QPushButton         *mCameraDeleteBtn;
     QPushButton         *mDialogCloseBtn;
-    QPushButton         *mPluginAboutBtn;
-    KAccel              *mCameraUIAccel;
-    KToggleAction       *mCameraConnectAction;
-    CameraType          *mCameraType;
-    CameraList       	*mCameraList;
-    KStatusBar        	*mStatusBar;
-    KConfig             *mConfig; 
-    GPEventFilter       *efilter_;
-    GPController        *controller_;
-    GPFileItemContainer *container_;
-    QSplitter           *mSplitter;   
-    CameraFolderView    *mFolderView;
-    CameraIconView      *mIconView;
-    QString             cameraPath_;
-    bool                cameraConnected_;
     QPushButton         *mChangeDownloadDirectoryBtn;
+    QPushButton         *mhelpButton;
+
+    KAccel              *mCameraUIAccel;
+    
+    KToggleAction       *mCameraConnectAction;
+    
+    CameraType          *mCameraType;
+    
+    CameraList       	*mCameraList;
+    
+    KStatusBar        	*mStatusBar;
+    
+    KConfig             *mConfig; 
+    
+    GPEventFilter       *efilter_;
+    
+    GPController        *controller_;
+    
+    GPFileItemContainer *container_;
+    
+    QSplitter           *mSplitter;   
+    
+    CameraFolderView    *mFolderView;
+    
+    CameraIconView      *mIconView;
+    
+    QString             cameraPath_;
+    
+    bool                cameraConnected_;
+    
     QLineEdit           *mDownloadDirectoryEdit;
 };
 

@@ -19,23 +19,60 @@
  * 
  * ============================================================ */
 
-// Qt
+// Qt includes.
+
 #include <qapplication.h>
 #include <qgroupbox.h>
-#include <qpushbutton.h>
 #include <qlayout.h>
 #include <qlistview.h>
-// KDE
+#include <qpushbutton.h>
+
+// KDE includes.
+
 #include <klocale.h>
 #include <kmessagebox.h>
-// Local
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
+
+// Local includes.
+
 #include "setupcamera.h"
 #include "cameraselection.h"
 #include "cameralist.h"
 #include "cameratype.h"
 #include "gpiface.h"
 
-SetupCamera::SetupCamera(QWidget* parent, const char* name) : KDialogBase(parent, name, true, i18n("Setup Cameras"), Ok|Cancel, Ok, true) {
+SetupCamera::SetupCamera(QWidget* parent, const char* name) 
+           : KDialogBase(parent, name, true, i18n("Setup Cameras"), 
+                         Help|Ok|Cancel, Ok, true) 
+{
+        // About data and help button.
+    
+        KAboutData* about = new KAboutData("kipiplugins",
+                                           I18N_NOOP("KameraKlient"), 
+                                           "0.1.0-cvs",
+                                           I18N_NOOP("An Digital camera interface KIPI plugin"),
+                                           KAboutData::License_GPL,
+                                           "(c) 2003-2004, Renchi Raju\n"
+                                           "(c) 2004, Tudor Calin", 
+                                           0,
+                                           "http://extragear.kde.org/apps/kipi.php");
+    
+        about->addAuthor("Renchi Raju", I18N_NOOP("Original author from Digikam project"),
+                         "renchi@pooh.tam.uiuc.edu");
+
+        about->addAuthor("Tudor Calin", I18N_NOOP("Porting the Digikam GPhoto2 interface to Kipi. Maintainer"),
+                         "tudor@1xtech.com");
+
+        helpButton_ = actionButton( Help );
+        KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+        helpMenu->menu()->removeItemAt(0);
+        helpMenu->menu()->insertItem(i18n("KameraKlient handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+        helpButton_->setPopup( helpMenu->menu() );
+        
 	setWFlags(Qt::WDestructiveClose);
 	QWidget *page = new QWidget(this);
 	setMainWidget(page);
@@ -88,6 +125,12 @@ SetupCamera::SetupCamera(QWidget* parent, const char* name) : KDialogBase(parent
 
 SetupCamera::~SetupCamera() {
 }
+
+void SetupCamera::slotHelp()
+{
+    KApplication::kApplication()->invokeHelp("kameraklient",
+                                             "kipi-plugins");
+}   
 
 void SetupCamera::slotSelectionChanged() {
     QListViewItem *item = listView_->selectedItem();
