@@ -33,7 +33,8 @@
 #include <qimage.h>
 #include <qpainter.h>
 #include <qfileinfo.h>
-#include <qfontmetrics.h> 
+#include <qfontmetrics.h>
+#include <qwmatrix.h>
 
 #include <math.h>
 #include <cstdlib>
@@ -44,7 +45,7 @@
 namespace KIPISlideShowPlugin
 {
 
-SlideShowGL::SlideShowGL(const QStringList& fileList,
+SlideShowGL::SlideShowGL(const QValueList<QPair<QString, int> >& fileList,
                          int delay, bool printName,bool loop,
                          const QString& effectName)
     : QGLWidget(0, 0, 0, WStyle_StaysOnTop | WType_Popup |
@@ -402,8 +403,16 @@ void SlideShowGL::previousFrame()
 
 void SlideShowGL::loadImage()
 {
-    QString path(fileList_[fileIndex_]);
+    QPair<QString, int> fileAngle = fileList_[fileIndex_];
+    QString path(fileAngle.first);
+    int     angle(fileAngle.second);
     QImage image(path);
+    if (angle != 0)
+    {
+        QWMatrix wm;
+        wm.rotate(angle);
+        image = image.xForm(wm);
+    }
 
     if (!image.isNull()) {
 
@@ -473,7 +482,7 @@ void SlideShowGL::montage(QImage& top, QImage& bot)
 
 void SlideShowGL::printFilename(QImage& layer)
 { 
-    QFileInfo fileinfo(fileList_[fileIndex_]);
+    QFileInfo fileinfo(fileList_[fileIndex_].first);
     QString filename = fileinfo.fileName();
     filename += " (";
     filename += QString::number(fileIndex_ + 1);

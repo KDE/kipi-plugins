@@ -22,7 +22,8 @@
 #ifndef SLIDESHOWGL_H
 #define SLIDESHOWGL_H
 
-#include <qstringlist.h>
+#include <qvaluelist.h>
+#include <qpair.h>
 #include <qstring.h>
 #include <qmap.h>
 #include <qgl.h>
@@ -40,7 +41,7 @@ class SlideShowGL : public QGLWidget
     
 public:
 
-    SlideShowGL(const QStringList& fileList,
+    SlideShowGL(const QValueList<QPair<QString, int> >& fileList,
                 int delay, bool printName, bool loop,
                 const QString& effectName);
     ~SlideShowGL();
@@ -74,7 +75,7 @@ private:
     typedef void (SlideShowGL::*EffectMethod)();
     QMap<QString, EffectMethod> Effects;
 
-    QStringList  fileList_;
+    QValueList<QPair<QString, int> >  fileList_;
     QTimer*      timer_;
     int          fileIndex_;
 

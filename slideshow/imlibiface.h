@@ -40,7 +40,7 @@ class ImImageSS
     
 public:
     
-    ImImageSS(ImlibIface *imIface, const QString& file);
+    ImImageSS(ImlibIface *imIface, const QString& file, int angle);
     ~ImImageSS();
 
     bool valid();

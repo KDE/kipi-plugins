@@ -30,6 +30,9 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
+#include <qvaluelist.h>
+#include <qpair.h>
+
 #include <cstdlib>
 #include <sys/time.h>
 #include <time.h>
@@ -192,11 +195,14 @@ void Plugin_SlideShow::slotSlideShow()
 	return;
     }
 
-    // PENDING(blackie) handle real URLS
-    QStringList fileList;
+    typedef QPair<QString, int> FileAnglePair;
+    typedef QValueList<FileAnglePair > FileList;
+    FileList fileList;
     
-    for( KURL::List::Iterator urlIt = urlList.begin(); urlIt != urlList.end(); ++urlIt ) {
-        fileList.append( (*urlIt).path() );
+    for( KURL::List::Iterator urlIt = urlList.begin(); urlIt != urlList.end(); ++urlIt )
+    {
+        KIPI::ImageInfo info = interface->info( *urlIt );
+        fileList.append( FileAnglePair((*urlIt).path(), info.angle()) );
     }
 
     if (shuffle)
@@ -205,8 +211,8 @@ void Plugin_SlideShow::slotSlideShow()
         gettimeofday(&tv, 0);
         srand(tv.tv_sec);
 
-        QStringList::iterator it  = fileList.begin();
-        QStringList::iterator it1;
+        FileList::iterator it  = fileList.begin();
+        FileList::iterator it1;
         
         for (uint i=0; i<fileList.size(); i++)
         {
@@ -217,6 +223,7 @@ void Plugin_SlideShow::slotSlideShow()
         }
     }
 
+
     if (!opengl) {
         KIPISlideShowPlugin::SlideShow *slideShow =
             new KIPISlideShowPlugin::SlideShow(fileList, delay, printFileName,
@@ -225,7 +232,8 @@ void Plugin_SlideShow::slotSlideShow()
     }
     else {
         if (!QGLFormat::hasOpenGL())
-            KMessageBox::error(kapp->activeWindow(), i18n("Sorry. OpenGL support not available on your system"));
+            KMessageBox::error(kapp->activeWindow(),
+                               i18n("Sorry. OpenGL support not available on your system"));
         else {
             KIPISlideShowPlugin::SlideShowGL *slideShow =
                 new KIPISlideShowPlugin::SlideShowGL(fileList, delay ,printFileName, loop, effectName);

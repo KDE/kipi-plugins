@@ -47,7 +47,7 @@ namespace KIPISlideShowPlugin
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SlideShow::SlideShow(const QStringList& fileList,
+SlideShow::SlideShow(const FileList& fileList,
                      int delay, bool printName, bool loop,
                      const QString& effectName)
                      : QWidget(0, 0, WStyle_StaysOnTop | WType_Popup |
@@ -297,10 +297,12 @@ void SlideShow::loadNextImage()
         toolBar_->setEnabledPrev(fileIndex_ > 0);
         toolBar_->setEnabledNext(fileIndex_ < num-1);
     }
-    
-    QString file(fileList_[fileIndex_]);
 
-    currImage_ = new ImImageSS(imIface_, file);
+    FileAnglePair fileAngle = fileList_[fileIndex_];
+    QString file(fileAngle.first);
+    int     angle(fileAngle.second);
+
+    currImage_ = new ImImageSS(imIface_, file, angle);
     currImage_->fitSize(width(), height());
     currImage_->render();
 
@@ -338,9 +340,12 @@ void SlideShow::loadPrevImage()
         toolBar_->setEnabledNext(fileIndex_ < num-1);
     }
     
-    QString file(fileList_[fileIndex_]);
+    FileAnglePair fileAngle = fileList_[fileIndex_];
+    QString file(fileAngle.first);
+    int     angle(fileAngle.second);
 
-    currImage_ = new ImImageSS(imIface_, file);
+
+    currImage_ = new ImImageSS(imIface_, file, angle);
     currImage_->fitSize(width(), height());
     currImage_->render();
 

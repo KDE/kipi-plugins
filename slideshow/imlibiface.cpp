@@ -63,7 +63,7 @@ public:
 
 // ---------------------------------------------------------------
 
-ImImageSS::ImImageSS(ImlibIface *imIface, const QString& file)
+ImImageSS::ImImageSS(ImlibIface *imIface, const QString& file, int angle)
 {
     imIface_ = imIface;
     
@@ -85,10 +85,27 @@ ImImageSS::ImImageSS(ImlibIface *imIface, const QString& file)
     if (d->image) {
         imlib_context_set_image(d->image);
         d->valid = true;
+
+        switch(angle)
+        {
+        case(90):
+            imlib_image_orientate(1);
+            break;
+        case(180):
+            imlib_image_orientate(2);
+            break;
+        case(270):
+            imlib_image_orientate(3);
+            break;
+        default:
+            break;
+        }
+
         d->origWidth  = imlib_image_get_width();
         d->origHeight = imlib_image_get_height();
         d->width      = d->origWidth;
         d->height     = d->origHeight;
+        
     }
 
     imlib_context_pop();

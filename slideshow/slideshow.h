@@ -22,13 +22,17 @@
 #ifndef SLIDESHOW_H
 #define SLIDESHOW_H
 
-#include <qstringlist.h>
+#include <qvaluelist.h>
+#include <qpair.h>
 #include <qstring.h>
 #include <qwidget.h>
 #include <qpainter.h>
 #include <qmap.h>
 
 class QTimer;
+
+typedef QPair<QString, int> FileAnglePair;
+typedef QValueList<FileAnglePair > FileList;
 
 namespace KIPISlideShowPlugin
 {
@@ -47,7 +51,7 @@ class SlideShow : public QWidget
     
 public:
 
-    SlideShow(const QStringList& fileList,
+    SlideShow(const FileList& fileList,
               int delay, bool printName, bool loop,
               const QString& effectName);
     ~SlideShow();
@@ -80,7 +84,7 @@ private:
     ImlibIface   *imIface_;
     ImImageSS    *currImage_;
     
-    QStringList fileList_;
+    FileList    fileList_;
     QTimer*     timer_;
     int         fileIndex_;
 
