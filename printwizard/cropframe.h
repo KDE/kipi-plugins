@@ -27,8 +27,8 @@
 
 #include "tphoto.h"
 
-/*namespace KIPIPrintWizardPlugin
-{*/
+namespace KIPIPrintWizardPlugin
+{
 
 class CropFrame : public QWidget
 {
@@ -64,6 +64,6 @@ class CropFrame : public QWidget
     void keyPressEvent(QKeyEvent *);
 };
 
-//}  // NameSpace KIPIPrintWizardPlugin
+}  // NameSpace KIPIPrintWizardPlugin
 
 #endif // CROPFRAME_H

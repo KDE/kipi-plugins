@@ -1,5 +1,5 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
-<class>FrmPrintWizardBase</class>
+<class>KIPIPrintWizardPlugin::FrmPrintWizardBase</class>
 <widget class="QWizard">
     <property name="name">
         <cstring>FrmPrintWizardBase</cstring>
@@ -1355,7 +1355,7 @@ Click the 'Next' button to begin.</string>
 </widget>
 <customwidgets>
     <customwidget>
-        <class>CropFrame</class>
+        <class>KIPIPrintWizardPlugin::CropFrame</class>
         <header location="local">cropframe.h</header>
         <sizehint>
             <width>-1</width>

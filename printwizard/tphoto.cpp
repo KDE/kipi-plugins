@@ -38,8 +38,8 @@
 #define IMAGE_FILE_MASK "*"
 //"*.jpg;*.jpeg;*.JPG;*.JPEG;*.png;*.PNG"
 
-/*namespace KIPIPrintWizardPlugin
-{*/
+namespace KIPIPrintWizardPlugin
+{
 
 TPhoto::TPhoto(int thumbnailSize)
 {
@@ -300,6 +300,6 @@ bool paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
   return (current < photos.count());
 }
 
-//}  // NameSpace KIPIPrintWizardPlugin
+}  // NameSpace KIPIPrintWizardPlugin
 
 

@@ -33,8 +33,8 @@ extern "C"
 #include "cropframe.h"
 #include "utils.h"
 
-/*namespace KIPIPrintWizardPlugin
-{*/
+namespace KIPIPrintWizardPlugin
+{
 
 CropFrame::CropFrame(QWidget *parent=0, const char *name=0)
          : QWidget(parent, name)
@@ -308,6 +308,6 @@ QColor CropFrame::color()
   return m_color;
 }
 
-//}  // NameSpace KIPIPrintWizardPlugin
+}  // NameSpace KIPIPrintWizardPlugin
 
 #include "cropframe.moc"

@@ -51,18 +51,19 @@ extern "C"
 // Local includes
 
 #include "utils.h"
-#include "frmprintwizard.h"
 #include "cropframe.h"
+#include "frmprintwizard.h"
 
-/*namespace KIPIPrintWizardPlugin
-{*/
+
+namespace KIPIPrintWizardPlugin
+{
 
 FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
-               : FrmPrintWizardBase(parent,name)
+              : FrmPrintWizardBase(parent, name)
 {
   // enable help buttons
-  for(int i=0; i < pageCount(); i++)
-    setHelpEnabled(page(i), true);
+  for(int i = 0; i < pageCount(); ++i)
+     setHelpEnabled(page(i), true);
 
   // turn off back button for first and last page
   setBackEnabled(page(0), false);
@@ -805,6 +806,6 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
   ListPhotoSizes->setCurrentItem(0);
 }
 
-//}  // NameSpace KIPIPrintWizardPlugin
+}  // NameSpace KIPIPrintWizardPlugin
 
 #include "frmprintwizard.moc"

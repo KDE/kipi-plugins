@@ -21,8 +21,8 @@
 class QWidget;
 class QStringList;
 
-/*namespace KIPIPrintWizardPlugin
-{*/
+namespace KIPIPrintWizardPlugin
+{
 
 int NINT(double n);
 int MIN(int a, int b);
@@ -34,7 +34,7 @@ bool checkRootPath(QWidget *parent, QString rootPath);
 bool copyFile(QString src, QString dest);
 bool moveFile(QString src, QString dest);
 
-//}  // NameSpace KIPIPrintWizardPlugin
+}  // NameSpace KIPIPrintWizardPlugin
 
 #endif // UTILS_H
 

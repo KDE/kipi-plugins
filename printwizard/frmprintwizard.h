@@ -31,8 +31,10 @@
 #include "tphoto.h"
 #include "frmprintwizardbase.h"
 
-/*namespace KIPIPrintWizardPlugin
-{*/
+namespace KIPIPrintWizardPlugin
+{
+
+class FrmPrintWizardBase;
 
 typedef struct _TPhotoSize {
   QString label;
@@ -90,7 +92,7 @@ protected slots:
   void slotHelp();
 };
 
-//}  // NameSpace KIPIPrintWizardPlugin
+}  // NameSpace KIPIPrintWizardPlugin
 
 
 #endif // FRMPRINTWIZARD_H

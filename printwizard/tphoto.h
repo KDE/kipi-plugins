@@ -34,8 +34,8 @@ class QPixmap;
 
 class KPrinter;
 
-/*namespace KIPIPrintWizardPlugin
-{*/
+namespace KIPIPrintWizardPlugin
+{
 
 class TPhoto 
 {
@@ -69,7 +69,7 @@ bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
 bool paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
                   unsigned int &current);
 
-//}  // NameSpace KIPIPrintWizardPlugin
+}  // NameSpace KIPIPrintWizardPlugin
                   
 #endif // TPHOTO_H
 
