@@ -91,17 +91,9 @@ Plugin_PrintWizard::~Plugin_PrintWizard()
 
 void Plugin_PrintWizard::slotActivate()
 {
-    KIPI::ImageCollection album = m_interface->currentAlbum();
-
-    // PENDING(blackie) how do we check for an album being selected?
-#ifdef TEMPORARILY_REMOVED
-    if (!album)
-    {
-        KMessageBox::sorry(0, i18n("Please select one or more photos to print."),
-                           i18n("Print Wizard"));
-        return;
-    }
-#endif
+    KIPI::ImageCollection album = m_interface->currentSelection();
+    if ( album.images().count() == 0 )
+        album = m_interface->currentAlbum();
 
     KURL::List fileList = album.images();
 
@@ -126,5 +118,5 @@ void Plugin_PrintWizard::slotItemsSelected(bool selected)
 
 KIPI::Category Plugin_PrintWizard::category() const
 {
-    return KIPI::IMAGESPLUGIN;
+    return KIPI::EXPORTPLUGIN;
 }
