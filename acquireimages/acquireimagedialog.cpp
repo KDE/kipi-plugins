@@ -68,6 +68,7 @@ extern "C"
 #include <ksqueezedtextlabel.h>
 #include <kio/netaccess.h>
 #include <kimageio.h>
+#include <ktempfile.h>
 
 #include <libkipi/thumbnailjob.h>
 #include <libkipi/imageinfo.h>
@@ -458,8 +459,12 @@ void AcquireImageDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixm
 
   void AcquireImageDialog::slotOk()
 {
-    KURL path = m_uploadPath->path();
-    if (!path.isValid())
+    // PENDING( aurelien)
+    // It would be nice if m_uploadPath kept its value between multiple snapshots.
+    KURL url = m_uploadPath->path();
+    url.adjustPath(1);
+    kdDebug(51001) << k_funcinfo << "path:" << url.prettyURL() << endl;
+    if (!url.isValid())
     {
         KMessageBox::error(0, i18n("You must select a target album for this image!"));
         return;
@@ -474,50 +479,67 @@ void AcquireImageDialog::slotGotPreview(const KURL &/*url*/, const QPixmap &pixm
     writeSettings();
 
     // Get all scanned image informations.
-    QString targetAlbumPath = path.path(); // handle real URLS.
-    QString imageFileName = m_FileName->text();
     QString imageFormat = m_imagesFormat->currentText();
     int imageCompression = m_imageCompression->value();
-    QString imagePath = targetAlbumPath + "/" + imageFileName + extension(imageFormat);
     QString Commentsimg = m_CommentsEdit->text();
-    QFile Image(imagePath);
 
-    // Saving the target image file.
+    // Find a unique url
+    QString fileName = m_FileName->text();
+    QString ext = extension(imageFormat);
+    url.setFileName(fileName + ext);
 
-    if ( Image.exists() == true )
-        {
-        if (KMessageBox::warningYesNo(0, i18n("The target image \n\"%1\"\nalready exist.\n"
-                                              "Do you want overwrite it?").arg(imagePath)) == KMessageBox::No)
-           return;
+    if (KIO::NetAccess::exists(url, false, this)) {
+        for (int idx=1;;idx++) {
+            url.setFileName(QString("%1_%2%3").arg(fileName).arg(idx).arg(ext));
+            if (!KIO::NetAccess::exists(url, false, this)) break;
         }
+    }
 
-    qDebug("Saving image: %s", imagePath.ascii());
-    bool ValRet = false;
+    kdDebug(51001) << k_funcinfo << "Saving image as " << url.prettyURL() << endl;
+    
+    // Save file
+    KTempFile tmp;
+    tmp.setAutoDelete(true);
+    QString imagePath;
+    if (url.isLocalFile()) {
+        imagePath=url.path();
+    } else {
+        imagePath=tmp.name();
+    }
 
-    if ( imageFormat == "JPEG" || imageFormat == "PNG" )
-       ValRet = m_qimageScanned.save(imagePath, imageFormat.latin1(), imageCompression);
+    bool ok=false;
+    if (imageFormat=="JPEG" || imageFormat=="PNG") {
+        ok = m_qimageScanned.save(imagePath, imageFormat.latin1(), imageCompression);
+    } else if (imageFormat=="TIFF") {
+        ok = QImageToTiff(m_qimageScanned, imagePath);
+    } else {
+        ok =  m_qimageScanned.save(imagePath, imageFormat.latin1());
+    }
 
-    if ( imageFormat == "PPM" || imageFormat == "BMP" )
-       ValRet = m_qimageScanned.save(imagePath, imageFormat.latin1());
-
-    if ( imageFormat == "TIFF" )
-       ValRet = QImageToTiff(m_qimageScanned, imagePath);
-
-    if ( ValRet == false )
-       {
+    if ( !ok )
+    {
        KMessageBox::error(0, i18n("Cannot write image file \"%1\"!").arg(imagePath));
        return;
-       }
+    }
+    
+    // Upload the image if necessary
+    if ( !url.isLocalFile()) {
+        if (!KIO::NetAccess::upload(imagePath, url, this)) {
+           KMessageBox::error(0, i18n("Could not upload image to \"%1\"!").arg(url.prettyURL()));
+           return;
+        }
+    }
+
 
     // Save the comments for this image.
     QString err;
-    KURL url; url.setPath( imagePath ); // PENDING(blackie) change to real URL handling.
-    bool ok = m_interface->addImage( url, err );
+    ok = m_interface->addImage( url, err );
     if ( !ok ) {
         KMessageBox::error( 0, i18n("<qt>Error when telling the application about the new image. "
                                   "The error was: %1</qt>" ).arg( err ) );
         return;
     }
+
 
     KIPI::ImageInfo info = m_interface->info( url );
     info.setDescription( Commentsimg );
@@ -545,8 +567,6 @@ void AcquireImageDialog::slotImageFormatChanged(const QString &string)
        m_imageCompression->setEnabled(true);
     else
        m_imageCompression->setEnabled(false);
-
-    checkNewFileName();
 }
 
 
@@ -571,59 +591,6 @@ QString AcquireImageDialog::extension(const QString& imageFormat)
 
     Q_ASSERT(false);
     return "";
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void AcquireImageDialog::checkNewFileName(void)
-{
-    // PENDING(blackie) this code needs to be rewritten to handle URL's rather than just local files.
-#ifdef TEMPORARILY_REMOVED
-    int albumSelectedId = m_AlbumList->currentItem();
-    QString albumSelectedText = m_AlbumList->text(albumSelectedId);
-
-    if ( albumSelectedText == QString::null)
-       return;
-
-    Digikam::AlbumInfo *album = Digikam::AlbumManager::instance()->findAlbum(albumSelectedText);
-    if (!album) return;
-    QString targetAlbumPath = album->getPath();
-    QString imageFileName = m_FileName->text().left( m_FileName->text().findRev('_', -1));
-    QString imageFormat = m_imagesFormat->currentText();
-    QString imagePath = targetAlbumPath + "/" + imageFileName + extension(imageFormat);
-    QFileInfo *Target = new QFileInfo(imagePath);
-    QString Temp = RenameTargetImageFile(Target);
-    QString newFileName = Temp.left( Temp.findRev('.', -1));
-
-    if ( newFileName != QString::null )
-       m_FileName->setText( newFileName );
-#endif
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-QString AcquireImageDialog::RenameTargetImageFile(QFileInfo *fi)
-{
-    QString Temp;
-    int Enumerator = 0;
-    KURL NewDestUrl;
-
-    do
-       {
-       ++Enumerator;
-       Temp = Temp.setNum( Enumerator );
-       NewDestUrl = fi->filePath().left( fi->filePath().findRev('.', -1)) + "_" + Temp +
-                                         extension(m_imagesFormat->currentText());
-       }
-    while ( Enumerator < 100 && KIO::NetAccess::exists(NewDestUrl) == true );
-
-    if (Enumerator == 100) return QString::null;
-
-    QFileInfo newDestFile(NewDestUrl.path());
-
-    return (newDestFile.fileName());
 }
 
 

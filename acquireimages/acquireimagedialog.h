@@ -113,8 +113,6 @@ Q_OBJECT
    QGuardedPtr<KIPI::ThumbnailJob> m_thumbJob;
 
    QString extension(const QString& imageFormat);
-   void checkNewFileName(void);
-   QString RenameTargetImageFile(QFileInfo *fi);
    bool QImageToTiff(const QImage& image, const QString& dst);
 
  private:
