@@ -152,7 +152,6 @@ void SlideShowGL::resizeGL(int w, int h)
 
 void SlideShowGL::mousePressEvent(QMouseEvent *event)
 {
-    qDebug("SlideShowGL::mousePressEvent");
     if (!effect_) {
         kdWarning() << "SlideShowGL: No transition method"
                     << endl;
@@ -1130,3 +1129,4 @@ void SlideShowGL::effectCube()
     m_i++;
 }
 
+#include "slideshowgl.moc"

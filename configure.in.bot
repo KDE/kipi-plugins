@@ -1,7 +1,6 @@
-if test -z "$ac_imlib_config"; then
+if test -z "$ac_imlib2_config"; then
   echo ""
-  echo "You're missing Imlib 1.x. The slideshow plugin won't be compiled without Imlib."
-  echo "You can download it from http://freshmeat.net/redir/imlib/4385/url_tgz/imlib-1.9.10.tar.gz"
+  echo "You're missing Imlib2. The slideshow plugin won't be compiled without Imlib2."
   echo ""
   all_tests=bad
 fi

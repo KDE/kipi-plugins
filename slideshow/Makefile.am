@@ -1,4 +1,5 @@
-INCLUDES    = $(IMLIB_CFLAGS) $(all_includes)
+INCLUDES    = $(IMLIB2_CFLAGS)  -I$(top_srcdir) -I$(top_srcdir)/libkipi \
+	$(all_includes)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
@@ -11,7 +12,7 @@ kipiplugin_slideshow_la_SOURCES = plugin_slideshow.cpp \
 	                          slideshowgl.cpp
 
 kipiplugin_slideshow_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) \
-				 $(LIB_IMLIB) $(GL_LIBS) 
+				 $(LIB_IMLIB2) $(GL_LIBS) 
 
 kipiplugin_slideshow_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 

@@ -289,3 +289,4 @@ void SlideShowConfig::slotAboutClicked()
                                   i18n("About SlideShow"));
 }
 
+#include "slideshowconfig.moc"

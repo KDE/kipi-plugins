@@ -296,12 +296,12 @@ void SlideShow::loadPrevImage()
 
 void SlideShow::showCurrentImage()
 {
-    imIface_->paint(currImage_, 0, 0, 0, 0,
-                    currImage_->qpixmap()->width(),
-                    currImage_->qpixmap()->height());
-    //bitBlt(this, 0, 0, currImage_->qpixmap(),
-    //       0, 0, currImage_->qpixmap()->width(),
-    //       currImage_->qpixmap()->height(), Qt::CopyROP, true);
+    //imIface_->paint(currImage_, 0, 0, 0, 0,
+    //                currImage_->qpixmap()->width(),
+    //                currImage_->qpixmap()->height());
+    bitBlt(this, 0, 0, currImage_->qpixmap(),
+           0, 0, currImage_->qpixmap()->width(),
+           currImage_->qpixmap()->height(), Qt::CopyROP, true);
 }
 
 
@@ -480,16 +480,12 @@ int SlideShow::effectChessboard(bool aInit)
     my  = my ? 0 : mdy;
 
     for (y=0; y<mw; y+=(mdy<<1))
-        {
-        imIface_->paint(currImage_, mix, y+miy, mix, y+miy, mdx, mdy);
-        imIface_->paint(currImage_, mx, y+my, mx, y+my, mdx, mdy);
-
-
-        //bitBlt(this, mix, y+miy, currImage_->qpixmap(), mix, y+miy,
-        //       mdx, mdy, CopyROP, true);
-        //bitBlt(this, mx, y+my, currImage_->qpixmap(), mx, y+my,
-        //       mdx, mdy, CopyROP, true);
-        }
+    {
+        bitBlt(this, mix, y+miy, currImage_->qpixmap(), mix, y+miy,
+               mdx, mdy, CopyROP, true);
+        bitBlt(this, mx, y+my, currImage_->qpixmap(), mx, y+my,
+               mdx, mdy, CopyROP, true);
+    }
 
     return mwait;
 }
@@ -964,3 +960,4 @@ void SlideShow::startPainter(Qt::PenStyle aPen)
     mPainter.setPen(aPen);
 }
 
+#include "slideshow.moc"

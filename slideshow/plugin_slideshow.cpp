@@ -160,3 +160,4 @@ KIPI::Category Plugin_SlideShow::category() const
     return KIPI::TOOLSPLUGIN;
 }
 
+#include "plugin_slideshow.moc"

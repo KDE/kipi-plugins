@@ -26,8 +26,7 @@
 #include <qpixmap.h>
 
 #include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <Imlib.h>
+#include <Imlib2.h>
 
 #include "imlibiface.h"
 
@@ -37,8 +36,7 @@ class ImImageSSPrivate
 {
 public:
     
-    ImlibData   *idata;
-    ImlibImage  *image;
+    Imlib_Image   image;
     int          width;
     int          height;
     int          origWidth;
@@ -56,11 +54,8 @@ class ImlibIfacePrivate {
 
 public:
 
-    QWidget   *parent;
-    ImlibData *idata;
-    Display   *display;
-    Window     win;
-    GC         gc;
+    QWidget       *parent;
+    Imlib_Context  context;
 };
 
 // ---------------------------------------------------------------
@@ -71,7 +66,6 @@ ImImageSS::ImImageSS(ImlibIface *imIface, const QString& file)
     
     d = new ImImageSSPrivate;
     d->filename = file;
-    d->idata = (ImlibData*) imIface->imlibData();
 
     d->valid      = false;
     d->image      = 0;
@@ -82,21 +76,29 @@ ImImageSS::ImImageSS(ImlibIface *imIface, const QString& file)
     d->fitWidth   = 0;
     d->fitHeight  = 0;
 
-    d->image = Imlib_load_image(d->idata,
-                                QFile::encodeName(file).data());
+    imlib_context_push(imIface_->d->context);
+    
+    d->image = imlib_load_image(QFile::encodeName(file).data());
     if (d->image) {
+        imlib_context_set_image(d->image);
         d->valid = true;
-        d->origWidth  = d->image->rgb_width;
-        d->origHeight = d->image->rgb_height;
+        d->origWidth  = imlib_image_get_width();
+        d->origHeight = imlib_image_get_height();
         d->width      = d->origWidth;
         d->height     = d->origHeight;
     }
+
+    imlib_context_pop();
 }
 
 ImImageSS::~ImImageSS()
 {
-    if (d->image)
-        Imlib_kill_image(d->idata, d->image);
+    if (d->image) {
+        imlib_context_push(imIface_->d->context);
+        imlib_context_set_image(d->image);
+        imlib_free_image();
+        imlib_context_pop();
+    }
     delete d;
 }
 
@@ -134,37 +136,25 @@ void ImImageSS::fitSize(int width, int height)
 
 void ImImageSS::render()
 {
-    if (!d->valid) return;
+    if (!d->valid)
+        return;
 
-
-    Pixmap pixmap;
+    // Center the image
+        
+    int cx = d->fitWidth/2;
+    int cy = d->fitHeight/2;
     
-    Imlib_render(d->idata, d->image, d->width, d->height);
-    pixmap = Imlib_move_image(d->idata, d->image);
+    int x = cx - d->width/2;
+    int y = cy - d->height/2;
 
-    if (pixmap) {
+    imlib_context_push(imIface_->d->context);
 
-        // Center the image
-        
-        int cx = d->fitWidth/2;
-        int cy = d->fitHeight/2;
+    imlib_context_set_image(d->image);
+    imlib_context_set_drawable(d->qpixmap.handle());
 
-        int x = cx - d->width/2;
-        int y = cy - d->height/2;
-        
-        XSetGraphicsExposures(imIface_->d->display,
-                              imIface_->d->gc, False);
-        XCopyArea(imIface_->d->display,
-                  pixmap,
-                  d->qpixmap.handle(),
-                  imIface_->d->gc,
-                  0, 0, d->width, d->height, x, y);
-        Imlib_free_pixmap(d->idata, pixmap);
-    }
-    else {
-        qWarning("Failed to convert to pixmap");
-        d->valid = false;
-    }
+    imlib_render_image_on_drawable_at_size(x, y, d->width, d->height);
+
+    imlib_context_pop();
 }
 
 QPixmap* ImImageSS::qpixmap()
@@ -178,51 +168,40 @@ ImlibIface::ImlibIface(QWidget *parent)
 {
     d = new ImlibIfacePrivate;
 
+    d->context = imlib_context_new();
+    imlib_context_push(d->context);
+
+    Display *display = parent->x11Display();
+    Visual  *vis     = DefaultVisual(display, DefaultScreen(display));
+    Colormap cm      = DefaultColormap(display, DefaultScreen(display));
+
     d->parent  = parent;
-    d->display = parent->x11Display();
-    d->win     = parent->handle();
-    d->gc = XCreateGC(parent->x11Display(),
-                      RootWindow(parent->x11Display(),
-                                 parent->x11Screen()),
-                      0, 0);
-    ImlibInitParams par;
-    par.flags = ( PARAMS_REMAP |
-                  PARAMS_FASTRENDER | PARAMS_HIQUALITY |
-                  PARAMS_DITHER |
-                  PARAMS_IMAGECACHESIZE | PARAMS_PIXMAPCACHESIZE );
-    par.remap           = 1;
-    par.fastrender      = 1;
-    par.hiquality       = 1;
-    par.dither          = 1;
-    uint maxcache       = 10240;
-    par.imagecachesize  = maxcache * 1024;
-    par.pixmapcachesize = maxcache * 1024;
-    d->idata = Imlib_init_with_params(d->display, &par );
+    
+    // 10 MB of cache
+    imlib_set_cache_size(10 * 1024 * 1024);
+
+    // set the maximum number of colors to allocate for 8bpp
+    // and less to 128 
+    imlib_set_color_usage(128);
+
+    // dither for depths < 24bpp 
+    imlib_context_set_dither(1);
+
+    // set the display , visual, colormap we are using 
+    imlib_context_set_display(display);
+    imlib_context_set_visual(vis);
+    imlib_context_set_colormap(cm);
+
+    // smooth scaling
+    imlib_context_set_anti_alias(1);
+
+    imlib_context_pop();
 }
 
 ImlibIface::~ImlibIface()
 {
-    XFreeGC(d->display, d->gc);
+    imlib_context_free(d->context);
     delete d;
 }
 
-void ImlibIface::paint(ImImageSS *image, int sx, int sy,
-                       int dx, int dy, int dw, int dh)
-{
-    if (!image || !image->valid()) return;
-
-    //     bitBlt(d->parent, sx, sy, image->qpixmap(),
-    //            dx, dy, dw, dh, Qt::CopyROP, true);
-    
-    XSetGraphicsExposures(d->display, d->gc, False);
-    XCopyArea(d->display,
-              image->qpixmap()->handle(),
-              d->win,
-              d->gc, dx, dy, dw, dh, sx, sy);
-}
-
-void* ImlibIface::imlibData()
-{
-    return d->idata;
-}
 

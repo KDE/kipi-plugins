@@ -63,14 +63,9 @@ public:
     ImlibIface(QWidget *parent);
     ~ImlibIface();
 
-    void paint(ImImageSS *image, int sx, int sy,
-               int dx, int dy, int dw, int dh);
-    void* imlibData();
-
 private:
 
     ImlibIfacePrivate *d;
-
 };
 
 

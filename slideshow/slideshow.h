@@ -73,7 +73,7 @@ private:
     
     QMap<QString, EffectMethod> Effects;
 
-    ImlibIface *imIface_;
+    ImlibIface   *imIface_;
     ImImageSS    *currImage_;
     ImImageSS    *nextImage_;
     
