@@ -127,9 +127,9 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     
     // About data and help button.
     
-    KAboutData* about = new KAboutData("kipi",
+    KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("CD Archiving"), 
-                                       "0.1.0-cvs",
+                                       "1.0.0-cvs",
                                        I18N_NOOP("An Album CD Archiving Kipi plugin.\n"
                                                  "This plugin use K3b CD/DVD burning software available at\n"
                                                  "http://www.k3b.org"),
