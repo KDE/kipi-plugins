@@ -262,7 +262,6 @@ void SendImagesDialog::setupImagesList(void)
 
     m_imageLabel = new QLabel( m_groupBoxImageList );
     m_imageLabel->setFixedHeight( 120 );
-    m_imageLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
     m_imageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_imageLabel->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
     QWhatsThis::add( m_imageLabel, i18n( "<p>Preview of the current image of the list." ) );
@@ -1137,8 +1136,10 @@ void SendImagesDialog::removeTmpFiles(void)
 
 void SendImagesDialog::setNbItems(void)
 {
-    m_groupBoxImageList->setTitle(i18n("Images list (%1 items)")
-                                  .arg(m_ImagesFilesListBox->count()));
+    if ( m_ImagesFilesListBox->count() == 0 ) m_groupBoxImageList->setTitle(i18n("Images list"));
+    else
+       m_groupBoxImageList->setTitle(i18n("Images list (1 item)", "Images list (%n items)",
+                                     m_ImagesFilesListBox->count() ));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
