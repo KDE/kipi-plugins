@@ -30,12 +30,13 @@
 #include <qcursor.h>
 #include <qimage.h>
 #include <qpainter.h>
+#include <qtimer.h>
 
 #include <math.h>
 #include <cstdlib>
 
 #include "slideshowgl.h"
-#include "pausetimer.h"
+#include "toolbar.h"
 
 namespace KIPISlideShowPlugin
 {
@@ -44,11 +45,33 @@ SlideShowGL::SlideShowGL(const QStringList& fileList,
                          int delay, bool loop,
                          const QString& effectName)
     : QGLWidget(0, 0, 0, WStyle_StaysOnTop | WType_Popup |
-                WX11BypassWM )
+                WX11BypassWM | WDestructiveClose)
 {
     move(0, 0);
     resize(QApplication::desktop()->size());
 
+    deskWidth_  = QApplication::desktop()->size().width();
+    deskHeight_ = QApplication::desktop()->size().height();
+
+    toolBar_ = new ToolBar(this);
+    toolBar_->hide();
+    if (!loop)
+    {
+        toolBar_->setEnabledPrev(false);
+    }
+    connect(toolBar_, SIGNAL(signalPause()),
+            SLOT(slotPause()));
+    connect(toolBar_, SIGNAL(signalPlay()),
+            SLOT(slotPlay()));
+    connect(toolBar_, SIGNAL(signalNext()),
+            SLOT(slotNext()));
+    connect(toolBar_, SIGNAL(signalPrev()),
+            SLOT(slotPrev()));
+    connect(toolBar_, SIGNAL(signalClose()),
+            SLOT(slotClose()));
+    
+    // -- Minimal texture size (opengl specs) --------------
+    
     width_  = 64;
     height_ = 64;
 
@@ -88,19 +111,30 @@ SlideShowGL::SlideShowGL(const QStringList& fileList,
 
     // --------------------------------------------------
 
-    timer_ = new PauseTimer();
+    timer_ = new QTimer();
     connect(timer_, SIGNAL(timeout()),
             SLOT(slotTimeOut()));
-    timer_->start(timeout_);
+    timer_->start(timeout_, true);
 
-    // hide cursor when not moved
+    // -- hide cursor when not moved --------------------
+
+    mouseMoveTimer_ = new QTimer;
+    connect(mouseMoveTimer_, SIGNAL(timeout()),
+            SLOT(slotMouseMoveTimeOut()));
+    
     setMouseTracking(true);
     slotMouseMoveTimeOut();
 }
 
 SlideShowGL::~SlideShowGL()
 {
-
+    delete timer_;
+    delete mouseMoveTimer_;
+  
+    if (texture_[0])
+        glDeleteTextures(1, &texture_[0]);
+    if (texture_[1])
+        glDeleteTextures(1, &texture_[1]);
 }
 
 void SlideShowGL::initializeGL()
@@ -175,89 +209,57 @@ void SlideShowGL::keyPressEvent(QKeyEvent *event)
 {
     if(!event)
         return;
-        
-    if(event->key() == Qt::Key_Space)
+
+    toolBar_->keyPressEvent(event);
+}
+
+void SlideShowGL::mousePressEvent(QMouseEvent *)
+{
+    if (endOfShow_)
+        close();
+}
+
+void SlideShowGL::mouseMoveEvent(QMouseEvent *e)
+{
+    setCursor(QCursor(Qt::ArrowCursor));
+    mouseMoveTimer_->start(1000, true);
+
+    if (!toolBar_->canHide())
+        return;
+    
+    QPoint pos(e->pos());
+    
+    if (pos.y() > 20 && pos.y() < (deskHeight_-20-1))
     {
-        event->accept();
-        timer_->pause();
+        if (toolBar_->isHidden())
+            return;
+        else
+            toolBar_->hide();
+        return;
+    }
+
+    int w = toolBar_->width();
+    int h = toolBar_->height();
+    
+    if (pos.y() < 20)
+    {
+        if (pos.x() <= deskWidth_/2)
+            // position top left
+            toolBar_->move(0,0);
+        else
+            // position top left
+            toolBar_->move(deskWidth_-w-1,0);
     }
     else
     {
-        event->ignore();
-        QWidget::keyPressEvent(event);
+        if (pos.x() <= deskWidth_/2)
+            // position bot left
+            toolBar_->move(0,deskHeight_-h-1);
+        else
+            // position bot right
+            toolBar_->move(deskWidth_-w-1,deskHeight_-h-1);
     }
-}
-
-void SlideShowGL::mousePressEvent(QMouseEvent *event)
-{
-    if (!effect_) {
-        kdWarning() << "SlideShowGL: No transition method"
-                    << endl;
-        effect_ = &SlideShowGL::effectNone;
-    }
-
-    if (effectRunning_) {
-        timeout_ = 10;
-    }
-    else {
-        if (timeout_ == -1) {
-            // effect was running and is complete now
-            // run timer while showing current image
-            timeout_ = delay_;
-            m_i     = 0;
-        }
-        else {
-
-            // timed out after showing current image
-            // load next image and start effect
-            if (random_)
-                effect_ = getRandomEffect();
-
-            if (endOfShow_) {
-                updateGL();
-                return;
-            }
-
-            if (event->button() == QMouseEvent::LeftButton) {
-                advanceFrame();
-                event->accept();
-            } else if (event->button() == QMouseEvent::RightButton) {
-                previousFrame();
-                event->accept();
-            }
-
-            loadImage();
-
-            timeout_ = 10;
-            effectRunning_ = true;
-            m_i = 0;
-
-        }
-    }
-
-    updateGL();
-    timer_->start(timeout_, true);
-}
-
-void SlideShowGL::mouseMoveEvent(QMouseEvent *)
-{
-    setCursor(QCursor(Qt::ArrowCursor));
-    QTimer::singleShot(1000, this, SLOT(slotMouseMoveTimeOut()));
-}
-
-void SlideShowGL::closeEvent(QCloseEvent  *e)
-{
-    makeCurrent();
-
-    timer_->stop();
-    delete timer_;
-
-    if (texture_[0])
-        glDeleteTextures(1, &texture_[0]);
-    if (texture_[1])
-        glDeleteTextures(1, &texture_[1]);
-
-    e->accept();
+    toolBar_->show();
 }
 
 void SlideShowGL::registerEffects()
@@ -327,10 +329,26 @@ SlideShowGL::EffectMethod SlideShowGL::getRandomEffect()
 void SlideShowGL::advanceFrame()
 {
     fileIndex_++;
-    if (fileIndex_ >= (int)fileList_.count()) {
-        fileIndex_ = 0;
-        if (!loop_)
+    int num = fileList_.count();
+    if (fileIndex_ >= num) {
+        if (loop_)
+        {
+            fileIndex_ = 0;
+        }
+        else
+        {
+            fileIndex_ = num-1;
             endOfShow_ = true;
+            toolBar_->setEnabledPlay(false);
+            toolBar_->setEnabledNext(false);
+            toolBar_->setEnabledPrev(false);
+        }
+    }
+
+    if (!loop_ && !endOfShow_)
+    {
+        toolBar_->setEnabledPrev(fileIndex_ > 0);
+        toolBar_->setEnabledNext(fileIndex_ < num-1);
     }
 
     tex1First_ = !tex1First_;
@@ -340,10 +358,26 @@ void SlideShowGL::advanceFrame()
 void SlideShowGL::previousFrame()
 {
     fileIndex_--;
+    int num = fileList_.count();
     if (fileIndex_ < 0) {
-        fileIndex_ = (int)fileList_.count()-1;
-        if (!loop_)
+        if (loop_)
+        {
+            fileIndex_ = num-1;
+        }
+        else
+        {
+            fileIndex_ = 0;
             endOfShow_ = true;
+            toolBar_->setEnabledPlay(false);
+            toolBar_->setEnabledNext(false);
+            toolBar_->setEnabledPrev(false);
+        }
+    }
+
+    if (!loop_ && !endOfShow_)
+    {
+        toolBar_->setEnabledPrev(fileIndex_ > 0);
+        toolBar_->setEnabledNext(fileIndex_ < num-1);
     }
 
     tex1First_ = !tex1First_;
@@ -517,6 +551,10 @@ void SlideShowGL::slotTimeOut()
 
 void SlideShowGL::slotMouseMoveTimeOut()
 {
+    QPoint pos(QCursor::pos());
+    if (pos.y() < 20 || pos.y() > ( deskHeight_-20-1))
+        return;
+    
     setCursor(QCursor(Qt::BlankCursor));
 }
 
@@ -1165,6 +1203,55 @@ void SlideShowGL::effectCube()
     }
 
     m_i++;
+}
+
+void SlideShowGL::slotPause()
+{
+    timer_->stop();
+
+    if (toolBar_->isHidden())
+    {
+        int w = toolBar_->width();
+        toolBar_->move(deskWidth_-w-1,0);
+        toolBar_->show();
+    }
+}
+
+void SlideShowGL::slotPlay()
+{
+    toolBar_->hide();
+    slotTimeOut();
+}
+
+void SlideShowGL::slotPrev()
+{
+    previousFrame();
+    if (endOfShow_) {
+        updateGL();
+        return;
+    }
+
+    effectRunning_ = false;
+    loadImage();
+    updateGL();
+}
+
+void SlideShowGL::slotNext()
+{
+    advanceFrame();
+    if (endOfShow_) {
+        updateGL();
+        return;
+    }
+
+    effectRunning_ = false;
+    loadImage();
+    updateGL();
+}
+
+void SlideShowGL::slotClose()
+{
+    close();    
 }
 
 }  // NameSpace KIPISlideShowPlugin

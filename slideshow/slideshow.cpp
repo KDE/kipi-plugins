@@ -37,7 +37,7 @@ extern "C"
 
 #include "imlibiface.h"
 #include "slideshow.h"
-#include "pausetimer.h"
+#include "toolbar.h"
 
 namespace KIPISlideShowPlugin
 {
@@ -54,17 +54,37 @@ SlideShow::SlideShow(const QStringList& fileList,
     resize(QApplication::desktop()->size());
     setPaletteBackgroundColor(black);
 
+    deskWidth_  = QApplication::desktop()->size().width();
+    deskHeight_ = QApplication::desktop()->size().height();
+
+    toolBar_ = new ToolBar(this);
+    toolBar_->hide();
+    if (!loop)
+    {
+        toolBar_->setEnabledPrev(false);
+    }
+    connect(toolBar_, SIGNAL(signalPause()),
+            SLOT(slotPause()));
+    connect(toolBar_, SIGNAL(signalPlay()),
+            SLOT(slotPlay()));
+    connect(toolBar_, SIGNAL(signalNext()),
+            SLOT(slotNext()));
+    connect(toolBar_, SIGNAL(signalPrev()),
+            SLOT(slotPrev()));
+    connect(toolBar_, SIGNAL(signalClose()),
+            SLOT(slotClose()));
+
+    // ---------------------------------------------------------------
+    
     imIface_   = new ImlibIface(this);
     currImage_ = 0;
-    nextImage_ = 0;
-    fileIndex_ = 0;
+    fileIndex_ = -1; // start with -1
     effect_        = 0;
     effectRunning_ = false;
-    timer_ = new PauseTimer(this);
+    timer_ = new QTimer();
     connect(timer_, SIGNAL(timeout()), SLOT(slotTimeOut()));
-    mIntArray = 0;
-    mouseMoveTimer_ = new QTimer(this);
-    connect(mouseMoveTimer_, SIGNAL(timeout()), SLOT(slotMouseMoveTimeOut()));
+    mIntArray  = 0;
+    endOfShow_ = false;
 
     // --------------------------------------------------
 
@@ -81,17 +101,22 @@ SlideShow::SlideShow(const QStringList& fileList,
     if (effectName_ == "Random")
         effect_ = getRandomEffect();
     else
-        {
+    {
         effect_ = Effects[effectName_];
         if (!effect_)
-	    {
+        {
             effect_ = Effects["None"];
-            }
         }
+    }
 
     timer_->start(10, true);
 
-    // hide cursor when not moved
+    // -- hide cursor when not moved --------------------
+
+    mouseMoveTimer_ = new QTimer;
+    connect(mouseMoveTimer_, SIGNAL(timeout()),
+            SLOT(slotMouseMoveTimeOut()));
+    
     setMouseTracking(true);
     slotMouseMoveTimeOut();
 }
@@ -112,8 +137,8 @@ SlideShow::~SlideShow()
     if (mIntArray)
         delete [] mIntArray;
 
-    if (nextImage_)
-        delete nextImage_;
+    if (currImage_)
+        delete currImage_;
     if (imIface_)
         delete imIface_;
 }
@@ -197,35 +222,34 @@ void SlideShow::slotTimeOut()
     int tmout = -1;
 
     if (effectRunning_)                           // Effect under progress ?
-        {
+    {
         tmout = (this->*effect_)(false);
-        }
+    }
     else
-        {
+    {
         loadNextImage();
-        currImage_ = nextImage_;
 
 	if (!currImage_ || fileList_.isEmpty())   // End of slideshow ?
-	    {
+        {
             showEndOfShow();
             return;
-            }
+        }
 
         if (effectName_ == "Random")              // Take a random effect.
-            {
+        {
             effect_ = getRandomEffect();
             if (!effect_) return;
-            }
+        }
 
         effectRunning_ = true;
         tmout = (this->*effect_)(true);
-        }
+    }
 
     if (tmout <= 0)                               // Effect finished -> delay.
-        {
+    {
         tmout = delay_;
         effectRunning_ = false;
-        }
+    }
 
     timer_->start(tmout, true);
 }
@@ -235,29 +259,39 @@ void SlideShow::slotTimeOut()
 
 void SlideShow::loadNextImage()
 {
-    if (nextImage_)
-        delete nextImage_;
+    if (currImage_)
+        delete currImage_;
+    currImage_ = 0;
 
-    nextImage_ = 0;
-
+    fileIndex_++;
     int num = fileList_.count();
-
     if (fileIndex_ >= num)
+    {
         if (loop_)
-            fileIndex_ = 0; //loop
+        {
+            fileIndex_ = 0;
+        }
         else
-            return; // don't loop
+        {
+            fileIndex_ = num-1;
+            return;
+        }
+    }
 
+    if (!loop_)
+    {
+        toolBar_->setEnabledPrev(fileIndex_ > 0);
+        toolBar_->setEnabledNext(fileIndex_ < num-1);
+    }
+    
     QString file(fileList_[fileIndex_]);
 
-    nextImage_ = new ImImageSS(imIface_, file);
-    nextImage_->fitSize(width(), height());
-    nextImage_->render();
+    currImage_ = new ImImageSS(imIface_, file);
+    currImage_->fitSize(width(), height());
+    currImage_->render();
 
     if (printName_)
         printFilename();
-
-    fileIndex_++;
 }
 
 
@@ -265,32 +299,39 @@ void SlideShow::loadNextImage()
 
 void SlideShow::loadPrevImage()
 {
-    if (nextImage_)
-        delete nextImage_;
+    if (currImage_)
+        delete currImage_;
+    currImage_ = 0;
 
-    nextImage_ = 0;
-
+    fileIndex_--;
     int num = fileList_.count();
-
-    fileIndex_--; // back from next to current
-    fileIndex_--; // back from current to previous
-
     if (fileIndex_ < 0)
+    {
         if (loop_)
-            fileIndex_ = num-1; //loop
+        {
+            fileIndex_ = num-1;
+        }
         else
-            return; // don't loop
+        {
+            fileIndex_ = -1; // set this to -1.
+            return;
+        }
+    }
 
+    if (!loop_)
+    {
+        toolBar_->setEnabledPrev(fileIndex_ > 0);
+        toolBar_->setEnabledNext(fileIndex_ < num-1);
+    }
+    
     QString file(fileList_[fileIndex_]);
 
-    nextImage_ = new ImImageSS(imIface_, file);
-    nextImage_->fitSize(width(), height());
-    nextImage_->render();
+    currImage_ = new ImImageSS(imIface_, file);
+    currImage_->fitSize(width(), height());
+    currImage_->render();
 
     if (printName_)
         printFilename();
-
-    fileIndex_++;
 }
 
 
@@ -298,9 +339,9 @@ void SlideShow::loadPrevImage()
 
 void SlideShow::showCurrentImage()
 {
-    //imIface_->paint(currImage_, 0, 0, 0, 0,
-    //                currImage_->qpixmap()->width(),
-    //                currImage_->qpixmap()->height());
+    if (!currImage_)
+        return;
+    
     bitBlt(this, 0, 0, currImage_->qpixmap(),
            0, 0, currImage_->qpixmap()->width(),
            currImage_->qpixmap()->height(), Qt::CopyROP, true);
@@ -311,12 +352,12 @@ void SlideShow::showCurrentImage()
 
 void SlideShow::printFilename()
 {
-    if (!nextImage_) return;
+    if (!currImage_) return;
 
     QPainter p;
-    p.begin(nextImage_->qpixmap());
+    p.begin(currImage_->qpixmap());
 
-    QString filename(nextImage_->filename());
+    QString filename(currImage_->filename());
     filename += " (";
     filename += QString::number(fileIndex_ + 1);
     filename += "/";
@@ -367,6 +408,11 @@ void SlideShow::showEndOfShow()
     p.drawText(100, 100, i18n("SlideShow Completed."));
     p.drawText(100, 150, i18n("Click To Exit..."));
     p.end();
+
+    endOfShow_ = true;
+    toolBar_->setEnabledPlay(false);
+    toolBar_->setEnabledNext(false);
+    toolBar_->setEnabledPrev(false);
 }
 
 
@@ -374,80 +420,64 @@ void SlideShow::showEndOfShow()
 
 void SlideShow::keyPressEvent(QKeyEvent *event)
 {
-    if(!event)
+    if (!event)
         return;
 
-    if(event->key() == Qt::Key_Space)
-    {
-        event->accept();
-        timer_->pause();
-    }
-    else
-    {
-        event->ignore();
-        QWidget::keyPressEvent(event);
-    }
+    toolBar_->keyPressEvent(event);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void SlideShow::mousePressEvent(QMouseEvent *event)
+void SlideShow::mousePressEvent(QMouseEvent *)
 {
-    if (!event) return;
-    if (!effect_) return;                         // No effect -> bye !
-
-    int tmout = -1;
-
-    if (effectRunning_)                           // Effect under progress ?
-        {
-        tmout = (this->*effect_)(false);
-        }
-    else
-        {
-        if (event->button() == QMouseEvent::LeftButton)
-            {
-            loadNextImage();
-            event->accept();
-            }
-        if (event->button() == QMouseEvent::RightButton)
-           {
-           loadPrevImage();
-           event->accept();
-           }
-        currImage_ = nextImage_;
-
-	if (!currImage_ || fileList_.isEmpty())   // End of slideshow ?
-	    {
-            showEndOfShow();
-            return;
-            }
-
-        if (effectName_ == "Random")              // Take a random effect.
-{
-            effect_ = getRandomEffect();
-            if (!effect_) return;
-            }
-
-        effectRunning_ = true;
-        tmout = (this->*effect_)(true);
-        }
-
-    if (tmout <= 0)                               // Effect finished -> delay.
-        {
-        tmout = delay_;
-        effectRunning_ = false;
-        }
-
-    timer_->start(tmout, true);
+    if (endOfShow_)
+        close();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void SlideShow::mouseMoveEvent(QMouseEvent *)
+void SlideShow::mouseMoveEvent(QMouseEvent *e)
 {
     setCursor(QCursor(Qt::ArrowCursor));
     mouseMoveTimer_->start(1000, true);
+
+    if (!toolBar_->canHide())
+        return;
+    
+    QPoint pos(e->pos());
+    
+    if (pos.y() > 20 && pos.y() < (deskHeight_-20-1))
+    {
+        if (toolBar_->isHidden())
+            return;
+        else
+            toolBar_->hide();
+        return;
+    }
+
+    int w = toolBar_->width();
+    int h = toolBar_->height();
+    
+    if (pos.y() < 20)
+    {
+        if (pos.x() <= deskWidth_/2)
+            // position top left
+            toolBar_->move(0,0);
+        else
+            // position top right
+            toolBar_->move(deskWidth_-w-1,0);
+    }
+    else
+    {
+        if (pos.x() <= deskWidth_/2)
+            // position bot left
+            toolBar_->move(0,deskHeight_-h-1);
+        else
+            // position bot right
+            toolBar_->move(deskWidth_-w-1,deskHeight_-h-1);
+    }
+    toolBar_->show();
 }
 
 
@@ -455,7 +485,10 @@ void SlideShow::mouseMoveEvent(QMouseEvent *)
 
 void SlideShow::slotMouseMoveTimeOut()
 {
-    if (mouseMoveTimer_->isActive()) return;
+    QPoint pos(QCursor::pos());
+    if (pos.y() < 20 || pos.y() > ( deskHeight_-20-1))
+        return;
+    
     setCursor(QCursor(Qt::BlankCursor));
 }
 
@@ -476,7 +509,7 @@ int SlideShow::effectChessboard(bool aInit)
     int y;
 
     if (aInit)
-        {
+    {
         mw  = width();
         mh  = height();
         mdx = 8;         // width of one tile
@@ -487,13 +520,13 @@ int SlideShow::effectChessboard(bool aInit)
         miy = 0;         // 0 or mdy for growing tiling effect
         my  = mj&1 ? 0 : mdy; // 0 or mdy for shrinking tiling effect
         mwait = 800 / mj; // timeout between effects
-        }
+    }
 
     if (mix >= mw)
-        {
+    {
         showCurrentImage();
         return -1;
-        }
+    }
 
     mix += mdx;
     mx  -= mdx;
@@ -520,7 +553,7 @@ int SlideShow::effectMeltdown(bool aInit)
     bool done;
 
     if (aInit)
-        {
+    {
         delete [] mIntArray;
         mw = width();
         mh = height();
@@ -530,11 +563,11 @@ int SlideShow::effectMeltdown(bool aInit)
         mIntArray = new int[mix];
         for (i=mix-1; i>=0; i--)
             mIntArray[i] = 0;
-        }
+    }
 
     done = true;
     for (i=0,x=0; i<mix; i++,x+=mdx)
-        {
+    {
         y = mIntArray[i];
         if (y >= mh) continue;
         done = false;
@@ -542,14 +575,14 @@ int SlideShow::effectMeltdown(bool aInit)
         bitBlt(this, x, y+mdy, this, x, y, mdx, mh-y-mdy, CopyROP, true);
         bitBlt(this, x, y, currImage_->qpixmap(), x, y, mdx, mdy, CopyROP, true);
         mIntArray[i] += mdy;
-        }
+    }
 
     if (done)
-        {
+    {
         delete [] mIntArray;
         mIntArray = NULL;
         return -1;
-        }
+    }
 
     return 15;
 }
@@ -559,51 +592,51 @@ int SlideShow::effectMeltdown(bool aInit)
 
 int SlideShow::effectSweep(bool aInit)
 {
-  int w, h, x, y, i;
+    int w, h, x, y, i;
 
-  if (aInit)
+    if (aInit)
     {
-    // subtype: 0=sweep right to left, 1=sweep left to right
-    //          2=sweep bottom to top, 3=sweep top to bottom
-    mSubType = rand() % 4;
-    mw  = width();
-    mh  = height();
-    mdx = (mSubType==1 ? 16 : -16);
-    mdy = (mSubType==3 ? 16 : -16);
-    mx  = (mSubType==1 ? 0 : mw);
-    my  = (mSubType==3 ? 0 : mh);
+        // subtype: 0=sweep right to left, 1=sweep left to right
+        //          2=sweep bottom to top, 3=sweep top to bottom
+        mSubType = rand() % 4;
+        mw  = width();
+        mh  = height();
+        mdx = (mSubType==1 ? 16 : -16);
+        mdy = (mSubType==3 ? 16 : -16);
+        mx  = (mSubType==1 ? 0 : mw);
+        my  = (mSubType==3 ? 0 : mh);
     }
 
-  if (mSubType==0 || mSubType==1)
+    if (mSubType==0 || mSubType==1)
     {
-    // horizontal sweep
-    if ((mSubType==0 && mx < -64) ||
-	(mSubType==1 && mx > mw+64))
-       {
-       return -1;
-       }
-    for (w=2,i=4,x=mx; i>0; i--, w<<=1, x-=mdx)
-       {
-       bitBlt(this, x, 0, currImage_->qpixmap(), x, 0, w, mh, CopyROP, true);
-       }
-    mx += mdx;
+        // horizontal sweep
+        if ((mSubType==0 && mx < -64) ||
+            (mSubType==1 && mx > mw+64))
+        {
+            return -1;
+        }
+        for (w=2,i=4,x=mx; i>0; i--, w<<=1, x-=mdx)
+        {
+            bitBlt(this, x, 0, currImage_->qpixmap(), x, 0, w, mh, CopyROP, true);
+        }
+        mx += mdx;
     }
-  else
+    else
     {
-    // vertical sweep
-    if ((mSubType==2 && my < -64) ||
-	(mSubType==3 && my > mh+64))
-      {
-      return -1;
-      }
-    for (h=2,i=4,y=my; i>0; i--, h<<=1, y-=mdy)
-      {
-      bitBlt(this, 0, y, currImage_->qpixmap(), 0, y, mw, h, CopyROP, true);
-      }
-    my += mdy;
+        // vertical sweep
+        if ((mSubType==2 && my < -64) ||
+            (mSubType==3 && my > mh+64))
+        {
+            return -1;
+        }
+        for (h=2,i=4,y=my; i>0; i--, h<<=1, y-=mdy)
+        {
+            bitBlt(this, 0, y, currImage_->qpixmap(), 0, y, mw, h, CopyROP, true);
+        }
+        my += mdy;
     }
 
-  return 20;
+    return 20;
 }
 
 
@@ -611,24 +644,24 @@ int SlideShow::effectSweep(bool aInit)
 
 int SlideShow::effectRandom(bool /*aInit*/)
 {
-  int x, y, i, w, h, fact, sz;
+    int x, y, i, w, h, fact, sz;
 
-  fact = (rand() % 3) + 1;
+    fact = (rand() % 3) + 1;
 
-  w = width() >> fact;
-  h = height() >> fact;
-  sz = 1 << fact;
+    w = width() >> fact;
+    h = height() >> fact;
+    sz = 1 << fact;
 
-  for (i = (w*h)<<1; i > 0; i--)
+    for (i = (w*h)<<1; i > 0; i--)
     {
-    x = (rand() % w) << fact;
-    y = (rand() % h) << fact;
-    bitBlt(this, x, y, currImage_->qpixmap(), x, y, sz, sz, CopyROP, true);
+        x = (rand() % w) << fact;
+        y = (rand() % h) << fact;
+        bitBlt(this, x, y, currImage_->qpixmap(), x, y, sz, sz, CopyROP, true);
     }
 
-  showCurrentImage();
+    showCurrentImage();
 
-  return -1;
+    return -1;
 }
 
 
@@ -636,31 +669,31 @@ int SlideShow::effectRandom(bool /*aInit*/)
 
 int SlideShow::effectGrowing(bool aInit)
 {
-  if (aInit)
+    if (aInit)
     {
-    mw = width();
-    mh = height();
-    mx = mw >> 1;
-    my = mh >> 1;
-    mi = 0;
-    mfx = mx / 100.0;
-    mfy = my / 100.0;
+        mw = width();
+        mh = height();
+        mx = mw >> 1;
+        my = mh >> 1;
+        mi = 0;
+        mfx = mx / 100.0;
+        mfy = my / 100.0;
     }
 
-  mx = (mw>>1) - (int)(mi * mfx);
-  my = (mh>>1) - (int)(mi * mfy);
-  mi++;
+    mx = (mw>>1) - (int)(mi * mfx);
+    my = (mh>>1) - (int)(mi * mfy);
+    mi++;
 
-  if (mx<0 || my<0)
+    if (mx<0 || my<0)
     {
-    showCurrentImage();
-    return -1;
+        showCurrentImage();
+        return -1;
     }
 
-  bitBlt(this, mx, my, currImage_->qpixmap(), mx, my,
-	 mw - (mx<<1), mh - (my<<1), CopyROP, true);
+    bitBlt(this, mx, my, currImage_->qpixmap(), mx, my,
+           mw - (mx<<1), mh - (my<<1), CopyROP, true);
 
-  return 20;
+    return 20;
 }
 
 
@@ -668,50 +701,50 @@ int SlideShow::effectGrowing(bool aInit)
 
 int SlideShow::effectIncomingEdges(bool aInit)
 {
-  int x1, y1;
+    int x1, y1;
 
-  if (aInit)
+    if (aInit)
     {
-    mw = width();
-    mh = height();
-    mix = mw >> 1;
-    miy = mh >> 1;
-    mfx = mix / 100.0;
-    mfy = miy / 100.0;
-    mi = 0;
-    mSubType = rand() & 1;
+        mw = width();
+        mh = height();
+        mix = mw >> 1;
+        miy = mh >> 1;
+        mfx = mix / 100.0;
+        mfy = miy / 100.0;
+        mi = 0;
+        mSubType = rand() & 1;
     }
 
-  mx = (int)(mfx * mi);
-  my = (int)(mfy * mi);
+    mx = (int)(mfx * mi);
+    my = (int)(mfy * mi);
 
-  if (mx>mix || my>miy)
+    if (mx>mix || my>miy)
     {
-    showCurrentImage();
-    return -1;
+        showCurrentImage();
+        return -1;
     }
 
-  x1 = mw - mx;
-  y1 = mh - my;
-  mi++;
+    x1 = mw - mx;
+    y1 = mh - my;
+    mi++;
 
-  if (mSubType)
+    if (mSubType)
     {
-    // moving image edges
-    bitBlt(this,  0,  0, currImage_->qpixmap(), mix-mx, miy-my, mx, my, CopyROP, true);
-    bitBlt(this, x1,  0, currImage_->qpixmap(), mix, miy-my, mx, my, CopyROP, true);
-    bitBlt(this,  0, y1, currImage_->qpixmap(), mix-mx, miy, mx, my, CopyROP, true);
-    bitBlt(this, x1, y1, currImage_->qpixmap(), mix, miy, mx, my, CopyROP, true);
+        // moving image edges
+        bitBlt(this,  0,  0, currImage_->qpixmap(), mix-mx, miy-my, mx, my, CopyROP, true);
+        bitBlt(this, x1,  0, currImage_->qpixmap(), mix, miy-my, mx, my, CopyROP, true);
+        bitBlt(this,  0, y1, currImage_->qpixmap(), mix-mx, miy, mx, my, CopyROP, true);
+        bitBlt(this, x1, y1, currImage_->qpixmap(), mix, miy, mx, my, CopyROP, true);
     }
-  else
+    else
     {
-    // fixed image edges
-    bitBlt(this,  0,  0, currImage_->qpixmap(),  0,  0, mx, my, CopyROP, true);
-    bitBlt(this, x1,  0, currImage_->qpixmap(), x1,  0, mx, my, CopyROP, true);
-    bitBlt(this,  0, y1, currImage_->qpixmap(),  0, y1, mx, my, CopyROP, true);
-    bitBlt(this, x1, y1, currImage_->qpixmap(), x1, y1, mx, my, CopyROP, true);
+        // fixed image edges
+        bitBlt(this,  0,  0, currImage_->qpixmap(),  0,  0, mx, my, CopyROP, true);
+        bitBlt(this, x1,  0, currImage_->qpixmap(), x1,  0, mx, my, CopyROP, true);
+        bitBlt(this,  0, y1, currImage_->qpixmap(),  0, y1, mx, my, CopyROP, true);
+        bitBlt(this, x1, y1, currImage_->qpixmap(), x1, y1, mx, my, CopyROP, true);
     }
-  return 20;
+    return 20;
 }
 
 
@@ -719,26 +752,26 @@ int SlideShow::effectIncomingEdges(bool aInit)
 
 int SlideShow::effectHorizLines(bool aInit)
 {
-  static int iyPos[] = { 0, 4, 2, 6, 1, 5, 3, 7, -1 };
-  int y;
+    static int iyPos[] = { 0, 4, 2, 6, 1, 5, 3, 7, -1 };
+    int y;
 
-  if (aInit)
+    if (aInit)
     {
-    mw = width();
-    mh = height();
-    mi = 0;
+        mw = width();
+        mh = height();
+        mi = 0;
     }
 
-  if (iyPos[mi] < 0) return -1;
+    if (iyPos[mi] < 0) return -1;
 
-  for (y=iyPos[mi]; y<mh; y+=8)
+    for (y=iyPos[mi]; y<mh; y+=8)
     {
-    bitBlt(this, 0, y, currImage_->qpixmap(), 0, y, mw, 1, CopyROP, true);
+        bitBlt(this, 0, y, currImage_->qpixmap(), 0, y, mw, 1, CopyROP, true);
     }
 
-  mi++;
-  if (iyPos[mi] >= 0) return 160;
-  return -1;
+    mi++;
+    if (iyPos[mi] >= 0) return 160;
+    return -1;
 }
 
 
@@ -746,26 +779,26 @@ int SlideShow::effectHorizLines(bool aInit)
 
 int SlideShow::effectVertLines(bool aInit)
 {
-  static int ixPos[] = { 0, 4, 2, 6, 1, 5, 3, 7, -1 };
-  int x;
+    static int ixPos[] = { 0, 4, 2, 6, 1, 5, 3, 7, -1 };
+    int x;
 
-  if (aInit)
+    if (aInit)
     {
-    mw = width();
-    mh = height();
-    mi = 0;
+        mw = width();
+        mh = height();
+        mi = 0;
     }
 
-  if (ixPos[mi] < 0) return -1;
+    if (ixPos[mi] < 0) return -1;
 
-  for (x=ixPos[mi]; x<mw; x+=8)
+    for (x=ixPos[mi]; x<mw; x+=8)
     {
-    bitBlt(this, x, 0, currImage_->qpixmap(), x, 0, 1, mh, CopyROP, true);
+        bitBlt(this, x, 0, currImage_->qpixmap(), x, 0, 1, mh, CopyROP, true);
     }
 
-  mi++;
-  if (ixPos[mi] >= 0) return 160;
-  return -1;
+    mi++;
+    if (ixPos[mi] >= 0) return 160;
+    return -1;
 }
 
 
@@ -778,7 +811,7 @@ int SlideShow::effectMultiCircleOut(bool aInit)
     static QPointArray pa(4);
 
     if (aInit)
-        {
+    {
         startPainter();
         mw = width();
         mh = height();
@@ -792,17 +825,17 @@ int SlideShow::effectMultiCircleOut(bool aInit)
         mAlpha = mfd;
         mwait = 10 * mi;
         mfx = M_PI/32;  // divisor must be powers of 8
-        }
+    }
 
     if (mAlpha < 0)
-        {
+    {
         mPainter.end();
         showCurrentImage();
         return -1;
-        }
+    }
 
     for (alpha=mAlpha, i=mi; i>=0; i--, alpha+=mfd)
-        {
+    {
         x = (mw>>1) + (int)(mfy * cos(-alpha));
         y = (mh>>1) + (int)(mfy * sin(-alpha));
 
@@ -813,7 +846,7 @@ int SlideShow::effectMultiCircleOut(bool aInit)
         pa.setPoint(2, mx, my);
 
         mPainter.drawPolygon(pa);
-        }
+    }
 
     mAlpha -= mfx;
 
@@ -826,7 +859,7 @@ int SlideShow::effectMultiCircleOut(bool aInit)
 int SlideShow::effectSpiralIn(bool aInit)
 {
     if (aInit)
-        {
+    {
         startPainter();
         mw = width();
         mh = height();
@@ -842,43 +875,43 @@ int SlideShow::effectSpiralIn(bool aInit)
         mj = 16 * 16;
         mx = 0;
         my = 0;
-        }
+    }
 
     if (mi==0 && mx0>=mx1)
-        {
+    {
         mPainter.end();
         showCurrentImage();
         return -1;
-        }
+    }
 
     if (mi==0 && mx>=mx1) // switch to: down on right side
-        {
+    {
         mi = 1;
         mdx = 0;
         mdy = miy;
         mx1 -= mix;
-        }
+    }
     else if (mi==1 && my>=my1) // switch to: right to left on bottom side
-        {
+    {
         mi = 2;
         mdx = -mix;
         mdy = 0;
         my1 -= miy;
-        }
+    }
     else if (mi==2 && mx<=mx0) // switch to: up on left side
-        {
+    {
         mi = 3;
         mdx = 0;
         mdy = -miy;
         mx0 += mix;
-        }
+    }
     else if (mi==3 && my<=my0) // switch to: left to right on top side
-        {
+    {
         mi = 0;
         mdx = mix;
         mdy = 0;
         my0 += miy;
-        }
+    }
 
     bitBlt(this, mx, my, currImage_->qpixmap(), mx, my, mix, miy, CopyROP, true);
 
@@ -898,7 +931,7 @@ int SlideShow::effectCircleOut(bool aInit)
     static QPointArray pa(4);
 
     if (aInit)
-        {
+    {
         startPainter();
         mw = width();
         mh = height();
@@ -909,14 +942,14 @@ int SlideShow::effectCircleOut(bool aInit)
         pa.setPoint(3, mw>>1, mh>>1);
         mfx = M_PI/16;  // divisor must be powers of 8
         mfy = sqrt((double)mw*mw + mh*mh) / 2;
-        }
+    }
 
     if (mAlpha < 0)
-        {
+    {
         mPainter.end();
         showCurrentImage();
         return -1;
-        }
+    }
 
     x = mx;
     y = my;
@@ -940,20 +973,20 @@ int SlideShow::effectBlobs(bool aInit)
     int r;
 
     if (aInit)
-        {
+    {
         startPainter();
         mAlpha = M_PI * 2;
         mw = width();
         mh = height();
         mi = 150;
-        }
+    }
 
     if (mi <= 0)
-        {
+    {
         mPainter.end();
         showCurrentImage();
         return -1;
-        }
+    }
 
     mx = rand() % mw;
     my = rand() % mh;
@@ -979,6 +1012,53 @@ void SlideShow::startPainter(Qt::PenStyle aPen)
     mPainter.begin(this);
     mPainter.setBrush(brush);
     mPainter.setPen(aPen);
+}
+
+void SlideShow::slotPause()
+{
+    timer_->stop();
+
+    if (toolBar_->isHidden())
+    {
+        int w = toolBar_->width();
+        toolBar_->move(deskWidth_-w-1,0);
+        toolBar_->show();
+    }
+}
+
+void SlideShow::slotPlay()
+{
+    toolBar_->hide();
+    slotTimeOut();
+}
+
+void SlideShow::slotPrev()
+{
+    loadPrevImage();
+    if (!currImage_ || fileList_.isEmpty())   
+    {
+        showEndOfShow();
+        return;
+    }
+    effectRunning_ = false;
+    showCurrentImage();
+}
+
+void SlideShow::slotNext()
+{
+    loadNextImage();
+    if (!currImage_ || fileList_.isEmpty())   
+    {
+        showEndOfShow();
+        return;
+    }
+    effectRunning_ = false;
+    showCurrentImage();
+}
+
+void SlideShow::slotClose()
+{
+    close();    
 }
 
 }  // NameSpace KIPISlideShowPlugin

@@ -28,14 +28,14 @@
 #include <qpainter.h>
 #include <qmap.h>
 
-class QMouseEvent;
+class QTimer;
 
 namespace KIPISlideShowPlugin
 {
 
-class PauseTimer;
 class ImlibIface;
 class ImImageSS;
+class ToolBar;
 
 class SlideShow;
 
@@ -79,11 +79,9 @@ private:
 
     ImlibIface   *imIface_;
     ImImageSS    *currImage_;
-    ImImageSS    *nextImage_;
     
     QStringList fileList_;
-    PauseTimer *timer_;
-    QTimer     *mouseMoveTimer_;
+    QTimer*     timer_;
     int         fileIndex_;
 
     EffectMethod effect_;
@@ -96,6 +94,11 @@ private:
     int* mIntArray;
     QPainter mPainter;
 
+    ToolBar*     toolBar_;
+    QTimer*      mouseMoveTimer_;
+    int          deskWidth_;
+    int          deskHeight_;
+    bool         endOfShow_;
     
 protected:
 
@@ -123,6 +126,12 @@ private slots:
 
     void slotTimeOut();
     void slotMouseMoveTimeOut();
+
+    void slotPause();
+    void slotPlay();
+    void slotPrev();
+    void slotNext();
+    void slotClose();
 };
 
 }  // NameSpace KIPISlideShowPlugin

@@ -27,10 +27,12 @@
 #include <qmap.h>
 #include <qgl.h>
 
+class QTimer;
+
 namespace KIPISlideShowPlugin
 {
-class PauseTimer;
 class SlideShowGL;
+class ToolBar;
 
 class SlideShowGL : public QGLWidget
 {
@@ -56,7 +58,6 @@ protected:
     
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *);
-    void closeEvent(QCloseEvent *);
     void keyPressEvent(QKeyEvent *event);
         
 private:
@@ -73,7 +74,7 @@ private:
     QMap<QString, EffectMethod> Effects;
 
     QStringList  fileList_;
-    PauseTimer   *timer_;
+    QTimer*      timer_;
     int          fileIndex_;
 
     GLuint       texture_[2];
@@ -93,6 +94,11 @@ private:
     int          m_dir;
     float        m_points[40][40][3];
 
+    ToolBar*     toolBar_;
+    QTimer*      mouseMoveTimer_;
+    int          deskWidth_;
+    int          deskHeight_;
+    
 private:
 
     void          paintTexture();
@@ -118,6 +124,12 @@ private slots:
 
     void slotTimeOut();
     void slotMouseMoveTimeOut();
+
+    void slotPause();
+    void slotPlay();
+    void slotPrev();
+    void slotNext();
+    void slotClose();
 };
 
 }  // NameSpace KIPISlideShowPlugin
