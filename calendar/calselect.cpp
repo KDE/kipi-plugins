@@ -27,8 +27,6 @@
 #include <qdatetime.h>
 #include <qlabel.h>
 
-#include <digikam/albummanager.h>
-
 #include "calselect.h"
 #include "calsettings.h"
 #include "monthwidget.h"

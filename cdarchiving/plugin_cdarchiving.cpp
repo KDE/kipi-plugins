@@ -24,9 +24,6 @@
 #include <kconfig.h>
 #include <kdebug.h>
 
-#include <digikam/albummanager.h>
-#include <digikam/albuminfo.h>
-
 #include "cdarchiving.h"
 #include "plugin_cdarchiving.h"
 
