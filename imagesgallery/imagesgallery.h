@@ -41,6 +41,7 @@
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qdir.h>
+#include <qcolor.h>
 #include <qthread.h>
 
 // Includes files for KDE.
@@ -72,53 +73,93 @@ class ImagesGallery : public QObject, public QThread
 Q_OBJECT
 
 public:
+
   ImagesGallery( KIPI::Interface* interface, QObject *parent=0 );
   ~ImagesGallery();
   
   virtual void run();
 
+  bool prepare(void);
   bool showDialog();
   void invokeWebBrowser(void);
   bool removeTargetGalleryFolder(void);
   
 private:
+
   KURL                m_url4browser;
 
   KConfig            *m_config;
   KProcess           *m_webBrowserProc;
   KIPI::Interface    *m_interface;
   
-  QString             m_hostName;
-  QString             m_hostURL;
-  
   bool                m_recurseSubDirectories;
   bool                m_copyFiles;
   bool                m_useCommentFile;
+  bool                m_useCommentsAlbum;
+  bool                m_useCollectionAlbum;
+  bool                m_useDateAlbum;
+  bool                m_useNbImagesAlbum;
+  bool                m_createPageForPhotos;
+  bool                m_printImageName;
+  bool                m_printImageProperty;
+  bool                m_printImageSize;
+  bool                m_printPageCreationDate;
+  bool                m_useNotOriginalImageSize;
+  bool                m_useSpecificThumbsCompression;
+  bool                m_useSpecificTargetimageCompression;
 
+  QString             m_hostName;
+  QString             m_hostURL;
   QString             m_AlbumTitle;
   QString             m_AlbumComments;
   QString             m_AlbumCollection;
   QString             m_AlbumDate;
   QString             m_StreamMainPageAlbumPreview;
   QString             m_imagesFileFilter;
+  QString             m_imageName;                       
+  QString             m_mainTPath;
+  QString             m_imageFormat;
+  QString             m_targetImagesFormat;
+  QString             m_mainTitle;
+  QString             m_fontName;
+  QString             m_fontSize;
+  QString             m_bordersImagesSize;
+  
+  QColor              m_backgroundColor;
+  QColor              m_foregroundColor;
+  QColor              m_bordersImagesColor;
+  
   QStringList         m_resizeImagesWithError;
 
   int                 m_imgWidth;
   int                 m_imgHeight;
   int                 m_imagesPerRow;
   int                 m_LevelRecursion;
-
   int                 m_targetImgWidth;
   int                 m_targetImgHeight;
-
+  int                 m_imagesResize;
+  int                 m_colorDepthSetTargetImages;
+  int                 m_colorDepthTargetImages;
+  int                 m_targetImagesCompression;
+  int                 m_thumbnailsSize;
+  int                 m_colorDepthSetThumbnails;
+  int                 m_colorDepthThumbnails;
+  int                 m_thumbsCompression;
+  
   CommentMap         *m_commentMap;
 
   QObject            *m_parent;
-    
+
+  QDir                m_targetDir;    // Target directory from setup dialog.
+  
   KIPIImagesGalleryPlugin::KIGPDialog  *m_configDlg;
+  
+  QValueList<KIPI::ImageCollection>     m_albumsList;        // Albums list from setup dialog.
+  KIPI::ImageCollection                 m_album;             // Current album use in the thread.
+  
 
-  KIPI::ImageCollection m_album;
-
+private:
+    
   bool createDirectory(QDir thumb_dir, QString imgGalleryDir, QString dirName);
 
   void createHead(QTextStream& stream);

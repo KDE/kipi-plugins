@@ -94,8 +94,11 @@ void Plugin_Imagesgallery::slotActivate()
     
     if ( m_gallery->showDialog() )
        {
-       if ( m_gallery->removeTargetGalleryFolder() == true)
-          m_gallery->start();
+       if ( m_gallery->removeTargetGalleryFolder() == true )
+          {
+          if ( m_gallery->prepare() == true );
+             m_gallery->start();
+          }
        }
 }
 

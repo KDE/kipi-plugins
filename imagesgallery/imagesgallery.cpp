@@ -347,31 +347,62 @@ bool ImagesGallery::removeTargetGalleryFolder(void)
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-// List of threaded operations.
+/////////////////////////////////////////////////////////////////////////////////////////////
+// Execute the no threadable operations before the real thread.
 
-void ImagesGallery::run()
+bool ImagesGallery::prepare(void)
 {
     KIPIImagesGalleryPlugin::EventData *d;
-    QString Path;
-    KURL SubUrl, MainUrl;
-        
+    
     // This variable are used for the recursive sub directories parsing
     // during the HTML pages creation. (TODO: Checked this mode)
     
     m_recurseSubDirectories = false;
     m_LevelRecursion = 1;
-    
+
     m_resizeImagesWithError.clear();
     m_StreamMainPageAlbumPreview = "";
-    m_imagesPerRow = m_configDlg->getImagesPerRow();
-    QValueList<KIPI::ImageCollection> albums(m_configDlg->getSelectedAlbums());
     
+    m_imagesPerRow = m_configDlg->getImagesPerRow();
+    m_albumsList = m_configDlg->getSelectedAlbums();
+    m_imageName = m_configDlg->getImageName();
+    m_useCommentFile = m_configDlg->useCommentFile();
+    m_imageFormat = m_configDlg->getImageFormat();
+    m_targetImagesFormat = m_configDlg->getTargetImagesFormat();
+    m_mainTitle = m_configDlg->getMainTitle();
+    m_backgroundColor = m_configDlg->getBackgroundColor();
+    m_foregroundColor = m_configDlg->getForegroundColor(); 
+    m_bordersImagesColor = m_configDlg->getBordersImagesColor();
+    m_fontName = m_configDlg->getFontName();    
+    m_fontSize = m_configDlg->getFontSize();
+    m_bordersImagesSize = m_configDlg->getBordersImagesSize();
+    m_useCommentsAlbum = m_configDlg->useCommentsAlbum();
+    m_useCollectionAlbum = m_configDlg->useCollectionAlbum();
+    m_useDateAlbum = m_configDlg->useDateAlbum();
+    m_useNbImagesAlbum = m_configDlg->useNbImagesAlbum();
+    m_createPageForPhotos = m_configDlg->getCreatePageForPhotos();   
+    m_printImageName = m_configDlg->printImageName();
+    m_printImageProperty = m_configDlg->printImageProperty();
+    m_printImageSize = m_configDlg->printImageSize();
+    m_printPageCreationDate = m_configDlg->printPageCreationDate();
+    m_useNotOriginalImageSize = m_configDlg->useNotOriginalImageSize();
+    m_imagesResize = m_configDlg->getImagesResize();
+    m_colorDepthSetTargetImages = m_configDlg->colorDepthSetTargetImages();
+    m_colorDepthTargetImages = m_configDlg->getColorDepthTargetImages();    
+    m_useSpecificTargetimageCompression = m_configDlg->useSpecificTargetimageCompression();
+    m_targetImagesCompression = m_configDlg->getTargetImagesCompression();            
+    m_thumbnailsSize = m_configDlg->getThumbnailsSize();
+    m_colorDepthSetThumbnails = m_configDlg->colorDepthSetThumbnails();
+    m_colorDepthThumbnails = m_configDlg->getColorDepthThumbnails();
+    m_useSpecificThumbsCompression = m_configDlg->useSpecificThumbsCompression();
+    m_thumbsCompression = m_configDlg->getThumbsCompression();
+                    
     // Estimate the number of actions for the KIPI progress dialog. 
     
-    int nbActions = albums.count();
+    int nbActions = m_albumsList.count();
     
-    for( QValueList<KIPI::ImageCollection>::Iterator it = albums.begin(); it != albums.end(); ++it ) 
+    for( QValueList<KIPI::ImageCollection>::Iterator it = m_albumsList.begin() ;
+         it != m_albumsList.end() ; ++it ) 
        nbActions = nbActions + (*it).images().count();
     
     d = new KIPIImagesGalleryPlugin::EventData;
@@ -383,35 +414,47 @@ void ImagesGallery::run()
     
     // Create the main target folder.
         
-    QDir TargetDir;
-    QString MainTPath = m_configDlg->getImageName() + "/KIPIHTMLExport";
+    m_mainTPath = m_imageName + "/KIPIHTMLExport";
 
-    if (TargetDir.mkdir( MainTPath ) == false)
+    if (m_targetDir.mkdir( m_mainTPath ) == false)
        {
        d = new KIPIImagesGalleryPlugin::EventData;
        d->action = KIPIImagesGalleryPlugin::Error;
        d->starting = false;
        d->success = false;
-       d->message = i18n("Could not create directory '%1'").arg(MainTPath);
+       d->message = i18n("Could not create directory '%1'").arg(m_mainTPath);
        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-       return;
+       return(false);
        }
+    
+    return(true);
+}
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// List of threaded operations.
+
+void ImagesGallery::run()
+{
+    KIPIImagesGalleryPlugin::EventData *d;
+    QString Path;
+    KURL SubUrl, MainUrl;
+       
     // Build all Albums HTML export.
 
-    if ( albums.count() > 1 )
+    if ( m_albumsList.count() > 1 )
        {
        KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
        QString dir = KGlobal::dirs()->findResourceDir("kipi_data", "gohome.png");
        dir = dir + "gohome.png";
 
        KURL srcURL(dir);
-       KURL destURL(m_configDlg->getImageName() + "/KIPIHTMLExport/gohome.png");
+       KURL destURL(m_imageName + "/KIPIHTMLExport/gohome.png");
        KIO::file_copy(srcURL, destURL, -1, true, false, false);           
        }
 
-       for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
-            albumIt != albums.end(); ++albumIt )
+       for( QValueList<KIPI::ImageCollection>::Iterator albumIt = m_albumsList.begin() ;
+            albumIt != m_albumsList.end() ; ++albumIt )
           {
           m_album = *albumIt;
           QDateTime newestDate;
@@ -420,7 +463,7 @@ void ImagesGallery::run()
           for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) 
              {
              kdDebug( 51000 ) << "URL:" << (*urlIt).prettyURL() << endl;
-             KIPI::ImageInfo info = m_interface->info( *urlIt );
+             KIPI::ImageInfo info = m_interface->info( *urlIt );                // TODO
                    
              if ( info.time() > newestDate )
                 newestDate = info.time();
@@ -432,15 +475,15 @@ void ImagesGallery::run()
           m_AlbumDate       = newestDate.toString ( Qt::LocalDate ) ;
           Path              = m_album.path().path();
 
-          SubUrl = m_configDlg->getImageName() + "/KIPIHTMLExport/" + m_AlbumTitle + "/" + "index.html";
+          SubUrl = m_imageName + "/KIPIHTMLExport/" + m_AlbumTitle + "/" + "index.html";
 
           if ( !SubUrl.isEmpty() && SubUrl.isValid())
              {
              // Create the target sub folder for the current album.
 
-             QString SubTPath= m_configDlg->getImageName() + "/KIPIHTMLExport/" + m_AlbumTitle;
+             QString SubTPath= m_imageName + "/KIPIHTMLExport/" + m_AlbumTitle;
  
-             if (TargetDir.mkdir( SubTPath ) == false)
+             if (m_targetDir.mkdir( SubTPath ) == false)
                  {
                  d = new KIPIImagesGalleryPlugin::EventData;
                  d->action = KIPIImagesGalleryPlugin::Error;
@@ -458,12 +501,10 @@ void ImagesGallery::run()
              d->albumName = m_AlbumTitle;
              QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                             
-             m_useCommentFile = m_configDlg->useCommentFile();
-
              if ( !createHtml( SubUrl, Path, 
                                m_LevelRecursion > 0 ? m_LevelRecursion + 1 : 0,
-                               m_configDlg->getImageFormat(),
-                               m_configDlg->getTargetImagesFormat()) )
+                               m_imageFormat,
+                               m_targetImagesFormat) )
                 {
                 d = new KIPIImagesGalleryPlugin::EventData;
                 d->action = KIPIImagesGalleryPlugin::BuildAlbumHTMLPage;
@@ -472,13 +513,13 @@ void ImagesGallery::run()
                 d->albumName = m_AlbumTitle;
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d)); 
                 
-                if ( !DeleteDir(MainTPath) )
+                if ( !DeleteDir(m_mainTPath) )
                    {
                    d = new KIPIImagesGalleryPlugin::EventData;
                    d->action = KIPIImagesGalleryPlugin::Error;
                    d->starting = false;
                    d->success = false;
-                   d->message = i18n("Cannot remove folder '%1'.").arg(MainTPath);
+                   d->message = i18n("Cannot remove folder '%1'.").arg(m_mainTPath);
                    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                    return;
                    }
@@ -505,9 +546,9 @@ void ImagesGallery::run()
     d->success = false;
     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
-    if ( albums.count () > 1 )
+    if ( m_albumsList.count() > 1 )
        {
-       MainUrl.setPath( m_configDlg->getImageName() + "/KIPIHTMLExport/" + "index.html" );
+       MainUrl.setPath( m_imageName + "/KIPIHTMLExport/" + "index.html" );
        QFile MainPageFile( MainUrl.path() );
 
        if ( MainPageFile.open(IO_WriteOnly) )
@@ -589,7 +630,7 @@ void ImagesGallery::createHead(QTextStream& stream)
            << m_hostName << " [" << m_hostURL << "]\">"  << endl;
     stream << "<meta name=\"date\" content=\"" + KGlobal::locale()->formatDate(QDate::currentDate()) + "\">"
            << endl;
-    stream << "<title>" << m_configDlg->getMainTitle() << "</title>" << endl;
+    stream << "<title>" << m_mainTitle << "</title>" << endl;
     
     this->createCSSSection(stream);
     
@@ -601,20 +642,20 @@ void ImagesGallery::createHead(QTextStream& stream)
 
 void ImagesGallery::createCSSSection(QTextStream& stream)
 {
-    QString backgroundColor = m_configDlg->getBackgroundColor().name();
-    QString foregroundColor = m_configDlg->getForegroundColor().name();
-    QString bordersImagesColor = m_configDlg->getBordersImagesColor().name();
+    QString backgroundColor = m_backgroundColor.name();
+    QString foregroundColor = m_foregroundColor.name();
+    QString bordersImagesColor = m_bordersImagesColor.name();
 
     // Adding a touch of style
 
     stream << "<style type='text/css'>\n";
     stream << "BODY {color: " << foregroundColor << "; background: " << backgroundColor << ";" << endl;
-    stream << "          font-family: " << m_configDlg->getFontName() << ", sans-serif;" << endl;
-    stream << "          font-size: " << m_configDlg->getFontSize() << "pt; margin: 4%; }" << endl;
+    stream << "          font-family: " << m_fontName << ", sans-serif;" << endl;
+    stream << "          font-size: " << m_fontSize << "pt; margin: 4%; }" << endl;
     stream << "H1       {color: " << foregroundColor << ";}" << endl;
     stream << "TABLE    {text-align: center; margin-left: auto; margin-right: auto;}" << endl;
     stream << "TD       { color: " << foregroundColor << "; padding: 1em}" << endl;
-    stream << "IMG.photo      { border: " << m_configDlg->getBordersImagesSize() << "px solid "
+    stream << "IMG.photo      { border: " << m_bordersImagesSize << "px solid "
            << bordersImagesColor << "; }" << endl;
     stream << "</style>" << endl;
 }
@@ -664,43 +705,43 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
     stream << "<h1>" << i18n("Image Gallery for Album ") << "&quot;" << m_AlbumTitle << "&quot;"
            << "</h1>" << endl;
 
-    if (m_configDlg->useCommentsAlbum() == true ||
-        m_configDlg->useCollectionAlbum() == true ||
-        m_configDlg->useDateAlbum() == true ||
-        m_configDlg->useNbImagesAlbum() == true)
+    if (m_useCommentsAlbum == true ||
+        m_useCollectionAlbum == true ||
+        m_useDateAlbum == true ||
+        m_useNbImagesAlbum == true)
        {
        stream << "<table width=\"100%\" border=1 cellpadding=0 cellspacing=0 "
                  "style=\"page-break-before: always\">\n" << endl;
        stream << "<col width=\"20%\"><col width=\"80%\">"<<endl;
        stream << "<tr valign=top><td align=left>\n" << endl;
 
-       if (m_configDlg->useCommentsAlbum() && !m_AlbumComments.isEmpty())
+       if (m_useCommentsAlbum && !m_AlbumComments.isEmpty())
            stream << i18n("<i>Comment:</i>") << "<br>\n" << endl;
 
-       if (m_configDlg->useCollectionAlbum() && !m_AlbumCollection.isEmpty())
+       if (m_useCollectionAlbum && !m_AlbumCollection.isEmpty())
            stream << i18n("<i>Collection:</i>") << "<br>\n" << endl;
 
-       if (m_configDlg->useDateAlbum() == true)
+       if (m_useDateAlbum == true)
            stream << i18n("<i>Date:</i>") << "<br>\n" << endl;
 
-       if (m_configDlg->useNbImagesAlbum() == true)
+       if (m_useNbImagesAlbum == true)
            stream << i18n("<i>Images:</i>") << "\n" << endl;
 
        stream << "</td><td align=left>\n" << endl;
 
-       if (m_configDlg->useCommentsAlbum() && !m_AlbumComments.isEmpty())
+       if (m_useCommentsAlbum && !m_AlbumComments.isEmpty())
            {
            stream << EscapeSgmlText(QTextCodec::codecForLocale(), m_AlbumComments, true, true)
                   << "<br>\n" << endl;
            }
 
-       if (m_configDlg->useCollectionAlbum() && !m_AlbumCollection.isEmpty())
+       if (m_useCollectionAlbum && !m_AlbumCollection.isEmpty())
            stream << m_AlbumCollection << "<br>\n" << endl;
 
-       if (m_configDlg->useDateAlbum() == true)
+       if (m_useDateAlbum == true)
            stream << m_AlbumDate << "<br>\n" << endl;
 
-       if (m_configDlg->useNbImagesAlbum() == true)
+       if (m_useNbImagesAlbum == true)
            stream << numOfImages << "\n" << endl;
 
        stream << "</td></tr></table>\n" << endl;
@@ -739,7 +780,7 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
         stream << "<tr>" << endl;
 
         for (int col = 0 ;
-             urlIt!=images.end() && col < m_configDlg->getImagesPerRow() ;
+             urlIt!=images.end() && col < m_imagesPerRow ;
              ++col, ++urlIt, ++imgIndex)
             {
             const QString imgName = (*urlIt).fileName();
@@ -765,7 +806,7 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
                 {
                 // user requested the creation of html pages for each photo
 
-                if ( m_configDlg->getCreatePageForPhotos() )
+                if ( m_createPageForPhotos )
                    stream << "<a href=\"pages/" << targetImgName << ".html\">";
                 else
                    stream << "<a href=\"images/" << targetImgName << "\">";
@@ -778,20 +819,20 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
 
                 QString sep = "\" title=\"";
 
-                if (m_configDlg->printImageName())
+                if ( m_printImageName )
                     {
                     stream << sep << imgName;
                     sep = ", ";
                     }
 
-                if (m_configDlg->printImageProperty())
+                if ( m_printImageProperty )
                     {
                     imgProp.load( targetImagesDir.absFilePath(targetImgName, true) );
                     stream << sep << imgProp.width() << "&nbsp;x&nbsp;" << imgProp.height();
                     sep = ", ";
                     }
 
-                if (m_configDlg->printImageSize())
+                if ( m_printImageSize)
                     {
                     imginfo.setFile( targetImagesDir, targetImgName );
                     stream << sep << (imginfo.size() / 1024) << "&nbsp;" <<  i18n("KB");
@@ -856,25 +897,24 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
                 
             stream << "</a>" << endl;
 
-            if (m_configDlg->printImageName())
+            if ( m_printImageName )
                 {
                 stream << "<div>" << imgName << "</div>" << endl;
                 }
 
-            if (m_configDlg->printImageProperty())
+            if ( m_printImageProperty )
                 {
                 imgProp.load( targetImagesDir.absFilePath(targetImgName, true) );
                 stream << "<div>" << imgProp.width() << " x " << imgProp.height() << "</div>" << endl;
                 }
 
-            if (m_configDlg->printImageSize())
+            if ( m_printImageSize )
                 {
                 imginfo.setFile( targetImagesDir, targetImgName );
                 stream << "<div>(" << (imginfo.size() / 1024) << " " <<  i18n("KB") << ") "
                        << "</div>" << endl;
                 }
-
-
+                
             stream << "</td>" << endl;
             }
 
@@ -887,7 +927,7 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
 
     // create HTML pages if requested.
 
-    if( m_configDlg->getCreatePageForPhotos() )
+    if( m_createPageForPhotos )
       {
       KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
       QString dir = KGlobal::dirs()->findResourceDir("kipi_data", "up.png");
@@ -951,7 +991,7 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
         }
       }
 
-    if (m_configDlg->printPageCreationDate())
+    if ( m_printPageCreationDate )
         {
         QString Temp;
         KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
@@ -983,7 +1023,7 @@ void ImagesGallery::createBodyMainPage(QTextStream& stream, KURL& url)
     QString Temp;
     const QString today(KGlobal::locale()->formatDate(QDate::currentDate()));
 
-    Temp = m_configDlg->getMainTitle();
+    Temp = m_mainTitle;
     stream << "<body>\n<h1>" << Temp << "</h1><p>\n" << endl;
 
     Temp = i18n("<i>Album list:</i>");
@@ -994,7 +1034,7 @@ void ImagesGallery::createBodyMainPage(QTextStream& stream, KURL& url)
 
     stream << "<hr>" << endl;
 
-    if ( m_configDlg->printPageCreationDate() )
+    if ( m_printPageCreationDate )
         {
         QString Temp;
         KGlobal::dirs()->addResourceType("kipi_data", KGlobal::dirs()->kde_default("data") + "kipi");
@@ -1095,9 +1135,9 @@ bool ImagesGallery::createHtml(const KURL& url, const QString& sourceDirName, in
 
     QDir pages_dir( imgGalleryDir + QString::fromLatin1("/pages/"));
 
-    if (m_configDlg->getCreatePageForPhotos())
+    if (m_createPageForPhotos )
        {
-       kdDebug( 51000 ) << "Create photos :" << m_configDlg->getCreatePageForPhotos() << endl;
+       kdDebug( 51000 ) << "Create photos :" << m_createPageForPhotos << endl;
 
        if (createDirectory(pages_dir, imgGalleryDir, "pages") == false)
          return false;
@@ -1140,7 +1180,7 @@ void ImagesGallery::loadComments(void)
     m_useCommentFile = false;
     m_commentMap = new CommentMap;
 
-    QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();
+    QValueList<KIPI::ImageCollection> albums = m_interface->allAlbums();       // TODO
 
     for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albums.begin() ;
          albumIt != albums.end() ; ++albumIt )
@@ -1149,7 +1189,7 @@ void ImagesGallery::loadComments(void)
 
         for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt )
             {
-            KIPI::ImageInfo info = m_interface->info( *urlIt );
+            KIPI::ImageInfo info = m_interface->info( *urlIt );                         // TODO
             QString comment=info.description();
             
             if (!comment.isEmpty())
@@ -1183,11 +1223,11 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
 
     const QString previousThumb = QString::fromLatin1("../thumbs/")
                                   + previousImgName.left( previousImgName.findRev('.', -1) )
-                                  + extension(m_configDlg->getImageFormat());
+                                  + extension(m_imageFormat);
 
     const QString nextThumb = QString::fromLatin1("../thumbs/")
                               + nextImgName.left( nextImgName.findRev('.', -1) )
-                              + extension(m_configDlg->getImageFormat());
+                              + extension(m_imageFormat);
 
     QFile file( pageFilename );
 
@@ -1207,7 +1247,7 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
               << m_hostName << " [" << m_hostURL << "]\">"  << endl;
        stream << "<meta name=\"date\" content=\""
                  + KGlobal::locale()->formatDate(QDate::currentDate()) + "\">" << endl;
-       stream << "<title>" << m_configDlg->getMainTitle() << " : "<< imgName <<"</title>" << endl;
+       stream << "<title>" << m_mainTitle << " : "<< imgName <<"</title>" << endl;
        
        this->createCSSSection(stream);
        
@@ -1321,13 +1361,13 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
 
        QFileInfo imginfo;
 
-       if (m_configDlg->printImageName())
+       if ( m_printImageName )
           {
           stream << sep << imgName;
           sep = ", ";
           }
 
-       if (m_configDlg->printImageProperty())
+       if ( m_printImageProperty )
           {
           imgProp.load( targetImagesDir.absFilePath(imgName, true) );
           
@@ -1337,7 +1377,7 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
           sep = ", ";
           }
 
-       if (m_configDlg->printImageSize())
+       if ( m_printImageSize )
           {
           imginfo.setFile( targetImagesDir, imgName );
           stream << sep << (imginfo.size() / 1024) << "&nbsp;" <<  i18n("KB");
@@ -1347,7 +1387,7 @@ bool ImagesGallery::createPage(const QString& imgGalleryDir, const QString& imgN
 
        // Footer
 
-       if (m_configDlg->printPageCreationDate())
+       if ( m_printPageCreationDate )
           {
           stream << "<hr>" << endl;
           QString valid = i18n("Valid HTML 4.01");
@@ -1385,8 +1425,8 @@ int ImagesGallery::createThumb( const KURL& url, const QString& imgName,
     const QString TargetImagesbDir = imgGalleryDir + QString::fromLatin1("/images/");
     int extentTargetImages;
 
-    if (m_configDlg->useNotOriginalImageSize() == true)
-        extentTargetImages = m_configDlg->getImagesResize();
+    if ( m_useNotOriginalImageSize == true)
+        extentTargetImages = m_imagesResize;
     else
         extentTargetImages = -1;    // Use original image size.
 
@@ -1395,26 +1435,26 @@ int ImagesGallery::createThumb( const KURL& url, const QString& imgName,
 
     ResizeImage(pixPath, TargetImagesbDir, TargetimagesFormat, TargetImageNameFormat,
                      &m_targetImgWidth, &m_targetImgHeight, extentTargetImages,
-                     m_configDlg->colorDepthSetTargetImages(),
-                     m_configDlg->getColorDepthTargetImages(),
-                     m_configDlg->useSpecificTargetimageCompression(),
-                     m_configDlg->getTargetImagesCompression());
+                     m_colorDepthSetTargetImages,
+                     m_colorDepthTargetImages,
+                     m_useSpecificTargetimageCompression,
+                     m_targetImagesCompression);
 
     // Create the thumbnails.
 
     const QString ImageNameFormat = imgName + extension(imageFormat);
     const QString thumbDir = imgGalleryDir + QString::fromLatin1("/thumbs/");
-    int extent = m_configDlg->getThumbnailsSize();
+    int extent = m_thumbnailsSize;
 
     m_imgWidth = 120; // Setting the size of the images is
     m_imgHeight = 90; // required to generate faster 'loading' pages
 
     return (ResizeImage(pixPath, thumbDir, imageFormat, ImageNameFormat,
                         &m_imgWidth, &m_imgHeight, extent,
-                        m_configDlg->colorDepthSetThumbnails(),
-                        m_configDlg->getColorDepthThumbnails(),
-                        m_configDlg->useSpecificThumbsCompression(),
-                        m_configDlg->getThumbsCompression()));
+                        m_colorDepthSetThumbnails,
+                        m_colorDepthThumbnails,
+                        m_useSpecificThumbsCompression,
+                        m_thumbsCompression));
 }
 
 
