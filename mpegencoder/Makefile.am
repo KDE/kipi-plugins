@@ -24,5 +24,5 @@ messages: rc.cpp
 
 ####### This script name should probably be more 'namespaced'. Think about distros putting everything in /usr/bin...
 bin_SCRIPTS = images2mpg
-man_MANS = images2mpg.1.gz
+man_MANS = images2mpg.1
 
