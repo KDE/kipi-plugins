@@ -122,3 +122,4 @@ KIPI::Category Plugin_HelloWorld::category() const
     return KIPI::IMAGESPLUGIN;
 }
 
+#include "plugin_helloworld.moc"
