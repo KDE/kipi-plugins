@@ -176,7 +176,7 @@ void CDArchivingDialog::setupSelection(void)
     connect( m_mediaFormat, SIGNAL( highlighted( const QString & ) ),
              this, SLOT( mediaFormatActived( const QString & ) ) );
 
-    connect( m_imageCollectionSelector, SIGNAL( signalSelectionChanged() ),
+    connect( m_imageCollectionSelector, SIGNAL( selectionChanged() ),
              this, SLOT( slotAlbumSelected() ) );
 }
 
