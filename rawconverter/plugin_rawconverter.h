@@ -37,6 +37,7 @@ public:
                         const QStringList &args);
     QString id() const { return QString::fromLatin1("rawconverter") }
     ~Plugin_RawConverter();
+    KIPI::Category category() const;
 
 private:
 

@@ -142,5 +142,5 @@ void Plugin_SlideShow::slotAlbumChanged(Digikam::AlbumInfo* album)
 
 KIPI::Category Plugin_SlideShow::category() const
 {
-    return KIPI::IMAGESPLUGIN;
+    return KIPI::TOOLSPLUGIN;
 }

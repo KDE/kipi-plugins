@@ -143,5 +143,5 @@ void Plugin_AcquireImages::slotAcquireImageDone(const QImage &img)
 
 KIPI::Category Plugin_AcquireImages::category() const
 {
-    return KIPI::IMAGESPLUGIN;
+    return KIPI::TOOLSPLUGIN;
 }
