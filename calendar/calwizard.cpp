@@ -252,6 +252,7 @@ void CalWizard::slotPageSelected(const QString&)
 
         if (!printer_)
             printer_ = new KPrinter(false);
+        printer_->setUsePrinterResolution(true);
 
         // TODO: Let user choose resolutions
         //, QPrinter::HighResolution);

@@ -292,6 +292,7 @@ void FrmPrintWizard::FrmPrintWizardBaseSelected(const QString &)
     {
       KPrinter printer;
       printer.setPageSize(m_pageSize);
+      printer.setUsePrinterResolution(true);
       if (printer.setup())
         printPhotos(m_photos, s->layouts, printer);
     }
