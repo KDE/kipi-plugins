@@ -24,8 +24,10 @@
 #include <qapplication.h>
 #include <qgroupbox.h>
 #include <qlayout.h>
+#include <qlabel.h>
 #include <qlistview.h>
 #include <qpushbutton.h>
+#include <qframe.h>
 
 // KDE includes.
 
@@ -36,6 +38,7 @@
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
+#include <kstandarddirs.h>
 
 // Include files for KIPI
 
@@ -56,78 +59,110 @@ SetupCamera::SetupCamera(QWidget* parent, const char* name)
            : KDialogBase(parent, name, true, i18n("Setup Cameras"), 
                          Help|Ok|Cancel, Ok, true) 
 {
-        // About data and help button.
+    // About data and help button.
     
-        KAboutData* about = new KAboutData("kipiplugins",
-                                           I18N_NOOP("KameraKlient"), 
-                                           kipi_version,
-                                           I18N_NOOP("An Digital camera interface Kipi plugin"),
-                                           KAboutData::License_GPL,
-                                           "(c) 2003-2004, Renchi Raju\n"
-                                           "(c) 2004, Tudor Calin", 
-                                           0,
-                                           "http://extragear.kde.org/apps/kipi.php");
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("KameraKlient"), 
+                                       kipi_version,
+                                       I18N_NOOP("An Digital camera interface Kipi plugin"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2003-2004, Renchi Raju\n"
+                                       "(c) 2004, Tudor Calin", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
     
-        about->addAuthor("Renchi Raju", I18N_NOOP("Original author from Digikam project"),
-                         "renchi@pooh.tam.uiuc.edu");
+    about->addAuthor("Renchi Raju", I18N_NOOP("Original author from Digikam project"),
+                     "renchi@pooh.tam.uiuc.edu");
 
-        about->addAuthor("Tudor Calin", I18N_NOOP("Porting the Digikam GPhoto2 interface to Kipi. Maintainer"),
-                         "tudor@1xtech.com");
+    about->addAuthor("Tudor Calin", I18N_NOOP("Porting the Digikam GPhoto2 interface to Kipi. Maintainer"),
+                     "tudor@1xtech.com");
 
-        helpButton_ = actionButton( Help );
-        KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
-        helpMenu->menu()->removeItemAt(0);
-        helpMenu->menu()->insertItem(i18n("KameraKlient handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-        helpButton_->setPopup( helpMenu->menu() );
+    helpButton_ = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("KameraKlient handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpButton_->setPopup( helpMenu->menu() );
         
-	setWFlags(Qt::WDestructiveClose);
-	QWidget *page = new QWidget(this);
-	setMainWidget(page);
-	QVBoxLayout* vbox = new QVBoxLayout(page, 5, 5); 
-	QGroupBox* groupBox = new QGroupBox(page, "groupBox");
-	groupBox->setColumnLayout(0, Qt::Vertical);
-	groupBox->layout()->setSpacing(5);
-	groupBox->layout()->setMargin(5);
-	QGridLayout* groupBoxLayout = new QGridLayout(groupBox->layout());
-	groupBoxLayout->setAlignment( Qt::AlignTop );
-	listView_ = new QListView( groupBox );
-	listView_->addColumn(i18n("Model"));
-	listView_->addColumn(i18n("Port"));
-	listView_->setAllColumnsShowFocus(true); 
-	groupBoxLayout->addMultiCellWidget(listView_, 0, 4, 0, 0);
-	addButton_ = new QPushButton(groupBox);
-	groupBoxLayout->addWidget(addButton_, 0, 1);
-	removeButton_ = new QPushButton(groupBox);
-	groupBoxLayout->addWidget(removeButton_, 1, 1);
-	editButton_ = new QPushButton( groupBox);
-	groupBoxLayout->addWidget(editButton_, 2, 1);
-	autoDetectButton_ = new QPushButton(groupBox);
-	groupBoxLayout->addWidget(autoDetectButton_, 3, 1);
-	addButton_->setText( i18n("Add..."));
-	removeButton_->setText( i18n( "Remove"));
-	editButton_->setText( i18n("Edit..."));
-	autoDetectButton_->setText(i18n("Auto-Detect"));
-	QSpacerItem* spacer = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
-	groupBoxLayout->addItem(spacer, 4, 1);
-	vbox->addWidget(groupBox);
-	removeButton_->setEnabled(false);
-	editButton_->setEnabled(false);
-	connect(listView_, SIGNAL(selectionChanged()), this, SLOT(slotSelectionChanged()));
-	connect(addButton_, SIGNAL(clicked()), this, SLOT(slotAddCamera()));
-	connect(removeButton_, SIGNAL(clicked()), this, SLOT(slotRemoveCamera()));
-	connect(editButton_, SIGNAL(clicked()), this, SLOT(slotEditCamera()));
-	connect(autoDetectButton_, SIGNAL(clicked()), this, SLOT(slotAutoDetectCamera()));
-	CameraList* clist = CameraList::instance();
-	if(clist) {
-	    QPtrList<CameraType>* cl = clist->cameraList();
-	    for (CameraType *ctype = cl->first(); ctype; ctype = cl->next()) {
-		new QListViewItem(listView_, ctype->model(), ctype->port());
-	    }
-	}
-	connect(this, SIGNAL(okClicked()), this, SLOT(slotOkClicked()));
-	show();
-	int W=SetupCamera::width (), H=SetupCamera::height();
-	move(QApplication::desktop()->width ()/2-(W/2), QApplication::desktop()->height()/2-(H/2));
+    setWFlags(Qt::WDestructiveClose);
+    QWidget *page = new QWidget(this);
+    setMainWidget(page);
+    QVBoxLayout* vbox = new QVBoxLayout(page, 5, 5); 
+        
+    //---------------------------------------------
+   
+    QFrame *headerFrame = new QFrame( page );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( i18n("Setup Cameras"), headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    vbox->addWidget( headerFrame );
+    
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+
+    //---------------------------------------------
+        
+    QGroupBox* groupBox = new QGroupBox(page, "groupBox");
+    groupBox->setColumnLayout(0, Qt::Vertical);
+    groupBox->layout()->setSpacing(5);
+    groupBox->layout()->setMargin(5);
+    
+    QGridLayout* groupBoxLayout = new QGridLayout(groupBox->layout());
+    groupBoxLayout->setAlignment( Qt::AlignTop );
+    listView_ = new QListView( groupBox );
+    listView_->addColumn(i18n("Model"));
+    listView_->addColumn(i18n("Port"));
+    listView_->setAllColumnsShowFocus(true); 
+    groupBoxLayout->addMultiCellWidget(listView_, 0, 4, 0, 0);
+    addButton_ = new QPushButton(groupBox);
+    groupBoxLayout->addWidget(addButton_, 0, 1);
+    removeButton_ = new QPushButton(groupBox);
+    groupBoxLayout->addWidget(removeButton_, 1, 1);
+    editButton_ = new QPushButton( groupBox);
+    groupBoxLayout->addWidget(editButton_, 2, 1);
+    autoDetectButton_ = new QPushButton(groupBox);
+    groupBoxLayout->addWidget(autoDetectButton_, 3, 1);
+    addButton_->setText( i18n("Add..."));
+    removeButton_->setText( i18n( "Remove"));
+    editButton_->setText( i18n("Edit..."));
+    autoDetectButton_->setText(i18n("Auto-Detect"));
+    QSpacerItem* spacer = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    groupBoxLayout->addItem(spacer, 4, 1);
+    vbox->addWidget(groupBox);
+    removeButton_->setEnabled(false);
+    editButton_->setEnabled(false);
+    
+    connect(listView_, SIGNAL(selectionChanged()), this, SLOT(slotSelectionChanged()));
+    connect(addButton_, SIGNAL(clicked()), this, SLOT(slotAddCamera()));
+    connect(removeButton_, SIGNAL(clicked()), this, SLOT(slotRemoveCamera()));
+    connect(editButton_, SIGNAL(clicked()), this, SLOT(slotEditCamera()));
+    connect(autoDetectButton_, SIGNAL(clicked()), this, SLOT(slotAutoDetectCamera()));
+    
+    CameraList* clist = CameraList::instance();
+        
+    if(clist) {
+        QPtrList<CameraType>* cl = clist->cameraList();
+        for (CameraType *ctype = cl->first(); ctype; ctype = cl->next()) {
+        new QListViewItem(listView_, ctype->model(), ctype->port());
+        }
+    }
+    
+    connect(this, SIGNAL(okClicked()), this, SLOT(slotOkClicked()));
+    
+    show();
+    int W=SetupCamera::width (), H=SetupCamera::height();
+    move(QApplication::desktop()->width ()/2-(W/2), QApplication::desktop()->height()/2-(H/2));
 }
 
 SetupCamera::~SetupCamera() {

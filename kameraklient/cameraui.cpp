@@ -44,6 +44,7 @@
 #include <qvaluelist.h>
 #include <qvbox.h>
 #include <qpushbutton.h>
+#include <qframe.h>
 
 // KDE includes
 
@@ -103,10 +104,38 @@ CameraUI::CameraUI() : QWidget()
     setWFlags(Qt::WDestructiveClose);
     resize(700, 440);
     setMinimumSize(600, 400);
+    
     mCameraList = new CameraList(this, locateLocal("data", "kipi/cameras.xml"));
     mCameraType =  new CameraType();
-    QHBoxLayout* mMainBoxLayout = new QHBoxLayout(this, 0, 4);
-    mMainBoxLayout->setResizeMode(QLayout::FreeResize);
+    
+    //---------------------------------------------
+    
+    QVBoxLayout *dvlay = new QVBoxLayout( this, 6 );
+    QFrame *headerFrame = new QFrame( this );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( i18n("Digital Camera interface"), headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    dvlay->addWidget( headerFrame );
+    
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+
+    //---------------------------------------------
+    
+    QHBoxLayout* mMainBoxLayout = new QHBoxLayout(dvlay);
+    mMainBoxLayout->setResizeMode(QLayout::FreeResize);    
     QVBoxLayout* mLeftBoxLayout = new QVBoxLayout(mMainBoxLayout, 0);
     QVBoxLayout* mBtnBoxLayout = new QVBoxLayout(mMainBoxLayout, 4);
     mBtnBoxLayout->setMargin(2);
