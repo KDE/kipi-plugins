@@ -55,6 +55,10 @@ extern "C"
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
+// Include files for libKipi.
+
+#include <libkipi/version.h>
+
 // Local includes
 
 #include "screenshotdialog.h"
@@ -149,7 +153,7 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Acquire images"), 
-                                       "0.1.0-cvs",
+                                       kipi_version,
                                        I18N_NOOP("A Kipi plugin to acquire images"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 

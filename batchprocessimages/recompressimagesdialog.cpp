@@ -42,6 +42,10 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
+// Include files for libKipi.
+
+#include <libkipi/version.h>
+
 // Local includes
 
 #include "recompressoptionsdialog.h"
@@ -60,7 +64,7 @@ RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interf
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch recompress images"), 
-                                       "0.1.0-cvs",
+                                       kipi_version,
                                        I18N_NOOP("A Kipi plugin to batch recompress images\n"
                                                  "This plugin use the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,

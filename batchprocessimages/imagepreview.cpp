@@ -61,6 +61,10 @@ extern "C"
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
+// Include files for libKipi.
+
+#include <libkipi/version.h>
+
 // Local includes
 
 #include "imagepreview.h"
@@ -82,7 +86,7 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch processes images"), 
-                                       "0.1.0-cvs",
+                                       kipi_version,
                                        I18N_NOOP("An interface for to preview the batch processes images Kipi plugins\n"
                                                  "This plugin use the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,

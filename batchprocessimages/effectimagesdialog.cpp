@@ -43,6 +43,10 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
+// Include files for libKipi.
+
+#include <libkipi/version.h>
+
 // Local includes
 
 #include "effectoptionsdialog.h"
@@ -62,7 +66,7 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch image effects"), 
-                                       "0.1.0-cvs",
+                                       kipi_version,
                                        I18N_NOOP("A Kipi plugin for batch image-effect transformations\n"
                                                  "This plugin use the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,
