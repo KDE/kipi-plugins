@@ -1,4 +1,5 @@
-INCLUDES    = -I$(top_srcdir) -I$(top_srcdir)/libkipi $(all_includes)
+INCLUDES    = -I$(top_srcdir) -I$(top_srcdir)/libkipi $(all_includes) \
+	$(LIBKEXIF_CFLAGS)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory

@@ -1,3 +1,64 @@
+###############################################################################
+# BEGIN PKG-CONFIG CHECK
+###############################################################################
+
+dnl KDE_PKG_CHECK_MODULES(GSTUFF, gtk+-2.0 >= 1.3 glib = 1.3.4, action-if, action-not)
+dnl defines GSTUFF_LIBS, GSTUFF_CFLAGS, see pkg-config man page
+dnl also defines GSTUFF_PKG_ERRORS on error
+AC_DEFUN([KDE_PKG_CHECK_MODULES], [
+  succeeded=no
+
+  if test -z "$PKG_CONFIG"; then
+    AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+  fi
+
+  if test "$PKG_CONFIG" != "no" ; then
+     PKG_CONFIG_MIN_VERSION=0.9.0
+     if $PKG_CONFIG --atleast-pkgconfig-version $PKG_CONFIG_MIN_VERSION; then
+        AC_MSG_CHECKING(for $2)
+
+        if $PKG_CONFIG --exists "$2" ; then
+            AC_MSG_RESULT(yes)
+            succeeded=yes
+
+            AC_MSG_CHECKING($1_CFLAGS)
+            $1_CFLAGS=`$PKG_CONFIG --cflags "$2"`
+            AC_MSG_RESULT($$1_CFLAGS)
+
+            AC_MSG_CHECKING($1_LIBS)
+            $1_LIBS=`$PKG_CONFIG --libs "$2"`
+            AC_MSG_RESULT($$1_LIBS)
+        else
+            $1_CFLAGS=""
+            $1_LIBS=""
+            ## If we have a custom action on failure, don't print errors, but
+            ## do set a variable so people can do so.
+            $1_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "$2"`
+            ifelse([$4], ,echo $$1_PKG_ERRORS,)
+        fi
+
+        AC_SUBST($1_CFLAGS)
+        AC_SUBST($1_LIBS)
+     else
+        echo "*** Your version of pkg-config is too old. You need version $PKG_CONFIG_MIN_VERSION or newer."
+        echo "*** See http://www.freedesktop.org/software/pkgconfig"
+     fi
+  fi
+  if test $succeeded = yes; then
+     ifelse([$3], , :, [$3])
+  else
+     ifelse([$4], , AC_MSG_WARN([Library requirements ($2) not met; consider adjusting the PKG_CONFIG_PATH environment variable if your libraries are in a nonstandard prefix so pkg-config can find them.]), [$4])
+  fi
+])
+
+AC_ARG_VAR(PKGCONFIGFOUND, [Path to pkg-config])
+AC_CHECK_PROG(PKGCONFIGFOUND, pkg-config,[yes])
+
+###############################################################################
+# END PKG-CONFIG CHECK
+###############################################################################
+
+
 # ----------------------------------------------------------
 # 
 # General kipi-plugin tests
@@ -19,22 +80,51 @@ AC_SUBST(LIBKIPI_CFLAGS)
 AC_SUBST(LIBKIPI_LIBS)
 AC_SUBST(LIBKIPI_LIBS_DEP)
 
+# --------------------------------------------------------------------
+# Check for libkexif
+# --------------------------------------------------------------------
 
 AC_MSG_CHECKING([for libkexif in our sources])
 if test -d $srcdir/libkexif; then
+    have_libkexif=yes
     LIBKEXIF_CFLAGS='-I$(top_srcdir)/libkexif'
     LIBKEXIF_LIBS='$(top_builddir)/libkexif/libkexif.la'
     LIBKEXIF_LIBS_DEP='$(LIBKEXIF_LIBS)'
     AC_MSG_RESULT([found])
+    AC_SUBST(LIBKEXIF_CFLAGS)
+    AC_SUBST(LIBKEXIF_LIBS)
+    AC_SUBST(LIBKEXIF_LIBS_DEP)
 else
-    # FIXME: Write a real test
-    LIBKEXIF_CFLAGS=''
-    LIBKEXIF_LIBS='-lkexif'
-    AC_MSG_RESULT([not found])
+    
+    if test "$PKGCONFIGFOUND" = "yes" ; then
+        # check for libkexif
+        have_libkexif=no
+
+	KDE_PKG_CHECK_MODULES(LIBKEXIF, libkexif >= 0.1,
+		have_libkexif=yes, have_libkexif=no)
+
+	if test "x$have_libkexif" = "xno"; then
+	   LIBKEXIF_CFLAGS=""
+	   LIBKEXIF_LIBS=""
+           AC_MSG_RESULT([not found])
+	else
+	   AC_MSG_RESULT([found])
+	fi
+     else
+        LIBKEXIF_CFLAGS=""
+	LIBKEXIF_LIBS=""
+        AC_MSG_RESULT([not found])
+     fi 
+     AC_SUBST(LIBKEXIF_CFLAGS)
+     AC_SUBST(LIBKEXIF_LIBS)
 fi
-AC_SUBST(LIBKEXIF_CFLAGS)
-AC_SUBST(LIBKEXIF_LIBS)
-AC_SUBST(LIBKEXIF_LIBS_DEP)
+
+if test x$have_libkexif != xyes; then
+   AC_MSG_RESULT(
+	[libkexif not installded. disabling jpeglossless plugin])
+fi
+
+AM_CONDITIONAL(compile_JPEGLOSSLESS, [test x$have_libkexif = xyes])
 
 
 #---------------------------------------------------------

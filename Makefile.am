@@ -8,9 +8,13 @@ if compile_KAMERAKLIENT
 KAMERAKLIENTDIR = kameraklient
 endif
 
+if compile_JPEGLOSSLESS
+JPEGLOSSLESSDIR = jpeglossless
+endif
+
 SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery \
-	commentseditor sendimages acquireimages \
-	jpeglossless batchprocessimages timeadjust diroperations wallpaper \
-	rawconverter findimages gammacalibration $(SLIDESHOWDIR) \
-	$(KAMERAKLIENTDIR)
+	sendimages acquireimages batchprocessimages \
+	timeadjust diroperations wallpaper \
+	rawconverter findimages gammacalibration \
+	$(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(JPEGLOSSLESSDIR)
 
