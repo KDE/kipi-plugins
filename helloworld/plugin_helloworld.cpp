@@ -89,10 +89,6 @@ void Plugin_HelloWorld::slotActivate()
                      << (m_interface->hasFeature( KIPI::AlbumsHaveComments ) ? "Yes" : "No") 
                      << endl;
     
-    kdDebug( 51000 ) << "  AlbumEQDir:          " 
-                     << (m_interface->hasFeature( KIPI::AlbumEQDir ) ? "Yes" : "No") 
-                     << endl;
-    
     kdDebug( 51000 ) << "  ImagesHasComments:   " 
                      << (m_interface->hasFeature( KIPI::ImagesHasComments ) ? "Yes" : "No") 
                      << endl;
