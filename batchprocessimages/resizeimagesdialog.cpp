@@ -329,7 +329,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           *proc << "convert";
           IncDec = ResizeImage( w, h, m_size);
 
-          *proc << "-geometry";
+          *proc << "-resize";
           QString Temp, Temp2;
           Temp2 = Temp.setNum( w ) + "x";
           Temp2.append(Temp.setNum( h ));
@@ -373,7 +373,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
           *proc << "-verbose" << "-gravity" << "Center";
 
-          *proc << "-geometry";
+          *proc << "-resize";
           QString Temp, Temp2;
           Temp2 = Temp.setNum( w ) + "x";
           Temp2.append(Temp.setNum( h ));
@@ -400,7 +400,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           {
           *proc << "convert";
 
-          *proc << "-geometry";
+          *proc << "-resize";
           QString Temp, Temp2;
           Temp2 = Temp.setNum( m_fixedWidth ) + "x";
           Temp2.append(Temp.setNum( m_fixedHeight ) + "!");
@@ -480,7 +480,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
           *proc << "-verbose" << "-gravity" << "Center";
 
-          *proc << "-geometry";
+          *proc << "-resize";
           QString Temp, Temp2;
           Temp2 = Temp.setNum( w ) + "x";
           Temp2.append(Temp.setNum( h ));
