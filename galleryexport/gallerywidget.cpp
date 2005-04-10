@@ -153,3 +153,5 @@ void GalleryWidget::slotResizeChecked()
 }
 
 }
+
+#include "gallerywidget.moc"
