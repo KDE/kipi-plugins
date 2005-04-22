@@ -1,25 +1,23 @@
-//////////////////////////////////////////////////////////////////////////////
-//
-//    SENDIMAGES.CPP
-//
-//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
-//
-//    This program is free software; you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation; either version 2 of the License, or
-//    (at your option) any later version.
-//
-//    This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with this program; if not, write to the Free Software
-//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-//
-//////////////////////////////////////////////////////////////////////////////
-
+/* ============================================================
+ * Author: Gilles Caulier <caulier dot gilles at free.fr>
+ *         from digiKam project.
+ * Date  : 2004-02-25
+ * Description : a kipi plugin for e-mailing images
+ * 
+ * Copyright 2004-2005 by Gilles Caulier
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * ============================================================ */
 
 // Include files for Qt
 
@@ -405,22 +403,30 @@ void SendImages::invokeMailAgent(void)
 
     if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" ||
          m_sendImagesDialog->m_mailAgentName->currentText() == "Netscape" ||
-         m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
+         m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" ||
+         m_sendImagesDialog->m_mailAgentName->currentText() == "GmailAgent")
     {
         m_mailAgentProc = new KProcess;
 
         m_thunderbirdUrl = m_sendImagesDialog->m_ThunderbirdBinPath->url();
 
         if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" )
+            {
             *m_mailAgentProc << "mozilla" << "-remote";
+            }
+        else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
+            {
+            *m_mailAgentProc << m_thunderbirdUrl << "-remote";
+            kdDebug (51000) << m_thunderbirdUrl << endl;
+            }
+        else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "GmailAgent" )
+            {
+            *m_mailAgentProc << "GmailAgent.py" << "-remote";
+            }
         else
-            if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
-                {
-                *m_mailAgentProc << m_thunderbirdUrl << "-remote";
-                kdDebug (51000) << m_thunderbirdUrl << endl;
-                }
-            else
-                *m_mailAgentProc << "netscape" << "-remote";
+            {
+            *m_mailAgentProc << "netscape" << "-remote";
+            }
 
         QString Temp = "xfeDoCommand(composeMessage,attachment='";
 

@@ -1,24 +1,23 @@
-//////////////////////////////////////////////////////////////////////////////
-//
-//    SENDIMAGESDIALOG.CPP
-//
-//    Copyright (C) 2003-2005 Gilles Caulier <caulier dot gilles at free.fr>
-//
-//    This program is free software; you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation; either version 2 of the License, or
-//    (at your option) any later version.
-//
-//    This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with this program; if not, write to the Free Software
-//    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-//
-//////////////////////////////////////////////////////////////////////////////
+/* ============================================================
+ * Author: Gilles Caulier <caulier dot gilles at free.fr>
+ *         from digiKam project.
+ * Date  : 2003-10-01
+ * Description : a kipi plugin for e-mailing images
+ * 
+ * Copyright 2003-2005 by Gilles Caulier
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * ============================================================ */
 
 // Include files for Qt
 
@@ -356,6 +355,7 @@ void SendImagesDialog::setupEmailOptions(void)
     m_mailAgentName = new QComboBox( false, page_setupEmailOptions );
     m_mailAgentName->insertItem( "Balsa" );
     m_mailAgentName->insertItem( "Evolution" );
+    m_mailAgentName->insertItem( "GmailAgent" );
     m_mailAgentName->insertItem( "Kmail" );
     m_mailAgentName->insertItem( "Mozilla" );
     m_mailAgentName->insertItem( "Netscape" );
@@ -366,6 +366,7 @@ void SendImagesDialog::setupEmailOptions(void)
                                            "These mail agent versions are supported:<p>"
                                            "<b>Balsa</b>: >= 2.x<p>"
                                            "<b>Evolution</b>: >= 1.4<p>"
+                                           "<b>GmailAgent</b>: >= 0.1<p>"
                                            "<b>Kmail</b>: >= 1.3<p>"
                                            "<b>Mozilla</b>: >= 1.4<p>"
                                            "<b>Netscape</b>: >= 7.x<p>"
@@ -514,13 +515,12 @@ void SendImagesDialog::setupEmailOptions(void)
 
 void SendImagesDialog::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("sendimages",
-                                             "kipi-plugins");
+    KApplication::kApplication()->invokeHelp("sendimages", "kipi-plugins");
 }
 
-void SendImagesDialog::slotMailAgentChanged(int i)
+void SendImagesDialog::slotMailAgentChanged(int)
 {
-    if ( i == 6 ) // Thunderbird
+    if ( m_mailAgentName->currentText() == "Thunderbird" )
        {
        m_labelThunderbirdBinPath->setEnabled(true);
        m_ThunderbirdBinPath->setEnabled(true);
@@ -629,7 +629,7 @@ void SendImagesDialog::slotOk()
 
     writeSettings();
 
-    for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
+    for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; i++)
         {
         ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(i) );
         m_images2send << pitem->url();

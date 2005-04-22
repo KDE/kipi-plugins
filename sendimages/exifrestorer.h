@@ -1,6 +1,7 @@
 /* ============================================================
  * File  : exifrestorer.h
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *         from digiKam project. 
  * Date  : 2003-02-23
  * Description : 
  * 
