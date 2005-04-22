@@ -222,7 +222,7 @@ void ProcessController::slotProcessStdErr()
     QByteArray ba = dcProcess_->readStderr();
     if (!ba.isEmpty())
     {
-        kdWarning() << "ProcessController: stderr: " << ba << endl;
+        kdWarning( 51000 ) << "ProcessController: stderr: " << (const char *)ba << endl;
     }
 }
 
