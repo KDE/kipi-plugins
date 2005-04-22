@@ -181,7 +181,7 @@ void FindDuplicateDialog::setupPageMethod(void)
     updateCache->setText(i18n( "&Update Cache" ));
     QWhatsThis::add( updateCache, i18n("<p>Update the cache data for the selected Albums.") );
     QPushButton* purgeCache = new QPushButton( groupBox2, "PurgeCacheAlbumsSelected" );
-    purgeCache->setText(i18n( "&Purge Cache (albums selected)" ));
+    purgeCache->setText(i18n( "&Purge Cache (Albums Selected)" ));
     QWhatsThis::add( purgeCache, i18n("<p>Purge the cache data for the selected Albums.") );
     QPushButton* purgeAllCache = new QPushButton( groupBox2, "PurgeAllCache" );
     purgeAllCache->setText(i18n( "&Purge All Caches" ));

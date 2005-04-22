@@ -322,7 +322,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_MPEGOutputEDITFilename = new KLineEdit( m_MPEGOutputFilename );
   m_MPEGOutputEDITFilename->setMinimumWidth( 300 );
   m_MPEGOutputBUTTONFilename = new QPushButton( m_MPEGOutputFilename );
-  m_MPEGOutputBUTTONFilename->setPixmap( LoadIcon( QString( "fileopen" ), KIcon::Toolbar ) );
+  m_MPEGOutputBUTTONFilename->setIconSet( SmallIconSet( "fileopen" ) );
   QWhatsThis::add( m_MPEGOutputEDITFilename,
      i18n( "You can specify here the output MPEG filename. "
      "Warning : MPEG files are very big (if you have many images in your portfolio). "
@@ -339,7 +339,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_AudioInputEDITFilename = new KLineEdit( m_AudioInputFilename );
   m_AudioInputEDITFilename->setMinimumWidth( 300 );
   m_AudioInputBUTTONFilename = new QPushButton( m_AudioInputFilename );
-  m_AudioInputBUTTONFilename->setPixmap( LoadIcon( QString( "fileopen" ), KIcon::Toolbar ) );
+  m_AudioInputBUTTONFilename->setIconSet( SmallIconSet( "fileopen" ) );
   QWhatsThis::add( m_AudioInputEDITFilename,
      i18n( "You can specify here the input audio file name. "
      "This audio file name will be multiplexed with the portfolio video. "
@@ -521,7 +521,7 @@ void KImg2mpgData::slotMPEGFilenameDialog( void )
   temp = KFileDialog::getOpenFileName(KGlobalSettings::documentPath(),
                                       QString( "*.mpg" ),
                                       this,
-                                      i18n("Select MPEG output file...") );
+                                      i18n("Select MPEG Output File") );
   if( temp.isEmpty() )
     return;
 
@@ -538,7 +538,7 @@ void KImg2mpgData::slotAudioFilenameDialog( void )
   temp = KFileDialog::getOpenFileName(KGlobalSettings::documentPath(),
                                       QString( "*.wav *.mp2" ),
                                       this,
-                                      i18n("Select audio input file...") );
+                                      i18n("Select Audio Input File") );
   if( temp.isEmpty() )
     return;
 

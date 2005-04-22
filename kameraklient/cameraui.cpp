@@ -73,6 +73,7 @@
 #include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
+#include <kguiitem.h>
 
 // Include files for KIPI
 
@@ -504,7 +505,7 @@ void CameraUI::slotCameraDeleteSelected() {
 	return;
     }
     QString warnMsg(i18n("About to delete these Image(s)\n" "Are you sure?"));
-    if(KMessageBox::warningContinueCancelList(this, warnMsg, deleteList, i18n("Warning"), i18n("Delete")) ==  KMessageBox::Continue) {
+    if(KMessageBox::warningContinueCancelList(this, warnMsg, deleteList, i18n("Warning"), KGuiItem(i18n("Delete"),"editdelete")) ==  KMessageBox::Continue) {
 	CameraIconItem *item = static_cast<CameraIconItem*>(mIconView->firstItem());
         while(item) {
             CameraIconItem *nextItem = static_cast<CameraIconItem *>(item->nextItem());

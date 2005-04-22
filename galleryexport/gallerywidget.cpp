@@ -114,7 +114,7 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, WFlags fl )
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     optionsBoxLayout->addWidget(m_dimensionSpinBox, 1, 0);
 
-    QLabel* resizeLabel = new QLabel(i18n("Maximum Dimension"), optionsBox);
+    QLabel* resizeLabel = new QLabel(i18n("Maximum dimension"), optionsBox);
     optionsBoxLayout->addWidget(resizeLabel, 1, 1);
 
     m_resizeCheckBox->setChecked(false);

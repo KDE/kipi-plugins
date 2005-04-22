@@ -33,7 +33,7 @@
                 <cstring>header</cstring>
             </property>
             <property name="text">
-                <string>&lt;h3&gt;Enter new Album name:&lt;/h3&gt;</string>
+                <string>&lt;h3&gt;Enter New Album Name&lt;/h3&gt;</string>
             </property>
         </widget>
         <widget class="Line">
@@ -63,7 +63,7 @@
                         <cstring>titleLabel</cstring>
                     </property>
                     <property name="text">
-                        <string>Title (Optional):</string>
+                        <string>Title (optional):</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="1" column="0">
@@ -71,7 +71,7 @@
                         <cstring>nameLabel</cstring>
                     </property>
                     <property name="text">
-                        <string>Name (Optional):</string>
+                        <string>Name (optional):</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="2" column="0">
@@ -79,7 +79,7 @@
                         <cstring>captionLabel</cstring>
                     </property>
                     <property name="text">
-                        <string>Caption (Optional):</string>
+                        <string>Caption (optional):</string>
                     </property>
                 </widget>
                 <widget class="QLineEdit" row="0" column="1">

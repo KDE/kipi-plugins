@@ -125,13 +125,13 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
     // ------------------------------------------------------------------
 
     allFilesButton_ = new QRadioButton( FileSrcButtonGroup_);
-    allFilesButton_->setText( i18n( "Show All Images in Current Album" ) );
+    allFilesButton_->setText( i18n( "Show all images in current album" ) );
     FileSrcButtonGroupLayout->addWidget( allFilesButton_ );
 
     // ------------------------------------------------------------------
 
     selectedFilesButton_ = new QRadioButton( FileSrcButtonGroup_);
-    selectedFilesButton_->setText( i18n( "Show Only Selected Images" ) );
+    selectedFilesButton_->setText( i18n( "Show only selected images" ) );
     selectedFilesButton_->setEnabled( allowSelectedOnly );
     FileSrcButtonGroupLayout->addWidget( selectedFilesButton_ );
 
@@ -140,13 +140,13 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
     // ------------------------------------------------------------------
 
     openglCheckBox_ = new QCheckBox( page );
-    openglCheckBox_->setText( i18n( "Use OpenGL Slideshow Transitions" ) );
+    openglCheckBox_->setText( i18n( "Use OpenGL slideshow transitions" ) );
     grid->addMultiCellWidget( openglCheckBox_, 2, 2, 0, 2 );
 
     // ------------------------------------------------------------------
 
     printNameCheckBox_ = new QCheckBox( page );
-    printNameCheckBox_->setText( i18n( "Print Filename" ) );
+    printNameCheckBox_->setText( i18n( "Print filename" ) );
     grid->addMultiCellWidget( printNameCheckBox_, 3, 3, 0, 2 );
 
     // ------------------------------------------------------------------
