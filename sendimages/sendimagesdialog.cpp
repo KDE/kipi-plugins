@@ -366,7 +366,7 @@ void SendImagesDialog::setupEmailOptions(void)
                                            "These mail agent versions are supported:<p>"
                                            "<b>Balsa</b>: >= 2.x<p>"
                                            "<b>Evolution</b>: >= 1.4<p>"
-                                           "<b>GmailAgent</b>: >= 0.1<p>"
+                                           "<b>GmailAgent</b>: >= 0.2<p>"
                                            "<b>Kmail</b>: >= 1.3<p>"
                                            "<b>Mozilla</b>: >= 1.4<p>"
                                            "<b>Netscape</b>: >= 7.x<p>"
