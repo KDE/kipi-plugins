@@ -421,7 +421,7 @@ void SendImages::invokeMailAgent(void)
             }
         else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "GmailAgent" )
             {
-            *m_mailAgentProc << "GmailAgent" << "-remote";
+            *m_mailAgentProc << "gmailagent" << "-remote";
             }
         else
             {
