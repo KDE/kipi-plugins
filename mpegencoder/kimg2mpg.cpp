@@ -536,7 +536,7 @@ void KImg2mpgData::slotAudioFilenameDialog( void )
   QString temp;
 
   temp = KFileDialog::getOpenFileName(KGlobalSettings::documentPath(),
-                                      QString( "*.wav *.mp2" ),
+                                      QString( "*.wav *.mp2 *.mp3 *.ogg" ),
                                       this,
                                       i18n("Select Audio Input File") );
   if( temp.isEmpty() )
@@ -833,20 +833,20 @@ void KImg2mpgData::slotEncode( void )
 
   if ( InputAudioFileName.isEmpty() == false )
     {
-    if ( InputAudioFileName.findRev(".wav", -1, false) == -1 )
+    if ( InputAudioFileName.findRev(".mp2", -1, false) == -1 )
       {
-      *m_Proc << "-a" << InputAudioFileName;                      // Input MP2 audio file name.
-      m_CommandLine = m_CommandLine + " -a " + InputAudioFileName;
+      *m_Proc << "-w" << InputAudioFileName;                      // Input WAV/OGG/MP3 audio file name.
+      m_CommandLine = m_CommandLine + " -w \"" + InputAudioFileName + "\"";
       }
     else
       {
-      *m_Proc << "-w" << InputAudioFileName;                      // Input WAV audio file name.
-      m_CommandLine = m_CommandLine + " -w " + InputAudioFileName;
+      *m_Proc << "-a" << InputAudioFileName;                      // Input MP2 audio file name.
+      m_CommandLine = m_CommandLine + " -a \"" + InputAudioFileName + "\"";
       }
     }
 
   *m_Proc << "-o" << OutputFileName;                              // Output MPEG file.
-  m_CommandLine = m_CommandLine + " -o " + OutputFileName;
+  m_CommandLine = m_CommandLine + " -o \"" + OutputFileName + "\"";
 
   *m_Proc << "-i";                                                // Input images option.
   m_CommandLine = m_CommandLine + " -i ";
@@ -857,7 +857,7 @@ void KImg2mpgData::slotEncode( void )
     ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(i) );
     FileName.append (pitem->path());                              // Input images files.
     *m_Proc << FileName;
-    m_CommandLine = m_CommandLine + " " + FileName + " ";
+    m_CommandLine = m_CommandLine + " \"" + FileName + "\" ";
     }
 
   connect(m_Proc, SIGNAL(processExited(KProcess *)),this,

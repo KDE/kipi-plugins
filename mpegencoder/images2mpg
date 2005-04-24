@@ -20,7 +20,9 @@
 # - 'ppmtoy4m'  from MjpegTools for create a video stream from the image.
 # - 'yuvscaler' from MjpegTools for adapt the video stream size before MPEG encoding.
 # - 'mpeg2enc'  from MjpegTools for encode the video stream in MPEG file.
-# - 'mp2enc'    from MjpegTools for encode on a MP2 file a WAV sound file if necessary.
+# - 'ogg123'    from vorbis-utils to transcode an ogg-audio file to wav
+# - 'mpg123'    to transcode an mp3-audio file to wav
+# - 'mp2enc'    from MjpegTools to transcode a WAV sound file to a MP2 file.
 # - 'mplex'     from MjpegTools for multiplexe the MPEG file and the MP2 sound and convert
 #               the final MPEG file to a DVD/XVCD/SVCD/VCD format compatible with vcdimager program.
 #
@@ -154,7 +156,7 @@ fi
 if [ -e "$TMPFILENAME.tmp.m2v" ]; then
     rm "$TMPFILENAME.tmp.m2v"
 fi
-
+    
 if [ -e "$TMPFILENAME.tmp.jpg" ]; then
     rm "$TMPFILENAME.tmp.jpg"
 fi
@@ -163,6 +165,10 @@ if [ -e "$TMPFILENAME.tmp.pnm" ]; then
     rm "$TMPFILENAME.tmp.pnm"
 fi
 if [ "$AUDIO_WAV" ]; then
+    if [ -e "$TMPFILENAME.tmp.wav" ]; then
+        rm "$TMPFILENAME.tmp.wav"
+    fi
+    
     if [ -e "$TMPFILENAME.tmp.mp2" ]; then
         rm "$TMPFILENAME.tmp.mp2"
     fi
@@ -374,7 +380,7 @@ while test $# -gt 0; do
       IFS=$OLD_IFS	
       ;;
 
-    # WAV audio file...
+    # WAV/MP3/OGG audio file...
     -w)
       OLD_IFS=$IFS	
       IFS="\""
@@ -386,7 +392,7 @@ while test $# -gt 0; do
       if [ -s $1 ]; then
          AUDIO_WAV=$1
       else
-         echo -e "The WAV audio file '$1' don't exist or can't be open !!!"
+         echo -e "The WAV/OGG/MP3 audio file '$1' don't exist or can't be open !!!"
          exit -1
       fi
       IFS=$OLD_IFS	
@@ -462,8 +468,8 @@ Options:
    -b <background file>        : 768x576 pixels background image file name [black color = default].
    -c <RGB color>              : hex RGB color for background image (ex: AA001F).
    -d <num>                    : duration for each image in MPEG file [10s = default, 1s = mini].
-   -a <MPEG audio file>        : MP2 audio file to merge with the video sequence.
-   -w <wav audio file>         : WAV audio file to convert in MPEG and to merge with the video sequence.
+   -a <MP2 audio file>         : MP2 audio file to merge with the video sequence.
+   -w <wav|ogg|mp3 audio file> : WAV/OGG/MP3 audio file to convert in MP2 and to merge with the video sequence.
    -o <output MPEG file>       : the ouput MPEG file name [temporary file name = default].
    -i <input images files>     : images files name to merge in MPEG.
    -I <ImageMagick bin folder> : folder for ImageMagick binary programs.
@@ -543,12 +549,16 @@ if [ -z "$MJPEGTBINFOLDER" ]; then
    YUVSCALER_BIN="yuvscaler"
    MPEG2ENC_BIN="mpeg2enc"
    MP2ENC_BIN="mp2enc"
+   OGG_BIN="ogg123"
+   MP3_BIN="mpg123"
    MPLEX_BIN="mplex"
 else
    PPMTOY4M_BIN="$MJPEGTBINFOLDER/ppmtoy4m"
    YUVSCALER_BIN="$MJPEGTBINFOLDER/yuvscaler"
    MPEG2ENC_BIN="$MJPEGTBINFOLDER/mpeg2enc"
    MP2ENC_BIN="$MJPEGTBINFOLDER/mp2enc"
+   OGG_BIN="$MJPEGTBINFOLDER/ogg123"
+   MP3_BIN="$MJPEGTBINFOLDER/mpg123"   
    MPLEX_BIN="$MJPEGTBINFOLDER/mplex"
 fi
 
@@ -718,10 +728,10 @@ fi
 if [ $WITHGUI = 0 ]; then
     echo -e "Video format                  : '$VIDEOFORMAT_MESSAGE'."
     echo -e "Video type                    : '$VIDEO_TYPE'."
-    if [ $AUDIO_MPEG ]; then
+    if [ "$AUDIO_MPEG" ]; then
 	echo -e "MPEG audio file               : '$AUDIO_MPEG'."
     fi
-    if [ $AUDIO_WAV ]; then
+    if [ "$AUDIO_WAV" ]; then
 	echo -e "WAV audio file                : '$AUDIO_WAV'."
     fi
     echo -e "Frames per second             : '$IMAGES_SEC'."
@@ -816,7 +826,7 @@ while test $CPT -lt $NBFRAMETOTAL;\
         fi
 
 	# MjpegTools MPEG encoding with the number of frames and the current image.
-        cat "$TMPFILENAME.tmp.pnm"
+        $CONVERT_BIN -depth 8  ppm:"$TMPFILENAME.tmp.pnm" - | cat 
 
      done | $PPMTOY4M_BIN -v $VERBOSE -n $NBFRAMETOTAL -F $IMAGES_SEC_FORMAT | $YUVSCALER_BIN -v $VERBOSE -n $VIDEO_TYPE_LETTER -O $VIDEO_FORMAT | $MPEG2ENC_BIN -v $VERBOSE -n $VIDEO_TYPE_LETTER -b $BIT_RATE -V $BUFFER_SIZE -f $VIDEO_FORMAT_NUMBER -o "$TMPFILENAME.tmp.m2v"
 
@@ -840,7 +850,10 @@ else
 	else 
 	    echo -e "\nEncoding audio file...\n" >&2
 	fi
-	cat "$AUDIO_WAV" | $MP2ENC_BIN -v $VERBOSE $AUDIO_WAVE_CONVERSION -o "$TMPFILENAME.tmp.mp2"
+	file -i "$AUDIO_WAV" | grep "audio/x-wav" && cp -f "$AUDIO_WAV" "$TMPFILENAME.tmp.wav"
+	file -i "$AUDIO_WAV" | grep "application/ogg" && $OGG_BIN -q -d wav -f "$TMPFILENAME.tmp.wav" "$AUDIO_WAV"
+	file -i "$AUDIO_WAV" | grep "audio/mpeg" && $MP3_BIN -q -w "$TMPFILENAME.tmp.wav" "$AUDIO_WAV"
+	cat "$TMPFILENAME.tmp.wav" | $MP2ENC_BIN -v $VERBOSE $AUDIO_WAVE_CONVERSION -o "$TMPFILENAME.tmp.mp2"
         AUDIOFILENAME="$TMPFILENAME.tmp.mp2"        
     fi
 fi
