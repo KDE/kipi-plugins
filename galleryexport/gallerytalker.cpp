@@ -189,7 +189,7 @@ bool GalleryTalker::addPhoto( const QString& albumName,
     form.addPair("protocol_version", "2.3");
     form.addPair("set_albumName", albumName);
     form.addPair("userfile_name", QFile::encodeName(KURL(path).filename()));
-    if (!albumName.isEmpty())
+    if (!caption.isEmpty())
         form.addPair("caption", caption);
 
     QImage image(photoPath);
