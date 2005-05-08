@@ -5,6 +5,7 @@ AC_CHECK_PROG(PKGCONFIGFOUND, pkg-config,[yes])
 # END PKG-CONFIG CHECK
 ###############################################################################
 
+KDE_ENABLE_HIDDEN_VISIBILITY
 
 # ----------------------------------------------------------
 #
