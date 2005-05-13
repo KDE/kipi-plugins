@@ -1,7 +1,14 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=FindImages
+Name[et]=Piltide otsimine
+Name[tr]=ResimBul
+Name[zh_CN]=查找图像
 Comment=KIPI Plugin for Finding Images
+Comment[el]=Πρόσθετο του KIPI για αναζήτηση εικόνων
+Comment[et]=KIPI piltide otsimise plugin
+Comment[tr]=Resim Bulmak İçin KIPI Eklentisi
+Comment[zh_CN]=KIPI 查找图像插件
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_findimages

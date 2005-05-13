@@ -1,7 +1,13 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=AcquireImages
+Name[et]=Pildihõive
+Name[tr]=ResimTara
+Name[zh_CN]=获取图像
 Comment=KIPI Acquire Image Plugin
+Comment[et]=KIPI pildihõive plugin
+Comment[tr]=KIPI Resim Tarama Eklentisi
+Comment[zh_CN]=KIPI 图像获取插件
 Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service

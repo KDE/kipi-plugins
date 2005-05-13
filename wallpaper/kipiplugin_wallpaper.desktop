@@ -1,7 +1,13 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=WallPaper
+Name[et]=Taustapilt
+Name[tr]=DuvarKağıdı
+Name[zh_CN]=壁纸
 Comment=KIPI Set Wall Paper Plugin
+Comment[et]=KIPI taustapildi seadmise plugin
+Comment[tr]=KIPI Duvar Kağıdı Yapma Eklentisi
+Comment[zh_CN]=KIPI 设定壁纸插件
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_wallpaper

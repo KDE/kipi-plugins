@@ -1,7 +1,13 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=ImagesGallery
+Name[et]=Pildigalerii
+Name[tr]=ResimGalerisi
+Name[zh_CN]=图库
 Comment=KIPI HTML Gallery Export Plugin
+Comment[et]=KIPI HTML-galerii eksportimise plugin
+Comment[tr]=KIPI HTML Galeri Aktarma Eklentisi
+Comment[zh_CN]=KIPI HTML 图库导出插件
 Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service

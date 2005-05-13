@@ -1,7 +1,13 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=RawConverter
+Name[et]=Toorpiltide teisendaja
+Name[tr]=HamDönüştürücü
+Name[zh_CN]=原图转换器
 Comment=KIPI Raw Image Converter
+Comment[et]=KIPI toorpiltide teisendaja
+Comment[tr]=KIPI Ham Resim Dönüştürücü
+Comment[zh_CN]=KIPI 原始图像转换器
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_rawconverter

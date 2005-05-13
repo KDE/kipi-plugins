@@ -1,7 +1,12 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=JPEGLossless
+Name[tr]=KayıpsızJPEG
+Name[zh_CN]=JPEG 无损
 Comment=KIPI JPEG Lossless Plugin
+Comment[et]=KIPI JPEG Lossless plugin
+Comment[tr]=KIPI Kayıpsız JPEG Eklentisi
+Comment[zh_CN]=KIPI JPEG 无损插件
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_jpeglossless

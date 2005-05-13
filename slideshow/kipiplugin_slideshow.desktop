@@ -1,7 +1,13 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=SlideShow
+Name[et]=Slaidishow
+Name[tr]=SlaytGösterisi
+Name[zh_CN]=幻灯片
 Comment=KIPI SlideShow Plugin
+Comment[et]=KIPI slaidishow plugin
+Comment[tr]=KIPI Slayt Gösterisi Eklentisi
+Comment[zh_CN]=KIPI 幻灯片插件
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_slideshow

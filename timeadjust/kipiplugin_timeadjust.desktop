@@ -1,7 +1,13 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=TimeDateAdjust
+Name[et]=Aja kohendamine
+Name[tr]=ZamanTarihAyarla
+Name[zh_CN]=日期时间调整
 Comment=KIPI Time and Date Adjust
+Comment[et]=KIPI kuupäeva ja kellaaja kohendamine
+Comment[tr]=KIPI Zaman ve Tarih Ayarlama
+Comment[zh_CN]=KIPI 时间和日期调整
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_timeadjust

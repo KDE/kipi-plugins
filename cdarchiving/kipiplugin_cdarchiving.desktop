@@ -1,7 +1,14 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=CDArchiving
+Name[et]=CD-le arhiveerimine
+Name[tr]=CDArşivleme
+Name[zh_CN]=CD 存档
 Comment=KIPI Albums CD and DVD Archiving Plugin
+Comment[el]=Πρόσθετο αρχειοθέτησης άλμπουμ CD και DVD του KIPI
+Comment[et]=KIPI albumite CD-le ja DVD-le arhiveerimise plugin
+Comment[tr]=KIPI Albümler CD ve DVD Arşivleme Eklentisi
+Comment[zh_CN]=KIPI 相册 CD 和 DVD 存档插件
 Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service

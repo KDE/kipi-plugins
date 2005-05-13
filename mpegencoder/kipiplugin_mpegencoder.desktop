@@ -1,7 +1,13 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=MPEGEncoder
+Name[et]=MPEG kodeerija
+Name[tr]=MPEGKodlayıcı
+Name[zh_CN]=MPEG 编码器
 Comment=KIPI Images MPEG Encoder Plugin
+Comment[et]=KIPI piltide MPEG kodeerimise plugin
+Comment[tr]=KIPI Resimler MPEG Kodlayıcı Eklentisi
+Comment[zh_CN]=KIPI 图像 MPEG 编码器插件
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_mpegencoder
