@@ -2,10 +2,12 @@
 Encoding=UTF-8
 Name=SendImages
 Name[et]=Piltide saatmine
+Name[sv]=Skicka bilder
 Name[tr]=ResimGönder
 Name[zh_CN]=发送图像
 Comment=KIPI EMail Images Plugin
 Comment[et]=KIPI piltide e-postiga saatmise plugin
+Comment[sv]=KIPI-insticksprogram: Skicka bilder med e-post
 Comment[tr]=KIPI Resim Gönderme Eklentisi
 Comment[zh_CN]=KIPI 电邮图像插件
 Icon=

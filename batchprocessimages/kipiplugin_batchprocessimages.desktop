@@ -2,10 +2,12 @@
 Encoding=UTF-8
 Name=BatchProcessImages
 Name[et]=Piltide pakktöötlus
+Name[sv]=Behandla bilder i bakgrunden
 Name[tr]=ÇokluResimİşleme
 Name[zh_CN]=批处理图像
 Comment=KIPI Batch Processing Images Plugin
 Comment[et]=KIPI piltide pakktöötluse plugin
+Comment[sv]=KIPI-insticksprogram: Behandla bilder i bakgrunden
 Comment[tr]=KIPI Çoklu Resim İşleme Eklentisi
 Comment[zh_CN]=KIPI 批处理图像插件
 Icon=

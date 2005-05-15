@@ -2,10 +2,12 @@
 Encoding=UTF-8
 Name=SlideShow
 Name[et]=Slaidishow
+Name[sv]=Bildspel
 Name[tr]=SlaytGösterisi
 Name[zh_CN]=幻灯片
 Comment=KIPI SlideShow Plugin
 Comment[et]=KIPI slaidishow plugin
+Comment[sv]=KIPI-insticksprogram: Bildspel
 Comment[tr]=KIPI Slayt Gösterisi Eklentisi
 Comment[zh_CN]=KIPI 幻灯片插件
 Type=Service

@@ -2,10 +2,12 @@
 Encoding=UTF-8
 Name=WallPaper
 Name[et]=Taustapilt
+Name[sv]=Skrivbordsunderlägg
 Name[tr]=DuvarKağıdı
 Name[zh_CN]=壁纸
 Comment=KIPI Set Wall Paper Plugin
 Comment[et]=KIPI taustapildi seadmise plugin
+Comment[sv]=KIPI-insticksprogram: Ange skrivbordsunderlägg
 Comment[tr]=KIPI Duvar Kağıdı Yapma Eklentisi
 Comment[zh_CN]=KIPI 设定壁纸插件
 Type=Service

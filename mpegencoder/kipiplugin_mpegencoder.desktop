@@ -2,10 +2,12 @@
 Encoding=UTF-8
 Name=MPEGEncoder
 Name[et]=MPEG kodeerija
+Name[sv]=MPEG-kodning
 Name[tr]=MPEGKodlayıcı
 Name[zh_CN]=MPEG 编码器
 Comment=KIPI Images MPEG Encoder Plugin
 Comment[et]=KIPI piltide MPEG kodeerimise plugin
+Comment[sv]=KIPI-insticksprogram: MPEG-kodning
 Comment[tr]=KIPI Resimler MPEG Kodlayıcı Eklentisi
 Comment[zh_CN]=KIPI 图像 MPEG 编码器插件
 Type=Service

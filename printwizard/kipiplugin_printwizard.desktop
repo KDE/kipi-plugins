@@ -2,10 +2,12 @@
 Encoding=UTF-8
 Name=PrintWizard
 Name[et]=Trükkimisnõustaja
+Name[sv]=Utskriftsguide
 Name[tr]=YazdırmaSihirbazı
 Name[zh_CN]=打印向导
 Comment=KIPI Print Wizard Plugin
 Comment[et]=KIPI trükkimisnõustaja plugin
+Comment[sv]=KIPI-insticksprogram: Utskriftsguide
 Comment[tr]=KIPI Yazdırma Sihirbazı Eklentisi
 Comment[zh_CN]=KIPI 打印向导插件
 Type=Service

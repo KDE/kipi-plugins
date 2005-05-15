@@ -2,10 +2,12 @@
 Encoding=UTF-8
 Name=Remote Gallery Export
 Name[et]=Kauggalerii eksport
+Name[sv]=Export till fjärrgalleri
 Name[tr]=Uzak Galeri Aktarma
 Name[zh_CN]=远程图库导出
 Comment=KIPI Remote Gallery Export Plugin
 Comment[et]=KIPI kauggalerii eksportimise plugin
+Comment[sv]=KIPI-insticksprogram: Export till fjärrgalleri
 Comment[tr]=KIPI Uzak Galeri Aktarma Eklentisi
 Comment[zh_CN]=KIPI 远程图库导出插件
 Type=Service

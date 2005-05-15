@@ -2,10 +2,12 @@
 Encoding=UTF-8
 Name=HelloWorld
 Name[et]=Tere, maailm
+Name[sv]=Hello world
 Name[tr]=MerhabaDünya
 Name[zh_CN]=世界你好
 Comment=KIPI Hello World Plugin
 Comment[et]=KIPI plugin 'Tere, maailm'
+Comment[sv]=KIPI-insticksprogram: Hello world
 Comment[tr]=KIPI Merhaba Dünya Eklentisi
 Comment[zh_CN]=KIPI 世界你好插件
 Type=Service
