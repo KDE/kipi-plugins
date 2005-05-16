@@ -2,11 +2,15 @@
 Encoding=UTF-8
 Name=AcquireImages
 Name[et]=Pildihõive
+Name[it]=AcquisizioneImmagini
+Name[nl]=Afbeeldingen ophalen
 Name[sv]=Hämta bilder
 Name[tr]=ResimTara
 Name[zh_CN]=获取图像
 Comment=KIPI Acquire Image Plugin
 Comment[et]=KIPI pildihõive plugin
+Comment[it]=Plugin di acquisizione di immagini di KIPI
+Comment[nl]=KIPI-plugin voor het ophalen van afbeeldingen
 Comment[sv]=KIPI-insticksprogram: Hämta bilder
 Comment[tr]=KIPI Resim Tarama Eklentisi
 Comment[zh_CN]=KIPI 图像获取插件

@@ -2,11 +2,15 @@
 Encoding=UTF-8
 Name=TimeDateAdjust
 Name[et]=Aja kohendamine
+Name[it]=RegolazioneDataOra
+Name[nl]=Tijd/datumBijstellen
 Name[sv]=Justera datum och tid
 Name[tr]=ZamanTarihAyarla
 Name[zh_CN]=日期时间调整
 Comment=KIPI Time and Date Adjust
 Comment[et]=KIPI kuupäeva ja kellaaja kohendamine
+Comment[it]=Regolazione di data e ora di KIPI
+Comment[nl]=KIPI-plugin voor het bijstellen van de datum/tijd
 Comment[sv]=KIPI-insticksprogram: Justera datum och tid
 Comment[tr]=KIPI Zaman ve Tarih Ayarlama
 Comment[zh_CN]=KIPI 时间和日期调整

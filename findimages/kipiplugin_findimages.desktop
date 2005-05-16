@@ -2,12 +2,16 @@
 Encoding=UTF-8
 Name=FindImages
 Name[et]=Piltide otsimine
+Name[it]=TrovaImmagini
+Name[nl]=AfbeeldingenZoeken
 Name[sv]=Sök bilder
 Name[tr]=ResimBul
 Name[zh_CN]=查找图像
 Comment=KIPI Plugin for Finding Images
 Comment[el]=Πρόσθετο του KIPI για αναζήτηση εικόνων
 Comment[et]=KIPI piltide otsimise plugin
+Comment[it]=Plugin di KIPI per trovare immagini
+Comment[nl]=KIPI-plugin voor het zoeken naar afbeeldingen
 Comment[sv]=KIPI-insticksprogram: Sök bilder
 Comment[tr]=Resim Bulmak İçin KIPI Eklentisi
 Comment[zh_CN]=KIPI 查找图像插件

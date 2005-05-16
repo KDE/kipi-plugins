@@ -2,11 +2,15 @@
 Encoding=UTF-8
 Name=RawConverter
 Name[et]=Toorpiltide teisendaja
+Name[it]=ConvertitoreGrezzo
+Name[nl]=Rauwconversie
 Name[sv]=Konvertering av obehandlade bilder
 Name[tr]=HamDönüştürücü
 Name[zh_CN]=原图转换器
 Comment=KIPI Raw Image Converter
 Comment[et]=KIPI toorpiltide teisendaja
+Comment[it]=Convertitore di immagini grezze di KIPI
+Comment[nl]=KIPI-plugin voor het converteren van rauwe afbeeldingen
 Comment[sv]=KIPI-insticksprogram: Konvertering av obehandlade bilder
 Comment[tr]=KIPI Ham Resim Dönüştürücü
 Comment[zh_CN]=KIPI 原始图像转换器
