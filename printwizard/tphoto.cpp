@@ -95,12 +95,12 @@ QSize & TPhoto::size()  // private
 int TPhoto::width()
 {
   return size().width();
-};
+}
 
 int TPhoto::height()
 {
   return size().height();
-};
+}
 
 const float FONT_HEIGHT_RATIO = 0.08;
 

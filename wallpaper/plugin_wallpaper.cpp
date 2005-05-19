@@ -51,7 +51,7 @@
 typedef KGenericFactory<Plugin_WallPaper> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_wallpaper,
-                            Factory("kipiplugin_wallpaper"));
+                            Factory("kipiplugin_wallpaper"))
 
  /////////////////////////////////////////////////////////////////////////////////////////////////////
 

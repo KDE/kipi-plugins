@@ -57,7 +57,7 @@ extern "C"
 typedef KGenericFactory<Plugin_SendImages> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_sendimages,
-                            Factory("kipiplugin_sendimages"));
+                            Factory("kipiplugin_sendimages"))
 
 // -----------------------------------------------------------
 Plugin_SendImages::Plugin_SendImages(QObject *parent, const char*, const QStringList&)

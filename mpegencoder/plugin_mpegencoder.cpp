@@ -46,7 +46,7 @@
 typedef KGenericFactory<Plugin_Mpegencoder> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_mpegencoder,
-                            Factory("kipiplugin_mpegencoder"));
+                            Factory("kipiplugin_mpegencoder"))
 
 // -----------------------------------------------------------
 

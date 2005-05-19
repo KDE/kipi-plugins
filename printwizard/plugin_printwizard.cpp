@@ -52,7 +52,7 @@ extern "C"
 typedef KGenericFactory<Plugin_PrintWizard> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_printwizard,
-                            Factory("kipiplugin_printwizard"));
+                            Factory("kipiplugin_printwizard"))
 
 Plugin_PrintWizard::Plugin_PrintWizard(QObject *parent, const char*, const QStringList&)
     : KIPI::Plugin(Factory::instance(), parent, "PrintWizard")

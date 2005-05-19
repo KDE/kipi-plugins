@@ -40,7 +40,7 @@
 typedef KGenericFactory<Plugin_TimeAdjust> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_timeadjust,
-                            Factory("kipiplugin_timeadjust"));
+                            Factory("kipiplugin_timeadjust"))
 
 Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent,
                                      const char*,

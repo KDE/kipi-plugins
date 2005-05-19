@@ -71,7 +71,7 @@ class FindDuplicateDialog : public KDialogBase
 
   enum FindDuplicateMethod {
     MethodAlmost = 0,
-    MethodFast   = 1,
+    MethodFast   = 1
   };
 
  signals:

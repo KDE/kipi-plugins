@@ -44,7 +44,7 @@
 typedef KGenericFactory<Plugin_Imagesgallery> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_imagesgallery,
-                            Factory("kipiplugin_imagesgallery"));
+                            Factory("kipiplugin_imagesgallery"))
 
 // -----------------------------------------------------------
 Plugin_Imagesgallery::Plugin_Imagesgallery(QObject *parent, const char*, const QStringList&)

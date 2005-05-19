@@ -43,7 +43,7 @@
 typedef KGenericFactory<Plugin_Calendar> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_calendar,
-                            Factory("kipiplugin_calendar"));
+                            Factory("kipiplugin_calendar"))
 
 Plugin_Calendar::Plugin_Calendar(QObject *parent,
                                  const char*,

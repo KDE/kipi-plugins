@@ -53,7 +53,7 @@
 typedef KGenericFactory<Plugin_FindImages> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_findimages,
-                            Factory("kipiplugin_findimages"));
+                            Factory("kipiplugin_findimages"))
 
 Plugin_FindImages::Plugin_FindImages(QObject *parent, const char*, const QStringList&)
                  : KIPI::Plugin( Factory::instance(), parent, "FindImages")

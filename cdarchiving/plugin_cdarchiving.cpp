@@ -45,7 +45,7 @@
 typedef KGenericFactory<Plugin_CDArchiving> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_cdarchiving,
-                            Factory("kipiplugin_cdarchiving"));
+                            Factory("kipiplugin_cdarchiving"))
 
 // -----------------------------------------------------------
 Plugin_CDArchiving::Plugin_CDArchiving(QObject *parent, const char*, const QStringList&)

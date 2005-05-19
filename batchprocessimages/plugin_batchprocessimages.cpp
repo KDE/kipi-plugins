@@ -66,7 +66,7 @@ extern "C"
 typedef KGenericFactory<Plugin_BatchProcessImages> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_batchprocessimages,
-                            Factory("kipiplugin_batchprocessimages"));
+                            Factory("kipiplugin_batchprocessimages"))
 
 // -----------------------------------------------------------
 Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char*, const QStringList&)
