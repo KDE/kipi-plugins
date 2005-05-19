@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=PrintWizard
+Name[cs]=Průvodcem tiskem
 Name[et]=Trükkimisnõustaja
 Name[it]=AssistenteDiStampa
 Name[nl]=Afdrukassistent
@@ -8,6 +9,7 @@ Name[sv]=Utskriftsguide
 Name[tr]=YazdırmaSihirbazı
 Name[zh_CN]=打印向导
 Comment=KIPI Print Wizard Plugin
+Comment[cs]=KIPI modul průvodce tiskem
 Comment[et]=KIPI trükkimisnõustaja plugin
 Comment[it]=Plugin assistente di stampa di KIPI
 Comment[nl]=KIPI-plugin voor het afdrukken van afbeeldingen

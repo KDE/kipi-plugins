@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Calendar
+Name[cs]=Kalendář
 Name[el]=Ημερολόγιο
 Name[et]=Kalender
 Name[ga]=Féilire
@@ -10,6 +11,7 @@ Name[sv]=Kalender
 Name[tr]=Takvim
 Name[zh_CN]=日历
 Comment=KIPI Calendar Creation Wizard Plugin
+Comment[cs]=KIPI modul průvodce vytvořením kalendáře
 Comment[el]=Πρόσθετο δημιουργίας Ημερολογίου του KIPI
 Comment[et]=KIPI kalendri loomise nõustaja plugin
 Comment[it]=Plugin assistente per la creazione di calendari di KIPI

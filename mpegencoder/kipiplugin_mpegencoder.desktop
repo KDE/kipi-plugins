@@ -8,6 +8,7 @@ Name[sv]=MPEG-kodning
 Name[tr]=MPEGKodlayıcı
 Name[zh_CN]=MPEG 编码器
 Comment=KIPI Images MPEG Encoder Plugin
+Comment[cs]=KIPI modul MPEG enkóderu 
 Comment[et]=KIPI piltide MPEG kodeerimise plugin
 Comment[it]=Plugin di codifica MPEG delle immagini di KIPI
 Comment[nl]=KIPI-plugin voor het maken van MPEG-diavoorstellingen

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=HelloWorld
+Name[cs]=Hello World
 Name[et]=Tere, maailm
 Name[it]=CiaoMondo
 Name[nl]=Hallo wereld
@@ -8,6 +9,7 @@ Name[sv]=Hello world
 Name[tr]=MerhabaDünya
 Name[zh_CN]=世界你好
 Comment=KIPI Hello World Plugin
+Comment[cs]=KIPI modul Hello World
 Comment[et]=KIPI plugin 'Tere, maailm'
 Comment[it]=Plugin ciao mondo di KIPI
 Comment[nl]=KIPI-plugin voor "Hallo wereld"

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=ImagesGallery
+Name[cs]=Galerie obrázků
 Name[et]=Pildigalerii
 Name[it]=GalleriaDelleImmagini
 Name[nl]=Afbeeldingengalerij
@@ -8,6 +9,7 @@ Name[sv]=Bildgalleri
 Name[tr]=ResimGalerisi
 Name[zh_CN]=图库
 Comment=KIPI HTML Gallery Export Plugin
+Comment[cs]=KIPI modul pro export galerie obrázků
 Comment[et]=KIPI HTML-galerii eksportimise plugin
 Comment[it]=Plugin di esportazione HTML di gallerie di KIPI
 Comment[nl]=KIPI-plugin voor het exporteren naar HTML-afbeeldingsgalerijen

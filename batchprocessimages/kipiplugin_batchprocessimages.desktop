@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=BatchProcessImages
+Name[cs]=Dávkové zpracování obrázků
 Name[et]=Piltide pakktöötlus
 Name[it]=ElaborazioneNonInterattivaDelleImmagini
 Name[nl]=AfbeeldingenVerwerken
@@ -8,6 +9,7 @@ Name[sv]=Behandla bilder i bakgrunden
 Name[tr]=ÇokluResimİşleme
 Name[zh_CN]=批处理图像
 Comment=KIPI Batch Processing Images Plugin
+Comment[cs]=KIPI modul dávkového zpracování obrázků
 Comment[et]=KIPI piltide pakktöötluse plugin
 Comment[it]=Plugin di elaborazione non interattiva delle immagini di KIPI
 Comment[nl]=KIPI-plugin voor het verwerken van een serie afbeeldingen
