@@ -2,7 +2,6 @@
 Encoding=UTF-8
 Name=Remote Gallery Export
 Name[cs]=Export do vzdálené galerie
-Name[et]=Kauggalerii eksport
 Name[it]=Esportazione remota di gallerie
 Name[nl]=Export naar externe galerij
 Name[sv]=Export till fjärrgalleri
@@ -10,7 +9,6 @@ Name[tr]=Uzak Galeri Aktarma
 Name[zh_CN]=远程图库导出
 Comment=KIPI Remote Gallery Export Plugin
 Comment[cs]=KIPI modul exportu do vzdálené galerie
-Comment[et]=KIPI kauggalerii eksportimise plugin
 Comment[it]=Plugin per l'esportazione remota di gallerie di KIPI
 Comment[nl]=KIPI-plugin voor het exporteren naar externe galerijen
 Comment[sv]=KIPI-insticksprogram: Export till fjärrgalleri
