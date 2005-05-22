@@ -1,11 +1,13 @@
 [Desktop Entry]
 Name=KameraKlient
 Name[cs]=Foto klient
+Name[et]=Kaameraklient
 Name[sv]=Kameraklient
 Name[tr]=Kameraİstemci
 Name[zh_CN]=相机客户端
 Comment=KIPI Digital Camera Interface Plugin
 Comment[cs]=KIPI modul rozhraní pro připojení fotoaparátu
+Comment[et]=KIPI digikaamera liidese plugin
 Comment[it]=Plugin di interfaccia alle fotocamere digitali di KIPI
 Comment[nl]=KIPI-plugin voor de digitale camera-interface
 Comment[sv]=KIPI-insticksprogram: Gränssnitt till digitalkamera

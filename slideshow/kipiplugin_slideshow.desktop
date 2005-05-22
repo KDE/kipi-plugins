@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=SlideShow
 Name[cs]=Slideshow
+Name[et]=Slaidiseanss
 Name[it]=Presentazione
 Name[nl]=Diavoorstelling
 Name[sv]=Bildspel
@@ -9,6 +10,7 @@ Name[tr]=SlaytGösterisi
 Name[zh_CN]=幻灯片
 Comment=KIPI SlideShow Plugin
 Comment[cs]=KIPI modul slideshow
+Comment[et]=KIPI slaidiseansi plugin
 Comment[it]=Plugin di presentazione di KIPI
 Comment[nl]=KIPI-plugin voor diavoorstellingen
 Comment[sv]=KIPI-insticksprogram: Bildspel

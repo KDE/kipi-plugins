@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=FindImages
 Name[cs]=Vyhledání obrázků
+Name[et]=Piltide otsimine
 Name[it]=TrovaImmagini
 Name[nl]=AfbeeldingenZoeken
 Name[sv]=Sök bilder
@@ -10,6 +11,7 @@ Name[zh_CN]=查找图像
 Comment=KIPI Plugin for Finding Images
 Comment[cs]=KIPI modul pro vyhledávání obrázků
 Comment[el]=Πρόσθετο του KIPI για αναζήτηση εικόνων
+Comment[et]=KIPI piltide otsimise plugin
 Comment[it]=Plugin di KIPI per trovare immagini
 Comment[nl]=KIPI-plugin voor het zoeken naar afbeeldingen
 Comment[sv]=KIPI-insticksprogram: Sök bilder
