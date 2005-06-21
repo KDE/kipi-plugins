@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=AcquireImages
+Name[da]=Hent billeder
 Name[et]=Pildihõive
 Name[it]=AcquisizioneImmagini
 Name[nl]=Afbeeldingen ophalen
@@ -14,6 +15,7 @@ Name[sv]=Hämta bilder
 Name[tr]=ResimTara
 Name[zh_CN]=获取图像
 Comment=KIPI Acquire Image Plugin
+Comment[da]=KIPI-plugin: Hent billeder
 Comment[et]=KIPI pildihõive plugin
 Comment[it]=Plugin di acquisizione di immagini di KIPI
 Comment[nl]=KIPI-plugin voor het ophalen van afbeeldingen
