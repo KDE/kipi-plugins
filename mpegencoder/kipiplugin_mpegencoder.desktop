@@ -16,6 +16,7 @@ Name[zh_CN]=MPEG 编码器
 Comment=KIPI Images MPEG Encoder Plugin
 Comment[cs]=KIPI modul MPEG enkóderu 
 Comment[da]=KIPI-plugin: MPEG-kodning
+Comment[de]=Ein KIPI-Plugin zum Erstellen eines MPEG-Films aus Bildern
 Comment[et]=KIPI piltide MPEG kodeerimise plugin
 Comment[it]=Plugin di codifica MPEG delle immagini di KIPI
 Comment[nl]=KIPI-plugin voor het maken van MPEG-diavoorstellingen

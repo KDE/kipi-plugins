@@ -15,6 +15,7 @@ Name[tr]=HamDönüştürücü
 Name[zh_CN]=原图转换器
 Comment=KIPI Raw Image Converter
 Comment[da]=KIPI-plugin: Konvertering af ubehandlede billeder
+Comment[de]=Ein KIPI-Plugin zum Konvertieren von Bildern im Raw-Format
 Comment[et]=KIPI toorpiltide teisendaja
 Comment[it]=Convertitore di immagini grezze di KIPI
 Comment[nl]=KIPI-plugin voor het converteren van rauwe afbeeldingen
