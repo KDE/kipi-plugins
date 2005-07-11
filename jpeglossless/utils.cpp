@@ -28,6 +28,9 @@
 extern "C" {
 #include <tiffio.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <utime.h>
 }
 
 #include "utils.h"
@@ -125,11 +128,30 @@ bool CopyFile(const QString& src, const QString& dst)
 
 bool MoveFile(const QString& src, const QString& dst)
 {
-    if (!CopyFile(src,dst)) return false;
+    struct stat stbuf;
+    if (::stat(QFile::encodeName(dst), &stbuf) != 0)
+    {
+        kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to stat src"
+                           << endl;
+        return false;
+    }
+    
+    if (!CopyFile(src,dst))
+        return false;
 
-    if (::unlink(QFile::encodeName(src).data()) != 0) {
+    struct utimbuf timbuf;
+    timbuf.actime = stbuf.st_atime;
+    timbuf.modtime = stbuf.st_mtime;
+    if (::utime(QFile::encodeName(dst), &timbuf) != 0)
+    {
+        kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to update dst time"
+                           << endl;
+    }
+    
+    if (::unlink(QFile::encodeName(src).data()) != 0)
+    {
         kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to unlink src"
-                    << endl;
+                           << endl;
     }
     return true;
 }
