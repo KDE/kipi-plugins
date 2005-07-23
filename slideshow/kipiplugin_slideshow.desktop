@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=SlideShow
+Name[br]=Diskouezadur skeudennoù
 Name[cs]=Slideshow
 Name[da]=Lysbilledshow
 Name[et]=Slaidiseanss
@@ -16,6 +17,7 @@ Name[sv]=Bildspel
 Name[tr]=SlaytGösterisi
 Name[zh_CN]=幻灯片
 Comment=KIPI SlideShow Plugin
+Comment[br]=Lugent diskouezadur skeudennoù KIPI
 Comment[cs]=KIPI modul slideshow
 Comment[da]=KIPI-plugin: Lysbilledshow
 Comment[de]=Ein KIPI-Plugin zur Erstellung von Bildschirmpräsentationen
