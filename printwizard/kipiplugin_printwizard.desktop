@@ -16,6 +16,7 @@ Name[sv]=Utskriftsguide
 Name[tr]=YazdırmaSihirbazı
 Name[zh_CN]=打印向导
 Comment=KIPI Print Wizard Plugin
+Comment[br]=Lugent skoazeller moulañ evit KIPI
 Comment[cs]=KIPI modul průvodce tiskem
 Comment[da]=KIPI-plugin: Udskriftsguide
 Comment[de]=Ein KIPI-Plugin zum Ausdrucken von Bildern
