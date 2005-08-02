@@ -62,6 +62,7 @@
 #include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
+#include <kstandarddirs.h>
 
 // Include files for KIPI
 
@@ -507,7 +508,7 @@ void CDArchivingDialog::setupBurning(void)
     label = new QLabel(i18n("&K3b binary path:"), page_burning);
     vlay->addWidget( label );
 
-    m_K3bBinPath = new KURLRequester( "/usr/bin/k3b", page_burning);
+    m_K3bBinPath = new KURLRequester( "k3b", page_burning);
     label->setBuddy( m_K3bBinPath );
     vlay->addWidget(m_K3bBinPath);
 
@@ -629,7 +630,7 @@ void CDArchivingDialog::slotOk()
 
     QFile fileK3b(getK3bBinPathName());
 
-    if (fileK3b.exists() == false)
+    if ( !KStandardDirs::findExe( getK3bBinPathName() ))
        {
        KMessageBox::sorry(this, i18n("K3b binary path is not valid. Please check it."));
        return;

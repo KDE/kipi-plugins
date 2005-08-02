@@ -196,7 +196,7 @@ void CDArchiving::readSettings(void)
 
     // Misc dialogbox setup tab
 
-    m_configDlg->setK3bBinPathName( m_config->readEntry("K3bBinPath", "/usr/bin/k3b") );
+    m_configDlg->setK3bBinPathName( m_config->readEntry("K3bBinPath", "k3b") );
     m_configDlg->setUseUseOnTheFly( m_config->readBoolEntry("UseOnTheFly", "true") );
     m_configDlg->setUseCheckCD( m_config->readBoolEntry("UseCheckCD", "true") );
     m_configDlg->setUseStartBurningProcess( m_config->readBoolEntry("UseStartWrintingProcess", "false") );
