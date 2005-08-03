@@ -204,7 +204,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     m_upload = new KIPI::UploadWidget( m_interface, groupBox3, "m_upload" );
     QWhatsThis::add( m_upload, i18n("<p>Here you can select the target folder which "
                                     "will used by the process."));
-    m_upload->setFixedHeight( 130 );
+    m_upload->setMinimumHeight( 130 );
 
     QWidget* add = new QWidget( groupBox3 );
     QVBoxLayout* lay = new QVBoxLayout( add );
@@ -227,9 +227,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     m_listFiles = new BatchProcessImagesList( box41 );
     lay2->addWidget( m_listFiles );
 
-    // This line is needed to ensure that the dialog do get a decent minimum size
-    // I believe it is a bug in Qt somewhere - 27 May. 2004 10:55 -- Jesper K. Pedersen
-    m_listFiles->setFixedHeight( m_listFiles->sizeHint().height() );
+    m_listFiles->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
 
     QVBoxLayout* lay3 = new QVBoxLayout( lay2 );
     m_addImagesButton = new QPushButton ( i18n( "&Add..." ), box41 );
