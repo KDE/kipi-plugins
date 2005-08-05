@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Flickr Exporter
+Comment=KIPI Remote Flickr Export Plugin
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_flickrexport
+author=Vardhman Jain, vardhman@gmail.com
