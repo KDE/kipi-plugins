@@ -204,7 +204,7 @@ void FlickrTalker::listAlbums()
 {
 	//To be implemented.
 }
-void FlickrTalker::getPhotoProperty(const QString& photoId,const QString& method,const QString& argList){
+void FlickrTalker::getPhotoProperty(const QString& method,const QString& argList){
 	if (m_job){
 		m_job->kill();
 		m_job = 0;
@@ -471,7 +471,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray &data)
 					if(details.nodeName()=="perms"){
 						kdDebug()<<"Perms="<<e.text()<<endl; 
 						QString	perms=e.text();//this is what is obtained from data.
-						int valueOk=KMessageBox::questionYesNo(0, i18n("Your currently have \ 
+						int valueOk=KMessageBox::questionYesNo(0, i18n("Your currently have \
 									%1 permissions, \nWould you like to \
 									proceed with current permissions ?\n[Upload requires Write permissions] ") 
 								.arg( perms ));
