@@ -31,7 +31,7 @@ RAWCONVERTERDIR = rawconverter
 endif
 
 SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery \
-	sendimages batchprocessimages wallpaper findimages galleryexport \
+	sendimages batchprocessimages wallpaper findimages galleryexport flickrexport\
 	$(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(JPEGLOSSLESSDIR) \
 	$(TIMEADJUSTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR)
 
