@@ -703,7 +703,7 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
               << endl;
        }
 
-    stream << "<h1>" << i18n("Image Gallery for Album ") << "&quot;" << m_AlbumTitle << "&quot;"
+    stream << "<h1>" << i18n("Image Gallery for Album %1").arg("&quot;"+m_AlbumTitle+"&quot;")
            << "</h1>" << endl;
 
     if (m_useCommentsAlbum == true ||
