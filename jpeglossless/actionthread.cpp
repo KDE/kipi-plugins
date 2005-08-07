@@ -63,30 +63,34 @@ void ActionThread::rotate(const KURL::List& urlList, RotateAction val)
          it != urlList.end(); ++it ) {
         KIPI::ImageInfo info = interface_->info( *it );
 
-        // If the image is being displayed rotaed in the host application, then rotate that
-        // angle too.
-        int angle = (info.angle() + 360) % 360;
+        // Don't use the host angle in case of auto-rotation (Rot0)
+        if (val != Rot0)
+        {
+            // If the image is being displayed rotaed in the host application, then rotate that
+            // angle too.
+            int angle = (info.angle() + 360) % 360;
 
-        // When the image has been rotated on the disk we can assume that it
-        // does not need to be rotated before being displayed.
-        info.setAngle( 0 );
+            // When the image has been rotated on the disk we can assume that it
+            // does not need to be rotated before being displayed.
+            info.setAngle( 0 );
+          
+            if ( val == Rot90 )
+                angle +=90;
+            else if ( val == Rot180 )
+                angle += 180;
+            else if ( val == Rot270 )
+                angle += 270;
 
-        if ( val == Rot90 )
-            angle +=90;
-        else if ( val == Rot180 )
-            angle += 180;
-        else if ( val == Rot270 )
-            angle += 270;
-
-        angle = (angle+360) % 360;
-        if ( (90-45) <= angle && angle < (90+45) )
-            val = Rot90;
-        else if ( (180-45) <= angle && angle < (180+45) )
-            val = Rot180;
-        else if ( (270-45) <= angle && angle < (270+45) )
-            val = Rot270;
-        else
-            val = Rot0;
+            angle = (angle+360) % 360;
+            if ( (90-45) <= angle && angle < (90+45) )
+                val = Rot90;
+            else if ( (180-45) <= angle && angle < (180+45) )
+                val = Rot180;
+            else if ( (270-45) <= angle && angle < (270+45) )
+                val = Rot270;
+            else
+                val = Rot0;
+        }
 
         Task *t      = new Task;
         t->filePath  = QDeepCopy<QString>((*it).path()); //deep copy
