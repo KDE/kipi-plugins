@@ -184,7 +184,11 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
     }
     comboFont_->insertStringList(smoothScalableFamilies);
 
+    // fetch and set the default font selected in the combo.
+    QFont f;
+    comboFont_->setCurrentText( f.family() );
 
+    
     gboxLayout->addLayout( hlayout );
 
     connect(comboFont_, SIGNAL(activated(int)),

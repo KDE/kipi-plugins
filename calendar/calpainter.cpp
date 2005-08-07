@@ -35,6 +35,8 @@
 
 #include <kglobal.h>
 #include <klocale.h>
+#include <kdeversion.h>
+#include <kcalendarsystem.h>
 
 // Local includes.
 
@@ -202,8 +204,13 @@ void CalPainter::paint(bool useDeviceMetrics)
     painter->setFont(f);
     painter->drawText(rCalHeader, Qt::AlignLeft|Qt::AlignVCenter,
                       QString::number(year_));
+#if KDE_IS_VERSION(3,2,0)
+    painter->drawText(rCalHeader, Qt::AlignRight|Qt::AlignVCenter,
+                      KGlobal::locale()->calendar()->monthName(month_, year_));
+#else
     painter->drawText(rCalHeader, Qt::AlignRight|Qt::AlignVCenter,
                       KGlobal::locale()->monthName(month_));
+#endif
     painter->restore();
 
     // ---------------------------------------------------------------
@@ -226,8 +233,14 @@ void CalPainter::paint(bool useDeviceMetrics)
         rsmall = r;
         rsmall.setWidth(r.width() - 2);
         rsmall.setHeight(r.height() - 2);
+#if KDE_IS_VERSION(3,2,0)
         painter->drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                   QDate::shortDayName(i+1));
+                          KGlobal::locale()->calendar()->weekDayName(i+1, true));
+#else
+        painter->drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
+                          KGlobal::locale()->weekDayName(i+1, true));
+#endif
+
     }
 
     painter->restore();
@@ -422,8 +435,13 @@ void paintCalendar(int year, int month, const QString& imagePath,
     painter->setFont(f);
     painter->drawText(rCalHeader, Qt::AlignLeft|Qt::AlignVCenter,
                       QString::number(year));
+#if KDE_IS_VERSION(3,2,0)
+    painter->drawText(rCalHeader, Qt::AlignRight|Qt::AlignVCenter,
+                      KGlobal::locale()->calendar()->monthName(month, year));
+#else
     painter->drawText(rCalHeader, Qt::AlignRight|Qt::AlignVCenter,
                       KGlobal::locale()->monthName(month));
+#endif
     painter->restore();
 
     // ---------------------------------------------------------------
@@ -446,8 +464,13 @@ void paintCalendar(int year, int month, const QString& imagePath,
         rsmall = r;
         rsmall.setWidth(r.width() - 2);
         rsmall.setHeight(r.height() - 2);
+#if KDE_IS_VERSION(3,2,0)
         painter->drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                   QDate::shortDayName(i+1));
+                          KGlobal::locale()->calendar()->weekDayName(i+1, true));
+#else
+        painter->drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
+                          KGlobal::locale()->weekDayName(i+1, true));
+#endif
     }
 
     painter->restore();
@@ -619,8 +642,13 @@ CalBlockPainter::CalBlockPainter(QObject *parent, int year, int month,
     painter->setFont(f);
     painter->drawText(rCalHeader, Qt::AlignLeft|Qt::AlignVCenter,
                       QString::number(year));
+#if KDE_IS_VERSION(3,2,0)
+    painter->drawText(rCalHeader, Qt::AlignRight|Qt::AlignVCenter,
+                      KGlobal::locale()->calendar()->monthName(month, year));
+#else
     painter->drawText(rCalHeader, Qt::AlignRight|Qt::AlignVCenter,
                       KGlobal::locale()->monthName(month));
+#endif
     painter->restore();
 
     // ---------------------------------------------------------------
@@ -643,8 +671,13 @@ CalBlockPainter::CalBlockPainter(QObject *parent, int year, int month,
         rsmall = r;
         rsmall.setWidth(r.width() - 2);
         rsmall.setHeight(r.height() - 2);
+#if KDE_IS_VERSION(3,2,0)
         painter->drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                   QDate::shortDayName(i+1));
+                          KGlobal::locale()->calendar()->weekDayName(i+1, true));
+#else
+        painter->drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
+                          KGlobal::locale()->weekDayName(i+1, true));
+#endif
     }
 
     painter->restore();
