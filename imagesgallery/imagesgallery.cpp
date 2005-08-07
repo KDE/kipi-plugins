@@ -16,6 +16,9 @@
 //    Copyright 2003-2004 by Gilles Caulier <caulier dot gilles at free.fr> for
 //    DigikamPlugins port.
 //
+//    Copyright 2005 by Tom Albers <tomalbers@kde.nl> fixing problems with making
+//    exports for tags
+//
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation; either version 2 of the License, or
@@ -373,15 +376,21 @@ bool ImagesGallery::prepare(void)
 
     m_albumsMap = new AlbumsMap;
         
+    m_totalAlbums = 0;
     for( QValueList<KIPI::ImageCollection>::Iterator albumIt = albumsList.begin() ;
          !m_cancelled && (albumIt != albumsList.end()) ; ++albumIt )
         {
-        AlbumData data((*albumIt).name(),    (*albumIt).category(),
+          
+        // a folder name "Tag: foo" is asking for trouble. Konqueror report that
+        // there is no such protocol. Delete the :
+        QString tempName = (*albumIt).name().replace("Tag: ", "Tag ");
+
+        AlbumData data(tempName,             (*albumIt).category(),
                        (*albumIt).comment(), (*albumIt).date(), 
                        (*albumIt).path(),    (*albumIt).images());
         
-        m_albumsMap->insert( (*albumIt).path().prettyURL(), data );
-        m_albumUrlList.append( (*albumIt).path() );
+        m_albumsMap->insert( m_totalAlbums, data );
+        m_totalAlbums++;
         }
     
     // Load images comments if necessary.
@@ -422,11 +431,11 @@ void ImagesGallery::run()
        KIO::file_copy(srcURL, destURL, -1, true, false, false);           
        }
 
-       for( KURL::List::Iterator albumsUrlIt = m_albumUrlList.begin() ;
-            !m_cancelled && (albumsUrlIt != m_albumUrlList.end()) ; ++albumsUrlIt )
+       QMapIterator<int, AlbumData> albumIt;
+       for( albumIt = m_albumsMap->begin() ; !m_cancelled && (albumIt != m_albumsMap->end()) ; ++albumIt )
           {
-          m_albumUrl = *albumsUrlIt;
-          AlbumData data = (*m_albumsMap)[m_albumUrl.prettyURL()];
+          m_currentAlbum = albumIt.key();
+          AlbumData data = (*albumIt);
           KURL::List images = data.itemsUrl();
 
           for( KURL::List::Iterator urlIt = images.begin(); urlIt != images.end(); ++urlIt ) 
@@ -457,7 +466,7 @@ void ImagesGallery::run()
                  d->message = i18n("Could not create folder '%1'").arg(SubTPath);
                  QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
                  usleep(1000);
-                 
+
                  return;
                  }
 
@@ -683,7 +692,7 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
                                const QString& TargetimagesFormat)
 {
     KIPIImagesGalleryPlugin::EventData *d;
-    AlbumData data = (*m_albumsMap)[m_albumUrl.prettyURL()];
+    AlbumData data = (*m_albumsMap)[m_currentAlbum];
     int numOfImages = data.countItems();
     
     kdDebug( 51000 ) << "Num of images in " << data.albumName().ascii() << " : " 

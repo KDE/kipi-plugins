@@ -98,7 +98,7 @@ const int NAV_THUMB_MAX_SIZE = 64;
 // directly because operator<(KURL,KURL) is not defined in KDE 3.1
 
 typedef QMap<QString, QString>   CommentMap;  // List of Albums items comments.
-typedef QMap<QString, AlbumData> AlbumsMap;   // Albums data list.
+typedef QMap<int, AlbumData> AlbumsMap;   // Albums data list.
 
 
 class ImagesGallery : public QObject
@@ -181,6 +181,8 @@ private:
   int                 m_colorDepthThumbnails;
   int                 m_thumbsCompression;
   int                 m_albumListSize;
+  int                 m_currentAlbum;
+  int                 m_totalAlbums;
   
   KURL::List          m_albumUrlList; // Urls of Albums list from setup dialog.
   KURL                m_albumUrl;     // Current album Url use in the thread.
