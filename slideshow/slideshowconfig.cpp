@@ -20,7 +20,7 @@
  * ============================================================ */
 
 // Qt includes.
- 
+
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
@@ -58,20 +58,20 @@ namespace KIPISlideShowPlugin
 {
 
 SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
-               : KDialogBase(parent, "", true, i18n("SlideShow"),
+               : KDialogBase(parent, "", true, i18n("Slide Show"),
                              Help|Ok|Cancel, Ok, true)
 {
     // About data and help button.
-    
+
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("SlideShow"), 
+                                       I18N_NOOP("Slide Show"),
                                        kipi_version,
                                        I18N_NOOP("A Kipi plugin for image slideshows"),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Renchi Raju", 
+                                       "(c) 2003-2004, Renchi Raju",
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
-    
+
     about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
                      "renchi@pooh.tam.uiuc.edu");
 
@@ -88,9 +88,9 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
     QWidget *page = new QWidget( this );
     setMainWidget( page );
     QGridLayout *grid = new QGridLayout( page, 1, 1, 6, 6);
-    
+
     // ------------------------------------------------------------------
-   
+
     QFrame *headerFrame = new QFrame( page );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
@@ -99,15 +99,15 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
     QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
     pixmapLabelLeft->setScaledContents( false );
     layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("SlideShow"), headerFrame, "labelTitle" );
+    QLabel *labelTitle = new QLabel( i18n("Slide Show"), headerFrame, "labelTitle" );
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
     grid->addMultiCellWidget( headerFrame, 0, 0, 0, 2 );
-    
+
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
     directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
@@ -140,7 +140,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
     // ------------------------------------------------------------------
 
     openglCheckBox_ = new QCheckBox( page );
-    openglCheckBox_->setText( i18n( "Use OpenGL slideshow transitions" ) );
+    openglCheckBox_->setText( i18n( "Use OpenGL slide show transitions" ) );
     grid->addMultiCellWidget( openglCheckBox_, 2, 2, 0, 2 );
 
     // ------------------------------------------------------------------
@@ -160,9 +160,9 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
     shuffleCheckBox_ = new QCheckBox( page );
     shuffleCheckBox_->setText( i18n( "Shuffle images" ) );
     grid->addMultiCellWidget( shuffleCheckBox_, 5, 5, 0, 2 );
-    
+
     // ------------------------------------------------------------------
-    
+
     QLabel* label1 = new QLabel( page);
     label1->setText( i18n( "Delay between images (ms):" ) );
     grid->addWidget( label1, 6, 0 );

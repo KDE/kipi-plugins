@@ -103,7 +103,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
 
     connect( m_progressDlg, SIGNAL( canceled() ),
              SLOT( slotAddPhotoCancel() ) );
-    
+
     connect( m_albumView, SIGNAL( selectionChanged() ),
              SLOT( slotAlbumSelected() ) );
     connect( m_photoView->browserExtension(),
@@ -132,7 +132,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
         m_dimensionSpinBox->setEnabled(false);
     }
     m_dimensionSpinBox->setValue(config.readNumEntry("Maximum Width", 1600));
-    
+
     QTimer::singleShot( 0, this,  SLOT( slotDoLogin() ) );
 }
 
@@ -150,7 +150,7 @@ GalleryWindow::~GalleryWindow()
     config.writeEntry("User", m_user);
     config.writeEntry("Resize", m_resizeCheckBox->isChecked());
     config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
-    
+
     delete m_progressDlg;
     delete m_talker;
 }
@@ -158,7 +158,7 @@ GalleryWindow::~GalleryWindow()
 void GalleryWindow::slotDoLogin()
 {
     QString password;
-    
+
 #if KDE_IS_VERSION(3,2,0)
     if (!m_wallet)
         m_wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(),
@@ -184,9 +184,9 @@ void GalleryWindow::slotDoLogin()
         }
     }
 #endif
-    
-        
-    GalleryLogin dlg( this, i18n( "Login into remote gallery" ),
+
+
+    GalleryLogin dlg( this, i18n( "Login Into Remote Gallery" ),
                       m_url, m_user, password );
     if ( dlg.exec() != QDialog::Accepted )
     {
@@ -211,7 +211,7 @@ void GalleryWindow::slotDoLogin()
     if (newPassword != password && m_wallet)
         m_wallet->writePassword("password", newPassword);
 #endif
-    
+
     m_talker->login( url.url(), dlg.name(), newPassword );
 }
 
@@ -259,7 +259,7 @@ void GalleryWindow::slotAlbums( const QValueList<GAlbum>& albumList )
     m_photoView->begin();
     m_photoView->write( "<html></html>" );
     m_photoView->end();
-    
+
     KIconLoader* iconLoader = KApplication::kApplication()->iconLoader();
     QPixmap pix = iconLoader->loadIcon( "folder", KIcon::NoGroup, 32 );
 
@@ -327,7 +327,7 @@ void GalleryWindow::slotPhotos( const QValueList<GPhoto>& photoList)
         .arg( pxSize )
         .arg( colorGroup().text().name() )
         .arg( colorGroup().base().name() );
-    
+
     styleSheet += QString( "a { font-size: %1px; color: %2; "
                            "text-decoration: none;}" )
                   .arg( pxSize )
@@ -336,16 +336,16 @@ void GalleryWindow::slotPhotos( const QValueList<GPhoto>& photoList)
                            "text-decoration: none;}" )
                   .arg( pxSize-2 )
                   .arg( QColor("steelblue").name() );
-    
+
     m_photoView->begin();
     m_photoView->setUserStyleSheet( styleSheet );
     m_photoView->write( "<html>" );
 
-    
+
     m_photoView->write("<table class='box-body' width='100%' "
                        "border='0' cellspacing='1' cellpadding='1'>" );
-    
-    
+
+
     typedef QValueList<GPhoto> GPhotoList;
     GPhotoList::const_iterator iter;
     for ( iter = photoList.begin(); iter != photoList.end(); ++iter )
@@ -390,7 +390,7 @@ void GalleryWindow::slotAlbumSelected()
             m_photoView->begin();
             m_photoView->write( "<html></html>" );
             m_photoView->end();
-            
+
             GAlbumViewItem* viewItem = static_cast<GAlbumViewItem*>(item);
             m_talker->listPhotos(viewItem->album.name);
             m_lastSelectedAlbum = viewItem->album.name;
@@ -418,7 +418,7 @@ void GalleryWindow::slotNewAlbum()
 
     // check for prohibited chars in the album name
     // \ / * ? " ' & < > | . + # ( ) or spaces
-    
+
     QChar ch;
     bool  clean = true;
     for (uint i=0; i<name.length(); i++)
@@ -433,77 +433,77 @@ void GalleryWindow::slotNewAlbum()
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == '*')
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == '?')
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == '"')
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == '\'')
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == '&')
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == '<')
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == '>')
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == '|')
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == '.')
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == '+')
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == '#')
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == '(')
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == ')')
         {
             clean = false;
             break;
-        }            
+        }
         else if (ch == ' ')
         {
             clean = false;
             break;
-        }            
+        }
     }
 
     if (!clean)
@@ -512,9 +512,9 @@ void GalleryWindow::slotNewAlbum()
                             .arg("\\ / * ? \" \' & < > | . + # ( ) or spaces") );
         return;
     }
-    
+
     QString parentAlbumName;
-    
+
     QListViewItem* item = m_albumView->selectedItem();
     if (item)
     {
@@ -540,7 +540,7 @@ void GalleryWindow::slotAddPhotos()
         return;
 
     typedef QPair<QString,QString> Pair;
-    
+
     m_uploadQueue.clear();
     for (KURL::List::iterator it = urls.begin(); it != urls.end(); ++it)
     {
@@ -563,7 +563,7 @@ void GalleryWindow::slotAddPhotoNext()
         slotAlbumSelected();
         return;
     }
-    
+
     typedef QPair<QString,QString> Pair;
     Pair pathComments = m_uploadQueue.first();
     m_uploadQueue.pop_front();
@@ -577,7 +577,7 @@ void GalleryWindow::slotAddPhotoNext()
         slotAddPhotoFailed( "" );
         return;
     }
-    
+
     m_progressDlg->setLabelText( i18n("Uploading file %1 ")
                                  .arg( KURL(pathComments.first).filename() ) );
 
@@ -623,7 +623,7 @@ void GalleryWindow::slotAddPhotoCancel()
     m_progressDlg->hide();
 
     m_talker->cancel();
-    
+
     // refresh the thumbnails
     slotAlbumSelected();
 }

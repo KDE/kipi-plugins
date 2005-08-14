@@ -2,8 +2,8 @@
  * File  : gallerywidget.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2004-12-01
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2004 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -11,12 +11,12 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include <klocale.h>
@@ -48,10 +48,10 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, WFlags fl )
     if ( !name )
 	setName( "GalleryWidget" );
     QVBoxLayout*  galleryWidgetLayout
-        = new QVBoxLayout( this, 5, 5, "GalleryWidgetLayout"); 
+        = new QVBoxLayout( this, 5, 5, "GalleryWidgetLayout");
 
     // ------------------------------------------------------------------------
-    
+
     QLabel*       headerLabel;
     QFrame*       headerLine;
 
@@ -76,7 +76,7 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, WFlags fl )
     m_photoView = new KHTMLPart( splitter, "m_photoView" );
 
     // ------------------------------------------------------------------------
-    
+
     QVBoxLayout*  rightButtonGroupLayout;
     QSpacerItem*  spacer;
     QButtonGroup* rightButtonGroup;
@@ -112,26 +112,26 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, WFlags fl )
     m_dimensionSpinBox  = new QSpinBox(0, 5000, 10, optionsBox);
     m_dimensionSpinBox->setValue(600);
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    optionsBoxLayout->addWidget(m_dimensionSpinBox, 1, 0);
+    optionsBoxLayout->addWidget(m_dimensionSpinBox, 1, 1);
 
-    QLabel* resizeLabel = new QLabel(i18n("Maximum dimension"), optionsBox);
-    optionsBoxLayout->addWidget(resizeLabel, 1, 1);
+    QLabel* resizeLabel = new QLabel(i18n("Maximum dimension:"), optionsBox);
+    optionsBoxLayout->addWidget(resizeLabel, 1, 0);
 
     m_resizeCheckBox->setChecked(false);
     m_dimensionSpinBox->setEnabled(false);
     connect(m_resizeCheckBox, SIGNAL(clicked()), SLOT(slotResizeChecked()));
-    
+
     // ------------------------------------------------------------------------
-    
+
     rightButtonGroupLayout->addWidget(optionsBox);
 
     // ------------------------------------------------------------------------
-    
+
     spacer = new QSpacerItem( 20, 100, QSizePolicy::Minimum, QSizePolicy::Expanding );
     rightButtonGroupLayout->addItem( spacer );
 
     // ------------------------------------------------------------------------
-    
+
     headerLabel->setText( i18n( "<h2>Gallery Export</h2>" ) );
     m_albumView->header()->setLabel( 0, i18n( "Albums" ) );
     m_newAlbumBtn->setText( i18n( "&New Album" ) );
@@ -149,7 +149,7 @@ GalleryWidget::~GalleryWidget()
 
 void GalleryWidget::slotResizeChecked()
 {
-    m_dimensionSpinBox->setEnabled(m_resizeCheckBox->isChecked());    
+    m_dimensionSpinBox->setEnabled(m_resizeCheckBox->isChecked());
 }
 
 }

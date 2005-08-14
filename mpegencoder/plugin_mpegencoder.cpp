@@ -60,14 +60,14 @@ void Plugin_Mpegencoder::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_actionMPEGEncoder = new KAction (i18n("Create MPEG SlideShow..."),
+    m_actionMPEGEncoder = new KAction (i18n("Create MPEG Slide Show..."),
                                        "video",
                                        0,
                                        this,
                                        SLOT(slotActivate()),
                                        actionCollection(),
                                        "mpeg_encoder");
-       
+
     addAction( m_actionMPEGEncoder );
 }
 
@@ -82,23 +82,23 @@ Plugin_Mpegencoder::~Plugin_Mpegencoder()
 void Plugin_Mpegencoder::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
-   
-    if ( !interface ) 
+
+    if ( !interface )
        {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
        return;
        }
-    
-    KIPIMPEGEncoderPlugin::KImg2mpgData *MPEGconverterDialog = 
+
+    KIPIMPEGEncoderPlugin::KImg2mpgData *MPEGconverterDialog =
                            new KIPIMPEGEncoderPlugin::KImg2mpgData( interface, kapp->activeWindow() );
-                           
-    KIPIMPEGEncoderPlugin::CheckBinProg* CheckExternalPrograms = 
+
+    KIPIMPEGEncoderPlugin::CheckBinProg* CheckExternalPrograms =
                            new KIPIMPEGEncoderPlugin::CheckBinProg(this);
-                           
+
     int ValRet = CheckExternalPrograms->findExecutables();
 
     MPEGconverterDialog->show();
-    
+
     if (ValRet == 0)
         MPEGconverterDialog->m_Encodebutton->setEnabled(false);
 
@@ -106,7 +106,7 @@ void Plugin_Mpegencoder::slotActivate()
         MPEGconverterDialog->m_AudioInputFilename->setEnabled(false);
 
     KIPI::ImageCollection images = interface->currentSelection();
-    
+
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
@@ -118,7 +118,7 @@ KIPI::Category Plugin_Mpegencoder::category( KAction* action ) const
 {
     if ( action == m_actionMPEGEncoder )
        return KIPI::TOOLSPLUGIN;
-    
+
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }

@@ -135,7 +135,7 @@ void TimeAdjustDialog::addConfigPage()
     QVBoxLayout *vlay = new QVBoxLayout( plainPage(), 6 );
 
     QLabel* header = new QLabel( plainPage() );
-    header->setText( i18n("Adjust Time and Dates") );
+    header->setText( i18n("Adjust Time & Dates") );
     vlay->addWidget( header );
 
     QFrame* hline = new QFrame( plainPage() );

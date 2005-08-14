@@ -2,8 +2,8 @@
  * File  : flickrwidget.cpp
  * Author: Vardhman Jain <vardhman @ gmail.com>
  * Date  : 2005-07-07
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2005 by Vardhman Jain
 
  * This program is free software; you can redistribute it
@@ -11,12 +11,12 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include <klocale.h>
@@ -48,10 +48,10 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
     if ( !name )
 	setName( "FlickrWidget" );
     QVBoxLayout*  flickrWidgetLayout
-        = new QVBoxLayout( this, 5, 5, "FlickrWidgetLayout"); 
+        = new QVBoxLayout( this, 5, 5, "FlickrWidgetLayout");
 
     // ------------------------------------------------------------------------
-    
+
     QLabel*       headerLabel;
     QFrame*       headerLine;
 
@@ -76,7 +76,7 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
     m_photoView = NULL;//new KHTMLPart( splitter, "m_photoView" );
 
     // ------------------------------------------------------------------------
-    
+
     QVBoxLayout*  rightButtonGroupLayout;
     QSpacerItem*  spacer;
     QButtonGroup* rightButtonGroup;
@@ -93,9 +93,9 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
     m_addPhotoBtn = new QPushButton( rightButtonGroup, "m_addPhotoBtn" );
     m_addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     rightButtonGroupLayout->addWidget( m_addPhotoBtn, 0, Qt::AlignHCenter );
-	
-    QGridLayout* tagsLayout=new QGridLayout(rightButtonGroupLayout,1,2); 
-    QLabel* tagsLabel=new QLabel(i18n("Tags"),rightButtonGroup);
+
+    QGridLayout* tagsLayout=new QGridLayout(rightButtonGroupLayout,1,2);
+    QLabel* tagsLabel=new QLabel(i18n("Tags:"),rightButtonGroup);
     tagsLayout->addWidget(tagsLabel,0,0);
     m_tagsLineEdit=new QLineEdit(rightButtonGroup,"m_tagsLineEdit");
     tagsLayout->addWidget(m_tagsLineEdit,0,1);
@@ -113,47 +113,47 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
 
     m_publicCheckBox = new QCheckBox(optionsBox);
     m_publicCheckBox->setText(i18n("Public ?"));
- //  m_publicCheckBox->show(); 
+ //  m_publicCheckBox->show();
     optionsBoxLayout->addWidget(m_publicCheckBox, 0, 1);
-    
+
     m_familyCheckBox = new QCheckBox(optionsBox);
     m_familyCheckBox->setText(i18n("Family ?"));
     optionsBoxLayout->addWidget(m_familyCheckBox, 0,2 );// 0, 0, 0, 3);
-    
+
     m_friendsCheckBox = new QCheckBox(optionsBox);
     m_friendsCheckBox->setText(i18n("Friends ?"));
    optionsBoxLayout->addWidget(m_friendsCheckBox,0,3);// 0, 0, 0, 4);
-    
+
 
     m_resizeCheckBox = new QCheckBox(optionsBox);
     m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
-  // m_resizeCheckBox->show(); 
+  // m_resizeCheckBox->show();
    optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox, 1,1,0,3,1 );
-    
+
     m_dimensionSpinBox  = new QSpinBox(0, 5000, 10, optionsBox);
     m_dimensionSpinBox->setValue(600);
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    optionsBoxLayout->addWidget(m_dimensionSpinBox, 2,0 );
+    optionsBoxLayout->addWidget(m_dimensionSpinBox, 2,1 );
 
-    QLabel* resizeLabel = new QLabel(i18n("Maximum dimension"), optionsBox);
-    optionsBoxLayout->addWidget(resizeLabel, 2, 1);
+    QLabel* resizeLabel = new QLabel(i18n("Maximum dimension:"), optionsBox);
+    optionsBoxLayout->addWidget(resizeLabel, 2, 0);
 
 
     m_resizeCheckBox->setChecked(false);
     m_dimensionSpinBox->setEnabled(false);
     connect(m_resizeCheckBox, SIGNAL(clicked()), SLOT(slotResizeChecked()));
-    
+
     // ------------------------------------------------------------------------
-    
+
     rightButtonGroupLayout->addWidget(optionsBox);
 
     // ------------------------------------------------------------------------
-    
+
     spacer = new QSpacerItem( 20, 100, QSizePolicy::Minimum, QSizePolicy::Expanding );
     rightButtonGroupLayout->addItem( spacer );
 
     // ------------------------------------------------------------------------
-    
+
     headerLabel->setText( i18n( "<h2>Flickr Export</h2>" ) );
 	m_tagView->hide();
 //    m_tagView->header()->setLabel( 0, i18n( "Albums" ) );
@@ -172,7 +172,7 @@ FlickrWidget::~FlickrWidget()
 
 void FlickrWidget::slotResizeChecked()
 {
-    m_dimensionSpinBox->setEnabled(m_resizeCheckBox->isChecked());    
+    m_dimensionSpinBox->setEnabled(m_resizeCheckBox->isChecked());
 }
 
 }
