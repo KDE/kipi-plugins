@@ -15,8 +15,9 @@ kipiplugin_batchprocessimages_la_SOURCES = plugin_batchprocessimages.cpp batchpr
 					   effectimagesdialog.cpp effectoptionsdialog.cpp \
 					   recompressimagesdialog.cpp recompressoptionsdialog.cpp \
 					   resizeimagesdialog.cpp resizeoptionsdialog.cpp \
-					   batchprocessimagesdialog.cpp renameimagesoptionsdialog.cpp \
-					   batchprocessimageslist.cpp
+					   batchprocessimagesdialog.cpp \
+					   batchprocessimageslist.cpp \
+					   renameimagesbase.ui renameimageswidget.cpp
 
 # Libs needed by the plugin
 kipiplugin_batchprocessimages_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS)

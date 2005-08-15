@@ -248,9 +248,9 @@ void Plugin_BatchProcessImages::slotActivate()
         }
     else if (from == "batch_rename_images")
         {
-        m_RenameImagesDialog = new KIPIBatchProcessImagesPlugin::RenameImagesDialog( urlList,
-                                                                 interface, kapp->activeWindow());
-        m_RenameImagesDialog->show();
+        KIPIBatchProcessImagesPlugin::RenameImagesDialog
+            dlg(urlList, interface, kapp->activeWindow());
+        dlg.exec();
         }
     else if (from == "batch_border_images")
         {

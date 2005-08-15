@@ -41,6 +41,7 @@ namespace KIPIBatchProcessImagesPlugin
 class BatchProcessImagesItem : public KListViewItem
 {
 public:
+
     BatchProcessImagesItem(QListView * parent, QString const & pathSrc, QString const & nameSrc,
                            QString const & nameDest, QString const & result);
 
@@ -62,6 +63,10 @@ public:
 
     void paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment);
 
+    void setKey(const QString& val, bool reverseSort);
+    QString key(int column, bool ascending) const;
+    int compare (QListViewItem * i, int col, bool ascending) const;
+
 private:
     QString _pathSrc;
     QString _nameSrc;
@@ -70,6 +75,8 @@ private:
     QString _error;
     QString _outputMess;
     bool    _overwrote;
+    QString _key;
+    bool    _reverseSort;
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

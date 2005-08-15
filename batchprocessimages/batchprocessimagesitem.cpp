@@ -42,7 +42,8 @@ BatchProcessImagesItem::BatchProcessImagesItem(QListView * parent, QString const
                         QString const & nameSrc, QString const & nameDest, QString const & result)
                       : KListViewItem( parent, "", nameSrc, nameDest, result),
                         _pathSrc(pathSrc), _nameSrc(nameSrc), _nameDest(nameDest), _result(result),
-                        _overwrote( false )
+                        _overwrote( false ),
+                        _reverseSort( false )
 {
     setText(0, pathSrc.section('/', -2, -2));
 }
@@ -97,6 +98,26 @@ bool BatchProcessImagesItem::overWrote()
 void BatchProcessImagesItem::setDidOverWrite( bool b )
 {
     _overwrote = b;
+}
+
+void BatchProcessImagesItem::setKey(const QString& val, bool reverseSort)
+{
+    _key = val;
+    _reverseSort = reverseSort;
+}
+
+QString BatchProcessImagesItem::key(int column, bool ) const
+{
+    if (_key.isNull())
+        return text(column);
+
+    return _key;
+}
+
+int BatchProcessImagesItem::compare(QListViewItem * i, int col, bool ascending) const
+{
+    int weight = _reverseSort ? -1 : 1;
+    return weight * key(col, ascending).localeAwareCompare(i->key( col, ascending));
 }
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
