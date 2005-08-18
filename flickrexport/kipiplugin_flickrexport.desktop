@@ -1,8 +1,12 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Flickr Exporter
+Name[br]=Ezporzher Flickr 
 Name[ga]=Easpórtálaí Flickr
+Name[it]=Esportazione a Flickr
 Comment=KIPI Remote Flickr Export Plugin
+Comment[it]=Plugin per l'esportazione remota a Flickr di KIPI
+Comment[nl]=KIPI-plugin voor het exporteren naar Flickr-galerij
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_flickrexport
