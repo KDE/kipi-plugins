@@ -49,6 +49,7 @@ extern "C"
 // KIPI includes
 
 #include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
 
 class QTimer;
 
@@ -60,44 +61,10 @@ namespace KIPICDArchivingPlugin
 
 class CDArchivingDialog;
 
-class AlbumData
-    {
-    public:
-        
-        AlbumData(){}
-        AlbumData( const QString& albumName,     const QString& albumCategory,
-                   const QString& albumComments, const QDate& albumDate,
-                   const KURL&    albumUrl,      const KURL::List& itemsUrl )
-                 : m_albumName(albumName), m_albumCategory(albumCategory),
-                   m_albumComments(albumComments), m_albumDate(albumDate),
-                   m_albumUrl(albumUrl), m_itemsUrl(itemsUrl)
-        {}
-
-        QString    albumName()     const { return m_albumName;        }
-        QString    albumCategory() const { return m_albumCategory;    }
-        QString    albumComments() const { return m_albumComments;    }
-        QDate      albumDate()     const { return m_albumDate;        }
-        KURL       albumUrl()      const { return m_albumUrl;         }        
-        KURL::List itemsUrl()      const { return m_itemsUrl;         }   
-        int        countItems()          { return m_itemsUrl.count(); }   
-        
-    private:
-        
-        QString    m_albumName;
-        QString    m_albumCategory;
-        QString    m_albumComments;
-        QDate      m_albumDate;
-        KURL       m_albumUrl;
-        KURL::List m_itemsUrl;
-    };
-    
 const int NAV_THUMB_MAX_SIZE = 64;
 
 // First field is the URL, represented with KURL::prettyURL. We can't use KURL
 // directly because operator<(KURL,KURL) is not defined in KDE 3.1
-
-typedef QMap<QString, QString>   CommentMap;  // List of Albums items comments.
-typedef QMap<QString, AlbumData> AlbumsMap;   // Albums data list.
 
 class CDArchiving : public QObject
 {
@@ -141,9 +108,7 @@ private:
   bool                m_useHTMLInterface;
   bool                m_useAutoRunWin32;
   bool                m_useStartBurningProcess;
-  bool                m_recurseSubDirectories;
   bool                m_copyFiles;
-  bool                m_useCommentFile;
   bool                m_useOnTheFly;
   bool                m_useCheckCD;
   
@@ -179,7 +144,6 @@ private:
   int                 m_imgWidth;
   int                 m_imgHeight;
   int                 m_imagesPerRow;
-  int                 m_LevelRecursion;
   int                 m_targetImgWidth;
   int                 m_targetImgHeight;
   int                 m_thumbnailsSize;
@@ -188,8 +152,7 @@ private:
   KURL::List          m_albumUrlList; // Urls of Albums list from setup dialog.
   KURL                m_albumUrl;     // Current album Url use in the thread.
   
-  CommentMap         *m_commentMap;
-  AlbumsMap          *m_albumsMap;
+  QValueList<KIPI::ImageCollection> m_albumsList;
   
   QObject            *m_parent;
   
@@ -202,9 +165,10 @@ private:
   void createHead(QTextStream& stream);
   void createCSSSection(QTextStream& stream);
 
-  void createBody(QTextStream& stream, const QString& sourceDirName,
-                  const QStringList& subDirList, const QDir& imageDir,
-                  const KURL& url, const QString& imageFormat);
+  void createBody(QTextStream& stream,
+                  const KIPI::ImageCollection& album,
+                  const KURL& targetURL,
+                  const QString& imageFormat);
 
   int  createThumb( const QString& imgName, const QString& sourceDirName,
                     const QString& imgGalleryDir, const QString& imageFormat);
@@ -213,21 +177,25 @@ private:
                     const QString ImageNameFormat, int *Width, int *Height, int SizeFactor,
                     bool ColorDepthChange, int ColorDepthValue, bool CompressionSet, int ImageCompression);
 
-  bool createHtml( const KURL& url, const QString& sourceDirName, int recursionLevel,
-                   const QString& imageFormat);
+  bool createHtml( const KIPI::ImageCollection& album,
+                   const KURL& targetURL,
+                   const QString& imageFormat );
 
-  bool createPage(const QString& imgGalleryDir , const QString& imgName, const QString& previousImgName,
-                  const QString& nextImgName, const QString& comment, 
-                  const QString& AlbumTitle, const QString& sourceDirName);
+  bool createPage(const QString& imgGalleryDir,
+                  const KURL& imgURL,
+                  const KURL& prevImgURL,
+                  const KURL& nextImgURL,
+                  const QString& comment);
 
   void createBodyMainPage(QTextStream& stream, KURL& url);
-  void loadComments(void);
+
   static QString extension(const QString& imageFormat);
 
   bool BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString IndexHtm,
                                QString AutoRunInf, QString AutorunFolder);
 
   bool AddFolderTreeToK3bXMLProjectFile (QString dirname, QTextStream* stream);
+  bool addCollectionToK3bXMLProjectFile(const KIPI::ImageCollection& collection, QTextStream* stream);
   bool CreateAutoRunInfFile(void);
   bool DeleteDir(QString dirname);
   bool deldir(QString dirname);

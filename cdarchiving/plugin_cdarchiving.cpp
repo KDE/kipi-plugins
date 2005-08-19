@@ -203,12 +203,14 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                {
                case(KIPICDArchivingPlugin::BuildHTMLiface):
                   {
+                  ++m_current;
                   text = i18n("Main HTML interface creation completed.");
                   break;
                   }
 
                case(KIPICDArchivingPlugin::BuildAlbumHTMLPage):
                   {
+                  ++m_current;
                   text = i18n("HTML page creation for Album '%1' completed.").arg(d->albumName);
                   break;
                   }
@@ -221,12 +223,14 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
 
                case(KIPICDArchivingPlugin::BuildAutoRuniface):
                   {
+                  ++m_current;
                   text = i18n("AutoRun interface creation completed.");
                   break;
                   }
 
                case(KIPICDArchivingPlugin::BuildK3bProject):
                   {
+                  ++m_current;
                   text = i18n("K3b project creation completed.");
                   break;
                   }
@@ -238,7 +242,6 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                }
 
             m_progressDlg->addedAction(text, KIPI::SuccessMessage);
-            ++m_current;
             }
         else
             {
@@ -246,7 +249,6 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
                {
                case(KIPICDArchivingPlugin::ResizeImages):
                   {
-                  ++m_current;
                   text = i18n("Failed to create thumbnail for '%1'").arg(d->fileName);
                   m_progressDlg->addedAction(text, KIPI::WarningMessage);
                   m_progressDlg->setProgress(m_current, m_total);
@@ -255,6 +257,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
 
                case(KIPICDArchivingPlugin::BuildHTMLiface):
                   {
+                  ++m_current;
                   text = i18n("Failed to create HTML interface: %1")
                               .arg(d->message);
                   m_progressDlg->addedAction(text, KIPI::ErrorMessage);
@@ -277,6 +280,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
 
                case(KIPICDArchivingPlugin::BuildK3bProject):
                   {
+                  ++m_current;
                   text = i18n("Failed to create K3b project.");
                   m_progressDlg->addedAction(text, KIPI::ErrorMessage);
                   m_progressDlg->setProgress(m_current, m_total);
