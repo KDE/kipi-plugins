@@ -76,21 +76,21 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox1);
 
        m_resizeFilter = new QComboBox( false, groupBox1 );
-       m_resizeFilter->insertItem("Bessel");
-       m_resizeFilter->insertItem("Blackman");
-       m_resizeFilter->insertItem("Box");
-       m_resizeFilter->insertItem("Catrom");
-       m_resizeFilter->insertItem("Cubic");
-       m_resizeFilter->insertItem("Gaussian");
-       m_resizeFilter->insertItem("Hermite");
-       m_resizeFilter->insertItem("Hanning");
-       m_resizeFilter->insertItem("Hamming");
-       m_resizeFilter->insertItem("Lanczos");
-       m_resizeFilter->insertItem("Mitchell");
-       m_resizeFilter->insertItem("Point");
-       m_resizeFilter->insertItem("Quadratic");
-       m_resizeFilter->insertItem("Sinc");
-       m_resizeFilter->insertItem("Triangle");
+       m_resizeFilter->insertItem(i18n("Filter name","Bessel"));
+       m_resizeFilter->insertItem(i18n("Filter name","Blackman"));
+       m_resizeFilter->insertItem(i18n("Filter name","Box"));
+       m_resizeFilter->insertItem(i18n("Filter name","Catrom"));
+       m_resizeFilter->insertItem(i18n("Filter name","Cubic"));
+       m_resizeFilter->insertItem(i18n("Filter name","Gaussian"));
+       m_resizeFilter->insertItem(i18n("Filter name","Hermite"));
+       m_resizeFilter->insertItem(i18n("Filter name","Hanning"));
+       m_resizeFilter->insertItem(i18n("Filter name","Hamming"));
+       m_resizeFilter->insertItem(i18n("Filter name","Lanczos"));
+       m_resizeFilter->insertItem(i18n("Filter name","Mitchell"));
+       m_resizeFilter->insertItem(i18n("Filter name","Point"));
+       m_resizeFilter->insertItem(i18n("Filter name","Quadratic"));
+       m_resizeFilter->insertItem(i18n("Filter name","Sinc"));
+       m_resizeFilter->insertItem(i18n("Filter name","Triangle"));
        QWhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize-image process. "
                                              "This filter will be used like a kernel convolution process "
                                              "during the increased image size rendering. The default filter "
@@ -142,21 +142,21 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
 
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox2);
        m_resizeFilter = new QComboBox( false, groupBox2 );
-       m_resizeFilter->insertItem("Bessel");
-       m_resizeFilter->insertItem("Blackman");
-       m_resizeFilter->insertItem("Box");
-       m_resizeFilter->insertItem("Catrom");
-       m_resizeFilter->insertItem("Cubic");
-       m_resizeFilter->insertItem("Gaussian");
-       m_resizeFilter->insertItem("Hermite");
-       m_resizeFilter->insertItem("Hanning");
-       m_resizeFilter->insertItem("Hamming");
-       m_resizeFilter->insertItem("Lanczos");
-       m_resizeFilter->insertItem("Mitchell");
-       m_resizeFilter->insertItem("Point");
-       m_resizeFilter->insertItem("Quadratic");
-       m_resizeFilter->insertItem("Sinc");
-       m_resizeFilter->insertItem("Triangle");
+       m_resizeFilter->insertItem(i18n("Filter name","Bessel"));
+       m_resizeFilter->insertItem(i18n("Filter name","Blackman"));
+       m_resizeFilter->insertItem(i18n("Filter name","Box"));
+       m_resizeFilter->insertItem(i18n("Filter name","Catrom"));
+       m_resizeFilter->insertItem(i18n("Filter name","Cubic"));
+       m_resizeFilter->insertItem(i18n("Filter name","Gaussian"));
+       m_resizeFilter->insertItem(i18n("Filter name","Hermite"));
+       m_resizeFilter->insertItem(i18n("Filter name","Hanning"));
+       m_resizeFilter->insertItem(i18n("Filter name","Hamming"));
+       m_resizeFilter->insertItem(i18n("Filter name","Lanczos"));
+       m_resizeFilter->insertItem(i18n("Filter name","Mitchell"));
+       m_resizeFilter->insertItem(i18n("Filter name","Point"));
+       m_resizeFilter->insertItem(i18n("Filter name","Quadratic"));
+       m_resizeFilter->insertItem(i18n("Filter name","Sinc"));
+       m_resizeFilter->insertItem(i18n("Filter name","Triangle"));
        QWhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize-image process. "
                                              "This filter will be used like a kernel convolution process "
                                              "during the increased image size rendering. The default filter "
@@ -194,21 +194,21 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox1);
 
        m_resizeFilter = new QComboBox( false, groupBox1 );
-       m_resizeFilter->insertItem("Bessel");
-       m_resizeFilter->insertItem("Blackman");
-       m_resizeFilter->insertItem("Box");
-       m_resizeFilter->insertItem("Catrom");
-       m_resizeFilter->insertItem("Cubic");
-       m_resizeFilter->insertItem("Gaussian");
-       m_resizeFilter->insertItem("Hermite");
-       m_resizeFilter->insertItem("Hanning");
-       m_resizeFilter->insertItem("Hamming");
-       m_resizeFilter->insertItem("Lanczos");
-       m_resizeFilter->insertItem("Mitchell");
-       m_resizeFilter->insertItem("Point");
-       m_resizeFilter->insertItem("Quadratic");
-       m_resizeFilter->insertItem("Sinc");
-       m_resizeFilter->insertItem("Triangle");
+       m_resizeFilter->insertItem(i18n("Filter name","Bessel"));
+       m_resizeFilter->insertItem(i18n("Filter name","Blackman"));
+       m_resizeFilter->insertItem(i18n("Filter name","Box"));
+       m_resizeFilter->insertItem(i18n("Filter name","Catrom"));
+       m_resizeFilter->insertItem(i18n("Filter name","Cubic"));
+       m_resizeFilter->insertItem(i18n("Filter name","Gaussian"));
+       m_resizeFilter->insertItem(i18n("Filter name","Hermite"));
+       m_resizeFilter->insertItem(i18n("Filter name","Hanning"));
+       m_resizeFilter->insertItem(i18n("Filter name","Hamming"));
+       m_resizeFilter->insertItem(i18n("Filter name","Lanczos"));
+       m_resizeFilter->insertItem(i18n("Filter name","Mitchell"));
+       m_resizeFilter->insertItem(i18n("Filter name","Point"));
+       m_resizeFilter->insertItem(i18n("Filter name","Quadratic"));
+       m_resizeFilter->insertItem(i18n("Filter name","Sinc"));
+       m_resizeFilter->insertItem(i18n("Filter name","Triangle"));
        QWhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize-image process. "
                                              "This filter will be used like a kernel convolution process "
                                              "during the increased image size rendering. The default filter "
@@ -292,21 +292,21 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
 
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox3);
        m_resizeFilter = new QComboBox( false, groupBox3 );
-       m_resizeFilter->insertItem("Bessel");
-       m_resizeFilter->insertItem("Blackman");
-       m_resizeFilter->insertItem("Box");
-       m_resizeFilter->insertItem("Catrom");
-       m_resizeFilter->insertItem("Cubic");
-       m_resizeFilter->insertItem("Gaussian");
-       m_resizeFilter->insertItem("Hermite");
-       m_resizeFilter->insertItem("Hanning");
-       m_resizeFilter->insertItem("Hamming");
-       m_resizeFilter->insertItem("Lanczos");
-       m_resizeFilter->insertItem("Mitchell");
-       m_resizeFilter->insertItem("Point");
-       m_resizeFilter->insertItem("Quadratic");
-       m_resizeFilter->insertItem("Sinc");
-       m_resizeFilter->insertItem("Triangle");
+       m_resizeFilter->insertItem(i18n("Filter name","Bessel"));
+       m_resizeFilter->insertItem(i18n("Filter name","Blackman"));
+       m_resizeFilter->insertItem(i18n("Filter name","Box"));
+       m_resizeFilter->insertItem(i18n("Filter name","Catrom"));
+       m_resizeFilter->insertItem(i18n("Filter name","Cubic"));
+       m_resizeFilter->insertItem(i18n("Filter name","Gaussian"));
+       m_resizeFilter->insertItem(i18n("Filter name","Hermite"));
+       m_resizeFilter->insertItem(i18n("Filter name","Hanning"));
+       m_resizeFilter->insertItem(i18n("Filter name","Hamming"));
+       m_resizeFilter->insertItem(i18n("Filter name","Lanczos"));
+       m_resizeFilter->insertItem(i18n("Filter name","Mitchell"));
+       m_resizeFilter->insertItem(i18n("Filter name","Point"));
+       m_resizeFilter->insertItem(i18n("Filter name","Quadratic"));
+       m_resizeFilter->insertItem(i18n("Filter name","Sinc"));
+       m_resizeFilter->insertItem(i18n("Filter name","Triangle"));
        QWhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize-image process. "
                                              "This filter will be used like a kernel convolution process "
                                              "during the increased image size rendering. The default filter "
