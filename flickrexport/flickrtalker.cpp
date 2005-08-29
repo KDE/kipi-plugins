@@ -106,7 +106,7 @@ void FlickrTalker::getFrob() {
    	connect(job, SIGNAL(result(KIO::Job *)),
             SLOT(slotResult(KIO::Job *)));
 	m_state = FE_GETFROB;
-	authProgressDlg->setLabelText("Getting the Frob");
+	authProgressDlg->setLabelText(i18n("Getting the Frob"));
 	authProgressDlg->setProgress(1,4);
 	m_job   = job;
 	m_buffer.resize(0);
@@ -134,7 +134,7 @@ void FlickrTalker::checkToken(const QString& token) {
    	connect(job, SIGNAL(result(KIO::Job *)),
             SLOT(slotResult(KIO::Job *)));
 	m_state = FE_CHECKTOKEN;
-	authProgressDlg->setLabelText("Checking if previous token is still valid");
+	authProgressDlg->setLabelText(i18n("Checking if previous token is still valid"));
 	authProgressDlg->setProgress(1,4);
 	m_job   = job;
 	m_buffer.resize(0);
@@ -156,11 +156,12 @@ void FlickrTalker::slotAuthenticate(){
 	headers.append("api_sig="+ md5);
 	const QString queryStr=url+headers.join("&");
  	KApplication::kApplication()->invokeBrowser(queryStr);
-	int valueOk=KMessageBox::questionYesNo(0, "Please Follow through the instructions in the browser window and return back to press ok if you are authenticated or press No", "Flickr::Kipi Plugin:Web Authorization"); 
+	int valueOk=KMessageBox::questionYesNo(0, i18n("Please Follow through the instructions in the browser window and \
+				return back to press ok if you are authenticated or press No"), "Flickr::Kipi Plugin:Web Authorization"); 
 	
 	if(valueOk==KMessageBox::Yes){
 		getToken(); 
-	authProgressDlg->setLabelText("Authenticating the User on web");
+	authProgressDlg->setLabelText(i18n("Authenticating the User on web"));
 	authProgressDlg->setProgress(2,4);
     	emit signalBusy( false );
 	}
@@ -197,7 +198,7 @@ void FlickrTalker::getToken(){
 	m_buffer.resize(0);
     	emit signalBusy( true );
 	kdDebug()<<"Please paste the url on the browser:\n"<<queryStr<<endl;
-	authProgressDlg->setLabelText("Getting the Token from the server");
+	authProgressDlg->setLabelText(i18n("Getting the Token from the server"));
 	authProgressDlg->setProgress(3,4);
 }
 void FlickrTalker::listAlbums()
@@ -474,7 +475,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray &data)
 						int valueOk=KMessageBox::questionYesNo(0, i18n("Your currently have \
 									%1 permissions, \nWould you like to \
 									proceed with current permissions ?\n[Upload requires Write permissions] ") 
-								.arg( perms ));
+								.arg( i18n(perms.latin1()) ));
 						if(valueOk==KMessageBox::No){
 							getFrob(); 
 							return;
