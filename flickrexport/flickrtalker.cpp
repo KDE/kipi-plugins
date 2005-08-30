@@ -157,7 +157,7 @@ void FlickrTalker::slotAuthenticate(){
 	const QString queryStr=url+headers.join("&");
  	KApplication::kApplication()->invokeBrowser(queryStr);
 	int valueOk=KMessageBox::questionYesNo(0, i18n("Please Follow through the instructions in the browser window and \
-				return back to press ok if you are authenticated or press No"), "Flickr::Kipi Plugin:Web Authorization"); 
+				return back to press ok if you are authenticated or press No"), i18n("Flickr::Kipi Plugin:Web Authorization")); 
 	
 	if(valueOk==KMessageBox::Yes){
 		getToken(); 
@@ -197,7 +197,7 @@ void FlickrTalker::getToken(){
 	m_job   = job;
 	m_buffer.resize(0);
     	emit signalBusy( true );
-	kdDebug()<<"Please paste the url on the browser:\n"<<queryStr<<endl;
+	kdDebug()<<" url invoked in the browser:\n"<<queryStr<<endl;
 	authProgressDlg->setLabelText(i18n("Getting the Token from the server"));
 	authProgressDlg->setProgress(3,4);
 }
@@ -356,10 +356,46 @@ void FlickrTalker::data(KIO::Job*, const QByteArray& data)
 }
 
 void FlickrTalker::slotError(const QString & error){
+	 QString transError;
+	 int errorNo=atoi(error.latin1());
+	switch (errorNo){
+		case 2: 
+			transError=i18n("No photo specified");break;
+		case 3: 
+			transError=i18n("General upload failure");break;
+		case 4: 
+			transError=i18n("Filesize was zero");break;
+		case 5: 
+			transError=i18n("Filetype was not recognised");break;
+		case 6:
+			transError=i18n("User exceeded upload limit");break;
+		case 96:
+		 transError=i18n("Invalid signature"); break;
+		case 97:
+		 transError=i18n("Missing signature"); break;
+		case 98:
+		 transError=i18n("Login Failed / Invalid auth token"); break;
+		case 100: //(error=="Invalid API Key")
+		 transError=i18n("Invalid API Key"); break;
+		case 105:
+		 transError=i18n("Service currently unavailable");break;		
+		case 111: 
+		 transError=i18n("Format \"xxx\" not found"); break;
+		 case 112: 
+		 transError=i18n("Method \"xxx\" not found"); break;
+		 case 114: 
+			 transError=i18n("Invalid SOAP envelope");break;
+		 case 115: 
+		 transError=i18n("Invalid XML-RPC Method Call");break;
+		 case 116: 
+		 transError=i18n("The POST method is now required for all setters"); break;
+		 default:
+		 transError=i18n("Unknown error");
+	};
 	 KMessageBox::warningContinueCancel( 0,
                                              i18n( "Error occured !")
-                                             + error
-                                             + i18n("\nDo you want to continue?" ) );
+                                             + transError
+                                             + i18n("\nDo you want to continue?"    ) );
 	kdDebug()<<"Not handling the error now will see it later"<<endl;
 }
 
@@ -431,9 +467,12 @@ void FlickrTalker::parseResponseGetFrob(const QByteArray &data)
 		m_frob=e.text();//this is what is obtained from data.
 		success=true;
 	}
-	if ( node.isElement() && node.nodeName() == "error" ) {
-		QDomElement e = node.toElement(); // try to convert the node to an element.
-		errorString=(e.text());//this is what is obtained from data.
+	if ( node.isElement() && node.nodeName() == "err" ) {
+		kdDebug()<<"Checking Error in response"<<endl;
+		QString code=node.toElement().attribute("code");
+		kdDebug()<<"Error code="<<code<<endl;
+       	kdDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;	
+		errorString=code;
 	}
         node = node.nextSibling();
     }
@@ -472,10 +511,18 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray &data)
 					if(details.nodeName()=="perms"){
 						kdDebug()<<"Perms="<<e.text()<<endl; 
 						QString	perms=e.text();//this is what is obtained from data.
+						QString transReturn;
+						if(perms=="write")
+							transReturn=i18n("write");
+						else if(perms=="read")
+							transReturn=i18n("read");
+						else if(perms=="delete")
+							transReturn=i18n("delete");
 						int valueOk=KMessageBox::questionYesNo(0, i18n("Your currently have \
 									%1 permissions, \nWould you like to \
-									proceed with current permissions ?\n[Upload requires Write permissions] ") 
-								.arg( i18n(perms.latin1()) ));
+									proceed with current permissions ?\n[Upload \
+									requires %2 permissions] ").arg( transReturn.latin1() ).arg( i18n("write"))
+								);
 						if(valueOk==KMessageBox::No){
 							getFrob(); 
 							return;
@@ -496,8 +543,23 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray &data)
 			}
 				success=true;
 		}
-		if ( node.isElement() && node.nodeName() == "error" ) {
-			errString =node.toElement().text();
+		if ( node.isElement() && node.nodeName() == "err" ) {
+		kdDebug()<<"Checking Error in response"<<endl;
+				QString code=node.toElement().attribute("code");
+				kdDebug()<<"Error code="<<code<<endl;
+       			kdDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;	
+				errString=code;
+				int valueOk=KMessageBox::questionYesNo(0, i18n("Your token is invalid. Would you like to \
+									get a new token to proceed ?\n"));
+						if(valueOk==KMessageBox::Yes){
+							getFrob(); 
+							return;
+						}
+						else{	
+							authProgressDlg->hide();//will popup the result for 
+							//the checktoken failure below 
+						}
+					
 		}
 		node = node.nextSibling();
 	}
@@ -608,8 +670,12 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray &data)
 			kdDebug()<<"Photoid="<<e.text()<<endl; 
 			success=true;
 		}
-		if ( node.isElement() && node.nodeName() == "error" ) {
-			emit signalError(node.toElement().text());
+		if ( node.isElement() && node.nodeName() == "err" ) {
+			kdDebug()<<"Checking Error in response"<<endl;
+			QString code=node.toElement().attribute("code");
+			kdDebug()<<"Error code="<<code<<endl;
+       		kdDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;	
+			emit signalError(code);
 		}
 		node = node.nextSibling();
 	}
@@ -642,15 +708,19 @@ void FlickrTalker::parseResponsePhotoProperty(const QByteArray &data)
 			kdDebug()<<"Photoid="<<e.text()<<endl; 
 			success=true;
 		}
-		if ( node.isElement() && node.nodeName() == "error" ) {
-			emit signalError(node.toElement().text());
+		if ( node.isElement() && node.nodeName() == "err" ) {
+			kdDebug()<<"Checking Error in response"<<endl;
+			QString code=node.toElement().attribute("code");
+			kdDebug()<<"Error code="<<code<<endl;
+       		kdDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;	
+			emit signalError(code);
 		}
 		node = node.nextSibling();
 	}
 	kdDebug()<<"GetToken finished"<<endl;
     if (!success)
     {
-        emit signalAddPhotoFailed(i18n("Failed to upload photo"));
+        emit signalAddPhotoFailed(i18n("Failed to query photo information"));
     }
     else
     {

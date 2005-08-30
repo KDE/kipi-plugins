@@ -59,7 +59,7 @@ namespace KIPIFlickrExportPlugin
 {
 
 FlickrWindow::FlickrWindow(KIPI::Interface* interface, QWidget *parent)
-    : KDialogBase(parent, 0, true, i18n( "Flickr Upload" ), Close, Close, false)
+    : KDialogBase(parent, 0, true, i18n( "Flickr Uploadr" ), Close, Close, false)
 {
     m_interface   = interface;
     m_uploadCount = 0;
@@ -87,7 +87,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, QWidget *parent)
 
     
     m_talker = new FlickrTalker( this );
-    connect( m_talker, SIGNAL( signalError( const QString& ) ),
+    connect( m_talker, SIGNAL( signalError( const QString& ) ),m_talker,
              SLOT( slotError( const QString& ) ) );
     connect( m_talker, SIGNAL( signalBusy( bool ) ),
              SLOT( slotBusy( bool ) ) );
@@ -260,6 +260,7 @@ void FlickrWindow::slotBusy( bool val )
 
 void FlickrWindow::slotError( const QString& msg )
 {
+	//m_talker->slotError(msg);
     KMessageBox::error( this, msg );
 }
 
