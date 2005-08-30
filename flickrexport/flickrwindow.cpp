@@ -59,7 +59,7 @@ namespace KIPIFlickrExportPlugin
 {
 
 FlickrWindow::FlickrWindow(KIPI::Interface* interface, QWidget *parent)
-    : KDialogBase(parent, 0, true, i18n( "Flickr Uploadr" ), Close, Close, false)
+    : KDialogBase(parent, 0, true, i18n( "Flickr Upload" ), Close, Close, false)
 {
     m_interface   = interface;
     m_uploadCount = 0;
@@ -378,7 +378,7 @@ void FlickrWindow::slotAddPhotos()
 	temp.is_public=m_publicCheckBox->isChecked();
         temp.is_family=m_familyCheckBox->isChecked();
         temp.is_friend=m_friendsCheckBox->isChecked();
-    	QStringList tags=QStringList::split(" ",m_tagsLineEdit->text(),FALSE);  
+    	QStringList tags=QStringList::split(" ",m_tagsLineEdit->text(),false);  
 	temp.tags=tags; 
         m_uploadQueue.append( Pair( (*it).path(), temp) );
     }
@@ -427,11 +427,8 @@ void FlickrWindow::slotAddPhotoSucceeded()
 void FlickrWindow::slotAddPhotoFailed( const QString& msg )
 {
     if ( KMessageBox::warningContinueCancel( this,
-                                             i18n( "Failed to upload photo into "
-                                                   "Flickr. " )
-                                             + msg
-                                             + i18n("\nDo you want to continue?" ) )
-         != KMessageBox::Continue )
+           i18n( "Failed to upload photo into Flickr. %1\nDo you want to continue?" )
+            .arg( msg )) != KMessageBox::Continue )
     {
         m_uploadQueue.clear();
         m_progressDlg->reset();

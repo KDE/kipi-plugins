@@ -393,9 +393,8 @@ void FlickrTalker::slotError(const QString & error){
 		 transError=i18n("Unknown error");
 	};
 	 KMessageBox::warningContinueCancel( 0,
-                                             i18n( "Error occured !")
-                                             + transError
-                                             + i18n("\nDo you want to continue?"    ) );
+                     i18n( "Error occured: %1\nDo you want to continue?")
+                             .arg(transError));
 	kdDebug()<<"Not handling the error now will see it later"<<endl;
 }
 
@@ -521,7 +520,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray &data)
 						int valueOk=KMessageBox::questionYesNo(0, i18n("Your currently have \
 									%1 permissions, \nWould you like to \
 									proceed with current permissions ?\n[Upload \
-									requires %2 permissions] ").arg( transReturn.latin1() ).arg( i18n("write"))
+									requires write permissions] ").arg( transReturn )
 								);
 						if(valueOk==KMessageBox::No){
 							getFrob(); 
