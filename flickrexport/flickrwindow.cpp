@@ -59,7 +59,7 @@ namespace KIPIFlickrExportPlugin
 {
 
 FlickrWindow::FlickrWindow(KIPI::Interface* interface, QWidget *parent)
-    : KDialogBase(parent, 0, true, i18n( "Flickr Upload" ), Close, Close, false)
+    : KDialogBase(parent, 0, true, i18n( "FlickrUploadr" ), Close, Close, false)
 {
     m_interface   = interface;
     m_uploadCount = 0;
