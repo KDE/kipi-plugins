@@ -156,8 +156,8 @@ namespace KIPIFlickrExportPlugin
 		QString queryStr=headers.join("&");
 		const QString completeUrl=url+queryStr;
 		KApplication::kApplication()->invokeBrowser(completeUrl);
-		int valueOk=KMessageBox::questionYesNo(0, i18n("Please Follow through the instructions in the browser window and \
-					return back to press ok if you are authenticated or press No"), i18n("Flickr::Kipi Plugin:Web Authorization")); 
+		int valueOk=KMessageBox::questionYesNo(0, i18n("Please Follow through the instructions in the browser window and "
+              "return back to press ok if you are authenticated or press No"), i18n("Flickr::Kipi Plugin:Web Authorization")); 
 
 					if(valueOk==KMessageBox::Yes){
 						getToken(); 
@@ -510,15 +510,15 @@ namespace KIPIFlickrExportPlugin
 							QString	perms=e.text();//this is what is obtained from data.
 							QString transReturn;
 							if(perms=="write")
-								transReturn=i18n("write");
+								transReturn=i18n("As in the persmission to", "write");
 							else if(perms=="read")
-								transReturn=i18n("read");
+								transReturn=i18n("As in the permission to", "read");
 							else if(perms=="delete")
-								transReturn=i18n("delete");
-							int valueOk=KMessageBox::questionYesNo(0, i18n("Your currently have \
-										%1 permissions, \nWould you like to \
-										proceed with current permissions ?\n[Upload \
-										requires write permissions] ").arg( transReturn )
+								transReturn=i18n("As in the permission to", "delete");
+							int valueOk=KMessageBox::questionYesNo(0, i18n("Your currently have "
+										"%1 permissions, \nWould you like to "
+										"proceed with current permissions ?\n[Upload "
+										"requires write permissions]").arg( transReturn )
 									);
 							if(valueOk==KMessageBox::No){
 								getFrob(); 
@@ -545,8 +545,8 @@ namespace KIPIFlickrExportPlugin
 				errorString=node.toElement().attribute("code");
 				kdDebug()<<"Error code="<<errorString<<endl;
 				kdDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;	
-				int valueOk=KMessageBox::questionYesNo(0, i18n("Your token is invalid. Would you like to \
-							get a new token to proceed ?\n"));
+				int valueOk=KMessageBox::questionYesNo(0, i18n("Your token is invalid. Would you like to "
+							"get a new token to proceed ?\n"));
 				if(valueOk==KMessageBox::Yes){
 					getFrob(); 
 					return;

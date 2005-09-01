@@ -112,7 +112,7 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
 
 
     m_publicCheckBox = new QCheckBox(optionsBox);
-    m_publicCheckBox->setText(i18n("Public ?"));
+    m_publicCheckBox->setText(i18n("As in accessible for people", "Public ?"));
  //  m_publicCheckBox->show();
     optionsBoxLayout->addWidget(m_publicCheckBox, 0, 1);
 
