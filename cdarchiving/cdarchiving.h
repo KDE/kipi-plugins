@@ -53,7 +53,6 @@ extern "C"
 
 class QTimer;
 
-class KConfig;
 class KProcess;
 
 namespace KIPICDArchivingPlugin
@@ -93,7 +92,6 @@ private:
                            
   KIPI::Interface    *m_interface;
 
-  KConfig            *m_config;
   CDArchivingDialog  *m_configDlg;
   
   QString             m_hostName;
