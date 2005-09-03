@@ -51,8 +51,6 @@ extern "C"
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
-class QTimer;
-
 class KProcess;
 
 namespace KIPICDArchivingPlugin
@@ -99,7 +97,6 @@ private:
   
   KAction            *m_actionCDArchiving;
   KProcess           *m_Proc;
-  QTimer             *m_K3bTimer;
   pid_t               m_k3bPid;
 
   bool                m_cancelled;

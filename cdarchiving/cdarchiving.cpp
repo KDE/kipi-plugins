@@ -413,12 +413,8 @@ void CDArchiving::invokeK3b()
 
     if ( m_useStartBurningProcess == true )
        {
-       m_K3bTimer = new QTimer(this);
-        
-       connect(m_K3bTimer, SIGNAL(timeout()), 
+       QTimer::singleShot(10000, 
                this, SLOT(slotK3bStartBurningProcess()));
-                  
-       m_K3bTimer->start(10000, true);
        m_k3bPid = m_Proc->pid();
        }
 }
