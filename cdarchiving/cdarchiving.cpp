@@ -1587,18 +1587,18 @@ bool CDArchiving::AddFolderTreeToK3bXMLProjectFile (QString dirname, QTextStream
 {
    QString Temp;
 
-   QDir *dir = new QDir(dirname);
-   dir->setFilter ( QDir::Dirs | QDir::Files | QDir::NoSymLinks );
+   QDir dir(dirname);
+   dir.setFilter ( QDir::Dirs | QDir::Files | QDir::NoSymLinks );
 
    Temp = "<directory name=\""
-          + EscapeSgmlText(QTextCodec::codecForLocale(), dir->dirName(), true, true)
+          + EscapeSgmlText(QTextCodec::codecForLocale(), dir.dirName(), true, true)
           + "\" >\n";
 
    *stream << Temp;
    
-   kdDebug( 51000 ) << "Directory: " << dir->dirName().latin1 () << endl;
+   kdDebug( 51000 ) << "Directory: " << dir.dirName().latin1 () << endl;
 
-   const QFileInfoList* fileinfolist = dir->entryInfoList();
+   const QFileInfoList* fileinfolist = dir.entryInfoList();
    QFileInfoListIterator it_files(*fileinfolist);
    QFileInfoListIterator it_folders(*fileinfolist);
    QFileInfo* fi_files;
@@ -1760,10 +1760,10 @@ bool CDArchiving::DeleteDir(QString dirname)
 
 bool CDArchiving::deldir(QString dirname)
 {
-    QDir *dir = new QDir(dirname);
-    dir->setFilter ( QDir::Dirs | QDir::Files | QDir::NoSymLinks );
+    QDir dir(dirname);
+    dir.setFilter ( QDir::Dirs | QDir::Files | QDir::NoSymLinks );
 
-    const QFileInfoList* fileinfolist = dir->entryInfoList();
+    const QFileInfoList* fileinfolist = dir.entryInfoList();
     QFileInfoListIterator it(*fileinfolist);
     QFileInfo* fi;
 
@@ -1779,12 +1779,12 @@ bool CDArchiving::deldir(QString dirname)
               {
               if (deldir( fi->absFilePath() ) == false)
                   return false;
-              if (dir->rmdir( fi->absFilePath() ) == false)
+              if (dir.rmdir( fi->absFilePath() ) == false)
                   return false;
               }
          else
               if( fi->isFile() )
-                   if (dir->remove(fi->absFilePath() ) == false)
+                   if (dir.remove(fi->absFilePath() ) == false)
                        return false;
          
          ++it;
