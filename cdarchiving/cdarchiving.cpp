@@ -148,10 +148,6 @@ void CDArchiving::writeSettings(void)
 
 void CDArchiving::readSettings(void)
 {
-    QColor* ColorFont;
-    QColor* ColorBackground;
-    QColor* ColorBordersImages;
-
     m_config = new KConfig("kipirc");
     m_config->setGroup("CDArchiving Settings");
 
@@ -167,19 +163,15 @@ void CDArchiving::readSettings(void)
     m_configDlg->setImagesPerRow( m_config->readEntry("ImagesPerRow", "4").toInt() );
     m_configDlg->setFontName( m_config->readEntry("FontName", "Helvetica") );
     m_configDlg->setFontSize( m_config->readEntry("FontSize", "14").toInt() );
-    ColorFont = new QColor( 208, 255, 208 );
-    m_configDlg->setForegroundColor( m_config->readColorEntry("FontColor", ColorFont));
-    ColorBackground = new QColor( 51, 51, 51 );
-    m_configDlg->setBackgroundColor( m_config->readColorEntry("BackgroundColor", ColorBackground));
+    QColor ColorFont( 208, 255, 208 );
+    m_configDlg->setForegroundColor( m_config->readColorEntry("FontColor", &ColorFont));
+    QColor ColorBackground( 51, 51, 51 );
+    m_configDlg->setBackgroundColor( m_config->readColorEntry("BackgroundColor", &ColorBackground));
     m_configDlg->setThumbnailsSize( m_config->readEntry("ThumbnailsSize", "140").toInt() );
     m_configDlg->setImageFormat( m_config->readEntry("ThumbnailsFormat", "JPEG") );
     m_configDlg->setBordersImagesSize( m_config->readEntry("BordersImagesSize", "1").toInt() );
-    ColorBordersImages = new QColor( 208, 255, 208 );
-    m_configDlg->setBordersImagesColor( m_config->readColorEntry("BordersImagesColor", ColorBordersImages));
-
-    delete ColorFont;
-    delete ColorBackground;
-    delete ColorBordersImages;
+    QColor ColorBordersImages( 208, 255, 208 );
+    m_configDlg->setBordersImagesColor( m_config->readColorEntry("BordersImagesColor", &ColorBordersImages));
 
     // CD Informations setup tab
 
