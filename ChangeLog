@@ -1,3 +1,305 @@
+v0.1.0-rc1                                                        2005-02-08
+----------------------------------------------------------------------------
+
+2005-09-03 16:08  gateau
+
+	* trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.cpp,
+	  trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.h:
+	  Replaced the QTimer with a call to QTimer::singleShot()
+
+2005-09-03 16:00  gateau
+
+	* trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.cpp,
+	  trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.h: -
+	  Create KConfig objects on the stack. - No need to keep a pointer
+	  on it in the object.
+
+2005-09-03 15:51  gateau
+
+	* trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.cpp:
+	  More heap -> stack objects.
+
+2005-09-03 15:49  gateau
+
+	* trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.cpp:
+	  Do not create objects on the heap when they can be created on
+	  the stack (C++ is not Java). This avoids memory leaks when
+	  objects are not deleted.
+
+2005-09-03 15:22  toma
+
+	* trunk/extragear/libs/kipi-plugins/sendimages/sendimages.cpp:
+	  Thunderbird does not return the dot in this error message, so
+	  thunderbird was not started and the composer can not be started
+	  in that case. Also replaced the 'contains' with a 'find' which
+	  is faster, I learned that from Ingo, which is pretty funny in
+	  this case ;-) BUGS: 108227 CCMAIL: oliver@doerr-privat.de
+
+2005-09-01 22:00  toma
+
+	* trunk/extragear/libs/kipi-plugins/flickrexport/flickrtalker.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwidget.cpp:
+	  No tabs in strings, makes a mess for translators, added some
+	  comments...
+
+2005-08-21 20:23  toma
+
+	* trunk/extragear/libs/kipi-plugins/batchprocessimages/resizeoptionsdialog.cpp:
+	  Add missing i18n() for filter names, some of them are based on
+	  the names of persons, but now there is a possibility to
+	  translate them for those who want that. BUG: 110982
+
+2005-08-19 07:06  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.cpp,
+	  trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.h,
+	  trunk/extragear/libs/kipi-plugins/cdarchiving/plugin_cdarchiving.cpp:
+	  CDArchiving kipi plugin : patch from Owen Hirst CCBUGS: 98269
+	  89394 91651 100877 106568
+
+2005-08-15 20:16  toma
+
+	* trunk/extragear/graphics/digikam/digikam/albumdb.cpp,
+	  trunk/extragear/graphics/digikam/digikam/albumdb.h,
+	  trunk/extragear/graphics/digikam/digikam/digikamapp.cpp,
+	  trunk/extragear/graphics/digikam/digikam/kipiinterface.cpp,
+	  trunk/extragear/graphics/digikam/digikam/kipiinterface.h,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/batchprocessimagesitem.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/batchprocessimagesitem.h,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/plugin_batchprocessimages.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/renameimagesbase.ui,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/renameimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/renameimagesdialog.h,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/renameimageswidget.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/renameimageswidget.h:
+	  Owen Hirst <n8rider@sbcglobal.net> has provided a patch for KIPI
+	  Rename Images (part of the BatchProcesses Plugin). kipi part: *
+	  Complete rewrite * Use rename instead of copy * Allow formatting
+	  of date string digikam part: * fixes the time and date
+	  adjustment not working * Update database entry when a file is
+	  renamed by a KIPI Plugin * make slideshow available right after
+	  digikams start This fixes the following bugs:
+	  BUGS:110391,110659,110698,110575,99895,104032,105727,110508,104511
+	  great work!
+
+2005-08-14 07:56  binner
+
+	* trunk/extragear/libs/kipi-plugins/flickrexport/flickrwidget.cpp,
+	  trunk/extragear/libs/kipi-plugins/galleryexport/gallerywidget.cpp,
+	  trunk/extragear/libs/kipi-plugins/galleryexport/gallerywindow.cpp,
+	  trunk/extragear/libs/kipi-plugins/mpegencoder/plugin_mpegencoder.cpp,
+	  trunk/extragear/libs/kipi-plugins/slideshow/slideshowconfig.cpp,
+	  trunk/extragear/libs/kipi-plugins/timeadjust/timeadjustdialog.cpp,
+	  trunk/extragear/libs/libkexif/kexifdialog.cpp: SVN_SILENT i18n
+	  style guide fixes, reference:
+	  http://developer.kde.org/documentation/standards/kde/style/basics/labels.html
+
+2005-08-07 21:00  pahlibar
+
+	* trunk/extragear/libs/kipi-plugins/jpeglossless/actionthread.cpp:
+	  in case of auto-rotate ignore the app specified angle. otherwise
+	  apps using exif rotation angle will specify the same angle and
+	  you end up having rotation by twice the actual needed angle
+
+2005-08-07 15:47  toma
+
+	* trunk/extragear/libs/kipi-plugins/calendar/calpainter.cpp,
+	  trunk/extragear/libs/kipi-plugins/calendar/caltemplate.cpp:
+	  Fixed 3 problems: - compiler deprecated barfs on monthNames. -
+	  the weekday was not localized, so they were english. - default
+	  font in pull down is now the application dafault font. BUG: 97187
+
+2005-08-07 14:12  toma
+
+	* trunk/extragear/libs/kipi-plugins/imagesgallery/imagesgallery.cpp,
+	  trunk/extragear/libs/kipi-plugins/imagesgallery/imagesgallery.h:
+	  Fixed two problems here: - when exporting tags a folder name
+	  "Tag: foo", was used. Konqueror would state that that protocol
+	  is not supported. Removed the : as a solution. - tags do not
+	  have a url, so using that as unique identifier in the map, was
+	  causing trouble. Exporting four tag albums resulted in four
+	  identical folders, because the key always returned 0. Used a
+	  QMapIterator and an int as a key. Could some people check if
+	  this is ok? CCMAIL: digikam-devel@kde.org BUG: 102219
+
+2005-08-07 00:14  toma
+
+	* trunk/extragear/libs/kipi-plugins/imagesgallery/imagesgallery.cpp:
+	  i18n fix for problem with a string. It had a space at the end of
+	  the string, translaters left that space out when translating and
+	  so a bug was born. BUG: 98199
+
+2005-08-05 17:54  jaiva
+
+	* trunk/extragear/libs/kipi-plugins/flickrexport,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/Makefile,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/Makefile.in,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickralbumdialog.ui,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickritem.h,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrtalker.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrtalker.h,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrviewitem.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrviewitem.h,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwidget.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwidget.h,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwindow.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwindow.h,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/kipiplugin_flickrexport.desktop,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/login.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/login.h,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/mpform.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/mpform.h,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/plugin_flickrexport.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/plugin_flickrexport.h:
+	  First release of flickrexport kipi-plugin file upload is
+	  completely supported and new auth API is implemented.
+
+2005-08-03 21:30  gateau
+
+	* trunk/extragear/libs/kipi-plugins/batchprocessimages/batchprocessimagesdialog.cpp:
+	  Make use of the available room when the user resizes the dialog.
+	  CCMAIL: kde-imaging@kde.org
+
+2005-08-02 14:52  lunakl
+
+	* trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.cpp,
+	  trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchivingdialog.cpp:
+	  Hardcoding k3b by default to /usr/bin/k3b makes no sense. It's
+	  usually in $PATH just like the KDE app using the KIPI plugin, so
+	  just 'k3b' should do as well, and doesn't break for whoever puts
+	  their KDE somewhere else than /usr/bin. I personally fail to see
+	  the point of this option at all, but oh well.
+
+2005-07-11 05:22  pahlibar
+
+	* trunk/extragear/libs/kipi-plugins/jpeglossless/utils.cpp:
+	  preserve timestamp of image when rotating/flipping BUG: 108537
+
+2005-05-08 11:55  mlaurent
+
+	* trunk/extragear/libs/configure.in.in,
+	  trunk/extragear/libs/kipi-plugins/configure.in.in,
+	  trunk/extragear/libs/libkexif/Makefile.am,
+	  trunk/extragear/libs/libkexif/configure.in.in,
+	  trunk/extragear/libs/libkexif/kexifdata.h,
+	  trunk/extragear/libs/libkexif/kexifdialog.h,
+	  trunk/extragear/libs/libkexif/kexifutils.h,
+	  trunk/extragear/libs/libkexif/kexifwidget.h,
+	  trunk/extragear/libs/libkexif/libkexif_export.h,
+	  trunk/extragear/libs/libkipi/configure.in.in,
+	  trunk/extragear/libs/libkipi/libkipi/Makefile.am,
+	  trunk/extragear/libs/libkipi/libkipi/batchprogressdialog.h,
+	  trunk/extragear/libs/libkipi/libkipi/imagecollection.h,
+	  trunk/extragear/libs/libkipi/libkipi/imagecollectionselector.h,
+	  trunk/extragear/libs/libkipi/libkipi/imagecollectionshared.h,
+	  trunk/extragear/libs/libkipi/libkipi/imagedialog.h,
+	  trunk/extragear/libs/libkipi/libkipi/imageinfo.h,
+	  trunk/extragear/libs/libkipi/libkipi/imageinfoshared.h,
+	  trunk/extragear/libs/libkipi/libkipi/interface.h,
+	  trunk/extragear/libs/libkipi/libkipi/libkipi_export.h,
+	  trunk/extragear/libs/libkipi/libkipi/plugin.h,
+	  trunk/extragear/libs/libkipi/libkipi/pluginloader.h,
+	  trunk/extragear/libs/libkipi/libkipi/uploadwidget.h: Add support
+	  -fvisibility
+
+2005-04-26 15:47  pahlibar
+
+	* trunk/kdeextragear-libs-1/kipi-plugins/galleryexport/gallerytalker.cpp:
+	  caption, not albumName
+
+2005-04-24 15:57  cgilles
+
+	* trunk/kdeextragear-libs-1/kipi-plugins/mpegencoder/images2mpg,
+	  trunk/kdeextragear-libs-1/kipi-plugins/mpegencoder/kimg2mpg.cpp:
+	  Patch from Thorsten Schnebeck <thorsten.schnebeck@gmx.net>
+	  Please try again with this patch applied to CVS HEAD. In
+	  according with results please close this bug. CCBUG:101110
+	  CCMAIL: digikam-deve@lists.sourceforge.net
+
+2005-04-22 05:58  cgilles
+
+	* trunk/kdeextragear-libs-1/kipi-plugins/sendimages/actions.h,
+	  trunk/kdeextragear-libs-1/kipi-plugins/sendimages/exifrestorer.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/sendimages/exifrestorer.h,
+	  trunk/kdeextragear-libs-1/kipi-plugins/sendimages/jpegsection.h,
+	  trunk/kdeextragear-libs-1/kipi-plugins/sendimages/listimageserrordialog.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/sendimages/listimageserrordialog.h,
+	  trunk/kdeextragear-libs-1/kipi-plugins/sendimages/plugin_sendimages.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/sendimages/plugin_sendimages.h,
+	  trunk/kdeextragear-libs-1/kipi-plugins/sendimages/sendimages.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/sendimages/sendimages.h,
+	  trunk/kdeextragear-libs-1/kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/sendimages/sendimagesdialog.h:
+	  KIPI SendImages plugins : Fix headers. support GmailAgent
+	  (experimental) CCMAIL: digikam-devel@lists.sourceforge.net
+
+2005-04-22 05:34  cgilles
+
+	* trunk/kdeextragear-libs-1/kipi-plugins/rawconverter/processcontroller.cpp:
+	  Make compile. Renchi take a look if is correct for your !
+	  CCMAIL: renchi@pooh.tam.uiuc.edu
+
+2005-04-05 22:57  pahlibar
+
+	* trunk/kdeextragear-libs-1/kipi-plugins/rawconverter/batchdialog.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/rawconverter/batchdialog.h,
+	  trunk/kdeextragear-libs-1/kipi-plugins/rawconverter/dcrawprocess.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/rawconverter/processcontroller.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/rawconverter/processcontroller.h,
+	  trunk/kdeextragear-libs-1/kipi-plugins/rawconverter/singledialog.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/rawconverter/singledialog.h:
+	  update to work with dcraw >= 6.x. will not work with lower
+	  versions anymore BUGS: 99437
+
+2005-04-05 17:48  pahlibar
+
+	* trunk/kdeextragear-libs-1/kipi-plugins/slideshow/imlibiface.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/slideshow/imlibiface.h,
+	  trunk/kdeextragear-libs-1/kipi-plugins/slideshow/plugin_slideshow.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/slideshow/slideshow.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/slideshow/slideshow.h,
+	  trunk/kdeextragear-libs-1/kipi-plugins/slideshow/slideshowgl.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/slideshow/slideshowgl.h:
+	  respect app set angle for rotating images in slideshow. need to
+	  come up with an angle spec to allow flipping of images as well
+	  (allowed by exif standard) BUGS: 103282
+
+2005-03-13 22:56  cgilles
+
+	* trunk/kdeextragear-libs-1/kipi-plugins/batchprocessimages/renameimagesdialog.cpp:
+	  patch from Cedric Pradalier. BUGS:99193 CCBUGS:99193
+
+2005-02-28 17:20  toma
+
+	* trunk/kdeextragear-libs-1/kipi-plugins/sendimages/plugin_sendimages.cpp:
+	  Make the menu entry for this plugin disabled when there is no
+	  images selected and enabled when there is a (valid) selection
+
+2005-02-20 16:47  cgilles
+
+	* trunk/kdeextragear-libs-1/kipi-plugins/mpegencoder/images2mpg:
+	  MPEGEncoder : -Fixed kipi url -Added new audio Wav sampling to
+	  48000 for to use with DVD author ! Thanks to "bcl.man" for this
+	  patch CCMAIL: kde-imaging@kde.org, bcl.man@free.fr
+
+2005-02-18 17:18  uga
+
+	* trunk/kdeextragear-libs-1/kipi-plugins/wallpaper/plugin_wallpaper.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/wallpaper/plugin_wallpaper.h:
+	  New wallpaper method "scale and crop" is available since kde 3.4
+	  Beta1
+
+2005-02-10 12:20  cgilles
+
+	* trunk/kdeextragear-libs-1/kipi-plugins/batchprocessimages/convertimagesdialog.cpp,
+	  trunk/kdeextragear-libs-1/kipi-plugins/batchprocessimages/convertimagesdialog.h:
+	  Added EPS image file format support in kipi batchconvertimage
+	  plugins. BUGS:99020 CCBUGS:99020
+	  CCMAIL:kde-imaging@kde.org,digikam-devel@lists.sourceforge.net
+
 v0.1.0-beta2                                                      2005-02-08
 ----------------------------------------------------------------------------
 
