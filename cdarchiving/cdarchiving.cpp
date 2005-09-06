@@ -388,10 +388,10 @@ void CDArchiving::invokeK3b()
 
     m_Proc = new KProcess();
 
-    *m_Proc << m_K3bBinPathName;;
+    *m_Proc << m_K3bBinPathName;
     *m_Proc << m_tmpFolder + "/KIPICDArchiving.xml";
 
-    QString K3bCommandLine = m_K3bBinPathName + " " + m_tmpFolder + "/KIPICDArchiving.xml";
+    QString K3bCommandLine = m_K3bBinPathName + " --nofork " + m_tmpFolder + "/KIPICDArchiving.xml";
     kdDebug(51000) << "K3b is started : " << K3bCommandLine.ascii() << endl;
 
     connect(m_Proc, SIGNAL(processExited(KProcess *)),
