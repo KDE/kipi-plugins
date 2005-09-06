@@ -136,6 +136,7 @@ void ImagesGallery::writeSettings(void)
     m_config->writePathEntry("WebBrowserName", m_configDlg->getWebBrowserName());
     m_config->writeEntry("FontName", m_configDlg->getFontName());
     m_config->writeEntry("FontColor", m_configDlg->getForegroundColor());
+    m_config->writeEntry("FontSize", m_configDlg->getFontSize());
     m_config->writeEntry("BackgroundColor", m_configDlg->getBackgroundColor());
     m_config->writeEntry("BordersImagesSize", m_configDlg->getBordersImagesSize());
     m_config->writeEntry("BordersImagesColor", m_configDlg->getBordersImagesColor());
