@@ -72,8 +72,11 @@ private:
 
     QListView                *m_tagView;
     KHTMLPart                *m_photoView;
+  
   //  QPushButton              *m_newAlbumBtn;
     QPushButton              *m_addPhotoBtn;
+    QPushButton              *m_helpButton;
+    
     QCheckBox                *m_resizeCheckBox;
     QCheckBox                *m_publicCheckBox;
     QCheckBox                *m_familyCheckBox;
@@ -111,6 +114,7 @@ private slots:
     void slotAddPhotoFailed( const QString& msg );
     void slotAddPhotoCancel();
     void slotAuthCancel();
+    void slotHelp();
 };
 
 }

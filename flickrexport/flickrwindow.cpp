@@ -19,6 +19,8 @@
  *
  * ============================================================ */
 
+// Include files for Qt
+ 
 #include <qlistview.h>
 #include <qpushbutton.h>
 #include <qtimer.h>
@@ -30,6 +32,11 @@
 #include <qcheckbox.h>
 #include <qstringlist.h>
 
+// Include files for KDE
+
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kpopupmenu.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kapplication.h>
@@ -44,8 +51,13 @@
 #include <kwallet.h>
 #endif
 
+// KIPI include files
+
+#include <libkipi/version.h>
 #include <libkipi/interface.h>
 #include <libkipi/imagedialog.h>
+
+// Local includes.
 
 #include "flickrtalker.h"
 #include "flickritem.h"
@@ -59,13 +71,33 @@ namespace KIPIFlickrExportPlugin
 {
 
 FlickrWindow::FlickrWindow(KIPI::Interface* interface, QWidget *parent)
-    : KDialogBase(parent, 0, true, i18n( "FlickrUploadr" ), Close, Close, false)
+    : KDialogBase(parent, 0, true, i18n( "FlickrUploadr" ), Help|Close, Close, false)
 {
     m_interface   = interface;
     m_uploadCount = 0;
     m_uploadTotal = 0;
     //m_wallet      = 0;
 
+    // About data and help button.
+
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Flickr Export"),
+                                       kipi_version,
+                                       I18N_NOOP("A Kipi plugin to export image collection to Flickr web service."),
+                                       KAboutData::License_GPL,
+                                       "(c) 2005, Vardhman Jain",
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi");
+
+    about->addAuthor("Vardhman Jain", I18N_NOOP("Author and maintainer"),
+                     "Vardhman at gmail dot com");
+
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Flickr Export Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
+    
     m_widget = new FlickrWidget( this );
     setMainWidget( m_widget );
     m_widget->setMinimumSize( 600, 400 );
@@ -168,6 +200,11 @@ FlickrWindow::~FlickrWindow()
     delete m_authProgressDlg;
     delete m_talker;
     delete m_widget;    
+}
+
+void FlickrWindow::slotHelp()
+{
+    KApplication::kApplication()->invokeHelp("flickrexport", "kipi-plugins");
 }
 
 void FlickrWindow::slotDoLogin()
