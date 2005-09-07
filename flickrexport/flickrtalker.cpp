@@ -379,6 +379,8 @@ namespace KIPIFlickrExportPlugin
 				transError=i18n("Invalid API Key"); break;
 			case 105:
 				transError=i18n("Service currently unavailable");break;		
+			case 108:
+				transError=i18n("Invalid Frob");break;		
 			case 111: 
 				transError=i18n("Format \"xxx\" not found"); break;
 			case 112: 
@@ -394,7 +396,7 @@ namespace KIPIFlickrExportPlugin
 		};
 
 		KMessageBox::error( 0, i18n("Error Occured: %1\n We can not proceed further").arg(transError));
-		kdDebug()<<"Not handling the error now will see it later"<<endl;
+		//kdDebug()<<"Not handling the error now will see it later"<<endl;
 	}
 
 	void FlickrTalker::slotResult(KIO::Job *job)
@@ -599,8 +601,12 @@ namespace KIPIFlickrExportPlugin
 				}
 				success=true;
 			}
-			if ( node.isElement() && node.nodeName() == "error" ) {
-				errorString=node.toElement().text();
+			else if ( node.isElement() && node.nodeName() == "err" ) {
+				kdDebug()<<"Checking Error in response"<<endl;
+				errorString=node.toElement().attribute("code");
+				kdDebug()<<"Error code="<<errorString<<endl;
+				kdDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;	
+				//emit signalError(code);
 			}
 			node = node.nextSibling();
 		}
