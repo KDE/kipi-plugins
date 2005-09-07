@@ -65,6 +65,7 @@ private:
     KHTMLPart                *m_photoView;
     QPushButton              *m_newAlbumBtn;
     QPushButton              *m_addPhotoBtn;
+    QPushButton              *m_helpButton;
     QCheckBox                *m_resizeCheckBox;
     QSpinBox                 *m_dimensionSpinBox;
     GalleryTalker            *m_talker;
@@ -96,6 +97,7 @@ private slots:
     void slotAddPhotoSucceeded();
     void slotAddPhotoFailed( const QString& msg );
     void slotAddPhotoCancel();
+    void slotHelp();
 };
 
 }

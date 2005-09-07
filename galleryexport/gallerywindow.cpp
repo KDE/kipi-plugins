@@ -4,7 +4,7 @@
  * Date  : 2004-11-30
  * Description :
  *
- * Copyright 2004 by Renchi Raju
+ * Copyright 2004-2005 by Renchi Raju
 
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -19,6 +19,8 @@
  *
  * ============================================================ */
 
+// Include files for Qt
+ 
 #include <qlistview.h>
 #include <qpushbutton.h>
 #include <qtimer.h>
@@ -29,6 +31,11 @@
 #include <qspinbox.h>
 #include <qcheckbox.h>
 
+// Include files for KDE
+
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kpopupmenu.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kapplication.h>
@@ -43,8 +50,13 @@
 #include <kwallet.h>
 #endif
 
+// KIPI include files
+
+#include <libkipi/version.h>
 #include <libkipi/interface.h>
 #include <libkipi/imagedialog.h>
+
+// Local includes.
 
 #include "gallerytalker.h"
 #include "galleryitem.h"
@@ -58,13 +70,33 @@ namespace KIPIGalleryExportPlugin
 {
 
 GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
-    : KDialogBase(parent, 0, true, i18n( "Gallery Export" ), Close, Close, false)
+    : KDialogBase(parent, 0, true, i18n( "Gallery Export" ), Help|Close, Close, false)
 {
     m_interface   = interface;
     m_uploadCount = 0;
     m_uploadTotal = 0;
     m_wallet      = 0;
 
+    // About data and help button.
+
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Gallery Export"),
+                                       kipi_version,
+                                       I18N_NOOP("A Kipi plugin to export image collection to remote Gallery server."),
+                                       KAboutData::License_GPL,
+                                       "(c) 2004-2005, Renchi Raju",
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi");
+
+    about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
+                     "renchi at pooh dot tam dot uiuc dot edu");
+
+    m_helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Gallery Export Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
+        
     GalleryWidget* widget = new GalleryWidget( this );
     setMainWidget( widget );
     widget->setMinimumSize( 600, 400 );
@@ -153,6 +185,11 @@ GalleryWindow::~GalleryWindow()
 
     delete m_progressDlg;
     delete m_talker;
+}
+
+void GalleryWindow::slotHelp()
+{
+    KApplication::kApplication()->invokeHelp("galleryexport", "kipi-plugins");
 }
 
 void GalleryWindow::slotDoLogin()
