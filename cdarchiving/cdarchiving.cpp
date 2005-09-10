@@ -135,6 +135,7 @@ void CDArchiving::writeSettings(void)
     // Misc dialogbox setup tab
 
     config.writeEntry("K3bBinPath", m_configDlg->getK3bBinPathName());
+    config.writeEntry("K3bParameters", m_configDlg->getK3bParameters());
     config.writeEntry("UseOnTheFly", m_configDlg->getUseOnTheFly());
     config.writeEntry("UseCheckCD", m_configDlg->getUseCheckCD());
     config.writeEntry("UseStartWrintingProcess", m_configDlg->getUseStartBurningProcess());
@@ -184,6 +185,7 @@ void CDArchiving::readSettings(void)
     // Misc dialogbox setup tab
 
     m_configDlg->setK3bBinPathName( config.readEntry("K3bBinPath", "k3b") );
+    m_configDlg->setK3bParameters( config.readEntry("K3bParameters", "--nofork") );
     m_configDlg->setUseUseOnTheFly( config.readBoolEntry("UseOnTheFly", "true") );
     m_configDlg->setUseCheckCD( config.readBoolEntry("UseCheckCD", "true") );
     m_configDlg->setUseStartBurningProcess( config.readBoolEntry("UseStartWrintingProcess", "false") );
@@ -234,6 +236,7 @@ bool CDArchiving::prepare(void)
     m_useHTMLInterface = m_configDlg->getUseHTMLInterface();
     m_useAutoRunWin32 = m_configDlg->getUseAutoRunWin32();
     m_K3bBinPathName = m_configDlg->getK3bBinPathName();
+    m_K3bParameters = m_configDlg->getK3bParameters();
     m_useStartBurningProcess = m_configDlg->getUseStartBurningProcess();
     m_imagesPerRow = m_configDlg->getImagesPerRow();
     m_imageFormat = m_configDlg->getImageFormat();
@@ -388,10 +391,12 @@ void CDArchiving::invokeK3b()
 
     m_Proc = new KProcess();
 
-    *m_Proc << m_K3bBinPathName;
+    *m_Proc << m_K3bBinPathName << m_K3bParameters;
     *m_Proc << m_tmpFolder + "/KIPICDArchiving.xml";
 
-    QString K3bCommandLine = m_K3bBinPathName + " --nofork " + m_tmpFolder + "/KIPICDArchiving.xml";
+    QString K3bCommandLine = m_K3bBinPathName + " " +
+                             m_K3bParameters + " " +
+                             m_tmpFolder + "/KIPICDArchiving.xml";
     kdDebug(51000) << "K3b is started : " << K3bCommandLine.ascii() << endl;
 
     connect(m_Proc, SIGNAL(processExited(KProcess *)),

@@ -72,8 +72,11 @@ class CDArchivingDialog : public KDialogBase
   CDArchivingDialog( KIPI::Interface* interface, QWidget *parent=0);
   ~CDArchivingDialog();
 
-  const QString getK3bBinPathName() const;
-  void  setK3bBinPathName(QString Value);
+  QString getK3bBinPathName() const;
+  QString getK3bParameters() const;
+  
+  void  setK3bBinPathName(const QString &Value);
+  void  setK3bParameters(const QString &Value);
 
   int   getImagesPerRow() const;
   void  setImagesPerRow(int Value);
@@ -203,6 +206,7 @@ class CDArchivingDialog : public KDialogBase
   QLineEdit          *m_preparer;
 
   KURLRequester      *m_K3bBinPath;
+  QLineEdit          *m_K3bParameters;
 
   KListView          *m_AlbumsList;
 

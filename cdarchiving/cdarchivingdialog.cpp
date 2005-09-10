@@ -464,6 +464,7 @@ void CDArchivingDialog::setupCDInfos(void)
     QWhatsThis::add( m_application_id,
                      i18n("<p>Enter here the media burning application name (128 characters max.).") );
 
+
     //---------------------------------------------
 
     label = new QLabel( i18n("Publisher:"), page_CDInfos);
@@ -519,6 +520,21 @@ void CDArchivingDialog::setupBurning(void)
 
     //---------------------------------------------
 
+    label = new QLabel( i18n("Application parameters:"), page_burning);
+    vlay->addWidget( label );
+
+    m_K3bParameters = new QLineEdit("--nofork", page_burning);
+    vlay->addWidget( m_K3bParameters );
+    m_labelTitle->setBuddy(m_K3bParameters);
+    m_K3bParameters->setMaxLength(128);
+    QWhatsThis::add( m_K3bParameters,
+                     i18n("<p>Enter parameters which will be used when starting the "
+                             "burning application. Newer versions of K3b might need "
+                             "--nofork, older versions might not need it. "
+                             "(128 characters max.).") );
+
+    //---------------------------------------------
+    
     QGroupBox * groupBoxAdvancedOptions = new QGroupBox( i18n("Advanced Burning Options"), page_burning );
     groupBoxAdvancedOptions->setColumnLayout(0, Qt::Vertical );
     groupBoxAdvancedOptions->layout()->setSpacing( 6 );
@@ -658,19 +674,32 @@ void CDArchivingDialog::UrlChanged(const QString &url )
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-const QString CDArchivingDialog::getK3bBinPathName() const
+QString CDArchivingDialog::getK3bBinPathName() const
 {
     return m_K3bBinPath->url();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+QString CDArchivingDialog::getK3bParameters() const
+{
+    return m_K3bParameters->text();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+void CDArchivingDialog::setK3bBinPathName(const QString &Value)
+{
+    m_K3bBinPath->setURL( Value );
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void CDArchivingDialog::setK3bBinPathName(QString Value)
+void CDArchivingDialog::setK3bParameters(const QString &Value)
 {
-    m_K3bBinPath->setURL( Value );
+    m_K3bParameters->setText( Value );
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 

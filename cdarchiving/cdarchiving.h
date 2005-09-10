@@ -108,6 +108,7 @@ private:
   bool                m_useCheckCD;
   
   QString             m_K3bBinPathName;
+  QString             m_K3bParameters;
   QString             m_AlbumTitle;
   QString             m_AlbumComments;
   QString             m_AlbumCollection;
