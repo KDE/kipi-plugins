@@ -89,6 +89,7 @@ else
      fi
      AC_SUBST(LIBKEXIF_CFLAGS)
      AC_SUBST(LIBKEXIF_LIBS)
+     AM_CONDITIONAL(compile_LIBKEXIF, true)
 fi
 
 if test x$have_libkexif != xyes; then
