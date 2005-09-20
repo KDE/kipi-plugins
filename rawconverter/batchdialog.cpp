@@ -382,42 +382,40 @@ void BatchDialog::addItems(const QStringList& itemList)
 
 void BatchDialog::readSettings()
 {
-    KConfig* config=kapp->config();
+    KConfig config("kipirc");
+    config.setGroup("RawConverter Settings");
 
-    config->setGroup("RawConverter Settings");
+    brightnessSpinBox_->setValue(config.readNumEntry("Brightness",10));
 
-    brightnessSpinBox_->setValue(config->readNumEntry("Brightness",10));
+    redSpinBox_->setValue(config.readNumEntry("Red Scale",10));
+    blueSpinBox_->setValue(config.readNumEntry("Blue Scale",10));
 
-    redSpinBox_->setValue(config->readNumEntry("Red Scale",10));
-    blueSpinBox_->setValue(config->readNumEntry("Blue Scale",10));
+    cameraWBCheckBox_->setChecked(config.readBoolEntry("Use Camera WB", true));
+    fourColorCheckBox_->setChecked(config.readBoolEntry("Four Color RGB", false));
 
-    cameraWBCheckBox_->setChecked(config->readBoolEntry("Use Camera WB", true));
-    fourColorCheckBox_->setChecked(config->readBoolEntry("Four Color RGB", false));
-
-    saveButtonGroup_->setButton(config->readNumEntry("Output Format", 0));
-    conflictButtonGroup_->setButton(config->readNumEntry("Conflict", 0));
+    saveButtonGroup_->setButton(config.readNumEntry("Output Format", 0));
+    conflictButtonGroup_->setButton(config.readNumEntry("Conflict", 0));
 }
 
 void BatchDialog::saveSettings()
 {
-    KConfig* config=kapp->config();
+    KConfig config("kipirc");
+    config.setGroup("RawConverter Settings");
 
-    config->setGroup("RawConverter Settings");
+    config.writeEntry("Brightness", brightnessSpinBox_->value());
 
-    config->writeEntry("Brightness", brightnessSpinBox_->value());
+    config.writeEntry("Red Scale", redSpinBox_->value());
+    config.writeEntry("Blue Scale", blueSpinBox_->value());
 
-    config->writeEntry("Red Scale", redSpinBox_->value());
-    config->writeEntry("Blue Scale", blueSpinBox_->value());
+    config.writeEntry("Use Camera WB", cameraWBCheckBox_->isChecked());
+    config.writeEntry("Four Color RGB", fourColorCheckBox_->isChecked());
 
-    config->writeEntry("Use Camera WB", cameraWBCheckBox_->isChecked());
-    config->writeEntry("Four Color RGB", fourColorCheckBox_->isChecked());
-
-    config->writeEntry("Output Format",
+    config.writeEntry("Output Format",
                        saveButtonGroup_->id(saveButtonGroup_->selected()));
-    config->writeEntry("Conflict",
+    config.writeEntry("Conflict",
                        conflictButtonGroup_->id(conflictButtonGroup_->selected()));
 
-    config->sync();
+    config.sync();
 }
 
 void BatchDialog::slotSaveFormatChanged()

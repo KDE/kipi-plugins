@@ -161,7 +161,7 @@ void Plugin_SlideShow::slotSlideShow()
            return;
     }
 
-    KConfig* config = kapp->config();
+    KConfig config("kipirc");
 
     bool    opengl;
     int     delay;
@@ -171,17 +171,17 @@ void Plugin_SlideShow::slotSlideShow()
     bool    showSelectedFilesOnly;
     QString effectName;
 
-    config->setGroup("SlideShow Settings");
-    opengl                = config->readBoolEntry("OpenGL");
-    delay                 = config->readNumEntry("Delay");
-    printFileName         = config->readBoolEntry("Print Filename");
-    loop                  = config->readBoolEntry("Loop");
-    shuffle               = config->readBoolEntry("Shuffle");
-    showSelectedFilesOnly = config->readBoolEntry("Show Selected Files Only");
+    config.setGroup("SlideShow Settings");
+    opengl                = config.readBoolEntry("OpenGL");
+    delay                 = config.readNumEntry("Delay");
+    printFileName         = config.readBoolEntry("Print Filename");
+    loop                  = config.readBoolEntry("Loop");
+    shuffle               = config.readBoolEntry("Shuffle");
+    showSelectedFilesOnly = config.readBoolEntry("Show Selected Files Only");
     if (!opengl)
-        effectName        = config->readEntry("Effect Name");
+        effectName        = config.readEntry("Effect Name");
     else
-        effectName        = config->readEntry("Effect Name (OpenGL)");
+        effectName        = config.readEntry("Effect Name (OpenGL)");
 
     KURL::List urlList;
     if (showSelectedFilesOnly)

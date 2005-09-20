@@ -101,46 +101,46 @@ CDArchiving::~CDArchiving()
 
 void CDArchiving::writeSettings(void)
 {
-    KConfig* config = kapp->config();
-    config->setGroup("CDArchiving Settings");
+    KConfig config("kipirc");
+    config.setGroup("CDArchiving Settings");
 
     // Albums selection dialogbox setup tab
 
-    config->writeEntry("MediaFormat", m_configDlg->getMediaFormat());
+    config.writeEntry("MediaFormat", m_configDlg->getMediaFormat());
 
     // HTML interface Look dialogbox setup tab
 
-    config->writeEntry("UseHTMLInterface", m_configDlg->getUseHTMLInterface());
-    config->writeEntry("UseAutoRun", m_configDlg->getUseAutoRunWin32());
-    config->writeEntry("MainPageTitle", m_configDlg->getMainTitle());
-    config->writeEntry("ImagesPerRow", m_configDlg->getImagesPerRow());
-    config->writeEntry("FontName", m_configDlg->getFontName());
-    config->writeEntry("FontSize", m_configDlg->getFontSize());
-    config->writeEntry("FontColor", m_configDlg->getForegroundColor());
-    config->writeEntry("BackgroundColor", m_configDlg->getBackgroundColor());
-    config->writeEntry("ThumbnailsSize", m_configDlg->getThumbnailsSize());  
-    config->writeEntry("ThumbnailsFormat", m_configDlg->getImageFormat());
-    config->writeEntry("BordersImagesSize", m_configDlg->getBordersImagesSize());
-    config->writeEntry("BordersImagesColor", m_configDlg->getBordersImagesColor());
+    config.writeEntry("UseHTMLInterface", m_configDlg->getUseHTMLInterface());
+    config.writeEntry("UseAutoRun", m_configDlg->getUseAutoRunWin32());
+    config.writeEntry("MainPageTitle", m_configDlg->getMainTitle());
+    config.writeEntry("ImagesPerRow", m_configDlg->getImagesPerRow());
+    config.writeEntry("FontName", m_configDlg->getFontName());
+    config.writeEntry("FontSize", m_configDlg->getFontSize());
+    config.writeEntry("FontColor", m_configDlg->getForegroundColor());
+    config.writeEntry("BackgroundColor", m_configDlg->getBackgroundColor());
+    config.writeEntry("ThumbnailsSize", m_configDlg->getThumbnailsSize());  
+    config.writeEntry("ThumbnailsFormat", m_configDlg->getImageFormat());
+    config.writeEntry("BordersImagesSize", m_configDlg->getBordersImagesSize());
+    config.writeEntry("BordersImagesColor", m_configDlg->getBordersImagesColor());
 
     // CD Informations setup tab
 
-    config->writeEntry("VolumeID", m_configDlg->getVolumeID());
-    config->writeEntry("VolumeSetID", m_configDlg->getVolumeSetID());
-    config->writeEntry("SystemID", m_configDlg->getSystemID());
-    config->writeEntry("ApplicationID", m_configDlg->getApplicationID());
-    config->writeEntry("Publisher", m_configDlg->getPublisher());
-    config->writeEntry("Preparer", m_configDlg->getPreparer());
+    config.writeEntry("VolumeID", m_configDlg->getVolumeID());
+    config.writeEntry("VolumeSetID", m_configDlg->getVolumeSetID());
+    config.writeEntry("SystemID", m_configDlg->getSystemID());
+    config.writeEntry("ApplicationID", m_configDlg->getApplicationID());
+    config.writeEntry("Publisher", m_configDlg->getPublisher());
+    config.writeEntry("Preparer", m_configDlg->getPreparer());
 
     // Misc dialogbox setup tab
 
-    config->writeEntry("K3bBinPath", m_configDlg->getK3bBinPathName());
-    config->writeEntry("K3bParameters", m_configDlg->getK3bParameters());
-    config->writeEntry("UseOnTheFly", m_configDlg->getUseOnTheFly());
-    config->writeEntry("UseCheckCD", m_configDlg->getUseCheckCD());
-    config->writeEntry("UseStartWrintingProcess", m_configDlg->getUseStartBurningProcess());
+    config.writeEntry("K3bBinPath", m_configDlg->getK3bBinPathName());
+    config.writeEntry("K3bParameters", m_configDlg->getK3bParameters());
+    config.writeEntry("UseOnTheFly", m_configDlg->getUseOnTheFly());
+    config.writeEntry("UseCheckCD", m_configDlg->getUseCheckCD());
+    config.writeEntry("UseStartWrintingProcess", m_configDlg->getUseStartBurningProcess());
 
-    config->sync();
+    config.sync();
 }
 
 
@@ -148,47 +148,47 @@ void CDArchiving::writeSettings(void)
 
 void CDArchiving::readSettings(void)
 {
-    KConfig* config = kapp->config();
-    config->setGroup("CDArchiving Settings");
+    KConfig config("kipirc");
+    config.setGroup("CDArchiving Settings");
 
     // Albums selection dialogbox setup tab
 
-    m_configDlg->setMediaFormat( config->readEntry("MediaFormat", i18n("CD (650Mb)")) );
+    m_configDlg->setMediaFormat( config.readEntry("MediaFormat", i18n("CD (650Mb)")) );
 
     // HTML interface Look dialogbox setup tab
 
-    m_configDlg->setUseHTMLInterface( config->readBoolEntry("UseHTMLInterface", "true") );
-    m_configDlg->setUseAutoRunWin32( config->readBoolEntry("UseAutoRun", "true") );
-    m_configDlg->setMainTitle( config->readEntry("MainPageTitle", i18n("KIPI Albums Archiving")) );
-    m_configDlg->setImagesPerRow( config->readEntry("ImagesPerRow", "4").toInt() );
-    m_configDlg->setFontName( config->readEntry("FontName", "Helvetica") );
-    m_configDlg->setFontSize( config->readEntry("FontSize", "14").toInt() );
+    m_configDlg->setUseHTMLInterface( config.readBoolEntry("UseHTMLInterface", "true") );
+    m_configDlg->setUseAutoRunWin32( config.readBoolEntry("UseAutoRun", "true") );
+    m_configDlg->setMainTitle( config.readEntry("MainPageTitle", i18n("KIPI Albums Archiving")) );
+    m_configDlg->setImagesPerRow( config.readEntry("ImagesPerRow", "4").toInt() );
+    m_configDlg->setFontName( config.readEntry("FontName", "Helvetica") );
+    m_configDlg->setFontSize( config.readEntry("FontSize", "14").toInt() );
     QColor ColorFont( 208, 255, 208 );
-    m_configDlg->setForegroundColor( config->readColorEntry("FontColor", &ColorFont));
+    m_configDlg->setForegroundColor( config.readColorEntry("FontColor", &ColorFont));
     QColor ColorBackground( 51, 51, 51 );
-    m_configDlg->setBackgroundColor( config->readColorEntry("BackgroundColor", &ColorBackground));
-    m_configDlg->setThumbnailsSize( config->readEntry("ThumbnailsSize", "140").toInt() );
-    m_configDlg->setImageFormat( config->readEntry("ThumbnailsFormat", "JPEG") );
-    m_configDlg->setBordersImagesSize( config->readEntry("BordersImagesSize", "1").toInt() );
+    m_configDlg->setBackgroundColor( config.readColorEntry("BackgroundColor", &ColorBackground));
+    m_configDlg->setThumbnailsSize( config.readEntry("ThumbnailsSize", "140").toInt() );
+    m_configDlg->setImageFormat( config.readEntry("ThumbnailsFormat", "JPEG") );
+    m_configDlg->setBordersImagesSize( config.readEntry("BordersImagesSize", "1").toInt() );
     QColor ColorBordersImages( 208, 255, 208 );
-    m_configDlg->setBordersImagesColor( config->readColorEntry("BordersImagesColor", &ColorBordersImages));
+    m_configDlg->setBordersImagesColor( config.readColorEntry("BordersImagesColor", &ColorBordersImages));
 
     // CD Informations setup tab
 
-    m_configDlg->setVolumeID( config->readEntry("VolumeID", i18n("CD Albums")) );
-    m_configDlg->setVolumeSetID( config->readEntry("VolumeSetIDeTitle", i18n("KIPI Album CD archiving")) );
-    m_configDlg->setSystemID( config->readEntry("SystemID", i18n("LINUX")) );
-    m_configDlg->setApplicationID( config->readEntry("ApplicationID", i18n("K3b CD-DVD Burning application")) );
-    m_configDlg->setPublisher( config->readEntry("Publisher", m_hostName + " [" + m_hostURL + "]") );
-    m_configDlg->setPreparer( config->readEntry("Preparer", i18n("KIPI CD-Archiving plugin")) );
+    m_configDlg->setVolumeID( config.readEntry("VolumeID", i18n("CD Albums")) );
+    m_configDlg->setVolumeSetID( config.readEntry("VolumeSetIDeTitle", i18n("KIPI Album CD archiving")) );
+    m_configDlg->setSystemID( config.readEntry("SystemID", i18n("LINUX")) );
+    m_configDlg->setApplicationID( config.readEntry("ApplicationID", i18n("K3b CD-DVD Burning application")) );
+    m_configDlg->setPublisher( config.readEntry("Publisher", m_hostName + " [" + m_hostURL + "]") );
+    m_configDlg->setPreparer( config.readEntry("Preparer", i18n("KIPI CD-Archiving plugin")) );
 
     // Misc dialogbox setup tab
 
-    m_configDlg->setK3bBinPathName( config->readEntry("K3bBinPath", "k3b") );
-    m_configDlg->setK3bParameters( config->readEntry("K3bParameters", "--nofork") );
-    m_configDlg->setUseUseOnTheFly( config->readBoolEntry("UseOnTheFly", "true") );
-    m_configDlg->setUseCheckCD( config->readBoolEntry("UseCheckCD", "true") );
-    m_configDlg->setUseStartBurningProcess( config->readBoolEntry("UseStartWrintingProcess", "false") );
+    m_configDlg->setK3bBinPathName( config.readEntry("K3bBinPath", "k3b") );
+    m_configDlg->setK3bParameters( config.readEntry("K3bParameters", "--nofork") );
+    m_configDlg->setUseUseOnTheFly( config.readBoolEntry("UseOnTheFly", "true") );
+    m_configDlg->setUseCheckCD( config.readBoolEntry("UseCheckCD", "true") );
+    m_configDlg->setUseStartBurningProcess( config.readBoolEntry("UseStartWrintingProcess", "false") );
   
     // Get the image files filters from the hosts app.
      
@@ -230,7 +230,7 @@ bool CDArchiving::prepare(void)
     m_cancelled = false;
     m_StreamMainPageAlbumPreview = "";
         
-    // Get config->from setup dialog.
+    // Get config from setup dialog.
     
     albumsList = m_configDlg->getSelectedAlbums();
     m_useHTMLInterface = m_configDlg->getUseHTMLInterface();

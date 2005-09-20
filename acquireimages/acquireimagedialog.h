@@ -51,6 +51,7 @@ class QFrame;
 class QPushButton;
 
 class KListBox;
+class KConfig;
 class KIntNumInput;
 class KSqueezedTextLabel;
 
@@ -80,6 +81,8 @@ Q_OBJECT
 
    QPushButton        *m_addNewAlbumButton;
    QPushButton        *m_helpButton;
+
+   KConfig            *m_config;
 
    QString             m_newDir;
    QString             m_ImagesFilesSort;

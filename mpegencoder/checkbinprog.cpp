@@ -45,10 +45,10 @@ namespace KIPIMPEGEncoderPlugin
 
 CheckBinProg::CheckBinProg(QObject *parent)
 {
-    KConfig* config=kapp->config();
-    config->setGroup("MPEGEncoder Settings");
-    ImageMagickPath = config->readPathEntry("ImageMagickBinFolder");
-    MjpegToolsPath = config->readPathEntry("MjpegToolsBinFolder");
+  config = new KConfig("kipirc");
+  config->setGroup("MPEGEncoder Settings");
+  ImageMagickPath = config->readPathEntry("ImageMagickBinFolder");
+  MjpegToolsPath = config->readPathEntry("MjpegToolsBinFolder");
 }
 
 
@@ -63,69 +63,69 @@ CheckBinProg::~CheckBinProg()
 
 int CheckBinProg::findExecutables( void )
 {
-    QFile montage, composite, convert, identify, ppmtoy4m, yuvscaler, mpeg2enc, mp2enc, mplex;
-    int ValRet = 0;
-    
-    if (ImageMagickPath.isEmpty())
+  QFile montage, composite, convert, identify, ppmtoy4m, yuvscaler, mpeg2enc, mp2enc, mplex;
+  int ValRet = 0;
+
+  if (ImageMagickPath.isEmpty())
         {
         KMessageBox::error(kapp->activeWindow(), i18n("Your 'ImageMagick' binary program path is empty.\nSetting to default value. Check option's setting."));
         return (ValRet);
         }
-    
-    if (MjpegToolsPath.isEmpty())
+
+if (MjpegToolsPath.isEmpty())
         {
         KMessageBox::error(kapp->activeWindow(), i18n("Your 'MjpegTools' binary programs path is empty.\nSetting to default value. Check option's setting."));
         return (ValRet);
         }
 
-    QString str = "";
-    
-    // ImageMagick external programs.
-    
-    if (montage.exists(QString (ImageMagickPath+"/montage")) == FALSE)
-        str = i18n("Cannot find 'montage' binary program from ImageMagick package. Please install it.");
-    
-    if (composite.exists(QString (ImageMagickPath+"/composite")) == FALSE)
-        str = i18n("Cannot find 'composite' binary program from ImageMagick package. Please install it.");
-    
-    if (convert.exists(QString (ImageMagickPath+"/convert")) == FALSE)
-        str = i18n("Cannot find 'convert' binary program from ImageMagick package. Please install it.");
-    
-    if (identify.exists(QString (ImageMagickPath+"/identify")) == FALSE)
-        str = i18n("Cannot find 'identify' binary program from ImageMagick package. Please install it.");
-    
-    // MjpegTools external programs.
-    
-    if (ppmtoy4m.exists(QString (MjpegToolsPath+"/ppmtoy4m")) == FALSE)
-        str = i18n("Cannot find 'ppmtoy4m' binary program from MjpegTools package. Please install it.");
-    
-    if (yuvscaler.exists(QString (MjpegToolsPath+"/yuvscaler")) == FALSE)
-        str = i18n("Cannot find 'yuvscaler' binary program from MjpegTools package. Please install it.");
-    
-    if (mpeg2enc.exists(QString (MjpegToolsPath+"/mpeg2enc")) == FALSE)
-        str = i18n("Cannot find 'mpeg2enc' binary program from MjpegTools package. Please install it.");
-    
-    if (  mplex.exists(QString (MjpegToolsPath+"/mplex")) == FALSE)
-        str = i18n("Cannot find 'mplex' binary program from MjpegTools package. Please install it.");
-    
-    if (mp2enc.exists(QString (MjpegToolsPath+"/mp2enc")) == FALSE)
-        {
-        str = i18n("Cannot find 'mp2enc' binary program from MjpegTools package. Please install it.\n"
-                "Audio capabilities will be disabled.");
-        ValRet = 2;
-        }
-    
-    if ( !str.isEmpty() )
-        {
-        str += i18n("\nCheck your installation and this plugin's options settings."
-                    "\n\nVisit these URLs for more information:"
-                    "\nImageMagick package: http://www.imagemagick.org/"
-                    "\nMjpegTools package: http://mjpeg.sourceforge.net/");
-        KMessageBox::error(kapp->activeWindow(), str);
-        return (ValRet);
-        }
-    
-    return (1);
+  QString str = "";
+
+  // ImageMagick external programs.
+
+  if (montage.exists(QString (ImageMagickPath+"/montage")) == FALSE)
+    str = i18n("Cannot find 'montage' binary program from ImageMagick package. Please install it.");
+
+  if (composite.exists(QString (ImageMagickPath+"/composite")) == FALSE)
+    str = i18n("Cannot find 'composite' binary program from ImageMagick package. Please install it.");
+
+  if (convert.exists(QString (ImageMagickPath+"/convert")) == FALSE)
+    str = i18n("Cannot find 'convert' binary program from ImageMagick package. Please install it.");
+
+  if (identify.exists(QString (ImageMagickPath+"/identify")) == FALSE)
+    str = i18n("Cannot find 'identify' binary program from ImageMagick package. Please install it.");
+
+  // MjpegTools external programs.
+
+  if (ppmtoy4m.exists(QString (MjpegToolsPath+"/ppmtoy4m")) == FALSE)
+    str = i18n("Cannot find 'ppmtoy4m' binary program from MjpegTools package. Please install it.");
+
+  if (yuvscaler.exists(QString (MjpegToolsPath+"/yuvscaler")) == FALSE)
+    str = i18n("Cannot find 'yuvscaler' binary program from MjpegTools package. Please install it.");
+
+  if (mpeg2enc.exists(QString (MjpegToolsPath+"/mpeg2enc")) == FALSE)
+    str = i18n("Cannot find 'mpeg2enc' binary program from MjpegTools package. Please install it.");
+
+  if (  mplex.exists(QString (MjpegToolsPath+"/mplex")) == FALSE)
+    str = i18n("Cannot find 'mplex' binary program from MjpegTools package. Please install it.");
+
+  if (mp2enc.exists(QString (MjpegToolsPath+"/mp2enc")) == FALSE)
+    {
+    str = i18n("Cannot find 'mp2enc' binary program from MjpegTools package. Please install it.\n"
+               "Audio capabilities will be disabled.");
+    ValRet = 2;
+    }
+
+  if ( !str.isEmpty() )
+    {
+    str += i18n("\nCheck your installation and this plugin's options settings."
+                 "\n\nVisit these URLs for more information:"
+                 "\nImageMagick package: http://www.imagemagick.org/"
+                 "\nMjpegTools package: http://mjpeg.sourceforge.net/");
+    KMessageBox::error(kapp->activeWindow(), str);
+    return (ValRet);
+    }
+
+  return (1);
 }
 
 }  // NameSpace KIPIMPEGEncoderPlugin

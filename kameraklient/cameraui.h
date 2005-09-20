@@ -159,6 +159,8 @@ private:
     
     KStatusBar        	*mStatusBar;
     
+    KConfig             *mConfig; 
+    
     GPEventFilter       *efilter_;
     
     GPController        *controller_;

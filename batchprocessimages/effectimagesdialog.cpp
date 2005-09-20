@@ -269,39 +269,41 @@ void EffectImagesDialog::slotOptionsClicked(void)
 
 void EffectImagesDialog::readSettings(void)
 {
-    KConfig* config = kapp->config();
-    config->setGroup("EffectImages Settings");
+m_config = new KConfig("kipirc");
+    m_config->setGroup("EffectImages Settings");
 
-    m_Type->setCurrentItem(config->readNumEntry("EffectType", 3));   // Emboss per default.
-    m_latWidth = config->readNumEntry("LatWidth", 50);
-    m_latHeight = config->readNumEntry("LatHeight", 50);
-    m_latOffset = config->readNumEntry("LatOffset", 1);
-    m_charcoalRadius = config->readNumEntry("CharcoalRadius", 3);
-    m_charcoalDeviation = config->readNumEntry("CharcoalDeviation", 3);
-    m_edgeRadius = config->readNumEntry("EdgeRadius", 3);
-    m_embossRadius = config->readNumEntry("EmbossRadius", 3);
-    m_embossDeviation = config->readNumEntry("EmbossDeviation", 3);
-    m_implodeFactor = config->readNumEntry("ImplodeFactor", 1);
-    m_paintRadius = config->readNumEntry("PaintRadius", 3);
-    m_shadeAzimuth = config->readNumEntry("ShadeAzimuth", 40);
-    m_shadeElevation = config->readNumEntry("ShadeElevation", 40);
-    m_solarizeFactor = config->readNumEntry("SolarizeFactor", 10);
-    m_spreadRadius = config->readNumEntry("SpreadRadius", 3);
-    m_swirlDegrees = config->readNumEntry("SwirlDegrees", 45);
-    m_waveAmplitude = config->readNumEntry("WaveAmplitude", 50);
-    m_waveLenght = config->readNumEntry("WaveLenght", 100);
+    m_Type->setCurrentItem(m_config->readNumEntry("EffectType", 3));   // Emboss per default.
+    m_latWidth = m_config->readNumEntry("LatWidth", 50);
+    m_latHeight = m_config->readNumEntry("LatHeight", 50);
+    m_latOffset = m_config->readNumEntry("LatOffset", 1);
+    m_charcoalRadius = m_config->readNumEntry("CharcoalRadius", 3);
+    m_charcoalDeviation = m_config->readNumEntry("CharcoalDeviation", 3);
+    m_edgeRadius = m_config->readNumEntry("EdgeRadius", 3);
+    m_embossRadius = m_config->readNumEntry("EmbossRadius", 3);
+    m_embossDeviation = m_config->readNumEntry("EmbossDeviation", 3);
+    m_implodeFactor = m_config->readNumEntry("ImplodeFactor", 1);
+    m_paintRadius = m_config->readNumEntry("PaintRadius", 3);
+    m_shadeAzimuth = m_config->readNumEntry("ShadeAzimuth", 40);
+    m_shadeElevation = m_config->readNumEntry("ShadeElevation", 40);
+    m_solarizeFactor = m_config->readNumEntry("SolarizeFactor", 10);
+    m_spreadRadius = m_config->readNumEntry("SpreadRadius", 3);
+    m_swirlDegrees = m_config->readNumEntry("SwirlDegrees", 45);
+    m_waveAmplitude = m_config->readNumEntry("WaveAmplitude", 50);
+    m_waveLenght = m_config->readNumEntry("WaveLenght", 100);
 
-    if (config->readEntry("SmallPreview", "true") == "true")
+    if (m_config->readEntry("SmallPreview", "true") == "true")
         m_smallPreview->setChecked( true );
     else
         m_smallPreview->setChecked( false );
 
-    m_overWriteMode->setCurrentItem(config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentItem(m_config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
 
-    if (config->readEntry("RemoveOriginal", "false") == "true")
+    if (m_config->readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );
     else
         m_removeOriginal->setChecked( false );
+
+    delete m_config;
 }
 
 
@@ -311,33 +313,35 @@ void EffectImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    KConfig* config = kapp->config();
-    config->setGroup("EffectImages Settings");
-    config->writeEntry("EffectType", m_Type->currentItem());
+    m_config = new KConfig("kipirc");
+    m_config->setGroup("EffectImages Settings");
+    m_config->writeEntry("EffectType", m_Type->currentItem());
 
-    config->writeEntry("LatWidth", m_latWidth);
-    config->writeEntry("LatHeight", m_latHeight);
-    config->writeEntry("LatOffset", m_latOffset);
-    config->writeEntry("CharcoalRadius", m_charcoalRadius);
-    config->writeEntry("CharcoalDeviation", m_charcoalDeviation);
-    config->writeEntry("EdgeRadius", m_edgeRadius);
-    config->writeEntry("EmbossRadius", m_embossRadius);
-    config->writeEntry("EmbossDeviation", m_embossDeviation);
-    config->writeEntry("ImplodeFactor", m_implodeFactor);
-    config->writeEntry("PaintRadius", m_paintRadius);
-    config->writeEntry("ShadeAzimuth", m_shadeAzimuth);
-    config->writeEntry("ShadeElevation", m_shadeElevation);
-    config->writeEntry("SolarizeFactor", m_solarizeFactor);
-    config->writeEntry("SpreadRadius", m_spreadRadius);
-    config->writeEntry("SwirlDegrees", m_swirlDegrees);
-    config->writeEntry("WaveAmplitude", m_waveAmplitude);
-    config->writeEntry("WaveLenght", m_waveLenght);
+    m_config->writeEntry("LatWidth", m_latWidth);
+    m_config->writeEntry("LatHeight", m_latHeight);
+    m_config->writeEntry("LatOffset", m_latOffset);
+    m_config->writeEntry("CharcoalRadius", m_charcoalRadius);
+    m_config->writeEntry("CharcoalDeviation", m_charcoalDeviation);
+    m_config->writeEntry("EdgeRadius", m_edgeRadius);
+    m_config->writeEntry("EmbossRadius", m_embossRadius);
+    m_config->writeEntry("EmbossDeviation", m_embossDeviation);
+    m_config->writeEntry("ImplodeFactor", m_implodeFactor);
+    m_config->writeEntry("PaintRadius", m_paintRadius);
+    m_config->writeEntry("ShadeAzimuth", m_shadeAzimuth);
+    m_config->writeEntry("ShadeElevation", m_shadeElevation);
+    m_config->writeEntry("SolarizeFactor", m_solarizeFactor);
+    m_config->writeEntry("SpreadRadius", m_spreadRadius);
+    m_config->writeEntry("SwirlDegrees", m_swirlDegrees);
+    m_config->writeEntry("WaveAmplitude", m_waveAmplitude);
+    m_config->writeEntry("WaveLenght", m_waveLenght);
 
-    config->writeEntry("SmallPreview", m_smallPreview->isChecked());
-    config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
+    m_config->writeEntry("SmallPreview", m_smallPreview->isChecked());
+    m_config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
+    m_config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
 
-    config->sync();
+    m_config->sync();
+
+    delete m_config;
 }
 
 

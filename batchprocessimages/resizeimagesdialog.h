@@ -72,8 +72,6 @@ Q_OBJECT
    int                    m_fixedHeight;
    int			  m_quality;
 
-protected:
-   
    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                        const QString& albumDest, bool previewMode);
 

@@ -123,7 +123,7 @@ FindDuplicateImages::~FindDuplicateImages()
 
 void FindDuplicateImages::writeSettings(void)
 {
-    KConfig* config=kapp->config();
+    config = new KConfig("kipirc");
     config->setGroup("FindDuplicateImages Settings");
 
     // Method dialogbox setup tab
@@ -132,6 +132,7 @@ void FindDuplicateImages::writeSettings(void)
     config->writeEntry("ApproximateThreeshold", m_findDuplicateDialog->getApproximateThreeshold());
 
     config->sync();
+    delete config;
 }
 
 
@@ -139,13 +140,15 @@ void FindDuplicateImages::writeSettings(void)
 
 void FindDuplicateImages::readSettings(void)
 {
-    KConfig* config=kapp->config();
+    config = new KConfig("kipirc");
     config->setGroup("FindDuplicateImages Settings");
 
     // Method dialogbox setup tab
 
     m_findDuplicateDialog->setFindMethod( config->readNumEntry("FindMethod", FindDuplicateDialog::MethodAlmost ) );
     m_findDuplicateDialog->setApproximateThreeshold( config->readNumEntry("ApproximateThreeshold", 88) );
+
+    delete config;
 
     // Get the image files filters from the hosts app.
      

@@ -157,22 +157,24 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
     //---------------------------------------------
 
     // Read all settings from configuration file.
-    
-    KConfig* config = kapp->config();
-    config->setGroup("ScreenshotImages Settings");
 
-    if (config->readEntry("GrabDesktop", "true") == "true")
+    m_config = new KConfig("kipirc");
+    m_config->setGroup("ScreenshotImages Settings");
+
+    if (m_config->readEntry("GrabDesktop", "true") == "true")
         m_desktopCB->setChecked( true );
     else
         m_desktopCB->setChecked( false );
 
-    if (config->readEntry("HideHostWin", "true") == "true")
+    if (m_config->readEntry("HideHostWin", "true") == "true")
         m_hideCB->setChecked( true );
     else
         m_hideCB->setChecked( false );
 
-    m_delay->setValue(config->readNumEntry("Delay", 1));
+    m_delay->setValue(m_config->readNumEntry("Delay", 1));
 
+    delete m_config;
+    
     // About data and help button.
     
     KAboutData* about = new KAboutData("kipiplugins",
@@ -217,13 +219,14 @@ void ScreenGrabDialog::slotClose( void )
 {
     // Write all settings in configuration file.
 
-    KConfig* config = kapp->config();
-    config->setGroup("ScreenshotImages Settings");
-    config->writeEntry("GrabDesktop", m_desktopCB->isChecked());
-    config->writeEntry("HideHostWin", m_hideCB->isChecked());
-    config->writeEntry("Delay", m_delay->value());
-    config->sync();
-    
+    m_config = new KConfig("kipirc");
+    m_config->setGroup("ScreenshotImages Settings");
+    m_config->writeEntry("GrabDesktop", m_desktopCB->isChecked());
+    m_config->writeEntry("HideHostWin", m_hideCB->isChecked());
+    m_config->writeEntry("Delay", m_delay->value());
+    m_config->sync();
+    delete m_config;
+
     close();
     delete this;
 }

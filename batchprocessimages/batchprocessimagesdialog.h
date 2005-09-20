@@ -69,6 +69,7 @@ class QListViewItem;
 class QGroupBox;
 
 class KProcess;
+class KConfig;
 class KProgress;
 class KURL;
 class KFileItem;
@@ -93,7 +94,6 @@ Q_OBJECT
    ~BatchProcessImagesDialog();
 
 protected slots:
-    
     void slotProcessStop(void);
 
 private slots:
@@ -130,7 +130,7 @@ private slots:
    virtual void slotOptionsClicked(void){};                   // Called when 'Options' button is clicked.
    virtual void slotTypeChanged(int){};                       // Called when the current type option is changed.
 
-protected:
+ protected:
 
    // --------------------------------------------------------------------------------------------------------
    // Standards widgets in the dialog
@@ -163,6 +163,8 @@ protected:
    QPushButton            *m_remImagesButton;
    QPushButton            *m_helpButton;
    
+   KConfig                *m_config;
+
    int                     m_convertStatus;
    int                     m_progressStatus;
    int                     m_nbItem;
@@ -182,8 +184,6 @@ protected:
 
    KIPI::Interface       *m_interface;
 
-protected:
-   
    // --------------------------------------------------------------------------------------------------------
    // Standards fonctions
 

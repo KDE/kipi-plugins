@@ -637,7 +637,7 @@ bool SendImages::resizeImageProcess( const QString &SourcePath, const QString &D
 
 void SendImages::slotMozillaExited(KProcess*)
 {
-    if ( m_mozillaStdErr.find("No running window found") != -1 )   // No remote Mozilla | Netscape |
+    if ( m_mozillaStdErr.contains("No running window found.") == true )   // No remote Mozilla | Netscape |
        {                                                                  // Thunderbird env. loaded !
        m_mailAgentProc2 = new KProcess;                                   // Init a new env.
 

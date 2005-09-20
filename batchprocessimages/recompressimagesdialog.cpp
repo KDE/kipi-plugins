@@ -148,26 +148,28 @@ void RecompressImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    KConfig* config = kapp->config();
-    config->setGroup("RecompressImages Settings");
+    m_config = new KConfig("kipirc");
+    m_config->setGroup("RecompressImages Settings");
 
-    m_JPEGCompression = config->readNumEntry("JPEGCompression", 75);
+    m_JPEGCompression = m_config->readNumEntry("JPEGCompression", 75);
 
-    if ( config->readEntry("CompressLossLess", "false") == "true")
+    if ( m_config->readEntry("CompressLossLess", "false") == "true")
        m_compressLossLess = true;
     else
        m_compressLossLess = false;
 
-    m_PNGCompression = config->readNumEntry("PNGCompression", 75);
-    m_TIFFCompressionAlgo = config->readEntry("TIFFCompressionAlgo", i18n("None"));
-    m_TGACompressionAlgo = config->readEntry("TGACompressionAlgo", i18n("None"));
+    m_PNGCompression = m_config->readNumEntry("PNGCompression", 75);
+    m_TIFFCompressionAlgo = m_config->readEntry("TIFFCompressionAlgo", i18n("None"));
+    m_TGACompressionAlgo = m_config->readEntry("TGACompressionAlgo", i18n("None"));
 
-    m_overWriteMode->setCurrentItem(config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentItem(m_config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
 
-    if (config->readEntry("RemoveOriginal", "false") == "true")
+    if (m_config->readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );
     else
         m_removeOriginal->setChecked( false );
+
+    delete m_config;
 }
 
 
@@ -177,19 +179,21 @@ void RecompressImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    KConfig* config = kapp->config();
-    config->setGroup("RecompressImages Settings");
+    m_config = new KConfig("kipirc");
+    m_config->setGroup("RecompressImages Settings");
 
-    config->writeEntry("JPEGCompression", m_JPEGCompression);
-    config->writeEntry("PNGCompression", m_PNGCompression);
-    config->writeEntry("CompressLossLess", m_compressLossLess);
-    config->writeEntry("TIFFCompressionAlgo", m_TIFFCompressionAlgo);
-    config->writeEntry("TGACompressionAlgo", m_TGACompressionAlgo);
+    m_config->writeEntry("JPEGCompression", m_JPEGCompression);
+    m_config->writeEntry("PNGCompression", m_PNGCompression);
+    m_config->writeEntry("CompressLossLess", m_compressLossLess);
+    m_config->writeEntry("TIFFCompressionAlgo", m_TIFFCompressionAlgo);
+    m_config->writeEntry("TGACompressionAlgo", m_TGACompressionAlgo);
 
-    config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
+    m_config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
+    m_config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
 
-    config->sync();
+    m_config->sync();
+
+    delete m_config;
 }
 
 
