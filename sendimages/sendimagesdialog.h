@@ -49,7 +49,6 @@ class QPushButton;
 class QFileInfo;
 
 class KFileItem;
-class KConfig;
 class KIntNumInput;
 class KListBox;
 class KSqueezedTextLabel;
@@ -88,6 +87,8 @@ public:
                     const KIPI::ImageCollection& images );
    ~SendImagesDialog();
 
+public:
+   
    KIntNumInput   *m_imageCompression;
 
    QComboBox      *m_imagesFormat;
@@ -128,8 +129,6 @@ protected:
    QLabel             *m_mailAgentLabel;
    QLabel             *m_labelThunderbirdBinPath;
       
-   KConfig            *m_config;
-
    QPushButton        *m_addImageButton;
    QPushButton        *m_remImagesButton;
    QPushButton        *m_helpButton;

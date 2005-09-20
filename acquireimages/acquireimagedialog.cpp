@@ -160,14 +160,11 @@ void AcquireImageDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("AcquireImages Settings");
-    m_FileName->setText(m_config->readPathEntry("DefaultImageFileName", i18n("image")));
-    m_imageCompression->setValue(m_config->readNumEntry("ImageCompression", 75));
-    m_imagesFormat->setCurrentText(m_config->readEntry("ImageFormat", "TIFF"));
+    KConfig* config = kapp->config();
+    config->setGroup("AcquireImages Settings");
+    m_FileName->setText(config->readPathEntry("DefaultImageFileName", i18n("image")));
+    m_imageCompression->setValue(config->readNumEntry("ImageCompression", 75));
 
-    delete m_config;
-    
     // Get the image files filters from the hosts app.
      
     m_ImagesFilesSort = m_interface->fileExtensions();    
@@ -180,13 +177,12 @@ void AcquireImageDialog::writeSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("AcquireImages Settings");
-    m_config->writePathEntry("DefaultImageFileName", m_FileName->text());
-    m_config->writeEntry("ImageCompression", m_imageCompression->value());
-    m_config->writeEntry("ImageFormat", m_imagesFormat->currentText());
-    m_config->sync();
-    delete m_config;
+    KConfig* config = kapp->config();
+    config->setGroup("AcquireImages Settings");
+    config->writePathEntry("DefaultImageFileName", m_FileName->text());
+    config->writeEntry("ImageCompression", m_imageCompression->value());
+    config->writeEntry("ImageFormat", m_imagesFormat->currentText());
+    config->sync();
 }
 
 

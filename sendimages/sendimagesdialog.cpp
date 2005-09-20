@@ -181,45 +181,42 @@ void SendImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("SendImages Settings");
+    KConfig* config=kapp->config();
+    config->setGroup("SendImages Settings");
 
-    m_mailAgentName->setCurrentText(m_config->readPathEntry("MailAgentName", "Kmail"));
+    m_mailAgentName->setCurrentText(config->readPathEntry("MailAgentName", "Kmail"));
 
-    m_ThunderbirdBinPath->setURL( m_config->readEntry("ThunderbirdBinPath", "/usr/bin/thunderbird"));
+    m_ThunderbirdBinPath->setURL( config->readEntry("ThunderbirdBinPath", "/usr/bin/thunderbird"));
 
-    if (m_config->readEntry("ImagesChangeProp", "true") == "true")
+    if (config->readEntry("ImagesChangeProp", "true") == "true")
         m_changeImagesProp->setChecked( true );
     else
         m_changeImagesProp->setChecked( false );
 
-    m_imagesResize->setCurrentItem(m_config->readNumEntry("ImageResize", 2));    // Medium size used by default...
-    m_imageCompression->setValue(m_config->readNumEntry("ImageCompression", 75));
-    m_imagesFormat->setCurrentText(m_config->readEntry("ImageFormat", "JPEG"));
+    m_imagesResize->setCurrentItem(config->readNumEntry("ImageResize", 2));    // Medium size used by default...
+    m_imageCompression->setValue(config->readNumEntry("ImageCompression", 75));
+    m_imagesFormat->setCurrentText(config->readEntry("ImageFormat", "JPEG"));
 
-    if (m_config->readEntry("AddComments", "true") == "true")
+    if (config->readEntry("AddComments", "true") == "true")
         m_addComments->setChecked( true );
     else
         m_addComments->setChecked( false );
-
-    delete m_config;
 }
 
 void SendImagesDialog::writeSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("SendImages Settings");
-    m_config->writePathEntry("MailAgentName", m_mailAgentName->currentText());
-    m_config->writeEntry("ThunderbirdBinPath", m_ThunderbirdBinPath->url());
-    m_config->writeEntry("AddComments", m_addComments->isChecked());
-    m_config->writeEntry("ImagesChangeProp", m_changeImagesProp->isChecked());
-    m_config->writeEntry("ImageResize", m_imagesResize->currentItem());
-    m_config->writeEntry("ImageCompression", m_imageCompression->value());
-    m_config->writeEntry("ImageFormat", m_imagesFormat->currentText());
-    m_config->sync();
-    delete m_config;
+    KConfig* config=kapp->config();
+    config->setGroup("SendImages Settings");
+    config->writePathEntry("MailAgentName", m_mailAgentName->currentText());
+    config->writeEntry("ThunderbirdBinPath", m_ThunderbirdBinPath->url());
+    config->writeEntry("AddComments", m_addComments->isChecked());
+    config->writeEntry("ImagesChangeProp", m_changeImagesProp->isChecked());
+    config->writeEntry("ImageResize", m_imagesResize->currentItem());
+    config->writeEntry("ImageCompression", m_imageCompression->value());
+    config->writeEntry("ImageFormat", m_imagesFormat->currentText());
+    config->sync();
 }
 
 void SendImagesDialog::setupImagesList(void)

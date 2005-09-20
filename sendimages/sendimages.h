@@ -109,6 +109,8 @@ protected:
 
    KIPI::ImageCollection  m_collection;
    
+protected:
+   
    QString extension(const QString& imageFileFormat);
    int getSize( int choice );
    

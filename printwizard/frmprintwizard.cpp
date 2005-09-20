@@ -620,10 +620,10 @@ QStringList FrmPrintWizard::printPhotosToFile(QPtrList<TPhoto> photos, QString &
 
 void FrmPrintWizard::loadSettings()
 {
-  KSimpleConfig config("kipirc");
-  config.setGroup("PrintWizard");
+  KConfig* config=kapp->config();
+  config->setGroup("PrintWizard");
 
-  int pageSize = config.readNumEntry("PageSize", (int)m_pageSize);
+  int pageSize = config->readNumEntry("PageSize", (int)m_pageSize);
   initPhotoSizes((KPrinter::PageSize)pageSize);
 
   if (m_pageSize == KPrinter::A6)
@@ -634,36 +634,36 @@ void FrmPrintWizard::loadSettings()
       CmbPaperSize->setCurrentItem(0);
 
   // captions
-  int captions = config.readNumEntry("ImageCaptions", 0);
+  int captions = config->readNumEntry("ImageCaptions", 0);
   GrpImageCaptions->setButton(captions);
 
   // set the last output path
-  QString outputPath = config.readPathEntry("OutputPath", EditOutputPath->text());
+  QString outputPath = config->readPathEntry("OutputPath", EditOutputPath->text());
   EditOutputPath->setText(outputPath);
 
   // set the proper radio button
-  int id = config.readNumEntry("PrintOutput", GrpOutputSettings->id(RdoOutputPrinter));
+  int id = config->readNumEntry("PrintOutput", GrpOutputSettings->id(RdoOutputPrinter));
   GrpOutputSettings->setButton(id);
 
   // photo size
-  QString photoSize = config.readEntry("PhotoSize");
+  QString photoSize = config->readEntry("PhotoSize");
   QListBoxItem *item = ListPhotoSizes->findItem(photoSize);
   if (item)
     ListPhotoSizes->setCurrentItem(item);
   else
     ListPhotoSizes->setCurrentItem(0);
 
-  EditCopies->setValue(config.readNumEntry("Copies", EditCopies->value()));
+  EditCopies->setValue(config->readNumEntry("Copies", EditCopies->value()));
 }
 
 
 // save the current wizard settings
 void FrmPrintWizard::saveSettings()
 {
-  KSimpleConfig config("kipirc");
-  config.setGroup("PrintWizard");
+  KConfig* config=kapp->config();
+  config->setGroup("PrintWizard");
 
-  config.writeEntry("PageSize", (int)m_pageSize);
+  config->writeEntry("PageSize", (int)m_pageSize);
 
   // output
   int output = 0;
@@ -675,18 +675,18 @@ void FrmPrintWizard::saveSettings()
     else
       if (RdoOutputGimp->isChecked())
         output = GrpOutputSettings->id(RdoOutputGimp);
-  config.writeEntry("PrintOutput", output);
+  config->writeEntry("PrintOutput", output);
 
   // image captions
-  config.writeEntry("ImageCaptions", buttonGroupSelectedId(GrpImageCaptions));
+  config->writeEntry("ImageCaptions", buttonGroupSelectedId(GrpImageCaptions));
 
   // output path
-  config.writePathEntry("OutputPath", EditOutputPath->text());
+  config->writePathEntry("OutputPath", EditOutputPath->text());
 
   // photo size
-  config.writeEntry("PhotoSize", ListPhotoSizes->currentText());
-  config.writeEntry("Copies", EditCopies->value());
-
+  config->writeEntry("PhotoSize", ListPhotoSizes->currentText());
+  config->writeEntry("Copies", EditCopies->value());
+  config->sync();
 }
 
 void FrmPrintWizard::GrpOutputSettings_clicked(int id)

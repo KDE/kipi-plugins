@@ -668,25 +668,23 @@ void CameraUI::slotChangeDownloadDirectory() {
 }
 
 void CameraUI::writeSettings() {
-    mConfig = new KConfig("kipirc");
-    mConfig->setGroup("KameraKlient Settings");
-    mConfig->writePathEntry("DownloadDirectory", mDownloadDirectoryEdit->text());
-    mConfig->writeEntry("DialogSize", frameSize());
-    mConfig->writeEntry("DialogXPos", x());
-    mConfig->writeEntry("DialogYPos", y());
-    mConfig->writeEntry("SplitterSizes", mSplitter->sizes());
-    mConfig->sync();
-    delete mConfig;
+    KConfig* config=kapp->config();
+    config->setGroup("KameraKlient Settings");
+    config->writePathEntry("DownloadDirectory", mDownloadDirectoryEdit->text());
+    config->writeEntry("DialogSize", frameSize());
+    config->writeEntry("DialogXPos", x());
+    config->writeEntry("DialogYPos", y());
+    config->writeEntry("SplitterSizes", mSplitter->sizes());
+    config->sync();
 }
 
 void CameraUI::readSettings() {
-    mConfig = new KConfig("kipirc");
-    mConfig->setGroup("KameraKlient Settings");
-    mDownloadDirectoryEdit->setText(mConfig->readPathEntry("DownloadDirectory", "$HOME"));
-    resize(mConfig->readSizeEntry("DialogSize"));
-    move(mConfig->readNumEntry("DialogXPos"), mConfig->readNumEntry("DialogYPos"));
-    mSplitter->setSizes(mConfig->readIntListEntry("SplitterSizes"));
-    delete mConfig;
+    KConfig* config=kapp->config();
+    config->setGroup("KameraKlient Settings");
+    mDownloadDirectoryEdit->setText(config->readPathEntry("DownloadDirectory", "$HOME"));
+    resize(config->readSizeEntry("DialogSize"));
+    move(config->readNumEntry("DialogXPos"), config->readNumEntry("DialogYPos"));
+    mSplitter->setSizes(config->readIntListEntry("SplitterSizes"));
 }
 
 }  // NameSpace KIPIKameraKlientPlugin

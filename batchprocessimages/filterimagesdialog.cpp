@@ -232,35 +232,33 @@ void FilterImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("FilterImages Settings");
+    KConfig* config = kapp->config();
+    config->setGroup("FilterImages Settings");
 
-    m_Type->setCurrentItem(m_config->readNumEntry("FilterType", 7));      // Sharpen per default
-    m_noiseType = m_config->readEntry("NoiseType", i18n("Gaussian"));
-    m_blurRadius = m_config->readNumEntry("BlurRadius", 3);
-    m_blurDeviation = m_config->readNumEntry("BlurDeviation", 1);
-    m_medianRadius = m_config->readNumEntry("MedianRadius", 3);
-    m_noiseRadius = m_config->readNumEntry("NoiseRadius", 3);
-    m_sharpenRadius = m_config->readNumEntry("SharpenRadius", 3);
-    m_sharpenDeviation = m_config->readNumEntry("SharpenDeviation", 1);
-    m_unsharpenRadius = m_config->readNumEntry("UnsharpenRadius", 3);
-    m_unsharpenDeviation = m_config->readNumEntry("UnsharpenDeviation", 1);
-    m_unsharpenPercent = m_config->readNumEntry("UnsharpenPercent", 3);
-    m_unsharpenThreshold = m_config->readNumEntry("UnsharpenThreshold", 1);
+    m_Type->setCurrentItem(config->readNumEntry("FilterType", 7));      // Sharpen per default
+    m_noiseType = config->readEntry("NoiseType", i18n("Gaussian"));
+    m_blurRadius = config->readNumEntry("BlurRadius", 3);
+    m_blurDeviation = config->readNumEntry("BlurDeviation", 1);
+    m_medianRadius = config->readNumEntry("MedianRadius", 3);
+    m_noiseRadius = config->readNumEntry("NoiseRadius", 3);
+    m_sharpenRadius = config->readNumEntry("SharpenRadius", 3);
+    m_sharpenDeviation = config->readNumEntry("SharpenDeviation", 1);
+    m_unsharpenRadius = config->readNumEntry("UnsharpenRadius", 3);
+    m_unsharpenDeviation = config->readNumEntry("UnsharpenDeviation", 1);
+    m_unsharpenPercent = config->readNumEntry("UnsharpenPercent", 3);
+    m_unsharpenThreshold = config->readNumEntry("UnsharpenThreshold", 1);
 
-    if (m_config->readEntry("SmallPreview", "true") == "true")
+    if (config->readEntry("SmallPreview", "true") == "true")
         m_smallPreview->setChecked( true );
     else
         m_smallPreview->setChecked( false );
 
-    m_overWriteMode->setCurrentItem(m_config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentItem(config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
 
-    if (m_config->readEntry("RemoveOriginal", "false") == "true")
+    if (config->readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );
     else
         m_removeOriginal->setChecked( false );
-
-    delete m_config;
 }
 
 
@@ -270,29 +268,27 @@ void FilterImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("FilterImages Settings");
+    KConfig* config = kapp->config();
+    config->setGroup("FilterImages Settings");
 
-    m_config->writeEntry("FilterType", m_Type->currentItem());
-    m_config->writeEntry("NoiseType", m_noiseType);
-    m_config->writeEntry("BlurRadius", m_blurRadius);
-    m_config->writeEntry("BlurDeviation", m_blurDeviation);
-    m_config->writeEntry("MedianRadius", m_medianRadius);
-    m_config->writeEntry("NoiseRadius", m_noiseRadius);
-    m_config->writeEntry("SharpenRadius", m_sharpenRadius);
-    m_config->writeEntry("SharpenDeviation", m_sharpenDeviation);
-    m_config->writeEntry("UnsharpenRadius", m_unsharpenRadius);
-    m_config->writeEntry("UnsharpenDeviation", m_unsharpenDeviation);
-    m_config->writeEntry("UnsharpenPercent", m_unsharpenPercent);
-    m_config->writeEntry("UnsharpenThreshold", m_unsharpenThreshold);
+    config->writeEntry("FilterType", m_Type->currentItem());
+    config->writeEntry("NoiseType", m_noiseType);
+    config->writeEntry("BlurRadius", m_blurRadius);
+    config->writeEntry("BlurDeviation", m_blurDeviation);
+    config->writeEntry("MedianRadius", m_medianRadius);
+    config->writeEntry("NoiseRadius", m_noiseRadius);
+    config->writeEntry("SharpenRadius", m_sharpenRadius);
+    config->writeEntry("SharpenDeviation", m_sharpenDeviation);
+    config->writeEntry("UnsharpenRadius", m_unsharpenRadius);
+    config->writeEntry("UnsharpenDeviation", m_unsharpenDeviation);
+    config->writeEntry("UnsharpenPercent", m_unsharpenPercent);
+    config->writeEntry("UnsharpenThreshold", m_unsharpenThreshold);
 
-    m_config->writeEntry("SmallPreview", m_smallPreview->isChecked());
-    m_config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    m_config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
+    config->writeEntry("SmallPreview", m_smallPreview->isChecked());
+    config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
+    config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
 
-    m_config->sync();
-
-    delete m_config;
+    config->sync();
 }
 
 

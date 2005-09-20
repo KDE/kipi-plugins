@@ -120,54 +120,53 @@ ImagesGallery::~ImagesGallery()
 
 void ImagesGallery::writeSettings(void)
 {
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("ImagesGallery Settings");
+    KConfig* config=kapp->config();
+    config->setGroup("ImagesGallery Settings");
 
     // HTML Look dialogbox setup tab
 
-    m_config->writeEntry("MainPageTitle", m_configDlg->getMainTitle());
-    m_config->writeEntry("ImagesPerRow", m_configDlg->getImagesPerRow());
-    m_config->writeEntry("PrintImageName", m_configDlg->printImageName());
-    m_config->writeEntry("PrintImageSize", m_configDlg->printImageSize());
-    m_config->writeEntry("PrintFileSize", m_configDlg->printImageProperty());
-    m_config->writeEntry("PrintPageCreationDate", m_configDlg->printPageCreationDate());
-    m_config->writeEntry("CreatePageForPhotos", m_configDlg->getCreatePageForPhotos());
-    m_config->writeEntry("OpenInWebBrowser", m_configDlg->OpenGalleryInWebBrowser());
-    m_config->writePathEntry("WebBrowserName", m_configDlg->getWebBrowserName());
-    m_config->writeEntry("FontName", m_configDlg->getFontName());
-    m_config->writeEntry("FontColor", m_configDlg->getForegroundColor());
-    m_config->writeEntry("FontSize", m_configDlg->getFontSize());
-    m_config->writeEntry("BackgroundColor", m_configDlg->getBackgroundColor());
-    m_config->writeEntry("BordersImagesSize", m_configDlg->getBordersImagesSize());
-    m_config->writeEntry("BordersImagesColor", m_configDlg->getBordersImagesColor());
+    config->writeEntry("MainPageTitle", m_configDlg->getMainTitle());
+    config->writeEntry("ImagesPerRow", m_configDlg->getImagesPerRow());
+    config->writeEntry("PrintImageName", m_configDlg->printImageName());
+    config->writeEntry("PrintImageSize", m_configDlg->printImageSize());
+    config->writeEntry("PrintFileSize", m_configDlg->printImageProperty());
+    config->writeEntry("PrintPageCreationDate", m_configDlg->printPageCreationDate());
+    config->writeEntry("CreatePageForPhotos", m_configDlg->getCreatePageForPhotos());
+    config->writeEntry("OpenInWebBrowser", m_configDlg->OpenGalleryInWebBrowser());
+    config->writePathEntry("WebBrowserName", m_configDlg->getWebBrowserName());
+    config->writeEntry("FontName", m_configDlg->getFontName());
+    config->writeEntry("FontColor", m_configDlg->getForegroundColor());
+    config->writeEntry("FontSize", m_configDlg->getFontSize());
+    config->writeEntry("BackgroundColor", m_configDlg->getBackgroundColor());
+    config->writeEntry("BordersImagesSize", m_configDlg->getBordersImagesSize());
+    config->writeEntry("BordersImagesColor", m_configDlg->getBordersImagesColor());
 
     // ALBUM dialogbox setup tab
 
-    m_config->writePathEntry("GalleryPath", m_configDlg->getImageName());
-    m_config->writeEntry("NotUseOriginalImageSize", m_configDlg->useNotOriginalImageSize());
-    m_config->writeEntry("ImagesResize", m_configDlg->getImagesResize());
-    m_config->writeEntry("TargetImagesCompressionSet", m_configDlg->useSpecificTargetimageCompression());
-    m_config->writeEntry("TargetImagesCompression", m_configDlg->getTargetImagesCompression());
-    m_config->writeEntry("TargetImagesFormat", m_configDlg->getTargetImagesFormat());
-    m_config->writeEntry("TargetImagesColorDepthSet", m_configDlg->colorDepthSetTargetImages());
-    m_config->writeEntry("TargetImagesColorDepthValue", m_configDlg->getColorDepthTargetImages());
-    m_config->writeEntry("UseCommentFile", m_configDlg->useCommentFile());
-    m_config->writeEntry("UseCommentsAlbum", m_configDlg->useCommentsAlbum());
-    m_config->writeEntry("UseCollectionAlbum", m_configDlg->useCollectionAlbum());
-    m_config->writeEntry("UseDateAlbum", m_configDlg->useDateAlbum());
-    m_config->writeEntry("PrintImageNb", m_configDlg->useNbImagesAlbum());
+    config->writePathEntry("GalleryPath", m_configDlg->getImageName());
+    config->writeEntry("NotUseOriginalImageSize", m_configDlg->useNotOriginalImageSize());
+    config->writeEntry("ImagesResize", m_configDlg->getImagesResize());
+    config->writeEntry("TargetImagesCompressionSet", m_configDlg->useSpecificTargetimageCompression());
+    config->writeEntry("TargetImagesCompression", m_configDlg->getTargetImagesCompression());
+    config->writeEntry("TargetImagesFormat", m_configDlg->getTargetImagesFormat());
+    config->writeEntry("TargetImagesColorDepthSet", m_configDlg->colorDepthSetTargetImages());
+    config->writeEntry("TargetImagesColorDepthValue", m_configDlg->getColorDepthTargetImages());
+    config->writeEntry("UseCommentFile", m_configDlg->useCommentFile());
+    config->writeEntry("UseCommentsAlbum", m_configDlg->useCommentsAlbum());
+    config->writeEntry("UseCollectionAlbum", m_configDlg->useCollectionAlbum());
+    config->writeEntry("UseDateAlbum", m_configDlg->useDateAlbum());
+    config->writeEntry("PrintImageNb", m_configDlg->useNbImagesAlbum());
 
     // THUMNAILS dialogbox setup tab
 
-    m_config->writeEntry("ThumbnailsSize", m_configDlg->getThumbnailsSize());
-    m_config->writeEntry("ThumbnailsCompressionSet", m_configDlg->useSpecificThumbsCompression());
-    m_config->writeEntry("ThumbnailsCompression", m_configDlg->getThumbsCompression());
-    m_config->writeEntry("ThumbnailsFormat", m_configDlg->getImageFormat());
-    m_config->writeEntry("ThumbnailsColorDepthSet", m_configDlg->colorDepthSetThumbnails());
-    m_config->writeEntry("ThumbnailsColorDepthValue", m_configDlg->getColorDepthThumbnails());
+    config->writeEntry("ThumbnailsSize", m_configDlg->getThumbnailsSize());
+    config->writeEntry("ThumbnailsCompressionSet", m_configDlg->useSpecificThumbsCompression());
+    config->writeEntry("ThumbnailsCompression", m_configDlg->getThumbsCompression());
+    config->writeEntry("ThumbnailsFormat", m_configDlg->getImageFormat());
+    config->writeEntry("ThumbnailsColorDepthSet", m_configDlg->colorDepthSetThumbnails());
+    config->writeEntry("ThumbnailsColorDepthValue", m_configDlg->getColorDepthThumbnails());
 
-    m_config->sync();
-    delete m_config;
+    config->sync();
 }
 
 
@@ -175,71 +174,69 @@ void ImagesGallery::writeSettings(void)
 
 void ImagesGallery::readSettings(void)
 {
-  QColor* ColorFont;
-  QColor* ColorBackground;
-  QColor* ColorBordersImages;
+    QColor* ColorFont;
+    QColor* ColorBackground;
+    QColor* ColorBordersImages;
 
-  m_config = new KConfig("kipirc");
-  m_config->setGroup("ImagesGallery Settings");
-
-  // HTML Look dialogbox setup tab
-
-  m_configDlg->setMainTitle( m_config->readEntry("MainPageTitle", i18n("KIPI Album Image Gallery")) );
-  m_configDlg->setImagesPerRow( m_config->readEntry("ImagesPerRow", "4").toInt() );
-
-  m_configDlg->setPrintImageName( m_config->readBoolEntry("PrintImageName", true) );
-  m_configDlg->setPrintImageSize( m_config->readBoolEntry("PrintImageSize", true) );
-  m_configDlg->setPrintImageProperty( m_config->readBoolEntry("PrintFileSize", true) );
-  m_configDlg->setPrintPageCreationDate( m_config->readBoolEntry("PrintPageCreationDate", true) );
-  m_configDlg->setCreatePageForPhotos( m_config->readBoolEntry("CreatePageForPhotos", true) );
-  m_configDlg->setOpenGalleryInWebBrowser( m_config->readBoolEntry("OpenInWebBrowser", true) );
-  m_configDlg->setWebBrowserName( m_config->readPathEntry("WebBrowserName", "Konqueror") );
-
-  m_configDlg->setFontName( m_config->readEntry("FontName", "Helvetica") );
-  m_configDlg->setFontSize( m_config->readEntry("FontSize", "14").toInt() );
-  ColorFont = new QColor( 208, 255, 208 );
-  m_configDlg->setForegroundColor( m_config->readColorEntry("FontColor", ColorFont));
-  ColorBackground = new QColor( 51, 51, 51 );
-  m_configDlg->setBackgroundColor( m_config->readColorEntry("BackgroundColor", ColorBackground));
-  m_configDlg->setBordersImagesSize( m_config->readEntry("BordersImagesSize", "1").toInt() );
-  ColorBordersImages = new QColor( 208, 255, 208 );
-  m_configDlg->setBordersImagesColor( m_config->readColorEntry("BordersImagesColor", ColorBordersImages));
-
-  delete ColorFont;
-  delete ColorBackground;
-  delete ColorBordersImages;
-
-  // ALBUM dialogbox setup tab
-
-  m_configDlg->setImageName( m_config->readPathEntry("GalleryPath", KGlobalSettings::documentPath()) );
-  m_configDlg->setNotUseOriginalImageSize( m_config->readBoolEntry("NotUseOriginalImageSize", true) );
-  m_configDlg->setImagesResizeFormat( m_config->readEntry("ImagesResize", "640").toInt() );
-  m_configDlg->setUseSpecificTargetimageCompression( m_config->readBoolEntry("TargetImagesCompressionSet",
-                                                                             false) );
-  m_configDlg->setTargetImagesCompression( m_config->readEntry("TargetImagesCompression", "75").toInt() );
-  m_configDlg->setTargetImagesFormat( m_config->readEntry("TargetImagesFormat", "JPEG") );
-  m_configDlg->setColorDepthSetTargetImages( m_config->readBoolEntry("TargetImagesColorDepthSet", false) );
-  m_configDlg->setColorDepthTargetImages( m_config->readEntry("TargetImagesColorDepthValue", "32") );
-  m_configDlg->setUseCommentFile( m_config->readBoolEntry("UseCommentFile", true) );
-  m_configDlg->setUseCommentsAlbum( m_config->readBoolEntry("UseCommentsAlbum", true) );
-  m_configDlg->setUseCollectionAlbum( m_config->readBoolEntry("UseCollectionAlbum", "true") );
-  m_configDlg->setUseDateAlbum( m_config->readBoolEntry("UseDateAlbum", true) );
-  m_configDlg->setUseNbImagesAlbum( m_config->readBoolEntry("PrintImageNb", true) );
-
-  // THUMNAILS dialogbox setup tab
-
-  m_configDlg->setThumbnailsSize( m_config->readEntry("ThumbnailsSize", "140").toInt() );
-  m_configDlg->setUseSpecificThumbsCompression( m_config->readBoolEntry("ThumbnailsCompressionSet", false) );
-  m_configDlg->setThumbsCompression( m_config->readEntry("ThumbnailsCompression", "75").toInt() );
-  m_configDlg->setImageFormat( m_config->readEntry("ThumbnailsFormat", "JPEG") );
-  m_configDlg->setColorDepthSetThumbnails( m_config->readBoolEntry("ThumbnailsColorDepthSet", false) );
-  m_configDlg->setColorDepthThumbnails( m_config->readEntry("ThumbnailsColorDepthValue", "32") );
-
-  delete m_config;
+    KConfig* config=kapp->config();
+    config->setGroup("ImagesGallery Settings");
     
-  // Get the image files filters from the hosts app.
-     
-  m_imagesFileFilter = m_interface->fileExtensions();
+    // HTML Look dialogbox setup tab
+    
+    m_configDlg->setMainTitle( config->readEntry("MainPageTitle", i18n("KIPI Album Image Gallery")) );
+    m_configDlg->setImagesPerRow( config->readEntry("ImagesPerRow", "4").toInt() );
+    
+    m_configDlg->setPrintImageName( config->readBoolEntry("PrintImageName", true) );
+    m_configDlg->setPrintImageSize( config->readBoolEntry("PrintImageSize", true) );
+    m_configDlg->setPrintImageProperty( config->readBoolEntry("PrintFileSize", true) );
+    m_configDlg->setPrintPageCreationDate( config->readBoolEntry("PrintPageCreationDate", true) );
+    m_configDlg->setCreatePageForPhotos( config->readBoolEntry("CreatePageForPhotos", true) );
+    m_configDlg->setOpenGalleryInWebBrowser( config->readBoolEntry("OpenInWebBrowser", true) );
+    m_configDlg->setWebBrowserName( config->readPathEntry("WebBrowserName", "Konqueror") );
+    
+    m_configDlg->setFontName( config->readEntry("FontName", "Helvetica") );
+    m_configDlg->setFontSize( config->readEntry("FontSize", "14").toInt() );
+    ColorFont = new QColor( 208, 255, 208 );
+    m_configDlg->setForegroundColor( config->readColorEntry("FontColor", ColorFont));
+    ColorBackground = new QColor( 51, 51, 51 );
+    m_configDlg->setBackgroundColor( config->readColorEntry("BackgroundColor", ColorBackground));
+    m_configDlg->setBordersImagesSize( config->readEntry("BordersImagesSize", "1").toInt() );
+    ColorBordersImages = new QColor( 208, 255, 208 );
+    m_configDlg->setBordersImagesColor( config->readColorEntry("BordersImagesColor", ColorBordersImages));
+    
+    delete ColorFont;
+    delete ColorBackground;
+    delete ColorBordersImages;
+    
+    // ALBUM dialogbox setup tab
+    
+    m_configDlg->setImageName( config->readPathEntry("GalleryPath", KGlobalSettings::documentPath()) );
+    m_configDlg->setNotUseOriginalImageSize( config->readBoolEntry("NotUseOriginalImageSize", true) );
+    m_configDlg->setImagesResizeFormat( config->readEntry("ImagesResize", "640").toInt() );
+    m_configDlg->setUseSpecificTargetimageCompression( config->readBoolEntry("TargetImagesCompressionSet",
+                                                                                false) );
+    m_configDlg->setTargetImagesCompression( config->readEntry("TargetImagesCompression", "75").toInt() );
+    m_configDlg->setTargetImagesFormat( config->readEntry("TargetImagesFormat", "JPEG") );
+    m_configDlg->setColorDepthSetTargetImages( config->readBoolEntry("TargetImagesColorDepthSet", false) );
+    m_configDlg->setColorDepthTargetImages( config->readEntry("TargetImagesColorDepthValue", "32") );
+    m_configDlg->setUseCommentFile( config->readBoolEntry("UseCommentFile", true) );
+    m_configDlg->setUseCommentsAlbum( config->readBoolEntry("UseCommentsAlbum", true) );
+    m_configDlg->setUseCollectionAlbum( config->readBoolEntry("UseCollectionAlbum", "true") );
+    m_configDlg->setUseDateAlbum( config->readBoolEntry("UseDateAlbum", true) );
+    m_configDlg->setUseNbImagesAlbum( config->readBoolEntry("PrintImageNb", true) );
+    
+    // THUMNAILS dialogbox setup tab
+    
+    m_configDlg->setThumbnailsSize( config->readEntry("ThumbnailsSize", "140").toInt() );
+    m_configDlg->setUseSpecificThumbsCompression( config->readBoolEntry("ThumbnailsCompressionSet", false) );
+    m_configDlg->setThumbsCompression( config->readEntry("ThumbnailsCompression", "75").toInt() );
+    m_configDlg->setImageFormat( config->readEntry("ThumbnailsFormat", "JPEG") );
+    m_configDlg->setColorDepthSetThumbnails( config->readBoolEntry("ThumbnailsColorDepthSet", false) );
+    m_configDlg->setColorDepthThumbnails( config->readEntry("ThumbnailsColorDepthValue", "32") );
+    
+    // Get the image files filters from the hosts app.
+        
+    m_imagesFileFilter = m_interface->fileExtensions();
 }
 
 

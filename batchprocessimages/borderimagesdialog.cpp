@@ -199,41 +199,40 @@ void BorderImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("BorderImages Settings");
+    KConfig* config = kapp->config();
+    config->setGroup("BorderImages Settings");
 
-    m_Type->setCurrentItem(m_config->readNumEntry("BorderType", 1));     // Niepce per default.
+    m_Type->setCurrentItem(config->readNumEntry("BorderType", 1));     // Niepce per default.
     QColor *ColorBlack = new QColor( 0, 0, 0 );
     QColor *ColorWhite = new QColor( 255, 255, 255 );
-    m_solidWidth = m_config->readNumEntry("SolidWidth", 25);
-    m_solidColor = m_config->readColorEntry("SolidColor", ColorBlack);
+    m_solidWidth = config->readNumEntry("SolidWidth", 25);
+    m_solidColor = config->readColorEntry("SolidColor", ColorBlack);
 
-    m_lineNiepceWidth = m_config->readNumEntry("LineNiepceWidth", 10);
-    m_lineNiepceColor = m_config->readColorEntry("LineNiepceColor", ColorBlack);
-    m_NiepceWidth = m_config->readNumEntry("NiepceWidth", 100);
-    m_NiepceColor = m_config->readColorEntry("NiepceColor", ColorWhite);
+    m_lineNiepceWidth = config->readNumEntry("LineNiepceWidth", 10);
+    m_lineNiepceColor = config->readColorEntry("LineNiepceColor", ColorBlack);
+    m_NiepceWidth = config->readNumEntry("NiepceWidth", 100);
+    m_NiepceColor = config->readColorEntry("NiepceColor", ColorWhite);
 
-    m_raiseWidth = m_config->readNumEntry("RaiseWidth", 50);
+    m_raiseWidth = config->readNumEntry("RaiseWidth", 50);
 
-    m_frameWidth = m_config->readNumEntry("FrameWidth", 25);
-    m_bevelWidth = m_config->readNumEntry("BevelWidth", 10);
-    m_frameColor = m_config->readColorEntry("FrameColor", ColorBlack);
+    m_frameWidth = config->readNumEntry("FrameWidth", 25);
+    m_bevelWidth = config->readNumEntry("BevelWidth", 10);
+    m_frameColor = config->readColorEntry("FrameColor", ColorBlack);
 
-    if (m_config->readEntry("SmallPreview", "true") == "true")
+    if (config->readEntry("SmallPreview", "true") == "true")
         m_smallPreview->setChecked( true );
     else
         m_smallPreview->setChecked( false );
 
-    m_overWriteMode->setCurrentItem(m_config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentItem(config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
 
-    if (m_config->readEntry("RemoveOriginal", "false") == "true")
+    if (config->readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );
     else
         m_removeOriginal->setChecked( false );
 
     delete ColorWhite;
     delete ColorBlack;
-    delete m_config;
 }
 
 
@@ -243,31 +242,29 @@ void BorderImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("BorderImages Settings");
-    m_config->writeEntry("BorderType", m_Type->currentItem());
+    KConfig* config = kapp->config();
+    config->setGroup("BorderImages Settings");
+    config->writeEntry("BorderType", m_Type->currentItem());
 
-    m_config->writeEntry("SolidWidth", m_solidWidth);
-    m_config->writeEntry("SolidColor", m_solidColor);
+    config->writeEntry("SolidWidth", m_solidWidth);
+    config->writeEntry("SolidColor", m_solidColor);
 
-    m_config->writeEntry("LineNiepceWidth", m_lineNiepceWidth);
-    m_config->writeEntry("LineNiepceColor", m_lineNiepceColor);
-    m_config->writeEntry("NiepceWidth", m_NiepceWidth);
-    m_config->writeEntry("NiepceColor", m_NiepceColor);
+    config->writeEntry("LineNiepceWidth", m_lineNiepceWidth);
+    config->writeEntry("LineNiepceColor", m_lineNiepceColor);
+    config->writeEntry("NiepceWidth", m_NiepceWidth);
+    config->writeEntry("NiepceColor", m_NiepceColor);
 
-    m_config->writeEntry("RaiseWidth", m_raiseWidth);
+    config->writeEntry("RaiseWidth", m_raiseWidth);
 
-    m_config->writeEntry("FrameWidth", m_frameWidth);
-    m_config->writeEntry("BevelWidth", m_bevelWidth);
-    m_config->writeEntry("FrameColor", m_frameColor);
+    config->writeEntry("FrameWidth", m_frameWidth);
+    config->writeEntry("BevelWidth", m_bevelWidth);
+    config->writeEntry("FrameColor", m_frameColor);
 
-    m_config->writeEntry("SmallPreview", m_smallPreview->isChecked());
-    m_config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    m_config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
+    config->writeEntry("SmallPreview", m_smallPreview->isChecked());
+    config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
+    config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
 
-    m_config->sync();
-
-    delete m_config;
+    config->sync();
 }
 
 

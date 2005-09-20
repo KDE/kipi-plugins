@@ -235,46 +235,44 @@ void ResizeImagesDialog::readSettings(void)
 
     QColor *ColorWhite = new QColor( 255, 255, 255 );
     QColor *ColorBlack = new QColor( 0, 0, 0 );
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("ResizeImages Settings");
+    KConfig* config = kapp->config();
+    config->setGroup("ResizeImages Settings");
 
-    m_Type->setCurrentItem(m_config->readNumEntry("ResiseType", 3)); // Prepare to print per default.
-    m_size = m_config->readNumEntry("Size", 640);
-    m_resizeFilter = m_config->readEntry("ResizeFilter", "Lanczos");
+    m_Type->setCurrentItem(config->readNumEntry("ResiseType", 3)); // Prepare to print per default.
+    m_size = config->readNumEntry("Size", 640);
+    m_resizeFilter = config->readEntry("ResizeFilter", "Lanczos");
 
-    m_paperSize = m_config->readEntry("PaperSize", "10x15");
-    m_printDpi = m_config->readEntry("PrintDpi", "300");
-    m_customXSize = m_config->readNumEntry("CustomXSize", 10);
-    m_customYSize = m_config->readNumEntry("CustomYSize", 15);
-    m_customDpi = m_config->readNumEntry("CustomDpi", 300);
-    m_backgroundColor = m_config->readColorEntry("BackgroundColor", ColorWhite);
-    m_marging = m_config->readNumEntry("MargingSize", 10);
+    m_paperSize = config->readEntry("PaperSize", "10x15");
+    m_printDpi = config->readEntry("PrintDpi", "300");
+    m_customXSize = config->readNumEntry("CustomXSize", 10);
+    m_customYSize = config->readNumEntry("CustomYSize", 15);
+    m_customDpi = config->readNumEntry("CustomDpi", 300);
+    m_backgroundColor = config->readColorEntry("BackgroundColor", ColorWhite);
+    m_marging = config->readNumEntry("MargingSize", 10);
 
+    m_quality = config->readNumEntry("Quality", 75);
+    m_Width = config->readNumEntry("Width", 1024);
+    m_Height = config->readNumEntry("Height", 768);
+    m_Border = config->readNumEntry("Border", 100);
+    m_bgColor = config->readColorEntry("BgColor", ColorBlack);
 
-    m_quality = m_config->readNumEntry("Quality", 75);
-    m_Width = m_config->readNumEntry("Width", 1024);
-    m_Height = m_config->readNumEntry("Height", 768);
-    m_Border = m_config->readNumEntry("Border", 100);
-    m_bgColor = m_config->readColorEntry("BgColor", ColorBlack);
+    m_fixedWidth = config->readNumEntry("FixedWidth", 640);
+    m_fixedHeight = config->readNumEntry("FixedHeight", 480);
 
-    m_fixedWidth = m_config->readNumEntry("FixedWidth", 640);
-    m_fixedHeight = m_config->readNumEntry("FixedHeight", 480);
-
-    if ( m_config->readEntry("CustomSettings", "false") == "true")
+    if ( config->readEntry("CustomSettings", "false") == "true")
        m_customSettings = true;
     else
        m_customSettings = false;
 
-    m_overWriteMode->setCurrentItem(m_config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentItem(config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
 
-    if (m_config->readEntry("RemoveOriginal", "false") == "true")
+    if (config->readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );
     else
         m_removeOriginal->setChecked( false );
 
     delete ColorWhite;
     delete ColorBlack;
-    delete m_config;
 }
 
 
@@ -284,36 +282,34 @@ void ResizeImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("ResizeImages Settings");
-    m_config->writeEntry("ResiseType", m_Type->currentItem());
-    m_config->writeEntry("Size", m_size);
-    m_config->writeEntry("ResizeFilter", m_resizeFilter);
+    KConfig* config = kapp->config();
+    config->setGroup("ResizeImages Settings");
+    config->writeEntry("ResiseType", m_Type->currentItem());
+    config->writeEntry("Size", m_size);
+    config->writeEntry("ResizeFilter", m_resizeFilter);
 
-    m_config->writeEntry("PaperSize", m_paperSize);
-    m_config->writeEntry("PrintDpi", m_printDpi);
-    m_config->writeEntry("CustomXSize", m_customXSize);
-    m_config->writeEntry("CustomYSize", m_customYSize);
-    m_config->writeEntry("CustomDpi", m_customDpi);
-    m_config->writeEntry("BackgroundColor", m_backgroundColor);
-    m_config->writeEntry("MargingSize", m_marging);
-    m_config->writeEntry("CustomSettings", m_customSettings);
+    config->writeEntry("PaperSize", m_paperSize);
+    config->writeEntry("PrintDpi", m_printDpi);
+    config->writeEntry("CustomXSize", m_customXSize);
+    config->writeEntry("CustomYSize", m_customYSize);
+    config->writeEntry("CustomDpi", m_customDpi);
+    config->writeEntry("BackgroundColor", m_backgroundColor);
+    config->writeEntry("MargingSize", m_marging);
+    config->writeEntry("CustomSettings", m_customSettings);
 
-    m_config->writeEntry("Quality", m_quality);
-    m_config->writeEntry("Width", m_Width);
-    m_config->writeEntry("Height", m_Height);
-    m_config->writeEntry("Border", m_Border);
-    m_config->writeEntry("BgColor", m_bgColor);
+    config->writeEntry("Quality", m_quality);
+    config->writeEntry("Width", m_Width);
+    config->writeEntry("Height", m_Height);
+    config->writeEntry("Border", m_Border);
+    config->writeEntry("BgColor", m_bgColor);
 
-    m_config->writeEntry("FixedWidth", m_fixedWidth);
-    m_config->writeEntry("FixedHeight", m_fixedHeight);
+    config->writeEntry("FixedWidth", m_fixedWidth);
+    config->writeEntry("FixedHeight", m_fixedHeight);
 
-    m_config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    m_config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
+    config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
+    config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
 
-    m_config->sync();
-
-    delete m_config;
+    config->sync();
 }
 
 

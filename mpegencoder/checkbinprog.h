@@ -36,12 +36,13 @@ class CheckBinProg : public QObject
 Q_OBJECT
 
 public:
+    
     CheckBinProg(QObject *parent=0);
     virtual ~CheckBinProg();
     int findExecutables( void );
 
 private:
-    KConfig* config;
+
     QString  ImageMagickPath;
     QString  MjpegToolsPath;
 };

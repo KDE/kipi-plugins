@@ -53,7 +53,6 @@ class QLabel;
 class QWidget;
 class QPixmap;
 
-class KConfig;
 class KProcess;
 class KLineEdit;
 class KIconLoader;
@@ -91,124 +90,124 @@ Q_OBJECT
 
 public:
 
-  KImg2mpgData( KIPI::Interface* interface, QWidget* parent = 0, const char * name = 0 );
-  virtual ~KImg2mpgData();
-
-  void show();
-  void ShowNumberImages( int Number );
-  void closeEvent(QCloseEvent*);
-  QPixmap LoadIcon( QString Name, int Group );
-  void addItems(const KURL::List& fileList);
-  void writeSettings();
-  void readSettings();
-
-  OptionsDialog* m_OptionDlg;
-  QPushButton*   m_Encodebutton;
-  QGroupBox*     m_AudioInputFilename;
-
+    KImg2mpgData( KIPI::Interface* interface, QWidget* parent = 0, const char * name = 0 );
+    virtual ~KImg2mpgData();
+    
+    void show();
+    void ShowNumberImages( int Number );
+    void closeEvent(QCloseEvent*);
+    QPixmap LoadIcon( QString Name, int Group );
+    void addItems(const KURL::List& fileList);
+    void writeSettings();
+    void readSettings();
+    
+    OptionsDialog* m_OptionDlg;
+    QPushButton*   m_Encodebutton;
+    QGroupBox*     m_AudioInputFilename;
+    
 public slots:
   
-  void reset();
-  void readStderr(KProcess *proc, char *buffer, int buflen);
-  void EncodeDone(KProcess* );
-  void slotMPEGFilenameDialog( void );
-  void slotAudioFilenameDialog( void );
-  void slotImagesFilesButtonAdd( void );
-  void slotImagesFilesButtonDelete( void );
-  void slotImagesFilesButtonUp( void );
-  void slotImagesFilesButtonDown( void );
-  void slotEncode( void );
-  void slotOptions( void );
-  void slotClose( void );
-  void slotHelp( void );
-  void slotImagesFilesSelected( QListBoxItem *item );
-  void SlotPortfolioDurationChanged ( int );
-  void slotOptionDlgOkClicked( void );
-  void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
-  void slotFailedPreview(const KFileItem*);
-  void slotAddDropItems(KURL::List filesUrl);
-
+    void reset();
+    void readStderr(KProcess *proc, char *buffer, int buflen);
+    void EncodeDone(KProcess* );
+    void slotMPEGFilenameDialog( void );
+    void slotAudioFilenameDialog( void );
+    void slotImagesFilesButtonAdd( void );
+    void slotImagesFilesButtonDelete( void );
+    void slotImagesFilesButtonUp( void );
+    void slotImagesFilesButtonDown( void );
+    void slotEncode( void );
+    void slotOptions( void );
+    void slotClose( void );
+    void slotHelp( void );
+    void slotImagesFilesSelected( QListBoxItem *item );
+    void SlotPortfolioDurationChanged ( int );
+    void slotOptionDlgOkClicked( void );
+    void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
+    void slotFailedPreview(const KFileItem*);
+    void slotAddDropItems(KURL::List filesUrl);
+    
 private:
   
-  QString               m_VideoFormatConfig;
-  QString               m_VideoTypeConfig;
-  QString               m_ImageDurationConfig;
-  QString               m_TransitionSpeedConfig;
-  QString               m_MPEGOutputFileConfig;
-  QString               m_AudioInputFileConfig;
-  QString               m_IMBinFolderConfig;
-  QString               m_MJBinFolderConfig;
-  QString               m_TmpFolderConfig;
-  QString               m_NoneLabel;
-  QString               m_EncodeString;
-  QString               m_DebugOuputMessages;
-  QString               m_CommandLine;
-  QString               m_ImagesFilesSort;
-
-  QColor                m_BackgroundColorConfig;
-
-  KConfig*              m_config;
+    QString               m_VideoFormatConfig;
+    QString               m_VideoTypeConfig;
+    QString               m_ImageDurationConfig;
+    QString               m_TransitionSpeedConfig;
+    QString               m_MPEGOutputFileConfig;
+    QString               m_AudioInputFileConfig;
+    QString               m_IMBinFolderConfig;
+    QString               m_MJBinFolderConfig;
+    QString               m_TmpFolderConfig;
+    QString               m_NoneLabel;
+    QString               m_EncodeString;
+    QString               m_DebugOuputMessages;
+    QString               m_CommandLine;
+    QString               m_ImagesFilesSort;
+    
+    QColor                m_BackgroundColorConfig;
+    
+    KIO::PreviewJob*      m_thumbJob;
+    
+    QTime                 m_EncodingDuration;
+    QTime                 m_DurationTime;
+    
+    bool                  m_Abort;
+    bool                  m_Encoding;
+    
+    pid_t                 m_Img2mpgPidNum;
+    
+    KProcess*             m_Proc;
+    
+    QLabel*               m_ImageLabel;
+    QLabel*               m_frame;
+    QLabel*               m_label1;
+    QLabel*               m_label3;
+    QLabel*               m_label4;
+    QLabel*               m_label5;
+    QLabel*               m_label6;
+    QLabel*               m_label7;
+    
+    KProgress*            m_progress;
+    
+    QPushButton*          m_quitbutton;
+    QPushButton*          m_optionsbutton;
+    QPushButton*          m_helpButton;
+    QPushButton*          m_MPEGOutputBUTTONFilename;
+    QPushButton*          m_AudioInputBUTTONFilename;
+    QPushButton*          m_ImagesFilesButtonAdd;
+    QPushButton*          m_ImagesFilesButtonDelete;
+    QPushButton*          m_ImagesFilesButtonUp;
+    QPushButton*          m_ImagesFilesButtonDown;
+    
+    QComboBox*            m_VideoTypeComboBox;
+    QComboBox*            m_VideoFormatComboBox;
+    QComboBox*            m_TransitionComboBox;
+    
+    QSpinBox*             m_DurationImageSpinBox;
+    
+    QGroupBox*            m_MPEGOutputFilename;
+    QGroupBox*            m_ImagesFilesGroup;
+    
+    KLineEdit*            m_MPEGOutputEDITFilename;
+    KLineEdit*            m_AudioInputEDITFilename;
+    
+    KIconLoader*          m_Icons;
+    
+    KColorButton*         m_BackgroundColorButton;
+    
+    KListBox*             m_ImagesFilesListBox;
+    
+    KButtonBox*           m_ImagesFilesButtonBox;
+    
+    KIPI::Interface*      m_interface;
+    
+    class KShowDebuggingOutput* m_DebuggingDialog;
+    
+private:
   
-  KIO::PreviewJob*      m_thumbJob;
-
-  QTime                 m_EncodingDuration;
-  QTime                 m_DurationTime;
-
-  bool                  m_Abort;
-  bool                  m_Encoding;
-
-  pid_t                 m_Img2mpgPidNum;
-
-  KProcess*             m_Proc;
-
-  QLabel*               m_ImageLabel;
-  QLabel*               m_frame;
-  QLabel*               m_label1;
-  QLabel*               m_label3;
-  QLabel*               m_label4;
-  QLabel*               m_label5;
-  QLabel*               m_label6;
-  QLabel*               m_label7;
-
-  KProgress*            m_progress;
-
-  QPushButton*          m_quitbutton;
-  QPushButton*          m_optionsbutton;
-  QPushButton*          m_helpButton;
-  QPushButton*          m_MPEGOutputBUTTONFilename;
-  QPushButton*          m_AudioInputBUTTONFilename;
-  QPushButton*          m_ImagesFilesButtonAdd;
-  QPushButton*          m_ImagesFilesButtonDelete;
-  QPushButton*          m_ImagesFilesButtonUp;
-  QPushButton*          m_ImagesFilesButtonDown;
-
-  QComboBox*            m_VideoTypeComboBox;
-  QComboBox*            m_VideoFormatComboBox;
-  QComboBox*            m_TransitionComboBox;
-
-  QSpinBox*             m_DurationImageSpinBox;
-
-  QGroupBox*            m_MPEGOutputFilename;
-  QGroupBox*            m_ImagesFilesGroup;
-
-  KLineEdit*            m_MPEGOutputEDITFilename;
-  KLineEdit*            m_AudioInputEDITFilename;
-
-  KIconLoader*          m_Icons;
-
-  KColorButton*         m_BackgroundColorButton;
-
-  KListBox*             m_ImagesFilesListBox;
-
-  KButtonBox*           m_ImagesFilesButtonBox;
-  
-  KIPI::Interface*      m_interface;
-
-  class KShowDebuggingOutput* m_DebuggingDialog;
-
-  void RemoveTmpFiles( void );
-  bool DeleteDir(QString dirname);
-  bool deldir(QString dirname);
+    void RemoveTmpFiles( void );
+    bool DeleteDir(QString dirname);
+    bool deldir(QString dirname);
 };
 
 }  // NameSpace KIPIMPEGEncoderPlugin

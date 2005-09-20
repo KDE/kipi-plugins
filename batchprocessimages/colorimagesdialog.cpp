@@ -212,28 +212,26 @@ void ColorImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("ColorImages Settings");
+    KConfig* config = kapp->config();
+    config->setGroup("ColorImages Settings");
 
-    m_Type->setCurrentItem(m_config->readNumEntry("ColorType", 8)); // Normalize per default.
-    m_depthValue = m_config->readEntry("DepthValue", "32");
-    m_fuzzDistance = m_config->readNumEntry("FuzzDistance", 3);
-    m_segmentCluster = m_config->readNumEntry("SegmentCluster", 3);
-    m_segmentSmooth = m_config->readNumEntry("SegmentSmooth", 3);
+    m_Type->setCurrentItem(config->readNumEntry("ColorType", 8)); // Normalize per default.
+    m_depthValue = config->readEntry("DepthValue", "32");
+    m_fuzzDistance = config->readNumEntry("FuzzDistance", 3);
+    m_segmentCluster = config->readNumEntry("SegmentCluster", 3);
+    m_segmentSmooth = config->readNumEntry("SegmentSmooth", 3);
 
-    if (m_config->readEntry("SmallPreview", "true") == "true")
+    if (config->readEntry("SmallPreview", "true") == "true")
         m_smallPreview->setChecked( true );
     else
         m_smallPreview->setChecked( false );
 
-    m_overWriteMode->setCurrentItem(m_config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentItem(config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
 
-    if (m_config->readEntry("RemoveOriginal", "false") == "true")
+    if (config->readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );
     else
         m_removeOriginal->setChecked( false );
-
-    delete m_config;
 }
 
 
@@ -243,22 +241,20 @@ void ColorImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("ColorImages Settings");
+    KConfig* config = kapp->config();
+    config->setGroup("ColorImages Settings");
 
-    m_config->writeEntry("ColorType", m_Type->currentItem());
-    m_config->writeEntry("DepthValue", m_depthValue);
-    m_config->writeEntry("FuzzDistance", m_fuzzDistance);
-    m_config->writeEntry("SegmentCluster", m_segmentCluster);
-    m_config->writeEntry("SegmentSmooth", m_segmentSmooth);
+    config->writeEntry("ColorType", m_Type->currentItem());
+    config->writeEntry("DepthValue", m_depthValue);
+    config->writeEntry("FuzzDistance", m_fuzzDistance);
+    config->writeEntry("SegmentCluster", m_segmentCluster);
+    config->writeEntry("SegmentSmooth", m_segmentSmooth);
 
-    m_config->writeEntry("SmallPreview", m_smallPreview->isChecked());
-    m_config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    m_config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
+    config->writeEntry("SmallPreview", m_smallPreview->isChecked());
+    config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
+    config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
 
-    m_config->sync();
-
-    delete m_config;
+    config->sync();
 }
 
 

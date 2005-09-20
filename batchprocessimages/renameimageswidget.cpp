@@ -19,11 +19,18 @@
 // 
 // ============================================================ 
 
-#include <klocale.h>
-#include <kconfig.h>
-#include <kio/previewjob.h>
-#include <kio/renamedlg.h>
-#include <kdebug.h>
+// C ANSI includes.
+
+extern "C"
+{
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <time.h>
+}
+
+// Qt includes.
 
 #include <qlistview.h>
 #include <qlineedit.h>
@@ -38,18 +45,22 @@
 #include <qprogressdialog.h>
 #include <qgroupbox.h>
 
+// KDE includes.
+
+#include <klocale.h>
+#include <kconfig.h>
+#include <kio/previewjob.h>
+#include <kio/renamedlg.h>
+#include <kdebug.h>
+#include <kapplication.h>
+
+// Kipi includes.
+
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 #include <libkipi/imagedialog.h>
 
-extern "C"
-{
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <time.h>
-}
+// Local includes.
 
 #include "batchprocessimagesitem.h"
 #include "renameimageswidget.h"
@@ -134,39 +145,39 @@ RenameImagesWidget::~RenameImagesWidget()
 
 void RenameImagesWidget::readSettings()
 {
-    KConfig config("kipirc");
-    config.setGroup("RenameImages Settings");
+    KConfig* config = kapp->config();
+    config->setGroup("RenameImages Settings");
 
-    m_prefixEdit->setText(config.readEntry("PrefixString", ""));
-    m_seqSpin->setValue(config.readNumEntry("FirstRenameValue", 1));
+    m_prefixEdit->setText(config->readEntry("PrefixString", ""));
+    m_seqSpin->setValue(config->readNumEntry("FirstRenameValue", 1));
 
-    m_addFileNameCheck->setChecked(config.readBoolEntry("AddOriginalFileName", false));
-    m_addFileDateCheck->setChecked(config.readBoolEntry("AddImageFileDate", false));
-    m_formatDateCheck->setChecked(config.readBoolEntry("FormatDate", false));
-    m_formatDateEdit->setText(config.readEntry("FormatDateString", "%Y-%m-%d"));
+    m_addFileNameCheck->setChecked(config->readBoolEntry("AddOriginalFileName", false));
+    m_addFileDateCheck->setChecked(config->readBoolEntry("AddImageFileDate", false));
+    m_formatDateCheck->setChecked(config->readBoolEntry("FormatDate", false));
+    m_formatDateEdit->setText(config->readEntry("FormatDateString", "%Y-%m-%d"));
 
-    m_sortCombo->setCurrentItem((enum SortOrder)(config.readNumEntry("SortMethod", 0))); 
-    m_reverseSortCheck->setChecked(config.readBoolEntry("ReverseOrder", false));
+    m_sortCombo->setCurrentItem((enum SortOrder)(config->readNumEntry("SortMethod", 0))); 
+    m_reverseSortCheck->setChecked(config->readBoolEntry("ReverseOrder", false));
 
     slotOptionsChanged();
 }
 
 void RenameImagesWidget::saveSettings()
 {
-    KConfig config("kipirc");
-    config.setGroup("RenameImages Settings");
+    KConfig* config = kapp->config();
+    config->setGroup("RenameImages Settings");
 
-    config.writeEntry("PrefixString", m_prefixEdit->text());
-    config.writeEntry("FirstRenameValue", m_seqSpin->value());
+    config->writeEntry("PrefixString", m_prefixEdit->text());
+    config->writeEntry("FirstRenameValue", m_seqSpin->value());
 
-    config.writeEntry("AddOriginalFileName", m_addFileNameCheck->isChecked());
-    config.writeEntry("AddImageFileDate", m_addFileDateCheck->isChecked());
-    config.writeEntry("FormatDate", m_formatDateCheck->isChecked());
-    config.writeEntry("FormatDateString", m_formatDateEdit->text());
+    config->writeEntry("AddOriginalFileName", m_addFileNameCheck->isChecked());
+    config->writeEntry("AddImageFileDate", m_addFileDateCheck->isChecked());
+    config->writeEntry("FormatDate", m_formatDateCheck->isChecked());
+    config->writeEntry("FormatDateString", m_formatDateEdit->text());
 
-    config.writeEntry("SortMethod", m_sortCombo->currentItem());
-    config.writeEntry("ReverseOrder", m_reverseSortCheck->isChecked());
-    config.sync();
+    config->writeEntry("SortMethod", m_sortCombo->currentItem());
+    config->writeEntry("ReverseOrder", m_reverseSortCheck->isChecked());
+    config->sync();
 }
 
 void RenameImagesWidget::slotOptionsChanged()

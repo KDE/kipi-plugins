@@ -52,7 +52,6 @@
 
 #include <libkipi/interface.h>
 
-class KConfig;
 class KProcess;
 
 namespace KIPIImagesGalleryPlugin
@@ -122,7 +121,6 @@ private:
 
   KURL                m_url4browser;
 
-  KConfig            *m_config;
   KProcess           *m_webBrowserProc;
   KIPI::Interface    *m_interface;
 

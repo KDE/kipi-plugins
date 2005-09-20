@@ -53,7 +53,6 @@ class QWidget;
 class QCheckBox;
 class QPushButton;
 
-class KConfig;
 class KIntNumInput;
 
 namespace KIPIAcquireImagesPlugin
@@ -92,8 +91,6 @@ protected:
     AcquireImageDialog *m_acquireImageDialog;
     
     QImage              m_screenshotImage;
-    
-    KConfig            *m_config;
     
     QWidget            *m_grabber;
     

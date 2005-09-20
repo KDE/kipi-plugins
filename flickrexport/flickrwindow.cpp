@@ -154,10 +154,11 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, QWidget *parent)
              SLOT( slotAddPhotos() ) );
 
     // read config
-    KConfig config("kipirc");
-    config.setGroup("FlickrExport Settings");
-    m_token = config.readEntry("token");
-    if (config.readBoolEntry("Resize", false))
+    
+    KConfig* config=kapp->config();
+    config->setGroup("FlickrExport Settings");
+    m_token = config->readEntry("token");
+    if (config->readBoolEntry("Resize", false))
     {
         m_resizeCheckBox->setChecked(true);
         m_dimensionSpinBox->setEnabled(true);
@@ -167,7 +168,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, QWidget *parent)
         m_resizeCheckBox->setChecked(false);
         m_dimensionSpinBox->setEnabled(false);
     }
-    m_dimensionSpinBox->setValue(config.readNumEntry("Maximum Width", 1600));
+    m_dimensionSpinBox->setValue(config->readNumEntry("Maximum Width", 1600));
     
    m_authProgressDlg = new QProgressDialog( this, 0, true );
    m_authProgressDlg->setAutoReset( true );
@@ -191,11 +192,13 @@ FlickrWindow::~FlickrWindow()
 #endif
 
     // write config
-    KConfig config("kipirc");
-    config.setGroup("FlickrExport Settings");
-    config.writeEntry("token", m_token);
-    config.writeEntry("Resize", m_resizeCheckBox->isChecked());
-    config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
+    KConfig* config=kapp->config();
+    config->setGroup("FlickrExport Settings");
+    config->writeEntry("token", m_token);
+    config->writeEntry("Resize", m_resizeCheckBox->isChecked());
+    config->writeEntry("Maximum Width",  m_dimensionSpinBox->value());
+    config->sync();
+    
     delete m_progressDlg;
     delete m_authProgressDlg;
     delete m_talker;

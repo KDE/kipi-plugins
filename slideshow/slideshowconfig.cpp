@@ -194,7 +194,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
 
     // ------------------------------------------------------------------
 
-    config_ = new KConfig("kipirc");
+    config_ = kapp->config();
     config_->setGroup("SlideShow Settings");
 
     readSettings();
@@ -202,11 +202,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
 
 SlideShowConfig::~SlideShowConfig()
 {
-    if (config_) {
-        delete config_;
-    }
 }
-
 
 void SlideShowConfig::loadEffectNames()
 {
