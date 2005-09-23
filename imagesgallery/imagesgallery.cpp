@@ -877,11 +877,11 @@ void ImagesGallery::createBody(QTextStream& stream, const QStringList& subDirLis
                    m_StreamMainPageAlbumPreview.append ( Temp2 );
                    Temp2 = "height=\"" + Temp.setNum(m_imgHeight) + "\" alt=\"" + imgPath + "\" ";
                    m_StreamMainPageAlbumPreview.append ( Temp2 );
-                   Temp2 = "title=\"" + m_AlbumTitle + " [ " + Temp.setNum(numOfImages) + i18n(" images")
+                   Temp2 = "title=\"" + m_AlbumTitle + " [ " + i18n("1 image", "%n images", numOfImages)
                            + " ]\"></a>\n";
                    m_StreamMainPageAlbumPreview.append ( Temp2 );
                    Temp2 = "<a href=\"" + m_AlbumTitle + "/" + "index.html" + "\">" + m_AlbumTitle + "</a>"
-                           + " [ " + Temp.setNum(numOfImages) + i18n(" images") + " ]" + "<br>\n";
+                           + " [ " + i18n("1 image", "%n images", numOfImages) + " ]" + "<br>\n";
                    m_StreamMainPageAlbumPreview.append ( Temp2 );
                    }
                 }
