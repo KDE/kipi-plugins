@@ -1,27 +1,29 @@
-//////////////////////////////////////////////////////////////////////////////
-//
-//    CDARCHIVINGDILAOG.CPP
-//
-//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
-//    Copyright (C) 2003-2004 by Gregory Kokanosky <gregory dot kokanosky at free.fr>
-//    for images navigation mode.
-//
-//    This program is free software; you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation; either version 2 of the License, or
-//    (at your option) any later version.
-//
-//    This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with this program; if not, write to the Free Software
-//    Foundation, Inc., 51 Franklin Steet, Fifth Floor, Cambridge, MA 02110-1301, USA.
-//
-//////////////////////////////////////////////////////////////////////////////
-
+/* ============================================================
+ * Author: Gilles Caulier <caulier dot gilles at free.fr>
+ *         from digiKam project.
+ * Date  : 2003-10-01
+ * Description : a kipi plugin to export image collections
+ *               on CD/DVD.
+ * 
+ * Copyright 2003-2005 by Gilles Caulier
+ * Copyright 2003-2004 by Gregory Kokanosky 
+ *                        <gregory dot kokanosky at free.fr>
+ *                        for HTML interface navigation mode
+ * Copyright 2005      by Owen Hirst <n8rider at sbcglobal.net>
+ *                        about bugfix.
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * ============================================================ */
 
 // Include files for Qt
 
@@ -80,11 +82,9 @@ namespace KIPICDArchivingPlugin
 
 KIO::filesize_t TargetMediaSize;
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *parent)
                  : KDialogBase( IconList, i18n("Configure Archive to CD"), Help|Ok|Cancel, Ok,
-                   parent, "CDArchivingDialog", true, true ), m_interface( interface )
+                                parent, "CDArchivingDialog", true, true ), m_interface( interface )
 {
     setCaption(i18n("Create CD/DVD Archive"));
     setupSelection();
@@ -103,7 +103,7 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
                                                  "This plugin use K3b CD/DVD burning software available at\n"
                                                  "http://www.k3b.org"),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier", 
+                                       "(c) 2003-2005, Gilles Caulier", 
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
     
@@ -111,7 +111,10 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
                      "caulier dot gilles at free.fr");
 
     about->addAuthor("Gregory Kokanosky", I18N_NOOP("Image navigation mode patches"),
-                     "gregory dot kokanosky at free.fr>");
+                     "gregory dot kokanosky at free.fr");
+
+    about->addAuthor("Owen Hirst", I18N_NOOP("Bugfix"),
+                     "n8rider at sbcglobal.net");
                          
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
@@ -120,24 +123,14 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     m_helpButton->setPopup( helpMenu->menu() );
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 CDArchivingDialog::~CDArchivingDialog()
 {
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("cdarchiving",
-                                             "kipi-plugins");
+    KApplication::kApplication()->invokeHelp("cdarchiving", "kipi-plugins");
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void CDArchivingDialog::setupSelection(void)
 {
@@ -179,9 +172,6 @@ void CDArchivingDialog::setupSelection(void)
     connect( m_imageCollectionSelector, SIGNAL( selectionChanged() ),
              this, SLOT( slotAlbumSelected() ) );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void CDArchivingDialog::setupLookPage(void)
 {
@@ -325,7 +315,8 @@ void CDArchivingDialog::setupLookPage(void)
     m_labelBackgroundColor->setBuddy( m_backgroundColor );
     hlay2->addStretch( 1 );
     hlay2->addWidget(m_backgroundColor);
-   //---------------------------------------------
+   
+    //---------------------------------------------
 
     QHBoxLayout *hlay13  = new QHBoxLayout( );
     vlay->addLayout( hlay13 );
@@ -334,9 +325,9 @@ void CDArchivingDialog::setupLookPage(void)
     m_bordersImagesSize->setValue( 1 );
     QWhatsThis::add( m_bordersImagesSize, i18n("<p>Select here the image border's size in pixels.") );
 
-    QLabel *label = new QLabel( i18n("Image border s&ize:"), page_setupLook );
-    label->setBuddy( m_bordersImagesSize );
-    hlay13->addWidget( label );
+    m_labelImageBorderSize = new QLabel( i18n("Image border s&ize:"), page_setupLook );
+    m_labelImageBorderSize->setBuddy( m_bordersImagesSize );
+    hlay13->addWidget( m_labelImageBorderSize );
     hlay13->addStretch( 1 );
     hlay13->addWidget( m_bordersImagesSize );
 
@@ -350,9 +341,9 @@ void CDArchivingDialog::setupLookPage(void)
     QWhatsThis::add( m_bordersImagesColor, i18n("<p>Select here the color used "
                                                 "for the image borders.") );
 
-    label = new QLabel( i18n("Image bo&rder color:"), page_setupLook);
-    hlay4->addWidget( label );
-    label->setBuddy( m_bordersImagesColor );
+    m_labelImageBorderSizeColor = new QLabel( i18n("Image bo&rder color:"), page_setupLook);
+    hlay4->addWidget( m_labelImageBorderSizeColor );
+    m_labelImageBorderSizeColor->setBuddy( m_bordersImagesColor );
     hlay4->addStretch( 1 );
     hlay4->addWidget(m_bordersImagesColor);
 
@@ -404,9 +395,20 @@ void CDArchivingDialog::setupLookPage(void)
 
     connect(m_useHTMLInterface, SIGNAL(toggled(bool)),
             m_backgroundColor, SLOT(setEnabled(bool)));
-}
+    
+    connect(m_useHTMLInterface, SIGNAL(toggled(bool)),
+            m_bordersImagesSize, SLOT(setEnabled(bool)));
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+    connect(m_useHTMLInterface, SIGNAL(toggled(bool)),
+            m_labelImageBorderSize, SLOT(setEnabled(bool)));
+
+    connect(m_useHTMLInterface, SIGNAL(toggled(bool)),
+            m_bordersImagesColor, SLOT(setEnabled(bool)));    
+            
+    connect(m_useHTMLInterface, SIGNAL(toggled(bool)),
+            m_labelImageBorderSizeColor, SLOT(setEnabled(bool)));    
+                   
+}
 
 void CDArchivingDialog::setupCDInfos(void)
 {
@@ -491,9 +493,6 @@ void CDArchivingDialog::setupCDInfos(void)
     vlay->addStretch(1);
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setupBurning(void)
 {
     page_burning = addPage( i18n("Media Burning"),
@@ -567,9 +566,6 @@ void CDArchivingDialog::setupBurning(void)
     vlay->addStretch(1);
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::slotAlbumSelected()
 {
     QValueList<KIPI::ImageCollection> ListAlbums(m_imageCollectionSelector->selectedImageCollections());
@@ -592,8 +588,6 @@ void CDArchivingDialog::slotAlbumSelected()
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::mediaFormatActived (const QString & item )
 {
     QString Color;
@@ -613,9 +607,6 @@ void CDArchivingDialog::mediaFormatActived (const QString & item )
     ShowMediaCapacity();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::ShowMediaCapacity(void)
 {
    QString Color = "<font color=\"blue\">";;
@@ -630,9 +621,6 @@ void CDArchivingDialog::ShowMediaCapacity(void)
                          i18n("<b>%1</b></font> / <b>%2</b>").arg(KIO::convertSizeFromKB(TargetMediaSize))
                               .arg(KIO::convertSizeFromKB (MaxMediaSize)) );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void CDArchivingDialog::slotOk()
 {
@@ -661,384 +649,245 @@ void CDArchivingDialog::slotOk()
     accept();
 }
 
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::UrlChanged(const QString &url )
 {
     enableButtonOK( !url.isEmpty());
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 QString CDArchivingDialog::getK3bBinPathName() const
 {
     return m_K3bBinPath->url();
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 QString CDArchivingDialog::getK3bParameters() const
 {
     return m_K3bParameters->text();
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void CDArchivingDialog::setK3bBinPathName(const QString &Value)
 {
     m_K3bBinPath->setURL( Value );
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setK3bParameters(const QString &Value)
 {
     m_K3bParameters->setText( Value );
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 int CDArchivingDialog::getImagesPerRow() const
 {
     return m_imagesPerRow->value();
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setImagesPerRow(int Value)
 {
     m_imagesPerRow->setValue(Value);
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 int CDArchivingDialog::getThumbnailsSize() const
 {
     return m_thumbnailsSize->value();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setThumbnailsSize(int Value)
 {
     m_thumbnailsSize->setValue( Value );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QString CDArchivingDialog::getFontName() const
 {
     return m_fontName->currentText();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setFontName(QString Value)
 {
     m_fontName->setCurrentText (Value);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QString CDArchivingDialog::getFontSize() const
 {
     return m_fontSize->text();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setFontSize(int Value)
 {
     m_fontSize->setValue( Value );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QColor CDArchivingDialog::getBackgroundColor() const
 {
     return m_backgroundColor->color();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setBackgroundColor(QColor Value)
 {
     m_backgroundColor->setColor( Value );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QColor CDArchivingDialog::getForegroundColor() const
 {
     return m_foregroundColor->color();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setForegroundColor(QColor Value)
 {
     m_foregroundColor->setColor( Value );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QString CDArchivingDialog::getImageFormat() const
 {
     return m_imageFormat->currentText();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setImageFormat(QString Value)
 {
     return m_imageFormat->setCurrentText( Value );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QString CDArchivingDialog::getMainTitle() const
 {
     return m_title->text();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setMainTitle(QString Value)
 {
     return m_title->setText( Value );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 bool CDArchivingDialog::getUseHTMLInterface() const
 {
     return m_useHTMLInterface->isChecked();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setUseHTMLInterface(bool Value)
 {
     m_useHTMLInterface->setChecked(Value);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 bool CDArchivingDialog::getUseAutoRunWin32() const
 {
     return m_useAutoRunWin32->isChecked();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setUseAutoRunWin32(bool Value)
 {
     m_useAutoRunWin32->setChecked(Value);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QString CDArchivingDialog::getVolumeID() const
 {
     return m_volume_id->text();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setVolumeID(QString Value)
 {
     return m_volume_id->setText( Value );
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QString CDArchivingDialog::getVolumeSetID() const
 {
     return m_volume_set_id->text();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setVolumeSetID(QString Value)
 {
     return m_volume_set_id->setText( Value );
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QString CDArchivingDialog::getSystemID() const
 {
     return m_system_id->text();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setSystemID(QString Value)
 {
     return m_system_id->setText( Value );
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QString CDArchivingDialog::getApplicationID() const
 {
     return m_application_id->text();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setApplicationID(QString Value)
 {
     return m_application_id->setText( Value );
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QString CDArchivingDialog::getPublisher() const
 {
     return m_publisher->text();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setPublisher(QString Value)
 {
     return m_publisher->setText( Value );
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QString CDArchivingDialog::getPreparer() const
 {
     return m_preparer->text();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setPreparer(QString Value)
 {
     return m_preparer->setText( Value );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QString CDArchivingDialog::getMediaFormat() const
 {
     return m_mediaFormat->currentText();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setMediaFormat(QString Value)
 {
     return m_mediaFormat->setCurrentText( Value );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 bool CDArchivingDialog::getUseOnTheFly() const
 {
     return m_burnOnTheFly->isChecked();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setUseUseOnTheFly(bool Value)
 {
     m_burnOnTheFly->setChecked(Value);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 bool CDArchivingDialog::getUseCheckCD() const
 {
     return m_checkCDBurn->isChecked();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setUseCheckCD(bool Value)
 {
     m_checkCDBurn->setChecked(Value);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 bool CDArchivingDialog::getUseStartBurningProcess() const
 {
     return m_startBurningProcess->isChecked();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setUseStartBurningProcess(bool Value)
 {
     m_startBurningProcess->setChecked(Value);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 const QColor CDArchivingDialog::getBordersImagesColor() const
 {
     return m_bordersImagesColor->color();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void CDArchivingDialog::setBordersImagesColor(QColor Value)
 {
     m_bordersImagesColor->setColor( Value );
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 const QString CDArchivingDialog::getBordersImagesSize() const
 {
     return m_bordersImagesSize->text();
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void CDArchivingDialog::setBordersImagesSize(int Value)
 {
