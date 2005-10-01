@@ -2,6 +2,7 @@
 Name=KameraKlient
 Name[cs]=Foto klient
 Name[da]=Kameraklient
+Name[es]=Cliente de cámara
 Name[et]=Kaameraklient
 Name[pl]=Klient Kamera
 Name[pt]=Cliente do Kamera
@@ -17,6 +18,7 @@ Comment=KIPI Digital Camera Interface Plugin
 Comment[cs]=KIPI modul rozhraní pro připojení fotoaparátu
 Comment[da]=KIPI-plugin: Grænseflade til digitalkamera
 Comment[de]=Ein KIPI-Modul zur Bereitstellung einer Kameraschnittstelle
+Comment[es]=Extensión de KIPI para interfaz de cámara digital
 Comment[et]=KIPI digikaamera liidese plugin
 Comment[it]=Plugin di interfaccia alle fotocamere digitali di KIPI
 Comment[nl]=KIPI-plugin voor de digitale camera-interface
