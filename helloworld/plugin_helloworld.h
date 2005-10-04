@@ -51,7 +51,7 @@ private slots:
     void slotActivate();
 
 private:
-    KAction         *m_actionHelloWorld
+    KAction         *m_actionHelloWorld;
     KIPI::Interface *m_interface;
 };
 
