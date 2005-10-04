@@ -51,7 +51,7 @@
 typedef KGenericFactory<Plugin_AcquireImages> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_acquireimages,
-                            Factory("kipiplugin_acquireimages"));
+                            Factory("kipiplugin_acquireimages"))
 
 // -----------------------------------------------------------
 Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const char*, const QStringList&)

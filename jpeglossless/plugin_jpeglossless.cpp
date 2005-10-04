@@ -55,7 +55,7 @@
 typedef KGenericFactory<Plugin_JPEGLossless> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_jpeglossless,
-                            Factory("kipiplugin_jpeglossless"));
+                            Factory("kipiplugin_jpeglossless"))
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////

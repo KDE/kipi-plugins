@@ -1623,13 +1623,4 @@ Click the 'Next' button to begin.</string>
     <slot>EditCopies_valueChanged( int )</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
-<includehints>
-    <includehint>kcombobox.h</includehint>
-    <includehint>kurllabel.h</includehint>
-    <includehint>klineedit.h</includehint>
-    <includehint>kpushbutton.h</includehint>
-    <includehint>klistbox.h</includehint>
-    <includehint>kipiprintwizardplugin::cropframe.h</includehint>
-    <includehint>kprogress.h</includehint>
-</includehints>
 </UI>

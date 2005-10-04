@@ -53,7 +53,7 @@ extern "C"
 typedef KGenericFactory<Plugin_RawConverter> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_rawconverter,
-                            Factory("kipiplugin_rawconverter"));
+                            Factory("kipiplugin_rawconverter"))
 
 Plugin_RawConverter::Plugin_RawConverter(QObject *parent,
                                          const char*,

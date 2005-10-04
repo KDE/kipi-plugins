@@ -194,7 +194,7 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Acquire Images Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
-};
+}
 
 
 //////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
