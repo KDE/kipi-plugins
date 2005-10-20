@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=Flickr Exporter
 Name[br]=Ezporzher Flickr 
+Name[el]=Περιηγητής Flickr
 Name[es]=Exportador Flickr
 Name[ga]=Easpórtálaí Flickr
 Name[it]=Esportazione a Flickr
@@ -17,6 +18,7 @@ Name[xx]=xxFlickr Exporterxx
 Comment=KIPI Remote Flickr Export Plugin
 Comment[da]=KIPI Eksternt Flickr eksport plugin
 Comment[de]=Ein KIPI-Modul, um Bilder zu Flickr zu exportieren
+Comment[el]=Πρόσθετο απομακρυσμένης εξαγωγής Flickr του KIPI
 Comment[es]=Extensión de KIPI para exportación Flickr remota
 Comment[it]=Plugin per l'esportazione remota a Flickr di KIPI
 Comment[nl]=KIPI-plugin voor het exporteren naar Flickr-galerij

@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=MPEGEncoder
 Name[da]=MPEG-kodning
+Name[el]=MPEGΚωδικοποιητής
 Name[es]=Codificador MPEG
 Name[et]=MPEG kodeerija
 Name[it]=CodificaMPEG
@@ -20,6 +21,7 @@ Comment=KIPI Images MPEG Encoder Plugin
 Comment[cs]=KIPI modul MPEG enkóderu 
 Comment[da]=KIPI-plugin: MPEG-kodning
 Comment[de]=Ein KIPI-Modul zum Erstellen eines MPEG-Films aus Bildern
+Comment[el]=Πρόσθετο του KIPI για κωδικοποίηση εικόνων MPEG
 Comment[es]=Extensión de KIPI para codificar imágenes MPEG
 Comment[et]=KIPI piltide MPEG kodeerimise plugin
 Comment[it]=Plugin di codifica MPEG delle immagini di KIPI

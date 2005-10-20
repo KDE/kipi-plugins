@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=AcquireImages
 Name[da]=Hent billeder
+Name[el]=ΑνάκτησηΕικόνων
 Name[es]=Obtener imágenes
 Name[et]=Pildihõive
 Name[it]=AcquisizioneImmagini
@@ -20,6 +21,7 @@ Name[zh_CN]=获取图像
 Comment=KIPI Acquire Image Plugin
 Comment[da]=KIPI-plugin: Hent billeder
 Comment[de]=Ein KIPI-Modul zum Holen von Bildern
+Comment[el]=Πρόσθετο ανάκτησης εικόνας KIPI
 Comment[es]=Extensión de KIPI para captura de imágenes
 Comment[et]=KIPI pildihõive plugin
 Comment[it]=Plugin di acquisizione di immagini di KIPI
