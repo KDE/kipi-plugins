@@ -18,7 +18,11 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
-
+extern "C"
+{
+	#include<unistd.h>
+}
+	
 // KDE includes.
 #include <klocale.h>
 #include <kaction.h>
@@ -27,7 +31,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kapplication.h>
-
+#include <kstandarddirs.h>
 // libkipi includes.
 #include <libkipi/interface.h>
 
@@ -89,8 +93,10 @@ void Plugin_FlickrExport::slotActivate()
         kdError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
-
-    KIPIFlickrExportPlugin::FlickrWindow dlg(interface, kapp->activeWindow());
+	KStandardDirs dir;
+	QString Tmp = dir.saveLocation("tmp", "kipi-flickrexportplugin-" + QString::number(getpid()) + "/");
+		
+    KIPIFlickrExportPlugin::FlickrWindow dlg(interface,Tmp,kapp->activeWindow());
     dlg.exec();
 }
 

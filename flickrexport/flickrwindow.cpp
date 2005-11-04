@@ -70,8 +70,8 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWindow::FlickrWindow(KIPI::Interface* interface, QWidget *parent)
-    : KDialogBase(parent, 0, true, i18n( "FlickrUploadr" ), Help|Close, Close, false)
+FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, QWidget *parent)
+    : KDialogBase(parent, 0, true, i18n( "FlickrUploadr" ), Help|Close, Close, false),m_tmp(tmpFolder)
 {
     m_interface   = interface;
     m_uploadCount = 0;
@@ -397,6 +397,7 @@ void FlickrWindow::slotNewAlbum()
 */
 void FlickrWindow::slotAddPhotos()
 {
+    kdDebug()<<"Slot Add Photos being called geting the list of url"<<endl;
     KURL::List urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
     kdDebug()<<"Slot Add Photos being called geting the list of url"<<endl;
     if (urls.isEmpty())

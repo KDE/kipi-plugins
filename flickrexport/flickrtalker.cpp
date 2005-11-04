@@ -41,6 +41,7 @@
 
 #include <string>
 #include "flickritem.h"
+#include "exifrestorer.h"
 #include "mpform.h"
 #include "flickrtalker.h"
 #include "flickrwindow.h"
@@ -311,6 +312,23 @@ namespace KIPIFlickrExportPlugin
 				image = image.smoothScale(maxDim, maxDim, QImage::ScaleMin);
 				path = locateLocal("tmp", KURL(photoPath).filename());
 				image.save(path, QImageIO::imageFormat(photoPath));
+				//if the image is JPEG:
+				//This resizing code comes mostly as it is from sendimageplugin
+				if (QString(QImageIO::imageFormat(photoPath)).upper() == "JPEG" ){
+					ExifRestorer exifHolder;
+					exifHolder.readFile(photoPath,ExifRestorer::ExifOnly);
+
+					if(exifHolder.hasExif())
+					{
+						ExifRestorer restorer;
+						restorer.readFile(path,ExifRestorer::EntireImage);
+						restorer.insertExifData(exifHolder.exifData());
+						restorer.writeFile(path);
+					}
+					else
+						kdWarning(51000)<<"(flickrExport::Image doesn't have exif data)"<<endl;
+				}	
+				
 				kdDebug() << "Resizing and saving to temp file: "<< path << endl;
 			}
 		}

@@ -9,7 +9,7 @@ kipiplugin_flickrexport_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 kipiplugin_flickrexport_la_SOURCES = plugin_flickrexport.cpp \
 		flickrwindow.cpp login.cpp flickrtalker.cpp \
 		flickrwidget.cpp mpform.cpp flickralbumdialog.ui \
-		flickrviewitem.cpp 
+		flickrviewitem.cpp	exifrestorer.cpp 
 
 kipiplugin_flickrexport_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) \
 				$(LIB_KHTML)

@@ -65,7 +65,7 @@ class FlickrWindow : public KDialogBase
 
 public:
 
-    FlickrWindow(KIPI::Interface *interface, QWidget *parent);
+    FlickrWindow(KIPI::Interface *interface, const QString &tmpFolder,QWidget *parent);
     ~FlickrWindow();
 
 private:
@@ -89,6 +89,7 @@ private:
     QString                   m_token;
     QString                   m_lastSelectedAlbum;
     KIPI::Interface          *m_interface;
+	QString 				  m_tmp;
     //KWallet::Wallet          *m_wallet;
 
     QProgressDialog                      *m_progressDlg;
