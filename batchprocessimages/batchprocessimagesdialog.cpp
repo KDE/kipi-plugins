@@ -1015,6 +1015,7 @@ void BatchProcessImagesDialog::endPreview(void)
     m_addImagesButton->setEnabled(true);
     m_remImagesButton->setEnabled(true);
     m_smallPreview->setEnabled(true);
+    m_removeOriginal->setEnabled(true);
     showButtonCancel( true );
 
     m_optionsButton->setEnabled(true);          // Default status if 'slotTypeChanged' isn't re-implemented.
