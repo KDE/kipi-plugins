@@ -128,16 +128,23 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
     m_resizeCheckBox = new QCheckBox(optionsBox);
     m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
   // m_resizeCheckBox->show();
-   optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox, 1,1,0,3,1 );
+   optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox, 1,1,0,4,1 );
 
     m_dimensionSpinBox  = new QSpinBox(0, 5000, 10, optionsBox);
     m_dimensionSpinBox->setValue(600);
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     optionsBoxLayout->addWidget(m_dimensionSpinBox, 2,1 );
 
-    QLabel* resizeLabel = new QLabel(i18n("Maximum dimension:"), optionsBox);
+	QLabel* resizeLabel = new QLabel(i18n("Maximum dimension:"), optionsBox);
     optionsBoxLayout->addWidget(resizeLabel, 2, 0);
-
+    
+	m_imageQualitySpinBox  = new QSpinBox(0, 100, 1, optionsBox);
+    m_imageQualitySpinBox->setValue(85);
+    m_imageQualitySpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    optionsBoxLayout->addWidget(m_imageQualitySpinBox, 3,1 );
+    
+	QLabel* imageQualityLabel = new QLabel(i18n("Image Quality (higher is better):"), optionsBox);//The term Compression factor may be to technical to write in the label
+    optionsBoxLayout->addWidget(imageQualityLabel, 3, 0);
 
     m_resizeCheckBox->setChecked(false);
     m_dimensionSpinBox->setEnabled(false);

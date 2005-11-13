@@ -111,6 +111,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_familyCheckBox          = m_widget->m_familyCheckBox;
     m_friendsCheckBox         = m_widget->m_friendsCheckBox;
     m_dimensionSpinBox = m_widget->m_dimensionSpinBox;
+    m_imageQualitySpinBox = m_widget->m_imageQualitySpinBox;
     m_tagsLineEdit          = m_widget->m_tagsLineEdit;
     //m_albumView->setRootIsDecorated( true );
 
@@ -168,6 +169,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
         m_dimensionSpinBox->setEnabled(false);
     }
     m_dimensionSpinBox->setValue(config.readNumEntry("Maximum Width", 1600));
+    m_imageQualitySpinBox->setValue(config.readNumEntry("Image Quality", 85));
     
    m_authProgressDlg = new QProgressDialog( this, 0, true );
    m_authProgressDlg->setAutoReset( true );
@@ -196,6 +198,7 @@ FlickrWindow::~FlickrWindow()
     config.writeEntry("token", m_token);
     config.writeEntry("Resize", m_resizeCheckBox->isChecked());
     config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
+    config.writeEntry("Image Quality",  m_imageQualitySpinBox->value());
     delete m_progressDlg;
     delete m_authProgressDlg;
     delete m_talker;
@@ -442,7 +445,7 @@ void FlickrWindow::slotAddPhotoNext()
     bool res = m_talker->addPhoto( pathComments.first, //the file path
                                    info,
 				   m_resizeCheckBox->isChecked(),
-                                   m_dimensionSpinBox->value() );
+                                   m_dimensionSpinBox->value(),m_imageQualitySpinBox->value() );
     if (!res)
     {
         slotAddPhotoFailed( "" );

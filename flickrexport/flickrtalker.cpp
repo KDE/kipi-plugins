@@ -251,7 +251,7 @@ namespace KIPIFlickrExportPlugin
 
 	bool FlickrTalker::addPhoto(  const QString& photoPath,
 			FPhotoInfo& info,
-			bool  rescale, int maxDim )
+			bool  rescale, int maxDim, int imageQuality )
 	{
 		if (m_job)
 		{
@@ -311,7 +311,7 @@ namespace KIPIFlickrExportPlugin
 			{
 				image = image.smoothScale(maxDim, maxDim, QImage::ScaleMin);
 				path = locateLocal("tmp", KURL(photoPath).filename());
-				image.save(path, QImageIO::imageFormat(photoPath));
+				image.save(path, QImageIO::imageFormat(photoPath),imageQuality);
 				//if the image is JPEG:
 				//This resizing code comes mostly as it is from sendimageplugin
 				if (QString(QImageIO::imageFormat(photoPath)).upper() == "JPEG" ){

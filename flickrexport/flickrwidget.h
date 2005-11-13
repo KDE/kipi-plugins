@@ -55,6 +55,7 @@ private:
     QCheckBox*    m_friendsCheckBox;
     QCheckBox*    m_publicCheckBox;
     QSpinBox*     m_dimensionSpinBox;
+    QSpinBox*     m_imageQualitySpinBox;
     QLineEdit*    m_tagsLineEdit;
     friend class FlickrWindow;
 };

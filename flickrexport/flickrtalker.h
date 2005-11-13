@@ -71,7 +71,7 @@ public:
                       const QString& albumCaption );
     bool addPhoto( const QString& photoPath,
                    FPhotoInfo& info,
-			bool rescale=false, int maxDim=600 );
+			bool rescale=false, int maxDim=600 , int imageQuality=85 );
 
     void cancel();
     

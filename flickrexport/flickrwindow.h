@@ -28,9 +28,6 @@
 #include <libkipi/imagedialog.h>
 
 
-
-
-
 class QListView;
 class QPushButton;
 class QSpinBox;
@@ -82,6 +79,7 @@ private:
     QCheckBox                *m_familyCheckBox;
     QCheckBox                *m_friendsCheckBox;
     QSpinBox                 *m_dimensionSpinBox;
+    QSpinBox                 *m_imageQualitySpinBox;
     QLineEdit                *m_tagsLineEdit;
     FlickrWidget	*m_widget;
     FlickrTalker            *m_talker;
