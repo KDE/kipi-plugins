@@ -229,10 +229,11 @@ void CalWizard::slotPageSelected(const QString&)
             QString year = QString::number(cSettings_->getYear());
             
             QString extra;
-            if (QDate::currentDate().month() >= 6 && 
-                QDate::currentDate().year() >= cSettings_->getYear())
+            if ((QDate::currentDate().month() >= 6 && 
+                 QDate::currentDate().year() == cSettings_->getYear()) ||
+                QDate::currentDate().year() > cSettings_->getYear())
                 extra = "<br><br><b>"+i18n("Please note that you are making a "
-                        "calendar for the current year or a year in the "
+                        "calendar for<br>the current year or a year in the "
                         "past.")+"</b>";
             
             wPrintLabel_->setText(i18n("Click Next to start Printing<br><br>"
