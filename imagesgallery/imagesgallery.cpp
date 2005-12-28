@@ -278,7 +278,9 @@ bool ImagesGallery::removeTargetGalleryFolder(void)
              KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove folder '%1'.").arg(MainTPath));
              return false;
              }
-          }
+          } 
+          else
+              return false;
        }
        
     return true;
