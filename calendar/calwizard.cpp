@@ -224,17 +224,27 @@ void CalWizard::slotPageSelected(const QString&)
                 printList.append(month);
             }
         }
-
+        
         if (!monthNumbers_.empty()) {
             QString year = QString::number(cSettings_->getYear());
-            wPrintLabel_->setText(i18n("Click Next to start Printing\n\n"
+            
+            QString extra;
+            if (QDate::currentDate().month() >= 6 && 
+                QDate::currentDate().year() >= cSettings_->getYear())
+                extra = "<br><br><b>"+i18n("Please note that you are making a "
+                        "calendar for the current year or a year in the "
+                        "past.")+"</b>";
+            
+            wPrintLabel_->setText(i18n("Click Next to start Printing<br><br>"
                                        "Following months will be printed for year %1:").arg(year)
-                                  + QString("\n")
-                             + printList.join("\n"));
+                                  + QString("<br>")
+                             + printList.join("<br>") + extra);
+            wPrintLabel_->setTextFormat(Qt::RichText);
+                
             setNextEnabled(wPrint_, true);
         }
         else {
-            wPrintLabel_->setText(i18n("No valid images selected for months\n"
+            wPrintLabel_->setText(i18n("No valid images selected for months<br>"
                                        "Click Back to select images"));
             setNextEnabled(wPrint_, false);
         }
