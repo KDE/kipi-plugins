@@ -195,9 +195,7 @@ bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
     int w  = NINT((double)layout->width() * xRatio);
     int h  = NINT((double)layout->height() * yRatio);
 
-    // We can use scaleFree because the crop frame should have the proper dimensions.
-    img = img.smoothScale(w, h, QImage::ScaleFree);
-    p.drawImage(x1 + left, y1 + top, img);
+    p.drawImage( QRect(x1 + left, y1 + top, w, h), img );
 
     if (captionType > 0)
     {
