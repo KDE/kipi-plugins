@@ -112,6 +112,13 @@ void SimpleViewerExport::startExport()
     m_progressDlg->setProgress(0, m_totalActions);
 
     slotProcess();
+
+#if KDE_VERSION >= 0x30200
+           m_progressDlg->setButtonCancel(KStdGuiItem::close());
+#else
+           m_progressDlg->setButtonCancelText(i18n("&Close"));
+#endif
+
 }
 
 void SimpleViewerExport::slotCancel()
