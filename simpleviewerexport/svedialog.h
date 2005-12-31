@@ -38,6 +38,7 @@ namespace KIPI
 class QFrame;
 class QLineEdit;
 class QCheckBox;
+class QComboBox;
 
 class KIntNumInput;
 class KColorButton;
