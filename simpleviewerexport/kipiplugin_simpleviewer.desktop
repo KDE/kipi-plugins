@@ -1,7 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=SimpleViewer
-Name[xx]=xxSimpleViewerxx
 Comment=KIPI Simple Viewer Plugin
 Type=Service
 ServiceTypes=KIPI/Plugin
