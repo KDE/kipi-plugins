@@ -1,7 +1,12 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=SimpleViewer
+Name[da]=SimpeleFremviser
+Name[el]=ΑπλόςΠροβολέας
+Name[ga]=AmharcánSimplí
 Comment=KIPI Simple Viewer Plugin
+Comment[da]=KIPI Simpel fremviser-plugin
+Comment[el]=Πρόσθετο απλού προβολέα του KIPI
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_simpleviewer
