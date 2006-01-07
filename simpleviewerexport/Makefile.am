@@ -19,7 +19,7 @@ kde_services_DATA = kipiplugin_simpleviewer.desktop
 
 # Install the SimpleViewer files
 kipiplugin_simpleviewer_svdir = $(kde_datadir)/kipiplugin_simpleviewerexport
-kipiplugin_simpleviewer_sv_DATA = test.txt
+kipiplugin_simpleviewer_sv_DATA = index.html
 
 # i18n translation messages 
 #Nota : no need a translation file for this plugin.
