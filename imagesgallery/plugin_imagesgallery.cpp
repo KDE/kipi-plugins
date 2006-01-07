@@ -212,7 +212,7 @@ void Plugin_Imagesgallery::customEvent(QCustomEvent *event)
                                  
                default: 
                   {
-                  kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Success' event: " << d->action << endl;
+                  kdWarning( 51000 ) << "Plugin_Imagesgallery: Unknown 'Success' event: " << d->action << endl;
                   }
                }
 
