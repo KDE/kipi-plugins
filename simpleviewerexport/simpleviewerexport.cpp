@@ -62,7 +62,7 @@ const QString viewer("viewer.swf");
 void SimpleViewerExport::run(KIPI::Interface* interface, QObject *parent)
 {
     SimpleViewerExport *plugin = new SimpleViewerExport(interface, parent);
-    
+ 
     if(!plugin->checkSimpleViewer())
     {
         if(!plugin->installSimpleViewer())
@@ -82,7 +82,12 @@ SimpleViewerExport::SimpleViewerExport(KIPI::Interface* interface, QObject *pare
 {
     m_interface = interface;
     m_configDlg = 0;
-    m_canceled = true;    
+    m_canceled = true;
+    m_dataLocal = locateLocal("data", "kipiplugin_simpleviewerexport/simpleviewer/", true);
+    
+    m_simpleViewerFiles.append(viewer);
+    m_simpleViewerFiles.append("flash_detect.js");
+    m_simpleViewerFiles.append("get_flash_player.gif");
 }
 
 SimpleViewerExport::~SimpleViewerExport()
@@ -432,8 +437,7 @@ bool SimpleViewerExport::openArchive(KZip &zip)
 
 bool SimpleViewerExport::extractArchive(KZip &zip)
 {
-    // Inhalt des Root-Verzeichnisses ermitteln
-    
+    // read root directory content
     QStringList names = zip.directory()->entries();
     if(names.count() != 1)
     {
@@ -442,7 +446,7 @@ bool SimpleViewerExport::extractArchive(KZip &zip)
         return false;
     }
             
-    // Das Root-Verzeichnis öffnen
+    // open root directory
     const KArchiveEntry *root = zip.directory()->entry(names[0]);
     if(!root || !root->isDirectory())
     {
@@ -452,26 +456,40 @@ bool SimpleViewerExport::extractArchive(KZip &zip)
     
     const KArchiveDirectory *dir = dynamic_cast<const KArchiveDirectory*>(root);
             
-    const KArchiveEntry *viewerEntry = dir->entry( QString::fromLatin1("viewer.swf") );
-    if( !viewerEntry || !viewerEntry->isFile() ) 
+    // extract the needed files from SimpleViewer archive
+    for(QStringList::Iterator it = m_simpleViewerFiles.begin(); 
+        it != m_simpleViewerFiles.end(); ++it ) 
     {
-        //KMessageBox::error( this, i18n( "Error reading viewer.swf file from %1; it is likely that the file is broken." ).arg( "ZIP" ) );
-        return false;
-    }
-    const KArchiveFile *viewerFile = dynamic_cast<const KArchiveFile*>(viewerEntry);
-    QByteArray array = viewerFile->data();
-    
-    QString dataDir = locateLocal("data", "kipiplugin_simpleviewerexport/simpleviewer/", true);
-    
-    QFile file( dataDir + viewer );
-    if ( file.open( IO_WriteOnly ) ) {
-        file.writeBlock(array);
-        file.close();
+        const KArchiveEntry *entry = dir->entry(*it);
+        if(!extractFile(entry))
+        {
+            //TODO error msg
+            kdDebug() << "could not open " << *it << " of zipname" << endl;
+            return false;
+        }
     }
     
     return true;
 }
 
+bool SimpleViewerExport::extractFile(const KArchiveEntry *entry)
+{
+    if( !entry || !entry->isFile() ) 
+        return false;
+   
+    const KArchiveFile *entryFile = dynamic_cast<const KArchiveFile*>(entry);
+    QByteArray array = entryFile->data();
+
+    QFile file( m_dataLocal + entry->name() );
+    if(file.open( IO_WriteOnly )) 
+    {
+        int ret = file.writeBlock(array);
+        file.close();
+        return ret > 0 ? true : false;
+    }
+    
+    return false;
+}
 
 } // namespace KIPISimpleViewerExportPlugin
 

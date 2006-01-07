@@ -40,6 +40,7 @@ class KZip;
 class KURL;
 class QString;
 class QImage;
+class KArchiveEntry;
 
 namespace KIPISimpleViewerExportPlugin
 {
@@ -136,6 +137,8 @@ private:
     
     bool extractArchive(KZip &zip);
     
+    bool extractFile(const KArchiveEntry *entry);
+    
 public slots:
     
     void slotProcess();
@@ -150,6 +153,8 @@ private:
     QTimer                              *m_timer;
     int                                  m_totalActions;
     bool                                 m_canceled;
+    QString                              m_dataLocal;
+    QStringList                          m_simpleViewerFiles;
 };
 
 }
