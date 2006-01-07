@@ -37,6 +37,7 @@
 #include <kstandarddirs.h>
 #include <kio/job.h>
 #include <kzip.h>
+#include <kmessagebox.h>
 
 // KIPI includes
 
@@ -71,8 +72,8 @@ void SimpleViewerExport::run(KIPI::Interface* interface, QObject *parent)
         }
     }
     
-    plugin->showConfigDialog();
-    plugin->startExport();
+    if(plugin->configure())
+        plugin->startExport();
     
     delete plugin;
 }
@@ -95,18 +96,41 @@ SimpleViewerExport::~SimpleViewerExport()
 
 }
 
-void SimpleViewerExport::showConfigDialog()
+bool SimpleViewerExport::configure()
 {
-   
     m_canceled = true;
     
     if(!m_configDlg)
         m_configDlg = new SVEDialog(m_interface, kapp->activeWindow());
-    
-    if(m_configDlg->exec() == QDialog::Rejected)
-        return;
 
-    m_canceled = false;
+    while(1)
+    {
+        if(m_configDlg->exec() == QDialog::Rejected)
+            return false;
+    
+        if(KIO::NetAccess::exists(m_configDlg->exportURL(), false, kapp->activeWindow()))
+        {
+            int ret = KMessageBox::warningYesNoCancel(kapp->activeWindow(),
+                                                      i18n("Target folder %1 already exists.\n"
+                                                           "Do you want to overwrite it (all data in this folder will be lost)")
+                                                           .arg(m_configDlg->exportURL()));
+            if(ret == KMessageBox::Cancel)
+            {
+                return false;
+            }
+            else if(ret == KMessageBox::Yes)
+            {
+                if(!KIO::NetAccess::del(m_configDlg->exportURL(), kapp->activeWindow()))
+                {
+                    KMessageBox::error(kapp->activeWindow(), 
+                                       i18n("Could not delete %1\n"
+                                            "Please choose another export folder")
+                                            .arg(m_configDlg->exportURL()));
+                }
+            }
+        }
+    }
+    return true;
 }
 
 void SimpleViewerExport::startExport()
@@ -172,7 +196,7 @@ void SimpleViewerExport::slotProcess()
 bool SimpleViewerExport::createExportDirectories()
 {
     KURL root = m_configDlg->exportURL();
-
+    
     if(!KIO::NetAccess::mkdir(root, kapp->activeWindow()))
     {
         m_progressDlg->addedAction(i18n("Could not create folder '%1'").arg(root.url()),
@@ -380,9 +404,17 @@ void SimpleViewerExport::copySimpleViewer()
     for(QStringList::Iterator it = files.begin(); it!=files.end(); ++it) {
         *it = dir.absPath() + "/" + *it;
     }
-    
     // TODO: catch errors
-    KIO::CopyJob *copyJob = KIO::copy(files, m_configDlg->exportURL(), true);    
+    KIO::CopyJob *copyJob = KIO::copy(files, m_configDlg->exportURL(), true);
+    
+    dataDir = locate("data", "kipiplugin_simpleviewerexport/simpleviewer_html");
+    QDir dirHtml(dataDir);
+    QStringList files2 = dirHtml.entryList(QDir::Files);
+    for(QStringList::Iterator it = files2.begin(); it!=files2.end(); ++it) {
+        *it = dirHtml.absPath() + "/" + *it;
+    }
+    // TODO: catch errors
+    KIO::CopyJob *copyJob2 = KIO::copy(files2, m_configDlg->exportURL(), true);
 }
 
 bool SimpleViewerExport::checkSimpleViewer() const

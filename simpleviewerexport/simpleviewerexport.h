@@ -61,7 +61,7 @@ private:
     SimpleViewerExport( KIPI::Interface* interface, QObject *parent=0 );
     ~SimpleViewerExport();
 
-    void showConfigDialog();
+    bool configure();
     void startExport();
 
     /**
