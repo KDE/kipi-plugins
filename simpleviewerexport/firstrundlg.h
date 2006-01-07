@@ -52,9 +52,15 @@ public:
     FirstRunDlg(QWidget *parent=0);
     ~FirstRunDlg();
 
+    /**
+     * Returns the URL, where the SimpleViewer package is stored
+     */
+    QString getURL();
+    
 private:
         
     KURLRequester       *m_urlRequester;
+    QString              m_url;
     
 private slots:
         

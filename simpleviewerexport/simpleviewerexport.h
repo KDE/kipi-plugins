@@ -36,6 +36,10 @@ namespace KIPI
 }
 
 class QTimer;
+class KZip;
+class KURL;
+class QString;
+class QImage;
 
 namespace KIPISimpleViewerExportPlugin
 {
@@ -113,7 +117,7 @@ private:
     /**
      * Copies simpleviewers files into the export directory
      */
-    void copySimpleViewer() const;
+    void copySimpleViewer();
     
     /**
      * Is the SimpleViewer flash installed?
@@ -124,7 +128,13 @@ private:
      * Installs the SimpleViewer files for the later export 
      * on the users machine
      */
-    bool installSimpleViewer() const;
+    bool installSimpleViewer();
+    
+    bool unzip(const QString &url);
+
+    bool openArchive(KZip &zip);
+    
+    bool extractArchive(KZip &zip);
     
 public slots:
     

@@ -36,6 +36,7 @@
 #include <kfilemetainfo.h>
 #include <kstandarddirs.h>
 #include <kio/job.h>
+#include <kzip.h>
 
 // KIPI includes
 
@@ -361,7 +362,7 @@ void SimpleViewerExport::cfgCreateFooter(QTextStream &ts)
     ts << "</SIMPLEVIEWER_DATA>" << endl;
 }
 
-void SimpleViewerExport::copySimpleViewer() const
+void SimpleViewerExport::copySimpleViewer()
 {
     QString dataDir = locate("data", "kipiplugin_simpleviewerexport/simpleviewer/");
     if(dataDir.isEmpty())
@@ -384,19 +385,93 @@ bool SimpleViewerExport::checkSimpleViewer() const
     return ! locate("data", "kipiplugin_simpleviewerexport/simpleviewer/"+viewer).isEmpty();
 }
 
-bool SimpleViewerExport::installSimpleViewer() const
+bool SimpleViewerExport::installSimpleViewer()
 {
     FirstRunDlg *firstRunDlg = new FirstRunDlg(kapp->activeWindow());
-    if(firstRunDlg->exec() == QDialog::Rejected)
+    if(firstRunDlg->exec() != QDialog::Accepted)
     {
         //TODO ErrorMessage
         delete firstRunDlg;
         return false;
     }
     
+    QString url = firstRunDlg->getURL();
+    
+    if(!unzip(url))
+    {
+        //TODO ErrorMessage
+        delete firstRunDlg;
+        return false;
+    }
+
     delete firstRunDlg;
     return true;
 }
+
+bool SimpleViewerExport::unzip(const QString &url)
+{
+    KZip zip(url);
+    
+    if(!openArchive(zip))    
+    {
+        return false;
+    }
+    
+    return extractArchive(zip);
+}
+
+bool SimpleViewerExport::openArchive(KZip &zip)
+{
+    if(!zip.open(IO_ReadOnly))
+    {
+        kdDebug() << "open archive failed\n";
+        return false;
+    }
+    return true;
+}
+
+bool SimpleViewerExport::extractArchive(KZip &zip)
+{
+    // Inhalt des Root-Verzeichnisses ermitteln
+    
+    QStringList names = zip.directory()->entries();
+    if(names.count() != 1)
+    {
+        kdDebug() << "Wrong SimpleViewer Version or corrupted archive" << endl;
+        kdDebug() << "Content of the archive root folder" << names << endl;
+        return false;
+    }
+            
+    // Das Root-Verzeichnis öffnen
+    const KArchiveEntry *root = zip.directory()->entry(names[0]);
+    if(!root || !root->isDirectory())
+    {
+        kdDebug() << "could not open " << names[0] << " of zipname" << endl;
+        return false;
+    }
+    
+    const KArchiveDirectory *dir = dynamic_cast<const KArchiveDirectory*>(root);
+            
+    const KArchiveEntry *viewerEntry = dir->entry( QString::fromLatin1("viewer.swf") );
+    if( !viewerEntry || !viewerEntry->isFile() ) 
+    {
+        //KMessageBox::error( this, i18n( "Error reading viewer.swf file from %1; it is likely that the file is broken." ).arg( "ZIP" ) );
+        return false;
+    }
+    const KArchiveFile *viewerFile = dynamic_cast<const KArchiveFile*>(viewerEntry);
+    QByteArray array = viewerFile->data();
+    
+    QString dataDir = locateLocal("data", "kipiplugin_simpleviewerexport/simpleviewer/", true);
+    
+    QFile file( dataDir + viewer );
+    if ( file.open( IO_WriteOnly ) ) {
+        file.writeBlock(array);
+        file.close();
+    }
+    
+    return true;
+}
+
 
 } // namespace KIPISimpleViewerExportPlugin
 

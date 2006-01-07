@@ -106,6 +106,12 @@ void FirstRunDlg::slotDownload(const QString &url)
 void FirstRunDlg::slotURLSelected(const QString &url)
 {
     enableButtonOK(true);
+    m_url = url;
+}
+
+QString FirstRunDlg::getURL()
+{
+    return m_url;
 }
 
 }
