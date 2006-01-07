@@ -360,6 +360,7 @@ void SendImagesDialog::setupEmailOptions(void)
     m_mailAgentName->insertItem( "Mozilla" );
     m_mailAgentName->insertItem( "Netscape" );
     m_mailAgentName->insertItem( "Sylpheed" );
+    m_mailAgentName->insertItem( "Sylpheed-Claws" );
     m_mailAgentName->insertItem( "Thunderbird" );
     m_mailAgentName->setCurrentText( "Kmail" );
     QWhatsThis::add( m_mailAgentName, i18n("<p>Select here your preferred external mail agent program."
@@ -371,6 +372,7 @@ void SendImagesDialog::setupEmailOptions(void)
                                            "<b>Mozilla</b>: >= 1.4<p>"
                                            "<b>Netscape</b>: >= 7.x<p>"
                                            "<b>Sylpheed</b>: >= 0.9<p>"
+                                           "<b>Sylpheed-Claws</b>: >= 0.9<p>"
                                            "<b>Thunderbird</b>: >= 0.4<p>") );
 
     hlay10->addWidget( m_mailAgentLabel );

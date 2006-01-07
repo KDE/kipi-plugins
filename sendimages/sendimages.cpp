@@ -344,11 +344,16 @@ void SendImages::invokeMailAgent(void)
 
     // Sylpheed mail agent call.
 
-    if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed" )
+    if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed" ||
+         m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed-Claws" )
     {
         m_mailAgentProc = new KProcess;
-        *m_mailAgentProc << "sylpheed" << "--compose";
-        *m_mailAgentProc << "--attach";
+        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed")
+            *m_mailAgentProc << "sylpheed";
+        else
+            *m_mailAgentProc << "sylpheed-claws";
+
+        *m_mailAgentProc << "--compose" << "--attach";
 
         for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
             *m_mailAgentProc << QFile::encodeName((*it).path());
