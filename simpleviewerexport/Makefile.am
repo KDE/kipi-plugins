@@ -6,7 +6,7 @@ kde_module_LTLIBRARIES = kipiplugin_simpleviewer.la
 kipiplugin_simpleviewer_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 # Srcs for the plugin
 kipiplugin_simpleviewer_la_SOURCES = plugin_simpleviewer.cpp svedialog.cpp \
-	simpleviewerexport.cpp
+	simpleviewerexport.cpp firstrundlg.cpp
 
 # Libs needed by the plugin
 kipiplugin_simpleviewer_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS)

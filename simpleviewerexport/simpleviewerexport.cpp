@@ -4,7 +4,7 @@
  * Date  : 2005-12-19
  * Description :
  *
- * Copyright 2005 by Joern Ahrens
+ * Copyright 2005-2006 by Joern Ahrens
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,6 +25,7 @@
 #include <qimage.h>
 #include <qtextstream.h>
 #include <qfile.h>
+#include <qdir.h>
 
 // KDE includes
 
@@ -33,6 +34,8 @@
 #include <kapplication.h>
 #include <kio/netaccess.h>
 #include <kfilemetainfo.h>
+#include <kstandarddirs.h>
+#include <kio/job.h>
 
 // KIPI includes
 
@@ -43,18 +46,31 @@
 // Local includes
 
 #include "simpleviewerexport.h"
+#include "firstrundlg.h"
 #include "svedialog.h"
 
 namespace KIPISimpleViewerExportPlugin
 {
     
 // maxium size of a simpleviewer thumbnail
+// TODO: read from configfile
 const int maxThumbSize = 45;
+
+const QString viewer("viewer.swf");
     
 void SimpleViewerExport::run(KIPI::Interface* interface, QObject *parent)
 {
     SimpleViewerExport *plugin = new SimpleViewerExport(interface, parent);
-    plugin->showDialog();
+    
+    if(!plugin->checkSimpleViewer())
+    {
+        if(!plugin->installSimpleViewer())
+        {
+            return;
+        }
+    }
+    
+    plugin->showConfigDialog();
     plugin->startExport();
     
     delete plugin;
@@ -73,8 +89,9 @@ SimpleViewerExport::~SimpleViewerExport()
 
 }
 
-void SimpleViewerExport::showDialog()
+void SimpleViewerExport::showConfigDialog()
 {
+   
     m_canceled = true;
     
     if(!m_configDlg)
@@ -248,7 +265,7 @@ bool SimpleViewerExport::exportImages()
         }
         cfgCreateFooter(ts);
     }
-
+    copySimpleViewer();
     return true;
 }
 
@@ -342,6 +359,43 @@ void SimpleViewerExport::cfgAddImage(QTextStream &ts, const KURL &kurl)
 void SimpleViewerExport::cfgCreateFooter(QTextStream &ts)
 {
     ts << "</SIMPLEVIEWER_DATA>" << endl;
+}
+
+void SimpleViewerExport::copySimpleViewer() const
+{
+    QString dataDir = locate("data", "kipiplugin_simpleviewerexport/simpleviewer/");
+    if(dataDir.isEmpty())
+        installSimpleViewer();
+    if(dataDir.isEmpty())
+        return;
+    
+    QDir dir(dataDir);
+    QStringList files = dir.entryList(QDir::Files);
+    for(QStringList::Iterator it = files.begin(); it!=files.end(); ++it) {
+        *it = dir.absPath() + "/" + *it;
+    }
+    
+    // TODO: catch errors
+    KIO::CopyJob *copyJob = KIO::copy(files, m_configDlg->exportURL(), true);    
+}
+
+bool SimpleViewerExport::checkSimpleViewer() const
+{
+    return ! locate("data", "kipiplugin_simpleviewerexport/simpleviewer/"+viewer).isEmpty();
+}
+
+bool SimpleViewerExport::installSimpleViewer() const
+{
+    FirstRunDlg *firstRunDlg = new FirstRunDlg(kapp->activeWindow());
+    if(firstRunDlg->exec() == QDialog::Rejected)
+    {
+        //TODO ErrorMessage
+        delete firstRunDlg;
+        return false;
+    }
+    
+    delete firstRunDlg;
+    return true;
 }
 
 } // namespace KIPISimpleViewerExportPlugin
