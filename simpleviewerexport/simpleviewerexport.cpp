@@ -57,7 +57,6 @@ namespace KIPISimpleViewerExportPlugin
 // maxium size of a simpleviewer thumbnail
 // TODO: read from configfile
 const int maxThumbSize = 45;
-
 const QString viewer("viewer.swf");
     
 void SimpleViewerExport::run(KIPI::Interface* interface, QObject *parent)
@@ -98,7 +97,7 @@ SimpleViewerExport::~SimpleViewerExport()
 
 bool SimpleViewerExport::configure()
 {
-    m_canceled = true;
+    m_canceled = false;
     
     if(!m_configDlg)
         m_configDlg = new SVEDialog(m_interface, kapp->activeWindow());
@@ -127,9 +126,16 @@ bool SimpleViewerExport::configure()
                                             "Please choose another export folder")
                                             .arg(m_configDlg->exportURL()));
                 }
+                else {
+                    break;
+                }
             }
         }
+        else {
+            break;
+        }
     }
+    
     return true;
 }
 
@@ -145,7 +151,7 @@ void SimpleViewerExport::startExport()
             this, SLOT(slotCancel()));
 
     m_progressDlg->show();
-
+    kapp->processEvents();
     // Estimate the number of actions for the KIPI progress dialog.
     m_progressDlg->addedAction(i18n("Estimate the number of actions to do..."), KIPI::StartingMessage);
     m_albumsList = m_configDlg->getSelectedAlbums();
@@ -175,11 +181,14 @@ void SimpleViewerExport::slotCancel()
 
 void SimpleViewerExport::slotProcess()
 {
+    if(m_canceled)
+        return;
+    
     m_progressDlg->addedAction(i18n("Initialising..."), KIPI::StartingMessage);
     if(!createExportDirectories())
     {
-        m_progressDlg->addedAction(i18n("Failed to create export directories"),
-                                   KIPI::ErrorMessage);
+            m_progressDlg->addedAction(i18n("Failed to create export directories"),
+                                       KIPI::ErrorMessage);
         return;
     }
 
@@ -407,7 +416,7 @@ void SimpleViewerExport::copySimpleViewer()
     // TODO: catch errors
     KIO::CopyJob *copyJob = KIO::copy(files, m_configDlg->exportURL(), true);
     
-    dataDir = locate("data", "kipiplugin_simpleviewerexport/simpleviewer_html");
+    dataDir = locate("data", "kipiplugin_simpleviewerexport/simpleviewer_html/");
     QDir dirHtml(dataDir);
     QStringList files2 = dirHtml.entryList(QDir::Files);
     for(QStringList::Iterator it = files2.begin(); it!=files2.end(); ++it) {
