@@ -102,37 +102,40 @@ bool SimpleViewerExport::configure()
     if(!m_configDlg)
         m_configDlg = new SVEDialog(m_interface, kapp->activeWindow());
 
-    while(1)
+    bool configured = false;
+    while(!configured)
     {
         if(m_configDlg->exec() == QDialog::Rejected)
             return false;
     
+        configured = true;
+        
         if(KIO::NetAccess::exists(m_configDlg->exportURL(), false, kapp->activeWindow()))
         {
             int ret = KMessageBox::warningYesNoCancel(kapp->activeWindow(),
                                                       i18n("Target folder %1 already exists.\n"
                                                            "Do you want to overwrite it (all data in this folder will be lost)")
                                                            .arg(m_configDlg->exportURL()));
-            if(ret == KMessageBox::Cancel)
+            
+            switch(ret)
             {
-                return false;
-            }
-            else if(ret == KMessageBox::Yes)
-            {
-                if(!KIO::NetAccess::del(m_configDlg->exportURL(), kapp->activeWindow()))
-                {
-                    KMessageBox::error(kapp->activeWindow(), 
-                                       i18n("Could not delete %1\n"
-                                            "Please choose another export folder")
-                                            .arg(m_configDlg->exportURL()));
-                }
-                else {
+                case KMessageBox::Yes:
+                    if(!KIO::NetAccess::del(m_configDlg->exportURL(), kapp->activeWindow()))
+                    {
+                        KMessageBox::error(kapp->activeWindow(), i18n("Could not delete %1\n"
+                                "Please choose another export folder").arg(m_configDlg->exportURL()));
+                        configured = false;
+                    }
                     break;
-                }
-            }
-        }
-        else {
-            break;
+                
+                case KMessageBox::No:
+                    configured = false;
+                    break;
+                
+                case KMessageBox::Cancel:
+                    return false;
+                    break;
+            };
         }
     }
     
@@ -236,16 +239,15 @@ bool SimpleViewerExport::createExportDirectories()
 
 bool SimpleViewerExport::exportImages()
 {
-    // TODO:
-    KURL thumbsDir = m_configDlg->exportURL();
+    KURL thumbsDir(m_configDlg->exportURL());
     thumbsDir.addPath("/thumbs");
-    KURL imagesDir = m_configDlg->exportURL();
+    
+    KURL imagesDir(m_configDlg->exportURL());
     imagesDir.addPath("/images");
 
     KURL xmlFile = m_configDlg->exportURL();
     xmlFile.addPath("/imageData.xml");
-    QFile file( xmlFile.path() );
-
+    QFile file(xmlFile.path());
     file.open(IO_WriteOnly);
     QTextStream ts(&file);
     cfgCreateHeader(ts);
@@ -288,15 +290,12 @@ bool SimpleViewerExport::exportImages()
                 continue;
             }
 
-            // TODO:
-            KURL thumbnailPath = thumbsDir;
+            KURL thumbnailPath(thumbsDir);
             thumbnailPath.addPath(kurl.filename());
-            kdDebug() << k_funcinfo << thumbnailPath.path() << endl;
             thumbnail.save(thumbnailPath.path(), "JPEG");
 
-            KURL imagePath = imagesDir;
+            KURL imagePath(imagesDir);
             imagePath.addPath(kurl.filename());
-            kdDebug() << k_funcinfo << imagePath.path() << endl;
             image.save(imagePath.path(), "JPEG");
 
             cfgAddImage(ts, kurl);
@@ -304,7 +303,9 @@ bool SimpleViewerExport::exportImages()
         }
         cfgCreateFooter(ts);
     }
+    
     copySimpleViewer();
+    
     return true;
 }
 
@@ -410,7 +411,8 @@ void SimpleViewerExport::copySimpleViewer()
     
     QDir dir(dataDir);
     QStringList files = dir.entryList(QDir::Files);
-    for(QStringList::Iterator it = files.begin(); it!=files.end(); ++it) {
+    for(QStringList::Iterator it = files.begin(); it != files.end(); ++it) 
+    {
         *it = dir.absPath() + "/" + *it;
     }
     // TODO: catch errors
@@ -418,12 +420,13 @@ void SimpleViewerExport::copySimpleViewer()
     
     dataDir = locate("data", "kipiplugin_simpleviewerexport/simpleviewer_html/");
     QDir dirHtml(dataDir);
-    QStringList files2 = dirHtml.entryList(QDir::Files);
-    for(QStringList::Iterator it = files2.begin(); it!=files2.end(); ++it) {
+    QStringList filesHtml = dirHtml.entryList(QDir::Files);
+    for(QStringList::Iterator it = filesHtml.begin(); it != filesHtml.end(); ++it) 
+    {
         *it = dirHtml.absPath() + "/" + *it;
     }
     // TODO: catch errors
-    KIO::CopyJob *copyJob2 = KIO::copy(files2, m_configDlg->exportURL(), true);
+    KIO::CopyJob *copyJob2 = KIO::copy(filesHtml, m_configDlg->exportURL(), true);
 }
 
 bool SimpleViewerExport::checkSimpleViewer() const
@@ -434,24 +437,22 @@ bool SimpleViewerExport::checkSimpleViewer() const
 bool SimpleViewerExport::installSimpleViewer()
 {
     FirstRunDlg *firstRunDlg = new FirstRunDlg(kapp->activeWindow());
-    if(firstRunDlg->exec() != QDialog::Accepted)
+    if(firstRunDlg->exec() == QDialog::Accepted)
     {
-        //TODO ErrorMessage
+        QString url = firstRunDlg->getURL();
         delete firstRunDlg;
-        return false;
+        
+        if(unzip(url))
+        {
+            return true;
+        }
+        else
+        {
+            // ErrorMessage
+        }
     }
     
-    QString url = firstRunDlg->getURL();
-    
-    if(!unzip(url))
-    {
-        //TODO ErrorMessage
-        delete firstRunDlg;
-        return false;
-    }
-
-    delete firstRunDlg;
-    return true;
+    return false;
 }
 
 bool SimpleViewerExport::unzip(const QString &url)
