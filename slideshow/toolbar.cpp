@@ -45,7 +45,7 @@ ToolBar::ToolBar(QWidget* parent)
     KIconLoader* loader = kapp->iconLoader();
     m_playBtn->setIconSet(loader->loadIcon("player_pause", KIcon::NoGroup, 22));
     m_prevBtn->setIconSet(loader->loadIcon("back", KIcon::NoGroup, 22));
-    m_nextBtn->setIconSet(loader->loadIcon("next", KIcon::NoGroup, 22));
+    m_nextBtn->setIconSet(loader->loadIcon("forward", KIcon::NoGroup, 22));
     m_stopBtn->setIconSet(loader->loadIcon("stop", KIcon::NoGroup, 22));
 
     lay->addWidget(m_playBtn);
