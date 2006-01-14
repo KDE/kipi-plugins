@@ -84,8 +84,19 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
 
-    about->addAuthor("Joern Ahrens", I18N_NOOP("Author and maintainer"),
+    about->addAuthor("Joern Ahrens", 
+                     I18N_NOOP("Author and maintainer"),
                      "joern dot ahrens at kdemail dot net");
+    
+    about->addCredit("Felix Turner",
+                     "Author of the SimpleViewer flash application",
+                     0,
+                     "http://www.airtightinteractive.com/simpleviewer/");
+    
+    about->addCredit("Mikkel B. Stegmann",
+                     "Basis for the index.html template",
+                     0,
+                     "http://www.stegmann.dk/mikkel/porta/");
 
     QPushButton *helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
