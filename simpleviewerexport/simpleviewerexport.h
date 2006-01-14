@@ -116,9 +116,14 @@ private:
     void cfgCreateFooter(QTextStream &ts);
     
     /**
+     * Creates the index.html file
+     */
+    bool createIndex();
+    
+    /**
      * Copies simpleviewers files into the export directory
      */
-    void copySimpleViewer();
+    bool copySimpleViewer();
     
     /**
      * Is the SimpleViewer flash installed?
@@ -152,9 +157,12 @@ private:
     QValueList<KIPI::ImageCollection>    m_albumsList;
     QTimer                              *m_timer;
     int                                  m_totalActions;
+    int                                  m_action;
     bool                                 m_canceled;
     QString                              m_dataLocal;
     QStringList                          m_simpleViewerFiles;
+    QString                              m_hostName;
+    QString                              m_hostURL;
 };
 
 }
