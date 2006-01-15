@@ -80,7 +80,7 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
                                        kipi_version,
                                        I18N_NOOP("A Kipi plugin for Simple Viewer export."),
                                        KAboutData::License_GPL,
-                                       "(c) 2005, Joern Ahrens",
+                                       "(c) 2005-2006, Joern Ahrens",
                                        0,
                                        "http://www.jokele.de/simpleviewerexport/");
 
