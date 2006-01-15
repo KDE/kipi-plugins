@@ -82,7 +82,7 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
                                        KAboutData::License_GPL,
                                        "(c) 2005, Joern Ahrens",
                                        0,
-                                       "http://extragear.kde.org/apps/kipi");
+                                       "http://www.jokele.de/simpleviewerexport/");
 
     about->addAuthor("Joern Ahrens", 
                      I18N_NOOP("Author and maintainer"),
