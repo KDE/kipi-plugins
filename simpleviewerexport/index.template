@@ -42,23 +42,6 @@
             -->
         </style>
 
-        <script language="javascript" type="text/javascript" src="flash_detect.js">
-            <!--
-            function getFlashVersion() { return null; };
-            //-->
-        </script>
-        <script language="javascript" type="text/javascript">
-            <!--
-            var flashVersion = getFlashVersion();
-            if (flashVersion < 6) {
-
-                location.replace("upgrade.html");
-            }          
-
-            // set document title (strip any html tags)             
-            document.title = title.replace(/(<([^>]+)>)/ig,""); 
-            //-->
-        </script>
     </head>
     <body>
     	<div id="mainlayer" style="visibility: visible; position:absolute; top: 0; left: 0; width: 100%; height: 100%; z-index:1;">
