@@ -42,7 +42,7 @@
 // plugin library and the second is the genericfactory templated from
 // the class for your plugin
 typedef KGenericFactory<Plugin_SimpleViewer> Factory;
-K_EXPORT_COMPONENT_FACTORY( kipiplugin_simpleviewer, Factory("kipiplugin_simpleviewer"));
+K_EXPORT_COMPONENT_FACTORY( kipiplugin_simpleviewer, Factory("kipiplugin_simpleviewer"))
 
 Plugin_SimpleViewer::Plugin_SimpleViewer(QObject *parent, const char*, const QStringList&)
     : KIPI::Plugin(Factory::instance(), parent, "SimpleViewer")
