@@ -58,6 +58,7 @@ public:
 
 CameraIconView::CameraIconView(QWidget *parent) : ThumbView(parent) {
     d = new CameraIconViewPrivate;
+    setThumbnailSize();
 }
 
 CameraIconView::~CameraIconView() {
