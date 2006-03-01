@@ -8,6 +8,10 @@ if compile_KAMERAKLIENT
 KAMERAKLIENTDIR = kameraklient
 endif
 
+if compile_IMAGEGALLERY2
+imagegallery2dir = imagegallery2
+endif
+
 if compile_JPEGLOSSLESS
 jpeglosslessdir = jpeglossless
 endif
@@ -30,7 +34,7 @@ if compile_RAWCONVERTER
 RAWCONVERTERDIR = rawconverter
 endif
 
-SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery simpleviewerexport\
+SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery $(imagesgallery2dir) simpleviewerexport\
 	sendimages batchprocessimages wallpaper findimages galleryexport flickrexport\
 	$(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(JPEGLOSSLESSDIR) \
 	$(TIMEADJUSTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR)

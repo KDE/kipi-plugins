@@ -1,0 +1,11 @@
+- Use libxml to generate XML files
+- Add i18n support
+- Add libxslt tests to configure.in
+- Support for special case: only one gallery
+- Define a theme description file, which should contain the theme title,
+  author, URL
+- Show theme description in theme list, with a screenshot
+- Store settings between invocations of the plugin
+- Support for remote URLs
+- Automatically rotate JPEG according to Exif info
+- let the user control quality of JPEG and PNG
