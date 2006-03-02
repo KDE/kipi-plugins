@@ -55,7 +55,7 @@ struct Wizard::Private {
 	
 	void initAppearancePage(QWidget* parent) {
 		mAppearancePage=new KListBox(parent);
-		QStringList list=KGlobal::instance()->dirs()->findAllResources("data", "kipiplugin_htmlgallery/themes/*/template.html");
+		QStringList list=KGlobal::instance()->dirs()->findAllResources("data", "kipiplugin_htmlgallery/themes/*/template.xslt");
 		QStringList::Iterator it=list.begin();
 		QStringList::Iterator end=list.end();
 		for (;it!=end; ++it) {
