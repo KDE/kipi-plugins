@@ -8,8 +8,6 @@
 	xmlns:exsl="http://exslt.org/common"
 	extension-element-prefixes="exsl">
 
-<xsl:include href="i18n.xsl"/>
-
 <xsl:template name="imagePage">
 	<html>
 	<head>
@@ -24,7 +22,6 @@
 				<xsl:when test="position() &gt; 1">
 					<a href="{preceding-sibling::image[position()=1]/full/@fileName}.html">
 						<img src="../snow/previous.png" alt="Previous" />
-						&previous;
 					</a>
 				</xsl:when>
 				<xsl:otherwise>
@@ -37,7 +34,6 @@
 				<xsl:when test="position() &lt; last()">
 					<a href="{following-sibling::image[position()=1]/full/@fileName}.html">
 						<img src="../snow/next.png" alt="Next" />
-						&next;
 					</a>
 				</xsl:when>
 				<xsl:otherwise>
