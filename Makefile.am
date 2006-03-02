@@ -8,8 +8,8 @@ if compile_KAMERAKLIENT
 KAMERAKLIENTDIR = kameraklient
 endif
 
-if compile_IMAGEGALLERY2
-imagegallery2dir = imagegallery2
+if compile_HTMLGALLERY
+HTMLGALLERYDIR = htmlgallery
 endif
 
 if compile_JPEGLOSSLESS
@@ -34,10 +34,11 @@ if compile_RAWCONVERTER
 RAWCONVERTERDIR = rawconverter
 endif
 
-SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery $(imagesgallery2dir) simpleviewerexport\
+SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery simpleviewerexport\
 	sendimages batchprocessimages wallpaper findimages galleryexport flickrexport\
 	$(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(JPEGLOSSLESSDIR) \
-	$(TIMEADJUSTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR)
+	$(TIMEADJUSTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR) \
+	$(HTMLGALLERYDIR)
 
 rcdir = $(kde_datadir)/kipi
 rc_DATA = tips

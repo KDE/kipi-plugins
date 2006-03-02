@@ -1,5 +1,5 @@
 SUBDIRS = themes
-INCLUDES    = $(LIBKIPI_CFLAGS) $(all_includes) $(XSLT_CFLAGS)
+INCLUDES    = $(LIBKIPI_CFLAGS) $(all_includes) $(LIBXSLT_CFLAGS)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
@@ -13,7 +13,7 @@ kipiplugin_htmlgallery_la_SOURCES = \
 	plugin.cpp \
 	wizard.cpp
 kipiplugin_htmlgallery_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) 
-kipiplugin_htmlgallery_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries) -lexslt $(LIB_XSLT)
+kipiplugin_htmlgallery_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries) -lexslt $(LIBXSLT_LIBS)
 
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = kipiplugin_htmlgallery.desktop

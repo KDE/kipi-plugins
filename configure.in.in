@@ -129,18 +129,18 @@ AM_CONDITIONAL(compile_KAMERAKLIENT, test -n "${GPHOTO_CONFIG}")
 have_xslt=no
 AC_PATH_PROG(XSLT_CONFIG,xslt-config)
 if test -n "${XSLT_CONFIG}"; then
-  XSLT_CFLAGS="`$XSLT_CONFIG --cflags`"
-  AC_SUBST(XSLT_CFLAGS)
-  LIB_XSLT="`$XSLT_CONFIG --libs`"
-  AC_SUBST(LIB_XSLT)
+  LIBXSLT_CFLAGS="`$XSLT_CONFIG --cflags`"
+  AC_SUBST(LIBXSLT_CFLAGS)
+  LIBXSLT_LIBS="`$XSLT_CONFIG --libs`"
+  AC_SUBST(LIBXSLT_LIBS)
   have_xslt=yes
 else
   AC_MSG_WARN([
-libxslt is required for the imagegallery2 plugin.
+libxslt is required for the htmlgallery plugin.
 ])
 fi
 
-AM_CONDITIONAL(compile_IMAGEGALLERY2, test -n "${XSLT_CONFIG}")
+AM_CONDITIONAL(compile_HTMLGALLERY, test -n "${XSLT_CONFIG}")
 
 
 
