@@ -44,3 +44,19 @@ if test "x$have_gphoto" != "xyes"; then
   echo ""
   all_tests=bad
 fi
+
+if test "x$have_libkexif" != "xyes"; then
+  echo ""
+  echo "You're missing libkexif. The jpeglossless plugin will not be compiled."
+  echo ""
+  all_tests=bad
+fi
+
+if test "x$have_xslt" != "xyes"; then
+  echo ""
+  echo "You're missing libxslt. The htmlgallery plugin will not be compiled."
+  echo ""
+  all_tests=bad
+fi
+
+
