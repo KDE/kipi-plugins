@@ -24,9 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // Qt
 #include <qdir.h>
 #include <qfile.h>
-#include <qfileinfo.h>
 #include <qregexp.h>
-#include <qtextstream.h>
 
 // KDE
 #include <kaboutdata.h>
@@ -50,6 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 // Local
 #include "galleryinfo.h"
+#include "xmlutils.h"
 
 namespace KIPIHTMLGallery {
 
@@ -78,91 +77,6 @@ QString webifyFileName(const QString& destDir, QString fileName) {
 
 	return fileName;
 }
-
-
-/**
- * A list of attributes for an XML element. To be used with @XMLElement
- */
-class XMLAttributeList {
-public:
-	QString toString() const {
-		QString txt=mList.join(" ");
-		return " " + txt;
-	}
-	
-	void append(const char* key, QString value) {
-		// FIXME: Encode value
-		QString txt=QString(key) + "=\"" + value + "\"";
-		mList.append(txt);
-	}
-	
-	void append(const char* key, int value) {
-		append(key, QString::number(value));
-	}
-
-private:
-	QStringList mList;
-};
-
-
-/**
- * A simple class to generate an XML element
- */
-class XMLElement {
-public:
-	XMLElement(QTextStream& stream, const QString& element, const XMLAttributeList* attributeList=0)
-	: mStream(stream)
-	, mElement(element)
-	{
-		mStream << "<" << mElement;
-		if (attributeList) {
-			mStream << attributeList->toString();
-		}
-		mStream << ">";
-	}
-
-	~XMLElement() {
-		mStream << "</" << mElement << ">\n";
-	}
-
-private:
-	QTextStream& mStream;
-	QString mElement;
-};
-
-
-template <class T>
-void echoXMLValue(QTextStream& stream, const char* element,const T& value) {
-	XMLElement x(stream, element);
-	stream << value;
-}
-
-
-/**
- * A simple wrapper for a C structure pointed to by @Ptr, which must be freed
- * with @freeFcn
- */
-template <class Ptr, void(*freeFcn)(Ptr)>
-class CWrapper {
-public:
-	CWrapper(Ptr ptr)
-	: mPtr(ptr) {}
-
-	~CWrapper() {
-		freeFcn(mPtr);
-	}
-
-	operator Ptr() const {
-		return mPtr;
-	}
-
-	bool operator!() const {
-		return !mPtr;
-	}
-
-private:
-	Ptr mPtr;
-};
 
 
 struct Generator::Private {
@@ -212,16 +126,13 @@ struct Generator::Private {
 		if (!createDir(baseDestDir)) return false;
 		
 		mXMLFileName=baseDestDir + "/gallery.xml";
-		QFile file(mXMLFileName);
-		if (!file.open(IO_WriteOnly)) {
+		XMLWriter xmlWriter;
+		if (!xmlWriter.open(mXMLFileName)) {
 			logError(i18n("Couldn't create gallery.xml"));
 			return false;
 		}
 
-		QTextStream stream(&file);
-		stream << "<?xml version='1.0' encoding='UTF-8'?>\n";
-
-		XMLElement collectionsX(stream, "collections");
+		XMLElement collectionsX(xmlWriter, "collections");
 
 		// Loop on collections
 		QValueList<KIPI::ImageCollection>::Iterator collectionIt=mInfo->mCollectionList.begin();
@@ -234,9 +145,9 @@ struct Generator::Private {
 			QString destDir = baseDestDir + "/" + collectionFileName;
 			if (!createDir(destDir)) return false;
 			
-			XMLElement collectionX(stream, "collection");
-			echoXMLValue(stream, "name", collection.name());
-			echoXMLValue(stream, "fileName", collectionFileName);
+			XMLElement collectionX(xmlWriter, "collection");
+			xmlWriter.writeElement("name", collection.name());
+			xmlWriter.writeElement("fileName", collectionFileName);
 			
 			// Loop on images
 			KURL::List imageList=collection.images();
@@ -249,9 +160,9 @@ struct Generator::Private {
 				qApp->processEvents();
 				
 				KIPI::ImageInfo info=mInterface->info(*it);
-				XMLElement imageX(stream, "image");
-				echoXMLValue(stream, "title", info.title());
-				echoXMLValue(stream, "description", info.description());
+				XMLElement imageX(xmlWriter, "image");
+				xmlWriter.writeElement("title", info.title());
+				xmlWriter.writeElement("description", info.description());
 			
 				// Load image
 				QImage image;
@@ -280,7 +191,7 @@ struct Generator::Private {
 					attrList.append("fileName", fileName);
 					attrList.append("width", image.width());
 					attrList.append("height", image.height());
-					XMLElement elem(stream, "full", &attrList);
+					XMLElement elem(xmlWriter, "full", &attrList);
 				}
 				
 				// Process thumbnail
@@ -298,7 +209,7 @@ struct Generator::Private {
 					attrList.append("fileName", fileName);
 					attrList.append("width", thumbnail.width());
 					attrList.append("height", thumbnail.height());
-					XMLElement elem(stream, "thumbnail", &attrList);
+					XMLElement elem(xmlWriter, "thumbnail", &attrList);
 				}
 			}
 		}

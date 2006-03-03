@@ -1,6 +1,4 @@
-- Use libxml to generate XML files
 - Add i18n support
-- Add libxslt tests to configure.in
 - Support for special case: only one gallery
 - Define a theme description file, which should contain the theme title,
   author, URL
