@@ -18,39 +18,34 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-#ifndef WIZARD_H
-#define WIZARD_H   
+#ifndef GALLERYINFO_H
+#define GALLERYINFO_H
+
+// Qt
+#include <qvaluelist.h>
 
 // KDE
-#include <kwizard.h>
+#include <kurl.h>
 
-namespace KIPI {
-class Interface;
-}
+// KIPI
+#include <libkipi/imagecollection.h>
 
-namespace KIPIHTMLGallery {
+namespace KIPIHTMLExport {
 
-class GalleryInfo;
+struct GalleryInfo {
+	KURL mDestURL;
+	QValueList<KIPI::ImageCollection> mCollectionList;
+	bool mOpenInBrowser;
+	QString mTheme;
+	
+	bool mFullResize;
+	int mFullSize;
+	QString mFullFormat;
 
-class Wizard : public KWizard {
-Q_OBJECT
-public:
-	Wizard(QWidget* parent, KIPI::Interface* interface, GalleryInfo* info);
-	~Wizard();
-
-protected slots:
-	virtual void accept();
-
-private slots:
-	void updateFinishButton();
-	void updateAppearancePageNextButton();
-
-private:
-	struct Private;
-	Private* d;
+	int mThumbnailSize;
+	QString mThumbnailFormat;
 };
-
 
 } // namespace
 
-#endif /* WIZARD_H */
+#endif /* GALLERYINFO_H */

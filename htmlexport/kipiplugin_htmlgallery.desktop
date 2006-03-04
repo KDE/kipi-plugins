@@ -5,4 +5,4 @@ Comment=KIPI HTML Gallery Export Plugin
 Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service
-X-KDE-Library=kipiplugin_htmlgallery
+X-KDE-Library=kipiplugin_htmlexport

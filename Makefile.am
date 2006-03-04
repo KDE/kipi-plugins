@@ -8,8 +8,8 @@ if compile_KAMERAKLIENT
 KAMERAKLIENTDIR = kameraklient
 endif
 
-if compile_HTMLGALLERY
-HTMLGALLERYDIR = htmlgallery
+if compile_HTMLEXPORT
+HTMLEXPORTDIR = htmlexport
 endif
 
 if compile_JPEGLOSSLESS
@@ -38,7 +38,7 @@ SUBDIRS = printwizard calendar mpegencoder cdarchiving imagesgallery simpleviewe
 	sendimages batchprocessimages wallpaper findimages galleryexport flickrexport\
 	$(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(JPEGLOSSLESSDIR) \
 	$(TIMEADJUSTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR) \
-	$(HTMLGALLERYDIR)
+	$(HTMLEXPORTDIR)
 
 rcdir = $(kde_datadir)/kipi
 rc_DATA = tips

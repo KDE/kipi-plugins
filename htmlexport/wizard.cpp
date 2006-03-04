@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "imagesettingspage.h"
 #include "outputpage.h"
 
-namespace KIPIHTMLGallery {
+namespace KIPIHTMLExport {
 
 struct Wizard::Private {
 	GalleryInfo* mInfo;
@@ -55,7 +55,7 @@ struct Wizard::Private {
 	
 	void initAppearancePage(QWidget* parent) {
 		mAppearancePage=new KListBox(parent);
-		QStringList list=KGlobal::instance()->dirs()->findAllResources("data", "kipiplugin_htmlgallery/themes/*/template.xslt");
+		QStringList list=KGlobal::instance()->dirs()->findAllResources("data", "kipiplugin_htmlexport/themes/*/template.xslt");
 		QStringList::Iterator it=list.begin();
 		QStringList::Iterator end=list.end();
 		for (;it!=end; ++it) {

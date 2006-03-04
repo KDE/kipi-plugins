@@ -136,11 +136,11 @@ if test -n "${XSLT_CONFIG}"; then
   have_xslt=yes
 else
   AC_MSG_WARN([
-libxslt is required for the htmlgallery plugin.
+libxslt is required for the htmlexport plugin.
 ])
 fi
 
-AM_CONDITIONAL(compile_HTMLGALLERY, test -n "${XSLT_CONFIG}")
+AM_CONDITIONAL(compile_HTMLEXPORT, test -n "${XSLT_CONFIG}")
 
 
 

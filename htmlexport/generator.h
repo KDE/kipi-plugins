@@ -28,7 +28,7 @@ class BatchProgressDialog;
 class Interface;
 }
 
-namespace KIPIHTMLGallery {
+namespace KIPIHTMLExport {
 
 class GalleryInfo;
 	

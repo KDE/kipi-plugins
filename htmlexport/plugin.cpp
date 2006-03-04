@@ -37,11 +37,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "generator.h"
 #include "wizard.h"
 
-typedef KGenericFactory<KIPIHTMLGallery::Plugin> Factory;
+typedef KGenericFactory<KIPIHTMLExport::Plugin> Factory;
 
-K_EXPORT_COMPONENT_FACTORY( kipiplugin_htmlgallery, Factory("kipiplugin_htmlgallery"))
+K_EXPORT_COMPONENT_FACTORY( kipiplugin_htmlexport, Factory("kipiplugin_htmlexport"))
 
-namespace KIPIHTMLGallery {
+namespace KIPIHTMLExport {
 
 
 struct Plugin::Private {
@@ -50,7 +50,7 @@ struct Plugin::Private {
 
 
 Plugin::Plugin(QObject *parent, const char*, const QStringList&)
-: KIPI::Plugin(Factory::instance(), parent, "HTMLGallery")
+: KIPI::Plugin(Factory::instance(), parent, "HTMLExport")
 {
 	d=new Private;
 	d->mAction=0;
@@ -66,7 +66,7 @@ void Plugin::setup( QWidget* widget ) {
 	KIPI::Plugin::setup( widget );
 	d->mAction = new KAction(i18n("HTML Gallery..."), "www", 0,
 		this, SLOT(slotActivate()),
-		actionCollection(), "htmlgallery");
+		actionCollection(), "htmlexport");
 	addAction(d->mAction);
 }
 

@@ -54,7 +54,7 @@ fi
 
 if test "x$have_xslt" != "xyes"; then
   echo ""
-  echo "You're missing libxslt. The htmlgallery plugin will not be compiled."
+  echo "You're missing libxslt. The htmlexport plugin will not be compiled."
   echo ""
   all_tests=bad
 fi

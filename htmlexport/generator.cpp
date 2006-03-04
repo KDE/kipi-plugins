@@ -50,7 +50,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "galleryinfo.h"
 #include "xmlutils.h"
 
-namespace KIPIHTMLGallery {
+namespace KIPIHTMLExport {
 
 
 /**
@@ -91,7 +91,7 @@ struct Generator::Private {
 
 	bool init() {
 		// mThemeURL
-		QString themeDir="kipiplugin_htmlgallery/themes/" + mInfo->mTheme;
+		QString themeDir="kipiplugin_htmlexport/themes/" + mInfo->mTheme;
 		QString themeBaseDir=KGlobal::instance()->dirs()->findResourceDir("data", themeDir + "/style.css");
 		if (themeBaseDir.isEmpty()) {
 			logError(i18n("Could not find theme"));
