@@ -54,23 +54,26 @@ namespace KIPIHTMLExport {
 
 
 /**
- * Produce a web-friendly file name, make sure it's unique in destDir
+ * Produce a web-friendly file name 
  */
-QString webifyFileName(const QString& destDir, QString fileName) {
-	// Remove extension
-	int dotPos=fileName.findRev('.');
-	if (dotPos!=-1) {
-		fileName=fileName.left(dotPos);
-	}
+QString webifyFileName(QString fileName) {
+	fileName=fileName.lower();
 	
 	// Remove potentially troublesome chars
-	fileName=fileName.lower();
 	fileName=fileName.replace(QRegExp("[^-0-9a-z]+"), "_");
 
+	return fileName;
+}
+
+
+/**
+ * Make sure a file name is unique in list
+ */
+QString makeFileNameUnique(const QStringList& list, QString fileName) {
 	// Make sure the file name is unique
 	QString fileNameBase=fileName;
 	int count=2;
-	while (QFile::exists(destDir + "/" + fileName)) {
+	while (list.findIndex(fileName)!=-1) {
 		fileName=fileNameBase + QString::number(count);
 		++count;
 	};
@@ -141,18 +144,21 @@ struct Generator::Private {
 			KIPI::ImageCollection collection=*collectionIt;
 			logInfo( i18n("Generating files for \"%1\"").arg(collection.name()) );
 
-			QString collectionFileName = webifyFileName(baseDestDir, collection.name());
+			QString collectionFileName = webifyFileName(collection.name());
 			QString destDir = baseDestDir + "/" + collectionFileName;
 			if (!createDir(destDir)) return false;
 			
 			XMLElement collectionX(xmlWriter, "collection");
 			xmlWriter.writeElement("name", collection.name());
 			xmlWriter.writeElement("fileName", collectionFileName);
+
+			QStringList fileNameList;
 			
 			// Loop on images
 			KURL::List imageList=collection.images();
 			KURL::List::Iterator it=imageList.begin();
 			KURL::List::Iterator end=imageList.end();
+
 			int pos=1;
 			int count=imageList.count();
 			for (; it!=end; ++it, ++pos) {
@@ -173,7 +179,9 @@ struct Generator::Private {
 				}
 				
 				// Prepare filenames
-				QString baseFileName=webifyFileName(destDir, (*it).fileName());
+				QString baseFileName=webifyFileName(info.title());
+				baseFileName=makeFileNameUnique(fileNameList, baseFileName);
+				fileNameList.append(baseFileName);
 
 				// Process full image
 				{
