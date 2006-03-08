@@ -1,4 +1,6 @@
-- Add i18n support
+- i18n support:
+  - More strings
+  - Fix makeXsltParam
 - Support for special case: only one gallery
 - Define a theme description file, which should contain the theme title,
   author, URL

@@ -21,11 +21,11 @@
 			<xsl:choose>
 				<xsl:when test="position() &gt; 1">
 					<a href="{preceding-sibling::image[position()=1]/full/@fileName}.html">
-						<img src="../snow/previous.png" alt="Previous" />
+						<img src="../snow/previous.png" alt="&lt;" title="{$i18nPrevious}" />
 					</a>
 				</xsl:when>
 				<xsl:otherwise>
-					<img src="../snow/previous_disabled.png" alt="Previous" />
+					<img src="../snow/previous_disabled.png" alt="&lt;" title="{$i18nPrevious}" />
 				</xsl:otherwise>
 			</xsl:choose>
 		</div>
@@ -33,11 +33,11 @@
 			<xsl:choose>
 				<xsl:when test="position() &lt; last()">
 					<a href="{following-sibling::image[position()=1]/full/@fileName}.html">
-						<img src="../snow/next.png" alt="Next" />
+						<img src="../snow/next.png" alt="&gt;" title="{$i18nNext}" />
 					</a>
 				</xsl:when>
 				<xsl:otherwise>
-					<img src="../snow/next_disabled.png" alt="Next" />
+					<img src="../snow/next_disabled.png" alt="&gt;" title="{$i18nNext}" />
 				</xsl:otherwise>
 			</xsl:choose>
 		</div>

@@ -82,6 +82,16 @@ QString makeFileNameUnique(const QStringList& list, QString fileName) {
 }
 
 
+/**
+ * Prepare an XSLT param, quoting it at start and at end
+ */
+QCString makeXsltParam(const QString& txt) {
+	// FIXME check for quotes
+	QString param="'" + txt + "'";
+	return param.utf8();
+}
+
+
 struct Generator::Private {
 	KIPI::Interface* mInterface;
 	GalleryInfo* mInfo;
@@ -241,16 +251,34 @@ struct Generator::Private {
 			logError(i18n("Could not load XML file '%1'").arg(mXMLFileName));
 			return false;
 		}
+		
+		// Prepare i18n params
+		typedef QMap<QCString,QCString> I18nMap;
+		I18nMap map;
+		map["i18nPrevious"]=makeXsltParam(i18n("Previous"));
+		map["i18nNext"]=makeXsltParam(i18n("Next"));
+
+		const char** params=new const char*[map.size()*2+1];
+		
+		I18nMap::Iterator it=map.begin(), end=map.end();
+		const char** ptr=params;
+		for (;it!=end; ++it) {
+			*ptr=it.key().data();
+			++ptr;
+			*ptr=it.data().data();
+			++ptr;
+		}
+		*ptr=0;
 
 		// Move to the destination dir, so that external documents get correctly
 		// produced
 		QString oldCD=QDir::currentDirPath();
 		QDir::setCurrent(mInfo->mDestURL.path());
 		
-		const char* params[]={0};
 		CWrapper<xmlDocPtr, xmlFreeDoc> xmlOutput= xsltApplyStylesheet(xslt, xmlGallery, params);
 		
 		QDir::setCurrent(oldCD);
+		//delete []params;
 		
 		if (!xmlOutput) {
 			logError(i18n("Error processing XML file"));
