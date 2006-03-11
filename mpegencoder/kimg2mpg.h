@@ -132,6 +132,7 @@ private:
   
   QString               m_VideoFormatConfig;
   QString               m_VideoTypeConfig;
+  QString               m_ChromaConfig;
   QString               m_ImageDurationConfig;
   QString               m_TransitionSpeedConfig;
   QString               m_MPEGOutputFileConfig;
@@ -184,6 +185,7 @@ private:
 
   QComboBox*            m_VideoTypeComboBox;
   QComboBox*            m_VideoFormatComboBox;
+  QComboBox*            m_ChromaComboBox;
   QComboBox*            m_TransitionComboBox;
 
   QSpinBox*             m_DurationImageSpinBox;

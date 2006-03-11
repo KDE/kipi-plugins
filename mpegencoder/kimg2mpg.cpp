@@ -228,7 +228,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   // Video format selection.
 
-  m_label1 = new QLabel(i18n("Video format and type:"), this);
+  m_label1 = new QLabel(i18n("Video format, type and chroma mode:"), this);
   g1->addWidget( m_label1, 0, 0, AlignLeft );
 
   m_VideoFormatComboBox = new QComboBox( false, this, "Video_Format_ComboBox" );
@@ -259,6 +259,17 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   connect( m_VideoTypeComboBox, SIGNAL( activated(int ) ),
            this, SLOT( SlotPortfolioDurationChanged (int) ) );
+
+  // Chroma subsampling mode
+  m_ChromaComboBox = new QComboBox( false, this, "Chroma_ComboBox" );
+  g1->addWidget( m_ChromaComboBox, 0, 3, AlignLeft );
+  m_ChromaComboBox->insertItem("Default");
+  m_ChromaComboBox->insertItem("444");
+  m_ChromaComboBox->insertItem("420jpeg");
+  m_ChromaComboBox->insertItem("420mpeg2");
+  QWhatsThis::add( m_ChromaComboBox,
+     i18n( "This option specifies the chroma subsampling mode. "
+           "Change it if you have problems with the default value " ) );
 
   // Image duration.
 
@@ -481,7 +492,9 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   readSettings();
 
   int maxW = QMAX( m_VideoFormatComboBox->sizeHint().width(),
-                   m_VideoTypeComboBox->sizeHint().width() );
+                   m_ChromaComboBox->sizeHint().width() );
+
+  m_ChromaComboBox->setMinimumWidth( maxW ); 
   m_VideoFormatComboBox->setMinimumWidth( maxW );
   m_VideoTypeComboBox->setMinimumWidth( maxW );
   m_TransitionComboBox->setMinimumWidth( maxW );
@@ -739,13 +752,27 @@ void KImg2mpgData::slotEncode( void )
   m_DebugOuputMessages = "";
   m_DurationTime.start();
   InputAudioFileName = m_AudioInputEDITFilename->text();
-  OutputFileName = m_MPEGOutputEDITFilename->text();
 
-  if (OutputFileName.isEmpty())
+  if (InputAudioFileName.isEmpty() == false && !QFile::exists(InputAudioFileName))
+  {
+    KMessageBox::error(this, i18n("You must specify an existing audio file."));
+    return;
+  }
+
+  OutputFileName = m_MPEGOutputEDITFilename->text();
+  QFileInfo fileInfo(OutputFileName);
+  if (OutputFileName.isEmpty() || fileInfo.isDir())
     {
     KMessageBox::error(this, i18n("You must specify an MPEG output file name."));
     return;
     }
+
+   QFileInfo dirInfo(fileInfo.dir().path());
+   if (!dirInfo.exists () || !dirInfo.isWritable())
+   {
+     KMessageBox::error(this, i18n("You must specify a writable path for your output file."));
+     return;
+   }
 
   if (m_ImagesFilesListBox->count() == 0)
     {
@@ -769,6 +796,7 @@ void KImg2mpgData::slotEncode( void )
   m_optionsbutton->setEnabled(false);
   m_VideoFormatComboBox->setEnabled(false);
   m_VideoTypeComboBox->setEnabled(false);
+  m_ChromaComboBox->setEnabled(false);
   m_DurationImageSpinBox->setEnabled(false);
   m_TransitionComboBox->setEnabled(false);
   m_MPEGOutputEDITFilename->setEnabled(false);
@@ -806,6 +834,12 @@ void KImg2mpgData::slotEncode( void )
 
   *m_Proc << "-n" << m_VideoTypeComboBox->currentText();          // Video type option.
   m_CommandLine = m_CommandLine + " -n " + m_VideoTypeComboBox->currentText();
+
+  if (m_ChromaComboBox->currentText() != "Default")
+  {
+    *m_Proc << "-S" << m_ChromaComboBox->currentText();          // Chroma subsampling mode option.
+    m_CommandLine = m_CommandLine + " -S " + m_ChromaComboBox->currentText();
+  }
 
   *m_Proc << "-d" << m_DurationImageSpinBox->text();              // Image duration.
   m_CommandLine = m_CommandLine + " -d " + m_DurationImageSpinBox->text();
@@ -1175,6 +1209,7 @@ void KImg2mpgData::reset()
   m_Encodebutton->setText(i18n("&Encode"));
   m_optionsbutton->setEnabled(true);
   m_VideoFormatComboBox->setEnabled(true);
+  m_ChromaComboBox->setEnabled(true);
   m_VideoTypeComboBox->setEnabled(true);
   m_DurationImageSpinBox->setEnabled(true);
   m_TransitionComboBox->setEnabled(true);
@@ -1200,6 +1235,9 @@ void KImg2mpgData::writeSettings()
 
   m_VideoTypeConfig = m_VideoTypeComboBox->currentText();
   m_config->writeEntry("VideoType", m_VideoTypeConfig);
+
+  m_ChromaConfig = m_ChromaComboBox->currentText();
+  m_config->writeEntry("ChromaMode", m_ChromaConfig);
 
   m_ImageDurationConfig = m_DurationImageSpinBox->text();
   m_config->writeEntry("ImageDuration", m_ImageDurationConfig);
@@ -1242,6 +1280,12 @@ void KImg2mpgData::readSettings()
   for (int i = 0 ; i < m_VideoTypeComboBox->count() ; ++i)
     if ( (QString) m_VideoTypeComboBox->text(i) == m_VideoTypeConfig)
       m_VideoTypeComboBox->setCurrentItem(i);
+
+  m_ChromaConfig = m_config->readEntry("ChromaMode", "Default");
+
+  for (int i = 0 ; i < m_ChromaComboBox->count() ; ++i)
+    if ( (QString) m_ChromaComboBox->text(i) == m_ChromaConfig)
+      m_ChromaComboBox->setCurrentItem(i);
 
   m_ImageDurationConfig = m_config->readEntry("ImageDuration", "10");
   m_DurationImageSpinBox->setValue(m_ImageDurationConfig.toInt());

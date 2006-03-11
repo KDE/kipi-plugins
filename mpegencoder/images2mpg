@@ -209,6 +209,9 @@ VIDEO_FORMAT="XVCD"
 # Default video type.
 VIDEO_TYPE="PAL"
 
+#Default Chroma subsampling mode (ppmtoy4m)
+PPMTOY4M_CHROMA_OPT=""
+
 # Default verbosity level .
 # 0 -> Just the error messages or warnings.
 # 1 -> level 0 + informations messages.
@@ -311,6 +314,16 @@ while test $# -gt 0; do
          exit -1
       fi
       VIDEO_TYPE=$1
+      ;;
+
+    # Chroma subsampling mode (ppmtoy4m option)...
+    -S)
+      shift
+      if [ -z $1 ]; then
+         echo -e "Missing parameter after '$OPTIONMESSAGE' option !"
+         exit -1
+      fi
+      PPMTOY4M_CHROMA_OPT="-S $1"
       ;;
 
     # Background image file...
@@ -464,6 +477,10 @@ Options:
    -t <num>                    : enable transition between images with the speed [1=slow, 2, 4, 5, 10, 20=fast].
    -T <Temporary folder>       : use a specific folder for creating the temporary files (ex: '/tmp').
    -f <Video format>           : video format  [DVD, XVCD=default, SVCD, VCD].
+   -S <mode>                   :  Set chroma subsampling mode. (default value depend on ppmtoy4m version)
+                                  [444 - 4:4:4 (no subsampling)
+                                   420jpeg - 4:2:0 JPEG/MPEG-1, interstitial cositing
+                                   420mpeg2 - 4:2:0 MPEG-2, horizontal cositing]
    -n <Video type>             : video type    [PAL=default, NTSC, SECAM].
    -b <background file>        : 768x576 pixels background image file name [black color = default].
    -c <RGB color>              : hex RGB color for background image (ex: AA001F).
@@ -828,7 +845,7 @@ while test $CPT -lt $NBFRAMETOTAL;\
 	# MjpegTools MPEG encoding with the number of frames and the current image.
         $CONVERT_BIN -depth 8  ppm:"$TMPFILENAME.tmp.pnm" - | cat 
 
-     done | $PPMTOY4M_BIN -v $VERBOSE -n $NBFRAMETOTAL -F $IMAGES_SEC_FORMAT | $YUVSCALER_BIN -v $VERBOSE -n $VIDEO_TYPE_LETTER -O $VIDEO_FORMAT | $MPEG2ENC_BIN -v $VERBOSE -n $VIDEO_TYPE_LETTER -b $BIT_RATE -V $BUFFER_SIZE -f $VIDEO_FORMAT_NUMBER -o "$TMPFILENAME.tmp.m2v"
+     done | $PPMTOY4M_BIN -v $VERBOSE -n $NBFRAMETOTAL -F $IMAGES_SEC_FORMAT $PPMTOY4M_CHROMA_OPT | $YUVSCALER_BIN -v $VERBOSE -n $VIDEO_TYPE_LETTER -O $VIDEO_FORMAT | $MPEG2ENC_BIN -v $VERBOSE -n $VIDEO_TYPE_LETTER -b $BIT_RATE -V $BUFFER_SIZE -f $VIDEO_FORMAT_NUMBER -o "$TMPFILENAME.tmp.m2v"
 
 DATE_FIN=`date +%s`
 TEMPSCALCUL=`echo $(($DATE_FIN-DATE_DEBUT))`
