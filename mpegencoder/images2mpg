@@ -477,7 +477,7 @@ Options:
    -t <num>                    : enable transition between images with the speed [1=slow, 2, 4, 5, 10, 20=fast].
    -T <Temporary folder>       : use a specific folder for creating the temporary files (ex: '/tmp').
    -f <Video format>           : video format  [DVD, XVCD=default, SVCD, VCD].
-   -S <mode>                   :  Set chroma subsampling mode. (default value depend on ppmtoy4m version)
+   -S <mode>                   :  Set chroma subsampling mode. (default value depends on ppmtoy4m version)
                                   [444 - 4:4:4 (no subsampling)
                                    420jpeg - 4:2:0 JPEG/MPEG-1, interstitial cositing
                                    420mpeg2 - 4:2:0 MPEG-2, horizontal cositing]
@@ -503,10 +503,12 @@ Notes :
 
   - The input images files with the '-i' option must be the last command line parameters.
   - If you use some whitespaces in the path folders/files, use '"' around the complete path string.
-
+  - With mjpegtools > 1.6.2 ppmtoy4m seems to have changed the default behavior for chroma subsampling 
+    mode so '-S' option is needed
+    
 Examples :
 
-#./images2mpg -f SVCD -d 15 -w Music.wav -o MyPortfolio.mpg -i 01.jpg 02.jpg 03.jpg 04.jpg
+#./images2mpg -f SVCD -d 15 -S 420mpeg2 -w Music.wav -o MyPortfolio.mpg -i 01.jpg 02.jpg 03.jpg 04.jpg
 
    Build PAL (default) SVCD MPEG file with the 'Music.wav' sound file and this image files sequence :
 
@@ -527,8 +529,8 @@ Author:
    CAULIER Gilles <caulier.gilles@free.fr>
 
 Visit :
-   URL PROJECT : http://digikam.sourceforge.net/ # PENDING(blackie) UPDATE URL
-   WEBCVS : http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/digikam/digikamplugins/mpegencoder/ # PENDING(blackie) update URL
+   URL PROJECT : http://extragear.kde.org/apps/kipi
+   WEBSVN : http://websvn.kde.org/trunk/extragear/libs/kipi-plugins/mpegencoder
 
 EOF
       exit 0
