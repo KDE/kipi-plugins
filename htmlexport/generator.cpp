@@ -239,14 +239,14 @@ struct Generator::Private {
 		logInfo(i18n("Generating HTML files"));
 
 		QString xsltFileName=mThemeURL.path() + "/template.xslt";
-		CWrapper<xsltStylesheetPtr, xsltFreeStylesheet> xslt= xsltParseStylesheetFile( (const xmlChar*) xsltFileName.ascii() );
+		CWrapper<xsltStylesheetPtr, xsltFreeStylesheet> xslt= xsltParseStylesheetFile( (const xmlChar*) xsltFileName.local8Bit().data() );
 
 		if (!xslt) {
 			logError(i18n("Could not load XSLT file '%1'").arg(xsltFileName));
 			return false;
 		}
 		
-		CWrapper<xmlDocPtr, xmlFreeDoc> xmlGallery=xmlParseFile( mXMLFileName.ascii() );
+		CWrapper<xmlDocPtr, xmlFreeDoc> xmlGallery=xmlParseFile( mXMLFileName.local8Bit().data() );
 		if (!xmlGallery) {
 			logError(i18n("Could not load XML file '%1'").arg(mXMLFileName));
 			return false;
@@ -286,7 +286,7 @@ struct Generator::Private {
 		}
 
 		QString destFileName=mInfo->mDestURL.path() + "/index.html";
-		FILE* file=fopen(destFileName.ascii(), "w");
+		FILE* file=fopen(destFileName.local8Bit().data(), "w");
 		if (!file) {
 			logError(i18n("Could not open '%1' for writting").arg(destFileName));
 			return false;
