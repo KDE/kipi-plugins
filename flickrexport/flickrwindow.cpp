@@ -31,7 +31,7 @@
 #include <qspinbox.h>
 #include <qcheckbox.h>
 #include <qstringlist.h>
-
+#include <qradiobutton.h>
 // Include files for KDE
 
 #include <kaboutdata.h>
@@ -101,7 +101,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_widget = new FlickrWidget( this );
     setMainWidget( m_widget );
     m_widget->setMinimumSize( 600, 400 );
-
+	m_urls=NULL;
     m_tagView        = m_widget->m_tagView;
     m_photoView        = m_widget->m_photoView;
     //m_newAlbumBtn      = widget->m_newAlbumBtn;
@@ -113,10 +113,12 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_dimensionSpinBox = m_widget->m_dimensionSpinBox;
     m_imageQualitySpinBox = m_widget->m_imageQualitySpinBox;
     m_tagsLineEdit          = m_widget->m_tagsLineEdit;
-    //m_albumView->setRootIsDecorated( true );
+	m_startUploadButton = m_widget->m_startUploadButton;
+    //m_startUploadButton->setEnabled(false);
+	//m_albumView->setRootIsDecorated( true );
 
     //m_newAlbumBtn->setEnabled( false );
-    m_addPhotoBtn->setEnabled( true );
+    m_addPhotoBtn->setEnabled( false );
 
     
     m_talker = new FlickrTalker( this );
@@ -154,6 +156,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     connect( m_addPhotoBtn, SIGNAL( clicked() ),
              SLOT( slotAddPhotos() ) );
 
+    connect( m_startUploadButton, SIGNAL( clicked() ),
+             SLOT( slotUploadImages() ) );
     // read config
     KConfig config("kipirc");
     config.setGroup("FlickrExport Settings");
@@ -199,7 +203,9 @@ FlickrWindow::~FlickrWindow()
     config.writeEntry("Resize", m_resizeCheckBox->isChecked());
     config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
     config.writeEntry("Image Quality",  m_imageQualitySpinBox->value());
-    delete m_progressDlg;
+    if(m_urls!=NULL)
+		delete m_urls;
+	delete m_progressDlg;
     delete m_authProgressDlg;
     delete m_talker;
     delete m_widget;    
@@ -401,14 +407,24 @@ void FlickrWindow::slotNewAlbum()
 void FlickrWindow::slotAddPhotos()
 {
     kdDebug()<<"Slot Add Photos being called geting the list of url"<<endl;
-    KURL::List urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
+    m_urls = new KURL::List(KIPI::ImageDialog::getImageURLs( this,
+				m_interface ));
     kdDebug()<<"Slot Add Photos being called geting the list of url"<<endl;
-    if (urls.isEmpty())
+} 
+void FlickrWindow::slotUploadImages(){
+   kdDebug()<<"SlotUploadImages invoked"<<endl;
+   if(m_widget->m_currentSelectionButton->isChecked()){
+   kdDebug()<<"Using Selection"<<endl;
+	   	 if (m_urls!=NULL)
+			 delete m_urls;
+   	    m_urls=new KURL::List(m_interface->currentSelection().images());
+   }
+   if (m_urls==NULL || m_urls->isEmpty())
         return;
     typedef QPair<QString,FPhotoInfo> Pair;
     
     m_uploadQueue.clear();
-    for (KURL::List::iterator it = urls.begin(); it != urls.end(); ++it)
+    for (KURL::List::iterator it = m_urls->begin(); it != m_urls->end(); ++it)
     {
         KIPI::ImageInfo info = m_interface->info( *it );
     	kdDebug() <<" Adding images to the list"<<endl;
@@ -428,7 +444,9 @@ void FlickrWindow::slotAddPhotos()
     m_uploadCount = 0;
     m_progressDlg->reset();
     slotAddPhotoNext();
+   kdDebug()<<"SlotUploadImages done"<<endl;
 }
+
 void FlickrWindow::slotAddPhotoNext()
 {
     if ( m_uploadQueue.isEmpty() )

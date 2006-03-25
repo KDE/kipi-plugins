@@ -29,6 +29,7 @@
 #include <qheader.h>
 #include <qlistview.h>
 #include <qbuttongroup.h>
+#include <qradiobutton.h>
 #include <qgroupbox.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>
@@ -89,12 +90,44 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
     //m_newAlbumBtn = new QPushButton( rightButtonGroup, "m_newAlbumBtn" );
     //m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     //rightButtonGroupLayout->addWidget( m_newAlbumBtn, 0, Qt::AlignHCenter );
+	m_fileSrcButtonGroup = new QButtonGroup( splitter, "fileSourceButton" );
+	m_fileSrcButtonGroup->setRadioButtonExclusive( true );
+	m_fileSrcButtonGroup->setColumnLayout(0, Qt::Vertical );
+	m_fileSrcButtonGroup->layout()->setSpacing( 5 );
+	m_fileSrcButtonGroup->layout()->setMargin( 5 );
+	QVBoxLayout* m_fileSrcButtonGroupLayout = new
+		QVBoxLayout( m_fileSrcButtonGroup->layout());
+	m_fileSrcButtonGroupLayout->setAlignment( Qt::AlignTop );
 
-    m_addPhotoBtn = new QPushButton( rightButtonGroup, "m_addPhotoBtn" );
+	// ------------------------------------------------------------------
+
+	m_currentSelectionButton = new QRadioButton(m_fileSrcButtonGroup);
+	m_currentSelectionButton->setText( i18n("Upload Currently "
+				"Selected Images" ) );
+	m_currentSelectionButton->setChecked(true);
+	m_fileSrcButtonGroupLayout->addWidget( 	m_currentSelectionButton );
+
+	// ------------------------------------------------------------------
+
+	m_selectImagesButton = new QRadioButton(m_fileSrcButtonGroup);
+	m_selectImagesButton->setText(i18n( "Select Images " 
+				"For uploading" ) );
+	m_selectImagesButton->setEnabled( true );
+	m_fileSrcButtonGroupLayout->addWidget(m_selectImagesButton);
+
+    m_addPhotoBtn = new QPushButton( m_fileSrcButtonGroup, "m_addPhotoBtn" );
     m_addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    rightButtonGroupLayout->addWidget( m_addPhotoBtn, 0, Qt::AlignHCenter );
+    m_fileSrcButtonGroupLayout->addWidget( m_addPhotoBtn/*, *0, Qt::AlignHCenter*/ );
 
-    QGridLayout* tagsLayout=new QGridLayout(rightButtonGroupLayout,1,2);
+    m_startUploadButton = new QPushButton( this,
+			"m_startUploadButton" );
+    m_startUploadButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    flickrWidgetLayout->addWidget( m_startUploadButton,0, Qt::AlignHCenter );
+	
+    connect(m_selectImagesButton, SIGNAL(clicked()),
+			SLOT(slotSelectionChecked()));
+    
+	QGridLayout* tagsLayout=new QGridLayout(rightButtonGroupLayout,1,2);
     QLabel* tagsLabel=new QLabel(i18n("Tags:"),rightButtonGroup);
     tagsLayout->addWidget(tagsLabel,0,0);
     m_tagsLineEdit=new QLineEdit(rightButtonGroup,"m_tagsLineEdit");
@@ -109,7 +142,6 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
     QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout(),3,3);
 
     // ------------------------------------------------------------------------
-
 
     m_publicCheckBox = new QCheckBox(optionsBox);
     m_publicCheckBox->setText(i18n("As in accessible for people", "Public ?"));
@@ -166,6 +198,7 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
 //    m_tagView->header()->setLabel( 0, i18n( "Albums" ) );
     //m_newAlbumBtn->setText( i18n( "&New Album" ) );
     m_addPhotoBtn->setText( i18n( "&Add Photos" ) );
+    m_startUploadButton->setText( i18n( "Start Uploading" ) );
 
     // ------------------------------------------------------------------------
 
@@ -177,6 +210,10 @@ FlickrWidget::~FlickrWidget()
 {
 }
 
+void FlickrWidget::slotSelectionChecked(){
+	kdDebug()<<"Slot Selection Checked "<<endl;
+	m_addPhotoBtn->setEnabled(m_selectImagesButton->isChecked());
+}
 void FlickrWidget::slotResizeChecked()
 {
     m_dimensionSpinBox->setEnabled(m_resizeCheckBox->isChecked());

@@ -506,6 +506,8 @@ namespace KIPIFlickrExportPlugin
 	{
 		bool success=false;
 		QString errorString;
+		QString username;
+		QString transReturn;
 		QDomDocument doc( "checktoken" );
 		if ( !doc.setContent( data ) ) {
 			return;
@@ -528,17 +530,29 @@ namespace KIPIFlickrExportPlugin
 						if(details.nodeName()=="perms"){
 							kdDebug()<<"Perms="<<e.text()<<endl; 
 							QString	perms=e.text();//this is what is obtained from data.
-							QString transReturn;
 							if(perms=="write")
 								transReturn=i18n("As in the persmission to", "write");
 							else if(perms=="read")
 								transReturn=i18n("As in the permission to", "read");
 							else if(perms=="delete")
 								transReturn=i18n("As in the permission to", "delete");
-							int valueOk=KMessageBox::questionYesNo(0, i18n("Your currently have "
-										"%1 permissions, \nWould you like to "
-										"proceed with current permissions ?\n[Upload "
-										"requires write permissions]").arg( transReturn )
+							
+						}
+						if(details.nodeName()=="user"){
+							kdDebug()<<"nsid="<<e.attribute("nsid")<<endl; 
+							username=e.attribute("username");
+							kdDebug()<<"username="<<e.attribute("username")<<endl; 
+							kdDebug()<<"fullname="<<e.attribute("fullname")<<endl; 
+						}
+					}	
+					details=details.nextSibling();
+				}
+				int valueOk=KMessageBox::questionYesNo(0, i18n("You are currently signed "
+										"with username: \"%1\" and "
+										"\"%2\" permissions, \nClick Yes to "
+										"proceed or No to change the username OR " 
+										"permissions ?\n[Upload "
+										"requires write permissions]").arg( username ).arg( transReturn )
 									);
 							if(valueOk==KMessageBox::No){
 								getFrob(); 
@@ -547,17 +561,7 @@ namespace KIPIFlickrExportPlugin
 							else{	
 								authProgressDlg->hide();
 								emit signalTokenObtained(m_token);
-
 							}
-						}
-						if(details.nodeName()=="user"){
-							kdDebug()<<"nsid="<<e.attribute("nsid")<<endl; 
-							kdDebug()<<"username="<<e.attribute("username")<<endl; 
-							kdDebug()<<"fullname="<<e.attribute("fullname")<<endl; 
-						}
-					}	
-					details=details.nextSibling();
-				}
 				success=true;
 			}
 			if ( node.isElement() && node.nodeName() == "err" ) {

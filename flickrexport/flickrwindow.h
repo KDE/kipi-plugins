@@ -81,6 +81,7 @@ private:
     QSpinBox                 *m_dimensionSpinBox;
     QSpinBox                 *m_imageQualitySpinBox;
     QLineEdit                *m_tagsLineEdit;
+	QPushButton              *m_startUploadButton;
     FlickrWidget	*m_widget;
     FlickrTalker            *m_talker;
     QIntDict<GAlbumViewItem>  m_albumDict;
@@ -89,7 +90,7 @@ private:
     KIPI::Interface          *m_interface;
 	QString 				  m_tmp;
     //KWallet::Wallet          *m_wallet;
-
+    KURL::List *m_urls;
     QProgressDialog                      *m_progressDlg;
     QProgressDialog                      *m_authProgressDlg;
     unsigned int                          m_uploadCount;
@@ -108,6 +109,7 @@ private slots:
     //void slotOpenPhoto( const KURL& url );
     //void slotNewAlbum();
     void slotAddPhotos();
+	void slotUploadImages();
     void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
     void slotAddPhotoFailed( const QString& msg );

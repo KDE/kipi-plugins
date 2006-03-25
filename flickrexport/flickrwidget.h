@@ -27,7 +27,7 @@ class QSpinBox;
 class QCheckBox;
 class KHTMLPart;
 class QLineEdit;
-
+class QRadioButton;
 namespace KIPIFlickrExportPlugin
 {
 
@@ -43,6 +43,7 @@ public:
 private slots:
 
     void slotResizeChecked();
+    void slotSelectionChecked();
 
 private:
 
@@ -54,10 +55,14 @@ private:
     QCheckBox*    m_familyCheckBox;
     QCheckBox*    m_friendsCheckBox;
     QCheckBox*    m_publicCheckBox;
+	QButtonGroup* m_fileSrcButtonGroup;
+	QRadioButton* m_currentSelectionButton;
+	QRadioButton* m_selectImagesButton;
     QSpinBox*     m_dimensionSpinBox;
     QSpinBox*     m_imageQualitySpinBox;
     QLineEdit*    m_tagsLineEdit;
-    friend class FlickrWindow;
+    QPushButton*  m_startUploadButton;
+	friend class FlickrWindow;
 };
 
 }
