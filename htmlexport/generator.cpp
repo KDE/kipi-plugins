@@ -83,11 +83,40 @@ QString makeFileNameUnique(const QStringList& list, QString fileName) {
 
 
 /**
- * Prepare an XSLT param, quoting it at start and at end
+ * Prepare an XSLT param, managing quote mess.
+ * abc   => 'abc'
+ * a"bc  => 'a"bc'
+ * a'bc  => "a'bc"
+ * a"'bc => concat('a"', "'", 'bc')
  */
 QCString makeXsltParam(const QString& txt) {
-	// FIXME check for quotes
-	QString param="'" + txt + "'";
+	QString param;
+	static const char apos='\'';
+	static const char quote='"';
+	
+	if (txt.find(apos)==-1) {
+		// First or second case: no apos
+		param= apos + txt + apos;
+		
+	} else if (txt.find(quote)==-1) {
+		// Third case: only apos, no quote
+		param= quote + txt + quote;
+		
+	} else {
+		// Forth case: both apos and quote :-(
+		QStringList lst=QStringList::split(apos, txt, true /*allowEmptyEntries*/);
+
+		QStringList::Iterator it=lst.begin(), end=lst.end();
+		param= "concat(";
+		param+= apos + *it + apos;
+		++it;
+		for (;it!=end; ++it) {
+			param+= ", \"'\", ";
+			param+= apos + *it + apos;
+		}
+		param+= ")";
+	}
+	//kdDebug() << "param: " << txt << " => " << param << endl;
 	return param.utf8();
 }
 
