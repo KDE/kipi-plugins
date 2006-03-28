@@ -1,11 +1,19 @@
+# Must be done
 - i18n support:
-  - More strings
+  - Provide more strings
   - Fix makeXsltParam
 - Support for special case: only one gallery
 - Define a theme description file, which should contain the theme title,
   author, URL
-- Show theme description in theme list, with a screenshot
+- Show theme description in theme list
+
+# Would be nice
+- Show screenshot alongside theme description
 - Store settings between invocations of the plugin
 - Support for remote URLs
-- Automatically rotate JPEG according to Exif info
 - let the user control quality of JPEG and PNG
+- Automatically rotate JPEG according to Exif info
+- Keep EXIF information
+- Make EXIF information available to themes
+- Implement and "update" mode which would only generate files for new or
+  modified images
