@@ -180,12 +180,7 @@ void ListImageItems::dropEvent(QDropEvent *e)
 KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const char *name)
             : KDialog( parent, name, false, Qt::WDestructiveClose ), m_interface( interface )
 {
-  // Init. Tmp folder
-
-  KStandardDirs dir;
-  m_TmpFolderConfig = dir.saveLocation("tmp", "kipi-mpegencoderplugin-" +
-                      QString::number(getpid()) );
-
+  m_TmpFolderConfig = "";
   m_Proc = 0L;
   m_thumbJob = 0L;
   m_Encoding = false;
@@ -748,6 +743,11 @@ void KImg2mpgData::slotEncode( void )
       }
     return;
     }
+
+  // Init. Tmp folder
+  KStandardDirs dir;
+  m_TmpFolderConfig = dir.saveLocation("tmp", "kipi-mpegencoderplugin-" +
+                                       QString::number(getpid()) );
 
   m_DebugOuputMessages = "";
   m_DurationTime.start();
