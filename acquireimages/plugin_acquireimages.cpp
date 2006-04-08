@@ -96,61 +96,70 @@ Plugin_AcquireImages::~Plugin_AcquireImages()
 
 void Plugin_AcquireImages::slotActivate()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+  KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     
-    if ( !interface ) 
-           {
-           kdError( 51000 ) << "Kipi interface is null!" << endl;
-           return;
-           }
+  if ( !interface ) 
+  {
+    kdError( 51000 ) << "Kipi interface is null!" << endl;
+    return;
+  }
     
-    QString from(sender()->name());
+  QString from(sender()->name());
 
-    if (from == "scan_images")
-       {
-       m_scanDialog = KScanDialog::getScanDialog(kapp->activeWindow(), "KIPI Scan Images Plugin");
+  if (from == "scan_images")
+  {
+    m_scanDialog = KScanDialog::getScanDialog(kapp->activeWindow(), "KIPI Scan Images Plugin");
 
-       if ( m_scanDialog )
-           {
-           m_scanDialog->setMinimumSize(400, 300);
-           
-           connect(m_scanDialog, SIGNAL(finalImage(const QImage &, int)),
-                   this, SLOT(slotAcquireImageDone(const QImage &)));
-           }
-       else
-           {
-           KMessageBox::sorry(kapp->activeWindow(), i18n("No KDE scan-service available; check your system."),
-                              i18n("KIPI's 'Scan Images' Plugin"));
-           kdDebug ( 51000 ) << "No Scan-service available, aborting!" << endl;
-           return;
-           }
+    if ( m_scanDialog )
+    {
+      m_scanDialog->setMinimumSize(400, 300);
 
-       if ( m_scanDialog->setup() )
-           m_scanDialog->show();
-       }
-    else if (from == "screenshot_images")
-       {
-       m_screenshotDialog = new KIPIAcquireImagesPlugin::ScreenGrabDialog(interface,
-                                                         kapp->activeWindow(), "KIPI ScreenshotImagesDialog");
-       m_screenshotDialog->show();
-       }
+      connect(m_scanDialog, SIGNAL(finalImage(const QImage &, int)),
+              this, SLOT(slotAcquireImageDone(const QImage &)));
+
+    }
     else
-       {
-       kdWarning( 51000 ) << "The impossible happened... unknown flip specified" << endl;
-       return;
-       }
-}
+    {
+      KMessageBox::sorry(kapp->activeWindow(), i18n("No KDE scan-service available; check your system."),
+                         i18n("KIPI's 'Scan Images' Plugin"));
+      kdDebug ( 51000 ) << "No Scan-service available, aborting!" << endl;
+      return;
+    }
 
+    if ( m_scanDialog->setup() )
+      m_scanDialog->show();
+  }
+  else if (from == "screenshot_images")
+  {
+    m_screenshotDialog = new KIPIAcquireImagesPlugin::ScreenGrabDialog(interface,
+        kapp->activeWindow(), "KIPI ScreenshotImagesDialog");
+    m_screenshotDialog->show();
+  }
+  else
+  {
+    kdWarning( 51000 ) << "The impossible happened... unknown flip specified" << endl;
+    return;
+  }
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Plugin_AcquireImages::slotAcquireImageDone(const QImage &img)
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+  //FIXME: this is not a cleaned way to test if scan has been interrupted
+  //       anyway it prevents a crash
+  QImage * pImg = (QImage*)&img;
+  if (!pImg )
+   {
+     kdError(51000) << "Acquired image is null!" << endl;
+     return;
+   }
+
+KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     
     if ( !interface ) 
            {
-           kdError( 51000 ) << "Kipi interface is null!" << endl;
+             kdError( 51000 ) << "Kipi interface is null!" << endl;
            return;
            }
            
