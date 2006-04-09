@@ -286,6 +286,7 @@ struct Generator::Private {
 		I18nMap map;
 		map["i18nPrevious"]=makeXsltParam(i18n("Previous"));
 		map["i18nNext"]=makeXsltParam(i18n("Next"));
+		map["i18nCollectionList"]=makeXsltParam(i18n("Collection List"));
 
 		const char** params=new const char*[map.size()*2+1];
 		

@@ -27,7 +27,7 @@
 	<body id="imagePage">
 	<h1>
 		<div id="caption">
-			<a href="../index.html">Collection List</a>
+			<a href="../index.html"><xsl:value-of select="$i18nCollectionList"/></a>
 			&raquo; <a href="index.html"><xsl:value-of select="../name"/></a>
 			&raquo; <xsl:value-of select="title"/>
 			(<xsl:value-of select="position()"/>/<xsl:value-of select="last()"/>)
@@ -94,7 +94,7 @@
 	</head>
 	<body id="collectionPage">
 	<h1>
-		<a href="../index.html">Collection List</a> &raquo; <xsl:value-of select="name"/>
+		<a href="../index.html"><xsl:value-of select="$i18nCollectionList"/></a> &raquo; <xsl:value-of select="name"/>
 	</h1>
 	<div id="content">
 		<ul>
@@ -120,11 +120,11 @@
 	<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Collection List</title>
+		<title><xsl:value-of select="$i18nCollectionList"/></title>
 		<link rel="stylesheet" type="text/css" href="matrix/style.css"/>
 	</head>
 	<body>
-	<h1>Collection List</h1>
+	<h1><xsl:value-of select="$i18nCollectionList"/></h1>
 	<div id="content">
 		<ul>
 			<xsl:for-each select="collections/collection">
