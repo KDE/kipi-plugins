@@ -10,8 +10,9 @@
 
 <xsl:template name="thumbnailLink">
 	<xsl:param name="text"/>
-	<a class="imageLink" href="{full/@fileName}.html">
-		<img src="{thumbnail/@fileName}" width="{thumbnail/@width}" height="{thumbnail/@height}" />
+	<xsl:param name="folder" select="'.'"/>
+	<a class="imageLink" href="{$folder}/{full/@fileName}.html">
+		<img src="{$folder}/{thumbnail/@fileName}" width="{thumbnail/@width}" height="{thumbnail/@height}" />
 		<br/>
 		<xsl:value-of select="$text"/>
 	</a>
@@ -27,8 +28,16 @@
 	<body id="imagePage">
 	<h1>
 		<div id="caption">
-			<a href="../index.html"><xsl:value-of select="$i18nCollectionList"/></a>
-			&raquo; <a href="index.html"><xsl:value-of select="../name"/></a>
+			<xsl:choose>
+				<xsl:when test="count(/collections/collection) &gt; 1">
+					<a href="../index.html"><xsl:value-of select="$i18nCollectionList"/></a>
+					&raquo;
+					<a href="../{../fileName}.html"><xsl:value-of select="../name"/></a>
+				</xsl:when>
+				<xsl:otherwise>
+					<a href="../index.html"><xsl:value-of select="../name"/></a>
+				</xsl:otherwise>
+			</xsl:choose>
 			&raquo; <xsl:value-of select="title"/>
 			(<xsl:value-of select="position()"/>/<xsl:value-of select="last()"/>)
 		</div>
@@ -90,21 +99,27 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><xsl:value-of select="name"/></title>
-		<link rel="stylesheet" type="text/css" href="../matrix/style.css"/>
+		<link rel="stylesheet" type="text/css" href="matrix/style.css"/>
 	</head>
 	<body id="collectionPage">
 	<h1>
-		<a href="../index.html"><xsl:value-of select="$i18nCollectionList"/></a> &raquo; <xsl:value-of select="name"/>
+		<xsl:if test="count(/collections/collection) &gt; 1">
+			<a href="index.html"><xsl:value-of select="$i18nCollectionList"/></a>
+			&raquo;
+		</xsl:if>
+		<xsl:value-of select="name"/>
 	</h1>
 	<div id="content">
 		<ul>
+			<xsl:variable name="folder" select='fileName'/>
 			<xsl:for-each select="image">
 				<li>
 					<xsl:call-template name="thumbnailLink">
 						<xsl:with-param name="text"><xsl:value-of select="title"/></xsl:with-param>
+						<xsl:with-param name="folder"><xsl:value-of select="$folder"/></xsl:with-param>
 					</xsl:call-template>
 				</li>
-				<exsl:document href='{full/@fileName}.html'>
+				<exsl:document href='{$folder}/{full/@fileName}.html'>
 					<xsl:call-template name="imagePage"/>
 				</exsl:document>
 			</xsl:for-each>
@@ -116,7 +131,7 @@
 </xsl:template>
 
 
-<xsl:template match="/">
+<xsl:template name="collectionListPage">
 	<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -129,11 +144,11 @@
 		<ul>
 			<xsl:for-each select="collections/collection">
 				<li>
-					<a href="{fileName}/index.html">
+					<a href="{fileName}.html">
 						<xsl:value-of select="name"/>
 					</a>
 				</li>
-				<exsl:document href="{fileName}/index.html">
+				<exsl:document href="{fileName}.html">
 					<xsl:call-template name="collectionPage"/>
 				</exsl:document>
 			</xsl:for-each>
@@ -142,5 +157,20 @@
 	</body>
 	</html>
 </xsl:template>
+
+
+<xsl:template match="/">
+	<xsl:choose>
+		<xsl:when test="count(collections/collection) &gt; 1">
+			<xsl:call-template name="collectionListPage"/>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:for-each select="collections/collection">
+				<xsl:call-template name="collectionPage"/>
+			</xsl:for-each>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
 
 </xsl:transform>

@@ -1,10 +1,10 @@
 # Must be done
-- Support for special case: only one gallery
 - Define a theme description file, which should contain the theme title,
   author, URL
 - Show theme description in theme list
 
 # Would be nice
+- Use collection image on collection list page
 - Show screenshot alongside theme description
 - Store settings between invocations of the plugin
 - Support for remote URLs
