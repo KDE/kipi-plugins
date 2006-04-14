@@ -11,7 +11,8 @@ kipiplugin_htmlexport_la_SOURCES = \
 	imagesettingspage.ui \
 	outputpage.ui \
 	plugin.cpp \
-	wizard.cpp
+	wizard.cpp \
+	theme.cpp
 kipiplugin_htmlexport_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) 
 kipiplugin_htmlexport_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries) -lexslt $(LIBXSLT_LIBS)
 

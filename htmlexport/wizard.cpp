@@ -26,12 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <qcombobox.h>
 #include <qdir.h>
 #include <qfileinfo.h>
+#include <qpainter.h>
 #include <qspinbox.h>
 
 // KDE
+#include <kdebug.h>
 #include <klistbox.h>
 #include <klocale.h>
-#include <kstandarddirs.h>
 #include <kurlrequester.h>
 #include <kwizard.h>
 
@@ -41,9 +42,43 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // Local
 #include "galleryinfo.h"
 #include "imagesettingspage.h"
+#include "theme.h"
 #include "outputpage.h"
 
 namespace KIPIHTMLExport {
+
+
+class ThemeListBoxItem : public QListBoxText {
+public:
+	ThemeListBoxItem(QListBox* list, Theme::Ptr theme)
+	: QListBoxText(list)
+	, mTheme(theme)
+	{}
+
+	virtual int height(const QListBox* lb) const {
+		return lb->fontMetrics().height()*3;	
+	}
+
+	Theme::Ptr mTheme;
+
+protected:
+	virtual void paint(QPainter* painter) {
+		QListBox* lb=listBox();
+		QFontMetrics fm=lb->fontMetrics();
+		QFont font=lb->font();
+		int top=fm.height()/2;
+		
+		font.setBold(true);
+		painter->setFont(font);
+		painter->drawText(0, top + fm.ascent(), mTheme->name());
+		top+=fm.height();
+		
+		font.setBold(false);
+		painter->setFont(font);
+		painter->drawText(0, top + fm.ascent(), mTheme->comment());
+	}
+};
+
 
 struct Wizard::Private {
 	GalleryInfo* mInfo;
@@ -55,13 +90,10 @@ struct Wizard::Private {
 	
 	void initAppearancePage(QWidget* parent) {
 		mAppearancePage=new KListBox(parent);
-		QStringList list=KGlobal::instance()->dirs()->findAllResources("data", "kipiplugin_htmlexport/themes/*/template.xslt");
-		QStringList::Iterator it=list.begin();
-		QStringList::Iterator end=list.end();
-		for (;it!=end; ++it) {
-			QFileInfo info(*it);
-			QString theme=info.dir().dirName();
-			mAppearancePage->insertItem(theme);
+		Theme::List list=Theme::getList();
+		Theme::List::Iterator it=list.begin(), end=list.end();
+		for (; it!=end; ++it) {
+			new ThemeListBoxItem(mAppearancePage, *it);
 		}
 	}
 };
@@ -106,7 +138,7 @@ void Wizard::updateFinishButton() {
 
 
 void Wizard::updateAppearancePageNextButton() {
-	setNextEnabled(d->mAppearancePage, !d->mAppearancePage->currentText().isEmpty());
+	setNextEnabled(d->mAppearancePage, d->mAppearancePage->selectedItem());
 }
 
 
@@ -116,7 +148,7 @@ void Wizard::accept() {
 	d->mInfo->mCollectionList=d->mCollectionSelector->selectedImageCollections();
 	d->mInfo->mOpenInBrowser=d->mOutputPage->openInBrowser->isChecked();
 
-	d->mInfo->mTheme=d->mAppearancePage->currentText();
+	d->mInfo->mTheme=static_cast<ThemeListBoxItem*>(d->mAppearancePage->selectedItem())->mTheme;
 
 	d->mInfo->mFullResize=d->mImageSettingsPage->fullResize->isChecked();
 	d->mInfo->mFullSize=d->mImageSettingsPage->fullSize->value();

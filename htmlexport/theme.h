@@ -18,37 +18,36 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-#ifndef GALLERYINFO_H
-#define GALLERYINFO_H
+#ifndef THEME_H
+#define THEME_H   
 
 // Qt
+#include <qstring.h>
 #include <qvaluelist.h>
 
 // KDE
-#include <kurl.h>
-
-// KIPI
-#include <libkipi/imagecollection.h>
-
-// Local
-#include <theme.h>
+#include <ksharedptr.h>
 
 namespace KIPIHTMLExport {
 
-struct GalleryInfo {
-	KURL mDestURL;
-	QValueList<KIPI::ImageCollection> mCollectionList;
-	bool mOpenInBrowser;
-	Theme::Ptr mTheme;
-	
-	bool mFullResize;
-	int mFullSize;
-	QString mFullFormat;
+class Theme : public KShared {
+public:
+	typedef KSharedPtr<Theme> Ptr;
+	typedef QValueList<Ptr> List;
 
-	int mThumbnailSize;
-	QString mThumbnailFormat;
+	~Theme();
+	QString name() const;
+	QString comment() const;
+	QString directory() const;
+	
+	static const List& getList();
+
+private:
+	Theme();
+	struct Private;
+	Private* d;
 };
 
 } // namespace
 
-#endif /* GALLERYINFO_H */
+#endif /* THEME_H */

@@ -48,6 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 // Local
 #include "galleryinfo.h"
+#include "theme.h"
 #include "xmlutils.h"
 
 namespace KIPIHTMLExport {
@@ -125,37 +126,23 @@ struct Generator::Private {
 	KIPI::Interface* mInterface;
 	GalleryInfo* mInfo;
 	KIPI::BatchProgressDialog* mProgressDialog;
-	KURL mThemeURL;
 	
 	// State info
 	bool mWarnings;
 	QString mXMLFileName;
 
-	bool init() {
-		// mThemeURL
-		QString themeDir="kipiplugin_htmlexport/themes/" + mInfo->mTheme;
-		QString themeBaseDir=KGlobal::instance()->dirs()->findResourceDir("data", themeDir + "/style.css");
-		if (themeBaseDir.isEmpty()) {
-			logError(i18n("Could not find theme"));
-			return false;
-		}
-
-		mThemeURL.setPath(themeBaseDir);
-		mThemeURL.addPath(themeDir);
-	
-		return true;
-	}
-
 	bool copyTheme() {
 		mProgressDialog->addedAction(i18n("Copying theme"), KIPI::ProgressMessage);
 		
+		KURL srcURL=KURL(mInfo->mTheme->directory());
+
 		KURL destURL=mInfo->mDestURL;
-		destURL.addPath(mInfo->mTheme);
+		destURL.addPath(srcURL.filename());
 		
 		if (QFile::exists(destURL.path())) {
 			KIO::NetAccess::del(destURL, mProgressDialog);
 		}
-		bool ok=KIO::NetAccess::dircopy(mThemeURL, destURL, mProgressDialog);
+		bool ok=KIO::NetAccess::dircopy(srcURL, destURL, mProgressDialog);
 		if (!ok) {
 			logError(i18n("Could not copy theme"));
 			return false;
@@ -267,7 +254,7 @@ struct Generator::Private {
 	bool generateHTML() {
 		logInfo(i18n("Generating HTML files"));
 
-		QString xsltFileName=mThemeURL.path() + "/template.xslt";
+		QString xsltFileName=mInfo->mTheme->directory() + "/template.xslt";
 		CWrapper<xsltStylesheetPtr, xsltFreeStylesheet> xslt= xsltParseStylesheetFile( (const xmlChar*) xsltFileName.local8Bit().data() );
 
 		if (!xslt) {
@@ -372,8 +359,6 @@ Generator::~Generator() {
 
 
 bool Generator::run() {
-	if (!d->init()) return false;
-	
 	QString destDir=d->mInfo->mDestURL.path();
 	if (!d->createDir(destDir)) return false;
 
