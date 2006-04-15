@@ -1046,7 +1046,7 @@ int BatchProcessImagesDialog::overwriteMode(void)
     if (OverWrite == i18n("Skip"))
         return OVERWRITE_SKIP;
 
-    if (OverWrite == i18n("Always OverWrite"))
+    if (OverWrite == i18n("Always Overwrite"))
         return OVERWRITE_OVER;
 
     return OVERWRITE_ASK;
