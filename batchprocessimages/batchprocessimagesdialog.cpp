@@ -488,6 +488,16 @@ bool BatchProcessImagesDialog::startProcess(void)
     // PENDING(blackie) handle remote URL's
     QString targetAlbum = m_upload->path().path();
 
+    //TODO check if it is valid also for remote URL's
+    // this is a workarond for bug 117397
+    QFileInfo dirInfo(targetAlbum + "/");
+    if (!dirInfo.isDir () || !dirInfo.isWritable())
+    {
+      KMessageBox::error(this, i18n("You must specify a writable path for your output file."));
+      endProcess();
+      return true;
+    }
+
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     m_listFiles->setCurrentItem(item);
 
@@ -519,6 +529,8 @@ bool BatchProcessImagesDialog::startProcess(void)
     if ( KIO::NetAccess::exists( desturl ) == true )
 #endif
        {
+
+
        switch (overwriteMode())
           {
           case OVERWRITE_ASK:
