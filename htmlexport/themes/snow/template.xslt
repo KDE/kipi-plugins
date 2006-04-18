@@ -122,6 +122,11 @@
 			<xsl:for-each select="collections/collection">
 				<li>
 					<a href="{fileName}.html">
+						<!-- Use first image as collection image -->
+						<img src="{fileName}/{image[1]/thumbnail/@fileName}"
+							width="{image[1]/thumbnail/@width}"
+							height="{image[1]/thumbnail/@height}" />
+						<br />
 						<xsl:value-of select="name"/>
 					</a>
 				</li>
