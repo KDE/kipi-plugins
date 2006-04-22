@@ -121,7 +121,7 @@ private:
 
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
-DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface, 
+DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
                                QDict < QPtrVector < QFile > >* cmp )
               : KDialogBase( parent, "DisplayCompare", true, 0,
                 Help|User1|Close, Close, true, i18n("Delete")),
@@ -129,25 +129,28 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
 {
     KImageIO::registerFormats();
     this->cmp = cmp;
-    
+
     // About data and help button.
-        
+
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Find Duplicate Images"), 
+                                       I18N_NOOP("Find Duplicate Images"),
                                        kipi_version,
                                        I18N_NOOP("A Kipi plugin to find duplicate images\n"
                                                  "This plugin is based on ShowImg implementation algorithm"),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier", 
+                                       "(c) 2003-2004, Gilles Caulier",
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
-    
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+
+    about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Maintainer"),
+                     "blackie atkde dot org");
+
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Original author"),
                      "caulier dot gilles at free.fr");
 
     about->addAuthor("Richard Groult", I18N_NOOP("Find duplicate images algorithm"),
                      "rgroult at jalix.org");
-                         
+
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
@@ -155,11 +158,11 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
     m_helpButton->setPopup( helpMenu->menu() );
 
     // ----------------------------------------------------
-        
+
     QWidget* box = new QWidget( this );
     setMainWidget(box);
     QVBoxLayout* ml = new QVBoxLayout( box, 10 );
-    
+
     QFrame *headerFrame = new QFrame( box );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
@@ -172,11 +175,11 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
     ml->addWidget( headerFrame );
-    
+
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
     directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
@@ -287,7 +290,7 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
 
     labelTitle->setText( i18n("Find Duplicate Image Results - 1 Duplicate Found",
                               "Find Duplicate Image Results - %n Duplicates Found", n_id));
-                    
+
     // signals and slots connections
 
     connect(this, SIGNAL(user1Clicked()),
@@ -424,7 +427,7 @@ void DisplayCompare::slotDisplayLeft(QListViewItem * item)
                                                            albumName,
                                                            comments
                                                            );
-          if (!last) 
+          if (!last)
              last = item;
           }
        }

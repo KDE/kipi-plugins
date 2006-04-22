@@ -95,7 +95,10 @@ FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *p
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
 
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+    about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Maintainer"),
+                     "blackie at kde dot org");
+
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Original author"),
                      "caulier dot gilles at free.fr");
 
     about->addAuthor("Richard Groult", I18N_NOOP("Find duplicate images algorithm"),
@@ -160,8 +163,7 @@ void FindDuplicateDialog::setupPageMethod(void)
                      "This method is faster but is not as robust."));
     m_labelsearchMethod->setBuddy( m_findMethod );
 
-    QLabel *m_label_approximateThreeshold = new QLabel (i18n("Approximate threshold:"), groupBox1);
-    vlay->addWidget( m_label_approximateThreeshold );
+    (void) new QLabel (i18n("Approximate threshold:"), groupBox1);
 
     m_approximateThreshold = new KIntNumInput(88, groupBox1);
     m_approximateThreshold->setRange(60, 100, 1, true );

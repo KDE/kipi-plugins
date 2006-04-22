@@ -64,7 +64,7 @@ public:
 
    virtual void run();
 
-   bool showDialog();
+   bool execDialog();
    void showResult();
    void compareAlbums();                                   // Launch the dialog box for Albums selection
                                                            // before comparison.
@@ -84,7 +84,7 @@ protected:
    bool equals(QFile*, QFile*);                            // Return true if the 2 files are the sames.
    void compareFast(QStringList filesList);                // Launch the exact comparison.
    void compareAlmost(QStringList filesList);              // Launch the approximative comparison.
-   
+
    char getRed(QImage *im, int x, int y);
    char getGreen(QImage *im, int x, int y);
    char getBlue(QImage *im, int x, int y);
