@@ -60,12 +60,12 @@ class  DisplayCompare : public KDialogBase
 Q_OBJECT
 
 public:
-   
-   DisplayCompare(QWidget* parent, KIPI::Interface* interface, QDict < QPtrVector < QFile > >* cmp);
+
+   DisplayCompare(QWidget* parent, KIPI::Interface* interface, const QDict < QPtrVector < QFile > >& cmp);
    ~DisplayCompare();
 
 private slots :
-   
+
    void slotDisplayRight(QListViewItem *);
    void slotDisplayLeft(QListViewItem *);
    void slotHelp();
@@ -74,8 +74,8 @@ private slots :
    void slotGotPreview2(const KFileItem* url, const QPixmap &pixmap);
 
 private:
-   
-   QDict < QPtrVector < QFile > >* cmp;
+
+   const QDict < QPtrVector < QFile > > m_cmp;
 
    QGroupBox*          GroupBox1;
    QGroupBox*          GroupBox2;
@@ -99,9 +99,9 @@ private:
 
    QListView*          listName;
    QListView*          listEq;
-   
+
    QPushButton        *m_helpButton;
-   
+
    KIPI::Interface    *m_interface;
 };
 

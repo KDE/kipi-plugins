@@ -1,9 +1,10 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//    ACTIONS.H
+//    FINDDUPPLICATEIMAGES.CPP
 //
-//    Copyright (C) 2004 Richard Groult <rgroult at jalix.org>
+//    Copyright (C) 2001 Richard Groult <rgroult at jalix.org> (from ShowImg project)
 //    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Richard Groult <rgroult at jalix.org>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -21,42 +22,40 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef ACTIONS_H
-#define ACTIONS_H
-#include <qstring.h>
+#ifndef FUZZYCOMPARE_H
+#define FUZZYCOMPARE_H
+
+class QImage;
+class QObject;
+class QStringList;
+#include <qdict.h>
+#include <qptrvector.h>
+#include <qfile.h>
 
 namespace KIPIFindDupplicateImagesPlugin
 {
+class FindDuplicateImages;
+class ImageSimilarityData;
 
-enum Action
-{
-    Similar = 0,
-    Exact,
-    Matrix,
-    FastParsing,
-    Progress
-};
-
-
-
-class EventData
+class FuzzyCompare
 {
 public:
-    EventData()
-       {
-       starting = false;
-       success  = false;
-       }
+    FuzzyCompare( QObject* parent, const QString& cacheDir );
+    QDict < QPtrVector < QFile > > doFuzzyCompare(const QStringList& filesList, float approximateLevel );
 
-    QString fileName;
-    QString errString;
-    int     total;
-    bool    starting;
-    bool    success;
-    Action  action;
+protected:
+    ImageSimilarityData* image_sim_fill_data(QString filename);
+    float image_sim_compare_fast(ImageSimilarityData *a, ImageSimilarityData *b, float min);
+    char getRed(QImage *im, int x, int y);
+    char getGreen(QImage *im, int x, int y);
+    char getBlue(QImage *im, int x, int y);
+
+private:
+    QObject* parent_;
+    const QString m_cacheDir;
 };
 
+}
 
-}  // NameSpace KIPIFindDupplicateImagesPlugin
+#endif /* FUZZYCOMPARE_H */
 
-#endif // ACTIONS_H

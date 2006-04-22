@@ -122,13 +122,12 @@ private:
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
-                               QDict < QPtrVector < QFile > >* cmp )
+                               const QDict < QPtrVector < QFile > >& cmp )
               : KDialogBase( parent, "DisplayCompare", true, 0,
                 Help|User1|Close, Close, true, i18n("Delete")),
-                m_interface( interface )
+                m_cmp(cmp), m_interface( interface )
 {
     KImageIO::registerFormats();
-    this->cmp = cmp;
 
     // About data and help button.
 
@@ -265,8 +264,7 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
 
     //---------------------------------------------
 
-    QDictIterator < QPtrVector < QFile > >itres (*cmp);    // iterator for res
-    cmp->setAutoDelete(true);
+    QDictIterator < QPtrVector < QFile > >itres(m_cmp);    // iterator for res
     int n_id = 0;
 
     while (itres.current ())
@@ -374,7 +372,7 @@ void DisplayCompare::slotDisplayLeft(QListViewItem * item)
     KApplication::setOverrideCursor( waitCursor );
     listEq->clear();
     FindOriginalItem *pitem = static_cast<FindOriginalItem*>( item );
-    QPtrVector < QFile > *list = (QPtrVector < QFile > *)cmp->find(pitem->fullpath());
+    QPtrVector < QFile > *list = (QPtrVector < QFile > *)m_cmp.find(pitem->fullpath());
     QImage im = QImage(pitem->fullpath());
 
     if ( !im.isNull() )

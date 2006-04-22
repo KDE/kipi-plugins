@@ -307,6 +307,8 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
     }
 
     kapp->processEvents();
+
+    // PENDING(blackie) should I delete d?!
     delete d;
 }
 

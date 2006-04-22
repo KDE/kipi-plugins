@@ -26,8 +26,6 @@
 #ifndef FINDDUPPLICATEIMAGES_H
 #define FINDDUPPLICATEIMAGES_H
 
-#define PAS 32
-
 // Include files for Qt
 
 #include <qobject.h>
@@ -56,53 +54,49 @@ class FindDuplicateDialog;
 
 class FindDuplicateImages : public QObject, public QThread
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-   FindDuplicateImages( KIPI::Interface* interface, QObject *parent=0);
-   ~FindDuplicateImages();
+    FindDuplicateImages( KIPI::Interface* interface, QObject *parent=0);
+    ~FindDuplicateImages();
 
-   virtual void run();
+    virtual void run();
 
-   bool execDialog();
-   void showResult();
-   void compareAlbums();                                   // Launch the dialog box for Albums selection
-                                                           // before comparison.
+    bool execDialog();
+    void showResult();
+    void compareAlbums();                                   // Launch the dialog box for Albums selection
+    // before comparison.
 
 public slots:
-  void slotUpdateCache(QStringList fromDirs);
-  void slotClearCache(QStringList fromDir);
-  void slotClearAllCache(void);
+    void slotUpdateCache(QStringList fromDirs);
+    void slotClearCache(QStringList fromDir);
+    void slotClearAllCache(void);
 
 protected:
-   KConfig              *config;
-   QString               m_imagesFileFilter;
-   QProgressDialog      *pdCache;
-   FindDuplicateDialog  *m_findDuplicateDialog;
-   float                 m_approximateLevel;
+    KConfig              *config;
+    QString               m_imagesFileFilter;
+    QProgressDialog      *pdCache;
+    FindDuplicateDialog  *m_findDuplicateDialog;
+    float                 m_approximateLevel;
 
-   bool equals(QFile*, QFile*);                            // Return true if the 2 files are the sames.
-   void compareFast(QStringList filesList);                // Launch the exact comparison.
-   void compareAlmost(QStringList filesList);              // Launch the approximative comparison.
+    QDict < QPtrVector < QFile > > compareFast(QStringList filesList, int* total );// Launch the exact comparison.
+    QDict < QPtrVector < QFile > > compareAlmost( const QStringList& filesList); // Launch the approximative comparison.
 
-   char getRed(QImage *im, int x, int y);
-   char getGreen(QImage *im, int x, int y);
-   char getBlue(QImage *im, int x, int y);
-   ImageSimilarityData* image_sim_fill_data(QString filename);
-   float image_sim_compare(ImageSimilarityData *a, ImageSimilarityData *b);
-   float image_sim_compare_fast(ImageSimilarityData *a, ImageSimilarityData *b, float min);
-   void writeSettings(void);
-   void readSettings(void);
-   void updateCache(QString fromDir);
-   bool DeleteDir(QString dirname);
-   bool deldir(QString dirname);
+    float image_sim_compare(ImageSimilarityData *a, ImageSimilarityData *b);
+    void writeSettings(void);
+    void readSettings(void);
+    void updateCache(QString fromDir);
+    bool DeleteDir(QString dirname);
+    bool deldir(QString dirname);
 
-   QStringList filesList;
-   bool isCompareAlmost;
-   QObject *parent_;
-   QDict < QPtrVector < QFile > > *res;
-   KIPI::Interface* m_interface;
-   QString cacheDir;
+    QStringList filesList;
+    bool isCompareAlmost;
+    QObject *parent_;
+    QDict < QPtrVector < QFile > > m_res;
+    KIPI::Interface* m_interface;
+    QString m_cacheDir;
+
+    friend class FuzzyCompare;
 };
 
 }  // NameSpace KIPIFindDupplicateImagesPlugin

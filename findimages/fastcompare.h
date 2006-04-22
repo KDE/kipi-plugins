@@ -1,9 +1,10 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//    ACTIONS.H
+//    FINDDUPPLICATEIMAGES.CPP
 //
-//    Copyright (C) 2004 Richard Groult <rgroult at jalix.org>
+//    Copyright (C) 2001 Richard Groult <rgroult at jalix.org> (from ShowImg project)
 //    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Richard Groult <rgroult at jalix.org>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -21,42 +22,32 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef ACTIONS_H
-#define ACTIONS_H
-#include <qstring.h>
+#ifndef FASTCOMPARE_H
+#define FASTCOMPARE_H
+
+class QStringList;
+class QObject;
+#include <qdict.h>
+#include <qptrvector.h>
+#include <qfile.h>
 
 namespace KIPIFindDupplicateImagesPlugin
 {
 
-enum Action
-{
-    Similar = 0,
-    Exact,
-    Matrix,
-    FastParsing,
-    Progress
-};
-
-
-
-class EventData
+class FastCompare
 {
 public:
-    EventData()
-       {
-       starting = false;
-       success  = false;
-       }
+    FastCompare( QObject* parent );
+    QDict < QPtrVector < QFile > > doFastCompare( const QStringList& filesList, int* total );
 
-    QString fileName;
-    QString errString;
-    int     total;
-    bool    starting;
-    bool    success;
-    Action  action;
+protected:
+    bool equals(QFile*, QFile*); // Return true if the 2 files are the sames.
+
+private:
+    QObject* m_parent;
 };
 
+}
 
-}  // NameSpace KIPIFindDupplicateImagesPlugin
+#endif /* FASTCOMPARE_H */
 
-#endif // ACTIONS_H
