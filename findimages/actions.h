@@ -24,6 +24,8 @@
 #ifndef ACTIONS_H
 #define ACTIONS_H
 #include <qstring.h>
+#include <qdatetime.h>
+#include <qapplication.h>
 
 namespace KIPIFindDupplicateImagesPlugin
 {
@@ -50,11 +52,16 @@ public:
 
     QString fileName;
     QString errString;
+    int     count;
     int     total;
     bool    starting;
     bool    success;
     Action  action;
 };
+
+
+void sendMessage( QObject* receiver, const Action& action, const QString & fileName,
+                  int total, bool starting, bool succes );
 
 
 }  // NameSpace KIPIFindDupplicateImagesPlugin

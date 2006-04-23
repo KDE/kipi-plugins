@@ -51,7 +51,7 @@ protected:
     char getBlue(QImage *im, int x, int y);
 
 private:
-    QObject* parent_;
+    QObject* m_parent;
     const QString m_cacheDir;
 };
 

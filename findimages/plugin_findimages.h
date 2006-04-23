@@ -45,30 +45,29 @@ class Plugin_FindImages : public KIPI::Plugin
 Q_OBJECT
 
 public:
-   
+
    Plugin_FindImages(QObject *parent, const char* name, const QStringList &args);
    ~Plugin_FindImages();
-   
+
    virtual KIPI::Category category( KAction* action ) const;
    virtual void setup( QWidget* widget );
 
 private:
-   
+
    KAction                                             *m_action_findDuplicateImages;
 
 protected:
-   
+
    KIPIFindDupplicateImagesPlugin::FindDuplicateImages *m_findDuplicateOperation;
-   
+
    KIPI::BatchProgressDialog                           *m_progressDlg;
-   
-   int                                                  m_current;
+
    int                                                  m_total;
 
    void customEvent(QCustomEvent *event);
 
 private slots:
-   
+
    void slotFindDuplicateImages();
    void slotCancel();
 };

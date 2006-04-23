@@ -89,8 +89,6 @@ Plugin_FindImages::~Plugin_FindImages()
 
 void Plugin_FindImages::slotFindDuplicateImages()
 {
-    m_progressDlg = 0;
-
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
     if ( !interface )
@@ -103,10 +101,13 @@ void Plugin_FindImages::slotFindDuplicateImages()
 
     if (m_findDuplicateOperation->execDialog())
     {
+        m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), i18n("Find Duplicate Images"));
+
+        connect(m_progressDlg, SIGNAL(cancelClicked()),
+                this, SLOT(slotCancel()));
+        m_progressDlg->show();
         m_findDuplicateOperation->compareAlbums();
     }
-
-    return;
 }
 
 
@@ -129,17 +130,6 @@ void Plugin_FindImages::slotCancel()
 void Plugin_FindImages::customEvent(QCustomEvent *event)
 {
     if (!event) return;
-
-    if (!m_progressDlg)
-    {
-        m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), i18n("Find Duplicate Images"));
-
-        connect(m_progressDlg, SIGNAL(cancelClicked()),
-                this, SLOT(slotCancel()));
-
-        m_current = 0;
-        m_progressDlg->show();
-    }
 
     KIPIFindDupplicateImagesPlugin::EventData *d = (KIPIFindDupplicateImagesPlugin::EventData*) event->data();
 
@@ -178,7 +168,6 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
 
         case(KIPIFindDupplicateImagesPlugin::Progress):
             {
-                m_current = 0;
                 m_total = d->total;
                 text = i18n("Checking 1 image...", "Checking %n images...", (int)(d->total/2));
                 break;
@@ -233,7 +222,6 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
             }
 
             m_progressDlg->addedAction(text, KIPI::WarningMessage);
-            ++m_current;
         }
         else
         {
@@ -271,7 +259,7 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
 
             case(KIPIFindDupplicateImagesPlugin::Progress):
                 {
-                    m_total = d->total;
+                    m_total = d->count; // We are done, so update m_total to ensure that the bar displays 100%
                     text = i18n("Checking images complete...");
                     break;
                 }
@@ -283,10 +271,8 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
             }
 
             m_progressDlg->addedAction(text, KIPI::SuccessMessage);
-            ++m_current;
         }
 
-        m_progressDlg->setProgress(m_current, m_total);
 
         if( d->action == KIPIFindDupplicateImagesPlugin::Progress )
         {
@@ -306,9 +292,9 @@ void Plugin_FindImages::customEvent(QCustomEvent *event)
         }
     }
 
+    m_progressDlg->setProgress(d->count, m_total);
     kapp->processEvents();
 
-    // PENDING(blackie) should I delete d?!
     delete d;
 }
 

@@ -9,7 +9,7 @@ kipiplugin_findimages_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 # Srcs for the plugin
 kipiplugin_findimages_la_SOURCES = plugin_findimages.cpp displaycompare.cpp \
                                    finddupplicateimages.cpp finddupplicatedialog.cpp \
-				   fuzzycompare.cpp fastcompare.cpp
+				   fuzzycompare.cpp fastcompare.cpp actions.cpp
 
 # Libs needed by the plugin
 kipiplugin_findimages_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS)

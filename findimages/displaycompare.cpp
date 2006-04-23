@@ -373,7 +373,7 @@ void DisplayCompare::slotDisplayLeft(QListViewItem * item)
     listEq->clear();
     FindOriginalItem *pitem = static_cast<FindOriginalItem*>( item );
     QPtrVector < QFile > *list = (QPtrVector < QFile > *)m_cmp.find(pitem->fullpath());
-    QImage im = QImage(pitem->fullpath());
+    QImage im(pitem->fullpath());
 
     if ( !im.isNull() )
        {
@@ -450,7 +450,7 @@ void DisplayCompare::slotDisplayRight(QListViewItem * item)
 {
     KApplication::setOverrideCursor( waitCursor );
     FindDuplicateItem *pitem = static_cast<FindDuplicateItem*>( item );
-    QImage im = QImage(pitem->fullpath());
+    QImage im(pitem->fullpath());
 
     if ( !im.isNull() )
        {

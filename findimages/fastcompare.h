@@ -30,6 +30,7 @@ class QObject;
 #include <qdict.h>
 #include <qptrvector.h>
 #include <qfile.h>
+#include "actions.h"
 
 namespace KIPIFindDupplicateImagesPlugin
 {
@@ -38,7 +39,7 @@ class FastCompare
 {
 public:
     FastCompare( QObject* parent );
-    QDict < QPtrVector < QFile > > doFastCompare( const QStringList& filesList, int* total );
+    QDict < QPtrVector < QFile > > doFastCompare( const QStringList& filesList );
 
 protected:
     bool equals(QFile*, QFile*); // Return true if the 2 files are the sames.

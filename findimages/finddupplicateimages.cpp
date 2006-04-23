@@ -217,19 +217,12 @@ void FindDuplicateImages::compareAlbums(void)
 void FindDuplicateImages::run()
 {
     m_res.clear();
-    KIPIFindDupplicateImagesPlugin::EventData *d = new KIPIFindDupplicateImagesPlugin::EventData;
-
-    if ( isCompareAlmost ) {
+    if ( isCompareAlmost )
         m_res = compareAlmost(filesList);
-        d->total = filesList.count()*2;
-    }
     else
-        m_res = compareFast(filesList, &d->total );
+        m_res = compareFast(filesList );
 
-    d->action = KIPIFindDupplicateImagesPlugin::Progress;
-    d->starting = false;
-    d->success = true;
-    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+    sendMessage( parent_, KIPIFindDupplicateImagesPlugin::Progress, QString::null, 0, false, true );
 }
 
 
@@ -381,10 +374,10 @@ QDict < QPtrVector < QFile > >  FindDuplicateImages::compareAlmost( const QStrin
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Nota: original source code from ShowImg !
 
-QDict < QPtrVector < QFile > > FindDuplicateImages::compareFast(QStringList filesList, int* total )
+QDict < QPtrVector < QFile > > FindDuplicateImages::compareFast(QStringList filesList )
 {
     FastCompare compare( parent_ );
-    return compare.doFastCompare( filesList, total );
+    return compare.doFastCompare( filesList);
 }
 
 

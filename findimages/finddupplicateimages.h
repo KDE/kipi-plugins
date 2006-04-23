@@ -79,7 +79,7 @@ protected:
     FindDuplicateDialog  *m_findDuplicateDialog;
     float                 m_approximateLevel;
 
-    QDict < QPtrVector < QFile > > compareFast(QStringList filesList, int* total );// Launch the exact comparison.
+    QDict < QPtrVector < QFile > > compareFast(QStringList filesList );// Launch the exact comparison.
     QDict < QPtrVector < QFile > > compareAlmost( const QStringList& filesList); // Launch the approximative comparison.
 
     float image_sim_compare(ImageSimilarityData *a, ImageSimilarityData *b);

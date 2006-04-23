@@ -38,17 +38,13 @@
 #include <math.h>
 
 KIPIFindDupplicateImagesPlugin::FuzzyCompare::FuzzyCompare( QObject* parent, const QString& cacheDir )
-    :parent_( parent ), m_cacheDir( cacheDir )
+    :m_parent( parent ), m_cacheDir( cacheDir )
 {
 }
 
 QDict < QPtrVector < QFile > >  KIPIFindDupplicateImagesPlugin::FuzzyCompare::doFuzzyCompare( const QStringList& filesList, float approximateLevel)
 {
-    KIPIFindDupplicateImagesPlugin::EventData *d = new KIPIFindDupplicateImagesPlugin::EventData;
-    d->action = KIPIFindDupplicateImagesPlugin::Progress;
-    d->total = filesList.count()*2;
-    d->starting = true;
-    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+    sendMessage( m_parent, KIPIFindDupplicateImagesPlugin::Progress, QString::null, filesList.count()*2, true, false );
 
     kdDebug( 51000 ) << filesList.count() << " images to parse with Almost method..." << endl;
     QDict < QPtrVector < QFile > > res;
@@ -69,11 +65,7 @@ QDict < QPtrVector < QFile > >  KIPIFindDupplicateImagesPlugin::FuzzyCompare::do
         QString Temp = fi.dirPath();
         QString albumName = Temp.section('/', -1);
 
-        d = new KIPIFindDupplicateImagesPlugin::EventData;
-        d->action = KIPIFindDupplicateImagesPlugin::Matrix;
-        d->fileName = itemName;
-        d->starting = true;
-        QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+        sendMessage( m_parent, KIPIFindDupplicateImagesPlugin::Matrix, itemName, 0, true, false );
 
         if( (is = image_sim_fill_data( itemName )) != NULL )
         {
@@ -85,24 +77,10 @@ QDict < QPtrVector < QFile > >  KIPIFindDupplicateImagesPlugin::FuzzyCompare::do
             list->resize (list->size () + 1);
             list->insert (list->size () - 1, is );
 
-            d = new KIPIFindDupplicateImagesPlugin::EventData;
-            d->action = KIPIFindDupplicateImagesPlugin::Matrix;
-            d->fileName = itemName;
-            d->starting = false;
-            d->success = true;
-            d->errString = "";
-            QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+            // sendMessage( m_parent, KIPIFindDupplicateImagesPlugin::Matrix, itemName, 0, false, true );
         }
         else
-        {
-            d = new KIPIFindDupplicateImagesPlugin::EventData;
-            d->action = KIPIFindDupplicateImagesPlugin::Matrix;
-            d->fileName = itemName;
-            d->starting = false;
-            d->success = false;
-            d->errString = "";
-            QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
-        }
+            sendMessage( m_parent, KIPIFindDupplicateImagesPlugin::Matrix, itemName, 0, false, false );
     }
 
     kdDebug( 51000 ) << "Matrix creation time:" << debut.msecsTo(QTime::currentTime()) << endl;
@@ -123,12 +101,7 @@ QDict < QPtrVector < QFile > >  KIPIFindDupplicateImagesPlugin::FuzzyCompare::do
 
                 if (i1 && !fait->find(i1->filename))
                 {
-                    d = new KIPIFindDupplicateImagesPlugin::EventData;
-                    d->action = KIPIFindDupplicateImagesPlugin::Similar;
-                    d->fileName = i1->filename;
-                    d->starting = true;
-                    d->success = false;
-                    QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+                    sendMessage( m_parent, KIPIFindDupplicateImagesPlugin::Similar, i1->filename, 0, true, false );
 
                     for (unsigned int j = i + 1; j < list->size (); j++)
                     {
@@ -159,12 +132,7 @@ QDict < QPtrVector < QFile > >  KIPIFindDupplicateImagesPlugin::FuzzyCompare::do
                     }
                 }
 
-                d = new KIPIFindDupplicateImagesPlugin::EventData;
-                d->action = KIPIFindDupplicateImagesPlugin::Similar;
-                d->fileName = i1->filename;
-                d->starting = false;
-                d->success = true;
-                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+                //sendMessage( m_parent, KIPIFindDupplicateImagesPlugin::Similar, i1->filename, 0, false, true );
             }
         }
 

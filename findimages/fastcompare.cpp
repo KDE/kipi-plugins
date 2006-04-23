@@ -35,7 +35,7 @@ KIPIFindDupplicateImagesPlugin::FastCompare::FastCompare( QObject* parent )
 }
 
 
-QDict < QPtrVector < QFile > > KIPIFindDupplicateImagesPlugin::FastCompare::doFastCompare( const QStringList& filesList, int* total )
+QDict < QPtrVector < QFile > > KIPIFindDupplicateImagesPlugin::FastCompare::doFastCompare( const QStringList& filesList )
 {
     QDict < QPtrVector < QFile > > res;
     QDict < QPtrVector < QFile > >*dict = new QDict < QPtrVector < QFile > >;
@@ -46,12 +46,7 @@ QDict < QPtrVector < QFile > > KIPIFindDupplicateImagesPlugin::FastCompare::doFa
     QFile *file;
     int nbrF = 0;
 
-    KIPIFindDupplicateImagesPlugin::EventData *d = new KIPIFindDupplicateImagesPlugin::EventData;
-    d->action = KIPIFindDupplicateImagesPlugin::Progress;
-    d->total = filesList.count()*2;
-    d->starting = true;
-    d->success = false;
-    QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+    sendMessage( m_parent, KIPIFindDupplicateImagesPlugin::Progress, QString::null, filesList.count()*2, true, false );
 
     kdDebug( 51000 ) << filesList.count() << " images to parse with Fast method..." << endl;
 
@@ -60,15 +55,7 @@ QDict < QPtrVector < QFile > > KIPIFindDupplicateImagesPlugin::FastCompare::doFa
         QString itemName(*item);
         nbrF++;
 
-        d = new KIPIFindDupplicateImagesPlugin::EventData;
-        d->action = KIPIFindDupplicateImagesPlugin::FastParsing;
-        d->fileName = itemName;
-        d->starting = true;
-        d->success = false;
-        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-#ifdef TEMPORARILY_REMOVED
-        msleep(5);
-#endif
+        sendMessage( m_parent, KIPIFindDupplicateImagesPlugin::FastParsing, itemName, 0, true, false );
 
         // Create a file
         file = new QFile( itemName );
@@ -91,15 +78,7 @@ QDict < QPtrVector < QFile > > KIPIFindDupplicateImagesPlugin::FastCompare::doFa
         list->resize (list->size () + 1);
         list->insert (list->size () - 1, file);
 
-        d = new KIPIFindDupplicateImagesPlugin::EventData;
-        d->action = KIPIFindDupplicateImagesPlugin::FastParsing;
-        d->fileName = itemName;
-        d->starting = false;
-        d->success = true;
-        QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-#ifdef TEMPORARILY_REMOVED
-        msleep(5);
-#endif
+        //sendMessage( m_parent, KIPIFindDupplicateImagesPlugin::FastParsing, itemName, 0, false, true );
     }
 
     // For counting the files comparaison tasks.
@@ -108,21 +87,14 @@ QDict < QPtrVector < QFile > > KIPIFindDupplicateImagesPlugin::FastCompare::doFa
 
     while (itcount.current ())
     {
-        // PENDING(blackie) fait isn't used for anything is it? - 22 Apr. 2006 12:35 -- Jesper K. Pedersen
-        QDict < QFile > *fait = new QDict < QFile >;
         list = (QPtrVector < QFile > *)itcount.current ();
 
         if (list->size () != 1)
             for (unsigned int i = 0; i < list->size (); i++)
                 ++count;
 
-        delete(fait);
         ++itcount;
     }
-
-    // PENDING(blackie) Isn't this wrong? itcount is on the stack and should thus not be deleted.
-    // 22 Apr. 2006 12:35 -- Jesper K. Pedersen
-    delete (itcount);
 
     // Files comparison
     QDictIterator < QPtrVector < QFile > >it (*dict);        // Iterator for dict.
@@ -138,16 +110,7 @@ QDict < QPtrVector < QFile > > KIPIFindDupplicateImagesPlugin::FastCompare::doFa
             {
                 QFile *file1 = (QFile *) (list->at (i));
 
-                d = new KIPIFindDupplicateImagesPlugin::EventData;
-                d->action   = KIPIFindDupplicateImagesPlugin::Exact;
-                d->fileName = file1->name();
-                d->total = filesList.count() + count;
-                d->starting = true;
-                d->success = false;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-#ifdef TEMPORARILY_REMOVED
-                msleep(5);
-#endif
+                sendMessage( m_parent, KIPIFindDupplicateImagesPlugin::Exact,file1->name(),filesList.count() + count, true, false );
 
                 if (!fait->find (file1->name()))
                 {
@@ -180,15 +143,7 @@ QDict < QPtrVector < QFile > > KIPIFindDupplicateImagesPlugin::FastCompare::doFa
                     }
                 }
 
-                d = new KIPIFindDupplicateImagesPlugin::EventData;
-                d->action = KIPIFindDupplicateImagesPlugin::Exact;
-                d->fileName = file1->name();
-                d->starting = false;
-                d->success = true;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-#ifdef TEMPORARILY_REMOVED
-                msleep(5);
-#endif
+                // sendMessage( m_parent, KIPIFindDupplicateImagesPlugin::Exact, file1->name(), 0, false, true );
             }
         }
 
@@ -197,8 +152,6 @@ QDict < QPtrVector < QFile > > KIPIFindDupplicateImagesPlugin::FastCompare::doFa
     }
 
     delete (it);
-
-    *total = filesList.count() + count;
 
     return res;
 }
@@ -231,4 +184,3 @@ bool KIPIFindDupplicateImagesPlugin::FastCompare::equals(QFile * f1, QFile * f2)
     f2->close ();
     return eq;
 }
-
