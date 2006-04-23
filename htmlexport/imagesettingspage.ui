@@ -108,7 +108,7 @@
                 <string>Format:</string>
             </property>
             <property name="buddy" stdset="0">
-                <cstring>spinBox2</cstring>
+                <cstring>kcfg_fullFormat</cstring>
             </property>
         </widget>
         <widget class="QLabel" row="5" column="0">
@@ -119,7 +119,7 @@
                 <string>Size:</string>
             </property>
             <property name="buddy" stdset="0">
-                <cstring>spinBox2</cstring>
+                <cstring>kcfg_thumbnailSize</cstring>
             </property>
         </widget>
         <widget class="QLabel" row="4" column="0" rowspan="1" colspan="5">
@@ -143,7 +143,7 @@
                 <string>Format:</string>
             </property>
             <property name="buddy" stdset="0">
-                <cstring>spinBox2</cstring>
+                <cstring>kcfg_thumbnailFormat</cstring>
             </property>
         </widget>
         <spacer row="5" column="2">
