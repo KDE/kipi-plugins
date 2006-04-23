@@ -126,17 +126,27 @@ struct Generator::Private {
 	KIPI::Interface* mInterface;
 	GalleryInfo* mInfo;
 	KIPI::BatchProgressDialog* mProgressDialog;
+	Theme::Ptr mTheme;
 	
 	// State info
 	bool mWarnings;
 	QString mXMLFileName;
 
+	bool init() {
+		mTheme=Theme::findByPath(mInfo->theme());
+		if (!mTheme) {
+			logError( i18n("Could not find theme in '%1'").arg(mInfo->theme()) );
+			return false;
+		}
+		return true;
+	}
+
 	bool copyTheme() {
 		mProgressDialog->addedAction(i18n("Copying theme"), KIPI::ProgressMessage);
 		
-		KURL srcURL=KURL(mInfo->mTheme->directory());
+		KURL srcURL=KURL(mTheme->directory());
 
-		KURL destURL=mInfo->mDestURL;
+		KURL destURL=mInfo->destKURL();
 		destURL.addPath(srcURL.filename());
 		
 		if (QFile::exists(destURL.path())) {
@@ -151,7 +161,7 @@ struct Generator::Private {
 	}
 
 	bool generateImagesAndXML() {
-		QString baseDestDir=mInfo->mDestURL.path();
+		QString baseDestDir=mInfo->destKURL().path();
 		if (!createDir(baseDestDir)) return false;
 		
 		mXMLFileName=baseDestDir + "/gallery.xml";
@@ -211,13 +221,15 @@ struct Generator::Private {
 
 				// Process full image
 				{
-					if (mInfo->mFullResize) {
-						image=image.smoothScale(mInfo->mFullSize, mInfo->mFullSize, QImage::ScaleMin);
+					if (mInfo->fullResize()) {
+						int size=mInfo->fullSize();
+						image=image.smoothScale(size, size, QImage::ScaleMin);
 					}
 					
-					QString fileName=baseFileName + "." + mInfo->mFullFormat.lower();
+					QString format=mInfo->fullFormatString();
+					QString fileName=baseFileName + "." + format.lower();
 					QString destPath=destDir + "/" + fileName;
-					if (!image.save(destPath, mInfo->mFullFormat.ascii())) {
+					if (!image.save(destPath, format.ascii())) {
 						logWarning(i18n("Could not save image '%1' to '%2'").arg(path).arg(destPath));
 						continue;
 					}
@@ -230,11 +242,13 @@ struct Generator::Private {
 				
 				// Process thumbnail
 				{
-					QImage thumbnail=image.smoothScale(mInfo->mThumbnailSize, mInfo->mThumbnailSize, QImage::ScaleMin);
-					QString fileName="thumb_" + baseFileName + "." + mInfo->mThumbnailFormat.lower();
+					int size=mInfo->thumbnailSize();
+					QImage thumbnail=image.smoothScale(size, size, QImage::ScaleMin);
 
+					QString format=mInfo->thumbnailFormatString();
+					QString fileName="thumb_" + baseFileName + "." + format.lower();
 					QString destPath=destDir + "/" + fileName;
-					if (!thumbnail.save(destPath, mInfo->mThumbnailFormat.ascii())) {
+					if (!thumbnail.save(destPath, format.ascii())) {
 						logWarning(i18n("Could not save thumbnail for image '%1' to '%2'").arg(path).arg(destPath));
 						continue;
 					}
@@ -254,7 +268,7 @@ struct Generator::Private {
 	bool generateHTML() {
 		logInfo(i18n("Generating HTML files"));
 
-		QString xsltFileName=mInfo->mTheme->directory() + "/template.xslt";
+		QString xsltFileName=mTheme->directory() + "/template.xslt";
 		CWrapper<xsltStylesheetPtr, xsltFreeStylesheet> xslt= xsltParseStylesheetFile( (const xmlChar*) xsltFileName.local8Bit().data() );
 
 		if (!xslt) {
@@ -290,7 +304,7 @@ struct Generator::Private {
 		// Move to the destination dir, so that external documents get correctly
 		// produced
 		QString oldCD=QDir::currentDirPath();
-		QDir::setCurrent(mInfo->mDestURL.path());
+		QDir::setCurrent(mInfo->destKURL().path());
 		
 		CWrapper<xmlDocPtr, xmlFreeDoc> xmlOutput= xsltApplyStylesheet(xslt, xmlGallery, params);
 		
@@ -302,7 +316,7 @@ struct Generator::Private {
 			return false;
 		}
 
-		QString destFileName=mInfo->mDestURL.path() + "/index.html";
+		QString destFileName=mInfo->destKURL().path() + "/index.html";
 		FILE* file=fopen(destFileName.local8Bit().data(), "w");
 		if (!file) {
 			logError(i18n("Could not open '%1' for writting").arg(destFileName));
@@ -359,7 +373,9 @@ Generator::~Generator() {
 
 
 bool Generator::run() {
-	QString destDir=d->mInfo->mDestURL.path();
+	if (!d->init()) return false;
+
+	QString destDir=d->mInfo->destKURL().path();
 	if (!d->createDir(destDir)) return false;
 
 	if (!d->copyTheme()) return false;

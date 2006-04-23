@@ -70,6 +70,18 @@ const Theme::List& Theme::getList() {
 }
 
 
+Theme::Ptr Theme::findByPath(const QString& path) {
+	const Theme::List& lst=getList();
+	Theme::List::ConstIterator it=lst.begin(), end=lst.end();
+	for (; it!=end; ++it) {
+		if ((*it)->path()==path) {
+			return *it;
+		}
+	}
+	return 0;
+}
+
+
 QString Theme::name() const {
 	return d->mDesktopFile->readName();
 }
@@ -77,6 +89,11 @@ QString Theme::name() const {
 
 QString Theme::comment() const {
 	return d->mDesktopFile->readComment();
+}
+
+
+QString Theme::path() const {
+	return d->mURL.path();
 }
 
 

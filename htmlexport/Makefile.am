@@ -12,7 +12,12 @@ kipiplugin_htmlexport_la_SOURCES = \
 	outputpage.ui \
 	plugin.cpp \
 	wizard.cpp \
-	theme.cpp
+	theme.cpp \
+	htmlexportconfig.kcfgc
+
+kde_kcfg_DATA = \
+	htmlexportconfig.kcfg
+
 kipiplugin_htmlexport_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) 
 kipiplugin_htmlexport_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries) -lexslt $(LIBXSLT_LIBS)
 

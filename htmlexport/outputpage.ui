@@ -37,14 +37,14 @@
                 </widget>
                 <widget class="KURLRequester">
                     <property name="name">
-                        <cstring>destURL</cstring>
+                        <cstring>kcfg_destURL</cstring>
                     </property>
                 </widget>
             </hbox>
         </widget>
         <widget class="QCheckBox">
             <property name="name">
-                <cstring>openInBrowser</cstring>
+                <cstring>kcfg_openInBrowser</cstring>
             </property>
             <property name="text">
                 <string>Open in browser</string>

@@ -74,11 +74,13 @@ void Plugin::setup( QWidget* widget ) {
 void Plugin::slotActivate() {
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
 	Q_ASSERT(interface);
-	
+
 	GalleryInfo info;
+	info.readConfig();
 	QWidget* parent=KApplication::kApplication()->mainWidget();
 	Wizard wizard(parent, interface, &info);
 	if (wizard.exec()==QDialog::Rejected) return;
+	info.writeConfig();
 	
 	KIPI::BatchProgressDialog* progressDialog=new KIPI::BatchProgressDialog(parent, i18n("Generating gallery..."));
 	
@@ -90,8 +92,8 @@ void Plugin::slotActivate() {
 		progressDialog->close();
 	}
 
-	if (info.mOpenInBrowser) {
-		KURL url(info.mDestURL);
+	if (info.openInBrowser()) {
+		KURL url=info.destKURL();
 		url.addPath("index.html");
 		KRun::runURL(url, "text/html");
 	}

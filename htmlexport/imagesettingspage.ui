@@ -76,7 +76,7 @@
                 </widget>
                 <widget class="QSpinBox" row="3" column="1">
                     <property name="name">
-                        <cstring>thumbnailSize</cstring>
+                        <cstring>kcfg_thumbnailSize</cstring>
                     </property>
                     <property name="maxValue">
                         <number>9999</number>
@@ -139,7 +139,7 @@
                         </property>
                     </item>
                     <property name="name">
-                        <cstring>thumbnailFormat</cstring>
+                        <cstring>kcfg_thumbnailFormat</cstring>
                     </property>
                 </widget>
                 <widget class="QComboBox" row="1" column="4">
@@ -154,12 +154,12 @@
                         </property>
                     </item>
                     <property name="name">
-                        <cstring>fullFormat</cstring>
+                        <cstring>kcfg_fullFormat</cstring>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="1" column="0">
                     <property name="name">
-                        <cstring>fullResize</cstring>
+                        <cstring>kcfg_fullResize</cstring>
                     </property>
                     <property name="text">
                         <string>Max size:</string>
@@ -178,7 +178,7 @@
                 </widget>
                 <widget class="QSpinBox" row="1" column="1">
                     <property name="name">
-                        <cstring>fullSize</cstring>
+                        <cstring>kcfg_fullSize</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
@@ -229,9 +229,9 @@
 </widget>
 <connections>
     <connection>
-        <sender>fullResize</sender>
+        <sender>kcfg_fullResize</sender>
         <signal>toggled(bool)</signal>
-        <receiver>fullSize</receiver>
+        <receiver>kcfg_fullSize</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>

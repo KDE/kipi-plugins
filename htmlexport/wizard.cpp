@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <qspinbox.h>
 
 // KDE
+#include <kconfigdialogmanager.h>
 #include <kdebug.h>
 #include <klistbox.h>
 #include <klocale.h>
@@ -82,6 +83,7 @@ protected:
 
 struct Wizard::Private {
 	GalleryInfo* mInfo;
+	KConfigDialogManager* mConfigManager;
 	
 	KIPI::ImageCollectionSelector* mCollectionSelector;
 	KListBox* mAppearancePage;
@@ -93,7 +95,10 @@ struct Wizard::Private {
 		Theme::List list=Theme::getList();
 		Theme::List::Iterator it=list.begin(), end=list.end();
 		for (; it!=end; ++it) {
-			new ThemeListBoxItem(mAppearancePage, *it);
+			ThemeListBoxItem* item=new ThemeListBoxItem(mAppearancePage, *it);
+			if ( (*it)->path()==mInfo->theme() ) {
+				mAppearancePage->setCurrentItem(item);
+			}
 		}
 	}
 };
@@ -116,14 +121,19 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface, GalleryInfo* info)
 	addPage(d->mImageSettingsPage, i18n("Image Settings"));
 	
 	d->mOutputPage=new OutputPage(this);
-	d->mOutputPage->destURL->setMode(KFile::Directory);
+	d->mOutputPage->kcfg_destURL->setMode(KFile::Directory);
 	addPage(d->mOutputPage, i18n("Output"));
 
-	connect(d->mOutputPage->destURL, SIGNAL(textChanged(const QString&)),
+	connect(d->mOutputPage->kcfg_destURL, SIGNAL(textChanged(const QString&)),
 		this, SLOT(updateFinishButton()) );
-	
+
+	d->mConfigManager=new KConfigDialogManager(this, d->mInfo);
+	d->mConfigManager->updateWidgets();
+
+	// Set page states
 	// Pages can only be disabled after they have *all* been added!
-	setNextEnabled(d->mAppearancePage, false);
+	setNextEnabled(d->mAppearancePage, d->mAppearancePage->currentItem()!=-1);
+	updateFinishButton();
 }
 
 
@@ -133,7 +143,7 @@ Wizard::~Wizard() {
 
 
 void Wizard::updateFinishButton() {
-	setFinishEnabled(d->mOutputPage, !d->mOutputPage->destURL->url().isEmpty());
+	setFinishEnabled(d->mOutputPage, !d->mOutputPage->kcfg_destURL->url().isEmpty());
 }
 
 
@@ -142,20 +152,16 @@ void Wizard::updateAppearancePageNextButton() {
 }
 
 
+/**
+ * Update mInfo
+ */
 void Wizard::accept() {
-	// FIXME: Handle remote urls
-	d->mInfo->mDestURL=d->mOutputPage->destURL->url();
 	d->mInfo->mCollectionList=d->mCollectionSelector->selectedImageCollections();
-	d->mInfo->mOpenInBrowser=d->mOutputPage->openInBrowser->isChecked();
 
-	d->mInfo->mTheme=static_cast<ThemeListBoxItem*>(d->mAppearancePage->selectedItem())->mTheme;
+	Theme::Ptr theme=static_cast<ThemeListBoxItem*>(d->mAppearancePage->selectedItem())->mTheme;
+	d->mInfo->setTheme(theme->path());
 
-	d->mInfo->mFullResize=d->mImageSettingsPage->fullResize->isChecked();
-	d->mInfo->mFullSize=d->mImageSettingsPage->fullSize->value();
-	d->mInfo->mFullFormat=d->mImageSettingsPage->fullFormat->currentText();
-	
-	d->mInfo->mThumbnailSize=d->mImageSettingsPage->thumbnailSize->value();
-	d->mInfo->mThumbnailFormat=d->mImageSettingsPage->thumbnailFormat->currentText();
+	d->mConfigManager->updateSettings();
 
 	KWizard::accept();
 }

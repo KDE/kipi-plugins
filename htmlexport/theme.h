@@ -38,9 +38,19 @@ public:
 	~Theme();
 	QString name() const;
 	QString comment() const;
+
+	/**
+	 * Theme path, on hard disk
+	 */
+	QString path() const;
+
+	/**
+	 * Theme directory on hard disk
+	 */
 	QString directory() const;
-	
+
 	static const List& getList();
+	static Ptr findByPath(const QString& path);
 
 private:
 	Theme();
