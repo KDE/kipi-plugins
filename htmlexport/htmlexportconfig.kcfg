@@ -23,6 +23,10 @@
 			<default>JPEG</default>
 		</entry>
 
+		<entry name="fullQuality" type="Int">
+			<default>80</default>
+		</entry>
+
 		<entry name="thumbnailSize" type="Int">
 			<default>120</default>
 		</entry>
@@ -34,6 +38,10 @@
 				<choice name="PNG"/>
 			</choices>
 			<default>JPEG</default>
+		</entry>
+
+		<entry name="thumbnailQuality" type="Int">
+			<default>80</default>
 		</entry>
 
 		<entry name="destURL" type="String">

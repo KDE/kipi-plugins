@@ -229,7 +229,7 @@ struct Generator::Private {
 					QString format=mInfo->fullFormatString();
 					QString fileName=baseFileName + "." + format.lower();
 					QString destPath=destDir + "/" + fileName;
-					if (!image.save(destPath, format.ascii())) {
+					if ( ! image.save(destPath, format.ascii(), mInfo->fullQuality()) ) {
 						logWarning(i18n("Could not save image '%1' to '%2'").arg(path).arg(destPath));
 						continue;
 					}
@@ -248,7 +248,7 @@ struct Generator::Private {
 					QString format=mInfo->thumbnailFormatString();
 					QString fileName="thumb_" + baseFileName + "." + format.lower();
 					QString destPath=destDir + "/" + fileName;
-					if (!thumbnail.save(destPath, format.ascii())) {
+					if ( ! thumbnail.save(destPath, format.ascii(), mInfo->thumbnailQuality()) ) {
 						logWarning(i18n("Could not save thumbnail for image '%1' to '%2'").arg(path).arg(destPath));
 						continue;
 					}
