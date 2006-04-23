@@ -1,15 +1,13 @@
 # Must be done
-- Define a theme description file, which should contain the theme title,
-  author, URL
-- Show theme description in theme list
+- Show theme info alongside theme list
+- Write theme howto
+- Create a "simple" theme
 
 # Would be nice
-- Use collection image on collection list page
+- Support theme variants, for example different color schemes.
 - Show screenshot alongside theme description
-- Store settings between invocations of the plugin
 - Support for remote URLs
-- let the user control quality of JPEG and PNG
-- Automatically rotate JPEG according to Exif info
+- Automatically rotate JPEG according to EXIF info
 - Keep EXIF information
 - Make EXIF information available to themes
 - Implement an "update" mode which would only generate files for new or
