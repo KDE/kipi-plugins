@@ -42,7 +42,7 @@ KIPIFindDupplicateImagesPlugin::FuzzyCompare::FuzzyCompare( QObject* parent, con
 {
 }
 
-QDict < QPtrVector < QFile > >  KIPIFindDupplicateImagesPlugin::FuzzyCompare::doFuzzyCompare( const QStringList& filesList, float approximateLevel)
+QDict < QPtrVector < QFile > >  KIPIFindDupplicateImagesPlugin::FuzzyCompare::compare( const QStringList& filesList )
 {
     sendMessage( m_parent, KIPIFindDupplicateImagesPlugin::Progress, QString::null, filesList.count()*2, true, false );
 
@@ -60,6 +60,9 @@ QDict < QPtrVector < QFile > >  KIPIFindDupplicateImagesPlugin::FuzzyCompare::do
 
     for ( QStringList::ConstIterator item = filesList.begin() ; item != filesList.end() ; ++item )
     {
+        if ( m_stopRequested )
+            return QDict < QPtrVector < QFile > >();
+
         QString itemName(*item);
         QFileInfo fi(itemName);
         QString Temp = fi.dirPath();
@@ -96,6 +99,9 @@ QDict < QPtrVector < QFile > >  KIPIFindDupplicateImagesPlugin::FuzzyCompare::do
         {
             for (unsigned int i = 0; i < list->size (); i++)
             {
+                if ( m_stopRequested )
+                    return QDict < QPtrVector < QFile > >();
+
                 // Create the 'ImageSimilarityData' data for the first image.
                 ImageSimilarityData *i1 = list->at(i);
 
@@ -109,9 +115,9 @@ QDict < QPtrVector < QFile > >  KIPIFindDupplicateImagesPlugin::FuzzyCompare::do
                         ImageSimilarityData *i2 = list->at(j);
 
                         // Real images file comparison calculation.
-                        float eq = image_sim_compare_fast(i1, i2, approximateLevel);
+                        float eq = image_sim_compare_fast(i1, i2, m_approximateLevel);
 
-                        if (eq >= approximateLevel)   // the files are the same !
+                        if (eq >= m_approximateLevel)   // the files are the same !
                         {
                             QPtrVector < QFile > *vect;
 

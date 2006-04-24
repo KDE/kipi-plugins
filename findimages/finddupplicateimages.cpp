@@ -76,7 +76,8 @@ namespace KIPIFindDupplicateImagesPlugin
 
 FindDuplicateImages::FindDuplicateImages( KIPI::Interface* interface, QObject *parent)
     : QObject(parent), QThread(), m_interface( interface ),
-      m_cacheDir(KGlobal::dirs()->saveLocation("cache", "kipi-findduplicate/"))
+      m_cacheDir(KGlobal::dirs()->saveLocation("cache", "kipi-findduplicate/")),
+      m_compareOp( 0 )
 {
     KImageIO::registerFormats();
     parent_ = parent;
@@ -201,9 +202,13 @@ void FindDuplicateImages::compareAlbums(void)
     }
 
     if ( m_findDuplicateDialog->getFindMethod() == FindDuplicateDialog::MethodAlmost )
-        isCompareAlmost = true;
+    {
+        FuzzyCompare *op = new FuzzyCompare( parent_, m_cacheDir );
+        op->setApproximateThreeshold( m_approximateLevel );
+        m_compareOp = op;
+    }
     else
-        isCompareAlmost = false;
+        m_compareOp = new FastCompare( parent_ );
 
     start();      // Starting the thread.
 
@@ -216,12 +221,7 @@ void FindDuplicateImages::compareAlbums(void)
 
 void FindDuplicateImages::run()
 {
-    m_res.clear();
-    if ( isCompareAlmost )
-        m_res = compareAlmost(filesList);
-    else
-        m_res = compareFast(filesList );
-
+    m_res = m_compareOp->compare(filesList );
     sendMessage( parent_, KIPIFindDupplicateImagesPlugin::Progress, QString::null, 0, false, true );
 }
 
@@ -361,26 +361,6 @@ float FindDuplicateImages::image_sim_compare(ImageSimilarityData *a, ImageSimila
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-// Nota: original source code from ShowImg !
-
-QDict < QPtrVector < QFile > >  FindDuplicateImages::compareAlmost( const QStringList& filesList)
-{
-    FuzzyCompare fuzzy( parent_, m_cacheDir );
-    return fuzzy.doFuzzyCompare( filesList, m_approximateLevel );
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-// Nota: original source code from ShowImg !
-
-QDict < QPtrVector < QFile > > FindDuplicateImages::compareFast(QStringList filesList )
-{
-    FastCompare compare( parent_ );
-    return compare.doFastCompare( filesList);
-}
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool FindDuplicateImages::DeleteDir(QString dirname)
@@ -446,5 +426,11 @@ bool FindDuplicateImages::deldir(QString dirname)
 }
 
 }  // NameSpace KIPIFindDupplicateImagesPlugin
+
+void KIPIFindDupplicateImagesPlugin::FindDuplicateImages::stopPlease()
+{
+    if ( m_compareOp )
+        m_compareOp->stopPlease();
+}
 
 #include "finddupplicateimages.moc"

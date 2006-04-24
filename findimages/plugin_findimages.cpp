@@ -115,7 +115,7 @@ void Plugin_FindImages::slotFindDuplicateImages()
 
 void Plugin_FindImages::slotCancel()
 {
-    m_findDuplicateOperation->terminate();
+    m_findDuplicateOperation->stopPlease();
     m_findDuplicateOperation->wait();
 
     if (m_progressDlg)

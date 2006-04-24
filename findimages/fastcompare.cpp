@@ -35,7 +35,7 @@ KIPIFindDupplicateImagesPlugin::FastCompare::FastCompare( QObject* parent )
 }
 
 
-QDict < QPtrVector < QFile > > KIPIFindDupplicateImagesPlugin::FastCompare::doFastCompare( const QStringList& filesList )
+QDict < QPtrVector < QFile > > KIPIFindDupplicateImagesPlugin::FastCompare::compare( const QStringList& filesList )
 {
     QDict < QPtrVector < QFile > > res;
     QDict < QPtrVector < QFile > >*dict = new QDict < QPtrVector < QFile > >;
@@ -52,6 +52,9 @@ QDict < QPtrVector < QFile > > KIPIFindDupplicateImagesPlugin::FastCompare::doFa
 
     for ( QStringList::ConstIterator item = filesList.begin(); item != filesList.end(); ++item )
     {
+        if ( m_stopRequested )
+            return QDict < QPtrVector < QFile > >();
+
         QString itemName(*item);
         nbrF++;
 
@@ -101,6 +104,8 @@ QDict < QPtrVector < QFile > > KIPIFindDupplicateImagesPlugin::FastCompare::doFa
 
     while (it.current ())
     {
+        if ( m_stopRequested )
+            return QDict < QPtrVector < QFile > >();
         QDict < QFile > *fait = new QDict < QFile >;
         list = (QPtrVector < QFile > *)it.current ();
 

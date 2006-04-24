@@ -51,6 +51,7 @@ namespace KIPIFindDupplicateImagesPlugin
 
 class ImageSimilarityData;
 class FindDuplicateDialog;
+class CompareOperation;
 
 class FindDuplicateImages : public QObject, public QThread
 {
@@ -64,8 +65,8 @@ public:
 
     bool execDialog();
     void showResult();
-    void compareAlbums();                                   // Launch the dialog box for Albums selection
-    // before comparison.
+    void compareAlbums();// Launch the dialog box for Albums selection before comparison.
+    void stopPlease();
 
 public slots:
     void slotUpdateCache(QStringList fromDirs);
@@ -79,9 +80,6 @@ protected:
     FindDuplicateDialog  *m_findDuplicateDialog;
     float                 m_approximateLevel;
 
-    QDict < QPtrVector < QFile > > compareFast(QStringList filesList );// Launch the exact comparison.
-    QDict < QPtrVector < QFile > > compareAlmost( const QStringList& filesList); // Launch the approximative comparison.
-
     float image_sim_compare(ImageSimilarityData *a, ImageSimilarityData *b);
     void writeSettings(void);
     void readSettings(void);
@@ -90,13 +88,13 @@ protected:
     bool deldir(QString dirname);
 
     QStringList filesList;
-    bool isCompareAlmost;
     QObject *parent_;
     QDict < QPtrVector < QFile > > m_res;
     KIPI::Interface* m_interface;
     QString m_cacheDir;
 
-    friend class FuzzyCompare;
+private:
+    CompareOperation* m_compareOp;
 };
 
 }  // NameSpace KIPIFindDupplicateImagesPlugin
