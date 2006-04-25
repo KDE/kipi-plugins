@@ -19,6 +19,7 @@ Name[tr]=HamDönüştürücü
 Name[xx]=xxRawConverterxx
 Name[zh_CN]=原图转换器
 Comment=KIPI Raw Image Converter
+Comment[cs]=KIPI převod RAW obrázků
 Comment[da]=KIPI-plugin: Konvertering af ubehandlede billeder
 Comment[de]=Ein KIPI-Modul zum Konvertieren von Bildern im Raw-Format
 Comment[el]=Μετατροπέας του KIPI για εικόνες ανεπεξέργαστης μορφής

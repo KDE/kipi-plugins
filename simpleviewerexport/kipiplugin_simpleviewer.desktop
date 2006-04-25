@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=SimpleViewer
+Name[cs]=Jednoduchý prohlížeč
 Name[da]=SimpelFremviser
 Name[el]=ΑπλόςΠροβολέας
 Name[es]=VisorSencillo
@@ -13,6 +14,7 @@ Name[pt_BR]=Visualizador Simples
 Name[sv]=Enkel visning
 Name[xx]=xxSimpleViewerxx
 Comment=KIPI Simple Viewer Plugin
+Comment[cs]=KIPI modul jednoduchého prohlížeč
 Comment[da]=KIPI Simpel fremviser-plugin
 Comment[de]=Ein einfacher Bildbetrachter als KIPI-Modul
 Comment[el]=Πρόσθετο απλού προβολέα του KIPI
