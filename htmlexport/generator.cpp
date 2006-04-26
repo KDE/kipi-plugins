@@ -268,11 +268,11 @@ struct Generator::Private {
 	bool generateHTML() {
 		logInfo(i18n("Generating HTML files"));
 
-		QString xsltFileName=mTheme->directory() + "/template.xslt";
+		QString xsltFileName=mTheme->directory() + "/template.xsl";
 		CWrapper<xsltStylesheetPtr, xsltFreeStylesheet> xslt= xsltParseStylesheetFile( (const xmlChar*) xsltFileName.local8Bit().data() );
 
 		if (!xslt) {
-			logError(i18n("Could not load XSLT file '%1'").arg(xsltFileName));
+			logError(i18n("Could not load XSL file '%1'").arg(xsltFileName));
 			return false;
 		}
 		
