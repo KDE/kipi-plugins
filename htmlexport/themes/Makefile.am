@@ -1,1 +1,1 @@
-SUBDIRS = matrix snow
+SUBDIRS = matrix snow simple
