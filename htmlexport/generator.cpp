@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // Qt
 #include <qdir.h>
 #include <qfile.h>
+#include <qpainter.h>
 #include <qregexp.h>
 
 // KDE
@@ -243,7 +244,21 @@ struct Generator::Private {
 				// Process thumbnail
 				{
 					int size=mInfo->thumbnailSize();
-					QImage thumbnail=image.smoothScale(size, size, QImage::ScaleMin);
+					QImage thumbnail=image.smoothScale(size, size, QImage::ScaleMax);
+					if (thumbnail.width()>size || thumbnail.height()>size) {
+						QPixmap croppedPix(size, size);
+						QPainter painter(&croppedPix);
+						
+						int sx=0, sy=0;
+						if (thumbnail.width()>size) {
+							sx=(thumbnail.width() - size)/2;
+						} else {
+							sy=(thumbnail.height() - size)/2;
+						}
+						painter.drawImage(0, 0, thumbnail, sx, sy, size, size);
+						painter.end();
+						thumbnail=croppedPix.convertToImage();
+					}
 
 					QString format=mInfo->thumbnailFormatString();
 					QString fileName="thumb_" + baseFileName + "." + format.lower();
