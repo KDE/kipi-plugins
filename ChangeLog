@@ -1,3 +1,20 @@
+2006-05-01 18:13  anaselli
+	* new images gallery export (html export by gateau)
+	* fixed bugs
+	images gallery 
+	  #120242 #112025 #106152 #119933 #99418 #103449 #110596
+	kamera klient
+	  #99157
+	print wizard
+	  #98286 #101495
+	batch process images
+	  #108945 
+	  #117397
+	mpeg encoder
+	  #109739 #114514 #114515 
+	acquire images
+	  #114519 
+
 v0.1.0-rc1                                                        2005-02-08
 ----------------------------------------------------------------------------
 
