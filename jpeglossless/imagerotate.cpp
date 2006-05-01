@@ -69,7 +69,9 @@ bool rotate(const QString& src, RotateAction angle, const QString& TmpFolder,
     }
     else
     {
-        if (!rotateQImage(src, tmp, angle, err))
+    // TODO : B.K.O #123499 : using Image Magick API here instead QT API 
+    // else RAW/TIFF/PNG 16 bits image are broken!
+//        if (!rotateQImage(src, tmp, angle, err))
             return false;
     }
 

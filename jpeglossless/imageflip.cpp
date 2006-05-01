@@ -68,7 +68,9 @@ bool flip(const QString& src, FlipAction action,
     }
     else
     {
-        if (!flipQImage(src, tmp, action, err))
+    // TODO : B.K.O #123499 : using Image Magick API here instead QT API 
+    // else RAW/TIFF/PNG 16 bits image are broken!
+//        if (!flipQImage(src, tmp, action, err))
             return false;
     }
 

@@ -67,7 +67,9 @@ bool image2GrayScale(const QString& src, const QString& TmpFolder, QString& err)
     }
     else
     {
-        if (!image2GrayScaleQImage(src, tmp, err))
+    // TODO : B.K.O #123499 : using Image Magick API here instead QT API 
+    // else RAW/TIFF/PNG 16 bits image are broken!
+//        if (!image2GrayScaleQImage(src, tmp, err))
             return false;
     }
 
