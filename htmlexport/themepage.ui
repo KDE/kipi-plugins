@@ -1,0 +1,44 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>ThemePage</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>ThemePage</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>412</width>
+            <height>247</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Form1</string>
+    </property>
+    <hbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
+        <widget class="KListBox">
+            <property name="name">
+                <cstring>mThemeList</cstring>
+            </property>
+        </widget>
+        <widget class="KTextBrowser">
+            <property name="name">
+                <cstring>mThemeInfo</cstring>
+            </property>
+        </widget>
+    </hbox>
+</widget>
+<customwidgets>
+</customwidgets>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>klistbox.h</includehint>
+    <includehint>ktextbrowser.h</includehint>
+</includehints>
+</UI>

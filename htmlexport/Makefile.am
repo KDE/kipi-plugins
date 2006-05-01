@@ -8,6 +8,7 @@ kde_module_LTLIBRARIES = kipiplugin_htmlexport.la
 kipiplugin_htmlexport_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 kipiplugin_htmlexport_la_SOURCES = \
 	generator.cpp \
+	themepage.ui \
 	imagesettingspage.ui \
 	outputpage.ui \
 	plugin.cpp \

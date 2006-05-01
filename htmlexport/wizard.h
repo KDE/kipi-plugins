@@ -43,7 +43,7 @@ protected slots:
 
 private slots:
 	void updateFinishButton();
-	void updateAppearancePageNextButton();
+	void slotThemeSelectionChanged();
 
 private:
 	struct Private;

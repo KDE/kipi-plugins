@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 namespace KIPIHTMLExport {
 
 
+static const char* AUTHOR_GROUP="X-HTMLExport Author";
+
 static Theme::List sList;
 
 
@@ -99,6 +101,18 @@ QString Theme::path() const {
 
 QString Theme::directory() const {
 	return d->mURL.directory();
+}
+
+
+QString Theme::authorName() const {
+	KConfigGroupSaver saver(d->mDesktopFile, AUTHOR_GROUP);
+	return d->mDesktopFile->readEntry("Name");
+}
+
+
+QString Theme::authorUrl() const {
+	KConfigGroupSaver saver(d->mDesktopFile, AUTHOR_GROUP);
+	return d->mDesktopFile->readEntry("Url");
 }
 
 

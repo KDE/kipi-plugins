@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <kdebug.h>
 #include <klistbox.h>
 #include <klocale.h>
+#include <ktextbrowser.h>
 #include <kurlrequester.h>
 #include <kwizard.h>
 
@@ -44,6 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "galleryinfo.h"
 #include "imagesettingspage.h"
 #include "theme.h"
+#include "themepage.h"
 #include "outputpage.h"
 
 namespace KIPIHTMLExport {
@@ -52,32 +54,11 @@ namespace KIPIHTMLExport {
 class ThemeListBoxItem : public QListBoxText {
 public:
 	ThemeListBoxItem(QListBox* list, Theme::Ptr theme)
-	: QListBoxText(list)
+	: QListBoxText(list, theme->name())
 	, mTheme(theme)
 	{}
 
-	virtual int height(const QListBox* lb) const {
-		return lb->fontMetrics().height()*3;	
-	}
-
 	Theme::Ptr mTheme;
-
-protected:
-	virtual void paint(QPainter* painter) {
-		QListBox* lb=listBox();
-		QFontMetrics fm=lb->fontMetrics();
-		QFont font=lb->font();
-		int top=fm.height()/2;
-		
-		font.setBold(true);
-		painter->setFont(font);
-		painter->drawText(0, top + fm.ascent(), mTheme->name());
-		top+=fm.height();
-		
-		font.setBold(false);
-		painter->setFont(font);
-		painter->drawText(0, top + fm.ascent(), mTheme->comment());
-	}
 };
 
 
@@ -86,18 +67,18 @@ struct Wizard::Private {
 	KConfigDialogManager* mConfigManager;
 	
 	KIPI::ImageCollectionSelector* mCollectionSelector;
-	KListBox* mAppearancePage;
+	ThemePage* mThemePage;
 	ImageSettingsPage* mImageSettingsPage;
 	OutputPage* mOutputPage;
 	
-	void initAppearancePage(QWidget* parent) {
-		mAppearancePage=new KListBox(parent);
+	void initThemePage() {
+		KListBox* listBox=mThemePage->mThemeList;
 		Theme::List list=Theme::getList();
 		Theme::List::Iterator it=list.begin(), end=list.end();
 		for (; it!=end; ++it) {
-			ThemeListBoxItem* item=new ThemeListBoxItem(mAppearancePage, *it);
+			ThemeListBoxItem* item=new ThemeListBoxItem(listBox, *it);
 			if ( (*it)->path()==mInfo->theme() ) {
-				mAppearancePage->setCurrentItem(item);
+				listBox->setCurrentItem(item);
 			}
 		}
 	}
@@ -112,10 +93,11 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface, GalleryInfo* info)
 	d->mCollectionSelector=new KIPI::ImageCollectionSelector(this, interface);
 	addPage(d->mCollectionSelector, i18n("Collection Selection"));
 
-	d->initAppearancePage(this);
-	addPage(d->mAppearancePage, i18n("Gallery Appearance"));
-	connect(d->mAppearancePage, SIGNAL(selectionChanged()),
-		this, SLOT(updateAppearancePageNextButton()) );
+	d->mThemePage=new ThemePage(this);
+	d->initThemePage();
+	addPage(d->mThemePage, i18n("Theme"));
+	connect(d->mThemePage->mThemeList, SIGNAL(selectionChanged()),
+		this, SLOT(slotThemeSelectionChanged()) );
 
 	d->mImageSettingsPage=new ImageSettingsPage(this);
 	addPage(d->mImageSettingsPage, i18n("Image Settings"));
@@ -132,7 +114,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface, GalleryInfo* info)
 
 	// Set page states
 	// Pages can only be disabled after they have *all* been added!
-	setNextEnabled(d->mAppearancePage, d->mAppearancePage->currentItem()!=-1);
+	slotThemeSelectionChanged();
 	updateFinishButton();
 }
 
@@ -147,8 +129,27 @@ void Wizard::updateFinishButton() {
 }
 
 
-void Wizard::updateAppearancePageNextButton() {
-	setNextEnabled(d->mAppearancePage, d->mAppearancePage->selectedItem());
+void Wizard::slotThemeSelectionChanged() {
+	KListBox* listBox=d->mThemePage->mThemeList;
+	KTextBrowser* browser=d->mThemePage->mThemeInfo;
+	if (listBox->selectedItem()) {
+		Theme::Ptr theme=static_cast<ThemeListBoxItem*>(listBox->selectedItem())->mTheme;
+		
+		QString url=theme->authorUrl();
+		QString author=theme->authorName();
+		if (!url.isEmpty()) {
+			author=QString("<a href='%1'>%2</a>").arg(url).arg(author);
+		}
+		
+		QString txt=
+			QString("<b>%1</b><br><br>%2<br><br>").arg(theme->name(), theme->comment())
+			+ i18n("Author: %1").arg(author);
+		browser->setText(txt);
+		setNextEnabled(d->mThemePage, true);
+	} else {
+		browser->clear();
+		setNextEnabled(d->mThemePage, false);
+	}
 }
 
 
@@ -158,7 +159,7 @@ void Wizard::updateAppearancePageNextButton() {
 void Wizard::accept() {
 	d->mInfo->mCollectionList=d->mCollectionSelector->selectedImageCollections();
 
-	Theme::Ptr theme=static_cast<ThemeListBoxItem*>(d->mAppearancePage->selectedItem())->mTheme;
+	Theme::Ptr theme=static_cast<ThemeListBoxItem*>(d->mThemePage->mThemeList->selectedItem())->mTheme;
 	d->mInfo->setTheme(theme->path());
 
 	d->mConfigManager->updateSettings();

@@ -39,6 +39,9 @@ public:
 	QString name() const;
 	QString comment() const;
 
+	QString authorName() const;
+	QString authorUrl() const;
+
 	/**
 	 * Theme path, on hard disk
 	 */
