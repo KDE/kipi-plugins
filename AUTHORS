@@ -1,10 +1,7 @@
 AUTHORS AND MAINTAINERS :
 
-Renchi Raju         <renchi at pooh.tam.uiuc.edu>                      
-Gilles Caulier      <caulier dot gilles at free.fr>   
-
 DEVELOPERS:
-
+Gilles Caulier      <caulier dot gilles at free.fr>   
 Tom Albers          <tomalbers at kde.nl>                                      
 Joern Ahrens        <kde at jokele.de>
 Owen Hirst          <n8rider at sbcglobal.net>    
@@ -20,3 +17,7 @@ Tudor Calin         <tudor at 1xtech.com>
 Todd Shoemaker      <todd at theshoemakers.net>                     
 Gregory Kokanosky   <gregory dot kokanosky at free.fr>
 Angelo Naselli      <anaselli at linux.it> 
+
+FORMER MAINTAINER:
+Renchi Raju         <renchi at pooh.tam.uiuc.edu> 
+
