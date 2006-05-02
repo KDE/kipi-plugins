@@ -13,13 +13,7 @@
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
     <description/>
-    <ignoreparts>
-      <part>KDevClearCase</part>
-      <part>KDevCTags2</part>
-      <part>KDevdistpart</part>
-      <part>KDevPerforce</part>
-      <part>KDevsubversion</part>
-    </ignoreparts>
+    <ignoreparts/>
     <secondaryLanguages/>
   </general>
   <kdevfileview>
@@ -111,14 +105,15 @@
       <numberofjobs>1</numberofjobs>
       <dontact>false</dontact>
       <makebin/>
+      <prio>0</prio>
     </make>
     <run>
       <directoryradio>custom</directoryradio>
-      <customdirectory>/usr/bin/</customdirectory>
-      <mainprogram>digikam</mainprogram>
+      <customdirectory>/</customdirectory>
+      <mainprogram>/usr/bin/digikam</mainprogram>
       <programargs/>
       <terminal>false</terminal>
-      <autocompile>true</autocompile>
+      <autocompile>false</autocompile>
       <envvars/>
     </run>
     <general>
@@ -140,6 +135,7 @@
         <cflags/>
         <cxxflags/>
         <f77flags/>
+        <envvars/>
       </default>
     </configurations>
   </kdevautoproject>
@@ -163,6 +159,14 @@
       <headerCompletionDelay>250</headerCompletionDelay>
     </codecompletion>
     <references/>
+    <creategettersetter>
+      <prefixGet/>
+      <prefixSet>set</prefixSet>
+      <prefixVariable>m_,_</prefixVariable>
+      <parameterName>theValue</parameterName>
+      <inlineGet>true</inlineGet>
+      <inlineSet>true</inlineSet>
+    </creategettersetter>
   </kdevcppsupport>
   <kdevcvsservice>
     <recursivewhenupdate>true</recursivewhenupdate>
