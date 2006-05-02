@@ -1,10 +1,12 @@
 /* ============================================================
  * File  : calwizard.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *         Tom Albers <tomalbers@kde.nl>
  * Date  : 2003-11-03
  * Description :
  *
  * Copyright 2003 by Renchi Raju
+ * Copyright 2006 by Tom Albers  
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -67,11 +69,11 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
            interface_( interface )
 {
     cSettings_ = new CalSettings();
-    
+
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
     directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
     // ---------------------------------------------------------------
 
     wTemplate_ = new CalTemplate(this, "wTemplate");
@@ -87,7 +89,7 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
     // ---------------------------------------------------------------
 
     wPrint_ = new QVBox(this, "wPrint");
-    
+
     QFrame *headerFrame = new QFrame( wPrint_ );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
@@ -102,13 +104,13 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    
+
     wPrintLabel_ = new QLabel(wPrint_, "wPrint");
     wPrintLabel_->setIndent(20);
 
     wPrint_->setStretchFactor(headerFrame, 0);
     wPrint_->setStretchFactor(wPrintLabel_, 2);
-    
+
     addPage(wPrint_, i18n("Print"));
     setHelpEnabled(wPrint_, true);
 
@@ -134,7 +136,7 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
     pixmapLabelLeft2->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft2->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle2->setPaletteBackgroundColor( QColor(201, 208, 255) );
-        
+
     wFinishLabel_ = new QLabel(wFinish_);
     wFinishLayout->addWidget(wFinishLabel_);
 
@@ -158,17 +160,20 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
     // ---------------------------------------------------------------
 
     // About data and help button.
-    
+
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Calendar"), 
+                                       I18N_NOOP("Calendar"),
                                        kipi_version,
                                        I18N_NOOP("A Kipi plugin to create a calendar"),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Renchi Raju", 
+                                       "(c) 2003-2004, Renchi Raju, (c) 2006 Tom Albers",
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
-    
-    about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
+
+    about->addAuthor("Tom Albers", I18N_NOOP("Author and maintainer"),
+                     "tomalbers@kde.nl");
+
+    about->addAuthor("Renchi Raju", I18N_NOOP("Former Author and maintainer"),
                      "renchi@pooh.tam.uiuc.edu");
 
     m_helpButton = helpButton();
@@ -178,13 +183,13 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
     m_helpButton->setPopup( helpMenu->menu() );
 
     // ------------------------------------------
-    
+
     printer_  = 0;
     painter_  = 0;
 
     connect(this, SIGNAL(selected(const QString&)),
             SLOT(slotPageSelected(const QString&)));
-            
+
     setCaption(i18n("Create Calendar"));
 }
 
@@ -224,24 +229,30 @@ void CalWizard::slotPageSelected(const QString&)
                 printList.append(month);
             }
         }
-        
+
         if (!monthNumbers_.empty()) {
             QString year = QString::number(cSettings_->getYear());
-            
+
             QString extra;
-            if ((QDate::currentDate().month() >= 6 && 
+            if ((QDate::currentDate().month() >= 6 &&
                  QDate::currentDate().year() == cSettings_->getYear()) ||
                 QDate::currentDate().year() > cSettings_->getYear())
                 extra = "<br><br><b>"+i18n("Please note that you are making a "
                         "calendar for<br>the current year or a year in the "
                         "past.")+"</b>";
-            
+
+            KApplication::startServiceByName("KJobViewer");
+            QString extra2 = i18n("<br><br>You can see KJobViewer is already started. "
+                    "After the plugin has prepared the calendar, it is passed to "
+                    "the PDF printer. In the KJobViewer you can see the progress "
+                    "of that part of the generation of the calendar.");
+
             wPrintLabel_->setText(i18n("Click Next to start Printing<br><br>"
                                        "Following months will be printed for year %1:").arg(year)
                                   + QString("<br>")
-                             + printList.join("<br>") + extra);
+                             + printList.join(" - ") + extra + extra2);
             wPrintLabel_->setTextFormat(Qt::RichText);
-                
+
             setNextEnabled(wPrint_, true);
         }
         else {
@@ -266,7 +277,7 @@ void CalWizard::slotPageSelected(const QString&)
             printer_ = new KPrinter(false);
 #if KDE_IS_VERSION(3,2,0)
         printer_->setUsePrinterResolution(true);
-#endif    
+#endif
 
         // TODO: Let user choose resolutions
         //, QPrinter::HighResolution);
