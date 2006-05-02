@@ -1,11 +1,12 @@
 /* ============================================================
- * File   : jpegtransform.h
- * Authors: Marcel Wiesweg
- *          Ralf Hoelzer
+ * Authors: Ralf Hoelzer <kde at ralfhoelzer.com>
+ *          Marcel Wiesweg <marcel.wiesweg@gmx.de>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date   : 2004-06-08
  * 
- * Copyright 2004 by Marcel Wiesweg
  * Copyright 2004 by  Ralf Hoelzer
+ * Copyright 2004-2005 by Marcel Wiesweg
+ * Copyright 2006 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,6 +24,13 @@
 #ifndef JPEGTRANSFORM_H
 #define JPEGTRANSFORM_H
 
+// Qt includes.
+
+#include <qstring.h>
+
+// Lib KExif includes. 
+
+#include <libkexif/kexifdata.h>
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -54,61 +62,70 @@ namespace KIPIJPEGLossLessPlugin
    (I did not proof that mathematically, but empirically)
 */
 
-class Matrix {
+class Matrix 
+{
+
 public:
+
    Matrix()
-    { 
-     set ( 1, 0,
-           0, 1 );
-    }
+   { 
+        set( 1, 0, 0, 1 );
+   }
     
    Matrix &operator*=(Matrix &ma)
-    {
-      set ( ma.m[0][0]*m[0][0] + ma.m[0][1]*m[1][0],  ma.m[0][0]*m[0][1] + ma.m[0][1]*m[1][1],
-            ma.m[1][0]*m[0][0] + ma.m[1][1]*m[1][0],  ma.m[1][0]*m[0][1] + ma.m[1][1]*m[1][1] );
-      return *this;
-    }
+   {
+        set( ma.m[0][0]*m[0][0] + ma.m[0][1]*m[1][0],  ma.m[0][0]*m[0][1] + ma.m[0][1]*m[1][1],
+             ma.m[1][0]*m[0][0] + ma.m[1][1]*m[1][0],  ma.m[1][0]*m[0][1] + ma.m[1][1]*m[1][1] );
+        return *this;
+   }
     
    bool operator==(Matrix &ma)
-    {
-      return m[0][0]==ma.m[0][0] &&
-             m[0][1]==ma.m[0][1] &&
-             m[1][0]==ma.m[1][0] &&
-             m[1][1]==ma.m[1][1];
-    }
+   {
+        return m[0][0]==ma.m[0][0] &&
+               m[0][1]==ma.m[0][1] &&
+               m[1][0]==ma.m[1][0] &&
+               m[1][1]==ma.m[1][1];
+   }
     
-   bool operator!=(Matrix &ma)
-    { return !(*this==ma); }
+   bool operator!=(Matrix &ma) 
+   { 
+        return !(*this==ma); 
+   }
     
-   static Matrix none;          //(1, 0, 0, 1)
-   static Matrix rotate90;      //(0,-1,1,0)
-   static Matrix rotate180;     //(-1,0,0,-1)
-   static Matrix rotate270;     //(0,1,-1,0)
-   static Matrix flipHorizontal;//(-1,0,0,1)
-   static Matrix flipVertical;  //(1,0,0,-1)
+   static Matrix none;                   //(1, 0, 0, 1)
+   static Matrix rotate90;               //(0,-1,1,0)
+   static Matrix rotate180;              //(-1,0,0,-1)
+   static Matrix rotate270;              //(0,1,-1,0)
+   static Matrix flipHorizontal;         //(-1,0,0,1)
+   static Matrix flipVertical;           //(1,0,0,-1)
    static Matrix rotate90flipHorizontal; //(0,1,1,0), first rotate, then flip
    static Matrix rotate90flipVertical;   //(0,-1,-1,0), first rotate, then flip
 
 protected:
+
    Matrix(int m11, int m12, int m21, int m22)
-    {
-     set(m11, m12, m21, m22);
-    }
+   {
+        set(m11, m12, m21, m22);
+   }
     
    void set(int m11, int m12, int m21, int m22)
-    {
-     m[0][0]=m11; m[0][1]=m12; m[1][0]=m21; m[1][1]=m22;
-    }
+   {
+        m[0][0]=m11;
+        m[0][1]=m12; 
+        m[1][0]=m21; 
+        m[1][1]=m22;
+   }
     
    int m[2][2];
 };
 
 
-bool transformJPEG(const QString& src, const QString& dest,
-                   Matrix &action, QString& err);
+bool transformJPEG(const QString& src, const QString& dest, Matrix &action, QString& err);
+
 void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate);
+
 void getExifAction(Matrix &action, KExifData::ImageOrientation exifOrientation);
 
 }  // NameSpace KIPIJPEGLossLessPlugin
 
-#endif
+#endif  // JPEGTRANSFORM_H

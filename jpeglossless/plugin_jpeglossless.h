@@ -1,12 +1,12 @@
 /* ============================================================
- * File  : plugin_jpeglossless.h
- * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- *          Gilles Caulier <caulier dot gilles at free.fr>
+ * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *         Gilles Caulier <caulier dot gilles at free.fr>
  * Date  : 2003-09-26
  * Description : JPEG loss less operations plugin
  *
- * Copyright 2003 by Renchi Raju & Gilles Caulier
-
+ * Copyright 2003-2005 by Renchi Raju & Gilles Caulier
+ * Copyright 2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -23,7 +23,7 @@
 #ifndef PLUGIN_JPEGLOSSLESS_H
 #define PLUGIN_JPEGLOSSLESS_H
 
-// LibKIPi includes.
+// LibKiPi includes.
 
 #include <libkipi/plugin.h>
 #include <libkipi/imagecollection.h>
@@ -65,16 +65,18 @@ private slots:
 
 private:
 
+    int          m_total;
+    int          m_current;
+
     KActionMenu *m_action_RotateImage;
     KActionMenu *m_action_FlipImage;
     KAction     *m_action_Convert2GrayScale;
     KAction     *m_action_AutoExif;
 
+    KURL::List   m_images;
+
     KIPIJPEGLossLessPlugin::ProgressDlg  *m_progressDlg;
     KIPIJPEGLossLessPlugin::ActionThread *m_thread;
-    int                         m_total;
-    int                         m_current;
-    KURL::List                  m_images;
 };
 
 #endif /* PLUGIN_JPEGLOSSLESS_H */

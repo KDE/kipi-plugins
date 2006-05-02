@@ -1,11 +1,12 @@
 /* ============================================================
- * File  : messagebox.h
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2004-01-22
- * Description : 
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2004-01-22
+ * Description : batch results dialog
  * 
- * Copyright 2004 by Renchi Raju
-
+ * Copyright 2004-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -21,6 +22,8 @@
 
 #ifndef MESSAGEBOX_H
 #define MESSAGEBOX_H
+
+// Qt includes.
 
 #include <qdialog.h>
 
@@ -39,11 +42,9 @@ public:
     MessageBox();
     ~MessageBox();
 
-    void addMsg(const QString& fileName,
-                const QString& msg);
+    void addMsg(const QString& fileName, const QString& msg);
 
-    static void showMsg(const QString& fileName,
-                        const QString& msg);
+    static void showMsg(const QString& fileName, const QString& msg);
     static MessageBox* instance();
 
 private:
@@ -54,8 +55,7 @@ private:
 
 private slots:
 
-    void slotClose();
-    
+    void slotClose();    
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin

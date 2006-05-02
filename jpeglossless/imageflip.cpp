@@ -1,11 +1,10 @@
 /* ============================================================
- * File  : imageflip.cpp
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
+ * Author: Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date  : 2003-10-14
  * Description : batch image flip
  *
- * Copyright 2003 by Gilles Caulier
-
+ * Copyright 2003-2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -19,24 +18,45 @@
  *
  * ============================================================ */
 
-#include <klocale.h>
-#include <kdebug.h>
-#include <kurl.h>
-#include <libkexif/kexifdata.h>
+#define XMD_H
+
+// C++ includes.
+
+#include <cstdio>
+#include <cstdlib>
+#include <cassert>
+#include <string>
+
+// Qt includes.
 
 #include <qimage.h>
 #include <qstring.h>
 #include <qfile.h>
 #include <qfileinfo.h>
 
+// KDE includes.
+
+#include <klocale.h>
+#include <kdebug.h>
+#include <kurl.h>
+
+// Lib KExif inlcudes.
+
+#include <libkexif/kexifdata.h>
+
+// ImageMgick includes.
+
+#include <Magick++.h>
+
+// Local includes
+
 #include "imageflip.h"
 #include "utils.h"
 
-#define XMD_H
+// C Ansi includes.
 
-extern "C" {
-#include <stdio.h>
-#include <stdlib.h>
+extern "C" 
+{
 #include <sys/types.h>
 #include <unistd.h>
 #include <jpeglib.h>
@@ -47,13 +67,11 @@ extern "C" {
 namespace KIPIJPEGLossLessPlugin
 {
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-bool flip(const QString& src, FlipAction action,
-          const QString& TmpFolder, QString& err)
+bool flip(const QString& src, FlipAction action, const QString& TmpFolder, QString& err)
 {
     QFileInfo fi(src);
-    if (!fi.exists() || !fi.isReadable() || !fi.isWritable()) {
+    if (!fi.exists() || !fi.isReadable() || !fi.isWritable()) 
+    {
         err = i18n("Error in opening input file");
         return false;
     }
@@ -68,14 +86,15 @@ bool flip(const QString& src, FlipAction action,
     }
     else
     {
-    // TODO : B.K.O #123499 : using Image Magick API here instead QT API 
-    // else RAW/TIFF/PNG 16 bits image are broken!
-//        if (!flipQImage(src, tmp, action, err))
+        // B.K.O #123499 : we using Image Magick API here instead QT API 
+        // else RAW/TIFF/PNG 16 bits image are broken!
+        if (!flipImageMagick(src, tmp, action, err))
             return false;
     }
 
     // Move back to original file
-    if (!MoveFile(tmp, src)) {
+    if (!MoveFile(tmp, src)) 
+    {
         err = i18n("Cannot update source image");
         return false;
     }
@@ -83,110 +102,71 @@ bool flip(const QString& src, FlipAction action,
     return true;
 }
 
-    
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-bool flipJPEG(const QString& src, const QString& dest,
-              FlipAction action, QString& err)
+bool flipJPEG(const QString& src, const QString& dest, FlipAction action, QString& err)
 {
     Matrix &transform=Matrix::none;
 
     switch(action)
     {
-    case (FlipHorizontal):
-    {
-        transform=Matrix::flipHorizontal;
-        break;
-    }
-    case (FlipVertical):
-    {
-        transform=Matrix::flipVertical;
-        break;
-    }
-    default:
-    {
-        kdError() << "ImageFlip: Nonstandard flip action" << endl;
-        err = i18n("Nonstandard flip action");
-        return false;
-    }
+        case (FlipHorizontal):
+        {
+            transform=Matrix::flipHorizontal;
+            break;
+        }
+        case (FlipVertical):
+        {
+            transform=Matrix::flipVertical;
+            break;
+        }
+        default:
+        {
+            kdError() << "ImageFlip: Nonstandard flip action" << endl;
+            err = i18n("Nonstandard flip action");
+            return false;
+        }
     }
 
     return transformJPEG(src, dest, transform, err);
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-bool flipQImage(const QString& src, const QString& dest,
-               FlipAction action, QString& err)
+bool flipImageMagick(const QString& src, const QString& dest, FlipAction action, QString& err)
 {
-    bool vertical;
+    try 
+    {
+        Magick::Image image;
+        std::string srcFileName(QFile::encodeName(src));
+        image.read(srcFileName);
+
+        switch(action)
+        {
+            case (FlipHorizontal):
+            {
+                image.flop();
+                break;
+            }
+            case (FlipVertical):
+            {
+                image.flip();
+                break;
+            }
+            default:
+            {
+                kdError() << "ImageFlip: Nonstandard flip action" << endl;
+                err = i18n("Nonstandard flip action");
+                return false;
+            }
+        }
     
-    switch(action)
-    {
-    case (FlipHorizontal):
-    {
-        vertical = false;        
-        break;
+        std::string destFileName(QFile::encodeName(dest));
+        image.write(destFileName);
+        return true;
     }
-    case (FlipVertical):
+    catch( std::exception &error_ )
     {
-        vertical = true;
-        break;
-    }
-    default:
-    {
-        kdError() << "ImageFlip: Nonstandard flip action" << endl;
-        err = i18n("Nonstandard flip action");
+        err = i18n("Cannot flip: %1").arg(error_.what());
+        kdError() << "ImageFlip: ImageMagick exception: " << error_.what() << endl;
         return false;
     }
-    }
-
-    QImage image(src);
-    if (image.isNull()) {
-        err = i18n("Error in opening input file");
-        return false;
-    }
-
-    if (vertical) {
-
-        // Vertical mirror
-        int bpl = image.bytesPerLine();
-        int y1, y2;
-        for (y1 = 0, y2 = image.height()-1; y1 < y2; y1++, y2--) {
-            uchar* a1 = image.scanLine(y1);
-            uchar* a2 = image.scanLine(y2);
-            for (int x = bpl; x > 0; x--) {
-                uchar c = *a1;
-                *a1++ = *a2;
-                *a2++ = c;
-            }
-        }
-    }
-    else {
-
-        // Horizontal mirror
-        if (image.depth() != 32)
-            image = image.convertDepth(32);
-        for (int y = image.height()-1; y >= 0; y--) {
-            uint* a1 = (uint *)image.scanLine(y);
-            uint* a2 = a1+image.width()-1;
-            while (a1 < a2) {
-                uint c = *a1;
-                *a1++ = *a2;
-                *a2-- = c;
-            }
-        }
-    }
-
-    if (QString(QImageIO::imageFormat(src)).upper() == QString("TIFF")) {
-        QImageToTiff(image, dest);
-    }
-    else
-        image.save(dest, QImageIO::imageFormat(src));
-
-    return true;
 }
 
 }  // NameSpace KIPIJPEGLossLessPlugin

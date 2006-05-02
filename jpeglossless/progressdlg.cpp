@@ -1,11 +1,12 @@
 /* ============================================================
- * File  : progressdlg.cpp
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date  : 2003-12-11
- * Description : 
+ * Description : batch progress dialog
  * 
- * Copyright 2003 by Renchi Raju
-
+ * Copyright 2003-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -35,7 +36,7 @@ namespace KIPIJPEGLossLessPlugin
 ProgressDlg::ProgressDlg()
            : QDialog(kapp->activeWindow())
 {
-    QVBoxLayout *lay = new QVBoxLayout(this,6,11);
+    QVBoxLayout *lay = new QVBoxLayout(this, 6, 11);
     label_ = new QLabel(this);
     lay->addWidget(label_);
     bar_   = new QProgressBar(this);
@@ -48,12 +49,11 @@ ProgressDlg::ProgressDlg()
     hlay->addWidget(btn_);
 
     connect(btn_, SIGNAL(clicked()),
-            SIGNAL(signalCanceled()));
+            this, SIGNAL(signalCanceled()));
 }
 
 ProgressDlg::~ProgressDlg()
-{
-    
+{    
 }
 
 void ProgressDlg::setText(const QString& text)

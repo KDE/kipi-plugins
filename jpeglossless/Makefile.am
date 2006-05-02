@@ -1,5 +1,6 @@
-INCLUDES    = $(LIBKIPI_CFLAGS) $(LIBKEXIF_CFLAGS) $(all_includes)
-METASOURCES = AUTO
+METASOURCES  = AUTO
+KDE_CXXFLAGS = $(USE_EXCEPTIONS)
+INCLUDES     = $(LIBKIPI_CFLAGS) $(LIBKEXIF_CFLAGS) $(all_includes)
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_jpeglossless.la
@@ -12,7 +13,7 @@ kipiplugin_jpeglossless_la_SOURCES = plugin_jpeglossless.cpp \
 		                     messagebox.cpp jpegtransform.cpp
 
 kipiplugin_jpeglossless_la_LIBADD = $(LIB_KPARTS) \
-				    -ljpeg $(LIBKIPI_LIBS) $(LIBKEXIF_LIBS) $(LIB_TIFF)
+				    -ljpeg -lMagick++ $(LIBKIPI_LIBS) $(LIBKEXIF_LIBS) 
 
 kipiplugin_jpeglossless_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 

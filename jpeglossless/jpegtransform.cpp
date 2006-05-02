@@ -1,11 +1,12 @@
 /* ============================================================
- * File   : jpegtransform.cpp
- * Authors: Marcel Wiesweg
- *          Ralf Hoelzer
+ * Authors: Ralf Hoelzer <kde at ralfhoelzer.com>
+ *          Marcel Wiesweg <marcel.wiesweg@gmx.de>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date   : 2004-06-08
  * 
- * Copyright 2004 by Marcel Wiesweg
  * Copyright 2004 by  Ralf Hoelzer
+ * Copyright 2004-2005 by Marcel Wiesweg
+ * Copyright 2006 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,9 +21,18 @@
  * 
  * ============================================================ */
 
+// C++ includes.
+
+#include <cstdio>
+#include <cstdlib>
+
+// Qt includes.
+
 #include <qstring.h>
 #include <qwmatrix.h>
 #include <qfile.h>
+
+// KDE includes.
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -30,16 +40,16 @@
 #include <libkexif/kexifdata.h>
 #include <libkexif/kexifutils.h>
 
-extern "C" {
-#include <stdio.h>
-#include <stdlib.h>
+// C Ansi includes.
+
+extern "C" 
+{
 #include <sys/types.h>
 #include <unistd.h>
 #include <jpeglib.h>
 #include "transupp.h"
 #include "jpegtransform.h"
 }
-
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -125,7 +135,8 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     bool twoPass = (flip != JXFORM_NONE);
 
     //If twoPass is true, we need another file (src -> tempFile -> destGiven)
-    if (twoPass) {
+    if (twoPass) 
+    {
         KTempFile tempFile;
         tempFile.setAutoDelete(false);
         dest=tempFile.name();
@@ -151,10 +162,8 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     // Initialize destination compression parameters from source values
     jpeg_copy_critical_parameters(&srcinfo, &dstinfo);
 
-    dst_coef_arrays = jtransform_adjust_parameters(&srcinfo,
-                                                   &dstinfo,
-                                                   src_coef_arrays,
-                                                   &transformoption);
+    dst_coef_arrays = jtransform_adjust_parameters(&srcinfo, &dstinfo,
+                                                   src_coef_arrays, &transformoption);
 
     // Specify data destination for compression
     jpeg_stdio_dest(&dstinfo, output_file);
@@ -168,10 +177,8 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     // Copy to the output file any extra markers that we want to preserve
     jcopy_markers_execute(&srcinfo, &dstinfo, copyoption);
 
-    jtransform_execute_transformation(&srcinfo,
-                                      &dstinfo,
-                                      src_coef_arrays,
-                                      &transformoption);
+    jtransform_execute_transformation(&srcinfo, &dstinfo,
+                                      src_coef_arrays, &transformoption);
 
     // Finish compression and release memory
     jpeg_finish_compress(&dstinfo);
@@ -183,7 +190,8 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     fclose(output_file);
 
     // Flip if needed
-    if (twoPass) {
+    if (twoPass) 
+    {
         // Initialize the JPEG decompression object with default error handling
         srcinfo.err = jpeg_std_error(&jsrcerr);
         jpeg_create_decompress(&srcinfo);
@@ -240,10 +248,8 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         // Copy to the output file any extra markers that we want to preserve
         jcopy_markers_execute(&srcinfo, &dstinfo, copyoption);
 
-        jtransform_execute_transformation(&srcinfo,
-                &dstinfo,
-                src_coef_arrays,
-                &transformoption);
+        jtransform_execute_transformation(&srcinfo, &dstinfo,
+                                          src_coef_arrays, &transformoption);
 
         // Finish compression and release memory
         jpeg_finish_compress(&dstinfo);
@@ -260,7 +266,6 @@ bool transformJPEG(const QString& src, const QString& destGiven,
 
     KExifUtils::writeOrientation(destGiven, KExifData::NORMAL);
 
-
     return true;
 }
 
@@ -268,34 +273,49 @@ bool transformJPEG(const QString& src, const QString& destGiven,
    Converts the mathematically correct description
    into the primitive operations that can be carried out losslessly.
 */
-void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate) {
+void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate) 
+{
    flip=JXFORM_NONE;
    rotate=JXFORM_NONE;
 
-   if (action==Matrix::rotate90) {
+   if (action==Matrix::rotate90) 
+   {
       rotate=JXFORM_ROT_90;
-   } else if (action==Matrix::rotate180) {
+   }
+   else if (action==Matrix::rotate180) 
+   {
       rotate=JXFORM_ROT_180;
-   } else if (action==Matrix::rotate270) {
+   }
+   else if (action==Matrix::rotate270) 
+   {
       rotate=JXFORM_ROT_270;
-   } else if (action==Matrix::flipHorizontal) {
+   }
+   else if (action==Matrix::flipHorizontal) 
+   {
       flip=JXFORM_FLIP_H;
-   } else if (action==Matrix::flipVertical) {
+   }
+   else if (action==Matrix::flipVertical) 
+   {
       flip=JXFORM_FLIP_V;
-   } else if (action==Matrix::rotate90flipHorizontal) {
+   }
+   else if (action==Matrix::rotate90flipHorizontal) 
+   {
       //first rotate, then flip!
       rotate=JXFORM_ROT_90;
       flip=JXFORM_FLIP_H;
-   } else if (action==Matrix::rotate90flipVertical) {
+   }
+   else if (action==Matrix::rotate90flipVertical) 
+   {
       //first rotate, then flip!
       rotate=JXFORM_ROT_90;
       flip=JXFORM_FLIP_V;
    }
 }
 
-
-void getExifAction(Matrix &action, KExifData::ImageOrientation exifOrientation) {
-    switch (exifOrientation) {
+void getExifAction(Matrix &action, KExifData::ImageOrientation exifOrientation) 
+{
+    switch (exifOrientation) 
+    {
         case KExifData::NORMAL:
             break;
 

@@ -1,11 +1,10 @@
 /* ============================================================
- * File  : convert2grayscale.h
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
+ * Author: Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date  : 2003-10-14
  * Description : batch images grayscale conversion
  *
- * Copyright 2003 by Gilles Caulier
-
+ * Copyright 2003-2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -23,16 +22,15 @@
 #define convert2grayscale_H
 
 class QString;
-class QImage;
 
 namespace KIPIJPEGLossLessPlugin
 {
-bool image2GrayScale(const QString& src, const QString& TmpFolder,
-                     QString& err);
-bool image2GrayScaleJPEG(const QString& src, const QString& dest,
-                         QString& err);
-bool image2GrayScaleQImage(const QString& src, const QString& dest,
-                           QString& err);
+
+bool image2GrayScale(const QString& src, const QString& TmpFolder, QString& err);
+
+bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err);
+
+bool image2GrayScaleImageMagick(const QString& src, const QString& dest, QString& err);
 
 }  // NameSpace KIPIJPEGLossLessPlugin
 

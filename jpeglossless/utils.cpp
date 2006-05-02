@@ -1,96 +1,56 @@
 /* ============================================================
- * File  : utils.cpp
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-12-03
- * Description :
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2003-12-03
+ * Description : misc utils to used in batch process
+ * 
+ * Copyright 2003-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
  *
- * Copyright 2003 by Renchi Raju
-
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * ============================================================ */
 
-#include <kdebug.h>
+// C Ansi includes.
+extern "C" 
+{
+#include <utime.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+}
+
+// Qt includes.
 
 #include <qimage.h>
 #include <qstring.h>
 #include <qfile.h>
 
-extern "C" {
-#include <tiffio.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <utime.h>
-}
+// KDE includes.
+
+#include <kdebug.h>
+
+// Local includes.
 
 #include "utils.h"
 
 namespace KIPIJPEGLossLessPlugin
 {
 
-bool QImageToTiff(const QImage& image, const QString& dst)
-{
-    TIFF               *tif;
-    unsigned char      *data;
-    int                 x, y;
-    QRgb                rgb;
-
-    tif = TIFFOpen(QFile::encodeName(dst).data(), "w");
-    if (tif)
-    {
-        TIFFSetField(tif, TIFFTAG_IMAGEWIDTH, image.width());
-        TIFFSetField(tif, TIFFTAG_IMAGELENGTH, image.height());
-        TIFFSetField(tif, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
-        TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, 8);
-        TIFFSetField(tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
-        TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_ADOBE_DEFLATE);
-        {
-            TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, 3);
-            TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-            TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP, TIFFDefaultStripSize(tif, 0));
-
-            data = new unsigned char[image.width()*3];
-            unsigned char *dptr = 0;
-
-            for (y = 0; y < image.height(); y++)
-            {
-                dptr = data;
-                for (x = 0; x < image.width(); x++) {
-                    rgb = *((uint *)image.scanLine(y) + x);
-                    *(dptr++) = qRed(rgb);
-                    *(dptr++) = qGreen(rgb);
-                    *(dptr++) = qBlue(rgb);
-                }
-                TIFFWriteScanline(tif, data, y, 0);
-            }
-
-            delete [] data;
-
-        }
-        TIFFClose(tif);
-
-        return true;
-    }
-
-    return false;
-}
-
 bool isJPEG(const QString& file)
 {
     QString format=QString(QImageIO::imageFormat(file)).upper();
     return format=="JPEG";
 }
-
 
 bool CopyFile(const QString& src, const QString& dst)
 {

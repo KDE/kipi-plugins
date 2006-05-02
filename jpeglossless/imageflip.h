@@ -1,11 +1,10 @@
 /* ============================================================
- * File  : imageflip.h
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
+ * Author: Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date  : 2003-10-14
  * Description : batch image flip
  * 
- * Copyright 2003 by Gilles Caulier
-
+ * Copyright 2003-2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -22,20 +21,20 @@
 #ifndef IMAGEFLIP_H
 #define IMAGEFLIP_H
 
+// Local includes.
+
 #include "actions.h"
 
 class QString;
-class QImage;
 
 namespace KIPIJPEGLossLessPlugin
 {
 
-bool flip(const QString& src, FlipAction action,
-         const QString& TmpFolder, QString& err);
-bool flipJPEG(const QString& src, const QString& dest,
-              FlipAction action, QString& err);
-bool flipQImage(const QString& src, const QString& dest,
-                FlipAction action, QString& err);
+bool flip(const QString& src, FlipAction action, const QString& TmpFolder, QString& err);
+
+bool flipJPEG(const QString& src, const QString& dest, FlipAction action, QString& err);
+
+bool flipImageMagick(const QString& src, const QString& dest, FlipAction action, QString& err);
 
 }  // NameSpace KIPIJPEGLossLessPlugin
 

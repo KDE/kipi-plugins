@@ -1,11 +1,10 @@
 /* ============================================================
- * File  : convert2grayscale.cpp
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
+ * Author: Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date  : 2003-10-14
  * Description : batch images grayscale conversion
  *
- * Copyright 2003 by Gilles Caulier
-
+ * Copyright 2003-2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -19,10 +18,16 @@
  *
  * ============================================================ */
 
-#include <klocale.h>
-#include <kdebug.h>
-#include <kurl.h>
-#include <kimageeffect.h>
+#define XMD_H
+
+// C++ includes.
+
+#include <cstdio>
+#include <cstdlib>
+#include <cassert>
+#include <string>
+
+// Qt includes.
 
 #include <qimage.h>
 #include <qstring.h>
@@ -30,14 +35,25 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 
+// KDE includes.
+
+#include <klocale.h>
+#include <kdebug.h>
+#include <kurl.h>
+
+// ImageMgick includes.
+
+#include <Magick++.h>
+
+// Local includes.
+
 #include "convert2grayscale.h"
 #include "utils.h"
 
-#define XMD_H
+// C Ansi includes.
 
-extern "C" {
-#include <stdio.h>
-#include <stdlib.h>
+extern "C" 
+{
 #include <sys/types.h>
 #include <unistd.h>
 #include <jpeglib.h>
@@ -47,12 +63,11 @@ extern "C" {
 namespace KIPIJPEGLossLessPlugin
 {
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 bool image2GrayScale(const QString& src, const QString& TmpFolder, QString& err)
 {
     QFileInfo fi(src);
-    if (!fi.exists() || !fi.isReadable() || !fi.isWritable()) {
+    if (!fi.exists() || !fi.isReadable() || !fi.isWritable()) 
+    {
         err = i18n("Error in opening input file");
         return false;
     }
@@ -67,23 +82,21 @@ bool image2GrayScale(const QString& src, const QString& TmpFolder, QString& err)
     }
     else
     {
-    // TODO : B.K.O #123499 : using Image Magick API here instead QT API 
-    // else RAW/TIFF/PNG 16 bits image are broken!
-//        if (!image2GrayScaleQImage(src, tmp, err))
+        // B.K.O #123499 : using Image Magick API here instead QT API 
+        // else RAW/TIFF/PNG 16 bits image are broken!
+        if (!image2GrayScaleImageMagick(src, tmp, err))
             return false;
     }
 
     // Move back to original file
-    if (!MoveFile(tmp, src)) {
+    if (!MoveFile(tmp, src)) 
+    {
         err = i18n("Cannot update source image");
         return false;
     }
 
     return true;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err)
 {
@@ -177,26 +190,26 @@ bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err)
     return true;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-bool image2GrayScaleQImage(const QString& src, const QString& dest,
-                           QString& err)
+bool image2GrayScaleImageMagick(const QString& src, const QString& dest, QString& err)
 {
-    QImage image(src);
-    if (image.isNull()) {
-        err = i18n("Error in opening input file");
+    try 
+    {
+        Magick::Image image;
+        std::string srcFileName(QFile::encodeName(src));
+        image.read(srcFileName);
+        
+        image.type( Magick::GrayscaleType );
+    
+        std::string destFileName(QFile::encodeName(dest));
+        image.write(destFileName);
+        return true;
+    }
+    catch( std::exception &error_ )
+    {
+        err = i18n("Cannot convert to gray scale: %1").arg(error_.what());
+        kdError() << "Convert2GrayScale: ImageMagick exception: " << error_.what() << endl;
         return false;
     }
-
-    image = KImageEffect::toGray(image);
-
-    if (QString(QImageIO::imageFormat(src)).upper() == QString("TIFF")) {
-        QImageToTiff(image, dest);
-    }
-    else
-        image.save(dest, QImageIO::imageFormat(src));
-
-    return true;
 }
 
 }  // NameSpace KIPIJPEGLossLessPlugin

@@ -1,11 +1,12 @@
 /* ============================================================
- * File  : messagebox.cpp
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2004-01-22
- * Description : 
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2004-01-22
+ * Description : batch results dialog
  * 
- * Copyright 2004 by Renchi Raju
-
+ * Copyright 2004-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -19,16 +20,22 @@
  * 
  * ============================================================ */
 
+// Qt includes.
+
+#include <qlistview.h>
+#include <qstring.h>
+#include <qlayout.h>
+#include <qlabel.h>
+
+// KDE includes.
+
 #include <klocale.h>
 #include <kapplication.h>
 #include <kiconloader.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
 
-#include <qlistview.h>
-#include <qstring.h>
-#include <qlayout.h>
-#include <qlabel.h>
+// Local includes.
 
 #include "messagebox.h"
 
@@ -38,7 +45,7 @@ namespace KIPIJPEGLossLessPlugin
 MessageBox* MessageBox::m_instance = 0;
 
 MessageBox::MessageBox()
-    : QDialog(kapp->activeWindow(),0,Qt::WDestructiveClose)
+          : QDialog(kapp->activeWindow(), 0, Qt::WDestructiveClose)
 {
     m_instance = this;
 
@@ -76,21 +83,20 @@ MessageBox::MessageBox()
         l->addItem(new QSpacerItem(10,10, QSizePolicy::Expanding,
                                    QSizePolicy::Minimum));
 
-        connect(btn, SIGNAL(clicked()), SLOT(slotClose()));
-
+        connect(btn, SIGNAL(clicked()), 
+                this, SLOT(slotClose()));
     }
 }
 
 MessageBox::~MessageBox()
 {
-    qWarning("deleted");
     m_instance = 0;    
 }
 
 void MessageBox::addMsg(const QString& fileName,
                         const QString& msg)
 {
-    new QListViewItem(m_msgView, fileName, msg);
+    new QListViewItem(m_msgView, fileName.section('/', -1), msg);
 }
 
 void MessageBox::slotClose()
