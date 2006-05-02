@@ -1,11 +1,11 @@
 /* ============================================================
- * File  : actionthread.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-12-04
- * Description :
+ * Date  : 2003-12-03
+ * Description : a class to manage plugin actions using threads
  *
- * Copyright 2003 by Renchi Raju
-
+ * Copyright 2003-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -19,16 +19,25 @@
  *
  * ============================================================ */
 
-#include <kdebug.h>
-#include <kstandarddirs.h>
-#include <qapplication.h>
-#include <qdir.h>
-#include <qdeepcopy.h>
+// C Ansi includes.
 
 extern "C"
 {
 #include <unistd.h>
 }
+
+// Qt includes.
+
+#include <qapplication.h>
+#include <qdir.h>
+#include <qdeepcopy.h>
+
+// KDE includes.
+
+#include <kdebug.h>
+#include <kstandarddirs.h>
+
+// Local includes.
 
 #include "imagerotate.h"
 #include "imageflip.h"
@@ -39,7 +48,7 @@ namespace KIPIJPEGLossLessPlugin
 {
 
 ActionThread::ActionThread( KIPI::Interface* interface, QObject *parent)
-    : QThread(), parent_(parent), interface_( interface )
+            : QThread(), parent_(parent), interface_( interface )
 {
     // Create a KIPI JPEGLossLess plugin temporary folder in KDE tmp directory.
     KStandardDirs dir;
@@ -60,7 +69,8 @@ ActionThread::~ActionThread()
 void ActionThread::rotate(const KURL::List& urlList, RotateAction val)
 {
     for (KURL::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) {
+         it != urlList.end(); ++it ) 
+    {
         KIPI::ImageInfo info = interface_->info( *it );
 
         // Don't use the host angle in case of auto-rotation (Rot0)
@@ -103,10 +113,13 @@ void ActionThread::rotate(const KURL::List& urlList, RotateAction val)
 void ActionThread::flip(const KURL::List& urlList, FlipAction val)
 {
     for (KURL::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) {
+         it != urlList.end(); ++it ) 
+    {
         KIPI::ImageInfo info = interface_->info( *it );
         int angle = (info.angle() + 360) % 360;
-        if ( (90-45 <= angle && angle < 90+45) || (270-45) < angle && angle < (270+45) ) {
+    
+        if ( (90-45 <= angle && angle < 90+45) || (270-45) < angle && angle < (270+45) ) 
+        {
             // The image is rotated 90 or 270 degrees, which means that the flip operations must be switched to
             // gain the effect the user expects.
             // Note this will only work if the angles is one of 90,180,270.
@@ -124,14 +137,14 @@ void ActionThread::flip(const KURL::List& urlList, FlipAction val)
 void ActionThread::convert2grayscale(const KURL::List& urlList)
 {
     for (KURL::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) {
+         it != urlList.end(); ++it ) 
+    {
         Task *t      = new Task;
         t->filePath  = QDeepCopy<QString>((*it).path()); //deep copy
         t->action    = GrayScale;
         taskQueue_.enqueue(t);
     }
 }
-
 
 void ActionThread::cancel()
 {
@@ -140,8 +153,8 @@ void ActionThread::cancel()
 
 void ActionThread::run()
 {
-    while (!taskQueue_.isEmpty()) {
-
+    while (!taskQueue_.isEmpty()) 
+    {
         Task *t = taskQueue_.dequeue();
         if (!t) continue;
 
@@ -149,71 +162,71 @@ void ActionThread::run()
 
         EventData *d = new EventData;
 
-        switch (t->action) {
-        case(Rotate): {
-            d->action   = Rotate;
-            d->fileName = t->filePath;
-            d->starting = true;
-            QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
-
-            bool result = true;
-            result = KIPIJPEGLossLessPlugin::rotate(t->filePath, t->rotAction,
-                                              tmpFolder_, errString);
-
-            EventData *r = new EventData;
-            r->action    = Rotate;
-            r->fileName  = t->filePath;
-            r->success   = result;
-            r->errString = errString;
-            QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
-            break;
-        }
-        case(Flip): {
-            d->action   = Flip;
-            d->fileName = t->filePath;
-            d->starting = true;
-            QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
-
-            bool result = KIPIJPEGLossLessPlugin::flip(t->filePath, t->flipAction,
-                                               tmpFolder_, errString);
-
-            EventData *r = new EventData;
-            r->action    = Flip;
-            r->fileName  = t->filePath;
-            r->success   = result;
-            r->errString = errString;
-            QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
-            break;
-        }
-        case(GrayScale): {
-            d->action   = GrayScale;
-            d->fileName = t->filePath;
-            d->starting = true;
-            QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
-
-            bool result = KIPIJPEGLossLessPlugin::image2GrayScale(t->filePath,
-                                                        tmpFolder_, errString);
-
-            EventData *r = new EventData;
-            r->action    = GrayScale;
-            r->fileName  = t->filePath;
-            r->success   = result;
-            r->errString = errString;
-            QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
-            break;
-        }
-
-        default: {
-            kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:ActionThread: "
-                        << "Unknown action specified"
-                        << endl;
-            delete d;
-        }
+        switch (t->action) 
+        {
+            case(Rotate): 
+            {
+                d->action   = Rotate;
+                d->fileName = t->filePath;
+                d->starting = true;
+                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+    
+                bool result = true;
+                result = KIPIJPEGLossLessPlugin::rotate(t->filePath, t->rotAction, tmpFolder_, errString);
+    
+                EventData *r = new EventData;
+                r->action    = Rotate;
+                r->fileName  = t->filePath;
+                r->success   = result;
+                r->errString = errString;
+                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
+                break;
+            }
+            case(Flip): 
+            {
+                d->action   = Flip;
+                d->fileName = t->filePath;
+                d->starting = true;
+                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+    
+                bool result = KIPIJPEGLossLessPlugin::flip(t->filePath, t->flipAction, tmpFolder_, errString);
+    
+                EventData *r = new EventData;
+                r->action    = Flip;
+                r->fileName  = t->filePath;
+                r->success   = result;
+                r->errString = errString;
+                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
+                break;
+            }
+            case(GrayScale): 
+            {
+                d->action   = GrayScale;
+                d->fileName = t->filePath;
+                d->starting = true;
+                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+    
+                bool result = KIPIJPEGLossLessPlugin::image2GrayScale(t->filePath, tmpFolder_, errString);
+    
+                EventData *r = new EventData;
+                r->action    = GrayScale;
+                r->fileName  = t->filePath;
+                r->success   = result;
+                r->errString = errString;
+                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
+                break;
+            }
+            default: 
+            {
+                kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:ActionThread: "
+                                   << "Unknown action specified"
+                                   << endl;
+                delete d;
+            }
         }
 
         delete t;
     }
-
 }
 
 void ActionThread::deleteDir(const QString& dirPath)
@@ -227,17 +240,18 @@ void ActionThread::deleteDir(const QString& dirPath)
     QFileInfoListIterator it(*infoList);
     QFileInfo* fi;
 
-    while( (fi = it.current()) ) {
+    while( (fi = it.current()) ) 
+    {
         ++it;
         if(fi->fileName() == "." || fi->fileName() == ".." )
             continue;
 
-        if( fi->isDir() ) {
+        if( fi->isDir() ) 
+        {
             deleteDir(fi->absFilePath());
         }
         else if( fi->isFile() )
             dir.remove(fi->absFilePath());
-
     }
 
     dir.rmdir(dir.absPath());

@@ -1,11 +1,11 @@
 /* ============================================================
- * File  : actionthread.h
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2003-12-03
- * Description :
+ * Description : a class to manage plugin actions using threads
  *
- * Copyright 2003 by Renchi Raju
-
+ * Copyright 2003-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -22,13 +22,21 @@
 #ifndef ACTIONTHREAD_H
 #define ACTIONTHREAD_H
 
+// Qt includes.
+
 #include <qthread.h>
 #include <qstringlist.h>
 
+// KDE includes.
+#include <kurl.h>
+
+// LibKipi includes.
+#include <libkipi/interface.h>
+
+// Local includes.
+
 #include "actions.h"
 #include "mtqueue.h"
-#include <kurl.h>
-#include <libkipi/interface.h>
 
 class QObject;
 
@@ -55,19 +63,24 @@ private:
 
     void deleteDir(const QString& dirPath);
 
-    struct Task_ {
-        QString       filePath;
-        Action        action;
-        RotateAction  rotAction;
-        FlipAction    flipAction;
+private:
+
+    struct Task_ 
+    {
+        QString      filePath;
+        Action       action;
+        RotateAction rotAction;
+        FlipAction   flipAction;
     };
 
     typedef struct Task_ Task;
 
-    QObject        *parent_;
-    MTQueue<Task>   taskQueue_;
-    QString         tmpFolder_;
-    KIPI::Interface* interface_;
+    QObject         *parent_;
+    QString          tmpFolder_;
+
+    MTQueue<Task>    taskQueue_;
+
+    KIPI::Interface *interface_;
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin
