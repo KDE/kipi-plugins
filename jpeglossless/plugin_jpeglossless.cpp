@@ -57,13 +57,8 @@ typedef KGenericFactory<Plugin_JPEGLossless> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_jpeglossless,
                             Factory("kipiplugin_jpeglossless"))
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent,
-                                         const char*,
-                                         const QStringList &)
-    : KIPI::Plugin( Factory::instance(), parent, "JPEGLossless")
+Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent, const char*, const QStringList &)
+                   : KIPI::Plugin( Factory::instance(), parent, "JPEGLossless")
 {
     kdDebug( 51001 ) << "Plugin_JPEGLossless plugin loaded" << endl;
 }
@@ -72,13 +67,13 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_AutoExif =  new KAction(i18n("Auto Rotate/Flip Using Exif Information"),
-                                     0,
-                                     0,
-                                     this,
-                                     SLOT(slotRotate()),
-                                     actionCollection(),
-                                     "rotate_exif") ;    
+    m_action_AutoExif = new KAction(i18n("Auto Rotate/Flip Using Exif Information"),
+                                    0,
+                                    0,
+                                    this,
+                                    SLOT(slotRotate()),
+                                    actionCollection(),
+                                    "rotate_exif");    
 
 
     m_action_RotateImage = new KActionMenu(i18n("Rotate"),
@@ -87,33 +82,33 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
                            "jpeglossless_rotate");
 
     m_action_RotateImage->insert( new KAction(i18n("90 Degrees"),
-                                0,
-                                0,
-                                this,
-                                SLOT(slotRotate()),
-                                actionCollection(),
-                                "rotate_90") );
+                                  0,
+                                  0,
+                                  this,
+                                  SLOT(slotRotate()),
+                                  actionCollection(),
+                                  "rotate_90") );
 
     m_action_RotateImage->insert( new KAction(i18n("180 Degrees"),
-                                0,
-                                0,
-                                this,
-                                SLOT(slotRotate()),
-                                actionCollection(),
-                                "rotate_180") );
+                                  0,
+                                  0,
+                                  this,
+                                  SLOT(slotRotate()),
+                                  actionCollection(),
+                                  "rotate_180") );
 
     m_action_RotateImage->insert( new KAction(i18n("270 Degrees"),
-                                0,
-                                0,
-                                this,
-                                SLOT(slotRotate()),
-                                actionCollection(),
-                                "rotate_270") );
+                                  0,
+                                  0,
+                                  this,
+                                  SLOT(slotRotate()),
+                                  actionCollection(),
+                                  "rotate_270") );
 
     m_action_FlipImage = new KActionMenu(i18n("Flip"),
-                           "flip_image",
-                           actionCollection(),
-                           "jpeglossless_flip");
+                             "flip_image",
+                             actionCollection(),
+                             "jpeglossless_flip");
 
     m_action_FlipImage->insert( new KAction(i18n("Horizontally"),
                                 0,
