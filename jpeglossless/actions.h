@@ -1,11 +1,12 @@
 /* ============================================================
- * File  : actions.h
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-12-05
- * Description :
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at free.fr>
+ * Date   : 2003-12-05
+ * Description : plugin action description class 
  *
- * Copyright 2003 by Renchi Raju
-
+ * Copyright 2003-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -48,19 +49,23 @@ enum FlipAction
 
 class EventData
 {
+
 public:
-    EventData() {
+
+    EventData() 
+    {
         starting = false;
         success  = false;
     }
 
-    QString fileName;
-    QString errString;
     bool    starting;
     bool    success;
+
+    QString fileName;
+    QString errString;
+
     Action  action;
 };
-
 
 }  // NameSpace KIPIJPEGLossLessPlugin
 
