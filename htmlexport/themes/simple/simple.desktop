@@ -1,6 +1,13 @@
 [Desktop Entry]
 Name=Simple
+Name[da]=Simpel
+Name[ga]=Simplí
+Name[pt]=Simples
+Name[pt_BR]=Simples
 Comment=A simple and light theme
+Comment[ga]=Téama simplí éadrom
+Comment[pt]=Ajuste de Data e Hora do KIPI
+Comment[pt_BR]=Ajuste de Data e Hora do KIPI
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
