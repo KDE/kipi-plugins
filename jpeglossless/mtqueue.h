@@ -1,8 +1,11 @@
 /* ============================================================
- * File  : mtqueue.h
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2004-11-09
- * Copyright 2004 by Renchi Raju
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at free.fr>
+ * Date   : 2004-11-09
+ * Description : Multithread queue description class 
+ *
+ * Copyright 2004-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -14,10 +17,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
+ *
  * ============================================================ */
 
 #ifndef MTQUEUE_H
 #define MTQUEUE_H
+
+// Qt includes.
 
 #include <qptrqueue.h>
 #include <qmutex.h>
@@ -73,10 +79,9 @@ public:
 private:
 
   QPtrQueue<Type> queue_;
-  QMutex mutex_;
-
+  QMutex          mutex_;
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin
 
-#endif
+#endif // KIPIJPEGLossLessPlugin

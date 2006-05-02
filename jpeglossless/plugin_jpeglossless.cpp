@@ -1,7 +1,7 @@
 /* ============================================================
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *         Gilles Caulier <caulier dot gilles at free.fr>
- * Date  : 2003-09-26
+ * Date   : 2003-09-26
  * Description : JPEG loss less operations plugin
  *
  * Copyright 2003-2005 by Renchi Raju & Gilles Caulier
