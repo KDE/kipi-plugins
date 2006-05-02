@@ -7,10 +7,9 @@ kde_module_LTLIBRARIES = kipiplugin_jpeglossless.la
 
 kipiplugin_jpeglossless_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKEXIF_LIBS_DEP)
 
-kipiplugin_jpeglossless_la_SOURCES = plugin_jpeglossless.cpp \
-		                     actionthread.cpp utils.cpp transupp.c progressdlg.cpp \
-		                     imagerotate.cpp  convert2grayscale.cpp imageflip.cpp \
-		                     messagebox.cpp jpegtransform.cpp
+kipiplugin_jpeglossless_la_SOURCES = plugin_jpeglossless.cpp jpegtransform.cpp \
+		                     actionthread.cpp utils.cpp transupp.c \
+		                     imagerotate.cpp convert2grayscale.cpp imageflip.cpp 
 
 kipiplugin_jpeglossless_la_LIBADD = $(LIB_KPARTS) \
 				    -ljpeg -lMagick++ $(LIBKIPI_LIBS) $(LIBKEXIF_LIBS) 
