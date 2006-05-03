@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Name=SlideShow
 Name[br]=Diskouezadur skeudennoù
-Name[cs]=Slideshow
+Name[cs]=Prezentace
 Name[cy]=Sioe Tryloywderau
 Name[da]=Lysbilledshow
 Name[el]=ΠροβολήΣλάιντ
@@ -24,7 +24,7 @@ Name[xx]=xxSlideShowxx
 Name[zh_CN]=幻灯片
 Comment=KIPI SlideShow Plugin
 Comment[br]=Lugent diskouezadur skeudennoù KIPI
-Comment[cs]=KIPI modul slideshow
+Comment[cs]=KIPI modul prezentace
 Comment[da]=KIPI-plugin: Lysbilledshow
 Comment[de]=Ein KIPI-Modul zur Erstellung von Bildschirmpräsentationen
 Comment[el]=Πρόσθετο του KIPI για προβολή σλάιντ
