@@ -71,7 +71,7 @@ namespace KIPIRawConverterPlugin
 SingleDialog::SingleDialog(const QString& file, QWidget *parent)
             : KDialogBase(parent, 0, false, i18n("Raw Image Converter"),
                           Help|User1|User2|User3|Close, Close, true,
-                          i18n("&Preview"), i18n("Con&vert"), i18n("A&bort"))
+                          i18n("&Preview"), i18n("Con&vert"), i18n("&Abort"))
 {
     inputFile_     = file;
     inputFileName_ = QFileInfo(file).fileName();
@@ -212,7 +212,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
                                                  "decoder program \"dcraw\""),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2005, Renchi Raju\n"
-                                       "(c) 2006, Gilles Caulier\n",
+                                       "(c) 2006, Gilles Caulier",
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
 

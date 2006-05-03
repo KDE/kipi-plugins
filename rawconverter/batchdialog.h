@@ -1,11 +1,12 @@
 /* ============================================================
- * File  : batchdialog.h
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date  : 2003-10-24
- * Description :
+ * Description : Raw converter batch dialog
  *
- * Copyright 2003 by Renchi Raju
-
+ * Copyright 2003-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -28,6 +29,10 @@
 #include <qstringlist.h>
 #include <qdict.h>
 
+// KDE includes.
+
+#include <kdialogbase.h>
+
 class QListViewItem;
 class QCheckBox;
 class QPushButton;
@@ -41,6 +46,7 @@ class KListView;
 class KListViewItem;
 class KURL;
 class KProgress;
+class KDoubleNumInput;
 
 namespace KIPI
 {
@@ -50,7 +56,6 @@ class ThumbnailJob;
 namespace KIPIRawConverterPlugin
 {
 
-class  CSpinBox;
 class  ProcessController;
 struct RawItem;
 
@@ -61,7 +66,8 @@ class BatchDialog : public QDialog
 
 public:
 
-    enum TargetFileOp {
+    enum TargetFileOp 
+    {
         OVERWRITE,
         OPENFILEDIALOG
     };
@@ -77,39 +83,6 @@ private:
     void saveSettings();
 
     void processOne();
-
-    KListView*     listView_;
-    QCheckBox*     cameraWBCheckBox_;
-    QCheckBox*     fourColorCheckBox_;
-    CSpinBox*      brightnessSpinBox_;
-    CSpinBox*      redSpinBox_;
-    CSpinBox*      blueSpinBox_;
-
-    QVButtonGroup* saveButtonGroup_;
-    QVButtonGroup* conflictButtonGroup_;
-
-    KProgress*     progressBar_;
-
-    QPushButton*   helpButton_;
-    QPushButton*   processButton_;
-    QPushButton*   closeButton_;
-    QPushButton*   abortButton_;
-
-    QRadioButton*  jpegButton_;
-    QRadioButton*  tiffButton_;
-    QRadioButton*  ppmButton_;
-
-    QRadioButton*  overwriteButton_;
-    QRadioButton*  promptButton_;
-    
-    QDict<RawItem>         itemDict_;
-    ProcessController     *controller_;
-    bool                   busy_;
-    QStringList            fileList_;
-
-    QString                targetExtension_;
-    TargetFileOp           targetFileOp_;
-
 
 private slots:
 
@@ -130,6 +103,46 @@ private slots:
 
     void slotBusy(bool busy);
     void slotGotThumbnail(const KFileItem* url, const QPixmap& pix);
+
+private:
+
+    bool               busy_;
+
+    QCheckBox         *cameraWBCheckBox_;
+    QCheckBox         *fourColorCheckBox_;
+
+    QVButtonGroup     *saveButtonGroup_;
+    QVButtonGroup     *conflictButtonGroup_;
+
+    QPushButton       *helpButton_;
+    QPushButton       *processButton_;
+    QPushButton       *closeButton_;
+    QPushButton       *abortButton_;
+
+    QRadioButton      *jpegButton_;
+    QRadioButton      *tiffButton_;
+    QRadioButton      *ppmButton_;
+
+    QRadioButton      *overwriteButton_;
+    QRadioButton      *promptButton_;
+    
+    QDict<RawItem>     itemDict_;
+
+    QStringList        fileList_;
+
+    QString            targetExtension_;
+
+    KDoubleNumInput   *brightnessSpinBox_;
+    KDoubleNumInput   *redSpinBox_;
+    KDoubleNumInput   *blueSpinBox_;
+
+    KProgress         *progressBar_;
+
+    KListView         *listView_;
+
+    ProcessController *controller_;
+
+    TargetFileOp       targetFileOp_;
 };
 
 } // NameSpace KIPIRawConverterPlugin
