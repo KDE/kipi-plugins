@@ -167,7 +167,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
 Plugin_JPEGLossless::~Plugin_JPEGLossless()
 {
-    // Remove KIPI JPEGLossLess plugin temporary folder in KDE tmp directory.
+    // TODO: remove KIPI JPEGLossLess plugin temporary folder in KDE tmp directory.
 
     delete m_thread;
 
@@ -368,17 +368,17 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
             {
                 case(KIPIJPEGLossLessPlugin::Rotate): 
                 {
-                    text = i18n("Failed to Rotate");
+                    text = i18n("Failed to Rotate image");
                     break;
                 }
                 case(KIPIJPEGLossLessPlugin::Flip): 
                 {
-                    text = i18n("Failed to flip Image");
+                    text = i18n("Failed to Flip image");
                     break;
                 }
                 case(KIPIJPEGLossLessPlugin::GrayScale): 
                 {
-                    text = i18n("Failed to convert to Black & White");
+                    text = i18n("Failed to convert image to Black & White");
                     break;
                 }
                 default: 
@@ -388,6 +388,8 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
             }
             
             m_progressDlg->addedAction(text, KIPI::WarningMessage);
+            if (!d->errString.isEmpty())
+                m_progressDlg->addedAction(d->errString, KIPI::WarningMessage);        
         }
         else
         {
@@ -400,7 +402,7 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
                 }
                 case(KIPIJPEGLossLessPlugin::Flip): 
                 {
-                    text = i18n("Flip Image complete");
+                    text = i18n("Flip image complete");
                     break;
                 }
                 case(KIPIJPEGLossLessPlugin::GrayScale): 
