@@ -75,7 +75,7 @@ private:
     KURL::List   m_images;
 
     KIPI::BatchProgressDialog            *m_progressDlg;
-    //KIPIJPEGLossLessPlugin::ProgressDlg  *m_progressDlg;
+
     KIPIJPEGLossLessPlugin::ActionThread *m_thread;
 };
 
