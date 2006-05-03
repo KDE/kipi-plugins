@@ -52,9 +52,9 @@ public:
 
     ~ImageSimilarityData()
     {
-        delete(avg_r);
-        delete(avg_g);
-        delete(avg_b);
+        free(avg_r);
+        free(avg_g);
+        free(avg_b);
     }
 
     QString filename;
