@@ -1,10 +1,11 @@
 /* ============================================================
- * File  : singledialog.cpp
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-10-22
- * Description :
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2003-10-22
+ * Description : Raw converter single dialog
  *
- * Copyright 2003 by Renchi Raju
+ * Copyright 2003-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -19,12 +20,9 @@
  *
  * ============================================================ */
 
-// C ansi includes.
+// C++ includes.
 
-extern "C"
-{
-#include <stdio.h>
-}
+#include <cstdio>
 
 // Qt includes.
 
@@ -54,6 +52,7 @@ extern "C"
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
+#include <kdebug.h>
 
 // KIPI include files
 
@@ -111,8 +110,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     lbox->setColumnLayout(0, Qt::Vertical);
     lbox->layout()->setSpacing( 6 );
     lbox->layout()->setMargin( 11 );
-    QVBoxLayout* lboxLayout =
-        new QVBoxLayout(lbox->layout());
+    QVBoxLayout* lboxLayout = new QVBoxLayout(lbox->layout());
 
     previewWidget_ = new PreviewWidget(lbox);
     lboxLayout->addWidget(previewWidget_);
@@ -125,32 +123,27 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     settingsBox->setColumnLayout(0, Qt::Vertical);
     settingsBox->layout()->setSpacing( 6 );
     settingsBox->layout()->setMargin( 11 );
-    QVBoxLayout* settingsBoxLayout =
-        new QVBoxLayout(settingsBox->layout());
+    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox->layout());
 
     // ---------------------------------------------------------------
 
-    cameraWBCheckBox_ = new QCheckBox(i18n("Use camera white balance"),
-                                      settingsBox);
-    QToolTip::add(cameraWBCheckBox_,
-                  i18n("Use the camera's custom white-balance settings.\n"
-                       "The default  is to use fixed daylight values,\n"
-                       "calculated from sample images."));
+    cameraWBCheckBox_ = new QCheckBox(i18n("Use camera white balance"), settingsBox);
+    QToolTip::add(cameraWBCheckBox_, i18n("Use the camera's custom white-balance settings.\n"
+                                          "The default  is to use fixed daylight values,\n"
+                                          "calculated from sample images."));
     settingsBoxLayout->addWidget(cameraWBCheckBox_);
 
     fourColorCheckBox_ = new QCheckBox(i18n("Four color RGBG"), settingsBox);
-    QToolTip::add(fourColorCheckBox_,
-                  i18n("Interpolate RGB as four colors.\n"
-                       "The default is to assume that all green\n"
-                       "pixels are the same. If even-row green\n"
-                       "pixels are more sensitive to ultraviolet light\n"
-                       "than odd-row this difference causes a mesh\n"
-                       "pattern in the output; using this option solves\n"
-                       "this problem with minimal loss of detail."));
+    QToolTip::add(fourColorCheckBox_, i18n("Interpolate RGB as four colors.\n"
+                                      "The default is to assume that all green\n"
+                                      "pixels are the same. If even-row green\n"
+                                      "pixels are more sensitive to ultraviolet light\n"
+                                      "than odd-row this difference causes a mesh\n"
+                                      "pattern in the output; using this option solves\n"
+                                      "this problem with minimal loss of detail."));
     settingsBoxLayout->addWidget(fourColorCheckBox_);
 
     QHBoxLayout *hboxLayout;
-
 
     // ---------------------------------------------------------------
 
@@ -160,8 +153,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     hboxLayout->addWidget(brightnessSpinBox_);
     hboxLayout->addWidget(new QLabel(i18n("Brightness"), settingsBox));
-    QToolTip::add(brightnessSpinBox_,
-                  i18n("Specify the output brightness"));
+    QToolTip::add(brightnessSpinBox_, i18n("Specify the output brightness"));
     settingsBoxLayout->addLayout(hboxLayout);
 
     // ---------------------------------------------------------------
@@ -169,9 +161,8 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     hboxLayout = new QHBoxLayout(0,0,6,"layout3");
     redSpinBox_ = new CSpinBox(settingsBox);
     redSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QToolTip::add(redSpinBox_,
-                  i18n("After all other color adjustments,\n"
-                       "multiply the red channel by this value"));
+    QToolTip::add(redSpinBox_, i18n("After all other color adjustments,\n"
+                                    "multiply the red channel by this value"));
 
     hboxLayout->addWidget(redSpinBox_);
     hboxLayout->addWidget(new QLabel(i18n("Red multiplier"), settingsBox));
@@ -182,9 +173,8 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     hboxLayout = new QHBoxLayout(0,0,6,"layout4");
     blueSpinBox_ = new CSpinBox(settingsBox);
     blueSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QToolTip::add(blueSpinBox_,
-                  i18n("After all other color adjustments,\n"
-                       "multiply the blue channel by this value"));
+    QToolTip::add(blueSpinBox_, i18n("After all other color adjustments,\n"
+                                     "multiply the blue channel by this value"));
 
     hboxLayout->addWidget(blueSpinBox_);
     hboxLayout->addWidget(new QLabel(i18n("Blue multiplier"), settingsBox));
@@ -196,31 +186,26 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     saveButtonGroup_->setRadioButtonExclusive(true);
 
     jpegButton_ = new QRadioButton("JPEG",saveButtonGroup_);
-    QToolTip::add(jpegButton_,
-                  i18n("Output the processed image in JPEG Format.\n"
-                       "This is a lossy format, but will give\n"
-                       "smaller-sized files"));
+    QToolTip::add(jpegButton_, i18n("Output the processed image in JPEG Format.\n"
+                                    "This is a lossy format, but will give\n"
+                                    "smaller-sized files"));
     jpegButton_->setChecked(true);
 
     tiffButton_ = new QRadioButton("TIFF",saveButtonGroup_);
-    QToolTip::add(tiffButton_,
-                  i18n("Output the processed image in TIFF Format.\n"
-                       "This generates larges, without\n"
-                       "losing quality"));
+    QToolTip::add(tiffButton_, i18n("Output the processed image in TIFF Format.\n"
+                                    "This generates larges, without\n"
+                                    "losing quality"));
 
     ppmButton_ = new QRadioButton("PPM",saveButtonGroup_);
-    QToolTip::add(ppmButton_,
-                  i18n("Output the processed image in PPM Format.\n"
-                       "This generates the largest files, without\n"
-                       "losing quality"));
+    QToolTip::add(ppmButton_, i18n("Output the processed image in PPM Format.\n"
+                                   "This generates the largest files, without\n"
+                                   "losing quality"));
 
     // ---------------------------------------------------------------
 
     mainLayout->addWidget(settingsBox, 1, 1);
     mainLayout->addWidget(saveButtonGroup_, 2, 1);
-    mainLayout->addItem(new QSpacerItem(10,10,
-                                        QSizePolicy::Minimum,
-                                        QSizePolicy::Expanding), 3, 1);
+    mainLayout->addItem(new QSpacerItem(10,10, QSizePolicy::Minimum, QSizePolicy::Expanding), 3, 1);
 
     // ---------------------------------------------------------------
 
@@ -231,9 +216,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     // ---------------------------------------------------------------
 
     hboxLayout = new QHBoxLayout(0, 0, 6);
-
-    hboxLayout->addItem(new QSpacerItem(10,10,QSizePolicy::Expanding,
-                                        QSizePolicy::Minimum));
+    hboxLayout->addItem(new QSpacerItem(10,10,QSizePolicy::Expanding, QSizePolicy::Minimum));
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -248,7 +231,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
                                                  "This plugin uses the Dave Coffin RAW photo "
                                                  "decoder program \"dcraw\""),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Renchi Raju",
+                                       "(c) 2003-2005, Renchi Raju",
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
 
@@ -263,16 +246,14 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     // ---------------------------------------------------------------
 
     previewButton_ = new QPushButton(i18n("&Preview"), this);
-    QToolTip::add(previewButton_,
-                  i18n("Generate a Preview from current settings.\n"
-                       "Uses a simple bilinear interpolation for\n"
-                       "quick results."));
+    QToolTip::add(previewButton_, i18n("Generate a Preview from current settings.\n"
+                                       "Uses a simple bilinear interpolation for\n"
+                                       "quick results."));
     hboxLayout->addWidget(previewButton_);
 
     processButton_ = new QPushButton(i18n("P&rocess"), this);
-    QToolTip::add(processButton_,
-                  i18n("Convert the Raw Image from current settings.\n"
-                       "This uses a high-quality adaptive algorithm."));
+    QToolTip::add(processButton_, i18n("Convert the Raw Image from current settings.\n"
+                                       "This uses a high-quality adaptive algorithm."));
     hboxLayout->addWidget(processButton_);
 
     abortButton_ = new QPushButton(i18n("&Abort"), this);
@@ -283,53 +264,52 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     QToolTip::add(closeButton_, i18n("Exit Raw Converter"));
     hboxLayout->addWidget(closeButton_);
 
-
     mainLayout->addMultiCellLayout(hboxLayout, 5, 5, 0, 1);
 
     // ---------------------------------------------------------------
 
     connect(previewButton_, SIGNAL(clicked()),
-            SLOT(slotPreview()));
+            this, SLOT(slotPreview()));
 
     connect(processButton_, SIGNAL(clicked()),
-            SLOT(slotProcess()));
+            this, SLOT(slotProcess()));
 
     connect(closeButton_, SIGNAL(clicked()),
-            SLOT(slotClose()));
+            this, SLOT(slotClose()));
 
     connect(abortButton_, SIGNAL(clicked()),
-            SLOT(slotAbort()));
+            this, SLOT(slotAbort()));
 
     // ---------------------------------------------------------------
 
     controller_ = new ProcessController(this);
 
-    connect(controller_,
-            SIGNAL(signalIdentified(const QString&, const QString&)),
-            SLOT(slotIdentified(const QString&, const QString&)));
-    connect(controller_,
-            SIGNAL(signalIdentifyFailed(const QString&, const QString&)),
-            SLOT(slotIdentifyFailed(const QString&, const QString&)));
-    connect(controller_,
-            SIGNAL(signalPreviewing(const QString&)),
-            SLOT(slotPreviewing(const QString&)));
-    connect(controller_,
-            SIGNAL(signalPreviewed(const QString&, const QString&)),
-            SLOT(slotPreviewed(const QString&, const QString&)));
-    connect(controller_,
-            SIGNAL(signalPreviewFailed(const QString&)),
-            SLOT(slotPreviewFailed(const QString&)));
-    connect(controller_,
-            SIGNAL(signalProcessing(const QString&)),
-            SLOT(slotProcessing(const QString&)));
-    connect(controller_,
-            SIGNAL(signalProcessed(const QString&, const QString&)),
-            SLOT(slotProcessed(const QString&, const QString&)));
-    connect(controller_,
-            SIGNAL(signalProcessingFailed(const QString&)),
-            SLOT(slotProcessingFailed(const QString&)));
-    connect(controller_,
-            SIGNAL(signalBusy(bool)), SLOT(slotBusy(bool)));
+    connect(controller_, SIGNAL(signalIdentified(const QString&, const QString&)),
+            this, SLOT(slotIdentified(const QString&, const QString&)));
+
+    connect(controller_, SIGNAL(signalIdentifyFailed(const QString&, const QString&)),
+            this, SLOT(slotIdentifyFailed(const QString&, const QString&)));
+
+    connect(controller_, SIGNAL(signalPreviewing(const QString&)),
+            this, SLOT(slotPreviewing(const QString&)));
+
+    connect(controller_, SIGNAL(signalPreviewed(const QString&, const QString&)),
+            this, SLOT(slotPreviewed(const QString&, const QString&)));
+
+    connect(controller_, SIGNAL(signalPreviewFailed(const QString&)),
+            this, SLOT(slotPreviewFailed(const QString&)));
+
+    connect(controller_, SIGNAL(signalProcessing(const QString&)),
+            this, SLOT(slotProcessing(const QString&)));
+
+    connect(controller_, SIGNAL(signalProcessed(const QString&, const QString&)),
+            this, SLOT(slotProcessed(const QString&, const QString&)));
+
+    connect(controller_, SIGNAL(signalProcessingFailed(const QString&)),
+            this, SLOT(slotProcessingFailed(const QString&)));
+
+    connect(controller_, SIGNAL(signalBusy(bool)), 
+            this, SLOT(slotBusy(bool)));
 
     // ---------------------------------------------------------------
 
@@ -348,8 +328,9 @@ SingleDialog::~SingleDialog()
 void SingleDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
-    if (abortButton_->isEnabled()) {
-        qWarning("close?");
+    if (abortButton_->isEnabled()) 
+    {
+        kdWarning( 51000 ) << "KIPIRAWConverter:single dialog closed" << endl;
     }
     e->accept();
 }
@@ -360,13 +341,10 @@ void SingleDialog::readSettings()
     config.setGroup("RawConverter Settings");
 
     brightnessSpinBox_->setValue(config.readNumEntry("Brightness",10));
-
     redSpinBox_->setValue(config.readNumEntry("Red Scale",10));
     blueSpinBox_->setValue(config.readNumEntry("Blue Scale",10));
-
     cameraWBCheckBox_->setChecked(config.readBoolEntry("Use Camera WB", true));
     fourColorCheckBox_->setChecked(config.readBoolEntry("Four Color RGB", false));
-
     saveButtonGroup_->setButton(config.readNumEntry("Output Format", 0));
 }
 
@@ -376,23 +354,18 @@ void SingleDialog::saveSettings()
     config.setGroup("RawConverter Settings");
 
     config.writeEntry("Brightness", brightnessSpinBox_->value());
-
     config.writeEntry("Red Scale", redSpinBox_->value());
     config.writeEntry("Blue Scale", blueSpinBox_->value());
-
     config.writeEntry("Use Camera WB", cameraWBCheckBox_->isChecked());
     config.writeEntry("Four Color RGB", fourColorCheckBox_->isChecked());
-
-    config.writeEntry("Output Format",
-                      saveButtonGroup_->id(saveButtonGroup_->selected()));
+    config.writeEntry("Output Format", saveButtonGroup_->id(saveButtonGroup_->selected()));
 
     config.sync();
 }
 
 void SingleDialog::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("rawconverter",
-                                             "kipi-plugins");
+    KApplication::kApplication()->invokeHelp("rawconverter", "kipi-plugins");
 }
 
 void SingleDialog::slotPreview()
@@ -416,6 +389,7 @@ void SingleDialog::slotProcess()
     s.brightness     = brightnessSpinBox_->value()/10.0;
     s.redMultiplier  = redSpinBox_->value()/10.0;
     s.blueMultiplier = blueSpinBox_->value()/10.0;
+    
     if (saveButtonGroup_->selected() == jpegButton_)
         s.outputFormat  = "JPEG";
     else if (saveButtonGroup_->selected() == tiffButton_)
@@ -451,14 +425,12 @@ void SingleDialog::slotBusy(bool val)
 
 void SingleDialog::slotIdentified(const QString&, const QString& identity)
 {
-    previewWidget_->setText(inputFileName_ + QString(" : ") +
-                            identity);
+    previewWidget_->setText(inputFileName_ + QString(" : ") + identity);
 }
 
 void SingleDialog::slotIdentifyFailed(const QString&, const QString& identity)
 {
-    previewWidget_->setText(i18n("Failed to identify raw image\n")
-                            + identity);
+    previewWidget_->setText(i18n("Failed to identify raw image\n") + identity);
 }
 
 void SingleDialog::slotPreviewing(const QString&)
@@ -484,11 +456,23 @@ void SingleDialog::slotProcessing(const QString&)
 void SingleDialog::slotProcessed(const QString&, const QString& tmpFile_)
 {
     previewWidget_->load(tmpFile_);
-    QString saveFile =
-        KFileDialog::getSaveFileName(QFileInfo(inputFile_).dirPath(true),
-                                     QString(), this);
+    QString filter("*.");
+    QString ext;
 
-    if (saveFile.isEmpty()) return;
+    if (saveButtonGroup_->selected() == ppmButton_)
+	ext = QString("ppm");
+    else if (saveButtonGroup_->selected() == tiffButton_)
+	ext = QString("tif");
+    else
+	ext = QString("jpg");
+
+    filter += ext;
+    QFileInfo fi(inputFile_);
+    QString saveFile = fi.dirPath(true) + QString("/") + fi.baseName() + QString(".") + ext;
+    saveFile = KFileDialog::getSaveFileName(saveFile, filter, this);
+    
+    if (saveFile.isEmpty()) 
+        return;
 
     if (::rename(QFile::encodeName( tmpFile_ ), QFile::encodeName( saveFile )) != 0)
     {

@@ -1,17 +1,18 @@
 /* ============================================================
- * File  : singledialog.h
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-10-22
- * Description : 
- * 
- * Copyright 2003 by Renchi Raju
-
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2003-10-22
+ * Description : Raw converter single dialog
+ *
+ * Copyright 2003-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,6 +22,8 @@
 
 #ifndef SINGLEDIALOG_H
 #define SINGLEDIALOG_H
+
+// Qt includes.
 
 #include <qdialog.h>
 #include <qstring.h>
@@ -56,33 +59,6 @@ private:
 
     void readSettings();
     void saveSettings();
-    
-    PreviewWidget* previewWidget_;
-    
-    QCheckBox*     cameraWBCheckBox_;
-    QCheckBox*     fourColorCheckBox_;
-    
-    CSpinBox*      brightnessSpinBox_;
-    CSpinBox*      redSpinBox_;
-    CSpinBox*      blueSpinBox_;
-    
-    QPushButton*   helpButton_;
-    QPushButton*   previewButton_;
-    QPushButton*   processButton_;
-    QPushButton*   closeButton_;
-    QPushButton*   abortButton_;
-
-    QRadioButton*  jpegButton_;
-    QRadioButton*  tiffButton_;
-    QRadioButton*  ppmButton_;
-    
-    QVButtonGroup* saveButtonGroup_;
-
-    QString            inputFile_;
-    QString            inputFileName_;
-    
-    ProcessController* controller_;
-
 
 private slots:
 
@@ -102,7 +78,34 @@ private slots:
     void slotProcessing(const QString&);
     void slotProcessed(const QString&, const QString& tmpFile_);
     void slotProcessingFailed(const QString&);
+    
+private:
 
+    QCheckBox         *cameraWBCheckBox_;
+    QCheckBox         *fourColorCheckBox_;
+    
+    QPushButton       *helpButton_;
+    QPushButton       *previewButton_;
+    QPushButton       *processButton_;
+    QPushButton       *closeButton_;
+    QPushButton       *abortButton_;
+
+    QRadioButton      *jpegButton_;
+    QRadioButton      *tiffButton_;
+    QRadioButton      *ppmButton_;
+    
+    QVButtonGroup     *saveButtonGroup_;
+
+    QString            inputFile_;
+    QString            inputFileName_;
+    
+    CSpinBox          *brightnessSpinBox_;
+    CSpinBox          *redSpinBox_;
+    CSpinBox          *blueSpinBox_;
+
+    PreviewWidget     *previewWidget_;
+
+    ProcessController *controller_;
 };
 
 } // NameSpace KIPIRawConverterPlugin
