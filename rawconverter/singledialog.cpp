@@ -53,6 +53,7 @@
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
+#include <knuminput.h>
 
 // KIPI include files
 
@@ -62,7 +63,6 @@
 
 #include "singledialog.h"
 #include "previewwidget.h"
-#include "cspinbox.h"
 #include "processcontroller.h"
 
 namespace KIPIRawConverterPlugin
@@ -118,19 +118,16 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    QGroupBox *settingsBox = new QGroupBox(i18n("Settings"), page);
-    settingsBox->setColumnLayout(0, Qt::Vertical);
-    settingsBox->layout()->setSpacing( spacingHint() );
-    settingsBox->layout()->setMargin( marginHint() );
-    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox->layout());
-
-    // ---------------------------------------------------------------
+    QGroupBox *settingsBox = new QGroupBox(0, Qt::Vertical, i18n("Settings"), page);
+    QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox->layout(), 4, 1, spacingHint());
 
     cameraWBCheckBox_ = new QCheckBox(i18n("Use camera white balance"), settingsBox);
     QToolTip::add(cameraWBCheckBox_, i18n("Use the camera's custom white-balance settings.\n"
                                           "The default  is to use fixed daylight values,\n"
                                           "calculated from sample images."));
-    settingsBoxLayout->addWidget(cameraWBCheckBox_);
+    settingsBoxLayout->addMultiCellWidget(cameraWBCheckBox_, 0, 0, 0, 1);    
+
+    // ---------------------------------------------------------------
 
     fourColorCheckBox_ = new QCheckBox(i18n("Four color RGBG"), settingsBox);
     QToolTip::add(fourColorCheckBox_, i18n("Interpolate RGB as four colors.\n"
@@ -140,44 +137,39 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
                                       "than odd-row this difference causes a mesh\n"
                                       "pattern in the output; using this option solves\n"
                                       "this problem with minimal loss of detail."));
-    settingsBoxLayout->addWidget(fourColorCheckBox_);
-
-    QHBoxLayout *hboxLayout;
+    settingsBoxLayout->addMultiCellWidget(fourColorCheckBox_, 1, 1, 0, 1);    
 
     // ---------------------------------------------------------------
 
-    hboxLayout = new QHBoxLayout(0, 0, 6, "layout2");
-    brightnessSpinBox_ = new CSpinBox(settingsBox);
-    brightnessSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-
-    hboxLayout->addWidget(brightnessSpinBox_);
-    hboxLayout->addWidget(new QLabel(i18n("Brightness"), settingsBox));
+    QLabel *label1 = new QLabel(i18n("Brightness:"), settingsBox);
+    brightnessSpinBox_ = new KDoubleNumInput(settingsBox);
+    brightnessSpinBox_->setPrecision(2);
+    brightnessSpinBox_->setRange(0.0, 10.0, 0.01, true);
     QToolTip::add(brightnessSpinBox_, i18n("Specify the output brightness"));
-    settingsBoxLayout->addLayout(hboxLayout);
+    settingsBoxLayout->addMultiCellWidget(label1, 2, 2, 0, 0);    
+    settingsBoxLayout->addMultiCellWidget(brightnessSpinBox_, 2, 2, 1, 1);    
 
     // ---------------------------------------------------------------
 
-    hboxLayout = new QHBoxLayout(0, 0, 6, "layout3");
-    redSpinBox_ = new CSpinBox(settingsBox);
-    redSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    QLabel *label2 = new QLabel(i18n("Red multiplier:"), settingsBox);
+    redSpinBox_ = new KDoubleNumInput(settingsBox);
+    redSpinBox_->setPrecision(2);
+    redSpinBox_->setRange(0.0, 10.0, 0.01, true);
     QToolTip::add(redSpinBox_, i18n("After all other color adjustments,\n"
                                     "multiply the red channel by this value"));
-
-    hboxLayout->addWidget(redSpinBox_);
-    hboxLayout->addWidget(new QLabel(i18n("Red multiplier"), settingsBox));
-    settingsBoxLayout->addLayout(hboxLayout);
+    settingsBoxLayout->addMultiCellWidget(label2, 3, 3, 0, 0);    
+    settingsBoxLayout->addMultiCellWidget(redSpinBox_, 3, 3, 1, 1);    
 
     // ---------------------------------------------------------------
 
-    hboxLayout = new QHBoxLayout(0, 0, 6, "layout4");
-    blueSpinBox_ = new CSpinBox(settingsBox);
-    blueSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    QLabel *label3 = new QLabel(i18n("Blue multiplier:"), settingsBox);
+    blueSpinBox_ = new KDoubleNumInput(settingsBox);
+    blueSpinBox_->setPrecision(2);
+    blueSpinBox_->setRange(0.0, 10.0, 0.01, true);
     QToolTip::add(blueSpinBox_, i18n("After all other color adjustments,\n"
                                      "multiply the blue channel by this value"));
-
-    hboxLayout->addWidget(blueSpinBox_);
-    hboxLayout->addWidget(new QLabel(i18n("Blue multiplier"), settingsBox));
-    settingsBoxLayout->addLayout(hboxLayout);
+    settingsBoxLayout->addMultiCellWidget(label3, 4, 4, 0, 0);    
+    settingsBoxLayout->addMultiCellWidget(blueSpinBox_, 4, 4, 1, 1);   
 
     // ---------------------------------------------------------------
 
@@ -236,6 +228,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     helpButton->setPopup( helpMenu->menu() );
 
     // ---------------------------------------------------------------
+
     setButtonTip( User1, i18n("Generate a Preview from current settings.\n"
                               "Uses a simple bilinear interpolation for\n"
                               "quick results."));
@@ -307,9 +300,9 @@ void SingleDialog::readSettings()
     KConfig config("kipirc");
     config.setGroup("RawConverter Settings");
 
-    brightnessSpinBox_->setValue(config.readNumEntry("Brightness",10));
-    redSpinBox_->setValue(config.readNumEntry("Red Scale",10));
-    blueSpinBox_->setValue(config.readNumEntry("Blue Scale",10));
+    brightnessSpinBox_->setValue(config.readDoubleNumEntry("Brightness Multiplier", 1.0));
+    redSpinBox_->setValue(config.readDoubleNumEntry("Red Multiplier", 1.0));
+    blueSpinBox_->setValue(config.readDoubleNumEntry("Blue Multiplier", 1.0));
     cameraWBCheckBox_->setChecked(config.readBoolEntry("Use Camera WB", true));
     fourColorCheckBox_->setChecked(config.readBoolEntry("Four Color RGB", false));
     saveButtonGroup_->setButton(config.readNumEntry("Output Format", 0));
@@ -320,9 +313,9 @@ void SingleDialog::saveSettings()
     KConfig config("kipirc");
     config.setGroup("RawConverter Settings");
 
-    config.writeEntry("Brightness", brightnessSpinBox_->value());
-    config.writeEntry("Red Scale", redSpinBox_->value());
-    config.writeEntry("Blue Scale", blueSpinBox_->value());
+    config.writeEntry("Brightness Multiplier", brightnessSpinBox_->value());
+    config.writeEntry("Red Multiplier", redSpinBox_->value());
+    config.writeEntry("Blue Multiplier", blueSpinBox_->value());
     config.writeEntry("Use Camera WB", cameraWBCheckBox_->isChecked());
     config.writeEntry("Four Color RGB", fourColorCheckBox_->isChecked());
     config.writeEntry("Output Format", saveButtonGroup_->id(saveButtonGroup_->selected()));
@@ -340,9 +333,9 @@ void SingleDialog::slotUser1()
     Settings& s      = controller_->settings;
     s.cameraWB       = cameraWBCheckBox_->isChecked();
     s.fourColorRGB   = fourColorCheckBox_->isChecked();
-    s.brightness     = brightnessSpinBox_->value()/10.0;
-    s.redMultiplier  = redSpinBox_->value()/10.0;
-    s.blueMultiplier = blueSpinBox_->value()/10.0;
+    s.brightness     = brightnessSpinBox_->value();
+    s.redMultiplier  = redSpinBox_->value();
+    s.blueMultiplier = blueSpinBox_->value();
     s.outputFormat   = "PPM";
 
     controller_->preview(inputFile_);
@@ -353,9 +346,9 @@ void SingleDialog::slotUser2()
     Settings& s      = controller_->settings;
     s.cameraWB       = cameraWBCheckBox_->isChecked();
     s.fourColorRGB   = fourColorCheckBox_->isChecked();
-    s.brightness     = brightnessSpinBox_->value()/10.0;
-    s.redMultiplier  = redSpinBox_->value()/10.0;
-    s.blueMultiplier = blueSpinBox_->value()/10.0;
+    s.brightness     = brightnessSpinBox_->value();
+    s.redMultiplier  = redSpinBox_->value();
+    s.blueMultiplier = blueSpinBox_->value();
     
     if (saveButtonGroup_->selected() == jpegButton_)
         s.outputFormat  = "JPEG";

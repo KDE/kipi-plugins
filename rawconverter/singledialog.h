@@ -37,10 +37,11 @@ class QVButtonGroup;
 class QRadioButton;
 class QCloseEvent;
 
+class KDoubleNumInput;
+
 namespace KIPIRawConverterPlugin
 {
 
-class CSpinBox;
 class PreviewWidget;
 class ProcessController;
 
@@ -94,9 +95,9 @@ private:
     QString            inputFile_;
     QString            inputFileName_;
     
-    CSpinBox          *brightnessSpinBox_;
-    CSpinBox          *redSpinBox_;
-    CSpinBox          *blueSpinBox_;
+    KDoubleNumInput   *brightnessSpinBox_;
+    KDoubleNumInput   *redSpinBox_;
+    KDoubleNumInput   *blueSpinBox_;
 
     PreviewWidget     *previewWidget_;
 
