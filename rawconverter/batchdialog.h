@@ -25,7 +25,6 @@
 
 // Qt includes.
 
-#include <qdialog.h>
 #include <qstringlist.h>
 #include <qdict.h>
 
@@ -35,7 +34,6 @@
 
 class QListViewItem;
 class QCheckBox;
-class QPushButton;
 class QRadioButton;
 class QVButtonGroup;
 class QLabel;
@@ -59,7 +57,7 @@ namespace KIPIRawConverterPlugin
 class  ProcessController;
 struct RawItem;
 
-class BatchDialog : public QDialog
+class BatchDialog : public KDialogBase
 {
 
     Q_OBJECT
@@ -81,18 +79,15 @@ private:
 
     void readSettings();
     void saveSettings();
-
     void processOne();
 
 private slots:
 
-    void slotSaveFormatChanged();
-
     void slotHelp();
+    void slotUser1();
+    void slotUser2();
 
-    void slotProcess();
-    void slotAbort();
-
+    void slotSaveFormatChanged();
     void slotIdentify();
     void slotIdentified(const QString& file, const QString& identity);
     void slotIdentifyFailed(const QString& file, const QString& identity);
@@ -113,11 +108,6 @@ private:
 
     QVButtonGroup     *saveButtonGroup_;
     QVButtonGroup     *conflictButtonGroup_;
-
-    QPushButton       *helpButton_;
-    QPushButton       *processButton_;
-    QPushButton       *closeButton_;
-    QPushButton       *abortButton_;
 
     QRadioButton      *jpegButton_;
     QRadioButton      *tiffButton_;

@@ -79,14 +79,17 @@ namespace KIPIRawConverterPlugin
 {
 
 BatchDialog::BatchDialog(QWidget *parent)
-           : QDialog(parent, 0, false, Qt::WDestructiveClose)
+           : KDialogBase(parent, 0, false, i18n("Raw Images Batch Converter"),
+                         Help|User1|User2|Close, Close, true,
+                         i18n("Con&vert"), i18n("&Abort"))
 {
-    setCaption(i18n("Raw Images Batch Converter"));
-    QGridLayout *mainLayout = new QGridLayout(this, 6, 2, 6, 11);
+    QWidget *page = new QWidget( this );
+    setMainWidget( page );
+    QGridLayout *mainLayout = new QGridLayout(page, 5, 1, 0, marginHint());
 
     //---------------------------------------------
 
-    QFrame *headerFrame = new QFrame( this );
+    QFrame *headerFrame = new QFrame( page );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
     layout->setMargin( 2 ); // to make sure the frame gets displayed
@@ -109,7 +112,7 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // --------------------------------------------------------------
 
-    listView_ = new KListView(this);
+    listView_ = new KListView(page);
     listView_->addColumn( i18n("Thumbnail") );
     listView_->addColumn( i18n("Raw Image") );
     listView_->addColumn( i18n("Target Image") );
@@ -120,12 +123,11 @@ BatchDialog::BatchDialog(QWidget *parent)
     listView_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     listView_->setSelectionMode(QListView::Single);
     listView_->setMinimumWidth(450);
-
-    mainLayout->addMultiCellWidget(listView_, 1, 4, 0, 0);
+    mainLayout->addMultiCellWidget(listView_, 1, 5, 0, 0);
 
     // ---------------------------------------------------------------
 
-    QGroupBox *settingsBox = new QGroupBox(0, Qt::Vertical, i18n("Settings"), this);
+    QGroupBox *settingsBox = new QGroupBox(0, Qt::Vertical, i18n("Settings"), page);
     QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox->layout(), 4, 1, KDialog::spacingHint());
 
     cameraWBCheckBox_ = new QCheckBox(i18n("Use camera white balance"), settingsBox);
@@ -178,10 +180,9 @@ BatchDialog::BatchDialog(QWidget *parent)
     settingsBoxLayout->addMultiCellWidget(label3, 4, 4, 0, 0);    
     settingsBoxLayout->addMultiCellWidget(blueSpinBox_, 4, 4, 1, 1);   
 
-
     // ---------------------------------------------------------------
 
-    saveButtonGroup_ = new QVButtonGroup(i18n("Save Format"),this);
+    saveButtonGroup_ = new QVButtonGroup(i18n("Save Format"),page);
     saveButtonGroup_->setRadioButtonExclusive(true);
 
     jpegButton_ = new QRadioButton("JPEG",saveButtonGroup_);
@@ -202,7 +203,7 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    conflictButtonGroup_ = new QVButtonGroup(i18n("If Target File Exists"),this);
+    conflictButtonGroup_ = new QVButtonGroup(i18n("If Target File Exists"), page);
     conflictButtonGroup_->setRadioButtonExclusive(true);
 
     overwriteButton_ = new QRadioButton(i18n("Overwrite"),conflictButtonGroup_);
@@ -211,32 +212,20 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    mainLayout->addWidget(settingsBox, 1, 1);
-    mainLayout->addWidget(saveButtonGroup_, 2, 1);
-    mainLayout->addWidget(conflictButtonGroup_, 3, 1);
-    mainLayout->addItem(new QSpacerItem(10, 10, QSizePolicy::Minimum,
-                                        QSizePolicy::Expanding), 4, 1);
+    mainLayout->addMultiCellWidget(settingsBox, 1, 1, 1, 1);
+    mainLayout->addMultiCellWidget(saveButtonGroup_, 2, 2, 1, 1);
+    mainLayout->addMultiCellWidget(conflictButtonGroup_, 3, 3, 1, 1);
 
-    // ---------------------------------------------------------------
+    progressBar_ = new KProgress(page);
+    mainLayout->addMultiCellWidget(progressBar_, 4, 4, 1, 1);
 
-    QFrame *hline = new QFrame(this);
-    hline->setFrameStyle(QFrame::HLine | QFrame::Sunken);
-    mainLayout->addMultiCellWidget(hline, 5, 5, 0, 1);
-
-    // ---------------------------------------------------------------
-
-    QHBoxLayout *hboxLayout = new QHBoxLayout(0, 0, 6);
-
-    progressBar_ = new KProgress(this);
-    hboxLayout->addWidget(progressBar_);
-
-    hboxLayout->addItem(new QSpacerItem(10,10,QSizePolicy::Expanding, QSizePolicy::Minimum));
-
+    mainLayout->setColStretch(0, 10);
+    mainLayout->setRowStretch(5, 10);
+    
     // ---------------------------------------------------------------
     // About data and help button.
 
-    helpButton_ = new QPushButton(i18n("&Help"), this);
-    hboxLayout->addWidget(helpButton_);
+    QPushButton *helpButton = actionButton( Help );
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("RAW Images Batch Converter"),
@@ -260,42 +249,22 @@ BatchDialog::BatchDialog(QWidget *parent)
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("RAW Images Batch Converter Handbook"),
                                  this, SLOT(slotHelp()), 0, -1, 0);
-    helpButton_->setPopup( helpMenu->menu() );
+    helpButton->setPopup( helpMenu->menu() );
 
     // ---------------------------------------------------------------
 
-    processButton_ = new QPushButton(i18n("P&rocess"), this);
-    QToolTip::add(processButton_, i18n("Start converting the raw images from current settings."));
-    hboxLayout->addWidget(processButton_);
+    setButtonTip( User1, i18n("Start converting the raw images from current settings."));
 
-    abortButton_ = new QPushButton(i18n("&Abort"), this);
-    QToolTip::add(abortButton_, i18n("Abort processing images"));
-    hboxLayout->addWidget(abortButton_);
-
-    closeButton_ = new QPushButton(i18n("&Close"), this);
-    QToolTip::add(closeButton_, i18n("Exit raw converter"));
-    hboxLayout->addWidget(closeButton_);
-
-    mainLayout->addMultiCellLayout(hboxLayout, 6, 6, 0, 1);
-    mainLayout->setColStretch(0, 10);
-
-    // ---------------------------------------------------------------
-
-    connect(saveButtonGroup_, SIGNAL(clicked(int)),
-            this, SLOT(slotSaveFormatChanged()));
-
-    connect(processButton_, SIGNAL(clicked()),
-            this, SLOT(slotProcess()));
-
-    connect(closeButton_, SIGNAL(clicked()),
-            this, SLOT(close()));
-
-    connect(abortButton_, SIGNAL(clicked()),
-            this, SLOT(slotAbort()));
+    setButtonTip( User2, i18n("Abort the current RAW files conversion"));
+    
+    setButtonTip( Close, i18n("Exit Raw Converter"));
 
     // ---------------------------------------------------------------
 
     controller_ = new ProcessController(this);
+
+    connect(saveButtonGroup_, SIGNAL(clicked(int)),
+            this, SLOT(slotSaveFormatChanged()));
 
     connect(controller_, SIGNAL(signalIdentified(const QString&, const QString&)),
             this, SLOT(slotIdentified(const QString&, const QString&)));
@@ -319,7 +288,6 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     itemDict_.setAutoDelete(true);
     slotBusy(false);
-
     readSettings();
 }
 
@@ -428,7 +396,7 @@ void BatchDialog::slotHelp()
     KApplication::kApplication()->invokeHelp("rawconverter", "kipi-plugins");
 }
 
-void BatchDialog::slotProcess()
+void BatchDialog::slotUser1()
 {
     fileList_.clear();
 
@@ -461,6 +429,14 @@ void BatchDialog::slotProcess()
     processOne();
 }
 
+void BatchDialog::slotUser2()
+{
+    fileList_.clear();
+    controller_->abort();
+    slotBusy(false);
+    QTimer::singleShot(1000, progressBar_, SLOT(reset()));
+}
+
 void BatchDialog::processOne()
 {
     if (fileList_.empty()) 
@@ -472,19 +448,12 @@ void BatchDialog::processOne()
     controller_->process(file);
 }
 
-void BatchDialog::slotAbort()
-{
-    fileList_.clear();
-    controller_->abort();
-    slotBusy(false);
-    QTimer::singleShot(500, progressBar_, SLOT(reset()));
-}
-
 void BatchDialog::slotBusy(bool busy)
 {
-    abortButton_->setEnabled(busy);
-    closeButton_->setEnabled(!busy);
-    processButton_->setEnabled(!busy);
+    enableButton (User1, !busy);
+    enableButton (User2, busy);
+    enableButton (Close, !busy);
+
     saveButtonGroup_->setEnabled(!busy);
     conflictButtonGroup_->setEnabled(!busy);
     cameraWBCheckBox_->setEnabled(!busy);

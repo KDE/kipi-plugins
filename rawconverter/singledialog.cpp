@@ -274,9 +274,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     // ---------------------------------------------------------------
 
     slotBusy(false);
-
     readSettings();
-
     QTimer::singleShot(0, this, SLOT( slotIdentify() ) );
 }
 
