@@ -69,21 +69,20 @@ namespace KIPIRawConverterPlugin
 {
 
 SingleDialog::SingleDialog(const QString& file, QWidget *parent)
-            : QDialog(parent, 0, false, Qt::WDestructiveClose)
+            : KDialogBase(parent, 0, false, i18n("Raw Image Converter"),
+                          Help|User1|User2|User3|Close, Close, true,
+                          i18n("&Preview"), i18n("Con&vert"), i18n("A&bort"))
 {
-
-    setCaption(i18n("Raw Image Converter"));
-
-    // --------------------------------------------------------------
-
     inputFile_     = file;
     inputFileName_ = QFileInfo(file).fileName();
-
-    QGridLayout *mainLayout = new QGridLayout(this, 6, 2, 5);
+    
+    QWidget *page = new QWidget( this );
+    setMainWidget( page );
+    QGridLayout *mainLayout = new QGridLayout(page, 3, 1, 0, marginHint());
 
     // --------------------------------------------------------------
 
-    QFrame *headerFrame = new QFrame( this );
+    QFrame *headerFrame = new QFrame( page );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
     layout->setMargin( 2 ); // to make sure the frame gets displayed
@@ -106,10 +105,10 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     // --------------------------------------------------------------
 
-    QGroupBox *lbox = new QGroupBox(i18n("Image Preview"), this);
+    QGroupBox *lbox = new QGroupBox(i18n("Image Preview"), page);
     lbox->setColumnLayout(0, Qt::Vertical);
-    lbox->layout()->setSpacing( 6 );
-    lbox->layout()->setMargin( 11 );
+    lbox->layout()->setSpacing( spacingHint() );
+    lbox->layout()->setMargin( marginHint() );
     QVBoxLayout* lboxLayout = new QVBoxLayout(lbox->layout());
 
     previewWidget_ = new PreviewWidget(lbox);
@@ -119,10 +118,10 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    QGroupBox *settingsBox = new QGroupBox(i18n("Settings"), this);
+    QGroupBox *settingsBox = new QGroupBox(i18n("Settings"), page);
     settingsBox->setColumnLayout(0, Qt::Vertical);
-    settingsBox->layout()->setSpacing( 6 );
-    settingsBox->layout()->setMargin( 11 );
+    settingsBox->layout()->setSpacing( spacingHint() );
+    settingsBox->layout()->setMargin( marginHint() );
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox->layout());
 
     // ---------------------------------------------------------------
@@ -147,7 +146,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    hboxLayout = new QHBoxLayout(0,0,6,"layout2");
+    hboxLayout = new QHBoxLayout(0, 0, 6, "layout2");
     brightnessSpinBox_ = new CSpinBox(settingsBox);
     brightnessSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
@@ -158,7 +157,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    hboxLayout = new QHBoxLayout(0,0,6,"layout3");
+    hboxLayout = new QHBoxLayout(0, 0, 6, "layout3");
     redSpinBox_ = new CSpinBox(settingsBox);
     redSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QToolTip::add(redSpinBox_, i18n("After all other color adjustments,\n"
@@ -170,7 +169,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    hboxLayout = new QHBoxLayout(0,0,6,"layout4");
+    hboxLayout = new QHBoxLayout(0, 0, 6, "layout4");
     blueSpinBox_ = new CSpinBox(settingsBox);
     blueSpinBox_->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QToolTip::add(blueSpinBox_, i18n("After all other color adjustments,\n"
@@ -182,7 +181,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    saveButtonGroup_ = new QVButtonGroup(i18n("Save Format"),this);
+    saveButtonGroup_ = new QVButtonGroup(i18n("Save Format"), page);
     saveButtonGroup_->setRadioButtonExclusive(true);
 
     jpegButton_ = new QRadioButton("JPEG",saveButtonGroup_);
@@ -203,26 +202,15 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    mainLayout->addWidget(settingsBox, 1, 1);
-    mainLayout->addWidget(saveButtonGroup_, 2, 1);
-    mainLayout->addItem(new QSpacerItem(10,10, QSizePolicy::Minimum, QSizePolicy::Expanding), 3, 1);
-
-    // ---------------------------------------------------------------
-
-    QFrame *hline = new QFrame(this);
-    hline->setFrameStyle(QFrame::HLine | QFrame::Sunken);
-    mainLayout->addMultiCellWidget(hline, 4, 4, 0, 1);
-
-    // ---------------------------------------------------------------
-
-    hboxLayout = new QHBoxLayout(0, 0, 6);
-    hboxLayout->addItem(new QSpacerItem(10,10,QSizePolicy::Expanding, QSizePolicy::Minimum));
+    mainLayout->addMultiCellWidget(settingsBox, 1, 1, 1, 1);
+    mainLayout->addMultiCellWidget(saveButtonGroup_, 2, 2, 1, 1);
+    mainLayout->setColStretch(0, 10);
+    mainLayout->setRowStretch(3, 10);
 
     // ---------------------------------------------------------------
     // About data and help button.
 
-    helpButton_ = new QPushButton(i18n("&Help"), this);
-    hboxLayout->addWidget(helpButton_);
+    QPushButton *helpButton = actionButton( Help );
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("RAW Image Converter"),
@@ -231,54 +219,33 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
                                                  "This plugin uses the Dave Coffin RAW photo "
                                                  "decoder program \"dcraw\""),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2005, Renchi Raju",
+                                       "(c) 2003-2005, Renchi Raju\n"
+                                       "(c) 2006, Gilles Caulier\n",
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
 
-    about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
+    about->addAuthor("Renchi Raju", I18N_NOOP("Original author"),
                      "renchi@pooh.tam.uiuc.edu");
+
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Maintainer"),
+                     "caulier dot gilles at kdemail dot net");
 
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("RAW Image Converter Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    helpButton_->setPopup( helpMenu->menu() );
+    helpButton->setPopup( helpMenu->menu() );
 
     // ---------------------------------------------------------------
+    setButtonTip( User1, i18n("Generate a Preview from current settings.\n"
+                              "Uses a simple bilinear interpolation for\n"
+                              "quick results."));
 
-    previewButton_ = new QPushButton(i18n("&Preview"), this);
-    QToolTip::add(previewButton_, i18n("Generate a Preview from current settings.\n"
-                                       "Uses a simple bilinear interpolation for\n"
-                                       "quick results."));
-    hboxLayout->addWidget(previewButton_);
+    setButtonTip( User2, i18n("Convert the Raw Image from current settings.\n"
+                              "This uses a high-quality adaptive algorithm."));
 
-    processButton_ = new QPushButton(i18n("P&rocess"), this);
-    QToolTip::add(processButton_, i18n("Convert the Raw Image from current settings.\n"
-                                       "This uses a high-quality adaptive algorithm."));
-    hboxLayout->addWidget(processButton_);
-
-    abortButton_ = new QPushButton(i18n("&Abort"), this);
-    QToolTip::add(abortButton_, i18n("Abort the current operation"));
-    hboxLayout->addWidget(abortButton_);
-
-    closeButton_ = new QPushButton(i18n("&Close"), this);
-    QToolTip::add(closeButton_, i18n("Exit Raw Converter"));
-    hboxLayout->addWidget(closeButton_);
-
-    mainLayout->addMultiCellLayout(hboxLayout, 5, 5, 0, 1);
-
-    // ---------------------------------------------------------------
-
-    connect(previewButton_, SIGNAL(clicked()),
-            this, SLOT(slotPreview()));
-
-    connect(processButton_, SIGNAL(clicked()),
-            this, SLOT(slotProcess()));
-
-    connect(closeButton_, SIGNAL(clicked()),
-            this, SLOT(slotClose()));
-
-    connect(abortButton_, SIGNAL(clicked()),
-            this, SLOT(slotAbort()));
+    setButtonTip( User3, i18n("Abort the current RAW file conversion"));
+    
+    setButtonTip( Close, i18n("Exit Raw Converter"));
 
     // ---------------------------------------------------------------
 
@@ -328,7 +295,7 @@ SingleDialog::~SingleDialog()
 void SingleDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
-    if (abortButton_->isEnabled()) 
+    if (actionButton( User3 )->isEnabled()) 
     {
         kdWarning( 51000 ) << "KIPIRAWConverter:single dialog closed" << endl;
     }
@@ -368,7 +335,7 @@ void SingleDialog::slotHelp()
     KApplication::kApplication()->invokeHelp("rawconverter", "kipi-plugins");
 }
 
-void SingleDialog::slotPreview()
+void SingleDialog::slotUser1()
 {
     Settings& s      = controller_->settings;
     s.cameraWB       = cameraWBCheckBox_->isChecked();
@@ -381,7 +348,7 @@ void SingleDialog::slotPreview()
     controller_->preview(inputFile_);
 }
 
-void SingleDialog::slotProcess()
+void SingleDialog::slotUser2()
 {
     Settings& s      = controller_->settings;
     s.cameraWB       = cameraWBCheckBox_->isChecked();
@@ -400,27 +367,22 @@ void SingleDialog::slotProcess()
     controller_->process(inputFile_);
 }
 
+void SingleDialog::slotUser3()
+{
+    controller_->abort();
+}
+
 void SingleDialog::slotIdentify()
 {
     controller_->identify(inputFile_);
 }
 
-void SingleDialog::slotClose()
-{
-    close();
-}
-
-void SingleDialog::slotAbort()
-{
-    controller_->abort();
-}
-
 void SingleDialog::slotBusy(bool val)
-{
-    abortButton_->setEnabled(val);
-    closeButton_->setEnabled(!val);
-    previewButton_->setEnabled(!val);
-    processButton_->setEnabled(!val);
+{   
+    enableButton (User1, !val);
+    enableButton (User2, !val);
+    enableButton (User3, val);
+    enableButton (Close, !val);
 }
 
 void SingleDialog::slotIdentified(const QString&, const QString& identity)

@@ -25,12 +25,14 @@
 
 // Qt includes.
 
-#include <qdialog.h>
 #include <qstring.h>
+
+// KDE includes.
+
+#include <kdialogbase.h>
 
 class QFrame;
 class QCheckBox;
-class QPushButton;
 class QVButtonGroup;
 class QRadioButton;
 class QCloseEvent;
@@ -42,7 +44,7 @@ class CSpinBox;
 class PreviewWidget;
 class ProcessController;
 
-class SingleDialog : public QDialog
+class SingleDialog : public KDialogBase
 {
     Q_OBJECT
 
@@ -63,10 +65,9 @@ private:
 private slots:
 
     void slotHelp();
-    void slotPreview();
-    void slotProcess();
-    void slotClose();
-    void slotAbort();
+    void slotUser1();
+    void slotUser2();
+    void slotUser3();
     void slotIdentify();
 
     void slotBusy(bool val);
@@ -83,12 +84,6 @@ private:
 
     QCheckBox         *cameraWBCheckBox_;
     QCheckBox         *fourColorCheckBox_;
-    
-    QPushButton       *helpButton_;
-    QPushButton       *previewButton_;
-    QPushButton       *processButton_;
-    QPushButton       *closeButton_;
-    QPushButton       *abortButton_;
 
     QRadioButton      *jpegButton_;
     QRadioButton      *tiffButton_;
