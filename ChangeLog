@@ -1,19 +1,985 @@
-2006-05-01 18:13  anaselli
-	* new images gallery export (html export by gateau)
-	* fixed bugs
-	images gallery 
-	  #120242 #112025 #106152 #119933 #99418 #103449 #110596
-	kamera klient
-	  #99157
-	print wizard
-	  #98286 #101495
-	batch process images
-	  #108945 
-	  #117397
-	mpeg encoder
-	  #109739 #114514 #114515 
-	acquire images
-	  #114519 
+v0.1.0-rc2                                                        2006-05-03
+----------------------------------------------------------------------------
+2006-05-02 17:31  toma
+
+	* trunk/extragear/libs/kipi-plugins/AUTHORS: Update
+
+2006-05-02 15:24  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/jpeglossless/actions.h: polish
+
+2006-05-02 15:22  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/jpeglossless/mtqueue.h,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.h:
+	  polish
+
+2006-05-02 15:18  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.cpp:
+	  polish
+
+2006-05-02 15:16  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.h:
+	  polish
+
+2006-05-02 14:03  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/jpeglossless/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/convert2grayscale.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/convert2grayscale.h,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/imageflip.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/imageflip.h,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/imagerotate.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/imagerotate.h,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/jpegtransform.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/jpegtransform.h,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/messagebox.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/messagebox.h,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.h,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/progressdlg.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/progressdlg.h,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/utils.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/utils.h: kipi
+	  jpeglosslessplugin : - using ImageMagick C++ API to perform
+	  action in non JPEG image. 16 bits images are preserved now. - Do
+	  not handle RAW files type to perform action. - Add libMagick++
+	  depency. - Remove libTiff API. - Simplify file name in dialog.
+	  No need the complete filepath here to prevent large dialogs
+	  size. Nota : a libMagick++ API detection is require into
+	  kipi-plugins .configure file. CCMAIL: kde-imaging@kde.org,
+	  digikam-devel@kde.org BUG: 123499
+
+2006-05-01 21:09  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/jpeglossless/convert2grayscale.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/imageflip.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/imagerotate.cpp:
+	  JPEGLossLess kipi plugin : disable Qt API method to
+	  rotate/flip/convertB&W non JPEG files else RAW/TIFF/PNG 16 bits
+	  images are broken ! This is want mean that only JPEG files will
+	  be processed by this plugin. To solve this problem, Image Magick
+	  API need to be used in this place instead Qt API. Nota : this
+	  B.K.O file can be toggle from critic to normal. CCMAIL:
+	  kde-imaging@kde.org CCBUGS: 123499
+
+2006-05-01 17:32  bram
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/themepage.ui:
+	  SVN_SILENT: fixuifiles
+
+2006-05-01 16:39  anaselli
+
+	* trunk/extragear/libs/kipi-plugins/AUTHORS: Added me as a
+	  contributor
+
+2006-05-01 16:34  anaselli
+
+	* trunk/extragear/libs/kipi-plugins/ChangeLog: Added bugs fixed
+	  for next release
+
+2006-05-01 15:36  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/TODO,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/theme.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/theme.h,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themepage.ui,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/wizard.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/wizard.h: Show
+	  theme info alongside theme list.
+
+2006-04-30 09:16  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/themes/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/simple,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/simple/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/simple/simple.desktop,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/simple/style.css,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/simple/template.xsl:
+	  New theme: simple
+
+2006-04-30 09:14  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/generator.cpp:
+	  Generate square thumbnails. It's easier to theme this way.
+
+2006-04-26 21:53  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/generator.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/matrix/template.xsl,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/matrix/template.xslt,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/snow/template.xsl,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/snow/template.xslt:
+	  Changed XSLT files extensions to .xsl. Seems to be more common.
+
+2006-04-26 11:52  blackie
+
+	* trunk/extragear/libs/kipi-plugins/findimages/compareoperation.h:
+	  ups forgot to add
+
+2006-04-24 21:37  bram
+
+	* trunk/extragear/artwork/smoothslidesaver/src/smoothslidesaverui.ui,
+	  trunk/extragear/graphics/kst/src/libkstapp/curvedialogwidget.ui,
+	  trunk/extragear/graphics/kst/src/libkstapp/datawizard.ui,
+	  trunk/extragear/graphics/kst/src/libkstapp/kstsettingsdlg.ui,
+	  trunk/extragear/graphics/kst/src/libkstapp/kstviewmanager.ui,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/imagesettingspage.ui,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/outputpage.ui,
+	  trunk/extragear/multimedia/k3b/src/projects/base_k3bbootimageview.ui,
+	  trunk/extragear/multimedia/k3b/src/projects/base_k3bmovixoptionswidget.ui,
+	  trunk/extragear/multimedia/k3b/src/rip/base_k3bvideodvdrippingwidget.ui,
+	  trunk/extragear/network/kftpgrabber/src/ui/config_general.ui,
+	  trunk/extragear/network/kmyfirewall/KMFSysTray/details_designer.ui,
+	  trunk/extragear/network/kmyfirewall/KMFSysTray/mainwidget_designer.ui,
+	  trunk/extragear/network/kmyfirewall/kmyfirewall/kmfwidgets/kmyfirewallhostwidget.ui,
+	  trunk/extragear/network/kmyfirewall/kmyfirewall/kmfwidgets/kmyfirewallinterfacewidget.ui,
+	  trunk/extragear/network/kmyfirewall/kmyfirewall/kmfwidgets/kmyfirewallmynetworkwidget.ui,
+	  trunk/extragear/network/kmyfirewall/kmyfirewall/kmfwidgets/kmyfirewallsystemsettingslinux.ui,
+	  trunk/extragear/network/knemo/kcm/configdlg.ui,
+	  trunk/extragear/network/knemo/knemod/interfacestatisticsdlg.ui,
+	  trunk/extragear/network/knemo/knemod/interfacestatusdlg.ui,
+	  trunk/extragear/network/knetstats/src/configurebase.ui,
+	  trunk/extragear/network/knetstats/src/statisticsbase.ui,
+	  trunk/extragear/network/konversation/src/autoreplace_preferencesui.ui,
+	  trunk/extragear/network/konversation/src/chatwindowappearance_preferences.ui,
+	  trunk/extragear/network/konversation/src/fontappearance_preferences.ui,
+	  trunk/extragear/network/konversation/src/generalbehavior_preferences.ui,
+	  trunk/extragear/network/konversation/src/quickbuttons_preferencesui.ui,
+	  trunk/extragear/network/konversation/src/searchbarbase.ui,
+	  trunk/extragear/network/konversation/src/tabbar_preferences.ui,
+	  trunk/extragear/network/ktorrent/apps/ktorrent/downloadpref.ui,
+	  trunk/extragear/network/ktorrent/apps/ktorrent/generalpref.ui,
+	  trunk/extragear/network/ktorrent/apps/ktorrent/queuedlg.ui,
+	  trunk/extragear/network/ktorrent/apps/ktupnptest/mainwidget.ui,
+	  trunk/extragear/network/ktorrent/plugins/infowidget/infowidgetbase.ui,
+	  trunk/extragear/network/ktorrent/plugins/infowidget/iwpref.ui,
+	  trunk/extragear/network/ktorrent/plugins/infowidget/trackerviewbase.ui,
+	  trunk/extragear/network/ktorrent/plugins/ipfilter/convert_dlg.ui,
+	  trunk/extragear/network/ktorrent/plugins/scheduler/bwspage.ui,
+	  trunk/extragear/office/datakiosk/src/relationeditordialog.ui,
+	  trunk/extragear/utils/katapult/common/imagedisplaysettings.ui,
+	  trunk/extragear/utils/katapult/katapult/confcatalogs.ui,
+	  trunk/extragear/utils/katapult/katapult/confdisplay.ui,
+	  trunk/extragear/utils/katapult/katapult/confgeneral.ui,
+	  trunk/extragear/utils/katapult/plugins/catalogs/amarokcatalog/settings.ui,
+	  trunk/extragear/utils/katapult/plugins/catalogs/bookmarkcatalog/settings.ui,
+	  trunk/extragear/utils/katapult/plugins/catalogs/calculatorcatalog/settings.ui,
+	  trunk/extragear/utils/katapult/plugins/catalogs/documentcatalog/settings.ui,
+	  trunk/extragear/utils/katapult/plugins/catalogs/programcatalog/settings.ui,
+	  trunk/extragear/utils/keurocalc/calculator.ui,
+	  trunk/extragear/utils/keurocalc/settingsdialog.ui: Massive
+	  fixuifiles
+
+2006-04-24 16:59  blackie
+
+	* trunk/extragear/libs/kipi-plugins/findimages/actions.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/fastcompare.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/fastcompare.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/finddupplicateimages.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/finddupplicateimages.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/fuzzycompare.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/fuzzycompare.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/plugin_findimages.cpp:
+	  using QThread::terminate for cancel operation made the plugin go
+	  bezerk. So now I ask it nicely to stop processing instead.
+
+2006-04-23 23:41  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/TODO: Updated
+
+2006-04-23 23:35  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/generator.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/htmlexportconfig.kcfg,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/imagesettingspage.ui:
+	  Implemented quality support
+
+2006-04-23 22:34  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/imagesettingspage.ui,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/outputpage.ui:
+	  Remove margins
+
+2006-04-23 22:24  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/imagesettingspage.ui,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/outputpage.ui:
+	  Buddy-ification
+
+2006-04-23 22:22  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/imagesettingspage.ui:
+	  Use a separate checkbox to enable full image resizing. This make
+	  it possible to setup a buddy for the fullsize spinbox.
+
+2006-04-23 22:07  gateau
+
+	* trunk/extragear/libs/configure.in.in,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/galleryinfo.h,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/generator.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/htmlexportconfig.kcfg,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/htmlexportconfig.kcfgc,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/imagesettingspage.ui,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/outputpage.ui,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/plugin.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/theme.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/theme.h,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/wizard.cpp: Use
+	  KConfigXT to store settings of the htmlexport plugin.
+
+2006-04-23 15:28  blackie
+
+	* trunk/extragear/libs/kipi-plugins/findimages/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/findimages/actions.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/actions.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/displaycompare.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/fastcompare.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/fastcompare.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/finddupplicateimages.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/finddupplicateimages.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/fuzzycompare.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/fuzzycompare.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/plugin_findimages.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/plugin_findimages.h:
+	  avoid flooding of GUI thread
+
+2006-04-22 23:30  blackie
+
+	* trunk/extragear/libs/kipi-plugins/findimages/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/findimages/actions.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/displaycompare.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/displaycompare.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/fastcompare.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/fastcompare.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/finddupplicateimages.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/finddupplicateimages.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/fuzzycompare.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/fuzzycompare.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/imagesimilaritydata.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/plugin_findimages.cpp:
+	  refactored the image compares into classes of their own, plus
+	  some cleanup in usage of pointers
+
+2006-04-22 21:06  blackie
+
+	* trunk/extragear/libs/kipi-plugins/findimages,
+	  trunk/extragear/libs/kipi-plugins/findimages/Doxyfile,
+	  trunk/extragear/libs/kipi-plugins/findimages/displaycompare.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/finddupplicatedialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/finddupplicateimages.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/finddupplicateimages.h,
+	  trunk/extragear/libs/kipi-plugins/findimages/plugin_findimages.cpp:
+	  Started maintenance of the Find Images plug-in. - added busy
+	  cursors at various places. - fixed a layout error - added myself
+	  as maintainer.
+
+2006-04-18 22:08  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/themes/matrix/template.xslt,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/snow/template.xslt:
+	  Use first image as collection image
+
+2006-04-18 17:45  gateau
+
+	* trunk/extragear/libs/kipi-plugins/kameraklient/cameraselection.cpp,
+	  trunk/extragear/libs/kipi-plugins/kameraklient/cameraselection.h,
+	  trunk/extragear/libs/kipi-plugins/kameraklient/mtlist.h,
+	  trunk/extragear/libs/kipi-plugins/kameraklient/mtqueue.h,
+	  trunk/extragear/libs/kipi-plugins/kameraklient/savefiledialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/kameraklient/savefiledialog.h,
+	  trunk/extragear/libs/kipi-plugins/kameraklient/thumbitem.cpp,
+	  trunk/extragear/libs/kipi-plugins/kameraklient/thumbitem.h,
+	  trunk/extragear/libs/kipi-plugins/kameraklient/thumbview.cpp,
+	  trunk/extragear/libs/kipi-plugins/kameraklient/thumbview.h:
+	  Added missing copyrights, based on Digikam CVS:
+	  http://cvs.sourceforge.net/viewcvs.py/digikam/digikam3/digikamcameraclient/cameraui/
+	  BUG: 99157
+
+2006-04-15 14:01  anaselli
+
+	* trunk/extragear/libs/kipi-plugins/batchprocessimages/batchprocessimagesdialog.cpp:
+	  A workaround stops the process if the target directory is not
+	  writable. BUG: 117397
+
+2006-04-15 10:23  anaselli
+
+	* trunk/extragear/libs/kipi-plugins/batchprocessimages/batchprocessimagesdialog.cpp:
+	  - typo BUG: 108945
+
+2006-04-14 18:20  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/galleryinfo.h,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/generator.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/theme.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/theme.h,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/matrix/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/matrix/matrix.desktop,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/snow/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/snow/snow.desktop,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/wizard.cpp: Started
+	  implementing theme description
+
+2006-04-09 22:19  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/TODO,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/matrix/template.xslt,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/snow/template.xslt:
+	  Implemented support for special case: "only one album", through
+	  XSL.
+
+2006-04-09 19:49  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/TODO,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/generator.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/matrix/template.xslt,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/snow/template.xslt:
+	  Added last missing translation. CCMAIL: kde-imaging@kde.org
+
+2006-04-08 15:53  anaselli
+
+	* trunk/extragear/libs/kipi-plugins/acquireimages/plugin_acquireimages.cpp:
+	  - fix bug 114519 BUG: 114519
+
+2006-04-04 21:23  anaselli
+
+	* trunk/extragear/libs/kipi-plugins/mpegencoder/kimg2mpg.cpp: -
+	  fix bug 114514 BUG: 114514
+
+2006-03-28 23:27  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/TODO,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/generator.cpp:
+	  Properly quote XSLT params (scary!)
+
+2006-03-28 23:25  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/TODO: Updated,
+	  splitted in two
+
+2006-03-25 19:37  jaiva
+
+	* trunk/extragear/libs/kipi-plugins/flickrexport/ChangeLog,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrtalker.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwidget.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwidget.h,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwindow.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwindow.h:
+	  Improvement release, Allows Current selection to be uploaded,
+	  and some UI improvements
+
+2006-03-22 23:00  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/generator.cpp: Use
+	  local8Bit() to pass filenames to libxslt
+
+2006-03-12 22:04  anaselli
+
+	* trunk/extragear/libs/kipi-plugins/mpegencoder/images2mpg: -
+	  Changed project URL - Added a note why I inserted '-S' opiton
+	  CCBUG:109739
+
+2006-03-11 22:06  anaselli
+
+	* trunk/extragear/libs/kipi-plugins/mpegencoder/images2mpg,
+	  trunk/extragear/libs/kipi-plugins/mpegencoder/kimg2mpg.cpp,
+	  trunk/extragear/libs/kipi-plugins/mpegencoder/kimg2mpg.h: fix
+	  bugs #114515, #109739
+
+2006-03-08 23:02  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/TODO,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/generator.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/snow/template.xslt:
+	  Started implementing i18n support, using XSLT params
+
+2006-03-05 23:32  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/generator.cpp:
+	  Produce unique filenames using titles. This way it should be
+	  possible to implement incremental updates of the gallery.
+
+2006-03-04 22:50  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/kipiplugin_htmlexport.desktop,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/kipiplugin_htmlgallery.desktop:
+	  Finished renaming
+
+2006-03-04 22:47  gateau
+
+	* trunk/extragear/libs/kipi-plugins/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/configure.in.bot,
+	  trunk/extragear/libs/kipi-plugins/configure.in.in,
+	  trunk/extragear/libs/kipi-plugins/htmlexport,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/.vimrc,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/TODO,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/galleryinfo.h,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/generator.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/generator.h,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/imagesettingspage.ui,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/kipiplugin_htmlgallery.desktop,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/outputpage.ui,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/plugin.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/plugin.h,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/matrix/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/snow/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/snow/next.svg,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/wizard.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/wizard.h,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/xmlutils.h,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery: Renamed
+	  htmlgallery to htmlexport
+
+2006-03-03 23:20  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlgallery/TODO,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/generator.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/xmlutils.h: -
+	  Moved xml classes to their own files - Reimplemented xml
+	  generation using libxml
+
+2006-03-03 20:00  toma
+
+	* trunk/extragear/libs/kipi-plugins/htmlgallery,
+	  trunk/extragear/libs/libkipi/libkipi: SVN_SILENT ignores
+
+2006-03-03 19:52  toma
+
+	* trunk/extragear/libs/kipi-plugins/configure.in.bot: Adds libxslt
+	  too the bot CCMAIL: aurelien.gateau@free.fr
+
+2006-03-02 14:22  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlgallery/themes/snow/template.xslt:
+	  Removed failed attempt at i18n support
+
+2006-03-02 14:21  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlgallery/wizard.cpp: Fixed
+	  the way themes are found
+
+2006-03-02 13:56  gateau
+
+	* trunk/extragear/libs/kipi-plugins/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/configure.in.in,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/Makefile.am: Fixed
+	  compilation
+
+2006-03-02 13:36  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlgallery,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/matrix,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/snow:
+	  Ignore Makefiles
+
+2006-03-02 13:33  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlgallery/Makefile.in,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/Makefile.in,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/matrix/Makefile.in,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/snow/Makefile.in:
+	  Oups, shouldn't have committed those
+
+2006-03-01 23:36  gateau
+
+	* trunk/extragear/libs/kipi-plugins/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/configure.in.in,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/.vimrc,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/Makefile.in,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/TODO,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/galleryinfo.h,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/generator.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/generator.h,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/imagesettingspage.ui,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/kipiplugin_htmlgallery.desktop,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/outputpage.ui,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/plugin.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/plugin.h,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/Makefile.in,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/matrix,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/matrix/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/matrix/Makefile.in,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/matrix/bg.png,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/matrix/style.css,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/matrix/template.xslt,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/snow,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/snow/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/snow/Makefile.in,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/snow/next.png,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/snow/next.svg,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/snow/next_disabled.png,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/snow/previous.png,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/snow/previous_disabled.png,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/snow/style.css,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/themes/snow/template.xslt,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/wizard.cpp,
+	  trunk/extragear/libs/kipi-plugins/htmlgallery/wizard.h: Imported
+	  the HTMLGallery plugin, which should replace ImagesGallery.
+	  CCMAIL: kde-imaging@kde.org
+
+2006-02-08 17:00  binner
+
+	* trunk/extragear/libs/kipi-plugins/kameraklient/cameraiconview.cpp:
+	  actually call setThumbnailSize() method somewhere
+
+2006-01-30 09:36  mueller
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/plugin_simpleviewer.cpp:
+	  the usual "daily unbreak compilation"
+
+2006-01-22 12:44  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/index.template:
+	  disabling flash detection code, because it causes problems with
+	  konqi
+
+2006-01-22 11:54  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/index.template:
+	  argh...that doesn't belongs to the template.
+
+2006-01-15 17:41  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/svedialog.cpp:
+	  yesyesyes allee: copyright.....
+
+2006-01-15 17:40  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/plugin_simpleviewer.cpp,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/plugin_simpleviewer.h,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/svedialog.h:
+	  yesyesyes allee: copyright.....
+
+2006-01-15 17:04  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/svedialog.cpp:
+	  changed homepage
+
+2006-01-15 16:38  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/Makefile.am: The first version
+	  of the plugin is ready to be launched. So this report can be
+	  closed. http://www.jokele.de/simpleviewerexport/ BUG: 118637
+
+2006-01-15 11:14  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/index.template:
+	  index template modifications
+
+2006-01-14 18:51  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/svedialog.cpp:
+	  credits...
+
+2006-01-14 18:40  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/index.template,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.cpp,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.h,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/space.png:
+	  - +index.template, kindly licensed for use from Mikkel B.
+	  Stegmann - creating an index.html file based on that template -
+	  handle the cancel button
+
+2006-01-10 17:34  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/slideshow/toolbar.cpp: He is
+	  talking about the slideshow, where we used indeed different
+	  icons. BUG: 119867
+
+2006-01-08 02:57  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.cpp:
+	  SVN_SILENT cleanup
+
+2006-01-07 23:37  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.cpp:
+	  enable exporting...
+
+2006-01-07 20:34  toma
+
+	* trunk/extragear/libs/kipi-plugins/sendimages/sendimages.cpp,
+	  trunk/extragear/libs/kipi-plugins/sendimages/sendimagesdialog.cpp:
+	  Adds support for the Sylpheed-Claws mua. Based on a patch from
+	  Paul Mangan. I modified the patch to prevent code duplication.
+	  Can you verify if this solution works as well? Thanks dor the
+	  patch. BUG: 119562
+
+2006-01-07 18:58  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.cpp,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.h:
+	  what to do if export folder already exists...
+
+2006-01-07 17:15  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/imagesgallery/plugin_imagesgallery.cpp:
+	  fixed typo
+
+2006-01-07 15:48  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/upgrade.html:
+	  adding flash upgrade page
+
+2006-01-07 15:47  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/index.html:
+	  adding index.html
+
+2006-01-07 11:13  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.cpp,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.h:
+	  Extract all needed files from simoleviewer archive
+
+2006-01-07 02:09  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/firstrundlg.cpp,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/firstrundlg.h,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.cpp,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.h:
+	  Extracting and installing SimpleViewer flash file. Still a lot
+	  of todos & code cleaning left....
+
+2006-01-07 00:55  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/README,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/firstrundlg.cpp,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/firstrundlg.h,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.cpp,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.h,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/svedialog.cpp:
+	  SimpleViewer is free to use, but uses a license which comes into
+	  conflict with several distributions. Due to the license it is
+	  not possible to ship it with this plugin. When SimpleViewer
+	  isn't found on the system, the firstrun dialog is opened, which
+	  lets the user install SimpleViewer.
+
+2006-01-03 22:41  mueller
+
+	* trunk/extragear/libs/kipi-plugins/imagesgallery/plugin_imagesgallery.cpp:
+	  remove mis-placed semicolon after if()
+
+2005-12-31 13:15  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.cpp:
+	  show close button after the export has finished
+
+2005-12-31 12:40  toma
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/svedialog.h:
+	  Missing class
+
+2005-12-31 12:32  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/Makefile.in:
+	  that was too much, thanks Laurent
+
+2005-12-31 12:27  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/Makefile.in,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/README,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/kipiplugin_simpleviewer.desktop,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/plugin_simpleviewer.cpp,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/plugin_simpleviewer.h,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.cpp,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.h,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/svedialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/svedialog.h,
+	  trunk/extragear/libs/kipi-plugins/simpleviewerexport/test.txt:
+	  Initial commit for simpleviewerexport kipi-plugin
+
+2005-12-31 12:08  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/simpleviewerexport: Initial
+	  commit for simpleviewerexport kipi-plugin
+
+2005-12-30 22:49  toma
+
+	* trunk/extragear/libs/kipi-plugins/printwizard/tphoto.cpp: Patch
+	  from Anders Lund for bug: Printing using the KIPI printing
+	  wizard is nearly impossible on my system, printing a 1600x1200
+	  image makes my system go into infinite swapping. BUG:117670
+
+2005-12-28 17:20  toma
+
+	* trunk/extragear/libs/kipi-plugins/imagesgallery/imagesgallery.cpp:
+	  Matiyam is right, return false if user says 'no' to the dialog
+	  else it will crash... BUG: 116605
+
+2005-12-28 15:15  toma
+
+	* trunk/extragear/libs/kipi-plugins/calendar/calwizard.cpp:
+	  Sometimes im really funny. Fix logic. BUG: 118936
+
+2005-12-28 15:06  toma
+
+	* trunk/extragear/libs/kipi-plugins/calendar/calwizard.cpp: Put in
+	  an extra warning for making a calendar for a year in the past
+	  and for the current year if it is in the second half of the
+	  year... BUG: 118936
+
+2005-12-16 02:11  thiago
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/dcrawprocess.cpp:
+	  * Remove getopt.h from the includes: it's only needed for
+	  getopt_long, which isn't used here. * Add stdlib.h because
+	  Solaris has getopt there instead of unistd.h (which sounds like
+	  the correct place to be, since getopt isn't part of ISO C). *
+	  Move sys/types.h to the top, just to be on the safe side.
+	  BUG:118407
+
+2005-11-13 20:13  jaiva
+
+	* trunk/extragear/libs/kipi-plugins/flickrexport/flickrtalker.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrtalker.h,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwidget.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwidget.h,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwindow.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwindow.h:
+	  Added the Image Quality factor option
+
+2005-11-05 12:44  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/batchprocessimages/batchprocessimagesdialog.cpp:
+	  BUG: 114512
+
+2005-11-04 05:57  jaiva
+
+	* trunk/extragear/libs/kipi-plugins/flickrexport/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/TODO,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/exifrestorer.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/exifrestorer.h,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrtalker.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwindow.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwindow.h,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/jpegsection.h,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/plugin_flickrexport.cpp:
+	  Added code to retain exif information while resizing JPG
+
+2005-11-01 23:15  mueller
+
+	* trunk/extragear/libs/kipi-plugins/configure.in.in,
+	  trunk/extragear/libs/libkipi/configure.in.in,
+	  trunk/extragear/libs/libkipi/libkipi/libkipi_export.h,
+	  trunk/extragear/libs/libkipi/libkipi/libkipi_export.h.in: the
+	  usual "daily unbreak compilation".. its getting tiresome
+
+2005-10-04 21:14  gateau
+
+	* trunk/extragear/libs/kipi-plugins/helloworld/plugin_helloworld.h:
+	  Unbreak compilation
+
+2005-10-04 07:47  mueller
+
+	* trunk/extragear/libs/kipi-plugins/acquireimages/plugin_acquireimages.cpp,
+	  trunk/extragear/libs/kipi-plugins/acquireimages/screenshotdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.cpp,
+	  trunk/extragear/libs/kipi-plugins/printwizard/frmprintwizardbase.ui,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/plugin_rawconverter.cpp:
+	  daily "unbreak compilation"
+
+2005-09-30 15:17  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/imagesgallery/TODO: Possible
+	  external tools list to use like external HTML generator CCMAIL :
+	  tomalbers@kde.nl
+
+2005-09-26 18:54  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/AUTHORS: missing to give
+	  credits to Jain and Tom
+
+2005-09-26 18:45  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/AUTHORS,
+	  trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchivingdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchivingdialog.h:
+	  add credits to Owen
+
+2005-09-26 05:51  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/sendimages/sendimages.cpp: fix
+	  wrong revert commit
+
+2005-09-24 09:19  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/kameraklient/Makefile.am: fix
+
+2005-09-24 09:17  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/kameraklient/Makefile.am:
+	  KameraKlient kipi plugin : added missing in i18n rules! CCMAIL:
+	  oliver@doerr-privat.de
+
+2005-09-23 07:22  coolo
+
+	* trunk/extragear/libs/kipi-plugins/imagesgallery/imagesgallery.cpp:
+	  don't rely on spaces and english plural
+
+2005-09-20 14:57  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/acquireimages/acquireimagedialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/acquireimages/acquireimagedialog.h,
+	  trunk/extragear/libs/kipi-plugins/acquireimages/screenshotdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/acquireimages/screenshotdialog.h,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/batchprocessimagesdialog.h,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/borderimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/colorimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/convertimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/effectimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/filterimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/recompressimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/renameimageswidget.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/resizeimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/resizeimagesdialog.h,
+	  trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/finddupplicateimages.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwindow.cpp,
+	  trunk/extragear/libs/kipi-plugins/galleryexport/gallerywindow.cpp,
+	  trunk/extragear/libs/kipi-plugins/imagesgallery/imagesgallery.cpp,
+	  trunk/extragear/libs/kipi-plugins/imagesgallery/imagesgallery.h,
+	  trunk/extragear/libs/kipi-plugins/kameraklient/cameraui.cpp,
+	  trunk/extragear/libs/kipi-plugins/kameraklient/cameraui.h,
+	  trunk/extragear/libs/kipi-plugins/mpegencoder/checkbinprog.cpp,
+	  trunk/extragear/libs/kipi-plugins/mpegencoder/checkbinprog.h,
+	  trunk/extragear/libs/kipi-plugins/mpegencoder/kimg2mpg.cpp,
+	  trunk/extragear/libs/kipi-plugins/mpegencoder/kimg2mpg.h,
+	  trunk/extragear/libs/kipi-plugins/printwizard/frmprintwizard.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/sendimages/sendimages.cpp,
+	  trunk/extragear/libs/kipi-plugins/sendimages/sendimages.h,
+	  trunk/extragear/libs/kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/sendimages/sendimagesdialog.h,
+	  trunk/extragear/libs/kipi-plugins/slideshow/plugin_slideshow.cpp,
+	  trunk/extragear/libs/kipi-plugins/slideshow/slideshowconfig.cpp:
+	  Revert last commit. Accordinly with Renchi, fix Raw converter to
+	  use common kipirc file instead host app rc file.
+
+2005-09-20 13:08  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/acquireimages/acquireimagedialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/acquireimages/acquireimagedialog.h,
+	  trunk/extragear/libs/kipi-plugins/acquireimages/screenshotdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/acquireimages/screenshotdialog.h,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/batchprocessimagesdialog.h,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/borderimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/colorimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/convertimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/effectimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/filterimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/recompressimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/renameimageswidget.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/resizeimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/batchprocessimages/resizeimagesdialog.h,
+	  trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.cpp,
+	  trunk/extragear/libs/kipi-plugins/findimages/finddupplicateimages.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwindow.cpp,
+	  trunk/extragear/libs/kipi-plugins/galleryexport/gallerywindow.cpp,
+	  trunk/extragear/libs/kipi-plugins/imagesgallery/imagesgallery.cpp,
+	  trunk/extragear/libs/kipi-plugins/imagesgallery/imagesgallery.h,
+	  trunk/extragear/libs/kipi-plugins/kameraklient/cameraui.cpp,
+	  trunk/extragear/libs/kipi-plugins/kameraklient/cameraui.h,
+	  trunk/extragear/libs/kipi-plugins/mpegencoder/checkbinprog.cpp,
+	  trunk/extragear/libs/kipi-plugins/mpegencoder/checkbinprog.h,
+	  trunk/extragear/libs/kipi-plugins/mpegencoder/kimg2mpg.cpp,
+	  trunk/extragear/libs/kipi-plugins/mpegencoder/kimg2mpg.h,
+	  trunk/extragear/libs/kipi-plugins/printwizard/frmprintwizard.cpp,
+	  trunk/extragear/libs/kipi-plugins/sendimages/sendimages.h,
+	  trunk/extragear/libs/kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/sendimages/sendimagesdialog.h,
+	  trunk/extragear/libs/kipi-plugins/slideshow/plugin_slideshow.cpp,
+	  trunk/extragear/libs/kipi-plugins/slideshow/slideshowconfig.cpp:
+	  kipi-plugins fix : using host apps rc file to store settings
+	  instead common kipirc file. Using this way, each host
+	  application can have a dedicaced plugins settings. Nota : I
+	  don't know why any plugins used a dedicaced kipirc config file,
+	  and others used host application rc file. CCMAIL:
+	  digikam-devel@kde.org
+
+2005-09-13 03:12  pahlibar
+
+	* trunk/extragear/libs/kipi-plugins/configure.in.in: if we are not
+	  using libkexif from the toplevel sources, define the conditional
+	  compile_LIBKEXIF to true. needed when tarballs are built
+	  separate from the src tree CCMAIL: tomalbers@kde.nl
+
+2005-09-10 20:51  toma
+
+	* trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.cpp,
+	  trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.h,
+	  trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchivingdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchivingdialog.h:
+	  Fix this beast for ever. k3b is a unique app and does not
+	  support the --temp-file parameter. I choose a more general
+	  solution now: make a setting where you can enter additional
+	  parameters for the executable. Default filled with --nofork. If
+	  people use older k3b's they have to remove it. That should go in
+	  the documentation as well.
+
+2005-09-07 11:37  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/galleryexport/gallerywindow.cpp,
+	  trunk/extragear/libs/kipi-plugins/galleryexport/gallerywindow.h:
+	  GalleryExport kipi plugin : Add link to handbook and About data.
+
+2005-09-07 11:14  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/flickrexport/flickrwindow.cpp,
+	  trunk/extragear/libs/kipi-plugins/flickrexport/flickrwindow.h:
+	  FlickrExport kipi plugin : Add link to handbook and About data.
+	  CCMAIL: vardhman@students.iiit.net
+
+2005-09-07 10:40  jaiva
+
+	* trunk/extragear/libs/kipi-plugins/flickrexport/flickrtalker.cpp:
+	  Fixed the handling of incomplete web-Authentication.
+
+2005-09-06 14:15  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/imagesgallery/imagesgallery.cpp:
+	  save font size properly CCMAIL: cyrill.h@solnet.ch
+
+2005-09-06 08:43  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/cdarchiving/cdarchiving.cpp:
+	  Accordinly with Tom Albers, restoring temporally ' -nofork ' K3b
+	  invocation for next RC release. This is a temp issue. A better
+	  way will be to use the new (and complete) dcop interface
+	  available on k3b. IMPORTANT : A new tool to ARCHIVE/RESTORE
+	  digikam database is planed by me and Tom for digiKam 0.8.1. It
+	  will be embeded on digiKam to support all database features.
+	  kipi CDArchiving tool will be obsolete for digikam in the
+	  future. We need a maintenor from kimdaba, gwenview or showimg
+	  project for this tool. CCMAIL: kde-imaging@kde.org,
+	  digikam-devel@kde.org
+
+2005-09-04 21:46  toma
+
+	* trunk/extragear/libs/kipi-plugins/ChangeLog,
+	  trunk/extragear/libs/kipi-plugins/kipi-plugins.lsm: Preparing
+	  for release.
 
 v0.1.0-rc1                                                        2005-02-08
 ----------------------------------------------------------------------------
