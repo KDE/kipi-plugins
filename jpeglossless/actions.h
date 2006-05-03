@@ -1,6 +1,6 @@
 /* ============================================================
  * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- *          Gilles Caulier <caulier dot gilles at free.fr>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date   : 2003-12-05
  * Description : plugin action description class 
  *
