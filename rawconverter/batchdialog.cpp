@@ -434,7 +434,12 @@ void BatchDialog::slotUser2()
     fileList_.clear();
     controller_->abort();
     slotBusy(false);
-    QTimer::singleShot(1000, progressBar_, SLOT(reset()));
+    QTimer::singleShot(500, this, SLOT(slotAborted()));
+}
+
+void BatchDialog::slotAborted()
+{
+    progressBar_->setProgress(0);
 }
 
 void BatchDialog::processOne()

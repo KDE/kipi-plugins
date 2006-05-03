@@ -86,6 +86,7 @@ private slots:
     void slotHelp();
     void slotUser1();
     void slotUser2();
+    void slotAborted();
 
     void slotSaveFormatChanged();
     void slotIdentify();
