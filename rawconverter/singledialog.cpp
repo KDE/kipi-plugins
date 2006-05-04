@@ -122,20 +122,20 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox->layout(), 4, 1, spacingHint());
 
     cameraWBCheckBox_ = new QCheckBox(i18n("Use camera white balance"), settingsBox);
-    QToolTip::add(cameraWBCheckBox_, i18n("Use the camera's custom white-balance settings.\n"
-                                          "The default  is to use fixed daylight values,\n"
+    QToolTip::add(cameraWBCheckBox_, i18n("<p>Use the camera's custom white-balance settings. "
+                                          "The default  is to use fixed daylight values, "
                                           "calculated from sample images."));
     settingsBoxLayout->addMultiCellWidget(cameraWBCheckBox_, 0, 0, 0, 1);    
 
     // ---------------------------------------------------------------
 
     fourColorCheckBox_ = new QCheckBox(i18n("Four color RGBG"), settingsBox);
-    QToolTip::add(fourColorCheckBox_, i18n("Interpolate RGB as four colors.\n"
-                                      "The default is to assume that all green\n"
-                                      "pixels are the same. If even-row green\n"
-                                      "pixels are more sensitive to ultraviolet light\n"
-                                      "than odd-row this difference causes a mesh\n"
-                                      "pattern in the output; using this option solves\n"
+    QToolTip::add(fourColorCheckBox_, i18n("<p>Interpolate RGB as four colors. "
+                                      "The default is to assume that all green "
+                                      "pixels are the same. If even-row green "
+                                      "pixels are more sensitive to ultraviolet light "
+                                      "than odd-row this difference causes a mesh "
+                                      "pattern in the output; using this option solves "
                                       "this problem with minimal loss of detail."));
     settingsBoxLayout->addMultiCellWidget(fourColorCheckBox_, 1, 1, 0, 1);    
 
@@ -145,7 +145,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     brightnessSpinBox_ = new KDoubleNumInput(settingsBox);
     brightnessSpinBox_->setPrecision(2);
     brightnessSpinBox_->setRange(0.0, 10.0, 0.01, true);
-    QToolTip::add(brightnessSpinBox_, i18n("Specify the output brightness"));
+    QToolTip::add(brightnessSpinBox_, i18n("<p>Specify the output brightness"));
     settingsBoxLayout->addMultiCellWidget(label1, 2, 2, 0, 0);    
     settingsBoxLayout->addMultiCellWidget(brightnessSpinBox_, 2, 2, 1, 1);    
 
@@ -155,7 +155,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     redSpinBox_ = new KDoubleNumInput(settingsBox);
     redSpinBox_->setPrecision(2);
     redSpinBox_->setRange(0.0, 10.0, 0.01, true);
-    QToolTip::add(redSpinBox_, i18n("After all other color adjustments,\n"
+    QToolTip::add(redSpinBox_, i18n("<p>After all other color adjustments, "
                                     "multiply the red channel by this value"));
     settingsBoxLayout->addMultiCellWidget(label2, 3, 3, 0, 0);    
     settingsBoxLayout->addMultiCellWidget(redSpinBox_, 3, 3, 1, 1);    
@@ -166,7 +166,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     blueSpinBox_ = new KDoubleNumInput(settingsBox);
     blueSpinBox_->setPrecision(2);
     blueSpinBox_->setRange(0.0, 10.0, 0.01, true);
-    QToolTip::add(blueSpinBox_, i18n("After all other color adjustments,\n"
+    QToolTip::add(blueSpinBox_, i18n("<p>After all other color adjustments, "
                                      "multiply the blue channel by this value"));
     settingsBoxLayout->addMultiCellWidget(label3, 4, 4, 0, 0);    
     settingsBoxLayout->addMultiCellWidget(blueSpinBox_, 4, 4, 1, 1);   
@@ -176,21 +176,30 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     saveButtonGroup_ = new QVButtonGroup(i18n("Save Format"), page);
     saveButtonGroup_->setRadioButtonExclusive(true);
 
-    jpegButton_ = new QRadioButton("JPEG",saveButtonGroup_);
-    QToolTip::add(jpegButton_, i18n("Output the processed image in JPEG Format.\n"
-                                    "This is a lossy format, but will give\n"
-                                    "smaller-sized files"));
-    jpegButton_->setChecked(true);
+    jpegButton_ = new QRadioButton("JPEG", saveButtonGroup_);
+    QToolTip::add(jpegButton_, i18n("<p>Output the processed image in JPEG Format. "
+                                    "Warning!!! JPEG is a lossy format, but will give "
+                                    "smaller-sized files. Minimum JPEG compression "
+                                    "will be used during conversion."));
 
-    tiffButton_ = new QRadioButton("TIFF",saveButtonGroup_);
-    QToolTip::add(tiffButton_, i18n("Output the processed image in TIFF Format.\n"
-                                    "This generates larges, without\n"
-                                    "losing quality"));
+    tiffButton_ = new QRadioButton("TIFF", saveButtonGroup_);
+    QToolTip::add(tiffButton_, i18n("<p>Output the processed image in TIFF Format. "
+                                    "This generates larges, without "
+                                    "losing quality. Adobe Deflate compression "
+                                    "will be used during conversion."));
 
-    ppmButton_ = new QRadioButton("PPM",saveButtonGroup_);
-    QToolTip::add(ppmButton_, i18n("Output the processed image in PPM Format.\n"
-                                   "This generates the largest files, without\n"
+    ppmButton_ = new QRadioButton("PPM", saveButtonGroup_);
+    QToolTip::add(ppmButton_, i18n("<p>Output the processed image in PPM Format. "
+                                   "This generates the largest files, without "
                                    "losing quality"));
+
+    pngButton_ = new QRadioButton("PNG", saveButtonGroup_);
+    QToolTip::add(pngButton_, i18n("<p>Output the processed image in PNG Format. "
+                                   "This generates larges, without "
+                                   "losing quality. Maximum PNG compression "
+                                   "will be used during conversion."));
+
+    pngButton_->setChecked(true);
 
     // ---------------------------------------------------------------
 
@@ -205,10 +214,10 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     QPushButton *helpButton = actionButton( Help );
 
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("RAW Image Converter"),
+                                       I18N_NOOP("Raw Image Converter"),
                                        kipi_version,
-                                       I18N_NOOP("A Kipi plugin for RAW image conversion\n"
-                                                 "This plugin uses the Dave Coffin RAW photo "
+                                       I18N_NOOP("A Kipi plugin for Raw image conversion\n"
+                                                 "This plugin uses the Dave Coffin Raw photo "
                                                  "decoder program \"dcraw\""),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2005, Renchi Raju\n"
@@ -224,21 +233,21 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("RAW Image Converter Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpMenu->menu()->insertItem(i18n("RAW Converter Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     helpButton->setPopup( helpMenu->menu() );
 
     // ---------------------------------------------------------------
 
-    setButtonTip( User1, i18n("Generate a Preview from current settings.\n"
-                              "Uses a simple bilinear interpolation for\n"
+    setButtonTip( User1, i18n("<p>Generate a Preview from current settings. "
+                              "Uses a simple bilinear interpolation for "
                               "quick results."));
 
-    setButtonTip( User2, i18n("Convert the Raw Image from current settings.\n"
+    setButtonTip( User2, i18n("<p>Convert the Raw Image from current settings. "
                               "This uses a high-quality adaptive algorithm."));
 
-    setButtonTip( User3, i18n("Abort the current RAW file conversion"));
+    setButtonTip( User3, i18n("<p>Abort the current RAW file conversion"));
     
-    setButtonTip( Close, i18n("Exit Raw Converter"));
+    setButtonTip( Close, i18n("<p>Exit Raw Converter"));
 
     // ---------------------------------------------------------------
 
@@ -303,7 +312,7 @@ void SingleDialog::readSettings()
     blueSpinBox_->setValue(config.readDoubleNumEntry("Blue Multiplier", 1.0));
     cameraWBCheckBox_->setChecked(config.readBoolEntry("Use Camera WB", true));
     fourColorCheckBox_->setChecked(config.readBoolEntry("Four Color RGB", false));
-    saveButtonGroup_->setButton(config.readNumEntry("Output Format", 0));
+    saveButtonGroup_->setButton(config.readNumEntry("Output Format", 3));  // PNG by default
 }
 
 void SingleDialog::saveSettings()
@@ -348,11 +357,13 @@ void SingleDialog::slotUser2()
     s.blueMultiplier = blueSpinBox_->value();
     
     if (saveButtonGroup_->selected() == jpegButton_)
-        s.outputFormat  = "JPEG";
+        s.outputFormat = "JPEG";
     else if (saveButtonGroup_->selected() == tiffButton_)
-        s.outputFormat  = "TIFF";
+        s.outputFormat = "TIFF";
+    else if (saveButtonGroup_->selected() == pngButton_)
+        s.outputFormat = "PNG";
     else
-        s.outputFormat  = "PPM";
+        s.outputFormat = "PPM";
 
     controller_->process(inputFile_);
 }
@@ -415,6 +426,8 @@ void SingleDialog::slotProcessed(const QString&, const QString& tmpFile_)
 	ext = QString("ppm");
     else if (saveButtonGroup_->selected() == tiffButton_)
 	ext = QString("tif");
+    else if (saveButtonGroup_->selected() == pngButton_)
+	ext = QString("png");
     else
 	ext = QString("jpg");
 

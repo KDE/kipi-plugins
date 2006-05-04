@@ -1,15 +1,15 @@
 /* ============================================================
- * File  : dmessagebox.cpp
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-02-22
- * Description :
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2003-02-22
+ * Description : a message box used in batch converter.
+ *               If One Message Box is already open, and more 
+ *               messages are posted they will be appended to 
+ *               the open messagebox
+ * 
+ * Copyright 2003-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
  *
- * Copyright 2003 by Renchi Raju
-
- * Update : 09/23/2003 - Gilles Caulier <caulier dot gilles at free.fr>
- *          Center the dialog box on the desktop.
- *          Improve i18n messages.
-
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -23,6 +23,8 @@
  * 
  * ============================================================ */
 
+// Qt includes.
+
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qtextedit.h>
@@ -31,9 +33,13 @@
 #include <qhbox.h>
 #include <qapplication.h>
 
+// KDE includes.
+
 #include <klocale.h>
 #include <kiconloader.h>
 #include <klistbox.h>
+
+// Locale includes.
 
 #include "dmessagebox.h"
 
@@ -43,7 +49,7 @@ namespace KIPIRawConverterPlugin
 DMessageBox* DMessageBox::s_instance = 0;
 
 DMessageBox::DMessageBox(QWidget *parent)
-    : QDialog(parent, 0, true, WShowModal | WDestructiveClose)
+           : QDialog(parent, 0, true, WShowModal | WDestructiveClose)
 {
     setCaption(i18n("Error"));
     
@@ -57,24 +63,20 @@ DMessageBox::DMessageBox(QWidget *parent)
     QHBox *hbox = new QHBox(this);
     hbox->setSpacing(5);
     
-    QPixmap pix = SmallIcon("error", KIcon::SizeMedium,
-                            KIcon::DefaultState);
+    QPixmap pix = SmallIcon("error", KIcon::SizeMedium, KIcon::DefaultState);
     QLabel *pixLabel = new QLabel(hbox);
     pixLabel->setPixmap(pix);
-    pixLabel->setSizePolicy(QSizePolicy::Fixed,
-                            QSizePolicy::Fixed);
+    pixLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     
     msgBox_ = new QLabel(hbox);
-    msgBox_->setSizePolicy(QSizePolicy::Expanding,
-                           QSizePolicy::Minimum);
+    msgBox_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     grid->addMultiCellWidget(hbox, 0, 0, 0, 2);
     
     // ---------------------------------------------------
 
     extraMsgBox_ = new KListBox(this);
-    extraMsgBox_->setSizePolicy(QSizePolicy::Expanding,
-                                QSizePolicy::Expanding);
+    extraMsgBox_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     grid->addMultiCellWidget(extraMsgBox_, 1, 1, 0, 2);
 
     // ---------------------------------------------------
@@ -84,19 +86,12 @@ DMessageBox::DMessageBox(QWidget *parent)
 
     // ---------------------------------------------------
 
-    grid->addItem( new QSpacerItem(5, 10,
-                                   QSizePolicy::Expanding,
-                                   QSizePolicy::Minimum),
-                   2, 0);
-    grid->addItem( new QSpacerItem(5, 10,
-                                   QSizePolicy::Expanding,
-                                   QSizePolicy::Minimum),
-                   2, 2);
+    grid->addItem( new QSpacerItem(5, 10, QSizePolicy::Expanding, QSizePolicy::Minimum), 2, 0);
+    grid->addItem( new QSpacerItem(5, 10, QSizePolicy::Expanding, QSizePolicy::Minimum), 2, 2);
     // ---------------------------------------------------
 
     connect(okButton, SIGNAL(clicked()),
             this, SLOT(slotOkClicked()));
-
 }
 
 DMessageBox::~DMessageBox()
@@ -106,7 +101,8 @@ DMessageBox::~DMessageBox()
 
 void DMessageBox::appendMsg(const QString& msg, const QString& mainMsg)
 {
-    if (count_ == 0) {
+    if (count_ == 0) 
+    {
         msgBox_->setText(mainMsg);
     }
 
@@ -126,7 +122,8 @@ void DMessageBox::showMsg(const QString& msg, const QString& mainMsg,
                           QWidget* parent)
 {
     DMessageBox* msgBox = DMessageBox::s_instance;
-    if (!msgBox) {
+    if (!msgBox) 
+    {
         msgBox = new DMessageBox(parent);
     }
 

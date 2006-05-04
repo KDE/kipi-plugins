@@ -113,6 +113,7 @@ private:
     QRadioButton      *jpegButton_;
     QRadioButton      *tiffButton_;
     QRadioButton      *ppmButton_;
+    QRadioButton      *pngButton_;
 
     QRadioButton      *overwriteButton_;
     QRadioButton      *promptButton_;

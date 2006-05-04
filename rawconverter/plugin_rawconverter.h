@@ -1,11 +1,13 @@
 /* ============================================================
- * File  : plugin_rawconverter.h
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-01-31
- * Description :
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2003-01-31
+ * Description : a kipi plugin to convert Raw file in single 
+ *               or batch mode.
  *
- * Copyright 2003 by Renchi Raju
-
+ * Copyright 2003-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -46,13 +48,15 @@ private:
 
     bool checkBinaries();
 
-    KAction *singleAction_;
-    KAction *batchAction_;
-
 private slots:
 
     void slotActivateSingle();
     void slotActivateBatch();
+
+private:
+
+    KAction *singleAction_;
+    KAction *batchAction_;
 };
 
 #endif /* PLUGIN_RAWCONVERTER_H */

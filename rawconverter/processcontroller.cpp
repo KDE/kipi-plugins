@@ -1,11 +1,12 @@
 /* ============================================================
- * File  : processcontroller.cpp
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-10-24
- * Description :
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2003-10-24
+ * Description : kipi dcraw process controller
  *
- * Copyright 2003 by Renchi Raju
-
+ * Copyright 2003-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -19,16 +20,28 @@
  *
  * ============================================================ */
 
-#include <qprocess.h>
-#include <qtimer.h>
-#include <qfile.h>
-#include <kdebug.h>
+// C Ansi includes.
 
 extern "C"
 {
 #include <unistd.h>
-#include <time.h>
 }
+
+// C++ includes.
+
+#include <ctime>
+
+// QT includes.
+
+#include <qprocess.h>
+#include <qtimer.h>
+#include <qfile.h>
+
+// KDE includes.
+
+#include <kdebug.h>
+
+// Local includes.
 
 #include "processcontroller.h"
 
@@ -36,17 +49,18 @@ namespace KIPIRawConverterPlugin
 {
 
 ProcessController::ProcessController(QObject *parent)
-    : QObject(parent)
+                 : QObject(parent)
 {
     dcProcess_ = new QProcess(this);
+
     connect(dcProcess_, SIGNAL(processExited()),
-            SLOT(slotProcessFinished()));
+            this, SLOT(slotProcessFinished()));
+
     connect(dcProcess_, SIGNAL(readyReadStderr()),
-            SLOT(slotProcessStdErr()));
+            this, SLOT(slotProcessStdErr()));
 
     currTime_ = QString::number(::time(0));
-
-    state_ = NONE;
+    state_    = NONE;
 }
 
 ProcessController::~ProcessController()
@@ -74,9 +88,7 @@ void ProcessController::process(const QString& file)
     emit signalProcessing(fileCurrent_);
 
     QFileInfo fi(fileCurrent_);
-    tmpFile_ = fi.dirPath(true) + QString("/")
-               + ".kipi-rawconverter-tmp-"
-               + currTime_;
+    tmpFile_ = fi.dirPath(true) + QString("/") + ".kipi-rawconverter-tmp-" + currTime_;
 
     dcProcess_->clearArguments();
 
@@ -86,8 +98,10 @@ void ProcessController::process(const QString& file)
 
     if (settings.cameraWB)
         dcProcess_->addArgument("-w");
+
     if (settings.fourColorRGB)
         dcProcess_->addArgument("-f");
+
     dcProcess_->addArgument("-b");
     dcProcess_->addArgument(QString::number(settings.brightness));
     dcProcess_->addArgument("-r");
@@ -113,9 +127,7 @@ void ProcessController::preview(const QString& file)
     emit signalPreviewing(fileCurrent_);
 
     QFileInfo fi(fileCurrent_);
-    tmpFile_ = fi.dirPath(true) + QString("/")
-               + ".kipi-rawconverter-tmp-"
-               + currTime_;
+    tmpFile_ = fi.dirPath(true) + QString("/") + ".kipi-rawconverter-tmp-" + currTime_;
 
     dcProcess_->clearArguments();
 
@@ -126,8 +138,10 @@ void ProcessController::preview(const QString& file)
 
     if (settings.cameraWB)
         dcProcess_->addArgument("-w");
+
     if (settings.fourColorRGB)
         dcProcess_->addArgument("-f");
+
     dcProcess_->addArgument("-b");
     dcProcess_->addArgument(QString::number(settings.brightness));
     dcProcess_->addArgument("-r");
@@ -169,51 +183,58 @@ void ProcessController::identifyOne()
     state_ = IDENTIFY;
 }
 
-
 void ProcessController::slotProcessFinished()
 {
     emit signalBusy(false);
 
-    switch (state_) {
-    case(IDENTIFY): {
-        QString identity = QString(dcProcess_->readStdout());
-        if (!dcProcess_->normalExit() || dcProcess_->exitStatus() != 0) {
-            emit signalIdentifyFailed(fileCurrent_, identity);
+    switch (state_) 
+    {
+        case(IDENTIFY): 
+        {
+            QString identity = QString(dcProcess_->readStdout());
+            if (!dcProcess_->normalExit() || dcProcess_->exitStatus() != 0) 
+            {
+                emit signalIdentifyFailed(fileCurrent_, identity);
+            }
+            else 
+            {
+                identity.remove(QFileInfo(fileCurrent_).fileName());
+                identity.remove(" is a ");
+                identity.remove(" image.");
+                emit signalIdentified(fileCurrent_, identity);
+            }
+            identifyOne();
+            break;
         }
-        else {
-            identity.remove(QFileInfo(fileCurrent_).fileName());
-            identity.remove(" is a ");
-            identity.remove(" image.");
-            emit signalIdentified(fileCurrent_, identity);
+    
+        case (PROCESS): 
+        {
+            if (!dcProcess_->normalExit() || dcProcess_->exitStatus() != 0) 
+            {
+                emit signalProcessingFailed(fileCurrent_);
+            }
+            else 
+            {
+                emit signalProcessed(fileCurrent_, tmpFile_);
+            }
+            break;
         }
-        identifyOne();
-        break;
-    }
-
-    case (PROCESS): {
-
-        if (!dcProcess_->normalExit() || dcProcess_->exitStatus() != 0) {
-            emit signalProcessingFailed(fileCurrent_);
+    
+        case (PREVIEW): 
+        {
+            if (!dcProcess_->normalExit() || dcProcess_->exitStatus() != 0) 
+            {
+                emit signalPreviewFailed(fileCurrent_);
+            }
+            else 
+            {
+                emit signalPreviewed(fileCurrent_, tmpFile_);
+            }
+            break;
         }
-        else {
-            emit signalProcessed(fileCurrent_, tmpFile_);
-        }
-        break;
-    }
-
-    case (PREVIEW): {
-
-        if (!dcProcess_->normalExit() || dcProcess_->exitStatus() != 0) {
-            emit signalPreviewFailed(fileCurrent_);
-        }
-        else {
-            emit signalPreviewed(fileCurrent_, tmpFile_);
-        }
-        break;
-    }
-
-    default:
-        break;
+    
+        default:
+            break;
     }
 }
 

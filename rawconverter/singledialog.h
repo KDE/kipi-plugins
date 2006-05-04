@@ -89,6 +89,7 @@ private:
     QRadioButton      *jpegButton_;
     QRadioButton      *tiffButton_;
     QRadioButton      *ppmButton_;
+    QRadioButton      *pngButton_;
     
     QVButtonGroup     *saveButtonGroup_;
 

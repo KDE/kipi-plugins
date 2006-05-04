@@ -1,11 +1,13 @@
 /* ============================================================
- * File  : plugin_rawconverter.cpp
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-01-31
- * Description :
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2003-01-31
+ * Description : a kipi plugin to convert Raw file in single 
+ *               or batch mode.
  *
- * Copyright 2003 by Renchi Raju
-
+ * Copyright 2003-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -18,6 +20,19 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
+// C ANSI Includes.
+
+extern "C"
+{
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+}
+
+// C++ includes.
+
+#include <cstdlib>
 
 // Qt Includes.
 
@@ -34,16 +49,6 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
-// C ANSI Includes.
-
-extern "C"
-{
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-}
-
 // Local includes.
 
 #include "plugin_rawconverter.h"
@@ -55,14 +60,11 @@ typedef KGenericFactory<Plugin_RawConverter> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_rawconverter,
                             Factory("kipiplugin_rawconverter"))
 
-Plugin_RawConverter::Plugin_RawConverter(QObject *parent,
-                                         const char*,
-                                         const QStringList&)
-    : KIPI::Plugin( Factory::instance(), parent, "RawConverter")
+Plugin_RawConverter::Plugin_RawConverter(QObject *parent, const char*, const QStringList&)
+                   : KIPI::Plugin( Factory::instance(), parent, "RawConverter")
 {
     kdDebug( 51001 ) << "Loaded RawConverter" << endl;
 }
-
 
 void Plugin_RawConverter::setup( QWidget* widget )
 {
@@ -107,24 +109,25 @@ Plugin_RawConverter::~Plugin_RawConverter()
 
 bool Plugin_RawConverter::checkBinaries()
 {
-
     QProcess process;
 
     process.clearArguments();
     process.addArgument("kipidcrawclient");
 
-    if (!process.start()) {
+    if (!process.start()) 
+    {
         KMessageBox::error(kapp->activeWindow(), i18n("Failed to start raw converter client.\n"
-                                   "Please check your installation."));
+                                                      "Please check your installation."));
         return false;
     }
 
     process.clearArguments();
     process.addArgument("dcraw");
 
-    if (!process.start()) {
+    if (!process.start()) 
+    {
         KMessageBox::error(kapp->activeWindow(), i18n("dcraw is required for raw image conversion.\n"
-                                   "Please install it."));
+                                                      "Please install it."));
         return false;
     }
 
@@ -136,10 +139,10 @@ void Plugin_RawConverter::slotActivateSingle()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
     if ( !interface )
-           {
-           kdError( 51000 ) << "Kipi interface is null!" << endl;
-           return;
-           }
+    {
+        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        return;
+    }
 
     KIPI::ImageCollection images;
     images = interface->currentSelection();
@@ -149,8 +152,8 @@ void Plugin_RawConverter::slotActivateSingle()
 
     if (!checkBinaries()) return;
 
-    KIPIRawConverterPlugin::SingleDialog *converter =
-        new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), kapp->activeWindow()); // PENDING(blackie) handle remote URLS
+    KIPIRawConverterPlugin::SingleDialog *converter = 
+        new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), kapp->activeWindow()); 
 
     converter->show();
 }
@@ -160,10 +163,10 @@ void Plugin_RawConverter::slotActivateBatch()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
     if ( !interface )
-           {
-           kdError( 51000 ) << "Kipi interface is null!" << endl;
-           return;
-           }
+    {
+        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        return;
+    }
 
     KIPI::ImageCollection images;
     images = interface->currentSelection();
@@ -178,11 +181,13 @@ void Plugin_RawConverter::slotActivateBatch()
 
     KURL::List urls = images.images();
     QStringList files;
-    for( KURL::List::Iterator it = urls.begin(); it != urls.end(); ++it ) {
-        files.append( (*it).path() ); // PENDING(blackie) handle remote URLs
-    }
-    converter->addItems(files);
 
+    for( KURL::List::Iterator it = urls.begin(); it != urls.end(); ++it ) 
+    {
+        files.append( (*it).path() );
+    }
+
+    converter->addItems(files);
     converter->show();
 }
 

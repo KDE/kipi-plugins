@@ -1,11 +1,12 @@
 /* ============================================================
- * File  : previewwidget.cpp
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-10-22
- * Description :
+ * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2003-10-22
+ * Description : preview raw file widget used in single convert
  *
- * Copyright 2003 by Renchi Raju
-
+ * Copyright 2003-2005 by Renchi Raju
+ * Copyright 2006 by Gilles Caulier
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -19,13 +20,19 @@
  *
  * ============================================================ */
 
+// Qt includes.
+
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qstring.h>
 #include <qevent.h>
 #include <qtimer.h>
 
+// KDE includes.
+
 #include <klocale.h>
+
+// Local includes.
 
 #include "previewwidget.h"
 
@@ -33,17 +40,18 @@ namespace KIPIRawConverterPlugin
 {
 
 PreviewWidget::PreviewWidget(QWidget *parent)
-    : QWidget(parent, 0, Qt::WRepaintNoErase)
+             : QWidget(parent, 0, Qt::WRepaintNoErase)
 {
-    setMinimumSize(QSize(484,364));
+    setMinimumSize(QSize(484, 364));
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     pix_ = new QPixmap(484,364);
     pix_->fill(Qt::black);
 
     timer_ = new QTimer(this);
+
     connect(timer_, SIGNAL(timeout()),
-            SLOT(slotResize()));
+            this, SLOT(slotResize()));
 }
 
 PreviewWidget::~PreviewWidget()
@@ -54,12 +62,11 @@ PreviewWidget::~PreviewWidget()
 void PreviewWidget::load(const QString& file)
 {
     text_ = "";
-
     pix_->fill(Qt::black);
-
     image_.load(file);
-    if (!image_.isNull()) {
 
+    if (!image_.isNull()) 
+    {
         QImage img = image_.scale(width(),height(),QImage::ScaleMin);
         int x = pix_->width()/2 - img.width()/2;
         int y = pix_->height()/2 - img.height()/2;
@@ -70,7 +77,8 @@ void PreviewWidget::load(const QString& file)
         p.drawRect(x,y,img.width(),img.height());
         p.end();
     }
-    else {
+    else 
+    {
         setText(i18n( "Failed to load image after processing" ));
         return;
     }
@@ -81,9 +89,7 @@ void PreviewWidget::load(const QString& file)
 void PreviewWidget::setText(const QString& text)
 {
     text_ = text;
-
     pix_->fill(Qt::black);
-
     QPainter p(pix_);
     p.setPen(QPen(Qt::white));
     p.drawText(0, 0, pix_->width(), pix_->height(),
@@ -92,11 +98,9 @@ void PreviewWidget::setText(const QString& text)
     update();
 }
 
-
 void PreviewWidget::paintEvent(QPaintEvent *e)
 {
     QRect r(e->rect());
-
     bitBlt(this, r.topLeft(), pix_, r, Qt::CopyROP);
 }
 
@@ -111,17 +115,18 @@ void PreviewWidget::slotResize()
 
     pix_->resize(width(),height());
     pix_->fill(Qt::black);
-    if (!text_.isEmpty()) {
-
+    if (!text_.isEmpty()) 
+    {
         QPainter p(pix_);
         p.setPen(QPen(Qt::white));
         p.drawText(0, 0, pix_->width(), pix_->height(),
                    Qt::AlignCenter|Qt::WordBreak, text_);
         p.end();
     }
-    else {
-        if (!image_.isNull()) {
-
+    else 
+    {
+        if (!image_.isNull()) 
+        {
             QImage img = image_.scale(width(),height(),QImage::ScaleMin);
             int x = pix_->width()/2 - img.width()/2;
             int y = pix_->height()/2 - img.height()/2;
