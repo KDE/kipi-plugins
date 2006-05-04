@@ -429,6 +429,9 @@ void BatchDialog::slotUser1()
     if (fileList_.empty()) 
     {
         KMessageBox::error(this, i18n("There is no Raw file to process in the list!"));
+        enableButton (User1, false);
+        enableButton (User2, false);
+        slotAborted();
         return;
     }
 
@@ -472,7 +475,12 @@ void BatchDialog::slotAborted()
 void BatchDialog::processOne()
 {
     if (fileList_.empty()) 
+    {
+        enableButton (User1, false);
+        enableButton (User2, false);
+        slotAborted();
         return;
+    }
     
     QString file(fileList_.first());
     fileList_.pop_front();
