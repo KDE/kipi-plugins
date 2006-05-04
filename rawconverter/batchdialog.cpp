@@ -256,7 +256,7 @@ BatchDialog::BatchDialog(QWidget *parent)
     // ---------------------------------------------------------------
 
     setButtonTip( User1, i18n("Start converting the raw images from current settings."));
-    setButtonTip( User2, i18n("Abort the current RAW files conversion"));
+    setButtonTip( User2, i18n("Abort the current Raw files conversion"));
     setButtonTip( Close, i18n("Exit Raw Converter"));
 
     // ---------------------------------------------------------------
@@ -364,7 +364,6 @@ void BatchDialog::saveSettings()
     config.writeEntry("Four Color RGB", fourColorCheckBox_->isChecked());
     config.writeEntry("Output Format", saveButtonGroup_->id(saveButtonGroup_->selected()));
     config.writeEntry("Conflict", conflictButtonGroup_->id(conflictButtonGroup_->selected()));
-
     config.sync();
 }
 
