@@ -86,12 +86,12 @@ void PreviewWidget::load(const QString& file)
     update();
 }
 
-void PreviewWidget::setText(const QString& text)
+void PreviewWidget::setText(const QString& text, const QColor& color)
 {
     text_ = text;
     pix_->fill(Qt::black);
     QPainter p(pix_);
-    p.setPen(QPen(Qt::white));
+    p.setPen(QPen(color));
     p.drawText(0, 0, pix_->width(), pix_->height(),
                Qt::AlignCenter|Qt::WordBreak, text);
     p.end();

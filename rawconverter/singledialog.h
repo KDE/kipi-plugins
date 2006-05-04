@@ -36,6 +36,7 @@ class QCheckBox;
 class QVButtonGroup;
 class QRadioButton;
 class QCloseEvent;
+class QTimer;
 
 class KDoubleNumInput;
 
@@ -80,8 +81,13 @@ private slots:
     void slotProcessing(const QString&);
     void slotProcessed(const QString&, const QString& tmpFile_);
     void slotProcessingFailed(const QString&);
+    void slotPreviewBlinkTimerDone();
+    void slotConvertBlinkTimerDone();
     
 private:
+
+    bool               previewBlink_;
+    bool               convertBlink_;
 
     QCheckBox         *cameraWBCheckBox_;
     QCheckBox         *fourColorCheckBox_;
@@ -96,6 +102,9 @@ private:
     QString            inputFile_;
     QString            inputFileName_;
     
+    QTimer            *blinkPreviewTimer_;
+    QTimer            *blinkConvertTimer_;
+
     KDoubleNumInput   *brightnessSpinBox_;
     KDoubleNumInput   *redSpinBox_;
     KDoubleNumInput   *blueSpinBox_;

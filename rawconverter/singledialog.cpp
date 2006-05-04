@@ -26,6 +26,7 @@
 
 // Qt includes.
 
+#include <qtimer.h>
 #include <qframe.h>
 #include <qgroupbox.h>
 #include <qvbuttongroup.h>
@@ -42,6 +43,7 @@
 
 // KDE includes.
 
+#include <kcursor.h>
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
@@ -249,9 +251,17 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     
     setButtonTip( Close, i18n("<p>Exit Raw Converter"));
 
+    blinkPreviewTimer_ = new QTimer(this);
+    blinkConvertTimer_ = new QTimer(this);
+    controller_        = new ProcessController(this);
+
     // ---------------------------------------------------------------
 
-    controller_ = new ProcessController(this);
+    connect( blinkPreviewTimer_, SIGNAL(timeout()),
+             this, SLOT(slotPreviewBlinkTimerDone()) );
+    
+    connect( blinkConvertTimer_, SIGNAL(timeout()),
+             this, SLOT(slotConvertBlinkTimerDone()) );
 
     connect(controller_, SIGNAL(signalIdentified(const QString&, const QString&)),
             this, SLOT(slotIdentified(const QString&, const QString&)));
@@ -289,6 +299,8 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
 SingleDialog::~SingleDialog()
 {
+    blinkPreviewTimer_->stop();
+    blinkConvertTimer_->stop();
     saveSettings();
 }
 
@@ -398,26 +410,61 @@ void SingleDialog::slotIdentifyFailed(const QString&, const QString& identity)
 
 void SingleDialog::slotPreviewing(const QString&)
 {
-    previewWidget_->setText(i18n("Generating Preview ..."));
+    previewBlink_ = false;
+    previewWidget_->setCursor( KCursor::waitCursor() );
+    blinkPreviewTimer_->start(200);
+}
+
+void SingleDialog::slotPreviewBlinkTimerDone()
+{
+    QString preview = i18n("Generating Preview...");
+
+    if (previewBlink_)
+        previewWidget_->setText(preview, Qt::green);
+    else
+        previewWidget_->setText(preview, Qt::darkGreen);
+
+    previewBlink_ = !previewBlink_;
+    blinkPreviewTimer_->start(200);
 }
 
 void SingleDialog::slotPreviewed(const QString&, const QString& tmpFile_)
 {
+    previewWidget_->unsetCursor();
+    blinkPreviewTimer_->stop();
     previewWidget_->load(tmpFile_);
 }
 
 void SingleDialog::slotPreviewFailed(const QString&)
 {
-    previewWidget_->setText(i18n("Failed to generate preview"));
+    previewWidget_->unsetCursor();
+    previewWidget_->setText(i18n("Failed to generate preview"), Qt::red);
 }
 
 void SingleDialog::slotProcessing(const QString&)
 {
-    previewWidget_->setText(i18n("Converting Raw Image ..."));
+    convertBlink_ = false;
+    previewWidget_->setCursor( KCursor::waitCursor() );
+    blinkConvertTimer_->start(200);
+}
+
+void SingleDialog::slotConvertBlinkTimerDone()
+{
+    QString convert = i18n("Converting Raw Image...");
+
+    if (convertBlink_)
+        previewWidget_->setText(convert, Qt::green);
+    else
+        previewWidget_->setText(convert, Qt::darkGreen);
+
+    convertBlink_ = !convertBlink_;
+    blinkConvertTimer_->start(200);
 }
 
 void SingleDialog::slotProcessed(const QString&, const QString& tmpFile_)
 {
+    previewWidget_->unsetCursor();
+    blinkConvertTimer_->stop();
     previewWidget_->load(tmpFile_);
     QString filter("*.");
     QString ext;
@@ -447,7 +494,8 @@ void SingleDialog::slotProcessed(const QString&, const QString& tmpFile_)
 
 void SingleDialog::slotProcessingFailed(const QString&)
 {
-    previewWidget_->setText(i18n("Failed to convert Raw image"));
+    previewWidget_->unsetCursor();
+    previewWidget_->setText(i18n("Failed to convert Raw image"), Qt::red);
 }
 
 } // NameSpace KIPIRawConverterPlugin
