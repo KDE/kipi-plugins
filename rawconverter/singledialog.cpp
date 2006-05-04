@@ -317,7 +317,6 @@ void SingleDialog::saveSettings()
     config.writeEntry("Use Camera WB", cameraWBCheckBox_->isChecked());
     config.writeEntry("Four Color RGB", fourColorCheckBox_->isChecked());
     config.writeEntry("Output Format", saveButtonGroup_->id(saveButtonGroup_->selected()));
-
     config.sync();
 }
 
@@ -383,7 +382,7 @@ void SingleDialog::slotIdentified(const QString&, const QString& identity)
 
 void SingleDialog::slotIdentifyFailed(const QString&, const QString& identity)
 {
-    previewWidget_->setText(i18n("Failed to identify raw image\n") + identity);
+    previewWidget_->setText(i18n("Failed to identify Raw image\n") + identity);
 }
 
 void SingleDialog::slotPreviewing(const QString&)
@@ -435,7 +434,7 @@ void SingleDialog::slotProcessed(const QString&, const QString& tmpFile_)
 
 void SingleDialog::slotProcessingFailed(const QString&)
 {
-    previewWidget_->setText(i18n("Failed to convert raw image"));
+    previewWidget_->setText(i18n("Failed to convert Raw image"));
 }
 
 } // NameSpace KIPIRawConverterPlugin

@@ -217,6 +217,8 @@ BatchDialog::BatchDialog(QWidget *parent)
     mainLayout->addMultiCellWidget(conflictButtonGroup_, 3, 3, 1, 1);
 
     progressBar_ = new KProgress(page);
+    progressBar_->setMaximumHeight( fontMetrics().height() );
+    progressBar_->setEnabled(false);
     mainLayout->addMultiCellWidget(progressBar_, 4, 4, 1, 1);
 
     mainLayout->setColStretch(0, 10);
@@ -254,9 +256,7 @@ BatchDialog::BatchDialog(QWidget *parent)
     // ---------------------------------------------------------------
 
     setButtonTip( User1, i18n("Start converting the raw images from current settings."));
-
     setButtonTip( User2, i18n("Abort the current RAW files conversion"));
-    
     setButtonTip( Close, i18n("Exit Raw Converter"));
 
     // ---------------------------------------------------------------
@@ -329,7 +329,7 @@ void BatchDialog::addItems(const QStringList& itemList)
 
     if (!urlList.empty()) 
     {
-        KIO::PreviewJob* thumbnailJob = KIO::filePreview(urlList, 48 );
+        KIO::PreviewJob* thumbnailJob = KIO::filePreview(urlList, 48);
 
         connect(thumbnailJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
                 this, SLOT(slotGotThumbnail(const KFileItem*, const QPixmap&)));
@@ -411,6 +411,7 @@ void BatchDialog::slotUser1()
 
     progressBar_->setTotalSteps(fileList_.count());
     progressBar_->setProgress(0);
+    progressBar_->setEnabled(true);
 
     Settings& s      = controller_->settings;
     s.cameraWB       = cameraWBCheckBox_->isChecked();
@@ -440,6 +441,7 @@ void BatchDialog::slotUser2()
 void BatchDialog::slotAborted()
 {
     progressBar_->setProgress(0);
+    progressBar_->setEnabled(false);
 }
 
 void BatchDialog::processOne()
