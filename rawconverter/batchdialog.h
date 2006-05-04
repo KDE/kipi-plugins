@@ -104,6 +104,10 @@ private:
 
     bool               busy_;
 
+    QLabel            *brightnessLabel_;
+    QLabel            *redLabel_;
+    QLabel            *blueLabel_;
+
     QCheckBox         *cameraWBCheckBox_;
     QCheckBox         *fourColorCheckBox_;
 

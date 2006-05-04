@@ -149,34 +149,34 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    QLabel *label1 = new QLabel(i18n("Brightness:"), settingsBox);
+    QLabel *brightnessLabel_ = new QLabel(i18n("Brightness:"), settingsBox);
     brightnessSpinBox_ = new KDoubleNumInput(settingsBox);
     brightnessSpinBox_->setPrecision(2);
     brightnessSpinBox_->setRange(0.0, 10.0, 0.01, true);
     QToolTip::add(brightnessSpinBox_, i18n("<p>Specify the output brightness"));
-    settingsBoxLayout->addMultiCellWidget(label1, 2, 2, 0, 0);    
+    settingsBoxLayout->addMultiCellWidget(brightnessLabel_, 2, 2, 0, 0);    
     settingsBoxLayout->addMultiCellWidget(brightnessSpinBox_, 2, 2, 1, 1);    
 
     // ---------------------------------------------------------------
 
-    QLabel *label2 = new QLabel(i18n("Red multiplier:"), settingsBox);
+    QLabel *redLabel_ = new QLabel(i18n("Red multiplier:"), settingsBox);
     redSpinBox_ = new KDoubleNumInput(settingsBox);
     redSpinBox_->setPrecision(2);
     redSpinBox_->setRange(0.0, 10.0, 0.01, true);
     QToolTip::add(redSpinBox_, i18n("<p>After all other color adjustments, "
                                     "multiply the red channel by this value"));
-    settingsBoxLayout->addMultiCellWidget(label2, 3, 3, 0, 0);    
+    settingsBoxLayout->addMultiCellWidget(redLabel_, 3, 3, 0, 0);    
     settingsBoxLayout->addMultiCellWidget(redSpinBox_, 3, 3, 1, 1);    
 
     // ---------------------------------------------------------------
 
-    QLabel *label3 = new QLabel(i18n("Blue multiplier:"), settingsBox);
+    QLabel *blueLabel_ = new QLabel(i18n("Blue multiplier:"), settingsBox);
     blueSpinBox_ = new KDoubleNumInput(settingsBox);
     blueSpinBox_->setPrecision(2);
     blueSpinBox_->setRange(0.0, 10.0, 0.01, true);
     QToolTip::add(blueSpinBox_, i18n("<p>After all other color adjustments, "
                                      "multiply the blue channel by this value"));
-    settingsBoxLayout->addMultiCellWidget(label3, 4, 4, 0, 0);    
+    settingsBoxLayout->addMultiCellWidget(blueLabel_, 4, 4, 0, 0);    
     settingsBoxLayout->addMultiCellWidget(blueSpinBox_, 4, 4, 1, 1);   
 
     // ---------------------------------------------------------------
@@ -500,6 +500,9 @@ void BatchDialog::slotBusy(bool busy)
     brightnessSpinBox_->setEnabled(!busy);
     redSpinBox_->setEnabled(!busy);
     blueSpinBox_->setEnabled(!busy);
+    brightnessLabel_->setEnabled(!busy);
+    redLabel_->setEnabled(!busy);
+    blueLabel_->setEnabled(!busy);
 }
 
 void BatchDialog::slotIdentify()
