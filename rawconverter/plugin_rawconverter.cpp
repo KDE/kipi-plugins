@@ -37,6 +37,7 @@ extern "C"
 // Qt Includes.
 
 #include <qprocess.h>
+#include <qfileinfo.h>
 
 // KDE includes.
 
@@ -107,6 +108,19 @@ Plugin_RawConverter::~Plugin_RawConverter()
 {
 }
 
+bool Plugin_RawConverter::isRAWFile(const QString& filePath)
+{
+    QString rawFilesExt("*.bay *.bmq *.cr2 *.crw *.cs1 *.dc2 *.dcr *.dng *.erf "
+                        "*.fff *.hdr *.k25 *.kdc *.mdc *.mos *.mrw *.nef *.orf "
+                        "*.pef *.pxn *.raf *.raw *.rdc *.sr2 *.srf *.x3f");
+
+    QFileInfo fileInfo(filePath);
+    if (rawFilesExt.upper().contains( fileInfo.extension().upper() ))
+        return true;
+
+    return false;
+}
+
 bool Plugin_RawConverter::checkBinaries()
 {
     QProcess process;
@@ -150,7 +164,15 @@ void Plugin_RawConverter::slotActivateSingle()
     if ( !images.isValid() )
         return;
 
-    if (!checkBinaries()) return;
+    if (!checkBinaries()) 
+        return;
+
+    if (!isRAWFile(images.images()[0].path()))
+    {
+        KMessageBox::error(kapp->activeWindow(), 
+                           i18n("\"%1\" is not a Raw file.").arg(images.images()[0].fileName()));
+        return;
+    }
 
     KIPIRawConverterPlugin::SingleDialog *converter = 
         new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), kapp->activeWindow()); 
@@ -174,7 +196,8 @@ void Plugin_RawConverter::slotActivateBatch()
     if ( !images.isValid() )
         return;
 
-    if (!checkBinaries()) return;
+    if (!checkBinaries()) 
+        return;
 
     KIPIRawConverterPlugin::BatchDialog *converter =
         new KIPIRawConverterPlugin::BatchDialog(kapp->activeWindow());
@@ -184,7 +207,8 @@ void Plugin_RawConverter::slotActivateBatch()
 
     for( KURL::List::Iterator it = urls.begin(); it != urls.end(); ++it ) 
     {
-        files.append( (*it).path() );
+        if (isRAWFile((*it).path()))
+            files.append( (*it).path() );
     }
 
     converter->addItems(files);

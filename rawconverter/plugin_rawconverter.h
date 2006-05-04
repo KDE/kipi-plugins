@@ -47,6 +47,7 @@ public:
 private:
 
     bool checkBinaries();
+    bool isRAWFile(const QString& filePath);
 
 private slots:
 
