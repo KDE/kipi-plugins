@@ -164,7 +164,8 @@ void ProcessController::abort()
 
 void ProcessController::identifyOne()
 {
-    if (fileList_.empty()) return;
+    if (fileList_.empty()) 
+        return;
 
     fileCurrent_ = fileList_.first();
     fileList_.pop_front();

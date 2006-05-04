@@ -73,7 +73,6 @@ extern "C"
 #include "batchdialog.h"
 #include "processcontroller.h"
 #include "clistviewitem.h"
-#include "dmessagebox.h"
 
 namespace KIPIRawConverterPlugin
 {
@@ -114,8 +113,8 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     listView_ = new KListView(page);
     listView_->addColumn( i18n("Thumbnail") );
-    listView_->addColumn( i18n("Raw Image") );
-    listView_->addColumn( i18n("Target Image") );
+    listView_->addColumn( i18n("Raw File") );
+    listView_->addColumn( i18n("Target File") );
     listView_->addColumn( i18n("Camera") );
     listView_->setResizeMode(QListView::AllColumns);
     listView_->setAllColumnsShowFocus(true);
@@ -395,10 +394,13 @@ void BatchDialog::slotSaveFormatChanged()
     while ( it.current() ) 
     {
         CListViewItem *item = (CListViewItem*) it.current();
-        RawItem *rawItem = item->rawItem;
-        QFileInfo fi(rawItem->directory + QString("/") + rawItem->src);
-        rawItem->dest = fi.baseName() + QString(".") + ext;
-        item->setText(2, rawItem->dest);
+        if (item->isEnabled())
+        {
+            RawItem *rawItem = item->rawItem;
+            QFileInfo fi(rawItem->directory + QString("/") + rawItem->src);
+            rawItem->dest = fi.baseName() + QString(".") + ext;
+            item->setText(2, rawItem->dest);
+        }
         ++it;
     }
 }
@@ -416,9 +418,18 @@ void BatchDialog::slotUser1()
     while ( it.current() ) 
     {
         CListViewItem *item = (CListViewItem*) it.current();
-        item->setPixmap(1, 0);
-        fileList_.append(item->rawItem->directory + QString("/") + item->rawItem->src);
+        if (item->isEnabled())
+        {
+            item->setPixmap(1, 0);
+            fileList_.append(item->rawItem->directory + QString("/") + item->rawItem->src);
+        }
         ++it;
+    }
+
+    if (fileList_.empty()) 
+    {
+        KMessageBox::error(this, i18n("There is no Raw file to process in the list!"));
+        return;
     }
 
     progressBar_->setTotalSteps(fileList_.count());
@@ -465,7 +476,6 @@ void BatchDialog::processOne()
     
     QString file(fileList_.first());
     fileList_.pop_front();
-
     controller_->process(file);
 }
 
@@ -508,15 +518,16 @@ void BatchDialog::slotIdentified(const QString& file, const QString& identity)
     }
 }
 
-void BatchDialog::slotIdentifyFailed(const QString& file, const QString& identity)
+void BatchDialog::slotIdentifyFailed(const QString& file, const QString& /*identity*/)
 {
     QString filename = QFileInfo(file).fileName();
     RawItem *item = itemDict_.find(filename);
     if (item) 
     {
-        DMessageBox::showMsg(identity, i18n("Raw Converter Cannot Handle Following Items"), this);
-        delete ((CListViewItem*) item->viewItem);
-        itemDict_.remove(filename);
+        item->viewItem->setText(2, i18n("None!"));
+        item->viewItem->setText(3, i18n("Not a Raw file!"));
+        item->viewItem->setSelectable(false);
+        item->viewItem->setEnabled(false);
     }
 }
 
@@ -526,7 +537,7 @@ void BatchDialog::slotProcessing(const QString& file)
     RawItem *item = itemDict_.find(filename);
     if (item) 
     {
-        item->viewItem->setPixmap(1,SmallIcon("player_play"));
+        item->viewItem->setPixmap(1, SmallIcon("player_play"));
         listView_->setSelected(item->viewItem, true);
     }
 }
@@ -537,7 +548,7 @@ void BatchDialog::slotProcessed(const QString& file, const QString& tmpFile)
     RawItem *rawItem = itemDict_.find(filename);
     if (rawItem) 
     {
-        rawItem->viewItem->setPixmap(1,SmallIcon("ok"));
+        rawItem->viewItem->setPixmap(1, SmallIcon("ok"));
     }
 
     QString destFile(rawItem->directory + QString("/") + rawItem->dest);

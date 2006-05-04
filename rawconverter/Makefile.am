@@ -7,7 +7,7 @@ kipiplugin_rawconverter_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 # Srcs for the plugin
 kipiplugin_rawconverter_la_SOURCES = plugin_rawconverter.cpp \
 	                             batchdialog.cpp singledialog.cpp previewwidget.cpp \
-	                             processcontroller.cpp dmessagebox.cpp 
+	                             processcontroller.cpp 
 
 # Libs needed by the plugin
 kipiplugin_rawconverter_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) 

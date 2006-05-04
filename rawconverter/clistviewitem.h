@@ -26,6 +26,7 @@
 // Qt includes.
 
 #include <qstring.h>
+#include <qpainter.h>
 
 // KDE includes.
 
@@ -53,6 +54,10 @@ class CListViewItem : public KListViewItem
 
 public:
 
+    struct RawItem *rawItem;
+
+public:
+
     CListViewItem(KListView* view, const QPixmap& pixmap, RawItem *item)
                 : KListViewItem(view), rawItem(item) 
     {
@@ -60,6 +65,7 @@ public:
          setThumbnail(pixmap);
          setText(1, rawItem->src);
          setText(2, rawItem->dest);
+         setEnabled(true);
     }
 
     ~CListViewItem(){}
@@ -68,9 +74,39 @@ public:
     {
         setPixmap(0, pixmap);
     }
-    
-    struct RawItem *rawItem;
 
+    void setEnabled(bool d)    
+    {
+        m_enabled = d;
+        repaint();
+    }
+
+    bool isEnabled(void)    
+    {
+        return m_enabled;
+    }
+    
+protected:
+
+    void paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
+    {
+        if (m_enabled)
+        {
+            KListViewItem::paintCell(p, cg, column, width, alignment);
+        }
+        else
+        {
+            QColorGroup _cg( cg );
+            QColor c = _cg.text();
+            _cg.setColor( QColorGroup::Text, Qt::gray );
+            KListViewItem::paintCell( p, _cg, column, width, alignment );
+            _cg.setColor( QColorGroup::Text, c );
+        }
+    }
+
+private: 
+
+    bool m_enabled;
 };
 
 } // NameSpace KIPIRawConverterPlugin
