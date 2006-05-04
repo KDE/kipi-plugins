@@ -38,6 +38,7 @@ class QRadioButton;
 class QVButtonGroup;
 class QLabel;
 class QPixmap;
+class QTimer;
 
 class KFileItem;
 class KListView;
@@ -70,6 +71,8 @@ public:
         OPENFILEDIALOG
     };
 
+public:
+
     BatchDialog(QWidget *parent);
     ~BatchDialog();
 
@@ -99,10 +102,14 @@ private slots:
 
     void slotBusy(bool busy);
     void slotGotThumbnail(const KFileItem* url, const QPixmap& pix);
+    void slotConvertBlinkTimerDone();
 
 private:
 
     bool               busy_;
+    bool               convertBlink_;
+
+    QTimer            *blinkConvertTimer_;
 
     QLabel            *brightnessLabel_;
     QLabel            *redLabel_;
@@ -137,6 +144,8 @@ private:
     KListView         *listView_;
 
     ProcessController *controller_;
+
+    RawItem           *currentConvertItem_;
 
     TargetFileOp       targetFileOp_;
 };

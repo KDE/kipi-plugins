@@ -257,11 +257,11 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    connect( blinkPreviewTimer_, SIGNAL(timeout()),
-             this, SLOT(slotPreviewBlinkTimerDone()) );
+    connect(blinkPreviewTimer_, SIGNAL(timeout()),
+            this, SLOT(slotPreviewBlinkTimerDone()));
     
-    connect( blinkConvertTimer_, SIGNAL(timeout()),
-             this, SLOT(slotConvertBlinkTimerDone()) );
+    connect(blinkConvertTimer_, SIGNAL(timeout()),
+            this, SLOT(slotConvertBlinkTimerDone()));
 
     connect(controller_, SIGNAL(signalIdentified(const QString&, const QString&)),
             this, SLOT(slotIdentified(const QString&, const QString&)));

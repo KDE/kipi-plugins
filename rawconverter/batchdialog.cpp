@@ -82,6 +82,7 @@ BatchDialog::BatchDialog(QWidget *parent)
                          Help|User1|User2|Close, Close, true,
                          i18n("Con&vert"), i18n("&Abort"))
 {
+    currentConvertItem_ = 0;
     QWidget *page = new QWidget( this );
     setMainWidget( page );
     QGridLayout *mainLayout = new QGridLayout(page, 5, 1, 0, marginHint());
@@ -149,7 +150,7 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    QLabel *brightnessLabel_ = new QLabel(i18n("Brightness:"), settingsBox);
+    brightnessLabel_   = new QLabel(i18n("Brightness:"), settingsBox);
     brightnessSpinBox_ = new KDoubleNumInput(settingsBox);
     brightnessSpinBox_->setPrecision(2);
     brightnessSpinBox_->setRange(0.0, 10.0, 0.01, true);
@@ -159,7 +160,7 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    QLabel *redLabel_ = new QLabel(i18n("Red multiplier:"), settingsBox);
+    redLabel_   = new QLabel(i18n("Red multiplier:"), settingsBox);
     redSpinBox_ = new KDoubleNumInput(settingsBox);
     redSpinBox_->setPrecision(2);
     redSpinBox_->setRange(0.0, 10.0, 0.01, true);
@@ -170,7 +171,7 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    QLabel *blueLabel_ = new QLabel(i18n("Blue multiplier:"), settingsBox);
+    blueLabel_   = new QLabel(i18n("Blue multiplier:"), settingsBox);
     blueSpinBox_ = new KDoubleNumInput(settingsBox);
     blueSpinBox_->setPrecision(2);
     blueSpinBox_->setRange(0.0, 10.0, 0.01, true);
@@ -267,9 +268,13 @@ BatchDialog::BatchDialog(QWidget *parent)
     setButtonTip( User2, i18n("<p>Abort the current Raw files conversion"));
     setButtonTip( Close, i18n("<p>Exit Raw Converter"));
 
+    blinkConvertTimer_ = new QTimer(this);
+    controller_        = new ProcessController(this);
+
     // ---------------------------------------------------------------
 
-    controller_ = new ProcessController(this);
+    connect(blinkConvertTimer_, SIGNAL(timeout()),
+            this, SLOT(slotConvertBlinkTimerDone()));
 
     connect(saveButtonGroup_, SIGNAL(clicked(int)),
             this, SLOT(slotSaveFormatChanged()));
@@ -301,6 +306,7 @@ BatchDialog::BatchDialog(QWidget *parent)
 
 BatchDialog::~BatchDialog()
 {
+    blinkConvertTimer_->stop();
     saveSettings();
 }
 
@@ -544,23 +550,39 @@ void BatchDialog::slotIdentifyFailed(const QString& file, const QString& /*ident
 
 void BatchDialog::slotProcessing(const QString& file)
 {
-    QString filename = QFileInfo(file).fileName();
-    RawItem *item = itemDict_.find(filename);
-    if (item) 
+    QString filename    = QFileInfo(file).fileName();
+    currentConvertItem_ = itemDict_.find(filename);
+    if (currentConvertItem_) 
+        listView_->setSelected(currentConvertItem_->viewItem, true);
+
+    convertBlink_ = false;
+    blinkConvertTimer_->start(500);
+}
+
+void BatchDialog::slotConvertBlinkTimerDone()
+{
+    if(convertBlink_)
     {
-        item->viewItem->setPixmap(1, SmallIcon("player_play"));
-        listView_->setSelected(item->viewItem, true);
+        if (currentConvertItem_)
+            currentConvertItem_->viewItem->setPixmap(1, SmallIcon("1rightarrow"));
     }
+    else
+    {
+        if (currentConvertItem_)
+            currentConvertItem_->viewItem->setPixmap(1, SmallIcon("2rightarrow"));
+    }
+
+    convertBlink_ = !convertBlink_;
+    blinkConvertTimer_->start(500);
 }
 
 void BatchDialog::slotProcessed(const QString& file, const QString& tmpFile)
 {
+    currentConvertItem_ = 0;
     QString filename = QFileInfo(file).fileName();
     RawItem *rawItem = itemDict_.find(filename);
     if (rawItem) 
-    {
         rawItem->viewItem->setPixmap(1, SmallIcon("ok"));
-    }
 
     QString destFile(rawItem->directory + QString("/") + rawItem->dest);
 
@@ -593,10 +615,11 @@ void BatchDialog::slotProcessed(const QString& file, const QString& tmpFile)
 
 void BatchDialog::slotProcessingFailed(const QString& file)
 {
+    currentConvertItem_ = 0;
     QString filename = QFileInfo(file).fileName();
-    RawItem *item = itemDict_.find(filename);
-    if (item) 
-        item->viewItem->setPixmap(1, SmallIcon("no"));
+    RawItem *rawItem = itemDict_.find(filename);
+    if (rawItem) 
+        rawItem->viewItem->setPixmap(1, SmallIcon("no"));
     
     progressBar_->advance(1);
     processOne();
@@ -604,11 +627,9 @@ void BatchDialog::slotProcessingFailed(const QString& file)
 
 void BatchDialog::slotGotThumbnail(const KFileItem* url, const QPixmap& pix)
 {
-    RawItem *item = itemDict_.find(url->url().filename());
-    if (item) 
-    {
-        item->viewItem->setThumbnail(pix);
-    }
+    RawItem *rawItem = itemDict_.find(url->url().filename());
+    if (rawItem) 
+        rawItem->viewItem->setThumbnail(pix);
 }
 
 } // NameSpace KIPIRawConverterPlugin
