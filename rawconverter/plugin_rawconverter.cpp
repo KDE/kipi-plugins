@@ -140,8 +140,13 @@ bool Plugin_RawConverter::checkBinaries()
 
     if (!process.start()) 
     {
-        KMessageBox::error(kapp->activeWindow(), i18n("dcraw is required for raw image conversion.\n"
-                                                      "Please install it."));
+        KMessageBox::error(kapp->activeWindow(),
+                           i18n("<qt><p>Unable to find the dcraw executable:<br> "
+                                "This program is required to process Raw file formats conversion. "
+                                "Please install dcraw as a package from your distributor "
+                                "or <a href=\"%2\">download the source</a>.</p></qt>")
+                                .arg("http://www.cybercom.net/~dcoffin/dcraw/"));        
+
         return false;
     }
 

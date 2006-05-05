@@ -36,9 +36,11 @@ class QListViewItem;
 class QCheckBox;
 class QRadioButton;
 class QVButtonGroup;
+class QGroupBox;
 class QLabel;
 class QPixmap;
 class QTimer;
+class QWidget;
 
 class KFileItem;
 class KListView;
@@ -111,12 +113,16 @@ private:
 
     QTimer            *blinkConvertTimer_;
 
+    QWidget           *page_;
+
     QLabel            *brightnessLabel_;
     QLabel            *redLabel_;
     QLabel            *blueLabel_;
 
     QCheckBox         *cameraWBCheckBox_;
     QCheckBox         *fourColorCheckBox_;
+    
+    QGroupBox         *settingsBox_;
 
     QVButtonGroup     *saveButtonGroup_;
     QVButtonGroup     *conflictButtonGroup_;

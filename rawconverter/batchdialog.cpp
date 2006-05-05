@@ -48,6 +48,7 @@ extern "C"
 
 // KDE includes.
 
+#include <kcursor.h>
 #include <klistview.h>
 #include <klocale.h>
 #include <kurl.h>
@@ -83,13 +84,13 @@ BatchDialog::BatchDialog(QWidget *parent)
                          i18n("Con&vert"), i18n("&Abort"))
 {
     currentConvertItem_ = 0;
-    QWidget *page = new QWidget( this );
-    setMainWidget( page );
-    QGridLayout *mainLayout = new QGridLayout(page, 5, 1, 0, marginHint());
+    page_ = new QWidget( this );
+    setMainWidget( page_ );
+    QGridLayout *mainLayout = new QGridLayout(page_, 5, 1, 0, marginHint());
 
     //---------------------------------------------
 
-    QFrame *headerFrame = new QFrame( page );
+    QFrame *headerFrame = new QFrame( page_ );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
     layout->setMargin( 2 ); // to make sure the frame gets displayed
@@ -112,7 +113,7 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // --------------------------------------------------------------
 
-    listView_ = new KListView(page);
+    listView_ = new KListView(page_);
     listView_->addColumn( i18n("Thumbnail") );
     listView_->addColumn( i18n("Raw File") );
     listView_->addColumn( i18n("Target File") );
@@ -127,10 +128,10 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    QGroupBox *settingsBox = new QGroupBox(0, Qt::Vertical, i18n("Settings"), page);
-    QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox->layout(), 4, 1, KDialog::spacingHint());
+    settingsBox_ = new QGroupBox(0, Qt::Vertical, i18n("Settings"), page_);
+    QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox_->layout(), 4, 1, KDialog::spacingHint());
 
-    cameraWBCheckBox_ = new QCheckBox(i18n("Use camera white balance"), settingsBox);
+    cameraWBCheckBox_ = new QCheckBox(i18n("Use camera white balance"), settingsBox_);
     QToolTip::add(cameraWBCheckBox_, i18n("<p>Use the camera's custom white-balance settings. "
                                           "The default  is to use fixed daylight values, "
                                           "calculated from sample images."));
@@ -138,7 +139,7 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    fourColorCheckBox_ = new QCheckBox(i18n("Four color RGBG"), settingsBox);
+    fourColorCheckBox_ = new QCheckBox(i18n("Four color RGBG"), settingsBox_);
     QToolTip::add(fourColorCheckBox_, i18n("<p>Interpolate RGB as four colors. "
                                       "The default is to assume that all green "
                                       "pixels are the same. If even-row green "
@@ -150,8 +151,8 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    brightnessLabel_   = new QLabel(i18n("Brightness:"), settingsBox);
-    brightnessSpinBox_ = new KDoubleNumInput(settingsBox);
+    brightnessLabel_   = new QLabel(i18n("Brightness:"), settingsBox_);
+    brightnessSpinBox_ = new KDoubleNumInput(settingsBox_);
     brightnessSpinBox_->setPrecision(2);
     brightnessSpinBox_->setRange(0.0, 10.0, 0.01, true);
     QToolTip::add(brightnessSpinBox_, i18n("<p>Specify the output brightness"));
@@ -160,8 +161,8 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    redLabel_   = new QLabel(i18n("Red multiplier:"), settingsBox);
-    redSpinBox_ = new KDoubleNumInput(settingsBox);
+    redLabel_   = new QLabel(i18n("Red multiplier:"), settingsBox_);
+    redSpinBox_ = new KDoubleNumInput(settingsBox_);
     redSpinBox_->setPrecision(2);
     redSpinBox_->setRange(0.0, 10.0, 0.01, true);
     QToolTip::add(redSpinBox_, i18n("<p>After all other color adjustments, "
@@ -171,8 +172,8 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    blueLabel_   = new QLabel(i18n("Blue multiplier:"), settingsBox);
-    blueSpinBox_ = new KDoubleNumInput(settingsBox);
+    blueLabel_   = new QLabel(i18n("Blue multiplier:"), settingsBox_);
+    blueSpinBox_ = new KDoubleNumInput(settingsBox_);
     blueSpinBox_->setPrecision(2);
     blueSpinBox_->setRange(0.0, 10.0, 0.01, true);
     QToolTip::add(blueSpinBox_, i18n("<p>After all other color adjustments, "
@@ -182,7 +183,7 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    saveButtonGroup_ = new QVButtonGroup(i18n("Save Format"),page);
+    saveButtonGroup_ = new QVButtonGroup(i18n("Save Format"),page_);
     saveButtonGroup_->setRadioButtonExclusive(true);
 
     jpegButton_ = new QRadioButton("JPEG", saveButtonGroup_);
@@ -212,7 +213,7 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    conflictButtonGroup_ = new QVButtonGroup(i18n("If Target File Exists"), page);
+    conflictButtonGroup_ = new QVButtonGroup(i18n("If Target File Exists"), page_);
     conflictButtonGroup_->setRadioButtonExclusive(true);
 
     overwriteButton_ = new QRadioButton(i18n("Overwrite"),conflictButtonGroup_);
@@ -221,11 +222,11 @@ BatchDialog::BatchDialog(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    mainLayout->addMultiCellWidget(settingsBox, 1, 1, 1, 1);
+    mainLayout->addMultiCellWidget(settingsBox_, 1, 1, 1, 1);
     mainLayout->addMultiCellWidget(saveButtonGroup_, 2, 2, 1, 1);
     mainLayout->addMultiCellWidget(conflictButtonGroup_, 3, 3, 1, 1);
 
-    progressBar_ = new KProgress(page);
+    progressBar_ = new KProgress(page_);
     progressBar_->setMaximumHeight( fontMetrics().height() );
     progressBar_->setEnabled(false);
     mainLayout->addMultiCellWidget(progressBar_, 4, 4, 1, 1);
@@ -499,6 +500,7 @@ void BatchDialog::slotBusy(bool busy)
     enableButton (User2, busy);
     enableButton (Close, !busy);
 
+    settingsBox_->setEnabled(!busy);
     saveButtonGroup_->setEnabled(!busy);
     conflictButtonGroup_->setEnabled(!busy);
     cameraWBCheckBox_->setEnabled(!busy);
@@ -509,6 +511,9 @@ void BatchDialog::slotBusy(bool busy)
     brightnessLabel_->setEnabled(!busy);
     redLabel_->setEnabled(!busy);
     blueLabel_->setEnabled(!busy);
+    listView_->setEnabled(!busy);
+
+    busy ? page_->setCursor(KCursor::waitCursor()) : page_->unsetCursor();
 }
 
 void BatchDialog::slotIdentify()
