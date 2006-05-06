@@ -8,6 +8,7 @@ Name[el]=Χιόνι
 Name[es]=Nieve
 Name[ga]=Sneachta
 Name[it]=Neve
+Name[ja]=雪 (Snow)
 Name[pt]=Neve
 Name[pt_BR]=Neve
 Name[sv]=Snö
@@ -17,10 +18,12 @@ Comment[de]=Passt perfekt zu Ihren Ferien in den Bergen
 Comment[el]=Μια υπέροχη επιλογή για διακοπές σε βουνό
 Comment[es]=Una coincidencia perfecta para sus vacaciones de montaña
 Comment[it]=Perfetto per le settimane bianche
+Comment[ja]=冬山での休日にぴったりのテーマ
 Comment[pt]=A combinação perfeita com as suas férias na montanha
 Comment[pt_BR]=A combinação perfeita com as suas férias na montanha
 Comment[sv]=Passar perfekt med din alpinsemester
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
+Name[ja]=Aurelien Gateau
 Url=mailto:aurelien.gateau@free.fr
