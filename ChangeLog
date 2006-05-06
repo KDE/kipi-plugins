@@ -1,5 +1,291 @@
 v0.1.0-rc2 - Last Changed Rev: 537412 - 2006-05-03
 ----------------------------------------------------------------------------
+2006-05-06 20:45  anaselli
+
+	* trunk/extragear/libs/kipi-plugins/ChangeLog,
+	  trunk/extragear/libs/libkexif/ChangeLog,
+	  trunk/extragear/libs/libkipi/ChangeLog: fix ChangeLog files
+
+2006-05-06 20:42  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/README: Update plugins list
+
+2006-05-06 20:24  anaselli
+
+	* trunk/extragear/libs/kipi-plugins/kipi-plugins.lsm: updated
+	  version for incoming release 0.1.0rc2
+
+2006-05-06 20:21  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/README: add libmagick++ depency
+
+2006-05-05 07:27  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/plugin_rawconverter.cpp:
+	  Kipi Raw converter : - improvements of batch dialog : set cursor
+	  busy during conversion. fix missing widget to disable. - fix
+	  error message if dcraw cannot be found when batch/single
+	  converter is started. CCMAIL : kde-imaging@kde.org,
+	  digikam-devel@kde.org
+
+2006-05-04 21:58  gateau
+
+	* trunk/extragear/libs/kipi-plugins/htmlexport/themes/matrix/matrix.desktop,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/simple/simple.desktop,
+	  trunk/extragear/libs/kipi-plugins/htmlexport/themes/snow/snow.desktop:
+	  Changed url to my email address
+
+2006-05-04 20:56  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.cpp:
+	  Kipi Raw converter (batch mode) : improvements of dialog : blink
+	  icon in Raw list files during conversion. CCMAIL :
+	  kde-imaging@kde.org, digikam-devel@kde.org
+
+2006-05-04 19:55  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.h:
+	  Kipi Raw converter (batch mode) : missing to toogle busy 3
+	  QLabel during conversions.
+
+2006-05-04 19:50  anaselli
+
+	* trunk/extragear/libs/kipi-plugins/Makefile.am: Removed
+	  imagesgallery to avoid to compile it to build 0.1.0rc2 (please
+	  re-add after release 0.1.0 rc2 if needed) CCMAIL:
+	  kde-imaging@kde.org
+
+2006-05-04 19:46  anaselli
+
+	* trunk/extragear/libs/kipi-plugins/ChangeLog: Added revision
+	  marker
+
+2006-05-04 19:38  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/previewwidget.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/previewwidget.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.h:
+	  Kipi Raw converter (single mode) : improvements of dialog : -
+	  toogle busy mouse cursor during preview rendering and
+	  conversion. - blink a message in preview widget during preview
+	  rendering and conversion. CCMAIL : kde-imaging@kde.org,
+	  digikam-devel@kde.org
+
+2006-05-04 18:48  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/plugin_rawconverter.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/plugin_rawconverter.h:
+	  Kipi Raw converter (batch and single mode) : only use real Raw
+	  files from current image collection selected checking file
+	  extensions. This way prevent any problems with dcraw if we parse
+	  JPEG files or TIFF/EP 16 bits files. CCMAIL :
+	  kde-imaging@kde.org, digikam-devel@kde.org
+
+2006-05-04 13:31  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.cpp:
+	  Kipi Raw converter (batch mode) : fix 'Convert' and 'Abort'
+	  buttons status when files list is empty and when all conversions
+	  are complete.
+
+2006-05-04 13:13  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/clistviewitem.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/dmessagebox.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/dmessagebox.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/processcontroller.cpp:
+	  Kipi Raw converter (batch mode) : - Improved batch dialog to
+	  handle properlly non Raw files. - No need to use a separate
+	  dialog to list non-Raw files. Just disable all non Raw file
+	  items in the list. That all... - Code simplification again. -
+	  Fix i18n again. CCMAIL : kde-imaging@kde.org,
+	  digikam-devel@kde.org
+
+2006-05-04 10:58  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/clistviewitem.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/dcrawprocess.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/dmessagebox.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/dmessagebox.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/plugin_rawconverter.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/plugin_rawconverter.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/previewwidget.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/previewwidget.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/processcontroller.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/processcontroller.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.h:
+	  Kipi Raw converter (batch and single mode) : support of PNG
+	  format like ouput file - PNG file format is now the default
+	  output format used by plugin. Max PNG compression is used. - set
+	  JPEG compression is 100 by default to give a max quality of
+	  output image. - Code cleanup and optimization. - Fix i18n at
+	  all. CCMAIL : kde-imaging@kde.org, digikam-devel@kde.org BUG:
+	  93787
+
+2006-05-04 07:41  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.cpp:
+	  fix i18n
+
+2006-05-04 07:40  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.cpp:
+	  Kipi Raw converter (batch mode) : polish progress bar rule
+
+2006-05-03 23:36  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.h:
+	  Kipi Raw converter (batch mode) : fix progress bar rule when
+	  abort button is pressed
+
+2006-05-03 23:27  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.cpp:
+	  Kipi Raw converter (batch mode) : improvements of dialog. -
+	  Using KDialogBase instead QDialog. - Using standard KDE spacing
+	  and marging at all. - Source code cleanup and simplification.
+	  CCMAIL: kde-imaging@kde.org, digikam-devel@kde.org
+
+2006-05-03 22:51  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/batchdialog.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/cspinbox.h,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.cpp:
+	  Kipi Raw converter (batch mode) : make it possible to enter
+	  numbers with 2 digit precision in settings. - no need to
+	  re-invent the wheel. We use KDoubleNumInput widget at all. -
+	  Removing old spinbox widget. - Fix dialog layout. - Fix widget
+	  order (label before a setting). CCMAIL: kde-imaging@kde.org,
+	  digikam-devel@kde.org BUG : 101455
+
+2006-05-03 22:17  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.h:
+	  Kipi Raw converter (single mode) : make it possible to enter
+	  numbers with 2 digit precision in settings. - no need to
+	  re-invent the wheel. We use KDoubleNumInput widget at all. - Fix
+	  dialog layout. - Fix widget order (label before a setting).
+	  CCMAIL: kde-imaging@kde.org, digikam-devel@kde.org CCBUGS :
+	  101455
+
+2006-05-03 21:21  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.h:
+	  Kipi Raw converter (single mode) : improvements of dialog. -
+	  Using KDialogBase instead QDialog. - Using standard KDE spacing
+	  and marging at all. - Source code cleanup and simplification.
+	  CCMAIL: kde-imaging@kde.org, digikam-devel@kde.org
+
+2006-05-03 20:41  toma
+
+	* trunk/extragear/libs/kipi-plugins/ChangeLog,
+	  trunk/extragear/libs/kipi-plugins/NEWS: Update for release
+
+2006-05-03 20:16  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.cpp,
+	  trunk/extragear/libs/kipi-plugins/rawconverter/singledialog.h:
+	  Kipi Raw converter (single mode) : fill a default file name into
+	  the save as dialog. CCMAIL: kde-imaging@kde.org,
+	  digikam-devel@kde.org BUG: 103763
+
+2006-05-03 17:59  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/configure.in.in: fix c++ flag
+
+2006-05-03 16:12  jahrens
+
+	* trunk/extragear/libs/kipi-plugins/AUTHORS: Wrong email addr
+
+2006-05-03 09:05  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/jpeglossless/actions.h,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/actionthread.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/actionthread.h,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.h:
+	  fix email
+
+2006-05-03 08:39  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.h:
+	  polish
+
+2006-05-03 08:20  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.cpp:
+	  kipi jpeglosslessplugin : If an error is detected during
+	  rotate/flip/convertB&W image process, displaying error messages
+	  into progress dialog like a warning. Note that all message from
+	  ImageMagick are reported too. CCMAIL: kde-imaging@kde.org,
+	  digikam-devel@kde.org
+
+2006-05-03 02:12  blackie
+
+	* trunk/extragear/libs/kipi-plugins/findimages/imagesimilaritydata.h:
+	  fixed mitchmached malloc/delete.
+
+2006-05-02 21:42  anaselli
+
+	* trunk/extragear/libs/kipi-plugins/configure.in.bot,
+	  trunk/extragear/libs/kipi-plugins/configure.in.in: Added a test
+	  check for libMagik needed by jpeglossless plugin CCMAIL:
+	  kde-imaging@kde.org, digikam-devel@kde.org
+
+2006-05-02 20:11  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/jpeglossless/Makefile.am,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/messagebox.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/messagebox.h,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.h,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/progressdlg.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/progressdlg.h:
+	  kipi jpeglosslessplugin : - using standard kipi batch progress
+	  dialog to display process/error messages. No need to have 2
+	  separate dialogs to render jobs. This way look like others kipi
+	  plugins. - Remove obsolete dialogs. - Code cleanup and
+	  simplifications. CCMAIL: kde-imaging@kde.org,
+	  digikam-devel@kde.org
+
+2006-05-02 19:23  toma
+
+	* trunk/extragear/libs/kipi-plugins/calendar/calwizard.cpp: Start
+	  KJobViewer at the last possible moment and add a note just
+	  before generating. BUG: 120868
+
+2006-05-02 19:04  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/jpeglossless/actionthread.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/actionthread.h,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.cpp,
+	  trunk/extragear/libs/kipi-plugins/jpeglossless/plugin_jpeglossless.h:
+	  polish
+
+2006-05-02 18:56  cgilles
+
+	* trunk/extragear/libs/kipi-plugins/AUTHORS,
+	  trunk/extragear/libs/kipi-plugins/kipiplugins.kdevelop: fix email
+
 2006-05-02 17:31  toma
 
 	* trunk/extragear/libs/kipi-plugins/AUTHORS: Update
