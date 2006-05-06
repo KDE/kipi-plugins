@@ -975,14 +975,14 @@ v0.1.0-rc2 - Last Changed Rev: 537412 - 2006-05-03
 	  project for this tool. CCMAIL: kde-imaging@kde.org,
 	  digikam-devel@kde.org
 
+v0.1.0-rc1                                                        2005-02-08
+----------------------------------------------------------------------------
+
 2005-09-04 21:46  toma
 
 	* trunk/extragear/libs/kipi-plugins/ChangeLog,
 	  trunk/extragear/libs/kipi-plugins/kipi-plugins.lsm: Preparing
 	  for release.
-
-v0.1.0-rc1                                                        2005-02-08
-----------------------------------------------------------------------------
 
 2005-09-03 16:08  gateau
 
