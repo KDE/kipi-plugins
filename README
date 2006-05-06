@@ -13,42 +13,31 @@ Libkipi allows image applications to use a plugin architecture for additional fu
 Currently implemented plugins are:
 
  1) RawConverter       : A Raw Image Converter for digital cameras 
-                         (by Renchi Raju).
 
  2) SlideShow          : Slideshow with effects ripped out from kslideshow and 3D effect using OpenGL 
-                         (by Renchi Raju).
 
  3) MpegEncoder        : An images to MPEG flux encoder for build a video file with many images 
-                         (by Gilles Caulier).
 
  4) ImagesGallery      : An Album to HTML gallery export 
-                         (by Gilles Caulier and Gregory Kokanosky).
 
  5) PrintWizard        : Print multiple images/index pages in one page
-                         (by Todd Shoemaker).
 
  6) JpegLossLess       : Batch images processing (rotation/flipping) without
-			losing meta information embedded in the image
+ 			 losing meta information embedded in the image
                          and without recompression of the jpeg data.
-                         (by Renchi Raju).
 
  7) CdArchiving        : Albums CD archiving via K3b cd burning program 
-                         (by Gilles Caulier).
 
  8) AcquireImages      : Acquire images interface 
-                         (by Gilles Caulier).
                          This plugin include these parts:
                             ScanImages (scanner management using Kooka).
                             ScreenshotImages (Snap Screen based on KSnapshot and adapted to Digikam).
 
  9) Calendar           : A Calendar construction plugin using Album images 
-                         (by Renchi Raju)
 
 10) SendImages         : A plugin to send images by email, allowing resizing and recompressing before sending.
-                         (by Gilles Caulier).
 
 11) BatchProcessImages : A batch process images plugin.
-                         (by Gilles Caulier).
                          This plugin includes these parts:
                             RenameImages (Image file names renaming).
                             ConvertImages (Image files format converting).
@@ -60,20 +49,18 @@ Currently implemented plugins are:
                             RecompressImages (Recompress JPEG, TIFF, PNG, and TGA images).
 
 12) TimeAdjust         : Adjust image file Time and Date.
-                         (by Jesper K. Pedersen).
 
 13) WallPaper          : Image to KDE Desktop.
-                         (by Gregory Kokanosky and Gilles Caulier).
 
 14) FindImages         : Find dupplicate images in albums
-                         (by Richard Grould and Gilles Caulier).
 
+15) GalleryExport      : Plugin to export images to a remote Gallery server (http://gallery.sf.net)
 
-15) GalleryExport      : Plugin to export images to a remote Gallery (http://gallery.sf.net)
-                         (by Renchi Raju).
+16) FlickrExport       : Plugin to export images to a remote Flickr web service (http://www.flickr.com)
 
-16) HelloWorld         : Tutorial plugin implementation 
-                         (by Renchi Raju, Gilles Caulier, and Achim Bohnet).
+17) HTMLExport         : New plugin to export images collections into HTML page (under developpment)
+
+Nota : "HelloWorld" plugin is just a tutorial plugin implementation for developpers.
 
 
 Contact :
@@ -120,15 +107,16 @@ Plugin Specific Dependencies (for compiling and for running) :
 
 Requirements: kde >= 3.1.x, libkipi >= 0.1
 specific plugin specific requirements:
-jpeglossless : libkexif >= 0.1, libtiff >= 3.0
-slideshow    : libimlib2 >= 1.0.x, OpenGL support for libqt
+
+jpeglossless       : libkexif >= 0.1, libmagick++ >= 6.2.4
+slideshow          : libimlib2 >= 1.0.x, OpenGL support for libqt
 batchprocessimages : imagemagick (runtime dependency)
-cdarchiving   : k3b (runtime dependency)
-kameraklient  : libgphoto2 >= 2.x
-mpegenconder  : mjpegtools (runtime dependency)
-wallpaper     : kdebase >= 3.1.x (runtime dependency)
-rawconverter  : libtiff >= 3.0
-acquireimages : libtiff >= 3.0
-timeadjust    : libkexif >= 0.1
+cdarchiving        : k3b (runtime dependency)
+kameraklient       : libgphoto2 >= 2.x
+mpegenconder       : mjpegtools (runtime dependency)
+wallpaper          : kdebase >= 3.1.x (runtime dependency)
+rawconverter       : libtiff >= 3.0
+acquireimages      : libtiff >= 3.0
+timeadjust         : libkexif >= 0.1
 
 
