@@ -60,7 +60,9 @@ Currently implemented plugins are:
 
 17) HTMLExport         : New plugin to export images collections into HTML page (under developpment)
 
-Nota : "HelloWorld" plugin is just a tutorial plugin implementation for developpers.
+18) SimpleViewerExport : Plugin to export images to SimpleViewer (http://www.airtightinteractive.com/simpleviewer/)
+
+Remark : "HelloWorld" plugin is just a tutorial plugin implementation for developpers.
 
 
 Contact :
