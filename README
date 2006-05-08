@@ -120,5 +120,6 @@ wallpaper          : kdebase >= 3.1.x (runtime dependency)
 rawconverter       : libtiff >= 3.0
 acquireimages      : libtiff >= 3.0
 timeadjust         : libkexif >= 0.1
+htmlexport         : libxslt >= 1.1
 
 
