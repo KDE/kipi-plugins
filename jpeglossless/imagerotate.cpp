@@ -26,6 +26,8 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <cassert>
+#include <string>
 
 // Qt includes.
 
@@ -45,6 +47,10 @@
 
 #include <libkexif/kexifdata.h>
 
+// ImageMgick includes.
+
+#include <Magick++.h>
+
 // Local includes.
 
 #include "imagerotate.h"
@@ -57,7 +63,6 @@ extern "C"
 #include <sys/types.h>
 #include <unistd.h>
 #include <jpeglib.h>
-#include <wand/magick-wand.h>
 #include "transupp.h"
 #include "jpegtransform.h"
 }
@@ -140,74 +145,51 @@ bool rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QSt
 
 bool rotateImageMagick(const QString& src, const QString& dest, RotateAction angle, QString& err)
 {
-    bool valRet = true;
-    MagickWandGenesis();
-    PixelWand *background    = NewPixelWand();
-    MagickWand *magickWand   = NewMagickWand();  
-    MagickBooleanType status = MagickReadImage(magickWand, QFile::encodeName(src));
+    try 
+    {
+        Magick::Image image;
+        std::string srcFileName(QFile::encodeName(src));
+        image.read(srcFileName);
+
+        switch(angle)
+        {
+            case (Rot90):
+            {
+                image.rotate(90.0);
+                break;
+            }
+            case (Rot180):
+            {
+                image.rotate(180.0);        
+                break;
+            }
+            case (Rot270):
+            {
+                image.rotate(270.0);
+                break;
+            }
+            case (Rot0):
+            {
+                break;
+            }
+            default:
+            {
+                kdError() << "ImageRotate: Nonstandard rotation angle" << endl;
+                err = i18n("Nonstandard rotation angle");
+                return false;
+            }
+        }
     
-    if (status == MagickFalse)
-    {
-        err = i18n("Failed to load original image");
-        valRet = false;
-        goto Exit_Method;
+        std::string destFileName(QFile::encodeName(dest));
+        image.write(destFileName);
+        return true;
     }
-
-    PixelSetColor(background, "#000000");
-
-    switch(angle)
+    catch( std::exception &error_ )
     {
-        case (Rot90):
-        {   
-            status = MagickRotateImage(magickWand, background, 90.0);
-            break;
-        }
-        case (Rot180):
-        {
-            status = MagickRotateImage(magickWand, background, 180.0);
-            break;
-        }
-        case (Rot270):
-        {
-            status = MagickRotateImage(magickWand, background, 270.0);
-            break;
-        }
-        case (Rot0):
-        {
-            break;
-        }
-        default:
-        {
-            kdError() << "ImageRotate: Nonstandard rotation angle" << endl;
-            err = i18n("Nonstandard rotation angle");
-            valRet = false;
-            goto Exit_Method;
-        }
+        err = i18n("Cannot rotating: %1").arg(error_.what());
+        kdError() << "ImageRotate: ImageMagick exception: " << error_.what() << endl;
+        return false;
     }
-
-    if (status == MagickFalse)
-    {
-        err = i18n("Failed to process image rotation image");
-        valRet = false;
-        goto Exit_Method;
-    }
-
-    status = MagickWriteImages(magickWand, QFile::encodeName(dest), MagickTrue);
-    
-    if (status == MagickFalse)
-    {
-        err = i18n("Failed to save target image");
-        valRet = false;
-        goto Exit_Method;
-    }
-
-Exit_Method:
-
-    if (background) DestroyPixelWand(background);
-    MagickClearException(magickWand);
-    if (magickWand) DestroyMagickWand(magickWand);
-    MagickWandTerminus();
-    return valRet;
 }
 
 }  // NameSpace KIPIJPEGLossLessPlugin

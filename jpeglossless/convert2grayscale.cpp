@@ -41,9 +41,9 @@
 #include <kdebug.h>
 #include <kurl.h>
 
-// ImageMagick includes.
+// ImageMgick includes.
 
-//#include <Magick++.h>
+#include <Magick++.h>
 
 // Local includes.
 
@@ -192,7 +192,7 @@ bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err)
 
 bool image2GrayScaleImageMagick(const QString& src, const QString& dest, QString& err)
 {
-/*    try 
+    try 
     {
         Magick::Image image;
         std::string srcFileName(QFile::encodeName(src));
@@ -209,7 +209,7 @@ bool image2GrayScaleImageMagick(const QString& src, const QString& dest, QString
         err = i18n("Cannot convert to gray scale: %1").arg(error_.what());
         kdError() << "Convert2GrayScale: ImageMagick exception: " << error_.what() << endl;
         return false;
-    }*/
+    }
 }
 
 }  // NameSpace KIPIJPEGLossLessPlugin
