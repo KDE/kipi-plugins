@@ -44,9 +44,9 @@
 
 #include <libkexif/kexifdata.h>
 
-// ImageMgick includes.
+// ImageMagick includes.
 
-#include <Magick++.h>
+//#include <Magick++.h>
 
 // Local includes
 
@@ -131,7 +131,7 @@ bool flipJPEG(const QString& src, const QString& dest, FlipAction action, QStrin
 
 bool flipImageMagick(const QString& src, const QString& dest, FlipAction action, QString& err)
 {
-    try 
+/*    try 
     {
         Magick::Image image;
         std::string srcFileName(QFile::encodeName(src));
@@ -166,7 +166,7 @@ bool flipImageMagick(const QString& src, const QString& dest, FlipAction action,
         err = i18n("Cannot flip: %1").arg(error_.what());
         kdError() << "ImageFlip: ImageMagick exception: " << error_.what() << endl;
         return false;
-    }
+    }*/
 }
 
 }  // NameSpace KIPIJPEGLossLessPlugin

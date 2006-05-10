@@ -1,6 +1,10 @@
 METASOURCES  = AUTO
-KDE_CXXFLAGS = $(USE_EXCEPTIONS)
 INCLUDES     = $(LIBKIPI_CFLAGS) $(LIBKEXIF_CFLAGS) $(all_includes)
+
+# --enable-final triggers: http://bugs.kde.org/show_bug.cgi?id=126326
+# digikam: camera download: auto-rotated images loose EXIF info ...
+# So make sure nofinal is always used here!
+KDE_OPTIONS = nofinal
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_jpeglossless.la
@@ -12,7 +16,7 @@ kipiplugin_jpeglossless_la_SOURCES = plugin_jpeglossless.cpp jpegtransform.cpp \
 		                     imagerotate.cpp convert2grayscale.cpp imageflip.cpp 
 
 kipiplugin_jpeglossless_la_LIBADD = $(LIB_KPARTS) \
-				    -ljpeg -lMagick++ $(LIBKIPI_LIBS) $(LIBKEXIF_LIBS) 
+				    -ljpeg -lWand $(LIBKIPI_LIBS) $(LIBKEXIF_LIBS) 
 
 kipiplugin_jpeglossless_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 
