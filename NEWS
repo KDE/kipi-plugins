@@ -1,21 +1,31 @@
-v0.1.0-rc2                                                        2005-05-03
+v0.1.0-rc2                                                        2005-05-06
 ----------------------------------------------------------------------------
-2006-05-01 18:13  anaselli
-	* new images gallery export (html export by gateau)
+2006-05-06 18:13  anaselli
+	* new images gallery export (html export by Aurelien Gateau)
+	* new SimpleViewer plugin (by Joern Ahrens)
 	* fixed bugs
 	images gallery 
-	  #120242 #112025 #106152 #119933 #99418 #103449 #110596
+	  #120242 #112025 #106152 #119933 #99418 #103449 #110596 #116605
+        jpeglossless
+          #123499 
 	kamera klient
 	  #99157
 	print wizard
-	  #98286 #101495
+	  #98286 #101495 #117670
 	batch process images
-	  #108945 
-	  #117397
+	  #108945 #117397 #114512
+        calendar
+          #120868 #118936 
 	mpeg encoder
 	  #109739 #114514 #114515 
 	acquire images
 	  #114519 
+        raw converter
+          #101455 #101455 #103763 #103763 #118407
+        send images
+          #119562
+        slideshow
+          #119867
 
 For details and info about previous versions, see ChangeLog.
 
