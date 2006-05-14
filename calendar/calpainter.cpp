@@ -20,7 +20,7 @@
  * ============================================================ */
 
 // Qt includes.
- 
+
 #include <qpainter.h>
 #include <qrect.h>
 #include <qpaintdevice.h>
@@ -85,7 +85,8 @@ void CalPainter::paint(bool useDeviceMetrics)
 
     // --------------------------------------------------
 
-    int   days[42];
+    int days[42];
+    int startDayOffset = KGlobal::locale()->weekStartDay();
 
     for (int i=0; i<42; i++)
         days[i] = -1;
@@ -93,8 +94,11 @@ void CalPainter::paint(bool useDeviceMetrics)
     QDate d(year_, month_, 1);
     int s = d.dayOfWeek();
 
+    if (s+7-startDayOffset >= 7)
+            s=s-7;
+
     for (int i=s; i<(s+d.daysInMonth()); i++) {
-        days[i-1] = i-s+1;
+        days[i + (7-startDayOffset)] = i-s+1;
     }
 
     // -----------------------------------------------
@@ -227,7 +231,12 @@ void CalPainter::paint(bool useDeviceMetrics)
 
     painter->setPen(Qt::red);
     sy = rCal.top();
-    for (int i=0; i<7; i++) {
+    for (int i=0; i<7; i++)
+    {
+        int dayname = i + startDayOffset;
+        if (dayname > 7)
+            dayname = dayname-7;
+
         sx = cellSize * i + rCal.left();
         r.moveTopLeft(QPoint(sx,sy));
         rsmall = r;
@@ -235,10 +244,10 @@ void CalPainter::paint(bool useDeviceMetrics)
         rsmall.setHeight(r.height() - 2);
 #if KDE_IS_VERSION(3,2,0)
         painter->drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                          KGlobal::locale()->calendar()->weekDayName(i+1, true));
+                          KGlobal::locale()->calendar()->weekDayName(dayname, true));
 #else
         painter->drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                          KGlobal::locale()->weekDayName(i+1, true));
+                          KGlobal::locale()->weekDayName(dayname, true));
 #endif
 
     }
@@ -302,7 +311,8 @@ void paintCalendar(int year, int month, const QString& imagePath,
 
     // --------------------------------------------------
 
-    int   days[42];
+    int days[42];
+    int startDayOffset = KGlobal::locale()->weekStartDay();
 
     for (int i=0; i<42; i++)
         days[i] = -1;
@@ -310,8 +320,11 @@ void paintCalendar(int year, int month, const QString& imagePath,
     QDate d(year, month, 1);
     int s = d.dayOfWeek();
 
+    if (s+7-startDayOffset >= 7)
+            s=s-7;
+
     for (int i=s; i<(s+d.daysInMonth()); i++) {
-        days[i-1] = i-s+1;
+        days[i+(7-startDayOffset)] = i-s+1;
     }
 
     // -----------------------------------------------
@@ -459,6 +472,11 @@ void paintCalendar(int year, int month, const QString& imagePath,
     painter->setPen(Qt::red);
     sy = rCal.top();
     for (int i=0; i<7; i++) {
+
+        int dayname = i + startDayOffset;
+        if (dayname > 7)
+            dayname = dayname-7;
+
         sx = cellSize * i + rCal.left();
         r.moveTopLeft(QPoint(sx,sy));
         rsmall = r;
@@ -466,10 +484,10 @@ void paintCalendar(int year, int month, const QString& imagePath,
         rsmall.setHeight(r.height() - 2);
 #if KDE_IS_VERSION(3,2,0)
         painter->drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                          KGlobal::locale()->calendar()->weekDayName(i+1, true));
+                          KGlobal::locale()->calendar()->weekDayName(dayname, true));
 #else
         painter->drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                          KGlobal::locale()->weekDayName(i+1, true));
+                          KGlobal::locale()->weekDayName(dayname, true));
 #endif
     }
 
@@ -526,14 +544,19 @@ CalBlockPainter::CalBlockPainter(QObject *parent, int year, int month,
     // --------------------------------------------------
 
     int  days[42];
+    int startDayOffset = KGlobal::locale()->weekStartDay();
+
     for (int i=0; i<42; i++)
         days[i] = -1;
 
     QDate d(year, month, 1);
     int s = d.dayOfWeek();
 
+    if (s+7-startDayOffset >= 7)
+            s=s-7;
+
     for (int i=s; i<(s+d.daysInMonth()); i++) {
-        days[i-1] = i-s+1;
+        days[i+(7-startDayOffset)] = i-s+1;
     }
 
     // -----------------------------------------------
@@ -666,6 +689,11 @@ CalBlockPainter::CalBlockPainter(QObject *parent, int year, int month,
     painter->setPen(Qt::red);
     sy = rCal.top();
     for (int i=0; i<7; i++) {
+
+        int dayname = i + startDayOffset;
+        if (dayname > 7)
+            dayname = dayname-7;
+
         sx = cellSize * i + rCal.left();
         r.moveTopLeft(QPoint(sx,sy));
         rsmall = r;
@@ -673,10 +701,10 @@ CalBlockPainter::CalBlockPainter(QObject *parent, int year, int month,
         rsmall.setHeight(r.height() - 2);
 #if KDE_IS_VERSION(3,2,0)
         painter->drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                          KGlobal::locale()->calendar()->weekDayName(i+1, true));
+                          KGlobal::locale()->calendar()->weekDayName(dayname, true));
 #else
         painter->drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                          KGlobal::locale()->weekDayName(i+1, true));
+                          KGlobal::locale()->weekDayName(dayname, true));
 #endif
     }
 
