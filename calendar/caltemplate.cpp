@@ -60,7 +60,7 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
     QGridLayout *mainLayout = new QGridLayout(this, 2, 1, 5, 5);
 
     // ----------------------------------------------------------------
-   
+
     QFrame *headerFrame = new QFrame( this );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
@@ -73,17 +73,17 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
     mainLayout->addMultiCellWidget( headerFrame, 0, 0, 0, 1 );
-        
+
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
     directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    
+
     // ----------------------------------------------------------------
-    
+
     previewSize_ = 300;
 
     QGroupBox *boxPreview_ = new QGroupBox( i18n("Preview"), this );
@@ -147,6 +147,7 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
 
     checkBoxDrawLines_ = new QCheckBox(i18n("Draw lines in calendar"), gbox);
     gboxLayout->addWidget( checkBoxDrawLines_ );
+    checkBoxDrawLines_->setChecked(true);
 
     connect(checkBoxDrawLines_, SIGNAL(toggled(bool)),
             SLOT(slotParamsChanged()));
@@ -188,7 +189,7 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
     QFont f;
     comboFont_->setCurrentText( f.family() );
 
-    
+
     gboxLayout->addLayout( hlayout );
 
     connect(comboFont_, SIGNAL(activated(int)),
@@ -205,10 +206,10 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
     // ---------------------------------------------------------------
 
     timer_ = new QTimer(this);
-    
+
     connect(timer_, SIGNAL(timeout()),
             SLOT(slotUpdatePreview()));
-            
+
     timer_->start(0,true);
 }
 
