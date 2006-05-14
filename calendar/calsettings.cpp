@@ -20,7 +20,7 @@
  * ============================================================ */
 
 // Local includes.
- 
+
 #include "calsettings.h"
 
 namespace KIPICalendarPlugin

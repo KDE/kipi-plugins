@@ -52,6 +52,7 @@ public:
     ~MonthWidget();
 
     KURL imagePath();
+    void setImage( const KURL& url );
 
 protected:
 

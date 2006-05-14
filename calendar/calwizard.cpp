@@ -6,7 +6,7 @@
  * Description :
  *
  * Copyright 2003 by Renchi Raju
- * Copyright 2006 by Tom Albers  
+ * Copyright 2006 by Tom Albers
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -47,6 +47,7 @@
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 #include <kdeversion.h>
+#include <kcalendarsystem.h>
 
 // LibKipi includes.
 
@@ -216,12 +217,15 @@ void CalWizard::slotPageSelected(const QString&)
         currPage_ = 0;
         monthNumbers_.clear();
         monthImages_.clear();
-
         KURL image;
         QString month;
         QStringList printList;
         for (int i=1; i<=12; i++) {
-            month =  KGlobal::locale()->monthName(i);
+#if KDE_IS_VERSION(3,2,0)
+            month = KGlobal::locale()->calendar()->monthName(i, false);
+#else
+            month = KGlobal::locale()->monthName(i);
+#endif
             image = cSettings_->getImage(i);
             if (!image.isEmpty()) {
                 monthNumbers_.append(i);
@@ -336,9 +340,15 @@ void CalWizard::slotPrintOnePage()
 
     QString yearName = QString::number(cSettings_->getYear());
 
-    wFinishLabel_->setText(i18n("Printing Calendar Page for %1 of %2").
-                           arg(KGlobal::locale()->monthName(month)).
-                           arg(yearName));
+#if KDE_IS_VERSION(3,2,0)
+    wFinishLabel_->setText(i18n("Printing Calendar Page for %1 of %2")
+                    .arg(KGlobal::locale()->calendar()->monthName(month, false))
+                    .arg(yearName));
+#else
+    wFinishLabel_->setText(i18n("Printing Calendar Page for %1 of %2")
+                     .arg(KGlobal::locale()->monthName(month)).
+                     .arg(yearName));
+#endif
 
     currPage_++;
     if (currPage_ != 0)

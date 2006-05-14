@@ -19,8 +19,8 @@
  *
  * ============================================================ */
 
-// Qt includes. 
- 
+// Qt includes.
+
 #include <qhgroupbox.h>
 #include <qlayout.h>
 #include <qspinbox.h>
@@ -60,7 +60,7 @@ void CalSelect::setupView( KIPI::Interface* interface )
     QVBoxLayout *mainLayout = new QVBoxLayout(this, 6, 11);
 
     // ----------------------------------------------------------------
-   
+
     QFrame *headerFrame = new QFrame( this );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
@@ -73,15 +73,15 @@ void CalSelect::setupView( KIPI::Interface* interface )
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
     mainLayout->addWidget( headerFrame );
-    
+
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
     directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    
+
     // ----------------------------------------------------------------
 
     QHGroupBox *yearBox = new QHGroupBox(i18n("Select Year"), this);
@@ -109,12 +109,18 @@ void CalSelect::setupView( KIPI::Interface* interface )
     QGridLayout *monthBoxLayout = new QGridLayout(monthBox->layout());
     monthBoxLayout->setAlignment( Qt::AlignCenter );
 
-    MonthWidget *w;
+    KURL::List urlList;
+    KIPI::ImageCollection images = interface->currentSelection();
+    if ( images.isValid() && !images.images().isEmpty())
+        urlList = images.images();
 
+    MonthWidget *w;
     int index = 0;
     for (int i=0; i<2; i++) {
         for (int j=0; j<6; j++) {
             w = new MonthWidget( interface, monthBox,index+1);
+            if (index < urlList.count())
+                w->setImage(urlList[index]);
             mwVector_->insert(index,w);
             monthBoxLayout->addWidget(w, i, j);
             index++;
