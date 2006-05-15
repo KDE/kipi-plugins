@@ -816,11 +816,11 @@ void KImg2mpgData::slotEncode( void )
   BackGroundColor = m_BackgroundColorButton->color();
   HexColor = "";
   Temp.setNum (BackGroundColor.red(), 16);
-  HexColor = HexColor + Temp;
+  HexColor = HexColor + Temp.rightJustify(2,'0');
   Temp.setNum (BackGroundColor.green(), 16);
-  HexColor = HexColor + Temp;
+  HexColor = HexColor + Temp.rightJustify(2,'0');
   Temp.setNum (BackGroundColor.blue(), 16);
-  HexColor = HexColor + Temp;
+  HexColor = HexColor + Temp.rightJustify(2,'0');
 
   // This is for debuging output in debug dialog box.
 
