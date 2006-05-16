@@ -11,8 +11,8 @@ kipiplugin_jpeglossless_la_SOURCES = plugin_jpeglossless.cpp jpegtransform.cpp \
 		                     actionthread.cpp utils.cpp transupp.c \
 		                     imagerotate.cpp convert2grayscale.cpp imageflip.cpp 
 
-kipiplugin_jpeglossless_la_LIBADD = $(LIB_KPARTS) \
-				    -ljpeg -lMagick++ $(LIBKIPI_LIBS) $(LIBKEXIF_LIBS) 
+kipiplugin_jpeglossless_la_LIBADD = -ljpeg -lMagick++ $(LIBKEXIF_LIBS) $(LIBKIPI_LIBS) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
+
 
 kipiplugin_jpeglossless_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 

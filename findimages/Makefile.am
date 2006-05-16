@@ -12,7 +12,7 @@ kipiplugin_findimages_la_SOURCES = plugin_findimages.cpp displaycompare.cpp \
 				   fuzzycompare.cpp fastcompare.cpp actions.cpp
 
 # Libs needed by the plugin
-kipiplugin_findimages_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS)
+kipiplugin_findimages_la_LIBADD = -lkdefx $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
 kipiplugin_findimages_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

@@ -10,7 +10,7 @@ kipiplugin_cdarchiving_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 kipiplugin_cdarchiving_la_SOURCES = plugin_cdarchiving.cpp cdarchivingdialog.cpp cdarchiving.cpp 
 
 # Libs needed by the plugin
-kipiplugin_cdarchiving_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS)
+kipiplugin_cdarchiving_la_LIBADD = $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
 kipiplugin_cdarchiving_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

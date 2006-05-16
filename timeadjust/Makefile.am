@@ -8,7 +8,7 @@ kipiplugin_timeadjust_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKEXIF_LIBS_DEP)
 kipiplugin_timeadjust_la_SOURCES = plugin_timeadjust.cpp timeadjustdialog.cpp
 
 # Libs needed by the plugin
-kipiplugin_timeadjust_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) $(LIBKEXIF_LIBS)
+kipiplugin_timeadjust_la_LIBADD = $(LIBKEXIF_LIBS) $(LIBKIPI_LIBS) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
 kipiplugin_timeadjust_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

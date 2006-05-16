@@ -8,7 +8,7 @@ kipiplugin_acquireimages_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 kipiplugin_acquireimages_la_SOURCES = plugin_acquireimages.cpp acquireimagedialog.cpp screenshotdialog.cpp
 
 # Libs needed by the plugin
-kipiplugin_acquireimages_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) $(LIB_TIFF)
+kipiplugin_acquireimages_la_LIBADD = $(LIB_TIFF) $(LIB_X11) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
 kipiplugin_acquireimages_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)

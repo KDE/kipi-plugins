@@ -11,8 +11,7 @@ kipiplugin_flickrexport_la_SOURCES = plugin_flickrexport.cpp \
 		flickrwidget.cpp mpform.cpp flickralbumdialog.ui \
 		flickrviewitem.cpp	exifrestorer.cpp 
 
-kipiplugin_flickrexport_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) \
-				$(LIB_KHTML)
+kipiplugin_flickrexport_la_LIBADD = $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 kipiplugin_flickrexport_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 

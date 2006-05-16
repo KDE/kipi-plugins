@@ -19,8 +19,9 @@ kipiplugin_htmlexport_la_SOURCES = \
 kde_kcfg_DATA = \
 	htmlexportconfig.kcfg
 
-kipiplugin_htmlexport_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) 
-kipiplugin_htmlexport_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries) -lexslt $(LIBXSLT_LIBS)
+kipiplugin_htmlexport_la_LIBADD = -lexslt -lxml2 $(LIBXSLT_LIBS) $(LIBKIPI_LIBS) $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
+kipiplugin_htmlexport_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+
 
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = kipiplugin_htmlexport.desktop

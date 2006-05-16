@@ -9,8 +9,7 @@ kipiplugin_calendar_la_SOURCES = plugin_calendar.cpp \
 		calwidget.cpp calpainter.cpp calselect.cpp \
 		monthwidget.cpp
 
-kipiplugin_calendar_la_LIBADD = $(LIB_KPARTS) \
-				-lkdeprint $(LIBKIPI_LIBS)
+kipiplugin_calendar_la_LIBADD = $(LIB_KDEPRINT) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 kipiplugin_calendar_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 

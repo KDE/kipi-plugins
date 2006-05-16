@@ -9,7 +9,7 @@ kipiplugin_imagesgallery_la_SOURCES = plugin_imagesgallery.cpp imgallerydialog.c
                                       imagesgallery.cpp exifrestorer.cpp 
 
 # Libs needed by the plugin
-kipiplugin_imagesgallery_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS)
+kipiplugin_imagesgallery_la_LIBADD = $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
 kipiplugin_imagesgallery_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
