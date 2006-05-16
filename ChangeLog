@@ -1,4 +1,109 @@
-v0.1.0-rc2 - Last Changed Rev: 537412 - 2006-05-03
+v0.1.0-rc3 - Last Changed Rev: ?????? - 2006-??-??
+----------------------------------------------------------------------------
+
+2006-05-16 01:29 +0000 [r541356]  ach
+
+	* kipi-plugins/slideshow/Makefile.am,
+	  kipi-plugins/galleryexport/Makefile.am,
+	  kipi-plugins/htmlexport/Makefile.am,
+	  kipi-plugins/findimages/Makefile.am,
+	  kipi-plugins/batchprocessimages/Makefile.am,
+	  kipi-plugins/kameraklient/Makefile.am,
+	  kipi-plugins/calendar/Makefile.am,
+	  kipi-plugins/timeadjust/Makefile.am,
+	  kipi-plugins/helloworld/Makefile.am,
+	  kipi-plugins/flickrexport/Makefile.am,
+	  kipi-plugins/printwizard/Makefile.am,
+	  kipi-plugins/jpeglossless/Makefile.am,
+	  kipi-plugins/simpleviewerexport/Makefile.am,
+	  kipi-plugins/sendimages/Makefile.am,
+	  kipi-plugins/acquireimages/Makefile.am,
+	  kipi-plugins/cdarchiving/Makefile.am,
+	  kipi-plugins/rawconverter/Makefile.am,
+	  kipi-plugins/imagesgallery/Makefile.am,
+	  kipi-plugins/wallpaper/Makefile.am,
+	  kipi-plugins/mpegencoder/Makefile.am: kipi-plugins: link only
+	  against and all libraries that contain symbols used by the
+	  plugin. Reduces the # of library packages referenced in NEEDED
+	  section of plugins by ~ factor of two (35 to 18 in kubuntu)
+	  CCMAIL: kde-imaging@kde.org
+
+2006-05-15 19:35 +0000 [r541235]  toma
+
+	* kipi-plugins/mpegencoder/kimg2mpg.cpp: Always return two numbers
+	  for r,g and b, else image2mpg will fail. Maybe this is the root
+	  of all evil for a long time? BUG: 127219
+
+2006-05-14 11:57 +0000 [r540657]  toma
+
+	* kipi-plugins/calendar/calpainter.cpp: Look at the settings to
+	  find out the first day of the week and adjust the calendars for
+	  that. So if the first day of the week in your country is
+	  wednesday, that will work now. CCBUG: 111697 BUG: 117105
+
+2006-05-14 10:50 +0000 [r540640]  toma
+
+	* kipi-plugins/calendar/caltemplate.cpp: Draw grid by default
+	  CCBUG: 116970
+
+2006-05-14 10:21 +0000 [r540633]  toma
+
+	* kipi-plugins/calendar/monthwidget.h,
+	  kipi-plugins/calendar/calselect.cpp,
+	  kipi-plugins/calendar/calsettings.cpp,
+	  kipi-plugins/calendar/calwizard.cpp,
+	  kipi-plugins/calendar/monthwidget.cpp: - Cleanup some warnings. -
+	  when you request a calendar and have some images selected in the
+	  host application, use those images for the months.
+
+2006-05-13 20:54 +0000 [r540535]  anaselli
+
+	* kipi-plugins/NEWS: Added all the bug fixed by 0.1.0rc2 release
+	  and missed SimpleViewer CCMAIL: kde-imaging@kde.org
+
+2006-05-13 19:17 +0000 [r540527]  cgilles
+
+	* kipi-plugins/jpeglossless/Makefile.am: revert to old version
+	  broken by a previous commit.
+
+2006-05-12 13:52 +0000 [r540067]  cgilles
+
+	* kipi-plugins/jpeglossless/Makefile.am: kipi-plugin JPEGLossLess :
+	  fix exception rules in makefile.
+
+2006-05-10 19:26 +0000 [r539484]  cgilles
+
+	* kipi-plugins/jpeglossless/convert2grayscale.cpp,
+	  kipi-plugins/jpeglossless/imageflip.cpp,
+	  kipi-plugins/jpeglossless/imagerotate.cpp: JpegLossLess plugin :
+	  revert. wrong commit for these files. This code is not ready to
+	  use (:=)))
+
+2006-05-10 19:22 +0000 [r539482]  cgilles
+
+	* kipi-plugins/jpeglossless/convert2grayscale.cpp,
+	  kipi-plugins/jpeglossless/imageflip.cpp,
+	  kipi-plugins/jpeglossless/imagerotate.cpp,
+	  kipi-plugins/jpeglossless/Makefile.am: JpegLossLess plugin :
+	  backport fix from digiKam (see file 126326 in B.K.O) about an
+	  incompatibility with JPEG implementation and "enable-final"
+	  option! CCMAIL: kde-imaging@kde.org CCBUGS: 126326
+
+2006-05-08 18:24 +0000 [r538737]  gateau
+
+	* kipi-plugins/README: Added dependency on libxslt for htmlexport
+
+2006-05-07 11:34 +0000 [r538265]  jahrens
+
+	* kipi-plugins/README: Plugin list update
+
+2006-05-06 22:01 +0000 [r538121]  toma
+
+	* kipi-plugins/ChangeLog, libkexif/ChangeLog, libkipi/ChangeLog:
+	  updates
+
+
+v0.1.0-rc2 - Last Changed Rev: 538177 - 2006-05-03
 ----------------------------------------------------------------------------
 2006-05-06 20:45  anaselli
 

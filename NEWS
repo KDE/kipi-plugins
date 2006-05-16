@@ -1,3 +1,19 @@
+v0.1.0-rc3                                                        2005-??-??
+----------------------------------------------------------------------------
+
+	XXXXXX entries added up to r541356  XXXXXX
+
+New features:
+
+
+Bugs fixed:
+
+	o mpegencoder: Always return two numbers for r,g and b, else
+	  image2mpg will fail (#127219)
+
+	o calendar: honors first day of the week now (#117105)
+
+
 v0.1.0-rc2                                                        2005-05-06
 ----------------------------------------------------------------------------
 2006-05-06 18:13  anaselli
