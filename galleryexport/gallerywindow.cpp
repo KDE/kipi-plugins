@@ -238,7 +238,7 @@ void GalleryWindow::slotDoLogin()
         url.setHost(dlg.url());
     }
     if (!url.url().endsWith(".php"))
-        url.addPath("gallery_remote2.php");
+        url.addPath("main.php");
 
     m_url    = url.url();
     m_user   = dlg.name();
@@ -327,7 +327,7 @@ void GalleryWindow::slotAlbums( const QValueList<GAlbum>& albumList )
             {
                 kdWarning() << "Failed to find parent for album "
                             << album.name
-                            << "with id " << album.ref_num;
+                            << " with id " << album.ref_num << "\n";
             }
         }
     }
@@ -388,19 +388,20 @@ void GalleryWindow::slotPhotos( const QValueList<GPhoto>& photoList)
     for ( iter = photoList.begin(); iter != photoList.end(); ++iter )
     {
         const GPhoto& photo = *iter;
-        KURL imageurl(photo.albumURL);
-        KURL thumburl(photo.albumURL);
-        imageurl.addPath(photo.name);
-        thumburl.addPath(photo.thumbName);
+        KURL imageurl(photo.albumURL + photo.name);
+        KURL thumburl(photo.albumURL + photo.thumbName);
+        // Boris : gallery use complex URLs (with = & etc.). the addPath seems not working in this context
+        //imageurl.addPath(photo.name);
+        //thumburl.addPath(photo.thumbName);
 
         m_photoView->write( "<tr><td class='photo'>"
                             + QString("<a href='%1'>")
                             .arg(imageurl.url())
-                            + QString("<img border=1 src=%1><br>")
+                            + QString("<img border=1 src=\"%1\"><br>")
                             .arg(thumburl.url())
                             + photo.name
                             + ( photo.caption.isEmpty() ? QString() :
-                                QString("<br><i>%1<i>")
+                                QString("<br><i>%1</i>")
                                 .arg(photo.caption) )
                             + "</a></td></tr>" );
     }

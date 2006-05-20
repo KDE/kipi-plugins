@@ -57,6 +57,7 @@ void GalleryMPForm::finish()
     str += "--";
     str += m_boundary;
     str += "--";
+    str += "\r\n";
 
     QTextStream ts(m_buffer, IO_Append|IO_WriteOnly);
     ts.setEncoding(QTextStream::UnicodeUTF8);
@@ -111,7 +112,7 @@ bool GalleryMPForm::addFile(const QString& path)
     str += m_boundary;
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
-    str += "userfile";
+    str += "g2_userfile";
     str += "\"; ";
     str += "filename=\"";
     str += QFile::encodeName(KURL(path).filename());

@@ -62,10 +62,11 @@ void GalleryTalker::login( const KURL& url, const QString& name,
     m_url = url;
 
     GalleryMPForm form;
-    form.addPair("cmd", "login");
-    form.addPair("protocol_version", "2.3");
-    form.addPair("uname", name);
-    form.addPair("password", passwd);
+    form.addPair("g2_form[cmd]", "login");
+    form.addPair("g2_controller", "remote:GalleryRemote");
+    form.addPair("g2_form[protocol_version]", "2.3");
+    form.addPair("g2_form[uname]", name);
+    form.addPair("g2_form[password]", passwd);
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
@@ -85,8 +86,9 @@ void GalleryTalker::login( const KURL& url, const QString& name,
 void GalleryTalker::listAlbums()
 {
     GalleryMPForm form;
-    form.addPair("cmd", "fetch-albums");
-    form.addPair("protocol_version", "2.3");
+    form.addPair("g2_form[cmd]", "fetch-albums-prune");
+    form.addPair("g2_controller", "remote:GalleryRemote");
+    form.addPair("g2_form[protocol_version]", "2.3");
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
@@ -113,9 +115,10 @@ void GalleryTalker::listPhotos( const QString& albumName )
     }
         
     GalleryMPForm form;
-    form.addPair("cmd", "fetch-album-images");
-    form.addPair("protocol_version", "2.3");
-    form.addPair("set_albumName", albumName);
+    form.addPair("g2_form[cmd]", "fetch-album-images");
+    form.addPair("g2_controller", "remote:GalleryRemote");
+    form.addPair("g2_form[protocol_version]", "2.3");
+    form.addPair("g2_form[set_albumName]", albumName);
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
@@ -145,15 +148,16 @@ void GalleryTalker::createAlbum( const QString& parentAlbumName,
     }
 
     GalleryMPForm form;
-    form.addPair("cmd", "new-album");
-    form.addPair("protocol_version", "2.3");
-    form.addPair("set_albumName", parentAlbumName);
+    form.addPair("g2_form[cmd]", "new-album");
+    form.addPair("g2_controller", "remote:GalleryRemote");
+    form.addPair("g2_form[protocol_version", "2.3");
+    form.addPair("g2_form[set_albumName]", parentAlbumName);
     if (!albumName.isEmpty())
-        form.addPair("newAlbumName", albumName);
+        form.addPair("g2_form[newAlbumName]", albumName);
     if (!albumTitle.isEmpty())
-        form.addPair("newAlbumTitle", albumTitle);
+        form.addPair("g2_form[newAlbumTitle]", albumTitle);
     if (!albumCaption.isEmpty())
-        form.addPair("newAlbumDesc", albumCaption);
+        form.addPair("g2_form[newAlbumDesc]", albumCaption);
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
@@ -185,12 +189,13 @@ bool GalleryTalker::addPhoto( const QString& albumName,
     QString path = photoPath;
     
     GalleryMPForm form;
-    form.addPair("cmd", "add-item");
-    form.addPair("protocol_version", "2.3");
-    form.addPair("set_albumName", albumName);
-    form.addPair("userfile_name", QFile::encodeName(KURL(path).filename()));
+    form.addPair("g2_form[cmd]", "add-item");
+    form.addPair("g2_controller", "remote:GalleryRemote");
+    form.addPair("g2_form[protocol_version]", "2.3");
+    form.addPair("g2_form[set_albumName]", albumName);
+    form.addPair("g2_userfile_name", QFile::encodeName(KURL(path).filename()));
     if (!caption.isEmpty())
-        form.addPair("caption", caption);
+        form.addPair("g2_form[caption]", caption);
 
     QImage image(photoPath);
 
@@ -371,7 +376,8 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
                 {
                     GAlbum album;
                     album.name    = value;
-                    album.ref_num = key.section(".", 2, 2).toInt();
+                    album.ref_num = value.toInt();
+                    //album.ref_num = key.section(".", 2, 2).toInt();
                     iter = albumList.append(album);
                 }
                 else if (key.startsWith("album.title"))
@@ -430,6 +436,9 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
         return;
     }
 
+    // We need parent albums to come first for rest of the code to work
+    qHeapSort(albumList);
+
     emit signalAlbums( albumList );
 }
 
@@ -457,8 +466,10 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
         }
         else
         {
-            QStringList strlist = QStringList::split("=", line);
-            if (strlist.count() == 2)
+        	// Boris the Gallery default URL contains "=" char. So we will split the string only from the first "=" char
+            QStringList strlist = QStringList();
+            strlist << line.left(line.find('=')) << line.mid(line.find('=')+1);
+            if (strlist.count() >= 2)
             {
                 QString key   = strlist[0];
                 QString value = strlist[1];
