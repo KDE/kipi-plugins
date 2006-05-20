@@ -1,4 +1,4 @@
-v0.1.0-rc3                                                        2005-??-??
+v0.1.0-rc3                                                        2006-??-??
 ----------------------------------------------------------------------------
 
 	XXXXXX entries added up to r541356  XXXXXX
@@ -14,7 +14,7 @@ Bugs fixed:
 	o calendar: honors first day of the week now (#117105)
 
 
-v0.1.0-rc2                                                        2005-05-06
+v0.1.0-rc2                                                        2006-05-06
 ----------------------------------------------------------------------------
 2006-05-06 18:13  anaselli
 	* new images gallery export (html export by Aurelien Gateau)
