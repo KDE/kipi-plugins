@@ -390,9 +390,6 @@ void GalleryWindow::slotPhotos( const QValueList<GPhoto>& photoList)
         const GPhoto& photo = *iter;
         KURL imageurl(photo.albumURL + photo.name);
         KURL thumburl(photo.albumURL + photo.thumbName);
-        // Boris : gallery use complex URLs (with = & etc.). the addPath seems not working in this context
-        //imageurl.addPath(photo.name);
-        //thumburl.addPath(photo.thumbName);
 
         m_photoView->write( "<tr><td class='photo'>"
                             + QString("<a href='%1'>")

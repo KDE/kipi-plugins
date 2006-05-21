@@ -497,7 +497,7 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
                 }
                 else if (key.startsWith("baseurl"))
                 {
-                    albumURL = value;
+                    albumURL = value.replace("\\","");
                 }
             }
         }
