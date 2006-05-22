@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Matrix
+Name[zh_CN]=黑客帝国
 Comment=Show your photos with Matrix style
 Comment[cs]=Zobrazení obrázků ve stylu Matrix
 Comment[da]=Vis foto med Matrix-stil
@@ -11,6 +12,7 @@ Comment[ja]=写真をMatrixスタイルで表示
 Comment[pt]=A suas fotos no estilo Matrix
 Comment[pt_BR]=A suas fotos no estilo Matrix
 Comment[sv]=Visa foton med Matrix-stil
+Comment[zh_CN]=以黑客帝国风格显示您的照片
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau

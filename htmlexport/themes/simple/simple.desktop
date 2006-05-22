@@ -11,6 +11,7 @@ Name[ja]=シンプル
 Name[pt]=Simples
 Name[pt_BR]=Simples
 Name[sv]=Enkelt
+Name[zh_CN]=简单
 Comment=A simple and light theme
 Comment[cs]=Jednoduché a malé téma
 Comment[da]=Et enkelt og lyst tema
@@ -23,6 +24,7 @@ Comment[ja]=シンプルで軽いテーマ
 Comment[pt]=Ajuste de Data e Hora do KIPI
 Comment[pt_BR]=Ajuste de Data e Hora do KIPI
 Comment[sv]=Ett enkelt och lättviktigt tema
+Comment[zh_CN]=简洁明快的主题
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
