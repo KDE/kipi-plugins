@@ -40,6 +40,7 @@ GalleryMPForm::GalleryMPForm()
 {
     m_boundary  = "----------";
     m_boundary += KApplication::randomString( 42 + 13 ).ascii();
+    m_using_gallery2 = false;
 }
 
 GalleryMPForm::~GalleryMPForm()
@@ -112,7 +113,10 @@ bool GalleryMPForm::addFile(const QString& path)
     str += m_boundary;
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
-    str += "g2_userfile";
+    if (m_using_gallery2)
+      str += "g2_userfile";
+    else
+      str += "userfile";
     str += "\"; ";
     str += "filename=\"";
     str += QFile::encodeName(KURL(path).filename());
@@ -121,7 +125,7 @@ bool GalleryMPForm::addFile(const QString& path)
     str += "Content-Type: ";
     str +=  mime.ascii();
     str += "\r\n\r\n";
-    
+
     QTextStream ts(m_buffer, IO_Append|IO_WriteOnly);
     ts.setEncoding(QTextStream::UnicodeUTF8);
     ts << str;
@@ -131,7 +135,7 @@ bool GalleryMPForm::addFile(const QString& path)
     memcpy(m_buffer.data()+oldSize, imageData.data(), imageData.size());
     m_buffer[m_buffer.size()-2] = '\r';
     m_buffer[m_buffer.size()-1] = '\n';
-    
+
     return true;
 }
 

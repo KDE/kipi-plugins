@@ -24,6 +24,7 @@
 #include <qlineedit.h>
 #include <qpushbutton.h>
 #include <qlayout.h>
+#include <qcheckbox.h>
 
 #include <klocale.h>
 
@@ -35,7 +36,8 @@ namespace KIPIGalleryExportPlugin
 GalleryLogin::GalleryLogin(QWidget* parent, const QString& header,
                            const QString& _url,
                            const QString& _name,
-                           const QString& _passwd)
+                           const QString& _passwd,
+                           const bool _use_gallery2)
     : QDialog(parent)
 {
     setSizeGripEnabled( false );
@@ -77,6 +79,12 @@ GalleryLogin::GalleryLogin(QWidget* parent, const QString& header,
     QLabel* passwdLabel = new QLabel(this);
     passwdLabel->setText(i18n( "Password:" ));
     centerLayout->addWidget(passwdLabel, 2, 0);
+
+    //---------------------------------------------
+    m_galleryVersion = new QCheckBox( i18n("Use &Gallery 2"), this);
+    m_galleryVersion->setChecked( _use_gallery2 );
+    centerLayout->addWidget( m_galleryVersion, 3, 1 );
+    //---------------------------------------------
 
     vbox->addLayout( centerLayout );
 
@@ -127,5 +135,12 @@ QString GalleryLogin::password() const
 {
     return m_passwdEdit->text();
 }
+
+//---------------------------------------------
+bool GalleryLogin::isgGallery2Enable() const
+{
+  return m_galleryVersion->isChecked ();
+}
+//---------------------------------------------
 
 }

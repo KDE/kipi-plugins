@@ -53,6 +53,8 @@ public:
     GalleryTalker(QWidget* parent);
     ~GalleryTalker();
 
+    void setGallery2(bool usegallery2) {m_using_gallery2 = usegallery2;};
+
     bool loggedIn() const;
 
     void login( const KURL& url, const QString& name,
@@ -66,7 +68,7 @@ public:
     bool addPhoto( const QString& albumName,
                    const QString& photoPath,
                    const QString& caption=QString(),
-                   bool rescale=false, int maxDim=600 );
+                   bool rescale=false, int maxDim=600);
 
     void cancel();
     
@@ -78,6 +80,7 @@ private:
     KURL       m_url;
     KIO::Job*  m_job;
     bool       m_loggedIn;
+    bool       m_using_gallery2;
     QByteArray m_buffer;
 
 private:

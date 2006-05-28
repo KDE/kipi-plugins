@@ -39,15 +39,17 @@ public:
 
     bool addPair(const QString& name, const QString& value);
     bool addFile(const QString& path);
+    void setGallery2(bool usegallery2) {m_using_gallery2 = usegallery2;};
 
     QString    contentType() const;
     QByteArray formData()    const;
     QString    boundary()    const;
-    
+
 private:
 
     QByteArray m_buffer;
     QCString   m_boundary;
+    bool m_using_gallery2;
 };
 
 }

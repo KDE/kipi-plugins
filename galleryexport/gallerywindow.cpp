@@ -113,22 +113,6 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
     m_newAlbumBtn->setEnabled( false );
     m_addPhotoBtn->setEnabled( false );
 
-    m_talker = new GalleryTalker( this );
-    connect( m_talker, SIGNAL( signalError( const QString& ) ),
-             SLOT( slotError( const QString& ) ) );
-    connect( m_talker, SIGNAL( signalBusy( bool ) ),
-             SLOT( slotBusy( bool ) ) );
-    connect( m_talker,  SIGNAL( signalLoginFailed( const QString& ) ),
-             SLOT( slotLoginFailed( const QString& ) ) );
-    connect( m_talker, SIGNAL( signalAlbums( const QValueList<GAlbum>& ) ),
-             SLOT( slotAlbums( const QValueList<GAlbum>& ) ) );
-    connect( m_talker, SIGNAL( signalPhotos( const QValueList<GPhoto>& ) ),
-             SLOT( slotPhotos( const QValueList<GPhoto>& ) ) );
-    connect( m_talker, SIGNAL( signalAddPhotoSucceeded() ),
-             SLOT( slotAddPhotoSucceeded() ) );
-    connect( m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
-             SLOT( slotAddPhotoFailed( const QString& ) ) );
-
     m_progressDlg = new QProgressDialog( this, 0, true );
     m_progressDlg->setAutoReset( true );
     m_progressDlg->setAutoClose( true );
@@ -153,6 +137,25 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
     config.setGroup("GalleryExport Settings");
     m_url  = config.readEntry("URL");
     m_user = config.readEntry("User");
+    m_using_gallery2 = config.readBoolEntry("Gallery2", true);
+
+    m_talker = new GalleryTalker( this );
+    connect( m_talker, SIGNAL( signalError( const QString& ) ),
+             SLOT( slotError( const QString& ) ) );
+    connect( m_talker, SIGNAL( signalBusy( bool ) ),
+             SLOT( slotBusy( bool ) ) );
+    connect( m_talker,  SIGNAL( signalLoginFailed( const QString& ) ),
+             SLOT( slotLoginFailed( const QString& ) ) );
+    connect( m_talker, SIGNAL( signalAlbums( const QValueList<GAlbum>& ) ),
+             SLOT( slotAlbums( const QValueList<GAlbum>& ) ) );
+    connect( m_talker, SIGNAL( signalPhotos( const QValueList<GPhoto>& ) ),
+             SLOT( slotPhotos( const QValueList<GPhoto>& ) ) );
+    connect( m_talker, SIGNAL( signalAddPhotoSucceeded() ),
+             SLOT( slotAddPhotoSucceeded() ) );
+    connect( m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
+             SLOT( slotAddPhotoFailed( const QString& ) ) );
+    m_talker->setGallery2(m_using_gallery2);
+
     if (config.readBoolEntry("Resize", false))
     {
         m_resizeCheckBox->setChecked(true);
@@ -180,6 +183,7 @@ GalleryWindow::~GalleryWindow()
     config.setGroup("GalleryExport Settings");
     config.writeEntry("URL",  m_url);
     config.writeEntry("User", m_user);
+    config.writeEntry("Gallery2", m_using_gallery2);
     config.writeEntry("Resize", m_resizeCheckBox->isChecked());
     config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
 
@@ -224,7 +228,7 @@ void GalleryWindow::slotDoLogin()
 
 
     GalleryLogin dlg( this, i18n( "Login Into Remote Gallery" ),
-                      m_url, m_user, password );
+                      m_url, m_user, password, m_using_gallery2 );
     if ( dlg.exec() != QDialog::Accepted )
     {
         close();
@@ -240,8 +244,10 @@ void GalleryWindow::slotDoLogin()
     if (!url.url().endsWith(".php"))
         url.addPath("main.php");
 
-    m_url    = url.url();
-    m_user   = dlg.name();
+    m_url            = url.url();
+    m_user           = dlg.name();
+    m_using_gallery2 = dlg.isgGallery2Enable();
+    m_talker->setGallery2(m_using_gallery2);
 
     QString newPassword = dlg.password();
 #if KDE_IS_VERSION(3,2,0)

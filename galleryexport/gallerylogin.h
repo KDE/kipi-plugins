@@ -26,6 +26,7 @@
 
 class QLabel;
 class QLineEdit;
+class QCheckBox;
 
 namespace KIPIGalleryExportPlugin
 {
@@ -33,23 +34,26 @@ namespace KIPIGalleryExportPlugin
 class GalleryLogin : public QDialog
 {
 public:
-    
+
     GalleryLogin(QWidget* parent, const QString& header,
                  const QString& _url=QString(),
                  const QString& _name=QString(),
-                 const QString& _passwd=QString());
+                 const QString& _passwd=QString(),
+                 const bool _use_gallery2=false);
     ~GalleryLogin();
 
     QString url()      const;
     QString name()     const;
     QString password() const;
-    
+    bool isgGallery2Enable() const;
+
 private:
 
     QLabel*    m_headerLabel;
     QLineEdit* m_urlEdit;
     QLineEdit* m_nameEdit;
     QLineEdit* m_passwdEdit;
+    QCheckBox* m_galleryVersion;
 };
 
 }
