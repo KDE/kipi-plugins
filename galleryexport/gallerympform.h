@@ -9,7 +9,7 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,21 +31,22 @@ class GalleryMPForm
 {
 public:
 
-    GalleryMPForm();
+    GalleryMPForm(bool usegallery2 = false);
     ~GalleryMPForm();
 
     void finish();
     void reset();
 
     bool addPair(const QString& name, const QString& value);
-    bool addFile(const QString& path);
-    void setGallery2(bool usegallery2) {m_using_gallery2 = usegallery2;};
+    bool addFile(const QString& path, const QString& displayFilename);
 
     QString    contentType() const;
     QByteArray formData()    const;
     QString    boundary()    const;
 
 private:
+
+    bool addPairRaw(const QString& name, const QString& value);
 
     QByteArray m_buffer;
     QCString   m_boundary;

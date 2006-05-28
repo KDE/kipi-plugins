@@ -2,8 +2,8 @@
  * File  : gallerympform.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2004-12-02
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2004 by Renchi Raju
 
  * This program is free software; you can redistribute it
@@ -11,12 +11,12 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include <kapplication.h>
@@ -36,11 +36,16 @@
 namespace KIPIGalleryExportPlugin
 {
 
-GalleryMPForm::GalleryMPForm()
+GalleryMPForm::GalleryMPForm(bool usegallery2)
 {
     m_boundary  = "----------";
     m_boundary += KApplication::randomString( 42 + 13 ).ascii();
-    m_using_gallery2 = false;
+    m_using_gallery2 = usegallery2;
+
+    if (m_using_gallery2)
+    {
+      addPairRaw("g2_controller", "remote:GalleryRemote");
+    }
 }
 
 GalleryMPForm::~GalleryMPForm()
@@ -67,6 +72,14 @@ void GalleryMPForm::finish()
 
 bool GalleryMPForm::addPair(const QString& name, const QString& value)
 {
+    if (m_using_gallery2)
+      return addPairRaw(QString("g2_form[%1]").arg(name), value);
+
+    return addPairRaw(name, value);
+}
+
+bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
+{
     QCString str;
 
     str += "--";
@@ -90,8 +103,17 @@ bool GalleryMPForm::addPair(const QString& name, const QString& value)
     return true;
 }
 
-bool GalleryMPForm::addFile(const QString& path)
+bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
 {
+    QString filename = "userfile_name";
+    if (m_using_gallery2)
+        filename = "g2_userfile_name";
+
+    if (!addPairRaw(filename, displayFilename))
+    {
+        return false;
+    }
+
     KMimeType::Ptr ptr = KMimeType::findByURL(path);
     QString mime = ptr->name();
     if (mime.isEmpty())

@@ -61,23 +61,12 @@ void GalleryTalker::login( const KURL& url, const QString& name,
 {
     m_url = url;
 
-    GalleryMPForm form;
-    form.setGallery2(m_using_gallery2);
-    if(m_using_gallery2)
-    {
-      form.addPair("g2_form[cmd]",              "login");
-      form.addPair("g2_controller",             "remote:GalleryRemote");
-      form.addPair("g2_form[protocol_version]", "2.3");
-      form.addPair("g2_form[uname]",            name);
-      form.addPair("g2_form[password]",         passwd);
-    }
-    else
-    {
-      form.addPair("cmd",              "login");
-      form.addPair("protocol_version", "2.3");
-      form.addPair("uname",            name);
-      form.addPair("password",         passwd);
-    }
+    GalleryMPForm form(m_using_gallery2);
+
+    form.addPair("cmd",              "login");
+    form.addPair("protocol_version", "2.3");
+    form.addPair("uname",            name);
+    form.addPair("password",         passwd);
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
@@ -96,19 +85,14 @@ void GalleryTalker::login( const KURL& url, const QString& name,
 
 void GalleryTalker::listAlbums()
 {
-    GalleryMPForm form;
-    form.setGallery2(m_using_gallery2);
-    if(m_using_gallery2)
-    {
-      form.addPair("g2_form[cmd]",              "fetch-albums-prune");
-      form.addPair("g2_controller",             "remote:GalleryRemote");
-      form.addPair("g2_form[protocol_version]", "2.3");
-    }
-    else
-    {
-      form.addPair("cmd",              "fetch-albums");
-      form.addPair("protocol_version", "2.3");
-    }
+    GalleryMPForm form(m_using_gallery2);
+
+    QString task = "fetch-albums";
+    if (m_using_gallery2)
+      task = "fetch-albums-prune";
+
+    form.addPair("cmd",              task);
+    form.addPair("protocol_version", "2.3");
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
@@ -134,21 +118,11 @@ void GalleryTalker::listPhotos( const QString& albumName )
         m_job = 0;
     }
 
-    GalleryMPForm form;
-    form.setGallery2(m_using_gallery2);
-    if(m_using_gallery2)
-    {
-      form.addPair("g2_form[cmd]",              "fetch-album-images");
-      form.addPair("g2_controller",             "remote:GalleryRemote");
-      form.addPair("g2_form[protocol_version]", "2.3");
-      form.addPair("g2_form[set_albumName]",    albumName);
-    }
-    else
-    {
-      form.addPair("cmd",              "fetch-album-images");
-      form.addPair("protocol_version", "2.3");
-      form.addPair("set_albumName",    albumName);
-    }
+    GalleryMPForm form(m_using_gallery2);
+
+    form.addPair("cmd",              "fetch-album-images");
+    form.addPair("protocol_version", "2.3");
+    form.addPair("set_albumName",    albumName);
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
@@ -177,33 +151,17 @@ void GalleryTalker::createAlbum( const QString& parentAlbumName,
         m_job = 0;
     }
 
-    GalleryMPForm form;
-    form.setGallery2(m_using_gallery2);
-    if(m_using_gallery2)
-    {
-      form.addPair("g2_form[cmd]", "new-album");
-      form.addPair("g2_controller", "remote:GalleryRemote");
-      form.addPair("g2_form[protocol_version", "2.3");
-      form.addPair("g2_form[set_albumName]", parentAlbumName);
-      if (!albumName.isEmpty())
-          form.addPair("g2_form[newAlbumName]", albumName);
-      if (!albumTitle.isEmpty())
-          form.addPair("g2_form[newAlbumTitle]", albumTitle);
-      if (!albumCaption.isEmpty())
-          form.addPair("g2_form[newAlbumDesc]", albumCaption);
-    }
-    else
-    {
-      form.addPair("cmd", "new-album");
-      form.addPair("protocol_version", "2.3");
-      form.addPair("set_albumName", parentAlbumName);
-      if (!albumName.isEmpty())
-          form.addPair("newAlbumName", albumName);
-      if (!albumTitle.isEmpty())
-          form.addPair("newAlbumTitle", albumTitle);
-      if (!albumCaption.isEmpty())
-          form.addPair("newAlbumDesc", albumCaption);
-    }
+    GalleryMPForm form(m_using_gallery2);
+
+    form.addPair("cmd", "new-album");
+    form.addPair("protocol_version", "2.3");
+    form.addPair("set_albumName", parentAlbumName);
+    if (!albumName.isEmpty())
+        form.addPair("newAlbumName", albumName);
+    if (!albumTitle.isEmpty())
+        form.addPair("newAlbumTitle", albumTitle);
+    if (!albumCaption.isEmpty())
+        form.addPair("newAlbumDesc", albumCaption);
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
@@ -233,33 +191,16 @@ bool GalleryTalker::addPhoto( const QString& albumName,
     }
 
     QString path = photoPath;
+    QString display_filename = QFile::encodeName(KURL(path).filename());
 
-    GalleryMPForm form;
-    form.setGallery2(m_using_gallery2);
+    GalleryMPForm form(m_using_gallery2);
 
-    if (m_using_gallery2)
-    {
-      form.addPair("g2_form[cmd]", "add-item");
-      form.addPair("g2_controller", "remote:GalleryRemote");
-      form.addPair("g2_form[protocol_version]", "2.3");
-      form.addPair("g2_form[set_albumName]", albumName);
-      form.addPair("g2_userfile_name", QFile::encodeName(KURL(path).filename()));
-    }
-    else
-    {
-      form.addPair("cmd", "add-item");
-      form.addPair("protocol_version", "2.3");
-      form.addPair("set_albumName", albumName);
-      form.addPair("userfile_name", QFile::encodeName(KURL(path).filename()));
-    }
+    form.addPair("cmd", "add-item");
+    form.addPair("protocol_version", "2.3");
+    form.addPair("set_albumName", albumName);
 
     if (!caption.isEmpty())
-    {
-      if (m_using_gallery2)
-        form.addPair("g2_form[caption]", caption);
-      else
-        form.addPair("caption", caption);
-    }
+      form.addPair("caption", caption);
     QImage image(photoPath);
 
     if (!image.isNull())
@@ -275,7 +216,10 @@ bool GalleryTalker::addPhoto( const QString& albumName,
         }
     }
 
-    if (!form.addFile(path))
+    // The filename bit can perhaps be calculated in addFile()
+    // but not sure of the temporary filename that could be
+    // used for resizing... so I've added it explicitly for now.
+    if (!form.addFile(path, display_filename))
         return false;
 
     form.finish();
@@ -518,7 +462,7 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
     GPhotoList::iterator iter = photoList.begin();
 
     QString albumURL;
-    
+
     while (!ts.atEnd())
     {
         line = ts.readLine();
@@ -582,7 +526,7 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
     {
         (*iter).albumURL = albumURL;
     }
-    
+
     emit signalPhotos( photoList );
 }
 
@@ -618,7 +562,7 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
                 {
                     kdDebug() << "STATUS: Create Album: " << value << endl;
                 }
-                         
+
             }
         }
     }
@@ -670,7 +614,7 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
                 {
                     kdDebug() << "STATUS: Add Photo: " << value << endl;
                 }
-                         
+
             }
         }
     }
