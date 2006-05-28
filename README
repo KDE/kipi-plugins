@@ -18,26 +18,24 @@ Currently implemented plugins are:
 
  3) MpegEncoder        : An images to MPEG flux encoder for build a video file with many images 
 
- 4) ImagesGallery      : An Album to HTML gallery export 
+ 4) PrintWizard        : Print multiple images/index pages in one page
 
- 5) PrintWizard        : Print multiple images/index pages in one page
-
- 6) JpegLossLess       : Batch images processing (rotation/flipping) without
+ 5) JpegLossLess       : Batch images processing (rotation/flipping) without
  			 losing meta information embedded in the image
                          and without recompression of the jpeg data.
 
- 7) CdArchiving        : Albums CD archiving via K3b cd burning program 
+ 6) CdArchiving        : Albums CD archiving via K3b cd burning program 
 
- 8) AcquireImages      : Acquire images interface 
+ 7) AcquireImages      : Acquire images interface 
                          This plugin include these parts:
                             ScanImages (scanner management using Kooka).
                             ScreenshotImages (Snap Screen based on KSnapshot and adapted to Digikam).
 
- 9) Calendar           : A Calendar construction plugin using Album images 
+ 8) Calendar           : A Calendar construction plugin using Album images 
 
-10) SendImages         : A plugin to send images by email, allowing resizing and recompressing before sending.
+ 9) SendImages         : A plugin to send images by email, allowing resizing and recompressing before sending.
 
-11) BatchProcessImages : A batch process images plugin.
+10) BatchProcessImages : A batch process images plugin.
                          This plugin includes these parts:
                             RenameImages (Image file names renaming).
                             ConvertImages (Image files format converting).
@@ -48,21 +46,22 @@ Currently implemented plugins are:
                             ResizeImages (Basic and Prepare to print images resizing).
                             RecompressImages (Recompress JPEG, TIFF, PNG, and TGA images).
 
-12) TimeAdjust         : Adjust image file Time and Date.
+11) TimeAdjust         : Adjust image file Time and Date.
 
-13) WallPaper          : Image to KDE Desktop.
+12) WallPaper          : Image to KDE Desktop.
 
-14) FindImages         : Find dupplicate images in albums
+13) FindImages         : Find dupplicate images in albums
 
-15) GalleryExport      : Plugin to export images to a remote Gallery server (http://gallery.sf.net)
+14) GalleryExport      : Plugin to export images to a remote Gallery (and Gallery 2) server (http://gallery.sf.net)
 
-16) FlickrExport       : Plugin to export images to a remote Flickr web service (http://www.flickr.com)
+15) FlickrExport       : Plugin to export images to a remote Flickr web service (http://www.flickr.com)
 
-17) HTMLExport         : New plugin to export images collections into HTML page (under developpment)
+16) HTMLExport         : New plugin to export images collections into HTML page (under developpment)
 
-18) SimpleViewerExport : Plugin to export images to SimpleViewer (http://www.airtightinteractive.com/simpleviewer/)
+17) SimpleViewerExport : Plugin to export images to SimpleViewer (http://www.airtightinteractive.com/simpleviewer/)
 
 Remark : "HelloWorld" plugin is just a tutorial plugin implementation for developpers.
+       : "ImagesGallery" plugin is obsolete and no more maintained at the moment.
 
 
 Contact :
