@@ -53,7 +53,8 @@ public:
     GalleryTalker(QWidget* parent);
     ~GalleryTalker();
 
-    void setGallery2(bool usegallery2) {m_using_gallery2 = usegallery2;};
+    static void setGallery2(bool usegallery2) {s_using_gallery2 = usegallery2;};
+    static bool isGallery2() {return s_using_gallery2;};
 
     bool loggedIn() const;
 
@@ -71,7 +72,7 @@ public:
                    bool rescale=false, int maxDim=600);
 
     void cancel();
-    
+
 private:
 
     QWidget*   m_parent;
@@ -80,8 +81,9 @@ private:
     KURL       m_url;
     KIO::Job*  m_job;
     bool       m_loggedIn;
-    bool       m_using_gallery2;
     QByteArray m_buffer;
+
+    static bool s_using_gallery2;
 
 private:
 

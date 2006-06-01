@@ -72,7 +72,6 @@ private:
     QIntDict<GAlbumViewItem>  m_albumDict;
     QString                   m_url;
     QString                   m_user;
-    bool                      m_using_gallery2;
     QString                   m_lastSelectedAlbum;
     KIPI::Interface          *m_interface;
     KWallet::Wallet          *m_wallet;

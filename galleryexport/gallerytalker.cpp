@@ -41,7 +41,7 @@ namespace KIPIGalleryExportPlugin
 {
 
 GalleryTalker::GalleryTalker( QWidget* parent )
-    : m_parent( parent ),  m_job( 0 ),  m_loggedIn( false ), m_using_gallery2( false )
+    : m_parent( parent ),  m_job( 0 ),  m_loggedIn( false )
 {
 }
 
@@ -50,6 +50,8 @@ GalleryTalker::~GalleryTalker()
     if (m_job)
         m_job->kill();
 }
+
+bool GalleryTalker::s_using_gallery2 = true;
 
 bool GalleryTalker::loggedIn() const
 {
@@ -61,7 +63,7 @@ void GalleryTalker::login( const KURL& url, const QString& name,
 {
     m_url = url;
 
-    GalleryMPForm form(m_using_gallery2);
+    GalleryMPForm form;
 
     form.addPair("cmd",              "login");
     form.addPair("protocol_version", "2.3");
@@ -85,10 +87,10 @@ void GalleryTalker::login( const KURL& url, const QString& name,
 
 void GalleryTalker::listAlbums()
 {
-    GalleryMPForm form(m_using_gallery2);
+    GalleryMPForm form;
 
     QString task = "fetch-albums";
-    if (m_using_gallery2)
+    if (s_using_gallery2)
       task = "fetch-albums-prune";
 
     form.addPair("cmd",              task);
@@ -118,7 +120,7 @@ void GalleryTalker::listPhotos( const QString& albumName )
         m_job = 0;
     }
 
-    GalleryMPForm form(m_using_gallery2);
+    GalleryMPForm form;
 
     form.addPair("cmd",              "fetch-album-images");
     form.addPair("protocol_version", "2.3");
@@ -151,7 +153,7 @@ void GalleryTalker::createAlbum( const QString& parentAlbumName,
         m_job = 0;
     }
 
-    GalleryMPForm form(m_using_gallery2);
+    GalleryMPForm form;
 
     form.addPair("cmd", "new-album");
     form.addPair("protocol_version", "2.3");
@@ -193,7 +195,7 @@ bool GalleryTalker::addPhoto( const QString& albumName,
     QString path = photoPath;
     QString display_filename = QFile::encodeName(KURL(path).filename());
 
-    GalleryMPForm form(m_using_gallery2);
+    GalleryMPForm form;
 
     form.addPair("cmd", "add-item");
     form.addPair("protocol_version", "2.3");
@@ -383,8 +385,10 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
                 {
                     GAlbum album;
                     album.name    = value;
-                    album.ref_num = value.toInt();
-                    //album.ref_num = key.section(".", 2, 2).toInt();
+                    if (s_using_gallery2)
+                        album.ref_num = value.toInt();
+                    else
+                        album.ref_num = key.section(".", 2, 2).toInt();
                     iter = albumList.append(album);
                 }
                 else if (key.startsWith("album.title"))

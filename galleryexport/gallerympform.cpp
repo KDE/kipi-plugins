@@ -32,17 +32,17 @@
 #include <cstdio>
 
 #include "gallerympform.h"
+#include "gallerytalker.h"
 
 namespace KIPIGalleryExportPlugin
 {
 
-GalleryMPForm::GalleryMPForm(bool usegallery2)
+GalleryMPForm::GalleryMPForm()
 {
     m_boundary  = "----------";
     m_boundary += KApplication::randomString( 42 + 13 ).ascii();
-    m_using_gallery2 = usegallery2;
 
-    if (m_using_gallery2)
+    if (GalleryTalker::isGallery2())
     {
       addPairRaw("g2_controller", "remote:GalleryRemote");
     }
@@ -72,7 +72,7 @@ void GalleryMPForm::finish()
 
 bool GalleryMPForm::addPair(const QString& name, const QString& value)
 {
-    if (m_using_gallery2)
+    if (GalleryTalker::isGallery2())
       return addPairRaw(QString("g2_form[%1]").arg(name), value);
 
     return addPairRaw(name, value);
@@ -106,7 +106,7 @@ bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
 bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
 {
     QString filename = "userfile_name";
-    if (m_using_gallery2)
+    if (GalleryTalker::isGallery2())
         filename = "g2_userfile_name";
 
     if (!addPairRaw(filename, displayFilename))
@@ -135,7 +135,7 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     str += m_boundary;
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
-    if (m_using_gallery2)
+    if (GalleryTalker::isGallery2())
       str += "g2_userfile";
     else
       str += "userfile";

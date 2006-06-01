@@ -20,7 +20,7 @@
  * ============================================================ */
 
 // Include files for Qt
- 
+
 #include <qlistview.h>
 #include <qpushbutton.h>
 #include <qtimer.h>
@@ -96,7 +96,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Gallery Export Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
-        
+
     GalleryWidget* widget = new GalleryWidget( this );
     setMainWidget( widget );
     widget->setMinimumSize( 600, 400 );
@@ -137,7 +137,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
     config.setGroup("GalleryExport Settings");
     m_url  = config.readEntry("URL");
     m_user = config.readEntry("User");
-    m_using_gallery2 = config.readBoolEntry("Gallery2", true);
+    GalleryTalker::setGallery2(config.readBoolEntry("Gallery2", true));
 
     m_talker = new GalleryTalker( this );
     connect( m_talker, SIGNAL( signalError( const QString& ) ),
@@ -154,7 +154,6 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
              SLOT( slotAddPhotoSucceeded() ) );
     connect( m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
              SLOT( slotAddPhotoFailed( const QString& ) ) );
-    m_talker->setGallery2(m_using_gallery2);
 
     if (config.readBoolEntry("Resize", false))
     {
@@ -183,7 +182,7 @@ GalleryWindow::~GalleryWindow()
     config.setGroup("GalleryExport Settings");
     config.writeEntry("URL",  m_url);
     config.writeEntry("User", m_user);
-    config.writeEntry("Gallery2", m_using_gallery2);
+    config.writeEntry("Gallery2", GalleryTalker::isGallery2());
     config.writeEntry("Resize", m_resizeCheckBox->isChecked());
     config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
 
@@ -228,12 +227,15 @@ void GalleryWindow::slotDoLogin()
 
 
     GalleryLogin dlg( this, i18n( "Login Into Remote Gallery" ),
-                      m_url, m_user, password, m_using_gallery2 );
+                      m_url, m_user, password, GalleryTalker::isGallery2() );
     if ( dlg.exec() != QDialog::Accepted )
     {
         close();
         return;
     }
+
+    m_user           = dlg.name();
+    GalleryTalker::setGallery2(dlg.isgGallery2Enable());
 
     KURL url(dlg.url());
     if (url.protocol().isEmpty())
@@ -242,12 +244,13 @@ void GalleryWindow::slotDoLogin()
         url.setHost(dlg.url());
     }
     if (!url.url().endsWith(".php"))
-        url.addPath("main.php");
-
-    m_url            = url.url();
-    m_user           = dlg.name();
-    m_using_gallery2 = dlg.isgGallery2Enable();
-    m_talker->setGallery2(m_using_gallery2);
+    {
+        if (GalleryTalker::isGallery2())
+            url.addPath("main.php");
+        else
+            url.addPath("gallery_remote2.php");
+    }
+    m_url = url.url();
 
     QString newPassword = dlg.password();
 #if KDE_IS_VERSION(3,2,0)
@@ -314,7 +317,7 @@ void GalleryWindow::slotAlbums( const QValueList<GAlbum>& albumList )
 
         if ( album.parent_ref_num == 0 )
         {
-            GAlbumViewItem* item = new GAlbumViewItem( m_albumView, album.name,
+            GAlbumViewItem* item = new GAlbumViewItem( m_albumView, album.title,
                                                        album );
             item->setPixmap( 0, pix );
             m_albumDict.insert( album.ref_num, item );
@@ -324,7 +327,7 @@ void GalleryWindow::slotAlbums( const QValueList<GAlbum>& albumList )
             QListViewItem* parent = m_albumDict.find( album.parent_ref_num );
             if ( parent )
             {
-                GAlbumViewItem* item = new GAlbumViewItem( parent, album.name,
+                GAlbumViewItem* item = new GAlbumViewItem( parent, album.title,
                                                            album);
                 item->setPixmap( 0, pix );
                 m_albumDict.insert( album.ref_num, item );

@@ -31,7 +31,7 @@ class GalleryMPForm
 {
 public:
 
-    GalleryMPForm(bool usegallery2 = false);
+    GalleryMPForm();
     ~GalleryMPForm();
 
     void finish();
@@ -50,7 +50,6 @@ private:
 
     QByteArray m_buffer;
     QCString   m_boundary;
-    bool m_using_gallery2;
 };
 
 }
