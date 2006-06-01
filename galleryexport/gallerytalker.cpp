@@ -600,7 +600,11 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
 
         if (!foundResponse)
         {
-            foundResponse = line.startsWith("#__GR2PROTO__");
+            // Gallery1 sends resizing debug code sometimes so we
+            // have to detect things slightly differently
+            foundResponse = (line.startsWith("#__GR2PROTO__")
+                             || (line.startsWith("<br>- Resizing")
+                                 && line.endsWith("#__GR2PROTO__")));
         }
         else
         {
