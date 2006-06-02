@@ -25,3 +25,5 @@ messages: rc.cpp
 kipiimagebrokenpicdir = $(kde_datadir)/kipi/data
 kipiimagebrokenpic_DATA = image_broken.png
 
+kipiHTML401picdir = $(kde_datadir)/kipi
+kipiHTML401pic_DATA = valid-html401.png gohome.png up.png

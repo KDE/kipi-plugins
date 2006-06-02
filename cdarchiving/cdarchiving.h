@@ -201,6 +201,8 @@ private:
 
   void writeSettings(void);
   void readSettings(void);
+
+  QString webifyFileName(QString fileName);
 };
 
 }  // NameSpace KIPICDArchivingPlugin

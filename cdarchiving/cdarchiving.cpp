@@ -38,6 +38,7 @@ extern "C"
 #include <qimage.h>
 #include <qtextcodec.h>
 #include <qtimer.h>
+#include <qregexp.h>
 
 // Include files for KDE
 
@@ -530,7 +531,7 @@ bool CDArchiving::buildHTMLInterface (void)
         KIPI::ImageCollection album = *it;
         kdDebug( 51000 ) << "HTML Interface for Album: " << album.name() << endl;
 
-        m_AlbumTitle      = album.name();
+        m_AlbumTitle      = webifyFileName(album.name());
         m_AlbumComments   = m_interface->hasFeature(KIPI::AlbumsHaveComments) ?
                             album.comment() : QString();
         m_AlbumCollection = m_interface->hasFeature(KIPI::AlbumsHaveCategory) ?
@@ -793,15 +794,15 @@ void CDArchiving::createBody(QTextStream& stream,
         {
             stream << "<tr>" << endl;
         }
-        
+
         QString   imgName = (*urlIt).fileName();
         QString   imgPath = (*urlIt).path();
         QFileInfo imgInfo(imgPath);
         QImage    imgProp = QImage(imgPath);
 
-        stream << "<td align='center'>\n<a href=\"pages/"  << imgName << ".htm\">";
+        stream << "<td align='center'>\n<a href=\"pages/"  << webifyFileName(imgName) << ".htm\">";
         kdDebug(51000) << "Creating thumbnail for " << imgName << endl;
-            
+
         d = new KIPICDArchivingPlugin::EventData;
         d->action = KIPICDArchivingPlugin::ResizeImages;
         d->starting = true;
@@ -809,13 +810,13 @@ void CDArchiving::createBody(QTextStream& stream,
         d->fileName = imgName;
         QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
         usleep(1000);
-            
+
         int valRet = createThumb(imgName, (*urlIt).directory(),
                                  imgGalleryDir, imageFormat);
-            
+
         if ( valRet != -1 )
         {
-            QString thumbPath("thumbs/" + imgName + extension(imageFormat));
+            QString thumbPath("thumbs/" + webifyFileName(imgName) + extension(imageFormat));
             stream << "<img class=\"photo\" src=\"" << thumbPath
                    << "\" width=\"" << m_imgWidth
                    << "\" "
@@ -1054,26 +1055,26 @@ bool CDArchiving::createPage(const QString& imgGalleryDir,
     const QDir pagesDir(imgGalleryDir + QString::fromLatin1("/pages/"));
     const QDir thumbsDir(imgGalleryDir + QString::fromLatin1("/thumbs/"));
     const QString imgName(imgURL.fileName());
-    
+
     // Html pages filenames
 
     const QString pageFilename = pagesDir.path() +
                                  QString::fromLatin1("/") +
-                                 imgName +
+                                 webifyFileName(imgName )+
                                  QString::fromLatin1(".htm");
-    const QString nextPageFilename =  nextImgURL.fileName() +
+    const QString nextPageFilename =  webifyFileName(nextImgURL.fileName()) +
                                       QString::fromLatin1(".htm");
-    const QString prevPageFilename =  prevImgURL.fileName() +
+    const QString prevPageFilename =  webifyFileName(prevImgURL.fileName()) +
                                       QString::fromLatin1(".htm");
 
     // Thumbs filenames
 
     const QString prevThumb = QString::fromLatin1("../thumbs/") +
-                              prevImgURL.fileName() +
+                              webifyFileName(prevImgURL.fileName()) +
                               extension(m_imageFormat);
 
     const QString nextThumb = QString::fromLatin1("../thumbs/") +
-                              nextImgURL.fileName() +
+                              webifyFileName(nextImgURL.fileName()) +
                               extension(m_imageFormat);
 
     QFile file( pageFilename );
@@ -1240,7 +1241,7 @@ int CDArchiving::createThumb( const QString& imgName, const QString& sourceDirNa
 
     // Create the thumbnails for the HTML interface.
 
-    const QString ImageNameFormat = imgName + extension(imageFormat);
+    const QString ImageNameFormat = webifyFileName(imgName) + extension(imageFormat);
     const QString thumbDir = imgGalleryDir + QString::fromLatin1("/thumbs/");
     int extent = m_thumbnailsSize;
 
@@ -1580,10 +1581,9 @@ bool CDArchiving::AddFolderTreeToK3bXMLProjectFile (QString dirname, QTextStream
    QDir dir(dirname);
    dir.setFilter ( QDir::Dirs | QDir::Files | QDir::NoSymLinks );
 
-   Temp = "<directory name=\""
-          + EscapeSgmlText(QTextCodec::codecForLocale(), dir.dirName(), true, true)
-          + "\" >\n";
-
+      Temp = "<directory name=\""
+            + EscapeSgmlText(QTextCodec::codecForLocale(), dir.dirName(), true, true)
+            + "\" >\n";
    *stream << Temp;
    
    kdDebug( 51000 ) << "Directory: " << dir.dirName().latin1 () << endl;
@@ -1650,12 +1650,17 @@ bool CDArchiving::addCollectionToK3bXMLProjectFile(const KIPI::ImageCollection& 
    kdDebug( 51000 ) << "Adding Collection: " << collection.name() << endl;
 
    QString Temp;
+   QString collection_name;
+   if (m_useHTMLInterface)
+    collection_name = webifyFileName(collection.name());
+   else
+    collection_name = collection.name();
 
    Temp = "<directory name=\""
-          + EscapeSgmlText(QTextCodec::codecForLocale(), collection.name(), true, true)
+          + EscapeSgmlText(QTextCodec::codecForLocale(), collection_name, true, true)
           + "\" >\n";
    *stream << Temp;
-   
+
    KURL::List images = collection.images();
 
    for (KURL::List::iterator it = images.begin();
@@ -1851,6 +1856,20 @@ QString CDArchiving::EscapeSgmlText(const QTextCodec* codec,
     }
 
     return strReturn;
+}
+
+
+/**
+ * Produce a web-friendly file name 
+ */
+
+QString CDArchiving::webifyFileName(QString fileName) {
+  fileName=fileName.lower();
+  
+  // Remove potentially troublesome chars
+  fileName=fileName.replace(QRegExp("[^-0-9a-zA-Z]+"), "_");
+
+  return fileName;
 }
 
 }  // NameSpace KIPICDArchivingPlugin
