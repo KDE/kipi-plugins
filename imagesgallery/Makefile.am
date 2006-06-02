@@ -21,5 +21,3 @@ kde_services_DATA = kipiplugin_imagesgallery.desktop
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_imagesgallery.pot
 
-kipiHTML401picdir = $(kde_datadir)/kipi
-kipiHTML401pic_DATA = valid-html401.png gohome.png up.png
