@@ -23,6 +23,7 @@
 #include <qtextstream.h>
 #include <qfile.h>
 #include <qimage.h>
+#include <qregexp.h>
 
 #include <klocale.h>
 #include <kio/job.h>
@@ -299,13 +300,14 @@ void GalleryTalker::slotResult(KIO::Job *job)
 
     if (m_state == GE_LOGIN && m_loggedIn)
     {
-        // get and parse the cookie
-        m_cookie = job->queryMetaData("setcookies");
-        // rfc2109: http://www.faqs.org/rfcs/rfc2109.html
-        m_cookie.remove("Set-Cookie:");
-        m_cookie = m_cookie.section(";", 0, 0);
-        m_cookie = "Cookie:" + m_cookie;
-
+        QStringList cookielist = QStringList::split("\n", job->queryMetaData("setcookies"));
+        m_cookie = "Cookie:";
+        for (QStringList::Iterator it = cookielist.begin(); it != cookielist.end(); ++it)
+        {
+            QRegExp rx("^Set-Cookie: ([^;]+)");
+            if (rx.search(*it) > -1)
+                m_cookie += " " + rx.cap(1) + ";";
+        }
         listAlbums();
     }
 }
