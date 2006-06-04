@@ -140,8 +140,12 @@ void forkDcraw()
             argl[index++] = dcParams.blue.c_str();
         }
 
-        argl[index++]  = dcParams.inFile.c_str();
-        argl[index] = 0;
+        argl[index++] = dcParams.inFile.c_str();
+        argl[index]   = 0;
+
+        std::cerr << "dcraw command line: " << std::endl;
+        for (int i=0; i<12; i++) std::cerr << " " << argl[i];
+        std::cerr << std::endl;
 
         if (execvp("dcraw", (char* const*) argl) == -1) 
         {
