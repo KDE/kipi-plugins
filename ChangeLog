@@ -1,5 +1,125 @@
-v0.1.0-rc3 - Last Changed Rev: ?????? - 2006-??-??
+v 0.1.0 - 2006-06-22
 ----------------------------------------------------------------------------
+
+2006-06-04 11:46 +0000 [r547996]  cgilles
+
+	* kipi-plugins/rawconverter/dcrawprocess.cpp: add debug messages on
+	  command line
+
+2006-06-04 10:35 +0000 [r547984]  cguthrie
+
+	* kipi-plugins/galleryexport/gallerytalker.cpp: Add support for
+	  multiple cookies by commiting a slightly modified patch. Tested
+	  on G1/G2 for a single cookie environment. Please reopen if my
+	  variation on the patch in some way doesn't work for you. BUG:
+	  123141
+
+2006-06-02 19:32 +0000 [r547624-547625]  anaselli
+
+	* kipi-plugins/imagesgallery/up.png (removed),
+	  kipi-plugins/imagesgallery/valid-html401.png (removed),
+	  kipi-plugins/imagesgallery/Makefile.am,
+	  kipi-plugins/imagesgallery/gohome.png (removed): and moved png
+	  file from old imagesgallery plugin
+
+	* kipi-plugins/cdarchiving/up.png (added),
+	  kipi-plugins/cdarchiving/cdarchiving.h,
+	  kipi-plugins/cdarchiving/valid-html401.png (added),
+	  kipi-plugins/cdarchiving/Makefile.am,
+	  kipi-plugins/cdarchiving/gohome.png (added),
+	  kipi-plugins/cdarchiving/cdarchiving.cpp: Added webifyFileName
+	  (from html gallery) and moved png file from old imagesgallery
+	  plugin BUG: 101656 BUG: 128125
+
+2006-06-01 17:20 +0000 [r547312]  cguthrie
+
+	* kipi-plugins/galleryexport/gallerytalker.cpp: Fix the invalid
+	  response error when uploading photos to gallery1. It would appear
+	  G1 is outputting some information stating that it is resizing the
+	  uploaded image and prevents us properly detecting the
+	  #__GR2PROTO__ trigger. BUG: 123978
+
+2006-06-01 08:15 +0000 [r547200]  cguthrie
+
+	* kipi-plugins/galleryexport/gallerympform.h,
+	  kipi-plugins/galleryexport/gallerytalker.h,
+	  kipi-plugins/galleryexport/gallerywindow.cpp,
+	  kipi-plugins/galleryexport/galleryviewitem.cpp,
+	  kipi-plugins/galleryexport/gallerywindow.h,
+	  kipi-plugins/galleryexport/gallerympform.cpp,
+	  kipi-plugins/galleryexport/gallerytalker.cpp: Misc. gallery
+	  version related changes: * Rather than pass the g2 flag about,
+	  make it a static call within GalleryTalker. * Correct the
+	  auto-appended path for the gallery url when in g1 mode. * Fix the
+	  album ref_num when in g1 mode. * Don't display the 'name' in g2
+	  mode (in g2 this 'name' is actually a ref_num) CCMAIL:
+	  kde-imaging@kde.org
+
+2006-05-30 12:59 +0000 [r546571]  cguthrie
+
+	* kipi-plugins/AUTHORS: Just update my email address as listed in
+	  the AUTHORS file to be one that I use for KDE specific stuff.
+	  SVN_SILENT:
+
+2006-05-28 15:13 +0000 [r545933]  anaselli
+
+	* kipi-plugins/README: added Gallery 2 in README and changed
+	  imagesgallery position CCMAIL: kde-imaging@kde.org
+
+2006-05-28 15:07 +0000 [r545930]  anaselli
+
+	* kipi-plugins/AUTHORS: Added Colin Guthrie as a contributor
+	  CCMAIL: colin@guthr.ie
+
+2006-05-28 15:03 +0000 [r545927]  anaselli
+
+	* kipi-plugins/galleryexport/gallerympform.h,
+	  kipi-plugins/galleryexport/gallerympform.cpp,
+	  kipi-plugins/galleryexport/gallerytalker.cpp: Code review by
+	  Colin Guthrie CCMAIL: colin@guthr.ie
+
+2006-05-28 09:28 +0000 [r545725]  anaselli
+
+	* kipi-plugins/galleryexport/gallerympform.h,
+	  kipi-plugins/galleryexport/gallerytalker.h,
+	  kipi-plugins/galleryexport/gallerywindow.cpp,
+	  kipi-plugins/galleryexport/gallerylogin.cpp,
+	  kipi-plugins/galleryexport/gallerywindow.h,
+	  kipi-plugins/galleryexport/gallerylogin.h,
+	  kipi-plugins/galleryexport/gallerympform.cpp,
+	  kipi-plugins/galleryexport/gallerytalker.cpp: Added a check box
+	  and split the code to manage Gallery 2 in 0.1.0 CCMAIL:
+	  kde-imaging@kde.org
+
+2006-05-21 13:32 +0000 [r543161]  anaselli
+
+	* kipi-plugins/galleryexport/gallerywindow.cpp,
+	  kipi-plugins/galleryexport/gallerytalker.cpp: applied patche by
+	  Colin Guthrie Please next time open a new bug report. Thanks
+	  CCBUG: 96352
+
+2006-05-20 17:19 +0000 [r542934]  anaselli
+
+	* kipi-plugins/galleryexport/gallerywindow.cpp,
+	  kipi-plugins/galleryexport/gallerympform.cpp,
+	  kipi-plugins/galleryexport/gallerytalker.cpp,
+	  kipi-plugins/galleryexport/galleryitem.h: applied patches by
+	  Boris Kavod, Colin Guthrie and David Bremner BUG: 96352
+
+2006-05-20 10:36 +0000 [r542780]  anaselli
+
+	* kipi-plugins/NEWS: wrong year :)
+
+2006-05-16 22:06 +0000 [r541654]  ach
+
+	* kipi-plugins/jpeglossless/Makefile.am: kipi-plugins: disable
+	  enabe-final for jpeglossless plugins again. Was removed by
+	  mistake in a revert
+
+2006-05-16 21:37 +0000 [r541646]  ach
+
+	* kipi-plugins/ChangeLog, kipi-plugins/NEWS: kipi-plugins: update
+	  NEWS and Changelog
 
 2006-05-16 01:29 +0000 [r541356]  ach
 
@@ -102,9 +222,9 @@ v0.1.0-rc3 - Last Changed Rev: ?????? - 2006-??-??
 	* kipi-plugins/ChangeLog, libkexif/ChangeLog, libkipi/ChangeLog:
 	  updates
 
-
 v0.1.0-rc2 - Last Changed Rev: 538177 - 2006-05-03
 ----------------------------------------------------------------------------
+
 2006-05-06 20:45  anaselli
 
 	* trunk/extragear/libs/kipi-plugins/ChangeLog,

@@ -1,18 +1,26 @@
-v0.1.0-rc3                                                        2006-??-??
+For details and info about current version, see ChangeLog.
+v 0.1.0                                                           2006-06-22
 ----------------------------------------------------------------------------
+Plugins:
+flickrexport kameraklient  printwizard timeadjust galleryexport 
+rawconverter acquireimages htmlexport  sendimages wallpaper
+batchprocessimages mpegencoder simpleviewerexport calendar slideshow
+cdarchiving findimages jpeglossless
 
-	XXXXXX entries added up to r541356  XXXXXX
-
-New features:
-
-
-Bugs fixed:
-
-	o mpegencoder: Always return two numbers for r,g and b, else
-	  image2mpg will fail (#127219)
-
-	o calendar: honors first day of the week now (#117105)
-
+Fixed bugs:
+- calendar
+117105 
+- cdarchive
+101656 128125
+- gallery export (added G2 support)
+123978 96352 123141
+imagesgallery (removed) HTML export (new) 
+88887  115474 120739 89068  90943  95116  96009 96363 107380 108696 109708
+109709 109710 111136 111509 111880 112107 113355
+mpeg encoder
+127219  127532
+raw converter
+101455
 
 v0.1.0-rc2                                                        2006-05-06
 ----------------------------------------------------------------------------
