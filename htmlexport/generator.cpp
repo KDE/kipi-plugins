@@ -203,9 +203,6 @@ struct Generator::Private {
 				qApp->processEvents();
 				
 				KIPI::ImageInfo info=mInterface->info(*it);
-				XMLElement imageX(xmlWriter, "image");
-				xmlWriter.writeElement("title", info.title());
-				xmlWriter.writeElement("description", info.description());
 			
 				// Load image
 				QImage image;
@@ -214,6 +211,10 @@ struct Generator::Private {
 					logWarning(i18n("Could not load image '%1'").arg(path));
 					continue;
 				}
+
+	                        XMLElement imageX(xmlWriter, "image");
+	                        xmlWriter.writeElement("title", info.title());
+	                        xmlWriter.writeElement("description", info.description());
 				
 				// Prepare filenames
 				QString baseFileName=webifyFileName(info.title());
