@@ -212,9 +212,9 @@ struct Generator::Private {
 					continue;
 				}
 
-	                        XMLElement imageX(xmlWriter, "image");
-	                        xmlWriter.writeElement("title", info.title());
-	                        xmlWriter.writeElement("description", info.description());
+				XMLElement imageX(xmlWriter, "image");
+				xmlWriter.writeElement("title", info.title());
+				xmlWriter.writeElement("description", info.description());
 				
 				// Prepare filenames
 				QString baseFileName=webifyFileName(info.title());
