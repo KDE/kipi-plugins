@@ -193,7 +193,7 @@ void SendImagesDialog::readSettings(void)
     if (t == "Kmail") t = "Default";
     m_mailAgentName->setCurrentText(t);
 
-    m_ThunderbirdBinPath->setURL( m_config->readEntry("ThunderbirdBinPath", "/usr/bin/thunderbird"));
+    m_ThunderbirdBinPath->setURL( m_config->readEntry("ThunderbirdBinPath", "/usr/bin/mozilla-thunderbird"));
 
     if (m_config->readEntry("ImagesChangeProp", "true") == "true")
         m_changeImagesProp->setChecked( true );

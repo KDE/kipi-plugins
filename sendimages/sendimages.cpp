@@ -327,7 +327,8 @@ bool SendImages::showErrors()
 
 void SendImages::invokeMailAgent(void)
 {
-    // Kmail agent call.
+    // default agent call
+    // FIXME: seems to fail for thunderbird. Fix kdelibs or maybe work around it.
 
     if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Default" )
        {
