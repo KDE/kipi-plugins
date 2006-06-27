@@ -184,7 +184,14 @@ void SendImagesDialog::readSettings(void)
     m_config = new KConfig("kipirc");
     m_config->setGroup("SendImages Settings");
 
-    m_mailAgentName->setCurrentText(m_config->readPathEntry("MailAgentName", "Kmail"));
+    QString t = m_config->readPathEntry("MailAgentName", "Default");
+
+    // The _old_ Kmail (mind the lowercase 'm') called the default mailer.
+    // this is now renamed to 'Default'. It should not interfere with KMail, which
+    // is now doing what you expect.
+    
+    if (t == "Kmail") t = "Default";
+    m_mailAgentName->setCurrentText(t);
 
     m_ThunderbirdBinPath->setURL( m_config->readEntry("ThunderbirdBinPath", "/usr/bin/thunderbird"));
 
@@ -353,22 +360,23 @@ void SendImagesDialog::setupEmailOptions(void)
     QLabel *m_mailAgentLabel = new QLabel( i18n("Mail agent:"), page_setupEmailOptions);
 
     m_mailAgentName = new QComboBox( false, page_setupEmailOptions );
+    m_mailAgentName->insertItem( "Default" );
     m_mailAgentName->insertItem( "Balsa" );
     m_mailAgentName->insertItem( "Evolution" );
     m_mailAgentName->insertItem( "GmailAgent" );
-    m_mailAgentName->insertItem( "Kmail" );
+    m_mailAgentName->insertItem( "KMail" );
     m_mailAgentName->insertItem( "Mozilla" );
     m_mailAgentName->insertItem( "Netscape" );
     m_mailAgentName->insertItem( "Sylpheed" );
     m_mailAgentName->insertItem( "Sylpheed-Claws" );
     m_mailAgentName->insertItem( "Thunderbird" );
-    m_mailAgentName->setCurrentText( "Kmail" );
+    m_mailAgentName->setCurrentText( "Default" );
     QWhatsThis::add( m_mailAgentName, i18n("<p>Select here your preferred external mail agent program."
                                            "These mail agent versions are supported:<p>"
                                            "<b>Balsa</b>: >= 2.x<p>"
                                            "<b>Evolution</b>: >= 1.4<p>"
                                            "<b>GmailAgent</b>: >= 0.2<p>"
-                                           "<b>Kmail</b>: >= 1.3<p>"
+                                           "<b>KMail</b>: >= 1.3<p>"
                                            "<b>Mozilla</b>: >= 1.4<p>"
                                            "<b>Netscape</b>: >= 7.x<p>"
                                            "<b>Sylpheed</b>: >= 0.9<p>"

@@ -329,7 +329,7 @@ void SendImages::invokeMailAgent(void)
 {
     // Kmail agent call.
 
-    if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Kmail" )
+    if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Default" )
        {
        KApplication::kApplication()->invokeMailer(
                        QString::null,                     // Destination address.
@@ -341,6 +341,25 @@ void SendImages::invokeMailAgent(void)
                        m_filesSendList.toStringList());   // Images attachments (+ comments).
        }
 
+
+    // KMail mail agent call.
+
+    if ( m_sendImagesDialog->m_mailAgentName->currentText() == "KMail" )
+    {
+        m_mailAgentProc = new KProcess;
+        *m_mailAgentProc << "kmail";
+
+        for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
+        {
+            *m_mailAgentProc << "--attach";
+            *m_mailAgentProc << QFile::encodeName((*it).path());
+        }
+
+        if ( m_mailAgentProc->start() == false )
+            KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
+                                                          "check your installation.")
+                               .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+    }
 
     // Sylpheed mail agent call.
 
