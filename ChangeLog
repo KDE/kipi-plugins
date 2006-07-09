@@ -1,52 +1,58 @@
 v 0.1.2 - 2006-07-08
 ----------------------------------------------------------------------------
 
-r559822 | anaselli | 2006-07-08 16:55:22 +0200 
-	* kipi-plugins/kipi-plugins.lsm
-	  prepare_kipiplugins.rb: prepare new release kipi-plugins 0.1.2 
-	  to fix missed po files, hope this time is good...
+2006-07-08 15:50 +0000 [r559907]  anaselli
 
-r556299 | anaselli | 2006-06-29 23:02:18 +0200 
+	* kipi-plugins/ChangeLog: new changelog svn2log.py seems to be
+	  broken now, added entries by hands :(
+
+2006-07-08 14:55 +0000 [r559822]  anaselli
+
+	* prepare_kipiplugins.rb, kipi-plugins/kipi-plugins.lsm: prepare
+	  new release kipi-plugins 0.1.2 to fix missed po files, hope this
+	  time is good...
+
+2006-06-29 21:02 +0000 [r556299]  anaselli
+
 	* kipi-plugins/ChangeLog: missed 0.1.1 entry
 
-r555589 | toma | 2006-06-28 00:37:30 +0200 
-	* kipi-plugins/sendimages/sendimages.cpp
-	  kipi-plugins/sendimages/sendimagesdialog.cpp: Fix comment, add a 
-	  fixme. Change the default path of thunderbird. I just hope that's 
+2006-06-27 22:37 +0000 [r555589]  toma
+
+	* kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp: Fix comment, add a
+	  fixme. Change the default path of thunderbird. I just hope that's
 	  the name on more distros. CCMAIL: kde-imaging@kde.org
 
-r555585 | toma | 2006-06-28 00:24:25 +0200 
-	* kipi-plugins/sendimages/sendimages.cpp
-	  kipi-plugins/sendimages/sendimagesdialog.cpp: The dialog said 
-	  'Kmail' but started the default mailer. Renamed that to 'Default'. 
-	  And added KMail has fixed setting. I so want to email pictured.
+2006-06-27 22:24 +0000 [r555585]  toma
+
+	* kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp: The dialog said
+	  'Kmail' but started the default mailer. Renamed that to
+	  'Default'. And added KMail has fixed setting. I so want to email
+	  pictured.
 
 v 0.1.1 - 2006-06-26
 ----------------------------------------------------------------------------
-anaselli: added missed po files
 
-r555236 | anaselli | 2006-06-26 21:19:47 +0200 
-	* kipi-plugins/kipi-plugins.lsm
-	  prepare_kipiplugins.rb
-	  release_kipiplugins.rb: prepeare kipi-plugins 0.1.1 for missed po 
+2006-06-26 19:19 +0000 [r555236]  anaselli
+
+	* prepare_kipiplugins.rb, kipi-plugins/kipi-plugins.lsm,
+	  release_kipiplugins.rb: prepeare kipi-plugins 0.1.1 for missed po
 	  files
 
-r554873 | gateau | 2006-06-25 17:57:59 +0200 
-	* kipi-plugins/htmlexport/generator.cpp
+2006-06-25 15:57 +0000 [r554870-554871]  gateau
 
-r554871 | gateau | 2006-06-25 17:57:19 +0200 
 	* kipi-plugins/htmlexport/TODO: Video
 
-r554870 | gateau | 2006-06-25 17:55:25 +0200 
-	* kipi-plugins/htmlexport/generator.cpp: Do not generate entries 
-	for video. Patch by Erik <edg72 at home dot nl>
+	* kipi-plugins/htmlexport/generator.cpp: Do not generate entries
+	  for video. Patch by Erik <edg72@home.nl>
 
 v 0.1.0 - 2006-06-22
 ----------------------------------------------------------------------------
 
-r554011 | anaselli | 2006-06-22 23:15:57 +0200 (gio, 22 giu 2006) | 1 line
-	* kipi-plugins/ChangeLog
-	  kipi-plugins/NEWS
+2006-06-22 21:15 +0000 [r554011]  anaselli
+
+	* kipi-plugins/ChangeLog, kipi-plugins/NEWS,
 	  kipi-plugins/kipi-plugins.lsm: prepare release 0.1.0 final
 
 2006-06-04 11:46 +0000 [r547996]  cgilles
