@@ -71,7 +71,7 @@ namespace KIPIFlickrExportPlugin
 {
 
 FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, QWidget *parent)
-    : KDialogBase(parent, 0, true, i18n( "FlickrUploadr" ), Help|Close, Close, false),m_tmp(tmpFolder)
+    : KDialogBase(parent, 0, false, i18n( "FlickrUploadr" ), Help|Close, Close, false),m_tmp(tmpFolder)
 {
     m_interface   = interface;
     m_uploadCount = 0;
@@ -97,7 +97,6 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Flickr Export Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
-    
     m_widget = new FlickrWidget( this );
     setMainWidget( m_widget );
     m_widget->setMinimumSize( 600, 400 );
@@ -114,7 +113,9 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_imageQualitySpinBox = m_widget->m_imageQualitySpinBox;
     m_tagsLineEdit          = m_widget->m_tagsLineEdit;
 	m_startUploadButton = m_widget->m_startUploadButton;
-    //m_startUploadButton->setEnabled(false);
+    m_changeUserButton=m_widget->m_changeUserButton;
+    m_userNameDisplayLabel=m_widget->m_userNameDisplayLabel;
+	//m_startUploadButton->setEnabled(false);
 	//m_albumView->setRootIsDecorated( true );
 
     //m_newAlbumBtn->setEnabled( false );
@@ -135,6 +136,9 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     connect( m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
              SLOT( slotAddPhotoFailed( const QString& ) ) );
     
+    connect( m_talker, SIGNAL( signalListPhotoSetsSucceeded( const QValueList<FPhotoSet>& ) ),
+            SLOT( slotListPhotoSetsResponse( const QValueList<FPhotoSet>& ) ) );
+
     m_progressDlg = new QProgressDialog( this, 0, true );
     m_progressDlg->setAutoReset( true );
     m_progressDlg->setAutoClose( true );
@@ -142,6 +146,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     connect( m_progressDlg, SIGNAL( canceled() ),
              SLOT( slotAddPhotoCancel() ) );
     
+    connect( m_changeUserButton, SIGNAL( clicked() ),
+             SLOT( slotUserChangeRequest() ) );
     //connect( m_tagView, SIGNAL( selectionChanged() ),
       //       SLOT( slotTagSelected() ) );
     connect( m_talker, SIGNAL( signalTokenObtained(const QString&) ),this,
@@ -218,74 +224,13 @@ void FlickrWindow::slotHelp()
 
 void FlickrWindow::slotDoLogin()
 {
-/*
-    QString password;
-    
-#if KDE_IS_VERSION(3,2,0)
-    if (!m_wallet)
-        m_wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(),
-                                               winId(),
-                                               KWallet::Wallet::Synchronous );
-    if (!m_wallet)
-    {
-        kdWarning() << "Failed to open kwallet" << endl;
-    }
-    else
-    {
-        if (!m_wallet->hasFolder("KIPIFlickrExportPlugin"))
-        {
-            if (!m_wallet->createFolder("KIPIFlickrExportPlugin"))
-                kdWarning() << "Failed to create kwallet folder" << endl;
-        }
-
-        if (!m_wallet->setFolder("KIPIFlickrExportPlugin"))
-            kdWarning() << "Failed to set kwallet folder" << endl;
-        else
-        {
-            m_wallet->readPassword("password", password);
-        }
-    }
-#endif
-    
-
-    m_url="http://www.flickr.com/tools/uploader_go.gne" ;
-    FlickrLogin dlg( this, i18n( "Login into flickr" ),
-                      m_user, password );
-    if ( dlg.exec() != QDialog::Accepted )
-    {
-        close();
-        return;
-    }
-
-
-   // m_url    = url.url();
-    m_user   = dlg.name();
-
-    QString newPassword = dlg.password();
-#if KDE_IS_VERSION(3,2,0)
-    if (newPassword != password && m_wallet)
-        m_wallet->writePassword("password", newPassword);
-#endif
-    m_talker->login( m_url, dlg.name(), newPassword );
-*/
 }
-/*
-void FlickrWindow::slotLoginFailed( const QString& msg )
-{
-    if ( KMessageBox::warningYesNo( this,
-                                    i18n( "Failed to login into Flickr. " )
-                                    + msg
-                                    + i18n("\nDo you want to try again?" ) )
-         != KMessageBox::Yes )
-    {
-        close();
-        return;
-    }
-
-    slotDoLogin();
-}*/
 void FlickrWindow::slotTokenObtained( const QString& token ){
 	m_token=token;
+	m_username=m_talker->getUserName();
+	m_userId=m_talker->getUserId();
+	kdDebug()<<"SlotTokenObtained invoked setting user Display name to "<<m_username<<endl;
+	m_userNameDisplayLabel->setText(m_username);
 	m_widget->setEnabled(true);
 }
 void FlickrWindow::slotBusy( bool val )
@@ -309,7 +254,11 @@ void FlickrWindow::slotError( const QString& msg )
 	//m_talker->slotError(msg);
     KMessageBox::error( this, msg );
 }
-
+void FlickrWindow::slotUserChangeRequest(){
+	kdDebug()<<"Slot Change User Request "<<endl;
+	m_talker->getFrob();
+	//m_addPhotoBtn->setEnabled(m_selectImagesButton->isChecked());
+}
 /*
 void FlickrWindow::slotAlbums( const QValueList<GAlbum>& albumList )
 {
@@ -398,18 +347,23 @@ void FlickrWindow::slotOpenPhoto( const KURL& url )
 }
 */
 
-/*
-void FlickrWindow::slotNewAlbum()
+void FlickrWindow::slotListPhotoSetsResponse(const QValueList <FPhotoSet>& photoSetList)
 {
-	To be implemented
+   kdDebug()<<"SlotListPhotoSetsResponse invoked"<<endl;
+   
 }
-*/
+
+void FlickrWindow::slotNewPhotoSet()
+{
+	//To be implemented
+}
+
 void FlickrWindow::slotAddPhotos()
 {
-    kdDebug()<<"Slot Add Photos being called geting the list of url"<<endl;
+    kdDebug()<<"Slot Add Photos called geting the list of url"<<endl;
+	//m_talker->listPhotoSets();
     m_urls = new KURL::List(KIPI::ImageDialog::getImageURLs( this,
 				m_interface ));
-    kdDebug()<<"Slot Add Photos being called geting the list of url"<<endl;
 } 
 void FlickrWindow::slotUploadImages(){
    kdDebug()<<"SlotUploadImages invoked"<<endl;
@@ -430,13 +384,42 @@ void FlickrWindow::slotUploadImages(){
     	kdDebug() <<" Adding images to the list"<<endl;
         FPhotoInfo temp;
         
-	temp.title=info.title();
+		temp.title=info.title();
         temp.description=info.description();
-	temp.is_public=m_publicCheckBox->isChecked();
+		temp.is_public=m_publicCheckBox->isChecked();
         temp.is_family=m_familyCheckBox->isChecked();
         temp.is_friend=m_friendsCheckBox->isChecked();
-    	QStringList tags=QStringList::split(" ",m_tagsLineEdit->text(),false);  
-	temp.tags=tags; 
+		
+		QStringList allTags;
+    	
+		QStringList tagsFromDialog=QStringList::split(" ",m_tagsLineEdit->text(),false); 
+		QStringList::Iterator itTags;
+
+		//Tags from the interface	
+		itTags= tagsFromDialog.begin();
+		while( itTags != tagsFromDialog.end() ) {
+			allTags.append( *itTags );
+			++itTags;
+		}
+
+		//Tags from the database
+		QMap <QString, QVariant> attribs=info.attributes();
+		QStringList tagsFromDatabase=attribs["tags"].asStringList();	
+		
+		itTags = tagsFromDatabase.begin();
+		while( itTags != tagsFromDatabase.end() ) {
+			allTags.append( *itTags );
+			++itTags;
+		}
+	
+		
+		itTags = allTags.begin();
+		
+		while( itTags != allTags.end() ) {
+			kdDebug()<<"TAGS"<< ( *itTags )<<endl;
+			++itTags;
+		}
+		temp.tags=allTags; 
         m_uploadQueue.append( Pair( (*it).path(), temp) );
     }
 

@@ -61,7 +61,9 @@ private:
     QSpinBox*     m_dimensionSpinBox;
     QSpinBox*     m_imageQualitySpinBox;
     QLineEdit*    m_tagsLineEdit;
-    QPushButton*  m_startUploadButton;
+    QPushButton*  m_changeUserButton;
+	QLabel*       m_userNameDisplayLabel;
+	QPushButton*  m_startUploadButton;
 	friend class FlickrWindow;
 };
 

@@ -54,6 +54,7 @@ class FlickrTalker;
 class GAlbum;
 class GPhoto;
 class FPhotoInfo;
+class FPhotoSet;
 class GAlbumViewItem;
 
 class FlickrWindow : public KDialogBase
@@ -86,10 +87,14 @@ private:
     FlickrTalker            *m_talker;
     QIntDict<GAlbumViewItem>  m_albumDict;
     QString                   m_token;
+	QString					  m_username;
+	QString 				  m_userId;
     QString                   m_lastSelectedAlbum;
     KIPI::Interface          *m_interface;
 	QString 				  m_tmp;
+	QLabel 					  *m_userNameDisplayLabel;
     //KWallet::Wallet          *m_wallet;
+	QPushButton				 *m_changeUserButton;
     KURL::List *m_urls;
     QProgressDialog                      *m_progressDlg;
     QProgressDialog                      *m_authProgressDlg;
@@ -107,7 +112,9 @@ private slots:
   //  void slotPhotos( const QValueList<GPhoto>& photoList );
   //  void slotTagSelected();
     //void slotOpenPhoto( const KURL& url );
-    //void slotNewAlbum();
+    void slotNewPhotoSet();
+    void slotUserChangeRequest();
+    void slotListPhotoSetsResponse(const QValueList <FPhotoSet>& photoSetList);
     void slotAddPhotos();
 	void slotUploadImages();
     void slotAddPhotoNext();

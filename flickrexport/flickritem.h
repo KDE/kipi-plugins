@@ -101,6 +101,20 @@ public:
     bool               create_sub;
 };
 
+class FPhotoSet
+{
+	public:
+		FPhotoSet()
+		{
+			id="-1";
+		}
+	QString  id;
+	QString primary; //="2483" 
+	QString secret;//="abcdef"
+	QString server;
+	QString photos;
+	QString title;
+	QString description;
+};
 }
-
 #endif /* FLICKRITEM_H */

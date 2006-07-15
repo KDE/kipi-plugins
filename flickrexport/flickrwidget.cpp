@@ -81,7 +81,7 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
     QVBoxLayout*  rightButtonGroupLayout;
     QSpacerItem*  spacer;
     QButtonGroup* rightButtonGroup;
-
+	
     rightButtonGroup = new QButtonGroup( splitter, "rightButtonGroup" );
     rightButtonGroupLayout = new QVBoxLayout( rightButtonGroup );
     rightButtonGroupLayout->setSpacing( 5 );
@@ -136,10 +136,18 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
 
     QGroupBox* optionsBox = new QGroupBox(i18n("Override Default Options"),
                                           rightButtonGroup);
+	QGroupBox* loginDetailsBox= new QGroupBox(i18n("User Details"),rightButtonGroup);
+	
     optionsBox->setColumnLayout(0, Qt::Vertical);
     optionsBox->layout()->setSpacing(5);
     optionsBox->layout()->setMargin(5);
-    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout(),3,3);
+	
+    loginDetailsBox->setColumnLayout(0, Qt::Vertical);
+    loginDetailsBox->layout()->setSpacing(5);
+    loginDetailsBox->layout()->setMargin(5);
+    
+	QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout(),3,3);
+	QGridLayout* loginDetailsBoxLayout = new QGridLayout(loginDetailsBox->layout(),3,3);
 
     // ------------------------------------------------------------------------
 
@@ -198,10 +206,20 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
 //    m_tagView->header()->setLabel( 0, i18n( "Albums" ) );
     //m_newAlbumBtn->setText( i18n( "&New Album" ) );
     m_addPhotoBtn->setText( i18n( "&Add Photos" ) );
-    m_startUploadButton->setText( i18n( "Start Uploading" ) );
 
+	QLabel *userNameLabel=new QLabel(i18n("Username:"),loginDetailsBox);
+	m_userNameDisplayLabel=new QLabel(i18n(" "),loginDetailsBox);
+    m_startUploadButton->setText( i18n( "Start Uploading" ));
+	m_changeUserButton=new QPushButton(loginDetailsBox,"m_changeUserButton");
+	m_changeUserButton->setText(i18n("Login with a different account"));
     // ------------------------------------------------------------------------
-
+	
+	loginDetailsBoxLayout->addWidget(userNameLabel,0,1);
+	loginDetailsBoxLayout->addWidget(m_userNameDisplayLabel,0,2);
+	loginDetailsBoxLayout->addWidget(m_changeUserButton,0,3);
+	
+	rightButtonGroupLayout->addWidget(loginDetailsBox);
+	
     resize( QSize(600, 400).expandedTo(minimumSizeHint()) );
     clearWState( WState_Polished );
 }
@@ -214,6 +232,7 @@ void FlickrWidget::slotSelectionChecked(){
 	kdDebug()<<"Slot Selection Checked "<<endl;
 	m_addPhotoBtn->setEnabled(m_selectImagesButton->isChecked());
 }
+
 void FlickrWidget::slotResizeChecked()
 {
     m_dimensionSpinBox->setEnabled(m_resizeCheckBox->isChecked());

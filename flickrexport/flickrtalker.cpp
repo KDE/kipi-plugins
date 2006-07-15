@@ -202,10 +202,28 @@ namespace KIPIFlickrExportPlugin
 		authProgressDlg->setLabelText(i18n("Getting the Token from the server"));
 		authProgressDlg->setProgress(3,4);
 	}
-	void FlickrTalker::listAlbums()
+	void FlickrTalker::listPhotoSets()
 	{
-		//To be implemented.
+		QString url="http://www.flickr.com/services/rest/?";
+		QString method="flickr.photosets.getList";
+		QStringList headers ;//
+		headers.append("api_key="+ m_apikey);
+		headers.append("method="+method);
+		headers.append("user_id="+m_userId);
+		QString queryStr=headers.join("&");
+		QString postUrl=url+queryStr;
+		QByteArray tmp;	
+		KIO::TransferJob* job = KIO::http_post(postUrl,tmp,false);
+		job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );	
+		connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),SLOT(data(KIO::Job*, const QByteArray&)));
+		connect(job, SIGNAL(result(KIO::Job *)), SLOT(slotResult(KIO::Job *)));
+		m_state = FE_LISTPHOTOSETS;
+		m_job   = job;
+		m_buffer.resize(0);
+		emit signalBusy( true );
+		kdDebug()<<"Getting Photo Set List:\n"<<queryStr<<endl;
 	}
+	
 	void FlickrTalker::getPhotoProperty(const QString& method,const QString& argList){
 		if (m_job){
 			m_job->kill();
@@ -246,6 +264,7 @@ namespace KIPIFlickrExportPlugin
 			const QString& albumCaption )
 	{
 		QString temp=parentAlbumName+albumName+albumTitle+albumCaption;//for avoing warnings.
+		
 		//To be implemented. The eqivalent for Album is sets.
 	}
 
@@ -352,6 +371,12 @@ namespace KIPIFlickrExportPlugin
 		return true;
 	}
 
+	QString FlickrTalker::getUserName(){
+		return m_username;
+	}
+	QString FlickrTalker::getUserId(){
+		return m_userId;
+	}
 	void FlickrTalker::cancel()
 	{
 		if (m_job)
@@ -436,8 +461,8 @@ namespace KIPIFlickrExportPlugin
 			case(FE_LOGIN):
 				//parseResponseLogin(m_buffer);
 				break;
-			case(FE_LISTALBUMS):
-				parseResponseListAlbums(m_buffer);
+			case(FE_LISTPHOTOSETS):
+				parseResponseListPhotoSets(m_buffer);
 				break;
 			case(FE_GETFROB):
 				parseResponseGetFrob(m_buffer);
@@ -540,14 +565,16 @@ namespace KIPIFlickrExportPlugin
 						}
 						if(details.nodeName()=="user"){
 							kdDebug()<<"nsid="<<e.attribute("nsid")<<endl; 
+							m_userId=e.attribute("nsid");
 							username=e.attribute("username");
+							m_username=username;
 							kdDebug()<<"username="<<e.attribute("username")<<endl; 
 							kdDebug()<<"fullname="<<e.attribute("fullname")<<endl; 
 						}
 					}	
 					details=details.nextSibling();
 				}
-				int valueOk=KMessageBox::questionYesNo(0, i18n("You are currently signed "
+				/*int valueOk=KMessageBox::questionYesNo(0, i18n("You are currently signed "
 										"with username: \"%1\" and "
 										"\"%2\" permissions, \nClick Yes to "
 										"proceed or No to change the username OR " 
@@ -562,6 +589,10 @@ namespace KIPIFlickrExportPlugin
 								authProgressDlg->hide();
 								emit signalTokenObtained(m_token);
 							}
+				*/
+				
+				authProgressDlg->hide();
+				emit signalTokenObtained(m_token);
 				success=true;
 			}
 			if ( node.isElement() && node.nodeName() == "err" ) {
@@ -616,7 +647,9 @@ namespace KIPIFlickrExportPlugin
 						if(details.nodeName()=="user"){
 							kdDebug()<<"nsid="<<e.attribute("nsid")<<endl; 
 							kdDebug()<<"username="<<e.attribute("username")<<endl; 
-							kdDebug()<<"fullname="<<e.attribute("fullname")<<endl; 
+							kdDebug()<<"fullname="<<e.attribute("fullname")<<endl;
+							m_username=e.attribute("username");
+							m_userId=e.attribute("nsid");
 						}
 					}
 					details=details.nextSibling();
@@ -640,16 +673,74 @@ namespace KIPIFlickrExportPlugin
 		else
 			emit signalError(errorString);
 	}
-	void FlickrTalker::parseResponseListAlbums(const QByteArray &data)
+	void FlickrTalker::parseResponseListPhotoSets(const QByteArray &data)
 	{
-		QDomDocument doc( "getListAlbums" );
+		bool success=false;
+		QDomDocument doc( "getListPhotoSets" );
 		if ( !doc.setContent( data ) ) {
 			return;
 		}
 		QDomElement docElem = doc.documentElement();
 		QDomNode node = docElem.firstChild();
-		//QDomElement e;
-		//To be implemented.
+		QDomElement e;
+		QString photoSet_id,photoSet_title,photoSet_description;
+		QValueList <FPhotoSet> photoSetList;
+		while( !node.isNull() ) {
+			if ( node.isElement() && node.nodeName() == "photosets" ) {
+			
+				e = node.toElement(); 
+				QDomNode details=e.firstChild();
+				FPhotoSet fps;
+				QDomNode detailsNode=details;
+				while(!detailsNode.isNull()){
+					if(detailsNode.isElement()){
+						e=detailsNode.toElement();
+						if(detailsNode.nodeName()=="photoset"){
+							kdDebug()<<"id="<<e.attribute("id")<<endl; 
+							photoSet_id=e.attribute("id");//this is what is obtained from data.
+							fps.id=photoSet_id;
+					 		QDomNode photoSetDetails=detailsNode.firstChild();
+							QDomElement e_detail;
+							while(!photoSetDetails.isNull()){
+								e_detail=photoSetDetails.toElement();
+								if(photoSetDetails.nodeName()=="title"){
+									kdDebug()<<"Title="<<e_detail.text()<<endl; 
+									photoSet_title=e_detail.text();
+									fps.title=photoSet_title;
+								}
+								else if(photoSetDetails.nodeName()=="description"){
+									kdDebug()<<"Description ="<<e_detail.text()<<endl; 
+									photoSet_description=e_detail.text();
+									fps.description=photoSet_description;
+								}
+								photoSetDetails=photoSetDetails.nextSibling();
+							}
+						}					
+					}
+					detailsNode=detailsNode.nextSibling();
+				}
+				photoSetList.append(fps);
+				details=details.nextSibling();
+				success=true;
+			}
+			if ( node.isElement() && node.nodeName() == "err" ) {
+				kdDebug()<<"Checking Error in response"<<endl;
+				QString code=node.toElement().attribute("code");
+				kdDebug()<<"Error code="<<code<<endl;
+				kdDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;	
+				emit signalError(code);
+			}
+			node = node.nextSibling();
+		}
+		kdDebug()<<"GetPhotoList finished"<<endl;
+		if (!success)
+		{
+			emit signalListPhotoSetsFailed(i18n("Failed to fetch photoSets List"));
+		}
+		else
+		{
+			emit signalListPhotoSetsSucceeded(photoSetList);
+		}	
 	}
 
 	void FlickrTalker::parseResponseListPhotos(const QByteArray &data)

@@ -36,6 +36,7 @@ namespace KIPIFlickrExportPlugin
 class GAlbum;
 class GPhoto;
 class FPhotoInfo;
+class FPhotoSet;
 class FlickrTalker : public QObject
 {
     Q_OBJECT
@@ -44,7 +45,7 @@ public:
 
     enum State {
         FE_LOGIN = 0,
-        FE_LISTALBUMS,
+        FE_LISTPHOTOSETS,
         FE_LISTPHOTOS,
         FE_GETPHOTOPROPERTY,
         FE_ADDPHOTO,
@@ -63,7 +64,7 @@ public:
     void checkToken(const QString& token) ;	   
     void getPhotoProperty(const QString& method,const QString& argList) ;	   
   
-    void listAlbums();
+    void listPhotoSets();
     void listPhotos( const QString& albumName );
     void createAlbum( const QString& parentAlbumName,
                       const QString& albumName,
@@ -72,7 +73,8 @@ public:
     bool addPhoto( const QString& photoPath,
                    FPhotoInfo& info,
 			bool rescale=false, int maxDim=600 , int imageQuality=85 );
-
+	QString getUserName();
+	QString getUserId();
     void cancel();
     
     QProgressDialog *authProgressDlg;
@@ -88,11 +90,12 @@ private:
     QString    m_secret;
     QString    m_frob;
     QString    m_token;
-
+	QString    m_username;
+	QString    m_userId;
 private:
 
  //   void parseResponseLogin(const QByteArray &data);
-    void parseResponseListAlbums(const QByteArray &data);
+    void parseResponseListPhotoSets(const QByteArray &data);
     void parseResponseListPhotos(const QByteArray &data);
     void parseResponseCreateAlbum(const QByteArray &data);
     void parseResponseAddPhoto(const QByteArray &data);
@@ -109,7 +112,9 @@ signals:
     void signalAlbums( const QValueList<GAlbum>& albumList );
     void signalPhotos( const QValueList<GPhoto>& photoList );
     void signalAddPhotoSucceeded( );
+    void signalListPhotoSetsSucceeded(const QValueList <FPhotoSet>& photoSetList);
     void signalAddPhotoFailed( const QString& msg );
+    void signalListPhotoSetsFailed( const QString& msg );
     void signalAuthenticate() ;	    
     void signalTokenObtained(const QString& token);
 
