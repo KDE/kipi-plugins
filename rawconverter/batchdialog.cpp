@@ -78,8 +78,8 @@ extern "C"
 namespace KIPIRawConverterPlugin
 {
 
-BatchDialog::BatchDialog(QWidget *parent)
-           : KDialogBase(parent, 0, false, i18n("Raw Images Batch Converter"),
+BatchDialog::BatchDialog(QWidget* /*parent*/)
+           : KDialogBase(0, 0, false, i18n("Raw Images Batch Converter"),
                          Help|User1|User2|Close, Close, true,
                          i18n("Con&vert"), i18n("&Abort"))
 {
