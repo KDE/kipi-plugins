@@ -95,9 +95,9 @@ void Plugin_FlickrExport::slotActivate()
     }
 	KStandardDirs dir;
 	QString Tmp = dir.saveLocation("tmp", "kipi-flickrexportplugin-" + QString::number(getpid()) + "/");
-		
-    KIPIFlickrExportPlugin::FlickrWindow dlg(interface,Tmp,kapp->activeWindow());
-    dlg.exec();
+	
+    KIPIFlickrExportPlugin::FlickrWindow *dlg=  new KIPIFlickrExportPlugin::FlickrWindow(interface,Tmp,kapp->activeWindow());
+    dlg->show();
 }
 
 KIPI::Category Plugin_FlickrExport::category( KAction* action ) const
