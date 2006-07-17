@@ -82,6 +82,7 @@ private:
     QSpinBox                 *m_dimensionSpinBox;
     QSpinBox                 *m_imageQualitySpinBox;
     QLineEdit                *m_tagsLineEdit;
+	QCheckBox			     *m_exportApplicationTags;
 	QPushButton              *m_startUploadButton;
     FlickrWidget	*m_widget;
     FlickrTalker            *m_talker;

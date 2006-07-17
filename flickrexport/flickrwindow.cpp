@@ -112,6 +112,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_dimensionSpinBox = m_widget->m_dimensionSpinBox;
     m_imageQualitySpinBox = m_widget->m_imageQualitySpinBox;
     m_tagsLineEdit          = m_widget->m_tagsLineEdit;
+	m_exportApplicationTags = m_widget->m_exportApplicationTags;
 	m_startUploadButton = m_widget->m_startUploadButton;
     m_changeUserButton=m_widget->m_changeUserButton;
     m_userNameDisplayLabel=m_widget->m_userNameDisplayLabel;
@@ -120,7 +121,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
 
     //m_newAlbumBtn->setEnabled( false );
     m_addPhotoBtn->setEnabled( false );
-
+	if(!m_interface->hasFeature(KIPI::HostSupportsTags))
+			m_exportApplicationTags->setEnabled(false);
     
     m_talker = new FlickrTalker( this );
     connect( m_talker, SIGNAL( signalError( const QString& ) ),m_talker,
@@ -404,7 +406,11 @@ void FlickrWindow::slotUploadImages(){
 
 		//Tags from the database
 		QMap <QString, QVariant> attribs=info.attributes();
-		QStringList tagsFromDatabase=attribs["tags"].asStringList();	
+		QStringList tagsFromDatabase;
+		
+		if(m_interface->hasFeature(KIPI::HostSupportsTags) && m_exportApplicationTags->isChecked()){
+			tagsFromDatabase=attribs["tags"].asStringList();	
+		}
 		
 		itTags = tagsFromDatabase.begin();
 		while( itTags != tagsFromDatabase.end() ) {

@@ -64,6 +64,7 @@ private:
     QPushButton*  m_changeUserButton;
 	QLabel*       m_userNameDisplayLabel;
 	QPushButton*  m_startUploadButton;
+	QCheckBox*    m_exportApplicationTags;
 	friend class FlickrWindow;
 };
 

@@ -127,11 +127,15 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
     connect(m_selectImagesButton, SIGNAL(clicked()),
 			SLOT(slotSelectionChecked()));
     
-	QGridLayout* tagsLayout=new QGridLayout(rightButtonGroupLayout,1,2);
+	QGridLayout* tagsLayout=new QGridLayout(rightButtonGroupLayout,2,2);
     QLabel* tagsLabel=new QLabel(i18n("Tags:"),rightButtonGroup);
     tagsLayout->addWidget(tagsLabel,0,0);
     m_tagsLineEdit=new QLineEdit(rightButtonGroup,"m_tagsLineEdit");
+	m_exportApplicationTags=new QCheckBox(rightButtonGroup);
+	m_exportApplicationTags->setText(i18n("Use application tags ?"));
     tagsLayout->addWidget(m_tagsLineEdit,0,1);
+    tagsLayout->addWidget(m_exportApplicationTags,1,1);
+	
     // ------------------------------------------------------------------------
 
     QGroupBox* optionsBox = new QGroupBox(i18n("Override Default Options"),
