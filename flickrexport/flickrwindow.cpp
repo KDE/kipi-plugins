@@ -121,8 +121,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
 
     //m_newAlbumBtn->setEnabled( false );
     m_addPhotoBtn->setEnabled( false );
-	if(!m_interface->hasFeature(KIPI::HostSupportsTags))
-			m_exportApplicationTags->setEnabled(false);
+	//if(!m_interface->hasFeature(KIPI::HostSupportsTags))
+	//		m_exportApplicationTags->setEnabled(false);
     
     m_talker = new FlickrTalker( this );
     connect( m_talker, SIGNAL( signalError( const QString& ) ),m_talker,
@@ -408,7 +408,7 @@ void FlickrWindow::slotUploadImages(){
 		QMap <QString, QVariant> attribs=info.attributes();
 		QStringList tagsFromDatabase;
 		
-		if(m_interface->hasFeature(KIPI::HostSupportsTags) && m_exportApplicationTags->isChecked()){
+		if(/*m_interface->hasFeature(KIPI::HostSupportsTags) && */ m_exportApplicationTags->isChecked()){
 			tagsFromDatabase=attribs["tags"].asStringList();	
 		}
 		
