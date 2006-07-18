@@ -5,6 +5,7 @@
  * Description : a kipi plugin for e-mailing images
  * 
  * Copyright 2004-2005 by Gilles Caulier
+ * Copyright 2006 by Tom Albers
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -259,10 +260,19 @@ void SendImages::makeCommentsFile(void)
             else
                 anyCommentsPresent = true;
 
-            ImageCommentsText = ImageCommentsText +
-                                i18n("Comments for image \"%1\": %2\n\n")
-                                .arg(targetFile)
-                                .arg(commentItem);
+            ImageCommentsText += i18n("Comments for image \"%1\": %2\n")
+                                    .arg(targetFile).arg(commentItem);
+            
+            //Tags from the database
+            QMap <QString, QVariant> attribs=info.attributes();
+            if (m_interface->hasFeature(KIPI::HostSupportsTags))
+                if (attribs["tags"].asStringList().count() > 0)
+                {
+                    ImageCommentsText += i18n("Tags: %2\n").arg(attribs["tags"].asStringList().join(","));
+                    anyCommentsPresent = true;
+                }
+        
+            ImageCommentsText += "\n";
             ++it;
         }
 

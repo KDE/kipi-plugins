@@ -5,6 +5,7 @@
  * Description : a kipi plugin for e-mailing images
  * 
  * Copyright 2003-2005 by Gilles Caulier
+ * Copyright 2006 by Tom Albers
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -406,8 +407,8 @@ void SendImagesDialog::setupEmailOptions(void)
 
     //---------------------------------------------
 
-    m_addComments = new QCheckBox( i18n("Add comments in attached file"), page_setupEmailOptions);
-    QWhatsThis::add( m_addComments, i18n("<p>If you enable this option, all images comments "
+    m_addComments = new QCheckBox( i18n("Attach a file with comments and tags"), page_setupEmailOptions);
+    QWhatsThis::add( m_addComments, i18n("<p>If you enable this option, all images comments and tags "
                                          "will be added as an attached file.") );
     vlay->addWidget( m_addComments );
 
