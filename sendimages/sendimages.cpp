@@ -264,13 +264,15 @@ void SendImages::makeCommentsFile(void)
                                     .arg(targetFile).arg(commentItem);
             
             //Tags from the database
-            QMap <QString, QVariant> attribs=info.attributes();
             if (m_interface->hasFeature(KIPI::HostSupportsTags))
+            {
+                QMap <QString, QVariant> attribs=info.attributes();
                 if (attribs["tags"].asStringList().count() > 0)
                 {
                     ImageCommentsText += i18n("Tags: %2\n").arg(attribs["tags"].asStringList().join(","));
                     anyCommentsPresent = true;
                 }
+            }
         
             ImageCommentsText += "\n";
             ++it;
