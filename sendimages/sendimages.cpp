@@ -150,8 +150,12 @@ void SendImages::run()
            // Prepare resizing images.
 
            QString imageFileName = ItemName;
+           QString f = (*it).directory().section('/', -1);
 
-           QString imageNameFormat = (*it).directory().section('/', -1) + "-" +
+           // Thunderbird does not like (). Replace them, BUG:131343
+           f.replace(QChar('('), "_").replace(QChar(')'), "_");
+
+           QString imageNameFormat = f + "-" +
                                      imageFileName.replace(QChar('.'), "_") +
                                      extension(m_imageFormat);
 
