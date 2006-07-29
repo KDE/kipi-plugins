@@ -232,7 +232,6 @@ bool CDArchiving::prepare(void)
     m_StreamMainPageAlbumPreview = "";
         
     // Get config from setup dialog.
-    
     albumsList = m_configDlg->getSelectedAlbums();
     m_useHTMLInterface = m_configDlg->getUseHTMLInterface();
     m_useAutoRunWin32 = m_configDlg->getUseAutoRunWin32();
@@ -525,13 +524,15 @@ bool CDArchiving::buildHTMLInterface (void)
     destURL = MainTPath + QString::fromLatin1("/up.png");
     KIO::file_copy(srcURL, destURL, -1, true, false, false);
 
+    //clear the temporary list for unique names
+    m_collection_name_list.clear();
     for (QValueList<KIPI::ImageCollection>::iterator it = m_albumsList.begin();
          it != m_albumsList.end(); ++it)
     {
         KIPI::ImageCollection album = *it;
         kdDebug( 51000 ) << "HTML Interface for Album: " << album.name() << endl;
 
-        m_AlbumTitle      = webifyFileName(album.name());
+        m_AlbumTitle      = makeFileNameUnique(m_collection_name_list, webifyFileName(album.name())); //webifyFileName(album.name());
         m_AlbumComments   = m_interface->hasFeature(KIPI::AlbumsHaveComments) ?
                             album.comment() : QString();
         m_AlbumCollection = m_interface->hasFeature(KIPI::AlbumsHaveCategory) ?
@@ -1541,8 +1542,12 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     if ( HTMLinterfaceFolder.isEmpty() == false )
        AddFolderTreeToK3bXMLProjectFile(HTMLinterfaceFolder, &stream);
 
+    //clear the temporary list for unique names
+    m_collection_name_list.clear();
+
     for (QValueList<KIPI::ImageCollection>::iterator it = m_albumsList.begin();
          !m_cancelled && (it != m_albumsList.end()); ++it)
+
     {
         d = new KIPICDArchivingPlugin::EventData;
         d->action = KIPICDArchivingPlugin::Progress;
@@ -1652,9 +1657,10 @@ bool CDArchiving::addCollectionToK3bXMLProjectFile(const KIPI::ImageCollection& 
    QString Temp;
    QString collection_name;
    if (m_useHTMLInterface)
-    collection_name = webifyFileName(collection.name());
+    collection_name = makeFileNameUnique(m_collection_name_list, webifyFileName(collection.name()));
    else
-    collection_name = collection.name();
+    collection_name = makeFileNameUnique(m_collection_name_list, collection.name());
+   kdDebug( 51000 ) << "num of unique collections: "<<  m_collection_name_list.size() << endl;
 
    Temp = "<directory name=\""
           + EscapeSgmlText(QTextCodec::codecForLocale(), collection_name, true, true)
@@ -1871,6 +1877,24 @@ QString CDArchiving::webifyFileName(QString fileName) {
 
   return fileName;
 }
+
+/**
+ * Make sure a file name is unique in list
+ */
+QString CDArchiving::makeFileNameUnique(const QStringList& list, QString fileName) {
+  // Make sure the file name is unique
+  QString fileNameBase=fileName;
+  int count=1;
+  while (list.findIndex(fileName)!=-1) {
+    fileName=fileNameBase + "-" + QString::number(count);
+    ++count;
+  };
+  
+  m_collection_name_list += fileName;
+ 
+  return fileName;
+}
+
 
 }  // NameSpace KIPICDArchivingPlugin
 

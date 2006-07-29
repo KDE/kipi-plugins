@@ -152,6 +152,7 @@ private:
   
   QObject            *m_parent;
   
+  QStringList        m_collection_name_list;
 private:
   
   bool buildHTMLInterface (void);
@@ -203,6 +204,8 @@ private:
   void readSettings(void);
 
   QString webifyFileName(QString fileName);
+  QString makeFileNameUnique(const QStringList& list, QString fileName);
+
 };
 
 }  // NameSpace KIPICDArchivingPlugin
