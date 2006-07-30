@@ -107,8 +107,11 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
     
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Author"),
                      "caulier dot gilles at free.fr");
+
+    about->addAuthor("Angelo Naselli", I18N_NOOP("Contributor"),
+                     "anaselli at linux.it");
 
     about->addAuthor("Gregory Kokanosky", I18N_NOOP("Image navigation mode patches"),
                      "gregory dot kokanosky at free.fr");
