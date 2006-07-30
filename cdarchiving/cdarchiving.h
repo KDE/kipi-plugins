@@ -167,7 +167,7 @@ private:
                   const KURL& targetURL,
                   const QString& imageFormat);
 
-  int  createThumb( const QString& imgName, const QString& sourceDirName,
+  int  createThumb( const QString& imgName, const QString& sourceDirName, const QString& uniqueFileName,
                     const QString& imgGalleryDir, const QString& imageFormat);
 
   int  ResizeImage( const QString Path, const QString Directory, const QString ImageFormat,
@@ -180,8 +180,11 @@ private:
 
   bool createPage(const QString& imgGalleryDir,
                   const KURL& imgURL,
+                  const QString& uniqueImgName,
                   const KURL& prevImgURL,
+                  const QString& prevUniqueImgName,
                   const KURL& nextImgURL,
+                  const QString& nextUniqueImgName,
                   const QString& comment);
 
   void createBodyMainPage(QTextStream& stream, KURL& url);
@@ -204,7 +207,7 @@ private:
   void readSettings(void);
 
   QString webifyFileName(QString fileName);
-  QString makeFileNameUnique(const QStringList& list, QString fileName);
+  QString makeFileNameUnique(QStringList& list, QString fileName);
 
 };
 

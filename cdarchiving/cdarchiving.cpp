@@ -776,16 +776,22 @@ void CDArchiving::createBody(QTextStream& stream,
 
     stream << "</td></tr></table>\n" << endl;
 
-    
     // Page Center -----------------------------------------------------------------------
-    
     stream << "<table>" << endl;
-    
-    // Table with images
 
+    // Table with images
     int        imgIndex = 0;
     EventData* d = 0;
-    
+
+    // preliminary unique name generation 
+    QStringList fileNameList;
+    for( KURL::List::iterator urlIt = images.begin() ; 
+            !m_cancelled && (urlIt != images.end());
+            ++urlIt)
+    {
+       QFileInfo imInfo( (*urlIt).fileName());
+       QString   imgName = makeFileNameUnique(fileNameList, imInfo.baseName(TRUE));
+    }
     for( KURL::List::iterator urlIt = images.begin() ; 
          !m_cancelled && (urlIt != images.end());
          ++urlIt, ++imgIndex)
@@ -796,12 +802,13 @@ void CDArchiving::createBody(QTextStream& stream,
             stream << "<tr>" << endl;
         }
 
-        QString   imgName = (*urlIt).fileName();
+        QString   imgName = fileNameList[imgIndex]; 
         QString   imgPath = (*urlIt).path();
         QFileInfo imgInfo(imgPath);
         QImage    imgProp = QImage(imgPath);
 
-        stream << "<td align='center'>\n<a href=\"pages/"  << webifyFileName(imgName) << ".htm\">";
+        stream << "<td align='center'>\n<a href=\"pages/"  
+               << webifyFileName(imgName) << ".htm\">";
         kdDebug(51000) << "Creating thumbnail for " << imgName << endl;
 
         d = new KIPICDArchivingPlugin::EventData;
@@ -812,12 +819,13 @@ void CDArchiving::createBody(QTextStream& stream,
         QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
         usleep(1000);
 
-        int valRet = createThumb(imgName, (*urlIt).directory(),
+        int valRet = createThumb((*urlIt).fileName(), (*urlIt).directory(), imgName,
                                  imgGalleryDir, imageFormat);
 
         if ( valRet != -1 )
         {
-            QString thumbPath("thumbs/" + webifyFileName(imgName) + extension(imageFormat));
+            QString thumbPath("thumbs/" + webifyFileName(imgName) 
+                                        + extension(imageFormat));
             stream << "<img class=\"photo\" src=\"" << thumbPath
                    << "\" width=\"" << m_imgWidth
                    << "\" "
@@ -836,13 +844,12 @@ void CDArchiving::createBody(QTextStream& stream,
             sep = ", ";
 
             QString imgPageComment = m_interface->info(*urlIt).description();
-            
+ 
             if ( !imgPageComment.isEmpty() )
             {
                 stream << sep
                        << EscapeSgmlText(QTextCodec::codecForLocale(),
                                          imgPageComment, true, true);
-                
             }
 
             stream << "\">" << endl;
@@ -857,13 +864,16 @@ void CDArchiving::createBody(QTextStream& stream,
                 nextImgName = images[imgIndex].fileName();
 
 
-            createPage(imgGalleryDir,  (*urlIt),
+            createPage(imgGalleryDir,  (*urlIt), imgName,
                        (imgIndex > 0) ? images[imgIndex-1] : KURL(),
+                       (imgIndex > 0) ? fileNameList[imgIndex-1] : QString(""),
                        (imgIndex < (int)(images.count()-1)) ? images[imgIndex+1] : KURL(),
+                       (imgIndex < (int)(fileNameList.count()-1)) ? 
+                                         fileNameList[imgIndex+1] : QString(""),
                        imgPageComment);
 
             // For each first image of current Album we add a preview in main HTML page.      
-                
+
             if ( imgIndex == 0) 
             {
                 QString Temp, Temp2;
@@ -1048,34 +1058,43 @@ bool CDArchiving::createHtml( const KIPI::ImageCollection& album,
 
 bool CDArchiving::createPage(const QString& imgGalleryDir,
                              const KURL& imgURL,
+                             const QString& uniqueImgName,
                              const KURL& prevImgURL,
+                             const QString& prevUniqueImgName,
                              const KURL& nextImgURL,
+                             const QString& nextUniqueImgName,
                              const QString& comment)
 {
 
     const QDir pagesDir(imgGalleryDir + QString::fromLatin1("/pages/"));
     const QDir thumbsDir(imgGalleryDir + QString::fromLatin1("/thumbs/"));
-    const QString imgName(imgURL.fileName());
+    const QFileInfo fi (imgURL.fileName());
+    const QString imgName = uniqueImgName + "." + fi.extension(FALSE);
+kdDebug( 51000 ) << "CreatePage: FileName: " << imgURL.fileName() << endl;
+kdDebug( 51000 ) << "CreatePage: uniqueFileName: " << imgName << endl;
+kdDebug( 51000 ) << "CreatePage: uniquePrevFileName: " << prevUniqueImgName << endl;
+kdDebug( 51000 ) << "CreatePage: uniqueNextFileName: " << nextUniqueImgName << endl;
+
 
     // Html pages filenames
 
     const QString pageFilename = pagesDir.path() +
                                  QString::fromLatin1("/") +
-                                 webifyFileName(imgName )+
+                                 webifyFileName(uniqueImgName)+
                                  QString::fromLatin1(".htm");
-    const QString nextPageFilename =  webifyFileName(nextImgURL.fileName()) +
+    const QString nextPageFilename =  webifyFileName(nextUniqueImgName) +
                                       QString::fromLatin1(".htm");
-    const QString prevPageFilename =  webifyFileName(prevImgURL.fileName()) +
+    const QString prevPageFilename =  webifyFileName(prevUniqueImgName) +
                                       QString::fromLatin1(".htm");
 
     // Thumbs filenames
 
     const QString prevThumb = QString::fromLatin1("../thumbs/") +
-                              webifyFileName(prevImgURL.fileName()) +
+                              webifyFileName(prevUniqueImgName) +
                               extension(m_imageFormat);
 
     const QString nextThumb = QString::fromLatin1("../thumbs/") +
-                              webifyFileName(nextImgURL.fileName()) +
+                              webifyFileName(nextUniqueImgName) +
                               extension(m_imageFormat);
 
     QFile file( pageFilename );
@@ -1098,7 +1117,7 @@ bool CDArchiving::createPage(const QString& imgGalleryDir,
         stream << "<meta name=\"date\" content=\""
                << KGlobal::locale()->formatDate(QDate::currentDate())
                << "\">" << endl;
-        stream << "<title>" << m_mainTitle << " : "<< imgURL.fileName() <<"</title>" << endl;
+        stream << "<title>" << m_mainTitle << " : "<< imgName/*imgURL.fileName()*/ <<"</title>" << endl;
 
         createCSSSection(stream);
 
@@ -1236,13 +1255,14 @@ bool CDArchiving::createPage(const QString& imgGalleryDir,
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int CDArchiving::createThumb( const QString& imgName, const QString& sourceDirName,
+                              const QString& uniqueFileName, 
                               const QString& imgGalleryDir, const QString& imageFormat)
 {
     const QString pixPath = sourceDirName + "/" + imgName;
 
     // Create the thumbnails for the HTML interface.
 
-    const QString ImageNameFormat = webifyFileName(imgName) + extension(imageFormat);
+    const QString ImageNameFormat = webifyFileName(uniqueFileName) + extension(imageFormat);
     const QString thumbDir = imgGalleryDir + QString::fromLatin1("/thumbs/");
     int extent = m_thumbnailsSize;
 
@@ -1600,30 +1620,30 @@ bool CDArchiving::AddFolderTreeToK3bXMLProjectFile (QString dirname, QTextStream
    QFileInfo* fi_folders;
 
    while( (fi_files = it_files.current()) && !m_cancelled )      // Check all files in folder.
-     {
+   {
      if ( fi_files->fileName() == "." || fi_files->fileName() == ".." )
-          {
-          ++it_files;
-          continue;
-          }
+     {
+       ++it_files;
+       continue;
+     }
 
      if( fi_files->isFile() )
-          {
-          kdDebug( 51000 ) << "   Filename: " << fi_files->fileName().latin1() << endl;
-          
-          Temp = "<file name=\""
-                 + EscapeSgmlText(QTextCodec::codecForLocale(), fi_files->fileName(), true, true)
-                 + "\" >\n"
-                 "<url>"
-                 + EscapeSgmlText(QTextCodec::codecForLocale(), fi_files->absFilePath(), true, true)
-                 + "</url>\n"
-                 "</file>\n";
+     {
+        kdDebug( 51000 ) << "   Filename: " << fi_files->fileName().latin1() << endl;
 
-          *stream << Temp;
-          }
+        Temp = "<file name=\""
+              + EscapeSgmlText(QTextCodec::codecForLocale(), fi_files->fileName(), true, true)
+              + "\" >\n"
+              "<url>"
+              + EscapeSgmlText(QTextCodec::codecForLocale(), fi_files->absFilePath(), true, true)
+              + "</url>\n"
+              "</file>\n";
+
+        *stream << Temp;
+     }
 
      ++it_files;
-     }
+   }
 
    while( (fi_folders = it_folders.current()) && !m_cancelled )           // Check all sub-folders in folder.
      {
@@ -1668,16 +1688,22 @@ bool CDArchiving::addCollectionToK3bXMLProjectFile(const KIPI::ImageCollection& 
    *stream << Temp;
 
    KURL::List images = collection.images();
-
+   kdDebug( 51000 ) << "   Files: " << images.size() << endl;
+   QStringList fileNameList;
    for (KURL::List::iterator it = images.begin();
         (it != images.end()) && !m_cancelled;
         ++it)
    {
 
        kdDebug( 51000 ) << "   Filename: " << (*it).fileName() << endl;
-          
+       QFileInfo fInfo((*it).fileName());
+       QString fName = makeFileNameUnique(fileNameList, fInfo.baseName(TRUE)) 
+              + "." + fInfo.extension( FALSE );
+       kdDebug( 51000 ) << "   Unique filename: " << fName  << endl;
+       kdDebug( 51000 ) << "num of unique files: "<< fileNameList.size() << endl;
+
        Temp = "<file name=\""
-              + EscapeSgmlText(QTextCodec::codecForLocale(), (*it).fileName(), true, true)
+              + EscapeSgmlText(QTextCodec::codecForLocale(), fName, true, true)
               + "\" >\n"
               "<url>"
               + EscapeSgmlText(QTextCodec::codecForLocale(), (*it).path(), true, true)
@@ -1881,7 +1907,7 @@ QString CDArchiving::webifyFileName(QString fileName) {
 /**
  * Make sure a file name is unique in list
  */
-QString CDArchiving::makeFileNameUnique(const QStringList& list, QString fileName) {
+QString CDArchiving::makeFileNameUnique(QStringList& list, QString fileName) {
   // Make sure the file name is unique
   QString fileNameBase=fileName;
   int count=1;
@@ -1890,7 +1916,7 @@ QString CDArchiving::makeFileNameUnique(const QStringList& list, QString fileNam
     ++count;
   };
   
-  m_collection_name_list += fileName;
+  list += fileName;
  
   return fileName;
 }
