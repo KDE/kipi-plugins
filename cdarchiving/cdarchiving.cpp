@@ -790,7 +790,7 @@ void CDArchiving::createBody(QTextStream& stream,
             ++urlIt)
     {
        QFileInfo imInfo( (*urlIt).fileName());
-       QString   imgName = makeFileNameUnique(fileNameList, imInfo.baseName(TRUE));
+       QString   imgName = makeFileNameUnique(fileNameList, webifyFileName(imInfo.baseName(TRUE)));
     }
     for( KURL::List::iterator urlIt = images.begin() ; 
          !m_cancelled && (urlIt != images.end());
@@ -1690,6 +1690,7 @@ bool CDArchiving::addCollectionToK3bXMLProjectFile(const KIPI::ImageCollection& 
    KURL::List images = collection.images();
    kdDebug( 51000 ) << "   Files: " << images.size() << endl;
    QStringList fileNameList;
+   QString fName;
    for (KURL::List::iterator it = images.begin();
         (it != images.end()) && !m_cancelled;
         ++it)
@@ -1697,7 +1698,11 @@ bool CDArchiving::addCollectionToK3bXMLProjectFile(const KIPI::ImageCollection& 
 
        kdDebug( 51000 ) << "   Filename: " << (*it).fileName() << endl;
        QFileInfo fInfo((*it).fileName());
-       QString fName = makeFileNameUnique(fileNameList, fInfo.baseName(TRUE)) 
+       if (m_useHTMLInterface)
+         fName = makeFileNameUnique(fileNameList, webifyFileName(fInfo.baseName(TRUE))) 
+              + "." + fInfo.extension( FALSE );
+       else
+         fName = makeFileNameUnique(fileNameList, fInfo.baseName(TRUE)) 
               + "." + fInfo.extension( FALSE );
        kdDebug( 51000 ) << "   Unique filename: " << fName  << endl;
        kdDebug( 51000 ) << "num of unique files: "<< fileNameList.size() << endl;
