@@ -24,7 +24,6 @@
 #include <qframe.h>
 #include <qlayout.h>
 #include <qvbox.h>
-#include <qhbox.h>
 #include <qlabel.h>
 
 // KDE include files
@@ -67,18 +66,14 @@ FirstRunDlg::FirstRunDlg( QWidget *parent )
                          "so it is available for further use.\n\n"));
     topLayout->addWidget( info );
     
-    QHBoxLayout *hboxURL = new QHBoxLayout(page);
-    topLayout->addLayout(hboxURL);
-    
     info = new QLabel(page);
-    info->setText(i18n( "1.) Download SimpleViewer: "));
-    hboxURL->addWidget(info);
+    info->setText(i18n( "1.) Download SimpleViewer Version 1.7.X (1.8.X isn't compatible yet):\n"));
+    topLayout->addWidget(info);
     
     KURLLabel *link = new KURLLabel(page);
     link->setText("http://www.airtightinteractive.com/simpleviewer/");
     link->setURL("http://www.airtightinteractive.com/simpleviewer/");
-    hboxURL->addWidget(link);
-    hboxURL->addStretch();
+    topLayout->addWidget(link);
     connect(link, SIGNAL(leftClickedURL(const QString &)),
             SLOT(slotDownload(const QString &)));
     
