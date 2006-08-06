@@ -26,6 +26,7 @@
 #include <qtextstream.h>
 #include <qfile.h>
 #include <qdir.h>
+#include <qregexp.h>
 
 // KDE includes
 
@@ -39,6 +40,7 @@
 #include <kzip.h>
 #include <kmessagebox.h>
 #include <kaboutdata.h>
+#include <ktempdir.h>
 
 // KIPI includes
 
@@ -88,6 +90,7 @@ SimpleViewerExport::SimpleViewerExport(KIPI::Interface* interface, QObject *pare
     m_action = 0;
     m_canceled = true;
     m_dataLocal = locateLocal("data", "kipiplugin_simpleviewerexport/simpleviewer/", true);
+    m_tempDir = 0;
     
     m_simpleViewerFiles.append(viewer);
     m_simpleViewerFiles.append("flash_detect.js");
@@ -107,7 +110,8 @@ SimpleViewerExport::SimpleViewerExport(KIPI::Interface* interface, QObject *pare
 
 SimpleViewerExport::~SimpleViewerExport()
 {
-
+    if(m_tempDir)
+        delete m_tempDir;
 }
 
 bool SimpleViewerExport::configure()
@@ -237,6 +241,13 @@ void SimpleViewerExport::slotProcess()
         return;
     }
 
+    if(!m_canceled && !upload())
+    {
+        m_progressDlg->addedAction(i18n("Failed to upload the gallery"),
+                                   KIPI::ErrorMessage);
+        return;
+    }
+
     if(m_canceled)
     {
         int ret = KMessageBox::warningYesNo(kapp->activeWindow(),
@@ -255,18 +266,20 @@ void SimpleViewerExport::slotProcess()
 
 bool SimpleViewerExport::createExportDirectories()
 {
+    m_tempDir = new KTempDir(locateLocal("tmp", "simpleviewerexport"));
+    m_tempDir->setAutoDelete(true);
+
     m_progressDlg->addedAction(i18n("Creating directories..."), KIPI::StartingMessage);    
     
     KURL root = m_configDlg->exportURL();
-    
     if(!KIO::NetAccess::mkdir(root, kapp->activeWindow()))
     {
         m_progressDlg->addedAction(i18n("Could not create folder '%1'").arg(root.url()),
                                    KIPI::ErrorMessage);
         return(false);
     }
-    
-    KURL thumbsDir = root;
+  
+    KURL thumbsDir = m_tempDir->name();
     thumbsDir.addPath("/thumbs");
     if(!KIO::NetAccess::mkdir(thumbsDir, kapp->activeWindow()))
     {
@@ -275,20 +288,11 @@ bool SimpleViewerExport::createExportDirectories()
         return(false);
     }
 
-    KURL imagesDir = root;
+    KURL imagesDir = m_tempDir->name();
     imagesDir.addPath("/images");
     if(!KIO::NetAccess::mkdir(imagesDir, kapp->activeWindow()))
     {
         m_progressDlg->addedAction(i18n("Could not create folder '%1'").arg(imagesDir.url()),
-                                   KIPI::ErrorMessage);
-        return(false);
-    }
-    
-    KURL simpleviewerDir = root;
-    simpleviewerDir.addPath("/simpleviewer");
-    if(!KIO::NetAccess::mkdir(simpleviewerDir, kapp->activeWindow()))
-    {
-        m_progressDlg->addedAction(i18n("Could not create folder '%1'").arg(simpleviewerDir.url()),
                                    KIPI::ErrorMessage);
         return(false);
     }
@@ -306,13 +310,13 @@ bool SimpleViewerExport::exportImages()
 
     m_progressDlg->addedAction(i18n("Creating images and thumbnails..."), KIPI::StartingMessage);
 
-    KURL thumbsDir(m_configDlg->exportURL());
+    KURL thumbsDir(m_tempDir->name());
     thumbsDir.addPath("/thumbs");
     
-    KURL imagesDir(m_configDlg->exportURL());
+    KURL imagesDir(m_tempDir->name());
     imagesDir.addPath("/images");
 
-    KURL xmlFile(m_configDlg->exportURL());
+    KURL xmlFile(m_tempDir->name());
     xmlFile.addPath("/imageData.xml");
     QFile file(xmlFile.path());
     file.open(IO_WriteOnly);
@@ -503,7 +507,7 @@ bool SimpleViewerExport::createIndex()
     indexTemplate.replace("{HOSTURL}", m_hostURL);
     indexTemplate.replace("{HOSTNAME}", m_hostName);
     
-    QFile outfile(m_configDlg->exportURL() + "/index.html");
+    QFile outfile(m_tempDir->name() + "/index.html");
     outfile.open(IO_WriteOnly);
     QTextStream out(&outfile);
     out << indexTemplate;
@@ -519,6 +523,8 @@ bool SimpleViewerExport::copySimpleViewer()
 {
     if(m_canceled)
         return false;
+
+    m_progressDlg->addedAction(i18n("Copying flash files..."), KIPI::StartingMessage);
 
     QString dataDir;
     
@@ -550,6 +556,23 @@ bool SimpleViewerExport::copySimpleViewer()
     }
     // TODO: catch errors
     KIO::CopyJob *copyJob = KIO::copy(files, m_configDlg->exportURL(), true);
+    
+    m_progressDlg->addedAction(i18n("flash files copied..."), KIPI::SuccessMessage);
+
+    return true;
+}
+
+bool SimpleViewerExport::upload()
+{
+    if(m_canceled)
+        return false;
+
+    m_progressDlg->addedAction(i18n("Uploading gallery..."), KIPI::StartingMessage);
+
+    if(!KIO::NetAccess::dircopy(m_tempDir->name() + "./", m_configDlg->exportURL()))
+        return false;
+
+    m_progressDlg->addedAction(i18n("Gallery uploaded..."), KIPI::SuccessMessage);
     
     return true;
 }

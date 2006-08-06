@@ -41,6 +41,7 @@ class KURL;
 class QString;
 class QImage;
 class KArchiveEntry;
+class KTempDir;
 
 namespace KIPISimpleViewerExportPlugin
 {
@@ -135,6 +136,8 @@ private:
      * on the users machine
      */
     bool installSimpleViewer();
+
+    bool upload();
     
     bool unzip(const QString &url);
 
@@ -163,6 +166,7 @@ private:
     QStringList                          m_simpleViewerFiles;
     QString                              m_hostName;
     QString                              m_hostURL;
+    KTempDir                            *m_tempDir;
 };
 
 }
