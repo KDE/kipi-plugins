@@ -22,6 +22,7 @@ Name[uk]=Набути зображення
 Name[xx]=xxAcquireImagesxx
 Name[zh_CN]=获取图像
 Comment=KIPI Acquire Image Plugin
+Comment[cs]=KIPI modul pro získávání obrázků
 Comment[da]=KIPI-plugin: Hent billeder
 Comment[de]=Ein KIPI-Modul zum Holen von Bildern
 Comment[el]=Πρόσθετο ανάκτησης εικόνας KIPI
