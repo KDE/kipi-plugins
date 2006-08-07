@@ -43,6 +43,7 @@ class QComboBox;
 class KIntNumInput;
 class KColorButton;
 class KURLRequester;
+class KConfig;
 
 namespace KIPISimpleViewerExportPlugin
 {
@@ -55,6 +56,9 @@ public:
  
     SVEDialog( KIPI::Interface* interface, QWidget *parent=0);
     ~SVEDialog();
+
+    void readConfig();
+    void writeConfig();
 
     void slotOk();
     QValueList<KIPI::ImageCollection> getSelectedAlbums() const;

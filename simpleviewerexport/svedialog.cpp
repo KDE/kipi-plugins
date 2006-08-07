@@ -47,6 +47,7 @@
 #include <kcolorbutton.h>
 #include <kurlrequester.h>
 #include <kglobalsettings.h>
+#include <kconfig.h>
 
 // KIPI include files
 
@@ -70,6 +71,8 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
     selectionPage();
     generalPage();
     lookPage();
+
+    readConfig();
 
     resize( 650, 450 );
 
@@ -107,6 +110,54 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
 
 SVEDialog::~SVEDialog()
 {
+}
+
+void SVEDialog::readConfig()
+{
+    KConfig *config = new KConfig("kipisimpleviewerexportrc");
+    
+    setThumbnailRows(config->readNumEntry("thumbnailRows", 1));
+    setThumbnailColumns(config->readNumEntry("thumbnailColumns", 1));
+    m_navPosition->setCurrentItem(config->readNumEntry("navPosition", 1));
+    m_navDirection->setCurrentItem(config->readNumEntry("navDirection", 1));
+    setTextColor(QColor(config->readEntry("textColor", "#ffffff")));
+    setBackgroundColor(QColor(config->readEntry("backgroundColor", "#181818")));    
+    setFrameColor(QColor(config->readEntry("frameColor", "#ffffff")));    
+    setFrameWidth(config->readNumEntry("frameWidth", 1));
+    setStagePadding(config->readNumEntry("stagePadding", 1));
+    setTitle(config->readEntry("title", ""));
+    m_exportURL->setURL(config->readPathEntry("exporturl",  KGlobalSettings::documentPath() + "simpleviewer"));
+    setResizeExportImages(config->readBoolEntry("resizeExportImages", true));
+    setImagesExportSize(config->readNumEntry("imagesExportSize", 640));
+    setMaxImagesDimension(config->readNumEntry("maxImageDimension", 640));
+    setShowExifComments(config->readBoolEntry("showExifComments", true));    
+        
+    delete config;
+}
+
+void SVEDialog::writeConfig()
+{
+    KConfig *config = new KConfig("kipisimpleviewerexportrc");
+    
+    config->writeEntry("thumbnailRows", thumbnailRows());
+    config->writeEntry("thumbnailColumns", thumbnailColumns());
+    config->writeEntry("navPosition", m_navPosition->currentItem());
+    config->writeEntry("navDirection", m_navDirection->currentItem());
+    config->writeEntry("textColor", textColor().name());
+    config->writeEntry("backgroundColor", backgroundColor().name());    
+    config->writeEntry("frameColor", frameColor().name());
+    config->writeEntry("frameWidth", frameWidth());
+    config->writeEntry("stagePadding", stagePadding());            
+    config->writePathEntry("exporturl", exportURL());
+    config->writeEntry("title", title());
+    config->writeEntry("resizeExportImages", resizeExportImages());
+    config->writeEntry("imagesExportSize", imagesExportSize());
+    config->writeEntry("maxImageDimension", maxImageDimension());
+    config->writeEntry("showExifComments", showExifComments());
+    
+    config->sync(); 
+    
+    delete config;
 }
 
 void SVEDialog::selectionPage()
@@ -319,7 +370,7 @@ void SVEDialog::slotOk()
         KMessageBox::sorry(this, i18n("You must select at least one album."));
         return;
     }
-
+    writeConfig();
     accept();
 }
 
@@ -464,9 +515,9 @@ QString SVEDialog::navDirection() const
 void SVEDialog::setNavDirection(const QString &direction)
 {
     if(direction == "LTR")
-        m_navPosition->setCurrentText(i18n("Left to Right"));
+        m_navDirection->setCurrentText(i18n("Left to Right"));
     else
-        m_navPosition->setCurrentText(i18n("Right Left"));
+        m_navDirection->setCurrentText(i18n("Right to Left"));
 }
 
 QString SVEDialog::navPosition() const

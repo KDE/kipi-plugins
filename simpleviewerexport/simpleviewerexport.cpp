@@ -26,7 +26,6 @@
 #include <qtextstream.h>
 #include <qfile.h>
 #include <qdir.h>
-#include <qregexp.h>
 
 // KDE includes
 
