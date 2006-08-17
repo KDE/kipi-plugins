@@ -1,4 +1,13 @@
-For details and info about current version, see ChangeLog.
+Note: for details and info about current version, see ChangeLog.
+
+                                                            
+----------------------------------------------------------------------------
+
+File from B.K.O fixed :
+
+127101: expand sequence number start value in batch rename images.
+
+
 v 0.1.0                                                           2006-06-22
 ----------------------------------------------------------------------------
 Plugins:
