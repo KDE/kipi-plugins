@@ -29,6 +29,15 @@
 #include <cassert>
 #include <string>
 
+// C Ansi includes.
+
+extern "C" 
+{
+#include <sys/types.h>
+#include <unistd.h>
+#include <jpeglib.h>
+}
+
 // Qt includes.
 
 #include <qimage.h>
@@ -53,19 +62,10 @@
 
 // Local includes.
 
-#include "imagerotate.h"
 #include "utils.h"
-
-// C Ansi includes.
-
-extern "C" 
-{
-#include <sys/types.h>
-#include <unistd.h>
-#include <jpeglib.h>
 #include "transupp.h"
 #include "jpegtransform.h"
-}
+#include "imagerotate.h"
 
 namespace KIPIJPEGLossLessPlugin
 {

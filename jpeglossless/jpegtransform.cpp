@@ -26,6 +26,15 @@
 #include <cstdio>
 #include <cstdlib>
 
+// C Ansi includes.
+
+extern "C" 
+{
+#include <sys/types.h>
+#include <unistd.h>
+#include <jpeglib.h>
+}
+
 // Qt includes.
 
 #include <qstring.h>
@@ -40,16 +49,11 @@
 #include <libkexif/kexifdata.h>
 #include <libkexif/kexifutils.h>
 
-// C Ansi includes.
+// Local includes.
 
-extern "C" 
-{
-#include <sys/types.h>
-#include <unistd.h>
-#include <jpeglib.h>
 #include "transupp.h"
 #include "jpegtransform.h"
-}
+
 
 namespace KIPIJPEGLossLessPlugin
 {

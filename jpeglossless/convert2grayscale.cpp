@@ -27,6 +27,15 @@
 #include <cassert>
 #include <string>
 
+// C Ansi includes.
+
+extern "C" 
+{
+#include <sys/types.h>
+#include <unistd.h>
+#include <jpeglib.h>
+}
+
 // Qt includes.
 
 #include <qimage.h>
@@ -47,18 +56,9 @@
 
 // Local includes.
 
-#include "convert2grayscale.h"
 #include "utils.h"
-
-// C Ansi includes.
-
-extern "C" 
-{
-#include <sys/types.h>
-#include <unistd.h>
-#include <jpeglib.h>
 #include "transupp.h"
-}
+#include "convert2grayscale.h"
 
 namespace KIPIJPEGLossLessPlugin
 {

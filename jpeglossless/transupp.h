@@ -20,9 +20,12 @@
 #ifndef TRANSUPP_H
 #define TRANSUPP_H
 
+namespace KIPIJPEGLossLessPlugin
+{
+
 /* If you happen not to want the image transform support, disable it here */
 #ifndef TRANSFORMS_SUPPORTED
-#define TRANSFORMS_SUPPORTED 1		/* 0 disables transform code */
+#define TRANSFORMS_SUPPORTED 1      /* 0 disables transform code */
 #endif
 
 /* Short forms of external names for systems with brain-damaged linkers. */
@@ -137,5 +140,6 @@ EXTERN(void) jcopy_markers_execute
 	JPP((j_decompress_ptr srcinfo, j_compress_ptr dstinfo,
 	     JCOPY_OPTION option));
 
-#endif
+} // namespace KIPIJPEGLossLessPlugin
 
+#endif // TRANSUPP_H
