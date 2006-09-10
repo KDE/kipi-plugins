@@ -10,7 +10,8 @@ kipiplugin_galleryexport_la_SOURCES = plugin_galleryexport.cpp \
 		galleries.cpp gallerylist.cpp galleryconfig.cpp \
 		gallerywindow.cpp gallerytalker.cpp \
 		gallerywidget.cpp gallerympform.cpp galleryalbumdialog.ui \
-		galleryviewitem.cpp
+		galleryviewitem.cpp \
+		exifrestorer.cpp
 
 kipiplugin_galleryexport_la_LIBADD = -lkwalletclient $(LIB_KHTML) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 

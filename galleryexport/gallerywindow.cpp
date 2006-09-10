@@ -182,10 +182,6 @@ void GalleryWindow::slotDoLogin()
 {
     GalleryList dlg(this, mpGalleries);
 
-/*
-    GalleryLogin dlg( this, i18n( "Login Into Remote Gallery" ),
-                      "", "", "", GalleryTalker::isGallery2() );
-*/
     if (QDialog::Accepted != dlg.exec())
     {
       close();
