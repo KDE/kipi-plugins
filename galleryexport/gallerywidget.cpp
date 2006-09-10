@@ -46,7 +46,7 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )
-	setName( "GalleryWidget" );
+	      setName( "GalleryWidget" );
     QVBoxLayout*  galleryWidgetLayout
         = new QVBoxLayout( this, 5, 5, "GalleryWidgetLayout");
 

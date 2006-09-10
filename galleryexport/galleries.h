@@ -83,7 +83,7 @@ private:
 };
 
 
-typedef QPtrList<Gallery> GalleryList;
+typedef QPtrList<Gallery> GalleryPtrList;
 
 /* Container class for all Galleries */
 class Galleries
@@ -102,7 +102,7 @@ private:
 
   KWallet::Wallet* mpWallet;
 
-  GalleryList mGalleries;
+  GalleryPtrList mGalleries;
   unsigned int mMaxGalleryId;
 };
 

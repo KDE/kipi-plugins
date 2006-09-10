@@ -28,6 +28,11 @@
 
 class KAction;
 
+namespace KIPIGalleryExportPlugin
+{
+class Galleries;
+}
+
 class Plugin_GalleryExport : public KIPI::Plugin
 {
     Q_OBJECT
@@ -44,11 +49,19 @@ public:
 
 public slots:
 
-    void slotActivate();
+    void slotSync();
+    void slotConfigure();
+    void slotCollectionSettings();
+    void slotImageSettings();
 
 private:
 
-    KAction *m_action;
+    KAction *m_action_sync;
+    KAction *m_action_configure;
+    KAction *m_action_collection_settings;
+    KAction *m_action_image_setting;
+    
+    KIPIGalleryExportPlugin::Galleries* mpGalleries;
 };
 
 #endif

@@ -37,14 +37,10 @@ namespace KIPI
 class Interface;
 }
 
-namespace KWallet
-{
-class Wallet;
-}
-
 namespace KIPIGalleryExportPlugin
 {
 
+class Galleries;
 class GalleryTalker;
 class GAlbum;
 class GPhoto;
@@ -56,7 +52,7 @@ class GalleryWindow : public KDialogBase
 
 public:
 
-    GalleryWindow(KIPI::Interface *interface, QWidget *parent);
+    GalleryWindow(KIPI::Interface *interface, QWidget *parent, Galleries* pGalleries);
     ~GalleryWindow();
 
 private:
@@ -70,16 +66,16 @@ private:
     QSpinBox                 *m_dimensionSpinBox;
     GalleryTalker            *m_talker;
     QIntDict<GAlbumViewItem>  m_albumDict;
-    QString                   m_url;
-    QString                   m_user;
     QString                   m_lastSelectedAlbum;
     KIPI::Interface          *m_interface;
-    KWallet::Wallet          *m_wallet;
 
     QProgressDialog                      *m_progressDlg;
     unsigned int                          m_uploadCount;
     unsigned int                          m_uploadTotal;
     QValueList< QPair<QString,QString> >  m_uploadQueue;
+
+    Galleries* mpGalleries;
+    Gallery*   mpGallery;
 
 private slots:
 

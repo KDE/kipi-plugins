@@ -45,10 +45,6 @@
 #include <krun.h>
 #include <kdebug.h>
 #include <kconfig.h>
-#include <kdeversion.h>
-#if KDE_IS_VERSION(3,2,0)
-#include <kwallet.h>
-#endif
 
 // KIPI include files
 
@@ -58,24 +54,26 @@
 
 // Local includes.
 
+#include "galleries.h"
+#include "gallerylist.h"
 #include "gallerytalker.h"
 #include "galleryitem.h"
 #include "galleryviewitem.h"
-#include "gallerylogin.h"
 #include "gallerywidget.h"
 #include "galleryalbumdialog.h"
 #include "gallerywindow.h"
 
+
 namespace KIPIGalleryExportPlugin
 {
 
-GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
-    : KDialogBase(parent, 0, true, i18n( "Gallery Export" ), Help|Close, Close, false)
+GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galleries* pGalleries)
+    : KDialogBase(parent, 0, true, i18n("Gallery Export"), Help|Close, Close, false),
+      m_interface(interface),
+      mpGalleries(pGalleries)
 {
-    m_interface   = interface;
     m_uploadCount = 0;
     m_uploadTotal = 0;
-    m_wallet      = 0;
 
     // About data and help button.
 
@@ -97,9 +95,9 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
     helpMenu->menu()->insertItem(i18n("Gallery Export Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
 
-    GalleryWidget* widget = new GalleryWidget( this );
-    setMainWidget( widget );
-    widget->setMinimumSize( 600, 400 );
+    GalleryWidget* widget = new GalleryWidget(this);
+    setMainWidget(widget);
+    widget->setMinimumSize(600, 400);
 
     m_albumView        = widget->m_albumView;
     m_photoView        = widget->m_photoView;
@@ -117,27 +115,20 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
     m_progressDlg->setAutoReset( true );
     m_progressDlg->setAutoClose( true );
 
-    connect( m_progressDlg, SIGNAL( canceled() ),
-             SLOT( slotAddPhotoCancel() ) );
+    connect(m_progressDlg, SIGNAL(canceled()), SLOT(slotAddPhotoCancel()));
 
-    connect( m_albumView, SIGNAL( selectionChanged() ),
-             SLOT( slotAlbumSelected() ) );
-    connect( m_photoView->browserExtension(),
-             SIGNAL( openURLRequest( const KURL&,
-                                     const KParts::URLArgs& ) ),
-             SLOT( slotOpenPhoto( const KURL& ) ) );
+    connect(m_albumView, SIGNAL(selectionChanged()), SLOT(slotAlbumSelected()));
+    connect(m_photoView->browserExtension(),
+            SIGNAL(openURLRequest(const KURL&,
+                                  const KParts::URLArgs&)),
+            SLOT(slotOpenPhoto(const KURL&)));
 
-    connect( m_newAlbumBtn, SIGNAL( clicked() ),
-             SLOT( slotNewAlbum() ) );
-    connect( m_addPhotoBtn, SIGNAL( clicked() ),
-             SLOT( slotAddPhotos() ) );
+    connect(m_newAlbumBtn, SIGNAL(clicked()), SLOT(slotNewAlbum()));
+    connect(m_addPhotoBtn, SIGNAL(clicked()), SLOT( slotAddPhotos()));
 
     // read config
     KConfig config("kipirc");
-    config.setGroup("GalleryExport Settings");
-    m_url  = config.readEntry("URL");
-    m_user = config.readEntry("User");
-    GalleryTalker::setGallery2(config.readBoolEntry("Gallery2", true));
+    config.setGroup("GallerySync Settings");
 
     m_talker = new GalleryTalker( this );
     connect( m_talker, SIGNAL( signalError( const QString& ) ),
@@ -172,17 +163,9 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent)
 
 GalleryWindow::~GalleryWindow()
 {
-#if KDE_IS_VERSION(3,2,0)
-    if (m_wallet)
-        delete m_wallet;
-#endif
-
     // write config
     KConfig config("kipirc");
-    config.setGroup("GalleryExport Settings");
-    config.writeEntry("URL",  m_url);
-    config.writeEntry("User", m_user);
-    config.writeEntry("Gallery2", GalleryTalker::isGallery2());
+    config.setGroup("GallerySync Settings");
     config.writeEntry("Resize", m_resizeCheckBox->isChecked());
     config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
 
@@ -197,68 +180,48 @@ void GalleryWindow::slotHelp()
 
 void GalleryWindow::slotDoLogin()
 {
-    QString password;
+    GalleryList dlg(this, mpGalleries);
 
-#if KDE_IS_VERSION(3,2,0)
-    if (!m_wallet)
-        m_wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(),
-                                               winId(),
-                                               KWallet::Wallet::Synchronous );
-    if (!m_wallet)
-    {
-        kdWarning() << "Failed to open kwallet" << endl;
-    }
-    else
-    {
-        if (!m_wallet->hasFolder("KIPIGalleryExportPlugin"))
-        {
-            if (!m_wallet->createFolder("KIPIGalleryExportPlugin"))
-                kdWarning() << "Failed to create kwallet folder" << endl;
-        }
-
-        if (!m_wallet->setFolder("KIPIGalleryExportPlugin"))
-            kdWarning() << "Failed to set kwallet folder" << endl;
-        else
-        {
-            m_wallet->readPassword("password", password);
-        }
-    }
-#endif
-
-
+/*
     GalleryLogin dlg( this, i18n( "Login Into Remote Gallery" ),
-                      m_url, m_user, password, GalleryTalker::isGallery2() );
-    if ( dlg.exec() != QDialog::Accepted )
+                      "", "", "", GalleryTalker::isGallery2() );
+*/
+    if (QDialog::Accepted != dlg.exec())
     {
-        close();
-        return;
+      close();
+      return;
     }
 
-    m_user           = dlg.name();
-    GalleryTalker::setGallery2(dlg.isgGallery2Enable());
+    Gallery* p_gallery = dlg.GetGallery();
+    if (!p_gallery)
+    {
+      close();
+      return;
+    }
 
-    KURL url(dlg.url());
+    GalleryTalker::setGallery2((2 == p_gallery->version()));
+
+    KURL url(p_gallery->url());
     if (url.protocol().isEmpty())
     {
-        url.setProtocol("http");
-        url.setHost(dlg.url());
+      url.setProtocol("http");
+      url.setHost(p_gallery->url());
     }
     if (!url.url().endsWith(".php"))
     {
-        if (GalleryTalker::isGallery2())
-            url.addPath("main.php");
-        else
-            url.addPath("gallery_remote2.php");
+      if (GalleryTalker::isGallery2())
+        url.addPath("main.php");
+      else
+        url.addPath("gallery_remote2.php");
     }
-    m_url = url.url();
+    // If we've done something clever, save it back to the gallery.
+    if (p_gallery->url() != url.url())
+    {
+      p_gallery->setUrl(url.url());
+      mpGalleries->Save();
+    }
 
-    QString newPassword = dlg.password();
-#if KDE_IS_VERSION(3,2,0)
-    if (newPassword != password && m_wallet)
-        m_wallet->writePassword("password", newPassword);
-#endif
-
-    m_talker->login( url.url(), dlg.name(), newPassword );
+    m_talker->login(url.url(), p_gallery->username(), p_gallery->password());
 }
 
 void GalleryWindow::slotLoginFailed( const QString& msg )
@@ -462,7 +425,7 @@ void GalleryWindow::slotNewAlbum()
 
     // check for prohibited chars in the album name
     // \ / * ? " ' & < > | . + # ( ) or spaces
-
+    // Todo: Change this to a QRegExp check.
     QChar ch;
     bool  clean = true;
     for (uint i=0; i<name.length(); i++)

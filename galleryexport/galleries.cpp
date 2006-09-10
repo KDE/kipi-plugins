@@ -209,7 +209,7 @@ void Galleries::Save()
       bln_use_wallet = true;
   }
 
-  for (GalleryList::iterator it = mGalleries.begin(); it != mGalleries.end(); ++it)
+  for (GalleryPtrList::iterator it = mGalleries.begin(); it != mGalleries.end(); ++it)
   {
     Gallery* p_gallery = (*it);
     if (!p_gallery->galleryId())
@@ -239,7 +239,7 @@ QListView* Galleries::asQListView(QWidget* pParent)
   p_lv->addColumn(i18n("User"));
   p_lv->setAllColumnsShowFocus(true);
 
-  for (GalleryList::iterator it = mGalleries.begin(); it != mGalleries.end(); ++it)
+  for (GalleryPtrList::iterator it = mGalleries.begin(); it != mGalleries.end(); ++it)
   {
     (*it)->asQListViewItem(p_lv);
   }

@@ -1,5 +1,5 @@
 /* ============================================================
- * File  : galleryconfig.h
+ * File  : gallerylist.h
  * Author: Colin Guthrie <kde@colin.guthr.ie>
  * Date  : 2006-09-04
  * Copyright 2006 by Colin Guthrie
@@ -16,44 +16,45 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#ifndef GALLERYCONFIG_H
-#define GALLERYCONFIG_H
+#ifndef GALLERYLIST_H
+#define GALLERYLIST_H
 
 #include <kdialogbase.h>
-#include <qvaluelist.h>
-#include <qpair.h>
-#include <qintdict.h>
+
+#include <qlistview.h>
 
 namespace KIPIGalleryExportPlugin
 {
 
 class Gallery;
+class Galleries;
 
-class GalleryEdit : public KDialogBase
+class GalleryList : public KDialogBase
 {
   Q_OBJECT
 
 public:
 
-  GalleryEdit(QWidget* pParent,
-              Gallery* pGallery,
-              QString title);
-  ~GalleryEdit();
+  GalleryList(QWidget *parent, Galleries* pGalleries, bool blnShowOpen = true);
+  ~GalleryList();
+
+  Gallery* GetGallery(void);
 
 private:
 
-  Gallery*         mpGallery;
-  QLabel*          mpHeaderLabel;
-  QLineEdit*       mpNameEdit;
-  QLineEdit*       mpUrlEdit;
-  QLineEdit*       mpUsernameEdit;
-  QLineEdit*       mpPasswordEdit;
-  QCheckBox*       mpGalleryVersion;
+  Galleries* mpGalleries;
+  Gallery* mpCurrentGallery;
+  QListView* mpGalleryList;
 
 private slots:
-  void slotOk(void);
+
+  void selectionChanged();
+
+  void slotUser1();
+  void slotUser2();
+  void slotUser3();
 };
 
 }
 
-#endif /* GALLERYCONFIG_H */
+#endif /* GALLERYLIST_H */
