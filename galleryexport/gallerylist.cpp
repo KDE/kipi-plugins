@@ -51,11 +51,14 @@ namespace KIPIGalleryExportPlugin
 
 GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOpen)
     : KDialogBase(pParent, 0, true, i18n("Remote Galleries"),
-                  Close|User1|User2|User3|(blnShowOpen ? Ok : 0),
+                  Ok|Close|User1|User2|User3,
                   Close, false),
       mpGalleries(pGalleries),
       mpCurrentGallery(0)
 {
+  if (!blnShowOpen)
+    showButtonOK(false);
+
   setButtonGuiItem(User3, KStdGuiItem::add());
   setButtonGuiItem(User2, KStdGuiItem::configure());
   setButtonGuiItem(User1, KStdGuiItem::remove());
@@ -87,6 +90,8 @@ GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOp
   mpGalleryList = mpGalleries->asQListView(page);
   vb->addWidget(mpGalleryList);
   connect(mpGalleryList, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
+  connect(mpGalleryList, SIGNAL(doubleClicked(QListViewItem*, const QPoint&, int)),
+          this, SLOT(doubleClicked(QListViewItem*, const QPoint&, int)));
 }
 
 GalleryList::~GalleryList()
@@ -115,6 +120,21 @@ void GalleryList::selectionChanged()
   else
   {
     mpCurrentGallery = 0;
+  }
+}
+
+void GalleryList::doubleClicked(QListViewItem* pCurrent, const QPoint&, int)
+{
+  if (!pCurrent)
+    return;
+
+  if (actionButton(Ok)->isVisible())
+  {
+    accept();
+  }
+  else
+  {
+    slotUser2();
   }
 }
 

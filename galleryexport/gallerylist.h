@@ -49,6 +49,7 @@ private:
 private slots:
 
   void selectionChanged();
+  void doubleClicked(QListViewItem*, const QPoint&, int);
 
   void slotUser1();
   void slotUser2();
