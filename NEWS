@@ -1,11 +1,13 @@
 Note: for details and info about current version, see ChangeLog.
 
                                                             
+v 0.1.1
 ----------------------------------------------------------------------------
 
 File from B.K.O fixed :
 
-127101: expand sequence number start value in batch rename images.
+001 ==> 127101 : expand sequence number start value in batch rename images.
+002 ==>  94494 : Support for multiple galleries.
 
 
 v 0.1.0                                                           2006-06-22
