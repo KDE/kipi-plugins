@@ -52,9 +52,11 @@ extern "C"
 
 // Local includes.
 
-#include "plugin_rawconverter.h"
+#include "rawfiles.h"
 #include "singledialog.h"
 #include "batchdialog.h"
+#include "plugin_rawconverter.h"
+#include "plugin_rawconverter.moc"
 
 typedef KGenericFactory<Plugin_RawConverter> Factory;
 
@@ -110,9 +112,7 @@ Plugin_RawConverter::~Plugin_RawConverter()
 
 bool Plugin_RawConverter::isRAWFile(const QString& filePath)
 {
-    QString rawFilesExt("*.bay *.bmq *.cr2 *.crw *.cs1 *.dc2 *.dcr *.dng *.erf "
-                        "*.fff *.hdr *.k25 *.kdc *.mdc *.mos *.mrw *.nef *.orf "
-                        "*.pef *.pxn *.raf *.raw *.rdc *.sr2 *.srf *.x3f");
+    QString rawFilesExt(kipi_raw_file_extentions);
 
     QFileInfo fileInfo(filePath);
     if (rawFilesExt.upper().contains( fileInfo.extension().upper() ))
@@ -231,4 +231,3 @@ KIPI::Category Plugin_RawConverter::category( KAction* action ) const
     return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }
 
-#include "plugin_rawconverter.moc"
