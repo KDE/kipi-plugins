@@ -105,7 +105,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
                                   "rotate_270") );
 
     m_action_FlipImage = new KActionMenu(i18n("Flip"),
-                             "flip_image",
+                             "flipimage",
                              actionCollection(),
                              "jpeglossless_flip");
 
