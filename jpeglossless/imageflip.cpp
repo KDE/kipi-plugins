@@ -83,12 +83,12 @@ bool ImageFlip::flip(const QString& src, FlipAction action, const QString& TmpFo
     /* Generate temporary filename */
     QString tmp = TmpFolder + "imageflip-" + fi.fileName();
 
-    if (isRAW(src))
+    if (Utils::isRAW(src))
     {
         err = i18n("Cannot rotate RAW file");
         return false;
     }    
-    else if (isJPEG(src))
+    else if (Utils::isJPEG(src))
     {
         if (!flipJPEG(src, tmp, action, err))
             return false;
@@ -102,7 +102,7 @@ bool ImageFlip::flip(const QString& src, FlipAction action, const QString& TmpFo
     }
 
     // Move back to original file
-    if (!MoveFile(tmp, src)) 
+    if (!Utils::MoveFile(tmp, src)) 
     {
         err = i18n("Cannot update source image");
         return false;

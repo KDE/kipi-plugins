@@ -76,12 +76,12 @@ private:
 
     typedef struct Task_ Task;
 
-    QObject         *parent_;
-    QString          tmpFolder_;
+    QObject         *m_parent;
+    QString          m_tmpFolder;
 
-    MTQueue<Task>    taskQueue_;
+    MTQueue<Task>    m_taskQueue;
 
-    KIPI::Interface *interface_;
+    KIPI::Interface *m_interface;
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin

@@ -64,15 +64,16 @@ private slots:
 
 private:
 
-    int          m_total;
-    int          m_current;
+    int                                   m_total;
+    int                                   m_current;
 
-    KActionMenu *m_action_RotateImage;
-    KActionMenu *m_action_FlipImage;
-    KAction     *m_action_Convert2GrayScale;
-    KAction     *m_action_AutoExif;
+    KAction                              *m_action_Convert2GrayScale;
+    KAction                              *m_action_AutoExif;
 
-    KURL::List   m_images;
+    KActionMenu                          *m_action_RotateImage;
+    KActionMenu                          *m_action_FlipImage;
+
+    KURL::List                            m_images;
 
     KIPI::BatchProgressDialog            *m_progressDlg;
 

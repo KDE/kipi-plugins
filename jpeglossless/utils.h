@@ -28,20 +28,32 @@ class QString;
 namespace KIPIJPEGLossLessPlugin
 {
 
-/** Test if a file is a JPEG file.
- */
-bool isJPEG(const QString& file);
+class Utils
+{
 
-/** Test if a file is a RAW file supported by dcraw.
- */
-bool isRAW(const QString& file);
+public:
 
-/** POSIX Compliant File Copy and Move -
-    Can't use KIO based operations as we need to use these in a thread
-*/
+    /** Test if a file is a JPEG file.
+    */
+    static bool isJPEG(const QString& file);
+    
+    /** Test if a file is a RAW file supported by dcraw.
+    */
+    static bool isRAW(const QString& file);
+    
+    /** POSIX Compliant File Copy and Move -
+        Can't use KIO based operations as we need to use these in a thread
+    */
+    
+    static bool CopyFile(const QString& src, const QString& dst);
+    static bool MoveFile(const QString& src, const QString& dst);
+    
+    /** Thread-safe recursive dir deletion.
+    */
+    
+    static bool deleteDir(const QString& dirPath);
 
-bool CopyFile(const QString& src, const QString& dst);
-bool MoveFile(const QString& src, const QString& dst);
+};
 
 }  // NameSpace KIPIJPEGLossLessPlugin
 

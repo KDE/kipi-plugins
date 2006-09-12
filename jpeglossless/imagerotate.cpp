@@ -82,12 +82,12 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, const QString& 
     // Generate temporary filename 
     QString tmp = TmpFolder + "imagerotation-" + fi.fileName();
 
-    if (isRAW(src))
+    if (Utils::isRAW(src))
     {
         err = i18n("Cannot rotate RAW file");
         return false;
     }    
-    else if (isJPEG(src))
+    else if (Utils::isJPEG(src))
     {
         if (!rotateJPEG(src, tmp, angle, err))
             return false;
@@ -101,7 +101,7 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, const QString& 
     }
 
     // Move back to original file
-    if (!MoveFile(tmp, src)) 
+    if (!Utils::MoveFile(tmp, src)) 
     {
         err = i18n("Cannot update source image");
         return false;

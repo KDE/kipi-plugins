@@ -40,6 +40,7 @@ extern "C"
 
 // Local includes.
 
+#include "utils.h"
 #include "imagerotate.h"
 #include "imageflip.h"
 #include "convert2grayscale.h"
@@ -49,12 +50,12 @@ namespace KIPIJPEGLossLessPlugin
 {
 
 ActionThread::ActionThread( KIPI::Interface* interface, QObject *parent)
-            : QThread(), parent_(parent), interface_( interface )
+            : QThread(), m_parent(parent), m_interface( interface )
 {
     // Create a KIPI JPEGLossLess plugin temporary folder in KDE tmp directory.
     KStandardDirs dir;
-    tmpFolder_ = dir.saveLocation("tmp", "kipi-jpeglosslessplugin-" +
-                                  QString::number(getpid()) + "/");
+    m_tmpFolder = dir.saveLocation("tmp", "kipi-jpeglosslessplugin-" +
+                                   QString::number(getpid()) + "/");
 }
 
 ActionThread::~ActionThread()
@@ -62,7 +63,7 @@ ActionThread::~ActionThread()
     // cancel the thread
     cancel();
     // delete the temporary folder
-    deleteDir(tmpFolder_);
+    Utils::deleteDir(m_tmpFolder);
     // wait for the thread to finish
     wait();
 }
@@ -72,7 +73,7 @@ void ActionThread::rotate(const KURL::List& urlList, RotateAction val)
     for (KURL::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
-        KIPI::ImageInfo info = interface_->info( *it );
+        KIPI::ImageInfo info = m_interface->info( *it );
 
         // Don't use the host angle in case of auto-rotation (Rot0)
         if (val != Rot0)
@@ -86,7 +87,7 @@ void ActionThread::rotate(const KURL::List& urlList, RotateAction val)
             info.setAngle( 0 );
           
             if ( val == Rot90 )
-                angle +=90;
+                angle += 90;
             else if ( val == Rot180 )
                 angle += 180;
             else if ( val == Rot270 )
@@ -107,7 +108,7 @@ void ActionThread::rotate(const KURL::List& urlList, RotateAction val)
         t->filePath  = QDeepCopy<QString>((*it).path()); //deep copy
         t->action    = Rotate;
         t->rotAction = val;
-        taskQueue_.enqueue(t);
+        m_taskQueue.enqueue(t);
     }
 }
 
@@ -116,14 +117,14 @@ void ActionThread::flip(const KURL::List& urlList, FlipAction val)
     for (KURL::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
-        KIPI::ImageInfo info = interface_->info( *it );
+        KIPI::ImageInfo info = m_interface->info( *it );
         int angle = (info.angle() + 360) % 360;
     
         if ( (90-45 <= angle && angle < 90+45) || (270-45) < angle && angle < (270+45) ) 
         {
-            // The image is rotated 90 or 270 degrees, which means that the flip operations must be switched to
-            // gain the effect the user expects.
-            // Note this will only work if the angles is one of 90,180,270.
+            // The image is rotated 90 or 270 degrees, which means that the flip operations 
+            // must be switched to gain the effect the user expects.
+            // Note: this will only work if the angles is one of 90,180,270.
             val = (FlipAction) !val;
         }
 
@@ -131,7 +132,7 @@ void ActionThread::flip(const KURL::List& urlList, FlipAction val)
         t->filePath   = QDeepCopy<QString>((*it).path()); //deep copy
         t->action     = Flip;
         t->flipAction = val;
-        taskQueue_.enqueue(t);
+        m_taskQueue.enqueue(t);
     }
 }
 
@@ -140,23 +141,23 @@ void ActionThread::convert2grayscale(const KURL::List& urlList)
     for (KURL::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
-        Task *t      = new Task;
-        t->filePath  = QDeepCopy<QString>((*it).path()); //deep copy
-        t->action    = GrayScale;
-        taskQueue_.enqueue(t);
+        Task *t     = new Task;
+        t->filePath = QDeepCopy<QString>((*it).path()); //deep copy
+        t->action   = GrayScale;
+        m_taskQueue.enqueue(t);
     }
 }
 
 void ActionThread::cancel()
 {
-    taskQueue_.flush();
+    m_taskQueue.flush();
 }
 
 void ActionThread::run()
 {
-    while (!taskQueue_.isEmpty()) 
+    while (!m_taskQueue.isEmpty()) 
     {
-        Task *t = taskQueue_.dequeue();
+        Task *t = m_taskQueue.dequeue();
         if (!t) continue;
 
         QString errString;
@@ -170,18 +171,18 @@ void ActionThread::run()
                 d->action   = Rotate;
                 d->fileName = t->filePath;
                 d->starting = true;
-                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
     
                 bool result = true;
                 ImageRotate imageRotate;
-                result = imageRotate.rotate(t->filePath, t->rotAction, tmpFolder_, errString);
+                result = imageRotate.rotate(t->filePath, t->rotAction, m_tmpFolder, errString);
     
                 EventData *r = new EventData;
                 r->action    = Rotate;
                 r->fileName  = t->filePath;
                 r->success   = result;
                 r->errString = errString;
-                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, r));
                 break;
             }
             case Flip: 
@@ -189,17 +190,17 @@ void ActionThread::run()
                 d->action   = Flip;
                 d->fileName = t->filePath;
                 d->starting = true;
-                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                 
                 ImageFlip imageFlip;
-                bool result = imageFlip.flip(t->filePath, t->flipAction, tmpFolder_, errString);
+                bool result = imageFlip.flip(t->filePath, t->flipAction, m_tmpFolder, errString);
     
                 EventData *r = new EventData;
                 r->action    = Flip;
                 r->fileName  = t->filePath;
                 r->success   = result;
                 r->errString = errString;
-                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, r));
                 break;
             }
             case GrayScale: 
@@ -207,17 +208,17 @@ void ActionThread::run()
                 d->action   = GrayScale;
                 d->fileName = t->filePath;
                 d->starting = true;
-                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
     
                 ImageGrayScale imageGrayScale;
-                bool result = imageGrayScale.image2GrayScale(t->filePath, tmpFolder_, errString);
+                bool result = imageGrayScale.image2GrayScale(t->filePath, m_tmpFolder, errString);
     
                 EventData *r = new EventData;
                 r->action    = GrayScale;
                 r->fileName  = t->filePath;
                 r->success   = result;
                 r->errString = errString;
-                QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, r));
                 break;
             }
             default: 
@@ -231,34 +232,6 @@ void ActionThread::run()
 
         delete t;
     }
-}
-
-void ActionThread::deleteDir(const QString& dirPath)
-{
-    QDir dir(dirPath);
-    if (!dir.exists()) return;
-    dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoSymLinks);
-
-    const QFileInfoList* infoList = dir.entryInfoList();
-    if (!infoList) return;
-    QFileInfoListIterator it(*infoList);
-    QFileInfo* fi;
-
-    while( (fi = it.current()) ) 
-    {
-        ++it;
-        if(fi->fileName() == "." || fi->fileName() == ".." )
-            continue;
-
-        if( fi->isDir() ) 
-        {
-            deleteDir(fi->absFilePath());
-        }
-        else if( fi->isFile() )
-            dir.remove(fi->absFilePath());
-    }
-
-    dir.rmdir(dir.absPath());
 }
 
 }  // NameSpace KIPIJPEGLossLessPlugin

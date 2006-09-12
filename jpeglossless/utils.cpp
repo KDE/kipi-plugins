@@ -36,6 +36,7 @@ extern "C"
 #include <qimage.h>
 #include <qstring.h>
 #include <qfile.h>
+#include <qdir.h>
 
 // KDE includes.
 
@@ -49,13 +50,13 @@ extern "C"
 namespace KIPIJPEGLossLessPlugin
 {
 
-bool isJPEG(const QString& file)
+bool Utils::isJPEG(const QString& file)
 {
     QString format = QString(QImageIO::imageFormat(file)).upper();
     return format=="JPEG";
 }
 
-bool isRAW(const QString& file)
+bool Utils::isRAW(const QString& file)
 {
     QString rawFilesExt(kipi_raw_file_extentions);
 
@@ -66,7 +67,7 @@ bool isRAW(const QString& file)
     return false;
 }
 
-bool CopyFile(const QString& src, const QString& dst)
+bool Utils::CopyFile(const QString& src, const QString& dst)
 {
     QFile sFile(src);
     QFile dFile(dst);
@@ -100,7 +101,7 @@ bool CopyFile(const QString& src, const QString& dst)
     return true;
 }
 
-bool MoveFile(const QString& src, const QString& dst)
+bool Utils::MoveFile(const QString& src, const QString& dst)
 {
     struct stat stbuf;
     if (::stat(QFile::encodeName(dst), &stbuf) != 0)
@@ -110,7 +111,7 @@ bool MoveFile(const QString& src, const QString& dst)
         return false;
     }
     
-    if (!CopyFile(src,dst))
+    if (!CopyFile(src, dst))
         return false;
 
     struct utimbuf timbuf;
@@ -127,6 +128,39 @@ bool MoveFile(const QString& src, const QString& dst)
         kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to unlink src"
                            << endl;
     }
+    return true;
+}
+
+bool Utils::deleteDir(const QString& dirPath)
+{
+    QDir dir(dirPath);
+    if (!dir.exists()) 
+        return false;
+
+    dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoSymLinks);
+
+    const QFileInfoList* infoList = dir.entryInfoList();
+    if (!infoList) 
+        return false;
+
+    QFileInfoListIterator it(*infoList);
+    QFileInfo* fi;
+
+    while( (fi = it.current()) ) 
+    {
+        ++it;
+        if(fi->fileName() == "." || fi->fileName() == ".." )
+            continue;
+
+        if( fi->isDir() ) 
+        {
+            deleteDir(fi->absFilePath());
+        }
+        else if( fi->isFile() )
+            dir.remove(fi->absFilePath());
+    }
+
+    dir.rmdir(dir.absPath());
     return true;
 }
 

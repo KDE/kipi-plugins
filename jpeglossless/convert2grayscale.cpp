@@ -80,7 +80,12 @@ bool ImageGrayScale::image2GrayScale(const QString& src, const QString& TmpFolde
     // Generate temporary filename 
     QString tmp = TmpFolder + "convert2grayscale-" + fi.fileName();
 
-    if (isJPEG(src))
+    if (Utils::isRAW(src))
+    {
+        err = i18n("Cannot convert to gray scale RAW file");
+        return false;
+    }    
+    else if (Utils::isJPEG(src))
     {
         if (!image2GrayScaleJPEG(src, tmp, err))
             return false;
@@ -94,7 +99,7 @@ bool ImageGrayScale::image2GrayScale(const QString& src, const QString& TmpFolde
     }
 
     // Move back to original file
-    if (!MoveFile(tmp, src)) 
+    if (!Utils::MoveFile(tmp, src)) 
     {
         err = i18n("Cannot update source image");
         return false;

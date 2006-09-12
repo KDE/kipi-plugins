@@ -60,6 +60,15 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_jpeglossless,
 Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent, const char*, const QStringList &)
                    : KIPI::Plugin( Factory::instance(), parent, "JPEGLossless")
 {
+    m_total                    = 0;
+    m_current                  = 0;
+    m_action_Convert2GrayScale = 0;
+    m_action_AutoExif          = 0;
+    m_action_RotateImage       = 0;
+    m_action_FlipImage         = 0;
+    m_progressDlg              = 0;
+    m_thread                   = 0;
+
     kdDebug( 51001 ) << "Plugin_JPEGLossless plugin loaded" << endl;
 }
 
@@ -151,7 +160,6 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     m_action_Convert2GrayScale->setEnabled( false );
     
     m_thread = new KIPIJPEGLossLessPlugin::ActionThread(interface, this);
-    m_progressDlg = 0;
 
     connect( interface, SIGNAL( selectionChanged( bool ) ),
              m_action_AutoExif, SLOT( setEnabled( bool ) ) );
@@ -168,12 +176,8 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
 Plugin_JPEGLossless::~Plugin_JPEGLossless()
 {
-    // TODO: remove KIPI JPEGLossLess plugin temporary folder in KDE tmp directory.
-
     delete m_thread;
-
-    if (m_progressDlg)
-        delete m_progressDlg;
+    delete m_progressDlg;
 }
 
 void Plugin_JPEGLossless::slotFlip()
