@@ -63,10 +63,6 @@ protected:
 
 private:
 
-    void deleteDir(const QString& dirPath);
-
-private:
-
     struct Task_ 
     {
         QString      filePath;
