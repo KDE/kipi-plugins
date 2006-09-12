@@ -84,4 +84,4 @@ private:
 
 }  // NameSpace KIPIJPEGLossLessPlugin
 
-#endif // KIPIJPEGLossLessPlugin
+#endif // MTQUEUE_H
