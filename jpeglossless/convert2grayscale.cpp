@@ -23,9 +23,6 @@
 // C++ includes.
 
 #include <cstdio>
-#include <cstdlib>
-#include <cassert>
-#include <string>
 
 // C Ansi includes.
 
@@ -46,24 +43,32 @@ extern "C"
 
 // KDE includes.
 
+#include <kprocess.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kurl.h>
-
-// ImageMgick includes.
-
-#include <Magick++.h>
 
 // Local includes.
 
 #include "utils.h"
 #include "transupp.h"
 #include "convert2grayscale.h"
+#include "convert2grayscale.moc"
 
 namespace KIPIJPEGLossLessPlugin
 {
 
-bool image2GrayScale(const QString& src, const QString& TmpFolder, QString& err)
+
+ImageGrayScale::ImageGrayScale()
+              : QObject()
+{
+}
+
+ImageGrayScale::~ImageGrayScale()
+{
+}
+
+bool ImageGrayScale::image2GrayScale(const QString& src, const QString& TmpFolder, QString& err)
 {
     QFileInfo fi(src);
     if (!fi.exists() || !fi.isReadable() || !fi.isWritable()) 
@@ -98,7 +103,7 @@ bool image2GrayScale(const QString& src, const QString& TmpFolder, QString& err)
     return true;
 }
 
-bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err)
+bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err)
 {
     JCOPY_OPTION copyoption = JCOPYOPT_ALL;
     jpeg_transform_info transformoption;
@@ -128,7 +133,7 @@ bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err)
     input_file = fopen(QFile::encodeName(src), "rb");
     if (!input_file)
     {
-        kdError() << "Image2GrayScale: Error in opening input file" << endl;
+        kdError( 51000 ) << "Image2GrayScale: Error in opening input file" << endl;
         err = i18n("Error in opening input file");
         return false;
     }
@@ -137,7 +142,7 @@ bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err)
     if (!output_file)
     {
         fclose(input_file);
-        kdError() << "Image2GrayScale: Error in opening output file" << endl;
+        kdError( 51000 ) << "Image2GrayScale: Error in opening output file" << endl;
         err = i18n("Error in opening output file");
         return false;
     }
@@ -190,26 +195,43 @@ bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err)
     return true;
 }
 
-bool image2GrayScaleImageMagick(const QString& src, const QString& dest, QString& err)
+bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QString& dest, QString& err)
 {
-    try 
-    {
-        Magick::Image image;
-        std::string srcFileName(QFile::encodeName(src));
-        image.read(srcFileName);
-        
-        image.type( Magick::GrayscaleType );
-    
-        std::string destFileName(QFile::encodeName(dest));
-        image.write(destFileName);
-        return true;
-    }
-    catch( std::exception &error_ )
-    {
-        err = i18n("Cannot convert to gray scale: %1").arg(error_.what());
-        kdError() << "Convert2GrayScale: ImageMagick exception: " << error_.what() << endl;
+    KProcess process;
+    process.clearArguments();
+    process << "convert" << "-type" << "Grayscale";   
+    process << src + QString("[0]") << dest;
+
+    kdDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;    
+
+    connect(&process, SIGNAL(receivedStderr(KProcess *, char*, int)),
+            this, SLOT(slotReadStderr(KProcess*, char*, int)));
+
+    if (!process.start(KProcess::Block, KProcess::Stderr))
         return false;
+
+    switch (process.exitStatus())
+    {
+        case 0:  // Process finished successfully !
+        {
+            return true;
+            break;
+        }
+        case 15: //  process aborted !
+        {
+            return false;
+            break;
+        }
     }
+
+    // Processing error !
+    err = i18n("Cannot convert to gray scale: %1").arg(m_stdErr.replace('\n', ' '));
+    return false;
+}
+
+void ImageGrayScale::slotReadStderr(KProcess*, char* buffer, int buflen)
+{
+    m_stdErr.append(QString::fromLocal8Bit(buffer, buflen));
 }
 
 }  // NameSpace KIPIJPEGLossLessPlugin

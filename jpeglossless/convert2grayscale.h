@@ -21,16 +21,42 @@
 #ifndef convert2grayscale_H
 #define convert2grayscale_H
 
+// Qt includes.
+
+#include <qobject.h>
+
 class QString;
+
+class KProcess;
 
 namespace KIPIJPEGLossLessPlugin
 {
 
-bool image2GrayScale(const QString& src, const QString& TmpFolder, QString& err);
+class ImageGrayScale : public QObject
+{
+    Q_OBJECT
 
-bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err);
+public:
 
-bool image2GrayScaleImageMagick(const QString& src, const QString& dest, QString& err);
+    ImageGrayScale();
+    ~ImageGrayScale();
+
+    bool image2GrayScale(const QString& src, const QString& TmpFolder, QString& err);
+
+private slots:
+
+    void slotReadStderr(KProcess*, char*, int);
+
+private:
+
+    bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err);
+    
+    bool image2GrayScaleImageMagick(const QString& src, const QString& dest, QString& err);
+
+private:
+
+    QString m_stdErr;
+};
 
 }  // NameSpace KIPIJPEGLossLessPlugin
 

@@ -27,16 +27,42 @@
 
 #include "actions.h"
 
+// Qt includes.
+
+#include <qobject.h>
+
 class QString;
+
+class KProcess;
 
 namespace KIPIJPEGLossLessPlugin
 {
 
-bool rotate(const QString& src, RotateAction angle, const QString& TmpFolder, QString& err);
+class ImageRotate : public QObject
+{
+    Q_OBJECT
 
-bool rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QString& err);
+public:
 
-bool rotateImageMagick(const QString& src, const QString& dest, RotateAction angle, QString& err);
+    ImageRotate();
+    ~ImageRotate();
+
+    bool rotate(const QString& src, RotateAction angle, const QString& TmpFolder, QString& err);
+
+private slots:
+
+    void slotReadStderr(KProcess*, char*, int);
+
+private:
+
+    bool rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QString& err);
+    
+    bool rotateImageMagick(const QString& src, const QString& dest, RotateAction angle, QString& err);
+
+private:
+
+    QString m_stdErr;
+};
 
 }  // NameSpace KIPIJPEGLossLessPlugin
 

@@ -165,7 +165,7 @@ void ActionThread::run()
 
         switch (t->action) 
         {
-            case(Rotate): 
+            case Rotate : 
             {
                 d->action   = Rotate;
                 d->fileName = t->filePath;
@@ -173,7 +173,8 @@ void ActionThread::run()
                 QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
     
                 bool result = true;
-                result = KIPIJPEGLossLessPlugin::rotate(t->filePath, t->rotAction, tmpFolder_, errString);
+                ImageRotate imageRotate;
+                result = imageRotate.rotate(t->filePath, t->rotAction, tmpFolder_, errString);
     
                 EventData *r = new EventData;
                 r->action    = Rotate;
@@ -183,14 +184,15 @@ void ActionThread::run()
                 QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
                 break;
             }
-            case(Flip): 
+            case Flip: 
             {
                 d->action   = Flip;
                 d->fileName = t->filePath;
                 d->starting = true;
                 QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
-    
-                bool result = KIPIJPEGLossLessPlugin::flip(t->filePath, t->flipAction, tmpFolder_, errString);
+                
+                ImageFlip imageFlip;
+                bool result = imageFlip.flip(t->filePath, t->flipAction, tmpFolder_, errString);
     
                 EventData *r = new EventData;
                 r->action    = Flip;
@@ -200,14 +202,15 @@ void ActionThread::run()
                 QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, r));
                 break;
             }
-            case(GrayScale): 
+            case GrayScale: 
             {
                 d->action   = GrayScale;
                 d->fileName = t->filePath;
                 d->starting = true;
                 QApplication::postEvent(parent_, new QCustomEvent(QEvent::User, d));
     
-                bool result = KIPIJPEGLossLessPlugin::image2GrayScale(t->filePath, tmpFolder_, errString);
+                ImageGrayScale imageGrayScale;
+                bool result = imageGrayScale.image2GrayScale(t->filePath, tmpFolder_, errString);
     
                 EventData *r = new EventData;
                 r->action    = GrayScale;

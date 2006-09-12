@@ -36,50 +36,50 @@ template<class Type> class MTQueue
 
 public:
 
-  MTQueue()
-  {
-      queue_.setAutoDelete(true);
-  }
-
-  ~MTQueue()
-  {
-    flush();
-  }
-
-  bool isEmpty()
-  {
-    mutex_.lock();
-    bool empty = queue_.isEmpty();
-    mutex_.unlock();
-    return empty;
-  }
-
-  void flush()
-  {
-    mutex_.lock();
-    queue_.clear();
-    mutex_.unlock();
-  }
-
-  void enqueue(Type * t)
-  {
-    mutex_.lock();
-    queue_.enqueue(t);
-    mutex_.unlock();
-  }
-
-  Type * dequeue()
-  {
-    mutex_.lock();
-    Type * i = queue_.dequeue();
-    mutex_.unlock();
-    return i;
-  }
+    MTQueue()
+    {
+        m_queue.setAutoDelete(true);
+    }
+    
+    ~MTQueue()
+    {
+        flush();
+    }
+    
+    bool isEmpty()
+    {
+        m_mutex.lock();
+        bool empty = m_queue.isEmpty();
+        m_mutex.unlock();
+        return empty;
+    }
+    
+    void flush()
+    {
+        m_mutex.lock();
+        m_queue.clear();
+        m_mutex.unlock();
+    }
+    
+    void enqueue(Type * t)
+    {
+        m_mutex.lock();
+        m_queue.enqueue(t);
+        m_mutex.unlock();
+    }
+    
+    Type * dequeue()
+    {
+        m_mutex.lock();
+        Type * i = m_queue.dequeue();
+        m_mutex.unlock();
+        return i;
+    }
 
 private:
 
-  QPtrQueue<Type> queue_;
-  QMutex          mutex_;
+  QPtrQueue<Type> m_queue;
+  QMutex          m_mutex;
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin

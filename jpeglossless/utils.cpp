@@ -32,6 +32,7 @@ extern "C"
 
 // Qt includes.
 
+#include <qfileinfo.h>
 #include <qimage.h>
 #include <qstring.h>
 #include <qfile.h>
@@ -42,6 +43,7 @@ extern "C"
 
 // Local includes.
 
+#include "rawfiles.h"
 #include "utils.h"
 
 namespace KIPIJPEGLossLessPlugin
@@ -49,8 +51,19 @@ namespace KIPIJPEGLossLessPlugin
 
 bool isJPEG(const QString& file)
 {
-    QString format=QString(QImageIO::imageFormat(file)).upper();
+    QString format = QString(QImageIO::imageFormat(file)).upper();
     return format=="JPEG";
+}
+
+bool isRAW(const QString& file)
+{
+    QString rawFilesExt(kipi_raw_file_extentions);
+
+    QFileInfo fileInfo(file);
+    if (rawFilesExt.upper().contains( fileInfo.extension().upper() ))
+        return true;
+
+    return false;
 }
 
 bool CopyFile(const QString& src, const QString& dst)

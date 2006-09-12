@@ -50,6 +50,7 @@
 #include "actions.h"
 #include "actionthread.h"
 #include "plugin_jpeglossless.h"
+#include "plugin_jpeglossless.moc"
 
 typedef KGenericFactory<Plugin_JPEGLossless> Factory;
 
@@ -430,13 +431,13 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
         m_current = 0;
 
 #if KDE_VERSION >= 0x30200
-           m_progressDlg->setButtonCancel( KStdGuiItem::close() );
+        m_progressDlg->setButtonCancel( KStdGuiItem::close() );
 #else
-           m_progressDlg->setButtonCancelText( i18n("&Close") );
+        m_progressDlg->setButtonCancelText( i18n("&Close") );
 #endif
 
         disconnect(m_progressDlg, SIGNAL(cancelClicked()),
-                    this, SLOT(slotCancel()));
+                   this, SLOT(slotCancel()));
 
         KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
         
@@ -484,5 +485,3 @@ KURL::List Plugin_JPEGLossless::images()
     m_images = images.images();
     return images.images();
 }
-
-#include "plugin_jpeglossless.moc"

@@ -46,6 +46,9 @@ extern "C"
 #include <kdebug.h>
 #include <klocale.h>
 #include <ktempfile.h>
+
+// Lib KExif includes.
+
 #include <libkexif/kexifdata.h>
 #include <libkexif/kexifutils.h>
 
@@ -54,18 +57,17 @@ extern "C"
 #include "transupp.h"
 #include "jpegtransform.h"
 
-
 namespace KIPIJPEGLossLessPlugin
 {
 
-Matrix Matrix::none                   (1, 0, 0, 1);
-Matrix Matrix::rotate90               (0,-1,1,0);
-Matrix Matrix::rotate180              (-1,0,0,-1);
-Matrix Matrix::rotate270              (0,1,-1,0);
-Matrix Matrix::flipHorizontal         (-1,0,0,1);
-Matrix Matrix::flipVertical           (1,0,0,-1);
-Matrix Matrix::rotate90flipHorizontal (0,1,1,0);
-Matrix Matrix::rotate90flipVertical   (0,-1,-1,0);
+Matrix Matrix::none                   ( 1,  0,  0,  1);
+Matrix Matrix::rotate90               ( 0, -1,  1,  0);
+Matrix Matrix::rotate180              (-1,  0,  0, -1);
+Matrix Matrix::rotate270              ( 0,  1, -1,  0);
+Matrix Matrix::flipHorizontal         (-1,  0,  0,  1);
+Matrix Matrix::flipVertical           ( 1,  0,  0, -1);
+Matrix Matrix::rotate90flipHorizontal ( 0,  1,  1,  0);
+Matrix Matrix::rotate90flipVertical   ( 0, -1, -1,  0);
 
 
 bool transformJPEG(const QString& src, const QString& destGiven,

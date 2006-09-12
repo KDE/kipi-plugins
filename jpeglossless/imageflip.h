@@ -25,16 +25,43 @@
 
 #include "actions.h"
 
+// Qt includes.
+
+#include <qobject.h>
+
 class QString;
+
+class KProcess;
 
 namespace KIPIJPEGLossLessPlugin
 {
 
-bool flip(const QString& src, FlipAction action, const QString& TmpFolder, QString& err);
+class ImageFlip : public QObject
+{
+    Q_OBJECT
 
-bool flipJPEG(const QString& src, const QString& dest, FlipAction action, QString& err);
+public:
 
-bool flipImageMagick(const QString& src, const QString& dest, FlipAction action, QString& err);
+    ImageFlip();
+    ~ImageFlip();
+
+    bool flip(const QString& src, FlipAction action, const QString& TmpFolder, QString& err);
+
+private slots:
+
+    void slotReadStderr(KProcess*, char*, int);
+
+private:
+
+    bool flipJPEG(const QString& src, const QString& dest, FlipAction action, QString& err);
+    
+    bool flipImageMagick(const QString& src, const QString& dest, FlipAction action, QString& err);
+
+
+private:
+
+    QString m_stdErr;
+};
 
 }  // NameSpace KIPIJPEGLossLessPlugin
 

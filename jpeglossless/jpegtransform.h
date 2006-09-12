@@ -92,14 +92,14 @@ public:
         return !(*this==ma); 
    }
     
-   static Matrix none;                   //(1, 0, 0, 1)
-   static Matrix rotate90;               //(0,-1,1,0)
-   static Matrix rotate180;              //(-1,0,0,-1)
-   static Matrix rotate270;              //(0,1,-1,0)
-   static Matrix flipHorizontal;         //(-1,0,0,1)
-   static Matrix flipVertical;           //(1,0,0,-1)
-   static Matrix rotate90flipHorizontal; //(0,1,1,0), first rotate, then flip
-   static Matrix rotate90flipVertical;   //(0,-1,-1,0), first rotate, then flip
+   static Matrix none;                   //( 1,  0,  0,  1)
+   static Matrix rotate90;               //( 0, -1,  1,  0)
+   static Matrix rotate180;              //(-1,  0,  0, -1)
+   static Matrix rotate270;              //( 0,  1, -1,  0)
+   static Matrix flipHorizontal;         //(-1,  0,  0,  1)
+   static Matrix flipVertical;           //( 1,  0,  0, -1)
+   static Matrix rotate90flipHorizontal; //( 0,  1,  1,  0), first rotate, then flip
+   static Matrix rotate90flipVertical;   //( 0, -1, -1,  0), first rotate, then flip
 
 protected:
 

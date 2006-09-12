@@ -25,9 +25,6 @@
 // C++ includes.
 
 #include <cstdio>
-#include <cstdlib>
-#include <cassert>
-#include <string>
 
 // C Ansi includes.
 
@@ -41,24 +38,16 @@ extern "C"
 // Qt includes.
 
 #include <qimage.h>
-#include <qstring.h>
 #include <qwmatrix.h>
 #include <qfile.h>
 #include <qfileinfo.h>
 
 // KDE includes.
 
+#include <kprocess.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kurl.h>
-
-// Lib KExif includes. 
-
-#include <libkexif/kexifdata.h>
-
-// ImageMgick includes.
-
-#include <Magick++.h>
 
 // Local includes.
 
@@ -66,11 +55,21 @@ extern "C"
 #include "transupp.h"
 #include "jpegtransform.h"
 #include "imagerotate.h"
+#include "imagerotate.moc"
 
 namespace KIPIJPEGLossLessPlugin
 {
 
-bool rotate(const QString& src, RotateAction angle, const QString& TmpFolder, QString& err)
+ImageRotate::ImageRotate()
+           : QObject()
+{
+}
+
+ImageRotate::~ImageRotate()
+{
+}
+
+bool ImageRotate::rotate(const QString& src, RotateAction angle, const QString& TmpFolder, QString& err)
 {
     QFileInfo fi(src);
 
@@ -82,8 +81,13 @@ bool rotate(const QString& src, RotateAction angle, const QString& TmpFolder, QS
 
     // Generate temporary filename 
     QString tmp = TmpFolder + "imagerotation-" + fi.fileName();
-    
-    if (isJPEG(src))
+
+    if (isRAW(src))
+    {
+        err = i18n("Cannot rotate RAW file");
+        return false;
+    }    
+    else if (isJPEG(src))
     {
         if (!rotateJPEG(src, tmp, angle, err))
             return false;
@@ -91,7 +95,7 @@ bool rotate(const QString& src, RotateAction angle, const QString& TmpFolder, QS
     else
     {
         // B.K.O #123499 : we using Image Magick API here instead QT API 
-        // else RAW/TIFF/PNG 16 bits image are broken!
+        // else TIFF/PNG 16 bits image are broken!
         if (!rotateImageMagick(src, tmp, angle, err))
             return false;
     }
@@ -106,7 +110,7 @@ bool rotate(const QString& src, RotateAction angle, const QString& TmpFolder, QS
     return true;
 }
 
-bool rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QString& err)
+bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QString& err)
 {
     Matrix &transform=Matrix::none;
 
@@ -134,7 +138,7 @@ bool rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QSt
         }
         default:
         {
-            kdError() << "ImageRotate: Nonstandard rotation angle" << endl;
+            kdError( 51000 ) << "ImageRotate: Nonstandard rotation angle" << endl;
             err = i18n("Nonstandard rotation angle");
             return false;
         }
@@ -143,53 +147,74 @@ bool rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QSt
     return transformJPEG(src, dest, transform, err);
 }
 
-bool rotateImageMagick(const QString& src, const QString& dest, RotateAction angle, QString& err)
+bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest, 
+                                    RotateAction angle, QString& err)
 {
-    try 
-    {
-        Magick::Image image;
-        std::string srcFileName(QFile::encodeName(src));
-        image.read(srcFileName);
+    KProcess process;
+    process.clearArguments();
+    process << "convert" << "-rotate";    
 
-        switch(angle)
-        {
-            case (Rot90):
-            {
-                image.rotate(90.0);
-                break;
-            }
-            case (Rot180):
-            {
-                image.rotate(180.0);        
-                break;
-            }
-            case (Rot270):
-            {
-                image.rotate(270.0);
-                break;
-            }
-            case (Rot0):
-            {
-                break;
-            }
-            default:
-            {
-                kdError() << "ImageRotate: Nonstandard rotation angle" << endl;
-                err = i18n("Nonstandard rotation angle");
-                return false;
-            }
-        }
-    
-        std::string destFileName(QFile::encodeName(dest));
-        image.write(destFileName);
-        return true;
-    }
-    catch( std::exception &error_ )
+    switch(angle)
     {
-        err = i18n("Cannot rotating: %1").arg(error_.what());
-        kdError() << "ImageRotate: ImageMagick exception: " << error_.what() << endl;
-        return false;
+        case (Rot90):
+        {
+            process << "90";
+            break;
+        }
+        case (Rot180):
+        {
+            process << "180";
+            break;
+        }
+        case (Rot270):
+        {
+            process << "270";
+            break;
+        }
+        case (Rot0):
+        {
+            break;
+        }
+        default:
+        {
+            kdError() << "ImageRotate: Nonstandard rotation angle" << endl;
+            err = i18n("Nonstandard rotation angle");
+            return false;
+        }
     }
+
+    process << src + QString("[0]") << dest;
+
+    kdDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;    
+
+    connect(&process, SIGNAL(receivedStderr(KProcess *, char*, int)),
+            this, SLOT(slotReadStderr(KProcess*, char*, int)));
+
+    if (!process.start(KProcess::Block, KProcess::Stderr))
+        return false;
+
+    switch (process.exitStatus())
+    {
+        case 0:  // Process finished successfully !
+        {
+            return true;
+            break;
+        }
+        case 15: //  process aborted !
+        {
+            return false;
+            break;
+        }
+    }
+
+    // Processing error !
+    err = i18n("Cannot rotate: %1").arg(m_stdErr.replace('\n', ' '));
+    return false;
+}
+
+void ImageRotate::slotReadStderr(KProcess*, char* buffer, int buflen)
+{
+    m_stdErr.append(QString::fromLocal8Bit(buffer, buflen));
 }
 
 }  // NameSpace KIPIJPEGLossLessPlugin
