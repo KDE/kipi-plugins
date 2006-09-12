@@ -4,7 +4,12 @@ Note: for details and info about current version, see ChangeLog.
 v 0.1.1
 ----------------------------------------------------------------------------
 
-File from B.K.O fixed :
+Kipi-plugins NEW FEATURES
+
+JPEGLossLess : Removing libmagic++ depency.
+
+
+Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 
 001 ==> 127101 : expand sequence number start value in batch rename images.
 002 ==>  94494 : Support for multiple galleries.
