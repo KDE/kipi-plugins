@@ -2,7 +2,7 @@
  * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *          Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date   : 2003-12-05
- * Description : plugin action description class 
+ * Description : JPEGLossLess plugin action descriptions
  *
  * Copyright 2003-2005 by Renchi Raju
  * Copyright 2006 by Gilles Caulier
