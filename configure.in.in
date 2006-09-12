@@ -142,26 +142,6 @@ fi
 
 AM_CONDITIONAL(compile_HTMLEXPORT, test -n "${XSLT_CONFIG}")
 
-
-#---------------------------------------------------------
-#
-# libMagick detection
-#
-#---------------------------------------------------------
-have_Magick=no
-AC_PATH_PROG(MAGICK_CONFIG,Magick++-config)
-if test -n "${MAGICK_CONFIG}"; then
-  LIBMAGICK_CFLAGS="`$MAGICK_CONFIG --cxxflags`"
-  AC_SUBST(LIBMAGICK_CFLAGS)
-  LIBMAGICK_LIBS="`$MAGICK_CONFIG --libs`"
-  AC_SUBST(LIBMAGICK_LIBS)
-  have_Magick=yes
-else
-  AC_MSG_WARN([
-libMagick is required for the jpeglossess plugin.
-])
-fi
-
 # ----------------------------------------------------------
 #
 # Slideshow plugin tests
