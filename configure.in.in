@@ -97,6 +97,32 @@ if test x$have_libkexif != xyes; then
 	[libkexif not installed. disabling jpeglossless plugin])
 fi
 
+AM_CONDITIONAL(compile_TIMEADJUST,    [test x$have_libkexif = xyes])
+AM_CONDITIONAL(compile_JPEGLOSSLESS,  [test x$have_libkexif = xyes])
+
+#------------------------------------------------------------------
+# Check for libtiff
+#------------------------------------------------------------------
+
+have_tiff=no
+AC_CHECK_LIB(tiff, TIFFWriteScanline,
+  have_tiff=yes,
+  AC_MSG_WARN([TIFF library not found]),
+  $all_libraries -ljpeg -lz -lm)
+
+if test "x$have_tiff" = "xyes"; then
+  KDE_CHECK_HEADER(tiffio.h, have_tiff=yes, have_tiff=no)
+fi
+
+if test "x$have_tiff" != "xyes"; then
+  AC_WARN([TIFF library not found, acquireimages, jpeglossless and rawconverter plugins will not be compiled.])
+else
+  LIB_TIFF="-ltiff"
+  AC_SUBST(LIB_TIFF)
+fi
+
+AM_CONDITIONAL(compile_ACQUIREIMAGES, [test x$have_tiff = xyes])
+AM_CONDITIONAL(compile_RAWCONVERTER,  [test x$have_tiff = xyes])
 
 #---------------------------------------------------------
 #
@@ -204,8 +230,6 @@ fi
 # END QT OPENGL CHECK
 ###############################################################################
 
-
-
 #---------------------------------------------------------
 # imlib2-detection
 #---------------------------------------------------------
@@ -270,31 +294,4 @@ if test -z "$ac_imlib2_config" -o "$have_GL" != yes; then
 	AC_MSG_WARN([Slideshow plugin will not be compiled])
 fi
 
-#------------------------------------------------------------------
-# Check for libtiff
-#------------------------------------------------------------------
-
-have_tiff=no
-AC_CHECK_LIB(tiff, TIFFWriteScanline,
-  have_tiff=yes,
-  AC_MSG_WARN([TIFF library not found]),
-  $all_libraries -ljpeg -lz -lm)
-
-if test "x$have_tiff" = "xyes"; then
-  KDE_CHECK_HEADER(tiffio.h, have_tiff=yes, have_tiff=no)
-fi
-
-if test "x$have_tiff" != "xyes"; then
-  AC_WARN([TIFF library not found, acquireimages, jpeglossless and rawconverter plugins will not be compiled.])
-else
-  LIB_TIFF="-ltiff"
-  AC_SUBST(LIB_TIFF)
-fi
-
-AM_CONDITIONAL(compile_ACQUIREIMAGES, [test x$have_tiff = xyes])
-AM_CONDITIONAL(compile_RAWCONVERTER,  [test x$have_tiff = xyes])
-
-
-AM_CONDITIONAL(compile_TIMEADJUST,   [test x$have_libkexif = xyes])
-AM_CONDITIONAL(compile_JPEGLOSSLESS,  [test x$have_libkexif = xyes -a x$have_tiff = xyes -a x$have_Magick = xyes])
 			
