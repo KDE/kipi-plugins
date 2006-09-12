@@ -58,10 +58,3 @@ if test "x$have_xslt" != "xyes"; then
   echo ""
   all_tests=bad
 fi
-
-if test "x$have_Magick" != "xyes"; then
-  echo ""
-  echo "You're missing libMagick. The jpeglossless plugin will not be compiled."
-  echo ""
-  all_tests=bad
-fi

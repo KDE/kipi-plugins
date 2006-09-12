@@ -21,7 +21,7 @@ Currently implemented plugins are:
  4) PrintWizard        : Print multiple images/index pages in one page
 
  5) JpegLossLess       : Batch images processing (rotation/flipping) without
- 			 losing meta information embedded in the image
+ 			             losing meta information embedded in the image
                          and without recompression of the jpeg data.
 
  6) CdArchiving        : Albums CD archiving via K3b cd burning program 
@@ -97,7 +97,6 @@ KDE 3.x
 gphoto2 2.x
 imlib2 >= 1.1.0
 libexif >= 0.5.7
-libmagick++ >= 6.2.4
 ImageMagick >= 5.5.4
 MJPEGTools >= 1.6.0
 dcRAW >= 5.02
@@ -109,7 +108,7 @@ Plugin Specific Dependencies (for compiling and for running) :
 Requirements: kde >= 3.1.x, libkipi >= 0.1
 specific plugin specific requirements:
 
-jpeglossless       : libkexif >= 0.1, libmagick++ >= 6.2.4
+jpeglossless       : libkexif >= 0.1, imagemagick (runtime dependency)
 slideshow          : libimlib2 >= 1.0.x, OpenGL support for libqt
 batchprocessimages : imagemagick (runtime dependency)
 cdarchiving        : k3b (runtime dependency)
