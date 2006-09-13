@@ -58,8 +58,9 @@ public:
 
 public:
 
-    CListViewItem(KListView* view, const QPixmap& pixmap, RawItem *item)
-                : KListViewItem(view), rawItem(item) 
+    CListViewItem(KListView *view, const QPixmap& pixmap, 
+                  RawItem *item, QListViewItem *after)
+                : KListViewItem(view, after), rawItem(item) 
     {
          rawItem->viewItem = this;
          setThumbnail(pixmap);

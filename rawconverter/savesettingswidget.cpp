@@ -1,0 +1,144 @@
+/* ============================================================
+ * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2006-09-13
+ * Description : dcraw settings widgets
+ *
+ * Copyright 2006 by Gilles Caulier
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
+// Qt includes.
+
+#include <qcombobox.h>
+#include <qvbuttongroup.h>
+#include <qradiobutton.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qwhatsthis.h>
+#include <qstring.h>
+
+// KDE includes.
+
+#include <kdialog.h>
+#include <klocale.h>
+
+// Local includes.
+
+#include "savesettingswidget.h"
+#include "savesettingswidget.moc"
+
+namespace KIPIRawConverterPlugin
+{
+
+class SaveSettingsWidgetPriv
+{
+public:
+
+    SaveSettingsWidgetPriv()
+    {
+        formatLabel         = 0;
+        conflictLabel       = 0;
+        conflictButtonGroup = 0;
+        formatComboBox      = 0;
+        overwriteButton     = 0;
+        promptButton        = 0;
+    }
+
+    QLabel        *formatLabel;
+    QLabel        *conflictLabel;
+
+    QVButtonGroup *conflictButtonGroup;
+
+    QComboBox     *formatComboBox;
+
+    QRadioButton  *overwriteButton;
+    QRadioButton  *promptButton;
+};
+
+SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
+                  : QGroupBox(0, Qt::Vertical, i18n("Save Settings"), parent)
+{
+    d = new SaveSettingsWidgetPriv;
+    QGridLayout* settingsBoxLayout = new QGridLayout(layout(), 2, 1, KDialog::spacingHint());
+
+    d->formatLabel    = new QLabel(i18n("File Format:"), this);
+    d->formatComboBox = new QComboBox( false, this );
+    d->formatComboBox->insertItem( "JPEG", RawDecodingSettings::JPEG );
+    d->formatComboBox->insertItem( "TIFF", RawDecodingSettings::TIFF );
+    d->formatComboBox->insertItem( "PPM",  RawDecodingSettings::PPM );
+    d->formatComboBox->insertItem( "PNG",  RawDecodingSettings::PNG );
+    QWhatsThis::add(d->formatComboBox, i18n("<p>Set here the ouput file format to use:<p>"
+                                       "<b>JPEG</b>: output the processed image in JPEG Format. "
+                                       "Warning!!! JPEG is a lossy format, but will give "
+                                       "smaller-sized files. Minimum JPEG compression "
+                                       "will be used during conversion.<p>"
+                                       "<b>TIFF</b>: output the processed image in TIFF Format. "
+                                       "This generates larges, without "
+                                       "losing quality. Adobe Deflate compression "
+                                       "will be used during conversion.<p>"
+                                       "<b>PPM</b>: output the processed image in PPM Format. "
+                                       "This generates the largest files, without "
+                                       "losing quality.<p>"
+                                       "<b>PNG</b>: output the processed image in PNG Format. "
+                                       "This generates larges, without "
+                                       "losing quality. Maximum PNG compression "
+                                       "will be used during conversion."));
+
+    d->conflictLabel       = new QLabel(i18n("If Target File Exists:"), this);
+    d->conflictButtonGroup = new QVButtonGroup(this);
+    d->overwriteButton     = new QRadioButton(i18n("Overwrite"), d->conflictButtonGroup);
+    d->promptButton        = new QRadioButton(i18n("Open file dialog"), d->conflictButtonGroup);
+    d->conflictButtonGroup->insert(d->overwriteButton, OVERWRITE);
+    d->conflictButtonGroup->insert(d->promptButton,    ASKTOUSER);
+    d->conflictButtonGroup->setRadioButtonExclusive(true);
+    d->overwriteButton->setChecked(true);
+    d->conflictButtonGroup->setFrameStyle(QFrame::NoFrame|QFrame::Plain);
+    d->conflictButtonGroup->setInsideMargin(0);
+    
+    settingsBoxLayout->addMultiCellWidget(d->formatLabel, 0, 0, 0, 0);   
+    settingsBoxLayout->addMultiCellWidget(d->formatComboBox, 0, 0, 1, 1);   
+    settingsBoxLayout->addMultiCellWidget(d->conflictLabel, 1, 1, 0, 1);   
+    settingsBoxLayout->addMultiCellWidget(d->conflictButtonGroup, 2, 2, 0, 1);   
+
+    connect(d->formatComboBox, SIGNAL(activated(int)),
+            this, SIGNAL(signalSaveFormatChanged()));
+}
+
+SaveSettingsWidget::~SaveSettingsWidget()
+{
+    delete d;
+}
+
+RawDecodingSettings::OutputFormat SaveSettingsWidget::fileFormat()
+{
+    return(RawDecodingSettings::OutputFormat)(d->formatComboBox->currentItem());
+}
+
+void SaveSettingsWidget::setFileFormat(RawDecodingSettings::OutputFormat f)
+{
+    d->formatComboBox->setCurrentItem((int)f);
+}
+
+SaveSettingsWidget::ConflictRule SaveSettingsWidget::conflictRule()
+{
+    return((ConflictRule)(d->conflictButtonGroup->selectedId()));
+}
+
+void SaveSettingsWidget::setConflictRule(SaveSettingsWidget::ConflictRule r)
+{
+    d->conflictButtonGroup->setButton((int)r);
+}
+
+} // NameSpace KIPIRawConverterPlugin
+

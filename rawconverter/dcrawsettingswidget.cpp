@@ -1,0 +1,422 @@
+/* ============================================================
+ * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2006-09-13
+ * Description : dcraw settings widgets
+ *
+ * Copyright 2006 by Gilles Caulier
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
+// Qt includes.
+
+#include <qcheckbox.h>
+#include <qcombobox.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qwhatsthis.h>
+#include <qstring.h>
+
+// KDE includes.
+
+#include <kdialog.h>
+#include <klocale.h>
+#include <knuminput.h>
+
+// Local includes.
+
+#include "dcrawsettingswidget.h"
+#include "dcrawsettingswidget.moc"
+
+namespace KIPIRawConverterPlugin
+{
+
+class DcrawSettingsWidgetPriv
+{
+public:
+
+    DcrawSettingsWidgetPriv()
+    {
+        cameraWBCheckBox         = 0;
+        fourColorCheckBox        = 0;
+        brightnessLabel          = 0;
+        brightnessSpinBox        = 0;
+        autoColorBalanceCheckBox = 0;
+        unclipColorLabel         = 0;
+        secondarySensorCheckBox  = 0;
+        RAWQualityComboBox       = 0;
+        RAWQualityLabel          = 0;
+        enableNoiseReduction     = 0;
+        NRSigmaDomain            = 0;
+        NRSigmaRange             = 0;
+        NRSigmaRangelabel        = 0;
+        NRSigmaDomainlabel       = 0;
+        unclipColorComboBox      = 0;
+        reconstructLabel         = 0;
+        reconstructSpinBox       = 0;
+    }
+
+    QLabel          *brightnessLabel;
+    QLabel          *RAWQualityLabel;
+    QLabel          *NRSigmaRangelabel;
+    QLabel          *NRSigmaDomainlabel;
+    QLabel          *unclipColorLabel;
+    QLabel          *reconstructLabel;
+
+    QComboBox       *RAWQualityComboBox;
+    QComboBox       *unclipColorComboBox;
+
+    QCheckBox       *cameraWBCheckBox;
+    QCheckBox       *fourColorCheckBox;
+    QCheckBox       *autoColorBalanceCheckBox;
+    QCheckBox       *secondarySensorCheckBox;
+    QCheckBox       *enableNoiseReduction;
+
+    KIntNumInput    *reconstructSpinBox;
+
+    KDoubleNumInput *brightnessSpinBox;
+    KDoubleNumInput *NRSigmaDomain;
+    KDoubleNumInput *NRSigmaRange;
+};
+
+DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent)
+                   : QGroupBox(0, Qt::Vertical, i18n("Decoding Settings"), parent)
+{
+    d = new DcrawSettingsWidgetPriv;
+    QGridLayout* settingsBoxLayout = new QGridLayout(layout(), 10, 1, KDialog::spacingHint());
+
+    // ---------------------------------------------------------------
+
+    d->fourColorCheckBox = new QCheckBox(i18n("Interpolate RGB as four colors"), this);
+    QWhatsThis::add(d->fourColorCheckBox, i18n("<p><b>Interpolate RGB as four colors</b><p>"
+                                          "The default is to assume that all green "
+                                          "pixels are the same. If even-row green "
+                                          "pixels are more sensitive to ultraviolet light "
+                                          "than odd-row this difference causes a mesh "
+                                          "pattern in the output; using this option solves "
+                                          "this problem with minimal loss of detail.<p>"
+                                          "To resume, this option blurs the image "
+                                          "a little, but it eliminates false 2x2 mesh patterns "
+                                          "with VNG quality method or mazes with AHD quality method."));
+    settingsBoxLayout->addMultiCellWidget(d->fourColorCheckBox, 0, 0, 0, 1);    
+
+    // ---------------------------------------------------------------
+
+    d->cameraWBCheckBox = new QCheckBox(i18n("Use camera white balance"), this);
+    QWhatsThis::add(d->cameraWBCheckBox, i18n("<p><b>Use camera white balance</b><p>"
+                                         "Use the camera's custom white-balance settings. "
+                                         "The default is to use fixed daylight values, "
+                                         "calculated from sample images. "
+                                         "If this can't be found, reverts to the default."));
+    settingsBoxLayout->addMultiCellWidget(d->cameraWBCheckBox, 1, 1, 0, 1);    
+
+    // ---------------------------------------------------------------
+
+    d->autoColorBalanceCheckBox = new QCheckBox(i18n("Automatic color balance"), this);
+    QWhatsThis::add( d->autoColorBalanceCheckBox, i18n("<p><b>Automatic color balance</b><p>"
+                                                  "The default is to use a fixed color balance "
+                                                  "based on a white card photographed "
+                                                  "in sunlight.<p>"));
+    settingsBoxLayout->addMultiCellWidget(d->autoColorBalanceCheckBox, 2, 2, 0, 1);    
+
+    // ---------------------------------------------------------------
+
+    d->secondarySensorCheckBox = new QCheckBox(i18n("Use Super CCD secondary sensors"), this);
+    QWhatsThis::add( d->secondarySensorCheckBox, i18n("<p><b>Use Super CCD secondary sensors</b><p>"
+                                                 "For Fuji Super CCD SR cameras, use the "
+                                                 "secondary sensors, in effect underexposing "
+                                                 "the image by four stops to reveal "
+                                                 "detail in the highlights. For all other camera "
+                                                 "types this option is ignored.<p>"));
+    settingsBoxLayout->addMultiCellWidget(d->secondarySensorCheckBox, 3, 3, 0, 1);   
+
+    // ---------------------------------------------------------------
+
+    d->unclipColorLabel    = new QLabel(i18n("Highlights clipping:"), this);
+    d->unclipColorComboBox = new QComboBox( false, this );
+    d->unclipColorComboBox->insertItem( i18n("Solid white"), 0 );
+    d->unclipColorComboBox->insertItem( i18n("Unclip"),      1 );
+    d->unclipColorComboBox->insertItem( i18n("Reconstruct"), 2 );
+    QWhatsThis::add( d->unclipColorComboBox, i18n("<p><b>Highlights clipping</b><p>"
+                                             "Select here the highlight cliping method:"
+                                             "<b>Solid white</b>: clip all highlights to solid white<p>"
+                                             "<b>Unclip</b>: leave highlights unclipped in various "
+                                             "shades of pink<p>"
+                                             "<b>Reconstruct</b>: reconstruct highlights using a level. "
+                                             "Low value favor whites and high value favor colors."));
+    settingsBoxLayout->addMultiCellWidget(d->unclipColorLabel, 4, 4, 0, 0);    
+    settingsBoxLayout->addMultiCellWidget(d->unclipColorComboBox, 4, 4, 1, 1);    
+
+    d->reconstructLabel   = new QLabel(i18n("Level:"), this);
+    d->reconstructSpinBox = new KIntNumInput(this);
+    d->reconstructSpinBox->setRange(0, 7, 1, true);
+    QWhatsThis::add(d->reconstructSpinBox, i18n("<p><b>Level</b><p>"
+                                               "Specify the reconstruct highlights level of ouput image."));
+    settingsBoxLayout->addMultiCellWidget(d->reconstructLabel, 5, 5, 0, 0);    
+    settingsBoxLayout->addMultiCellWidget(d->reconstructSpinBox, 5, 5, 1, 1);    
+
+    // ---------------------------------------------------------------
+
+    d->brightnessLabel   = new QLabel(i18n("Brightness:"), this);
+    d->brightnessSpinBox = new KDoubleNumInput(this);
+    d->brightnessSpinBox->setPrecision(2);
+    d->brightnessSpinBox->setRange(0.0, 10.0, 0.01, true);
+    QWhatsThis::add(d->brightnessSpinBox, i18n("<p><b>Brighness</b><p>"
+                                               "Specify the brightness level of ouput image."));
+    settingsBoxLayout->addMultiCellWidget(d->brightnessLabel, 6, 6, 0, 0);    
+    settingsBoxLayout->addMultiCellWidget(d->brightnessSpinBox, 6, 6, 1, 1);    
+
+    // ---------------------------------------------------------------
+
+    d->RAWQualityLabel    = new QLabel(i18n("Quality:"), this);
+    d->RAWQualityComboBox = new QComboBox( false, this );
+    d->RAWQualityComboBox->insertItem( i18n("Bilinear interpolation"), 0 );
+    d->RAWQualityComboBox->insertItem( i18n("VNG interpolation"),      1 );
+    d->RAWQualityComboBox->insertItem( i18n("AHD interpolation"),      2 );
+    QWhatsThis::add( d->RAWQualityComboBox, i18n("<p><b>Quality</b><p>"
+                "Select here the demosaicing RAW images decoding "
+                "interpolation method. A demosaicing algorithm is a digital image process used to "
+                "interpolate a complete image from the partial raw data received from the color-filtered "
+                "image sensor internal to many digital cameras in form of a matrix of colored pixels. "
+                "Also known as CFA interpolation or color reconstruction, another common spelling "
+                "is demosaicing. There are 3 methods to demosaicing RAW images:<p>"
+                "<b>Bilinear</b>: use high-speed but low-quality bilinear "
+                "interpolation (default - for slow computer). In this method, "
+                "the red value of a non-red pixel is computed as the average of "
+                "the adjacent red pixels, and similar for blue and green.<p>"
+                "<b>VNG</b>: use Variable Number of Gradients interpolation. "
+                "This method computes gradients near the pixel of interest and uses "
+                "the lower gradients (representing smoother and more similar parts "
+                "of the image) to make an estimate.<p>"
+                "<b>AHD</b>: use Adaptive Homogeneity-Directed interpolation. "
+                "This method selects the direction of interpolation so as to "
+                "maximize a homogeneity metric, thus typically minimizing color artifacts.<p>"));
+    settingsBoxLayout->addMultiCellWidget(d->RAWQualityLabel, 7, 7, 0, 0); 
+    settingsBoxLayout->addMultiCellWidget(d->RAWQualityComboBox, 7, 7, 1, 1);
+
+    // ---------------------------------------------------------------
+
+    d->enableNoiseReduction = new QCheckBox(i18n("Enable Noise Reduction"), this);
+    QWhatsThis::add( d->enableNoiseReduction, i18n("<p><b>Enable Noise Reduction</b><p>"
+                     "Toggle bilateral filter to smooth noise while "
+                     "preserving edges. This option can be use to reduce low noise. The pictures edges "
+                     "are preserved because it is applied in CIELab color space instead of RGB.<p>"));
+    settingsBoxLayout->addMultiCellWidget(d->enableNoiseReduction, 8, 8, 0, 1);
+
+    d->NRSigmaDomain = new KDoubleNumInput(this);
+    d->NRSigmaDomain->setValue(2.0);
+    d->NRSigmaDomain->setPrecision(1);
+    d->NRSigmaDomain->setRange(0.1, 5.0, 0.1);
+    d->NRSigmaDomainlabel = new QLabel(i18n("Sigma domain:"), this);
+    QWhatsThis::add( d->NRSigmaDomain, i18n("<p><b>Sigma domain</b><p>"
+                                       "The noise reduction Sigma Domain in units of pixels. "
+                                       "The default value is 2.0.<p>"));
+    settingsBoxLayout->addMultiCellWidget(d->NRSigmaDomainlabel, 9, 9, 0, 0);
+    settingsBoxLayout->addMultiCellWidget(d->NRSigmaDomain, 9, 9, 1, 1);
+
+    d->NRSigmaRange = new KDoubleNumInput(this);
+    d->NRSigmaRange->setValue(4.0);
+    d->NRSigmaRange->setPrecision(1);
+    d->NRSigmaRange->setRange(0.1, 5.0, 0.1);
+    d->NRSigmaRangelabel = new QLabel(i18n("Sigma range:"), this);
+    QWhatsThis::add( d->NRSigmaRange, i18n("<p><b>Sigma range</b><p>"
+                                           "The noise reduction Sigma Range in units of "
+                                           "CIELab colorspace. The default value is 4.0.<p>"));
+    settingsBoxLayout->addMultiCellWidget(d->NRSigmaRangelabel, 10, 10, 0, 0);
+    settingsBoxLayout->addMultiCellWidget(d->NRSigmaRange, 10, 10, 1, 1);
+
+    // ---------------------------------------------------------------
+
+    connect(d->unclipColorComboBox, SIGNAL(activated(int)),
+            this, SLOT(slotUnclipColorActivated(int)));
+
+    connect(d->enableNoiseReduction, SIGNAL(toggled(bool)),
+            this, SLOT(slotNoiseReductionToggled(bool)));
+}
+
+DcrawSettingsWidget::~DcrawSettingsWidget()
+{
+    delete d;
+}
+
+void DcrawSettingsWidget::slotUnclipColorActivated(int v)
+{
+    if (v == 2)     // Reconstruct Highlight method
+    {
+        d->reconstructLabel->setEnabled(true);
+        d->reconstructSpinBox->setEnabled(true);
+    }
+    else
+    {
+        d->reconstructLabel->setEnabled(false);
+        d->reconstructSpinBox->setEnabled(false);
+    }
+}
+
+void DcrawSettingsWidget::slotNoiseReductionToggled(bool b)
+{
+    d->NRSigmaDomain->setEnabled(b);
+    d->NRSigmaRange->setEnabled(b);
+    d->NRSigmaRangelabel->setEnabled(b);
+    d->NRSigmaDomainlabel->setEnabled(b);
+}
+
+bool DcrawSettingsWidget::useCameraWB()
+{
+    return d->cameraWBCheckBox->isChecked();
+}
+
+bool DcrawSettingsWidget::useAutoColorBalance()
+{
+    return d->autoColorBalanceCheckBox->isChecked();
+}
+
+bool DcrawSettingsWidget::usefourColor()
+{
+    return d->fourColorCheckBox->isChecked();
+}
+
+int DcrawSettingsWidget::unclipColor()
+{
+    switch(d->unclipColorComboBox->currentItem())
+    {
+        case 0:
+            return 0;
+            break;
+        case 1:
+            return 1;
+            break;
+        default:         // Reconstruct Highlight method
+            return d->reconstructSpinBox->value()+2;
+            break;
+    }
+}
+
+bool DcrawSettingsWidget::useSecondarySensor()
+{
+    return d->secondarySensorCheckBox->isChecked();
+}
+
+double DcrawSettingsWidget::brightness()
+{
+    return d->brightnessSpinBox->value();
+}
+
+void DcrawSettingsWidget::setCameraWB(bool b)
+{
+    d->cameraWBCheckBox->setChecked(b);
+}
+
+RawDecodingSettings::DecodingQuality DcrawSettingsWidget::quality()
+{
+    switch(d->RAWQualityComboBox->currentItem())
+    {
+        case 1:
+            return RawDecodingSettings::VNG;
+            break;
+        case 2:
+            return RawDecodingSettings::AHD;
+            break;
+        default:    
+            return RawDecodingSettings::BILINEAR;
+            break;
+    }
+}
+
+bool DcrawSettingsWidget::useNoiseReduction()
+{
+    return d->enableNoiseReduction->isChecked();
+}
+
+double DcrawSettingsWidget::sigmaDomain()
+{
+    return d->NRSigmaDomain->value();
+}
+
+double DcrawSettingsWidget::sigmaRange()
+{
+    return d->NRSigmaRange->value();
+}
+
+void DcrawSettingsWidget::setAutoColorBalance(bool b)
+{
+    d->autoColorBalanceCheckBox->setChecked(b);
+}
+
+void DcrawSettingsWidget::setFourColor(bool b)
+{
+    d->fourColorCheckBox->setChecked(b);
+}
+
+void DcrawSettingsWidget::setUnclipColor(int v)
+{
+    switch(v)
+    {
+        case 0:
+            d->unclipColorComboBox->setCurrentItem(0);
+            break;
+        case 1:
+            d->unclipColorComboBox->setCurrentItem(1);
+            break;
+        default:         // Reconstruct Highlight method
+            d->unclipColorComboBox->setCurrentItem(2);
+            d->reconstructSpinBox->setValue(v-2);
+            break;
+    }
+
+    slotUnclipColorActivated(d->unclipColorComboBox->currentItem());
+}
+
+void DcrawSettingsWidget::setSecondarySensor(bool b)
+{
+    d->secondarySensorCheckBox->setChecked(b);
+}
+
+void DcrawSettingsWidget::setBrightness(double b)
+{
+    d->brightnessSpinBox->setValue(b);
+}
+
+void DcrawSettingsWidget::setSigmaDomain(double b)
+{
+    d->NRSigmaDomain->setValue(b);
+}
+
+void DcrawSettingsWidget::setSigmaRange(double b)
+{
+    d->NRSigmaRange->setValue(b);
+}
+
+void DcrawSettingsWidget::setQuality(RawDecodingSettings::DecodingQuality q)
+{
+    switch(q)
+    {
+        case RawDecodingSettings::VNG:
+            d->RAWQualityComboBox->setCurrentItem(1);
+            break;
+        case RawDecodingSettings::AHD:
+            d->RAWQualityComboBox->setCurrentItem(2);
+            break;
+        default:    
+            d->RAWQualityComboBox->setCurrentItem(0);
+            break;
+    }
+}
+
+void DcrawSettingsWidget::setNoiseReduction(bool b)
+{
+    d->enableNoiseReduction->setChecked(b);
+    slotNoiseReductionToggled(b);
+}
+
+} // NameSpace KIPIRawConverterPlugin

@@ -31,20 +31,17 @@
 
 #include <kdialogbase.h>
 
-class QFrame;
-class QCheckBox;
-class QVButtonGroup;
-class QRadioButton;
 class QCloseEvent;
+class QCustomEvent;
 class QTimer;
-
-class KDoubleNumInput;
 
 namespace KIPIRawConverterPlugin
 {
 
 class PreviewWidget;
-class ProcessController;
+class ActionThread;
+class DcrawSettingsWidget;
+class SaveSettingsWidget;
 
 class SingleDialog : public KDialogBase
 {
@@ -57,6 +54,7 @@ public:
 
 protected:
 
+    void customEvent(QCustomEvent *event);
     void closeEvent(QCloseEvent *e);
     
 private:
@@ -64,54 +62,49 @@ private:
     void readSettings();
     void saveSettings();
 
+    void busy(bool busy);
+
+    void identified(const QString&, const QString& identity);
+
+    void previewing(const QString&);
+    void previewed(const QString&, const QString& tmpFile_);
+    void previewFailed(const QString&);
+
+    void processing(const QString&);
+    void processed(const QString&, const QString& tmpFile_);
+    void processingFailed(const QString&);
+
 private slots:
 
     void slotHelp();
     void slotUser1();
     void slotUser2();
     void slotUser3();
+    void slotClose();
+
     void slotIdentify();
 
-    void slotBusy(bool val);
-    void slotIdentified(const QString&, const QString& identity);
-    void slotIdentifyFailed(const QString&, const QString& identity);
-    void slotPreviewing(const QString&);
-    void slotPreviewed(const QString&, const QString& tmpFile_);
-    void slotPreviewFailed(const QString&);
-    void slotProcessing(const QString&);
-    void slotProcessed(const QString&, const QString& tmpFile_);
-    void slotProcessingFailed(const QString&);
     void slotPreviewBlinkTimerDone();
     void slotConvertBlinkTimerDone();
     
 private:
 
-    bool               previewBlink_;
-    bool               convertBlink_;
+    bool                 previewBlink_;
+    bool                 convertBlink_;
 
-    QCheckBox         *cameraWBCheckBox_;
-    QCheckBox         *fourColorCheckBox_;
-
-    QRadioButton      *jpegButton_;
-    QRadioButton      *tiffButton_;
-    QRadioButton      *ppmButton_;
-    QRadioButton      *pngButton_;
+    QString              inputFile_;
+    QString              inputFileName_;
     
-    QVButtonGroup     *saveButtonGroup_;
+    QTimer              *blinkPreviewTimer_;
+    QTimer              *blinkConvertTimer_;
 
-    QString            inputFile_;
-    QString            inputFileName_;
-    
-    QTimer            *blinkPreviewTimer_;
-    QTimer            *blinkConvertTimer_;
+    PreviewWidget       *previewWidget_;
 
-    KDoubleNumInput   *brightnessSpinBox_;
-    KDoubleNumInput   *redSpinBox_;
-    KDoubleNumInput   *blueSpinBox_;
+    ActionThread        *m_thread;
 
-    PreviewWidget     *previewWidget_;
+    DcrawSettingsWidget *m_decodingSettingsBox;
 
-    ProcessController *controller_;
+    SaveSettingsWidget  *m_saveSettingsBox;
 };
 
 } // NameSpace KIPIRawConverterPlugin

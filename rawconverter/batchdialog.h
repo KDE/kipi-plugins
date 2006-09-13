@@ -32,46 +32,26 @@
 
 #include <kdialogbase.h>
 
-class QListViewItem;
-class QCheckBox;
-class QRadioButton;
-class QVButtonGroup;
-class QGroupBox;
-class QLabel;
-class QPixmap;
 class QTimer;
 class QWidget;
+class QCustomEvent;
+class QCloseEvent;
 
-class KFileItem;
 class KListView;
-class KListViewItem;
-class KURL;
 class KProgress;
-class KDoubleNumInput;
-
-namespace KIPI
-{
-class ThumbnailJob;
-}
 
 namespace KIPIRawConverterPlugin
 {
 
-class  ProcessController;
+class  ActionThread;
+class  DcrawSettingsWidget;
+class  SaveSettingsWidget;
 struct RawItem;
 
 class BatchDialog : public KDialogBase
 {
 
-    Q_OBJECT
-
-public:
-
-    enum TargetFileOp 
-    {
-        OVERWRITE,
-        OPENFILEDIALOG
-    };
+Q_OBJECT
 
 public:
 
@@ -80,80 +60,57 @@ public:
 
     void addItems(const QStringList& itemList);
 
+protected:
+
+    void customEvent(QCustomEvent *event);
+    void closeEvent(QCloseEvent *e);
+
 private:
 
     void readSettings();
     void saveSettings();
+
+    void busy(bool busy);
+
     void processOne();
+    void processing(const QString& file);
+    void processed(const QString& file, const QString& tmpFile);
+    void processingFailed(const QString& file);
 
 private slots:
 
+    void slotClose();
     void slotHelp();
     void slotUser1();
     void slotUser2();
     void slotAborted();
 
     void slotSaveFormatChanged();
-    void slotIdentify();
-    void slotIdentified(const QString& file, const QString& identity);
-    void slotIdentifyFailed(const QString& file, const QString& identity);
-
-    void slotProcessing(const QString& file);
-    void slotProcessed(const QString& file, const QString& tmpFile);
-    void slotProcessingFailed(const QString& file);
-
-    void slotBusy(bool busy);
-    void slotGotThumbnail(const KFileItem* url, const QPixmap& pix);
     void slotConvertBlinkTimerDone();
 
 private:
 
-    bool               busy_;
-    bool               convertBlink_;
+    bool                 m_convertBlink;
 
-    QTimer            *blinkConvertTimer_;
+    QTimer              *m_blinkConvertTimer;
 
-    QWidget           *page_;
+    QWidget             *m_page;
 
-    QLabel            *brightnessLabel_;
-    QLabel            *redLabel_;
-    QLabel            *blueLabel_;
+    QDict<RawItem>       m_itemDict;
 
-    QCheckBox         *cameraWBCheckBox_;
-    QCheckBox         *fourColorCheckBox_;
-    
-    QGroupBox         *settingsBox_;
+    QStringList          m_fileList;
 
-    QVButtonGroup     *saveButtonGroup_;
-    QVButtonGroup     *conflictButtonGroup_;
+    KProgress           *m_progressBar;
 
-    QRadioButton      *jpegButton_;
-    QRadioButton      *tiffButton_;
-    QRadioButton      *ppmButton_;
-    QRadioButton      *pngButton_;
+    KListView           *m_listView;
 
-    QRadioButton      *overwriteButton_;
-    QRadioButton      *promptButton_;
-    
-    QDict<RawItem>     itemDict_;
+    RawItem             *m_currentConvertItem;
+   
+    ActionThread        *m_thread;
 
-    QStringList        fileList_;
+    DcrawSettingsWidget *m_decodingSettingsBox;
 
-    QString            targetExtension_;
-
-    KDoubleNumInput   *brightnessSpinBox_;
-    KDoubleNumInput   *redSpinBox_;
-    KDoubleNumInput   *blueSpinBox_;
-
-    KProgress         *progressBar_;
-
-    KListView         *listView_;
-
-    ProcessController *controller_;
-
-    RawItem           *currentConvertItem_;
-
-    TargetFileOp       targetFileOp_;
+    SaveSettingsWidget  *m_saveSettingsBox;
 };
 
 } // NameSpace KIPIRawConverterPlugin

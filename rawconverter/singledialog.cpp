@@ -28,14 +28,9 @@
 
 #include <qtimer.h>
 #include <qframe.h>
-#include <qgroupbox.h>
-#include <qvbuttongroup.h>
-#include <qradiobutton.h>
-#include <qcheckbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qtimer.h>
 #include <qfileinfo.h>
 #include <qevent.h>
 #include <qpushbutton.h>
@@ -55,7 +50,6 @@
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
-#include <knuminput.h>
 
 // KIPI include files
 
@@ -63,9 +57,13 @@
 
 // Local includes.
 
-#include "singledialog.h"
 #include "previewwidget.h"
-#include "processcontroller.h"
+#include "dcrawutils.h"
+#include "dcrawsettingswidget.h"
+#include "savesettingswidget.h"
+#include "actionthread.h"
+#include "singledialog.h"
+#include "singledialog.moc"
 
 namespace KIPIRawConverterPlugin
 {
@@ -120,93 +118,12 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    QGroupBox *settingsBox = new QGroupBox(0, Qt::Vertical, i18n("Settings"), page);
-    QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox->layout(), 4, 1, spacingHint());
+    m_decodingSettingsBox = new DcrawSettingsWidget(page);
+    m_saveSettingsBox     = new SaveSettingsWidget(page);
 
-    cameraWBCheckBox_ = new QCheckBox(i18n("Use camera white balance"), settingsBox);
-    QToolTip::add(cameraWBCheckBox_, i18n("<p>Use the camera's custom white-balance settings. "
-                                          "The default  is to use fixed daylight values, "
-                                          "calculated from sample images."));
-    settingsBoxLayout->addMultiCellWidget(cameraWBCheckBox_, 0, 0, 0, 1);    
+    mainLayout->addMultiCellWidget(m_decodingSettingsBox, 1, 1, 1, 1);
+    mainLayout->addMultiCellWidget(m_saveSettingsBox, 2, 2, 1, 1);
 
-    // ---------------------------------------------------------------
-
-    fourColorCheckBox_ = new QCheckBox(i18n("Four color RGBG"), settingsBox);
-    QToolTip::add(fourColorCheckBox_, i18n("<p>Interpolate RGB as four colors. "
-                                      "The default is to assume that all green "
-                                      "pixels are the same. If even-row green "
-                                      "pixels are more sensitive to ultraviolet light "
-                                      "than odd-row this difference causes a mesh "
-                                      "pattern in the output; using this option solves "
-                                      "this problem with minimal loss of detail."));
-    settingsBoxLayout->addMultiCellWidget(fourColorCheckBox_, 1, 1, 0, 1);    
-
-    // ---------------------------------------------------------------
-
-    QLabel *label1 = new QLabel(i18n("Brightness:"), settingsBox);
-    brightnessSpinBox_ = new KDoubleNumInput(settingsBox);
-    brightnessSpinBox_->setPrecision(2);
-    brightnessSpinBox_->setRange(0.0, 10.0, 0.01, true);
-    QToolTip::add(brightnessSpinBox_, i18n("<p>Specify the output brightness"));
-    settingsBoxLayout->addMultiCellWidget(label1, 2, 2, 0, 0);    
-    settingsBoxLayout->addMultiCellWidget(brightnessSpinBox_, 2, 2, 1, 1);    
-
-    // ---------------------------------------------------------------
-
-    QLabel *label2 = new QLabel(i18n("Red multiplier:"), settingsBox);
-    redSpinBox_ = new KDoubleNumInput(settingsBox);
-    redSpinBox_->setPrecision(2);
-    redSpinBox_->setRange(0.0, 10.0, 0.01, true);
-    QToolTip::add(redSpinBox_, i18n("<p>After all other color adjustments, "
-                                    "multiply the red channel by this value"));
-    settingsBoxLayout->addMultiCellWidget(label2, 3, 3, 0, 0);    
-    settingsBoxLayout->addMultiCellWidget(redSpinBox_, 3, 3, 1, 1);    
-
-    // ---------------------------------------------------------------
-
-    QLabel *label3 = new QLabel(i18n("Blue multiplier:"), settingsBox);
-    blueSpinBox_ = new KDoubleNumInput(settingsBox);
-    blueSpinBox_->setPrecision(2);
-    blueSpinBox_->setRange(0.0, 10.0, 0.01, true);
-    QToolTip::add(blueSpinBox_, i18n("<p>After all other color adjustments, "
-                                     "multiply the blue channel by this value"));
-    settingsBoxLayout->addMultiCellWidget(label3, 4, 4, 0, 0);    
-    settingsBoxLayout->addMultiCellWidget(blueSpinBox_, 4, 4, 1, 1);   
-
-    // ---------------------------------------------------------------
-
-    saveButtonGroup_ = new QVButtonGroup(i18n("Save Format"), page);
-    saveButtonGroup_->setRadioButtonExclusive(true);
-
-    jpegButton_ = new QRadioButton("JPEG", saveButtonGroup_);
-    QToolTip::add(jpegButton_, i18n("<p>Output the processed image in JPEG Format. "
-                                    "Warning!!! JPEG is a lossy format, but will give "
-                                    "smaller-sized files. Minimum JPEG compression "
-                                    "will be used during conversion."));
-
-    tiffButton_ = new QRadioButton("TIFF", saveButtonGroup_);
-    QToolTip::add(tiffButton_, i18n("<p>Output the processed image in TIFF Format. "
-                                    "This generates larges, without "
-                                    "losing quality. Adobe Deflate compression "
-                                    "will be used during conversion."));
-
-    ppmButton_ = new QRadioButton("PPM", saveButtonGroup_);
-    QToolTip::add(ppmButton_, i18n("<p>Output the processed image in PPM Format. "
-                                   "This generates the largest files, without "
-                                   "losing quality"));
-
-    pngButton_ = new QRadioButton("PNG", saveButtonGroup_);
-    QToolTip::add(pngButton_, i18n("<p>Output the processed image in PNG Format. "
-                                   "This generates larges, without "
-                                   "losing quality. Maximum PNG compression "
-                                   "will be used during conversion."));
-
-    pngButton_->setChecked(true);
-
-    // ---------------------------------------------------------------
-
-    mainLayout->addMultiCellWidget(settingsBox, 1, 1, 1, 1);
-    mainLayout->addMultiCellWidget(saveButtonGroup_, 2, 2, 1, 1);
     mainLayout->setColStretch(0, 10);
     mainLayout->setRowStretch(3, 10);
 
@@ -253,7 +170,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     blinkPreviewTimer_ = new QTimer(this);
     blinkConvertTimer_ = new QTimer(this);
-    controller_        = new ProcessController(this);
+    m_thread           = new ActionThread(this);
 
     // ---------------------------------------------------------------
 
@@ -263,55 +180,35 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     connect(blinkConvertTimer_, SIGNAL(timeout()),
             this, SLOT(slotConvertBlinkTimerDone()));
 
-    connect(controller_, SIGNAL(signalIdentified(const QString&, const QString&)),
-            this, SLOT(slotIdentified(const QString&, const QString&)));
-
-    connect(controller_, SIGNAL(signalIdentifyFailed(const QString&, const QString&)),
-            this, SLOT(slotIdentifyFailed(const QString&, const QString&)));
-
-    connect(controller_, SIGNAL(signalPreviewing(const QString&)),
-            this, SLOT(slotPreviewing(const QString&)));
-
-    connect(controller_, SIGNAL(signalPreviewed(const QString&, const QString&)),
-            this, SLOT(slotPreviewed(const QString&, const QString&)));
-
-    connect(controller_, SIGNAL(signalPreviewFailed(const QString&)),
-            this, SLOT(slotPreviewFailed(const QString&)));
-
-    connect(controller_, SIGNAL(signalProcessing(const QString&)),
-            this, SLOT(slotProcessing(const QString&)));
-
-    connect(controller_, SIGNAL(signalProcessed(const QString&, const QString&)),
-            this, SLOT(slotProcessed(const QString&, const QString&)));
-
-    connect(controller_, SIGNAL(signalProcessingFailed(const QString&)),
-            this, SLOT(slotProcessingFailed(const QString&)));
-
-    connect(controller_, SIGNAL(signalBusy(bool)), 
-            this, SLOT(slotBusy(bool)));
-
     // ---------------------------------------------------------------
 
-    slotBusy(false);
+    busy(false);
     readSettings();
     QTimer::singleShot(0, this, SLOT( slotIdentify() ) );
 }
 
 SingleDialog::~SingleDialog()
 {
-    blinkPreviewTimer_->stop();
-    blinkConvertTimer_->stop();
-    saveSettings();
+    delete m_thread;
 }
 
 void SingleDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
-    if (actionButton( User3 )->isEnabled()) 
-    {
-        kdWarning( 51000 ) << "KIPIRAWConverter:single dialog closed" << endl;
-    }
+    blinkPreviewTimer_->stop();
+    blinkConvertTimer_->stop();
+    m_thread->cancel();
+    saveSettings();
     e->accept();
+}
+
+void SingleDialog::slotClose()
+{
+    blinkPreviewTimer_->stop();
+    blinkConvertTimer_->stop();
+    m_thread->cancel();
+    saveSettings();
+    KDialogBase::slotClose();
 }
 
 void SingleDialog::readSettings()
@@ -319,12 +216,27 @@ void SingleDialog::readSettings()
     KConfig config("kipirc");
     config.setGroup("RawConverter Settings");
 
-    brightnessSpinBox_->setValue(config.readDoubleNumEntry("Brightness Multiplier", 1.0));
-    redSpinBox_->setValue(config.readDoubleNumEntry("Red Multiplier", 1.0));
-    blueSpinBox_->setValue(config.readDoubleNumEntry("Blue Multiplier", 1.0));
-    cameraWBCheckBox_->setChecked(config.readBoolEntry("Use Camera WB", true));
-    fourColorCheckBox_->setChecked(config.readBoolEntry("Four Color RGB", false));
-    saveButtonGroup_->setButton(config.readNumEntry("Output Format", 3));  // PNG by default
+    m_decodingSettingsBox->setCameraWB(config.readBoolEntry("Use Camera WB", true));
+    m_decodingSettingsBox->setAutoColorBalance(config.readBoolEntry("Use Auto Color Balance", true));
+    m_decodingSettingsBox->setFourColor(config.readBoolEntry("Four Color RGB", false));
+    m_decodingSettingsBox->setUnclipColor(config.readNumEntry("Unclip Color", 0));
+    m_decodingSettingsBox->setSecondarySensor(config.readBoolEntry("Use Secondary Sensor", false));
+    m_decodingSettingsBox->setNoiseReduction(config.readBoolEntry("Use Noise Resuction", false));
+    m_decodingSettingsBox->setBrightness(config.readDoubleNumEntry("Brightness Multiplier", 1.0));
+    m_decodingSettingsBox->setSigmaDomain(config.readDoubleNumEntry("Sigma Domain", 2.0));
+    m_decodingSettingsBox->setSigmaRange(config.readDoubleNumEntry("Sigma Range", 4.0));
+
+    m_decodingSettingsBox->setQuality(
+        (RawDecodingSettings::DecodingQuality)config.readNumEntry("Decoding Quality", 
+            (int)(RawDecodingSettings::BILINEAR))); 
+
+    m_saveSettingsBox->setFileFormat(
+        (RawDecodingSettings::OutputFormat)config.readNumEntry("Output Format", 
+            (int)(RawDecodingSettings::PNG))); 
+
+    m_saveSettingsBox->setConflictRule(
+        (SaveSettingsWidget::ConflictRule)config.readNumEntry("Conflict",
+            (int)(SaveSettingsWidget::OVERWRITE)));
 }
 
 void SingleDialog::saveSettings()
@@ -332,12 +244,19 @@ void SingleDialog::saveSettings()
     KConfig config("kipirc");
     config.setGroup("RawConverter Settings");
 
-    config.writeEntry("Brightness Multiplier", brightnessSpinBox_->value());
-    config.writeEntry("Red Multiplier", redSpinBox_->value());
-    config.writeEntry("Blue Multiplier", blueSpinBox_->value());
-    config.writeEntry("Use Camera WB", cameraWBCheckBox_->isChecked());
-    config.writeEntry("Four Color RGB", fourColorCheckBox_->isChecked());
-    config.writeEntry("Output Format", saveButtonGroup_->id(saveButtonGroup_->selected()));
+    config.writeEntry("Use Camera WB", m_decodingSettingsBox->useCameraWB());
+    config.writeEntry("Use Auto Color Balance", m_decodingSettingsBox->useAutoColorBalance());
+    config.writeEntry("Four Color RGB", m_decodingSettingsBox->usefourColor());
+    config.writeEntry("Unclip Color", m_decodingSettingsBox->unclipColor());
+    config.writeEntry("Use Secondary Sensor", m_decodingSettingsBox->useSecondarySensor());
+    config.writeEntry("Use Noise Resuction", m_decodingSettingsBox->useNoiseReduction());
+    config.writeEntry("Brightness Multiplier", m_decodingSettingsBox->brightness());
+    config.writeEntry("Sigma Domain", m_decodingSettingsBox->sigmaDomain());
+    config.writeEntry("Sigma Range", m_decodingSettingsBox->sigmaRange());
+    config.writeEntry("Decoding Quality", (int)m_decodingSettingsBox->quality());
+
+    config.writeEntry("Output Format", (int)m_saveSettingsBox->fileFormat());
+    config.writeEntry("Conflict", (int)m_saveSettingsBox->conflictRule());
     config.sync();
 }
 
@@ -348,49 +267,66 @@ void SingleDialog::slotHelp()
 
 void SingleDialog::slotUser1()
 {
-    Settings& s      = controller_->settings;
-    s.cameraWB       = cameraWBCheckBox_->isChecked();
-    s.fourColorRGB   = fourColorCheckBox_->isChecked();
-    s.brightness     = brightnessSpinBox_->value();
-    s.redMultiplier  = redSpinBox_->value();
-    s.blueMultiplier = blueSpinBox_->value();
-    s.outputFormat   = "PPM";
+    RawDecodingSettings rawDecodingSettings;
+    rawDecodingSettings.cameraColorBalance      = m_decodingSettingsBox->useCameraWB();
+    rawDecodingSettings.automaticColorBalance   = m_decodingSettingsBox->useAutoColorBalance();
+    rawDecodingSettings.RGBInterpolate4Colors   = m_decodingSettingsBox->usefourColor();
+    rawDecodingSettings.unclipColors            = m_decodingSettingsBox->unclipColor();
+    rawDecodingSettings.SuperCCDsecondarySensor = m_decodingSettingsBox->useSecondarySensor();
+    rawDecodingSettings.enableNoiseReduction    = m_decodingSettingsBox->useNoiseReduction();
+    rawDecodingSettings.brightness              = m_decodingSettingsBox->brightness();
+    rawDecodingSettings.NRSigmaDomain           = m_decodingSettingsBox->sigmaDomain();
+    rawDecodingSettings.NRSigmaRange            = m_decodingSettingsBox->sigmaRange();
+    rawDecodingSettings.RAWQuality              = m_decodingSettingsBox->quality();
+    
+    m_thread->setRawDecodingSettings(rawDecodingSettings);
 
-    controller_->preview(inputFile_);
+    KURL::List oneFile;
+    oneFile.append(inputFile_);
+    m_thread->processHalfRawFiles(oneFile);
+    if (!m_thread->running())
+        m_thread->start();
 }
 
 void SingleDialog::slotUser2()
 {
-    Settings& s      = controller_->settings;
-    s.cameraWB       = cameraWBCheckBox_->isChecked();
-    s.fourColorRGB   = fourColorCheckBox_->isChecked();
-    s.brightness     = brightnessSpinBox_->value();
-    s.redMultiplier  = redSpinBox_->value();
-    s.blueMultiplier = blueSpinBox_->value();
+    RawDecodingSettings rawDecodingSettings;
+    rawDecodingSettings.cameraColorBalance      = m_decodingSettingsBox->useCameraWB();
+    rawDecodingSettings.automaticColorBalance   = m_decodingSettingsBox->useAutoColorBalance();
+    rawDecodingSettings.RGBInterpolate4Colors   = m_decodingSettingsBox->usefourColor();
+    rawDecodingSettings.unclipColors            = m_decodingSettingsBox->unclipColor();
+    rawDecodingSettings.SuperCCDsecondarySensor = m_decodingSettingsBox->useSecondarySensor();
+    rawDecodingSettings.enableNoiseReduction    = m_decodingSettingsBox->useNoiseReduction();
+    rawDecodingSettings.brightness              = m_decodingSettingsBox->brightness();
+    rawDecodingSettings.NRSigmaDomain           = m_decodingSettingsBox->sigmaDomain();
+    rawDecodingSettings.NRSigmaRange            = m_decodingSettingsBox->sigmaRange();
+    rawDecodingSettings.RAWQuality              = m_decodingSettingsBox->quality();
+    rawDecodingSettings.outputFileFormat        = m_saveSettingsBox->fileFormat();
     
-    if (saveButtonGroup_->selected() == jpegButton_)
-        s.outputFormat = "JPEG";
-    else if (saveButtonGroup_->selected() == tiffButton_)
-        s.outputFormat = "TIFF";
-    else if (saveButtonGroup_->selected() == pngButton_)
-        s.outputFormat = "PNG";
-    else
-        s.outputFormat = "PPM";
+    m_thread->setRawDecodingSettings(rawDecodingSettings);
 
-    controller_->process(inputFile_);
+    KURL::List oneFile;
+    oneFile.append(inputFile_);
+    m_thread->processRawFiles(oneFile);
+    if (!m_thread->running())
+        m_thread->start();
 }
 
 void SingleDialog::slotUser3()
 {
-    controller_->abort();
+    m_thread->cancel();
 }
 
 void SingleDialog::slotIdentify()
 {
-    controller_->identify(inputFile_);
+    KURL::List oneFile;
+    oneFile.append(inputFile_);
+    m_thread->identifyRawFiles(oneFile);
+    if (!m_thread->running())
+        m_thread->start();
 }
 
-void SingleDialog::slotBusy(bool val)
+void SingleDialog::busy(bool val)
 {   
     enableButton (User1, !val);
     enableButton (User2, !val);
@@ -398,21 +334,90 @@ void SingleDialog::slotBusy(bool val)
     enableButton (Close, !val);
 }
 
-void SingleDialog::slotIdentified(const QString&, const QString& identity)
+void SingleDialog::identified(const QString&, const QString& identity)
 {
     previewWidget_->setText(inputFileName_ + QString(" : ") + identity);
 }
 
-void SingleDialog::slotIdentifyFailed(const QString&, const QString& identity)
-{
-    previewWidget_->setText(i18n("Failed to identify Raw image\n") + identity);
-}
-
-void SingleDialog::slotPreviewing(const QString&)
+void SingleDialog::previewing(const QString&)
 {
     previewBlink_ = false;
     previewWidget_->setCursor( KCursor::waitCursor() );
     blinkPreviewTimer_->start(200);
+}
+
+void SingleDialog::previewed(const QString&, const QString& tmpFile_)
+{
+    previewWidget_->unsetCursor();
+    blinkPreviewTimer_->stop();
+    previewWidget_->load(tmpFile_);
+}
+
+void SingleDialog::previewFailed(const QString&)
+{
+    previewWidget_->unsetCursor();
+    previewWidget_->setText(i18n("Failed to generate preview"), Qt::red);
+}
+
+void SingleDialog::processing(const QString&)
+{
+    convertBlink_ = false;
+    previewWidget_->setCursor( KCursor::waitCursor() );
+    blinkConvertTimer_->start(200);
+}
+
+void SingleDialog::processed(const QString&, const QString& tmpFile_)
+{
+    previewWidget_->unsetCursor();
+    blinkConvertTimer_->stop();
+    previewWidget_->load(tmpFile_);
+    QString filter("*.");
+    QString ext;
+
+    switch(m_saveSettingsBox->fileFormat())
+    {
+        case RawDecodingSettings::JPEG:
+            ext = "jpg";
+            break;
+        case RawDecodingSettings::TIFF:
+            ext = "tif";
+            break;
+        case RawDecodingSettings::PPM:
+            ext = "ppm";
+            break;
+        case RawDecodingSettings::PNG:
+            ext = "png";
+            break;
+    }
+
+    filter += ext;
+    QFileInfo fi(inputFile_);
+    QString destFile = fi.dirPath(true) + QString("/") + fi.baseName() + QString(".") + ext;
+
+    if (m_saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
+    {
+        struct stat statBuf;
+        if (::stat(QFile::encodeName(destFile), &statBuf) == 0) 
+        {
+            destFile = KFileDialog::getSaveFileName(destFile, QString(), this,
+                                       i18n("Save Raw Image converted from "
+                                            "'%1' as").arg(fi.fileName()));
+        }
+    }
+
+    if (!destFile.isEmpty()) 
+    {
+        if (::rename(QFile::encodeName(tmpFile_), QFile::encodeName(destFile)) != 0)
+        {
+            KMessageBox::error(this, i18n("Failed to save image %1").arg( destFile ));
+        }
+    }
+}
+
+void SingleDialog::processingFailed(const QString&)
+{
+    previewWidget_->unsetCursor();
+    previewWidget_->setText(i18n("Failed to convert Raw image"), Qt::red);
 }
 
 void SingleDialog::slotPreviewBlinkTimerDone()
@@ -428,26 +433,6 @@ void SingleDialog::slotPreviewBlinkTimerDone()
     blinkPreviewTimer_->start(200);
 }
 
-void SingleDialog::slotPreviewed(const QString&, const QString& tmpFile_)
-{
-    previewWidget_->unsetCursor();
-    blinkPreviewTimer_->stop();
-    previewWidget_->load(tmpFile_);
-}
-
-void SingleDialog::slotPreviewFailed(const QString&)
-{
-    previewWidget_->unsetCursor();
-    previewWidget_->setText(i18n("Failed to generate preview"), Qt::red);
-}
-
-void SingleDialog::slotProcessing(const QString&)
-{
-    convertBlink_ = false;
-    previewWidget_->setCursor( KCursor::waitCursor() );
-    blinkConvertTimer_->start(200);
-}
-
 void SingleDialog::slotConvertBlinkTimerDone()
 {
     QString convert = i18n("Converting Raw Image...");
@@ -461,43 +446,99 @@ void SingleDialog::slotConvertBlinkTimerDone()
     blinkConvertTimer_->start(200);
 }
 
-void SingleDialog::slotProcessed(const QString&, const QString& tmpFile_)
+void SingleDialog::customEvent(QCustomEvent *event)
 {
-    previewWidget_->unsetCursor();
-    blinkConvertTimer_->stop();
-    previewWidget_->load(tmpFile_);
-    QString filter("*.");
-    QString ext;
+    if (!event) return;
 
-    if (saveButtonGroup_->selected() == ppmButton_)
-	ext = QString("ppm");
-    else if (saveButtonGroup_->selected() == tiffButton_)
-	ext = QString("tif");
-    else if (saveButtonGroup_->selected() == pngButton_)
-	ext = QString("png");
-    else
-	ext = QString("jpg");
+    EventData *d = (EventData*) event->data();
+    if (!d) return;
 
-    filter += ext;
-    QFileInfo fi(inputFile_);
-    QString saveFile = fi.dirPath(true) + QString("/") + fi.baseName() + QString(".") + ext;
-    saveFile = KFileDialog::getSaveFileName(saveFile, filter, this);
-    
-    if (saveFile.isEmpty()) 
-        return;
+    QString text;
 
-    if (::rename(QFile::encodeName( tmpFile_ ), QFile::encodeName( saveFile )) != 0)
+    if (d->starting)            // Something have been started...
     {
-        KMessageBox::error(this, i18n("Failed to save image %1").arg( saveFile ));
+        switch (d->action) 
+        {
+            case(IDENTIFY): 
+                break;
+            case(PREVIEW):
+            {
+                busy(true);
+                previewing(d->filePath);
+                break;
+            }
+            case(PROCESS):
+            {
+                busy(true);
+                processing(d->filePath);
+                break;
+            }
+            default: 
+            {
+                kdWarning( 51000 ) << "KIPIRawConverterPlugin: Unknown event" << endl;
+                break;
+            }
+        }
     }
-}
+    else                 
+    {
+        if (!d->success)        // Something is failed...
+        {
+            switch (d->action) 
+            {
+                case(IDENTIFY): 
+                    break;
+                case(PREVIEW):
+                {
+                    previewFailed(d->filePath);
+                    busy(false);
+                    break;
+                }
+                case(PROCESS):
+                {
+                    processingFailed(d->filePath);
+                    busy(false);
+                    break;
+                }
+                default: 
+                {
+                    kdWarning( 51000 ) << "KIPIRawConverterPlugin: Unknown event" << endl;
+                    break;
+                }
+            }
+        }
+        else                    // Something is done...
+        {
+            switch (d->action)
+            {
+                case(IDENTIFY): 
+                {
+                    identified(d->filePath, d->message);
+                    busy(false);
+                    break;
+                }
+                case(PREVIEW):
+                {
+                    previewed(d->filePath, d->destPath);
+                    busy(false);
+                    break;
+                }
+                case(PROCESS):
+                {
+                    processed(d->filePath, d->destPath);
+                    busy(false);
+                    break;
+                }
+                default: 
+                {
+                    kdWarning( 51000 ) << "KIPIRawConverterPlugin: Unknown event" << endl;
+                    break;
+                }
+            }
+        }
+    }
 
-void SingleDialog::slotProcessingFailed(const QString&)
-{
-    previewWidget_->unsetCursor();
-    previewWidget_->setText(i18n("Failed to convert Raw image"), Qt::red);
+    delete d;
 }
 
 } // NameSpace KIPIRawConverterPlugin
-
-#include "singledialog.moc"
