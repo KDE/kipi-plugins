@@ -53,12 +53,9 @@ extern "C"
 #include <kprocess.h>
 #include <kstandarddirs.h>
 
-// KIPI include files
-
-#include <libkipi/version.h>
-
 // Local includes.
 
+#include "version.h"
 #include "rawfiles.h"
 #include "dcrawutils.h"
 
@@ -364,7 +361,7 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
     pclose( f );
 
     QByteArray ICCColorProfile = getICCProfilFromFile(rawDecodingSettings.outputColorSpace);
-    QString soft = QString("Kipi Raw Converter v.%1").arg(kipi_version);
+    QString soft = QString("Kipi Raw Converter v.%1").arg(kipiplugins_version);
     QFileInfo fi(filePath);
     destPath = fi.dirPath(true) + QString("/") + ".kipi-rawconverter-tmp-" 
                                 + QString::number(::time(0));
