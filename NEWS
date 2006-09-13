@@ -1,19 +1,31 @@
 Note: for details and info about current version, see ChangeLog.
 
                                                             
-v 0.1.1
+v 0.1.3
 ----------------------------------------------------------------------------
 
 Kipi-plugins NEW FEATURES
 
 JPEGLossLess : Removing libmagic++ depency.
-
+RAWConverter : New core to be compatible with recent dcraw release. A lot 
+               of RAW decoding settings have been added.
+RAWConverter : Embedding ouput color space in target image (JPEG/PNG/TIFF).
 
 Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 
 001 ==> 127101 : expand sequence number start value in batch rename images.
 002 ==>  94494 : Support for multiple galleries.
 003 ==> 128394 : Convertion of RAW files fails with dcraw 8.21
+
+v 0.1.2                                                           2006-07-08
+----------------------------------------------------------------------------
+
+Minor fix release
+
+v 0.1.1                                                           2006-06-26
+----------------------------------------------------------------------------
+
+Minor fix release
 
 v 0.1.0                                                           2006-06-22
 ----------------------------------------------------------------------------
