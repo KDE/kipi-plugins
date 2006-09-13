@@ -90,7 +90,7 @@ public:
 };
 
 DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent)
-                   : QGroupBox(0, Qt::Vertical, i18n("Decoding Settings"), parent)
+                   : QGroupBox(0, Qt::Vertical, i18n("RAW Decoding Settings"), parent)
 {
     d = new DcrawSettingsWidgetPriv;
     QGridLayout* settingsBoxLayout = new QGridLayout(layout(), 10, 1, KDialog::spacingHint());
@@ -131,7 +131,7 @@ DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    d->secondarySensorCheckBox = new QCheckBox(i18n("Use Super CCD secondary sensors"), this);
+    d->secondarySensorCheckBox = new QCheckBox(i18n("Use Super-CCD secondary sensors"), this);
     QWhatsThis::add( d->secondarySensorCheckBox, i18n("<p><b>Use Super CCD secondary sensors</b><p>"
                                                  "For Fuji Super CCD SR cameras, use the "
                                                  "secondary sensors, in effect underexposing "
@@ -206,7 +206,7 @@ DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    d->enableNoiseReduction = new QCheckBox(i18n("Enable Noise Reduction"), this);
+    d->enableNoiseReduction = new QCheckBox(i18n("Enable noise reduction"), this);
     QWhatsThis::add( d->enableNoiseReduction, i18n("<p><b>Enable Noise Reduction</b><p>"
                      "Toggle bilateral filter to smooth noise while "
                      "preserving edges. This option can be use to reduce low noise. The pictures edges "
