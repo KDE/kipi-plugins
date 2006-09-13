@@ -243,6 +243,8 @@ void BatchDialog::readSettings()
     m_saveSettingsBox->setConflictRule(
         (SaveSettingsWidget::ConflictRule)config.readNumEntry("Conflict",
             (int)(SaveSettingsWidget::OVERWRITE)));
+    
+    resize(configDialogSize(config, QString("Batch Raw Converter Dialog")));
 }
 
 void BatchDialog::saveSettings()
@@ -263,6 +265,8 @@ void BatchDialog::saveSettings()
 
     config.writeEntry("Output Format", (int)m_saveSettingsBox->fileFormat());
     config.writeEntry("Conflict", (int)m_saveSettingsBox->conflictRule());
+
+    saveDialogSize(config, QString("Batch Raw Converter Dialog"));
     config.sync();
 }
 

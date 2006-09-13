@@ -237,6 +237,8 @@ void SingleDialog::readSettings()
     m_saveSettingsBox->setConflictRule(
         (SaveSettingsWidget::ConflictRule)config.readNumEntry("Conflict",
             (int)(SaveSettingsWidget::OVERWRITE)));
+
+    resize(configDialogSize(config, QString("Single Raw Converter Dialog")));
 }
 
 void SingleDialog::saveSettings()
@@ -257,6 +259,8 @@ void SingleDialog::saveSettings()
 
     config.writeEntry("Output Format", (int)m_saveSettingsBox->fileFormat());
     config.writeEntry("Conflict", (int)m_saveSettingsBox->conflictRule());
+
+    saveDialogSize(config, QString("Single Raw Converter Dialog"));
     config.sync();
 }
 
