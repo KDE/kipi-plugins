@@ -51,12 +51,9 @@
 #include <kstandarddirs.h>
 #include <kdebug.h>
 
-// KIPI include files
-
-#include <libkipi/version.h>
-
 // Local includes.
 
+#include "version.h"
 #include "previewwidget.h"
 #include "dcrawutils.h"
 #include "dcrawsettingswidget.h"
@@ -134,7 +131,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Raw Image Converter"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin for Raw image conversion\n"
                                                  "This plugin uses the Dave Coffin Raw photo "
                                                  "decoder program \"dcraw\""),

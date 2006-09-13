@@ -60,12 +60,9 @@ extern "C"
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 
-// KIPI include files
-
-#include <libkipi/version.h>
-
 // Local includes.
 
+#include "version.h"
 #include "dcrawutils.h"
 #include "dcrawsettingswidget.h"
 #include "savesettingswidget.h"
@@ -149,7 +146,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Raw Images Batch Converter"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin for Raw images conversion\n"
                                                  "This plugin uses the Dave Coffin Raw photo "
                                                  "decoder program \"dcraw\""),
