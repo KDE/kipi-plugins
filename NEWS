@@ -13,7 +13,7 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 
 001 ==> 127101 : expand sequence number start value in batch rename images.
 002 ==>  94494 : Support for multiple galleries.
-
+003 ==> 128394 : Convertion of RAW files fails with dcraw 8.21
 
 v 0.1.0                                                           2006-06-22
 ----------------------------------------------------------------------------
