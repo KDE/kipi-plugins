@@ -72,7 +72,7 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
     d = new SaveSettingsWidgetPriv;
     QGridLayout* settingsBoxLayout = new QGridLayout(layout(), 2, 1, KDialog::spacingHint());
 
-    d->formatLabel    = new QLabel(i18n("Output file Format:"), this);
+    d->formatLabel    = new QLabel(i18n("Output file format:"), this);
     d->formatComboBox = new QComboBox( false, this );
     d->formatComboBox->insertItem( "JPEG", RawDecodingSettings::JPEG );
     d->formatComboBox->insertItem( "TIFF", RawDecodingSettings::TIFF );
