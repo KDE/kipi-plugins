@@ -64,6 +64,8 @@ public:
         unclipColorComboBox      = 0;
         reconstructLabel         = 0;
         reconstructSpinBox       = 0;
+        outputColorSpaceLabel    = 0;
+        outputColorSpaceComboBox = 0;
     }
 
     QLabel          *brightnessLabel;
@@ -72,9 +74,11 @@ public:
     QLabel          *NRSigmaDomainlabel;
     QLabel          *unclipColorLabel;
     QLabel          *reconstructLabel;
+    QLabel          *outputColorSpaceLabel;
 
     QComboBox       *RAWQualityComboBox;
     QComboBox       *unclipColorComboBox;
+    QComboBox       *outputColorSpaceComboBox;
 
     QCheckBox       *cameraWBCheckBox;
     QCheckBox       *fourColorCheckBox;
@@ -237,6 +241,20 @@ DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent)
 
     // ---------------------------------------------------------------
 
+    d->outputColorSpaceLabel    = new QLabel(i18n("Color space:"), this);
+    d->outputColorSpaceComboBox = new QComboBox( false, this );
+    d->outputColorSpaceComboBox->insertItem( i18n("Raw (linear)"), 0 );
+    d->outputColorSpaceComboBox->insertItem( i18n("sRGB"),         1 );
+    d->outputColorSpaceComboBox->insertItem( i18n("Adobe RGB"),    2 );
+    d->outputColorSpaceComboBox->insertItem( i18n("Wide Gamut"),   3 );
+    d->outputColorSpaceComboBox->insertItem( i18n("Pro-Photo"),    4 );
+    QWhatsThis::add( d->outputColorSpaceComboBox, i18n("<p><b>Color space</b><p>"
+                "Select here the output color space used to decode RAW data.<p>"));
+    settingsBoxLayout->addMultiCellWidget(d->outputColorSpaceLabel, 11, 11, 0, 0); 
+    settingsBoxLayout->addMultiCellWidget(d->outputColorSpaceComboBox, 11, 11, 1, 1);
+
+    // ---------------------------------------------------------------
+
     connect(d->unclipColorComboBox, SIGNAL(activated(int)),
             this, SLOT(slotUnclipColorActivated(int)));
 
@@ -333,6 +351,11 @@ RawDecodingSettings::DecodingQuality DcrawSettingsWidget::quality()
     }
 }
 
+RawDecodingSettings::OutputColorSpace DcrawSettingsWidget::outputColorSpace()
+{
+    return (RawDecodingSettings::OutputColorSpace)(d->outputColorSpaceComboBox->currentItem());
+}
+
 bool DcrawSettingsWidget::useNoiseReduction()
 {
     return d->enableNoiseReduction->isChecked();
@@ -411,6 +434,11 @@ void DcrawSettingsWidget::setQuality(RawDecodingSettings::DecodingQuality q)
             d->RAWQualityComboBox->setCurrentItem(0);
             break;
     }
+}
+
+void DcrawSettingsWidget::setOutputColorSpace(RawDecodingSettings::OutputColorSpace c)
+{
+    d->outputColorSpaceComboBox->setCurrentItem((int)c);
 }
 
 void DcrawSettingsWidget::setNoiseReduction(bool b)

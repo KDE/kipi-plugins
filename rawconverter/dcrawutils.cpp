@@ -272,6 +272,7 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
     // -b : Change the output brightness.
     // -q : Use simple bilinear interpolation for quick results
     // -B : Use bilateral filter to smooth noise while preserving edges.
+    // -o : Select the output colorspace used to decode RAW data.
 
     command = "dcraw";
     command += " -c ";
@@ -315,6 +316,11 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
         command += NRSigmaRange.setNum(rawDecodingSettings.NRSigmaRange);
         command += " ";
     }
+
+    command += "-o ";
+    QCString colorSpace;
+    command += colorSpace.setNum(rawDecodingSettings.outputColorSpace);
+    command += " ";
     
     command += QFile::encodeName( KProcess::quote( filePath ) );
 

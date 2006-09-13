@@ -238,6 +238,10 @@ void SingleDialog::readSettings()
         (SaveSettingsWidget::ConflictRule)config.readNumEntry("Conflict",
             (int)(SaveSettingsWidget::OVERWRITE)));
 
+    m_decodingSettingsBox->setOutputColorSpace(
+        (RawDecodingSettings::OutputColorSpace)config.readNumEntry("Output Color Space", 
+            (int)(RawDecodingSettings::SRGB))); 
+
     resize(configDialogSize(config, QString("Single Raw Converter Dialog")));
 }
 
@@ -256,6 +260,7 @@ void SingleDialog::saveSettings()
     config.writeEntry("Sigma Domain", m_decodingSettingsBox->sigmaDomain());
     config.writeEntry("Sigma Range", m_decodingSettingsBox->sigmaRange());
     config.writeEntry("Decoding Quality", (int)m_decodingSettingsBox->quality());
+    config.writeEntry("Output Color Space", (int)m_decodingSettingsBox->outputColorSpace());
 
     config.writeEntry("Output Format", (int)m_saveSettingsBox->fileFormat());
     config.writeEntry("Conflict", (int)m_saveSettingsBox->conflictRule());
@@ -282,6 +287,7 @@ void SingleDialog::slotUser1()
     rawDecodingSettings.NRSigmaDomain           = m_decodingSettingsBox->sigmaDomain();
     rawDecodingSettings.NRSigmaRange            = m_decodingSettingsBox->sigmaRange();
     rawDecodingSettings.RAWQuality              = m_decodingSettingsBox->quality();
+    rawDecodingSettings.outputColorSpace        = m_decodingSettingsBox->outputColorSpace();
     
     m_thread->setRawDecodingSettings(rawDecodingSettings);
 
@@ -306,7 +312,8 @@ void SingleDialog::slotUser2()
     rawDecodingSettings.NRSigmaRange            = m_decodingSettingsBox->sigmaRange();
     rawDecodingSettings.RAWQuality              = m_decodingSettingsBox->quality();
     rawDecodingSettings.outputFileFormat        = m_saveSettingsBox->fileFormat();
-    
+    rawDecodingSettings.outputColorSpace        = m_decodingSettingsBox->outputColorSpace();
+
     m_thread->setRawDecodingSettings(rawDecodingSettings);
 
     KURL::List oneFile;

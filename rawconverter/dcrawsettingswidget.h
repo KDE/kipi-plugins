@@ -53,6 +53,7 @@ public:
     double sigmaDomain();
     double sigmaRange();
     RawDecodingSettings::DecodingQuality quality();
+    RawDecodingSettings::OutputColorSpace outputColorSpace();
 
     void   setCameraWB(bool b);
     void   setAutoColorBalance(bool b);
@@ -64,6 +65,7 @@ public:
     void   setSigmaDomain(double b);
     void   setSigmaRange(double b);
     void   setQuality(RawDecodingSettings::DecodingQuality q);
+    void   setOutputColorSpace(RawDecodingSettings::OutputColorSpace c);
 
 private slots:
 
