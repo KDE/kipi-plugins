@@ -38,6 +38,7 @@ extern "C"
 #include <tiffio.h>
 #include <tiffvers.h>
 #include <png.h>
+#include "iccjpeg.h"
 }
 
 // Qt Includes.
@@ -50,6 +51,7 @@ extern "C"
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocess.h>
+#include <kstandarddirs.h>
 
 // KIPI include files
 
@@ -355,6 +357,7 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
     
     pclose( f );
 
+    QByteArray ICCColorProfile = getICCProfilFromFile(rawDecodingSettings.outputColorSpace);
     QString soft = QString("Kipi Raw Converter v.%1").arg(kipi_version);
     QFileInfo fi(filePath);
     destPath = fi.dirPath(true) + QString("/") + ".kipi-rawconverter-tmp-" 
@@ -380,7 +383,8 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
     
             int      row_stride;
             JSAMPROW row_pointer[1];
-    
+
+            // Init JPEG compressor.    
             cinfo.err = jpeg_std_error(&jerr);
             jpeg_create_compress(&cinfo);
             jpeg_stdio_dest(&cinfo, f);
@@ -395,8 +399,13 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
             cinfo.comp_info[0].v_samp_factor = 1; 
             jpeg_set_quality(&cinfo, 100, true);
             jpeg_start_compress(&cinfo, true);
+
+            // Write ICC color profil.
+            if (!ICCColorProfile.isEmpty())
+                write_icc_profile (&cinfo, (JOCTET *)ICCColorProfile.data(), ICCColorProfile.size());
+
+            // Write image data
             row_stride = cinfo.image_width * 3;
-            
             while (cinfo.next_scanline < cinfo.image_height)
             {
                 row_pointer[0] = imgData + (cinfo.next_scanline * row_stride);
@@ -434,6 +443,14 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
             sig_bit.alpha = 8;
             png_set_sBIT(png_ptr, info_ptr, &sig_bit);
             png_set_compression_level(png_ptr, 9);
+
+            // Write ICC profil.
+            if (!ICCColorProfile.isEmpty())
+            {
+                png_set_iCCP(png_ptr, info_ptr, "icc", PNG_COMPRESSION_TYPE_BASE, 
+                             ICCColorProfile.data(), ICCColorProfile.size());
+            }    
+
 
             QString libpngver(PNG_HEADER_VERSION_STRING);
             libpngver.replace('\n', ' ');
@@ -503,6 +520,16 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
             soft.append(QString(" ( %1 )").arg(libtiffver));
             TIFFSetField(tif, TIFFTAG_SOFTWARE,        (const char*)soft.ascii());
 
+            // Write ICC profil.
+            if (!ICCColorProfile.isEmpty())
+            {
+#if defined(TIFFTAG_ICCPROFILE)    
+                TIFFSetField(tif, TIFFTAG_ICCPROFILE, (uint32)ICCColorProfile.size(), 
+                             (uchar *)ICCColorProfile.data());
+#endif      
+            }    
+
+            // Write image data
             for (y = 0; y < height; y++)
             {
                 data = imgData + (y * width * 3);
@@ -539,6 +566,55 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
     
     delete [] imgData;     
     return true;
+}
+
+QByteArray DcrawUtils::getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace)
+{    
+    QString filePath;
+    KGlobal::dirs()->addResourceType("profiles", KGlobal::dirs()->kde_default("data") + "kipiplugin_rawconverter/profiles");
+
+    switch(colorSpace)
+    {
+        case RawDecodingSettings::SRGB:
+        {
+            filePath = KGlobal::dirs()->findResourceDir("profiles", "srgb.icm");
+            filePath.append("srgb.icm");
+            break;
+        }
+        case RawDecodingSettings::ADOBERGB:
+        {
+            filePath = KGlobal::dirs()->findResourceDir("profiles", "adobergb.icm");
+            filePath.append("adobergb.icm");
+            break;
+        }
+        case RawDecodingSettings::WIDEGAMMUT:
+        {
+            filePath = KGlobal::dirs()->findResourceDir("profiles", "widegamut.icm");
+            filePath.append("widegamut.icm");
+            break;
+        }
+        case RawDecodingSettings::PROPHOTO:
+        {
+            filePath = KGlobal::dirs()->findResourceDir("profiles", "prophoto.icm");
+            filePath.append("prophoto.icm");
+            break;
+        }
+        default:
+            break;
+    }
+
+    if ( filePath.isEmpty() ) 
+        return QByteArray();
+
+    QFile file(filePath);
+    if ( !file.open(IO_ReadOnly) ) 
+        return QByteArray();
+    
+    QByteArray data(file.size());
+    QDataStream stream( &file );
+    stream.readRawBytes(data.data(), data.size());
+    file.close();
+    return data;
 }
 
 }  // namespace KIPIRawConverterPlugin

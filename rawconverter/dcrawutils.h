@@ -23,6 +23,7 @@
 
 // Qt Includes.
 
+#include <qcstring.h>
 #include <qstring.h>
 #include <qimage.h>
 
@@ -49,6 +50,15 @@ public:
         PNG
     };
 
+    enum OutputColorSpace 
+    {
+        RAWCOLOR = 0,
+        SRGB,
+        ADOBERGB,
+        WIDEGAMMUT,
+        PROPHOTO
+    };
+
     RawDecodingSettings()
     {
         enableNoiseReduction    = false;
@@ -59,6 +69,7 @@ public:
         RAWQuality              = BILINEAR;
     
         outputFileFormat        = PNG;
+        outputColorSpace        = SRGB;
 
         RGBInterpolate4Colors   = false;
         SuperCCDsecondarySensor = false;
@@ -94,10 +105,10 @@ public:
         0   = Clip all highlights to solid white.
         1   = Leave highlights unclipped in various shades of pink.
         2-9 = Reconstruct highlights. Low numbers favor whites; high numbers favor colors.*/
-    int  unclipColors;
+    int   unclipColors;
 
-    /** RAW quality decoding factor value. */
-    int   RAWQuality;
+    /** RAW quality decoding factor value. See DecodingQuality values for details. */
+    DecodingQuality RAWQuality;
 
     /** RAW file decoding using bilateral filter to reduce noise. This is '-B sigma_domain sigma_range' 
         dcraw option to smooth noise while preserving edges. sigma_domain is in units of pixels, while
@@ -114,7 +125,10 @@ public:
     float brightness;   
 
     /** The file format used to convert RAW data. See OutputFormat values for details. */
-    int   outputFileFormat;
+    OutputFormat outputFileFormat;
+
+    /** The output color space used to decoded RAW data. See OutputColorSpace values for details. */
+    OutputColorSpace outputColorSpace;
 };
 
 class DcrawUtils
@@ -139,6 +153,8 @@ public:
     */
     static bool decodeRAWImage(const QString& filePath, QString& destPath,
                 RawDecodingSettings rawDecodingSettings);
+
+    static QByteArray getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace);
 
 };
 
