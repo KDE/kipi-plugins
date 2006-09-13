@@ -22,7 +22,7 @@
 #ifndef KIPIPLUGINS_VERSION_H
 #define KIPIPLUGINS_VERSION_H
 
-static const char digikamimageplugins_version[] = "0.1.3-svn";
+static const char kipiplugins_version[] = "0.1.3-svn";
 
 #endif // KIPIPLUGINS_VERSION_H
 
