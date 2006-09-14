@@ -80,9 +80,10 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
     d->formatComboBox->insertItem( "PNG",  RawDecodingSettings::PNG );
     QWhatsThis::add(d->formatComboBox, i18n("<p>Set here the ouput file format to use:<p>"
                                        "<b>JPEG</b>: output the processed image in JPEG Format. "
-                                       "Warning!!! JPEG is a lossy format, but will give "
-                                       "smaller-sized files. Minimum JPEG compression "
-                                       "will be used during conversion.<p>"
+                                       "this format will give smaller-sized files. Minimum JPEG "
+                                       "compression level will be used during RAW conversion.<p>"
+                                       "<b>Warning!!! duing of destructive compression algorithm, "
+                                       "JPEG is a lossy quality format.</b><p>"
                                        "<b>TIFF</b>: output the processed image in TIFF Format. "
                                        "This generates larges, without "
                                        "losing quality. Adobe Deflate compression "
