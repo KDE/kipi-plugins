@@ -148,7 +148,7 @@ DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent, const QString& dcrawVe
 
     // ---------------------------------------------------------------
 
-    d->unclipColorLabel    = new QLabel(i18n("Highlights clipping:"), this);
+    d->unclipColorLabel    = new QLabel(i18n("Highlights:"), this);
     d->unclipColorComboBox = new QComboBox( false, this );
     d->unclipColorComboBox->insertItem( i18n("Solid white"), 0 );
     d->unclipColorComboBox->insertItem( i18n("Unclip"),      1 );
