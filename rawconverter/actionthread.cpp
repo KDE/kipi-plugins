@@ -147,7 +147,8 @@ void ActionThread::run()
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
                 QString destPath;
-                bool result = DcrawUtils::decodeHalfRAWImage(t->filePath, destPath, t->decodingSettings);
+                DcrawUtils dcrawIface;
+                bool result = dcrawIface.decodeHalfRAWImage(t->filePath, destPath, t->decodingSettings);
 
                 EventData *r = new EventData;
                 r->action    = PREVIEW;
@@ -165,7 +166,8 @@ void ActionThread::run()
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
                 QString destPath;
-                bool result = DcrawUtils::decodeRAWImage(t->filePath, destPath, t->decodingSettings);
+                DcrawUtils dcrawIface;
+                bool result = dcrawIface.decodeRAWImage(t->filePath, destPath, t->decodingSettings);
 
                 EventData *r = new EventData;
                 r->action    = PROCESS;

@@ -83,51 +83,71 @@ public:
 
 public:
     
-    /** Half-size color image decoding (twice as fast as "enableRAWQuality"). Use this option to 
-        reduce time loading to render histogram for example, no to render an image to screen. */
+    /** Half-size color image decoding (twice as fast as "enableRAWQuality"). 
+        Use this option to reduce time loading to render histogram for example, 
+        no to render an image to screen. 
+    */
     bool  halfSizeColorImage;
 
-    /**  Use the color balance specified by the camera. If this can't be found, reverts to the default. */
+    /**  Use the color balance specified by the camera. If this can't be found, 
+         reverts to the default. 
+    */
     bool  cameraColorBalance;
     
-    /** Automatic color balance. The default is to use a fixed color balance based on a white card 
-        photographed in sunlight. */
+    /** Automatic color balance. The default is to use a fixed color balance 
+        based on a white card photographed in sunlight. 
+    */
     bool  automaticColorBalance;
     
-    /** RAW file decoding using RGB interpolation as four colors. */
+    /** RAW file decoding using RGB interpolation as four colors. 
+    */
     bool  RGBInterpolate4Colors;
 
-    /** For Fuji Super CCD SR cameras, use the secondary sensors. In effect underexposing the image 
-        by four stops to reveal detail in the highlights. */
+    /** For Fuji Super CCD SR cameras, use the secondary sensors. In effect 
+        underexposing the image by four stops to reveal detail in the highlights. 
+    */
     bool  SuperCCDsecondarySensor;
     
     /** Unclip Highlight color level: 
         0   = Clip all highlights to solid white.
         1   = Leave highlights unclipped in various shades of pink.
-        2-9 = Reconstruct highlights. Low numbers favor whites; high numbers favor colors.*/
+        2-9 = Reconstruct highlights. Low numbers favor whites; high numbers 
+              favor colors.
+    */
     int   unclipColors;
 
-    /** RAW quality decoding factor value. See DecodingQuality values for details. */
+    /** RAW quality decoding factor value. See DecodingQuality values 
+        for details. 
+    */
     DecodingQuality RAWQuality;
 
-    /** RAW file decoding using bilateral filter to reduce noise. This is '-B sigma_domain sigma_range' 
-        dcraw option to smooth noise while preserving edges. sigma_domain is in units of pixels, while
-        sigma_range is in units of CIELab colorspace. */
+    /** RAW file decoding using bilateral filter to reduce noise. This is '-B 
+        sigma_domain sigma_range' dcraw option to smooth noise while preserving 
+        edges. sigma_domain is in units of pixels, while sigma_range is in units 
+        of CIELab colorspace. 
+    */
     bool  enableNoiseReduction;
 
-    /** Noise reduction sigma domain value. */
+    /** Noise reduction sigma domain value. 
+    */
     float NRSigmaDomain;
     
-    /** Noise reduction sigma range value. */
+    /** Noise reduction sigma range value. 
+    */
     float NRSigmaRange;    
 
-    /** Brightness of output image. */
+    /** Brightness of output image. 
+    */
     float brightness;   
 
-    /** The file format used to convert RAW data. See OutputFormat values for details. */
+    /** The file format used to convert RAW data. See OutputFormat values 
+        for details. 
+    */
     OutputFormat outputFileFormat;
 
-    /** The output color space used to decoded RAW data. See OutputColorSpace values for details. */
+    /** The output color space used to decoded RAW data. See OutputColorSpace 
+        values for details. 
+    */
     OutputColorSpace outputColorSpace;
 };
 
@@ -135,6 +155,9 @@ class DcrawUtils
 {
 
 public:
+
+    DcrawUtils();
+    ~DcrawUtils();
 
     /** Get the embedded preview image in RAW file
     */
@@ -146,16 +169,21 @@ public:
 
     /** Extract a small size of decode RAW data in 8 bits/color/pixels using sRGB color space.
     */
-    static bool decodeHalfRAWImage(const QString& filePath, QString& destPath,
-                RawDecodingSettings rawDecodingSettings);
+    bool decodeHalfRAWImage(const QString& filePath, QString& destPath,
+                            RawDecodingSettings rawDecodingSettings);
 
     /** Extract a full size of RAW data in 8 bits/color/pixels using sRGB color space.
     */
-    static bool decodeRAWImage(const QString& filePath, QString& destPath,
-                RawDecodingSettings rawDecodingSettings);
+    bool decodeRAWImage(const QString& filePath, QString& destPath,
+                        RawDecodingSettings rawDecodingSettings);
 
-    static QByteArray getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace);
+private:
 
+    QByteArray getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace);
+
+private:
+
+    bool m_cancel;
 };
 
 }  // namespace KIPIRawConverterPlugin

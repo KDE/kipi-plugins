@@ -62,6 +62,15 @@ extern "C"
 namespace KIPIRawConverterPlugin
 {
 
+DcrawUtils::DcrawUtils()
+{
+    m_cancel = false;
+}
+
+DcrawUtils::~DcrawUtils()
+{
+}
+
 bool DcrawUtils::loadDcrawPreview(QImage& image, const QString& path)
 {
     FILE       *f;
