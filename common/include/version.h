@@ -18,7 +18,6 @@
  * 
  * ============================================================ */
 
-
 #ifndef KIPIPLUGINS_VERSION_H
 #define KIPIPLUGINS_VERSION_H
 
