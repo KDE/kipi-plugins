@@ -79,7 +79,7 @@ void DcrawIface::cancel()
 
 bool DcrawIface::loadDcrawPreview(QImage& image, const QString& path)
 {
-    FILE       *f;
+    FILE       *f=0;
     QByteArray  imgData;
     const int   MAX_IPC_SIZE = (1024*32);
     char        buffer[MAX_IPC_SIZE];
@@ -185,7 +185,7 @@ bool DcrawIface::loadDcrawPreview(QImage& image, const QString& path)
 
 bool DcrawIface::rawFileIdentify(QString& identify, const QString& path)
 {
-    FILE       *f;
+    FILE       *f=0;
     QByteArray  txtData;
     const int   MAX_IPC_SIZE = (1024*32);
     char        buffer[MAX_IPC_SIZE];
@@ -270,6 +270,7 @@ bool DcrawIface::decodeRAWImage(const QString& filePath, QString& destPath,
                                 RawDecodingSettings rawDecodingSettings)
 {
     m_cancel = false;
+    FILE* f=0;
     int  width, height, rgbmax;
     char nl;
     QCString command;
@@ -338,8 +339,8 @@ bool DcrawIface::decodeRAWImage(const QString& filePath, QString& destPath,
     command += QFile::encodeName( KProcess::quote( filePath ) );
 
     kdDebug() << "Running dcraw command : " << command << endl;
-
-    FILE* f = popen( command.data(), "r" );
+    
+    f = popen( command.data(), "r" );
 
     if ( !f )
     {
