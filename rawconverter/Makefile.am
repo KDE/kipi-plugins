@@ -10,7 +10,7 @@ kde_module_LTLIBRARIES = kipiplugin_rawconverter.la
 kipiplugin_rawconverter_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 
 # Srcs for the plugin
-kipiplugin_rawconverter_la_SOURCES = plugin_rawconverter.cpp dcrawutils.cpp savesettingswidget.cpp \
+kipiplugin_rawconverter_la_SOURCES = plugin_rawconverter.cpp dcrawiface.cpp savesettingswidget.cpp \
 	                             batchdialog.cpp actionthread.cpp dcrawsettingswidget.cpp \
 	                             singledialog.cpp previewwidget.cpp iccjpeg.c 
 

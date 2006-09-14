@@ -1,7 +1,7 @@
 /* ============================================================
- * Author: Gilles Caulier <caulier dot gilles at kdemail dot net> 
- * Date  : 2006-12-09
- * Description : RAW file util methods using dcraw
+ * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net> 
+ * Date   : 2006-12-09
+ * Description : dcraw interface (tested with dcraw 8.x releases)
  *
  * Copyright 2006 by Gilles Caulier
  *
@@ -57,21 +57,27 @@ extern "C"
 
 #include "pluginsversion.h"
 #include "rawfiles.h"
-#include "dcrawutils.h"
+#include "dcrawiface.h"
 
 namespace KIPIRawConverterPlugin
 {
 
-DcrawUtils::DcrawUtils()
+DcrawIface::DcrawIface()
 {
     m_cancel = false;
 }
 
-DcrawUtils::~DcrawUtils()
+DcrawIface::~DcrawIface()
 {
+    cancel();
 }
 
-bool DcrawUtils::loadDcrawPreview(QImage& image, const QString& path)
+void DcrawIface::cancel()
+{
+    m_cancel = true;
+}
+
+bool DcrawIface::loadDcrawPreview(QImage& image, const QString& path)
 {
     FILE       *f;
     QByteArray  imgData;
@@ -177,7 +183,7 @@ bool DcrawUtils::loadDcrawPreview(QImage& image, const QString& path)
     return false;
 }
 
-bool DcrawUtils::rawFileIdentify(QString& identify, const QString& path)
+bool DcrawIface::rawFileIdentify(QString& identify, const QString& path)
 {
     FILE       *f;
     QByteArray  txtData;
@@ -252,7 +258,7 @@ bool DcrawUtils::rawFileIdentify(QString& identify, const QString& path)
     return true;
 }
 
-bool DcrawUtils::decodeHalfRAWImage(const QString& filePath, QString& destPath,
+bool DcrawIface::decodeHalfRAWImage(const QString& filePath, QString& destPath,
                                     RawDecodingSettings rawDecodingSettings)
 {
     rawDecodingSettings.halfSizeColorImage = true;
@@ -260,9 +266,10 @@ bool DcrawUtils::decodeHalfRAWImage(const QString& filePath, QString& destPath,
     return(decodeRAWImage(filePath, destPath, rawDecodingSettings));
 }
 
-bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
+bool DcrawIface::decodeRAWImage(const QString& filePath, QString& destPath,
                                 RawDecodingSettings rawDecodingSettings)
 {
+    m_cancel = false;
     int  width, height, rgbmax;
     char nl;
     QCString command;
@@ -354,9 +361,9 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
     uchar *dst     = imgData;
     uchar  src[3];
     
-    for (int h = 0; h < height; h++)
+    for (int h = 0; !m_cancel && (h < height); h++)
     {
-        for (int w = 0; w < width; w++)
+        for (int w = 0; !m_cancel && (w < width); w++)
         {
             fread (src, 3 *sizeof(uchar), 1, f);
 
@@ -368,6 +375,12 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
     }
     
     pclose( f );
+
+    if (m_cancel)
+    {
+        delete [] imgData;     
+        return false;
+    }
 
     QByteArray ICCColorProfile = getICCProfilFromFile(rawDecodingSettings.outputColorSpace);
     QString soft = QString("Kipi Raw Converter v.%1").arg(kipiplugins_version);
@@ -418,7 +431,7 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
 
             // Write image data
             row_stride = cinfo.image_width * 3;
-            while (cinfo.next_scanline < cinfo.image_height)
+            while (!m_cancel && (cinfo.next_scanline < cinfo.image_height))
             {
                 row_pointer[0] = imgData + (cinfo.next_scanline * row_stride);
                 jpeg_write_scanlines(&cinfo, row_pointer, 1);
@@ -463,7 +476,6 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
                              ICCColorProfile.data(), ICCColorProfile.size());
             }    
 
-
             QString libpngver(PNG_HEADER_VERSION_STRING);
             libpngver.replace('\n', ' ');
             soft.append(QString(" (%1)").arg(libpngver));
@@ -476,9 +488,9 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
             png_write_info(png_ptr, info_ptr);
             png_set_shift(png_ptr, &sig_bit);
             png_set_packing(png_ptr);
-            unsigned char* ptr  = imgData;
+            unsigned char* ptr = imgData;
     
-            for (int y = 0; y < height; y++)
+            for (int y = 0; !m_cancel && (y < height); y++)
             {
                 row_ptr = (png_bytep) ptr;
                 png_write_rows(png_ptr, &row_ptr, 1);
@@ -493,10 +505,10 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
         }
         case RawDecodingSettings::TIFF:
         {
-            TIFF               *tif=0;
-            unsigned char      *data;
-            int                 y;
-            int                 w;
+            TIFF          *tif=0;
+            unsigned char *data=0;
+            int            y;
+            int            w;
             
             tif = TIFFOpen(QFile::encodeName(destPath), "wb");
     
@@ -542,7 +554,7 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
             }    
 
             // Write image data
-            for (y = 0; y < height; y++)
+            for (y = 0; !m_cancel && (y < height); y++)
             {
                 data = imgData + (y * width * 3);
                 TIFFWriteScanline(tif, data, y, 0);
@@ -577,10 +589,17 @@ bool DcrawUtils::decodeRAWImage(const QString& filePath, QString& destPath,
     }
     
     delete [] imgData;     
+
+    if (m_cancel)
+    {
+        ::remove(QFile::encodeName(destPath));
+        return false;
+    }
+
     return true;
 }
 
-QByteArray DcrawUtils::getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace)
+QByteArray DcrawIface::getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace)
 {    
     QString filePath;
     KGlobal::dirs()->addResourceType("profiles", KGlobal::dirs()->kde_default("data") + "kipiplugin_rawconverter/profiles");

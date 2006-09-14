@@ -55,7 +55,7 @@
 
 #include "pluginsversion.h"
 #include "previewwidget.h"
-#include "dcrawutils.h"
+#include "dcrawiface.h"
 #include "dcrawsettingswidget.h"
 #include "savesettingswidget.h"
 #include "actionthread.h"
@@ -271,6 +271,7 @@ void SingleDialog::slotHelp()
     KApplication::kApplication()->invokeHelp("rawconverter", "kipi-plugins");
 }
 
+// 'Preview' dialog button.
 void SingleDialog::slotUser1()
 {
     RawDecodingSettings rawDecodingSettings;
@@ -295,6 +296,7 @@ void SingleDialog::slotUser1()
         m_thread->start();
 }
 
+// 'Convert' dialog button.
 void SingleDialog::slotUser2()
 {
     RawDecodingSettings rawDecodingSettings;
@@ -320,6 +322,7 @@ void SingleDialog::slotUser2()
         m_thread->start();
 }
 
+// 'Abort' dialog button.
 void SingleDialog::slotUser3()
 {
     m_thread->cancel();
@@ -336,6 +339,8 @@ void SingleDialog::slotIdentify()
 
 void SingleDialog::busy(bool val)
 {   
+    m_decodingSettingsBox->setEnabled(!val);
+    m_saveSettingsBox->setEnabled(!val);
     enableButton (User1, !val);
     enableButton (User2, !val);
     enableButton (User3, val);
@@ -364,6 +369,7 @@ void SingleDialog::previewed(const QString&, const QString& tmpFile)
 void SingleDialog::previewFailed(const QString&)
 {
     m_previewWidget->unsetCursor();
+    m_blinkPreviewTimer->stop();
     m_previewWidget->setText(i18n("Failed to generate preview"), Qt::red);
 }
 
@@ -425,6 +431,7 @@ void SingleDialog::processed(const QString&, const QString& tmpFile)
 void SingleDialog::processingFailed(const QString&)
 {
     m_previewWidget->unsetCursor();
+    m_blinkConvertTimer->stop();
     m_previewWidget->setText(i18n("Failed to convert Raw image"), Qt::red);
 }
 

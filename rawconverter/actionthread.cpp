@@ -40,7 +40,6 @@ extern "C"
 
 // Local includes.
 
-#include "dcrawutils.h"
 #include "actionthread.h"
 
 namespace KIPIRawConverterPlugin
@@ -105,6 +104,7 @@ void ActionThread::processHalfRawFiles(const KURL::List& urlList)
 void ActionThread::cancel()
 {
     m_taskQueue.flush();
+    m_dcrawIface.cancel();
 }
 
 void ActionThread::run()
@@ -124,11 +124,11 @@ void ActionThread::run()
             {
                 // Get embedded RAW file thumbnail.
                 QImage image;
-                DcrawUtils::loadDcrawPreview(image, t->filePath);
+                m_dcrawIface.loadDcrawPreview(image, t->filePath);
 
                 // Identify Camera model.    
                 QString identify;
-                DcrawUtils::rawFileIdentify(identify, t->filePath);
+                m_dcrawIface.rawFileIdentify(identify, t->filePath);
 
                 EventData *r = new EventData;
                 r->action    = IDENTIFY;
@@ -141,14 +141,13 @@ void ActionThread::run()
             }
             case PREVIEW: 
             {
-                d->action   = PREVIEW;
-                d->filePath = t->filePath;
-                d->starting = true;
+                d->action    = PREVIEW;
+                d->filePath  = t->filePath;
+                d->starting  = true;
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
                 QString destPath;
-                DcrawUtils dcrawIface;
-                bool result = dcrawIface.decodeHalfRAWImage(t->filePath, destPath, t->decodingSettings);
+                bool result  = m_dcrawIface.decodeHalfRAWImage(t->filePath, destPath, t->decodingSettings);
 
                 EventData *r = new EventData;
                 r->action    = PREVIEW;
@@ -160,14 +159,13 @@ void ActionThread::run()
             }
             case PROCESS: 
             {
-                d->action   = PROCESS;
-                d->filePath = t->filePath;
-                d->starting = true;
+                d->action    = PROCESS;
+                d->filePath  = t->filePath;
+                d->starting  = true;
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
                 QString destPath;
-                DcrawUtils dcrawIface;
-                bool result = dcrawIface.decodeRAWImage(t->filePath, destPath, t->decodingSettings);
+                bool result  = m_dcrawIface.decodeRAWImage(t->filePath, destPath, t->decodingSettings);
 
                 EventData *r = new EventData;
                 r->action    = PROCESS;

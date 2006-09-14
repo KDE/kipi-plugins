@@ -25,14 +25,15 @@
 // Qt includes.
 
 #include <qthread.h>
-#include <qstringlist.h>
+#include <qstring.h>
 
 // KDE includes.
+
 #include <kurl.h>
 
 // Local includes.
 
-#include "dcrawutils.h"
+#include "dcrawiface.h"
 #include "actions.h"
 #include "mtqueue.h"
 
@@ -72,9 +73,10 @@ private:
     typedef struct Task_ Task;
 
     QObject             *m_parent;
-    QString              m_tmpFolder;
 
     RawDecodingSettings  m_rawDecodingSettings;
+
+    DcrawIface           m_dcrawIface;
 
     MTQueue<Task>        m_taskQueue;
 };

@@ -63,7 +63,7 @@ extern "C"
 // Local includes.
 
 #include "pluginsversion.h"
-#include "dcrawutils.h"
+#include "dcrawiface.h"
 #include "dcrawsettingswidget.h"
 #include "savesettingswidget.h"
 #include "actionthread.h"

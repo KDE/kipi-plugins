@@ -1,7 +1,7 @@
 /* ============================================================
- * Author: Gilles Caulier <caulier dot gilles at kdemail dot net> 
- * Date  : 2006-12-09
- * Description : RAW file util methods using dcraw
+ * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net> 
+ * Date   : 2006-12-09
+ * Description : dcraw interface (tested with dcraw 8.x releases)
  *
  * Copyright 2006 by Gilles Caulier
  *
@@ -18,8 +18,8 @@
  *
  * ============================================================ */
 
-#ifndef DCRAWUTILS_H
-#define DCRAWUTILS_H
+#ifndef DCRAWIFACE_H
+#define DCRAWIFACE_H
 
 // Qt Includes.
 
@@ -151,28 +151,35 @@ public:
     OutputColorSpace outputColorSpace;
 };
 
-class DcrawUtils
+class DcrawIface
 {
 
 public:
 
-    DcrawUtils();
-    ~DcrawUtils();
+    DcrawIface();
+    ~DcrawIface();
+
+    /** To cancel 'decodeHalfRAWImage' and 'decodeRAWImage' methods running 
+        in a separate thread.
+    */
+    void cancel();
 
     /** Get the embedded preview image in RAW file
     */
-    static bool loadDcrawPreview(QImage& image, const QString& path);
+    bool loadDcrawPreview(QImage& image, const QString& path);
 
     /** Get the camera model witch have taken RAW file
     */ 
-    static bool rawFileIdentify(QString& identify, const QString& path);
+    bool rawFileIdentify(QString& identify, const QString& path);
 
-    /** Extract a small size of decode RAW data in 8 bits/color/pixels using sRGB color space.
+    /** Extract a small size of decode RAW data in 8 bits/color/pixels 
+        using sRGB color space.
     */
     bool decodeHalfRAWImage(const QString& filePath, QString& destPath,
                             RawDecodingSettings rawDecodingSettings);
 
-    /** Extract a full size of RAW data in 8 bits/color/pixels using sRGB color space.
+    /** Extract a full size of RAW data in 8 bits/color/pixels using 
+        sRGB color space.
     */
     bool decodeRAWImage(const QString& filePath, QString& destPath,
                         RawDecodingSettings rawDecodingSettings);
@@ -188,4 +195,4 @@ private:
 
 }  // namespace KIPIRawConverterPlugin
 
-#endif /* DCRAWUTILS_H */
+#endif /* DCRAWIFACE_H */

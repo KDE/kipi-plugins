@@ -27,7 +27,7 @@
 
 // Local includes.
 
-#include "dcrawutils.h"
+#include "dcrawiface.h"
 
 namespace KIPIRawConverterPlugin
 {
