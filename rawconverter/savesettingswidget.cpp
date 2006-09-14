@@ -121,6 +121,12 @@ SaveSettingsWidget::~SaveSettingsWidget()
     delete d;
 }
 
+void SaveSettingsWidget::setDefaultSettings()
+{
+    setFileFormat(RawDecodingSettings::PNG); 
+    setConflictRule(SaveSettingsWidget::OVERWRITE);
+}
+
 RawDecodingSettings::OutputFormat SaveSettingsWidget::fileFormat()
 {
     return(RawDecodingSettings::OutputFormat)(d->formatComboBox->currentItem());

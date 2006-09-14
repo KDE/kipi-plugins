@@ -76,7 +76,7 @@ namespace KIPIRawConverterPlugin
 
 BatchDialog::BatchDialog(QWidget* /*parent*/, const QString& dcrawVersion)
            : KDialogBase(0, 0, false, i18n("Raw Images Batch Converter"),
-                         Help|User1|User2|Close, Close, true,
+                         Help|Default|User1|User2|Close, Close, true,
                          i18n("Con&vert"), i18n("&Abort"))
 {
     m_currentConvertItem = 0;
@@ -214,6 +214,12 @@ void BatchDialog::slotClose()
     KDialogBase::slotClose();
 }
 
+void BatchDialog::slotDefault()
+{
+    m_decodingSettingsBox->setDefaultSettings();
+    m_saveSettingsBox->setDefaultSettings();
+}
+
 void BatchDialog::readSettings()
 {
     KConfig config("kipirc");
@@ -233,6 +239,10 @@ void BatchDialog::readSettings()
         (RawDecodingSettings::DecodingQuality)config.readNumEntry("Decoding Quality", 
             (int)(RawDecodingSettings::BILINEAR))); 
 
+    m_decodingSettingsBox->setOutputColorSpace(
+        (RawDecodingSettings::OutputColorSpace)config.readNumEntry("Output Color Space", 
+            (int)(RawDecodingSettings::SRGB))); 
+
     m_saveSettingsBox->setFileFormat(
         (RawDecodingSettings::OutputFormat)config.readNumEntry("Output Format", 
             (int)(RawDecodingSettings::PNG))); 
@@ -240,10 +250,6 @@ void BatchDialog::readSettings()
     m_saveSettingsBox->setConflictRule(
         (SaveSettingsWidget::ConflictRule)config.readNumEntry("Conflict",
             (int)(SaveSettingsWidget::OVERWRITE)));
-
-    m_decodingSettingsBox->setOutputColorSpace(
-        (RawDecodingSettings::OutputColorSpace)config.readNumEntry("Output Color Space", 
-            (int)(RawDecodingSettings::SRGB))); 
 
     resize(configDialogSize(config, QString("Batch Raw Converter Dialog")));
 }

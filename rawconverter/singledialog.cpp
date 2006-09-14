@@ -67,7 +67,7 @@ namespace KIPIRawConverterPlugin
 
 SingleDialog::SingleDialog(const QString& file, QWidget *parent, const QString& dcrawVersion)
             : KDialogBase(parent, 0, false, i18n("Raw Image Converter"),
-                          Help|User1|User2|User3|Close, Close, true,
+                          Help|Default|User1|User2|User3|Close, Close, true,
                           i18n("&Preview"), i18n("Con&vert"), i18n("&Abort"))
 {
     m_inputFile     = file;
@@ -208,6 +208,12 @@ void SingleDialog::slotClose()
     KDialogBase::slotClose();
 }
 
+void SingleDialog::slotDefault()
+{
+    m_decodingSettingsBox->setDefaultSettings();
+    m_saveSettingsBox->setDefaultSettings();
+}
+
 void SingleDialog::readSettings()
 {
     KConfig config("kipirc");
@@ -227,6 +233,10 @@ void SingleDialog::readSettings()
         (RawDecodingSettings::DecodingQuality)config.readNumEntry("Decoding Quality", 
             (int)(RawDecodingSettings::BILINEAR))); 
 
+    m_decodingSettingsBox->setOutputColorSpace(
+        (RawDecodingSettings::OutputColorSpace)config.readNumEntry("Output Color Space", 
+            (int)(RawDecodingSettings::SRGB))); 
+
     m_saveSettingsBox->setFileFormat(
         (RawDecodingSettings::OutputFormat)config.readNumEntry("Output Format", 
             (int)(RawDecodingSettings::PNG))); 
@@ -234,10 +244,6 @@ void SingleDialog::readSettings()
     m_saveSettingsBox->setConflictRule(
         (SaveSettingsWidget::ConflictRule)config.readNumEntry("Conflict",
             (int)(SaveSettingsWidget::OVERWRITE)));
-
-    m_decodingSettingsBox->setOutputColorSpace(
-        (RawDecodingSettings::OutputColorSpace)config.readNumEntry("Output Color Space", 
-            (int)(RawDecodingSettings::SRGB))); 
 
     resize(configDialogSize(config, QString("Single Raw Converter Dialog")));
 }

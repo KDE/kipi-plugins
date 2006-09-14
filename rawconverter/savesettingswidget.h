@@ -57,6 +57,8 @@ public:
     void setFileFormat(RawDecodingSettings::OutputFormat f);
     void setConflictRule(ConflictRule r);
 
+    void setDefaultSettings();
+
 signals:
 
     void signalSaveFormatChanged();

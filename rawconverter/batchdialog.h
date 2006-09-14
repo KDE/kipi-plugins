@@ -79,6 +79,7 @@ private:
 
 private slots:
 
+    void slotDefault();
     void slotClose();
     void slotHelp();
     void slotUser1();

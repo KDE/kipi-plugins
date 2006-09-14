@@ -67,6 +67,8 @@ public:
     void   setQuality(RawDecodingSettings::DecodingQuality q);
     void   setOutputColorSpace(RawDecodingSettings::OutputColorSpace c);
 
+    void   setDefaultSettings();
+
 private slots:
 
     void slotUnclipColorActivated(int);

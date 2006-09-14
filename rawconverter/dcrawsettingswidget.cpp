@@ -285,6 +285,21 @@ DcrawSettingsWidget::~DcrawSettingsWidget()
     delete d;
 }
 
+void DcrawSettingsWidget::setDefaultSettings()
+{
+    setCameraWB(true);
+    setAutoColorBalance(true);
+    setFourColor(false);
+    setUnclipColor(0);
+    setSecondarySensor(false);
+    setNoiseReduction(false);
+    setBrightness(1.0);
+    setSigmaDomain(2.0);
+    setSigmaRange(4.0);
+    setQuality(RawDecodingSettings::BILINEAR); 
+    setOutputColorSpace(RawDecodingSettings::SRGB); 
+}
+
 void DcrawSettingsWidget::slotUnclipColorActivated(int v)
 {
     if (v == 2)     // Reconstruct Highlight method

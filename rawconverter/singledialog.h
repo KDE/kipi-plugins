@@ -75,13 +75,14 @@ private:
     void processingFailed(const QString&);
 
 private slots:
-
+    
+    void slotDefault();
+    void slotClose();
     void slotHelp();
     void slotUser1();
     void slotUser2();
     void slotUser3();
-    void slotClose();
-
+    
     void slotIdentify();
 
     void slotPreviewBlinkTimerDone();
