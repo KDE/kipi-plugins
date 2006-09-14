@@ -437,9 +437,7 @@ void BatchDialog::processOne()
     QString file(m_fileList.first());
     m_fileList.pop_front();
 
-    KURL::List oneFile;
-    oneFile.append(file);
-    m_thread->processRawFiles(oneFile);
+    m_thread->processRawFile(KURL(file));
     if (!m_thread->running())
         m_thread->start();
 }

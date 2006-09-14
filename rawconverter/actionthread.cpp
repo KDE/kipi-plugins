@@ -58,6 +58,27 @@ ActionThread::~ActionThread()
     wait();
 }
 
+void ActionThread::identifyRawFile(const KURL& url)
+{
+    KURL::List oneFile;
+    oneFile.append(url);
+    identifyRawFiles(oneFile);
+}
+
+void ActionThread::processRawFile(const KURL& url)
+{
+    KURL::List oneFile;
+    oneFile.append(url);
+    processRawFiles(oneFile);
+}
+
+void ActionThread::processHalfRawFile(const KURL& url)
+{
+    KURL::List oneFile;
+    oneFile.append(url);
+    processHalfRawFiles(oneFile);
+}
+
 void ActionThread::identifyRawFiles(const KURL::List& urlList)
 {
     for (KURL::List::const_iterator it = urlList.begin();

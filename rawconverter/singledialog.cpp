@@ -288,10 +288,7 @@ void SingleDialog::slotUser1()
     rawDecodingSettings.outputColorSpace        = m_decodingSettingsBox->outputColorSpace();
     
     m_thread->setRawDecodingSettings(rawDecodingSettings);
-
-    KURL::List oneFile;
-    oneFile.append(m_inputFile);
-    m_thread->processHalfRawFiles(oneFile);
+    m_thread->processHalfRawFile(KURL(m_inputFile));
     if (!m_thread->running())
         m_thread->start();
 }
@@ -314,10 +311,7 @@ void SingleDialog::slotUser2()
     rawDecodingSettings.outputColorSpace        = m_decodingSettingsBox->outputColorSpace();
 
     m_thread->setRawDecodingSettings(rawDecodingSettings);
-
-    KURL::List oneFile;
-    oneFile.append(m_inputFile);
-    m_thread->processRawFiles(oneFile);
+    m_thread->processRawFile(KURL(m_inputFile));
     if (!m_thread->running())
         m_thread->start();
 }
@@ -330,9 +324,7 @@ void SingleDialog::slotUser3()
 
 void SingleDialog::slotIdentify()
 {
-    KURL::List oneFile;
-    oneFile.append(m_inputFile);
-    m_thread->identifyRawFiles(oneFile);
+    m_thread->identifyRawFile(KURL(m_inputFile));
     if (!m_thread->running())
         m_thread->start();
 }

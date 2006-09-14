@@ -51,6 +51,11 @@ public:
     ~ActionThread();
 
     void setRawDecodingSettings(RawDecodingSettings rawDecodingSettings);
+
+    void identifyRawFile(const KURL& url);
+    void processRawFile(const KURL& url);
+    void processHalfRawFile(const KURL& url);
+
     void identifyRawFiles(const KURL::List& urlList);
     void processRawFiles(const KURL::List& urlList);
     void processHalfRawFiles(const KURL::List& urlList);
