@@ -251,7 +251,21 @@ DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent, const QString& dcrawVe
     d->outputColorSpaceComboBox->insertItem( i18n("Wide Gamut"),   3 );
     d->outputColorSpaceComboBox->insertItem( i18n("Pro-Photo"),    4 );
     QWhatsThis::add( d->outputColorSpaceComboBox, i18n("<p><b>Color space</b><p>"
-                "Select here the output color space used to decode RAW data.<p>"));
+                "Select here the output color space used to decode RAW data.<p>"
+                "<b>Raw (linear)</b>: in this mode, none output color space is used "
+                "during RAW decoding.<p>"
+                "<b>sRGB</b>: this color space is an RGB color space, created "
+                "cooperatively by Hewlett-Packard and Microsoft, that is the "
+                "best choice for images destined for the Web and portrait photography.<p>"
+                "<b>Adobe RGB</b>: this color space is an RGB color space, developed by "
+                "Adobe, that used for photography applications such as advertising "
+                "and fine art.<p>"
+                "<b>Wide Gamut</b>: this color space is is an expanded version of the "
+                "Adobe RGB color space.<p>"
+                "<b>Pro-Photo</b>: this color space is an RGB color space, developed by "
+                "Kodak, that offers an especially large gamut designed for use with "
+                "photographic output in mind."));
+
     settingsBoxLayout->addMultiCellWidget(d->outputColorSpaceLabel, 11, 11, 0, 0); 
     settingsBoxLayout->addMultiCellWidget(d->outputColorSpaceComboBox, 11, 11, 1, 1);
 
