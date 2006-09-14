@@ -53,6 +53,7 @@ extern "C"
 // Local includes.
 
 #include "rawfiles.h"
+#include "dcrawbinary.h"
 #include "singledialog.h"
 #include "batchdialog.h"
 #include "plugin_rawconverter.h"
@@ -123,30 +124,42 @@ bool Plugin_RawConverter::isRAWFile(const QString& filePath)
 
 bool Plugin_RawConverter::checkBinaries()
 {
-    QProcess process;
+    KIPIRawConverterPlugin::DcrawBinary dcrawBinary;
 
-    process.clearArguments();
-    process.addArgument("kipidcrawclient");
-
-    if (!process.start()) 
+    if (!dcrawBinary.isAvailable()) 
     {
-        KMessageBox::error(kapp->activeWindow(), i18n("Failed to start raw converter client.\n"
-                                                      "Please check your installation."));
+        KMessageBox::information(
+                     kapp->activeWindow(),
+                     i18n("<qt><p>Unable to find the dcraw executable:<br> "
+                          "This program is required by this plugin to support raw file decoding. "
+                          "Please install dcraw as a package from your distributor "
+                          "or <a href=\"%1\">download the source</a>.</p>"
+                          "<p>Note: at least, dcraw version %2 is required by this plugin.</p></qt>")
+                          .arg("http://www.cybercom.net/~dcoffin/dcraw")
+                          .arg(dcrawBinary.minimalVersion()),
+                     QString::null,
+                     QString::null,
+                     KMessageBox::Notify | KMessageBox::AllowLink);
         return false;
     }
 
-    process.clearArguments();
-    process.addArgument("dcraw");
-
-    if (!process.start()) 
+    if (!dcrawBinary.versionIsRight()) 
     {
-        KMessageBox::error(kapp->activeWindow(),
-                           i18n("<qt><p>Unable to find the dcraw executable:<br> "
-                                "This program is required to process Raw file formats conversion. "
-                                "Please install dcraw as a package from your distributor "
-                                "or <a href=\"%2\">download the source</a>.</p></qt>")
-                                .arg("http://www.cybercom.net/~dcoffin/dcraw/"));        
-
+        KMessageBox::information(
+                     kapp->activeWindow(),
+                     i18n("<qt><p>dcraw executable isn't up to date:<br> "
+                          "The version %1 of dcraw have been found on your computer. "
+                          "This version is too old to run properlly with this plugin. "
+                          "Please update dcraw as a package from your distributor "
+                          "or <a href=\"%2\">download the source</a>.</p>"
+                          "<p>Note: at least, dcraw version %3 is required by this "
+                          "plugin</p></qt>")
+                          .arg(dcrawBinary.version())
+                          .arg("http://www.cybercom.net/~dcoffin/dcraw")
+                          .arg(dcrawBinary.minimalVersion()),
+                     QString::null,
+                     QString::null,
+                     KMessageBox::Notify | KMessageBox::AllowLink);
         return false;
     }
 
