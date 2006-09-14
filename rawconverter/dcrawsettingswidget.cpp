@@ -154,12 +154,12 @@ DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent, const QString& dcrawVe
     d->unclipColorComboBox->insertItem( i18n("Unclip"),      1 );
     d->unclipColorComboBox->insertItem( i18n("Reconstruct"), 2 );
     QWhatsThis::add( d->unclipColorComboBox, i18n("<p><b>Highlights clipping</b><p>"
-                                             "Select here the highlight cliping method:"
+                                             "Select here the highlight cliping method:<p>"
                                              "<b>Solid white</b>: clip all highlights to solid white<p>"
                                              "<b>Unclip</b>: leave highlights unclipped in various "
                                              "shades of pink<p>"
-                                             "<b>Reconstruct</b>: reconstruct highlights using a level. "
-                                             "Low value favor whites and high value favor colors."));
+                                             "<b>Reconstruct</b>: reconstruct highlights using a "
+                                             "level value."));
     settingsBoxLayout->addMultiCellWidget(d->unclipColorLabel, 4, 4, 0, 0);    
     settingsBoxLayout->addMultiCellWidget(d->unclipColorComboBox, 4, 4, 1, 1);    
 
@@ -167,7 +167,8 @@ DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent, const QString& dcrawVe
     d->reconstructSpinBox = new KIntNumInput(this);
     d->reconstructSpinBox->setRange(0, 7, 1, true);
     QWhatsThis::add(d->reconstructSpinBox, i18n("<p><b>Level</b><p>"
-                                               "Specify the reconstruct highlights level of ouput image."));
+                                               "Specify the reconstruct highlights level of ouput image. "
+                                               "Low value favor whites and high value favor colors."));
     settingsBoxLayout->addMultiCellWidget(d->reconstructLabel, 5, 5, 0, 0);    
     settingsBoxLayout->addMultiCellWidget(d->reconstructSpinBox, 5, 5, 1, 1);    
 
@@ -178,7 +179,8 @@ DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent, const QString& dcrawVe
     d->brightnessSpinBox->setPrecision(2);
     d->brightnessSpinBox->setRange(0.0, 10.0, 0.01, true);
     QWhatsThis::add(d->brightnessSpinBox, i18n("<p><b>Brighness</b><p>"
-                                               "Specify the brightness level of ouput image."));
+                                               "Specify the brightness level of ouput image."
+                                               "The default value is 1.0.<p>"));
     settingsBoxLayout->addMultiCellWidget(d->brightnessLabel, 6, 6, 0, 0);    
     settingsBoxLayout->addMultiCellWidget(d->brightnessSpinBox, 6, 6, 1, 1);    
 
