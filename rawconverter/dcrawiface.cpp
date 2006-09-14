@@ -79,7 +79,7 @@ void DcrawIface::cancel()
 
 bool DcrawIface::loadDcrawPreview(QImage& image, const QString& path)
 {
-    FILE       *f=0;
+    FILE       *f=NULL;
     QByteArray  imgData;
     const int   MAX_IPC_SIZE = (1024*32);
     char        buffer[MAX_IPC_SIZE];
@@ -104,7 +104,7 @@ bool DcrawIface::loadDcrawPreview(QImage& image, const QString& path)
 
     f = popen( command.data(), "r" );
 
-    if ( !f )
+    if ( f == NULL )
         return false;
 
     file.open( IO_ReadOnly,  f );
@@ -142,14 +142,14 @@ bool DcrawIface::loadDcrawPreview(QImage& image, const QString& path)
     // -a : Use automatic white balance
     // -w : Use camera white balance, if possible
 
-    f=0;
+    f=NULL;
     command  = "dcraw -c -h -w -a ";
     command += QFile::encodeName( KProcess::quote( path ) );
     kdDebug( 51000 ) << "Running dcraw command " << command << endl;
 
     f = popen( command.data(), "r" );
 
-    if ( !f )
+    if ( f == NULL )
         return false;
 
     file.open( IO_ReadOnly,  f );
@@ -186,7 +186,7 @@ bool DcrawIface::loadDcrawPreview(QImage& image, const QString& path)
 
 bool DcrawIface::rawFileIdentify(QString& identify, const QString& path)
 {
-    FILE       *f=0;
+    FILE       *f=NULL;
     QByteArray  txtData;
     const int   MAX_IPC_SIZE = (1024*32);
     char        buffer[MAX_IPC_SIZE];
@@ -219,7 +219,7 @@ bool DcrawIface::rawFileIdentify(QString& identify, const QString& path)
 
     f = popen( command.data(), "r" );
 
-    if ( !f )
+    if ( f == NULL )
     {
         identify = i18n("Cannot start dcraw instance");
         return false;
@@ -271,7 +271,7 @@ bool DcrawIface::decodeRAWImage(const QString& filePath, QString& destPath,
                                 RawDecodingSettings rawDecodingSettings)
 {
     m_cancel = false;
-    FILE* f=0;
+    FILE* f=NULL;
     int  width, height, rgbmax;
     char nl;
     QCString command;
@@ -343,7 +343,7 @@ bool DcrawIface::decodeRAWImage(const QString& filePath, QString& destPath,
     
     f = popen( command.data(), "r" );
 
-    if ( !f )
+    if ( f == NULL )
     {
         kdDebug( 51000 ) << "dcraw program unavailable." << endl;
         return false;
