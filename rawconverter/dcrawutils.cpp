@@ -55,7 +55,7 @@ extern "C"
 
 // Local includes.
 
-#include "version.h"
+#include "pluginsversion.h"
 #include "rawfiles.h"
 #include "dcrawutils.h"
 

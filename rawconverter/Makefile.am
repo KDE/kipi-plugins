@@ -1,11 +1,14 @@
-INCLUDES    = -I$(top_srcdir)/kipi-plugins/common/include \
-	          $(LIBKIPI_CFLAGS) $(all_includes)
 METASOURCES = AUTO
 SUBDIRS = profiles
 
+INCLUDES = -I$(top_srcdir)/kipi-plugins/common/include \
+	       $(LIBKIPI_CFLAGS) $(all_includes)
+
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_rawconverter.la
+
 kipiplugin_rawconverter_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
+
 # Srcs for the plugin
 kipiplugin_rawconverter_la_SOURCES = plugin_rawconverter.cpp dcrawutils.cpp savesettingswidget.cpp \
 	                             batchdialog.cpp actionthread.cpp dcrawsettingswidget.cpp \

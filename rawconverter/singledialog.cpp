@@ -53,7 +53,7 @@
 
 // Local includes.
 
-#include "version.h"
+#include "pluginsversion.h"
 #include "previewwidget.h"
 #include "dcrawutils.h"
 #include "dcrawsettingswidget.h"
