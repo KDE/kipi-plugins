@@ -27,6 +27,7 @@
 #include <qstring.h>
 #include <qevent.h>
 #include <qtimer.h>
+#include <qimage.h>
 
 // KDE includes.
 
@@ -35,43 +36,64 @@
 // Local includes.
 
 #include "previewwidget.h"
+#include "previewwidget.moc"
 
 namespace KIPIRawConverterPlugin
 {
 
+class PreviewWidgetPriv
+{
+public:
+
+    PreviewWidgetPriv()
+    {
+        pix   = 0;
+        timer = 0;
+    }
+
+    QPixmap *pix;
+
+    QTimer  *timer;
+
+    QString  text;
+
+    QImage   image;
+};
+
 PreviewWidget::PreviewWidget(QWidget *parent)
              : QWidget(parent, 0, Qt::WRepaintNoErase)
 {
+    d = new PreviewWidgetPriv;
     setMinimumSize(QSize(484, 364));
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    pix_ = new QPixmap(484,364);
-    pix_->fill(Qt::black);
+    d->pix = new QPixmap(484,364);
+    d->pix->fill(Qt::black);
 
-    timer_ = new QTimer(this);
+    d->timer = new QTimer(this);
 
-    connect(timer_, SIGNAL(timeout()),
+    connect(d->timer, SIGNAL(timeout()),
             this, SLOT(slotResize()));
 }
 
 PreviewWidget::~PreviewWidget()
 {
-    delete pix_;
+    delete d;
 }
 
 void PreviewWidget::load(const QString& file)
 {
-    text_ = "";
-    pix_->fill(Qt::black);
-    image_.load(file);
+    d->text = "";
+    d->pix->fill(Qt::black);
+    d->image.load(file);
 
-    if (!image_.isNull()) 
+    if (!d->image.isNull()) 
     {
-        QImage img = image_.scale(width(),height(),QImage::ScaleMin);
-        int x = pix_->width()/2 - img.width()/2;
-        int y = pix_->height()/2 - img.height()/2;
+        QImage img = d->image.scale(width(),height(),QImage::ScaleMin);
+        int x = d->pix->width()/2 - img.width()/2;
+        int y = d->pix->height()/2 - img.height()/2;
 
-        QPainter p(pix_);
+        QPainter p(d->pix);
         p.drawImage(x, y, img);
         p.setPen(QPen(Qt::white));
         p.drawRect(x,y,img.width(),img.height());
@@ -88,11 +110,11 @@ void PreviewWidget::load(const QString& file)
 
 void PreviewWidget::setText(const QString& text, const QColor& color)
 {
-    text_ = text;
-    pix_->fill(Qt::black);
-    QPainter p(pix_);
+    d->text = text;
+    d->pix->fill(Qt::black);
+    QPainter p(d->pix);
     p.setPen(QPen(color));
-    p.drawText(0, 0, pix_->width(), pix_->height(),
+    p.drawText(0, 0, d->pix->width(), d->pix->height(),
                Qt::AlignCenter|Qt::WordBreak, text);
     p.end();
     update();
@@ -101,37 +123,37 @@ void PreviewWidget::setText(const QString& text, const QColor& color)
 void PreviewWidget::paintEvent(QPaintEvent *e)
 {
     QRect r(e->rect());
-    bitBlt(this, r.topLeft(), pix_, r, Qt::CopyROP);
+    bitBlt(this, r.topLeft(), d->pix, r, Qt::CopyROP);
 }
 
 void PreviewWidget::resizeEvent(QResizeEvent*)
 {
-    timer_->start(10,true);
+    d->timer->start(10,true);
 }
 
 void PreviewWidget::slotResize()
 {
-    if (timer_->isActive()) return;
+    if (d->timer->isActive()) return;
 
-    pix_->resize(width(),height());
-    pix_->fill(Qt::black);
-    if (!text_.isEmpty()) 
+    d->pix->resize(width(),height());
+    d->pix->fill(Qt::black);
+    if (!d->text.isEmpty()) 
     {
-        QPainter p(pix_);
+        QPainter p(d->pix);
         p.setPen(QPen(Qt::white));
-        p.drawText(0, 0, pix_->width(), pix_->height(),
-                   Qt::AlignCenter|Qt::WordBreak, text_);
+        p.drawText(0, 0, d->pix->width(), d->pix->height(),
+                   Qt::AlignCenter|Qt::WordBreak, d->text);
         p.end();
     }
     else 
     {
-        if (!image_.isNull()) 
+        if (!d->image.isNull()) 
         {
-            QImage img = image_.scale(width(),height(),QImage::ScaleMin);
-            int x = pix_->width()/2 - img.width()/2;
-            int y = pix_->height()/2 - img.height()/2;
+            QImage img = d->image.scale(width(),height(),QImage::ScaleMin);
+            int x = d->pix->width()/2 - img.width()/2;
+            int y = d->pix->height()/2 - img.height()/2;
 
-            QPainter p(pix_);
+            QPainter p(d->pix);
             p.drawImage(x, y, img);
             p.setPen(QPen(Qt::white));
             p.drawRect(x,y,img.width(),img.height());
@@ -144,4 +166,3 @@ void PreviewWidget::slotResize()
 
 } // NameSpace KIPIRawConverterPlugin
 
-#include "previewwidget.moc"

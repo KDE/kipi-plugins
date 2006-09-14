@@ -25,18 +25,16 @@
 
 // Qt includes.
 
+#include <qcolor.h>
 #include <qwidget.h>
 #include <qstring.h>
-#include <qimage.h>
-#include <qcolor.h>
 
 class QPaintEvent;
-class QPixmap;
-class QImage;
-class QTimer;
+class QResizeEvent;
 
 namespace KIPIRawConverterPlugin
 {
+class PreviewWidgetPriv;
 
 class PreviewWidget : public QWidget
 {
@@ -61,10 +59,7 @@ private slots:
     
 private:
 
-    QPixmap *pix_;
-    QTimer  *timer_;
-    QString  text_;
-    QImage   image_;
+    PreviewWidgetPriv* d;
 };
 
 } // NameSpace KIPIRawConverterPlugin
