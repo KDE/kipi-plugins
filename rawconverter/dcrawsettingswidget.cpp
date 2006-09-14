@@ -153,7 +153,7 @@ DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent, const QString& dcrawVe
     d->unclipColorComboBox->insertItem( i18n("Solid white"), 0 );
     d->unclipColorComboBox->insertItem( i18n("Unclip"),      1 );
     d->unclipColorComboBox->insertItem( i18n("Reconstruct"), 2 );
-    QWhatsThis::add( d->unclipColorComboBox, i18n("<p><b>Highlights clipping</b><p>"
+    QWhatsThis::add( d->unclipColorComboBox, i18n("<p><b>Highlights</b><p>"
                                              "Select here the highlight cliping method:<p>"
                                              "<b>Solid white</b>: clip all highlights to solid white<p>"
                                              "<b>Unclip</b>: leave highlights unclipped in various "
