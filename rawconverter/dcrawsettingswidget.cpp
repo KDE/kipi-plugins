@@ -225,9 +225,9 @@ DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent, const QString& dcrawVe
     d->NRSigmaDomain->setValue(2.0);
     d->NRSigmaDomain->setPrecision(1);
     d->NRSigmaDomain->setRange(0.1, 5.0, 0.1);
-    d->NRSigmaDomainlabel = new QLabel(i18n("Sigma domain:"), this);
-    QWhatsThis::add( d->NRSigmaDomain, i18n("<p><b>Sigma domain</b><p>"
-                                       "The noise reduction Sigma Domain in units of pixels. "
+    d->NRSigmaDomainlabel = new QLabel(i18n("Domain:"), this);
+    QWhatsThis::add( d->NRSigmaDomain, i18n("<p><b>Domain</b><p>"
+                                       "Set here the noise reduction Sigma Domain in units of pixels. "
                                        "The default value is 2.0.<p>"));
     settingsBoxLayout->addMultiCellWidget(d->NRSigmaDomainlabel, 9, 9, 0, 0);
     settingsBoxLayout->addMultiCellWidget(d->NRSigmaDomain, 9, 9, 1, 1);
@@ -236,9 +236,9 @@ DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent, const QString& dcrawVe
     d->NRSigmaRange->setValue(4.0);
     d->NRSigmaRange->setPrecision(1);
     d->NRSigmaRange->setRange(0.1, 5.0, 0.1);
-    d->NRSigmaRangelabel = new QLabel(i18n("Sigma range:"), this);
-    QWhatsThis::add( d->NRSigmaRange, i18n("<p><b>Sigma range</b><p>"
-                                           "The noise reduction Sigma Range in units of "
+    d->NRSigmaRangelabel = new QLabel(i18n("Range:"), this);
+    QWhatsThis::add( d->NRSigmaRange, i18n("<p><b>Range</b><p>"
+                                           "Set here the noise reduction Sigma Range in units of "
                                            "CIELab colorspace. The default value is 4.0.<p>"));
     settingsBoxLayout->addMultiCellWidget(d->NRSigmaRangelabel, 10, 10, 0, 0);
     settingsBoxLayout->addMultiCellWidget(d->NRSigmaRange, 10, 10, 1, 1);
