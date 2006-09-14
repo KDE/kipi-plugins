@@ -93,8 +93,10 @@ public:
     KDoubleNumInput *NRSigmaRange;
 };
 
-DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent)
-                   : QGroupBox(0, Qt::Vertical, i18n("RAW Decoding Settings"), parent)
+DcrawSettingsWidget::DcrawSettingsWidget(QWidget *parent, const QString& dcrawVersion)
+                   : QGroupBox(0, Qt::Vertical, 
+                               i18n("RAW Decoding Settings (dcraw %1)").arg(dcrawVersion), 
+                               parent)
 {
     d = new DcrawSettingsWidgetPriv;
     QGridLayout* settingsBoxLayout = new QGridLayout(layout(), 10, 1, KDialog::spacingHint());

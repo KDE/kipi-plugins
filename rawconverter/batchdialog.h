@@ -55,7 +55,7 @@ Q_OBJECT
 
 public:
 
-    BatchDialog(QWidget *parent);
+    BatchDialog(QWidget *parent, const QString& dcrawVersion);
     ~BatchDialog();
 
     void addItems(const QStringList& itemList);

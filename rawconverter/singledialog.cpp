@@ -65,7 +65,7 @@
 namespace KIPIRawConverterPlugin
 {
 
-SingleDialog::SingleDialog(const QString& file, QWidget *parent)
+SingleDialog::SingleDialog(const QString& file, QWidget *parent, const QString& dcrawVersion)
             : KDialogBase(parent, 0, false, i18n("Raw Image Converter"),
                           Help|User1|User2|User3|Close, Close, true,
                           i18n("&Preview"), i18n("Con&vert"), i18n("&Abort"))
@@ -115,7 +115,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    m_decodingSettingsBox = new DcrawSettingsWidget(page);
+    m_decodingSettingsBox = new DcrawSettingsWidget(page, dcrawVersion);
     m_saveSettingsBox     = new SaveSettingsWidget(page);
 
     mainLayout->addMultiCellWidget(m_decodingSettingsBox, 1, 1, 1, 1);

@@ -74,7 +74,7 @@ extern "C"
 namespace KIPIRawConverterPlugin
 {
 
-BatchDialog::BatchDialog(QWidget* /*parent*/)
+BatchDialog::BatchDialog(QWidget* /*parent*/, const QString& dcrawVersion)
            : KDialogBase(0, 0, false, i18n("Raw Images Batch Converter"),
                          Help|User1|User2|Close, Close, true,
                          i18n("Con&vert"), i18n("&Abort"))
@@ -125,7 +125,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
 
     // ---------------------------------------------------------------
 
-    m_decodingSettingsBox = new DcrawSettingsWidget(m_page);
+    m_decodingSettingsBox = new DcrawSettingsWidget(m_page, dcrawVersion);
     m_saveSettingsBox     = new SaveSettingsWidget(m_page);
 
     mainLayout->addMultiCellWidget(m_decodingSettingsBox, 1, 1, 1, 1);

@@ -122,9 +122,10 @@ bool Plugin_RawConverter::isRAWFile(const QString& filePath)
     return false;
 }
 
-bool Plugin_RawConverter::checkBinaries()
+bool Plugin_RawConverter::checkBinaries(QString &dcrawVersion)
 {
     KIPIRawConverterPlugin::DcrawBinary dcrawBinary;
+    dcrawVersion = dcrawBinary.version();
 
     if (!dcrawBinary.isAvailable()) 
     {
@@ -154,7 +155,7 @@ bool Plugin_RawConverter::checkBinaries()
                           "or <a href=\"%2\">download the source</a>.</p>"
                           "<p>Note: at least, dcraw version %3 is required by this "
                           "plugin</p></qt>")
-                          .arg(dcrawBinary.version())
+                          .arg(dcrawVersion)
                           .arg("http://www.cybercom.net/~dcoffin/dcraw")
                           .arg(dcrawBinary.minimalVersion()),
                      QString::null,
@@ -182,7 +183,8 @@ void Plugin_RawConverter::slotActivateSingle()
     if ( !images.isValid() )
         return;
 
-    if (!checkBinaries()) 
+    QString dcrawVersion;
+    if (!checkBinaries(dcrawVersion)) 
         return;
 
     if (!isRAWFile(images.images()[0].path()))
@@ -193,7 +195,8 @@ void Plugin_RawConverter::slotActivateSingle()
     }
 
     KIPIRawConverterPlugin::SingleDialog *converter = 
-        new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), kapp->activeWindow()); 
+        new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), 
+            kapp->activeWindow(), dcrawVersion); 
 
     converter->show();
 }
@@ -214,11 +217,12 @@ void Plugin_RawConverter::slotActivateBatch()
     if ( !images.isValid() )
         return;
 
-    if (!checkBinaries()) 
+    QString dcrawVersion;
+    if (!checkBinaries(dcrawVersion)) 
         return;
 
     KIPIRawConverterPlugin::BatchDialog *converter =
-        new KIPIRawConverterPlugin::BatchDialog(kapp->activeWindow());
+        new KIPIRawConverterPlugin::BatchDialog(kapp->activeWindow(), dcrawVersion);
 
     KURL::List urls = images.images();
     QStringList files;

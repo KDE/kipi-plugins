@@ -40,7 +40,7 @@ class DcrawSettingsWidget : public QGroupBox
     
 public:
 
-    DcrawSettingsWidget(QWidget *parent);
+    DcrawSettingsWidget(QWidget *parent, const QString& dcrawVersion);
     ~DcrawSettingsWidget();
 
     bool   useCameraWB();
