@@ -67,11 +67,11 @@ private:
     void identified(const QString&, const QString& identity);
 
     void previewing(const QString&);
-    void previewed(const QString&, const QString& tmpFile_);
+    void previewed(const QString&, const QString& tmpFile);
     void previewFailed(const QString&);
 
     void processing(const QString&);
-    void processed(const QString&, const QString& tmpFile_);
+    void processed(const QString&, const QString& tmpFile);
     void processingFailed(const QString&);
 
 private slots:
@@ -89,16 +89,16 @@ private slots:
     
 private:
 
-    bool                 previewBlink_;
-    bool                 convertBlink_;
+    bool                 m_previewBlink;
+    bool                 m_convertBlink;
 
-    QString              inputFile_;
-    QString              inputFileName_;
+    QString              m_inputFile;
+    QString              m_inputFileName;
     
-    QTimer              *blinkPreviewTimer_;
-    QTimer              *blinkConvertTimer_;
+    QTimer              *m_blinkPreviewTimer;
+    QTimer              *m_blinkConvertTimer;
 
-    PreviewWidget       *previewWidget_;
+    PreviewWidget       *m_previewWidget;
 
     ActionThread        *m_thread;
 

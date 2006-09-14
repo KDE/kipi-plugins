@@ -70,8 +70,8 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
                           Help|User1|User2|User3|Close, Close, true,
                           i18n("&Preview"), i18n("Con&vert"), i18n("&Abort"))
 {
-    inputFile_     = file;
-    inputFileName_ = QFileInfo(file).fileName();
+    m_inputFile     = file;
+    m_inputFileName = QFileInfo(file).fileName();
     
     QWidget *page = new QWidget( this );
     setMainWidget( page );
@@ -108,8 +108,8 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     lbox->layout()->setMargin( marginHint() );
     QVBoxLayout* lboxLayout = new QVBoxLayout(lbox->layout());
 
-    previewWidget_ = new PreviewWidget(lbox);
-    lboxLayout->addWidget(previewWidget_);
+    m_previewWidget = new PreviewWidget(lbox);
+    lboxLayout->addWidget(m_previewWidget);
 
     mainLayout->addMultiCellWidget(lbox, 1, 3, 0, 0);
 
@@ -165,16 +165,16 @@ SingleDialog::SingleDialog(const QString& file, QWidget *parent)
     
     setButtonTip( Close, i18n("<p>Exit Raw Converter"));
 
-    blinkPreviewTimer_ = new QTimer(this);
-    blinkConvertTimer_ = new QTimer(this);
+    m_blinkPreviewTimer = new QTimer(this);
+    m_blinkConvertTimer = new QTimer(this);
     m_thread           = new ActionThread(this);
 
     // ---------------------------------------------------------------
 
-    connect(blinkPreviewTimer_, SIGNAL(timeout()),
+    connect(m_blinkPreviewTimer, SIGNAL(timeout()),
             this, SLOT(slotPreviewBlinkTimerDone()));
     
-    connect(blinkConvertTimer_, SIGNAL(timeout()),
+    connect(m_blinkConvertTimer, SIGNAL(timeout()),
             this, SLOT(slotConvertBlinkTimerDone()));
 
     // ---------------------------------------------------------------
@@ -192,8 +192,8 @@ SingleDialog::~SingleDialog()
 void SingleDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
-    blinkPreviewTimer_->stop();
-    blinkConvertTimer_->stop();
+    m_blinkPreviewTimer->stop();
+    m_blinkConvertTimer->stop();
     m_thread->cancel();
     saveSettings();
     e->accept();
@@ -201,8 +201,8 @@ void SingleDialog::closeEvent(QCloseEvent *e)
 
 void SingleDialog::slotClose()
 {
-    blinkPreviewTimer_->stop();
-    blinkConvertTimer_->stop();
+    m_blinkPreviewTimer->stop();
+    m_blinkConvertTimer->stop();
     m_thread->cancel();
     saveSettings();
     KDialogBase::slotClose();
@@ -289,7 +289,7 @@ void SingleDialog::slotUser1()
     m_thread->setRawDecodingSettings(rawDecodingSettings);
 
     KURL::List oneFile;
-    oneFile.append(inputFile_);
+    oneFile.append(m_inputFile);
     m_thread->processHalfRawFiles(oneFile);
     if (!m_thread->running())
         m_thread->start();
@@ -314,7 +314,7 @@ void SingleDialog::slotUser2()
     m_thread->setRawDecodingSettings(rawDecodingSettings);
 
     KURL::List oneFile;
-    oneFile.append(inputFile_);
+    oneFile.append(m_inputFile);
     m_thread->processRawFiles(oneFile);
     if (!m_thread->running())
         m_thread->start();
@@ -328,7 +328,7 @@ void SingleDialog::slotUser3()
 void SingleDialog::slotIdentify()
 {
     KURL::List oneFile;
-    oneFile.append(inputFile_);
+    oneFile.append(m_inputFile);
     m_thread->identifyRawFiles(oneFile);
     if (!m_thread->running())
         m_thread->start();
@@ -344,41 +344,41 @@ void SingleDialog::busy(bool val)
 
 void SingleDialog::identified(const QString&, const QString& identity)
 {
-    previewWidget_->setText(inputFileName_ + QString(" : ") + identity);
+    m_previewWidget->setText(m_inputFileName + QString(" : ") + identity);
 }
 
 void SingleDialog::previewing(const QString&)
 {
-    previewBlink_ = false;
-    previewWidget_->setCursor( KCursor::waitCursor() );
-    blinkPreviewTimer_->start(200);
+    m_previewBlink = false;
+    m_previewWidget->setCursor( KCursor::waitCursor() );
+    m_blinkPreviewTimer->start(200);
 }
 
-void SingleDialog::previewed(const QString&, const QString& tmpFile_)
+void SingleDialog::previewed(const QString&, const QString& tmpFile)
 {
-    previewWidget_->unsetCursor();
-    blinkPreviewTimer_->stop();
-    previewWidget_->load(tmpFile_);
+    m_previewWidget->unsetCursor();
+    m_blinkPreviewTimer->stop();
+    m_previewWidget->load(tmpFile);
 }
 
 void SingleDialog::previewFailed(const QString&)
 {
-    previewWidget_->unsetCursor();
-    previewWidget_->setText(i18n("Failed to generate preview"), Qt::red);
+    m_previewWidget->unsetCursor();
+    m_previewWidget->setText(i18n("Failed to generate preview"), Qt::red);
 }
 
 void SingleDialog::processing(const QString&)
 {
-    convertBlink_ = false;
-    previewWidget_->setCursor( KCursor::waitCursor() );
-    blinkConvertTimer_->start(200);
+    m_convertBlink = false;
+    m_previewWidget->setCursor( KCursor::waitCursor() );
+    m_blinkConvertTimer->start(200);
 }
 
-void SingleDialog::processed(const QString&, const QString& tmpFile_)
+void SingleDialog::processed(const QString&, const QString& tmpFile)
 {
-    previewWidget_->unsetCursor();
-    blinkConvertTimer_->stop();
-    previewWidget_->load(tmpFile_);
+    m_previewWidget->unsetCursor();
+    m_blinkConvertTimer->stop();
+    m_previewWidget->load(tmpFile);
     QString filter("*.");
     QString ext;
 
@@ -399,7 +399,7 @@ void SingleDialog::processed(const QString&, const QString& tmpFile_)
     }
 
     filter += ext;
-    QFileInfo fi(inputFile_);
+    QFileInfo fi(m_inputFile);
     QString destFile = fi.dirPath(true) + QString("/") + fi.baseName() + QString(".") + ext;
 
     if (m_saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
@@ -415,7 +415,7 @@ void SingleDialog::processed(const QString&, const QString& tmpFile_)
 
     if (!destFile.isEmpty()) 
     {
-        if (::rename(QFile::encodeName(tmpFile_), QFile::encodeName(destFile)) != 0)
+        if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1").arg( destFile ));
         }
@@ -424,34 +424,34 @@ void SingleDialog::processed(const QString&, const QString& tmpFile_)
 
 void SingleDialog::processingFailed(const QString&)
 {
-    previewWidget_->unsetCursor();
-    previewWidget_->setText(i18n("Failed to convert Raw image"), Qt::red);
+    m_previewWidget->unsetCursor();
+    m_previewWidget->setText(i18n("Failed to convert Raw image"), Qt::red);
 }
 
 void SingleDialog::slotPreviewBlinkTimerDone()
 {
     QString preview = i18n("Generating Preview...");
 
-    if (previewBlink_)
-        previewWidget_->setText(preview, Qt::green);
+    if (m_previewBlink)
+        m_previewWidget->setText(preview, Qt::green);
     else
-        previewWidget_->setText(preview, Qt::darkGreen);
+        m_previewWidget->setText(preview, Qt::darkGreen);
 
-    previewBlink_ = !previewBlink_;
-    blinkPreviewTimer_->start(200);
+    m_previewBlink = !m_previewBlink;
+    m_blinkPreviewTimer->start(200);
 }
 
 void SingleDialog::slotConvertBlinkTimerDone()
 {
     QString convert = i18n("Converting Raw Image...");
 
-    if (convertBlink_)
-        previewWidget_->setText(convert, Qt::green);
+    if (m_convertBlink)
+        m_previewWidget->setText(convert, Qt::green);
     else
-        previewWidget_->setText(convert, Qt::darkGreen);
+        m_previewWidget->setText(convert, Qt::darkGreen);
 
-    convertBlink_ = !convertBlink_;
-    blinkConvertTimer_->start(200);
+    m_convertBlink = !m_convertBlink;
+    m_blinkConvertTimer->start(200);
 }
 
 void SingleDialog::customEvent(QCustomEvent *event)
