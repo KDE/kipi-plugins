@@ -48,12 +48,12 @@
 
 // KIPI include files
 
-#include <libkipi/version.h>
 #include <libkipi/interface.h>
 #include <libkipi/imagedialog.h>
 
 // Local includes.
 
+#include "pluginsversion.h"
 #include "galleries.h"
 #include "gallerylist.h"
 #include "gallerytalker.h"
@@ -62,7 +62,7 @@
 #include "gallerywidget.h"
 #include "galleryalbumdialog.h"
 #include "gallerywindow.h"
-
+#include "gallerywindow.moc"
 
 namespace KIPIGalleryExportPlugin
 {
@@ -79,7 +79,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Gallery Export"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin to export image collection to remote Gallery server."),
                                        KAboutData::License_GPL,
                                        "(c) 2004-2005, Renchi Raju",
@@ -632,6 +632,4 @@ void GalleryWindow::slotAddPhotoCancel()
 }
 
 }
-
-#include "gallerywindow.moc"
 
