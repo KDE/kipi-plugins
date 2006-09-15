@@ -483,7 +483,10 @@ void BatchDialog::processing(const QString& file)
     QString filename     = QFileInfo(file).fileName();
     m_currentConvertItem = m_itemDict.find(filename);
     if (m_currentConvertItem) 
+    {
         m_listView->setSelected(m_currentConvertItem->viewItem, true);
+        m_listView->ensureItemVisible(m_currentConvertItem->viewItem);
+    }
 
     m_convertBlink = false;
     m_blinkConvertTimer->start(500);
