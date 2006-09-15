@@ -20,8 +20,6 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#include "kimg2mpg.h"
-
 // C Ansi includes
 
 extern "C"
@@ -89,14 +87,16 @@ extern "C"
 
 // KIPI include files
 
-#include <libkipi/version.h>
 #include <libkipi/imagedialog.h>
 
 // Local includes
 
+#include "pluginsversion.h"
 #include "kshowdebuggingoutput.h"
 #include "optionsdialog.h"
 #include "checkbinprog.h"
+#include "kimg2mpg.h"
+#include "kimg2mpg.moc"
 
 namespace KIPIMPEGEncoderPlugin
 {
@@ -431,7 +431,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
   KAboutData* about = new KAboutData("kipiplugins",
                                      I18N_NOOP("MPEG Slideshow"),
-                                     kipi_version,
+                                     kipiplugins_version,
                                      I18N_NOOP("A Kipi plugin for encoding images to an MPEG file."),
                                      KAboutData::License_GPL,
                                      "(c) 2003-2004, Gilles Caulier",
@@ -1432,4 +1432,3 @@ return true;
 
 }  // NameSpace KIPIMPEGEncoderPlugin
 
-#include "kimg2mpg.moc"
