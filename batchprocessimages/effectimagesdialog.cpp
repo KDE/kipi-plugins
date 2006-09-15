@@ -43,16 +43,14 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
-// Include files for libKipi.
-
-#include <libkipi/version.h>
-
 // Local includes
 
+#include "pluginsversion.h"
 #include "effectoptionsdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
 #include "effectimagesdialog.h"
+#include "effectimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -66,7 +64,7 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch image effects"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin for batch image-effect transformations\n"
                                                  "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,
@@ -466,4 +464,3 @@ QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
 
-#include "effectimagesdialog.moc"

@@ -29,12 +29,12 @@
 #include <qlayout.h>
 #include <qpushbutton.h>
 
-// Includes files for KIPI
+// Local includes.
 
-#include <libkipi/version.h>
-
-#include "renameimagesdialog.h"
+#include "pluginsversion.h"
 #include "renameimageswidget.h"
+#include "renameimagesdialog.h"
+#include "renameimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -50,7 +50,7 @@ RenameImagesDialog::RenameImagesDialog(const KURL::List& images,
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch-rename images"), 
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin to batch-rename images"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2005, Gilles Caulier", 
@@ -80,8 +80,7 @@ RenameImagesDialog::RenameImagesDialog(const KURL::List& images,
 }
 
 RenameImagesDialog::~RenameImagesDialog()
-{
-    
+{   
 }
 
 void RenameImagesDialog::slotHelp(void)
@@ -91,4 +90,3 @@ void RenameImagesDialog::slotHelp(void)
 
 }
 
-#include "renameimagesdialog.moc"

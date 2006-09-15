@@ -44,15 +44,13 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
-// Include files for libKipi.
-
-#include <libkipi/version.h>
-
 // Local includes
 
+#include "pluginsversion.h"
 #include "resizeoptionsdialog.h"
 #include "outputdialog.h"
 #include "resizeimagesdialog.h"
+#include "resizeimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -66,7 +64,7 @@ ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch resize images"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin to batch-resize images\n"
                                                  "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,
@@ -605,4 +603,3 @@ bool ResizeImagesDialog::ResizeImage( int &w, int &h, int SizeFactor)
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
 
-#include "resizeimagesdialog.moc"

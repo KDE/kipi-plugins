@@ -20,7 +20,6 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-
 // Include files for Qt
 
 #include <qgroupbox.h>
@@ -43,16 +42,14 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
-// Include files for libKipi.
-
-#include <libkipi/version.h>
-
 // Local includes
 
+#include "pluginsversion.h"
 #include "filteroptionsdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
 #include "filterimagesdialog.h"
+#include "filterimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -66,7 +63,7 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch image filtering"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin to batch filter images\n"
                                                  "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,
@@ -393,4 +390,3 @@ QString FilterImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
 
-#include "filterimagesdialog.moc"

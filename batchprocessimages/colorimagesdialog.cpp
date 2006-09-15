@@ -42,16 +42,14 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
-// Include files for libKipi.
-
-#include <libkipi/version.h>
-
 // Local includes
 
+#include "pluginsversion.h"
 #include "coloroptionsdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
 #include "colorimagesdialog.h"
+#include "colorimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -65,7 +63,7 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch image-color enhancement"), 
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin for batch image-color enhancement\n"
                                                  "This plugin use the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,
@@ -351,4 +349,3 @@ QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *i
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
 
-#include "colorimagesdialog.moc"

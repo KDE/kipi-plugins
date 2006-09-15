@@ -63,13 +63,11 @@ extern "C"
 #include <kpopupmenu.h>
 #include <kdeversion.h>
 
-// Include files for libKipi.
-
-#include <libkipi/version.h>
-
 // Local includes
 
+#include "pluginsversion.h"
 #include "imagepreview.h"
+#include "imagepreview.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -88,7 +86,7 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch process images"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("An interface to preview the \"Batch Process Images\" "
                                                  "Kipi plugin.\n"
                                                  "This plugin uses the \"convert\" program from \"ImageMagick\" "
@@ -462,4 +460,3 @@ void PixmapView::contentsMouseMoveEvent( QMouseEvent * e )
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
 
-#include "imagepreview.moc"

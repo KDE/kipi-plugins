@@ -43,16 +43,14 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
-// Include files for libKipi.
-
-#include <libkipi/version.h>
-
 // Local includes
 
-#include "borderoptionsdialog.h"
+#include "pluginsversion.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
+#include "borderoptionsdialog.h"
 #include "borderimagesdialog.h"
+#include "borderimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -66,7 +64,7 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch Image-bordering"), 
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin for batch bordering images\n"
                                                  "This plugin use the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,
@@ -362,4 +360,3 @@ QString BorderImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
 
-#include "borderimagesdialog.moc"

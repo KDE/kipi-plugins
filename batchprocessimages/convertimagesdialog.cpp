@@ -44,15 +44,13 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
-// Include files for libKipi.
-
-#include <libkipi/version.h>
-
 // Local includes
 
+#include "pluginsversion.h"
 #include "convertoptionsdialog.h"
 #include "outputdialog.h"
 #include "convertimagesdialog.h"
+#include "convertimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -66,7 +64,7 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch convert images"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin for batch converting images\n"
                                                  "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,
@@ -358,7 +356,7 @@ QString ConvertImagesDialog::ImageFileExt(QString Ext)
 {
     if ( Ext == "TIFF" || Ext == "tiff" )
        return ("tif");
-    else if ( Ext == "JPEG" || Ext == "jpeg" )
+    else if ( Ext == "JPEG" || Ext == "jpeg" || Ext == "JPE" || Ext == "jpe" )
        return ("jpg");
     else
        return (Ext.lower());
@@ -366,4 +364,3 @@ QString ConvertImagesDialog::ImageFileExt(QString Ext)
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
 
-#include "convertimagesdialog.moc"

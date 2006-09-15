@@ -42,15 +42,13 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
-// Include files for libKipi.
-
-#include <libkipi/version.h>
-
 // Local includes
 
+#include "pluginsversion.h"
 #include "recompressoptionsdialog.h"
 #include "outputdialog.h"
 #include "recompressimagesdialog.h"
+#include "recompressimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -64,7 +62,7 @@ RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interf
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch recompress images"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin to batch recompress images\n"
                                                  "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
                                        KAboutData::License_GPL,
@@ -281,10 +279,13 @@ bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
 {
     QString imageExt = item->nameSrc().section('.', -1 );
 
-    if (imageExt != "JPEG" && imageExt != "jpeg" && imageExt != "JPG" && imageExt != "jpg" &&
-        imageExt != "PNG" && imageExt != "png" &&
-        imageExt != "TIFF" && imageExt != "tiff" && imageExt != "TIF" && imageExt != "tif" &&
-        imageExt != "TGA" && imageExt != "tga")
+    if (imageExt != "JPEG" && imageExt != "jpeg" && 
+        imageExt != "JPG"  && imageExt != "jpg"  &&
+        imageExt != "JPE"  && imageExt != "jpe"  &&
+        imageExt != "PNG"  && imageExt != "png"  &&
+        imageExt != "TIFF" && imageExt != "tiff" && 
+        imageExt != "TIF"  && imageExt != "tif"  &&
+        imageExt != "TGA"  && imageExt != "tga")
         {
         item->changeResult(i18n("Skipped."));
         item->changeError(i18n("image file format unsupported."));
@@ -296,4 +297,3 @@ bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
 
-#include "recompressimagesdialog.moc"

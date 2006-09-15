@@ -38,13 +38,11 @@
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 
-// Include files for libKipi.
-
-#include <libkipi/version.h>
-
 // Local includes
 
+#include "pluginsversion.h"
 #include "outputdialog.h"
+#include "outputdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -59,7 +57,7 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Batch processes images"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("An interface to show the output of the \"Batch Process "
                                                  "Images\" Kipi plugin.\n"
                                                  "This plugin uses the \"convert\" program from \"ImageMagick\" "
@@ -150,4 +148,3 @@ void OutputDialog::slotCopyToCliboard( void )
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
 
-#include "outputdialog.moc"
