@@ -32,6 +32,7 @@
 #include <qcheckbox.h>
 #include <qstringlist.h>
 #include <qradiobutton.h>
+
 // Include files for KDE
 
 #include <kaboutdata.h>
@@ -53,12 +54,12 @@
 
 // KIPI include files
 
-#include <libkipi/version.h>
 #include <libkipi/interface.h>
 #include <libkipi/imagedialog.h>
 
 // Local includes.
 
+#include "pluginsversion.h"
 #include "flickrtalker.h"
 #include "flickritem.h"
 #include "flickrviewitem.h"
@@ -82,7 +83,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Flickr Export"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin to export image collection to Flickr web service."),
                                        KAboutData::License_GPL,
                                        "(c) 2005, Vardhman Jain",
@@ -100,29 +101,30 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_widget = new FlickrWidget( this );
     setMainWidget( m_widget );
     m_widget->setMinimumSize( 600, 400 );
-	m_urls=NULL;
-    m_tagView        = m_widget->m_tagView;
-    m_photoView        = m_widget->m_photoView;
-    //m_newAlbumBtn      = widget->m_newAlbumBtn;
-    m_addPhotoBtn      = m_widget->m_addPhotoBtn;
-    m_resizeCheckBox   = m_widget->m_resizeCheckBox;
-    m_publicCheckBox	       = m_widget->m_publicCheckBox;
-    m_familyCheckBox          = m_widget->m_familyCheckBox;
-    m_friendsCheckBox         = m_widget->m_friendsCheckBox;
-    m_dimensionSpinBox = m_widget->m_dimensionSpinBox;
-    m_imageQualitySpinBox = m_widget->m_imageQualitySpinBox;
-    m_tagsLineEdit          = m_widget->m_tagsLineEdit;
-	m_exportApplicationTags = m_widget->m_exportApplicationTags;
-	m_startUploadButton = m_widget->m_startUploadButton;
-    m_changeUserButton=m_widget->m_changeUserButton;
-    m_userNameDisplayLabel=m_widget->m_userNameDisplayLabel;
-	//m_startUploadButton->setEnabled(false);
-	//m_albumView->setRootIsDecorated( true );
 
+    m_urls                  = NULL;
+    m_tagView               = m_widget->m_tagView;
+    m_photoView             = m_widget->m_photoView;
+    //m_newAlbumBtn           = widget->m_newAlbumBtn;
+    m_addPhotoBtn           = m_widget->m_addPhotoBtn;
+    m_resizeCheckBox        = m_widget->m_resizeCheckBox;
+    m_publicCheckBox	    = m_widget->m_publicCheckBox;
+    m_familyCheckBox        = m_widget->m_familyCheckBox;
+    m_friendsCheckBox       = m_widget->m_friendsCheckBox;
+    m_dimensionSpinBox      = m_widget->m_dimensionSpinBox;
+    m_imageQualitySpinBox   = m_widget->m_imageQualitySpinBox;
+    m_tagsLineEdit          = m_widget->m_tagsLineEdit;
+    m_exportApplicationTags = m_widget->m_exportApplicationTags;
+    m_startUploadButton     = m_widget->m_startUploadButton;
+    m_changeUserButton      = m_widget->m_changeUserButton;
+    m_userNameDisplayLabel  = m_widget->m_userNameDisplayLabel;
+
+    //m_startUploadButton->setEnabled(false);
+    //m_albumView->setRootIsDecorated( true );
     //m_newAlbumBtn->setEnabled( false );
     m_addPhotoBtn->setEnabled( false );
-	//if(!m_interface->hasFeature(KIPI::HostSupportsTags))
-	//		m_exportApplicationTags->setEnabled(false);
+    //if(!m_interface->hasFeature(KIPI::HostSupportsTags))
+    //		m_exportApplicationTags->setEnabled(false);
     
     m_talker = new FlickrTalker( this );
     connect( m_talker, SIGNAL( signalError( const QString& ) ),m_talker,

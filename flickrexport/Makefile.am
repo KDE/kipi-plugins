@@ -1,5 +1,7 @@
-INCLUDES    = $(LIBKIPI_CFLAGS) $(all_includes)
 METASOURCES = AUTO
+
+INCLUDES = -I$(top_srcdir)/kipi-plugins/common/include \
+	   $(LIBKIPI_CFLAGS) $(all_includes)
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_flickrexport.la
@@ -7,9 +9,9 @@ kde_module_LTLIBRARIES = kipiplugin_flickrexport.la
 kipiplugin_flickrexport_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 
 kipiplugin_flickrexport_la_SOURCES = plugin_flickrexport.cpp \
-		flickrwindow.cpp login.cpp flickrtalker.cpp \
-		flickrwidget.cpp mpform.cpp flickralbumdialog.ui \
-		flickrviewitem.cpp	exifrestorer.cpp 
+		                     flickrwindow.cpp login.cpp flickrtalker.cpp \
+		                     flickrwidget.cpp mpform.cpp flickralbumdialog.ui \
+		                     flickrviewitem.cpp exifrestorer.cpp 
 
 kipiplugin_flickrexport_la_LIBADD = $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
