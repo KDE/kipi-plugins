@@ -63,13 +63,14 @@
 
 // Include files for KIPI
 
-#include <libkipi/version.h>
 #include <libkipi/imagedialog.h>
 
 // Local include files
 
-#include "sendimagesdialog.h"
+#include "pluginsversion.h"
 #include "listimageserrordialog.h"
+#include "sendimagesdialog.h"
+#include "sendimagesdialog.moc"
 
 namespace KIPISendimagesPlugin
 {
@@ -154,7 +155,7 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Send Images"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin for emailing images"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2005, Gilles Caulier",
@@ -660,4 +661,3 @@ void SendImagesDialog::setNbItems(void)
 
 }  // NameSpace KIPISendimagesPlugin
 
-#include "sendimagesdialog.moc"
