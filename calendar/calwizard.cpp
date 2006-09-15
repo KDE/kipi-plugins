@@ -51,16 +51,17 @@
 
 // LibKipi includes.
 
-#include <libkipi/version.h>
 #include <libkipi/interface.h>
 
 // Local includes.
 
-#include "calwizard.h"
+#include "pluginsversion.h"
 #include "caltemplate.h"
 #include "calselect.h"
 #include "calsettings.h"
 #include "calpainter.h"
+#include "calwizard.h"
+#include "calwizard.moc"
 
 namespace KIPICalendarPlugin
 {
@@ -164,7 +165,7 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Calendar"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin to create a calendar"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Renchi Raju, (c) 2006 Tom Albers",
@@ -367,4 +368,3 @@ void CalWizard::slotPrintOnePage()
 
 }  // NameSpace KIPICalendarPlugin
 
-#include "calwizard.moc"
