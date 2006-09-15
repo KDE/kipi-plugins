@@ -58,14 +58,12 @@ extern "C"
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 
-// Include files for libKipi.
-
-#include <libkipi/version.h>
-
 // Local includes
 
+#include "pluginsversion.h"
 #include "screenshotdialog.h"
 #include "acquireimagedialog.h"
+#include "screenshotdialog.moc"
 
 namespace KIPIAcquireImagesPlugin
 {
@@ -179,7 +177,7 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Acquire images"), 
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin to acquire images"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 
@@ -360,4 +358,3 @@ bool ScreenGrabDialog::eventFilter( QObject* o, QEvent* e)
 
 }  // NameSpace KIPIAcquireImagesPlugin
 
-#include "screenshotdialog.moc"

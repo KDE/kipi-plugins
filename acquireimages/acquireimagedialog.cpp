@@ -81,12 +81,13 @@ extern "C"
 
 // Include files for libKipi.
 
-#include <libkipi/version.h>
 #include <libkipi/imageinfo.h>
 
 // Local includes
 
+#include "pluginsversion.h"
 #include "acquireimagedialog.h"
+#include "acquireimagedialog.moc"
 
 namespace KIPIAcquireImagesPlugin
 {
@@ -120,7 +121,7 @@ AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *par
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Acquire images"), 
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin to acquire images"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Gilles Caulier", 
@@ -610,4 +611,3 @@ bool AcquireImageDialog::QImageToTiff(const QImage& image, const QString& dst)
 
 }  // NameSpace KIPIAcquireImagesPlugin
 
-#include "acquireimagedialog.moc"
