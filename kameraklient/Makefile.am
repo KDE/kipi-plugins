@@ -1,5 +1,6 @@
 ## Makefile.am for kameraklient
-INCLUDES = $(GPHOTO_CFLAGS) $(LIBKIPI_CFLAGS) $(all_includes)
+INCLUDES = -I$(top_srcdir)/kipi-plugins/common/include \
+	   $(GPHOTO_CFLAGS) $(LIBKIPI_CFLAGS) $(all_includes)
 
 METASOURCES = AUTO
 

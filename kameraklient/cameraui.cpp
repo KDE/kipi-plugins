@@ -75,19 +75,15 @@
 #include <kiconloader.h>
 #include <kguiitem.h>
 
-// Include files for KIPI
-
-#include <libkipi/version.h>
-
 // Local includes.
 
+#include "pluginsversion.h"
 #include "camerafolderitem.h"
 #include "cameraiconview.h"
 #include "camerafolderview.h"
 #include "cameraiconitem.h"
 #include "cameralist.h"
 #include "cameratype.h"
-#include "cameraui.h"
 #include "dmessagebox.h"
 #include "gpcontroller.h"
 #include "gpeventfilter.h"
@@ -95,6 +91,8 @@
 #include "gpfileiteminfo.h"
 #include "savefiledialog.h"
 #include "setupcamera.h"
+#include "cameraui.h"
+#include "cameraui.moc"
 
 namespace KIPIKameraKlientPlugin
 {
@@ -171,7 +169,7 @@ CameraUI::CameraUI() : QWidget()
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("KameraKlient"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Digital camera interface Kipi plugin"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Renchi Raju\n"
@@ -691,4 +689,3 @@ void CameraUI::readSettings() {
 
 }  // NameSpace KIPIKameraKlientPlugin
 
-#include "cameraui.moc"
