@@ -22,6 +22,13 @@
 #ifndef DCRAWIFACE_H
 #define DCRAWIFACE_H
 
+// C Ansi includes.
+
+extern "C"
+{
+#include <png.h>
+}
+
 // Qt Includes.
 
 #include <qstring.h>
@@ -86,6 +93,14 @@ private:
     void startProcess();
 
     virtual void customEvent(QCustomEvent *);
+
+    void   writeRawProfile(png_struct *ping, png_info *ping_info, char *profile_type, 
+                           char *profile_data, png_uint_32 length);
+
+    size_t concatenateString(char *destination, const char *source, const size_t length);
+    size_t copyString(char *destination, const char *source, const size_t length);
+    long   formatString(char *string, const size_t length, const char *format,...);
+    long   formatStringList(char *string, const size_t length, const char *format, va_list operands);
 
 private slots:
 

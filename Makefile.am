@@ -25,7 +25,6 @@ JPEGLOSSLESSDIR = $(jpeglosslessdir)
 TIMEADJUSTDIR = $(timeadjustdir)
 endif
 
-
 if compile_ACQUIREIMAGES
 ACQUIREIMAGESDIR = acquireimages
 endif

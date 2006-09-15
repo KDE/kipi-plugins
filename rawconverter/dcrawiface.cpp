@@ -38,7 +38,6 @@ extern "C"
 #include <jpeglib.h>
 #include <tiffio.h>
 #include <tiffvers.h>
-#include <png.h>
 #include "iccjpeg.h"
 }
 
@@ -63,6 +62,7 @@ extern "C"
 
 #include "pluginsversion.h"
 #include "rawfiles.h"
+#include "exiv2iface.h"
 #include "dcrawbinary.h"
 #include "dcrawiface.h"
 #include "dcrawiface.moc"
@@ -468,6 +468,12 @@ bool DcrawIface::loadFromDcraw(const QString& filePath, QString& destPath)
             
             jpeg_finish_compress(&cinfo);
             fclose(f);
+
+            // Metadata restoration.
+            Exiv2Iface exiv2Ifave;
+            exiv2Ifave.load(filePath);
+            exiv2Ifave.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
+            exiv2Ifave.save(destPath);
             break;
         }
         case RawDecodingSettings::PNG:
@@ -514,6 +520,23 @@ bool DcrawIface::loadFromDcraw(const QString& filePath, QString& destPath)
             text.text = (char *)soft.ascii();
             text.compression = PNG_TEXT_COMPRESSION_zTXt;
             png_set_text(png_ptr, info_ptr, &(text), 1);
+
+            // Metadata restoration.
+            Exiv2Iface exiv2Ifave;
+            exiv2Ifave.load(filePath);
+            exiv2Ifave.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
+
+            // Store Exif data.
+            QByteArray ba = exiv2Ifave.getExif();
+            const uchar ExifHeader[] = {0x45, 0x78, 0x69, 0x66, 0x00, 0x00};
+            QByteArray profile = QByteArray(ba.size() + sizeof(ExifHeader));
+            memcpy(profile.data(), ExifHeader, sizeof(ExifHeader));
+            memcpy(profile.data()+sizeof(ExifHeader), ba.data(), ba.size());
+            writeRawProfile(png_ptr, info_ptr, "exif", profile.data(), (png_uint_32) profile.size());
+
+            // Store Iptc data.
+            QByteArray ba2 = exiv2Ifave.getIptc();
+            writeRawProfile(png_ptr, info_ptr, "iptc", ba2.data(), (png_uint_32) ba2.size());
 
             png_write_info(png_ptr, info_ptr);
             png_set_shift(png_ptr, &sig_bit);
@@ -569,6 +592,21 @@ bool DcrawIface::loadFromDcraw(const QString& filePath, QString& destPath)
             TIFFSetField(tif, TIFFTAG_PHOTOMETRIC,     PHOTOMETRIC_RGB);
             w = TIFFScanlineSize(tif);
             TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP,    TIFFDefaultStripSize(tif, 0));
+
+
+            // Metadata restoration.
+            Exiv2Iface exiv2Ifave;
+            exiv2Ifave.load(filePath);
+            exiv2Ifave.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
+
+            // Store Exif data.
+            // TODO
+
+            // Store Iptc data.
+            QByteArray ba2 = exiv2Ifave.getIptc(true);
+#if defined(TIFFTAG_PHOTOSHOP)
+            TIFFSetField (tif, TIFFTAG_PHOTOSHOP,      (uint32)ba2.size(), (uchar *)ba2.data());
+#endif
 
             QString libtiffver(TIFFLIB_VERSION_STR);
             libtiffver.replace('\n', ' ');
@@ -839,6 +877,168 @@ void DcrawIface::slotReceivedStderr(KProcess *, char *buffer, int buflen)
 {
     QCString message(buffer, buflen);
     kdDebug() << "Dcraw StdErr: " << message << endl;
+}
+
+void DcrawIface::writeRawProfile(png_struct *ping, png_info *ping_info, char *profile_type, 
+                                 char *profile_data, png_uint_32 length)
+{
+    png_textp      text;
+    
+    register long  i;
+    
+    uchar         *sp;
+    
+    png_charp      dp;
+    
+    png_uint_32    allocated_length, description_length;
+
+    const uchar hex[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
+    
+    kdDebug() << "Writing Raw profile: type=" << profile_type << ", length=" << length << endl;
+    
+    text               = (png_textp) png_malloc(ping, (png_uint_32) sizeof(png_text));
+    description_length = strlen((const char *) profile_type);
+    allocated_length   = (png_uint_32) (length*2 + (length >> 5) + 20 + description_length);
+    
+    text[0].text   = (png_charp) png_malloc(ping, allocated_length);
+    text[0].key    = (png_charp) png_malloc(ping, (png_uint_32) 80);
+    text[0].key[0] = '\0';
+    
+    concatenateString(text[0].key, "Raw profile type ", 4096);
+    concatenateString(text[0].key, (const char *) profile_type, 62);
+    
+    sp = (uchar*)profile_data;
+    dp = text[0].text;
+    *dp++='\n';
+    
+    copyString(dp, (const char *) profile_type, allocated_length);
+    
+    dp += description_length;
+    *dp++='\n';
+    
+    formatString(dp, allocated_length-strlen(text[0].text), "%8lu ", length);
+    
+    dp += 8;
+    
+    for (i=0; i < (long) length; i++)
+    {
+        if (i%36 == 0)
+            *dp++='\n';
+
+        *(dp++)=(char) hex[((*sp >> 4) & 0x0f)];
+        *(dp++)=(char) hex[((*sp++ ) & 0x0f)]; 
+    }
+
+    *dp++='\n';
+    *dp='\0';
+    text[0].text_length = (png_size_t) (dp-text[0].text);
+    text[0].compression = -1;
+
+    if (text[0].text_length <= allocated_length)
+        png_set_text(ping, ping_info,text, 1);
+
+    png_free(ping, text[0].text);
+    png_free(ping, text[0].key);
+    png_free(ping, text);
+}
+
+size_t DcrawIface::concatenateString(char *destination, const char *source, const size_t length)
+{
+    register char       *q;
+    
+    register const char *p;
+    
+    register size_t      i;
+    
+    size_t               count;
+  
+    if ( !destination || !source || length == 0 )
+        return 0;
+
+    p = source;
+    q = destination;
+    i = length;
+
+    while ((i-- != 0) && (*q != '\0'))
+        q++;
+
+    count = (size_t) (q-destination);
+    i     = length-count;
+
+    if (i == 0)
+        return(count+strlen(p));
+
+    while (*p != '\0')
+    {
+        if (i != 1)
+        {
+            *q++=(*p);
+            i--;
+        }
+        p++;
+    }
+
+    *q='\0';
+    
+    return(count+(p-source));
+}
+
+size_t DcrawIface::copyString(char *destination, const char *source, const size_t length)
+{
+    register char       *q;
+    
+    register const char *p;
+    
+    register size_t      i;
+        
+    if ( !destination || !source || length == 0 )
+        return 0;
+
+    p = source;
+    q = destination;
+    i = length;
+
+    if ((i != 0) && (--i != 0))
+    {
+        do
+        {
+            if ((*q++=(*p++)) == '\0')
+                break;
+        } 
+        while (--i != 0);
+    }
+
+    if (i == 0)
+    {
+        if (length != 0)
+            *q='\0';
+  
+        while (*p++ != '\0');
+    }
+    
+    return((size_t) (p-source-1));
+}
+
+long DcrawIface::formatString(char *string, const size_t length, const char *format,...)
+{
+    long n;
+    
+    va_list operands;
+    
+    va_start(operands,format);
+    n = (long) formatStringList(string, length, format, operands);
+    va_end(operands);
+    return(n);
+}
+
+long DcrawIface::formatStringList(char *string, const size_t length, const char *format, va_list operands)
+{
+    int n = vsnprintf(string, length, format, operands);
+    
+    if (n < 0)
+        string[length-1] = '\0';
+    
+    return((long) n);
 }
 
 }  // namespace KIPIRawConverterPlugin
