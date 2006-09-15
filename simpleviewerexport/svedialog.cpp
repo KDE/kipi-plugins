@@ -51,12 +51,13 @@
 
 // KIPI include files
 
-#include <libkipi/version.h>
 #include <libkipi/imagecollectionselector.h>
 
 // Local include files
 
+#include "pluginsversion.h"
 #include "svedialog.h"
+#include "svedialog.moc"
 
 namespace KIPISimpleViewerExportPlugin
 {
@@ -80,7 +81,7 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Simple Viewer"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin for Simple Viewer export."),
                                        KAboutData::License_GPL,
                                        "(c) 2005-2006, Joern Ahrens",
@@ -541,4 +542,3 @@ void SVEDialog::setNavPosition(const QString &pos)
 
 } //  namespace KIPISimpleViewerExportPlugin
 
-#include "svedialog.moc"
