@@ -99,8 +99,9 @@ imlib2 >= 1.1.0
 libexif >= 0.5.7
 ImageMagick >= 5.5.4
 MJPEGTools >= 1.6.0
-dcRAW >= 5.02
+dcRAW >= 8.02
 libtiff >= 3.5.x
+libexiv2 >= 0.10.0
 
 Plugin Specific Dependencies (for compiling and for running) :
 -------------------------------------------------------------------------
@@ -115,7 +116,7 @@ cdarchiving        : k3b (runtime dependency)
 kameraklient       : libgphoto2 >= 2.x
 mpegenconder       : mjpegtools (runtime dependency)
 wallpaper          : kdebase >= 3.1.x (runtime dependency)
-rawconverter       : libtiff >= 3.0
+rawconverter       : libtiff >= 3.0, libexiv2 >= 0.10.0
 acquireimages      : libtiff >= 3.0
 timeadjust         : libkexif >= 0.1
 htmlexport         : libxslt >= 1.1
