@@ -57,6 +57,7 @@ public:
 
     RawDecodingSettings()
     {
+        sixteenBitsImage        = false;
         enableNoiseReduction    = false;
         NRSigmaDomain           = 2.0;
         NRSigmaRange            = 4.0;
@@ -78,7 +79,12 @@ public:
     ~RawDecodingSettings(){};
 
 public:
-    
+
+    /** If true, decode RAW file in 16 bits per color per pixel else 8 bits. 
+        NOTE: 16 bits color depth image data are not yet supported by this plugin.
+    */
+    bool  sixteenBitsImage;    
+
     /** Half-size color image decoding (twice as fast as "enableRAWQuality"). 
         Use this option to reduce time loading to render histogram for example, 
         no to render an image to screen. 

@@ -65,8 +65,8 @@
 namespace KIPIRawConverterPlugin
 {
 
-SingleDialog::SingleDialog(const QString& file, QWidget *parent, const QString& dcrawVersion)
-            : KDialogBase(parent, 0, false, i18n("Raw Image Converter"),
+SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/, const QString& dcrawVersion)
+            : KDialogBase(0, 0, false, i18n("Raw Image Converter"),
                           Help|Default|User1|User2|User3|Close, Close, true,
                           i18n("&Preview"), i18n("Con&vert"), i18n("&Abort"))
 {

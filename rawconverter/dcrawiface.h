@@ -1,9 +1,10 @@
 /* ============================================================
  * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net> 
+ *          Marcel Wiesweg <marcel.wiesweg@gmx.de>
  * Date   : 2006-12-09
  * Description : dcraw interface (tested with dcraw 8.x releases)
  *
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006 by Gilles Caulier and Marcel Wiesweg
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,29 +24,27 @@
 
 // Qt Includes.
 
-#include <qcstring.h>
 #include <qstring.h>
+#include <qobject.h>
 #include <qimage.h>
 
 // Local includes.
 
 #include "rawdecodingsettings.h"
 
+class QCustomEvent;
+
+class KProcess;
+
 namespace KIPIRawConverterPlugin
 {
+class DcrawIfacePriv;
 
-class DcrawIface
+class DcrawIface : public QObject
 {
+    Q_OBJECT
 
-public:
-
-    DcrawIface();
-    ~DcrawIface();
-
-    /** To cancel 'decodeHalfRAWImage' and 'decodeRAWImage' methods running 
-        in a separate thread.
-    */
-    void cancel();
+public:  // Fast non cancelable methods.
 
     /** Get the embedded preview image in RAW file
     */
@@ -54,6 +53,18 @@ public:
     /** Get the camera model witch have taken RAW file
     */ 
     bool rawFileIdentify(QString& identify, const QString& path);
+
+public:
+
+    DcrawIface();
+    ~DcrawIface();
+
+public: // Cancelable methods to extract RAW data. dcraw decoding can take a while.
+
+    /** To cancel 'decodeHalfRAWImage' and 'decodeRAWImage' methods running 
+        in a separate thread.
+    */
+    void cancel();
 
     /** Extract a small size of decode RAW data in 8 bits/color/pixels 
         using sRGB color space.
@@ -71,9 +82,21 @@ private:
 
     QByteArray getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace);
 
+    bool loadFromDcraw(const QString& filePath, QString& destPath);
+    void startProcess();
+
+    virtual void customEvent(QCustomEvent *);
+
+private slots:
+
+    void slotProcessExited(KProcess *);
+    void slotReceivedStdout(KProcess *, char *buffer, int buflen);
+    void slotReceivedStderr(KProcess *, char *buffer, int buflen);
+    void slotContinueQuery();
+
 private:
 
-    bool m_cancel;
+    DcrawIfacePriv *d;
 };
 
 }  // namespace KIPIRawConverterPlugin

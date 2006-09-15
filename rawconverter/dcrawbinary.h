@@ -42,7 +42,7 @@ public:
     DcrawBinary();
     ~DcrawBinary();
 
-    const char *path();
+    static const char *path();
     bool isAvailable() const;
     QString version() const;
     bool versionIsRight() const;
