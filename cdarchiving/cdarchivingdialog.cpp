@@ -68,14 +68,15 @@
 
 // Include files for KIPI
 
-#include <libkipi/version.h>
 #include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
 #include <libkipi/imagecollectionselector.h>
 
 // Local include files
 
+#include "pluginsversion.h"
 #include "cdarchivingdialog.h"
+#include "cdarchivingdialog.moc"
 
 namespace KIPICDArchivingPlugin
 {
@@ -98,7 +99,7 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("CD/DVD Archiving"), 
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("An Album CD/DVD Archiving Kipi plugin.\n"
                                                  "This plugin use K3b CD/DVD burning software available at\n"
                                                  "http://www.k3b.org"),
@@ -899,4 +900,3 @@ void CDArchivingDialog::setBordersImagesSize(int Value)
 
 }  // NameSpace KIPICDArchivingPlugin
 
-#include "cdarchivingdialog.moc"
