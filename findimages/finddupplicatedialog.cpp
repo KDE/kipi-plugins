@@ -61,13 +61,14 @@
 
 // Include files for KIPI
 
-#include <libkipi/version.h>
 #include <libkipi/imagecollection.h>
 #include <libkipi/imagecollectionselector.h>
 
 // Local include files
 
+#include "pluginsversion.h"
 #include "finddupplicatedialog.h"
+#include "finddupplicatedialog.moc"
 
 namespace KIPIFindDupplicateImagesPlugin
 {
@@ -87,7 +88,7 @@ FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *p
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Find Duplicate Images"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin to find duplicate images\n"
                                                  "This plugin is based on ShowImg implementation algorithm"),
                                        KAboutData::License_GPL,
@@ -336,4 +337,3 @@ void FindDuplicateDialog::setApproximateThreeshold(int Value)
 
 }  // NameSpace KIPIFindDupplicateImagesPlugin
 
-#include "finddupplicatedialog.moc"
