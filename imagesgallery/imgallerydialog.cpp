@@ -75,11 +75,11 @@
 
 // KIPI include files
 
-#include <libkipi/version.h>
 #include <libkipi/imagecollectionselector.h>
 
 // Local include files
 
+#include "pluginsversion.h"
 #include "imgallerydialog.h"
 #include "imgallerydialog.moc"
 
@@ -103,7 +103,7 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Image Gallery"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin for HTML album export.\n"
                                                  "Based on KimgalleryPlugin implementation."),
                                        KAboutData::License_GPL,
