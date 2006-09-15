@@ -44,15 +44,13 @@
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 
-// Include files for KIPI
-
-#include <libkipi/version.h>
-
 // Local includes.
 
+#include "pluginsversion.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowconfig.h"
+#include "slideshowconfig.moc"
 
 namespace KIPISlideShowPlugin
 {
@@ -65,7 +63,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Slide Show"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin for image slideshows"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Renchi Raju",
@@ -358,4 +356,3 @@ void SlideShowConfig::slotHelp()
 
 }  // NameSpace KIPISlideShowPlugin
 
-#include "slideshowconfig.moc"
