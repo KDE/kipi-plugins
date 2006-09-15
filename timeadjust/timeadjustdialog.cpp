@@ -43,13 +43,14 @@
 
 // LibKipi includes.
 
-#include <libkipi/version.h>
 #include <libkipi/imageinfo.h>
 #include <libkexif/kexifdata.h>
 
 // Local includes.
 
+#include "pluginsversion.h"
 #include "timeadjustdialog.h"
+#include "timeadjustdialog.moc"
 
 namespace KIPITimeAdjustPlugin
 {
@@ -62,7 +63,7 @@ TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent,
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Time Adjust"),
-                                       kipi_version,
+                                       kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin for adjusting dates and times"),
                                        KAboutData::License_GPL,
                                        "(c) 2003-2004, Jesper K. Pedersen",
@@ -280,4 +281,3 @@ QDateTime TimeAdjustDialog::updateTime( const KURL& url, const QDateTime& time )
 
 }  // NameSpace KIPITimeAdjustPlugin
 
-#include "timeadjustdialog.moc"

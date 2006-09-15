@@ -1,4 +1,6 @@
-INCLUDES    = $(LIBKIPI_CFLAGS) $(LIBKEXIF_CFLAGS) $(all_includes)
+INCLUDES = -I$(top_srcdir)/kipi-plugins/common/include \
+           $(LIBKIPI_CFLAGS) $(LIBKEXIF_CFLAGS) $(all_includes)
+
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
