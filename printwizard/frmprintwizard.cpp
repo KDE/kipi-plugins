@@ -55,10 +55,11 @@ extern "C"
 
 // Local includes
 
+#include "pluginsversion.h"
 #include "utils.h"
 #include "cropframe.h"
 #include "frmprintwizard.h"
-
+#include "frmprintwizard.moc"
 
 namespace KIPIPrintWizardPlugin
 {
@@ -93,7 +94,7 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
     
   KAboutData* about = new KAboutData("kipiplugins",
                                      I18N_NOOP("Print Wizard"), 
-                                     "0.1.0-cvs",
+                                     kipiplugins_version,
                                      I18N_NOOP("A KIPI plugin to print images"),
                                      KAboutData::License_GPL,
                                      "(c) 2003-2004, Todd Shoemaker", 
@@ -1108,4 +1109,3 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
 
 }  // NameSpace KIPIPrintWizardPlugin
 
-#include "frmprintwizard.moc"
