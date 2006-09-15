@@ -10,6 +10,7 @@ JPEGLossLess : Removing libmagic++ depency.
 RAWConverter : New core to be compatible with recent dcraw release. A lot 
                of RAW decoding settings have been added.
 RAWConverter : Embedding ouput color space in target image (JPEG/PNG/TIFF).
+RAWConverter : Metadata preservation in target image during Raw conversion (JPEG/PNG).
 
 Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 
@@ -18,6 +19,7 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 003 ==> 128394 : Convertion of RAW files fails with dcraw 8.21
 004 ==> 132659 : "Missing signature" - Flickr API changed and upload of 
                  images is no longer possible.
+005 ==> 107905 : Copy exif data from raw to converted images.
 
 v 0.1.2                                                           2006-07-08
 ----------------------------------------------------------------------------
