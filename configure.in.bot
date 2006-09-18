@@ -15,7 +15,7 @@ fi
 
 if test "x$have_tiff" != "xyes"; then
   echo ""
-  echo "You're missing libtiff. The acquireimages, jpeglossless and rawconverter plugins will not be compiled."
+  echo "You're missing libtiff. The acquireimages/jpeglossless/rawconverter plugins will not be compiled."
   echo ""
   all_tests=bad
 fi
