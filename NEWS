@@ -9,14 +9,15 @@ Kipi-plugins NEW FEATURES
 
 GalleryExport : Support for multiple galleries.
 
-JPEGLossLess  : Removing libmagic++ depency.
+JPEGLossLess  : Removed libmagic++ depency.
+JPEGLossLess  : Removed libkexif depency. Using Exiv2 instead.
 
 RAWConverter  : New core to be compatible with recent dcraw release. A lot 
                 of RAW decoding settings have been added.
 RAWConverter  : Embedding ouput color space in target image (JPEG/PNG/TIFF).
 RAWConverter  : Metadata preservation in target image during Raw conversion (JPEG/PNG).
 
-TimeAdjust    : Removing libkexif depency. Using Exiv2 instead.
+TimeAdjust    : Removed libkexif depency. Using Exiv2 instead.
 
 
 Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
