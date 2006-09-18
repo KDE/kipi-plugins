@@ -150,7 +150,7 @@ bool Plugin_RawConverter::checkBinaries(QString &dcrawVersion)
                      kapp->activeWindow(),
                      i18n("<qt><p>dcraw executable isn't up to date:<br> "
                           "The version %1 of dcraw have been found on your computer. "
-                          "This version is too old to run properlly with this plugin. "
+                          "This version is too old to run properly with this plugin. "
                           "Please update dcraw as a package from your distributor "
                           "or <a href=\"%2\">download the source</a>.</p>"
                           "<p>Note: at least, dcraw version %3 is required by this "
