@@ -41,6 +41,7 @@
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
+#include <kstandarddirs.h>
 
 // LibKipi includes.
 
@@ -57,7 +58,8 @@ namespace KIPITimeAdjustPlugin
 {
 
 TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent, const char* name )
-                : KDialogBase( Plain, i18n("Adjust Time & Date"), Help|Ok|Cancel, Ok, parent, name ),
+                : KDialogBase( Plain, i18n("Adjust Time & Date"), Help|Ok|Cancel, Ok, parent, 
+                  name, true, true ),
                   m_interface( interface )
 {
     // About data and help button.
@@ -142,15 +144,31 @@ void TimeAdjustDialog::addConfigPage()
 {
     QVBoxLayout *vlay = new QVBoxLayout( plainPage(), 6 );
 
-    QLabel* header = new QLabel( plainPage() );
-    header->setText( i18n("Adjust Time Stamp of Picture Files") );
-    vlay->addWidget( header );
+    // -- Banner ------------------------------------------------------------
 
-    QFrame* hline = new QFrame( plainPage() );
-    hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
-    vlay->addWidget( hline );
+    QFrame *headerFrame = new QFrame( plainPage() );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( i18n("Adjust Time Stamp of Picture Files"), headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    vlay->addWidget( headerFrame );
 
-    // Adjustment type
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+
+    // -- Adjustment type ------------------------------------------------------------
+
     m_adjustTypeGrp = new QVButtonGroup( i18n("Adjustment Type"),
                                          plainPage(), "adjustment type" );
     m_adjustTypeGrp->setRadioButtonExclusive( true );
@@ -164,48 +182,52 @@ void TimeAdjustDialog::addConfigPage()
     connect( m_adjustTypeGrp, SIGNAL( clicked(int) ),
              this, SLOT( adjustmentTypeChanged() ) );
 
-    // Adjustment
-    m_adjustValGrp = new QVButtonGroup( i18n("Adjustment"), plainPage(), "adjustment" );
+    // -- Adjustments ------------------------------------------------------------
+
+    m_adjustValGrp = new QVButtonGroup( i18n("Adjustments"), plainPage(), "adjustments" );
     vlay->addWidget( m_adjustValGrp );
-    QWidget* grid = new QWidget( m_adjustValGrp );
-    QGridLayout* gridLay = new QGridLayout( grid, 0, 3 );
+
+    QWidget* grid        = new QWidget( m_adjustValGrp );
+    QGridLayout* gridLay = new QGridLayout( grid, 1, 7, spacingHint());
     gridLay->setColStretch( 2, 1 );
+    gridLay->setColStretch( 5, 1 );
 
-    QLabel* label = new QLabel( i18n("Seconds:"), grid );
-    m_secs = new QSpinBox( 0, 1000, 1, grid );
+    QLabel* label = new QLabel( i18n("Hours:"), grid );
+    m_hours       = new QSpinBox( 0, 1000, 1, grid );
     gridLay->addWidget( label, 0, 0 );
-    gridLay->addWidget( m_secs, 0, 1 );
+    gridLay->addWidget( m_hours, 0, 1 );
 
-    label = new QLabel( i18n("Minutes:"), grid );
+    label     = new QLabel( i18n("Minutes:"), grid );
     m_minutes = new QSpinBox( 0, 1000, 1, grid );
-    gridLay->addWidget( label, 1, 0 );
-    gridLay->addWidget( m_minutes, 1, 1 );
+    gridLay->addWidget( label, 0, 3 );
+    gridLay->addWidget( m_minutes, 0, 4 );
 
-    label = new QLabel( i18n("Hours:"), grid );
-    m_hours = new QSpinBox( 0, 1000, 1, grid );
-    gridLay->addWidget( label, 2, 0 );
-    gridLay->addWidget( m_hours, 2, 1 );
+    label  = new QLabel( i18n("Seconds:"), grid );
+    m_secs = new QSpinBox( 0, 1000, 1, grid );
+    gridLay->addWidget( label, 0, 6 );
+    gridLay->addWidget( m_secs, 0, 7 );
 
-    label = new QLabel( i18n("Days:"), grid );
+    label  = new QLabel( i18n("Days:"), grid );
     m_days = new QSpinBox( 0, 1000, 1, grid );
-    gridLay->addWidget( label, 3, 0 );
-    gridLay->addWidget( m_days, 3, 1 );
+    gridLay->addWidget( label, 1, 0 );
+    gridLay->addWidget( m_days, 1, 1 );
 
-    label = new QLabel( i18n("Months:"), grid );
+    label    = new QLabel( i18n("Months:"), grid );
     m_months = new QSpinBox( 0, 1000, 1, grid );
-    gridLay->addWidget( label, 4, 0 );
-    gridLay->addWidget( m_months, 4, 1 );
+    gridLay->addWidget( label, 1, 3 );
+    gridLay->addWidget( m_months, 1, 4 );
 
-    label = new QLabel( i18n("Years:"), grid );
+    label   = new QLabel( i18n("Years:"), grid );
     m_years = new QSpinBox( 0, 1000, 1, grid );
-    gridLay->addWidget( label, 5, 0 );
-    gridLay->addWidget( m_years, 5, 1 );
+    gridLay->addWidget( label, 1, 6 );
+    gridLay->addWidget( m_years, 1, 7 );
 
-    // Example page
+    // -- Example ------------------------------------------------------------
+
     m_exampleBox = new QVGroupBox( i18n( "Example" ), plainPage(), "example" );
     vlay->addWidget( m_exampleBox );
 
-    m_infoLabel = new QLabel( m_exampleBox );
+    m_infoLabel  = new QLabel( m_exampleBox );
     m_exampleAdj = new QLabel( m_exampleBox );
 
     connect( m_secs, SIGNAL( valueChanged( int ) ), 
