@@ -7,6 +7,7 @@ METASOURCES = AUTO
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_timeadjust.la
 kipiplugin_timeadjust_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) 
+
 # Srcs for the plugin
 kipiplugin_timeadjust_la_SOURCES = plugin_timeadjust.cpp timeadjustdialog.cpp
 
