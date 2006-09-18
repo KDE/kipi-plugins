@@ -51,7 +51,7 @@ extern "C"
 #include <kurl.h>
 #include <kiconloader.h>
 #include <kprogress.h>
-#include <kfiledialog.h>
+#include <kio/renamedlg.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <kapplication.h>
@@ -494,22 +494,37 @@ void BatchDialog::processing(const QString& file)
 
 void BatchDialog::processed(const QString& file, const QString& tmpFile)
 {
-    m_currentConvertItem = 0;
+    m_blinkConvertTimer->stop();
     QString filename = QFileInfo(file).fileName();
-    RawItem *rawItem = m_itemDict.find(filename);
-    if (rawItem) 
-        rawItem->viewItem->setPixmap(1, SmallIcon("ok"));
-
-    QString destFile(rawItem->directory + QString("/") + rawItem->dest);
+    QString destFile(m_currentConvertItem->directory + QString("/") + m_currentConvertItem->dest);
 
     if (m_saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
     {
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0) 
         {
-            destFile = KFileDialog::getSaveFileName(rawItem->directory, QString(), this,
-                                       i18n("Save Raw Image converted from "
-                                            "'%1' as").arg(rawItem->src));
+            KIO::RenameDlg dlg(this, i18n("Save Raw Image converted from '%1' as")
+                                     .arg(m_currentConvertItem->src),
+                               tmpFile, destFile,
+                               KIO::RenameDlg_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
+
+            switch (dlg.exec())
+            {
+                case KIO::R_CANCEL:
+                case KIO::R_SKIP:
+                {
+                    destFile = QString();
+                    m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("cancel"));
+                    break;
+                }
+                case KIO::R_RENAME:
+                {
+                    destFile = dlg.newDestURL().path();
+                    break;
+                }
+                default:    // Overwrite.
+                    break;
+            }
         }
     }
 
@@ -518,26 +533,26 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1").arg( destFile ));
+            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("cancel"));
         }
         else 
         {
-            rawItem->dest = QFileInfo(destFile).fileName();
-            rawItem->viewItem->setText(2, rawItem->dest);
+            m_currentConvertItem->dest = QFileInfo(destFile).fileName();
+            m_currentConvertItem->viewItem->setText(2, m_currentConvertItem->dest);
+            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("ok"));
         }
     }
 
     m_progressBar->advance(1);
+    m_currentConvertItem = 0;
 }
 
 void BatchDialog::processingFailed(const QString& file)
 {
-    m_currentConvertItem = 0;
-    QString filename    = QFileInfo(file).fileName();
-    RawItem *rawItem    = m_itemDict.find(filename);
-    if (rawItem) 
-        rawItem->viewItem->setPixmap(1, SmallIcon("no"));
-    
+    QString filename = QFileInfo(file).fileName();
+    m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("no"));
     m_progressBar->advance(1);
+    m_currentConvertItem = 0;
 }
 
 void BatchDialog::customEvent(QCustomEvent *event)

@@ -20,9 +20,14 @@
  *
  * ============================================================ */
 
-// C++ includes.
+// C Ansi includes.
 
-#include <cstdio>
+extern "C"
+{
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+}
 
 // Qt includes.
 
@@ -40,9 +45,9 @@
 
 #include <kcursor.h>
 #include <klocale.h>
-#include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
+#include <kio/renamedlg.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <khelpmenu.h>
@@ -411,9 +416,26 @@ void SingleDialog::processed(const QString&, const QString& tmpFile)
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0) 
         {
-            destFile = KFileDialog::getSaveFileName(destFile, QString(), this,
-                                       i18n("Save Raw Image converted from "
-                                            "'%1' as").arg(fi.fileName()));
+            KIO::RenameDlg dlg(this, i18n("Save Raw Image converted from '%1' as").arg(fi.fileName()),
+                               tmpFile, destFile,
+                               KIO::RenameDlg_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
+
+            switch (dlg.exec())
+            {
+                case KIO::R_CANCEL:
+                case KIO::R_SKIP:
+                {
+                    destFile = QString();
+                    break;
+                }
+                case KIO::R_RENAME:
+                {
+                    destFile = dlg.newDestURL().path();
+                    break;
+                }
+                default:    // Overwrite.
+                    break;
+            }
         }
     }
 
