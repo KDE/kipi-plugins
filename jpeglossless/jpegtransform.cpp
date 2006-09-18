@@ -47,13 +47,9 @@ extern "C"
 #include <klocale.h>
 #include <ktempfile.h>
 
-// Lib KExif includes.
-
-#include <libkexif/kexifdata.h>
-#include <libkexif/kexifutils.h>
-
 // Local includes.
 
+#include "pluginsversion.h"
 #include "transupp.h"
 #include "jpegtransform.h"
 
@@ -124,23 +120,21 @@ bool transformJPEG(const QString& src, const QString& destGiven,
 
     (void) jpeg_read_header(&srcinfo, true);
 
-    KExifData *exifData = new KExifData;
-    exifData->readFromFile(src);
-
-    getExifAction(exifAction, exifData->getImageOrientation());
-
-    delete exifData;
+    // Get Exif orientation action to do.
+    KIPIPlugins::Exiv2Iface exiv2Iface;
+    exiv2Iface.load(src);
+    getExifAction(exifAction, exiv2Iface.getImageOrientation());
 
     // Compose actions: first exif, then user
     action*=exifAction;
     action*=userAction;
 
-    //Convert action into flip+rotate action
+    // Convert action into flip+rotate action
     convertTransform(action, flip, rotate);
     kdDebug() << "Transforming with option " << flip << " " << rotate <<endl;
     bool twoPass = (flip != JXFORM_NONE);
 
-    //If twoPass is true, we need another file (src -> tempFile -> destGiven)
+    // If twoPass is true, we need another file (src -> tempFile -> destGiven)
     if (twoPass) 
     {
         KTempFile tempFile;
@@ -266,93 +260,102 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         fclose(input_file);
         fclose(output_file);
 
-        //unlink temp file
+        // Unlink temp file
         unlink(QFile::encodeName(dest));
     }
 
-    KExifUtils::writeOrientation(destGiven, KExifData::NORMAL);
+    // And set finaly update the metadata to target file.
+
+    QImage img(destGiven);
+    QImage exifThumbnail = img.scale(160, 120, QImage::ScaleMin);
+    exiv2Iface.load(destGiven);
+    exiv2Iface.setImageOrientation(KIPIPlugins::Exiv2Iface::ORIENTATION_NORMAL);
+    exiv2Iface.setImageProgramId(QString("Kipi JPEGLossLess"), QString(kipiplugins_version));
+    exiv2Iface.setImageDimensions(img.size());
+    exiv2Iface.setExifThumbnail(exifThumbnail);
+    exiv2Iface.save(destGiven);
 
     return true;
 }
 
-/*
-   Converts the mathematically correct description
-   into the primitive operations that can be carried out losslessly.
+/** Converts the mathematically correct description
+    into the primitive operations that can be carried out losslessly.
 */
 void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate) 
 {
-   flip=JXFORM_NONE;
-   rotate=JXFORM_NONE;
-
-   if (action==Matrix::rotate90) 
-   {
-      rotate=JXFORM_ROT_90;
-   }
-   else if (action==Matrix::rotate180) 
-   {
-      rotate=JXFORM_ROT_180;
-   }
-   else if (action==Matrix::rotate270) 
-   {
-      rotate=JXFORM_ROT_270;
-   }
-   else if (action==Matrix::flipHorizontal) 
-   {
-      flip=JXFORM_FLIP_H;
-   }
-   else if (action==Matrix::flipVertical) 
-   {
-      flip=JXFORM_FLIP_V;
-   }
-   else if (action==Matrix::rotate90flipHorizontal) 
-   {
-      //first rotate, then flip!
-      rotate=JXFORM_ROT_90;
-      flip=JXFORM_FLIP_H;
-   }
-   else if (action==Matrix::rotate90flipVertical) 
-   {
-      //first rotate, then flip!
-      rotate=JXFORM_ROT_90;
-      flip=JXFORM_FLIP_V;
-   }
+    flip   = JXFORM_NONE;
+    rotate = JXFORM_NONE;
+    
+    if (action == Matrix::rotate90) 
+    {
+        rotate = JXFORM_ROT_90;
+    }
+    else if (action == Matrix::rotate180) 
+    {
+        rotate = JXFORM_ROT_180;
+    }
+    else if (action == Matrix::rotate270) 
+    {
+        rotate = JXFORM_ROT_270;
+    }
+    else if (action == Matrix::flipHorizontal) 
+    {
+        flip = JXFORM_FLIP_H;
+    }
+    else if (action == Matrix::flipVertical) 
+    {
+        flip = JXFORM_FLIP_V;
+    }
+    else if (action == Matrix::rotate90flipHorizontal) 
+    {
+        //first rotate, then flip!
+        rotate = JXFORM_ROT_90;
+        flip   = JXFORM_FLIP_H;
+    }
+    else if (action == Matrix::rotate90flipVertical) 
+    {
+        //first rotate, then flip!
+        rotate = JXFORM_ROT_90;
+        flip   = JXFORM_FLIP_V;
+    }
 }
 
-void getExifAction(Matrix &action, KExifData::ImageOrientation exifOrientation) 
+void getExifAction(Matrix &action, KIPIPlugins::Exiv2Iface::ImageOrientation exifOrientation) 
 {
     switch (exifOrientation) 
     {
-        case KExifData::NORMAL:
+        case KIPIPlugins::Exiv2Iface::ORIENTATION_NORMAL:
             break;
 
-        case KExifData::HFLIP:
+        case KIPIPlugins::Exiv2Iface::ORIENTATION_HFLIP:
             action*=Matrix::flipHorizontal;
             break;
 
-        case KExifData::ROT_180:
+        case KIPIPlugins::Exiv2Iface::ORIENTATION_ROT_180:
             action*=Matrix::rotate180;
             break;
 
-        case KExifData::VFLIP:
+        case KIPIPlugins::Exiv2Iface::ORIENTATION_VFLIP:
             action*=Matrix::flipVertical;
             break;
 
-        case KExifData::ROT_90_HFLIP:
+        case KIPIPlugins::Exiv2Iface::ORIENTATION_ROT_90_HFLIP:
             action*=Matrix::rotate90flipHorizontal;
             break;
 
-        case KExifData::ROT_90:
+        case KIPIPlugins::Exiv2Iface::ORIENTATION_ROT_90:
             action*=Matrix::rotate90;
             break;
 
-        case KExifData::ROT_90_VFLIP:
+        case KIPIPlugins::Exiv2Iface::ORIENTATION_ROT_90_VFLIP:
             action*=Matrix::rotate90flipVertical;
             break;
 
-        case KExifData::ROT_270:
+        case KIPIPlugins::Exiv2Iface::ORIENTATION_ROT_270:
             action*=Matrix::rotate270;
             break;
-        case KExifData::UNSPECIFIED:
+
+        case KIPIPlugins::Exiv2Iface::ORIENTATION_UNSPECIFIED:
             action*=Matrix::none;
             break;
     }

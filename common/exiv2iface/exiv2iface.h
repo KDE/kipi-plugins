@@ -5,6 +5,10 @@
  *
  * Copyright 2006 by Gilles Caulier
  *
+ * NOTE: This class is a simplified version of Digikam::DMetadata
+ *       class from digiKam core. Please contact digiKam team 
+ *       before to change/fix/improve this implementation.
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -38,6 +42,21 @@ class Exiv2Iface
 
 public:
 
+    enum ImageOrientation
+    {
+        ORIENTATION_UNSPECIFIED  = 0, 
+        ORIENTATION_NORMAL       = 1, 
+        ORIENTATION_HFLIP        = 2, 
+        ORIENTATION_ROT_180      = 3, 
+        ORIENTATION_VFLIP        = 4, 
+        ORIENTATION_ROT_90_HFLIP = 5, 
+        ORIENTATION_ROT_90       = 6, 
+        ORIENTATION_ROT_90_VFLIP = 7, 
+        ORIENTATION_ROT_270      = 8
+    };
+
+public:
+
     Exiv2Iface();
     ~Exiv2Iface();
     
@@ -57,7 +76,9 @@ public:
     bool setExifThumbnail(const QImage& thumb);
     bool setExifTagString(const char *exifTagName, const QString& value);
     bool setImagePreview(const QImage& preview);
+    bool setImageOrientation(ImageOrientation orientation);
 
+    Exiv2Iface::ImageOrientation getImageOrientation();
     QDateTime getImageDateTime() const;
 
 private:

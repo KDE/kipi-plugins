@@ -28,9 +28,9 @@
 
 #include <qstring.h>
 
-// Lib KExif includes. 
+// Local includes.
 
-#include <libkexif/kexifdata.h>
+#include "exiv2iface.h"
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -124,7 +124,7 @@ bool transformJPEG(const QString& src, const QString& dest, Matrix &action, QStr
 
 void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate);
 
-void getExifAction(Matrix &action, KExifData::ImageOrientation exifOrientation);
+void getExifAction(Matrix &action, KIPIPlugins::Exiv2Iface::ImageOrientation exifOrientation);
 
 }  // NameSpace KIPIJPEGLossLessPlugin
 

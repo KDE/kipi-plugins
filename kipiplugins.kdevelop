@@ -110,7 +110,7 @@
     <run>
       <directoryradio>custom</directoryradio>
       <customdirectory>/</customdirectory>
-      <mainprogram>/opt/kde3/bin/digikam</mainprogram>
+      <mainprogram>/usr/bin/digikam</mainprogram>
       <programargs/>
       <terminal>false</terminal>
       <autocompile>false</autocompile>
