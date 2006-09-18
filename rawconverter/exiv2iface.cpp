@@ -28,9 +28,12 @@
 // Qt includes.
 
 #include <qfile.h>
+#include <qimage.h>
+#include <qsize.h>
 
 // KDE includes.
 
+#include <ktempfile.h>
 #include <kdebug.h>
 
 // Exiv2 includes.
@@ -275,6 +278,107 @@ bool Exiv2Iface::setImageProgramId(const QString& program, const QString& versio
     catch( Exiv2::Error &e )
     {
         kdDebug() << "Cannot set Program identity into image using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }
+
+    return false;
+}
+
+bool Exiv2Iface::setImageDimensions(const QSize& size)
+{
+    try
+    {    
+        d->exifMetadata["Exif.Image.ImageWidth"]      = size.width();
+        d->exifMetadata["Exif.Image.ImageLength"]     = size.height();
+        d->exifMetadata["Exif.Photo.PixelXDimension"] = size.width();
+        d->exifMetadata["Exif.Photo.PixelYDimension"] = size.height();
+        return true;
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot set Date & Time into image using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }        
+    
+    return false;
+}
+
+bool Exiv2Iface::setExifThumbnail(const QImage& thumb)
+{
+    try
+    {   
+        KTempFile thumbFile(QString::null, "DigikamDMetadataThumb");
+        thumbFile.setAutoDelete(true);
+        thumb.save(thumbFile.name(), "JPEG");
+
+        const std::string &fileName( (const char*)(QFile::encodeName(thumbFile.name())) );
+        d->exifMetadata.setJpegThumbnail( fileName );
+        return true;
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot set Exif Thumbnail using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }        
+    
+    return false;
+}
+
+bool Exiv2Iface::setExifTagString(const char *exifTagName, const QString& value)
+{
+    try
+    {
+        d->exifMetadata[exifTagName] = value.ascii();
+        return true;
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot set Exif tag string into image using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }
+
+    return false;
+}
+
+bool Exiv2Iface::setImagePreview(const QImage& preview)
+{
+    try
+    {
+        KTempFile previewFile(QString::null, "DigikamDMetadataPreview");
+        previewFile.setAutoDelete(true);
+        // A little bit compressed preview jpeg image to limit IPTC size.
+        preview.save(previewFile.name(), "JPEG");
+
+        QFile file(previewFile.name());
+        if ( !file.open(IO_ReadOnly) ) 
+            return false;
+
+        kdDebug() << "(" << preview.width() << "x" << preview.height() 
+                  << ") JPEG image preview size: " << file.size() 
+                  << " bytes" << endl;
+        
+        QByteArray data(file.size());
+        QDataStream stream( &file );
+        stream.readRawBytes(data.data(), data.size());
+        file.close();
+        
+        Exiv2::DataValue val;
+        val.read((Exiv2::byte *)data.data(), data.size());
+        d->iptcMetadata["Iptc.Application2.Preview"] = val;
+        
+        // See http://www.iptc.org/std/IIM/4.1/specification/IIMV4.1.pdf Appendix A for details.
+        d->iptcMetadata["Iptc.Application2.PreviewFormat"]  = 11;  // JPEG 
+        d->iptcMetadata["Iptc.Application2.PreviewVersion"] = 1;
+        
+        return true;
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot get image preview using Exiv2 (" 
                   << QString::fromLocal8Bit(e.what().c_str())
                   << ")" << endl;
     }

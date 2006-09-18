@@ -26,6 +26,9 @@
 #include <qcstring.h>
 #include <qstring.h>
 
+class QImage;
+class QSize;
+
 namespace KIPIRawConverterPlugin
 {
 
@@ -51,6 +54,10 @@ public:
     void setIptc(const QByteArray& data);
 
     bool setImageProgramId(const QString& program, const QString& version);
+    bool setImageDimensions(const QSize& size);
+    bool setExifThumbnail(const QImage& thumb);
+    bool setExifTagString(const char *exifTagName, const QString& value);
+    bool setImagePreview(const QImage& preview);
 
 private:
 
