@@ -28,6 +28,9 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 004 ==> 132659 : "Missing signature" - Flickr API changed and upload of 
                  images is no longer possible.
 005 ==> 107905 : Copy exif data from raw to converted images.
+006 ==> 119537 : Exif width and height are not corrected after lossless rotation.
+007 ==> 
+
 
 v 0.1.2                                                           2006-07-08
 ----------------------------------------------------------------------------
