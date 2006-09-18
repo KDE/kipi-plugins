@@ -13,11 +13,11 @@ HTMLEXPORTDIR = htmlexport
 endif
 
 if compile_JPEGLOSSLESS
-jpeglosslessdir = jpeglossless
+JPEGLOSSLESSDIR = jpeglossless
 endif
 
 if compile_TIMEADJUST
-timeadjustdir = timeadjust
+TIMEADJUSTDIR = timeadjust
 endif
 
 if compile_ACQUIREIMAGES
