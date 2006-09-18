@@ -47,10 +47,6 @@ extern "C"
 #include <kdebug.h>
 #include <kurl.h>
 
-// Lib KExif inlcudes.
-
-#include <libkexif/kexifdata.h>
-
 // Local includes
 
 #include "transupp.h"
