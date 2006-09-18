@@ -1,10 +1,11 @@
 /* ============================================================
- * File  : timeadjustdialog.cpp
- * Author: Jesper K. Pedersen <blackie@kde.org>
- * Date  : 2004-05-16
- * Description :
+ * Authors: Jesper K. Pedersen <blackie@kde.org>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2004-05-16
+ * Description : a plugin to set time stamp of picture files.
  *
- * Copyright 2003 by Jesper Pedersen
+ * Copyright 2003-2005 by Jesper Pedersen
+ * Copyright 2006 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -44,11 +45,11 @@
 // LibKipi includes.
 
 #include <libkipi/imageinfo.h>
-#include <libkexif/kexifdata.h>
 
 // Local includes.
 
 #include "pluginsversion.h"
+#include "exiv2iface.h"
 #include "timeadjustdialog.h"
 #include "timeadjustdialog.moc"
 
@@ -64,14 +65,18 @@ TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent,
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Time Adjust"),
                                        kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin for adjusting dates and times"),
+                                       I18N_NOOP("A Kipi plugin for adjusting time stamp of picture files"),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Jesper K. Pedersen",
+                                       "(c) 2003-2005, Jesper K. Pedersen\n"
+                                       "(c) 2006, Gilles Caulier",
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
 
     about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Author and maintainer"),
                      "blackie@kde.org");
+
+    about->addAuthor("Gilles Caulier", I18N_NOOP("Developper"),
+                     "caulier dot gilles at kdemail dot net");
 
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
@@ -93,9 +98,11 @@ void TimeAdjustDialog::setImages( const KURL::List& images )
     int exactCount=0;
     int inexactCount=0;
 
-    for( KURL::List::ConstIterator it = images.begin(); it != images.end(); ++it ) {
+    for( KURL::List::ConstIterator it = images.begin(); it != images.end(); ++it ) 
+    {
         KIPI::ImageInfo info = m_interface->info( *it );
-        if ( info.isTimeExact() ) {
+        if ( info.isTimeExact() ) 
+        {
             exactCount++;
             m_exampleDate = info.time();
             m_images.append( *it );
@@ -104,8 +111,8 @@ void TimeAdjustDialog::setImages( const KURL::List& images )
             inexactCount++;
     }
 
-    if ( inexactCount > 0 ) {
-
+    if ( inexactCount > 0 ) 
+    {
         QString tmpLabel = i18n("1 image will be changed; ",
                                 "%n images will be changed; ",
                                 exactCount)
@@ -115,7 +122,8 @@ void TimeAdjustDialog::setImages( const KURL::List& images )
 
         m_infoLabel->setText( tmpLabel );
     }
-    else {
+    else 
+    {
         m_infoLabel->setText( i18n("1 image will be changed",
                                    "%n images will be changed",
                                    m_images.count() ) );
@@ -127,8 +135,7 @@ void TimeAdjustDialog::setImages( const KURL::List& images )
 
 void TimeAdjustDialog::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("timeadjust",
-                                             "kipi-plugins");
+    KApplication::kApplication()->invokeHelp("timeadjust", "kipi-plugins");
 }
 
 void TimeAdjustDialog::addConfigPage()
@@ -136,7 +143,7 @@ void TimeAdjustDialog::addConfigPage()
     QVBoxLayout *vlay = new QVBoxLayout( plainPage(), 6 );
 
     QLabel* header = new QLabel( plainPage() );
-    header->setText( i18n("Adjust Time & Dates") );
+    header->setText( i18n("Adjust Time Stamp of Picture Files") );
     vlay->addWidget( header );
 
     QFrame* hline = new QFrame( plainPage() );
@@ -153,8 +160,9 @@ void TimeAdjustDialog::addConfigPage()
                                    m_adjustTypeGrp );
     vlay->addWidget( m_adjustTypeGrp );
     m_add->setChecked( true );
+
     connect( m_adjustTypeGrp, SIGNAL( clicked(int) ),
-             SLOT( adjustmentTypeChanged() ) );
+             this, SLOT( adjustmentTypeChanged() ) );
 
     // Adjustment
     m_adjustValGrp = new QVButtonGroup( i18n("Adjustment"), plainPage(), "adjustment" );
@@ -200,8 +208,8 @@ void TimeAdjustDialog::addConfigPage()
     m_infoLabel = new QLabel( m_exampleBox );
     m_exampleAdj = new QLabel( m_exampleBox );
 
-    connect( m_secs, SIGNAL( valueChanged( int ) ), this,
-             SLOT( updateExample() ) );
+    connect( m_secs, SIGNAL( valueChanged( int ) ), 
+             this, SLOT( updateExample() ) );
 
     connect( m_minutes, SIGNAL( valueChanged( int ) ),
              this, SLOT( updateExample() ) );
@@ -222,7 +230,7 @@ void TimeAdjustDialog::addConfigPage()
 void TimeAdjustDialog::updateExample()
 {
     QString oldDate = m_exampleDate.toString();
-    QDateTime date = updateTime( KURL(), m_exampleDate );
+    QDateTime date  = updateTime( KURL(), m_exampleDate );
     QString newDate = date.toString();
     m_exampleAdj->setText( i18n( "%1 would, for example, change into %2")
                            .arg(oldDate).arg(newDate) );
@@ -253,11 +261,11 @@ QDateTime TimeAdjustDialog::updateTime( const KURL& url, const QDateTime& time )
 {
     if ( m_exif->isChecked() )
     {
-        KExifData exifData;
-        if ( !exifData.readFromFile(url.path()) )
+        KIPIPlugins::Exiv2Iface exiv2Iface;
+        if ( !exiv2Iface.load(url.path()) )
             return time;
 
-        QDateTime newTime = exifData.getExifDateTime();
+        QDateTime newTime = exiv2Iface.getImageDateTime();
         if (newTime.isValid())
             return newTime;
         else
@@ -280,4 +288,3 @@ QDateTime TimeAdjustDialog::updateTime( const KURL& url, const QDateTime& time )
 }
 
 }  // NameSpace KIPITimeAdjustPlugin
-

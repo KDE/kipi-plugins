@@ -49,7 +49,7 @@
 
 #include "exiv2iface.h"
 
-namespace KIPIRawConverterPlugin
+namespace KIPIPlugins
 {
 
 class Exiv2IfacePriv
@@ -386,4 +386,134 @@ bool Exiv2Iface::setImagePreview(const QImage& preview)
     return false;
 }
 
-}  // NameSpace KIPIRawConverterPlugin
+QDateTime Exiv2Iface::getImageDateTime() const
+{
+    try
+    {    
+        // In first, trying to get Date & time from Exif tags.
+        
+        if (!d->exifMetadata.empty())
+        {        
+            // Try standard Exif date time entry.
+    
+            Exiv2::ExifKey key("Exif.Image.DateTime");
+            Exiv2::ExifData exifData(d->exifMetadata);
+            Exiv2::ExifData::iterator it = exifData.findKey(key);
+            
+            if (it != exifData.end())
+            {
+                QDateTime dateTime = QDateTime::fromString(it->toString().c_str(), Qt::ISODate);
+    
+                if (dateTime.isValid())
+                {
+                    // kdDebug() << "DateTime (Exif standard): " << dateTime << endl;
+                    return dateTime;
+                }
+            }
+    
+            // Bogus standard Exif date time entry. Try Exif date time original.
+    
+            Exiv2::ExifKey key2("Exif.Photo.DateTimeOriginal");
+            Exiv2::ExifData::iterator it2 = exifData.findKey(key2);
+            
+            if (it2 != exifData.end())
+            {
+                QDateTime dateTime = QDateTime::fromString(it2->toString().c_str(), Qt::ISODate);
+    
+                if (dateTime.isValid())
+                {
+                    // kdDebug() << "DateTime (Exif original): " << dateTime << endl;
+                    return dateTime;
+                }
+            }
+    
+            // Bogus Exif date time original entry. Try Exif date time digitized.
+    
+            Exiv2::ExifKey key3("Exif.Photo.DateTimeDigitized");
+            Exiv2::ExifData::iterator it3 = exifData.findKey(key3);
+            
+            if (it3 != exifData.end())
+            {
+                QDateTime dateTime = QDateTime::fromString(it3->toString().c_str(), Qt::ISODate);
+    
+                if (dateTime.isValid())
+                {
+                    // kdDebug() << "DateTime (Exif digitalized): " << dateTime << endl;
+                    return dateTime;
+                }
+            }
+        }
+        
+        // In second, trying to get Date & time from Iptc tags.
+            
+        if (!d->iptcMetadata.empty())
+        {        
+            // Try creation Iptc date time entries.
+
+            Exiv2::IptcKey keyDateCreated("Iptc.Application2.DateCreated");
+            Exiv2::IptcData iptcData(d->iptcMetadata);
+            Exiv2::IptcData::iterator it = iptcData.findKey(keyDateCreated);
+                        
+            if (it != iptcData.end())
+            {
+                QString IptcDateCreated(it->toString().c_str());
+    
+                Exiv2::IptcKey keyTimeCreated("Iptc.Application2.TimeCreated");
+                Exiv2::IptcData::iterator it2 = iptcData.findKey(keyTimeCreated);
+                
+                if (it2 != iptcData.end())
+                {
+                    QString IptcTimeCreated(it2->toString().c_str());
+                    
+                    QDate date = QDate::fromString(IptcDateCreated, Qt::ISODate);
+                    QTime time = QTime::fromString(IptcTimeCreated, Qt::ISODate);
+                    QDateTime dateTime = QDateTime(date, time);
+                    
+                    if (dateTime.isValid())
+                    {
+                        // kdDebug() << "Date (IPTC created): " << dateTime << endl;
+                        return dateTime;
+                    }                    
+                }
+            }                        
+            
+            // Try digitization Iptc date time entries.
+    
+            Exiv2::IptcKey keyDigitizationDate("Iptc.Application2.DigitizationDate");
+            Exiv2::IptcData::iterator it3 = iptcData.findKey(keyDigitizationDate);
+                        
+            if (it3 != iptcData.end())
+            {
+                QString IptcDateDigitization(it3->toString().c_str());
+    
+                Exiv2::IptcKey keyDigitizationTime("Iptc.Application2.DigitizationTime");
+                Exiv2::IptcData::iterator it4 = iptcData.findKey(keyDigitizationTime);
+                
+                if (it4 != iptcData.end())
+                {
+                    QString IptcTimeDigitization(it4->toString().c_str());
+                    
+                    QDate date = QDate::fromString(IptcDateDigitization, Qt::ISODate);
+                    QTime time = QTime::fromString(IptcTimeDigitization, Qt::ISODate);
+                    QDateTime dateTime = QDateTime(date, time);
+                    
+                    if (dateTime.isValid())
+                    {
+                        // kdDebug() << "Date (IPTC digitalized): " << dateTime << endl;
+                        return dateTime;
+                    }                    
+                }
+            }                       
+        }
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot parse Exif date & time tag using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }        
+    
+    return QDateTime();
+}
+
+}  // NameSpace KIPIPlugins

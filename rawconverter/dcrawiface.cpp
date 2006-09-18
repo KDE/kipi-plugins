@@ -489,7 +489,7 @@ bool DcrawIface::loadFromDcraw(const QString& filePath, QString& destPath)
             fclose(f);
 
             // Metadata restoration and update.
-            Exiv2Iface exiv2Iface;
+            KIPIPlugins::Exiv2Iface exiv2Iface;
             exiv2Iface.load(filePath);
             exiv2Iface.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
             exiv2Iface.setImageDimensions(QSize(d->width, d->height));
@@ -544,7 +544,7 @@ bool DcrawIface::loadFromDcraw(const QString& filePath, QString& destPath)
             png_set_text(png_ptr, info_ptr, &(text), 1);
 
             // Metadata restoration and update.
-            Exiv2Iface exiv2Iface;
+            KIPIPlugins::Exiv2Iface exiv2Iface;
             exiv2Iface.load(filePath);
             exiv2Iface.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
             exiv2Iface.setImageDimensions(QSize(d->width, d->height));
@@ -621,7 +621,7 @@ bool DcrawIface::loadFromDcraw(const QString& filePath, QString& destPath)
 
 
             // Metadata restoration and update.
-            Exiv2Iface exiv2Iface;
+            KIPIPlugins::Exiv2Iface exiv2Iface;
             exiv2Iface.load(filePath);
             exiv2Iface.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
             exiv2Iface.setImageDimensions(QSize(d->width, d->height));

@@ -25,11 +25,10 @@
 
 #include <qcstring.h>
 #include <qstring.h>
+#include <qimage.h>
+#include <qdatetime.h>
 
-class QImage;
-class QSize;
-
-namespace KIPIRawConverterPlugin
+namespace KIPIPlugins
 {
 
 class Exiv2IfacePriv;
@@ -59,11 +58,13 @@ public:
     bool setExifTagString(const char *exifTagName, const QString& value);
     bool setImagePreview(const QImage& preview);
 
+    QDateTime getImageDateTime() const;
+
 private:
 
     Exiv2IfacePriv *d;
 };
 
-}  // NameSpace KIPIRawConverterPlugin
+}  // NameSpace KIPIPlugins
 
 #endif /* EXIV2IFACE_H */

@@ -1,10 +1,11 @@
 /* ============================================================
- * File  : timeadjustdialog.h
- * Author: Jesper K. Pedersen <blackie@kde.org>
- * Date  : 2004-05-16
- * Description :
+ * Authors: Jesper K. Pedersen <blackie@kde.org>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2004-05-16
+ * Description : a plugin to set time stamp of picture files.
  *
- * Copyright 2003 by Jesper Pedersen
+ * Copyright 2003-2005 by Jesper Pedersen
+ * Copyright 2006 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -63,32 +64,31 @@ protected:
 
 private:
 
-    KIPI::Interface* m_interface;
+    KIPI::Interface *m_interface;
     
-    KURL::List m_images;
+    KURL::List       m_images;
     
-    QRadioButton* m_add;
-    QRadioButton* m_subtract;
-    QRadioButton* m_exif;
+    QRadioButton    *m_add;
+    QRadioButton    *m_subtract;
+    QRadioButton    *m_exif;
 
-    QVGroupBox*    m_exampleBox;
-    QVButtonGroup* m_adjustValGrp;
-    QVButtonGroup* m_adjustTypeGrp;
+    QVGroupBox      *m_exampleBox;
+    QVButtonGroup   *m_adjustValGrp;
+    QVButtonGroup   *m_adjustTypeGrp;
     
-    QLabel* m_infoLabel;
-    QLabel* m_exampleAdj;
+    QLabel          *m_infoLabel;
+    QLabel          *m_exampleAdj;
     
-    QPushButton* m_helpButton;
+    QPushButton     *m_helpButton;
     
-    QSpinBox* m_secs;
-    QSpinBox* m_minutes;
-    QSpinBox* m_hours;
-    QSpinBox* m_days;
-    QSpinBox* m_months;
-    QSpinBox* m_years;
+    QSpinBox        *m_secs;
+    QSpinBox        *m_minutes;
+    QSpinBox        *m_hours;
+    QSpinBox        *m_days;
+    QSpinBox        *m_months;
+    QSpinBox        *m_years;
     
-    QDateTime m_exampleDate;
-
+    QDateTime        m_exampleDate;
 };
 
 }  // NameSpace KIPITimeAdjustPlugin

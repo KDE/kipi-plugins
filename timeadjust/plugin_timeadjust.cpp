@@ -1,10 +1,11 @@
 /* ============================================================
- * File  : plugin_timeadjust.cpp
- * Author: Jesper K. Pedersen <blackie@blackie.dk>
- * Date  : 2004-05-16
- * Description :
+ * Authors: Jesper K. Pedersen <blackie@kde.org>
+ *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2004-05-16
+ * Description : a plugin to set time stamp of picture files.
  *
- * Copyright 2003 by Jesper K. Pedersen
+ * Copyright 2003-2005 by Jesper Pedersen
+ * Copyright 2006 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -16,6 +17,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
+ *
  * ============================================================ */
 
 // KDE includes.
@@ -36,16 +38,15 @@
 
 #include "timeadjustdialog.h"
 #include "plugin_timeadjust.h"
+#include "plugin_timeadjust.moc"
 
 typedef KGenericFactory<Plugin_TimeAdjust> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_timeadjust,
                             Factory("kipiplugin_timeadjust"))
 
-Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent,
-                                     const char*,
-                                     const QStringList&)
-    : KIPI::Plugin( Factory::instance(), parent, "TimeAdjust"), m_dialog( 0 )
+Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent, const char*, const QStringList&)
+                 : KIPI::Plugin( Factory::instance(), parent, "TimeAdjust"), m_dialog( 0 )
 {
     kdDebug( 51001 ) << "Plugin_TimeAdjust plugin loaded" << endl;
 }
@@ -69,10 +70,10 @@ void Plugin_TimeAdjust::setup( QWidget* widget )
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
 
     if ( !m_interface )
-       {
+    {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
        return;
-       }
+    }
 
     KIPI::ImageCollection selection = m_interface->currentSelection();
     m_actionTimeAjust->setEnabled( selection.isValid() &&
@@ -105,6 +106,3 @@ KIPI::Category Plugin_TimeAdjust::category( KAction* action ) const
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
-
-
-#include "plugin_timeadjust.moc"
