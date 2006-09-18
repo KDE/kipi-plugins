@@ -20,11 +20,6 @@ if compile_TIMEADJUST
 timeadjustdir = timeadjust
 endif
 
-if compile_LIBKEXIF
-JPEGLOSSLESSDIR = $(jpeglosslessdir)
-TIMEADJUSTDIR = $(timeadjustdir)
-endif
-
 if compile_ACQUIREIMAGES
 ACQUIREIMAGESDIR = acquireimages
 endif
