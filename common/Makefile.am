@@ -1,0 +1,2 @@
+SUBDIRS = exiv2iface  
+

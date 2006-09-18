@@ -1,8 +1,8 @@
 METASOURCES = AUTO
 SUBDIRS = profiles
-KDE_CXXFLAGS = $(USE_EXCEPTIONS)
 
 INCLUDES = -I$(top_srcdir)/kipi-plugins/common/include \
+	       -I$(top_srcdir)/kipi-plugins/common/exiv2iface \
 	       $(LIBKIPI_CFLAGS) $(all_includes)
 
 # Install this plugin in the KDE modules directory
@@ -12,12 +12,13 @@ kipiplugin_rawconverter_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 
 # Srcs for the plugin
 kipiplugin_rawconverter_la_SOURCES = plugin_rawconverter.cpp dcrawiface.cpp savesettingswidget.cpp \
-	                             batchdialog.cpp actionthread.cpp dcrawsettingswidget.cpp \
-	                             singledialog.cpp previewwidget.cpp iccjpeg.c dcrawbinary.cpp \
-				     exiv2iface.cpp 
+	                                 batchdialog.cpp actionthread.cpp dcrawsettingswidget.cpp \
+	                                 singledialog.cpp previewwidget.cpp iccjpeg.c dcrawbinary.cpp 
 
 # Libs needed by the plugin
-kipiplugin_rawconverter_la_LIBADD = -ljpeg -lpng $(LIB_TIFF) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_EXIV2) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
+kipiplugin_rawconverter_la_LIBADD = -ljpeg -lpng \
+				     -I$(top_srcdir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \
+				     $(LIB_TIFF) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
 kipiplugin_rawconverter_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
