@@ -52,54 +52,6 @@ if test "x$have_libkipi" != "xyes"; then
      DO_NOT_COMPILE="$DO_NOT_COMPILE kipi-plugins"
 fi
 
-# --------------------------------------------------------------------
-# Check for libkexif
-# --------------------------------------------------------------------
-
-AC_MSG_CHECKING([for libkexif in our sources])
-if test -d $srcdir/libkexif; then
-    have_libkexif=yes
-    LIBKEXIF_CFLAGS='-I$(top_srcdir)'
-    LIBKEXIF_LIBS='$(top_builddir)/libkexif/libkexif.la'
-    LIBKEXIF_LIBS_DEP='$(LIBKEXIF_LIBS)'
-    AC_MSG_RESULT([found])
-    AC_SUBST(LIBKEXIF_CFLAGS)
-    AC_SUBST(LIBKEXIF_LIBS)
-    AC_SUBST(LIBKEXIF_LIBS_DEP)
-else
-
-    if test "$PKGCONFIGFOUND" = "yes" ; then
-        # check for libkexif
-        have_libkexif=no
-
-	KDE_PKG_CHECK_MODULES(LIBKEXIF, libkexif >= 0.1,
-		have_libkexif=yes, have_libkexif=no)
-
-	if test "x$have_libkexif" = "xno"; then
-	   LIBKEXIF_CFLAGS=""
-	   LIBKEXIF_LIBS=""
-           AC_MSG_RESULT([not found])
-	else
-	   AC_MSG_RESULT([found])
-	fi
-     else
-        LIBKEXIF_CFLAGS=""
-	LIBKEXIF_LIBS=""
-        AC_MSG_RESULT([not found])
-     fi
-     AC_SUBST(LIBKEXIF_CFLAGS)
-     AC_SUBST(LIBKEXIF_LIBS)
-     AM_CONDITIONAL(compile_LIBKEXIF, true)
-fi
-
-if test x$have_libkexif != xyes; then
-   AC_MSG_RESULT(
-	[libkexif not installed. disabling jpeglossless plugin])
-fi
-
-AM_CONDITIONAL(compile_TIMEADJUST,    [test x$have_libkexif = xyes])
-AM_CONDITIONAL(compile_JPEGLOSSLESS,  [test x$have_libkexif = xyes])
-
 #------------------------------------------------------------------
 # Check for libtiff
 #------------------------------------------------------------------
@@ -183,7 +135,9 @@ else
   AC_SUBST(LIB_EXIV2)
 fi
 
-AM_CONDITIONAL(compile_RAWCONVERTER, test -n "${EXIV2_CONFIG}")
+AM_CONDITIONAL(compile_RAWCONVERTER, [test x$have_exiv2 = xyes])
+AM_CONDITIONAL(compile_TIMEADJUST,   [test x$have_exiv2 = xyes])
+AM_CONDITIONAL(compile_JPEGLOSSLESS, [test x$have_exiv2 = xyes])
 
 # ----------------------------------------------------------
 #
