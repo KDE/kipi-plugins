@@ -17,7 +17,7 @@ kipiplugin_rawconverter_la_SOURCES = plugin_rawconverter.cpp dcrawiface.cpp save
 
 # Libs needed by the plugin
 kipiplugin_rawconverter_la_LIBADD = -ljpeg -lpng \
-				     -I$(top_srcdir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \
+				     $(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \
 				     $(LIB_TIFF) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
