@@ -33,7 +33,7 @@ if compile_RAWCONVERTER
 RAWCONVERTERDIR = rawconverter
 endif
 
-SUBDIRS = printwizard calendar mpegencoder cdarchiving simpleviewerexport\
+SUBDIRS = common printwizard calendar mpegencoder cdarchiving simpleviewerexport\
 	sendimages batchprocessimages wallpaper findimages galleryexport flickrexport\
 	$(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(JPEGLOSSLESSDIR) \
 	$(TIMEADJUSTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR) \
