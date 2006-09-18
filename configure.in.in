@@ -135,9 +135,9 @@ else
   AC_SUBST(LIB_EXIV2)
 fi
 
-AM_CONDITIONAL(compile_RAWCONVERTER, [test x$have_exiv2 = xyes])
-AM_CONDITIONAL(compile_TIMEADJUST,   [test x$have_exiv2 = xyes])
-AM_CONDITIONAL(compile_JPEGLOSSLESS, [test x$have_exiv2 = xyes])
+AM_CONDITIONAL(compile_RAWCONVERTER, test -n "${EXIV2_CONFIG}")
+AM_CONDITIONAL(compile_TIMEADJUST,   test -n "${EXIV2_CONFIG}")
+AM_CONDITIONAL(compile_JPEGLOSSLESS, test -n "${EXIV2_CONFIG}")
 
 # ----------------------------------------------------------
 #
