@@ -1,6 +1,6 @@
 INCLUDES = -I$(top_srcdir)/kipi-plugins/common/include \
 	       -I$(top_srcdir)/kipi-plugins/common/exiv2iface \
-	       $(LIBKIPI_CFLAGS) $(LIBKEXIF_CFLAGS) $(all_includes)
+	       $(LIBKIPI_CFLAGS) $(all_includes)
 
 METASOURCES = AUTO
 
