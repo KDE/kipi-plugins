@@ -12,14 +12,6 @@ if compile_HTMLEXPORT
 HTMLEXPORTDIR = htmlexport
 endif
 
-if compile_JPEGLOSSLESS
-JPEGLOSSLESSDIR = jpeglossless
-endif
-
-if compile_TIMEADJUST
-TIMEADJUSTDIR = timeadjust
-endif
-
 if compile_ACQUIREIMAGES
 ACQUIREIMAGESDIR = acquireimages
 endif
@@ -28,11 +20,10 @@ if compile_RAWCONVERTER
 RAWCONVERTERDIR = rawconverter
 endif
 
-SUBDIRS = common printwizard calendar mpegencoder cdarchiving simpleviewerexport\
-	sendimages batchprocessimages wallpaper findimages galleryexport flickrexport\
-	$(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(JPEGLOSSLESSDIR) \
-	$(TIMEADJUSTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR) \
-	$(HTMLEXPORTDIR)
+SUBDIRS = common printwizard calendar mpegencoder cdarchiving simpleviewerexport \
+	      sendimages batchprocessimages wallpaper findimages galleryexport flickrexport \
+	      jpeglossless timeadjust \
+	      $(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR) $(HTMLEXPORTDIR) 
 
 rcdir = $(kde_datadir)/kipi
 rc_DATA = tips
