@@ -31,19 +31,19 @@ class RawDecodingSettings
 
 public:
 
-    enum DecodingQuality 
-    {
-        BILINEAR = 0,
-        VNG      = 2,
-        AHD      = 3
-    };
-
     enum OutputFormat 
     {
         JPEG = 0,
         TIFF,
         PPM,
         PNG
+    };
+
+    enum DecodingQuality 
+    {
+        BILINEAR = 0,
+        VNG      = 2,
+        AHD      = 3
     };
 
     enum OutputColorSpace 
@@ -57,6 +57,8 @@ public:
 
     RawDecodingSettings()
     {
+        outputFileFormat        = PNG;
+
         sixteenBitsImage        = false;
         enableNoiseReduction    = false;
         NRSigmaDomain           = 2.0;
@@ -64,8 +66,6 @@ public:
 
         brightness              = 1.0;
         RAWQuality              = BILINEAR;
-    
-        outputFileFormat        = PNG;
         outputColorSpace        = SRGB;
 
         RGBInterpolate4Colors   = false;
@@ -80,8 +80,12 @@ public:
 
 public:
 
-    /** If true, decode RAW file in 16 bits per color per pixel else 8 bits. 
-        NOTE: 16 bits color depth image data are not yet supported by this plugin.
+    /** The file format used to convert RAW data. See OutputFormat values 
+        for details. 
+    */
+    OutputFormat outputFileFormat;
+
+    /** If true, decode RAW file in 16 bits per color per pixel else 8 bits.
     */
     bool  sixteenBitsImage;    
 
@@ -141,11 +145,6 @@ public:
     /** Brightness of output image. 
     */
     float brightness;   
-
-    /** The file format used to convert RAW data. See OutputFormat values 
-        for details. 
-    */
-    OutputFormat outputFileFormat;
 
     /** The output color space used to decoded RAW data. See OutputColorSpace 
         values for details. 
