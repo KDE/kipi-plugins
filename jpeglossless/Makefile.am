@@ -1,7 +1,7 @@
 METASOURCES  = AUTO
 INCLUDES     = -I$(top_srcdir)/kipi-plugins/common/include \
 	           -I$(top_srcdir)/kipi-plugins/common/exiv2iface \
-	           $(LIBKIPI_CFLAGS) $(LIBKEXIF_CFLAGS) $(all_includes)
+	           $(LIBKIPI_CFLAGS) $(all_includes)
 
 # --enable-final triggers: http://bugs.kde.org/show_bug.cgi?id=126326
 # digikam: camera download: auto-rotated images loose EXIF info ...
