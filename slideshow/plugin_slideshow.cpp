@@ -187,7 +187,17 @@ void Plugin_SlideShow::slotSlideShow()
     if (showSelectedFilesOnly)
         urlList = interface->currentSelection().images();
     else
+    {
+        KURL currentPath = interface->currentAlbum().path();
+        QValueList<KIPI::ImageCollection> albumList;
+        albumList = interface->allAlbums();
+        QValueList<KIPI::ImageCollection>::iterator it;
+
         urlList = interface->currentAlbum().images();
+        for ( it = albumList.begin(); it != albumList.end(); ++it )
+            if (currentPath.isParentOf((*it).path()) && !((*it).path() == currentPath))
+                urlList += (*it).images();
+    }
 
     if ( urlList.isEmpty() )
     {
