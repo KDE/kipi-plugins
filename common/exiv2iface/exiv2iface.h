@@ -74,12 +74,22 @@ public:
     bool setImageProgramId(const QString& program, const QString& version);
     bool setImageDimensions(const QSize& size);
     bool setExifThumbnail(const QImage& thumb);
-    bool setExifTagString(const char *exifTagName, const QString& value);
     bool setImagePreview(const QImage& preview);
     bool setImageOrientation(ImageOrientation orientation);
 
+    bool setGPSInfo(double altitude, double latitude, double longitude);
+    bool getGPSInfo(double& altitude, double& latitude, double& longitude);
+
+    bool setExifTagString(const char *exifTagName, const QString& value);
+    QString getExifTagString(const char* exifTagName) const;
+
     Exiv2Iface::ImageOrientation getImageOrientation();
     QDateTime getImageDateTime() const;
+
+private:
+
+    void convertToRational(double number, long int* numerator, 
+                           long int* denominator, int rounding);
 
 private:
 
