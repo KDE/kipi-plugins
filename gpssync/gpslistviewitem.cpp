@@ -47,8 +47,8 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
     m_url       = url;
 
     setEnabled(false);
-    setText(0, m_url.fileName());
     setPixmap(0, SmallIcon( "file_broken", KIcon::SizeLarge, KIcon::DisabledState ));
+    setText(1, m_url.fileName());
 
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.load(m_url.path());
@@ -68,9 +68,9 @@ void GPSListViewItem::setGPSInfo(double altitude, double latitude, double longit
     m_altitude  = altitude;
     m_latitude  = latitude;
     m_longitude = longitude;
-    setText(1, QString::number(m_altitude));
-    setText(2, QString::number(m_latitude));
-    setText(3, QString::number(m_longitude));
+    setText(2, QString::number(m_altitude));
+    setText(3, QString::number(m_latitude));
+    setText(4, QString::number(m_longitude));
 }
 
 void GPSListViewItem::getGPSInfo(double& altitude, double& latitude, double& longitude)
@@ -89,11 +89,11 @@ void GPSListViewItem::setDateTime(QDateTime date)
     {
         setEnabled(true);
         m_date = date;
-        setText(4, date.toString(Qt::ISODate));
+        setText(5, date.toString(Qt::ISODate));
     }
     else
     {
-        setText(4, i18n("Not available"));
+        setText(5, i18n("Not available"));
     }
 }
 
@@ -111,14 +111,15 @@ void GPSListViewItem::writeGPSInfoToFile()
 {
     if (isEnabled())
     {
+        setPixmap(1, SmallIcon("run"));
         KIPIPlugins::Exiv2Iface exiv2Iface;
         exiv2Iface.load(m_url.path());
         bool ret = exiv2Iface.setGPSInfo(m_altitude, m_latitude, m_longitude);
         ret &= exiv2Iface.save(m_url.path());
         if (ret)
-            setPixmap(4, SmallIcon("ok"));
+            setPixmap(1, SmallIcon("ok"));
         else
-            setPixmap(4, SmallIcon("cancel"));
+            setPixmap(1, SmallIcon("cancel"));
     }
 }
 
@@ -152,6 +153,7 @@ void GPSListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, 
 void GPSListViewItem::slotGotThumbnail(const KFileItem*, const QPixmap& pix)
 {
     setPixmap(0, pix);
+    repaint();
 }
 
 } // NameSpace KIPIGPSSyncPlugin

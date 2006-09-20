@@ -95,7 +95,8 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     // --------------------------------------------------------------
 
     m_listView = new KListView(plainPage());
-    m_listView->addColumn( i18n("Picture") );
+    m_listView->addColumn( i18n("Thumbnail") );
+    m_listView->addColumn( i18n("Filename") );
     m_listView->addColumn( i18n("Altitude") );
     m_listView->addColumn( i18n("Latitude") );
     m_listView->addColumn( i18n("Longitude") );
@@ -172,8 +173,13 @@ void GPSSyncDialog::setImages( const KURL::List& images )
     // update metadata on others file formats.
 
     for( KURL::List::ConstIterator it = images.begin(); it != images.end(); ++it )
-        if (QString(QImageIO::imageFormat((*it).path())).upper() == QString("JPEG"))
+    {
+        QFileInfo fi((*it).path());
+        QString ext = fi.extension().upper();
+
+        if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
             new GPSListViewItem(m_listView, m_listView->lastItem(), *it);
+    }
 }
 
 void GPSSyncDialog::slotGPSFileSelected(const QString &path)
