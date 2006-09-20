@@ -1,0 +1,10 @@
+[Desktop Entry]
+Comment=KIPI GPS Device Sync
+Encoding=UTF-8
+Icon=
+Name=GPSSync
+ServiceTypes=KIPI/Plugin
+Type=Service
+X-KDE-Library=kipiplugin_gpssync
+X-KIPI-ReqFeatures=ImagesHasTime
+author=Gilles Caulier, caulier dot gilles at kdemail dot net
