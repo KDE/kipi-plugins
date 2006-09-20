@@ -45,7 +45,7 @@ public:
 
     bool   useCameraWB();
     bool   useAutoColorBalance();
-    bool   usefourColor();
+    bool   useFourColor();
     bool   useSecondarySensor();
     bool   useNoiseReduction();
     int    unclipColor();

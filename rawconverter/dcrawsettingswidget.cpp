@@ -332,7 +332,7 @@ bool DcrawSettingsWidget::useAutoColorBalance()
     return d->autoColorBalanceCheckBox->isChecked();
 }
 
-bool DcrawSettingsWidget::usefourColor()
+bool DcrawSettingsWidget::useFourColor()
 {
     return d->fourColorCheckBox->isChecked();
 }

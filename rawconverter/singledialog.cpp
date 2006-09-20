@@ -260,7 +260,7 @@ void SingleDialog::saveSettings()
 
     config.writeEntry("Use Camera WB", m_decodingSettingsBox->useCameraWB());
     config.writeEntry("Use Auto Color Balance", m_decodingSettingsBox->useAutoColorBalance());
-    config.writeEntry("Four Color RGB", m_decodingSettingsBox->usefourColor());
+    config.writeEntry("Four Color RGB", m_decodingSettingsBox->useFourColor());
     config.writeEntry("Unclip Color", m_decodingSettingsBox->unclipColor());
     config.writeEntry("Use Secondary Sensor", m_decodingSettingsBox->useSecondarySensor());
     config.writeEntry("Use Noise Resuction", m_decodingSettingsBox->useNoiseReduction());
@@ -288,7 +288,7 @@ void SingleDialog::slotUser1()
     RawDecodingSettings rawDecodingSettings;
     rawDecodingSettings.cameraColorBalance      = m_decodingSettingsBox->useCameraWB();
     rawDecodingSettings.automaticColorBalance   = m_decodingSettingsBox->useAutoColorBalance();
-    rawDecodingSettings.RGBInterpolate4Colors   = m_decodingSettingsBox->usefourColor();
+    rawDecodingSettings.RGBInterpolate4Colors   = m_decodingSettingsBox->useFourColor();
     rawDecodingSettings.unclipColors            = m_decodingSettingsBox->unclipColor();
     rawDecodingSettings.SuperCCDsecondarySensor = m_decodingSettingsBox->useSecondarySensor();
     rawDecodingSettings.enableNoiseReduction    = m_decodingSettingsBox->useNoiseReduction();
@@ -310,7 +310,7 @@ void SingleDialog::slotUser2()
     RawDecodingSettings rawDecodingSettings;
     rawDecodingSettings.cameraColorBalance      = m_decodingSettingsBox->useCameraWB();
     rawDecodingSettings.automaticColorBalance   = m_decodingSettingsBox->useAutoColorBalance();
-    rawDecodingSettings.RGBInterpolate4Colors   = m_decodingSettingsBox->usefourColor();
+    rawDecodingSettings.RGBInterpolate4Colors   = m_decodingSettingsBox->useFourColor();
     rawDecodingSettings.unclipColors            = m_decodingSettingsBox->unclipColor();
     rawDecodingSettings.SuperCCDsecondarySensor = m_decodingSettingsBox->useSecondarySensor();
     rawDecodingSettings.enableNoiseReduction    = m_decodingSettingsBox->useNoiseReduction();
