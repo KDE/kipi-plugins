@@ -135,9 +135,10 @@ void Plugin_GPSSync::slotActivate()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
+/* NOTE: this plugin do not use yet GPSBabel to convert GPS data file to GPX
     QString gpsBabelVersion;
     if (!checkBinaries(gpsBabelVersion)) 
-        return;
+        return;*/
 
     KIPIGPSSyncPlugin::GPSSyncDialog *dialog = new KIPIGPSSyncPlugin::GPSSyncDialog(
                                                m_interface, kapp->activeWindow());

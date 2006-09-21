@@ -31,12 +31,14 @@
 
 #include <libkipi/interface.h>
 
+// local includes.
+
+#include "gpsdataparser.h"
+
 class QWidget;
 class QPushButton;
 
 class KListView;
-class KProgress;
-class KURLRequester;
 
 namespace KIPIGPSSyncPlugin
 {
@@ -61,13 +63,11 @@ protected slots:
     void slotApply();
     void slotHelp();
     void slotClose();
-
-private slots:
-
-    void slotGPSFileSelected(const QString &);
+    void slotUser1();
 
 private:
 
+    void matchGPSAndPhoto(); 
     void readSettings();
     void saveSettings();
 
@@ -77,12 +77,10 @@ private:
  
     KListView       *m_listView;
 
-    KProgress       *m_progressBar;
-
-    KURLRequester   *m_gpsFile;
-
     KIPI::Interface *m_interface;
- };
+
+    GPSDataParser    m_gpxParser;
+};
 
 }  // NameSpace KIPIGPSSyncPlugin
 

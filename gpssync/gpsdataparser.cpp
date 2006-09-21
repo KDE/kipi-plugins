@@ -1,7 +1,8 @@
 /* ============================================================
  * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date   : 2006-09-19
- * Description : GPS data file parser.
+ * Description : GPS data file parser. 
+ *               (GPX format http://www.topografix.com/gpx.asp).
  * 
  * Copyright 2006 by Gilles Caulier
  *
@@ -21,12 +22,15 @@
 // C++ includes.
 
 #include <cmath>
+#include <cstdlib>
 
 // Qt includes.
 
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qfile.h>
+#include <qdom.h>
+#include <qtextstream.h>
 
 // KDE includes.
 
@@ -39,46 +43,134 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSData
+GPSDataParser::GPSDataParser()
 {
-public:
-    
-    GPSData(): m_altitude(0.0), m_latitude(0.0), m_longitude(0.0), m_speed(0.0){}
-
-    GPSData(double altitude, double latitude, double longitude, double speed)
-                 : m_altitude(altitude), m_latitude(latitude),
-                   m_longitude(longitude), m_speed(speed)
-    {}
-
-    void setAltitude(double alt)  { m_altitude  = alt; }
-    void setLatitude(double lat)  { m_latitude  = lat; }
-    void setLongitude(double lng) { m_longitude = lng; }
-    void setSpeed(double spd)     { m_speed     = spd; }
-
-    double altitude()  const { return m_altitude;  }
-    double latitude()  const { return m_latitude;  }
-    double longitude() const { return m_longitude; }
-    double speed()     const { return m_speed;     }
-    
-private:
-    
-    double    m_altitude;
-    double    m_latitude;
-    double    m_longitude;
-    double    m_speed;
-};
-
-GPSDataParser::GPSDataParser(const KURL& url)
-{
-    m_GPSDataMap.clear();
-    openFile(url);
+    clear();
 }
 
-void GPSDataParser::openFile(const KURL& url)
+void GPSDataParser::clear()
 {
+    m_GPSDataMap.clear();
+}
 
-    // FIXME : use an external GPSBabel instance to parse GPS data file 
-    //         and extract GPS positions.
+int GPSDataParser::numPoints()
+{
+    return m_GPSDataMap.count();
+}
+
+bool GPSDataParser::parseDates(QDateTime dateTime, int averageSecs, double& alt, double& lat, double& lon)
+{
+    for (GPSDataMap::Iterator it = m_GPSDataMap.begin();
+         it != m_GPSDataMap.end(); ++it )
+    {
+        int nbSecs = abs(dateTime.secsTo( it.key() ));
+        if( nbSecs < averageSecs )
+        {
+            GPSData data = m_GPSDataMap[it.key()];
+            alt = data.altitude();
+            lat = data.latitude();
+            lon = data.longitude();
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool GPSDataParser::loadGPXFile(const KURL& url)
+{
+    QFile gpxfile(url.path());
+
+    if (!gpxfile.open(IO_ReadOnly))
+        return false;
+
+    QDomDocument gpxDoc("gpx");
+    if (!gpxDoc.setContent(&gpxfile))
+        return false;
+
+    QDomElement gpxDocElem = gpxDoc.documentElement();
+    if (gpxDocElem.tagName()!="gpx")
+        return false;
+    
+    for (QDomNode nTrk = gpxDocElem.firstChild();
+         !nTrk.isNull(); nTrk = nTrk.nextSibling()) 
+    {
+        QDomElement trkElem = nTrk.toElement();
+        if (trkElem.isNull()) continue;
+        if (trkElem.tagName() != "trk") continue;
+
+        for (QDomNode nTrkseg = trkElem.firstChild();
+            !nTrkseg.isNull(); nTrkseg = nTrkseg.nextSibling()) 
+        {
+            QDomElement trksegElem = nTrkseg.toElement();
+            if (trksegElem.isNull()) continue;
+            if (trksegElem.tagName() != "trkseg") continue;
+
+            for (QDomNode nTrkpt = trksegElem.firstChild();
+                !nTrkpt.isNull(); nTrkpt = nTrkpt.nextSibling()) 
+            {
+                QDomElement trkptElem = nTrkpt.toElement();
+                if (trkptElem.isNull()) continue;
+                if (trkptElem.tagName() != "trkpt") continue;
+
+                QDateTime ptDateTime;
+                double    ptAltitude  = 0.0;
+                double    ptLatitude  = 0.0;
+                double    ptLongitude = 0.0;
+
+                // Get GPS position. If not available continue to next point.
+                QString lat = trkptElem.attribute("lat");
+                QString lon = trkptElem.attribute("lon");
+                if (lat.isEmpty() || lon.isEmpty()) continue;
+
+                ptLatitude  = lat.toDouble();
+                ptLongitude = lon.toDouble();
+
+                // Get metadata of track point (altitude and time stamp)
+                for (QDomNode nTrkptMeta = trkptElem.firstChild();
+                    !nTrkptMeta.isNull(); nTrkptMeta = nTrkptMeta.nextSibling()) 
+                {
+                    QDomElement trkptMetaElem = nTrkptMeta.toElement();
+                    if (trkptMetaElem.isNull()) continue;
+                    if (trkptMetaElem.tagName() == QString("time")) 
+                    {
+                        // Get GPS point time stamp. If not available continue to next point.
+                        QString time = trkptMetaElem.text();
+                        if (time.isEmpty()) continue;
+                        ptDateTime = QDateTime::fromString(time, Qt::ISODate);
+                    }
+                    if (trkptMetaElem.tagName() == QString("ele")) 
+                    {
+                        // Get GPS point altitude. If not available continue to next point.
+                        QString ele = trkptMetaElem.text();
+                        if (!ele.isEmpty())
+                            ptAltitude  = ele.toDouble();
+                    }
+                }
+
+                if (ptDateTime.isNull())
+                    continue;
+
+                GPSData gpsData(ptAltitude, ptLatitude, ptLongitude, 0.0);
+                m_GPSDataMap.insert( ptDateTime, gpsData );
+
+/*
+                kdDebug( 51001 ) << "Date:" << ptDateTime 
+                                 << "Alt:"  << ptAltitude 
+                                 << "Lat:"  << ptLatitude 
+                                 << "Lon:"  << ptLongitude 
+                                 << endl;*/
+            }
+        }
+    }
+
+    kdDebug( 51001 ) << "GPX File " << url.fileName() 
+                     << " parsed with " << numPoints() 
+                     << " points extracted" << endl;
+    return true;
+}
+
+/* NOTE: Since this class can parse GPX file, this code is obsolete !
 
     QFile       trackFile(url.path());
     QStringList trackLinesList;
@@ -152,8 +244,7 @@ void GPSDataParser::openFile(const KURL& url)
 
             row++;
         }
-    }
-}
+    }*/
 
 double GPSDataParser::calculateDistance(double lon1, double lat1, double lon2, double lat2)
 {

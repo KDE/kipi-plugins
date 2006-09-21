@@ -51,14 +51,15 @@ public:
     GPSListViewItem(KListView *view, QListViewItem *after, const KURL& url);
     ~GPSListViewItem();
 
-    void setGPSInfo(double altitude, double latitude, double longitude);
+    void setGPSInfo(double altitude, double latitude, double longitude, bool dirty=true);
     void getGPSInfo(double& altitude, double& latitude, double& longitude);
 
     void setDateTime(QDateTime date);
     QDateTime getDateTime();
 
     void setEnabled(bool e);
-    bool isEnabled(void);
+    bool isEnabled();
+    bool isDirty();
 
     KURL getUrl();
     void writeGPSInfoToFile();

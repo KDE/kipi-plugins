@@ -45,12 +45,14 @@ public:
     GPSListViewItemPriv()
     {
         enabled   = false;
+        dirty     = false;
         altitude  = 0.0;
         latitude  = 0.0;
         longitude = 0.0;
     }
 
     bool      enabled;
+    bool      dirty;
 
     double    altitude;
     double    latitude;
@@ -76,7 +78,7 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
     setDateTime(exiv2Iface.getImageDateTime());
     double alt, lat, lng;
     exiv2Iface.getGPSInfo(alt, lat, lng);
-    setGPSInfo(alt, lat, lng);
+    setGPSInfo(alt, lat, lng, false);
 
     KIO::PreviewJob* thumbnailJob = KIO::filePreview(url, 64);
 
@@ -89,14 +91,16 @@ GPSListViewItem::~GPSListViewItem()
     delete d;
 }
 
-void GPSListViewItem::setGPSInfo(double altitude, double latitude, double longitude)
+void GPSListViewItem::setGPSInfo(double altitude, double latitude, double longitude, bool dirty)
 {
+    d->dirty     = dirty;
     d->altitude  = altitude;
     d->latitude  = latitude;
     d->longitude = longitude;
     setText(2, QString::number(d->altitude));
     setText(3, QString::number(d->latitude));
     setText(4, QString::number(d->longitude));
+    repaint();
 }
 
 void GPSListViewItem::getGPSInfo(double& altitude, double& latitude, double& longitude)
@@ -135,7 +139,7 @@ KURL GPSListViewItem::getUrl()
 
 void GPSListViewItem::writeGPSInfoToFile()
 {
-    if (isEnabled())
+    if (isEnabled() && isDirty())
     {
         setPixmap(1, SmallIcon("run"));
         KIPIPlugins::Exiv2Iface exiv2Iface;
@@ -155,16 +159,30 @@ void GPSListViewItem::setEnabled(bool e)
     repaint();
 }
 
-bool GPSListViewItem::isEnabled(void)    
+bool GPSListViewItem::isEnabled()    
 {
     return d->enabled;
+}
+
+bool GPSListViewItem::isDirty()    
+{
+    return d->dirty;
 }
 
 void GPSListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
 {
     if (d->enabled)
     {
-        KListViewItem::paintCell(p, cg, column, width, alignment);
+        if ( isDirty() && column >=2  && column <=4 )
+        {
+            QColorGroup _cg( cg );
+            QColor c = _cg.text();
+            _cg.setColor( QColorGroup::Text, Qt::red );
+            KListViewItem::paintCell( p, _cg, column, width, alignment );
+            _cg.setColor( QColorGroup::Text, c );
+        }
+        else
+            KListViewItem::paintCell(p, cg, column, width, alignment);
     }
     else
     {

@@ -28,10 +28,10 @@
 #include <qpushbutton.h>
 #include <qframe.h>
 #include <qimage.h>
+#include <qfileinfo.h>
 
 // KDE includes.
 
-#include <kprogress.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kapplication.h>
@@ -41,9 +41,10 @@
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 #include <klistview.h>
-#include <kurlrequester.h>
+#include <kfiledialog.h>
 #include <kconfig.h>
-#include <klineedit.h>
+#include <kmessagebox.h>
+#include <kglobalsettings.h>
 
 // LibKipi includes.
 
@@ -60,12 +61,12 @@ namespace KIPIGPSSyncPlugin
 {
 
 GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
-             : KDialogBase(Plain, i18n("GPS Sync"), Help|Apply|Close, Close, parent, 
+             : KDialogBase(Plain, i18n("GPS Sync"), Help|User1|Apply|Close, Close, parent, 
                            0, true, true ),
                m_interface( interface )
 {
-    // FIXME : handle Apply button with GPS file data parser result.
-    //enableButton(Apply, false);
+    setButtonText( User1, i18n("Load GPX File..."));
+    enableButton(Apply, false);
 
     QGridLayout *mainLayout = new QGridLayout(plainPage(), 3, 1, 0, marginHint());
 
@@ -82,7 +83,6 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     QLabel *labelTitle = new QLabel( i18n("Syncronize Picture Metadata with a GPS Device"), headerFrame, "labelTitle" );
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
-    mainLayout->addMultiCellWidget(headerFrame, 0, 0, 0, 1);
 
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
@@ -108,32 +108,10 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     m_listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_listView->setSelectionMode(QListView::Single);
     m_listView->setMinimumWidth(450);
+    mainLayout->addMultiCellWidget(headerFrame, 0, 0, 0, 1);
+    mainLayout->addMultiCellWidget(m_listView, 1, 3, 0, 1);
+    mainLayout->setRowStretch(1, 10);
 
-    // ---------------------------------------------------------------
-
-    QWidget *settingsBox = new QGroupBox(0, Qt::Vertical, i18n("Settings"), plainPage());
-    QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox->layout(), 2, 1,
-                                                     KDialog::spacingHint());
-
-    QLabel *gpsFileLabel = new QLabel(i18n("GPS data file:"), settingsBox);
-    m_gpsFile = new KURLRequester(KGlobalSettings::documentPath(), settingsBox);
-    m_gpsFile->lineEdit()->setReadOnly(true);
-    m_gpsFile->setMode(KFile::File | KFile::LocalOnly | KFile::ExistingOnly);    
-    
-    settingsBoxLayout->addMultiCellWidget(gpsFileLabel, 0, 0, 0, 1); 
-    settingsBoxLayout->addMultiCellWidget(m_gpsFile, 1, 1, 0, 1); 
-
-    // ---------------------------------------------------------------
-
-    m_progressBar = new KProgress(plainPage());
-    m_progressBar->setMaximumHeight( fontMetrics().height() );
-    
-    mainLayout->addMultiCellWidget(m_listView, 1, 3, 0, 0);
-    mainLayout->addMultiCellWidget(settingsBox, 1, 1, 1, 1);
-    mainLayout->addMultiCellWidget(m_progressBar, 2, 2, 1, 1);
-    mainLayout->setColStretch(0, 10);
-    mainLayout->setRowStretch(3, 10);
-    
     // ---------------------------------------------------------------
     // About data and help button.
 
@@ -156,10 +134,6 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     helpMenu->menu()->insertItem(i18n("GPS Sync Handbook"),
                                  this, SLOT(slotHelp()), 0, -1, 0);
     helpButton->setPopup( helpMenu->menu() );
-
-    connect(m_gpsFile, SIGNAL(urlSelected(const QString &)),
-            this, SLOT(slotGPSFileSelected(const QString &)));
-
     readSettings();
 }
 
@@ -182,13 +156,37 @@ void GPSSyncDialog::setImages( const KURL::List& images )
     }
 }
 
-void GPSSyncDialog::slotGPSFileSelected(const QString &path)
+// Load GPX data file.
+void GPSSyncDialog::slotUser1()
 {
-    // TODO: call here the GPS data file parser using GPSBabel to extract 
-    // GPS data and set GPS positions to all pictures enable in the list.
+    KURL loadGPXFile = KFileDialog::getOpenURL(KGlobalSettings::documentPath(),
+                                               QString( "*.gpx" ), this,
+                                               QString( i18n("Select GPX File to Load")) );
+    if( loadGPXFile.isEmpty() )
+       return;
 
-    // FIXME : handle Apply button with GPS file data parser result.
-    //enableButton(Apply, true);
+    enableButton(Apply, false);
+    m_gpxParser.clear();
+    bool ret = m_gpxParser.loadGPXFile(loadGPXFile);
+
+    if (!ret)
+    {
+        KMessageBox::error(this, i18n("Cannot parse %1 GPX file!")
+                           .arg(loadGPXFile.fileName()), i18n("GPS Sync"));    
+        enableButton(Apply, false);
+        return;
+    }
+
+    if (m_gpxParser.numPoints() <= 0)
+    {
+        KMessageBox::sorry(this, i18n("The %1 GPX file do not have a date-time track to use!")
+                           .arg(loadGPXFile.fileName()), i18n("GPS Sync"));    
+        enableButton(Apply, false);
+        return;
+    }
+
+    enableButton(Apply, true);
+    matchGPSAndPhoto();
 }
 
 void GPSSyncDialog::slotHelp()
@@ -226,11 +224,40 @@ void GPSSyncDialog::saveSettings()
     config.sync();
 }
 
+void GPSSyncDialog::matchGPSAndPhoto()
+{
+    int itemsUpdated = 0;
+
+    QListViewItemIterator it( m_listView );
+    while ( it.current() ) 
+    {
+        GPSListViewItem *item = (GPSListViewItem*) it.current();
+        double alt =0.0, lat=0.0, lng = 0.0;
+        if (m_gpxParser.parseDates(item->getDateTime(), 30, alt, lat, lng))
+        {
+            item->setGPSInfo(alt, lat, lng);
+            itemsUpdated++;
+        }
+        ++it;
+    }
+
+    if (itemsUpdated == 0)
+    {
+        KMessageBox::sorry(this, i18n("Cannot find pictures to correlate with GPX file data."),
+                           i18n("GPS Sync"));    
+        enableButton(Apply, false);
+        return;
+    }
+
+    KMessageBox::information(this, i18n("GPS data of %1 picture(s) have been updated on "
+                             "the list using the GPX data file.\n"
+                       "Press Apply button to update picture(s) metadata.")
+                       .arg(itemsUpdated), i18n("GPS Sync"));    
+    enableButton(Apply, true);
+}
+
 void GPSSyncDialog::slotApply()
 {
-    m_progressBar->setTotalSteps(m_listView->childCount());
-    m_progressBar->setProgress(0);
-    
     QListViewItemIterator it( m_listView );
     while ( it.current() ) 
     {
@@ -239,7 +266,7 @@ void GPSSyncDialog::slotApply()
         m_listView->ensureItemVisible(item);
         item->writeGPSInfoToFile();
         ++it;
-        m_progressBar->advance(1);
+        kapp->processEvents();
     }
 }
 
