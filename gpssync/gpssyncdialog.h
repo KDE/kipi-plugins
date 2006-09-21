@@ -27,7 +27,7 @@
 #include <kdialogbase.h>
 #include <kurl.h>
 
-// LibKIPi includes.
+// LibKipi includes.
 
 #include <libkipi/interface.h>
 
@@ -35,13 +35,9 @@
 
 #include "gpsdataparser.h"
 
-class QWidget;
-class QPushButton;
-
-class KListView;
-
 namespace KIPIGPSSyncPlugin
 {
+class GPSSyncDialogPriv;
 
 class GPSSyncDialog :public KDialogBase 
 {
@@ -73,13 +69,7 @@ private:
 
 private:
 
-    QPushButton     *m_helpButton;
- 
-    KListView       *m_listView;
-
-    KIPI::Interface *m_interface;
-
-    GPSDataParser    m_gpxParser;
+    GPSSyncDialogPriv *d;
 };
 
 }  // NameSpace KIPIGPSSyncPlugin

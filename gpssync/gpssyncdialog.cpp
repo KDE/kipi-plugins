@@ -46,10 +46,6 @@
 #include <kmessagebox.h>
 #include <kglobalsettings.h>
 
-// LibKipi includes.
-
-#include <libkipi/imageinfo.h>
-
 // Local includes.
 
 #include "gpslistviewitem.h"
@@ -60,11 +56,31 @@
 namespace KIPIGPSSyncPlugin
 {
 
-GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
-             : KDialogBase(Plain, i18n("GPS Sync"), Help|User1|Apply|Close, Close, parent, 
-                           0, true, true ),
-               m_interface( interface )
+class GPSSyncDialogPriv
 {
+public:
+
+    GPSSyncDialogPriv()
+    {
+        listView  = 0;
+        interface = 0;
+    }
+
+    KListView       *listView;
+
+    KIPI::Interface *interface;
+
+    GPSDataParser    gpxParser;
+};
+
+GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
+             : KDialogBase(Plain, i18n("GPS Sync"), 
+                           Help|User1|Apply|Close, Close, 
+                           parent, 0, true, true )
+{
+    d = new GPSSyncDialogPriv;
+    d->interface = interface;
+
     setButtonText( User1, i18n("Load GPX File..."));
     enableButton(Apply, false);
 
@@ -94,28 +110,27 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
 
     // --------------------------------------------------------------
 
-    m_listView = new KListView(plainPage());
-    m_listView->addColumn( i18n("Thumbnail") );
-    m_listView->addColumn( i18n("Filename") );
-    m_listView->addColumn( i18n("Altitude") );
-    m_listView->addColumn( i18n("Latitude") );
-    m_listView->addColumn( i18n("Longitude") );
-    m_listView->addColumn( i18n("Date") );
-    m_listView->addColumn( i18n("Extrapoled") );
-    m_listView->setResizeMode(QListView::AllColumns);
-    m_listView->setAllColumnsShowFocus(true);
-    m_listView->setSorting(-1);
-    m_listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    m_listView->setSelectionMode(QListView::Single);
-    m_listView->setMinimumWidth(450);
+    d->listView = new KListView(plainPage());
+    d->listView->addColumn( i18n("Thumbnail") );
+    d->listView->addColumn( i18n("Filename") );
+    d->listView->addColumn( i18n("Altitude") );
+    d->listView->addColumn( i18n("Latitude") );
+    d->listView->addColumn( i18n("Longitude") );
+    d->listView->addColumn( i18n("Date") );
+    d->listView->addColumn( i18n("Extrapoled") );
+    d->listView->setResizeMode(QListView::AllColumns);
+    d->listView->setAllColumnsShowFocus(true);
+    d->listView->setSorting(-1);
+    d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    d->listView->setSelectionMode(QListView::Single);
+    d->listView->setMinimumWidth(450);
+
     mainLayout->addMultiCellWidget(headerFrame, 0, 0, 0, 1);
-    mainLayout->addMultiCellWidget(m_listView, 1, 3, 0, 1);
+    mainLayout->addMultiCellWidget(d->listView, 1, 3, 0, 1);
     mainLayout->setRowStretch(1, 10);
 
     // ---------------------------------------------------------------
     // About data and help button.
-
-    QPushButton *helpButton = actionButton( Help );
 
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("GPS Sync"),
@@ -133,12 +148,14 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("GPS Sync Handbook"),
                                  this, SLOT(slotHelp()), 0, -1, 0);
-    helpButton->setPopup( helpMenu->menu() );
+    actionButton(Help)->setPopup( helpMenu->menu() );
+
     readSettings();
 }
 
 GPSSyncDialog::~GPSSyncDialog()
 {
+    delete d;
 }
 
 void GPSSyncDialog::setImages( const KURL::List& images )
@@ -152,7 +169,7 @@ void GPSSyncDialog::setImages( const KURL::List& images )
         QString ext = fi.extension().upper();
 
         if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
-            new GPSListViewItem(m_listView, m_listView->lastItem(), *it);
+            new GPSListViewItem(d->listView, d->listView->lastItem(), *it);
     }
 }
 
@@ -166,8 +183,8 @@ void GPSSyncDialog::slotUser1()
        return;
 
     enableButton(Apply, false);
-    m_gpxParser.clear();
-    bool ret = m_gpxParser.loadGPXFile(loadGPXFile);
+    d->gpxParser.clear();
+    bool ret = d->gpxParser.loadGPXFile(loadGPXFile);
 
     if (!ret)
     {
@@ -177,7 +194,7 @@ void GPSSyncDialog::slotUser1()
         return;
     }
 
-    if (m_gpxParser.numPoints() <= 0)
+    if (d->gpxParser.numPoints() <= 0)
     {
         KMessageBox::sorry(this, i18n("The %1 GPX file do not have a date-time track to use!")
                            .arg(loadGPXFile.fileName()), i18n("GPS Sync"));    
@@ -228,12 +245,12 @@ void GPSSyncDialog::matchGPSAndPhoto()
 {
     int itemsUpdated = 0;
 
-    QListViewItemIterator it( m_listView );
+    QListViewItemIterator it( d->listView );
     while ( it.current() ) 
     {
         GPSListViewItem *item = (GPSListViewItem*) it.current();
         double alt =0.0, lat=0.0, lng = 0.0;
-        if (m_gpxParser.parseDates(item->getDateTime(), 30, alt, lat, lng))
+        if (d->gpxParser.parseDates(item->getDateTime(), 30, alt, lat, lng))
         {
             item->setGPSInfo(alt, lat, lng);
             itemsUpdated++;
@@ -258,12 +275,12 @@ void GPSSyncDialog::matchGPSAndPhoto()
 
 void GPSSyncDialog::slotApply()
 {
-    QListViewItemIterator it( m_listView );
+    QListViewItemIterator it( d->listView );
     while ( it.current() ) 
     {
         GPSListViewItem *item = (GPSListViewItem*) it.current();
-        m_listView->setSelected(item, true);
-        m_listView->ensureItemVisible(item);
+        d->listView->setSelected(item, true);
+        d->listView->ensureItemVisible(item);
         item->writeGPSInfoToFile();
         ++it;
         kapp->processEvents();
