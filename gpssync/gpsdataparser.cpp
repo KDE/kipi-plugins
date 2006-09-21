@@ -66,7 +66,7 @@ bool GPSDataParser::parseDates(QDateTime dateTime, int averageSecs, double& alt,
         int nbSecs = abs(dateTime.secsTo( it.key() ));
         if( nbSecs < averageSecs )
         {
-            GPSData data = m_GPSDataMap[it.key()];
+            GPSDataContainer data = m_GPSDataMap[it.key()];
             alt = data.altitude();
             lat = data.latitude();
             lon = data.longitude();
@@ -151,7 +151,7 @@ bool GPSDataParser::loadGPXFile(const KURL& url)
                 if (ptDateTime.isNull())
                     continue;
 
-                GPSData gpsData(ptAltitude, ptLatitude, ptLongitude, 0.0);
+                GPSDataContainer gpsData(ptAltitude, ptLatitude, ptLongitude, 0.0);
                 m_GPSDataMap.insert( ptDateTime, gpsData );
 
 /*
@@ -193,7 +193,7 @@ bool GPSDataParser::loadGPXFile(const KURL& url)
 
     int row = 0;
     QString distance;
-    GPSData gpsData;
+    GPSDataContainer gpsData;
     QDateTime prevGpsDate;
 
     for( QStringList::Iterator it = trackLinesList.begin(); it != trackLinesList.end(); ++it )

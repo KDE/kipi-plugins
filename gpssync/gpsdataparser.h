@@ -31,45 +31,20 @@
 
 #include <kurl.h>
 
+// Local includes.
+
+#include "gpsdatacontainer.h"
+
 namespace KIPIGPSSyncPlugin
 {
-
-class GPSData
-{
-public:
-    
-    GPSData(): m_altitude(0.0), m_latitude(0.0), m_longitude(0.0), m_speed(0.0){}
-
-    GPSData(double altitude, double latitude, double longitude, double speed)
-                 : m_altitude(altitude), m_latitude(latitude),
-                   m_longitude(longitude), m_speed(speed)
-    {}
-
-    void setAltitude(double alt)  { m_altitude  = alt; }
-    void setLatitude(double lat)  { m_latitude  = lat; }
-    void setLongitude(double lng) { m_longitude = lng; }
-    void setSpeed(double spd)     { m_speed     = spd; }
-
-    double altitude()  const { return m_altitude;  }
-    double latitude()  const { return m_latitude;  }
-    double longitude() const { return m_longitude; }
-    double speed()     const { return m_speed;     }
-    
-private:
-    
-    double    m_altitude;
-    double    m_latitude;
-    double    m_longitude;
-    double    m_speed;
-};
 
 class GPSDataParser
 {
 	
 public:
 
-	GPSDataParser();
-	~GPSDataParser(){};	
+    GPSDataParser();
+    ~GPSDataParser(){};	
 
     bool loadGPXFile(const KURL& url);    
 
@@ -84,7 +59,7 @@ private:
 
 private: 
 
-    typedef QMap<QDateTime, GPSData> GPSDataMap; 
+    typedef QMap<QDateTime, GPSDataContainer> GPSDataMap; 
 
     GPSDataMap m_GPSDataMap;
 };
