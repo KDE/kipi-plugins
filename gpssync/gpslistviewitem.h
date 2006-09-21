@@ -39,6 +39,7 @@ class KFileItem;
 
 namespace KIPIGPSSyncPlugin
 {
+class GPSListViewItemPriv;
 
 class GPSListViewItem : public QObject, public KListViewItem
 {
@@ -49,7 +50,7 @@ public:
 
     GPSListViewItem(KListView *view, QListViewItem *after, const KURL& url);
 
-    ~GPSListViewItem(){};
+    ~GPSListViewItem();
 
     void setGPSInfo(double altitude, double latitude, double longitude);
     void getGPSInfo(double& altitude, double& latitude, double& longitude);
@@ -57,7 +58,7 @@ public:
     void setDateTime(QDateTime date);
     QDateTime getDateTime();
 
-    void setEnabled(bool d);
+    void setEnabled(bool e);
     bool isEnabled(void);
 
     KURL getUrl();
@@ -73,15 +74,7 @@ private slots:
 
 private: 
 
-    bool      m_enabled;
-
-    double    m_altitude;
-    double    m_latitude;
-    double    m_longitude;
-
-    QDateTime m_date;
-
-    KURL      m_url;
+    GPSListViewItemPriv *d;
 };
 
 } // NameSpace KIPIGPSSyncPlugin

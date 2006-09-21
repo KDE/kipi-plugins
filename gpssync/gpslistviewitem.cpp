@@ -38,20 +38,41 @@
 namespace KIPIGPSSyncPlugin
 {
 
+class GPSListViewItemPriv
+{
+public:
+
+    GPSListViewItemPriv()
+    {
+        enabled   = false;
+        altitude  = 0.0;
+        latitude  = 0.0;
+        longitude = 0.0;
+    }
+
+    bool      enabled;
+
+    double    altitude;
+    double    latitude;
+    double    longitude;
+    
+    QDateTime date;
+
+    KURL      url;
+};
+
 GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KURL& url)
                : KListViewItem(view, after)
 {
-    m_altitude  = 0.0;
-    m_latitude  = 0.0;
-    m_longitude = 0.0;
-    m_url       = url;
+    d = new GPSListViewItemPriv;
+    d->url = url;
 
     setEnabled(false);
     setPixmap(0, SmallIcon( "file_broken", KIcon::SizeLarge, KIcon::DisabledState ));
-    setText(1, m_url.fileName());
+    setText(1, d->url.fileName());
 
     KIPIPlugins::Exiv2Iface exiv2Iface;
-    exiv2Iface.load(m_url.path());
+    exiv2Iface.load(d->url.path());
     setDateTime(exiv2Iface.getImageDateTime());
     double alt, lat, lng;
     exiv2Iface.getGPSInfo(alt, lat, lng);
@@ -63,23 +84,28 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
             this, SLOT(slotGotThumbnail(const KFileItem*, const QPixmap&)));
 }
 
+GPSListViewItem::~GPSListViewItem()
+{
+    delete d;
+}
+
 void GPSListViewItem::setGPSInfo(double altitude, double latitude, double longitude)
 {
-    m_altitude  = altitude;
-    m_latitude  = latitude;
-    m_longitude = longitude;
-    setText(2, QString::number(m_altitude));
-    setText(3, QString::number(m_latitude));
-    setText(4, QString::number(m_longitude));
+    d->altitude  = altitude;
+    d->latitude  = latitude;
+    d->longitude = longitude;
+    setText(2, QString::number(d->altitude));
+    setText(3, QString::number(d->latitude));
+    setText(4, QString::number(d->longitude));
 }
 
 void GPSListViewItem::getGPSInfo(double& altitude, double& latitude, double& longitude)
 {
     if (isEnabled())
     {
-        altitude  = m_altitude;
-        latitude  = m_latitude;
-        longitude = m_longitude;
+        altitude  = d->altitude;
+        latitude  = d->latitude;
+        longitude = d->longitude;
     }
 }
 
@@ -88,7 +114,7 @@ void GPSListViewItem::setDateTime(QDateTime date)
     if (date.isValid())
     {
         setEnabled(true);
-        m_date = date;
+        d->date = date;
         setText(5, date.toString(Qt::ISODate));
     }
     else
@@ -99,12 +125,12 @@ void GPSListViewItem::setDateTime(QDateTime date)
 
 QDateTime GPSListViewItem::getDateTime()
 {
-    return m_date;
+    return d->date;
 }
 
 KURL GPSListViewItem::getUrl()
 {
-    return m_url;
+    return d->url;
 }
 
 void GPSListViewItem::writeGPSInfoToFile()
@@ -113,9 +139,9 @@ void GPSListViewItem::writeGPSInfoToFile()
     {
         setPixmap(1, SmallIcon("run"));
         KIPIPlugins::Exiv2Iface exiv2Iface;
-        exiv2Iface.load(m_url.path());
-        bool ret = exiv2Iface.setGPSInfo(m_altitude, m_latitude, m_longitude);
-        ret &= exiv2Iface.save(m_url.path());
+        exiv2Iface.load(d->url.path());
+        bool ret = exiv2Iface.setGPSInfo(d->altitude, d->latitude, d->longitude);
+        ret &= exiv2Iface.save(d->url.path());
         if (ret)
             setPixmap(1, SmallIcon("ok"));
         else
@@ -123,20 +149,20 @@ void GPSListViewItem::writeGPSInfoToFile()
     }
 }
 
-void GPSListViewItem::setEnabled(bool d)    
+void GPSListViewItem::setEnabled(bool e)    
 {
-    m_enabled = d;
+    d->enabled = e;
     repaint();
 }
 
 bool GPSListViewItem::isEnabled(void)    
 {
-    return m_enabled;
+    return d->enabled;
 }
 
 void GPSListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
 {
-    if (m_enabled)
+    if (d->enabled)
     {
         KListViewItem::paintCell(p, cg, column, width, alignment);
     }
