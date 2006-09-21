@@ -1,5 +1,6 @@
-SUBDIRS = themes
-INCLUDES    = $(LIBKIPI_CFLAGS) $(all_includes) $(LIBXSLT_CFLAGS)
+SUBDIRS     = themes
+INCLUDES    =  -I$(top_srcdir)/kipi-plugins/common/include \
+	           $(LIBKIPI_CFLAGS) $(all_includes) $(LIBXSLT_CFLAGS)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory

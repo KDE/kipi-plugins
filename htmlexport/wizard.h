@@ -42,6 +42,7 @@ protected slots:
 	virtual void accept();
 
 private slots:
+    void slotHelp();
 	void updateFinishButton();
 	void slotThemeSelectionChanged();
 
