@@ -49,7 +49,6 @@ Q_OBJECT
 public:
 
     GPSListViewItem(KListView *view, QListViewItem *after, const KURL& url);
-
     ~GPSListViewItem();
 
     void setGPSInfo(double altitude, double latitude, double longitude);
