@@ -56,7 +56,7 @@ Plugin_Imagesgallery::Plugin_Imagesgallery(QObject *parent, const char*, const Q
 void Plugin_Imagesgallery::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    m_actionImagesGallery = new KAction (i18n("HTML Export..."),        // Menu message.
+    m_actionImagesGallery = new KAction (i18n("Images Gallery..."),     // Menu message.
                                          "www",                         // Menu icon.
                                          0,
                                          this,
