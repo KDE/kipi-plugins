@@ -1,7 +1,5 @@
 ----------------------------------------------------------------------------
 * General
- - Fix release and prepare_release scripts (After Gilles changes there
-   is at least one new version file for kipi plugin...) AP: anaselli
 
  - All dialog less plugins which modify images should only use
    currentSelection().
