@@ -6,6 +6,7 @@ v 0.1.3
 
 Kipi-plugins NEW FEATURES
 
+GPSSync       : New kipi plugin to sync photo metadata with a GPS device.
 
 GalleryExport : Support for multiple galleries.
 
