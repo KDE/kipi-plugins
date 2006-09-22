@@ -16,6 +16,7 @@
 
 #include <qcheckbox.h>
 #include <qfile.h>
+#include <qfont.h>
 #include <qframe.h>
 #include <qhgroupbox.h>
 #include <qlabel.h>
@@ -59,7 +60,6 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
 
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
     layout->setMargin( 2 ); // to make sure the frame gets displayed
-//     layout->setSpacing( 0 );
 
     QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
     pixmapLabelLeft->setScaledContents( false );
@@ -80,11 +80,25 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
 
     dvlay->addWidget( headerFrame );
 
+
+    if( !openDevice() )
+    {
+        /// No iPod warning frame
+        QLabel *warning = new QLabel( i18n("<p align=\"center\"><b>No iPod was detected</b></p>"), box );
+        warning->setPaletteBackgroundColor( QColor(147,18,18) );
+        warning->setPaletteForegroundColor( Qt::white );
+
+        warning->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+
+        dvlay->addWidget( warning );
+
+        enableButton( KDialogBase::User1, false );
+    }
+
+
     QHBoxLayout *albumLayout = new QHBoxLayout( box );
     QLabel      *albumLabel  = new QLabel( i18n("Destination &Album:" ), box );
     albumLayout->setMargin( 2 );
-
-    openDevice();
 
     QStringList albums = getIPodAlbums();
 
@@ -109,11 +123,6 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
 
     dvlay->addLayout( albumLayout );
     dvlay->addLayout( newAlbumLayout );
-
-    bool noAlbums = albums.isEmpty();
-    m_newAlbumCheckBox->setChecked( noAlbums );
-    m_newAlbumLineEdit->setEnabled( noAlbums );
-    m_albumCombo->setEnabled( !noAlbums );
 
     QHGroupBox *urlListBox = new QHGroupBox( box );
     QWidget* urlBox = new QWidget( urlListBox );
@@ -148,6 +157,19 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     QWhatsThis::add( m_progress, i18n("This is the current percentage of the task completed.") );
 
     dvlay->addWidget( m_progress );
+
+    /// enable/disable as appropriate
+    bool noAlbums = albums.isEmpty();
+    // disable the options if there is no ipod
+    // default to add a new album if no albums are found
+    m_newAlbumCheckBox->setChecked( noAlbums && m_itdb );
+    m_newAlbumCheckBox->setEnabled( m_itdb );
+    m_newAlbumLineEdit->setEnabled( noAlbums && m_itdb );
+    m_albumCombo->setEnabled( !noAlbums && m_itdb );
+
+    urlListBox->setEnabled( m_itdb );
+    m_progress->setEnabled( m_itdb );
+
 
     connect( m_newAlbumCheckBox, SIGNAL( toggled(bool) ), SLOT( slotNewAlbumChecked(bool) ) );
 
@@ -196,6 +218,8 @@ UploadDialog::slotNewAlbumChecked( bool on )
 void
 UploadDialog::slotProcessStart()
 {
+    enableButton( KDialogBase::User1, false );
+
     if( !m_itdb )
         return;
 
@@ -218,6 +242,15 @@ UploadDialog::slotProcessStart()
 
     if( err )
         debug() << "Failed with error: " << err << endl;
+}
+
+void
+UploadDialog::slotProcessFinished()
+{
+    setButtonText( User1, i18n("&Close") );
+
+    disconnect( this, SIGNAL( user1Clicked() ), this, SLOT( slotProcessStop() ) );
+       connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotOk() ) );
 }
 
 

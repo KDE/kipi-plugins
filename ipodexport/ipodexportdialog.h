@@ -51,6 +51,7 @@ class UploadDialog : public KDialogBase
     private slots:
         void slotNewAlbumChecked( bool on );
         void slotProcessStart();
+        void slotProcessFinished();
 
     private:
         bool openDevice(); // connect to the ipod
