@@ -21,9 +21,14 @@ extern "C" {
 #include <kdialogbase.h>
 #include <libkipi/interface.h>
 
+class ImageList;
+
 class QCheckBox;
+class QLabel;
+class QPushButton;
 class KComboBox;
 class KLineEdit;
+class KProgress;
 class KURL;
 
 class UploadDialog : public KDialogBase
@@ -58,6 +63,11 @@ class UploadDialog : public KDialogBase
         KComboBox       *m_albumCombo;
         QCheckBox       *m_newAlbumCheckBox;
         KLineEdit       *m_newAlbumLineEdit;
+        KProgress       *m_progress;
+        QPushButton     *m_addImagesButton;
+        QPushButton     *m_remImagesButton;
+        ImageList       *m_imageList;
+        QLabel          *m_imageLabel;
 
         QString          m_mountPoint;
         QString          m_deviceNode;

@@ -12,19 +12,25 @@
  ***************************************************************************/
 
 #include "ipodexportdialog.h"
+#include "imagelist.h"
 
 #include <qcheckbox.h>
 #include <qfile.h>
 #include <qframe.h>
+#include <qhgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpixmap.h>
+#include <qpushbutton.h>
+#include <qvgroupbox.h>
+#include <qwhatsthis.h>
 
 #include <kcombobox.h>
 #include <kdebug.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kmountpoint.h>
+#include <kprogress.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
 
@@ -74,24 +80,24 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
 
     dvlay->addWidget( headerFrame );
 
-    QHBoxLayout *albumLayout = new QHBoxLayout( this );
-    QLabel      *albumLabel  = new QLabel( i18n("Destination &Album:" ), this );
+    QHBoxLayout *albumLayout = new QHBoxLayout( box );
+    QLabel      *albumLabel  = new QLabel( i18n("Destination &Album:" ), box );
     albumLayout->setMargin( 2 );
 
     openDevice();
 
     QStringList albums = getIPodAlbums();
 
-    m_albumCombo = new KComboBox( this );
+    m_albumCombo = new KComboBox( box );
     m_albumCombo->insertStringList( albums );
     albumLabel->setBuddy( m_albumCombo );
 
     albumLayout->addWidget( albumLabel );
     albumLayout->addWidget( m_albumCombo );
 
-    QHBoxLayout *newAlbumLayout = new QHBoxLayout( this );
-    m_newAlbumCheckBox = new QCheckBox( i18n("Create a new album:"), this );
-    m_newAlbumLineEdit = new KLineEdit( this );
+    QHBoxLayout *newAlbumLayout = new QHBoxLayout( box );
+    m_newAlbumCheckBox = new QCheckBox( i18n("Create a new album:"), box );
+    m_newAlbumLineEdit = new KLineEdit( box );
     newAlbumLayout->setMargin( 2 );
 
     KIPI::ImageCollection album = m_interface->currentAlbum();
@@ -109,6 +115,40 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     m_newAlbumLineEdit->setEnabled( noAlbums );
     m_albumCombo->setEnabled( !noAlbums );
 
+    QHGroupBox *urlListBox = new QHGroupBox( box );
+    QWidget* urlBox = new QWidget( urlListBox );
+    QHBoxLayout* urlLayout = new QHBoxLayout( urlBox, 0, spacingHint() );
+    m_imageList = new ImageList( urlBox );
+    urlLayout->addWidget( m_imageList );
+
+    m_imageList->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
+
+    QVBoxLayout* urlLayout_1 = new QVBoxLayout( urlLayout );
+    m_addImagesButton = new QPushButton ( i18n( "&Add..." ), urlBox );
+    urlLayout_1->addWidget( m_addImagesButton );
+    QWhatsThis::add( m_addImagesButton, i18n("Add images to be queued for the iPod.") );
+
+    m_remImagesButton = new QPushButton ( i18n( "&Remove" ), urlBox );
+    urlLayout_1->addWidget( m_remImagesButton );
+    QWhatsThis::add( m_remImagesButton, i18n("Remove selected image from the list.") );
+
+    m_imageLabel = new QLabel( urlBox );
+    m_imageLabel->setFixedHeight( 80 );
+    m_imageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
+    m_imageLabel->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
+    urlLayout_1->addWidget( m_imageLabel );
+    QWhatsThis::add( m_imageLabel, i18n( "The preview of the selected image in the list." ) );
+    urlLayout_1->addStretch( 1 );
+
+    dvlay->addWidget( urlListBox );
+
+    m_progress = new KProgress( box, "Progress" );
+    m_progress->setTotalSteps(100);
+    m_progress->setValue(0);
+    QWhatsThis::add( m_progress, i18n("This is the current percentage of the task completed.") );
+
+    dvlay->addWidget( m_progress );
+
     connect( m_newAlbumCheckBox, SIGNAL( toggled(bool) ), SLOT( slotNewAlbumChecked(bool) ) );
 
     connect( this, SIGNAL( user1Clicked() ), SLOT( slotProcessStart() ) );
@@ -118,6 +158,9 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
 const QStringList
 UploadDialog::getIPodAlbums()
 {
+    if( !m_itdb )
+        return QStringList();
+
     KIPI::ImageCollection selection = m_interface->currentSelection();
 
     if ( !selection.isValid() ) return QStringList();
@@ -153,6 +196,9 @@ UploadDialog::slotNewAlbumChecked( bool on )
 void
 UploadDialog::slotProcessStart()
 {
+    if( !m_itdb )
+        return;
+
     QString albumName = getDestinationAlbum();
 
     for( KURL::List::Iterator it = m_selectedImages.begin();
@@ -166,8 +212,7 @@ UploadDialog::slotProcessStart()
 
     debug() << "Writing database" << endl;
     GError *err = 0;
-    if( !itdb_photodb_write( m_itdb, &err ) )
-        debug() << "OH CRAP!" << endl;
+    itdb_photodb_write( m_itdb, &err );
 
     debug() << "Finished writing database" << endl;
 
