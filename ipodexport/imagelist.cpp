@@ -45,8 +45,7 @@ ImageList::ImageList(QWidget *parent, const char *name)
     setAcceptDrops(true);
     setDropVisualizer(false);
     addColumn(i18n("Source Album"));
-    addColumn(i18n("Source Image"));
-    addColumn(i18n("Target Image"));
+    addColumn(i18n("Image"));
     addColumn(i18n("Result"));
     setSorting(3);
     setItemMargin(3);
@@ -108,15 +107,15 @@ void ImageList::droppedImagesItems(QDropEvent *e)
     char *str;
 
     while ( (str = it.current()) != 0 )
-       {
-       QString filePath = QUriDrag::uriToLocalFile(str);
-       QFileInfo fileInfo(filePath);
+    {
+        QString filePath = QUriDrag::uriToLocalFile(str);
+        QFileInfo fileInfo(filePath);
 
-       if (fileInfo.isFile() && fileInfo.exists())
-          FilesPath.append(fileInfo.filePath());
+        if( fileInfo.isFile() && fileInfo.exists() )
+            FilesPath.append(fileInfo.filePath());
 
-       ++it;
-       }
+        ++it;
+    }
 
     if (FilesPath.isEmpty() == false)
        emit addedDropItems(FilesPath);

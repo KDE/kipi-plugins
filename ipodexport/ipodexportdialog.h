@@ -27,6 +27,7 @@ class QCheckBox;
 class QLabel;
 class QPushButton;
 class KComboBox;
+class KFileItem;
 class KLineEdit;
 class KProgress;
 class KURL;
@@ -53,11 +54,19 @@ class UploadDialog : public KDialogBase
         void slotProcessStart();
         void slotProcessFinished();
 
+        void slotAddDropItems( QStringList filesPath );
+
+        void slotImageSelected( QListViewItem * item );
+        void slotGotPreview( const KFileItem* , const QPixmap &pixmap );
+
+        void slotImagesFilesButtonAdd();
+        void slotImagesFilesButtonRem();
+
     private:
         bool openDevice(); // connect to the ipod
         const QStringList getIPodAlbums();
+        void addUrlToList( QString &file );
 
-        KURL::List       m_selectedImages;
         KIPI::Interface *m_interface;
         Itdb_PhotoDB    *m_itdb;
 

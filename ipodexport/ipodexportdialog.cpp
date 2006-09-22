@@ -13,27 +13,37 @@
 
 #include "ipodexportdialog.h"
 #include "imagelist.h"
+#include "imagelistitem.h"
 
 #include <qcheckbox.h>
 #include <qfile.h>
+#include <qfileinfo.h>
 #include <qfont.h>
 #include <qframe.h>
 #include <qhgroupbox.h>
+#include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpixmap.h>
 #include <qpushbutton.h>
 #include <qvgroupbox.h>
 #include <qwhatsthis.h>
+#include <qwmatrix.h>
 
 #include <kcombobox.h>
 #include <kdebug.h>
+#include <kfileitem.h>
+#include <kio/jobclasses.h>
+#include <kio/global.h>
+#include <kio/previewjob.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kmountpoint.h>
 #include <kprogress.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
+
+#include <libkipi/imagedialog.h>
 
 #define debug() kdDebug( 51000 )
 
@@ -45,11 +55,6 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     , m_mountPoint( QString::null )
     , m_deviceNode( QString::null )
 {
-    KIPI::ImageCollection images = interface->currentSelection();
-
-    if ( images.isValid() )
-        m_selectedImages = images.images();
-
     QWidget       *box = plainPage();
     QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
 
@@ -170,10 +175,34 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     urlListBox->setEnabled( m_itdb );
     m_progress->setEnabled( m_itdb );
 
+    /// add selected items to the ImageList
+    KIPI::ImageCollection images = interface->currentSelection();
+
+    if ( images.isValid() )
+    {
+        KURL::List selected = images.images();
+        for( KURL::List::Iterator it = selected.begin(); it != selected.end(); ++it )
+        {
+            addUrlToList( (*it).path() );
+        }
+    }
+
 
     connect( m_newAlbumCheckBox, SIGNAL( toggled(bool) ), SLOT( slotNewAlbumChecked(bool) ) );
 
     connect( this, SIGNAL( user1Clicked() ), SLOT( slotProcessStart() ) );
+
+    connect( m_imageList, SIGNAL( addedDropItems(QStringList) ),
+                    this,   SLOT( slotAddDropItems(QStringList) ) );
+
+    connect( m_imageList, SIGNAL( currentChanged(QListViewItem*) ),
+                    this,   SLOT( slotImageSelected(QListViewItem*) ) );
+
+    connect( m_addImagesButton, SIGNAL( clicked() ),
+                    this,         SLOT( slotImagesFilesButtonAdd() ) );
+
+    connect( m_remImagesButton, SIGNAL( clicked() ),
+                    this,         SLOT( slotImagesFilesButtonRem() ) );
 }
 
 
@@ -253,6 +282,117 @@ UploadDialog::slotProcessFinished()
        connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotOk() ) );
 }
 
+void
+UploadDialog::slotImageSelected( QListViewItem *item )
+{
+    if( !item || m_imageList->childCount() == 0 )
+    {
+        m_imageLabel->clear();
+        return;
+    }
+
+    ImageListItem *pitem = static_cast<ImageListItem*>( item );
+    if ( !pitem ) return;
+
+    m_imageLabel->clear();
+
+    QString IdemIndexed = "file:" + pitem->pathSrc();
+
+    KURL url( IdemIndexed );
+
+    KIO::PreviewJob* m_thumbJob = KIO::filePreview( url, m_imageLabel->height() );
+
+    connect( m_thumbJob, SIGNAL( gotPreview(const KFileItem*, const QPixmap&) ),
+                   this,   SLOT( slotGotPreview(const KFileItem*, const QPixmap&) ) );
+}
+
+void
+UploadDialog::slotGotPreview(const KFileItem* url, const QPixmap &pixmap)
+{
+    QPixmap pix( pixmap );
+
+    // Rotate the thumbnail compared to the angle the host application dictate
+    KIPI::ImageInfo info = m_interface->info( url->url() );
+    if ( info.angle() != 0 )
+    {
+        QImage img = pix.convertToImage();
+        QWMatrix matrix;
+
+        matrix.rotate( info.angle() );
+        img = img.xForm( matrix );
+        pix.convertFromImage( img );
+    }
+
+    m_imageLabel->setPixmap(pix);
+}
+
+void
+UploadDialog::slotImagesFilesButtonAdd()
+{
+    QStringList fileList;
+
+    KURL::List urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
+
+    for( KURL::List::Iterator it = urls.begin() ; it != urls.end() ; ++it )
+        fileList << (*it).path();
+
+    if ( urls.isEmpty() ) return;
+
+    slotAddDropItems( fileList );
+}
+
+void
+UploadDialog::slotImagesFilesButtonRem()
+{
+    QPtrList<QListViewItem> selected = m_imageList->selectedItems();
+
+    for( QListViewItem *it = selected.first(); it; it = selected.next() )
+        delete it;
+}
+
+
+void
+UploadDialog::slotAddDropItems(QStringList filesPath)
+{
+    if( filesPath.isEmpty() ) return;
+
+    for( QStringList::Iterator it = filesPath.begin() ; it != filesPath.end() ; ++it )
+    {
+        QString currentDropFile = *it;
+
+        // Check if the new item already exist in the list.
+
+        bool itemExists = false;
+
+        QListViewItemIterator it2( m_imageList );
+
+        while( it2.current() )
+        {
+            ImageListItem *item = static_cast<ImageListItem*>(it2.current());
+
+            if( item->pathSrc() == currentDropFile.section('/', 0, -1) )
+            {
+                itemExists = true;
+                break;
+            }
+            ++it2;
+        }
+
+        if( !itemExists )
+            addUrlToList( currentDropFile );
+    }
+}
+
+void
+UploadDialog::addUrlToList( QString &file )
+{
+    QFileInfo *fi = new QFileInfo( file );
+
+    new ImageListItem( m_imageList, file.section('/', 0, -1), fi->fileName(), QString::null );
+
+    delete fi;
+}
+
 
 bool
 UploadDialog::openDevice()
@@ -262,7 +402,6 @@ UploadDialog::openDevice()
         debug() <<  "iPod at " << mountPoint() << " already opened" << endl;
         return false;
     }
-
 
     // try to find a mounted ipod
     bool ipodFound = false;
