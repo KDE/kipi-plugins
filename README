@@ -60,6 +60,10 @@ Currently implemented plugins are:
 
 17) SimpleViewerExport : Plugin to export images to SimpleViewer (http://www.airtightinteractive.com/simpleviewer/)
 
+18) GPSSync            : Plugin to synchronize pictures metadata with a GPS device.
+
+19) IpodExport         : Plugin to export pictures with an Ipod device.
+
 Remark : "HelloWorld" plugin is just a tutorial plugin implementation for developpers.
        : "ImagesGallery" plugin is obsolete and no more maintained at the moment.
 
@@ -103,6 +107,7 @@ dcRAW       >= 8.16
 libtiff     >= 3.5.x
 libexiv2    >= 0.10
 libxslt     >= 1.1
+libgpod     >= 0.3.2
 
 Plugin Specific Dependencies (for compiling and for running) :
 -------------------------------------------------------------------------
@@ -117,3 +122,4 @@ wallpaper          : kdebase (runtime dependency)
 rawconverter       : libtiff, dcraw (runtime dependency)
 acquireimages      : libtiff
 htmlexport         : libxslt
+ipodexport         : libgpod 
