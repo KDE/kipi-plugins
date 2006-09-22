@@ -216,8 +216,8 @@ void GPSSyncDialog::setImages( const KURL::List& images )
 void GPSSyncDialog::slotUser1()
 {
     KURL loadGPXFile = KFileDialog::getOpenURL(KGlobalSettings::documentPath(),
-                                               QString( "*.gpx" ), this,
-                                               QString( i18n("Select GPX File to Load")) );
+                                               i18n("%1|GPS Exchange Format").arg("*.gpx"), this,
+                                               QString(i18n("Select GPX File to Load")) );
     if( loadGPXFile.isEmpty() )
        return;
 
