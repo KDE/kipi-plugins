@@ -65,7 +65,7 @@ class UploadDialog : public KDialogBase
     private:
         bool openDevice(); // connect to the ipod
         const QStringList getIPodAlbums();
-        void addUrlToList( QString &file );
+        void addUrlToList( QString file );
 
         KIPI::Interface *m_interface;
         Itdb_PhotoDB    *m_itdb;

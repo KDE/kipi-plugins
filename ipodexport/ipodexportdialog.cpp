@@ -185,6 +185,7 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
         {
             addUrlToList( (*it).path() );
         }
+        enableButton( KDialogBase::User1, m_imageList->childCount() > 0 );
     }
 
 
@@ -247,20 +248,32 @@ UploadDialog::slotNewAlbumChecked( bool on )
 void
 UploadDialog::slotProcessStart()
 {
-    enableButton( KDialogBase::User1, false );
-
-    if( !m_itdb )
+    if( !m_itdb || !m_imageList->childCount() )
         return;
+
+    disconnect( this, SIGNAL( user1Clicked() ), this, SLOT( slotProcessStart() ) );
+       connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotProcessStop()  ) );
+
+    showButtonCancel( false );
+    setButtonText( User1, i18n("&Stop") );
+
+    m_newAlbumCheckBox->setEnabled( false );
+    m_newAlbumLineEdit->setEnabled( false );
+    m_albumCombo->setEnabled( false );
+
+    m_progress->setTotalSteps( m_imageList->childCount() + 1 ); // +1 for writing the database
 
     QString albumName = getDestinationAlbum();
 
-    for( KURL::List::Iterator it = m_selectedImages.begin();
-         it != m_selectedImages.end(); ++it )
+    for( QListViewItem *item = m_imageList->firstChild(); item; item = item->nextSibling() )
     {
-        debug() << "Uploading " << (*it).path().utf8() << " to ipod album " << albumName.utf8() << endl;
-        KIPI::ImageInfo info = m_interface->info( *it );
+    #define item static_cast<ImageListItem*>(item)
+        debug() << "Uploading " << item->pathSrc().utf8() << " to ipod album " << albumName.utf8() << endl;
 
-        itdb_photodb_add_photo( m_itdb, albumName.utf8(), (*it).path().utf8() );
+        itdb_photodb_add_photo( m_itdb, albumName.utf8(), item->pathSrc().utf8() );
+
+        m_progress->advance( 1 );
+    #undef  item
     }
 
     debug() << "Writing database" << endl;
@@ -268,9 +281,11 @@ UploadDialog::slotProcessStart()
     itdb_photodb_write( m_itdb, &err );
 
     debug() << "Finished writing database" << endl;
+    if( err ) debug() << "Failed with error: " << err << endl;
 
-    if( err )
-        debug() << "Failed with error: " << err << endl;
+    m_progress->advance( 1 );
+
+    slotProcessFinished();
 }
 
 void
@@ -348,6 +363,8 @@ UploadDialog::slotImagesFilesButtonRem()
 
     for( QListViewItem *it = selected.first(); it; it = selected.next() )
         delete it;
+
+    enableButton( KDialogBase::User1, m_imageList->childCount() > 0 );
 }
 
 
@@ -381,10 +398,12 @@ UploadDialog::slotAddDropItems(QStringList filesPath)
         if( !itemExists )
             addUrlToList( currentDropFile );
     }
+
+    enableButton( KDialogBase::User1, m_imageList->childCount() > 0 );
 }
 
 void
-UploadDialog::addUrlToList( QString &file )
+UploadDialog::addUrlToList( QString file )
 {
     QFileInfo *fi = new QFileInfo( file );
 
