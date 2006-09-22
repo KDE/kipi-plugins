@@ -36,6 +36,8 @@ Plugin_iPodExport::Plugin_iPodExport( QObject *parent, const char*, const QStrin
     : KIPI::Plugin( Factory::instance(), parent, "iPodExport")
 {
     kdDebug( 51001 ) << "Plugin_iPodExport plugin loaded" << endl;
+
+    g_type_init();
 }
 
 void Plugin_iPodExport::setup( QWidget* widget )
