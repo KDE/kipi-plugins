@@ -104,9 +104,11 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int accuracySecs, int tim
             GPSDataContainer prevGPSPoint = m_GPSDataMap[prevDateTime];
             GPSDataContainer nextGPSPoint = m_GPSDataMap[nextDateTime];
 
+            double alt1 = prevGPSPoint.altitude();
             double lon1 = prevGPSPoint.longitude();
             double lat1 = prevGPSPoint.latitude();
             uint   t1   = prevDateTime.toTime_t();
+            double alt2 = nextGPSPoint.altitude();
             double lon2 = nextGPSPoint.longitude();
             double lat2 = nextGPSPoint.latitude();
             uint   t2   = nextDateTime.toTime_t();
@@ -114,7 +116,7 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int accuracySecs, int tim
 
             if (t3-t1 != 0)  
             {
-                alt = 0.0;    // We cannot interpolate altitude.
+                alt = alt1 + (alt2-alt1) * (t2-t1)/(t3-t1);
                 lat = lat1 + (lat2-lat1) * (t2-t1)/(t3-t1);
                 lon = lon1 + (lon2-lon1) * (t2-t1)/(t3-t1);
                 isInterpolated = true;    
