@@ -95,8 +95,6 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
         warning->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
 
         dvlay->addWidget( warning );
-
-        enableButton( KDialogBase::User1, false );
     }
     else //device opened! hooray!
     {
@@ -208,7 +206,7 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
         {
             addUrlToList( (*it).path() );
         }
-        enableButton( KDialogBase::User1, m_imageList->childCount() > 0 );
+        enableButton( KDialogBase::User1, m_imageList->childCount() > 0 && m_itdb );
     }
 
 
