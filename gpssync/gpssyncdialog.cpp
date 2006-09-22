@@ -269,7 +269,7 @@ void GPSSyncDialog::slotLoadGPXFile()
 {
     KURL loadGPXFile = KFileDialog::getOpenURL(KGlobalSettings::documentPath(),
                                                i18n("%1|GPS Exchange Format").arg("*.gpx"), this,
-                                               QString(i18n("Select GPX File to Load")) );
+                                               i18n("Select GPX File to Load") );
     if( loadGPXFile.isEmpty() )
        return;
 
