@@ -11,6 +11,10 @@
  *                                                                         *
  ***************************************************************************/
 
+extern "C" {
+#include <glib-object.h> //g_init_type
+}
+
 #include "ipodexportdialog.h"
 #include "plugin_ipodexport.h"
 
