@@ -92,12 +92,35 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
         QLabel *warning = new QLabel( i18n("<p align=\"center\"><b>No iPod was detected</b></p>"), box );
         warning->setPaletteBackgroundColor( QColor(147,18,18) );
         warning->setPaletteForegroundColor( Qt::white );
-
         warning->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
 
         dvlay->addWidget( warning );
 
         enableButton( KDialogBase::User1, false );
+    }
+    else //device opened! hooray!
+    {
+        /// Show iPod info stuff
+        const Itdb_IpodInfo *ipodInfo = itdb_device_get_ipod_info( m_itdb->device );
+        const gchar *modelString = 0;
+        QString text;
+        if( ipodInfo )
+        {
+            modelString = itdb_info_get_ipod_model_name_string( ipodInfo->ipod_model );
+            text = i18n( "<p align=\"center\"><b>iPod %1 detected at: %2</b></p>")
+                        .arg( modelString, mountPoint() );
+        }
+        else
+            text = i18n( "<p align=\"center\"><b>iPod detected at: %1</b></p>")
+                        .arg( mountPoint() );
+
+        QLabel *info = new QLabel( text, box );
+
+        info->setPaletteBackgroundColor( QColor(0,98,0) );
+        info->setPaletteForegroundColor( Qt::white );
+        info->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+
+        dvlay->addWidget( info );
     }
 
 
