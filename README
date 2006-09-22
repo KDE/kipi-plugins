@@ -33,7 +33,8 @@ Currently implemented plugins are:
 
  8) Calendar           : A Calendar construction plugin using Album images 
 
- 9) SendImages         : A plugin to send images by email, allowing resizing and recompressing before sending.
+ 9) SendImages         : A plugin to send images by e-mail, allowing resizing and recompressing 
+                         before sending.
 
 10) BatchProcessImages : A batch process images plugin.
                          This plugin includes these parts:
@@ -52,13 +53,15 @@ Currently implemented plugins are:
 
 13) FindImages         : Find dupplicate images in albums
 
-14) GalleryExport      : Plugin to export images to a remote Gallery (and Gallery 2) server (http://gallery.sf.net)
+14) GalleryExport      : Plugin to export images to a remote Gallery (and Gallery 2) server
+                         (http://gallery.sf.net)
 
 15) FlickrExport       : Plugin to export images to a remote Flickr web service (http://www.flickr.com)
 
 16) HTMLExport         : New plugin to export images collections into HTML page (under developpment)
 
-17) SimpleViewerExport : Plugin to export images to SimpleViewer (http://www.airtightinteractive.com/simpleviewer/)
+17) SimpleViewerExport : Plugin to export images to SimpleViewer
+                         (http://www.airtightinteractive.com/simpleviewer/)
 
 18) GPSSync            : Plugin to synchronize pictures metadata with a GPS device.
 
@@ -107,7 +110,7 @@ dcRAW       >= 8.16
 libtiff     >= 3.5.x
 libexiv2    >= 0.10
 libxslt     >= 1.1
-libgpod     >= 0.3.2
+libgpod     >  0.3.2 (current svn implementation)
 
 Plugin Specific Dependencies (for compiling and for running) :
 -------------------------------------------------------------------------
