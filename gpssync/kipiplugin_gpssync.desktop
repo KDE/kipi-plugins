@@ -1,8 +1,12 @@
 [Desktop Entry]
 Comment=KIPI GPS Device Sync
+Comment[pt]='Plugin' de Sincronização com GPS do KIPI
+Comment[pt_BR]='Plugin' de Sincronização com GPS do KIPI
 Encoding=UTF-8
 Icon=
 Name=GPSSync
+Name[pt]=Sincronização GPS
+Name[pt_BR]=Sincronização GPS
 ServiceTypes=KIPI/Plugin
 Type=Service
 X-KDE-Library=kipiplugin_gpssync
