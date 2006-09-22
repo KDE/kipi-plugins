@@ -20,10 +20,14 @@ if compile_RAWCONVERTER
 RAWCONVERTERDIR = rawconverter
 endif
 
+if compile_IPODEXPORT
+IPODEXPORTDIR = ipodexport
+endif
+
 SUBDIRS = common printwizard calendar mpegencoder cdarchiving simpleviewerexport \
 	      sendimages batchprocessimages wallpaper findimages galleryexport flickrexport \
 	      jpeglossless timeadjust gpssync \
-	      $(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR) $(HTMLEXPORTDIR) 
+	      $(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR) $(HTMLEXPORTDIR) $(IPODEXPORTDIR)
 
 rcdir = $(kde_datadir)/kipi
 rc_DATA = tips

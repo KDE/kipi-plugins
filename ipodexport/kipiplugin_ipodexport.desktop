@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=iPodExport
+Comment=KIPI iPod Export Plugin
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_ipodexport
+author=Seb Ruiz, me@sebruiz.net

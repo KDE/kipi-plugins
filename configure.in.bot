@@ -85,4 +85,16 @@ else
   echo "-- libxstl found.................. YES"
 fi
 
+if test "x$have_libgpod" != "xyes"; then
+  echo "-- libgpod found.................. NO"
+  echo ""
+  echo "iPodExport plugin needs the libgpod library. This plugin will not be compiled!"
+  echo "To complile this plugin, please install libgpod development package."
+  echo "libgpod website is at http://gtkpod.org/libgpod.html"
+  echo ""
+  all_tests=bad
+else
+  echo "-- libgpod found.................. YES"
+fi
+
 
