@@ -29,6 +29,7 @@
 #include <qpushbutton.h>
 #include <qfileinfo.h>
 #include <qwhatsthis.h>
+#include <qcheckbox.h>
 
 // KDE includes.
 
@@ -71,11 +72,14 @@ public:
         gpxFileName    = 0;
         gpxPointsLabel = 0;
         timeZoneCB     = 0;
+        interpolateBox = 0;
     }
 
     QLabel             *gpxPointsLabel;
 
     QComboBox          *timeZoneCB;
+
+    QCheckBox          *interpolateBox;
 
     KListView          *listView;
 
@@ -96,8 +100,9 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d = new GPSSyncDialogPriv;
     d->interface = interface;
 
-    setButtonText( User1, i18n("Load GPX File..."));
+    setButtonText(User1, i18n("Correlate"));
     enableButton(Apply, false);
+    enableButton(User1, false);
 
     QGridLayout *mainLayout = new QGridLayout(plainPage(), 3, 1, 0, marginHint());
 
@@ -144,8 +149,13 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     // ---------------------------------------------------------------
 
     QWidget *settingsBox = new QGroupBox(0, Qt::Vertical, i18n("Settings"), plainPage());
-    QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox->layout(), 5, 1,
+    QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox->layout(), 7, 1,
                                                      KDialog::spacingHint());
+
+    QPushButton *loadGPXButton = new QPushButton(i18n("Load GPX File..."), settingsBox);
+
+    connect(loadGPXButton, SIGNAL(pressed()),
+            this, SLOT(slotLoadGPXFile()));
 
     QLabel *gpxFileLabel = new QLabel(i18n("Current GPX file:"), settingsBox);
     d->gpxFileName       = new KSqueezedTextLabel(i18n("No GPX file"), settingsBox);
@@ -188,14 +198,20 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
                     "pictures were taken in, so that the times of the pictures "
                     "can be adjusted to match the GPS data"));
 
-    settingsBoxLayout->addMultiCellWidget(gpxFileLabel, 0, 0, 0, 1);     
-    settingsBoxLayout->addMultiCellWidget(d->gpxFileName, 1, 1, 0, 1);     
-    settingsBoxLayout->addMultiCellWidget(d->gpxPointsLabel, 2, 2, 0, 1);     
-    settingsBoxLayout->addMultiCellWidget(line, 3, 3, 0, 1);     
-    settingsBoxLayout->addMultiCellWidget(maxGapLabel, 4, 4, 0, 0); 
-    settingsBoxLayout->addMultiCellWidget(d->maxGapInput, 4, 4, 1, 1); 
-    settingsBoxLayout->addMultiCellWidget(timeZoneLabel, 5, 5, 0, 0); 
-    settingsBoxLayout->addMultiCellWidget(d->timeZoneCB, 5, 5, 1, 1); 
+    d->interpolateBox = new QCheckBox(i18n("Interpolate"), settingsBox);
+    QWhatsThis::add(d->interpolateBox, i18n("<p>Set on this option to interpolate GPS points "
+                    "witch are not matches properly with the GPX data file."));
+
+    settingsBoxLayout->addMultiCellWidget(loadGPXButton, 0, 0, 0, 1);     
+    settingsBoxLayout->addMultiCellWidget(gpxFileLabel, 1, 1, 0, 1);     
+    settingsBoxLayout->addMultiCellWidget(d->gpxFileName, 2, 2, 0, 1);     
+    settingsBoxLayout->addMultiCellWidget(d->gpxPointsLabel, 3, 3, 0, 1);     
+    settingsBoxLayout->addMultiCellWidget(line, 4, 4, 0, 1);     
+    settingsBoxLayout->addMultiCellWidget(maxGapLabel, 5, 5, 0, 0); 
+    settingsBoxLayout->addMultiCellWidget(d->maxGapInput, 5, 5, 1, 1); 
+    settingsBoxLayout->addMultiCellWidget(timeZoneLabel, 6, 6, 0, 0); 
+    settingsBoxLayout->addMultiCellWidget(d->timeZoneCB, 6, 6, 1, 1); 
+    settingsBoxLayout->addMultiCellWidget(d->interpolateBox, 7, 7, 0, 1); 
 
     // ---------------------------------------------------------------
 
@@ -249,8 +265,7 @@ void GPSSyncDialog::setImages( const KURL::List& images )
     }
 }
 
-// Load GPX data file.
-void GPSSyncDialog::slotUser1()
+void GPSSyncDialog::slotLoadGPXFile()
 {
     KURL loadGPXFile = KFileDialog::getOpenURL(KGlobalSettings::documentPath(),
                                                i18n("%1|GPS Exchange Format").arg("*.gpx"), this,
@@ -258,7 +273,6 @@ void GPSSyncDialog::slotUser1()
     if( loadGPXFile.isEmpty() )
        return;
 
-    enableButton(Apply, false);
     d->gpxParser.clear();
     bool ret = d->gpxParser.loadGPXFile(loadGPXFile);
 
@@ -267,6 +281,7 @@ void GPSSyncDialog::slotUser1()
         KMessageBox::error(this, i18n("Cannot parse %1 GPX file!")
                            .arg(loadGPXFile.fileName()), i18n("GPS Sync"));    
         enableButton(Apply, false);
+        enableButton(User1, false);
         return;
     }
 
@@ -275,13 +290,15 @@ void GPSSyncDialog::slotUser1()
         KMessageBox::sorry(this, i18n("The %1 GPX file do not have a date-time track to use!")
                            .arg(loadGPXFile.fileName()), i18n("GPS Sync"));    
         enableButton(Apply, false);
+        enableButton(User1, false);
         return;
     }
 
     d->gpxFileName->setText(loadGPXFile.fileName());
     d->gpxPointsLabel->setText(i18n("Points parsed: %1").arg(d->gpxParser.numPoints()));
     enableButton(Apply, true);
-    matchGPSAndPhoto();
+    enableButton(User1, true);
+    slotUser1();
 }
 
 void GPSSyncDialog::slotHelp()
@@ -308,7 +325,7 @@ void GPSSyncDialog::readSettings()
     config.setGroup("GPS Sync Settings");
     d->maxGapInput->setValue(config.readNumEntry("Max Gap Time", 30));
     d->timeZoneCB->setCurrentItem(config.readNumEntry("Time Zone", 12));
-
+    d->interpolateBox->setChecked(config.readBoolEntry("Interpolate", false));
     resize(configDialogSize(config, QString("GPS Sync Dialog")));
 }
 
@@ -318,12 +335,13 @@ void GPSSyncDialog::saveSettings()
     config.setGroup("GPS Sync Settings");
     config.writeEntry("Max Gap Time", d->maxGapInput->value() );
     config.writeEntry("Time Zone", d->timeZoneCB->currentItem() );
-
+    config.writeEntry("Interpolate", d->interpolateBox->isChecked() );
     saveDialogSize(config, QString("GPS Sync Dialog"));
     config.sync();
 }
 
-void GPSSyncDialog::matchGPSAndPhoto()
+// Start to correlate the GPS positions and Pictures
+void GPSSyncDialog::slotUser1()
 {
     int itemsUpdated = 0;
 
@@ -331,14 +349,16 @@ void GPSSyncDialog::matchGPSAndPhoto()
     while ( it.current() ) 
     {
         GPSListViewItem *item = (GPSListViewItem*) it.current();
-        double alt =0.0, lat=0.0, lng = 0.0;
+        double alt=0.0, lat=0.0, lng=0.0;
+        bool isInterpolated;
 
-        if (d->gpxParser.parseDates(item->getDateTime(), 
-                                    d->maxGapInput->value(),
-                                    d->timeZoneCB->currentItem()-12,
-                                    alt, lat, lng))
+        if (d->gpxParser.matchDate(item->getDateTime(), 
+                                   d->maxGapInput->value(),
+                                   d->timeZoneCB->currentItem()-12,
+                                   d->interpolateBox->isChecked(),
+                                   alt, lat, lng, isInterpolated))
         {
-            item->setGPSInfo(alt, lat, lng);
+            item->setGPSInfo(alt, lat, lng, isInterpolated);
             itemsUpdated++;
         }
         ++it;
@@ -368,6 +388,9 @@ void GPSSyncDialog::slotApply()
         d->listView->setSelected(item, true);
         d->listView->ensureItemVisible(item);
         item->writeGPSInfoToFile();
+
+        // TODO : new libkipi method to store GPS info in host database.
+
         ++it;
         kapp->processEvents();
     }

@@ -60,10 +60,10 @@ protected slots:
     void slotHelp();
     void slotClose();
     void slotUser1();
+    void slotLoadGPXFile(); 
 
 private:
 
-    void matchGPSAndPhoto(); 
     void readSettings();
     void saveSettings();
 

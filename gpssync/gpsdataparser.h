@@ -50,13 +50,15 @@ public:
 
     void clear();
     int  numPoints();
-    bool parseDates(QDateTime photoDateTime, int accuracySecs, int timeZone, 
-                    double& alt, double& lat, double& lon);
+    bool matchDate(QDateTime photoDateTime, int accuracySecs, int timeZone, 
+                   bool interpolate, double& alt, double& lat, double& lon,
+                   bool& isInterpolated);
 
 private:
 
-    double calculateDistance(double lon1, double lat1, double lon2, double lat2);
-    int    calculateTimeDiff(QDateTime date1, QDateTime date2);
+    // Methods used to perform interpolation.
+    QDateTime findNextDate(QDateTime dateTime, int secs);
+    QDateTime findPrevDate(QDateTime dateTime, int secs);
 
 private: 
 

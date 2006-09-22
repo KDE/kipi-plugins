@@ -44,15 +44,17 @@ public:
 
     GPSListViewItemPriv()
     {
-        enabled   = false;
-        dirty     = false;
-        altitude  = 0.0;
-        latitude  = 0.0;
-        longitude = 0.0;
+        enabled        = false;
+        dirty          = false;
+        isInterpolated = false;
+        altitude       = 0.0;
+        latitude       = 0.0;
+        longitude      = 0.0;
     }
 
     bool      enabled;
     bool      dirty;
+    bool      isInterpolated;
 
     double    altitude;
     double    latitude;
@@ -78,7 +80,7 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
     setDateTime(exiv2Iface.getImageDateTime());
     double alt, lat, lng;
     exiv2Iface.getGPSInfo(alt, lat, lng);
-    setGPSInfo(alt, lat, lng, false);
+    setGPSInfo(alt, lat, lng, false, false);
 
     KIO::PreviewJob* thumbnailJob = KIO::filePreview(url, 64);
 
@@ -91,15 +93,28 @@ GPSListViewItem::~GPSListViewItem()
     delete d;
 }
 
-void GPSListViewItem::setGPSInfo(double altitude, double latitude, double longitude, bool dirty)
+void GPSListViewItem::setGPSInfo(double altitude, double latitude, double longitude, 
+                                 bool interpolated, bool dirty)
 {
-    d->dirty     = dirty;
-    d->altitude  = altitude;
-    d->latitude  = latitude;
-    d->longitude = longitude;
+    d->isInterpolated = interpolated;
+    d->dirty          = dirty;
+    d->altitude       = altitude;
+    d->latitude       = latitude;
+    d->longitude      = longitude;
     setText(2, QString::number(d->altitude));
     setText(3, QString::number(d->latitude));
     setText(4, QString::number(d->longitude));
+
+    QString status;
+    if (isDirty())
+    {
+        if (isInterpolated())
+            status = i18n("Interpolated");
+        else
+            status = i18n("Found");
+    }
+    setText(6, status);
+
     repaint();
 }
 
@@ -135,6 +150,11 @@ QDateTime GPSListViewItem::getDateTime()
 KURL GPSListViewItem::getUrl()
 {
     return d->url;
+}
+
+bool GPSListViewItem::isInterpolated()
+{
+    return d->isInterpolated;
 }
 
 void GPSListViewItem::writeGPSInfoToFile()

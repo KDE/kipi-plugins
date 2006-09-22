@@ -51,7 +51,8 @@ public:
     GPSListViewItem(KListView *view, QListViewItem *after, const KURL& url);
     ~GPSListViewItem();
 
-    void setGPSInfo(double altitude, double latitude, double longitude, bool dirty=true);
+    void setGPSInfo(double altitude, double latitude, double longitude,  
+                    bool interpolated, bool dirty=true);
     void getGPSInfo(double& altitude, double& latitude, double& longitude);
 
     void setDateTime(QDateTime date);
@@ -60,6 +61,7 @@ public:
     void setEnabled(bool e);
     bool isEnabled();
     bool isDirty();
+    bool isInterpolated();
 
     KURL getUrl();
     void writeGPSInfoToFile();
