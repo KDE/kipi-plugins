@@ -26,9 +26,8 @@
 #include <qvgroupbox.h>
 #include <qgrid.h>
 #include <qpushbutton.h>
-#include <qframe.h>
-#include <qimage.h>
 #include <qfileinfo.h>
+#include <qwhatsthis.h>
 
 // KDE includes.
 
@@ -37,6 +36,7 @@
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <khelpmenu.h>
+#include <ksqueezedtextlabel.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
@@ -45,6 +45,8 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <kglobalsettings.h>
+#include <knuminput.h>
+#include <kseparator.h>
 
 // Local includes.
 
@@ -62,15 +64,24 @@ public:
 
     GPSSyncDialogPriv()
     {
-        listView  = 0;
-        interface = 0;
+        listView       = 0;
+        interface      = 0;
+        maxGapInput    = 0;
+        gpxFileName    = 0;
+        gpxPointsLabel = 0;
     }
 
-    KListView       *listView;
+    QLabel             *gpxPointsLabel;
 
-    KIPI::Interface *interface;
+    KListView          *listView;
 
-    GPSDataParser    gpxParser;
+    KIntSpinBox        *maxGapInput;
+
+    KSqueezedTextLabel *gpxFileName;
+
+    KIPI::Interface    *interface;
+
+    GPSDataParser       gpxParser;
 };
 
 GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
@@ -96,7 +107,8 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
     pixmapLabelLeft->setScaledContents( false );
     layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Syncronize Picture Metadata with a GPS Device"), headerFrame, "labelTitle" );
+    QLabel *labelTitle = new QLabel( i18n("Syncronize Picture Metadata with a GPS Device"),
+                                     headerFrame, "labelTitle" );
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
 
@@ -125,9 +137,36 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->listView->setSelectionMode(QListView::Single);
     d->listView->setMinimumWidth(450);
 
-    mainLayout->addMultiCellWidget(headerFrame, 0, 0, 0, 1);
+    // ---------------------------------------------------------------
+
+    QWidget *settingsBox = new QGroupBox(0, Qt::Vertical, i18n("Settings"), plainPage());
+    QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox->layout(), 5, 1,
+                                                     KDialog::spacingHint());
+
+    QLabel *gpxFileLabel = new QLabel(i18n("Current GPX file:"), settingsBox);
+    d->gpxFileName       = new KSqueezedTextLabel(i18n("No GPX file"), settingsBox);
+    d->gpxPointsLabel    = new QLabel(settingsBox);
+    KSeparator *line     = new KSeparator(Horizontal, settingsBox);
+
+    QLabel *maxGapLabel = new QLabel(i18n("Max gap time:"), settingsBox);
+    d->maxGapInput      = new KIntSpinBox(0, 2000, 1, 30, 10, settingsBox);
+    QWhatsThis::add(d->maxGapInput, i18n("<p>Set here the maximum distance in "
+                    "seconds from a GPS point that a photo will be matched."));
+
+    settingsBoxLayout->addMultiCellWidget(gpxFileLabel, 0, 0, 0, 1);     
+    settingsBoxLayout->addMultiCellWidget(d->gpxFileName, 1, 1, 0, 1);     
+    settingsBoxLayout->addMultiCellWidget(d->gpxPointsLabel, 2, 2, 0, 1);     
+    settingsBoxLayout->addMultiCellWidget(line, 3, 3, 0, 1);     
+    settingsBoxLayout->addMultiCellWidget(maxGapLabel, 4, 4, 0, 0); 
+    settingsBoxLayout->addMultiCellWidget(d->maxGapInput, 4, 4, 1, 1); 
+
+    // ---------------------------------------------------------------
+
+    mainLayout->addMultiCellWidget(headerFrame, 0, 0, 0, 2);
     mainLayout->addMultiCellWidget(d->listView, 1, 3, 0, 1);
-    mainLayout->setRowStretch(1, 10);
+    mainLayout->addMultiCellWidget(settingsBox, 1, 1, 2, 2);
+    mainLayout->setColStretch(1, 10);
+    mainLayout->setRowStretch(3, 10);
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -202,6 +241,8 @@ void GPSSyncDialog::slotUser1()
         return;
     }
 
+    d->gpxFileName->setText(loadGPXFile.fileName());
+    d->gpxPointsLabel->setText(i18n("Points parsed: %1").arg(d->gpxParser.numPoints()));
     enableButton(Apply, true);
     matchGPSAndPhoto();
 }
@@ -228,6 +269,7 @@ void GPSSyncDialog::readSettings()
 {
     KConfig config("kipirc");
     config.setGroup("GPS Sync Settings");
+    d->maxGapInput->setValue(config.readNumEntry("Max Gap Time", 30));
 
     resize(configDialogSize(config, QString("GPS Sync Dialog")));
 }
@@ -236,6 +278,7 @@ void GPSSyncDialog::saveSettings()
 {
     KConfig config("kipirc");
     config.setGroup("GPS Sync Settings");
+    config.writeEntry("Max Gap Time", d->maxGapInput->value() );
 
     saveDialogSize(config, QString("GPS Sync Dialog"));
     config.sync();
@@ -250,7 +293,7 @@ void GPSSyncDialog::matchGPSAndPhoto()
     {
         GPSListViewItem *item = (GPSListViewItem*) it.current();
         double alt =0.0, lat=0.0, lng = 0.0;
-        if (d->gpxParser.parseDates(item->getDateTime(), 30, alt, lat, lng))
+        if (d->gpxParser.parseDates(item->getDateTime(), d->maxGapInput->value(), alt, lat, lng))
         {
             item->setGPSInfo(alt, lat, lng);
             itemsUpdated++;
