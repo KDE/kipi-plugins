@@ -21,6 +21,7 @@
 
 // Qt includes.
 
+#include <qcombobox.h>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qvgroupbox.h>
@@ -69,9 +70,12 @@ public:
         maxGapInput    = 0;
         gpxFileName    = 0;
         gpxPointsLabel = 0;
+        timeZoneCB     = 0;
     }
 
     QLabel             *gpxPointsLabel;
+
+    QComboBox          *timeZoneCB;
 
     KListView          *listView;
 
@@ -129,7 +133,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->listView->addColumn( i18n("Latitude") );
     d->listView->addColumn( i18n("Longitude") );
     d->listView->addColumn( i18n("Date") );
-    d->listView->addColumn( i18n("Extrapoled") );
+    d->listView->addColumn( i18n("Status") );
     d->listView->setResizeMode(QListView::AllColumns);
     d->listView->setAllColumnsShowFocus(true);
     d->listView->setSorting(-1);
@@ -153,12 +157,45 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     QWhatsThis::add(d->maxGapInput, i18n("<p>Set here the maximum distance in "
                     "seconds from a GPS point that a photo will be matched."));
 
+    QLabel *timeZoneLabel = new QLabel(i18n("Time zone:"), settingsBox);
+    d->timeZoneCB         = new QComboBox( false, settingsBox );
+    d->timeZoneCB->insertItem(i18n("-12"), 0);
+    d->timeZoneCB->insertItem(i18n("-11"), 1);
+    d->timeZoneCB->insertItem(i18n("-10"), 2);
+    d->timeZoneCB->insertItem(i18n("-9"),  3);
+    d->timeZoneCB->insertItem(i18n("-8"),  4);
+    d->timeZoneCB->insertItem(i18n("-7"),  5);
+    d->timeZoneCB->insertItem(i18n("-6"),  6);
+    d->timeZoneCB->insertItem(i18n("-5"),  7);
+    d->timeZoneCB->insertItem(i18n("-4"),  8);
+    d->timeZoneCB->insertItem(i18n("-3"),  9);
+    d->timeZoneCB->insertItem(i18n("-2"),  10);
+    d->timeZoneCB->insertItem(i18n("-1"),  11);
+    d->timeZoneCB->insertItem(i18n("GMT"), 12);
+    d->timeZoneCB->insertItem(i18n("+1"),  13);
+    d->timeZoneCB->insertItem(i18n("+2"),  14);
+    d->timeZoneCB->insertItem(i18n("+3"),  15);
+    d->timeZoneCB->insertItem(i18n("+4"),  16);
+    d->timeZoneCB->insertItem(i18n("+5"),  17);
+    d->timeZoneCB->insertItem(i18n("+6"),  18);
+    d->timeZoneCB->insertItem(i18n("+7"),  19);
+    d->timeZoneCB->insertItem(i18n("+8"),  20);
+    d->timeZoneCB->insertItem(i18n("+9"),  21);
+    d->timeZoneCB->insertItem(i18n("+10"), 22);
+    d->timeZoneCB->insertItem(i18n("+11"), 23);
+    d->timeZoneCB->insertItem(i18n("+12"), 24);
+    QWhatsThis::add(d->timeZoneCB, i18n("<p>Set here the time zone where the "
+                    "pictures were taken in, so that the times of the pictures "
+                    "can be adjusted to match the GPS data"));
+
     settingsBoxLayout->addMultiCellWidget(gpxFileLabel, 0, 0, 0, 1);     
     settingsBoxLayout->addMultiCellWidget(d->gpxFileName, 1, 1, 0, 1);     
     settingsBoxLayout->addMultiCellWidget(d->gpxPointsLabel, 2, 2, 0, 1);     
     settingsBoxLayout->addMultiCellWidget(line, 3, 3, 0, 1);     
     settingsBoxLayout->addMultiCellWidget(maxGapLabel, 4, 4, 0, 0); 
     settingsBoxLayout->addMultiCellWidget(d->maxGapInput, 4, 4, 1, 1); 
+    settingsBoxLayout->addMultiCellWidget(timeZoneLabel, 5, 5, 0, 0); 
+    settingsBoxLayout->addMultiCellWidget(d->timeZoneCB, 5, 5, 1, 1); 
 
     // ---------------------------------------------------------------
 
@@ -270,6 +307,7 @@ void GPSSyncDialog::readSettings()
     KConfig config("kipirc");
     config.setGroup("GPS Sync Settings");
     d->maxGapInput->setValue(config.readNumEntry("Max Gap Time", 30));
+    d->timeZoneCB->setCurrentItem(config.readNumEntry("Time Zone", 12));
 
     resize(configDialogSize(config, QString("GPS Sync Dialog")));
 }
@@ -279,6 +317,7 @@ void GPSSyncDialog::saveSettings()
     KConfig config("kipirc");
     config.setGroup("GPS Sync Settings");
     config.writeEntry("Max Gap Time", d->maxGapInput->value() );
+    config.writeEntry("Time Zone", d->timeZoneCB->currentItem() );
 
     saveDialogSize(config, QString("GPS Sync Dialog"));
     config.sync();
@@ -293,7 +332,11 @@ void GPSSyncDialog::matchGPSAndPhoto()
     {
         GPSListViewItem *item = (GPSListViewItem*) it.current();
         double alt =0.0, lat=0.0, lng = 0.0;
-        if (d->gpxParser.parseDates(item->getDateTime(), d->maxGapInput->value(), alt, lat, lng))
+
+        if (d->gpxParser.parseDates(item->getDateTime(), 
+                                    d->maxGapInput->value(),
+                                    d->timeZoneCB->currentItem()-12,
+                                    alt, lat, lng))
         {
             item->setGPSInfo(alt, lat, lng);
             itemsUpdated++;

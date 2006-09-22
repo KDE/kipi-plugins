@@ -50,7 +50,8 @@ public:
 
     void clear();
     int  numPoints();
-    bool parseDates(QDateTime dateTime, int averageSecs, double& alt, double& lat, double& lon);
+    bool parseDates(QDateTime photoDateTime, int accuracySecs, int timeZone, 
+                    double& alt, double& lat, double& lon);
 
 private:
 

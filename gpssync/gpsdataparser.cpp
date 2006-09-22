@@ -58,13 +58,23 @@ int GPSDataParser::numPoints()
     return m_GPSDataMap.count();
 }
 
-bool GPSDataParser::parseDates(QDateTime dateTime, int averageSecs, double& alt, double& lat, double& lon)
+bool GPSDataParser::parseDates(QDateTime photoDateTime, int accuracySecs, int timeZone,
+                               double& alt, double& lat, double& lon)
 {
+    // GPS device are sync in time by satelite using GMT time.
+    // If the camera time is different than GMT time, we need to convert it to GMT time
+    // Using the time zone.
+    QDateTime cameraGMTDateTime = photoDateTime.addSecs(timeZone*3600*(-1));
+
     for (GPSDataMap::Iterator it = m_GPSDataMap.begin();
          it != m_GPSDataMap.end(); ++it )
     {
-        int nbSecs = abs(dateTime.secsTo( it.key() ));
-        if( nbSecs < averageSecs )
+        // Here we check a possible accuracy in seconds between the 
+        // Camera GMT time and the GPS device GMT time.
+        
+        int nbSecs = abs(cameraGMTDateTime.secsTo( it.key() ));
+        
+        if( nbSecs < accuracySecs )
         {
             GPSDataContainer data = m_GPSDataMap[it.key()];
             alt = data.altitude();
