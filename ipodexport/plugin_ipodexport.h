@@ -32,12 +32,9 @@ public:
 
 private slots:
     void slotImageUpload();
-    void slotBatchImageUpload() { }
 
 private:
-
     KAction         *m_actionImageUpload;
-    KAction         *m_actionBatchImageUpload;
     KIPI::Interface *m_interface;
 };
 
