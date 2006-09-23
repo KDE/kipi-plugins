@@ -32,8 +32,7 @@
 #include <kdebug.h>
 #include <kfileitem.h>
 #include <kiconloader.h>
-#include <kio/jobclasses.h>
-#include <kio/global.h>
+#include <kinputdialog.h> //new album
 #include <kio/previewjob.h>
 #include <klocale.h>
 #include <kmountpoint.h>
@@ -129,7 +128,7 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     m_ipodAlbumList->setSelectionMode( QListView::Single );
     m_ipodAlbumList->setAllColumnsShowFocus( true );
     m_ipodAlbumList->setRootIsDecorated( true ); // show expand icons
-    m_ipodAlbumList->setMinimumHeight( 130 );
+    m_ipodAlbumList->setMinimumHeight( 100 );
 
     QWidget          *buttons = new QWidget( destinationBox );
     QVBoxLayout *buttonLayout = new QVBoxLayout( buttons, 0, spacingHint() );
@@ -139,8 +138,8 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     QWhatsThis::add( m_addAlbumButton, i18n("Create a new photo album on the iPod."));
     QWhatsThis::add( m_remAlbumButton, i18n("Remove the selected photo albums from the iPod."));
 
-    QLabel *icon = new QLabel( buttons );
-    icon->setPixmap( KGlobal::iconLoader()->loadIcon( "ipod", KIcon::Desktop, KIcon::SizeEnormous ) );
+    QLabel *ipod_icon = new QLabel( buttons );
+    ipod_icon->setPixmap( KGlobal::iconLoader()->loadIcon( "ipod", KIcon::Desktop, KIcon::SizeEnormous ) );
 
     m_ipodPreview = new QLabel( buttons );
     m_ipodPreview->setFixedHeight( 80 );
@@ -150,15 +149,16 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     buttonLayout->addWidget( m_addAlbumButton );
     buttonLayout->addWidget( m_remAlbumButton );
     buttonLayout->addWidget( m_ipodPreview );
-    buttonLayout->addWidget( icon );
+    buttonLayout->addWidget( ipod_icon );
     buttonLayout->addStretch( 1 );
 
     dvlay->addWidget( destinationBox );
 
-    QHGroupBox *urlListBox = new QHGroupBox( box );
+    QHGroupBox *urlListBox = new QHGroupBox( i18n("Hard Disk"), box );
     QWidget* urlBox = new QWidget( urlListBox );
     QHBoxLayout* urlLayout = new QHBoxLayout( urlBox, 0, spacingHint() );
     m_imageList = new ImageList( urlBox );
+    m_imageList->setMinimumHeight( 100 );
     urlLayout->addWidget( m_imageList );
 
     m_imageList->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
@@ -176,8 +176,13 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     m_imagePreview->setFixedHeight( 80 );
     m_imagePreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_imagePreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    urlLayout_1->addWidget( m_imagePreview );
     QWhatsThis::add( m_imagePreview, i18n( "The preview of the selected image in the list." ) );
+
+    QLabel *hdd_icon = new QLabel( urlBox );
+    hdd_icon->setPixmap( KGlobal::iconLoader()->loadIcon( "hdd_unmount", KIcon::Desktop, KIcon::SizeEnormous ) );
+
+    urlLayout_1->addWidget( m_imagePreview );
+    urlLayout_1->addWidget( hdd_icon );
     urlLayout_1->addStretch( 1 );
 
     dvlay->addWidget( urlListBox );
@@ -274,14 +279,19 @@ UploadDialog::slotProcessStart()
         return;
 
     disconnect( this, SIGNAL( user1Clicked() ), this, SLOT( slotProcessStart() ) );
-       connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotProcessStop()  ) );
+//        connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotProcessStop()  ) );
+
+
+    QListViewItem *selected = m_ipodAlbumList->selectedItem();
+    if( !selected || selected->depth() != 0 /*not album*/)
+        return;
+
+    QString albumName = selected->text( 0 );
 
     showButtonCancel( false );
     setButtonText( User1, i18n("&Stop") );
 
     m_progress->setTotalSteps( m_imageList->childCount() + 1 ); // +1 for writing the database
-
-    QString albumName = QString("test");
 
     for( QListViewItem *item = m_imageList->firstChild(); item; item = item->nextSibling() )
     {
@@ -311,7 +321,7 @@ UploadDialog::slotProcessFinished()
 {
     setButtonText( User1, i18n("&Close") );
 
-    disconnect( this, SIGNAL( user1Clicked() ), this, SLOT( slotProcessStop() ) );
+//     disconnect( this, SIGNAL( user1Clicked() ), this, SLOT( slotProcessStop() ) );
        connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotOk() ) );
 }
 
@@ -319,6 +329,9 @@ void
 UploadDialog::slotIpodImageSelected( QListViewItem *item )
 {
     m_ipodPreview->clear();
+
+    // only let the user transfer to directories which are selected
+    enableButton( KDialogBase::User1, item && item->depth() == 0 );
 
     if( !item || item->depth() != 1 )
         return;
@@ -417,6 +430,27 @@ UploadDialog::slotImagesFilesButtonRem()
         delete it;
 
     enableButton( KDialogBase::User1, m_imageList->childCount() > 0 );
+}
+
+void
+UploadDialog::slotCreateIpodAlbum()
+{
+    QString helper;
+    KIPI::ImageCollection album = m_interface->currentAlbum();
+    if( album.isValid() )
+        helper = album.name();
+
+    bool ok = false;
+    QString newAlbum = KInputDialog::getText( i18n("New iPod Photo Album"),
+                                              i18n("Create a new album:"),
+                                              helper, &ok, this );
+    if( ok )
+    {
+        itdb_photodb_photoalbum_new( m_itdb, newAlbum.utf8() );
+        // add the new album to the list view
+        KListViewItem *i = new KListViewItem( m_ipodAlbumList, 0, newAlbum );
+        i->setPixmap( 0, KGlobal::iconLoader()->loadIcon( "folder", KIcon::Toolbar, KIcon::SizeSmall ) );
+    }
 }
 
 

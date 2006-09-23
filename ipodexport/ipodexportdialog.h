@@ -63,7 +63,7 @@ class UploadDialog : public KDialogBase
         void slotImagesFilesButtonAdd();
         void slotImagesFilesButtonRem();
 
-        void slotCreateIpodAlbum() { }
+        void slotCreateIpodAlbum();
         void slotDeleteIpodAlbum() { }
 
     private:
