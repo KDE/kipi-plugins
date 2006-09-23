@@ -29,6 +29,8 @@ class QPushButton;
 class KComboBox;
 class KFileItem;
 class KLineEdit;
+class KListView;
+class KListViewItem;
 class KProgress;
 class KURL;
 
@@ -44,40 +46,44 @@ class UploadDialog : public KDialogBase
                 itdb_photodb_free( m_itdb );
         }
 
-        const QString getDestinationAlbum();
-
         QString mountPoint() { return m_mountPoint; }
         QString deviceNode() { return m_deviceNode; }
 
     private slots:
-        void slotNewAlbumChecked( bool on );
         void slotProcessStart();
         void slotProcessFinished();
 
         void slotAddDropItems( QStringList filesPath );
 
-        void slotImageSelected( QListViewItem * item );
+        void slotImageSelected( QListViewItem *item );
         void slotGotPreview( const KFileItem* , const QPixmap &pixmap );
+
+        void slotIpodImageSelected( QListViewItem *item );
 
         void slotImagesFilesButtonAdd();
         void slotImagesFilesButtonRem();
 
+        void slotCreateIpodAlbum() { }
+        void slotDeleteIpodAlbum() { }
+
     private:
         bool openDevice(); // connect to the ipod
-        const QStringList getIPodAlbums();
+        void getIPodAlbums();
+        void getIPodAlbumPhotos( KListViewItem *item, Itdb_PhotoAlbum *album );
         void addUrlToList( QString file );
 
         KIPI::Interface *m_interface;
         Itdb_PhotoDB    *m_itdb;
 
-        KComboBox       *m_albumCombo;
-        QCheckBox       *m_newAlbumCheckBox;
-        KLineEdit       *m_newAlbumLineEdit;
         KProgress       *m_progress;
+        QPushButton     *m_addAlbumButton;
+        QPushButton     *m_remAlbumButton;
         QPushButton     *m_addImagesButton;
         QPushButton     *m_remImagesButton;
         ImageList       *m_imageList;
-        QLabel          *m_imageLabel;
+        KListView       *m_ipodAlbumList;
+        QLabel          *m_imagePreview;
+        QLabel          *m_ipodPreview;
 
         QString          m_mountPoint;
         QString          m_deviceNode;
