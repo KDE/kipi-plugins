@@ -87,7 +87,7 @@ void GPSBabelBinary::slotReadStdoutFromGPSBabel(KProcess*, char* buffer, int buf
     if (firstLine.startsWith(headerStarts))
     {
         d->version = firstLine.remove(0, headerStarts.length());   
-        kdDebug() << "Found gpsbabel version: " << version() << endl;    
+        kdDebug( 51001 ) << "Found gpsbabel version: " << version() << endl;    
     }
 }
 
