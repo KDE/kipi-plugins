@@ -358,7 +358,7 @@ void GPSSyncDialog::slotUser1()
                                    d->interpolateBox->isChecked(),
                                    alt, lat, lng, isInterpolated))
         {
-            item->setGPSInfo(alt, lat, lng, isInterpolated);
+            item->setGPSInfo(GPSDataContainer(alt, lat, lng, isInterpolated));
             itemsUpdated++;
         }
         ++it;
@@ -374,8 +374,8 @@ void GPSSyncDialog::slotUser1()
 
     KMessageBox::information(this, i18n("GPS data of %1 picture(s) have been updated on "
                              "the list using the GPX data file.\n"
-                       "Press Apply button to update picture(s) metadata.")
-                       .arg(itemsUpdated), i18n("GPS Sync"));    
+                             "Press Apply button to update picture(s) metadata.")
+                             .arg(itemsUpdated), i18n("GPS Sync"));    
     enableButton(Apply, true);
 }
 

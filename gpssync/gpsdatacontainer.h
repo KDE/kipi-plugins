@@ -30,29 +30,42 @@ class GPSDataContainer
 {
 public:
     
-    GPSDataContainer(): m_altitude(0.0), m_latitude(0.0), m_longitude(0.0), m_speed(0.0){}
-
-    GPSDataContainer(double altitude, double latitude, double longitude, double speed)
-                   : m_altitude(altitude), m_latitude(latitude),
-                     m_longitude(longitude), m_speed(speed)
+    GPSDataContainer(): m_interpolated(false), m_altitude(0.0), 
+                        m_latitude(0.0), m_longitude(0.0) 
     {}
 
-    void setAltitude(double alt)  { m_altitude  = alt; }
-    void setLatitude(double lat)  { m_latitude  = lat; }
-    void setLongitude(double lng) { m_longitude = lng; }
-    void setSpeed(double spd)     { m_speed     = spd; }
+    GPSDataContainer(double altitude, double latitude, 
+                     double longitude, bool interpolated)
+                   : m_interpolated(interpolated), m_altitude(altitude),
+                     m_latitude(latitude), m_longitude(longitude)
+    {}
 
-    double altitude()  const { return m_altitude;  }
-    double latitude()  const { return m_latitude;  }
-    double longitude() const { return m_longitude; }
-    double speed()     const { return m_speed;     }
+    GPSDataContainer& GPSDataContainer::operator=(const GPSDataContainer& data)
+    {
+        m_interpolated = data.isInterpolated();
+        m_altitude     = data.altitude();
+        m_latitude     = data.latitude();
+        m_longitude    = data.longitude();        
+        return *this;
+    }
+
+    void setInterpolated(bool ite) { m_interpolated = ite; }
+    void setAltitude(double alt)   { m_altitude     = alt; }
+    void setLatitude(double lat)   { m_latitude     = lat; }
+    void setLongitude(double lng)  { m_longitude    = lng; }
+
+    bool   isInterpolated() const { return m_interpolated; }
+    double altitude()       const { return m_altitude;     }
+    double latitude()       const { return m_latitude;     }
+    double longitude()      const { return m_longitude;    }
     
 private:
     
+    bool   m_interpolated;
+
     double m_altitude;
     double m_latitude;
     double m_longitude;
-    double m_speed;
 };
 
 } // NameSpace KIPIGPSSyncPlugin

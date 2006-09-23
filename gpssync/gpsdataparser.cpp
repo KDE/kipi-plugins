@@ -254,15 +254,8 @@ bool GPSDataParser::loadGPXFile(const KURL& url)
                 if (ptDateTime.isNull())
                     continue;
 
-                GPSDataContainer gpsData(ptAltitude, ptLatitude, ptLongitude, 0.0);
+                GPSDataContainer gpsData(ptAltitude, ptLatitude, ptLongitude, false);
                 m_GPSDataMap.insert( ptDateTime, gpsData );
-
-/*
-                kdDebug( 51001 ) << "Date:" << ptDateTime 
-                                 << "Alt:"  << ptAltitude 
-                                 << "Lat:"  << ptLatitude 
-                                 << "Lon:"  << ptLongitude 
-                                 << endl;*/
             }
         }
     }

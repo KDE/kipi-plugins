@@ -46,23 +46,16 @@ public:
     {
         enabled        = false;
         dirty          = false;
-        isInterpolated = false;
-        altitude       = 0.0;
-        latitude       = 0.0;
-        longitude      = 0.0;
     }
 
-    bool      enabled;
-    bool      dirty;
-    bool      isInterpolated;
+    bool             enabled;
+    bool             dirty;
 
-    double    altitude;
-    double    latitude;
-    double    longitude;
-    
-    QDateTime date;
+    QDateTime        date;
 
-    KURL      url;
+    KURL             url;
+
+    GPSDataContainer gpsData;    
 };
 
 GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KURL& url)
@@ -80,7 +73,7 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
     setDateTime(exiv2Iface.getImageDateTime());
     double alt, lat, lng;
     exiv2Iface.getGPSInfo(alt, lat, lng);
-    setGPSInfo(alt, lat, lng, false, false);
+    setGPSInfo(GPSDataContainer(alt, lat, lng, false), false);
 
     KIO::PreviewJob* thumbnailJob = KIO::filePreview(url, 64);
 
@@ -93,22 +86,18 @@ GPSListViewItem::~GPSListViewItem()
     delete d;
 }
 
-void GPSListViewItem::setGPSInfo(double altitude, double latitude, double longitude, 
-                                 bool interpolated, bool dirty)
+void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty)
 {
-    d->isInterpolated = interpolated;
-    d->dirty          = dirty;
-    d->altitude       = altitude;
-    d->latitude       = latitude;
-    d->longitude      = longitude;
-    setText(2, QString::number(d->altitude));
-    setText(3, QString::number(d->latitude));
-    setText(4, QString::number(d->longitude));
+    d->dirty   = dirty;
+    d->gpsData = gpsData;
+    setText(2, QString::number(d->gpsData.altitude()));
+    setText(3, QString::number(d->gpsData.latitude()));
+    setText(4, QString::number(d->gpsData.longitude()));
 
     QString status;
     if (isDirty())
     {
-        if (isInterpolated())
+        if (d->gpsData.isInterpolated())
             status = i18n("Interpolated");
         else
             status = i18n("Found");
@@ -118,14 +107,9 @@ void GPSListViewItem::setGPSInfo(double altitude, double latitude, double longit
     repaint();
 }
 
-void GPSListViewItem::getGPSInfo(double& altitude, double& latitude, double& longitude)
+GPSDataContainer GPSListViewItem::getGPSInfo()
 {
-    if (isEnabled())
-    {
-        altitude  = d->altitude;
-        latitude  = d->latitude;
-        longitude = d->longitude;
-    }
+    return d->gpsData;
 }
 
 void GPSListViewItem::setDateTime(QDateTime date)
@@ -154,7 +138,7 @@ KURL GPSListViewItem::getUrl()
 
 bool GPSListViewItem::isInterpolated()
 {
-    return d->isInterpolated;
+    return d->gpsData.isInterpolated();
 }
 
 void GPSListViewItem::writeGPSInfoToFile()
@@ -164,7 +148,9 @@ void GPSListViewItem::writeGPSInfoToFile()
         setPixmap(1, SmallIcon("run"));
         KIPIPlugins::Exiv2Iface exiv2Iface;
         exiv2Iface.load(d->url.path());
-        bool ret = exiv2Iface.setGPSInfo(d->altitude, d->latitude, d->longitude);
+        bool ret = exiv2Iface.setGPSInfo(d->gpsData.altitude(), 
+                                         d->gpsData.latitude(), 
+                                         d->gpsData.longitude());
         ret &= exiv2Iface.save(d->url.path());
         if (ret)
             setPixmap(1, SmallIcon("ok"));

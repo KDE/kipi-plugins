@@ -31,6 +31,10 @@
 #include <kurl.h>
 #include <klistview.h>
 
+// Local includes.
+
+#include "gpsdatacontainer.h"
+
 class QPainter;
 class QColorGroup;
 class QPixmap;
@@ -51,9 +55,8 @@ public:
     GPSListViewItem(KListView *view, QListViewItem *after, const KURL& url);
     ~GPSListViewItem();
 
-    void setGPSInfo(double altitude, double latitude, double longitude,  
-                    bool interpolated, bool dirty=true);
-    void getGPSInfo(double& altitude, double& latitude, double& longitude);
+    void setGPSInfo(GPSDataContainer gpsData, bool dirty=true);
+    GPSDataContainer getGPSInfo();
 
     void setDateTime(QDateTime date);
     QDateTime getDateTime();
