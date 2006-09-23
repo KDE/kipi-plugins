@@ -212,7 +212,7 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
         enableButton( KDialogBase::User1, m_imageList->childCount() > 0 && m_itdb );
     }
 
-
+    destinationBox->setEnabled( m_itdb );
     urlListBox->setEnabled( m_itdb );
     m_progress->setEnabled( m_itdb );
 
