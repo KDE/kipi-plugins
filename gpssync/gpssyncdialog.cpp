@@ -349,16 +349,15 @@ void GPSSyncDialog::slotUser1()
     while ( it.current() ) 
     {
         GPSListViewItem *item = (GPSListViewItem*) it.current();
-        double alt=0.0, lat=0.0, lng=0.0;
-        bool isInterpolated;
+        GPSDataContainer gpsData;
 
         if (d->gpxParser.matchDate(item->getDateTime(), 
                                    d->maxGapInput->value(),
                                    d->timeZoneCB->currentItem()-12,
                                    d->interpolateBox->isChecked(),
-                                   alt, lat, lng, isInterpolated))
+                                   gpsData))
         {
-            item->setGPSInfo(GPSDataContainer(alt, lat, lng, isInterpolated));
+            item->setGPSInfo(gpsData);
             itemsUpdated++;
         }
         ++it;

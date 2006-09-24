@@ -59,11 +59,8 @@ int GPSDataParser::numPoints()
 }
 
 bool GPSDataParser::matchDate(QDateTime photoDateTime, int accuracySecs, int timeZone, 
-                              bool interpolate, double& alt, double& lat, double& lon, 
-                              bool& isInterpolated)
+                              bool interpolate, GPSDataContainer& gpsData)
 {
-    isInterpolated = false;
-
     // GPS device are sync in time by satelite using GMT time.
     // If the camera time is different than GMT time, we need to convert it to GMT time
     // Using the time zone.
@@ -81,10 +78,7 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int accuracySecs, int tim
         
         if( nbSecs < accuracySecs )
         {
-            GPSDataContainer data = m_GPSDataMap[it.key()];
-            alt = data.altitude();
-            lat = data.latitude();
-            lon = data.longitude();
+            gpsData = m_GPSDataMap[it.key()];
             return true;
         }
     }
@@ -116,10 +110,10 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int accuracySecs, int tim
 
             if (t3-t1 != 0)  
             {
-                alt = alt1 + (alt2-alt1) * (t2-t1)/(t3-t1);
-                lat = lat1 + (lat2-lat1) * (t2-t1)/(t3-t1);
-                lon = lon1 + (lon2-lon1) * (t2-t1)/(t3-t1);
-                isInterpolated = true;    
+                gpsData.setAltitude(alt1 + (alt2-alt1) * (t2-t1)/(t3-t1));
+                gpsData.setLatitude(lat1 + (lat2-lat1) * (t2-t1)/(t3-t1));
+                gpsData.setLongitude(lon1 + (lon2-lon1) * (t2-t1)/(t3-t1));
+                gpsData.setInterpolated(true);
                 return true;
             }
         }
