@@ -22,6 +22,8 @@
 
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qcombobox.h>
+#include <qpushbutton.h>
 
 // KDE includes.
 
@@ -44,12 +46,24 @@ class GPSEditDialogDialogPrivate
 
 public:
 
+    enum WebGPSLocator
+    {
+        CapeLinks = 0
+        // TODO : Added here others web GPS coordinates locator
+    };
+
     GPSEditDialogDialogPrivate()
     {
         altitudeInput  = 0;
         latitudeInput  = 0;
         longitudeInput = 0;
+        gpsButton      = 0;
+        gpsCombo       = 0;
     }
+
+    QPushButton    *gpsButton;
+
+    QComboBox      *gpsCombo;
 
     KDoubleSpinBox *altitudeInput;
     KDoubleSpinBox *latitudeInput;
@@ -67,7 +81,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     setHelp("gpssync", "kipi-plugins");
     setButtonText(User1, i18n("Delete"));
 
-    QGridLayout* grid = new QGridLayout(plainPage(), 2, 1, 0, spacingHint());
+    QGridLayout* grid = new QGridLayout(plainPage(), 3, 1, 0, spacingHint());
 
     QLabel *altitudeLabel  = new QLabel(i18n("Altitude:"), plainPage());
     QLabel *latitudeLabel  = new QLabel(i18n("Latitude:"), plainPage());
@@ -76,18 +90,28 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     d->latitudeInput       = new KDoubleSpinBox(plainPage());
     d->longitudeInput      = new KDoubleSpinBox(plainPage());
     d->altitudeInput->setRange(-20000.0, 20000.0, 1.0, 1);
-    d->latitudeInput->setRange(-90.0, 90.0, 1E-6, 8);
-    d->longitudeInput->setRange(-180.0, 180.0, 1E-6, 8);
+    d->latitudeInput->setRange(-90.0, 90.0, 1E-6, 6);
+    d->longitudeInput->setRange(-180.0, 180.0, 1E-6, 6);
     d->altitudeInput->setValue(gpsData.altitude());
     d->latitudeInput->setValue(gpsData.latitude());
     d->longitudeInput->setValue(gpsData.longitude());
 
+    d->gpsCombo  = new QComboBox( false, plainPage() );
+    d->gpsButton = new QPushButton(i18n("Get GPS Coordinates..."), plainPage());
+    d->gpsCombo->insertItem(QString("Capelinks"), GPSEditDialogDialogPrivate::CapeLinks);
+    // TODO : Added here others web GPS coordinates locator
+    
     grid->addMultiCellWidget(altitudeLabel, 0, 0, 0, 0);
     grid->addMultiCellWidget(latitudeLabel, 1, 1, 0, 0);
     grid->addMultiCellWidget(longitudeLabel, 2, 2, 0, 0);
     grid->addMultiCellWidget(d->altitudeInput, 0, 0, 1, 1);
     grid->addMultiCellWidget(d->latitudeInput, 1, 1, 1, 1);
     grid->addMultiCellWidget(d->longitudeInput, 2, 2, 1, 1);
+    grid->addMultiCellWidget(d->gpsCombo, 3, 3, 0, 0 );
+    grid->addMultiCellWidget(d->gpsButton, 3, 3, 1, 1 );
+
+    connect(d->gpsButton, SIGNAL(clicked()),
+            this, SLOT(slotGPSLocator()));
 
     adjustSize();
 }
@@ -108,6 +132,24 @@ GPSDataContainer GPSEditDialog::getGPSInfo()
 void GPSEditDialog::slotUser1()
 {
     done(-1);
+}
+
+void GPSEditDialog::slotGPSLocator()
+{
+    QString val, url;
+
+    switch( d->gpsCombo->currentItem() )
+    {
+        case GPSEditDialogDialogPrivate::CapeLinks:
+        {
+            url.append("http://www.capelinks.com/cape-cod/maps/gps");
+            break;
+        }
+
+        // TODO : Added here others web GPS coordinates locator
+    }
+    
+    KApplication::kApplication()->invokeBrowser(url);
 }
 
 }  // namespace KIPIGPSSyncPlugin

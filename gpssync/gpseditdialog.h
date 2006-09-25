@@ -49,6 +49,7 @@ public:
 protected slots:
 
     void slotUser1();
+    void slotGPSLocator();
 
 private:
 
