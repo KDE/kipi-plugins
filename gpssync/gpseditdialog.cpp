@@ -75,9 +75,9 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     d->altitudeInput       = new KDoubleSpinBox(plainPage());
     d->latitudeInput       = new KDoubleSpinBox(plainPage());
     d->longitudeInput      = new KDoubleSpinBox(plainPage());
-    d->altitudeInput->setRange(-20000.0, 20000.0, 0.1, 1);
-    d->latitudeInput->setRange(-90.0, 90.0, 0.01, 2);
-    d->longitudeInput->setRange(-180.0, 180.0, 0.01, 2);
+    d->altitudeInput->setRange(-20000.0, 20000.0, 1.0, 1);
+    d->latitudeInput->setRange(-90.0, 90.0, 1E-6, 8);
+    d->longitudeInput->setRange(-180.0, 180.0, 1E-6, 8);
     d->altitudeInput->setValue(gpsData.altitude());
     d->latitudeInput->setValue(gpsData.latitude());
     d->longitudeInput->setValue(gpsData.longitude());
