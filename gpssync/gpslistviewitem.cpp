@@ -155,10 +155,12 @@ void GPSListViewItem::writeGPSInfoToFile()
         setPixmap(1, SmallIcon("run"));
         KIPIPlugins::Exiv2Iface exiv2Iface;
         bool ret = exiv2Iface.load(d->url.path());
-        ret &= exiv2Iface.removeGPSInfo();
-        if (!d->erase)
+        if (d->erase)
+            ret &= exiv2Iface.removeGPSInfo();
+        else
         {
-            ret &= exiv2Iface.setGPSInfo(d->gpsData.altitude(), d->gpsData.latitude(), 
+            ret &= exiv2Iface.setGPSInfo(d->gpsData.altitude(), 
+                                         d->gpsData.latitude(), 
                                          d->gpsData.longitude());
         }
         ret &= exiv2Iface.save(d->url.path());
