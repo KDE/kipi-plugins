@@ -73,9 +73,12 @@ public:
         gpxPointsLabel = 0;
         timeZoneCB     = 0;
         interpolateBox = 0;
+        maxTimeInput   = 0;
+        maxTimeLabel   = 0;
     }
 
     QLabel             *gpxPointsLabel;
+    QLabel             *maxTimeLabel;
 
     QComboBox          *timeZoneCB;
 
@@ -84,6 +87,7 @@ public:
     KListView          *listView;
 
     KIntSpinBox        *maxGapInput;
+    KIntSpinBox        *maxTimeInput;
 
     KSqueezedTextLabel *gpxFileName;
 
@@ -149,7 +153,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     // ---------------------------------------------------------------
 
     QWidget *settingsBox = new QGroupBox(0, Qt::Vertical, i18n("Settings"), plainPage());
-    QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox->layout(), 7, 1,
+    QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox->layout(), 8, 1,
                                                      KDialog::spacingHint());
 
     QPushButton *loadGPXButton = new QPushButton(i18n("Load GPX File..."), settingsBox);
@@ -202,6 +206,11 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     QWhatsThis::add(d->interpolateBox, i18n("<p>Set on this option to interpolate GPS points "
                     "witch are not matches properly with the GPX data file."));
 
+    d->maxTimeLabel = new QLabel(i18n("Max. distance time:"), settingsBox);
+    d->maxTimeInput = new KIntSpinBox(0, 240, 1, 15, 10, settingsBox);
+    QWhatsThis::add(d->maxTimeInput, i18n("<p>Set here the maximum distance time in minutes "
+                    "to get matched points from GPX file around a GPS point to interpolate."));
+
     settingsBoxLayout->addMultiCellWidget(loadGPXButton, 0, 0, 0, 1);     
     settingsBoxLayout->addMultiCellWidget(gpxFileLabel, 1, 1, 0, 1);     
     settingsBoxLayout->addMultiCellWidget(d->gpxFileName, 2, 2, 0, 1);     
@@ -212,6 +221,8 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     settingsBoxLayout->addMultiCellWidget(timeZoneLabel, 6, 6, 0, 0); 
     settingsBoxLayout->addMultiCellWidget(d->timeZoneCB, 6, 6, 1, 1); 
     settingsBoxLayout->addMultiCellWidget(d->interpolateBox, 7, 7, 0, 1); 
+    settingsBoxLayout->addMultiCellWidget(d->maxTimeLabel, 8, 8, 0, 0); 
+    settingsBoxLayout->addMultiCellWidget(d->maxTimeInput, 8, 8, 1, 1); 
 
     // ---------------------------------------------------------------
 
@@ -241,6 +252,14 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     helpMenu->menu()->insertItem(i18n("GPS Sync Handbook"),
                                  this, SLOT(slotHelp()), 0, -1, 0);
     actionButton(Help)->setPopup( helpMenu->menu() );
+
+    // ---------------------------------------------------------------
+
+    connect(d->interpolateBox, SIGNAL(toggled(bool)),
+            d->maxTimeLabel, SLOT(setEnabled(bool)));
+
+    connect(d->interpolateBox, SIGNAL(toggled(bool)),
+            d->maxTimeInput, SLOT(setEnabled(bool)));
 
     readSettings();
 }
@@ -326,6 +345,10 @@ void GPSSyncDialog::readSettings()
     d->maxGapInput->setValue(config.readNumEntry("Max Gap Time", 30));
     d->timeZoneCB->setCurrentItem(config.readNumEntry("Time Zone", 12));
     d->interpolateBox->setChecked(config.readBoolEntry("Interpolate", false));
+    d->maxTimeInput->setValue(config.readNumEntry("Max Inter Dist Time", 15));
+    
+    d->maxTimeLabel->setEnabled(d->interpolateBox->isChecked());
+    d->maxTimeInput->setEnabled(d->interpolateBox->isChecked());
     resize(configDialogSize(config, QString("GPS Sync Dialog")));
 }
 
@@ -336,6 +359,7 @@ void GPSSyncDialog::saveSettings()
     config.writeEntry("Max Gap Time", d->maxGapInput->value() );
     config.writeEntry("Time Zone", d->timeZoneCB->currentItem() );
     config.writeEntry("Interpolate", d->interpolateBox->isChecked() );
+    config.writeEntry("Max Inter Dist Time", d->maxTimeInput->value() );
     saveDialogSize(config, QString("GPS Sync Dialog"));
     config.sync();
 }
@@ -355,7 +379,8 @@ void GPSSyncDialog::slotUser1()
                                    d->maxGapInput->value(),
                                    d->timeZoneCB->currentItem()-12,
                                    d->interpolateBox->isChecked(),
-                                   600, gpsData))
+                                   d->maxTimeInput->value(), 
+                                   gpsData))
         {
             item->setGPSInfo(gpsData);
             itemsUpdated++;
