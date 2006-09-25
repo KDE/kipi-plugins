@@ -905,6 +905,41 @@ bool Exiv2Iface::setGPSInfo(double altitude, double latitude, double longitude)
     return false;
 }
 
+bool Exiv2Iface::removeGPSInfo()
+{
+    try
+    {  
+        QStringList gpsTagsKeys;
+  
+        for (Exiv2::ExifData::iterator it = d->exifMetadata.begin();
+             it != d->exifMetadata.end(); ++it)
+        {
+            QString key = QString::fromLocal8Bit(it->key().c_str());
+
+            if (key.section(".", 1, 1) == QString("GPSInfo"))
+                gpsTagsKeys.append(key);
+        }
+
+        for(QStringList::Iterator it2 = gpsTagsKeys.begin(); it2 != gpsTagsKeys.end(); ++it2)             
+        {
+            Exiv2::ExifKey gpsKey((*it2).ascii());
+            Exiv2::ExifData::iterator it3 = d->exifMetadata.findKey(gpsKey);
+            if (it3 != d->exifMetadata.end())
+                d->exifMetadata.erase(it3);
+        }
+        
+        return true;
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot remove Exif GPS tag using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }        
+    
+    return false;
+}
+
 void Exiv2Iface::convertToRational(double number, long int* numerator, 
                                    long int* denominator, int rounding)
 {

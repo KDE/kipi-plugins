@@ -79,6 +79,7 @@ public:
 
     bool setGPSInfo(double altitude, double latitude, double longitude);
     bool getGPSInfo(double& altitude, double& latitude, double& longitude);
+    bool removeGPSInfo();
 
     bool setExifTagString(const char *exifTagName, const QString& value);
     QString getExifTagString(const char* exifTagName) const;
