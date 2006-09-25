@@ -34,6 +34,8 @@
 
 #include "imagelistitem.h"
 
+using namespace IpodExport;
+
 //////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 ImageListItem::ImageListItem( QListView * parent, QString const &pathSrc,

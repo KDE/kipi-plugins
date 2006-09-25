@@ -3,6 +3,7 @@
 //    ImageList.H
 //
 //    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//              (C) 2006 Seb Ruiz <me@sebruiz.net>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -23,30 +24,38 @@
 #ifndef IMAGELIST_H
 #define IMAGELIST_H
 
-// Include files for Qt
-
-#include <qobject.h>
-
-// Include files for KDE
-
 #include <klistview.h>
+
+namespace IpodExport
+{
 
 class ImageList : public KListView
 {
 Q_OBJECT
 
 public:
-    ImageList(QWidget *parent=0, const char *name=0);
+
+    enum ListType { UploadType, IpodType };
+
+    ImageList( ListType=UploadType, QWidget *parent=0, const char *name=0 );
+
+    ListType getType() const { return m_type; }
 
 signals:
-    void addedDropItems(QStringList filesPath);
+    void addedDropItems( QStringList filesPath );
 
 protected:
-    void dragEnterEvent(QDragEnterEvent *e);
-    void dropEvent(QDropEvent* e);
-    bool acceptDrag(QDropEvent* e) const;
-    void contentsDropEvent(QDropEvent* e);
-    void droppedImagesItems(QDropEvent *e);
+    void dragEnterEvent( QDragEnterEvent *e );
+    void dropEvent( QDropEvent* e );
+    bool acceptDrag( QDropEvent* e ) const;
+    void contentsDropEvent( QDropEvent* e );
+    void droppedImagesItems( QDropEvent *e );
+    void viewportPaintEvent( QPaintEvent* );
+
+private:
+    ListType m_type;
 };
+
+}
 
 #endif

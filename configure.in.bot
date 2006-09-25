@@ -86,9 +86,9 @@ else
 fi
 
 if test "x$have_libgpod" != "xyes"; then
-  echo "-- libgpod found.................. NO"
+  echo "-- libgpod 0.4.0 found............ NO"
   echo ""
-  echo "iPodExport plugin needs the libgpod library. This plugin will not be compiled!"
+  echo "iPodExport plugin needs the libgpod library, version 0.4.0. This plugin will not be compiled!"
   echo "To complile this plugin, please install libgpod development package."
   echo "libgpod website is at http://gtkpod.org/libgpod.html"
   echo ""

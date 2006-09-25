@@ -55,14 +55,7 @@ void Plugin_iPodExport::setup( QWidget* widget )
     addAction( m_actionImageUpload );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
-
-    if ( !m_interface )
-    {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
-        return;
-    }
 }
-
 
 KIPI::Category Plugin_iPodExport::category( KAction* action ) const
 {
@@ -75,7 +68,9 @@ KIPI::Category Plugin_iPodExport::category( KAction* action ) const
 
 void Plugin_iPodExport::slotImageUpload()
 {
-    UploadDialog *dlg = new UploadDialog( m_interface, i18n("iPod Export"), kapp->activeWindow() );
+    IpodExport::UploadDialog *dlg = new IpodExport::UploadDialog( m_interface, i18n("iPod Export"),
+                                                                  kapp->activeWindow() );
+    dlg->setMinimumWidth( 460 );
     dlg->show();
 }
 

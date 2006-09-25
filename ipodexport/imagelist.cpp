@@ -22,45 +22,91 @@
 
 // Include files for Qt
 
+#include <qapplication.h>
 #include <qevent.h>
 #include <qdragobject.h>
-#include <qstrlist.h>
 #include <qfileinfo.h>
-#include <qwhatsthis.h>
-#include <qlistview.h>
-
-// Include files for KDE
+#include <qpainter.h>
+#include <qsimplerichtext.h>
 
 #include <klocale.h>
 
-// Local include files
-
 #include "imagelist.h"
+
+using namespace IpodExport;
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-ImageList::ImageList(QWidget *parent, const char *name)
-                      : KListView(parent, name)
+ImageList::ImageList( ListType type, QWidget *parent, const char *name )
+    : KListView( parent, name )
+    , m_type( type )
 {
-    setAcceptDrops(true);
-    setDropVisualizer(false);
-    addColumn(i18n("Source Album"));
-    addColumn(i18n("Image"));
-    addColumn(i18n("Result"));
-    setSorting(3);
-    setItemMargin(3);
-    setResizeMode(QListView::LastColumn);
-    setSelectionMode(QListView::Single);
+    if( type == ImageList::UploadType )
+    {
+        setAcceptDrops( true );
+        setDropVisualizer( false );
+        addColumn( i18n("Source Album") );
+        addColumn( i18n("Image") );
+        addColumn( i18n("Result") );
+    }
+    else if( type == ImageList::IpodType )
+    {
+        addColumn( i18n("Albums") );
+        setRootIsDecorated( true ); // show expand icons
+    }
+
+    setSorting( 3 );
+    setItemMargin( 3 );
+    setResizeMode( QListView::LastColumn );
+    setSelectionMode( QListView::Single );
     setAllColumnsShowFocus ( true );
-    QWhatsThis::add( this, i18n("<p>You can see here the operations' results "
-                                "during the process. Double-click on an item for more "
-                                "information once the process has ended. "
-                                "<p>You can use the \"Add\" button or drag-and-drop "
-                                "to add some new items to the list. "
-                                "<p>If the items are taken from different Albums "
-                                "the process' results will be merged to the target Album.") );
 }
 
+void
+ImageList::viewportPaintEvent( QPaintEvent *e )
+{
+    if( e ) KListView::viewportPaintEvent( e );
+
+    if( !childCount() && e )
+    {
+        QPainter p( viewport() );
+        QString minimumText;
+
+        if( m_type == UploadType )
+        {
+            minimumText = (i18n(
+                    "<div align=center>"
+                    "<h3>Upload Queue</h3>"
+                        "To create a queue, "
+                        "<b>drag</b> images and "
+                        "<b>drop</b> them here.<br><br>"
+                    "</div>" ) );
+        }
+        else if( m_type == IpodType )
+        {
+            minimumText = (i18n(
+                    "<div align=center>"
+                    "<h3>iPod Albums</h3>"
+                        "An album needs to be created before images, "
+                        "can be transferred to the iPod."
+                    "</div>" ) );
+        }
+        QSimpleRichText t( minimumText, QApplication::font() );
+
+        if ( t.width()+30 >= viewport()->width() || t.height()+30 >= viewport()->height() )
+            //too big, giving up
+            return;
+
+        const uint w = t.width();
+        const uint h = t.height();
+        const uint x = (viewport()->width() - w - 30) / 2 ;
+        const uint y = (viewport()->height() - h - 30) / 2 ;
+
+        p.setBrush( colorGroup().background() );
+        p.drawRoundRect( x, y, w+30, h+30, (8*200)/w, (8*200)/h );
+        t.draw( &p, x+15, y+15, QRect(), colorGroup() );
+    }
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -98,7 +144,7 @@ void ImageList::dropEvent(QDropEvent *e)
 void ImageList::droppedImagesItems(QDropEvent *e)
 {
     QStrList strList;
-    QStringList FilesPath;
+    QStringList filesPath;
 
     if ( !QUriDrag::decode(e, strList) ) return;
 
@@ -112,11 +158,11 @@ void ImageList::droppedImagesItems(QDropEvent *e)
         QFileInfo fileInfo(filePath);
 
         if( fileInfo.isFile() && fileInfo.exists() )
-            FilesPath.append(fileInfo.filePath());
+            filesPath.append( fileInfo.filePath() );
 
         ++it;
     }
 
-    if (FilesPath.isEmpty() == false)
-       emit addedDropItems(FilesPath);
+    if( !filesPath.isEmpty() )
+       emit addedDropItems( filesPath );
 }

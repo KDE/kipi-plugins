@@ -35,7 +35,9 @@
 #include <kinputdialog.h> //new album
 #include <kio/previewjob.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <kmountpoint.h>
+#include <kpopupmenu.h>
 #include <kprogress.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
@@ -44,11 +46,14 @@
 
 #define debug() kdDebug( 51000 )
 
+using namespace IpodExport;
+
 UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget *parent )
-    : KDialogBase( KDialogBase::Plain, caption, Help|User1|Cancel,
+    : KDialogBase( KDialogBase::Plain, caption, Help|User1|Close,
                    Cancel, parent, "SimpleUploadDialog", false, false, i18n("&Start"))
     , m_interface( interface )
     , m_itdb( 0 )
+    , m_transferring( false )
     , m_mountPoint( QString::null )
     , m_deviceNode( QString::null )
 {
@@ -121,22 +126,19 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
 
     QHGroupBox *destinationBox = new QHGroupBox( i18n("iPod"), box );
 
-    m_ipodAlbumList = new KListView( destinationBox );
-    m_ipodAlbumList->addColumn( i18n("Albums") );
-    m_ipodAlbumList->setItemMargin( 3 );
-    m_ipodAlbumList->setResizeMode( QListView::LastColumn );
-    m_ipodAlbumList->setSelectionMode( QListView::Single );
-    m_ipodAlbumList->setAllColumnsShowFocus( true );
-    m_ipodAlbumList->setRootIsDecorated( true ); // show expand icons
+    m_ipodAlbumList = new ImageList( ImageList::IpodType, destinationBox );
     m_ipodAlbumList->setMinimumHeight( 100 );
 
     QWidget          *buttons = new QWidget( destinationBox );
     QVBoxLayout *buttonLayout = new QVBoxLayout( buttons, 0, spacingHint() );
 
     m_addAlbumButton = new QPushButton ( i18n( "&New..."), buttons, "addAlbumButton");
-    m_remAlbumButton = new QPushButton ( i18n( "&Remove"), buttons, "remAlbumButton");
     QWhatsThis::add( m_addAlbumButton, i18n("Create a new photo album on the iPod."));
+
+#ifdef HAVE_ITDB_REMOVE_PHOTOS
+    m_remAlbumButton = new QPushButton ( i18n( "&Remove"), buttons, "remAlbumButton");
     QWhatsThis::add( m_remAlbumButton, i18n("Remove the selected photo albums from the iPod."));
+#endif
 
     QLabel *ipod_icon = new QLabel( buttons );
     ipod_icon->setPixmap( KGlobal::iconLoader()->loadIcon( "ipod", KIcon::Desktop, KIcon::SizeEnormous ) );
@@ -147,7 +149,9 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     m_ipodPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
 
     buttonLayout->addWidget( m_addAlbumButton );
+#ifdef HAVE_ITDB_REMOVE_PHOTOS
     buttonLayout->addWidget( m_remAlbumButton );
+#endif
     buttonLayout->addWidget( m_ipodPreview );
     buttonLayout->addWidget( ipod_icon );
     buttonLayout->addStretch( 1 );
@@ -157,7 +161,7 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     QHGroupBox *urlListBox = new QHGroupBox( i18n("Hard Disk"), box );
     QWidget* urlBox = new QWidget( urlListBox );
     QHBoxLayout* urlLayout = new QHBoxLayout( urlBox, 0, spacingHint() );
-    m_imageList = new ImageList( urlBox );
+    m_imageList = new ImageList( ImageList::UploadType, urlBox );
     m_imageList->setMinimumHeight( 100 );
     urlLayout->addWidget( m_imageList );
 
@@ -209,8 +213,9 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
         {
             addUrlToList( (*it).path() );
         }
-        enableButton( KDialogBase::User1, m_imageList->childCount() > 0 && m_itdb );
     }
+
+    enableButtons();
 
     destinationBox->setEnabled( m_itdb );
     urlListBox->setEnabled( m_itdb );
@@ -219,7 +224,10 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     /// connect the signals & slots
 
     connect( m_addAlbumButton, SIGNAL( clicked() ), SLOT( slotCreateIpodAlbum() ) );
+
+#ifdef HAVE_ITDB_REMOVE_PHOTOS
     connect( m_remAlbumButton, SIGNAL( clicked() ), SLOT( slotDeleteIpodAlbum() ) );
+#endif
 
     connect( this, SIGNAL( user1Clicked() ), SLOT( slotProcessStart() ) );
 
@@ -230,7 +238,7 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
                     this,   SLOT( slotImageSelected(QListViewItem*) ) );
 
     connect( m_ipodAlbumList, SIGNAL( currentChanged(QListViewItem*) ),
-                    this,   SLOT( slotIpodImageSelected(QListViewItem*) ) );
+                    this,   SLOT( slotIpodItemSelected(QListViewItem*) ) );
 
     connect( m_addImagesButton, SIGNAL( clicked() ),
                     this,         SLOT( slotImagesFilesButtonAdd() ) );
@@ -273,34 +281,45 @@ UploadDialog::getIPodAlbumPhotos( KListViewItem *item, Itdb_PhotoAlbum *album )
 }
 
 void
+UploadDialog::enableButtons()
+{
+    // enable the start button only if there are albums to transfer to, items to transfer
+    // and a database to add to!
+    enableButton( KDialogBase::User1, m_imageList->childCount()     > 0 &&
+                                      m_ipodAlbumList->childCount() > 0 &&
+                                      !m_transferring                   &&
+                                      m_imageList->selectedItem()       &&
+                                      !m_imageList->selectedItem()->depth() &&
+                                      m_itdb );
+    enableButton( KDialogBase::Close, !m_transferring );
+}
+
+void
 UploadDialog::slotProcessStart()
 {
     if( !m_itdb || !m_imageList->childCount() )
         return;
 
-    disconnect( this, SIGNAL( user1Clicked() ), this, SLOT( slotProcessStart() ) );
-//        connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotProcessStop()  ) );
-
-
     QListViewItem *selected = m_ipodAlbumList->selectedItem();
     if( !selected || selected->depth() != 0 /*not album*/)
         return;
 
+    m_transferring = true;
+
     QString albumName = selected->text( 0 );
 
-    showButtonCancel( false );
-    setButtonText( User1, i18n("&Stop") );
+    enableButton( KDialogBase::User1, false );
+    enableButton( KDialogBase::Close, false );
 
     m_progress->setTotalSteps( m_imageList->childCount() + 1 ); // +1 for writing the database
 
-    for( QListViewItem *item = m_imageList->firstChild(); item; item = item->nextSibling() )
+    while( QListViewItem *item = m_imageList->firstChild() )
     {
     #define item static_cast<ImageListItem*>(item)
         debug() << "Uploading " << item->pathSrc().utf8() << " to ipod album " << albumName.utf8() << endl;
-
         itdb_photodb_add_photo( m_itdb, albumName.utf8(), item->pathSrc().utf8() );
-
         m_progress->advance( 1 );
+        delete item;
     #undef  item
     }
 
@@ -313,25 +332,23 @@ UploadDialog::slotProcessStart()
 
     m_progress->advance( 1 );
 
-    slotProcessFinished();
+    m_transferring = false;
+
+    enableButtons();
 }
 
 void
-UploadDialog::slotProcessFinished()
-{
-    setButtonText( User1, i18n("&Close") );
-
-//     disconnect( this, SIGNAL( user1Clicked() ), this, SLOT( slotProcessStop() ) );
-       connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotOk() ) );
-}
-
-void
-UploadDialog::slotIpodImageSelected( QListViewItem *item )
+UploadDialog::slotIpodItemSelected( QListViewItem *item )
 {
     m_ipodPreview->clear();
 
     // only let the user transfer to directories which are selected
     enableButton( KDialogBase::User1, item && item->depth() == 0 );
+
+    m_remAlbumButton->setEnabled( item );
+
+    if( m_ipodAlbumList->currentItem() )
+        m_ipodAlbumList->currentItem()->setSelected( true );
 
     if( !item || item->depth() != 1 )
         return;
@@ -355,17 +372,17 @@ UploadDialog::slotIpodImageSelected( QListViewItem *item )
         return;
     }
 
-    debug() << "Thumb found with length: " << thumb->image_data_len << endl;
+//     uchar *data = itdb_thumb_get_rgb_data( m_itdb->device, thumb );
 
-    QPixmap pix;
-    pix.loadFromData( thumb->image_data, thumb->image_data_len );
-    m_ipodPreview->setPixmap( pix );
+//     QPixmap pix( thumb->width, thumb->height );
+//     pix.loadFromData( data,  );
+//     m_ipodPreview->setPixmap( pix );
 }
 
 void
 UploadDialog::slotImageSelected( QListViewItem *item )
 {
-    if( !item || m_imageList->childCount() == 0 )
+    if( !item || m_imageList->childCount() == 0 || m_transferring)
     {
         m_imagePreview->clear();
         return;
@@ -450,9 +467,68 @@ UploadDialog::slotCreateIpodAlbum()
         // add the new album to the list view
         KListViewItem *i = new KListViewItem( m_ipodAlbumList, 0, newAlbum );
         i->setPixmap( 0, KGlobal::iconLoader()->loadIcon( "folder", KIcon::Toolbar, KIcon::SizeSmall ) );
+        // commit the changes to the iPod
+        GError *err = 0;
+        itdb_photodb_write( m_itdb, &err );
     }
 }
 
+void
+UploadDialog::slotRenameIpodAlbum()
+{
+#ifdef HAVE_ITDB_REMOVE_PHOTOS
+    QListViewItem *selected = m_ipodAlbumList->selectedItem();
+
+    // only allow renaming of album items
+    if( !selected || selected->depth() != 0 ) return;
+
+    QString oldName = selected->text(0);
+    bool ok = false;
+    QString newName = KInputDialog::getText( i18n("Rename iPod Photo Album"),
+                                             i18n("New album title:"),
+                                             i18n("Album"), &ok, this );
+    if( ok )
+    {
+        // change the name on the ipod, and rename the listviewitem
+        itdb_photodb_rename_photoalbum( m_itdb, oldName.utf8(), newName.utf8() );
+        selected->setText( 0, newName );
+        // commit changes to the iPod
+        GError *err = 0;
+        itdb_photodb_write( m_itdb, &err );
+    }
+#endif
+}
+
+void
+UploadDialog::slotDeleteIpodAlbum()
+{
+    QListViewItem *selected = m_ipodAlbumList->selectedItem();
+    if( !selected ) return;
+
+    GError *err = 0;
+
+    QString text = selected->text(0);
+
+    switch( selected->depth() )
+    {
+        case 0: //album
+            debug() << "Deleting album: " << text << endl;
+            if( itdb_photodb_remove_photoalbum( m_itdb, text.utf8() ) )
+                delete selected;
+            else
+                debug() << "Error deleting album, oh no!" << endl;
+            break;
+
+        case 1: //image
+            debug() << "Deleting image with id: " << text << endl;
+            if( itdb_photodb_remove_photo( m_itdb, text.toInt() ) )
+                delete selected; // remove the item from the listview if there was no error.
+            else
+                debug() << "Error deleting image, oh no!" << endl;
+
+            itdb_photodb_write( m_itdb, &err );
+    }
+}
 
 void
 UploadDialog::slotAddDropItems(QStringList filesPath)
@@ -510,6 +586,7 @@ UploadDialog::openDevice()
 
     // try to find a mounted ipod
     bool ipodFound = false;
+
     KMountPoint::List currentmountpoints = KMountPoint::currentMountPoints();
     for( KMountPoint::List::Iterator mountiter = currentmountpoints.begin();
          mountiter != currentmountpoints.end();
@@ -532,23 +609,37 @@ UploadDialog::openDevice()
              devicenode != deviceNode() )
             continue;
 
+        /// Detecting an ipod. Since the user may never have created a photodb, or have deleted the
+        /// Photo directory, we must try to find a better way to determine if an ipod really exists
+        /// at this mount point. So, check if the iPod_Control directory exists.
         GError *err = 0;
-        m_itdb = itdb_photodb_parse( QFile::encodeName( mountpoint ), &err );
+        Itdb_iTunesDB *db = itdb_parse( QFile::encodeName( mountpoint ), &err );
         if( err )
         {
             debug() << "could not parse itdb at " << mountpoint << endl;
             g_error_free( err );
-            if( m_itdb )
+            if( db )
             {
-                itdb_photodb_free( m_itdb );
-                m_itdb = 0;
+                itdb_free( db );
+                db = 0;
             }
             continue;
         }
 
         if( mountPoint().isEmpty() )
             m_mountPoint = mountpoint;
+
         ipodFound = true;
+        m_itdb = itdb_photodb_parse( QFile::encodeName( mountpoint ), &err );
+        if( err )
+        {
+            g_error_free( err );
+            if( m_itdb )
+            {
+                itdb_photodb_free( m_itdb );
+                m_itdb = 0;
+            }
+        }
         break;
     }
 
@@ -567,19 +658,27 @@ UploadDialog::openDevice()
 
     if( !m_itdb )
     {
-        debug() << "could not find iTunesDB on device mounted at " << mountPoint()
-                << ". Trying to create a new one. " << endl;
+        debug() << "could not find iTunesDB on device mounted at " << mountPoint() << endl;
 
-        m_itdb = itdb_photodb_new();
+        QString msg = i18n( "An iPod photo database could not be found on device mounted at %1. "
+                "Should I try to initialize your iPod photo database?" ).arg( mountPoint() );
 
-        if( !m_itdb )
+        if( KMessageBox::warningContinueCancel( this, msg, i18n( "Initialize iPod Photo Database?" ),
+                    KGuiItem(i18n("&Initialize"), "new") ) == KMessageBox::Continue )
         {
-            debug() << "Could not initialise photodb..." << endl;
-            return false;
-        }
-    }
 
-    itdb_device_set_mountpoint( m_itdb->device, mountPoint().utf8() );
+            m_itdb = itdb_photodb_new();
+            itdb_device_set_mountpoint( m_itdb->device, mountPoint().utf8() );
+
+            if( !m_itdb )
+            {
+                debug() << "Could not initialise photodb..." << endl;
+                return false;
+            }
+        }
+        else
+            return false;
+    }
 
     return true;
 }

@@ -36,6 +36,9 @@
 class QPainter;
 class QListView;
 
+namespace IpodExport
+{
+
 class ImageListItem : public KListViewItem
 {
 public:
@@ -75,5 +78,7 @@ private:
     QString m_key;
     bool    m_reverseSort;
 };
+
+}
 
 #endif  // BATCHPROCESSIMAGESITEM_H

@@ -34,6 +34,9 @@ class KListViewItem;
 class KProgress;
 class KURL;
 
+namespace IpodExport
+{
+
 class UploadDialog : public KDialogBase
 {
     Q_OBJECT
@@ -51,29 +54,32 @@ class UploadDialog : public KDialogBase
 
     private slots:
         void slotProcessStart();
-        void slotProcessFinished();
 
         void slotAddDropItems( QStringList filesPath );
 
         void slotImageSelected( QListViewItem *item );
         void slotGotPreview( const KFileItem* , const QPixmap &pixmap );
 
-        void slotIpodImageSelected( QListViewItem *item );
+        void slotIpodItemSelected( QListViewItem *item );
+        void slotIpodShowContextMenu( QListViewItem * ) { }
 
         void slotImagesFilesButtonAdd();
         void slotImagesFilesButtonRem();
 
         void slotCreateIpodAlbum();
-        void slotDeleteIpodAlbum() { }
+        void slotDeleteIpodAlbum();
+        void slotRenameIpodAlbum();
 
     private:
         bool openDevice(); // connect to the ipod
         void getIPodAlbums();
         void getIPodAlbumPhotos( KListViewItem *item, Itdb_PhotoAlbum *album );
         void addUrlToList( QString file );
+        void enableButtons();
 
         KIPI::Interface *m_interface;
         Itdb_PhotoDB    *m_itdb;
+        bool             m_transferring;
 
         KProgress       *m_progress;
         QPushButton     *m_addAlbumButton;
@@ -88,5 +94,7 @@ class UploadDialog : public KDialogBase
         QString          m_mountPoint;
         QString          m_deviceNode;
 };
+
+}
 
 #endif // IPOD_EXPORTDIALOG_H
