@@ -54,6 +54,7 @@
 
 #include "gpslistviewitem.h"
 #include "pluginsversion.h"
+#include "gpseditdialog.h"
 #include "gpssyncdialog.h"
 #include "gpssyncdialog.moc"
 
@@ -98,15 +99,16 @@ public:
 
 GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
              : KDialogBase(Plain, i18n("GPS Sync"), 
-                           Help|User1|Apply|Close, Close, 
+                           Help|User1|User2|Apply|Close, Close, 
                            parent, 0, true, true )
 {
     d = new GPSSyncDialogPriv;
     d->interface = interface;
 
     setButtonText(User1, i18n("Correlate"));
-    enableButton(Apply, false);
+    setButtonText(User2, i18n("Edit Coordinates..."));
     enableButton(User1, false);
+    enableButton(User2, true);
 
     QGridLayout *mainLayout = new QGridLayout(plainPage(), 3, 1, 0, marginHint());
 
@@ -157,9 +159,6 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
                                                      KDialog::spacingHint());
 
     QPushButton *loadGPXButton = new QPushButton(i18n("Load GPX File..."), settingsBox);
-
-    connect(loadGPXButton, SIGNAL(pressed()),
-            this, SLOT(slotLoadGPXFile()));
 
     QLabel *gpxFileLabel = new QLabel(i18n("Current GPX file:"), settingsBox);
     d->gpxFileName       = new KSqueezedTextLabel(i18n("No GPX file"), settingsBox);
@@ -255,6 +254,9 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
 
     // ---------------------------------------------------------------
 
+    connect(loadGPXButton, SIGNAL(pressed()),
+            this, SLOT(slotLoadGPXFile()));
+
     connect(d->interpolateBox, SIGNAL(toggled(bool)),
             d->maxTimeLabel, SLOT(setEnabled(bool)));
 
@@ -299,7 +301,6 @@ void GPSSyncDialog::slotLoadGPXFile()
     {
         KMessageBox::error(this, i18n("Cannot parse %1 GPX file!")
                            .arg(loadGPXFile.fileName()), i18n("GPS Sync"));    
-        enableButton(Apply, false);
         enableButton(User1, false);
         return;
     }
@@ -308,14 +309,12 @@ void GPSSyncDialog::slotLoadGPXFile()
     {
         KMessageBox::sorry(this, i18n("The %1 GPX file do not have a date-time track to use!")
                            .arg(loadGPXFile.fileName()), i18n("GPS Sync"));    
-        enableButton(Apply, false);
         enableButton(User1, false);
         return;
     }
 
     d->gpxFileName->setText(loadGPXFile.fileName());
     d->gpxPointsLabel->setText(i18n("Points parsed: %1").arg(d->gpxParser.numPoints()));
-    enableButton(Apply, true);
     enableButton(User1, true);
     slotUser1();
 }
@@ -392,7 +391,6 @@ void GPSSyncDialog::slotUser1()
     {
         KMessageBox::sorry(this, i18n("Cannot find pictures to correlate with GPX file data."),
                            i18n("GPS Sync"));    
-        enableButton(Apply, false);
         return;
     }
 
@@ -400,7 +398,30 @@ void GPSSyncDialog::slotUser1()
                              "the list using the GPX data file.\n"
                              "Press Apply button to update picture(s) metadata.")
                              .arg(itemsUpdated), i18n("GPS Sync"));    
-    enableButton(Apply, true);
+}
+
+// Launch the GPS coordinates editor.
+void GPSSyncDialog::slotUser2()
+{
+    if (!d->listView->currentItem())
+    {
+        KMessageBox::information(this, i18n("Please, select a picture from "
+                     "the list to edit GPS coordinate manually."), i18n("GPS Sync"));    
+        return;
+    }
+
+    GPSListViewItem* item = (GPSListViewItem*)d->listView->currentItem();
+
+    GPSEditDialog dlg(this, item->getGPSInfo(), item->getUrl().fileName());
+    switch (dlg.exec())
+    {
+        case KDialogBase::Accepted:
+            item->setGPSInfo(dlg.getGPSInfo(), true, true);
+        break;
+        case(-1):   // Erase all GPS tags
+            item->eraseGPSInfo(true);
+        break;
+    }
 }
 
 void GPSSyncDialog::slotApply()

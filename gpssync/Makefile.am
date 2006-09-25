@@ -10,7 +10,7 @@ kipiplugin_gpssync_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 
 # Srcs for the plugin
 kipiplugin_gpssync_la_SOURCES = plugin_gpssync.cpp gpssyncdialog.cpp gpslistviewitem.cpp \
-	                            gpsbabelbinary.cpp gpsdataparser.cpp 
+	                            gpsbabelbinary.cpp gpsdataparser.cpp gpseditdialog.cpp 
 
 # Libs needed by the plugin
 kipiplugin_gpssync_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \

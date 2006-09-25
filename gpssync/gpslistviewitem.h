@@ -55,8 +55,10 @@ public:
     GPSListViewItem(KListView *view, QListViewItem *after, const KURL& url);
     ~GPSListViewItem();
 
-    void setGPSInfo(GPSDataContainer gpsData, bool dirty=true);
+    void setGPSInfo(GPSDataContainer gpsData, bool dirty=true, bool addedManually=false);
     GPSDataContainer getGPSInfo();
+    void eraseGPSInfo(bool e);
+
 
     void setDateTime(QDateTime date);
     QDateTime getDateTime();

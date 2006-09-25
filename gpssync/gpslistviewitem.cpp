@@ -44,12 +44,14 @@ public:
 
     GPSListViewItemPriv()
     {
-        enabled        = false;
-        dirty          = false;
+        enabled = false;
+        dirty   = false;
+        erase   = false;
     }
 
     bool             enabled;
     bool             dirty;
+    bool             erase;
 
     QDateTime        date;
 
@@ -86,7 +88,7 @@ GPSListViewItem::~GPSListViewItem()
     delete d;
 }
 
-void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty)
+void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty, bool addedManually)
 {
     d->dirty   = dirty;
     d->gpsData = gpsData;
@@ -100,7 +102,12 @@ void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty)
         if (d->gpsData.isInterpolated())
             status = i18n("Interpolated");
         else
-            status = i18n("Found");
+        {
+            if (addedManually)
+                status = i18n("Added");
+            else
+                status = i18n("Found");
+        }
     }
     setText(6, status);
 
@@ -147,10 +154,13 @@ void GPSListViewItem::writeGPSInfoToFile()
     {
         setPixmap(1, SmallIcon("run"));
         KIPIPlugins::Exiv2Iface exiv2Iface;
-        exiv2Iface.load(d->url.path());
-        bool ret = exiv2Iface.setGPSInfo(d->gpsData.altitude(), 
-                                         d->gpsData.latitude(), 
+        bool ret = exiv2Iface.load(d->url.path());
+        ret &= exiv2Iface.removeGPSInfo();
+        if (!d->erase)
+        {
+            ret &= exiv2Iface.setGPSInfo(d->gpsData.altitude(), d->gpsData.latitude(), 
                                          d->gpsData.longitude());
+        }
         ret &= exiv2Iface.save(d->url.path());
         if (ret)
             setPixmap(1, SmallIcon("ok"));
@@ -175,11 +185,32 @@ bool GPSListViewItem::isDirty()
     return d->dirty;
 }
 
+void GPSListViewItem::eraseGPSInfo(bool e)
+{
+    d->erase = e;
+    d->dirty = true;
+
+    if (e)
+        setText(6, i18n("Deleted!"));
+    else 
+        setText(6, "");
+
+    repaint();
+}
+
 void GPSListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
 {
     if (d->enabled)
     {
-        if ( isDirty() && column >=2  && column <=4 )
+        if ( isDirty() && !d->erase && column >= 2  && column <= 4 )
+        {
+            QColorGroup _cg( cg );
+            QColor c = _cg.text();
+            _cg.setColor( QColorGroup::Text, Qt::red );
+            KListViewItem::paintCell( p, _cg, column, width, alignment );
+            _cg.setColor( QColorGroup::Text, c );
+        }
+        else if ( isDirty() && d->erase && column == 6)
         {
             QColorGroup _cg( cg );
             QColor c = _cg.text();

@@ -35,8 +35,11 @@
 
 #include "gpsdataparser.h"
 
+class QListViewItem;
+
 namespace KIPIGPSSyncPlugin
 {
+
 class GPSSyncDialogPriv;
 
 class GPSSyncDialog :public KDialogBase 
@@ -60,6 +63,10 @@ protected slots:
     void slotHelp();
     void slotClose();
     void slotUser1();
+    void slotUser2();
+
+private slots:
+
     void slotLoadGPXFile(); 
 
 private:
