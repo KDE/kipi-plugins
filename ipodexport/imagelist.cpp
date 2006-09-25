@@ -47,7 +47,6 @@ ImageList::ImageList( ListType type, QWidget *parent, const char *name )
         setDropVisualizer( false );
         addColumn( i18n("Source Album") );
         addColumn( i18n("Image") );
-        addColumn( i18n("Result") );
     }
     else if( type == ImageList::IpodType )
     {

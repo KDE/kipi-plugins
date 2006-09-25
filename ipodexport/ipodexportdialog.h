@@ -71,19 +71,21 @@ class UploadDialog : public KDialogBase
         void slotRenameIpodAlbum();
 
     private:
-        bool openDevice(); // connect to the ipod
-        void getIPodAlbums();
-        void getIPodAlbumPhotos( KListViewItem *item, Itdb_PhotoAlbum *album );
         void addUrlToList( QString file );
         void enableButtons();
+        void getIpodAlbums();
+        void getIpodAlbumPhotos( KListViewItem *item, Itdb_PhotoAlbum *album );
+        void reloadIpodAlbum( const QString &name );
+
+        bool openDevice(); // connect to the ipod
 
         KIPI::Interface *m_interface;
         Itdb_PhotoDB    *m_itdb;
         bool             m_transferring;
 
         KProgress       *m_progress;
-        QPushButton     *m_addAlbumButton;
-        QPushButton     *m_remAlbumButton;
+        QPushButton     *m_createAlbumButton;
+        QPushButton     *m_removeAlbumButton;
         QPushButton     *m_renameAlbumButton;
         QPushButton     *m_addImagesButton;
         QPushButton     *m_remImagesButton;
