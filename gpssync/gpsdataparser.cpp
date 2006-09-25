@@ -58,8 +58,9 @@ int GPSDataParser::numPoints()
     return m_GPSDataMap.count();
 }
 
-bool GPSDataParser::matchDate(QDateTime photoDateTime, int accuracySecs, int timeZone, 
-                              bool interpolate, GPSDataContainer& gpsData)
+bool GPSDataParser::matchDate(QDateTime photoDateTime, int maxGapTime, int timeZone, 
+                              bool interpolate, int interpolationDstTime,
+                              GPSDataContainer& gpsData)
 {
     // GPS device are sync in time by satelite using GMT time.
     // If the camera time is different than GMT time, we need to convert it to GMT time
@@ -76,7 +77,7 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int accuracySecs, int tim
         
         int nbSecs = abs(cameraGMTDateTime.secsTo( it.key() ));
         
-        if( nbSecs < accuracySecs )
+        if( nbSecs < maxGapTime )
         {
             gpsData = m_GPSDataMap[it.key()];
             return true;
@@ -87,11 +88,11 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int accuracySecs, int tim
 
     if (interpolate)
     {
-        // The interpolate GPS point will be separate by at the maximum of 10 mn 
-        // before and after the next and previous real GPS point found.
+        // The interpolate GPS point will be separate by at the maximum of 'interpolationDstTime' 
+        // seconds before and after the next and previous real GPS point found.
 
-        QDateTime prevDateTime = findPrevDate(cameraGMTDateTime, 600);
-        QDateTime nextDateTime = findNextDate(cameraGMTDateTime, 600);
+        QDateTime prevDateTime = findPrevDate(cameraGMTDateTime, interpolationDstTime);
+        QDateTime nextDateTime = findNextDate(cameraGMTDateTime, interpolationDstTime);
         
         if (!nextDateTime.isNull() && !prevDateTime.isNull())
         {
@@ -110,8 +111,8 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int accuracySecs, int tim
 
             if (t3-t1 != 0)  
             {
-                gpsData.setAltitude(alt1 + (alt2-alt1) * (t2-t1)/(t3-t1));
-                gpsData.setLatitude(lat1 + (lat2-lat1) * (t2-t1)/(t3-t1));
+                gpsData.setAltitude(alt1  + (alt2-alt1) * (t2-t1)/(t3-t1));
+                gpsData.setLatitude(lat1  + (lat2-lat1) * (t2-t1)/(t3-t1));
                 gpsData.setLongitude(lon1 + (lon2-lon1) * (t2-t1)/(t3-t1));
                 gpsData.setInterpolated(true);
                 return true;

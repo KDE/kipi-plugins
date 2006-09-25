@@ -50,8 +50,9 @@ public:
 
     void clear();
     int  numPoints();
-    bool matchDate(QDateTime photoDateTime, int accuracySecs, int timeZone, 
-                   bool interpolate, GPSDataContainer& gpsData);
+    bool matchDate(QDateTime photoDateTime, int maxGapTime, int timeZone, 
+                   bool interpolate, int interpolationDstTime, 
+                   GPSDataContainer& gpsData);
 
 private:
 
