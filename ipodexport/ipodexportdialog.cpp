@@ -502,6 +502,7 @@ UploadDialog::slotRenameIpodAlbum()
 void
 UploadDialog::slotDeleteIpodAlbum()
 {
+#ifdef HAVE_ITDB_REMOVE_PHOTOS
     QListViewItem *selected = m_ipodAlbumList->selectedItem();
     if( !selected ) return;
 
@@ -528,6 +529,7 @@ UploadDialog::slotDeleteIpodAlbum()
 
             itdb_photodb_write( m_itdb, &err );
     }
+#endif
 }
 
 void
