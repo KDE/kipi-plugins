@@ -379,7 +379,7 @@ void GPSSyncDialog::slotUser1()
                                    d->maxGapInput->value(),
                                    d->timeZoneCB->currentItem()-12,
                                    d->interpolateBox->isChecked(),
-                                   d->maxTimeInput->value(), 
+                                   d->maxTimeInput->value()*60, 
                                    gpsData))
         {
             item->setGPSInfo(gpsData);
