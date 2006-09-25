@@ -790,6 +790,9 @@ bool Exiv2Iface::setGPSInfo(double altitude, double latitude, double longitude)
 {
     try
     {    
+        // In first, we need to clean up all existing GPS info.
+        removeGPSInfo();
+
         char scratchBuf[100];
         long int nom, denom;
         long int deg, min;
