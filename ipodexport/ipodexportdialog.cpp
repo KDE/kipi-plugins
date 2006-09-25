@@ -132,12 +132,14 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     QWidget          *buttons = new QWidget( destinationBox );
     QVBoxLayout *buttonLayout = new QVBoxLayout( buttons, 0, spacingHint() );
 
-    m_addAlbumButton = new QPushButton ( i18n( "&New..."), buttons, "addAlbumButton");
+    m_addAlbumButton = new QPushButton( i18n("&New..."), buttons, "addAlbumButton");
     QWhatsThis::add( m_addAlbumButton, i18n("Create a new photo album on the iPod."));
 
 #ifdef HAVE_ITDB_REMOVE_PHOTOS
-    m_remAlbumButton = new QPushButton ( i18n( "&Remove"), buttons, "remAlbumButton");
-    QWhatsThis::add( m_remAlbumButton, i18n("Remove the selected photo albums from the iPod."));
+    m_remAlbumButton = new QPushButton( i18n("&Remove"), buttons, "remAlbumButton");
+    QWhatsThis::add( m_remAlbumButton, i18n("Remove the selected photos or albums from the iPod."));
+    m_renameAlbumButton = new QPushButton( i18n("R&ename"), buttons, "renameAlbumsButton");
+    QWhatsThis::add( m_renameAlbumButton, i18n("Rename the selected photo album on the iPod."));
 #endif
 
     QLabel *ipod_icon = new QLabel( buttons );
@@ -151,6 +153,7 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     buttonLayout->addWidget( m_addAlbumButton );
 #ifdef HAVE_ITDB_REMOVE_PHOTOS
     buttonLayout->addWidget( m_remAlbumButton );
+    buttonLayout->addWidget( m_renameAlbumButton );
 #endif
     buttonLayout->addWidget( m_ipodPreview );
     buttonLayout->addWidget( ipod_icon );
@@ -226,7 +229,8 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     connect( m_addAlbumButton, SIGNAL( clicked() ), SLOT( slotCreateIpodAlbum() ) );
 
 #ifdef HAVE_ITDB_REMOVE_PHOTOS
-    connect( m_remAlbumButton, SIGNAL( clicked() ), SLOT( slotDeleteIpodAlbum() ) );
+    connect( m_remAlbumButton,    SIGNAL( clicked() ), SLOT( slotDeleteIpodAlbum() ) );
+    connect( m_renameAlbumButton, SIGNAL( clicked() ), SLOT( slotRenameIpodAlbum() ) );
 #endif
 
     connect( this, SIGNAL( user1Clicked() ), SLOT( slotProcessStart() ) );
@@ -345,7 +349,10 @@ UploadDialog::slotIpodItemSelected( QListViewItem *item )
     // only let the user transfer to directories which are selected
     enableButton( KDialogBase::User1, item && item->depth() == 0 );
 
+#ifdef HAVE_ITDB_REMOVE_PHOTOS
     m_remAlbumButton->setEnabled( item );
+    m_renameAlbumButton->setEnabled( item && item->depth() == 0 );
+#endif
 
     if( m_ipodAlbumList->currentItem() )
         m_ipodAlbumList->currentItem()->setSelected( true );

@@ -84,6 +84,7 @@ class UploadDialog : public KDialogBase
         KProgress       *m_progress;
         QPushButton     *m_addAlbumButton;
         QPushButton     *m_remAlbumButton;
+        QPushButton     *m_renameAlbumButton;
         QPushButton     *m_addImagesButton;
         QPushButton     *m_remImagesButton;
         ImageList       *m_imageList;
