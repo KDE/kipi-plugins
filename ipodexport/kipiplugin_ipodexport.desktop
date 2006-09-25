@@ -1,7 +1,12 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=iPodExport
+Name[pt]=Exportação para o iPod
+Name[pt_BR]=Exportação para o iPod
 Comment=KIPI iPod Export Plugin
+Comment[ja]=Kipi iPod エクスポートプラグイン
+Comment[pt]='Plugin' do KIPI de Exportação para o iPod
+Comment[pt_BR]='Plugin' do KIPI de Exportação para o iPod
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_ipodexport
