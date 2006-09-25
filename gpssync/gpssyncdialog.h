@@ -31,10 +31,6 @@
 
 #include <libkipi/interface.h>
 
-// local includes.
-
-#include "gpsdataparser.h"
-
 class QListViewItem;
 
 namespace KIPIGPSSyncPlugin
