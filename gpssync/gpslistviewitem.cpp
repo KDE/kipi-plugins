@@ -93,9 +93,9 @@ void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty, bool adde
     setEnabled(true);
     d->dirty   = dirty;
     d->gpsData = gpsData;
-    setText(2, QString::number(d->gpsData.altitude()));
-    setText(3, QString::number(d->gpsData.latitude()));
-    setText(4, QString::number(d->gpsData.longitude()));
+    setText(2, QString::number(d->gpsData.altitude(),  'g', 12));
+    setText(3, QString::number(d->gpsData.latitude(),  'g', 12));
+    setText(4, QString::number(d->gpsData.longitude(), 'g', 12));
 
     QString status;
     if (isDirty())

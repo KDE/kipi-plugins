@@ -24,6 +24,7 @@
 #include <qlayout.h>
 #include <qcombobox.h>
 #include <qpushbutton.h>
+#include <qvalidator.h>
 
 // KDE includes.
 
@@ -31,7 +32,8 @@
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kapplication.h>
-#include <knuminput.h>
+#include <klineedit.h>
+#include <kmessagebox.h>
 
 // Local includes.
 
@@ -62,13 +64,13 @@ public:
         gpsCombo       = 0;
     }
 
-    QPushButton    *gpsButton;
+    QPushButton *gpsButton;
 
-    QComboBox      *gpsCombo;
+    QComboBox   *gpsCombo;
 
-    KDoubleSpinBox *altitudeInput;
-    KDoubleSpinBox *latitudeInput;
-    KDoubleSpinBox *longitudeInput;
+    KLineEdit   *altitudeInput;
+    KLineEdit   *latitudeInput;
+    KLineEdit   *longitudeInput;
 };
 
 GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, 
@@ -82,20 +84,27 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     setHelp("gpssync", "kipi-plugins");
     setButtonText(User1, i18n("Delete"));
 
-    QGridLayout* grid = new QGridLayout(plainPage(), 3, 1, 0, spacingHint());
+    QGridLayout* grid = new QGridLayout(plainPage(), 3, 2, 0, spacingHint());
 
     QLabel *altitudeLabel  = new QLabel(i18n("Altitude:"), plainPage());
     QLabel *latitudeLabel  = new QLabel(i18n("Latitude:"), plainPage());
     QLabel *longitudeLabel = new QLabel(i18n("Longitude:"), plainPage());
-    d->altitudeInput       = new KDoubleSpinBox(plainPage());
-    d->latitudeInput       = new KDoubleSpinBox(plainPage());
-    d->longitudeInput      = new KDoubleSpinBox(plainPage());
-    d->altitudeInput->setRange(-20000.0, 20000.0, 1.0, 1);
-    d->latitudeInput->setRange(-90.0, 90.0, 1E-6, 6);
-    d->longitudeInput->setRange(-180.0, 180.0, 1E-6, 6);
-    d->altitudeInput->setValue(gpsData.altitude());
-    d->latitudeInput->setValue(gpsData.latitude());
-    d->longitudeInput->setValue(gpsData.longitude());
+
+    d->altitudeInput       = new KLineEdit(plainPage());
+    d->latitudeInput       = new KLineEdit(plainPage());
+    d->longitudeInput      = new KLineEdit(plainPage());
+
+    QPushButton *altResetButton = new QPushButton(SmallIcon("clear_left"), QString::null, plainPage());
+    QPushButton *latResetButton = new QPushButton(SmallIcon("clear_left"), QString::null, plainPage());
+    QPushButton *lonResetButton = new QPushButton(SmallIcon("clear_left"), QString::null, plainPage());
+
+    d->altitudeInput->setValidator(new QDoubleValidator(-20000.0, 20000.0, 1, this));
+    d->latitudeInput->setValidator(new QDoubleValidator(-90.0, 90.0, 8, this));
+    d->longitudeInput->setValidator(new QDoubleValidator(-180.0, 180.0, 8, this));
+
+    d->altitudeInput->setText(QString::number(gpsData.altitude(),   'g', 12));
+    d->latitudeInput->setText(QString::number(gpsData.latitude(),   'g', 12));
+    d->longitudeInput->setText(QString::number(gpsData.longitude(), 'g', 12));
 
     d->gpsCombo  = new QComboBox( false, plainPage() );
     d->gpsButton = new QPushButton(i18n("Get GPS Coordinates..."), plainPage());
@@ -110,11 +119,23 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     grid->addMultiCellWidget(d->altitudeInput, 0, 0, 1, 1);
     grid->addMultiCellWidget(d->latitudeInput, 1, 1, 1, 1);
     grid->addMultiCellWidget(d->longitudeInput, 2, 2, 1, 1);
-    grid->addMultiCellWidget(d->gpsCombo, 3, 3, 0, 0 );
-    grid->addMultiCellWidget(d->gpsButton, 3, 3, 1, 1 );
+    grid->addMultiCellWidget(altResetButton, 0, 0, 2, 2);
+    grid->addMultiCellWidget(latResetButton, 1, 1, 2, 2);
+    grid->addMultiCellWidget(lonResetButton, 2, 2, 2, 2);
+    grid->addMultiCellWidget(d->gpsCombo, 3, 3, 0, 0);
+    grid->addMultiCellWidget(d->gpsButton, 3, 3, 1, 2);
 
     connect(d->gpsButton, SIGNAL(clicked()),
             this, SLOT(slotGPSLocator()));
+
+    connect(altResetButton, SIGNAL(clicked()),
+            d->altitudeInput, SLOT(clear()));
+
+    connect(latResetButton, SIGNAL(clicked()),
+            d->latitudeInput, SLOT(clear()));
+
+    connect(lonResetButton, SIGNAL(clicked()),
+            d->longitudeInput, SLOT(clear()));
 
     adjustSize();
 }
@@ -126,10 +147,38 @@ GPSEditDialog::~GPSEditDialog()
 
 GPSDataContainer GPSEditDialog::getGPSInfo()
 {
-    return GPSDataContainer(d->altitudeInput->value(), 
-                            d->latitudeInput->value(),
-                            d->longitudeInput->value(),
+    return GPSDataContainer(d->altitudeInput->text().toDouble(), 
+                            d->latitudeInput->text().toDouble(),
+                            d->longitudeInput->text().toDouble(),
                             false);
+}
+
+void GPSEditDialog::slotOk()
+{
+    bool ok;
+
+    d->altitudeInput->text().toDouble(&ok);
+    if (!ok)
+    {
+        KMessageBox::error(this, i18n("Altitude value is not correct!"), i18n("GPS Sync"));    
+        return;
+    }        
+
+    d->latitudeInput->text().toDouble(&ok);
+    if (!ok)
+    {
+        KMessageBox::error(this, i18n("Latitude value is not correct!"), i18n("GPS Sync"));    
+        return;
+    }        
+
+    d->longitudeInput->text().toDouble(&ok);
+    if (!ok)
+    {
+        KMessageBox::error(this, i18n("Longitude value is not correct!"), i18n("GPS Sync"));    
+        return;
+    }        
+
+    accept();
 }
 
 void GPSEditDialog::slotUser1()
