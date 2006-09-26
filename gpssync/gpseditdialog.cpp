@@ -48,7 +48,8 @@ public:
 
     enum WebGPSLocator
     {
-        CapeLinks = 0
+        CapeLinks = 0,
+        MapKi
         // TODO : Added here others web GPS coordinates locator
     };
 
@@ -99,6 +100,8 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     d->gpsCombo  = new QComboBox( false, plainPage() );
     d->gpsButton = new QPushButton(i18n("Get GPS Coordinates..."), plainPage());
     d->gpsCombo->insertItem(QString("Capelinks"), GPSEditDialogDialogPrivate::CapeLinks);
+    d->gpsCombo->insertItem(QString("MapKi"), GPSEditDialogDialogPrivate::MapKi);
+
     // TODO : Added here others web GPS coordinates locator
     
     grid->addMultiCellWidget(altitudeLabel, 0, 0, 0, 0);
@@ -143,6 +146,12 @@ void GPSEditDialog::slotGPSLocator()
         case GPSEditDialogDialogPrivate::CapeLinks:
         {
             url.append("http://www.capelinks.com/cape-cod/maps/gps");
+            break;
+        }
+
+        case GPSEditDialogDialogPrivate::MapKi:
+        {
+            url.append("http://mapki.com/getLonLat.php");
             break;
         }
 
