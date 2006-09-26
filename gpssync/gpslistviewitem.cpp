@@ -74,8 +74,8 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
     exiv2Iface.load(d->url.path());
     setDateTime(exiv2Iface.getImageDateTime());
     double alt, lat, lng;
-    exiv2Iface.getGPSInfo(alt, lat, lng);
-    setGPSInfo(GPSDataContainer(alt, lat, lng, false), false);
+    if (exiv2Iface.getGPSInfo(alt, lat, lng))
+        setGPSInfo(GPSDataContainer(alt, lat, lng, false), false);
 
     KIO::PreviewJob* thumbnailJob = KIO::filePreview(url, 64);
 
@@ -90,6 +90,7 @@ GPSListViewItem::~GPSListViewItem()
 
 void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty, bool addedManually)
 {
+    setEnabled(true);
     d->dirty   = dirty;
     d->gpsData = gpsData;
     setText(2, QString::number(d->gpsData.altitude()));
@@ -123,7 +124,6 @@ void GPSListViewItem::setDateTime(QDateTime date)
 {
     if (date.isValid())
     {
-        setEnabled(true);
         d->date = date;
         setText(5, date.toString(Qt::ISODate));
     }
@@ -202,7 +202,7 @@ void GPSListViewItem::eraseGPSInfo(bool e)
 
 void GPSListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
 {
-    if (d->enabled)
+    if (isEnabled())
     {
         if ( isDirty() && !d->erase && column >= 2  && column <= 4 )
         {
