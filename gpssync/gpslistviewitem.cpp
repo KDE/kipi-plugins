@@ -93,6 +93,7 @@ void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty, bool adde
     setEnabled(true);
     d->dirty   = dirty;
     d->gpsData = gpsData;
+    d->erase   = false;
     setText(2, QString::number(d->gpsData.altitude(),  'g', 12));
     setText(3, QString::number(d->gpsData.latitude(),  'g', 12));
     setText(4, QString::number(d->gpsData.longitude(), 'g', 12));
@@ -187,16 +188,11 @@ bool GPSListViewItem::isDirty()
     return d->dirty;
 }
 
-void GPSListViewItem::eraseGPSInfo(bool e)
+void GPSListViewItem::eraseGPSInfo()
 {
-    d->erase = e;
+    d->erase = true;
     d->dirty = true;
-
-    if (e)
-        setText(6, i18n("Deleted!"));
-    else 
-        setText(6, "");
-
+    setText(6, i18n("Deleted!"));
     repaint();
 }
 

@@ -150,7 +150,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->listView->setAllColumnsShowFocus(true);
     d->listView->setSorting(-1);
     d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->listView->setSelectionMode(QListView::Single);
+    d->listView->setSelectionMode(QListView::Extended);
     d->listView->setMinimumWidth(450);
 
     // ---------------------------------------------------------------
@@ -401,7 +401,7 @@ void GPSSyncDialog::slotUser1()
                              .arg(itemsUpdated), i18n("GPS Sync"));    
 }
 
-// Launch the GPS coordinates editor.
+// Start the GPS coordinates editor dialog.
 void GPSSyncDialog::slotUser2()
 {
     if (!d->listView->currentItem())
@@ -417,11 +417,37 @@ void GPSSyncDialog::slotUser2()
     switch (dlg.exec())
     {
         case KDialogBase::Accepted:
-            item->setGPSInfo(dlg.getGPSInfo(), true, true);
-        break;
+        {
+            QListViewItemIterator it(d->listView);
+
+            while (it.current())
+            {
+                if (it.current()->isSelected())
+                {
+                    GPSListViewItem *selItem = (GPSListViewItem*)it.current();
+                    selItem->setGPSInfo(dlg.getGPSInfo(), true, true);
+                }
+                ++it;
+            }
+
+            break;
+        }
         case(-1):   // Erase all GPS tags
-            item->eraseGPSInfo(true);
-        break;
+        {
+            QListViewItemIterator it(d->listView);
+
+            while (it.current())
+            {
+                if (it.current()->isSelected())
+                {
+                    GPSListViewItem *selItem = (GPSListViewItem*)it.current();
+                    selItem->eraseGPSInfo();
+                }
+                ++it;
+            }
+
+            break;
+        }
     }
 }
 

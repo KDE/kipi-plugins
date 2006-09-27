@@ -57,7 +57,7 @@ public:
 
     void setGPSInfo(GPSDataContainer gpsData, bool dirty=true, bool addedManually=false);
     GPSDataContainer getGPSInfo();
-    void eraseGPSInfo(bool e);
+    void eraseGPSInfo();
 
     void setDateTime(QDateTime date);
     QDateTime getDateTime();
