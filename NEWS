@@ -32,7 +32,8 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 005 ==> 107905 : Copy exif data from raw to converted images.
 006 ==> 119537 : Exif width and height are not corrected after lossless rotation.
 007 ==> 91545  :  'Slideshow' does nothing if an album only contains subalbums, but no images directly or is empty.
-008 ==> 
+008 ==> 134749 : GPS Sync: altitude shown is wrong.
+009 ==> 
 
 
 v 0.1.2                                                           2006-07-08
