@@ -112,6 +112,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     d->worldMap = new KHTMLPart(plainPage());
     /*d->worldMap->openURL(KURL("/home/gilles/Documents/Devel/SVN/trunk/extragear/libs/kipi-plugins/gpssync/getlonlat.html"));*/
     d->worldMap->view()->resize(640, 480);
+    d->worldMap->setJScriptEnabled(true);
     d->worldMap->show();
 
     d->gpsCombo  = new QComboBox( false, plainPage() );
