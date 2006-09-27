@@ -49,8 +49,18 @@ public:
 protected slots:
 
     void slotOk();
+    void slotClose();
     void slotUser1();
     void slotGPSLocator(int);
+
+protected:
+
+    void closeEvent(QCloseEvent *);
+
+private:
+
+    void readSettings();
+    void saveSettings();
 
 private:
 

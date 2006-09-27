@@ -30,6 +30,7 @@
 // KDE includes.
 
 #include <klocale.h>
+#include <kconfig.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kapplication.h>
@@ -147,13 +148,44 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     connect(lonResetButton, SIGNAL(clicked()),
             d->longitudeInput, SLOT(clear()));
 
-    adjustSize();
-    slotGPSLocator(d->gpsCombo->currentItem());
+    readSettings();
 }
 
 GPSEditDialog::~GPSEditDialog()
 {
     delete d;
+}
+
+void GPSEditDialog::closeEvent(QCloseEvent *e)
+{
+    if (!e) return;
+    saveSettings();
+    e->accept();
+}
+
+void GPSEditDialog::slotClose()
+{
+    saveSettings();
+    KDialogBase::slotClose();
+}
+
+void GPSEditDialog::readSettings()
+{
+    KConfig config("kipirc");
+    config.setGroup("GPS Sync Settings");
+    d->gpsCombo->setCurrentItem(config.readNumEntry("GPS Locator", 
+                                GPSEditDialogDialogPrivate::CapeLinks));
+    resize(configDialogSize(config, QString("GPS Edit Dialog")));
+    slotGPSLocator(d->gpsCombo->currentItem());
+}
+
+void GPSEditDialog::saveSettings()
+{
+    KConfig config("kipirc");
+    config.setGroup("GPS Sync Settings");
+    config.writeEntry("GPS Locator", d->gpsCombo->currentItem());
+    saveDialogSize(config, QString("GPS Edit Dialog"));
+    config.sync();
 }
 
 GPSDataContainer GPSEditDialog::getGPSInfo()
