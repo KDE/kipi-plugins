@@ -768,8 +768,8 @@ bool Exiv2Iface::getGPSInfo(double& altitude, double& latitude, double& longitud
         if (altRef.isEmpty()) return false;
         QString alt = getExifTagString("Exif.GPSInfo.GPSAltitude");
         if (alt.isEmpty()) return false;
-        num       = rational.section("/", 0, 0);
-        den       = rational.section("/", 1, 1);
+        num       = alt.section("/", 0, 0);
+        den       = alt.section("/", 1, 1);
         altitude  = num.toDouble()/den.toDouble();
         
         if (altRef == "1") altitude *= -1.0;
