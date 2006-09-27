@@ -50,7 +50,7 @@ protected slots:
 
     void slotOk();
     void slotUser1();
-    void slotGPSLocator();
+    void slotGPSLocator(int);
 
 private:
 

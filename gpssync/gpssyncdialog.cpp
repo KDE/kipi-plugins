@@ -427,6 +427,8 @@ void GPSSyncDialog::slotUser2()
 
 void GPSSyncDialog::slotApply()
 {
+    KURL::List images;
+
     QListViewItemIterator it( d->listView );
     while ( it.current() ) 
     {
@@ -434,12 +436,15 @@ void GPSSyncDialog::slotApply()
         d->listView->setSelected(item, true);
         d->listView->ensureItemVisible(item);
         item->writeGPSInfoToFile();
+        images.append(item->getUrl());
 
         // TODO : new libkipi method to store GPS info in host database.
 
         ++it;
         kapp->processEvents();
     }
+    
+    d->interface->refreshImages(images);
 }
 
 }  // NameSpace KIPIGPSSyncPlugin

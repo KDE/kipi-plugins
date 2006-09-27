@@ -14,7 +14,7 @@ kipiplugin_gpssync_la_SOURCES = plugin_gpssync.cpp gpssyncdialog.cpp gpslistview
 
 # Libs needed by the plugin
 kipiplugin_gpssync_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \
-	       $(LIBKIPI_LIBS) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
+	       $(LIBKIPI_LIBS) $(LIB_KDEUI) $(LIB_KHTML) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
 kipiplugin_gpssync_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
