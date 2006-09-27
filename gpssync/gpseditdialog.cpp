@@ -85,7 +85,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     d = new GPSEditDialogDialogPrivate;
 
     setHelp("gpssync", "kipi-plugins");
-    setButtonText(User1, i18n("Delete"));
+    setButtonText(User1, i18n("Delete Coordinates"));
 
     QGridLayout* grid = new QGridLayout(plainPage(), 4, 3, 0, spacingHint());
 
