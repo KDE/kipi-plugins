@@ -1,84 +1,73 @@
-//////////////////////////////////////////////////////////////////////////////
-//
-//    BATCHPROCESSIMAGESITEM.H
-//
-//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at free.fr>
-//              (C) 2006 Seb Ruiz <me@sebruiz.net>
-//
-//    This program is free software; you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation; either version 2 of the License, or
-//    (at your option) any later version.
-//
-//    This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with this program; if not, write to the Free Software
-//    Foundation, Inc., 51 Franklin Steet, Fifth Floor, Cambridge, MA 02110-1301, USA.
-//
-//////////////////////////////////////////////////////////////////////////////
+/***************************************************************************
+ * copyright            : (C) 2006 Seb Ruiz <me@sebruiz.net>               *
+ **************************************************************************/
 
-#ifndef BATCHPROCESSIMAGESITEM_H
-#define BATCHPROCESSIMAGESITEM_H
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 
-// Include files for Qt
+#ifndef IMAGELISTITEM_H
+#define IMAGELISTITEM_H
+
+extern "C" {
+#include <gpod/itdb.h>
+}
 
 #include <qstring.h>
-#include <qobject.h>
-
-// Include files for KDE
-
 #include <klistview.h>
-
-class QPainter;
-class QListView;
 
 namespace IpodExport
 {
 
-class ImageListItem : public KListViewItem
-{
-public:
+    class ImageListItem : public KListViewItem
+    {
+    public:
 
-    ImageListItem( QListView * parent, QString const & pathSrc,
-                   QString const & name, QString const & result);
+        /// for use by the upload widget
+        ImageListItem( QListView *parent, QString const & pathSrc, QString const & name )
+            : KListViewItem( parent, QString::null/*set below*/, name )
+            , m_pathSrc( pathSrc )
+            , m_name( name )
+            , m_photoAlbum( 0 )
+        {
+            setText( 0, pathSrc.section('/', -2, -2) );
+        }
 
-    ~ImageListItem() { }
+        /// for use by the ipod widget
+        ImageListItem( QListView *parent, QListViewItem *after, Itdb_PhotoAlbum * pa )
+            : KListViewItem( parent, after )
+            , m_pathSrc( QString::null )
+            , m_name( QString::null )
+            , m_photoAlbum( pa )
+        {
+            setText( 0, pa->name );
+        }
 
-    QString pathSrc();
-    QString name();
-    QString result();
-    QString error();
-    QString outputMess();
+        QString          pathSrc()    const { return m_pathSrc;    }
+        QString          name()       const { return m_name;       }
+        Itdb_PhotoAlbum *photoAlbum() const { return m_photoAlbum; }
 
-    bool overWrote() const               { return m_overwrote; }
-    void setDidOverWrite( const bool b ) { m_overwrote = b;    }
+        void setPhotoAlbum( Itdb_PhotoAlbum *pa ) { m_photoAlbum = pa; }
+        void setName( const QString & name )
+        {
+            if( m_photoAlbum )
+                strcpy( m_photoAlbum->name, name.utf8() );
 
-    void changeResult( QString text );
-    void changeError( QString text );
-    void changeNameDest( QString text );
-    void changeOutputMsg( QString text );
+            m_name = m_photoAlbum->name;
+            setText( 0, m_photoAlbum->name );
+        }
 
-    void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
-
-    void setKey( const QString& val, bool reverseSort );
-    QString key( int column, bool ascending ) const;
-    int compare( QListViewItem * i, int col, bool ascending ) const;
-
-private:
-    QString m_pathSrc;
-    QString m_name;
-    QString m_result;
-    QString m_error;
-    QString m_outputMsg;
-    bool    m_overwrote;
-    QString m_key;
-    bool    m_reverseSort;
-};
+    private:
+        QString          m_pathSrc;
+        QString          m_name;
+        Itdb_PhotoAlbum *m_photoAlbum;
+    };
 
 }
 
-#endif  // BATCHPROCESSIMAGESITEM_H
+#endif  // IMAGELISTITEM_H

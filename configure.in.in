@@ -171,7 +171,7 @@ if test "$build_libgpod" != "no"; then
             AC_CHECK_FUNCS(itdb_get_mountpoint)
             AC_CHECK_FUNCS(itdb_device_get_ipod_info)
 
-            AC_CHECK_FUNCS(itdb_photodb_remove_photoalbum,
+            AC_CHECK_FUNCS(itdb_photodb_photoalbum_remove,
                            [AC_DEFINE(HAVE_ITDB_REMOVE_PHOTOS, 1, [have libgpod remove photos])],
                            ,
                            [#include <gpod/itdb.h>])

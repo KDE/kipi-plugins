@@ -267,7 +267,7 @@ UploadDialog::getIpodAlbums()
     {
         Itdb_PhotoAlbum *ipodAlbum = (Itdb_PhotoAlbum *)it->data;
         debug() << "found album: " << ipodAlbum->name << endl;
-        last = new KListViewItem( m_ipodAlbumList, last, ipodAlbum->name );
+        last = new ImageListItem( m_ipodAlbumList, last, ipodAlbum );
         last->setPixmap( 0, KGlobal::iconLoader()->loadIcon( "folder", KIcon::Toolbar, KIcon::SizeSmall ) );
         getIpodAlbumPhotos( last, ipodAlbum );
     }
@@ -502,10 +502,11 @@ UploadDialog::slotCreateIpodAlbum()
                                               helper, &ok, this );
     if( ok )
     {
-        itdb_photodb_photoalbum_new( m_itdb, newAlbum.utf8() );
+        Itdb_PhotoAlbum *photoAlbum = itdb_photodb_photoalbum_new( m_itdb, newAlbum.utf8() );
         // add the new album to the list view
-        KListViewItem *i = new KListViewItem( m_ipodAlbumList, 0, newAlbum );
+        KListViewItem *i = new ImageListItem( m_ipodAlbumList, 0, photoAlbum );
         i->setPixmap( 0, KGlobal::iconLoader()->loadIcon( "folder", KIcon::Toolbar, KIcon::SizeSmall ) );
+        i->setSelected( true );
         // commit the changes to the iPod
         GError *err = 0;
         itdb_photodb_write( m_itdb, &err );
@@ -516,12 +517,11 @@ void
 UploadDialog::slotRenameIpodAlbum()
 {
 #ifdef HAVE_ITDB_REMOVE_PHOTOS
-    QListViewItem *selected = m_ipodAlbumList->selectedItem();
+    ImageListItem *selected = dynamic_cast<ImageListItem*>(m_ipodAlbumList->selectedItem());
 
     // only allow renaming of album items
     if( !selected || selected->depth() != 0 ) return;
 
-    QString oldName = selected->text(0);
     bool ok = false;
     QString newName = KInputDialog::getText( i18n("Rename iPod Photo Album"),
                                              i18n("New album title:"),
@@ -529,8 +529,7 @@ UploadDialog::slotRenameIpodAlbum()
     if( ok )
     {
         // change the name on the ipod, and rename the listviewitem
-        itdb_photodb_rename_photoalbum( m_itdb, oldName.utf8(), newName.utf8() );
-        selected->setText( 0, newName );
+        selected->setName( newName );
         // commit changes to the iPod
         GError *err = 0;
         itdb_photodb_write( m_itdb, &err );
@@ -553,26 +552,22 @@ UploadDialog::slotDeleteIpodAlbum()
     {
         case 0: //album
             debug() << "Deleting album: " << text << endl;
-            if( itdb_photodb_remove_photoalbum( m_itdb, text.utf8() ) )
-                delete selected;
-            else
-                debug() << "Error deleting album, oh no!" << endl;
+            itdb_photodb_photoalbum_remove( m_itdb, dynamic_cast<ImageListItem*>(selected)->photoAlbum() );
             break;
 
         case 1: //image
             debug() << "Deleting image with id: " << text << endl;
-            if( itdb_photodb_remove_photo( m_itdb, text.toInt() ) )
-                delete selected; // remove the item from the listview if there was no error.
-            else
-                debug() << "Error deleting image, oh no!" << endl;
-
-            itdb_photodb_write( m_itdb, &err );
+            itdb_photodb_remove_photo( m_itdb, text.toInt() );
+            break;
     }
+
+    delete selected;
+    itdb_photodb_write( m_itdb, &err );
 #endif
 }
 
 void
-UploadDialog::slotAddDropItems(QStringList filesPath)
+UploadDialog::slotAddDropItems( QStringList filesPath )
 {
     if( filesPath.isEmpty() ) return;
 
@@ -610,7 +605,7 @@ UploadDialog::addUrlToList( QString file )
 {
     QFileInfo *fi = new QFileInfo( file );
 
-    new ImageListItem( m_imageList, file.section('/', 0, -1), fi->fileName(), QString::null );
+    new ImageListItem( m_imageList, file.section('/', 0, -1), fi->fileName() );
 
     delete fi;
 }
