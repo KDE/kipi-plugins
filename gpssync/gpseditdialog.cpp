@@ -114,7 +114,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, const QS
     grid->addMultiCellWidget(d->longitudeInput, 6, 6, 0, 1);
     grid->addMultiCellWidget(lonResetButton, 6, 6, 2, 2);
     grid->addMultiCellWidget(d->worldMap->view(), 0, 7, 3, 3);
-    grid->setColStretch(0, 2);
+    grid->setColStretch(0, 3);
     grid->setColStretch(3, 10);
     grid->setRowStretch(7, 10);
 
