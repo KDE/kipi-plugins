@@ -43,7 +43,7 @@ public:
 
 signals:
 
-    void signalMouseReleased();
+    void signalNewGPSLocationFromMap(const QString&, const QString&);
 
 protected:
 

@@ -49,7 +49,7 @@ protected slots:
 
     void slotOk();
     void slotCancel();
-    void slotGetGPSLocationFromMap();
+    void slotNewGPSLocationFromMap(const QString& lat, const QString& lon);
 
 protected:
 

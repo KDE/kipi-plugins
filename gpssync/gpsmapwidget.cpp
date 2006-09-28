@@ -36,7 +36,8 @@ GPSMapWidget::GPSMapWidget(QWidget* parent, const QString& lat, const QString& l
             : KHTMLPart(parent)
 {
     view()->resize(640, 480);
-    setJScriptEnabled(true);       
+    setJScriptEnabled(true);     
+    setDNDEnabled(false);
     QString url("http://digikam3rdparty.free.fr/gpslocator/getlonlat.php");
     url.append("?lat=");
     url.append(lat);
@@ -51,7 +52,17 @@ GPSMapWidget::~GPSMapWidget()
 
 void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *)
 {
-    emit signalMouseReleased();
+    QString status = jsStatusBarText();
+    
+    if (status.startsWith(QString("(lat:")))
+    {
+        status.remove(0, 5);
+        status.truncate(status.length()-1);
+        QString lat = status.section(",", 0, 0);
+        QString lon = status.section(",", 1, 1);
+        lon.remove(0, 5);
+        emit signalNewGPSLocationFromMap(lat, lon);
+    }
 }
 
 }  // namespace KIPIGPSSyncPlugin

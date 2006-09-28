@@ -127,8 +127,8 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, const QS
     connect(lonResetButton, SIGNAL(released()),
             d->longitudeInput, SLOT(clear()));
 
-    connect(d->worldMap, SIGNAL(signalMouseReleased()),
-            this, SLOT(slotGetGPSLocationFromMap()));
+    connect(d->worldMap, SIGNAL(signalNewGPSLocationFromMap(const QString&, const QString&)),
+            this, SLOT(slotNewGPSLocationFromMap(const QString&, const QString&)));
 
     readSettings();
 }
@@ -203,20 +203,10 @@ void GPSEditDialog::slotOk()
     accept();
 }
 
-void GPSEditDialog::slotGetGPSLocationFromMap()
+void GPSEditDialog::slotNewGPSLocationFromMap(const QString& lat, const QString& lon)
 {
-    QString status = d->worldMap->jsStatusBarText();
-    
-    if (status.startsWith(QString("(lat:")))
-    {
-        status.remove(0, 5);
-        status.truncate(status.length()-1);
-        QString lat = status.section(",", 0, 0);
-        QString lon = status.section(",", 1, 1);
-        lon.remove(0, 5);
-        d->latitudeInput->setText(lat);
-        d->longitudeInput->setText(lon);
-    }
+    d->latitudeInput->setText(lat);
+    d->longitudeInput->setText(lon);
 }
 
 }  // namespace KIPIGPSSyncPlugin
