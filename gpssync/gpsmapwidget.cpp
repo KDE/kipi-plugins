@@ -1,7 +1,7 @@
 /* ============================================================
  * Authors: Caulier Gilles <caulier dot gilles at kdemail dot net>
- * Date   : 2006-09-22
- * Description : a dialog to edit GPS positions
+ * Date   : 2006-09-28
+ * Description : a widget to display a GPS web map locator.
  * 
  * Copyright 2006 by Gilles Caulier
  *
@@ -15,56 +15,43 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * ============================================================ */
-
-#ifndef GPSEDITDIALOG_H
-#define GPSEDITDIALOG_H
 
 // KDE includes.
 
-#include <kdialogbase.h>
+#include <kdebug.h>
+#include <khtmlview.h>
+#include <kurl.h>
 
 // Local includes.
 
-#include "gpsdatacontainer.h"
+#include "gpsmapwidget.h"
+#include "gpsmapwidget.moc"
 
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSEditDialogDialogPrivate;
-
-class GPSEditDialog : public KDialogBase
+GPSMapWidget::GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon)
+            : KHTMLPart(parent)
 {
-    Q_OBJECT
+    view()->resize(640, 480);
+    setJScriptEnabled(true);       
+    QString url("http://digikam3rdparty.free.fr/gpslocator/getlonlat.php");
+    url.append("?lat=");
+    url.append(lat);
+    url.append("&lon=");
+    url.append(lon);
+    openURL(KURL(url));
+}
 
-public:
+GPSMapWidget::~GPSMapWidget()
+{
+}
 
-    GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, const QString& fileName);
-    ~GPSEditDialog();
-
-    GPSDataContainer getGPSInfo();
-
-protected slots:
-
-    void slotOk();
-    void slotClose();
-    void slotGetGPSLocationFromMap();
-
-protected:
-
-    void closeEvent(QCloseEvent *);
-
-private:
-
-    void readSettings();
-    void saveSettings();
-
-private:
-
-    GPSEditDialogDialogPrivate * d;
-};
+void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *)
+{
+    emit signalMouseReleased();
+}
 
 }  // namespace KIPIGPSSyncPlugin
-
-#endif /* GPSEDITDIALOG_H */

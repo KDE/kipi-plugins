@@ -1,7 +1,7 @@
 /* ============================================================
  * Authors: Caulier Gilles <caulier dot gilles at kdemail dot net>
- * Date   : 2006-09-22
- * Description : a dialog to edit GPS positions
+ * Date   : 2006-09-28
+ * Description : a widget to display a GPS web map locator.
  * 
  * Copyright 2006 by Gilles Caulier
  *
@@ -18,53 +18,38 @@
  *
  * ============================================================ */
 
-#ifndef GPSEDITDIALOG_H
-#define GPSEDITDIALOG_H
+#ifndef GPSMAPWIDGET_H
+#define GPSMAPWIDGET_H
+
+// Qt includes.
+
+#include <qstring.h>
 
 // KDE includes.
 
-#include <kdialogbase.h>
-
-// Local includes.
-
-#include "gpsdatacontainer.h"
+#include <khtml_part.h>
 
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSEditDialogDialogPrivate;
-
-class GPSEditDialog : public KDialogBase
+class GPSMapWidget : public KHTMLPart
 {
     Q_OBJECT
 
 public:
 
-    GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, const QString& fileName);
-    ~GPSEditDialog();
+    GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon);
+    ~GPSMapWidget();
 
-    GPSDataContainer getGPSInfo();
+signals:
 
-protected slots:
-
-    void slotOk();
-    void slotClose();
-    void slotGetGPSLocationFromMap();
+    void signalMouseReleased();
 
 protected:
 
-    void closeEvent(QCloseEvent *);
-
-private:
-
-    void readSettings();
-    void saveSettings();
-
-private:
-
-    GPSEditDialogDialogPrivate * d;
+    void khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *);
 };
 
 }  // namespace KIPIGPSSyncPlugin
 
-#endif /* GPSEDITDIALOG_H */
+#endif /* GPSMAPWIDGET_H */
