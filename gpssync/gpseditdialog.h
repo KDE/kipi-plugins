@@ -48,7 +48,7 @@ public:
 protected slots:
 
     void slotOk();
-    void slotClose();
+    void slotCancel();
     void slotGetGPSLocationFromMap();
 
 protected:

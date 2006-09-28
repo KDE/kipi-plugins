@@ -145,10 +145,10 @@ void GPSEditDialog::closeEvent(QCloseEvent *e)
     e->accept();
 }
 
-void GPSEditDialog::slotClose()
+void GPSEditDialog::slotCancel()
 {
     saveSettings();
-    KDialogBase::slotClose();
+    KDialogBase::slotCancel();
 }
 
 void GPSEditDialog::readSettings()
@@ -199,6 +199,7 @@ void GPSEditDialog::slotOk()
         return;
     }        
 
+    saveSettings();
     accept();
 }
 
