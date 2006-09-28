@@ -74,7 +74,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, const QS
 
     setHelp("gpssync", "kipi-plugins");
 
-    QGridLayout* grid = new QGridLayout(plainPage(), 4, 3, 0, spacingHint());
+    QGridLayout* grid = new QGridLayout(plainPage(), 7, 3, 0, spacingHint());
 
     QLabel *message = new QLabel(i18n("<p>Use the map on the left to select the right place where "
                                       "have been taken the picture. Click with right mouse button "
@@ -93,8 +93,8 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, const QS
     QPushButton *lonResetButton = new QPushButton(SmallIcon("clear_left"), QString::null, plainPage());
 
     d->altitudeInput->setValidator(new QDoubleValidator(-20000.0, 20000.0, 1, this));
-    d->latitudeInput->setValidator(new QDoubleValidator(-90.0, 90.0, 8, this));
-    d->longitudeInput->setValidator(new QDoubleValidator(-180.0, 180.0, 8, this));
+    d->latitudeInput->setValidator(new QDoubleValidator(-90.0, 90.0, 12, this));
+    d->longitudeInput->setValidator(new QDoubleValidator(-180.0, 180.0, 12, this));
 
     d->altitudeInput->setText(QString::number(gpsData.altitude(),   'g', 12));
     d->latitudeInput->setText(QString::number(gpsData.latitude(),   'g', 12));
@@ -104,18 +104,19 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, const QS
     d->worldMap->show();
 
     grid->addMultiCellWidget(message, 0, 0, 0, 2);
-    grid->addMultiCellWidget(altitudeLabel, 1, 1, 0, 0);
-    grid->addMultiCellWidget(latitudeLabel, 2, 2, 0, 0);
-    grid->addMultiCellWidget(longitudeLabel, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->altitudeInput, 1, 1, 1, 1);
-    grid->addMultiCellWidget(d->latitudeInput, 2, 2, 1, 1);
-    grid->addMultiCellWidget(d->longitudeInput, 3, 3, 1, 1);
-    grid->addMultiCellWidget(altResetButton, 1, 1, 2, 2);
-    grid->addMultiCellWidget(latResetButton, 2, 2, 2, 2);
-    grid->addMultiCellWidget(lonResetButton, 3, 3, 2, 2);
-    grid->addMultiCellWidget(d->worldMap->view(), 0, 4, 3, 3);
+    grid->addMultiCellWidget(altitudeLabel, 1, 1, 0, 2);
+    grid->addMultiCellWidget(d->altitudeInput, 2, 2, 0, 1);
+    grid->addMultiCellWidget(altResetButton, 2, 2, 2, 2);
+    grid->addMultiCellWidget(latitudeLabel, 3, 3, 0, 2);
+    grid->addMultiCellWidget(d->latitudeInput, 4, 4, 0, 1);
+    grid->addMultiCellWidget(latResetButton, 4, 4, 2, 2);
+    grid->addMultiCellWidget(longitudeLabel, 5, 5, 0, 2);
+    grid->addMultiCellWidget(d->longitudeInput, 6, 6, 0, 1);
+    grid->addMultiCellWidget(lonResetButton, 6, 6, 2, 2);
+    grid->addMultiCellWidget(d->worldMap->view(), 0, 7, 3, 3);
+    grid->setColStretch(0, 2);
     grid->setColStretch(3, 10);
-    grid->setRowStretch(4, 10);
+    grid->setRowStretch(7, 10);
 
     connect(altResetButton, SIGNAL(clicked()),
             d->altitudeInput, SLOT(clear()));
