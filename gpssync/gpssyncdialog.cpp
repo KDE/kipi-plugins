@@ -262,7 +262,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
 
     // ---------------------------------------------------------------
 
-    connect(loadGPXButton, SIGNAL(pressed()),
+    connect(loadGPXButton, SIGNAL(released()),
             this, SLOT(slotLoadGPXFile()));
 
     connect(d->interpolateBox, SIGNAL(toggled(bool)),

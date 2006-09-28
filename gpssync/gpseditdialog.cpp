@@ -118,13 +118,13 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, const QS
     grid->setColStretch(3, 10);
     grid->setRowStretch(7, 10);
 
-    connect(altResetButton, SIGNAL(clicked()),
+    connect(altResetButton, SIGNAL(released()),
             d->altitudeInput, SLOT(clear()));
 
-    connect(latResetButton, SIGNAL(clicked()),
+    connect(latResetButton, SIGNAL(released()),
             d->latitudeInput, SLOT(clear()));
 
-    connect(lonResetButton, SIGNAL(clicked()),
+    connect(lonResetButton, SIGNAL(released()),
             d->longitudeInput, SLOT(clear()));
 
     connect(d->worldMap, SIGNAL(signalMouseReleased()),
