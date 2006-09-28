@@ -15,9 +15,9 @@
 #include "imagelistitem.h"
 #include "ipodexportdialog.h"
 
+#include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
-#include <qfont.h>
 #include <qframe.h>
 #include <qhgroupbox.h>
 #include <qimage.h>
@@ -108,11 +108,11 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
         {
             modelString = itdb_info_get_ipod_model_name_string( ipodInfo->ipod_model );
             text = i18n( "<p align=\"center\"><b>iPod %1 detected at: %2</b></p>")
-                        .arg( modelString, mountPoint() );
+                        .arg( modelString, m_mountPoint );
         }
         else
             text = i18n( "<p align=\"center\"><b>iPod detected at: %1</b></p>")
-                        .arg( mountPoint() );
+                        .arg( m_mountPoint );
 
         QLabel *info = new QLabel( text, box );
 
@@ -616,7 +616,7 @@ UploadDialog::openDevice()
 {
     if( m_itdb )
     {
-        debug() <<  "iPod at " << mountPoint() << " already opened" << endl;
+        debug() <<  "iPod at " << m_mountPoint << " already opened" << endl;
         return false;
     }
 
@@ -631,8 +631,8 @@ UploadDialog::openDevice()
         QString devicenode = (*mountiter)->mountedFrom();
         QString mountpoint = (*mountiter)->mountPoint();
 
-        if( !mountPoint().isEmpty() &&
-             mountpoint != mountPoint() )
+        if( !m_mountPoint.isEmpty() &&
+             mountpoint != m_mountPoint )
             continue;
 
         if( mountpoint.startsWith( "/proc" ) ||
@@ -641,31 +641,24 @@ UploadDialog::openDevice()
             mountpoint.startsWith( "/boot" ) )
             continue;
 
-        if( !deviceNode().isEmpty() &&
-             devicenode != deviceNode() )
+        if( !m_deviceNode.isEmpty() &&
+             devicenode != m_deviceNode )
             continue;
 
-        /// Detecting an ipod. Since the user may never have created a photodb, or have deleted the
-        /// Photo directory, we must try to find a better way to determine if an ipod really exists
-        /// at this mount point. So, check if the iPod_Control directory exists.
-        GError *err = 0;
-        Itdb_iTunesDB *db = itdb_parse( QFile::encodeName( mountpoint ), &err );
-        if( err )
-        {
-            debug() << "could not parse itdb at " << mountpoint << endl;
-            g_error_free( err );
-            if( db )
-            {
-                itdb_free( db );
-                db = 0;
-            }
-            continue;
-        }
+        /// Detecting whether an iPod exists.
+        QString path = QString( itdb_get_control_dir( QFile::encodeName( mountpoint ) ) );
+        QDir d( path );
 
-        if( mountPoint().isEmpty() )
+        if( path.isEmpty() || !d.exists() )
+            continue;
+
+        if( m_mountPoint.isEmpty() )
             m_mountPoint = mountpoint;
 
+        /// Here, we have found an ipod, but we are not sure if the photo db exists.
+        /// Try and parse it to determine whether we have initialised the iPod.
         ipodFound = true;
+        GError *err = 0;
         m_itdb = itdb_photodb_parse( QFile::encodeName( mountpoint ), &err );
         if( err )
         {
@@ -690,21 +683,22 @@ UploadDialog::openDevice()
         return false;
     }
 
-    debug() << "iPod found mounted at " << mountPoint() << endl;
+    debug() << "iPod found mounted at " << m_mountPoint << endl;
 
+    /// No photodb was able to be parsed, so offer to initialise the ipod for the user.
     if( !m_itdb )
     {
-        debug() << "could not find iTunesDB on device mounted at " << mountPoint() << endl;
+        debug() << "could not find iTunesDB on device mounted at " << m_mountPoint << endl;
 
         QString msg = i18n( "An iPod photo database could not be found on device mounted at %1. "
-                "Should I try to initialize your iPod photo database?" ).arg( mountPoint() );
+                "Should I try to initialize your iPod photo database?" ).arg( m_mountPoint );
 
         if( KMessageBox::warningContinueCancel( this, msg, i18n( "Initialize iPod Photo Database?" ),
                     KGuiItem(i18n("&Initialize"), "new") ) == KMessageBox::Continue )
         {
 
             m_itdb = itdb_photodb_new();
-            itdb_device_set_mountpoint( m_itdb->device, mountPoint().utf8() );
+            itdb_device_set_mountpoint( m_itdb->device, m_mountPoint.utf8() );
 
             if( !m_itdb )
             {
