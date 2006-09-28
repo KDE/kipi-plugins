@@ -68,25 +68,24 @@ public:
         worldMap       = 0;
     }
 
-    QComboBox   *gpsCombo;
+    QComboBox *gpsCombo;
 
-    KLineEdit   *altitudeInput;
-    KLineEdit   *latitudeInput;
-    KLineEdit   *longitudeInput;
+    KLineEdit *altitudeInput;
+    KLineEdit *latitudeInput;
+    KLineEdit *longitudeInput;
 
-    KHTMLPart   *worldMap;
+    KHTMLPart *worldMap;
 };
 
 GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, 
                              const QString& fileName)
              : KDialogBase(Plain, i18n("%1 - Edit GPS coordinates").arg(fileName),
-                           Help|User1|Ok|Cancel, Ok,
+                           Help|Ok|Cancel, Ok,
                            parent, 0, true, true)
 {
     d = new GPSEditDialogDialogPrivate;
 
     setHelp("gpssync", "kipi-plugins");
-    setButtonText(User1, i18n("Delete Coordinates"));
 
     QGridLayout* grid = new QGridLayout(plainPage(), 4, 3, 0, spacingHint());
 
@@ -222,11 +221,6 @@ void GPSEditDialog::slotOk()
     }        
 
     accept();
-}
-
-void GPSEditDialog::slotUser1()
-{
-    done(-1);
 }
 
 void GPSEditDialog::slotGPSLocator(int i)

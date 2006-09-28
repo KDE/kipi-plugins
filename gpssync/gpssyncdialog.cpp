@@ -100,16 +100,23 @@ public:
 
 GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
              : KDialogBase(Plain, i18n("GPS Sync"), 
-                           Help|User1|User2|Apply|Close, Close, 
+                           Help|User1|User2|User3|Apply|Close, Close, 
                            parent, 0, true, true )
 {
     d = new GPSSyncDialogPriv;
     d->interface = interface;
 
     setButtonText(User1, i18n("Correlate"));
-    setButtonText(User2, i18n("Edit Coordinates..."));
+    setButtonText(User2, i18n("Edit..."));
+    setButtonText(User3, i18n("Remove"));
+
+    setButtonTip(User1, i18n("Correlate GPX file data with all pictures from the list."));
+    setButtonTip(User2, i18n("Edit manually GPS coordinates of selected pictures form the list."));
+    setButtonTip(User3, i18n("Remove GPS coordinates of selected pictures form the list."));
+
     enableButton(User1, false);
     enableButton(User2, true);
+    enableButton(User3, true);
 
     QGridLayout *mainLayout = new QGridLayout(plainPage(), 3, 1, 0, marginHint());
 
@@ -364,7 +371,7 @@ void GPSSyncDialog::saveSettings()
     config.sync();
 }
 
-// Start to correlate the GPS positions and Pictures
+// Correlate the GPS positions from Pictures using a GPX file data.
 void GPSSyncDialog::slotUser1()
 {
     int itemsUpdated = 0;
@@ -406,48 +413,51 @@ void GPSSyncDialog::slotUser2()
 {
     if (!d->listView->currentItem())
     {
-        KMessageBox::information(this, i18n("Please, select a picture from "
-                     "the list to edit GPS coordinate manually."), i18n("GPS Sync"));    
+        KMessageBox::information(this, i18n("Please, select pictures from "
+                     "the list to edit GPS coordinates manually."), i18n("GPS Sync"));    
         return;
     }
 
     GPSListViewItem* item = (GPSListViewItem*)d->listView->currentItem();
 
     GPSEditDialog dlg(this, item->getGPSInfo(), item->getUrl().fileName());
-    switch (dlg.exec())
+
+    if (dlg.exec() == KDialogBase::Accepted)
     {
-        case KDialogBase::Accepted:
+        QListViewItemIterator it(d->listView);
+
+        while (it.current())
         {
-            QListViewItemIterator it(d->listView);
-
-            while (it.current())
+            if (it.current()->isSelected())
             {
-                if (it.current()->isSelected())
-                {
-                    GPSListViewItem *selItem = (GPSListViewItem*)it.current();
-                    selItem->setGPSInfo(dlg.getGPSInfo(), true, true);
-                }
-                ++it;
+                GPSListViewItem *selItem = (GPSListViewItem*)it.current();
+                selItem->setGPSInfo(dlg.getGPSInfo(), true, true);
             }
-
-            break;
+            ++it;
         }
-        case(-1):   // Erase all GPS tags
+    }
+}
+
+// Remove GPS coordinates from pictures.
+void GPSSyncDialog::slotUser3()
+{
+    if (!d->listView->currentItem())
+    {
+        KMessageBox::information(this, i18n("Please, select pictures from "
+                     "the list to remove GPS coordinates."), i18n("GPS Sync"));    
+        return;
+    }
+
+    QListViewItemIterator it(d->listView);
+
+    while (it.current())
+    {
+        if (it.current()->isSelected())
         {
-            QListViewItemIterator it(d->listView);
-
-            while (it.current())
-            {
-                if (it.current()->isSelected())
-                {
-                    GPSListViewItem *selItem = (GPSListViewItem*)it.current();
-                    selItem->eraseGPSInfo();
-                }
-                ++it;
-            }
-
-            break;
+            GPSListViewItem *selItem = (GPSListViewItem*)it.current();
+            selItem->eraseGPSInfo();
         }
+        ++it;
     }
 }
 

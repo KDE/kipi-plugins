@@ -60,6 +60,7 @@ protected slots:
     void slotClose();
     void slotUser1();
     void slotUser2();
+    void slotUser3();
 
 private slots:
 
