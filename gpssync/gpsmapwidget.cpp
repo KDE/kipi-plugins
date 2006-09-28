@@ -38,6 +38,7 @@ GPSMapWidget::GPSMapWidget(QWidget* parent, const QString& lat, const QString& l
     view()->resize(640, 480);
     setJScriptEnabled(true);     
     setDNDEnabled(false);
+    setEditable(false);
     QString url("http://digikam3rdparty.free.fr/gpslocator/getlonlat.php");
     url.append("?lat=");
     url.append(lat);
