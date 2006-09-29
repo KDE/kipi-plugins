@@ -54,7 +54,7 @@ protected slots:
 
 protected:
 
-    void GPSEditDialog::resizeEvent(QResizeEvent *);
+    void resizeEvent(QResizeEvent *);
     void closeEvent(QCloseEvent *);
 
 private:
