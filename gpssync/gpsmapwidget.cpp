@@ -32,12 +32,25 @@
 namespace KIPIGPSSyncPlugin
 {
 
+class GPSMapWidgetPrivate
+{
+
+public:
+
+    GPSMapWidgetPrivate(){}
+
+    QString latitude;
+    QString longitude;
+    QString zoomLevel;
+};
+
 GPSMapWidget::GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon, int zoomLevel)
             : KHTMLPart(parent)
 {
-    m_zoomLevel = QString::number(zoomLevel);
-    m_latitude  = lat;
-    m_longitude = lon;
+    d = new GPSMapWidgetPrivate;
+    d->zoomLevel = QString::number(zoomLevel);
+    d->latitude  = lat;
+    d->longitude = lon;
 
     setJScriptEnabled(true);     
     setDNDEnabled(false);
@@ -50,6 +63,7 @@ GPSMapWidget::GPSMapWidget(QWidget* parent, const QString& lat, const QString& l
 
 GPSMapWidget::~GPSMapWidget()
 {
+    delete d;
 }
 
 void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *)
@@ -62,12 +76,12 @@ void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *)
     {
         status.remove(0, 5);
         status.truncate(status.length()-1);
-        m_latitude  = status.section(",", 0, 0);
-        m_longitude = status.section(",", 1, 1);
-        m_longitude.remove(0, 5);
-        m_zoomLevel = status.section(",", 2, 2);
-        m_zoomLevel.remove(0, 6);
-        emit signalNewGPSLocationFromMap(m_latitude, m_longitude);
+        d->latitude  = status.section(",", 0, 0);
+        d->longitude = status.section(",", 1, 1);
+        d->longitude.remove(0, 5);
+        d->zoomLevel = status.section(",", 2, 2);
+        d->zoomLevel.remove(0, 6);
+        emit signalNewGPSLocationFromMap(d->latitude, d->longitude);
     }
 
     // If a new map zoom level have been selected, the Status 
@@ -75,7 +89,7 @@ void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *)
     if (status.startsWith(QString("newZoomLevel:")))
     {
         status.remove(0, 13);
-        m_zoomLevel = status;
+        d->zoomLevel = status;
     }
 }
 
@@ -83,15 +97,15 @@ void GPSMapWidget::resized()
 {
     QString url("http://digikam3rdparty.free.fr/gpslocator/getlonlat.php");
     url.append("?lat=");
-    url.append(m_latitude);
+    url.append(d->latitude);
     url.append("&lon=");
-    url.append(m_longitude);
+    url.append(d->longitude);
     url.append("&wth=");
     url.append(QString::number(view()->width()));
     url.append("&hgt=");
     url.append(QString::number(view()->height()));
     url.append("&zom=");
-    url.append(m_zoomLevel);
+    url.append(d->zoomLevel);
     openURL(KURL(url));
     kdDebug( 51001 ) << url << endl;
 }

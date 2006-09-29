@@ -29,10 +29,10 @@
 
 #include <khtml_part.h>
 
-class QResizeEvent;
-
 namespace KIPIGPSSyncPlugin
 {
+
+class GPSMapWidgetPrivate;
 
 class GPSMapWidget : public KHTMLPart
 {
@@ -55,9 +55,7 @@ protected:
 
 private:
 
-    QString m_latitude;
-    QString m_longitude;
-    QString m_zoomLevel;
+    GPSMapWidgetPrivate *d;
 };
 
 }  // namespace KIPIGPSSyncPlugin

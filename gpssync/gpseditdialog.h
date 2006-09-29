@@ -64,7 +64,7 @@ private:
 
 private:
 
-    GPSEditDialogDialogPrivate * d;
+    GPSEditDialogDialogPrivate *d;
 };
 
 }  // namespace KIPIGPSSyncPlugin
