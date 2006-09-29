@@ -50,9 +50,11 @@ protected slots:
     void slotOk();
     void slotCancel();
     void slotNewGPSLocationFromMap(const QString& lat, const QString& lon);
+    void slotUpdateWorldMap();
 
 protected:
 
+    void GPSEditDialog::resizeEvent(QResizeEvent *);
     void closeEvent(QCloseEvent *);
 
 private:

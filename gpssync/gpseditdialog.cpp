@@ -20,6 +20,7 @@
 
 // Qt includes.
 
+#include <qtimer.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
@@ -131,6 +132,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, const QS
             this, SLOT(slotNewGPSLocationFromMap(const QString&, const QString&)));
 
     readSettings();
+    QTimer::singleShot(0, this, SLOT(slotUpdateWorldMap()));
 }
 
 GPSEditDialog::~GPSEditDialog()
@@ -143,6 +145,17 @@ void GPSEditDialog::closeEvent(QCloseEvent *e)
     if (!e) return;
     saveSettings();
     e->accept();
+}
+
+void GPSEditDialog::slotUpdateWorldMap()
+{
+    d->worldMap->resized();
+}
+
+void GPSEditDialog::resizeEvent(QResizeEvent *e)
+{
+    if (!e) return;
+    slotUpdateWorldMap();
 }
 
 void GPSEditDialog::slotCancel()

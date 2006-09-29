@@ -29,6 +29,8 @@
 
 #include <khtml_part.h>
 
+class QResizeEvent;
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -41,6 +43,8 @@ public:
     GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon);
     ~GPSMapWidget();
 
+    void resized();
+
 signals:
 
     void signalNewGPSLocationFromMap(const QString&, const QString&);
@@ -48,6 +52,11 @@ signals:
 protected:
 
     void khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *);
+
+private:
+
+    QString m_latitude;
+    QString m_longitude;
 };
 
 }  // namespace KIPIGPSSyncPlugin

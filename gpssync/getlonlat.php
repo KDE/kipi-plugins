@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 
-<!--
+<?php
 /* ============================================================
  * Authors: Caulier Gilles <caulier dot gilles at kdemail dot net>
  * Date   : 2006-09-22
@@ -10,8 +10,16 @@
  * 
  * Copyright 2006 by Gilles Caulier
  * 
- * Note : this script use Google Map api:
- *        http://www.google.com/apis/maps/documentation
+ * Notes : This script use Google Map api:
+ *         http://www.google.com/apis/maps/documentation
+ *         This script must be copied to host kipi-plugins
+ *         web project page.
+ *         This script accept some values from url:
+ *           - 'alt' : picture altitude.
+ *           - 'lon' : picture longitude. 
+ *           - 'wth' : width of map.
+ *           - 'hgt' : height of map.
+ *
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,7 +33,7 @@
  * GNU General Public License for more details.
  * 
  * ============================================================ */
--->
+?>
 
 <head>
 <script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAy_Vv5rc03ctmYvwfsuTH6RSK29CRGKrdb78LNYpP1_riKtR3zRRxy4unyuWAi2vp7m1isLwuHObXDg" 
@@ -82,7 +90,17 @@ function loadMap()
 </script>
 </head>
 
-<body onLoad="loadMap()">
-<div id="map" style="width: 640px; height: 480px"></div>
+<body onLoad="loadMap()" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
+
+<?php
+    echo "<div id=\"map\" ";
+    echo "style=\"width: ";
+    echo $_GET['wth'];
+    echo "px; height: ";
+    echo $_GET['hgt'];
+    echo "px\">";
+?>
+
+</div>
 </body>
 </html>

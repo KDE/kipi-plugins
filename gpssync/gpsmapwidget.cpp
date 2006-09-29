@@ -35,16 +35,14 @@ namespace KIPIGPSSyncPlugin
 GPSMapWidget::GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon)
             : KHTMLPart(parent)
 {
-    view()->resize(640, 480);
+    m_latitude  = lat;
+    m_longitude = lon;
     setJScriptEnabled(true);     
     setDNDEnabled(false);
     setEditable(false);
-    QString url("http://digikam3rdparty.free.fr/gpslocator/getlonlat.php");
-    url.append("?lat=");
-    url.append(lat);
-    url.append("&lon=");
-    url.append(lon);
-    openURL(KURL(url));
+    view()->setVScrollBarMode(QScrollView::AlwaysOff);
+    view()->setHScrollBarMode(QScrollView::AlwaysOff);
+    view()->setMinimumSize(480, 360);
 }
 
 GPSMapWidget::~GPSMapWidget()
@@ -59,11 +57,26 @@ void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *)
     {
         status.remove(0, 5);
         status.truncate(status.length()-1);
-        QString lat = status.section(",", 0, 0);
-        QString lon = status.section(",", 1, 1);
-        lon.remove(0, 5);
-        emit signalNewGPSLocationFromMap(lat, lon);
+        m_latitude  = status.section(",", 0, 0);
+        m_longitude = status.section(",", 1, 1);
+        m_longitude.remove(0, 5);
+        emit signalNewGPSLocationFromMap(m_latitude, m_longitude);
     }
+}
+
+void GPSMapWidget::resized()
+{
+    QString url("http://digikam3rdparty.free.fr/gpslocator/getlonlat.php");
+    url.append("?lat=");
+    url.append(m_latitude);
+    url.append("&lon=");
+    url.append(m_longitude);
+    url.append("&wth=");
+    url.append(QString::number(view()->width()));
+    url.append("&hgt=");
+    url.append(QString::number(view()->height()));
+    openURL(KURL(url));
+    kdDebug( 51001 ) << url << endl;
 }
 
 }  // namespace KIPIGPSSyncPlugin
