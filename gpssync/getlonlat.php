@@ -78,6 +78,14 @@ function loadMap()
             }
         }
     );
+
+    GEvent.addListener(map, "zoomend", 
+        function(oldLevel, newLevel)
+        {
+            msg = "newZoomLevel:" + newLevel;
+            window.status=msg;
+        }
+    );
 }
 {
     window.addEventListener("load", 
