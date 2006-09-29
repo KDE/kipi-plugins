@@ -420,7 +420,9 @@ void GPSSyncDialog::slotUser2()
 
     GPSListViewItem* item = (GPSListViewItem*)d->listView->currentItem();
 
-    GPSEditDialog dlg(this, item->getGPSInfo(), item->getUrl().fileName());
+    GPSEditDialog dlg(this, item->getGPSInfo(), 
+                      item->getUrl().fileName(),
+                      item->hasGPSInfo());
 
     if (dlg.exec() == KDialogBase::Accepted)
     {

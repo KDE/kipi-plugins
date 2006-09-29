@@ -44,14 +44,16 @@ public:
 
     GPSListViewItemPriv()
     {
-        enabled = false;
-        dirty   = false;
-        erase   = false;
+        enabled    = false;
+        dirty      = false;
+        erase      = false;
+        hasGPSInfo = false;
     }
 
     bool             enabled;
     bool             dirty;
     bool             erase;
+    bool             hasGPSInfo;
 
     QDateTime        date;
 
@@ -74,7 +76,8 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
     exiv2Iface.load(d->url.path());
     setDateTime(exiv2Iface.getImageDateTime());
     double alt, lat, lng;
-    if (exiv2Iface.getGPSInfo(alt, lat, lng))
+    d->hasGPSInfo = exiv2Iface.getGPSInfo(alt, lat, lng);
+    if (hasGPSInfo())
         setGPSInfo(GPSDataContainer(alt, lat, lng, false), false);
 
     KIO::PreviewJob* thumbnailJob = KIO::filePreview(url, 64);
@@ -91,9 +94,10 @@ GPSListViewItem::~GPSListViewItem()
 void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty, bool addedManually)
 {
     setEnabled(true);
-    d->dirty   = dirty;
-    d->gpsData = gpsData;
-    d->erase   = false;
+    d->dirty      = dirty;
+    d->gpsData    = gpsData;
+    d->erase      = false;
+    d->hasGPSInfo = true;
     setText(2, QString::number(d->gpsData.altitude(),  'g', 12));
     setText(3, QString::number(d->gpsData.latitude(),  'g', 12));
     setText(4, QString::number(d->gpsData.longitude(), 'g', 12));
@@ -142,6 +146,11 @@ QDateTime GPSListViewItem::getDateTime()
 KURL GPSListViewItem::getUrl()
 {
     return d->url;
+}
+
+bool GPSListViewItem::hasGPSInfo()
+{
+    return d->hasGPSInfo;
 }
 
 bool GPSListViewItem::isInterpolated()

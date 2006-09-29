@@ -66,7 +66,8 @@ public:
     GPSMapWidget *worldMap;
 };
 
-GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, const QString& fileName)
+GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, 
+                             const QString& fileName, bool hasGPSInfo)
              : KDialogBase(Plain, i18n("%1 - Edit GPS coordinates").arg(fileName),
                            Help|Ok|Cancel, Ok,
                            parent, 0, true, true)
@@ -101,7 +102,8 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, const QS
     d->latitudeInput->setText(QString::number(gpsData.latitude(),   'g', 12));
     d->longitudeInput->setText(QString::number(gpsData.longitude(), 'g', 12));
 
-    d->worldMap = new GPSMapWidget(plainPage(), d->latitudeInput->text(), d->longitudeInput->text());
+    d->worldMap = new GPSMapWidget(plainPage(), d->latitudeInput->text(), 
+                                   d->longitudeInput->text(), hasGPSInfo ? 8 : 1);
     d->worldMap->show();
 
     grid->addMultiCellWidget(message, 0, 0, 0, 2);
