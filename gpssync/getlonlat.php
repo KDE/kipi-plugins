@@ -19,7 +19,7 @@
  *           - 'lon' : picture longitude. 
  *           - 'wth' : width of map.
  *           - 'hgt' : height of map.
- *
+ *           - 'zom' : map zoom level.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -54,7 +54,9 @@ function loadMap()
     echo $_GET['lat'];
     echo ", ";
     echo $_GET['lon'];
-    echo "), 8);\n";
+    echo "), ";
+    echo $_GET['zom'];
+    echo ");\n";
     
     echo "map.addOverlay(new GMarker(new GLatLng(";
     echo $_GET['lat'];
@@ -71,7 +73,7 @@ function loadMap()
             {
                 map.addOverlay(new GMarker(point));
                 map.panTo(point);
-                msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
+                msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ", zoom:" + map.getZoom() + ")";
                 window.status=msg;
             }
         }

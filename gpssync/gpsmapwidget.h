@@ -40,7 +40,7 @@ class GPSMapWidget : public KHTMLPart
 
 public:
 
-    GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon);
+    GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon, int zoomLevel=8);
     ~GPSMapWidget();
 
     void resized();
@@ -57,6 +57,7 @@ private:
 
     QString m_latitude;
     QString m_longitude;
+    QString m_zoomLevel;
 };
 
 }  // namespace KIPIGPSSyncPlugin
