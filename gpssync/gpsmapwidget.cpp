@@ -23,8 +23,6 @@
 #include <kdebug.h>
 #include <khtmlview.h>
 #include <kurl.h>
-#include <kconfig.h>
-#include <dcopref.h>
 
 // Local includes.
 
@@ -65,20 +63,6 @@ GPSMapWidget::GPSMapWidget(QWidget* parent, const QString& lat, const QString& l
     view()->setVScrollBarMode(QScrollView::AlwaysOff);
     view()->setHScrollBarMode(QScrollView::AlwaysOff);
     view()->setMinimumSize(480, 360);
-
-    // We will force KHTMLPart to use a safary browser identification with
-    // the GPS locator url. This is mandatory because Google Maps do not yet
-    // support konqueror identification.
-
-    KConfig config("kio_httprc");
-    config.setGroup(d->gpsLocalorUrl.lower());
-    config.writeEntry("UserAgent", "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; appLanguage) AppleWebKit/125.5.5 (KHTML, like Gecko) Safari/125.11");
-    config.sync();
-
-    // Inform running http(s) io-slaves about the browser id. change...
-    if (!DCOPRef("*", "KIO::Scheduler").send("reparseSlaveConfiguration", QString::null))
-        kdWarning() << "Unable to dispatch browser id change to http io-slaves" 
-                    << endl;
 }
 
 GPSMapWidget::~GPSMapWidget()
