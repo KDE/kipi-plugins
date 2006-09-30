@@ -33,7 +33,8 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 006 ==> 119537 : Exif width and height are not corrected after lossless rotation.
 007 ==> 91545  :  'Slideshow' does nothing if an album only contains subalbums, but no images directly or is empty.
 008 ==> 134749 : GPS Sync: altitude shown is wrong.
-009 ==> 
+009 ==> 134298 : Simple viewer export: save settings / keep settings missing!
+010 ==> 
 
 
 v 0.1.2                                                           2006-07-08
