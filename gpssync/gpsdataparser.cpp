@@ -68,6 +68,8 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int maxGapTime, int timeZ
     QDateTime cameraGMTDateTime = photoDateTime.addSecs(timeZone*3600*(-1));
 
     // We trying to find the right date in the GPS points list.
+    bool findItem = false;
+    int nbSecItem = maxGapTime;
 
     for (GPSDataMap::Iterator it = m_GPSDataMap.begin();
          it != m_GPSDataMap.end(); ++it )
@@ -77,12 +79,16 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int maxGapTime, int timeZ
         
         int nbSecs = abs(cameraGMTDateTime.secsTo( it.key() ));
         
-        if( nbSecs < maxGapTime )
+        // We tring to find the minimal accuracy.
+        if( nbSecs < maxGapTime && nbSecs < nbSecItem)
         {
-            gpsData = m_GPSDataMap[it.key()];
-            return true;
+            gpsData   = m_GPSDataMap[it.key()];
+            findItem  = true;
+            nbSecItem = nbSecs;
         }
     }
+
+    if (findItem) return true;
 
     // If we can't find it, we will trying to interpolate the GPS point.
 
