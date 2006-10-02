@@ -70,7 +70,7 @@ GPSMapWidget::~GPSMapWidget()
     delete d;
 }
 
-void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *)
+void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
 {
     QString status = jsStatusBarText();
     
@@ -95,6 +95,8 @@ void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *)
         status.remove(0, 13);
         d->zoomLevel = status;
     }
+
+    KHTMLPart::khtmlMouseReleaseEvent(e);
 }
 
 void GPSMapWidget::resized()
