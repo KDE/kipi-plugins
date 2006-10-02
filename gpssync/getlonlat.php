@@ -1,6 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-
 <?php
 /* ============================================================
  * Authors: Caulier Gilles <caulier dot gilles at kdemail dot net>
@@ -10,16 +7,16 @@
  * 
  * Copyright 2006 by Gilles Caulier
  * 
- * Notes : This script use Google Map api:
+ * Notes : This script use Google Map API version 2:
  *         http://www.google.com/apis/maps/documentation
  *         This script must be copied to host kipi-plugins
  *         web project page.
- *         This script accept some values from url:
- *           - 'alt' : picture altitude.
- *           - 'lon' : picture longitude. 
- *           - 'wth' : width of map.
- *           - 'hgt' : height of map.
- *           - 'zom' : map zoom level.
+ *         This script accept these values from url:
+ *           - 'altitude'  : picture altitude.
+ *           - 'longitude' : picture longitude. 
+ *           - 'width'     : width of map.
+ *           - 'height'    : height of map.
+ *           - 'zoom'      : map zoom level.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -35,7 +32,11 @@
  * ============================================================ */
 ?>
 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+
 <head>
+<title>GPSSync Kipi-plugin Geographical Location Editor</title>
 <script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAy_Vv5rc03ctmYvwfsuTH6RSK29CRGKrdb78LNYpP1_riKtR3zRRxy4unyuWAi2vp7m1isLwuHObXDg" 
 type="text/javascript">
 </script>
@@ -51,17 +52,17 @@ function loadMap()
 
 <?php
     echo "map.setCenter(new GLatLng(";
-    echo $_GET['lat'];
+    echo $_GET['latitude'];
     echo ", ";
-    echo $_GET['lon'];
+    echo $_GET['longitude'];
     echo "), ";
-    echo $_GET['zom'];
+    echo $_GET['zoom'];
     echo ");\n";
     
     echo "map.addOverlay(new GMarker(new GLatLng(";
-    echo $_GET['lat'];
+    echo $_GET['latitude'];
     echo ", ";
-    echo $_GET['lon'];
+    echo $_GET['longitude'];
     echo ")));\n";
 ?>
 
@@ -105,9 +106,9 @@ function loadMap()
 <?php
     echo "<div id=\"map\" ";
     echo "style=\"width: ";
-    echo $_GET['wth'];
+    echo $_GET['width'];
     echo "px; height: ";
-    echo $_GET['hgt'];
+    echo $_GET['height'];
     echo "px\">";
 ?>
 

@@ -102,15 +102,15 @@ void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
 void GPSMapWidget::resized()
 {
     QString url = d->gpsLocalorUrl;
-    url.append("?lat=");
+    url.append("?latitude=");
     url.append(d->latitude);
-    url.append("&lon=");
+    url.append("&longitude=");
     url.append(d->longitude);
-    url.append("&wth=");
+    url.append("&width=");
     url.append(QString::number(view()->width()));
-    url.append("&hgt=");
+    url.append("&height=");
     url.append(QString::number(view()->height()));
-    url.append("&zom=");
+    url.append("&zoom=");
     url.append(d->zoomLevel);
     openURL(KURL(url));
     kdDebug( 51001 ) << url << endl;
