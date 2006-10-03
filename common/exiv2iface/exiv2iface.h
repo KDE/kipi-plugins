@@ -84,6 +84,8 @@ public:
     bool setExifTagString(const char *exifTagName, const QString& value);
     QString getExifTagString(const char* exifTagName) const;
 
+    QByteArray getExifTagData(const char *exifTagName) const;
+
     Exiv2Iface::ImageOrientation getImageOrientation();
     QDateTime getImageDateTime() const;
 

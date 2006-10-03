@@ -5,7 +5,6 @@
  *
  * Copyright 2006 by Gilles Caulier
  *
- *
  * NOTE: This class is a simplified version of Digikam::DMetadata
  *       class from digiKam core. Please contact digiKam team 
  *       before to change/fix/improve this implementation.
@@ -718,14 +717,13 @@ bool Exiv2Iface::getGPSInfo(double& altitude, double& latitude, double& longitud
         
         // Get the reference in first.
 
-        QString altRef = getExifTagString("Exif.GPSInfo.GPSAltitudeRef");
-        if (altRef.isEmpty()) return false;
-        
-        QString latRef = getExifTagString("Exif.GPSInfo.GPSLatitudeRef");
+        QByteArray latRef = getExifTagData("Exif.GPSInfo.GPSLatitudeRef");
         if (latRef.isEmpty()) return false;
 
-        QString lngRef = getExifTagString("Exif.GPSInfo.GPSLongitudeRef");
+        QByteArray lngRef = getExifTagData("Exif.GPSInfo.GPSLongitudeRef");
         if (lngRef.isEmpty()) return false;
+
+        QByteArray altRef = getExifTagData("Exif.GPSInfo.GPSAltitudeRef");
 
         // Latitude decoding.
 
@@ -751,7 +749,7 @@ bool Exiv2Iface::getGPSInfo(double& altitude, double& latitude, double& longitud
         else 
             return false;
         
-        if (latRef == "S") latitude *= -1.0;
+        if (latRef[0] == 'S') latitude *= -1.0;
     
         // Longitude decoding.
 
@@ -776,22 +774,23 @@ bool Exiv2Iface::getGPSInfo(double& altitude, double& latitude, double& longitud
         else 
             return false;
         
-        if (lngRef == "W") longitude *= -1.0;
+        if (lngRef[0] == 'W') longitude *= -1.0;
 
         // Altitude decoding.
 
-        Exiv2::ExifKey exifKey3("Exif.GPSInfo.GPSAltitude");
-        it = exifData.findKey(exifKey3);
-        if (it != exifData.end())
+        if (!altRef.isEmpty()) 
         {
-            num      = (*it).toRational(0).first;
-            den      = (*it).toRational(0).second;
-            altitude = num/den;
+            Exiv2::ExifKey exifKey3("Exif.GPSInfo.GPSAltitude");
+            it = exifData.findKey(exifKey3);
+            if (it != exifData.end())
+            {
+                num      = (*it).toRational(0).first;
+                den      = (*it).toRational(0).second;
+                altitude = num/den;
+            }
+        
+            if (altRef[0] == '1') altitude *= -1.0;
         }
-        else 
-            return false;
-       
-        if (altRef == "1") altitude *= -1.0;
 
         return true;
     }
@@ -1020,6 +1019,31 @@ void Exiv2Iface::convertToRational(double number, long int* numerator,
     // Copy out the numbers.
     *numerator   = (int)numTemp;
     *denominator = (int)denTemp;
+}
+
+QByteArray Exiv2Iface::getExifTagData(const char* exifTagName) const
+{
+    try
+    {
+        Exiv2::ExifKey exifKey(exifTagName);
+        Exiv2::ExifData exifData(d->exifMetadata);
+        Exiv2::ExifData::iterator it = exifData.findKey(exifKey);
+        if (it != exifData.end())
+        {
+            QByteArray data((*it).size());
+            (*it).copy((Exiv2::byte*)data.data(), exifData.byteOrder());
+            return data;
+        }
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot find Exif key '"
+                  << exifTagName << "' into image using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }
+
+    return QByteArray();
 }
 
 }  // NameSpace KIPIPlugins
