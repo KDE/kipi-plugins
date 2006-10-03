@@ -98,9 +98,9 @@ void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty, bool adde
     d->gpsData    = gpsData;
     d->erase      = false;
     d->hasGPSInfo = true;
-    setText(2, QString::number(d->gpsData.altitude(),  'g', 12));
     setText(3, QString::number(d->gpsData.latitude(),  'g', 12));
     setText(4, QString::number(d->gpsData.longitude(), 'g', 12));
+    setText(5, QString::number(d->gpsData.altitude(),  'g', 12));
 
     QString status;
     if (isDirty())
@@ -130,11 +130,11 @@ void GPSListViewItem::setDateTime(QDateTime date)
     if (date.isValid())
     {
         d->date = date;
-        setText(5, date.toString(Qt::ISODate));
+        setText(2, date.toString(Qt::LocalDate));
     }
     else
     {
-        setText(5, i18n("Not available"));
+        setText(2, i18n("Not available"));
     }
 }
 
@@ -209,7 +209,7 @@ void GPSListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, 
 {
     if (isEnabled())
     {
-        if ( isDirty() && !d->erase && column >= 2  && column <= 4 )
+        if ( isDirty() && !d->erase && column >= 3  && column <= 5 )
         {
             QColorGroup _cg( cg );
             QColor c = _cg.text();
