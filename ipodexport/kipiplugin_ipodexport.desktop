@@ -1,12 +1,15 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=iPodExport
+Name[da]=Eksport til iPod
 Name[el]=Εξαγωγή iPod
 Name[it]=Esportazione a iPod
 Name[pt]=Exportação para o iPod
 Name[pt_BR]=Exportação para o iPod
 Name[sv]=Export till iPod
 Comment=KIPI iPod Export Plugin
+Comment[da]=KIPI-plugin for eksport til iPod
+Comment[de]=KIPI iPod Exportmodul
 Comment[el]=Πρόσθετο εξαγωγής iPod του KIPI
 Comment[it]=Plugin per l'esportazione remota a iPod di KIPI
 Comment[ja]=Kipi iPod エクスポートプラグイン

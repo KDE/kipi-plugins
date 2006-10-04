@@ -1,5 +1,7 @@
 [Desktop Entry]
 Comment=KIPI GPS Device Sync
+Comment[da]=KIPI GPS-enhedssynkronisering
+Comment[de]=Ein KIPI-Modul zur Synchronisation von Photos mit einem GPS-Gerät
 Comment[el]=KIPI συγχρονισμός συσκευής GPS
 Comment[it]=Sincronizzazione con dispositivi GPS di KIPI
 Comment[ja]=Kipi GPS デバイス同期
@@ -9,6 +11,7 @@ Comment[sv]=KIPI GPS-enhetssynkronisering
 Encoding=UTF-8
 Icon=
 Name=GPSSync
+Name[da]=GPS-synkronisering
 Name[el]=Συγχρονισμός GPS
 Name[pt]=Sincronização GPS
 Name[pt_BR]=Sincronização GPS
