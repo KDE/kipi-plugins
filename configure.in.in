@@ -5,6 +5,11 @@ AC_CHECK_PROG(PKGCONFIGFOUND, pkg-config,[yes])
 # END PKG-CONFIG CHECK
 ###############################################################################
 
+# common header files path for kipi-plugins
+KIPI_PLUGINS_COMMON_INCLUDE="-I\$(top_srcdir)/kipi-plugins/common/include \
+                             -I\$(top_srcdir)/kipi-plugins/common/exiv2iface" 
+AC_SUBST(KIPI_PLUGINS_COMMON_INCLUDE)
+
 KDE_ENABLE_HIDDEN_VISIBILITY
 
 # ----------------------------------------------------------

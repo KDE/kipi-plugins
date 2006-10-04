@@ -1,5 +1,5 @@
-INCLUDES = -I$(top_srcdir)/kipi-plugins/common/include \
-	   $(LIBKIPI_CFLAGS) $(all_includes)
+INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(LIBKIPI_CFLAGS) $(all_includes)
+
 METASOURCES = AUTO
 SUBDIRS = data
 
