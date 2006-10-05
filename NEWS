@@ -19,6 +19,8 @@ RAWConverter  : New core to be compatible with recent dcraw release. A lot
 RAWConverter  : Embedding ouput color space in target image (JPEG/PNG/TIFF).
 RAWConverter  : Metadata preservation in target image during Raw conversion (JPEG/PNG).
 
+SendImages    : Added image size limit x mail (Michael Höchstetter)
+ 
 TimeAdjust    : Removed libkexif depency. Using Exiv2 instead.
 
 
@@ -31,7 +33,8 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
                  images is no longer possible.
 005 ==> 107905 : RAW Converter: Copy exif data from raw to converted images.
 006 ==> 119537 : JPEGLossLess: Exif width and height are not corrected after lossless rotation.
-007 ==> 91545  : Slideshow: plugin does nothing if an album only contains subalbums, but no images directly or is empty.
+007 ==> 91545  : Slideshow: plugin does nothing if an album only contains subalbums, but no 
+                 images directly or is empty.
 008 ==> 134749 : GPS Sync: altitude shown is wrong.
 009 ==> 134298 : SimpleViewer Export: save settings / keep settings missing!
 010 ==> 134747 : GPS Sync: not optimal correlation.

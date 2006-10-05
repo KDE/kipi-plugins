@@ -205,7 +205,8 @@ void SendImagesDialog::readSettings(void)
     m_imagesResize->setCurrentItem(m_config->readNumEntry("ImageResize", 2));    // Medium size used by default...
     m_imageCompression->setValue(m_config->readNumEntry("ImageCompression", 75));
     m_imagesFormat->setCurrentText(m_config->readEntry("ImageFormat", "JPEG"));
-
+    m_attachmentlimit->setValue(m_config->readNumEntry("AttachmentLimit", 10));
+        
     if (m_config->readEntry("AddComments", "true") == "true")
         m_addComments->setChecked( true );
     else
@@ -227,8 +228,10 @@ void SendImagesDialog::writeSettings(void)
     m_config->writeEntry("ImageResize", m_imagesResize->currentItem());
     m_config->writeEntry("ImageCompression", m_imageCompression->value());
     m_config->writeEntry("ImageFormat", m_imagesFormat->currentText());
+    m_config->writeEntry("AttachmentLimit", m_attachmentlimit->value());	
     m_config->sync();
     delete m_config;
+
 }
 
 void SendImagesDialog::setupImagesList(void)
@@ -507,6 +510,12 @@ void SendImagesDialog::setupEmailOptions(void)
     vlay->addWidget( groupBox2 );
     vlay->addStretch(1);
 
+    m_attachmentlimit = new KIntNumInput(17, page_setupEmailOptions);
+    m_attachmentlimit->setRange(1, 50, 1, true );
+    m_attachmentlimit->setLabel( i18n("Maximum Email Size:"));
+    m_attachmentlimit->setSuffix(i18n("MB"));
+    vlay->addWidget( m_attachmentlimit );
+		    
     //---------------------------------------------
 
     connect(m_changeImagesProp, SIGNAL(toggled(bool)),

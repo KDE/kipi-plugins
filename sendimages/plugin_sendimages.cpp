@@ -279,20 +279,18 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
 
            disconnect(m_progressDlg, SIGNAL(cancelClicked()),
                       this, SLOT(slotCancel()));
-                                                  
+
            // Create a text file with images comments if necessary.
 
            m_sendImagesOperation->makeCommentsFile();
            m_progressDlg->addedAction(i18n("Creating comments file if necessary..."),
                                       KIPI::StartingMessage);
-                                      
-           // Invoke mailer agent call.
 
-           m_sendImagesOperation->invokeMailAgent();
-           m_progressDlg->addedAction(i18n("Starting mailer agent..."),
-                                      KIPI::StartingMessage);
-           
-           m_progressDlg->setProgress(m_total, m_total);                                      
+           // Invoke mailer agent call.
+           int type = m_sendImagesOperation->invokeMailAgent() ? KIPI::SuccessMessage : KIPI::ErrorMessage;
+           m_progressDlg->addedAction(i18n("Starting mailer agent..."), type);
+
+           m_progressDlg->setProgress(m_total, m_total); 
            }
         }
 

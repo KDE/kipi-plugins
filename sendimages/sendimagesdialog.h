@@ -89,6 +89,7 @@ public:
    ~SendImagesDialog();
 
    KIntNumInput   *m_imageCompression;
+   KIntNumInput   *m_attachmentlimit;
 
    QComboBox      *m_imagesFormat;
    QComboBox      *m_imagesResize;

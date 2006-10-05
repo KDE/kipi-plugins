@@ -22,7 +22,7 @@
 
 // Include files for Qt
 
-#include <qfile.h>
+
 #include <qfileinfo.h>
 #include <qdir.h>
 #include <qimage.h>
@@ -113,6 +113,7 @@ void SendImages::prepare(void)
     m_imageFormat = m_sendImagesDialog->m_imagesFormat->currentText();
     m_sizeFactor = getSize( m_sendImagesDialog->m_imagesResize->currentItem() );
     m_imageCompression = m_sendImagesDialog->m_imageCompression->value();
+    m_attachmentlimit = m_sendImagesDialog->m_attachmentlimit->value()*800000-2000; ///Base64-encoding needs a lot of space
 }
 
 
@@ -339,43 +340,88 @@ bool SendImages::showErrors()
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+// Returns a list of Filenames, whose sum filesize is smaller than the quota
+// by Michael Höchstetter
+//
+KURL::List SendImages::divideEmails(void)
+{
+	 unsigned long mylistsize=0;
+	 
+	 KURL::List sendnow;
+	 KURL::List filesSendList;
+	 
+	 for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
+	 {
+		  kdDebug (51000) << "m_attachmentlimit " << m_attachmentlimit << endl;
+		  QString imageName = (*it).path();	
+		  kdDebug (51000) << "Imagename: " << imageName << endl;
+		  QFile file(imageName);
+		  kdDebug (51000) << "filesize: " << file.size() << endl;
+		  if ((mylistsize + file.size()) <= m_attachmentlimit)
+		  {
+          mylistsize+=file.size();
+          sendnow.append(*it);
+          kdDebug (51000) << "mylistsize " << mylistsize << " attachmentlimit "
+                       << m_attachmentlimit << endl;
+		  }
+		  else 
+		  {
+        kdDebug (51000) << "file "<< imageName << " is out of " << m_attachmentlimit << endl;
+        filesSendList.append(*it);
+		  }
+	 }
+	 m_filesSendList=filesSendList;
+  
+	 return sendnow;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 // Invoke mailer agent.
 
-void SendImages::invokeMailAgent(void)
+bool SendImages::invokeMailAgent(void)
 {
-    // default agent call
-    // FIXME: seems to fail for thunderbird. Fix kdelibs or maybe work around it.
+  bool agentInvoked = false;
 
+  // default agent call
+  // FIXME: seems to fail for thunderbird. Fix kdelibs or maybe work around it.
+  KURL::List filelist;
+  while (!((filelist=divideEmails()).empty()))
+  {
+    kdDebug (51000) << "number of elements in filelist " << filelist.size() << endl;
+    kdDebug (51000) << "number of elements in m_filelist " << m_filesSendList.size() << endl;	
     if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Default" )
-       {
-       KApplication::kApplication()->invokeMailer(
-                       QString::null,                     // Destination address.
-                       QString::null,                     // Carbon Copy address.
-                       QString::null,                     // Blind Carbon Copy address
-                       QString::null,                     // Message Subject.
-                       QString::null,                     // Message Body.
-                       QString::null,                     // Message Body File.
-                       m_filesSendList.toStringList());   // Images attachments (+ comments).
-       }
+    {
+      KApplication::kApplication()->invokeMailer(
+          QString::null,                     // Destination address.
+      QString::null,                     // Carbon Copy address.
+      QString::null,                     // Blind Carbon Copy address
+      QString::null,                     // Message Subject.
+      QString::null,                     // Message Body.
+      QString::null,                     // Message Body File.
+      filelist.toStringList());   // Images attachments (+ comments).
+      agentInvoked = true;
+    }
 
 
     // KMail mail agent call.
 
     if ( m_sendImagesDialog->m_mailAgentName->currentText() == "KMail" )
     {
-        m_mailAgentProc = new KProcess;
-        *m_mailAgentProc << "kmail";
+      m_mailAgentProc = new KProcess;
+      *m_mailAgentProc << "kmail";
 
-        for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
-        {
-            *m_mailAgentProc << "--attach";
-            *m_mailAgentProc << QFile::encodeName((*it).path());
-        }
+      for ( KURL::List::Iterator it = filelist.begin() ; it != filelist.end() ; ++it )
+      {
+        *m_mailAgentProc << "--attach";
+        *m_mailAgentProc << QFile::encodeName((*it).path());
+      }
 
-        if ( m_mailAgentProc->start() == false )
-            KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
-                                                          "check your installation.")
-                               .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+      if ( m_mailAgentProc->start() == false )
+        KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
+            "check your installation.")
+                .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+      else
+        agentInvoked = true;
     }
 
     // Sylpheed mail agent call.
@@ -383,61 +429,67 @@ void SendImages::invokeMailAgent(void)
     if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed" ||
          m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed-Claws" )
     {
-        m_mailAgentProc = new KProcess;
-        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed")
-            *m_mailAgentProc << "sylpheed";
-        else
-            *m_mailAgentProc << "sylpheed-claws";
+      m_mailAgentProc = new KProcess;
+      if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed")
+        *m_mailAgentProc << "sylpheed";
+      else
+        *m_mailAgentProc << "sylpheed-claws";
 
-        *m_mailAgentProc << "--compose" << "--attach";
+      *m_mailAgentProc << "--compose" << "--attach";
 
-        for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
-            *m_mailAgentProc << QFile::encodeName((*it).path());
+      for ( KURL::List::Iterator it = filelist.begin() ; it != filelist.end() ; ++it )
+        *m_mailAgentProc << QFile::encodeName((*it).path());
 
-        if ( m_mailAgentProc->start() == false )
-            KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
-                                                          "check your installation.")
-                               .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+      if ( m_mailAgentProc->start() == false )
+        KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
+            "check your installation.")
+                .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+      else
+        agentInvoked = true;
     }
 
     // Balsa mail agent call.
 
     if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Balsa" )
     {
-        m_mailAgentProc = new KProcess;
-        *m_mailAgentProc << "balsa" << "-m" << "mailto:";
+      m_mailAgentProc = new KProcess;
+      *m_mailAgentProc << "balsa" << "-m" << "mailto:";
 
-        for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
-        {
-            *m_mailAgentProc << "-a";
-            *m_mailAgentProc << QFile::encodeName((*it).path());
-        }
+      for ( KURL::List::Iterator it = filelist.begin() ; it != filelist.end() ; ++it )
+      {
+        *m_mailAgentProc << "-a";
+        *m_mailAgentProc << QFile::encodeName((*it).path());
+      }
 
-        if ( m_mailAgentProc->start() == false )
-            KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
-                                                          "check your installation.")
-                               .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+      if ( m_mailAgentProc->start() == false )
+        KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
+            "check your installation.")
+                .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+      else
+        agentInvoked = true;
     }
 
     if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Evolution" )    // Evolution mail agent call.
     {
-        m_mailAgentProc = new KProcess;
-        *m_mailAgentProc << "evolution";
+      m_mailAgentProc = new KProcess;
+      *m_mailAgentProc << "evolution";
 
-        QString Temp = "mailto:?subject=";
+      QString Temp = "mailto:?subject=";
 
-        for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
-        {
-            Temp.append("&attach=");
-            Temp.append( QFile::encodeName((*it).path()) );
-        }
+      for ( KURL::List::Iterator it = filelist.begin() ; it != filelist.end() ; ++it )
+      {
+        Temp.append("&attach=");
+        Temp.append( QFile::encodeName((*it).path()) );
+      }
 
-        *m_mailAgentProc << Temp;
+      *m_mailAgentProc << Temp;
 
-        if ( m_mailAgentProc->start() == false )
-            KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
-                                                          "check your installation.")
-                               .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+      if ( m_mailAgentProc->start() == false )
+        KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
+            "check your installation.")
+                .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+      else
+        agentInvoked = true;
     }
 
     // Mozilla | Netscape | Thunderbird mail agent call.
@@ -447,55 +499,59 @@ void SendImages::invokeMailAgent(void)
          m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" ||
          m_sendImagesDialog->m_mailAgentName->currentText() == "GmailAgent")
     {
-        m_mailAgentProc = new KProcess;
+      m_mailAgentProc = new KProcess;
 
-        m_thunderbirdUrl = m_sendImagesDialog->m_ThunderbirdBinPath->url();
+      m_thunderbirdUrl = m_sendImagesDialog->m_ThunderbirdBinPath->url();
 
-        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" )
-            {
-            *m_mailAgentProc << "mozilla" << "-remote";
-            }
-        else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
-            {
-            *m_mailAgentProc << m_thunderbirdUrl << "-remote";
-            kdDebug (51000) << m_thunderbirdUrl << endl;
-            }
-        else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "GmailAgent" )
-            {
-            *m_mailAgentProc << "gmailagent" << "-remote";
-            }
-        else
-            {
-            *m_mailAgentProc << "netscape" << "-remote";
-            }
+      if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" )
+      {
+        *m_mailAgentProc << "mozilla" << "-remote";
+      }
+      else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
+      {
+        *m_mailAgentProc << m_thunderbirdUrl << "-remote";
+        kdDebug (51000) << m_thunderbirdUrl << endl;
+      }
+      else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "GmailAgent" )
+      {
+        *m_mailAgentProc << "gmailagent" << "-remote";
+      }
+      else
+      {
+        *m_mailAgentProc << "netscape" << "-remote";
+      }
 
-        QString Temp = "xfeDoCommand(composeMessage,attachment='";
+      QString Temp = "xfeDoCommand(composeMessage,attachment='";
 
-        for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
-        {
-            Temp.append( "file://" );
-            Temp.append( QFile::encodeName((*it).path()) );
-            Temp.append( "," );
-        }
+      for ( KURL::List::Iterator it = filelist.begin() ; it != filelist.end() ; ++it )
+      {
+        Temp.append( "file://" );
+        Temp.append( QFile::encodeName((*it).path()) );
+        Temp.append( "," );
+      }
 
-        Temp.append("')");
+      Temp.append("')");
 
-        *m_mailAgentProc << Temp;
+      *m_mailAgentProc << Temp;
 
-        connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)),
-                this, SLOT(slotMozillaExited(KProcess*)));
+      connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)),
+              this, SLOT(slotMozillaExited(KProcess*)));
 
-        connect(m_mailAgentProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
-                this, SLOT(slotMozillaReadStderr(KProcess*, char*, int)));
+      connect(m_mailAgentProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
+              this, SLOT(slotMozillaReadStderr(KProcess*, char*, int)));
 
-        kdDebug (51000) << Temp << endl;
+      kdDebug (51000) << Temp << endl;
 
-        if ( m_mailAgentProc->start(KProcess::NotifyOnExit , KProcess::All) == false )
-            KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
-                                                          "check your installation.")
-                               .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
-        else return;
+      if ( m_mailAgentProc->start(KProcess::NotifyOnExit , KProcess::All) == false )
+        KMessageBox::error(kapp->activeWindow(), i18n("Cannot start '%1' program;\nplease "
+            "check your installation.")
+                .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+      else
+        agentInvoked = true;
     }
+  }
+
+  return agentInvoked;
 }
 
 

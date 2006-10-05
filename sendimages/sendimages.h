@@ -66,9 +66,10 @@ public:
    void prepare(void);
    bool showErrors(void);
    void makeCommentsFile(void);
-   void invokeMailAgent(void);
+   bool invokeMailAgent(void);
    void removeTmpFiles(void);
-
+   KURL::List divideEmails(void);
+	   
 private slots:   
 
    void slotMozillaTimeout(void);
@@ -99,6 +100,8 @@ protected:
    
    int                    m_sizeFactor;                // Image size factor in the setup dialog.
    int                    m_imageCompression;          // Image compression factor in the setup dialog.
+   unsigned long                    m_attachmentlimit;           // Biggest permitted email.
+   
    
    KURL::List             m_images;                    // List of images in the setup dialog.
    KURL::List             m_filesSendList;             // KURL of resized images.
