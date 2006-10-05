@@ -34,7 +34,8 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 007 ==> 91545  :  'Slideshow' does nothing if an album only contains subalbums, but no images directly or is empty.
 008 ==> 134749 : GPS Sync: altitude shown is wrong.
 009 ==> 134298 : Simple viewer export: save settings / keep settings missing!
-010 ==> 
+010 ==> 134747 : GPS Sync: not optimal correlation.
+011 ==> 
 
 
 v 0.1.2                                                           2006-07-08
