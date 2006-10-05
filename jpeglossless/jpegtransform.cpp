@@ -33,7 +33,6 @@ extern "C"
 #include <sys/types.h>
 #include <unistd.h>
 #include <jpeglib.h>
-#include <utime.h>
 }
 
 // Qt includes.
@@ -41,7 +40,6 @@ extern "C"
 #include <qstring.h>
 #include <qwmatrix.h>
 #include <qfile.h>
-#include <qdatetime.h>
 
 // KDE includes.
 
@@ -266,7 +264,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         unlink(QFile::encodeName(dest));
     }
 
-    // Update the metadata to target file.
+    // And set finaly update the metadata to target file.
 
     QImage img(destGiven);
     QImage exifThumbnail = img.scale(160, 120, QImage::ScaleMin);
@@ -276,16 +274,6 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     exiv2Iface.setImageDimensions(img.size());
     exiv2Iface.setExifThumbnail(exifThumbnail);
     exiv2Iface.save(destGiven);
-
-    // Update the file modification time of target file.
-
-    QDateTime now = QDateTime::currentDateTime();
-    
-    struct utimbuf ut;
-    ut.modtime = now.toTime_t();
-    ut.actime  = now.toTime_t();
-
-    ::utime(QFile::encodeName(destGiven), &ut);
 
     return true;
 }
