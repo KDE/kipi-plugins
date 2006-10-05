@@ -341,6 +341,31 @@ void GPSSyncDialog::closeEvent(QCloseEvent *e)
 
 void GPSSyncDialog::slotClose()
 {
+    // Check if one item is dirty in the list.
+
+    QListViewItemIterator it( d->listView );
+    int dirty = 0;
+
+    while ( it.current() ) 
+    {
+        GPSListViewItem *item = (GPSListViewItem*) it.current();
+        if (item->isDirty())
+            dirty++;
+        ++it;
+    }
+
+    if (dirty > 0)
+    {
+        QString msg = i18n("1 picture from the list isn't updated.",
+                           "%n pictures from the list isn't updated.", dirty);
+
+        if (KMessageBox::No == KMessageBox::warningYesNo(this,
+                     i18n("<p>%1\n"
+                          "Do you want really to close this window without apply changes?</p>")
+                          .arg(msg)))
+            return;
+    }
+
     saveSettings();
     KDialogBase::slotClose();
 }
@@ -402,10 +427,13 @@ void GPSSyncDialog::slotUser1()
         return;
     }
 
-    KMessageBox::information(this, i18n("GPS data of %1 picture(s) have been updated on "
-                             "the list using the GPX data file.\n"
-                             "Press Apply button to update picture(s) metadata.")
-                             .arg(itemsUpdated), i18n("GPS Sync"));    
+    QString msg = i18n("GPS data of 1 picture have been updated on the list using the GPX data file.\n"
+                       "Press <b>Apply</b> button to update picture metadata.",
+                       "GPS data of %n pictures have been updated on the list using the GPX data file."
+                       "Press <b>Apply</b> button to update pictures metadata.",
+                       itemsUpdated);
+
+    KMessageBox::information(this, msg, i18n("GPS Sync"));    
 }
 
 // Start the GPS coordinates editor dialog.
@@ -413,7 +441,7 @@ void GPSSyncDialog::slotUser2()
 {
     if (!d->listView->currentItem())
     {
-        KMessageBox::information(this, i18n("Please, select pictures from "
+        KMessageBox::information(this, i18n("Please, select at least one picture from "
                      "the list to edit GPS coordinates manually."), i18n("GPS Sync"));    
         return;
     }
@@ -445,7 +473,7 @@ void GPSSyncDialog::slotUser3()
 {
     if (!d->listView->currentItem())
     {
-        KMessageBox::information(this, i18n("Please, select pictures from "
+        KMessageBox::information(this, i18n("Please, select at least one picture from "
                      "the list to remove GPS coordinates."), i18n("GPS Sync"));    
         return;
     }
