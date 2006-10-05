@@ -374,7 +374,7 @@ bool GPSSyncDialog::promptUserClose()
 
         if (KMessageBox::No == KMessageBox::warningYesNo(this,
                      i18n("<p>%1\n"
-                          "Do you want really to close this window without apply changes?</p>")
+                          "Do you want really to close this window without applying changes?</p>")
                           .arg(msg)))
             return false;
     }
