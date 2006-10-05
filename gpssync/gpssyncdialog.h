@@ -68,6 +68,7 @@ private slots:
 
 private:
 
+    bool promptUserClose();
     void readSettings();
     void saveSettings();
 

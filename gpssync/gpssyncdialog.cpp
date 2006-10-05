@@ -335,11 +335,24 @@ void GPSSyncDialog::slotHelp()
 void GPSSyncDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
+    if (!promptUserClose()) 
+    {
+        e->ignore();
+        return;
+    }
+
     saveSettings();
     e->accept();
 }
 
 void GPSSyncDialog::slotClose()
+{
+    if (!promptUserClose()) return;
+    saveSettings();
+    KDialogBase::slotClose();
+}
+
+bool GPSSyncDialog::promptUserClose()
 {
     // Check if one item is dirty in the list.
 
@@ -363,11 +376,10 @@ void GPSSyncDialog::slotClose()
                      i18n("<p>%1\n"
                           "Do you want really to close this window without apply changes?</p>")
                           .arg(msg)))
-            return;
+            return false;
     }
 
-    saveSettings();
-    KDialogBase::slotClose();
+    return true;
 }
 
 void GPSSyncDialog::readSettings()
