@@ -178,6 +178,8 @@ void GPSListViewItem::writeGPSInfoToFile()
             setPixmap(1, SmallIcon("ok"));
         else
             setPixmap(1, SmallIcon("cancel"));
+	
+	d->dirty = false;
     }
 }
 
