@@ -4,7 +4,9 @@ METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_gpssync.la
-kipiplugin_gpssync_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) 
+
+kipiplugin_gpssync_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) \
+	$(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la 
 
 # Srcs for the plugin
 kipiplugin_gpssync_la_SOURCES = plugin_gpssync.cpp gpssyncdialog.cpp gpslistviewitem.cpp \

@@ -6,7 +6,8 @@ INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(LIBKIPI_CFLAGS) $(all_includes)
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_rawconverter.la
 
-kipiplugin_rawconverter_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
+kipiplugin_rawconverter_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) \
+	$(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la 
 
 # Srcs for the plugin
 kipiplugin_rawconverter_la_SOURCES = plugin_rawconverter.cpp dcrawiface.cpp savesettingswidget.cpp \
