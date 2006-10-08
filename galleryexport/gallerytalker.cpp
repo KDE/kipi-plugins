@@ -37,7 +37,7 @@
 #include "galleryitem.h"
 #include "gallerympform.h"
 #include "gallerytalker.h"
-#include "exifrestorer.h"
+#include "exiv2iface.h"
 
 namespace KIPIGalleryExportPlugin
 {
@@ -218,19 +218,10 @@ bool GalleryTalker::addPhoto( const QString& albumName,
 
             if ("JPEG" == QString(QImageIO::imageFormat(photoPath)).upper())
             {
-              ExifRestorer exifHolder;
-              exifHolder.readFile(photoPath,ExifRestorer::ExifOnly);
-
-              if (exifHolder.hasExif())
+              KIPIPlugins::Exiv2Iface exiv2;
+              if (exiv2.load(photoPath))
               {
-                ExifRestorer restorer;
-                restorer.readFile(path, ExifRestorer::EntireImage);
-                restorer.insertExifData(exifHolder.exifData());
-                restorer.writeFile(path);
-              }
-              else
-              {
-                kdWarning(51000) << "(galleryexport::Image doesn't have exif data)" << endl;
+                exiv2.save(path);
               }
             }
             kdDebug() << "Resizing and saving to temp file: "
