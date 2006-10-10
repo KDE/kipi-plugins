@@ -149,7 +149,8 @@ bool DcrawIface::loadDcrawPreview(QImage& image, const QString& path)
     // -e : Extract the camera-generated thumbnail, not the raw image (JPEG or a PPM file).
     // Note : this code require at least dcraw version 8.x
 
-    command  = "dcraw -c -e ";
+    command  = DcrawBinary::path();
+    command += " -c -e ";
     command += QFile::encodeName( KProcess::quote( path ) );
     kdDebug( 51000 ) << "Running dcraw command " << command << endl;
 
@@ -194,7 +195,8 @@ bool DcrawIface::loadDcrawPreview(QImage& image, const QString& path)
     // -w : Use camera white balance, if possible
 
     f=NULL;
-    command  = "dcraw -c -h -w -a ";
+    command  = DcrawBinary::path();
+    command += " -c -h -w -a ";
     command += QFile::encodeName( KProcess::quote( path ) );
     kdDebug( 51000 ) << "Running dcraw command " << command << endl;
 
@@ -264,7 +266,8 @@ bool DcrawIface::rawFileIdentify(QString& identify, const QString& path)
     // -c : write to stdout
     // -i : identify files without decoding them.
 
-    command  = "dcraw -c -i ";
+    command  = DcrawBinary::path();
+    command += " -c -i ";
     command += QFile::encodeName( KProcess::quote( path ) );
     kdDebug( 51000 ) << "Running dcraw command " << command << endl;
 

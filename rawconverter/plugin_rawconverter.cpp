@@ -131,13 +131,12 @@ bool Plugin_RawConverter::checkBinaries(QString &dcrawVersion)
     {
         KMessageBox::information(
                      kapp->activeWindow(),
-                     i18n("<qt><p>Unable to find the dcraw executable:<br> "
-                          "This program is required by this plugin to support raw file decoding. "
-                          "Please install dcraw as a package from your distributor "
-                          "or <a href=\"%1\">download the source</a>.</p>"
-                          "<p>Note: at least, dcraw version %2 is required by this plugin.</p></qt>")
-                          .arg("http://www.cybercom.net/~dcoffin/dcraw")
-                          .arg(dcrawBinary.minimalVersion()),
+                     i18n("<qt><p>Unable to find the <b>%1</b> executable:<br>"
+                          "This program is required by this plugin to support "
+                          "Raw files decoding. "
+                          "Please check %2 installation on your computer.</p></qt>")
+                          .arg(dcrawBinary.path())
+                          .arg(dcrawBinary.path()),
                      QString::null,
                      QString::null,
                      KMessageBox::Notify | KMessageBox::AllowLink);
@@ -148,15 +147,17 @@ bool Plugin_RawConverter::checkBinaries(QString &dcrawVersion)
     {
         KMessageBox::information(
                      kapp->activeWindow(),
-                     i18n("<qt><p>dcraw executable isn't up to date:<br> "
-                          "The version %1 of dcraw have been found on your computer. "
+                     i18n("<qt><p><b>%1</b> executable isn't up to date:<br>"
+                          "The version %2 of %3 have been found on your computer. "
                           "This version is too old to run properly with this plugin. "
-                          "Please update dcraw as a package from your distributor "
-                          "or <a href=\"%2\">download the source</a>.</p>"
-                          "<p>Note: at least, dcraw version %3 is required by this "
-                          "plugin</p></qt>")
+                          "Please check %4 installation on your computer.</p>"
+                          "<p>Note: at least, %5 version %6 is required by this "
+                          "plugin.</p></qt>")
+                          .arg(dcrawBinary.path())
                           .arg(dcrawVersion)
-                          .arg("http://www.cybercom.net/~dcoffin/dcraw")
+                          .arg(dcrawBinary.path())
+                          .arg(dcrawBinary.path())
+                          .arg(dcrawBinary.path())
                           .arg(dcrawBinary.minimalVersion()),
                      QString::null,
                      QString::null,
