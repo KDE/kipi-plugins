@@ -27,7 +27,6 @@
 #include <qvgroupbox.h>
 #include <qgrid.h>
 #include <qpushbutton.h>
-#include <qfileinfo.h>
 #include <qwhatsthis.h>
 #include <qcheckbox.h>
 
@@ -281,17 +280,8 @@ GPSSyncDialog::~GPSSyncDialog()
 
 void GPSSyncDialog::setImages( const KURL::List& images )
 {
-    // We only add all JPEG file only on the list because Exiv2 can't 
-    // update metadata on others file formats.
-
     for( KURL::List::ConstIterator it = images.begin(); it != images.end(); ++it )
-    {
-        QFileInfo fi((*it).path());
-        QString ext = fi.extension().upper();
-
-        if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
-            new GPSListViewItem(d->listView, d->listView->lastItem(), *it);
-    }
+        new GPSListViewItem(d->listView, d->listView->lastItem(), *it);
 }
 
 void GPSSyncDialog::slotLoadGPXFile()

@@ -22,6 +22,7 @@
 
 #include <qstring.h>
 #include <qpainter.h>
+#include <qfileinfo.h>
 
 // KDE includes.
 
@@ -48,12 +49,14 @@ public:
         dirty      = false;
         erase      = false;
         hasGPSInfo = false;
+        readOnly   = false;
     }
 
     bool             enabled;
     bool             dirty;
     bool             erase;
     bool             hasGPSInfo;
+    bool             readOnly;
 
     QDateTime        date;
 
@@ -71,6 +74,17 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
     setEnabled(false);
     setPixmap(0, SmallIcon( "file_broken", KIcon::SizeLarge, KIcon::DisabledState ));
     setText(1, d->url.fileName());
+    
+    // We only add all JPEG files as R/W because Exiv2 can't yet 
+    // update metadata on others file formats.
+
+    QFileInfo fi(d->url.path());
+    QString ext = fi.extension().upper();
+    if (ext != QString("JPG") && ext != QString("JPEG") && ext != QString("JPE"))
+    {
+        setText(6, i18n("Read only"));
+        d->readOnly = true;
+    }
 
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.load(d->url.path());
@@ -93,36 +107,50 @@ GPSListViewItem::~GPSListViewItem()
 
 void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty, bool addedManually)
 {
-    setEnabled(true);
-    d->dirty      = dirty;
-    d->gpsData    = gpsData;
-    d->erase      = false;
-    d->hasGPSInfo = true;
-    setText(3, QString::number(d->gpsData.latitude(),  'g', 12));
-    setText(4, QString::number(d->gpsData.longitude(), 'g', 12));
-    setText(5, QString::number(d->gpsData.altitude(),  'g', 12));
-
-    QString status;
-    if (isDirty())
+    if (!isReadOnly())
     {
-        if (d->gpsData.isInterpolated())
-            status = i18n("Interpolated");
-        else
+        setEnabled(true);
+        d->dirty      = dirty;
+        d->gpsData    = gpsData;
+        d->erase      = false;
+        d->hasGPSInfo = true;
+        setText(3, QString::number(d->gpsData.latitude(),  'g', 12));
+        setText(4, QString::number(d->gpsData.longitude(), 'g', 12));
+        setText(5, QString::number(d->gpsData.altitude(),  'g', 12));
+    
+        QString status;
+        if (isDirty())
         {
-            if (addedManually)
-                status = i18n("Added");
+            if (d->gpsData.isInterpolated())
+                status = i18n("Interpolated");
             else
-                status = i18n("Found");
+            {
+                if (addedManually)
+                    status = i18n("Added");
+                else
+                    status = i18n("Found");
+            }
         }
+        setText(6, status);
+    
+        repaint();
     }
-    setText(6, status);
-
-    repaint();
 }
 
 GPSDataContainer GPSListViewItem::getGPSInfo()
 {
     return d->gpsData;
+}
+
+void GPSListViewItem::eraseGPSInfo()
+{
+    if (!isReadOnly())
+    {
+        d->erase = true;
+        d->dirty = true;
+        setText(6, i18n("Deleted!"));
+        repaint();
+    }
 }
 
 void GPSListViewItem::setDateTime(QDateTime date)
@@ -165,6 +193,7 @@ void GPSListViewItem::writeGPSInfoToFile()
         setPixmap(1, SmallIcon("run"));
         KIPIPlugins::Exiv2Iface exiv2Iface;
         bool ret = exiv2Iface.load(d->url.path());
+
         if (d->erase)
             ret &= exiv2Iface.removeGPSInfo();
         else
@@ -173,13 +202,15 @@ void GPSListViewItem::writeGPSInfoToFile()
                                          d->gpsData.latitude(), 
                                          d->gpsData.longitude());
         }
+
         ret &= exiv2Iface.save(d->url.path());
+        
         if (ret)
             setPixmap(1, SmallIcon("ok"));
         else
             setPixmap(1, SmallIcon("cancel"));
 	
-	d->dirty = false;
+	    d->dirty = false;
     }
 }
 
@@ -199,17 +230,14 @@ bool GPSListViewItem::isDirty()
     return d->dirty;
 }
 
-void GPSListViewItem::eraseGPSInfo()
+bool GPSListViewItem::isReadOnly()    
 {
-    d->erase = true;
-    d->dirty = true;
-    setText(6, i18n("Deleted!"));
-    repaint();
+    return d->readOnly;
 }
 
 void GPSListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
 {
-    if (isEnabled())
+    if (isEnabled() && !isReadOnly())
     {
         if ( isDirty() && !d->erase && column >= 3  && column <= 5 )
         {

@@ -67,6 +67,7 @@ public:
     bool isDirty();
     bool isInterpolated();
     bool hasGPSInfo();
+    bool isReadOnly();
 
     KURL getUrl();
     void writeGPSInfoToFile();
