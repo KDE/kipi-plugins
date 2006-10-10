@@ -18,6 +18,8 @@ RAWConverter  : New core to be compatible with recent dcraw release. A lot
                 of RAW decoding settings have been added.
 RAWConverter  : Embedding ouput color space in target image (JPEG/PNG/TIFF).
 RAWConverter  : Metadata preservation in target image during Raw conversion (JPEG/PNG).
+RAWConverter  : Removing external dcraw depency. Now plugin include a full supported version of 
+                dcraw program in core.
 
 SendImages    : Added image size limit x mail (Michael Höchstetter)
  

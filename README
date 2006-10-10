@@ -106,7 +106,6 @@ libgphoto2  >= 2.x
 imlib2      >= 1.1.0
 ImageMagick >= 5.5.4
 MJPEGTools  >= 1.6.0
-dcRAW       >= 8.16
 libtiff     >= 3.5.x
 libexiv2    >= 0.10
 libxslt     >= 1.1
@@ -122,7 +121,7 @@ cdarchiving        : k3b (runtime dependency)
 kameraklient       : libgphoto2
 mpegenconder       : mjpegtools (runtime dependency)
 wallpaper          : kdebase (runtime dependency)
-rawconverter       : libtiff, dcraw (runtime dependency)
+rawconverter       : libtiff
 acquireimages      : libtiff
 htmlexport         : libxslt
 ipodexport         : libgpod 
