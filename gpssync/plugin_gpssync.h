@@ -1,8 +1,8 @@
 /* ============================================================
  * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date   : 2006-05-16
- * Description : a plugin to synchronize metadata pictures 
- *               with a GPS device.
+ * Description : a plugin to synchronize pictures with 
+ *               a GPS device.
  *
  * Copyright 2006 by Gilles Caulier
  *
@@ -33,6 +33,7 @@ class Plugin_GPSSync : public KIPI::Plugin
     Q_OBJECT
 
 public:
+
     Plugin_GPSSync(QObject *parent, const char* name, const QStringList &args);
 
     virtual KIPI::Category category( KAction* action ) const;
