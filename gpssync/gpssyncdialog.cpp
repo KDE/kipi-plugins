@@ -51,9 +51,9 @@
 
 // Local includes.
 
+#include "pluginsversion.h"
 #include "gpslistviewitem.h"
 #include "gpsdataparser.h"
-#include "pluginsversion.h"
 #include "gpseditdialog.h"
 #include "gpssyncdialog.h"
 #include "gpssyncdialog.moc"
