@@ -49,9 +49,9 @@ private:
 
 private:
 
-    KAction                          *m_actionGPSSync;
+    KAction         *m_actionGPSSync;
 
-    KIPI::Interface                  *m_interface;
+    KIPI::Interface *m_interface;
 };
 
 #endif // PLUGIN_GPSSYNC_H
