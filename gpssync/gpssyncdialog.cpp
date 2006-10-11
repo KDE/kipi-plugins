@@ -161,8 +161,8 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
 
     // ---------------------------------------------------------------
 
-    QWidget *settingsBox = new QGroupBox(0, Qt::Vertical, i18n("Settings"), plainPage());
-    QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox->layout(), 8, 1,
+    QGroupBox *settingsBox         = new QGroupBox(0, Qt::Vertical, i18n("Settings"), plainPage());
+    QGridLayout *settingsBoxLayout = new QGridLayout(settingsBox->layout(), 8, 1,
                                                      KDialog::spacingHint());
 
     QPushButton *loadGPXButton = new QPushButton(i18n("Load GPX File..."), settingsBox);
