@@ -141,7 +141,7 @@ bool DcrawIface::loadDcrawPreview(QImage& image, const QString& path)
     QFileInfo fileInfo(path);
     QString   rawFilesExt(kipi_raw_file_extentions);
 
-    if (!fileInfo.exists() || !rawFilesExt.upper().contains( fileInfo.extension().upper() ))
+    if (!fileInfo.exists() || !rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
         return false;
 
     // Try to extract embedded thumbnail using dcraw with options:
@@ -256,7 +256,7 @@ bool DcrawIface::rawFileIdentify(QString& identify, const QString& path)
         return false;
     }
 
-    if (!rawFilesExt.upper().contains( fileInfo.extension().upper() ))
+    if (!rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
     {
         identify = i18n("Not a RAW file");
         return false;

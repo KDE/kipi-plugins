@@ -116,7 +116,7 @@ bool Plugin_RawConverter::isRAWFile(const QString& filePath)
     QString rawFilesExt(kipi_raw_file_extentions);
 
     QFileInfo fileInfo(filePath);
-    if (rawFilesExt.upper().contains( fileInfo.extension().upper() ))
+    if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
         return true;
 
     return false;

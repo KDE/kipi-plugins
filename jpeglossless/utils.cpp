@@ -61,7 +61,7 @@ bool Utils::isRAW(const QString& file)
     QString rawFilesExt(kipi_raw_file_extentions);
 
     QFileInfo fileInfo(file);
-    if (rawFilesExt.upper().contains( fileInfo.extension().upper() ))
+    if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
         return true;
 
     return false;
