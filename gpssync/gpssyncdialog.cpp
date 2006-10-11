@@ -278,6 +278,11 @@ GPSSyncDialog::~GPSSyncDialog()
     delete d;
 }
 
+void GPSSyncDialog::slotHelp()
+{
+    KApplication::kApplication()->invokeHelp("gpssync", "kipi-plugins");
+}
+
 void GPSSyncDialog::setImages( const KURL::List& images )
 {
     for( KURL::List::ConstIterator it = images.begin(); it != images.end(); ++it )
@@ -315,11 +320,6 @@ void GPSSyncDialog::slotLoadGPXFile()
     d->gpxPointsLabel->setText(i18n("Points parsed: %1").arg(d->gpxParser.numPoints()));
     enableButton(User1, true);
     slotUser1();
-}
-
-void GPSSyncDialog::slotHelp()
-{
-    KApplication::kApplication()->invokeHelp("gpssync", "kipi-plugins");
 }
 
 void GPSSyncDialog::closeEvent(QCloseEvent *e)
