@@ -98,7 +98,7 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
 
     d->conflictLabel       = new QLabel(i18n("If Target File Exists:"), this);
     d->conflictButtonGroup = new QVButtonGroup(this);
-    d->overwriteButton     = new QRadioButton(i18n("Overwrite automaticly"), d->conflictButtonGroup);
+    d->overwriteButton     = new QRadioButton(i18n("Overwrite automatically"), d->conflictButtonGroup);
     d->promptButton        = new QRadioButton(i18n("Open rename-file dialog"), d->conflictButtonGroup);
     d->conflictButtonGroup->insert(d->overwriteButton, OVERWRITE);
     d->conflictButtonGroup->insert(d->promptButton,    ASKTOUSER);
