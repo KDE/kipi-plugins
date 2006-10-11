@@ -29,19 +29,21 @@ TimeAdjust    : Removed libkexif depency. Using Exiv2 instead.
 Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 
 001 ==> 127101 : BatchProcess: expand sequence number start value in batch rename images.
-002 ==>  94494 : GalleryExport: Support for multiple galleries.
+002 ==>  94494 : GalleryExport: support for multiple galleries.
 003 ==> 128394 : RAW Canverter: convertion of RAW files fails with dcraw 8.21
 004 ==> 132659 : Flickr Export: "Missing signature" - Flickr API changed and upload of 
                  images is no longer possible.
-005 ==> 107905 : RAW Converter: Copy exif data from raw to converted images.
+005 ==> 107905 : RAW Converter: copy exif data from raw to converted images.
 006 ==> 119537 : JPEGLossLess: Exif width and height are not corrected after lossless rotation.
 007 ==> 91545  : Slideshow: plugin does nothing if an album only contains subalbums, but no 
                  images directly or is empty.
 008 ==> 134749 : GPS Sync: altitude shown is wrong.
 009 ==> 134298 : SimpleViewer Export: save settings / keep settings missing!
 010 ==> 134747 : GPS Sync: not optimal correlation.
-011 ==> 135157 : GPS Sync: Warning about changes not applied always appear even when already applied.
-012 ==>
+011 ==> 135157 : GPS Sync: warning about changes not applied always appear even when already applied.
+012 ==> 135237 : GPS Sync: filenames with multiple periods in them do not show up in the file 
+                 listing (incorrect extension identification).
+013 ==> 
 
 
 v 0.1.2                                                           2006-07-08
