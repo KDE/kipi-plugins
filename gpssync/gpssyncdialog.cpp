@@ -110,7 +110,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     setButtonText(User3, i18n("Remove"));
 
     setButtonTip(User1, i18n("Correlate GPX file data with all pictures from the list."));
-    setButtonTip(User2, i18n("Edit manually GPS coordinates of selected pictures form the list."));
+    setButtonTip(User2, i18n("Edit manually GPS coordinates of selected pictures from the list."));
     setButtonTip(User3, i18n("Remove GPS coordinates of selected pictures from the list."));
 
     enableButton(User1, false);
