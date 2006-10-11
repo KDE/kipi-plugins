@@ -20,7 +20,6 @@
 
 // Qt includes.
 
-#include <qstring.h>
 #include <qpainter.h>
 #include <qfileinfo.h>
 

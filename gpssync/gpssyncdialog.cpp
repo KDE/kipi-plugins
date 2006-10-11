@@ -354,6 +354,7 @@ bool GPSSyncDialog::promptUserClose()
         GPSListViewItem *item = (GPSListViewItem*) it.current();
         if (item->isDirty())
             dirty++;
+	    
         ++it;
     }
 
