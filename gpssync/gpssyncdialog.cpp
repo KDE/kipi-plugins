@@ -507,7 +507,7 @@ void GPSSyncDialog::slotApply()
         item->writeGPSInfoToFile();
         images.append(item->getUrl());
 
-        // TODO : new libkipi method to store GPS info in host database.
+        // TODO : add libkipi method call to please the host to re-read metadata from pictures.
 
         ++it;
         kapp->processEvents();

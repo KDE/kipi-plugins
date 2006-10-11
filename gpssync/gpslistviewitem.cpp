@@ -78,7 +78,7 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
     // update metadata on others file formats.
 
     QFileInfo fi(d->url.path());
-    QString ext = fi.extension().upper();
+    QString ext = fi.extension(false).upper();
     if (ext != QString("JPG") && ext != QString("JPEG") && ext != QString("JPE"))
     {
         setText(6, i18n("Read only"));
@@ -106,34 +106,33 @@ GPSListViewItem::~GPSListViewItem()
 
 void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty, bool addedManually)
 {
-    if (!isReadOnly())
+    setEnabled(true);
+    d->dirty      = dirty;
+    d->gpsData    = gpsData;
+    d->erase      = false;
+    d->hasGPSInfo = true;
+    setText(3, QString::number(d->gpsData.latitude(),  'g', 12));
+    setText(4, QString::number(d->gpsData.longitude(), 'g', 12));
+    setText(5, QString::number(d->gpsData.altitude(),  'g', 12));
+    
+    if (isDirty())
     {
-        setEnabled(true);
-        d->dirty      = dirty;
-        d->gpsData    = gpsData;
-        d->erase      = false;
-        d->hasGPSInfo = true;
-        setText(3, QString::number(d->gpsData.latitude(),  'g', 12));
-        setText(4, QString::number(d->gpsData.longitude(), 'g', 12));
-        setText(5, QString::number(d->gpsData.altitude(),  'g', 12));
-    
         QString status;
-        if (isDirty())
+
+        if (d->gpsData.isInterpolated())
+            status = i18n("Interpolated");
+        else
         {
-            if (d->gpsData.isInterpolated())
-                status = i18n("Interpolated");
+            if (addedManually)
+                status = i18n("Added");
             else
-            {
-                if (addedManually)
-                    status = i18n("Added");
-                else
-                    status = i18n("Found");
-            }
+                status = i18n("Found");
         }
+        
         setText(6, status);
-    
-        repaint();
     }
+    
+    repaint();
 }
 
 GPSDataContainer GPSListViewItem::getGPSInfo()
@@ -187,7 +186,7 @@ bool GPSListViewItem::isInterpolated()
 
 void GPSListViewItem::writeGPSInfoToFile()
 {
-    if (isEnabled() && isDirty())
+    if (isEnabled() && isDirty() && !isReadOnly())
     {
         setPixmap(1, SmallIcon("run"));
         KIPIPlugins::Exiv2Iface exiv2Iface;
