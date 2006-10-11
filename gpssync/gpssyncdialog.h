@@ -1,8 +1,8 @@
 /* ============================================================
  * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
- * Date   : 2004-05-16
- * Description : a plugin to synchronize metadata pictures 
- *               with a GPS device.
+ * Date   : 2006-05-16
+ * Description : a plugin to synchronize pictures with 
+ *               a GPS device.
  *
  * Copyright 2006 by Gilles Caulier
  *
