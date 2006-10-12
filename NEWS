@@ -21,7 +21,7 @@ RAWConverter  : Metadata preservation in target image during Raw conversion (JPE
 RAWConverter  : Removing external dcraw depency. Now plugin include a full supported version of 
                 dcraw program in core.
 
-SendImages    : Added image size limit x mail (Michael Höchstetter)
+SendImages    : Added image size limit x mail (Michael Hï¿½hstetter)
  
 TimeAdjust    : Removed libkexif depency. Using Exiv2 instead.
 
@@ -43,7 +43,8 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 011 ==> 135157 : GPS Sync: warning about changes not applied always appear even when already applied.
 012 ==> 135237 : GPS Sync: filenames with multiple periods in them do not show up in the file 
                  listing (incorrect extension identification).
-013 ==> 
+013 ==> 135484 : GPS Sync: thumbnail generation for multible images can cause severe overload.
+014 ==> 
 
 
 v 0.1.2                                                           2006-07-08
