@@ -26,8 +26,9 @@ endif
 
 SUBDIRS = common printwizard calendar mpegencoder cdarchiving simpleviewerexport \
 	      sendimages batchprocessimages wallpaper findimages galleryexport flickrexport \
-	      jpeglossless timeadjust gpssync \
-	      $(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR) $(HTMLEXPORTDIR) $(IPODEXPORTDIR)
+	      jpeglossless timeadjust gpssync metadataedit \
+	      $(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR) \
+	      $(HTMLEXPORTDIR) $(IPODEXPORTDIR) 
 
 rcdir = $(kde_datadir)/kipi
 rc_DATA = tips
