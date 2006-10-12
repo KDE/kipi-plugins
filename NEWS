@@ -44,7 +44,8 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 012 ==> 135237 : GPS Sync: filenames with multiple periods in them do not show up in the file 
                  listing (incorrect extension identification).
 013 ==> 135484 : GPS Sync: thumbnail generation for multible images can cause severe overload.
-014 ==> 
+014 ==> 135353 : GPS Sync: the name of the plugin is missleading.
+015 ==> 
 
 
 v 0.1.2                                                           2006-07-08
