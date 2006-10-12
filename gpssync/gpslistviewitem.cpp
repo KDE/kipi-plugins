@@ -65,7 +65,7 @@ public:
 };
 
 GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KURL& url)
-               : KListViewItem(view, after)
+               : QObject(view), KListViewItem(view, after)
 {
     d = new GPSListViewItemPriv;
     d->url = url;
