@@ -11,6 +11,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "pluginsversion.h"
 #include "imagelist.h"
 #include "imagelistitem.h"
 #include "ipodexportdialog.h"
@@ -29,6 +30,9 @@
 #include <qwhatsthis.h>
 #include <qwmatrix.h>
 
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kpopupmenu.h>
 #include <kdebug.h>
 #include <kfileitem.h>
 #include <kiconloader.h>
@@ -41,6 +45,7 @@
 #include <kprogress.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
+#include <kapplication.h>
 
 #include <libkipi/imagedialog.h>
 
@@ -57,6 +62,30 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     , m_mountPoint( QString::null )
     , m_deviceNode( QString::null )
 {
+
+    // ---------------------------------------------------------------
+    // About data and help button.
+
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("iPod Export"),
+                                       kipiplugins_version,
+                                       I18N_NOOP("A Plugin to export pictures to an iPod device"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2006, Seb Ruiz",
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi");
+
+    about->addAuthor("Seb Ruiz", I18N_NOOP("Author and Maintainer"),
+                     "me at sebruiz dot net");
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("iPod Export Handbook"),
+                                 this, SLOT(slotHelp()), 0, -1, 0);
+    actionButton(Help)->setPopup( helpMenu->menu() );
+
+    // ---------------------------------------------------------------
+
     QWidget       *box = plainPage();
     QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
 
@@ -255,6 +284,11 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
                     this,         SLOT( slotImagesFilesButtonRem() ) );
 }
 
+void 
+UploadDialog::slotHelp()
+{
+    KApplication::kApplication()->invokeHelp("ipodexport", "kipi-plugins");
+}
 
 void
 UploadDialog::getIpodAlbums()

@@ -1,5 +1,6 @@
 
-INCLUDES    = $(LIBKIPI_CFLAGS) \
+INCLUDES    = $(KIPI_PLUGINS_COMMON_INCLUDE) \
+	          $(LIBKIPI_CFLAGS) \
               $(LIBGPOD_CFLAGS) \
               $(all_includes)
 

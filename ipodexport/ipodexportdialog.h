@@ -69,6 +69,7 @@ class UploadDialog : public KDialogBase
         void slotCreateIpodAlbum();
         void slotDeleteIpodAlbum();
         void slotRenameIpodAlbum();
+        void slotHelp();
 
     private:
         void addUrlToList( QString file );
