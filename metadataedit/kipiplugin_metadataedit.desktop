@@ -1,0 +1,9 @@
+[Desktop Entry]
+Comment=KIPI Pictures Metadata Editor
+Encoding=UTF-8
+Icon=
+Name=MetadataEdit
+ServiceTypes=KIPI/Plugin
+Type=Service
+X-KDE-Library=kipiplugin_metadataedit
+author=Gilles Caulier, caulier dot gilles at kdemail dot net
