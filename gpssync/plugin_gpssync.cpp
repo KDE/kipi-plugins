@@ -57,7 +57,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
 
     // this is our action shown in the menubar/toolbar of the mainwindow
 
-    m_actionGPSSync = new KAction (i18n("GPS Sync..."),
+    m_actionGPSSync = new KAction (i18n("Geolocalization..."),
                                    "gpsimagetag",
                                    0,     
                                    this,

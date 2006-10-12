@@ -98,7 +98,7 @@ public:
 };
 
 GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
-             : KDialogBase(Plain, i18n("GPS Sync"), 
+             : KDialogBase(Plain, i18n("Geolocalization"), 
                            Help|User1|User2|User3|Apply|Close, Close, 
                            parent, 0, true, true )
 {
@@ -129,7 +129,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
     pixmapLabelLeft->setScaledContents( false );
     layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Syncronize Picture Metadata with a GPS Device"),
+    QLabel *labelTitle = new QLabel( i18n("Pictures Geolocalization"),
                                      headerFrame, "labelTitle" );
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
