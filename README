@@ -63,7 +63,7 @@ Currently implemented plugins are:
 17) SimpleViewerExport : Plugin to export images to SimpleViewer
                          (http://www.airtightinteractive.com/simpleviewer/)
 
-18) GPSSync            : Plugin to synchronize pictures metadata with a GPS device.
+18) GPSSync            : Plugin to geolocalize pictures.
 
 19) IpodExport         : Plugin to export pictures with an Ipod device.
 
