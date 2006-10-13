@@ -71,6 +71,9 @@ public:
     bool setExif(const QByteArray& data);
     bool setIptc(const QByteArray& data);
 
+    bool clearExif();
+    bool clearIptc();
+
     bool setImageProgramId(const QString& program, const QString& version);
     bool setImageDimensions(const QSize& size);
     bool setExifThumbnail(const QImage& thumb);
