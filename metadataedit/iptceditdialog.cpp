@@ -40,6 +40,7 @@
 
 #include "iptccaption.h"
 #include "iptccredits.h"
+#include "iptcstatus.h"
 #include "iptceditdialog.h"
 #include "iptceditdialog.moc"
 
@@ -55,19 +56,22 @@ public:
     {
         page_caption = 0;
         page_credits = 0;
+        page_status  = 0;
 
         captionPage  = 0;
         creditsPage  = 0;
+        statusPage   = 0;
     }
 
     QByteArray   iptcData;
 
     QFrame      *page_caption;
     QFrame      *page_credits;
+    QFrame      *page_status;
 
     IPTCCaption *captionPage;
     IPTCCredits *creditsPage;
-
+    IPTCStatus  *statusPage;
 };
 
 IPTCEditDialog::IPTCEditDialog(QWidget* parent, QByteArray iptcData, const QString& fileName)
@@ -86,6 +90,10 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, QByteArray iptcData, const QStri
     d->page_credits = addPage(i18n("Credits"), i18n("IPTC Credits Informations"),
                               BarIcon("identity", KIcon::SizeMedium));
     d->creditsPage  = new IPTCCredits(d->page_credits, d->iptcData);
+
+    d->page_status  = addPage(i18n("Status"), i18n("IPTC Status Informations"),
+                              BarIcon("messagebox_info", KIcon::SizeMedium));
+    d->statusPage   = new IPTCStatus(d->page_status, d->iptcData);
 
     readSettings();
     show();
@@ -135,6 +143,7 @@ void IPTCEditDialog::slotOk()
 {
     d->captionPage->applyMetadata(d->iptcData);
     d->creditsPage->applyMetadata(d->iptcData);
+    d->statusPage->applyMetadata(d->iptcData);
 
     saveSettings();
     accept();

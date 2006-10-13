@@ -126,7 +126,7 @@ IPTCCredits::IPTCCredits(QWidget* parent, QByteArray& iptcData)
     d->sourceEdit  = new KLineEdit(parent);
     d->sourceEdit->setValidator(asciiValidator);
     d->sourceEdit->setMaxLength(32);
-    label4->setBuddy(d->sourceEdit);
+    label5->setBuddy(d->sourceEdit);
     vlay->addWidget(label5);
     vlay->addWidget(d->sourceEdit);
     QWhatsThis::add(d->sourceEdit, i18n("<p>Set here the original owner of content. "
