@@ -36,6 +36,7 @@
 
 // Local includes.
 
+#include "exiv2iface.h"
 #include "iptccaption.h"
 #include "iptccaption.moc"
 
@@ -127,8 +128,7 @@ IPTCCaption::IPTCCaption(QWidget* parent, QByteArray& iptcData)
     vlay->addStretch();
                                          
     // --------------------------------------------------------
-    
-    
+        
     readMetadata(iptcData);
 }
 
@@ -137,12 +137,25 @@ IPTCCaption::~IPTCCaption()
     delete d;
 }
 
-void IPTCCaption::applyMetadata(QByteArray& iptcData)
-{
-}
-
 void IPTCCaption::readMetadata(QByteArray& iptcData)
 {
+    KIPIPlugins::Exiv2Iface exiv2Iface;
+    exiv2Iface.setIptc(iptcData);
+    d->captionEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Caption", false));
+    d->writerEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Writer", false));
+    d->headlineEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Headline", false));
+    d->specialInstructionEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.SpecialInstructions", false));
+}
+
+void IPTCCaption::applyMetadata(QByteArray& iptcData)
+{
+    KIPIPlugins::Exiv2Iface exiv2Iface;
+    exiv2Iface.setIptc(iptcData);
+    exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->captionEdit->text());
+    exiv2Iface.setIptcTagString("Iptc.Application2.Writer", d->writerEdit->text());
+    exiv2Iface.setIptcTagString("Iptc.Application2.Headline", d->headlineEdit->text());
+    exiv2Iface.setIptcTagString("Iptc.Application2.SpecialInstructions", d->specialInstructionEdit->text());
+    iptcData = exiv2Iface.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin

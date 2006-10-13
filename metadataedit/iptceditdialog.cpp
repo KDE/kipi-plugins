@@ -128,7 +128,7 @@ void IPTCEditDialog::saveSettings()
 
 QByteArray IPTCEditDialog::getIPTCInfo()
 {
-    return QByteArray();
+    return d->iptcData;
 }
 
 void IPTCEditDialog::slotOk()

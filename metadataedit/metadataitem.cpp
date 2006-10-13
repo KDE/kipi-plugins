@@ -173,17 +173,26 @@ void MetadataItem::writeMetadataToFile()
 {
     if (isEnabled() && isDirty())
     {
-/*        setPixmap(1, SmallIcon("run"));
+        setPixmap(1, SmallIcon("run"));
         KIPIPlugins::Exiv2Iface exiv2Iface;
         bool ret = exiv2Iface.load(d->url.path());
 
-        if (d->erase)
-            ret &= exiv2Iface.removeGPSInfo();
+        if (d->eraseExif)
+        {
+        //    ret &= exiv2Iface.removeExif();
+        }
         else
         {
-            ret &= exiv2Iface.setGPSInfo(d->gpsData.altitude(), 
-                                         d->gpsData.latitude(), 
-                                         d->gpsData.longitude());
+            ret &= exiv2Iface.setExif(d->exifData);
+        }
+
+        if (d->eraseIptc)
+        {
+        //    ret &= exiv2Iface.removeIptc();
+        }
+        else
+        {
+            ret &= exiv2Iface.setIptc(d->iptcData);
         }
 
         ret &= exiv2Iface.save(d->url.path());
@@ -191,7 +200,7 @@ void MetadataItem::writeMetadataToFile()
         if (ret)
             setPixmap(1, SmallIcon("ok"));
         else
-            setPixmap(1, SmallIcon("cancel"));*/
+            setPixmap(1, SmallIcon("cancel"));
 	
 	    d->dirty = false;
     }

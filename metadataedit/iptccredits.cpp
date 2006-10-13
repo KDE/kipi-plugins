@@ -35,6 +35,7 @@
 
 // Local includes.
 
+#include "exiv2iface.h"
 #include "iptccredits.h"
 #include "iptccredits.moc"
 
@@ -148,12 +149,27 @@ IPTCCredits::~IPTCCredits()
     delete d;
 }
 
-void IPTCCredits::applyMetadata(QByteArray& iptcData)
-{
-}
-
 void IPTCCredits::readMetadata(QByteArray& iptcData)
 {
+    KIPIPlugins::Exiv2Iface exiv2Iface;
+    exiv2Iface.setIptc(iptcData);
+    d->copyrightEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Copyright", false));
+    d->bylineEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Byline", false));
+    d->bylineTitleEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.BylineTitle", false));
+    d->creditEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Credit", false));
+    d->sourceEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Source", false));
+}
+
+void IPTCCredits::applyMetadata(QByteArray& iptcData)
+{
+    KIPIPlugins::Exiv2Iface exiv2Iface;
+    exiv2Iface.setIptc(iptcData);
+    exiv2Iface.setIptcTagString("Iptc.Application2.Copyright", d->copyrightEdit->text());
+    exiv2Iface.setIptcTagString("Iptc.Application2.Byline", d->bylineEdit->text());
+    exiv2Iface.setIptcTagString("Iptc.Application2.BylineTitle", d->bylineTitleEdit->text());
+    exiv2Iface.setIptcTagString("Iptc.Application2.Credit", d->creditEdit->text());
+    exiv2Iface.setIptcTagString("Iptc.Application2.Source", d->sourceEdit->text());
+    iptcData = exiv2Iface.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin

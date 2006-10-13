@@ -382,24 +382,24 @@ void MetadataEditDialog::slotRemoveIptc()
 
 void MetadataEditDialog::slotApply()
 {
-/*    KURL::List images;
+    KURL::List images;
 
     QListViewItemIterator it( d->listView );
     while ( it.current() ) 
     {
-        GPSListViewItem *item = (GPSListViewItem*) it.current();
+        MetadataItem *item = (MetadataItem*)it.current();
         d->listView->setSelected(item, true);
         d->listView->ensureItemVisible(item);
-        item->writeGPSInfoToFile();
+        item->writeMetadataToFile();
         images.append(item->getUrl());
 
-        // TODO : new libkipi method to store GPS info in host database.
+        // TODO : add libkipi method call to please the host to re-read metadata from pictures.
 
         ++it;
         kapp->processEvents();
     }
     
-    d->interface->refreshImages(images);*/
+    d->interface->refreshImages(images);
 }
 
 }  // NameSpace KIPIMetadataEditPlugin
