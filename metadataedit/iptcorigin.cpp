@@ -52,6 +52,8 @@ public:
         provinceEdit      = 0;
         countryEdit       = 0;
         countryCodeEdit   = 0;
+        locationEdit      = 0;
+        locationCodeEdit  = 0;
         originalTransEdit = 0;
     }
 
@@ -61,6 +63,8 @@ public:
     KLineEdit *provinceEdit;
     KLineEdit *countryEdit;
     KLineEdit *countryCodeEdit;
+    KLineEdit *locationEdit;
+    KLineEdit *locationCodeEdit;
     KLineEdit *originalTransEdit;
 };
 
@@ -86,6 +90,30 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
     grid->addMultiCellWidget(d->objectNameEdit, 1, 1, 0, 2);
     QWhatsThis::add(d->objectNameEdit, i18n("<p>Set here the shorthland reference of content. "
                     "This field is limited to 64 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    QLabel *label2  = new QLabel(i18n("Location:"), parent);
+    d->locationEdit = new KLineEdit(parent);
+    d->locationEdit->setValidator(asciiValidator);
+    d->locationEdit->setMaxLength(64);
+    label2->setBuddy(d->locationEdit);
+    grid->addMultiCellWidget(label2, 2, 2, 0, 0);
+    grid->addMultiCellWidget(d->locationEdit, 2, 2, 1, 2);
+    QWhatsThis::add(d->locationEdit, i18n("<p>Set here the full country name referenced by the content. "
+                                          "This field is limited to 64 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    QLabel *label3      = new QLabel(i18n("Location code:"), parent);
+    d->locationCodeEdit = new KLineEdit(parent);
+    d->locationCodeEdit->setValidator(asciiValidator);
+    d->locationCodeEdit->setMaxLength(3);
+    label3->setBuddy(d->locationCodeEdit);
+    grid->addMultiCellWidget(label3, 3, 3, 0, 0);
+    grid->addMultiCellWidget(d->locationCodeEdit, 3, 3, 1, 1);
+    QWhatsThis::add(d->locationCodeEdit, i18n("<p>Set here the ISO country code referenced by the content. "
+                                              "This field is limited to 3 ASCII characters."));
 
     // --------------------------------------------------------
 
@@ -117,7 +145,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
     d->provinceEdit = new KLineEdit(parent);
     d->provinceEdit->setValidator(asciiValidator);
     d->provinceEdit->setMaxLength(32);
-    label5->setBuddy(d->provinceEdit);
+    label6->setBuddy(d->provinceEdit);
     grid->addMultiCellWidget(label6, 8, 8, 0, 0);
     grid->addMultiCellWidget(d->provinceEdit, 8, 8, 1, 2);
     QWhatsThis::add(d->provinceEdit, i18n("<p>Set here the Province or State of content origin. "
@@ -129,10 +157,10 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
     d->countryEdit = new KLineEdit(parent);
     d->countryEdit->setValidator(asciiValidator);
     d->countryEdit->setMaxLength(64);
-    label5->setBuddy(d->countryEdit);
+    label7->setBuddy(d->countryEdit);
     grid->addMultiCellWidget(label7, 9, 9, 0, 0);
     grid->addMultiCellWidget(d->countryEdit, 9, 9, 1, 2);
-    QWhatsThis::add(d->provinceEdit, i18n("<p>Set here the full country name of content origin. "
+    QWhatsThis::add(d->countryEdit, i18n("<p>Set here the full country name of content origin. "
                                           "This field is limited to 64 ASCII characters."));
 
     // --------------------------------------------------------
@@ -143,7 +171,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
     d->countryCodeEdit->setMaxLength(3);
     label5->setBuddy(d->countryCodeEdit);
     grid->addMultiCellWidget(label8, 10, 10, 0, 0);
-    grid->addMultiCellWidget(d->countryCodeEdit, 10, 10, 1, 2);
+    grid->addMultiCellWidget(d->countryCodeEdit, 10, 10, 1, 1);
     QWhatsThis::add(d->countryCodeEdit, i18n("<p>Set here the ISO country code of content origin. "
                                              "This field is limited to 3 ASCII characters."));
 
@@ -183,6 +211,8 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     exiv2Iface.setIptc(iptcData);
 
     d->objectNameEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.ObjectName", false));
+    d->locationEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.LocationName", false));
+    d->locationCodeEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.LocationCode", false));
     d->cityEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.City", false));
     d->sublocationEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.SubLocation", false));
     d->provinceEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.ProvinceState", false));
@@ -197,7 +227,8 @@ void IPTCOrigin::applyMetadata(QByteArray& iptcData)
     exiv2Iface.setIptc(iptcData);
 
     exiv2Iface.setIptcTagString("Iptc.Application2.ObjectName", d->objectNameEdit->text());
-    exiv2Iface.setIptcTagString("Iptc.Application2.City", d->cityEdit->text());
+    exiv2Iface.setIptcTagString("Iptc.Application2.LocationName", d->locationEdit->text());
+    exiv2Iface.setIptcTagString("Iptc.Application2.LocationCode", d->locationCodeEdit->text());    exiv2Iface.setIptcTagString("Iptc.Application2.City", d->cityEdit->text());
     exiv2Iface.setIptcTagString("Iptc.Application2.SubLocation", d->sublocationEdit->text());
     exiv2Iface.setIptcTagString("Iptc.Application2.ProvinceState", d->provinceEdit->text());
     exiv2Iface.setIptcTagString("Iptc.Application2.CountryName", d->countryEdit->text());
