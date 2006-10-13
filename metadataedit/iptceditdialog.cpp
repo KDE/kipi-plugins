@@ -133,11 +133,9 @@ QByteArray IPTCEditDialog::getIPTCInfo()
 
 void IPTCEditDialog::slotOk()
 {
-    d->captionPage->applySettings(d->iptcData);
-/*    d->contentPage->applySettings(d->iptcData);
-    d->imagePage->applySettings(d->iptcData);
-    d->statusPage->applySettings(d->iptcData);
-*/
+    d->captionPage->applyMetadata(d->iptcData);
+    d->creditsPage->applyMetadata(d->iptcData);
+
     saveSettings();
     accept();
 }

@@ -40,11 +40,11 @@ public:
     IPTCCredits(QWidget* parent, QByteArray& iptcData);
     ~IPTCCredits();
 
-    void applySettings(QByteArray& iptcData);
+    void applyMetadata(QByteArray& iptcData);
 
 private:
 
-    void readSettings(QByteArray& iptcData);
+    void readMetadata(QByteArray& iptcData);
 
 private:
 

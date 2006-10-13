@@ -129,7 +129,7 @@ IPTCCaption::IPTCCaption(QWidget* parent, QByteArray& iptcData)
     // --------------------------------------------------------
     
     
-    readSettings(iptcData);
+    readMetadata(iptcData);
 }
 
 IPTCCaption::~IPTCCaption()
@@ -137,11 +137,11 @@ IPTCCaption::~IPTCCaption()
     delete d;
 }
 
-void IPTCCaption::applySettings(QByteArray& iptcData)
+void IPTCCaption::applyMetadata(QByteArray& iptcData)
 {
 }
 
-void IPTCCaption::readSettings(QByteArray& iptcData)
+void IPTCCaption::readMetadata(QByteArray& iptcData)
 {
 }
 

@@ -140,7 +140,7 @@ IPTCCredits::IPTCCredits(QWidget* parent, QByteArray& iptcData)
                                          
     // --------------------------------------------------------
         
-    readSettings(iptcData);
+    readMetadata(iptcData);
 }
 
 IPTCCredits::~IPTCCredits()
@@ -148,11 +148,11 @@ IPTCCredits::~IPTCCredits()
     delete d;
 }
 
-void IPTCCredits::applySettings(QByteArray& iptcData)
+void IPTCCredits::applyMetadata(QByteArray& iptcData)
 {
 }
 
-void IPTCCredits::readSettings(QByteArray& iptcData)
+void IPTCCredits::readMetadata(QByteArray& iptcData)
 {
 }
 

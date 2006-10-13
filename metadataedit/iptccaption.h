@@ -40,11 +40,11 @@ public:
     IPTCCaption(QWidget* parent, QByteArray& iptcData);
     ~IPTCCaption();
 
-    void applySettings(QByteArray& iptcData);
+    void applyMetadata(QByteArray& iptcData);
 
 private:
 
-    void readSettings(QByteArray& iptcData);
+    void readMetadata(QByteArray& iptcData);
 
 private:
 
