@@ -26,6 +26,7 @@
 #include <qlabel.h>
 #include <qwhatsthis.h>
 #include <qvalidator.h>
+#include <qcheckbox.h>
 
 // KDE includes.
 
@@ -49,19 +50,30 @@ public:
 
     IPTCCaptionPriv()
     {
-        captionEdit            = 0;
-        subjectEdit            = 0;
-        writerEdit             = 0;
-        headlineEdit           = 0;
-        specialInstructionEdit = 0;
+        captionEdit             = 0;
+        subjectEdit             = 0;
+        writerEdit              = 0;
+        headlineEdit            = 0;
+        specialInstructionEdit  = 0;
+        captionCheck            = 0;
+        specialInstructionCheck = 0;
+        subjectCheck            = 0;
+        writerCheck             = 0;
+        headlineCheck           = 0;
     }
+
+    QCheckBox *captionCheck;
+    QCheckBox *specialInstructionCheck;
+    QCheckBox *subjectCheck;
+    QCheckBox *writerCheck;
+    QCheckBox *headlineCheck;
+
+    KTextEdit *captionEdit;
+    KTextEdit *specialInstructionEdit;
 
     KLineEdit *subjectEdit;
     KLineEdit *writerEdit;
     KLineEdit *headlineEdit;
-
-    KTextEdit *captionEdit;
-    KTextEdit *specialInstructionEdit;
 };
 
 IPTCCaption::IPTCCaption(QWidget* parent, QByteArray& iptcData)
@@ -76,60 +88,55 @@ IPTCCaption::IPTCCaption(QWidget* parent, QByteArray& iptcData)
     
     // --------------------------------------------------------
 
-    QLabel *label1 = new QLabel(i18n("Caption:"), parent);
+    d->captionCheck = new QCheckBox(i18n("Caption:"), parent);
     d->captionEdit  = new KTextEdit(parent);
 /*    d->captionEdit->setValidator(asciiValidator);
     d->captionEdit->setMaxLength(2000);*/
-    label1->setBuddy(d->captionEdit);
-    vlay->addWidget(label1);
+    vlay->addWidget(d->captionCheck);
     vlay->addWidget(d->captionEdit);
-    QWhatsThis::add( d->captionEdit, i18n("<p>Set here the content description. This field is limited "
+    QWhatsThis::add(d->captionEdit, i18n("<p>Set here the content description. This field is limited "
                                          "to 2000 ASCII characters."));
 
     // --------------------------------------------------------
 
-    QLabel *label2 = new QLabel(i18n("Subject:"), parent);
-    d->subjectEdit = new KLineEdit(parent);
+    d->subjectCheck = new QCheckBox(i18n("Subject:"), parent);
+    d->subjectEdit  = new KLineEdit(parent);
     d->subjectEdit->setValidator(asciiValidator);
     d->subjectEdit->setMaxLength(236);
-    label2->setBuddy(d->subjectEdit);
-    vlay->addWidget(label2);
+    vlay->addWidget(d->subjectCheck);
     vlay->addWidget(d->subjectEdit);
     QWhatsThis::add(d->subjectEdit, i18n("<p>Set here the structured definition of the subject. "
                     "This field is limited to 236 ASCII characters."));
 
     // --------------------------------------------------------
 
-    QLabel *label3 = new QLabel(i18n("Caption Writer:"), parent);
+    d->writerCheck = new QCheckBox(i18n("Caption Writer:"), parent);
     d->writerEdit  = new KLineEdit(parent);
     d->writerEdit->setValidator(asciiValidator);
     d->writerEdit->setMaxLength(32);
-    label3->setBuddy(d->writerEdit);
-    vlay->addWidget(label3);
+    vlay->addWidget(d->writerCheck);
     vlay->addWidget(d->writerEdit);
     QWhatsThis::add(d->writerEdit, i18n("<p>Set here the person responsible for caption. This field is limited "
                                         "to 32 ASCII characters."));
         
     // --------------------------------------------------------
 
-    QLabel *label4  = new QLabel(i18n("Headline:"), parent);
-    d->headlineEdit = new KLineEdit(parent);
+    d->headlineCheck = new QCheckBox(i18n("Headline:"), parent);
+    d->headlineEdit  = new KLineEdit(parent);
     d->headlineEdit->setValidator(asciiValidator);
     d->headlineEdit->setMaxLength(256);
-    label4->setBuddy(d->headlineEdit);
-    vlay->addWidget(label4);
+    vlay->addWidget(d->headlineCheck);
     vlay->addWidget(d->headlineEdit);
     QWhatsThis::add(d->headlineEdit, i18n("<p>Set here the content synopsis. This field is limited "
                                           "to 256 ASCII characters."));
 
     // --------------------------------------------------------
 
-    QLabel *label5            = new QLabel(i18n("Special Instructions:"), parent);
-    d->specialInstructionEdit = new KTextEdit(parent);
+    d->specialInstructionCheck = new QCheckBox(i18n("Special Instructions:"), parent);
+    d->specialInstructionEdit  = new KTextEdit(parent);
 /*    d->specialInstructionEdit->setValidator(asciiValidator);
     d->specialInstructionEdit->setMaxLength(256);*/
-    label5->setBuddy(d->specialInstructionEdit);
-    vlay->addWidget(label5);
+    vlay->addWidget(d->specialInstructionCheck);
     vlay->addWidget(d->specialInstructionEdit);
     QWhatsThis::add(d->specialInstructionEdit, i18n("<p>Set here the editorial usage instructions. "
                                                     "This field is limited to 256 ASCII characters."));
@@ -140,7 +147,24 @@ IPTCCaption::IPTCCaption(QWidget* parent, QByteArray& iptcData)
                                        "ASCII characters set.</b>"), parent);
     vlay->addWidget(iptcNote);
     vlay->addStretch();
-                                         
+
+    // --------------------------------------------------------
+                                     
+    connect(d->captionCheck, SIGNAL(toggled(bool)),
+            d->captionEdit, SLOT(setEnabled(bool)));
+
+    connect(d->subjectCheck, SIGNAL(toggled(bool)),
+            d->subjectEdit, SLOT(setEnabled(bool)));
+
+    connect(d->writerCheck, SIGNAL(toggled(bool)),
+            d->writerEdit, SLOT(setEnabled(bool)));
+
+    connect(d->headlineCheck, SIGNAL(toggled(bool)),
+            d->headlineEdit, SLOT(setEnabled(bool)));
+    
+    connect(d->specialInstructionCheck, SIGNAL(toggled(bool)),
+            d->specialInstructionEdit, SLOT(setEnabled(bool)));
+
     // --------------------------------------------------------
         
     readMetadata(iptcData);
@@ -155,22 +179,79 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
-    d->captionEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Caption", false));
-    d->subjectEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Subject", false));
-    d->writerEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Writer", false));
-    d->headlineEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Headline", false));
-    d->specialInstructionEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.SpecialInstructions", false));
+    QString data;
+
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Caption", false);    
+    if (!data.isNull())
+    {
+        d->captionEdit->setText(data);
+        d->captionCheck->setChecked(true);
+    }
+    d->captionEdit->setEnabled(d->captionCheck->isChecked());
+
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Subject", false);    
+    if (!data.isNull())
+    {
+        d->subjectEdit->setText(data);
+        d->subjectCheck->setChecked(true);
+    }
+    d->subjectEdit->setEnabled(d->subjectCheck->isChecked());
+
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Writer", false);    
+    if (!data.isNull())
+    {
+        d->writerEdit->setText(data);
+        d->writerCheck->setChecked(true);
+    }
+    d->writerEdit->setEnabled(d->writerCheck->isChecked());
+
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Headline", false);    
+    if (!data.isNull())
+    {
+        d->headlineEdit->setText(data);
+        d->headlineCheck->setChecked(true);
+    }
+    d->headlineEdit->setEnabled(d->headlineCheck->isChecked());
+
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.SpecialInstructions", false);    
+    if (!data.isNull())
+    {
+        d->specialInstructionEdit->setText(data);
+        d->specialInstructionCheck->setChecked(true);
+    }
+    d->specialInstructionEdit->setEnabled(d->specialInstructionCheck->isChecked());
 }
 
 void IPTCCaption::applyMetadata(QByteArray& iptcData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
-    exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->captionEdit->text());
-    exiv2Iface.setIptcTagString("Iptc.Application2.Subject", d->subjectEdit->text());
-    exiv2Iface.setIptcTagString("Iptc.Application2.Writer", d->writerEdit->text());
-    exiv2Iface.setIptcTagString("Iptc.Application2.Headline", d->headlineEdit->text());
-    exiv2Iface.setIptcTagString("Iptc.Application2.SpecialInstructions", d->specialInstructionEdit->text());
+
+    if (d->captionCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->captionEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
+
+    if (d->subjectCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.Subject", d->subjectEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.Subject");
+
+    if (d->writerCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.Writer", d->writerEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.Writer");
+
+    if (d->headlineCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.Headline", d->headlineEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.Headline");
+
+    if (d->specialInstructionCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.SpecialInstructions", d->specialInstructionEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.SpecialInstructions");
+
     iptcData = exiv2Iface.getIptc();
 }
 
