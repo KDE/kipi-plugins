@@ -112,8 +112,8 @@ MetadataEditDialog::MetadataEditDialog( KIPI::Interface* interface, QWidget* par
     d->listView = new KListView(plainPage());
     d->listView->addColumn( i18n("Thumbnail") );
     d->listView->addColumn( i18n("File Name") );
-    d->listView->addColumn( i18n("As EXIF") );
-    d->listView->addColumn( i18n("As IPTC") );
+    d->listView->addColumn( i18n("Has EXIF") );
+    d->listView->addColumn( i18n("Has IPTC") );
     d->listView->addColumn( i18n("Status") );
     d->listView->setResizeMode(QListView::AllColumns);
     d->listView->setAllColumnsShowFocus(true);
