@@ -1,7 +1,7 @@
 /* ============================================================
- * Authors: Caulier Gilles <caulier dot gilles at kdemail dot net>
- * Date   : 2006-10-12
- * Description : a dialog to edit IPTC metadata
+ * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Date   : 2006-10-13
+ * Description : IPTC origin settings page.
  * 
  * Copyright 2006 by Gilles Caulier
  *
@@ -15,55 +15,42 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * ============================================================ */
 
-#ifndef IPTCEDITDIALOG_H
-#define IPTCEDITDIALOG_H
+#ifndef IPTC_ORIGIN_H
+#define IPTC_ORIGIN_H
 
 // Qt includes.
 
+#include <qwidget.h>
 #include <qcstring.h>
-
-// KDE includes.
-
-#include <kdialogbase.h>
 
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCEditDialogDialogPrivate;
+class IPTCOriginPriv;
 
-class IPTCEditDialog : public KDialogBase
+class IPTCOrigin : public QWidget
 {
     Q_OBJECT
-
+    
 public:
 
-    IPTCEditDialog(QWidget* parent, QByteArray iptcData, const QString& fileName);
-    ~IPTCEditDialog();
+    IPTCOrigin(QWidget* parent, QByteArray& iptcData);
+    ~IPTCOrigin();
 
-    QByteArray getIPTCInfo();
-
-protected slots:
-
-    void slotOk();
-    void slotCancel();
-
-protected:
-
-    void closeEvent(QCloseEvent *);
+    void applyMetadata(QByteArray& iptcData);
 
 private:
 
-    void readSettings();
-    void saveSettings();
+    void readMetadata(QByteArray& iptcData);
 
 private:
 
-    IPTCEditDialogDialogPrivate *d;
+    IPTCOriginPriv* d;
 };
 
 }  // namespace KIPIMetadataEditPlugin
 
-#endif /* IPTCEDITDIALOG_H */
+#endif // IPTC_ORIGIN_H 

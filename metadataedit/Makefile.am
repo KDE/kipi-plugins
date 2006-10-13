@@ -11,7 +11,7 @@ kipiplugin_metadataedit_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) \
 # Srcs for the plugin
 kipiplugin_metadataedit_la_SOURCES = plugin_metadataedit.cpp metadataeditdialog.cpp \
 	                                 metadataitem.cpp iptceditdialog.cpp iptccaption.cpp \
-	                                 iptccredits.cpp iptcstatus.cpp 
+	                                 iptccredits.cpp iptcstatus.cpp iptcorigin.cpp 
 
 # Libs needed by the plugin
 kipiplugin_metadataedit_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \
