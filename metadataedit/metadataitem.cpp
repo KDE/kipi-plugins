@@ -179,7 +179,7 @@ void MetadataItem::writeMetadataToFile()
 
         if (d->eraseExif)
         {
-        //    ret &= exiv2Iface.removeExif();
+            ret &= exiv2Iface.clearExif();
         }
         else
         {
@@ -188,7 +188,7 @@ void MetadataItem::writeMetadataToFile()
 
         if (d->eraseIptc)
         {
-        //    ret &= exiv2Iface.removeIptc();
+            ret &= exiv2Iface.clearIptc();
         }
         else
         {
