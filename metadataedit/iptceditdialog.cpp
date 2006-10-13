@@ -42,6 +42,7 @@
 #include "iptccredits.h"
 #include "iptcstatus.h"
 #include "iptcorigin.h"
+#include "iptcdatetime.h"
 #include "iptceditdialog.h"
 #include "iptceditdialog.moc"
 
@@ -55,28 +56,32 @@ public:
 
     IPTCEditDialogDialogPrivate()
     {
-        page_caption = 0;
-        page_credits = 0;
-        page_status  = 0;
-        page_origin  = 0;
+        page_caption  = 0;
+        page_credits  = 0;
+        page_status   = 0;
+        page_origin   = 0;
+        page_datetime = 0;
 
-        captionPage  = 0;
-        creditsPage  = 0;
-        statusPage   = 0;
-        originPage   = 0;
+        captionPage   = 0;
+        creditsPage   = 0;
+        statusPage    = 0;
+        originPage    = 0;
+        datetimePage  = 0;
     }
 
     QByteArray   iptcData;
 
-    QFrame      *page_caption;
-    QFrame      *page_credits;
-    QFrame      *page_status;
-    QFrame      *page_origin;
+    QFrame       *page_caption;
+    QFrame       *page_credits;
+    QFrame       *page_status;
+    QFrame       *page_origin;
+    QFrame       *page_datetime;
 
-    IPTCCaption *captionPage;
-    IPTCCredits *creditsPage;
-    IPTCStatus  *statusPage;
-    IPTCOrigin  *originPage;
+    IPTCCaption  *captionPage;
+    IPTCCredits  *creditsPage;
+    IPTCStatus   *statusPage;
+    IPTCOrigin   *originPage;
+    IPTCDateTime *datetimePage;
 };
 
 IPTCEditDialog::IPTCEditDialog(QWidget* parent, QByteArray iptcData, const QString& fileName)
@@ -88,21 +93,25 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, QByteArray iptcData, const QStri
 
     setHelp("metadataedit", "kipi-plugins");
 
-    d->page_caption = addPage(i18n("Caption"), i18n("IPTC Caption Informations"),
-                              BarIcon("editclear", KIcon::SizeMedium));
-    d->captionPage  = new IPTCCaption(d->page_caption, d->iptcData);
+    d->page_caption  = addPage(i18n("Caption"), i18n("IPTC Caption Informations"),
+                               BarIcon("editclear", KIcon::SizeMedium));
+    d->captionPage   = new IPTCCaption(d->page_caption, d->iptcData);
 
-    d->page_credits = addPage(i18n("Credits"), i18n("IPTC Credits Informations"),
-                              BarIcon("identity", KIcon::SizeMedium));
-    d->creditsPage  = new IPTCCredits(d->page_credits, d->iptcData);
+    d->page_credits  = addPage(i18n("Credits"), i18n("IPTC Credits Informations"),
+                               BarIcon("identity", KIcon::SizeMedium));
+    d->creditsPage   = new IPTCCredits(d->page_credits, d->iptcData);
 
-    d->page_status  = addPage(i18n("Status"), i18n("IPTC Status Informations"),
-                              BarIcon("messagebox_info", KIcon::SizeMedium));
-    d->statusPage   = new IPTCStatus(d->page_status, d->iptcData);
+    d->page_status   = addPage(i18n("Status"), i18n("IPTC Status Informations"),
+                               BarIcon("messagebox_info", KIcon::SizeMedium));
+    d->statusPage    = new IPTCStatus(d->page_status, d->iptcData);
 
-    d->page_origin  = addPage(i18n("Origin"), i18n("IPTC Origin Informations"),
-                              BarIcon("www", KIcon::SizeMedium));
-    d->originPage   = new IPTCOrigin(d->page_origin, d->iptcData);
+    d->page_origin   = addPage(i18n("Origin"), i18n("IPTC Origin Informations"),
+                               BarIcon("www", KIcon::SizeMedium));
+    d->originPage    = new IPTCOrigin(d->page_origin, d->iptcData);
+
+    d->page_datetime = addPage(i18n("Date & Time"), i18n("IPTC Date and Time Informations"),
+                               BarIcon("today", KIcon::SizeMedium));
+    d->datetimePage  = new IPTCDateTime(d->page_datetime, d->iptcData);
 
     readSettings();
     show();
@@ -154,6 +163,7 @@ void IPTCEditDialog::slotOk()
     d->creditsPage->applyMetadata(d->iptcData);
     d->statusPage->applyMetadata(d->iptcData);
     d->originPage->applyMetadata(d->iptcData);
+    d->datetimePage->applyMetadata(d->iptcData);
     saveSettings();
     accept();
 }
