@@ -92,6 +92,9 @@ public:
     bool setExifTagString(const char *exifTagName, const QString& value);
     bool setIptcTagString(const char *iptcTagName, const QString& value);
 
+    bool removeExifTag(const char *exifTagName);
+    bool removeIptcTag(const char *iptcTagName);
+
     Exiv2Iface::ImageOrientation getImageOrientation();
     QDateTime getImageDateTime() const;
 
