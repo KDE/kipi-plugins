@@ -68,8 +68,8 @@ public:
     QByteArray getIptc(bool addIrbHeader=false) const;
 
     void setComments(const QByteArray& data);
-    void setExif(const QByteArray& data);
-    void setIptc(const QByteArray& data);
+    bool setExif(const QByteArray& data);
+    bool setIptc(const QByteArray& data);
 
     bool setImageProgramId(const QString& program, const QString& version);
     bool setImageDimensions(const QSize& size);
@@ -81,10 +81,13 @@ public:
     bool getGPSInfo(double& altitude, double& latitude, double& longitude);
     bool removeGPSInfo();
 
-    bool setExifTagString(const char *exifTagName, const QString& value);
-    QString getExifTagString(const char* exifTagName) const;
-
+    QString    getExifTagString(const char *exifTagName, bool escapeCR=true) const;
     QByteArray getExifTagData(const char *exifTagName) const;
+    QString    getIptcTagString(const char* iptcTagName, bool escapeCR=true) const;
+    QByteArray getIptcTagData(const char *iptcTagName) const;
+
+    bool setExifTagString(const char *exifTagName, const QString& value);
+    bool setIptcTagString(const char *iptcTagName, const QString& value);
 
     Exiv2Iface::ImageOrientation getImageOrientation();
     QDateTime getImageDateTime() const;
