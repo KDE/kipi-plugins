@@ -53,6 +53,7 @@ public:
         bylineTitleEdit = 0;
         creditEdit      = 0;
         sourceEdit      = 0;
+        contactEdit     = 0;
     }
 
     KLineEdit *copyrightEdit;
@@ -60,6 +61,7 @@ public:
     KLineEdit *bylineTitleEdit;
     KLineEdit *creditEdit;
     KLineEdit *sourceEdit;
+    KLineEdit *contactEdit;
 };
 
 IPTCCredits::IPTCCredits(QWidget* parent, QByteArray& iptcData)
@@ -134,6 +136,18 @@ IPTCCredits::IPTCCredits(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
+    QLabel *label6 = new QLabel(i18n("Contact:"), parent);
+    d->contactEdit  = new KLineEdit(parent);
+    d->contactEdit->setValidator(asciiValidator);
+    d->contactEdit->setMaxLength(128);
+    label6->setBuddy(d->sourceEdit);
+    vlay->addWidget(label6);
+    vlay->addWidget(d->contactEdit);
+    QWhatsThis::add(d->contactEdit, i18n("<p>Set here the person or organisation to contact. "
+                                         "This field is limited to 128 ASCII characters."));
+
+    // --------------------------------------------------------
+
     QLabel *iptcNote = new QLabel(i18n("<b>Note: IPTC text tags only support printable "
                                        "ASCII characters set.</b>"), parent);
     vlay->addWidget(iptcNote);
@@ -158,6 +172,7 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     d->bylineTitleEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.BylineTitle", false));
     d->creditEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Credit", false));
     d->sourceEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Source", false));
+    d->contactEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Contact", false));
 }
 
 void IPTCCredits::applyMetadata(QByteArray& iptcData)
@@ -168,7 +183,7 @@ void IPTCCredits::applyMetadata(QByteArray& iptcData)
     exiv2Iface.setIptcTagString("Iptc.Application2.Byline", d->bylineEdit->text());
     exiv2Iface.setIptcTagString("Iptc.Application2.BylineTitle", d->bylineTitleEdit->text());
     exiv2Iface.setIptcTagString("Iptc.Application2.Credit", d->creditEdit->text());
-    exiv2Iface.setIptcTagString("Iptc.Application2.Source", d->sourceEdit->text());
+    exiv2Iface.setIptcTagString("Iptc.Application2.Source", d->sourceEdit->text());    exiv2Iface.setIptcTagString("Iptc.Application2.Contact", d->contactEdit->text());
     iptcData = exiv2Iface.getIptc();
 }
 

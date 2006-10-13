@@ -50,11 +50,13 @@ public:
     IPTCCaptionPriv()
     {
         captionEdit            = 0;
+        subjectEdit            = 0;
         writerEdit             = 0;
         headlineEdit           = 0;
         specialInstructionEdit = 0;
     }
 
+    KLineEdit *subjectEdit;
     KLineEdit *writerEdit;
     KLineEdit *headlineEdit;
 
@@ -86,36 +88,48 @@ IPTCCaption::IPTCCaption(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    QLabel *label2 = new QLabel(i18n("Caption Writer:"), parent);
+    QLabel *label2 = new QLabel(i18n("Subject:"), parent);
+    d->subjectEdit = new KLineEdit(parent);
+    d->subjectEdit->setValidator(asciiValidator);
+    d->subjectEdit->setMaxLength(236);
+    label2->setBuddy(d->subjectEdit);
+    vlay->addWidget(label2);
+    vlay->addWidget(d->subjectEdit);
+    QWhatsThis::add(d->subjectEdit, i18n("<p>Set here the structured definition of the subject. "
+                    "This field is limited to 236 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    QLabel *label3 = new QLabel(i18n("Caption Writer:"), parent);
     d->writerEdit  = new KLineEdit(parent);
     d->writerEdit->setValidator(asciiValidator);
     d->writerEdit->setMaxLength(32);
-    label2->setBuddy(d->writerEdit);
-    vlay->addWidget(label2);
+    label3->setBuddy(d->writerEdit);
+    vlay->addWidget(label3);
     vlay->addWidget(d->writerEdit);
     QWhatsThis::add(d->writerEdit, i18n("<p>Set here the person responsible for caption. This field is limited "
                                         "to 32 ASCII characters."));
         
     // --------------------------------------------------------
 
-    QLabel *label3  = new QLabel(i18n("Headline:"), parent);
+    QLabel *label4  = new QLabel(i18n("Headline:"), parent);
     d->headlineEdit = new KLineEdit(parent);
     d->headlineEdit->setValidator(asciiValidator);
     d->headlineEdit->setMaxLength(256);
-    label3->setBuddy(d->headlineEdit);
-    vlay->addWidget(label3);
+    label4->setBuddy(d->headlineEdit);
+    vlay->addWidget(label4);
     vlay->addWidget(d->headlineEdit);
     QWhatsThis::add(d->headlineEdit, i18n("<p>Set here the content synopsis. This field is limited "
                                           "to 256 ASCII characters."));
 
     // --------------------------------------------------------
 
-    QLabel *label4            = new QLabel(i18n("Special Instructions:"), parent);
+    QLabel *label5            = new QLabel(i18n("Special Instructions:"), parent);
     d->specialInstructionEdit = new KTextEdit(parent);
 /*    d->specialInstructionEdit->setValidator(asciiValidator);
     d->specialInstructionEdit->setMaxLength(256);*/
-    label4->setBuddy(d->specialInstructionEdit);
-    vlay->addWidget(label4);
+    label5->setBuddy(d->specialInstructionEdit);
+    vlay->addWidget(label5);
     vlay->addWidget(d->specialInstructionEdit);
     QWhatsThis::add(d->specialInstructionEdit, i18n("<p>Set here the editorial usage instructions. "
                                                     "This field is limited to 256 ASCII characters."));
@@ -142,6 +156,7 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     d->captionEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Caption", false));
+    d->subjectEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Subject", false));
     d->writerEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Writer", false));
     d->headlineEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Headline", false));
     d->specialInstructionEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.SpecialInstructions", false));
@@ -152,6 +167,7 @@ void IPTCCaption::applyMetadata(QByteArray& iptcData)
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->captionEdit->text());
+    exiv2Iface.setIptcTagString("Iptc.Application2.Subject", d->subjectEdit->text());
     exiv2Iface.setIptcTagString("Iptc.Application2.Writer", d->writerEdit->text());
     exiv2Iface.setIptcTagString("Iptc.Application2.Headline", d->headlineEdit->text());
     exiv2Iface.setIptcTagString("Iptc.Application2.SpecialInstructions", d->specialInstructionEdit->text());
