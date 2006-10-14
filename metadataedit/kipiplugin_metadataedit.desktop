@@ -1,8 +1,15 @@
 [Desktop Entry]
 Comment=KIPI Pictures Metadata Editor
+Comment[ja]=Kipi 画像のメタデータエディタ
+Comment[pt]=Editor de Meta-Dados das Imagens do KIPI
+Comment[pt_BR]=Editor de Meta-Dados das Imagens do KIPI
+Comment[sv]=KIPI-editor för metadata i bilder
 Encoding=UTF-8
 Icon=
 Name=MetadataEdit
+Name[pt]=Edição de Meta-Dados
+Name[pt_BR]=Edição de Meta-Dados
+Name[sv]=Metadataeditor
 ServiceTypes=KIPI/Plugin
 Type=Service
 X-KDE-Library=kipiplugin_metadataedit
