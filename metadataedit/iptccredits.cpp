@@ -26,6 +26,7 @@
 #include <qlabel.h>
 #include <qwhatsthis.h>
 #include <qvalidator.h>
+#include <qcheckbox.h>
 
 // KDE includes.
 
@@ -48,13 +49,26 @@ public:
 
     IPTCCreditsPriv()
     {
-        copyrightEdit   = 0;
-        bylineEdit      = 0;
-        bylineTitleEdit = 0;
-        creditEdit      = 0;
-        sourceEdit      = 0;
-        contactEdit     = 0;
+        copyrightEdit    = 0;
+        bylineEdit       = 0;
+        bylineTitleEdit  = 0;
+        creditEdit       = 0;
+        sourceEdit       = 0;
+        contactEdit      = 0;
+        copyrightCheck   = 0;
+        bylineCheck      = 0;
+        bylineTitleCheck = 0;
+        creditCheck      = 0;
+        sourceCheck      = 0;
+        contactCheck     = 0;
     }
+
+    QCheckBox *copyrightCheck;
+    QCheckBox *bylineCheck;
+    QCheckBox *bylineTitleCheck;
+    QCheckBox *creditCheck;
+    QCheckBox *sourceCheck;
+    QCheckBox *contactCheck;
 
     KLineEdit *copyrightEdit;
     KLineEdit *bylineEdit;
@@ -76,72 +90,66 @@ IPTCCredits::IPTCCredits(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    QLabel *label1   = new QLabel(i18n("Copyright:"), parent);
-    d->copyrightEdit = new KLineEdit(parent);
+    d->copyrightCheck = new QCheckBox(i18n("Copyright:"), parent);
+    d->copyrightEdit  = new KLineEdit(parent);
     d->copyrightEdit->setValidator(asciiValidator);
     d->copyrightEdit->setMaxLength(128);
-    label1->setBuddy(d->copyrightEdit);
-    vlay->addWidget(label1);
+    vlay->addWidget(d->copyrightCheck);
     vlay->addWidget(d->copyrightEdit);
     QWhatsThis::add(d->copyrightEdit, i18n("<p>Set here the necessary copyright notice. This field is limited "
                                            "to 128 ASCII characters."));
     
     // --------------------------------------------------------
 
-    QLabel *label2 = new QLabel(i18n("Byline:"), parent);
+    d->bylineCheck = new QCheckBox(i18n("Byline:"), parent);
     d->bylineEdit  = new KLineEdit(parent);
     d->bylineEdit->setValidator(asciiValidator);
     d->bylineEdit->setMaxLength(32);
-    label2->setBuddy(d->bylineEdit);
-    vlay->addWidget(label2);
+    vlay->addWidget(d->bylineCheck);
     vlay->addWidget(d->bylineEdit);
     QWhatsThis::add(d->bylineEdit, i18n("<p>Set here the name of content creator. This field is limited "
                                         "to 32 ASCII characters."));
         
     // --------------------------------------------------------
 
-    QLabel *label3     = new QLabel(i18n("Byline Title:"), parent);
-    d->bylineTitleEdit = new KLineEdit(parent);
+    d->bylineTitleCheck = new QCheckBox(i18n("Byline Title:"), parent);
+    d->bylineTitleEdit  = new KLineEdit(parent);
     d->bylineTitleEdit->setValidator(asciiValidator);
     d->bylineTitleEdit->setMaxLength(32);
-    label3->setBuddy(d->bylineTitleEdit);
-    vlay->addWidget(label3);
+    vlay->addWidget(d->bylineTitleCheck);
     vlay->addWidget(d->bylineTitleEdit);
     QWhatsThis::add(d->bylineTitleEdit, i18n("<p>Set here the title of content creator. This field is limited "
                                              "to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
-    QLabel *label4 = new QLabel(i18n("Credit:"), parent);
+    d->creditCheck = new QCheckBox(i18n("Credit:"), parent);
     d->creditEdit  = new KLineEdit(parent);
     d->creditEdit->setValidator(asciiValidator);
     d->creditEdit->setMaxLength(32);
-    label4->setBuddy(d->creditEdit);
-    vlay->addWidget(label4);
+    vlay->addWidget(d->creditCheck);
     vlay->addWidget(d->creditEdit);
     QWhatsThis::add(d->creditEdit, i18n("<p>Set here the content provider. "
                                         "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
-    QLabel *label5 = new QLabel(i18n("Source:"), parent);
+    d->sourceCheck = new QCheckBox(i18n("Source:"), parent);
     d->sourceEdit  = new KLineEdit(parent);
     d->sourceEdit->setValidator(asciiValidator);
     d->sourceEdit->setMaxLength(32);
-    label5->setBuddy(d->sourceEdit);
-    vlay->addWidget(label5);
+    vlay->addWidget(d->sourceCheck);
     vlay->addWidget(d->sourceEdit);
     QWhatsThis::add(d->sourceEdit, i18n("<p>Set here the original owner of content. "
                                         "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
-    QLabel *label6 = new QLabel(i18n("Contact:"), parent);
+    d->contactCheck = new QCheckBox(i18n("Contact:"), parent);
     d->contactEdit  = new KLineEdit(parent);
     d->contactEdit->setValidator(asciiValidator);
     d->contactEdit->setMaxLength(128);
-    label6->setBuddy(d->sourceEdit);
-    vlay->addWidget(label6);
+    vlay->addWidget(d->contactCheck);
     vlay->addWidget(d->contactEdit);
     QWhatsThis::add(d->contactEdit, i18n("<p>Set here the person or organisation to contact. "
                                          "This field is limited to 128 ASCII characters."));
@@ -153,6 +161,26 @@ IPTCCredits::IPTCCredits(QWidget* parent, QByteArray& iptcData)
     vlay->addWidget(iptcNote);
     vlay->addStretch();
                                          
+    // --------------------------------------------------------
+
+    connect(d->copyrightCheck, SIGNAL(toggled(bool)),
+            d->copyrightEdit, SLOT(setEnabled(bool)));
+
+    connect(d->bylineCheck, SIGNAL(toggled(bool)),
+            d->bylineEdit, SLOT(setEnabled(bool)));
+
+    connect(d->bylineTitleCheck, SIGNAL(toggled(bool)),
+            d->bylineTitleEdit, SLOT(setEnabled(bool)));
+
+    connect(d->creditCheck, SIGNAL(toggled(bool)),
+            d->creditEdit, SLOT(setEnabled(bool)));
+
+    connect(d->sourceCheck, SIGNAL(toggled(bool)),
+            d->sourceEdit, SLOT(setEnabled(bool)));
+
+    connect(d->contactCheck, SIGNAL(toggled(bool)),
+            d->contactEdit, SLOT(setEnabled(bool)));
+
     // --------------------------------------------------------
         
     readMetadata(iptcData);
@@ -167,23 +195,92 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
-    d->copyrightEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Copyright", false));
-    d->bylineEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Byline", false));
-    d->bylineTitleEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.BylineTitle", false));
-    d->creditEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Credit", false));
-    d->sourceEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Source", false));
-    d->contactEdit->setText(exiv2Iface.getIptcTagString("Iptc.Application2.Contact", false));
+    QString data;
+
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Copyright", false);    
+    if (!data.isNull())
+    {
+        d->copyrightEdit->setText(data);
+        d->copyrightCheck->setChecked(true);
+    }
+    d->copyrightEdit->setEnabled(d->copyrightCheck->isChecked());
+
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Byline", false);    
+    if (!data.isNull())
+    {
+        d->bylineEdit->setText(data);
+        d->bylineCheck->setChecked(true);
+    }
+    d->bylineEdit->setEnabled(d->bylineCheck->isChecked());
+
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.BylineTitle", false);    
+    if (!data.isNull())
+    {
+        d->bylineTitleEdit->setText(data);
+        d->bylineTitleCheck->setChecked(true);
+    }
+    d->bylineTitleEdit->setEnabled(d->bylineTitleCheck->isChecked());
+
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Credit", false);    
+    if (!data.isNull())
+    {
+        d->creditEdit->setText(data);
+        d->creditCheck->setChecked(true);
+    }
+    d->creditEdit->setEnabled(d->creditCheck->isChecked());
+
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Source", false);    
+    if (!data.isNull())
+    {
+        d->sourceEdit->setText(data);
+        d->sourceCheck->setChecked(true);
+    }
+    d->sourceEdit->setEnabled(d->sourceCheck->isChecked());
+
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Contact", false);    
+    if (!data.isNull())
+    {
+        d->contactEdit->setText(data);
+        d->contactCheck->setChecked(true);
+    }
+    d->contactEdit->setEnabled(d->contactCheck->isChecked());
 }
 
 void IPTCCredits::applyMetadata(QByteArray& iptcData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
-    exiv2Iface.setIptcTagString("Iptc.Application2.Copyright", d->copyrightEdit->text());
-    exiv2Iface.setIptcTagString("Iptc.Application2.Byline", d->bylineEdit->text());
-    exiv2Iface.setIptcTagString("Iptc.Application2.BylineTitle", d->bylineTitleEdit->text());
-    exiv2Iface.setIptcTagString("Iptc.Application2.Credit", d->creditEdit->text());
-    exiv2Iface.setIptcTagString("Iptc.Application2.Source", d->sourceEdit->text());    exiv2Iface.setIptcTagString("Iptc.Application2.Contact", d->contactEdit->text());
+
+    if (d->copyrightCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.Copyright", d->copyrightEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.Copyright");
+
+    if (d->bylineCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.Byline", d->bylineEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.Byline");
+
+    if (d->bylineTitleCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.BylineTitle", d->bylineTitleEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.BylineTitle");
+
+    if (d->creditCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.Credit", d->creditEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.Credit");
+
+    if (d->sourceCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.Source", d->sourceEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.Source");
+
+    if (d->contactCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.Contact", d->contactEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.Contact");
+
     iptcData = exiv2Iface.getIptc();
 }
 
