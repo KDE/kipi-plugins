@@ -1213,4 +1213,87 @@ void Exiv2Iface::convertToRational(double number, long int* numerator,
     *denominator = (int)denTemp;
 }
 
+QStringList Exiv2Iface::getImageKeywords() const
+{
+    try
+    {    
+        if (!d->iptcMetadata.empty())
+        {
+            QStringList keywords;          
+            Exiv2::IptcData iptcData(d->iptcMetadata);
+
+            for (Exiv2::IptcData::iterator it = iptcData.begin(); it != iptcData.end(); ++it)
+            {
+                QString key = QString::fromLocal8Bit(it->key().c_str());
+                
+                if (key == QString("Iptc.Application2.Keywords"))
+                {
+                    QString val(it->toString().c_str());
+                    keywords.append(val);
+                }
+            }
+            
+            return keywords;
+        }
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot get IPTC Keywords from image using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }        
+    
+    return QStringList();
+}
+
+bool Exiv2Iface::setImageKeywords(const QStringList& oldKeywords, const QStringList& newKeywords)
+{
+    try
+    {    
+        QStringList oldkeys = oldKeywords;
+        QStringList newkeys = newKeywords;
+        
+        // Remove all old keywords.
+        Exiv2::IptcData iptcData(d->iptcMetadata);
+        Exiv2::IptcData::iterator it = iptcData.begin();
+
+        while(it != iptcData.end())
+        {
+            QString key = QString::fromLocal8Bit(it->key().c_str());
+            QString val(it->toString().c_str());
+            
+            if (key == QString("Iptc.Application2.Keywords") && oldKeywords.contains(val))
+                it = iptcData.erase(it);
+            else 
+                ++it;
+        };
+
+        // Add new keywords. Note that Keywords IPTC tag is limited to 64 char but can be redondant.
+
+        Exiv2::IptcKey iptcTag("Iptc.Application2.Keywords");
+
+        for (QStringList::iterator it = newkeys.begin(); it != newkeys.end(); ++it)
+        {
+            QString key = *it;
+            key.truncate(64);
+            
+            Exiv2::Value::AutoPtr val = Exiv2::Value::create(Exiv2::asciiString);
+            val->read(key.latin1());
+            iptcData.add(iptcTag, val.get());        
+        }
+
+        d->iptcMetadata = iptcData;
+
+        return true;
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot set IPTC Keywords into image using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }        
+    
+    return false;
+}
+
 }  // NameSpace KIPIPlugins
