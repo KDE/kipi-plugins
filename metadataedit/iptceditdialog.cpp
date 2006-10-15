@@ -43,6 +43,7 @@
 #include "iptcstatus.h"
 #include "iptcorigin.h"
 #include "iptcdatetime.h"
+#include "iptckeywords.h"
 #include "iptceditdialog.h"
 #include "iptceditdialog.moc"
 
@@ -57,12 +58,14 @@ public:
     IPTCEditDialogDialogPrivate()
     {
         page_caption  = 0;
+        page_keywords = 0;
         page_credits  = 0;
         page_status   = 0;
         page_origin   = 0;
         page_datetime = 0;
 
         captionPage   = 0;
+        keywordsPage  = 0;
         creditsPage   = 0;
         statusPage    = 0;
         originPage    = 0;
@@ -72,12 +75,14 @@ public:
     QByteArray   iptcData;
 
     QFrame       *page_caption;
+    QFrame       *page_keywords;
     QFrame       *page_credits;
     QFrame       *page_status;
     QFrame       *page_origin;
     QFrame       *page_datetime;
 
     IPTCCaption  *captionPage;
+    IPTCKeywords *keywordsPage;
     IPTCCredits  *creditsPage;
     IPTCStatus   *statusPage;
     IPTCOrigin   *originPage;
@@ -96,6 +101,10 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, QByteArray iptcData, const QStri
     d->page_caption  = addPage(i18n("Caption"), i18n("IPTC Caption Informations"),
                                BarIcon("editclear", KIcon::SizeMedium));
     d->captionPage   = new IPTCCaption(d->page_caption, d->iptcData);
+
+    d->page_keywords = addPage(i18n("Keywords"), i18n("IPTC Keywords Informations"),
+                               BarIcon("bookmark", KIcon::SizeMedium));
+    d->keywordsPage  = new IPTCKeywords(d->page_keywords, d->iptcData);
 
     d->page_credits  = addPage(i18n("Credits"), i18n("IPTC Credits Informations"),
                                BarIcon("identity", KIcon::SizeMedium));
@@ -160,6 +169,7 @@ QByteArray IPTCEditDialog::getIPTCInfo()
 void IPTCEditDialog::slotOk()
 {
     d->captionPage->applyMetadata(d->iptcData);
+    d->keywordsPage->applyMetadata(d->iptcData);
     d->creditsPage->applyMetadata(d->iptcData);
     d->statusPage->applyMetadata(d->iptcData);
     d->originPage->applyMetadata(d->iptcData);
