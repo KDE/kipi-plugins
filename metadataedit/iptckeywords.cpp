@@ -86,6 +86,8 @@ IPTCKeywords::IPTCKeywords(QWidget* parent, QByteArray& iptcData)
     d->keywordEdit   = new KLineEdit(parent);
     d->keywordEdit->setValidator(asciiValidator);
     d->keywordEdit->setMaxLength(64);
+    QWhatsThis::add(d->keywordEdit, i18n("<p>Enter here a new keyword. "
+                    "This field is limited to 64 ASCII characters."));
 
     d->keywordsBox   = new KListBox(parent);
     d->keywordsBox->setVScrollBarMode(QScrollView::AlwaysOn);
