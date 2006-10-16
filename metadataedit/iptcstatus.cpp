@@ -67,6 +67,7 @@ public:
     QCheckBox *priorityCheck;
     QCheckBox *objectTypeCheck;
     QCheckBox *objectCycleCheck;
+    QCheckBox *objectAttributeCheck;
     QCheckBox *statusCheck;
     QCheckBox *JobIDCheck;
     QCheckBox *programCheck;
@@ -75,9 +76,11 @@ public:
     QComboBox *priorityCB;
     QComboBox *objectCycleCB;
     QComboBox *objectTypeCB;
+    QComboBox *objectAttributeCB;
 
     KLineEdit *statusEdit;
     KLineEdit *objectTypeDescEdit;
+    KLineEdit *objectAttributeDescEdit;
     KLineEdit *JobIDEdit;
     KLineEdit *programEdit;
     KLineEdit *programVersionEdit;
@@ -88,7 +91,7 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
 {
     d = new IPTCStatusPriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 12, 2, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 14, 2, KDialog::spacingHint());
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -139,16 +142,52 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
     d->objectTypeCB       = new QComboBox(false, parent);
     d->objectTypeDescEdit = new KLineEdit(parent);
     d->objectTypeDescEdit->setValidator(asciiValidator);
-    d->objectTypeDescEdit->setMaxLength(32);
+    d->objectTypeDescEdit->setMaxLength(64);
     d->objectTypeCB->insertItem(i18n("News"),     0);
     d->objectTypeCB->insertItem(i18n("Data"),     1);
     d->objectTypeCB->insertItem(i18n("Advisory"), 2);
     grid->addMultiCellWidget(d->objectTypeCheck, 4, 4, 0, 0);
     grid->addMultiCellWidget(d->objectTypeCB, 4, 4, 1, 1);
-    grid->addMultiCellWidget(d->objectTypeDescEdit, 4, 4, 2, 2);
+    grid->addMultiCellWidget(d->objectTypeDescEdit, 5, 5, 0, 2);
     QWhatsThis::add(d->objectTypeCB, i18n("<p>Select here the editorial type of content."));
-    QWhatsThis::add(d->objectTypeDescEdit, i18n("<p>Set here the editorial description of content. "
+    QWhatsThis::add(d->objectTypeDescEdit, i18n("<p>Set here the editorial type description of content. "
                                                 "This field is limited to 64 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->objectAttributeCheck    = new QCheckBox(i18n("Object Attribute:"), parent);
+    d->objectAttributeCB       = new QComboBox(false, parent);
+    d->objectAttributeDescEdit = new KLineEdit(parent);
+    d->objectAttributeDescEdit->setValidator(asciiValidator);
+    d->objectAttributeDescEdit->setMaxLength(64);
+    d->objectAttributeCB->insertItem(i18n("Current"),                           0);
+    d->objectAttributeCB->insertItem(i18n("Analysis"),                          1);
+    d->objectAttributeCB->insertItem(i18n("Archive material"),                  2);
+    d->objectAttributeCB->insertItem(i18n("Background"),                        3);
+    d->objectAttributeCB->insertItem(i18n("Feature"),                           4);
+    d->objectAttributeCB->insertItem(i18n("Forecast"),                          5);
+    d->objectAttributeCB->insertItem(i18n("History"),                           6);
+    d->objectAttributeCB->insertItem(i18n("Obituary"),                          7);
+    d->objectAttributeCB->insertItem(i18n("Opinion"),                           8);
+    d->objectAttributeCB->insertItem(i18n("Polls & Surveys"),                   9);
+    d->objectAttributeCB->insertItem(i18n("Profile"),                           10);
+    d->objectAttributeCB->insertItem(i18n("Results Listings & Table"),          11);
+    d->objectAttributeCB->insertItem(i18n("Side bar & Supporting information"), 12);
+    d->objectAttributeCB->insertItem(i18n("Summary"),                           13);
+    d->objectAttributeCB->insertItem(i18n("Transcript & Verbatim"),             14);
+    d->objectAttributeCB->insertItem(i18n("Interview"),                         15);
+    d->objectAttributeCB->insertItem(i18n("From the Scene"),                    16);
+    d->objectAttributeCB->insertItem(i18n("Retrospective"),                     17);
+    d->objectAttributeCB->insertItem(i18n("Statistics"),                        18);
+    d->objectAttributeCB->insertItem(i18n("Update"),                            19);
+    d->objectAttributeCB->insertItem(i18n("Wrap-up"),                           20);
+    d->objectAttributeCB->insertItem(i18n("Press Release"),                     21);
+    grid->addMultiCellWidget(d->objectAttributeCheck, 6, 6, 0, 0);
+    grid->addMultiCellWidget(d->objectAttributeCB, 6, 6, 1, 2);
+    grid->addMultiCellWidget(d->objectAttributeDescEdit, 7, 7, 0, 2);
+    QWhatsThis::add(d->objectAttributeCB, i18n("<p>Select here the editorial attribute of content."));
+    QWhatsThis::add(d->objectAttributeDescEdit, i18n("<p>Set here the editorial attribute description of "
+                                                     "content. This field is limited to 64 ASCII characters."));
 
     // --------------------------------------------------------
 
@@ -156,8 +195,8 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
     d->JobIDEdit  = new KLineEdit(parent);
     d->JobIDEdit->setValidator(asciiValidator);
     d->JobIDEdit->setMaxLength(32);
-    grid->addMultiCellWidget(d->JobIDCheck, 5, 5, 0, 2);
-    grid->addMultiCellWidget(d->JobIDEdit, 6, 6, 0, 2);
+    grid->addMultiCellWidget(d->JobIDCheck, 8, 8, 0, 2);
+    grid->addMultiCellWidget(d->JobIDEdit, 9, 9, 0, 2);
     QWhatsThis::add(d->JobIDEdit, i18n("<p>Set here the string that identifies content that recurs. "
                                        "This field is limited to 32 ASCII characters."));
 
@@ -167,8 +206,8 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
     d->programEdit  = new KLineEdit(parent);
     d->programEdit->setValidator(asciiValidator);
     d->programEdit->setMaxLength(32);
-    grid->addMultiCellWidget(d->programCheck, 7, 7, 0, 2);
-    grid->addMultiCellWidget(d->programEdit, 8, 8, 0, 2);
+    grid->addMultiCellWidget(d->programCheck, 10, 10, 0, 2);
+    grid->addMultiCellWidget(d->programEdit, 11, 11, 0, 2);
     QWhatsThis::add(d->programEdit, i18n("<p>Set here the content creation program name. "
                                          "This field is limited to 32 ASCII characters."));
 
@@ -178,8 +217,8 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
     d->programVersionEdit  = new KLineEdit(parent);
     d->programVersionEdit->setValidator(asciiValidator);
     d->programVersionEdit->setMaxLength(10);
-    grid->addMultiCellWidget(d->programVersionCheck, 9, 9, 0, 2);
-    grid->addMultiCellWidget(d->programVersionEdit, 10, 10, 0, 0);
+    grid->addMultiCellWidget(d->programVersionCheck, 12, 12, 0, 2);
+    grid->addMultiCellWidget(d->programVersionEdit, 13, 13, 0, 0);
     QWhatsThis::add(d->programVersionEdit, i18n("<p>Set here the content creation program version. "
                                                 "This field is limited to 10 ASCII characters."));
 
@@ -187,9 +226,9 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
 
     QLabel *iptcNote = new QLabel(i18n("<b>Note: IPTC text tags only support printable "
                                        "ASCII characters set.</b>"), parent);
-    grid->addMultiCellWidget(iptcNote, 11, 11, 0, 2);
+    grid->addMultiCellWidget(iptcNote, 14, 14, 0, 2);
     grid->setColStretch(2, 10);                     
-    grid->setRowStretch(12, 10);                     
+    grid->setRowStretch(14, 10);                     
 
     // --------------------------------------------------------
 
@@ -204,6 +243,12 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
 
     connect(d->objectTypeCheck, SIGNAL(toggled(bool)),
             d->objectTypeDescEdit, SLOT(setEnabled(bool)));
+
+    connect(d->objectAttributeCheck, SIGNAL(toggled(bool)),
+            d->objectAttributeCB, SLOT(setEnabled(bool)));
+
+    connect(d->objectAttributeCheck, SIGNAL(toggled(bool)),
+            d->objectAttributeDescEdit, SLOT(setEnabled(bool)));
 
     connect(d->statusCheck, SIGNAL(toggled(bool)),
             d->statusEdit, SLOT(setEnabled(bool)));
@@ -247,7 +292,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
         QString typeSec = data.section(":", 0, 0);
         if (!typeSec.isEmpty())
         {
-            int type = typeSec.toInt();
+            int type = typeSec.toInt()-1;
             if (type < 3 && type >= 0)
             {
                 d->objectTypeCB->setCurrentItem(type);
@@ -258,6 +303,24 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     }
     d->objectTypeCB->setEnabled(d->objectTypeCheck->isChecked());
     d->objectTypeDescEdit->setEnabled(d->objectTypeCheck->isChecked());
+
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectAttribute", false);    
+    if (!data.isNull())
+    {
+        QString attSec = data.section(":", 0, 0);
+        if (!attSec.isEmpty())
+        {
+            int att = attSec.toInt()-1;
+            if (att < 21 && att >= 0)
+            {
+                d->objectAttributeCB->setCurrentItem(att);
+                d->objectAttributeDescEdit->setText(data.section(":", -1));
+                d->objectAttributeCheck->setChecked(true);
+            }
+        }
+    }
+    d->objectAttributeCB->setEnabled(d->objectAttributeCheck->isChecked());
+    d->objectAttributeDescEdit->setEnabled(d->objectAttributeCheck->isChecked());
 
     data = exiv2Iface.getIptcTagString("Iptc.Application2.FixtureId", false);    
     if (!data.isNull())
@@ -318,12 +381,23 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
 
     if (d->objectTypeCheck->isChecked())
     {
-        QString objectType = QString("0%1:%2").arg(d->objectTypeCB->currentItem())
-                                              .arg(d->objectTypeDescEdit->text());
+        QString objectType;
+        objectType.sprintf("%2d", d->objectTypeCB->currentItem()+1);
+        objectType.append(QString(":%1").arg(d->objectTypeDescEdit->text()));
         exiv2Iface.setIptcTagString("Iptc.Application2.ObjectType", objectType);
     }
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectType");
+        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectAttribute");
+
+    if (d->objectAttributeCheck->isChecked())
+    {
+        QString objectAttribute;
+        objectAttribute.sprintf("%3d", d->objectAttributeCB->currentItem()+1);
+        objectAttribute.append(QString(":%1").arg(d->objectAttributeDescEdit->text()));
+        exiv2Iface.setIptcTagString("Iptc.Application2.ObjectAttribute", objectAttribute);
+    }
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectAttribute");
 
     if (d->JobIDCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Application2.FixtureId", d->JobIDEdit->text());
