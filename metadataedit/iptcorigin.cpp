@@ -107,7 +107,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
     d->objectNameEdit->setMaxLength(64);
     grid->addMultiCellWidget(d->objectNameCheck, 0, 0, 0, 2);
     grid->addMultiCellWidget(d->objectNameEdit, 1, 1, 0, 2);
-    QWhatsThis::add(d->objectNameEdit, i18n("<p>Set here the shorthland reference of content. "
+    QWhatsThis::add(d->objectNameEdit, i18n("<p>Set here the shorthand reference of content. "
                     "This field is limited to 64 ASCII characters."));
 
     // --------------------------------------------------------
