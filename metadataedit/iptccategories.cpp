@@ -97,7 +97,7 @@ IPTCCategories::IPTCCategories(QWidget* parent, QByteArray& iptcData)
     d->subCategoryEdit = new KLineEdit(parent);
     d->subCategoryEdit->setValidator(asciiValidator);
     d->subCategoryEdit->setMaxLength(32);
-    QWhatsThis::add(d->subjectEdit, i18n("<p>Enter here a new supplemental category of content. "
+    QWhatsThis::add(d->subCategoryEdit, i18n("<p>Enter here a new supplemental category of content. "
                     "This field is limited to 32 ASCII characters."));
 
     d->subCategoriesBox = new KListBox(parent);
