@@ -35,6 +35,7 @@
 
 // Local includes.
 
+#include "pluginsversion.h"
 #include "exiv2iface.h"
 #include "iptcstatus.h"
 #include "iptcstatus.moc"
@@ -53,15 +54,11 @@ public:
         objectTypeCB        = 0;
         statusEdit          = 0;
         JobIDEdit           = 0;
-        programEdit         = 0;
-        programVersionEdit  = 0;
         priorityCheck       = 0;
         objectCycleCheck    = 0;
         objectTypeCheck     = 0;
         statusCheck         = 0;
         JobIDCheck          = 0;
-        programCheck        = 0;
-        programVersionCheck = 0;
     }
 
     QCheckBox *priorityCheck;
@@ -70,8 +67,6 @@ public:
     QCheckBox *objectAttributeCheck;
     QCheckBox *statusCheck;
     QCheckBox *JobIDCheck;
-    QCheckBox *programCheck;
-    QCheckBox *programVersionCheck;
 
     QComboBox *priorityCB;
     QComboBox *objectCycleCB;
@@ -82,8 +77,6 @@ public:
     KLineEdit *objectTypeDescEdit;
     KLineEdit *objectAttributeDescEdit;
     KLineEdit *JobIDEdit;
-    KLineEdit *programEdit;
-    KLineEdit *programVersionEdit;
 };
 
 IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
@@ -91,7 +84,7 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
 {
     d = new IPTCStatusPriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 14, 2, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 11, 2, KDialog::spacingHint());
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -191,7 +184,7 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    d->JobIDCheck = new QCheckBox(i18n("Job ID:"), parent);
+    d->JobIDCheck = new QCheckBox(i18n("Job Identification:"), parent);
     d->JobIDEdit  = new KLineEdit(parent);
     d->JobIDEdit->setValidator(asciiValidator);
     d->JobIDEdit->setMaxLength(32);
@@ -202,33 +195,11 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    d->programCheck = new QCheckBox(i18n("Program:"), parent);
-    d->programEdit  = new KLineEdit(parent);
-    d->programEdit->setValidator(asciiValidator);
-    d->programEdit->setMaxLength(32);
-    grid->addMultiCellWidget(d->programCheck, 10, 10, 0, 2);
-    grid->addMultiCellWidget(d->programEdit, 11, 11, 0, 2);
-    QWhatsThis::add(d->programEdit, i18n("<p>Set here the content creation program name. "
-                                         "This field is limited to 32 ASCII characters."));
-
-    // --------------------------------------------------------
-
-    d->programVersionCheck = new QCheckBox(i18n("Program Version:"), parent);
-    d->programVersionEdit  = new KLineEdit(parent);
-    d->programVersionEdit->setValidator(asciiValidator);
-    d->programVersionEdit->setMaxLength(10);
-    grid->addMultiCellWidget(d->programVersionCheck, 12, 12, 0, 2);
-    grid->addMultiCellWidget(d->programVersionEdit, 13, 13, 0, 0);
-    QWhatsThis::add(d->programVersionEdit, i18n("<p>Set here the content creation program version. "
-                                                "This field is limited to 10 ASCII characters."));
-
-    // --------------------------------------------------------
-
     QLabel *iptcNote = new QLabel(i18n("<b>Note: IPTC text tags only support printable "
                                        "ASCII characters set.</b>"), parent);
-    grid->addMultiCellWidget(iptcNote, 14, 14, 0, 2);
+    grid->addMultiCellWidget(iptcNote, 10, 10, 0, 2);
     grid->setColStretch(2, 10);                     
-    grid->setRowStretch(14, 10);                     
+    grid->setRowStretch(11, 10);                     
 
     // --------------------------------------------------------
 
@@ -255,12 +226,6 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
 
     connect(d->JobIDCheck, SIGNAL(toggled(bool)),
             d->JobIDEdit, SLOT(setEnabled(bool)));
-
-    connect(d->programCheck, SIGNAL(toggled(bool)),
-            d->programEdit, SLOT(setEnabled(bool)));
-
-    connect(d->programVersionCheck, SIGNAL(toggled(bool)),
-            d->programVersionEdit, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
 
@@ -330,22 +295,6 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     }
     d->JobIDEdit->setEnabled(d->JobIDCheck->isChecked());
 
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Program", false);    
-    if (!data.isNull())
-    {
-        d->programEdit->setText(data);
-        d->programCheck->setChecked(true);
-    }
-    d->programEdit->setEnabled(d->programCheck->isChecked());
-
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.ProgramVersion", false);    
-    if (!data.isNull())
-    {
-        d->programVersionEdit->setText(data);
-        d->programVersionCheck->setChecked(true);
-    }
-    d->programVersionEdit->setEnabled(d->programVersionCheck->isChecked());
-
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Urgency", false);    
     if (!data.isNull())
     {
@@ -404,16 +353,6 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.FixtureId");
 
-    if (d->programCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Program", d->programEdit->text());
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Program");
-
-    if (d->programVersionCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.ProgramVersion", d->programVersionEdit->text());
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.ProgramVersion");
-
     if (d->priorityCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Application2.Urgency", QString::number(d->priorityCB->currentItem()));
     else
@@ -438,6 +377,8 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
     }
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.ObjectCycle");
+
+    exiv2Iface.setImageProgramId(QString("Kipi MetadataEdit"), QString(kipiplugins_version));
 
     iptcData = exiv2Iface.getIptc();
 }
