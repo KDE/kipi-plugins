@@ -83,6 +83,9 @@ public:
     QStringList getImageKeywords() const;
     bool setImageKeywords(const QStringList& oldKeywords, const QStringList& newKeywords);
 
+    QStringList getImageSubCategories() const;
+    bool setImageSubCategories(const QStringList& oldSubCategories, const QStringList& newSubCategories);
+
     bool setGPSInfo(double altitude, double latitude, double longitude);
     bool getGPSInfo(double& altitude, double& latitude, double& longitude);
     bool removeGPSInfo();
