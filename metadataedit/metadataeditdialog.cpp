@@ -50,6 +50,7 @@
 
 // Local includes.
 
+#include "exiv2iface.h"
 #include "pluginsversion.h"
 #include "iptceditdialog.h"
 #include "metadataitem.h"
@@ -334,6 +335,51 @@ void MetadataEditDialog::slotLoadExif()
 
 void MetadataEditDialog::slotLoadIptc()
 {
+    if (!d->listView->currentItem())
+    {
+        KMessageBox::information(this, i18n("Please, select at least one picture from "
+                     "the list to edit IPTC metadata manually."), i18n("Edit Metadata"));    
+        return;
+    }
+
+    KURL loadIPTCFile = KFileDialog::getOpenURL(KGlobalSettings::documentPath(),
+                                                QString::null, this,
+                                                i18n("Select File to Load IPTC data") );
+    if( loadIPTCFile.isEmpty() )
+       return;
+    
+    KIPIPlugins::Exiv2Iface exiv2Iface;
+    if (!exiv2Iface.load(loadIPTCFile.path()))
+    {
+        KMessageBox::error(this, i18n("Cannot load metadata from %1!").arg(loadIPTCFile.fileName()), 
+                           i18n("Edit Metadata"));    
+        return;
+    }
+    
+    QByteArray iptcData = exiv2Iface.getIptc();
+    if (iptcData.isEmpty())
+    {
+        KMessageBox::error(this, i18n("%1 donot have IPTC metadata!").arg(loadIPTCFile.fileName()), 
+                           i18n("Edit Metadata"));    
+        return;
+    }        
+
+    IPTCEditDialog dlg(this, iptcData, loadIPTCFile.fileName());
+
+    if (dlg.exec() == KDialogBase::Accepted)
+    {
+        QListViewItemIterator it(d->listView);
+
+        while (it.current())
+        {
+            if (it.current()->isSelected())
+            {
+                MetadataItem *selItem = (MetadataItem*)it.current();
+                selItem->setIptc(dlg.getIPTCInfo(), true);
+            }
+            ++it;
+        }
+    }
 }
 
 void MetadataEditDialog::slotRemoveExif()
