@@ -11,7 +11,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "pluginsversion.h"
 #include "imagelist.h"
 #include "imagelistitem.h"
 #include "ipodexportdialog.h"
@@ -30,11 +29,9 @@
 #include <qwhatsthis.h>
 #include <qwmatrix.h>
 
-#include <kaboutdata.h>
-#include <khelpmenu.h>
-#include <kpopupmenu.h>
 #include <kdebug.h>
 #include <kfileitem.h>
+#include <kfiledialog.h> // add images
 #include <kiconloader.h>
 #include <kinputdialog.h> //new album
 #include <kio/previewjob.h>
@@ -45,52 +42,36 @@
 #include <kprogress.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
-#include <kapplication.h>
 
+#if KIPI_PLUGIN
 #include <libkipi/imagedialog.h>
+#endif
 
-#define debug() kdDebug( 51000 )
+#define debug() kdDebug()
 
 using namespace IpodExport;
 
-UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget *parent )
+UploadDialog::UploadDialog(
+                            #if KIPI_PLUGIN
+                            KIPI::Interface* interface,
+                            #endif
+                            QString caption, QWidget *parent )
     : KDialogBase( KDialogBase::Plain, caption, Help|User1|Close,
                    Cancel, parent, "SimpleUploadDialog", false, false, i18n("&Start"))
+#if KIPI_PLUGIN
     , m_interface( interface )
+#endif
     , m_itdb( 0 )
     , m_transferring( false )
     , m_mountPoint( QString::null )
     , m_deviceNode( QString::null )
 {
-
-    // ---------------------------------------------------------------
-    // About data and help button.
-
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("iPod Export"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Plugin to export pictures to an iPod device"),
-                                       KAboutData::License_GPL,
-                                       "(c) 2006, Seb Ruiz",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
-
-    about->addAuthor("Seb Ruiz", I18N_NOOP("Author and Maintainer"),
-                     "me at sebruiz dot net");
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("iPod Export Handbook"),
-                                 this, SLOT(slotHelp()), 0, -1, 0);
-    actionButton(Help)->setPopup( helpMenu->menu() );
-
-    // ---------------------------------------------------------------
-
     QWidget       *box = plainPage();
     QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
 
     dvlay->setMargin( 2 );
 
+#if KIPI_PLUGIN
     QFrame *headerFrame = new QFrame( box );
     headerFrame->setFrameStyle( QFrame::Panel | QFrame::Sunken );
 
@@ -115,7 +96,7 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
     dvlay->addWidget( headerFrame );
-
+#endif
 
     if( !openDevice() )
     {
@@ -239,6 +220,7 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
     /// populate the ipod view with a list of albums etc
     getIpodAlbums();
 
+#if KIPI_PLUGIN
     /// add selected items to the ImageList
     KIPI::ImageCollection images = interface->currentSelection();
 
@@ -250,6 +232,7 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
             addUrlToList( (*it).path() );
         }
     }
+#endif
 
     enableButtons();
 
@@ -284,11 +267,6 @@ UploadDialog::UploadDialog( KIPI::Interface* interface, QString caption, QWidget
                     this,         SLOT( slotImagesFilesButtonRem() ) );
 }
 
-void 
-UploadDialog::slotHelp()
-{
-    KApplication::kApplication()->invokeHelp("ipodexport", "kipi-plugins");
-}
 
 void
 UploadDialog::getIpodAlbums()
@@ -323,15 +301,8 @@ UploadDialog::getIpodAlbumPhotos( KListViewItem *item, Itdb_PhotoAlbum *album )
 }
 
 void
-UploadDialog::reloadIpodAlbum( const QString &album )
+UploadDialog::reloadIpodAlbum( KListViewItem *item, Itdb_PhotoAlbum *album )
 {
-    QListViewItem *item = 0;
-    for( item = m_ipodAlbumList->firstChild(); item; item = item->nextSibling() )
-    {
-        if( item->text(0) == album )
-            break;
-    }
-
     if( !item ) return;
 
     while( item->firstChild() )
@@ -341,11 +312,13 @@ UploadDialog::reloadIpodAlbum( const QString &album )
     for( GList *it = m_itdb->photoalbums; it; it = it->next )
     {
         ipodAlbum = (Itdb_PhotoAlbum *)it->data;
-        if( strcmp( ipodAlbum->name, album.utf8() ) == 0 )
+        if( strcmp( ipodAlbum->name, album->name ) == 0 )
             break; // we found the album
     }
 
-    getIpodAlbumPhotos( static_cast<KListViewItem*>(item), ipodAlbum );
+    dynamic_cast<ImageListItem*>(item)->setPhotoAlbum( ipodAlbum );
+
+    getIpodAlbumPhotos( item, ipodAlbum );
 }
 
 void
@@ -374,7 +347,7 @@ UploadDialog::slotProcessStart()
 
     m_transferring = true;
 
-    QString albumName = selected->text( 0 );
+    Itdb_PhotoAlbum *album = dynamic_cast<ImageListItem*>(selected)->photoAlbum();
 
     enableButton( KDialogBase::User1, false );
     enableButton( KDialogBase::Close, false );
@@ -384,8 +357,8 @@ UploadDialog::slotProcessStart()
     while( QListViewItem *item = m_imageList->firstChild() )
     {
     #define item static_cast<ImageListItem*>(item)
-        debug() << "Uploading " << item->pathSrc().utf8() << " to ipod album " << albumName.utf8() << endl;
-        itdb_photodb_add_photo( m_itdb, albumName.utf8(), item->pathSrc().utf8() );
+        debug() << "Uploading " << item->pathSrc().utf8() << " to ipod album " << item->text(0) << endl;
+        itdb_photodb_add_photo( m_itdb, QFile::encodeName( selected->text(0) ), item->pathSrc().utf8() );
         m_progress->advance( 1 );
         delete item;
     #undef  item
@@ -400,7 +373,7 @@ UploadDialog::slotProcessStart()
 
     m_progress->advance( 1 );
 
-    reloadIpodAlbum( albumName );
+    reloadIpodAlbum( dynamic_cast<KListViewItem*>(selected), album );
 
     m_transferring = false;
 
@@ -479,6 +452,7 @@ UploadDialog::slotImageSelected( QListViewItem *item )
 void
 UploadDialog::slotGotPreview(const KFileItem* url, const QPixmap &pixmap)
 {
+#if KIPI_PLUGIN
     QPixmap pix( pixmap );
 
     // Rotate the thumbnail compared to the angle the host application dictate
@@ -494,15 +468,27 @@ UploadDialog::slotGotPreview(const KFileItem* url, const QPixmap &pixmap)
     }
 
     m_imagePreview->setPixmap(pix);
+#else
+    Q_UNUSED( url );
+    m_imagePreview->setPixmap( pixmap );
+#endif
 }
 
 void
 UploadDialog::slotImagesFilesButtonAdd()
 {
     QStringList fileList;
-
-    KURL::List urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
-
+    KURL::List urls;
+#if KIPI_PLUGIN
+    urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
+#else
+    const QString filter = QString( "*.jpg *.jpeg *.jpe *.tiff *.gif *.png *.bmp|" + i18n("Image files") );
+    KFileDialog dlg( QString::null, filter, this, "addImagesDlg", true );
+    dlg.setCaption( i18n("Add Images") );
+    dlg.setMode( KFile::Files | KFile::Directory );
+    dlg.exec();
+    urls = dlg.selectedURLs();
+#endif
     for( KURL::List::Iterator it = urls.begin() ; it != urls.end() ; ++it )
         fileList << (*it).path();
 
@@ -526,9 +512,11 @@ void
 UploadDialog::slotCreateIpodAlbum()
 {
     QString helper;
+    #if KIPI_PLUGIN
     KIPI::ImageCollection album = m_interface->currentAlbum();
     if( album.isValid() )
         helper = album.name();
+    #endif
 
     bool ok = false;
     QString newAlbum = KInputDialog::getText( i18n("New iPod Photo Album"),
@@ -584,15 +572,17 @@ UploadDialog::slotDeleteIpodAlbum()
 
     switch( selected->depth() )
     {
+    #define item dynamic_cast<ImageListItem*>(selected)
         case 0: //album
             debug() << "Deleting album: " << text << endl;
-            itdb_photodb_photoalbum_remove( m_itdb, dynamic_cast<ImageListItem*>(selected)->photoAlbum() );
+            itdb_photodb_photoalbum_remove( m_itdb, item->photoAlbum(), true/*remove photos*/);
             break;
 
         case 1: //image
             debug() << "Deleting image with id: " << text << endl;
-            itdb_photodb_remove_photo( m_itdb, text.toInt() );
+            itdb_photodb_remove_photo( m_itdb, item->photoAlbum(), text.toInt() );
             break;
+    #undef item
     }
 
     delete selected;
@@ -732,13 +722,16 @@ UploadDialog::openDevice()
         {
 
             m_itdb = itdb_photodb_new();
-            itdb_device_set_mountpoint( m_itdb->device, m_mountPoint.utf8() );
+            itdb_device_set_mountpoint( m_itdb->device, QFile::encodeName( m_mountPoint ) );
 
             if( !m_itdb )
             {
                 debug() << "Could not initialise photodb..." << endl;
                 return false;
             }
+
+            GError *err = 0;
+            itdb_photodb_write( m_itdb, &err );
         }
         else
             return false;

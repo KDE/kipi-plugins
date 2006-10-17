@@ -59,6 +59,7 @@ ImageList::ImageList( ListType type, QWidget *parent, const char *name )
     setResizeMode( QListView::LastColumn );
     setSelectionMode( QListView::Single );
     setAllColumnsShowFocus ( true );
+
 }
 
 void

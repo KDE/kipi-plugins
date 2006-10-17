@@ -18,8 +18,13 @@ extern "C" {
 #include <gpod/itdb.h>
 }
 
+#define KIPI_PLUGIN 1
+
 #include <kdialogbase.h>
+
+#if KIPI_PLUGIN
 #include <libkipi/interface.h>
+#endif
 
 class ImageList;
 
@@ -42,7 +47,12 @@ class UploadDialog : public KDialogBase
     Q_OBJECT
 
     public:
-        UploadDialog( KIPI::Interface* interface, QString caption, QWidget *parent=0 );
+        UploadDialog(
+                        #if KIPI_PLUGIN
+                        KIPI::Interface* interface,
+                        #endif
+                        QString caption, QWidget *parent=0 );
+
         ~UploadDialog()
         {
             if( m_itdb )
@@ -69,18 +79,19 @@ class UploadDialog : public KDialogBase
         void slotCreateIpodAlbum();
         void slotDeleteIpodAlbum();
         void slotRenameIpodAlbum();
-        void slotHelp();
 
     private:
         void addUrlToList( QString file );
         void enableButtons();
         void getIpodAlbums();
         void getIpodAlbumPhotos( KListViewItem *item, Itdb_PhotoAlbum *album );
-        void reloadIpodAlbum( const QString &name );
+        void reloadIpodAlbum( KListViewItem *item, Itdb_PhotoAlbum *album );
 
         bool openDevice(); // connect to the ipod
 
+#if KIPI_PLUGIN
         KIPI::Interface *m_interface;
+#endif
         Itdb_PhotoDB    *m_itdb;
         bool             m_transferring;
 

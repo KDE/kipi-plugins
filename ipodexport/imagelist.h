@@ -34,7 +34,6 @@ class ImageList : public KListView
 Q_OBJECT
 
 public:
-
     enum ListType { UploadType, IpodType };
 
     ImageList( ListType=UploadType, QWidget *parent=0, const char *name=0 );
@@ -45,10 +44,10 @@ signals:
     void addedDropItems( QStringList filesPath );
 
 protected:
-    void dragEnterEvent( QDragEnterEvent *e );
-    void dropEvent( QDropEvent* e );
     bool acceptDrag( QDropEvent* e ) const;
     void contentsDropEvent( QDropEvent* e );
+    void dragEnterEvent( QDragEnterEvent *e );
+    void dropEvent( QDropEvent* e );
     void droppedImagesItems( QDropEvent *e );
     void viewportPaintEvent( QPaintEvent* );
 
