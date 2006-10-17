@@ -175,7 +175,7 @@ EXIFCaption::~EXIFCaption()
 void EXIFCaption::readMetadata(QByteArray& exifData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    exiv2Iface.setIptc(exifData);
     QString data;
 
 /*
