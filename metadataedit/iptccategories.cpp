@@ -85,7 +85,7 @@ IPTCCategories::IPTCCategories(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    d->categoryCheck = new QCheckBox(i18n("Identify subject of content:"), parent);    
+    d->categoryCheck = new QCheckBox(i18n("Identify subject of content (3 chars max):"), parent);    
     d->categoryEdit  = new KLineEdit(parent);
     d->categoryEdit->setValidator(asciiValidator);
     d->categoryEdit->setMaxLength(3);
