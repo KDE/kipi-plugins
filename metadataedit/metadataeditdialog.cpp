@@ -338,7 +338,7 @@ void MetadataEditDialog::slotLoadIptc()
     if (!d->listView->currentItem())
     {
         KMessageBox::information(this, i18n("Please, select at least one picture from "
-                     "the list to edit IPTC metadata manually."), i18n("Edit Metadata"));    
+                     "the list to apply IPTC metadata from a specific picture."), i18n("Edit Metadata"));    
         return;
     }
 
@@ -359,7 +359,7 @@ void MetadataEditDialog::slotLoadIptc()
     QByteArray iptcData = exiv2Iface.getIptc();
     if (iptcData.isEmpty())
     {
-        KMessageBox::error(this, i18n("%1 donot have IPTC metadata!").arg(loadIPTCFile.fileName()), 
+        KMessageBox::error(this, i18n("%1 do not have IPTC metadata!").arg(loadIPTCFile.fileName()), 
                            i18n("Edit Metadata"));    
         return;
     }        
