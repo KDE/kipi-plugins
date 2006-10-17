@@ -25,6 +25,9 @@
 #include <qwhatsthis.h>
 #include <qvalidator.h>
 #include <qcheckbox.h>
+#include <qcombobox.h>
+#include <qlistbox.h>
+#include <qmap.h>
 
 // KDE includes.
 
@@ -51,41 +54,295 @@ public:
         cityEdit           = 0;
         sublocationEdit    = 0;
         provinceEdit       = 0;
-        countryEdit        = 0;
-        countryCodeEdit    = 0;
         locationEdit       = 0;
-        locationCodeEdit   = 0;
         originalTransEdit  = 0;
         objectNameCheck    = 0;
         cityCheck          = 0;
         sublocationCheck   = 0;
         provinceCheck      = 0;
         countryCheck       = 0;
-        countryCodeCheck   = 0;
         locationCheck      = 0;
-        locationCodeCheck  = 0;
         originalTransCheck = 0;
+
+        // Standard ISO 3166 country codes.
+
+        countryCodeMap.insert( "AFG", i18n("Afghanistan") );
+        countryCodeMap.insert( "ALB", i18n("Albania") );
+        countryCodeMap.insert( "DZA", i18n("Algeria") );
+        countryCodeMap.insert( "ASM", i18n("American Samoa") );
+        countryCodeMap.insert( "AND", i18n("Andorra") );
+        countryCodeMap.insert( "AGO", i18n("Angola") );
+        countryCodeMap.insert( "AIA", i18n("Anguilla") );
+        countryCodeMap.insert( "AGO", i18n("Angola") );
+        countryCodeMap.insert( "ATA", i18n("Antarctica") );
+        countryCodeMap.insert( "ATG", i18n("Antigua and Barbuda") );
+        countryCodeMap.insert( "ARG", i18n("Argentina") );
+        countryCodeMap.insert( "ARM", i18n("Armenia") );
+        countryCodeMap.insert( "ABW", i18n("Aruba") );
+        countryCodeMap.insert( "AUS", i18n("Australia") );
+        countryCodeMap.insert( "AUT", i18n("Austria") );
+        countryCodeMap.insert( "AZE", i18n("Azerbaijan") );
+        countryCodeMap.insert( "BHS", i18n("Bahamas") );
+        countryCodeMap.insert( "BHR", i18n("Bahrain") );
+        countryCodeMap.insert( "BGD", i18n("Bangladesh") );
+        countryCodeMap.insert( "BRB", i18n("Barbados") );
+        countryCodeMap.insert( "BLR", i18n("Belarus") );
+        countryCodeMap.insert( "BEL", i18n("Belgium") );
+        countryCodeMap.insert( "BLZ", i18n("Belize") );
+        countryCodeMap.insert( "BEN", i18n("Benin") );
+        countryCodeMap.insert( "BMU", i18n("Bermuda") );
+        countryCodeMap.insert( "BTN", i18n("Bhutan") );
+        countryCodeMap.insert( "BOL", i18n("Bolivia") );
+        countryCodeMap.insert( "BIH", i18n("Bosnia and Herzegovina") );
+        countryCodeMap.insert( "BWA", i18n("Botswana") );
+        countryCodeMap.insert( "BVT", i18n("Bouvet Island") );
+        countryCodeMap.insert( "BRA", i18n("Brazil") );
+        countryCodeMap.insert( "IOT", i18n("British Indian Ocean Territory") );
+        countryCodeMap.insert( "VGB", i18n("British Virgin Islands") );
+        countryCodeMap.insert( "BRN", i18n("Brunei Darussalam") );
+        countryCodeMap.insert( "BGR", i18n("Bulgaria") );
+        countryCodeMap.insert( "BFA", i18n("Burkina Faso") );
+        countryCodeMap.insert( "BDI", i18n("Burundi") );
+        countryCodeMap.insert( "KHM", i18n("Cambodia") );
+        countryCodeMap.insert( "CMR", i18n("Cameroon") );
+        countryCodeMap.insert( "CAN", i18n("Canada") );
+        countryCodeMap.insert( "CPV", i18n("Cape Verde") );
+        countryCodeMap.insert( "CYM", i18n("Cayman Islands") );
+        countryCodeMap.insert( "CAF", i18n("Central African Republic") );
+        countryCodeMap.insert( "TCD", i18n("Chad") );
+        countryCodeMap.insert( "CHL", i18n("Chile") );
+        countryCodeMap.insert( "CHN", i18n("China") );
+        countryCodeMap.insert( "CXR", i18n("Christmas Island ") );
+        countryCodeMap.insert( "CCK", i18n("Cocos Islands") );
+        countryCodeMap.insert( "COL", i18n("Colombia") );
+        countryCodeMap.insert( "COM", i18n("Comoros") );
+        countryCodeMap.insert( "COD", i18n("Zaire") );
+        countryCodeMap.insert( "COG", i18n("Congo") );
+        countryCodeMap.insert( "COK", i18n("Cook Islands") );
+        countryCodeMap.insert( "CRI", i18n("Costa Rica") );
+        countryCodeMap.insert( "CIV", i18n("Ivory Coast") );
+        countryCodeMap.insert( "CUB", i18n("Cuba") );
+        countryCodeMap.insert( "CYP", i18n("Cyprus") );
+        countryCodeMap.insert( "CZE", i18n("Czech Republic") );
+        countryCodeMap.insert( "DNK", i18n("Denmark") );
+        countryCodeMap.insert( "DJI", i18n("Djibouti") );
+        countryCodeMap.insert( "DMA", i18n("Dominica") );
+        countryCodeMap.insert( "DOM", i18n("Dominican Republic") );
+        countryCodeMap.insert( "ECU", i18n("Ecuador") );
+        countryCodeMap.insert( "EGY", i18n("Egypt") );
+        countryCodeMap.insert( "SLV", i18n("El Salvador") );
+        countryCodeMap.insert( "GNQ", i18n("Equatorial Guinea") );
+        countryCodeMap.insert( "ERI", i18n("Eritrea") );
+        countryCodeMap.insert( "EST", i18n("Estonia") );
+        countryCodeMap.insert( "ETH", i18n("Ethiopia") );
+        countryCodeMap.insert( "FRO", i18n("Faeroe Islands") );
+        countryCodeMap.insert( "FLK", i18n("Falkland Islands") );
+        countryCodeMap.insert( "FJI", i18n("Fiji Islands") );
+        countryCodeMap.insert( "FIN", i18n("Finland") );
+        countryCodeMap.insert( "FRA", i18n("France") );
+        countryCodeMap.insert( "GUF", i18n("French Guiana") );
+        countryCodeMap.insert( "PYF", i18n("French Polynesia") );
+        countryCodeMap.insert( "ATF", i18n("French Southern Territories") );
+        countryCodeMap.insert( "GAB", i18n("Gabon") );
+        countryCodeMap.insert( "GMB", i18n("Gambia") );
+        countryCodeMap.insert( "GEO", i18n("Georgia") );
+        countryCodeMap.insert( "DEU", i18n("Germany") );
+        countryCodeMap.insert( "GHA", i18n("Ghana") );
+        countryCodeMap.insert( "GIB", i18n("Gibraltar") );
+        countryCodeMap.insert( "GRC", i18n("Greece") );
+        countryCodeMap.insert( "GRL", i18n("Greenland") );
+        countryCodeMap.insert( "GRD", i18n("Grenada") );
+        countryCodeMap.insert( "GLP", i18n("Guadaloupe") );
+        countryCodeMap.insert( "GUM", i18n("Guam") );
+        countryCodeMap.insert( "GTM", i18n("Guatemala") );
+        countryCodeMap.insert( "GIN", i18n("Guinea") );
+        countryCodeMap.insert( "GNB", i18n("Guinea-Bissau") );
+        countryCodeMap.insert( "GUY", i18n("Guyana") );
+        countryCodeMap.insert( "HTI", i18n("Haiti") );
+        countryCodeMap.insert( "HMD", i18n("Heard and McDonald Islands") );
+        countryCodeMap.insert( "VAT", i18n("Vatican") );
+        countryCodeMap.insert( "HND", i18n("Honduras") );
+        countryCodeMap.insert( "HKG", i18n("Hong Kong") );
+        countryCodeMap.insert( "HRV", i18n("Croatia") );
+        countryCodeMap.insert( "HUN", i18n("Hungary") );
+        countryCodeMap.insert( "ISL", i18n("Iceland") );
+        countryCodeMap.insert( "IND", i18n("India") );
+        countryCodeMap.insert( "IDN", i18n("Indonesia") );
+        countryCodeMap.insert( "IRN", i18n("Iran") );
+        countryCodeMap.insert( "IRQ", i18n("Iraq") );
+        countryCodeMap.insert( "IRL", i18n("Ireland") );
+        countryCodeMap.insert( "ISR", i18n("Israel") );
+        countryCodeMap.insert( "ITA", i18n("Italy") );
+        countryCodeMap.insert( "JAM", i18n("Jamaica") );
+        countryCodeMap.insert( "JPN", i18n("Japan") );
+        countryCodeMap.insert( "JOR", i18n("Jordan") );
+        countryCodeMap.insert( "KAZ", i18n("Kazakhstan") );
+        countryCodeMap.insert( "KEN", i18n("Kenya") );
+        countryCodeMap.insert( "KIR", i18n("Kiribati") );
+        countryCodeMap.insert( "PRK", i18n("Korea") );
+        countryCodeMap.insert( "KOR", i18n("Korea") );
+        countryCodeMap.insert( "KWT", i18n("Kuwait") );
+        countryCodeMap.insert( "KGZ", i18n("Kyrgyz Republic") );
+        countryCodeMap.insert( "LAO", i18n("Lao") );
+        countryCodeMap.insert( "LVA", i18n("Latvia") );
+        countryCodeMap.insert( "LBN", i18n("Lebanon") );
+        countryCodeMap.insert( "LSO", i18n("Lesotho") );
+        countryCodeMap.insert( "LBR", i18n("Liberia") );
+        countryCodeMap.insert( "LBY", i18n("Libyan Arab Jamahiriya") );
+        countryCodeMap.insert( "LIE", i18n("Liechtenstein") );
+        countryCodeMap.insert( "LTU", i18n("Lithuania") );
+        countryCodeMap.insert( "LUX", i18n("Luxembourg") );
+        countryCodeMap.insert( "MAC", i18n("Macao") );
+        countryCodeMap.insert( "MKD", i18n("Macedonia") );
+        countryCodeMap.insert( "MDG", i18n("Madagascar") );
+        countryCodeMap.insert( "MWI", i18n("Malawi") );
+        countryCodeMap.insert( "MYS", i18n("Malaysia") );
+        countryCodeMap.insert( "MDV", i18n("Maldives") );
+        countryCodeMap.insert( "MLI", i18n("Mali") );
+        countryCodeMap.insert( "MLT", i18n("Malta") );
+        countryCodeMap.insert( "MHL", i18n("Marshall Islands") );
+        countryCodeMap.insert( "MTQ", i18n("Martinique") );
+        countryCodeMap.insert( "MRT", i18n("Mauritania") );
+        countryCodeMap.insert( "MUS", i18n("Mauritius") );
+        countryCodeMap.insert( "MYT", i18n("Mayotte") );
+        countryCodeMap.insert( "MEX", i18n("Mexico") );
+        countryCodeMap.insert( "FSM", i18n("Micronesia") );
+        countryCodeMap.insert( "MDA", i18n("Moldova") );
+        countryCodeMap.insert( "MCO", i18n("Monaco") );
+        countryCodeMap.insert( "MNG", i18n("Mongolia") );
+        countryCodeMap.insert( "MSR", i18n("Montserrat") );
+        countryCodeMap.insert( "MAR", i18n("Morocco") );
+        countryCodeMap.insert( "MOZ", i18n("Mozambique") );
+        countryCodeMap.insert( "MMR", i18n("Myanmar") );
+        countryCodeMap.insert( "NAM", i18n("Namibia") );
+        countryCodeMap.insert( "NRU", i18n("Nauru") );
+        countryCodeMap.insert( "NPL", i18n("Nepal") );
+        countryCodeMap.insert( "ANT", i18n("Netherlands Antilles") );
+        countryCodeMap.insert( "NLD", i18n("Netherlands") );
+        countryCodeMap.insert( "NCL", i18n("New Caledonia") );
+        countryCodeMap.insert( "NZL", i18n("New Zealand") );
+        countryCodeMap.insert( "NIC", i18n("Nicaragua") );
+        countryCodeMap.insert( "NER", i18n("Niger") );
+        countryCodeMap.insert( "NGA", i18n("Nigeria") );
+        countryCodeMap.insert( "NIU", i18n("Niue") );
+        countryCodeMap.insert( "NFK", i18n("Norfolk Island") );
+        countryCodeMap.insert( "MNP", i18n("Northern Mariana Islands") );
+        countryCodeMap.insert( "NOR", i18n("Norway") );
+        countryCodeMap.insert( "OMN", i18n("Oman") );
+        countryCodeMap.insert( "PAK", i18n("Pakistan") );
+        countryCodeMap.insert( "PLW", i18n("Palau") );
+        countryCodeMap.insert( "PSE", i18n("Palestinian Territory") );
+        countryCodeMap.insert( "PAN", i18n("Panama") );
+        countryCodeMap.insert( "PNG", i18n("Papua New Guinea") );
+        countryCodeMap.insert( "PRY", i18n("Paraguay") );
+        countryCodeMap.insert( "PER", i18n("Peru") );
+        countryCodeMap.insert( "PHL", i18n("Philippines") );
+        countryCodeMap.insert( "PCN", i18n("Pitcairn Island") );
+        countryCodeMap.insert( "POL", i18n("Poland") );
+        countryCodeMap.insert( "PRT", i18n("Portugal") );
+        countryCodeMap.insert( "PRI", i18n("Puerto Rico") );
+        countryCodeMap.insert( "QAT", i18n("Qatar") );
+        countryCodeMap.insert( "REU", i18n("Reunion") );
+        countryCodeMap.insert( "ROU", i18n("Romania") );
+        countryCodeMap.insert( "RUS", i18n("Russian Federation") );
+        countryCodeMap.insert( "RWA", i18n("Rwanda") );
+        countryCodeMap.insert( "SHN", i18n("St. Helena") );
+        countryCodeMap.insert( "KNA", i18n("St. Kitts and Nevis") );
+        countryCodeMap.insert( "LCA", i18n("St. Lucia") );
+        countryCodeMap.insert( "SPM", i18n("St. Pierre and Miquelon") );
+        countryCodeMap.insert( "VCT", i18n("St. Vincent and the Grenadines") );
+        countryCodeMap.insert( "WSM", i18n("Samoa") );
+        countryCodeMap.insert( "SMR", i18n("San Marino") );
+        countryCodeMap.insert( "STP", i18n("Sao Tome and Principe") );
+        countryCodeMap.insert( "SAU", i18n("Saudi Arabia") );
+        countryCodeMap.insert( "SEN", i18n("Senegal") );
+        countryCodeMap.insert( "SCG", i18n("Serbia and Montenegro") );
+        countryCodeMap.insert( "SYC", i18n("Seychelles") );
+        countryCodeMap.insert( "SLE", i18n("Sierra Leone") );
+        countryCodeMap.insert( "SGP", i18n("Singapore") );
+        countryCodeMap.insert( "SVK", i18n("Slovakia") );
+        countryCodeMap.insert( "SVN", i18n("Slovenia") );
+        countryCodeMap.insert( "SLB", i18n("Solomon Islands") );
+        countryCodeMap.insert( "SOM", i18n("Somalia") );
+        countryCodeMap.insert( "ZAF", i18n("South Africa") );
+        countryCodeMap.insert( "SGS", i18n("South Georgia and the South Sandwich Islands") );
+        countryCodeMap.insert( "ESP", i18n("Spain") );
+        countryCodeMap.insert( "LKA", i18n("Sri Lanka") );
+        countryCodeMap.insert( "SDN", i18n("Sudan") );
+        countryCodeMap.insert( "SUR", i18n("Suriname") );
+        countryCodeMap.insert( "SJM", i18n("Svalbard & Jan Mayen Islands") );
+        countryCodeMap.insert( "SWZ", i18n("Swaziland") );
+        countryCodeMap.insert( "SWE", i18n("Sweden") );
+        countryCodeMap.insert( "CHE", i18n("Switzerland") );
+        countryCodeMap.insert( "SYR", i18n("Syrian Arab Republic") );
+        countryCodeMap.insert( "TWN", i18n("Taiwan") );
+        countryCodeMap.insert( "TJK", i18n("Tajikistan") );
+        countryCodeMap.insert( "TZA", i18n("Tanzania") );
+        countryCodeMap.insert( "THA", i18n("Thailand") );
+        countryCodeMap.insert( "TLS", i18n("Timor-Leste") );
+        countryCodeMap.insert( "TGO", i18n("Togo") );
+        countryCodeMap.insert( "TKL", i18n("Tokelau Islands") );
+        countryCodeMap.insert( "TON", i18n("Tonga") );
+        countryCodeMap.insert( "TTO", i18n("Trinidad and Tobago") );
+        countryCodeMap.insert( "TUN", i18n("Tunisia") );
+        countryCodeMap.insert( "TUR", i18n("Turkey") );
+        countryCodeMap.insert( "TKM", i18n("Turkmenistan") );
+        countryCodeMap.insert( "TCA", i18n("Turks and Caicos Islands") );
+        countryCodeMap.insert( "TUV", i18n("Tuvalu") );
+        countryCodeMap.insert( "VIR", i18n("US Virgin Islands") );
+        countryCodeMap.insert( "UGA", i18n("Uganda") );
+        countryCodeMap.insert( "UKR", i18n("Ukraine") );
+        countryCodeMap.insert( "ARE", i18n("United Arab Emirates") );
+        countryCodeMap.insert( "GBR", i18n("United Kingdom") );
+        countryCodeMap.insert( "UMI", i18n("United States Minor Outlying Islands") );
+        countryCodeMap.insert( "USA", i18n("United States of America") );
+        countryCodeMap.insert( "URY", i18n("Uruguay, Eastern Republic of") );
+        countryCodeMap.insert( "UZB", i18n("Uzbekistan") );
+        countryCodeMap.insert( "VUT", i18n("Vanuatu") );
+        countryCodeMap.insert( "VEN", i18n("Venezuela") );
+        countryCodeMap.insert( "VNM", i18n("Viet Nam") );
+        countryCodeMap.insert( "WLF", i18n("Wallis and Futuna Islands ") );
+        countryCodeMap.insert( "ESH", i18n("Western Sahara") );
+        countryCodeMap.insert( "YEM", i18n("Yemen") );
+        countryCodeMap.insert( "ZMB", i18n("Zambia") );
+        countryCodeMap.insert( "ZWE", i18n("Zimbabwe") );
+
+        // Supplemental IPTC country codes.
+
+        countryCodeMap.insert( "XUN", i18n("United Nations") );
+        countryCodeMap.insert( "XEU", i18n("European Union") );
+        countryCodeMap.insert( "XSP", i18n("Space") );
+        countryCodeMap.insert( "XSE", i18n("At Sea") );
+        countryCodeMap.insert( "XIF", i18n("In Flight") );
+        countryCodeMap.insert( "XEN", i18n("England") );
+        countryCodeMap.insert( "XSC", i18n("Scotland") );
+        countryCodeMap.insert( "XNI", i18n("Northern Ireland") );
+        countryCodeMap.insert( "XWA", i18n("Wales") );
+        countryCodeMap.insert( "PSE", i18n("Palestine") );
+        countryCodeMap.insert( "GZA", i18n("Gaza") );
+        countryCodeMap.insert( "JRO", i18n("Jericho") );
     }
 
-    QCheckBox *objectNameCheck;
-    QCheckBox *cityCheck;
-    QCheckBox *sublocationCheck;
-    QCheckBox *provinceCheck;
-    QCheckBox *countryCheck;
-    QCheckBox *countryCodeCheck;
-    QCheckBox *locationCheck;
-    QCheckBox *locationCodeCheck;
-    QCheckBox *originalTransCheck;
+    typedef QMap<QString, QString> CountryCodeMap; 
 
-    KLineEdit *objectNameEdit;
-    KLineEdit *cityEdit;
-    KLineEdit *sublocationEdit;
-    KLineEdit *provinceEdit;
-    KLineEdit *countryEdit;
-    KLineEdit *countryCodeEdit;
-    KLineEdit *locationEdit;
-    KLineEdit *locationCodeEdit;
-    KLineEdit *originalTransEdit;
+    CountryCodeMap countryCodeMap;
+
+    QComboBox     *countryCB;
+
+    QCheckBox     *objectNameCheck;
+    QCheckBox     *cityCheck;
+    QCheckBox     *sublocationCheck;
+    QCheckBox     *provinceCheck;
+    QCheckBox     *countryCheck;
+    QCheckBox     *locationCheck;
+    QCheckBox     *originalTransCheck;
+
+    KLineEdit     *objectNameEdit;
+    KLineEdit     *cityEdit;
+    KLineEdit     *sublocationEdit;
+    KLineEdit     *provinceEdit;
+    KLineEdit     *locationEdit;
+    KLineEdit     *originalTransEdit;
 };
 
 IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
@@ -93,7 +350,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
 {
     d = new IPTCOriginPriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 14, 2, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 10, 2, KDialog::spacingHint());
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -123,14 +380,14 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    d->locationCodeCheck = new QCheckBox(i18n("Location code:"), parent);
-    d->locationCodeEdit  = new KLineEdit(parent);
-    d->locationCodeEdit->setValidator(asciiValidator);
-    d->locationCodeEdit->setMaxLength(3);
-    grid->addMultiCellWidget(d->locationCodeCheck, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->locationCodeEdit, 3, 3, 1, 1);
-    QWhatsThis::add(d->locationCodeEdit, i18n("<p>Set here the ISO country code referenced by the content. "
-                                              "This field is limited to 3 ASCII characters."));
+    d->sublocationCheck = new QCheckBox(i18n("Sublocation:"), parent);
+    d->sublocationEdit  = new KLineEdit(parent);
+    d->sublocationEdit->setValidator(asciiValidator);
+    d->sublocationEdit->setMaxLength(32);
+    grid->addMultiCellWidget(d->sublocationCheck, 3, 3, 0, 0);
+    grid->addMultiCellWidget(d->sublocationEdit, 3, 3, 1, 2);
+    QWhatsThis::add(d->sublocationEdit, i18n("<p>Set here the content location within city. "
+                                             "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
@@ -138,21 +395,10 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
     d->cityEdit  = new KLineEdit(parent);
     d->cityEdit->setValidator(asciiValidator);
     d->cityEdit->setMaxLength(32);
-    grid->addMultiCellWidget(d->cityCheck, 6, 6, 0, 0);
-    grid->addMultiCellWidget(d->cityEdit, 6, 6, 1, 2);
+    grid->addMultiCellWidget(d->cityCheck, 4, 4, 0, 0);
+    grid->addMultiCellWidget(d->cityEdit, 4, 4, 1, 2);
     QWhatsThis::add(d->cityEdit, i18n("<p>Set here the city of content origin. "
                                       "This field is limited to 32 ASCII characters."));
-
-    // --------------------------------------------------------
-
-    d->sublocationCheck = new QCheckBox(i18n("Sublocation:"), parent);
-    d->sublocationEdit  = new KLineEdit(parent);
-    d->sublocationEdit->setValidator(asciiValidator);
-    d->sublocationEdit->setMaxLength(32);
-    grid->addMultiCellWidget(d->sublocationCheck, 7, 7, 0, 0);
-    grid->addMultiCellWidget(d->sublocationEdit, 7, 7, 1, 2);
-    QWhatsThis::add(d->sublocationEdit, i18n("<p>Set here the content location within city. "
-                                             "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
@@ -160,32 +406,25 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
     d->provinceEdit  = new KLineEdit(parent);
     d->provinceEdit->setValidator(asciiValidator);
     d->provinceEdit->setMaxLength(32);
-    grid->addMultiCellWidget(d->provinceCheck, 8, 8, 0, 0);
-    grid->addMultiCellWidget(d->provinceEdit, 8, 8, 1, 2);
+    grid->addMultiCellWidget(d->provinceCheck, 5, 5, 0, 0);
+    grid->addMultiCellWidget(d->provinceEdit, 5, 5, 1, 2);
     QWhatsThis::add(d->provinceEdit, i18n("<p>Set here the Province or State of content origin. "
                                           "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
     d->countryCheck = new QCheckBox(i18n("Country:"), parent);
-    d->countryEdit  = new KLineEdit(parent);
-    d->countryEdit->setValidator(asciiValidator);
-    d->countryEdit->setMaxLength(64);
-    grid->addMultiCellWidget(d->countryCheck, 9, 9, 0, 0);
-    grid->addMultiCellWidget(d->countryEdit, 9, 9, 1, 2);
-    QWhatsThis::add(d->countryEdit, i18n("<p>Set here the full country name of content origin. "
-                                          "This field is limited to 64 ASCII characters."));
+    d->countryCB    = new QComboBox(false, parent);
 
-    // --------------------------------------------------------
+    for (IPTCOriginPriv::CountryCodeMap::Iterator it = d->countryCodeMap.begin();
+         it != d->countryCodeMap.end(); ++it )
+        d->countryCB->insertItem(QString("%1 - %2").arg(it.key()).arg(it.data()));
 
-    d->countryCodeCheck = new QCheckBox(i18n("Country code:"), parent);
-    d->countryCodeEdit  = new KLineEdit(parent);
-    d->countryCodeEdit->setValidator(asciiValidator);
-    d->countryCodeEdit->setMaxLength(3);
-    grid->addMultiCellWidget(d->countryCodeCheck, 10, 10, 0, 0);
-    grid->addMultiCellWidget(d->countryCodeEdit, 10, 10, 1, 1);
-    QWhatsThis::add(d->countryCodeEdit, i18n("<p>Set here the ISO country code of content origin. "
-                                             "This field is limited to 3 ASCII characters."));
+    d->countryCB->listBox()->sort();
+
+    grid->addMultiCellWidget(d->countryCheck, 6, 6, 0, 0);
+    grid->addMultiCellWidget(d->countryCB, 6, 6, 1, 2);
+    QWhatsThis::add(d->countryCB, i18n("<p>Select here country name of content origin."));
 
     // --------------------------------------------------------
 
@@ -193,8 +432,8 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
     d->originalTransEdit  = new KLineEdit(parent);
     d->originalTransEdit->setValidator(asciiValidator);
     d->originalTransEdit->setMaxLength(32);
-    grid->addMultiCellWidget(d->originalTransCheck, 11, 11, 0, 2);
-    grid->addMultiCellWidget(d->originalTransEdit, 12, 12, 0, 2);
+    grid->addMultiCellWidget(d->originalTransCheck, 7, 7, 0, 2);
+    grid->addMultiCellWidget(d->originalTransEdit, 8, 8, 0, 2);
     QWhatsThis::add(d->originalTransEdit, i18n("<p>Set here the location of original content transmission. "
                     "This field is limited to 32 ASCII characters."));
 
@@ -202,9 +441,9 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
 
     QLabel *iptcNote = new QLabel(i18n("<b>Note: IPTC text tags only support printable "
                                        "ASCII characters set.</b>"), parent);
-    grid->addMultiCellWidget(iptcNote, 13, 13, 0, 2);
+    grid->addMultiCellWidget(iptcNote, 9, 9, 0, 2);
     grid->setColStretch(2, 10);                     
-    grid->setRowStretch(14, 10);                     
+    grid->setRowStretch(10, 10);                     
 
     // --------------------------------------------------------
 
@@ -221,16 +460,10 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
             d->provinceEdit, SLOT(setEnabled(bool)));
 
     connect(d->countryCheck, SIGNAL(toggled(bool)),
-            d->countryEdit, SLOT(setEnabled(bool)));
-
-    connect(d->countryCodeCheck, SIGNAL(toggled(bool)),
-            d->countryCodeEdit, SLOT(setEnabled(bool)));
+            d->countryCB, SLOT(setEnabled(bool)));
 
     connect(d->locationCheck, SIGNAL(toggled(bool)),
             d->locationEdit, SLOT(setEnabled(bool)));
-
-    connect(d->locationCodeCheck, SIGNAL(toggled(bool)),
-            d->locationCodeEdit, SLOT(setEnabled(bool)));
 
     connect(d->originalTransCheck, SIGNAL(toggled(bool)),
             d->originalTransEdit, SLOT(setEnabled(bool)));
@@ -267,14 +500,6 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     }
     d->locationEdit->setEnabled(d->locationCheck->isChecked());
 
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.LocationCode", false);    
-    if (!data.isNull())
-    {
-        d->locationCodeEdit->setText(data);
-        d->locationCodeCheck->setChecked(true);
-    }
-    d->locationCodeEdit->setEnabled(d->locationCodeCheck->isChecked());
-
     data = exiv2Iface.getIptcTagString("Iptc.Application2.City", false);    
     if (!data.isNull())
     {
@@ -299,21 +524,33 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     }
     d->provinceEdit->setEnabled(d->provinceCheck->isChecked());
 
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.CountryName", false);    
-    if (!data.isNull())
-    {
-        d->countryEdit->setText(data);
-        d->countryCheck->setChecked(true);
-    }
-    d->countryEdit->setEnabled(d->countryCheck->isChecked());
+    // Country code/name rules: we trying to check if "CountryCode" tag exists else "LocationCode" tag.
+    // Both are the same.
 
     data = exiv2Iface.getIptcTagString("Iptc.Application2.CountryCode", false);    
     if (!data.isNull())
     {
-        d->countryCodeEdit->setText(data);
-        d->countryCodeCheck->setChecked(true);
+        QListBoxItem *item = d->countryCB->listBox()->findItem(d->countryCodeMap.find(data).key());
+        if (item)
+        {
+            d->countryCB->listBox()->setCurrentItem(item);
+            d->countryCheck->setChecked(true);
+        }
     }
-    d->countryCodeEdit->setEnabled(d->countryCodeCheck->isChecked());
+    else
+    {
+        data = exiv2Iface.getIptcTagString("Iptc.Application2.LocationCode", false);    
+        if (!data.isNull())
+        {
+            QListBoxItem *item = d->countryCB->listBox()->findItem(d->countryCodeMap.find(data).key());
+            if (item)
+            {
+                d->countryCB->listBox()->setCurrentItem(item);
+                d->countryCheck->setChecked(true);
+            }
+        }
+    }
+    d->countryCB->setEnabled(d->countryCheck->isChecked());
 
     data = exiv2Iface.getIptcTagString("Iptc.Application2.TransmissionReference", false);    
     if (!data.isNull())
@@ -339,11 +576,6 @@ void IPTCOrigin::applyMetadata(QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.LocationName");
 
-    if (d->locationCodeCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.LocationCode", d->locationCodeEdit->text());
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.LocationCode");
-
     if (d->cityCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Application2.City", d->cityEdit->text());
     else
@@ -360,14 +592,19 @@ void IPTCOrigin::applyMetadata(QByteArray& iptcData)
         exiv2Iface.removeIptcTag("Iptc.Application2.ProvinceState");
 
     if (d->countryCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.CountryName", d->countryEdit->text());
+    {
+        QString countryCode = d->countryCB->currentText().left(3);
+        QString countryName = d->countryCB->currentText().right(7);
+        exiv2Iface.setIptcTagString("Iptc.Application2.CountryCode", countryCode);
+        exiv2Iface.setIptcTagString("Iptc.Application2.CountryName", countryName);
+        exiv2Iface.setIptcTagString("Iptc.Application2.LocationCode", countryCode);
+    }
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.CountryName");
-
-    if (d->countryCodeCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.CountryCode", d->countryCodeEdit->text());
-    else
+    {
         exiv2Iface.removeIptcTag("Iptc.Application2.CountryCode");
+        exiv2Iface.removeIptcTag("Iptc.Application2.CountryName");
+        exiv2Iface.removeIptcTag("Iptc.Application2.LocationCode");
+    }
 
     if (d->originalTransCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Application2.TransmissionReference", d->originalTransEdit->text());
