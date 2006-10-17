@@ -530,10 +530,14 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     data = exiv2Iface.getIptcTagString("Iptc.Application2.CountryCode", false);    
     if (!data.isNull())
     {
-        QListBoxItem *item = d->countryCB->listBox()->findItem(d->countryCodeMap.find(data).key());
-        if (item)
+        int item = -1;
+        for (int i = 0 ; i < d->countryCB->count() ; i++)
+            if (d->countryCB->text(i).left(3) == data)
+                item = i;
+
+        if (item != -1)
         {
-            d->countryCB->listBox()->setCurrentItem(item);
+            d->countryCB->setCurrentItem(item);
             d->countryCheck->setChecked(true);
         }
     }
@@ -542,10 +546,14 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
         data = exiv2Iface.getIptcTagString("Iptc.Application2.LocationCode", false);    
         if (!data.isNull())
         {
-            QListBoxItem *item = d->countryCB->listBox()->findItem(d->countryCodeMap.find(data).key());
-            if (item)
+            int item = -1;
+            for (int i = 0 ; i < d->countryCB->count() ; i++)
+                if (d->countryCB->text(i).left(3) == data)
+                    item = i;
+    
+            if (item != -1)
             {
-                d->countryCB->listBox()->setCurrentItem(item);
+                d->countryCB->setCurrentItem(item);
                 d->countryCheck->setChecked(true);
             }
         }
