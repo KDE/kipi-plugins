@@ -32,6 +32,8 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
 
 // Local includes.
 
@@ -378,7 +380,10 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.ObjectCycle");
 
-    exiv2Iface.setImageProgramId(QString("Kipi MetadataEdit"), QString(kipiplugins_version));
+    const KAboutData *data = KApplication::kApplication()->aboutData();
+    exiv2Iface.setImageProgramId(QString("Kipi MetadataEdit plugin (Using %1 %2)")
+                                 .arg(data->appName()).arg(data->version()),
+                                 QString(kipiplugins_version));
 
     iptcData = exiv2Iface.getIptc();
 }
