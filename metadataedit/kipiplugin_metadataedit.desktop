@@ -1,5 +1,7 @@
 [Desktop Entry]
 Comment=KIPI Pictures Metadata Editor
+Comment[da]=KIPI-editor for metadata i billeder
+Comment[de]=Ein KIPI-Modul zum Bearbeiten der Metadaten
 Comment[it]=Editor dei dati aggiuntivi delle immagini di KIPI
 Comment[ja]=Kipi 画像のメタデータエディタ
 Comment[pt]=Editor de Meta-Dados das Imagens do KIPI
@@ -8,6 +10,8 @@ Comment[sv]=KIPI-editor för metadata i bilder
 Encoding=UTF-8
 Icon=
 Name=MetadataEdit
+Name[da]=Metadataeditor
+Name[de]=MetadataEditor
 Name[it]=ModificaDatiAggiuntivi
 Name[pt]=Edição de Meta-Dados
 Name[pt_BR]=Edição de Meta-Dados
