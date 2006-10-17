@@ -381,6 +381,7 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
         exiv2Iface.removeIptcTag("Iptc.Application2.ObjectCycle");
 
     const KAboutData *data = KApplication::kApplication()->aboutData();
+    // This IPTC tag must be in English. Not i18n !
     exiv2Iface.setImageProgramId(QString("Kipi MetadataEdit plugin (Using %1 %2)")
                                  .arg(data->appName()).arg(data->version()),
                                  QString(kipiplugins_version));
