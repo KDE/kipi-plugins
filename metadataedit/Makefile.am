@@ -12,7 +12,8 @@ kipiplugin_metadataedit_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) \
 kipiplugin_metadataedit_la_SOURCES = plugin_metadataedit.cpp metadataeditdialog.cpp \
 	                                 metadataitem.cpp iptceditdialog.cpp iptccaption.cpp \
 	                                 iptccredits.cpp iptcstatus.cpp iptcorigin.cpp \
-	                                 iptcdatetime.cpp iptckeywords.cpp iptccategories.cpp 
+	                                 iptcdatetime.cpp iptckeywords.cpp iptccategories.cpp \
+					 exifeditdialog.cpp 
 
 # Libs needed by the plugin
 kipiplugin_metadataedit_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \

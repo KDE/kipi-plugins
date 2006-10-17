@@ -52,6 +52,7 @@
 
 #include "exiv2iface.h"
 #include "pluginsversion.h"
+#include "exifeditdialog.h"
 #include "iptceditdialog.h"
 #include "metadataitem.h"
 #include "metadataeditdialog.h"
@@ -298,6 +299,31 @@ void MetadataEditDialog::saveSettings()
 
 void MetadataEditDialog::slotEditExif()
 {
+    if (!d->listView->currentItem())
+    {
+        KMessageBox::information(this, i18n("Please, select at least one picture from "
+                     "the list to edit EXIF metadata manually."), i18n("Edit Metadata"));    
+        return;
+    }
+
+    MetadataItem* item = (MetadataItem*)d->listView->currentItem();
+
+    EXIFEditDialog dlg(this, item->getExif(), item->getUrl().fileName());
+
+    if (dlg.exec() == KDialogBase::Accepted)
+    {
+        QListViewItemIterator it(d->listView);
+
+        while (it.current())
+        {
+            if (it.current()->isSelected())
+            {
+                MetadataItem *selItem = (MetadataItem*)it.current();
+                selItem->setExif(dlg.getEXIFInfo(), true);
+            }
+            ++it;
+        }
+    }
 }
 
 void MetadataEditDialog::slotEditIptc()
@@ -331,6 +357,7 @@ void MetadataEditDialog::slotEditIptc()
 
 void MetadataEditDialog::slotLoadExif()
 {
+    // TODO
 }
 
 void MetadataEditDialog::slotLoadIptc()
