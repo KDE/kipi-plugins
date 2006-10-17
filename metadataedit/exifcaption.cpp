@@ -50,30 +50,38 @@ public:
 
     EXIFCaptionPriv()
     {
-        captionEdit             = 0;
-        subjectEdit             = 0;
-        writerEdit              = 0;
-        headlineEdit            = 0;
-        specialInstructionEdit  = 0;
-        captionCheck            = 0;
-        specialInstructionCheck = 0;
-        subjectCheck            = 0;
-        writerCheck             = 0;
-        headlineCheck           = 0;
+        documentNameEdit  = 0;
+        imageDescEdit     = 0;
+        makeEdit          = 0;
+        modelEdit         = 0;
+        artistEdit        = 0;
+        copyrightEdit     = 0;
+        userCommentEdit   = 0;
+        userCommentCheck  = 0;
+        documentNameCheck = 0;
+        imageDescCheck    = 0;
+        makeCheck         = 0;
+        modelCheck        = 0;
+        artistCheck       = 0;
+        copyrightCheck    = 0;
     }
 
-    QCheckBox *captionCheck;
-    QCheckBox *specialInstructionCheck;
-    QCheckBox *subjectCheck;
-    QCheckBox *writerCheck;
-    QCheckBox *headlineCheck;
+    QCheckBox *documentNameCheck;
+    QCheckBox *imageDescCheck;
+    QCheckBox *makeCheck;
+    QCheckBox *modelCheck;
+    QCheckBox *artistCheck;
+    QCheckBox *copyrightCheck;
+    QCheckBox *userCommentCheck;
 
-    KTextEdit *captionEdit;
-    KTextEdit *specialInstructionEdit;
+    KTextEdit *userCommentEdit;
 
-    KLineEdit *subjectEdit;
-    KLineEdit *writerEdit;
-    KLineEdit *headlineEdit;
+    KLineEdit *documentNameEdit;
+    KLineEdit *imageDescEdit;
+    KLineEdit *makeEdit;
+    KLineEdit *modelEdit;
+    KLineEdit *artistEdit;
+    KLineEdit *copyrightEdit;
 };
 
 EXIFCaption::EXIFCaption(QWidget* parent, QByteArray& exifData)
@@ -86,82 +94,108 @@ EXIFCaption::EXIFCaption(QWidget* parent, QByteArray& exifData)
     QRegExp asciiRx("[\x20-\x7F]+$");
     QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
   
-/*  
+  
     // --------------------------------------------------------
 
-    d->captionCheck = new QCheckBox(i18n("Caption:"), parent);
-    d->captionEdit  = new KTextEdit(parent);
-    vlay->addWidget(d->captionCheck);
-    vlay->addWidget(d->captionEdit);
-    QWhatsThis::add(d->captionEdit, i18n("<p>Set here the content description. This field is limited "
-                                         "to 2000 ASCII characters."));
-
-    // --------------------------------------------------------
-
-    d->subjectCheck = new QCheckBox(i18n("Subject:"), parent);
-    d->subjectEdit  = new KLineEdit(parent);
-    d->subjectEdit->setValidator(asciiValidator);
-    d->subjectEdit->setMaxLength(236);
-    vlay->addWidget(d->subjectCheck);
-    vlay->addWidget(d->subjectEdit);
-    QWhatsThis::add(d->subjectEdit, i18n("<p>Set here the structured definition of the subject. "
-                    "This field is limited to 236 ASCII characters."));
+    d->documentNameCheck = new QCheckBox(i18n("Document name (*):"), parent);
+    d->documentNameEdit  = new KLineEdit(parent);
+    d->documentNameEdit->setValidator(asciiValidator);
+    vlay->addWidget(d->documentNameCheck);
+    vlay->addWidget(d->documentNameEdit);
+    QWhatsThis::add(d->documentNameEdit, i18n("<p>Set here the name of the document from which "
+                                         "this picture was been scanned. This field is limited "
+                                         "to ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->writerCheck = new QCheckBox(i18n("Caption Writer:"), parent);
-    d->writerEdit  = new KLineEdit(parent);
-    d->writerEdit->setValidator(asciiValidator);
-    d->writerEdit->setMaxLength(32);
-    vlay->addWidget(d->writerCheck);
-    vlay->addWidget(d->writerEdit);
-    QWhatsThis::add(d->writerEdit, i18n("<p>Set here the person responsible for caption. This field is limited "
-                                        "to 32 ASCII characters."));
+    d->imageDescCheck = new QCheckBox(i18n("Image description (*):"), parent);
+    d->imageDescEdit  = new KLineEdit(parent);
+    d->imageDescEdit->setValidator(asciiValidator);
+    vlay->addWidget(d->imageDescCheck);
+    vlay->addWidget(d->imageDescEdit);
+    QWhatsThis::add(d->imageDescEdit, i18n("<p>Set here the picture title. This field is limited "
+                                      "to ASCII characters."));
         
     // --------------------------------------------------------
 
-    d->headlineCheck = new QCheckBox(i18n("Headline:"), parent);
-    d->headlineEdit  = new KLineEdit(parent);
-    d->headlineEdit->setValidator(asciiValidator);
-    d->headlineEdit->setMaxLength(256);
-    vlay->addWidget(d->headlineCheck);
-    vlay->addWidget(d->headlineEdit);
-    QWhatsThis::add(d->headlineEdit, i18n("<p>Set here the content synopsis. This field is limited "
-                                          "to 256 ASCII characters."));
+    d->makeCheck = new QCheckBox(i18n("Make (*):"), parent);
+    d->makeEdit  = new KLineEdit(parent);
+    d->makeEdit->setValidator(asciiValidator);
+    vlay->addWidget(d->makeCheck);
+    vlay->addWidget(d->makeEdit);
+    QWhatsThis::add(d->makeEdit, i18n("<p>Set here the manufacturer of image input equipment. "
+                                 "This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->specialInstructionCheck = new QCheckBox(i18n("Special Instructions:"), parent);
-    d->specialInstructionEdit  = new KTextEdit(parent);
-    vlay->addWidget(d->specialInstructionCheck);
-    vlay->addWidget(d->specialInstructionEdit);
-    QWhatsThis::add(d->specialInstructionEdit, i18n("<p>Set here the editorial usage instructions. "
-                                                    "This field is limited to 256 ASCII characters."));
+    d->modelCheck = new QCheckBox(i18n("Model (*):"), parent);
+    d->modelEdit  = new KLineEdit(parent);
+    d->modelEdit->setValidator(asciiValidator);
+    vlay->addWidget(d->modelCheck);
+    vlay->addWidget(d->modelEdit);
+    QWhatsThis::add(d->modelEdit, i18n("<p>Set here the model of image input equipment. "
+                                  "This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
-    QLabel *iptcNote = new QLabel(i18n("<b>Note: EXIF text tags only support printable "
+    d->artistCheck = new QCheckBox(i18n("Artist (*):"), parent);
+    d->artistEdit  = new KLineEdit(parent);
+    d->artistEdit->setValidator(asciiValidator);
+    vlay->addWidget(d->artistCheck);
+    vlay->addWidget(d->artistEdit);
+    QWhatsThis::add(d->artistEdit, i18n("<p>Set here the name of the person who created the picture. "
+                                  "This field is limited to ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->copyrightCheck = new QCheckBox(i18n("Copyright (*):"), parent);
+    d->copyrightEdit  = new KLineEdit(parent);
+    d->copyrightEdit->setValidator(asciiValidator);
+    vlay->addWidget(d->copyrightCheck);
+    vlay->addWidget(d->copyrightEdit);
+    QWhatsThis::add(d->copyrightEdit, i18n("<p>Set here the copyright holder of picture. "
+                                      "This field is limited to ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->userCommentCheck = new QCheckBox(i18n("User comments:"), parent);
+    d->userCommentEdit  = new KTextEdit(parent);
+    vlay->addWidget(d->userCommentCheck);
+    vlay->addWidget(d->userCommentEdit);
+    QWhatsThis::add(d->userCommentEdit, i18n("<p>Set here the picture user comments. "
+                                             "This field is not limited. UTF8 encoding "
+                                             "will be used to save text."));
+
+    // --------------------------------------------------------
+
+    QLabel *iptcNote = new QLabel(i18n("<b>Note: EXIF text tags annoted by (*) only support printable "
                                        "ASCII characters set.</b>"), parent);
     vlay->addWidget(iptcNote);
     vlay->addStretch();
 
     // --------------------------------------------------------
-                                     
-    connect(d->captionCheck, SIGNAL(toggled(bool)),
-            d->captionEdit, SLOT(setEnabled(bool)));
 
-    connect(d->subjectCheck, SIGNAL(toggled(bool)),
-            d->subjectEdit, SLOT(setEnabled(bool)));
+    connect(d->documentNameCheck, SIGNAL(toggled(bool)),
+            d->documentNameEdit, SLOT(setEnabled(bool)));
 
-    connect(d->writerCheck, SIGNAL(toggled(bool)),
-            d->writerEdit, SLOT(setEnabled(bool)));
+    connect(d->imageDescCheck, SIGNAL(toggled(bool)),
+            d->imageDescEdit, SLOT(setEnabled(bool)));
 
-    connect(d->headlineCheck, SIGNAL(toggled(bool)),
-            d->headlineEdit, SLOT(setEnabled(bool)));
+    connect(d->makeCheck, SIGNAL(toggled(bool)),
+            d->makeEdit, SLOT(setEnabled(bool)));
+
+    connect(d->modelCheck, SIGNAL(toggled(bool)),
+            d->modelEdit, SLOT(setEnabled(bool)));
     
-    connect(d->specialInstructionCheck, SIGNAL(toggled(bool)),
-            d->specialInstructionEdit, SLOT(setEnabled(bool)));
-*/
+    connect(d->artistCheck, SIGNAL(toggled(bool)),
+            d->artistEdit, SLOT(setEnabled(bool)));
+
+    connect(d->copyrightCheck, SIGNAL(toggled(bool)),
+            d->copyrightEdit, SLOT(setEnabled(bool)));
+
+    connect(d->userCommentCheck, SIGNAL(toggled(bool)),
+            d->userCommentEdit, SLOT(setEnabled(bool)));
+
     // --------------------------------------------------------
         
     readMetadata(exifData);
@@ -178,46 +212,63 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
     exiv2Iface.setIptc(exifData);
     QString data;
 
-/*
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Caption", false);    
+    data = exiv2Iface.getExifTagString("Exif.Image.DocumentName", false);    
     if (!data.isNull())
     {
-        d->captionEdit->setText(data);
-        d->captionCheck->setChecked(true);
+        d->documentNameEdit->setText(data);
+        d->documentNameCheck->setChecked(true);
     }
-    d->captionEdit->setEnabled(d->captionCheck->isChecked());
+    d->documentNameEdit->setEnabled(d->documentNameCheck->isChecked());
 
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Subject", false);    
+    data = exiv2Iface.getExifTagString("Exif.Image.ImageDescription", false);     
     if (!data.isNull())
     {
-        d->subjectEdit->setText(data);
-        d->subjectCheck->setChecked(true);
+        d->imageDescEdit->setText(data);
+        d->imageDescCheck->setChecked(true);
     }
-    d->subjectEdit->setEnabled(d->subjectCheck->isChecked());
+    d->imageDescEdit->setEnabled(d->imageDescCheck->isChecked());
 
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Writer", false);    
+    data = exiv2Iface.getExifTagString("Exif.Image.Make", false);       
     if (!data.isNull())
     {
-        d->writerEdit->setText(data);
-        d->writerCheck->setChecked(true);
+        d->makeEdit->setText(data);
+        d->makeCheck->setChecked(true);
     }
-    d->writerEdit->setEnabled(d->writerCheck->isChecked());
+    d->makeEdit->setEnabled(d->makeCheck->isChecked());
 
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Headline", false);    
+    data = exiv2Iface.getExifTagString("Exif.Image.Model", false);     
     if (!data.isNull())
     {
-        d->headlineEdit->setText(data);
-        d->headlineCheck->setChecked(true);
+        d->modelEdit->setText(data);
+        d->modelCheck->setChecked(true);
     }
-    d->headlineEdit->setEnabled(d->headlineCheck->isChecked());
+    d->modelEdit->setEnabled(d->modelCheck->isChecked());
 
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.SpecialInstructions", false);    
+    data = exiv2Iface.getExifTagString("Exif.Image.Artist", false);    
     if (!data.isNull())
     {
-        d->specialInstructionEdit->setText(data);
-        d->specialInstructionCheck->setChecked(true);
+        d->artistEdit->setText(data);
+        d->artistCheck->setChecked(true);
     }
-    d->specialInstructionEdit->setEnabled(d->specialInstructionCheck->isChecked());*/
+    d->artistEdit->setEnabled(d->artistCheck->isChecked());
+
+    data = exiv2Iface.getExifTagString("Exif.Image.Copyright", false);    
+    if (!data.isNull())
+    {
+        d->copyrightEdit->setText(data);
+        d->copyrightCheck->setChecked(true);
+    }
+    d->copyrightEdit->setEnabled(d->copyrightCheck->isChecked());
+
+/* TODO
+    data = exiv2Iface.getIma;    
+    if (!data.isNull())
+    {
+        d->userCommentEdit->setText(data);
+        d->userCommentCheck->setChecked(true);
+    }
+    d->userCommentEdit->setEnabled(d->userCommentCheck->isChecked());
+*/
 }
 
 void EXIFCaption::applyMetadata(QByteArray& exifData)

@@ -37,6 +37,7 @@
 
 // Local includes.
 
+#include "exifcaption.h"
 #include "exifeditdialog.h"
 #include "exifeditdialog.moc"
 
@@ -57,8 +58,8 @@ public:
         page_origin   = 0;
         page_datetime = 0;
 
-/*        captionPage   = 0;
-        keywordsPage  = 0;
+        captionPage   = 0;
+/*        keywordsPage  = 0;
         creditsPage   = 0;
         statusPage    = 0;
         originPage    = 0;
@@ -75,8 +76,8 @@ public:
     QFrame         *page_origin;
     QFrame         *page_datetime;
 
-/*    EXIFCaption    *captionPage;
-    EXIFKeywords   *keywordsPage;
+    EXIFCaption    *captionPage;
+/*    EXIFKeywords   *keywordsPage;
     EXIFCategories *categoriesPage;
     EXIFCredits    *creditsPage;
     EXIFStatus     *statusPage;
@@ -95,7 +96,7 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, QByteArray exifData, const QStri
 
     d->page_caption    = addPage(i18n("Caption"), i18n("EXIF Caption Informations"),
                                  BarIcon("editclear", KIcon::SizeMedium));
-//    d->captionPage     = new EXIFCaption(d->page_caption, d->exifData);
+    d->captionPage     = new EXIFCaption(d->page_caption, d->exifData);
 
 /*    d->page_keywords   = addPage(i18n("Keywords"), i18n("EXIF Keywords Informations"),
                                  BarIcon("bookmark", KIcon::SizeMedium));
@@ -168,8 +169,8 @@ QByteArray EXIFEditDialog::getEXIFInfo()
 
 void EXIFEditDialog::slotOk()
 {
-/*    d->captionPage->applyMetadata(d->exifData);
-    d->keywordsPage->applyMetadata(d->exifData);
+    d->captionPage->applyMetadata(d->exifData);
+/*    d->keywordsPage->applyMetadata(d->exifData);
     d->categoriesPage->applyMetadata(d->exifData);
     d->creditsPage->applyMetadata(d->exifData);
     d->statusPage->applyMetadata(d->exifData);
