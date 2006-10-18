@@ -39,6 +39,7 @@
 
 #include "exifcaption.h"
 #include "exifdatetime.h"
+#include "exifexposure.h"
 #include "exifeditdialog.h"
 #include "exifeditdialog.moc"
 
@@ -53,7 +54,7 @@ public:
     EXIFEditDialogDialogPrivate()
     {
         page_caption  = 0;
-        page_keywords = 0;
+        page_exposure = 0;
         page_credits  = 0;
         page_status   = 0;
         page_origin   = 0;
@@ -62,7 +63,7 @@ public:
         captionPage   = 0;
         datetimePage  = 0;
 /*
-        keywordsPage  = 0;
+        exposurePage  = 0;
         creditsPage   = 0;
         statusPage    = 0;
         originPage    = 0;
@@ -73,7 +74,7 @@ public:
 
     QFrame         *page_caption;
     QFrame         *page_datetime;
-    QFrame         *page_keywords;
+    QFrame         *page_exposure;
     QFrame         *page_categories;
     QFrame         *page_credits;
     QFrame         *page_status;
@@ -81,9 +82,9 @@ public:
 
     EXIFCaption    *captionPage;
     EXIFDateTime   *datetimePage;
-/*
-    EXIFKeywords   *keywordsPage;
-    EXIFCategories *categoriesPage;
+    EXIFExposure   *exposurePage;
+
+/*    EXIFCategories *categoriesPage;
     EXIFCredits    *creditsPage;
     EXIFStatus     *statusPage;
     EXIFOrigin     *originPage;
@@ -107,11 +108,11 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, QByteArray exifData, const QStri
                                  BarIcon("today", KIcon::SizeMedium));
     d->datetimePage    = new EXIFDateTime(d->page_datetime, d->exifData);
 
-/*    d->page_keywords   = addPage(i18n("Keywords"), i18n("EXIF Keywords Informations"),
-                                 BarIcon("bookmark", KIcon::SizeMedium));
-    d->keywordsPage    = new EXIFKeywords(d->page_keywords, d->exifData);
+    d->page_exposure   = addPage(i18n("Exposure"), i18n("EXIF Exposure Informations"),
+                                 BarIcon("camera", KIcon::SizeMedium));
+    d->exposurePage    = new EXIFExposure(d->page_exposure, d->exifData);
 
-    d->page_categories = addPage(i18n("Categories"), i18n("EXIF Categories Informations"),
+/*    d->page_categories = addPage(i18n("Categories"), i18n("EXIF Categories Informations"),
                                  BarIcon("bookmark_folder", KIcon::SizeMedium));
     d->categoriesPage  = new EXIFCategories(d->page_categories, d->exifData);
 
@@ -176,8 +177,9 @@ void EXIFEditDialog::slotOk()
 {
     d->captionPage->applyMetadata(d->exifData);
     d->datetimePage->applyMetadata(d->exifData);
+    d->exposurePage->applyMetadata(d->exifData);
+
 /*
-    d->keywordsPage->applyMetadata(d->exifData);
     d->categoriesPage->applyMetadata(d->exifData);
     d->creditsPage->applyMetadata(d->exifData);
     d->statusPage->applyMetadata(d->exifData);
