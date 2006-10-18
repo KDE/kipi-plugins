@@ -23,8 +23,8 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qwhatsthis.h>
-#include <qvalidator.h>
 #include <qcheckbox.h>
+#include <qcombobox.h>
 
 // KDE includes.
 
@@ -47,12 +47,16 @@ public:
 
     EXIFExposurePriv()
     {
-        exposureTimeCheck   = 0;
-        exposureTimeNumEdit = 0;
-        exposureTimeDenEdit = 0;
+        exposureTimeCheck    = 0;
+        exposureProgramCheck = 0;
+        exposureTimeNumEdit  = 0;
+        exposureTimeDenEdit  = 0;
     }
 
     QCheckBox   *exposureTimeCheck;
+    QCheckBox   *exposureProgramCheck;
+
+    QComboBox   *exposureProgramCB;
 
     KIntSpinBox *exposureTimeNumEdit;
     KIntSpinBox *exposureTimeDenEdit;
@@ -80,41 +84,22 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
                     "of picture, given in seconds."));
 
     // --------------------------------------------------------
-/*
-    d->dateOriginalCheck       = new QCheckBox(i18n("Original date and time"), parent);
-    d->dateOriginalSubSecCheck = new QCheckBox(i18n("Original sub-second"), parent);
-    d->dateOriginalSel         = new KExposureWidget(parent);
-    d->dateOriginalSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, 10, parent);
-    d->dateOriginalSel->setExposure(QExposure::currentExposure());
-    grid->addMultiCellWidget(d->dateOriginalCheck, 2, 2, 0, 0);
-    grid->addMultiCellWidget(d->dateOriginalSubSecCheck, 2, 2, 1, 2);
-    grid->addMultiCellWidget(d->dateOriginalSel, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->dateOriginalSubSecEdit, 3, 3, 1, 1);
-    QWhatsThis::add(d->dateOriginalSel, i18n("<p>Set here the date and time when the original image "
-                                        "data was generated. For a digital still camera the date and "
-                                        "time the picture was taken are recorded."));
-    QWhatsThis::add(d->dateOriginalSubSecEdit, i18n("<p>Set here the fractions of seconds for the date "
-                                               "and time when the original image data was generated."));
 
-    // --------------------------------------------------------
-
-    d->dateDigitalizedCheck       = new QCheckBox(i18n("Digitization date and time"), parent);
-    d->dateDigitalizedSubSecCheck = new QCheckBox(i18n("Digitization sub-second"), parent);
-    d->dateDigitalizedSel         = new KExposureWidget(parent);
-    d->dateDigitalizedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, 10, parent);
-    d->dateDigitalizedSel->setExposure(QExposure::currentExposure());
-    grid->addMultiCellWidget(d->dateDigitalizedCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->dateDigitalizedSubSecCheck, 4, 4, 1, 2);
-    grid->addMultiCellWidget(d->dateDigitalizedSel, 5, 5, 0, 0);
-    grid->addMultiCellWidget(d->dateDigitalizedSubSecEdit, 5, 5, 1, 1);
-    QWhatsThis::add(d->dateDigitalizedSel, i18n("<p>Set here the date and time when the image was "
-                                           "stored as digital data. If, for example, an image was "
-                                           "captured by a digital still camera and at the same "
-                                           "time the file was recorded, then Original and Digitization "
-                                           "date and time will have the same contents."));
-    QWhatsThis::add(d->dateDigitalizedSubSecEdit, i18n("<p>Set here the fractions of seconds for the date "
-                                                  "and time when the image was stored as digital data."));
-*/
+    d->exposureProgramCheck = new QCheckBox(i18n("Exposure Program:"), parent);
+    d->exposureProgramCB    = new QComboBox(false, parent);
+    d->exposureProgramCB->insertItem(i18n("Not defined"),       0);
+    d->exposureProgramCB->insertItem(i18n("Manual"),            1);
+    d->exposureProgramCB->insertItem(i18n("Auto"),              2);
+    d->exposureProgramCB->insertItem(i18n("Aperture priority"), 3);
+    d->exposureProgramCB->insertItem(i18n("Shutter priority"),  4);
+    d->exposureProgramCB->insertItem(i18n("Creative program"),  5);
+    d->exposureProgramCB->insertItem(i18n("Action program"),    6);
+    d->exposureProgramCB->insertItem(i18n("Portrait mode"),     7);
+    d->exposureProgramCB->insertItem(i18n("Landscape mode"),    8);
+    grid->addMultiCellWidget(d->exposureProgramCheck, 2, 2, 0, 0);
+    grid->addMultiCellWidget(d->exposureProgramCB, 2, 2, 2, 4);
+    QWhatsThis::add(d->exposureProgramCB, i18n("<p>Select here the program used by the camera "
+                                          "to set exposure when the picture have been taken."));
 
     grid->setColStretch(1, 10);                     
     grid->setRowStretch(6, 10);                     
@@ -126,6 +111,9 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     connect(d->exposureTimeCheck, SIGNAL(toggled(bool)),
             d->exposureTimeDenEdit, SLOT(setEnabled(bool)));
+
+    connect(d->exposureProgramCheck, SIGNAL(toggled(bool)),
+            d->exposureProgramCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
     
@@ -141,7 +129,8 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
-    int num=0, den=0;
+    int  num=0, den=0;
+    long val=0;
     
     if (exiv2Iface.getExifTagRational("Exif.Photo.ExposureTime", num, den))
     {
@@ -152,6 +141,12 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
     d->exposureTimeNumEdit->setEnabled(d->exposureTimeCheck->isChecked());
     d->exposureTimeDenEdit->setEnabled(d->exposureTimeCheck->isChecked());
 
+    if (exiv2Iface.getExifTagLong("Exif.Photo.ExposureProgram", val))
+    {
+        d->exposureProgramCB->setCurrentItem(val);
+        d->exposureProgramCheck->setChecked(true);
+    }
+    d->exposureProgramCB->setEnabled(d->exposureProgramCheck->isChecked());
 }
 
 void EXIFExposure::applyMetadata(QByteArray& exifData)
@@ -164,6 +159,11 @@ void EXIFExposure::applyMetadata(QByteArray& exifData)
                                       d->exposureTimeDenEdit->value());
     else
         exiv2Iface.removeExifTag("Exif.Photo.ExposureTime");
+
+    if (d->exposureProgramCheck->isChecked())
+        exiv2Iface.setExifTagLong("Exif.Photo.ExposureProgram", d->exposureProgramCB->currentItem());
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.ExposureProgram");
 
     exifData = exiv2Iface.getExif();
 }
