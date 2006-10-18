@@ -101,10 +101,12 @@ public:
 
     QString    getExifTagString(const char *exifTagName, bool escapeCR=true) const;
     QByteArray getExifTagData(const char *exifTagName) const;
+    bool       getExifTagRational(const char *exifTagName, int &num, int &den, int component=0);
     QString    getIptcTagString(const char* iptcTagName, bool escapeCR=true) const;
     QByteArray getIptcTagData(const char *iptcTagName) const;
 
     bool setExifTagString(const char *exifTagName, const QString& value);
+    bool setExifTagRational(const char *exifTagName, int num, int den);
     bool setIptcTagString(const char *iptcTagName, const QString& value);
 
     bool removeExifTag(const char *exifTagName);

@@ -522,6 +522,48 @@ QByteArray Exiv2Iface::getIptcTagData(const char *iptcTagName) const
     return QByteArray();
 }
 
+bool Exiv2Iface::getExifTagRational(const char *exifTagName, int &num, int &den, int component)
+{
+    try
+    {
+        Exiv2::ExifKey exifKey(exifTagName);
+        Exiv2::ExifData exifData(d->exifMetadata);
+        Exiv2::ExifData::iterator it = exifData.findKey(exifKey);
+        if (it != exifData.end())
+        {
+            num = (*it).toRational(component).first;
+            den = (*it).toRational(component).second;
+            return true;
+        }
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot find Exif Rational value from key '"
+                  << exifTagName << "' into image using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }
+
+    return false;
+}
+
+bool Exiv2Iface::setExifTagRational(const char *exifTagName, int num, int den)
+{
+    try
+    {
+        d->exifMetadata[exifTagName] = Exiv2::Rational(num, den);
+        return true;
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot set Exif tag rational value into image using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }
+
+    return false;
+}
+
 bool Exiv2Iface::removeExifTag(const char *exifTagName)
 {
     try
