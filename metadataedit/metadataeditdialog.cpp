@@ -357,7 +357,51 @@ void MetadataEditDialog::slotEditIptc()
 
 void MetadataEditDialog::slotLoadExif()
 {
-    // TODO
+    if (!d->listView->currentItem())
+    {
+        KMessageBox::information(this, i18n("Please, select at least one picture from "
+                     "the list to apply EXIF metadata from a specific picture."), i18n("Edit Metadata"));    
+        return;
+    }
+
+    KURL loadEXIFFile = KFileDialog::getOpenURL(KGlobalSettings::documentPath(),
+                                                QString::null, this,
+                                                i18n("Select File to Load EXIF data") );
+    if( loadEXIFFile.isEmpty() )
+       return;
+    
+    KIPIPlugins::Exiv2Iface exiv2Iface;
+    if (!exiv2Iface.load(loadEXIFFile.path()))
+    {
+        KMessageBox::error(this, i18n("Cannot load metadata from \"%1\"!").arg(loadEXIFFile.fileName()), 
+                           i18n("Edit Metadata"));    
+        return;
+    }
+    
+    QByteArray exifData = exiv2Iface.getExif();
+    if (exifData.isEmpty())
+    {
+        KMessageBox::error(this, i18n("\"%1\" do not have EXIF metadata!").arg(loadEXIFFile.fileName()), 
+                           i18n("Edit Metadata"));    
+        return;
+    }        
+
+    EXIFEditDialog dlg(this, exifData, loadEXIFFile.fileName());
+
+    if (dlg.exec() == KDialogBase::Accepted)
+    {
+        QListViewItemIterator it(d->listView);
+
+        while (it.current())
+        {
+            if (it.current()->isSelected())
+            {
+                MetadataItem *selItem = (MetadataItem*)it.current();
+                selItem->setExif(dlg.getEXIFInfo(), true);
+            }
+            ++it;
+        }
+    }
 }
 
 void MetadataEditDialog::slotLoadIptc()
@@ -378,7 +422,7 @@ void MetadataEditDialog::slotLoadIptc()
     KIPIPlugins::Exiv2Iface exiv2Iface;
     if (!exiv2Iface.load(loadIPTCFile.path()))
     {
-        KMessageBox::error(this, i18n("Cannot load metadata from %1!").arg(loadIPTCFile.fileName()), 
+        KMessageBox::error(this, i18n("Cannot load metadata from \"%1\"!").arg(loadIPTCFile.fileName()), 
                            i18n("Edit Metadata"));    
         return;
     }
@@ -386,7 +430,7 @@ void MetadataEditDialog::slotLoadIptc()
     QByteArray iptcData = exiv2Iface.getIptc();
     if (iptcData.isEmpty())
     {
-        KMessageBox::error(this, i18n("%1 do not have IPTC metadata!").arg(loadIPTCFile.fileName()), 
+        KMessageBox::error(this, i18n("\"%1\" do not have IPTC metadata!").arg(loadIPTCFile.fileName()), 
                            i18n("Edit Metadata"));    
         return;
     }        
