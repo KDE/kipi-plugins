@@ -200,7 +200,7 @@ UploadDialog::UploadDialog(
     QWhatsThis::add( m_imagePreview, i18n( "The preview of the selected image in the list." ) );
 
     QLabel *hdd_icon = new QLabel( urlBox );
-    hdd_icon->setPixmap( KGlobal::iconLoader()->loadIcon( "hdd_unmount", KIcon::Desktop, KIcon::SizeEnormous ) );
+    hdd_icon->setPixmap( KGlobal::iconLoader()->loadIcon( "system", KIcon::Desktop, KIcon::SizeEnormous ) );
 
     urlLayout_1->addWidget( m_imagePreview );
     urlLayout_1->addWidget( hdd_icon );
