@@ -1,9 +1,10 @@
 /* ============================================================
- * Author: Gilles Caulier <caulier dot gilles at kdemail dot net>
- * Date  : 2006-09-15
+ * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
+ *          Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Date   : 2006-09-15
  * Description : Exiv2 library interface
  *
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006 by Gilles Caulier and Marcel Wiesweg
  *
  * NOTE: This class is a simplified version of Digikam::DMetadata
  *       class from digiKam core. Please contact digiKam team 
@@ -31,6 +32,11 @@
 #include <qstring.h>
 #include <qimage.h>
 #include <qdatetime.h>
+
+// Exiv2 includes.
+
+#include <exiv2/types.hpp>
+#include <exiv2/exif.hpp>
 
 namespace KIPIPlugins
 {
@@ -90,6 +96,9 @@ public:
     bool getGPSInfo(double& altitude, double& latitude, double& longitude);
     bool removeGPSInfo();
 
+    QString getExifComment() const;
+    bool    setExifComment(const QString& comment);
+
     QString    getExifTagString(const char *exifTagName, bool escapeCR=true) const;
     QByteArray getExifTagData(const char *exifTagName) const;
     QString    getIptcTagString(const char* iptcTagName, bool escapeCR=true) const;
@@ -103,6 +112,9 @@ public:
 
     Exiv2Iface::ImageOrientation getImageOrientation();
     QDateTime getImageDateTime() const;
+
+    static QString convertCommentValue(const Exiv2::Exifdatum &comment);
+    static QString detectEncodingAndDecode(const std::string &value);
 
 private:
 

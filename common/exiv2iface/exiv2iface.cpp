@@ -1,9 +1,10 @@
 /* ============================================================
  * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
+ *          Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  * Date   : 2006-09-15
  * Description : Exiv2 library interface
  *
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006 by Gilles Caulier and Marcel Wiesweg
  *
  * NOTE: This class is a simplified version of Digikam::DMetadata
  *       class from digiKam core. Please contact digiKam team 
@@ -37,16 +38,17 @@
 #include <qfile.h>
 #include <qimage.h>
 #include <qsize.h>
+#include <qtextcodec.h>
 
 // KDE includes.
 
 #include <ktempfile.h>
+#include <kstringhandler.h>
 #include <kdebug.h>
+#include <kdeversion.h>
 
 // Exiv2 includes.
 
-#include <exiv2/types.hpp>
-#include <exiv2/exif.hpp>
 #include <exiv2/image.hpp>
 #include <exiv2/jpgimage.hpp>
 #include <exiv2/datasets.hpp>
@@ -1377,6 +1379,195 @@ bool Exiv2Iface::setImageSubCategories(const QStringList& oldSubCategories, cons
     }        
     
     return false;
+}
+
+QString Exiv2Iface::getExifComment() const
+{
+    try
+    {
+        if (!d->exifMetadata.empty())
+        {
+            Exiv2::ExifKey key("Exif.Photo.UserComment");
+            Exiv2::ExifData exifData(d->exifMetadata);
+            Exiv2::ExifData::iterator it = exifData.findKey(key);
+
+            if (it != exifData.end())
+            {
+                QString exifComment = convertCommentValue(*it);
+
+                // some cameras fill the UserComment with whitespace
+                if (!exifComment.isEmpty() && !exifComment.stripWhiteSpace().isEmpty())
+                    return exifComment;
+            }
+        }
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot find Exif User Comment using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }
+
+    return QString();
+}
+
+bool Exiv2Iface::setExifComment(const QString& comment)
+{
+    try
+    {
+        if (comment.isEmpty())
+            return false;
+
+        // Write as Unicode only when necessary.
+        QTextCodec *latin1Codec = QTextCodec::codecForName("iso8859-1");
+        if (latin1Codec->canEncode(comment))
+        {
+            // write as ASCII
+            std::string exifComment("charset=\"Ascii\" ");
+            exifComment += comment.latin1();
+            d->exifMetadata["Exif.Photo.UserComment"] = exifComment;
+        }
+        else
+        {
+            // write as Unicode (UCS-2)
+
+            // Be aware that we are dealing with a UCS-2 string.
+            // Null termination means \0\0, strlen does not work,
+            // do not use any const-char*-only methods,
+            // pass a std::string and not a const char * to ExifDatum::operator=().
+            const unsigned short *ucs2 = comment.ucs2();
+            std::string exifComment("charset=\"Unicode\" ");
+            exifComment.append((const char*)ucs2, sizeof(unsigned short) * comment.length());
+            d->exifMetadata["Exif.Photo.UserComment"] = exifComment;
+        }
+
+        return true;
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot set Exif Comment using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }
+
+    return false;
+}
+
+QString Exiv2Iface::convertCommentValue(const Exiv2::Exifdatum &exifDatum)
+{
+    try
+    {
+        std::string comment;
+        std::string charset;
+#ifdef EXIV2_CHECK_VERSION
+        if (EXIV2_CHECK_VERSION(0,11,0))
+        {
+            comment = exifDatum.toString();
+        }
+        else
+        {
+            // workaround for bug in TIFF parser: CommentValue is loaded as DataValue
+            const Exiv2::Value &value = exifDatum.value();
+            Exiv2::byte *data = new Exiv2::byte[value.size()];
+            value.copy(data, Exiv2::invalidByteOrder);
+            Exiv2::CommentValue commentValue;
+            // this read method is hidden in CommentValue
+            static_cast<Exiv2::Value &>(commentValue).read(data, value.size(), Exiv2::invalidByteOrder);
+            comment = commentValue.toString();
+            delete [] data;
+        }
+#else
+        comment = exifDatum.toString();
+#endif
+
+        // libexiv2 will prepend "charset=\"SomeCharset\" " if charset is specified
+        // Before conversion to QString, we must know the charset, so we stay with std::string for a while
+        if (comment.length() > 8 && comment.substr(0, 8) == "charset=")
+        {
+            // the prepended charset specification is followed by a blank
+            std::string::size_type pos = comment.find_first_of(' ');
+            if (pos != std::string::npos)
+            {
+                // extract string between the = and the blank
+                charset = comment.substr(8, pos-8);
+                // get the rest of the string after the charset specification
+                comment = comment.substr(pos+1);
+            }
+        }
+
+        if (charset == "\"Unicode\"")
+        {
+            // QString expects a null-terminated UCS-2 string.
+            // Is it already null terminated? In any case, add termination for safety.
+            comment += "\0\0";
+            return QString::fromUcs2((unsigned short *)comment.data());
+        }
+        else if (charset == "\"Jis\"")
+        {
+            QTextCodec *codec = QTextCodec::codecForName("JIS7");
+            return codec->toUnicode(comment.c_str());
+        }
+        else if (charset == "\"Ascii\"")
+        {
+            return QString::fromLatin1(comment.c_str());
+        }
+        else
+        {
+            return detectEncodingAndDecode(comment);
+        }
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot convert Comment using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }
+
+    return QString();
+}
+
+QString Exiv2Iface::detectEncodingAndDecode(const std::string &value)
+{
+    // For charset autodetection, we could use sophisticated code
+    // (Mozilla chardet, KHTML's autodetection, QTextCodec::codecForContent),
+    // but that is probably too much.
+    // We check for UTF8, Local encoding and ASCII.
+
+    if (value.empty())
+        return QString();
+
+#if KDE_IS_VERSION(3,2,0)
+    if (KStringHandler::isUtf8(value.c_str()))
+    {
+        return QString::fromUtf8(value.c_str());
+    }
+#else
+    // anyone who is still running KDE 3.0 or 3.1 is missing so many features
+    // that he will have to accept this missing feature.
+    return QString::fromUtf8(value.c_str());
+#endif
+
+    // Utf8 has a pretty unique byte pattern.
+    // Thats not true for ASCII, it is not possible
+    // to reliably autodetect different ISO-8859 charsets.
+    // We try if QTextCodec can decide here, otherwise we use Latin1.
+    // Or use local8Bit as default?
+
+    // load QTextCodecs
+    QTextCodec *latin1Codec = QTextCodec::codecForName("iso8859-1");
+    //QTextCodec *utf8Codec   = QTextCodec::codecForName("utf8");
+    QTextCodec *localCodec  = QTextCodec::codecForLocale();
+
+    // make heuristic match
+    int latin1Score = latin1Codec->heuristicContentMatch(value.c_str(), value.length());
+    int localScore  = localCodec->heuristicContentMatch(value.c_str(), value.length());
+
+    // convert string:
+    // Use whatever has the larger score, local or ASCII
+    if (localScore >= 0 && localScore >= latin1Score)
+        return localCodec->toUnicode(value.c_str(), value.length());
+    else
+        return QString::fromLatin1(value.c_str());
 }
 
 }  // NameSpace KIPIPlugins
