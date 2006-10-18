@@ -25,6 +25,7 @@
 #include <qwhatsthis.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
+#include <qlistbox.h>
 
 // KDE includes.
 
@@ -50,8 +51,10 @@ public:
         exposureTimeCheck    = 0;
         exposureProgramCheck = 0;
         exposureModeCheck    = 0;
+        ISOSpeedCheck        = 0;
         exposureProgramCB    = 0;
         exposureModeCB       = 0;
+        ISOSpeedCB           = 0;
         exposureTimeNumEdit  = 0;
         exposureTimeDenEdit  = 0;
     }
@@ -59,9 +62,11 @@ public:
     QCheckBox   *exposureTimeCheck;
     QCheckBox   *exposureProgramCheck;
     QCheckBox   *exposureModeCheck;
+    QCheckBox   *ISOSpeedCheck;
 
     QComboBox   *exposureProgramCB;
     QComboBox   *exposureModeCB;
+    QComboBox   *ISOSpeedCB;
 
     KIntSpinBox *exposureTimeNumEdit;
     KIntSpinBox *exposureTimeDenEdit;
@@ -121,6 +126,51 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
                                        "series of frames of the same scene at different "
                                        "exposure settings."));
 
+    // --------------------------------------------------------
+
+    d->ISOSpeedCheck = new QCheckBox(i18n("ISO Speed Rating:"), parent);
+    d->ISOSpeedCB    = new QComboBox(false, parent);
+    d->ISOSpeedCB->insertItem("10",    0);
+    d->ISOSpeedCB->insertItem("12",    1);
+    d->ISOSpeedCB->insertItem("16",    2);
+    d->ISOSpeedCB->insertItem("20",    3);
+    d->ISOSpeedCB->insertItem("25",    4);
+    d->ISOSpeedCB->insertItem("32",    5);
+    d->ISOSpeedCB->insertItem("40",    6);
+    d->ISOSpeedCB->insertItem("50",    7);
+    d->ISOSpeedCB->insertItem("64",    8);
+    d->ISOSpeedCB->insertItem("80",    9);
+    d->ISOSpeedCB->insertItem("100",   10);
+    d->ISOSpeedCB->insertItem("125",   11);
+    d->ISOSpeedCB->insertItem("160",   12);
+    d->ISOSpeedCB->insertItem("200",   13);
+    d->ISOSpeedCB->insertItem("250",   14);
+    d->ISOSpeedCB->insertItem("320",   15);
+    d->ISOSpeedCB->insertItem("400",   16);
+    d->ISOSpeedCB->insertItem("500",   17);
+    d->ISOSpeedCB->insertItem("640",   18);
+    d->ISOSpeedCB->insertItem("800",   19);
+    d->ISOSpeedCB->insertItem("1000",  20);
+    d->ISOSpeedCB->insertItem("1250",  21);
+    d->ISOSpeedCB->insertItem("1600",  22);
+    d->ISOSpeedCB->insertItem("2000",  23);
+    d->ISOSpeedCB->insertItem("2500",  24);
+    d->ISOSpeedCB->insertItem("3200",  25);
+    d->ISOSpeedCB->insertItem("4000",  26);
+    d->ISOSpeedCB->insertItem("5000",  27);
+    d->ISOSpeedCB->insertItem("6400",  28);
+    d->ISOSpeedCB->insertItem("8000",  29);
+    d->ISOSpeedCB->insertItem("10000", 30);
+    d->ISOSpeedCB->insertItem("12500", 31);
+    d->ISOSpeedCB->insertItem("16000", 32);
+    d->ISOSpeedCB->insertItem("20000", 33);
+    d->ISOSpeedCB->insertItem("25000", 34);
+    d->ISOSpeedCB->insertItem("32000", 35);
+    grid->addMultiCellWidget(d->ISOSpeedCheck, 4, 4, 0, 0);
+    grid->addMultiCellWidget(d->ISOSpeedCB, 4, 4, 2, 4);
+    QWhatsThis::add(d->ISOSpeedCB, i18n("<p>Select here the ISO Speed of the digital still camera "
+                    "witch have taken the picture."));
+
     grid->setColStretch(1, 10);                     
     grid->setRowStretch(6, 10);                     
 
@@ -137,6 +187,9 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     connect(d->exposureModeCheck, SIGNAL(toggled(bool)),
             d->exposureModeCB, SLOT(setEnabled(bool)));
+
+    connect(d->ISOSpeedCheck, SIGNAL(toggled(bool)),
+            d->ISOSpeedCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
     
@@ -177,6 +230,21 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
         d->exposureModeCheck->setChecked(true);
     }
     d->exposureModeCB->setEnabled(d->exposureModeCheck->isChecked());
+
+    if (exiv2Iface.getExifTagLong("Exif.Photo.ISOSpeedRatings", val))
+    {
+        int item = -1;
+        for (int i = 0 ; i < d->ISOSpeedCB->count() ; i++)
+            if (d->ISOSpeedCB->text(i) == QString::number(val))
+                item = i;
+
+        if (item != -1)
+        {
+            d->ISOSpeedCB->setCurrentItem(item);
+            d->ISOSpeedCheck->setChecked(true);
+        }
+    }
+    d->ISOSpeedCB->setEnabled(d->ISOSpeedCheck->isChecked());
 }
 
 void EXIFExposure::applyMetadata(QByteArray& exifData)
@@ -199,6 +267,11 @@ void EXIFExposure::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifTagLong("Exif.Photo.ExposureMode", d->exposureModeCB->currentItem());
     else
         exiv2Iface.removeExifTag("Exif.Photo.ExposureMode");
+
+    if (d->ISOSpeedCheck->isChecked())
+        exiv2Iface.setExifTagLong("Exif.Photo.ISOSpeedRatings", d->ISOSpeedCB->currentText().toLong());
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.ISOSpeedRatings");
 
     exifData = exiv2Iface.getExif();
 }
