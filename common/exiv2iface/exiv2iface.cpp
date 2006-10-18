@@ -472,6 +472,30 @@ bool Exiv2Iface::setIptcTagString(const char *iptcTagName, const QString& value)
     return false;
 }
 
+bool Exiv2Iface::getExifTagLong(const char* exifTagName, long &val)
+{
+    try
+    {    
+        Exiv2::ExifKey exifKey(exifTagName);
+        Exiv2::ExifData exifData(d->exifMetadata);
+        Exiv2::ExifData::iterator it = exifData.findKey(exifKey);
+        if (it != exifData.end())
+        {
+            val = it->toLong();
+            return true;
+        }
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot find Exif key '"
+                  << exifTagName << "' into image using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }        
+    
+    return false;    
+}
+
 QByteArray Exiv2Iface::getExifTagData(const char* exifTagName) const
 {
     try
@@ -540,6 +564,23 @@ bool Exiv2Iface::getExifTagRational(const char *exifTagName, int &num, int &den,
     {
         kdDebug() << "Cannot find Exif Rational value from key '"
                   << exifTagName << "' into image using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }
+
+    return false;
+}
+
+bool Exiv2Iface::setExifTagLong(const char *exifTagName, long val)
+{
+    try
+    {
+        d->exifMetadata[exifTagName] = int32_t(val);
+        return true;
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot set Exif tag long value into image using Exiv2 (" 
                   << QString::fromLocal8Bit(e.what().c_str())
                   << ")" << endl;
     }
