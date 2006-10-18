@@ -92,7 +92,7 @@ IPTCKeywords::IPTCKeywords(QWidget* parent, QByteArray& iptcData)
     d->keywordsBox   = new KListBox(parent);
     d->keywordsBox->setVScrollBarMode(QScrollView::AlwaysOn);
     
-    d->addKeywordButton = new QPushButton( i18n("&Add..."), parent);
+    d->addKeywordButton = new QPushButton( i18n("&Add"), parent);
     d->delKeywordButton = new QPushButton( i18n("&Delete"), parent);
     d->delKeywordButton->setEnabled(false);
 

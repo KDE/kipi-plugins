@@ -132,7 +132,7 @@ MetadataEditDialog::MetadataEditDialog( KIPI::Interface* interface, QWidget* par
 
     QPushButton *editExifButton   = new QPushButton(i18n("Edit..."), exifBox);
     QPushButton *loadExifButton   = new QPushButton(i18n("Load..."), exifBox);
-    QPushButton *removeExifButton = new QPushButton(i18n("Remove..."), exifBox);
+    QPushButton *removeExifButton = new QPushButton(i18n("Remove"), exifBox);
 
     QWhatsThis::add(editExifButton, i18n("<p>Edit EXIF data of selected pictures from the list."));
     QWhatsThis::add(loadExifButton, i18n("<p>Load EXIF data from a picture and set it to selected "
@@ -151,7 +151,7 @@ MetadataEditDialog::MetadataEditDialog( KIPI::Interface* interface, QWidget* par
 
     QPushButton *editIptcButton   = new QPushButton(i18n("Edit..."), iptcBox);
     QPushButton *loadIptcButton   = new QPushButton(i18n("Load..."), iptcBox);
-    QPushButton *removeIptcButton = new QPushButton(i18n("Remove..."), iptcBox);
+    QPushButton *removeIptcButton = new QPushButton(i18n("Remove"), iptcBox);
 
     QWhatsThis::add(editIptcButton, i18n("<p>Edit IPTC data of selected pictures from the list."));
     QWhatsThis::add(loadIptcButton, i18n("<p>Load IPTC data from a picture and set it to selected "

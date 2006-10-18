@@ -103,7 +103,7 @@ IPTCCategories::IPTCCategories(QWidget* parent, QByteArray& iptcData)
     d->subCategoriesBox = new KListBox(parent);
     d->subCategoriesBox->setVScrollBarMode(QScrollView::AlwaysOn);
     
-    d->addSubCategoryButton = new QPushButton( i18n("&Add..."), parent);
+    d->addSubCategoryButton = new QPushButton( i18n("&Add"), parent);
     d->delSubCategoryButton = new QPushButton( i18n("&Delete"), parent);
     d->delSubCategoryButton->setEnabled(false);
 

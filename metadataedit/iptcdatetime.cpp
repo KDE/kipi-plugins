@@ -97,8 +97,8 @@ IPTCDateTime::IPTCDateTime(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    d->dateCreatedCheck = new QCheckBox(i18n("Date created"), parent);
-    d->timeCreatedCheck = new QCheckBox(i18n("Time created"), parent);
+    d->dateCreatedCheck = new QCheckBox(i18n("Creation date"), parent);
+    d->timeCreatedCheck = new QCheckBox(i18n("Creation time"), parent);
     d->dateCreatedSel   = new KDateWidget(parent);
     d->timeCreatedSel   = new KTimeWidget(parent);
     d->dateCreatedSel->setDate(QDate::currentDate());
