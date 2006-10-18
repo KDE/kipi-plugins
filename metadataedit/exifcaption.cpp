@@ -209,7 +209,7 @@ EXIFCaption::~EXIFCaption()
 void EXIFCaption::readMetadata(QByteArray& exifData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
-    exiv2Iface.setIptc(exifData);
+    exiv2Iface.setExif(exifData);
     QString data;
 
     data = exiv2Iface.getExifTagString("Exif.Image.DocumentName", false);    
@@ -260,15 +260,13 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
     }
     d->copyrightEdit->setEnabled(d->copyrightCheck->isChecked());
 
-/* TODO
-    data = exiv2Iface.getIma;    
+    data = exiv2Iface.getExifComment();    
     if (!data.isNull())
     {
         d->userCommentEdit->setText(data);
         d->userCommentCheck->setChecked(true);
     }
     d->userCommentEdit->setEnabled(d->userCommentCheck->isChecked());
-*/
 }
 
 void EXIFCaption::applyMetadata(QByteArray& exifData)
@@ -276,32 +274,41 @@ void EXIFCaption::applyMetadata(QByteArray& exifData)
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
 
-/*
-    if (d->captionCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->captionEdit->text());
+    if (d->documentNameCheck->isChecked())
+        exiv2Iface.setExifTagString("Exif.Image.DocumentName", d->documentNameEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
+        exiv2Iface.removeExifTag("Exif.Image.DocumentName");
 
-    if (d->subjectCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Subject", d->subjectEdit->text());
+    if (d->imageDescCheck->isChecked())
+        exiv2Iface.setExifTagString("Exif.Image.ImageDescription", d->imageDescEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Subject");
+        exiv2Iface.removeExifTag("Exif.Image.ImageDescription");
 
-    if (d->writerCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Writer", d->writerEdit->text());
+    if (d->makeCheck->isChecked())
+        exiv2Iface.setExifTagString("Exif.Image.Make", d->makeEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Writer");
+        exiv2Iface.removeExifTag("Exif.Image.Make");
 
-    if (d->headlineCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Headline", d->headlineEdit->text());
+    if (d->modelCheck->isChecked())
+        exiv2Iface.setExifTagString("Exif.Image.Model", d->modelEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Headline");
+        exiv2Iface.removeExifTag("Exif.Image.Model");
 
-    if (d->specialInstructionCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.SpecialInstructions", d->specialInstructionEdit->text());
+    if (d->artistCheck->isChecked())
+        exiv2Iface.setExifTagString("Exif.Image.Artist", d->artistEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.SpecialInstructions");
-*/
+        exiv2Iface.removeExifTag("Exif.Image.Artist");
+
+    if (d->copyrightCheck->isChecked())
+        exiv2Iface.setExifTagString("Exif.Image.Copyright", d->copyrightEdit->text());
+    else
+        exiv2Iface.removeExifTag("Exif.Image.Copyright");
+
+    if (d->userCommentCheck->isChecked())
+        exiv2Iface.setExifComment(d->userCommentEdit->text());
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.UserComment");
+
     exifData = exiv2Iface.getExif();
 }
 
