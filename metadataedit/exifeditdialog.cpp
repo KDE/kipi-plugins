@@ -38,6 +38,7 @@
 // Local includes.
 
 #include "exifcaption.h"
+#include "exifdatetime.h"
 #include "exifeditdialog.h"
 #include "exifeditdialog.moc"
 
@@ -59,30 +60,34 @@ public:
         page_datetime = 0;
 
         captionPage   = 0;
-/*        keywordsPage  = 0;
+        datetimePage  = 0;
+/*
+        keywordsPage  = 0;
         creditsPage   = 0;
         statusPage    = 0;
         originPage    = 0;
-        datetimePage  = 0;*/
+*/
     }
 
     QByteArray   exifData;
 
     QFrame         *page_caption;
+    QFrame         *page_datetime;
     QFrame         *page_keywords;
     QFrame         *page_categories;
     QFrame         *page_credits;
     QFrame         *page_status;
     QFrame         *page_origin;
-    QFrame         *page_datetime;
 
     EXIFCaption    *captionPage;
-/*    EXIFKeywords   *keywordsPage;
+    EXIFDateTime   *datetimePage;
+/*
+    EXIFKeywords   *keywordsPage;
     EXIFCategories *categoriesPage;
     EXIFCredits    *creditsPage;
     EXIFStatus     *statusPage;
     EXIFOrigin     *originPage;
-    EXIFDateTime   *datetimePage;*/
+*/
 };
 
 EXIFEditDialog::EXIFEditDialog(QWidget* parent, QByteArray exifData, const QString& fileName)
@@ -97,6 +102,10 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, QByteArray exifData, const QStri
     d->page_caption    = addPage(i18n("Caption"), i18n("EXIF Caption Informations"),
                                  BarIcon("editclear", KIcon::SizeMedium));
     d->captionPage     = new EXIFCaption(d->page_caption, d->exifData);
+
+    d->page_datetime   = addPage(i18n("Date & Time"), i18n("EXIF Date and Time Informations"),
+                                 BarIcon("today", KIcon::SizeMedium));
+    d->datetimePage    = new EXIFDateTime(d->page_datetime, d->exifData);
 
 /*    d->page_keywords   = addPage(i18n("Keywords"), i18n("EXIF Keywords Informations"),
                                  BarIcon("bookmark", KIcon::SizeMedium));
@@ -117,10 +126,6 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, QByteArray exifData, const QStri
     d->page_origin     = addPage(i18n("Origin"), i18n("EXIF Origin Informations"),
                                  BarIcon("www", KIcon::SizeMedium));
     d->originPage      = new EXIFOrigin(d->page_origin, d->exifData);
-
-    d->page_datetime   = addPage(i18n("Date & Time"), i18n("EXIF Date and Time Informations"),
-                                 BarIcon("today", KIcon::SizeMedium));
-    d->datetimePage    = new EXIFDateTime(d->page_datetime, d->exifData);
 */
 
     readSettings();
@@ -170,12 +175,14 @@ QByteArray EXIFEditDialog::getEXIFInfo()
 void EXIFEditDialog::slotOk()
 {
     d->captionPage->applyMetadata(d->exifData);
-/*    d->keywordsPage->applyMetadata(d->exifData);
+    d->datetimePage->applyMetadata(d->exifData);
+/*
+    d->keywordsPage->applyMetadata(d->exifData);
     d->categoriesPage->applyMetadata(d->exifData);
     d->creditsPage->applyMetadata(d->exifData);
     d->statusPage->applyMetadata(d->exifData);
     d->originPage->applyMetadata(d->exifData);
-    d->datetimePage->applyMetadata(d->exifData);*/
+*/
     saveSettings();
     accept();
 }
