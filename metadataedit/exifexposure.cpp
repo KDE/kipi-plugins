@@ -15,7 +15,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *  
  * ============================================================ */
 
 // QT includes.
@@ -49,14 +49,19 @@ public:
     {
         exposureTimeCheck    = 0;
         exposureProgramCheck = 0;
+        exposureModeCheck    = 0;
+        exposureProgramCB    = 0;
+        exposureModeCB       = 0;
         exposureTimeNumEdit  = 0;
         exposureTimeDenEdit  = 0;
     }
 
     QCheckBox   *exposureTimeCheck;
     QCheckBox   *exposureProgramCheck;
+    QCheckBox   *exposureModeCheck;
 
     QComboBox   *exposureProgramCB;
+    QComboBox   *exposureModeCB;
 
     KIntSpinBox *exposureTimeNumEdit;
     KIntSpinBox *exposureTimeDenEdit;
@@ -101,6 +106,21 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     QWhatsThis::add(d->exposureProgramCB, i18n("<p>Select here the program used by the camera "
                                           "to set exposure when the picture have been taken."));
 
+    // --------------------------------------------------------
+
+    d->exposureModeCheck = new QCheckBox(i18n("Exposure Mode:"), parent);
+    d->exposureModeCB    = new QComboBox(false, parent);
+    d->exposureModeCB->insertItem(i18n("Auto"),         0);
+    d->exposureModeCB->insertItem(i18n("Manual"),       1);
+    d->exposureModeCB->insertItem(i18n("Auto bracket"), 2);
+    grid->addMultiCellWidget(d->exposureModeCheck, 3, 3, 0, 0);
+    grid->addMultiCellWidget(d->exposureModeCB, 3, 3, 2, 4);
+    QWhatsThis::add(d->exposureModeCB, i18n("<p>Select here the mode used by the camera "
+                                       "to set exposure when the picture have been shot. "
+                                       "In auto-bracketing mode, the camera shoots a "
+                                       "series of frames of the same scene at different "
+                                       "exposure settings."));
+
     grid->setColStretch(1, 10);                     
     grid->setRowStretch(6, 10);                     
 
@@ -114,6 +134,9 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     connect(d->exposureProgramCheck, SIGNAL(toggled(bool)),
             d->exposureProgramCB, SLOT(setEnabled(bool)));
+
+    connect(d->exposureModeCheck, SIGNAL(toggled(bool)),
+            d->exposureModeCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
     
@@ -147,6 +170,13 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
         d->exposureProgramCheck->setChecked(true);
     }
     d->exposureProgramCB->setEnabled(d->exposureProgramCheck->isChecked());
+
+    if (exiv2Iface.getExifTagLong("Exif.Photo.ExposureMode", val))
+    {
+        d->exposureModeCB->setCurrentItem(val);
+        d->exposureModeCheck->setChecked(true);
+    }
+    d->exposureModeCB->setEnabled(d->exposureModeCheck->isChecked());
 }
 
 void EXIFExposure::applyMetadata(QByteArray& exifData)
@@ -164,6 +194,11 @@ void EXIFExposure::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifTagLong("Exif.Photo.ExposureProgram", d->exposureProgramCB->currentItem());
     else
         exiv2Iface.removeExifTag("Exif.Photo.ExposureProgram");
+
+    if (d->exposureModeCheck->isChecked())
+        exiv2Iface.setExifTagLong("Exif.Photo.ExposureMode", d->exposureModeCB->currentItem());
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.ExposureMode");
 
     exifData = exiv2Iface.getExif();
 }
