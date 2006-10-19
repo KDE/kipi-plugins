@@ -316,8 +316,10 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
 
     if (exiv2Iface.getExifTagLong("Exif.Photo.LightSource", val))
     {
-        if (val > 8 && val < 25)
+        if (val > 8 && val < 16)
             val = val - 4;
+        else if (val > 16 && val < 25)
+            val = val - 5;
         else if (val == 255)    
             val = 20;
 
@@ -364,8 +366,10 @@ void EXIFExposure::applyMetadata(QByteArray& exifData)
     if (d->lightSourceCheck->isChecked())
     {
         long val = d->lightSourceCB->currentItem();
-        if (val > 4 && val < 20)
+        if (val > 4 && val < 12)
             val = val + 4;
+        else if (val > 11 && val < 20)
+            val = val + 5;
         else if (val == 20)    
             val = 255;
 
