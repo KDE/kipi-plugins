@@ -53,10 +53,12 @@ public:
         exposureModeCheck    = 0;
         ISOSpeedCheck        = 0;
         meteringModeCheck    = 0;
+        lightSourceCheck     = 0;
         exposureProgramCB    = 0;
         exposureModeCB       = 0;
         ISOSpeedCB           = 0;
         meteringModeCB       = 0;
+        lightSourceCB        = 0;
         exposureTimeNumEdit  = 0;
         exposureTimeDenEdit  = 0;
     }
@@ -66,11 +68,13 @@ public:
     QCheckBox   *exposureModeCheck;
     QCheckBox   *ISOSpeedCheck;
     QCheckBox   *meteringModeCheck;
+    QCheckBox   *lightSourceCheck;
 
     QComboBox   *exposureProgramCB;
     QComboBox   *exposureModeCB;
     QComboBox   *ISOSpeedCB;
     QComboBox   *meteringModeCB;
+    QComboBox   *lightSourceCB;
 
     KIntSpinBox *exposureTimeNumEdit;
     KIntSpinBox *exposureTimeDenEdit;
@@ -192,8 +196,38 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     QWhatsThis::add(d->ISOSpeedCB, i18n("<p>Select here the ISO Speed of the digital still camera "
                     "witch have taken the picture."));
 
+    // --------------------------------------------------------
+
+    d->lightSourceCheck = new QCheckBox(i18n("Light source:"), parent);
+    d->lightSourceCB    = new QComboBox(false, parent);
+    d->lightSourceCB->insertItem(i18n("Unknown"),                                 0);
+    d->lightSourceCB->insertItem(i18n("Daylight"),                                1);
+    d->lightSourceCB->insertItem(i18n("Fluorescent"),                             2);
+    d->lightSourceCB->insertItem(i18n("Tungsten (incandescent light)"),           3);
+    d->lightSourceCB->insertItem(i18n("Flash"),                                   4);
+    d->lightSourceCB->insertItem(i18n("Fine weather"),                            5);
+    d->lightSourceCB->insertItem(i18n("Cloudy weather"),                          6);
+    d->lightSourceCB->insertItem(i18n("Shade"),                                   7);
+    d->lightSourceCB->insertItem(i18n("Daylight fluorescent (D 5700 - 7100K)"),   8);
+    d->lightSourceCB->insertItem(i18n("Day white fluorescent (N 4600 - 5400K)"),  9);
+    d->lightSourceCB->insertItem(i18n("Cool white fluorescent (W 3900 - 4500K)"), 10);
+    d->lightSourceCB->insertItem(i18n("White fluorescent (WW 3200 - 3700K)"),     11);
+    d->lightSourceCB->insertItem(i18n("Standard light A"),                        12);
+    d->lightSourceCB->insertItem(i18n("Standard light B"),                        13);
+    d->lightSourceCB->insertItem(i18n("Standard light C"),                        14);
+    d->lightSourceCB->insertItem(i18n("D55"),                                     15);
+    d->lightSourceCB->insertItem(i18n("D65"),                                     16);
+    d->lightSourceCB->insertItem(i18n("D75"),                                     17);
+    d->lightSourceCB->insertItem(i18n("D50"),                                     18);
+    d->lightSourceCB->insertItem(i18n("ISO studio tungsten"),                     19);
+    d->lightSourceCB->insertItem(i18n("Other light source"),                      20);
+    grid->addMultiCellWidget(d->lightSourceCheck, 6, 6, 0, 0);
+    grid->addMultiCellWidget(d->lightSourceCB, 6, 6, 2, 4);
+    QWhatsThis::add(d->lightSourceCB, i18n("<p>Select here the kind of light source used "
+                                           "to take the picture."));
+
     grid->setColStretch(1, 10);                     
-    grid->setRowStretch(6, 10);                     
+    grid->setRowStretch(7, 10);                     
 
     // --------------------------------------------------------
 
@@ -214,6 +248,9 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     connect(d->ISOSpeedCheck, SIGNAL(toggled(bool)),
             d->ISOSpeedCB, SLOT(setEnabled(bool)));
+
+    connect(d->lightSourceCheck, SIGNAL(toggled(bool)),
+            d->lightSourceCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
     
@@ -276,6 +313,18 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
         }
     }
     d->ISOSpeedCB->setEnabled(d->ISOSpeedCheck->isChecked());
+
+    if (exiv2Iface.getExifTagLong("Exif.Photo.LightSource", val))
+    {
+        if (val > 8 && val < 25)
+            val = val - 4;
+        else if (val == 255)    
+            val = 20;
+
+        d->lightSourceCB->setCurrentItem(val);
+        d->lightSourceCheck->setChecked(true);
+    }
+    d->lightSourceCB->setEnabled(d->lightSourceCheck->isChecked());
 }
 
 void EXIFExposure::applyMetadata(QByteArray& exifData)
@@ -311,6 +360,19 @@ void EXIFExposure::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifTagLong("Exif.Photo.ISOSpeedRatings", d->ISOSpeedCB->currentText().toLong());
     else
         exiv2Iface.removeExifTag("Exif.Photo.ISOSpeedRatings");
+
+    if (d->lightSourceCheck->isChecked())
+    {
+        long val = d->lightSourceCB->currentItem();
+        if (val > 4 && val < 20)
+            val = val + 4;
+        else if (val == 20)    
+            val = 255;
+
+        exiv2Iface.setExifTagLong("Exif.Photo.LightSource", val);
+    }
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.LightSource");
 
     exifData = exiv2Iface.getExif();
 }
