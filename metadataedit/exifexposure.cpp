@@ -52,9 +52,11 @@ public:
         exposureProgramCheck = 0;
         exposureModeCheck    = 0;
         ISOSpeedCheck        = 0;
+        meteringModeCheck    = 0;
         exposureProgramCB    = 0;
         exposureModeCB       = 0;
         ISOSpeedCB           = 0;
+        meteringModeCB       = 0;
         exposureTimeNumEdit  = 0;
         exposureTimeDenEdit  = 0;
     }
@@ -63,10 +65,12 @@ public:
     QCheckBox   *exposureProgramCheck;
     QCheckBox   *exposureModeCheck;
     QCheckBox   *ISOSpeedCheck;
+    QCheckBox   *meteringModeCheck;
 
     QComboBox   *exposureProgramCB;
     QComboBox   *exposureModeCB;
     QComboBox   *ISOSpeedCB;
+    QComboBox   *meteringModeCB;
 
     KIntSpinBox *exposureTimeNumEdit;
     KIntSpinBox *exposureTimeDenEdit;
@@ -95,7 +99,7 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->exposureProgramCheck = new QCheckBox(i18n("Exposure Program:"), parent);
+    d->exposureProgramCheck = new QCheckBox(i18n("Exposure program:"), parent);
     d->exposureProgramCB    = new QComboBox(false, parent);
     d->exposureProgramCB->insertItem(i18n("Not defined"),       0);
     d->exposureProgramCB->insertItem(i18n("Manual"),            1);
@@ -113,7 +117,7 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->exposureModeCheck = new QCheckBox(i18n("Exposure Mode:"), parent);
+    d->exposureModeCheck = new QCheckBox(i18n("Exposure mode:"), parent);
     d->exposureModeCB    = new QComboBox(false, parent);
     d->exposureModeCB->insertItem(i18n("Auto"),         0);
     d->exposureModeCB->insertItem(i18n("Manual"),       1);
@@ -128,7 +132,24 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->ISOSpeedCheck = new QCheckBox(i18n("ISO Speed Rating:"), parent);
+    d->meteringModeCheck = new QCheckBox(i18n("Metering mode:"), parent);
+    d->meteringModeCB    = new QComboBox(false, parent);
+    d->meteringModeCB->insertItem(i18n("Unknown"),                 0);
+    d->meteringModeCB->insertItem(i18n("Average"),                 1);
+    d->meteringModeCB->insertItem(i18n("Center weighted average"), 2);
+    d->meteringModeCB->insertItem(i18n("Spot"),                    3);
+    d->meteringModeCB->insertItem(i18n("Multi-spot"),              4);
+    d->meteringModeCB->insertItem(i18n("Multi-segment"),           5);
+    d->meteringModeCB->insertItem(i18n("Partial"),                 6);
+    d->meteringModeCB->insertItem(i18n("Other"),                   7);
+    grid->addMultiCellWidget(d->meteringModeCheck, 4, 4, 0, 0);
+    grid->addMultiCellWidget(d->meteringModeCB, 4, 4, 2, 4);
+    QWhatsThis::add(d->meteringModeCB, i18n("<p>Select here the metering mode used by the camera "
+                                       "to set exposure when the picture have been shot."));
+
+    // --------------------------------------------------------
+
+    d->ISOSpeedCheck = new QCheckBox(i18n("ISO speed rating:"), parent);
     d->ISOSpeedCB    = new QComboBox(false, parent);
     d->ISOSpeedCB->insertItem("10",    0);
     d->ISOSpeedCB->insertItem("12",    1);
@@ -166,8 +187,8 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->ISOSpeedCB->insertItem("20000", 33);
     d->ISOSpeedCB->insertItem("25000", 34);
     d->ISOSpeedCB->insertItem("32000", 35);
-    grid->addMultiCellWidget(d->ISOSpeedCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->ISOSpeedCB, 4, 4, 2, 4);
+    grid->addMultiCellWidget(d->ISOSpeedCheck, 5, 5, 0, 0);
+    grid->addMultiCellWidget(d->ISOSpeedCB, 5, 5, 2, 4);
     QWhatsThis::add(d->ISOSpeedCB, i18n("<p>Select here the ISO Speed of the digital still camera "
                     "witch have taken the picture."));
 
@@ -187,6 +208,9 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     connect(d->exposureModeCheck, SIGNAL(toggled(bool)),
             d->exposureModeCB, SLOT(setEnabled(bool)));
+
+    connect(d->meteringModeCheck, SIGNAL(toggled(bool)),
+            d->meteringModeCB, SLOT(setEnabled(bool)));
 
     connect(d->ISOSpeedCheck, SIGNAL(toggled(bool)),
             d->ISOSpeedCB, SLOT(setEnabled(bool)));
@@ -231,6 +255,13 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
     }
     d->exposureModeCB->setEnabled(d->exposureModeCheck->isChecked());
 
+    if (exiv2Iface.getExifTagLong("Exif.Photo.MeteringMode", val))
+    {
+        d->meteringModeCB->setCurrentItem(val > 6 ? 7 : val);
+        d->meteringModeCheck->setChecked(true);
+    }
+    d->meteringModeCB->setEnabled(d->meteringModeCheck->isChecked());
+
     if (exiv2Iface.getExifTagLong("Exif.Photo.ISOSpeedRatings", val))
     {
         int item = -1;
@@ -267,6 +298,14 @@ void EXIFExposure::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifTagLong("Exif.Photo.ExposureMode", d->exposureModeCB->currentItem());
     else
         exiv2Iface.removeExifTag("Exif.Photo.ExposureMode");
+
+    if (d->meteringModeCheck->isChecked())
+    {
+        long met = d->meteringModeCB->currentItem();
+        exiv2Iface.setExifTagLong("Exif.Photo.MeteringMode", met > 6 ? 255 : met);
+    }
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.MeteringMode");
 
     if (d->ISOSpeedCheck->isChecked())
         exiv2Iface.setExifTagLong("Exif.Photo.ISOSpeedRatings", d->ISOSpeedCB->currentText().toLong());
