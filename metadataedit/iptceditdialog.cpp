@@ -93,7 +93,7 @@ public:
 };
 
 IPTCEditDialog::IPTCEditDialog(QWidget* parent, QByteArray iptcData, const QString& fileName)
-              : KDialogBase(IconList, i18n("%1 - Edit IPTC").arg(fileName), Help|Ok|Cancel, 
+              : KDialogBase(IconList, i18n("%1 - Edit IPTC Metadata").arg(fileName), Help|Ok|Cancel, 
                             Ok, parent, 0, true, true )
 {
     d = new IPTCEditDialogDialogPrivate;
@@ -101,31 +101,31 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, QByteArray iptcData, const QStri
 
     setHelp("metadataedit", "kipi-plugins");
 
-    d->page_caption    = addPage(i18n("Caption"), i18n("IPTC Caption Informations"),
+    d->page_caption    = addPage(i18n("Caption"), i18n("Caption Informations"),
                                  BarIcon("editclear", KIcon::SizeMedium));
     d->captionPage     = new IPTCCaption(d->page_caption, d->iptcData);
 
-    d->page_keywords   = addPage(i18n("Keywords"), i18n("IPTC Keywords Informations"),
+    d->page_keywords   = addPage(i18n("Keywords"), i18n("Keywords Informations"),
                                  BarIcon("bookmark", KIcon::SizeMedium));
     d->keywordsPage    = new IPTCKeywords(d->page_keywords, d->iptcData);
 
-    d->page_categories = addPage(i18n("Categories"), i18n("IPTC Categories Informations"),
+    d->page_categories = addPage(i18n("Categories"), i18n("Categories Informations"),
                                  BarIcon("bookmark_folder", KIcon::SizeMedium));
     d->categoriesPage  = new IPTCCategories(d->page_categories, d->iptcData);
 
-    d->page_credits    = addPage(i18n("Credits"), i18n("IPTC Credits Informations"),
+    d->page_credits    = addPage(i18n("Credits"), i18n("Credits Informations"),
                                  BarIcon("identity", KIcon::SizeMedium));
     d->creditsPage     = new IPTCCredits(d->page_credits, d->iptcData);
   
-    d->page_status     = addPage(i18n("Status"), i18n("IPTC Status Informations"),
+    d->page_status     = addPage(i18n("Status"), i18n("Status Informations"),
                                  BarIcon("messagebox_info", KIcon::SizeMedium));
     d->statusPage      = new IPTCStatus(d->page_status, d->iptcData);
 
-    d->page_origin     = addPage(i18n("Origin"), i18n("IPTC Origin Informations"),
+    d->page_origin     = addPage(i18n("Origin"), i18n("Origin Informations"),
                                  BarIcon("www", KIcon::SizeMedium));
     d->originPage      = new IPTCOrigin(d->page_origin, d->iptcData);
 
-    d->page_datetime   = addPage(i18n("Date & Time"), i18n("IPTC Date and Time Informations"),
+    d->page_datetime   = addPage(i18n("Date & Time"), i18n("Date and Time Informations"),
                                  BarIcon("today", KIcon::SizeMedium));
     d->datetimePage    = new IPTCDateTime(d->page_datetime, d->iptcData);
 

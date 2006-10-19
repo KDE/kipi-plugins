@@ -92,7 +92,7 @@ public:
 };
 
 EXIFEditDialog::EXIFEditDialog(QWidget* parent, QByteArray exifData, const QString& fileName)
-              : KDialogBase(IconList, i18n("%1 - Edit EXIF").arg(fileName), Help|Ok|Cancel, 
+              : KDialogBase(IconList, i18n("%1 - Edit EXIF Metadata").arg(fileName), Help|Ok|Cancel, 
                             Ok, parent, 0, true, true )
 {
     d = new EXIFEditDialogDialogPrivate;
