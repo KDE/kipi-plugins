@@ -100,15 +100,15 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, QByteArray exifData, const QStri
 
     setHelp("metadataedit", "kipi-plugins");
 
-    d->page_caption    = addPage(i18n("Caption"), i18n("EXIF Caption Informations"),
+    d->page_caption    = addPage(i18n("Caption"), i18n("Caption Informations"),
                                  BarIcon("editclear", KIcon::SizeMedium));
     d->captionPage     = new EXIFCaption(d->page_caption, d->exifData);
 
-    d->page_datetime   = addPage(i18n("Date & Time"), i18n("EXIF Date and Time Informations"),
+    d->page_datetime   = addPage(i18n("Date & Time"), i18n("Date and Time Informations"),
                                  BarIcon("today", KIcon::SizeMedium));
     d->datetimePage    = new EXIFDateTime(d->page_datetime, d->exifData);
 
-    d->page_exposure   = addPage(i18n("Exposure"), i18n("EXIF Exposure Informations"),
+    d->page_exposure   = addPage(i18n("Exposure"), i18n("Pictures-Taking Conditions"),
                                  BarIcon("camera", KIcon::SizeMedium));
     d->exposurePage    = new EXIFExposure(d->page_exposure, d->exifData);
 
