@@ -85,7 +85,7 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 {
     d = new EXIFExposurePriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 8, 4, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 8, 5, KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -115,7 +115,7 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->exposureProgramCB->insertItem(i18n("Portrait mode"),     7);
     d->exposureProgramCB->insertItem(i18n("Landscape mode"),    8);
     grid->addMultiCellWidget(d->exposureProgramCheck, 2, 2, 0, 0);
-    grid->addMultiCellWidget(d->exposureProgramCB, 2, 2, 2, 4);
+    grid->addMultiCellWidget(d->exposureProgramCB, 2, 2, 2, 5);
     QWhatsThis::add(d->exposureProgramCB, i18n("<p>Select here the program used by the camera "
                                           "to set exposure when the picture have been taken."));
 
@@ -127,7 +127,7 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->exposureModeCB->insertItem(i18n("Manual"),       1);
     d->exposureModeCB->insertItem(i18n("Auto bracket"), 2);
     grid->addMultiCellWidget(d->exposureModeCheck, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->exposureModeCB, 3, 3, 2, 4);
+    grid->addMultiCellWidget(d->exposureModeCB, 3, 3, 2, 5);
     QWhatsThis::add(d->exposureModeCB, i18n("<p>Select here the mode used by the camera "
                                        "to set exposure when the picture have been shot. "
                                        "In auto-bracketing mode, the camera shoots a "
@@ -147,7 +147,7 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->meteringModeCB->insertItem(i18n("Partial"),                 6);
     d->meteringModeCB->insertItem(i18n("Other"),                   7);
     grid->addMultiCellWidget(d->meteringModeCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->meteringModeCB, 4, 4, 2, 4);
+    grid->addMultiCellWidget(d->meteringModeCB, 4, 4, 2, 5);
     QWhatsThis::add(d->meteringModeCB, i18n("<p>Select here the metering mode used by the camera "
                                        "to set exposure when the picture have been shot."));
 
@@ -192,7 +192,7 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->ISOSpeedCB->insertItem("25000", 34);
     d->ISOSpeedCB->insertItem("32000", 35);
     grid->addMultiCellWidget(d->ISOSpeedCheck, 5, 5, 0, 0);
-    grid->addMultiCellWidget(d->ISOSpeedCB, 5, 5, 2, 4);
+    grid->addMultiCellWidget(d->ISOSpeedCB, 5, 5, 2, 5);
     QWhatsThis::add(d->ISOSpeedCB, i18n("<p>Select here the ISO Speed of the digital still camera "
                     "witch have taken the picture."));
 
@@ -222,11 +222,12 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->lightSourceCB->insertItem(i18n("ISO studio tungsten"),                     19);
     d->lightSourceCB->insertItem(i18n("Other light source"),                      20);
     grid->addMultiCellWidget(d->lightSourceCheck, 6, 6, 0, 0);
-    grid->addMultiCellWidget(d->lightSourceCB, 6, 6, 2, 4);
+    grid->addMultiCellWidget(d->lightSourceCB, 6, 6, 2, 5);
     QWhatsThis::add(d->lightSourceCB, i18n("<p>Select here the kind of light source used "
                                            "to take the picture."));
 
     grid->setColStretch(1, 10);                     
+    grid->setColStretch(5, 10);                     
     grid->setRowStretch(7, 10);                     
 
     // --------------------------------------------------------
