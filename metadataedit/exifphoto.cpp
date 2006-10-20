@@ -287,7 +287,7 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->ISOSpeedCheck = new QCheckBox(i18n("ISO speed rating:"), parent);
+    d->ISOSpeedCheck = new QCheckBox(i18n("Sensitivity (ISO):"), parent);
     d->ISOSpeedCB    = new QComboBox(false, parent);
     d->ISOSpeedCB->insertItem("10",    0);
     d->ISOSpeedCB->insertItem("12",    1);
