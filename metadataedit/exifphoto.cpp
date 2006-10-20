@@ -38,8 +38,8 @@
 // Local includes.
 
 #include "exiv2iface.h"
-#include "exifexposure.h"
-#include "exifexposure.moc"
+#include "exifphoto.h"
+#include "exifphoto.moc"
 
 namespace KIPIMetadataEditPlugin
 {
@@ -60,11 +60,11 @@ namespace KIPIMetadataEditPlugin
         QString m_desc;
     };
 
-class EXIFExposurePriv
+class EXIFPhotoPriv
 {
 public:
 
-    EXIFExposurePriv()
+    EXIFPhotoPriv()
     {
         apertureCheck        = 0;
         exposureTimeCheck    = 0;
@@ -138,10 +138,10 @@ public:
     KDoubleSpinBox *focalLengthEdit;
 };
 
-EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
+EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
             : QWidget(parent)
 {
-    d = new EXIFExposurePriv;
+    d = new EXIFPhotoPriv;
 
     QGridLayout* grid = new QGridLayout(parent, 9, 5, KDialog::spacingHint());
 
@@ -365,7 +365,7 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->flashModeCheck = new QCheckBox(i18n("Flash mode:"), parent);
     d->flashModeCB    = new QComboBox(false, parent);
 
-    for (EXIFExposurePriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
+    for (EXIFPhotoPriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
         it != d->flashModeMap.end(); ++it )
        d->flashModeCB->insertItem(it.data().desc());
 
@@ -415,12 +415,12 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     readMetadata(exifData);
 }
 
-EXIFExposure::~EXIFExposure()
+EXIFPhoto::~EXIFPhoto()
 {
     delete d;
 }
 
-void EXIFExposure::readMetadata(QByteArray& exifData)
+void EXIFPhoto::readMetadata(QByteArray& exifData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
@@ -513,7 +513,7 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
     if (exiv2Iface.getExifTagLong("Exif.Photo.Flash", val))
     {
         int item = -1;    
-        for (EXIFExposurePriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
+        for (EXIFPhotoPriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
             it != d->flashModeMap.end(); ++it )
         {
             if (it.data().id() == val)
@@ -529,7 +529,7 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
     d->flashModeCB->setEnabled(d->flashModeCheck->isChecked());
 }
 
-void EXIFExposure::applyMetadata(QByteArray& exifData)
+void EXIFPhoto::applyMetadata(QByteArray& exifData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
