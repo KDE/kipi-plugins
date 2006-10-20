@@ -43,25 +43,23 @@
 
 namespace KIPIMetadataEditPlugin
 {
-/*
-    class Aperture
+
+    class FlashMode
     {
     public:
 
-        Aperture() {}
-        Aperture(int num, int den) : m_num(num), m_den(den) {}
+        FlashMode() {}
+        FlashMode(int id, const QString& desc) : m_id(id), m_desc(desc) {}
 
-        int     num()     const { return m_num;                            }
-        int     den()     const { return m_den;                            }
-        double  value()   const { return (double)(m_num)/(double)(m_den);  }
-        QString fnumber() const { return QString::number(value(), 'g', 1); }
+        int     id()   const { return m_id;   }
+        QString desc() const { return m_desc; }
 
     private:
 
-        int     m_num;
-        int     m_den;
+        int     m_id;
+        QString m_desc;
     };
-*/
+
 class EXIFExposurePriv
 {
 public:
@@ -76,6 +74,7 @@ public:
         meteringModeCheck    = 0;
         lightSourceCheck     = 0;
         focalLengthCheck     = 0;
+        flashModeCheck       = 0;
         apertureCB           = 0;
         exposureProgramCB    = 0;
         exposureModeCB       = 0;
@@ -85,41 +84,35 @@ public:
         exposureTimeNumEdit  = 0;
         exposureTimeDenEdit  = 0;
         focalLengthEdit      = 0;
+        flashModeCB          = 0;
 
-/*        apertureMap.insert( 1.0,  Aperture(1, 1) );
-        apertureMap.insert( 1.1,  Aperture(1, 1) );
-        apertureMap.insert( 1.2,  Aperture(1, 1) );
-        apertureMap.insert( 1.4,  Aperture(1, 1) );
-        apertureMap.insert( 1.6,  Aperture(1, 1) );
-        apertureMap.insert( 1.8,  Aperture(1, 1) );
-        apertureMap.insert( 2.0,  Aperture(1, 1) );
-        apertureMap.insert( 2.2,  Aperture(1, 1) );
-        apertureMap.insert( 2.5,  Aperture(1, 1) );
-        apertureMap.insert( 2.8,  Aperture(1, 1) );
-        apertureMap.insert( 3.2,  Aperture(1, 1) );
-        apertureMap.insert( 3.5,  Aperture(1, 1) );
-        apertureMap.insert( 4.0,  Aperture(1, 1) );
-        apertureMap.insert( 4.5,  Aperture(1, 1) );
-        apertureMap.insert( 5.0,  Aperture(1, 1) );
-        apertureMap.insert( 5.6,  Aperture(1, 1) );
-        apertureMap.insert( 6.3,  Aperture(1, 1) );
-        apertureMap.insert( 7.0,  Aperture(1, 1) );
-        apertureMap.insert( 8.0,  Aperture(1, 1) );
-        apertureMap.insert( 9.0,  Aperture(1, 1) );
-        apertureMap.insert( 10.0, Aperture(1, 1) );
-        apertureMap.insert( 11.0, Aperture(1, 1) );
-        apertureMap.insert( 12.0, Aperture(1, 1) );
-        apertureMap.insert( 14.0, Aperture(1, 1) );
-        apertureMap.insert( 16.0, Aperture(1, 1) );
-        apertureMap.insert( 18.0, Aperture(1, 1) );
-        apertureMap.insert( 20.0, Aperture(1, 1) );
-        apertureMap.insert( 22.0, Aperture(1, 1) );
-*/
+        flashModeMap.insert(0,  FlashMode( 0x00, i18n("No flash") ));
+        flashModeMap.insert(1,  FlashMode( 0x01, i18n("Fired") ));
+        flashModeMap.insert(2,  FlashMode( 0x05, i18n("Fired, no strobe return light") ));
+        flashModeMap.insert(3,  FlashMode( 0x07, i18n("Fired, strobe return light") ));
+        flashModeMap.insert(4,  FlashMode( 0x09, i18n("Yes, compulsory") ));
+        flashModeMap.insert(5,  FlashMode( 0x0d, i18n("Yes, compulsory, no return light") ));
+        flashModeMap.insert(6,  FlashMode( 0x0f, i18n("Yes, compulsory, return light") ));
+        flashModeMap.insert(7,  FlashMode( 0x10, i18n("No, compulsory") ));
+        flashModeMap.insert(8,  FlashMode( 0x18, i18n("No, auto") ));
+        flashModeMap.insert(9,  FlashMode( 0x19, i18n("Yes, auto") ));
+        flashModeMap.insert(10, FlashMode( 0x1d, i18n("Yes, auto, no return light") ));
+        flashModeMap.insert(11, FlashMode( 0x1f, i18n("Yes, auto, return light") ));
+        flashModeMap.insert(12, FlashMode( 0x20, i18n("No flash function") ));
+        flashModeMap.insert(13, FlashMode( 0x41, i18n("Yes, red-eye") ));
+        flashModeMap.insert(14, FlashMode( 0x45, i18n("Yes, red-eye, no return light") ));
+        flashModeMap.insert(15, FlashMode( 0x47, i18n("Yes, red-eye, return light") ));
+        flashModeMap.insert(16, FlashMode( 0x49, i18n("Yes, compulsory, red-eye") ));
+        flashModeMap.insert(17, FlashMode( 0x4d, i18n("Yes, compulsory, red-eye, no return light") ));
+        flashModeMap.insert(18, FlashMode( 0x4f, i18n("Yes, compulsory, red-eye, return light") ));
+        flashModeMap.insert(19, FlashMode( 0x59, i18n("Yes, auto, red-eye") ));
+        flashModeMap.insert(20, FlashMode( 0x5d, i18n("Yes, auto, red-eye, no return light") ));
+        flashModeMap.insert(21, FlashMode( 0x5f, i18n("Yes, auto, red-eye, return light") ));
     }
 
-/*    typedef QMap<double, Aperture> ApertureMap; 
+    typedef QMap<int, FlashMode> FlashModeMap; 
 
-    ApertureMap apertureMap;*/
+    FlashModeMap   flashModeMap;
 
     QCheckBox      *apertureCheck;
     QCheckBox      *exposureTimeCheck;
@@ -129,6 +122,7 @@ public:
     QCheckBox      *meteringModeCheck;
     QCheckBox      *lightSourceCheck;
     QCheckBox      *focalLengthCheck;
+    QCheckBox      *flashModeCheck;
    
     QComboBox      *apertureCB;
     QComboBox      *exposureProgramCB;
@@ -136,6 +130,7 @@ public:
     QComboBox      *ISOSpeedCB;
     QComboBox      *meteringModeCB;
     QComboBox      *lightSourceCB;
+    QComboBox      *flashModeCB;
 
     KIntSpinBox    *exposureTimeNumEdit;
     KIntSpinBox    *exposureTimeDenEdit;
@@ -148,7 +143,7 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 {
     d = new EXIFExposurePriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 8, 5, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 9, 5, KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -365,9 +360,23 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     QWhatsThis::add(d->lightSourceCB, i18n("<p>Select here the kind of light source used "
                                            "to take the picture."));
 
+    // --------------------------------------------------------
+
+    d->flashModeCheck = new QCheckBox(i18n("Flash mode:"), parent);
+    d->flashModeCB    = new QComboBox(false, parent);
+
+    for (EXIFExposurePriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
+        it != d->flashModeMap.end(); ++it )
+       d->flashModeCB->insertItem(it.data().desc());
+
+    grid->addMultiCellWidget(d->flashModeCheck, 8, 8, 0, 0);
+    grid->addMultiCellWidget(d->flashModeCB, 8, 8, 2, 5);
+    QWhatsThis::add(d->flashModeCB, i18n("<p>Select here the flash program mode used by camera "
+                                         "to take the picture."));
+
     grid->setColStretch(1, 10);                     
     grid->setColStretch(5, 10);                     
-    grid->setRowStretch(8, 10);                     
+    grid->setRowStretch(9, 10);                     
 
     // --------------------------------------------------------
 
@@ -397,6 +406,9 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     connect(d->lightSourceCheck, SIGNAL(toggled(bool)),
             d->lightSourceCB, SLOT(setEnabled(bool)));
+
+    connect(d->flashModeCheck, SIGNAL(toggled(bool)),
+            d->flashModeCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
     
@@ -497,6 +509,24 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
         d->lightSourceCheck->setChecked(true);
     }
     d->lightSourceCB->setEnabled(d->lightSourceCheck->isChecked());
+
+    if (exiv2Iface.getExifTagLong("Exif.Photo.Flash", val))
+    {
+        int item = -1;    
+        for (EXIFExposurePriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
+            it != d->flashModeMap.end(); ++it )
+        {
+            if (it.data().id() == val)
+                item = it.key();
+        }
+        
+        if (item != -1)
+        {
+            d->flashModeCB->setCurrentItem(item);
+            d->flashModeCheck->setChecked(true);
+        }
+    }
+    d->flashModeCB->setEnabled(d->flashModeCheck->isChecked());
 }
 
 void EXIFExposure::applyMetadata(QByteArray& exifData)
@@ -564,6 +594,14 @@ void EXIFExposure::applyMetadata(QByteArray& exifData)
     }
     else
         exiv2Iface.removeExifTag("Exif.Photo.LightSource");
+
+    if (d->flashModeCheck->isChecked())
+    {
+        long val = d->flashModeCB->currentItem();
+        exiv2Iface.setExifTagLong("Exif.Photo.Flash", d->flashModeMap[val].id());
+    }
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.Flash");
 
     exifData = exiv2Iface.getExif();
 }
