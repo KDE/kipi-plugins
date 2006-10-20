@@ -102,13 +102,13 @@ public:
     QString    getExifTagString(const char *exifTagName, bool escapeCR=true) const;
     QByteArray getExifTagData(const char *exifTagName) const;
     bool       getExifTagLong(const char* exifTagName, long &val);
-    bool       getExifTagRational(const char *exifTagName, int &num, int &den, int component=0);
+    bool       getExifTagRational(const char *exifTagName, long int &num, long int &den, int component=0);
     QString    getIptcTagString(const char* iptcTagName, bool escapeCR=true) const;
     QByteArray getIptcTagData(const char *iptcTagName) const;
 
     bool setExifTagString(const char *exifTagName, const QString& value);
     bool setExifTagLong(const char *exifTagName, long val);
-    bool setExifTagRational(const char *exifTagName, int num, int den);
+    bool setExifTagRational(const char *exifTagName, long int num, long int den);
     bool setIptcTagString(const char *iptcTagName, const QString& value);
 
     bool removeExifTag(const char *exifTagName);
@@ -119,11 +119,8 @@ public:
 
     static QString convertCommentValue(const Exiv2::Exifdatum &comment);
     static QString detectEncodingAndDecode(const std::string &value);
-
-private:
-
-    void convertToRational(double number, long int* numerator, 
-                           long int* denominator, int rounding);
+    static void convertToRational(double number, long int* numerator, 
+                                  long int* denominator, int rounding);
 
 private:
 

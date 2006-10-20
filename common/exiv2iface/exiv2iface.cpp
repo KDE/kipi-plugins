@@ -546,7 +546,7 @@ QByteArray Exiv2Iface::getIptcTagData(const char *iptcTagName) const
     return QByteArray();
 }
 
-bool Exiv2Iface::getExifTagRational(const char *exifTagName, int &num, int &den, int component)
+bool Exiv2Iface::getExifTagRational(const char *exifTagName, long int &num, long int &den, int component)
 {
     try
     {
@@ -588,7 +588,7 @@ bool Exiv2Iface::setExifTagLong(const char *exifTagName, long val)
     return false;
 }
 
-bool Exiv2Iface::setExifTagRational(const char *exifTagName, int num, int den)
+bool Exiv2Iface::setExifTagRational(const char *exifTagName, long int num, long int den)
 {
     try
     {
