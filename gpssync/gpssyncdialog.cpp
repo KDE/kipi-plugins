@@ -430,11 +430,11 @@ void GPSSyncDialog::slotUser1()
         return;
     }
 
-    QString msg = i18n("GPS data of 1 picture have been updated on the list using the GPX data file.\n"
-                       "Press <b>Apply</b> button to update picture metadata.",
-                       "GPS data of %n pictures have been updated on the list using the GPX data file."
-                       "Press <b>Apply</b> button to update pictures metadata.",
+    QString msg = i18n("GPS data of 1 picture have been updated on the list using the GPX data file.",
+                       "GPS data of %n pictures have been updated on the list using the GPX data file.",
                        itemsUpdated);
+    msg += '\n';
+    msg += i18n("Press <b>Apply</b> button to update pictures metadata.");
 
     KMessageBox::information(this, msg, i18n("GPS Sync"));    
 }
