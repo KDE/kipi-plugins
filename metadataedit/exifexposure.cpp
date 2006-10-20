@@ -26,6 +26,8 @@
 #include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qlistbox.h>
+#include <qpair.h>
+#include <qmap.h>
 
 // KDE includes.
 
@@ -41,19 +43,39 @@
 
 namespace KIPIMetadataEditPlugin
 {
+/*
+    class Aperture
+    {
+    public:
 
+        Aperture() {}
+        Aperture(int num, int den) : m_num(num), m_den(den) {}
+
+        int     num()     const { return m_num;                            }
+        int     den()     const { return m_den;                            }
+        double  value()   const { return (double)(m_num)/(double)(m_den);  }
+        QString fnumber() const { return QString::number(value(), 'g', 1); }
+
+    private:
+
+        int     m_num;
+        int     m_den;
+    };
+*/
 class EXIFExposurePriv
 {
 public:
 
     EXIFExposurePriv()
     {
+        apertureCheck        = 0;
         exposureTimeCheck    = 0;
         exposureProgramCheck = 0;
         exposureModeCheck    = 0;
         ISOSpeedCheck        = 0;
         meteringModeCheck    = 0;
         lightSourceCheck     = 0;
+        apertureCB           = 0;
         exposureProgramCB    = 0;
         exposureModeCB       = 0;
         ISOSpeedCB           = 0;
@@ -61,8 +83,43 @@ public:
         lightSourceCB        = 0;
         exposureTimeNumEdit  = 0;
         exposureTimeDenEdit  = 0;
+
+/*        apertureMap.insert( 1.0,  Aperture(1, 1) );
+        apertureMap.insert( 1.1,  Aperture(1, 1) );
+        apertureMap.insert( 1.2,  Aperture(1, 1) );
+        apertureMap.insert( 1.4,  Aperture(1, 1) );
+        apertureMap.insert( 1.6,  Aperture(1, 1) );
+        apertureMap.insert( 1.8,  Aperture(1, 1) );
+        apertureMap.insert( 2.0,  Aperture(1, 1) );
+        apertureMap.insert( 2.2,  Aperture(1, 1) );
+        apertureMap.insert( 2.5,  Aperture(1, 1) );
+        apertureMap.insert( 2.8,  Aperture(1, 1) );
+        apertureMap.insert( 3.2,  Aperture(1, 1) );
+        apertureMap.insert( 3.5,  Aperture(1, 1) );
+        apertureMap.insert( 4.0,  Aperture(1, 1) );
+        apertureMap.insert( 4.5,  Aperture(1, 1) );
+        apertureMap.insert( 5.0,  Aperture(1, 1) );
+        apertureMap.insert( 5.6,  Aperture(1, 1) );
+        apertureMap.insert( 6.3,  Aperture(1, 1) );
+        apertureMap.insert( 7.0,  Aperture(1, 1) );
+        apertureMap.insert( 8.0,  Aperture(1, 1) );
+        apertureMap.insert( 9.0,  Aperture(1, 1) );
+        apertureMap.insert( 10.0, Aperture(1, 1) );
+        apertureMap.insert( 11.0, Aperture(1, 1) );
+        apertureMap.insert( 12.0, Aperture(1, 1) );
+        apertureMap.insert( 14.0, Aperture(1, 1) );
+        apertureMap.insert( 16.0, Aperture(1, 1) );
+        apertureMap.insert( 18.0, Aperture(1, 1) );
+        apertureMap.insert( 20.0, Aperture(1, 1) );
+        apertureMap.insert( 22.0, Aperture(1, 1) );
+*/
     }
 
+/*    typedef QMap<double, Aperture> ApertureMap; 
+
+    ApertureMap apertureMap;*/
+
+    QCheckBox   *apertureCheck;
     QCheckBox   *exposureTimeCheck;
     QCheckBox   *exposureProgramCheck;
     QCheckBox   *exposureModeCheck;
@@ -70,6 +127,7 @@ public:
     QCheckBox   *meteringModeCheck;
     QCheckBox   *lightSourceCheck;
 
+    QComboBox   *apertureCB;
     QComboBox   *exposureProgramCB;
     QComboBox   *exposureModeCB;
     QComboBox   *ISOSpeedCB;
@@ -89,15 +147,82 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
+    d->apertureCheck = new QCheckBox(i18n("Aperture (f-number):"), parent);
+    d->apertureCB    = new QComboBox(false, parent);
+    d->apertureCB->insertItem("1.0");
+    d->apertureCB->insertItem("1.1");
+    d->apertureCB->insertItem("1.2");
+    d->apertureCB->insertItem("1.3");
+    d->apertureCB->insertItem("1.4");
+    d->apertureCB->insertItem("1.6");
+    d->apertureCB->insertItem("1.8");
+    d->apertureCB->insertItem("2.0");
+    d->apertureCB->insertItem("2.2");
+    d->apertureCB->insertItem("2.5");
+    d->apertureCB->insertItem("2.8");
+    d->apertureCB->insertItem("3.2");
+    d->apertureCB->insertItem("3.5");
+    d->apertureCB->insertItem("3.6");
+    d->apertureCB->insertItem("4.0");
+    d->apertureCB->insertItem("4.5");
+    d->apertureCB->insertItem("4.9");
+    d->apertureCB->insertItem("5.0");
+    d->apertureCB->insertItem("5.6");
+    d->apertureCB->insertItem("5.7");
+    d->apertureCB->insertItem("6.3");
+    d->apertureCB->insertItem("7.0");
+    d->apertureCB->insertItem("7.1");
+    d->apertureCB->insertItem("8.0");
+    d->apertureCB->insertItem("9.0");
+    d->apertureCB->insertItem("10.0");
+    d->apertureCB->insertItem("10.1");
+    d->apertureCB->insertItem("11.0");
+    d->apertureCB->insertItem("11.3");
+    d->apertureCB->insertItem("12.0");
+    d->apertureCB->insertItem("12.7");
+    d->apertureCB->insertItem("13.0");
+    d->apertureCB->insertItem("14.0");
+    d->apertureCB->insertItem("14.3");
+    d->apertureCB->insertItem("16.0");
+    d->apertureCB->insertItem("18.0");
+    d->apertureCB->insertItem("20.0");
+    d->apertureCB->insertItem("20.2");
+    d->apertureCB->insertItem("22.0");
+    d->apertureCB->insertItem("22.6");
+    d->apertureCB->insertItem("25.0");
+    d->apertureCB->insertItem("25.4");
+    d->apertureCB->insertItem("28.5");
+    d->apertureCB->insertItem("29.0");
+    d->apertureCB->insertItem("32.0");
+    d->apertureCB->insertItem("35.9");
+    d->apertureCB->insertItem("36.0");
+    d->apertureCB->insertItem("40.0");
+    d->apertureCB->insertItem("40.3");
+    d->apertureCB->insertItem("45.0");
+    d->apertureCB->insertItem("45.3");
+    d->apertureCB->insertItem("50.8");
+    d->apertureCB->insertItem("51.0");
+    d->apertureCB->insertItem("57.0");
+    d->apertureCB->insertItem("64.0");
+    d->apertureCB->insertItem("72.0");
+    d->apertureCB->insertItem("81.0");
+    d->apertureCB->insertItem("91.0");
+    grid->addMultiCellWidget(d->apertureCheck, 0, 0, 0, 0);
+    grid->addMultiCellWidget(d->apertureCB, 0, 0, 2, 2);
+    QWhatsThis::add(d->apertureCB, i18n("<p>Select here the lens aperture used by camera "
+                                        "to take the picture."));
+
+    // --------------------------------------------------------
+
     d->exposureTimeCheck   = new QCheckBox(i18n("Exposure time (seconds):"), parent);
     d->exposureTimeNumEdit = new KIntSpinBox(1, 100000, 1, 1, 10, parent);
     d->exposureTimeDenEdit = new KIntSpinBox(1, 100000, 1, 1, 10, parent);
     QLabel *exposureLabel  = new QLabel("/", parent);
     exposureLabel->setAlignment (Qt::AlignRight|Qt::AlignVCenter);
-    grid->addMultiCellWidget(d->exposureTimeCheck, 0, 0, 0, 0);
-    grid->addMultiCellWidget(d->exposureTimeNumEdit, 0, 0, 2, 2);
-    grid->addMultiCellWidget(exposureLabel, 0, 0, 3, 3);
-    grid->addMultiCellWidget(d->exposureTimeDenEdit, 0, 0, 4, 4);
+    grid->addMultiCellWidget(d->exposureTimeCheck, 1, 1, 0, 0);
+    grid->addMultiCellWidget(d->exposureTimeNumEdit, 1, 1, 2, 2);
+    grid->addMultiCellWidget(exposureLabel, 1, 1, 3, 3);
+    grid->addMultiCellWidget(d->exposureTimeDenEdit, 1, 1, 4, 4);
     QWhatsThis::add(d->exposureTimeCheck, i18n("<p>Set on this option to set the exposure time "
                     "of picture, given in seconds."));
 
@@ -232,6 +357,9 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
+    connect(d->apertureCheck, SIGNAL(toggled(bool)),
+            d->apertureCB, SLOT(setEnabled(bool)));
+
     connect(d->exposureTimeCheck, SIGNAL(toggled(bool)),
             d->exposureTimeNumEdit, SLOT(setEnabled(bool)));
 
@@ -267,8 +395,25 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
-    int  num=0, den=0;
+    long int  num=0, den=0;
     long val=0;
+
+    if (exiv2Iface.getExifTagRational("Exif.Photo.FNumber", num, den))
+    {
+        QString aperture = QString::number((double)(num)/(double)(den), 'f', 1);
+
+        int item = -1;
+        for (int i = 0 ; i < d->apertureCB->count() ; i++)
+            if (d->apertureCB->text(i) == aperture)
+                item = i;
+
+        if (item != -1)
+        {
+            d->apertureCB->setCurrentItem(item);
+            d->apertureCheck->setChecked(true);
+        }
+    }
+    d->apertureCB->setEnabled(d->apertureCheck->isChecked());
     
     if (exiv2Iface.getExifTagRational("Exif.Photo.ExposureTime", num, den))
     {
@@ -334,6 +479,15 @@ void EXIFExposure::applyMetadata(QByteArray& exifData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
+
+    if (d->exposureTimeCheck->isChecked())
+    {
+        long int num=1, den=1;
+        exiv2Iface.convertToRational(d->apertureCB->currentText().toLong(), &num, &den, 1);
+        exiv2Iface.setExifTagRational("Exif.Photo.FNumber", num, den);
+    }
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.FNumber");
 
     if (d->exposureTimeCheck->isChecked())
         exiv2Iface.setExifTagRational("Exif.Photo.ExposureTime", d->exposureTimeNumEdit->value(),
