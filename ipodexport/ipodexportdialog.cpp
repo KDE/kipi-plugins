@@ -157,7 +157,7 @@ UploadDialog::UploadDialog(
 #endif
 
     QLabel *ipod_icon = new QLabel( buttons );
-    ipod_icon->setPixmap( KGlobal::iconLoader()->loadIcon( "ipod", KIcon::Desktop, KIcon::SizeEnormous ) );
+    ipod_icon->setPixmap( KGlobal::iconLoader()->loadIcon( "ipod", KIcon::Desktop, KIcon::SizeHuge ) );
 
     m_ipodPreview = new QLabel( buttons );
     m_ipodPreview->setFixedHeight( 80 );
@@ -200,7 +200,7 @@ UploadDialog::UploadDialog(
     QWhatsThis::add( m_imagePreview, i18n( "The preview of the selected image in the list." ) );
 
     QLabel *hdd_icon = new QLabel( urlBox );
-    hdd_icon->setPixmap( KGlobal::iconLoader()->loadIcon( "system", KIcon::Desktop, KIcon::SizeEnormous ) );
+    hdd_icon->setPixmap( KGlobal::iconLoader()->loadIcon( "system", KIcon::Desktop, KIcon::SizeHuge ) );
 
     urlLayout_1->addWidget( m_imagePreview );
     urlLayout_1->addWidget( hdd_icon );
