@@ -10,6 +10,9 @@ KIPI_PLUGINS_COMMON_INCLUDE="-I\$(top_srcdir)/kipi-plugins/common/include \
                              -I\$(top_srcdir)/kipi-plugins/common/exiv2iface" 
 AC_SUBST(KIPI_PLUGINS_COMMON_INCLUDE)
 
+KIPI_PLUGINS_COMMON_LDFLAGS="-L\$(top_builddir)/kipi-plugins/common/libkipiplugins"
+AC_SUBST(KIPI_PLUGINS_COMMON_LDFLAGS)
+
 KDE_ENABLE_HIDDEN_VISIBILITY
 
 # ----------------------------------------------------------
