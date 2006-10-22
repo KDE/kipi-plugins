@@ -81,7 +81,7 @@ IPTCKeywords::IPTCKeywords(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    d->keywordsCheck = new QCheckBox(i18n("Use information retrievial words:"), parent);    
+    d->keywordsCheck = new QCheckBox(i18n("Use information retrieval words:"), parent);    
 
     d->keywordEdit   = new KLineEdit(parent);
     d->keywordEdit->setValidator(asciiValidator);
