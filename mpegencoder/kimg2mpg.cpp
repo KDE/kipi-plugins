@@ -80,7 +80,6 @@ extern "C"
 #include <kglobalsettings.h>
 #include <kdebug.h>
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
@@ -92,6 +91,7 @@ extern "C"
 // Local includes
 
 #include "pluginsversion.h"
+#include "kpaboutdata.h"
 #include "kshowdebuggingoutput.h"
 #include "optionsdialog.h"
 #include "checkbinprog.h"
@@ -429,17 +429,17 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_helpButton->setText( i18n( "&Help") );
   v3->addWidget( m_helpButton );
 
-  KAboutData* about = new KAboutData("kipiplugins",
-                                     I18N_NOOP("MPEG Slideshow"),
-                                     kipiplugins_version,
-                                     I18N_NOOP("A Kipi plugin for encoding images to an MPEG file."),
-                                     KAboutData::License_GPL,
-                                     "(c) 2003-2004, Gilles Caulier",
-                                     0,
-                                     "http://extragear.kde.org/apps/kipi");
+  KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("MPEG Slideshow"),
+                                      NULL,
+                                      KAboutData::License_GPL,
+                                      I18N_NOOP("A Kipi plugin for encoding images to an MPEG file."),
+  "(c) 2003-2004, Gilles Caulier");
 
-  about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                   "caulier dot gilles at free.fr");
+  about->addAuthor("Gilles Caulier", I18N_NOOP("Author"),
+                    "caulier dot gilles at free.fr");
+
+  about->addAuthor("Angelo Naselli", I18N_NOOP("Contributor"),
+                    "anaselli at linux dot it");
 
   KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
   helpMenu->menu()->removeItemAt(0);

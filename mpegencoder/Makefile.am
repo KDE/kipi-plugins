@@ -6,15 +6,15 @@ METASOURCES = AUTO
 kde_module_LTLIBRARIES = kipiplugin_mpegencoder.la
 kipiplugin_mpegencoder_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 # Srcs for the plugin
-kipiplugin_mpegencoder_la_SOURCES = plugin_mpegencoder.cpp \
+kipiplugin_mpegencoder_la_SOURCES = kimg2mpgbase.ui plugin_mpegencoder.cpp \
                                        kimg2mpg.cpp kshowdebuggingoutput.cpp \
                                        optionsdialog.cpp checkbinprog.cpp
 
 # Libs needed by the plugin
-kipiplugin_mpegencoder_la_LIBADD = $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
+kipiplugin_mpegencoder_la_LIBADD = $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) 
 
 # LD flags for the plugin
-kipiplugin_mpegencoder_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+kipiplugin_mpegencoder_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
 
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = kipiplugin_mpegencoder.desktop
