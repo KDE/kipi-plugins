@@ -44,15 +44,17 @@ public:
 
     MetadataItemPriv()
     {
-        enabled    = false;
-        dirty      = false;
-        eraseExif  = false;
-        eraseIptc  = false;
-        readOnly   = false;
+        enabled   = false;
+        dirtyExif = false;
+        dirtyIptc = false;
+        eraseExif = false;
+        eraseIptc = false;
+        readOnly  = false;
     }
 
     bool       enabled;
-    bool       dirty;
+    bool       dirtyExif;
+    bool       dirtyIptc;
     bool       eraseExif;
     bool       eraseIptc;
     bool       readOnly;
@@ -103,7 +105,7 @@ MetadataItem::~MetadataItem()
 void MetadataItem::setExif(const QByteArray& exifData, bool dirty)
 {
     setEnabled(true);
-    d->dirty     = dirty;
+    d->dirtyExif = dirty;
     d->exifData  = exifData;
     d->eraseIptc = false;
     setText(2, hasExif() ? i18n("Yes") : i18n("No"));
@@ -113,7 +115,7 @@ void MetadataItem::setExif(const QByteArray& exifData, bool dirty)
 void MetadataItem::setIptc(const QByteArray& iptcData, bool dirty)
 {
     setEnabled(true);
-    d->dirty     = dirty;
+    d->dirtyIptc = dirty;
     d->iptcData  = iptcData;
     d->eraseIptc = false;
     setText(3, hasIptc() ? i18n("Yes") : i18n("No"));
@@ -135,7 +137,7 @@ void MetadataItem::eraseExif()
     if (!isReadOnly())
     {
         d->eraseExif = true;
-        d->dirty     = true;
+        d->dirtyExif = true;
         setText(2, i18n("Removed!"));
         setText(4, i18n("Dirty!"));
         repaint();
@@ -147,7 +149,7 @@ void MetadataItem::eraseIptc()
     if (!isReadOnly())
     {
         d->eraseIptc = true;
-        d->dirty     = true;
+        d->dirtyIptc = true;
         setText(3, i18n("Removed!"));
         setText(4, i18n("Dirty!"));
         repaint();
@@ -181,7 +183,7 @@ void MetadataItem::writeMetadataToFile()
         {
             ret &= exiv2Iface.clearExif();
         }
-        else
+        else if (d->dirtyExif)
         {
             ret &= exiv2Iface.setExif(d->exifData);
         }
@@ -190,7 +192,7 @@ void MetadataItem::writeMetadataToFile()
         {
             ret &= exiv2Iface.clearIptc();
         }
-        else
+        else if (d->dirtyIptc)
         {
             ret &= exiv2Iface.setIptc(d->iptcData);
         }
@@ -202,7 +204,8 @@ void MetadataItem::writeMetadataToFile()
         else
             setPixmap(1, SmallIcon("cancel"));
 	
-	    d->dirty = false;
+        d->dirtyExif = false;
+        d->dirtyIptc = false;
     }
 }
 
@@ -219,7 +222,7 @@ bool MetadataItem::isEnabled()
 
 bool MetadataItem::isDirty()    
 {
-    return d->dirty;
+    return (d->dirtyExif || d->dirtyIptc);
 }
 
 bool MetadataItem::isReadOnly()    
