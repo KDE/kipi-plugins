@@ -82,7 +82,6 @@ MetadataItem::MetadataItem(KListView *view, QListViewItem *after, const KURL& ur
     QString ext = fi.extension(false).upper();
     if (ext != QString("JPG") && ext != QString("JPEG") && ext != QString("JPE"))
     {
-        setText(4, i18n("Read only"));
         d->readOnly = true;
     }
 
@@ -108,7 +107,17 @@ void MetadataItem::setExif(const QByteArray& exifData, bool dirty)
     d->dirtyExif = dirty;
     d->exifData  = exifData;
     d->eraseIptc = false;
-    setText(2, hasExif() ? i18n("Yes") : i18n("No"));
+
+    if (d->readOnly)
+        setText(2, hasExif() ? i18n("Available (read only)") : i18n("Not available (read only)"));
+    else
+    {
+        if (d->dirtyExif)
+            setText(2, i18n("Changed or added"));
+        else
+            setText(2, hasExif() ? i18n("Available") : i18n("Not available"));
+    }
+
     repaint();
 }
 
@@ -118,7 +127,17 @@ void MetadataItem::setIptc(const QByteArray& iptcData, bool dirty)
     d->dirtyIptc = dirty;
     d->iptcData  = iptcData;
     d->eraseIptc = false;
-    setText(3, hasIptc() ? i18n("Yes") : i18n("No"));
+
+    if (d->readOnly)
+        setText(3, hasIptc() ? i18n("Available (read only)") : i18n("Not available (read only)"));
+    else
+    {
+        if (d->dirtyIptc)
+            setText(3, i18n("Changed or added"));
+        else
+            setText(3, hasIptc() ? i18n("Available") : i18n("Not available"));
+    }
+
     repaint();
 }
 
@@ -138,8 +157,7 @@ void MetadataItem::eraseExif()
     {
         d->eraseExif = true;
         d->dirtyExif = true;
-        setText(2, i18n("Removed!"));
-        setText(4, i18n("Dirty!"));
+        setText(2, i18n("To be removed!"));
         repaint();
     }
 }
@@ -150,8 +168,7 @@ void MetadataItem::eraseIptc()
     {
         d->eraseIptc = true;
         d->dirtyIptc = true;
-        setText(3, i18n("Removed!"));
-        setText(4, i18n("Dirty!"));
+        setText(3, i18n("To be removed!"));
         repaint();
     }
 }
@@ -181,20 +198,48 @@ void MetadataItem::writeMetadataToFile()
 
         if (d->eraseExif)
         {
-            ret &= exiv2Iface.clearExif();
+            bool exifRet = exiv2Iface.clearExif();
+
+            if (exifRet)
+                setText(2, i18n("Removed"));
+            else
+                setText(2, i18n("Failed to remove"));
+
+            ret &= exifRet;
         }
         else if (d->dirtyExif)
         {
-            ret &= exiv2Iface.setExif(d->exifData);
+            bool exifRet = exiv2Iface.setExif(d->exifData);
+
+            if (exifRet)
+                setText(2, i18n("Available"));
+            else
+                setText(2, i18n("Failed to change/add"));
+
+            ret &= exifRet;
         }
 
         if (d->eraseIptc)
         {
-            ret &= exiv2Iface.clearIptc();
+            bool iptcRet = exiv2Iface.clearIptc();
+
+            if (iptcRet)
+                setText(3, i18n("Removed"));
+            else
+                setText(3, i18n("Failed to remove"));
+
+            ret &= iptcRet;
         }
         else if (d->dirtyIptc)
         {
-            ret &= exiv2Iface.setIptc(d->iptcData);
+            bool iptcRet = exiv2Iface.setIptc(d->iptcData);
+
+            if (iptcRet)
+                setText(3, i18n("Available"));
+            else
+                setText(3, i18n("Failed to change/add"));
+
+            ret &= iptcRet;
         }
 
         ret &= exiv2Iface.save(d->url.path());
@@ -235,14 +280,6 @@ void MetadataItem::paintCell(QPainter *p, const QColorGroup &cg, int column, int
     if (isEnabled() && !isReadOnly())
     {
         if ( isDirty() && !d->eraseExif && !d->eraseIptc && column >= 2  && column <= 3 )
-        {
-            QColorGroup _cg( cg );
-            QColor c = _cg.text();
-            _cg.setColor( QColorGroup::Text, Qt::red );
-            KListViewItem::paintCell( p, _cg, column, width, alignment );
-            _cg.setColor( QColorGroup::Text, c );
-        }
-        else if ( isDirty() && d->eraseExif && d->eraseIptc && column == 4)
         {
             QColorGroup _cg( cg );
             QColor c = _cg.text();
