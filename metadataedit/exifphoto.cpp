@@ -476,6 +476,26 @@ void EXIFPhoto::readMetadata(QByteArray& exifData)
             d->apertureCheck->setChecked(true);
         }
     }
+    else if (exiv2Iface.getExifTagRational("Exif.Photo.ApertureValue", num, den))
+    {
+        double aperture = pow(2.0, ((double)(num)/(double)(den))/2.0);
+
+        QString fnumber = QString::number(aperture, 'f', 1);
+
+        int item = -1;
+        for (int i = 0 ; i < d->apertureCB->count() ; i++)
+        {
+            if (d->apertureCB->text(i).remove(0, 2) == fnumber)
+                item = i;
+        }
+
+        if (item != -1)
+        {
+            d->apertureCB->setCurrentItem(item);
+            d->apertureCheck->setChecked(true);
+        }    
+
+    }
     d->apertureCB->setEnabled(d->apertureCheck->isChecked());
     
     if (exiv2Iface.getExifTagRational("Exif.Photo.MaxApertureValue", num, den))
@@ -607,9 +627,17 @@ void EXIFPhoto::applyMetadata(QByteArray& exifData)
     {
         exiv2Iface.convertToRational(d->apertureCB->currentText().remove(0, 2).toDouble(), &num, &den, 1);
         exiv2Iface.setExifTagRational("Exif.Photo.FNumber", num, den);
+
+        double fnumber  = d->apertureCB->currentText().remove(0, 2).toDouble();
+        double aperture = 2.0*(log(fnumber)/log(2.0));
+        exiv2Iface.convertToRational(aperture, &num, &den, 8);
+        exiv2Iface.setExifTagRational("Exif.Photo.ApertureValue", num, den);
     }
     else
+    {
         exiv2Iface.removeExifTag("Exif.Photo.FNumber");
+        exiv2Iface.removeExifTag("Exif.Photo.ApertureValue");
+    }
 
     if (d->maxApertureCheck->isChecked())
     {
