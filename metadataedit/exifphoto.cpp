@@ -241,8 +241,9 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
     d->focalLength35mmEdit  = new KIntSpinBox(1, 10000, 1, 1, 10, parent);
     grid->addMultiCellWidget(d->focalLength35mmCheck, 1, 1, 0, 0);
     grid->addMultiCellWidget(d->focalLength35mmEdit, 1, 1, 2, 2);
-    QWhatsThis::add(d->focalLength35mmEdit, i18n("<p>Set here the lens focal lenght value in milimeters "
-                                                 "used in 35 mm film."));
+    QWhatsThis::add(d->focalLength35mmEdit, i18n("<p>Set here equivalent focal length assuming "
+                                            "a 35mm film camera, in mm. A value of 0 means the focal "
+                                            "length is unknown."));
 
     // --------------------------------------------------------
 
