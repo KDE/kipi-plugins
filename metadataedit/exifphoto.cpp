@@ -81,6 +81,7 @@ public:
         focalLength35mmCheck = 0;
         focalLengthCheck     = 0;
         flashModeCheck       = 0;
+        flashEnergyCheck     = 0;
         whiteBalanceCheck    = 0;
         apertureCB           = 0;
         maxApertureCB        = 0;
@@ -93,6 +94,7 @@ public:
         exposureTimeDenEdit  = 0;
         focalLength35mmEdit  = 0;
         focalLengthEdit      = 0;
+        flashEnergyEdit      = 0;
         flashModeCB          = 0;
         whiteBalanceCB       = 0;
 
@@ -196,6 +198,7 @@ public:
     QCheckBox      *focalLength35mmCheck;
     QCheckBox      *focalLengthCheck;
     QCheckBox      *flashModeCheck;
+    QCheckBox      *flashEnergyCheck;
     QCheckBox      *whiteBalanceCheck;
    
     QComboBox      *apertureCB;
@@ -212,6 +215,7 @@ public:
     KIntSpinBox    *exposureTimeDenEdit;
     KIntSpinBox    *focalLength35mmEdit;
 
+    KDoubleSpinBox *flashEnergyEdit;
     KDoubleSpinBox *focalLengthEdit;
 };
 
@@ -220,7 +224,7 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
 {
     d = new EXIFPhotoPriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 12, 5, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 13, 5, KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -415,19 +419,31 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
+    d->flashEnergyCheck = new QCheckBox(i18n("Flash energy (BCPS):"), parent);
+    d->flashEnergyEdit  = new KDoubleSpinBox(1, 10000, 1, 1, 1, parent);
+    grid->addMultiCellWidget(d->flashEnergyCheck, 11, 11, 0, 0);
+    grid->addMultiCellWidget(d->flashEnergyEdit, 11, 11, 2, 2);
+    QWhatsThis::add(d->flashEnergyEdit, i18n("<p>Set here the flash enrgy used to take the picture "
+                                             "in BCPS unit. Beam Candle Power Seconds is the measure "
+                                             "of effective intensity of a light source when it is "
+                                             "focused into a beam by a reflector or lens. This value "
+                                             "is the effective intensity for a period of one second."));
+
+    // --------------------------------------------------------
+
     d->whiteBalanceCheck = new QCheckBox(i18n("White balance:"), parent);
     d->whiteBalanceCB    = new QComboBox(false, parent);
     d->whiteBalanceCB->insertItem(i18n("Auto"),   0);
     d->whiteBalanceCB->insertItem(i18n("Manual"), 1);
-    grid->addMultiCellWidget(d->whiteBalanceCheck, 11, 11, 0, 0);
-    grid->addMultiCellWidget(d->whiteBalanceCB, 11, 11, 2, 5);
+    grid->addMultiCellWidget(d->whiteBalanceCheck, 12, 12, 0, 0);
+    grid->addMultiCellWidget(d->whiteBalanceCB, 12, 12, 2, 5);
     QWhatsThis::add(d->whiteBalanceCB, i18n("<p>Select here the white balance mode set by camera when "
                                            "the picture have been shot."));
 
 
     grid->setColStretch(1, 10);                     
     grid->setColStretch(5, 10);                     
-    grid->setRowStretch(12, 10);                     
+    grid->setRowStretch(13, 10);                     
 
     // --------------------------------------------------------
 
@@ -466,6 +482,9 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
 
     connect(d->flashModeCheck, SIGNAL(toggled(bool)),
             d->flashModeCB, SLOT(setEnabled(bool)));
+
+    connect(d->flashEnergyCheck, SIGNAL(toggled(bool)),
+            d->flashEnergyEdit, SLOT(setEnabled(bool)));
 
     connect(d->whiteBalanceCheck, SIGNAL(toggled(bool)),
             d->whiteBalanceCB, SLOT(setEnabled(bool)));
@@ -650,6 +669,13 @@ void EXIFPhoto::readMetadata(QByteArray& exifData)
     }
     d->flashModeCB->setEnabled(d->flashModeCheck->isChecked());
 
+    if (exiv2Iface.getExifTagRational("Exif.Photo.FlashEnergy", num, den))
+    {
+        d->flashEnergyEdit->setValue((double)(num) / (double)(den));
+        d->flashEnergyCheck->setChecked(true);
+    }
+    d->flashEnergyEdit->setEnabled(d->flashEnergyCheck->isChecked());
+
     if (exiv2Iface.getExifTagLong("Exif.Photo.WhiteBalance", val))
     {
         d->whiteBalanceCB->setCurrentItem(val);
@@ -765,6 +791,14 @@ void EXIFPhoto::applyMetadata(QByteArray& exifData)
     }
     else
         exiv2Iface.removeExifTag("Exif.Photo.Flash");
+
+    if (d->flashEnergyCheck->isChecked())
+    {
+        exiv2Iface.convertToRational(d->flashEnergyEdit->value(), &num, &den, 1);
+        exiv2Iface.setExifTagRational("Exif.Photo.FlashEnergy", num, den);
+    }
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.FlashEnergy");
 
     if (d->whiteBalanceCheck->isChecked())
         exiv2Iface.setExifTagLong("Exif.Photo.WhiteBalance", d->whiteBalanceCB->currentItem());
