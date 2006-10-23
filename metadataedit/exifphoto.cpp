@@ -78,6 +78,7 @@ public:
         ISOSpeedCheck        = 0;
         meteringModeCheck    = 0;
         lightSourceCheck     = 0;
+        focalLength35mmCheck = 0;
         focalLengthCheck     = 0;
         flashModeCheck       = 0;
         whiteBalanceCheck    = 0;
@@ -90,6 +91,7 @@ public:
         lightSourceCB        = 0;
         exposureTimeNumEdit  = 0;
         exposureTimeDenEdit  = 0;
+        focalLength35mmEdit  = 0;
         focalLengthEdit      = 0;
         flashModeCB          = 0;
         whiteBalanceCB       = 0;
@@ -191,6 +193,7 @@ public:
     QCheckBox      *ISOSpeedCheck;
     QCheckBox      *meteringModeCheck;
     QCheckBox      *lightSourceCheck;
+    QCheckBox      *focalLength35mmCheck;
     QCheckBox      *focalLengthCheck;
     QCheckBox      *flashModeCheck;
     QCheckBox      *whiteBalanceCheck;
@@ -207,6 +210,7 @@ public:
 
     KIntSpinBox    *exposureTimeNumEdit;
     KIntSpinBox    *exposureTimeDenEdit;
+    KIntSpinBox    *focalLength35mmEdit;
 
     KDoubleSpinBox *focalLengthEdit;
 };
@@ -216,11 +220,11 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
 {
     d = new EXIFPhotoPriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 11, 5, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 12, 5, KDialog::spacingHint());
 
     // --------------------------------------------------------
 
-    d->focalLengthCheck = new QCheckBox(i18n("Focal Length (mm):"), parent);
+    d->focalLengthCheck = new QCheckBox(i18n("Focal length (mm):"), parent);
     d->focalLengthEdit  = new KDoubleSpinBox(1, 10000, 1, 50, 1, parent);
     grid->addMultiCellWidget(d->focalLengthCheck, 0, 0, 0, 0);
     grid->addMultiCellWidget(d->focalLengthEdit, 0, 0, 2, 2);
@@ -229,11 +233,20 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
+    d->focalLength35mmCheck = new QCheckBox(i18n("Focal length in 35mm film (mm):"), parent);
+    d->focalLength35mmEdit  = new KIntSpinBox(1, 10000, 1, 1, 10, parent);
+    grid->addMultiCellWidget(d->focalLength35mmCheck, 1, 1, 0, 0);
+    grid->addMultiCellWidget(d->focalLength35mmEdit, 1, 1, 2, 2);
+    QWhatsThis::add(d->focalLength35mmEdit, i18n("<p>Set here the lens focal lenght value in milimeters "
+                                                 "used in 35 mm film."));
+
+    // --------------------------------------------------------
+
     d->apertureCheck = new QCheckBox(i18n("Lens aperture (f-number):"), parent);
     d->apertureCB    = new QComboBox(false, parent);
     d->apertureCB->insertStringList(d->apertureValues);
-    grid->addMultiCellWidget(d->apertureCheck, 1, 1, 0, 0);
-    grid->addMultiCellWidget(d->apertureCB, 1, 1, 2, 2);
+    grid->addMultiCellWidget(d->apertureCheck, 2, 2, 0, 0);
+    grid->addMultiCellWidget(d->apertureCB, 2, 2, 2, 2);
     QWhatsThis::add(d->apertureCB, i18n("<p>Select here the lens aperture used by camera "
                                         "to take the picture."));
 
@@ -242,8 +255,8 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
     d->maxApertureCheck = new QCheckBox(i18n("Max. lens aperture (f-number):"), parent);
     d->maxApertureCB    = new QComboBox(false, parent);
     d->maxApertureCB->insertStringList(d->apertureValues);
-    grid->addMultiCellWidget(d->maxApertureCheck, 2, 2, 0, 0);
-    grid->addMultiCellWidget(d->maxApertureCB, 2, 2, 2, 2);
+    grid->addMultiCellWidget(d->maxApertureCheck, 3, 3, 0, 0);
+    grid->addMultiCellWidget(d->maxApertureCB, 3, 3, 2, 2);
     QWhatsThis::add(d->maxApertureCB, i18n("<p>Select here the smallest aperture of the lens used by camera "
                                            "to take the picture."));
 
@@ -254,10 +267,10 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
     d->exposureTimeDenEdit = new KIntSpinBox(1, 100000, 1, 1, 10, parent);
     QLabel *exposureLabel  = new QLabel("/", parent);
     exposureLabel->setAlignment (Qt::AlignRight|Qt::AlignVCenter);
-    grid->addMultiCellWidget(d->exposureTimeCheck, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->exposureTimeNumEdit, 3, 3, 2, 2);
-    grid->addMultiCellWidget(exposureLabel, 3, 3, 3, 3);
-    grid->addMultiCellWidget(d->exposureTimeDenEdit, 3, 3, 4, 4);
+    grid->addMultiCellWidget(d->exposureTimeCheck, 4, 4, 0, 0);
+    grid->addMultiCellWidget(d->exposureTimeNumEdit, 4, 4, 2, 2);
+    grid->addMultiCellWidget(exposureLabel, 4, 4, 3, 3);
+    grid->addMultiCellWidget(d->exposureTimeDenEdit, 4, 4, 4, 4);
     QWhatsThis::add(d->exposureTimeCheck, i18n("<p>Set on this option to set the exposure time "
                     "of picture, given in seconds."));
 
@@ -274,8 +287,8 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
     d->exposureProgramCB->insertItem(i18n("Action program"),    6);
     d->exposureProgramCB->insertItem(i18n("Portrait mode"),     7);
     d->exposureProgramCB->insertItem(i18n("Landscape mode"),    8);
-    grid->addMultiCellWidget(d->exposureProgramCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->exposureProgramCB, 4, 4, 2, 5);
+    grid->addMultiCellWidget(d->exposureProgramCheck, 5, 5, 0, 0);
+    grid->addMultiCellWidget(d->exposureProgramCB, 5, 5, 2, 5);
     QWhatsThis::add(d->exposureProgramCB, i18n("<p>Select here the program used by the camera "
                                           "to set exposure when the picture have been taken."));
 
@@ -286,8 +299,8 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
     d->exposureModeCB->insertItem(i18n("Auto"),         0);
     d->exposureModeCB->insertItem(i18n("Manual"),       1);
     d->exposureModeCB->insertItem(i18n("Auto bracket"), 2);
-    grid->addMultiCellWidget(d->exposureModeCheck, 5, 5, 0, 0);
-    grid->addMultiCellWidget(d->exposureModeCB, 5, 5, 2, 5);
+    grid->addMultiCellWidget(d->exposureModeCheck, 6, 6, 0, 0);
+    grid->addMultiCellWidget(d->exposureModeCB, 6, 6, 2, 5);
     QWhatsThis::add(d->exposureModeCB, i18n("<p>Select here the mode used by the camera "
                                        "to set exposure when the picture have been shot. "
                                        "In auto-bracketing mode, the camera shoots a "
@@ -306,8 +319,8 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
     d->meteringModeCB->insertItem(i18n("Multi-segment"),           5);
     d->meteringModeCB->insertItem(i18n("Partial"),                 6);
     d->meteringModeCB->insertItem(i18n("Other"),                   7);
-    grid->addMultiCellWidget(d->meteringModeCheck, 6, 6, 0, 0);
-    grid->addMultiCellWidget(d->meteringModeCB, 6, 6, 2, 5);
+    grid->addMultiCellWidget(d->meteringModeCheck, 7, 7, 0, 0);
+    grid->addMultiCellWidget(d->meteringModeCB, 7, 7, 2, 5);
     QWhatsThis::add(d->meteringModeCB, i18n("<p>Select here the metering mode used by the camera "
                                        "to set exposure when the picture have been shot."));
 
@@ -351,8 +364,8 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
     d->ISOSpeedCB->insertItem("20000", 33);
     d->ISOSpeedCB->insertItem("25000", 34);
     d->ISOSpeedCB->insertItem("32000", 35);
-    grid->addMultiCellWidget(d->ISOSpeedCheck, 7, 7, 0, 0);
-    grid->addMultiCellWidget(d->ISOSpeedCB, 7, 7, 2, 5);
+    grid->addMultiCellWidget(d->ISOSpeedCheck, 8, 8, 0, 0);
+    grid->addMultiCellWidget(d->ISOSpeedCB, 8, 8, 2, 5);
     QWhatsThis::add(d->ISOSpeedCB, i18n("<p>Select here the ISO Speed of the camera "
                     "witch have taken the picture."));
 
@@ -381,8 +394,8 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
     d->lightSourceCB->insertItem(i18n("D50"),                                     18);
     d->lightSourceCB->insertItem(i18n("ISO studio tungsten"),                     19);
     d->lightSourceCB->insertItem(i18n("Other light source"),                      20);
-    grid->addMultiCellWidget(d->lightSourceCheck, 8, 8, 0, 0);
-    grid->addMultiCellWidget(d->lightSourceCB, 8, 8, 2, 5);
+    grid->addMultiCellWidget(d->lightSourceCheck, 9, 9, 0, 0);
+    grid->addMultiCellWidget(d->lightSourceCB, 9, 9, 2, 5);
     QWhatsThis::add(d->lightSourceCB, i18n("<p>Select here the kind of light source used "
                                            "to take the picture."));
 
@@ -395,8 +408,8 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
         it != d->flashModeMap.end(); ++it )
        d->flashModeCB->insertItem(it.data().desc());
 
-    grid->addMultiCellWidget(d->flashModeCheck, 9, 9, 0, 0);
-    grid->addMultiCellWidget(d->flashModeCB, 9, 9, 2, 5);
+    grid->addMultiCellWidget(d->flashModeCheck, 10, 10, 0, 0);
+    grid->addMultiCellWidget(d->flashModeCB, 10, 10, 2, 5);
     QWhatsThis::add(d->flashModeCB, i18n("<p>Select here the flash program mode used by camera "
                                          "to take the picture."));
 
@@ -406,20 +419,23 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
     d->whiteBalanceCB    = new QComboBox(false, parent);
     d->whiteBalanceCB->insertItem(i18n("Auto"),   0);
     d->whiteBalanceCB->insertItem(i18n("Manual"), 1);
-    grid->addMultiCellWidget(d->whiteBalanceCheck, 10, 10, 0, 0);
-    grid->addMultiCellWidget(d->whiteBalanceCB, 10, 10, 2, 5);
+    grid->addMultiCellWidget(d->whiteBalanceCheck, 11, 11, 0, 0);
+    grid->addMultiCellWidget(d->whiteBalanceCB, 11, 11, 2, 5);
     QWhatsThis::add(d->whiteBalanceCB, i18n("<p>Select here the white balance mode set by camera when "
                                            "the picture have been shot."));
 
 
     grid->setColStretch(1, 10);                     
     grid->setColStretch(5, 10);                     
-    grid->setRowStretch(11, 10);                     
+    grid->setRowStretch(12, 10);                     
 
     // --------------------------------------------------------
 
     connect(d->focalLengthCheck, SIGNAL(toggled(bool)),
             d->focalLengthEdit, SLOT(setEnabled(bool)));
+
+    connect(d->focalLength35mmCheck, SIGNAL(toggled(bool)),
+            d->focalLength35mmEdit, SLOT(setEnabled(bool)));
 
     connect(d->apertureCheck, SIGNAL(toggled(bool)),
             d->apertureCB, SLOT(setEnabled(bool)));
@@ -477,6 +493,13 @@ void EXIFPhoto::readMetadata(QByteArray& exifData)
         d->focalLengthCheck->setChecked(true);
     }
     d->focalLengthEdit->setEnabled(d->focalLengthCheck->isChecked());
+
+    if (exiv2Iface.getExifTagLong("Exif.Photo.FocalLengthIn35mmFilm", val))
+    {
+        d->focalLength35mmEdit->setValue(val);
+        d->focalLength35mmCheck->setChecked(true);
+    }
+    d->focalLength35mmEdit->setEnabled(d->focalLength35mmCheck->isChecked());
 
     if (exiv2Iface.getExifTagRational("Exif.Photo.FNumber", num, den))
     {
@@ -648,6 +671,11 @@ void EXIFPhoto::applyMetadata(QByteArray& exifData)
     }
     else
         exiv2Iface.removeExifTag("Exif.Photo.FocalLength");
+
+    if (d->focalLength35mmCheck->isChecked())
+        exiv2Iface.setExifTagLong("Exif.Photo.FocalLengthIn35mmFilm", d->focalLength35mmEdit->value());
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.FocalLengthIn35mmFilm");
 
     if (d->apertureCheck->isChecked())
     {
