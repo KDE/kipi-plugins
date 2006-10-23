@@ -1,7 +1,7 @@
 /* ============================================================
  * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date   : 2006-10-18
- * Description : EXIF exposure settings page.
+ * Description : EXIF photo settings page.
  * 
  * Copyright 2006 by Gilles Caulier
  *
