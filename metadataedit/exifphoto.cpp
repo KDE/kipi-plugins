@@ -80,6 +80,7 @@ public:
         lightSourceCheck     = 0;
         focalLengthCheck     = 0;
         flashModeCheck       = 0;
+        whiteBalanceCheck    = 0;
         apertureCB           = 0;
         maxApertureCB        = 0;
         exposureProgramCB    = 0;
@@ -91,6 +92,7 @@ public:
         exposureTimeDenEdit  = 0;
         focalLengthEdit      = 0;
         flashModeCB          = 0;
+        whiteBalanceCB       = 0;
 
         flashModeMap.insert(0,  FlashMode( 0x00, i18n("No flash") ));
         flashModeMap.insert(1,  FlashMode( 0x01, i18n("Fired") ));
@@ -177,7 +179,7 @@ public:
 
     typedef QMap<int, FlashMode> FlashModeMap; 
 
-    FlashModeMap   flashModeMap;
+    FlashModeMap    flashModeMap;
 
     QStringList     apertureValues;
 
@@ -191,6 +193,7 @@ public:
     QCheckBox      *lightSourceCheck;
     QCheckBox      *focalLengthCheck;
     QCheckBox      *flashModeCheck;
+    QCheckBox      *whiteBalanceCheck;
    
     QComboBox      *apertureCB;
     QComboBox      *maxApertureCB;
@@ -200,6 +203,7 @@ public:
     QComboBox      *meteringModeCB;
     QComboBox      *lightSourceCB;
     QComboBox      *flashModeCB;
+    QComboBox      *whiteBalanceCB;
 
     KIntSpinBox    *exposureTimeNumEdit;
     KIntSpinBox    *exposureTimeDenEdit;
@@ -212,7 +216,7 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
 {
     d = new EXIFPhotoPriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 10, 5, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 11, 5, KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -396,9 +400,21 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
     QWhatsThis::add(d->flashModeCB, i18n("<p>Select here the flash program mode used by camera "
                                          "to take the picture."));
 
+    // --------------------------------------------------------
+
+    d->whiteBalanceCheck = new QCheckBox(i18n("White balance:"), parent);
+    d->whiteBalanceCB    = new QComboBox(false, parent);
+    d->whiteBalanceCB->insertItem(i18n("Auto"),   0);
+    d->whiteBalanceCB->insertItem(i18n("Manual"), 1);
+    grid->addMultiCellWidget(d->whiteBalanceCheck, 10, 10, 0, 0);
+    grid->addMultiCellWidget(d->whiteBalanceCB, 10, 10, 2, 5);
+    QWhatsThis::add(d->whiteBalanceCB, i18n("<p>Select here the white balance mode set by camera when "
+                                           "the picture have been shot."));
+
+
     grid->setColStretch(1, 10);                     
     grid->setColStretch(5, 10);                     
-    grid->setRowStretch(10, 10);                     
+    grid->setRowStretch(11, 10);                     
 
     // --------------------------------------------------------
 
@@ -434,6 +450,9 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
 
     connect(d->flashModeCheck, SIGNAL(toggled(bool)),
             d->flashModeCB, SLOT(setEnabled(bool)));
+
+    connect(d->whiteBalanceCheck, SIGNAL(toggled(bool)),
+            d->whiteBalanceCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
     
@@ -607,6 +626,13 @@ void EXIFPhoto::readMetadata(QByteArray& exifData)
         }
     }
     d->flashModeCB->setEnabled(d->flashModeCheck->isChecked());
+
+    if (exiv2Iface.getExifTagLong("Exif.Photo.WhiteBalance", val))
+    {
+        d->whiteBalanceCB->setCurrentItem(val);
+        d->whiteBalanceCheck->setChecked(true);
+    }
+    d->whiteBalanceCB->setEnabled(d->whiteBalanceCheck->isChecked());
 }
 
 void EXIFPhoto::applyMetadata(QByteArray& exifData)
@@ -711,6 +737,11 @@ void EXIFPhoto::applyMetadata(QByteArray& exifData)
     }
     else
         exiv2Iface.removeExifTag("Exif.Photo.Flash");
+
+    if (d->whiteBalanceCheck->isChecked())
+        exiv2Iface.setExifTagLong("Exif.Photo.WhiteBalance", d->whiteBalanceCB->currentItem());
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.WhiteBalance");
 
     exifData = exiv2Iface.getExif();
 }
