@@ -158,64 +158,64 @@ EXIFPhoto::EXIFPhoto(QWidget* parent, QByteArray& exifData)
 
     d->apertureCheck = new QCheckBox(i18n("Aperture (f-number):"), parent);
     d->apertureCB    = new QComboBox(false, parent);
-    d->apertureCB->insertItem("F1.0");
-    d->apertureCB->insertItem("F1.1");
-    d->apertureCB->insertItem("F1.2");
-    d->apertureCB->insertItem("F1.3");
-    d->apertureCB->insertItem("F1.4");
-    d->apertureCB->insertItem("F1.6");
-    d->apertureCB->insertItem("F1.8");
-    d->apertureCB->insertItem("F2.0");
-    d->apertureCB->insertItem("F2.2");
-    d->apertureCB->insertItem("F2.5");
-    d->apertureCB->insertItem("F2.8");
-    d->apertureCB->insertItem("F3.2");
-    d->apertureCB->insertItem("F3.5");
-    d->apertureCB->insertItem("F3.6");
-    d->apertureCB->insertItem("F4.0");
-    d->apertureCB->insertItem("F4.5");
-    d->apertureCB->insertItem("F4.9");
-    d->apertureCB->insertItem("F5.0");
-    d->apertureCB->insertItem("F5.6");
-    d->apertureCB->insertItem("F5.7");
-    d->apertureCB->insertItem("F6.3");
-    d->apertureCB->insertItem("F7.0");
-    d->apertureCB->insertItem("F7.1");
-    d->apertureCB->insertItem("F8.0");
-    d->apertureCB->insertItem("F9.0");
-    d->apertureCB->insertItem("F10.0");
-    d->apertureCB->insertItem("F10.1");
-    d->apertureCB->insertItem("F11.0");
-    d->apertureCB->insertItem("F11.3");
-    d->apertureCB->insertItem("F12.0");
-    d->apertureCB->insertItem("F12.7");
-    d->apertureCB->insertItem("F13.0");
-    d->apertureCB->insertItem("F14.0");
-    d->apertureCB->insertItem("F14.3");
-    d->apertureCB->insertItem("F16.0");
-    d->apertureCB->insertItem("F18.0");
-    d->apertureCB->insertItem("F20.0");
-    d->apertureCB->insertItem("F20.2");
-    d->apertureCB->insertItem("F22.0");
-    d->apertureCB->insertItem("F22.6");
-    d->apertureCB->insertItem("F25.0");
-    d->apertureCB->insertItem("F25.4");
-    d->apertureCB->insertItem("F28.5");
-    d->apertureCB->insertItem("F29.0");
-    d->apertureCB->insertItem("F32.0");
-    d->apertureCB->insertItem("F35.9");
-    d->apertureCB->insertItem("F36.0");
-    d->apertureCB->insertItem("F40.0");
-    d->apertureCB->insertItem("F40.3");
-    d->apertureCB->insertItem("F45.0");
-    d->apertureCB->insertItem("F45.3");
-    d->apertureCB->insertItem("F50.8");
-    d->apertureCB->insertItem("F51.0");
-    d->apertureCB->insertItem("F57.0");
-    d->apertureCB->insertItem("F64.0");
-    d->apertureCB->insertItem("F72.0");
-    d->apertureCB->insertItem("F81.0");
-    d->apertureCB->insertItem("F91.0");
+    d->apertureCB->insertItem("f/1.0");
+    d->apertureCB->insertItem("f/1.1");
+    d->apertureCB->insertItem("f/1.2");
+    d->apertureCB->insertItem("f/1.3");
+    d->apertureCB->insertItem("f/1.4");
+    d->apertureCB->insertItem("f/1.6");
+    d->apertureCB->insertItem("f/1.8");
+    d->apertureCB->insertItem("f/2.0");
+    d->apertureCB->insertItem("f/2.2");
+    d->apertureCB->insertItem("f/2.5");
+    d->apertureCB->insertItem("f/2.8");
+    d->apertureCB->insertItem("f/3.2");
+    d->apertureCB->insertItem("f/3.5");
+    d->apertureCB->insertItem("f/3.6");
+    d->apertureCB->insertItem("f/4.0");
+    d->apertureCB->insertItem("f/4.5");
+    d->apertureCB->insertItem("f/4.9");
+    d->apertureCB->insertItem("f/5.0");
+    d->apertureCB->insertItem("f/5.6");
+    d->apertureCB->insertItem("f/5.7");
+    d->apertureCB->insertItem("f/6.3");
+    d->apertureCB->insertItem("f/7.0");
+    d->apertureCB->insertItem("f/7.1");
+    d->apertureCB->insertItem("f/8.0");
+    d->apertureCB->insertItem("f/9.0");
+    d->apertureCB->insertItem("f/10.0");
+    d->apertureCB->insertItem("f/10.1");
+    d->apertureCB->insertItem("f/11.0");
+    d->apertureCB->insertItem("f/11.3");
+    d->apertureCB->insertItem("f/12.0");
+    d->apertureCB->insertItem("f/12.7");
+    d->apertureCB->insertItem("f/13.0");
+    d->apertureCB->insertItem("f/14.0");
+    d->apertureCB->insertItem("f/14.3");
+    d->apertureCB->insertItem("f/16.0");
+    d->apertureCB->insertItem("f/18.0");
+    d->apertureCB->insertItem("f/20.0");
+    d->apertureCB->insertItem("f/20.2");
+    d->apertureCB->insertItem("f/22.0");
+    d->apertureCB->insertItem("f/22.6");
+    d->apertureCB->insertItem("f/25.0");
+    d->apertureCB->insertItem("f/25.4");
+    d->apertureCB->insertItem("f/28.5");
+    d->apertureCB->insertItem("f/29.0");
+    d->apertureCB->insertItem("f/32.0");
+    d->apertureCB->insertItem("f/35.9");
+    d->apertureCB->insertItem("f/36.0");
+    d->apertureCB->insertItem("f/40.0");
+    d->apertureCB->insertItem("f/40.3");
+    d->apertureCB->insertItem("f/45.0");
+    d->apertureCB->insertItem("f/45.3");
+    d->apertureCB->insertItem("f/50.8");
+    d->apertureCB->insertItem("f/51.0");
+    d->apertureCB->insertItem("f/57.0");
+    d->apertureCB->insertItem("f/64.0");
+    d->apertureCB->insertItem("f/72.0");
+    d->apertureCB->insertItem("f/81.0");
+    d->apertureCB->insertItem("f/91.0");
     grid->addMultiCellWidget(d->apertureCheck, 1, 1, 0, 0);
     grid->addMultiCellWidget(d->apertureCB, 1, 1, 2, 2);
     QWhatsThis::add(d->apertureCB, i18n("<p>Select here the lens aperture used by camera "
@@ -441,7 +441,7 @@ void EXIFPhoto::readMetadata(QByteArray& exifData)
         int item = -1;
         for (int i = 0 ; i < d->apertureCB->count() ; i++)
         {
-            if (d->apertureCB->text(i).remove(0, 1) == aperture)
+            if (d->apertureCB->text(i).remove(0, 2) == aperture)
                 item = i;
         }
 
@@ -547,7 +547,7 @@ void EXIFPhoto::applyMetadata(QByteArray& exifData)
 
     if (d->exposureTimeCheck->isChecked())
     {
-        exiv2Iface.convertToRational(d->apertureCB->currentText().remove(0, 1).toDouble(), &num, &den, 1);
+        exiv2Iface.convertToRational(d->apertureCB->currentText().remove(0, 2).toDouble(), &num, &den, 1);
         exiv2Iface.setExifTagRational("Exif.Photo.FNumber", num, den);
     }
     else
