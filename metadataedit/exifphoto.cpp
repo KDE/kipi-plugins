@@ -457,7 +457,7 @@ void EXIFPhoto::readMetadata(QByteArray& exifData)
         d->focalLengthEdit->setValue((double)(num) / (double)(den));
         d->focalLengthCheck->setChecked(true);
     }
-    d->exposureTimeNumEdit->setEnabled(d->focalLengthCheck->isChecked());
+    d->focalLengthEdit->setEnabled(d->focalLengthCheck->isChecked());
 
     if (exiv2Iface.getExifTagRational("Exif.Photo.FNumber", num, den))
     {
@@ -504,6 +504,18 @@ void EXIFPhoto::readMetadata(QByteArray& exifData)
         d->exposureTimeNumEdit->setValue(num);
         d->exposureTimeDenEdit->setValue(den);
         d->exposureTimeCheck->setChecked(true);
+    }
+    else if (exiv2Iface.getExifTagRational("Exif.Photo.ShutterSpeedValue", num, den))
+    {
+        double tmp = exp(log(2.0) * (double)(num)/(double)(den));
+        if (tmp > 1.0) 
+            num = (long int)(tmp + 0.5);
+        else 
+            den = (long int)(1.0/tmp + 0.5);
+
+        d->exposureTimeNumEdit->setValue(num);
+        d->exposureTimeDenEdit->setValue(den);
+        d->exposureTimeCheck->setChecked(true);        
     }
     d->exposureTimeNumEdit->setEnabled(d->exposureTimeCheck->isChecked());
     d->exposureTimeDenEdit->setEnabled(d->exposureTimeCheck->isChecked());
@@ -610,10 +622,21 @@ void EXIFPhoto::applyMetadata(QByteArray& exifData)
         exiv2Iface.removeExifTag("Exif.Photo.MaxApertureValue");
 
     if (d->exposureTimeCheck->isChecked())
+    {
         exiv2Iface.setExifTagRational("Exif.Photo.ExposureTime", d->exposureTimeNumEdit->value(),
                                       d->exposureTimeDenEdit->value());
+
+        double exposureTime = (double)(d->exposureTimeNumEdit->value())/
+                              (double)(d->exposureTimeDenEdit->value());
+        double shutterSpeed = (-1.0)*(log(exposureTime)/log(2.0));
+        exiv2Iface.convertToRational(shutterSpeed, &num, &den, 8);
+        exiv2Iface.setExifTagRational("Exif.Photo.ShutterSpeedValue", num, den);
+    }
     else
+    {
         exiv2Iface.removeExifTag("Exif.Photo.ExposureTime");
+        exiv2Iface.removeExifTag("Exif.Photo.ShutterSpeedValue");
+    }
 
     if (d->exposureProgramCheck->isChecked())
         exiv2Iface.setExifTagLong("Exif.Photo.ExposureProgram", d->exposureProgramCB->currentItem());
