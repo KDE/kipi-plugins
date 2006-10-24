@@ -1,7 +1,7 @@
 /* ============================================================
  * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date   : 2006-10-18
- * Description : EXIF photo settings page.
+ * Description : EXIF light settings page.
  * 
  * Copyright 2006 by Gilles Caulier
  *
@@ -18,8 +18,8 @@
  * 
  * ============================================================ */
 
-#ifndef EXIF_PHOTO_H
-#define EXIF_PHOTO_H
+#ifndef EXIF_LIGHT_H
+#define EXIF_LIGHT_H
 
 // Qt includes.
 
@@ -29,16 +29,16 @@
 namespace KIPIMetadataEditPlugin
 {
 
-class EXIFPhotoPriv;
+class EXIFLightPriv;
 
-class EXIFPhoto : public QWidget
+class EXIFLight : public QWidget
 {
     Q_OBJECT
     
 public:
 
-    EXIFPhoto(QWidget* parent, QByteArray& exifData);
-    ~EXIFPhoto();
+    EXIFLight(QWidget* parent, QByteArray& exifData);
+    ~EXIFLight();
 
     void applyMetadata(QByteArray& exifData);
 
@@ -48,9 +48,9 @@ private:
 
 private:
 
-    EXIFPhotoPriv* d;
+    EXIFLightPriv* d;
 };
 
 }  // namespace KIPIMetadataEditPlugin
 
-#endif // EXIF_PHOTO_H 
+#endif // EXIF_LIGHT_H 

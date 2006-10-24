@@ -14,7 +14,7 @@ kipiplugin_metadataedit_la_SOURCES = plugin_metadataedit.cpp metadataeditdialog.
 	                                 iptccredits.cpp iptcstatus.cpp iptcorigin.cpp \
 	                                 iptcdatetime.cpp iptckeywords.cpp iptccategories.cpp \
 	                                 exifeditdialog.cpp exifcaption.cpp exifdatetime.cpp \
-	                                 exifphoto.cpp 
+	                                 exiflens.cpp exifexposure.cpp exiflight.cpp 
 
 # Libs needed by the plugin
 kipiplugin_metadataedit_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \
