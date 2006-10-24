@@ -60,10 +60,12 @@ public:
         exposureBiasCheck    = 0;
         ISOSpeedCheck        = 0;
         meteringModeCheck    = 0;
+        sensingMethodCheck   = 0;
         exposureProgramCB    = 0;
         exposureModeCB       = 0;
         ISOSpeedCB           = 0;
         meteringModeCB       = 0;
+        sensingMethodCB      = 0;
         exposureTimeNumEdit  = 0;
         exposureTimeDenEdit  = 0;
         exposureBiasEdit     = 0;
@@ -75,11 +77,13 @@ public:
     QCheckBox      *exposureBiasCheck;
     QCheckBox      *ISOSpeedCheck;
     QCheckBox      *meteringModeCheck;
+    QCheckBox      *sensingMethodCheck;
    
     QComboBox      *exposureProgramCB;
     QComboBox      *exposureModeCB;
     QComboBox      *ISOSpeedCB;
     QComboBox      *meteringModeCB;
+    QComboBox      *sensingMethodCB;
 
     KIntSpinBox    *exposureTimeNumEdit;
     KIntSpinBox    *exposureTimeDenEdit;
@@ -92,7 +96,7 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 {
     d = new EXIFExposurePriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 6, 5, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 7, 5, KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -212,9 +216,25 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     QWhatsThis::add(d->ISOSpeedCB, i18n("<p>Select here the ISO Speed of the camera "
                     "witch have taken the picture."));
 
+    // --------------------------------------------------------
+
+    d->sensingMethodCheck = new QCheckBox(i18n("Sensing method:"), parent);
+    d->sensingMethodCB    = new QComboBox(false, parent);
+    d->sensingMethodCB->insertItem(i18n("Not defined"),             0);
+    d->sensingMethodCB->insertItem(i18n("One-chip color area"),     1);
+    d->sensingMethodCB->insertItem(i18n("Two-chip color area"),     2);
+    d->sensingMethodCB->insertItem(i18n("Three-chip color area"),   3);
+    d->sensingMethodCB->insertItem(i18n("Color sequential area"),   4);
+    d->sensingMethodCB->insertItem(i18n("Trilinear sensor"),        5);
+    d->sensingMethodCB->insertItem(i18n("Color sequential linear"), 6);
+    grid->addMultiCellWidget(d->sensingMethodCheck, 6, 6, 0, 0);
+    grid->addMultiCellWidget(d->sensingMethodCB, 6, 6, 2, 5);
+    QWhatsThis::add(d->sensingMethodCB, i18n("<p>Select here the image sensor type used by the camera "
+                                       "to take the picture."));
+
     grid->setColStretch(1, 10);                     
     grid->setColStretch(5, 10);                     
-    grid->setRowStretch(6, 10);                     
+    grid->setRowStretch(7, 10);                     
 
     // --------------------------------------------------------
 
@@ -238,6 +258,9 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     connect(d->ISOSpeedCheck, SIGNAL(toggled(bool)),
             d->ISOSpeedCB, SLOT(setEnabled(bool)));
+
+    connect(d->sensingMethodCheck, SIGNAL(toggled(bool)),
+            d->sensingMethodCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
     
@@ -333,6 +356,13 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
         }
     }
     d->ISOSpeedCB->setEnabled(d->ISOSpeedCheck->isChecked());
+
+    if (exiv2Iface.getExifTagLong("Exif.Photo.SensingMethod", val))
+    {
+        d->sensingMethodCB->setCurrentItem(val > 6 ? val-2 : val-1);
+        d->sensingMethodCheck->setChecked(true);
+    }
+    d->sensingMethodCB->setEnabled(d->sensingMethodCheck->isChecked());
 }
 
 void EXIFExposure::applyMetadata(QByteArray& exifData)
@@ -396,6 +426,14 @@ void EXIFExposure::applyMetadata(QByteArray& exifData)
         exiv2Iface.removeExifTag("Exif.Photo.ISOSpeedRatings");
         exiv2Iface.removeExifTag("Exif.Photo.ExposureIndex");
     }
+
+    if (d->sensingMethodCheck->isChecked())
+    {
+        long sem = d->sensingMethodCB->currentItem();
+        exiv2Iface.setExifTagLong("Exif.Photo.SensingMethod", sem > 4 ? sem+2 : sem+1);
+    }
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.SensingMethod");
 
     exifData = exiv2Iface.getExif();
 }
