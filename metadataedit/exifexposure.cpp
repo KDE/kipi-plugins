@@ -318,6 +318,20 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
             d->ISOSpeedCheck->setChecked(true);
         }
     }
+    else if (exiv2Iface.getExifTagRational("Exif.Photo.ExposureIndex", num, den))
+    {
+        val = num / den;    
+        int item = -1;
+        for (int i = 0 ; i < d->ISOSpeedCB->count() ; i++)
+            if (d->ISOSpeedCB->text(i) == QString::number(val))
+                item = i;
+
+        if (item != -1)
+        {
+            d->ISOSpeedCB->setCurrentItem(item);
+            d->ISOSpeedCheck->setChecked(true);
+        }
+    }
     d->ISOSpeedCB->setEnabled(d->ISOSpeedCheck->isChecked());
 }
 
@@ -371,9 +385,17 @@ void EXIFExposure::applyMetadata(QByteArray& exifData)
         exiv2Iface.removeExifTag("Exif.Photo.MeteringMode");
 
     if (d->ISOSpeedCheck->isChecked())
+    {
         exiv2Iface.setExifTagLong("Exif.Photo.ISOSpeedRatings", d->ISOSpeedCB->currentText().toLong());
+
+        exiv2Iface.convertToRational(d->ISOSpeedCB->currentText().toDouble(), &num, &den, 1);
+        exiv2Iface.setExifTagRational("Exif.Photo.ExposureIndex", num, den);
+    }
     else
+    {
         exiv2Iface.removeExifTag("Exif.Photo.ISOSpeedRatings");
+        exiv2Iface.removeExifTag("Exif.Photo.ExposureIndex");
+    }
 
     exifData = exiv2Iface.getExif();
 }
