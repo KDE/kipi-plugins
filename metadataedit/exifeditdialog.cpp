@@ -42,6 +42,7 @@
 #include "exiflens.h"
 #include "exifexposure.h"
 #include "exiflight.h"
+#include "exifadjust.h"
 #include "exifeditdialog.h"
 #include "exifeditdialog.moc"
 
@@ -60,12 +61,14 @@ public:
         page_lens     = 0;
         page_exposure = 0;
         page_light    = 0;
+        page_adjust   = 0;
 
         captionPage   = 0;
         datetimePage  = 0;
         lensPage      = 0;
         exposurePage  = 0;
         lightPage     = 0;
+        adjustPage    = 0;
     }
 
     QByteArray    exifData;
@@ -75,12 +78,14 @@ public:
     QFrame       *page_lens;
     QFrame       *page_exposure;
     QFrame       *page_light;
+    QFrame       *page_adjust;
 
     EXIFCaption  *captionPage;
     EXIFDateTime *datetimePage;
     EXIFLens     *lensPage;
     EXIFExposure *exposurePage;
     EXIFLight    *lightPage;
+    EXIFAdjust   *adjustPage;
 };
 
 EXIFEditDialog::EXIFEditDialog(QWidget* parent, QByteArray exifData, const QString& fileName)
@@ -111,6 +116,10 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, QByteArray exifData, const QStri
     d->page_light      = addPage(i18n("Light"), i18n("Light Source Informations"),
                                  BarIcon("idea", KIcon::SizeMedium));
     d->lightPage       = new EXIFLight(d->page_light, d->exifData);
+
+    d->page_adjust     = addPage(i18n("Adjustments"), i18n("Pictures Adjustments Informations"),
+                                 BarIcon("blend", KIcon::SizeMedium));
+    d->adjustPage      = new EXIFAdjust(d->page_adjust, d->exifData);
 
     readSettings();
     show();
@@ -163,6 +172,7 @@ void EXIFEditDialog::slotOk()
     d->lensPage->applyMetadata(d->exifData);
     d->exposurePage->applyMetadata(d->exifData);
     d->lightPage->applyMetadata(d->exifData);
+    d->adjustPage->applyMetadata(d->exifData);
 
     saveSettings();
     accept();
