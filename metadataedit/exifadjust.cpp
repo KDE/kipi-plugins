@@ -54,16 +54,18 @@ public:
 
     EXIFAdjustPriv()
     {
-        brightnessCheck  = 0;
-        gainControlCheck = 0;
-        contrastCheck    = 0;
-        saturationCheck  = 0;
-        sharpnessCheck   = 0;
-        brightnessEdit   = 0;
-        gainControlCB    = 0;
-        contrastCB       = 0;
-        saturationCB     = 0;
-        sharpnessCB      = 0;
+        brightnessCheck     = 0;
+        gainControlCheck    = 0;
+        contrastCheck       = 0;
+        saturationCheck     = 0;
+        sharpnessCheck      = 0;
+        customRenderedCheck = 0;
+        brightnessEdit      = 0;
+        gainControlCB       = 0;
+        contrastCB          = 0;
+        saturationCB        = 0;
+        sharpnessCB         = 0;
+        customRenderedCB    = 0;
     }
 
     QCheckBox      *brightnessCheck;
@@ -71,11 +73,13 @@ public:
     QCheckBox      *contrastCheck;
     QCheckBox      *saturationCheck;
     QCheckBox      *sharpnessCheck;
+    QCheckBox      *customRenderedCheck;
 
     QComboBox      *gainControlCB;
     QComboBox      *contrastCB;
     QComboBox      *saturationCB;
     QComboBox      *sharpnessCB;
+    QComboBox      *customRenderedCB;
    
     KDoubleSpinBox *brightnessEdit;
 };
@@ -85,7 +89,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
 {
     d = new EXIFAdjustPriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 5, 2, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 6, 2, KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -146,8 +150,19 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
     QWhatsThis::add(d->sharpnessCB, i18n("<p>Set here the direction of sharpness processing "
                                          "applied by the camera to take the picture."));
 
+    // --------------------------------------------------------
+
+    d->customRenderedCheck = new QCheckBox(i18n("Custom rendered:"), parent);
+    d->customRenderedCB    = new QComboBox(false, parent);
+    d->customRenderedCB->insertItem(i18n("Normal process"), 0);
+    d->customRenderedCB->insertItem(i18n("Custom process"), 1);
+    grid->addMultiCellWidget(d->customRenderedCheck, 5, 5, 0, 0);
+    grid->addMultiCellWidget(d->customRenderedCB, 5, 5, 2, 2);
+    QWhatsThis::add(d->customRenderedCB, i18n("<p>Set here the use of special processing on "
+                                              "image data, such as rendering geared to output."));
+
     grid->setColStretch(1, 10);                     
-    grid->setRowStretch(5, 10);                     
+    grid->setRowStretch(6, 10);                     
 
     // --------------------------------------------------------
 
@@ -165,6 +180,9 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
 
     connect(d->sharpnessCheck, SIGNAL(toggled(bool)),
             d->sharpnessCB, SLOT(setEnabled(bool)));
+
+    connect(d->customRenderedCheck, SIGNAL(toggled(bool)),
+            d->customRenderedCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
     
@@ -217,6 +235,13 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
         d->sharpnessCheck->setChecked(true);
     }
     d->sharpnessCB->setEnabled(d->sharpnessCheck->isChecked());
+
+    if (exiv2Iface.getExifTagLong("Exif.Photo.CustomRendered", val))
+    {
+        d->customRenderedCB->setCurrentItem(val);
+        d->customRenderedCheck->setChecked(true);
+    }
+    d->customRenderedCB->setEnabled(d->customRenderedCheck->isChecked());
 }
 
 void EXIFAdjust::applyMetadata(QByteArray& exifData)
@@ -252,6 +277,11 @@ void EXIFAdjust::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifTagLong("Exif.Photo.Sharpness", d->sharpnessCB->currentItem());
     else
         exiv2Iface.removeExifTag("Exif.Photo.Sharpness");
+
+    if (d->customRenderedCheck->isChecked())
+        exiv2Iface.setExifTagLong("Exif.Photo.CustomRendered", d->customRenderedCB->currentItem());
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.CustomRendered");
 
     exifData = exiv2Iface.getExif();
 }
