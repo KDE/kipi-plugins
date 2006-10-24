@@ -196,21 +196,24 @@ void GPSEditDialog::slotOk()
     d->altitudeInput->text().toDouble(&ok);
     if (!ok)
     {
-        KMessageBox::error(this, i18n("Altitude value is not correct!"), i18n("GPS Sync"));    
+        KMessageBox::error(this, i18n("Altitude value is not correct!"), 
+                           i18n("Edit Geographical Coordinates"));    
         return;
     }        
 
     d->latitudeInput->text().toDouble(&ok);
     if (!ok)
     {
-        KMessageBox::error(this, i18n("Latitude value is not correct!"), i18n("GPS Sync"));    
+        KMessageBox::error(this, i18n("Latitude value is not correct!"), 
+                           i18n("Edit Geographical Coordinates"));    
         return;
     }        
 
     d->longitudeInput->text().toDouble(&ok);
     if (!ok)
     {
-        KMessageBox::error(this, i18n("Longitude value is not correct!"), i18n("GPS Sync"));    
+        KMessageBox::error(this, i18n("Longitude value is not correct!"), 
+                           i18n("Edit Geographical Coordinates"));    
         return;
     }        
 
