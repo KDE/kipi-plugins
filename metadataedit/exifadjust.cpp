@@ -58,20 +58,24 @@ public:
         gainControlCheck = 0;
         contrastCheck    = 0;
         saturationCheck  = 0;
+        sharpnessCheck   = 0;
         brightnessEdit   = 0;
         gainControlCB    = 0;
         contrastCB       = 0;
         saturationCB     = 0;
+        sharpnessCB      = 0;
     }
 
     QCheckBox      *brightnessCheck;
     QCheckBox      *gainControlCheck;
     QCheckBox      *contrastCheck;
     QCheckBox      *saturationCheck;
+    QCheckBox      *sharpnessCheck;
 
     QComboBox      *gainControlCB;
     QComboBox      *contrastCB;
     QComboBox      *saturationCB;
+    QComboBox      *sharpnessCB;
    
     KDoubleSpinBox *brightnessEdit;
 };
@@ -81,7 +85,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
 {
     d = new EXIFAdjustPriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 6, 2, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 5, 2, KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -130,8 +134,20 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
     QWhatsThis::add(d->saturationCB, i18n("<p>Set here the direction of saturation processing "
                                           "applied by the camera to take the picture."));
 
+    // --------------------------------------------------------
+
+    d->sharpnessCheck = new QCheckBox(i18n("Sharpness:"), parent);
+    d->sharpnessCB    = new QComboBox(false, parent);
+    d->sharpnessCB->insertItem(i18n("Normal"), 0);
+    d->sharpnessCB->insertItem(i18n("Soft"),   1);
+    d->sharpnessCB->insertItem(i18n("Hard"),   2);
+    grid->addMultiCellWidget(d->sharpnessCheck, 4, 4, 0, 0);
+    grid->addMultiCellWidget(d->sharpnessCB, 4, 4, 2, 2);
+    QWhatsThis::add(d->sharpnessCB, i18n("<p>Set here the direction of sharpness processing "
+                                         "applied by the camera to take the picture."));
+
     grid->setColStretch(1, 10);                     
-    grid->setRowStretch(6, 10);                     
+    grid->setRowStretch(5, 10);                     
 
     // --------------------------------------------------------
 
@@ -146,6 +162,9 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
 
     connect(d->saturationCheck, SIGNAL(toggled(bool)),
             d->saturationCB, SLOT(setEnabled(bool)));
+
+    connect(d->sharpnessCheck, SIGNAL(toggled(bool)),
+            d->sharpnessCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
     
@@ -191,6 +210,13 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
         d->saturationCheck->setChecked(true);
     }
     d->saturationCB->setEnabled(d->saturationCheck->isChecked());
+
+    if (exiv2Iface.getExifTagLong("Exif.Photo.Sharpness", val))
+    {
+        d->sharpnessCB->setCurrentItem(val);
+        d->sharpnessCheck->setChecked(true);
+    }
+    d->sharpnessCB->setEnabled(d->sharpnessCheck->isChecked());
 }
 
 void EXIFAdjust::applyMetadata(QByteArray& exifData)
@@ -221,6 +247,11 @@ void EXIFAdjust::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifTagLong("Exif.Photo.Saturation", d->saturationCB->currentItem());
     else
         exiv2Iface.removeExifTag("Exif.Photo.Saturation");
+
+    if (d->sharpnessCheck->isChecked())
+        exiv2Iface.setExifTagLong("Exif.Photo.Sharpness", d->sharpnessCB->currentItem());
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.Sharpness");
 
     exifData = exiv2Iface.getExif();
 }
