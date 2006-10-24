@@ -75,7 +75,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
                                      actionCollection(),
                                      "gpssync"));
 
-    m_action_geolocalization->insert(new KAction (i18n("Edit coordinates..."),
+    m_action_geolocalization->insert(new KAction (i18n("Edit Coordinates..."),
                                      0,
                                      0,     
                                      this,
@@ -83,7 +83,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
                                      actionCollection(),
                                      "gpsedit"));
 
-    m_action_geolocalization->insert(new KAction (i18n("Remove coordinates..."),
+    m_action_geolocalization->insert(new KAction (i18n("Remove Coordinates..."),
                                      0,
                                      0,     
                                      this,
