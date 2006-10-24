@@ -56,14 +56,18 @@ public:
     {
         brightnessCheck  = 0;
         gainControlCheck = 0;
+        contrastCheck    = 0;
         brightnessEdit   = 0;
         gainControlCB    = 0;
+        contrastCB       = 0;
     }
 
     QCheckBox      *brightnessCheck;
     QCheckBox      *gainControlCheck;
+    QCheckBox      *contrastCheck;
 
     QComboBox      *gainControlCB;
+    QComboBox      *contrastCB;
    
     KDoubleSpinBox *brightnessEdit;
 };
@@ -98,6 +102,17 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
     QWhatsThis::add(d->gainControlCB, i18n("<p>Set here the degree of overall image gain adjustment "
                                              "used by camera to take the picture."));
 
+    // --------------------------------------------------------
+
+    d->contrastCheck = new QCheckBox(i18n("Contrast:"), parent);
+    d->contrastCB    = new QComboBox(false, parent);
+    d->contrastCB->insertItem(i18n("Normal"), 0);
+    d->contrastCB->insertItem(i18n("Soft"),   1);
+    d->contrastCB->insertItem(i18n("Hard"),   2);
+    grid->addMultiCellWidget(d->contrastCheck, 2, 2, 0, 0);
+    grid->addMultiCellWidget(d->contrastCB, 2, 2, 2, 2);
+    QWhatsThis::add(d->contrastCB, i18n("<p>Set here the direction of contrast processing "
+                                        "applied by the camera to take the picture."));
 
     grid->setColStretch(1, 10);                     
     grid->setRowStretch(6, 10);                     
@@ -109,6 +124,9 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
 
     connect(d->gainControlCheck, SIGNAL(toggled(bool)),
             d->gainControlCB, SLOT(setEnabled(bool)));
+
+    connect(d->contrastCheck, SIGNAL(toggled(bool)),
+            d->contrastCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
     
@@ -140,6 +158,13 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
         d->gainControlCheck->setChecked(true);
     }
     d->gainControlCB->setEnabled(d->gainControlCheck->isChecked());
+    
+    if (exiv2Iface.getExifTagLong("Exif.Photo.Contrast", val))
+    {
+        d->contrastCB->setCurrentItem(val);
+        d->contrastCheck->setChecked(true);
+    }
+    d->contrastCB->setEnabled(d->contrastCheck->isChecked());
 }
 
 void EXIFAdjust::applyMetadata(QByteArray& exifData)
@@ -160,6 +185,11 @@ void EXIFAdjust::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifTagLong("Exif.Photo.GainControl", d->gainControlCB->currentItem());
     else
         exiv2Iface.removeExifTag("Exif.Photo.GainControl");
+
+    if (d->contrastCheck->isChecked())
+        exiv2Iface.setExifTagLong("Exif.Photo.Contrast", d->contrastCB->currentItem());
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.Contrast");
 
     exifData = exiv2Iface.getExif();
 }
