@@ -143,7 +143,7 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->exposureBiasCheck = new QCheckBox(i18n("Exposure Bias (APEX):"), parent);
+    d->exposureBiasCheck = new QCheckBox(i18n("Exposure bias (APEX):"), parent);
     d->exposureBiasEdit  = new KDoubleSpinBox(-99.99, 99.99, 0.1, 0.0, 2, parent);
     grid->addMultiCellWidget(d->exposureBiasCheck, 3, 3, 0, 0);
     grid->addMultiCellWidget(d->exposureBiasEdit, 3, 3, 2, 2);
