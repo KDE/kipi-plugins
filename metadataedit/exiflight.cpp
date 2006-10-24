@@ -152,7 +152,7 @@ EXIFLight::EXIFLight(QWidget* parent, QByteArray& exifData)
     d->lightSourceCB->insertItem(i18n("ISO studio tungsten"),                     19);
     d->lightSourceCB->insertItem(i18n("Other light source"),                      20);
     grid->addMultiCellWidget(d->lightSourceCheck, 0, 0, 0, 0);
-    grid->addMultiCellWidget(d->lightSourceCB, 0, 0, 2, 5);
+    grid->addMultiCellWidget(d->lightSourceCB, 0, 0, 2, 3);
     QWhatsThis::add(d->lightSourceCB, i18n("<p>Select here the kind of light source used "
                                            "to take the picture."));
 
@@ -195,7 +195,6 @@ EXIFLight::EXIFLight(QWidget* parent, QByteArray& exifData)
 
 
     grid->setColStretch(1, 10);                     
-    grid->setColStretch(3, 10);                     
     grid->setRowStretch(4, 10);                     
 
     // --------------------------------------------------------

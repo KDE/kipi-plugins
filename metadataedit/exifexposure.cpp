@@ -57,6 +57,7 @@ public:
         exposureTimeCheck    = 0;
         exposureProgramCheck = 0;
         exposureModeCheck    = 0;
+        exposureBiasCheck    = 0;
         ISOSpeedCheck        = 0;
         meteringModeCheck    = 0;
         exposureProgramCB    = 0;
@@ -65,11 +66,13 @@ public:
         meteringModeCB       = 0;
         exposureTimeNumEdit  = 0;
         exposureTimeDenEdit  = 0;
+        exposureBiasEdit     = 0;
     }
 
     QCheckBox      *exposureTimeCheck;
     QCheckBox      *exposureProgramCheck;
     QCheckBox      *exposureModeCheck;
+    QCheckBox      *exposureBiasCheck;
     QCheckBox      *ISOSpeedCheck;
     QCheckBox      *meteringModeCheck;
    
@@ -80,6 +83,8 @@ public:
 
     KIntSpinBox    *exposureTimeNumEdit;
     KIntSpinBox    *exposureTimeDenEdit;
+
+    KDoubleSpinBox *exposureBiasEdit;
 };
 
 EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
@@ -87,7 +92,7 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 {
     d = new EXIFExposurePriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 5, 5, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 6, 5, KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -138,6 +143,15 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
+    d->exposureBiasCheck = new QCheckBox(i18n("Exposure Bias (APEX):"), parent);
+    d->exposureBiasEdit  = new KDoubleSpinBox(-99.99, 99.99, 0.1, 0.0, 2, parent);
+    grid->addMultiCellWidget(d->exposureBiasCheck, 3, 3, 0, 0);
+    grid->addMultiCellWidget(d->exposureBiasEdit, 3, 3, 2, 2);
+    QWhatsThis::add(d->exposureBiasEdit, i18n("<p>Set here the exposure bias value in APEX unit "
+                                             "used by camera to take the picture."));
+
+    // --------------------------------------------------------
+
     d->meteringModeCheck = new QCheckBox(i18n("Metering mode:"), parent);
     d->meteringModeCB    = new QComboBox(false, parent);
     d->meteringModeCB->insertItem(i18n("Unknown"),                 0);
@@ -148,8 +162,8 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->meteringModeCB->insertItem(i18n("Multi-segment"),           5);
     d->meteringModeCB->insertItem(i18n("Partial"),                 6);
     d->meteringModeCB->insertItem(i18n("Other"),                   7);
-    grid->addMultiCellWidget(d->meteringModeCheck, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->meteringModeCB, 3, 3, 2, 5);
+    grid->addMultiCellWidget(d->meteringModeCheck, 4, 4, 0, 0);
+    grid->addMultiCellWidget(d->meteringModeCB, 4, 4, 2, 5);
     QWhatsThis::add(d->meteringModeCB, i18n("<p>Select here the metering mode used by the camera "
                                        "to set exposure when the picture have been shot."));
 
@@ -193,14 +207,14 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->ISOSpeedCB->insertItem("20000", 33);
     d->ISOSpeedCB->insertItem("25000", 34);
     d->ISOSpeedCB->insertItem("32000", 35);
-    grid->addMultiCellWidget(d->ISOSpeedCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->ISOSpeedCB, 4, 4, 2, 5);
+    grid->addMultiCellWidget(d->ISOSpeedCheck, 5, 5, 0, 0);
+    grid->addMultiCellWidget(d->ISOSpeedCB, 5, 5, 2, 5);
     QWhatsThis::add(d->ISOSpeedCB, i18n("<p>Select here the ISO Speed of the camera "
                     "witch have taken the picture."));
 
     grid->setColStretch(1, 10);                     
     grid->setColStretch(5, 10);                     
-    grid->setRowStretch(5, 10);                     
+    grid->setRowStretch(6, 10);                     
 
     // --------------------------------------------------------
 
@@ -215,6 +229,9 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     connect(d->exposureModeCheck, SIGNAL(toggled(bool)),
             d->exposureModeCB, SLOT(setEnabled(bool)));
+
+    connect(d->exposureBiasCheck, SIGNAL(toggled(bool)),
+            d->exposureBiasEdit, SLOT(setEnabled(bool)));
 
     connect(d->meteringModeCheck, SIGNAL(toggled(bool)),
             d->meteringModeCB, SLOT(setEnabled(bool)));
@@ -274,6 +291,13 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
     }
     d->exposureModeCB->setEnabled(d->exposureModeCheck->isChecked());
 
+    if (exiv2Iface.getExifTagRational("Exif.Photo.ExposureBiasValue", num, den))
+    {
+        d->exposureBiasEdit->setValue((double)(num) / (double)(den));
+        d->exposureBiasCheck->setChecked(true);
+    }
+    d->exposureBiasEdit->setEnabled(d->exposureBiasCheck->isChecked());
+
     if (exiv2Iface.getExifTagLong("Exif.Photo.MeteringMode", val))
     {
         d->meteringModeCB->setCurrentItem(val > 6 ? 7 : val);
@@ -329,6 +353,14 @@ void EXIFExposure::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifTagLong("Exif.Photo.ExposureMode", d->exposureModeCB->currentItem());
     else
         exiv2Iface.removeExifTag("Exif.Photo.ExposureMode");
+
+    if (d->exposureBiasCheck->isChecked())
+    {
+        exiv2Iface.convertToRational(d->exposureBiasEdit->value(), &num, &den, 1);
+        exiv2Iface.setExifTagRational("Exif.Photo.ExposureBiasValue", num, den);
+    }
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.ExposureBiasValue");
 
     if (d->meteringModeCheck->isChecked())
     {

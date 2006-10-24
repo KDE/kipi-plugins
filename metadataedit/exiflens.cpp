@@ -154,7 +154,7 @@ EXIFLens::EXIFLens(QWidget* parent, QByteArray& exifData)
     d->focalLengthCheck = new QCheckBox(i18n("Focal length (mm):"), parent);
     d->focalLengthEdit  = new KDoubleSpinBox(1.0, 10000.0, 1.0, 50.0, 1, parent);
     grid->addMultiCellWidget(d->focalLengthCheck, 0, 0, 0, 0);
-    grid->addMultiCellWidget(d->focalLengthEdit, 0, 0, 1, 1);
+    grid->addMultiCellWidget(d->focalLengthEdit, 0, 0, 2, 2);
     QWhatsThis::add(d->focalLengthEdit, i18n("<p>Set here the lens focal lenght in milimeters "
                                              "used by camera to take the picture."));
 
@@ -163,7 +163,7 @@ EXIFLens::EXIFLens(QWidget* parent, QByteArray& exifData)
     d->focalLength35mmCheck = new QCheckBox(i18n("Focal length in 35mm film (mm):"), parent);
     d->focalLength35mmEdit  = new KIntSpinBox(1, 10000, 1, 1, 10, parent);
     grid->addMultiCellWidget(d->focalLength35mmCheck, 1, 1, 0, 0);
-    grid->addMultiCellWidget(d->focalLength35mmEdit, 1, 1, 1, 1);
+    grid->addMultiCellWidget(d->focalLength35mmEdit, 1, 1, 2, 2);
     QWhatsThis::add(d->focalLength35mmEdit, i18n("<p>Set here equivalent focal length assuming "
                                             "a 35mm film camera, in mm. A value of 0 means the focal "
                                             "length is unknown."));
@@ -173,7 +173,7 @@ EXIFLens::EXIFLens(QWidget* parent, QByteArray& exifData)
     d->digitalZoomRatioCheck = new QCheckBox(i18n("Digital zoom ratio:"), parent);
     d->digitalZoomRatioEdit  = new KDoubleSpinBox(0.0, 100.0, 0.1, 1.0, 1, parent);
     grid->addMultiCellWidget(d->digitalZoomRatioCheck, 2, 2, 0, 0);
-    grid->addMultiCellWidget(d->digitalZoomRatioEdit, 2, 2, 1, 1);
+    grid->addMultiCellWidget(d->digitalZoomRatioEdit, 2, 2, 2, 2);
     QWhatsThis::add(d->digitalZoomRatioEdit, i18n("<p>Set here the digital zoom ratio "
                                              "used by camera to take the picture."));
 
@@ -183,7 +183,7 @@ EXIFLens::EXIFLens(QWidget* parent, QByteArray& exifData)
     d->apertureCB    = new QComboBox(false, parent);
     d->apertureCB->insertStringList(d->apertureValues);
     grid->addMultiCellWidget(d->apertureCheck, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->apertureCB, 3, 3, 1, 1);
+    grid->addMultiCellWidget(d->apertureCB, 3, 3, 2, 2);
     QWhatsThis::add(d->apertureCB, i18n("<p>Select here the lens aperture used by camera "
                                         "to take the picture."));
 
@@ -193,12 +193,11 @@ EXIFLens::EXIFLens(QWidget* parent, QByteArray& exifData)
     d->maxApertureCB    = new QComboBox(false, parent);
     d->maxApertureCB->insertStringList(d->apertureValues);
     grid->addMultiCellWidget(d->maxApertureCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->maxApertureCB, 4, 4, 1, 1);
+    grid->addMultiCellWidget(d->maxApertureCB, 4, 4, 2, 2);
     QWhatsThis::add(d->maxApertureCB, i18n("<p>Select here the smallest aperture of the lens used by camera "
                                            "to take the picture."));
 
     grid->setColStretch(1, 10);                     
-    grid->setColStretch(2, 10);                     
     grid->setRowStretch(5, 10);                     
 
     // --------------------------------------------------------
