@@ -105,11 +105,11 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, QByteArray exifData, const QStri
                                  BarIcon("today", KIcon::SizeMedium));
     d->datetimePage    = new EXIFDateTime(d->page_datetime, d->exifData);
 
-    d->page_lens       = addPage(i18n("Lens"), i18n("Camera Lens Informations"),
+    d->page_lens       = addPage(i18n("Lens"), i18n("Lens Informations"),
                                  BarIcon("camera", KIcon::SizeMedium));
     d->lensPage        = new EXIFLens(d->page_lens, d->exifData);
 
-    d->page_exposure   = addPage(i18n("Exposure"), i18n("Camera Exposure Informations"),
+    d->page_exposure   = addPage(i18n("Exposure"), i18n("Exposure Informations"),
                                  BarIcon("configure", KIcon::SizeMedium));
     d->exposurePage    = new EXIFExposure(d->page_exposure, d->exifData);
 
