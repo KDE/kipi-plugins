@@ -57,17 +57,21 @@ public:
         brightnessCheck  = 0;
         gainControlCheck = 0;
         contrastCheck    = 0;
+        saturationCheck  = 0;
         brightnessEdit   = 0;
         gainControlCB    = 0;
         contrastCB       = 0;
+        saturationCB     = 0;
     }
 
     QCheckBox      *brightnessCheck;
     QCheckBox      *gainControlCheck;
     QCheckBox      *contrastCheck;
+    QCheckBox      *saturationCheck;
 
     QComboBox      *gainControlCB;
     QComboBox      *contrastCB;
+    QComboBox      *saturationCB;
    
     KDoubleSpinBox *brightnessEdit;
 };
@@ -114,6 +118,18 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
     QWhatsThis::add(d->contrastCB, i18n("<p>Set here the direction of contrast processing "
                                         "applied by the camera to take the picture."));
 
+    // --------------------------------------------------------
+
+    d->saturationCheck = new QCheckBox(i18n("Saturation:"), parent);
+    d->saturationCB    = new QComboBox(false, parent);
+    d->saturationCB->insertItem(i18n("Normal"), 0);
+    d->saturationCB->insertItem(i18n("Low"),    1);
+    d->saturationCB->insertItem(i18n("High"),   2);
+    grid->addMultiCellWidget(d->saturationCheck, 3, 3, 0, 0);
+    grid->addMultiCellWidget(d->saturationCB, 3, 3, 2, 2);
+    QWhatsThis::add(d->saturationCB, i18n("<p>Set here the direction of saturation processing "
+                                          "applied by the camera to take the picture."));
+
     grid->setColStretch(1, 10);                     
     grid->setRowStretch(6, 10);                     
 
@@ -127,6 +143,9 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
 
     connect(d->contrastCheck, SIGNAL(toggled(bool)),
             d->contrastCB, SLOT(setEnabled(bool)));
+
+    connect(d->saturationCheck, SIGNAL(toggled(bool)),
+            d->saturationCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
     
@@ -165,6 +184,13 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
         d->contrastCheck->setChecked(true);
     }
     d->contrastCB->setEnabled(d->contrastCheck->isChecked());
+
+    if (exiv2Iface.getExifTagLong("Exif.Photo.Saturation", val))
+    {
+        d->saturationCB->setCurrentItem(val);
+        d->saturationCheck->setChecked(true);
+    }
+    d->saturationCB->setEnabled(d->saturationCheck->isChecked());
 }
 
 void EXIFAdjust::applyMetadata(QByteArray& exifData)
@@ -190,6 +216,11 @@ void EXIFAdjust::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifTagLong("Exif.Photo.Contrast", d->contrastCB->currentItem());
     else
         exiv2Iface.removeExifTag("Exif.Photo.Contrast");
+
+    if (d->saturationCheck->isChecked())
+        exiv2Iface.setExifTagLong("Exif.Photo.Saturation", d->saturationCB->currentItem());
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.Saturation");
 
     exifData = exiv2Iface.getExif();
 }
