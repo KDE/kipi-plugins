@@ -506,12 +506,12 @@ void GPSSyncDialog::slotApply()
         d->listView->ensureItemVisible(item);
         item->writeGPSInfoToFile();
         images.append(item->getUrl());
-
-        // TODO : add libkipi method call to please the host to re-read metadata from pictures.
-
         ++it;
         kapp->processEvents();
     }
+
+    // We use kipi interface refreshImages() method to tell to host than 
+    // metadata from pictures have changed and need to be re-readed.
     
     d->interface->refreshImages(images);
 }

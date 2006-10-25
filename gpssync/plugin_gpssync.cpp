@@ -193,6 +193,7 @@ void Plugin_GPSSync::slotGPSEdit()
     {
         gpsData = dlg.getGPSInfo();
         KURL::List imageURLs = images.images();
+        KURL::List updatedURLs;
         KURL::List errorURLs;
     
         for( KURL::List::iterator it = imageURLs.begin() ; 
@@ -216,9 +217,16 @@ void Plugin_GPSSync::slotGPSEdit()
                 
                     if (!ret)
                         errorURLs.append(url);
+                    else 
+                        updatedURLs.append(url);
                 }
             }
         }
+
+        // We use kipi interface refreshImages() method to tell to host than 
+        // metadata from pictures have changed and need to be re-readed.
+        
+        m_interface->refreshImages(updatedURLs);
 
         if (!errorURLs.isEmpty())
         {
@@ -239,6 +247,7 @@ void Plugin_GPSSync::slotGPSRemove()
         return;
 
     KURL::List imageURLs = images.images();
+    KURL::List updatedURLs;
     KURL::List errorURLs;
 
     for( KURL::List::iterator it = imageURLs.begin() ; 
@@ -260,8 +269,15 @@ void Plugin_GPSSync::slotGPSRemove()
         
             if (!ret)
                 errorURLs.append(url);
+            else 
+                updatedURLs.append(url);
         }
     }
+
+    // We use kipi interface refreshImages() method to tell to host than 
+    // metadata from pictures have changed and need to be re-readed.
+    
+    m_interface->refreshImages(updatedURLs);
 
     if (!errorURLs.isEmpty())
     {
