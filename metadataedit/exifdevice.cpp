@@ -66,11 +66,13 @@ public:
         ISOSpeedCheck        = 0;
         meteringModeCheck    = 0;
         sensingMethodCheck   = 0;
+        sceneTypeCheck       = 0;
         exposureProgramCB    = 0;
         exposureModeCB       = 0;
         ISOSpeedCB           = 0;
         meteringModeCB       = 0;
         sensingMethodCB      = 0;
+        sceneTypeCB          = 0;
         exposureTimeNumEdit  = 0;
         exposureTimeDenEdit  = 0;
         exposureBiasEdit     = 0;
@@ -88,6 +90,7 @@ public:
     QCheckBox      *ISOSpeedCheck;
     QCheckBox      *meteringModeCheck;
     QCheckBox      *sensingMethodCheck;
+    QCheckBox      *sceneTypeCheck;
    
     QComboBox      *deviceTypeCB;
     QComboBox      *exposureProgramCB;
@@ -95,6 +98,7 @@ public:
     QComboBox      *ISOSpeedCB;
     QComboBox      *meteringModeCB;
     QComboBox      *sensingMethodCB;
+    QComboBox      *sceneTypeCB;
 
     KLineEdit      *makeEdit;
     KLineEdit      *modelEdit;
@@ -110,7 +114,7 @@ EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
 {
     d = new EXIFDevicePriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 11, 5, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 12, 5, KDialog::spacingHint());
 
     // EXIF only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -286,13 +290,26 @@ EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
+    d->sceneTypeCheck = new QCheckBox(i18n("Scene capture type:"), parent);
+    d->sceneTypeCB    = new QComboBox(false, parent);
+    d->sceneTypeCB->insertItem(i18n("Standard"),    0);
+    d->sceneTypeCB->insertItem(i18n("Landscape"),   1);
+    d->sceneTypeCB->insertItem(i18n("Portrait"),    2);
+    d->sceneTypeCB->insertItem(i18n("Night scene"), 3);
+    grid->addMultiCellWidget(d->sceneTypeCheck, 10, 10, 0, 0);
+    grid->addMultiCellWidget(d->sceneTypeCB, 10, 10, 2, 5);
+    QWhatsThis::add(d->sceneTypeCB, i18n("<p>Select here the type of scene used by the camera "
+                                    "to take the picture."));
+
+    // --------------------------------------------------------
+
     QLabel *exifNote = new QLabel(i18n("<b>Note: EXIF text tags annoted by (*) only support printable "
                                        "ASCII characters set.</b>"), parent);
-    grid->addMultiCellWidget(exifNote, 10, 10, 0, 5);
+    grid->addMultiCellWidget(exifNote, 11, 11, 0, 5);
 
     grid->setColStretch(1, 10);                     
     grid->setColStretch(5, 10);                     
-    grid->setRowStretch(11, 10);                     
+    grid->setRowStretch(12, 10);                     
 
     // --------------------------------------------------------
 
@@ -328,6 +345,9 @@ EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
 
     connect(d->sensingMethodCheck, SIGNAL(toggled(bool)),
             d->sensingMethodCB, SLOT(setEnabled(bool)));
+
+    connect(d->sceneTypeCheck, SIGNAL(toggled(bool)),
+            d->sceneTypeCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
     
@@ -454,6 +474,13 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
         d->sensingMethodCheck->setChecked(true);
     }
     d->sensingMethodCB->setEnabled(d->sensingMethodCheck->isChecked());
+
+    if (exiv2Iface.getExifTagLong("Exif.Photo.SceneCaptureType", val))
+    {
+        d->sceneTypeCB->setCurrentItem(val);
+        d->sceneTypeCheck->setChecked(true);
+    }
+    d->sceneTypeCB->setEnabled(d->sceneTypeCheck->isChecked());
 }
 
 void EXIFDevice::applyMetadata(QByteArray& exifData)
@@ -540,6 +567,11 @@ void EXIFDevice::applyMetadata(QByteArray& exifData)
     }
     else
         exiv2Iface.removeExifTag("Exif.Photo.SensingMethod");
+
+    if (d->sceneTypeCheck->isChecked())
+        exiv2Iface.setExifTagLong("Exif.Photo.SceneCaptureType", d->sceneTypeCB->currentItem());
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.SceneCaptureType");
 
     exifData = exiv2Iface.getExif();
 }
