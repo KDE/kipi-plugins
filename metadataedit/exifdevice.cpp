@@ -1,7 +1,7 @@
 /* ============================================================
  * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date   : 2006-10-18
- * Description : EXIF exposure settings page.
+ * Description : EXIF device settings page.
  * 
  * Copyright 2006 by Gilles Caulier
  *
@@ -32,28 +32,32 @@
 #include <qlistbox.h>
 #include <qpair.h>
 #include <qmap.h>
+#include <qvalidator.h>
 
 // KDE includes.
 
 #include <klocale.h>
 #include <kdialog.h>
 #include <knuminput.h>
+#include <klineedit.h>
 
 // Local includes.
 
 #include "exiv2iface.h"
-#include "exifexposure.h"
-#include "exifexposure.moc"
+#include "exifdevice.h"
+#include "exifdevice.moc"
 
 namespace KIPIMetadataEditPlugin
 {
 
-class EXIFExposurePriv
+class EXIFDevicePriv
 {
 public:
 
-    EXIFExposurePriv()
+    EXIFDevicePriv()
     {
+        makeCheck            = 0;
+        modelCheck           = 0;
         exposureTimeCheck    = 0;
         exposureProgramCheck = 0;
         exposureModeCheck    = 0;
@@ -69,8 +73,12 @@ public:
         exposureTimeNumEdit  = 0;
         exposureTimeDenEdit  = 0;
         exposureBiasEdit     = 0;
+        makeEdit             = 0;
+        modelEdit            = 0;
     }
 
+    QCheckBox      *makeCheck;
+    QCheckBox      *modelCheck;
     QCheckBox      *exposureTimeCheck;
     QCheckBox      *exposureProgramCheck;
     QCheckBox      *exposureModeCheck;
@@ -85,18 +93,45 @@ public:
     QComboBox      *meteringModeCB;
     QComboBox      *sensingMethodCB;
 
+    KLineEdit      *makeEdit;
+    KLineEdit      *modelEdit;
+
     KIntSpinBox    *exposureTimeNumEdit;
     KIntSpinBox    *exposureTimeDenEdit;
 
     KDoubleSpinBox *exposureBiasEdit;
 };
 
-EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
-            : QWidget(parent)
+EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
+          : QWidget(parent)
 {
-    d = new EXIFExposurePriv;
+    d = new EXIFDevicePriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 7, 5, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 11, 5, KDialog::spacingHint());
+
+    // EXIF only accept printable Ascii char.
+    QRegExp asciiRx("[\x20-\x7F]+$");
+    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+
+    // --------------------------------------------------------
+
+    d->makeCheck = new QCheckBox(i18n("Make (*):"), parent);
+    d->makeEdit  = new KLineEdit(parent);
+    d->makeEdit->setValidator(asciiValidator);
+    grid->addMultiCellWidget(d->makeCheck, 0, 0, 0, 0);
+    grid->addMultiCellWidget(d->makeEdit, 0, 0, 2, 5);
+    QWhatsThis::add(d->makeEdit, i18n("<p>Set here the manufacturer of image input equipment. "
+                                 "This field is limited to ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->modelCheck = new QCheckBox(i18n("Model (*):"), parent);
+    d->modelEdit  = new KLineEdit(parent);
+    d->modelEdit->setValidator(asciiValidator);
+    grid->addMultiCellWidget(d->modelCheck, 1, 1, 0, 0);
+    grid->addMultiCellWidget(d->modelEdit, 1, 1, 2, 5);
+    QWhatsThis::add(d->modelEdit, i18n("<p>Set here the model of image input equipment. "
+                                  "This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
@@ -105,10 +140,10 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->exposureTimeDenEdit = new KIntSpinBox(1, 100000, 1, 1, 10, parent);
     QLabel *exposureLabel  = new QLabel("/", parent);
     exposureLabel->setAlignment (Qt::AlignRight|Qt::AlignVCenter);
-    grid->addMultiCellWidget(d->exposureTimeCheck, 0, 0, 0, 0);
-    grid->addMultiCellWidget(d->exposureTimeNumEdit, 0, 0, 2, 2);
-    grid->addMultiCellWidget(exposureLabel, 0, 0, 3, 3);
-    grid->addMultiCellWidget(d->exposureTimeDenEdit, 0, 0, 4, 4);
+    grid->addMultiCellWidget(d->exposureTimeCheck, 3, 3, 0, 0);
+    grid->addMultiCellWidget(d->exposureTimeNumEdit, 3, 3, 2, 2);
+    grid->addMultiCellWidget(exposureLabel, 3, 3, 3, 3);
+    grid->addMultiCellWidget(d->exposureTimeDenEdit, 3, 3, 4, 4);
     QWhatsThis::add(d->exposureTimeCheck, i18n("<p>Set on this option to set the exposure time "
                     "of picture, given in seconds."));
 
@@ -125,8 +160,8 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->exposureProgramCB->insertItem(i18n("Action program"),    6);
     d->exposureProgramCB->insertItem(i18n("Portrait mode"),     7);
     d->exposureProgramCB->insertItem(i18n("Landscape mode"),    8);
-    grid->addMultiCellWidget(d->exposureProgramCheck, 1, 1, 0, 0);
-    grid->addMultiCellWidget(d->exposureProgramCB, 1, 1, 2, 5);
+    grid->addMultiCellWidget(d->exposureProgramCheck, 4, 4, 0, 0);
+    grid->addMultiCellWidget(d->exposureProgramCB, 4, 4, 2, 5);
     QWhatsThis::add(d->exposureProgramCB, i18n("<p>Select here the program used by the camera "
                                           "to set exposure when the picture have been taken."));
 
@@ -137,8 +172,8 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->exposureModeCB->insertItem(i18n("Auto"),         0);
     d->exposureModeCB->insertItem(i18n("Manual"),       1);
     d->exposureModeCB->insertItem(i18n("Auto bracket"), 2);
-    grid->addMultiCellWidget(d->exposureModeCheck, 2, 2, 0, 0);
-    grid->addMultiCellWidget(d->exposureModeCB, 2, 2, 2, 5);
+    grid->addMultiCellWidget(d->exposureModeCheck, 5, 5, 0, 0);
+    grid->addMultiCellWidget(d->exposureModeCB, 5, 5, 2, 5);
     QWhatsThis::add(d->exposureModeCB, i18n("<p>Select here the mode used by the camera "
                                        "to set exposure when the picture have been shot. "
                                        "In auto-bracketing mode, the camera shoots a "
@@ -149,8 +184,8 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
 
     d->exposureBiasCheck = new QCheckBox(i18n("Exposure bias (APEX):"), parent);
     d->exposureBiasEdit  = new KDoubleSpinBox(-99.99, 99.99, 0.1, 0.0, 2, parent);
-    grid->addMultiCellWidget(d->exposureBiasCheck, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->exposureBiasEdit, 3, 3, 2, 2);
+    grid->addMultiCellWidget(d->exposureBiasCheck, 6, 6, 0, 0);
+    grid->addMultiCellWidget(d->exposureBiasEdit, 6, 6, 2, 2);
     QWhatsThis::add(d->exposureBiasEdit, i18n("<p>Set here the exposure bias value in APEX unit "
                                              "used by camera to take the picture."));
 
@@ -166,8 +201,8 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->meteringModeCB->insertItem(i18n("Multi-segment"),           5);
     d->meteringModeCB->insertItem(i18n("Partial"),                 6);
     d->meteringModeCB->insertItem(i18n("Other"),                   7);
-    grid->addMultiCellWidget(d->meteringModeCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->meteringModeCB, 4, 4, 2, 5);
+    grid->addMultiCellWidget(d->meteringModeCheck, 7, 7, 0, 0);
+    grid->addMultiCellWidget(d->meteringModeCB, 7, 7, 2, 5);
     QWhatsThis::add(d->meteringModeCB, i18n("<p>Select here the metering mode used by the camera "
                                        "to set exposure when the picture have been shot."));
 
@@ -211,8 +246,8 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->ISOSpeedCB->insertItem("20000", 33);
     d->ISOSpeedCB->insertItem("25000", 34);
     d->ISOSpeedCB->insertItem("32000", 35);
-    grid->addMultiCellWidget(d->ISOSpeedCheck, 5, 5, 0, 0);
-    grid->addMultiCellWidget(d->ISOSpeedCB, 5, 5, 2, 5);
+    grid->addMultiCellWidget(d->ISOSpeedCheck, 8, 8, 0, 0);
+    grid->addMultiCellWidget(d->ISOSpeedCB, 8, 8, 2, 5);
     QWhatsThis::add(d->ISOSpeedCB, i18n("<p>Select here the ISO Speed of the camera "
                     "witch have taken the picture."));
 
@@ -227,16 +262,28 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     d->sensingMethodCB->insertItem(i18n("Color sequential area"),   4);
     d->sensingMethodCB->insertItem(i18n("Trilinear sensor"),        5);
     d->sensingMethodCB->insertItem(i18n("Color sequential linear"), 6);
-    grid->addMultiCellWidget(d->sensingMethodCheck, 6, 6, 0, 0);
-    grid->addMultiCellWidget(d->sensingMethodCB, 6, 6, 2, 5);
+    grid->addMultiCellWidget(d->sensingMethodCheck, 9, 9, 0, 0);
+    grid->addMultiCellWidget(d->sensingMethodCB, 9, 9, 2, 5);
     QWhatsThis::add(d->sensingMethodCB, i18n("<p>Select here the image sensor type used by the camera "
                                        "to take the picture."));
 
+    // --------------------------------------------------------
+
+    QLabel *exifNote = new QLabel(i18n("<b>Note: EXIF text tags annoted by (*) only support printable "
+                                       "ASCII characters set.</b>"), parent);
+    grid->addMultiCellWidget(exifNote, 10, 10, 0, 5);
+
     grid->setColStretch(1, 10);                     
     grid->setColStretch(5, 10);                     
-    grid->setRowStretch(7, 10);                     
+    grid->setRowStretch(11, 10);                     
 
     // --------------------------------------------------------
+
+    connect(d->makeCheck, SIGNAL(toggled(bool)),
+            d->makeEdit, SLOT(setEnabled(bool)));
+
+    connect(d->modelCheck, SIGNAL(toggled(bool)),
+            d->modelEdit, SLOT(setEnabled(bool)));
 
     connect(d->exposureTimeCheck, SIGNAL(toggled(bool)),
             d->exposureTimeNumEdit, SLOT(setEnabled(bool)));
@@ -267,17 +314,34 @@ EXIFExposure::EXIFExposure(QWidget* parent, QByteArray& exifData)
     readMetadata(exifData);
 }
 
-EXIFExposure::~EXIFExposure()
+EXIFDevice::~EXIFDevice()
 {
     delete d;
 }
 
-void EXIFExposure::readMetadata(QByteArray& exifData)
+void EXIFDevice::readMetadata(QByteArray& exifData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
     long int num=1, den=1;
     long     val=0;
+    QString  data;
+
+    data = exiv2Iface.getExifTagString("Exif.Image.Make", false);       
+    if (!data.isNull())
+    {
+        d->makeEdit->setText(data);
+        d->makeCheck->setChecked(true);
+    }
+    d->makeEdit->setEnabled(d->makeCheck->isChecked());
+
+    data = exiv2Iface.getExifTagString("Exif.Image.Model", false);     
+    if (!data.isNull())
+    {
+        d->modelEdit->setText(data);
+        d->modelCheck->setChecked(true);
+    }
+    d->modelEdit->setEnabled(d->modelCheck->isChecked());
 
     if (exiv2Iface.getExifTagRational("Exif.Photo.ExposureTime", num, den))
     {
@@ -365,11 +429,21 @@ void EXIFExposure::readMetadata(QByteArray& exifData)
     d->sensingMethodCB->setEnabled(d->sensingMethodCheck->isChecked());
 }
 
-void EXIFExposure::applyMetadata(QByteArray& exifData)
+void EXIFDevice::applyMetadata(QByteArray& exifData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
     long int num=1, den=1;
+
+    if (d->makeCheck->isChecked())
+        exiv2Iface.setExifTagString("Exif.Image.Make", d->makeEdit->text());
+    else
+        exiv2Iface.removeExifTag("Exif.Image.Make");
+
+    if (d->modelCheck->isChecked())
+        exiv2Iface.setExifTagString("Exif.Image.Model", d->modelEdit->text());
+    else
+        exiv2Iface.removeExifTag("Exif.Image.Model");
 
     if (d->exposureTimeCheck->isChecked())
     {

@@ -40,7 +40,7 @@
 #include "exifcaption.h"
 #include "exifdatetime.h"
 #include "exiflens.h"
-#include "exifexposure.h"
+#include "exifdevice.h"
 #include "exiflight.h"
 #include "exifadjust.h"
 #include "exifeditdialog.h"
@@ -59,14 +59,14 @@ public:
         page_caption  = 0;
         page_datetime = 0;
         page_lens     = 0;
-        page_exposure = 0;
+        page_device   = 0;
         page_light    = 0;
         page_adjust   = 0;
 
         captionPage   = 0;
         datetimePage  = 0;
         lensPage      = 0;
-        exposurePage  = 0;
+        devicePage    = 0;
         lightPage     = 0;
         adjustPage    = 0;
     }
@@ -76,14 +76,14 @@ public:
     QFrame       *page_caption;
     QFrame       *page_datetime;
     QFrame       *page_lens;
-    QFrame       *page_exposure;
+    QFrame       *page_device;
     QFrame       *page_light;
     QFrame       *page_adjust;
 
     EXIFCaption  *captionPage;
     EXIFDateTime *datetimePage;
     EXIFLens     *lensPage;
-    EXIFExposure *exposurePage;
+    EXIFDevice   *devicePage;
     EXIFLight    *lightPage;
     EXIFAdjust   *adjustPage;
 };
@@ -105,13 +105,13 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, QByteArray exifData, const QStri
                                  BarIcon("today", KIcon::SizeMedium));
     d->datetimePage    = new EXIFDateTime(d->page_datetime, d->exifData);
 
-    d->page_lens       = addPage(i18n("Lens"), i18n("Lens Informations"),
+    d->page_lens       = addPage(i18n("Lens"), i18n("Lens Settings"),
                                  BarIcon("camera", KIcon::SizeMedium));
     d->lensPage        = new EXIFLens(d->page_lens, d->exifData);
 
-    d->page_exposure   = addPage(i18n("Exposure"), i18n("Exposure Informations"),
-                                 BarIcon("configure", KIcon::SizeMedium));
-    d->exposurePage    = new EXIFExposure(d->page_exposure, d->exifData);
+    d->page_device     = addPage(i18n("Device"), i18n("Capture Device Settings"),
+                                 BarIcon("scanner", KIcon::SizeMedium));
+    d->devicePage      = new EXIFDevice(d->page_device, d->exifData);
 
     d->page_light      = addPage(i18n("Light"), i18n("Light Source Informations"),
                                  BarIcon("idea", KIcon::SizeMedium));
@@ -170,7 +170,7 @@ void EXIFEditDialog::slotOk()
     d->captionPage->applyMetadata(d->exifData);
     d->datetimePage->applyMetadata(d->exifData);
     d->lensPage->applyMetadata(d->exifData);
-    d->exposurePage->applyMetadata(d->exifData);
+    d->devicePage->applyMetadata(d->exifData);
     d->lightPage->applyMetadata(d->exifData);
     d->adjustPage->applyMetadata(d->exifData);
 

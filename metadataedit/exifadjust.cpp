@@ -85,7 +85,7 @@ public:
 };
 
 EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
-            : QWidget(parent)
+          : QWidget(parent)
 {
     d = new EXIFAdjustPriv;
 

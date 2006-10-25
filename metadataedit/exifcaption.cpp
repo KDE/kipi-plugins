@@ -52,24 +52,18 @@ public:
     {
         documentNameEdit  = 0;
         imageDescEdit     = 0;
-        makeEdit          = 0;
-        modelEdit         = 0;
         artistEdit        = 0;
         copyrightEdit     = 0;
         userCommentEdit   = 0;
         userCommentCheck  = 0;
         documentNameCheck = 0;
         imageDescCheck    = 0;
-        makeCheck         = 0;
-        modelCheck        = 0;
         artistCheck       = 0;
         copyrightCheck    = 0;
     }
 
     QCheckBox *documentNameCheck;
     QCheckBox *imageDescCheck;
-    QCheckBox *makeCheck;
-    QCheckBox *modelCheck;
     QCheckBox *artistCheck;
     QCheckBox *copyrightCheck;
     QCheckBox *userCommentCheck;
@@ -78,8 +72,6 @@ public:
 
     KLineEdit *documentNameEdit;
     KLineEdit *imageDescEdit;
-    KLineEdit *makeEdit;
-    KLineEdit *modelEdit;
     KLineEdit *artistEdit;
     KLineEdit *copyrightEdit;
 };
@@ -92,8 +84,7 @@ EXIFCaption::EXIFCaption(QWidget* parent, QByteArray& exifData)
 
     // EXIF only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
-  
+    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);  
   
     // --------------------------------------------------------
 
@@ -116,26 +107,6 @@ EXIFCaption::EXIFCaption(QWidget* parent, QByteArray& exifData)
     QWhatsThis::add(d->imageDescEdit, i18n("<p>Set here the picture title. This field is limited "
                                       "to ASCII characters."));
         
-    // --------------------------------------------------------
-
-    d->makeCheck = new QCheckBox(i18n("Make (*):"), parent);
-    d->makeEdit  = new KLineEdit(parent);
-    d->makeEdit->setValidator(asciiValidator);
-    vlay->addWidget(d->makeCheck);
-    vlay->addWidget(d->makeEdit);
-    QWhatsThis::add(d->makeEdit, i18n("<p>Set here the manufacturer of image input equipment. "
-                                 "This field is limited to ASCII characters."));
-
-    // --------------------------------------------------------
-
-    d->modelCheck = new QCheckBox(i18n("Model (*):"), parent);
-    d->modelEdit  = new KLineEdit(parent);
-    d->modelEdit->setValidator(asciiValidator);
-    vlay->addWidget(d->modelCheck);
-    vlay->addWidget(d->modelEdit);
-    QWhatsThis::add(d->modelEdit, i18n("<p>Set here the model of image input equipment. "
-                                  "This field is limited to ASCII characters."));
-
     // --------------------------------------------------------
 
     d->artistCheck = new QCheckBox(i18n("Artist (*):"), parent);
@@ -168,9 +139,9 @@ EXIFCaption::EXIFCaption(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    QLabel *iptcNote = new QLabel(i18n("<b>Note: EXIF text tags annoted by (*) only support printable "
+    QLabel *exifNote = new QLabel(i18n("<b>Note: EXIF text tags annoted by (*) only support printable "
                                        "ASCII characters set.</b>"), parent);
-    vlay->addWidget(iptcNote);
+    vlay->addWidget(exifNote);
     vlay->addStretch();
 
     // --------------------------------------------------------
@@ -181,12 +152,6 @@ EXIFCaption::EXIFCaption(QWidget* parent, QByteArray& exifData)
     connect(d->imageDescCheck, SIGNAL(toggled(bool)),
             d->imageDescEdit, SLOT(setEnabled(bool)));
 
-    connect(d->makeCheck, SIGNAL(toggled(bool)),
-            d->makeEdit, SLOT(setEnabled(bool)));
-
-    connect(d->modelCheck, SIGNAL(toggled(bool)),
-            d->modelEdit, SLOT(setEnabled(bool)));
-    
     connect(d->artistCheck, SIGNAL(toggled(bool)),
             d->artistEdit, SLOT(setEnabled(bool)));
 
@@ -228,22 +193,6 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
     }
     d->imageDescEdit->setEnabled(d->imageDescCheck->isChecked());
 
-    data = exiv2Iface.getExifTagString("Exif.Image.Make", false);       
-    if (!data.isNull())
-    {
-        d->makeEdit->setText(data);
-        d->makeCheck->setChecked(true);
-    }
-    d->makeEdit->setEnabled(d->makeCheck->isChecked());
-
-    data = exiv2Iface.getExifTagString("Exif.Image.Model", false);     
-    if (!data.isNull())
-    {
-        d->modelEdit->setText(data);
-        d->modelCheck->setChecked(true);
-    }
-    d->modelEdit->setEnabled(d->modelCheck->isChecked());
-
     data = exiv2Iface.getExifTagString("Exif.Image.Artist", false);    
     if (!data.isNull())
     {
@@ -283,16 +232,6 @@ void EXIFCaption::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifTagString("Exif.Image.ImageDescription", d->imageDescEdit->text());
     else
         exiv2Iface.removeExifTag("Exif.Image.ImageDescription");
-
-    if (d->makeCheck->isChecked())
-        exiv2Iface.setExifTagString("Exif.Image.Make", d->makeEdit->text());
-    else
-        exiv2Iface.removeExifTag("Exif.Image.Make");
-
-    if (d->modelCheck->isChecked())
-        exiv2Iface.setExifTagString("Exif.Image.Model", d->modelEdit->text());
-    else
-        exiv2Iface.removeExifTag("Exif.Image.Model");
 
     if (d->artistCheck->isChecked())
         exiv2Iface.setExifTagString("Exif.Image.Artist", d->artistEdit->text());

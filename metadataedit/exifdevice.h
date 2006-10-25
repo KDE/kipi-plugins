@@ -1,7 +1,7 @@
 /* ============================================================
  * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date   : 2006-10-18
- * Description : EXIF exposure settings page.
+ * Description : EXIF device settings page.
  * 
  * Copyright 2006 by Gilles Caulier
  *
@@ -18,8 +18,8 @@
  * 
  * ============================================================ */
 
-#ifndef EXIF_EXPOSURE_H
-#define EXIF_EXPOSURE_H
+#ifndef EXIF_DEVICE_H
+#define EXIF_DEVICE_H
 
 // Qt includes.
 
@@ -29,16 +29,16 @@
 namespace KIPIMetadataEditPlugin
 {
 
-class EXIFExposurePriv;
+class EXIFDevicePriv;
 
-class EXIFExposure : public QWidget
+class EXIFDevice : public QWidget
 {
     Q_OBJECT
     
 public:
 
-    EXIFExposure(QWidget* parent, QByteArray& exifData);
-    ~EXIFExposure();
+    EXIFDevice(QWidget* parent, QByteArray& exifData);
+    ~EXIFDevice();
 
     void applyMetadata(QByteArray& exifData);
 
@@ -48,9 +48,9 @@ private:
 
 private:
 
-    EXIFExposurePriv* d;
+    EXIFDevicePriv* d;
 };
 
 }  // namespace KIPIMetadataEditPlugin
 
-#endif // EXIF_EXPOSURE_H 
+#endif // EXIF_DEVICE_H 
