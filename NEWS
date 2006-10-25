@@ -12,6 +12,8 @@ New Plugin    : IpodExport   : New kipi plugin to export pictures to an ipod dev
 
 GalleryExport : Support for multiple galleries.
 
+HTMLExport    : New "s0" theme from Petr Vanek
+
 JPEGLossLess  : Removed libmagic++ depency.
 JPEGLossLess  : Removed libkexif depency. Using Exiv2 instead.
 
