@@ -58,6 +58,7 @@ public:
     {
         makeCheck            = 0;
         modelCheck           = 0;
+        deviceTypeCheck      = 0;
         exposureTimeCheck    = 0;
         exposureProgramCheck = 0;
         exposureModeCheck    = 0;
@@ -79,6 +80,7 @@ public:
 
     QCheckBox      *makeCheck;
     QCheckBox      *modelCheck;
+    QCheckBox      *deviceTypeCheck;
     QCheckBox      *exposureTimeCheck;
     QCheckBox      *exposureProgramCheck;
     QCheckBox      *exposureModeCheck;
@@ -87,6 +89,7 @@ public:
     QCheckBox      *meteringModeCheck;
     QCheckBox      *sensingMethodCheck;
    
+    QComboBox      *deviceTypeCB;
     QComboBox      *exposureProgramCB;
     QComboBox      *exposureModeCB;
     QComboBox      *ISOSpeedCB;
@@ -115,7 +118,7 @@ EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->makeCheck = new QCheckBox(i18n("Make (*):"), parent);
+    d->makeCheck = new QCheckBox(i18n("Device manufacturer (*):"), parent);
     d->makeEdit  = new KLineEdit(parent);
     d->makeEdit->setValidator(asciiValidator);
     grid->addMultiCellWidget(d->makeCheck, 0, 0, 0, 0);
@@ -125,13 +128,27 @@ EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->modelCheck = new QCheckBox(i18n("Model (*):"), parent);
+    d->modelCheck = new QCheckBox(i18n("Device model (*):"), parent);
     d->modelEdit  = new KLineEdit(parent);
     d->modelEdit->setValidator(asciiValidator);
     grid->addMultiCellWidget(d->modelCheck, 1, 1, 0, 0);
     grid->addMultiCellWidget(d->modelEdit, 1, 1, 2, 5);
     QWhatsThis::add(d->modelEdit, i18n("<p>Set here the model of image input equipment. "
                                   "This field is limited to ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->deviceTypeCheck = new QCheckBox(i18n("Device type:"), parent);
+    d->deviceTypeCB    = new QComboBox(false, parent);
+    d->deviceTypeCB->insertItem(i18n("Film scanner"),             0);
+    d->deviceTypeCB->insertItem(i18n("Reflection print scanner"), 1);
+    d->deviceTypeCB->insertItem(i18n("Digital camera"),           2);
+    d->deviceTypeCheck->setTristate(true);
+
+    grid->addMultiCellWidget(d->deviceTypeCheck, 2, 2, 0, 0);
+    grid->addMultiCellWidget(d->deviceTypeCB, 2, 2, 2, 5);
+    QWhatsThis::add(d->deviceTypeCB, i18n("<p>Select here the image input equipment type used to "
+                                     "generate the picture."));
 
     // --------------------------------------------------------
 
@@ -285,6 +302,9 @@ EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
     connect(d->modelCheck, SIGNAL(toggled(bool)),
             d->modelEdit, SLOT(setEnabled(bool)));
 
+    connect(d->deviceTypeCheck, SIGNAL(toggled(bool)),
+            d->deviceTypeCB, SLOT(setEnabled(bool)));
+
     connect(d->exposureTimeCheck, SIGNAL(toggled(bool)),
             d->exposureTimeNumEdit, SLOT(setEnabled(bool)));
 
@@ -342,6 +362,13 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
         d->modelCheck->setChecked(true);
     }
     d->modelEdit->setEnabled(d->modelCheck->isChecked());
+
+    if (exiv2Iface.getExifTagLong("Exif.Photo.FileSource", val))
+    {
+        d->deviceTypeCB->setCurrentItem(val-1);
+        d->deviceTypeCheck->setChecked(true);
+    }
+    d->deviceTypeCB->setEnabled(d->deviceTypeCheck->isChecked());
 
     if (exiv2Iface.getExifTagRational("Exif.Photo.ExposureTime", num, den))
     {
@@ -444,6 +471,11 @@ void EXIFDevice::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifTagString("Exif.Image.Model", d->modelEdit->text());
     else
         exiv2Iface.removeExifTag("Exif.Image.Model");
+
+    if (d->deviceTypeCheck->isChecked())
+        exiv2Iface.setExifTagLong("Exif.Photo.FileSource", d->deviceTypeCB->currentItem()+1);
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.FileSource");
 
     if (d->exposureTimeCheck->isChecked())
     {
