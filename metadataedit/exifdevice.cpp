@@ -56,28 +56,30 @@ public:
 
     EXIFDevicePriv()
     {
-        makeCheck            = 0;
-        modelCheck           = 0;
-        deviceTypeCheck      = 0;
-        exposureTimeCheck    = 0;
-        exposureProgramCheck = 0;
-        exposureModeCheck    = 0;
-        exposureBiasCheck    = 0;
-        ISOSpeedCheck        = 0;
-        meteringModeCheck    = 0;
-        sensingMethodCheck   = 0;
-        sceneTypeCheck       = 0;
-        exposureProgramCB    = 0;
-        exposureModeCB       = 0;
-        ISOSpeedCB           = 0;
-        meteringModeCB       = 0;
-        sensingMethodCB      = 0;
-        sceneTypeCB          = 0;
-        exposureTimeNumEdit  = 0;
-        exposureTimeDenEdit  = 0;
-        exposureBiasEdit     = 0;
-        makeEdit             = 0;
-        modelEdit            = 0;
+        makeCheck                = 0;
+        modelCheck               = 0;
+        deviceTypeCheck          = 0;
+        exposureTimeCheck        = 0;
+        exposureProgramCheck     = 0;
+        exposureModeCheck        = 0;
+        exposureBiasCheck        = 0;
+        ISOSpeedCheck            = 0;
+        meteringModeCheck        = 0;
+        sensingMethodCheck       = 0;
+        sceneTypeCheck           = 0;
+        subjectDistanceTypeCheck = 0;
+        exposureProgramCB        = 0;
+        exposureModeCB           = 0;
+        ISOSpeedCB               = 0;
+        meteringModeCB           = 0;
+        sensingMethodCB          = 0;
+        sceneTypeCB              = 0;
+        subjectDistanceTypeCB    = 0;
+        exposureTimeNumEdit      = 0;
+        exposureTimeDenEdit      = 0;
+        exposureBiasEdit         = 0;
+        makeEdit                 = 0;
+        modelEdit                = 0;
     }
 
     QCheckBox      *makeCheck;
@@ -91,6 +93,7 @@ public:
     QCheckBox      *meteringModeCheck;
     QCheckBox      *sensingMethodCheck;
     QCheckBox      *sceneTypeCheck;
+    QCheckBox      *subjectDistanceTypeCheck;
    
     QComboBox      *deviceTypeCB;
     QComboBox      *exposureProgramCB;
@@ -99,6 +102,7 @@ public:
     QComboBox      *meteringModeCB;
     QComboBox      *sensingMethodCB;
     QComboBox      *sceneTypeCB;
+    QComboBox      *subjectDistanceTypeCB;
 
     KLineEdit      *makeEdit;
     KLineEdit      *modelEdit;
@@ -114,7 +118,7 @@ EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
 {
     d = new EXIFDevicePriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 12, 5, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 13, 5, KDialog::spacingHint());
 
     // EXIF only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -127,8 +131,8 @@ EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
     d->makeEdit->setValidator(asciiValidator);
     grid->addMultiCellWidget(d->makeCheck, 0, 0, 0, 0);
     grid->addMultiCellWidget(d->makeEdit, 0, 0, 2, 5);
-    QWhatsThis::add(d->makeEdit, i18n("<p>Set here the manufacturer of image input equipment. "
-                                 "This field is limited to ASCII characters."));
+    QWhatsThis::add(d->makeEdit, i18n("<p>Set here the manufacturer of image input equipment used to "
+                                 "take the picture. This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
@@ -137,8 +141,8 @@ EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
     d->modelEdit->setValidator(asciiValidator);
     grid->addMultiCellWidget(d->modelCheck, 1, 1, 0, 0);
     grid->addMultiCellWidget(d->modelEdit, 1, 1, 2, 5);
-    QWhatsThis::add(d->modelEdit, i18n("<p>Set here the model of image input equipment. "
-                                  "This field is limited to ASCII characters."));
+    QWhatsThis::add(d->modelEdit, i18n("<p>Set here the model of image input equipment used to "
+                                  "take the picture. This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
@@ -147,12 +151,10 @@ EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
     d->deviceTypeCB->insertItem(i18n("Film scanner"),             0);
     d->deviceTypeCB->insertItem(i18n("Reflection print scanner"), 1);
     d->deviceTypeCB->insertItem(i18n("Digital camera"),           2);
-    d->deviceTypeCheck->setTristate(true);
-
     grid->addMultiCellWidget(d->deviceTypeCheck, 2, 2, 0, 0);
     grid->addMultiCellWidget(d->deviceTypeCB, 2, 2, 2, 5);
     QWhatsThis::add(d->deviceTypeCB, i18n("<p>Select here the image input equipment type used to "
-                                     "generate the picture."));
+                                     "take the picture."));
 
     // --------------------------------------------------------
 
@@ -303,13 +305,26 @@ EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
+    d->subjectDistanceTypeCheck = new QCheckBox(i18n("Subject distance type:"), parent);
+    d->subjectDistanceTypeCB    = new QComboBox(false, parent);
+    d->subjectDistanceTypeCB->insertItem(i18n("Unknow"),       0);
+    d->subjectDistanceTypeCB->insertItem(i18n("Macro"),        1);
+    d->subjectDistanceTypeCB->insertItem(i18n("Close view"),   2);
+    d->subjectDistanceTypeCB->insertItem(i18n("Distant view"), 3);
+    grid->addMultiCellWidget(d->subjectDistanceTypeCheck, 11, 11, 0, 0);
+    grid->addMultiCellWidget(d->subjectDistanceTypeCB, 11, 11, 2, 5);
+    QWhatsThis::add(d->subjectDistanceTypeCB, i18n("<p>Select here the type of distance between "
+                                              "the subject and the image input equipment."));
+
+    // --------------------------------------------------------
+
     QLabel *exifNote = new QLabel(i18n("<b>Note: EXIF text tags annoted by (*) only support printable "
                                        "ASCII characters set.</b>"), parent);
-    grid->addMultiCellWidget(exifNote, 11, 11, 0, 5);
+    grid->addMultiCellWidget(exifNote, 12, 12, 0, 5);
 
     grid->setColStretch(1, 10);                     
     grid->setColStretch(5, 10);                     
-    grid->setRowStretch(12, 10);                     
+    grid->setRowStretch(13, 10);                     
 
     // --------------------------------------------------------
 
@@ -348,6 +363,9 @@ EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
 
     connect(d->sceneTypeCheck, SIGNAL(toggled(bool)),
             d->sceneTypeCB, SLOT(setEnabled(bool)));
+
+    connect(d->subjectDistanceTypeCheck, SIGNAL(toggled(bool)),
+            d->subjectDistanceTypeCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
     
@@ -481,6 +499,13 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
         d->sceneTypeCheck->setChecked(true);
     }
     d->sceneTypeCB->setEnabled(d->sceneTypeCheck->isChecked());
+
+    if (exiv2Iface.getExifTagLong("Exif.Photo.SubjectDistanceRange", val))
+    {
+        d->subjectDistanceTypeCB->setCurrentItem(val);
+        d->subjectDistanceTypeCheck->setChecked(true);
+    }
+    d->subjectDistanceTypeCB->setEnabled(d->subjectDistanceTypeCheck->isChecked());
 }
 
 void EXIFDevice::applyMetadata(QByteArray& exifData)
@@ -572,6 +597,11 @@ void EXIFDevice::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifTagLong("Exif.Photo.SceneCaptureType", d->sceneTypeCB->currentItem());
     else
         exiv2Iface.removeExifTag("Exif.Photo.SceneCaptureType");
+
+    if (d->subjectDistanceTypeCheck->isChecked())
+        exiv2Iface.setExifTagLong("Exif.Photo.SubjectDistanceRange", d->subjectDistanceTypeCB->currentItem());
+    else
+        exiv2Iface.removeExifTag("Exif.Photo.SubjectDistanceRange");
 
     exifData = exiv2Iface.getExif();
 }
