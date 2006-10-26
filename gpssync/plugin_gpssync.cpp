@@ -160,10 +160,11 @@ void Plugin_GPSSync::slotGPSSync()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-/* NOTE: this plugin do not use yet GPSBabel to convert GPS data file to GPX
+    /* NOTE: this plugin do not use yet GPSBabel to convert GPS data file to GPX
     QString gpsBabelVersion;
     if (!checkBinaries(gpsBabelVersion)) 
-        return;*/
+        return;
+    */
 
     KIPIGPSSyncPlugin::GPSSyncDialog *dialog = new KIPIGPSSyncPlugin::GPSSyncDialog(
                                                m_interface, kapp->activeWindow());
@@ -206,21 +207,24 @@ void Plugin_GPSSync::slotGPSEdit()
         
             QFileInfo fi(url.path());
             QString ext = fi.extension(false).upper();
+            bool ret = false;
             if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
             {
-                if (exiv2Iface.load(url.path()))
+                ret = true;
+                ret &= exiv2Iface.load(url.path());
+                if (ret)
                 {
-                    bool ret = exiv2Iface.setGPSInfo(gpsData.altitude(), 
-                                                     gpsData.latitude(), 
-                                                     gpsData.longitude());
+                    ret &= exiv2Iface.setGPSInfo(gpsData.altitude(), 
+                                                 gpsData.latitude(), 
+                                                 gpsData.longitude());
                     ret &= exiv2Iface.save(url.path());
-                
-                    if (!ret)
-                        errorURLs.append(url);
-                    else 
-                        updatedURLs.append(url);
                 }
             }
+
+            if (!ret)
+                errorURLs.append(url);
+            else 
+                updatedURLs.append(url);
         }
 
         // We use kipi interface refreshImages() method to tell to host than 
@@ -232,7 +236,7 @@ void Plugin_GPSSync::slotGPSEdit()
         {
             KMessageBox::errorList(
                         kapp->activeWindow(),
-                        i18n("Unable to save geographical coordinates to:"),
+                        i18n("Unable to save geographical coordinates into:"),
                         errorURLs.toStringList(),
                         i18n("Edit Geographical Coordinates"));  
         }
@@ -260,18 +264,20 @@ void Plugin_GPSSync::slotGPSRemove()
     
         QFileInfo fi(url.path());
         QString ext = fi.extension(false).upper();
+        bool ret = false;
         if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
         {
+            ret = true;
             KIPIPlugins::Exiv2Iface exiv2Iface;
-            exiv2Iface.load(url.path());
-            bool ret = exiv2Iface.removeGPSInfo();
+            ret &= exiv2Iface.load(url.path());
+            ret &= exiv2Iface.removeGPSInfo();
             ret &= exiv2Iface.save(url.path());
-        
-            if (!ret)
-                errorURLs.append(url);
-            else 
-                updatedURLs.append(url);
         }
+        
+        if (!ret)
+            errorURLs.append(url);
+        else 
+            updatedURLs.append(url);
     }
 
     // We use kipi interface refreshImages() method to tell to host than 
