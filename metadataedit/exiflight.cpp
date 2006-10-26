@@ -229,7 +229,7 @@ void EXIFLight::readMetadata(QByteArray& exifData)
 
     if (exiv2Iface.getExifTagLong("Exif.Photo.LightSource", val))
     {
-        if ((val> 8 && val <16) || (val> 16 && val <25) || val == 255) 
+        if ((val>=0 && val <=4) || (val> 8 && val <16) || (val> 16 && val <25) || val == 255) 
         {    
             if (val > 8 && val < 16)
                 val = val - 4;
