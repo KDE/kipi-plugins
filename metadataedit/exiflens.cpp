@@ -27,7 +27,6 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qwhatsthis.h>
-#include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qlistbox.h>
 #include <qpair.h>
@@ -41,6 +40,7 @@
 
 // Local includes.
 
+#include "metadatacheckbox.h"
 #include "exiv2iface.h"
 #include "exiflens.h"
 #include "exiflens.moc"
@@ -125,21 +125,22 @@ public:
         apertureValues.append("f/91.0");
     }
 
-    QStringList     apertureValues;
+    QStringList       apertureValues;
 
-    QCheckBox      *apertureCheck;
-    QCheckBox      *maxApertureCheck;
-    QCheckBox      *focalLength35mmCheck;
-    QCheckBox      *focalLengthCheck;
-    QCheckBox      *digitalZoomRatioCheck;
+    QCheckBox        *focalLength35mmCheck;
+    QCheckBox        *focalLengthCheck;
+    QCheckBox        *digitalZoomRatioCheck;
    
-    QComboBox      *apertureCB;
-    QComboBox      *maxApertureCB;
+    QComboBox        *apertureCB;
+    QComboBox        *maxApertureCB;
 
-    KIntSpinBox    *focalLength35mmEdit;
+    KIntSpinBox      *focalLength35mmEdit;
 
-    KDoubleSpinBox *focalLengthEdit;
-    KDoubleSpinBox *digitalZoomRatioEdit;
+    KDoubleSpinBox   *focalLengthEdit;
+    KDoubleSpinBox   *digitalZoomRatioEdit;
+
+    MetadataCheckBox *apertureCheck;
+    MetadataCheckBox *maxApertureCheck;
 };
 
 EXIFLens::EXIFLens(QWidget* parent, QByteArray& exifData)
@@ -179,7 +180,7 @@ EXIFLens::EXIFLens(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->apertureCheck = new QCheckBox(i18n("Lens aperture (f-number):"), parent);
+    d->apertureCheck = new MetadataCheckBox(i18n("Lens aperture (f-number):"), parent);
     d->apertureCB    = new QComboBox(false, parent);
     d->apertureCB->insertStringList(d->apertureValues);
     grid->addMultiCellWidget(d->apertureCheck, 3, 3, 0, 0);
@@ -189,7 +190,7 @@ EXIFLens::EXIFLens(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->maxApertureCheck = new QCheckBox(i18n("Max. lens aperture (f-number):"), parent);
+    d->maxApertureCheck = new MetadataCheckBox(i18n("Max. lens aperture (f-number):"), parent);
     d->maxApertureCB    = new QComboBox(false, parent);
     d->maxApertureCB->insertStringList(d->apertureValues);
     grid->addMultiCellWidget(d->maxApertureCheck, 4, 4, 0, 0);
@@ -289,8 +290,9 @@ void EXIFLens::readMetadata(QByteArray& exifData)
         {
             d->apertureCB->setCurrentItem(item);
             d->apertureCheck->setChecked(true);
-        }    
-
+        }
+        else
+            d->apertureCheck->setValid(false);
     }
     d->apertureCB->setEnabled(d->apertureCheck->isChecked());
     
@@ -312,6 +314,8 @@ void EXIFLens::readMetadata(QByteArray& exifData)
             d->maxApertureCB->setCurrentItem(item);
             d->maxApertureCheck->setChecked(true);
         }
+        else
+            d->maxApertureCheck->setValid(false);
     }
     d->maxApertureCB->setEnabled(d->maxApertureCheck->isChecked());
 }
@@ -353,7 +357,7 @@ void EXIFLens::applyMetadata(QByteArray& exifData)
         exiv2Iface.convertToRational(aperture, &num, &den, 8);
         exiv2Iface.setExifTagRational("Exif.Photo.ApertureValue", num, den);
     }
-    else
+    else if (d->apertureCheck->isValid())
     {
         exiv2Iface.removeExifTag("Exif.Photo.FNumber");
         exiv2Iface.removeExifTag("Exif.Photo.ApertureValue");
@@ -366,7 +370,7 @@ void EXIFLens::applyMetadata(QByteArray& exifData)
         exiv2Iface.convertToRational(aperture, &num, &den, 8);
         exiv2Iface.setExifTagRational("Exif.Photo.MaxApertureValue", num, den);
     }
-    else
+    else if (d->maxApertureCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.MaxApertureValue");
 
     exifData = exiv2Iface.getExif();
