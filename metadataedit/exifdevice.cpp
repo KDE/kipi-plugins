@@ -27,11 +27,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qwhatsthis.h>
-#include <qcheckbox.h>
 #include <qcombobox.h>
-#include <qlistbox.h>
-#include <qpair.h>
-#include <qmap.h>
 #include <qvalidator.h>
 
 // KDE includes.

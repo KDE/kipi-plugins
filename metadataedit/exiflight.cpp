@@ -27,10 +27,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qwhatsthis.h>
-#include <qcheckbox.h>
 #include <qcombobox.h>
-#include <qlistbox.h>
-#include <qpair.h>
 #include <qmap.h>
 
 // KDE includes.
@@ -41,6 +38,7 @@
 
 // Local includes.
 
+#include "metadatacheckbox.h"
 #include "exiv2iface.h"
 #include "exiflight.h"
 #include "exiflight.moc"

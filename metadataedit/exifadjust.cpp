@@ -29,9 +29,6 @@
 #include <qwhatsthis.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
-#include <qlistbox.h>
-#include <qpair.h>
-#include <qmap.h>
 
 // KDE includes.
 
