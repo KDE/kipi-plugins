@@ -103,18 +103,19 @@ public:
 
     typedef QMap<int, FlashMode> FlashModeMap; 
 
-    FlashModeMap    flashModeMap;
+    FlashModeMap      flashModeMap;
 
-    QCheckBox      *lightSourceCheck;
-    QCheckBox      *flashModeCheck;
-    QCheckBox      *flashEnergyCheck;
-    QCheckBox      *whiteBalanceCheck;
+    QCheckBox        *flashEnergyCheck;
    
-    QComboBox      *lightSourceCB;
-    QComboBox      *flashModeCB;
-    QComboBox      *whiteBalanceCB;
+    QComboBox        *lightSourceCB;
+    QComboBox        *flashModeCB;
+    QComboBox        *whiteBalanceCB;
 
-    KDoubleSpinBox *flashEnergyEdit;
+    KDoubleSpinBox   *flashEnergyEdit;
+
+    MetadataCheckBox *lightSourceCheck;
+    MetadataCheckBox *flashModeCheck;
+    MetadataCheckBox *whiteBalanceCheck;
 };
 
 EXIFLight::EXIFLight(QWidget* parent, QByteArray& exifData)
@@ -126,7 +127,7 @@ EXIFLight::EXIFLight(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->lightSourceCheck = new QCheckBox(i18n("Light source:"), parent);
+    d->lightSourceCheck = new MetadataCheckBox(i18n("Light source:"), parent);
     d->lightSourceCB    = new QComboBox(false, parent);
     d->lightSourceCB->insertItem(i18n("Unknown"),                                 0);
     d->lightSourceCB->insertItem(i18n("Daylight"),                                1);
@@ -156,7 +157,7 @@ EXIFLight::EXIFLight(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->flashModeCheck = new QCheckBox(i18n("Flash mode:"), parent);
+    d->flashModeCheck = new MetadataCheckBox(i18n("Flash mode:"), parent);
     d->flashModeCB    = new QComboBox(false, parent);
 
     for (EXIFLightPriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
@@ -182,7 +183,7 @@ EXIFLight::EXIFLight(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->whiteBalanceCheck = new QCheckBox(i18n("White balance:"), parent);
+    d->whiteBalanceCheck = new MetadataCheckBox(i18n("White balance:"), parent);
     d->whiteBalanceCB    = new QComboBox(false, parent);
     d->whiteBalanceCB->insertItem(i18n("Auto"),   0);
     d->whiteBalanceCB->insertItem(i18n("Manual"), 1);
@@ -228,15 +229,20 @@ void EXIFLight::readMetadata(QByteArray& exifData)
 
     if (exiv2Iface.getExifTagLong("Exif.Photo.LightSource", val))
     {
-        if (val > 8 && val < 16)
-            val = val - 4;
-        else if (val > 16 && val < 25)
-            val = val - 5;
-        else if (val == 255)    
-            val = 20;
-
-        d->lightSourceCB->setCurrentItem(val);
-        d->lightSourceCheck->setChecked(true);
+        if ((val> 8 && val <16) || (val> 16 && val <25) || val == 255) 
+        {    
+            if (val > 8 && val < 16)
+                val = val - 4;
+            else if (val > 16 && val < 25)
+                val = val - 5;
+            else if (val == 255)    
+                val = 20;
+    
+            d->lightSourceCB->setCurrentItem(val);
+            d->lightSourceCheck->setChecked(true);
+        }
+        else 
+            d->lightSourceCheck->setValid(false);
     }
     d->lightSourceCB->setEnabled(d->lightSourceCheck->isChecked());
 
@@ -255,6 +261,8 @@ void EXIFLight::readMetadata(QByteArray& exifData)
             d->flashModeCB->setCurrentItem(item);
             d->flashModeCheck->setChecked(true);
         }
+        else
+            d->flashModeCheck->setValid(false);
     }
     d->flashModeCB->setEnabled(d->flashModeCheck->isChecked());
 
@@ -267,8 +275,13 @@ void EXIFLight::readMetadata(QByteArray& exifData)
 
     if (exiv2Iface.getExifTagLong("Exif.Photo.WhiteBalance", val))
     {
-        d->whiteBalanceCB->setCurrentItem(val);
-        d->whiteBalanceCheck->setChecked(true);
+        if (val>=0 && val<=1)
+        {
+            d->whiteBalanceCB->setCurrentItem(val);
+            d->whiteBalanceCheck->setChecked(true);
+        }
+        else
+            d->whiteBalanceCheck->setValid(false);
     }
     d->whiteBalanceCB->setEnabled(d->whiteBalanceCheck->isChecked());
 }
@@ -291,7 +304,7 @@ void EXIFLight::applyMetadata(QByteArray& exifData)
 
         exiv2Iface.setExifTagLong("Exif.Photo.LightSource", val);
     }
-    else
+    else if (d->lightSourceCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.LightSource");
 
     if (d->flashModeCheck->isChecked())
@@ -299,7 +312,7 @@ void EXIFLight::applyMetadata(QByteArray& exifData)
         long val = d->flashModeCB->currentItem();
         exiv2Iface.setExifTagLong("Exif.Photo.Flash", d->flashModeMap[val].id());
     }
-    else
+    else if (d->flashModeCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.Flash");
 
     if (d->flashEnergyCheck->isChecked())
@@ -312,7 +325,7 @@ void EXIFLight::applyMetadata(QByteArray& exifData)
 
     if (d->whiteBalanceCheck->isChecked())
         exiv2Iface.setExifTagLong("Exif.Photo.WhiteBalance", d->whiteBalanceCB->currentItem());
-    else
+    else if (d->whiteBalanceCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.WhiteBalance");
 
     exifData = exiv2Iface.getExif();
