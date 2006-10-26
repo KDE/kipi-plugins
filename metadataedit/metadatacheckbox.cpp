@@ -2,6 +2,9 @@
  * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date   : 2006-10-18
  * Description : a checkbox with a boolean valid parameter.
+ *               The boolean statement is used to check if 
+ *               a metadata value from a picture have a know 
+ *               value registred by EXIF/IPTC spec.   
  * 
  * Copyright 2006 by Gilles Caulier
  *
