@@ -27,7 +27,6 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qwhatsthis.h>
-#include <qcheckbox.h>
 #include <qcombobox.h>
 
 // KDE includes.
@@ -38,6 +37,7 @@
 
 // Local includes.
 
+#include "metadatacheckbox.h"
 #include "exiv2iface.h"
 #include "exifadjust.h"
 #include "exifadjust.moc"
@@ -65,20 +65,21 @@ public:
         customRenderedCB    = 0;
     }
 
-    QCheckBox      *brightnessCheck;
-    QCheckBox      *gainControlCheck;
-    QCheckBox      *contrastCheck;
-    QCheckBox      *saturationCheck;
-    QCheckBox      *sharpnessCheck;
-    QCheckBox      *customRenderedCheck;
+    QCheckBox        *brightnessCheck;
 
-    QComboBox      *gainControlCB;
-    QComboBox      *contrastCB;
-    QComboBox      *saturationCB;
-    QComboBox      *sharpnessCB;
-    QComboBox      *customRenderedCB;
+    QComboBox        *gainControlCB;
+    QComboBox        *contrastCB;
+    QComboBox        *saturationCB;
+    QComboBox        *sharpnessCB;
+    QComboBox        *customRenderedCB;
    
-    KDoubleSpinBox *brightnessEdit;
+    KDoubleSpinBox   *brightnessEdit;
+
+    MetadataCheckBox *gainControlCheck;
+    MetadataCheckBox *contrastCheck;
+    MetadataCheckBox *saturationCheck;
+    MetadataCheckBox *sharpnessCheck;
+    MetadataCheckBox *customRenderedCheck;
 };
 
 EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
@@ -99,7 +100,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->gainControlCheck = new QCheckBox(i18n("Gain Control:"), parent);
+    d->gainControlCheck = new MetadataCheckBox(i18n("Gain Control:"), parent);
     d->gainControlCB    = new QComboBox(false, parent);
     d->gainControlCB->insertItem(i18n("None"),           0);
     d->gainControlCB->insertItem(i18n("Low gain up"),    1);
@@ -113,7 +114,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->contrastCheck = new QCheckBox(i18n("Contrast:"), parent);
+    d->contrastCheck = new MetadataCheckBox(i18n("Contrast:"), parent);
     d->contrastCB    = new QComboBox(false, parent);
     d->contrastCB->insertItem(i18n("Normal"), 0);
     d->contrastCB->insertItem(i18n("Soft"),   1);
@@ -125,7 +126,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->saturationCheck = new QCheckBox(i18n("Saturation:"), parent);
+    d->saturationCheck = new MetadataCheckBox(i18n("Saturation:"), parent);
     d->saturationCB    = new QComboBox(false, parent);
     d->saturationCB->insertItem(i18n("Normal"), 0);
     d->saturationCB->insertItem(i18n("Low"),    1);
@@ -137,7 +138,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->sharpnessCheck = new QCheckBox(i18n("Sharpness:"), parent);
+    d->sharpnessCheck = new MetadataCheckBox(i18n("Sharpness:"), parent);
     d->sharpnessCB    = new QComboBox(false, parent);
     d->sharpnessCB->insertItem(i18n("Normal"), 0);
     d->sharpnessCB->insertItem(i18n("Soft"),   1);
@@ -149,7 +150,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
 
     // --------------------------------------------------------
 
-    d->customRenderedCheck = new QCheckBox(i18n("Custom rendered:"), parent);
+    d->customRenderedCheck = new MetadataCheckBox(i18n("Custom rendered:"), parent);
     d->customRenderedCB    = new QComboBox(false, parent);
     d->customRenderedCB->insertItem(i18n("Normal process"), 0);
     d->customRenderedCB->insertItem(i18n("Custom process"), 1);
@@ -207,36 +208,61 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
 
     if (exiv2Iface.getExifTagLong("Exif.Photo.GainControl", val))
     {
-        d->gainControlCB->setCurrentItem(val);
-        d->gainControlCheck->setChecked(true);
+        if (val >= 0 && val <= 4)
+        {
+            d->gainControlCB->setCurrentItem(val);
+            d->gainControlCheck->setChecked(true);
+        }
+        else
+            d->gainControlCheck->setValid(false);
     }
     d->gainControlCB->setEnabled(d->gainControlCheck->isChecked());
     
     if (exiv2Iface.getExifTagLong("Exif.Photo.Contrast", val))
     {
-        d->contrastCB->setCurrentItem(val);
-        d->contrastCheck->setChecked(true);
+        if (val >= 0 && val <= 2)
+        {
+            d->contrastCB->setCurrentItem(val);
+            d->contrastCheck->setChecked(true);
+        }
+        else
+            d->contrastCheck->setValid(false);
     }
     d->contrastCB->setEnabled(d->contrastCheck->isChecked());
 
     if (exiv2Iface.getExifTagLong("Exif.Photo.Saturation", val))
     {
-        d->saturationCB->setCurrentItem(val);
-        d->saturationCheck->setChecked(true);
+        if (val >= 0 && val <= 2)
+        {
+            d->saturationCB->setCurrentItem(val);
+            d->saturationCheck->setChecked(true);
+        }
+        else
+            d->saturationCheck->setValid(false);
     }
     d->saturationCB->setEnabled(d->saturationCheck->isChecked());
 
     if (exiv2Iface.getExifTagLong("Exif.Photo.Sharpness", val))
     {
-        d->sharpnessCB->setCurrentItem(val);
-        d->sharpnessCheck->setChecked(true);
+        if (val >= 0 && val <= 2)
+        {
+            d->sharpnessCB->setCurrentItem(val);
+            d->sharpnessCheck->setChecked(true);
+        }
+        else
+            d->sharpnessCheck->setValid(false);
     }
     d->sharpnessCB->setEnabled(d->sharpnessCheck->isChecked());
 
     if (exiv2Iface.getExifTagLong("Exif.Photo.CustomRendered", val))
     {
-        d->customRenderedCB->setCurrentItem(val);
-        d->customRenderedCheck->setChecked(true);
+        if (val >= 0 && val <= 1)
+        {
+            d->customRenderedCB->setCurrentItem(val);
+            d->customRenderedCheck->setChecked(true);
+        }
+        else
+            d->customRenderedCheck->setValid(false);
     }
     d->customRenderedCB->setEnabled(d->customRenderedCheck->isChecked());
 }
@@ -257,27 +283,27 @@ void EXIFAdjust::applyMetadata(QByteArray& exifData)
 
     if (d->gainControlCheck->isChecked())
         exiv2Iface.setExifTagLong("Exif.Photo.GainControl", d->gainControlCB->currentItem());
-    else
+    else if (d->gainControlCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.GainControl");
 
     if (d->contrastCheck->isChecked())
         exiv2Iface.setExifTagLong("Exif.Photo.Contrast", d->contrastCB->currentItem());
-    else
+    else if (d->contrastCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.Contrast");
 
     if (d->saturationCheck->isChecked())
         exiv2Iface.setExifTagLong("Exif.Photo.Saturation", d->saturationCB->currentItem());
-    else
+    else if (d->saturationCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.Saturation");
 
     if (d->sharpnessCheck->isChecked())
         exiv2Iface.setExifTagLong("Exif.Photo.Sharpness", d->sharpnessCB->currentItem());
-    else
+    else if (d->sharpnessCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.Sharpness");
 
     if (d->customRenderedCheck->isChecked())
         exiv2Iface.setExifTagLong("Exif.Photo.CustomRendered", d->customRenderedCB->currentItem());
-    else
+    else if (d->customRenderedCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.CustomRendered");
 
     exifData = exiv2Iface.getExif();
