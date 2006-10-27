@@ -24,9 +24,8 @@
 #include <qlabel.h>
 #include <qwhatsthis.h>
 #include <qvalidator.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
 #include <qlistbox.h>
+#include <qcombobox.h>
 #include <qmap.h>
 
 // KDE includes.
@@ -37,6 +36,7 @@
 
 // Local includes.
 
+#include "metadatacheckbox.h"
 #include "exiv2iface.h"
 #include "iptcorigin.h"
 #include "iptcorigin.moc"
@@ -325,24 +325,25 @@ public:
 
     typedef QMap<QString, QString> CountryCodeMap; 
 
-    CountryCodeMap countryCodeMap;
+    CountryCodeMap    countryCodeMap;
 
-    QComboBox     *countryCB;
+    QComboBox        *countryCB;
 
-    QCheckBox     *objectNameCheck;
-    QCheckBox     *cityCheck;
-    QCheckBox     *sublocationCheck;
-    QCheckBox     *provinceCheck;
-    QCheckBox     *countryCheck;
-    QCheckBox     *locationCheck;
-    QCheckBox     *originalTransCheck;
+    QCheckBox        *objectNameCheck;
+    QCheckBox        *cityCheck;
+    QCheckBox        *sublocationCheck;
+    QCheckBox        *provinceCheck;
+    QCheckBox        *locationCheck;
+    QCheckBox        *originalTransCheck;
 
-    KLineEdit     *objectNameEdit;
-    KLineEdit     *cityEdit;
-    KLineEdit     *sublocationEdit;
-    KLineEdit     *provinceEdit;
-    KLineEdit     *locationEdit;
-    KLineEdit     *originalTransEdit;
+    KLineEdit        *objectNameEdit;
+    KLineEdit        *cityEdit;
+    KLineEdit        *sublocationEdit;
+    KLineEdit        *provinceEdit;
+    KLineEdit        *locationEdit;
+    KLineEdit        *originalTransEdit;
+
+    MetadataCheckBox *countryCheck;
 };
 
 IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
@@ -413,7 +414,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    d->countryCheck = new QCheckBox(i18n("Country:"), parent);
+    d->countryCheck = new MetadataCheckBox(i18n("Country:"), parent);
     d->countryCB    = new QComboBox(false, parent);
 
     for (IPTCOriginPriv::CountryCodeMap::Iterator it = d->countryCodeMap.begin();
@@ -540,6 +541,8 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
             d->countryCB->setCurrentItem(item);
             d->countryCheck->setChecked(true);
         }
+        else
+            d->countryCheck->setValid(false);
     }
     else
     {
@@ -556,6 +559,8 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
                 d->countryCB->setCurrentItem(item);
                 d->countryCheck->setChecked(true);
             }
+            else
+                d->countryCheck->setValid(false);
         }
     }
     d->countryCB->setEnabled(d->countryCheck->isChecked());
@@ -607,7 +612,7 @@ void IPTCOrigin::applyMetadata(QByteArray& iptcData)
         exiv2Iface.setIptcTagString("Iptc.Application2.CountryName", countryName);
         exiv2Iface.setIptcTagString("Iptc.Application2.LocationCode", countryCode);
     }
-    else
+    else if (d->countryCheck->isValid())
     {
         exiv2Iface.removeIptcTag("Iptc.Application2.CountryCode");
         exiv2Iface.removeIptcTag("Iptc.Application2.CountryName");
