@@ -34,9 +34,12 @@
 #include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
 
 // Local includes.
 
+#include "pluginsversion.h"
 #include "exiv2iface.h"
 #include "exifcaption.h"
 #include "exifcaption.moc"
@@ -247,6 +250,12 @@ void EXIFCaption::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifComment(d->userCommentEdit->text());
     else
         exiv2Iface.removeExifTag("Exif.Photo.UserComment");
+
+    const KAboutData *data = KApplication::kApplication()->aboutData();
+    // This Exif tag must be in English. Not i18n !
+    exiv2Iface.setImageProgramId(QString("%1 (Using Kipi MetadataEdit plugin %2)")
+                                 .arg(data->appName()).arg(QString(kipiplugins_version)),
+                                 data->version());
 
     exifData = exiv2Iface.getExif();
 }
