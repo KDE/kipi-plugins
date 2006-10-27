@@ -25,7 +25,6 @@
 #include <qlabel.h>
 #include <qwhatsthis.h>
 #include <qvalidator.h>
-#include <qcheckbox.h>
 
 // KDE includes.
 
@@ -37,6 +36,7 @@
 
 // Local includes.
 
+#include "metadatacheckbox.h"
 #include "pluginsversion.h"
 #include "exiv2iface.h"
 #include "iptcstatus.h"
@@ -63,22 +63,23 @@ public:
         JobIDCheck          = 0;
     }
 
-    QCheckBox *priorityCheck;
-    QCheckBox *objectTypeCheck;
-    QCheckBox *objectCycleCheck;
-    QCheckBox *objectAttributeCheck;
-    QCheckBox *statusCheck;
-    QCheckBox *JobIDCheck;
+    QCheckBox        *statusCheck;
+    QCheckBox        *JobIDCheck;
 
-    QComboBox *priorityCB;
-    QComboBox *objectCycleCB;
-    QComboBox *objectTypeCB;
-    QComboBox *objectAttributeCB;
+    QComboBox        *priorityCB;
+    QComboBox        *objectCycleCB;
+    QComboBox        *objectTypeCB;
+    QComboBox        *objectAttributeCB;
 
-    KLineEdit *statusEdit;
-    KLineEdit *objectTypeDescEdit;
-    KLineEdit *objectAttributeDescEdit;
-    KLineEdit *JobIDEdit;
+    KLineEdit        *statusEdit;
+    KLineEdit        *objectTypeDescEdit;
+    KLineEdit        *objectAttributeDescEdit;
+    KLineEdit        *JobIDEdit;
+
+    MetadataCheckBox *priorityCheck;
+    MetadataCheckBox *objectCycleCheck;
+    MetadataCheckBox *objectTypeCheck;
+    MetadataCheckBox *objectAttributeCheck;
 };
 
 IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
@@ -105,7 +106,7 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    d->priorityCheck = new QCheckBox(i18n("Priority:"), parent);
+    d->priorityCheck = new MetadataCheckBox(i18n("Priority:"), parent);
     d->priorityCB    = new QComboBox(false, parent);
     d->priorityCB->insertItem(i18n("0: None"), 0);
     d->priorityCB->insertItem(i18n("1: High"), 1);
@@ -122,7 +123,7 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    d->objectCycleCheck = new QCheckBox(i18n("Object Cycle:"), parent);
+    d->objectCycleCheck = new MetadataCheckBox(i18n("Object Cycle:"), parent);
     d->objectCycleCB    = new QComboBox(false, parent);
     d->objectCycleCB->insertItem(i18n("Morning"),   0);
     d->objectCycleCB->insertItem(i18n("Afternoon"), 1);
@@ -133,7 +134,7 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
       
     // --------------------------------------------------------
 
-    d->objectTypeCheck    = new QCheckBox(i18n("Object Type:"), parent);
+    d->objectTypeCheck    = new MetadataCheckBox(i18n("Object Type:"), parent);
     d->objectTypeCB       = new QComboBox(false, parent);
     d->objectTypeDescEdit = new KLineEdit(parent);
     d->objectTypeDescEdit->setValidator(asciiValidator);
@@ -150,7 +151,7 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    d->objectAttributeCheck    = new QCheckBox(i18n("Object Attribute:"), parent);
+    d->objectAttributeCheck    = new MetadataCheckBox(i18n("Object Attribute:"), parent);
     d->objectAttributeCB       = new QComboBox(false, parent);
     d->objectAttributeDescEdit = new KLineEdit(parent);
     d->objectAttributeDescEdit->setValidator(asciiValidator);
@@ -244,6 +245,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
+    int     val;
 
     data = exiv2Iface.getIptcTagString("Iptc.Application2.EditStatus", false);    
     if (!data.isNull())
@@ -253,6 +255,43 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     }
     d->statusEdit->setEnabled(d->statusCheck->isChecked());
 
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Urgency", false);    
+    if (!data.isNull())
+    {
+        val = data.toInt(); 
+        if (val >= 0 && val <= 8)
+        {
+            d->priorityCB->setCurrentItem(val);
+            d->priorityCheck->setChecked(true);
+        }
+        else
+            d->priorityCheck->setValid(false);
+    }
+    d->priorityCB->setEnabled(d->priorityCheck->isChecked());
+
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectCycle", false);    
+    if (!data.isNull())
+    {
+        if (data == QString("a"))
+        {
+            d->objectCycleCB->setCurrentItem(0);
+            d->objectCycleCheck->setChecked(true);
+        }
+        else if (data == QString("b"))
+        {
+            d->objectCycleCB->setCurrentItem(1);
+            d->objectCycleCheck->setChecked(true);
+        }
+        else if (data == QString("c"))
+        {
+            d->objectCycleCB->setCurrentItem(2);
+            d->objectCycleCheck->setChecked(true);
+        }
+        else 
+            d->objectCycleCheck->setValid(false);
+    }
+    d->objectCycleCB->setEnabled(d->objectCycleCheck->isChecked());
+
     data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectType", false);    
     if (!data.isNull())
     {
@@ -260,12 +299,14 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
         if (!typeSec.isEmpty())
         {
             int type = typeSec.toInt()-1;
-            if (type < 3 && type >= 0)
+            if (type >= 0 && type < 3)
             {
                 d->objectTypeCB->setCurrentItem(type);
                 d->objectTypeDescEdit->setText(data.section(":", -1));
                 d->objectTypeCheck->setChecked(true);
             }
+            else
+                d->objectTypeCheck->setValid(false);
         }
     }
     d->objectTypeCB->setEnabled(d->objectTypeCheck->isChecked());
@@ -278,12 +319,14 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
         if (!attSec.isEmpty())
         {
             int att = attSec.toInt()-1;
-            if (att < 21 && att >= 0)
+            if (att >= 0 && att < 21)
             {
                 d->objectAttributeCB->setCurrentItem(att);
                 d->objectAttributeDescEdit->setText(data.section(":", -1));
                 d->objectAttributeCheck->setChecked(true);
             }
+            else 
+                d->objectAttributeCheck->setValid(false);
         }
     }
     d->objectAttributeCB->setEnabled(d->objectAttributeCheck->isChecked());
@@ -296,28 +339,6 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
         d->JobIDCheck->setChecked(true);
     }
     d->JobIDEdit->setEnabled(d->JobIDCheck->isChecked());
-
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Urgency", false);    
-    if (!data.isNull())
-    {
-        d->priorityCB->setCurrentItem(data.toInt());
-        d->priorityCheck->setChecked(true);
-    }
-    d->priorityCB->setEnabled(d->priorityCheck->isChecked());
-
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectCycle", false);    
-    if (!data.isNull())
-    {
-        if (data == QString("a"))
-            d->objectCycleCB->setCurrentItem(0);
-        else if (data == QString("b"))
-            d->objectCycleCB->setCurrentItem(1);
-        else if (data == QString("c"))
-            d->objectCycleCB->setCurrentItem(2);
-
-        d->objectCycleCheck->setChecked(true);
-    }
-    d->objectCycleCB->setEnabled(d->objectCycleCheck->isChecked());
 }
 
 void IPTCStatus::applyMetadata(QByteArray& iptcData)
@@ -330,34 +351,9 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.EditStatus");
 
-    if (d->objectTypeCheck->isChecked())
-    {
-        QString objectType;
-        objectType.sprintf("%2d", d->objectTypeCB->currentItem()+1);
-        objectType.append(QString(":%1").arg(d->objectTypeDescEdit->text()));
-        exiv2Iface.setIptcTagString("Iptc.Application2.ObjectType", objectType);
-    }
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectAttribute");
-
-    if (d->objectAttributeCheck->isChecked())
-    {
-        QString objectAttribute;
-        objectAttribute.sprintf("%3d", d->objectAttributeCB->currentItem()+1);
-        objectAttribute.append(QString(":%1").arg(d->objectAttributeDescEdit->text()));
-        exiv2Iface.setIptcTagString("Iptc.Application2.ObjectAttribute", objectAttribute);
-    }
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectAttribute");
-
-    if (d->JobIDCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.FixtureId", d->JobIDEdit->text());
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.FixtureId");
-
     if (d->priorityCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Application2.Urgency", QString::number(d->priorityCB->currentItem()));
-    else
+    else if (d->priorityCheck->isValid())
         exiv2Iface.removeIptcTag("Iptc.Application2.Urgency");
 
     if (d->objectCycleCheck->isChecked())
@@ -377,14 +373,39 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
                 break;
         }
     }
-    else
+    else if (d->objectCycleCheck->isValid())
         exiv2Iface.removeIptcTag("Iptc.Application2.ObjectCycle");
+
+    if (d->objectTypeCheck->isChecked())
+    {
+        QString objectType;
+        objectType.sprintf("%2d", d->objectTypeCB->currentItem()+1);
+        objectType.append(QString(":%1").arg(d->objectTypeDescEdit->text()));
+        exiv2Iface.setIptcTagString("Iptc.Application2.ObjectType", objectType);
+    }
+    else if (d->objectTypeCheck->isValid())
+        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectType");
+
+    if (d->objectAttributeCheck->isChecked())
+    {
+        QString objectAttribute;
+        objectAttribute.sprintf("%3d", d->objectAttributeCB->currentItem()+1);
+        objectAttribute.append(QString(":%1").arg(d->objectAttributeDescEdit->text()));
+        exiv2Iface.setIptcTagString("Iptc.Application2.ObjectAttribute", objectAttribute);
+    }
+    else if (d->objectAttributeCheck->isValid())
+        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectAttribute");
+
+    if (d->JobIDCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.FixtureId", d->JobIDEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.FixtureId");
 
     const KAboutData *data = KApplication::kApplication()->aboutData();
     // This IPTC tag must be in English. Not i18n !
-    exiv2Iface.setImageProgramId(QString("Kipi MetadataEdit plugin (Using %1 %2)")
-                                 .arg(data->appName()).arg(data->version()),
-                                 QString(kipiplugins_version));
+    exiv2Iface.setImageProgramId(QString("%1 (Using Kipi MetadataEdit plugin %2)")
+                                 .arg(data->appName()).arg(QString(kipiplugins_version)),
+                                 data->version());
 
     iptcData = exiv2Iface.getIptc();
 }
