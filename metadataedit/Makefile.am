@@ -11,7 +11,7 @@ kipiplugin_metadataedit_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) \
 # Srcs for the plugin
 kipiplugin_metadataedit_la_SOURCES = plugin_metadataedit.cpp metadataeditdialog.cpp \
 	                                 metadataitem.cpp metadatacheckbox.cpp \
-	                                 iptceditdialog.cpp iptccaption.cpp \
+	                                 iptceditdialog.cpp iptccaption.cpp iptcsubjects.cpp \
 	                                 iptccredits.cpp iptcstatus.cpp iptcorigin.cpp \
 	                                 iptcdatetime.cpp iptckeywords.cpp iptccategories.cpp \
 	                                 exifeditdialog.cpp exifcaption.cpp exifdatetime.cpp \

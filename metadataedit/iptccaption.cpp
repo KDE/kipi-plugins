@@ -99,17 +99,6 @@ IPTCCaption::IPTCCaption(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    d->subjectCheck = new QCheckBox(i18n("Subject:"), parent);
-    d->subjectEdit  = new KLineEdit(parent);
-    d->subjectEdit->setValidator(asciiValidator);
-    d->subjectEdit->setMaxLength(236);
-    vlay->addWidget(d->subjectCheck);
-    vlay->addWidget(d->subjectEdit);
-    QWhatsThis::add(d->subjectEdit, i18n("<p>Set here the structured definition of the subject. "
-                    "This field is limited to 236 ASCII characters."));
-
-    // --------------------------------------------------------
-
     d->writerCheck = new QCheckBox(i18n("Caption Writer:"), parent);
     d->writerEdit  = new KLineEdit(parent);
     d->writerEdit->setValidator(asciiValidator);
@@ -153,9 +142,6 @@ IPTCCaption::IPTCCaption(QWidget* parent, QByteArray& iptcData)
     connect(d->captionCheck, SIGNAL(toggled(bool)),
             d->captionEdit, SLOT(setEnabled(bool)));
 
-    connect(d->subjectCheck, SIGNAL(toggled(bool)),
-            d->subjectEdit, SLOT(setEnabled(bool)));
-
     connect(d->writerCheck, SIGNAL(toggled(bool)),
             d->writerEdit, SLOT(setEnabled(bool)));
 
@@ -188,14 +174,6 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
         d->captionCheck->setChecked(true);
     }
     d->captionEdit->setEnabled(d->captionCheck->isChecked());
-
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Subject", false);    
-    if (!data.isNull())
-    {
-        d->subjectEdit->setText(data);
-        d->subjectCheck->setChecked(true);
-    }
-    d->subjectEdit->setEnabled(d->subjectCheck->isChecked());
 
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Writer", false);    
     if (!data.isNull())
@@ -231,11 +209,6 @@ void IPTCCaption::applyMetadata(QByteArray& iptcData)
         exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->captionEdit->text());
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
-
-    if (d->subjectCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Subject", d->subjectEdit->text());
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Subject");
 
     if (d->writerCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Application2.Writer", d->writerEdit->text());

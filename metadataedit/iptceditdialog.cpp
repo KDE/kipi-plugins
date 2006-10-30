@@ -44,6 +44,7 @@
 #include "iptcorigin.h"
 #include "iptcdatetime.h"
 #include "iptckeywords.h"
+#include "iptcsubjects.h"
 #include "iptccategories.h"
 #include "iptceditdialog.h"
 #include "iptceditdialog.moc"
@@ -59,6 +60,7 @@ public:
     IPTCEditDialogDialogPrivate()
     {
         page_caption  = 0;
+        page_subjects = 0;
         page_keywords = 0;
         page_credits  = 0;
         page_status   = 0;
@@ -66,6 +68,7 @@ public:
         page_datetime = 0;
 
         captionPage   = 0;
+        subjectsPage  = 0;
         keywordsPage  = 0;
         creditsPage   = 0;
         statusPage    = 0;
@@ -76,6 +79,7 @@ public:
     QByteArray   iptcData;
 
     QFrame         *page_caption;
+    QFrame         *page_subjects;
     QFrame         *page_keywords;
     QFrame         *page_categories;
     QFrame         *page_credits;
@@ -84,6 +88,7 @@ public:
     QFrame         *page_datetime;
 
     IPTCCaption    *captionPage;
+    IPTCSubjects   *subjectsPage;
     IPTCKeywords   *keywordsPage;
     IPTCCategories *categoriesPage;
     IPTCCredits    *creditsPage;
@@ -104,6 +109,10 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, QByteArray iptcData, const QStri
     d->page_caption    = addPage(i18n("Caption"), i18n("Caption Informations"),
                                  BarIcon("editclear", KIcon::SizeMedium));
     d->captionPage     = new IPTCCaption(d->page_caption, d->iptcData);
+
+    d->page_subjects   = addPage(i18n("Subjects"), i18n("Subjects Informations"),
+                                 BarIcon("cookie", KIcon::SizeMedium));
+    d->subjectsPage    = new IPTCSubjects(d->page_subjects, d->iptcData);
 
     d->page_keywords   = addPage(i18n("Keywords"), i18n("Keywords Informations"),
                                  BarIcon("bookmark", KIcon::SizeMedium));
@@ -176,6 +185,7 @@ QByteArray IPTCEditDialog::getIPTCInfo()
 void IPTCEditDialog::slotOk()
 {
     d->captionPage->applyMetadata(d->iptcData);
+    d->subjectsPage->applyMetadata(d->iptcData);
     d->keywordsPage->applyMetadata(d->iptcData);
     d->categoriesPage->applyMetadata(d->iptcData);
     d->creditsPage->applyMetadata(d->iptcData);
