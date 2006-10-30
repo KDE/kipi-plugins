@@ -1381,6 +1381,89 @@ bool Exiv2Iface::setImageKeywords(const QStringList& oldKeywords, const QStringL
     return false;
 }
 
+QStringList Exiv2Iface::getImageSubjects() const
+{
+    try
+    {    
+        if (!d->iptcMetadata.empty())
+        {
+            QStringList subjects;          
+            Exiv2::IptcData iptcData(d->iptcMetadata);
+
+            for (Exiv2::IptcData::iterator it = iptcData.begin(); it != iptcData.end(); ++it)
+            {
+                QString key = QString::fromLocal8Bit(it->key().c_str());
+                
+                if (key == QString("Iptc.Application2.Subject"))
+                {
+                    QString val(it->toString().c_str());
+                    subjects.append(val);
+                }
+            }
+            
+            return subjects;
+        }
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot get IPTC Subjects from image using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }        
+    
+    return QStringList();
+}
+
+bool Exiv2Iface::setImageSubjects(const QStringList& oldSubjects, const QStringList& newSubjects)
+{
+    try
+    {    
+        QStringList oldDef = oldSubjects;
+        QStringList newDef = newSubjects;
+        
+        // Remove all old subjects.
+        Exiv2::IptcData iptcData(d->iptcMetadata);
+        Exiv2::IptcData::iterator it = iptcData.begin();
+
+        while(it != iptcData.end())
+        {
+            QString key = QString::fromLocal8Bit(it->key().c_str());
+            QString val(it->toString().c_str());
+            
+            if (key == QString("Iptc.Application2.Subject") && oldDef.contains(val))
+                it = iptcData.erase(it);
+            else 
+                ++it;
+        };
+
+        // Add new subjects. Note that Keywords IPTC tag is limited to 236 char but can be redondant.
+
+        Exiv2::IptcKey iptcTag("Iptc.Application2.Subject");
+
+        for (QStringList::iterator it = newDef.begin(); it != newDef.end(); ++it)
+        {
+            QString key = *it;
+            key.truncate(236);
+            
+            Exiv2::Value::AutoPtr val = Exiv2::Value::create(Exiv2::asciiString);
+            val->read(key.latin1());
+            iptcData.add(iptcTag, val.get());        
+        }
+
+        d->iptcMetadata = iptcData;
+
+        return true;
+    }
+    catch( Exiv2::Error &e )
+    {
+        kdDebug() << "Cannot set IPTC Subjects into image using Exiv2 (" 
+                  << QString::fromLocal8Bit(e.what().c_str())
+                  << ")" << endl;
+    }        
+    
+    return false;
+}
+
 QStringList Exiv2Iface::getImageSubCategories() const
 {
     try

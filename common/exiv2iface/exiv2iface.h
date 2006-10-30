@@ -89,6 +89,9 @@ public:
     QStringList getImageKeywords() const;
     bool setImageKeywords(const QStringList& oldKeywords, const QStringList& newKeywords);
 
+    QStringList getImageSubjects() const;
+    bool setImageSubjects(const QStringList& oldSubjects, const QStringList& newSubjects);
+
     QStringList getImageSubCategories() const;
     bool setImageSubCategories(const QStringList& oldSubCategories, const QStringList& newSubCategories);
 
