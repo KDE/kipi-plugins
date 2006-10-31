@@ -120,6 +120,7 @@ public:
     Exiv2Iface::ImageOrientation getImageOrientation();
     QDateTime getImageDateTime() const;
 
+    static bool isReadOnly(const QString& filePath);
     static QString convertCommentValue(const Exiv2::Exifdatum &comment);
     static QString detectEncodingAndDecode(const std::string &value);
     static void convertToRational(double number, long int* numerator, 

@@ -39,6 +39,7 @@
 #include <qimage.h>
 #include <qsize.h>
 #include <qtextcodec.h>
+#include <qfileinfo.h>
 
 // KDE includes.
 
@@ -311,6 +312,17 @@ bool Exiv2Iface::save(const QString& filePath)
                   << ")" << endl;
         return false;
     }
+}
+
+bool Exiv2Iface::isReadOnly(const QString& filePath)
+{
+    QFileInfo fi(filePath);
+    QString ext = fi.extension(false).upper();
+    
+    if (ext != QString("JPG") && ext != QString("JPEG") && ext != QString("JPE"))
+        return true;
+
+    return false;
 }
 
 bool Exiv2Iface::setImageProgramId(const QString& program, const QString& version)
