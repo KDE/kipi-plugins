@@ -250,6 +250,13 @@ void Plugin_GPSSync::slotGPSRemove()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
+    if (KMessageBox::warningYesNo(
+                     kapp->activeWindow(),
+                     i18n("Geographical coordinates will be definitivly removed from all current selected pictures.\n"
+                          "Do you want to continue ?"),
+                     i18n("Remove Geographical Coordinates")) != KMessageBox::Yes)
+        return;
+
     KURL::List imageURLs = images.images();
     KURL::List updatedURLs;
     KURL::List errorURLs;
