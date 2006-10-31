@@ -320,9 +320,9 @@ bool Exiv2Iface::isReadOnly(const QString& filePath)
     QString ext = fi.extension(false).upper();
     
     if (ext != QString("JPG") && ext != QString("JPEG") && ext != QString("JPE"))
-        return true;
+        return false;
 
-    return false;
+    return true;
 }
 
 bool Exiv2Iface::setImageProgramId(const QString& program, const QString& version)
