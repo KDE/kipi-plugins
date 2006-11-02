@@ -116,12 +116,12 @@ void Plugin_SlideShow::slotActivate()
     }
 
     KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
-        = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, kapp->activeWindow() );
+            = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, kapp->activeWindow(), i18n("Slide Show").ascii());
     
-    connect(slideShowConfig, SIGNAL(okClicked()),
-            this, SLOT(slotSlideShow()));
+    connect(slideShowConfig, SIGNAL(okButtonClicked()),
+             this, SLOT(slotSlideShow()));
 
-    slideShowConfig->show();
+     slideShowConfig->show();
 }
 
 void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)

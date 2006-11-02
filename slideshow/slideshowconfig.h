@@ -26,29 +26,21 @@
 
 #include <qstring.h>
 
-// KDE includes.
+// SlideShow includes
 
-#include <kdialogbase.h>
+#include "slideshowconfigbase.h"
 
-class QButtonGroup;
-class QCheckBox;
-class QComboBox;
-class QRadioButton;
-class QSpinBox;
-class QPushButton;
-
-class KConfig;
 
 namespace KIPISlideShowPlugin
 {
 
-class SlideShowConfig : public KDialogBase
+class SlideShowConfig : public SlideShowConfigBase
 {
     Q_OBJECT
 
 public:
 
-    SlideShowConfig(bool allowSelectedOnly, QWidget *parent);
+    SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const char* name);
     ~SlideShowConfig();
 
 private:
@@ -64,28 +56,9 @@ private slots:
     void slotHelp();
     void slotOpenGLToggled();
 
-private:
-    
-    QPushButton*  m_helpButton;
+signals:
+    void okButtonClicked(); // Signal needed by plugin_slideshow class
 
-    QButtonGroup* FileSrcButtonGroup_;
-    
-    QRadioButton* allFilesButton_;
-    QRadioButton* selectedFilesButton_;
-    
-    QCheckBox*    openglCheckBox_;
-    QCheckBox*    printNameCheckBox_;
-    QCheckBox*    loopCheckBox_;
-    QCheckBox*    shuffleCheckBox_;
-    
-    QSpinBox*     delaySpinBox_;
-    
-    QComboBox*    effectsComboBox_;
-    
-    QString       effectName_;
-    QString       effectNameGL_;
-
-    KConfig*      config_;    
 };
 
 }  // NameSpace KIPISlideShowPlugin

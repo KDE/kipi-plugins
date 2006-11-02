@@ -55,9 +55,8 @@
 namespace KIPISlideShowPlugin
 {
 
-SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
-               : KDialogBase(parent, "", true, i18n("Slide Show"),
-                             Help|Ok|Cancel, Ok, true)
+SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const char* name)
+    :SlideShowConfigBase(parent, name) 
 {
     // About data and help button.
 
@@ -70,127 +69,27 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent)
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
 
-    about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
+    about->addAuthor("Renchi Raju", I18N_NOOP("Author"),
                      "renchi@pooh.tam.uiuc.edu");
+    about->addAuthor("Valerio Fuoglio", I18N_NOOP("Maintainer"),
+                     "valerio.fuoglio@kdemail.net");
 
-    m_helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("SlideShow Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    m_helpButton->setPopup( helpMenu->menu() );
+     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+     helpMenu->menu()->removeItemAt(0);
+     helpMenu->menu()->insertItem(i18n("SlideShow Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+     m_helpButton->setPopup( helpMenu->menu() );
 
-    // ------------------------------------------------------------------
 
-    config_ = 0;
+    // Switch to selected files only (it depends on allowSelectedOnly)
 
-    QWidget *page = new QWidget( this );
-    setMainWidget( page );
-    QGridLayout *grid = new QGridLayout( page, 1, 1, 6, 6);
-
-    // ------------------------------------------------------------------
-
-    QFrame *headerFrame = new QFrame( page );
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-    layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
-    pixmapLabelLeft->setScaledContents( false );
-    layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Slide Show"), headerFrame, "labelTitle" );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-    grid->addMultiCellWidget( headerFrame, 0, 0, 0, 2 );
-
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-
-    // ------------------------------------------------------------------
-
-    FileSrcButtonGroup_ = new QButtonGroup( page );
-    FileSrcButtonGroup_->setRadioButtonExclusive( true );
-    FileSrcButtonGroup_->setColumnLayout(0, Qt::Vertical );
-    FileSrcButtonGroup_->layout()->setSpacing( 5 );
-    FileSrcButtonGroup_->layout()->setMargin( 5 );
-    QVBoxLayout* FileSrcButtonGroupLayout = new QVBoxLayout( FileSrcButtonGroup_->layout() );
-    FileSrcButtonGroupLayout->setAlignment( Qt::AlignTop );
-
-    // ------------------------------------------------------------------
-
-    allFilesButton_ = new QRadioButton( FileSrcButtonGroup_);
-    allFilesButton_->setText( i18n( "Show all images in current album" ) );
-    FileSrcButtonGroupLayout->addWidget( allFilesButton_ );
-
-    // ------------------------------------------------------------------
-
-    selectedFilesButton_ = new QRadioButton( FileSrcButtonGroup_);
-    selectedFilesButton_->setText( i18n( "Show only selected images" ) );
     selectedFilesButton_->setEnabled( allowSelectedOnly );
-    FileSrcButtonGroupLayout->addWidget( selectedFilesButton_ );
 
-    grid->addMultiCellWidget( FileSrcButtonGroup_, 1, 1, 0, 2 );
-
-    // ------------------------------------------------------------------
-
-    openglCheckBox_ = new QCheckBox( page );
-    openglCheckBox_->setText( i18n( "Use OpenGL slide show transitions" ) );
-    grid->addMultiCellWidget( openglCheckBox_, 2, 2, 0, 2 );
-
-    // ------------------------------------------------------------------
-
-    printNameCheckBox_ = new QCheckBox( page );
-    printNameCheckBox_->setText( i18n( "Print filename" ) );
-    grid->addMultiCellWidget( printNameCheckBox_, 3, 3, 0, 2 );
-
-    // ------------------------------------------------------------------
-
-    loopCheckBox_ = new QCheckBox( page );
-    loopCheckBox_->setText( i18n( "Loop" ) );
-    grid->addMultiCellWidget( loopCheckBox_, 4, 4, 0, 2 );
-
-    // ------------------------------------------------------------------
-
-    shuffleCheckBox_ = new QCheckBox( page );
-    shuffleCheckBox_->setText( i18n( "Shuffle images" ) );
-    grid->addMultiCellWidget( shuffleCheckBox_, 5, 5, 0, 2 );
-
-    // ------------------------------------------------------------------
-
-    QLabel* label1 = new QLabel( page);
-    label1->setText( i18n( "Delay between images (ms):" ) );
-    grid->addWidget( label1, 6, 0 );
-
-    // ------------------------------------------------------------------
-
-    delaySpinBox_ = new QSpinBox( 1000, 10000, 10, page );
-    delaySpinBox_->setSizePolicy(QSizePolicy( (QSizePolicy::SizeType)0,
-                                              (QSizePolicy::SizeType)0));
-    grid->addWidget( delaySpinBox_, 6, 1 );
-
-    // ------------------------------------------------------------------
-
-    QLabel* label2 = new QLabel( page, "label2" );
-    label2->setText( i18n( "Transition effect:" ) );
-    grid->addWidget( label2, 7, 0 );
-
-    // ------------------------------------------------------------------
-
-    effectsComboBox_ = new QComboBox( FALSE, page, "effectsComboBox_" );
-    effectsComboBox_->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7,
-                                                  (QSizePolicy::SizeType)0 ) );
-    grid->addMultiCellWidget( effectsComboBox_, 7, 7, 1, 2 );
-
-    // ------------------------------------------------------------------
+    // Signal to Slot connections
 
     connect(openglCheckBox_, SIGNAL(toggled(bool)), SLOT(slotOpenGLToggled()));
-    connect(this, SIGNAL(okClicked()), this, SLOT(slotOkClicked()));
+    connect(buttonOk, SIGNAL(clicked()), this, SLOT(slotOkClicked()));   
 
-    // ------------------------------------------------------------------
+    // Configuration file management 
 
     config_ = new KConfig("kipirc");
     config_->setGroup("SlideShow Settings");
@@ -346,6 +245,8 @@ void SlideShowConfig::slotOpenGLToggled()
 void SlideShowConfig::slotOkClicked()
 {
     saveSettings();
+
+    emit okButtonClicked();
 }
 
 void SlideShowConfig::slotHelp()
