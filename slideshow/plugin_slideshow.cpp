@@ -45,7 +45,7 @@
 #include "plugin_slideshow.h"
 
 // Lib KIPI includes.
-
+ 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
