@@ -48,7 +48,8 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
                  listing (incorrect extension identification).
 013 ==> 135484 : GPS Sync: thumbnail generation for multible images can cause severe overload.
 014 ==> 135353 : GPS Sync: the name of the plugin is missleading.
-015 ==> 
+015 ==> 136257 : MetadataEdit: Editing the EXIF-data overwrites all the data for selected files.
+016 ==> 
 
 
 v 0.1.2                                                           2006-07-08
