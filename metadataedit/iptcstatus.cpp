@@ -82,7 +82,7 @@ public:
     MetadataCheckBox *objectAttributeCheck;
 };
 
-IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
+IPTCStatus::IPTCStatus(QWidget* parent)
           : QWidget(parent)
 {
     d = new IPTCStatusPriv;
@@ -232,7 +232,55 @@ IPTCStatus::IPTCStatus(QWidget* parent, QByteArray& iptcData)
 
     // --------------------------------------------------------
 
-    readMetadata(iptcData);
+    connect(d->priorityCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->objectCycleCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->objectTypeCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->objectTypeCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->objectAttributeCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->objectAttributeCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->statusCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->JobIDCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->priorityCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->objectCycleCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->objectTypeCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->objectAttributeCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->statusEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->objectTypeDescEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->objectAttributeDescEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->JobIDEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
 }
 
 IPTCStatus::~IPTCStatus()
@@ -242,6 +290,7 @@ IPTCStatus::~IPTCStatus()
 
 void IPTCStatus::readMetadata(QByteArray& iptcData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
@@ -339,6 +388,8 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
         d->JobIDCheck->setChecked(true);
     }
     d->JobIDEdit->setEnabled(d->JobIDCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void IPTCStatus::applyMetadata(QByteArray& iptcData)

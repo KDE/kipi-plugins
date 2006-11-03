@@ -9,13 +9,14 @@ kipiplugin_metadataedit_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) \
 	$(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la 
 
 # Srcs for the plugin
-kipiplugin_metadataedit_la_SOURCES = plugin_metadataedit.cpp metadataeditdialog.cpp \
-	                                 metadataitem.cpp metadatacheckbox.cpp \
-	                                 iptceditdialog.cpp iptccaption.cpp iptcsubjects.cpp \
-	                                 iptccredits.cpp iptcstatus.cpp iptcorigin.cpp \
-	                                 iptcdatetime.cpp iptckeywords.cpp iptccategories.cpp \
-	                                 exifeditdialog.cpp exifcaption.cpp exifdatetime.cpp \
-	                                 exiflens.cpp exifdevice.cpp exiflight.cpp exifadjust.cpp 
+kipiplugin_metadataedit_la_SOURCES = plugin_metadataedit.cpp metadatacheckbox.cpp \
+	                             exifeditdialog.cpp exifcaption.cpp \
+	                             exifdatetime.cpp exifadjust.cpp \
+	                             exiflens.cpp exifdevice.cpp exiflight.cpp \
+	                             iptceditdialog.cpp iptccaption.cpp iptcsubjects.cpp \
+	                             iptccredits.cpp iptcstatus.cpp iptcorigin.cpp \
+	                             iptcdatetime.cpp iptckeywords.cpp iptccategories.cpp 
+	                                 
 
 # Libs needed by the plugin
 kipiplugin_metadataedit_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \

@@ -37,14 +37,15 @@ class IPTCDateTime : public QWidget
     
 public:
 
-    IPTCDateTime(QWidget* parent, QByteArray& iptcData);
+    IPTCDateTime(QWidget* parent);
     ~IPTCDateTime();
 
     void applyMetadata(QByteArray& iptcData);
-
-private:
-
     void readMetadata(QByteArray& iptcData);
+
+signals:
+
+    void signalModified();
 
 private:
 

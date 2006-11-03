@@ -346,7 +346,7 @@ public:
     MetadataCheckBox *countryCheck;
 };
 
-IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
+IPTCOrigin::IPTCOrigin(QWidget* parent)
           : QWidget(parent)
 {
     d = new IPTCOriginPriv;
@@ -470,8 +470,50 @@ IPTCOrigin::IPTCOrigin(QWidget* parent, QByteArray& iptcData)
             d->originalTransEdit, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
-        
-    readMetadata(iptcData);
+
+    connect(d->objectNameCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->cityCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->sublocationCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->provinceCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->countryCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->locationCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->originalTransCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->countryCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->objectNameEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->cityEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->sublocationEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->provinceEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->locationEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->originalTransEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
 }
 
 IPTCOrigin::~IPTCOrigin()
@@ -481,6 +523,7 @@ IPTCOrigin::~IPTCOrigin()
 
 void IPTCOrigin::readMetadata(QByteArray& iptcData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
@@ -572,6 +615,8 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
         d->originalTransCheck->setChecked(true);
     }
     d->originalTransEdit->setEnabled(d->originalTransCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void IPTCOrigin::applyMetadata(QByteArray& iptcData)

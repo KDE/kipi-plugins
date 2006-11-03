@@ -35,7 +35,9 @@
 
 // Local includes.
 
-#include "metadataeditdialog.h"
+#include "exiv2iface.h"
+#include "exifeditdialog.h"
+#include "iptceditdialog.h"
 #include "plugin_metadataedit.h"
 #include "plugin_metadataedit.moc"
 
@@ -53,15 +55,44 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    // this is our action shown in the menubar/toolbar of the mainwindow
+    m_actionMetadataEdit = new KActionMenu(i18n("Metadata"),
+                               0,
+                               actionCollection(),
+                               "metadataedit");
 
-    m_actionMetadataEdit = new KAction (i18n("Edit Metadata..."),
-                                        "metadataedit",
-                                        0,     
-                                        this,
-                                        SLOT(slotActivate()),
-                                        actionCollection(),
-                                        "metadataedit");
+    m_actionMetadataEdit->insert(new KAction (i18n("Edit EXIF..."),
+                                     0,
+                                     0,     
+                                     this,
+                                     SLOT(slotEditExif()),
+                                     actionCollection(),
+                                     "editexif"));
+
+    m_actionMetadataEdit->insert(new KAction (i18n("Remove EXIF..."),
+                                     0,
+                                     0,     
+                                     this,
+                                     SLOT(slotRemoveExif()),
+                                     actionCollection(),
+                                     "removeexif"));
+
+    m_actionMetadataEdit->insert(new KActionSeparator());
+
+    m_actionMetadataEdit->insert(new KAction (i18n("Edit IPTC..."),
+                                     0,
+                                     0,     
+                                     this,
+                                     SLOT(slotEditIptc()),
+                                     actionCollection(),
+                                     "editiptc"));
+
+    m_actionMetadataEdit->insert(new KAction (i18n("Remove IPTC..."),
+                                     0,
+                                     0,     
+                                     this,
+                                     SLOT(slotRemoveIptc()),
+                                     actionCollection(),
+                                     "removeiptc"));
 
     addAction( m_actionMetadataEdit );
 
@@ -80,19 +111,136 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
              m_actionMetadataEdit, SLOT(setEnabled(bool)));
 }
 
-void Plugin_MetadataEdit::slotActivate()
+void Plugin_MetadataEdit::slotEditExif()
 {
-    // Get the current/selected album from host
     KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KIPIMetadataEditPlugin::MetadataEditDialog *dialog = new KIPIMetadataEditPlugin::MetadataEditDialog(
-                                                         m_interface, kapp->activeWindow());
+    KIPIMetadataEditPlugin::EXIFEditDialog dialog(kapp->activeWindow(), images.images());
+    dialog.exec();
+    m_interface->refreshImages(images.images());
+}
 
-    dialog->setImages( images.images() );
-    dialog->show();
+void Plugin_MetadataEdit::slotRemoveExif()
+{
+    KIPI::ImageCollection images = m_interface->currentSelection();
+
+    if ( !images.isValid() || images.images().isEmpty() )
+        return;
+
+    if (KMessageBox::warningYesNo(
+                     kapp->activeWindow(),
+                     i18n("EXIF metadata will be definitivly removed from all current selected pictures.\n"
+                          "Do you want to continue ?"),
+                     i18n("Remove EXIF Metadata")) != KMessageBox::Yes)
+        return;
+
+    KURL::List imageURLs = images.images();
+    KURL::List updatedURLs;
+    KURL::List errorURLs;
+
+    for( KURL::List::iterator it = imageURLs.begin() ; 
+         it != imageURLs.end(); ++it)
+    {
+        KURL url = *it;
+        bool ret = false;
+
+        if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
+        {
+            ret = true;
+            KIPIPlugins::Exiv2Iface exiv2Iface;
+            ret &= exiv2Iface.load(url.path());
+            ret &= exiv2Iface.clearExif();
+            ret &= exiv2Iface.save(url.path());
+        }
+        
+        if (!ret)
+            errorURLs.append(url);
+        else 
+            updatedURLs.append(url);
+    }
+
+    // We use kipi interface refreshImages() method to tell to host than 
+    // metadata from pictures have changed and need to be re-readed.
+    
+    m_interface->refreshImages(updatedURLs);
+
+    if (!errorURLs.isEmpty())
+    {
+        KMessageBox::errorList(
+                    kapp->activeWindow(),
+                    i18n("Unable to remove EXIF metadata from:"),
+                    errorURLs.toStringList(),
+                    i18n("Remove EXIF Metadata"));  
+    }
+}
+
+void Plugin_MetadataEdit::slotEditIptc()
+{
+    KIPI::ImageCollection images = m_interface->currentSelection();
+
+    if ( !images.isValid() || images.images().isEmpty() )
+        return;
+
+    KIPIMetadataEditPlugin::IPTCEditDialog dialog(kapp->activeWindow(), images.images());
+    dialog.exec();
+    m_interface->refreshImages(images.images());
+}
+
+void Plugin_MetadataEdit::slotRemoveIptc()
+{
+    KIPI::ImageCollection images = m_interface->currentSelection();
+
+    if ( !images.isValid() || images.images().isEmpty() )
+        return;
+
+    if (KMessageBox::warningYesNo(
+                     kapp->activeWindow(),
+                     i18n("IPTC metadata will be definitivly removed from all current selected pictures.\n"
+                          "Do you want to continue ?"),
+                     i18n("Remove IPTC Metadata")) != KMessageBox::Yes)
+        return;
+
+    KURL::List imageURLs = images.images();
+    KURL::List updatedURLs;
+    KURL::List errorURLs;
+
+    for( KURL::List::iterator it = imageURLs.begin() ; 
+         it != imageURLs.end(); ++it)
+    {
+        KURL url = *it;
+        bool ret = false;
+
+        if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
+        {
+            ret = true;
+            KIPIPlugins::Exiv2Iface exiv2Iface;
+            ret &= exiv2Iface.load(url.path());
+            ret &= exiv2Iface.clearIptc();
+            ret &= exiv2Iface.save(url.path());
+        }
+        
+        if (!ret)
+            errorURLs.append(url);
+        else 
+            updatedURLs.append(url);
+    }
+
+    // We use kipi interface refreshImages() method to tell to host than 
+    // metadata from pictures have changed and need to be re-readed.
+    
+    m_interface->refreshImages(updatedURLs);
+
+    if (!errorURLs.isEmpty())
+    {
+        KMessageBox::errorList(
+                    kapp->activeWindow(),
+                    i18n("Unable to remove IPTC metadata from:"),
+                    errorURLs.toStringList(),
+                    i18n("Remove IPTC Metadata"));  
+    }
 }
 
 KIPI::Category Plugin_MetadataEdit::category( KAction* action ) const

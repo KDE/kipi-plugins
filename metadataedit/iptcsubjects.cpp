@@ -68,7 +68,7 @@ public:
     KListBox    *subjectsBox;
 };
 
-IPTCSubjects::IPTCSubjects(QWidget* parent, QByteArray& iptcData)
+IPTCSubjects::IPTCSubjects(QWidget* parent)
             : QWidget(parent)
 {
     d = new IPTCSubjectsPriv;
@@ -121,6 +121,8 @@ IPTCSubjects::IPTCSubjects(QWidget* parent, QByteArray& iptcData)
     connect(d->delSubjectButton, SIGNAL(clicked()),
             this, SLOT(slotDelSubject()));
 
+    // --------------------------------------------------------
+
     connect(d->subjectsCheck, SIGNAL(toggled(bool)),
             d->subjectEdit, SLOT(setEnabled(bool)));
 
@@ -134,8 +136,15 @@ IPTCSubjects::IPTCSubjects(QWidget* parent, QByteArray& iptcData)
             d->delSubjectButton, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
-        
-    readMetadata(iptcData);
+
+    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->addSubjectButton, SIGNAL(clicked()),
+            this, SIGNAL(signalModified()));
+
+    connect(d->delSubjectButton, SIGNAL(clicked()),
+            this, SIGNAL(signalModified()));
 }
 
 IPTCSubjects::~IPTCSubjects()
@@ -184,6 +193,7 @@ void IPTCSubjects::slotAddSubject()
 
 void IPTCSubjects::readMetadata(QByteArray& iptcData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     d->oldSubjects = exiv2Iface.getImageSubjects();
@@ -197,6 +207,8 @@ void IPTCSubjects::readMetadata(QByteArray& iptcData)
     d->subjectsBox->setEnabled(d->subjectsCheck->isChecked());
     d->addSubjectButton->setEnabled(d->subjectsCheck->isChecked());
     d->delSubjectButton->setEnabled(d->subjectsCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void IPTCSubjects::applyMetadata(QByteArray& iptcData)

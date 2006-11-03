@@ -37,14 +37,15 @@ class EXIFLens : public QWidget
     
 public:
 
-    EXIFLens(QWidget* parent, QByteArray& exifData);
+    EXIFLens(QWidget* parent);
     ~EXIFLens();
 
     void applyMetadata(QByteArray& exifData);
-
-private:
-
     void readMetadata(QByteArray& exifData);
+
+signals:
+
+    void signalModified();
 
 private:
 

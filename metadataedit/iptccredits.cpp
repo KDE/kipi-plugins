@@ -78,7 +78,7 @@ public:
     KLineEdit *contactEdit;
 };
 
-IPTCCredits::IPTCCredits(QWidget* parent, QByteArray& iptcData)
+IPTCCredits::IPTCCredits(QWidget* parent)
            : QWidget(parent)
 {
     d = new IPTCCreditsPriv;
@@ -182,8 +182,44 @@ IPTCCredits::IPTCCredits(QWidget* parent, QByteArray& iptcData)
             d->contactEdit, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
-        
-    readMetadata(iptcData);
+
+    connect(d->copyrightCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->bylineCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->bylineTitleCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->creditCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->sourceCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->contactCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->copyrightEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->bylineEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->bylineTitleEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->creditEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->sourceEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->contactEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
 }
 
 IPTCCredits::~IPTCCredits()
@@ -193,6 +229,7 @@ IPTCCredits::~IPTCCredits()
 
 void IPTCCredits::readMetadata(QByteArray& iptcData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
@@ -244,6 +281,8 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
         d->contactCheck->setChecked(true);
     }
     d->contactEdit->setEnabled(d->contactCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void IPTCCredits::applyMetadata(QByteArray& iptcData)

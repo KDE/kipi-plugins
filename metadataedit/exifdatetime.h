@@ -37,14 +37,15 @@ class EXIFDateTime : public QWidget
     
 public:
 
-    EXIFDateTime(QWidget* parent, QByteArray& exifData);
+    EXIFDateTime(QWidget* parent);
     ~EXIFDateTime();
 
     void applyMetadata(QByteArray& exifData);
-
-private:
-
     void readMetadata(QByteArray& exifData);
+
+signals:
+
+    void signalModified();
 
 private:
 

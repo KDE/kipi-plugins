@@ -28,6 +28,7 @@
 // KDE includes.
 
 #include <kdialogbase.h>
+#include <kurl.h>
 
 namespace KIPIMetadataEditPlugin
 {
@@ -40,19 +41,30 @@ class EXIFEditDialog : public KDialogBase
 
 public:
 
-    EXIFEditDialog(QWidget* parent, QByteArray exifData, const QString& fileName);
+    EXIFEditDialog(QWidget* parent, KURL::List urls);
     ~EXIFEditDialog();
 
-    QByteArray getEXIFInfo();
+public slots:
+
+    void slotModified();
 
 protected slots:
 
     void slotOk();
+    void slotHelp();
     void slotCancel();
 
 protected:
 
     void closeEvent(QCloseEvent *);
+    bool eventFilter(QObject *, QEvent *);
+
+private slots:
+
+    void slotItemChanged();
+    void slotApply();
+    void slotUser1();
+    void slotUser2();
 
 private:
 

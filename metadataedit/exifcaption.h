@@ -37,14 +37,15 @@ class EXIFCaption : public QWidget
     
 public:
 
-    EXIFCaption(QWidget* parent, QByteArray& exifData);
+    EXIFCaption(QWidget* parent);
     ~EXIFCaption();
 
     void applyMetadata(QByteArray& exifData);
-
-private:
-
     void readMetadata(QByteArray& exifData);
+
+signals:
+
+    void signalModified();
 
 private:
 

@@ -111,7 +111,7 @@ public:
     MetadataCheckBox *subjectDistanceTypeCheck;
 };
 
-EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
+EXIFDevice::EXIFDevice(QWidget* parent)
           : QWidget(parent)
 {
     d = new EXIFDevicePriv;
@@ -366,8 +366,83 @@ EXIFDevice::EXIFDevice(QWidget* parent, QByteArray& exifData)
             d->subjectDistanceTypeCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
-    
-    readMetadata(exifData);
+
+    connect(d->makeCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->modelCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->exposureTimeCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->exposureBiasCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->deviceTypeCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->exposureProgramCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->exposureModeCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->meteringModeCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->ISOSpeedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->sensingMethodCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->sceneTypeCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->subjectDistanceTypeCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->deviceTypeCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->exposureProgramCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->exposureModeCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->ISOSpeedCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->meteringModeCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->sensingMethodCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->sceneTypeCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->subjectDistanceTypeCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->makeEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->modelEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->exposureTimeNumEdit, SIGNAL(valueChanged(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->exposureTimeDenEdit, SIGNAL(valueChanged(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->exposureBiasEdit, SIGNAL(valueChanged(double)),
+            this, SIGNAL(signalModified()));
 }
 
 EXIFDevice::~EXIFDevice()
@@ -377,6 +452,7 @@ EXIFDevice::~EXIFDevice()
 
 void EXIFDevice::readMetadata(QByteArray& exifData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
     long int num=1, den=1;
@@ -543,6 +619,8 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
             d->subjectDistanceTypeCheck->setValid(false);            
     }
     d->subjectDistanceTypeCB->setEnabled(d->subjectDistanceTypeCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void EXIFDevice::applyMetadata(QByteArray& exifData)

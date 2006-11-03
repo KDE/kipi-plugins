@@ -298,7 +298,7 @@ void MetadataEditDialog::saveSettings()
 
 void MetadataEditDialog::slotEditExif()
 {
-    if (!d->listView->currentItem())
+/*    if (!d->listView->currentItem())
     {
         KMessageBox::information(this, i18n("Please, select at least one picture from "
                      "the list to edit EXIF metadata manually."), i18n("Edit Metadata"));    
@@ -322,7 +322,7 @@ void MetadataEditDialog::slotEditExif()
             }
             ++it;
         }
-    }
+    }*/
 }
 
 void MetadataEditDialog::slotEditIptc()
@@ -336,7 +336,7 @@ void MetadataEditDialog::slotEditIptc()
 
     MetadataItem* item = (MetadataItem*)d->listView->currentItem();
 
-    IPTCEditDialog dlg(this, item->getIptc(), item->getUrl().fileName());
+/*    IPTCEditDialog dlg(this, item->getIptc(), item->getUrl().fileName());
 
     if (dlg.exec() == KDialogBase::Accepted)
     {
@@ -351,7 +351,7 @@ void MetadataEditDialog::slotEditIptc()
             }
             ++it;
         }
-    }
+    }*/
 }
 
 void MetadataEditDialog::slotLoadExif()
@@ -385,7 +385,7 @@ void MetadataEditDialog::slotLoadExif()
         return;
     }        
 
-    EXIFEditDialog dlg(this, exifData, loadEXIFFile.fileName());
+/*    EXIFEditDialog dlg(this, exifData, loadEXIFFile.fileName());
 
     if (dlg.exec() == KDialogBase::Accepted)
     {
@@ -400,7 +400,7 @@ void MetadataEditDialog::slotLoadExif()
             }
             ++it;
         }
-    }
+    }*/
 }
 
 void MetadataEditDialog::slotLoadIptc()
@@ -434,7 +434,7 @@ void MetadataEditDialog::slotLoadIptc()
         return;
     }        
 
-    IPTCEditDialog dlg(this, iptcData, loadIPTCFile.fileName());
+/*    IPTCEditDialog dlg(this, iptcData, loadIPTCFile.fileName());
 
     if (dlg.exec() == KDialogBase::Accepted)
     {
@@ -449,7 +449,7 @@ void MetadataEditDialog::slotLoadIptc()
             }
             ++it;
         }
-    }
+    }*/
 }
 
 void MetadataEditDialog::slotRemoveExif()

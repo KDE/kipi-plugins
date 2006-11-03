@@ -37,14 +37,15 @@ class IPTCCaption : public QWidget
     
 public:
 
-    IPTCCaption(QWidget* parent, QByteArray& iptcData);
+    IPTCCaption(QWidget* parent);
     ~IPTCCaption();
 
     void applyMetadata(QByteArray& iptcData);
-
-private:
-
     void readMetadata(QByteArray& iptcData);
+
+signals:
+
+    void signalModified();
 
 private:
 

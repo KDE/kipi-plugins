@@ -82,7 +82,7 @@ public:
     MetadataCheckBox *customRenderedCheck;
 };
 
-EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
+EXIFAdjust::EXIFAdjust(QWidget* parent)
           : QWidget(parent)
 {
     d = new EXIFAdjustPriv;
@@ -183,8 +183,44 @@ EXIFAdjust::EXIFAdjust(QWidget* parent, QByteArray& exifData)
             d->customRenderedCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
+
+    connect(d->brightnessCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
     
-    readMetadata(exifData);
+    connect(d->gainControlCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->contrastCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->saturationCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->sharpnessCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->customRenderedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->gainControlCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->contrastCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->saturationCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->sharpnessCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->customRenderedCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->brightnessEdit, SIGNAL(valueChanged(double)),
+            this, SIGNAL(signalModified()));
 }
 
 EXIFAdjust::~EXIFAdjust()
@@ -194,6 +230,7 @@ EXIFAdjust::~EXIFAdjust()
 
 void EXIFAdjust::readMetadata(QByteArray& exifData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
     long int num=1, den=1;
@@ -265,6 +302,8 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
             d->customRenderedCheck->setValid(false);
     }
     d->customRenderedCB->setEnabled(d->customRenderedCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void EXIFAdjust::applyMetadata(QByteArray& exifData)

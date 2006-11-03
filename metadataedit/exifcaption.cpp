@@ -79,7 +79,7 @@ public:
     KLineEdit *copyrightEdit;
 };
 
-EXIFCaption::EXIFCaption(QWidget* parent, QByteArray& exifData)
+EXIFCaption::EXIFCaption(QWidget* parent)
            : QWidget(parent)
 {
     d = new EXIFCaptionPriv;
@@ -118,7 +118,7 @@ EXIFCaption::EXIFCaption(QWidget* parent, QByteArray& exifData)
     vlay->addWidget(d->artistCheck);
     vlay->addWidget(d->artistEdit);
     QWhatsThis::add(d->artistEdit, i18n("<p>Set here the name of the person who created the picture. "
-                                  "This field is limited to ASCII characters."));
+                                   "This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
@@ -165,8 +165,38 @@ EXIFCaption::EXIFCaption(QWidget* parent, QByteArray& exifData)
             d->userCommentEdit, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
-        
-    readMetadata(exifData);
+
+    connect(d->documentNameCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+    
+    connect(d->imageDescCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->artistCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->copyrightCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->userCommentCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->userCommentEdit, SIGNAL(textChanged()),
+            this, SIGNAL(signalModified()));
+    
+    connect(d->documentNameEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->imageDescEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->artistEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->copyrightEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
 }
 
 EXIFCaption::~EXIFCaption()
@@ -176,6 +206,7 @@ EXIFCaption::~EXIFCaption()
 
 void EXIFCaption::readMetadata(QByteArray& exifData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
     QString data;
@@ -219,6 +250,8 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
         d->userCommentCheck->setChecked(true);
     }
     d->userCommentEdit->setEnabled(d->userCommentCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void EXIFCaption::applyMetadata(QByteArray& exifData)

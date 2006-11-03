@@ -25,7 +25,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class KActionMenu;
 
 class Plugin_MetadataEdit : public KIPI::Plugin
 {
@@ -40,11 +40,15 @@ public:
 
 protected slots:
 
-    void slotActivate();
+    void slotEditExif();
+    void slotRemoveExif();
+
+    void slotEditIptc();
+    void slotRemoveIptc();
 
 private:
 
-    KAction         *m_actionMetadataEdit;
+    KActionMenu     *m_actionMetadataEdit;
 
     KIPI::Interface *m_interface;
 };

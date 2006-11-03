@@ -80,7 +80,7 @@ public:
     KDateTimeWidget *dateDigitalizedSel;
 };
 
-EXIFDateTime::EXIFDateTime(QWidget* parent, QByteArray& exifData)
+EXIFDateTime::EXIFDateTime(QWidget* parent)
             : QWidget(parent)
 {
     d = new EXIFDateTimePriv;
@@ -163,8 +163,44 @@ EXIFDateTime::EXIFDateTime(QWidget* parent, QByteArray& exifData)
             d->dateDigitalizedSubSecEdit, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
+
+    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
     
-    readMetadata(exifData);
+    connect(d->dateOriginalCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateDigitalizedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateCreatedSubSecCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateOriginalSubSecCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateDigitalizedSubSecCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->dateCreatedSubSecEdit, SIGNAL(valueChanged(int)),
+            this, SIGNAL(signalModified()));
+    
+    connect(d->dateOriginalSubSecEdit, SIGNAL(valueChanged(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateDigitalizedSubSecEdit, SIGNAL(valueChanged(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateCreatedSel, SIGNAL(valueChanged (const QDateTime &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateOriginalSel, SIGNAL(valueChanged (const QDateTime &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateDigitalizedSel, SIGNAL(valueChanged (const QDateTime &)),
+            this, SIGNAL(signalModified()));
 }
 
 EXIFDateTime::~EXIFDateTime()
@@ -174,6 +210,7 @@ EXIFDateTime::~EXIFDateTime()
 
 void EXIFDateTime::readMetadata(QByteArray& exifData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
 
@@ -257,6 +294,8 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
         }
     }
     d->dateDigitalizedSubSecEdit->setEnabled(d->dateDigitalizedSubSecCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void EXIFDateTime::applyMetadata(QByteArray& exifData)

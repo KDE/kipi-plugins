@@ -37,14 +37,15 @@ class IPTCKeywords : public QWidget
     
 public:
 
-    IPTCKeywords(QWidget* parent, QByteArray& iptcData);
+    IPTCKeywords(QWidget* parent);
     ~IPTCKeywords();
 
     void applyMetadata(QByteArray& iptcData);
-
-private:
-
     void readMetadata(QByteArray& iptcData);
+
+signals:
+
+    void signalModified();
 
 private slots:
 

@@ -140,7 +140,7 @@ public:
     MetadataCheckBox *maxApertureCheck;
 };
 
-EXIFLens::EXIFLens(QWidget* parent, QByteArray& exifData)
+EXIFLens::EXIFLens(QWidget* parent)
         : QWidget(parent)
 {
     d = new EXIFLensPriv;
@@ -216,8 +216,38 @@ EXIFLens::EXIFLens(QWidget* parent, QByteArray& exifData)
             d->maxApertureCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
-    
-    readMetadata(exifData);
+
+    connect(d->focalLength35mmCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->focalLengthCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->digitalZoomRatioCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->apertureCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->maxApertureCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->apertureCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->maxApertureCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->focalLength35mmEdit, SIGNAL(valueChanged(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->focalLengthEdit, SIGNAL(valueChanged(double)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->digitalZoomRatioEdit, SIGNAL(valueChanged(double)),
+            this, SIGNAL(signalModified()));
 }
 
 EXIFLens::~EXIFLens()
@@ -227,6 +257,7 @@ EXIFLens::~EXIFLens()
 
 void EXIFLens::readMetadata(QByteArray& exifData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
     long int num=1, den=1;
@@ -315,6 +346,8 @@ void EXIFLens::readMetadata(QByteArray& exifData)
             d->maxApertureCheck->setValid(false);
     }
     d->maxApertureCB->setEnabled(d->maxApertureCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void EXIFLens::applyMetadata(QByteArray& exifData)

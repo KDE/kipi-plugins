@@ -118,8 +118,8 @@ public:
     MetadataCheckBox *whiteBalanceCheck;
 };
 
-EXIFLight::EXIFLight(QWidget* parent, QByteArray& exifData)
-            : QWidget(parent)
+EXIFLight::EXIFLight(QWidget* parent)
+         : QWidget(parent)
 {
     d = new EXIFLightPriv;
 
@@ -211,8 +211,32 @@ EXIFLight::EXIFLight(QWidget* parent, QByteArray& exifData)
             d->whiteBalanceCB, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
-    
-    readMetadata(exifData);
+
+    connect(d->flashEnergyCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->lightSourceCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->flashModeCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->whiteBalanceCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->lightSourceCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->flashModeCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->whiteBalanceCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->flashEnergyEdit, SIGNAL(valueChanged(double)),
+            this, SIGNAL(signalModified()));
 }
 
 EXIFLight::~EXIFLight()
@@ -222,6 +246,7 @@ EXIFLight::~EXIFLight()
 
 void EXIFLight::readMetadata(QByteArray& exifData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
     long int num=1, den=1;
@@ -284,6 +309,8 @@ void EXIFLight::readMetadata(QByteArray& exifData)
             d->whiteBalanceCheck->setValid(false);
     }
     d->whiteBalanceCB->setEnabled(d->whiteBalanceCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void EXIFLight::applyMetadata(QByteArray& exifData)

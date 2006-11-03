@@ -37,14 +37,15 @@ class IPTCSubjects : public QWidget
     
 public:
 
-    IPTCSubjects(QWidget* parent, QByteArray& iptcData);
+    IPTCSubjects(QWidget* parent);
     ~IPTCSubjects();
 
     void applyMetadata(QByteArray& iptcData);
-
-private:
-
     void readMetadata(QByteArray& iptcData);
+
+signals:
+
+    void signalModified();
 
 private slots:
 

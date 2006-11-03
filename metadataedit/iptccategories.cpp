@@ -72,8 +72,8 @@ public:
     KListBox    *subCategoriesBox;
 };
 
-IPTCCategories::IPTCCategories(QWidget* parent, QByteArray& iptcData)
-           : QWidget(parent)
+IPTCCategories::IPTCCategories(QWidget* parent)
+              : QWidget(parent)
 {
     d = new IPTCCategoriesPriv;
     QGridLayout *grid = new QGridLayout(parent, 6, 1, 0, KDialog::spacingHint());
@@ -172,8 +172,21 @@ IPTCCategories::IPTCCategories(QWidget* parent, QByteArray& iptcData)
             this, SLOT(slotDelCategory()));
 
     // --------------------------------------------------------
-        
-    readMetadata(iptcData);
+
+    connect(d->categoryCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->subCategoriesCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->addSubCategoryButton, SIGNAL(clicked()),
+            this, SIGNAL(signalModified()));
+    
+    connect(d->delSubCategoryButton, SIGNAL(clicked()),
+            this, SIGNAL(signalModified()));
+
+    connect(d->categoryEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
 }
 
 IPTCCategories::~IPTCCategories()
@@ -222,6 +235,7 @@ void IPTCCategories::slotAddCategory()
 
 void IPTCCategories::readMetadata(QByteArray& iptcData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
@@ -247,6 +261,8 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
     d->subCategoriesBox->setEnabled(d->categoryCheck->isChecked() && d->subCategoriesCheck->isChecked());
     d->addSubCategoryButton->setEnabled(d->categoryCheck->isChecked() && d->subCategoriesCheck->isChecked());
     d->delSubCategoryButton->setEnabled(d->categoryCheck->isChecked() && d->subCategoriesCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void IPTCCategories::applyMetadata(QByteArray& iptcData)

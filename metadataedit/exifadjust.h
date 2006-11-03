@@ -37,14 +37,15 @@ class EXIFAdjust : public QWidget
     
 public:
 
-    EXIFAdjust(QWidget* parent, QByteArray& exifData);
+    EXIFAdjust(QWidget* parent);
     ~EXIFAdjust();
 
     void applyMetadata(QByteArray& exifData);
-
-private:
-
     void readMetadata(QByteArray& exifData);
+
+signals:
+
+    void signalModified();
 
 private:
 

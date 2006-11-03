@@ -37,14 +37,15 @@ class EXIFLight : public QWidget
     
 public:
 
-    EXIFLight(QWidget* parent, QByteArray& exifData);
+    EXIFLight(QWidget* parent);
     ~EXIFLight();
 
     void applyMetadata(QByteArray& exifData);
-
-private:
-
     void readMetadata(QByteArray& exifData);
+
+signals:
+
+    void signalModified();
 
 private:
 

@@ -51,32 +51,28 @@ public:
     IPTCCaptionPriv()
     {
         captionEdit             = 0;
-        subjectEdit             = 0;
         writerEdit              = 0;
         headlineEdit            = 0;
         specialInstructionEdit  = 0;
         captionCheck            = 0;
         specialInstructionCheck = 0;
-        subjectCheck            = 0;
         writerCheck             = 0;
         headlineCheck           = 0;
     }
 
     QCheckBox *captionCheck;
     QCheckBox *specialInstructionCheck;
-    QCheckBox *subjectCheck;
     QCheckBox *writerCheck;
     QCheckBox *headlineCheck;
 
     KTextEdit *captionEdit;
     KTextEdit *specialInstructionEdit;
 
-    KLineEdit *subjectEdit;
     KLineEdit *writerEdit;
     KLineEdit *headlineEdit;
 };
 
-IPTCCaption::IPTCCaption(QWidget* parent, QByteArray& iptcData)
+IPTCCaption::IPTCCaption(QWidget* parent)
            : QWidget(parent)
 {
     d = new IPTCCaptionPriv;
@@ -152,8 +148,32 @@ IPTCCaption::IPTCCaption(QWidget* parent, QByteArray& iptcData)
             d->specialInstructionEdit, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
-        
-    readMetadata(iptcData);
+
+    connect(d->captionCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->writerCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->headlineCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+    
+    connect(d->specialInstructionCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->captionEdit, SIGNAL(textChanged()),
+            this, SIGNAL(signalModified()));
+    
+    connect(d->specialInstructionEdit, SIGNAL(textChanged()),
+            this, SIGNAL(signalModified()));
+
+    connect(d->writerEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->headlineEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
 }
 
 IPTCCaption::~IPTCCaption()
@@ -163,6 +183,7 @@ IPTCCaption::~IPTCCaption()
 
 void IPTCCaption::readMetadata(QByteArray& iptcData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
@@ -198,6 +219,8 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
         d->specialInstructionCheck->setChecked(true);
     }
     d->specialInstructionEdit->setEnabled(d->specialInstructionCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void IPTCCaption::applyMetadata(QByteArray& iptcData)

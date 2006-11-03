@@ -68,8 +68,8 @@ public:
     KListBox    *keywordsBox;
 };
 
-IPTCKeywords::IPTCKeywords(QWidget* parent, QByteArray& iptcData)
-           : QWidget(parent)
+IPTCKeywords::IPTCKeywords(QWidget* parent)
+            : QWidget(parent)
 {
     d = new IPTCKeywordsPriv;
     QGridLayout *grid = new QGridLayout(parent, 5, 2, 0, KDialog::spacingHint());
@@ -121,6 +121,8 @@ IPTCKeywords::IPTCKeywords(QWidget* parent, QByteArray& iptcData)
     connect(d->delKeywordButton, SIGNAL(clicked()),
             this, SLOT(slotDelKeyword()));
 
+    // --------------------------------------------------------
+
     connect(d->keywordsCheck, SIGNAL(toggled(bool)),
             d->keywordEdit, SLOT(setEnabled(bool)));
 
@@ -134,8 +136,15 @@ IPTCKeywords::IPTCKeywords(QWidget* parent, QByteArray& iptcData)
             d->delKeywordButton, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
-        
-    readMetadata(iptcData);
+
+    connect(d->keywordsCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->addKeywordButton, SIGNAL(clicked()),
+            this, SIGNAL(signalModified()));
+    
+    connect(d->delKeywordButton, SIGNAL(clicked()),
+            this, SIGNAL(signalModified()));
 }
 
 IPTCKeywords::~IPTCKeywords()
@@ -184,6 +193,7 @@ void IPTCKeywords::slotAddKeyword()
 
 void IPTCKeywords::readMetadata(QByteArray& iptcData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     d->oldKeywords = exiv2Iface.getImageKeywords();
@@ -197,6 +207,8 @@ void IPTCKeywords::readMetadata(QByteArray& iptcData)
     d->keywordsBox->setEnabled(d->keywordsCheck->isChecked());
     d->addKeywordButton->setEnabled(d->keywordsCheck->isChecked());
     d->delKeywordButton->setEnabled(d->keywordsCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void IPTCKeywords::applyMetadata(QByteArray& iptcData)

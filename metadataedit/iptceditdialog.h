@@ -28,6 +28,7 @@
 // KDE includes.
 
 #include <kdialogbase.h>
+#include <kurl.h>
 
 namespace KIPIMetadataEditPlugin
 {
@@ -40,19 +41,30 @@ class IPTCEditDialog : public KDialogBase
 
 public:
 
-    IPTCEditDialog(QWidget* parent, QByteArray iptcData, const QString& fileName);
+    IPTCEditDialog(QWidget* parent, KURL::List urls);
     ~IPTCEditDialog();
 
-    QByteArray getIPTCInfo();
+public slots:
+
+    void slotModified();
 
 protected slots:
 
     void slotOk();
+    void slotHelp();
     void slotCancel();
 
 protected:
 
     void closeEvent(QCloseEvent *);
+    bool eventFilter(QObject *, QEvent *);
+
+private slots:
+
+    void slotItemChanged();
+    void slotApply();
+    void slotUser1();
+    void slotUser2();
 
 private:
 

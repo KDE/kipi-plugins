@@ -37,14 +37,15 @@ class EXIFDevice : public QWidget
     
 public:
 
-    EXIFDevice(QWidget* parent, QByteArray& exifData);
+    EXIFDevice(QWidget* parent);
     ~EXIFDevice();
 
     void applyMetadata(QByteArray& exifData);
-
-private:
-
     void readMetadata(QByteArray& exifData);
+
+signals:
+
+    void signalModified();
 
 private:
 

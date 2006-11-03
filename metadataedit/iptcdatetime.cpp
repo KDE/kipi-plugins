@@ -88,8 +88,8 @@ public:
     KTimeWidget *timeDigitalizedSel;
 };
 
-IPTCDateTime::IPTCDateTime(QWidget* parent, QByteArray& iptcData)
-          : QWidget(parent)
+IPTCDateTime::IPTCDateTime(QWidget* parent)
+            : QWidget(parent)
 {
     d = new IPTCDateTimePriv;
 
@@ -193,8 +193,56 @@ IPTCDateTime::IPTCDateTime(QWidget* parent, QByteArray& iptcData)
             d->timeDigitalizedSel, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
-    
-    readMetadata(iptcData);
+
+    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateReleasedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateExpiredCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateDigitalizedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeCreatedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeReleasedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeExpiredCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeDigitalizedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->dateCreatedSel, SIGNAL(changed(QDate)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateReleasedSel, SIGNAL(changed(QDate)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateExpiredSel, SIGNAL(changed(QDate)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateDigitalizedSel, SIGNAL(changed(QDate)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeCreatedSel, SIGNAL(valueChanged(const QTime &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeReleasedSel, SIGNAL(valueChanged(const QTime &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeExpiredSel, SIGNAL(valueChanged(const QTime &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeDigitalizedSel, SIGNAL(valueChanged(const QTime &)),
+            this, SIGNAL(signalModified()));
 }
 
 IPTCDateTime::~IPTCDateTime()
@@ -204,6 +252,7 @@ IPTCDateTime::~IPTCDateTime()
 
 void IPTCDateTime::readMetadata(QByteArray& iptcData)
 {
+    blockSignals(true);
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
@@ -310,6 +359,8 @@ void IPTCDateTime::readMetadata(QByteArray& iptcData)
         }
     }   
     d->timeDigitalizedSel->setEnabled(d->timeDigitalizedCheck->isChecked());
+
+    blockSignals(false);
 }
 
 void IPTCDateTime::applyMetadata(QByteArray& iptcData)

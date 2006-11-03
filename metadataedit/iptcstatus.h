@@ -37,14 +37,15 @@ class IPTCStatus : public QWidget
     
 public:
 
-    IPTCStatus(QWidget* parent, QByteArray& iptcData);
+    IPTCStatus(QWidget* parent);
     ~IPTCStatus();
 
     void applyMetadata(QByteArray& iptcData);
-
-private:
-
     void readMetadata(QByteArray& iptcData);
+
+signals:
+
+    void signalModified();
 
 private:
 
