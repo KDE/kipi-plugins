@@ -1,6 +1,6 @@
 AUTHORS AND MAINTAINERS :
 
-DEVELOPERS:
+MAIN DEVELOPERS:
 Gilles Caulier      <caulier dot gilles at kdemail dot net>
 Tom Albers          <tomalbers at kde.nl>
 Joern Ahrens        <joern dot ahrens at kdemail dot net>
@@ -8,15 +8,43 @@ Owen Hirst          <n8rider at sbcglobal.net>
 Vardhman Jain       <vardhman at gmail.com>
 Jesper K. Pedersen  <blackie at kde.org>
 Aurelien Gateau     <aurelien dot gateau at free.fr>
+Seb Ruiz            <me at sebruiz dot net>
 
 CONTRIBUTORS:
-Angelo Naselli      <anaselli at linux.it>
+Angelo Naselli      <anaselli at linux dot it>
 Ralf Hoelzer        <kde at ralfhoelzer dot com>
 Richard Groult      <Richard dot Groult at jalix.org>
 Tudor Calin         <tudor at 1xtech.com>
 Todd Shoemaker      <todd at theshoemakers.net>
 Gregory Kokanosky   <gregory dot kokanosky at free.fr>
 Colin Guthrie       <kde at colin dot guthr dot ie>
+Valerio Fuoglio     <valerio dot fuoglio at kdemail dot net>
+
+PLUGINS MAINTAINERS
+Acquire images      : Jesper K. Pedersen
+Batch Process       : Aurelien Gateau 
+Calendar            : adopted by Tom Albers
+Cd archiving        : adopted by Angelo Naselli
+Find images         : Jesper K. Pedersen and Richard Groult
+Flickr export       : Vardhman jain
+Gallery export      : Colin Guthrie
+GPSSync             : Gilles Caulier
+HTML export         : Aurelien Gateau
+Ipod export         : Seb Ruiz
+Jpeglossless        : Gilles Caulier
+Kamera Klient       : Aurelien Gateau and Michael J Gruber
+MetadataEdit        : Gilles Caulier
+Mpeg encoder        : adopted by Angelo Naselli
+Print wizard        :
+Raw converter       : Gilles Caulier
+Sendimages          : Gilles Caulier
+Simpleviewer export : Joern Ahrens
+Slideshow           : Valerio Fuoglio
+Time adjust         : Jesper K. Pedersen
+Wallpaper           : Jesper K. Pedersen
+
+POJECT COORDINATOR
+Angelo Naselli      <anaselli at linux dot it>
 
 FORMER MAINTAINER:
 Renchi Raju         <renchi at pooh.tam.uiuc.edu> 
