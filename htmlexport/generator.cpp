@@ -69,19 +69,25 @@ QString webifyFileName(QString fileName) {
 
 
 /**
- * Make sure a file name is unique in list
+ * This helper class is used to make sure we use unique filenames
  */
-QString makeFileNameUnique(const QStringList& list, QString fileName) {
-	// Make sure the file name is unique
-	QString fileNameBase=fileName;
-	int count=2;
-	while (list.findIndex(fileName)!=-1) {
-		fileName=fileNameBase + QString::number(count);
-		++count;
-	};
+class UniqueNameHelper {
+public:
+	QString makeNameUnique(QString name) {
+		QString nameBase = name;
+		int count=2;
+		while (mList.findIndex(name)!=-1) {
+			name = nameBase + QString::number(count);
+			++count;
+		};
 
-	return fileName;
-}
+		mList.append(name);
+		return name;
+	}
+
+private:
+	QStringList mList;
+};
 
 
 /**
@@ -123,6 +129,29 @@ QCString makeXsltParam(const QString& txt) {
 }
 
 
+/**
+ * Crop @image so that the returned image is a square of @size x @size pixels
+ */
+QImage cropImage(QImage image, int size) {
+	if (image.width() == size && image.height() == size) {
+		return image;
+	}
+	QPixmap croppedPix(size, size);
+	QPainter painter(&croppedPix);
+	
+	int sx=0, sy=0;
+	if (image.width()>size) {
+		sx=(image.width() - size)/2;
+	} else {
+		sy=(image.height() - size)/2;
+	}
+	painter.drawImage(0, 0, image, sx, sy, size, size);
+	painter.end();
+
+	return croppedPix.convertToImage();
+}
+
+
 struct Generator::Private {
 	KIPI::Interface* mInterface;
 	GalleryInfo* mInfo;
@@ -132,6 +161,7 @@ struct Generator::Private {
 	// State info
 	bool mWarnings;
 	QString mXMLFileName;
+	UniqueNameHelper mUniqueNameHelper;
 
 	bool init() {
 		mTheme=Theme::findByPath(mInfo->theme());
@@ -161,6 +191,81 @@ struct Generator::Private {
 		return true;
 	}
 
+
+	void generateImagesAndXMLForCollection(const KIPI::ImageCollection& collection, XMLWriter& xmlWriter, const QString& destDir) {
+		KURL::List imageList=collection.images();
+		KURL::List::Iterator it=imageList.begin();
+		KURL::List::Iterator end=imageList.end();
+
+		int pos=1;
+		int count=imageList.count();
+		for (; it!=end; ++it, ++pos) {
+			mProgressDialog->setProgress(pos, count);
+			qApp->processEvents();
+			
+			KIPI::ImageInfo info=mInterface->info(*it);
+		
+			// Load image
+			QImage image;
+			QString path=(*it).path();
+			if (!image.load(path) ) {
+				logWarning(i18n("Could not load image '%1'").arg(path));
+				continue;
+			}
+
+			XMLElement imageX(xmlWriter, "image");
+			xmlWriter.writeElement("title", info.title());
+			xmlWriter.writeElement("description", info.description());
+			
+			// Prepare filenames
+			QString baseFileName=webifyFileName(info.title());
+			baseFileName=mUniqueNameHelper.makeNameUnique(baseFileName);
+
+			// Process full image
+			{
+				if (mInfo->fullResize()) {
+					int size=mInfo->fullSize();
+					image=image.smoothScale(size, size, QImage::ScaleMin);
+				}
+				
+				QString format=mInfo->fullFormatString();
+				QString fileName=baseFileName + "." + format.lower();
+				QString destPath=destDir + "/" + fileName;
+				if ( ! image.save(destPath, format.ascii(), mInfo->fullQuality()) ) {
+					logWarning(i18n("Could not save image '%1' to '%2'").arg(path).arg(destPath));
+					continue;
+				}
+				XMLAttributeList attrList;
+				attrList.append("fileName", fileName);
+				attrList.append("width", image.width());
+				attrList.append("height", image.height());
+				XMLElement elem(xmlWriter, "full", &attrList);
+			}
+			
+			// Process thumbnail
+			{
+				int size=mInfo->thumbnailSize();
+				QImage thumbnail=image.smoothScale(size, size, QImage::ScaleMax);
+				thumbnail = cropImage(thumbnail, size);
+
+				QString format=mInfo->thumbnailFormatString();
+				QString fileName="thumb_" + baseFileName + "." + format.lower();
+				QString destPath=destDir + "/" + fileName;
+				if ( ! thumbnail.save(destPath, format.ascii(), mInfo->thumbnailQuality()) ) {
+					logWarning(i18n("Could not save thumbnail for image '%1' to '%2'").arg(path).arg(destPath));
+					continue;
+				}
+				
+				XMLAttributeList attrList;
+				attrList.append("fileName", fileName);
+				attrList.append("width", thumbnail.width());
+				attrList.append("height", thumbnail.height());
+				XMLElement elem(xmlWriter, "thumbnail", &attrList);
+			}
+		}
+	}
+
+
 	bool generateImagesAndXML() {
 		QString baseDestDir=mInfo->destKURL().path();
 		if (!createDir(baseDestDir)) return false;
@@ -189,93 +294,8 @@ struct Generator::Private {
 			xmlWriter.writeElement("name", collection.name());
 			xmlWriter.writeElement("fileName", collectionFileName);
 
-			QStringList fileNameList;
-			
-			// Loop on images
-			KURL::List imageList=collection.images();
-			KURL::List::Iterator it=imageList.begin();
-			KURL::List::Iterator end=imageList.end();
+			generateImagesAndXMLForCollection(collection, xmlWriter, destDir);
 
-			int pos=1;
-			int count=imageList.count();
-			for (; it!=end; ++it, ++pos) {
-				mProgressDialog->setProgress(pos, count);
-				qApp->processEvents();
-				
-				KIPI::ImageInfo info=mInterface->info(*it);
-			
-				// Load image
-				QImage image;
-				QString path=(*it).path();
-				if (!image.load(path) ) {
-					logWarning(i18n("Could not load image '%1'").arg(path));
-					continue;
-				}
-
-				XMLElement imageX(xmlWriter, "image");
-				xmlWriter.writeElement("title", info.title());
-				xmlWriter.writeElement("description", info.description());
-				
-				// Prepare filenames
-				QString baseFileName=webifyFileName(info.title());
-				baseFileName=makeFileNameUnique(fileNameList, baseFileName);
-				fileNameList.append(baseFileName);
-
-				// Process full image
-				{
-					if (mInfo->fullResize()) {
-						int size=mInfo->fullSize();
-						image=image.smoothScale(size, size, QImage::ScaleMin);
-					}
-					
-					QString format=mInfo->fullFormatString();
-					QString fileName=baseFileName + "." + format.lower();
-					QString destPath=destDir + "/" + fileName;
-					if ( ! image.save(destPath, format.ascii(), mInfo->fullQuality()) ) {
-						logWarning(i18n("Could not save image '%1' to '%2'").arg(path).arg(destPath));
-						continue;
-					}
-					XMLAttributeList attrList;
-					attrList.append("fileName", fileName);
-					attrList.append("width", image.width());
-					attrList.append("height", image.height());
-					XMLElement elem(xmlWriter, "full", &attrList);
-				}
-				
-				// Process thumbnail
-				{
-					int size=mInfo->thumbnailSize();
-					QImage thumbnail=image.smoothScale(size, size, QImage::ScaleMax);
-					if (thumbnail.width()>size || thumbnail.height()>size) {
-						QPixmap croppedPix(size, size);
-						QPainter painter(&croppedPix);
-						
-						int sx=0, sy=0;
-						if (thumbnail.width()>size) {
-							sx=(thumbnail.width() - size)/2;
-						} else {
-							sy=(thumbnail.height() - size)/2;
-						}
-						painter.drawImage(0, 0, thumbnail, sx, sy, size, size);
-						painter.end();
-						thumbnail=croppedPix.convertToImage();
-					}
-
-					QString format=mInfo->thumbnailFormatString();
-					QString fileName="thumb_" + baseFileName + "." + format.lower();
-					QString destPath=destDir + "/" + fileName;
-					if ( ! thumbnail.save(destPath, format.ascii(), mInfo->thumbnailQuality()) ) {
-						logWarning(i18n("Could not save thumbnail for image '%1' to '%2'").arg(path).arg(destPath));
-						continue;
-					}
-					
-					XMLAttributeList attrList;
-					attrList.append("fileName", fileName);
-					attrList.append("width", thumbnail.width());
-					attrList.append("height", thumbnail.height());
-					XMLElement elem(xmlWriter, "thumbnail", &attrList);
-				}
-			}
 		}
 		return true;
 	}
