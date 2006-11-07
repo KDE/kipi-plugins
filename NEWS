@@ -23,6 +23,7 @@ RAWConverter  : Embedding ouput color space in target image (JPEG/PNG/TIFF).
 RAWConverter  : Metadata preservation in target image during Raw conversion (JPEG/PNG).
 RAWConverter  : Removing external dcraw depency. Now plugin include a full supported version of 
                 dcraw program in core.
+RAWConverter  : updated dcraw.c implementation to version 8.41.
 
 SendImages    : Added image size limit x mail (Michael H�hstetter)
  
