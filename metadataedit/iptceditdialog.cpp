@@ -111,8 +111,8 @@ public:
 
 IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls)
               : KDialogBase(IconList, QString::null, 
-                            urls.count() > 1 ? Help|User1|User2|Stretch|Ok|Apply|Cancel 
-                                             : Help|Stretch|Ok|Apply|Cancel, 
+                            urls.count() > 1 ? Help|User1|User2|Stretch|Ok|Apply|Close 
+                                             : Help|Stretch|Ok|Apply|Close, 
                             Ok, parent, 0, true, true,
                             KStdGuiItem::guiItem(KStdGuiItem::Forward),
                             KStdGuiItem::guiItem(KStdGuiItem::Back) )
@@ -225,10 +225,10 @@ void IPTCEditDialog::closeEvent(QCloseEvent *e)
     e->accept();
 }
 
-void IPTCEditDialog::slotCancel()
+void IPTCEditDialog::slotClose()
 {
     saveSettings();
-    KDialogBase::slotCancel();
+    KDialogBase::slotClose();
 }
 
 void IPTCEditDialog::readSettings()

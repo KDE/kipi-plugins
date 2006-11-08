@@ -52,7 +52,7 @@ protected slots:
 
     void slotOk();
     void slotHelp();
-    void slotCancel();
+    void slotClose();
 
 protected:
 
