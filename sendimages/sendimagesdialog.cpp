@@ -453,7 +453,8 @@ void SendImagesDialog::setupEmailOptions(void)
                      "and a target mailbox size.<p>"
                      "<b>%4</b>: use this if you have a high-speed internet connection "
                      "and if the target mailbox size is not limited.<p>"
-                     "<b>%5</b>: use this if you have no size or speed restrictions.<p>")
+                     "<b>%5</b>: use this if you have no size or speed restrictions.<p>"
+                     "<b>%6</b>: use this only for printing purpose.<p>")
                      .arg(i18n("very small (320 pixels)"))
                      .arg(i18n("small (640 pixels)"))
                      .arg(i18n("medium (800 pixels)"))
