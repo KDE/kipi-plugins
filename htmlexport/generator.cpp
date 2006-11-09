@@ -130,9 +130,11 @@ QCString makeXsltParam(const QString& txt) {
 
 
 /**
- * Crop @image so that the returned image is a square of @size x @size pixels
+ * Genearate a square thumbnail from @fullImage of @size x @size pixels
  */
-QImage cropImage(QImage image, int size) {
+QImage generateSquareThumbnail(const QImage& fullImage, int size) {
+	QImage image = fullImage.smoothScale(size, size, QImage::ScaleMax);
+
 	if (image.width() == size && image.height() == size) {
 		return image;
 	}
@@ -191,78 +193,92 @@ struct Generator::Private {
 		return true;
 	}
 
+	
+	void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName, const QString& fileName, const QImage& image) {
+		XMLAttributeList attrList;
+		attrList.append("fileName", fileName);
+		attrList.append("width", image.width());
+		attrList.append("height", image.height());
+		XMLElement elem(xmlWriter, elementName, &attrList);
+	}
 
-	void generateImagesAndXMLForCollection(const KIPI::ImageCollection& collection, XMLWriter& xmlWriter, const QString& destDir) {
-		KURL::List imageList=collection.images();
-		KURL::List::Iterator it=imageList.begin();
-		KURL::List::Iterator end=imageList.end();
 
-		int pos=1;
-		int count=imageList.count();
-		for (; it!=end; ++it, ++pos) {
-			mProgressDialog->setProgress(pos, count);
-			qApp->processEvents();
-			
-			KIPI::ImageInfo info=mInterface->info(*it);
+	void generateImageAndXMLForURL(XMLWriter& xmlWriter, const QString& destDir, const KURL& imageURL) {
+		KIPI::ImageInfo info=mInterface->info(imageURL);
+	
+		// Load image
+		QString path=imageURL.path();
+		QFile imageFile(path);
+		if (!imageFile.open(IO_ReadOnly)) {
+			logWarning(i18n("Could not read image '%1'").arg(path));
+			return;
+		}
 		
-			// Load image
-			QImage image;
-			QString path=(*it).path();
-			if (!image.load(path) ) {
-				logWarning(i18n("Could not load image '%1'").arg(path));
-				continue;
+		QString imageFormat = QImageIO::imageFormat(&imageFile);
+		if (imageFormat.isEmpty()) {
+			logWarning(i18n("Format of image '%1' is unknown").arg(path));
+			return;
+		}
+		imageFile.close();
+		imageFile.open(IO_ReadOnly);
+
+		QByteArray imageData = imageFile.readAll();
+		QImage image;
+		if (!image.loadFromData(imageData) ) {
+			logWarning(i18n("Error loading image '%1'").arg(path));
+			return;
+		}
+
+		// Process images
+		if (!mInfo->useOriginalImage() && mInfo->fullResize()) {
+			int size = mInfo->fullSize();
+			image = image.smoothScale(size, size, QImage::ScaleMin);
+		}
+
+		QImage thumbnail = generateSquareThumbnail(image, mInfo->thumbnailSize());
+
+		// Save images
+		QString baseFileName = webifyFileName(info.title());
+		baseFileName = mUniqueNameHelper.makeNameUnique(baseFileName);
+
+		// Save full
+		QString fullFileName;
+		if (mInfo->useOriginalImage()) {
+			fullFileName = baseFileName + "." + imageFormat.lower();
+			QString destPath = destDir + "/" + fullFileName;
+			QFile destFile(destPath);
+			if (!destFile.open(IO_WriteOnly)) {
+				logWarning(i18n("Could not open file '%1' for writing").arg(fullFileName));
+				return;
 			}
-
-			XMLElement imageX(xmlWriter, "image");
-			xmlWriter.writeElement("title", info.title());
-			xmlWriter.writeElement("description", info.description());
-			
-			// Prepare filenames
-			QString baseFileName=webifyFileName(info.title());
-			baseFileName=mUniqueNameHelper.makeNameUnique(baseFileName);
-
-			// Process full image
-			{
-				if (mInfo->fullResize()) {
-					int size=mInfo->fullSize();
-					image=image.smoothScale(size, size, QImage::ScaleMin);
-				}
-				
-				QString format=mInfo->fullFormatString();
-				QString fileName=baseFileName + "." + format.lower();
-				QString destPath=destDir + "/" + fileName;
-				if ( ! image.save(destPath, format.ascii(), mInfo->fullQuality()) ) {
-					logWarning(i18n("Could not save image '%1' to '%2'").arg(path).arg(destPath));
-					continue;
-				}
-				XMLAttributeList attrList;
-				attrList.append("fileName", fileName);
-				attrList.append("width", image.width());
-				attrList.append("height", image.height());
-				XMLElement elem(xmlWriter, "full", &attrList);
+			if (destFile.writeBlock(imageData) != (Q_LONG)imageData.size()) {
+				logWarning(i18n("Could not save image to file '%1'").arg(fullFileName));
+				return;
 			}
-			
-			// Process thumbnail
-			{
-				int size=mInfo->thumbnailSize();
-				QImage thumbnail=image.smoothScale(size, size, QImage::ScaleMax);
-				thumbnail = cropImage(thumbnail, size);
-
-				QString format=mInfo->thumbnailFormatString();
-				QString fileName="thumb_" + baseFileName + "." + format.lower();
-				QString destPath=destDir + "/" + fileName;
-				if ( ! thumbnail.save(destPath, format.ascii(), mInfo->thumbnailQuality()) ) {
-					logWarning(i18n("Could not save thumbnail for image '%1' to '%2'").arg(path).arg(destPath));
-					continue;
-				}
-				
-				XMLAttributeList attrList;
-				attrList.append("fileName", fileName);
-				attrList.append("width", thumbnail.width());
-				attrList.append("height", thumbnail.height());
-				XMLElement elem(xmlWriter, "thumbnail", &attrList);
+		} else {
+			fullFileName = baseFileName + "." + mInfo->fullFormatString().lower();
+			QString destPath = destDir + "/" + fullFileName;
+			if (!image.save(destPath, mInfo->fullFormatString().ascii(), mInfo->fullQuality())) {
+				logWarning(i18n("Could not save image '%1' to '%2'").arg(path).arg(destPath));
+				return;
 			}
 		}
+
+		// Save thumbnail
+		QString thumbnailFileName = "thumb_" + baseFileName + "." + mInfo->thumbnailFormatString().lower();
+		QString destPath = destDir + "/" + thumbnailFileName;
+		if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().ascii(), mInfo->thumbnailQuality())) {
+			logWarning(i18n("Could not save thumbnail for image '%1' to '%2'").arg(path).arg(destPath));
+			return;
+		}
+		
+		// Write XML
+		XMLElement imageX(xmlWriter, "image");
+		xmlWriter.writeElement("title", info.title());
+		xmlWriter.writeElement("description", info.description());
+		
+		appendImageElementToXML(xmlWriter, "full", fullFileName, image);
+		appendImageElementToXML(xmlWriter, "thumbnail", thumbnailFileName, thumbnail);
 	}
 
 
@@ -294,7 +310,18 @@ struct Generator::Private {
 			xmlWriter.writeElement("name", collection.name());
 			xmlWriter.writeElement("fileName", collectionFileName);
 
-			generateImagesAndXMLForCollection(collection, xmlWriter, destDir);
+			// Loop on image in collection
+			KURL::List imageList = collection.images();
+			KURL::List::Iterator it = imageList.begin();
+			KURL::List::Iterator end = imageList.end();
+
+			int pos = 1;
+			int count = imageList.count();
+			for (; it!=end; ++it, ++pos) {
+				mProgressDialog->setProgress(pos, count);
+				qApp->processEvents();
+				generateImageAndXMLForURL(xmlWriter, destDir, *it);
+			}
 
 		}
 		return true;
