@@ -42,9 +42,11 @@ protected slots:
 
     void slotEditExif();
     void slotRemoveExif();
+    void slotImportExif();
 
     void slotEditIptc();
     void slotRemoveIptc();
+    void slotImportIptc();
 
 private:
 

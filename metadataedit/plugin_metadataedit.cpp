@@ -28,6 +28,8 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
+#include <kfiledialog.h>
+#include <kglobalsettings.h>
 
 // LibKIPI includes.
 
@@ -76,6 +78,14 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
                                      actionCollection(),
                                      "removeexif"));
 
+    m_actionMetadataEdit->insert(new KAction (i18n("Import EXIF..."),
+                                     0,
+                                     0,     
+                                     this,
+                                     SLOT(slotImportExif()),
+                                     actionCollection(),
+                                     "importexif"));
+
     m_actionMetadataEdit->insert(new KActionSeparator());
 
     m_actionMetadataEdit->insert(new KAction (i18n("Edit IPTC..."),
@@ -93,6 +103,14 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
                                      SLOT(slotRemoveIptc()),
                                      actionCollection(),
                                      "removeiptc"));
+
+    m_actionMetadataEdit->insert(new KAction (i18n("Import IPTC..."),
+                                     0,
+                                     0,     
+                                     this,
+                                     SLOT(slotImportIptc()),
+                                     actionCollection(),
+                                     "importiptc"));
 
     addAction( m_actionMetadataEdit );
 
@@ -163,7 +181,7 @@ void Plugin_MetadataEdit::slotRemoveExif()
     }
 
     // We use kipi interface refreshImages() method to tell to host than 
-    // metadata from pictures have changed and need to be re-readed.
+    // metadata from pictures have changed and need to be re-read.
     
     m_interface->refreshImages(updatedURLs);
 
@@ -174,6 +192,86 @@ void Plugin_MetadataEdit::slotRemoveExif()
                     i18n("Unable to remove EXIF metadata from:"),
                     errorURLs.toStringList(),
                     i18n("Remove EXIF Metadata"));  
+    }
+}
+
+void Plugin_MetadataEdit::slotImportExif()
+{
+    KIPI::ImageCollection images = m_interface->currentSelection();
+
+    if ( !images.isValid() || images.images().isEmpty() )
+        return;
+
+    KURL importEXIFFile = KFileDialog::getOpenURL(KGlobalSettings::documentPath(),
+                                                  QString::null, kapp->activeWindow(),
+                                                  i18n("Select File to Import EXIF metadata") );
+    if( importEXIFFile.isEmpty() )
+       return;
+    
+    KIPIPlugins::Exiv2Iface exiv2Iface;
+    if (!exiv2Iface.load(importEXIFFile.path()))
+    {
+        KMessageBox::error(kapp->activeWindow(), 
+                           i18n("Cannot load metadata from \"%1\"").arg(importEXIFFile.fileName()), 
+                           i18n("Import EXIF Metadata"));    
+        return;
+    }
+    
+    QByteArray exifData = exiv2Iface.getExif();
+    if (exifData.isEmpty())
+    {
+        KMessageBox::error(kapp->activeWindow(), 
+                           i18n("\"%1\" do not have EXIF metadata").arg(importEXIFFile.fileName()), 
+                           i18n("Import EXIF Metadata"));    
+        return;
+    }        
+
+    if (KMessageBox::warningYesNo(
+                     kapp->activeWindow(),
+                     i18n("EXIF metadata from current selected pictures will be definitivly "
+                          "remplaced by the EXIF content of \"%1\".\n"
+                          "Do you want to continue ?").arg(importEXIFFile.fileName()),
+                     i18n("Import EXIF Metadata")) != KMessageBox::Yes)
+        return;
+
+
+    KURL::List imageURLs = images.images();
+    KURL::List updatedURLs;
+    KURL::List errorURLs;
+
+    for( KURL::List::iterator it = imageURLs.begin() ; 
+         it != imageURLs.end(); ++it)
+    {
+        KURL url = *it;
+        bool ret = false;
+
+        if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
+        {
+            ret = true;
+            KIPIPlugins::Exiv2Iface exiv2Iface;
+            ret &= exiv2Iface.load(url.path());
+            ret &= exiv2Iface.setExif(exifData);
+            ret &= exiv2Iface.save(url.path());
+        }
+        
+        if (!ret)
+            errorURLs.append(url);
+        else 
+            updatedURLs.append(url);
+    }
+
+    // We use kipi interface refreshImages() method to tell to host than 
+    // metadata from pictures have changed and need to be re-read.
+    
+    m_interface->refreshImages(updatedURLs);
+
+    if (!errorURLs.isEmpty())
+    {
+        KMessageBox::errorList(
+                    kapp->activeWindow(),
+                    i18n("Unable to set EXIF metadata from:"),
+                    errorURLs.toStringList(),
+                    i18n("Import EXIF Metadata"));  
     }
 }
 
@@ -229,7 +327,7 @@ void Plugin_MetadataEdit::slotRemoveIptc()
     }
 
     // We use kipi interface refreshImages() method to tell to host than 
-    // metadata from pictures have changed and need to be re-readed.
+    // metadata from pictures have changed and need to be re-read.
     
     m_interface->refreshImages(updatedURLs);
 
@@ -240,6 +338,86 @@ void Plugin_MetadataEdit::slotRemoveIptc()
                     i18n("Unable to remove IPTC metadata from:"),
                     errorURLs.toStringList(),
                     i18n("Remove IPTC Metadata"));  
+    }
+}
+
+void Plugin_MetadataEdit::slotImportIptc()
+{
+    KIPI::ImageCollection images = m_interface->currentSelection();
+
+    if ( !images.isValid() || images.images().isEmpty() )
+        return;
+
+    KURL importIPTCFile = KFileDialog::getOpenURL(KGlobalSettings::documentPath(),
+                                                  QString::null, kapp->activeWindow(),
+                                                  i18n("Select File to Import IPTC metadata") );
+    if( importIPTCFile.isEmpty() )
+       return;
+    
+    KIPIPlugins::Exiv2Iface exiv2Iface;
+    if (!exiv2Iface.load(importIPTCFile.path()))
+    {
+        KMessageBox::error(kapp->activeWindow(), 
+                           i18n("Cannot load metadata from \"%1\"").arg(importIPTCFile.fileName()), 
+                           i18n("Import IPTC Metadata"));    
+        return;
+    }
+    
+    QByteArray iptcData = exiv2Iface.getIptc();
+    if (iptcData.isEmpty())
+    {
+        KMessageBox::error(kapp->activeWindow(), 
+                           i18n("\"%1\" do not have IPTC metadata").arg(importIPTCFile.fileName()), 
+                           i18n("Import IPTC Metadata"));    
+        return;
+    }        
+
+    if (KMessageBox::warningYesNo(
+                     kapp->activeWindow(),
+                     i18n("IPTC metadata from current selected pictures will be definitivly "
+                          "remplaced by the IPTC content of \"%1\".\n"
+                          "Do you want to continue ?").arg(importIPTCFile.fileName()),
+                     i18n("Import IPTC Metadata")) != KMessageBox::Yes)
+        return;
+
+
+    KURL::List imageURLs = images.images();
+    KURL::List updatedURLs;
+    KURL::List errorURLs;
+
+    for( KURL::List::iterator it = imageURLs.begin() ; 
+         it != imageURLs.end(); ++it)
+    {
+        KURL url = *it;
+        bool ret = false;
+
+        if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
+        {
+            ret = true;
+            KIPIPlugins::Exiv2Iface exiv2Iface;
+            ret &= exiv2Iface.load(url.path());
+            ret &= exiv2Iface.setIptc(iptcData);
+            ret &= exiv2Iface.save(url.path());
+        }
+        
+        if (!ret)
+            errorURLs.append(url);
+        else 
+            updatedURLs.append(url);
+    }
+
+    // We use kipi interface refreshImages() method to tell to host than 
+    // metadata from pictures have changed and need to be re-read.
+    
+    m_interface->refreshImages(updatedURLs);
+
+    if (!errorURLs.isEmpty())
+    {
+        KMessageBox::errorList(
+                    kapp->activeWindow(),
+                    i18n("Unable to set IPTC metadata from:"),
+                    errorURLs.toStringList(),
+                    i18n("Import IPTC Metadata"));  
     }
 }
 
