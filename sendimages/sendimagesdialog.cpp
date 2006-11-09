@@ -442,6 +442,7 @@ void SendImagesDialog::setupEmailOptions(void)
     m_imagesResize->insertItem(i18n("Medium (800 pixels)"));
     m_imagesResize->insertItem(i18n("Big (1024 pixels)"));
     m_imagesResize->insertItem(i18n("Very Big (1280 pixels)"));
+    m_imagesResize->insertItem(i18n("Huge - for printing (1600 pixels)"));
     m_imagesResize->setCurrentText (i18n("Medium (800 pixels)"));
     whatsThis = i18n("<p>Select here the images size to send:<p>"
                      "<b>%1</b>: use this if you have a very slow internet "
@@ -457,7 +458,8 @@ void SendImagesDialog::setupEmailOptions(void)
                      .arg(i18n("small (640 pixels)"))
                      .arg(i18n("medium (800 pixels)"))
                      .arg(i18n("big (1024 pixels)"))
-                     .arg(i18n("very big (1280 pixels)"));
+                     .arg(i18n("very big (1280 pixels)"))
+		     .arg(i18n("huge - for printing (1600 pixels)"));
     QWhatsThis::add( m_imagesResize, whatsThis );
 
     m_labelImageSize = new QLabel( i18n("New images size:"), groupBox2);

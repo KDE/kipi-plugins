@@ -113,7 +113,7 @@ void SendImages::prepare(void)
     m_imageFormat = m_sendImagesDialog->m_imagesFormat->currentText();
     m_sizeFactor = getSize( m_sendImagesDialog->m_imagesResize->currentItem() );
     m_imageCompression = m_sendImagesDialog->m_imageCompression->value();
-    m_attachmentlimit = m_sendImagesDialog->m_attachmentlimit->value()*800000-2000; ///Base64-encoding needs a lot of space
+    m_attachmentlimit = m_sendImagesDialog->m_attachmentlimit->value()*770000-2000; ///Base64-encoding needs a lot of space
 }
 
 
@@ -665,6 +665,9 @@ int SendImages::getSize ( int choice )
        case 4:
           return (1280);
           break;
+       case 5:
+	  return (1600);
+	  break;
        default:
           return (800); // Default value...
           break;
