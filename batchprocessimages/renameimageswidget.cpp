@@ -64,16 +64,8 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
       m_interface(interface),
       m_urlList(urlList)
 {
-    m_listView->addColumn(i18n("Album"));
-    m_listView->addColumn(i18n("Source Image"));
-    m_listView->addColumn(i18n("Target Image"));
-    m_listView->addColumn(i18n("Result"));
-    m_listView->setResizeMode(QListView::LastColumn);
-    m_listView->setSelectionMode(QListView::Single);
-    m_listView->setAllColumnsShowFocus ( true );
+    m_listView->setSorting(-1);
 
-    m_removeButton->setEnabled(false);
-    
     readSettings();
     
     connect(m_listView, SIGNAL(doubleClicked(QListViewItem*)),
@@ -235,7 +227,11 @@ void RenameImagesWidget::updateListing()
         }
     };
     
+    // Update list order. We need to set the sorting column temporarily
+    // otherwise sort() won't do anything
+    m_listView->setSorting(1);
     m_listView->sort();
+    m_listView->setSorting(-1);
 
     int pos = 0;
     for (QListViewItem* it = m_listView->firstChild(); it;
