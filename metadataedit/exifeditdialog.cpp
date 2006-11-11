@@ -247,11 +247,12 @@ void EXIFEditDialog::slotItemChanged()
     d->page_adjust->setEnabled(!d->isReadOnly);
     enableButton(Apply, !d->isReadOnly);
     
-    setCaption(i18n("%1 (%2/%3) - Edit EXIF Metadata%4")
+    setCaption(QString("%1 (%2/%3) - %4")
                .arg((*d->currItem).filename())
                .arg(d->urls.findIndex(*(d->currItem))+1)
                .arg(d->urls.count())
-               .arg(d->isReadOnly ? i18n(" - (read only)") : QString::null));
+               .arg(i18n("Edit EXIF Metadata")) + 
+               (d->isReadOnly ? QString(" - ") + i18n("(read only)") : QString::null));
     enableButton(User1, *(d->currItem) != d->urls.last());
     enableButton(User2, *(d->currItem) != d->urls.first());
     enableButton(Apply, false);
