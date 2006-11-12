@@ -32,6 +32,7 @@
 #include "frmprintwizardbase.h"
 
 class QPushButton;
+class KProcess;
 
 namespace KIPIPrintWizardPlugin
 {
@@ -55,7 +56,7 @@ private:
   QPtrList<TPhotoSize> m_photoSizes;
 
   KPrinter::PageSize m_pageSize;
-
+  KProcess           *m_Proc;
   QString      m_tempPath;
 
   int m_currentPreviewPage;

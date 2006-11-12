@@ -26,6 +26,7 @@ extern "C"
 
 #include <qlabel.h>
 #include <qpushbutton.h>
+#include <qcheckbox.h>
 #include <qspinbox.h>
 #include <qpainter.h>
 #include <qbuttongroup.h>
@@ -34,6 +35,8 @@ extern "C"
 
 // Include files for KDE
 
+#include <kprogress.h>
+#include <kprocess.h>
 #include <ksimpleconfig.h>
 #include <klistbox.h>
 #include <kprinter.h>
@@ -152,6 +155,9 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
   connect(BtnPreviewPageDown, SIGNAL(clicked(void)),
           this, SLOT(BtnPreviewPageDown_clicked(void)));
   loadSettings();
+
+  m_Proc = new KProcess;
+  *m_Proc << "kjobviewer" << "--all";
 }
 
 FrmPrintWizard::~FrmPrintWizard()
@@ -542,6 +548,9 @@ void FrmPrintWizard::printPhotos(QPtrList<TPhoto> photos, QPtrList<QRect> layout
   p.end();
 
   this->finishButton()->setEnabled(true);
+  if (m_kjobviewer->isChecked())
+    if ( !m_Proc->start() )
+      kdDebug( 51000 ) << "Error running kjobviewr\n";
   LblPrintProgress->setText(i18n("Complete.  Click Finish to exit the Print Wizard."));
 }
 
@@ -615,7 +624,12 @@ QStringList FrmPrintWizard::printPhotosToFile(QPtrList<TPhoto> photos, QString &
   if (printing)
     LblPrintProgress->setText(i18n("Printing Canceled."));
   else
+  {
+    if (m_kjobviewer->isChecked())
+      if ( !m_Proc->start() )
+        kdDebug( 51000 ) << "Error launching kjobviewr\n";
     LblPrintProgress->setText(i18n("Complete.  Click Finish to exit the Print Wizard."));
+  }
   return files;
 }
 
@@ -654,6 +668,9 @@ void FrmPrintWizard::loadSettings()
   else
     ListPhotoSizes->setCurrentItem(0);
 
+  // kjobviewer
+  m_kjobviewer->setChecked(config.readBoolEntry("KjobViewer", true));
+
   EditCopies->setValue(config.readNumEntry("Copies", EditCopies->value()));
 }
 
@@ -687,6 +704,9 @@ void FrmPrintWizard::saveSettings()
   // photo size
   config.writeEntry("PhotoSize", ListPhotoSizes->currentText());
   config.writeEntry("Copies", EditCopies->value());
+
+  // kjobviewer
+  config.writeEntry("KjobViewer", m_kjobviewer->isChecked());
 
 }
 
