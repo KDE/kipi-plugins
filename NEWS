@@ -51,7 +51,8 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 014 ==> 135353 : GPS Sync: the name of the plugin is missleading.
 015 ==> 136257 : MetadataEdit: Editing the EXIF-data overwrites all the data for selected files.
 016 ==> 128341 : HTMLExport: kipi html export should not resize images if "resize target images" is not checked.
-017 ==> 
+017 ==> 127476 : Printing as very very slow (added a workaround running kjobviewer)
+018 ==> 
 
 
 v 0.1.2                                                           2006-07-08
