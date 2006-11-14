@@ -32,9 +32,6 @@
 
 // Include files for KDE
 
-#include <kaboutdata.h>
-#include <khelpmenu.h>
-#include <kpopupmenu.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kapplication.h>

@@ -17,7 +17,7 @@ kipiplugin_galleryexport_la_SOURCES = plugin_galleryexport.cpp \
 kipiplugin_galleryexport_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \
 	-lkwalletclient $(LIB_KHTML) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
-kipiplugin_galleryexport_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+kipiplugin_galleryexport_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
 
 kde_services_DATA = kipiplugin_galleryexport.desktop
 

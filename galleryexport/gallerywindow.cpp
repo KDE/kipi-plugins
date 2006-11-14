@@ -53,6 +53,7 @@
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "galleries.h"
 #include "gallerylist.h"
@@ -77,17 +78,17 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
 
     // About data and help button.
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Gallery Export"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin to export image collection to remote Gallery server."),
-                                       KAboutData::License_GPL,
-                                       "(c) 2004-2005, Renchi Raju",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
+    KIPIPlugins::KPAboutData* about = new KIPIPlugins::KPAboutData(I18N_NOOP("Gallery Export"),
+                                        NULL,
+                                        KAboutData::License_GPL,
+                                        I18N_NOOP("A Kipi plugin to export image collection to remote Gallery server."),
+                                        "(c) 2003-2005, Renchi Raju");
 
-    about->addAuthor("Renchi Raju", I18N_NOOP("Author and maintainer"),
+    about->addAuthor("Renchi Raju", I18N_NOOP("Author"),
                      "renchi at pooh dot tam dot uiuc dot edu");
+
+    about->addAuthor("Colin Guthrie", I18N_NOOP("Maintainer"),
+                     "kde at colin dot guthr dot ie");
 
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
