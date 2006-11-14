@@ -27,6 +27,7 @@
 #include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kpopupmenu.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
@@ -86,7 +87,7 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
                                      actionCollection(),
                                      "importexif"));
 
-    m_actionMetadataEdit->insert(new KActionSeparator());
+    m_actionMetadataEdit->popupMenu()->insertSeparator();
 
     m_actionMetadataEdit->insert(new KAction (i18n("Edit IPTC..."),
                                      0,
