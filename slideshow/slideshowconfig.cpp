@@ -46,6 +46,7 @@
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
@@ -60,14 +61,11 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const 
 {
     // About data and help button.
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Slide Show"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin for image slideshows"),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2004, Renchi Raju",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
+    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("Slide Show"),
+                                        NULL,
+                                        KAboutData::License_GPL,
+                                        I18N_NOOP("A Kipi plugin for image slideshow"),
+                                        "(c) 2003-2004, Renchi Raju");
 
     about->addAuthor("Renchi Raju", I18N_NOOP("Author"),
                      "renchi@pooh.tam.uiuc.edu");
