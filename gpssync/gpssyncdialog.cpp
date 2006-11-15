@@ -35,7 +35,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <ksqueezedtextlabel.h>
 #include <kiconloader.h>
@@ -51,6 +50,7 @@
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "gpslistviewitem.h"
 #include "gpsdataparser.h"
@@ -241,14 +241,11 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("GPS Sync"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Plugin to synchronize pictures metadata with a GPS device"),
+    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("GPS Sync"),
+                                       NULL,
                                        KAboutData::License_GPL,
-                                       "(c) 2006, Gilles Caulier",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
+                                       I18N_NOOP("A Plugin to synchronize pictures metadata with a GPS device"),
+                                       "(c) 2006, Gilles Caulier");
 
     about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
                      "caulier dot gilles at kdemail dot net");

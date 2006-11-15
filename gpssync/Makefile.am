@@ -18,7 +18,7 @@ kipiplugin_gpssync_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface/li
 	       $(LIBKIPI_LIBS) $(LIB_KDEUI) $(LIB_KHTML) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
-kipiplugin_gpssync_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+kipiplugin_gpssync_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
 
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = kipiplugin_gpssync.desktop
