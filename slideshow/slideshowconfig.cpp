@@ -61,11 +61,11 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const 
 {
     // About data and help button.
 
-    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("Slide Show"),
-                                        NULL,
-                                        KAboutData::License_GPL,
-                                        I18N_NOOP("A Kipi plugin for image slideshow"),
-                                        "(c) 2003-2004, Renchi Raju");
+    about = new KIPIPlugins::KPAboutData(I18N_NOOP("Slide Show"),
+                                         NULL,
+                                         KAboutData::License_GPL,
+                                         I18N_NOOP("A Kipi plugin for image slideshow"),
+                                         "(c) 2003-2004, Renchi Raju");
 
     about->addAuthor("Renchi Raju", I18N_NOOP("Author"),
                      "renchi@pooh.tam.uiuc.edu");
@@ -100,6 +100,8 @@ SlideShowConfig::~SlideShowConfig()
     if (config_) {
         delete config_;
     }
+    
+    delete about;
 }
 
 

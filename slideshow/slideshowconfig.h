@@ -26,10 +26,10 @@
 
 #include <qstring.h>
 
-// SlideShow includes
+// local includes
 
 #include "slideshowconfigbase.h"
-
+#include "kpaboutdata.h"
 
 namespace KIPISlideShowPlugin
 {
@@ -49,6 +49,8 @@ private:
     void loadEffectNamesGL();
     void readSettings();
     void saveSettings();
+
+    KIPIPlugins::KPAboutData * about;
 
 private slots:
 
