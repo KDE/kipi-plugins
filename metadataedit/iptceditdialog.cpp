@@ -35,10 +35,10 @@
 #include <kmessagebox.h>
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
-#include <kaboutdata.h>
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "exiv2iface.h"
 #include "iptccaption.h"
@@ -158,14 +158,11 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Edit Metadata"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Plugin to edit pictures metadata"),
-                                       KAboutData::License_GPL,
-                                       "(c) 2006, Gilles Caulier",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
+    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("Edit Metadata"),
+                                            NULL,
+                                            KAboutData::License_GPL,
+                                            I18N_NOOP("A Plugin to edit pictures metadata"),
+                                            "(c) 2006, Gilles Caulier");
 
     about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
                      "caulier dot gilles at kdemail dot net");
