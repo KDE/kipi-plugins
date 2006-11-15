@@ -49,7 +49,6 @@ extern "C"
 #include <kconfig.h>
 #include <kio/renamedlg.h>
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
@@ -58,6 +57,7 @@ extern "C"
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "previewwidget.h"
 #include "dcrawiface.h"
@@ -134,17 +134,14 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/, const QStri
 
     QPushButton *helpButton = actionButton( Help );
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Raw Image Converter"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin for Raw image conversion\n"
-                                                 "This plugin uses the Dave Coffin Raw photo "
-                                                 "decoder program \"dcraw\""),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2005, Renchi Raju\n"
-                                       "(c) 2006, Gilles Caulier",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
+    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("Raw Image Converter"),
+                                            NULL,
+                                            KAboutData::License_GPL,
+                                            I18N_NOOP("A Kipi plugin for Raw image conversion\n"
+                                                      "This plugin uses the Dave Coffin Raw photo "
+                                                      "decoder program \"dcraw\""),
+                                            "(c) 2003-2005, Renchi Raju\n"
+                                            "(c) 2006, Gilles Caulier");
 
     about->addAuthor("Renchi Raju", I18N_NOOP("Original author"),
                      "renchi@pooh.tam.uiuc.edu");

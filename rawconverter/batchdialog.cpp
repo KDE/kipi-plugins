@@ -55,13 +55,13 @@ extern "C"
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "dcrawiface.h"
 #include "dcrawsettingswidget.h"
@@ -144,18 +144,15 @@ BatchDialog::BatchDialog(QWidget* /*parent*/, const QString& dcrawVersion)
 
     QPushButton *helpButton = actionButton( Help );
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Raw Images Batch Converter"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin for Raw images conversion\n"
-                                                 "This plugin uses the Dave Coffin Raw photo "
-                                                 "decoder program \"dcraw\""),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2005, Renchi Raju\n"
-                                       "(c) 2006, Gilles Caulier",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
-
+    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("Raw Images Batch Converter"),
+                                        NULL,
+                                        KAboutData::License_GPL,
+                                        I18N_NOOP("A Kipi plugin for Raw images conversion\n"
+                                                  "This plugin uses the Dave Coffin Raw photo "
+                                                  "decoder program \"dcraw\""),
+                                        "(c) 2003-2005, Renchi Raju\n"
+                                        "(c) 2006, Gilles Caulier");
+    
     about->addAuthor("Renchi Raju", I18N_NOOP("Original author"),
                      "renchi@pooh.tam.uiuc.edu");
 
