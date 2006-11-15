@@ -56,7 +56,6 @@
 #include <kbuttonbox.h>
 #include <ksqueezedtextlabel.h>
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
 #include <kurlrequester.h>
@@ -67,6 +66,7 @@
 
 // Local include files
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "listimageserrordialog.h"
 #include "sendimagesdialog.h"
@@ -153,14 +153,11 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
 
     // About data and help button.
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Send Images"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin for emailing images"),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2005, Gilles Caulier",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
+    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("Send Images"),
+                                            NULL,
+                                            KAboutData::License_GPL,
+                                            I18N_NOOP("A Kipi plugin for emailing images"),
+                                            "(c) 2003-2005, Gilles Caulier");
 
     about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at free.fr");
