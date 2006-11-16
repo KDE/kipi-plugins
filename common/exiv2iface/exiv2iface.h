@@ -33,10 +33,10 @@
 #include <qimage.h>
 #include <qdatetime.h>
 
-// Exiv2 includes.
-
-#include <exiv2/types.hpp>
-#include <exiv2/exif.hpp>
+namespace Exiv2
+{
+    class Exifdatum;
+}
 
 namespace KIPIPlugins
 {
