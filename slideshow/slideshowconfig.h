@@ -50,7 +50,7 @@ private:
     void readSettings();
     void saveSettings();
 
-    KIPIPlugins::KPAboutData * about;
+    KIPIPlugins::KPAboutData * m_about;
 
 private slots:
 

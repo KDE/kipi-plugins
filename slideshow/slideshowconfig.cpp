@@ -61,21 +61,21 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const 
 {
     // About data and help button.
 
-    about = new KIPIPlugins::KPAboutData(I18N_NOOP("Slide Show"),
-                                         NULL,
-                                         KAboutData::License_GPL,
-                                         I18N_NOOP("A Kipi plugin for image slideshow"),
-                                         "(c) 2003-2004, Renchi Raju");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Slide Show"),
+                                             NULL,
+                                             KAboutData::License_GPL,
+                                             I18N_NOOP("A Kipi plugin for image slideshow"),
+                                             "(c) 2003-2004, Renchi Raju");
 
-    about->addAuthor("Renchi Raju", I18N_NOOP("Author"),
+    m_about->addAuthor("Renchi Raju", I18N_NOOP("Author"),
                      "renchi@pooh.tam.uiuc.edu");
-    about->addAuthor("Valerio Fuoglio", I18N_NOOP("Maintainer"),
+    m_about->addAuthor("Valerio Fuoglio", I18N_NOOP("Maintainer"),
                      "valerio.fuoglio@kdemail.net");
 
-     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
-     helpMenu->menu()->removeItemAt(0);
-     helpMenu->menu()->insertItem(i18n("SlideShow Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-     m_helpButton->setPopup( helpMenu->menu() );
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("SlideShow Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
 
 
     // Switch to selected files only (it depends on allowSelectedOnly)
@@ -100,8 +100,8 @@ SlideShowConfig::~SlideShowConfig()
     if (config_) {
         delete config_;
     }
-    
-    delete about;
+
+    delete m_about;
 }
 
 
