@@ -31,6 +31,10 @@
 
 #include <kdialogbase.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 class QCloseEvent;
 class QCustomEvent;
 class QTimer;
@@ -106,6 +110,8 @@ private:
     DcrawSettingsWidget *m_decodingSettingsBox;
 
     SaveSettingsWidget  *m_saveSettingsBox;
+
+    KIPIPlugins::KPAboutData *m_about; 
 };
 
 } // NameSpace KIPIRawConverterPlugin

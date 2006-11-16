@@ -134,22 +134,22 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/, const QStri
 
     QPushButton *helpButton = actionButton( Help );
 
-    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("Raw Image Converter"),
-                                            NULL,
-                                            KAboutData::License_GPL,
-                                            I18N_NOOP("A Kipi plugin for Raw image conversion\n"
-                                                      "This plugin uses the Dave Coffin Raw photo "
-                                                      "decoder program \"dcraw\""),
-                                            "(c) 2003-2005, Renchi Raju\n"
-                                            "(c) 2006, Gilles Caulier");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Raw Image Converter"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin for Raw image conversion\n"
+                                                     "This plugin uses the Dave Coffin Raw photo "
+                                                     "decoder program \"dcraw\""),
+                                           "(c) 2003-2005, Renchi Raju\n"
+                                           "(c) 2006, Gilles Caulier");
 
-    about->addAuthor("Renchi Raju", I18N_NOOP("Original author"),
-                     "renchi@pooh.tam.uiuc.edu");
+    m_about->addAuthor("Renchi Raju", I18N_NOOP("Original author"),
+                       "renchi@pooh.tam.uiuc.edu");
 
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Maintainer"),
-                     "caulier dot gilles at kdemail dot net");
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Maintainer"),
+                       "caulier dot gilles at kdemail dot net");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("RAW Converter Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     helpButton->setPopup( helpMenu->menu() );
@@ -188,6 +188,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/, const QStri
 
 SingleDialog::~SingleDialog()
 {
+    delete m_about;
     delete m_thread;
 }
 
