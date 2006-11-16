@@ -32,6 +32,10 @@
 
 #include <kdialogbase.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 class QTimer;
 class QWidget;
 class QCustomEvent;
@@ -106,12 +110,14 @@ private:
     KListView           *m_listView;
 
     RawItem             *m_currentConvertItem;
-   
+
     ActionThread        *m_thread;
 
     DcrawSettingsWidget *m_decodingSettingsBox;
 
     SaveSettingsWidget  *m_saveSettingsBox;
+
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 } // NameSpace KIPIRawConverterPlugin

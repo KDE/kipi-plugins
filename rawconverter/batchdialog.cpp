@@ -138,28 +138,28 @@ BatchDialog::BatchDialog(QWidget* /*parent*/, const QString& dcrawVersion)
 
     mainLayout->setColStretch(0, 10);
     mainLayout->setRowStretch(5, 10);
-    
+
     // ---------------------------------------------------------------
     // About data and help button.
 
     QPushButton *helpButton = actionButton( Help );
 
-    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("Raw Images Batch Converter"),
-                                        NULL,
-                                        KAboutData::License_GPL,
-                                        I18N_NOOP("A Kipi plugin for Raw images conversion\n"
-                                                  "This plugin uses the Dave Coffin Raw photo "
-                                                  "decoder program \"dcraw\""),
-                                        "(c) 2003-2005, Renchi Raju\n"
-                                        "(c) 2006, Gilles Caulier");
-    
-    about->addAuthor("Renchi Raju", I18N_NOOP("Original author"),
-                     "renchi@pooh.tam.uiuc.edu");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Raw Images Batch Converter"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin for Raw images conversion\n"
+                                                     "This plugin uses the Dave Coffin Raw photo "
+                                                     "decoder program \"dcraw\""),
+                                           "(c) 2003-2005, Renchi Raju\n"
+                                           "(c) 2006, Gilles Caulier");
 
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Maintainer"),
-                     "caulier dot gilles at kdemail dot net");
+    m_about->addAuthor("Renchi Raju", I18N_NOOP("Original author"),
+                       "renchi@pooh.tam.uiuc.edu");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Maintainer"),
+                       "caulier dot gilles at kdemail dot net");
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Raw Converter Handbook"),
                                  this, SLOT(slotHelp()), 0, -1, 0);
@@ -191,6 +191,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/, const QString& dcrawVersion)
 
 BatchDialog::~BatchDialog()
 {
+    delete m_about;
     delete m_thread;
 }
 
