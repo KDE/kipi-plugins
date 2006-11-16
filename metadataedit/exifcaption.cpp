@@ -178,6 +178,15 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     connect(d->userCommentCheck, SIGNAL(toggled(bool)),
             d->userCommentEdit, SLOT(setEnabled(bool)));
 
+    connect(d->userCommentCheck, SIGNAL(toggled(bool)),
+            d->syncJFIFCommentCheck, SLOT(setEnabled(bool)));
+
+    connect(d->userCommentCheck, SIGNAL(toggled(bool)),
+            d->syncHostCommentCheck, SLOT(setEnabled(bool)));
+
+    connect(d->userCommentCheck, SIGNAL(toggled(bool)),
+            d->syncIPTCCaptionCheck, SLOT(setEnabled(bool)));
+
     // --------------------------------------------------------
 
     connect(d->documentNameCheck, SIGNAL(toggled(bool)),
