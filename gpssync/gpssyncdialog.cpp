@@ -76,6 +76,8 @@ public:
         interpolateBox = 0;
         maxTimeInput   = 0;
         maxTimeLabel   = 0;
+
+        about = 0;
     }
 
     QLabel             *gpxPointsLabel;
@@ -93,6 +95,8 @@ public:
     KSqueezedTextLabel *gpxFileName;
 
     KIPI::Interface    *interface;
+
+    KIPIPlugins::KPAboutData    *about; 
 
     GPSDataParser       gpxParser;
 };
@@ -241,16 +245,16 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("GPS Sync"),
-                                       NULL,
-                                       KAboutData::License_GPL,
-                                       I18N_NOOP("A Plugin to synchronize pictures metadata with a GPS device"),
-                                       "(c) 2006, Gilles Caulier");
+    d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("GPS Sync"),
+                                            NULL,
+                                            KAboutData::License_GPL,
+                                            I18N_NOOP("A Plugin to synchronize pictures metadata with a GPS device"),
+                                            "(c) 2006, Gilles Caulier");
 
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
-                     "caulier dot gilles at kdemail dot net");
+    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
+                        "caulier dot gilles at kdemail dot net");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("GPS Sync Handbook"),
                                  this, SLOT(slotHelp()), 0, -1, 0);
@@ -272,6 +276,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
 
 GPSSyncDialog::~GPSSyncDialog()
 {
+    delete d->about;
     delete d;
 }
 
