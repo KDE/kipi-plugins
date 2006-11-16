@@ -69,6 +69,8 @@ public:
         isReadOnly    = false;
         interface     = 0;
 
+        about         = 0;
+
         page_caption  = 0;
         page_datetime = 0;
         page_lens     = 0;
@@ -96,7 +98,7 @@ public:
     QFrame               *page_device;
     QFrame               *page_light;
     QFrame               *page_adjust;
-    
+
     KURL::List            urls;
 
     KURL::List::iterator  currItem;
@@ -109,6 +111,8 @@ public:
     EXIFAdjust           *adjustPage;
 
     KIPI::Interface      *interface;
+
+    KIPIPlugins::KPAboutData *about;
 };
 
 EXIFEditDialog::EXIFEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface *iface)
@@ -153,16 +157,16 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface
     // ---------------------------------------------------------------
     // About data and help button.
 
-    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("Edit Metadata"),
-                                           NULL,
-                                           KAboutData::License_GPL,
-                                           I18N_NOOP("A Plugin to edit pictures metadata"),
-                                           "(c) 2006, Gilles Caulier");
+    d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("Edit Metadata"),
+                                            NULL,
+                                            KAboutData::License_GPL,
+                                            I18N_NOOP("A Plugin to edit pictures metadata"),
+                                            "(c) 2006, Gilles Caulier");
 
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
-                     "caulier dot gilles at kdemail dot net");
+    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
+                        "caulier dot gilles at kdemail dot net");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Edit Metadata Handbook"),
                                  this, SLOT(slotHelp()), 0, -1, 0);
@@ -196,6 +200,7 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface
 
 EXIFEditDialog::~EXIFEditDialog()
 {
+    delete d->about;
     delete d;
 }
 

@@ -72,6 +72,8 @@ public:
         page_origin   = 0;
         page_datetime = 0;
 
+        about         = 0;
+
         captionPage   = 0;
         subjectsPage  = 0;
         keywordsPage  = 0;
@@ -98,6 +100,8 @@ public:
     KURL::List            urls;
 
     KURL::List::iterator  currItem;
+
+    KIPIPlugins::KPAboutData *about;
 
     IPTCCaption          *captionPage;
     IPTCSubjects         *subjectsPage;
@@ -158,16 +162,16 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("Edit Metadata"),
+    d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("Edit Metadata"),
                                             NULL,
                                             KAboutData::License_GPL,
                                             I18N_NOOP("A Plugin to edit pictures metadata"),
                                             "(c) 2006, Gilles Caulier");
 
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
-                     "caulier dot gilles at kdemail dot net");
+    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
+                        "caulier dot gilles at kdemail dot net");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Edit Metadata Handbook"),
                                  this, SLOT(slotHelp()), 0, -1, 0);
@@ -207,6 +211,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls)
 
 IPTCEditDialog::~IPTCEditDialog()
 {
+    delete d->about;
     delete d;
 }
 
