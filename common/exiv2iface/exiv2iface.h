@@ -26,6 +26,10 @@
 #ifndef EXIV2IFACE_H
 #define EXIV2IFACE_H
 
+// C++ includes.
+
+#include <string>
+
 // QT includes.
 
 #include <qcstring.h>
