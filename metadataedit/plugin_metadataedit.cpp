@@ -137,7 +137,7 @@ void Plugin_MetadataEdit::slotEditExif()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KIPIMetadataEditPlugin::EXIFEditDialog dialog(kapp->activeWindow(), images.images());
+    KIPIMetadataEditPlugin::EXIFEditDialog dialog(kapp->activeWindow(), images.images(), m_interface);
     dialog.exec();
     m_interface->refreshImages(images.images());
 }

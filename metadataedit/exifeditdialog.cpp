@@ -36,6 +36,11 @@
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
 
+// LibKIPI includes.
+
+#include <libkipi/imagecollection.h>
+#include <libkipi/plugin.h>
+
 // Local includes.
 
 #include "kpaboutdata.h"
@@ -62,6 +67,8 @@ public:
     {
         modified      = false;
         isReadOnly    = false;
+        interface     = 0;
+
         page_caption  = 0;
         page_datetime = 0;
         page_lens     = 0;
@@ -81,6 +88,7 @@ public:
     bool                  isReadOnly;
 
     QByteArray            exifData;
+    QByteArray            iptcData;
 
     QFrame               *page_caption;
     QFrame               *page_datetime;
@@ -99,9 +107,11 @@ public:
     EXIFDevice           *devicePage;
     EXIFLight            *lightPage;
     EXIFAdjust           *adjustPage;
+
+    KIPI::Interface      *interface;
 };
 
-EXIFEditDialog::EXIFEditDialog(QWidget* parent, KURL::List urls)
+EXIFEditDialog::EXIFEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface *iface)
               : KDialogBase(IconList, QString::null, 
                             urls.count() > 1 ? Help|User1|User2|Stretch|Ok|Apply|Close 
                                              : Help|Stretch|Ok|Apply|Close, 
@@ -110,8 +120,9 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KURL::List urls)
                             KStdGuiItem::guiItem(KStdGuiItem::Back) )
 {
     d = new EXIFEditDialogDialogPrivate;
-    d->urls     = urls;
-    d->currItem = d->urls.begin();
+    d->urls      = urls;
+    d->interface = iface;
+    d->currItem  = d->urls.begin();
 
     // ---------------------------------------------------------------
 
@@ -211,6 +222,9 @@ void EXIFEditDialog::readSettings()
     KConfig config("kipirc");
     config.setGroup("Metadata Edit Settings");
     showPage(config.readNumEntry("EXIF Edit Page", 0));
+    d->captionPage->setCheckedSyncJFIFComment(config.readBoolEntry("Sync JFIF Comment", true));
+    d->captionPage->setCheckedSyncHostComment(config.readBoolEntry("Sync Host Comment", true));
+    d->captionPage->setCheckedIPTCCaption(config.readBoolEntry("Sync IPTC Caption", true));
     resize(configDialogSize(config, QString("EXIF Edit Dialog")));
 }
 
@@ -219,6 +233,9 @@ void EXIFEditDialog::saveSettings()
     KConfig config("kipirc");
     config.setGroup("Metadata Edit Settings");
     config.writeEntry("EXIF Edit Page", activePageIndex());
+    config.writeEntry("Sync JFIF Comment", d->captionPage->syncJFIFCommentIsChecked());
+    config.writeEntry("Sync Host Comment", d->captionPage->syncHostCommentIsChecked());
+    config.writeEntry("Sync IPTC Caption", d->captionPage->syncIPTCCaptionIsChecked());
     saveDialogSize(config, QString("EXIF Edit Dialog"));
     config.sync();
 }
@@ -228,6 +245,7 @@ void EXIFEditDialog::slotItemChanged()
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.load((*d->currItem).path());
     d->exifData = exiv2Iface.getExif();
+    d->iptcData = exiv2Iface.getIptc();
     d->captionPage->readMetadata(d->exifData);
     d->datetimePage->readMetadata(d->exifData);
     d->lensPage->readMetadata(d->exifData);
@@ -259,7 +277,13 @@ void EXIFEditDialog::slotApply()
 {
     if (d->modified && !d->isReadOnly) 
     {
-        d->captionPage->applyMetadata(d->exifData);
+        if (d->captionPage->syncHostCommentIsChecked())
+        {
+            KIPI::ImageInfo info = d->interface->info(*d->currItem);
+            info.setDescription(d->captionPage->getExifUserComments());
+        }
+
+        d->captionPage->applyMetadata(d->exifData, d->iptcData);
         d->datetimePage->applyMetadata(d->exifData);
         d->lensPage->applyMetadata(d->exifData);
         d->devicePage->applyMetadata(d->exifData);
@@ -268,6 +292,7 @@ void EXIFEditDialog::slotApply()
         KIPIPlugins::Exiv2Iface exiv2Iface;
         exiv2Iface.load((*d->currItem).path());
         exiv2Iface.setExif(d->exifData);
+        exiv2Iface.setIptc(d->iptcData);
         exiv2Iface.save((*d->currItem).path());
         d->modified = false;
     }
@@ -298,6 +323,7 @@ void EXIFEditDialog::slotModified()
 
 void EXIFEditDialog::slotOk()
 {
+    slotApply();
     saveSettings();
     accept();
 }

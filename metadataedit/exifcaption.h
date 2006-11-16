@@ -25,6 +25,7 @@
 
 #include <qwidget.h>
 #include <qcstring.h>
+#include <qstring.h>
 
 namespace KIPIMetadataEditPlugin
 {
@@ -40,8 +41,18 @@ public:
     EXIFCaption(QWidget* parent);
     ~EXIFCaption();
 
-    void applyMetadata(QByteArray& exifData);
+    void applyMetadata(QByteArray& exifData, QByteArray& iptcData);
     void readMetadata(QByteArray& exifData);
+
+    bool syncJFIFCommentIsChecked();
+    bool syncHostCommentIsChecked();
+    bool syncIPTCCaptionIsChecked();
+
+    void setCheckedSyncJFIFComment(bool c);
+    void setCheckedSyncHostComment(bool c);
+    void setCheckedIPTCCaption(bool c);
+
+    QString getExifUserComments();
 
 signals:
 

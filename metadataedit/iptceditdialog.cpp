@@ -326,6 +326,7 @@ void IPTCEditDialog::slotModified()
 
 void IPTCEditDialog::slotOk()
 {
+    slotApply();
     saveSettings();
     accept();
 }

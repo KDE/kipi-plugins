@@ -53,16 +53,19 @@ public:
 
     EXIFCaptionPriv()
     {
-        documentNameEdit  = 0;
-        imageDescEdit     = 0;
-        artistEdit        = 0;
-        copyrightEdit     = 0;
-        userCommentEdit   = 0;
-        userCommentCheck  = 0;
-        documentNameCheck = 0;
-        imageDescCheck    = 0;
-        artistCheck       = 0;
-        copyrightCheck    = 0;
+        documentNameEdit     = 0;
+        imageDescEdit        = 0;
+        artistEdit           = 0;
+        copyrightEdit        = 0;
+        userCommentEdit      = 0;
+        userCommentCheck     = 0;
+        documentNameCheck    = 0;
+        imageDescCheck       = 0;
+        artistCheck          = 0;
+        copyrightCheck       = 0;
+        syncJFIFCommentCheck = 0;
+        syncHostCommentCheck = 0;
+        syncIPTCCaptionCheck = 0;
     }
 
     QCheckBox *documentNameCheck;
@@ -70,6 +73,9 @@ public:
     QCheckBox *artistCheck;
     QCheckBox *copyrightCheck;
     QCheckBox *userCommentCheck;
+    QCheckBox *syncJFIFCommentCheck;
+    QCheckBox *syncHostCommentCheck;
+    QCheckBox *syncIPTCCaptionCheck;
 
     KTextEdit *userCommentEdit;
 
@@ -134,11 +140,19 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     d->userCommentCheck = new QCheckBox(i18n("User comments:"), parent);
     d->userCommentEdit  = new KTextEdit(parent);
-    vlay->addWidget(d->userCommentCheck);
-    vlay->addWidget(d->userCommentEdit);
     QWhatsThis::add(d->userCommentEdit, i18n("<p>Set here the picture user comments. "
                                              "This field is not limited. UTF8 encoding "
                                              "will be used to save text."));
+
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF comment section"), parent);
+    d->syncHostCommentCheck = new QCheckBox(i18n("Sync host application comment"), parent);
+    d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption"), parent);
+
+    vlay->addWidget(d->userCommentCheck);
+    vlay->addWidget(d->userCommentEdit);
+    vlay->addWidget(d->syncJFIFCommentCheck);
+    vlay->addWidget(d->syncHostCommentCheck);
+    vlay->addWidget(d->syncIPTCCaptionCheck);
 
     // --------------------------------------------------------
 
@@ -204,6 +218,41 @@ EXIFCaption::~EXIFCaption()
     delete d;
 }
 
+bool EXIFCaption::syncJFIFCommentIsChecked()
+{
+    return d->syncJFIFCommentCheck->isChecked();
+}
+
+bool EXIFCaption::syncHostCommentIsChecked()
+{
+    return d->syncHostCommentCheck->isChecked();
+}
+
+bool EXIFCaption::syncIPTCCaptionIsChecked()
+{
+    return d->syncIPTCCaptionCheck->isChecked();
+}
+
+QString EXIFCaption::getExifUserComments()
+{
+    return d->userCommentEdit->text();
+}
+
+void EXIFCaption::setCheckedSyncJFIFComment(bool c)
+{
+    d->syncJFIFCommentCheck->setChecked(c);
+}
+
+void EXIFCaption::setCheckedSyncHostComment(bool c)
+{
+    d->syncHostCommentCheck->setChecked(c);
+}
+
+void EXIFCaption::setCheckedIPTCCaption(bool c)
+{
+    d->syncIPTCCaptionCheck->setChecked(c);
+}
+
 void EXIFCaption::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
@@ -250,14 +299,18 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
         d->userCommentCheck->setChecked(true);
     }
     d->userCommentEdit->setEnabled(d->userCommentCheck->isChecked());
+    d->syncJFIFCommentCheck->setEnabled(d->userCommentCheck->isChecked());
+    d->syncHostCommentCheck->setEnabled(d->userCommentCheck->isChecked());
+    d->syncIPTCCaptionCheck->setEnabled(d->userCommentCheck->isChecked());
 
     blockSignals(false);
 }
 
-void EXIFCaption::applyMetadata(QByteArray& exifData)
+void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
+    exiv2Iface.setIptc(iptcData);
 
     if (d->documentNameCheck->isChecked())
         exiv2Iface.setExifTagString("Exif.Image.DocumentName", d->documentNameEdit->text());
@@ -280,7 +333,15 @@ void EXIFCaption::applyMetadata(QByteArray& exifData)
         exiv2Iface.removeExifTag("Exif.Image.Copyright");
 
     if (d->userCommentCheck->isChecked())
+    {
         exiv2Iface.setExifComment(d->userCommentEdit->text());
+        
+        if (syncJFIFCommentIsChecked())
+            exiv2Iface.setComments(d->userCommentEdit->text().utf8());
+        
+        if (syncIPTCCaptionIsChecked())
+            exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->userCommentEdit->text());
+    }
     else
         exiv2Iface.removeExifTag("Exif.Photo.UserComment");
 
@@ -291,6 +352,7 @@ void EXIFCaption::applyMetadata(QByteArray& exifData)
                                  data->version());
 
     exifData = exiv2Iface.getExif();
+    iptcData = exiv2Iface.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin

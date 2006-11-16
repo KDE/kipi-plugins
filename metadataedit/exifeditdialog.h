@@ -30,6 +30,11 @@
 #include <kdialogbase.h>
 #include <kurl.h>
 
+namespace KIPI
+{
+    class Interface;
+}
+
 namespace KIPIMetadataEditPlugin
 {
 
@@ -41,7 +46,7 @@ class EXIFEditDialog : public KDialogBase
 
 public:
 
-    EXIFEditDialog(QWidget* parent, KURL::List urls);
+    EXIFEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface *iface);
     ~EXIFEditDialog();
 
 public slots:
