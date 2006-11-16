@@ -153,17 +153,17 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
 
     // About data and help button.
 
-    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("Send Images"),
-                                            NULL,
-                                            KAboutData::License_GPL,
-                                            I18N_NOOP("A Kipi plugin for emailing images"),
-                                            "(c) 2003-2005, Gilles Caulier");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Send Images"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin for emailing images"),
+                                           "(c) 2003-2005, Gilles Caulier");
 
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                     "caulier dot gilles at free.fr");
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                       "caulier dot gilles at free.fr");
 
     m_helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Send Image Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
@@ -174,6 +174,8 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
 SendImagesDialog::~SendImagesDialog()
 {
     if ( m_thumbJob ) delete m_thumbJob;
+
+    delete m_about;
 }
 
 void SendImagesDialog::readSettings(void)

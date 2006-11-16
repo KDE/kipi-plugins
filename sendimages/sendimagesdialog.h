@@ -39,6 +39,7 @@
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
+#include "kpaboutdata.h"
 
 class QComboBox;
 class QGroupBox;
@@ -153,6 +154,7 @@ protected:
    KSqueezedTextLabel *m_ImageAlbum;
    
    KIPI::Interface    *m_interface;
+   KIPIPlugins::KPAboutData *m_about;
    KIO::PreviewJob    *m_thumbJob;
 
  private:
