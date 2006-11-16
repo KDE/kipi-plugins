@@ -88,6 +88,12 @@ private slots:
 
     void slotAddImages();
     void slotRemoveImage();
+
+	void sortList(int);
+	void reverseList();
+
+	void moveCurrentItemUp();
+	void moveCurrentItemDown();
 };
 
 }

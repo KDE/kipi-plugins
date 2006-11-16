@@ -37,6 +37,7 @@
 #include <qtimer.h>
 #include <qprogressdialog.h>
 #include <qgroupbox.h>
+#include <qpopupmenu.h>
 
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
@@ -67,7 +68,13 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
     m_listView->setSorting(-1);
 
     readSettings();
-    
+
+	QPopupMenu* sortMenu = new QPopupMenu(this);
+	sortMenu->insertItem(i18n("Sort by Name"), BYNAME);
+	sortMenu->insertItem(i18n("Sort by Size"), BYSIZE);
+	sortMenu->insertItem(i18n("Sort by Date"), BYDATE);
+	m_sortButton->setPopup(sortMenu);
+
     connect(m_listView, SIGNAL(doubleClicked(QListViewItem*)),
             SLOT(slotListViewDoubleClicked(QListViewItem*)));
     connect(m_listView, SIGNAL(selectionChanged(QListViewItem*)),
@@ -86,15 +93,22 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
     connect(m_formatDateEdit, SIGNAL(textChanged(const QString&)),
             SLOT(slotOptionsChanged()));
 
-    connect(m_sortCombo, SIGNAL(activated(int)),
-            SLOT(slotOptionsChanged()));
-    connect(m_reverseSortCheck, SIGNAL(toggled(bool)),
-            SLOT(slotOptionsChanged()));
-
     connect(m_addButton, SIGNAL(clicked()),
             SLOT(slotAddImages()));
     connect(m_removeButton, SIGNAL(clicked()),
             SLOT(slotRemoveImage()));
+
+	connect(sortMenu, SIGNAL(activated(int)),
+			SLOT(sortList(int)) );
+	
+	connect(m_reverseList, SIGNAL(clicked()),
+			SLOT(reverseList()) );
+
+    connect(m_moveUp, SIGNAL(clicked()),
+            SLOT(moveCurrentItemUp()) );
+    
+    connect(m_moveDown, SIGNAL(clicked()),
+            SLOT(moveCurrentItemDown()) );
     
     m_timer = new QTimer(this);
     m_progress = new QProgressDialog(this, 0, true);
@@ -137,9 +151,6 @@ void RenameImagesWidget::readSettings()
     m_formatDateCheck->setChecked(config.readBoolEntry("FormatDate", false));
     m_formatDateEdit->setText(config.readEntry("FormatDateString", "%Y-%m-%d"));
 
-    m_sortCombo->setCurrentItem((enum SortOrder)(config.readNumEntry("SortMethod", 0))); 
-    m_reverseSortCheck->setChecked(config.readBoolEntry("ReverseOrder", false));
-
     slotOptionsChanged();
 }
 
@@ -156,8 +167,6 @@ void RenameImagesWidget::saveSettings()
     config.writeEntry("FormatDate", m_formatDateCheck->isChecked());
     config.writeEntry("FormatDateString", m_formatDateEdit->text());
 
-    config.writeEntry("SortMethod", m_sortCombo->currentItem());
-    config.writeEntry("ReverseOrder", m_reverseSortCheck->isChecked());
     config.sync();
 }
 
@@ -194,34 +203,34 @@ void RenameImagesWidget::slotImageSelected(QListViewItem* item)
             SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 }
 
-void RenameImagesWidget::updateListing()
+
+void RenameImagesWidget::sortList(int intSortOrder)
 {
+    SortOrder sortOrder = static_cast<SortOrder>(intSortOrder);
+
     for (QListViewItem* it = m_listView->firstChild(); it;
          it = it->nextSibling())
     {
         BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(it);
 
-        switch (m_sortCombo->currentItem())
+        switch (sortOrder)
         {
         case(BYNAME):
         {
-            item->setKey(item->text(1),
-                         m_reverseSortCheck->isChecked());
+            item->setKey(item->text(1), false);
             break;
         }
         case(BYSIZE):
         {
             QFileInfo fi(item->pathSrc());
-            item->setKey(QString::number(fi.size()),
-                         m_reverseSortCheck->isChecked());
+            item->setKey(QString::number(fi.size()), false);
             break;
         }
         case(BYDATE):
         {
             KURL url(item->pathSrc());
             KIPI::ImageInfo info = m_interface->info(url);
-            item->setKey(info.time().toString(Qt::ISODate),
-                         m_reverseSortCheck->isChecked());
+            item->setKey(info.time().toString(Qt::ISODate), false);
             break;
         }
         }
@@ -233,6 +242,56 @@ void RenameImagesWidget::updateListing()
     m_listView->sort();
     m_listView->setSorting(-1);
 
+    updateListing();
+}
+
+
+void RenameImagesWidget::reverseList()
+{
+    if (m_listView->childCount() < 2) return;
+
+    QListViewItem* lastItem = m_listView->lastItem();
+
+    while (m_listView->firstChild() != lastItem) {
+        m_listView->firstChild()->moveItem(lastItem);
+    }
+
+    updateListing();
+}
+
+
+void RenameImagesWidget::moveCurrentItemUp() {
+    QListViewItem* currentItem = m_listView->currentItem();
+    if (!currentItem) return;
+
+    for (QListViewItem* previousItem = m_listView->firstChild(); previousItem;
+         previousItem = previousItem->nextSibling()) 
+    {
+        if (previousItem->nextSibling() == currentItem) {
+            previousItem->moveItem(currentItem);
+            break;
+        }
+    }
+
+    updateListing();
+}
+
+
+void RenameImagesWidget::moveCurrentItemDown() {
+    QListViewItem* currentItem = m_listView->currentItem();
+    if (!currentItem) return;
+    
+    QListViewItem* nextItem = currentItem->nextSibling();
+    if (nextItem) {
+        currentItem->moveItem(nextItem);
+    }
+
+    updateListing();
+}
+
+
+void RenameImagesWidget::updateListing()
+{
     int pos = 0;
     for (QListViewItem* it = m_listView->firstChild(); it;
          it = it->nextSibling())
