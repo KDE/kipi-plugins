@@ -28,6 +28,7 @@
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "tphoto.h"
 #include "frmprintwizardbase.h"
 
@@ -63,8 +64,10 @@ private:
   QStringList  m_gimpFiles;
 
   QPushButton *m_helpButton;
-  
+
   bool         m_cancelPrinting;
+
+  KIPIPlugins::KPAboutData *m_about;
 
   void updateCropFrame(TPhoto *, int);
   void setBtnCropEnabled();

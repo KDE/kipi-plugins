@@ -58,6 +58,7 @@ extern "C"
 
 // Local includes
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "utils.h"
 #include "cropframe.h"
@@ -94,21 +95,18 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
   // ---------------------------------------------------------------
 
   // About data and help button.
-    
-  KAboutData* about = new KAboutData("kipiplugins",
-                                     I18N_NOOP("Print Wizard"), 
-                                     kipiplugins_version,
-                                     I18N_NOOP("A KIPI plugin to print images"),
-                                     KAboutData::License_GPL,
-                                     "(c) 2003-2004, Todd Shoemaker", 
-                                     0,
-                                     "http://extragear.kde.org/apps/kipi");
-    
-  about->addAuthor("Todd Shoemaker", I18N_NOOP("Author"),
-                   "todd@theshoemakers.net");
+
+  m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Print Wizard"),
+                                         NULL,
+                                         KAboutData::License_GPL,
+                                         I18N_NOOP("A KIPI plugin to print images"),
+                                         "(c) 2003-2004, Todd Shoemaker");
+
+  m_about->addAuthor("Todd Shoemaker", I18N_NOOP("Author"),
+                     "todd@theshoemakers.net");
 
   m_helpButton = helpButton();
-  KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+  KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
   helpMenu->menu()->removeItemAt(0);
   helpMenu->menu()->insertItem(i18n("Print Wizard Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
   m_helpButton->setPopup( helpMenu->menu() );
@@ -166,6 +164,8 @@ FrmPrintWizard::~FrmPrintWizard()
     if (m_photos.at(i))
       delete m_photos.at(i);
   m_photos.clear();
+
+  delete m_about;
 }
 
 void FrmPrintWizard::slotHelp()

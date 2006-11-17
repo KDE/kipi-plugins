@@ -10,7 +10,7 @@ kipiplugin_printwizard_la_SOURCES = frmprintwizardbase.ui plugin_printwizard.cpp
 #LIBKIPI_LIBS = $(top_builddir)/libkipi/libkipi/libkipi.la
 kipiplugin_printwizard_la_LIBADD = $(LIB_KDEPRINT) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
-kipiplugin_printwizard_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+kipiplugin_printwizard_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
 
 kde_services_DATA = kipiplugin_printwizard.desktop
 
