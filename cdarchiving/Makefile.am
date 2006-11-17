@@ -14,7 +14,7 @@ kipiplugin_cdarchiving_la_SOURCES = plugin_cdarchiving.cpp cdarchivingdialog.cpp
 kipiplugin_cdarchiving_la_LIBADD = $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
-kipiplugin_cdarchiving_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+kipiplugin_cdarchiving_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
 
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = kipiplugin_cdarchiving.desktop

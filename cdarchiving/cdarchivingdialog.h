@@ -40,6 +40,7 @@
 // Include files for KIPI
 
 #include <libkipi/interface.h>
+#include "kpaboutdata.h"
 
 class QString;
 class QCheckBox;
@@ -228,6 +229,8 @@ private:
   
     QValueList<KIPI::ImageCollection>  m_selectedAlbums;
     KIPI::ImageCollectionSelector     *m_imageCollectionSelector;
+
+    KIPIPlugins::KPAboutData *m_about;
 
 private:
  

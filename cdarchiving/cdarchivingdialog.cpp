@@ -74,6 +74,7 @@
 
 // Local include files
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "cdarchivingdialog.h"
 #include "cdarchivingdialog.moc"
@@ -97,31 +98,28 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     
     // About data and help button.
     
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("CD/DVD Archiving"), 
-                                       kipiplugins_version,
-                                       I18N_NOOP("An Album CD/DVD Archiving Kipi plugin.\n"
-                                                 "This plugin use K3b CD/DVD burning software available at\n"
-                                                 "http://www.k3b.org"),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2005, Gilles Caulier", 
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
-    
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Author"),
-                     "caulier dot gilles at free.fr");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("CD/DVD Archiving"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("An Album CD/DVD Archiving Kipi plugin.\n"
+                                                     "This plugin use K3b CD/DVD burning software available at\n"
+                                                     "http://www.k3b.org"),
+                                           "(c) 2003-2005, Gilles Caulier");
 
-    about->addAuthor("Angelo Naselli", I18N_NOOP("Contributor"),
-                     "anaselli at linux.it");
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author"),
+                       "caulier dot gilles at free.fr");
 
-    about->addAuthor("Gregory Kokanosky", I18N_NOOP("Image navigation mode patches"),
-                     "gregory dot kokanosky at free.fr");
+    m_about->addAuthor("Angelo Naselli", I18N_NOOP("Contributor"),
+                       "anaselli at linux.it");
 
-    about->addAuthor("Owen Hirst", I18N_NOOP("Bugfix"),
-                     "n8rider at sbcglobal.net");
-                         
+    m_about->addAuthor("Gregory Kokanosky", I18N_NOOP("Image navigation mode patches"),
+                       "gregory dot kokanosky at free.fr");
+
+    m_about->addAuthor("Owen Hirst", I18N_NOOP("Bugfix"),
+                       "n8rider at sbcglobal.net");
+
     m_helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("CD/DVD Archiving Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
@@ -129,6 +127,7 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
 
 CDArchivingDialog::~CDArchivingDialog()
 {
+    delete m_about;
 }
 
 void CDArchivingDialog::slotHelp()
