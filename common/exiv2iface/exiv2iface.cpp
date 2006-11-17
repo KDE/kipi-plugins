@@ -226,8 +226,10 @@ bool Exiv2Iface::setIptc(const QByteArray& data)
     {    
         if (!data.isEmpty())
         {
-            d->iptcMetadata.load((const Exiv2::byte*)data.data(), data.size());
-            return true;
+            if (d->iptcMetadata.load((const Exiv2::byte*)data.data(), data.size()) == 1)
+		return false;
+	    else
+                return true;
         }
     }
     catch( Exiv2::Error &e )
