@@ -204,8 +204,10 @@ bool Exiv2Iface::setExif(const QByteArray& data)
     {    
         if (!data.isEmpty())
         {
-            d->exifMetadata.load((const Exiv2::byte*)data.data(), data.size());
-            return true;
+            if (d->exifMetadata.load((const Exiv2::byte*)data.data(), data.size()) == 1)
+		return false;
+	    else		
+                return true;
         }
     }
     catch( Exiv2::Error &e )
