@@ -24,6 +24,7 @@
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
+#include <kdeversion.h>
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
@@ -43,13 +44,15 @@ namespace KIPIPlugins
                                                                   pluginDescription,
                                                                   "http://www.kipi-plugins.org")
   {
+#if KDE_IS_VERSION(3,4,0)
+    // setProgramLogo is defined from kde 3.4.0 on
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_plugins_logo", KGlobal::dirs()->kde_default("data") + "kipi/data");
     directory = KGlobal::dirs()->findResourceDir("kipi_plugins_logo", "kipi-plugins_logo.png");
 
     // set the kipiplugins logo inside the about dialog
     setProgramLogo(QImage(directory + "kipi-plugins_logo.png"));
-
+#endif
     // set the plugin description into long text description
     setOtherText(pluginDescription);
 
