@@ -429,19 +429,19 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_helpButton->setText( i18n( "&Help") );
   v3->addWidget( m_helpButton );
 
-  KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("MPEG Slideshow"),
+  m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("MPEG Slideshow"),
                                       NULL,
                                       KAboutData::License_GPL,
                                       I18N_NOOP("A Kipi plugin for encoding images to an MPEG file."),
   "(c) 2003-2004, Gilles Caulier");
 
-  about->addAuthor("Gilles Caulier", I18N_NOOP("Author"),
+  m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author"),
                     "caulier dot gilles at free.fr");
 
-  about->addAuthor("Angelo Naselli", I18N_NOOP("Contributor"),
+  m_about->addAuthor("Angelo Naselli", I18N_NOOP("Contributor"),
                     "anaselli at linux dot it");
 
-  KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+  KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
   helpMenu->menu()->removeItemAt(0);
   helpMenu->menu()->insertItem(i18n("MPEG SlideShow Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
   m_helpButton->setPopup( helpMenu->menu() );
@@ -501,6 +501,8 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 KImg2mpgData::~KImg2mpgData()
 {
   if ( m_thumbJob ) delete m_thumbJob;
+
+  delete m_about;
 }
 
 

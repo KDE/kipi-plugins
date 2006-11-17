@@ -41,6 +41,7 @@
 
 // Include files for KIPI
 
+#include "kpaboutdata.h"
 #include <libkipi/interface.h>
 
 class KFileItem;
@@ -205,6 +206,8 @@ private:
   KButtonBox*           m_ImagesFilesButtonBox;
   
   KIPI::Interface*      m_interface;
+
+  KIPIPlugins::KPAboutData* m_about;
 
   class KShowDebuggingOutput* m_DebuggingDialog;
 
