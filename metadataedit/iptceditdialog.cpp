@@ -300,7 +300,7 @@ void IPTCEditDialog::slotApply()
         d->datetimePage->applyMetadata(d->iptcData);
         KIPIPlugins::Exiv2Iface exiv2Iface;
         exiv2Iface.load((*d->currItem).path());
-        exiv2Iface.setExif(d->iptcData);
+        exiv2Iface.setIptc(d->iptcData);
         exiv2Iface.save((*d->currItem).path());
         d->modified = false;
     }
