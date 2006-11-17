@@ -204,7 +204,7 @@ bool Exiv2Iface::setExif(const QByteArray& data)
     {    
         if (!data.isEmpty())
         {
-            if (d->exifMetadata.load((const Exiv2::byte*)data.data(), data.size()) == 1)
+            if (d->exifMetadata.load((const Exiv2::byte*)data.data(), data.size()) != 0)
 		return false;
 	    else		
                 return true;
@@ -226,7 +226,7 @@ bool Exiv2Iface::setIptc(const QByteArray& data)
     {    
         if (!data.isEmpty())
         {
-            if (d->iptcMetadata.load((const Exiv2::byte*)data.data(), data.size()) == 1)
+            if (d->iptcMetadata.load((const Exiv2::byte*)data.data(), data.size()) != 0)
 		return false;
 	    else
                 return true;
