@@ -49,6 +49,7 @@ function loadMap()
     var map = new GMap2(document.getElementById("map"));
     map.addControl(new GLargeMapControl());
     map.addControl(new GMapTypeControl());
+    map.addControl(new GScaleControl());
 
 <?php
     echo "map.setCenter(new GLatLng(";
