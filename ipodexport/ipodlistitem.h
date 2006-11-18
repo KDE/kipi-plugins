@@ -11,37 +11,46 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef IMAGELISTITEM_H
-#define IMAGELISTITEM_H
+#ifndef IPODLISTITEM_H
+#define IPODLISTITEM_H
 
 extern "C" {
 #include <gpod/itdb.h>
 }
 
-#include <qstring.h>
 #include <klistview.h>
-#include <klocale.h>
 
 namespace IpodExport
 {
 
-    class ImageListItem : public KListViewItem
+    class IpodAlbumItem : public KListViewItem
     {
-    public:
+        public:
+            IpodAlbumItem( QListView *parent, QListViewItem *after, Itdb_PhotoAlbum *pa );
 
-        ImageListItem( QListView *parent, QString const & pathSrc, QString const & name )
-            : KListViewItem( parent, QString::null/*set below*/, name )
-            , m_pathSrc( pathSrc )
-        {
-            setText( 0, pathSrc.section('/', -2, -2) );
-        }
+            QString          name()       const { return m_name;       }
+            Itdb_PhotoAlbum *photoAlbum() const { return m_photoAlbum; }
 
-        QString          pathSrc()    const { return m_pathSrc;    }
+            void setPhotoAlbum( Itdb_PhotoAlbum *pa );
+            void setName( const QString & name );
 
-    private:
-        QString          m_pathSrc;
+        private:
+            QString          m_name;
+            Itdb_PhotoAlbum *m_photoAlbum;
+    };
+
+    class IpodPhotoItem : public KListViewItem
+    {
+        public:
+            IpodPhotoItem( IpodAlbumItem *parent, IpodPhotoItem *after, Itdb_Artwork *art );
+
+            Itdb_Artwork *artwork() const { return m_artwork; }
+            void          setArtwork( Itdb_Artwork *art );
+
+        private:
+            Itdb_Artwork *m_artwork;
     };
 
 }
 
-#endif  // IMAGELISTITEM_H
+#endif  // IPODLISTITEM_H

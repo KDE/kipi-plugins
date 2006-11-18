@@ -31,28 +31,28 @@ namespace IpodExport
 
 class ImageList : public KListView
 {
-Q_OBJECT
+    Q_OBJECT
 
-public:
-    enum ListType { UploadType, IpodType };
+    public:
+        enum ListType { UploadType, IpodType };
 
-    ImageList( ListType=UploadType, QWidget *parent=0, const char *name=0 );
+        ImageList( ListType=UploadType, QWidget *parent=0, const char *name=0 );
 
-    ListType getType() const { return m_type; }
+        ListType getType() const { return m_type; }
 
-signals:
-    void addedDropItems( QStringList filesPath );
+    signals:
+        void addedDropItems( QStringList filesPath );
 
-protected:
-    bool acceptDrag( QDropEvent* e ) const;
-    void contentsDropEvent( QDropEvent* e );
-    void dragEnterEvent( QDragEnterEvent *e );
-    void dropEvent( QDropEvent* e );
-    void droppedImagesItems( QDropEvent *e );
-    void viewportPaintEvent( QPaintEvent* );
+    protected:
+        bool acceptDrag( QDropEvent *e ) const;
+        void contentsDropEvent( QDropEvent *e );
+        void dragEnterEvent( QDragEnterEvent *e );
+        void dropEvent( QDropEvent *e );
+        void droppedImagesItems( QDropEvent *e );
+        void viewportPaintEvent( QPaintEvent *e );
 
-private:
-    ListType m_type;
+    private:
+        ListType m_type;
 };
 
 }

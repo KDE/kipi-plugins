@@ -11,37 +11,46 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef IMAGELISTITEM_H
-#define IMAGELISTITEM_H
+#ifndef IPOD_HEADER_H
+#define IPOD_HEADER_H
 
-extern "C" {
-#include <gpod/itdb.h>
-}
+#include <qframe.h> //baseclass
 
-#include <qstring.h>
-#include <klistview.h>
-#include <klocale.h>
+class QLabel;
+class KPushButton;
 
 namespace IpodExport
 {
 
-    class ImageListItem : public KListViewItem
-    {
+class IpodHeader : public QFrame
+{
+    Q_OBJECT
+
     public:
+        IpodHeader( QWidget *parent=0, const char *name=0, WFlags f=0 );
+        ~IpodHeader() { }
 
-        ImageListItem( QListView *parent, QString const & pathSrc, QString const & name )
-            : KListViewItem( parent, QString::null/*set below*/, name )
-            , m_pathSrc( pathSrc )
-        {
-            setText( 0, pathSrc.section('/', -2, -2) );
-        }
+        enum ViewType { NoIpod, IncompatibleIpod, ValidIpod };
 
-        QString          pathSrc()    const { return m_pathSrc;    }
+        void setViewType( ViewType view );
+        ViewType viewType() const         { return m_viewType; }
+
+    signals:
+        void refreshDevices();
+        void updateSysInfo();
 
     private:
-        QString          m_pathSrc;
-    };
+        void setNoIpod();
+        void setIncompatibleIpod();
+        void setValidIpod();
+
+        ViewType m_viewType;
+
+        KPushButton *m_button;
+        QLabel      *m_messageLabel;
+
+};
 
 }
 
-#endif  // IMAGELISTITEM_H
+#endif /* IPOD_HEADER_H */

@@ -26,9 +26,8 @@ extern "C" {
 #include <libkipi/interface.h>
 #endif
 
-class ImageList;
-
 class QCheckBox;
+class QHGroupBox;
 class QLabel;
 class QPushButton;
 class KComboBox;
@@ -36,11 +35,15 @@ class KFileItem;
 class KLineEdit;
 class KListView;
 class KListViewItem;
-class KProgress;
 class KURL;
 
 namespace IpodExport
 {
+
+class ImageList;
+class IpodAlbumItem;
+class IpodPhotoItem;
+class IpodHeader;
 
 class UploadDialog : public KDialogBase
 {
@@ -59,33 +62,42 @@ class UploadDialog : public KDialogBase
                 itdb_photodb_free( m_itdb );
         }
 
+        static UploadDialog *instance() { return s_instance; }
+
+        QString ipodModel() const;
         QString mountPoint() { return m_mountPoint; }
         QString deviceNode() { return m_deviceNode; }
 
     private slots:
-        void slotProcessStart();
+        void startTransfer();
 
-        void slotAddDropItems( QStringList filesPath );
+        void addDropItems( QStringList filesPath );
 
-        void slotImageSelected( QListViewItem *item );
-        void slotGotPreview( const KFileItem* , const QPixmap &pixmap );
+        void imageSelected( QListViewItem *item );
+        void gotImagePreview( const KFileItem* , const QPixmap &pixmap );
 
-        void slotIpodItemSelected( QListViewItem *item );
-        void slotIpodShowContextMenu( QListViewItem * ) { }
+        void ipodItemSelected( QListViewItem *item );
+        void ipodShowContextMenu( QListViewItem * ) { }
 
-        void slotImagesFilesButtonAdd();
-        void slotImagesFilesButtonRem();
+        void imagesFilesButtonAdd();
+        void imagesFilesButtonRem();
 
-        void slotCreateIpodAlbum();
-        void slotDeleteIpodAlbum();
-        void slotRenameIpodAlbum();
+        void createIpodAlbum();
+        void deleteIpodAlbum();
+        void renameIpodAlbum();
+
+        void refreshDevices();
+        void updateSysInfo();
 
     private:
         void addUrlToList( QString file );
+        bool deleteIpodAlbum( IpodAlbumItem *album );
+        bool deleteIpodPhoto( IpodPhotoItem *photo );
         void enableButtons();
         void getIpodAlbums();
-        void getIpodAlbumPhotos( KListViewItem *item, Itdb_PhotoAlbum *album );
-        void reloadIpodAlbum( KListViewItem *item, Itdb_PhotoAlbum *album );
+        void getIpodAlbumPhotos( IpodAlbumItem *item, Itdb_PhotoAlbum *album );
+        Itdb_Artwork *photoFromId( const uint id );
+        void reloadIpodAlbum( IpodAlbumItem *item, Itdb_PhotoAlbum *album );
 
         bool openDevice(); // connect to the ipod
 
@@ -93,21 +105,30 @@ class UploadDialog : public KDialogBase
         KIPI::Interface *m_interface;
 #endif
         Itdb_PhotoDB    *m_itdb;
+        Itdb_IpodInfo   *m_ipodInfo;
+        IpodHeader      *m_ipodHeader;
         bool             m_transferring;
 
-        KProgress       *m_progress;
+        QListViewItem   *m_destinationAlbum;
+
         QPushButton     *m_createAlbumButton;
         QPushButton     *m_removeAlbumButton;
         QPushButton     *m_renameAlbumButton;
         QPushButton     *m_addImagesButton;
         QPushButton     *m_remImagesButton;
-        ImageList       *m_imageList;
+        QPushButton     *m_transferImagesButton;
+        ImageList       *m_uploadList;
         KListView       *m_ipodAlbumList;
         QLabel          *m_imagePreview;
         QLabel          *m_ipodPreview;
 
+        QHGroupBox      *m_destinationBox;
+        QHGroupBox      *m_urlListBox;
+
         QString          m_mountPoint;
         QString          m_deviceNode;
+
+        static UploadDialog *s_instance;
 };
 
 }

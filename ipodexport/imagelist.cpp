@@ -1,26 +1,16 @@
-//////////////////////////////////////////////////////////////////////////////
-//
-//    ImageList.CPP
-//
-//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at free.fr>
-//
-//    This program is free software; you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation; either version 2 of the License, or
-//    (at your option) any later version.
-//
-//    This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with this program; if not, write to the Free Software
-//    Foundation, Inc., 51 Franklin Steet, Fifth Floor, Cambridge, MA 02110-1301, USA.
-//
-//////////////////////////////////////////////////////////////////////////////
+/***************************************************************************
+ * copyright            : (C) 2006 Seb Ruiz <me@sebruiz.net>               *
+ * Originally based off Kipi plugins code, by Gilles Caulier               *
+ ***************************************************************************/
 
-// Include files for Qt
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 
 #include <qapplication.h>
 #include <qevent.h>
@@ -52,14 +42,13 @@ ImageList::ImageList( ListType type, QWidget *parent, const char *name )
     {
         addColumn( i18n("Albums") );
         setRootIsDecorated( true ); // show expand icons
+        setSorting( -1 );
+        setSelectionMode( QListView::Single );
     }
 
-    setSorting( 3 );
     setItemMargin( 3 );
     setResizeMode( QListView::LastColumn );
-    setSelectionMode( QListView::Single );
-    setAllColumnsShowFocus ( true );
-
+    setAllColumnsShowFocus( true );
 }
 
 void
@@ -87,7 +76,7 @@ ImageList::viewportPaintEvent( QPaintEvent *e )
             minimumText = (i18n(
                     "<div align=center>"
                     "<h3>iPod Albums</h3>"
-                        "An album needs to be created before images, "
+                        "An album needs to be created before images "
                         "can be transferred to the iPod."
                     "</div>" ) );
         }
@@ -108,40 +97,28 @@ ImageList::viewportPaintEvent( QPaintEvent *e )
     }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void ImageList::dragEnterEvent(QDragEnterEvent *e)
+void ImageList::dragEnterEvent( QDragEnterEvent *e )
 {
-    e->accept(QUriDrag::canDecode(e));
+    e->accept( QUriDrag::canDecode(e) );
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-bool ImageList::acceptDrag(QDropEvent* e) const
+bool ImageList::acceptDrag( QDropEvent* e ) const
 {
-    return ( QUriDrag::canDecode(e) );
+    return QUriDrag::canDecode( e );
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void ImageList::contentsDropEvent(QDropEvent* e)
+void ImageList::contentsDropEvent( QDropEvent *e )
 {
-    droppedImagesItems(e);
+    droppedImagesItems( e );
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void ImageList::dropEvent(QDropEvent *e)
+void ImageList::dropEvent( QDropEvent *e )
 {
-    droppedImagesItems(e);
+    droppedImagesItems( e );
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-void ImageList::droppedImagesItems(QDropEvent *e)
+void ImageList::droppedImagesItems( QDropEvent *e )
 {
     QStrList strList;
     QStringList filesPath;
