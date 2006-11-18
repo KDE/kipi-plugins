@@ -53,8 +53,8 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 016 ==> 128341 : HTMLExport   : kipi html export should not resize images if "resize target images" is not checked.
 017 ==> 127476 : PrintWizzard : Printing as very very slow (added a workaround running kjobviewer)
 018 ==> 136941 : BatchProcess : graphical picture ordering and renaming.
-019 ==> 
-
+019 ==> 136855 : MetadataEdit : Editing metadata on a few selected imagefiles and clicking forward or apply crashes digikam.
+020 ==> 
 
 v 0.1.2                                                           2006-07-08
 ----------------------------------------------------------------------------
