@@ -27,6 +27,7 @@
 // Local includes
 
 #include "batchprocessimagesdialog.h"
+#include "kpaboutdata.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -68,6 +69,10 @@ Q_OBJECT
 
    void readSettings(void);
    void saveSettings(void);
+
+  private:
+
+   KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

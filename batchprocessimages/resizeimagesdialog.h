@@ -26,6 +26,7 @@
 
 // Local includes
 
+#include "kpaboutdata.h"
 #include "batchprocessimagesdialog.h"
 
 namespace KIPIBatchProcessImagesPlugin
@@ -81,7 +82,10 @@ Q_OBJECT
                             const QString& albumDest);
 
    bool ResizeImage( int &w, int &h, int SizeFactor);
-   
+
+ private:
+
+ KIPIPlugins::KPAboutData   *m_about;
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

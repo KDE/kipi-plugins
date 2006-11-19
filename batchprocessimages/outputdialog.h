@@ -32,6 +32,10 @@
 
 #include <kdialogbase.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 class QTextView;
 class QPushButton;
 
@@ -57,6 +61,8 @@ private:
   
   QPushButton *m_helpButton;
   QTextView *debugView;
+  
+  KIPIPlugins::KPAboutData  *m_about;
 
 };
 

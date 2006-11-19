@@ -33,6 +33,10 @@
 
 #include <kdialogbase.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 class QPixmap;
 class QCursor;
 class QLCDNumber;
@@ -94,7 +98,7 @@ protected:
 
     void drawContents(QPainter *p, int x, int y, int w, int h);
     void PreviewCal(const QString &ImagePath, const QString &tmpPath);
-    
+
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +130,10 @@ protected:
     QSlider     *ZoomFactorSlider;
     
     QPushButton *m_helpButton;
-    
+
+private:
+
+    KIPIPlugins::KPAboutData    *m_about;
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

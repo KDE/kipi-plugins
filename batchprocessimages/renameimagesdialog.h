@@ -26,6 +26,10 @@
 #include <kdialogbase.h>
 #include <kurl.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 namespace KIPI
 {
 class Interface;
@@ -50,7 +54,9 @@ public:
 private:
 
     RenameImagesWidget* m_widget;
-    
+
+    KIPIPlugins::KPAboutData* m_about;
+
 private slots:
 
     void slotHelp();

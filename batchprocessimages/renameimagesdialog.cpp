@@ -21,7 +21,6 @@
  * ============================================================ */
 
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
@@ -31,6 +30,7 @@
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "renameimageswidget.h"
 #include "renameimagesdialog.h"
@@ -47,21 +47,18 @@ RenameImagesDialog::RenameImagesDialog(const KURL::List& images,
                    false, false, i18n("&Start"))
 {
     // About data and help button.
-    
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Batch-rename images"), 
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin to batch-rename images"),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2005, Gilles Caulier", 
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
-    
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch-rename images"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin to batch-rename images"),
+                                           "(c) 2003-2005, Gilles Caulier");
+
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at free.fr");
-                        
+
     QPushButton* helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Batch-Rename Images Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     helpButton->setPopup( helpMenu->menu() );
@@ -80,7 +77,8 @@ RenameImagesDialog::RenameImagesDialog(const KURL::List& images,
 }
 
 RenameImagesDialog::~RenameImagesDialog()
-{   
+{
+    delete m_about; 
 }
 
 void RenameImagesDialog::slotHelp(void)

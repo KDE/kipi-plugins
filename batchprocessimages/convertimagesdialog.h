@@ -26,7 +26,9 @@
 
 // Local includes
 
+#include "kpaboutdata.h"
 #include "batchprocessimagesdialog.h"
+
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -63,6 +65,10 @@ Q_OBJECT
 
    QString oldFileName2NewFileName(QString fileName);
    QString ImageFileExt(QString Ext);
+
+ private:
+
+   KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

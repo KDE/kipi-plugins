@@ -26,6 +26,7 @@
 
 // Local includes
 
+#include "kpaboutdata.h"
 #include "batchprocessimagesdialog.h"
 
 namespace KIPIBatchProcessImagesPlugin
@@ -63,6 +64,10 @@ Q_OBJECT
 
    bool prepareStartProcess(BatchProcessImagesItem *item,
                             const QString& albumDest);
+
+ private:
+
+   KIPIPlugins::KPAboutData    *m_about;
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

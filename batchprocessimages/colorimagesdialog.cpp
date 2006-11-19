@@ -37,7 +37,6 @@
 #include <knuminput.h>
 #include <kprocess.h>
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
@@ -45,6 +44,7 @@
 // Local includes
 
 #include "pluginsversion.h"
+#include "kpaboutdata.h"
 #include "coloroptionsdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
@@ -60,22 +60,19 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image-Color Processing"), parent )
 {
     // About data and help button.
-    
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Batch image-color enhancement"), 
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin for batch image-color enhancement\n"
-                                                 "This plugin use the \"convert\" program from \"ImageMagick\" package."),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier", 
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
-    
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch image-color enhancement"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin for batch image-color enhancement\n"
+                                                     "This plugin use the \"convert\" program from \"ImageMagick\" package."),
+                                           "(c) 2003-2004, Gilles Caulier");
+
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at free.fr");
-                        
+
     m_helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Batch Image-Color Enhancement Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
@@ -140,6 +137,7 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
 
 ColorImagesDialog::~ColorImagesDialog()
 {
+    delete m_about;
 }
 
 

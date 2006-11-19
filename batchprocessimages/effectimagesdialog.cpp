@@ -38,13 +38,13 @@
 #include <knuminput.h>
 #include <kprocess.h>
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 
 // Local includes
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "effectoptionsdialog.h"
 #include "outputdialog.h"
@@ -62,21 +62,18 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
 {
     // About data and help button.
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Batch image effects"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin for batch image-effect transformations\n"
-                                                 "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch image effects"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin for batch image-effect transformations\n"
+                                                     "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
+                                           "(c) 2003-2004, Gilles Caulier");
 
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at free.fr");
 
     m_helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Batch Image Effects Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
@@ -139,6 +136,7 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
 
 EffectImagesDialog::~EffectImagesDialog()
 {
+    delete m_about;
 }
 
 
