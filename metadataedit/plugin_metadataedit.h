@@ -48,6 +48,8 @@ protected slots:
     void slotRemoveIptc();
     void slotImportIptc();
 
+    void slotEditComments();
+
 private:
 
     KActionMenu     *m_actionMetadataEdit;

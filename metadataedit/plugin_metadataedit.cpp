@@ -113,6 +113,16 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
                                      actionCollection(),
                                      "importiptc"));
 
+/*    m_actionMetadataEdit->popupMenu()->insertSeparator();
+
+    m_actionMetadataEdit->insert(new KAction (i18n("Edit Comments..."),
+                                     0,
+                                     0,     
+                                     this,
+                                     SLOT(slotEditComments()),
+                                     actionCollection(),
+                                     "editcomments"));
+*/
     addAction( m_actionMetadataEdit );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
@@ -151,7 +161,7 @@ void Plugin_MetadataEdit::slotRemoveExif()
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("EXIF metadata will be definitivly removed from all current selected pictures.\n"
+                     i18n("EXIF metadata will be definitly removed from all current selected pictures.\n"
                           "Do you want to continue ?"),
                      i18n("Remove EXIF Metadata")) != KMessageBox::Yes)
         return;
@@ -229,8 +239,8 @@ void Plugin_MetadataEdit::slotImportExif()
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("EXIF metadata from current selected pictures will be definitivly "
-                          "remplaced by the EXIF content of \"%1\".\n"
+                     i18n("EXIF metadata from current selected pictures will be definitly "
+                          "replaced by the EXIF content of \"%1\".\n"
                           "Do you want to continue ?").arg(importEXIFFile.fileName()),
                      i18n("Import EXIF Metadata")) != KMessageBox::Yes)
         return;
@@ -297,7 +307,7 @@ void Plugin_MetadataEdit::slotRemoveIptc()
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("IPTC metadata will be definitivly removed from all current selected pictures.\n"
+                     i18n("IPTC metadata will be definitly removed from all current selected pictures.\n"
                           "Do you want to continue ?"),
                      i18n("Remove IPTC Metadata")) != KMessageBox::Yes)
         return;
@@ -375,8 +385,8 @@ void Plugin_MetadataEdit::slotImportIptc()
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("IPTC metadata from current selected pictures will be definitivly "
-                          "remplaced by the IPTC content of \"%1\".\n"
+                     i18n("IPTC metadata from current selected pictures will be definitly "
+                          "replaced by the IPTC content of \"%1\".\n"
                           "Do you want to continue ?").arg(importIPTCFile.fileName()),
                      i18n("Import IPTC Metadata")) != KMessageBox::Yes)
         return;
@@ -419,6 +429,62 @@ void Plugin_MetadataEdit::slotImportIptc()
                     i18n("Unable to set IPTC metadata from:"),
                     errorURLs.toStringList(),
                     i18n("Import IPTC Metadata"));  
+    }
+}
+
+void Plugin_MetadataEdit::slotEditComments()
+{
+    KIPI::ImageCollection images = m_interface->currentSelection();
+
+    if ( !images.isValid() || images.images().isEmpty() )
+        return;
+
+    // TODO : new Edit Comments dialog here.
+
+    if (KMessageBox::warningYesNo(
+                     kapp->activeWindow(),
+                     i18n("Comments from current selected pictures will be definitly "
+                          "replaced.\nDo you want to continue ?"),
+                     i18n("Edit Pictures Comments")) != KMessageBox::Yes)
+        return;
+
+    KURL::List imageURLs = images.images();
+    KURL::List updatedURLs;
+    KURL::List errorURLs;
+
+    for( KURL::List::iterator it = imageURLs.begin() ; 
+         it != imageURLs.end(); ++it)
+    {
+        KURL url = *it;
+        bool ret = false;
+
+        if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
+        {
+            ret = true;
+            KIPIPlugins::Exiv2Iface exiv2Iface;
+            ret &= exiv2Iface.load(url.path());
+/*            ret &= exiv2Iface.setIptc(iptcData);
+            ret &= exiv2Iface.save(url.path());*/
+        }
+        
+        if (!ret)
+            errorURLs.append(url);
+        else 
+            updatedURLs.append(url);
+    }
+
+    // We use kipi interface refreshImages() method to tell to host than 
+    // metadata from pictures have changed and need to be re-read.
+    
+    m_interface->refreshImages(updatedURLs);
+
+    if (!errorURLs.isEmpty())
+    {
+        KMessageBox::errorList(
+                    kapp->activeWindow(),
+                    i18n("Unable to set Comments from:"),
+                    errorURLs.toStringList(),
+                    i18n("Edit Pictures Comments"));  
     }
 }
 
