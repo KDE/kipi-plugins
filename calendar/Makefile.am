@@ -12,7 +12,7 @@ kipiplugin_calendar_la_SOURCES = plugin_calendar.cpp \
 
 kipiplugin_calendar_la_LIBADD = $(LIB_KDEPRINT) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
-kipiplugin_calendar_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+kipiplugin_calendar_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
 
 kde_services_DATA = kipiplugin_calendar.desktop
 

@@ -35,6 +35,10 @@
 
 #include <libkipi/interface.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 class QLabel;
 class QVBox;
 class QPainter;
@@ -83,6 +87,8 @@ private:
     int               currPage_;
     QGuardedPtr<CalBlockPainter> cb_;
     KIPI::Interface* interface_;
+
+    KIPIPlugins::KPAboutData    *m_about;
 
 private slots:
 

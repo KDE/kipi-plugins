@@ -41,7 +41,6 @@
 #include <klocale.h>
 #include <kprinter.h>
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
@@ -55,6 +54,7 @@
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "caltemplate.h"
 #include "calselect.h"
@@ -163,23 +163,20 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     // About data and help button.
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Calendar"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin to create a calendar"),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2004, Renchi Raju, (c) 2006 Tom Albers",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Calendar"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin to create a calendar"),
+                                           "(c) 2003-2004, Renchi Raju, (c) 2006 Tom Albers");
 
-    about->addAuthor("Tom Albers", I18N_NOOP("Author and maintainer"),
-                     "tomalbers@kde.nl");
+    m_about->addAuthor("Tom Albers", I18N_NOOP("Author and maintainer"),
+                       "tomalbers@kde.nl");
 
-    about->addAuthor("Renchi Raju", I18N_NOOP("Former Author and maintainer"),
-                     "renchi@pooh.tam.uiuc.edu");
+    m_about->addAuthor("Renchi Raju", I18N_NOOP("Former Author and maintainer"),
+                       "renchi@pooh.tam.uiuc.edu");
 
     m_helpButton = helpButton();
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Calendar Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
@@ -202,6 +199,8 @@ CalWizard::~CalWizard()
     if (painter_) delete painter_;
     if (printer_) delete printer_;
     delete cSettings_;
+
+    delete m_about;
 }
 
 void CalWizard::slotHelp()
