@@ -78,20 +78,20 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
 
     // About data and help button.
 
-    KIPIPlugins::KPAboutData* about = new KIPIPlugins::KPAboutData(I18N_NOOP("Gallery Export"),
-                                        NULL,
-                                        KAboutData::License_GPL,
-                                        I18N_NOOP("A Kipi plugin to export image collection to remote Gallery server."),
-                                        "(c) 2003-2005, Renchi Raju");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Gallery Export"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin to export image collection to remote Gallery server."),
+                                           "(c) 2003-2005, Renchi Raju");
 
-    about->addAuthor("Renchi Raju", I18N_NOOP("Author"),
-                     "renchi at pooh dot tam dot uiuc dot edu");
+    m_about->addAuthor("Renchi Raju", I18N_NOOP("Author"),
+                       "renchi at pooh dot tam dot uiuc dot edu");
 
-    about->addAuthor("Colin Guthrie", I18N_NOOP("Maintainer"),
-                     "kde at colin dot guthr dot ie");
+    m_about->addAuthor("Colin Guthrie", I18N_NOOP("Maintainer"),
+                       "kde at colin dot guthr dot ie");
 
     m_helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Gallery Export Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
@@ -172,6 +172,7 @@ GalleryWindow::~GalleryWindow()
 
     delete m_progressDlg;
     delete m_talker;
+    delete m_about;
 }
 
 void GalleryWindow::slotHelp()

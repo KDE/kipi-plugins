@@ -36,6 +36,10 @@ namespace KIPI
 {
 class Interface;
 }
+namespace KIPIPlugins
+{
+class KPAboutData;
+}
 
 namespace KIPIGalleryExportPlugin
 {
@@ -68,6 +72,7 @@ private:
     QIntDict<GAlbumViewItem>  m_albumDict;
     QString                   m_lastSelectedAlbum;
     KIPI::Interface          *m_interface;
+    KIPIPlugins::KPAboutData *m_about;
 
     QProgressDialog                      *m_progressDlg;
     unsigned int                          m_uploadCount;
