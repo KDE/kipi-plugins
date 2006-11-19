@@ -161,7 +161,7 @@ void Plugin_MetadataEdit::slotRemoveExif()
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("EXIF metadata will be definitly removed from all current selected pictures.\n"
+                     i18n("EXIF metadata will be permanently removed from all current selected pictures.\n"
                           "Do you want to continue ?"),
                      i18n("Remove EXIF Metadata")) != KMessageBox::Yes)
         return;
@@ -239,7 +239,7 @@ void Plugin_MetadataEdit::slotImportExif()
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("EXIF metadata from current selected pictures will be definitly "
+                     i18n("EXIF metadata from current selected pictures will be permanently "
                           "replaced by the EXIF content of \"%1\".\n"
                           "Do you want to continue ?").arg(importEXIFFile.fileName()),
                      i18n("Import EXIF Metadata")) != KMessageBox::Yes)
@@ -307,7 +307,7 @@ void Plugin_MetadataEdit::slotRemoveIptc()
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("IPTC metadata will be definitly removed from all current selected pictures.\n"
+                     i18n("IPTC metadata will be permanently removed from all current selected pictures.\n"
                           "Do you want to continue ?"),
                      i18n("Remove IPTC Metadata")) != KMessageBox::Yes)
         return;
@@ -385,7 +385,7 @@ void Plugin_MetadataEdit::slotImportIptc()
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("IPTC metadata from current selected pictures will be definitly "
+                     i18n("IPTC metadata from current selected pictures will be permanently "
                           "replaced by the IPTC content of \"%1\".\n"
                           "Do you want to continue ?").arg(importIPTCFile.fileName()),
                      i18n("Import IPTC Metadata")) != KMessageBox::Yes)
@@ -443,7 +443,7 @@ void Plugin_MetadataEdit::slotEditComments()
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("Comments from current selected pictures will be definitly "
+                     i18n("Comments from current selected pictures will be permanently "
                           "replaced.\nDo you want to continue ?"),
                      i18n("Edit Pictures Comments")) != KMessageBox::Yes)
         return;
