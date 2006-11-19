@@ -116,23 +116,20 @@ AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *par
     slotImageFormatChanged(m_imagesFormat->currentText());
     page_setupImageOptions->setFocus();
     resize( 600, 400 );
-    
+
     // About data and help button.
-    
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Acquire images"), 
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin to acquire images"),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier", 
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
-    
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                     "caulier dot gilles at free.fr");
+
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Acquire images"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin to acquire images"),
+                                           "(c) 2003-2004, Gilles Caulier");
+
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                       "caulier dot gilles at free.fr");
 
     m_helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Acquire Images Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
@@ -143,6 +140,7 @@ AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *par
 
 AcquireImageDialog::~AcquireImageDialog()
 {
+    delete m_about;
 }
 
 

@@ -42,6 +42,10 @@
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 class QPushButton;
 class QLineEdit;
 class QLabel;
@@ -88,6 +92,8 @@ Q_OBJECT
    QString             m_ImagesFilesSort;
 
    KIPI::UploadWidget* m_uploadPath;
+
+   KIPIPlugins::KPAboutData *m_about; 
 
    KIntNumInput       *m_imageCompression;
 

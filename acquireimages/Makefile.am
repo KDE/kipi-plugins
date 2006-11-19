@@ -11,7 +11,7 @@ kipiplugin_acquireimages_la_SOURCES = plugin_acquireimages.cpp acquireimagedialo
 kipiplugin_acquireimages_la_LIBADD = $(LIB_TIFF) $(LIB_X11) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
-kipiplugin_acquireimages_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+kipiplugin_acquireimages_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
 
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = kipiplugin_acquireimages.desktop
