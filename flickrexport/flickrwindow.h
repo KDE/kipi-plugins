@@ -27,6 +27,10 @@
 #include <libkipi/interface.h>
 #include <libkipi/imagedialog.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 
 class QListView;
 class QPushButton;
@@ -102,6 +106,8 @@ private:
     unsigned int                          m_uploadCount;
     unsigned int                          m_uploadTotal;
     QValueList< QPair<QString,FPhotoInfo> >  m_uploadQueue;
+
+    KIPIPlugins::KPAboutData    *m_about; 
 
 private slots:
     void slotTokenObtained(const QString& token);

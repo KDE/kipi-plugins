@@ -35,7 +35,6 @@
 
 // Include files for KDE
 
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
 #include <klocale.h>
@@ -59,6 +58,7 @@
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "flickrtalker.h"
 #include "flickritem.h"
@@ -81,20 +81,17 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
 
     // About data and help button.
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Flickr Export"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin to export image collection to Flickr web service."),
-                                       KAboutData::License_GPL,
-                                       "(c) 2005, Vardhman Jain",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Flickr Export"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin to export image collection to Flickr web service."),
+                                           "(c) 2005, Vardhman Jain");
 
-    about->addAuthor("Vardhman Jain", I18N_NOOP("Author and maintainer"),
+    m_about->addAuthor("Vardhman Jain", I18N_NOOP("Author and maintainer"),
                      "Vardhman at gmail dot com");
 
     m_helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Flickr Export Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
@@ -218,7 +215,9 @@ FlickrWindow::~FlickrWindow()
 	delete m_progressDlg;
     delete m_authProgressDlg;
     delete m_talker;
-    delete m_widget;    
+    delete m_widget;
+
+    delete m_about;
 }
 
 void FlickrWindow::slotHelp()

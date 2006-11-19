@@ -14,7 +14,7 @@ kipiplugin_flickrexport_la_SOURCES = plugin_flickrexport.cpp \
 
 kipiplugin_flickrexport_la_LIBADD = $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
-kipiplugin_flickrexport_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+kipiplugin_flickrexport_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
 
 kde_services_DATA = kipiplugin_flickrexport.desktop
 
