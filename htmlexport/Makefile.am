@@ -21,7 +21,7 @@ kde_kcfg_DATA = \
 	htmlexportconfig.kcfg
 
 kipiplugin_htmlexport_la_LIBADD = -lexslt -lxml2 $(LIBXSLT_LIBS) $(LIBKIPI_LIBS) $(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
-kipiplugin_htmlexport_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+kipiplugin_htmlexport_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
 
 
 # Install the desktop file needed to detect the plugin

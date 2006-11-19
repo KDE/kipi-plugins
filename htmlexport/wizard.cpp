@@ -38,7 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <kurlrequester.h>
 #include <kwizard.h>
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
 
@@ -46,6 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <libkipi/imagecollectionselector.h>
 
 // Local
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "galleryinfo.h"
 #include "imagesettingspage.h"
@@ -96,20 +96,17 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface, GalleryInfo* info)
 	d->mInfo=info;
 
     // About data and help button.
-        
-    KAboutData* about = new KAboutData("kipiplugins",
-                                        I18N_NOOP("HTML Export"), 
-                                        kipiplugins_version,
-                                        I18N_NOOP("A KIPI plugin to export image collections to HTML pages"),
-                                        KAboutData::License_GPL,
-                                        "(c) 2006, Aurelien Gateau", 
-                                        0,
-                                        "http://extragear.kde.org/apps/kipi");
-        
-    about->addAuthor("Aurelien Gateau", I18N_NOOP("Author and Maintainer"),
-                    "aurelien.gateau@free.fr");
-    
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("HTML Export"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A KIPI plugin to export image collections to HTML pages"),
+                                           "(c) 2006, Aurelien Gateau");
+
+    m_about->addAuthor("Aurelien Gateau", I18N_NOOP("Author and Maintainer"),
+                       "aurelien.gateau@free.fr");
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("HTML Export Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     helpButton()->setPopup( helpMenu->menu() );
@@ -145,6 +142,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface, GalleryInfo* info)
 
 Wizard::~Wizard() {
 	delete d;
+        delete m_about;
 }
 
 void Wizard::slotHelp() {

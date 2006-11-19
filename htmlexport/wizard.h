@@ -24,6 +24,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // KDE
 #include <kwizard.h>
 
+//Local includes
+#include "kpaboutdata.h"
+
 namespace KIPI {
 class Interface;
 }
@@ -49,6 +52,8 @@ private slots:
 private:
 	struct Private;
 	Private* d;
+
+        KIPIPlugins::KPAboutData    *m_about; 
 };
 
 
