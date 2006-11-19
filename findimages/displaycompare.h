@@ -38,6 +38,10 @@
 
 #include <libkipi/interface.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 class QVBoxLayout;
 class QHBoxLayout;
 class QGridLayout;
@@ -103,6 +107,8 @@ private:
    QPushButton        *m_helpButton;
 
    KIPI::Interface    *m_interface;
+
+   KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // NameSpace KIPIFindDupplicateImagesPlugin

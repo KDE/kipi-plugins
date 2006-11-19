@@ -36,6 +36,10 @@
 
 #include <libkipi/interface.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 class QComboBox;
 class QFrame;
 class QPushButton;
@@ -103,6 +107,8 @@ class FindDuplicateDialog : public KDialogBase
   KIPI::Interface               *m_interface;
   
   KIPI::ImageCollectionSelector     *m_imageCollectionSelector;
+  
+  KIPIPlugins::KPAboutData      *m_about;
 
  private :
  

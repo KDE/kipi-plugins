@@ -55,7 +55,6 @@
 #include <ksqueezedtextlabel.h>
 #include <kio/global.h>
 #include <klistview.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
 
@@ -66,6 +65,7 @@
 
 // Local include files
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "finddupplicatedialog.h"
 #include "finddupplicatedialog.moc"
@@ -86,27 +86,24 @@ FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *p
 
     // About data and help button.
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Find Duplicate Images"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin to find duplicate images\n"
-                                                 "This plugin is based on ShowImg implementation algorithm"),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Find Duplicate Images"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin to find duplicate images\n"
+                                                     "This plugin is based on ShowImg implementation algorithm"),
+                                           "(c) 2003-2004, Gilles Caulier");
 
-    about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Maintainer"),
-                     "blackie at kde dot org");
+    m_about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Maintainer"),
+                       "blackie at kde dot org");
 
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Original author"),
-                     "caulier dot gilles at free.fr");
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Original author"),
+                       "caulier dot gilles at free.fr");
 
-    about->addAuthor("Richard Groult", I18N_NOOP("Find duplicate images algorithm"),
-                     "rgroult at jalix.org");
+    m_about->addAuthor("Richard Groult", I18N_NOOP("Find duplicate images algorithm"),
+                       "rgroult at jalix.org");
 
     m_helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Find Duplicate Images Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
@@ -117,6 +114,7 @@ FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *p
 
 FindDuplicateDialog::~FindDuplicateDialog()
 {
+    delete m_about;
 }
 
 
