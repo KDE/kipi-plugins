@@ -55,11 +55,13 @@ public:
     CommentRemoveDialogDialogPrivate()
     {
         about                  = 0;
+        removeHOSTCommentCheck = 0;
         removeJFIFCommentCheck = 0;
         removeEXIFCommentCheck = 0;
         removeIPTCCaptionCheck = 0;
     }
 
+    QCheckBox                *removeHOSTCommentCheck;
     QCheckBox                *removeJFIFCommentCheck;
     QCheckBox                *removeEXIFCommentCheck;
     QCheckBox                *removeIPTCCaptionCheck;
@@ -96,6 +98,9 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
 
     QVBoxLayout *vlay = new QVBoxLayout(plainPage(), 0, KDialog::spacingHint());
 
+    d->removeHOSTCommentCheck = new QCheckBox(i18n("Remove comment hosted by %1")
+                                    .arg(KApplication::kApplication()->aboutData()->appName()), 
+                                    plainPage());
     d->removeJFIFCommentCheck = new QCheckBox(i18n("Remove JFIF comment section"), plainPage());
     d->removeEXIFCommentCheck = new QCheckBox(i18n("Remove EXIF user comment"), plainPage());
     d->removeIPTCCaptionCheck = new QCheckBox(i18n("Remove IPTC caption"), plainPage());
@@ -104,6 +109,7 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
                                    "will be permanently removed.</b>"), plainPage());
     
 
+    vlay->addWidget(d->removeHOSTCommentCheck);
     vlay->addWidget(d->removeJFIFCommentCheck);
     vlay->addWidget(d->removeEXIFCommentCheck);
     vlay->addWidget(d->removeIPTCCaptionCheck);
@@ -142,6 +148,7 @@ void CommentRemoveDialog::readSettings()
 {
     KConfig config("kipirc");
     config.setGroup("Comments Remove Settings");
+    setCheckedRemoveHOSTComment(config.readBoolEntry("Remove HOST Comment", true));
     setCheckedRemoveJFIFComment(config.readBoolEntry("Remove JFIF Comment", true));
     setCheckedRemoveEXIFComment(config.readBoolEntry("Remove EXIF Comment", true));
     setCheckedRemoveIPTCCaption(config.readBoolEntry("Remove IPTC Caption", true));
@@ -152,6 +159,7 @@ void CommentRemoveDialog::saveSettings()
 {
     KConfig config("kipirc");
     config.setGroup("Comments Remove Settings");
+    config.writeEntry("Remove HOST Comment", removeHOSTCommentIsChecked());
     config.writeEntry("Remove JFIF Comment", removeJFIFCommentIsChecked());
     config.writeEntry("Remove EXIF Comment", removeEXIFCommentIsChecked());
     config.writeEntry("Remove IPTC Caption", removeIPTCCaptionIsChecked());
@@ -163,6 +171,11 @@ void CommentRemoveDialog::slotOk()
 {
     saveSettings();
     accept();
+}
+
+bool CommentRemoveDialog::removeHOSTCommentIsChecked()
+{
+    return d->removeHOSTCommentCheck->isChecked();
 }
 
 bool CommentRemoveDialog::removeJFIFCommentIsChecked()
@@ -178,6 +191,11 @@ bool CommentRemoveDialog::removeEXIFCommentIsChecked()
 bool CommentRemoveDialog::removeIPTCCaptionIsChecked()
 {
     return d->removeIPTCCaptionCheck->isChecked();
+}
+
+void CommentRemoveDialog::setCheckedRemoveHOSTComment(bool c)
+{
+    d->removeHOSTCommentCheck->setChecked(c);
 }
 
 void CommentRemoveDialog::setCheckedRemoveJFIFComment(bool c)

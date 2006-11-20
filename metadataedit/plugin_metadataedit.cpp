@@ -528,8 +528,11 @@ void Plugin_MetadataEdit::slotRemoveComments()
         KURL url = *it;
         bool ret = false;
 
-        KIPI::ImageInfo info = m_interface->info(url);
-        info.setDescription(QString::null);
+        if (dlg.removeHOSTCommentIsChecked())
+        {
+            KIPI::ImageInfo info = m_interface->info(url);
+            info.setDescription(QString::null);
+        }
 
         if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
         {

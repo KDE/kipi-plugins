@@ -39,10 +39,12 @@ public:
     CommentRemoveDialog(QWidget* parent);
     ~CommentRemoveDialog();
 
+    bool removeHOSTCommentIsChecked();
     bool removeJFIFCommentIsChecked();
     bool removeEXIFCommentIsChecked();
     bool removeIPTCCaptionIsChecked();
 
+    void setCheckedRemoveHOSTComment(bool c);
     void setCheckedRemoveJFIFComment(bool c);
     void setCheckedRemoveEXIFComment(bool c);
     void setCheckedRemoveIPTCCaption(bool c);
