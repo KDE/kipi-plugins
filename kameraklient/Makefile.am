@@ -8,7 +8,7 @@ kipiplugin_kameraklient_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 
 kipiplugin_kameraklient_la_LIBADD = $(LIB_GPHOTO) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
-kipiplugin_kameraklient_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+kipiplugin_kameraklient_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
 
 kde_services_DATA = kipiplugin_kameraklient.desktop
 

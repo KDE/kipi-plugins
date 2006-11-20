@@ -70,13 +70,13 @@
 #include <kstdaccel.h>
 #include <kurl.h>
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kguiitem.h>
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "camerafolderitem.h"
 #include "cameraiconview.h"
@@ -167,23 +167,20 @@ CameraUI::CameraUI() : QWidget()
     mhelpButton->setMinimumSize(QSize(100, 0));
     mBtnBoxLayout->addWidget(mhelpButton);
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("KameraKlient"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Digital camera interface Kipi plugin"),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2004, Renchi Raju\n"
-                                       "(c) 2004, Tudor Calin",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("KameraKlient"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Digital camera interface Kipi plugin"),
+                                           "(c) 2003-2004, Renchi Raju\n"
+                                           "(c) 2004, Tudor Calin");
 
-    about->addAuthor("Renchi Raju", I18N_NOOP("Original author from Digikam project"),
-                     "renchi@pooh.tam.uiuc.edu");
+    m_about->addAuthor("Renchi Raju", I18N_NOOP("Original author from Digikam project"),
+                       "renchi@pooh.tam.uiuc.edu");
 
-    about->addAuthor("Tudor Calin", I18N_NOOP("Porting the Digikam GPhoto2 interface to Kipi. Maintainer"),
-                     "tudor@1xtech.com");
+    m_about->addAuthor("Tudor Calin", I18N_NOOP("Porting the Digikam GPhoto2 interface to Kipi. Maintainer"),
+                       "tudor@1xtech.com");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("KameraKlient Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     mhelpButton->setPopup( helpMenu->menu() );
@@ -250,6 +247,8 @@ CameraUI::~CameraUI() {
     delete container_;
     mFolderView->clear();
     mIconView->clear();
+
+    delete m_about;
 }
 
 

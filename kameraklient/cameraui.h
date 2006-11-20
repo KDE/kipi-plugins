@@ -35,6 +35,7 @@
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "gpfileiteminfo.h"
 #include "cameratype.h"
 
@@ -178,6 +179,8 @@ private:
     bool                cameraConnected_;
     
     QLineEdit           *mDownloadDirectoryEdit;
+
+    KIPIPlugins::KPAboutData    *m_about;
 };
 
 }  // NameSpace KIPIKameraKlientPlugin

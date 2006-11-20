@@ -34,7 +34,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
@@ -46,6 +45,7 @@
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "setupcamera.h"
 #include "cameraselection.h"
 #include "cameralist.h"
@@ -60,25 +60,22 @@ SetupCamera::SetupCamera(QWidget* parent, const char* name)
                          Help|Ok|Cancel, Ok, true) 
 {
     // About data and help button.
-    
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("KameraKlient"), 
-                                       kipi_version,
-                                       I18N_NOOP("An Digital camera interface Kipi plugin"),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2004, Renchi Raju\n"
-                                       "(c) 2004, Tudor Calin", 
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
-    
-    about->addAuthor("Renchi Raju", I18N_NOOP("Original author from Digikam project"),
-                     "renchi@pooh.tam.uiuc.edu");
 
-    about->addAuthor("Tudor Calin", I18N_NOOP("Porting the Digikam GPhoto2 interface to Kipi. Maintainer"),
-                     "tudor@1xtech.com");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("KameraKlient"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("An Digital camera interface Kipi plugin"),
+                                           "(c) 2003-2004, Renchi Raju\n"
+                                           "(c) 2004, Tudor Calin");
+    
+    m_about->addAuthor("Renchi Raju", I18N_NOOP("Original author from Digikam project"),
+                       "renchi@pooh.tam.uiuc.edu");
+
+    m_about->addAuthor("Tudor Calin", I18N_NOOP("Porting the Digikam GPhoto2 interface to Kipi. Maintainer"),
+                       "tudor@1xtech.com");
 
     helpButton_ = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("KameraKlient Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     helpButton_->setPopup( helpMenu->menu() );
@@ -166,6 +163,7 @@ SetupCamera::SetupCamera(QWidget* parent, const char* name)
 }
 
 SetupCamera::~SetupCamera() {
+    delete m_about;
 }
 
 void SetupCamera::slotHelp()
