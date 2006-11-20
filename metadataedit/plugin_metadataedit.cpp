@@ -41,6 +41,7 @@
 #include "exiv2iface.h"
 #include "exifeditdialog.h"
 #include "iptceditdialog.h"
+#include "commenteditdialog.h"
 #include "plugin_metadataedit.h"
 #include "plugin_metadataedit.moc"
 
@@ -113,7 +114,7 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
                                      actionCollection(),
                                      "importiptc"));
 
-/*    m_actionMetadataEdit->popupMenu()->insertSeparator();
+    m_actionMetadataEdit->popupMenu()->insertSeparator();
 
     m_actionMetadataEdit->insert(new KAction (i18n("Edit Comments..."),
                                      0,
@@ -122,7 +123,7 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
                                      SLOT(slotEditComments()),
                                      actionCollection(),
                                      "editcomments"));
-*/
+
     addAction( m_actionMetadataEdit );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
@@ -439,13 +440,9 @@ void Plugin_MetadataEdit::slotEditComments()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    // TODO : new Edit Comments dialog here.
+    KIPIMetadataEditPlugin::CommentEditDialog dlg(kapp->activeWindow());
 
-    if (KMessageBox::warningYesNo(
-                     kapp->activeWindow(),
-                     i18n("Comments from current selected pictures will be permanently "
-                          "replaced.\nDo you want to continue ?"),
-                     i18n("Edit Pictures Comments")) != KMessageBox::Yes)
+    if (dlg.exec() != KMessageBox::Ok)
         return;
 
     KURL::List imageURLs = images.images();
@@ -458,13 +455,25 @@ void Plugin_MetadataEdit::slotEditComments()
         KURL url = *it;
         bool ret = false;
 
+        KIPI::ImageInfo info = m_interface->info(url);
+        info.setDescription(dlg.getComments());
+
         if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
         {
             ret = true;
             KIPIPlugins::Exiv2Iface exiv2Iface;
             ret &= exiv2Iface.load(url.path());
-/*            ret &= exiv2Iface.setIptc(iptcData);
-            ret &= exiv2Iface.save(url.path());*/
+
+            if (dlg.syncEXIFCommentIsChecked())
+                ret &= exiv2Iface.setExifComment(dlg.getComments());
+        
+            if (dlg.syncJFIFCommentIsChecked())
+                ret &= exiv2Iface.setComments(dlg.getComments().utf8());
+        
+            if (dlg.syncIPTCCaptionIsChecked())
+                ret &= exiv2Iface.setIptcTagString("Iptc.Application2.Caption", dlg.getComments());
+
+            ret &= exiv2Iface.save(url.path());
         }
         
         if (!ret)
@@ -482,7 +491,7 @@ void Plugin_MetadataEdit::slotEditComments()
     {
         KMessageBox::errorList(
                     kapp->activeWindow(),
-                    i18n("Unable to set Comments from:"),
+                    i18n("Unable to set comments like picture metadata from:"),
                     errorURLs.toStringList(),
                     i18n("Edit Pictures Comments"));  
     }

@@ -15,8 +15,8 @@ kipiplugin_metadataedit_la_SOURCES = plugin_metadataedit.cpp metadatacheckbox.cp
 	                             exiflens.cpp exifdevice.cpp exiflight.cpp \
 	                             iptceditdialog.cpp iptccaption.cpp iptcsubjects.cpp \
 	                             iptccredits.cpp iptcstatus.cpp iptcorigin.cpp \
-	                             iptcdatetime.cpp iptckeywords.cpp iptccategories.cpp 
-	                                 
+	                             iptcdatetime.cpp iptckeywords.cpp iptccategories.cpp \
+				     commenteditdialog.cpp
 
 # Libs needed by the plugin
 kipiplugin_metadataedit_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \
