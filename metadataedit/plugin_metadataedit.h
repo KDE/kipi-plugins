@@ -49,6 +49,7 @@ protected slots:
     void slotImportIptc();
 
     void slotEditComments();
+    void slotRemoveComments();
 
 private:
 

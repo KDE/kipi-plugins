@@ -42,8 +42,6 @@
 // Local includes.
 
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
-#include "exiv2iface.h"
 #include "commenteditdialog.h"
 #include "commenteditdialog.moc"
 
@@ -69,6 +67,7 @@ public:
     QCheckBox                *syncIPTCCaptionCheck;
 
     KTextEdit                *userCommentEdit;
+
     KIPIPlugins::KPAboutData *about;
 };
 
@@ -159,7 +158,7 @@ void CommentEditDialog::readSettings()
     config.setGroup("Comments Edit Settings");
     setCheckedSyncJFIFComment(config.readBoolEntry("Sync JFIF Comment", true));
     setCheckedSyncEXIFComment(config.readBoolEntry("Sync EXIF Comment", true));
-    setCheckedIPTCCaption(config.readBoolEntry("Sync IPTC Caption", true));
+    setCheckedSyncIPTCCaption(config.readBoolEntry("Sync IPTC Caption", true));
     resize(configDialogSize(config, QString("Comments Edit Dialog")));
 }
 
@@ -210,7 +209,7 @@ void CommentEditDialog::setCheckedSyncEXIFComment(bool c)
     d->syncEXIFCommentCheck->setChecked(c);
 }
 
-void CommentEditDialog::setCheckedIPTCCaption(bool c)
+void CommentEditDialog::setCheckedSyncIPTCCaption(bool c)
 {
     d->syncIPTCCaptionCheck->setChecked(c);
 }

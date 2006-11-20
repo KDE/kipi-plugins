@@ -42,6 +42,7 @@
 #include "exifeditdialog.h"
 #include "iptceditdialog.h"
 #include "commenteditdialog.h"
+#include "commentremovedialog.h"
 #include "plugin_metadataedit.h"
 #include "plugin_metadataedit.moc"
 
@@ -123,6 +124,14 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
                                      SLOT(slotEditComments()),
                                      actionCollection(),
                                      "editcomments"));
+
+    m_actionMetadataEdit->insert(new KAction (i18n("Remove Comments..."),
+                                     0,
+                                     0,     
+                                     this,
+                                     SLOT(slotRemoveComments()),
+                                     actionCollection(),
+                                     "removecomments"));
 
     addAction( m_actionMetadataEdit );
 
@@ -489,11 +498,75 @@ void Plugin_MetadataEdit::slotEditComments()
 
     if (!errorURLs.isEmpty())
     {
-        KMessageBox::errorList(
-                    kapp->activeWindow(),
-                    i18n("Unable to set comments like picture metadata from:"),
-                    errorURLs.toStringList(),
-                    i18n("Edit Pictures Comments"));  
+        KMessageBox::informationList(
+                     kapp->activeWindow(),
+                     i18n("Unable to set comments like picture metadata from:"),
+                     errorURLs.toStringList(),
+                     i18n("Edit Pictures Comments"));  
+    }
+}
+
+void Plugin_MetadataEdit::slotRemoveComments()
+{
+    KIPI::ImageCollection images = m_interface->currentSelection();
+
+    if ( !images.isValid() || images.images().isEmpty() )
+        return;
+
+    KIPIMetadataEditPlugin::CommentRemoveDialog dlg(kapp->activeWindow());
+
+    if (dlg.exec() != KMessageBox::Ok)
+        return;
+
+    KURL::List imageURLs = images.images();
+    KURL::List updatedURLs;
+    KURL::List errorURLs;
+
+    for( KURL::List::iterator it = imageURLs.begin() ; 
+         it != imageURLs.end(); ++it)
+    {
+        KURL url = *it;
+        bool ret = false;
+
+        KIPI::ImageInfo info = m_interface->info(url);
+        info.setDescription(QString::null);
+
+        if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
+        {
+            ret = true;
+            KIPIPlugins::Exiv2Iface exiv2Iface;
+            ret &= exiv2Iface.load(url.path());
+
+            if (dlg.removeEXIFCommentIsChecked())
+                ret &= exiv2Iface.removeExifTag("Exif.Photo.UserComment");
+
+            if (dlg.removeJFIFCommentIsChecked())
+                ret &= exiv2Iface.setComments(QByteArray());
+        
+            if (dlg.removeIPTCCaptionIsChecked())
+                ret &= exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
+
+            ret &= exiv2Iface.save(url.path());
+        }
+        
+        if (!ret)
+            errorURLs.append(url);
+        else 
+            updatedURLs.append(url);
+    }
+
+    // We use kipi interface refreshImages() method to tell to host than 
+    // metadata from pictures have changed and need to be re-read.
+    
+    m_interface->refreshImages(updatedURLs);
+
+    if (!errorURLs.isEmpty())
+    {
+        KMessageBox::informationList(
+                     kapp->activeWindow(),
+                     i18n("Unable to remove Comments like picture metadata from:"),
+                     errorURLs.toStringList(),
+                     i18n("Remove Pictures Comments"));  
     }
 }
 

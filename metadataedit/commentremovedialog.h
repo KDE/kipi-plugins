@@ -1,7 +1,7 @@
 /* ============================================================
  * Authors: Caulier Gilles <caulier dot gilles at kdemail dot net>
  * Date   : 2006-11-20
- * Description : a dialog to batch edit comments
+ * Description : a dialog to batch remove comments
  * 
  * Copyright 2006 by Gilles Caulier
  *
@@ -18,12 +18,8 @@
  *
  * ============================================================ */
 
-#ifndef COMMENTEDITDIALOG_H
-#define COMMENTEDITDIALOG_H
-
-// Qt includes.
-
-#include <qstring.h>
+#ifndef COMMENTREMOVEDIALOG_H
+#define COMMENTREMOVEDIALOG_H
 
 // KDE includes.
 
@@ -32,26 +28,24 @@
 namespace KIPIMetadataEditPlugin
 {
 
-class CommentEditDialogDialogPrivate;
+class CommentRemoveDialogDialogPrivate;
 
-class CommentEditDialog : public KDialogBase
+class CommentRemoveDialog : public KDialogBase
 {
     Q_OBJECT
 
 public:
 
-    CommentEditDialog(QWidget* parent);
-    ~CommentEditDialog();
+    CommentRemoveDialog(QWidget* parent);
+    ~CommentRemoveDialog();
 
-    bool syncJFIFCommentIsChecked();
-    bool syncEXIFCommentIsChecked();
-    bool syncIPTCCaptionIsChecked();
+    bool removeJFIFCommentIsChecked();
+    bool removeEXIFCommentIsChecked();
+    bool removeIPTCCaptionIsChecked();
 
-    void setCheckedSyncJFIFComment(bool c);
-    void setCheckedSyncEXIFComment(bool c);
-    void setCheckedSyncIPTCCaption(bool c);
-
-    QString getComments();
+    void setCheckedRemoveJFIFComment(bool c);
+    void setCheckedRemoveEXIFComment(bool c);
+    void setCheckedRemoveIPTCCaption(bool c);
 
 protected slots:
 
@@ -70,9 +64,9 @@ private:
 
 private:
 
-    CommentEditDialogDialogPrivate *d;
+    CommentRemoveDialogDialogPrivate *d;
 };
 
 }  // namespace KIPIMetadataEditPlugin
 
-#endif /* COMMENTEDITDIALOG_H */
+#endif /* COMMENTREMOVEDIALOG_H */
