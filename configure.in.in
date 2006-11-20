@@ -174,17 +174,12 @@ if test "$build_libgpod" != "no"; then
         CFLAGS="$CFLAGS $LIBGPOD_CFLAGS"
         LDFLAGS="$LDFLAGS $LIBGPOD_LIBS"
 
-        AC_CHECK_FUNCS(itdb_photodb_add_photo, have_libgpod_photos=yes)
+        AC_CHECK_FUNCS(itdb_photodb_photoalbum_create, have_libgpod_photos=yes)
         AC_CHECK_FUNCS(itdb_photodb_parse)
         AC_CHECK_FUNCS(itdb_device_get_ipod_info)
 
-        AC_CHECK_FUNCS(itdb_photodb_photoalbum_remove,
-                        [AC_DEFINE(HAVE_ITDB_REMOVE_PHOTOS, 1, [have libgpod remove photos])],
-                        ,
-                        [#include <gpod/itdb.h>])
-
         if test "x$have_libgpod_photos" = "xno"; then
-            AC_MSG_WARN([ Current version of libgpod does not support the photo database. You need version 0.4.1 or above.])
+            AC_MSG_WARN([ Current version of libgpod does not support the photo database. You need a CVS (development) version.])
             have_libgpod=no
         else
             CPPFLAGS=$ac_cppflags_save
