@@ -69,7 +69,6 @@
 #include <ksqueezedtextlabel.h>
 #include <kio/previewjob.h>
 #include <klistview.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
 
@@ -79,6 +78,7 @@
 
 // Local include files
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "imgallerydialog.h"
 #include "imgallerydialog.moc"
@@ -101,33 +101,30 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
 
     // About data and help button.
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Image Gallery"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin for HTML album export.\n"
-                                                 "Based on KimgalleryPlugin implementation."),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Image Gallery"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin for HTML album export.\n"
+                                                     "Based on KimgalleryPlugin implementation."),
+                                           "(c) 2003-2004, Gilles Caulier");
 
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                     "caulier dot gilles at free.fr");
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+                       "caulier dot gilles at free.fr");
 
-    about->addAuthor("Gregory Kokanosky", I18N_NOOP("Image navigation mode patches"),
-                     "gregory dot kokanosky at free.fr>");
+    m_about->addAuthor("Gregory Kokanosky", I18N_NOOP("Image navigation mode patches"),
+                       "gregory dot kokanosky at free.fr>");
 
-    about->addAuthor("Achim Bohnet", I18N_NOOP("HTML implementation patches"),
-                     "ach at mpe.mpg.de");
+    m_about->addAuthor("Achim Bohnet", I18N_NOOP("HTML implementation patches"),
+                       "ach at mpe.mpg.de");
 
-    about->addAuthor("Lukáš Tinkl", I18N_NOOP("Original HTML generator implementation"),
-                     "lukas at kde.org");
+    m_about->addAuthor("Lukáš Tinkl", I18N_NOOP("Original HTML generator implementation"),
+                       "lukas at kde.org");
 
-    about->addAuthor("Andreas Schlapbach", I18N_NOOP("Original HTML generator implementation"),
-                     "schlpbch at iam.unibe.ch");
+    m_about->addAuthor("Andreas Schlapbach", I18N_NOOP("Original HTML generator implementation"),
+                       "schlpbch at iam.unibe.ch");
 
     m_helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Image Gallery Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
@@ -138,6 +135,7 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
 
 KIGPDialog::~KIGPDialog()
 {
+    delete m_about;
 }
 
 void KIGPDialog::slotHelp()

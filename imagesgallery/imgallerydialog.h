@@ -47,6 +47,10 @@
 
 #include <libkipi/interface.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 class QProgressDialog;
 class QCheckBox;
 class QString;
@@ -243,6 +247,8 @@ class KIGPDialog : public KDialogBase
   
   QValueList<KIPI::ImageCollection>  m_selectedAlbums;
   KIPI::ImageCollectionSelector     *m_imageCollectionSelector;
+  
+  KIPIPlugins::KPAboutData  *m_about;
   
  private:
  
