@@ -145,8 +145,10 @@ EXIFCaption::EXIFCaption(QWidget* parent)
                                              "will be used to save text."));
 
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF comment section"), parent);
-    d->syncHostCommentCheck = new QCheckBox(i18n("Sync host application comment"), parent);
-    d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption"), parent);
+    d->syncHostCommentCheck = new QCheckBox(i18n("Sync comment hosted by %1")
+                                            .arg(KApplication::kApplication()->aboutData()->appName()), 
+                                            parent);
+    d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: ASCII limited)"), parent);
 
     vlay->addWidget(d->userCommentCheck);
     vlay->addWidget(d->userCommentEdit);

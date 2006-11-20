@@ -111,7 +111,7 @@ CommentEditDialog::CommentEditDialog(QWidget* parent)
 
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF comment section"), plainPage());
     d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF user comment"), plainPage());
-    d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption"), plainPage());
+    d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: ASCII limited)"), plainPage());
 
     QLabel *note = new QLabel(i18n("<b>Note: Comments from current selected pictures "
                                    "will be permanently replaced.</b>"), plainPage());
