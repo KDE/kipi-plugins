@@ -128,11 +128,12 @@ QByteArray Exiv2Iface::getComments() const
     return data;
 }
 
-void Exiv2Iface::setComments(const QByteArray& data)
+bool Exiv2Iface::setComments(const QByteArray& data)
 {
     QString string(data);
     const std::string str(string.utf8());
     d->imageComments = str;
+    return true;
 }
 
 QByteArray Exiv2Iface::getExif() const

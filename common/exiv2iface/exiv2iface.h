@@ -77,7 +77,7 @@ public:
     QByteArray getExif() const;
     QByteArray getIptc(bool addIrbHeader=false) const;
 
-    void setComments(const QByteArray& data);
+    bool setComments(const QByteArray& data);
     bool setExif(const QByteArray& data);
     bool setIptc(const QByteArray& data);
 
