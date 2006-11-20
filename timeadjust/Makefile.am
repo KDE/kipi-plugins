@@ -16,7 +16,7 @@ kipiplugin_timeadjust_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface
 	       $(LIBKIPI_LIBS) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
-kipiplugin_timeadjust_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+kipiplugin_timeadjust_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
 
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = kipiplugin_timeadjust.desktop

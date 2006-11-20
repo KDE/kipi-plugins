@@ -32,6 +32,10 @@
 
 #include <libkipi/interface.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 class QSpinBox;
 class QRadioButton;
 class QPushButton;
@@ -48,6 +52,7 @@ class TimeAdjustDialog :public KDialogBase
 public:
 
     TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent, const char* name = 0 );
+    ~TimeAdjustDialog();
     void setImages( const KURL::List& images );
 
 protected slots:
@@ -89,6 +94,8 @@ private:
     QSpinBox        *m_years;
     
     QDateTime        m_exampleDate;
+
+    KIPIPlugins::KPAboutData    *m_about;
 };
 
 }  // NameSpace KIPITimeAdjustPlugin

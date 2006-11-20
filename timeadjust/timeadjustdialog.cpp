@@ -64,24 +64,21 @@ TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent,
 {
     // About data and help button.
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Time Adjust"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin for adjusting time stamp of picture files"),
-                                       KAboutData::License_GPL,
-                                       "(c) 2003-2005, Jesper K. Pedersen\n"
-                                       "(c) 2006, Gilles Caulier",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Time Adjust"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin for adjusting time stamp of picture files"),
+                                           "(c) 2003-2005, Jesper K. Pedersen\n"
+                                           "(c) 2006, Gilles Caulier");
 
-    about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Author and maintainer"),
-                     "blackie@kde.org");
+    m_about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Author and maintainer"),
+                       "blackie@kde.org");
 
-    about->addAuthor("Gilles Caulier", I18N_NOOP("Developper"),
-                     "caulier dot gilles at kdemail dot net");
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Developper"),
+                       "caulier dot gilles at kdemail dot net");
 
     m_helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Time Adjust Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
@@ -92,6 +89,11 @@ TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent,
 
     connect( this, SIGNAL( okClicked() ),
              this, SLOT( slotOK() ) );
+}
+
+TimeAdjustDialog::~TimeAdjustDialog()
+{
+    delete m_about;
 }
 
 void TimeAdjustDialog::setImages( const KURL::List& images )
