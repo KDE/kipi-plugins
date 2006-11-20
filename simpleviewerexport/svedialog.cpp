@@ -38,7 +38,6 @@
 // KDE include files
 
 #include <klocale.h>
-#include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
 #include <kiconloader.h>
@@ -55,6 +54,7 @@
 
 // Local include files
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "svedialog.h"
 #include "svedialog.moc"
@@ -79,31 +79,28 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
 
     // About data and help button.
 
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Simple Viewer"),
-                                       kipiplugins_version,
-                                       I18N_NOOP("A Kipi plugin for Simple Viewer export."),
-                                       KAboutData::License_GPL,
-                                       "(c) 2005-2006, Joern Ahrens",
-                                       0,
-                                       "http://www.jokele.de/simpleviewerexport/");
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Simple Viewer"),
+                                           NULL,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin for Simple Viewer export."),
+                                           "(c) 2005-2006, Joern Ahrens");
 
-    about->addAuthor("Joern Ahrens", 
-                     I18N_NOOP("Author and maintainer"),
-                     "joern dot ahrens at kdemail dot net");
+    m_about->addAuthor("Joern Ahrens", 
+                       I18N_NOOP("Author and maintainer"),
+                       "joern dot ahrens at kdemail dot net");
     
-    about->addCredit("Felix Turner",
-                     "Author of the SimpleViewer flash application",
-                     0,
-                     "http://www.airtightinteractive.com/simpleviewer/");
+    m_about->addCredit("Felix Turner",
+                       "Author of the SimpleViewer flash application",
+                       0,
+                       "http://www.airtightinteractive.com/simpleviewer/");
     
-    about->addCredit("Mikkel B. Stegmann",
-                     "Basis for the index.html template",
-                     0,
-                     "http://www.stegmann.dk/mikkel/porta/");
+    m_about->addCredit("Mikkel B. Stegmann",
+                       "Basis for the index.html template",
+                       0,
+                       "http://www.stegmann.dk/mikkel/porta/");
 
     QPushButton *helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
 //    helpMenu->menu()->insertItem(i18n("Image Gallery Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     helpButton->setPopup( helpMenu->menu() );
@@ -111,6 +108,7 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
 
 SVEDialog::~SVEDialog()
 {
+    delete m_about;
 }
 
 void SVEDialog::readConfig()

@@ -30,6 +30,10 @@
 
 #include <libkipi/interface.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 namespace KIPI
 {
     class ImageCollectionSelector;
@@ -113,6 +117,8 @@ private:
     void selectionPage();
     void generalPage();
     void lookPage();
+    
+    KIPIPlugins::KPAboutData* m_about;
     
 private:
 
