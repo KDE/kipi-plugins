@@ -296,6 +296,8 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     QString data;
     int     val;
 
+    d->statusEdit->clear();
+    d->statusCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.EditStatus", false);    
     if (!data.isNull())
     {
@@ -304,6 +306,8 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     }
     d->statusEdit->setEnabled(d->statusCheck->isChecked());
 
+    d->priorityCB->setCurrentItem(0);
+    d->priorityCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Urgency", false);    
     if (!data.isNull())
     {
@@ -318,6 +322,8 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     }
     d->priorityCB->setEnabled(d->priorityCheck->isChecked());
 
+    d->objectCycleCB->setCurrentItem(0);
+    d->objectCycleCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectCycle", false);    
     if (!data.isNull())
     {
@@ -341,6 +347,9 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     }
     d->objectCycleCB->setEnabled(d->objectCycleCheck->isChecked());
 
+    d->objectTypeCB->setCurrentItem(0);
+    d->objectTypeDescEdit->clear();
+    d->objectTypeCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectType", false);    
     if (!data.isNull())
     {
@@ -361,6 +370,9 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     d->objectTypeCB->setEnabled(d->objectTypeCheck->isChecked());
     d->objectTypeDescEdit->setEnabled(d->objectTypeCheck->isChecked());
 
+    d->objectAttributeCB->setCurrentItem(0);
+    d->objectAttributeDescEdit->clear();
+    d->objectAttributeCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectAttribute", false);    
     if (!data.isNull())
     {
@@ -381,6 +393,8 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     d->objectAttributeCB->setEnabled(d->objectAttributeCheck->isChecked());
     d->objectAttributeDescEdit->setEnabled(d->objectAttributeCheck->isChecked());
 
+    d->JobIDEdit->clear();
+    d->JobIDCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.FixtureId", false);    
     if (!data.isNull())
     {
