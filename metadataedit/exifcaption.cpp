@@ -271,6 +271,8 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
     exiv2Iface.setExif(exifData);
     QString data;
 
+    d->documentNameEdit->clear();
+    d->documentNameCheck->setChecked(false);
     data = exiv2Iface.getExifTagString("Exif.Image.DocumentName", false);    
     if (!data.isNull())
     {
@@ -279,6 +281,8 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
     }
     d->documentNameEdit->setEnabled(d->documentNameCheck->isChecked());
 
+    d->imageDescEdit->clear();
+    d->imageDescCheck->setChecked(false);
     data = exiv2Iface.getExifTagString("Exif.Image.ImageDescription", false);     
     if (!data.isNull())
     {
@@ -287,6 +291,8 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
     }
     d->imageDescEdit->setEnabled(d->imageDescCheck->isChecked());
 
+    d->artistEdit->clear();
+    d->artistCheck->setChecked(false);
     data = exiv2Iface.getExifTagString("Exif.Image.Artist", false);    
     if (!data.isNull())
     {
@@ -295,6 +301,8 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
     }
     d->artistEdit->setEnabled(d->artistCheck->isChecked());
 
+    d->copyrightEdit->clear();
+    d->copyrightCheck->setChecked(false);
     data = exiv2Iface.getExifTagString("Exif.Image.Copyright", false);    
     if (!data.isNull())
     {
@@ -303,6 +311,8 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
     }
     d->copyrightEdit->setEnabled(d->copyrightCheck->isChecked());
 
+    d->userCommentEdit->clear();
+    d->userCommentCheck->setChecked(false);
     data = exiv2Iface.getExifComment();    
     if (!data.isNull())
     {
