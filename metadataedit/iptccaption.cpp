@@ -188,6 +188,8 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
     exiv2Iface.setIptc(iptcData);
     QString data;
 
+    d->captionEdit->clear();
+    d->captionCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Caption", false);    
     if (!data.isNull())
     {
@@ -196,6 +198,8 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
     }
     d->captionEdit->setEnabled(d->captionCheck->isChecked());
 
+    d->writerEdit->clear();
+    d->writerCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Writer", false);    
     if (!data.isNull())
     {
@@ -204,6 +208,8 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
     }
     d->writerEdit->setEnabled(d->writerCheck->isChecked());
 
+    d->headlineEdit->clear();
+    d->headlineCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Headline", false);    
     if (!data.isNull())
     {
@@ -212,6 +218,8 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
     }
     d->headlineEdit->setEnabled(d->headlineCheck->isChecked());
 
+    d->specialInstructionEdit->clear();
+    d->specialInstructionCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.SpecialInstructions", false);    
     if (!data.isNull())
     {
