@@ -22,7 +22,6 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qdatetime.h>
 #include <qwhatsthis.h>
 #include <qvalidator.h>
 #include <qcheckbox.h>
@@ -33,6 +32,9 @@
 #include <kdialog.h>
 #include <kdatetimewidget.h>
 #include <knuminput.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <kseparator.h>
 
 // Local includes.
 
@@ -62,6 +64,8 @@ public:
         dateCreatedSubSecCheck     = 0;
         dateOriginalSubSecCheck    = 0;
         dateDigitalizedSubSecCheck = 0;
+        syncHOSTDateCheck          = 0;
+        syncIPTCDateCheck          = 0;
     }
 
     QCheckBox       *dateCreatedCheck;
@@ -70,6 +74,8 @@ public:
     QCheckBox       *dateCreatedSubSecCheck;
     QCheckBox       *dateOriginalSubSecCheck;
     QCheckBox       *dateDigitalizedSubSecCheck;
+    QCheckBox       *syncHOSTDateCheck;
+    QCheckBox       *syncIPTCDateCheck;
 
     KIntSpinBox     *dateCreatedSubSecEdit;
     KIntSpinBox     *dateOriginalSubSecEdit;
@@ -85,7 +91,7 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
 {
     d = new EXIFDateTimePriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 8, 3, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 9, 3, KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -94,10 +100,20 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateCreatedSel         = new KDateTimeWidget(parent);
     d->dateCreatedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, 10, parent);
     d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
+    d->syncHOSTDateCheck      = new QCheckBox(i18n("Sync creation date hosted by %1")
+                                              .arg(KApplication::kApplication()->aboutData()->appName()), 
+                                              parent);
+    d->syncIPTCDateCheck      = new QCheckBox(i18n("Sync IPTC creation date"), parent);
+    KSeparator *line          = new KSeparator(Horizontal, parent);
+
     grid->addMultiCellWidget(d->dateCreatedCheck, 0, 0, 0, 0);
     grid->addMultiCellWidget(d->dateCreatedSubSecCheck, 0, 0, 1, 2);
     grid->addMultiCellWidget(d->dateCreatedSel, 1, 1, 0, 0);
     grid->addMultiCellWidget(d->dateCreatedSubSecEdit, 1, 1, 1, 1);
+    grid->addMultiCellWidget(d->syncHOSTDateCheck, 2, 2, 0, 3);
+    grid->addMultiCellWidget(d->syncIPTCDateCheck, 3, 3, 0, 3);
+    grid->addMultiCellWidget(line, 4, 4, 0, 3);
+
     QWhatsThis::add(d->dateCreatedSel, i18n("<p>Set here the date and time of image creation. "
                                        "In this standard it is the date and time the file was changed."));
     QWhatsThis::add(d->dateCreatedSubSecEdit, i18n("<p>Set here the fractions of seconds for the date "
@@ -110,10 +126,10 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateOriginalSel         = new KDateTimeWidget(parent);
     d->dateOriginalSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, 10, parent);
     d->dateOriginalSel->setDateTime(QDateTime::currentDateTime());
-    grid->addMultiCellWidget(d->dateOriginalCheck, 2, 2, 0, 0);
-    grid->addMultiCellWidget(d->dateOriginalSubSecCheck, 2, 2, 1, 2);
-    grid->addMultiCellWidget(d->dateOriginalSel, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->dateOriginalSubSecEdit, 3, 3, 1, 1);
+    grid->addMultiCellWidget(d->dateOriginalCheck, 5, 5, 0, 0);
+    grid->addMultiCellWidget(d->dateOriginalSubSecCheck, 5, 5, 1, 2);
+    grid->addMultiCellWidget(d->dateOriginalSel, 6, 6, 0, 0);
+    grid->addMultiCellWidget(d->dateOriginalSubSecEdit, 6, 6, 1, 1);
     QWhatsThis::add(d->dateOriginalSel, i18n("<p>Set here the date and time when the original image "
                                         "data was generated. For a digital still camera the date and "
                                         "time the picture was taken are recorded."));
@@ -127,10 +143,10 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateDigitalizedSel         = new KDateTimeWidget(parent);
     d->dateDigitalizedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, 10, parent);
     d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
-    grid->addMultiCellWidget(d->dateDigitalizedCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->dateDigitalizedSubSecCheck, 4, 4, 1, 2);
-    grid->addMultiCellWidget(d->dateDigitalizedSel, 5, 5, 0, 0);
-    grid->addMultiCellWidget(d->dateDigitalizedSubSecEdit, 5, 5, 1, 1);
+    grid->addMultiCellWidget(d->dateDigitalizedCheck, 7, 7, 0, 0);
+    grid->addMultiCellWidget(d->dateDigitalizedSubSecCheck, 7, 7, 1, 2);
+    grid->addMultiCellWidget(d->dateDigitalizedSel, 8, 8, 0, 0);
+    grid->addMultiCellWidget(d->dateDigitalizedSubSecEdit, 8, 8, 1, 1);
     QWhatsThis::add(d->dateDigitalizedSel, i18n("<p>Set here the date and time when the image was "
                                            "stored as digital data. If, for example, an image was "
                                            "captured by a digital still camera and at the same "
@@ -140,7 +156,7 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
                                                   "and time when the image was stored as digital data."));
 
     grid->setColStretch(3, 10);                     
-    grid->setRowStretch(6, 10);                     
+    grid->setRowStretch(9, 10);                     
 
     // --------------------------------------------------------
 
@@ -161,6 +177,12 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
 
     connect(d->dateDigitalizedSubSecCheck, SIGNAL(toggled(bool)),
             d->dateDigitalizedSubSecEdit, SLOT(setEnabled(bool)));
+
+    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
+            d->syncHOSTDateCheck, SLOT(setEnabled(bool)));
+
+    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
+            d->syncIPTCDateCheck, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
 
@@ -208,6 +230,31 @@ EXIFDateTime::~EXIFDateTime()
     delete d;
 }
 
+bool EXIFDateTime::syncHOSTDateIsChecked()
+{
+    return d->syncHOSTDateCheck->isChecked();
+}
+
+bool EXIFDateTime::syncIPTCDateIsChecked()
+{
+    return d->syncIPTCDateCheck->isChecked();
+}
+
+void EXIFDateTime::setCheckedSyncHOSTDate(bool c)
+{
+    d->syncHOSTDateCheck->setChecked(c);
+}
+
+void EXIFDateTime::setCheckedSyncIPTCDate(bool c)
+{
+    d->syncIPTCDateCheck->setChecked(c);
+}
+
+QDateTime EXIFDateTime::getExifCreationDate()
+{
+    return d->dateCreatedSel->dateTime();
+}
+
 void EXIFDateTime::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
@@ -230,6 +277,8 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
         }
     }    
     d->dateCreatedSel->setEnabled(d->dateCreatedCheck->isChecked());
+    d->syncHOSTDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
+    d->syncIPTCDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
 
     d->dateCreatedSubSecEdit->setValue(0);
     d->dateCreatedSubSecCheck->setChecked(false);
@@ -307,14 +356,25 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
     blockSignals(false);
 }
 
-void EXIFDateTime::applyMetadata(QByteArray& exifData)
+void EXIFDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.setExif(exifData);
+    exiv2Iface.setIptc(iptcData);
 
     if (d->dateCreatedCheck->isChecked())
+    {
         exiv2Iface.setExifTagString("Exif.Image.DateTime",
                    d->dateCreatedSel->dateTime().toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
+
+        if (syncIPTCDateIsChecked())
+        {
+            exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
+                       d->dateCreatedSel->dateTime().date().toString(Qt::ISODate));
+            exiv2Iface.setIptcTagString("Iptc.Application2.TimeCreated",
+                       d->dateCreatedSel->dateTime().time().toString(Qt::ISODate));
+        }
+    }
     else
         exiv2Iface.removeExifTag("Exif.Image.DateTime");
 
@@ -349,6 +409,7 @@ void EXIFDateTime::applyMetadata(QByteArray& exifData)
         exiv2Iface.removeExifTag("Exif.Photo.SubSecTimeDigitized");
 
     exifData = exiv2Iface.getExif();
+    iptcData = exiv2Iface.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin

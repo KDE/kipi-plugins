@@ -25,6 +25,7 @@
 
 #include <qwidget.h>
 #include <qcstring.h>
+#include <qdatetime.h>
 
 namespace KIPIMetadataEditPlugin
 {
@@ -40,8 +41,16 @@ public:
     EXIFDateTime(QWidget* parent);
     ~EXIFDateTime();
 
-    void applyMetadata(QByteArray& exifData);
+    void applyMetadata(QByteArray& exifData, QByteArray& iptcData);
     void readMetadata(QByteArray& exifData);
+
+    bool syncHOSTDateIsChecked();
+    bool syncIPTCDateIsChecked();
+
+    void setCheckedSyncHOSTDate(bool c);
+    void setCheckedSyncIPTCDate(bool c);
+
+    QDateTime getExifCreationDate();
 
 signals:
 
