@@ -263,24 +263,28 @@ void IPTCDateTime::readMetadata(QByteArray& iptcData)
     dateStr = exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated", false);
     timeStr = exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated", false);
 
+    d->dateCreatedSel->setDate(QDate::currentDate());
+    d->dateCreatedCheck->setChecked(false);
     if (!dateStr.isEmpty()) 
     {
         date = QDate::fromString(dateStr, Qt::ISODate);
         if (date.isValid())
         {
-            d->dateCreatedCheck->setChecked(true);
             d->dateCreatedSel->setDate(date);
+            d->dateCreatedCheck->setChecked(true);
         }
     }    
     d->dateCreatedSel->setEnabled(d->dateCreatedCheck->isChecked());
 
+    d->timeCreatedSel->setTime(QTime::currentTime());
+    d->timeCreatedCheck->setChecked(false);
     if (!timeStr.isEmpty()) 
     {
         time = QTime::fromString(timeStr, Qt::ISODate);
         if (time.isValid())
         {
-            d->timeCreatedCheck->setChecked(true);
             d->timeCreatedSel->setTime(time);
+            d->timeCreatedCheck->setChecked(true);
         }
     }    
     d->timeCreatedSel->setEnabled(d->timeCreatedCheck->isChecked());
@@ -288,24 +292,28 @@ void IPTCDateTime::readMetadata(QByteArray& iptcData)
     dateStr = exiv2Iface.getIptcTagString("Iptc.Application2.ReleaseDate", false);
     timeStr = exiv2Iface.getIptcTagString("Iptc.Application2.ReleaseTime", false);
 
+    d->dateReleasedSel->setDate(QDate::currentDate());
+    d->dateReleasedCheck->setChecked(false);
     if (!dateStr.isEmpty()) 
     {
         date = QDate::fromString(dateStr, Qt::ISODate);
         if (date.isValid())
         {
-            d->dateReleasedCheck->setChecked(true);
             d->dateReleasedSel->setDate(date);
+            d->dateReleasedCheck->setChecked(true);
         }
     }    
     d->dateReleasedSel->setEnabled(d->dateReleasedCheck->isChecked());
 
+    d->timeReleasedSel->setTime(QTime::currentTime());
+    d->timeReleasedCheck->setChecked(false);
     if (!timeStr.isEmpty()) 
     {
         time = QTime::fromString(timeStr, Qt::ISODate);
         if (time.isValid())
         {
-            d->timeReleasedCheck->setChecked(true);
             d->timeReleasedSel->setTime(time);
+            d->timeReleasedCheck->setChecked(true);
         }
     }    
     d->timeReleasedSel->setEnabled(d->timeReleasedCheck->isChecked());
@@ -313,24 +321,28 @@ void IPTCDateTime::readMetadata(QByteArray& iptcData)
     dateStr = exiv2Iface.getIptcTagString("Iptc.Application2.ExpirationDate", false);
     timeStr = exiv2Iface.getIptcTagString("Iptc.Application2.ExpirationTime", false);
 
+    d->dateExpiredSel->setDate(QDate::currentDate());
+    d->dateExpiredCheck->setChecked(false);
     if (!dateStr.isEmpty()) 
     {
         date = QDate::fromString(dateStr, Qt::ISODate);
         if (date.isValid())
         {
-            d->dateExpiredCheck->setChecked(true);
             d->dateExpiredSel->setDate(date);
+            d->dateExpiredCheck->setChecked(true);
         }
     }    
     d->dateExpiredSel->setEnabled(d->dateExpiredCheck->isChecked());
 
+    d->timeExpiredSel->setTime(QTime::currentTime());
+    d->timeExpiredCheck->setChecked(false);
     if (!timeStr.isEmpty()) 
     {
         time = QTime::fromString(timeStr, Qt::ISODate);
         if (time.isValid())
         {
-            d->timeExpiredCheck->setChecked(true);
             d->timeExpiredSel->setTime(time);
+            d->timeExpiredCheck->setChecked(true);
         }
     }   
     d->timeExpiredSel->setEnabled(d->timeExpiredCheck->isChecked());
@@ -338,24 +350,28 @@ void IPTCDateTime::readMetadata(QByteArray& iptcData)
     dateStr = exiv2Iface.getIptcTagString("Iptc.Application2.DigitizationDate", false);
     timeStr = exiv2Iface.getIptcTagString("Iptc.Application2.DigitizationTime", false);
 
+    d->dateDigitalizedSel->setDate(QDate::currentDate());
+    d->dateDigitalizedCheck->setChecked(false);
     if (!dateStr.isEmpty()) 
     {
         date = QDate::fromString(dateStr, Qt::ISODate);
         if (date.isValid())
         {
-            d->dateDigitalizedCheck->setChecked(true);
             d->dateDigitalizedSel->setDate(date);
+            d->dateDigitalizedCheck->setChecked(true);
         }
     }    
     d->dateDigitalizedSel->setEnabled(d->dateDigitalizedCheck->isChecked());
 
+    d->timeDigitalizedSel->setTime(QTime::currentTime());
+    d->timeDigitalizedCheck->setChecked(false);
     if (!timeStr.isEmpty()) 
     {
         time = QTime::fromString(timeStr, Qt::ISODate);
         if (time.isValid())
         {
-            d->timeDigitalizedCheck->setChecked(true);
             d->timeDigitalizedSel->setTime(time);
+            d->timeDigitalizedCheck->setChecked(true);
         }
     }   
     d->timeDigitalizedSel->setEnabled(d->timeDigitalizedCheck->isChecked());
