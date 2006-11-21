@@ -252,6 +252,8 @@ void EXIFLight::readMetadata(QByteArray& exifData)
     long int num=1, den=1;
     long     val=0;
 
+    d->lightSourceCB->setCurrentItem(0);
+    d->lightSourceCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.LightSource", val))
     {
         if ((val>=0 && val <=4) || (val> 8 && val <16) || (val> 16 && val <25) || val == 255) 
@@ -271,6 +273,8 @@ void EXIFLight::readMetadata(QByteArray& exifData)
     }
     d->lightSourceCB->setEnabled(d->lightSourceCheck->isChecked());
 
+    d->flashModeCB->setCurrentItem(0);
+    d->flashModeCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.Flash", val))
     {
         int item = -1;    
@@ -291,6 +295,8 @@ void EXIFLight::readMetadata(QByteArray& exifData)
     }
     d->flashModeCB->setEnabled(d->flashModeCheck->isChecked());
 
+    d->flashEnergyEdit->setValue(1.0);
+    d->flashEnergyCheck->setChecked(false);
     if (exiv2Iface.getExifTagRational("Exif.Photo.FlashEnergy", num, den))
     {
         d->flashEnergyEdit->setValue((double)(num) / (double)(den));
@@ -298,6 +304,8 @@ void EXIFLight::readMetadata(QByteArray& exifData)
     }
     d->flashEnergyEdit->setEnabled(d->flashEnergyCheck->isChecked());
 
+    d->whiteBalanceCB->setCurrentItem(0);
+    d->whiteBalanceCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.WhiteBalance", val))
     {
         if (val>=0 && val<=1)
