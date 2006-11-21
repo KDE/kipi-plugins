@@ -528,6 +528,8 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     exiv2Iface.setIptc(iptcData);
     QString data;
 
+    d->objectNameEdit->clear();
+    d->objectNameCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectName", false);    
     if (!data.isNull())
     {
@@ -536,6 +538,8 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     }
     d->objectNameEdit->setEnabled(d->objectNameCheck->isChecked());
 
+    d->locationEdit->clear();
+    d->locationCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.LocationName", false);    
     if (!data.isNull())
     {
@@ -544,6 +548,8 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     }
     d->locationEdit->setEnabled(d->locationCheck->isChecked());
 
+    d->cityEdit->clear();
+    d->cityCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.City", false);    
     if (!data.isNull())
     {
@@ -552,6 +558,8 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     }
     d->cityEdit->setEnabled(d->cityCheck->isChecked());
 
+    d->sublocationEdit->clear();
+    d->sublocationCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.SubLocation", false);    
     if (!data.isNull())
     {
@@ -560,6 +568,8 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     }
     d->sublocationEdit->setEnabled(d->sublocationCheck->isChecked());
 
+    d->provinceEdit->clear();
+    d->provinceCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.ProvinceState", false);    
     if (!data.isNull())
     {
@@ -571,6 +581,8 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     // Country code/name rules: we trying to check if "CountryCode" tag exists else "LocationCode" tag.
     // Both are the same.
 
+    d->countryCB->setCurrentItem(0);
+    d->countryCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.CountryCode", false);    
     if (!data.isNull())
     {
@@ -608,6 +620,8 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     }
     d->countryCB->setEnabled(d->countryCheck->isChecked());
 
+    d->originalTransEdit->clear();
+    d->originalTransCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.TransmissionReference", false);    
     if (!data.isNull())
     {
