@@ -36,6 +36,7 @@
 #include <kdialog.h>
 #include <knuminput.h>
 #include <klineedit.h>
+#include <kseparator.h>
 
 // Local includes.
 
@@ -116,7 +117,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 {
     d = new EXIFDevicePriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 13, 5, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 16, 5, KDialog::spacingHint());
 
     // EXIF only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -154,6 +155,12 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     QWhatsThis::add(d->deviceTypeCB, i18n("<p>Select here the image input equipment type used to "
                                      "take the picture."));
 
+    QLabel *warning = new QLabel(i18n("<b>Warning: EXIF Makernotes can be unreadable if you set "
+                                      "wrong device manufacturer/model description.</b>"), parent);
+    KSeparator *line = new KSeparator(Horizontal, parent);
+    grid->addMultiCellWidget(warning, 3, 3, 0, 5);
+    grid->addMultiCellWidget(line, 4, 4, 0, 5);
+
     // --------------------------------------------------------
 
     d->exposureTimeCheck   = new QCheckBox(i18n("Exposure time (seconds):"), parent);
@@ -161,10 +168,10 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->exposureTimeDenEdit = new KIntSpinBox(1, 100000, 1, 1, 10, parent);
     QLabel *exposureLabel  = new QLabel("/", parent);
     exposureLabel->setAlignment (Qt::AlignRight|Qt::AlignVCenter);
-    grid->addMultiCellWidget(d->exposureTimeCheck, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->exposureTimeNumEdit, 3, 3, 2, 2);
-    grid->addMultiCellWidget(exposureLabel, 3, 3, 3, 3);
-    grid->addMultiCellWidget(d->exposureTimeDenEdit, 3, 3, 4, 4);
+    grid->addMultiCellWidget(d->exposureTimeCheck, 5, 5, 0, 0);
+    grid->addMultiCellWidget(d->exposureTimeNumEdit, 5, 5, 2, 2);
+    grid->addMultiCellWidget(exposureLabel, 5, 5, 3, 3);
+    grid->addMultiCellWidget(d->exposureTimeDenEdit, 5, 5, 4, 4);
     QWhatsThis::add(d->exposureTimeCheck, i18n("<p>Set on this option to set the exposure time "
                                           "of picture, given in seconds."));
 
@@ -181,8 +188,8 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->exposureProgramCB->insertItem(i18n("Action program"),    6);
     d->exposureProgramCB->insertItem(i18n("Portrait mode"),     7);
     d->exposureProgramCB->insertItem(i18n("Landscape mode"),    8);
-    grid->addMultiCellWidget(d->exposureProgramCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->exposureProgramCB, 4, 4, 2, 5);
+    grid->addMultiCellWidget(d->exposureProgramCheck, 6, 6, 0, 0);
+    grid->addMultiCellWidget(d->exposureProgramCB, 6, 6, 2, 5);
     QWhatsThis::add(d->exposureProgramCB, i18n("<p>Select here the program used by the camera "
                                           "to set exposure when the picture have been taken."));
 
@@ -193,8 +200,8 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->exposureModeCB->insertItem(i18n("Auto"),         0);
     d->exposureModeCB->insertItem(i18n("Manual"),       1);
     d->exposureModeCB->insertItem(i18n("Auto bracket"), 2);
-    grid->addMultiCellWidget(d->exposureModeCheck, 5, 5, 0, 0);
-    grid->addMultiCellWidget(d->exposureModeCB, 5, 5, 2, 5);
+    grid->addMultiCellWidget(d->exposureModeCheck, 7, 7, 0, 0);
+    grid->addMultiCellWidget(d->exposureModeCB, 7, 7, 2, 5);
     QWhatsThis::add(d->exposureModeCB, i18n("<p>Select here the mode used by the camera "
                                        "to set exposure when the picture have been shot. "
                                        "In auto-bracketing mode, the camera shoots a "
@@ -205,10 +212,13 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     d->exposureBiasCheck = new QCheckBox(i18n("Exposure bias (APEX):"), parent);
     d->exposureBiasEdit  = new KDoubleSpinBox(-99.99, 99.99, 0.1, 0.0, 2, parent);
-    grid->addMultiCellWidget(d->exposureBiasCheck, 6, 6, 0, 0);
-    grid->addMultiCellWidget(d->exposureBiasEdit, 6, 6, 2, 2);
+    grid->addMultiCellWidget(d->exposureBiasCheck, 8, 8, 0, 0);
+    grid->addMultiCellWidget(d->exposureBiasEdit, 8, 8, 2, 2);
     QWhatsThis::add(d->exposureBiasEdit, i18n("<p>Set here the exposure bias value in APEX unit "
                                          "used by camera to take the picture."));
+
+    KSeparator *line2 = new KSeparator(Horizontal, parent);
+    grid->addMultiCellWidget(line2, 9, 9, 0, 5);
 
     // --------------------------------------------------------
 
@@ -222,8 +232,8 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->meteringModeCB->insertItem(i18n("Multi-segment"),           5);
     d->meteringModeCB->insertItem(i18n("Partial"),                 6);
     d->meteringModeCB->insertItem(i18n("Other"),                   7);
-    grid->addMultiCellWidget(d->meteringModeCheck, 7, 7, 0, 0);
-    grid->addMultiCellWidget(d->meteringModeCB, 7, 7, 2, 5);
+    grid->addMultiCellWidget(d->meteringModeCheck, 10, 10, 0, 0);
+    grid->addMultiCellWidget(d->meteringModeCB, 10, 10, 2, 5);
     QWhatsThis::add(d->meteringModeCB, i18n("<p>Select here the metering mode used by the camera "
                                        "to set exposure when the picture have been shot."));
 
@@ -267,8 +277,8 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->ISOSpeedCB->insertItem("20000", 33);
     d->ISOSpeedCB->insertItem("25000", 34);
     d->ISOSpeedCB->insertItem("32000", 35);
-    grid->addMultiCellWidget(d->ISOSpeedCheck, 8, 8, 0, 0);
-    grid->addMultiCellWidget(d->ISOSpeedCB, 8, 8, 2, 5);
+    grid->addMultiCellWidget(d->ISOSpeedCheck, 11, 11, 0, 0);
+    grid->addMultiCellWidget(d->ISOSpeedCB, 11, 11, 2, 5);
     QWhatsThis::add(d->ISOSpeedCB, i18n("<p>Select here the ISO Speed of the camera "
                                    "witch have taken the picture."));
 
@@ -283,8 +293,8 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->sensingMethodCB->insertItem(i18n("Color sequential area"),   4);
     d->sensingMethodCB->insertItem(i18n("Trilinear sensor"),        5);
     d->sensingMethodCB->insertItem(i18n("Color sequential linear"), 6);
-    grid->addMultiCellWidget(d->sensingMethodCheck, 9, 9, 0, 0);
-    grid->addMultiCellWidget(d->sensingMethodCB, 9, 9, 2, 5);
+    grid->addMultiCellWidget(d->sensingMethodCheck, 12, 12, 0, 0);
+    grid->addMultiCellWidget(d->sensingMethodCB, 12, 12, 2, 5);
     QWhatsThis::add(d->sensingMethodCB, i18n("<p>Select here the image sensor type used by the camera "
                                        "to take the picture."));
 
@@ -296,8 +306,8 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->sceneTypeCB->insertItem(i18n("Landscape"),   1);
     d->sceneTypeCB->insertItem(i18n("Portrait"),    2);
     d->sceneTypeCB->insertItem(i18n("Night scene"), 3);
-    grid->addMultiCellWidget(d->sceneTypeCheck, 10, 10, 0, 0);
-    grid->addMultiCellWidget(d->sceneTypeCB, 10, 10, 2, 5);
+    grid->addMultiCellWidget(d->sceneTypeCheck, 13, 13, 0, 0);
+    grid->addMultiCellWidget(d->sceneTypeCB, 13, 13, 2, 5);
     QWhatsThis::add(d->sceneTypeCB, i18n("<p>Select here the type of scene used by the camera "
                                     "to take the picture."));
 
@@ -309,8 +319,8 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->subjectDistanceTypeCB->insertItem(i18n("Macro"),        1);
     d->subjectDistanceTypeCB->insertItem(i18n("Close view"),   2);
     d->subjectDistanceTypeCB->insertItem(i18n("Distant view"), 3);
-    grid->addMultiCellWidget(d->subjectDistanceTypeCheck, 11, 11, 0, 0);
-    grid->addMultiCellWidget(d->subjectDistanceTypeCB, 11, 11, 2, 5);
+    grid->addMultiCellWidget(d->subjectDistanceTypeCheck, 14, 14, 0, 0);
+    grid->addMultiCellWidget(d->subjectDistanceTypeCB, 14, 14, 2, 5);
     QWhatsThis::add(d->subjectDistanceTypeCB, i18n("<p>Select here the type of distance between "
                                               "the subject and the image input equipment."));
 
@@ -318,11 +328,11 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     QLabel *exifNote = new QLabel(i18n("<b>Note: EXIF text tags annoted by (*) only support printable "
                                        "ASCII characters set.</b>"), parent);
-    grid->addMultiCellWidget(exifNote, 12, 12, 0, 5);
+    grid->addMultiCellWidget(exifNote, 15, 15, 0, 5);
 
     grid->setColStretch(1, 10);                     
     grid->setColStretch(5, 10);                     
-    grid->setRowStretch(13, 10);                     
+    grid->setRowStretch(16, 10);                     
 
     // --------------------------------------------------------
 
@@ -459,6 +469,8 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     long     val=0;
     QString  data;
 
+    d->makeEdit->clear();
+    d->makeCheck->setChecked(false);
     data = exiv2Iface.getExifTagString("Exif.Image.Make", false);       
     if (!data.isNull())
     {
@@ -467,6 +479,8 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     }
     d->makeEdit->setEnabled(d->makeCheck->isChecked());
 
+    d->modelEdit->clear();
+    d->modelCheck->setChecked(false);
     data = exiv2Iface.getExifTagString("Exif.Image.Model", false);     
     if (!data.isNull())
     {
@@ -475,6 +489,8 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     }
     d->modelEdit->setEnabled(d->modelCheck->isChecked());
 
+    d->deviceTypeCB->setCurrentItem(2);     // DSC
+    d->deviceTypeCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.FileSource", val))
     {
         if (val>0 && val<4)
@@ -487,6 +503,9 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     }
     d->deviceTypeCB->setEnabled(d->deviceTypeCheck->isChecked());
 
+    d->exposureTimeNumEdit->setValue(1);
+    d->exposureTimeDenEdit->setValue(1);
+    d->exposureTimeCheck->setChecked(false);
     if (exiv2Iface.getExifTagRational("Exif.Photo.ExposureTime", num, den))
     {
         d->exposureTimeNumEdit->setValue(num);
@@ -508,6 +527,8 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     d->exposureTimeNumEdit->setEnabled(d->exposureTimeCheck->isChecked());
     d->exposureTimeDenEdit->setEnabled(d->exposureTimeCheck->isChecked());
 
+    d->exposureProgramCB->setCurrentItem(0);
+    d->exposureProgramCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.ExposureProgram", val))
     {
         if (val>=0 && val <=8)
@@ -520,6 +541,8 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     }
     d->exposureProgramCB->setEnabled(d->exposureProgramCheck->isChecked());
 
+    d->exposureModeCB->setCurrentItem(0);
+    d->exposureModeCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.ExposureMode", val))
     {
         if (val>=0 && val <=2)
@@ -532,6 +555,8 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     }
     d->exposureModeCB->setEnabled(d->exposureModeCheck->isChecked());
 
+    d->exposureBiasEdit->setValue(0.0);
+    d->exposureBiasCheck->setChecked(false);
     if (exiv2Iface.getExifTagRational("Exif.Photo.ExposureBiasValue", num, den))
     {
         d->exposureBiasEdit->setValue((double)(num) / (double)(den));
@@ -539,6 +564,8 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     }
     d->exposureBiasEdit->setEnabled(d->exposureBiasCheck->isChecked());
 
+    d->meteringModeCB->setCurrentItem(0);
+    d->meteringModeCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.MeteringMode", val))
     {
         if ((val>= 0 && val <=6) || val == 255) 
@@ -551,6 +578,8 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     }
     d->meteringModeCB->setEnabled(d->meteringModeCheck->isChecked());
 
+    d->ISOSpeedCB->setCurrentItem(10);       // 100 ISO
+    d->ISOSpeedCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.ISOSpeedRatings", val))
     {
         int item = -1;
@@ -584,6 +613,8 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     }
     d->ISOSpeedCB->setEnabled(d->ISOSpeedCheck->isChecked());
 
+    d->sensingMethodCB->setCurrentItem(0);
+    d->sensingMethodCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.SensingMethod", val))
     {
         if (val>=1 && val<=8 && val!=6)
@@ -596,6 +627,8 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     }
     d->sensingMethodCB->setEnabled(d->sensingMethodCheck->isChecked());
 
+    d->sceneTypeCB->setCurrentItem(0);
+    d->sceneTypeCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.SceneCaptureType", val))
     {
         if (val>=0 && val<=3)
@@ -608,6 +641,8 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     }
     d->sceneTypeCB->setEnabled(d->sceneTypeCheck->isChecked());
 
+    d->subjectDistanceTypeCB->setCurrentItem(0);
+    d->subjectDistanceTypeCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.SubjectDistanceRange", val))
     {
         if (val>=0 && val<=3)
