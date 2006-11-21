@@ -198,6 +198,8 @@ void IPTCSubjects::readMetadata(QByteArray& iptcData)
     exiv2Iface.setIptc(iptcData);
     d->oldSubjects = exiv2Iface.getImageSubjects();
 
+    d->subjectsBox->clear();
+    d->subjectsCheck->setChecked(false);
     if (!d->oldSubjects.isEmpty())
     {
         d->subjectsBox->insertStringList(d->oldSubjects);
