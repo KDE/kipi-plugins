@@ -217,19 +217,22 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
     QDateTime datetime;
     QString datetimeStr, data;
 
+    d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
+    d->dateCreatedCheck->setChecked(false);
     datetimeStr = exiv2Iface.getExifTagString("Exif.Image.DateTime", false);
-
     if (!datetimeStr.isEmpty()) 
     {
         datetime = QDateTime::fromString(datetimeStr, Qt::ISODate);
         if (datetime.isValid())
         {
-            d->dateCreatedCheck->setChecked(true);
             d->dateCreatedSel->setDateTime(datetime);
+            d->dateCreatedCheck->setChecked(true);
         }
     }    
     d->dateCreatedSel->setEnabled(d->dateCreatedCheck->isChecked());
 
+    d->dateCreatedSubSecEdit->setValue(0);
+    d->dateCreatedSubSecCheck->setChecked(false);
     data = exiv2Iface.getExifTagString("Exif.Photo.SubSecTime", false);    
     if (!data.isNull())
     {
@@ -243,19 +246,22 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
     }
     d->dateCreatedSubSecEdit->setEnabled(d->dateCreatedSubSecCheck->isChecked());
 
+    d->dateOriginalSel->setDateTime(QDateTime::currentDateTime());
+    d->dateOriginalCheck->setChecked(false);
     datetimeStr = exiv2Iface.getExifTagString("Exif.Photo.DateTimeOriginal", false);
-
     if (!datetimeStr.isEmpty()) 
     {
         datetime = QDateTime::fromString(datetimeStr, Qt::ISODate);
         if (datetime.isValid())
         {
-            d->dateOriginalCheck->setChecked(true);
             d->dateOriginalSel->setDateTime(datetime);
+            d->dateOriginalCheck->setChecked(true);
         }
     }    
     d->dateOriginalSel->setEnabled(d->dateOriginalCheck->isChecked());
 
+    d->dateOriginalSubSecEdit->setValue(0);
+    d->dateOriginalSubSecCheck->setChecked(false);
     data = exiv2Iface.getExifTagString("Exif.Photo.SubSecTimeOriginal", false);    
     if (!data.isNull())
     {
@@ -269,19 +275,22 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
     }
     d->dateOriginalSubSecEdit->setEnabled(d->dateOriginalSubSecCheck->isChecked());
 
+    d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
+    d->dateDigitalizedCheck->setChecked(false);
     datetimeStr = exiv2Iface.getExifTagString("Exif.Photo.DateTimeDigitized", false);
-
     if (!datetimeStr.isEmpty()) 
     {
         datetime = QDateTime::fromString(datetimeStr, Qt::ISODate);
         if (datetime.isValid())
         {
-            d->dateDigitalizedCheck->setChecked(true);
             d->dateDigitalizedSel->setDateTime(datetime);
+            d->dateDigitalizedCheck->setChecked(true);
         }
     }    
     d->dateDigitalizedSel->setEnabled(d->dateDigitalizedCheck->isChecked());
 
+    d->dateDigitalizedSubSecEdit->setValue(0);
+    d->dateDigitalizedSubSecCheck->setChecked(false);
     data = exiv2Iface.getExifTagString("Exif.Photo.SubSecTimeDigitized", false);    
     if (!data.isNull())
     {
