@@ -833,9 +833,9 @@ void DcrawIface::slotProcessExited(KProcess *)
 
     QMutexLocker lock(&d->mutex);
     d->running    = false;
-    d->normalExit = d->process->normalExit();
+    d->normalExit = d->process->normalExit() && d->process->exitStatus() == 0;
     delete d->process;
-    d->process = 0;
+    d->process    = 0;
     delete d->queryTimer;
     d->queryTimer = 0;
     d->condVar.wakeAll();
