@@ -198,6 +198,8 @@ void IPTCKeywords::readMetadata(QByteArray& iptcData)
     exiv2Iface.setIptc(iptcData);
     d->oldKeywords = exiv2Iface.getImageKeywords();
 
+    d->keywordsBox->clear();
+    d->keywordsCheck->setChecked(false);
     if (!d->oldKeywords.isEmpty())
     {
         d->keywordsBox->insertStringList(d->oldKeywords);
