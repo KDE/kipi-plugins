@@ -240,6 +240,8 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
     exiv2Iface.setIptc(iptcData);
     QString data;
 
+    d->categoryEdit->clear();
+    d->categoryCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Category", false);    
     if (!data.isNull())
     {
@@ -249,14 +251,14 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
     d->categoryEdit->setEnabled(d->categoryCheck->isChecked());
     d->subCategoriesCheck->setEnabled(d->categoryCheck->isChecked());
 
+    d->subCategoriesBox->clear();
+    d->subCategoriesCheck->setChecked(false);
     d->oldSubCategories = exiv2Iface.getImageSubCategories();
-
     if (!d->oldSubCategories.isEmpty())
     {
         d->subCategoriesBox->insertStringList(d->oldSubCategories);
         d->subCategoriesCheck->setChecked(true);
     }
-
     d->subCategoryEdit->setEnabled(d->categoryCheck->isChecked() && d->subCategoriesCheck->isChecked());
     d->subCategoriesBox->setEnabled(d->categoryCheck->isChecked() && d->subCategoriesCheck->isChecked());
     d->addSubCategoryButton->setEnabled(d->categoryCheck->isChecked() && d->subCategoriesCheck->isChecked());
