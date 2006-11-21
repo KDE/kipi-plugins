@@ -234,6 +234,8 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     exiv2Iface.setIptc(iptcData);
     QString data;
 
+    d->copyrightEdit->clear();
+    d->copyrightCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Copyright", false);    
     if (!data.isNull())
     {
@@ -242,6 +244,8 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     }
     d->copyrightEdit->setEnabled(d->copyrightCheck->isChecked());
 
+    d->bylineEdit->clear();
+    d->bylineCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Byline", false);    
     if (!data.isNull())
     {
@@ -250,6 +254,8 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     }
     d->bylineEdit->setEnabled(d->bylineCheck->isChecked());
 
+    d->bylineTitleEdit->clear();
+    d->bylineTitleCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.BylineTitle", false);    
     if (!data.isNull())
     {
@@ -258,6 +264,8 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     }
     d->bylineTitleEdit->setEnabled(d->bylineTitleCheck->isChecked());
 
+    d->creditEdit->clear();
+    d->creditCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Credit", false);    
     if (!data.isNull())
     {
@@ -266,6 +274,8 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     }
     d->creditEdit->setEnabled(d->creditCheck->isChecked());
 
+    d->sourceEdit->clear();
+    d->sourceCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Source", false);    
     if (!data.isNull())
     {
@@ -274,6 +284,8 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     }
     d->sourceEdit->setEnabled(d->sourceCheck->isChecked());
 
+    d->contactEdit->clear();
+    d->contactCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Contact", false);    
     if (!data.isNull())
     {
