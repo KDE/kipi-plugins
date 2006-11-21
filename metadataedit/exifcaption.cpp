@@ -64,7 +64,7 @@ public:
         artistCheck          = 0;
         copyrightCheck       = 0;
         syncJFIFCommentCheck = 0;
-        syncHostCommentCheck = 0;
+        syncHOSTCommentCheck = 0;
         syncIPTCCaptionCheck = 0;
     }
 
@@ -74,7 +74,7 @@ public:
     QCheckBox *copyrightCheck;
     QCheckBox *userCommentCheck;
     QCheckBox *syncJFIFCommentCheck;
-    QCheckBox *syncHostCommentCheck;
+    QCheckBox *syncHOSTCommentCheck;
     QCheckBox *syncIPTCCaptionCheck;
 
     KTextEdit *userCommentEdit;
@@ -145,7 +145,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
                                              "will be used to save text."));
 
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF comment section"), parent);
-    d->syncHostCommentCheck = new QCheckBox(i18n("Sync comment hosted by %1")
+    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync comment hosted by %1")
                                             .arg(KApplication::kApplication()->aboutData()->appName()), 
                                             parent);
     d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: ASCII limited)"), parent);
@@ -153,7 +153,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     vlay->addWidget(d->userCommentCheck);
     vlay->addWidget(d->userCommentEdit);
     vlay->addWidget(d->syncJFIFCommentCheck);
-    vlay->addWidget(d->syncHostCommentCheck);
+    vlay->addWidget(d->syncHOSTCommentCheck);
     vlay->addWidget(d->syncIPTCCaptionCheck);
 
     // --------------------------------------------------------
@@ -184,7 +184,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
             d->syncJFIFCommentCheck, SLOT(setEnabled(bool)));
 
     connect(d->userCommentCheck, SIGNAL(toggled(bool)),
-            d->syncHostCommentCheck, SLOT(setEnabled(bool)));
+            d->syncHOSTCommentCheck, SLOT(setEnabled(bool)));
 
     connect(d->userCommentCheck, SIGNAL(toggled(bool)),
             d->syncIPTCCaptionCheck, SLOT(setEnabled(bool)));
@@ -234,9 +234,9 @@ bool EXIFCaption::syncJFIFCommentIsChecked()
     return d->syncJFIFCommentCheck->isChecked();
 }
 
-bool EXIFCaption::syncHostCommentIsChecked()
+bool EXIFCaption::syncHOSTCommentIsChecked()
 {
-    return d->syncHostCommentCheck->isChecked();
+    return d->syncHOSTCommentCheck->isChecked();
 }
 
 bool EXIFCaption::syncIPTCCaptionIsChecked()
@@ -254,12 +254,12 @@ void EXIFCaption::setCheckedSyncJFIFComment(bool c)
     d->syncJFIFCommentCheck->setChecked(c);
 }
 
-void EXIFCaption::setCheckedSyncHostComment(bool c)
+void EXIFCaption::setCheckedSyncHOSTComment(bool c)
 {
-    d->syncHostCommentCheck->setChecked(c);
+    d->syncHOSTCommentCheck->setChecked(c);
 }
 
-void EXIFCaption::setCheckedIPTCCaption(bool c)
+void EXIFCaption::setCheckedSyncIPTCCaption(bool c)
 {
     d->syncIPTCCaptionCheck->setChecked(c);
 }
@@ -321,7 +321,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
     }
     d->userCommentEdit->setEnabled(d->userCommentCheck->isChecked());
     d->syncJFIFCommentCheck->setEnabled(d->userCommentCheck->isChecked());
-    d->syncHostCommentCheck->setEnabled(d->userCommentCheck->isChecked());
+    d->syncHOSTCommentCheck->setEnabled(d->userCommentCheck->isChecked());
     d->syncIPTCCaptionCheck->setEnabled(d->userCommentCheck->isChecked());
 
     blockSignals(false);

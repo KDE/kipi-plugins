@@ -45,12 +45,12 @@ public:
     void readMetadata(QByteArray& exifData);
 
     bool syncJFIFCommentIsChecked();
-    bool syncHostCommentIsChecked();
+    bool syncHOSTCommentIsChecked();
     bool syncIPTCCaptionIsChecked();
 
     void setCheckedSyncJFIFComment(bool c);
-    void setCheckedSyncHostComment(bool c);
-    void setCheckedIPTCCaption(bool c);
+    void setCheckedSyncHOSTComment(bool c);
+    void setCheckedSyncIPTCCaption(bool c);
 
     QString getExifUserComments();
 

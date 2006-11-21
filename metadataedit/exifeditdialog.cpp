@@ -228,8 +228,8 @@ void EXIFEditDialog::readSettings()
     config.setGroup("Metadata Edit Settings");
     showPage(config.readNumEntry("EXIF Edit Page", 0));
     d->captionPage->setCheckedSyncJFIFComment(config.readBoolEntry("Sync JFIF Comment", true));
-    d->captionPage->setCheckedSyncHostComment(config.readBoolEntry("Sync Host Comment", true));
-    d->captionPage->setCheckedIPTCCaption(config.readBoolEntry("Sync IPTC Caption", true));
+    d->captionPage->setCheckedSyncHOSTComment(config.readBoolEntry("Sync Host Comment", true));
+    d->captionPage->setCheckedSyncIPTCCaption(config.readBoolEntry("Sync IPTC Caption", true));
     resize(configDialogSize(config, QString("EXIF Edit Dialog")));
 }
 
@@ -239,7 +239,7 @@ void EXIFEditDialog::saveSettings()
     config.setGroup("Metadata Edit Settings");
     config.writeEntry("EXIF Edit Page", activePageIndex());
     config.writeEntry("Sync JFIF Comment", d->captionPage->syncJFIFCommentIsChecked());
-    config.writeEntry("Sync Host Comment", d->captionPage->syncHostCommentIsChecked());
+    config.writeEntry("Sync Host Comment", d->captionPage->syncHOSTCommentIsChecked());
     config.writeEntry("Sync IPTC Caption", d->captionPage->syncIPTCCaptionIsChecked());
     saveDialogSize(config, QString("EXIF Edit Dialog"));
     config.sync();
@@ -282,7 +282,7 @@ void EXIFEditDialog::slotApply()
 {
     if (d->modified && !d->isReadOnly) 
     {
-        if (d->captionPage->syncHostCommentIsChecked())
+        if (d->captionPage->syncHOSTCommentIsChecked())
         {
             KIPI::ImageInfo info = d->interface->info(*d->currItem);
             info.setDescription(d->captionPage->getExifUserComments());
