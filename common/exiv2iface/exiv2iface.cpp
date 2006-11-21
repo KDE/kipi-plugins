@@ -367,7 +367,7 @@ bool Exiv2Iface::setImageDimensions(const QSize& size)
     }
     catch( Exiv2::Error &e )
     {
-        kdDebug() << "Cannot set Date & Time into image using Exiv2 (" 
+        kdDebug() << "Cannot set image dimensions using Exiv2 (" 
                   << QString::fromLocal8Bit(e.what().c_str())
                   << ")" << endl;
     }        
