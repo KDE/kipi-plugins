@@ -263,6 +263,8 @@ void EXIFLens::readMetadata(QByteArray& exifData)
     long int num=1, den=1;
     long     val=0;
 
+    d->focalLengthEdit->setValue(50.0);
+    d->focalLengthCheck->setChecked(false);
     if (exiv2Iface.getExifTagRational("Exif.Photo.FocalLength", num, den))
     {
         d->focalLengthEdit->setValue((double)(num) / (double)(den));
@@ -270,6 +272,8 @@ void EXIFLens::readMetadata(QByteArray& exifData)
     }
     d->focalLengthEdit->setEnabled(d->focalLengthCheck->isChecked());
 
+    d->focalLength35mmEdit->setValue(10);
+    d->focalLength35mmCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.FocalLengthIn35mmFilm", val))
     {
         d->focalLength35mmEdit->setValue(val);
@@ -277,6 +281,8 @@ void EXIFLens::readMetadata(QByteArray& exifData)
     }
     d->focalLength35mmEdit->setEnabled(d->focalLength35mmCheck->isChecked());
 
+    d->digitalZoomRatioEdit->setValue(1.0);
+    d->digitalZoomRatioCheck->setChecked(false);
     if (exiv2Iface.getExifTagRational("Exif.Photo.DigitalZoomRatio", num, den))
     {
         d->digitalZoomRatioEdit->setValue((num == 0) ? 0.0 : (double)(num) / (double)(den));
@@ -284,6 +290,8 @@ void EXIFLens::readMetadata(QByteArray& exifData)
     }
     d->digitalZoomRatioEdit->setEnabled(d->digitalZoomRatioCheck->isChecked());
 
+    d->apertureCB->setCurrentItem(0);
+    d->apertureCheck->setChecked(false);
     if (exiv2Iface.getExifTagRational("Exif.Photo.FNumber", num, den))
     {
         QString fnumber = QString::number((double)(num)/(double)(den), 'f', 1);
@@ -324,6 +332,8 @@ void EXIFLens::readMetadata(QByteArray& exifData)
     }
     d->apertureCB->setEnabled(d->apertureCheck->isChecked());
     
+    d->maxApertureCB->setCurrentItem(0);
+    d->maxApertureCheck->setChecked(false);
     if (exiv2Iface.getExifTagRational("Exif.Photo.MaxApertureValue", num, den))
     {
         double maxAperture = pow(2.0, ((double)(num)/(double)(den))/2.0);
