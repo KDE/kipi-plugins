@@ -236,6 +236,8 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
     long int num=1, den=1;
     long     val=0;
     
+    d->brightnessEdit->setValue(0.0);
+    d->brightnessCheck->setChecked(false);
     if (exiv2Iface.getExifTagRational("Exif.Photo.BrightnessValue", num, den))
     {
         d->brightnessEdit->setValue((double)(num) / (double)(den));
@@ -243,6 +245,8 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
     }
     d->brightnessEdit->setEnabled(d->brightnessCheck->isChecked());
 
+    d->gainControlCB->setCurrentItem(0);
+    d->gainControlCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.GainControl", val))
     {
         if (val >= 0 && val <= 4)
@@ -255,6 +259,8 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
     }
     d->gainControlCB->setEnabled(d->gainControlCheck->isChecked());
     
+    d->contrastCB->setCurrentItem(0);
+    d->contrastCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.Contrast", val))
     {
         if (val >= 0 && val <= 2)
@@ -267,6 +273,8 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
     }
     d->contrastCB->setEnabled(d->contrastCheck->isChecked());
 
+    d->saturationCB->setCurrentItem(0);
+    d->saturationCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.Saturation", val))
     {
         if (val >= 0 && val <= 2)
@@ -279,6 +287,8 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
     }
     d->saturationCB->setEnabled(d->saturationCheck->isChecked());
 
+    d->sharpnessCB->setCurrentItem(0);
+    d->sharpnessCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.Sharpness", val))
     {
         if (val >= 0 && val <= 2)
@@ -291,6 +301,8 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
     }
     d->sharpnessCB->setEnabled(d->sharpnessCheck->isChecked());
 
+    d->customRenderedCB->setCurrentItem(0);
+    d->customRenderedCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.CustomRendered", val))
     {
         if (val >= 0 && val <= 1)
