@@ -230,6 +230,8 @@ void EXIFEditDialog::readSettings()
     d->captionPage->setCheckedSyncJFIFComment(config.readBoolEntry("Sync JFIF Comment", true));
     d->captionPage->setCheckedSyncHOSTComment(config.readBoolEntry("Sync Host Comment", true));
     d->captionPage->setCheckedSyncIPTCCaption(config.readBoolEntry("Sync IPTC Caption", true));
+    d->datetimePage->setCheckedSyncHOSTDate(config.readBoolEntry("Sync Host Date", true));
+    d->datetimePage->setCheckedSyncIPTCDate(config.readBoolEntry("Sync IPTC Date", true));
     resize(configDialogSize(config, QString("EXIF Edit Dialog")));
 }
 
@@ -241,6 +243,8 @@ void EXIFEditDialog::saveSettings()
     config.writeEntry("Sync JFIF Comment", d->captionPage->syncJFIFCommentIsChecked());
     config.writeEntry("Sync Host Comment", d->captionPage->syncHOSTCommentIsChecked());
     config.writeEntry("Sync IPTC Caption", d->captionPage->syncIPTCCaptionIsChecked());
+    config.writeEntry("Sync Host Date", d->datetimePage->syncHOSTDateIsChecked());
+    config.writeEntry("Sync IPTC Date", d->datetimePage->syncIPTCDateIsChecked());
     saveDialogSize(config, QString("EXIF Edit Dialog"));
     config.sync();
 }
@@ -282,14 +286,20 @@ void EXIFEditDialog::slotApply()
 {
     if (d->modified && !d->isReadOnly) 
     {
+        KIPI::ImageInfo info = d->interface->info(*d->currItem);
+
         if (d->captionPage->syncHOSTCommentIsChecked())
         {
-            KIPI::ImageInfo info = d->interface->info(*d->currItem);
             info.setDescription(d->captionPage->getExifUserComments());
         }
-
         d->captionPage->applyMetadata(d->exifData, d->iptcData);
-        d->datetimePage->applyMetadata(d->exifData);
+
+        if (d->datetimePage->syncHOSTDateIsChecked())
+        {
+            info.setTime(d->datetimePage->getExifCreationDate());
+        }
+        d->datetimePage->applyMetadata(d->exifData, d->iptcData);
+
         d->lensPage->applyMetadata(d->exifData);
         d->devicePage->applyMetadata(d->exifData);
         d->lightPage->applyMetadata(d->exifData);
