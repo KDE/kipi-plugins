@@ -79,6 +79,8 @@ extern "C"
 #include <kbuttonbox.h>
 #include <kdiroperator.h>
 #include <kdeversion.h>
+#include <kurlrequester.h>
+#include <klineedit.h>
 
 // KIPI includes
 
@@ -116,7 +118,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     KImageIO::registerFormats();
 
     QWidget* box = plainPage();
-    QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
+    QVBoxLayout *dvlay = new QVBoxLayout(box, 0, KDialog::spacingHint());
 
     //---------------------------------------------
 
@@ -201,21 +203,20 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     groupBox3 = new QHGroupBox( i18n("Target Folder"), box );
 
-    m_upload = new KIPI::UploadWidget( m_interface, groupBox3, "m_upload" );
-    QWhatsThis::add( m_upload, i18n("<p>Here you can select the target folder which "
+    m_destinationURL = new KURLRequester(groupBox3);
+	m_destinationURL->setMode(KFile::Directory | KFile::LocalOnly);
+	KIPI::ImageCollection album = interface->currentAlbum();
+	if (album.isValid()) {
+		QString url;
+		if (album.isDirectory()) {
+			url = album.uploadPath().path();
+		} else {
+			url = QDir::homeDirPath();
+		}
+		m_destinationURL->lineEdit()->setText(url);
+	}
+    QWhatsThis::add( m_destinationURL, i18n("<p>Here you can select the target folder which "
                                     "will used by the process."));
-    m_upload->setMinimumHeight( 130 );
-
-    QWidget* add = new QWidget( groupBox3 );
-    QVBoxLayout* lay = new QVBoxLayout( add );
-
-    m_addNewAlbumButton = new QPushButton ( i18n( "&New..."), add, "PushButton_AddNewAlbum");
-    QWhatsThis::add( m_addNewAlbumButton, i18n("<p>With this button, you can create a new folder."));
-    lay->addWidget( m_addNewAlbumButton );
-    lay->addStretch( 1 );
-
-    connect( m_addNewAlbumButton, SIGNAL( clicked() ),
-             m_upload, SLOT( mkdir() ) );
 
     dvlay->addWidget( groupBox3 );
 
@@ -465,8 +466,7 @@ void BatchProcessImagesDialog::slotProcessStart( void )
     m_overWriteMode->setEnabled(false);
     m_removeOriginal->setEnabled(false);
 
-    m_addNewAlbumButton->setEnabled(false);
-    m_upload->setEnabled(false);
+    m_destinationURL->setEnabled(false);
     m_addImagesButton->setEnabled(false);
     m_remImagesButton->setEnabled(false);
 
@@ -485,8 +485,7 @@ bool BatchProcessImagesDialog::startProcess(void)
        return true;
        }
 
-    // PENDING(blackie) handle remote URL's
-    QString targetAlbum = m_upload->path().path();
+    QString targetAlbum = m_destinationURL->url();
 
     //TODO check if it is valid also for remote URL's
     // this is a workarond for bug 117397
@@ -697,7 +696,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
         // Save the comments for the converted image
         KURL src;
         src.setPath( item->pathSrc() );
-        KURL dest = m_upload->path();
+        KURL dest = m_destinationURL->url();
         dest.addPath( item->nameDest() );
         QString errmsg;
 
@@ -818,9 +817,8 @@ void BatchProcessImagesDialog::slotPreview(void)
     m_labelOverWrite->setEnabled(false);
     m_overWriteMode->setEnabled(false);
     m_removeOriginal->setEnabled(false);
-    m_addNewAlbumButton->setEnabled(false);
     m_smallPreview->setEnabled(false);
-    m_upload->setEnabled(false);
+    m_destinationURL->setEnabled(false);
     m_addImagesButton->setEnabled(false);
     m_remImagesButton->setEnabled(false);
 
@@ -1022,8 +1020,7 @@ void BatchProcessImagesDialog::endPreview(void)
     m_previewButton->setEnabled(true);
     m_labelOverWrite->setEnabled(true);
     m_overWriteMode->setEnabled(true);
-    m_addNewAlbumButton->setEnabled(true);
-    m_upload->setEnabled(true);
+    m_destinationURL->setEnabled(true);
     m_addImagesButton->setEnabled(true);
     m_remImagesButton->setEnabled(true);
     m_smallPreview->setEnabled(true);
@@ -1079,7 +1076,7 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
 
     if (removeFlag == true) // Try to delete de destination !
        {
-       KURL deleteImage = m_upload->path();
+       KURL deleteImage = m_destinationURL->url();
        deleteImage.addPath(item->nameDest());
 
 #if KDE_VERSION >= 0x30200

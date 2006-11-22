@@ -72,12 +72,8 @@ class KProcess;
 class KConfig;
 class KProgress;
 class KURL;
+class KURLRequester;
 class KFileItem;
-
-namespace KIPI
-{
-    class UploadWidget;
-}
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -141,8 +137,8 @@ private slots:
 
    QComboBox              *m_overWriteMode;
    QComboBox              *m_Type;
-      
-   KIPI::UploadWidget     *m_upload;
+
+   KURLRequester          *m_destinationURL;
 
    BatchProcessImagesList *m_listFiles;
    KProgress              *m_progress;
@@ -158,7 +154,6 @@ private slots:
 
    QPushButton            *m_optionsButton;
    QPushButton            *m_previewButton;
-   QPushButton            *m_addNewAlbumButton;
    QPushButton            *m_addImagesButton;
    QPushButton            *m_remImagesButton;
    QPushButton            *m_helpButton;
