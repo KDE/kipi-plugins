@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>570</width>
-            <height>690</height>
+            <height>556</height>
         </rect>
     </property>
     <property name="caption">
@@ -41,7 +41,7 @@
                         <string>Sequence number start value:</string>
                     </property>
                 </widget>
-                <widget class="QLineEdit" row="0" column="1" rowspan="1" colspan="2">
+                <widget class="QLineEdit" row="0" column="1">
                     <property name="name">
                         <cstring>m_prefixEdit</cstring>
                     </property>
@@ -54,7 +54,7 @@
                         <string>Prefix string:</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="3">
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>m_addFileNameCheck</cstring>
                     </property>
@@ -62,7 +62,7 @@
                         <string>Add original file name</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="3">
+                <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>m_addFileDateCheck</cstring>
                     </property>
@@ -70,47 +70,84 @@
                         <string>Add file date</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="4" column="0">
-                    <property name="name">
-                        <cstring>m_formatDateCheck</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Format datetime string</string>
-                    </property>
-                </widget>
-                <widget class="QLineEdit" row="4" column="1" rowspan="1" colspan="2">
+                <widget class="QLineEdit" row="4" column="1">
                     <property name="name">
                         <cstring>m_formatDateEdit</cstring>
                     </property>
                 </widget>
-                <widget class="QSpinBox" row="1" column="2">
+                <widget class="QLayoutWidget" row="4" column="0">
                     <property name="name">
-                        <cstring>m_seqSpin</cstring>
+                        <cstring>layout1</cstring>
                     </property>
-                    <property name="maxValue">
-                        <number>999999</number>
-                    </property>
-                    <property name="minValue">
-                        <number>1</number>
-                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer5</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Fixed</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>12</width>
+                                    <height>14</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>m_formatDateCheck</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Date format:</string>
+                            </property>
+                        </widget>
+                    </hbox>
                 </widget>
-                <spacer row="1" column="1">
+                <widget class="QLayoutWidget" row="1" column="1">
                     <property name="name">
-                        <cstring>spacer</cstring>
+                        <cstring>layout2</cstring>
                     </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>251</width>
-                            <height>21</height>
-                        </size>
-                    </property>
-                </spacer>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QSpinBox">
+                            <property name="name">
+                                <cstring>m_seqSpin</cstring>
+                            </property>
+                            <property name="maxValue">
+                                <number>999999</number>
+                            </property>
+                            <property name="minValue">
+                                <number>1</number>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>261</width>
+                                    <height>21</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
             </grid>
         </widget>
         <widget class="QGroupBox">
