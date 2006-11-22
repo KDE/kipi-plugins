@@ -41,6 +41,9 @@ class QRadioButton;
 class QPushButton;
 class QVButtonGroup;
 class QVGroupBox;
+class QButtonGroup;
+
+class KDateTimeWidget;
 
 namespace KIPITimeAdjustPlugin
 {
@@ -59,7 +62,7 @@ protected slots:
 
     void updateExample();
     void adjustmentTypeChanged();
-    void slotOK();
+    void slotOk();
     void slotHelp();
 
 protected:
@@ -72,10 +75,11 @@ private:
     QRadioButton             *m_add;
     QRadioButton             *m_subtract;
     QRadioButton             *m_exif;
+    QRadioButton             *m_custom;
 
     QVGroupBox               *m_exampleBox;
     QVButtonGroup            *m_adjustValGrp;
-    QVButtonGroup            *m_adjustTypeGrp;
+    QButtonGroup             *m_adjustTypeGrp;
     
     QLabel                   *m_infoLabel;
     QLabel                   *m_exampleAdj;
@@ -90,6 +94,8 @@ private:
     QSpinBox                 *m_years;
     
     QDateTime                 m_exampleDate;
+
+    KDateTimeWidget          *m_dateCreatedSel;
 
     KURL::List                m_images;
 

@@ -26,6 +26,8 @@
 #include <qlabel.h>
 #include <qvbuttongroup.h>
 #include <qvgroupbox.h>
+#include <qgroupbox.h>
+#include <qhbox.h>
 #include <qradiobutton.h>
 #include <qspinbox.h>
 #include <qgrid.h>
@@ -42,6 +44,7 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
+#include <kdatetimewidget.h>
 
 // LibKipi includes.
 
@@ -58,9 +61,9 @@ namespace KIPITimeAdjustPlugin
 {
 
 TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent, const char* name )
-                : KDialogBase( Plain, i18n("Adjust Time & Date"), Help|Ok|Cancel, Ok, parent, 
-                  name, true, true ),
-                  m_interface( interface )
+                : KDialogBase(Plain, i18n("Adjust Time & Date"), Help|Ok|Cancel, 
+                              Ok, parent, name, true, true),
+                  m_interface(interface)
 {
     // About data and help button.
 
@@ -86,9 +89,6 @@ TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent,
     // ------------------------------------------------------------------
 
     addConfigPage();
-
-    connect( this, SIGNAL( okClicked() ),
-             this, SLOT( slotOK() ) );
 }
 
 TimeAdjustDialog::~TimeAdjustDialog()
@@ -171,26 +171,33 @@ void TimeAdjustDialog::addConfigPage()
 
     // -- Adjustment type ------------------------------------------------------------
 
-    m_adjustTypeGrp = new QVButtonGroup( i18n("Adjustment Type"),
-                                         plainPage(), "adjustment type" );
+    QVGroupBox *adjGB = new QVGroupBox(i18n("Adjustment Type"), plainPage());
+    m_adjustTypeGrp   = new QButtonGroup(1, Qt::Horizontal, adjGB);
+    m_add             = new QRadioButton( i18n("Add"), m_adjustTypeGrp );
+    m_subtract        = new QRadioButton( i18n("Subtract" ), m_adjustTypeGrp );
+    m_exif            = new QRadioButton( i18n("Set file date to EXIF/IPTC creation date"), m_adjustTypeGrp );
+    m_custom          = new QRadioButton( i18n("Custom date"), m_adjustTypeGrp );
+    m_adjustTypeGrp->setFrameStyle( QFrame::NoFrame );
+    m_adjustTypeGrp->setInsideMargin(0); 
     m_adjustTypeGrp->setRadioButtonExclusive( true );
-    m_add      = new QRadioButton( i18n("Add"), m_adjustTypeGrp );
-    m_subtract = new QRadioButton( i18n("Subtract" ), m_adjustTypeGrp );
-    m_exif     = new QRadioButton( i18n("Set file date to EXIF/IPTC creation date"),
-                                   m_adjustTypeGrp );
-    vlay->addWidget( m_adjustTypeGrp );
-    m_add->setChecked( true );
 
-    connect( m_adjustTypeGrp, SIGNAL( clicked(int) ),
-             this, SLOT( adjustmentTypeChanged() ) );
+    QHBox *hbox      = new QHBox(m_adjustTypeGrp);
+    QLabel *space    = new QLabel(hbox);
+    m_dateCreatedSel = new KDateTimeWidget(hbox);
+    new QLabel(hbox);
+    space->setFixedWidth(15);
+    m_dateCreatedSel->setDateTime(QDateTime::currentDateTime());
+    
+    m_add->setChecked(true);
+    vlay->addWidget(adjGB);
 
     // -- Adjustments ------------------------------------------------------------
 
-    m_adjustValGrp = new QVButtonGroup( i18n("Adjustments"), plainPage(), "adjustments" );
-    vlay->addWidget( m_adjustValGrp );
+    m_adjustValGrp = new QVButtonGroup(i18n("Adjustments"), plainPage());
+    vlay->addWidget(m_adjustValGrp);
 
-    QWidget* grid        = new QWidget( m_adjustValGrp );
-    QGridLayout* gridLay = new QGridLayout( grid, 1, 7, spacingHint());
+    QWidget* grid        = new QWidget(m_adjustValGrp);
+    QGridLayout* gridLay = new QGridLayout(grid, 1, 7, spacingHint());
     gridLay->setColStretch( 2, 1 );
     gridLay->setColStretch( 5, 1 );
 
@@ -232,6 +239,11 @@ void TimeAdjustDialog::addConfigPage()
     m_infoLabel  = new QLabel( m_exampleBox );
     m_exampleAdj = new QLabel( m_exampleBox );
 
+    // -- Slots/Signals ------------------------------------------------------
+
+    connect( m_adjustTypeGrp, SIGNAL( clicked(int) ),
+             this, SLOT( adjustmentTypeChanged() ) );
+
     connect( m_secs, SIGNAL( valueChanged( int ) ), 
              this, SLOT( updateExample() ) );
 
@@ -249,6 +261,8 @@ void TimeAdjustDialog::addConfigPage()
 
     connect( m_years, SIGNAL( valueChanged( int ) ),
              this, SLOT( updateExample() ) );
+
+    adjustmentTypeChanged();
 }
 
 void TimeAdjustDialog::updateExample()
@@ -266,11 +280,22 @@ void TimeAdjustDialog::adjustmentTypeChanged()
     if ( !btn )
         return;
 
-    m_exampleBox->setEnabled( btn != m_exif );
-    m_adjustValGrp->setEnabled( btn != m_exif );
+    m_exampleBox->setEnabled(false);
+    m_adjustValGrp->setEnabled(false);
+    m_dateCreatedSel->setEnabled(false);
+
+    if (btn == m_add || btn == m_subtract)
+    {
+        m_exampleBox->setEnabled(true);
+        m_adjustValGrp->setEnabled(true);
+    }
+    else if (btn == m_custom)
+    {
+        m_dateCreatedSel->setEnabled(true);
+    }
 }
 
-void TimeAdjustDialog::slotOK()
+void TimeAdjustDialog::slotOk()
 {
     for( KURL::List::ConstIterator it = m_images.begin(); it != m_images.end(); ++it )
     {
@@ -283,7 +308,11 @@ void TimeAdjustDialog::slotOK()
 
 QDateTime TimeAdjustDialog::updateTime( const KURL& url, const QDateTime& time ) const
 {
-    if ( m_exif->isChecked() )
+    if ( m_custom->isChecked() )
+    {
+        return m_dateCreatedSel->dateTime();
+    }
+    else if ( m_exif->isChecked() )
     {
         KIPIPlugins::Exiv2Iface exiv2Iface;
         if ( !exiv2Iface.load(url.path()) )
