@@ -250,6 +250,8 @@ void IPTCEditDialog::readSettings()
     d->captionPage->setCheckedSyncJFIFComment(config.readBoolEntry("Sync JFIF Comment", true));
     d->captionPage->setCheckedSyncHOSTComment(config.readBoolEntry("Sync Host Comment", true));
     d->captionPage->setCheckedSyncEXIFComment(config.readBoolEntry("Sync EXIF Comment", true));
+    d->datetimePage->setCheckedSyncHOSTDate(config.readBoolEntry("Sync Host Date", true));
+    d->datetimePage->setCheckedSyncEXIFDate(config.readBoolEntry("Sync EXIF Date", true));
     resize(configDialogSize(config, QString("IPTC Edit Dialog")));
 }
 
@@ -261,6 +263,8 @@ void IPTCEditDialog::saveSettings()
     config.writeEntry("Sync JFIF Comment", d->captionPage->syncJFIFCommentIsChecked());
     config.writeEntry("Sync Host Comment", d->captionPage->syncHOSTCommentIsChecked());
     config.writeEntry("Sync EXIF Comment", d->captionPage->syncEXIFCommentIsChecked());
+    config.writeEntry("Sync Host Date", d->datetimePage->syncHOSTDateIsChecked());
+    config.writeEntry("Sync EXIF Date", d->datetimePage->syncEXIFDateIsChecked());
     saveDialogSize(config, QString("IPTC Edit Dialog"));
     config.sync();
 }
@@ -314,7 +318,12 @@ void IPTCEditDialog::slotApply()
         }
         d->captionPage->applyMetadata(d->exifData, d->iptcData);
 
-        d->datetimePage->applyMetadata(d->iptcData);
+        if (d->datetimePage->syncHOSTDateIsChecked())
+        {
+            info.setTime(d->datetimePage->getIPTCCreationDate());
+        }
+        d->datetimePage->applyMetadata(d->exifData, d->iptcData);
+
         d->subjectsPage->applyMetadata(d->iptcData);
         d->keywordsPage->applyMetadata(d->iptcData);
         d->categoriesPage->applyMetadata(d->iptcData);

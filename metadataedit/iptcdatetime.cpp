@@ -33,6 +33,9 @@
 #include <kdialog.h>
 #include <kdatewidget.h>
 #include <ktimewidget.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <kseparator.h>
 
 // Local includes.
 
@@ -66,6 +69,8 @@ public:
         timeReleasedCheck    = 0;
         timeExpiredCheck     = 0;
         timeDigitalizedCheck = 0;
+        syncHOSTDateCheck    = 0;
+        syncEXIFDateCheck    = 0;
     }
 
     QCheckBox   *dateCreatedCheck;
@@ -76,6 +81,8 @@ public:
     QCheckBox   *timeReleasedCheck;
     QCheckBox   *timeExpiredCheck;
     QCheckBox   *timeDigitalizedCheck;
+    QCheckBox   *syncHOSTDateCheck;
+    QCheckBox   *syncEXIFDateCheck;
 
     KDateWidget *dateCreatedSel;
     KDateWidget *dateReleasedSel;
@@ -93,20 +100,28 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
 {
     d = new IPTCDateTimePriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 8, 3, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent, 11, 2, KDialog::spacingHint());
 
     // --------------------------------------------------------
 
-    d->dateCreatedCheck = new QCheckBox(i18n("Creation date"), parent);
-    d->timeCreatedCheck = new QCheckBox(i18n("Creation time"), parent);
-    d->dateCreatedSel   = new KDateWidget(parent);
-    d->timeCreatedSel   = new KTimeWidget(parent);
+    d->dateCreatedCheck  = new QCheckBox(i18n("Creation date"), parent);
+    d->timeCreatedCheck  = new QCheckBox(i18n("Creation time"), parent);
+    d->dateCreatedSel    = new KDateWidget(parent);
+    d->timeCreatedSel    = new KTimeWidget(parent);
+    d->syncHOSTDateCheck = new QCheckBox(i18n("Sync creation date hosted by %1")
+                                              .arg(KApplication::kApplication()->aboutData()->appName()), 
+                                              parent);
+    d->syncEXIFDateCheck = new QCheckBox(i18n("Sync EXIF creation date"), parent);
+    KSeparator *line     = new KSeparator(Horizontal, parent);
     d->dateCreatedSel->setDate(QDate::currentDate());
     d->timeCreatedSel->setTime(QTime::currentTime());
     grid->addMultiCellWidget(d->dateCreatedCheck, 0, 0, 0, 0);
     grid->addMultiCellWidget(d->timeCreatedCheck, 0, 0, 1, 1);
     grid->addMultiCellWidget(d->dateCreatedSel, 1, 1, 0, 0);
     grid->addMultiCellWidget(d->timeCreatedSel, 1, 1, 1, 1);
+    grid->addMultiCellWidget(d->syncHOSTDateCheck, 2, 2, 0, 2);
+    grid->addMultiCellWidget(d->syncEXIFDateCheck, 3, 3, 0, 2);
+    grid->addMultiCellWidget(line, 4, 4, 0, 2);
     QWhatsThis::add(d->dateCreatedSel, i18n("<p>Set here the creation date of "
                     "intellectual content."));
     QWhatsThis::add(d->timeCreatedSel, i18n("<p>Set here the creation time of "
@@ -120,10 +135,10 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
     d->timeReleasedSel   = new KTimeWidget(parent);
     d->dateReleasedSel->setDate(QDate::currentDate());
     d->timeReleasedSel->setTime(QTime::currentTime());
-    grid->addMultiCellWidget(d->dateReleasedCheck, 2, 2, 0, 0);
-    grid->addMultiCellWidget(d->timeReleasedCheck, 2, 2, 1, 1);
-    grid->addMultiCellWidget(d->dateReleasedSel, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->timeReleasedSel, 3, 3, 1, 1);
+    grid->addMultiCellWidget(d->dateReleasedCheck, 5, 5, 0, 0);
+    grid->addMultiCellWidget(d->timeReleasedCheck, 5, 5, 1, 1);
+    grid->addMultiCellWidget(d->dateReleasedSel, 6, 6, 0, 0);
+    grid->addMultiCellWidget(d->timeReleasedSel, 6, 6, 1, 1);
     QWhatsThis::add(d->dateReleasedSel, i18n("<p>Set here the earliest intended usable date of "
                     "intellectual content."));
     QWhatsThis::add(d->timeReleasedSel, i18n("<p>Set here the earliest intended usable time of "
@@ -137,10 +152,10 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
     d->timeExpiredSel   = new KTimeWidget(parent);
     d->dateExpiredSel->setDate(QDate::currentDate());
     d->timeExpiredSel->setTime(QTime::currentTime());
-    grid->addMultiCellWidget(d->dateExpiredCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->timeExpiredCheck, 4, 4, 1, 1);
-    grid->addMultiCellWidget(d->dateExpiredSel, 5, 5, 0, 0);
-    grid->addMultiCellWidget(d->timeExpiredSel, 5, 5, 1, 1);
+    grid->addMultiCellWidget(d->dateExpiredCheck, 7, 7, 0, 0);
+    grid->addMultiCellWidget(d->timeExpiredCheck, 7, 7, 1, 1);
+    grid->addMultiCellWidget(d->dateExpiredSel, 8, 8, 0, 0);
+    grid->addMultiCellWidget(d->timeExpiredSel, 8, 8, 1, 1);
     QWhatsThis::add(d->dateExpiredSel, i18n("<p>Set here the latest intended usable date of "
                     "intellectual content."));
     QWhatsThis::add(d->timeExpiredSel, i18n("<p>Set here the latest intended usable time of "
@@ -154,17 +169,17 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
     d->timeDigitalizedSel   = new KTimeWidget(parent);
     d->dateDigitalizedSel->setDate(QDate::currentDate());
     d->timeDigitalizedSel->setTime(QTime::currentTime());
-    grid->addMultiCellWidget(d->dateDigitalizedCheck, 6, 6, 0, 0);
-    grid->addMultiCellWidget(d->timeDigitalizedCheck, 6, 6, 1, 1);
-    grid->addMultiCellWidget(d->dateDigitalizedSel, 7, 7, 0, 0);
-    grid->addMultiCellWidget(d->timeDigitalizedSel, 7, 7, 1, 1);
+    grid->addMultiCellWidget(d->dateDigitalizedCheck, 9, 9, 0, 0);
+    grid->addMultiCellWidget(d->timeDigitalizedCheck, 9, 9, 1, 1);
+    grid->addMultiCellWidget(d->dateDigitalizedSel, 10, 10, 0, 0);
+    grid->addMultiCellWidget(d->timeDigitalizedSel, 10, 10, 1, 1);
     QWhatsThis::add(d->dateDigitalizedSel, i18n("<p>Set here the creation date of "
                     "digital representation."));
     QWhatsThis::add(d->timeDigitalizedSel, i18n("<p>Set here the creation time of "
                     "digital representation."));
 
     grid->setColStretch(2, 10);                     
-    grid->setRowStretch(8, 10);                     
+    grid->setRowStretch(11, 10);                     
 
     // --------------------------------------------------------
 
@@ -191,6 +206,12 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
 
     connect(d->timeDigitalizedCheck, SIGNAL(toggled(bool)),
             d->timeDigitalizedSel, SLOT(setEnabled(bool)));
+
+    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
+            d->syncHOSTDateCheck, SLOT(setEnabled(bool)));
+
+    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
+            d->syncEXIFDateCheck, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
 
@@ -250,6 +271,31 @@ IPTCDateTime::~IPTCDateTime()
     delete d;
 }
 
+bool IPTCDateTime::syncHOSTDateIsChecked()
+{
+    return d->syncHOSTDateCheck->isChecked();
+}
+
+bool IPTCDateTime::syncEXIFDateIsChecked()
+{
+    return d->syncEXIFDateCheck->isChecked();
+}
+
+void IPTCDateTime::setCheckedSyncHOSTDate(bool c)
+{
+    d->syncHOSTDateCheck->setChecked(c);
+}
+
+void IPTCDateTime::setCheckedSyncEXIFDate(bool c)
+{
+    d->syncEXIFDateCheck->setChecked(c);
+}
+
+QDateTime IPTCDateTime::getIPTCCreationDate()
+{
+    return QDateTime(d->dateCreatedSel->date(), d->timeCreatedSel->time());
+}
+
 void IPTCDateTime::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
@@ -275,6 +321,8 @@ void IPTCDateTime::readMetadata(QByteArray& iptcData)
         }
     }    
     d->dateCreatedSel->setEnabled(d->dateCreatedCheck->isChecked());
+    d->syncHOSTDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
+    d->syncEXIFDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
 
     d->timeCreatedSel->setTime(QTime::currentTime());
     d->timeCreatedCheck->setChecked(false);
@@ -379,14 +427,22 @@ void IPTCDateTime::readMetadata(QByteArray& iptcData)
     blockSignals(false);
 }
 
-void IPTCDateTime::applyMetadata(QByteArray& iptcData)
+void IPTCDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
+    exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
 
     if (d->dateCreatedCheck->isChecked())
+    {
         exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
                                     d->dateCreatedSel->date().toString(Qt::ISODate));
+        if (syncEXIFDateIsChecked())
+        {
+            exiv2Iface.setExifTagString("Exif.Image.DateTime",
+                    getIPTCCreationDate().toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
+        }
+    }
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.DateCreated");
 
@@ -432,6 +488,7 @@ void IPTCDateTime::applyMetadata(QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.DigitizationTime");
 
+    exifData = exiv2Iface.getExif();
     iptcData = exiv2Iface.getIptc();
 }
 

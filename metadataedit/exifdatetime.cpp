@@ -250,7 +250,7 @@ void EXIFDateTime::setCheckedSyncIPTCDate(bool c)
     d->syncIPTCDateCheck->setChecked(c);
 }
 
-QDateTime EXIFDateTime::getExifCreationDate()
+QDateTime EXIFDateTime::getEXIFCreationDate()
 {
     return d->dateCreatedSel->dateTime();
 }

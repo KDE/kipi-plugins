@@ -296,7 +296,7 @@ void EXIFEditDialog::slotApply()
 
         if (d->datetimePage->syncHOSTDateIsChecked())
         {
-            info.setTime(d->datetimePage->getExifCreationDate());
+            info.setTime(d->datetimePage->getEXIFCreationDate());
         }
         d->datetimePage->applyMetadata(d->exifData, d->iptcData);
 

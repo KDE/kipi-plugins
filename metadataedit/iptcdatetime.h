@@ -40,8 +40,16 @@ public:
     IPTCDateTime(QWidget* parent);
     ~IPTCDateTime();
 
-    void applyMetadata(QByteArray& iptcData);
+    void applyMetadata(QByteArray& exifData, QByteArray& iptcData);
     void readMetadata(QByteArray& iptcData);
+
+    bool syncHOSTDateIsChecked();
+    bool syncEXIFDateIsChecked();
+
+    void setCheckedSyncHOSTDate(bool c);
+    void setCheckedSyncEXIFDate(bool c);
+
+    QDateTime getIPTCCreationDate();
 
 signals:
 

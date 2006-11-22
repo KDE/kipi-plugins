@@ -50,7 +50,7 @@ public:
     void setCheckedSyncHOSTDate(bool c);
     void setCheckedSyncIPTCDate(bool c);
 
-    QDateTime getExifCreationDate();
+    QDateTime getEXIFCreationDate();
 
 signals:
 
