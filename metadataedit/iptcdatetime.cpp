@@ -116,7 +116,7 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
     d->dateCreatedSel->setDate(QDate::currentDate());
     d->timeCreatedSel->setTime(QTime::currentTime());
     grid->addMultiCellWidget(d->dateCreatedCheck, 0, 0, 0, 0);
-    grid->addMultiCellWidget(d->timeCreatedCheck, 0, 0, 1, 1);
+    grid->addMultiCellWidget(d->timeCreatedCheck, 0, 0, 1, 2);
     grid->addMultiCellWidget(d->dateCreatedSel, 1, 1, 0, 0);
     grid->addMultiCellWidget(d->timeCreatedSel, 1, 1, 1, 1);
     grid->addMultiCellWidget(d->syncHOSTDateCheck, 2, 2, 0, 2);
@@ -136,7 +136,7 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
     d->dateReleasedSel->setDate(QDate::currentDate());
     d->timeReleasedSel->setTime(QTime::currentTime());
     grid->addMultiCellWidget(d->dateReleasedCheck, 5, 5, 0, 0);
-    grid->addMultiCellWidget(d->timeReleasedCheck, 5, 5, 1, 1);
+    grid->addMultiCellWidget(d->timeReleasedCheck, 5, 5, 1, 2);
     grid->addMultiCellWidget(d->dateReleasedSel, 6, 6, 0, 0);
     grid->addMultiCellWidget(d->timeReleasedSel, 6, 6, 1, 1);
     QWhatsThis::add(d->dateReleasedSel, i18n("<p>Set here the earliest intended usable date of "
@@ -153,7 +153,7 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
     d->dateExpiredSel->setDate(QDate::currentDate());
     d->timeExpiredSel->setTime(QTime::currentTime());
     grid->addMultiCellWidget(d->dateExpiredCheck, 7, 7, 0, 0);
-    grid->addMultiCellWidget(d->timeExpiredCheck, 7, 7, 1, 1);
+    grid->addMultiCellWidget(d->timeExpiredCheck, 7, 7, 1, 2);
     grid->addMultiCellWidget(d->dateExpiredSel, 8, 8, 0, 0);
     grid->addMultiCellWidget(d->timeExpiredSel, 8, 8, 1, 1);
     QWhatsThis::add(d->dateExpiredSel, i18n("<p>Set here the latest intended usable date of "
@@ -170,7 +170,7 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
     d->dateDigitalizedSel->setDate(QDate::currentDate());
     d->timeDigitalizedSel->setTime(QTime::currentTime());
     grid->addMultiCellWidget(d->dateDigitalizedCheck, 9, 9, 0, 0);
-    grid->addMultiCellWidget(d->timeDigitalizedCheck, 9, 9, 1, 1);
+    grid->addMultiCellWidget(d->timeDigitalizedCheck, 9, 9, 1, 2);
     grid->addMultiCellWidget(d->dateDigitalizedSel, 10, 10, 0, 0);
     grid->addMultiCellWidget(d->timeDigitalizedSel, 10, 10, 1, 1);
     QWhatsThis::add(d->dateDigitalizedSel, i18n("<p>Set here the creation date of "
