@@ -29,6 +29,7 @@ SendImages    : Added image size limit x mail (Michael H�hstetter)
  
 TimeAdjust    : Removed libkexif depency. Using Exiv2 instead.
 TimeAdjust    : New option to customize Date and Time to a specific timestamp.
+TimeAdjust    : New options sync EXIF/IPTC Creation Date with timestamp.
 
 
 Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
