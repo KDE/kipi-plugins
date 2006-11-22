@@ -303,7 +303,7 @@ void Plugin_MetadataEdit::slotEditIptc()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KIPIMetadataEditPlugin::IPTCEditDialog dialog(kapp->activeWindow(), images.images());
+    KIPIMetadataEditPlugin::IPTCEditDialog dialog(kapp->activeWindow(), images.images(), m_interface);
     dialog.exec();
     m_interface->refreshImages(images.images());
 }

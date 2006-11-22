@@ -244,7 +244,7 @@ bool EXIFCaption::syncIPTCCaptionIsChecked()
     return d->syncIPTCCaptionCheck->isChecked();
 }
 
-QString EXIFCaption::getExifUserComments()
+QString EXIFCaption::getEXIFUserComments()
 {
     return d->userCommentEdit->text();
 }

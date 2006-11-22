@@ -86,31 +86,31 @@ public:
         adjustPage    = 0;
     }
 
-    bool                  modified;
-    bool                  isReadOnly;
+    bool                      modified;
+    bool                      isReadOnly;
 
-    QByteArray            exifData;
-    QByteArray            iptcData;
+    QByteArray                exifData;
+    QByteArray                iptcData;
 
-    QFrame               *page_caption;
-    QFrame               *page_datetime;
-    QFrame               *page_lens;
-    QFrame               *page_device;
-    QFrame               *page_light;
-    QFrame               *page_adjust;
+    QFrame                   *page_caption;
+    QFrame                   *page_datetime;
+    QFrame                   *page_lens;
+    QFrame                   *page_device;
+    QFrame                   *page_light;
+    QFrame                   *page_adjust;
 
-    KURL::List            urls;
+    KURL::List                urls;
 
-    KURL::List::iterator  currItem;
+    KURL::List::iterator      currItem;
 
-    EXIFCaption          *captionPage;
-    EXIFDateTime         *datetimePage;
-    EXIFLens             *lensPage;
-    EXIFDevice           *devicePage;
-    EXIFLight            *lightPage;
-    EXIFAdjust           *adjustPage;
+    EXIFCaption              *captionPage;
+    EXIFDateTime             *datetimePage;
+    EXIFLens                 *lensPage;
+    EXIFDevice               *devicePage;
+    EXIFLight                *lightPage;
+    EXIFAdjust               *adjustPage;
 
-    KIPI::Interface      *interface;
+    KIPI::Interface          *interface;
 
     KIPIPlugins::KPAboutData *about;
 };
@@ -290,7 +290,7 @@ void EXIFEditDialog::slotApply()
 
         if (d->captionPage->syncHOSTCommentIsChecked())
         {
-            info.setDescription(d->captionPage->getExifUserComments());
+            info.setDescription(d->captionPage->getEXIFUserComments());
         }
         d->captionPage->applyMetadata(d->exifData, d->iptcData);
 

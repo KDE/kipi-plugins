@@ -36,6 +36,11 @@
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
 
+// LibKIPI includes.
+
+#include <libkipi/imagecollection.h>
+#include <libkipi/plugin.h>
+
 // Local includes.
 
 #include "kpaboutdata.h"
@@ -65,55 +70,58 @@ public:
         modified      = false;
         isReadOnly    = false;
         page_caption  = 0;
+        page_datetime = 0;
         page_subjects = 0;
         page_keywords = 0;
         page_credits  = 0;
         page_status   = 0;
         page_origin   = 0;
-        page_datetime = 0;
 
         about         = 0;
 
         captionPage   = 0;
+        datetimePage  = 0;
         subjectsPage  = 0;
         keywordsPage  = 0;
         creditsPage   = 0;
         statusPage    = 0;
         originPage    = 0;
-        datetimePage  = 0;
     }
 
-    bool                  modified;
-    bool                  isReadOnly;
+    bool                      modified;
+    bool                      isReadOnly;
 
-    QByteArray            iptcData;
+    QByteArray                exifData;
+    QByteArray                iptcData;
 
-    QFrame               *page_caption;
-    QFrame               *page_subjects;
-    QFrame               *page_keywords;
-    QFrame               *page_categories;
-    QFrame               *page_credits;
-    QFrame               *page_status;
-    QFrame               *page_origin;
-    QFrame               *page_datetime;
+    QFrame                   *page_caption;
+    QFrame                   *page_datetime;
+    QFrame                   *page_subjects;
+    QFrame                   *page_keywords;
+    QFrame                   *page_categories;
+    QFrame                   *page_credits;
+    QFrame                   *page_status;
+    QFrame                   *page_origin;
 
-    KURL::List            urls;
+    KURL::List                urls;
 
-    KURL::List::iterator  currItem;
+    KURL::List::iterator      currItem;
+
+    IPTCCaption              *captionPage;
+    IPTCDateTime             *datetimePage;
+    IPTCSubjects             *subjectsPage;
+    IPTCKeywords             *keywordsPage;
+    IPTCCategories           *categoriesPage;
+    IPTCCredits              *creditsPage;
+    IPTCStatus               *statusPage;
+    IPTCOrigin               *originPage;
+
+    KIPI::Interface          *interface;
 
     KIPIPlugins::KPAboutData *about;
-
-    IPTCCaption          *captionPage;
-    IPTCSubjects         *subjectsPage;
-    IPTCKeywords         *keywordsPage;
-    IPTCCategories       *categoriesPage;
-    IPTCCredits          *creditsPage;
-    IPTCStatus           *statusPage;
-    IPTCOrigin           *originPage;
-    IPTCDateTime         *datetimePage;
 };
 
-IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls)
+IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface *iface)
               : KDialogBase(IconList, QString::null, 
                             urls.count() > 1 ? Help|User1|User2|Stretch|Ok|Apply|Close 
                                              : Help|Stretch|Ok|Apply|Close, 
@@ -122,14 +130,19 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls)
                             KStdGuiItem::guiItem(KStdGuiItem::Back) )
 {
     d = new IPTCEditDialogDialogPrivate;
-    d->urls     = urls;
-    d->currItem = d->urls.begin();
+    d->urls      = urls;
+    d->interface = iface;
+    d->currItem  = d->urls.begin();
 
     // ---------------------------------------------------------------
 
     d->page_caption    = addPage(i18n("Caption"), i18n("Caption Informations"),
                                  BarIcon("editclear", KIcon::SizeMedium));
     d->captionPage     = new IPTCCaption(d->page_caption);
+
+    d->page_datetime   = addPage(i18n("Date & Time"), i18n("Date and Time Informations"),
+                                 BarIcon("today", KIcon::SizeMedium));
+    d->datetimePage    = new IPTCDateTime(d->page_datetime);
 
     d->page_subjects   = addPage(i18n("Subjects"), i18n("Subjects Informations"),
                                  BarIcon("cookie", KIcon::SizeMedium));
@@ -155,10 +168,6 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls)
                                  BarIcon("www", KIcon::SizeMedium));
     d->originPage      = new IPTCOrigin(d->page_origin);
 
-    d->page_datetime   = addPage(i18n("Date & Time"), i18n("Date and Time Informations"),
-                                 BarIcon("today", KIcon::SizeMedium));
-    d->datetimePage    = new IPTCDateTime(d->page_datetime);
-
     // ---------------------------------------------------------------
     // About data and help button.
 
@@ -182,6 +191,9 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls)
     connect(d->captionPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
+    connect(d->datetimePage, SIGNAL(signalModified()),
+            this, SLOT(slotModified()));
+
     connect(d->subjectsPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
@@ -198,9 +210,6 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls)
             this, SLOT(slotModified()));
 
     connect(d->originPage, SIGNAL(signalModified()),
-            this, SLOT(slotModified()));
-
-    connect(d->datetimePage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
     // ------------------------------------------------------------
@@ -238,6 +247,9 @@ void IPTCEditDialog::readSettings()
     KConfig config("kipirc");
     config.setGroup("Metadata Edit Settings");
     showPage(config.readNumEntry("IPTC Edit Page", 0));
+    d->captionPage->setCheckedSyncJFIFComment(config.readBoolEntry("Sync JFIF Comment", true));
+    d->captionPage->setCheckedSyncHOSTComment(config.readBoolEntry("Sync Host Comment", true));
+    d->captionPage->setCheckedSyncEXIFComment(config.readBoolEntry("Sync EXIF Comment", true));
     resize(configDialogSize(config, QString("IPTC Edit Dialog")));
 }
 
@@ -246,6 +258,9 @@ void IPTCEditDialog::saveSettings()
     KConfig config("kipirc");
     config.setGroup("Metadata Edit Settings");
     config.writeEntry("IPTC Edit Page", activePageIndex());
+    config.writeEntry("Sync JFIF Comment", d->captionPage->syncJFIFCommentIsChecked());
+    config.writeEntry("Sync Host Comment", d->captionPage->syncHOSTCommentIsChecked());
+    config.writeEntry("Sync EXIF Comment", d->captionPage->syncEXIFCommentIsChecked());
     saveDialogSize(config, QString("IPTC Edit Dialog"));
     config.sync();
 }
@@ -254,25 +269,26 @@ void IPTCEditDialog::slotItemChanged()
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
     exiv2Iface.load((*d->currItem).path());
+    d->exifData = exiv2Iface.getExif();
     d->iptcData = exiv2Iface.getIptc();
     d->captionPage->readMetadata(d->iptcData);
+    d->datetimePage->readMetadata(d->iptcData);
     d->subjectsPage->readMetadata(d->iptcData);
     d->keywordsPage->readMetadata(d->iptcData);
     d->categoriesPage->readMetadata(d->iptcData);
     d->creditsPage->readMetadata(d->iptcData);
     d->statusPage->readMetadata(d->iptcData);
     d->originPage->readMetadata(d->iptcData);
-    d->datetimePage->readMetadata(d->iptcData);
 
     d->isReadOnly = KIPIPlugins::Exiv2Iface::isReadOnly((*d->currItem).path()); 
     d->page_caption->setEnabled(!d->isReadOnly);
+    d->page_datetime->setEnabled(!d->isReadOnly);
     d->page_subjects->setEnabled(!d->isReadOnly);
     d->page_keywords->setEnabled(!d->isReadOnly);
     d->page_categories->setEnabled(!d->isReadOnly);
     d->page_credits->setEnabled(!d->isReadOnly);
     d->page_status->setEnabled(!d->isReadOnly);
     d->page_origin->setEnabled(!d->isReadOnly);
-    d->page_datetime->setEnabled(!d->isReadOnly);
     enableButton(Apply, !d->isReadOnly);
     
     setCaption(QString("%1 (%2/%3) - %4")
@@ -290,16 +306,24 @@ void IPTCEditDialog::slotApply()
 {
     if (d->modified && !d->isReadOnly) 
     {
-        d->captionPage->applyMetadata(d->iptcData);
+        KIPI::ImageInfo info = d->interface->info(*d->currItem);
+
+        if (d->captionPage->syncHOSTCommentIsChecked())
+        {
+            info.setDescription(d->captionPage->getIPTCCaption());
+        }
+        d->captionPage->applyMetadata(d->exifData, d->iptcData);
+
+        d->datetimePage->applyMetadata(d->iptcData);
         d->subjectsPage->applyMetadata(d->iptcData);
         d->keywordsPage->applyMetadata(d->iptcData);
         d->categoriesPage->applyMetadata(d->iptcData);
         d->creditsPage->applyMetadata(d->iptcData);
         d->statusPage->applyMetadata(d->iptcData);
         d->originPage->applyMetadata(d->iptcData);
-        d->datetimePage->applyMetadata(d->iptcData);
         KIPIPlugins::Exiv2Iface exiv2Iface;
         exiv2Iface.load((*d->currItem).path());
+        exiv2Iface.setExif(d->exifData);
         exiv2Iface.setIptc(d->iptcData);
         exiv2Iface.save((*d->currItem).path());
         d->modified = false;

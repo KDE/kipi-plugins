@@ -52,7 +52,7 @@ public:
     void setCheckedSyncHOSTComment(bool c);
     void setCheckedSyncIPTCCaption(bool c);
 
-    QString getExifUserComments();
+    QString getEXIFUserComments();
 
 signals:
 

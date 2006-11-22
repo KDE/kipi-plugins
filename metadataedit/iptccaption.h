@@ -40,8 +40,18 @@ public:
     IPTCCaption(QWidget* parent);
     ~IPTCCaption();
 
-    void applyMetadata(QByteArray& iptcData);
+    void applyMetadata(QByteArray& exifData, QByteArray& iptcData);
     void readMetadata(QByteArray& iptcData);
+
+    bool syncJFIFCommentIsChecked();
+    bool syncHOSTCommentIsChecked();
+    bool syncEXIFCommentIsChecked();
+
+    void setCheckedSyncJFIFComment(bool c);
+    void setCheckedSyncHOSTComment(bool c);
+    void setCheckedSyncEXIFComment(bool c);
+    
+    QString getIPTCCaption();
 
 signals:
 

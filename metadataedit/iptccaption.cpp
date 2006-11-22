@@ -34,6 +34,9 @@
 #include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <kseparator.h>
 
 // Local includes.
 
@@ -58,12 +61,18 @@ public:
         specialInstructionCheck = 0;
         writerCheck             = 0;
         headlineCheck           = 0;
+        syncJFIFCommentCheck    = 0;
+        syncHOSTCommentCheck    = 0;
+        syncEXIFCommentCheck    = 0;
     }
 
     QCheckBox *captionCheck;
     QCheckBox *specialInstructionCheck;
     QCheckBox *writerCheck;
     QCheckBox *headlineCheck;
+    QCheckBox *syncJFIFCommentCheck;
+    QCheckBox *syncHOSTCommentCheck;
+    QCheckBox *syncEXIFCommentCheck;
 
     KTextEdit *captionEdit;
     KTextEdit *specialInstructionEdit;
@@ -84,12 +93,23 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     
     // --------------------------------------------------------
 
-    d->captionCheck = new QCheckBox(i18n("Caption:"), parent);
-    d->captionEdit  = new KTextEdit(parent);
+    d->captionCheck         = new QCheckBox(i18n("Caption:"), parent);
+    d->captionEdit          = new KTextEdit(parent);
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF comment section"), parent);
+    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync comment hosted by %1")
+                                            .arg(KApplication::kApplication()->aboutData()->appName()), 
+                                            parent);
+    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF comment"), parent);
+    KSeparator *line        = new KSeparator(Horizontal, parent);
+
 /*    d->captionEdit->setValidator(asciiValidator);
     d->captionEdit->setMaxLength(2000);*/
     vlay->addWidget(d->captionCheck);
     vlay->addWidget(d->captionEdit);
+    vlay->addWidget(d->syncJFIFCommentCheck);
+    vlay->addWidget(d->syncHOSTCommentCheck);
+    vlay->addWidget(d->syncEXIFCommentCheck);
+    vlay->addWidget(line);
     QWhatsThis::add(d->captionEdit, i18n("<p>Set here the content description. This field is limited "
                                          "to 2000 ASCII characters."));
 
@@ -138,6 +158,15 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     connect(d->captionCheck, SIGNAL(toggled(bool)),
             d->captionEdit, SLOT(setEnabled(bool)));
 
+    connect(d->captionCheck, SIGNAL(toggled(bool)),
+            d->syncJFIFCommentCheck, SLOT(setEnabled(bool)));
+
+    connect(d->captionCheck, SIGNAL(toggled(bool)),
+            d->syncHOSTCommentCheck, SLOT(setEnabled(bool)));
+
+    connect(d->captionCheck, SIGNAL(toggled(bool)),
+            d->syncEXIFCommentCheck, SLOT(setEnabled(bool)));
+
     connect(d->writerCheck, SIGNAL(toggled(bool)),
             d->writerEdit, SLOT(setEnabled(bool)));
 
@@ -181,6 +210,41 @@ IPTCCaption::~IPTCCaption()
     delete d;
 }
 
+bool IPTCCaption::syncJFIFCommentIsChecked()
+{
+    return d->syncJFIFCommentCheck->isChecked();
+}
+
+bool IPTCCaption::syncHOSTCommentIsChecked()
+{
+    return d->syncHOSTCommentCheck->isChecked();
+}
+
+bool IPTCCaption::syncEXIFCommentIsChecked()
+{
+    return d->syncEXIFCommentCheck->isChecked();
+}
+
+QString IPTCCaption::getIPTCCaption()
+{
+    return d->captionEdit->text();
+}
+
+void IPTCCaption::setCheckedSyncJFIFComment(bool c)
+{
+    d->syncJFIFCommentCheck->setChecked(c);
+}
+
+void IPTCCaption::setCheckedSyncHOSTComment(bool c)
+{
+    d->syncHOSTCommentCheck->setChecked(c);
+}
+
+void IPTCCaption::setCheckedSyncEXIFComment(bool c)
+{
+    d->syncEXIFCommentCheck->setChecked(c);
+}
+
 void IPTCCaption::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
@@ -197,6 +261,9 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
         d->captionCheck->setChecked(true);
     }
     d->captionEdit->setEnabled(d->captionCheck->isChecked());
+    d->syncJFIFCommentCheck->setEnabled(d->captionCheck->isChecked());
+    d->syncHOSTCommentCheck->setEnabled(d->captionCheck->isChecked());
+    d->syncEXIFCommentCheck->setEnabled(d->captionCheck->isChecked());
 
     d->writerEdit->clear();
     d->writerCheck->setChecked(false);
@@ -231,13 +298,22 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
     blockSignals(false);
 }
 
-void IPTCCaption::applyMetadata(QByteArray& iptcData)
+void IPTCCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
     KIPIPlugins::Exiv2Iface exiv2Iface;
+    exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
 
     if (d->captionCheck->isChecked())
+    {
         exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->captionEdit->text());
+
+        if (syncEXIFCommentIsChecked())
+            exiv2Iface.setExifComment(d->captionEdit->text());
+
+        if (syncJFIFCommentIsChecked())
+            exiv2Iface.setComments(d->captionEdit->text().utf8());
+    }
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
 
@@ -256,6 +332,7 @@ void IPTCCaption::applyMetadata(QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.SpecialInstructions");
 
+    exifData = exiv2Iface.getExif();
     iptcData = exiv2Iface.getIptc();
 }
 

@@ -41,7 +41,7 @@ class IPTCEditDialog : public KDialogBase
 
 public:
 
-    IPTCEditDialog(QWidget* parent, KURL::List urls);
+    IPTCEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface *iface);
     ~IPTCEditDialog();
 
 public slots:
