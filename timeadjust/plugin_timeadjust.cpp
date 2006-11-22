@@ -46,56 +46,53 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_timeadjust,
                             Factory("kipiplugin_timeadjust"))
 
 Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent, const char*, const QStringList&)
-                 : KIPI::Plugin( Factory::instance(), parent, "TimeAdjust"), m_dialog( 0 )
+                 : KIPI::Plugin( Factory::instance(), parent, "TimeAdjust")
 {
     kdDebug( 51001 ) << "Plugin_TimeAdjust plugin loaded" << endl;
 }
 
-void Plugin_TimeAdjust::setup( QWidget* widget )
+void Plugin_TimeAdjust::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup( widget );
+    KIPI::Plugin::setup(widget);
 
     // this is our action shown in the menubar/toolbar of the mainwindow
 
     m_actionTimeAjust = new KAction (i18n("Adjust Time && Date..."),
                                      "clock",
-                                     0,     // or a shortcut like CTRL+SHIFT+Key_S,
+                                     0,
                                      this,
                                      SLOT(slotActivate()),
                                      actionCollection(),
                                      "timeadjust");
 
-    addAction( m_actionTimeAjust );
+    addAction(m_actionTimeAjust);
 
-    m_interface = dynamic_cast< KIPI::Interface* >( parent() );
+    m_interface = dynamic_cast< KIPI::Interface* >(parent());
 
-    if ( !m_interface )
+    if (!m_interface)
     {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
        return;
     }
 
     KIPI::ImageCollection selection = m_interface->currentSelection();
-    m_actionTimeAjust->setEnabled( selection.isValid() &&
-                                   !selection.images().isEmpty() );
+    m_actionTimeAjust->setEnabled(selection.isValid() &&
+                                  !selection.images().isEmpty());
 
-    connect( m_interface, SIGNAL(selectionChanged(bool)),
-             m_actionTimeAjust, SLOT(setEnabled(bool)));
+    connect(m_interface, SIGNAL(selectionChanged(bool)),
+            m_actionTimeAjust, SLOT(setEnabled(bool)));
 }
 
 void Plugin_TimeAdjust::slotActivate()
 {
-    // Get the current/selected album
     KIPI::ImageCollection images = m_interface->currentSelection();
 
-    if ( !images.isValid() || images.images().isEmpty() )
+    if (!images.isValid() || images.images().isEmpty())
         return;
 
-    if ( m_dialog == 0 )
-        m_dialog = new KIPITimeAdjustPlugin::TimeAdjustDialog( m_interface, kapp->activeWindow(), "time adjust dialog" );
-
-    m_dialog->setImages( images.images() );
-    m_dialog->show();
+    KIPITimeAdjustPlugin::TimeAdjustDialog dlg(m_interface, kapp->activeWindow());
+    dlg.setImages(images.images());
+    dlg.exec();
 }
 
 KIPI::Category Plugin_TimeAdjust::category( KAction* action ) const

@@ -42,6 +42,7 @@ class QPushButton;
 class QVButtonGroup;
 class QVGroupBox;
 class QButtonGroup;
+class QCheckBox;
 
 class KDateTimeWidget;
 
@@ -54,28 +55,38 @@ class TimeAdjustDialog :public KDialogBase
 
 public:
 
-    TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent, const char* name = 0 );
+    TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent);
     ~TimeAdjustDialog();
-    void setImages( const KURL::List& images );
+    
+    void setImages(const KURL::List& images);
 
 protected slots:
 
-    void updateExample();
-    void adjustmentTypeChanged();
+    void slotUpdateExample();
+    void slotAdjustmentTypeChanged();
     void slotOk();
+    void slotCancel();
     void slotHelp();
 
 protected:
 
-    void addConfigPage();
-    QDateTime updateTime( const KURL& url, const QDateTime& time ) const;
+    void closeEvent(QCloseEvent *);
 
 private:
+
+    void readSettings();
+    void saveSettings();
+    QDateTime updateTime(const KURL& url, const QDateTime& time) const;
     
+private:
+
     QRadioButton             *m_add;
     QRadioButton             *m_subtract;
     QRadioButton             *m_exif;
     QRadioButton             *m_custom;
+
+    QCheckBox                *m_syncEXIFDateCheck;
+    QCheckBox                *m_syncIPTCDateCheck;
 
     QVGroupBox               *m_exampleBox;
     QVButtonGroup            *m_adjustValGrp;

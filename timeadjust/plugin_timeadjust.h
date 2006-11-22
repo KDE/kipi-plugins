@@ -29,26 +29,26 @@
 
 class KAction;
 
-class KIPITimeAdjustPlugin::TimeAdjustDialog;
-
 class Plugin_TimeAdjust : public KIPI::Plugin
 {
     Q_OBJECT
 
 public:
-    Plugin_TimeAdjust(QObject *parent, const char* name,
-                      const QStringList &args);
+
+    Plugin_TimeAdjust(QObject *parent, const char* name, const QStringList &args);
 
     virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* );
 
 protected slots:
+
     void slotActivate();
 
 private:
-    KIPI::Interface                        *m_interface;
-    KIPITimeAdjustPlugin::TimeAdjustDialog *m_dialog;
-    KAction                                *m_actionTimeAjust;
+
+    KAction         *m_actionTimeAjust;
+
+    KIPI::Interface *m_interface;
 };
 
 #endif // PLUGIN_TIMEADJUST_H
