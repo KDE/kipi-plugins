@@ -176,7 +176,7 @@ void TimeAdjustDialog::addConfigPage()
     m_adjustTypeGrp->setRadioButtonExclusive( true );
     m_add      = new QRadioButton( i18n("Add"), m_adjustTypeGrp );
     m_subtract = new QRadioButton( i18n("Subtract" ), m_adjustTypeGrp );
-    m_exif     = new QRadioButton( i18n("Set file date to camera provided (EXIF) date"),
+    m_exif     = new QRadioButton( i18n("Set file date to EXIF/IPTC creation date"),
                                    m_adjustTypeGrp );
     vlay->addWidget( m_adjustTypeGrp );
     m_add->setChecked( true );
