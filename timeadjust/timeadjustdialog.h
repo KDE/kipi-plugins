@@ -68,34 +68,34 @@ protected:
     QDateTime updateTime( const KURL& url, const QDateTime& time ) const;
 
 private:
+    
+    QRadioButton             *m_add;
+    QRadioButton             *m_subtract;
+    QRadioButton             *m_exif;
 
-    KIPI::Interface *m_interface;
+    QVGroupBox               *m_exampleBox;
+    QVButtonGroup            *m_adjustValGrp;
+    QVButtonGroup            *m_adjustTypeGrp;
     
-    KURL::List       m_images;
+    QLabel                   *m_infoLabel;
+    QLabel                   *m_exampleAdj;
     
-    QRadioButton    *m_add;
-    QRadioButton    *m_subtract;
-    QRadioButton    *m_exif;
+    QPushButton              *m_helpButton;
+    
+    QSpinBox                 *m_secs;
+    QSpinBox                 *m_minutes;
+    QSpinBox                 *m_hours;
+    QSpinBox                 *m_days;
+    QSpinBox                 *m_months;
+    QSpinBox                 *m_years;
+    
+    QDateTime                 m_exampleDate;
 
-    QVGroupBox      *m_exampleBox;
-    QVButtonGroup   *m_adjustValGrp;
-    QVButtonGroup   *m_adjustTypeGrp;
-    
-    QLabel          *m_infoLabel;
-    QLabel          *m_exampleAdj;
-    
-    QPushButton     *m_helpButton;
-    
-    QSpinBox        *m_secs;
-    QSpinBox        *m_minutes;
-    QSpinBox        *m_hours;
-    QSpinBox        *m_days;
-    QSpinBox        *m_months;
-    QSpinBox        *m_years;
-    
-    QDateTime        m_exampleDate;
+    KURL::List                m_images;
 
-    KIPIPlugins::KPAboutData    *m_about;
+    KIPI::Interface          *m_interface;
+
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // NameSpace KIPITimeAdjustPlugin

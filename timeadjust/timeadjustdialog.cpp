@@ -77,7 +77,7 @@ TimeAdjustDialog::TimeAdjustDialog( KIPI::Interface* interface, QWidget* parent,
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Developper"),
                        "caulier dot gilles at kdemail dot net");
 
-    m_helpButton = actionButton( Help );
+    m_helpButton        = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Time Adjust Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
@@ -275,8 +275,8 @@ void TimeAdjustDialog::slotOK()
     for( KURL::List::ConstIterator it = m_images.begin(); it != m_images.end(); ++it )
     {
         KIPI::ImageInfo info = m_interface->info( *it );
-        QDateTime time = info.time();
-        time = updateTime( info.path(), info.time() );
+        QDateTime time       = info.time();
+        time                 = updateTime( info.path(), info.time() );
         info.setTime( time );
     }
 }
