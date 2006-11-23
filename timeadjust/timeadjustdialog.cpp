@@ -254,6 +254,8 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     d->exampleAdj = new QLabel(d->exampleBox);
     d->exampleAdj->setAlignment(Qt::AlignCenter);
 
+    vlay->addStretch();
+
     // -- Slots/Signals ------------------------------------------------------
 
     connect(d->adjustTypeGrp, SIGNAL( clicked(int) ),
