@@ -193,9 +193,9 @@ void Plugin_GPSSync::slotGPSEdit()
     if (dlg.exec() == KDialogBase::Accepted)
     {
         gpsData = dlg.getGPSInfo();
-        KURL::List imageURLs = images.images();
-        KURL::List updatedURLs;
-        KURL::List errorURLs;
+        KURL::List  imageURLs = images.images();
+        KURL::List  updatedURLs;
+        QStringList errorFiles;
     
         for( KURL::List::iterator it = imageURLs.begin() ; 
             it != imageURLs.end(); ++it)
@@ -222,7 +222,7 @@ void Plugin_GPSSync::slotGPSEdit()
             }
 
             if (!ret)
-                errorURLs.append(url);
+                errorFiles.append(url.fileName());
             else 
                 updatedURLs.append(url);
         }
@@ -232,12 +232,12 @@ void Plugin_GPSSync::slotGPSEdit()
         
         m_interface->refreshImages(updatedURLs);
 
-        if (!errorURLs.isEmpty())
+        if (!errorFiles.isEmpty())
         {
             KMessageBox::errorList(
                         kapp->activeWindow(),
                         i18n("Unable to save geographical coordinates into:"),
-                        errorURLs.toStringList(),
+                        errorFiles,
                         i18n("Edit Geographical Coordinates"));  
         }
     }
@@ -257,9 +257,9 @@ void Plugin_GPSSync::slotGPSRemove()
                      i18n("Remove Geographical Coordinates")) != KMessageBox::Yes)
         return;
 
-    KURL::List imageURLs = images.images();
-    KURL::List updatedURLs;
-    KURL::List errorURLs;
+    KURL::List  imageURLs = images.images();
+    KURL::List  updatedURLs;
+    QStringList errorFiles;
 
     for( KURL::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
@@ -282,7 +282,7 @@ void Plugin_GPSSync::slotGPSRemove()
         }
         
         if (!ret)
-            errorURLs.append(url);
+            errorFiles.append(url.fileName());
         else 
             updatedURLs.append(url);
     }
@@ -292,12 +292,12 @@ void Plugin_GPSSync::slotGPSRemove()
     
     m_interface->refreshImages(updatedURLs);
 
-    if (!errorURLs.isEmpty())
+    if (!errorFiles.isEmpty())
     {
         KMessageBox::errorList(
                     kapp->activeWindow(),
                     i18n("Unable to remove geographical coordinates from:"),
-                    errorURLs.toStringList(),
+                    errorFiles,
                     i18n("Remove Geographical Coordinates"));  
     }
 }
