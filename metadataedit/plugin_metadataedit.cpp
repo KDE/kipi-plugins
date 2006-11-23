@@ -176,9 +176,9 @@ void Plugin_MetadataEdit::slotRemoveExif()
                      i18n("Remove EXIF Metadata")) != KMessageBox::Yes)
         return;
 
-    KURL::List imageURLs = images.images();
-    KURL::List updatedURLs;
-    KURL::List errorURLs;
+    KURL::List  imageURLs = images.images();
+    KURL::List  updatedURLs;
+    QStringList errorFiles;
 
     for( KURL::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
@@ -196,7 +196,7 @@ void Plugin_MetadataEdit::slotRemoveExif()
         }
         
         if (!ret)
-            errorURLs.append(url);
+            errorFiles.append(url.fileName());
         else 
             updatedURLs.append(url);
     }
@@ -206,12 +206,12 @@ void Plugin_MetadataEdit::slotRemoveExif()
     
     m_interface->refreshImages(updatedURLs);
 
-    if (!errorURLs.isEmpty())
+    if (!errorFiles.isEmpty())
     {
         KMessageBox::errorList(
                     kapp->activeWindow(),
                     i18n("Unable to remove EXIF metadata from:"),
-                    errorURLs.toStringList(),
+                    errorFiles,
                     i18n("Remove EXIF Metadata"));  
     }
 }
@@ -256,9 +256,9 @@ void Plugin_MetadataEdit::slotImportExif()
         return;
 
 
-    KURL::List imageURLs = images.images();
-    KURL::List updatedURLs;
-    KURL::List errorURLs;
+    KURL::List  imageURLs = images.images();
+    KURL::List  updatedURLs;
+    QStringList errorFiles;
 
     for( KURL::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
@@ -276,7 +276,7 @@ void Plugin_MetadataEdit::slotImportExif()
         }
         
         if (!ret)
-            errorURLs.append(url);
+            errorFiles.append(url.fileName());
         else 
             updatedURLs.append(url);
     }
@@ -286,12 +286,12 @@ void Plugin_MetadataEdit::slotImportExif()
     
     m_interface->refreshImages(updatedURLs);
 
-    if (!errorURLs.isEmpty())
+    if (!errorFiles.isEmpty())
     {
         KMessageBox::errorList(
                     kapp->activeWindow(),
                     i18n("Unable to set EXIF metadata from:"),
-                    errorURLs.toStringList(),
+                    errorFiles,
                     i18n("Import EXIF Metadata"));  
     }
 }
@@ -322,9 +322,9 @@ void Plugin_MetadataEdit::slotRemoveIptc()
                      i18n("Remove IPTC Metadata")) != KMessageBox::Yes)
         return;
 
-    KURL::List imageURLs = images.images();
-    KURL::List updatedURLs;
-    KURL::List errorURLs;
+    KURL::List  imageURLs = images.images();
+    KURL::List  updatedURLs;
+    QStringList errorFiles;
 
     for( KURL::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
@@ -342,7 +342,7 @@ void Plugin_MetadataEdit::slotRemoveIptc()
         }
         
         if (!ret)
-            errorURLs.append(url);
+            errorFiles.append(url.fileName());
         else 
             updatedURLs.append(url);
     }
@@ -352,12 +352,12 @@ void Plugin_MetadataEdit::slotRemoveIptc()
     
     m_interface->refreshImages(updatedURLs);
 
-    if (!errorURLs.isEmpty())
+    if (!errorFiles.isEmpty())
     {
         KMessageBox::errorList(
                     kapp->activeWindow(),
                     i18n("Unable to remove IPTC metadata from:"),
-                    errorURLs.toStringList(),
+                    errorFiles,
                     i18n("Remove IPTC Metadata"));  
     }
 }
@@ -402,9 +402,9 @@ void Plugin_MetadataEdit::slotImportIptc()
         return;
 
 
-    KURL::List imageURLs = images.images();
-    KURL::List updatedURLs;
-    KURL::List errorURLs;
+    KURL::List  imageURLs = images.images();
+    KURL::List  updatedURLs;
+    QStringList errorFiles;
 
     for( KURL::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
@@ -422,7 +422,7 @@ void Plugin_MetadataEdit::slotImportIptc()
         }
         
         if (!ret)
-            errorURLs.append(url);
+            errorFiles.append(url.fileName());
         else 
             updatedURLs.append(url);
     }
@@ -432,12 +432,12 @@ void Plugin_MetadataEdit::slotImportIptc()
     
     m_interface->refreshImages(updatedURLs);
 
-    if (!errorURLs.isEmpty())
+    if (!errorFiles.isEmpty())
     {
         KMessageBox::errorList(
                     kapp->activeWindow(),
                     i18n("Unable to set IPTC metadata from:"),
-                    errorURLs.toStringList(),
+                    errorFiles,
                     i18n("Import IPTC Metadata"));  
     }
 }
@@ -454,9 +454,9 @@ void Plugin_MetadataEdit::slotEditComments()
     if (dlg.exec() != KMessageBox::Ok)
         return;
 
-    KURL::List imageURLs = images.images();
-    KURL::List updatedURLs;
-    KURL::List errorURLs;
+    KURL::List  imageURLs = images.images();
+    KURL::List  updatedURLs;
+    QStringList errorFiles;
 
     for( KURL::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
@@ -486,7 +486,7 @@ void Plugin_MetadataEdit::slotEditComments()
         }
         
         if (!ret)
-            errorURLs.append(url);
+            errorFiles.append(url.fileName());
         else 
             updatedURLs.append(url);
     }
@@ -496,12 +496,12 @@ void Plugin_MetadataEdit::slotEditComments()
     
     m_interface->refreshImages(updatedURLs);
 
-    if (!errorURLs.isEmpty())
+    if (!errorFiles.isEmpty())
     {
         KMessageBox::informationList(
                      kapp->activeWindow(),
                      i18n("Unable to set comments like picture metadata from:"),
-                     errorURLs.toStringList(),
+                     errorFiles,
                      i18n("Edit Pictures Comments"));  
     }
 }
@@ -518,9 +518,9 @@ void Plugin_MetadataEdit::slotRemoveComments()
     if (dlg.exec() != KMessageBox::Ok)
         return;
 
-    KURL::List imageURLs = images.images();
-    KURL::List updatedURLs;
-    KURL::List errorURLs;
+    KURL::List  imageURLs = images.images();
+    KURL::List  updatedURLs;
+    QStringList errorFiles;
 
     for( KURL::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
@@ -553,7 +553,7 @@ void Plugin_MetadataEdit::slotRemoveComments()
         }
         
         if (!ret)
-            errorURLs.append(url);
+            errorFiles.append(url.fileName());
         else 
             updatedURLs.append(url);
     }
@@ -563,12 +563,12 @@ void Plugin_MetadataEdit::slotRemoveComments()
     
     m_interface->refreshImages(updatedURLs);
 
-    if (!errorURLs.isEmpty())
+    if (!errorFiles.isEmpty())
     {
         KMessageBox::informationList(
                      kapp->activeWindow(),
                      i18n("Unable to remove Comments like picture metadata from:"),
-                     errorURLs.toStringList(),
+                     errorFiles,
                      i18n("Remove Pictures Comments"));  
     }
 }
