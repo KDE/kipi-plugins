@@ -203,7 +203,6 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     d->syncEXIFDateCheck = new QCheckBox(i18n("Sync EXIF creation date"), d->adjustTypeGrp);
     d->syncIPTCDateCheck = new QCheckBox(i18n("Sync IPTC creation date"), d->adjustTypeGrp);
 
-    d->add->setChecked(true);
     vlay->addWidget(adjGB);
 
     // -- Adjustments ------------------------------------------------------------
@@ -312,6 +311,13 @@ void TimeAdjustDialog::readSettings()
 {
     KConfig config("kipirc");
     config.setGroup("Time Adjust Settings");
+
+    int adjType = config.readNumEntry("Adjustment Type", 0);   // add by default.
+    if (adjType == 0) d->add->setChecked(true);
+    if (adjType == 1) d->subtract->setChecked(true);
+    if (adjType == 2) d->exif->setChecked(true);
+    if (adjType == 3) d->custom->setChecked(true);
+
     d->syncEXIFDateCheck->setChecked(config.readBoolEntry("Sync EXIF Date", true));
     d->syncIPTCDateCheck->setChecked(config.readBoolEntry("Sync IPTC Date", true));
     resize(configDialogSize(config, QString("Time Adjust Dialog")));
@@ -321,6 +327,13 @@ void TimeAdjustDialog::saveSettings()
 {
     KConfig config("kipirc");
     config.setGroup("Time Adjust Settings");
+
+    int adjType = 0;              // add
+    if (d->subtract->isChecked()) adjType = 1;
+    if (d->exif->isChecked())     adjType = 2;
+    if (d->custom->isChecked())   adjType = 3;
+    config.writeEntry("Adjustment Type", adjType);
+
     config.writeEntry("Sync EXIF Date", d->syncEXIFDateCheck->isChecked());
     config.writeEntry("Sync IPTC Date", d->syncIPTCDateCheck->isChecked());
     saveDialogSize(config, QString("Time Adjust Dialog"));
