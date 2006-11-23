@@ -51,10 +51,12 @@
 
 // LibKipi includes.
 
+#include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "exiv2iface.h"
 #include "timeadjustdialog.h"
@@ -63,33 +65,97 @@
 namespace KIPITimeAdjustPlugin
 {
 
+class TimeAdjustDialogPrivate
+{
+
+public:
+
+    TimeAdjustDialogPrivate()
+    {
+        add               = 0;
+        subtract          = 0;
+        exif              = 0;
+        custom            = 0;
+        syncEXIFDateCheck = 0;
+        syncIPTCDateCheck = 0;
+        exampleBox        = 0;
+        adjustValGrp      = 0;
+        adjustTypeGrp     = 0;
+        infoLabel         = 0;
+        exampleAdj        = 0;
+        secs              = 0;
+        minutes           = 0;
+        hours             = 0;
+        days              = 0;
+        months            = 0;
+        years             = 0;
+        dateCreatedSel    = 0;
+        interface         = 0;
+        about             = 0;
+    }
+
+    QRadioButton             *add;
+    QRadioButton             *subtract;
+    QRadioButton             *exif;
+    QRadioButton             *custom;
+
+    QCheckBox                *syncEXIFDateCheck;
+    QCheckBox                *syncIPTCDateCheck;
+
+    QVGroupBox               *exampleBox;
+    QVButtonGroup            *adjustValGrp;
+    QButtonGroup             *adjustTypeGrp;
+    
+    QLabel                   *infoLabel;
+    QLabel                   *exampleAdj;
+    
+    QSpinBox                 *secs;
+    QSpinBox                 *minutes;
+    QSpinBox                 *hours;
+    QSpinBox                 *days;
+    QSpinBox                 *months;
+    QSpinBox                 *years;
+    
+    QDateTime                 exampleDate;
+
+    KDateTimeWidget          *dateCreatedSel;
+
+    KURL::List                images;
+
+    KIPI::Interface          *interface;
+
+    KIPIPlugins::KPAboutData *about;
+};
+
 TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
                 : KDialogBase(Plain, i18n("Adjust Time & Date"), Help|Ok|Cancel, 
-                              Ok, parent, 0, true, true),
-                  m_interface(interface)
+                              Ok, parent, 0, true, true)
 {
+    d = new TimeAdjustDialogPrivate;
+    d->interface = interface;
+
     QVBoxLayout *vlay = new QVBoxLayout(plainPage(), 6);
 
     // -- About data and help button ----------------------------------------
 
-    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Time Adjust"),
+    d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("Time Adjust"),
                                            NULL,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin for adjusting time stamp of picture files"),
                                            "(c) 2003-2005, Jesper K. Pedersen\n"
                                            "(c) 2006, Gilles Caulier");
 
-    m_about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Author and maintainer"),
+    d->about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Author and maintainer"),
                        "blackie@kde.org");
 
-    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Developper"),
+    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Developper"),
                        "caulier dot gilles at kdemail dot net");
 
-    m_helpButton        = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
+    QPushButton *helpButton = actionButton(Help);
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Time Adjust Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    m_helpButton->setPopup( helpMenu->menu() );
+    helpButton->setPopup(helpMenu->menu());
 
     // -- Banner ------------------------------------------------------------
 
@@ -117,99 +183,99 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     // -- Adjustment type ------------------------------------------------------------
 
     QVGroupBox *adjGB = new QVGroupBox(i18n("Adjustment Type"), plainPage());
-    m_adjustTypeGrp   = new QButtonGroup(1, Qt::Horizontal, adjGB);
-    m_add             = new QRadioButton(i18n("Add"), m_adjustTypeGrp);
-    m_subtract        = new QRadioButton(i18n("Subtract"), m_adjustTypeGrp);
-    m_exif            = new QRadioButton(i18n("Set file date to EXIF/IPTC creation date"), m_adjustTypeGrp);
-    m_custom          = new QRadioButton(i18n("Custom date"), m_adjustTypeGrp);
+    d->adjustTypeGrp   = new QButtonGroup(1, Qt::Horizontal, adjGB);
+    d->add             = new QRadioButton(i18n("Add"), d->adjustTypeGrp);
+    d->subtract        = new QRadioButton(i18n("Subtract"), d->adjustTypeGrp);
+    d->exif            = new QRadioButton(i18n("Set file date to EXIF/IPTC creation date"), d->adjustTypeGrp);
+    d->custom          = new QRadioButton(i18n("Custom date"), d->adjustTypeGrp);
 
-    m_adjustTypeGrp->setFrameStyle(QFrame::NoFrame);
-    m_adjustTypeGrp->setInsideMargin(0); 
-    m_adjustTypeGrp->setRadioButtonExclusive(true);
+    d->adjustTypeGrp->setFrameStyle(QFrame::NoFrame);
+    d->adjustTypeGrp->setInsideMargin(0); 
+    d->adjustTypeGrp->setRadioButtonExclusive(true);
 
-    QHBox *hbox      = new QHBox(m_adjustTypeGrp);
-    QLabel *space    = new QLabel(hbox);
-    m_dateCreatedSel = new KDateTimeWidget(hbox);
+    QHBox *hbox       = new QHBox(d->adjustTypeGrp);
+    QLabel *space     = new QLabel(hbox);
+    d->dateCreatedSel = new KDateTimeWidget(hbox);
     new QLabel(hbox);
     space->setFixedWidth(15);
-    m_dateCreatedSel->setDateTime(QDateTime::currentDateTime());
+    d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
     
-    m_syncEXIFDateCheck = new QCheckBox(i18n("Sync EXIF creation date"), m_adjustTypeGrp);
-    m_syncIPTCDateCheck = new QCheckBox(i18n("Sync IPTC creation date"), m_adjustTypeGrp);
+    d->syncEXIFDateCheck = new QCheckBox(i18n("Sync EXIF creation date"), d->adjustTypeGrp);
+    d->syncIPTCDateCheck = new QCheckBox(i18n("Sync IPTC creation date"), d->adjustTypeGrp);
 
-    m_add->setChecked(true);
+    d->add->setChecked(true);
     vlay->addWidget(adjGB);
 
     // -- Adjustments ------------------------------------------------------------
 
-    m_adjustValGrp = new QVButtonGroup(i18n("Adjustments"), plainPage());
-    vlay->addWidget(m_adjustValGrp);
+    d->adjustValGrp = new QVButtonGroup(i18n("Adjustments"), plainPage());
+    vlay->addWidget(d->adjustValGrp);
 
-    QWidget* grid        = new QWidget(m_adjustValGrp);
+    QWidget* grid        = new QWidget(d->adjustValGrp);
     QGridLayout* gridLay = new QGridLayout(grid, 1, 7, spacingHint());
     gridLay->setColStretch( 2, 1 );
     gridLay->setColStretch( 5, 1 );
 
     QLabel* label = new QLabel( i18n("Hours:"), grid );
-    m_hours       = new QSpinBox( 0, 1000, 1, grid );
+    d->hours       = new QSpinBox( 0, 1000, 1, grid );
     gridLay->addWidget( label, 0, 0 );
-    gridLay->addWidget( m_hours, 0, 1 );
+    gridLay->addWidget( d->hours, 0, 1 );
 
-    label     = new QLabel( i18n("Minutes:"), grid );
-    m_minutes = new QSpinBox( 0, 1000, 1, grid );
+    label      = new QLabel( i18n("Minutes:"), grid );
+    d->minutes = new QSpinBox( 0, 1000, 1, grid );
     gridLay->addWidget( label, 0, 3 );
-    gridLay->addWidget( m_minutes, 0, 4 );
+    gridLay->addWidget( d->minutes, 0, 4 );
 
-    label  = new QLabel( i18n("Seconds:"), grid );
-    m_secs = new QSpinBox( 0, 1000, 1, grid );
+    label   = new QLabel( i18n("Seconds:"), grid );
+    d->secs = new QSpinBox( 0, 1000, 1, grid );
     gridLay->addWidget( label, 0, 6 );
-    gridLay->addWidget( m_secs, 0, 7 );
+    gridLay->addWidget( d->secs, 0, 7 );
 
-    label  = new QLabel( i18n("Days:"), grid );
-    m_days = new QSpinBox( 0, 1000, 1, grid );
+    label   = new QLabel( i18n("Days:"), grid );
+    d->days = new QSpinBox( 0, 1000, 1, grid );
     gridLay->addWidget( label, 1, 0 );
-    gridLay->addWidget( m_days, 1, 1 );
+    gridLay->addWidget( d->days, 1, 1 );
 
-    label    = new QLabel( i18n("Months:"), grid );
-    m_months = new QSpinBox( 0, 1000, 1, grid );
+    label     = new QLabel( i18n("Months:"), grid );
+    d->months = new QSpinBox( 0, 1000, 1, grid );
     gridLay->addWidget( label, 1, 3 );
-    gridLay->addWidget( m_months, 1, 4 );
+    gridLay->addWidget( d->months, 1, 4 );
 
-    label   = new QLabel( i18n("Years:"), grid );
-    m_years = new QSpinBox( 0, 1000, 1, grid );
+    label    = new QLabel( i18n("Years:"), grid );
+    d->years = new QSpinBox( 0, 1000, 1, grid );
     gridLay->addWidget( label, 1, 6 );
-    gridLay->addWidget( m_years, 1, 7 );
+    gridLay->addWidget( d->years, 1, 7 );
 
     // -- Example ------------------------------------------------------------
 
-    m_exampleBox = new QVGroupBox(i18n("Example"), plainPage());
-    vlay->addWidget(m_exampleBox);
+    d->exampleBox = new QVGroupBox(i18n("Example"), plainPage());
+    vlay->addWidget(d->exampleBox);
 
-    m_infoLabel  = new QLabel(m_exampleBox);
-    m_exampleAdj = new QLabel(m_exampleBox);
-    m_exampleAdj->setAlignment(Qt::AlignCenter);
+    d->infoLabel  = new QLabel(d->exampleBox);
+    d->exampleAdj = new QLabel(d->exampleBox);
+    d->exampleAdj->setAlignment(Qt::AlignCenter);
 
     // -- Slots/Signals ------------------------------------------------------
 
-    connect(m_adjustTypeGrp, SIGNAL( clicked(int) ),
+    connect(d->adjustTypeGrp, SIGNAL( clicked(int) ),
             this, SLOT( slotAdjustmentTypeChanged() ));
 
-    connect(m_secs, SIGNAL( valueChanged( int ) ), 
+    connect(d->secs, SIGNAL( valueChanged( int ) ), 
             this, SLOT( slotUpdateExample() ));
 
-    connect(m_minutes, SIGNAL( valueChanged( int ) ),
+    connect(d->minutes, SIGNAL( valueChanged( int ) ),
             this, SLOT( slotUpdateExample() ));
 
-    connect(m_hours, SIGNAL( valueChanged( int ) ),
+    connect(d->hours, SIGNAL( valueChanged( int ) ),
             this, SLOT( slotUpdateExample() ));
 
-    connect(m_days, SIGNAL( valueChanged( int ) ),
+    connect(d->days, SIGNAL( valueChanged( int ) ),
             this, SLOT( slotUpdateExample() ));
 
-    connect(m_months, SIGNAL( valueChanged( int ) ),
+    connect(d->months, SIGNAL( valueChanged( int ) ),
             this, SLOT( slotUpdateExample() ));
 
-    connect(m_years, SIGNAL( valueChanged( int ) ),
+    connect(d->years, SIGNAL( valueChanged( int ) ),
             this, SLOT( slotUpdateExample() ));
 
     // -----------------------------------------------------------------------
@@ -220,7 +286,8 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
 
 TimeAdjustDialog::~TimeAdjustDialog()
 {
-    delete m_about;
+    delete d->about;
+    delete d;
 }
 
 void TimeAdjustDialog::slotHelp()
@@ -245,8 +312,8 @@ void TimeAdjustDialog::readSettings()
 {
     KConfig config("kipirc");
     config.setGroup("Time Adjust Settings");
-    m_syncEXIFDateCheck->setChecked(config.readBoolEntry("Sync EXIF Date", true));
-    m_syncIPTCDateCheck->setChecked(config.readBoolEntry("Sync IPTC Date", true));
+    d->syncEXIFDateCheck->setChecked(config.readBoolEntry("Sync EXIF Date", true));
+    d->syncIPTCDateCheck->setChecked(config.readBoolEntry("Sync IPTC Date", true));
     resize(configDialogSize(config, QString("Time Adjust Dialog")));
 }
 
@@ -254,26 +321,26 @@ void TimeAdjustDialog::saveSettings()
 {
     KConfig config("kipirc");
     config.setGroup("Time Adjust Settings");
-    config.writeEntry("Sync EXIF Date", m_syncEXIFDateCheck->isChecked());
-    config.writeEntry("Sync IPTC Date", m_syncIPTCDateCheck->isChecked());
+    config.writeEntry("Sync EXIF Date", d->syncEXIFDateCheck->isChecked());
+    config.writeEntry("Sync IPTC Date", d->syncIPTCDateCheck->isChecked());
     saveDialogSize(config, QString("Time Adjust Dialog"));
     config.sync();
 }
 
 void TimeAdjustDialog::setImages(const KURL::List& images)
 {
-    m_images.clear();
-    int exactCount=0;
-    int inexactCount=0;
+    d->images.clear();
+    int exactCount   = 0;
+    int inexactCount = 0;
 
     for( KURL::List::ConstIterator it = images.begin(); it != images.end(); ++it ) 
     {
-        KIPI::ImageInfo info = m_interface->info( *it );
+        KIPI::ImageInfo info = d->interface->info( *it );
         if (info.isTimeExact()) 
         {
             exactCount++;
-            m_exampleDate = info.time();
-            m_images.append(*it);
+            d->exampleDate = info.time();
+            d->images.append(*it);
         }
         else
             inexactCount++;
@@ -288,13 +355,13 @@ void TimeAdjustDialog::setImages(const KURL::List& images)
                                 "%n images will be skipped due to inexact dates.",
                                 inexactCount );
 
-        m_infoLabel->setText(tmpLabel);
+        d->infoLabel->setText(tmpLabel);
     }
     else 
     {
-        m_infoLabel->setText(i18n("1 image will be changed",
+        d->infoLabel->setText(i18n("1 image will be changed",
                                   "%n images will be changed",
-                                  m_images.count()));
+                                  d->images.count()));
     }
     // PENDING(blackie) handle all images being inexact.
 
@@ -303,34 +370,34 @@ void TimeAdjustDialog::setImages(const KURL::List& images)
 
 void TimeAdjustDialog::slotUpdateExample()
 {
-    QString oldDate = m_exampleDate.toString();
-    QDateTime date  = updateTime(KURL(), m_exampleDate);
+    QString oldDate = d->exampleDate.toString();
+    QDateTime date  = updateTime(KURL(), d->exampleDate);
     QString newDate = date.toString();
-    m_exampleAdj->setText(i18n("<b>%1</b><br>would, for example, "
+    d->exampleAdj->setText(i18n("<b>%1</b><br>would, for example, "
                                "change into<br><b>%2</b>")
                           .arg(oldDate).arg(newDate));
 }
 
 void TimeAdjustDialog::slotAdjustmentTypeChanged()
 {
-    m_exampleBox->setEnabled(false);
-    m_adjustValGrp->setEnabled(false);
-    m_dateCreatedSel->setEnabled(false);
-    m_syncEXIFDateCheck->setEnabled(false);
-    m_syncIPTCDateCheck->setEnabled(false);
+    d->exampleBox->setEnabled(false);
+    d->adjustValGrp->setEnabled(false);
+    d->dateCreatedSel->setEnabled(false);
+    d->syncEXIFDateCheck->setEnabled(false);
+    d->syncIPTCDateCheck->setEnabled(false);
 
-    if (m_add->isChecked() || m_subtract->isChecked())
+    if (d->add->isChecked() || d->subtract->isChecked())
     {
-        m_exampleBox->setEnabled(true);
-        m_adjustValGrp->setEnabled(true);
-        m_syncEXIFDateCheck->setEnabled(true);
-        m_syncIPTCDateCheck->setEnabled(true);
+        d->exampleBox->setEnabled(true);
+        d->adjustValGrp->setEnabled(true);
+        d->syncEXIFDateCheck->setEnabled(true);
+        d->syncIPTCDateCheck->setEnabled(true);
     }
-    else if (m_custom->isChecked())
+    else if (d->custom->isChecked())
     {
-        m_dateCreatedSel->setEnabled(true);
-        m_syncEXIFDateCheck->setEnabled(true);
-        m_syncIPTCDateCheck->setEnabled(true);
+        d->dateCreatedSel->setEnabled(true);
+        d->syncEXIFDateCheck->setEnabled(true);
+        d->syncIPTCDateCheck->setEnabled(true);
     }
 }
 
@@ -339,19 +406,19 @@ void TimeAdjustDialog::slotOk()
     KURL::List  updatedURLs;
     QStringList errorFiles;
 
-    for( KURL::List::ConstIterator it = m_images.begin(); it != m_images.end(); ++it )
+    for( KURL::List::ConstIterator it = d->images.begin(); it != d->images.end(); ++it )
     {
         KURL url = *it;
         bool ret = false;
 
-        KIPI::ImageInfo info = m_interface->info(url);
+        KIPI::ImageInfo info = d->interface->info(url);
         QDateTime dateTime   = info.time();
         dateTime             = updateTime(info.path(), info.time());
         info.setTime(dateTime);
 
-        if (!m_exif->isChecked())
+        if (!d->exif->isChecked())
         {
-            if (m_syncEXIFDateCheck->isChecked() || m_syncIPTCDateCheck->isChecked())
+            if (d->syncEXIFDateCheck->isChecked() || d->syncIPTCDateCheck->isChecked())
             {
                 if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
                 {
@@ -361,13 +428,13 @@ void TimeAdjustDialog::slotOk()
                     ret &= exiv2Iface.load(url.path());
                     if (ret)
                     {
-                        if (m_syncEXIFDateCheck->isChecked())
+                        if (d->syncEXIFDateCheck->isChecked())
                         {
                             ret &= exiv2Iface.setExifTagString("Exif.Image.DateTime",
                                 dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
                         }
             
-                        if (m_syncIPTCDateCheck->isChecked())
+                        if (d->syncIPTCDateCheck->isChecked())
                         {
                             ret &= exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
                                 dateTime.date().toString(Qt::ISODate));
@@ -389,7 +456,7 @@ void TimeAdjustDialog::slotOk()
 
     // We use kipi interface refreshImages() method to tell to host than 
     // metadata from pictures have changed and need to be re-read.
-    m_interface->refreshImages(m_images);
+    d->interface->refreshImages(d->images);
 
     if (!errorFiles.isEmpty())
     {
@@ -406,11 +473,11 @@ void TimeAdjustDialog::slotOk()
 
 QDateTime TimeAdjustDialog::updateTime(const KURL& url, const QDateTime& time) const
 {
-    if (m_custom->isChecked())
+    if (d->custom->isChecked())
     {
-        return m_dateCreatedSel->dateTime();
+        return d->dateCreatedSel->dateTime();
     }
-    else if (m_exif->isChecked())
+    else if (d->exif->isChecked())
     {
         KIPIPlugins::Exiv2Iface exiv2Iface;
         if ( !exiv2Iface.load(url.path()) )
@@ -425,15 +492,15 @@ QDateTime TimeAdjustDialog::updateTime(const KURL& url, const QDateTime& time) c
     else
     {
         int sign = -1;
-        if (m_add->isChecked())
+        if (d->add->isChecked())
             sign = 1;
 
-        QDateTime newTime = time.addSecs( sign * ( m_secs->value()
-                                                   + 60*m_minutes->value()
-                                                   + 60*60*m_hours->value()
-                                                   + 24*60*60*m_days->value() ) );
-        newTime = newTime.addMonths( sign * m_months->value() );
-        newTime = newTime.addYears( sign * m_years->value() );
+        QDateTime newTime = time.addSecs( sign * ( d->secs->value()
+                                                   + 60*d->minutes->value()
+                                                   + 60*60*d->hours->value()
+                                                   + 24*60*60*d->days->value() ) );
+        newTime = newTime.addMonths( sign * d->months->value() );
+        newTime = newTime.addYears( sign * d->years->value() );
         return newTime;
     }
 }

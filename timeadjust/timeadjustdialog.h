@@ -23,31 +23,24 @@
 #ifndef TIMEADJUSTDIALOG_H
 #define TIMEADJUSTDIALOG_H
 
+// Qt includes.
+
+#include <qdatetime.h>
+
 // KDE includes.
 
 #include <kdialogbase.h>
 #include <kurl.h>
 
-// LibKIPi includes.
-
-#include <libkipi/interface.h>
-
-// Local includes
-
-#include "kpaboutdata.h"
-
-class QSpinBox;
-class QRadioButton;
-class QPushButton;
-class QVButtonGroup;
-class QVGroupBox;
-class QButtonGroup;
-class QCheckBox;
-
-class KDateTimeWidget;
+namespace KIPI
+{
+    class Interface;
+}
 
 namespace KIPITimeAdjustPlugin
 {
+
+class TimeAdjustDialogPrivate;
 
 class TimeAdjustDialog :public KDialogBase 
 {
@@ -80,39 +73,8 @@ private:
     
 private:
 
-    QRadioButton             *m_add;
-    QRadioButton             *m_subtract;
-    QRadioButton             *m_exif;
-    QRadioButton             *m_custom;
+    TimeAdjustDialogPrivate *d;
 
-    QCheckBox                *m_syncEXIFDateCheck;
-    QCheckBox                *m_syncIPTCDateCheck;
-
-    QVGroupBox               *m_exampleBox;
-    QVButtonGroup            *m_adjustValGrp;
-    QButtonGroup             *m_adjustTypeGrp;
-    
-    QLabel                   *m_infoLabel;
-    QLabel                   *m_exampleAdj;
-    
-    QPushButton              *m_helpButton;
-    
-    QSpinBox                 *m_secs;
-    QSpinBox                 *m_minutes;
-    QSpinBox                 *m_hours;
-    QSpinBox                 *m_days;
-    QSpinBox                 *m_months;
-    QSpinBox                 *m_years;
-    
-    QDateTime                 m_exampleDate;
-
-    KDateTimeWidget          *m_dateCreatedSel;
-
-    KURL::List                m_images;
-
-    KIPI::Interface          *m_interface;
-
-    KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // NameSpace KIPITimeAdjustPlugin
