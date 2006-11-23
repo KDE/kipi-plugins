@@ -47,6 +47,7 @@
 #include <kstandarddirs.h>
 #include <kdatetimewidget.h>
 #include <kconfig.h>
+#include <kmessagebox.h>
 
 // LibKipi includes.
 
@@ -335,9 +336,15 @@ void TimeAdjustDialog::slotAdjustmentTypeChanged()
 
 void TimeAdjustDialog::slotOk()
 {
+    KURL::List  updatedURLs;
+    QStringList errorFiles;
+
     for( KURL::List::ConstIterator it = m_images.begin(); it != m_images.end(); ++it )
     {
-        KIPI::ImageInfo info = m_interface->info( *it );
+        KURL url = *it;
+        bool ret = false;
+
+        KIPI::ImageInfo info = m_interface->info(url);
         QDateTime dateTime   = info.time();
         dateTime             = updateTime(info.path(), info.time());
         info.setTime(dateTime);
@@ -346,31 +353,53 @@ void TimeAdjustDialog::slotOk()
         {
             if (m_syncEXIFDateCheck->isChecked() || m_syncIPTCDateCheck->isChecked())
             {
-                KIPIPlugins::Exiv2Iface exiv2Iface;
-
-                if (exiv2Iface.load(info.path().path()))
+                if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
                 {
-                    if (m_syncEXIFDateCheck->isChecked())
-                    {
-                        exiv2Iface.setExifTagString("Exif.Image.DateTime",
-                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
-                    }
-        
-                    if (m_syncIPTCDateCheck->isChecked())
-                    {
-                        exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
-                            dateTime.date().toString(Qt::ISODate));
-                        exiv2Iface.setIptcTagString("Iptc.Application2.TimeCreated",
-                        dateTime.time().toString(Qt::ISODate));
-                    }
+                    ret = true;
+                    KIPIPlugins::Exiv2Iface exiv2Iface;
     
-                    exiv2Iface.save(info.path().path());
+                    ret &= exiv2Iface.load(url.path());
+                    if (ret)
+                    {
+                        if (m_syncEXIFDateCheck->isChecked())
+                        {
+                            ret &= exiv2Iface.setExifTagString("Exif.Image.DateTime",
+                                dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
+                        }
+            
+                        if (m_syncIPTCDateCheck->isChecked())
+                        {
+                            ret &= exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
+                                dateTime.date().toString(Qt::ISODate));
+                            ret &= exiv2Iface.setIptcTagString("Iptc.Application2.TimeCreated",
+                                dateTime.time().toString(Qt::ISODate));
+                        }
+        
+                        ret &= exiv2Iface.save(url.path());
+                    }
                 }
+        
+                if (!ret)
+                    errorFiles.append(url.fileName());
+                else 
+                    updatedURLs.append(url);
             }
         }        
     }
 
+    // We use kipi interface refreshImages() method to tell to host than 
+    // metadata from pictures have changed and need to be re-read.
     m_interface->refreshImages(m_images);
+
+    if (!errorFiles.isEmpty())
+    {
+        KMessageBox::informationList(
+                     kapp->activeWindow(),
+                     i18n("Unable to set date and time like picture metadata from:"),
+                     errorFiles,
+                     i18n("Adjust Time & Date"));  
+    }
+
     saveSettings();
     accept();
 }
