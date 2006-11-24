@@ -1,8 +1,7 @@
 /* ============================================================
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
- *         from digiKam project.
- * Date  : 2003-10-01
- * Description : a kipi plugin for e-mailing images
+ * Authors: Gilles Caulier <caulier dot gilles at free.fr>
+ * Date   : 2003-10-01
+ * Description : a kipi plugin to e-mailing images
  * 
  * Copyright 2003-2005 by Gilles Caulier
  *
@@ -39,6 +38,9 @@
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
+
+// Local includes.
+
 #include "kpaboutdata.h"
 
 class QComboBox;
@@ -50,7 +52,6 @@ class QPushButton;
 class QFileInfo;
 
 class KFileItem;
-class KConfig;
 class KIntNumInput;
 class KListBox;
 class KSqueezedTextLabel;
@@ -61,7 +62,7 @@ namespace KIPISendimagesPlugin
 
 class ListImageItems : public KListBox
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
 
@@ -80,12 +81,11 @@ protected:
 
 class SendImagesDialog : public KDialogBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
    
-   SendImagesDialog(QWidget *parent, 
-                    KIPI::Interface* interface, 
+   SendImagesDialog(QWidget *parent, KIPI::Interface* interface, 
                     const KIPI::ImageCollection& images );
    ~SendImagesDialog();
 
@@ -99,7 +99,7 @@ public:
    QCheckBox      *m_addComments;
    QCheckBox      *m_changeImagesProp;
              
-   KURLRequester      *m_ThunderbirdBinPath;
+   KURLRequester  *m_ThunderbirdBinPath;
       
    KURL::List      m_images2send;
    
@@ -123,48 +123,46 @@ private slots:
    void slotThunderbirdBinPathChanged(const QString&);
    void slotMailAgentChanged(int);
 
-protected:
-   
-   QLabel             *m_labelImageFormat;
-   QLabel             *m_labelImageSize;
-   QLabel             *m_mailAgentLabel;
-   QLabel             *m_labelThunderbirdBinPath;
-      
-   KConfig            *m_config;
-
-   QPushButton        *m_addImageButton;
-   QPushButton        *m_remImagesButton;
-   QPushButton        *m_helpButton;
-     
-   ListImageItems     *m_ImagesFilesListBox;
-   
-   bool                m_cancelled;
-
-   QProgressDialog    *m_progressDlg;
-
-   QGroupBox          *m_groupBoxImageList;
-
-   QLabel             *m_imageLabel;
-
-   QFrame             *page_setupImagesList;
-   QFrame             *page_setupEmailOptions;
-   QFrame             *page_about;
-
-   KSqueezedTextLabel *m_ImageComments;
-   KSqueezedTextLabel *m_ImageAlbum;
-   
-   KIPI::Interface    *m_interface;
-   KIPIPlugins::KPAboutData *m_about;
-   KIO::PreviewJob    *m_thumbJob;
-
- private:
+private:
    
    void setupImagesList(void);
    void setupEmailOptions(void);
-   void setImagesList( const KURL::List& images );
+   void setImagesList(const KURL::List& images);
    void writeSettings(void);
    void readSettings(void);
    void setNbItems(void);
+
+private:
+
+   bool                      m_cancelled;
+   
+   QLabel                   *m_labelImageFormat;
+   QLabel                   *m_labelImageSize;
+   QLabel                   *m_mailAgentLabel;
+   QLabel                   *m_labelThunderbirdBinPath;
+      
+   QPushButton              *m_addImageButton;
+   QPushButton              *m_remImagesButton;
+   QPushButton              *m_helpButton;
+     
+   QProgressDialog          *m_progressDlg;
+
+   QGroupBox                *m_groupBoxImageList;
+
+   QLabel                   *m_imageLabel;
+
+   QFrame                   *page_setupImagesList;
+   QFrame                   *page_setupEmailOptions;
+   QFrame                   *page_about;
+
+   KSqueezedTextLabel       *m_ImageComments;
+   KSqueezedTextLabel       *m_ImageAlbum;
+   
+   KIPI::Interface          *m_interface;
+   KIO::PreviewJob          *m_thumbJob;
+
+   KIPIPlugins::KPAboutData *m_about;
+   ListImageItems           *m_ImagesFilesListBox;
 };
 
 }  // NameSpace KIPISendimagesPlugin

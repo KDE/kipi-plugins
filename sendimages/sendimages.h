@@ -1,7 +1,7 @@
 /* ============================================================
  * Authors: Gilles Caulier <caulier dot gilles at free.fr>
  * Date   : 2004-02-25
- * Description : a kipi plugin for e-mailing images
+ * Description : a kipi plugin to e-mailing images
  * 
  * Copyright 2004-2005 by Gilles Caulier
  *

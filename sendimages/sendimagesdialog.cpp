@@ -1,8 +1,7 @@
 /* ============================================================
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
- *         from digiKam project.
- * Date  : 2003-10-01
- * Description : a kipi plugin for e-mailing images
+ * Authors: Gilles Caulier <caulier dot gilles at free.fr>
+ * Date   : 2003-10-01
+ * Description : a kipi plugin to e-mailing images
  * 
  * Copyright 2003-2005 by Gilles Caulier
  * Copyright 2006 by Tom Albers
@@ -77,6 +76,7 @@ namespace KIPISendimagesPlugin
 
 class ImageItem : public QListBoxText
 {
+
 public:
     ImageItem(QListBox * parent, QString const & comments, KURL const & url)
             : QListBoxText(parent), _comments(comments), _url(url)
@@ -89,6 +89,7 @@ public:
     void setName(const QString &newName) { setText(newName);                         }
 
 private:
+
     QString _comments;
     KURL    _url;
 };
@@ -117,21 +118,19 @@ void ListImageItems::dropEvent(QDropEvent *e)
     char *str;
 
     while ( (str = it.current()) != 0 )
-       {
-       QString filePath = QUriDrag::uriToLocalFile(str);
-       QFileInfo fileInfo(filePath);
+    {
+        QString filePath = QUriDrag::uriToLocalFile(str);
+        QFileInfo fileInfo(filePath);
 
-       if (fileInfo.isFile() && fileInfo.exists())
-          FilesPath.append(fileInfo.filePath());
-
-       ++it;
-       }
+        if (fileInfo.isFile() && fileInfo.exists())
+            FilesPath.append(fileInfo.filePath());
+    
+        ++it;
+    }
 
     if (FilesPath.isEmpty() == false)
        emit addedDropItems(FilesPath);
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
                                    const KIPI::ImageCollection& images )
@@ -139,7 +138,7 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
                   Ok, parent, "SendImagesDialog", false, true )
 {
     m_interface = interface;
-    m_thumbJob = 0L;
+    m_thumbJob  = 0;
 
     setupImagesList();
     setupEmailOptions();
@@ -160,9 +159,9 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
                                            "(c) 2003-2005, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                       "caulier dot gilles at free.fr");
+                       "caulier dot gilles at kdemail dot net");
 
-    m_helpButton = actionButton( Help );
+    m_helpButton        = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Send Image Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
@@ -173,7 +172,8 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
 
 SendImagesDialog::~SendImagesDialog()
 {
-    if ( m_thumbJob ) delete m_thumbJob;
+    if ( m_thumbJob ) 
+        delete m_thumbJob;
 
     delete m_about;
 }
@@ -181,11 +181,11 @@ SendImagesDialog::~SendImagesDialog()
 void SendImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
+    
+    KConfig config("kipirc");
+    config.setGroup("SendImages Settings");
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("SendImages Settings");
-
-    QString t = m_config->readPathEntry("MailAgentName", "Default");
+    QString t = config.readPathEntry("MailAgentName", "Default");
 
     // The _old_ Kmail (mind the lowercase 'm') called the default mailer.
     // this is now renamed to 'Default'. It should not interfere with KMail, which
@@ -194,52 +194,48 @@ void SendImagesDialog::readSettings(void)
     if (t == "Kmail") t = "Default";
     m_mailAgentName->setCurrentText(t);
 
-    m_ThunderbirdBinPath->setURL( m_config->readEntry("ThunderbirdBinPath", "/usr/bin/mozilla-thunderbird"));
+    m_ThunderbirdBinPath->setURL( config.readEntry("ThunderbirdBinPath", "/usr/bin/mozilla-thunderbird"));
 
-    if (m_config->readEntry("ImagesChangeProp", "true") == "true")
+    if (config.readEntry("ImagesChangeProp", "true") == "true")
         m_changeImagesProp->setChecked( true );
     else
         m_changeImagesProp->setChecked( false );
 
-    m_imagesResize->setCurrentItem(m_config->readNumEntry("ImageResize", 2));    // Medium size used by default...
-    m_imageCompression->setValue(m_config->readNumEntry("ImageCompression", 75));
-    m_imagesFormat->setCurrentText(m_config->readEntry("ImageFormat", "JPEG"));
-    m_attachmentlimit->setValue(m_config->readNumEntry("AttachmentLimit", 10));
+    m_imagesResize->setCurrentItem(config.readNumEntry("ImageResize", 2));  // Medium size used by default.
+    m_imageCompression->setValue(config.readNumEntry("ImageCompression", 75));
+    m_imagesFormat->setCurrentText(config.readEntry("ImageFormat", "JPEG"));
+    m_attachmentlimit->setValue(config.readNumEntry("AttachmentLimit", 10));
         
-    if (m_config->readEntry("AddComments", "true") == "true")
+    if (config.readEntry("AddComments", "true") == "true")
         m_addComments->setChecked( true );
     else
         m_addComments->setChecked( false );
-
-    delete m_config;
 }
 
 void SendImagesDialog::writeSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("SendImages Settings");
-    m_config->writePathEntry("MailAgentName", m_mailAgentName->currentText());
-    m_config->writeEntry("ThunderbirdBinPath", m_ThunderbirdBinPath->url());
-    m_config->writeEntry("AddComments", m_addComments->isChecked());
-    m_config->writeEntry("ImagesChangeProp", m_changeImagesProp->isChecked());
-    m_config->writeEntry("ImageResize", m_imagesResize->currentItem());
-    m_config->writeEntry("ImageCompression", m_imageCompression->value());
-    m_config->writeEntry("ImageFormat", m_imagesFormat->currentText());
-    m_config->writeEntry("AttachmentLimit", m_attachmentlimit->value());	
-    m_config->sync();
-    delete m_config;
-
+    KConfig config("kipirc");
+    config.setGroup("SendImages Settings");
+    config.writePathEntry("MailAgentName", m_mailAgentName->currentText());
+    config.writeEntry("ThunderbirdBinPath", m_ThunderbirdBinPath->url());
+    config.writeEntry("AddComments", m_addComments->isChecked());
+    config.writeEntry("ImagesChangeProp", m_changeImagesProp->isChecked());
+    config.writeEntry("ImageResize", m_imagesResize->currentItem());
+    config.writeEntry("ImageCompression", m_imageCompression->value());
+    config.writeEntry("ImageFormat", m_imagesFormat->currentText());
+    config.writeEntry("AttachmentLimit", m_attachmentlimit->value());	
+    config.sync();
 }
 
 void SendImagesDialog::setupImagesList(void)
 {
     QString whatsThis;
 
-    page_setupImagesList = addPage( i18n("Images"),
-                                    i18n("Image List to Email"),
-                                    BarIcon("image", KIcon::SizeMedium ) );
+    page_setupImagesList = addPage(i18n("Images"),
+                                   i18n("Image List to Email"),
+                                   BarIcon("image", KIcon::SizeMedium));
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupImagesList, 0, spacingHint() );
 
@@ -314,32 +310,32 @@ void SendImagesDialog::setImagesList( const KURL::List& Files )
     if ( Files.count() == 0 ) return;
 
     for( KURL::List::ConstIterator it = Files.begin(); it != Files.end(); ++it )
-      {
-      KIPI::ImageInfo imageInfo = m_interface->info( *it );
-      QString comments = imageInfo.description();
-
-      // Check if the new item already exist in the list.
-
-      bool findItem = false;
-
-      for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
-          {
-          ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(i) );
-
-          if (pitem->url() == (*it))
-             findItem = true;
-          }
-
-      if (findItem == false)
-         {
-         ImageItem *item = new ImageItem( m_ImagesFilesListBox,
-                                          comments,                   // Image comments.
-                                          *it                         // Complete url (path & file name).
-                                        );
-
-         item->setName( (*it).fileName() );
-         }
-      }
+    {
+        KIPI::ImageInfo imageInfo = m_interface->info( *it );
+        QString comments = imageInfo.description();
+    
+        // Check if the new item already exist in the list.
+    
+        bool findItem = false;
+    
+        for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
+        {
+            ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(i) );
+    
+            if (pitem->url() == (*it))
+                findItem = true;
+        }
+    
+        if (findItem == false)
+        {
+            ImageItem *item = new ImageItem(m_ImagesFilesListBox,
+                                            comments,               // Image comments.
+                                            *it                     // Complete url (path & file name).
+                                            );
+    
+            item->setName( (*it).fileName() );
+        }
+    }
 
     m_ImagesFilesListBox->setCurrentItem( m_ImagesFilesListBox->count()-1) ;
     slotImageSelected(m_ImagesFilesListBox->item(m_ImagesFilesListBox->currentItem()));
@@ -350,9 +346,9 @@ void SendImagesDialog::setupEmailOptions(void)
 {
     QString whatsThis;
 
-    page_setupEmailOptions = addPage( i18n("Mail"),
-                                      i18n("Mail Options"),
-                                      BarIcon("mail_generic", KIcon::SizeMedium ) );
+    page_setupEmailOptions = addPage(i18n("Mail"),
+                                     i18n("Mail Options"),
+                                     BarIcon("mail_generic", KIcon::SizeMedium));
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupEmailOptions, 0, spacingHint() );
 
@@ -403,8 +399,8 @@ void SendImagesDialog::setupEmailOptions(void)
     m_labelThunderbirdBinPath->setBuddy( m_ThunderbirdBinPath );
     vlay->addWidget(m_ThunderbirdBinPath);
 
-    connect( m_ThunderbirdBinPath, SIGNAL(textChanged(const QString&)),
-             this, SLOT(slotThunderbirdBinPathChanged(const QString&)));
+    connect(m_ThunderbirdBinPath, SIGNAL(textChanged(const QString&)),
+            this, SLOT(slotThunderbirdBinPathChanged(const QString&)));
 
     QWhatsThis::add( m_ThunderbirdBinPath, i18n("<p>The path name to the Thunderbird binary program.") );
 
@@ -485,7 +481,7 @@ void SendImagesDialog::setupEmailOptions(void)
 
     //---------------------------------------------
 
-    QHBoxLayout *hlay13  = new QHBoxLayout( );
+    QHBoxLayout *hlay13  = new QHBoxLayout();
     groupBox2Layout->addLayout( hlay13 );
 
     m_imagesFormat = new QComboBox(false, groupBox2);
@@ -503,13 +499,13 @@ void SendImagesDialog::setupEmailOptions(void)
                 "and chromaticity data for improved color matching on heterogeneous platforms.");
     QWhatsThis::add( m_imagesFormat, whatsThis );
 
-    m_labelImageFormat = new QLabel( i18n("Images file format:"), groupBox2);
-    hlay13->addWidget( m_labelImageFormat );
-    m_labelImageFormat->setBuddy( m_imagesFormat );
-    hlay13->addStretch( 1 );
+    m_labelImageFormat = new QLabel(i18n("Images file format:"), groupBox2);
+    hlay13->addWidget(m_labelImageFormat);
+    m_labelImageFormat->setBuddy(m_imagesFormat);
+    hlay13->addStretch(1);
     hlay13->addWidget(m_imagesFormat);
 
-    vlay->addWidget( groupBox2 );
+    vlay->addWidget(groupBox2);
     vlay->addStretch(1);
 
     m_attachmentlimit = new KIntNumInput(17, page_setupEmailOptions);
@@ -544,15 +540,15 @@ void SendImagesDialog::slotHelp()
 void SendImagesDialog::slotMailAgentChanged(int)
 {
     if ( m_mailAgentName->currentText() == "Thunderbird" )
-       {
-       m_labelThunderbirdBinPath->setEnabled(true);
-       m_ThunderbirdBinPath->setEnabled(true);
-       }
+    {
+        m_labelThunderbirdBinPath->setEnabled(true);
+        m_ThunderbirdBinPath->setEnabled(true);
+    }
     else
-       {
+    {
        m_labelThunderbirdBinPath->setEnabled(false);
        m_ThunderbirdBinPath->setEnabled(false);
-       }
+    }
 }
 
 void SendImagesDialog::slotThunderbirdBinPathChanged(const QString &url )
@@ -579,14 +575,14 @@ void SendImagesDialog::slotImagesFilesButtonAdd( void )
 void SendImagesDialog::slotImagesFilesButtonRem( void )
 {
     for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
-       {
-       if (m_ImagesFilesListBox->isSelected(i))
-           {
-           m_ImagesFilesListBox->removeItem(i);
-           m_ImagesFilesListBox->setCurrentItem(i);
-           --i;
-           }
-       }
+    {
+        if (m_ImagesFilesListBox->isSelected(i))
+        {
+            m_ImagesFilesListBox->removeItem(i);
+            m_ImagesFilesListBox->setCurrentItem(i);
+            --i;
+        }
+    }
 
     m_ImagesFilesListBox->setSelected(m_ImagesFilesListBox->item(m_ImagesFilesListBox->currentItem()), true);
     slotImageSelected(m_ImagesFilesListBox->item(m_ImagesFilesListBox->currentItem()));
@@ -596,10 +592,10 @@ void SendImagesDialog::slotImagesFilesButtonRem( void )
 void SendImagesDialog::slotImageSelected( QListBoxItem * item )
 {
     if ( !item || m_ImagesFilesListBox->count() == 0 )
-       {
-       m_imageLabel->clear();
-       return;
-       }
+    {
+        m_imageLabel->clear();
+        return;
+    }
 
     ImageItem *pitem = static_cast<ImageItem*>( item );
 
@@ -609,7 +605,8 @@ void SendImagesDialog::slotImageSelected( QListBoxItem * item )
     m_ImageAlbum->setText( i18n("Album: %1").arg(pitem->album()) );
     m_imageLabel->clear();
 
-    if ( m_thumbJob ) delete m_thumbJob;
+    if ( m_thumbJob ) 
+        delete m_thumbJob;
 
     m_thumbJob = KIO::filePreview( pitem->url(), m_imageLabel->height() );
 
@@ -634,29 +631,29 @@ void SendImagesDialog::slotFailedPreview(const KFileItem*)
 void SendImagesDialog::slotOk()
 {
     if ( m_ImagesFilesListBox->count() == 0 )
-       {
-       KMessageBox::error(this, i18n("You must add some images to send."));
-       return;
-       }
+    {
+        KMessageBox::error(this, i18n("You must add some images to send."));
+        return;
+    }
 
     if ( m_mailAgentName->currentText() == "Thunderbird" )
-       {
-       QFile fileThunderbird(m_ThunderbirdBinPath->url());
-
-       if (fileThunderbird.exists() == false)
-          {
-          KMessageBox::sorry(this, i18n("Thunderbird binary path is not valid. Please check it."));
-          return;
-          }
-       }
+    {
+        QFile fileThunderbird(m_ThunderbirdBinPath->url());
+    
+        if (fileThunderbird.exists() == false)
+        {
+            KMessageBox::sorry(this, i18n("Thunderbird binary path is not valid. Please check it."));
+            return;
+        }
+    }
 
     writeSettings();
 
     for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; i++)
-        {
+    {
         ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(i) );
         m_images2send << pitem->url();
-        }
+    }
 
     emit signalAccepted();
     accept();

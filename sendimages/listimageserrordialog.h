@@ -1,8 +1,7 @@
 /* ============================================================
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
- *         from digiKam project.
- * Date  : 2003-10-01
- * Description : a kipi plugin for e-mailing images
+ * Authors: Gilles Caulier <caulier dot gilles at free.fr>
+ * Date   : 2003-10-01
+ * Description : a kipi plugin to e-mailing images
  * 
  * Copyright 2003-2005 by Gilles Caulier
  *
@@ -19,7 +18,6 @@
  * 
  * ============================================================ */
 
-
 #ifndef LISTIMAGESERRORDIALOG_included
 #define LISTIMAGESERRORDIALOG_included
 
@@ -35,19 +33,20 @@ namespace KIPISendimagesPlugin
 
 class listImagesErrorDialog : public KDialogBase
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-  listImagesErrorDialog(QWidget* parent, QString Caption,
-                        const QString &Mess1, const QString &Mess2,
-                        KURL::List ListOfiles);
-  ~listImagesErrorDialog();
+
+    listImagesErrorDialog(QWidget* parent, QString Caption,
+                            const QString &Mess1, const QString &Mess2,
+                            KURL::List ListOfiles);
+    ~listImagesErrorDialog();
 
 private:
-  KListView*     m_listFiles;
+
+    KListView *m_listFiles;
 };
 
 }  // NameSpace KIPISendimagesPlugin
 
 #endif  // LISTIMAGESERRORDIALOG_included
-

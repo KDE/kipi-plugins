@@ -1,8 +1,7 @@
 /* ============================================================
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
- *         from digiKam project.
- * Date  : 2003-10-01
- * Description : a kipi plugin for e-mailing images
+ * Authors: Gilles Caulier <caulier dot gilles at free.fr>
+ * Date   : 2003-10-01
+ * Description : a kipi plugin to e-mailing images
  * 
  * Copyright 2003-2005 by Gilles Caulier
  *
@@ -39,11 +38,10 @@
 // Local includes.
 
 #include "listimageserrordialog.h"
+#include "listimageserrordialog.moc"
 
 namespace KIPISendimagesPlugin
 {
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption, 
                                              const QString &Mess1, const QString &Mess2,
@@ -99,17 +97,14 @@ listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption,
     g1->addWidget (labelMess2, 3, 1);
 
     for ( KURL::List::Iterator it = ListOfiles.begin() ; it != ListOfiles.end() ; ++it )
-       {
-       new KListViewItem( m_listFiles,
-                          (*it).fileName(),    
-                          (*it).directory().section('/', -1) );
-       }
+    {
+        new KListViewItem( m_listFiles,
+                           (*it).fileName(),    
+                           (*it).directory().section('/', -1) );
+    }
 
    resize( 500, 400 );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 listImagesErrorDialog::~listImagesErrorDialog()
 {
@@ -117,4 +112,3 @@ listImagesErrorDialog::~listImagesErrorDialog()
 
 }  // NameSpace KIPISendimagesPlugin
 
-#include "listimageserrordialog.moc"
