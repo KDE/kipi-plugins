@@ -1,8 +1,7 @@
 /* ============================================================
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
- *         from digiKam project.
- * Date  : 2004-02-25
- * Description : a kipi plugin for e-mailing images
+ * Authors: Gilles Caulier <caulier dot gilles at free.fr>
+ * Date   : 2004-02-25
+ * Description : a kipi plugin to e-mailing images
  * 
  * Copyright 2004-2005 by Gilles Caulier
  * Copyright 2006 by Tom Albers
@@ -22,7 +21,6 @@
 
 // Include files for Qt
 
-
 #include <qfileinfo.h>
 #include <qdir.h>
 #include <qimage.h>
@@ -30,6 +28,7 @@
 #include <qcombobox.h>
 #include <qcheckbox.h>
 #include <qtimer.h>
+#include <qurl.h>
 
 // Include files for KDE
 
@@ -53,11 +52,13 @@
 
 // Local include files
 
-#include "sendimages.h"
 #include "sendimagesdialog.h"
 #include "listimageserrordialog.h"
-#include "exifrestorer.h"
+#include "exiv2iface.h"
 #include "actions.h"
+#include "pluginsversion.h"
+#include "sendimages.h"
+#include "sendimages.moc"
 
 namespace KIPISendimagesPlugin
 {
@@ -77,17 +78,11 @@ SendImages::SendImages(KIPI::Interface* interface, const QString &tmpFolder,
             this, SLOT(slotMozillaTimeout()));
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 SendImages::~SendImages()
 {
     delete m_sendImagesDialog;
     wait();
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void SendImages::showDialog()
 {
@@ -100,9 +95,7 @@ void SendImages::showDialog()
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-// Execute the no threadable operations before the real thread.
-
+/** Execute the no threadable operations before the real thread.*/
 void SendImages::prepare(void)
 {
     m_filesSendList.clear();
@@ -113,13 +106,13 @@ void SendImages::prepare(void)
     m_imageFormat = m_sendImagesDialog->m_imagesFormat->currentText();
     m_sizeFactor = getSize( m_sendImagesDialog->m_imagesResize->currentItem() );
     m_imageCompression = m_sendImagesDialog->m_imageCompression->value();
-    m_attachmentlimit = m_sendImagesDialog->m_attachmentlimit->value()*770000-2000; ///Base64-encoding needs a lot of space
+    
+    // Base64-encoding needs a lot of space.
+    m_attachmentlimit = m_sendImagesDialog->m_attachmentlimit->value()*770000-2000; 
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-// List of threaded operations.
-
+/** List of threaded operations.*/
 void SendImages::run()
 {
     KIPISendimagesPlugin::EventData *d;
@@ -132,7 +125,7 @@ void SendImages::run()
     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
     for( KURL::List::Iterator it = m_images.begin() ; it != m_images.end() ; ++it )
-        {
+    {
         QString imageName = (*it).path();
         QString ItemName = imageName.section( '/', -1 );
 
@@ -147,7 +140,7 @@ void SendImages::run()
         // Prepare resized target images to send.
 
         if ( m_changeProp == true )
-           {
+        {
            // Prepare resizing images.
 
            QString imageFileName = ItemName;
@@ -162,10 +155,14 @@ void SendImages::run()
 
            kdDebug (51000) << "Resizing ' " << imageName.ascii() << "-> '"
                            << m_tmp.ascii() << imageNameFormat.ascii()
-                           << "' (" << m_imageFormat.ascii() << ")" << endl;
+                           << "' (" << m_imageFormat.ascii() << "; "<<m_sizeFactor <<")" << endl;
+	   
+    	   // Return value for resizeImageProcess-function, in order to avoid reopening 
+           // the image for exiv-writing.
+	       QSize newsize;
 
            if ( resizeImageProcess( imageName, m_tmp, m_imageFormat, imageNameFormat,
-                                    m_sizeFactor, m_imageCompression) == false )
+                                    m_sizeFactor, m_imageCompression, newsize) == false )
                {
                // Resized images failed...
 
@@ -178,30 +175,28 @@ void SendImages::run()
                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
                m_imagesResizedWithError.append(*it);
-               }
-           else          // Resized images OK...
-               {
+          } 
+	  else          // Resized images OK...
+          {
                // Only try to write Exif if both src and destination are JPEG files.
 
-               if (QString(QImageIO::imageFormat(imageName)).upper() == "JPEG" &&
-                   m_imageFormat.upper() == "JPEG")
-                  {
-                  ExifRestorer exifHolder;
-                  exifHolder.readFile(imageName, ExifRestorer::ExifOnly);
+               if (QString(QImageIO::imageFormat(imageName)).upper() == "JPEG" && m_imageFormat.upper() == "JPEG")
+               {
+                    QString targetFile = m_tmp + imageNameFormat;
+                            KIPIPlugins::Exiv2Iface exiv2Iface;
+                    if (exiv2Iface.load(imageName))
+                    {
+                        exiv2Iface.setImageProgramId(QString("Kipi SendImages"), QString(kipiplugins_version));
+                        exiv2Iface.setImageDimensions(newsize);
+                        exiv2Iface.save(targetFile);
+                    }
 
-                  QString targetFile = m_tmp + imageNameFormat;
-
-                  if (exifHolder.hasExif())
-                     {
-                     ExifRestorer restorer;
-                     restorer.readFile(targetFile, ExifRestorer::EntireImage);
-                     restorer.insertExifData(exifHolder.exifData());
-                     restorer.writeFile(targetFile);
-                     }
-                  else
-                     kdWarning( 51000 ) << ("createThumb::No Exif Data Found") << endl;
-                  }
-
+		       } 
+               else 
+               {
+                    kdWarning( 51000 ) << ("createThumb::No Exif Data Found") << endl;
+		       }
+	
                d = new KIPISendimagesPlugin::EventData;
                d->action   = KIPISendimagesPlugin::ResizeImages;
                d->fileName = (*it).fileName();
@@ -239,9 +234,7 @@ void SendImages::run()
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-// Create a text file with the images comments.
-
+/** Create a text file with the images comments.*/
 void SendImages::makeCommentsFile(void)
 {
     if ( m_sendImagesDialog->m_addComments->isChecked() == true )
@@ -296,9 +289,6 @@ void SendImages::makeCommentsFile(void)
     }
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 bool SendImages::showErrors()
 {
     if ( m_imagesResizedWithError.isEmpty() == false )
@@ -339,10 +329,8 @@ bool SendImages::showErrors()
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-// Returns a list of Filenames, whose sum filesize is smaller than the quota
-// by Michael Höchstetter
-//
+/** Returns a list of Filenames, whose sum filesize is smaller than the quota
+    by Michael Hoechstetter.*/
 KURL::List SendImages::divideEmails(void)
 {
 	 unsigned long mylistsize=0;
@@ -375,9 +363,7 @@ KURL::List SendImages::divideEmails(void)
 	 return sendnow;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-// Invoke mailer agent.
-
+/** Invoke mailer agent.*/
 bool SendImages::invokeMailAgent(void)
 {
   bool agentInvoked = false;
@@ -521,17 +507,22 @@ bool SendImages::invokeMailAgent(void)
         *m_mailAgentProc << "netscape" << "-remote";
       }
 
-      QString Temp = "xfeDoCommand(composeMessage,attachment='";
+      QString Temp = "xfeDoCommand(composeMessage,attachment=";
 
       for ( KURL::List::Iterator it = filelist.begin() ; it != filelist.end() ; ++it )
       {
-        Temp.append( "file://" );
-        Temp.append( QFile::encodeName((*it).path()) );
-        Temp.append( "," );
+        Temp.append( "\"file://" );
+        //Temp.append( QFile::encodeName((*it).path()) );
+	///It is working with spaces inside the file and pathname, but what still is a problem are kommas
+	//FIXME
+	QString toencode=(*it).encodedPathAndQuery();
+	//QUrl::encode(toencode); 
+        Temp.append(toencode);
+	Temp.append( "\"," );
       }
-
-      Temp.append("')");
-
+      Temp.remove(Temp.length()-1,1);
+      Temp.append(")");
+      
       *m_mailAgentProc << Temp;
 
       connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)),
@@ -563,9 +554,6 @@ void SendImages::removeTmpFiles(void)
        KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove temporary folder %1.").arg(m_tmp));
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 bool SendImages::DeleteDir(QString dirname)
 {
     if ( !dirname.isEmpty() )
@@ -588,9 +576,6 @@ bool SendImages::DeleteDir(QString dirname)
 
     return true;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool SendImages::deldir(QString dirname)
 {
@@ -628,9 +613,6 @@ bool SendImages::deldir(QString dirname)
     return true;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 QString SendImages::extension(const QString& imageFileFormat)
 {
     if (imageFileFormat == "PNG")
@@ -642,9 +624,6 @@ QString SendImages::extension(const QString& imageFileFormat)
     Q_ASSERT(false);
     return "";
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int SendImages::getSize ( int choice )
 {
@@ -674,12 +653,9 @@ int SendImages::getSize ( int choice )
        }
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-bool SendImages::resizeImageProcess( const QString &SourcePath, const QString &DestPath,
-                                     const QString &ImageFormat, const QString &ImageName,
-                                     int SizeFactor, int ImageCompression)
+bool SendImages::resizeImageProcess(const QString &SourcePath, const QString &DestPath,
+                                    const QString &ImageFormat, const QString &ImageName,
+                                    int SizeFactor, int ImageCompression, QSize &newsize)
 {
     QImage img;
 
@@ -718,6 +694,7 @@ bool SendImages::resizeImageProcess( const QString &SourcePath, const QString &D
                }
 
            img = scaleImg;
+	   newsize=img.size();
            }
 
         if ( !img.save(DestPath + ImageName, ImageFormat.latin1(), ImageCompression) )
@@ -731,9 +708,6 @@ bool SendImages::resizeImageProcess( const QString &SourcePath, const QString &D
 
     return false;
 }
-
-
-/////////////////////////////////////// SLOTS ///////////////////////////////////////////////////////
 
 void SendImages::slotMozillaExited(KProcess*)
 {
@@ -768,9 +742,6 @@ void SendImages::slotMozillaExited(KProcess*)
        }
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void SendImages::slotMozillaTimeout(void)
 {
     m_mailAgentProc3 = new KProcess;
@@ -802,9 +773,6 @@ void SendImages::slotMozillaTimeout(void)
                                   .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void SendImages::slotMozillaReadStderr(KProcess*, char *buffer, int buflen)
 {
     m_mozillaStdErr = QString::fromLocal8Bit(buffer, buflen);
@@ -812,4 +780,3 @@ void SendImages::slotMozillaReadStderr(KProcess*, char *buffer, int buflen)
 
 }  // NameSpace KIPISendimagesPlugin
 
-#include "sendimages.moc"

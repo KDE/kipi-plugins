@@ -120,7 +120,7 @@ protected:
    
    bool resizeImageProcess( const QString &SourcePath, const QString &DestPath,
                             const QString &ImageFormat, const QString &ImageName,
-                            int SizeFactor, int ImageCompression);
+                            int SizeFactor, int ImageCompression, QSize &newsize);
 };
 
 }  // NameSpace KIPISendimagesPlugin
