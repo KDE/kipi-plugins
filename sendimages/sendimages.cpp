@@ -37,7 +37,6 @@
 #include <kconfig.h>
 #include <kapplication.h>
 #include <kimageeffect.h>
-#include <kdebug.h>
 #include <kprogress.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
@@ -150,11 +149,10 @@ void SendImages::run()
             QString imageNameFormat = f + "-" +
                                       imageFileName.replace(QChar('.'), "_") +
                                       extension(m_imageFormat);
-    
-            kdDebug (51000) << "Resizing ' " << imageName.ascii() << "-> '"
-                            << m_tmp.ascii() << imageNameFormat.ascii()
-                            << "' (" << m_imageFormat.ascii() << "; "<<m_sizeFactor <<")" << endl;
-        
+   
+            qDebug( "Resizing %s-> '%s %s ' (%s ; %d )",imageName.ascii(),
+            m_tmp.ascii(),imageNameFormat.ascii(),m_imageFormat.ascii(),m_sizeFactor);
+ 
             // Return value for resizeImageProcess-function, in order to avoid reopening 
             // the image for exiv-writing.
             QSize newsize;
@@ -193,8 +191,8 @@ void SendImages::run()
                 } 
                 else 
                 {
-                    kdWarning( 51000 ) << ("createThumb::No Exif Data Found") << endl;
-		        }
+                    qWarning( "createThumb::No Exif Data Found") ;
+		}
 	
                 d = new KIPISendimagesPlugin::EventData;
                 d->action    = KIPISendimagesPlugin::ResizeImages;
@@ -336,21 +334,21 @@ KURL::List SendImages::divideEmails(void)
     
     for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
     {
-        kdDebug (51000) << "m_attachmentlimit " << m_attachmentlimit << endl;
+        qDebug("m_attachmentlimit: %lu ", m_attachmentlimit);
         QString imageName = (*it).path();	
-        kdDebug (51000) << "Imagename: " << imageName << endl;
+        qDebug("Imagename: %s", imageName.ascii());
         QFile file(imageName);
-        kdDebug (51000) << "filesize: " << file.size() << endl;
+        qDebug("filesize: %lu", file.size());
+
         if ((mylistsize + file.size()) <= m_attachmentlimit)
         {
             mylistsize+=file.size();
             sendnow.append(*it);
-            kdDebug (51000) << "mylistsize " << mylistsize << " attachmentlimit "
-                            << m_attachmentlimit << endl;
+            qDebug("mylistsize: %lu; attachmentlimit: %lu",mylistsize, m_attachmentlimit);
         }
         else 
         {
-            kdDebug (51000) << "file "<< imageName << " is out of " << m_attachmentlimit << endl;
+            qDebug("file %s is out of %lu",imageName.ascii(),m_attachmentlimit);
             filesSendList.append(*it);
         }
 	}
@@ -370,8 +368,8 @@ bool SendImages::invokeMailAgent(void)
  
     while (!((filelist=divideEmails()).empty()))
     {
-        kdDebug (51000) << "number of elements in filelist " << filelist.size() << endl;
-        kdDebug (51000) << "number of elements in m_filelist " << m_filesSendList.size() << endl;	
+        qDebug("number of elements in filelist %d",filelist.size());
+        qDebug("number of elements in m_filelist %d", m_filesSendList.size());	
         if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Default" )
         {
             KApplication::kApplication()->invokeMailer(
@@ -499,7 +497,7 @@ bool SendImages::invokeMailAgent(void)
             else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
             {
                 *m_mailAgentProc << m_thunderbirdUrl << "-remote";
-                kdDebug (51000) << m_thunderbirdUrl << endl;
+                qDebug("URL: %s", m_thunderbirdUrl.ascii());
             }
             else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "GmailAgent" )
             {
@@ -536,7 +534,7 @@ bool SendImages::invokeMailAgent(void)
             connect(m_mailAgentProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
                     this, SLOT(slotMozillaReadStderr(KProcess*, char*, int)));
         
-            kdDebug (51000) << Temp << endl;
+            qDebug ("%s", Temp.ascii());
         
             if ( m_mailAgentProc->start(KProcess::NotifyOnExit , KProcess::All) == false )
                 KMessageBox::error(kapp->activeWindow(), 
@@ -692,7 +690,7 @@ bool SendImages::resizeImageProcess(const QString &SourcePath, const QString &De
     
             if ( scaleImg.width() != w || scaleImg.height() != h )
             {
-                kdDebug (51000) << "Resizing failed. Aborting." << endl;
+                qDebug ("Resizing failed. Aborting.");
                 return false;
             }
     
@@ -702,7 +700,7 @@ bool SendImages::resizeImageProcess(const QString &SourcePath, const QString &De
     
         if ( !img.save(DestPath + ImageName, ImageFormat.latin1(), ImageCompression) )
         {
-            kdDebug (51000) << "Saving failed with specific compression value. Aborting." << endl;
+            qDebug("Saving failed with specific compression value. Aborting.");
             return false;
         }
     
