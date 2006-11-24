@@ -1,7 +1,6 @@
 /* ============================================================
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
- *         from digiKam project.
- * Date  : 2004-02-25
+ * Authors: Gilles Caulier <caulier dot gilles at free.fr>
+ * Date   : 2004-02-25
  * Description : a kipi plugin for e-mailing images
  * 
  * Copyright 2004-2005 by Gilles Caulier
@@ -55,72 +54,87 @@ Q_OBJECT
 
 public:
 
-   SendImages(KIPI::Interface* interface, const QString &tmpFolder, 
-              const KIPI::ImageCollection& imagesCollection, QObject *parent=0);
-               
-   ~SendImages();
-
-   virtual void run();
-
-   void showDialog(void);
-   void prepare(void);
-   bool showErrors(void);
-   void makeCommentsFile(void);
-   bool invokeMailAgent(void);
-   void removeTmpFiles(void);
-   KURL::List divideEmails(void);
+    SendImages(KIPI::Interface* interface, const QString &tmpFolder, 
+                const KIPI::ImageCollection& imagesCollection, QObject *parent=0);
+                
+    ~SendImages();
+    
+    virtual void run();
+    
+    void showDialog(void);
+    void prepare(void);
+    bool showErrors(void);
+    void makeCommentsFile(void);
+    bool invokeMailAgent(void);
+    void removeTmpFiles(void);
+    KURL::List divideEmails(void);
 	   
 private slots:   
 
-   void slotMozillaTimeout(void);
-   void slotMozillaExited(KProcess* proc);
-   void slotMozillaReadStderr(KProcess* proc, char *buffer, int buflen);
-   
-protected:
+    void slotMozillaTimeout(void);
+    void slotMozillaExited(KProcess* proc);
+    void slotMozillaReadStderr(KProcess* proc, char *buffer, int buflen);
 
-   KIPI::Interface       *m_interface;
-
-   SendImagesDialog      *m_sendImagesDialog;
+private:
    
-   QObject               *m_parent;
-   
-   KProcess              *m_mailAgentProc;
-   KProcess              *m_mailAgentProc2;
-   KProcess              *m_mailAgentProc3;
-   
-   QTimer                *m_mozillaTimer;
-
-   QString                m_mozillaStdErr;
-   QString                m_tmp;
-
-   bool                   m_changeProp;                // Change image properties options in setup dialog.
-   
-   QString                m_imageFormat;               // Image format option in the setup dialog.
-   QString                m_thunderbirdUrl;
-   
-   int                    m_sizeFactor;                // Image size factor in the setup dialog.
-   int                    m_imageCompression;          // Image compression factor in the setup dialog.
-   unsigned long                    m_attachmentlimit;           // Biggest permitted email.
-   
-   
-   KURL::List             m_images;                    // List of images in the setup dialog.
-   KURL::List             m_filesSendList;             // KURL of resized images.
-   KURL::List             m_imagesResizedWithError;    // KURL of orignal images that cannot be resized.
-   KURL::List             m_imagesPackage;             // KURL of orignal images than have been resized 
-                                                       // and KURL of resized images (used for to create 
-                                                       // the comments file).
-
-   KIPI::ImageCollection  m_collection;
-   
-   QString extension(const QString& imageFileFormat);
-   int getSize( int choice );
-   
-   bool DeleteDir(QString dirname);
-   bool deldir(QString dirname);
-   
-   bool resizeImageProcess( const QString &SourcePath, const QString &DestPath,
+    QString extension(const QString& imageFileFormat);
+    int getSize( int choice );
+    
+    bool DeleteDir(QString dirname);
+    bool deldir(QString dirname);
+    
+    bool resizeImageProcess(const QString &SourcePath, const QString &DestPath,
                             const QString &ImageFormat, const QString &ImageName,
                             int SizeFactor, int ImageCompression, QSize &newsize);
+  
+private:
+
+    /** Change image properties options in setup dialog.*/
+    bool                   m_changeProp;                
+    
+    /** Image size factor in the setup dialog.*/
+    int                    m_sizeFactor;                
+
+    /** Image compression factor in the setup dialog.*/
+    int                    m_imageCompression;          
+
+    /** Biggest permitted email.*/
+    unsigned long          m_attachmentlimit;
+    
+    QObject               *m_parent;
+    
+    QTimer                *m_mozillaTimer;
+    
+    QString                m_mozillaStdErr;
+    QString                m_tmp;
+    
+    /** Image format option in the setup dialog.*/
+    QString                m_imageFormat;               
+    QString                m_thunderbirdUrl;
+    
+    KProcess              *m_mailAgentProc;
+    KProcess              *m_mailAgentProc2;
+    KProcess              *m_mailAgentProc3;
+
+    /** List of images in the setup dialog.*/
+    KURL::List             m_images;       
+             
+    /** URL of resized images.*/
+    KURL::List             m_filesSendList;             
+
+    /** URL of orignal images that cannot be resized.*/
+    KURL::List             m_imagesResizedWithError;    
+
+    /** URL of orignal images than have been resized 
+        and KURL of resized images (used for to create 
+        the comments file).*/
+    KURL::List             m_imagesPackage;             
+
+    KIPI::ImageCollection  m_collection;
+    
+    KIPI::Interface       *m_interface;
+    
+    SendImagesDialog      *m_sendImagesDialog;
 };
 
 }  // NameSpace KIPISendimagesPlugin

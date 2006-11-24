@@ -1,7 +1,6 @@
 /* ============================================================
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
- *         from digiKam project.
- * Date  : 2003-10-01
+ * Authors: Gilles Caulier <caulier dot gilles at free.fr>
+ * Date   : 2003-10-01
  * Description : a kipi plugin for e-mailing images
  * 
  * Copyright 2003-2005 by Gilles Caulier
@@ -33,7 +32,7 @@ class KIPISendimagesPlugin::SendImages;
 
 namespace KIPI
 {
-class BatchProgressDialog;
+    class BatchProgressDialog;
 }
 
 class Plugin_SendImages : public KIPI::Plugin
@@ -53,19 +52,21 @@ public slots:
    void slotActivate();
    void slotCancel();
    void slotAcceptedConfigDlg();
+
+private:
+
+   void customEvent(QCustomEvent *event);
    
 private:
 
    int                               m_current;
    int                               m_total;
+
+   KAction                          *m_action_sendimages;
    
    KIPI::BatchProgressDialog        *m_progressDlg;
    
-   KAction                          *m_action_sendimages;
    KIPISendimagesPlugin::SendImages *m_sendImagesOperation;
-
-   void customEvent(QCustomEvent *event);
 };
-
 
 #endif // PLUGIN_SENDIMAGES_H 
