@@ -1283,7 +1283,7 @@ void KImg2mpgData::readSettings()
     if ( (QString) m_VideoTypeComboBox->text(i) == m_VideoTypeConfig)
       m_VideoTypeComboBox->setCurrentItem(i);
 
-  m_ChromaConfig = m_config->readEntry("ChromaMode", "Default");
+  m_ChromaConfig = m_config->readEntry("ChromaMode", "420mpeg2");
 
   for (int i = 0 ; i < m_ChromaComboBox->count() ; ++i)
     if ( (QString) m_ChromaComboBox->text(i) == m_ChromaConfig)
