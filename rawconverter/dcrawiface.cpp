@@ -152,7 +152,7 @@ bool DcrawIface::loadDcrawPreview(QImage& image, const QString& path)
     command  = DcrawBinary::path();
     command += " -c -e ";
     command += QFile::encodeName( KProcess::quote( path ) );
-    kdDebug( 51000 ) << "Running dcraw command " << command << endl;
+    kdDebug( 51000 ) << "Running RAW decoding command " << command << endl;
 
     f = popen( command.data(), "r" );
 
@@ -198,7 +198,7 @@ bool DcrawIface::loadDcrawPreview(QImage& image, const QString& path)
     command  = DcrawBinary::path();
     command += " -c -h -w -a ";
     command += QFile::encodeName( KProcess::quote( path ) );
-    kdDebug( 51000 ) << "Running dcraw command " << command << endl;
+    kdDebug( 51000 ) << "Running RAW decoding command " << command << endl;
 
     f = popen( command.data(), "r" );
 
@@ -269,7 +269,7 @@ bool DcrawIface::rawFileIdentify(QString& identify, const QString& path)
     command  = DcrawBinary::path();
     command += " -c -i ";
     command += QFile::encodeName( KProcess::quote( path ) );
-    kdDebug( 51000 ) << "Running dcraw command " << command << endl;
+    kdDebug( 51000 ) << "Running RAW decoding command " << command << endl;
 
     f = popen( command.data(), "r" );
 
@@ -812,13 +812,13 @@ void DcrawIface::startProcess()
     *d->process << QString::number( d->rawDecodingSettings.outputColorSpace );
 
     *d->process << QFile::encodeName( d->filePath );
-    kdDebug() << "Running dcraw command " << d->process->args() << endl;
+    kdDebug() << "Running RAW decoding command " << d->process->args() << endl;
 
     // actually start the process
     if ( !d->process->start(KProcess::NotifyOnExit, 
          KProcess::Communication(KProcess::Stdout | KProcess::Stderr)) )
     {
-        kdError() << "Failed to start dcraw" << endl;
+        kdError() << "Failed to start RAW decoding" << endl;
         delete d->process;
         d->process    = 0;
         d->running    = false;
@@ -854,7 +854,7 @@ void DcrawIface::slotReceivedStdout(KProcess *, char *buffer, int buflen)
         QString magic = QString::fromAscii(buffer, 2);
         if (magic != "P6") 
         {
-            kdError() << "Cannot parse header from dcraw: Magic is " << magic << endl;
+            kdError() << "Cannot parse header from RAW decoding: Magic is " << magic << endl;
             d->process->kill();
             return;
         }
@@ -878,7 +878,7 @@ void DcrawIface::slotReceivedStdout(KProcess *, char *buffer, int buflen)
         QStringList sizes = QStringList::split(" ", splitlist[1]);
         if (splitlist.size() < 3 || sizes.size() < 2)
         {
-            kdError() << "Cannot parse header from dcraw: Could not split" << endl;
+            kdError() << "Cannot parse header from RAW decoding: Could not split" << endl;
             d->process->kill();
             return;
         }
@@ -909,7 +909,7 @@ void DcrawIface::slotReceivedStdout(KProcess *, char *buffer, int buflen)
 void DcrawIface::slotReceivedStderr(KProcess *, char *buffer, int buflen)
 {
     QCString message(buffer, buflen);
-    kdDebug() << "Dcraw StdErr: " << message << endl;
+    kdDebug() << "RAW decoding StdErr: " << message << endl;
 }
 
 void DcrawIface::writeRawProfile(png_struct *ping, png_info *ping_info, char *profile_type, 
