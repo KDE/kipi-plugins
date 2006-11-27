@@ -665,8 +665,8 @@ void IPTCOrigin::applyMetadata(QByteArray& iptcData)
 
     if (d->countryCheck->isChecked())
     {
+        QString countryName = d->countryCB->currentText().mid(6);
         QString countryCode = d->countryCB->currentText().left(3);
-        QString countryName = d->countryCB->currentText().right(7);
         exiv2Iface.setIptcTagString("Iptc.Application2.CountryCode", countryCode);
         exiv2Iface.setIptcTagString("Iptc.Application2.CountryName", countryName);
         exiv2Iface.setIptcTagString("Iptc.Application2.LocationCode", countryCode);
