@@ -110,7 +110,7 @@ MJPEGTools  >= 1.6.0
 imlib2      >= 1.1.0
 libgphoto2  >= 2.x
 libtiff     >= 3.5.x
-libexiv2    >= svn    (future 0.12 release)
+libexiv2    >= 0.12
 libxslt     >= 1.1
 libgpod     >= 0.4.0
 
