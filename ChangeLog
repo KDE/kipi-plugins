@@ -1,3 +1,4175 @@
+v 0.1.3-beta1 - 2006-11-29
+----------------------------------------------------------------------------
+
+2006-11-29 20:45  anaselli
+
+	* [r609230] configure.in.in:
+	  fixed wrong message if exiv2_config is not present
+
+2006-11-29 12:54  anaselli
+
+	* [r609050] configure.in.in:
+	  improved exiv2 test
+
+2006-11-29 09:45  anaselli
+
+	* [r609024] configure.in.in:
+	  changed warning message
+
+2006-11-28 23:06  anaselli
+
+	* [r608932] configure.in.in:
+	  Added libexiv2 >= 0.12 requirement
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-27 16:43  cgilles
+
+	* [r608467] README:
+	  fix depency to Exiv2 0.12
+
+2006-11-27 12:45  cgilles
+
+	* [r608312] rawconverter/dcrawiface.cpp:
+	  digikam from trunk : fix debug message
+
+2006-11-27 08:47  cgilles
+
+	* [r608242] NEWS:
+	  update
+
+2006-11-27 08:46  cgilles
+
+	* [r608241] metadataedit/iptcorigin.cpp:
+	  kipi-plugins from trunk : fix country name extraction for combox.
+	  BUG: 137921
+
+2006-11-25 20:58  anaselli
+
+	* [r607806] mpegencoder/kimg2mpg.cpp:
+	  kimg2mpg now calls by default images2mpg with "-S 420mpeg2"
+	  passed to
+	  ppmtoy4m. The old one, named "Default" in the configuration
+	  dialog, is left to
+	  get back-compatibility since some old versions of ppmtoy4m used
+	  "-S 420_mpeg2".
+	  
+	  Note that if you upgrade kipi-plugins, you should remember that
+	  the default behavior is already set into your kipirc.
+	  CCMAIL: <kde-imaging@kde.org>
+
+2006-11-24 12:40  cgilles
+
+	* [r607391] sendimages/sendimages.cpp:
+	  kipi-plugins from trunk : SendImages : patch from Michael
+	  Höchstetter to fix kdDebug() statements to qDebug() in
+	  multithreaded section.
+	  
+	  Important nocice to kipi developpers : never use kdDebug() in
+	  QThread because it not thread-safe! Please look the story on
+	  http://bugs.kde.org/show_bug.cgi?id=133026
+	  
+	  CCMAIL: kde-imaging@kde.org, michael.hoechstetter@gmx.de
+	  CCBUGS: 133026
+
+2006-11-24 09:22  cgilles
+
+	* [r607351] sendimages/listimageserrordialog.cpp,
+	  sendimages/listimageserrordialog.h,
+	  sendimages/plugin_sendimages.cpp, sendimages/sendimages.h,
+	  sendimages/sendimagesdialog.cpp, sendimages/sendimagesdialog.h:
+	  kipi-plugins from trunk : SendImages : Fix Coding style
+	  CCMAIL: michael.hoechstetter@gmx.de
+
+2006-11-24 09:00  cgilles
+
+	* [r607344] sendimages/plugin_sendimages.cpp,
+	  sendimages/plugin_sendimages.h, sendimages/sendimages.cpp,
+	  sendimages/sendimages.h:
+	  kipi-plugins from trunk : SendImages : Fix Coding style
+	  CCMAIL: michael.hoechstetter@gmx.de
+
+2006-11-24 08:20  cgilles
+
+	* [r607337] sendimages/Makefile.am, sendimages/exifrestorer.cpp,
+	  sendimages/exifrestorer.h, sendimages/jpegsection.h,
+	  sendimages/sendimages.cpp, sendimages/sendimages.h:
+	  kipi-plugins from trunk : SendImages : patch from Michael
+	  Höchstetter :
+	  
+	  - Support Exiv2Iface class instead JpegRestorer.
+	  - Fix small bug concerning filenames and thunderbird, mozilla
+	  ....
+	  Now it is possible, that the path and filename contains
+	  "spaces", however it
+	  still is not possible to contain signs like kommas. Still todo.
+	  
+	  CCMAIL: kde-imaging@kde.org, michael.hoechstetter@gmx.de
+
+2006-11-23 14:09  cgilles
+
+	* [r607169] timeadjust/timeadjustdialog.cpp:
+	  fix layout
+
+2006-11-23 13:50  cgilles
+
+	* [r607163] timeadjust/timeadjustdialog.cpp:
+	  kipi-plugins from trunk : TimeAdjust : now the plugin remember
+	  the Adjustment Type settings between session
+
+2006-11-23 13:27  cgilles
+
+	* [r607160] timeadjust/timeadjustdialog.cpp,
+	  timeadjust/timeadjustdialog.h:
+	  kipi-plugins from trunk : TimeAdjust : using d private internal
+	  class
+
+2006-11-23 13:05  cgilles
+
+	* [r607155] timeadjust/timeadjustdialog.cpp:
+	  kipi-plugins from trunk : TimeAdjust : More readable report if
+	  writting operations on files are failed
+
+2006-11-23 12:40  cgilles
+
+	* [r607153] gpssync/plugin_gpssync.cpp:
+	  kipi-plugins from trunk : GPSSync : More redeable report if
+	  wrtting operation files are failed
+
+2006-11-23 12:40  cgilles
+
+	* [r607152] metadataedit/plugin_metadataedit.cpp:
+	  kipi-plugins from trunk : MetadataEdit : More redeable report if
+	  wrtting operation files are failed
+
+2006-11-23 06:41  cgilles
+
+	* [r607102] NEWS:
+	  update
+
+2006-11-22 23:20  gateau
+
+	* [r607073] batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/batchprocessimagesdialog.h:
+	  Replaced UploadWidget with a KURLRequester
+	  BUG: 117399
+	  BUG: 135408
+
+2006-11-22 23:15  gateau
+
+	* [r607072] batchprocessimages/renameimagesbase.ui:
+	  Cleanup
+
+2006-11-22 22:31  cgilles
+
+	* [r607062] NEWS:
+	  update
+
+2006-11-22 22:23  cgilles
+
+	* [r607061] timeadjust/plugin_timeadjust.cpp,
+	  timeadjust/plugin_timeadjust.h, timeadjust/timeadjustdialog.cpp,
+	  timeadjust/timeadjustdialog.h:
+	  kipi-plugins from trunk : Time Adjust : add new options to sync
+	  timestamp to EXIF and IPTC Creation Date.
+
+2006-11-22 15:23  cgilles
+
+	* [r606977] NEWS:
+	  update
+
+2006-11-22 15:22  cgilles
+
+	* [r606976] timeadjust/timeadjustdialog.cpp,
+	  timeadjust/timeadjustdialog.h:
+	  kipi-plugins from trunk : TimeAdjust plugin : new option to
+	  customize Date and Time at a specific timestamp.
+
+2006-11-22 14:25  cgilles
+
+	* [r606970] metadataedit/iptcdatetime.cpp:
+	  fix layout
+
+2006-11-22 14:14  cgilles
+
+	* [r606968] timeadjust/timeadjustdialog.cpp,
+	  timeadjust/timeadjustdialog.h:
+	  polish
+
+2006-11-22 14:09  cgilles
+
+	* [r606965] timeadjust/timeadjustdialog.cpp:
+	  fix i18n
+
+2006-11-22 08:50  cgilles
+
+	* [r606886] metadataedit/exifdatetime.cpp,
+	  metadataedit/exifdatetime.h, metadataedit/exifeditdialog.cpp,
+	  metadataedit/iptcdatetime.cpp, metadataedit/iptcdatetime.h,
+	  metadataedit/iptceditdialog.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : IPTC Edit Dialog
+	  : add 2 new options to sync IPTC Creation Date with EXIF
+	  Creation Date, and kipi host application Creation date (digiKam
+	  timestamp)
+	  
+	  CCBUGS: 136260
+
+2006-11-22 08:12  cgilles
+
+	* [r606881] metadataedit/exifcaption.cpp,
+	  metadataedit/exifcaption.h, metadataedit/exifeditdialog.cpp,
+	  metadataedit/iptccaption.cpp, metadataedit/iptccaption.h,
+	  metadataedit/iptceditdialog.cpp, metadataedit/iptceditdialog.h,
+	  metadataedit/plugin_metadataedit.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : IPTC Edit Dialog
+	  : add 3 new options to sync IPTC Caption with JFIF comment
+	  section, EXIF User Comment, and kipi host application comments
+	  (digiKam comment)
+	  
+	  CCBUGS: 136260
+
+2006-11-22 06:22  cgilles
+
+	* [r606869] metadataedit/exifeditdialog.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : commit missing
+	  files.
+
+2006-11-21 21:24  cgilles
+
+	* [r606808] rawconverter/dcrawiface.cpp:
+	  kipi-plugins from trunk : RAWConverter : backport patch from
+	  Marcel (from digiKam core) about to take a care if dcraw fail to
+	  decode a RAW file (look B.K.O #137495 for details)
+
+2006-11-21 13:32  cgilles
+
+	* [r606713] metadataedit/exifdatetime.cpp,
+	  metadataedit/exifdatetime.h:
+	  kipi-plugins from trunk : MetadataEdit plugin : Exif Edit Dialog
+	  : add 2 new options to sync Exif Creation Date with IPTC
+	  Creation Date, and kipi host application Creation Date (digiKam
+	  Date & Time)
+	  
+	  CCBUGS: 136260
+
+2006-11-21 13:01  cgilles
+
+	* [r606705] metadataedit/exifcaption.cpp,
+	  metadataedit/exifcaption.h, metadataedit/exifeditdialog.cpp:
+	  kipi-plugins from trunk : MetadataEdit : polish implementation
+
+2006-11-21 12:52  cgilles
+
+	* [r606701] common/exiv2iface/exiv2iface.cpp:
+	  fix warning
+
+2006-11-21 12:00  cgilles
+
+	* [r606686] metadataedit/iptcsubjects.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-21 11:59  cgilles
+
+	* [r606684] metadataedit/iptcstatus.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-21 11:54  cgilles
+
+	* [r606682] metadataedit/iptcorigin.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-21 11:51  cgilles
+
+	* [r606680] metadataedit/iptckeywords.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-21 11:49  cgilles
+
+	* [r606679] metadataedit/iptcdatetime.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-21 11:43  cgilles
+
+	* [r606677] metadataedit/iptccredits.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-21 11:40  cgilles
+
+	* [r606676] metadataedit/iptccategories.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-21 11:36  cgilles
+
+	* [r606674] metadataedit/iptccaption.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-21 09:32  cgilles
+
+	* [r606653] metadataedit/exiflight.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-21 09:30  cgilles
+
+	* [r606652] metadataedit/exiflens.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-21 09:22  cgilles
+
+	* [r606650] metadataedit/exifdevice.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-21 08:57  cgilles
+
+	* [r606648] metadataedit/exifdatetime.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-21 08:50  cgilles
+
+	* [r606646] metadataedit/exifadjust.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-21 08:47  cgilles
+
+	* [r606645] metadataedit/exifcaption.cpp:
+	  kipi-plugins from trunk : MetadataEdit : missing to clean widget
+	  before to change current picture to edit.
+
+2006-11-20 12:48  cgilles
+
+	* [r606427] metadataedit/commentremovedialog.cpp,
+	  metadataedit/commentremovedialog.h,
+	  metadataedit/plugin_metadataedit.cpp:
+	  code polishing
+
+2006-11-20 12:35  cgilles
+
+	* [r606424] metadataedit/Makefile.am,
+	  metadataedit/commenteditdialog.cpp,
+	  metadataedit/commenteditdialog.h,
+	  metadataedit/commentremovedialog.cpp,
+	  metadataedit/commentremovedialog.h,
+	  metadataedit/plugin_metadataedit.cpp,
+	  metadataedit/plugin_metadataedit.h:
+	  kipi-plugins from trunk : MetadataEdit : new option to remove
+	  Comments to a group of pictures. This tool will remove comments
+	  from all selected pictures selected on host application. You can
+	  remove IPTC/EXIF/JFIF comments at the same time.
+	  
+	  CCMAIL: digikam-devel@kde.org, kde-imaging@kde.org
+
+2006-11-20 11:00  seb
+
+	* [r606400] configure.in.in:
+	  Fix the check for libgpod in the configure, as some of the
+	  methods changed
+
+2006-11-20 09:34  cgilles
+
+	* [r606390] metadataedit/commenteditdialog.cpp,
+	  metadataedit/exifcaption.cpp:
+	  Fix i18n
+
+2006-11-20 09:22  cgilles
+
+	* [r606387] metadataedit/Makefile.am,
+	  metadataedit/commenteditdialog.cpp,
+	  metadataedit/commenteditdialog.h,
+	  metadataedit/plugin_metadataedit.cpp:
+	  kipi-plugins from trunk : MetadataEdit : new option to set
+	  Comments to a group of pictures. This tool will set the same
+	  comments to all selected pictures from host application. You can
+	  sync IPTC/EXIF/JFIF comments at the same time.
+	  
+	  A fresh screenshot :
+	  
+	  http://digikam3rdparty.free.fr/Screenshots/KipipluginBatchCommentsEditor.png
+	  
+	  CCMAIL: digikam-devel@kde.org, kde-imaging@kde.org
+
+2006-11-20 07:56  cgilles
+
+	* [r606372] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  kipi-plugins from trunk : Exiv2iface : fix return bool value
+	  with SetComments()
+
+2006-11-20 00:41  vfuoglio
+
+	* [r606320] timeadjust/Makefile.am,
+	  timeadjust/timeadjustdialog.cpp, timeadjust/timeadjustdialog.h:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-20 00:34  vfuoglio
+
+	* [r606319] simpleviewerexport/Makefile.am,
+	  simpleviewerexport/svedialog.cpp,
+	  simpleviewerexport/svedialog.h:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-20 00:27  vfuoglio
+
+	* [r606317] kameraklient/Makefile.am,
+	  kameraklient/cameraselection.cpp,
+	  kameraklient/cameraselection.h, kameraklient/cameraui.cpp,
+	  kameraklient/cameraui.h, kameraklient/setupcamera.cpp,
+	  kameraklient/setupcamera.h:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-20 00:10  vfuoglio
+
+	* [r606313] imagesgallery/Makefile.am,
+	  imagesgallery/imgallerydialog.cpp,
+	  imagesgallery/imgallerydialog.h:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-19 23:58  vfuoglio
+
+	* [r606312] htmlexport/Makefile.am, htmlexport/wizard.cpp,
+	  htmlexport/wizard.h:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-19 23:36  vfuoglio
+
+	* [r606309] flickrexport/Makefile.am,
+	  flickrexport/flickrwindow.cpp, flickrexport/flickrwindow.h:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-19 23:24  vfuoglio
+
+	* [r606306] findimages/Makefile.am, findimages/displaycompare.cpp,
+	  findimages/displaycompare.h,
+	  findimages/finddupplicatedialog.cpp,
+	  findimages/finddupplicatedialog.h:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-19 22:21  vfuoglio
+
+	* [r606294] calendar/Makefile.am, calendar/calwizard.cpp,
+	  calendar/calwizard.h:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-19 22:10  vfuoglio
+
+	* [r606289] batchprocessimages/Makefile.am,
+	  batchprocessimages/borderimagesdialog.cpp,
+	  batchprocessimages/borderimagesdialog.h,
+	  batchprocessimages/colorimagesdialog.cpp,
+	  batchprocessimages/colorimagesdialog.h,
+	  batchprocessimages/convertimagesdialog.cpp,
+	  batchprocessimages/convertimagesdialog.h,
+	  batchprocessimages/effectimagesdialog.cpp,
+	  batchprocessimages/effectimagesdialog.h,
+	  batchprocessimages/filterimagesdialog.cpp,
+	  batchprocessimages/filterimagesdialog.h,
+	  batchprocessimages/imagepreview.cpp,
+	  batchprocessimages/imagepreview.h,
+	  batchprocessimages/outputdialog.cpp,
+	  batchprocessimages/outputdialog.h,
+	  batchprocessimages/recompressimagesdialog.cpp,
+	  batchprocessimages/recompressimagesdialog.h,
+	  batchprocessimages/renameimagesdialog.cpp,
+	  batchprocessimages/renameimagesdialog.h,
+	  batchprocessimages/resizeimagesdialog.cpp,
+	  batchprocessimages/resizeimagesdialog.h:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-19 20:53  vfuoglio
+
+	* [r606276] acquireimages/Makefile.am,
+	  acquireimages/acquireimagedialog.cpp,
+	  acquireimages/acquireimagedialog.h:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-19 16:27  cguthrie
+
+	* [r606207] galleryexport/gallerywindow.cpp,
+	  galleryexport/gallerywindow.h:
+	  Fix that memory leak all the cool kids are talking about.
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-19 16:18  cgilles
+
+	* [r606205] metadataedit/plugin_metadataedit.cpp:
+	  typo again
+
+2006-11-19 15:09  cgilles
+
+	* [r606172] metadataedit/plugin_metadataedit.cpp,
+	  metadataedit/plugin_metadataedit.h:
+	  fix typo
+
+2006-11-19 08:43  cgilles
+
+	* [r606084] README:
+	  update
+
+2006-11-19 08:41  cgilles
+
+	* [r606082] README:
+	  update Exiv2 depency to future 0.12 release duing of an indeep
+	  internal bug into current 0.11 release.
+
+2006-11-18 18:53  cgilles
+
+	* [r605968] gpssync/getlonlat.php:
+	  patch from Heiner Lamprecht to show google map scale.
+
+2006-11-18 07:19  cgilles
+
+	* [r605769] NEWS:
+	  update
+
+2006-11-18 03:41  seb
+
+	* [r605748] htmlexport, htmlexport/themes/s0, slideshow:
+	  Update more of the svn:ignore propset
+
+2006-11-18 03:40  seb
+
+	* [r605747] rawconverter:
+	  Ignore the binary
+
+2006-11-18 03:39  seb
+
+	* [r605746] common/libkipiplugins:
+	  ignore generated files/dirs
+
+2006-11-18 03:38  seb
+
+	* [r605745] metadataedit:
+	  ignore generated files
+
+2006-11-18 03:37  seb
+
+	* [r605744] configure.in.in:
+	  update configure
+
+2006-11-18 03:37  seb
+
+	* [r605743] ipodexport/Makefile.am, ipodexport/imagelist.cpp,
+	  ipodexport/imagelist.h, ipodexport/imagelistitem.h,
+	  ipodexport/ipodexportdialog.cpp, ipodexport/ipodexportdialog.h,
+	  ipodexport/ipodheader.cpp, ipodexport/ipodheader.h,
+	  ipodexport/ipodlistitem.cpp, ipodexport/ipodlistitem.h:
+	  Merge ipod export sources to be current, and ready for release
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-17 22:28  anaselli
+
+	* [r605713] common/libkipiplugins/kpaboutdata.cpp:
+	  setProgramLogo is defined from kde 3.4.0 on
+	  CCBUG: 134037
+
+2006-11-17 16:20  vfuoglio
+
+	* [r605642] printwizard/Makefile.am,
+	  printwizard/frmprintwizard.cpp, printwizard/frmprintwizard.h:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-17 16:18  vfuoglio
+
+	* [r605641] mpegencoder/kimg2mpg.cpp, mpegencoder/kimg2mpg.h:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-17 16:17  vfuoglio
+
+	* [r605639] cdarchiving/Makefile.am,
+	  cdarchiving/cdarchivingdialog.cpp,
+	  cdarchiving/cdarchivingdialog.h:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-17 09:52  cgilles
+
+	* [r605575] common/exiv2iface/exiv2iface.cpp:
+	  fix return Exiv2 test values
+
+2006-11-17 07:26  cgilles
+
+	* [r605554] common/exiv2iface/exiv2iface.cpp:
+	  test return value from Exiv2
+
+2006-11-17 07:19  cgilles
+
+	* [r605552] common/exiv2iface/exiv2iface.cpp:
+	  test return value from Exiv2
+	  
+	  CCBUGS: 136855
+
+2006-11-17 07:13  cgilles
+
+	* [r605551] metadataedit/iptceditdialog.cpp:
+	  iptc <> exif
+	  
+	  CCBUGS: 136855
+
+2006-11-16 20:15  cgilles
+
+	* [r605460] metadataedit/exifcaption.cpp:
+	  missing signals/slots connections
+
+2006-11-16 19:34  vfuoglio
+
+	* [r605452] metadataedit/exifeditdialog.cpp,
+	  metadataedit/iptceditdialog.cpp:
+	  Fixed memory leaks (KHelpMenu unallocate about data)
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-16 16:38  vfuoglio
+
+	* [r605397] rawconverter/singledialog.cpp,
+	  rawconverter/singledialog.h:
+	  Fixed memory leaks (KHelpMenu unallocate about data)
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-16 16:37  vfuoglio
+
+	* [r605396] sendimages/sendimagesdialog.cpp,
+	  sendimages/sendimagesdialog.h:
+	  Fixed memory leaks (KHelpMenu unallocate about data)
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-16 16:37  vfuoglio
+
+	* [r605395] rawconverter/batchdialog.cpp,
+	  rawconverter/batchdialog.h:
+	  Fixed memory leaks (KHelpMenu unallocate about data)
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-16 16:31  vfuoglio
+
+	* [r605390] gpssync/gpssyncdialog.cpp:
+	  Fixed memory leaks (KHelpMenu unallocate about data)
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-16 14:39  cgilles
+
+	* [r605374] metadataedit/exifcaption.cpp,
+	  metadataedit/exifcaption.h, metadataedit/exifeditdialog.cpp,
+	  metadataedit/exifeditdialog.h, metadataedit/iptceditdialog.cpp,
+	  metadataedit/plugin_metadataedit.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : Exif Edit Dialog
+	  : add 3 new options to sync Exif User Comment with JFIF comment
+	  section, IPTC caption, and kipi host application comments
+	  (digiKam comment)
+	  
+	  CCBUGS: 136260
+
+2006-11-16 14:27  vfuoglio
+
+	* [r605372] slideshow/slideshowconfig.cpp,
+	  slideshow/slideshowconfig.h:
+	  Class SlideShowConfig: Renamed member "about" to "m_about".
+
+2006-11-16 13:46  cgilles
+
+	* [r605360] AUTHORS:
+	  typo
+
+2006-11-16 09:45  cgilles
+
+	* [r605303] common/exiv2iface/exiv2iface.h:
+	  compile
+
+2006-11-16 09:28  cgilles
+
+	* [r605301] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  kipi-plugins from trunk : compile under kubuntu without using
+	  C++ exception management everywhere : do not include exiv2
+	  headers in Exiv2Iface header.
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-16 08:08  cgilles
+
+	* [r605279] NEWS:
+	  update
+
+2006-11-16 07:25  gateau
+
+	* [r605272] batchprocessimages/renameimagesbase.ui,
+	  batchprocessimages/renameimageswidget.cpp,
+	  batchprocessimages/renameimageswidget.h:
+	  It's now possible to move files in the list.
+	  CCBUG: 136941
+
+2006-11-15 15:42  vfuoglio
+
+	* [r605150] slideshow/slideshowconfig.cpp,
+	  slideshow/slideshowconfig.h:
+	  Fixed memory leaks (KHelpMenu unallocate about data)
+	  
+	  CCMAIL: kdeimaging@kde.org
+
+2006-11-15 00:57  vfuoglio
+
+	* [r605023] sendimages/Makefile.am,
+	  sendimages/sendimagesdialog.cpp:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-15 00:56  vfuoglio
+
+	* [r605022] rawconverter/Makefile.am,
+	  rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-15 00:51  vfuoglio
+
+	* [r605020] metadataedit/Makefile.am,
+	  metadataedit/exifeditdialog.cpp,
+	  metadataedit/iptceditdialog.cpp:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-15 00:49  vfuoglio
+
+	* [r605019] gpssync/Makefile.am, gpssync/gpssyncdialog.cpp:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-14 23:54  cguthrie
+
+	* [r605011] galleryexport/Makefile.am,
+	  galleryexport/galleryconfig.cpp, galleryexport/gallerylist.cpp,
+	  galleryexport/gallerywindow.cpp:
+	  New KPAboutData changes.
+	  Added me as maintainer.
+	  Removed some unnecessary headers (still a few in there tho').
+	  Copied Valerio's changes from Slideshow. Thanks :)
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-14 23:13  anaselli
+
+	* [r605002] AUTHORS:
+	  Added Orgad Shaneh as the new Calendar maintainer
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-14 22:37  vfuoglio
+
+	* [r604984] slideshow/Makefile.am, slideshow/slideshowconfig.cpp:
+	  Used new KPAboutData
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-14 12:21  cgilles
+
+	* [r604810] metadataedit/plugin_metadataedit.cpp:
+	  Fix memory leak. Thanks mr valgrind
+
+2006-11-12 20:42  anaselli
+
+	* [r604437] NEWS:
+	  updated for bug 127476
+
+2006-11-12 20:40  anaselli
+
+	* [r604435] printwizard/frmprintwizard.cpp,
+	  printwizard/frmprintwizard.h, printwizard/frmprintwizardbase.ui:
+	  Added a workaround to allow user to understand what's happening
+	  looking at kjobviewer.
+	  
+	  BUG: 127476
+
+2006-11-11 17:49  cgilles
+
+	* [r604146] metadataedit/exifeditdialog.cpp,
+	  metadataedit/iptceditdialog.cpp:
+	  fix i18n
+
+2006-11-11 13:04  scripty
+
+	* [r604059] htmlexport/themes/s0/s0.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-11-10 15:30  gateau
+
+	* [r603870] batchprocessimages/renameimagesbase.ui,
+	  batchprocessimages/renameimageswidget.cpp:
+	  Set most settings in ui file. Disable sorting by clicking
+	  headers.
+
+2006-11-10 15:00  gateau
+
+	* [r603862] batchprocessimages/renameimagesbase.ui:
+	  Moved image list below options and make sure it uses all the
+	  available height
+	  if dialog is resized.
+
+2006-11-09 18:28  cgilles
+
+	* [r603682] NEWS:
+	  update
+
+2006-11-09 18:27  cgilles
+
+	* [r603681] NEWS:
+	  update
+
+2006-11-09 17:20  gateau
+
+	* [r603670] htmlexport/generator.cpp,
+	  htmlexport/htmlexportconfig.kcfg,
+	  htmlexport/imagesettingspage.ui:
+	  Reworked image and XML generation.
+	  Added an option to use the original file.
+	  BUG: 128341
+
+2006-11-09 16:38  cgilles
+
+	* [r603661] metadataedit/metadataeditdialog.cpp,
+	  metadataedit/metadataeditdialog.h,
+	  metadataedit/metadataitem.cpp, metadataedit/metadataitem.h:
+	  kipiplugins from trunk : MetadataEdit : clean up
+
+2006-11-09 16:32  cgilles
+
+	* [r603659] metadataedit/plugin_metadataedit.cpp,
+	  metadataedit/plugin_metadataedit.h:
+	  kipiplugins from trunk : MetadataEdit : Added Import EXif and
+	  Import IPTC options. Finalize plugin interface with host
+	  application. Ask properly to user before to apply definitive
+	  changes in metadata from pictures.
+	  
+	  BUG: 136257
+
+2006-11-09 08:06  cgilles
+
+	* [r603482] sendimages/sendimagesdialog.cpp:
+	  fix QString
+
+2006-11-09 08:00  cgilles
+
+	* [r603481] sendimages/sendimages.cpp,
+	  sendimages/sendimagesdialog.cpp:
+	  kipi-plugins from trunk: SendImages plugin: patch from Michael
+	  Höchstetter <michael.hoechstetter@gmx.de>:
+	  
+	  - correction of a too big factor (emails hat a maximal size of
+	  10.3 instead
+	   of 10 MB)
+	  - added a resize factor of 1600 pixels for printing purpose.
+
+2006-11-08 21:37  cgilles
+
+	* [r603423] metadataedit/exifeditdialog.cpp,
+	  metadataedit/exifeditdialog.h, metadataedit/iptceditdialog.cpp,
+	  metadataedit/iptceditdialog.h:
+	  kipi-plugins from trunk : MetadataEdit plugin : Cancel button to
+	  Close button
+
+2006-11-07 12:13  cgilles
+
+	* [r602965] NEWS, rawconverter/dcraw.c:
+	  kipi-plugins from trunk : RAWConverter : updated dcraw.c
+	  implementation to version 8.41
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-05 14:53  anaselli
+
+	* [r602252] AUTHORS:
+	  authors revising
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-05 00:29  gateau
+
+	* [r602017] htmlexport/generator.cpp:
+	  Clean up: moved some code from generateImagesAndXML to a new
+	  method.
+
+2006-11-03 13:05  scripty
+
+	* [r601495] gpssync/kipiplugin_gpssync.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-11-03 12:19  cgilles
+
+	* [r601480] NEWS:
+	  update
+
+2006-11-03 12:11  cgilles
+
+	* [r601479] metadataedit/Makefile.am, metadataedit/exifadjust.cpp,
+	  metadataedit/exifadjust.h, metadataedit/exifcaption.cpp,
+	  metadataedit/exifcaption.h, metadataedit/exifdatetime.cpp,
+	  metadataedit/exifdatetime.h, metadataedit/exifdevice.cpp,
+	  metadataedit/exifdevice.h, metadataedit/exifeditdialog.cpp,
+	  metadataedit/exifeditdialog.h, metadataedit/exiflens.cpp,
+	  metadataedit/exiflens.h, metadataedit/exiflight.cpp,
+	  metadataedit/exiflight.h, metadataedit/iptccaption.cpp,
+	  metadataedit/iptccaption.h, metadataedit/iptccategories.cpp,
+	  metadataedit/iptccategories.h, metadataedit/iptccredits.cpp,
+	  metadataedit/iptccredits.h, metadataedit/iptcdatetime.cpp,
+	  metadataedit/iptcdatetime.h, metadataedit/iptceditdialog.cpp,
+	  metadataedit/iptceditdialog.h, metadataedit/iptckeywords.cpp,
+	  metadataedit/iptckeywords.h, metadataedit/iptcorigin.cpp,
+	  metadataedit/iptcorigin.h, metadataedit/iptcstatus.cpp,
+	  metadataedit/iptcstatus.h, metadataedit/iptcsubjects.cpp,
+	  metadataedit/iptcsubjects.h,
+	  metadataedit/metadataeditdialog.cpp,
+	  metadataedit/plugin_metadataedit.cpp,
+	  metadataedit/plugin_metadataedit.h:
+	  kipi-plugins from trunk : MetadataEdit plugin :
+	  - The main dialog is now removed. This one do not give
+	  susbtancial informations to user : the host application
+	  interface is now used intead and it enough for this plugin.
+	  - All user actions are encapsuled into Images/Metadata sub-menu.
+	  - Actions are : Edit IPTC, Edit EXIF, Remove IPTC, Remove EXIF.
+	  - Add warning message when IPTC/EXIF data are removed from files.
+	  - The Editor dialogs are now inspired from old Comment&Tags Edit
+	  dialog from digiKam 0.8.x.
+	  - TODO : new option to add EXIF/IPTC to a list of picture using
+	  a file picture metadata. Of course all the pictures will have
+	  the same metadata.
+	  
+	  CCMAIL: digikam-devel@kde.org
+	  BUG: 136257
+
+2006-11-03 00:18  vfuoglio
+
+	* [r601365] slideshow/plugin_slideshow.cpp:
+	  Fix previous commit
+
+2006-11-02 23:43  vfuoglio
+
+	* [r601358] slideshow/Makefile.am, slideshow/plugin_slideshow.cpp,
+	  slideshow/slideshowconfig.cpp, slideshow/slideshowconfig.h,
+	  slideshow/slideshowconfigbase.ui:
+	  Created, with qtdesigner, slideshowconfigbase dialog for
+	  slideshowconfig class.
+	  Added me as maintainer.
+	  CCMAIL: kde-imaging@kde.org
+	  GUI
+
+2006-10-31 21:17  cgilles
+
+	* [r600798] common/exiv2iface/exiv2iface.cpp:
+	  revert
+
+2006-10-31 21:10  cgilles
+
+	* [r600795] common/exiv2iface/exiv2iface.cpp:
+	  invert
+
+2006-10-31 20:52  cgilles
+
+	* [r600788] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  new method to check if a file is read only with Exiv2
+
+2006-10-31 10:01  cgilles
+
+	* [r600640] gpssync/plugin_gpssync.cpp:
+	  show warning message when GPS info will be removed
+
+2006-10-30 13:09  scripty
+
+	* [r600403] gpssync/kipiplugin_gpssync.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-30 09:47  cgilles
+
+	* [r600299] metadataedit/Makefile.am,
+	  metadataedit/iptccaption.cpp, metadataedit/iptceditdialog.cpp,
+	  metadataedit/iptcsubjects.cpp, metadataedit/iptcsubjects.h:
+	  kipiplugins from trunk : MetadataEdit plugin: Fix IPTC Subjects
+	  edit method. because IPTC Subjects tags can be repeatable, a new
+	  tab have been added for that. This subjects editor do not
+	  provide a simple way to edit the IPTC Subjects following the
+	  IPTC spec appendix H-J but it resepct the repeatability of
+	  values in datasets (witch old implementation do not support).
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-10-30 09:34  cgilles
+
+	* [r600292] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  kipiplugins from trunk : Exiv2 interface : new methods to
+	  set/get IPTC Subjects data.
+
+2006-10-28 12:59  scripty
+
+	* [r599743] htmlexport/themes/s0/s0.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-27 11:42  scripty
+
+	* [r599489] htmlexport/themes/s0/s0.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-27 07:35  cgilles
+
+	* [r599450] metadataedit/iptcorigin.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: IPTC Origin editor
+	  settings use MetadataCheckBox widget.
+
+2006-10-27 07:30  cgilles
+
+	* [r599445] metadataedit/exifcaption.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: if only Exif
+	  Editor is used, record too Program ID tags.
+
+2006-10-27 07:16  cgilles
+
+	* [r599442] metadataedit/iptcstatus.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: IPTC Status editor
+	  settings use MetadataCheckBox widget.
+
+2006-10-26 19:43  cgilles
+
+	* [r599361] metadataedit/exifadjust.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : Exif Adjustments
+	  editor use MetadataCheckBox
+
+2006-10-26 14:36  cgilles
+
+	* [r599290] metadataedit/exiflight.cpp:
+	  kipiplugins from trunk : GPSSync plugin: fix Light Source tag
+	  value handling
+
+2006-10-26 12:21  cgilles
+
+	* [r599256] metadataedit/exiflight.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin : Exif Light editor
+	  : add MetadataCheckBox support
+
+2006-10-26 12:11  cgilles
+
+	* [r599253] metadataedit/exifadjust.cpp,
+	  metadataedit/exifdevice.cpp, metadataedit/exiflens.cpp,
+	  metadataedit/exiflight.cpp:
+	  polish
+
+2006-10-26 12:06  cgilles
+
+	* [r599250] metadataedit/exiflens.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin : Exif Lens editor
+	  : add MetadataCheckBox support
+
+2006-10-26 11:55  scripty
+
+	* [r599243] htmlexport/themes/s0/s0.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-26 11:16  cgilles
+
+	* [r599234] metadataedit/metadatacheckbox.cpp,
+	  metadataedit/metadatacheckbox.h:
+	  add more desc.
+
+2006-10-26 09:14  cgilles
+
+	* [r599205] gpssync/plugin_gpssync.cpp:
+	  kipiplugins from trunk : GPSSync plugin: fix error handling
+	  during read/write exif metadata from files
+	  CCMAIL: kde-imaging@kde.org
+
+2006-10-25 14:12  cgilles
+
+	* [r599038] metadataedit/exifdevice.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Device editor
+	  settings use MetadataCheckBox widget.
+
+2006-10-25 13:45  cgilles
+
+	* [r599029] metadataedit/Makefile.am,
+	  metadataedit/metadatacheckbox.cpp,
+	  metadataedit/metadatacheckbox.h:
+	  kipiplugins from trunk : MetadataEdit plugin: new metadata
+	  checkbox widget with a flag to be abble to check if the original
+	  tag value respect Exif spec.
+
+2006-10-25 11:13  cgilles
+
+	* [r598992] metadataedit/exifdevice.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Device
+	  informations editor: add Subject Distance Range settings
+	  
+	  CCBUGS: 103255
+
+2006-10-25 10:39  cgilles
+
+	* [r598987] metadataedit/exifdevice.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Device
+	  informations editor: add Scene Capture Type settings
+	  
+	  CCBUGS: 103255
+
+2006-10-25 10:26  cgilles
+
+	* [r598985] metadataedit/exifdevice.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Device
+	  informations editor: add File Source settings
+	  
+	  CCBUGS: 103255
+
+2006-10-25 08:58  cgilles
+
+	* [r598974] metadataedit/Makefile.am, metadataedit/exifadjust.cpp,
+	  metadataedit/exifcaption.cpp, metadataedit/exifdevice.cpp,
+	  metadataedit/exifdevice.h, metadataedit/exifeditdialog.cpp,
+	  metadataedit/exifexposure.cpp, metadataedit/exifexposure.h:
+	  kipiplugins from trunk : MetadataEdit plugin: rename Exif
+	  Exposure to Exif Device. Move 'Make' and 'Model' tags from
+	  Caption to Device Editor
+
+2006-10-25 07:46  cgilles
+
+	* [r598965] metadataedit/metadataeditdialog.cpp:
+	  fix comments
+
+2006-10-25 07:43  cgilles
+
+	* [r598962] gpssync/gpssyncdialog.cpp, gpssync/plugin_gpssync.cpp:
+	  kipiplugins from trunk : GPSSync plugin: refresh Image to
+	  updated picture when using 'Edit Geo. Coordinates' and 'Remove
+	  Geo. Coordinates' menu options.
+
+2006-10-25 07:32  cgilles
+
+	* [r598960] NEWS:
+	  update
+
+2006-10-25 07:30  cgilles
+
+	* [r598959] htmlexport/themes/s0,
+	  htmlexport/themes/s0/Makefile.am,
+	  htmlexport/themes/s0/arrows_source.svg,
+	  htmlexport/themes/s0/next.png,
+	  htmlexport/themes/s0/next_disabled.png,
+	  htmlexport/themes/s0/previous.png,
+	  htmlexport/themes/s0/previous_disabled.png,
+	  htmlexport/themes/s0/s0.desktop, htmlexport/themes/s0/style.css,
+	  htmlexport/themes/s0/template.xsl, htmlexport/themes/s0/up.png:
+	  kipiplugins from trunk : new HTML Export theme named "s0" from
+	  Petr Vanek
+	  See http://www.yarpen.cz/digikam for details
+	  CCMAIL: aurelien.gateau@free.fr
+
+2006-10-24 13:34  cgilles
+
+	* [r598749] metadataedit/exifeditdialog.cpp:
+	  i18n
+
+2006-10-24 13:14  cgilles
+
+	* [r598747] metadataedit/exifexposure.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
+	  informations editor: add Sensing Method settings
+	  
+	  CCBUGS: 103255
+
+2006-10-24 12:43  cgilles
+
+	* [r598741] metadataedit/exifadjust.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Picture
+	  Adjustments informations editor: add Custom Rendered settings
+	  
+	  CCBUGS: 103255
+
+2006-10-24 12:26  cgilles
+
+	* [r598736] metadataedit/exifadjust.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Picture
+	  Adjustments informations editor: add Sharpness settings
+	  
+	  CCBUGS: 103255
+
+2006-10-24 12:21  cgilles
+
+	* [r598735] metadataedit/exifadjust.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Picture
+	  Adjustments informations editor: add Saturation settings
+	  
+	  CCBUGS: 103255
+
+2006-10-24 12:15  cgilles
+
+	* [r598734] metadataedit/exifadjust.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Picture
+	  Adjustments informations editor: add Contrast settings
+	  
+	  CCBUGS: 103255
+
+2006-10-24 12:09  cgilles
+
+	* [r598732] metadataedit/Makefile.am, metadataedit/exifadjust.cpp,
+	  metadataedit/exifadjust.h, metadataedit/exifeditdialog.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: add Exif Picture
+	  Adjustments informations editor
+	  
+	  CCBUGS: 103255
+
+2006-10-24 11:56  scripty
+
+	* [r598726] gpssync/kipiplugin_gpssync.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  simpleviewerexport/kipiplugin_simpleviewer.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-24 11:02  cgilles
+
+	* [r598657] metadataedit/exifexposure.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
+	  informations editor: handle Exposure Index settings accordinly
+	  with ISO Speed Rating settings
+	  
+	  CCBUGS: 103255
+
+2006-10-24 10:53  cgilles
+
+	* [r598656] metadataedit/exifexposure.cpp:
+	  i18n
+
+2006-10-24 10:47  cgilles
+
+	* [r598655] metadataedit/exifexposure.cpp,
+	  metadataedit/exiflens.cpp, metadataedit/exiflight.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
+	  informations editor: add Exposure Bias Value settings
+	  
+	  CCBUGS: 103255
+
+2006-10-24 10:27  cgilles
+
+	* [r598651] metadataedit/exiflens.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Lens
+	  informations editor: add Digital Zoom Ratio settings
+	  
+	  CCBUGS: 103255
+
+2006-10-24 09:36  cgilles
+
+	* [r598637] metadataedit/Makefile.am,
+	  metadataedit/exifeditdialog.cpp, metadataedit/exifexposure.cpp,
+	  metadataedit/exifexposure.h, metadataedit/exiflens.cpp,
+	  metadataedit/exiflens.h, metadataedit/exiflight.cpp,
+	  metadataedit/exiflight.h, metadataedit/exifphoto.cpp,
+	  metadataedit/exifphoto.h:
+	  kipiplugins from trunk : MetadataEdit plugin: separate Exif
+	  photo informations to 3 sub-categories : Lens, Exposure, and
+	  Light
+	  
+	  CCBUGS: 103255
+
+2006-10-24 08:05  cgilles
+
+	* [r598626] gpssync/plugin_gpssync.cpp:
+	  i18n
+
+2006-10-24 08:00  cgilles
+
+	* [r598625] gpssync/gpseditdialog.cpp, gpssync/plugin_gpssync.cpp,
+	  gpssync/plugin_gpssync.h:
+	  kipiplugins from trunk : GPSSync plugin:
+	  
+	  plugin now provides 3 sub-menu entries (instead just one) :
+	  
+	  - Start GPS device correlator using current pictures selection.
+	  - Start Geographical Coordinates editor to tag current pictures
+	  selection.
+	  - Remove Geographical Coordinates from current pictures selection
+	  
+	  CCBUGS: 135451
+	  CCMAIL: kde-imaging@kde.org, digikam-devel@kde.org
+
+2006-10-23 14:16  cgilles
+
+	* [r598409] metadataedit/exifphoto.cpp:
+	  i18n
+
+2006-10-23 14:12  cgilles
+
+	* [r598407] metadataedit/exifphoto.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
+	  informations editor: add Flash Energy settings
+	  
+	  CCBUGS: 103255
+
+2006-10-23 13:20  cgilles
+
+	* [r598395] metadataedit/exifphoto.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
+	  informations editor: add Focal Lenght In 35mm Film settings
+	  
+	  CCBUGS: 103255
+
+2006-10-23 12:59  cgilles
+
+	* [r598385] metadataedit/exifphoto.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
+	  informations editor: add White Balance settings
+	  
+	  CCBUGS: 103255
+
+2006-10-23 12:42  cgilles
+
+	* [r598380] metadataedit/exifphoto.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
+	  informations editor: control Aperture Value tag with FNumber tag
+	  
+	  CCBUGS: 103255
+
+2006-10-23 12:15  cgilles
+
+	* [r598367] metadataedit/exifphoto.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
+	  informations editor: control Shutter Speed Value tag with
+	  Exposure Time tag
+	  
+	  CCBUGS: 103255
+
+2006-10-23 09:17  anaselli
+
+	* [r598335] mpegencoder/Makefile.am:
+	  fixed wrong commit
+
+2006-10-23 08:58  cgilles
+
+	* [r598331] metadataedit/exifphoto.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
+	  informations editor: added Max Aperture Value settings.
+	  
+	  CCBUGS: 103255
+
+2006-10-23 06:37  cgilles
+
+	* [r598284] metadataedit/exifphoto.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
+	  informations editor: Fix Aperture values controls again (ex.
+	  F2.8 ==> f/2.8)
+
+2006-10-23 06:00  cgilles
+
+	* [r598278] metadataedit/exifphoto.cpp:
+	  fix header
+
+2006-10-22 21:38  anaselli
+
+	* [r598211] mpegencoder/Makefile.am, mpegencoder/kimg2mpg.cpp:
+	  - Used new KPAboutData
+	  - Added me as a contributor
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-10-22 18:58  cgilles
+
+	* [r598173] metadataedit/metadataeditdialog.cpp,
+	  metadataedit/metadataitem.cpp:
+	  moved status info to Exif and Iptc col.
+
+2006-10-22 08:08  cgilles
+
+	* [r597975] metadataedit/metadataitem.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : Finalize plugin
+	  
+	  BUG: 91812, 103255
+
+2006-10-22 07:51  cgilles
+
+	* [r597969] metadataedit/iptckeywords.cpp:
+	  typo again (:=)))
+
+2006-10-21 21:40  anaselli
+
+	* [r597868] common/Makefile.am, common/include/kpaboutdata.h,
+	  common/libkipiplugins/Makefile.am,
+	  common/libkipiplugins/kpaboutdata.cpp, configure.in.in:
+	  Added new libkipiplugins common library
+	  - KPAboutData to be used into AboutDialog of each plugins
+	  
+	  Please test, use and improve it
+	  CCMAIL: kde-imaging@kde.org
+
+2006-10-21 21:29  anaselli
+
+	* [r597864] common/libkipiplugins:
+	  libkipiplugins directory for kipi-plugins common dialogs
+
+2006-10-21 19:20  cgilles
+
+	* [r597836] metadataedit/iptckeywords.cpp:
+	  typo
+
+2006-10-21 11:43  scripty
+
+	* [r597684] cdarchiving/kipiplugin_cdarchiving.desktop,
+	  htmlexport/kipiplugin_htmlexport.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  imagesgallery/kipiplugin_imagesgallery.desktop,
+	  jpeglossless/kipiplugin_jpeglossless.desktop,
+	  mpegencoder/kipiplugin_mpegencoder.desktop,
+	  rawconverter/kipiplugin_rawconverter.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-20 18:07  dfaure
+
+	* [r597552] gpssync/gpssyncdialog.cpp:
+	  You can't use \n in a message with a plural form, since the \n
+	  is the delimiter between translations
+	  (plus it was even used inconsistently)
+
+2006-10-20 14:03  cgilles
+
+	* [r597484] metadataedit/exifphoto.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
+	  informations editor: Fix Aperture values controls
+
+2006-10-20 12:59  cgilles
+
+	* [r597468] metadataedit/exifphoto.cpp:
+	  i18n
+
+2006-10-20 12:58  cgilles
+
+	* [r597465] metadataedit/Makefile.am,
+	  metadataedit/exifeditdialog.cpp, metadataedit/exifexposure.cpp,
+	  metadataedit/exifexposure.h, metadataedit/exifphoto.cpp,
+	  metadataedit/exifphoto.h:
+	  kipiplugins from trunk : MetadataEdit plugin: exifexposure ==>
+	  exifphoto
+
+2006-10-20 12:48  cgilles
+
+	* [r597460] metadataedit/exifexposure.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
+	  informations editor: added Flash Mode settings.
+	  
+	  CCBUGS: 103255
+
+2006-10-20 11:41  scripty
+
+	* [r597437] htmlexport/kipiplugin_htmlexport.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  simpleviewerexport/kipiplugin_simpleviewer.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-20 11:11  cgilles
+
+	* [r597432] metadataedit/exifexposure.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
+	  informations editor: added lens Focal Length settings.
+	  
+	  CCBUGS: 103255
+
+2006-10-20 09:40  cgilles
+
+	* [r597411] metadataedit/exifexposure.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
+	  informations editor: added Aperture (F-number) settings.
+	  
+	  CCBUGS: 103255
+
+2006-10-20 09:39  cgilles
+
+	* [r597410] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  kipiplugins from trunk : Exiv2 interface: using long int instead
+	  int with num and den extracted from Rational values
+
+2006-10-20 05:39  aumuell
+
+	* [r597364] ipodexport/ipodexportdialog.cpp:
+	  use SizeHuge instead of SizeEnormous icons below buttons in
+	  order to not exceed height of 768 pixels
+
+2006-10-19 19:59  cgilles
+
+	* [r597277] metadataedit/exifexposure.cpp:
+	  fix layout
+
+2006-10-19 19:41  cgilles
+
+	* [r597265] metadataedit/exifexposure.cpp:
+	  fix Light Source settings rules
+
+2006-10-19 19:20  cgilles
+
+	* [r597256] metadataedit/exifexposure.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : Exif Exposure
+	  editor : add Light Source settings
+	  
+	  CCBUGS: 103255
+
+2006-10-19 18:55  cgilles
+
+	* [r597251] metadataedit/exifeditdialog.cpp,
+	  metadataedit/iptceditdialog.cpp:
+	  i18n
+
+2006-10-19 18:53  cgilles
+
+	* [r597250] metadataedit/exifeditdialog.cpp:
+	  i18n
+
+2006-10-19 18:50  cgilles
+
+	* [r597249] metadataedit/exifexposure.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : Exif Exposure
+	  editor : add Metering Mode settings
+	  
+	  CCBUGS: 103255
+
+2006-10-18 20:29  cgilles
+
+	* [r596893] metadataedit/exifexposure.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : Exif Exposure
+	  editor : add ISO speed ratings settings
+	  
+	  CCBUGS: 103255
+
+2006-10-18 17:25  cgilles
+
+	* [r596848] metadataedit/exifexposure.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : Exif Exposure
+	  editor : add Exposure Mode settings
+	  
+	  CCBUGS: 103255
+
+2006-10-18 17:00  cgilles
+
+	* [r596842] metadataedit/exifexposure.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : Exif Exposure
+	  editor : add Exposure Program settings
+	  
+	  CCBUGS: 103255
+
+2006-10-18 16:52  cgilles
+
+	* [r596840] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  kipi-plugins from trunk : Exiv2 Interface : new methods to
+	  add/remove EXIF long tag values
+
+2006-10-18 14:28  cgilles
+
+	* [r596795] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  kipiplugins from trunk : Exiv2 interface: New method set/unset
+	  Exif tag rational value
+
+2006-10-18 14:27  cgilles
+
+	* [r596794] metadataedit/Makefile.am,
+	  metadataedit/exifeditdialog.cpp, metadataedit/exifexposure.cpp,
+	  metadataedit/exifexposure.h:
+	  kipiplugins from trunk : MetadataEdit plugin: started Exif
+	  Exposure informations editor. Not yet complete
+	  
+	  CCBUGS: 103255
+
+2006-10-18 13:09  seb
+
+	* [r596775] ipodexport/ipodexportdialog.cpp:
+	  Change the hdd icon to a system icon
+
+2006-10-18 11:40  cgilles
+
+	* [r596732] metadataedit/exifdatetime.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Date & Time
+	  informations editor support now sub-seconds time values.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  CCBUGS: 103255
+
+2006-10-18 09:00  cgilles
+
+	* [r596705] metadataedit/Makefile.am,
+	  metadataedit/exifdatetime.cpp, metadataedit/exifdatetime.h,
+	  metadataedit/exifeditdialog.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Date & Time
+	  informations editor is fully implemented.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  CCBUGS: 103255
+
+2006-10-18 07:45  cgilles
+
+	* [r596693] metadataedit/metadataeditdialog.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: capabaility to
+	  load EXIF metadata from a specific picture and apply it to a
+	  list of pictures
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  CCBUGS: 103255
+
+2006-10-18 07:39  cgilles
+
+	* [r596690] metadataedit/iptccategories.cpp,
+	  metadataedit/iptcdatetime.cpp, metadataedit/iptckeywords.cpp,
+	  metadataedit/metadataeditdialog.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: fix IPTC editor
+	  i18n following Mikolaj Machowski tips.
+	  
+	  CCBUGS: 91812
+
+2006-10-18 07:29  cgilles
+
+	* [r596688] metadataedit/exifcaption.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: Exif Caption
+	  informations editor is fully implemented.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  CCBUGS: 103255
+
+2006-10-18 07:03  cgilles
+
+	* [r596680] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  kipiplugins from trunk : Exiv2 interface: New method backported
+	  from digiKam core to get/set Exif user Comment. Give credit to
+	  Marcel
+
+2006-10-17 22:35  seb
+
+	* [r596599] ipodexport/imagelist.cpp, ipodexport/imagelist.h,
+	  ipodexport/ipodexportdialog.cpp, ipodexport/ipodexportdialog.h:
+	  Merge my long overdue local changes to the ipod export. I've
+	  refactored a little bit of it to ensure that the plugin can be
+	  used as a standalone application for when that time comes.
+	  I also seemed to lose the "About Data" which colin added, but it
+	  wouldn't compile either, so i'll look into that a little later.
+
+2006-10-17 20:01  cgilles
+
+	* [r596525] metadataedit/exifcaption.cpp,
+	  metadataedit/exifeditdialog.cpp:
+	  Exif metadata editor GUI implemented.
+
+2006-10-17 14:45  cgilles
+
+	* [r596449] metadataedit/exifcaption.cpp:
+	  compile
+
+2006-10-17 14:45  cgilles
+
+	* [r596448] metadataedit/Makefile.am,
+	  metadataedit/exifcaption.cpp, metadataedit/exifcaption.h:
+	  kipiplugins from trunk : MetadataEdit plugin: add EXIF caption
+	  page (not yet complete)
+
+2006-10-17 14:35  cgilles
+
+	* [r596444] metadataedit/Makefile.am,
+	  metadataedit/exifeditdialog.cpp, metadataedit/exifeditdialog.h,
+	  metadataedit/metadataeditdialog.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: starting
+	  implementation of EXIF editor
+
+2006-10-17 13:54  cgilles
+
+	* [r596432] metadataedit/metadataeditdialog.cpp:
+	  fix i18n
+
+2006-10-17 13:52  cgilles
+
+	* [r596431] metadataedit/metadataeditdialog.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: capabaility to
+	  load IPTC metadata from a specific picture and apply it to a
+	  list of pictures
+
+2006-10-17 11:47  cgilles
+
+	* [r596404] NEWS:
+	  update
+
+2006-10-17 11:35  scripty
+
+	* [r596396] gpssync/kipiplugin_gpssync.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  mpegencoder/kipiplugin_mpegencoder.desktop,
+	  simpleviewerexport/kipiplugin_simpleviewer.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-17 09:53  cgilles
+
+	* [r596376] metadataedit/iptcorigin.cpp:
+	  fix country code decoding
+
+2006-10-17 09:06  cgilles
+
+	* [r596365] metadataedit/iptccategories.cpp:
+	  fix i18n
+
+2006-10-17 08:59  cgilles
+
+	* [r596364] metadataedit/iptcstatus.cpp:
+	  add comment
+
+2006-10-17 08:58  cgilles
+
+	* [r596363] metadataedit/iptcstatus.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: store host app
+	  name and version in IPTC ProgramName tag
+
+2006-10-17 08:35  cgilles
+
+	* [r596354] metadataedit/iptcorigin.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin: IPTC Origin
+	  informations editor now support all country codes define by
+	  ISO-3166 norm.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  CCBUGS: 91812, 133276, 103255
+
+2006-10-16 11:06  cgilles
+
+	* [r595975] metadataedit/iptcstatus.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : polish source
+	  code : set automaticly IPTC Program/version tags
+	  
+	  CCBUGS: 91812, 133276, 103255
+
+2006-10-16 09:50  cgilles
+
+	* [r595961] metadataedit/iptcstatus.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : add
+	  ObjectAttribute IPTC tag to status editor page.
+	  
+	  CCBUGS: 91812, 133276, 103255
+
+2006-10-16 09:02  cgilles
+
+	* [r595953] metadataedit/iptcstatus.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : add ObjectType
+	  IPTC tag to status editor page.
+	  
+	  CCBUGS: 91812, 133276, 103255
+
+2006-10-16 07:51  cgilles
+
+	* [r595936] metadataedit/iptccategories.cpp:
+	  compile
+
+2006-10-16 07:50  cgilles
+
+	* [r595935] metadataedit/iptccategories.cpp,
+	  metadataedit/iptckeywords.cpp:
+	  kipi-plugins from trunk : add whatthis
+
+2006-10-16 07:38  cgilles
+
+	* [r595932] metadataedit/iptccategories.cpp,
+	  metadataedit/iptccategories.h:
+	  kipi-plugins from trunk : MetadataEdit plugin : IPTC Categories
+	  editor page is now implemented.
+	  
+	  CCMAIL: digikam-devel@kde.org, kde-imaging@kde.org
+	  CCBUGS: 91812, 133276, 103255
+
+2006-10-16 07:26  cgilles
+
+	* [r595930] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  kipi-plugins from trunk : Exiv2Iface : new methods to add/remove
+	  IPTC Sub-Categories
+
+2006-10-16 07:03  cgilles
+
+	* [r595926] metadataedit/Makefile.am,
+	  metadataedit/iptceditdialog.cpp, metadataedit/iptcorigin.cpp:
+	  typo
+
+2006-10-15 16:32  cgilles
+
+	* [r595781] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  kipi-plugins from trunk : Exiv2Iface : backport methods from
+	  digiKam core to add/remove IPTC keywords
+
+2006-10-15 16:31  cgilles
+
+	* [r595780] metadataedit/Makefile.am,
+	  metadataedit/iptceditdialog.cpp, metadataedit/iptckeywords.cpp,
+	  metadataedit/iptckeywords.h:
+	  kipi-plugins from trunk : MetadataEdit plugin : IPTC Keywords
+	  editor page is now implemented.
+	  
+	  CCMAIL: digikam-devel@kde.org, kde-imaging@kde.org
+	  CCBUGS: 91812, 133276, 103255
+
+2006-10-15 11:34  scripty
+
+	* [r595674] gpssync/kipiplugin_gpssync.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-14 12:54  cgilles
+
+	* [r595477] metadataedit/iptcorigin.cpp:
+	  kipi-plugins from trunk : IPTC origin page can set/unset tags
+
+2006-10-14 12:34  cgilles
+
+	* [r595475] metadataedit/iptcstatus.cpp:
+	  kipi-plugins from trunk : IPTC status page can set/unset tags
+
+2006-10-14 11:49  cgilles
+
+	* [r595464] metadataedit/iptccredits.cpp:
+	  kipi-plugins from trunk : IPTC credit page can set/unset tags
+
+2006-10-14 11:42  scripty
+
+	* [r595460] gpssync/kipiplugin_gpssync.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  printwizard/kipiplugin_printwizard.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-13 20:41  cgilles
+
+	* [r595284] metadataedit/iptccaption.cpp:
+	  capbility to set/unset IPTC Caption tags from metadata
+
+2006-10-13 19:11  cgilles
+
+	* [r595263] metadataedit/metadataeditdialog.cpp:
+	  typo
+
+2006-10-13 14:32  cgilles
+
+	* [r595212] metadataedit/iptcorigin.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin:
+	  
+	  Missing IPTC LocationName and LocationCode tags.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  CCBUGS: 91812, 133276, 103255
+
+2006-10-13 14:11  cgilles
+
+	* [r595205] metadataedit/iptccaption.cpp,
+	  metadataedit/iptccredits.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin:
+	  
+	  Missing IPTC Contact and Subject tags.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  CCBUGS: 91812, 133276, 103255
+
+2006-10-13 13:50  cgilles
+
+	* [r595193] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  kipi-plugins from trunk : new methods to remove Exif or Iptc tag
+
+2006-10-13 13:49  cgilles
+
+	* [r595192] metadataedit/Makefile.am,
+	  metadataedit/iptcdatetime.cpp, metadataedit/iptcdatetime.h,
+	  metadataedit/iptceditdialog.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin:
+	  
+	  Added IPTC Date & Time informations in IPTC Edit dialog
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  CCBUGS: 91812, 133276, 103255
+
+2006-10-13 12:09  cgilles
+
+	* [r595152] metadataedit/Makefile.am,
+	  metadataedit/iptceditdialog.cpp, metadataedit/iptceditdialog.h,
+	  metadataedit/iptcorigin.cpp, metadataedit/iptcorigin.h:
+	  kipiplugins from trunk : MetadataEdit plugin:
+	  
+	  Added IPTC Origin informations in IPTC Edit dialog
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  CCBUGS: 91812, 133276, 103255
+
+2006-10-13 11:41  scripty
+
+	* [r595148] gpssync/kipiplugin_gpssync.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-13 09:16  cgilles
+
+	* [r595071] metadataedit/Makefile.am,
+	  metadataedit/iptccredits.cpp, metadataedit/iptceditdialog.cpp,
+	  metadataedit/iptcstatus.cpp, metadataedit/iptcstatus.h:
+	  kipiplugins from trunk : MetadataEdit plugin:
+	  
+	  Added IPTC Status informations in IPTC Edit dialog
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  CCBUGS: 91812, 133276, 103255
+
+2006-10-13 07:43  cgilles
+
+	* [r595034] metadataedit/metadataitem.cpp:
+	  kipi-plugins from trunk : MetadataEdit plugin : to be able to
+	  clear Exif or Iptc metadata
+
+2006-10-13 07:40  cgilles
+
+	* [r595033] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  kipi-plugins from trunk : new methods to clear Exif or Iptc
+	  metadata
+
+2006-10-13 07:20  cgilles
+
+	* [r595027] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  kipiplugins from trunk : Exiv2Iface update : to be able to
+	  set/get IPTC/exif text tags
+
+2006-10-13 07:19  cgilles
+
+	* [r595026] metadataedit/iptccaption.cpp,
+	  metadataedit/iptccredits.cpp, metadataedit/iptceditdialog.cpp,
+	  metadataedit/metadataeditdialog.cpp,
+	  metadataedit/metadataitem.cpp:
+	  kipiplugins from trunk : MetadataEdit plugin:
+	  
+	  "Et Voila"... The IPTC metadata can be changed/set from
+	  pictures. The IPTC data set to edit is not yet complete, but a
+	  more complete edit dialog coming soon...
+	  
+	  CCMAIL: digikam-devel@kde.org, kde-imaging@kde.org
+	  CCBUGS: 91812, 133276, 103255
+
+2006-10-13 05:30  cgilles
+
+	* [r595011] metadataedit/iptccaption.cpp,
+	  metadataedit/iptccaption.h, metadataedit/iptccredits.cpp,
+	  metadataedit/iptccredits.h, metadataedit/iptceditdialog.cpp:
+	  Fix read/save metadata methods
+
+2006-10-12 20:30  cgilles
+
+	* [r594928] README:
+	  update
+
+2006-10-12 19:24  cgilles
+
+	* [r594900] Makefile.am:
+	  update
+
+2006-10-12 19:23  cgilles
+
+	* [r594899] metadataedit, metadataedit/Makefile.am,
+	  metadataedit/iptccaption.cpp, metadataedit/iptccaption.h,
+	  metadataedit/iptccredits.cpp, metadataedit/iptccredits.h,
+	  metadataedit/iptceditdialog.cpp, metadataedit/iptceditdialog.h,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  metadataedit/metadataeditdialog.cpp,
+	  metadataedit/metadataeditdialog.h,
+	  metadataedit/metadataitem.cpp, metadataedit/metadataitem.h,
+	  metadataedit/plugin_metadataedit.cpp,
+	  metadataedit/plugin_metadataedit.h:
+	  kipiplugins from trunk : new plugin to edit EXIF photograph tags
+	  and IPTC tags of pictures
+	  This tool can be used on single or batch mode.
+	  
+	  Note: this plugin is under developement. It's not yet suitable.
+	  
+	  CCMAIL: digikam-devel@kde.org, kde-imaging@kde.org
+	  CCBUGS: 91812, 133276, 103255
+
+2006-10-12 12:40  cgilles
+
+	* [r594825] ipodexport/Makefile.am,
+	  ipodexport/ipodexportdialog.cpp, ipodexport/ipodexportdialog.h:
+	  kipi-plugins from trunk: iPod Export plugin : just add standard
+	  main dialog Help menu like others plugins witch provide :
+	  
+	  - kipi-plugins release number.
+	  - link to the right bug report in B.K.O
+	  - info about author
+	  - link to the future handbook.
+
+2006-10-12 10:38  cgilles
+
+	* [r594790] NEWS:
+	  update
+
+2006-10-12 10:37  cgilles
+
+	* [r594789] gpssync/gpssyncdialog.cpp,
+	  gpssync/kipiplugin_gpssync.desktop, gpssync/plugin_gpssync.cpp:
+	  kipi-plugins from trunk : using 'geolocalization' to naming
+	  GPSSync plugin on hosts.
+	  BUG: 135353
+
+2006-10-12 10:35  cgilles
+
+	* [r594788] README:
+	  update
+
+2006-10-12 08:51  cgilles
+
+	* [r594769] NEWS:
+	  update
+
+2006-10-12 06:55  cgilles
+
+	* [r594746] gpssync/gpslistviewitem.cpp:
+	  kipiplugins from trunk : GPSSync : missing to pass parent
+	  instance to QObject.
+	  This can cause broken dispatch events.
+	  
+	  Please, let's me hear if this patch fix the problem. I have
+	  located others implementations
+	  where this problem exist.
+	  
+	  CCBUGS: 135484
+
+2006-10-11 13:24  cgilles
+
+	* [r594499] gpssync/gpssyncdialog.cpp:
+	  polish
+
+2006-10-11 11:31  cgilles
+
+	* [r594457] jpeglossless/utils.cpp, rawconverter/dcrawiface.cpp,
+	  rawconverter/plugin_rawconverter.cpp:
+	  kipi-plugins from trunk : Raw converter and JPEGLossLess plugin
+	  don't check properly the filenale extension.
+	  CCBUGS: 135237
+
+2006-10-11 11:23  cgilles
+
+	* [r594452] NEWS:
+	  update
+
+2006-10-11 11:18  cgilles
+
+	* [r594449] gpssync/gpslistviewitem.cpp,
+	  gpssync/gpssyncdialog.cpp:
+	  polish read only pictures status rule
+
+2006-10-11 08:03  cgilles
+
+	* [r594416] gpssync/gpslistviewitem.cpp,
+	  gpssync/gpssyncdialog.cpp:
+	  polish
+
+2006-10-11 07:46  cgilles
+
+	* [r594412] gpssync/gpssyncdialog.cpp:
+	  typo
+
+2006-10-11 07:43  cgilles
+
+	* [r594410] gpssync/gpssyncdialog.cpp:
+	  typo
+
+2006-10-11 07:39  cgilles
+
+	* [r594409] gpssync/gpssyncdialog.cpp:
+	  polish
+
+2006-10-11 07:37  cgilles
+
+	* [r594408] gpssync/gpssyncdialog.cpp:
+	  polish
+
+2006-10-11 07:33  cgilles
+
+	* [r594406] gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h:
+	  polish
+
+2006-10-11 06:49  cgilles
+
+	* [r594401] gpssync/plugin_gpssync.h:
+	  polish
+
+2006-10-11 06:40  cgilles
+
+	* [r594398] gpssync/plugin_gpssync.cpp, gpssync/plugin_gpssync.h:
+	  polish
+
+2006-10-11 05:52  cgilles
+
+	* [r594388] rawconverter/savesettingswidget.cpp:
+	  kipi-plugins from trunk : fix automaticly to automatically
+	  BUG:135430
+
+2006-10-10 14:15  cgilles
+
+	* [r594212] gpssync/gpslistviewitem.cpp,
+	  gpssync/gpslistviewitem.h, gpssync/gpssyncdialog.cpp:
+	  kipi-plugins from trunk : GPSSync : to be able to handle Read
+	  Only pictures file format. Just to display GPS location if it
+	  available.
+
+2006-10-10 12:35  cgilles
+
+	* [r594192] rawconverter/Makefile.am, rawconverter/dcraw.c,
+	  rawconverter/dcrawbinary.cpp, rawconverter/dcrawiface.cpp,
+	  rawconverter/plugin_rawconverter.cpp:
+	  kipi-plugins from trunk : RAW Converter : bye bye external dcraw
+	  depency :
+	  
+	  Raw onverter plugin use a dedicaced dcraw binary program to run.
+	  This is mandatory since dcraw author have broken the command
+	  line options
+	  compatibility with the 8.x serie.
+	  
+	  Also, dcraw is not available like a library!
+	  
+	  The dcraw.c source code embeded in plugin is just a copy of
+	  official implementation, but this one have been completly tested
+	  with plugin.
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-10-10 12:30  cgilles
+
+	* [r594189] NEWS, README:
+	  update
+
+2006-10-08 17:02  cguthrie
+
+	* [r593666] galleryexport/Makefile.am,
+	  galleryexport/exifrestorer.cpp, galleryexport/exifrestorer.h,
+	  galleryexport/gallerytalker.cpp, galleryexport/jpegsection.h:
+	  Convert to Exiv2 Exif restorer.
+	  CCBUG: 129856
+
+2006-10-08 12:56  cguthrie
+
+	* [r593599] configure.in.in:
+	  iPod Export requires libgpod 0.4.0+
+
+2006-10-08 12:25  cguthrie
+
+	* [r593587] configure.in.bot:
+	  Fix small copy/paste typo in the message relating Exiv2 not
+	  being found.
+
+2006-10-05 21:15  anaselli
+
+	* [r592815] NEWS, sendimages/plugin_sendimages.cpp,
+	  sendimages/sendimages.cpp, sendimages/sendimages.h,
+	  sendimages/sendimagesdialog.cpp, sendimages/sendimagesdialog.h:
+	  Added size limit per mail (by Michael Höchstetter)
+	  Added a check if at least one image has been added to a mail
+	  
+	  CCMAIL: kde-imaging@kde.org, michael.hoechstetter@gmx.de
+
+2006-10-05 16:31  cgilles
+
+	* [r592758] NEWS:
+	  update
+
+2006-10-05 16:29  cgilles
+
+	* [r592757] gpssync/gpssyncdialog.cpp:
+	  typo
+
+2006-10-05 16:28  cgilles
+
+	* [r592756] gpssync/gpslistviewitem.cpp:
+	  Fix disty status when Metadata are written in pictures.
+	  
+	  BUG:135157
+
+2006-10-05 16:20  cgilles
+
+	* [r592750] NEWS:
+	  update
+
+2006-10-05 12:23  scripty
+
+	* [r592695] gpssync/kipiplugin_gpssync.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-05 07:41  cgilles
+
+	* [r592623] gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h:
+	  kipi-plugins from trunk : GPSSync : if one image is dirty from
+	  the list, closing dialog will please user to take a care about
+	  to apply pictures changes
+
+2006-10-05 07:34  cgilles
+
+	* [r592621] jpeglossless/jpegtransform.cpp:
+	  wrong commit. revert
+
+2006-10-05 07:32  cgilles
+
+	* [r592620] gpssync/gpssyncdialog.cpp,
+	  jpeglossless/jpegtransform.cpp:
+	  kipi-plugins from trunk : GPSSync : if one image is dirty from
+	  the list, closing dialog will please user to take a care about
+	  to apply pictures changes
+
+2006-10-05 07:03  cgilles
+
+	* [r592615] gpssync/Makefile.am, jpeglossless/Makefile.am,
+	  rawconverter/Makefile.am, timeadjust/Makefile.am:
+	  kipi-plugins from trunk : check libexiv2iface depency when it's
+	  mandatory
+
+2006-10-04 11:29  scripty
+
+	* [r592306] gpssync/kipiplugin_gpssync.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-04 10:25  anaselli
+
+	* [r592295] acquireimages/Makefile.am,
+	  batchprocessimages/Makefile.am, calendar/Makefile.am,
+	  cdarchiving/Makefile.am, common/exiv2iface/Makefile.am,
+	  configure.in.in, findimages/Makefile.am,
+	  flickrexport/Makefile.am, galleryexport/Makefile.am,
+	  gpssync/Makefile.am, htmlexport/Makefile.am,
+	  imagesgallery/Makefile.am, jpeglossless/Makefile.am,
+	  kameraklient/Makefile.am, mpegencoder/Makefile.am,
+	  printwizard/Makefile.am, rawconverter/Makefile.am,
+	  sendimages/Makefile.am, simpleviewerexport/Makefile.am,
+	  slideshow/Makefile.am, timeadjust/Makefile.am:
+	  fix problem using automake & co.
+	  - added KIPI_PLUGINS_COMMON_INCLUDE into configure.in.in
+	  (please test it for regressions)
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-10-04 10:23  cgilles
+
+	* [r592292] common/exiv2iface/exiv2iface.cpp:
+	  kipi-plugins from trunk : bugfix in altitude and longitude
+	  decoding
+
+2006-10-03 10:19  cgilles
+
+	* [r591843] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  kipi-plugins from trunk : Exiv2 interface : fix lat/lon/alt GPS
+	  ref extraction
+
+2006-10-03 10:18  cgilles
+
+	* [r591842] gpssync/gpslistviewitem.cpp,
+	  gpssync/gpssyncdialog.cpp:
+	  kipi-plugins from trunk : GPSSync : re-design list view contents
+	  like Sony GPS Image tracker do.
+
+2006-10-03 07:38  cgilles
+
+	* [r591810] common/exiv2iface/exiv2iface.cpp:
+	  kipi-plugins from trunk : fix broken GPS location decoding using
+	  current Exiv2 implementation. Backport getGPSInfo method from
+	  digikam core
+
+2006-10-02 13:26  cgilles
+
+	* [r591457] gpssync/getlonlat.php, gpssync/gpsmapwidget.cpp:
+	  kipi-plugins from trunk : GPSSync tool : fix php script
+	  parameters
+
+2006-10-02 12:46  cgilles
+
+	* [r591444] gpssync/gpsmapwidget.cpp:
+	  kipi-plugins from trunk: GPSSync: Fix broken mouse release event
+	  with google map widget. Thanks to Marcel for this report
+
+2006-10-02 11:40  scripty
+
+	* [r591426] gpssync/kipiplugin_gpssync.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-10-01 18:18  cgilles
+
+	* [r591107] gpssync/gpseditdialog.cpp:
+	  fix typo
+
+2006-09-30 12:55  cgilles
+
+	* [r590552] gpssync/gpsmapwidget.cpp:
+	  using Safari browser is do not improve gg maps rendering
+
+2006-09-30 12:33  cgilles
+
+	* [r590544] gpssync/gpsmapwidget.cpp:
+	  force KHTLMPart to use safari browser id with google maps
+
+2006-09-30 09:09  cgilles
+
+	* [r590455] NEWS:
+	  update
+
+2006-09-30 09:03  cgilles
+
+	* [r590452] gpssync/gpsdataparser.cpp:
+	  kipi-plugins from trunk : GPSSync : optimize GPX data parsing to
+	  search the minimal diff time.
+	  
+	  Fabien, your patch is not optimum because it don't check all
+	  items in the list. In fact if the date list of GPS point isn't
+	  sorted using time stamp, your optimization don't work.
+	  
+	  Of course i will very surprise if the gps data list is not
+	  sorted in time (:=))). But like I have none experience with GPS
+	  data, we must care about this point.
+	  
+	  Please test this patch indeep and give me your feedback. Thanks
+	  in advance.
+	  
+	  CCBUGS: 134747
+
+2006-09-29 13:15  cgilles
+
+	* [r590188] gpssync/gpseditdialog.cpp:
+	  fix typo
+
+2006-09-29 13:12  cgilles
+
+	* [r590187] gpssync/gpseditdialog.cpp:
+	  fix typo
+
+2006-09-29 12:45  cgilles
+
+	* [r590177] gpssync/gpseditdialog.cpp, gpssync/gpseditdialog.h,
+	  gpssync/gpslistviewitem.cpp, gpssync/gpslistviewitem.h,
+	  gpssync/gpssyncdialog.cpp:
+	  kipi-plugins from trunk : GPSSync tool : set properly the map
+	  zoom level if picture don't have GPS info
+
+2006-09-29 12:32  cgilles
+
+	* [r590169] gpssync/gpseditdialog.h, gpssync/gpsmapwidget.cpp,
+	  gpssync/gpsmapwidget.h:
+	  using d private internal class
+
+2006-09-29 12:28  cgilles
+
+	* [r590167] gpssync/getlonlat.php, gpssync/gpsmapwidget.cpp:
+	  kipi-plugins from trunk : GPSSync tool : handle properly the
+	  zoom level from the Google Maps
+
+2006-09-29 11:51  cgilles
+
+	* [r590155] gpssync/getlonlat.php, gpssync/gpsmapwidget.cpp,
+	  gpssync/gpsmapwidget.h:
+	  remember map zoom level if map is resized.
+
+2006-09-29 10:10  cgilles
+
+	* [r590113] gpssync/gpseditdialog.h:
+	  compile with GCC 4.1
+
+2006-09-29 10:04  cgilles
+
+	* [r590109] gpssync/getlonlat.php, gpssync/gpseditdialog.cpp,
+	  gpssync/gpseditdialog.h, gpssync/gpsmapwidget.cpp,
+	  gpssync/gpsmapwidget.h:
+	  kipi-plugins from trunk : GPSSync tool : The GPS location editor
+	  dialog now display the Google Maps view like a real widget,
+	  without margin and depending of the dialog size. If you reduce
+	  or increase dialog size, the world map size will be updated in
+	  live.
+	  
+	  CCMAIL: gerhard@kulzer.net, kde-imaging@ke.org
+	  
+	  BUG: 133359
+	  CCBUGS: 111560
+
+2006-09-28 21:15  cgilles
+
+	* [r589881] gpssync/gpsmapwidget.cpp:
+	  fix html property
+
+2006-09-28 21:11  cgilles
+
+	* [r589879] gpssync/gpseditdialog.cpp, gpssync/gpseditdialog.h,
+	  gpssync/gpsmapwidget.cpp, gpssync/gpsmapwidget.h:
+	  reduce signal emits to check new lat. lon. from map before to
+	  send it
+
+2006-09-28 20:57  cgilles
+
+	* [r589877] gpssync/gpseditdialog.cpp:
+	  fix layout
+
+2006-09-28 20:53  cgilles
+
+	* [r589875] gpssync/gpseditdialog.cpp, gpssync/gpseditdialog.h:
+	  fix events to use to save settings properly.
+
+2006-09-28 14:12  cgilles
+
+	* [r589712] gpssync/gpseditdialog.cpp, gpssync/gpssyncdialog.cpp:
+	  kipi-plugins from trunk : GPSSync tool : fix signals from buttons
+
+2006-09-28 14:07  cgilles
+
+	* [r589704] gpssync/gpseditdialog.cpp:
+	  kipi-plugins from trunk : GPSSync tool : fix layout
+
+2006-09-28 11:47  scripty
+
+	* [r589637] gpssync/kipiplugin_gpssync.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-09-28 10:51  cgilles
+
+	* [r589554] gpssync/Makefile.am, gpssync/getlonlat.php,
+	  gpssync/gpseditdialog.cpp, gpssync/gpseditdialog.h,
+	  gpssync/gpsmapwidget.cpp, gpssync/gpsmapwidget.h:
+	  kipi-plugins from trunk : GPSSync tool : The GPS location editor
+	  dialognow use a dediced Google Maps to select the right place
+	  where have been taken the pictures.
+	  
+	  Improvements :
+	  
+	  - If the current picture already have GPS coordinates, the map
+	  will pan to the right place automaiticly at session startup!
+	  
+	  - The GPS coordinates are automaticly captured by the dialog
+	  when the user right click on the map ! There is nothing to do
+	  manually to set the GPS location...
+	  
+	  Angelo: with this plugin, i'm using a little php script to
+	  handle the google map with is interfaced with the plugin dialog
+	  ! This php script is hosted actually in a 3rd party digikam
+	  page. I would to host this page in the new kipi-plugins web
+	  project page. Can you help me ?
+	  
+	  Noe : there is a copy of php script in svn.
+	  
+	  CCMAIL: gerhard@kulzer.net, kde-imaging@ke.org
+	  
+	  BUG: 133359
+	  CCBUGS: 111560
+
+2006-09-28 06:47  cgilles
+
+	* [r589488] gpssync/gpseditdialog.cpp, gpssync/gpseditdialog.h,
+	  gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h:
+	  kipi-plugins from trunk : GPSSync tool : "Remove" button to
+	  delete GPS data from picture is now on main dialog.
+	  
+	  CCMAIL: gerhard@kulzer.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-28 00:21  seb
+
+	* [r589347] ipodexport/ipodexportdialog.cpp:
+	  Improve ipod detection times by a magnitude
+
+2006-09-27 15:17  seb
+
+	* [r589076] configure.in.in, ipodexport/Makefile.am,
+	  ipodexport/imagelistitem.cpp, ipodexport/imagelistitem.h,
+	  ipodexport/ipodexportdialog.cpp:
+	  Port to newer libgpod-cvs api (still works with 0.4.0)
+
+2006-09-27 14:46  cgilles
+
+	* [r589066] NEWS:
+	  update
+
+2006-09-27 14:45  cgilles
+
+	* [r589065] common/exiv2iface/exiv2iface.cpp:
+	  kipi-plugins from trunk : fix GPS altitude value extraction.
+	  
+	  BUG: 134749
+
+2006-09-27 14:21  cgilles
+
+	* [r589056] gpssync/gpseditdialog.cpp, gpssync/gpseditdialog.h:
+	  kipi-plugins from trunk : GPSSync tool : remember the GPS
+	  position editor dialog settings between sessions.
+	  
+	  CCMAIL: gerhard@kulzer.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-27 12:28  cgilles
+
+	* [r589006] gpssync/gpseditdialog.cpp:
+	  fix i18n
+
+2006-09-27 12:27  cgilles
+
+	* [r589005] gpssync/gpslistviewitem.cpp,
+	  gpssync/gpslistviewitem.h, gpssync/gpssyncdialog.cpp:
+	  kipi-plugins from trunk : GPSSync tool : added capabilty to
+	  add/remove GPS position manually to more than one pictures at
+	  the same time. Just take your pictures selection on the list
+	  using SHIFT/CTRL keys and push "Edit Coordinates" button.
+	  
+	  CCMAIL: gerhard@kulzer.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-27 10:02  cgilles
+
+	* [r588886] gpssync/gpseditdialog.cpp:
+	  always enable JavaScript
+
+2006-09-27 08:52  cgilles
+
+	* [r588865] gpssync/Makefile.am, gpssync/gpseditdialog.cpp,
+	  gpssync/gpseditdialog.h, gpssync/gpssyncdialog.cpp:
+	  kipi-plugins from trunk : GPSSync tool : use a KHTMLPart widget
+	  to embed web locator page in GPS positions editor dialog
+	  
+	  CCMAIL: gerhard@kulzer.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-26 11:37  cgilles
+
+	* [r588569] gpssync/gpseditdialog.cpp, gpssync/gpseditdialog.h,
+	  gpssync/gpslistviewitem.cpp:
+	  kipi-plugins from trunk : GPSSync tool : improve GPS position
+	  editor dialog with a better precision. Don't use a
+	  KDoubleNumInput widget but a KLineEdit instead to be able to cut
+	  and paste easily position coordinate from konqueror. Added
+	  buttons to clear GPS position entries.
+	  
+	  CCMAIL: gerhard@kulzer.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-26 11:35  scripty
+
+	* [r588564] gpssync/kipiplugin_gpssync.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  trunk/extragear/libs/libkipi/libkipi/kipiplugin.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-09-26 09:14  cgilles
+
+	* [r588511] gpssync/gpseditdialog.cpp:
+	  kipi-plugins from trunk : GPSSync tool : added mapki link
+	  CCMAIL: gerhard@kulzer.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-26 08:54  cgilles
+
+	* [r588502] gpssync/gpslistviewitem.cpp,
+	  gpssync/gpslistviewitem.h:
+	  kipi-plugins from trunk : GPSSync tool : to be able to set GPS
+	  info in pictures if time stamp is not available and if user set
+	  GPS coordinate manually
+	  
+	  CCMAIL: kde-imaging@kde.org, alexios.beveratos@gmail.com,
+	  gerhard@kulzer.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-25 18:28  cgilles
+
+	* [r588355] gpssync/gpslistviewitem.cpp:
+	  using more generic Exiv2iface api
+
+2006-09-25 18:27  cgilles
+
+	* [r588354] common/exiv2iface/exiv2iface.cpp:
+	  more generic api
+
+2006-09-25 18:22  cgilles
+
+	* [r588351] gpssync/gpsdatacontainer.h, gpssync/gpssyncdialog.cpp,
+	  gpssync/gpssyncdialog.h:
+	  fix broken compilation with gcc 4.1
+
+2006-09-25 14:27  cgilles
+
+	* [r588294] gpssync/gpseditdialog.cpp, gpssync/gpseditdialog.h:
+	  kipi-plugins from trunk : GPSSync tool : add links to external
+	  web tools to get GPS coordinate. First one is CapeLinks web
+	  site...
+	  
+	  CCMAIL: kde-imaging@kde.org, alexios.beveratos@gmail.com,
+	  gerhard@kulzer.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-25 13:54  cgilles
+
+	* [r588276] gpssync/gpseditdialog.cpp:
+	  fix precision
+
+2006-09-25 13:05  seb
+
+	* [r588255] ipodexport/imagelist.cpp,
+	  ipodexport/ipodexportdialog.cpp, ipodexport/ipodexportdialog.h:
+	  After transferring photos to the ipod, repopulate the target
+	  album to show the uploaded pictures
+
+2006-09-25 12:53  cgilles
+
+	* [r588251] gpssync/Makefile.am, gpssync/gpseditdialog.cpp,
+	  gpssync/gpseditdialog.h, gpssync/gpslistviewitem.cpp,
+	  gpssync/gpslistviewitem.h, gpssync/gpssyncdialog.cpp,
+	  gpssync/gpssyncdialog.h:
+	  kipi-plugins from trunk : GPSSync tool :
+	  
+	  - New options :
+	  * to set GPS coordinates manually.
+	  * to remove all GPS info from file.
+	  
+	  - Bug fix (relevant of EXIV2 library ?) : we need to clean up
+	  all GPS info from file before to rewrite it.
+	  Andreas, i have seen that if a picture has already GPS infos, if
+	  i don't process a clean up of all Exif.GPSInfo tags,
+	  the lattitude and altitude values are set to 0.
+	  
+	  CCMAIL: kde-imaging@kde.org, alexios.beveratos@gmail.com,
+	  gerhard@kulzer.net, ahuggel@gmx.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-25 12:34  seb
+
+	* [r588249] ipodexport/ipodexportdialog.cpp,
+	  ipodexport/ipodexportdialog.h:
+	  * Add button to rename ipod photo albums
+	  * Fix potential crashes if libgpod 0.4.0 was used
+
+2006-09-25 12:15  cgilles
+
+	* [r588242] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  new method to erase all GPS Exif tags
+
+2006-09-25 11:38  scripty
+
+	* [r588226] flickrexport/kipiplugin_flickrexport.desktop,
+	  gpssync/kipiplugin_gpssync.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-09-25 08:41  cgilles
+
+	* [r588176] gpssync/gpssyncdialog.cpp:
+	  time is in minutes from gui, not seconds.
+
+2006-09-25 07:56  seb
+
+	* [r588164] ipodexport/ipodexportdialog.cpp:
+	  Missed an #define for a patch which will go upstream for libgpod
+	  0.4.1.
+	  Thanks to Gilles for finding this!
+
+2006-09-25 06:46  cgilles
+
+	* [r588155] README:
+	  update depency
+
+2006-09-25 06:44  cgilles
+
+	* [r588154] gpssync/gpssyncdialog.cpp:
+	  kipi-plugins from trunk : GPSSync tool : new option to set the
+	  maximum distance time in minutes to get matched points from GPX
+	  file around a GPS point to interpolate.
+	  
+	  CCMAIL: kde-imaging@kde.org, alexios.beveratos@gmail.com,
+	  gerhard@kulzer.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-25 06:18  cgilles
+
+	* [r588150] gpssync/gpsdataparser.cpp, gpssync/gpsdataparser.h,
+	  gpssync/gpssyncdialog.cpp:
+	  code polishing
+
+2006-09-25 04:06  seb
+
+	* [r588136] configure.in.bot, configure.in.in,
+	  ipodexport/imagelist.cpp, ipodexport/imagelist.h,
+	  ipodexport/imagelistitem.cpp, ipodexport/imagelistitem.h,
+	  ipodexport/ipodexportdialog.cpp, ipodexport/ipodexportdialog.h,
+	  ipodexport/plugin_ipodexport.cpp:
+	  * Detect libgpod 0.4.0 release, now required
+	  * Subclass the imagelist for ipod and upload types, drawing
+	  balloon help bubbles too
+	  * Enclose the plugin in a namespace to prevent potential memory
+	  conflicts between kipi-plugins
+	  * Overhaul the UI design, allowing the user to create, delete,
+	  and rename photo albums on the ipod
+	  * Allow deleting of photos/albums if libgpod-cvs is used
+	  CCMAIL: kde-imaging@kde.org
+
+2006-09-24 18:50  cgilles
+
+	* [r588048] gpssync/gpsdataparser.cpp, gpssync/gpsdataparser.h,
+	  gpssync/gpssyncdialog.cpp:
+	  using GPSDataContainer everywhere
+
+2006-09-23 21:15  cgilles
+
+	* [r587737] gpssync/gpsbabelbinary.cpp:
+	  fix debug statement
+
+2006-09-23 12:28  cgilles
+
+	* [r587620] gpssync/gpsdatacontainer.h, gpssync/gpsdataparser.cpp,
+	  gpssync/gpslistviewitem.cpp, gpssync/gpslistviewitem.h,
+	  gpssync/gpssyncdialog.cpp:
+	  kipi-plugins from trunk : using GPSDataContainer class
+	  everywhere. polish source code.
+
+2006-09-23 06:05  seb
+
+	* [r587561] ipodexport/ipodexportdialog.cpp:
+	  Disable the ipod list if there is no ipod plugged in.
+	  
+	  Heres a new screenshot:
+	  http://www.sebruiz.net/files/ipod_photo.png
+
+2006-09-23 05:56  seb
+
+	* [r587555] ipodexport/ipodexportdialog.cpp,
+	  ipodexport/ipodexportdialog.h:
+	  * Re-enable transferring of photos to the ipod
+	  * Allow creating new photo albums on the ipod
+
+2006-09-23 05:25  seb
+
+	* [r587551] ipodexport/ipodexportdialog.cpp,
+	  ipodexport/ipodexportdialog.h:
+	  New widget for displaying contents of the ipod. soon to have
+	  previews and add/remove album functionality.
+	  Transferring is temporarily disabled
+
+2006-09-22 23:03  seb
+
+	* [r587474] ipodexport/ipodexportdialog.cpp:
+	  Disable the Start button if there is no ipod plugged in
+
+2006-09-22 16:17  cgilles
+
+	* [r587401] gpssync/gpssyncdialog.cpp:
+	  fix
+
+2006-09-22 15:48  seb
+
+	* [r587389] ipodexport/ipodexportdialog.cpp:
+	  Add a green label to show successful finding of ipod
+
+2006-09-22 15:32  seb
+
+	* [r587386] ipodexport/plugin_ipodexport.cpp,
+	  ipodexport/plugin_ipodexport.h:
+	  Remove unneeded secondary action, and make the primary action an
+	  entry in the Tools Menu
+
+2006-09-22 15:29  seb
+
+	* [r587385] trunk/extragear/libs, htmlexport,
+	  trunk/extragear/libs/libkexif,
+	  trunk/extragear/libs/libkipi/libkipi:
+	  Update ignores
+
+2006-09-22 15:28  seb
+
+	* [r587384] ipodexport/ipodexportdialog.cpp,
+	  ipodexport/ipodexportdialog.h:
+	  Complete the dialog initialisation:
+	  - add the selected files to the list view
+	  - allow adding/removal of files
+	  - update the progress bar as images are uploaded
+
+2006-09-22 15:04  seb
+
+	* [r587381] ipodexport/Makefile.am, ipodexport/imagelist.cpp,
+	  ipodexport/imagelistitem.cpp, ipodexport/imagelistitem.h,
+	  ipodexport/ipodexportdialog.cpp, ipodexport/ipodexportdialog.h:
+	  Make the ipod upload dialog work well!
+	  Add and remove item functionality to the list view (which was
+	  stolen from the batch image processing!)
+
+2006-09-22 14:36  cgilles
+
+	* [r587368] gpssync/gpsdataparser.cpp:
+	  kipi-plugins from trunk : GPSSync tool : interpolate altitude
+	  value like latitude and longitude.
+	  
+	  CCMAIL: kde-imaging@kde.org, alexios.beveratos@gmail.com,
+	  gerhard@kulzer.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-22 13:10  cgilles
+
+	* [r587348] gpssync/gpsdataparser.cpp, gpssync/gpsdataparser.h,
+	  gpssync/gpslistviewitem.cpp, gpssync/gpslistviewitem.h,
+	  gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h:
+	  kipi-plugins from trunk : GPSSync tool : added new option to
+	  interpolate GPS positions.
+	  
+	  CCMAIL: kde-imaging@kde.org, alexios.beveratos@gmail.com,
+	  gerhard@kulzer.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-22 11:32  scripty
+
+	* [r587330] galleryexport/kipiplugin_galleryexport.desktop,
+	  gpssync/kipiplugin_gpssync.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-09-22 10:42  cgilles
+
+	* [r587322] gpssync/gpsdataparser.cpp, gpssync/gpsdataparser.h,
+	  gpssync/gpssyncdialog.cpp:
+	  kipi-plugins from trunk : GPSSync tool : added new option to set
+	  camera time-zone in hours to match properly all pictures with
+	  GPS data using GMT time.
+	  
+	  CCMAIL: kde-imaging@kde.org, alexios.beveratos@gmail.com,
+	  gerhard@kulzer.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-22 09:11  seb
+
+	* [r587316] configure.in.in:
+	  Hopefully a better check for libgpod cvs. Check directly for
+	  the itdb photo methods
+
+2006-09-22 09:01  seb
+
+	* [r587315] ipodexport, ipodexport/ipodexportdialog.cpp,
+	  ipodexport/ipodexportdialog.h:
+	  Disable the contents of the dialog and provide a warning label
+	  if there is no ipod connected
+
+2006-09-22 08:59  cgilles
+
+	* [r587313] gpssync/gpssyncdialog.cpp:
+	  missing i18n
+
+2006-09-22 08:47  cgilles
+
+	* [r587310] gpssync/gpssyncdialog.cpp:
+	  kipi-plugins from trunk : GPSSync tool : added new option to set
+	  the max gap time in seconds to synchronize pictures with GPS
+	  data. default value is 30s.
+	  
+	  CCMAIL: kde-imaging@kde.org, alexios.beveratos@gmail.com,
+	  gerhard@kulzer.net
+	  
+	  CCBUGS: 133359, 111560
+
+2006-09-22 08:15  seb
+
+	* [r587306] ipodexport/Makefile.am, ipodexport/imagelist.cpp,
+	  ipodexport/imagelist.h, ipodexport/ipodexportdialog.cpp,
+	  ipodexport/ipodexportdialog.h, ipodexport/plugin_ipodexport.cpp:
+	  * Copy over the batch image processing image list view for use
+	  with ipod export
+	  * More work towards the dialog
+	  * Dont crash if there is no ipod plugged in
+
+2006-09-22 07:54  seb
+
+	* [r587303] ipodexport/plugin_ipodexport.cpp:
+	  Include necessary for g_init_type()
+
+2006-09-22 07:44  seb
+
+	* [r587298] ipodexport/plugin_ipodexport.cpp:
+	  Don't do crazy crashing stuff
+
+2006-09-22 07:37  cgilles
+
+	* [r587297] README:
+	  upate
+
+2006-09-22 07:29  cgilles
+
+	* [r587290] README:
+	  update
+
+2006-09-22 07:05  cgilles
+
+	* [r587287] NEWS:
+	  update
+
+2006-09-22 06:59  seb
+
+	* [r587286] acquireimages, batchprocessimages, calendar,
+	  cdarchiving, common, common/exiv2iface, findimages,
+	  flickrexport, galleryexport, gpssync, htmlexport,
+	  htmlexport/themes/simple, ipodexport, jpeglossless,
+	  kameraklient, mpegencoder, printwizard, rawconverter,
+	  rawconverter/profiles, sendimages, simpleviewerexport,
+	  slideshow, timeadjust, wallpaper:
+	  Totally update all the svn:ignore properties, of nearly all the
+	  kipi-plugins...
+
+2006-09-22 06:52  seb
+
+	* [r587284] Makefile.am, configure.in.bot, configure.in.in,
+	  ipodexport, ipodexport/Makefile.am,
+	  ipodexport/ipodexportdialog.cpp, ipodexport/ipodexportdialog.h,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  ipodexport/plugin_ipodexport.cpp,
+	  ipodexport/plugin_ipodexport.h:
+	  Import of a kipi plugin to transfer photos to an iPod photo/video
+	  Requires libgpod > 0.3.2 (ie cvs version)
+	  
+	  Testing is welcomed, but I would advise not using it if you have
+	  a well established and important photo database which is already
+	  on the ipod.
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-09-21 21:42  anaselli
+
+	* [r587182] TODO, trunk/extragear/libs/prepare_kipiplugins.rb:
+	  change release also in
+	  kipi-plugins/common/include/pluginsversion.h
+	  to prepare kipi-plugins release
+
+2006-09-21 18:24  cgilles
+
+	* [r587143] gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h:
+	  using internal d private class
+
+2006-09-21 18:04  cgilles
+
+	* [r587140] gpssync/gpsdatacontainer.h, gpssync/gpsdataparser.cpp,
+	  gpssync/gpsdataparser.h:
+	  separate class GPSData and GPSDataParser
+
+2006-09-21 16:39  cgilles
+
+	* [r587123] configure.in.bot:
+	  fix
+
+2006-09-21 16:38  cgilles
+
+	* [r587122] configure.in.in:
+	  fix
+
+2006-09-21 12:53  cgilles
+
+	* [r587074] NEWS:
+	  update
+
+2006-09-21 12:52  cgilles
+
+	* [r587073] gpssync/gpsdataparser.cpp, gpssync/gpsdataparser.h,
+	  gpssync/gpslistviewitem.cpp, gpssync/gpslistviewitem.h,
+	  gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h,
+	  gpssync/plugin_gpssync.cpp:
+	  kipi-plugins from trunk : new plugin to synchronize pictures
+	  metadata with a GPS data file.
+	  
+	  First beta version of GPSSync kipi-plugin is now available for
+	  testing.
+	  
+	  To use it, you need a GPX xml file generated by your GPS device.
+	  The GPX file must be generated to render a wayspoints or
+	  trackpoints list.
+	  
+	  If your GPS device do not support GPX, you can generate it using
+	  GPSBabel program like this :
+	  
+	  # gpsbabel -w -i mapsource -f Driveback.mps -o gpx -F
+	  Driveback.gpx
+	  
+	  The plugin use the Exif time-stamp to correlate GPS data.
+	  Accuracy of 30s is used to diff camera and GPS time-stamp. Of
+	  course, the date of your GPS device and your camera must be set
+	  properly (:=))).
+	  
+	  Some links:
+	  
+	  GPSBalbel: http://www.gpsbabel.org
+	  GPX file format: http://www.topografix.com/gpx.asp
+	  Plugin in action:
+	  http://digikam3rdparty.free.fr/Screenshots/newkipigpssyncplugin.png
+	  
+	  CCMAIL: kde-imaging@kde.org, digikam-devel@kde.org,
+	  digikam-users@kde.org, alexios.beveratos@gmail.com,
+	  gerhard@kulzer.net
+	  
+	  BUG: 111560
+	  CCBUGS: 133359
+
+2006-09-21 12:38  cgilles
+
+	* [r587069] Makefile.am:
+	  GPSSync kipi plugin can be compiled and used now.
+
+2006-09-21 11:43  scripty
+
+	* [r587043] gpssync/kipiplugin_gpssync.desktop,
+	  trunk/extragear/libs/libkipi/libkipi/kipiplugin.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-09-21 08:11  cgilles
+
+	* [r586987] gpssync/gpslistviewitem.h:
+	  fix
+
+2006-09-21 08:10  cgilles
+
+	* [r586986] gpssync/gpslistviewitem.cpp,
+	  gpssync/gpslistviewitem.h:
+	  using d private class to store private members
+
+2006-09-21 07:58  cgilles
+
+	* [r586982] imagesgallery/plugin_imagesgallery.cpp:
+	  fix i18n
+
+2006-09-21 07:57  cgilles
+
+	* [r586980] htmlexport/Makefile.am, htmlexport/wizard.cpp,
+	  htmlexport/wizard.h:
+	  kipi-plugins from trunk : HTML Export plugin : just add a full
+	  help button like others plugin.
+
+2006-09-20 20:37  cgilles
+
+	* [r586878] gpssync/gpslistviewitem.cpp,
+	  gpssync/gpssyncdialog.cpp:
+	  fix listview col. order
+	  fix JPEG extension decoding
+
+2006-09-20 14:57  cgilles
+
+	* [r586770] gpssync, gpssync/Makefile.am,
+	  gpssync/gpsbabelbinary.cpp, gpssync/gpsbabelbinary.h,
+	  gpssync/gpsdataparser.cpp, gpssync/gpsdataparser.h,
+	  gpssync/gpslistviewitem.cpp, gpssync/gpslistviewitem.h,
+	  gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h,
+	  gpssync/hi16-action-gpsimagetag.png,
+	  gpssync/hi32-action-gpsimagetag.png,
+	  gpssync/kipiplugin_gpssync.desktop, gpssync/plugin_gpssync.cpp,
+	  gpssync/plugin_gpssync.h:
+	  kipi-plugins from trunk : new plugin to synchronize pictures
+	  metadata with a GPS data file.
+	  
+	  This plugin is under development and not yet done (missing GPS
+	  file parser implementation using GPSBabel program).
+	  It will not be compiled.
+	  
+	  CCMAIL: kde-imaging@kde.org, alexios.beveratos@gmail.com,
+	  gerhard@kulzer.net
+
+2006-09-20 08:47  cgilles
+
+	* [r586666] rawconverter/batchdialog.cpp,
+	  rawconverter/dcrawbinary.cpp,
+	  rawconverter/dcrawsettingswidget.cpp,
+	  rawconverter/dcrawsettingswidget.h,
+	  rawconverter/singledialog.cpp:
+	  fix minimum dcraw release number : 8.16 at least
+
+2006-09-20 08:46  cgilles
+
+	* [r586665] README:
+	  update
+
+2006-09-20 07:03  cgilles
+
+	* [r586636] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h:
+	  new methods to set/get GPS info into Exif metadata
+
+2006-09-19 20:32  cgilles
+
+	* [r586509] rawconverter/rawdecodingsettings.h:
+	  polish
+
+2006-09-19 09:46  anaselli
+
+	* [r586275] TODO:
+	  a todo for reminding me something
+
+2006-09-19 09:43  anaselli
+
+	* [r586272] NEWS:
+	  added bug 91545 - try following Gilles way :)
+
+2006-09-19 09:40  anaselli
+
+	* [r586270] slideshow/plugin_slideshow.cpp:
+	  patch provided by drajar <djarca73 at yahoo dot com>
+	  Tested by Gilles
+	  BUG: 91545
+
+2006-09-19 06:05  cgilles
+
+	* [r586232] Makefile.am:
+	  compile
+
+2006-09-19 06:02  cgilles
+
+	* [r586230] configure.in.in:
+	  kipi-plugins from trunk : if Exiv2 library is not found,
+	  kipi-plugins cannot be compiled
+
+2006-09-19 05:50  cgilles
+
+	* [r586229] jpeglossless/Makefile.am:
+	  fix
+
+2006-09-19 05:49  cgilles
+
+	* [r586228] timeadjust/Makefile.am:
+	  fix
+
+2006-09-19 05:37  cgilles
+
+	* [r586226] configure.in.bot:
+	  kipi-plugins from trunk : more detailled results of .configure
+	  script
+
+2006-09-18 14:34  cgilles
+
+	* [r586023] Makefile.am:
+	  fix
+
+2006-09-18 14:30  cgilles
+
+	* [r586022] configure.in.in:
+	  update
+
+2006-09-18 14:25  cgilles
+
+	* [r586020] configure.in.in:
+	  update
+
+2006-09-18 14:24  cgilles
+
+	* [r586019] configure.in.bot:
+	  update
+
+2006-09-18 14:22  cgilles
+
+	* [r586018] configure.in.bot:
+	  update
+
+2006-09-18 13:32  cgilles
+
+	* [r586002] NEWS:
+	  update
+
+2006-09-18 13:28  cgilles
+
+	* [r585999] Makefile.am:
+	  compile
+
+2006-09-18 12:31  cgilles
+
+	* [r585980] trunk/extragear/libs/PACKAGING, README,
+	  configure.in.bot, configure.in.in:
+	  kipi-plugins from trunk : removing libkexif depency ! We using
+	  Exiv2 instead everywhere.
+	  
+	  Developpers, please take a look into the new Exiv2 interface
+	  kipi-plugins/common/exiv2iface.cpp to manage metadata into your
+	  kipi-plugins.
+	  This class is a simplified version of the DMetadata class from
+	  digiKam core. Please contact digiKam team if you want to
+	  add/fix/improve new
+	  methods. Thanks in advance.
+	  
+	  CCMAIL: digikam-devel@kde.org, kde-imaging@kde.org
+
+2006-09-18 12:19  cgilles
+
+	* [r585975] NEWS:
+	  update
+
+2006-09-18 12:17  cgilles
+
+	* [r585974] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h, jpeglossless/Makefile.am,
+	  jpeglossless/jpegtransform.cpp, jpeglossless/jpegtransform.h,
+	  kipiplugins.kdevelop:
+	  kipi-plugins from trunk : JPEGLossLess plugin : Using Exiv2
+	  library intead libkexif.
+	  CCMAIL: kde-imaging@kde.org
+
+2006-09-18 12:06  cgilles
+
+	* [r585969] common/exiv2iface/Makefile.am:
+	  file missing
+
+2006-09-18 11:35  cgilles
+
+	* [r585956] timeadjust/Makefile.am:
+	  polish
+
+2006-09-18 11:14  cgilles
+
+	* [r585945] rawconverter/plugin_rawconverter.cpp:
+	  fix typo
+
+2006-09-18 10:50  cgilles
+
+	* [r585936] NEWS:
+	  update
+
+2006-09-18 10:46  cgilles
+
+	* [r585935] jpeglossless/imageflip.cpp:
+	  polish
+
+2006-09-18 10:44  cgilles
+
+	* [r585933] timeadjust/timeadjustdialog.cpp:
+	  kipi-plugins from trunk : TimeAdjust plugin : polish dialog
+
+2006-09-18 10:21  cgilles
+
+	* [r585927] common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h, rawconverter/dcrawiface.cpp,
+	  timeadjust/Makefile.am, timeadjust/plugin_timeadjust.cpp,
+	  timeadjust/plugin_timeadjust.h, timeadjust/timeadjustdialog.cpp,
+	  timeadjust/timeadjustdialog.h:
+	  kipi-plugins from trunk : TimeAdjust plugin : Using Exiv2
+	  library intead libkexif.
+	  CCMAIL: kde-imaging@kde.org
+
+2006-09-18 09:35  cgilles
+
+	* [r585913] Makefile.am:
+	  compile
+
+2006-09-18 09:32  cgilles
+
+	* [r585911] rawconverter/Makefile.am:
+	  compile
+
+2006-09-18 09:26  cgilles
+
+	* [r585910] common/Makefile.am, common/exiv2iface,
+	  common/exiv2iface/exiv2iface.cpp,
+	  common/exiv2iface/exiv2iface.h, rawconverter/Makefile.am,
+	  rawconverter/exiv2iface.cpp, rawconverter/exiv2iface.h:
+	  kipi-plugins from trunk : moving exiv2 interface to plugins
+	  common place
+
+2006-09-18 08:48  cgilles
+
+	* [r585900] rawconverter/dcrawiface.cpp,
+	  rawconverter/exiv2iface.cpp, rawconverter/exiv2iface.h:
+	  kipi-plugins from trunk : Raw Converter : More Exif/Iptc
+	  informations are updated during conversion
+
+2006-09-18 06:42  cgilles
+
+	* [r585881] rawconverter/batchdialog.cpp,
+	  rawconverter/savesettingswidget.cpp,
+	  rawconverter/singledialog.cpp:
+	  kipi-plugins from trunk : Raw Converter : using KIO::renameDlg
+	  instead KFileDialog.
+
+2006-09-15 13:50  cgilles
+
+	* [r584777] rawconverter/batchdialog.cpp:
+	  following the current item in the list during conversion
+
+2006-09-15 13:25  cgilles
+
+	* [r584767] README:
+	  update
+
+2006-09-15 13:23  cgilles
+
+	* [r584765] NEWS:
+	  update
+
+2006-09-15 13:17  cgilles
+
+	* [r584763] Makefile.am, configure.in.bot, configure.in.in,
+	  kipiplugins.kdevelop, rawconverter/Makefile.am,
+	  rawconverter/dcrawiface.cpp, rawconverter/dcrawiface.h,
+	  rawconverter/exiv2iface.cpp, rawconverter/exiv2iface.h:
+	  kipi-plugins from trunk : Raw Converter :
+	  Exif/makernotes/iptc/gps metadata restoration after RAW image
+	  decoding.
+	  
+	  - Add Exiv2 depency. I recommend to use the current
+	  implementation of Exiv2 from svn (Exiv2 0.11 will be release in
+	  a near future)
+	  
+	  - Add a new Exiv2 interface class based on some part of digiKam
+	  core. This class will be will be moved later to the common
+	  plugins folder to remplace libkexif depency everywhere. I need
+	  to polish and improve the code before.
+	  
+	  - Actually, 2 output file formats are fully supported to store
+	  metadata : JPEG and PNG. Note PNG Exif/Iptc storing use
+	  ImageMagick raw profile stored in compressed text chunk.
+	  Tiff file format will be added when Exiv2 library will support
+	  Tiff write io (normally later 0.11 release)
+	  
+	  To all digiKam users : after to have converted Raw files using
+	  this plugin, you will have the pleasure to see all metadata into
+	  target files using Metadata side bar (:=)))
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  
+	  BUG : 107905
+	  CCBUGS: 128394
+
+2006-09-15 10:25  cgilles
+
+	* [r584591] rawconverter/dcrawbinary.h,
+	  rawconverter/dcrawiface.cpp, rawconverter/dcrawiface.h,
+	  rawconverter/rawdecodingsettings.h,
+	  rawconverter/singledialog.cpp:
+	  kipi-plugins from trunk : Raw Converter : full cancelable (when
+	  you want) dcraw instance during RAW image data decoding.
+	  The code use now a KProcess instance instead a simple
+	  non-cancelable popen() call. The implementation is inspired from
+	  digiKam RAW image loader
+	  CCBUGS: 107905, 128394
+
+2006-09-15 08:33  cgilles
+
+	* [r584564] batchprocessimages/Makefile.am,
+	  batchprocessimages/borderimagesdialog.cpp,
+	  batchprocessimages/colorimagesdialog.cpp,
+	  batchprocessimages/convertimagesdialog.cpp,
+	  batchprocessimages/effectimagesdialog.cpp,
+	  batchprocessimages/filterimagesdialog.cpp,
+	  batchprocessimages/imagepreview.cpp,
+	  batchprocessimages/outputdialog.cpp,
+	  batchprocessimages/recompressimagesdialog.cpp,
+	  batchprocessimages/renameimagesdialog.cpp,
+	  batchprocessimages/resizeimagesdialog.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 08:19  cgilles
+
+	* [r584556] acquireimages/Makefile.am,
+	  acquireimages/acquireimagedialog.cpp,
+	  acquireimages/screenshotdialog.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 08:17  cgilles
+
+	* [r584554] calendar/Makefile.am, calendar/calwizard.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 08:15  cgilles
+
+	* [r584553] cdarchiving/Makefile.am,
+	  cdarchiving/cdarchivingdialog.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 08:14  cgilles
+
+	* [r584552] findimages/Makefile.am,
+	  findimages/finddupplicatedialog.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 08:12  cgilles
+
+	* [r584551] galleryexport/Makefile.am,
+	  galleryexport/gallerywindow.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 08:07  cgilles
+
+	* [r584549] imagesgallery/Makefile.am,
+	  imagesgallery/imgallerydialog.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 08:05  cgilles
+
+	* [r584547] kameraklient/Makefile.am, kameraklient/cameraui.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 08:03  cgilles
+
+	* [r584546] mpegencoder/Makefile.am, mpegencoder/kimg2mpg.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 08:00  cgilles
+
+	* [r584545] printwizard/Makefile.am,
+	  printwizard/frmprintwizard.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 07:56  cgilles
+
+	* [r584544] sendimages/Makefile.am,
+	  sendimages/sendimagesdialog.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 07:54  cgilles
+
+	* [r584543] simpleviewerexport/Makefile.am,
+	  simpleviewerexport/svedialog.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 07:53  cgilles
+
+	* [r584542] slideshow/Makefile.am, slideshow/slideshowconfig.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 07:51  cgilles
+
+	* [r584541] timeadjust/Makefile.am,
+	  timeadjust/timeadjustdialog.cpp:
+	  using kipi-plugins version instead libkipi into about data
+
+2006-09-15 07:46  cgilles
+
+	* [r584540] flickrexport/Makefile.am,
+	  flickrexport/flickrwindow.cpp:
+	  using kipi-plugins version instead libkipi
+
+2006-09-15 07:06  cgilles
+
+	* [r584532] NEWS:
+	  update
+
+2006-09-15 07:04  cgilles
+
+	* [r584531] flickrexport/flickrtalker.cpp:
+	  kipi plugins from trunk : flickr Export : patch from Debajyoti
+	  Bera about new flickr API compliant
+	  BUG:132659
+
+2006-09-14 14:38  cgilles
+
+	* [r584364] rawconverter/dcrawsettingswidget.cpp:
+	  fix i18n
+
+2006-09-14 14:34  cgilles
+
+	* [r584363] rawconverter/dcrawsettingswidget.cpp:
+	  fix i18n
+
+2006-09-14 14:32  cgilles
+
+	* [r584362] rawconverter/dcrawsettingswidget.cpp:
+	  fix i18n
+
+2006-09-14 14:24  cgilles
+
+	* [r584359] rawconverter/dcrawiface.h,
+	  rawconverter/rawdecodingsettings.h:
+	  separate RawDecodingSettings class and DcrawIface class
+
+2006-09-14 12:28  cgilles
+
+	* [r584331] rawconverter/dcrawiface.cpp:
+	  init pointer to 0
+
+2006-09-14 12:20  cgilles
+
+	* [r584324] rawconverter/dcrawiface.cpp:
+	  int pointer to 0
+
+2006-09-14 12:15  cgilles
+
+	* [r584320] rawconverter/dcrawiface.cpp:
+	  init pointer to 0
+
+2006-09-14 11:14  cgilles
+
+	* [r584218] rawconverter/batchdialog.cpp,
+	  rawconverter/batchdialog.h,
+	  rawconverter/dcrawsettingswidget.cpp,
+	  rawconverter/dcrawsettingswidget.h,
+	  rawconverter/savesettingswidget.cpp,
+	  rawconverter/savesettingswidget.h,
+	  rawconverter/singledialog.cpp, rawconverter/singledialog.h:
+	  kipi-plugins from trunk : Raw Converter : add 'Default' button
+	  to set all settings to default values.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  
+	  CCBUGS: 107905, 128394
+
+2006-09-14 11:00  cgilles
+
+	* [r584213] rawconverter/savesettingswidget.cpp:
+	  fix 18n
+
+2006-09-14 10:55  cgilles
+
+	* [r584212] rawconverter/dcrawsettingswidget.cpp:
+	  fix 18n
+
+2006-09-14 10:48  cgilles
+
+	* [r584211] rawconverter/dcrawsettingswidget.cpp:
+	  add RGB color space descriptions
+
+2006-09-14 09:28  cgilles
+
+	* [r584185] rawconverter/batchdialog.cpp,
+	  rawconverter/batchdialog.h,
+	  rawconverter/dcrawsettingswidget.cpp,
+	  rawconverter/dcrawsettingswidget.h,
+	  rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/plugin_rawconverter.h,
+	  rawconverter/singledialog.cpp, rawconverter/singledialog.h:
+	  kipi-plugins from trunk : Raw Converter : print dcraw version
+	  detected at startup to the header of RAW decoding settings area.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  
+	  CCBUGS: 107905, 128394
+
+2006-09-14 09:11  cgilles
+
+	* [r584176] rawconverter/Makefile.am,
+	  rawconverter/dcrawbinary.cpp, rawconverter/dcrawbinary.h,
+	  rawconverter/plugin_rawconverter.cpp:
+	  kipi-plugins from trunk : Raw Converter : dcraw version
+	  detection at startup. Code come from digiKam project
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  
+	  CCBUGS: 107905, 128394
+
+2006-09-14 08:00  cgilles
+
+	* [r584167] rawconverter/actionthread.cpp,
+	  rawconverter/actionthread.h, rawconverter/batchdialog.cpp,
+	  rawconverter/singledialog.cpp:
+	  code polishing
+
+2006-09-14 07:05  cgilles
+
+	* [r584156] rawconverter/Makefile.am,
+	  rawconverter/actionthread.cpp, rawconverter/actionthread.h,
+	  rawconverter/batchdialog.cpp, rawconverter/dcrawiface.cpp,
+	  rawconverter/dcrawiface.h, rawconverter/dcrawsettingswidget.h,
+	  rawconverter/dcrawutils.cpp, rawconverter/dcrawutils.h,
+	  rawconverter/savesettingswidget.h,
+	  rawconverter/singledialog.cpp:
+	  DcrawUtils ==> DcrawIface class
+
+2006-09-14 06:18  cgilles
+
+	* [r584150] rawconverter/actionthread.cpp,
+	  rawconverter/dcrawutils.cpp, rawconverter/dcrawutils.h:
+	  new class
+
+2006-09-14 05:52  cgilles
+
+	* [r584143] rawconverter/previewwidget.cpp,
+	  rawconverter/previewwidget.h:
+	  using d private class
+
+2006-09-14 05:46  cgilles
+
+	* [r584140] rawconverter/singledialog.cpp,
+	  rawconverter/singledialog.h:
+	  polish source code
+
+2006-09-14 05:37  cgilles
+
+	* [r584122] rawconverter/Makefile.am,
+	  rawconverter/batchdialog.cpp, rawconverter/dcrawutils.cpp,
+	  rawconverter/singledialog.cpp:
+	  compile
+
+2006-09-14 05:35  cgilles
+
+	* [r584112] common/include/pluginsversion.h,
+	  common/include/version.h:
+	  rename
+
+2006-09-14 05:34  cgilles
+
+	* [r584109] common/include/version.h:
+	  fix
+
+2006-09-13 21:11  cgilles
+
+	* [r583960] rawconverter/batchdialog.cpp,
+	  rawconverter/singledialog.cpp:
+	  using kipiplugins version string
+
+2006-09-13 21:09  cgilles
+
+	* [r583957] rawconverter/dcrawutils.cpp:
+	  using kip-plugins version string
+
+2006-09-13 21:07  cgilles
+
+	* [r583955] common/include/version.h:
+	  fix name
+
+2006-09-13 21:05  cgilles
+
+	* [r583952] NEWS:
+	  update
+
+2006-09-13 21:01  cgilles
+
+	* [r583950] common/include/version.h:
+	  new version header file
+
+2006-09-13 20:02  cgilles
+
+	* [r583928] rawconverter/batchdialog.cpp,
+	  rawconverter/dcrawsettingswidget.cpp,
+	  rawconverter/dcrawsettingswidget.h, rawconverter/dcrawutils.cpp,
+	  rawconverter/singledialog.cpp:
+	  kipi-plugins from trunk : Raw Converter : new option to set the
+	  output color space to use during RAW image data decoding : SRGB,
+	  ADOBERGB, WIDEGAMUT, PROPHOTO
+	  
+	  CCBUGS: 107905
+
+2006-09-13 19:31  cgilles
+
+	* [r583914] rawconverter/iccjpeg.c, rawconverter/iccjpeg.h:
+	  missing files to compile
+
+2006-09-13 19:30  cgilles
+
+	* [r583913] rawconverter/Makefile.am, rawconverter/dcrawutils.cpp,
+	  rawconverter/dcrawutils.h, rawconverter/profiles,
+	  rawconverter/profiles/Makefile.am,
+	  rawconverter/profiles/adobergb.icm,
+	  rawconverter/profiles/prophoto.icm,
+	  rawconverter/profiles/srgb.icm,
+	  rawconverter/profiles/widegamut.icm:
+	  kipi-plugins from trunk : Raw Converter :
+	  
+	  - Store icc color space profile used to decode RAW data into
+	  target image (JPEG, PNG, TIFF)
+	  - 4 icc color profile files (comming from krita repository) are
+	  available : SRGB, ADOBERGB, WIDEGAMUT, PROPHOTO
+	  
+	  Actually, the implementation only use SRGB color space
+	  
+	  CCBUGS: 107905
+
+2006-09-13 16:39  cgilles
+
+	* [r583835] rawconverter/batchdialog.cpp,
+	  rawconverter/singledialog.cpp:
+	  remember dialog size between sessions
+
+2006-09-13 16:38  cgilles
+
+	* [r583833] rawconverter/savesettingswidget.cpp:
+	  fix i18n
+
+2006-09-13 16:30  cgilles
+
+	* [r583831] rawconverter/savesettingswidget.cpp:
+	  fix i18n
+
+2006-09-13 16:29  cgilles
+
+	* [r583830] rawconverter/dcrawsettingswidget.cpp:
+	  fix i18n
+
+2006-09-13 15:04  cgilles
+
+	* [r583807] NEWS:
+	  update
+
+2006-09-13 15:03  cgilles
+
+	* [r583806] rawconverter/Makefile.am, rawconverter/actions.h,
+	  rawconverter/actionthread.cpp, rawconverter/actionthread.h,
+	  rawconverter/batchdialog.cpp, rawconverter/batchdialog.h,
+	  rawconverter/clistviewitem.h, rawconverter/dcrawprocess.cpp,
+	  rawconverter/dcrawsettingswidget.cpp,
+	  rawconverter/dcrawsettingswidget.h, rawconverter/dcrawutils.cpp,
+	  rawconverter/dcrawutils.h, rawconverter/kipidcrawclient.1,
+	  rawconverter/mtqueue.h, rawconverter/processcontroller.cpp,
+	  rawconverter/processcontroller.h,
+	  rawconverter/savesettingswidget.cpp,
+	  rawconverter/savesettingswidget.h,
+	  rawconverter/singledialog.cpp, rawconverter/singledialog.h:
+	  kipi-plugins from trunk : Raw Converter : complete rewrite raw
+	  converter core !
+	  
+	  - Removing old external sub program to invoque dcraw instance.
+	  - Using multithreaded implementation based on JPEGLossLess
+	  plugin core.
+	  - New dcraw interface to invoque dcraw binary program directly
+	  using a separate thread.
+	  - New dcraw settings widget common to batch and single version
+	  of converter.
+	  - The new implementation always give RAW file thumbnails in
+	  batch converter dialog.
+	  - New save target file settings widget common to batch and
+	  single version of converter.
+	  - New option to convert raw file based on last dcraw version
+	  avaialble (8.38) and similar than digiKam dcraw setup :
+	  * quality decoding (Bilinear, AHD, VND).
+	  * Interpolation as 4 colors.
+	  * Use super CCD sensor.
+	  * Auto Color balance.
+	  * Camera whithe balance.
+	  * Noise reduction settings.
+	  * Highlight clipping (solid white, Unclip, Recontruct using
+	  level)
+	  * Brighness adjustements.
+	  
+	  - Removing obsolete dcraw options comming from dcraw v. 8.xx :
+	  red/blue adjustments.
+	  
+	  - Code simplification and optimisations about compression level
+	  with TIFF output files.
+	  
+	  - Fresh screenshot:
+	  http://digikam3rdparty.free.fr/Screenshots/newkipirawconverter.png
+	  
+	  
+	  NOTES :
+	  
+	  - The code have been tested with the last dcraw release from
+	  today. Please take a care if you use an with old version.
+	  - The code is in beta. Please take a care.
+	  
+	  TODO :
+	  
+	  - Metadata preservation using Exiv2 library.
+	  - Embedding sRGB ICC color profile in JPEG/PNG/TIFF files.
+	  - More output color space, like Adobe, and WideGamut.
+	  - dcraw version detection.
+	  - Fix dcraw decoding canceling to stop dcraw imediatly (actually
+	  the implementation wait until the current raw file decoding is
+	  done).
+	  - Fix the dcraw interface class to use bach and single converter
+	  plugin at the same time.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  BUG: 128394
+	  CCBUGS: 107905
+
+2006-09-13 11:40  scripty
+
+	* [r583774]
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  calendar/kipiplugin_calendar.desktop,
+	  cdarchiving/kipiplugin_cdarchiving.desktop,
+	  findimages/kipiplugin_findimages.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  helloworld/kipiplugin_helloworld.desktop,
+	  htmlexport/kipiplugin_htmlexport.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  imagesgallery/kipiplugin_imagesgallery.desktop,
+	  jpeglossless/kipiplugin_jpeglossless.desktop,
+	  kameraklient/kipiplugin_kameraklient.desktop,
+	  mpegencoder/kipiplugin_mpegencoder.desktop,
+	  printwizard/kipiplugin_printwizard.desktop,
+	  rawconverter/kipiplugin_rawconverter.desktop,
+	  sendimages/kipiplugin_sendimages.desktop,
+	  slideshow/kipiplugin_slideshow.desktop,
+	  timeadjust/kipiplugin_timeadjust.desktop,
+	  wallpaper/kipiplugin_wallpaper.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-09-12 08:56  cgilles
+
+	* [r583399] jpeglossless/actionthread.h:
+	  clean up code
+
+2006-09-12 08:54  cgilles
+
+	* [r583398] jpeglossless/actionthread.cpp,
+	  jpeglossless/actionthread.h:
+	  clean up code
+
+2006-09-12 08:50  cgilles
+
+	* [r583396] jpeglossless/actions.h:
+	  clean up code
+
+2006-09-12 08:48  cgilles
+
+	* [r583395] jpeglossless/mtqueue.h:
+	  clean up code
+
+2006-09-12 08:43  cgilles
+
+	* [r583394] jpeglossless/actionthread.cpp,
+	  jpeglossless/actionthread.h, jpeglossless/convert2grayscale.cpp,
+	  jpeglossless/imageflip.cpp, jpeglossless/imagerotate.cpp,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  jpeglossless/plugin_jpeglossless.h, jpeglossless/utils.cpp,
+	  jpeglossless/utils.h:
+	  clean up code
+
+2006-09-12 08:21  cgilles
+
+	* [r583390] configure.in.in:
+	  fix depencies checking
+
+2006-09-12 07:29  cgilles
+
+	* [r583373] NEWS:
+	  update
+
+2006-09-12 07:27  cgilles
+
+	* [r583372] configure.in.in:
+	  kipi-plugins from trunk : removing libmagick++ depency
+
+2006-09-12 07:26  cgilles
+
+	* [r583371] README, configure.in.bot:
+	  kipi-plugins from trunk : removing libmagick++ depency
+
+2006-09-12 07:16  cgilles
+
+	* [r583369] jpeglossless/Makefile.am,
+	  jpeglossless/actionthread.cpp,
+	  jpeglossless/convert2grayscale.cpp,
+	  jpeglossless/convert2grayscale.h, jpeglossless/imageflip.cpp,
+	  jpeglossless/imageflip.h, jpeglossless/imagerotate.cpp,
+	  jpeglossless/imagerotate.h, jpeglossless/jpegtransform.cpp,
+	  jpeglossless/jpegtransform.h, jpeglossless/mtqueue.h,
+	  jpeglossless/plugin_jpeglossless.cpp, jpeglossless/utils.cpp,
+	  jpeglossless/utils.h:
+	  kipi-plugins from trunk : JPEGLossLess BugFix : with some TIFF
+	  files generated under win32 and using non-standard tiff tags,
+	  libmagick++ crash the host if the same file is parsed using
+	  KFileMetaInfo API.
+	  
+	  This is an indeep libtiff problem witch provide common/shared
+	  static methods to handle tiff error/warnings. In fact
+	  KFileMetaInfo try to use the tiff error static methods from
+	  libMagick++ witch are invalid. Using a separate process to
+	  perform ImageMagick transforms solve this problem.
+	  
+	  This commit remove libmagick++ depency to process non-jpeg files
+	  transforms. The plugin use an ImageMagick runtime dependency
+	  instead (convert tool run by a KProcess instance).
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-09-11 17:33  cgilles
+
+	* [r583197] NEWS:
+	  update
+
+2006-09-11 14:19  cgilles
+
+	* [r583146] rawconverter/Makefile.am,
+	  rawconverter/plugin_rawconverter.cpp:
+	  RAW converter use now the common raw file list
+
+2006-09-11 14:18  cgilles
+
+	* [r583145] common, common/include, common/include/rawfiles.h:
+	  New folder to store common includes/implementations/pics shared
+	  by all kipi-plugins.
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-09-11 08:50  cgilles
+
+	* [r582986] jpeglossless/hi32-action-flip.png,
+	  jpeglossless/hi32-action-flipimage.png,
+	  jpeglossless/plugin_jpeglossless.cpp:
+	  fix icon name
+
+2006-09-11 06:22  cgilles
+
+	* [r582952] jpeglossless/hi32-action-flip_image.png,
+	  jpeglossless/hi32-action-flipimage.png,
+	  jpeglossless/plugin_jpeglossless.cpp:
+	  Fix icon name
+
+2006-09-10 19:58  cguthrie
+
+	* [r582859] galleryexport/gallerylist.cpp,
+	  galleryexport/gallerylist.h:
+	  Some small double click based niceness on the list of galleries.
+
+2006-09-10 19:21  cguthrie
+
+	* [r582849] galleryexport/Makefile.am,
+	  galleryexport/exifrestorer.cpp, galleryexport/exifrestorer.h,
+	  galleryexport/gallerytalker.cpp,
+	  galleryexport/gallerywindow.cpp, galleryexport/jpegsection.h:
+	  Fixes the disappearing EXIF bug. Copied from Flickr.
+	  BUG: 129856
+
+2006-09-10 18:55  cguthrie
+
+	* [r582844] galleryexport/Makefile.am,
+	  galleryexport/galleries.cpp, galleryexport/galleries.h,
+	  galleryexport/gallery.png, galleryexport/galleryconfig.cpp,
+	  galleryexport/galleryconfig.h, galleryexport/gallerylist.cpp,
+	  galleryexport/gallerylist.h, galleryexport/gallerylogin.cpp,
+	  galleryexport/gallerylogin.h, galleryexport/gallerywidget.cpp,
+	  galleryexport/gallerywindow.cpp, galleryexport/gallerywindow.h,
+	  galleryexport/plugin_galleryexport.cpp,
+	  galleryexport/plugin_galleryexport.h:
+	  Add support for multiple galleries.
+	  Please can people test this? It works for me but there are no
+	  doubt issues somewhere ;)
+	  BUG: 94494
+
+2006-09-08 00:47  cguthrie
+
+	* [r581948] galleryexport/galleries.cpp,
+	  galleryexport/galleries.h, galleryexport/galleryconfig.cpp,
+	  galleryexport/galleryconfig.h:
+	  Work towards supporting multiple galleries.
+	  I wont commit the changes to existing files just yet as it's not
+	  ready to go live.
+	  I am now able to define, edit, delete multiple galleries which
+	  save permanently in kipirc/wallet. Just need to update some more
+	  UI elements to use this new list of galleries when logging in.
+	  CCBUG: 94494
+
+2006-08-21 12:26  cgilles
+
+	* [r575369] jpeglossless/Makefile.am,
+	  jpeglossless/convert2grayscale.cpp, jpeglossless/imageflip.cpp,
+	  jpeglossless/imagerotate.cpp, jpeglossless/jpegtransform.cpp,
+	  jpeglossless/transupp.c, jpeglossless/transupp.cpp,
+	  jpeglossless/transupp.h, jpeglossless/utils.cpp:
+	  kipi JPEGLossLess plugin : missing namesapce with transupp.c
+	  transupp.c ==> transupp.cpp
+
+2006-08-18 10:48  bram
+
+	* [r574180]
+	  trunk/extragear/graphics/kphotoalbum/kexi/3rdparty/kolibs/KoPageLayoutColumnsBase.ui,
+	  
+	  trunk/extragear/graphics/kphotoalbum/kexi/3rdparty/kolibs/KoPageLayoutHeaderBase.ui,
+	  trunk/extragear/graphics/kst/src/libkstapp/csddialogwidget.ui,
+	  trunk/extragear/graphics/kst/src/libkstapp/datawizard.ui,
+	  trunk/extragear/graphics/kst/src/libkstapp/imagedialogwidget.ui,
+	  trunk/extragear/graphics/kst/src/widgets/colorpalettewidget.ui,
+	  batchprocessimages/renameimagesbase.ui,
+	  trunk/extragear/multimedia/amarok/src/Options2.ui,
+	  trunk/extragear/multimedia/amarok/src/Options8.ui,
+	  trunk/extragear/multimedia/amarok/src/mediadevice/generic/genericmediadeviceconfigdialog.ui,
+	  
+	  trunk/extragear/multimedia/k3b/plugins/encoder/external/base_k3bexternalencoderconfigwidget.ui,
+	  
+	  trunk/extragear/multimedia/k3b/plugins/encoder/external/base_k3bexternalencodereditwidget.ui,
+	  
+	  trunk/extragear/multimedia/k3b/src/rip/base_k3bvideodvdrippingwidget.ui,
+	  
+	  trunk/extragear/network/kftpgrabber/src/ui/kftpquickconnectlayout.ui,
+	  
+	  trunk/extragear/network/kmyfirewall/kmyfirewall/kmfwidgets/kmyfirewallhostwidget.ui,
+	  
+	  trunk/extragear/network/kmyfirewall/kmyfirewall/kmfwidgets/kmyfirewallmynetworkwidget.ui,
+	  trunk/extragear/network/knemo/kcm/configdlg.ui,
+	  trunk/extragear/utils/filelight/src/part/dialog.ui:
+	  SVN_SILENT: fixuifiles
+
+2006-08-17 13:22  cgilles
+
+	* [r573896] batchprocessimages/renameimagesoptionsdialog.cpp,
+	  batchprocessimages/renameimagesoptionsdialog.h:
+	  remove obsolete code (usused since a long time)
+
+2006-08-17 13:21  cgilles
+
+	* [r573895] NEWS:
+	  update
+
+2006-08-17 13:16  cgilles
+
+	* [r573894] batchprocessimages/renameimagesbase.ui:
+	  Batch rename image kipi plugin : fix min. and max prefix num
+	  value from 1 to 999999 (like in digiKam 0.9.0 camera gui)
+	  BUG: 127101
+
+2006-08-07 18:57  jahrens
+
+	* [r570803] simpleviewerexport/simpleviewerexport.cpp,
+	  simpleviewerexport/svedialog.cpp,
+	  simpleviewerexport/svedialog.h:
+	  sve stores its configuration now
+
+2006-08-06 20:12  jahrens
+
+	* [r570463] simpleviewerexport/simpleviewerexport.cpp,
+	  simpleviewerexport/simpleviewerexport.h:
+	  simpleviewerexport is now able to upload the created gallery to
+	  a webserver
+
+2006-08-06 15:44  scripty
+
+	* [r570385] acquireimages/kipiplugin_acquireimages.desktop,
+	  htmlexport/themes/snow/snow.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-08-03 09:06  jahrens
+
+	* [r569259] simpleviewerexport/firstrundlg.cpp:
+	  simpleviewer launched a new version (1.8) which isn't compatible
+	  yet
+
+2006-07-30 17:43  anaselli
+
+	* [r567951] cdarchiving/cdarchiving.cpp:
+	  CCBUG: 131284
+	  Fixed the case in which under the same tag there are two files
+	  with similar name but some upper case letters using HTML
+	  interface.
+
+2006-07-30 15:34  anaselli
+
+	* [r567908] cdarchiving/cdarchivingdialog.cpp:
+	  added me as contributor
+
+2006-07-30 15:11  anaselli
+
+	* [r567902] cdarchiving/cdarchiving.cpp,
+	  cdarchiving/cdarchiving.h:
+	  BUG: 131284
+
+2006-07-29 18:06  anaselli
+
+	* [r567662] cdarchiving/cdarchiving.cpp,
+	  cdarchiving/cdarchiving.h:
+	  BUG: 125766
+
+2006-07-25 18:27  toma
+
+	* [r566299] sendimages/sendimages.cpp:
+	  Thunderbird's commandline does not like ( and ). Filter them out
+	  in the temp file name.
+	  BUG:131343
+
+2006-07-18 18:07  toma
+
+	* [r563875] sendimages/sendimages.cpp:
+	  Into the if statement.
+
+2006-07-18 18:05  jaiva
+
+	* [r563874] flickrexport/flickrwindow.cpp:
+	  Removed the check for HostSupportsTags feature to be compatible
+	  with old libkipi and digikam
+
+2006-07-18 17:39  toma
+
+	* [r563865] sendimages/sendimages.cpp,
+	  sendimages/sendimagesdialog.cpp:
+	  Adjust sendimages plugin to add the tags when the host apps has
+	  them.
+
+2006-07-17 20:05  jaiva
+
+	* [r563539] flickrexport/flickrwidget.cpp,
+	  flickrexport/flickrwidget.h, flickrexport/flickrwindow.cpp,
+	  flickrexport/flickrwindow.h:
+	  Application tags export support added. Digikam tags export works
+	  now.
+
+2006-07-17 06:43  jaiva
+
+	* [r563270] flickrexport/flickrwindow.cpp,
+	  flickrexport/plugin_flickrexport.cpp:
+	  Plugin window is now non-modal, can be run in background
+
+2006-07-16 21:31  cgilles
+
+	* [r563174] rawconverter/batchdialog.cpp:
+	  RAW batch converter dialog use a non-modal dialog now. Just need
+	  to use a null parent in constructor and start dialog with show()
+	  method.
+	  A minimize button is also available to reduce the dialog during
+	  conversions.
+	  
+	  Vardhman: this is a right example for you to transform you
+	  flicker export plugin in non-modal ! Look here :
+	  http://digikam3rdparty.free.fr/Screenshots/batchrawconverter-nonmodal.png
+	  
+	  CCMAIL: kde-imaging@kde.org, vardhman@gmail.com
+
+2006-07-15 13:38  jaiva
+
+	* [r562627] flickrexport/flickritem.h,
+	  flickrexport/flickrtalker.cpp, flickrexport/flickrtalker.h,
+	  flickrexport/flickrwidget.cpp, flickrexport/flickrwidget.h,
+	  flickrexport/flickrwindow.cpp, flickrexport/flickrwindow.h:
+	  Solves #128522. Removing the question regarding username. Shows
+	  username in the plugin window and can be changed from there.
+
+2006-07-09 15:24  anaselli
+
+	* [r560227] ChangeLog:
+	  svn2log.py seems to work again here... fixed changelogs entries
+
 v 0.1.2 - 2006-07-08
 ----------------------------------------------------------------------------
 
