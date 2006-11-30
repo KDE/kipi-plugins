@@ -44,6 +44,10 @@
 #include "kpaboutdata.h"
 #include <libkipi/interface.h>
 
+// Local includes
+
+#include "kimg2mpgbase.h"
+
 class KFileItem;
 class QPushButton;
 class QComboBox;
@@ -86,7 +90,7 @@ protected:
 };
 
 
-class KImg2mpgData : public KDialog
+class KImg2mpgData : public KImg2mpgBase
 {
 Q_OBJECT
 
@@ -104,11 +108,9 @@ public:
   void readSettings();
 
   OptionsDialog* m_OptionDlg;
-  QPushButton*   m_Encodebutton;
-  QGroupBox*     m_AudioInputFilename;
 
 public slots:
-  
+
   void reset();
   void readStderr(KProcess *proc, char *buffer, int buflen);
   void EncodeDone(KProcess* );
@@ -128,7 +130,7 @@ public slots:
   void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
   void slotFailedPreview(const KFileItem*);
   void slotAddDropItems(KURL::List filesUrl);
-
+  
 private:
   
   QString               m_VideoFormatConfig;
@@ -150,7 +152,7 @@ private:
   QColor                m_BackgroundColorConfig;
 
   KConfig*              m_config;
-  
+
   KIO::PreviewJob*      m_thumbJob;
 
   QTime                 m_EncodingDuration;
@@ -163,48 +165,8 @@ private:
 
   KProcess*             m_Proc;
 
-  QLabel*               m_ImageLabel;
-  QLabel*               m_frame;
-  QLabel*               m_label1;
-  QLabel*               m_label3;
-  QLabel*               m_label4;
-  QLabel*               m_label5;
-  QLabel*               m_label6;
-  QLabel*               m_label7;
-
-  KProgress*            m_progress;
-
-  QPushButton*          m_quitbutton;
-  QPushButton*          m_optionsbutton;
-  QPushButton*          m_helpButton;
-  QPushButton*          m_MPEGOutputBUTTONFilename;
-  QPushButton*          m_AudioInputBUTTONFilename;
-  QPushButton*          m_ImagesFilesButtonAdd;
-  QPushButton*          m_ImagesFilesButtonDelete;
-  QPushButton*          m_ImagesFilesButtonUp;
-  QPushButton*          m_ImagesFilesButtonDown;
-
-  QComboBox*            m_VideoTypeComboBox;
-  QComboBox*            m_VideoFormatComboBox;
-  QComboBox*            m_ChromaComboBox;
-  QComboBox*            m_TransitionComboBox;
-
-  QSpinBox*             m_DurationImageSpinBox;
-
-  QGroupBox*            m_MPEGOutputFilename;
-  QGroupBox*            m_ImagesFilesGroup;
-
-  KLineEdit*            m_MPEGOutputEDITFilename;
-  KLineEdit*            m_AudioInputEDITFilename;
-
   KIconLoader*          m_Icons;
 
-  KColorButton*         m_BackgroundColorButton;
-
-  KListBox*             m_ImagesFilesListBox;
-
-  KButtonBox*           m_ImagesFilesButtonBox;
-  
   KIPI::Interface*      m_interface;
 
   KIPIPlugins::KPAboutData* m_about;

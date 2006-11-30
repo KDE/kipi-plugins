@@ -95,6 +95,7 @@ extern "C"
 #include "kshowdebuggingoutput.h"
 #include "optionsdialog.h"
 #include "checkbinprog.h"
+#include "kimg2mpgbase.h"
 #include "kimg2mpg.h"
 #include "kimg2mpg.moc"
 
@@ -178,7 +179,7 @@ void ListImageItems::dropEvent(QDropEvent *e)
 /////////////////////////////// CONSTRUCTOR /////////////////////////////////////////////////
 
 KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const char *name)
-            : KDialog( parent, name, false, Qt::WDestructiveClose ), m_interface( interface )
+            : KImg2mpgBase(parent, name), m_interface( interface )
 {
   m_TmpFolderConfig = "";
   m_Proc = 0L;
@@ -189,201 +190,33 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_Icons = new KIconLoader( QString( "kipi" ) );
   m_NoneLabel = i18n ("none");
 
-  QVBoxLayout* ml = new QVBoxLayout( this, 10 );
+  // Set buttons icon
 
-  //---------------------------------------------
+  m_MPEGOutputBUTTONFilename->setIconSet( SmallIconSet( "fileopen" ) );
+  m_AudioInputBUTTONFilename->setIconSet( SmallIconSet( "fileopen" ) );
 
-  QFrame *headerFrame = new QFrame( this );
-  headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-  QHBoxLayout* layout = new QHBoxLayout( headerFrame );
-  layout->setMargin( 2 ); // to make sure the frame gets displayed
-  layout->setSpacing( 0 );
-  QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
-  pixmapLabelLeft->setScaledContents( false );
-  layout->addWidget( pixmapLabelLeft );
-  QLabel *labelTitle = new QLabel( i18n("Create MPEG Slideshow"), headerFrame, "labelTitle" );
-  layout->addWidget( labelTitle );
-  layout->setStretchFactor( labelTitle, 1 );
-  ml->addWidget( headerFrame );
-
-  QString directory;
-  KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-  directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
-  pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-  pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-  labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-
-  //---------------------------------------------
-
-  QHBoxLayout* h1 = new QHBoxLayout( ml );
-  QVBoxLayout* v1 = new QVBoxLayout( h1 );
-  h1->addSpacing( 5 );
-  QGridLayout* g1 = new QGridLayout( v1, 3, 2 );
-
-  // Video format selection.
-
-  m_label1 = new QLabel(i18n("Video format, type and chroma mode:"), this);
-  g1->addWidget( m_label1, 0, 0, AlignLeft );
-
-  m_VideoFormatComboBox = new QComboBox( false, this, "Video_Format_ComboBox" );
-  g1->addWidget( m_VideoFormatComboBox, 0, 1, AlignLeft );
-  m_VideoFormatComboBox->insertItem("XVCD");
-  m_VideoFormatComboBox->insertItem("SVCD");
-  m_VideoFormatComboBox->insertItem("VCD");
-  m_VideoFormatComboBox->insertItem("DVD");
-  QWhatsThis::add( m_VideoFormatComboBox,
-     i18n( "This option specifies the video format for your MPEG file. "
-     "For a high photographic resolution on a TV screen, select "
-     "'XVCD' (it is the same DVD resolution); "
-     "although some old DVD players cannot read this format. "
-     "'VCD'/'SVCD' are more compatible with DVD players, "
-     "but they are only medium resolution. "
-     "DVD is an experimental option." ) );
-
-  // Video type selection.
-
-  m_VideoTypeComboBox = new QComboBox( false, this, "Video_Type_ComboBox" );
-  g1->addWidget( m_VideoTypeComboBox, 0, 2, AlignLeft );
-  m_VideoTypeComboBox->insertItem("PAL");
-  m_VideoTypeComboBox->insertItem("NTSC");
-  m_VideoTypeComboBox->insertItem("SECAM");
-  QWhatsThis::add( m_VideoTypeComboBox,
-     i18n( "This option specifies the video type for your MPEG file. "
-     "NTSC is an American TV standard; PAL/SECAM is European." ) );
+  // Signal/Slot connections
 
   connect( m_VideoTypeComboBox, SIGNAL( activated(int ) ),
            this, SLOT( SlotPortfolioDurationChanged (int) ) );
 
-  // Chroma subsampling mode
-  m_ChromaComboBox = new QComboBox( false, this, "Chroma_ComboBox" );
-  g1->addWidget( m_ChromaComboBox, 0, 3, AlignLeft );
-  m_ChromaComboBox->insertItem("Default");
-  m_ChromaComboBox->insertItem("444");
-  m_ChromaComboBox->insertItem("420jpeg");
-  m_ChromaComboBox->insertItem("420mpeg2");
-  QWhatsThis::add( m_ChromaComboBox,
-     i18n( "This option specifies the chroma subsampling mode. "
-           "Change it if you have problems with the default value " ) );
-
-  // Image duration.
-
-  m_label3 = new QLabel(i18n("Image duration (seconds):"), this);
-  g1->addWidget( m_label3, 2, 0, AlignLeft );
-
-  m_DurationImageSpinBox = new QSpinBox( 1, 999, 1 , this, "Duration_Image_SpinBox" );
-  g1->addWidget( m_DurationImageSpinBox, 2, 1, AlignLeft );
-  QWhatsThis::add( m_DurationImageSpinBox,
-     i18n( "This option specifies the duration for each image in your MPEG file. "
-     "10 seconds is a good value for an image portfolio. "
-     "Warning: you may have some problems with your DVD player if the "
-     "total MPEG duration is under 3 seconds."));
-
   connect( m_DurationImageSpinBox, SIGNAL( valueChanged(int ) ),
            this, SLOT( SlotPortfolioDurationChanged (int) ) );
-
-  // Transition between images selection.
-
-  m_label4 = new QLabel(i18n("Transition speed between images:"), this);
-  g1->addWidget( m_label4, 3, 0, AlignLeft );
-
-  m_TransitionComboBox = new QComboBox( false, this, "Transition_ComboBox" );
-  g1->addWidget( m_TransitionComboBox, 3, 1, AlignLeft );
-  m_TransitionComboBox->insertItem(m_NoneLabel);
-  m_TransitionComboBox->insertItem("1");
-  m_TransitionComboBox->insertItem("2");
-  m_TransitionComboBox->insertItem("4");
-  m_TransitionComboBox->insertItem("5");
-  m_TransitionComboBox->insertItem("10");
-  m_TransitionComboBox->insertItem("20");
-  QWhatsThis::add( m_TransitionComboBox,
-     i18n( "This option specifies the transition speed between images in your MPEG file. "
-     "'1' is a slow transition and '20' is a very fast transition. "
-     "'2' is a good value for an image portfolio." ) );
 
   connect( m_TransitionComboBox, SIGNAL( activated(int ) ),
            this, SLOT( SlotPortfolioDurationChanged (int) ) );
 
-  // Background color selection.
-
-  m_label5 = new QLabel(i18n("Background color:"), this);
-  g1->addWidget( m_label5, 4, 0, AlignLeft );
-
-  // Black (default background color).
-
-  QColor BackGroundCOLOR = QColor( 0, 0, 0 );
-
-  m_BackgroundColorButton = new KColorButton( BackGroundCOLOR, this );
-  g1->addWidget( m_BackgroundColorButton, 4, 1, AlignLeft );
-  QWhatsThis::add( m_BackgroundColorButton,
-     i18n( "You can select here the background color for your portfolio. "
-     "This color is used to pad the image size to fit the TV screen size. "
-     "Black is a good value for this. " ));
-
-  // MPEG output filename selection.
-
-  m_MPEGOutputFilename = new QGroupBox( 2, Qt::Horizontal, i18n( "MPEG Output Filename" ), this);
-  v1->addWidget( m_MPEGOutputFilename );
-
-  m_MPEGOutputEDITFilename = new KLineEdit( m_MPEGOutputFilename );
-  m_MPEGOutputEDITFilename->setMinimumWidth( 300 );
-  m_MPEGOutputBUTTONFilename = new QPushButton( m_MPEGOutputFilename );
-  m_MPEGOutputBUTTONFilename->setIconSet( SmallIconSet( "fileopen" ) );
-  QWhatsThis::add( m_MPEGOutputEDITFilename,
-     i18n( "You can specify here the output MPEG filename. "
-     "Warning : MPEG files are very big (if you have many images in your portfolio). "
-     "Select a folder with a sufficient free disk space. ") );
-
   connect( m_MPEGOutputBUTTONFilename, SIGNAL( clicked() ),
            this, SLOT( slotMPEGFilenameDialog() ) );
 
-  // Audio input filename selection.
-
-  m_AudioInputFilename = new QGroupBox( 2, Qt::Horizontal, i18n( "Audio Input Filename" ), this);
-  v1->addWidget( m_AudioInputFilename );
-
-  m_AudioInputEDITFilename = new KLineEdit( m_AudioInputFilename );
-  m_AudioInputEDITFilename->setMinimumWidth( 300 );
-  m_AudioInputBUTTONFilename = new QPushButton( m_AudioInputFilename );
-  m_AudioInputBUTTONFilename->setIconSet( SmallIconSet( "fileopen" ) );
-  QWhatsThis::add( m_AudioInputEDITFilename,
-     i18n( "You can specify here the input audio file name. "
-     "This audio file name will be multiplexed with the portfolio video. "
-     "Warning: if the audio duration is too long, it will be truncated." ) );
-
   connect( m_AudioInputBUTTONFilename, SIGNAL( clicked() ),
            this, SLOT( slotAudioFilenameDialog() ) );
-
-  // Images files list and the control buttons.
-
-  m_ImagesFilesGroup = new QGroupBox(3, Qt::Horizontal, i18n( "Image Files in Portfolio" ), this );
-  v1->addWidget( m_ImagesFilesGroup );
-
-  m_ImagesFilesListBox = new ListImageItems( m_ImagesFilesGroup, "ListImageItems");
-  m_ImagesFilesListBox->setSelectionMode (QListBox::Extended);
-  m_ImagesFilesListBox->setMinimumWidth( 300 );
-  QWhatsThis::add( m_ImagesFilesListBox,
-     i18n( "This is the list of the image files for your portfolio. "
-     "The portfolio's first image is on the top; the last image is on the bottom. "
-     "If you want to add some images, click on the 'Add' "
-     "button or use the drag-and-drop." ) );
 
   connect( m_ImagesFilesListBox, SIGNAL( currentChanged( QListBoxItem * ) ),
            this, SLOT( slotImagesFilesSelected(QListBoxItem *) ) );
 
   connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(KURL::List) ),
           this, SLOT( slotAddDropItems(KURL::List)));
-
-  m_ImagesFilesButtonBox = new KButtonBox( m_ImagesFilesGroup, Vertical );
-  m_ImagesFilesButtonAdd = m_ImagesFilesButtonBox->addButton( i18n( "&Add..." ) );
-  QWhatsThis::add( m_ImagesFilesButtonAdd, i18n( "Add some image files to the portfolio list." ) );
-  m_ImagesFilesButtonDelete = m_ImagesFilesButtonBox->addButton( i18n( "&Delete" ) );
-  QWhatsThis::add( m_ImagesFilesButtonDelete, i18n( "Remove some image files from the portfolio list." ) );
-  m_ImagesFilesButtonUp = m_ImagesFilesButtonBox->addButton( i18n( "Image &Up" ) );
-  QWhatsThis::add( m_ImagesFilesButtonUp, i18n( "Moving the current image up on the portfolio list." ) );
-  m_ImagesFilesButtonDown = m_ImagesFilesButtonBox->addButton( i18n( "Image D&own" ) );
-  QWhatsThis::add( m_ImagesFilesButtonDown, i18n( "Moving the current image down on the portfolio list." ) );
-  m_ImagesFilesButtonBox->layout();
 
   connect( m_ImagesFilesButtonAdd, SIGNAL( clicked() ),
            this, SLOT( slotImagesFilesButtonAdd() ) );
@@ -397,37 +230,17 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   connect( m_ImagesFilesButtonDown, SIGNAL( clicked() ),
            this, SLOT( slotImagesFilesButtonDown() ) );
 
-  m_ImageLabel = new QLabel( m_ImagesFilesGroup );
-  m_ImageLabel->setMinimumWidth( 120 );
-  m_ImageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-  m_ImageLabel->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-  QWhatsThis::add( m_ImageLabel, i18n( "Preview the currently selected image." ) );
-
-  m_label6 = new QLabel(m_ImagesFilesGroup);
-  QWhatsThis::add( m_label6, i18n( "Total number of images in the portfolio and sequence duration." ) );
-  m_label7 = new QLabel(m_ImagesFilesGroup);
-  QWhatsThis::add( m_label7, i18n( "Currently selected image in the portfolio list." ) );
-
-  // Encode push button.
-
-  QVBoxLayout* v3 = new QVBoxLayout( h1 );
-  m_Encodebutton = new QPushButton( this, "PushButton_Encode" );
-  m_Encodebutton->setText(i18n( "&Encode") );
-  m_Encodebutton->setAutoRepeat( false );
-  QWhatsThis::add( m_Encodebutton, i18n( "Start the portfolio MPEG encoding. "
-                                         "The program uses the 'images2mpg' bash script. " ) );
-
   connect(m_Encodebutton, SIGNAL(clicked()),
           this, SLOT(slotEncode()));
 
-  v3->addWidget( m_Encodebutton );
-  v3->addStretch( 1 );
+  connect(m_optionsbutton, SIGNAL(clicked()),
+          this, SLOT(slotOptions()));
+
+  connect(m_quitbutton, SIGNAL(clicked()),
+          this, SLOT(slotClose()));
 
   // About data and help button.
 
-  m_helpButton = new QPushButton( this, "HelpButton_Options" );
-  m_helpButton->setText( i18n( "&Help") );
-  v3->addWidget( m_helpButton );
 
   m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("MPEG Slideshow"),
                                       NULL,
@@ -438,51 +251,17 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author"),
                     "caulier dot gilles at free.fr");
 
-  m_about->addAuthor("Angelo Naselli", I18N_NOOP("Contributor"),
+  m_about->addAuthor("Angelo Naselli", I18N_NOOP("Maintainer"),
                     "anaselli at linux dot it");
+
+  m_about->addAuthor("Valerio Fuoglio", I18N_NOOP("Maintainer"),
+                     "valerio dot fuoglio at kdemail dot net");
 
   KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
   helpMenu->menu()->removeItemAt(0);
   helpMenu->menu()->insertItem(i18n("MPEG SlideShow Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
   m_helpButton->setPopup( helpMenu->menu() );
 
-  // Options button.
-
-  m_optionsbutton = new QPushButton( this, "PushButton_Settings" );
-  m_optionsbutton->setText( i18n( "&Settings") );
-
-  connect(m_optionsbutton, SIGNAL(clicked()),
-          this, SLOT(slotOptions()));
-
-  v3->addWidget( m_optionsbutton );
-
-  // Quit push button.
-
-  m_quitbutton = new QPushButton( this, "PushButton_Quit" );
-  m_quitbutton->setText(i18n( "&Close") );
-  m_quitbutton->setAutoRepeat( false );
-
-  connect(m_quitbutton, SIGNAL(clicked()),
-          this, SLOT(slotClose()));
-
-  v3->addWidget( m_quitbutton );
-  QWhatsThis::add( m_quitbutton, i18n( "Abort the current encoding and exit." ) );
-
-  // Process messages frame.
-
-  m_frame = new QLabel( this, "Process_Messages_frame" );
-  m_frame->setMinimumHeight( 25 );
-  m_frame->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-  m_frame->setAlignment(AlignCenter|WordBreak|ExpandTabs);
-  ml->addWidget( m_frame );
-  QWhatsThis::add( m_frame, i18n( "Current encoding task." ) );
-
-  // Progress bar.
-
-  m_progress = new KProgress( this, "Progress" );
-  m_progress->setMinimumHeight( 25 );
-  ml->addWidget( m_progress );
-  QWhatsThis::add( m_progress, i18n( "Encoding progress bar." ) );
 
   readSettings();
 
@@ -1187,7 +966,7 @@ void KImg2mpgData::closeEvent(QCloseEvent* e)
 void KImg2mpgData::show()
 {
   setCaption(i18n("Create MPEG Slideshow"));
-  KDialog::show();
+  QDialog::show();
 }
 
 

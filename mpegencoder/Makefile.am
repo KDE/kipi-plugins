@@ -6,7 +6,7 @@ METASOURCES = AUTO
 kde_module_LTLIBRARIES = kipiplugin_mpegencoder.la
 kipiplugin_mpegencoder_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 # Srcs for the plugin
-kipiplugin_mpegencoder_la_SOURCES = plugin_mpegencoder.cpp \
+kipiplugin_mpegencoder_la_SOURCES = plugin_mpegencoder.cpp kimg2mpgbase.ui\
                                        kimg2mpg.cpp kshowdebuggingoutput.cpp \
                                        optionsdialog.cpp checkbinprog.cpp
 
