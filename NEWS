@@ -6,6 +6,16 @@ v 0.1.3
 
 Kipi-plugins NEW FEATURES
 
+
+Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
+
+001 ==> 
+
+v 0.1.3 beta1
+----------------------------------------------------------------------------
+
+Kipi-plugins NEW FEATURES
+
 New Plugin    : MetadataEdit : New kipi plugin to edit EXIF and IPTC pictures metadata.
 New Plugin    : GPSSync      : New kipi plugin to sync photo metadata with a GPS device.
 New Plugin    : IpodExport   : New kipi plugin to export pictures to an ipod device.
