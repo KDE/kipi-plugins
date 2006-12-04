@@ -68,7 +68,7 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 018 ==> 136941 : BatchProcess : graphical picture ordering and renaming.
 019 ==> 136855 : MetadataEdit : Editing metadata on a few selected imagefiles and clicking forward 
                                 or apply crashes digiKam.
-020 ==> 135408 : BatchPorcess : Window does not fit on screen.
+020 ==> 135408 : BatchProcess : Window does not fit on screen.
 021 ==> 117399 : BatchProcess : Usability of Target folder.
 022 ==> 137921 : MetadataEdit : wrong country code in IPTC.
 
