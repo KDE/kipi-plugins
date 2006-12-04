@@ -1,6 +1,6 @@
 Note: for details and info about current version, see ChangeLog.
 
-                                                            
+
 v 0.1.3
 ----------------------------------------------------------------------------
 
@@ -160,4 +160,11 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 025 ==> 119562 : SendImages   : A patch that adds support for the Sylpheed-Claws mua.
 026 ==> 119867 : Slideshow    : Different icon types used by slideshow for for backwards/forwards.
 
+v0.1.0-rc1                                                        2006-01-06
+----------------------------------------------------------------------------
+
+New in this version is the flickr upload plugin: you can now easily upload  your images to the flickr server. Sendimages now has support for Thunderbird  and GmailAgent. We fixed numerous bugs in the CDArchiving plugin, it should  work fine again with K3b. Rename images had some issues, we rewrote the user  interface and fixed several bugs. The weekdays of the calendar were not  localized. We fixed the ImagesGallery, so you can export multiple tags to a  html-page. You can now rotate or flip your images lossless, while preserving  the timestamp. The rawconverter now supports dcraw>=6.x.  
+
+More information about the bugs can be found in the following bugreports:  
+108227, 98269,89394,91651,100877,100568,110391,110659,110698,  110575,99895,104032,105727,110508,104511,97178,102219, 98199, 108537, 101110, 9943 ,103282  
 
