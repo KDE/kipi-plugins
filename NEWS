@@ -16,9 +16,9 @@ v 0.1.3 beta1
 
 Kipi-plugins NEW FEATURES
 
-New Plugin    : MetadataEdit : New kipi plugin to edit EXIF and IPTC pictures metadata.
-New Plugin    : GPSSync      : New kipi plugin to sync photo metadata with a GPS device.
-New Plugin    : IpodExport   : New kipi plugin to export pictures to an ipod device.
+New Plugin    : MetadataEdit : New kipi plugin to edit EXIF and IPTC pictures metadata (by Gilles Caulier).
+New Plugin    : GPSSync      : New kipi plugin to sync photo metadata with a GPS device (by Gilles Caulier).
+New Plugin    : IpodExport   : New kipi plugin to export pictures to an ipod device (by Seb Ruiz).
 
 GalleryExport : Support for multiple galleries.
 
@@ -123,32 +123,41 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 
 v0.1.0-rc2                                                        2006-05-06
 ----------------------------------------------------------------------------
-2006-05-06 18:13  anaselli
-	* new images gallery export (html export by Aurelien Gateau)
-	* new SimpleViewer plugin (by Joern Ahrens)
-	* fixed bugs
-	images gallery 
-	  #120242 #112025 #106152 #119933 #99418 #103449 #110596 #116605
-        jpeglossless
-          #123499 
-	kamera klient
-	  #99157
-	print wizard
-	  #98286 #101495 #117670
-	batch process images
-	  #108945 #117397 #114512
-        calendar
-          #120868 #118936 
-	mpeg encoder
-	  #109739 #114514 #114515 
-	acquire images
-	  #114519 
-        raw converter
-          #101455 #101455 #103763 #103763 #118407
-        send images
-          #119562
-        slideshow
-          #119867
 
-For details and info about previous versions, see ChangeLog.
+Kipi-plugins NEW FEATURES
+
+New Plugin    : HTMLExport   : new images gallery export supporting XHTML and CSS (by Aurelien Gateau).
+New Plugin    : SimpleViewer : new plugin to export to flash web page (by Joern Ahrens)
+
+Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
+
+001 ==> 120242 : HTMLExport   : Bad sorting of images in html export.
+002 ==> 112025 : HTMLExport   : digiKam overwrites albums previously exported to HTML.
+003 ==> 106152 : HTMLExport   : Creates faulty links when choosing picture filenames derived from the EXIF info.
+004 ==> 119933 : HTMLExport   : Image gallery has problems with german umlauts in file-/directorynames.
+005 ==> 99418  : HTMLExport   : Help menu in progress dialog refers to batch process plugin about instead of image gallery plugins.
+006 ==> 103449 : HTMLExport   : Title and name of album are together and album with accents do not function.
+007 ==> 110596 : HTMLExport   : Apos entitity is not correct for HTML (it is XML entity).
+008 ==> 116605 : HTMLExport   : Crash when exporting to an existing dir an choosing no to overwrite.
+009 ==> 123499 : JPEGLossLess : RAW images are rotated wrong.
+010 ==> 99157  : KameraKlient : Some kameraklient source files miss copyright and license info.
+011 ==> 98286  : PrintWizard  : Print Wizard has wrong default paper size.
+012 ==> 101495 : PrintWizard  : Raster effect on printout.
+013 ==> 117670 : PrintWizard  : Printing is awfully slow.
+014 ==> 108945 : BatchProcess : Batch image filtering overwrite mode: always overwrite doesn't work.
+015 ==> 117397 : BatchProcess : batchplugins 'start' not disabled when target folder is not writeable orwith no image in list.
+016 ==> 114512 : BatchProcess : The checkbox "Remove original" is left disabled after a preview.
+017 ==> 120868 : Calendar     : Failed to create PDF callendar
+018 ==> 118936 : calendar     : kipi calendar wizard should default to next year.
+019 ==> 109739 : MpegEncoder  : yuvscaler error in digikam.
+020 ==> 114514 : MpegEncoder  : Do not delete the temporary folder "~/tmp/kde-user/kipi-mpegencoderplugin-PID/" after 
+                                each encoding process.
+021 ==> 114515 : MpegEncoder  : Verify the existence of the MPEG output file path and the existence of the audio input file 
+                                before launching the encoding process.
+022 ==> 114519 : AcquireImage : Crash when stopping a Final Scan.
+023 ==> 103763 : RAWConverter : Rawconverter (single) should fill a default file name into the save as dialog.
+024 ==> 118407 : RAWConverter : dcrawprocess.cpp does not compileon Solaris
+025 ==> 119562 : SendImages   : A patch that adds support for the Sylpheed-Claws mua.
+026 ==> 119867 : Slideshow    : Different icon types used by slideshow for for backwards/forwards.
+
 
