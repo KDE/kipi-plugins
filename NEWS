@@ -76,35 +76,50 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 v 0.1.2                                                           2006-07-08
 ----------------------------------------------------------------------------
 
-Minor fix release
+Compilation fix release.
 
 v 0.1.1                                                           2006-06-26
 ----------------------------------------------------------------------------
 
-Minor fix release
+Compilation fix release.
 
 v 0.1.0                                                           2006-06-22
 ----------------------------------------------------------------------------
-Plugins:
-flickrexport kameraklient  printwizard timeadjust galleryexport 
-rawconverter acquireimages htmlexport  sendimages wallpaper
-batchprocessimages mpegencoder simpleviewerexport calendar slideshow
-cdarchiving findimages jpeglossless
 
-Fixed bugs:
-- calendar
-117105 
-- cdarchive
-101656 128125
-- gallery export (added G2 support)
-123978 96352 123141
-imagesgallery (removed) HTML export (new) 
-88887  115474 120739 89068  90943  95116  96009 96363 107380 108696 109708
-109709 109710 111136 111509 111880 112107 113355
-mpeg encoder
-127219  127532
-raw converter
-101455
+Kipi-plugins NEW FEATURES
+
+GalleryExport : added Gallery 2 version support.
+ImageGallery  : removed is removed and replaced by HTML export plugin.
+
+Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
+
+001 ==> 117105 : Calendar      : Calendar tool should use internationalized country setting.
+002 ==> 101656 : CDArchive     : Use irretating filenames foo.jpeg.jpeg for images.
+003 ==> 128125 : CDArchive     : Album title from digikam are not converted into html entities.
+004 ==> 123978 : GalleryExport : "Invalid response" error when exporting images to Gallery 1.5.2.
+005 ==> 96352  : GalleryExport : Can not login into Gallery2.
+006 ==> 123141 : GalleryExport : Gallery Export - manage several cookies.
+007 ==> 88887  : HTMLExport    : No Exif-rotation in HTML export.
+008 ==> 115474 : HTMLExport    : Web export creats duplicate extensions.
+009 ==> 120739 : HTMLExport    : Wrong thumbnail for album.
+010 ==> 89068  : HTMLExport    : Improvement for the HTML export plugin.
+011 ==> 90943  : HTMLEXPORT    : Add CSS functionality.
+012 ==> 95116  : HTMLEXPORT    : Incremental local export or other easy web publishing method.
+013 ==> 96009  : HTMLEXPORT    : Unnecessary deletion of directories in "export HTML" .
+014 ==> 96363  : HTMLEXPORT    : Option to save full/different sized images in gallery.
+015 ==> 107380 : HTMLEXPORT    : Split long html pages by number of images per page.
+016 ==> 108696 : HTMLEXPORT    : Themable html export.
+017 ==> 109708 : HTMLEXPORT    : Number of thumbnails per row should be in the same tab as size of thumbnail.
+018 ==> 109709 : HTMLEXPORT    : Create target dir when it does not exist.
+019 ==> 109710 : HTMLEXPORT    : Make clicking on image going to the next image.
+020 ==> 111136 : HTMLEXPORT    : export to non-local directory (fish://) does not work.
+021 ==> 111509 : HTMLEXPORT    : Subalbums not supported by HTML export.
+022 ==> 111880 : HTMLEXPORT    : New option to add original image (as link in thumbnail).
+023 ==> 112107 : HTMLEXPORT    : Avi files in html exports.
+024 ==> 113355 : HTMLEXPORT    : Add auto-forwarding (slide show) to HTML-Export.
+025 ==> 127219 : MPEGEncoder   : Creation of mpeg slide show fails.
+026 ==> 127532 : MPEGEncoder   : 'image2mpg' wrong directory error.
+027 ==> 101455 : RAWConverter  : Make it possible to enter numbers with 2 digit precision in RAW converter dialog.
 
 v0.1.0-rc2                                                        2006-05-06
 ----------------------------------------------------------------------------
