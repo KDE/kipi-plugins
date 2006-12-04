@@ -126,8 +126,8 @@ v0.1.0-rc2                                                        2006-05-06
 
 Kipi-plugins NEW FEATURES
 
-New Plugin    : HTMLExport   : new images gallery export supporting XHTML and CSS (by Aurelien Gateau).
-New Plugin    : SimpleViewer : new plugin to export to flash web page (by Joern Ahrens)
+New Plugin     : HTMLExport   : new images gallery export supporting XHTML and CSS (by Aurelien Gateau).
+New Plugin     : SimpleViewer : new plugin to export to flash web page (by Joern Ahrens)
 
 Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 
@@ -160,11 +160,39 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 025 ==> 119562 : SendImages   : A patch that adds support for the Sylpheed-Claws mua.
 026 ==> 119867 : Slideshow    : Different icon types used by slideshow for for backwards/forwards.
 
-v0.1.0-rc1                                                        2006-01-06
+v0.1.0-rc1                                                        2005-09-04
 ----------------------------------------------------------------------------
 
-New in this version is the flickr upload plugin: you can now easily upload  your images to the flickr server. Sendimages now has support for Thunderbird  and GmailAgent. We fixed numerous bugs in the CDArchiving plugin, it should  work fine again with K3b. Rename images had some issues, we rewrote the user  interface and fixed several bugs. The weekdays of the calendar were not  localized. We fixed the ImagesGallery, so you can export multiple tags to a  html-page. You can now rotate or flip your images lossless, while preserving  the timestamp. The rawconverter now supports dcraw>=6.x.  
+Kipi-plugins NEW FEATURES
 
-More information about the bugs can be found in the following bugreports:  
-108227, 98269,89394,91651,100877,100568,110391,110659,110698,  110575,99895,104032,105727,110508,104511,97178,102219, 98199, 108537, 101110, 9943 ,103282  
+New Plugin     : FlickrExport : new plugin to upload pictures on Flickr web service.
+
+SendImages     : support for Thunderbird and GmailAgent.
+Calendar       : The weekdays are now localized.
+HTMLExport     : Export multiple tags to an html-page.
+JPEGLossLess   : Rotate or flip your images lossless, while preserving  the timestamp.
+RAWConverter   : Supports of dcraw>=6.x.
+
+Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
+
+001 ==> 108227 : SendImages   : Thunderbird will not open when sending emails in digiKam.
+002 ==> 98269  : CDArchive    : Status bar in archive to CD/DVD goes to 100% while creating thumbs.
+003 ==> 89394  : CDArchive    : Make CDArchivingplugin work when ImageCollection!=Folder.
+004 ==> 91651  : CDArchive    : Running cdarchiving plugin from kimdaba sends all images to the cd, not just the selected images.
+005 ==> 100877 : CDArchive    : kimdaba can not create temporary directories for CD-archive.
+006 ==> 110391 : BatchProcess : Batch rename removes tags and comments.
+007 ==> 110659 : BatchProcess : Batch rename function makes copies instead of renaming.
+008 ==> 110698 : TimeAdjust   : Adjust time and date does not work.
+009 ==> 110575 : BatchProcess : Crash when renaming images.
+010 ==> 99895  : BatchProcess : Rename ordered by modification date sorts by name.
+011 ==> 104032 : BatchProcess : Renaming images takes a lot memory and time.
+012 ==> 105727 : BatchProcess : digiKam adds to the first picture an additional "_1".
+013 ==> 110508 : BatchProcess : Umlauts-conversion error when renaming images.
+014 ==> 104511 : BatchProcess : Why a destination path for a rename action ? "No valid URL" when blank.
+015 ==> 102219 : HTMLExport   : When you export html from a tags gallery links are incorrect.
+016 ==> 98199  : HTMLExport   : Missing whitespace in german html-export (headline).
+017 ==> 108537 : JPEGLossLess : Plugin change file date/time. Could this be made optional since I want to keep 
+                                the original file date/time.
+018 ==> 101110 : MPEGEncoder  : Cannot create MPEG from photos using transitions.
+019 ==> 103282 : Slideshow    : No exif-rotation.
 
