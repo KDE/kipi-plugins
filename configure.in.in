@@ -161,7 +161,7 @@ if test "$build_libgpod" != "no"; then
         # check for libgpod
         have_libgpod=no
 
-        PKG_CHECK_MODULES(LIBGPOD, libgpod-1.0 >= 0.4.0, have_libgpod=yes,have_libgpod=no)
+        PKG_CHECK_MODULES(LIBGPOD, libgpod-1.0 > 0.4.0, have_libgpod=yes,have_libgpod=no)
         AC_MSG_RESULT($have_libgpod)
         if test "x$have_libgpod" != "xno"; then
             AC_DEFINE(HAVE_LIBGPOD, 1, [have libgpod])
