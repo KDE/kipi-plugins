@@ -279,11 +279,19 @@ bool Exiv2Iface::load(const QString& filePath)
 
 bool Exiv2Iface::save(const QString& filePath)
 {
+    if (filePath.isEmpty())
+        return false;
+
+    // NOTE: see B.K.O #137770 : never touch the file if is read only.
+    QFileInfo info(filePath); 
+    if (!info.isWritable())
+    {
+        kdDebug() << "File '" << info.fileName() << "' is read-only. Metadata not saved." << endl;
+        return false;
+    }
+
     try
     {    
-        if (filePath.isEmpty())
-            return false;
-
         Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open((const char*)
                                       (QFile::encodeName(filePath)));
         
