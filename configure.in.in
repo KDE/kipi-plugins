@@ -13,7 +13,7 @@ AC_SUBST(KIPI_PLUGINS_COMMON_INCLUDE)
 KIPI_PLUGINS_COMMON_LDFLAGS="-L\$(top_builddir)/kipi-plugins/common/libkipiplugins"
 AC_SUBST(KIPI_PLUGINS_COMMON_LDFLAGS)
 
-KDE_ENABLE_HIDDEN_VISIBILITY
+KDE_ENABLE_HIDDEN_VISIBILITY 
 
 # ----------------------------------------------------------
 #
@@ -37,7 +37,7 @@ else
         # check for libkipi
         have_libkipi=no
 
-	KDE_PKG_CHECK_MODULES(LIBKIPI, libkipi >= 0.1,
+	KDE_PKG_CHECK_MODULES(LIBKIPI, libkipi >= 0.1.5
 		have_libkipi=yes, have_libkipi=no)
 
 	if test "x$have_libkipi" = "xno"; then
@@ -138,14 +138,14 @@ if test -n "${EXIV2_CONFIG}"; then
   AC_SUBST(EXIV2_CFLAGS)
   LIB_EXIV2="`$EXIV2_CONFIG --libs`"
   AC_SUBST(LIB_EXIV2)
-  PKG_CHECK_MODULES(EXIV2, exiv2 >= 0.12, have_exiv2=yes,have_exiv2=no)
+  KDE_PKG_CHECK_MODULES(EXIV2, exiv2 >= 0.12, have_exiv2=yes,have_exiv2=no)
 fi
 
 if test "x$have_exiv2" != "xyes"; then
   if test -n "${EXIV2_CONFIG}"; then
     AC_MSG_RESULT($have_exiv2)
   fi
-  AC_MSG_WARN([Exiv2 library is required by kipi-plugins.])
+  AC_MSG_ERROR([Exiv2 library is required by kipi-plugins.])
   DO_NOT_COMPILE="$DO_NOT_COMPILE kipi-plugins"
 fi
 
@@ -161,7 +161,7 @@ if test "$build_libgpod" != "no"; then
         # check for libgpod
         have_libgpod=no
 
-        PKG_CHECK_MODULES(LIBGPOD, libgpod-1.0 > 0.4.0, have_libgpod=yes,have_libgpod=no)
+        KDE_PKG_CHECK_MODULES(LIBGPOD, libgpod-1.0 > 0.4.0, have_libgpod=yes,have_libgpod=no)
         AC_MSG_RESULT($have_libgpod)
         if test "x$have_libgpod" != "xno"; then
             AC_DEFINE(HAVE_LIBGPOD, 1, [have libgpod])
