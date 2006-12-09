@@ -33,37 +33,40 @@ namespace KIPIKameraKlientPlugin
 {
 
 int GPIface::autoDetect(QString& model, QString& port) {
-    ::CameraList camList;
+    CameraList *pCamList;
     CameraAbilitiesList *abilList;
     GPPortInfoList *infoList;
     const char *camModel_, *camPort_;
     GPContext *context;
 
     context = gp_context_new ();
+    gp_list_new(&pCamList);
 
     gp_abilities_list_new (&abilList);
     gp_abilities_list_load (abilList, context);
     gp_port_info_list_new (&infoList);
     gp_port_info_list_load (infoList);
-    gp_abilities_list_detect (abilList, infoList, &camList, context);
+    gp_abilities_list_detect (abilList, infoList, pCamList, context);
     gp_abilities_list_free (abilList);
     gp_port_info_list_free (infoList);
 
     gp_context_unref( context );
 
-    int count = gp_list_count (&camList);
+    int count = gp_list_count (pCamList);
 
     if (count<=0) {
+        gp_list_free(pCamList);
         return -1;
     }
 
     for (int i = 0; i < count; i++) {
-        gp_list_get_name  (&camList, i, &camModel_);
-        gp_list_get_value (&camList, i, &camPort_);
+        gp_list_get_name  (pCamList, i, &camModel_);
+        gp_list_get_value (pCamList, i, &camPort_);
     }
 
     model = camModel_;
     port  = camPort_;
+    gp_list_free(pCamList);
 
     return 0;
 }
