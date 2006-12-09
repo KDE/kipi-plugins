@@ -1,7 +1,7 @@
 Note: for details and info about current version, see ChangeLog.
 
 
-v 0.1.3
+v 0.1.3 svn
 ----------------------------------------------------------------------------
 
 Kipi-plugins NEW FEATURES
@@ -9,7 +9,8 @@ Kipi-plugins NEW FEATURES
 
 Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 
-001 ==> 
+001 ==> 138410: kipi-plugins-0.1.3-beta1 requires latest libkipi/libkexif
+002 ==>
 
 v 0.1.3 beta1
 ----------------------------------------------------------------------------
