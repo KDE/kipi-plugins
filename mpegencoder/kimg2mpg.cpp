@@ -510,36 +510,34 @@ void KImg2mpgData::slotEncode( void )
   QString Temp;
   QString OutputFileName, InputAudioFileName;
   bool ResultOk;
- 
-    if (m_ChromaComboBox->currentText() == i18n("Default"))
+
+  if (m_Encoding)
+  {
+    int Ret = KMessageBox::questionYesNo(this,
+        i18n("Do you really abort this encoding process ?\n\n"
+            "Warning: all work so-far will be lost."));
+    if (Ret == KMessageBox::Yes)
     {
-      int Ret= KMessageBox::warningContinueCancel( this, 
+      m_Abort = true;
+      reset();
+    }
+    return;
+  }
+
+  if (m_ChromaComboBox->currentText() == i18n("Default"))
+  {
+     int Ret= KMessageBox::warningContinueCancel( this, 
                                             i18n( "Default chroma mode option works only with Mjpegtools version < 1.6.3\n"),
                                             i18n( "Check your Mjpegtools version" ),
                                             KStdGuiItem::cont(),
                                             i18n( "KIPImpegencoderChromaWarning"));
-      if (Ret == KMessageBox::Cancel)
-      {
-        m_Abort = true;
-        reset();
-        return;
-      }
-    }
-
- if (m_Encoding)
-    {
-    int Ret = KMessageBox::questionYesNo(this,
-        i18n("Do you really abort this encoding process ?\n\n"
-             "Warning: all work so-far will be lost."));
-    if (Ret == KMessageBox::Yes)
-      {
-      m_Abort = true;
-      reset();
-      }
-    return;
-    }
-
-
+     if (Ret == KMessageBox::Cancel)
+     {
+       m_Abort = true;
+       reset();
+       return;
+     }
+   }
 
   // Init. Tmp folder
   KStandardDirs dir;
