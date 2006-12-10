@@ -60,6 +60,7 @@ extern "C"
 #include <qdatetime.h>
 #include <qlayout.h>
 #include <qdragobject.h>
+#include <qmessagebox.h>
 
 // KDElib includes
 
@@ -262,7 +263,6 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   helpMenu->menu()->insertItem(i18n("MPEG SlideShow Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
   m_helpButton->setPopup( helpMenu->menu() );
 
-
   readSettings();
 
   int maxW = QMAX( m_VideoFormatComboBox->sizeHint().width(),
@@ -291,7 +291,6 @@ void KImg2mpgData::SlotPortfolioDurationChanged ( int )
 {
   ShowNumberImages( m_ImagesFilesListBox->count() );
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -511,8 +510,23 @@ void KImg2mpgData::slotEncode( void )
   QString Temp;
   QString OutputFileName, InputAudioFileName;
   bool ResultOk;
+ 
+    if (m_ChromaComboBox->currentText() == i18n("Default"))
+    {
+      int Ret= KMessageBox::warningContinueCancel( this, 
+                                            i18n( "Default chroma mode option works only with Mjpegtools version < 1.6.3\n"),
+                                            i18n( "Check your Mjpegtools version" ),
+                                            KStdGuiItem::cont(),
+                                            i18n( "KIPImpegencoderChromaWarning"));
+      if (Ret == KMessageBox::Cancel)
+      {
+        m_Abort = true;
+        reset();
+        return;
+      }
+    }
 
-  if (m_Encoding)
+ if (m_Encoding)
     {
     int Ret = KMessageBox::questionYesNo(this,
         i18n("Do you really abort this encoding process ?\n\n"
@@ -524,6 +538,8 @@ void KImg2mpgData::slotEncode( void )
       }
     return;
     }
+
+
 
   // Init. Tmp folder
   KStandardDirs dir;
@@ -616,7 +632,7 @@ void KImg2mpgData::slotEncode( void )
   *m_Proc << "-n" << m_VideoTypeComboBox->currentText();          // Video type option.
   m_CommandLine = m_CommandLine + " -n " + m_VideoTypeComboBox->currentText();
 
-  if (m_ChromaComboBox->currentText() != "Default")
+  if (m_ChromaComboBox->currentText() != i18n("Default"))
   {
     *m_Proc << "-S" << m_ChromaComboBox->currentText();          // Chroma subsampling mode option.
     m_CommandLine = m_CommandLine + " -S " + m_ChromaComboBox->currentText();

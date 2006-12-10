@@ -130,7 +130,7 @@ public slots:
   void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
   void slotFailedPreview(const KFileItem*);
   void slotAddDropItems(KURL::List filesUrl);
-  
+
 private:
   
   QString               m_VideoFormatConfig;
