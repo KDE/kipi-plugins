@@ -26,10 +26,10 @@
 
 #include <qstring.h>
 
-// local includes
+// SlideShow includes
 
 #include "slideshowconfigbase.h"
-#include "kpaboutdata.h"
+
 
 namespace KIPISlideShowPlugin
 {
@@ -40,7 +40,7 @@ class SlideShowConfig : public SlideShowConfigBase
 
 public:
 
-    SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const char* name);
+    SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const char* name, bool ImagesHasComments);
     ~SlideShowConfig();
 
 private:
@@ -50,13 +50,14 @@ private:
     void readSettings();
     void saveSettings();
 
-    KIPIPlugins::KPAboutData * m_about;
-
 private slots:
 
     void slotOkClicked();
     void slotHelp();
     void slotOpenGLToggled();
+    void slotPrintCommentsToggled();
+    void slotCommentsFontColorChanged();
+    void slotCommentsBgColorChanged();
 
 signals:
     void okButtonClicked(); // Signal needed by plugin_slideshow class

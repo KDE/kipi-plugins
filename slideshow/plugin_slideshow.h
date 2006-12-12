@@ -54,6 +54,8 @@ private slots:
 private:
 
     KAction *m_actionSlideShow;
+
+    bool m_ImagesHasComments;
 };
 
 #endif

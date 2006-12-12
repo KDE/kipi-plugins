@@ -46,8 +46,10 @@ namespace KIPISlideShowPlugin
 {
 
 SlideShowGL::SlideShowGL(const QValueList<QPair<QString, int> >& fileList,
-                         int delay, bool printName,bool loop,
-                         const QString& effectName)
+                         const QStringList& commentsList, bool ImagesHasComments,
+                         int delay, bool printName, bool printComments, bool loop,
+                         const QString& effectName,
+                         const QFont& commentsFont, uint commentsFontColor, uint commentsBgColor, int commentsLinesLength)
     : QGLWidget(0, 0, 0, WStyle_StaysOnTop | WType_Popup |
                 WX11BypassWM | WDestructiveClose)
 {
@@ -92,11 +94,20 @@ SlideShowGL::SlideShowGL(const QValueList<QPair<QString, int> >& fileList,
 
     // --------------------------------------------------
 
-    fileList_   = fileList;
-    delay_      = QMAX(delay, 1000);   // at least have 1 second delay
-    loop_       = loop;
-    effectName_ = effectName;
-    printName_  = printName;
+    fileList_       = fileList;
+    commentsList_   = commentsList;
+    delay_          = QMAX(delay, 1000);   // at least have 1 second delay
+    loop_           = loop;
+    effectName_     = effectName;
+    printName_      = printName;
+    printComments_  = printComments;
+
+    ImagesHasComments_   = ImagesHasComments;
+
+    commentsFont_        = commentsFont;
+    commentsFontColor_   = commentsFontColor;
+    commentsBgColor_     = commentsBgColor;
+    commentsLinesLength_ = commentsLinesLength;
 
     // ------------------------------------------------------------------
 
@@ -434,6 +445,9 @@ void SlideShowGL::loadImage()
 	if (printName_)
 	    printFilename(black);
 	
+        if (printComments_ && ImagesHasComments_)
+            printComments(black);
+        
 	QImage t = convertToGLFormat(black);
 
         /* create the texture */
@@ -509,6 +523,82 @@ void SlideShowGL::printFilename(QImage& layer)
    
     QImage textimage(pix.convertToImage());
     KImageEffect::blendOnLower(0,height_-rect.height(),textimage,layer);
+}
+
+void SlideShowGL::printComments(QImage& layer)
+{ 
+    QString comments = commentsList_[fileIndex_];
+
+    int yPos = 5; // Text Y coordinate
+    if (printName_) yPos += 20;
+
+    QStringList commentsByLines;
+
+    uint commentsIndex = 0; // Comments QString index
+
+    while (commentsIndex < comments.length())
+    {
+        QString newLine; 
+        bool breakLine = FALSE; // End Of Line found
+        uint currIndex; //  Comments QString current index
+
+        // Check miminal lines dimension
+
+        int commentsLinesLengthLocal = commentsLinesLength_;
+
+        for ( currIndex = commentsIndex; currIndex < comments.length() && !breakLine; currIndex++ )
+            if( comments[currIndex] == QChar('\n') || comments[currIndex].isSpace() ) breakLine = TRUE;
+
+        if (commentsLinesLengthLocal <= (int)((currIndex - commentsIndex)))
+            commentsLinesLengthLocal = (currIndex - commentsIndex);
+
+        breakLine = FALSE;
+
+        for ( currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal && 
+              currIndex < comments.length() &&  
+                      !breakLine; currIndex++ )
+        {
+            breakLine = (comments[currIndex] == QChar('\n')) ? TRUE : FALSE;
+
+            if (breakLine)
+                newLine.append( ' ' );
+            else
+                newLine.append( comments[currIndex] );
+        }
+
+        commentsIndex = currIndex; // The line is ended
+
+        if ( commentsIndex != comments.length() )
+            while ( !newLine.endsWith(" ") )
+        {
+            newLine.truncate(newLine.length() - 1);
+            commentsIndex--;
+        }
+
+        commentsByLines.prepend(newLine.stripWhiteSpace());
+    }
+
+    QFontMetrics fm(commentsFont_);
+
+    for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ ) {
+
+        yPos += commentsFont_.pointSize() + 10 ;
+
+        QRect rect=fm.boundingRect(commentsByLines[lineNumber]);
+        rect.addCoords( 0, 0, 2, 2 );
+
+        QPixmap pix(rect.width(),rect.height());
+        pix.fill(QColor(commentsBgColor_)); 
+
+        QPainter p(&pix);
+        p.setPen(QColor(commentsFontColor_));
+        p.setFont(commentsFont_);
+        p.drawText(1,commentsFont_.pointSize()+0 , commentsByLines[lineNumber]);
+        p.end();
+
+        QImage textimage(pix.convertToImage());
+        KImageEffect::blendOnLower(0,height_-rect.height()-yPos,textimage,layer);
+    }
 }
 
 void SlideShowGL::showEndOfShow()
@@ -617,7 +707,7 @@ void SlideShowGL::slotMouseMoveTimeOut()
     if ((pos.y() < (deskY_+20)) ||
         (pos.y() > (deskY_+deskHeight_-20-1)))
         return;
-    
+
     setCursor(QCursor(Qt::BlankCursor));
 }
 

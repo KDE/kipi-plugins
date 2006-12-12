@@ -23,11 +23,17 @@
 #define SLIDESHOW_H
 
 #include <qvaluelist.h>
+#include <qstringlist.h>
 #include <qpair.h>
 #include <qstring.h>
 #include <qwidget.h>
 #include <qpainter.h>
 #include <qmap.h>
+#include <qfont.h>
+
+// Includes for libKIPI.
+#include <libkipi/imagecollection.h>
+#include <libkipi/interface.h>
 
 class QTimer;
 
@@ -51,9 +57,10 @@ class SlideShow : public QWidget
     
 public:
 
-    SlideShow(const FileList& fileList,
-              int delay, bool printName, bool loop,
-              const QString& effectName);
+    SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments,
+              int delay, bool printName, bool printComments, bool loop,
+              const QString& effectName,
+              const QFont& commentsFont, uint commentsFontColor, uint commentsBgColor, int commentsLinesLength);
     ~SlideShow();
 
     void registerEffects();
@@ -67,6 +74,7 @@ private:
     void          loadPrevImage();
     void          showCurrentImage();
     void          printFilename();
+    void          printComments();
     EffectMethod  getRandomEffect();
     void          showEndOfShow();
     
@@ -75,8 +83,16 @@ private:
     // config ------------------
     int         delay_;
     bool        printName_;
+    bool        printComments_;
     QString     effectName_;
     bool        loop_;
+
+    bool        ImagesHasComments_;
+
+    QFont       commentsFont_;
+    uint        commentsFontColor_;
+    uint        commentsBgColor_;
+    int         commentsLinesLength_;
     // -------------------------
     
     QMap<QString, EffectMethod> Effects;
@@ -85,12 +101,15 @@ private:
     ImImageSS    *currImage_;
     
     FileList    fileList_;
+    QStringList commentsList_;
     QTimer*     timer_;
     int         fileIndex_;
 
     EffectMethod effect_;
     bool         effectRunning_;
 
+    int m_commentsLinesLenght;
+    
     // values for state of various effects:
     int      mx, my, mw, mh, mdx, mdy, mix, miy, mi, mj, mSubType;
     int      mx0, my0, mx1, my1, mwait;

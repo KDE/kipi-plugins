@@ -23,6 +23,7 @@
 #define SLIDESHOWGL_H
 
 #include <qvaluelist.h>
+#include <qstringlist.h>
 #include <qpair.h>
 #include <qstring.h>
 #include <qmap.h>
@@ -42,8 +43,10 @@ class SlideShowGL : public QGLWidget
 public:
 
     SlideShowGL(const QValueList<QPair<QString, int> >& fileList,
-                int delay, bool printName, bool loop,
-                const QString& effectName);
+                const QStringList& commentsList, bool ImagesHasComments,
+                int delay, bool printName, bool printComments, bool loop,
+                const QString& effectName,
+                const QFont& commentsFont, uint commentsFontColor, uint commentsBgColor, int commentsLinesLength);
     ~SlideShowGL();
 
     void registerEffects();
@@ -69,6 +72,14 @@ private:
     QString     effectName_;
     bool        loop_;
     bool        printName_;
+    bool        printComments_;
+    
+    bool        ImagesHasComments_;
+    
+    QFont       commentsFont_;
+    uint        commentsFontColor_;
+    uint        commentsBgColor_;
+    int         commentsLinesLength_;
 
     // -------------------------
     
@@ -76,6 +87,7 @@ private:
     QMap<QString, EffectMethod> Effects;
 
     QValueList<QPair<QString, int> >  fileList_;
+    QStringList  commentsList_;
     QTimer*      timer_;
     int          fileIndex_;
 
@@ -114,6 +126,7 @@ private:
     EffectMethod  getRandomEffect();
     void          showEndOfShow();
     void          printFilename(QImage& layer);
+    void          printComments(QImage& layer);
     
     void          effectNone();
     void          effectBlend();

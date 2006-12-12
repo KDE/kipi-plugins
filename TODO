@@ -16,7 +16,6 @@
 * SLIDESHOW PLUGIN [Author: Renchi Raju]
   (SlideShow with snazzy effects)
 
- - Show comments in slideshow (configurable)
  - Add preview Slideshow effects in dialogbox similar Kcontrol
    screensavers settings.
  - Auto-rotate according to EXIF orientation tag

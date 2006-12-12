@@ -29,6 +29,10 @@
 #include <qdesktopwidget.h>
 #include <qevent.h>
 #include <qcursor.h>
+#include <qfont.h>
+
+#include <kdebug.h>
+#include <qtextcodec.h>
 
 extern "C"
 {
@@ -42,14 +46,18 @@ extern "C"
 #include "slideshow.h"
 #include "toolbar.h"
 
+#include <kdebug.h>
+
 namespace KIPISlideShowPlugin
 {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 SlideShow::SlideShow(const FileList& fileList,
-                     int delay, bool printName, bool loop,
-                     const QString& effectName)
+                     const QStringList& commentsList, bool ImagesHasComments,
+                     int delay, bool printName, bool printComments, bool loop,
+                     const QString& effectName,
+                     const QFont &commentsFont, uint commentsFontColor, uint commentsBgColor, int commentsLinesLength)
                      : QWidget(0, 0, WStyle_StaysOnTop | WType_Popup |
                                WX11BypassWM | WDestructiveClose)
 {
@@ -102,11 +110,20 @@ SlideShow::SlideShow(const FileList& fileList,
 
     // --------------------------------------------------
 
-    fileList_   = fileList;
-    delay_      = QMAX(delay, 300); // at least have 0.3 second delay
-    loop_       = loop;
-    printName_  = printName;
-    effectName_ = effectName;
+    fileList_       = fileList;
+    commentsList_   = commentsList;
+    delay_          = QMAX(delay, 300); // at least have 0.3 second delay
+    loop_           = loop;
+    printName_      = printName;
+    printComments_  = printComments;
+    effectName_     = effectName;
+
+    ImagesHasComments_   = ImagesHasComments; 
+
+    commentsFont_        = commentsFont;
+    commentsFontColor_   = commentsFontColor;
+    commentsBgColor_     = commentsBgColor;
+    commentsLinesLength_ = commentsLinesLength;
 
     // --------------------------------------------------
 
@@ -301,13 +318,16 @@ void SlideShow::loadNextImage()
     FileAnglePair fileAngle = fileList_[fileIndex_];
     QString file(fileAngle.first);
     int     angle(fileAngle.second);
-
+    
     currImage_ = new ImImageSS(imIface_, file, angle);
     currImage_->fitSize(width(), height());
     currImage_->render();
 
     if (printName_)
         printFilename();
+    
+    if (printComments_ && ImagesHasComments_)
+        printComments();
 }
 
 
@@ -343,14 +363,16 @@ void SlideShow::loadPrevImage()
     FileAnglePair fileAngle = fileList_[fileIndex_];
     QString file(fileAngle.first);
     int     angle(fileAngle.second);
-
-
+    
     currImage_ = new ImImageSS(imIface_, file, angle);
     currImage_->fitSize(width(), height());
     currImage_->render();
 
     if (printName_)
         printFilename();
+    
+    if (printComments_)
+        printComments();
 }
 
 
@@ -390,7 +412,85 @@ void SlideShow::printFilename()
 
     p.setPen(QColor("white"));
     p.drawText(10, height()-20, filename);
+}
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void SlideShow::printComments()
+{
+    if (!currImage_) return;
+
+    QString comments = commentsList_[fileIndex_];
+
+    int yPos = 20; // Text Y coordinate
+    if (printName_) yPos = 40;
+
+    QStringList commentsByLines;
+
+    uint commentsIndex = 0; // Comments QString index
+
+    while (commentsIndex < comments.length())
+    {
+        QString newLine; 
+        bool breakLine = FALSE; // End Of Line found
+        uint currIndex; //  Comments QString current index
+
+        // Check miminal lines dimension
+
+        uint commentsLinesLengthLocal = commentsLinesLength_;
+
+        for ( currIndex = commentsIndex; currIndex < comments.length() && !breakLine; currIndex++ )
+            if( comments[currIndex] == QChar('\n') || comments[currIndex].isSpace() ) breakLine = TRUE;
+
+        if (commentsLinesLengthLocal <= (currIndex - commentsIndex)) 
+            commentsLinesLengthLocal = (currIndex - commentsIndex);
+
+        breakLine = FALSE;
+
+        for ( currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal && 
+                                         currIndex < comments.length() &&  
+                                         !breakLine; currIndex++ )
+            {
+                breakLine = (comments[currIndex] == QChar('\n')) ? TRUE : FALSE;
+
+                if (breakLine)
+                  newLine.append( ' ' );
+               else
+                 newLine.append( comments[currIndex] );
+            }
+
+            commentsIndex = currIndex; // The line is ended
+
+        if ( commentsIndex != comments.length() )
+            while ( !newLine.endsWith(" ") )
+            {
+                newLine.truncate(newLine.length() - 1);
+                commentsIndex--;
+            }
+
+        commentsByLines.prepend(newLine.stripWhiteSpace());
+    }
+
+    QPainter p;
+    p.begin(currImage_->qpixmap());
+    p.setFont(commentsFont_);
+
+    for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ ) {
+
+        p.setPen(QColor(commentsBgColor_));
+
+        // coefficient 1.5 is used to maintain distance between different lines
+
+         for (int x=9; x<=11; x++)
+             for (int y = (int)(yPos + lineNumber * 1.5 * commentsFont_.pointSize()  + 1); 
+                      y >= (int)(yPos + lineNumber* 1.5 * commentsFont_.pointSize()  - 1); y--)
+                p.drawText(x, height()-y, commentsByLines[lineNumber]);
+
+        p.setPen(QColor(commentsFontColor_));
+
+        p.drawText(10, height()-(int)(lineNumber * 1.5 * commentsFont_.pointSize() + yPos), commentsByLines[lineNumber]);
+    }
 }
 
 
