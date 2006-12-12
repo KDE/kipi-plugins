@@ -282,11 +282,17 @@ bool Exiv2Iface::save(const QString& filePath)
     if (filePath.isEmpty())
         return false;
 
-    // NOTE: see B.K.O #137770 : never touch the file if is read only.
-    QFileInfo info(filePath); 
-    if (!info.isWritable())
+    // NOTE: see B.K.O #137770 & #138540 : never touch the file if is read only.
+    QFileInfo finfo(filePath); 
+    QFileInfo dinfo(finfo.dirPath()); 
+    if (!finfo.isWritable())
     {
-        kdDebug() << "File '" << info.fileName() << "' is read-only. Metadata not saved." << endl;
+        kdDebug() << "File '" << finfo.fileName() << "' is read-only. Metadata not saved." << endl;
+        return false;
+    }
+    if (!dinfo.isWritable())
+    {
+        kdDebug() << "Dir '" << dinfo.filePath() << "' is read-only. Metadata not saved." << endl;
         return false;
     }
 
