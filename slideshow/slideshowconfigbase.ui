@@ -511,10 +511,13 @@
                                                     <number>10000</number>
                                                 </property>
                                                 <property name="minValue">
-                                                    <number>1000</number>
+                                                    <number>100</number>
                                                 </property>
                                                 <property name="lineStep">
                                                     <number>10</number>
+                                                </property>
+                                                <property name="value">
+                                                    <number>1000</number>
                                                 </property>
                                             </widget>
                                         </hbox>
