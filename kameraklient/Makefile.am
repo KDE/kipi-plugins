@@ -12,13 +12,14 @@ kipiplugin_kameraklient_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KD
 
 kde_services_DATA = kipiplugin_kameraklient.desktop
 
-kipiplugin_kameraklient_la_SOURCES = kameraklient.cpp camerafolderitem.cpp camerafolderview.cpp \
+# Gilles Caulier 12/13/06): order of file to compile is important to support --enable-final compilation option.
+kipiplugin_kameraklient_la_SOURCES = gpiface.cpp gpcamera.cpp gpcontroller.cpp gpeventfilter.cpp \
+				     gpfileitemcontainer.cpp gpfileiteminfo.cpp \
+				     gpfileiteminfodlg.cpp gpmessages.cpp gpstatus.cpp \
+				     kameraklient.cpp camerafolderitem.cpp camerafolderview.cpp \
 				     cameraiconitem.cpp cameraiconview.cpp cameralist.cpp \
 				     cameraselection.cpp cameratype.cpp cameraui.cpp \
-				     dmessagebox.cpp gpcamera.cpp gpcontroller.cpp \
-				     gpeventfilter.cpp gpfileitemcontainer.cpp gpfileiteminfo.cpp \
-				     gpfileiteminfodlg.cpp gpiface.cpp gpmessages.cpp \
-				     gpstatus.cpp savefiledialog.cpp setupcamera.cpp \
+				     dmessagebox.cpp savefiledialog.cpp setupcamera.cpp \
 				     thumbitem.cpp thumbview.cpp
 
 kipiplugin_kameraklientdir = $(kde_datadir)/kipiplugin_kameraklient

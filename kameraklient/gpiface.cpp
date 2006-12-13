@@ -19,13 +19,17 @@
  * 
  * ============================================================ */
 
+// GPhoto2
+
+extern "C" 
+{
+#include <gphoto2.h>
+}
+
 // Qt
 #include <qstring.h>
 #include <qstringlist.h>
-// GPhoto2
-extern "C" {
-#include <gphoto2.h>
-}
+
 // Local
 #include "gpiface.h"
 
