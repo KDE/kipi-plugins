@@ -11,9 +11,10 @@ Slideshow     : Show image comments (configurable)
 
 Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 
-001 ==> 138410 : kipi-plugins-0.1.3-beta1 requires latest libkipi/libkexif
-002 ==> 106133 : Slideshow   : show image comments in slideshow mode
-003 ==>
+001 ==> 138410 : General     : kipi-plugins-0.1.3-beta1 requires latest libkipi/libkexif.
+002 ==> 106133 : Slideshow   : Show image comments in slideshow mode.
+003 ==> 124057 : SendImages  : Problems sending jpeg-pictures from digiKam using the "send picture"-feature.
+004 ==> 
 
 
 v 0.1.3 beta1
