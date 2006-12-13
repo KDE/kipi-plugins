@@ -1,4 +1,5 @@
 # Requires by dcraw.c implementation.
+# Require by dcraw implementation
 KDE_OPTIONS = nofinal
 
 METASOURCES = AUTO
