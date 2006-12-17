@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>KIPIMPEGEncoderPlugin::KImg2mpgBase</class>
 <widget class="QDialog">
     <property name="name">
@@ -40,9 +40,6 @@
             <width>0</width>
             <height>0</height>
         </size>
-    </property>
-    <property name="caption">
-        <string>Form1</string>
     </property>
     <property name="sizeGripEnabled">
         <bool>false</bool>
@@ -738,9 +735,6 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                             <property name="text">
                                 <string>&amp;Add...</string>
                             </property>
-                            <property name="accel">
-                                <string>Alt+A</string>
-                            </property>
                             <property name="whatsThis" stdset="0">
                                 <string>Add some image files to the portfolio list.</string>
                             </property>
@@ -765,9 +759,6 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                             </property>
                             <property name="text">
                                 <string>&amp;Delete</string>
-                            </property>
-                            <property name="accel">
-                                <string>Alt+D</string>
                             </property>
                             <property name="whatsThis" stdset="0">
                                 <string>Remove some image files from the portfolio list.</string>
@@ -794,9 +785,6 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                             <property name="text">
                                 <string>Image &amp;Up</string>
                             </property>
-                            <property name="accel">
-                                <string>Alt+U</string>
-                            </property>
                             <property name="whatsThis" stdset="0">
                                 <string>Moving the current image up on the portfolio list.</string>
                             </property>
@@ -821,9 +809,6 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                             </property>
                             <property name="text">
                                 <string>Image D&amp;own</string>
-                            </property>
-                            <property name="accel">
-                                <string>Alt+O</string>
                             </property>
                             <property name="whatsThis" stdset="0">
                                 <string>Moving the current image down on the portfolio list.</string>
@@ -1245,9 +1230,6 @@ This audio file name will be multiplexed with the portfolio video.
                             <property name="text">
                                 <string>&amp;Encode</string>
                             </property>
-                            <property name="accel">
-                                <string>Alt+E</string>
-                            </property>
                             <property name="whatsThis" stdset="0">
                                 <string>Start the portfolio MPEG encoding. 
 The program uses the 'images2mpg' bash script.</string>
@@ -1291,9 +1273,6 @@ The program uses the 'images2mpg' bash script.</string>
                             <property name="text">
                                 <string>&amp;Settings</string>
                             </property>
-                            <property name="accel">
-                                <string>Alt+S</string>
-                            </property>
                         </widget>
                         <spacer>
                             <property name="name">
@@ -1327,9 +1306,6 @@ The program uses the 'images2mpg' bash script.</string>
                             <property name="text">
                                 <string>&amp;Help</string>
                             </property>
-                            <property name="accel">
-                                <string>Alt+H</string>
-                            </property>
                         </widget>
                         <widget class="QPushButton">
                             <property name="name">
@@ -1345,9 +1321,6 @@ The program uses the 'images2mpg' bash script.</string>
                             </property>
                             <property name="text">
                                 <string>&amp;Close</string>
-                            </property>
-                            <property name="accel">
-                                <string>Alt+C</string>
                             </property>
                             <property name="whatsThis" stdset="0">
                                 <string>Abort the current encoding and exit.</string>

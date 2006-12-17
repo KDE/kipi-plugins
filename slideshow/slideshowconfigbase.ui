@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>KIPISlideShowPlugin::SlideShowConfigBase</class>
 <widget class="KDialog">
     <property name="name">
@@ -196,9 +196,6 @@
                                 <property name="text">
                                     <string>Show all images in current al&amp;bum</string>
                                 </property>
-                                <property name="accel">
-                                    <string>Alt+B</string>
-                                </property>
                             </widget>
                             <widget class="QRadioButton">
                                 <property name="name">
@@ -214,9 +211,6 @@
                                 </property>
                                 <property name="text">
                                     <string>Show onl&amp;y selected images</string>
-                                </property>
-                                <property name="accel">
-                                    <string>Alt+Y</string>
                                 </property>
                             </widget>
                         </vbox>
@@ -277,9 +271,6 @@
                                                 <property name="text">
                                                     <string>Use Open&amp;GL slideshow transitions</string>
                                                 </property>
-                                                <property name="accel">
-                                                    <string>Alt+G</string>
-                                                </property>
                                                 <property name="checked">
                                                     <bool>true</bool>
                                                 </property>
@@ -337,9 +328,6 @@
                                                 <property name="text">
                                                     <string>P&amp;rint filename</string>
                                                 </property>
-                                                <property name="accel">
-                                                    <string>Alt+R</string>
-                                                </property>
                                                 <property name="checked">
                                                     <bool>true</bool>
                                                 </property>
@@ -358,9 +346,6 @@
                                                 </property>
                                                 <property name="text">
                                                     <string>Pr&amp;int comments </string>
-                                                </property>
-                                                <property name="accel">
-                                                    <string>Alt+I</string>
                                                 </property>
                                                 <property name="checked">
                                                     <bool>true</bool>
@@ -430,9 +415,6 @@
                                         <property name="text">
                                             <string>&amp;Loop</string>
                                         </property>
-                                        <property name="accel">
-                                            <string>Alt+L</string>
-                                        </property>
                                     </widget>
                                     <widget class="QCheckBox">
                                         <property name="name">
@@ -454,9 +436,6 @@
                                         </property>
                                         <property name="text">
                                             <string>&amp;Shuffle images</string>
-                                        </property>
-                                        <property name="accel">
-                                            <string>Alt+S</string>
                                         </property>
                                     </widget>
                                     <widget class="QLayoutWidget">
@@ -907,9 +886,6 @@
                     </property>
                     <property name="text">
                         <string>O&amp;K</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+K</string>
                     </property>
                     <property name="autoDefault">
                         <bool>true</bool>
