@@ -582,7 +582,7 @@ void SlideShowGL::printComments(QImage& layer)
 
     for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ ) {
 
-        yPos += commentsFont_.pointSize() + 10 ;
+        yPos += 1.5 * commentsFont_.pointSize();
 
         QRect rect=fm.boundingRect(commentsByLines[lineNumber]);
         rect.addCoords( 0, 0, 2, 2 );
