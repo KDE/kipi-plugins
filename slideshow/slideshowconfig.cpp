@@ -51,7 +51,7 @@
 
 // libkipi includes
 
-#include "interface.h"
+#include <libkipi/interface.h>
 
 // Common includes.
 
