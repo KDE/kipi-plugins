@@ -1,5 +1,258 @@
+V 0.1.3-rc1 - 2006-12-28
+----------------------------------------------------------------------------
+2006-12-22 13:46  scripty
+
+	* [r615737]
+	  kipi-plugins/printwizard/kipiplugin_printwizard.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-12-19 17:12  vkrause
+
+	* [r614961] kipi-plugins/slideshow/slideshowconfig.cpp:
+	  compile
+
+2006-12-19 13:59  vfuoglio
+
+	* [r614922] kipi-plugins/slideshow/slideshowgl.cpp:
+	  Fixed distance between comments lines.
+	  
+	  SVN_SILENT
+
+2006-12-18 19:27  cgilles
+
+	* [r614741] kipi-plugins/configure.in.bot:
+	  fix Exiv2 detection error message
+
+2006-12-17 12:14  bram
+
+	* [r614335] kipi-plugins/batchprocessimages/renameimagesbase.ui,
+	  kipi-plugins/htmlexport/imagesettingspage.ui,
+	  kipi-plugins/mpegencoder/kimg2mpgbase.ui,
+	  kipi-plugins/printwizard/frmprintwizardbase.ui,
+	  kipi-plugins/slideshow/slideshowconfigbase.ui:
+	  SVN_SILENT: fixuifiles
+
+2006-12-14 22:04  anaselli
+
+	* [r613716] kipi-plugins/common/exiv2iface/Makefile.am,
+	  kipi-plugins/configure.in.in:
+	  new exiv2 test using pkg-config
+
+2006-12-14 06:59  cgilles
+
+	* [r613593] kipi-plugins/NEWS:
+	  update
+
+2006-12-13 23:18  vfuoglio
+
+	* [r613541] kipi-plugins/slideshow/slideshowconfigbase.ui:
+	  Now slideshow interval can be set below 1000 ms (min 100 ms).
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  BUG: 108147
+
+2006-12-13 14:01  scripty
+
+	* [r613180] kipi-plugins/htmlexport/themes/s0/s0.desktop,
+	  kipi-plugins/htmlexport/themes/snow/snow.desktop,
+	  kipi-plugins/jpeglossless/kipiplugin_jpeglossless.desktop,
+	  kipi-plugins/simpleviewerexport/kipiplugin_simpleviewer.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-12-13 08:32  cgilles
+
+	* [r613037] kipi-plugins/rawconverter/Makefile.am:
+	  add comment
+
+2006-12-13 08:26  cgilles
+
+	* [r613036] kipi-plugins/kameraklient/Makefile.am,
+	  kipi-plugins/kameraklient/gpiface.cpp:
+	  kipi-plugins from trunk : support of "--enable-final" compilation
+	  option
+
+2006-12-13 05:14  cgilles
+
+	* [r612924] kipi-plugins/NEWS:
+	  update
+
+2006-12-12 14:25  cgilles
+
+	* [r612755] kipi-plugins/common/exiv2iface/exiv2iface.cpp:
+	  kipi-plugins from trunk : if file dir-path is read-only, do not
+	  try to save metadata on pictures.
+	  CCBUGS: 138540
+
+2006-12-12 01:56  vfuoglio
+
+	* [r612634] kipi-plugins/NEWS, kipi-plugins/TODO,
+	  kipi-plugins/slideshow/plugin_slideshow.cpp,
+	  kipi-plugins/slideshow/plugin_slideshow.h,
+	  kipi-plugins/slideshow/slideshow.cpp,
+	  kipi-plugins/slideshow/slideshow.h,
+	  kipi-plugins/slideshow/slideshowconfig.cpp,
+	  kipi-plugins/slideshow/slideshowconfig.h,
+	  kipi-plugins/slideshow/slideshowconfigbase.ui,
+	  kipi-plugins/slideshow/slideshowgl.cpp,
+	  kipi-plugins/slideshow/slideshowgl.h:
+	  Added possibility to show image comments.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  BUG: 106133
+	  GUI:
+
+2006-12-10 19:34  anaselli
+
+	* [r612297] kipi-plugins/mpegencoder/kimg2mpg.cpp:
+	  If users press cancel there's no need to tell them again they're
+	  using "Default"...
+	  
+	  CCMAIL: <kde-imaging@kde.org>
+
+2006-12-10 18:45  vfuoglio
+
+	* [r612280] kipi-plugins/mpegencoder/kimg2mpg.cpp,
+	  kipi-plugins/mpegencoder/kimg2mpg.h,
+	  kipi-plugins/mpegencoder/kimg2mpgbase.ui,
+	  libkipi/libkipi/hi128-app-kipi.png:
+	  - Fixed dialog resizing issues
+	  - Added warning dialog for mjpegtools version check
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  GUI
+
+2006-12-10 10:22  cgilles
+
+	* [r612080] kipi-plugins/jpeglossless/plugin_jpeglossless.cpp:
+	  kipi-plugins from trunk : add JPEGLossLess Flip/rotate keyboard
+	  shortcut actions. Using the same than digiKam image editor.
+	  CCBUGS: 133091
+	  CCMAIL: ach@mpe.mpg.de
+
+2006-12-09 22:27  anaselli
+
+	* [r611887] kipi-plugins/NEWS:
+	  updated
+
+2006-12-09 00:24  anaselli
+
+	* [r611631] kipi-plugins/configure.in.bot:
+	  changed libgpod version required
+
+2006-12-09 00:18  anaselli
+
+	* [r611628] kipi-plugins/configure.in.in:
+	  never commit when you're asleep...
+	  
+	  CCMAIL: <kde-imaging@kde.org>
+
+2006-12-09 00:10  anaselli
+
+	* [r611626] kipi-plugins/kameraklient/gpcamera.cpp,
+	  kipi-plugins/kameraklient/gpiface.cpp:
+	  changed to get it working for new libgphoto2
+	  
+	  CCMAIL: <kde-imaging@kde.org>
+
+2006-12-09 00:07  anaselli
+
+	* [r611625] kipi-plugins/configure.in.in:
+	  - changed PKG_CHECK_MODULES with KDE_PKG_CHECK_MODULES
+	  as provided by Fabien's patch
+	  - now if exiv2 is missed configure aborts
+	  - now libkipi 0.1.5 is required
+	  
+	  CCMAIL: <kde-imaging@kde.org>
+
+2006-12-07 13:36  scripty
+
+	* [r611267] kipi-plugins/gpssync/kipiplugin_gpssync.desktop,
+	  kipi-plugins/htmlexport/themes/s0/s0.desktop,
+	  kipi-plugins/ipodexport/kipiplugin_ipodexport.desktop,
+	  kipi-plugins/metadataedit/kipiplugin_metadataedit.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-12-07 12:33  cgilles
+
+	* [r611248] kipi-plugins/common/exiv2iface/exiv2iface.cpp:
+	  kipi-plugins from trunk : Don't touch read-only file when
+	  metadata need to be updated.
+	  CCBUG: 137770
+
+2006-12-05 22:17  anaselli
+
+	* [r610876] kipi-plugins/configure.in.in:
+	  At the moment we know only libgpod 0.4.0 is not ok so a greater
+	  version should be enough (waiting for seb to be back)
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2006-12-04 14:34  cgilles
+
+	* [r610568] kipi-plugins/NEWS:
+	  update
+
+2006-12-04 14:11  cgilles
+
+	* [r610562] kipi-plugins/NEWS:
+	  update
+
+2006-12-04 13:28  cgilles
+
+	* [r610484] kipi-plugins/NEWS:
+	  update
+
+2006-12-04 13:21  cgilles
+
+	* [r610468] kipi-plugins/NEWS:
+	  update
+
+2006-12-04 13:01  cgilles
+
+	* [r610462] kipi-plugins/NEWS:
+	  update
+
+2006-12-04 12:41  cgilles
+
+	* [r610452] kipi-plugins/NEWS:
+	  update
+
+2006-12-04 06:28  cgilles
+
+	* [r610328] kipi-plugins/metadataedit/exiflight.cpp:
+	  typo
+
+2006-11-30 16:39  vfuoglio
+
+	* [r609404] kipi-plugins/AUTHORS,
+	  kipi-plugins/mpegencoder/Makefile.am,
+	  kipi-plugins/mpegencoder/kimg2mpg.cpp,
+	  kipi-plugins/mpegencoder/kimg2mpg.h,
+	  kipi-plugins/mpegencoder/kimg2mpgbase.ui:
+	  - Used new GUI (created with designer)
+	  - Added me as maintainer (in accord with Angelo Naselli)
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  GUI
+
+2006-11-30 13:02  anaselli
+
+	* [r609369] kipi-plugins/NEWS:
+	  changed version and added new list for future 0.1.3 beta/rc
+
+----------------------------------------------------------------------------
 v 0.1.3-beta1 - 2006-11-29
 ----------------------------------------------------------------------------
+
+2006-11-29 22:07  anaselli
+
+        * [r609259] kipi-plugins/ChangeLog,
+          kipi-plugins/common/include/pluginsversion.h,
+          kipi-plugins/kipi-plugins.lsm:
+          kipi-plugins 0.1.3 beta 1
+          svn2log.py seems to be broken again used svn2cl instead
+
+          CCMAIL: kde-imaging@kde.org
 
 2006-11-29 20:45  anaselli
 
