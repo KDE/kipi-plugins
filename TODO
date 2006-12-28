@@ -1,11 +1,15 @@
 ----------------------------------------------------------------------------
 * General
 
+ - anaselli: fix kipi-plugins building if libkipi is missed or a wrong 
+             release is present
+ - anaselli: add svn2cl management also for prepare_libkipi.rb
+
  - All dialog less plugins which modify images should only use
    currentSelection().
  - All dialog less plugins which do not modify images should use either
    current* methods.
-
+ 
 ----------------------------------------------------------------------------
 * RAWCONVERTER PLUGIN [Author: Renchi Raju]
   (Raw files converter)
