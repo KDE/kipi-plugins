@@ -1,6 +1,14 @@
 Note: for details and info about current version, see ChangeLog.
 
 
+v 0.1.3 
+----------------------------------------------------------------------------
+
+Kipi-plugins NEW FEATURES
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
+
 v 0.1.3 rc1
 ----------------------------------------------------------------------------
 
@@ -9,7 +17,7 @@ Kipi-plugins NEW FEATURES
 Slideshow     : Show image comments (configurable)
 
 
-Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 138410 : General     : kipi-plugins-0.1.3-beta1 requires latest libkipi/libkexif.
 002 ==> 106133 : Slideshow   : Show image comments in slideshow mode.
@@ -48,7 +56,7 @@ TimeAdjust    : New option to customize Date and Time to a specific timestamp.
 TimeAdjust    : New options sync EXIF/IPTC Creation Date with timestamp.
 
 
-Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 127101 : BatchProcess : expand sequence number start value in batch rename images.
 002 ==>  94494 : GalleryExport: support for multiple galleries.
