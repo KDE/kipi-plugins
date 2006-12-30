@@ -24,6 +24,7 @@
 #include <kio/previewjob.h>
 #include <kio/renamedlg.h>
 #include <kdebug.h>
+#include <kdeversion.h>
 
 #include <qlistview.h>
 #include <qlineedit.h>
@@ -66,14 +67,19 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
       m_urlList(urlList)
 {
     m_listView->setSorting(-1);
+#if KDE_IS_VERSION(3,4,0)
+    // next can be done directly into designer but it seems not to compile
+    // under kde < 3.4.0
+    m_listView->setShadeSortColumn( FALSE );
+#endif
 
     readSettings();
 
-	QPopupMenu* sortMenu = new QPopupMenu(this);
-	sortMenu->insertItem(i18n("Sort by Name"), BYNAME);
-	sortMenu->insertItem(i18n("Sort by Size"), BYSIZE);
-	sortMenu->insertItem(i18n("Sort by Date"), BYDATE);
-	m_sortButton->setPopup(sortMenu);
+    QPopupMenu* sortMenu = new QPopupMenu(this);
+    sortMenu->insertItem(i18n("Sort by Name"), BYNAME);
+    sortMenu->insertItem(i18n("Sort by Size"), BYSIZE);
+    sortMenu->insertItem(i18n("Sort by Date"), BYDATE);
+    m_sortButton->setPopup(sortMenu);
 
     connect(m_listView, SIGNAL(doubleClicked(QListViewItem*)),
             SLOT(slotListViewDoubleClicked(QListViewItem*)));
