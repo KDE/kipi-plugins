@@ -112,7 +112,7 @@ libgphoto2  >= 2.x
 libtiff     >= 3.5.x
 libexiv2    >= 0.12
 libxslt     >= 1.1
-libgpod     >= 0.4.0
+libgpod     > 0.4.0
 
 Plugin Specific Dependencies (for compiling and for running) :
 -------------------------------------------------------------------------
