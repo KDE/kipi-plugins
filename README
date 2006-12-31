@@ -5,7 +5,7 @@ Note: Most of the LibKipiPlugins have previously been Digikamplugins.
       kipi-plugins is based in part on the work of the Independent
       JPEG Group.
 
-Please visit this url: http://extragear.kde.org/apps/kipi
+Please visit this url: http://www.kipi-plugins.org/
 
 Summary:
 ----------------------------------------------------------------------
@@ -51,7 +51,7 @@ Currently implemented plugins are:
 
 12) WallPaper          : Image to KDE Desktop.
 
-13) FindImages         : Find dupplicate images in albums
+13) FindImages         : Find duplicate images in albums
 
 14) GalleryExport      : Plugin to export images to a remote Gallery (and Gallery 2) server
                          (http://gallery.sf.net)
@@ -112,7 +112,7 @@ libgphoto2  >= 2.x
 libtiff     >= 3.5.x
 libexiv2    >= 0.12
 libxslt     >= 1.1
-libgpod     > 0.4.0
+libgpod     > 0.4.0 (fails to build with 0.4.0)
 
 Plugin Specific Dependencies (for compiling and for running) :
 -------------------------------------------------------------------------
@@ -127,4 +127,4 @@ wallpaper          : kdebase (runtime dependency)
 rawconverter       : libtiff
 acquireimages      : libtiff
 htmlexport         : libxslt
-ipodexport         : libgpod 
+ipodexport (currently broken) : libgpod
