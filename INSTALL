@@ -1,15 +1,4 @@
-Requirements: kde >= 3.1.x, libkipi >= 0.1
-specific plugin specific requirements:
-jpeglossless : libkexif >= 0.1, libtiff >= 3.0
-slideshow    : libimlib2 >= 1.0.x, OpenGL support for libqt
-batchprocessimages : imagemagick (runtime dependency)
-cdarchiving : k3b (runtime dependency)
-kameraklient : libgphoto2 >= 2.x
-mpegenconder : mjpegtools (runtime dependency)
-wallpaper : kdebase >= 3.1.x (runtime dependency)
-rawconverter  : libtiff >= 3.0
-acquireimages : libtiff >= 3.0
-timeadjust    : libkexif >= 0.1
+Requirements: listed at the end of README
 
 
 Basic Installation
