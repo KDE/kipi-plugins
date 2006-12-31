@@ -20,10 +20,10 @@ kipiplugin_metadataedit_la_SOURCES = plugin_metadataedit.cpp metadatacheckbox.cp
 
 # Libs needed by the plugin
 kipiplugin_metadataedit_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \
-	       $(LIBKIPI_LIBS) $(LIB_KDEUI) $(LIB_KHTML) $(LIB_KDECORE) $(LIB_QT)
+	       -lkipiplugins $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
-kipiplugin_metadataedit_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
+kipiplugin_metadataedit_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries)
 
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = kipiplugin_metadataedit.desktop
