@@ -54,6 +54,7 @@ GalleryTalker::~GalleryTalker()
 }
 
 bool GalleryTalker::s_using_gallery2 = true;
+QString GalleryTalker::s_authToken = "";
 
 bool GalleryTalker::loggedIn() const
 {
@@ -329,6 +330,8 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
     QString     line;
     bool foundResponse = false;
 
+    m_loggedIn = false;
+    
     while (!ts.atEnd())
     {
         line = ts.readLine();
@@ -342,10 +345,14 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
             QStringList strlist = QStringList::split("=", line);
             if (strlist.count() == 2)
             {
-                m_loggedIn = (strlist[0] == "status") &&
-                             (strlist[1] == "0");
-                if (m_loggedIn)
-                    break;
+                if (("status" == strlist[0]) && ("0" == strlist[1]))
+                {
+                  m_loggedIn = true;
+                }
+                else if (strlist[0] == "auth_token")
+                {
+                  s_authToken = strlist[1];
+                }
             }
         }
     }

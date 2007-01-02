@@ -55,6 +55,8 @@ public:
 
     static void setGallery2(bool usegallery2) {s_using_gallery2 = usegallery2;};
     static bool isGallery2() {return s_using_gallery2;};
+    
+    static QString getAuthToken() {return s_authToken;};
 
     bool loggedIn() const;
 
@@ -83,7 +85,8 @@ private:
     bool       m_loggedIn;
     QByteArray m_buffer;
 
-    static bool s_using_gallery2;
+    static bool    s_using_gallery2;
+    static QString s_authToken;
 
 private:
 

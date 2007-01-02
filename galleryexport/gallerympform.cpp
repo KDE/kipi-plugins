@@ -45,6 +45,9 @@ GalleryMPForm::GalleryMPForm()
     if (GalleryTalker::isGallery2())
     {
       addPairRaw("g2_controller", "remote:GalleryRemote");
+      QString auth_token = GalleryTalker::getAuthToken();
+      if (!auth_token.isEmpty())
+        addPairRaw("g2_authToken", auth_token);
     }
 }
 
