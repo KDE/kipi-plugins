@@ -349,7 +349,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
                 {
                   m_loggedIn = true;
                 }
-                else if (strlist[0] == "auth_token")
+                else if ("auth_token" == strlist[0])
                 {
                   s_authToken = strlist[1];
                 }
