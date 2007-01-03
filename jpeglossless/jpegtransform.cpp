@@ -32,6 +32,7 @@ extern "C"
 {
 #include <sys/types.h>
 #include <unistd.h>
+#include <setjmp.h>
 #include <jpeglib.h>
 }
 
@@ -66,6 +67,54 @@ Matrix Matrix::rotate90flipHorizontal ( 0,  1,  1,  0);
 Matrix Matrix::rotate90flipVertical   ( 0, -1, -1,  0);
 
 
+// To manage Errors/Warnings handling provide by libjpeg
+
+//#define ENABLE_DEBUG_MESSAGES
+
+struct jpegtransform_jpeg_error_mgr : public jpeg_error_mgr
+{
+    jmp_buf setjmp_buffer;
+};
+
+static void jpegtransform_jpeg_error_exit(j_common_ptr cinfo);
+static void jpegtransform_jpeg_emit_message(j_common_ptr cinfo, int msg_level);
+static void jpegtransform_jpeg_output_message(j_common_ptr cinfo);
+
+static void jpegtransform_jpeg_error_exit(j_common_ptr cinfo)
+{
+    jpegtransform_jpeg_error_mgr* myerr = (jpegtransform_jpeg_error_mgr*) cinfo->err;
+
+    char buffer[JMSG_LENGTH_MAX];
+    (*cinfo->err->format_message)(cinfo, buffer);
+
+#ifdef ENABLE_DEBUG_MESSAGES
+    kdDebug() << k_funcinfo << buffer << endl;
+#endif
+
+    longjmp(myerr->setjmp_buffer, 1);
+}
+
+static void jpegtransform_jpeg_emit_message(j_common_ptr cinfo, int msg_level)
+{
+    Q_UNUSED(msg_level)
+    char buffer[JMSG_LENGTH_MAX];
+    (*cinfo->err->format_message)(cinfo, buffer);
+
+#ifdef ENABLE_DEBUG_MESSAGES
+    kdDebug() << k_funcinfo << buffer << " (" << msg_level << ")" << endl;
+#endif
+}
+
+static void jpegtransform_jpeg_output_message(j_common_ptr cinfo)
+{
+    char buffer[JMSG_LENGTH_MAX];
+    (*cinfo->err->format_message)(cinfo, buffer);
+
+#ifdef ENABLE_DEBUG_MESSAGES
+    kdDebug() << k_funcinfo << buffer << endl;
+#endif
+}
+
 bool transformJPEG(const QString& src, const QString& destGiven,
                    Matrix &userAction, QString& err)
 {
@@ -80,7 +129,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
 
     struct jpeg_decompress_struct srcinfo;
     struct jpeg_compress_struct dstinfo;
-    struct jpeg_error_mgr jsrcerr, jdsterr;
+    struct jpegtransform_jpeg_error_mgr jsrcerr, jdsterr;
     jvirt_barray_ptr * src_coef_arrays;
     jvirt_barray_ptr * dst_coef_arrays;
 
@@ -88,12 +137,16 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     JXFORM_CODE flip,rotate;
 
     // Initialize the JPEG decompression object with default error handling
-    srcinfo.err = jpeg_std_error(&jsrcerr);
-    jpeg_create_decompress(&srcinfo);
+    srcinfo.err                 = jpeg_std_error(&jsrcerr);
+    srcinfo.err->error_exit     = jpegtransform_jpeg_error_exit;
+    srcinfo.err->emit_message   = jpegtransform_jpeg_emit_message;
+    srcinfo.err->output_message = jpegtransform_jpeg_output_message;
 
     // Initialize the JPEG compression object with default error handling
-    dstinfo.err = jpeg_std_error(&jdsterr);
-    jpeg_create_compress(&dstinfo);
+    dstinfo.err                 = jpeg_std_error(&jdsterr);
+    dstinfo.err->error_exit     = jpegtransform_jpeg_error_exit;
+    dstinfo.err->emit_message   = jpegtransform_jpeg_emit_message;
+    dstinfo.err->output_message = jpegtransform_jpeg_output_message;
 
     FILE *input_file;
     FILE *output_file;
@@ -114,6 +167,18 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         err = i18n("Error in opening output file");
         return false;
     }
+
+    if (setjmp(jsrcerr.setjmp_buffer) || setjmp(jdsterr.setjmp_buffer))
+    {
+        jpeg_destroy_decompress(&srcinfo);
+        jpeg_destroy_compress(&dstinfo);
+        fclose(input_file);
+        fclose(output_file);
+        return false;
+    }
+
+    jpeg_create_decompress(&srcinfo);
+    jpeg_create_compress(&dstinfo);
 
     jpeg_stdio_src(&srcinfo, input_file);
     jcopy_markers_setup(&srcinfo, copyoption);
