@@ -92,7 +92,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     m_action_RotateImage->insert( new KAction(i18n("90 Degrees"),
                                   0,
-                                  SHIFT+Key_9,
+                                  CTRL+Key_9,
                                   this,
                                   SLOT(slotRotate()),
                                   actionCollection(),
@@ -100,7 +100,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     m_action_RotateImage->insert( new KAction(i18n("180 Degrees"),
                                   0,
-                                  SHIFT+Key_8,
+                                  CTRL+Key_8,
                                   this,
                                   SLOT(slotRotate()),
                                   actionCollection(),
@@ -108,7 +108,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     m_action_RotateImage->insert( new KAction(i18n("270 Degrees"),
                                   0,
-                                  SHIFT+Key_7,
+                                  CTRL+Key_7,
                                   this,
                                   SLOT(slotRotate()),
                                   actionCollection(),
@@ -121,7 +121,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     m_action_FlipImage->insert( new KAction(i18n("Horizontally"),
                                 0,
-                                SHIFT+Key_Asterisk,
+                                CTRL+Key_Asterisk,
                                 this,
                                 SLOT(slotFlip()),
                                 actionCollection(),
@@ -129,7 +129,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     m_action_FlipImage->insert( new KAction(i18n("Vertically"),
                                 0,
-                                SHIFT+Key_Slash,
+                                CTRL+Key_Slash,
                                 this,
                                 SLOT(slotFlip()),
                                 actionCollection(),
