@@ -31,15 +31,24 @@
  * 
  * ============================================================ */
 ?>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>GPSSync Kipi-plugin Geographical Location Editor</title>
-<script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAy_Vv5rc03ctmYvwfsuTH6RSK29CRGKrdb78LNYpP1_riKtR3zRRxy4unyuWAi2vp7m1isLwuHObXDg" 
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAy_Vv5rc03ctmYvwfsuTH6RSK29CRGKrdb78LNYpP1_riKtR3zRRxy4unyuWAi2vp7m1isLwuHObXDg" 
 type="text/javascript">
 </script>
+
+<style type="text/css">
+    /*<![CDATA[*/
+    body {
+        padding: 0px;
+        margin: 0px;
+    }
+    /*]]>*/
+</style>
 
 <script type="text/javascript">
 
@@ -102,7 +111,7 @@ function loadMap()
 </script>
 </head>
 
-<body onLoad="loadMap()" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
+<body onLoad="loadMap()">
 
 <?php
     echo "<div id=\"map\" ";
@@ -110,7 +119,7 @@ function loadMap()
     echo $_GET['width'];
     echo "px; height: ";
     echo $_GET['height'];
-    echo "px\">";
+    echo "px;\">";
 ?>
 
 </div>
