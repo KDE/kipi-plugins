@@ -29,6 +29,7 @@
 #include <qcheckbox.h>
 #include <qtimer.h>
 #include <qurl.h>
+#include <qdeepcopy.h>
 
 // Include files for KDE
 
@@ -66,6 +67,7 @@ SendImages::SendImages(KIPI::Interface* interface, const QString &tmpFolder,
                        const KIPI::ImageCollection& imagesCollection, QObject *parent)
           : QObject(parent), QThread()
 {
+    m_invokedBefore=false;
     m_interface    = interface;
     m_tmp          = tmpFolder;
     m_collection   = imagesCollection;
@@ -136,18 +138,23 @@ void SendImages::run()
 
         // Prepare resized target images to send.
 
+        QString imageFileName = ItemName;
+        //QString TempFileName             = (*it).directory().section('/', -1);
+        QString TempFileName=(*it).path().section('/', -2,-1);
+        qDebug("TempFileName: %s",TempFileName.ascii());
+        TempFileName.replace(QChar('/'), "-");
+        
+        // Thunderbird does not like (). Replace them, BUG:131343
+        TempFileName.replace(QChar('('), "_").replace(QChar(')'), "_");
+        // and these characters are better eliminated, too ;-)
+        TempFileName.replace(QChar(','), "_").replace(QChar(' '), "_");
+        TempFileName.replace(QChar(';'), "_").replace(QChar('%'), "_");
+
         if ( m_changeProp == true )
         {
             // Prepare resizing images.
 
-            QString imageFileName = ItemName;
-            QString f             = (*it).directory().section('/', -1);
-    
-            // Thunderbird does not like (). Replace them, BUG:131343
-            f.replace(QChar('('), "_").replace(QChar(')'), "_");
-    
-            QString imageNameFormat = f + "-" +
-                                      imageFileName.replace(QChar('.'), "_") +
+            QString imageNameFormat = TempFileName.replace(QChar('.'), "_") +
                                       extension(m_imageFormat);
    
             qDebug( "Resizing %s-> '%s %s ' (%s ; %d )",imageName.ascii(),
@@ -209,17 +216,20 @@ void SendImages::run()
         }
         else     // No resize images operations...
         {
-           d = new KIPISendimagesPlugin::EventData;
-           d->action    = KIPISendimagesPlugin::Progress;
-           d->fileName  = (*it).fileName();
-           d->albumName = (*it).directory().section('/', -1);
-           d->starting  = true;
-           d->success   = false;
-           QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+            if ( copyImageProcess( imageName, m_tmp, TempFileName) == true )
+            {
+                d = new KIPISendimagesPlugin::EventData;
+                d->action    = KIPISendimagesPlugin::Progress;
+                d->fileName  = (*it).fileName();
+                d->albumName = (*it).directory().section('/', -1);
+                d->starting  = true;
+                d->success   = false;
+                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
-           m_filesSendList.append(imageName);
-           m_imagesPackage.append(imageName);
-           m_imagesPackage.append(imageName);
+                m_filesSendList.append(m_tmp + TempFileName);
+                m_imagesPackage.append(*it);
+                m_imagesPackage.append(m_tmp + TempFileName);
+            }
         }
     }
 
@@ -331,7 +341,7 @@ KURL::List SendImages::divideEmails(void)
     
     KURL::List sendnow;
     KURL::List filesSendList;
-    
+
     for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
     {
         qDebug("m_attachmentlimit: %lu ", m_attachmentlimit);
@@ -364,10 +374,18 @@ bool SendImages::invokeMailAgent(void)
     
     // default agent call
     // FIXME: seems to fail for thunderbird. Fix kdelibs or maybe work around it.
+    
+    
     KURL::List filelist;
- 
+    kurllistdeepcopy(m_filesSendList_copy,m_filesSendList);
+
+
+    qDebug("invokeMailagent1: Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",m_filesSendList.size(),m_filesSendList_copy.size());
+
     while (!((filelist=divideEmails()).empty()))
     {
+
+        qDebug("invokeMailagent2: Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",m_filesSendList.size(),m_filesSendList_copy.size());
         qDebug("number of elements in filelist %d",filelist.size());
         qDebug("number of elements in m_filelist %d", m_filesSendList.size());	
         if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Default" )
@@ -508,32 +526,29 @@ bool SendImages::invokeMailAgent(void)
                 *m_mailAgentProc << "netscape" << "-remote";
             }
         
-            QString Temp = "xfeDoCommand(composeMessage,attachment=";
+            QString Temp = " xfeDoCommand(composeMessage,attachment='";
         
             for ( KURL::List::Iterator it = filelist.begin() ; it != filelist.end() ; ++it )
             {
-                Temp.append( "\"file://" );
-                //Temp.append( QFile::encodeName((*it).path()) );
-
-                // FIXME : It is working with spaces inside the file and pathname, but what 
-                //  still is a problem are kommas
+                Temp.append( "file://" );
                 QString toencode=(*it).encodedPathAndQuery();
-                //QUrl::encode(toencode); 
                 Temp.append(toencode);
-                Temp.append( "\"," );
+                Temp.append( "," );
             }
     
             Temp.remove(Temp.length()-1,1);
-            Temp.append(")");
+            Temp.append("')");
             
             *m_mailAgentProc << Temp;
-        
-            connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)),
+       
+            if (!m_invokedBefore)
+            {
+                connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)),
                     this, SLOT(slotMozillaExited(KProcess*)));
         
-            connect(m_mailAgentProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
+                connect(m_mailAgentProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
                     this, SLOT(slotMozillaReadStderr(KProcess*, char*, int)));
-        
+            }
             qDebug ("%s", Temp.ascii());
         
             if ( m_mailAgentProc->start(KProcess::NotifyOnExit , KProcess::All) == false )
@@ -542,7 +557,10 @@ bool SendImages::invokeMailAgent(void)
                                         "check your installation.")
                                         .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
             else
-                agentInvoked = true;
+            {   agentInvoked = true;
+                m_invokedBefore=true;
+            }
+            
         }
     }
     
@@ -654,6 +672,42 @@ int SendImages::getSize ( int choice )
     }
 }
 
+// This function can be replaced with Qt4 QFile.copy
+bool SendImages::copyImageProcess(const QString &oldFilePath, const QString &DestPath,
+                                  const QString &ImageName)
+{
+        
+        
+        //same file, no need to copy
+        qDebug("DestPath: %s",(DestPath).ascii());
+        qDebug("ImageName: %s",(ImageName).ascii());
+        if(oldFilePath.compare(DestPath+ImageName) == 0)
+                return true;
+
+        //load both files
+        QFile oldFile(oldFilePath);
+        QFile newFile(DestPath+ImageName);
+        bool openOld = oldFile.open( IO_ReadOnly );
+        bool openNew = newFile.open( IO_WriteOnly );
+
+        //if either file fails to open bail
+        if(!openOld || !openNew) { return false; }
+
+        //copy contents
+        uint BUFFER_SIZE = 16000;
+        char* buffer = new char[BUFFER_SIZE];
+        while(!oldFile.atEnd())
+        {
+                Q_LONG len = oldFile.readBlock( buffer, BUFFER_SIZE );
+                newFile.writeBlock( buffer, len );
+        }
+
+        //deallocate buffer
+        delete[] buffer;
+        buffer = NULL;
+        return true;
+}
+
 bool SendImages::resizeImageProcess(const QString &SourcePath, const QString &DestPath,
                                     const QString &ImageFormat, const QString &ImageName,
                                     int SizeFactor, int ImageCompression, QSize &newsize)
@@ -712,14 +766,23 @@ bool SendImages::resizeImageProcess(const QString &SourcePath, const QString &De
 
 void SendImages::slotMozillaExited(KProcess*)
 {
-    if ( m_mozillaStdErr.find("No running window found") != -1 )   // No remote Mozilla | Netscape |
+    qDebug("slotMozillaExited");
+    ///Here would be the right point to clear the sendlist in order to avoid infinite resendings!!
+    m_filesSendList.clear();
+    ///Also disconnect SLOT
+    m_mailAgentProc->disconnect(SIGNAL(processExited(KProcess *)),
+                    this, SLOT(slotMozillaExited(KProcess*)));
+
+    qDebug("Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",m_filesSendList.size(),m_filesSendList_copy.size()); 
+   if ( m_mozillaStdErr.find("No running window found") != -1 )   // No remote Mozilla | Netscape |
     {                                                              // Thunderbird env. loaded !
         m_mailAgentProc2 = new KProcess;                           // Init a new env.
 
         if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" )
            *m_mailAgentProc2 << "mozilla" << "-mail";
         else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
-           *m_mailAgentProc2 << m_thunderbirdUrl << "-mail";
+           *m_mailAgentProc2 << m_thunderbirdUrl << "-mail";  ///for new versions of thunderbird, we don't need it anymore
+           //*m_mailAgentProc2 << m_thunderbirdUrl;
         else
            *m_mailAgentProc2 << "netscape" << "-mail";
 
@@ -745,33 +808,13 @@ void SendImages::slotMozillaExited(KProcess*)
 
 void SendImages::slotMozillaTimeout(void)
 {
-    m_mailAgentProc3 = new KProcess;
+        
+    m_mozillaTimer->disconnect(SIGNAL(timeout()), this, SLOT(slotMozillaTimeout()));
 
-    if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" )
-       *m_mailAgentProc3 << "mozilla" << "-remote";
-    else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
-       *m_mailAgentProc3 << m_thunderbirdUrl << "-remote";
-    else
-       *m_mailAgentProc3 << "netscape" << "-remote";
+    qDebug("slotMozillaTimeout: Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",m_filesSendList.size(),m_filesSendList_copy.size());
+    kurllistdeepcopy(m_filesSendList,m_filesSendList_copy);
+    invokeMailAgent();
 
-    QString Temp = "xfeDoCommand(composeMessage,attachment='";
-
-    for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
-    {
-        Temp.append( "file://" );
-        Temp.append( QFile::encodeName((*it).path()) );
-        Temp.append( "," );
-    }
-
-    Temp.append("')");
-
-    *m_mailAgentProc3 << Temp;
-
-    if ( m_mailAgentProc3->start() == false )
-       KMessageBox::error(kapp->activeWindow(), 
-                          i18n("Cannot start '%1' program;\nplease "
-                               "check your installation.")
-                               .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
 }
 
 void SendImages::slotMozillaReadStderr(KProcess*, char *buffer, int buflen)
@@ -779,5 +822,27 @@ void SendImages::slotMozillaReadStderr(KProcess*, char *buffer, int buflen)
     m_mozillaStdErr = QString::fromLocal8Bit(buffer, buflen);
 }
 
+bool SendImages::kurllistdeepcopy(KURL::List &Destination, KURL::List Source)
+{
+    Destination.clear();
+    qDebug("kurllistdeepcopy");
+    for ( KURL::List::Iterator it = Source.begin() ; it != Source.end() ; ++it )
+    {
+        //QString Tempstring;
+        QString Getstring=(*it).path();
+        QString Tempstring=Getstring.copy();
+        Destination.append(Tempstring);
+        qDebug("%s",Tempstring.ascii());
+    }
+    
+    /*qDebug("deepcopytest");
+    Source.clear();
+    for ( KURL::List::Iterator it = Destination.begin() ; it != Destination.end() ; ++it )
+    {
+        qDebug("%s",(*it).path().ascii());
+    }*/
+    qDebug("kurllistdeepcopyend\n");
+    return true;
+}
 }  // NameSpace KIPISendimagesPlugin
 

@@ -76,7 +76,7 @@ private slots:
     void slotMozillaReadStderr(KProcess* proc, char *buffer, int buflen);
 
 private:
-   
+    
     QString extension(const QString& imageFileFormat);
     int getSize( int choice );
     
@@ -86,9 +86,11 @@ private:
     bool resizeImageProcess(const QString &SourcePath, const QString &DestPath,
                             const QString &ImageFormat, const QString &ImageName,
                             int SizeFactor, int ImageCompression, QSize &newsize);
-  
+    bool copyImageProcess(const QString &oldFilePath, const QString &DestPath,
+                                  const QString &ImageName);
+    bool kurllistdeepcopy(KURL::List &Destination, KURL::List Source);
 private:
-
+    bool m_invokedBefore;
     /** Change image properties options in setup dialog.*/
     bool                   m_changeProp;                
     
@@ -120,7 +122,8 @@ private:
     KURL::List             m_images;       
              
     /** URL of resized images.*/
-    KURL::List             m_filesSendList;             
+    KURL::List             m_filesSendList;
+    KURL::List             m_filesSendList_copy;
 
     /** URL of orignal images that cannot be resized.*/
     KURL::List             m_imagesResizedWithError;    
