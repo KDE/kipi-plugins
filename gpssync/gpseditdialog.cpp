@@ -3,7 +3,7 @@
  * Date   : 2006-09-22
  * Description : a dialog to edit GPS positions
  * 
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -29,6 +29,7 @@
 // KDE includes.
 
 #include <klocale.h>
+#include <khelpmenu.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -36,9 +37,12 @@
 #include <klineedit.h>
 #include <kmessagebox.h>
 #include <khtmlview.h>
+#include <kpopupmenu.h>
 
 // Local includes.
 
+#include "kpaboutdata.h"
+#include "pluginsversion.h"
 #include "gpsmapwidget.h"
 #include "gpseditdialog.h"
 #include "gpseditdialog.moc"
@@ -57,13 +61,16 @@ public:
         latitudeInput  = 0;
         longitudeInput = 0;
         worldMap       = 0;
+        about          = 0;
     }
 
-    KLineEdit    *altitudeInput;
-    KLineEdit    *latitudeInput;
-    KLineEdit    *longitudeInput;
+    KLineEdit                *altitudeInput;
+    KLineEdit                *latitudeInput;
+    KLineEdit                *longitudeInput;
 
-    GPSMapWidget *worldMap;
+    KIPIPlugins::KPAboutData *about; 
+
+    GPSMapWidget             *worldMap;
 };
 
 GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, 
@@ -73,8 +80,6 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
                            parent, 0, true, true)
 {
     d = new GPSEditDialogDialogPrivate;
-
-    setHelp("gpssync", "kipi-plugins");
 
     QGridLayout* grid = new QGridLayout(plainPage(), 7, 3, 0, spacingHint());
 
@@ -98,9 +103,20 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     d->latitudeInput->setValidator(new QDoubleValidator(-90.0, 90.0, 12, this));
     d->longitudeInput->setValidator(new QDoubleValidator(-180.0, 180.0, 12, this));
 
-    d->altitudeInput->setText(QString::number(gpsData.altitude(),   'g', 12));
-    d->latitudeInput->setText(QString::number(gpsData.latitude(),   'g', 12));
-    d->longitudeInput->setText(QString::number(gpsData.longitude(), 'g', 12));
+    if (hasGPSInfo)
+    {
+        d->altitudeInput->setText(QString::number(gpsData.altitude(),   'g', 12));
+        d->latitudeInput->setText(QString::number(gpsData.latitude(),   'g', 12));
+        d->longitudeInput->setText(QString::number(gpsData.longitude(), 'g', 12));
+    } 
+    else 
+    {
+        KConfig config("kipirc");
+        config.setGroup("GPS Sync Settings");
+        d->altitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Altitude", 0.0),   'g', 12));
+        d->latitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Latitude", 0.0),   'g', 12));
+        d->longitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Longitude", 0.0), 'g', 12));
+    }
 
     d->worldMap = new GPSMapWidget(plainPage(), d->latitudeInput->text(), 
                                    d->longitudeInput->text(), hasGPSInfo ? 8 : 1);
@@ -121,6 +137,26 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     grid->setColStretch(3, 10);
     grid->setRowStretch(7, 10);
 
+    // ---------------------------------------------------------------
+    // About data and help button.
+
+    d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("GPS Sync"),
+                                            NULL,
+                                            KAboutData::License_GPL,
+                                            I18N_NOOP("A Plugin to synchronize pictures metadata with a GPS device"),
+                                            "(c) 2006-2007, Gilles Caulier");
+
+    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
+                        "caulier dot gilles at kdemail dot net");
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("GPS Sync Handbook"),
+                                 this, SLOT(slotHelp()), 0, -1, 0);
+    actionButton(Help)->setPopup( helpMenu->menu() );
+
+    // ---------------------------------------------------------------
+
     connect(altResetButton, SIGNAL(released()),
             d->altitudeInput, SLOT(clear()));
 
@@ -139,6 +175,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
 
 GPSEditDialog::~GPSEditDialog()
 {
+    delete d->about;
     delete d;
 }
 
@@ -178,6 +215,9 @@ void GPSEditDialog::saveSettings()
     KConfig config("kipirc");
     config.setGroup("GPS Sync Settings");
     saveDialogSize(config, QString("GPS Edit Dialog"));
+    config.writeEntry("GPS Last Latitude", d->latitudeInput->text().toDouble());
+    config.writeEntry("GPS Last Longitude", d->longitudeInput->text().toDouble());
+    config.writeEntry("GPS Last Altitude", d->altitudeInput->text().toDouble());
     config.sync();
 }
 

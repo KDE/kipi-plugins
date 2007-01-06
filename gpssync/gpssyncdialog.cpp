@@ -4,7 +4,7 @@
  * Description : a plugin to synchronize pictures with 
  *               a GPS device.
  *
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -80,25 +80,25 @@ public:
         about = 0;
     }
 
-    QLabel             *gpxPointsLabel;
-    QLabel             *maxTimeLabel;
+    QLabel                         *gpxPointsLabel;
+    QLabel                   *maxTimeLabel;
 
-    QComboBox          *timeZoneCB;
+    QComboBox                *timeZoneCB;
 
-    QCheckBox          *interpolateBox;
+    QCheckBox                *interpolateBox;
 
-    KListView          *listView;
+    KListView                *listView;
 
-    KIntSpinBox        *maxGapInput;
-    KIntSpinBox        *maxTimeInput;
+    KIntSpinBox              *maxGapInput;
+    KIntSpinBox              *maxTimeInput;
 
-    KSqueezedTextLabel *gpxFileName;
+    KSqueezedTextLabel       *gpxFileName;
 
-    KIPI::Interface    *interface;
+    KIPI::Interface          *interface;
 
-    KIPIPlugins::KPAboutData    *about; 
+    KIPIPlugins::KPAboutData *about; 
 
-    GPSDataParser       gpxParser;
+    GPSDataParser             gpxParser;
 };
 
 GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
@@ -249,7 +249,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
                                             NULL,
                                             KAboutData::License_GPL,
                                             I18N_NOOP("A Plugin to synchronize pictures metadata with a GPS device"),
-                                            "(c) 2006, Gilles Caulier");
+                                            "(c) 2006-2007, Gilles Caulier");
 
     d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
                         "caulier dot gilles at kdemail dot net");
