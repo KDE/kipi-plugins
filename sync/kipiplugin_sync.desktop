@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Sync
+Comment=KIPI Synchronization Plugin
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_sync
+author=Colin Guthrie, kde@colin.guthr.ie
