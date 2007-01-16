@@ -9,7 +9,7 @@ Kipi-plugins NEW FEATURES
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 137582 : GalleryExport : Add preliminary support for Gallery 2.2 security features
-
+002 ==> 132220 : SendImages    : Solved problems with filenames and commandline with thunderbird and mozilla
 
 v 0.1.3 rc1
 ----------------------------------------------------------------------------
