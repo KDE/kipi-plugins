@@ -1,7 +1,11 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Sync
+Name[pt]=Sincronização
+Name[pt_BR]=Sincronização
 Comment=KIPI Synchronization Plugin
+Comment[pt]='Plugin' de Sincronização do KIPI
+Comment[pt_BR]='Plugin' de Sincronização do KIPI
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_sync
