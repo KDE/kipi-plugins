@@ -60,7 +60,7 @@ public:
   void setVersion(unsigned int version);
   void setSinkId(unsigned int sinkId);
 
-  QListViewItem* asQListViewItem(QListView* pParent);
+  void asQListViewItem(QListView* pParent);
 
 private:
 
@@ -104,7 +104,7 @@ public:
   void Add(Sink* pSink);
   void Remove(Sink* pSink);
   void Save();
-  QListView* asQListView(QWidget* pParent);
+  void asQListView(QListView* pListView);
 
 private:
   void Load();

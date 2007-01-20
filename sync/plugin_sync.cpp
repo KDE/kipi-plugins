@@ -34,9 +34,9 @@
 // Local includes.
 #include "plugin_sync.h"
 #include "sinks.h"
-#include "gallerylist.h"
-#include "gallerywindow.h"
-#include "galleryconfig.h"
+//#include "sinklist.h"
+//#include "gallerywindow.h"
+//#include "galleryconfig.h"
 
 typedef KGenericFactory<Plugin_Sync> Factory;
 
@@ -106,7 +106,7 @@ void Plugin_Sync::setup(QWidget* widget)
     this,
     SLOT(slotSettingsImage()),
     actionCollection(),
-    "galleryexport");
+    "sync");
   mpActionSettingsImage->setEnabled(true);
   addAction(mpActionSettingsImage);
 }
@@ -128,9 +128,10 @@ void Plugin_Sync::slotSync()
     kdError( 51000 ) << "Kipi interface is null!" << endl;
     return;
   }
-
-  KIPIGalleryExportPlugin::GalleryWindow dlg(interface, kapp->activeWindow(), mpSinks);
+/*
+  KIPISyncPlugin::GalleryWindow dlg(interface, kapp->activeWindow(), mpSinks);
   dlg.exec();
+*/
 }
 
 
@@ -142,9 +143,10 @@ void Plugin_Sync::slotConfigure()
     kdError(51000) << "Kipi interface is null!" << endl;
     return;
   }
-
-  KIPIGalleryExportPlugin::GalleryList dlg(kapp->activeWindow(), mpSinks, false);
+/*
+  KIPISyncPlugin::SinkList dlg(kapp->activeWindow(), mpSinks, false);
   dlg.exec();
+*/
 }
 
 

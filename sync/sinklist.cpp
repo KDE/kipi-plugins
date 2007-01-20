@@ -16,78 +16,34 @@
  *
  * ============================================================ */
 
-// Include files for Qt
-
-#include <qlistview.h>
-#include <qpushbutton.h>
-#include <qtimer.h>
-#include <qpixmap.h>
-#include <qcursor.h>
-#include <qlineedit.h>
-#include <qprogressdialog.h>
-#include <qspinbox.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
 
 // Include files for KDE
 
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kapplication.h>
-#include <kiconloader.h>
+#include <kpushbutton.h>
+
 
 // Local includes.
 
 #include "sinks.h"
 #include "sinklist.h"
-#include "sinkconfig.h"
+//#include "sinkconfig.h"
 
 namespace KIPISyncPlugin
 {
 
 SinkList::SinkList(QWidget *pParent, Sinks* pSinks, bool blnShowOpen)
-    : KDialogBase(pParent, 0, true, i18n("Sinks"),
-                  Ok|Close|User1|User2|User3,
-                  Close, false),
+    : SinkListBase(pParent),
       mpSinks(pSinks),
       mpCurrentSink(0)
 {
-  if (!blnShowOpen)
-    showButtonOK(false);
-
-  setButtonGuiItem(User3, KStdGuiItem::add());
-  setButtonGuiItem(User2, KStdGuiItem::configure());
-  setButtonGuiItem(User1, KStdGuiItem::remove());
-  setButtonGuiItem(Close, KStdGuiItem::close());
-  setButtonGuiItem(Ok,    KStdGuiItem::open());
-
-  enableButton(Ok,    false);
-  enableButton(User1, false);
-  enableButton(User2, false);
-
-  QFrame *page = new QFrame(this);
-  QHBoxLayout *tll = new QHBoxLayout(page);
-  page->setMinimumSize(400, 200);
-  setMainWidget(page);
-
-  QHBoxLayout *hb = new QHBoxLayout();
-  hb->setSpacing(KDialog::spacingHint());
-  tll->addItem(hb);
-
-  QLabel *label = new QLabel(page);
-  hb->addWidget(label);
-  label->setPixmap(UserIcon("sink"));
-  label->setFrameStyle (QFrame::Panel | QFrame::Sunken);
-  label->setAlignment(Qt::AlignTop);
-  QVBoxLayout *vb = new QVBoxLayout();
-  vb->setSpacing (KDialog::spacingHint());
-  tll->addItem(vb);
-
-  mpSinkList = mpSinks->asQListView(page);
-  vb->addWidget(mpSinkList);
-  connect(mpSinkList, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
-  connect(mpSinkList, SIGNAL(doubleClicked(QListViewItem*, const QPoint&, int)),
-          this, SLOT(doubleClicked(QListViewItem*, const QPoint&, int)));
+  buttonOpen->setEnabled(blnShowOpen);
+  buttonRemove->setEnabled(false);
+  buttonConfigure->setEnabled(false);
+  
+  mpSinks->asQListView(listSinks);
 }
 
 SinkList::~SinkList()
@@ -102,11 +58,11 @@ Sink* SinkList::GetSink()
 
 void SinkList::selectionChanged()
 {
-  QListViewItem* p_lvi = mpSinkList->selectedItem();
+  QListViewItem* p_lvi = listSinks->selectedItem();
   bool bln_selected = (p_lvi ? true : false);
-  enableButton(User1, bln_selected);
-  enableButton(User2, bln_selected);
-  enableButton(Ok,    bln_selected);
+  buttonRemove->setEnabled(bln_selected);
+  buttonConfigure->setEnabled(bln_selected);
+  buttonOpen->setEnabled(bln_selected);
 
   if (bln_selected)
   {
@@ -124,19 +80,20 @@ void SinkList::doubleClicked(QListViewItem* pCurrent, const QPoint&, int)
   if (!pCurrent)
     return;
 
-  if (actionButton(Ok)->isVisible())
+  if (buttonOpen->isEnabled())
   {
     accept();
   }
   else
   {
-    slotUser2();
+    buttonConfigure_clicked();
   }
 }
 
 //==================   Add   =====
-void SinkList::slotUser3(void)
+void SinkList::buttonAdd_clicked(void)
 {
+/*
   Sink* p_sink = new Sink();
   SinkEdit dlg(this, p_sink, i18n("New Sink"));
   if (QDialog::Accepted == dlg.exec())
@@ -149,19 +106,21 @@ void SinkList::slotUser3(void)
   {
     delete p_sink;
   }
+*/
 }
 
 
 //==================   Edit  ======
-void SinkList::slotUser2(void)
+void SinkList::buttonConfigure_clicked(void)
 {
-  QListViewItem* p_lvi = mpSinkList->selectedItem();
+  QListViewItem* p_lvi = listSinks->selectedItem();
   if (!p_lvi)
   {
     KMessageBox::error(kapp->activeWindow(), i18n("No sink selected!"));
   }
   else
   {
+    /*
     SinkQListViewItem* p_glvi = dynamic_cast<SinkQListViewItem*>(p_lvi);
     SinkEdit dlg(this, p_glvi->GetSink(), i18n("Edit Sink"));
     if (QDialog::Accepted == dlg.exec())
@@ -169,14 +128,15 @@ void SinkList::slotUser2(void)
       p_glvi->Refresh();
       mpSinks->Save();
     }
+    */
   }
 }
 
 
 //==================  Remove ======
-void SinkList::slotUser1(void)
+void SinkList::buttonRemove_clicked(void)
 {
-  QListViewItem* p_lvi = mpSinkList->selectedItem();
+  QListViewItem* p_lvi = listSinks->selectedItem();
   if (!p_lvi)
   {
     KMessageBox::error(kapp->activeWindow(), i18n("No sink selected!"));

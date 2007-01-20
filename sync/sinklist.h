@@ -18,9 +18,9 @@
 #ifndef SINKLIST_H
 #define SINKLIST_H
 
-#include <kdialogbase.h>
+#include "sinklistbase.h"
 
-#include <qlistview.h>
+class QWidget;
 
 namespace KIPISyncPlugin
 {
@@ -28,7 +28,7 @@ namespace KIPISyncPlugin
 class Sink;
 class Sinks;
 
-class SinkList : public KDialogBase
+class SinkList : public SinkListBase
 {
   Q_OBJECT
 
@@ -47,12 +47,12 @@ private:
 
 private slots:
 
+  void buttonRemove_clicked();
+  void buttonConfigure_clicked();
+  void buttonAdd_clicked();
+  
   void selectionChanged();
   void doubleClicked(QListViewItem*, const QPoint&, int);
-
-  void slotUser1();
-  void slotUser2();
-  void slotUser3();
 };
 
 }

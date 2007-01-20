@@ -56,7 +56,7 @@ public slots:
 
 private:
 
-  KIPISinkPlugin::Sinks* mpSinks;
+  KIPISyncPlugin::Sinks* mpSinks;
 
   KAction* mpActionSync;
   KAction* mpActionConfigure;

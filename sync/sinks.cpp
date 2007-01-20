@@ -68,16 +68,16 @@ void Sink::setVersion(unsigned int version) { mVersion = version; }
 void Sink::setSinkId(unsigned int sinkId) { mSinkId = sinkId; }
 
 
-QListViewItem* Sink::asQListViewItem(QListView* pParent)
+void Sink::asQListViewItem(QListView* pParent)
 {
-  return (QListViewItem*) new SinkQListViewItem(this, pParent);
+  new SinkQListViewItem(this, pParent);
 }
 
 
 
 SinkQListViewItem::SinkQListViewItem(Sink* pSink, QListView* pParent)
   : QListViewItem(pParent, pSink->name(), pSink->url(), pSink->username()),
-    mpSink(Sink)
+    mpSink(pSink)
 {
 }
 
@@ -234,22 +234,15 @@ void Sinks::Save()
   config.writeEntry("Sinks", sink_ids);
 }
 
-QListView* Sinks::asQListView(QWidget* pParent)
+void Sinks::asQListView(QListView* pListView)
 {
   Load();
 
-  QListView* p_lv = new QListView(pParent);
-  p_lv->addColumn(i18n("Sink Name"));
-  p_lv->addColumn(i18n("URL"));
-  p_lv->addColumn(i18n("User"));
-  p_lv->setAllColumnsShowFocus(true);
-
+  pListView->clear();
   for (SinkPtrList::iterator it = mSinks.begin(); it != mSinks.end(); ++it)
   {
-    (*it)->asQListViewItem(p_lv);
+    (*it)->asQListViewItem(pListView);
   }
-
-  return p_lv;
 }
 
 }
