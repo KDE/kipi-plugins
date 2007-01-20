@@ -325,7 +325,7 @@ UploadDialog::startTransfer()
 #define item static_cast<ImageListItem*>(item)
         debug() << "Uploading "      << item->pathSrc()
                 << " to ipod album " << album->name << endl;
-        Itdb_Artwork *art = itdb_photodb_add_photo( m_itdb, QFile::encodeName( item->pathSrc() ), &err );
+        Itdb_Artwork *art = itdb_photodb_add_photo( m_itdb, QFile::encodeName( item->pathSrc() ), 0, 0, &err );
         if( !art )
         {
             if( err )
@@ -336,7 +336,7 @@ UploadDialog::startTransfer()
             }
         }
         else
-            itdb_photodb_photoalbum_add_photo( m_itdb, album, art );
+            itdb_photodb_photoalbum_add_photo( m_itdb, album, art, 0 );
 
         delete item;
 #undef  item
