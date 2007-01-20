@@ -1,5 +1,5 @@
 /* ============================================================
- * File  : gallerylist.h
+ * File  : sinklist.h
  * Author: Colin Guthrie <kde@colin.guthr.ie>
  * Date  : 2006-09-04
  * Copyright 2006 by Colin Guthrie
@@ -7,8 +7,7 @@
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,35 +15,35 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#ifndef GALLERYLIST_H
-#define GALLERYLIST_H
+#ifndef SINKLIST_H
+#define SINKLIST_H
 
 #include <kdialogbase.h>
 
 #include <qlistview.h>
 
-namespace KIPIGalleryExportPlugin
+namespace KIPISyncPlugin
 {
 
-class Gallery;
-class Galleries;
+class Sink;
+class Sinks;
 
-class GalleryList : public KDialogBase
+class SinkList : public KDialogBase
 {
   Q_OBJECT
 
 public:
 
-  GalleryList(QWidget *parent, Galleries* pGalleries, bool blnShowOpen = true);
-  ~GalleryList();
+  SinkList(QWidget* pParent, Sinks* pSinks, bool blnShowOpen = true);
+  ~SinkList();
 
-  Gallery* GetGallery(void);
+  Sink* GetSink(void);
 
 private:
 
-  Galleries* mpGalleries;
-  Gallery* mpCurrentGallery;
-  QListView* mpGalleryList;
+  Sinks* mpSinks;
+  Sink* mpCurrentSink;
+  QListView* mpSinkList;
 
 private slots:
 
@@ -58,4 +57,4 @@ private slots:
 
 }
 
-#endif /* GALLERYLIST_H */
+#endif /* SINKLIST_H */

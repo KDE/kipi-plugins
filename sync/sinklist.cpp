@@ -1,5 +1,5 @@
 /* ============================================================
- * File  : gallerylist.cpp
+ * File  : sinklist.cpp
  * Author: Colin Guthrie <kde@colin.guthr.ie>
  * Date  : 2006-09-04
  * Copyright 2006 by Colin Guthrie
@@ -7,8 +7,7 @@
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -39,19 +38,19 @@
 
 // Local includes.
 
-#include "galleries.h"
-#include "gallerylist.h"
-#include "galleryconfig.h"
+#include "sinks.h"
+#include "sinklist.h"
+#include "sinkconfig.h"
 
-namespace KIPIGalleryExportPlugin
+namespace KIPISyncPlugin
 {
 
-GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOpen)
-    : KDialogBase(pParent, 0, true, i18n("Remote Galleries"),
+SinkList::SinkList(QWidget *pParent, Sinks* pSinks, bool blnShowOpen)
+    : KDialogBase(pParent, 0, true, i18n("Sinks"),
                   Ok|Close|User1|User2|User3,
                   Close, false),
-      mpGalleries(pGalleries),
-      mpCurrentGallery(0)
+      mpSinks(pSinks),
+      mpCurrentSink(0)
 {
   if (!blnShowOpen)
     showButtonOK(false);
@@ -77,33 +76,33 @@ GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOp
 
   QLabel *label = new QLabel(page);
   hb->addWidget(label);
-  label->setPixmap(UserIcon("gallery"));
+  label->setPixmap(UserIcon("sink"));
   label->setFrameStyle (QFrame::Panel | QFrame::Sunken);
   label->setAlignment(Qt::AlignTop);
   QVBoxLayout *vb = new QVBoxLayout();
   vb->setSpacing (KDialog::spacingHint());
   tll->addItem(vb);
 
-  mpGalleryList = mpGalleries->asQListView(page);
-  vb->addWidget(mpGalleryList);
-  connect(mpGalleryList, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
-  connect(mpGalleryList, SIGNAL(doubleClicked(QListViewItem*, const QPoint&, int)),
+  mpSinkList = mpSinks->asQListView(page);
+  vb->addWidget(mpSinkList);
+  connect(mpSinkList, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
+  connect(mpSinkList, SIGNAL(doubleClicked(QListViewItem*, const QPoint&, int)),
           this, SLOT(doubleClicked(QListViewItem*, const QPoint&, int)));
 }
 
-GalleryList::~GalleryList()
+SinkList::~SinkList()
 {
 
 }
 
-Gallery* GalleryList::GetGallery()
+Sink* SinkList::GetSink()
 {
-  return mpCurrentGallery;
+  return mpCurrentSink;
 }
 
-void GalleryList::selectionChanged()
+void SinkList::selectionChanged()
 {
-  QListViewItem* p_lvi = mpGalleryList->selectedItem();
+  QListViewItem* p_lvi = mpSinkList->selectedItem();
   bool bln_selected = (p_lvi ? true : false);
   enableButton(User1, bln_selected);
   enableButton(User2, bln_selected);
@@ -111,16 +110,16 @@ void GalleryList::selectionChanged()
 
   if (bln_selected)
   {
-    GalleryQListViewItem* p_glvi = dynamic_cast<GalleryQListViewItem*>(p_lvi);
-    mpCurrentGallery = p_glvi->GetGallery();
+    SinkQListViewItem* p_glvi = dynamic_cast<SinkQListViewItem*>(p_lvi);
+    mpCurrentSink = p_glvi->GetSink();
   }
   else
   {
-    mpCurrentGallery = 0;
+    mpCurrentSink = 0;
   }
 }
 
-void GalleryList::doubleClicked(QListViewItem* pCurrent, const QPoint&, int)
+void SinkList::doubleClicked(QListViewItem* pCurrent, const QPoint&, int)
 {
   if (!pCurrent)
     return;
@@ -136,73 +135,73 @@ void GalleryList::doubleClicked(QListViewItem* pCurrent, const QPoint&, int)
 }
 
 //==================   Add   =====
-void GalleryList::slotUser3(void)
+void SinkList::slotUser3(void)
 {
-  Gallery* p_gallery = new Gallery();
-  GalleryEdit dlg(this, p_gallery, i18n("New Remote Gallery"));
+  Sink* p_sink = new Sink();
+  SinkEdit dlg(this, p_sink, i18n("New Sink"));
   if (QDialog::Accepted == dlg.exec())
   {
-    mpGalleries->Add(p_gallery);
-    mpGalleries->Save();
-    p_gallery->asQListViewItem(mpGalleryList);
+    mpSinks->Add(p_sink);
+    mpSinks->Save();
+    p_sink->asQListViewItem(mpSinkList);
   }
   else
   {
-    delete p_gallery;
+    delete p_sink;
   }
 }
 
 
 //==================   Edit  ======
-void GalleryList::slotUser2(void)
+void SinkList::slotUser2(void)
 {
-  QListViewItem* p_lvi = mpGalleryList->selectedItem();
+  QListViewItem* p_lvi = mpSinkList->selectedItem();
   if (!p_lvi)
   {
-    KMessageBox::error(kapp->activeWindow(), i18n("No gallery selected!"));
+    KMessageBox::error(kapp->activeWindow(), i18n("No sink selected!"));
   }
   else
   {
-    GalleryQListViewItem* p_glvi = dynamic_cast<GalleryQListViewItem*>(p_lvi);
-    GalleryEdit dlg(this, p_glvi->GetGallery(), i18n("Edit Remote Gallery"));
+    SinkQListViewItem* p_glvi = dynamic_cast<SinkQListViewItem*>(p_lvi);
+    SinkEdit dlg(this, p_glvi->GetSink(), i18n("Edit Sink"));
     if (QDialog::Accepted == dlg.exec())
     {
       p_glvi->Refresh();
-      mpGalleries->Save();
+      mpSinks->Save();
     }
   }
 }
 
 
 //==================  Remove ======
-void GalleryList::slotUser1(void)
+void SinkList::slotUser1(void)
 {
-  QListViewItem* p_lvi = mpGalleryList->selectedItem();
+  QListViewItem* p_lvi = mpSinkList->selectedItem();
   if (!p_lvi)
   {
-    KMessageBox::error(kapp->activeWindow(), i18n("No gallery selected!"));
+    KMessageBox::error(kapp->activeWindow(), i18n("No sink selected!"));
   }
   else
   {
     if (KMessageBox::Yes == 
           KMessageBox::warningYesNo(kapp->activeWindow(),
-            i18n("Are you sure you want to remove this gallery? "
+            i18n("Are you sure you want to remove this sink? "
                  "All synchronisaton settings will be lost. "
                  "You cannot undo this action."), 
-            i18n("Remove Remote Gallery"), 
+            i18n("Remove Sink?"), 
             KStdGuiItem::yes(), KStdGuiItem::no(),
             QString::null, KMessageBox::Dangerous))
     {
-      GalleryQListViewItem* p_glvi = dynamic_cast<GalleryQListViewItem*>(p_lvi);
-      Gallery* p_gallery = p_glvi->GetGallery();
+      SinkQListViewItem* p_glvi = dynamic_cast<SinkQListViewItem*>(p_lvi);
+      Sink* p_sink = p_glvi->GetSink();
       delete p_glvi;
-      mpGalleries->Remove(p_gallery);
-      mpGalleries->Save();
+      mpSinks->Remove(p_sink);
+      mpSinks->Save();
     }
   }
 }
 
 }
 
-#include "gallerylist.moc"
+#include "sinklist.moc"
 
