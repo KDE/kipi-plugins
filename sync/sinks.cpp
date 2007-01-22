@@ -29,54 +29,13 @@
 #endif
 
 #include "sinks.h"
+#include "sink.h"
 
 namespace KIPISyncPlugin
 {
 
-
-Sink::Sink(const QString& name, const QString& url,
-           const QString& username, const QString& password,
-           const unsigned int version,
-           const unsigned int sinkId)
-  : mName(name),
-    mUrl(url),
-    mUsername(username),
-    mPassword(password),
-    mVersion(version),
-    mSinkId(sinkId)
-{
-
-}
-
-Sink::~Sink()
-{
-
-}
-
-QString Sink::name() const { return mName; }
-QString Sink::url() const { return mUrl; }
-QString Sink::username() const { return mUsername; }
-QString Sink::password() const { return mPassword; }
-unsigned int Sink::version() const { return mVersion; }
-unsigned int Sink::sinkId() const { return mSinkId; }
-
-void Sink::setName(QString name) { mName = name; }
-void Sink::setUrl(QString url) { mUrl = url; }
-void Sink::setUsername(QString username) { mUsername = username; }
-void Sink::setPassword(QString password) { mPassword = password; }
-void Sink::setVersion(unsigned int version) { mVersion = version; }
-void Sink::setSinkId(unsigned int sinkId) { mSinkId = sinkId; }
-
-
-void Sink::asQListViewItem(QListView* pParent)
-{
-  new SinkQListViewItem(this, pParent);
-}
-
-
-
 SinkQListViewItem::SinkQListViewItem(Sink* pSink, QListView* pParent)
-  : QListViewItem(pParent, pSink->name(), pSink->url(), pSink->username()),
+  : QListViewItem(pParent, pSink->Name(), pSink->Type()),
     mpSink(pSink)
 {
 }
@@ -88,9 +47,8 @@ Sink* SinkQListViewItem::GetSink()
 
 void SinkQListViewItem::Refresh()
 {
-  setText(0, mpSink->name());
-  setText(1, mpSink->url());
-  setText(2, mpSink->username());
+  setText(0, mpSink->Name());
+  setText(1, mpSink->Type());
 }
 
 
@@ -165,7 +123,7 @@ void Sinks::Load()
     if (bln_use_wallet)
       mpWallet->readPassword(QString("Password%1").arg(sink_id), password);
 
-    Sink* p_sink = new Sink(name, url, username, password, version, sink_id);
+    Sink* p_sink;// = new Sink(name, url, username, password, version, sink_id);
     mSinks.append(p_sink);
   }
 }
@@ -216,6 +174,7 @@ void Sinks::Save()
     Sink* p_sink = (*it);
 
     // Has this sink been saved before?
+    /*
     if (!p_sink->sinkId())
       p_sink->setSinkId(++mMaxSinkId);
 
@@ -228,6 +187,7 @@ void Sinks::Save()
     config.writeEntry(QString("Version%1").arg(sink_id), p_sink->version());
     if (bln_use_wallet)
       mpWallet->writePassword(QString("Password%1").arg(sink_id), p_sink->password());
+    */
   }
 
   config.setGroup("Sync Settings");
@@ -241,7 +201,7 @@ void Sinks::asQListView(QListView* pListView)
   pListView->clear();
   for (SinkPtrList::iterator it = mSinks.begin(); it != mSinks.end(); ++it)
   {
-    (*it)->asQListViewItem(pListView);
+    //(*it)->asQListViewItem(pListView);
   }
 }
 

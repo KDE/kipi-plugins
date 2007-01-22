@@ -43,6 +43,8 @@ SinkList::SinkList(QWidget *pParent, Sinks* pSinks, bool blnShowOpen)
   buttonRemove->setEnabled(false);
   buttonConfigure->setEnabled(false);
   
+  listSinks->addColumn(i18n("Name"));
+  listSinks->addColumn(i18n("Type"));
   mpSinks->asQListView(listSinks);
 }
 

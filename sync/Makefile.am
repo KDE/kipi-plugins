@@ -9,7 +9,8 @@ kipiplugin_sync_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) \
 	$(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la 
 
 kipiplugin_sync_la_SOURCES = plugin_sync.cpp \
-		sinks.cpp sinklist.cpp sinklistbase.ui
+		sink.cpp sinkfactory.cpp sinks.cpp \
+		sinklist.cpp sinklistbase.ui
 
 kipiplugin_sync_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \
 	-lkwalletclient $(LIB_KHTML) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)

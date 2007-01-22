@@ -32,48 +32,8 @@ class Wallet;
 namespace KIPISyncPlugin
 {
 
-/// @todo Convert this to an Interface/Factory type setup.
-class Sink
-{
-
-public:
-
-  Sink(const QString& name = i18n("New Sink"),
-       const QString& url = QString("http://www.newsink.com/"),
-       const QString& username = QString(),
-       const QString& password = QString(),
-       const unsigned int version = 2,
-       const unsigned int sinkId = 0);
-  ~Sink();
-
-  QString name()           const;
-  QString url()            const;
-  QString username()       const;
-  QString password()       const;
-  unsigned int version()   const;
-  unsigned int sinkId() const;
-
-  void setName(QString name);
-  void setUrl(QString url);
-  void setUsername(QString username);
-  void setPassword(QString password);
-  void setVersion(unsigned int version);
-  void setSinkId(unsigned int sinkId);
-
-  void asQListViewItem(QListView* pParent);
-
-private:
-
-  QString mName;
-  QString mUrl;
-  QString mUsername;
-  QString mPassword;
-  unsigned int mVersion;
-
-  unsigned int mSinkId;
-
-};
-
+// Forward Declarations
+class Sink;
 
 /* Simple Stub Class to allow easy access to Sinks from GUI elements */
 class SinkQListViewItem : public QListViewItem
