@@ -1,9 +1,11 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Sync
+Name[el]=Συγχρονισμός
 Name[pt]=Sincronização
 Name[pt_BR]=Sincronização
 Comment=KIPI Synchronization Plugin
+Comment[el]=Πρόσθετο συγχρονισμού του KIPI
 Comment[it]=Plugin di sincronizzazione di KIPI
 Comment[ja]=Kipi 同期プラグイン
 Comment[pt]='Plugin' de Sincronização do KIPI
