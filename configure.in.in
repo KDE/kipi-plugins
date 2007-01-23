@@ -147,22 +147,19 @@ fi
 #------------------------------------------------------------------
 
 
+# check for libgpod
+have_libgpod=no
 if test "$build_libgpod" != "no"; then
     if test "$PKGCONFIGFOUND" = "yes" ; then
 
-        # check for libgpod
-        have_libgpod=no
-
         KDE_PKG_CHECK_MODULES(LIBGPOD, libgpod-1.0 > 0.4.0, have_libgpod=yes,have_libgpod=no)
-        AC_MSG_RESULT($have_libgpod)
-        if test "x$have_libgpod" != "xno"; then
-            AC_DEFINE(HAVE_LIBGPOD, 1, [have libgpod])
-        fi
 
         if test "x$have_libgpod" = "xyes"; then
+        AC_DEFINE(HAVE_LIBGPOD, 1, [have libgpod])
         ac_cppflags_save=$CPPFLAGS
         ac_cflags_save=$CFLAGS
         ac_ldflags_save=$LDFLAGS
+
         CPPFLAGS="$CPPFLAGS $LIBGPOD_INCLUDES"
         CFLAGS="$CFLAGS $LIBGPOD_CFLAGS"
         LDFLAGS="$LDFLAGS $LIBGPOD_LIBS"
@@ -180,8 +177,7 @@ if test "$build_libgpod" != "no"; then
             LDFLAGS=$ac_ldflags_save
         fi
         else
-          AC_MSG_WARN([
-          libgpod is required for the iPod export plugin.])
+          AC_MSG_WARN([libgpod is required for the iPod export plugin.])
         fi
     fi
 fi
