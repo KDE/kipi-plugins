@@ -21,7 +21,7 @@ RAWCONVERTERDIR = rawconverter
 endif
 
 if compile_IPODEXPORT
-IPODEXPORTDIR = ipodexport
+#IPODEXPORTDIR = ipodexport
 endif
 
 SUBDIRS = common printwizard calendar mpegencoder cdarchiving simpleviewerexport \
