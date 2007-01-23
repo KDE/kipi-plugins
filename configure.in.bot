@@ -95,6 +95,7 @@ if test "x$have_libgpod" != "xyes"; then
   all_tests=bad
 else
   echo "-- libgpod found.................. YES"
+  echo "WARNING: iPodExport plugin has been disabled by kipi team because it has not been tested enough."
 fi
 
 

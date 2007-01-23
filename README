@@ -127,4 +127,4 @@ wallpaper          : kdebase (runtime dependency)
 rawconverter       : libtiff
 acquireimages      : libtiff
 htmlexport         : libxslt
-ipodexport (currently broken) : libgpod
+ipodexport (currently disabled) : libgpod
