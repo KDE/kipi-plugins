@@ -152,32 +152,19 @@ have_libgpod=no
 if test "$build_libgpod" != "no"; then
     if test "$PKGCONFIGFOUND" = "yes" ; then
 
-        KDE_PKG_CHECK_MODULES(LIBGPOD, libgpod-1.0 > 0.4.0, have_libgpod=yes,have_libgpod=no)
+        KDE_PKG_CHECK_MODULES(LIBGPOD, libgpod-1.0 = 0.4.2, have_libgpod=yes,have_libgpod=no)
 
         if test "x$have_libgpod" = "xyes"; then
-        AC_DEFINE(HAVE_LIBGPOD, 1, [have libgpod])
-        ac_cppflags_save=$CPPFLAGS
-        ac_cflags_save=$CFLAGS
-        ac_ldflags_save=$LDFLAGS
+            AC_DEFINE(HAVE_LIBGPOD, 1, [have libgpod])
+            ac_cppflags_save=$CPPFLAGS
+            ac_cflags_save=$CFLAGS
+            ac_ldflags_save=$LDFLAGS
 
-        CPPFLAGS="$CPPFLAGS $LIBGPOD_INCLUDES"
-        CFLAGS="$CFLAGS $LIBGPOD_CFLAGS"
-        LDFLAGS="$LDFLAGS $LIBGPOD_LIBS"
-
-        AC_CHECK_FUNCS(itdb_photodb_photoalbum_create, have_libgpod_photos=yes)
-        AC_CHECK_FUNCS(itdb_photodb_parse)
-        AC_CHECK_FUNCS(itdb_device_get_ipod_info)
-
-        if test "x$have_libgpod_photos" = "xno"; then
-            AC_MSG_WARN([ Current version of libgpod does not support the photo database. You need a CVS (development) version.])
-            have_libgpod=no
+            CPPFLAGS="$CPPFLAGS $LIBGPOD_INCLUDES"
+            CFLAGS="$CFLAGS $LIBGPOD_CFLAGS"
+            LDFLAGS="$LDFLAGS $LIBGPOD_LIBS"
         else
-            CPPFLAGS=$ac_cppflags_save
-            CFLAGS=$ac_cflags_save
-            LDFLAGS=$ac_ldflags_save
-        fi
-        else
-          AC_MSG_WARN([libgpod is required for the iPod export plugin.])
+            AC_MSG_WARN([libgpod is required for the iPod export plugin.])
         fi
     fi
 fi
