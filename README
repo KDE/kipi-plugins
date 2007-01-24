@@ -65,7 +65,7 @@ Currently implemented plugins are:
 
 18) GPSSync            : Plugin to geolocalize pictures.
 
-19) IpodExport         : Plugin to export pictures with an Ipod device.
+19) IpodExport (beta)  : Plugin to export pictures with an Ipod device.
 
 20) MetadataEdit       : Plugin to edit EXIF and IPTC pictures metadata.
 
@@ -127,4 +127,4 @@ wallpaper          : kdebase (runtime dependency)
 rawconverter       : libtiff
 acquireimages      : libtiff
 htmlexport         : libxslt
-ipodexport (currently disabled) : libgpod
+ipodexport         : libgpod
