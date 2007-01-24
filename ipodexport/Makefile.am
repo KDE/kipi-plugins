@@ -20,3 +20,8 @@ kipiplugin_ipodexport_la_LIBADD  = $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB
 kipiplugin_ipodexport_la_LDFLAGS = -module $(KDE_PLUGIN) $(LIBGPOD_LIBS) $(all_libraries)
 
 kde_services_DATA = kipiplugin_ipodexport.desktop
+
+# i18n translation messages
+messages: rc.cpp
+	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_ipodexport.pot
+
