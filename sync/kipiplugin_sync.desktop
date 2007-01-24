@@ -2,12 +2,15 @@
 Encoding=UTF-8
 Name=Sync
 Name[el]=Συγχρονισμός
+Name[pl]=Synchronizacja
 Name[pt]=Sincronização
 Name[pt_BR]=Sincronização
 Comment=KIPI Synchronization Plugin
+Comment[de]=Ein KIPI-Modul zur Synchronisation
 Comment[el]=Πρόσθετο συγχρονισμού του KIPI
 Comment[it]=Plugin di sincronizzazione di KIPI
 Comment[ja]=Kipi 同期プラグイン
+Comment[pl]=Wtyczka KIPI - Synchronizacja
 Comment[pt]='Plugin' de Sincronização do KIPI
 Comment[pt_BR]='Plugin' de Sincronização do KIPI
 Type=Service
