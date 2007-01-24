@@ -1,5 +1,335 @@
+V 0.1.3 - 2007-01-24
+----------------------------------------------------------------------------
+2007-01-24 20:38  anaselli
+
+	* [r626873] kipi-plugins/README:
+	  Added beta in iPodExport Plugin
+	  
+	  CCMAIL: <kde-imaging@kde.org>
+
+2007-01-24 18:04  amantia
+
+	* [r626836] kipi-plugins/kameraklient/gpcamera.cpp:
+	  Fix compilation.
+
+2007-01-24 10:42  scripty
+
+	* [r626695] kipi-plugins/sync/kipiplugin_sync.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2007-01-24 07:56  seb
+
+	* [r626678] kipi-plugins/Makefile.am,
+	  kipi-plugins/configure.in.bot, kipi-plugins/configure.in.in:
+	  Since libgpod 0.4.2 has been released, I've re-enabled the ipod
+	  export plugin. I've also returned home so i can resume
+	  maintaining the plugin.
+	  Now, now more problems with API breakages since we rely on a
+	  stable release.
+	  
+	  RFC, please!
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2007-01-23 22:46  anaselli
+
+	* [r626621] kipi-plugins/README, kipi-plugins/configure.in.bot:
+	  Added a note into README and a warning into configure.bot file
+	  that ipod export has been disabled
+	  
+	  REMEMBER to remove it after final ;)
+	  
+	  CCMAIL: <kde-imaging@kde.org>
+
+2007-01-23 22:35  anaselli
+
+	* [r626618] kipi-plugins/Makefile.am:
+	  disabled ipodexport for incoming release
+	  
+	  CCMAIL: <kde-imaging@kde.org>
+
+2007-01-23 22:33  anaselli
+
+	* [r626616] kipi-plugins/configure.in.in:
+	  fixed libgpod test
+	  
+	  CCMAIL: <kde-imaging@kde.org>
+
+2007-01-22 10:45  scripty
+
+	* [r626155] kipi-plugins/gpssync/kipiplugin_gpssync.desktop,
+	  kipi-plugins/sync/kipiplugin_sync.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2007-01-22 08:54  cguthrie
+
+	* [r626123] kipi-plugins/sync/Makefile.am,
+	  kipi-plugins/sync/sinkfactory.cpp,
+	  kipi-plugins/sync/sinkfactory.h, kipi-plugins/sync/sinklist.cpp,
+	  kipi-plugins/sync/sinklistbase.ui, kipi-plugins/sync/sinks.cpp,
+	  kipi-plugins/sync/sinks.h:
+	  Slowly work towards a structure for creating Sinks (definition of
+	  Sink is still very incomplete)
+
+2007-01-20 19:49  cguthrie
+
+	* [r625683] kipi-plugins/sync, kipi-plugins/sync/Makefile.am,
+	  kipi-plugins/sync/plugin_sync.cpp,
+	  kipi-plugins/sync/plugin_sync.h, kipi-plugins/sync/sinklist.cpp,
+	  kipi-plugins/sync/sinklist.h, kipi-plugins/sync/sinklistbase.ui,
+	  kipi-plugins/sync/sinks.cpp, kipi-plugins/sync/sinks.h:
+	  Convert the listing dialog to a .ui file and adapt other parts to
+	  use it.
+	  By no means complete or funtioning.
+
+2007-01-20 13:51  cguthrie
+
+	* [r625578] kipi-plugins/sync/gallerylist.cpp,
+	  kipi-plugins/sync/gallerylist.h, kipi-plugins/sync/sinklist.cpp,
+	  kipi-plugins/sync/sinklist.h:
+	  More gallery->sync renames: This really needs proper refactoring,
+	  but just trying to get something that at least partly compiles
+	  first.
+
+2007-01-20 13:01  cguthrie
+
+	* [r625569] kipi-plugins/ipodexport/ipodexportdialog.cpp:
+	  Fix to compile with latest libgpod 0.4.2
+	  Warning: I do not have an ipod to test this, so you may still
+	  want to disable this for final release Angelo.
+	  The only changes were to add 0 values for position and rotation
+	  in two functions calls, so I shouldn't expect too much fall out.
+	  CCBUG: 67873
+
+2007-01-20 10:42  scripty
+
+	* [r625542] kipi-plugins/sync/kipiplugin_sync.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2007-01-18 10:58  scripty
+
+	* [r624897] kipi-plugins/calendar/kipiplugin_calendar.desktop,
+	  kipi-plugins/sync/kipiplugin_sync.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2007-01-17 10:55  scripty
+
+	* [r624564] kipi-plugins/sync/kipiplugin_sync.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2007-01-16 15:18  hoechstetter
+
+	* [r624155] kipi-plugins/NEWS:
+	  
+
+2007-01-15 09:14  cguthrie
+
+	* [r623691] kipi-plugins/sync/galleries.cpp,
+	  kipi-plugins/sync/galleries.h,
+	  kipi-plugins/sync/kipiplugin_galleryexport.desktop,
+	  kipi-plugins/sync/kipiplugin_sync.desktop,
+	  kipi-plugins/sync/plugin_galleryexport.cpp,
+	  kipi-plugins/sync/plugin_galleryexport.h,
+	  kipi-plugins/sync/plugin_sync.cpp,
+	  kipi-plugins/sync/plugin_sync.h, kipi-plugins/sync/sinks.cpp,
+	  kipi-plugins/sync/sinks.h:
+	  Started renaming files/classes etc.
+	  Nowhere near ready or compilable yet.
+	  (Don't worry Angelo, it shouldn't get in the way of release, but
+	  if it does just kill it)
+	  CCMAIL: kde-imaging@kde.org
+
+2007-01-14 21:24  cguthrie
+
+	* [r623450] kipi-plugins/sync:
+	  Copy galleryexport to 'sync' for work on new generic
+	  synchronisation framework.
+	  Please don't expect any fast development on this from me, but
+	  I'll try and give it some focus in the coming months.
+	  If this in some way messes up the release process, please just
+	  svn rm the folder as I can always resurect it. I will not commit
+	  any updated Makefile.am's etc. in the kipi-plugins directory.
+	  CCMAIL: kde-imaging@kde.org
+
+2007-01-06 14:06  cgilles
+
+	* [r620531] kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpseditdialog.h,
+	  kipi-plugins/gpssync/gpssyncdialog.cpp,
+	  kipi-plugins/gpssync/gpssyncdialog.h:
+	  kipi-plugins from trunk : GPS Sync tool : patch from Heiner
+	  Lamprecht to remember the last GPS position used by user between
+	  plugin session.
+	  
+	  CCMAIL: heiner@heiner-lamprecht.net
+
+2007-01-06 14:05  cgilles
+
+	* [r620528] kipi-plugins/gpssync/getlonlat.php:
+	  kipi-plugins from trunk : GPS Sync tool : patch from Heiner
+	  Lamprecht to port Google maps interface from HTML to XHTML
+	  
+	  CCMAIL: heiner@heiner-lamprecht.net
+
+2007-01-06 14:02  scripty
+
+	* [r620524]
+	  kipi-plugins/acquireimages/kipiplugin_acquireimages.desktop,
+	  kipi-plugins/batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  kipi-plugins/calendar/kipiplugin_calendar.desktop,
+	  kipi-plugins/cdarchiving/kipiplugin_cdarchiving.desktop,
+	  kipi-plugins/findimages/kipiplugin_findimages.desktop,
+	  kipi-plugins/flickrexport/kipiplugin_flickrexport.desktop,
+	  kipi-plugins/galleryexport/kipiplugin_galleryexport.desktop,
+	  kipi-plugins/gpssync/kipiplugin_gpssync.desktop,
+	  kipi-plugins/helloworld/kipiplugin_helloworld.desktop,
+	  kipi-plugins/htmlexport/kipiplugin_htmlexport.desktop,
+	  kipi-plugins/htmlexport/themes/matrix/matrix.desktop,
+	  kipi-plugins/htmlexport/themes/s0/s0.desktop,
+	  kipi-plugins/htmlexport/themes/simple/simple.desktop,
+	  kipi-plugins/htmlexport/themes/snow/snow.desktop,
+	  kipi-plugins/imagesgallery/kipiplugin_imagesgallery.desktop,
+	  kipi-plugins/ipodexport/kipiplugin_ipodexport.desktop,
+	  kipi-plugins/jpeglossless/kipiplugin_jpeglossless.desktop,
+	  kipi-plugins/kameraklient/kipiplugin_kameraklient.desktop,
+	  kipi-plugins/metadataedit/kipiplugin_metadataedit.desktop,
+	  kipi-plugins/mpegencoder/kipiplugin_mpegencoder.desktop,
+	  kipi-plugins/printwizard/kipiplugin_printwizard.desktop,
+	  kipi-plugins/rawconverter/kipiplugin_rawconverter.desktop,
+	  kipi-plugins/sendimages/kipiplugin_sendimages.desktop,
+	  kipi-plugins/simpleviewerexport/kipiplugin_simpleviewer.desktop,
+	  kipi-plugins/slideshow/kipiplugin_slideshow.desktop,
+	  kipi-plugins/timeadjust/kipiplugin_timeadjust.desktop,
+	  kipi-plugins/wallpaper/kipiplugin_wallpaper.desktop,
+	  libkipi/libkipi/kipiplugin.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2007-01-06 11:28  hoechstetter
+
+	* [r620497] kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimages.h:
+	  BUG: 132220;
+	  implemented a replacement of not welcomed characters in filenames
+	  and
+	  fixed the mozilla, thunderbird, ... commandline
+
+2007-01-03 16:27  mwiesweg
+
+	* [r619526] kipi-plugins/jpeglossless/jpegtransform.cpp:
+	  Port back fix for digikam bug 139197 to JPEGLossLess:
+	  Use proper libjpeg error handling.
+	  In case of an error, libjpeg would call exit() from the default
+	  error handler.
+	  
+	  CCBUG: 139197
+
+2007-01-03 09:33  cgilles
+
+	* [r619378] kipi-plugins/jpeglossless/plugin_jpeglossless.cpp:
+	  kipi-plugins from trunk : JPEGLossLess shortcuts : use CTRL
+	  instead SHIFT to prevent conflict with new rule from Comments
+	  Text edit widget focus from digiKam right side bar.
+	  
+	  CCBUGS: 131743
+
+2007-01-02 17:04  cguthrie
+
+	* [r619053] kipi-plugins/NEWS:
+	  Update news after fixing bug 137582
+
+2007-01-02 15:05  cguthrie
+
+	* [r619007] kipi-plugins/galleryexport/gallerytalker.cpp:
+	  Be consistent with the order of statics vs. vars (to prevent
+	  thinkos when you accidentally put only = when you mean ==)
+
+2007-01-02 15:01  cguthrie
+
+	* [r619005] kipi-plugins/galleryexport/TODO,
+	  kipi-plugins/galleryexport/gallerympform.cpp,
+	  kipi-plugins/galleryexport/gallerytalker.cpp,
+	  kipi-plugins/galleryexport/gallerytalker.h:
+	  Implement new security feature required by upcoming Gallery v2.2.
+	  This is as yet untested but I have tested with Gallery v2.1 to
+	  ensure no regressions.
+	  Hopefully when Gallery v2.2 is releases this will Just Work(tm),
+	  if not then I will have to patch it accordingly.
+	  I have assumed as per the spec doc suggests that the auth token
+	  will not change since login.
+	  BUG: 137582
+
+2006-12-31 14:45  ach
+
+	* [r618196] kipi-plugins/INSTALL:
+	  kipi-plugins: remove out of date requirements section
+	  and refer to README instead
+
+2006-12-31 14:42  ach
+
+	* [r618195] kipi-plugins/README:
+	  kipi-plugins: update README
+	  o use new kipi-plugins website URL. kipi info
+	  on extragear is out of date
+	  o fix typo
+	  o add note that ipodexport plugin is currently
+	  broken with latest stable libgpod 0.4.0 release
+
+2006-12-31 14:34  anaselli
+
+	* [r618192] kipi-plugins/README:
+	  libgpod > 0.4.0 - version 0.4.0 isn't compatible with current
+	  ipodexport plugin implementation
+
+2006-12-31 13:13  ach
+
+	* [r618170] kipi-plugins/gpssync/Makefile.am,
+	  kipi-plugins/metadataedit/Makefile.am:
+	  kipi-plugins: list all and only directly used libraries.
+	  Move kipiplugins library from LDFLAGS to LIBADD
+
+2006-12-30 14:21  anaselli
+
+	* [r617899] kipi-plugins/configure.in.bot:
+	  libkipi >= 0.1.5 now
+
+2006-12-30 13:33  anaselli
+
+	* [r617822] kipi-plugins/batchprocessimages/renameimagesbase.ui,
+	  kipi-plugins/batchprocessimages/renameimageswidget.cpp:
+	  leave old plugins compatible to kde 3.3 by now
+
+2006-12-29 14:08  anaselli
+
+	* [r617540] kipi-plugins/NEWS:
+	  updated
+
+2006-12-29 13:40  scripty
+
+	* [r617531]
+	  kipi-plugins/simpleviewerexport/kipiplugin_simpleviewer.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2006-12-28 01:08  anaselli
+
+	* [r617108] kipi-plugins/TODO:
+	  remind me todo
+
+----------------------------------------------------------------------------
 V 0.1.3-rc1 - 2006-12-28
 ----------------------------------------------------------------------------
+
+2006-12-27 23:39  vfuoglio
+
+	* [r617085] kipi-plugins/ChangeLog,
+	  kipi-plugins/common/include/pluginsversion.h,
+	  kipi-plugins/kipi-plugins.lsm:
+	  kipi-plugins 0.1.3 rc1
+
+2006-12-27 23:20  anaselli
+
+	* [r617080] kipi-plugins/NEWS:
+	  prepare 0.1.3 rc1
+
 2006-12-22 13:46  scripty
 
 	* [r615737]
