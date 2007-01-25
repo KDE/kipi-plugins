@@ -380,14 +380,14 @@ bool SendImages::invokeMailAgent(void)
     kurllistdeepcopy(m_filesSendList_copy,m_filesSendList);
 
 
-    qDebug("invokeMailagent1: Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",m_filesSendList.size(),m_filesSendList_copy.size());
+    qDebug("invokeMailagent1: Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",(int)m_filesSendList.size(),(int)m_filesSendList_copy.size());
 
     while (!((filelist=divideEmails()).empty()))
     {
 
-        qDebug("invokeMailagent2: Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",m_filesSendList.size(),m_filesSendList_copy.size());
-        qDebug("number of elements in filelist %d",filelist.size());
-        qDebug("number of elements in m_filelist %d", m_filesSendList.size());	
+        qDebug("invokeMailagent2: Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",(int) m_filesSendList.size(),(int)m_filesSendList_copy.size());
+        qDebug("number of elements in filelist %d",(int)filelist.size());
+        qDebug("number of elements in m_filelist %d", (int)m_filesSendList.size());	
         if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Default" )
         {
             KApplication::kApplication()->invokeMailer(
@@ -773,7 +773,7 @@ void SendImages::slotMozillaExited(KProcess*)
     m_mailAgentProc->disconnect(SIGNAL(processExited(KProcess *)),
                     this, SLOT(slotMozillaExited(KProcess*)));
 
-    qDebug("Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",m_filesSendList.size(),m_filesSendList_copy.size()); 
+    qDebug("Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",(int)m_filesSendList.size(),(int)m_filesSendList_copy.size()); 
    if ( m_mozillaStdErr.find("No running window found") != -1 )   // No remote Mozilla | Netscape |
     {                                                              // Thunderbird env. loaded !
         m_mailAgentProc2 = new KProcess;                           // Init a new env.
@@ -811,7 +811,7 @@ void SendImages::slotMozillaTimeout(void)
         
     m_mozillaTimer->disconnect(SIGNAL(timeout()), this, SLOT(slotMozillaTimeout()));
 
-    qDebug("slotMozillaTimeout: Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",m_filesSendList.size(),m_filesSendList_copy.size());
+    qDebug("slotMozillaTimeout: Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",(int)m_filesSendList.size(),(int)m_filesSendList_copy.size());
     kurllistdeepcopy(m_filesSendList,m_filesSendList_copy);
     invokeMailAgent();
 
