@@ -1,5 +1,12 @@
 Note: for details and info about current version, see ChangeLog.
 
+v 0.1.4 beta1 
+----------------------------------------------------------------------------
+
+Kipi-plugins NEW FEATURES
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+001 ==> 139264 : General     : Prefer Exif DateTimeOriginal for image date/time (DateTimeDigitized and DateTime only used as fallback)
 
 v 0.1.3 
 ----------------------------------------------------------------------------
