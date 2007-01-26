@@ -1,12 +1,11 @@
-INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(LIBKIPI_CFLAGS) $(all_includes)
+INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(LIBKEXIV2_CFLAGS) $(LIBKIPI_CFLAGS) $(all_includes)
 
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_metadataedit.la
 
-kipiplugin_metadataedit_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) \
-	$(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la 
+kipiplugin_metadataedit_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKEXIV2_LIBS_DEP) 
 
 # Srcs for the plugin
 kipiplugin_metadataedit_la_SOURCES = plugin_metadataedit.cpp metadatacheckbox.cpp \
@@ -19,7 +18,7 @@ kipiplugin_metadataedit_la_SOURCES = plugin_metadataedit.cpp metadatacheckbox.cp
 				     commenteditdialog.cpp commentremovedialog.cpp 
 
 # Libs needed by the plugin
-kipiplugin_metadataedit_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \
+kipiplugin_metadataedit_la_LIBADD = $(LIBKEXIV2_LIBS) \
 	       -lkipiplugins $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin

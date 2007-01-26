@@ -34,9 +34,12 @@
 #include <klistbox.h>
 #include <klineedit.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
-#include "exiv2iface.h"
 #include "iptcsubjects.h"
 #include "iptcsubjects.moc"
 
@@ -194,7 +197,7 @@ void IPTCSubjects::slotAddSubject()
 void IPTCSubjects::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     d->oldSubjects = exiv2Iface.getImageSubjects();
 
@@ -215,7 +218,7 @@ void IPTCSubjects::readMetadata(QByteArray& iptcData)
 
 void IPTCSubjects::applyMetadata(QByteArray& iptcData)
 {
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QStringList newSubjects;    
 

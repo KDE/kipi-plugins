@@ -4,7 +4,7 @@
  * Date   : 2006-12-09
  * Description : dcraw interface (tested with dcraw 8.x releases)
  *
- * Copyright 2006 by Gilles Caulier and Marcel Wiesweg
+ * Copyright 2006-2007 by Gilles Caulier and Marcel Wiesweg
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

@@ -3,7 +3,7 @@
  * Date   : 2006-10-12
  * Description : a dialog to edit IPTC metadata
  * 
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -41,11 +41,14 @@
 #include <libkipi/imagecollection.h>
 #include <libkipi/plugin.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "exiv2iface.h"
 #include "iptccaption.h"
 #include "iptccredits.h"
 #include "iptcstatus.h"
@@ -271,7 +274,7 @@ void IPTCEditDialog::saveSettings()
 
 void IPTCEditDialog::slotItemChanged()
 {
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.load((*d->currItem).path());
     d->exifData = exiv2Iface.getExif();
     d->iptcData = exiv2Iface.getIptc();
@@ -284,7 +287,7 @@ void IPTCEditDialog::slotItemChanged()
     d->statusPage->readMetadata(d->iptcData);
     d->originPage->readMetadata(d->iptcData);
 
-    d->isReadOnly = KIPIPlugins::Exiv2Iface::isReadOnly((*d->currItem).path()); 
+    d->isReadOnly = KExiv2Library::LibKExiv2::isReadOnly((*d->currItem).path()); 
     d->page_caption->setEnabled(!d->isReadOnly);
     d->page_datetime->setEnabled(!d->isReadOnly);
     d->page_subjects->setEnabled(!d->isReadOnly);
@@ -330,7 +333,7 @@ void IPTCEditDialog::slotApply()
         d->creditsPage->applyMetadata(d->iptcData);
         d->statusPage->applyMetadata(d->iptcData);
         d->originPage->applyMetadata(d->iptcData);
-        KIPIPlugins::Exiv2Iface exiv2Iface;
+        KExiv2Library::LibKExiv2 exiv2Iface;
         exiv2Iface.load((*d->currItem).path());
         exiv2Iface.setExif(d->exifData);
         exiv2Iface.setIptc(d->iptcData);

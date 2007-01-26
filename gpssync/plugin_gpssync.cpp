@@ -4,7 +4,7 @@
  * Description : a plugin to synchronize pictures with 
  *               a GPS device.
  *
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,9 +38,12 @@
 
 #include <libkipi/imagecollection.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
-#include "exiv2iface.h"
 #include "gpsbabelbinary.h"
 #include "gpsdatacontainer.h"
 #include "gpseditdialog.h"
@@ -181,7 +184,7 @@ void Plugin_GPSSync::slotGPSEdit()
         return;
 
     KURL img = images.images().first();
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.load(img.path());
     double alt, lat, lng;
     bool hasGPSInfo = exiv2Iface.getGPSInfo(alt, lat, lng);
@@ -275,7 +278,7 @@ void Plugin_GPSSync::slotGPSRemove()
         if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
         {
             ret = true;
-            KIPIPlugins::Exiv2Iface exiv2Iface;
+            KExiv2Library::LibKExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.removeGPSInfo();
             ret &= exiv2Iface.save(url.path());

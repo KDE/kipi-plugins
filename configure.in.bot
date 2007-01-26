@@ -20,22 +20,22 @@ if test "x$have_libkipi" != "xyes"; then
   echo "-- libkipi found.................. NO"
   echo ""
   echo "Kipi-Plugins needs libkipi >= 0.1.5. You need to install libkipi first"
-  echo "libkipi website is at http://extragear.kde.org/apps/kipi"
+  echo "libkipi website is at http://www.kipi-plugins.org"
   echo ""
   all_tests=bad
 else
   echo "-- libkipi found.................. YES"
 fi
 
-if test "x$have_exiv2" != "xyes"; then
-  echo "-- Exiv2 library found............ NO"
+if test "x$have_libkexiv2" != "xyes"; then
+  echo "-- libkexiv2 library found............ NO"
   echo ""
-  echo "Kipi-Plugins needs Exiv2 library >= 0.12. You need to install Exiv2 first"
-  echo "Exiv2 website is at http://www.exiv2.org"
+  echo "Kipi-Plugins needs libkexiv2 library >= 0.1. You need to install libkexiv2 first"
+  echo "libkexiv2 website is at http://www.kipi-plugins.org"
   echo ""
   all_tests=bad
 else
-  echo "-- Exiv2 library found............ YES"
+  echo "-- libkexiv2 library found............ YES"
 fi
 
 if test "x$have_tiff" != "xyes"; then

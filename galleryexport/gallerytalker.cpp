@@ -34,10 +34,13 @@
 #include <cstring>
 #include <cstdio>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 #include "galleryitem.h"
 #include "gallerympform.h"
 #include "gallerytalker.h"
-#include "exiv2iface.h"
 
 namespace KIPIGalleryExportPlugin
 {
@@ -219,7 +222,7 @@ bool GalleryTalker::addPhoto( const QString& albumName,
 
             if ("JPEG" == QString(QImageIO::imageFormat(photoPath)).upper())
             {
-              KIPIPlugins::Exiv2Iface exiv2;
+              KExiv2Library::LibKExiv2 exiv2;
               if (exiv2.load(photoPath))
               {
                 exiv2.save(path);

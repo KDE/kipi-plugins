@@ -3,7 +3,7 @@
  * Date   : 2006-10-11
  * Description : a plugin to edit pictures metadata
  *
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,9 +36,12 @@
 
 #include <libkipi/imagecollection.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
-#include "exiv2iface.h"
 #include "exifeditdialog.h"
 #include "iptceditdialog.h"
 #include "commenteditdialog.h"
@@ -186,10 +189,10 @@ void Plugin_MetadataEdit::slotRemoveExif()
         KURL url = *it;
         bool ret = false;
 
-        if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
+        if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
         {
             ret = true;
-            KIPIPlugins::Exiv2Iface exiv2Iface;
+            KExiv2Library::LibKExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.clearExif();
             ret &= exiv2Iface.save(url.path());
@@ -229,7 +232,7 @@ void Plugin_MetadataEdit::slotImportExif()
     if( importEXIFFile.isEmpty() )
        return;
     
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     if (!exiv2Iface.load(importEXIFFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(), 
@@ -266,10 +269,10 @@ void Plugin_MetadataEdit::slotImportExif()
         KURL url = *it;
         bool ret = false;
 
-        if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
+        if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
         {
             ret = true;
-            KIPIPlugins::Exiv2Iface exiv2Iface;
+            KExiv2Library::LibKExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.setExif(exifData);
             ret &= exiv2Iface.save(url.path());
@@ -332,10 +335,10 @@ void Plugin_MetadataEdit::slotRemoveIptc()
         KURL url = *it;
         bool ret = false;
 
-        if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
+        if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
         {
             ret = true;
-            KIPIPlugins::Exiv2Iface exiv2Iface;
+            KExiv2Library::LibKExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.clearIptc();
             ret &= exiv2Iface.save(url.path());
@@ -375,7 +378,7 @@ void Plugin_MetadataEdit::slotImportIptc()
     if( importIPTCFile.isEmpty() )
        return;
     
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     if (!exiv2Iface.load(importIPTCFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(), 
@@ -412,10 +415,10 @@ void Plugin_MetadataEdit::slotImportIptc()
         KURL url = *it;
         bool ret = false;
 
-        if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
+        if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
         {
             ret = true;
-            KIPIPlugins::Exiv2Iface exiv2Iface;
+            KExiv2Library::LibKExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.setIptc(iptcData);
             ret &= exiv2Iface.save(url.path());
@@ -467,10 +470,10 @@ void Plugin_MetadataEdit::slotEditComments()
         KIPI::ImageInfo info = m_interface->info(url);
         info.setDescription(dlg.getComments());
 
-        if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
+        if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
         {
             ret = true;
-            KIPIPlugins::Exiv2Iface exiv2Iface;
+            KExiv2Library::LibKExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
 
             if (dlg.syncEXIFCommentIsChecked())
@@ -534,10 +537,10 @@ void Plugin_MetadataEdit::slotRemoveComments()
             info.setDescription(QString::null);
         }
 
-        if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
+        if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
         {
             ret = true;
-            KIPIPlugins::Exiv2Iface exiv2Iface;
+            KExiv2Library::LibKExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
 
             if (dlg.removeEXIFCommentIsChecked())

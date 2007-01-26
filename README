@@ -1,11 +1,11 @@
-KIPIPLUGINS
+KIPIPLUGINS PROJECT
 
 Note: Most of the LibKipiPlugins have previously been Digikamplugins.
 
       kipi-plugins is based in part on the work of the Independent
       JPEG Group.
 
-Please visit this url: http://www.kipi-plugins.org/
+Please visit this url: http://www.kipi-plugins.org
 
 Summary:
 ----------------------------------------------------------------------
@@ -110,7 +110,7 @@ MJPEGTools  >= 1.6.0
 imlib2      >= 1.1.0
 libgphoto2  >= 2.x
 libtiff     >= 3.5.x
-libexiv2    >= 0.12
+libkexiv2   >= 0.1
 libxslt     >= 1.1
 libgpod     > 0.4.0 (fails to build with 0.4.0)
 

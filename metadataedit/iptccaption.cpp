@@ -3,7 +3,7 @@
  * Date   : 2006-10-12
  * Description : IPTC caption settings page.
  * 
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,9 +38,12 @@
 #include <kaboutdata.h>
 #include <kseparator.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
-#include "exiv2iface.h"
 #include "iptccaption.h"
 #include "iptccaption.moc"
 
@@ -248,7 +251,7 @@ void IPTCCaption::setCheckedSyncEXIFComment(bool c)
 void IPTCCaption::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
 
@@ -300,7 +303,7 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
 
 void IPTCCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
 

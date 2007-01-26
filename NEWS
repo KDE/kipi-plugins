@@ -5,6 +5,9 @@ v 0.1.4 beta1
 
 Kipi-plugins NEW FEATURES
 
+General        : Moved Exiv2Iface class to a new shared library named libkexiv2 used by 
+                 kipi-plugins and digiKam.
+
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 001 ==> 139264 : General     : Prefer Exif DateTimeOriginal for image date/time (DateTimeDigitized and DateTime only used as fallback)
 
@@ -23,7 +26,7 @@ v 0.1.3 rc1
 
 Kipi-plugins NEW FEATURES
 
-Slideshow     : Show image comments (configurable)
+Slideshow      : Show image comments (configurable)
 
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):

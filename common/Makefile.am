@@ -1,2 +1,2 @@
-SUBDIRS = exiv2iface libkipiplugins
+SUBDIRS = libkipiplugins
 

@@ -3,7 +3,7 @@
  * Date   : 2004-02-25
  * Description : a kipi plugin to e-mailing images
  * 
- * Copyright 2004-2005 by Gilles Caulier
+ * Copyright 2004-2007 by Gilles Caulier
  * Copyright 2006 by Tom Albers
  *
  * This program is free software; you can redistribute it
@@ -50,11 +50,14 @@
 #include <knuminput.h>
 #include <kurlrequester.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local include files
 
 #include "sendimagesdialog.h"
 #include "listimageserrordialog.h"
-#include "exiv2iface.h"
 #include "actions.h"
 #include "pluginsversion.h"
 #include "sendimages.h"
@@ -193,7 +196,7 @@ void SendImages::run()
                     m_imageFormat.upper() == "JPEG")
                 {
                     QString targetFile = m_tmp + imageNameFormat;
-                    KIPIPlugins::Exiv2Iface exiv2Iface;
+                    KExiv2Library::LibKExiv2 exiv2Iface;
 
                     if (exiv2Iface.load(imageName))
                     {

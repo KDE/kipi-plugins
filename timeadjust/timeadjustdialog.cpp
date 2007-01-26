@@ -5,7 +5,7 @@
  * Description : a plugin to set time stamp of picture files.
  *
  * Copyright 2003-2005 by Jesper Pedersen
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -54,11 +54,14 @@
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "exiv2iface.h"
 #include "timeadjustdialog.h"
 #include "timeadjustdialog.moc"
 
@@ -435,10 +438,10 @@ void TimeAdjustDialog::slotOk()
         {
             if (d->syncEXIFDateCheck->isChecked() || d->syncIPTCDateCheck->isChecked())
             {
-                if (!KIPIPlugins::Exiv2Iface::isReadOnly(url.path()))
+                if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
                 {
                     ret = true;
-                    KIPIPlugins::Exiv2Iface exiv2Iface;
+                    KExiv2Library::LibKExiv2 exiv2Iface;
     
                     ret &= exiv2Iface.load(url.path());
                     if (ret)
@@ -494,7 +497,7 @@ QDateTime TimeAdjustDialog::updateTime(const KURL& url, const QDateTime& time) c
     }
     else if (d->exif->isChecked())
     {
-        KIPIPlugins::Exiv2Iface exiv2Iface;
+        KExiv2Library::LibKExiv2 exiv2Iface;
         if ( !exiv2Iface.load(url.path()) )
             return time;
 

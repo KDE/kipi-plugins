@@ -3,7 +3,7 @@
  * Date   : 2006-10-12
  * Description : EXIF caption settings page.
  * 
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,10 +37,13 @@
 #include <kapplication.h>
 #include <kaboutdata.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
 #include "pluginsversion.h"
-#include "exiv2iface.h"
 #include "exifcaption.h"
 #include "exifcaption.moc"
 
@@ -267,7 +270,7 @@ void EXIFCaption::setCheckedSyncIPTCCaption(bool c)
 void EXIFCaption::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     QString data;
 
@@ -329,7 +332,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
 
 void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
 

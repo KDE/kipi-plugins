@@ -3,7 +3,7 @@
  * Date   : 2006-10-15
  * Description : IPTC categories settings page.
  * 
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,9 +34,12 @@
 #include <klistbox.h>
 #include <klineedit.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
-#include "exiv2iface.h"
 #include "iptccategories.h"
 #include "iptccategories.moc"
 
@@ -236,7 +239,7 @@ void IPTCCategories::slotAddCategory()
 void IPTCCategories::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
 
@@ -270,7 +273,7 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
 void IPTCCategories::applyMetadata(QByteArray& iptcData)
 {
     QStringList newCategories;    
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
     if (d->categoryCheck->isChecked())

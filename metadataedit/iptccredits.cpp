@@ -3,7 +3,7 @@
  * Date   : 2006-10-12
  * Description : IPTC credits settings page.
  * 
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,9 +34,12 @@
 #include <kdialog.h>
 #include <klineedit.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
-#include "exiv2iface.h"
 #include "iptccredits.h"
 #include "iptccredits.moc"
 
@@ -230,7 +233,7 @@ IPTCCredits::~IPTCCredits()
 void IPTCCredits::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
 
@@ -299,7 +302,7 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
 
 void IPTCCredits::applyMetadata(QByteArray& iptcData)
 {
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
     if (d->copyrightCheck->isChecked())

@@ -3,7 +3,7 @@
  * Date   : 2004-02-25
  * Description : a kipi plugin to e-mailing images
  * 
- * Copyright 2004-2005 by Gilles Caulier
+ * Copyright 2004-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

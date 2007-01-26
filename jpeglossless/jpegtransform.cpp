@@ -6,7 +6,7 @@
  * 
  * Copyright 2004 by  Ralf Hoelzer
  * Copyright 2004-2005 by Marcel Wiesweg
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -186,7 +186,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     (void) jpeg_read_header(&srcinfo, true);
 
     // Get Exif orientation action to do.
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.load(src);
     getExifAction(exifAction, exiv2Iface.getImageOrientation());
 
@@ -334,7 +334,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     QImage img(destGiven);
     QImage exifThumbnail = img.scale(160, 120, QImage::ScaleMin);
     exiv2Iface.load(destGiven);
-    exiv2Iface.setImageOrientation(KIPIPlugins::Exiv2Iface::ORIENTATION_NORMAL);
+    exiv2Iface.setImageOrientation(KExiv2Library::LibKExiv2::ORIENTATION_NORMAL);
     exiv2Iface.setImageProgramId(QString("Kipi JPEGLossLess"), QString(kipiplugins_version));
     exiv2Iface.setImageDimensions(img.size());
     exiv2Iface.setExifThumbnail(exifThumbnail);
@@ -385,42 +385,42 @@ void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate)
     }
 }
 
-void getExifAction(Matrix &action, KIPIPlugins::Exiv2Iface::ImageOrientation exifOrientation) 
+void getExifAction(Matrix &action, KExiv2Library::LibKExiv2::ImageOrientation exifOrientation) 
 {
     switch (exifOrientation) 
     {
-        case KIPIPlugins::Exiv2Iface::ORIENTATION_NORMAL:
+        case KExiv2Library::LibKExiv2::ORIENTATION_NORMAL:
             break;
 
-        case KIPIPlugins::Exiv2Iface::ORIENTATION_HFLIP:
+        case KExiv2Library::LibKExiv2::ORIENTATION_HFLIP:
             action*=Matrix::flipHorizontal;
             break;
 
-        case KIPIPlugins::Exiv2Iface::ORIENTATION_ROT_180:
+        case KExiv2Library::LibKExiv2::ORIENTATION_ROT_180:
             action*=Matrix::rotate180;
             break;
 
-        case KIPIPlugins::Exiv2Iface::ORIENTATION_VFLIP:
+        case KExiv2Library::LibKExiv2::ORIENTATION_VFLIP:
             action*=Matrix::flipVertical;
             break;
 
-        case KIPIPlugins::Exiv2Iface::ORIENTATION_ROT_90_HFLIP:
+        case KExiv2Library::LibKExiv2::ORIENTATION_ROT_90_HFLIP:
             action*=Matrix::rotate90flipHorizontal;
             break;
 
-        case KIPIPlugins::Exiv2Iface::ORIENTATION_ROT_90:
+        case KExiv2Library::LibKExiv2::ORIENTATION_ROT_90:
             action*=Matrix::rotate90;
             break;
 
-        case KIPIPlugins::Exiv2Iface::ORIENTATION_ROT_90_VFLIP:
+        case KExiv2Library::LibKExiv2::ORIENTATION_ROT_90_VFLIP:
             action*=Matrix::rotate90flipVertical;
             break;
 
-        case KIPIPlugins::Exiv2Iface::ORIENTATION_ROT_270:
+        case KExiv2Library::LibKExiv2::ORIENTATION_ROT_270:
             action*=Matrix::rotate270;
             break;
 
-        case KIPIPlugins::Exiv2Iface::ORIENTATION_UNSPECIFIED:
+        case KExiv2Library::LibKExiv2::ORIENTATION_UNSPECIFIED:
             action*=Matrix::none;
             break;
     }

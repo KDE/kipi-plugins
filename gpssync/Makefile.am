@@ -1,21 +1,20 @@
-INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(LIBKIPI_CFLAGS) $(all_includes)
+INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(LIBKEXIV2_CFLAGS) $(LIBKIPI_CFLAGS) $(all_includes)
 
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_gpssync.la
 
-kipiplugin_gpssync_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) \
-	$(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la 
+kipiplugin_gpssync_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKEXIV2_LIBS_DEP)  
 
 # Srcs for the plugin
 kipiplugin_gpssync_la_SOURCES = plugin_gpssync.cpp gpssyncdialog.cpp gpslistviewitem.cpp \
-	                            gpsbabelbinary.cpp gpsdataparser.cpp gpseditdialog.cpp \
-	                            gpsmapwidget.cpp 
+	                        gpsbabelbinary.cpp gpsdataparser.cpp gpseditdialog.cpp \
+	                        gpsmapwidget.cpp 
 
 # Libs needed by the plugin
-kipiplugin_gpssync_la_LIBADD = $(top_builddir)/kipi-plugins/common/exiv2iface/libexiv2iface.la \
-		-lkipiplugins $(LIBKIPI_LIBS) $(LIB_KHTML) $(LIB_KPARTS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
+kipiplugin_gpssync_la_LIBADD = $(LIBKEXIV2_LIBS) -lkipiplugins $(LIBKIPI_LIBS) $(LIB_KHTML) \
+	                       $(LIB_KPARTS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
 kipiplugin_gpssync_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries)

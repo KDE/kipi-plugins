@@ -5,7 +5,7 @@
  * Description : a plugin to set time stamp of picture files.
  *
  * Copyright 2003-2005 by Jesper Pedersen
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

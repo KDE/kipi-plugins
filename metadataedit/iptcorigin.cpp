@@ -3,7 +3,7 @@
  * Date   : 2006-10-13
  * Description : IPTC origin settings page.
  * 
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,10 +34,13 @@
 #include <kdialog.h>
 #include <klineedit.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
 #include "metadatacheckbox.h"
-#include "exiv2iface.h"
 #include "iptcorigin.h"
 #include "iptcorigin.moc"
 
@@ -524,7 +527,7 @@ IPTCOrigin::~IPTCOrigin()
 void IPTCOrigin::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
 
@@ -635,7 +638,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
 
 void IPTCOrigin::applyMetadata(QByteArray& iptcData)
 {
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
     if (d->objectNameCheck->isChecked())

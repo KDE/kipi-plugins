@@ -4,7 +4,7 @@
  * Date   : 2006-12-09
  * Description : dcraw interface (tested with dcraw 8.x releases)
  *
- * Copyright 2006 by Gilles Caulier and Marcel Wiesweg
+ * Copyright 2006-2007 by Gilles Caulier and Marcel Wiesweg
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -58,11 +58,14 @@ extern "C"
 #include <kprocess.h>
 #include <kstandarddirs.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
 #include "pluginsversion.h"
 #include "rawfiles.h"
-#include "exiv2iface.h"
 #include "dcrawbinary.h"
 #include "dcrawiface.h"
 #include "dcrawiface.moc"
@@ -492,7 +495,7 @@ bool DcrawIface::loadFromDcraw(const QString& filePath, QString& destPath)
             fclose(f);
 
             // Metadata restoration and update.
-            KIPIPlugins::Exiv2Iface exiv2Iface;
+            KExiv2Library::LibKExiv2 exiv2Iface;
             exiv2Iface.load(filePath);
             exiv2Iface.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
             exiv2Iface.setImageDimensions(QSize(d->width, d->height));
@@ -547,7 +550,7 @@ bool DcrawIface::loadFromDcraw(const QString& filePath, QString& destPath)
             png_set_text(png_ptr, info_ptr, &(text), 1);
 
             // Metadata restoration and update.
-            KIPIPlugins::Exiv2Iface exiv2Iface;
+            KExiv2Library::LibKExiv2 exiv2Iface;
             exiv2Iface.load(filePath);
             exiv2Iface.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
             exiv2Iface.setImageDimensions(QSize(d->width, d->height));
@@ -624,7 +627,7 @@ bool DcrawIface::loadFromDcraw(const QString& filePath, QString& destPath)
 
 
             // Metadata restoration and update.
-            KIPIPlugins::Exiv2Iface exiv2Iface;
+            KExiv2Library::LibKExiv2 exiv2Iface;
             exiv2Iface.load(filePath);
             exiv2Iface.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
             exiv2Iface.setImageDimensions(QSize(d->width, d->height));

@@ -3,7 +3,7 @@
  * Date   : 2006-09-19
  * Description : GPS file list view item.
  * 
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -29,9 +29,12 @@
 #include <kio/previewjob.h>
 #include <kiconloader.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
-#include "exiv2iface.h"
 #include "gpslistviewitem.h"
 #include "gpslistviewitem.moc"
 
@@ -85,7 +88,7 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
         d->readOnly = true;
     }
 
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.load(d->url.path());
     setDateTime(exiv2Iface.getImageDateTime());
     double alt, lat, lng;
@@ -189,7 +192,7 @@ void GPSListViewItem::writeGPSInfoToFile()
     if (isEnabled() && isDirty() && !isReadOnly())
     {
         setPixmap(1, SmallIcon("run"));
-        KIPIPlugins::Exiv2Iface exiv2Iface;
+        KExiv2Library::LibKExiv2 exiv2Iface;
         bool ret = exiv2Iface.load(d->url.path());
 
         if (d->erase)

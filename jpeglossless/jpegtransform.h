@@ -6,7 +6,7 @@
  * 
  * Copyright 2004 by  Ralf Hoelzer
  * Copyright 2004-2005 by Marcel Wiesweg
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2006 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -28,9 +28,9 @@
 
 #include <qstring.h>
 
-// Local includes.
+// LibKExiv2 includes. 
 
-#include "exiv2iface.h"
+#include <libkexiv2/libkexiv2.h>
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -40,7 +40,7 @@ namespace KIPIJPEGLossLessPlugin
    the user will request rotating operations relative to what he sees,
    and that is the picture rotated according to the EXIF tag.
    So the operation requested and the given EXIF angle must be combined.
-   E.g. if orientation is "6" (rotate 90° clockwiseto show correctly) 
+   E.g. if orientation is "6" (rotate 90 clockwiseto show correctly) 
    and the user selects 180 clockwise, the operation is 270.
    If the user selected 270, the operation would be None (and clearing the exif tag).
    
@@ -52,7 +52,7 @@ namespace KIPIJPEGLossLessPlugin
    All transformations needed here - rotate 90, 180, 270, flipV, flipH - 
    can be described in a 2x2 matrix with the values 0,1,-1
    (because flipping is expressed by changing the sign only,
-    and sine and cosine of 90°, 180° and 270° are either 0,1 or -1).
+    and sine and cosine of 90, 180 and 270 are either 0,1 or -1).
     
     x' = m11 x + m12 y
     y' = m21 x + m22 y
@@ -124,7 +124,7 @@ bool transformJPEG(const QString& src, const QString& dest, Matrix &action, QStr
 
 void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate);
 
-void getExifAction(Matrix &action, KIPIPlugins::Exiv2Iface::ImageOrientation exifOrientation);
+void getExifAction(Matrix &action, KExiv2Library::LibKExiv2::ImageOrientation exifOrientation);
 
 }  // NameSpace KIPIJPEGLossLessPlugin
 

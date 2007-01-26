@@ -3,7 +3,7 @@
  * Date   : 2006-10-15
  * Description : IPTC keywords settings page.
  * 
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,9 +34,12 @@
 #include <klistbox.h>
 #include <klineedit.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
-#include "exiv2iface.h"
 #include "iptckeywords.h"
 #include "iptckeywords.moc"
 
@@ -194,7 +197,7 @@ void IPTCKeywords::slotAddKeyword()
 void IPTCKeywords::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     d->oldKeywords = exiv2Iface.getImageKeywords();
 
@@ -215,7 +218,7 @@ void IPTCKeywords::readMetadata(QByteArray& iptcData)
 
 void IPTCKeywords::applyMetadata(QByteArray& iptcData)
 {
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QStringList newKeywords;    
 

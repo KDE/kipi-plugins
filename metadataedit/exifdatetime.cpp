@@ -3,7 +3,7 @@
  * Date   : 2006-10-18
  * Description : EXIF date and time settings page.
  * 
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,9 +36,12 @@
 #include <kaboutdata.h>
 #include <kseparator.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/libkexiv2.h>
+
 // Local includes.
 
-#include "exiv2iface.h"
 #include "exifdatetime.h"
 #include "exifdatetime.moc"
 
@@ -258,7 +261,7 @@ QDateTime EXIFDateTime::getEXIFCreationDate()
 void EXIFDateTime::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
 
     QDateTime datetime;
@@ -358,7 +361,7 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
 
 void EXIFDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
-    KIPIPlugins::Exiv2Iface exiv2Iface;
+    KExiv2Library::LibKExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
 
