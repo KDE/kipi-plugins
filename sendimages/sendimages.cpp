@@ -1,5 +1,5 @@
 /* ============================================================
- * Authors: Gilles Caulier <caulier dot gilles at free.fr>
+ * Authors: Gilles Caulier <caulier dot gilles at free.fr>, Michael Höchstetter <michael.hoechstetter@kdemail.net
  * Date   : 2004-02-25
  * Description : a kipi plugin to e-mailing images
  * 
@@ -62,7 +62,7 @@
 
 namespace KIPISendimagesPlugin
 {
-
+///Constructor: saves system handoff parameters in member variables
 SendImages::SendImages(KIPI::Interface* interface, const QString &tmpFolder,
                        const KIPI::ImageCollection& imagesCollection, QObject *parent)
           : QObject(parent), QThread()
@@ -79,12 +79,15 @@ SendImages::SendImages(KIPI::Interface* interface, const QString &tmpFolder,
             this, SLOT(slotMozillaTimeout()));
 }
 
+///Destructor
 SendImages::~SendImages()
 {
     delete m_sendImagesDialog;
     wait();
 }
 
+
+///Invokes the User Dialog Window
 void SendImages::showDialog()
 {
     m_sendImagesDialog = new KIPISendimagesPlugin::SendImagesDialog(kapp->activeWindow(),
@@ -96,6 +99,7 @@ void SendImages::showDialog()
 }
 
 /** Execute the no threadable operations before the real thread.*/
+///Gets input from the user dialog and store it into member variables
 void SendImages::prepare(void)
 {
     m_filesSendList.clear();
@@ -112,6 +116,8 @@ void SendImages::prepare(void)
 }
 
 /** List of threaded operations.*/
+///Prepares the image list. This includes resizing, copying, maintaining an image's exif, 
+///and dropping evil characters out of filenames ;-)
 void SendImages::run()
 {
     KIPISendimagesPlugin::EventData *d;
@@ -240,7 +246,7 @@ void SendImages::run()
     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 }
 
-/** Create a text file with the images comments.*/
+/// Creates a text file with the images comments.
 void SendImages::makeCommentsFile(void)
 {
     if ( m_sendImagesDialog->m_addComments->isChecked() == true )
@@ -294,6 +300,7 @@ void SendImages::makeCommentsFile(void)
     }
 }
 
+///Shows up an error dialog and the problematic images
 bool SendImages::showErrors()
 {
     if ( m_imagesResizedWithError.isEmpty() == false )
@@ -334,7 +341,7 @@ bool SendImages::showErrors()
 }
 
 /** Returns a list of Filenames, whose sum filesize is smaller than the quota
-    by Michael Hoechstetter.*/
+    The returned images are deleted from the m_filesSendList*/
 KURL::List SendImages::divideEmails(void)
 {
     unsigned long mylistsize=0;
@@ -367,25 +374,22 @@ KURL::List SendImages::divideEmails(void)
 	return sendnow;
 }
 
-/** Invoke mailer agent.*/
+/** Invokes mail agent. Depending on which mail agent to be used, we have different
+    proceedings. Easy for every agent except of mozilla derivates */
 bool SendImages::invokeMailAgent(void)
 {
     bool agentInvoked = false;
-    
-    // default agent call
-    // FIXME: seems to fail for thunderbird. Fix kdelibs or maybe work around it.
-    
-    
+
     KURL::List filelist;
     kurllistdeepcopy(m_filesSendList_copy,m_filesSendList);
 
 
-    qDebug("invokeMailagent1: Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",(int)m_filesSendList.size(),(int)m_filesSendList_copy.size());
+    qDebug("invokeMailagent1: Number of elements in m_filesSendList=%d, and in m_filesSendList_copy=%d)",(int)m_filesSendList.size(),(int)m_filesSendList_copy.size());
 
     while (!((filelist=divideEmails()).empty()))
     {
 
-        qDebug("invokeMailagent2: Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",(int) m_filesSendList.size(),(int)m_filesSendList_copy.size());
+        qDebug("invokeMailagent2: Number of elements in m_filesSendList=%d, and in m_filesSendList_copy=%d)",(int) m_filesSendList.size(),(int)m_filesSendList_copy.size());
         qDebug("number of elements in filelist %d",(int)filelist.size());
         qDebug("number of elements in m_filelist %d", (int)m_filesSendList.size());	
         if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Default" )
@@ -567,12 +571,14 @@ bool SendImages::invokeMailAgent(void)
     return agentInvoked;
 }
 
+///Cleans up the temp directory
 void SendImages::removeTmpFiles(void)
 {
     if (DeleteDir(m_tmp) == false)
        KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove temporary folder %1.").arg(m_tmp));
 }
 
+///Checks if directory is empty and invokes its deletion
 bool SendImages::DeleteDir(QString dirname)
 {
     if ( !dirname.isEmpty() )
@@ -596,6 +602,7 @@ bool SendImages::DeleteDir(QString dirname)
     return true;
 }
 
+///Deletes a directory and all its contents - Please call it using "DeleteDir"
 bool SendImages::deldir(QString dirname)
 {
     QDir *dir = new QDir(dirname);
@@ -632,6 +639,7 @@ bool SendImages::deldir(QString dirname)
     return true;
 }
 
+///Returns the file-extention of the corresponding fileformat
 QString SendImages::extension(const QString& imageFileFormat)
 {
     if (imageFileFormat == "PNG")
@@ -644,6 +652,8 @@ QString SendImages::extension(const QString& imageFileFormat)
     return "";
 }
 
+///in sendimagesplugin dialog the user can select a compression of images
+///this function returns the pixel-size of the selected entry
 int SendImages::getSize ( int choice )
 {
     switch (choice)
@@ -672,12 +682,12 @@ int SendImages::getSize ( int choice )
     }
 }
 
+///This function should copy the images to tempfolder in order to avoid suspicious filenames
+///It is used, when no resizing should take place
 // This function can be replaced with Qt4 QFile.copy
 bool SendImages::copyImageProcess(const QString &oldFilePath, const QString &DestPath,
                                   const QString &ImageName)
 {
-        
-        
         //same file, no need to copy
         qDebug("DestPath: %s",(DestPath).ascii());
         qDebug("ImageName: %s",(ImageName).ascii());
@@ -707,7 +717,7 @@ bool SendImages::copyImageProcess(const QString &oldFilePath, const QString &Des
         buffer = NULL;
         return true;
 }
-
+///Resizes the Images before Sending...
 bool SendImages::resizeImageProcess(const QString &SourcePath, const QString &DestPath,
                                     const QString &ImageFormat, const QString &ImageName,
                                     int SizeFactor, int ImageCompression, QSize &newsize)
@@ -764,6 +774,7 @@ bool SendImages::resizeImageProcess(const QString &SourcePath, const QString &De
     return false;
 }
 
+///If mozilla, or thunderbird or any derivate isn't already running, start it now, wait 5 seconds and start SlotMozillaTimeout()
 void SendImages::slotMozillaExited(KProcess*)
 {
     qDebug("slotMozillaExited");
@@ -773,7 +784,7 @@ void SendImages::slotMozillaExited(KProcess*)
     m_mailAgentProc->disconnect(SIGNAL(processExited(KProcess *)),
                     this, SLOT(slotMozillaExited(KProcess*)));
 
-    qDebug("Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",(int)m_filesSendList.size(),(int)m_filesSendList_copy.size()); 
+    qDebug("Number of elements in m_filesSendList=%d, and in m_filesSendList_copy=%d)",(int)m_filesSendList.size(),(int)m_filesSendList_copy.size()); 
    if ( m_mozillaStdErr.find("No running window found") != -1 )   // No remote Mozilla | Netscape |
     {                                                              // Thunderbird env. loaded !
         m_mailAgentProc2 = new KProcess;                           // Init a new env.
@@ -806,26 +817,30 @@ void SendImages::slotMozillaExited(KProcess*)
     }
 }
 
+///If Mozilla wasn't started before, now it is and so we can begin with the transmission
 void SendImages::slotMozillaTimeout(void)
 {
         
     m_mozillaTimer->disconnect(SIGNAL(timeout()), this, SLOT(slotMozillaTimeout()));
 
-    qDebug("slotMozillaTimeout: Anzahl der Elemente in m_filesSendList=%d, und in der m_filesSendList_copy=%d)",(int)m_filesSendList.size(),(int)m_filesSendList_copy.size());
+    qDebug("slotMozillaTimeout: Number of elements in m_filesSendList=%d, and in m_filesSendList_copy=%d)",(int)m_filesSendList.size(),(int)m_filesSendList_copy.size());
     kurllistdeepcopy(m_filesSendList,m_filesSendList_copy);
     invokeMailAgent();
 
 }
 
+///Handles mozillas errors
 void SendImages::slotMozillaReadStderr(KProcess*, char *buffer, int buflen)
 {
     m_mozillaStdErr = QString::fromLocal8Bit(buffer, buflen);
 }
 
+
+///Makes a deep copy of a KURL-list: Real and slow copying instead of only pointer arithmetics
 bool SendImages::kurllistdeepcopy(KURL::List &Destination, KURL::List Source)
 {
     Destination.clear();
-    qDebug("kurllistdeepcopy");
+    qDebug("kurllistdeepcopy started");
     for ( KURL::List::Iterator it = Source.begin() ; it != Source.end() ; ++it )
     {
         //QString Tempstring;
@@ -841,7 +856,7 @@ bool SendImages::kurllistdeepcopy(KURL::List &Destination, KURL::List Source)
     {
         qDebug("%s",(*it).path().ascii());
     }*/
-    qDebug("kurllistdeepcopyend\n");
+    qDebug("kurllistdeepcopy ended\n");
     return true;
 }
 }  // NameSpace KIPISendimagesPlugin

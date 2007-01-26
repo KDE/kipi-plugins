@@ -36,10 +36,11 @@ class listImagesErrorDialog : public KDialogBase
     Q_OBJECT
 
 public:
-
+    ///Constructor: Shows up error descriptions to the user
     listImagesErrorDialog(QWidget* parent, QString Caption,
                             const QString &Mess1, const QString &Mess2,
                             KURL::List ListOfiles);
+    ///Destructor
     ~listImagesErrorDialog();
 
 private:

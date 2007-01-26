@@ -42,7 +42,7 @@
 
 namespace KIPISendimagesPlugin
 {
-
+///Constructor: Shows up error descriptions
 listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption, 
                                              const QString &Mess1, const QString &Mess2,
                                              KURL::List ListOfiles)
@@ -106,6 +106,7 @@ listImagesErrorDialog::listImagesErrorDialog(QWidget* parent, QString Caption,
    resize( 500, 400 );
 }
 
+///Destructor
 listImagesErrorDialog::~listImagesErrorDialog()
 {
 }
