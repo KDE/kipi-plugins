@@ -1,19 +1,62 @@
+# ----------------------------------------------------------
+#
+# pkg-config check
+#
+# ----------------------------------------------------------
+
 AC_ARG_VAR(PKGCONFIGFOUND, [Path to pkg-config])
 AC_CHECK_PROG(PKGCONFIGFOUND, pkg-config,[yes])
 
-###############################################################################
-# END PKG-CONFIG CHECK
-###############################################################################
-
+# ----------------------------------------------------------
+#
 # common header files path for kipi-plugins
-KIPI_PLUGINS_COMMON_INCLUDE="-I\$(top_srcdir)/kipi-plugins/common/include \
-                             -I\$(top_srcdir)/kipi-plugins/common/exiv2iface"
+#
+# ----------------------------------------------------------
+
+KIPI_PLUGINS_COMMON_INCLUDE="-I\$(top_srcdir)/kipi-plugins/common/include"
 AC_SUBST(KIPI_PLUGINS_COMMON_INCLUDE)
 
 KIPI_PLUGINS_COMMON_LDFLAGS="-L\$(top_builddir)/kipi-plugins/common/libkipiplugins"
 AC_SUBST(KIPI_PLUGINS_COMMON_LDFLAGS)
 
-KDE_ENABLE_HIDDEN_VISIBILITY 
+# -----------------------------------------------------------------
+#
+# enable hidden visibility only if kde >= 3.3.2 and kdelibs has
+# been compiled with visibility enabled
+#
+# -----------------------------------------------------------------
+
+AC_LANG_PUSH(C++)
+kipiplugins_save_cppflags=$CPPFLAGS
+CPPFLAGS="$CPPFLAGS $all_includes"  
+AC_MSG_CHECKING([if hidden visibility should be enabled])
+AC_COMPILE_IFELSE(
+ [
+   #include <kdeversion.h>
+   #include <kdemacros.h>
+   int other_func( void )
+   { 
+      #if KDE_IS_VERSION(3,3,2)
+      #else
+        iam dying;
+      #endif
+      #ifdef __KDE_HAVE_GCC_VISIBILITY
+      #else
+        no, iam really dead;
+      #endif      
+      return 0;
+   }
+ ], 
+ [ AC_MSG_RESULT([yes])
+   kipiplugins_enable_hidden_visibility="yes" ],
+ [ AC_MSG_RESULT([no]) ] 
+)
+CPPFLAGS=$kipiplugins_save_cppflags
+AC_LANG_POP(C++)
+
+if test "x$kipiplugins_enable_hidden_visibility" = "xyes"; then
+   KDE_ENABLE_HIDDEN_VISIBILITY 
+fi
 
 # ----------------------------------------------------------
 #
@@ -61,7 +104,9 @@ if test "x$have_libkipi" != "xyes"; then
 fi
 
 # --------------------------------------------------------------------
+#
 # Check for libkexiv2
+#
 # --------------------------------------------------------------------
 
 AC_MSG_CHECKING([for libkexiv2 in our sources])
@@ -133,9 +178,10 @@ AM_CONDITIONAL(compile_RAWCONVERTER,  [test x$have_tiff = xyes])
 
 #---------------------------------------------------------
 #
-# gphoto2 detection
+# gphoto2 detection - KameraKlient plugin
 #
 #---------------------------------------------------------
+
 have_gphoto=no
 AC_PATH_PROG(GPHOTO_CONFIG,gphoto2-config)
 AC_PATH_PROG(GPHOTO_PORT_CONFIG,gphoto2-port-config)
@@ -156,9 +202,10 @@ AM_CONDITIONAL(compile_KAMERAKLIENT, test -n "${GPHOTO_CONFIG}")
 
 #---------------------------------------------------------
 #
-# xslt detection
+# xslt detection - HTML export plugin
 #
 #---------------------------------------------------------
+
 have_xslt=no
 AC_PATH_PROG(XSLT_CONFIG,xslt-config)
 if test -n "${XSLT_CONFIG}"; then
@@ -177,12 +224,10 @@ AM_CONDITIONAL(compile_HTMLEXPORT, test -n "${XSLT_CONFIG}")
 
 #------------------------------------------------------------------
 #
-# Check for libgpod (ipod export plugin)
+# Check for libgpod - ipod export plugin
 #
 #------------------------------------------------------------------
 
-
-# check for libgpod
 have_libgpod=no
 if test "$build_libgpod" != "no"; then
     if test "$PKGCONFIGFOUND" = "yes" ; then
@@ -208,13 +253,9 @@ AM_CONDITIONAL(compile_IPODEXPORT,  [test x$have_libgpod = xyes])
 
 # ----------------------------------------------------------
 #
-# Slideshow plugin tests
+# Qt OpenGl check (fudged from Amarok) - Slideshow plugin
 #
 # ----------------------------------------------------------
-
-###############################################################################
-# BEGIN QT OPENGL CHECK (fudged from Amarok)
-###############################################################################
 
 AC_ARG_WITH(opengl,
     AC_HELP_STRING([--without-opengl],[build kipi-plugins without OpenGL [default=with]]),
@@ -264,16 +305,11 @@ if test "$build_opengl" != "no"; then
     AC_SUBST(GL_LIBS)
 fi
 
-###############################################################################
-# END QT OPENGL CHECK
-###############################################################################
-
 #---------------------------------------------------------
 #
-# imlib2-detection
+# imlib2-detection - Slideshow plugin
 #
 #---------------------------------------------------------
-# checking for Imlib2...
 
 AC_DEFUN([KDE_FIND_IMLIB2_CONFIG],
    [AC_MSG_CHECKING([for imlib2-config])
@@ -333,5 +369,4 @@ AM_CONDITIONAL(compile_SLIDESHOW, test -n "$ac_imlib2_config" -a "$have_GL" = ye
 if test -z "$ac_imlib2_config" -o "$have_GL" != yes; then
 	AC_MSG_WARN([Slideshow plugin will not be compiled])
 fi
-
 
