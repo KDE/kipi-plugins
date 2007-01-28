@@ -109,7 +109,7 @@ bool ImageFlip::flip(const QString& src, FlipAction action, const QString& TmpFo
 
 bool ImageFlip::flipJPEG(const QString& src, const QString& dest, FlipAction action, QString& err)
 {
-    Matrix &transform=Matrix::none;
+    Matrix transform=Matrix::none;
 
     switch(action)
     {

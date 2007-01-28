@@ -72,14 +72,14 @@ public:
         set( 1, 0, 0, 1 );
    }
     
-   Matrix &operator*=(Matrix &ma)
+   Matrix &operator*=(const Matrix &ma)
    {
         set( ma.m[0][0]*m[0][0] + ma.m[0][1]*m[1][0],  ma.m[0][0]*m[0][1] + ma.m[0][1]*m[1][1],
              ma.m[1][0]*m[0][0] + ma.m[1][1]*m[1][0],  ma.m[1][0]*m[0][1] + ma.m[1][1]*m[1][1] );
         return *this;
    }
     
-   bool operator==(Matrix &ma)
+   bool operator==(const Matrix &ma) const
    {
         return m[0][0]==ma.m[0][0] &&
                m[0][1]==ma.m[0][1] &&
@@ -87,19 +87,19 @@ public:
                m[1][1]==ma.m[1][1];
    }
     
-   bool operator!=(Matrix &ma) 
+   bool operator!=(const Matrix &ma) const
    { 
         return !(*this==ma); 
    }
     
-   static Matrix none;                   //( 1,  0,  0,  1)
-   static Matrix rotate90;               //( 0, -1,  1,  0)
-   static Matrix rotate180;              //(-1,  0,  0, -1)
-   static Matrix rotate270;              //( 0,  1, -1,  0)
-   static Matrix flipHorizontal;         //(-1,  0,  0,  1)
-   static Matrix flipVertical;           //( 1,  0,  0, -1)
-   static Matrix rotate90flipHorizontal; //( 0,  1,  1,  0), first rotate, then flip
-   static Matrix rotate90flipVertical;   //( 0, -1, -1,  0), first rotate, then flip
+   static const Matrix none;                   //( 1,  0,  0,  1)
+   static const Matrix rotate90;               //( 0, -1,  1,  0)
+   static const Matrix rotate180;              //(-1,  0,  0, -1)
+   static const Matrix rotate270;              //( 0,  1, -1,  0)
+   static const Matrix flipHorizontal;         //(-1,  0,  0,  1)
+   static const Matrix flipVertical;           //( 1,  0,  0, -1)
+   static const Matrix rotate90flipHorizontal; //( 0,  1,  1,  0), first rotate, then flip
+   static const Matrix rotate90flipVertical;   //( 0, -1, -1,  0), first rotate, then flip
 
 protected:
 

@@ -57,14 +57,14 @@ extern "C"
 namespace KIPIJPEGLossLessPlugin
 {
 
-Matrix Matrix::none                   ( 1,  0,  0,  1);
-Matrix Matrix::rotate90               ( 0, -1,  1,  0);
-Matrix Matrix::rotate180              (-1,  0,  0, -1);
-Matrix Matrix::rotate270              ( 0,  1, -1,  0);
-Matrix Matrix::flipHorizontal         (-1,  0,  0,  1);
-Matrix Matrix::flipVertical           ( 1,  0,  0, -1);
-Matrix Matrix::rotate90flipHorizontal ( 0,  1,  1,  0);
-Matrix Matrix::rotate90flipVertical   ( 0, -1, -1,  0);
+const Matrix Matrix::none                   ( 1,  0,  0,  1);
+const Matrix Matrix::rotate90               ( 0, -1,  1,  0);
+const Matrix Matrix::rotate180              (-1,  0,  0, -1);
+const Matrix Matrix::rotate270              ( 0,  1, -1,  0);
+const Matrix Matrix::flipHorizontal         (-1,  0,  0,  1);
+const Matrix Matrix::flipVertical           ( 1,  0,  0, -1);
+const Matrix Matrix::rotate90flipHorizontal ( 0,  1,  1,  0);
+const Matrix Matrix::rotate90flipVertical   ( 0, -1, -1,  0);
 
 
 // To manage Errors/Warnings handling provide by libjpeg

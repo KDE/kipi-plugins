@@ -112,7 +112,7 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, const QString& 
 
 bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QString& err)
 {
-    Matrix &transform=Matrix::none;
+    Matrix transform=Matrix::none;
 
     switch(angle)
     {
