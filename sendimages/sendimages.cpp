@@ -53,7 +53,7 @@
 
 // LibKExiv2 includes. 
 
-#include <libkexiv2/libkexiv2.h>
+#include <libkexiv2/kexiv2.h>
 
 // Local include files
 
@@ -209,8 +209,8 @@ void SendImages::run()
                 else 
                 {
                     qWarning( "createThumb::No Exif Data Found") ;
-		}
-	
+                }
+        
                 d = new KIPISendimagesPlugin::EventData;
                 d->action    = KIPISendimagesPlugin::ResizeImages;
                 d->fileName  = (*it).fileName();
@@ -356,7 +356,7 @@ KURL::List SendImages::divideEmails(void)
     for ( KURL::List::Iterator it = m_filesSendList.begin() ; it != m_filesSendList.end() ; ++it )
     {
         qDebug("m_attachmentlimit: %lu ", m_attachmentlimit);
-        QString imageName = (*it).path();	
+        QString imageName = (*it).path();       
         qDebug("Imagename: %s", imageName.ascii());
         QFile file(imageName);
         qDebug("filesize: %lu", file.size());
@@ -372,10 +372,10 @@ KURL::List SendImages::divideEmails(void)
             qDebug("file %s is out of %lu",imageName.ascii(),m_attachmentlimit);
             filesSendList.append(*it);
         }
-	}
-	m_filesSendList=filesSendList;
+        }
+        m_filesSendList=filesSendList;
   
-	return sendnow;
+        return sendnow;
 }
 
 /** Invokes mail agent. Depending on which mail agent to be used, we have different
@@ -395,7 +395,7 @@ bool SendImages::invokeMailAgent(void)
 
         qDebug("invokeMailagent2: Number of elements in m_filesSendList=%d, and in m_filesSendList_copy=%d)",(int) m_filesSendList.size(),(int)m_filesSendList_copy.size());
         qDebug("number of elements in filelist %d",(int)filelist.size());
-        qDebug("number of elements in m_filelist %d", (int)m_filesSendList.size());	
+        qDebug("number of elements in m_filelist %d", (int)m_filesSendList.size());     
         if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Default" )
         {
             KApplication::kApplication()->invokeMailer(
@@ -678,8 +678,8 @@ int SendImages::getSize ( int choice )
           return (1280);
           break;
        case 5:
-    	  return (1600);
-	      break;
+          return (1600);
+              break;
        default:
           return (800); // Default value...
           break;
@@ -863,5 +863,6 @@ bool SendImages::kurllistdeepcopy(KURL::List &Destination, KURL::List Source)
     qDebug("kurllistdeepcopy ended\n");
     return true;
 }
+
 }  // NameSpace KIPISendimagesPlugin
 
