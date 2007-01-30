@@ -270,7 +270,7 @@ void EXIFCaption::setCheckedSyncIPTCCaption(bool c)
 void EXIFCaption::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     QString data;
 
@@ -332,7 +332,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
 
 void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
 

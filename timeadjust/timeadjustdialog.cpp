@@ -438,10 +438,10 @@ void TimeAdjustDialog::slotOk()
         {
             if (d->syncEXIFDateCheck->isChecked() || d->syncIPTCDateCheck->isChecked())
             {
-                if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
+                if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
                 {
                     ret = true;
-                    KExiv2Library::LibKExiv2 exiv2Iface;
+                    KExiv2Iface::KExiv2 exiv2Iface;
     
                     ret &= exiv2Iface.load(url.path());
                     if (ret)
@@ -497,7 +497,7 @@ QDateTime TimeAdjustDialog::updateTime(const KURL& url, const QDateTime& time) c
     }
     else if (d->exif->isChecked())
     {
-        KExiv2Library::LibKExiv2 exiv2Iface;
+        KExiv2Iface::KExiv2 exiv2Iface;
         if ( !exiv2Iface.load(url.path()) )
             return time;
 

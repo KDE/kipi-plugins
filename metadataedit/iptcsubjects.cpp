@@ -197,7 +197,7 @@ void IPTCSubjects::slotAddSubject()
 void IPTCSubjects::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     d->oldSubjects = exiv2Iface.getImageSubjects();
 
@@ -218,7 +218,7 @@ void IPTCSubjects::readMetadata(QByteArray& iptcData)
 
 void IPTCSubjects::applyMetadata(QByteArray& iptcData)
 {
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QStringList newSubjects;    
 

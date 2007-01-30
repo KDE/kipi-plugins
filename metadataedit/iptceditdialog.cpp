@@ -274,7 +274,7 @@ void IPTCEditDialog::saveSettings()
 
 void IPTCEditDialog::slotItemChanged()
 {
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.load((*d->currItem).path());
     d->exifData = exiv2Iface.getExif();
     d->iptcData = exiv2Iface.getIptc();
@@ -287,7 +287,7 @@ void IPTCEditDialog::slotItemChanged()
     d->statusPage->readMetadata(d->iptcData);
     d->originPage->readMetadata(d->iptcData);
 
-    d->isReadOnly = KExiv2Library::LibKExiv2::isReadOnly((*d->currItem).path()); 
+    d->isReadOnly = KExiv2Iface::KExiv2::isReadOnly((*d->currItem).path()); 
     d->page_caption->setEnabled(!d->isReadOnly);
     d->page_datetime->setEnabled(!d->isReadOnly);
     d->page_subjects->setEnabled(!d->isReadOnly);
@@ -333,7 +333,7 @@ void IPTCEditDialog::slotApply()
         d->creditsPage->applyMetadata(d->iptcData);
         d->statusPage->applyMetadata(d->iptcData);
         d->originPage->applyMetadata(d->iptcData);
-        KExiv2Library::LibKExiv2 exiv2Iface;
+        KExiv2Iface::KExiv2 exiv2Iface;
         exiv2Iface.load((*d->currItem).path());
         exiv2Iface.setExif(d->exifData);
         exiv2Iface.setIptc(d->iptcData);

@@ -186,7 +186,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     (void) jpeg_read_header(&srcinfo, true);
 
     // Get Exif orientation action to do.
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.load(src);
     getExifAction(exifAction, exiv2Iface.getImageOrientation());
 
@@ -334,7 +334,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     QImage img(destGiven);
     QImage exifThumbnail = img.scale(160, 120, QImage::ScaleMin);
     exiv2Iface.load(destGiven);
-    exiv2Iface.setImageOrientation(KExiv2Library::LibKExiv2::ORIENTATION_NORMAL);
+    exiv2Iface.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
     exiv2Iface.setImageProgramId(QString("Kipi JPEGLossLess"), QString(kipiplugins_version));
     exiv2Iface.setImageDimensions(img.size());
     exiv2Iface.setExifThumbnail(exifThumbnail);
@@ -385,42 +385,42 @@ void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate)
     }
 }
 
-void getExifAction(Matrix &action, KExiv2Library::LibKExiv2::ImageOrientation exifOrientation) 
+void getExifAction(Matrix &action, KExiv2Iface::KExiv2::ImageOrientation exifOrientation) 
 {
     switch (exifOrientation) 
     {
-        case KExiv2Library::LibKExiv2::ORIENTATION_NORMAL:
+        case KExiv2Iface::KExiv2::ORIENTATION_NORMAL:
             break;
 
-        case KExiv2Library::LibKExiv2::ORIENTATION_HFLIP:
+        case KExiv2Iface::KExiv2::ORIENTATION_HFLIP:
             action*=Matrix::flipHorizontal;
             break;
 
-        case KExiv2Library::LibKExiv2::ORIENTATION_ROT_180:
+        case KExiv2Iface::KExiv2::ORIENTATION_ROT_180:
             action*=Matrix::rotate180;
             break;
 
-        case KExiv2Library::LibKExiv2::ORIENTATION_VFLIP:
+        case KExiv2Iface::KExiv2::ORIENTATION_VFLIP:
             action*=Matrix::flipVertical;
             break;
 
-        case KExiv2Library::LibKExiv2::ORIENTATION_ROT_90_HFLIP:
+        case KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP:
             action*=Matrix::rotate90flipHorizontal;
             break;
 
-        case KExiv2Library::LibKExiv2::ORIENTATION_ROT_90:
+        case KExiv2Iface::KExiv2::ORIENTATION_ROT_90:
             action*=Matrix::rotate90;
             break;
 
-        case KExiv2Library::LibKExiv2::ORIENTATION_ROT_90_VFLIP:
+        case KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP:
             action*=Matrix::rotate90flipVertical;
             break;
 
-        case KExiv2Library::LibKExiv2::ORIENTATION_ROT_270:
+        case KExiv2Iface::KExiv2::ORIENTATION_ROT_270:
             action*=Matrix::rotate270;
             break;
 
-        case KExiv2Library::LibKExiv2::ORIENTATION_UNSPECIFIED:
+        case KExiv2Iface::KExiv2::ORIENTATION_UNSPECIFIED:
             action*=Matrix::none;
             break;
     }

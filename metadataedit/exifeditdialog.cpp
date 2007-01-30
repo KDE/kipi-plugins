@@ -254,7 +254,7 @@ void EXIFEditDialog::saveSettings()
 
 void EXIFEditDialog::slotItemChanged()
 {
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.load((*d->currItem).path());
     d->exifData = exiv2Iface.getExif();
     d->iptcData = exiv2Iface.getIptc();
@@ -265,7 +265,7 @@ void EXIFEditDialog::slotItemChanged()
     d->lightPage->readMetadata(d->exifData);
     d->adjustPage->readMetadata(d->exifData);
 
-    d->isReadOnly = KExiv2Library::LibKExiv2::isReadOnly((*d->currItem).path()); 
+    d->isReadOnly = KExiv2Iface::KExiv2::isReadOnly((*d->currItem).path()); 
     d->page_caption->setEnabled(!d->isReadOnly);
     d->page_datetime->setEnabled(!d->isReadOnly);
     d->page_lens->setEnabled(!d->isReadOnly);
@@ -307,7 +307,7 @@ void EXIFEditDialog::slotApply()
         d->devicePage->applyMetadata(d->exifData);
         d->lightPage->applyMetadata(d->exifData);
         d->adjustPage->applyMetadata(d->exifData);
-        KExiv2Library::LibKExiv2 exiv2Iface;
+        KExiv2Iface::KExiv2 exiv2Iface;
         exiv2Iface.load((*d->currItem).path());
         exiv2Iface.setExif(d->exifData);
         exiv2Iface.setIptc(d->iptcData);

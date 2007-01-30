@@ -239,7 +239,7 @@ void IPTCCategories::slotAddCategory()
 void IPTCCategories::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
 
@@ -273,7 +273,7 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
 void IPTCCategories::applyMetadata(QByteArray& iptcData)
 {
     QStringList newCategories;    
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
     if (d->categoryCheck->isChecked())

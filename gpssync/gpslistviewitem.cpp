@@ -88,7 +88,7 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
         d->readOnly = true;
     }
 
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.load(d->url.path());
     setDateTime(exiv2Iface.getImageDateTime());
     double alt, lat, lng;
@@ -192,7 +192,7 @@ void GPSListViewItem::writeGPSInfoToFile()
     if (isEnabled() && isDirty() && !isReadOnly())
     {
         setPixmap(1, SmallIcon("run"));
-        KExiv2Library::LibKExiv2 exiv2Iface;
+        KExiv2Iface::KExiv2 exiv2Iface;
         bool ret = exiv2Iface.load(d->url.path());
 
         if (d->erase)

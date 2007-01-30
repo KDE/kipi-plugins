@@ -302,7 +302,7 @@ QDateTime IPTCDateTime::getIPTCCreationDate()
 void IPTCDateTime::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
     QDate date;
@@ -432,7 +432,7 @@ void IPTCDateTime::readMetadata(QByteArray& iptcData)
 
 void IPTCDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
 

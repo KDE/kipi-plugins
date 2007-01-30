@@ -197,7 +197,7 @@ void IPTCKeywords::slotAddKeyword()
 void IPTCKeywords::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     d->oldKeywords = exiv2Iface.getImageKeywords();
 
@@ -218,7 +218,7 @@ void IPTCKeywords::readMetadata(QByteArray& iptcData)
 
 void IPTCKeywords::applyMetadata(QByteArray& iptcData)
 {
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QStringList newKeywords;    
 

@@ -189,10 +189,10 @@ void Plugin_MetadataEdit::slotRemoveExif()
         KURL url = *it;
         bool ret = false;
 
-        if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
         {
             ret = true;
-            KExiv2Library::LibKExiv2 exiv2Iface;
+            KExiv2Iface::KExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.clearExif();
             ret &= exiv2Iface.save(url.path());
@@ -232,7 +232,7 @@ void Plugin_MetadataEdit::slotImportExif()
     if( importEXIFFile.isEmpty() )
        return;
     
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importEXIFFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(), 
@@ -269,10 +269,10 @@ void Plugin_MetadataEdit::slotImportExif()
         KURL url = *it;
         bool ret = false;
 
-        if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
         {
             ret = true;
-            KExiv2Library::LibKExiv2 exiv2Iface;
+            KExiv2Iface::KExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.setExif(exifData);
             ret &= exiv2Iface.save(url.path());
@@ -335,10 +335,10 @@ void Plugin_MetadataEdit::slotRemoveIptc()
         KURL url = *it;
         bool ret = false;
 
-        if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
         {
             ret = true;
-            KExiv2Library::LibKExiv2 exiv2Iface;
+            KExiv2Iface::KExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.clearIptc();
             ret &= exiv2Iface.save(url.path());
@@ -378,7 +378,7 @@ void Plugin_MetadataEdit::slotImportIptc()
     if( importIPTCFile.isEmpty() )
        return;
     
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importIPTCFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(), 
@@ -415,10 +415,10 @@ void Plugin_MetadataEdit::slotImportIptc()
         KURL url = *it;
         bool ret = false;
 
-        if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
         {
             ret = true;
-            KExiv2Library::LibKExiv2 exiv2Iface;
+            KExiv2Iface::KExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.setIptc(iptcData);
             ret &= exiv2Iface.save(url.path());
@@ -470,10 +470,10 @@ void Plugin_MetadataEdit::slotEditComments()
         KIPI::ImageInfo info = m_interface->info(url);
         info.setDescription(dlg.getComments());
 
-        if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
         {
             ret = true;
-            KExiv2Library::LibKExiv2 exiv2Iface;
+            KExiv2Iface::KExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
 
             if (dlg.syncEXIFCommentIsChecked())
@@ -537,10 +537,10 @@ void Plugin_MetadataEdit::slotRemoveComments()
             info.setDescription(QString::null);
         }
 
-        if (!KExiv2Library::LibKExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
         {
             ret = true;
-            KExiv2Library::LibKExiv2 exiv2Iface;
+            KExiv2Iface::KExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
 
             if (dlg.removeEXIFCommentIsChecked())

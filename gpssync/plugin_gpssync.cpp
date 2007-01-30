@@ -184,7 +184,7 @@ void Plugin_GPSSync::slotGPSEdit()
         return;
 
     KURL img = images.images().first();
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.load(img.path());
     double alt, lat, lng;
     bool hasGPSInfo = exiv2Iface.getGPSInfo(alt, lat, lng);
@@ -278,7 +278,7 @@ void Plugin_GPSSync::slotGPSRemove()
         if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
         {
             ret = true;
-            KExiv2Library::LibKExiv2 exiv2Iface;
+            KExiv2Iface::KExiv2 exiv2Iface;
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.removeGPSInfo();
             ret &= exiv2Iface.save(url.path());

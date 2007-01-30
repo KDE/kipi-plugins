@@ -222,7 +222,7 @@ bool GalleryTalker::addPhoto( const QString& albumName,
 
             if ("JPEG" == QString(QImageIO::imageFormat(photoPath)).upper())
             {
-              KExiv2Library::LibKExiv2 exiv2;
+              KExiv2Iface::KExiv2 exiv2;
               if (exiv2.load(photoPath))
               {
                 exiv2.save(path);

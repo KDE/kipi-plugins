@@ -261,7 +261,7 @@ QDateTime EXIFDateTime::getEXIFCreationDate()
 void EXIFDateTime::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
 
     QDateTime datetime;
@@ -361,7 +361,7 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
 
 void EXIFDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
 

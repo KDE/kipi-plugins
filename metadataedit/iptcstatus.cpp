@@ -294,7 +294,7 @@ IPTCStatus::~IPTCStatus()
 void IPTCStatus::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
     int     val;
@@ -411,7 +411,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
 
 void IPTCStatus::applyMetadata(QByteArray& iptcData)
 {
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
     if (d->statusCheck->isChecked())

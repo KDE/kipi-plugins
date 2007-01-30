@@ -466,7 +466,7 @@ EXIFDevice::~EXIFDevice()
 void EXIFDevice::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     long int num=1, den=1;
     long     val=0;
@@ -663,7 +663,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
 void EXIFDevice::applyMetadata(QByteArray& exifData)
 {
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     long int num=1, den=1;
 

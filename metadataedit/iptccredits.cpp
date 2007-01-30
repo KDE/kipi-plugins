@@ -233,7 +233,7 @@ IPTCCredits::~IPTCCredits()
 void IPTCCredits::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
 
@@ -302,7 +302,7 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
 
 void IPTCCredits::applyMetadata(QByteArray& iptcData)
 {
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
     if (d->copyrightCheck->isChecked())

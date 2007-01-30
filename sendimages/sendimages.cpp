@@ -1,5 +1,6 @@
 /* ============================================================
- * Authors: Gilles Caulier <caulier dot gilles at free.fr>, Michael Höchstetter <michael.hoechstetter@kdemail.net
+ * Authors: Gilles Caulier <caulier dot gilles at free.fr>, 
+ *          Michael Höchstetter <michael.hoechstetter@kdemail.net
  * Date   : 2004-02-25
  * Description : a kipi plugin to e-mailing images
  * 
@@ -196,7 +197,7 @@ void SendImages::run()
                     m_imageFormat.upper() == "JPEG")
                 {
                     QString targetFile = m_tmp + imageNameFormat;
-                    KExiv2Library::LibKExiv2 exiv2Iface;
+                    KExiv2Iface::KExiv2 exiv2Iface;
 
                     if (exiv2Iface.load(imageName))
                     {

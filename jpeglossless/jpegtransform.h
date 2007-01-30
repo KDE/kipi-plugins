@@ -124,7 +124,7 @@ bool transformJPEG(const QString& src, const QString& dest, Matrix &action, QStr
 
 void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate);
 
-void getExifAction(Matrix &action, KExiv2Library::LibKExiv2::ImageOrientation exifOrientation);
+void getExifAction(Matrix &action, KExiv2Iface::KExiv2::ImageOrientation exifOrientation);
 
 }  // NameSpace KIPIJPEGLossLessPlugin
 

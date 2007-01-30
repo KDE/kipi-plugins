@@ -527,7 +527,7 @@ IPTCOrigin::~IPTCOrigin()
 void IPTCOrigin::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
 
@@ -638,7 +638,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
 
 void IPTCOrigin::applyMetadata(QByteArray& iptcData)
 {
-    KExiv2Library::LibKExiv2 exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
     if (d->objectNameCheck->isChecked())
