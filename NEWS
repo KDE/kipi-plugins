@@ -9,8 +9,9 @@ General        : Moved Exiv2Iface class to a new shared library named libkexiv2 
                  kipi-plugins and digiKam.
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
-001 ==> 139264 : General     : Prefer Exif DateTimeOriginal for image date/time (DateTimeDigitized and DateTime only used as fallback)
-002 ==> 139074 : SendImages  : Format missmatch at sendimages.cpp ('int' vs. 'size_t').
+001 ==> 139264 : General      : Prefer Exif DateTimeOriginal for image date/time (DateTimeDigitized and DateTime only used as fallback)
+002 ==> 139074 : SendImages   : Format missmatch at sendimages.cpp ('int' vs. 'size_t').
+003 ==> 140132 : MetadataEdit : Comments should sync to IPTC Caption First.
 
 v 0.1.3 
 ----------------------------------------------------------------------------
