@@ -30,6 +30,7 @@
 
 #include "sinks.h"
 #include "sink.h"
+#include "sinkfactory.h"
 
 namespace KIPISyncPlugin
 {
@@ -76,7 +77,7 @@ void Sinks::Load()
   if (bln_loaded) return;
   bln_loaded = true;
 
-  bool bln_use_wallet = false;
+  KWallet::Wallet* p_wallet = NULL;
 #if KDE_IS_VERSION(3,2,0)
   mpWallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(),
                                          kapp->activeWindow()->winId(),
@@ -96,7 +97,7 @@ void Sinks::Load()
     if (!mpWallet->setFolder("KIPISyncPlugin"))
       kdWarning() << "Failed to set kwallet folder" << endl;
     else
-      bln_use_wallet = true;
+      p_wallet = mpWallet;
   }
 #endif
 
@@ -106,8 +107,7 @@ void Sinks::Load()
   QValueList<int> sink_ids = config.readIntListEntry("Sinks");
 
   config.setGroup("Sync Sinks");
-  QString name, url, username, password = "";
-  int version;
+  QString type = "";
   for (QValueList<int>::Iterator it = sink_ids.begin(); it != sink_ids.end(); ++it)
   {
     unsigned int sink_id = (*it);
@@ -115,16 +115,10 @@ void Sinks::Load()
     if (sink_id > mMaxSinkId)
       mMaxSinkId = sink_id;
 
-    // Partially load the sink with this id to find out what type it is.
-    name = config.readEntry(QString("Name%1").arg(sink_id));
-    url = config.readEntry(QString("URL%1").arg(sink_id));
-    username = config.readEntry(QString("Username%1").arg(sink_id));
-    version = config.readNumEntry(QString("Version%1").arg(sink_id));
-    if (bln_use_wallet)
-      mpWallet->readPassword(QString("Password%1").arg(sink_id), password);
-
-    Sink* p_sink;// = new Sink(name, url, username, password, version, sink_id);
-    mSinks.append(p_sink);
+    type = config.readEntry(QString("Type%1").arg(sink_id));
+    Sink* p_sink = SinkFactory::Create(type, sink_id, &config, p_wallet);
+    if (p_sink)
+      mSinks.append(p_sink);
   }
 }
 
@@ -152,7 +146,7 @@ void Sinks::Save()
   config.deleteGroup("Sync Sinks");
   config.setGroup("Sync Sinks");
 
-  bool bln_use_wallet = false;
+  KWallet::Wallet* p_wallet = NULL;
   if (mpWallet)
   {
     if (mpWallet->hasFolder("KIPISyncPlugin"))
@@ -166,28 +160,13 @@ void Sinks::Save()
     if (!mpWallet->setFolder("KIPISyncPlugin"))
       kdWarning() << "Failed to set kwallet folder" << endl;
     else
-      bln_use_wallet = true;
+      p_wallet = mpWallet;
   }
 
   for (SinkPtrList::iterator it = mSinks.begin(); it != mSinks.end(); ++it)
   {
     Sink* p_sink = (*it);
-
-    // Has this sink been saved before?
-    /*
-    if (!p_sink->sinkId())
-      p_sink->setSinkId(++mMaxSinkId);
-
-    unsigned int sink_id = p_sink->sinkId();
-    sink_ids.append(sink_id);
-
-    config.writeEntry(QString("Name%1").arg(sink_id), p_sink->name());
-    config.writeEntry(QString("URL%1").arg(sink_id), p_sink->url());
-    config.writeEntry(QString("Username%1").arg(sink_id), p_sink->username());
-    config.writeEntry(QString("Version%1").arg(sink_id), p_sink->version());
-    if (bln_use_wallet)
-      mpWallet->writePassword(QString("Password%1").arg(sink_id), p_sink->password());
-    */
+    p_sink->Save(&config, p_wallet);
   }
 
   config.setGroup("Sync Settings");

@@ -1,7 +1,7 @@
 /* ============================================================
- * File  : sinkfactory.cpp
+ * File  : item.cpp
  * Author: Colin Guthrie <kde@colin.guthr.ie>
- * Date  : 2007-01-22
+ * Date  : 2007-01-26
  *
  * Copyright 2007 Colin Guthrie
  *
@@ -16,31 +16,10 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#include "sinkfactory.h"
+#include "item.h"
 
-namespace KIPISyncPlugin
+namespace KIPI2
 {
 
-// Define the static stack variables
-SinkMap SinkFactory::mSinkProxies;
-
-// Define the register method
-bool SinkFactory::Register(QString name, SinkProxy* pSinkProxy)
-{
-  if (mSinkProxies.contains(name))
-    return false;
-  
-  mSinkProxies[name] = pSinkProxy;
-  return true;
-}
-
-// The main creation method
-Sink* SinkFactory::Create(QString name, unsigned int sinkId, KConfig* pConfig, KWallet::Wallet* pWallet)
-{
-  if (!mSinkProxies.contains(name))
-    return NULL;
-  
-  return (*(mSinkProxies[name]))(sinkId, pConfig, pWallet);
-}
 
 }

@@ -8,8 +8,12 @@ kde_module_LTLIBRARIES = kipiplugin_sync.la
 kipiplugin_sync_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKEXIV2_LIBS_DEP) 
 
 kipiplugin_sync_la_SOURCES = plugin_sync.cpp \
+		libkipi2/interface.cpp \
+		libkipi2/collection.cpp libkipi2/item.cpp \
 		sink.cpp sinkfactory.cpp sinks.cpp \
-		sinklist.cpp sinklistbase.ui
+		sinklist.cpp sinklistbase.ui \
+		sinks/gallery/galleryform.cpp sinks/gallery/gallerysink.cpp \
+		sinks/gallery/gallerycollection.cpp sinks/gallery/galleryitem.cpp
 
 kipiplugin_sync_la_LIBADD = $(LIBKEXIV2_LIBS) \
 	-lkwalletclient $(LIB_KHTML) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)

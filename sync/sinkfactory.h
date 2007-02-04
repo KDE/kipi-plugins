@@ -21,6 +21,12 @@
 
 #include <qmap.h>
 class QListView;
+class KConfig;
+namespace KWallet
+{
+class Wallet;
+}
+
 
 namespace KIPISyncPlugin
 {
@@ -29,13 +35,13 @@ class Sink;
 // Create a templated creator function to allow our "sinks" to
 // register themselves with the factory.
 template <class T>
-Sink* SinkCreator()
+Sink* SinkCreator(unsigned int sinkId, KConfig* pConfig, KWallet::Wallet* pWallet)
 {
-  return (Sink*) new T;
+  return (Sink*) new T(sinkId, pConfig, pWallet);
 }
 
 // Define a type that is a pointer to the templated function above.
-typedef Sink* SinkProxy();
+typedef Sink* SinkProxy(unsigned int sinkId, KConfig* pConfig, KWallet::Wallet* pWallet);
 
 // And define a type that is a Map of names to creator functions.
 typedef QMap<QString, SinkProxy*> SinkMap;
@@ -45,7 +51,7 @@ class SinkFactory
 {
 public:
   static bool Register(QString name, SinkProxy* pSinkProxy);
-  static Sink* Create(QString name);
+  static Sink* Create(QString name, unsigned int sinkId, KConfig* pConfig, KWallet::Wallet* pWallet);
 
 private:
   static SinkMap mSinkProxies;

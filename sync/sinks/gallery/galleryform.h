@@ -1,5 +1,5 @@
 /* ============================================================
- * File  : gallerympform.h
+ * File  : galleryform.h
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2004-12-02
  * Copyright 2004 by Renchi Raju
@@ -16,40 +16,44 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#ifndef GALLERYMPFORM_H
-#define GALLERYMPFORM_H
+#ifndef GALLERYFORM_H
+#define GALLERYFORM_H
 
 #include <qcstring.h>
 #include <qstring.h>
 
 class KURL;
 
-namespace KIPIGalleryExportPlugin
+namespace KIPISyncPlugin
 {
 
-class GalleryMPForm
+typedef enum
+{
+  Gallery1,
+  Gallery2
+} GalleryVersion;
+
+
+class GalleryForm
 {
 public:
 
-    GalleryMPForm();
-    ~GalleryMPForm();
+    GalleryForm(GalleryVersion version, QString authToken = "");
+    ~GalleryForm();
 
-    void finish();
-    void reset();
-
-    bool addPair(const QString& name, const QString& value);
+    void addPair(const QString& name, const QString& value);
     bool addFile(const QString& path, const QString& displayFilename);
 
     QString    contentType() const;
-    QByteArray formData()    const;
-    QString    boundary()    const;
+    QByteArray formData();
 
 private:
 
-    bool addPairRaw(const QString& name, const QString& value);
+    void addPairRaw(const QString& name, const QString& value);
 
+    GalleryVersion mVersion;
     QByteArray m_buffer;
-    QCString   m_boundary;
+    QCString   mBoundary;
 };
 
 }

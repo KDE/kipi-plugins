@@ -1,7 +1,7 @@
 /* ============================================================
- * File  : sinkfactory.cpp
+ * File  : gallerycollection.h
  * Author: Colin Guthrie <kde@colin.guthr.ie>
- * Date  : 2007-01-22
+ * Date  : 2007-02-02
  *
  * Copyright 2007 Colin Guthrie
  *
@@ -16,31 +16,14 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#include "sinkfactory.h"
+#include "../../libkipi2/collection.h"
 
-namespace KIPISyncPlugin
+namespace KipiSyncPlugin
 {
 
-// Define the static stack variables
-SinkMap SinkFactory::mSinkProxies;
-
-// Define the register method
-bool SinkFactory::Register(QString name, SinkProxy* pSinkProxy)
+class GalleryCollection : KIPI2::Collection
 {
-  if (mSinkProxies.contains(name))
-    return false;
-  
-  mSinkProxies[name] = pSinkProxy;
-  return true;
-}
 
-// The main creation method
-Sink* SinkFactory::Create(QString name, unsigned int sinkId, KConfig* pConfig, KWallet::Wallet* pWallet)
-{
-  if (!mSinkProxies.contains(name))
-    return NULL;
-  
-  return (*(mSinkProxies[name]))(sinkId, pConfig, pWallet);
-}
+};
 
 }

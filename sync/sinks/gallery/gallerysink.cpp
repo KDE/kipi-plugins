@@ -1,5 +1,5 @@
 /* ============================================================
- * File  : gallerytalker.cpp
+ * File  : gallerysink.cpp
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2004-11-30
  * Description :
@@ -9,8 +9,7 @@
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,44 +37,66 @@
 
 #include <libkexiv2/libkexiv2.h>
 
+#include "gallerysink.h"
+#include "gallerycollection.h"
 #include "galleryitem.h"
-#include "gallerympform.h"
-#include "gallerytalker.h"
 
-namespace KIPIGalleryExportPlugin
+namespace KIPISyncPlugin
 {
 
-GalleryTalker::GalleryTalker( QWidget* parent )
-    : m_parent( parent ),  m_job( 0 ),  m_loggedIn( false )
+GallerySink::GallerySink(unsigned int sinkId, KConfig* pConfig, KWallet::Wallet* pWallet, GalleryVersion version)
+  : Sink(sinkId, pConfig, pWallet),
+    mVersion(version), 
+    mAuthToken(""), 
+    m_job(0),
+    m_loggedIn(false)
 {
+  mName     = pConfig->readEntry(QString("Name%1").arg(sinkId));
+  mURL      = pConfig->readEntry(QString("URL%1").arg(sinkId));
+  mUsername = pConfig->readEntry(QString("Username%1").arg(sinkId));
+  if (pWallet)
+    pWallet->readPassword(QString("Password%1").arg(sinkId), mPassword);
 }
 
-GalleryTalker::~GalleryTalker()
+GallerySink::~GallerySink()
 {
-    if (m_job)
-        m_job->kill();
+  if (m_job)
+    m_job->kill();
 }
 
-bool GalleryTalker::s_using_gallery2 = true;
-QString GalleryTalker::s_authToken = "";
 
-bool GalleryTalker::loggedIn() const
+const KIPI2::CollectionList* GallerySink::getCollections()
+{
+  return NULL;
+}
+  
+void GallerySink::Save(KConfig* pConfig, KWallet::Wallet* pWallet)
+{
+  pConfig->writeEntry(QString("Name%1").arg(mSinkId), mName);
+  pConfig->writeEntry(QString("Type%1").arg(mSinkId), Type());
+  pConfig->writeEntry(QString("URL%1").arg(mSinkId), mURL);
+  pConfig->writeEntry(QString("Username%1").arg(mSinkId), mUsername);
+  if (pWallet)
+    pWallet->writePassword(QString("Password%1").arg(mSinkId), mPassword);
+}
+
+/*
+bool GallerySink::loggedIn() const
 {
     return m_loggedIn;
 }
 
-void GalleryTalker::login( const KURL& url, const QString& name,
+void GallerySink::login( const KURL& url, const QString& name,
                            const QString& passwd )
 {
     m_url = url;
 
-    GalleryMPForm form;
+    GalleryForm form(mVersion, mAuthToken);
 
     form.addPair("cmd",              "login");
     form.addPair("protocol_version", "2.3");
     form.addPair("uname",            name);
     form.addPair("password",         passwd);
-    form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
     job->addMetaData("content-type", form.contentType() );
@@ -91,17 +112,16 @@ void GalleryTalker::login( const KURL& url, const QString& name,
     emit signalBusy( true );
 }
 
-void GalleryTalker::listAlbums()
+void GallerySink::listAlbums()
 {
-    GalleryMPForm form;
+    GalleryForm form(mVersion, mAuthToken);
 
     QString task = "fetch-albums";
-    if (s_using_gallery2)
+    if (Gallery2 == mVersion)
       task = "fetch-albums-prune";
 
     form.addPair("cmd",              task);
     form.addPair("protocol_version", "2.3");
-    form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
     job->addMetaData("content-type", form.contentType() );
@@ -118,7 +138,7 @@ void GalleryTalker::listAlbums()
     emit signalBusy( true );
 }
 
-void GalleryTalker::listPhotos( const QString& albumName )
+void GallerySink::listPhotos( const QString& albumName )
 {
     if (m_job)
     {
@@ -126,12 +146,11 @@ void GalleryTalker::listPhotos( const QString& albumName )
         m_job = 0;
     }
 
-    GalleryMPForm form;
+    GalleryForm form(mVersion, mAuthToken);
 
     form.addPair("cmd",              "fetch-album-images");
     form.addPair("protocol_version", "2.3");
     form.addPair("set_albumName",    albumName);
-    form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
     job->addMetaData("content-type", form.contentType() );
@@ -148,7 +167,7 @@ void GalleryTalker::listPhotos( const QString& albumName )
     emit signalBusy( true );
 }
 
-void GalleryTalker::createAlbum( const QString& parentAlbumName,
+void GallerySink::createAlbum( const QString& parentAlbumName,
                                  const QString& albumName,
                                  const QString& albumTitle,
                                  const QString& albumCaption )
@@ -159,7 +178,7 @@ void GalleryTalker::createAlbum( const QString& parentAlbumName,
         m_job = 0;
     }
 
-    GalleryMPForm form;
+    GalleryForm form(mVersion, mAuthToken);
 
     form.addPair("cmd", "new-album");
     form.addPair("protocol_version", "2.3");
@@ -170,7 +189,6 @@ void GalleryTalker::createAlbum( const QString& parentAlbumName,
         form.addPair("newAlbumTitle", albumTitle);
     if (!albumCaption.isEmpty())
         form.addPair("newAlbumDesc", albumCaption);
-    form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
     job->addMetaData("content-type", form.contentType() );
@@ -187,7 +205,7 @@ void GalleryTalker::createAlbum( const QString& parentAlbumName,
     emit signalBusy( true );
 }
 
-bool GalleryTalker::addPhoto( const QString& albumName,
+bool GallerySink::addPhoto( const QString& albumName,
                               const QString& photoPath,
                               const QString& caption,
                               bool  rescale, int maxDim )
@@ -201,7 +219,7 @@ bool GalleryTalker::addPhoto( const QString& albumName,
     QString path = photoPath;
     QString display_filename = QFile::encodeName(KURL(path).filename());
 
-    GalleryMPForm form;
+    GalleryForm form(mVersion, mAuthToken);
 
     form.addPair("cmd", "add-item");
     form.addPair("protocol_version", "2.3");
@@ -239,8 +257,6 @@ bool GalleryTalker::addPhoto( const QString& albumName,
     if (!form.addFile(path, display_filename))
         return false;
 
-    form.finish();
-
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("cookies", "manual");
@@ -258,7 +274,7 @@ bool GalleryTalker::addPhoto( const QString& albumName,
     return true;
 }
 
-void GalleryTalker::cancel()
+void GallerySink::cancel()
 {
     if (m_job)
     {
@@ -267,7 +283,7 @@ void GalleryTalker::cancel()
     }
 }
 
-void GalleryTalker::data(KIO::Job*, const QByteArray& data)
+void GallerySink::data(KIO::Job*, const QByteArray& data)
 {
     if (data.isEmpty())
         return;
@@ -277,7 +293,7 @@ void GalleryTalker::data(KIO::Job*, const QByteArray& data)
     memcpy(m_buffer.data()+oldSize, data.data(), data.size());
 }
 
-void GalleryTalker::slotResult(KIO::Job *job)
+void GallerySink::slotResult(KIO::Job *job)
 {
     m_job = 0;
     emit signalBusy( false );
@@ -289,7 +305,7 @@ void GalleryTalker::slotResult(KIO::Job *job)
         else if ( m_state == GE_ADDPHOTO )
             emit signalAddPhotoFailed( job->errorString() );
         else
-            job->showErrorDialog( m_parent );
+            job->showErrorDialog( ); //m_parent
         return;
     }
 
@@ -326,7 +342,7 @@ void GalleryTalker::slotResult(KIO::Job *job)
     }
 }
 
-void GalleryTalker::parseResponseLogin(const QByteArray &data)
+void GallerySink::parseResponseLogin(const QByteArray &data)
 {
     QTextStream ts(data, IO_ReadOnly );
     ts.setEncoding(QTextStream::UnicodeUTF8);
@@ -354,7 +370,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
                 }
                 else if ("auth_token" == strlist[0])
                 {
-                  s_authToken = strlist[1];
+                  mAuthToken = strlist[1];
                 }
             }
         }
@@ -372,7 +388,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
     }
 }
 
-void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
+void GallerySink::parseResponseListAlbums(const QByteArray &data)
 {
     QTextStream ts(data, IO_ReadOnly );
     ts.setEncoding(QTextStream::UnicodeUTF8);
@@ -407,7 +423,7 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
                 {
                     GAlbum album;
                     album.name    = value;
-                    if (s_using_gallery2)
+                    if (Gallery2 == mVersion)
                         album.ref_num = value.toInt();
                     else
                         album.ref_num = key.section(".", 2, 2).toInt();
@@ -475,7 +491,7 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
     emit signalAlbums( albumList );
 }
 
-void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
+void GallerySink::parseResponseListPhotos(const QByteArray &data)
 {
     QTextStream ts(data, IO_ReadOnly );
     ts.setEncoding(QTextStream::UnicodeUTF8);
@@ -556,7 +572,7 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
     emit signalPhotos( photoList );
 }
 
-void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
+void GallerySink::parseResponseCreateAlbum(const QByteArray &data)
 {
     QTextStream ts(data, IO_ReadOnly );
     ts.setEncoding(QTextStream::UnicodeUTF8);
@@ -608,7 +624,7 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
     listAlbums();
 }
 
-void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
+void GallerySink::parseResponseAddPhoto(const QByteArray &data)
 {
     QTextStream ts(data, IO_ReadOnly );
     ts.setEncoding(QTextStream::UnicodeUTF8);
@@ -664,8 +680,6 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
         emit signalAddPhotoSucceeded();
     }
 }
-
+*/
 }
-
-#include "gallerytalker.moc"
 
