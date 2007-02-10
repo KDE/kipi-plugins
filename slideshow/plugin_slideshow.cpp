@@ -68,7 +68,7 @@ void Plugin_SlideShow::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
     
-    m_actionSlideShow = new KAction (i18n("SlideShow..."),
+    m_actionSlideShow = new KAction (i18n("Advanced SlideShow..."),
                                      "slideshow",
                                      0,
                                      this,
