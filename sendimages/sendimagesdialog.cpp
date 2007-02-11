@@ -362,6 +362,7 @@ void SendImagesDialog::setupEmailOptions(void)
     m_mailAgentName = new QComboBox( false, page_setupEmailOptions );
     m_mailAgentName->insertItem( "Default" );
     m_mailAgentName->insertItem( "Balsa" );
+    m_mailAgentName->insertItem( "Claws Mail" );
     m_mailAgentName->insertItem( "Evolution" );
     m_mailAgentName->insertItem( "GmailAgent" );
     m_mailAgentName->insertItem( "KMail" );
@@ -374,6 +375,7 @@ void SendImagesDialog::setupEmailOptions(void)
     QWhatsThis::add( m_mailAgentName, i18n("<p>Select here your preferred external mail agent program."
                                            "These mail agent versions are supported:<p>"
                                            "<b>Balsa</b>: >= 2.x<p>"
+					   "<b>Claws Mail</b>: >= 2.6.1<p>"
                                            "<b>Evolution</b>: >= 1.4<p>"
                                            "<b>GmailAgent</b>: >= 0.2<p>"
                                            "<b>KMail</b>: >= 1.3<p>"

@@ -431,14 +431,17 @@ bool SendImages::invokeMailAgent(void)
             agentInvoked = true;
         }
     
-        // Sylpheed mail agent call.
+        // Claws Mail and Sylpheed mail agent call.
     
-        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed" ||
+        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Claws Mail" ||
+	     m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed" ||
              m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed-Claws" )
         {
             m_mailAgentProc = new KProcess;
 
-            if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed")
+            if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Claws Mail")
+               *m_mailAgentProc << "claws-mail";
+            else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed")
                 *m_mailAgentProc << "sylpheed";
             else
                 *m_mailAgentProc << "sylpheed-claws";
