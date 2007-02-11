@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Viewer
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_viewer
+author=Markus Leuthold
