@@ -7,6 +7,7 @@ Kipi-plugins NEW FEATURES
 
 General        : Moved Exiv2Iface class to a new shared library named libkexiv2 used by 
                  kipi-plugins and digiKam.
+Image viewer   : initial import of new OpenGL based image viewer
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 001 ==> 139264 : General      : Prefer Exif DateTimeOriginal for image date/time (DateTimeDigitized and DateTime only used as fallback)
