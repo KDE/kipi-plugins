@@ -13,6 +13,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 001 ==> 139264 : General      : Prefer Exif DateTimeOriginal for image date/time (DateTimeDigitized and DateTime only used as fallback)
 002 ==> 139074 : SendImages   : Format missmatch at sendimages.cpp ('int' vs. 'size_t').
 003 ==> 140132 : MetadataEdit : Comments should sync to IPTC Caption First.
+006 ==> 138241 : SendImages   : A patch that adds support for the Claws Mail MUA.
+007 ==> 
 
 v 0.1.3 
 ----------------------------------------------------------------------------
