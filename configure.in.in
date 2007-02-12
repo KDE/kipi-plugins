@@ -142,7 +142,6 @@ else
      fi
      AC_SUBST(LIBKEXIV2_CFLAGS)
      AC_SUBST(LIBKEXIV2_LIBS)
-     AM_CONDITIONAL(compile_LIBKEXIV2, true)
 fi
 
 if test x$have_libkexiv2 != xyes; then
