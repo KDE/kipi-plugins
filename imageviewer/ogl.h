@@ -110,7 +110,8 @@ protected:
     QTimer timerMouseMove;
     QCursor moveCursor, zoomCursor;
 	float zoomfactor_scrollwheel,  zoomfactor_mousemove,  zoomfactor_keyboard;
-
+	QString nullImage;
+	
 protected:
     virtual void keyPressEvent(QKeyEvent *k);
     virtual void wheelEvent ( QWheelEvent * e );

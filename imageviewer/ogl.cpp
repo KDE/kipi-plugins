@@ -33,6 +33,7 @@
 #include "ogl.h"
 #include "timer.h"
 #include "texture.h"
+#include "../common/include/rawfiles.h"
 				 
 using namespace std;
 using namespace KIPIviewer;
@@ -41,7 +42,8 @@ ogl::ogl(KIPI::Interface* interface) {
 		KIPI::ImageCollection selection = interface->currentSelection();
 		KIPI::ImageCollection album = interface->currentAlbum();
 		KURL::List myfiles;
-
+		
+		QString rawFilesExt(kipi_raw_file_extentions);
 		QString selectedImage;
 		int foundNumber=0;
 		file_idx=0; //index of picture to be displayed
@@ -68,14 +70,18 @@ ogl::ogl(KIPI::Interface* interface) {
 					file_idx=foundNumber;
 				}
 				
-				//TODO also handle movies
 				KMimeType::Ptr type = KMimeType::findByURL(s);
-				if (type->name().find("image")>=0) {
+				bool isImage=type->name().find("image")>=0;
+				
+				//RAW files not yet supported. 
+				QFileInfo fileInfo(s);
+				bool isRAW=rawFilesExt.upper().contains( fileInfo.extension(false).upper() );
+					
+				if ( isImage && !isRAW ) {
 					files.append(s);
 					foundNumber++;  //counter for searching the start image in case one  image is selected
 					kdDebug(51000) << s << " type=" << type->name() << endl;
-			}
-			
+				}
 		}
 		
 		firstImage=true;
@@ -97,7 +103,10 @@ ogl::ogl(KIPI::Interface* interface) {
 		zoomCursor=QCursor(file);
 		file = locate( "data", "kipiplugin_imageviewer/pics/hand.png" );
 		moveCursor=QCursor(file);
-
+		
+		//get path of nullImage in case QImage can't load the image
+		nullImage = locate( "data", "kipiplugin_imageviewer/pics/nullImage.png" );
+		
 		showFullScreen(); 
 		
 		//let the cursor dissapear after 2sec of inactivity
@@ -400,7 +409,10 @@ Texture * ogl::loadImage(int file_index)
 		QString f = files[file_index];
 		kdDebug(51000) << "loading " << f << " file_index=" << file_index << endl;
 		cache[imod].file_index=file_index;
-		cache[imod].texture->load(f,QSize(width(),height()),tex[0]);
+		if (!cache[imod].texture->load(f,QSize(width(),height()),tex[0])) {
+			//loading failed
+			cache[imod].texture->load(nullImage,QSize(width(),height()),tex[0]);
+		}
 		cache[imod].texture->setViewport(width(),height());
 		return cache[imod].texture;
 	}
