@@ -24,6 +24,7 @@
 #include <qwmatrix.h>
 
 using namespace std;
+using namespace KIPIviewer;
 
 Texture::Texture()
 {

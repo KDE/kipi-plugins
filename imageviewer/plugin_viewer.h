@@ -39,7 +39,7 @@ public:
     virtual KIPI::Category category( KAction* action ) const;
 
 protected:
-	ogl * widget;
+	KIPIviewer::ogl * widget;
     KAction * actionViewer;
 	
 public slots:

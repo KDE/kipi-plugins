@@ -28,6 +28,8 @@
  * @author Markus Leuthold <kusi (+at) forum.titlis.org>
  * @version 0.1
  */
+
+namespace KIPIviewer {
 class Timer{
 public:
     Timer();
@@ -38,5 +40,5 @@ protected:
 	QTime timer;
 	int meantime;
 };
-
+}; //namespace KIPIviewer
 #endif

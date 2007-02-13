@@ -49,6 +49,8 @@
  
 #define EMPTY 99999
 #define CACHESIZE 3
+
+namespace KIPIviewer {
 using namespace std;
 
 class ogl : public QGLWidget
@@ -118,5 +120,5 @@ protected:
 private slots:
     void timeoutMouseMove();
 };
-
+}; //namespace KIPIviewer
 #endif // _OGL_H_

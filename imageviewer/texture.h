@@ -21,7 +21,6 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#define QT_CLEAN_NAMESPACE
 #include <qgl.h>
 #include <qstring.h>
 #include <qdatetime.h>
@@ -34,7 +33,7 @@
  * @version 0.1
  */
 
-
+namespace KIPIviewer {
 class Texture{
 public:
 	enum Type {QT, JPEGLIB};
@@ -78,5 +77,6 @@ protected:
 	float vtop, vbottom, vleft, vright;
 	int rotate_list[4], rotate_idx;
 };
+}; //namespace KIPIviewer
 
 #endif

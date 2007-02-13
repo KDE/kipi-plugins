@@ -94,6 +94,6 @@ void  Plugin_viewer::slotActivate()
         return;
     }
 	
-	widget = new ogl(interface);
+	widget = new KIPIviewer::ogl(interface);
 	widget->show();
 }

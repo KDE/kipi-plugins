@@ -35,7 +35,7 @@
 #include "texture.h"
 				 
 using namespace std;
-
+using namespace KIPIviewer;
 		 
 ogl::ogl(KIPI::Interface* interface) {
 		KIPI::ImageCollection selection = interface->currentSelection();

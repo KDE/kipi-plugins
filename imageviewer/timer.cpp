@@ -20,6 +20,7 @@
 #include <kdebug.h>
 #include "timer.h"
 
+using namespace KIPIviewer;
 
 Timer::Timer()
 {
