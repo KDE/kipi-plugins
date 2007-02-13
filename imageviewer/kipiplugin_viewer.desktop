@@ -1,6 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Viewer
+Name[it]=Visore
+Name[pt]=Visualizador
+Name[pt_BR]=Visualizador
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_viewer
