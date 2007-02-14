@@ -1,7 +1,10 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Viewer
+Name[br]=Gweler
+Name[es]=Visor
 Name[it]=Visore
+Name[ja]=ビューア
 Name[pt]=Visualizador
 Name[pt_BR]=Visualizador
 Type=Service
