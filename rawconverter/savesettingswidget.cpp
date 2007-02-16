@@ -1,9 +1,9 @@
 /* ============================================================
  * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date   : 2006-09-13
- * Description : dcraw settings widgets
+ * Description : save settings widgets
  *
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -74,10 +74,10 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
 
     d->formatLabel    = new QLabel(i18n("Output file format:"), this);
     d->formatComboBox = new QComboBox( false, this );
-    d->formatComboBox->insertItem( "JPEG", RawDecodingSettings::JPEG );
-    d->formatComboBox->insertItem( "TIFF", RawDecodingSettings::TIFF );
-    d->formatComboBox->insertItem( "PPM",  RawDecodingSettings::PPM );
-    d->formatComboBox->insertItem( "PNG",  RawDecodingSettings::PNG );
+    d->formatComboBox->insertItem( "JPEG", OUTPUT_JPEG );
+    d->formatComboBox->insertItem( "TIFF", OUTPUT_TIFF );
+    d->formatComboBox->insertItem( "PPM",  OUTPUT_PPM );
+    d->formatComboBox->insertItem( "PNG",  OUTPUT_PNG );
     QWhatsThis::add(d->formatComboBox, i18n("<p>Set here the ouput file format to use:<p>"
                                        "<b>JPEG</b>: output the processed image in JPEG Format. "
                                        "this format will give smaller-sized files. Minimum JPEG "
@@ -123,16 +123,16 @@ SaveSettingsWidget::~SaveSettingsWidget()
 
 void SaveSettingsWidget::setDefaultSettings()
 {
-    setFileFormat(RawDecodingSettings::PNG); 
-    setConflictRule(SaveSettingsWidget::OVERWRITE);
+    setFileFormat(OUTPUT_PNG); 
+    setConflictRule(OVERWRITE);
 }
 
-RawDecodingSettings::OutputFormat SaveSettingsWidget::fileFormat()
+SaveSettingsWidget::OutputFormat SaveSettingsWidget::fileFormat()
 {
-    return(RawDecodingSettings::OutputFormat)(d->formatComboBox->currentItem());
+    return(OutputFormat)(d->formatComboBox->currentItem());
 }
 
-void SaveSettingsWidget::setFileFormat(RawDecodingSettings::OutputFormat f)
+void SaveSettingsWidget::setFileFormat(SaveSettingsWidget::OutputFormat f)
 {
     d->formatComboBox->setCurrentItem((int)f);
 }

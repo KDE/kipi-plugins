@@ -5,7 +5,7 @@
  * Description : a class to manage plugin actions using threads
  *
  * Copyright 2003-2005 by Renchi Raju
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -35,8 +35,12 @@ extern "C"
 
 // KDE includes.
 
-#include <kdebug.h>
+#include <klocale.h>
 #include <kstandarddirs.h>
+
+// LibKDcraw includes.
+
+#include <libkdcraw/dcrawinfocontainer.h>
 
 // Local includes.
 
@@ -91,9 +95,11 @@ void ActionThread::identifyRawFiles(const KURL::List& urlList)
     }
 }
 
-void ActionThread::setRawDecodingSettings(RawDecodingSettings rawDecodingSettings)
+void ActionThread::setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings, 
+                                          SaveSettingsWidget::OutputFormat outputFormat)
 {
     m_rawDecodingSettings = rawDecodingSettings;
+    m_outputFormat        = outputFormat;
 }
 
 void ActionThread::processRawFiles(const KURL::List& urlList)
@@ -103,6 +109,7 @@ void ActionThread::processRawFiles(const KURL::List& urlList)
     {
         Task *t             = new Task;
         t->filePath         = QDeepCopy<QString>((*it).path()); //deep copy
+        t->outputFormat     = m_outputFormat;
         t->decodingSettings = m_rawDecodingSettings;
         t->action           = PROCESS;
         m_taskQueue.enqueue(t);
@@ -116,6 +123,7 @@ void ActionThread::processHalfRawFiles(const KURL::List& urlList)
     {
         Task *t             = new Task;
         t->filePath         = QDeepCopy<QString>((*it).path()); //deep copy
+        t->outputFormat     = m_outputFormat;
         t->decodingSettings = m_rawDecodingSettings;
         t->action           = PREVIEW;
         m_taskQueue.enqueue(t);
@@ -148,8 +156,12 @@ void ActionThread::run()
                 m_dcrawIface.loadDcrawPreview(image, t->filePath);
 
                 // Identify Camera model.    
-                QString identify;
-                m_dcrawIface.rawFileIdentify(identify, t->filePath);
+                KDcrawIface::DcrawInfoContainer info;
+                m_dcrawIface.rawFileIdentify(info, t->filePath);
+
+                QString identify = i18n("Cannot identify RAW file");
+                if (info.isDecodable)
+                    identify = info.make + QString(" ") + info.model;
 
                 EventData *r = new EventData;
                 r->action    = IDENTIFY;
@@ -160,6 +172,7 @@ void ActionThread::run()
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, r));
                 break;
             }
+
             case PREVIEW: 
             {
                 d->action    = PREVIEW;
@@ -168,7 +181,8 @@ void ActionThread::run()
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
                 QString destPath;
-                bool result  = m_dcrawIface.decodeHalfRAWImage(t->filePath, destPath, t->decodingSettings);
+                bool result  = m_dcrawIface.decodeHalfRAWImage(t->filePath, destPath, 
+                                                               t->outputFormat, t->decodingSettings);
 
                 EventData *r = new EventData;
                 r->action    = PREVIEW;
@@ -178,6 +192,7 @@ void ActionThread::run()
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, r));
                 break;
             }
+
             case PROCESS: 
             {
                 d->action    = PROCESS;
@@ -186,7 +201,8 @@ void ActionThread::run()
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
                 QString destPath;
-                bool result  = m_dcrawIface.decodeRAWImage(t->filePath, destPath, t->decodingSettings);
+                bool result  = m_dcrawIface.decodeRAWImage(t->filePath, destPath, 
+                                                           t->outputFormat, t->decodingSettings);
 
                 EventData *r = new EventData;
                 r->action    = PROCESS;
@@ -196,11 +212,10 @@ void ActionThread::run()
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, r));
                 break;
             }
+
             default: 
             {
-                kdWarning( 51000 ) << "KIPIRawConverterPlugin:ActionThread: "
-                                   << "Unknown action specified"
-                                   << endl;
+                qWarning("KIPIRawConverterPlugin:ActionThread: Unknown action specified");
                 delete d;
             }
         }

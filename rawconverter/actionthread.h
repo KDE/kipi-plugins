@@ -4,7 +4,7 @@
  * Description : a class to manage raw converter plugin 
  *               actions using threads
  *
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,9 +31,14 @@
 
 #include <kurl.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/rawdecodingsettings.h>
+
 // Local includes.
 
-#include "dcrawiface.h"
+#include "rawdecodingiface.h"
+#include "savesettingswidget.h"
 #include "actions.h"
 #include "mtqueue.h"
 
@@ -50,7 +55,8 @@ public:
     ActionThread(QObject *parent);
     ~ActionThread();
 
-    void setRawDecodingSettings(RawDecodingSettings rawDecodingSettings);
+    void setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings, 
+                                SaveSettingsWidget::OutputFormat outputFormat);
 
     void identifyRawFile(const KURL& url);
     void processRawFile(const KURL& url);
@@ -70,20 +76,23 @@ private:
 
     struct Task_ 
     {
-        QString             filePath;
-        Action              action;
-        RawDecodingSettings decodingSettings;
+        QString                          filePath;
+        Action                           action;
+        SaveSettingsWidget::OutputFormat outputFormat;
+        KDcrawIface::RawDecodingSettings decodingSettings;
     };
 
     typedef struct Task_ Task;
 
-    QObject             *m_parent;
+    QObject                          *m_parent;
 
-    RawDecodingSettings  m_rawDecodingSettings;
+    SaveSettingsWidget::OutputFormat  m_outputFormat;
 
-    DcrawIface           m_dcrawIface;
+    KDcrawIface::RawDecodingSettings  m_rawDecodingSettings;
 
-    MTQueue<Task>        m_taskQueue;
+    RawDecodingIface                  m_dcrawIface;
+
+    MTQueue<Task>                     m_taskQueue;
 };
 
 }  // NameSpace KIPIRawConverterPlugin

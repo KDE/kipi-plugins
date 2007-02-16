@@ -3,7 +3,7 @@
  * Date   : 2006-09-13
  * Description : save settings widgets
  *
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,10 +25,6 @@
 
 #include <qgroupbox.h>
 
-// Local includes.
-
-#include "dcrawiface.h"
-
 namespace KIPIRawConverterPlugin
 {
 
@@ -39,6 +35,14 @@ class SaveSettingsWidget : public QGroupBox
     Q_OBJECT
     
 public:
+
+    enum OutputFormat 
+    {
+        OUTPUT_JPEG = 0,
+        OUTPUT_TIFF,
+        OUTPUT_PPM,
+        OUTPUT_PNG
+    };
 
     enum ConflictRule 
     {
@@ -51,10 +55,10 @@ public:
     SaveSettingsWidget(QWidget *parent);
     ~SaveSettingsWidget();
 
-    RawDecodingSettings::OutputFormat fileFormat();
+    SaveSettingsWidget::OutputFormat fileFormat();
     ConflictRule conflictRule();
 
-    void setFileFormat(RawDecodingSettings::OutputFormat f);
+    void setFileFormat(SaveSettingsWidget::OutputFormat f);
     void setConflictRule(ConflictRule r);
 
     void setDefaultSettings();

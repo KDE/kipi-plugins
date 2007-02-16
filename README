@@ -9,7 +9,7 @@ Please visit this url: http://www.kipi-plugins.org
 
 Summary:
 ----------------------------------------------------------------------
-Libkipi allows image applications to use a plugin architecture for additional functionality.
+Libkipi and kipi-plugins allows image applications to use a plugin architecture for additional functionalities.
 Currently implemented plugins are:
 
  1) RawConverter       : A Raw Image Converter for digital cameras 
@@ -78,7 +78,7 @@ Contact :
 -----------------------------------------------------------------------
 If you have questions, comments, suggestions to make do email at :
 
-kde-imaging.kde.org
+kde-imaging@kde.org
 
 
 IMPORTANT : the bugreports and wishlist are hosted by the KDE bugs report 
@@ -112,8 +112,9 @@ imlib2      >= 1.1.0
 libgphoto2  >= 2.x
 libtiff     >= 3.5.x
 libkexiv2   >= 0.1
+libkdcraw   >= 0.1
 libxslt     >= 1.1
-libgpod     > 0.4.0 (fails to build with 0.4.0)
+libgpod     >= 0.4.2
 
 Plugin Specific Dependencies (for compiling and for running) :
 -------------------------------------------------------------------------
@@ -125,7 +126,7 @@ cdarchiving        : k3b (runtime dependency)
 kameraklient       : libgphoto2
 mpegenconder       : mjpegtools (runtime dependency)
 wallpaper          : kdebase (runtime dependency)
-rawconverter       : libtiff
+rawconverter       : libtiff, libkdcraw 
 acquireimages      : libtiff
 htmlexport         : libxslt
 ipodexport         : libgpod

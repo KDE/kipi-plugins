@@ -5,7 +5,7 @@
  * Description : Raw converter batch dialog
  *
  * Copyright 2003-2005 by Renchi Raju
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -59,12 +59,15 @@ extern "C"
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/dcrawsettingswidget.h>
+
 // Local includes.
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "dcrawiface.h"
-#include "dcrawsettingswidget.h"
+#include "rawdecodingiface.h"
 #include "savesettingswidget.h"
 #include "actionthread.h"
 #include "clistviewitem.h"
@@ -125,7 +128,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/, const QString& dcrawVersion)
 
     // ---------------------------------------------------------------
 
-    m_decodingSettingsBox = new DcrawSettingsWidget(m_page, dcrawVersion);
+    m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(m_page, dcrawVersion);
     m_saveSettingsBox     = new SaveSettingsWidget(m_page);
 
     mainLayout->addMultiCellWidget(m_decodingSettingsBox, 1, 1, 1, 1);
@@ -142,16 +145,13 @@ BatchDialog::BatchDialog(QWidget* /*parent*/, const QString& dcrawVersion)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    QPushButton *helpButton = actionButton( Help );
-
-    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Raw Images Batch Converter"),
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("RAW Images Batch Converter"),
                                            NULL,
                                            KAboutData::License_GPL,
-                                           I18N_NOOP("A Kipi plugin for Raw images conversion\n"
-                                                     "This plugin uses the Dave Coffin Raw photo "
-                                                     "decoder program \"dcraw\""),
+                                           I18N_NOOP("A Kipi plugin to convert RAW images\n"
+                                                     "Using KDcraw library"),
                                            "(c) 2003-2005, Renchi Raju\n"
-                                           "(c) 2006, Gilles Caulier");
+                                           "(c) 2006-2007, Gilles Caulier");
 
     m_about->addAuthor("Renchi Raju", I18N_NOOP("Original author"),
                        "renchi@pooh.tam.uiuc.edu");
@@ -163,7 +163,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/, const QString& dcrawVersion)
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Raw Converter Handbook"),
                                  this, SLOT(slotHelp()), 0, -1, 0);
-    helpButton->setPopup( helpMenu->menu() );
+    actionButton(Help)->setPopup( helpMenu->menu() );
 
     // ---------------------------------------------------------------
 
@@ -234,16 +234,16 @@ void BatchDialog::readSettings()
     m_decodingSettingsBox->setSigmaRange(config.readDoubleNumEntry("Sigma Range", 4.0));
 
     m_decodingSettingsBox->setQuality(
-        (RawDecodingSettings::DecodingQuality)config.readNumEntry("Decoding Quality", 
-            (int)(RawDecodingSettings::BILINEAR))); 
+        (KDcrawIface::RawDecodingSettings::DecodingQuality)config.readNumEntry("Decoding Quality", 
+            (int)(KDcrawIface::RawDecodingSettings::BILINEAR))); 
 
     m_decodingSettingsBox->setOutputColorSpace(
-        (RawDecodingSettings::OutputColorSpace)config.readNumEntry("Output Color Space", 
-            (int)(RawDecodingSettings::SRGB))); 
+        (KDcrawIface::RawDecodingSettings::OutputColorSpace)config.readNumEntry("Output Color Space", 
+            (int)(KDcrawIface::RawDecodingSettings::SRGB))); 
 
     m_saveSettingsBox->setFileFormat(
-        (RawDecodingSettings::OutputFormat)config.readNumEntry("Output Format", 
-            (int)(RawDecodingSettings::PNG))); 
+        (SaveSettingsWidget::OutputFormat)config.readNumEntry("Output Format", 
+            (int)(SaveSettingsWidget::OUTPUT_PNG))); 
 
     m_saveSettingsBox->setConflictRule(
         (SaveSettingsWidget::ConflictRule)config.readNumEntry("Conflict",
@@ -309,7 +309,7 @@ void BatchDialog::slotUser1()
     m_progressBar->setProgress(0);
     m_progressBar->setEnabled(true);
 
-    RawDecodingSettings rawDecodingSettings;
+    KDcrawIface::RawDecodingSettings rawDecodingSettings;
     rawDecodingSettings.cameraColorBalance      = m_decodingSettingsBox->useCameraWB();
     rawDecodingSettings.automaticColorBalance   = m_decodingSettingsBox->useAutoColorBalance();
     rawDecodingSettings.RGBInterpolate4Colors   = m_decodingSettingsBox->useFourColor();
@@ -320,10 +320,9 @@ void BatchDialog::slotUser1()
     rawDecodingSettings.NRSigmaDomain           = m_decodingSettingsBox->sigmaDomain();
     rawDecodingSettings.NRSigmaRange            = m_decodingSettingsBox->sigmaRange();
     rawDecodingSettings.RAWQuality              = m_decodingSettingsBox->quality();
-    rawDecodingSettings.outputFileFormat        = m_saveSettingsBox->fileFormat();
     rawDecodingSettings.outputColorSpace        = m_decodingSettingsBox->outputColorSpace();
     
-    m_thread->setRawDecodingSettings(rawDecodingSettings);
+    m_thread->setRawDecodingSettings(rawDecodingSettings, m_saveSettingsBox->fileFormat());
     processOne();
 }
 
@@ -352,16 +351,16 @@ void BatchDialog::addItems(const QStringList& itemList)
 
     switch(m_saveSettingsBox->fileFormat())
     {
-        case RawDecodingSettings::JPEG:
+        case SaveSettingsWidget::OUTPUT_JPEG:
             ext = "jpg";
             break;
-        case RawDecodingSettings::TIFF:
+        case SaveSettingsWidget::OUTPUT_TIFF:
             ext = "tif";
             break;
-        case RawDecodingSettings::PPM:
+        case SaveSettingsWidget::OUTPUT_PPM:
             ext = "ppm";
             break;
-        case RawDecodingSettings::PNG:
+        case SaveSettingsWidget::OUTPUT_PNG:
             ext = "png";
             break;
     }
@@ -400,16 +399,16 @@ void BatchDialog::slotSaveFormatChanged()
 
     switch(m_saveSettingsBox->fileFormat())
     {
-        case RawDecodingSettings::JPEG:
+        case SaveSettingsWidget::OUTPUT_JPEG:
             ext = "jpg";
             break;
-        case RawDecodingSettings::TIFF:
+        case SaveSettingsWidget::OUTPUT_TIFF:
             ext = "tif";
             break;
-        case RawDecodingSettings::PPM:
+        case SaveSettingsWidget::OUTPUT_PPM:
             ext = "ppm";
             break;
-        case RawDecodingSettings::PNG:
+        case SaveSettingsWidget::OUTPUT_PNG:
             ext = "png";
             break;
     }

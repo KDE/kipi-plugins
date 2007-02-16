@@ -5,7 +5,7 @@
  * Description : Raw converter batch dialog
  *
  * Copyright 2003-2005 by Renchi Raju
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -44,11 +44,15 @@ class QCloseEvent;
 class KListView;
 class KProgress;
 
+namespace KDcrawIface
+{
+class DcrawSettingsWidget;
+}
+
 namespace KIPIRawConverterPlugin
 {
 
 class  ActionThread;
-class  DcrawSettingsWidget;
 class  SaveSettingsWidget;
 struct RawItem;
 
@@ -95,29 +99,29 @@ private slots:
 
 private:
 
-    bool                 m_convertBlink;
+    bool                              m_convertBlink;
 
-    QTimer              *m_blinkConvertTimer;
+    QTimer                           *m_blinkConvertTimer;
 
-    QWidget             *m_page;
+    QWidget                          *m_page;
 
-    QDict<RawItem>       m_itemDict;
+    QDict<RawItem>                    m_itemDict;
 
-    QStringList          m_fileList;
+    QStringList                       m_fileList;
 
-    KProgress           *m_progressBar;
+    KProgress                        *m_progressBar;
 
-    KListView           *m_listView;
+    KListView                        *m_listView;
 
-    RawItem             *m_currentConvertItem;
+    RawItem                          *m_currentConvertItem;
 
-    ActionThread        *m_thread;
+    ActionThread                     *m_thread;
 
-    DcrawSettingsWidget *m_decodingSettingsBox;
+    SaveSettingsWidget               *m_saveSettingsBox;
 
-    SaveSettingsWidget  *m_saveSettingsBox;
+    KDcrawIface::DcrawSettingsWidget *m_decodingSettingsBox;
 
-    KIPIPlugins::KPAboutData *m_about;
+    KIPIPlugins::KPAboutData         *m_about;
 };
 
 } // NameSpace KIPIRawConverterPlugin

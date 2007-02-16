@@ -5,7 +5,7 @@
  * Description : Raw converter single dialog
  *
  * Copyright 2003-2005 by Renchi Raju
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -55,13 +55,16 @@ extern "C"
 #include <kstandarddirs.h>
 #include <kdebug.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/dcrawsettingswidget.h>
+
 // Local includes.
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "previewwidget.h"
-#include "dcrawiface.h"
-#include "dcrawsettingswidget.h"
+#include "rawdecodingiface.h"
 #include "savesettingswidget.h"
 #include "actionthread.h"
 #include "singledialog.h"
@@ -120,7 +123,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/, const QStri
 
     // ---------------------------------------------------------------
 
-    m_decodingSettingsBox = new DcrawSettingsWidget(page, dcrawVersion);
+    m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(page, dcrawVersion);
     m_saveSettingsBox     = new SaveSettingsWidget(page);
 
     mainLayout->addMultiCellWidget(m_decodingSettingsBox, 1, 1, 1, 1);
@@ -132,16 +135,13 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/, const QStri
     // ---------------------------------------------------------------
     // About data and help button.
 
-    QPushButton *helpButton = actionButton( Help );
-
-    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Raw Image Converter"),
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("RAW Image Converter"),
                                            NULL,
                                            KAboutData::License_GPL,
-                                           I18N_NOOP("A Kipi plugin for Raw image conversion\n"
-                                                     "This plugin uses the Dave Coffin Raw photo "
-                                                     "decoder program \"dcraw\""),
+                                           I18N_NOOP("A Kipi plugin to convert RAW images\n"
+                                                     "Using KDcraw library"),
                                            "(c) 2003-2005, Renchi Raju\n"
-                                           "(c) 2006, Gilles Caulier");
+                                           "(c) 2006-2007, Gilles Caulier");
 
     m_about->addAuthor("Renchi Raju", I18N_NOOP("Original author"),
                        "renchi@pooh.tam.uiuc.edu");
@@ -152,7 +152,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/, const QStri
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("RAW Converter Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    helpButton->setPopup( helpMenu->menu() );
+    actionButton(Help)->setPopup( helpMenu->menu() );
 
     // ---------------------------------------------------------------
 
@@ -233,16 +233,16 @@ void SingleDialog::readSettings()
     m_decodingSettingsBox->setSigmaRange(config.readDoubleNumEntry("Sigma Range", 4.0));
 
     m_decodingSettingsBox->setQuality(
-        (RawDecodingSettings::DecodingQuality)config.readNumEntry("Decoding Quality", 
-            (int)(RawDecodingSettings::BILINEAR))); 
+        (KDcrawIface::RawDecodingSettings::DecodingQuality)config.readNumEntry("Decoding Quality", 
+            (int)(KDcrawIface::RawDecodingSettings::BILINEAR))); 
 
     m_decodingSettingsBox->setOutputColorSpace(
-        (RawDecodingSettings::OutputColorSpace)config.readNumEntry("Output Color Space", 
-            (int)(RawDecodingSettings::SRGB))); 
+        (KDcrawIface::RawDecodingSettings::OutputColorSpace)config.readNumEntry("Output Color Space", 
+            (int)(KDcrawIface::RawDecodingSettings::SRGB))); 
 
     m_saveSettingsBox->setFileFormat(
-        (RawDecodingSettings::OutputFormat)config.readNumEntry("Output Format", 
-            (int)(RawDecodingSettings::PNG))); 
+        (SaveSettingsWidget::OutputFormat)config.readNumEntry("Output Format", 
+            (int)(SaveSettingsWidget::OUTPUT_PNG))); 
 
     m_saveSettingsBox->setConflictRule(
         (SaveSettingsWidget::ConflictRule)config.readNumEntry("Conflict",
@@ -283,7 +283,7 @@ void SingleDialog::slotHelp()
 // 'Preview' dialog button.
 void SingleDialog::slotUser1()
 {
-    RawDecodingSettings rawDecodingSettings;
+    KDcrawIface::RawDecodingSettings rawDecodingSettings;
     rawDecodingSettings.cameraColorBalance      = m_decodingSettingsBox->useCameraWB();
     rawDecodingSettings.automaticColorBalance   = m_decodingSettingsBox->useAutoColorBalance();
     rawDecodingSettings.RGBInterpolate4Colors   = m_decodingSettingsBox->useFourColor();
@@ -296,7 +296,7 @@ void SingleDialog::slotUser1()
     rawDecodingSettings.RAWQuality              = m_decodingSettingsBox->quality();
     rawDecodingSettings.outputColorSpace        = m_decodingSettingsBox->outputColorSpace();
     
-    m_thread->setRawDecodingSettings(rawDecodingSettings);
+    m_thread->setRawDecodingSettings(rawDecodingSettings, SaveSettingsWidget::OUTPUT_PNG);
     m_thread->processHalfRawFile(KURL(m_inputFile));
     if (!m_thread->running())
         m_thread->start();
@@ -305,7 +305,7 @@ void SingleDialog::slotUser1()
 // 'Convert' dialog button.
 void SingleDialog::slotUser2()
 {
-    RawDecodingSettings rawDecodingSettings;
+    KDcrawIface::RawDecodingSettings rawDecodingSettings;
     rawDecodingSettings.cameraColorBalance      = m_decodingSettingsBox->useCameraWB();
     rawDecodingSettings.automaticColorBalance   = m_decodingSettingsBox->useAutoColorBalance();
     rawDecodingSettings.RGBInterpolate4Colors   = m_decodingSettingsBox->useFourColor();
@@ -316,10 +316,9 @@ void SingleDialog::slotUser2()
     rawDecodingSettings.NRSigmaDomain           = m_decodingSettingsBox->sigmaDomain();
     rawDecodingSettings.NRSigmaRange            = m_decodingSettingsBox->sigmaRange();
     rawDecodingSettings.RAWQuality              = m_decodingSettingsBox->quality();
-    rawDecodingSettings.outputFileFormat        = m_saveSettingsBox->fileFormat();
     rawDecodingSettings.outputColorSpace        = m_decodingSettingsBox->outputColorSpace();
 
-    m_thread->setRawDecodingSettings(rawDecodingSettings);
+    m_thread->setRawDecodingSettings(rawDecodingSettings, m_saveSettingsBox->fileFormat());
     m_thread->processRawFile(KURL(m_inputFile));
     if (!m_thread->running())
         m_thread->start();
@@ -391,16 +390,16 @@ void SingleDialog::processed(const QString&, const QString& tmpFile)
 
     switch(m_saveSettingsBox->fileFormat())
     {
-        case RawDecodingSettings::JPEG:
+        case SaveSettingsWidget::OUTPUT_JPEG:
             ext = "jpg";
             break;
-        case RawDecodingSettings::TIFF:
+        case SaveSettingsWidget::OUTPUT_TIFF:
             ext = "tif";
             break;
-        case RawDecodingSettings::PPM:
+        case SaveSettingsWidget::OUTPUT_PPM:
             ext = "ppm";
             break;
-        case RawDecodingSettings::PNG:
+        case SaveSettingsWidget::OUTPUT_PNG:
             ext = "png";
             break;
     }

@@ -5,7 +5,7 @@
  * Description : Raw converter single dialog
  *
  * Copyright 2003-2005 by Renchi Raju
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -39,12 +39,16 @@ class QCloseEvent;
 class QCustomEvent;
 class QTimer;
 
+namespace KDcrawIface
+{
+class DcrawSettingsWidget;
+}
+
 namespace KIPIRawConverterPlugin
 {
 
 class PreviewWidget;
 class ActionThread;
-class DcrawSettingsWidget;
 class SaveSettingsWidget;
 
 class SingleDialog : public KDialogBase
@@ -94,24 +98,24 @@ private slots:
     
 private:
 
-    bool                 m_previewBlink;
-    bool                 m_convertBlink;
+    bool                              m_previewBlink;
+    bool                              m_convertBlink;
 
-    QString              m_inputFile;
-    QString              m_inputFileName;
+    QString                           m_inputFile;
+    QString                           m_inputFileName;
     
-    QTimer              *m_blinkPreviewTimer;
-    QTimer              *m_blinkConvertTimer;
+    QTimer                           *m_blinkPreviewTimer;
+    QTimer                           *m_blinkConvertTimer;
 
-    PreviewWidget       *m_previewWidget;
+    PreviewWidget                    *m_previewWidget;
 
-    ActionThread        *m_thread;
+    ActionThread                     *m_thread;
 
-    DcrawSettingsWidget *m_decodingSettingsBox;
+    SaveSettingsWidget               *m_saveSettingsBox;
 
-    SaveSettingsWidget  *m_saveSettingsBox;
+    KDcrawIface::DcrawSettingsWidget *m_decodingSettingsBox;
 
-    KIPIPlugins::KPAboutData *m_about; 
+    KIPIPlugins::KPAboutData         *m_about; 
 };
 
 } // NameSpace KIPIRawConverterPlugin

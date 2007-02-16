@@ -6,7 +6,7 @@
  *               or batch mode.
  *
  * Copyright 2003-2005 by Renchi Raju
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -50,10 +50,13 @@ extern "C"
 #include <kdebug.h>
 #include <kmessagebox.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/dcrawbinary.h>
+
 // Local includes.
 
-#include "rawfiles.h"
-#include "dcrawbinary.h"
 #include "singledialog.h"
 #include "batchdialog.h"
 #include "plugin_rawconverter.h"
@@ -113,7 +116,7 @@ Plugin_RawConverter::~Plugin_RawConverter()
 
 bool Plugin_RawConverter::isRAWFile(const QString& filePath)
 {
-    QString rawFilesExt(kipi_raw_file_extentions);
+    QString rawFilesExt(raw_file_extentions);
 
     QFileInfo fileInfo(filePath);
     if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
@@ -124,48 +127,10 @@ bool Plugin_RawConverter::isRAWFile(const QString& filePath)
 
 bool Plugin_RawConverter::checkBinaries(QString &dcrawVersion)
 {
-    KIPIRawConverterPlugin::DcrawBinary dcrawBinary;
+    KDcrawIface::DcrawBinary dcrawBinary;
+    dcrawBinary.checkReport();
     dcrawVersion = dcrawBinary.version();
-
-    if (!dcrawBinary.isAvailable()) 
-    {
-        KMessageBox::information(
-                     kapp->activeWindow(),
-                     i18n("<qt><p>Unable to find the <b>%1</b> executable:<br>"
-                          "This program is required by this plugin to support "
-                          "Raw files decoding. "
-                          "Please check %2 installation on your computer.</p></qt>")
-                          .arg(dcrawBinary.path())
-                          .arg(dcrawBinary.path()),
-                     QString::null,
-                     QString::null,
-                     KMessageBox::Notify | KMessageBox::AllowLink);
-        return false;
-    }
-
-    if (!dcrawBinary.versionIsRight()) 
-    {
-        KMessageBox::information(
-                     kapp->activeWindow(),
-                     i18n("<qt><p><b>%1</b> executable isn't up to date:<br>"
-                          "The version %2 of %3 have been found on your computer. "
-                          "This version is too old to run properly with this plugin. "
-                          "Please check %4 installation on your computer.</p>"
-                          "<p>Note: at least, %5 version %6 is required by this "
-                          "plugin.</p></qt>")
-                          .arg(dcrawBinary.path())
-                          .arg(dcrawVersion)
-                          .arg(dcrawBinary.path())
-                          .arg(dcrawBinary.path())
-                          .arg(dcrawBinary.path())
-                          .arg(dcrawBinary.minimalVersion()),
-                     QString::null,
-                     QString::null,
-                     KMessageBox::Notify | KMessageBox::AllowLink);
-        return false;
-    }
-
-    return true;
+    return dcrawBinary.isAvailable();
 }
 
 void Plugin_RawConverter::slotActivateSingle()

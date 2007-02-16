@@ -149,6 +149,52 @@ if test x$have_libkexiv2 != xyes; then
   DO_NOT_COMPILE="$DO_NOT_COMPILE kipi-plugins"
 fi
 
+# --------------------------------------------------------------------
+#
+# Check for libkdcraw
+#
+# --------------------------------------------------------------------
+
+AC_MSG_CHECKING([for libkdcraw in our sources])
+if test -d $srcdir/libkdcraw; then
+    have_libkdcraw=yes
+    LIBKDCRAW_CFLAGS='-I$(top_srcdir)'
+    LIBKDCRAW_LIBS='$(top_builddir)/libkdcraw/libkdcraw.la'
+    LIBKDCRAW_LIBS_DEP='$(LIBKDCRAW_LIBS)'
+    AC_MSG_RESULT([found])
+    AC_SUBST(LIBKDCRAW_CFLAGS)
+    AC_SUBST(LIBKDCRAW_LIBS)
+    AC_SUBST(LIBKDCRAW_LIBS_DEP)
+else
+
+    if test "$PKGCONFIGFOUND" = "yes" ; then
+        # check for libkdcraw
+        have_libkdcraw=no
+
+        KDE_PKG_CHECK_MODULES(LIBKDCRAW, libkdcraw >= 0.1,
+                have_libkdcraw=yes, have_libkdcraw=no)
+
+        if test "x$have_libkdcraw" = "xno"; then
+           LIBKDCRAW_CFLAGS=""
+           LIBKDCRAW_LIBS=""
+           AC_MSG_RESULT([not found])
+        else
+           AC_MSG_RESULT([found])
+        fi
+     else
+        LIBKDCRAW_CFLAGS=""
+        LIBKDCRAW_LIBS=""
+        AC_MSG_RESULT([not found])
+     fi
+     AC_SUBST(LIBKDCRAW_CFLAGS)
+     AC_SUBST(LIBKDCRAW_LIBS)
+fi
+
+if test x$have_libkdcraw != xyes; then
+  AC_MSG_ERROR([libkdcraw library is required by kipi-plugins.])
+  DO_NOT_COMPILE="$DO_NOT_COMPILE kipi-plugins"
+fi
+
 #------------------------------------------------------------------
 #
 # Check for libtiff
