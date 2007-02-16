@@ -57,7 +57,7 @@ class SingleDialog : public KDialogBase
 
 public:
 
-    SingleDialog(const QString& file, QWidget *parent, const QString& dcrawVersion);
+    SingleDialog(const QString& file, QWidget *parent);
     ~SingleDialog();
 
 protected:

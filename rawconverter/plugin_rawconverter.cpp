@@ -125,11 +125,10 @@ bool Plugin_RawConverter::isRAWFile(const QString& filePath)
     return false;
 }
 
-bool Plugin_RawConverter::checkBinaries(QString &dcrawVersion)
+bool Plugin_RawConverter::checkBinaries()
 {
     KDcrawIface::DcrawBinary dcrawBinary;
     dcrawBinary.checkReport();
-    dcrawVersion = dcrawBinary.version();
     return dcrawBinary.isAvailable();
 }
 
@@ -137,7 +136,7 @@ void Plugin_RawConverter::slotActivateSingle()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !interface )
+    if (!interface)
     {
         kdError( 51000 ) << "Kipi interface is null!" << endl;
         return;
@@ -146,11 +145,10 @@ void Plugin_RawConverter::slotActivateSingle()
     KIPI::ImageCollection images;
     images = interface->currentSelection();
 
-    if ( !images.isValid() )
+    if (!images.isValid())
         return;
 
-    QString dcrawVersion;
-    if (!checkBinaries(dcrawVersion)) 
+    if (!checkBinaries()) 
         return;
 
     if (!isRAWFile(images.images()[0].path()))
@@ -162,7 +160,7 @@ void Plugin_RawConverter::slotActivateSingle()
 
     KIPIRawConverterPlugin::SingleDialog *converter = 
         new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), 
-            kapp->activeWindow(), dcrawVersion); 
+            kapp->activeWindow()); 
 
     converter->show();
 }
@@ -171,7 +169,7 @@ void Plugin_RawConverter::slotActivateBatch()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !interface )
+    if (!interface)
     {
         kdError( 51000 ) << "Kipi interface is null!" << endl;
         return;
@@ -180,15 +178,14 @@ void Plugin_RawConverter::slotActivateBatch()
     KIPI::ImageCollection images;
     images = interface->currentSelection();
 
-    if ( !images.isValid() )
+    if (!images.isValid())
         return;
 
-    QString dcrawVersion;
-    if (!checkBinaries(dcrawVersion)) 
+    if (!checkBinaries()) 
         return;
 
     KIPIRawConverterPlugin::BatchDialog *converter =
-        new KIPIRawConverterPlugin::BatchDialog(kapp->activeWindow(), dcrawVersion);
+        new KIPIRawConverterPlugin::BatchDialog(kapp->activeWindow());
 
     KURL::List urls = images.images();
     QStringList files;

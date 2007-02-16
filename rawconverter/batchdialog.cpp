@@ -36,6 +36,7 @@ extern "C"
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <qtimer.h>
+#include <qgroupbox.h>
 #include <qfileinfo.h>
 #include <qevent.h>
 #include <qpixmap.h>
@@ -77,7 +78,7 @@ extern "C"
 namespace KIPIRawConverterPlugin
 {
 
-BatchDialog::BatchDialog(QWidget* /*parent*/, const QString& dcrawVersion)
+BatchDialog::BatchDialog(QWidget* /*parent*/)
            : KDialogBase(0, 0, false, i18n("Raw Images Batch Converter"),
                          Help|Default|User1|User2|Close, Close, true,
                          i18n("Con&vert"), i18n("&Abort"))
@@ -86,7 +87,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/, const QString& dcrawVersion)
     m_thread             = 0;
     m_page = new QWidget( this );
     setMainWidget( m_page );
-    QGridLayout *mainLayout = new QGridLayout(m_page, 5, 1, 0, marginHint());
+    QGridLayout *mainLayout = new QGridLayout(m_page, 5, 1, 0, spacingHint());
 
     //---------------------------------------------
 
@@ -128,14 +129,15 @@ BatchDialog::BatchDialog(QWidget* /*parent*/, const QString& dcrawVersion)
 
     // ---------------------------------------------------------------
 
-    m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(m_page, dcrawVersion);
-    m_saveSettingsBox     = new SaveSettingsWidget(m_page);
+    QGroupBox *rawSettingsGroup = new QGroupBox(1, Qt::Vertical, i18n("RAW Decoding Settings"), m_page);
+    m_decodingSettingsBox       = new KDcrawIface::DcrawSettingsWidget(rawSettingsGroup);
+    m_saveSettingsBox           = new SaveSettingsWidget(m_page);
 
-    mainLayout->addMultiCellWidget(m_decodingSettingsBox, 1, 1, 1, 1);
+    mainLayout->addMultiCellWidget(rawSettingsGroup, 1, 1, 1, 1);
     mainLayout->addMultiCellWidget(m_saveSettingsBox, 2, 3, 1, 1);
 
     m_progressBar = new KProgress(m_page);
-    m_progressBar->setMaximumHeight( fontMetrics().height() );
+    m_progressBar->setMaximumHeight( fontMetrics().height()+2 );
     m_progressBar->setEnabled(false);
     mainLayout->addMultiCellWidget(m_progressBar, 4, 4, 1, 1);
 

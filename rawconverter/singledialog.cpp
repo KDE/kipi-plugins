@@ -37,6 +37,7 @@ extern "C"
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <qfileinfo.h>
+#include <qgroupbox.h>
 #include <qevent.h>
 #include <qpushbutton.h>
 #include <qfile.h>
@@ -73,7 +74,7 @@ extern "C"
 namespace KIPIRawConverterPlugin
 {
 
-SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/, const QString& dcrawVersion)
+SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
             : KDialogBase(0, 0, false, i18n("Raw Image Converter"),
                           Help|Default|User1|User2|User3|Close, Close, true,
                           i18n("&Preview"), i18n("Con&vert"), i18n("&Abort"))
@@ -83,7 +84,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/, const QStri
     
     QWidget *page = new QWidget( this );
     setMainWidget( page );
-    QGridLayout *mainLayout = new QGridLayout(page, 3, 1, 0, marginHint());
+    QGridLayout *mainLayout = new QGridLayout(page, 3, 1, 0, spacingHint());
 
     // --------------------------------------------------------------
 
@@ -123,10 +124,11 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/, const QStri
 
     // ---------------------------------------------------------------
 
-    m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(page, dcrawVersion);
-    m_saveSettingsBox     = new SaveSettingsWidget(page);
+    QGroupBox *rawSettingsGroup = new QGroupBox(1, Qt::Vertical, i18n("RAW Decoding Settings"), page);
+    m_decodingSettingsBox       = new KDcrawIface::DcrawSettingsWidget(rawSettingsGroup);
+    m_saveSettingsBox           = new SaveSettingsWidget(page);
 
-    mainLayout->addMultiCellWidget(m_decodingSettingsBox, 1, 1, 1, 1);
+    mainLayout->addMultiCellWidget(rawSettingsGroup, 1, 1, 1, 1);
     mainLayout->addMultiCellWidget(m_saveSettingsBox, 2, 2, 1, 1);
 
     mainLayout->setColStretch(0, 10);
