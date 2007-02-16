@@ -42,9 +42,12 @@ extern "C"
 
 #include <kdebug.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/rawfiles.h>
+
 // Local includes.
 
-#include "rawfiles.h"
 #include "utils.h"
 
 namespace KIPIJPEGLossLessPlugin
@@ -58,7 +61,7 @@ bool Utils::isJPEG(const QString& file)
 
 bool Utils::isRAW(const QString& file)
 {
-    QString rawFilesExt(kipi_raw_file_extentions);
+    QString rawFilesExt(raw_file_extentions);
 
     QFileInfo fileInfo(file);
     if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))

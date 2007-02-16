@@ -29,11 +29,15 @@
 #include <kiconloader.h>
 #include <kstandarddirs.h>				 
 
+// LibKDcraw includes.
+
+#include <libkdcraw/rawfiles.h>
+
+// Local includes.
 
 #include "ogl.h"
 #include "timer.h"
 #include "texture.h"
-#include "../common/include/rawfiles.h"
 				 
 using namespace std;
 using namespace KIPIviewer;
@@ -43,7 +47,7 @@ ogl::ogl(KIPI::Interface* interface) {
 		KIPI::ImageCollection album = interface->currentAlbum();
 		KURL::List myfiles;
 		
-		QString rawFilesExt(kipi_raw_file_extentions);
+		QString rawFilesExt(raw_file_extentions);
 		QString selectedImage;
 		int foundNumber=0;
 		file_idx=0; //index of picture to be displayed
