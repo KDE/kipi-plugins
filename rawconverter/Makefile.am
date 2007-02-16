@@ -1,6 +1,3 @@
-# Requires by dcraw.c implementation.
-KDE_OPTIONS = nofinal
-
 METASOURCES = AUTO
 SUBDIRS = profiles
 
@@ -41,6 +38,9 @@ messages: rc.cpp
 # The dcraw.c source code is just a copy of official implementation, but 
 # this one have been completly tested with this plugin. 
 # Note: dcraw project page is http://cybercom.net/~dcoffin
+
+# Requires by dcraw.c implementation.
+KDE_OPTIONS = nofinal
 
 bin_PROGRAMS = kipidcraw
 
