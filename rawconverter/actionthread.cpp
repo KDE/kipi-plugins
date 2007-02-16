@@ -7,6 +7,10 @@
  * Copyright 2003-2005 by Renchi Raju
  * Copyright 2006-2007 by Gilles Caulier
  *
+ * NOTE: Do not use kdDebug() in this implementation because 
+ *       it will be multithreaded. Use qDebug() instead. 
+ *       See B.K.O #133026 for details.
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
