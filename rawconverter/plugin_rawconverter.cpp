@@ -127,9 +127,9 @@ bool Plugin_RawConverter::isRAWFile(const QString& filePath)
 
 bool Plugin_RawConverter::checkBinaries()
 {
-    KDcrawIface::DcrawBinary dcrawBinary;
-    dcrawBinary.checkReport();
-    return dcrawBinary.isAvailable();
+    KDcrawIface::DcrawBinary::instance()->checkSystem();
+    KDcrawIface::DcrawBinary::instance()->checkReport();
+    return KDcrawIface::DcrawBinary::instance()->isAvailable();
 }
 
 void Plugin_RawConverter::slotActivateSingle()
