@@ -135,9 +135,10 @@ bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
                                           QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
                                           KDcrawIface::RawDecodingSettings rawDecodingSettings)
 {
-    int width, height;
+    int width, height, rgbmax;
     QByteArray imageData;
-    if (!KDcrawIface::KDcraw::decodeHalfRAWImage(filePath, rawDecodingSettings, imageData, width, height))
+    if (!KDcrawIface::KDcraw::decodeHalfRAWImage(filePath, rawDecodingSettings, 
+                                                 imageData, width, height, rgbmax))
         return false;
 
     return (loadedFromDcraw(filePath, destPath, outputFileFormat, 
@@ -148,9 +149,10 @@ bool RawDecodingIface::decodeRAWImage(const QString& filePath,
                                       QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
                                       KDcrawIface::RawDecodingSettings rawDecodingSettings)
 {
-    int width, height;
+    int width, height, rgbmax;
     QByteArray imageData;
-    if (!KDcrawIface::KDcraw::decodeRAWImage(filePath, rawDecodingSettings, imageData, width, height))
+    if (!KDcrawIface::KDcraw::decodeRAWImage(filePath, rawDecodingSettings, 
+                                             imageData, width, height, rgbmax))
         return false;
 
     return (loadedFromDcraw(filePath, destPath, outputFileFormat, 
