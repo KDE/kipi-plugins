@@ -142,7 +142,7 @@ bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
         return false;
 
     return (loadedFromDcraw(filePath, destPath, outputFileFormat, 
-                            imageData, width, height, rawDecodingSettings));
+                            imageData, width, height));
 }
 
 bool RawDecodingIface::decodeRAWImage(const QString& filePath, 
@@ -156,15 +156,14 @@ bool RawDecodingIface::decodeRAWImage(const QString& filePath,
         return false;
 
     return (loadedFromDcraw(filePath, destPath, outputFileFormat, 
-                            imageData, width, height, rawDecodingSettings));
+                            imageData, width, height));
 }
 
 // ----------------------------------------------------------------------------------
 
 bool RawDecodingIface::loadedFromDcraw(const QString& filePath, 
                                        QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
-                                       QByteArray imageData, int width, int height,
-                                       KDcrawIface::RawDecodingSettings rawDecodingSettings)
+                                       QByteArray imageData, int width, int height)
 {
     // -- Use a QImage instance to write IPTC preview and Exif thumbnail -------
 
@@ -188,7 +187,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
 
     // -- Write image data into destination file -------------------------------
 
-    QByteArray ICCColorProfile = getICCProfilFromFile(rawDecodingSettings.outputColorSpace);
+    QByteArray ICCColorProfile = getICCProfilFromFile(m_rawDecodingSettings.outputColorSpace);
     QString soft = QString("Kipi Raw Converter v.%1").arg(kipiplugins_version);
     QFileInfo fi(filePath);
     destPath = fi.dirPath(true) + QString("/") + ".kipi-rawconverter-tmp-" 
