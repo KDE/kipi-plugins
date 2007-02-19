@@ -130,7 +130,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     // ---------------------------------------------------------------
 
     QGroupBox *rawSettingsGroup = new QGroupBox(1, Qt::Vertical, i18n("RAW Decoding Settings"), m_page);
-    m_decodingSettingsBox       = new KDcrawIface::DcrawSettingsWidget(rawSettingsGroup);
+    m_decodingSettingsBox       = new KDcrawIface::DcrawSettingsWidget(rawSettingsGroup, false, true, true);
     m_saveSettingsBox           = new SaveSettingsWidget(m_page);
 
     mainLayout->addMultiCellWidget(rawSettingsGroup, 1, 1, 1, 1);
