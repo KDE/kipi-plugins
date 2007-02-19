@@ -11,7 +11,7 @@ METASOURCES = AUTO
 kde_module_LTLIBRARIES = kipiplugin_viewer.la
 
 kipiplugin_viewer_la_SOURCES = ogl.cpp texture.cpp timer.cpp plugin_viewer.cpp
-kipiplugin_viewer_la_LIBADD = $(LIB KPARTS) $(LIBKIPI_LIBS) -lGL
+kipiplugin_viewer_la_LIBADD = $(LIB_KPARTS) $(LIBKIPI_LIBS) -lGL
 kipiplugin_viewer_la_LDFLAGS = -module $(KDE PLUGIN) $(all libraries)
 
 kde_services_DATA = kipiplugin_viewer.desktop
