@@ -230,8 +230,10 @@ void BatchDialog::readSettings()
     m_decodingSettingsBox->setFourColor(config.readBoolEntry("Four Color RGB", false));
     m_decodingSettingsBox->setUnclipColor(config.readNumEntry("Unclip Color", 0));
     m_decodingSettingsBox->setDontStretchPixels(config.readBoolEntry("Dont Stretch Pixels", false));
-    m_decodingSettingsBox->setNoiseReduction(config.readBoolEntry("Use Noise Resuction", false));
+    m_decodingSettingsBox->setNoiseReduction(config.readBoolEntry("Use Noise Reduction", false));
     m_decodingSettingsBox->setBrightness(config.readDoubleNumEntry("Brightness Multiplier", 1.0));
+    m_decodingSettingsBox->setUseBlackPoint(config.readBoolEntry("Use Black Point", false));
+    m_decodingSettingsBox->setBlackPoint(config.readNumEntry("Black Point", 0));
     m_decodingSettingsBox->setSigmaDomain(config.readDoubleNumEntry("Sigma Domain", 2.0));
     m_decodingSettingsBox->setSigmaRange(config.readDoubleNumEntry("Sigma Range", 4.0));
 
@@ -264,8 +266,10 @@ void BatchDialog::saveSettings()
     config.writeEntry("Four Color RGB", m_decodingSettingsBox->useFourColor());
     config.writeEntry("Unclip Color", m_decodingSettingsBox->unclipColor());
     config.writeEntry("Dont Stretch Pixels", m_decodingSettingsBox->useDontStretchPixels());
-    config.writeEntry("Use Noise Resuction", m_decodingSettingsBox->useNoiseReduction());
+    config.writeEntry("Use Noise Reduction", m_decodingSettingsBox->useNoiseReduction());
     config.writeEntry("Brightness Multiplier", m_decodingSettingsBox->brightness());
+    config.writeEntry("Use Black Point", m_decodingSettingsBox->useBlackPoint());
+    config.writeEntry("Black Point", m_decodingSettingsBox->blackPoint());
     config.writeEntry("Sigma Domain", m_decodingSettingsBox->sigmaDomain());
     config.writeEntry("Sigma Range", m_decodingSettingsBox->sigmaRange());
     config.writeEntry("Decoding Quality", (int)m_decodingSettingsBox->quality());
@@ -316,9 +320,11 @@ void BatchDialog::slotUser1()
     rawDecodingSettings.automaticColorBalance   = m_decodingSettingsBox->useAutoColorBalance();
     rawDecodingSettings.RGBInterpolate4Colors   = m_decodingSettingsBox->useFourColor();
     rawDecodingSettings.unclipColors            = m_decodingSettingsBox->unclipColor();
-    rawDecodingSettings.DontStretchPixels = m_decodingSettingsBox->useDontStretchPixels();
+    rawDecodingSettings.DontStretchPixels       = m_decodingSettingsBox->useDontStretchPixels();
     rawDecodingSettings.enableNoiseReduction    = m_decodingSettingsBox->useNoiseReduction();
     rawDecodingSettings.brightness              = m_decodingSettingsBox->brightness();
+    rawDecodingSettings.enableBlackPoint        = m_decodingSettingsBox->useBlackPoint();
+    rawDecodingSettings.blackPoint              = m_decodingSettingsBox->blackPoint();
     rawDecodingSettings.NRSigmaDomain           = m_decodingSettingsBox->sigmaDomain();
     rawDecodingSettings.NRSigmaRange            = m_decodingSettingsBox->sigmaRange();
     rawDecodingSettings.RAWQuality              = m_decodingSettingsBox->quality();
