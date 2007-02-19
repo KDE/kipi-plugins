@@ -1,6 +1,6 @@
 /* ============================================================
  * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ *          Gilles Caulier <caulier dot gilles at gmail dot com>
  * Date  : 2003-10-24
  * Description : Raw converter batch dialog
  *
@@ -159,7 +159,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
                        "renchi@pooh.tam.uiuc.edu");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Maintainer"),
-                       "caulier dot gilles at kdemail dot net");
+                       "caulier dot gilles at gmail dot com");
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);

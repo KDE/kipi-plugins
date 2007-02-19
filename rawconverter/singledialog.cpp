@@ -1,6 +1,6 @@
 /* ============================================================
  * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ *          Gilles Caulier <caulier dot gilles at gmail dot com>
  * Date   : 2003-10-22
  * Description : Raw converter single dialog
  *
@@ -111,16 +111,8 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
 
     // --------------------------------------------------------------
 
-    QGroupBox *lbox = new QGroupBox(i18n("Image Preview"), page);
-    lbox->setColumnLayout(0, Qt::Vertical);
-    lbox->layout()->setSpacing( spacingHint() );
-    lbox->layout()->setMargin( marginHint() );
-    QVBoxLayout* lboxLayout = new QVBoxLayout(lbox->layout());
-
-    m_previewWidget = new PreviewWidget(lbox);
-    lboxLayout->addWidget(m_previewWidget);
-
-    mainLayout->addMultiCellWidget(lbox, 1, 3, 0, 0);
+    m_previewWidget = new PreviewWidget(page);
+    mainLayout->addMultiCellWidget(m_previewWidget, 1, 3, 0, 0);
 
     // ---------------------------------------------------------------
 
@@ -149,7 +141,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
                        "renchi@pooh.tam.uiuc.edu");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Maintainer"),
-                       "caulier dot gilles at kdemail dot net");
+                       "caulier dot gilles at gmail dot com");
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);

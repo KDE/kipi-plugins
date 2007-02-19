@@ -1,11 +1,11 @@
 /* ============================================================
  * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ *          Gilles Caulier <caulier dot gilles at gmail dot com>
  * Date   : 2003-10-22
  * Description : preview raw file widget used in single convert
  *
  * Copyright 2003-2005 by Renchi Raju
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,7 +26,7 @@
 // Qt includes.
 
 #include <qcolor.h>
-#include <qwidget.h>
+#include <qframe.h>
 #include <qstring.h>
 
 class QPaintEvent;
@@ -36,7 +36,7 @@ namespace KIPIRawConverterPlugin
 {
 class PreviewWidgetPriv;
 
-class PreviewWidget : public QWidget
+class PreviewWidget : public QFrame
 {
     Q_OBJECT
     

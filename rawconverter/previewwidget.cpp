@@ -1,11 +1,11 @@
 /* ============================================================
  * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ *          Gilles Caulier <caulier dot gilles at gmail dot com>
  * Date   : 2003-10-22
  * Description : preview raw file widget used in single convert
  *
  * Copyright 2003-2005 by Renchi Raju
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -61,13 +61,17 @@ public:
 };
 
 PreviewWidget::PreviewWidget(QWidget *parent)
-             : QWidget(parent, 0, Qt::WRepaintNoErase)
+             : QFrame(parent, 0, Qt::WRepaintNoErase)
 {
     d = new PreviewWidgetPriv;
-    setMinimumSize(QSize(484, 364));
+    setFrameStyle(QFrame::GroupBoxPanel|QFrame::Plain); 
+    setMargin(0); 
+    setLineWidth(1); 
+
+    setMinimumSize(QSize(400, 300));
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    d->pix = new QPixmap(484,364);
+    d->pix = new QPixmap(400, 300);
     d->pix->fill(Qt::black);
 
     d->timer = new QTimer(this);
