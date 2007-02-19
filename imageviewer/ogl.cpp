@@ -29,10 +29,6 @@
 #include <kiconloader.h>
 #include <kstandarddirs.h>				 
 
-// LibKDcraw includes.
-
-#include <libkdcraw/rawfiles.h>
-
 // Local includes.
 
 #include "ogl.h"
@@ -47,7 +43,6 @@ ogl::ogl(KIPI::Interface* interface) {
 		KIPI::ImageCollection album = interface->currentAlbum();
 		KURL::List myfiles;
 		
-		QString rawFilesExt(raw_file_extentions);
 		QString selectedImage;
 		int foundNumber=0;
 		file_idx=0; //index of picture to be displayed
@@ -76,12 +71,8 @@ ogl::ogl(KIPI::Interface* interface) {
 				
 				KMimeType::Ptr type = KMimeType::findByURL(s);
 				bool isImage=type->name().find("image")>=0;
-				
-				//RAW files not yet supported. 
-				QFileInfo fileInfo(s);
-				bool isRAW=rawFilesExt.upper().contains( fileInfo.extension(false).upper() );
-					
-				if ( isImage && !isRAW ) {
+													
+				if ( isImage ) {
 					files.append(s);
 					foundNumber++;  //counter for searching the start image in case one  image is selected
 					kdDebug(51000) << s << " type=" << type->name() << endl;

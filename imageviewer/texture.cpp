@@ -17,11 +17,25 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Cambridge, MA 02110-1301, USA.        *
  ***************************************************************************/
-#include "texture.h"
-#include "timer.h"
+
+// Qt includes.
+
+#include <qwmatrix.h>
+#include <qfileinfo.h>
+
 #include <jpeglib.h>
 #include <iostream>
-#include <qwmatrix.h>
+
+// LibKDcraw includes.
+
+#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/kdcraw.h>
+
+// Local includes.
+
+#include "timer.h"
+#include "texture.h"
+
 
 using namespace std;
 using namespace KIPIviewer;
@@ -77,7 +91,17 @@ bool Texture::load(QString fn, QSize size, GLuint tn)
 	filename=fn;
 	initial_size=size;
 	_texnr=tn;
-	qimage=QImage(fn);
+
+	// check if its a RAW file.
+	QString rawFilesExt(raw_file_extentions);
+	QFileInfo fileInfo(fn);
+	if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() )) {
+		//it's a RAW file, use the libkdcraw loader
+		KDcrawIface::KDcraw::loadDcrawPreview(qimage, fn);
+	}	else {
+		//use the standard loader
+		qimage=QImage(fn);
+	}
 	
 	if (qimage.isNull()) {
 		return false;
