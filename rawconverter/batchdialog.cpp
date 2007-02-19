@@ -229,7 +229,7 @@ void BatchDialog::readSettings()
     m_decodingSettingsBox->setAutoColorBalance(config.readBoolEntry("Use Auto Color Balance", true));
     m_decodingSettingsBox->setFourColor(config.readBoolEntry("Four Color RGB", false));
     m_decodingSettingsBox->setUnclipColor(config.readNumEntry("Unclip Color", 0));
-    m_decodingSettingsBox->setSecondarySensor(config.readBoolEntry("Use Secondary Sensor", false));
+    m_decodingSettingsBox->setDontStretchPixels(config.readBoolEntry("Dont Stretch Pixels", false));
     m_decodingSettingsBox->setNoiseReduction(config.readBoolEntry("Use Noise Resuction", false));
     m_decodingSettingsBox->setBrightness(config.readDoubleNumEntry("Brightness Multiplier", 1.0));
     m_decodingSettingsBox->setSigmaDomain(config.readDoubleNumEntry("Sigma Domain", 2.0));
@@ -263,7 +263,7 @@ void BatchDialog::saveSettings()
     config.writeEntry("Use Auto Color Balance", m_decodingSettingsBox->useAutoColorBalance());
     config.writeEntry("Four Color RGB", m_decodingSettingsBox->useFourColor());
     config.writeEntry("Unclip Color", m_decodingSettingsBox->unclipColor());
-    config.writeEntry("Use Secondary Sensor", m_decodingSettingsBox->useSecondarySensor());
+    config.writeEntry("Dont Stretch Pixels", m_decodingSettingsBox->useDontStretchPixels());
     config.writeEntry("Use Noise Resuction", m_decodingSettingsBox->useNoiseReduction());
     config.writeEntry("Brightness Multiplier", m_decodingSettingsBox->brightness());
     config.writeEntry("Sigma Domain", m_decodingSettingsBox->sigmaDomain());
@@ -316,7 +316,7 @@ void BatchDialog::slotUser1()
     rawDecodingSettings.automaticColorBalance   = m_decodingSettingsBox->useAutoColorBalance();
     rawDecodingSettings.RGBInterpolate4Colors   = m_decodingSettingsBox->useFourColor();
     rawDecodingSettings.unclipColors            = m_decodingSettingsBox->unclipColor();
-    rawDecodingSettings.SuperCCDsecondarySensor = m_decodingSettingsBox->useSecondarySensor();
+    rawDecodingSettings.DontStretchPixels = m_decodingSettingsBox->useDontStretchPixels();
     rawDecodingSettings.enableNoiseReduction    = m_decodingSettingsBox->useNoiseReduction();
     rawDecodingSettings.brightness              = m_decodingSettingsBox->brightness();
     rawDecodingSettings.NRSigmaDomain           = m_decodingSettingsBox->sigmaDomain();
