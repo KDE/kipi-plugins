@@ -102,19 +102,20 @@ Check this with './configure --help' command line.
 Dependencies :
 -----------------------------------------------------------------------
 
-AutoConf    >= 2.5
-AutoMake    >= 1.7.0
-KDE         >= 3.1.x
-Qt          >= 3.3.x
-ImageMagick >= 5.5.4
-MJPEGTools  >= 1.6.0
-imlib2      >= 1.1.0
-libgphoto2  >= 2.x
-libtiff     >= 3.5.x
-libkexiv2   >= 0.1
-libkdcraw   >= 0.1
-libxslt     >= 1.1
-libgpod     >= 0.4.2
+AutoConf    >= 2.5.x                        http://www.gnu.org/software/autoconf
+AutoMake    >= 1.7.x                        http://www.gnu.org/software/automake
+libqt       >= 3.3.x                        http://www.trolltech.com
+libkde      >= 3.4.x (>=3.5.x recommended)  http://www.kde.org
+imlib2      >= 1.1.0                        http://www.enlightenment.org/Libraries/Imlib2
+libgphoto2  >= 2.x   (>=2.2.x recommended)  http://www.gphoto.org
+libtiff     >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/libtiff
+libkexiv2   >= 0.1                          http://www.kipi-plugins.org
+libkdcraw   >= 0.1                          http://www.kipi-plugins.org
+libxslt     >= 1.1                          http://xmlsoft.org/XSLT
+libgpod     >= 0.4.2                        http://www.gtkpod.org/libgpod
+ImageMagick >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
+MJPEGTools  >= 1.6.0 (runtime dependency)   http://mjpeg.sourceforge.net
+K3b         >= 0.11  (runtime dependency)   http://www.k3b.org
 
 Plugin Specific Dependencies (for compiling and for running) :
 -------------------------------------------------------------------------
@@ -126,7 +127,7 @@ cdarchiving        : k3b (runtime dependency)
 kameraklient       : libgphoto2
 mpegenconder       : mjpegtools (runtime dependency)
 wallpaper          : kdebase (runtime dependency)
-rawconverter       : libtiff, libkdcraw 
+rawconverter       : libtiff 
 acquireimages      : libtiff
 htmlexport         : libxslt
 ipodexport         : libgpod
