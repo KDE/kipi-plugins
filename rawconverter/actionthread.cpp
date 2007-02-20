@@ -66,11 +66,23 @@ ActionThread::~ActionThread()
     wait();
 }
 
-void ActionThread::identifyRawFile(const KURL& url)
+void ActionThread::identifyRawFile(const KURL& url, bool full)
 {
     KURL::List oneFile;
     oneFile.append(url);
-    identifyRawFiles(oneFile);
+    identifyRawFiles(oneFile, full);
+}
+
+void ActionThread::identifyRawFiles(const KURL::List& urlList, bool full)
+{
+    for (KURL::List::const_iterator it = urlList.begin();
+         it != urlList.end(); ++it ) 
+    {
+        Task *t     = new Task;
+        t->filePath = QDeepCopy<QString>((*it).path()); //deep copy
+        t->action   = full ? IDENTIFY_FULL : IDENTIFY;
+        m_taskQueue.enqueue(t);
+    }
 }
 
 void ActionThread::processRawFile(const KURL& url)
@@ -85,18 +97,6 @@ void ActionThread::processHalfRawFile(const KURL& url)
     KURL::List oneFile;
     oneFile.append(url);
     processHalfRawFiles(oneFile);
-}
-
-void ActionThread::identifyRawFiles(const KURL::List& urlList)
-{
-    for (KURL::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) 
-    {
-        Task *t     = new Task;
-        t->filePath = QDeepCopy<QString>((*it).path()); //deep copy
-        t->action   = IDENTIFY;
-        m_taskQueue.enqueue(t);
-    }
 }
 
 void ActionThread::setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings, 
@@ -154,6 +154,7 @@ void ActionThread::run()
         switch (t->action) 
         {
             case IDENTIFY: 
+            case IDENTIFY_FULL: 
             {
                 // Get embedded RAW file thumbnail.
                 QImage image;
@@ -165,10 +166,45 @@ void ActionThread::run()
 
                 QString identify = i18n("Cannot identify RAW file");
                 if (info.isDecodable)
-                    identify = info.make + QString(" ") + info.model;
+                {
+                    if (t->action == IDENTIFY)
+                        identify = info.make + QString("-") + info.model;
+                    else
+                    {
+                        long int num, den;
+                        identify = i18n("Make: %1\n").arg(info.make); 
+                        identify.append(i18n("Model: %1\n").arg(info.model));
+
+                        if (info.dateTime.isValid())
+                        {
+                            identify.append(i18n("Created: %1\n")
+                                    .arg(KGlobal::locale()->formatDateTime(info.dateTime, true, true)));
+                        }
+
+                        if (info.aperture != -1.0)
+                        {
+                            identify.append(i18n("Aperture: f/%1\n").arg(QString::number(info.aperture)));
+                        }
+
+                        if (info.focalLength != -1.0)
+                        {
+                            identify.append(i18n("Focal: %1 mm\n").arg(info.focalLength));
+                        }                        
+
+                        if (info.exposureTime != -1.0)
+                        {
+                            identify.append(i18n("Exposure: 1/%1 s\n").arg(info.exposureTime));
+                        }
+   
+                        if (info.sensitivity != -1)
+                        {
+                            identify.append(i18n("Sensitivity: %1 ISO").arg(info.sensitivity));
+                        }
+                    }
+                }
 
                 EventData *r = new EventData;
-                r->action    = IDENTIFY;
+                r->action    = t->action;
                 r->filePath  = t->filePath;
                 r->image     = image;
                 r->message   = identify;

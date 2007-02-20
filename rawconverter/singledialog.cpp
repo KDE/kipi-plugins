@@ -334,7 +334,7 @@ void SingleDialog::slotUser3()
 
 void SingleDialog::slotIdentify()
 {
-    m_thread->identifyRawFile(KURL(m_inputFile));
+    m_thread->identifyRawFile(KURL(m_inputFile), true);
     if (!m_thread->running())
         m_thread->start();
 }
@@ -351,7 +351,7 @@ void SingleDialog::busy(bool val)
 
 void SingleDialog::identified(const QString&, const QString& identity)
 {
-    m_previewWidget->setText(m_inputFileName + QString(" : ") + identity);
+    m_previewWidget->setText(m_inputFileName + QString(" :\n") + identity);
 }
 
 void SingleDialog::previewing(const QString&)
@@ -493,7 +493,7 @@ void SingleDialog::customEvent(QCustomEvent *event)
     {
         switch (d->action) 
         {
-            case(IDENTIFY): 
+            case(IDENTIFY_FULL): 
                 break;
             case(PREVIEW):
             {
@@ -520,7 +520,7 @@ void SingleDialog::customEvent(QCustomEvent *event)
         {
             switch (d->action) 
             {
-                case(IDENTIFY): 
+                case(IDENTIFY_FULL): 
                     break;
                 case(PREVIEW):
                 {
@@ -545,7 +545,7 @@ void SingleDialog::customEvent(QCustomEvent *event)
         {
             switch (d->action)
             {
-                case(IDENTIFY): 
+                case(IDENTIFY_FULL): 
                 {
                     identified(d->filePath, d->message);
                     busy(false);

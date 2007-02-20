@@ -28,6 +28,7 @@ enum Action
 {
     NONE = 0,
     IDENTIFY,
+    IDENTIFY_FULL,
     PREVIEW,
     PROCESS
 };

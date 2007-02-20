@@ -58,13 +58,14 @@ public:
     void setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings, 
                                 SaveSettingsWidget::OutputFormat outputFormat);
 
-    void identifyRawFile(const KURL& url);
-    void processRawFile(const KURL& url);
-    void processHalfRawFile(const KURL& url);
+    void identifyRawFile(const KURL& url, bool full=false);
+    void identifyRawFiles(const KURL::List& urlList, bool full=false);
 
-    void identifyRawFiles(const KURL::List& urlList);
-    void processRawFiles(const KURL::List& urlList);
+    void processHalfRawFile(const KURL& url);
     void processHalfRawFiles(const KURL::List& urlList);
+
+    void processRawFile(const KURL& url);
+    void processRawFiles(const KURL::List& urlList);
 
     void cancel();
 
