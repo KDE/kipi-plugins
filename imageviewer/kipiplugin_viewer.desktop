@@ -10,6 +10,7 @@ Name[ja]=ビューア
 Name[pt]=Visualizador
 Name[pt_BR]=Visualizador
 Name[sv]=Visning
+Comment=KIPI OpenGL Image Viewer
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_viewer
