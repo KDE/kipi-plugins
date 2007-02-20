@@ -29,6 +29,10 @@ extern "C"
 #include <unistd.h>
 }
 
+// C++ includes.
+
+#include <cstdio> 
+
 // Qt includes.
 
 #include <qtimer.h>
