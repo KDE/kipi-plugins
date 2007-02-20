@@ -49,7 +49,7 @@ void Plugin_viewer::setup( QWidget* widget )
     }
 
 	actionViewer = new KAction (i18n("Image Viewer"),
-                                     "viewer",
+                                     "ogl",
                                      0, // do never set shortcuts from plugins.
                                      this,
                                      SLOT(slotActivate()),

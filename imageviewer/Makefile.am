@@ -15,6 +15,9 @@ kipiplugin_viewer_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUG
 kde_services_DATA = kipiplugin_viewer.desktop
 
 
+kipiviewericondir = $(kde_datadir)/kipiplugin_viewer/icons
+kipiviewericon_ICON = AUTO
+
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_viewer.pot
 
