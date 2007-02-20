@@ -23,12 +23,11 @@
 // Qt includes.
 
 #include <qpainter.h>
-#include <qpixmap.h>
+#include <qimage.h>
 #include <qstring.h>
 #include <qevent.h>
 #include <qtimer.h>
 #include <qfile.h>
-#include <qimage.h>
 
 // KDE includes.
 
@@ -106,21 +105,32 @@ void PreviewWidget::load(const QString& file)
     }
     else 
     {
-        setText(i18n( "Failed to load image after processing" ));
+        setInfo(i18n( "Failed to load image after processing" ));
         return;
     }
 
     update();
 }
 
-void PreviewWidget::setText(const QString& text, const QColor& color)
+void PreviewWidget::setInfo(const QString& text, const QColor& color, const QPixmap& preview)
 {
     d->text = text;
     d->pix->fill(Qt::black);
     QPainter p(d->pix);
     p.setPen(QPen(color));
-    p.drawText(0, 0, d->pix->width(), d->pix->height(),
-               Qt::AlignCenter|Qt::WordBreak, text);
+
+    if (!preview.isNull())
+    {
+        p.drawPixmap(d->pix->width()/2-preview.width()/2, d->pix->height()/4-preview.height()/2, 
+                     preview, 0, 0, preview.width(), preview.height());
+        p.drawText(0, d->pix->height()/2, d->pix->width(), d->pix->height()/2,
+                   Qt::AlignCenter|Qt::WordBreak, text);
+    }
+    else
+    {
+        p.drawText(0, 0, d->pix->width(), d->pix->height(),
+                Qt::AlignCenter|Qt::WordBreak, text);
+    }
     p.end();
     update();
 }

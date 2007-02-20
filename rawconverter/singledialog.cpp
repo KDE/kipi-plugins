@@ -353,9 +353,9 @@ void SingleDialog::busy(bool val)
     enableButton (Close, !val);
 }
 
-void SingleDialog::identified(const QString&, const QString& identity)
+void SingleDialog::identified(const QString&, const QString& identity, const QPixmap& preview)
 {
-    m_previewWidget->setText(m_inputFileName + QString(" :\n") + identity);
+    m_previewWidget->setInfo(m_inputFileName + QString(" :\n") + identity, Qt::white, preview);
 }
 
 void SingleDialog::previewing(const QString&)
@@ -377,7 +377,7 @@ void SingleDialog::previewFailed(const QString&)
 {
     m_previewWidget->unsetCursor();
     m_blinkPreviewTimer->stop();
-    m_previewWidget->setText(i18n("Failed to generate preview"), Qt::red);
+    m_previewWidget->setInfo(i18n("Failed to generate preview"), Qt::red);
 }
 
 void SingleDialog::processing(const QString&)
@@ -456,7 +456,7 @@ void SingleDialog::processingFailed(const QString&)
 {
     m_previewWidget->unsetCursor();
     m_blinkConvertTimer->stop();
-    m_previewWidget->setText(i18n("Failed to convert Raw image"), Qt::red);
+    m_previewWidget->setInfo(i18n("Failed to convert Raw image"), Qt::red);
 }
 
 void SingleDialog::slotPreviewBlinkTimerDone()
@@ -464,9 +464,9 @@ void SingleDialog::slotPreviewBlinkTimerDone()
     QString preview = i18n("Generating Preview...");
 
     if (m_previewBlink)
-        m_previewWidget->setText(preview, Qt::green);
+        m_previewWidget->setInfo(preview, Qt::green);
     else
-        m_previewWidget->setText(preview, Qt::darkGreen);
+        m_previewWidget->setInfo(preview, Qt::darkGreen);
 
     m_previewBlink = !m_previewBlink;
     m_blinkPreviewTimer->start(200);
@@ -477,9 +477,9 @@ void SingleDialog::slotConvertBlinkTimerDone()
     QString convert = i18n("Converting Raw Image...");
 
     if (m_convertBlink)
-        m_previewWidget->setText(convert, Qt::green);
+        m_previewWidget->setInfo(convert, Qt::green);
     else
-        m_previewWidget->setText(convert, Qt::darkGreen);
+        m_previewWidget->setInfo(convert, Qt::darkGreen);
 
     m_convertBlink = !m_convertBlink;
     m_blinkConvertTimer->start(200);
@@ -552,7 +552,8 @@ void SingleDialog::customEvent(QCustomEvent *event)
             {
                 case(IDENTIFY_FULL): 
                 {
-                    identified(d->filePath, d->message);
+                    QPixmap pix = QPixmap(d->image.scale(256, 256, QImage::ScaleMin));
+                    identified(d->filePath, d->message, pix);
                     busy(false);
                     break;
                 }

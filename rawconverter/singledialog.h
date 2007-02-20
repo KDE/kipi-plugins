@@ -72,7 +72,7 @@ private:
 
     void busy(bool busy);
 
-    void identified(const QString&, const QString& identity);
+    void identified(const QString&, const QString& identity, const QPixmap& preview);
 
     void previewing(const QString&);
     void previewed(const QString&, const QString& tmpFile);

@@ -27,6 +27,7 @@
 
 #include <qcolor.h>
 #include <qframe.h>
+#include <qpixmap.h>
 #include <qstring.h>
 
 class QPaintEvent;
@@ -46,7 +47,8 @@ public:
     ~PreviewWidget();
 
     void load(const QString& file);
-    void setText(const QString& text, const QColor& color=Qt::white);
+    void setInfo(const QString& text, const QColor& color=Qt::white, 
+                 const QPixmap& preview=QPixmap());
 
 protected:
 
