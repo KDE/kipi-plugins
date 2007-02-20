@@ -19,14 +19,26 @@
  * 
  * ============================================================ */
 
+// Qt includes.
+
 #include <qwidget.h>
 #include <qstring.h>
 #include <qfile.h>
 #include <qfileinfo.h>
+#include <qimage.h>
 #include <qpixmap.h>
+
+// LibKDcraw includes.
+
+#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/kdcraw.h>
+
+// Imlib2 includes.
 
 #include <X11/Xlib.h>
 #include <Imlib2.h>
+
+// Local includes.
 
 #include "imlibiface.h"
 
@@ -81,7 +93,24 @@ ImImageSS::ImImageSS(ImlibIface *imIface, const QString& file, int angle)
 
     imlib_context_push(imIface_->d->context);
     
-    d->image = imlib_load_image(QFile::encodeName(file).data());
+    QString rawFilesExt(raw_file_extentions);
+
+    // Check if RAW file.
+    QFileInfo fileInfo(file);
+    if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
+    {
+        QImage rawPreview;
+        KDcrawIface::KDcraw::loadDcrawPreview(rawPreview, file);
+        d->image = imlib_create_image(rawPreview.width(), rawPreview.height());
+        imlib_context_set_image(d->image);
+        DATA32* data = imlib_image_get_data_for_reading_only();
+        memcpy(data, rawPreview.bits(), rawPreview.numBytes());
+    }
+    else
+    {
+        d->image = imlib_load_image(QFile::encodeName(file).data());
+    }
+
     if (d->image) {
         imlib_context_set_image(d->image);
         d->valid = true;
