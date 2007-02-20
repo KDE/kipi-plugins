@@ -1,5 +1,5 @@
 /* ============================================================
- * Authors: Gilles Caulier <caulier dot gilles at free.fr>
+ * Authors: Gilles Caulier <caulier dot gilles at gmail dot com>
  * Date   : 2003-10-01
  * Description : a kipi plugin for e-mailing images
  * 

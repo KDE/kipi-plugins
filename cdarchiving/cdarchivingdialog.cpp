@@ -1,5 +1,5 @@
 /* ============================================================
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
+ * Author: Gilles Caulier <caulier dot gilles at gmail dot com>
  *         from digiKam project.
  * Date  : 2003-10-01
  * Description : a kipi plugin to export image collections
@@ -107,7 +107,7 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
                                            "(c) 2003-2005, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author"),
-                       "caulier dot gilles at free.fr");
+                       "caulier dot gilles at gmail dot com");
 
     m_about->addAuthor("Angelo Naselli", I18N_NOOP("Contributor"),
                        "anaselli at linux.it");

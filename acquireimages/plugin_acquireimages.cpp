@@ -2,7 +2,7 @@
 //
 //    plugin_acquireimages.cpp
 //
-//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at gmail dot com>
 //
 //    Description : KIPI Acquire Images Plugin.
 //

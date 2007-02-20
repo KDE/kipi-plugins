@@ -50,4 +50,4 @@ Comment[zh_CN]=KIPI 查找图像插件
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_findimages
-author=Caulier Gilles, caulier dot gilles at free.fr
+author=Caulier Gilles, caulier dot gilles at gmail dot com

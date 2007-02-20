@@ -1,6 +1,6 @@
 /* ============================================================
  *
- * Copyright (C) 2003-2005 Gilles CAULIER <caulier dot gilles at free.fr>
+ * Copyright (C) 2003-2005 Gilles CAULIER <caulier dot gilles at gmail dot com>
  * Copyright (C) 2005 by Owen Hirst <n8rider@sbcglobal.net>
  *
  * This program is free software; you can redistribute it
@@ -55,7 +55,7 @@ RenameImagesDialog::RenameImagesDialog(const KURL::List& images,
                                            "(c) 2003-2005, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                     "caulier dot gilles at free.fr");
+                     "caulier dot gilles at gmail dot com");
 
     QPushButton* helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);

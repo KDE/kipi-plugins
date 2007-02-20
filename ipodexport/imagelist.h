@@ -2,7 +2,7 @@
 //
 //    ImageList.H
 //
-//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at gmail dot com>
 //              (C) 2006 Seb Ruiz <me@sebruiz.net>
 //
 //    This program is free software; you can redistribute it and/or modify

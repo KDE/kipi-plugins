@@ -1,5 +1,5 @@
 /* ============================================================
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
+ * Author: Gilles Caulier <caulier dot gilles at gmail dot com>
  *         from digiKam project.
  * Date  : 2004-02-25
  * Description : a kipi plugin for e-mailing images

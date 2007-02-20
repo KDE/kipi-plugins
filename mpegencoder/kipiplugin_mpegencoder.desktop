@@ -47,5 +47,5 @@ Comment[zh_CN]=KIPI 图像 MPEG 编码器插件
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_mpegencoder
-author=Gilles Caulier, caulier dot gilles at free.fr
+author=Gilles Caulier, caulier dot gilles at gmail dot com
 X-KIPI-MergeMenu=true

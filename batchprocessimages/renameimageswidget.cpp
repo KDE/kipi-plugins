@@ -1,5 +1,5 @@
 // ============================================================
-// Copyright (C) 2003-2005 Gilles CAULIER <caulier dot gilles at free.fr>
+// Copyright (C) 2003-2005 Gilles CAULIER <caulier dot gilles at gmail dot com>
 // Copyright (C) 2005 by Owen Hirst <n8rider@sbcglobal.net>
 //
 // This program is free software; you can redistribute it

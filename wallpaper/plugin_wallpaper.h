@@ -2,7 +2,7 @@
  * File   : plugin_wallpaper.h
  *
  * Authors: Gregory KOKANOSKY <gregory dot kokanosky at free.fr>
- *          Gilles Caulier <caulier dot gilles at free.fr>
+ *          Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * Date   : 01/2004
  *

@@ -2,7 +2,7 @@
 //
 //    OUTPUTDIALOG.CPP
 //
-//    Copyright (C) 2003 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2003 Gilles CAULIER <caulier dot gilles at gmail dot com>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
                                            "(c) 2003-2004, Gilles Caulier"); 
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                       "caulier dot gilles at free.fr");
+                       "caulier dot gilles at gmail dot com");
 
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);

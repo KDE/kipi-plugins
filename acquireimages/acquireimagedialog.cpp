@@ -126,7 +126,7 @@ AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *par
                                            "(c) 2003-2004, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                       "caulier dot gilles at free.fr");
+                       "caulier dot gilles at gmail dot com");
 
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);

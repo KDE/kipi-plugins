@@ -1,6 +1,6 @@
 /* ============================================================
  * File  : plugin_mpegencoder.h
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
+ * Author: Gilles Caulier <caulier dot gilles at gmail dot com>
  * Date  : 2003-09-02
  * Description :
  *

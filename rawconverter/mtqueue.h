@@ -1,5 +1,5 @@
 /* ============================================================
- * Authors: Gilles Caulier <caulier dot gilles at free.fr>
+ * Authors: Gilles Caulier <caulier dot gilles at gmail dot com>
  * Date   : 2006-12-09
  * Description : Multithread queue description class 
  *

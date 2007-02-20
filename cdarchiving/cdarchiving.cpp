@@ -2,7 +2,7 @@
 //
 //    CDARCHIVING.CPP
 //
-//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2003-2004 Gilles Caulier <caulier dot gilles at gmail dot com>
 //    Copyright (C) 2003-2004 by Gregory Kokanosky <gregory dot kokanosky at free.fr>
 //    for images navigation mode.
 //

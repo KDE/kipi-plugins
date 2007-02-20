@@ -2,7 +2,7 @@
 //
 //    COLOROPTIONSDIALOG.CPP
 //
-//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles CAULIER <caulier dot gilles at gmail dot com>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by

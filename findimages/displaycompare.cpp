@@ -3,7 +3,7 @@
 //    DISPLAYCOMPARE.CPP
 //
 //    Copyright (C) 2001 Richard Groult <rgroult at jalix.org> (from ShowImg project)
-//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at gmail dot com>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -142,7 +142,7 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
                        "blackie atkde dot org");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Original author"),
-                       "caulier dot gilles at free.fr");
+                       "caulier dot gilles at gmail dot com");
 
     m_about->addAuthor("Richard Groult", I18N_NOOP("Find duplicate images algorithm"),
                        "rgroult at jalix.org");

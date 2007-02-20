@@ -2,7 +2,7 @@
 //
 //    KIMG2MPG.CPP
 //
-//    Copyright (C) 2003 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2003 Gilles Caulier <caulier dot gilles at gmail dot com>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -250,7 +250,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
   "(c) 2003-2004, Gilles Caulier");
 
   m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author"),
-                    "caulier dot gilles at free.fr");
+                    "caulier dot gilles at gmail dot com");
 
   m_about->addAuthor("Angelo Naselli", I18N_NOOP("Maintainer"),
                     "anaselli at linux dot it");

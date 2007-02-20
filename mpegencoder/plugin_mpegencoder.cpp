@@ -1,6 +1,6 @@
 /* ============================================================
  * File  : plugin_mpegencoder.cpp
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
+ * Author: Gilles Caulier <caulier dot gilles at gmail dot com>
  * Date  : 2003-09-02
  * Description : Images MPEG encoder plugin ('kimg2mpeg'
  *               program from 'kvcdtools' project

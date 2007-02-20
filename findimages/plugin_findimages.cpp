@@ -2,7 +2,7 @@
 //
 //    PLUGIN_FINDIMAGES.CPP
 //
-//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at free.fr>
+//    Copyright (C) 2004 Gilles Caulier <caulier dot gilles at gmail dot com>
 //    Copyright (C) 2004 Richard Groult <rgroult at jalix.org>
 //
 //    This program is free software; you can redistribute it and/or modify

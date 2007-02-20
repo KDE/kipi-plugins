@@ -1,5 +1,5 @@
 /* ============================================================
- * Author: Gilles Caulier <caulier dot gilles at free.fr>
+ * Author: Gilles Caulier <caulier dot gilles at gmail dot com>
  *         from digiKam project.
  * Date  : 2003-10-01
  * Description : a kipi plugin to export image collections

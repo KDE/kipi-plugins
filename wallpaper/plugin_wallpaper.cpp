@@ -2,7 +2,7 @@
  * File   : plugin_wallpaper.cpp
  *
  * Authors: Gregory KOKANOSKY <gregory dot kokanosky at free.fr>
- *          Gilles Caulier <caulier dot gilles at free.fr>
+ *          Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * Date   : 01/2004
  *
@@ -237,7 +237,7 @@ void Plugin_WallPaper::setWallpaper(int layout)
    else
       {
       // PENDING We need a way to get a parent widget
-      // Sun, 06 Jun 2004 - Aurélien
+      // Sun, 06 Jun 2004 - Aurï¿½ien
 
       KMessageBox::information( kapp->activeWindow(), i18n(
          "<qt><p>You selected a remote image. It needs to be saved to your local disk to be used as a wallpaper."
