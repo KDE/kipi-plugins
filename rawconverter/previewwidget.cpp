@@ -20,13 +20,6 @@
  *
  * ============================================================ */
 
-extern "C"
-{
-//#include <sys/types.h>
-//#include <sys/stat.h>
-//#include <unistd.h>
-}
-
 // Qt includes.
 
 #include <qpainter.h>
@@ -98,7 +91,6 @@ void PreviewWidget::load(const QString& file)
     d->text = "";
     d->pix->fill(Qt::black);
     d->image.load(file);
-    ::remove(QFile::encodeName(file));
 
     if (!d->image.isNull()) 
     {

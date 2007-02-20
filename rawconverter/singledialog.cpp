@@ -370,6 +370,7 @@ void SingleDialog::previewed(const QString&, const QString& tmpFile)
     m_previewWidget->unsetCursor();
     m_blinkPreviewTimer->stop();
     m_previewWidget->load(tmpFile);
+    ::remove(QFile::encodeName(tmpFile));
 }
 
 void SingleDialog::previewFailed(const QString&)
