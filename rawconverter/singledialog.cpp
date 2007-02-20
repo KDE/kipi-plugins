@@ -231,6 +231,11 @@ void SingleDialog::readSettings()
     m_decodingSettingsBox->setBlackPoint(config.readNumEntry("Black Point", 0));
     m_decodingSettingsBox->setSigmaDomain(config.readDoubleNumEntry("Sigma Domain", 2.0));
     m_decodingSettingsBox->setSigmaRange(config.readDoubleNumEntry("Sigma Range", 4.0));
+    m_decodingSettingsBox->setUseColorMultipliers(config.readBoolEntry("Use Color Multipliers", false));
+    m_decodingSettingsBox->setcolorMultiplier1(config.readDoubleNumEntry("Color Multiplier1", 1.0));
+    m_decodingSettingsBox->setcolorMultiplier2(config.readDoubleNumEntry("Color Multiplier2", 1.0));
+    m_decodingSettingsBox->setcolorMultiplier3(config.readDoubleNumEntry("Color Multiplier3", 1.0));
+    m_decodingSettingsBox->setcolorMultiplier4(config.readDoubleNumEntry("Color Multiplier4", 1.0));
 
     m_decodingSettingsBox->setQuality(
         (KDcrawIface::RawDecodingSettings::DecodingQuality)config.readNumEntry("Decoding Quality", 
@@ -269,6 +274,11 @@ void SingleDialog::saveSettings()
     config.writeEntry("Sigma Range", m_decodingSettingsBox->sigmaRange());
     config.writeEntry("Decoding Quality", (int)m_decodingSettingsBox->quality());
     config.writeEntry("Output Color Space", (int)m_decodingSettingsBox->outputColorSpace());
+    config.writeEntry("Use Color Multipliers", m_decodingSettingsBox->useColorMultipliers());
+    config.writeEntry("Color Multiplier1", m_decodingSettingsBox->colorMultiplier1());
+    config.writeEntry("Color Multiplier2", m_decodingSettingsBox->colorMultiplier2());
+    config.writeEntry("Color Multiplier3", m_decodingSettingsBox->colorMultiplier3());
+    config.writeEntry("Color Multiplier4", m_decodingSettingsBox->colorMultiplier4());
 
     config.writeEntry("Output Format", (int)m_saveSettingsBox->fileFormat());
     config.writeEntry("Conflict", (int)m_saveSettingsBox->conflictRule());
@@ -286,19 +296,24 @@ void SingleDialog::slotHelp()
 void SingleDialog::slotUser1()
 {
     KDcrawIface::RawDecodingSettings rawDecodingSettings;
-    rawDecodingSettings.cameraColorBalance      = m_decodingSettingsBox->useCameraWB();
-    rawDecodingSettings.automaticColorBalance   = m_decodingSettingsBox->useAutoColorBalance();
-    rawDecodingSettings.RGBInterpolate4Colors   = m_decodingSettingsBox->useFourColor();
-    rawDecodingSettings.unclipColors            = m_decodingSettingsBox->unclipColor();
-    rawDecodingSettings.DontStretchPixels       = m_decodingSettingsBox->useDontStretchPixels();
-    rawDecodingSettings.enableNoiseReduction    = m_decodingSettingsBox->useNoiseReduction();
-    rawDecodingSettings.brightness              = m_decodingSettingsBox->brightness();
-    rawDecodingSettings.enableBlackPoint        = m_decodingSettingsBox->useBlackPoint();
-    rawDecodingSettings.blackPoint              = m_decodingSettingsBox->blackPoint();
-    rawDecodingSettings.NRSigmaDomain           = m_decodingSettingsBox->sigmaDomain();
-    rawDecodingSettings.NRSigmaRange            = m_decodingSettingsBox->sigmaRange();
-    rawDecodingSettings.RAWQuality              = m_decodingSettingsBox->quality();
-    rawDecodingSettings.outputColorSpace        = m_decodingSettingsBox->outputColorSpace();
+    rawDecodingSettings.cameraColorBalance         = m_decodingSettingsBox->useCameraWB();
+    rawDecodingSettings.automaticColorBalance      = m_decodingSettingsBox->useAutoColorBalance();
+    rawDecodingSettings.RGBInterpolate4Colors      = m_decodingSettingsBox->useFourColor();
+    rawDecodingSettings.unclipColors               = m_decodingSettingsBox->unclipColor();
+    rawDecodingSettings.DontStretchPixels          = m_decodingSettingsBox->useDontStretchPixels();
+    rawDecodingSettings.enableNoiseReduction       = m_decodingSettingsBox->useNoiseReduction();
+    rawDecodingSettings.brightness                 = m_decodingSettingsBox->brightness();
+    rawDecodingSettings.enableBlackPoint           = m_decodingSettingsBox->useBlackPoint();
+    rawDecodingSettings.blackPoint                 = m_decodingSettingsBox->blackPoint();
+    rawDecodingSettings.NRSigmaDomain              = m_decodingSettingsBox->sigmaDomain();
+    rawDecodingSettings.NRSigmaRange               = m_decodingSettingsBox->sigmaRange();
+    rawDecodingSettings.RAWQuality                 = m_decodingSettingsBox->quality();
+    rawDecodingSettings.outputColorSpace           = m_decodingSettingsBox->outputColorSpace();
+    rawDecodingSettings.enableColorMultipliers     = m_decodingSettingsBox->useColorMultipliers();
+    rawDecodingSettings.colorBalanceMultipliers[0] = m_decodingSettingsBox->colorMultiplier1();
+    rawDecodingSettings.colorBalanceMultipliers[1] = m_decodingSettingsBox->colorMultiplier2();
+    rawDecodingSettings.colorBalanceMultipliers[2] = m_decodingSettingsBox->colorMultiplier3();
+    rawDecodingSettings.colorBalanceMultipliers[3] = m_decodingSettingsBox->colorMultiplier4();
     
     m_thread->setRawDecodingSettings(rawDecodingSettings, SaveSettingsWidget::OUTPUT_PNG);
     m_thread->processHalfRawFile(KURL(m_inputFile));
@@ -310,19 +325,24 @@ void SingleDialog::slotUser1()
 void SingleDialog::slotUser2()
 {
     KDcrawIface::RawDecodingSettings rawDecodingSettings;
-    rawDecodingSettings.cameraColorBalance      = m_decodingSettingsBox->useCameraWB();
-    rawDecodingSettings.automaticColorBalance   = m_decodingSettingsBox->useAutoColorBalance();
-    rawDecodingSettings.RGBInterpolate4Colors   = m_decodingSettingsBox->useFourColor();
-    rawDecodingSettings.unclipColors            = m_decodingSettingsBox->unclipColor();
-    rawDecodingSettings.DontStretchPixels       = m_decodingSettingsBox->useDontStretchPixels();
-    rawDecodingSettings.enableNoiseReduction    = m_decodingSettingsBox->useNoiseReduction();
-    rawDecodingSettings.brightness              = m_decodingSettingsBox->brightness();
-    rawDecodingSettings.enableBlackPoint        = m_decodingSettingsBox->useBlackPoint();
-    rawDecodingSettings.blackPoint              = m_decodingSettingsBox->blackPoint();
-    rawDecodingSettings.NRSigmaDomain           = m_decodingSettingsBox->sigmaDomain();
-    rawDecodingSettings.NRSigmaRange            = m_decodingSettingsBox->sigmaRange();
-    rawDecodingSettings.RAWQuality              = m_decodingSettingsBox->quality();
-    rawDecodingSettings.outputColorSpace        = m_decodingSettingsBox->outputColorSpace();
+    rawDecodingSettings.cameraColorBalance         = m_decodingSettingsBox->useCameraWB();
+    rawDecodingSettings.automaticColorBalance      = m_decodingSettingsBox->useAutoColorBalance();
+    rawDecodingSettings.RGBInterpolate4Colors      = m_decodingSettingsBox->useFourColor();
+    rawDecodingSettings.unclipColors               = m_decodingSettingsBox->unclipColor();
+    rawDecodingSettings.DontStretchPixels          = m_decodingSettingsBox->useDontStretchPixels();
+    rawDecodingSettings.enableNoiseReduction       = m_decodingSettingsBox->useNoiseReduction();
+    rawDecodingSettings.brightness                 = m_decodingSettingsBox->brightness();
+    rawDecodingSettings.enableBlackPoint           = m_decodingSettingsBox->useBlackPoint();
+    rawDecodingSettings.blackPoint                 = m_decodingSettingsBox->blackPoint();
+    rawDecodingSettings.NRSigmaDomain              = m_decodingSettingsBox->sigmaDomain();
+    rawDecodingSettings.NRSigmaRange               = m_decodingSettingsBox->sigmaRange();
+    rawDecodingSettings.RAWQuality                 = m_decodingSettingsBox->quality();
+    rawDecodingSettings.outputColorSpace           = m_decodingSettingsBox->outputColorSpace();
+    rawDecodingSettings.enableColorMultipliers     = m_decodingSettingsBox->useColorMultipliers();
+    rawDecodingSettings.colorBalanceMultipliers[0] = m_decodingSettingsBox->colorMultiplier1();
+    rawDecodingSettings.colorBalanceMultipliers[1] = m_decodingSettingsBox->colorMultiplier2();
+    rawDecodingSettings.colorBalanceMultipliers[2] = m_decodingSettingsBox->colorMultiplier3();
+    rawDecodingSettings.colorBalanceMultipliers[3] = m_decodingSettingsBox->colorMultiplier4();
 
     m_thread->setRawDecodingSettings(rawDecodingSettings, m_saveSettingsBox->fileFormat());
     m_thread->processRawFile(KURL(m_inputFile));
