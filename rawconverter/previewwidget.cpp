@@ -52,6 +52,7 @@ public:
     }
 
     QPixmap *pix;
+    QPixmap  preview;
 
     QTimer  *timer;
 
@@ -114,22 +115,23 @@ void PreviewWidget::load(const QString& file)
 
 void PreviewWidget::setInfo(const QString& text, const QColor& color, const QPixmap& preview)
 {
-    d->text = text;
+    d->text    = text;
+    d->preview = preview;
     d->pix->fill(Qt::black);
     QPainter p(d->pix);
     p.setPen(QPen(color));
 
-    if (!preview.isNull())
+    if (!d->preview.isNull())
     {
-        p.drawPixmap(d->pix->width()/2-preview.width()/2, d->pix->height()/4-preview.height()/2, 
-                     preview, 0, 0, preview.width(), preview.height());
+        p.drawPixmap(d->pix->width()/2-d->preview.width()/2, d->pix->height()/4-d->preview.height()/2, 
+                     d->preview, 0, 0, d->preview.width(), d->preview.height());
         p.drawText(0, d->pix->height()/2, d->pix->width(), d->pix->height()/2,
-                   Qt::AlignCenter|Qt::WordBreak, text);
+                   Qt::AlignCenter|Qt::WordBreak, d->text);
     }
     else
     {
         p.drawText(0, 0, d->pix->width(), d->pix->height(),
-                Qt::AlignCenter|Qt::WordBreak, text);
+                   Qt::AlignCenter|Qt::WordBreak, d->text);
     }
     p.end();
     update();
@@ -156,15 +158,27 @@ void PreviewWidget::slotResize()
     {
         QPainter p(d->pix);
         p.setPen(QPen(Qt::white));
-        p.drawText(0, 0, d->pix->width(), d->pix->height(),
-                   Qt::AlignCenter|Qt::WordBreak, d->text);
+
+        if (!d->preview.isNull())
+        {
+            p.drawPixmap(d->pix->width()/2-d->preview.width()/2, d->pix->height()/4-d->preview.height()/2, 
+                        d->preview, 0, 0, d->preview.width(), d->preview.height());
+            p.drawText(0, d->pix->height()/2, d->pix->width(), d->pix->height()/2,
+                    Qt::AlignCenter|Qt::WordBreak, d->text);
+        }
+        else
+        {
+            p.drawText(0, 0, d->pix->width(), d->pix->height(),
+                    Qt::AlignCenter|Qt::WordBreak, d->text);
+        }
+
         p.end();
     }
     else 
     {
         if (!d->image.isNull()) 
         {
-            QImage img = d->image.scale(width(),height(),QImage::ScaleMin);
+            QImage img = d->image.scale(width(),height(), QImage::ScaleMin);
             int x = d->pix->width()/2 - img.width()/2;
             int y = d->pix->height()/2 - img.height()/2;
 
