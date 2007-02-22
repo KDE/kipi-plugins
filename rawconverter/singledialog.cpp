@@ -229,8 +229,7 @@ void SingleDialog::readSettings()
     m_decodingSettingsBox->setBrightness(config.readDoubleNumEntry("Brightness Multiplier", 1.0));
     m_decodingSettingsBox->setUseBlackPoint(config.readBoolEntry("Use Black Point", false));
     m_decodingSettingsBox->setBlackPoint(config.readNumEntry("Black Point", 0));
-    m_decodingSettingsBox->setSigmaDomain(config.readDoubleNumEntry("Sigma Domain", 2.0));
-    m_decodingSettingsBox->setSigmaRange(config.readDoubleNumEntry("Sigma Range", 4.0));
+    m_decodingSettingsBox->setNRThreshold(config.readNumEntry("NR Threshold", 100));
     m_decodingSettingsBox->setUseColorMultipliers(config.readBoolEntry("Use Color Multipliers", false));
     m_decodingSettingsBox->setcolorMultiplier1(config.readDoubleNumEntry("Color Multiplier1", 1.0));
     m_decodingSettingsBox->setcolorMultiplier2(config.readDoubleNumEntry("Color Multiplier2", 1.0));
@@ -270,8 +269,7 @@ void SingleDialog::saveSettings()
     config.writeEntry("Brightness Multiplier", m_decodingSettingsBox->brightness());
     config.writeEntry("Use Black Point", m_decodingSettingsBox->useBlackPoint());
     config.writeEntry("Black Point", m_decodingSettingsBox->blackPoint());
-    config.writeEntry("Sigma Domain", m_decodingSettingsBox->sigmaDomain());
-    config.writeEntry("Sigma Range", m_decodingSettingsBox->sigmaRange());
+    config.writeEntry("NR Threshold", m_decodingSettingsBox->NRThreshold());
     config.writeEntry("Decoding Quality", (int)m_decodingSettingsBox->quality());
     config.writeEntry("Output Color Space", (int)m_decodingSettingsBox->outputColorSpace());
     config.writeEntry("Use Color Multipliers", m_decodingSettingsBox->useColorMultipliers());
@@ -305,8 +303,7 @@ void SingleDialog::slotUser1()
     rawDecodingSettings.brightness                 = m_decodingSettingsBox->brightness();
     rawDecodingSettings.enableBlackPoint           = m_decodingSettingsBox->useBlackPoint();
     rawDecodingSettings.blackPoint                 = m_decodingSettingsBox->blackPoint();
-    rawDecodingSettings.NRSigmaDomain              = m_decodingSettingsBox->sigmaDomain();
-    rawDecodingSettings.NRSigmaRange               = m_decodingSettingsBox->sigmaRange();
+    rawDecodingSettings.NRThreshold                = m_decodingSettingsBox->NRThreshold();
     rawDecodingSettings.RAWQuality                 = m_decodingSettingsBox->quality();
     rawDecodingSettings.outputColorSpace           = m_decodingSettingsBox->outputColorSpace();
     rawDecodingSettings.enableColorMultipliers     = m_decodingSettingsBox->useColorMultipliers();
@@ -334,8 +331,7 @@ void SingleDialog::slotUser2()
     rawDecodingSettings.brightness                 = m_decodingSettingsBox->brightness();
     rawDecodingSettings.enableBlackPoint           = m_decodingSettingsBox->useBlackPoint();
     rawDecodingSettings.blackPoint                 = m_decodingSettingsBox->blackPoint();
-    rawDecodingSettings.NRSigmaDomain              = m_decodingSettingsBox->sigmaDomain();
-    rawDecodingSettings.NRSigmaRange               = m_decodingSettingsBox->sigmaRange();
+    rawDecodingSettings.NRThreshold                = m_decodingSettingsBox->NRThreshold();
     rawDecodingSettings.RAWQuality                 = m_decodingSettingsBox->quality();
     rawDecodingSettings.outputColorSpace           = m_decodingSettingsBox->outputColorSpace();
     rawDecodingSettings.enableColorMultipliers     = m_decodingSettingsBox->useColorMultipliers();
