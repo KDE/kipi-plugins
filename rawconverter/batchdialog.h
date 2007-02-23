@@ -40,6 +40,7 @@ class QTimer;
 class QWidget;
 class QCustomEvent;
 class QCloseEvent;
+class QGroupBox;
 
 class KListView;
 class KProgress;
@@ -108,6 +109,8 @@ private:
     QDict<RawItem>                    m_itemDict;
 
     QStringList                       m_fileList;
+
+    QGroupBox                        *m_rawSettingsGroup;
 
     KProgress                        *m_progressBar;
 

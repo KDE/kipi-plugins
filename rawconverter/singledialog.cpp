@@ -120,11 +120,11 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
 
     // ---------------------------------------------------------------
 
-    QGroupBox *rawSettingsGroup = new QGroupBox(1, Qt::Vertical, i18n("RAW Decoding Settings"), page);
-    m_decodingSettingsBox       = new KDcrawIface::DcrawSettingsWidget(rawSettingsGroup, false, true, true);
-    m_saveSettingsBox           = new SaveSettingsWidget(page);
+    m_rawSettingsGroup    = new QGroupBox(1, Qt::Vertical, i18n("RAW Decoding Settings"), page);
+    m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(m_rawSettingsGroup, false, true, true);
+    m_saveSettingsBox     = new SaveSettingsWidget(page);
 
-    mainLayout->addMultiCellWidget(rawSettingsGroup, 1, 1, 1, 1);
+    mainLayout->addMultiCellWidget(m_rawSettingsGroup, 1, 1, 1, 1);
     mainLayout->addMultiCellWidget(m_saveSettingsBox, 2, 2, 1, 1);
 
     mainLayout->setColStretch(0, 10);
@@ -361,7 +361,7 @@ void SingleDialog::slotIdentify()
 
 void SingleDialog::busy(bool val)
 {   
-    m_decodingSettingsBox->setEnabled(!val);
+    m_rawSettingsGroup->setEnabled(!val);
     m_saveSettingsBox->setEnabled(!val);
     enableButton (User1, !val);
     enableButton (User2, !val);
