@@ -312,7 +312,7 @@ void SingleDialog::slotUser1()
     rawDecodingSettings.colorBalanceMultipliers[2] = m_decodingSettingsBox->colorMultiplier3();
     rawDecodingSettings.colorBalanceMultipliers[3] = m_decodingSettingsBox->colorMultiplier4();
     
-    m_thread->setRawDecodingSettings(rawDecodingSettings, SaveSettingsWidget::OUTPUT_PNG);
+    m_thread->setRawDecodingSettings(rawDecodingSettings, SaveSettingsWidget::OUTPUT_PPM);
     m_thread->processHalfRawFile(KURL(m_inputFile));
     if (!m_thread->running())
         m_thread->start();
