@@ -171,7 +171,6 @@ void ActionThread::run()
                         identify = info.make + QString("-") + info.model;
                     else
                     {
-                        long int num, den;
                         identify = i18n("Make: %1\n").arg(info.make); 
                         identify.append(i18n("Model: %1\n").arg(info.model));
 
