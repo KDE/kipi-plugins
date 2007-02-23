@@ -164,7 +164,7 @@ void ActionThread::run()
                 KDcrawIface::DcrawInfoContainer info;
                 m_dcrawIface.rawFileIdentify(info, t->filePath);
 
-                QString identify = i18n("Cannot identify RAW file");
+                QString identify = i18n("Cannot identify Raw image");
                 if (info.isDecodable)
                 {
                     if (t->action == IDENTIFY)

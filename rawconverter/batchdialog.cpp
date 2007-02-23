@@ -154,7 +154,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("RAW Images Batch Converter"),
                                            NULL,
                                            KAboutData::License_GPL,
-                                           I18N_NOOP("A Kipi plugin to convert RAW images\n"
+                                           I18N_NOOP("A Kipi plugin to convert Raw images\n"
                                                      "Using KDcraw library"),
                                            "(c) 2003-2005, Renchi Raju\n"
                                            "(c) 2006-2007, Gilles Caulier");
@@ -173,9 +173,9 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
 
     // ---------------------------------------------------------------
 
-    setButtonTip( User1, i18n("<p>Start converting the RAW images from current settings"));
-    setButtonTip( User2, i18n("<p>Abort the current RAW files conversion"));
-    setButtonTip( Close, i18n("<p>Exit RAW Converter"));
+    setButtonTip( User1, i18n("<p>Start converting the Raw images from current settings"));
+    setButtonTip( User2, i18n("<p>Abort the current Raw files conversion"));
+    setButtonTip( Close, i18n("<p>Exit Raw Converter"));
 
     m_blinkConvertTimer = new QTimer(this);
     m_thread            = new ActionThread(this);

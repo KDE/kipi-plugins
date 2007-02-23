@@ -136,7 +136,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("RAW Image Converter"),
                                            NULL,
                                            KAboutData::License_GPL,
-                                           I18N_NOOP("A Kipi plugin to convert RAW images\n"
+                                           I18N_NOOP("A Kipi plugin to convert Raw images\n"
                                                      "Using KDcraw library"),
                                            "(c) 2003-2005, Renchi Raju\n"
                                            "(c) 2006-2007, Gilles Caulier");
@@ -161,7 +161,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
     setButtonTip( User2, i18n("<p>Convert the Raw Image from current settings. "
                               "This uses a high-quality adaptive algorithm."));
 
-    setButtonTip( User3, i18n("<p>Abort the current RAW file conversion"));
+    setButtonTip( User3, i18n("<p>Abort the current Raw file conversion"));
     
     setButtonTip( Close, i18n("<p>Exit Raw Converter"));
 

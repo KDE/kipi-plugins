@@ -81,7 +81,7 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
     QWhatsThis::add(d->formatComboBox, i18n("<p>Set here the ouput file format to use:<p>"
                                        "<b>JPEG</b>: output the processed image in JPEG Format. "
                                        "this format will give smaller-sized files. Minimum JPEG "
-                                       "compression level will be used during RAW conversion.<p>"
+                                       "compression level will be used during Raw conversion.<p>"
                                        "<b>Warning!!! duing of destructive compression algorithm, "
                                        "JPEG is a lossy quality format.</b><p>"
                                        "<b>TIFF</b>: output the processed image in TIFF Format. "
