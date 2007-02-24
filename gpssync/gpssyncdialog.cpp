@@ -176,7 +176,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->gpxPointsLabel    = new QLabel(settingsBox);
     KSeparator *line     = new KSeparator(Horizontal, settingsBox);
 
-    QLabel *maxGapLabel = new QLabel(i18n("Max gap time:"), settingsBox);
+    QLabel *maxGapLabel = new QLabel(i18n("Max. time gap:"), settingsBox);
     d->maxGapInput      = new KIntSpinBox(0, 2000, 1, 30, 10, settingsBox);
     QWhatsThis::add(d->maxGapInput, i18n("<p>Set here the maximum distance in "
                     "seconds from a GPS point that a photo will be matched."));
@@ -216,7 +216,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     QWhatsThis::add(d->interpolateBox, i18n("<p>Set this option to interpolate GPS points "
                     "which are not properly matched to the GPX data file."));
 
-    d->maxTimeLabel = new QLabel(i18n("Max. distance time:"), settingsBox);
+    d->maxTimeLabel = new QLabel(i18n("Max. time distance:"), settingsBox);
     d->maxTimeInput = new KIntSpinBox(0, 240, 1, 15, 10, settingsBox);
     QWhatsThis::add(d->maxTimeInput, i18n("<p>Set here the maximum time distance in minutes "
                     "to get matched points from GPX file around a GPS point to interpolate."));
