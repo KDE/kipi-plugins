@@ -178,8 +178,9 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
 
     QLabel *maxGapLabel = new QLabel(i18n("Max. time gap:"), settingsBox);
     d->maxGapInput      = new KIntSpinBox(0, 2000, 1, 30, 10, settingsBox);
-    QWhatsThis::add(d->maxGapInput, i18n("<p>Set here the maximum distance in "
-                    "seconds from a GPS point that a photo will be matched."));
+    QWhatsThis::add(d->maxGapInput, i18n("<p>Sets the maximum difference in "
+                    "seconds from a GPS track point to the image time to be matched."
+                    "If the time difference exceeds this setting, no match takes place."));
 
     QLabel *timeZoneLabel = new QLabel(i18n("Time zone:"), settingsBox);
     d->timeZoneCB         = new QComboBox( false, settingsBox );
@@ -208,18 +209,18 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->timeZoneCB->insertItem(i18n("GMT+10:00"), 22);
     d->timeZoneCB->insertItem(i18n("GMT+11:00"), 23);
     d->timeZoneCB->insertItem(i18n("GMT+12:00"), 24);
-    QWhatsThis::add(d->timeZoneCB, i18n("<p>Set here the time zone of the camera during "
-                    "picture shooting, so that the times of the pictures "
-                    "can be adjusted to match the GPS data"));
+    QWhatsThis::add(d->timeZoneCB, i18n("<p>Sets the time zone of the camera during "
+                    "picture shooting, so that the time stamps of the pictures "
+                    "can be converted to GMT to match the GPS time"));
 
     d->interpolateBox = new QCheckBox(i18n("Interpolate"), settingsBox);
-    QWhatsThis::add(d->interpolateBox, i18n("<p>Set this option to interpolate GPS points "
-                    "which are not properly matched to the GPX data file."));
+    QWhatsThis::add(d->interpolateBox, i18n("<p>Set this option to interpolate GPS track points "
+                    "which are not closely matched to the GPX data file."));
 
-    d->maxTimeLabel = new QLabel(i18n("Max. time distance:"), settingsBox);
+    d->maxTimeLabel = new QLabel(i18n("Difference in min.:"), settingsBox);
     d->maxTimeInput = new KIntSpinBox(0, 240, 1, 15, 10, settingsBox);
-    QWhatsThis::add(d->maxTimeInput, i18n("<p>Set here the maximum time distance in minutes "
-                    "to get matched points from GPX file around a GPS point to interpolate."));
+    QWhatsThis::add(d->maxTimeInput, i18n("<p>Sets the maximum time difference in minutes (240 max.)"
+                    " to interpolate GPX file points to image time data."));
 
     settingsBoxLayout->addMultiCellWidget(loadGPXButton, 0, 0, 0, 1);     
     settingsBoxLayout->addMultiCellWidget(gpxFileLabel, 1, 1, 0, 1);     
