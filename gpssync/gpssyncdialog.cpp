@@ -208,17 +208,17 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->timeZoneCB->insertItem(i18n("GMT+10:00"), 22);
     d->timeZoneCB->insertItem(i18n("GMT+11:00"), 23);
     d->timeZoneCB->insertItem(i18n("GMT+12:00"), 24);
-    QWhatsThis::add(d->timeZoneCB, i18n("<p>Set here the time zone where the "
-                    "pictures were taken in, so that the times of the pictures "
+    QWhatsThis::add(d->timeZoneCB, i18n("<p>Set here the time zone of the camera during "
+                    "picture shooting, so that the times of the pictures "
                     "can be adjusted to match the GPS data"));
 
     d->interpolateBox = new QCheckBox(i18n("Interpolate"), settingsBox);
-    QWhatsThis::add(d->interpolateBox, i18n("<p>Set on this option to interpolate GPS points "
-                    "witch are not matches properly with the GPX data file."));
+    QWhatsThis::add(d->interpolateBox, i18n("<p>Set this option to interpolate GPS points "
+                    "which are not properly matched to the GPX data file."));
 
     d->maxTimeLabel = new QLabel(i18n("Max. distance time:"), settingsBox);
     d->maxTimeInput = new KIntSpinBox(0, 240, 1, 15, 10, settingsBox);
-    QWhatsThis::add(d->maxTimeInput, i18n("<p>Set here the maximum distance time in minutes "
+    QWhatsThis::add(d->maxTimeInput, i18n("<p>Set here the maximum time distance in minutes "
                     "to get matched points from GPX file around a GPS point to interpolate."));
 
     settingsBoxLayout->addMultiCellWidget(loadGPXButton, 0, 0, 0, 1);     
