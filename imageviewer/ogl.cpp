@@ -234,21 +234,25 @@ void ogl::keyPressEvent(QKeyEvent *k)
 		case Key_Space:
 			nextImage();
 			break;
+			
         case Key_P:
 		case Key_Left:
 		case Key_Up:
 		case Key_PageUp:
 			prevImage();
-			break;		
+			break;	
+				
 		case Key_R:
 			texture->rotate();
 			downloadTex(texture);
 			updateGL();
 			break;		
+			
 		case Key_Escape:
 			// clean up: where does this have to be done?
 			close(true);
 			break;
+			
 		case Key_F:
 			// according to QT documentation, showFullScreen() has some 
 			// serious issues on window managers that do not follow modern
@@ -261,16 +265,19 @@ void ogl::keyPressEvent(QKeyEvent *k)
 				showFullScreen();
 			}
 			break;
+			
 		case Key_Z:
 			texture->reset();
 			updateGL();
 			break;
+			
 		case Key_C:
 			if (wheelAction==zoomImage)
 				wheelAction=changeImage;
 			else
 				wheelAction=zoomImage;
 			break;
+			
 		case Key_Plus:
 			middlepoint =  QPoint(width()/2,height()/2);
 			if (texture->setSize( zoomsize )) {
@@ -278,15 +285,30 @@ void ogl::keyPressEvent(QKeyEvent *k)
 			};
 			zoom(-1, middlepoint, zoomfactor_keyboard);	
 			break;
+			
 		case Key_Minus:
 			middlepoint =  QPoint(width()/2,height()/2);
 			if (texture->setSize( zoomsize )) 
 				downloadTex(texture); //load full resolution image
 			zoom(1, middlepoint, zoomfactor_keyboard);	
 			break;
+			
 		case Key_O:
 			texture->zoomToOriginal();
 			updateGL();
+			break;
+			
+		case Key_Control:
+			if (wheelAction==zoomImage)
+				//scrollwheel changes to the next image
+				wheelAction=changeImage;
+			else {
+				//scrollwheel does zoom
+				wheelAction=zoomImage;
+				setCursor (zoomCursor);
+				timerMouseMove.stop();
+			}		
+			break;
 	}
 }
 
@@ -466,16 +488,23 @@ void ogl::mousePressEvent ( QMouseEvent * e )
 void ogl::mouseMoveEvent ( QMouseEvent * e ) 
 {
 	if ( e->state() == LeftButton ) {
+		//panning
 		QPoint diff=e->pos()-startdrag;
 		texture->move(diff);
 		updateGL();
 		startdrag=e->pos();
 	} else if ( e->state() == RightButton ) {
+		//zooming
 		zoom(previous_pos.y()-e->y(), startdrag, zoomfactor_mousemove );
 		previous_pos=e->pos();
-	} else {	
-		timerMouseMove.start(2000);
-		unsetCursor();
+	} else {
+		//no key is pressed while moving mouse
+		//don't do anything if ctrl is pressed
+		if (timerMouseMove.isActive()) {
+			//ctrl is not pressed, no zooming, therefore restore and hide cursor in 2 sec
+			unsetCursor();
+			timerMouseMove.start(2000);
+		}
 	}
 	return;
 }
@@ -604,6 +633,16 @@ void ogl::keyReleaseEvent ( QKeyEvent * e )
 			} else
 				e->ignore();
 			break;
+			
+		case Key_Control:
+			if (wheelAction==zoomImage)
+				wheelAction=changeImage;
+			else
+				wheelAction=zoomImage;
+				unsetCursor();
+				timerMouseMove.start(2000);
+			break;
+			
 		default:
 			e->ignore();
 			break;
