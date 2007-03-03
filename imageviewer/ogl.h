@@ -21,10 +21,6 @@
 #ifndef _OGL_H_
 #define _OGL_H_
 
-// #ifdef HAVE_CONFIG_H
-// #include <config.h>
-// #endif
-
 #include <qgl.h>
 #include <qdir.h>
 #include <qimage.h>
