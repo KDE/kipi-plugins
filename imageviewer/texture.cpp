@@ -386,11 +386,22 @@ void Texture::rotate()
 /*!
     \fn Texture::setToOriginalSize()
     zoom image such that each pixel of the screen corresponds to a pixel in the jpg
+    remember that OpenGL is not a pixel exact specification, and the image will still be filtered by OpenGL
  */
 void Texture::zoomToOriginal()
 {
+	float zoomfactorToOriginal;
 	reset();
-	cout << display_x << " img=" << qimage.width();
-	float zoomfactorToOriginal=float(display_x)/qimage.width();
+// 	cout << "display x=" << display_x << " img=" << qimage.width() << endl;
+// 	cout << "rdx=" << rdx << " rdy="<< rdy << " rtx=" <<rtx<<" rty="<<rty<<endl;
+	
+	if (qimage.width()/qimage.height() > float(display_x)/float(display_y)) {
+		//image touches right and left edge of window
+		zoomfactorToOriginal=float(display_x)/qimage.width();
+	} else {
+		//image touches upper and lower edge of window
+		zoomfactorToOriginal=float(display_y)/qimage.height();
+	}
+		
 	zoom(zoomfactorToOriginal,QPoint(display_x/2,display_y/2));
 }
