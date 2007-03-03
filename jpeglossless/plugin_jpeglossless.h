@@ -1,11 +1,11 @@
 /* ============================================================
  * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ *          Gilles Caulier <caulier dot gilles at gmail dot com>
  * Date   : 2003-09-26
  * Description : JPEG loss less operations plugin
  *
  * Copyright 2003-2005 by Renchi Raju & Gilles Caulier
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,7 +23,7 @@
 #ifndef PLUGIN_JPEGLOSSLESS_H
 #define PLUGIN_JPEGLOSSLESS_H
 
-// LibKiPi includes.
+// LibKipi includes.
 
 #include <libkipi/plugin.h>
 #include <libkipi/imagecollection.h>
@@ -63,6 +63,8 @@ private slots:
     void slotCancel();
 
 private:
+
+    bool                                  m_failed;
 
     int                                   m_total;
     int                                   m_current;
