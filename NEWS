@@ -7,7 +7,7 @@ Kipi-plugins NEW FEATURES
 
 General        : Moved Exiv2Iface class to a new shared library named libkexiv2 used by 
                  kipi-plugins and digiKam.
-Image viewer   : initial import of new OpenGL based image viewer
+ImageViewer    : initial import of new OpenGL based image viewer.
 RAWConverter   : Port plugin to libkdcraw shared library.
 
 
@@ -17,7 +17,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 003 ==> 140132 : MetadataEdit : Comments should sync to IPTC Caption First.
 006 ==> 138241 : SendImages   : A patch that adds support for the Claws Mail MUA.
 007 ==> 140865 : RAWConverter : Plugin does not work (image can not be converted).
-008 ==> 
+008 ==> 141528 : JPEGLossLess : Remove confirmation dialog for image rotate.
+009 ==> 
 
 v 0.1.3 
 ----------------------------------------------------------------------------
