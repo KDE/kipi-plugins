@@ -89,29 +89,20 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
                                   actionCollection(),
                                   "jpeglossless_rotate");
 
-    m_action_RotateImage->insert( new KAction(i18n("90 Degrees"),
-                                  0,
-                                  CTRL+Key_9,
+    m_action_RotateImage->insert( new KAction(i18n("Left"),
+                                  "rotate_ccw",
+                                  CTRL+Key_Left,
                                   this,
                                   SLOT(slotRotate()),
                                   actionCollection(),
-                                  "rotate_90") );
-
-    m_action_RotateImage->insert( new KAction(i18n("180 Degrees"),
-                                  0,
-                                  CTRL+Key_8,
+                                  "rotate_ccw") );
+    m_action_RotateImage->insert( new KAction(i18n("Right"),
+                                  "rotate_cw",
+                                  CTRL+Key_Right,
                                   this,
                                   SLOT(slotRotate()),
                                   actionCollection(),
-                                  "rotate_180") );
-
-    m_action_RotateImage->insert( new KAction(i18n("270 Degrees"),
-                                  0,
-                                  CTRL+Key_7,
-                                  this,
-                                  SLOT(slotRotate()),
-                                  actionCollection(),
-                                  "rotate_270") );
+                                  "rotate_cw") );
 
     m_action_FlipImage = new KActionMenu(i18n("Flip"),
                                   "flip",
@@ -237,22 +228,16 @@ void Plugin_JPEGLossless::slotRotate()
     QString title;
     bool proceed = false;
 
-    if (from == "rotate_90") 
+    if (from == "rotate_cw") 
     {
         m_thread->rotate(items, KIPIJPEGLossLessPlugin::Rot90);
-        title = i18n("to 90 degrees");
+        title = i18n("right (clockwise)");
         proceed = true;
     }
-    else if (from == "rotate_180") 
-    {
-        m_thread->rotate(items, KIPIJPEGLossLessPlugin::Rot180);
-        title = i18n("to 180 degrees");
-        proceed = true;
-    }
-    else if (from == "rotate_270") 
+    else if (from == "rotate_ccw") 
     {
         m_thread->rotate(items, KIPIJPEGLossLessPlugin::Rot270);
-        title = i18n("to 270 degrees");
+        title = i18n("left (counterclockwise)");
         proceed = true;
     }
     else if (from == "rotate_exif") 
