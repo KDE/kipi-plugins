@@ -1,24 +1,8 @@
 [Desktop Entry]
 Comment=KIPI plugin to Geolocalize pictures
-Comment[da]=KIPI-plugin til at lokalisere billeder geografisk
-Comment[de]=Ein KIPI-Modul zum geographischen Zuordnen von Bildern
-Comment[el]=Πρόσθετο του KIPI για γεωτοποθέτηση εικόνων
-Comment[es]=Extensión de KIPI para geolocalizar imágenes
-Comment[et]=KIPI piltide geolokatsiooni plugin
-Comment[it]=Plugin di KIPI per geolocalizzare le immagini
-Comment[nl]=KIPI-plugin voor het geolokaliseren van afbeeldingen
-Comment[pa]=ਭੂ-ਚਿੱਤਰਾਂ ਲਈ KIPI ਪਲੱਗਇਨ
-Comment[pl]=Wtyczka KIPI do geolokalizacji zdjęć
-Comment[pt]='Plugin' do KIPI para localizar geograficamente as imagens
-Comment[pt_BR]=Plug-in para geolocalização de figuras do KIPI
-Comment[sv]=KIPI-insticksprogram för att lokalisera bilder geografiskt
 Encoding=UTF-8
 Icon=
 Name=GPSSync
-Name[da]=GPS-synkronisering
-Name[el]=Συγχρονισμός GPS
-Name[pt]=Sincronização GPS
-Name[sv]=GPS-synkronisering
 ServiceTypes=KIPI/Plugin
 Type=Service
 X-KDE-Library=kipiplugin_gpssync
