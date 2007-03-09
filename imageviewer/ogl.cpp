@@ -115,7 +115,7 @@ ogl::ogl(KIPI::Interface* interface) {
     \fn ogl::initializeGL()
 	\todo blending
  */
-void ogl::initializeGL() {
+void ogl::initializeGL() {	
 //     cout << "enter initializeGL" << endl;
 
     glEnable(GL_TEXTURE_RECTANGLE_ARB);
@@ -648,4 +648,27 @@ void ogl::keyReleaseEvent ( QKeyEvent * e )
 			break;
 	}
 	
+}
+
+
+/*!
+    \fn ogl::getOGLstate()
+    check if OpenGL engine is ready. This function is called from outside the widget.
+    If OpenGL doen't work correctly, the widget can be destroyed
+ */
+OGLstate ogl::getOGLstate()
+{
+	//no OpenGL context is found. Are the drivers ok?
+	if ( !isValid() ) {
+		return oglNoContext;
+	}
+	
+	//GL_ARB_texture_rectangle is not supported
+	QString s = QString ( ( char* ) glGetString ( GL_EXTENSIONS ) );
+	if ( !s.contains ( "GL_ARB_texture_rectangle",false ) )	{
+		return oglNoRectangularTexture;
+	}
+	
+	//everything is ok!
+	return oglOK;
 }

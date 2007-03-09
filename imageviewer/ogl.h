@@ -49,6 +49,10 @@
 namespace KIPIviewer {
 using namespace std;
 
+enum OGLstate {
+        oglOK, oglNoRectangularTexture, oglNoContext
+};	
+
 class ogl : public QGLWidget
 {
     Q_OBJECT
@@ -58,7 +62,6 @@ public:
 
 	
 	~ogl() {
-// 		std::cout << "enter ogl destructor" << std::endl;
 		glDeleteTextures(1,tex);
 		for(int i=0;i<CACHESIZE;i++) {
 			cache[i].file_index=EMPTY;
@@ -78,6 +81,7 @@ public:
     void zoom(int mdelta, QPoint pos, float factor);
     virtual void mouseReleaseEvent(QMouseEvent * e);
     virtual void keyReleaseEvent ( QKeyEvent * e );
+    OGLstate getOGLstate();
 
 protected:
 	struct Cache {

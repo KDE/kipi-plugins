@@ -21,6 +21,7 @@
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
 #include <kurl.h>
+#include <qmessagebox.h>
 #include <libkipi/imageinfo.h>
 #include <iostream>
 #include "ogl.h"
@@ -95,5 +96,21 @@ void  Plugin_viewer::slotActivate()
     }
 	
 	widget = new KIPIviewer::ogl(interface);
-	widget->show();
+	
+	switch(widget->getOGLstate()) {
+		case KIPIviewer::oglOK:
+			widget->show();
+			break;
+			
+		case KIPIviewer::oglNoRectangularTexture:
+			kdError( 51000 ) << "GL_ARB_texture_rectangle not supported" << endl;
+			delete widget;
+			QMessageBox::critical(new QWidget(),"OpenGL error","GL_ARB_texture_rectangle not supported");
+			break;
+			
+		case KIPIviewer::oglNoContext:
+			kdError( 51000 ) << "no OpenGL context found" << endl;
+			delete widget;
+			QMessageBox::critical(new QWidget(),"OpenGL error","no OpenGL context found");
+	}
 }
