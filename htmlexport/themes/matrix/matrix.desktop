@@ -1,8 +1,28 @@
 [Desktop Entry]
 Name=Matrix
+Name[cy]=Matrics
+Name[pa]=ਮੈਟਰਿਕਸ
+Name[zh_CN]=黑客帝国
 Comment=Show your photos with Matrix style
+Comment[cs]=Zobrazení obrázků ve stylu Matrix
+Comment[da]=Vis foto med Matrix-stil
+Comment[de]=Zeigt ihre Photos in einem Matrix-Stil
 Comment[el]=Εμφάνιση των φωτογραφιών σας με στυλ Matrix
+Comment[es]=Muestra sus fotografías con el estilo Matrix
+Comment[et]=Fotode näitamine Matrixi stiiliga
+Comment[fi]=Valokuvat Matrix-tyyliin esitettyinä
+Comment[gl]=Mostra as fotos con estilo Matrix
+Comment[it]=Mostra le tue foto in stile Matrix
+Comment[ja]=写真を Matrix スタイルで表示
+Comment[nl]=Afbeeldingsgalerij in de stijl van The Matrix
+Comment[pa]=ਆਪਣੀਆਂ ਫੋਟੋ ਮਟੈਰਕਿਸ ਸ਼ੈਲੀ 'ਚ ਵੇਖਾਓ
+Comment[pl]=Pokaż swoje zdjęcia w stylu Matrixa
+Comment[pt]=A suas fotos no estilo Matrix
+Comment[pt_BR]=Mostrar suas fotos com estilo matrix
+Comment[sv]=Visa foton med Matrix-stil
+Comment[zh_CN]=以黑客帝国风格显示您的照片
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
+Name[ja]=Aurelien Gateau
 Url=mailto:aurelien.gateau@free.fr

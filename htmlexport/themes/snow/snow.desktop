@@ -1,9 +1,44 @@
 [Desktop Entry]
 Name=Snow
+Name[br]=Erc'h
+Name[cs]=Sníh
+Name[cy]=Eira
+Name[da]=Sne
+Name[de]=Schnee
 Name[el]=Χιόνι
+Name[es]=Nieve
+Name[et]=Lumi
+Name[fi]=Lumi
+Name[ga]=Sneachta
+Name[gl]=Neve
+Name[it]=Neve
+Name[ja]=雪 (Snow)
+Name[nl]=Sneeuw
+Name[pa]=ਬਰਫ਼
+Name[pl]=Śnieg
+Name[pt]=Neve
+Name[sv]=Snö
+Name[zh_CN]=雪月
 Comment=A perfect match for your mountain holidays
+Comment[cs]=Skvělé pro dovolenou na horách
+Comment[da]=Passer perfekt til din ferie i bjergene
+Comment[de]=Passt perfekt zu Ihren Ferien in den Bergen
 Comment[el]=Μια υπέροχη επιλογή για διακοπές σε βουνό
+Comment[es]=Una coincidencia perfecta para sus vacaciones de montaña
+Comment[et]=Sobib hiilgavalt kokku mägipuhkuse pilti8dega
+Comment[fi]=Luo valokuviisi lumiefekti
+Comment[gl]=O que precisa para as suas vacazóns na montaña
+Comment[it]=Perfetto per le settimane bianche
+Comment[ja]=冬山での休日にぴったりのテーマ
+Comment[nl]=Een perfect thema voor uw bergvakanties
+Comment[pa]=ਤੁਹਾਡੀ ਪਹਾੜੀ ਉੱਤੇ ਮਨਾਈਆਂ ਛੁੱਟੀਆਂ ਲਈ ਠੀਕ
+Comment[pl]=Idealnie pasuje do prezentacji zdjęć z Twoich górskich wakacji
+Comment[pt]=A combinação perfeita com as suas férias na montanha
+Comment[pt_BR]=um companheiro perfeito para suas férias nas montanhas
+Comment[sv]=Passar perfekt med din alpinsemester
+Comment[zh_CN]=野营的绝配
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
+Name[ja]=Aurelien Gateau
 Url=mailto:aurelien.gateau@free.fr
