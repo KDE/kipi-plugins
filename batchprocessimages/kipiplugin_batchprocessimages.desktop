@@ -1,7 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=BatchProcessImages
+Name[el]=ΟμαδικήΕπεξεργασίαΕικόνων
 Comment=KIPI Batch Processing Images Plugin
+Comment[el]=Πρόσθετο ομαδικής επεξεργασίας εικόνων KIPI
 Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service

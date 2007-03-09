@@ -1,7 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Sync
+Name[el]=Συγχρονισμός
 Comment=KIPI Synchronization Plugin
+Comment[el]=Πρόσθετο συγχρονισμού του KIPI
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_sync

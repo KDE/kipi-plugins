@@ -1,7 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Remote Gallery Export
+Name[el]=Εξαγωγή απομακρυσμένης συλλογής
 Comment=KIPI Remote Gallery Export Plugin
+Comment[el]=Πρόσθετο εξαγωγής απομακρυσμένης συλλογής του KIPI
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_galleryexport

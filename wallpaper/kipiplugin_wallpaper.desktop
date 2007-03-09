@@ -1,7 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=WallPaper
+Name[el]=Ταπετσαρία
 Comment=KIPI Set Wall Paper Plugin
+Comment[el]=Πρόσθετο ορισμού ταπετσαρίας του KIPI
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_wallpaper

@@ -1,7 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Viewer
+Name[el]=Προβολέας
 Comment=KIPI OpenGL Image Viewer
+Comment[el]=Προβολέας εικόνων OpenGL των KIPI
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_viewer

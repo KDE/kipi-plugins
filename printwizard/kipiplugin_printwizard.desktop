@@ -1,7 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=PrintWizard
+Name[el]=ΜάγοςΕκτύπωσης
 Comment=KIPI Print Wizard Plugin
+Comment[el]=Πρόσθετο μάγου εκτύπωσης του KIPI
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_printwizard

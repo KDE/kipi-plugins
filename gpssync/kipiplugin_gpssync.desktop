@@ -1,8 +1,10 @@
 [Desktop Entry]
 Comment=KIPI plugin to Geolocalize pictures
+Comment[el]=Πρόσθετο του KIPI για γεωτοποθέτηση εικόνων
 Encoding=UTF-8
 Icon=
 Name=GPSSync
+Name[el]=Συγχρονισμός GPS
 ServiceTypes=KIPI/Plugin
 Type=Service
 X-KDE-Library=kipiplugin_gpssync

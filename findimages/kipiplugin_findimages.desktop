@@ -1,7 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=FindImages
+Name[el]=ΑναζήτησηΕικόνων
 Comment=KIPI Plugin for Finding Images
+Comment[el]=Πρόσθετο του KIPI για αναζήτηση εικόνων
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_findimages

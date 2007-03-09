@@ -1,7 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=ImagesGallery
+Name[el]=ΣυλλογήΕικόνων
 Comment=KIPI HTML Gallery Export Plugin
+Comment[el]=Πρόσθετο του KIPI για εξαγωγή HTML συλλογής
 Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service

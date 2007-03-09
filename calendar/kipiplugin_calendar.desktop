@@ -1,7 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Calendar
+Name[el]=Ημερολόγιο
 Comment=KIPI Calendar Creation Wizard Plugin
+Comment[el]=Πρόσθετο μάγου δημιουργίας ημερολογίου του KIPI
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_calendar

@@ -1,7 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=HelloWorld
+Name[el]=ΓειάΣουΚόσμε
 Comment=KIPI Hello World Plugin
+Comment[el]=Πρόσθετο γεια σου κόσμε του KIPI
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_helloworld

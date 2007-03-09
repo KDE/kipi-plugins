@@ -1,7 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=RawConverter
+Name[el]=ΜετατροπέαςΑκατέργαστηςΜορφής
 Comment=KIPI Raw Image Converter
+Comment[el]=Μετατροπέας του KIPI για εικόνες ανεπεξέργαστης μορφής
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_rawconverter

@@ -1,7 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=SlideShow
+Name[el]=ΠροβολήΣλάιντ
 Comment=KIPI SlideShow Plugin
+Comment[el]=Πρόσθετο του KIPI για προβολή σλάιντ
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_slideshow

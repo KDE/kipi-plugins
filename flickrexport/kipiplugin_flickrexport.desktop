@@ -1,7 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Flickr Exporter
+Name[el]=Εξαγωγέας Flickr
 Comment=KIPI Remote Flickr Export Plugin
+Comment[el]=Πρόσθετο απομακρυσμένης εξαγωγής Flickr του KIPI
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_flickrexport
