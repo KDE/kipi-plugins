@@ -19,7 +19,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 007 ==> 140865 : RAWConverter : Plugin does not work (image can not be converted).
 008 ==> 141528 : JPEGLossLess : Remove confirmation dialog for image rotate.
 009 ==> 141530 : JPEGLossLess : Use Rotate left/right instead of degrees
-010 ==> 
+010 ==> 142848 : GPSSync      : Timezone needs to go to GMT +13.
+011 ==> 
 
 v 0.1.3 
 ----------------------------------------------------------------------------
