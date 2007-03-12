@@ -1,5 +1,5 @@
 /* ============================================================
- * Authors: Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Authors: Gilles Caulier <caulier dot gilles at gmail dot com>
  * Date   : 2006-05-16
  * Description : a plugin to synchronize pictures with 
  *               a GPS device.
@@ -209,6 +209,8 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->timeZoneCB->insertItem(i18n("GMT+10:00"), 22);
     d->timeZoneCB->insertItem(i18n("GMT+11:00"), 23);
     d->timeZoneCB->insertItem(i18n("GMT+12:00"), 24);
+    d->timeZoneCB->insertItem(i18n("GMT+13:00"), 25);
+    d->timeZoneCB->insertItem(i18n("GMT+14:00"), 26);
     QWhatsThis::add(d->timeZoneCB, i18n("<p>Sets the time zone of the camera during "
                     "picture shooting, so that the time stamps of the pictures "
                     "can be converted to GMT to match the GPS time"));
@@ -253,7 +255,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
                                             "(c) 2006-2007, Gilles Caulier");
 
     d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
-                        "caulier dot gilles at kdemail dot net");
+                        "caulier dot gilles at gmail dot com");
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeItemAt(0);
