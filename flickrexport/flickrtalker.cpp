@@ -38,6 +38,7 @@
 #include <qdom.h>
 #include <cstring>
 #include <cstdio>
+#include <cstdlib>
 
 #include <string>
 #include "flickritem.h"
