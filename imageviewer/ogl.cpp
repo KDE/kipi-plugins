@@ -27,8 +27,8 @@
 #include <qbitmap.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <kstandarddirs.h>				 
-
+#include <kstandarddirs.h>
+ 
 // Local includes.
 
 #include "ogl.h"
@@ -566,16 +566,30 @@ void ogl::nextImage()
 
 /*!
     \fn ogl::zoom(int mdelta, QPos pos)
-    \param mdelta delta of mouse movement: zoom in if mdelta >0, zoomout otherwise
+    \param mdelta delta of mouse movement: 
+	                            mdelta>0: zoom in
+	                            mdelta<0: zoom out
+	                            mdelta=0: do nothing
 	\param pos position of mouse
 	\param factor zoom factor:scrollwheel needs a higher factor that right click mouse move. factor=1 -> no zoom
  */
 void ogl::zoom(int mdelta, QPoint pos, float factor)
 {
-	if (mdelta > 0)
-    	delta=factor; //multiplicator for zooming in
-	if (mdelta < 0)
-    	delta=2.0-factor; //multiplicator for zooming out
+	if (mdelta==0) {
+		//do nothing
+		return;
+	}
+	
+	if (mdelta > 0) {
+		//multiplicator for zooming in
+		delta=factor; 
+	}
+	
+	if (mdelta < 0) {
+		//multiplicator for zooming out
+		delta=2.0-factor;
+	} 
+
 	texture->zoom(delta,pos);
 	updateGL();
 }
