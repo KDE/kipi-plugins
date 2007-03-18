@@ -29,6 +29,7 @@ template <class T> void DestroyCollectionList(CollectionList& collections)
   {
     delete dynamic_cast<T*>(*it);
   }
+  collections.empty();
 }
 
 template <class T> void DestroyItemList(ItemList& items)
@@ -39,6 +40,7 @@ template <class T> void DestroyItemList(ItemList& items)
   {
     delete dynamic_cast<T*>(*it);
   }
+  items.empty();
 }  
 
 
@@ -53,6 +55,11 @@ Collection::Collection(Collection* pParent, unsigned int features)
 bool Collection::Supports(enum Features feature)
 {
   return (mFeatures & feature);
+}
+
+const Collection* Collection::getParentCollection()
+{
+  return mpParent;
 }
 
 // Default, basic implementation of getSubCollections

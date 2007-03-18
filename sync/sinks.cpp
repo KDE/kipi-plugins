@@ -58,25 +58,6 @@ Sinks::Sinks()
  : mpWallet(NULL),
    mMaxSinkId(0)
 {
-}
-
-
-Sinks::~Sinks()
-{
-  if (mpWallet)
-    delete mpWallet;
-
-  // Todo: clear up mSinks
-}
-
-
-/// @todo Abstract this to per-sink-type load
-void Sinks::Load()
-{
-  static bool bln_loaded = false;
-  if (bln_loaded) return;
-  bln_loaded = true;
-
   KWallet::Wallet* p_wallet = NULL;
 #if KDE_IS_VERSION(3,2,0)
   mpWallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(),
@@ -107,7 +88,7 @@ void Sinks::Load()
   QValueList<int> sink_ids = config.readIntListEntry("Sinks");
 
   config.setGroup("Sync Sinks");
-  QString type = "";
+  QString name, type;
   for (QValueList<int>::Iterator it = sink_ids.begin(); it != sink_ids.end(); ++it)
   {
     unsigned int sink_id = (*it);
@@ -116,16 +97,38 @@ void Sinks::Load()
       mMaxSinkId = sink_id;
 
     type = config.readEntry(QString("Type%1").arg(sink_id));
-    Sink* p_sink = SinkFactory::Create(type, sink_id, &config, p_wallet);
+    name = config.readEntry(QString("Name%1").arg(sink_id));
+    Sink* p_sink = SinkFactory::Create(type, sink_id, name, &config, p_wallet);
     if (p_sink)
       mSinks.append(p_sink);
   }
 }
 
 
-void Sinks::Add(Sink* pSink)
+Sinks::~Sinks()
 {
-  mSinks.append(pSink);
+  if (mpWallet)
+    delete mpWallet;
+
+  // Todo: clear up mSinks
+}
+
+
+/// @todo Abstract this to per-sink-type load
+void Sinks::Load()
+{
+  static bool bln_loaded = false;
+  if (bln_loaded) return;
+  bln_loaded = true;
+}
+
+
+Sink* Sinks::Add(QString type, QString name)
+{
+  Sink* p_sink = SinkFactory::Create(type, ++mMaxSinkId, name, NULL, NULL);
+  // This actually needs to be a call to sync factory creation... pass in the new SinkId
+  mSinks.append(p_sink);
+  return p_sink;
 }
 
 void Sinks::Remove(Sink* pSink)
@@ -167,6 +170,7 @@ void Sinks::Save()
   {
     Sink* p_sink = (*it);
     p_sink->Save(&config, p_wallet);
+    sink_ids.append(p_sink->SinkId());
   }
 
   config.setGroup("Sync Settings");

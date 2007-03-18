@@ -40,10 +40,8 @@ namespace KIPISyncPlugin
 class GalleryCollection;
 class GalleryItem;
 
-class GallerySink : Sink
-{
-  Q_OBJECT
-  
+class GallerySink : public Sink
+{ 
 public:
   enum State {
       GE_LOGIN = 0,
@@ -53,12 +51,14 @@ public:
       GE_ADDPHOTO
   };
 
-  GallerySink(unsigned int sinkId, KConfig* pConfig, KWallet::Wallet* pWallet, GalleryVersion version);
+  GallerySink(unsigned int sinkId, QString name, KConfig* pConfig, KWallet::Wallet* pWallet, GalleryVersion version);
   ~GallerySink();
 
   const KIPI2::CollectionList* getCollections();
   
   void Save(KConfig* pConfig, KWallet::Wallet* pWallet);
+  
+  bool Connect();
 
   /*
   bool loggedIn() const;
@@ -83,16 +83,16 @@ private:
   QString        mAuthToken;
   
   QString        mName;
-  QString        mURL;
+  KURL           mURL;
   QString        mUsername;
   QString        mPassword;
   
-  State      m_state;
+  State          mState;
   QString    m_cookie;
   KURL       m_url;
-  KIO::Job*  m_job;
+  KIO::Job*      mpJob;
   bool       m_loggedIn;
-  QByteArray m_buffer;
+  QByteArray     mBuffer;
   /*
   void parseResponseLogin(const QByteArray &data);
   void parseResponseListAlbums(const QByteArray &data);

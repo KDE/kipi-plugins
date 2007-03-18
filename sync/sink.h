@@ -38,14 +38,15 @@ namespace KIPISyncPlugin
 
 // Foreard definition
 /// @todo Convert this to an Interface/Factory type setup.
-class Sink : KIPI2::Interface
+class Sink : public KIPI2::Interface
 {
-
 public:
-  Sink(unsigned int sinkId, KConfig* pConfig, KWallet::Wallet* pWallet);
+  Sink(unsigned int sinkId, QString name, KConfig* pConfig, KWallet::Wallet* pWallet);
+
+  unsigned int SinkId();
 
   /// The Name of the Sink as chosen by the user.
-  virtual QString Name() = 0;
+  QString Name();
   
   /// An internal, unique type as specifed by the sink.
   virtual QString Type() = 0;
@@ -57,13 +58,18 @@ public:
 
   virtual void Save(KConfig* pConfig, KWallet::Wallet* pWallet) = 0;
   
+  // As some Sinks are remote, we have the concept of connect/disconnect
+  virtual bool Connect() { return true; };
+  
+  virtual void Disconnect() { };
+  
   //virtual void asQListViewItem(QListView* pParent) = 0;
 
 protected:
 
+  unsigned int mSinkId;
   QString mName;
 
-  unsigned int mSinkId;
 
 };
 
@@ -71,8 +77,7 @@ protected:
 class Sink2 : Sink
 {
 public:
-  Sink2(unsigned int sinkId, KConfig* pConfig, KWallet::Wallet* pWallet);
-  QString Name();
+  Sink2(unsigned int sinkId, QString name, KConfig* pConfig, KWallet::Wallet* pWallet);
   QString Type();
   QString TypeDescription();
   KIPI2::CollectionList* getCollections();

@@ -23,11 +23,21 @@
 namespace KIPISyncPlugin
 {
 
-Sink::Sink(unsigned int sinkId, KConfig*, KWallet::Wallet*)
- : mSinkId(sinkId)
+Sink::Sink(unsigned int sinkId, QString name, KConfig*, KWallet::Wallet*)
+ : mSinkId(sinkId),
+   mName(name)
 {
 }
 
+unsigned int Sink::SinkId()
+{
+  return mSinkId;
+}
+
+QString Sink::Name()
+{
+  return mName;
+}
 /*
 Sink::Sink(const QString& name, const QString& url,
            const QString& username, const QString& password,
@@ -70,13 +80,12 @@ void Sink::asQListViewItem(QListView* pParent)
 */
 
 // Pretend sink (just for testin the structure - will be removed!)
-Sink2::Sink2(unsigned int sinkId, KConfig* pConfig, KWallet::Wallet* pWallet)
- : Sink(sinkId, pConfig, pWallet)
+Sink2::Sink2(unsigned int sinkId, QString name, KConfig* pConfig, KWallet::Wallet* pWallet)
+ : Sink(sinkId, name, pConfig, pWallet)
 {
-
+  mName = "Sink2";
 }
 
-QString Sink2::Name() { return "Sink2"; }
 QString Sink2::Type() { return "Sink2"; }
 QString Sink2::TypeDescription() { return "Sink2"; }
 
@@ -95,7 +104,9 @@ void test()
 {
   SinkFactory::Register("Sink2", SinkCreator<Sink2>);
   
-  Sink* p_tmp = SinkFactory::Create("Sink2", 1, NULL, NULL);
+  Sink* p_tmp = SinkFactory::Create("Sink2", 1, "Something", NULL, NULL);
   p_tmp = p_tmp;
 }
 }
+
+//#include "sink.moc"

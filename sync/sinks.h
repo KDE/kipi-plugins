@@ -61,7 +61,7 @@ public:
   Sinks();
   ~Sinks();
 
-  void Add(Sink* pSink);
+  Sink* Add(QString type, QString name);
   void Remove(Sink* pSink);
   void Save();
   void asQListView(QListView* pListView);

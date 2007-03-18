@@ -44,15 +44,15 @@
 namespace KIPISyncPlugin
 {
 
-GallerySink::GallerySink(unsigned int sinkId, KConfig* pConfig, KWallet::Wallet* pWallet, GalleryVersion version)
-  : Sink(sinkId, pConfig, pWallet),
+GallerySink::GallerySink(unsigned int sinkId, QString name, KConfig* pConfig, KWallet::Wallet* pWallet, GalleryVersion version)
+  : Sink(sinkId, name, pConfig, pWallet),
     mVersion(version), 
     mAuthToken(""), 
-    m_job(0),
+    mpJob(0),
     m_loggedIn(false)
 {
-  mName     = pConfig->readEntry(QString("Name%1").arg(sinkId));
-  mURL      = pConfig->readEntry(QString("URL%1").arg(sinkId));
+  QString tmp = pConfig->readEntry(QString("URL%1").arg(sinkId));
+  mURL = KURL(tmp);
   mUsername = pConfig->readEntry(QString("Username%1").arg(sinkId));
   if (pWallet)
     pWallet->readPassword(QString("Password%1").arg(sinkId), mPassword);
@@ -60,8 +60,8 @@ GallerySink::GallerySink(unsigned int sinkId, KConfig* pConfig, KWallet::Wallet*
 
 GallerySink::~GallerySink()
 {
-  if (m_job)
-    m_job->kill();
+  if (mpJob)
+    mpJob->kill();
 }
 
 
@@ -74,31 +74,30 @@ void GallerySink::Save(KConfig* pConfig, KWallet::Wallet* pWallet)
 {
   pConfig->writeEntry(QString("Name%1").arg(mSinkId), mName);
   pConfig->writeEntry(QString("Type%1").arg(mSinkId), Type());
-  pConfig->writeEntry(QString("URL%1").arg(mSinkId), mURL);
+  pConfig->writeEntry(QString("URL%1").arg(mSinkId), QString(mURL.url()));
   pConfig->writeEntry(QString("Username%1").arg(mSinkId), mUsername);
   if (pWallet)
     pWallet->writePassword(QString("Password%1").arg(mSinkId), mPassword);
 }
+
 
 /*
 bool GallerySink::loggedIn() const
 {
     return m_loggedIn;
 }
+*/
 
-void GallerySink::login( const KURL& url, const QString& name,
-                           const QString& passwd )
+bool GallerySink::Connect()
 {
-    m_url = url;
-
     GalleryForm form(mVersion, mAuthToken);
 
     form.addPair("cmd",              "login");
     form.addPair("protocol_version", "2.3");
-    form.addPair("uname",            name);
-    form.addPair("password",         passwd);
+    form.addPair("uname",            mUsername);
+    form.addPair("password",         mPassword);
 
-    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
+    KIO::TransferJob* job = KIO::http_post(mURL, form.formData(), false);
     job->addMetaData("content-type", form.contentType() );
     job->addMetaData("cookies", "manual");
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
@@ -106,12 +105,12 @@ void GallerySink::login( const KURL& url, const QString& name,
     connect(job, SIGNAL(result(KIO::Job *)),
             SLOT(slotResult(KIO::Job *)));
 
-    m_state = GE_LOGIN;
-    m_job   = job;
-    m_buffer.resize(0);
-    emit signalBusy( true );
+    mState = GE_LOGIN;
+    mpJob   = job;
+    mBuffer.resize(0);
+    //emit signalBusy( true );
 }
-
+/*
 void GallerySink::listAlbums()
 {
     GalleryForm form(mVersion, mAuthToken);
@@ -132,18 +131,18 @@ void GallerySink::listAlbums()
     connect(job, SIGNAL(result(KIO::Job *)),
             SLOT(slotResult(KIO::Job *)));
 
-    m_state = GE_LISTALBUMS;
-    m_job   = job;
-    m_buffer.resize(0);
+    mState = GE_LISTALBUMS;
+    mpJob   = job;
+    mBuffer.resize(0);
     emit signalBusy( true );
 }
 
 void GallerySink::listPhotos( const QString& albumName )
 {
-    if (m_job)
+    if (mpJob)
     {
-        m_job->kill();
-        m_job = 0;
+        mpJob->kill();
+        mpJob = 0;
     }
 
     GalleryForm form(mVersion, mAuthToken);
@@ -161,9 +160,9 @@ void GallerySink::listPhotos( const QString& albumName )
     connect(job, SIGNAL(result(KIO::Job *)),
             SLOT(slotResult(KIO::Job *)));
 
-    m_state = GE_LISTPHOTOS;
-    m_job   = job;
-    m_buffer.resize(0);
+    mState = GE_LISTPHOTOS;
+    mpJob   = job;
+    mBuffer.resize(0);
     emit signalBusy( true );
 }
 
@@ -172,10 +171,10 @@ void GallerySink::createAlbum( const QString& parentAlbumName,
                                  const QString& albumTitle,
                                  const QString& albumCaption )
 {
-    if (m_job)
+    if (mpJob)
     {
-        m_job->kill();
-        m_job = 0;
+        mpJob->kill();
+        mpJob = 0;
     }
 
     GalleryForm form(mVersion, mAuthToken);
@@ -199,9 +198,9 @@ void GallerySink::createAlbum( const QString& parentAlbumName,
     connect(job, SIGNAL(result(KIO::Job *)),
             SLOT(slotResult(KIO::Job *)));
 
-    m_state = GE_CREATEALBUM;
-    m_job   = job;
-    m_buffer.resize(0);
+    mState = GE_CREATEALBUM;
+    mpJob   = job;
+    mBuffer.resize(0);
     emit signalBusy( true );
 }
 
@@ -210,10 +209,10 @@ bool GallerySink::addPhoto( const QString& albumName,
                               const QString& caption,
                               bool  rescale, int maxDim )
 {
-    if (m_job)
+    if (mpJob)
     {
-        m_job->kill();
-        m_job = 0;
+        mpJob->kill();
+        mpJob = 0;
     }
 
     QString path = photoPath;
@@ -266,9 +265,9 @@ bool GallerySink::addPhoto( const QString& albumName,
     connect(job, SIGNAL(result(KIO::Job *)),
             SLOT(slotResult(KIO::Job *)));
 
-    m_state = GE_ADDPHOTO;
-    m_job   = job;
-    m_buffer.resize(0);
+    mState = GE_ADDPHOTO;
+    mpJob   = job;
+    mBuffer.resize(0);
     emit signalBusy( true );
 
     return true;
@@ -276,10 +275,10 @@ bool GallerySink::addPhoto( const QString& albumName,
 
 void GallerySink::cancel()
 {
-    if (m_job)
+    if (mpJob)
     {
-        m_job->kill();
-        m_job = 0;
+        mpJob->kill();
+        mpJob = 0;
     }
 }
 
@@ -288,47 +287,47 @@ void GallerySink::data(KIO::Job*, const QByteArray& data)
     if (data.isEmpty())
         return;
 
-    int oldSize = m_buffer.size();
-    m_buffer.resize(m_buffer.size() + data.size());
-    memcpy(m_buffer.data()+oldSize, data.data(), data.size());
+    int oldSize = mBuffer.size();
+    mBuffer.resize(mBuffer.size() + data.size());
+    memcpy(mBuffer.data()+oldSize, data.data(), data.size());
 }
 
 void GallerySink::slotResult(KIO::Job *job)
 {
-    m_job = 0;
+    mpJob = 0;
     emit signalBusy( false );
 
     if ( job->error() )
     {
-        if ( m_state == GE_LOGIN )
+        if ( mState == GE_LOGIN )
             emit signalLoginFailed( job->errorString() );
-        else if ( m_state == GE_ADDPHOTO )
+        else if ( mState == GE_ADDPHOTO )
             emit signalAddPhotoFailed( job->errorString() );
         else
             job->showErrorDialog( ); //m_parent
         return;
     }
 
-    switch(m_state)
+    switch(mState)
     {
     case(GE_LOGIN):
-        parseResponseLogin(m_buffer);
+        parseResponseLogin(mBuffer);
         break;
     case(GE_LISTALBUMS):
-        parseResponseListAlbums(m_buffer);
+        parseResponseListAlbums(mBuffer);
         break;
     case(GE_LISTPHOTOS):
-        parseResponseListPhotos(m_buffer);
+        parseResponseListPhotos(mBuffer);
         break;
     case(GE_CREATEALBUM):
-        parseResponseCreateAlbum(m_buffer);
+        parseResponseCreateAlbum(mBuffer);
         break;
     case(GE_ADDPHOTO):
-        parseResponseAddPhoto(m_buffer);
+        parseResponseAddPhoto(mBuffer);
         break;
     }
 
-    if (m_state == GE_LOGIN && m_loggedIn)
+    if (mState == GE_LOGIN && m_loggedIn)
     {
         QStringList cookielist = QStringList::split("\n", job->queryMetaData("setcookies"));
         m_cookie = "Cookie:";
@@ -683,3 +682,5 @@ void GallerySink::parseResponseAddPhoto(const QByteArray &data)
 */
 }
 
+
+//#include "gallerysink.moc"

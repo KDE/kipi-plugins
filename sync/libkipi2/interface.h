@@ -19,12 +19,15 @@
 #ifndef KIPI2_INTERFACE_H
 #define KIPI2_INTERFACE_H
 
+#include <qobject.h>
 #include "collection.h"
 
 namespace KIPI2
 {
-class Interface
+class Interface : public QObject
 {
+  Q_OBJECT
+
 public:
   virtual const CollectionList* getCollections() = 0;
 };

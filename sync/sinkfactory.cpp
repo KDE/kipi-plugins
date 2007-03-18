@@ -25,22 +25,22 @@ namespace KIPISyncPlugin
 SinkMap SinkFactory::mSinkProxies;
 
 // Define the register method
-bool SinkFactory::Register(QString name, SinkProxy* pSinkProxy)
+bool SinkFactory::Register(QString type, SinkProxy* pSinkProxy)
 {
-  if (mSinkProxies.contains(name))
+  if (mSinkProxies.contains(type))
     return false;
   
-  mSinkProxies[name] = pSinkProxy;
+  mSinkProxies[type] = pSinkProxy;
   return true;
 }
 
 // The main creation method
-Sink* SinkFactory::Create(QString name, unsigned int sinkId, KConfig* pConfig, KWallet::Wallet* pWallet)
+Sink* SinkFactory::Create(QString type, unsigned int sinkId, QString name, KConfig* pConfig, KWallet::Wallet* pWallet)
 {
-  if (!mSinkProxies.contains(name))
+  if (!mSinkProxies.contains(type))
     return NULL;
   
-  return (*(mSinkProxies[name]))(sinkId, pConfig, pWallet);
+  return (*(mSinkProxies[type]))(sinkId, name, pConfig, pWallet);
 }
 
 }
