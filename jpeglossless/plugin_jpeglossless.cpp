@@ -91,14 +91,14 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     m_action_RotateImage->insert( new KAction(i18n("Left"),
                                   "rotate_ccw",
-                                  CTRL+Key_Left,
+                                  SHIFT+CTRL+Key_Left,
                                   this,
                                   SLOT(slotRotate()),
                                   actionCollection(),
                                   "rotate_ccw") );
     m_action_RotateImage->insert( new KAction(i18n("Right"),
                                   "rotate_cw",
-                                  CTRL+Key_Right,
+                                  SHIFT+CTRL+Key_Right,
                                   this,
                                   SLOT(slotRotate()),
                                   actionCollection(),
