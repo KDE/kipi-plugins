@@ -104,6 +104,8 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
 
   m_about->addAuthor("Todd Shoemaker", I18N_NOOP("Author"),
                      "todd@theshoemakers.net");
+  m_about->addAuthor("Angelo Naselli", I18N_NOOP("Contributor"),
+                     "anaselli@linux.it");
 
   m_helpButton = helpButton();
   KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
@@ -123,7 +125,7 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
 
   m_currentPreviewPage = 0;
   m_pageSize = KPrinter::A1; // select a different page to force a refresh in initPhotoSizes.
-  initPhotoSizes(KPrinter::Letter); // default to letter for now.
+  initPhotoSizes(KPrinter::A4); // default to A4 for now.
 
   EditOutputPath->setText(QDir::homeDirPath());
 
@@ -644,7 +646,7 @@ void FrmPrintWizard::loadSettings()
   if (m_pageSize == KPrinter::A6)
       CmbPaperSize->setCurrentItem(2);
   else if (m_pageSize == KPrinter::A4)
-      CmbPaperSize->setCurrentItem(1);      
+      CmbPaperSize->setCurrentItem(1);
   else
       CmbPaperSize->setCurrentItem(0);
 
@@ -976,6 +978,26 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
   {
     // A4 is 21 x 29.7cm
     TPhotoSize *p;
+
+    // ========== 6x9 cm - 8 photos
+    p = new TPhotoSize;
+    p->dpi = 0;
+    p->autoRotate = true;
+    p->label = i18n("6 x 9cm (8 photos)");
+    // page size
+    p->layouts.append(new QRect(0, 0, 2100, 2970));
+    // photo layouts
+    p->layouts.append(new QRect( 100,  100, 900, 600));
+    p->layouts.append(new QRect(1100,  100, 900, 600));
+    p->layouts.append(new QRect( 100,  800, 900, 600));
+    p->layouts.append(new QRect(1100,  800, 900, 600));
+    p->layouts.append(new QRect( 100, 1500, 900, 600));
+    p->layouts.append(new QRect(1100, 1500, 900, 600));
+    p->layouts.append(new QRect( 100, 2200, 900, 600));
+    p->layouts.append(new QRect(1100, 2200, 900, 600));
+    // add to the list
+    m_photoSizes.append(p);
+
     // ========== 9x13
     p = new TPhotoSize;
     p->dpi = 0;
