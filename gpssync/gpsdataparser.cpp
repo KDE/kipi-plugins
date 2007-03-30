@@ -113,13 +113,13 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int maxGapTime, int timeZ
             double lon2 = nextGPSPoint.longitude();
             double lat2 = nextGPSPoint.latitude();
             uint   t2   = nextDateTime.toTime_t();
-            uint   t3   = cameraGMTDateTime.toTime_t();
+            uint   tCor   = cameraGMTDateTime.toTime_t();
 
-            if (t3-t1 != 0)  
+            if (tCor-t1 != 0)  
             {
-                gpsData.setAltitude(alt1  + (alt2-alt1) * (t2-t1)/(t3-t1));
-                gpsData.setLatitude(lat1  + (lat2-lat1) * (t2-t1)/(t3-t1));
-                gpsData.setLongitude(lon1 + (lon2-lon1) * (t2-t1)/(t3-t1));
+                gpsData.setAltitude(alt1  + (alt2-alt1) * (tCor-t1)/(t2-t1));
+                gpsData.setLatitude(lat1  + (lat2-lat1) * (tCor-t1)/(t2-t1));
+                gpsData.setLongitude(lon1 + (lon2-lon1) * (tCor-t1)/(t2-t1));
                 gpsData.setInterpolated(true);
                 return true;
             }
