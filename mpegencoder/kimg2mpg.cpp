@@ -681,13 +681,21 @@ void KImg2mpgData::slotEncode( void )
   m_CommandLine = m_CommandLine + " -i ";
 
   for (uint i=0 ; i < m_ImagesFilesListBox->count() ; ++i)
-    {
+  {
     QString FileName="";
     ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(i) );
     FileName.append (pitem->path());                              // Input images files.
+    if (!QFile::exists(FileName))
+    {
+      KMessageBox::error(this,
+                         i18n("Can't access to file %1, please check the path is right.").arg(FileName));
+      m_Abort = true;
+      reset();
+      return;
+    }
     *m_Proc << FileName;
     m_CommandLine = m_CommandLine + " \"" + FileName + "\" ";
-    }
+  }
 
   connect(m_Proc, SIGNAL(processExited(KProcess *)),this,
           SLOT(EncodeDone(KProcess*)));
