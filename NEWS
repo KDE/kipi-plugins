@@ -23,7 +23,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 010 ==> 142848 : GPSSync      : Timezone needs to go to GMT +13.
 011 ==> 140297 : GPSSync      : GPS kipi plugin truncates input coordinates, introducing inacuracy.
 012 ==> 143594 : GPSSync      : Bad Interpolation in correlate gpssync.
-013 ==> 
+013 ==> ------ : MPEGEncoder  : avoid to pass img2mpg script unmanaged file path.
+014 ==>
 
 v 0.1.3 
 ----------------------------------------------------------------------------
