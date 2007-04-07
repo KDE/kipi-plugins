@@ -60,7 +60,7 @@ private:
     QDateTime findNextDate(QDateTime dateTime, int secs);
     QDateTime findPrevDate(QDateTime dateTime, int secs);
 
-private: 
+protected: 
 
     typedef QMap<QDateTime, GPSDataContainer> GPSDataMap; 
 

@@ -10,11 +10,13 @@ kipiplugin_gpssync_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKEXIV2_LIBS_DEP)
 # Srcs for the plugin
 kipiplugin_gpssync_la_SOURCES = plugin_gpssync.cpp gpssyncdialog.cpp gpslistviewitem.cpp \
 	                        gpsbabelbinary.cpp gpsdataparser.cpp gpseditdialog.cpp \
-	                        gpsmapwidget.cpp 
+	                        gpsmapwidget.cpp kmlexport.cpp kmlexportconfig.cpp \
+				kmlgpsdataparser.cpp 
 
 # Libs needed by the plugin
 kipiplugin_gpssync_la_LIBADD = $(LIBKEXIV2_LIBS) -lkipiplugins $(LIBKIPI_LIBS) $(LIB_KHTML) \
-	                       $(LIB_KPARTS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
+	                       $(LIB_KPARTS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT) \
+	                       $(LIB_KFILE)
 
 # LD flags for the plugin
 kipiplugin_gpssync_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries)

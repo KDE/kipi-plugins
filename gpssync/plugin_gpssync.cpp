@@ -50,6 +50,9 @@
 #include "gpssyncdialog.h"
 #include "plugin_gpssync.h"
 #include "plugin_gpssync.moc"
+#include "kmlexport.h"
+#include "kmlexportconfig.h"
+
 
 typedef KGenericFactory<Plugin_GPSSync> Factory;
 
@@ -95,6 +98,17 @@ void Plugin_GPSSync::setup( QWidget* widget )
                                      "gpsremove"));
 
     addAction( m_action_geolocalization );
+
+   // this is our action shown in the menubar/toolbar of the mainwindow
+    m_actionKMLExport = new KAction (i18n("Export kml..."),
+                                     "www",	// icon
+                                   0,	// do never set shortcuts from plugins.
+                                   this,
+                                   SLOT(slotKMLExport()),
+                                   actionCollection(),
+                                   "kmlexport");
+
+    addAction( m_actionKMLExport );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
 
@@ -305,10 +319,38 @@ void Plugin_GPSSync::slotGPSRemove()
     }
 }
 
+
+void Plugin_GPSSync::slotKMLExport()
+{
+    KIPI::ImageCollection selection = m_interface->currentSelection();
+
+    if ( !selection.isValid() ) {
+        kdDebug( 51000) << "No Selection!" << endl;
+    }
+    else {
+        KIPIGPSSyncPlugin::KMLExportConfig *kmlExportConfigGui = new KIPIGPSSyncPlugin::KMLExportConfig( kapp->activeWindow(), i18n("KMLExport").ascii());
+        connect(kmlExportConfigGui, SIGNAL(okButtonClicked()), this, SLOT(slotKMLGenerate()));
+        kmlExportConfigGui->show();
+
+    }
+}
+
+void Plugin_GPSSync::slotKMLGenerate()
+{
+    KIPI::ImageCollection selection = m_interface->currentSelection();
+    KIPIGPSSyncPlugin::kmlExport myExport(m_interface);
+    if(!myExport.getConfig())
+        return;
+    myExport.generate();
+}
+
+
 KIPI::Category Plugin_GPSSync::category( KAction* action ) const
 {
     if ( action == m_action_geolocalization )
        return KIPI::IMAGESPLUGIN;
+    if ( action == m_actionKMLExport )
+       return KIPI::EXPORTPLUGIN;
 
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please

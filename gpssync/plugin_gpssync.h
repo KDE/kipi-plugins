@@ -27,6 +27,7 @@
 #include <libkipi/plugin.h>
 
 class KActionMenu;
+class KAction;
 
 class Plugin_GPSSync : public KIPI::Plugin
 {
@@ -44,6 +45,8 @@ protected slots:
     void slotGPSSync();
     void slotGPSEdit();
     void slotGPSRemove();
+    void slotKMLGenerate();
+    void slotKMLExport();
 
 private:
 
@@ -52,6 +55,7 @@ private:
 private:
 
     KActionMenu     *m_action_geolocalization;
+    KAction         *m_actionKMLExport;
 
     KIPI::Interface *m_interface;
 };
