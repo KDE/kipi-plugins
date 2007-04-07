@@ -11,6 +11,7 @@ ImageViewer    : initial import of new OpenGL based image viewer.
 RAWConverter   : Port plugin to libkdcraw shared library.
 Printwizard    : Printwizard can print 8 photos per page (A4)
 MPEGEncoder    : Avoid to pass img2mpg script unmanaged file path.
+GPSSync        : New plugin to export GPS postion from pictures to Google Maps / Google Earth.
 
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
