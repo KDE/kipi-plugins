@@ -10,6 +10,7 @@ General        : Moved Exiv2Iface class to a new shared library named libkexiv2 
 ImageViewer    : initial import of new OpenGL based image viewer.
 RAWConverter   : Port plugin to libkdcraw shared library.
 Printwizard    : Printwizard can print 8 photos per page (A4)
+MPEGEncoder    : Avoid to pass img2mpg script unmanaged file path.
 
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
@@ -23,8 +24,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 010 ==> 142848 : GPSSync      : Timezone needs to go to GMT +13.
 011 ==> 140297 : GPSSync      : GPS kipi plugin truncates input coordinates, introducing inacuracy.
 012 ==> 143594 : GPSSync      : Bad Interpolation in correlate gpssync.
-013 ==> ------ : MPEGEncoder  : avoid to pass img2mpg script unmanaged file path.
-014 ==>
+014 ==> 139793 : GPSSync      : KML google export import.
+015 ==> 
 
 v 0.1.3 
 ----------------------------------------------------------------------------
