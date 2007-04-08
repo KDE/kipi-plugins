@@ -1,0 +1,119 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>HelpDialog</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>HelpDialog</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>712</width>
+            <height>539</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Usage Image Viewer</string>
+    </property>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>pushButton1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>260</x>
+                <y>500</y>
+                <width>230</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>O&amp;K</string>
+        </property>
+        <property name="accel">
+            <string>Alt+K</string>
+        </property>
+    </widget>
+    <widget class="QTextBrowser">
+        <property name="name">
+            <cstring>textBrowser2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>690</width>
+                <height>480</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>&lt;b&gt;&lt;font color="#5500ff"&gt;&lt;font size="+2"&gt;Image Access&lt;/font&gt;&lt;/font&gt;&lt;/b&gt;&lt;br&gt;
+&lt;TABLE&gt; 
+ &lt;TR&gt; 
+ &lt;TD&gt;next image&lt;/TD&gt; 
+ &lt;TD&gt;scrollwheel down/down arrow/right arrow/PgDown/Space/n&lt;/TD&gt;
+ &lt;/TR&gt; 
+ &lt;TR&gt; 
+ &lt;TD&gt;previous image &lt;/TD&gt; 
+ &lt;TD&gt;scrollwheel up/up arrow/left arrow/PgUp/p &lt;/TD&gt; 
+ &lt;/TR&gt;
+&lt;TR&gt; 
+ &lt;TD&gt;quit&lt;/TD&gt; 
+ &lt;TD&gt;Esc&lt;/TD&gt; 
+ &lt;/TR&gt; 
+ &lt;/TABLE&gt;
+&lt;br&gt;
+ &lt;TH&gt;&lt;b&gt;&lt;font color="#5500ff"&gt;&lt;font size="+2"&gt;Display&lt;/font&gt;&lt;/font&gt;&lt;/b&gt;&lt;/TH&gt; &lt;/br&gt;
+&lt;TABLE&gt; 
+ &lt;TR&gt; 
+ &lt;TD&gt;toggle fullscreen/normal &lt;/TD&gt; 
+ &lt;TD&gt;f&lt;/TD&gt; 
+ &lt;/TR&gt; 
+ &lt;TR&gt; 
+ &lt;TD&gt;toggle scrollwheel action&lt;/TD&gt; 
+ &lt;TD&gt;c (either zoom or change image)&lt;/TD&gt; 
+ &lt;/TR&gt;
+ &lt;TR&gt; 
+ &lt;TD&gt;rotation &lt;/TD&gt; 
+ &lt;TD&gt;r&lt;/TD&gt; 
+ &lt;/TR&gt; 
+ &lt;TR&gt; 
+ &lt;TD&gt;reset view &lt;/TD&gt; 
+ &lt;TD&gt;double click&lt;/TD&gt; 
+ &lt;/TR&gt; 
+ &lt;TR&gt; 
+ &lt;TD&gt;original size&lt;/TD&gt; 
+ &lt;TD&gt;o&lt;/TD&gt; 
+ &lt;/TR&gt;
+ &lt;/TABLE&gt;
+&lt;br&gt;
+
+
+&lt;b&gt;&lt;font color="#5500ff" size="+2"&gt;Zooming&lt;/font&gt;&lt;/b&gt;&lt;br&gt; 
+&lt;UL&gt;
+&lt;LI&gt;move mouse in up/down-direction while pressing the right mouse button
+&lt;LI&gt;alternatively, press c and use the scrollwheel&lt;br&gt;
+&lt;LI&gt;plus/minus
+&lt;LI&gt;ctrl + scrollwheel
+&lt;/UL&gt;
+
+&lt;b&gt;&lt;font color="#5500ff" size="+2"&gt;Panning&lt;/font&gt;&lt;/b&gt;&lt;br&gt;
+&lt;UL&gt; 
+&lt;LI&gt;move mouse while pressing the left button
+&lt;/UL&gt;</string>
+        </property>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>pushButton1</sender>
+        <signal>clicked()</signal>
+        <receiver>HelpDialog</receiver>
+        <slot>close()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>pushButton1_clicked()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

@@ -28,12 +28,14 @@
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
- 
+#include <kmessagebox.h>
+
 // Local includes.
 
 #include "ogl.h"
 #include "timer.h"
 #include "texture.h"
+#include "help.h"
 				 
 using namespace std;
 using namespace KIPIviewer;
@@ -309,6 +311,10 @@ void ogl::keyPressEvent(QKeyEvent *k)
 				timerMouseMove.stop();
 			}		
 			break;
+			
+		default:
+			QDialog * h = new HelpDialog;
+			h->show();
 	}
 }
 
