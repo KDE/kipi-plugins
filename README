@@ -126,6 +126,8 @@ batchprocessimages : imagemagick (runtime dependency)
 cdarchiving        : k3b (runtime dependency)
 kameraklient       : libgphoto2
 mpegenconder       : mjpegtools (runtime dependency)
+                   : mpg123 (runtime dependency)
+                   : vorbis-tools (runtime dependency)
 wallpaper          : kdebase (runtime dependency)
 rawconverter       : libtiff 
 acquireimages      : libtiff
