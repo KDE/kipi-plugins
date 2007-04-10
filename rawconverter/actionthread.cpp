@@ -177,7 +177,7 @@ void ActionThread::run()
                         if (info.dateTime.isValid())
                         {
                             identify.append(i18n("Created: %1\n")
-                                    .arg(KGlobal::locale()->formatDateTime(info.dateTime, KLocale::ShortDate, true)));
+                                    .arg(KGlobal::locale()->formatDateTime(info.dateTime, true, true)));
                         }
 
                         if (info.aperture != -1.0)
