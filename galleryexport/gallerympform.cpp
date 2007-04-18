@@ -70,7 +70,7 @@ void GalleryMPForm::finish()
 
     QTextStream ts(m_buffer, IO_Append|IO_WriteOnly);
     ts.setEncoding(QTextStream::UnicodeUTF8);
-    ts << str;
+    ts << str << '\0';
 }
 
 bool GalleryMPForm::addPair(const QString& name, const QString& value)

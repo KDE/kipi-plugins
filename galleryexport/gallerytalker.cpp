@@ -72,7 +72,7 @@ void GalleryTalker::login( const KURL& url, const QString& name,
     GalleryMPForm form;
 
     form.addPair("cmd",              "login");
-    form.addPair("protocol_version", "2.3");
+    form.addPair("protocol_version", "2.11");
     form.addPair("uname",            name);
     form.addPair("password",         passwd);
     form.finish();
@@ -100,7 +100,7 @@ void GalleryTalker::listAlbums()
       task = "fetch-albums-prune";
 
     form.addPair("cmd",              task);
-    form.addPair("protocol_version", "2.3");
+    form.addPair("protocol_version", "2.11");
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
@@ -129,7 +129,7 @@ void GalleryTalker::listPhotos( const QString& albumName )
     GalleryMPForm form;
 
     form.addPair("cmd",              "fetch-album-images");
-    form.addPair("protocol_version", "2.3");
+    form.addPair("protocol_version", "2.11");
     form.addPair("set_albumName",    albumName);
     form.finish();
 
@@ -162,7 +162,7 @@ void GalleryTalker::createAlbum( const QString& parentAlbumName,
     GalleryMPForm form;
 
     form.addPair("cmd", "new-album");
-    form.addPair("protocol_version", "2.3");
+    form.addPair("protocol_version", "2.11");
     form.addPair("set_albumName", parentAlbumName);
     if (!albumName.isEmpty())
         form.addPair("newAlbumName", albumName);
@@ -204,7 +204,7 @@ bool GalleryTalker::addPhoto( const QString& albumName,
     GalleryMPForm form;
 
     form.addPair("cmd", "add-item");
-    form.addPair("protocol_version", "2.3");
+    form.addPair("protocol_version", "2.11");
     form.addPair("set_albumName", albumName);
 
     if (!caption.isEmpty())
@@ -318,7 +318,7 @@ void GalleryTalker::slotResult(KIO::Job *job)
         m_cookie = "Cookie:";
         for (QStringList::Iterator it = cookielist.begin(); it != cookielist.end(); ++it)
         {
-            QRegExp rx("^Set-Cookie: ([^;]+)");
+            QRegExp rx("^Set-Cookie: ([^;]+=[^;]+)");
             if (rx.search(*it) > -1)
                 m_cookie += " " + rx.cap(1) + ";";
         }
@@ -452,6 +452,10 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
                 {
                     if (iter != albumList.end())
                         (*iter).create_sub = (value == "true");
+                }
+                else if (key == "auth_token")
+                {
+                  s_authToken = value;
                 }
             }
         }
