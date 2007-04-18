@@ -109,7 +109,7 @@ libkde      >= 3.4.x (>=3.5.x recommended)  http://www.kde.org
 imlib2      >= 1.1.0                        http://www.enlightenment.org/Libraries/Imlib2
 libgphoto2  >= 2.x   (>=2.2.x recommended)  http://www.gphoto.org
 libtiff     >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/libtiff
-libkexiv2   >= 0.1                          http://www.kipi-plugins.org
+libkexiv2   >= 0.1.2                        http://www.kipi-plugins.org
 libkdcraw   >= 0.1                          http://www.kipi-plugins.org
 libxslt     >= 1.1                          http://xmlsoft.org/XSLT
 libgpod     >= 0.4.2                        http://www.gtkpod.org/libgpod
