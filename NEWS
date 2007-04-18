@@ -26,7 +26,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 011 ==> 140297 : GPSSync      : GPS kipi plugin truncates input coordinates, introducing inacuracy.
 012 ==> 143594 : GPSSync      : Bad Interpolation in correlate gpssync.
 014 ==> 139793 : GPSSync      : KML google export import.
-015 ==> 
+015 ==> 142259 : GalleruExport: Export to Gallery 2.2-RC-1 fails.
+016 ==> 
 
 v 0.1.3 
 ----------------------------------------------------------------------------
