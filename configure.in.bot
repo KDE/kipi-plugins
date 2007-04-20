@@ -85,7 +85,7 @@ else
 fi
 
 if test "x$have_xslt" != "xyes"; then
-  echo "-- libxstl found.................. NO"
+  echo "-- libxslt found.................. NO"
   echo ""
   echo "HtmlExport plugin needs XSLT library. This plugin will not be compiled!"
   echo "To complile this plugin, please install libxslt development package."
@@ -93,7 +93,7 @@ if test "x$have_xslt" != "xyes"; then
   echo ""
   all_tests=bad
 else
-  echo "-- libxstl found.................. YES"
+  echo "-- libxslt found.................. YES"
 fi
 
 if test "x$have_libgpod" != "xyes"; then
