@@ -55,6 +55,11 @@
 
 #include <libkexiv2/kexiv2.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/kdcraw.h>
+
 // Local include files
 
 #include "sendimagesdialog.h"
@@ -731,7 +736,15 @@ bool SendImages::resizeImageProcess(const QString &SourcePath, const QString &De
 {
     QImage img;
 
-    if ( img.load(SourcePath) == true )
+    // Check if RAW file.
+    QString rawFilesExt(raw_file_extentions);
+    QFileInfo fileInfo(SourcePath);
+    if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
+        KDcrawIface::KDcraw::loadDcrawPreview(img, SourcePath);
+    else
+        img.load(SourcePath);
+
+    if ( !img.isNull() )
     {
         int w = img.width();
         int h = img.height();
