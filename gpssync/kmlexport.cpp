@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Stéphane Pontier                           *
- *   shadow.walker@free.fr                                                 *
+ *   Copyright (C) 2006-2007 by Stéphane Pontier <shadow.walker@free.fr>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,21 +14,34 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
  ***************************************************************************/
-
-// KDE includes.
-
-#include <kstandarddirs.h>
-#include <kapplication.h>
-#include <kconfig.h>
-#include <kio/job.h>
-#include <klocale.h>
-#include <libkexiv2/kexiv2.h>
 
 // Local includes.
 
 #include "kmlexport.h"
+
+// Qt
+
+#include <qpainter.h>
+#include <qregexp.h>
+
+// KDE includes.
+
+#include <kapplication.h>
+#include <kconfig.h>
+#include <kio/job.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kstandarddirs.h>
+#include <libkexiv2/kexiv2.h>
+
+// LibKIPI includes
+#include <libkipi/plugin.h>
+
+// KIPI
+#include <libkipi/batchprogressdialog.h>
+#include <libkipi/imageinfo.h>
 
 namespace KIPIGPSSyncPlugin {
 
@@ -64,15 +76,15 @@ bool kmlExport::createDir(QDir dir) {
 
 
 /*!
-    \fn kmlExport::webifyFileName(QString fileName)
+\fn kmlExport::webifyFileName(const QString &fileName)
  */
-QString kmlExport::webifyFileName(QString fileName) {
-    fileName=fileName.lower();
+QString kmlExport::webifyFileName(const QString &fileName) {
+    QString webFileName=fileName.lower();
 
     // Remove potentially troublesome chars
-    fileName=fileName.replace(QRegExp("[^-0-9a-z]+"), "_");
+    webFileName=webFileName.replace(QRegExp("[^-0-9a-z]+"), "_");
 
-    return fileName;
+    return webFileName;
 }
 
 
@@ -176,12 +188,12 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imag
     // Save images
     /** @todo remove the extension of the file
         * it's appear with digikam but not with gwenview
-        * which already seems to strip the extention
+        * which already seems to strip the extension
         */
     QString baseFileName = webifyFileName(info.title());
     //	baseFileName = mUniqueNameHelper.makeNameUnique(baseFileName);
     QString fullFileName;
-    fullFileName = baseFileName + "." + imageFormat.lower();
+    fullFileName = baseFileName + '.' + imageFormat.lower();
     QString destPath = m_tempDestDir + m_imageDir + fullFileName;
     if (!image.save(destPath, imageFormat.ascii(), 85)) {
         // if not able to save the image, it's pointless to create a placemark
@@ -217,7 +229,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imag
             *                   For a DSC the date and time the picture was taken are recorded.
             * DateTimeDigitized: The date and time when the image was stored as digital data.
             * So for:
-            * - a DSC: the right time is the DateTimeDigitized wich is also DateTimeOriginal
+            * - a DSC: the right time is the DateTimeDigitized which is also DateTimeOriginal
             *          if the picture has been modified the (standard)DateTime should change.
             * - a scanned picture, the right time is the DateTimeOriginal which should also be the the DateTime
             *          the (standard)DateTime should be the same except if the picture is modified
@@ -248,7 +260,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imag
         logInfo(i18n("Creation of placemark '%1'").arg(fullFileName));
 
         // Save icon
-        QString iconFileName = "thumb_" + baseFileName + "." + imageFormat.lower();
+        QString iconFileName = "thumb_" + baseFileName + '.' + imageFormat.lower();
         QString destPath = m_tempDestDir + m_imageDir + iconFileName;
         if (!icon.save(destPath, imageFormat.ascii(),85)) {
             logWarning(i18n("Could not save icon for image '%1' to '%2'").arg(path).arg(destPath));
@@ -299,13 +311,22 @@ void kmlExport::addTrack(QDomElement &kmlAlbum)
         return;
     }
 
-    // style of points and track
-    QDomElement kmlTrackStyle = addKmlElement(kmlAlbum, "Style");
-    kmlTrackStyle.setAttribute("id","track");
-    QDomElement kmlIconStyle = addKmlElement(kmlTrackStyle, "IconStyle");
-    QDomElement kmlIcon = addKmlElement(kmlIconStyle, "Icon");
-    //! FIXME is there a way to be sure of the location of the icon?
-    addKmlTextElement(kmlIcon, "href", "http://maps.google.com/mapfiles/kml/pal4/icon60.png");
+    // create a folder that will contain tracks and points
+    QDomElement kmlFolder = addKmlElement(kmlAlbum, "Folder");
+    addKmlTextElement(kmlFolder, "name", i18n("Tracks"));
+
+    if (!m_optimize_googlemap) {
+        // style of points and track
+        QDomElement kmlTrackStyle = addKmlElement(kmlAlbum, "Style");
+        kmlTrackStyle.setAttribute("id","track");
+        QDomElement kmlIconStyle = addKmlElement(kmlTrackStyle, "IconStyle");
+        QDomElement kmlIcon = addKmlElement(kmlIconStyle, "Icon");
+        //! FIXME is there a way to be sure of the location of the icon?
+        addKmlTextElement(kmlIcon, "href", "http://maps.google.com/mapfiles/kml/pal4/icon60.png");
+
+        m_gpxParser.CreateTrackPoints(kmlFolder, *kmlDocument, m_TimeZone - 12, m_GPXAltitudeMode);
+    }
+
     // linetrack style
     QDomElement kmlLineTrackStyle = addKmlElement(kmlAlbum, "Style");
     kmlLineTrackStyle.setAttribute("id","linetrack");
@@ -319,7 +340,7 @@ void kmlExport::addTrack(QDomElement &kmlAlbum)
     addKmlTextElement(kmlLineStyle, "color", KMLColorValue);
     addKmlTextElement(kmlLineStyle, "width", QString("%1").arg(m_LineWidth) );
 
-    m_gpxParser.CreateTrack(kmlAlbum, *kmlDocument, m_TimeZone - 12, m_GPXAltitudeMode);
+    m_gpxParser.CreateTrackLine(kmlAlbum, *kmlDocument, m_GPXAltitudeMode);
 
 }
 
@@ -350,10 +371,16 @@ void kmlExport::generate()
     QDomElement kmlDescription = addKmlHtmlElement( kmlAlbum, "description", "Created with kmlexport <a href=\"http://www.kipi-plugins.org/\">kipi-plugin</a>");
 
 
+    if (m_GPXtracks) {
+        addTrack(kmlAlbum);
+    }
+
     KURL::List images = selection.images();
+    int defectImage =0;
     int pos = 1;
     int count = images.count();
-    for( KURL::List::Iterator selIt = images.begin(); selIt != images.end(); ++selIt, ++pos) {
+    KURL::List::ConstIterator imagesEnd (images.constEnd());
+    for( KURL::List::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos) {
         KExiv2Iface::KExiv2 exiv2Iface;
         KIPI::ImageInfo info = m_interface->info( *selIt );
         // exiv2 load from url not image
@@ -365,14 +392,18 @@ void kmlExport::generate()
             // generation de l'image et de l'icone
             generateImagesthumb(m_interface,url,kmlAlbum);
         } else {
-            logWarning(i18n("No position info for:'%1'").arg(info.title()));
+            logWarning(i18n("No position data for '%1'").arg(info.title()));
+            defectImage++;
         }
         m_progressDialog->setProgress(pos, count);
         qApp->processEvents();
     }
 
-    if (m_GPXtracks) {
-        addTrack(kmlAlbum);
+    if (defectImage) {
+        /** @todo if defectImage==count there are no pictures exported, does it worst to continue? */
+        QWidget* parent=KApplication::kApplication()->mainWidget();
+        KMessageBox::information(parent, i18n("No position data for 1 picture",
+                                              "No position data for %n pictures", defectImage));
     }
 
 
@@ -418,7 +449,7 @@ int kmlExport::getConfig()
     m_GPXAltitudeMode       = config.readNumEntry("GPX Altitude Mode", 0);
 
     KStandardDirs dir;
-    m_tempDestDir = dir.saveLocation("tmp", "kipi-kmlrexportplugin-" + QString::number(getpid()) + "/");
+    m_tempDestDir = dir.saveLocation("tmp", "kipi-kmlrexportplugin-" + QString::number(getpid()) + '/');
 
     m_imageDir = "images/";
     m_googlemapSize = 32;

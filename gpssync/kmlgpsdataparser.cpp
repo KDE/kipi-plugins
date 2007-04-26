@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Stéphane Pontier                                *
- *   shadow.walker@free.fr                                                 *
+ *   Copyright (C) 2006-2007 by Stéphane Pontier <shadow.walker@free.fr>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,16 +14,17 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
  ***************************************************************************/
-
-// KDE includes.
-
-#include <kdebug.h>
 
 // Local includes.
 
 #include "kmlgpsdataparser.h"
+
+// KDE includes.
+
+#include <kdebug.h>
+#include <klocale.h>
 
 namespace KIPIGPSSyncPlugin {
 
@@ -40,8 +40,10 @@ KMLGPSDataParser::~KMLGPSDataParser()
 
 QString KMLGPSDataParser::lineString() {
     QString line = "";
-    for (GPSDataMap::Iterator it = m_GPSDataMap.begin();
-         it != m_GPSDataMap.end(); ++it )
+    // cache the end to not recalculate it with large number of points
+    GPSDataMap::ConstIterator end (m_GPSDataMap.constEnd());
+    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
+         it != end; ++it )
     {
         line += QString("%1,%2,%3 ").arg(it.data().longitude()).arg(it.data().latitude()).arg(it.data().altitude());
     }
@@ -50,22 +52,15 @@ QString KMLGPSDataParser::lineString() {
 
 }
 
-
 /*!
-\fn void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrack(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode)
+\fn void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackLine(QDomElement &parent, QDomDocument &root, int altitudeMode)
  */
-void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrack(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode)
+void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackLine(QDomElement &parent, QDomDocument &root, int altitudeMode)
 {
     kmlDocument = &root;
-    kdDebug( 51001 ) << "creation d'un trackpoint" << endl;
-
-    // create a folder that will contain tracks and points
-
-    QDomElement kmlFolder = addKmlElement(parent, "Folder");
-    addKmlTextElement(kmlFolder, "name", i18n("Tracks"));
 
     // add the linetrack
-    QDomElement kmlPlacemark = addKmlElement(kmlFolder, "Placemark");
+    QDomElement kmlPlacemark = addKmlElement(parent, "Placemark");
     addKmlTextElement(kmlPlacemark, "name", i18n("Track"));
     QDomElement kmlLineString = addKmlElement(kmlPlacemark, "LineString");
     addKmlTextElement(kmlLineString, "coordinates", lineString());
@@ -77,21 +72,31 @@ void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrack(QDomElement &parent, QDomD
     } else {
         addKmlTextElement(kmlLineString, "altitudeMode", "clampToGround");
     }
+}
+/*!
+\fn void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode)
+ */
+void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode)
+{
+    kmlDocument = &root;
+    kdDebug( 51001 ) << "creation d'un trackpoint" << endl;
 
     // create the points
-    QDomElement kmlPointsFolder = addKmlElement(kmlFolder, "Folder");
+    QDomElement kmlPointsFolder = addKmlElement(parent, "Folder");
     addKmlTextElement(kmlPointsFolder, "name", i18n("Points"));
     addKmlTextElement(kmlPointsFolder, "visibility", "0");
     addKmlTextElement(kmlPointsFolder, "open", "0");
     int i = 0;
-    for (GPSDataMap::Iterator it = m_GPSDataMap.begin();
-         it != m_GPSDataMap.end(); ++it )
+    // cache the end to not recalculate it with large number of points
+    GPSDataMap::ConstIterator end (m_GPSDataMap.constEnd());
+    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
+         it != end; ++it, i++)
     {
         QDomElement kmlPointPlacemark = addKmlElement(kmlPointsFolder, "Placemark");
         addKmlTextElement(kmlPointPlacemark, "name", QString("%1 %2 ").arg(i18n("Point")).arg(i));
         addKmlTextElement(kmlPointPlacemark, "styleUrl", "#track");
         QDomElement kmlTimeStamp = addKmlElement(kmlPointPlacemark, "TimeStamp");
-        // GPS device are sync in time by satelite using GMT time.
+        // GPS device are sync in time by satellite using GMT time.
         // If the camera time is different than GMT time, we want to
         // convert the GPS time to localtime of the picture to be display
         // in the same timeframe
@@ -113,7 +118,6 @@ void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrack(QDomElement &parent, QDomD
         } else {
             addKmlTextElement(kmlGeometry, "altitudeMode", "clampToGround");
         }
-        i++;
     }
 
 }

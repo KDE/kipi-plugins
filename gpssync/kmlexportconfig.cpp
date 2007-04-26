@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Stéphane Pontier                                *
- *   shadow.walker@free.fr                                                 *
+ *   Copyright (C) 2006-2007 by Stéphane Pontier <shadow.walker@free.fr>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,40 +14,41 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
  ***************************************************************************/
-
-// Qt includes.
-
-#include <qvariant.h>
-#include <qpushbutton.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qbuttongroup.h>
-#include <qradiobutton.h>
-#include <qlineedit.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-
-// KDE includes.
-
-#include <khelpmenu.h>
-#include <knuminput.h>
-#include <kpopupmenu.h>
-#include <kconfig.h>
-#include <kdialog.h>
-#include <kapplication.h>
-#include <klocale.h>
-#include <kstandarddirs.h>
-#include <kurlrequester.h>
-#include <klineedit.h>
 
 // Local includes.
 
 #include "kmlexportconfig.h"
+
+// Qt includes.
+
+#include <qbuttongroup.h>
+#include <qcheckbox.h>
+#include <qcombobox.h>
+#include <qgroupbox.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
+#include <qradiobutton.h>
+#include <qtooltip.h>
+#include <qwhatsthis.h>
+
+// KDE includes.
+
+#include <kapplication.h>
+#include <kconfig.h>
+#include <kcolorbutton.h>
+#include <kdialog.h>
+#include <khelpmenu.h>
+#include <klocale.h>
+#include <klineedit.h>
+#include <knuminput.h>
+#include "kpaboutdata.h"
+#include <kpopupmenu.h>
+#include <kstandarddirs.h>
+#include <kurlrequester.h>
 
 namespace KIPIGPSSyncPlugin {
 
@@ -107,26 +107,26 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
 
     LocalTargetRadioButton_ = new QRadioButton( i18n( "&Local or web target used by GoogleEarth" ),
                                                 buttonGroupTargetType, "LocalTargetRadioButton_" );
-    LocalTargetRadioButton_->setChecked( TRUE );
+    LocalTargetRadioButton_->setChecked( true );
     buttonGroupTargetTypeLayout->addWidget( LocalTargetRadioButton_, 0, 0 );
 
     GoogleMapTargetRadioButton_ = new QRadioButton( i18n( "Web target used by GoogleMap" ),
                                                     buttonGroupTargetType, "GoogleMapTargetRadioButton_" );
     buttonGroupTargetTypeLayout->addWidget( GoogleMapTargetRadioButton_, 1, 0 );
     QToolTip::add( GoogleMapTargetRadioButton_, i18n(
-        "When using GoogleMap, all image must have complete URL, and icons are sqarred ones" ) );
+        "When using GoogleMap, all image must have complete URL, icons are squared and when drawing a track, only linetrack is exported" ) );
 
 
 
     // target preference, suite
     TargetPreferenceGroupBoxLayout->addMultiCellWidget( buttonGroupTargetType, 0, 1, 0, 4 );
 
-    QLabel *AltitudeLabel_ = new QLabel( i18n( "Pictures Altitude" ),
+    QLabel *AltitudeLabel_ = new QLabel( i18n( "Picture altitude" ),
                                                TargetPreferenceGroupBox, "AltitudeLabel_" );
     TargetPreferenceGroupBoxLayout->addMultiCellWidget( AltitudeLabel_, 2, 2, 0, 4 );
     AltitudeCB_ = new QComboBox( false, TargetPreferenceGroupBox );
-    AltitudeCB_->insertItem(i18n("clamp to Ground"));
-    AltitudeCB_->insertItem(i18n("relative to Ground"));
+    AltitudeCB_->insertItem(i18n("clamp to ground"));
+    AltitudeCB_->insertItem(i18n("relative to ground"));
     AltitudeCB_->insertItem(i18n("absolute"));
     QWhatsThis::add(AltitudeCB_, i18n("<p>Specifies how pictures are displayed"
                                          "<dl><dt>clamp to ground (default)</dt>"
@@ -137,11 +137,14 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
                                          "<dd>Sets the altitude of the coordinate relative to sea level, regardless of the actual elevation of the terrain beneath the element.</dd></dl>"));
     TargetPreferenceGroupBoxLayout->addMultiCellWidget( AltitudeCB_, 2, 2, 2, 4 );
 
-    destinationDirectoryLabel_ = new QLabel( i18n( "Destination Directory" ),
+    destinationDirectoryLabel_ = new QLabel( i18n( "Destination directory" ),
                                              TargetPreferenceGroupBox, "destinationDirectoryLabel_" );
     TargetPreferenceGroupBoxLayout->addMultiCellWidget( destinationDirectoryLabel_, 3, 3, 0, 2 );
 
-    DestinationDirectory_ = new QLineEdit( TargetPreferenceGroupBox, "DestinationDirectory_" );
+    //    DestinationDirectory_ = new QLineEdit( TargetPreferenceGroupBox, "DestinationDirectory_" );
+    DestinationDirectory_= new KURLRequester( TargetPreferenceGroupBox, "DestinationDirectory_");
+    DestinationDirectory_->setCaption(i18n("Select a directory to save the kml file and pictures"));
+    DestinationDirectory_->setMode(KFile::Directory | KFile::LocalOnly );
     TargetPreferenceGroupBoxLayout->addMultiCellWidget( DestinationDirectory_, 3, 3, 3, 4 );
 
     DestinationUrlLabel_ = new QLabel( i18n( "Destination URL" ),
@@ -151,7 +154,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     DestinationURL_ = new QLineEdit( TargetPreferenceGroupBox, "DestinationURL_" );
 
     TargetPreferenceGroupBoxLayout->addMultiCellWidget( DestinationURL_, 4, 4, 2, 4 );
-    FileNameLabel_ = new QLabel( i18n( "File Name" ),
+    FileNameLabel_ = new QLabel( i18n( "File name" ),
                                  TargetPreferenceGroupBox, "FileNameLabel_" );
     TargetPreferenceGroupBoxLayout->addWidget( FileNameLabel_, 5, 0 );
 
@@ -167,7 +170,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     SizeGroupBoxLayout = new QGridLayout( SizeGroupBox->layout(), 2, 3, KDialog::spacingHint() );
     SizeGroupBoxLayout->setAlignment( Qt::AlignTop );
 
-    IconSizeLabel = new QLabel( i18n( "Icons size" ),
+    IconSizeLabel = new QLabel( i18n( "Icon size" ),
                                 SizeGroupBox, "IconSizeLabel" );
     SizeGroupBoxLayout->addWidget( IconSizeLabel, 0, 0 );
 
@@ -178,7 +181,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     spacer3 = new QSpacerItem( 191, 21, QSizePolicy::Expanding, QSizePolicy::Minimum );
     SizeGroupBoxLayout->addItem( spacer3, 0, 2 );
 
-    ImageSizeLabel = new QLabel( i18n( "Images size" ),
+    ImageSizeLabel = new QLabel( i18n( "Image size" ),
                                  SizeGroupBox, "ImageSizeLabel" );
     SizeGroupBoxLayout->addWidget( ImageSizeLabel, 1, 0 );
 
@@ -203,7 +206,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     GPXTracksGroupBoxLayout->addMultiCellWidget( GPXTracksCheckBox_, 0, 0, 0, 3);
 
     // file selector
-    GPXFileLabel_ = new QLabel( i18n( "GPX File" ),
+    GPXFileLabel_ = new QLabel( i18n( "GPX file" ),
                                     GPXTracksGroupBox, "GPXFileLabel_" );
     GPXTracksGroupBoxLayout->addMultiCellWidget( GPXFileLabel_, 1, 1, 0, 0);
 
@@ -212,7 +215,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     GPXFileKURLRequester_->setCaption(i18n("Select GPX File to Load"));
     GPXTracksGroupBoxLayout->addMultiCellWidget( GPXFileKURLRequester_, 1, 1, 1, 3);
 
-    timeZoneLabel_ = new QLabel(i18n("Time zone:"), GPXTracksGroupBox);
+    timeZoneLabel_ = new QLabel(i18n("Time zone"), GPXTracksGroupBox);
     GPXTracksGroupBoxLayout->addMultiCellWidget( timeZoneLabel_, 2, 2, 0, 0);
     timeZoneCB = new QComboBox( false, GPXTracksGroupBox );
     timeZoneCB->insertItem(i18n("GMT-12:00"), 0);
@@ -247,14 +250,14 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
                                         "can be converted to match the local time"));
     GPXTracksGroupBoxLayout->addMultiCellWidget( timeZoneCB, 2, 2, 1, 3);
 
-    GPXLineWidthLabel_ = new QLabel( i18n( "Track Width" ),
+    GPXLineWidthLabel_ = new QLabel( i18n( "Track width" ),
                                      GPXTracksGroupBox, "GPXLineWidthLabel_" );
     GPXTracksGroupBoxLayout->addMultiCellWidget( GPXLineWidthLabel_, 3, 3, 0, 0);
     GPXLineWidthInput_ = new KIntNumInput( GPXTracksGroupBox, "GPXLineWidthInput_" );
     GPXLineWidthInput_->setValue( 4 );
     GPXTracksGroupBoxLayout->addMultiCellWidget( GPXLineWidthInput_, 3, 3, 1, 3);
 
-    GPXColorLabel_ = new QLabel( i18n( "Track Color" ),
+    GPXColorLabel_ = new QLabel( i18n( "Track color" ),
                                  GPXTracksGroupBox, "GPXColorLabel_" );
     GPXTracksGroupBoxLayout->addWidget( GPXColorLabel_, 4, 0 );
     GPXTrackColor_ = new KColorButton(QColor("#ffffff"), GPXTracksGroupBox);
@@ -267,7 +270,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     GPXTracksOpacityInput_->setSuffix( QString::fromAscii( "%" ) );
     GPXTracksGroupBoxLayout->addMultiCellWidget( GPXTracksOpacityInput_, 4, 4, 2, 3);
 
-    GPXAltitudeLabel_ = new QLabel( i18n( "Track Altitude" ),
+    GPXAltitudeLabel_ = new QLabel( i18n( "Track altitude" ),
                                      GPXTracksGroupBox, "GPXAltitudeLabel_" );
     GPXTracksGroupBoxLayout->addMultiCellWidget( GPXAltitudeLabel_, 5, 5, 0, 0);
     GPXAltitudeCB_ = new QComboBox( false, GPXTracksGroupBox );
@@ -394,7 +397,7 @@ void KMLExportConfig::saveSettings()
     config_->writeEntry("optimize_googlemap", GoogleMapTargetRadioButton_->isChecked());
     config_->writeEntry("iconSize", IconSizeInput_->value());
     config_->writeEntry("size", ImageSizeInput_->value());
-    QString destination = DestinationDirectory_->text();
+    QString destination = DestinationDirectory_->url();
     if (!destination.endsWith("/")) {
         destination.append("/");
     }
@@ -468,7 +471,7 @@ void KMLExportConfig::readSettings()
     ImageSizeInput_->setValue(size);
 
     AltitudeCB_->setCurrentItem(AltitudeMode);
-    DestinationDirectory_->setText(baseDestDir);
+    DestinationDirectory_->setURL(baseDestDir);
     DestinationURL_->setText(UrlDestDir);
     FileName_->setText(KMLFileName);
 

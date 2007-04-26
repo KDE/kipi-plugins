@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Stéphane Pontier                                *
- *   shadow.walker@free.fr                                                 *
+ *   Copyright (C) 2006-2007 by Stéphane Pontier <shadow.walker@free.fr>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,7 +14,7 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
  ***************************************************************************/
 
 #ifndef KMLEXPORTCONFIG_H
@@ -23,27 +22,25 @@
 
 // Qt includes.
 
-#include <qvariant.h>
-#include "qcheckbox.h"
+class QButtonGroup;
+class QCheckBox;
+class QComboBox;
+class QGridLayout;
+class QGroupBox;
+class QLabel;
+class QLineEdit;
+class QRadioButton;
+class QSpacerItem;
 
 // KDE includes.
 
-#include "kpaboutdata.h"
 #include <kdialogbase.h>
-#include <kurlrequester.h>
-#include <kcolorbutton.h>
-
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
-class QSpacerItem;
-class QGroupBox;
-class QLabel;
+class KColorButton;
 class KIntNumInput;
-class QPushButton;
-class QButtonGroup;
-class QRadioButton;
-class QLineEdit;
+class KURLRequester;
+namespace KIPIPlugins {
+    class KPAboutData;
+}
 
 namespace KIPIGPSSyncPlugin {
 class KMLExportConfig : public KDialogBase
@@ -51,7 +48,7 @@ class KMLExportConfig : public KDialogBase
     Q_OBJECT
 
 public:
-    KMLExportConfig( QWidget* parent = 0, const char* name = 0);
+    explicit KMLExportConfig( QWidget* parent = 0, const char* name = 0);
     ~KMLExportConfig();
 
     QLabel* ImageSizeLabel;
@@ -64,7 +61,7 @@ public:
     QRadioButton* GoogleMapTargetRadioButton_;
     QComboBox* AltitudeCB_;
     QLabel* destinationDirectoryLabel_;
-    QLineEdit* DestinationDirectory_;
+    KURLRequester* DestinationDirectory_;
     QLineEdit* DestinationURL_;
     QLabel* FileNameLabel_;
     QLineEdit* FileName_;

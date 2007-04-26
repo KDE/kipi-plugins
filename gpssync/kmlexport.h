@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Stéphane Pontier                           *
- *   shadow.walker@free.fr                                                 *
+ *   Copyright (C) 2006-2007 by Stéphane Pontier <shadow.walker@free.fr>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,29 +14,22 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
  ***************************************************************************/
 
 #ifndef KIPIKMLEXPORTKMLEXPORT_H
 #define KIPIKMLEXPORTKMLEXPORT_H
 
-// LibKIPI includes
-#include <libkipi/plugin.h>
-
 // KIPI
-#include <libkipi/batchprogressdialog.h>
-#include <libkipi/imageinfo.h>
-#include <libkipi/interface.h>
-
+namespace KIPI {
+    class BatchProgressDialog;
+    class Interface;
+}
 // Qt
+#include <qcolor.h>
 #include <qdir.h>
 #include <qdom.h>
-#include <qfile.h>
-#include <qdatastream.h>
-#include <qimage.h>
-#include <kdebug.h>
-#include <qpainter.h>
-#include <qregexp.h>
+class QImage;
 
 // locale include
 #include "kmlgpsdataparser.h"
@@ -69,7 +61,7 @@ public:
      *  @param the filename
      *  @return the webifyed filename
      */
-    QString webifyFileName(QString fileName);
+    QString webifyFileName(const QString &fileName);
     /*! Generate a square thumbnail from @fullImage of @size x @size pixels
      *  @param fullImage the original image
      *  @param size the size of the thumbnail

@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Stéphane Pontier                           *
- *   shadow.walker@free.fr                                                 *
+ *   Copyright (C) 2006-2007 by Stéphane Pontier <shadow.walker@free.fr>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,23 +14,19 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
  ***************************************************************************/
 
 #ifndef KIPIGPSSYNCPLUGINKMLGPSDATAPARSER_H
 #define KIPIGPSSYNCPLUGINKMLGPSDATAPARSER_H
 
-// Qt includes.
-
-#include <qdom.h>
-
-// KDE includes.
-
-#include <klocale.h>
-
 // Local includes.
 
 #include "gpsdataparser.h"
+
+// Qt includes.
+
+#include <qdom.h>
 
 
 namespace KIPIGPSSyncPlugin {
@@ -50,14 +45,20 @@ public:
      *  @return the string containing the time ordered point (lon,lat,alt)
      */
     QString lineString();
-    /*! Create a KML Element that will contain the points and the linetrace of the GPS
+    /*! Create a KML Element that will contain the linetrace of the GPS
+     *  @param parent the QDomElement to which the track will be added
+     *  @param root the QDomDocument used to create all elements
+     *  @param altitudeMode altitude mode of the line and points
+     */
+    void CreateTrackLine(QDomElement &parent, QDomDocument &root, int altitudeMode);
+    /*! Create a KML Element that will contain the points and of the GPS
      *  @param parent the QDomElement to which the track will be added
      *  @param root the QDomDocument used to create all elements
      *  @param timeZone the Timezone of the pictures
      *  @param altitudeMode altitude mode of the line and points
      */
-    void CreateTrack(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode);
-
+    void CreateTrackPoints(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode);
+    
 private:
     /*! @todo maybe initialize it in the constructor */
     /*! the root document, used to create all QDomElements */

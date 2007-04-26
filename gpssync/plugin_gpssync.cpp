@@ -100,7 +100,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
     addAction( m_action_geolocalization );
 
    // this is our action shown in the menubar/toolbar of the mainwindow
-    m_actionKMLExport = new KAction (i18n("Export kml..."),
+    m_actionKMLExport = new KAction (i18n("KML Export..."),
                                      "www",	// icon
                                    0,	// do never set shortcuts from plugins.
                                    this,
