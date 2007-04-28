@@ -16,7 +16,7 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with this program; if not, write to the Free Software
-//    Foundation, Inc., 51 Franklin Steet, Fifth Floor, Cambridge, MA 02110-1301, USA.
+//    Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
 //
 //////////////////////////////////////////////////////////////////////////////
 
@@ -322,7 +322,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
     img.load( item->pathSrc() );
 
-    // Get image informations.
+    // Get image information.
 
     int w = img.width();
     int h = img.height();
@@ -449,7 +449,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
              {
              MargingSize = (int)((float)(m_marging * m_customDpi) / (float)(25.4));
 
-             if (w < h)   // (w < h) because all paper dimensions are verticaly gived !
+             if (w < h)   // (w < h) because all paper dimensions are vertically gived !
                 {
                 m_xPixels = (int)( (float)(m_customXSize * m_customDpi) / (float)(2.54) );
                 m_yPixels = (int)( (float)(m_customYSize * m_customDpi) / (float)(2.54) );
@@ -466,7 +466,7 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
              int Dpi = Temp.toInt();
              MargingSize = (int)((float)(m_marging * Dpi) / (float)(25.4));
 
-             if (w < h)   // (w < h) because all paper dimensions are verticaly given !
+             if (w < h)   // (w < h) because all paper dimensions are vertically given !
                 {
                 Temp = m_paperSize.left(m_paperSize.find('x'));
                 m_xPixels = (int)( (float)(Temp.toInt() * Dpi) / (float)(2.54) );

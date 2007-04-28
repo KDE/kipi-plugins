@@ -4,7 +4,7 @@
  * Date  : 2004-06-18
  * Description : 
  * 
- * Copyright 2004 by Tudor Calin
+ * Copyright 2004 by Tudor Calin <tudor@1xtech.com>
 
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

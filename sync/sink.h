@@ -3,7 +3,7 @@
  * Author: Colin Guthrie <kde@colin.guthr.ie>
  * Date  : 2007-01-22
  *
- * Copyright 2007 Colin Guthrie
+ * Copyright 2007 Colin Guthrie <kde@colin.guthr.ie>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -48,7 +48,7 @@ public:
   /// The Name of the Sink as chosen by the user.
   QString Name();
   
-  /// An internal, unique type as specifed by the sink.
+  /// An internal, unique type as specified by the sink.
   virtual QString Type() = 0;
   
   /// Some information about the sink type for the benefit of the user.

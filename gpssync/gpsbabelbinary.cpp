@@ -3,7 +3,7 @@
  * Date   : 2006-09-19
  * Description : Autodetect gpsbabel binary program and version
  *
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006 by Gilles Caulier <caulier dot gilles at kdemail dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -78,7 +78,7 @@ void GPSBabelBinary::checkSystem()
 
 void GPSBabelBinary::slotReadStdoutFromGPSBabel(KProcess*, char* buffer, int buflen)
 {
-    // The dcraw ouput look like this : GPSBabel Version 1.2.5
+    // The dcraw output look like this : GPSBabel Version 1.2.5
     QString headerStarts("GPSBabel Version ");
 
     QString stdOut    = QString::fromLocal8Bit(buffer, buflen);

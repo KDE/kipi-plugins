@@ -4,7 +4,7 @@
  * Date  : 2006-01-06
  * Description :
  *
- * Copyright 2006 by Joern Ahrens
+ * Copyright 20066 by Joern Ahrens <joern.ahrens@kdemail.net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -67,7 +67,7 @@ FirstRunDlg::FirstRunDlg( QWidget *parent )
     topLayout->addWidget( info );
     
     info = new QLabel(page);
-    info->setText(i18n( "1.) Download SimpleViewer Version 1.7.X (1.8.X isn't compatible yet):\n"));
+    info->setText(i18n( "1.) Download SimpleViewer Version 1.7.X (1.8.X is not compatible yet):\n"));
     topLayout->addWidget(info);
     
     KURLLabel *link = new KURLLabel(page);

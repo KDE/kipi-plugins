@@ -86,7 +86,7 @@ void CropFrame::init(TPhoto *photo, int width, int height, bool autoRotate, bool
   m_pixmapY = (this->height() / 2) - (m_pixmap->height() / 2);
 
   m_color = Qt::red;
-  // size the rectangle based on the minumum image dimension
+  // size the rectangle based on the minimum image dimension
   int w = m_pixmap->width();
   int h = m_pixmap->height();;
   if (w < h)

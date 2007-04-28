@@ -31,7 +31,7 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with this program; if not, write to the Free Software
-//    Foundation, Inc., 51 Franklin Steet, Fifth Floor, Cambridge, MA 02110-1301, USA.
+//    Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
 //
 //////////////////////////////////////////////////////////////////////////////
 
@@ -553,7 +553,7 @@ void ImagesGallery::run()
           d->action = KIPIImagesGalleryPlugin::Error;
           d->starting = false;
           d->success = false;
-          d->message = i18n("Couldn't open file '%1'").arg(MainUrl.path());
+          d->message = i18n("Could not open file '%1'").arg(MainUrl.path());
           QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
           usleep(1000);
           

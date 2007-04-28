@@ -3,7 +3,7 @@
  * Date   : 2006-10-18
  * Description : EXIF lens settings page.
  * 
- * Copyright 2006-2007 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at kdemail dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -156,7 +156,7 @@ EXIFLens::EXIFLens(QWidget* parent)
     d->focalLengthEdit  = new KDoubleSpinBox(1.0, 10000.0, 1.0, 50.0, 1, parent);
     grid->addMultiCellWidget(d->focalLengthCheck, 0, 0, 0, 0);
     grid->addMultiCellWidget(d->focalLengthEdit, 0, 0, 2, 2);
-    QWhatsThis::add(d->focalLengthEdit, i18n("<p>Set here the lens focal lenght in milimeters "
+    QWhatsThis::add(d->focalLengthEdit, i18n("<p>Set here the lens focal length in milimeters "
                                              "used by camera to take the picture."));
 
     // --------------------------------------------------------

@@ -4,8 +4,8 @@
  * Date  : 2003-01-21
  * Description :
  *
- * Copyright 2003 by Renchi Raju
- * Copyright 2004 by Tudor Calin
+ * Copyright 2003 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright 2004 by Tudor Calin <tudor@1xtech.com>
  *
  * Update : 08/28/2003 - Gilles Caulier <caulier.gilles@free.fr>
  *          Add standard shortcuts and toolbars KDE menu entry.

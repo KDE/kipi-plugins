@@ -4,7 +4,7 @@
  * Date  : 2003-09-30
  * Description :
  *
- * Copyright 2003 by Todd Shoemaker
+ * Copyright 2003 by Todd Shoemaker <todd@theshoemakers.net>
 
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

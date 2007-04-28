@@ -16,11 +16,11 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with this program; if not, write to the Free Software
-//    Foundation, Inc., 51 Franklin Steet, Fifth Floor, Cambridge, MA 02110-1301, USA.
+//    Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
 //
 //////////////////////////////////////////////////////////////////////////////
 
-// This implementation is a tempate for all batch process images dialog derived implementations class
+// This implementation is a template for all batch process images dialog derived implementations class
 // who use ImageMagick tools.
 
 #ifndef BATCHPROCESSIMAGESDIALOG_H

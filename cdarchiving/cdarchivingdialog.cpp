@@ -5,7 +5,7 @@
  * Description : a kipi plugin to export image collections
  *               on CD/DVD.
  * 
- * Copyright 2003-2005 by Gilles Caulier
+ * Copyright 2003-2005 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright 2003-2004 by Gregory Kokanosky 
  *                        <gregory dot kokanosky at free.fr>
  *                        for HTML interface navigation mode

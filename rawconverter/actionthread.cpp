@@ -4,8 +4,8 @@
  * Date   : 2003-12-03
  * Description : a class to manage plugin actions using threads
  *
- * Copyright 2003-2005 by Renchi Raju
- * Copyright 2006-2007 by Gilles Caulier
+ * Copyright 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * NOTE: Do not use kdDebug() in this implementation because 
  *       it will be multithreaded. Use qDebug() instead. 

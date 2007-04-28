@@ -4,8 +4,8 @@
  * Date   : 2003-09-26
  * Description : JPEG loss less operations plugin
  *
- * Copyright 2003-2005 by Renchi Raju & Gilles Caulier
- * Copyright 2006-2007 by Gilles Caulier
+ * Copyright 2003-2005 by Renchi Raju & Gilles Caulier <renchi@pooh.tam.uiuc.edu>
+ * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -190,7 +190,7 @@ void Plugin_JPEGLossless::slotFlip()
     else if (from == "flip_vertical") 
     {
         m_thread->flip(items, KIPIJPEGLossLessPlugin::FlipVertical);
-        title = i18n("verticaly");
+        title = i18n("vertically");
         proceed = true;
     }
     else 

@@ -2,7 +2,7 @@
  * File  : gallerylist.h
  * Author: Colin Guthrie <kde@colin.guthr.ie>
  * Date  : 2006-09-04
- * Copyright 2006 by Colin Guthrie
+ * Copyright 2006 by Colin Guthrie <kde@colin.guthr.ie>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

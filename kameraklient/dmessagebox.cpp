@@ -4,7 +4,7 @@
  * Date  : 2003-02-22
  * Description :
  *
- * Copyright 2003 by Renchi Raju
+ * Copyright 2003 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
 
  * Update : 09/23/2003 - Gilles Caulier <caulier.gilles@free.fr>
  *          Center the dialog box on the desktop.

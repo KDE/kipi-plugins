@@ -4,7 +4,8 @@
  * Date   : 2006-12-09
  * Description : RAW decoding interface
  *
- * Copyright 2006-2007 by Gilles Caulier and Marcel Wiesweg
+ * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright 2006-2007 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

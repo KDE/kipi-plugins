@@ -4,7 +4,7 @@
  * Description : a plugin to synchronize pictures with 
  *               a GPS device.
  *
- * Copyright 2006-2007 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at kdemail dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -365,8 +365,8 @@ bool GPSSyncDialog::promptUserClose()
 
     if (dirty > 0)
     {
-        QString msg = i18n("1 picture from the list isn't updated.",
-                           "%n pictures from the list isn't updated.", dirty);
+        QString msg = i18n("1 picture from the list is not updated.",
+                           "%n pictures from the list are not updated.", dirty);
 
         if (KMessageBox::No == KMessageBox::warningYesNo(this,
                      i18n("<p>%1\n"

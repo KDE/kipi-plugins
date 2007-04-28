@@ -4,9 +4,9 @@
  *          Gilles Caulier <caulier dot gilles at kdemail dot net>
  * Date   : 2004-06-08
  * 
- * Copyright 2004 by  Ralf Hoelzer
- * Copyright 2004-2005 by Marcel Wiesweg
- * Copyright 2006-2007 by Gilles Caulier
+ * Copyright 2004 by  Ralf Hoelzer <kde at ralfhoelzer.com>
+ * Copyright 2004-2005 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
+ * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at kdemail dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

@@ -4,7 +4,7 @@
  * Description : a plugin to synchronize pictures with 
  *               a GPS device.
  *
- * Copyright 2006-2007 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at kdemail dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -151,7 +151,7 @@ bool Plugin_GPSSync::checkBinaries(QString &gpsBabelVersion)
     {
         KMessageBox::information(
                      kapp->activeWindow(),
-                     i18n("<qt><p>gpsbabel executable isn't up to date:<br> "
+                     i18n("<qt><p>gpsbabel executable is not up to date:<br> "
                           "The version %1 of gpsbabel have been found on your computer. "
                           "This version is too old to run properly with this plugin. "
                           "Please update gpsbabel as a package from your distributor "

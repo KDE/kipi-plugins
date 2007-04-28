@@ -4,7 +4,7 @@
  * Date  : 2003-01-22
  * Description :
  *
- * Copyright 2003 by Renchi Raju
+ * Copyright 2003 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
 
  * Update : 09/23/2003 - Gilles Caulier <caulier.gilles@free.fr>
  *          Improve i18n messages.

@@ -3,7 +3,7 @@
  * Date   : 2006-09-22
  * Description : a dialog to edit GPS positions
  * 
- * Copyright 2006-2007 by Gilles Caulier
+ * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at kdemail dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

@@ -4,7 +4,8 @@
  * Date   : 2006-12-09
  * Description : RAW decoding interface
  *
- * Copyright 2006-2007 by Gilles Caulier and Marcel Wiesweg
+ * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright 2006-2007 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
  *
  * NOTE: Do not use kdDebug() in this implementation because 
  *       it will be multithreaded. Use qDebug() instead. 
@@ -461,7 +462,7 @@ void RawDecodingIface::writeRawProfile(png_struct *ping, png_info *ping_info, ch
 
     const uchar hex[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
     
-    qDebug("Writing Raw profile: type=%s, lenght=%i", profile_type, (int)length);
+    qDebug("Writing Raw profile: type=%s, length=%i", profile_type, (int)length);
     
     text               = (png_textp) png_malloc(ping, (png_uint_32) sizeof(png_text));
     description_length = strlen((const char *) profile_type);

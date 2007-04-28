@@ -113,7 +113,7 @@ bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
   QRect *layout = layouts.at(1);
 
   // scale the page size to best fit the painter
-  // size the rectangle based on the minumum image dimension
+  // size the rectangle based on the minimum image dimension
   int destW = p.window().width();
   int destH = p.window().height();
 
@@ -286,7 +286,7 @@ bool paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
   QRect *layout = layouts.at(1);
 
   // scale the page size to best fit the painter
-  // size the rectangle based on the minumum image dimension
+  // size the rectangle based on the minimum image dimension
   int destW = p.width();
   int destH = p.height();
 

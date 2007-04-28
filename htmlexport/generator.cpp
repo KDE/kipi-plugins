@@ -1,7 +1,7 @@
 // vim: set tabstop=4 shiftwidth=4 noexpandtab:
 /*
 A KIPI plugin to generate HTML image galleries
-Copyright 2006 Aurelien Gateau
+Copyright 2006 Aurelien Gateau <aurelien dot gateau at free.fr>
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -15,7 +15,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 */
 // Self
@@ -296,7 +296,7 @@ struct Generator::Private {
 		mXMLFileName=baseDestDir + "/gallery.xml";
 		XMLWriter xmlWriter;
 		if (!xmlWriter.open(mXMLFileName)) {
-			logError(i18n("Couldn't create gallery.xml"));
+			logError(i18n("Could not create gallery.xml"));
 			return false;
 		}
 
@@ -389,7 +389,7 @@ struct Generator::Private {
 		QString destFileName=mInfo->destKURL().path() + "/index.html";
 		FILE* file=fopen(destFileName.local8Bit().data(), "w");
 		if (!file) {
-			logError(i18n("Could not open '%1' for writting").arg(destFileName));
+			logError(i18n("Could not open '%1' for writing").arg(destFileName));
 			return false;
 		}
 		xsltSaveResultToFile(file, xmlOutput, xslt);

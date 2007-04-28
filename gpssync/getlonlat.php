@@ -5,7 +5,7 @@
  * Description : a php script to show GPS locator world map
  *               this script is used by GPSSync kipi-plugin.
  * 
- * Copyright 2006 by Gilles Caulier
+ * Copyright 2006 by Gilles Caulier <caulier dot gilles at kdemail dot net>
  * 
  * Notes : This script use Google Map API version 2:
  *         http://www.google.com/apis/maps/documentation

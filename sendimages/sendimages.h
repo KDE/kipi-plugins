@@ -3,7 +3,7 @@
  * Date   : 2004-02-25
  * Description : a kipi plugin to e-mailing images
  * 
- * Copyright 2004-2007 by Gilles Caulier
+ * Copyright 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -98,7 +98,7 @@ private slots:
     void slotMozillaReadStderr(KProcess* proc, char *buffer, int buflen);
 
 private:
-    ///Returns the file-extention of the corresponding fileformat
+    ///Returns the file-extension of the corresponding fileformat
     QString extension(const QString& imageFileFormat);
 
     ///in sendimagesplugin dialog the user can select a compression of images
@@ -159,10 +159,10 @@ private:
     KURL::List             m_filesSendList;
     KURL::List             m_filesSendList_copy;
 
-    /** URL of orignal images that cannot be resized.*/
+    /** URL of original images that cannot be resized.*/
     KURL::List             m_imagesResizedWithError;    
 
-    /** URL of orignal images than have been resized 
+    /** URL of original images than have been resized 
         and KURL of resized images (used for to create 
         the comments file).*/
     KURL::List             m_imagesPackage;             

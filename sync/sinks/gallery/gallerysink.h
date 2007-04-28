@@ -4,7 +4,7 @@
  * Based On Work By: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2007-01-27
  *
- * Copyright 2007 Colin Guthrie
+ * Copyright 2007 by Colin Guthrie <kde@colin.guthr.ie>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

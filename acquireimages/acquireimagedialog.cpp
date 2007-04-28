@@ -16,7 +16,7 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with this program; if not, write to the Free Software
-//    Foundation, Inc., 51 Franklin Steet, Fifth Floor, Cambridge, MA 02110-1301, USA.
+//    Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
 //
 //////////////////////////////////////////////////////////////////////////////
 
@@ -445,7 +445,7 @@ void AcquireImageDialog::slotAlbumSelected( const KURL &url )
 
     writeSettings();
 
-    // Get all scanned image informations.
+    // Get all scanned image information.
     QString imageFormat = m_imagesFormat->currentText();
     int imageCompression = m_imageCompression->value();
     QString Commentsimg = m_CommentsEdit->text();

@@ -16,7 +16,7 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with this program; if not, write to the Free Software
-//    Foundation, Inc., 51 Franklin Steet, Fifth Floor, Cambridge, MA 02110-1301, USA.
+//    Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
 //
 //////////////////////////////////////////////////////////////////////////////
 
@@ -617,7 +617,7 @@ void KImg2mpgData::slotEncode( void )
   Temp.setNum (BackGroundColor.blue(), 16);
   HexColor = HexColor + Temp.rightJustify(2,'0');
 
-  // This is for debuging output in debug dialog box.
+  // This is for debugging output in debug dialog box.
 
   m_CommandLine = i18n("THE COMMAND LINE IS :\n\n");
   m_CommandLine = m_CommandLine + "images2mpg --with-gui ";
@@ -688,7 +688,7 @@ void KImg2mpgData::slotEncode( void )
     if (!QFile::exists(FileName))
     {
       KMessageBox::error(this,
-                         i18n("Can't access to file %1, please check the path is right.").arg(FileName));
+                         i18n("Cannot access to file %1, please check the path is right.").arg(FileName));
       m_Abort = true;
       reset();
       return;

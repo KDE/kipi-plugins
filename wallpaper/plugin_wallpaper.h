@@ -8,7 +8,8 @@
  *
  * Description : Wall Paper plugin parts for KII
  *
- * Copyright 2004 by Gregory KOKANOSKY and Gilles CAULIER
+ * Copyright 2004 by Gregory KOKANOSKY <gregory dot kokanosky at free.fr>
+ * Copyright 2004 by Gilles CAULIER <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

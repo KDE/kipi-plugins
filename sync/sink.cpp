@@ -3,7 +3,7 @@
  * Author: Colin Guthrie <kde@colin.guthr.ie>
  * Date  : 2007-01-22
  *
- * Copyright 2007 Colin Guthrie
+ * Copyright 2007 Colin Guthrie <kde@colin.guthr.ie>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

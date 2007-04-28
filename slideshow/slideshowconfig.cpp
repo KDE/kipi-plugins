@@ -4,7 +4,7 @@
  * Date  : 2003-02-17
  * Description : KIPI slideshow plugin.
  *
- * Copyright 2003-2004 by Renchi Raju
+ * Copyright 2003-2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

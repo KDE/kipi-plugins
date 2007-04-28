@@ -3,7 +3,7 @@
  * Date  : 2003-10-14
  * Description : batch image flip
  * 
- * Copyright 2003-2006 by Gilles Caulier
+ * Copyright 2003-2006 by Gilles Caulier <caulier dot gilles at kdemail dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

@@ -2,7 +2,7 @@
  * File  : flickrtalker.h
  * Author: Vardhman Jain <vardhman @ gmail.com>
  * Date  : 2005-07-07
- * Copyright 2005 by Vardhman Jain
+ * Copyright 2005 by Vardhman Jain <vardhman @ gmail.com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
