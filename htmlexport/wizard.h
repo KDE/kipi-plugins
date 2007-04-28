@@ -24,9 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 // KDE
 #include <kwizard.h>
 
-//Local includes
-#include "kpaboutdata.h"
-
 namespace KIPI {
 class Interface;
 }
@@ -45,15 +42,13 @@ protected slots:
 	virtual void accept();
 
 private slots:
-    void slotHelp();
+	void showHelp();
 	void updateFinishButton();
 	void slotThemeSelectionChanged();
 
 private:
 	struct Private;
 	Private* d;
-
-        KIPIPlugins::KPAboutData    *m_about; 
 };
 
 

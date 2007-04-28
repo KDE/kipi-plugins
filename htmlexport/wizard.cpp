@@ -52,6 +52,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include "theme.h"
 #include "themepage.h"
 #include "outputpage.h"
+#include "kpaboutdata.h"
 
 namespace KIPIHTMLExport {
 
@@ -75,6 +76,7 @@ struct Wizard::Private {
 	ThemePage* mThemePage;
 	ImageSettingsPage* mImageSettingsPage;
 	OutputPage* mOutputPage;
+	KIPIPlugins::KPAboutData* mAbout;
 	
 	void initThemePage() {
 		KListBox* listBox=mThemePage->mThemeList;
@@ -95,21 +97,21 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface, GalleryInfo* info)
 	d=new Private;
 	d->mInfo=info;
 
-    // About data and help button.
+	// About data
+	d->mAbout = new KIPIPlugins::KPAboutData(I18N_NOOP("HTML Export"),
+			NULL,
+			KAboutData::License_GPL,
+			I18N_NOOP("A KIPI plugin to export image collections to HTML pages"),
+			"(c) 2006, Aurelien Gateau");
 
-    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("HTML Export"),
-                                           NULL,
-                                           KAboutData::License_GPL,
-                                           I18N_NOOP("A KIPI plugin to export image collections to HTML pages"),
-                                           "(c) 2006, Aurelien Gateau");
+	d->mAbout->addAuthor("Aurelien Gateau", I18N_NOOP("Author and Maintainer"),
+			"aurelien.gateau@free.fr");
 
-    m_about->addAuthor("Aurelien Gateau", I18N_NOOP("Author and Maintainer"),
-                       "aurelien.gateau@free.fr");
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("HTML Export Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    helpButton()->setPopup( helpMenu->menu() );
+	// Help button
+	KHelpMenu* helpMenu = new KHelpMenu(this, d->mAbout, false);
+	helpMenu->menu()->removeItemAt(0);
+	helpMenu->menu()->insertItem(i18n("HTML Export Handbook"), this, SLOT(showHelp()), 0, -1, 0);
+	helpButton()->setPopup( helpMenu->menu() );
 	
 	d->mCollectionSelector=new KIPI::ImageCollectionSelector(this, interface);
 	addPage(d->mCollectionSelector, i18n("Collection Selection"));
@@ -141,12 +143,12 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface, GalleryInfo* info)
 
 
 Wizard::~Wizard() {
+	delete d->mAbout;
 	delete d;
-        delete m_about;
 }
 
-void Wizard::slotHelp() {
-  KApplication::kApplication()->invokeHelp("htmlexport", "kipi-plugins");
+void Wizard::showHelp() {
+	KApplication::kApplication()->invokeHelp("htmlexport", "kipi-plugins");
 }
 
 void Wizard::updateFinishButton() {

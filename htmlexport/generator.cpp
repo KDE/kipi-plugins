@@ -475,7 +475,7 @@ bool Generator::run() {
 	exsltRegisterAll();
 	bool result=d->generateHTML();
 	xsltCleanupGlobals();
-    xmlCleanupParser();
+	xmlCleanupParser();
 	return result;
 }
 

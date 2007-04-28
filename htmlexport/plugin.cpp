@@ -72,7 +72,7 @@ void Plugin::setup( QWidget* widget ) {
 
 
 void Plugin::slotActivate() {
-    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+	KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
 	Q_ASSERT(interface);
 
 	GalleryInfo info;
