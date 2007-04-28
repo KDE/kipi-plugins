@@ -230,9 +230,16 @@ struct Generator::Private {
 		}
 
 		// Process images
-		if (!mInfo->useOriginalImage() && mInfo->fullResize()) {
-			int size = mInfo->fullSize();
-			image = image.smoothScale(size, size, QImage::ScaleMin);
+		if (!mInfo->useOriginalImage()) {
+			if (mInfo->fullResize()) {
+				int size = mInfo->fullSize();
+				image = image.smoothScale(size, size, QImage::ScaleMin);
+			}
+			if (info.angle() != 0) {
+				QWMatrix matrix;
+				matrix.rotate(info.angle());
+				image = image.xForm(matrix);
+			}
 		}
 
 		QImage thumbnail = generateSquareThumbnail(image, mInfo->thumbnailSize());
