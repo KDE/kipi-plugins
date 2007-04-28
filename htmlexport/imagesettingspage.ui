@@ -135,7 +135,7 @@
         </spacer>
         <widget class="QButtonGroup" row="1" column="1" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>kcfg_useOriginalImage</cstring>
+                <cstring>kcfg_useOriginalImageAsFullImage</cstring>
             </property>
             <property name="frameShape">
                 <enum>NoFrame</enum>
