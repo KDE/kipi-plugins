@@ -193,6 +193,19 @@ struct Generator::Private {
 		return true;
 	}
 
+	bool writeDataToFile(const QByteArray& data, const QString& destPath) {
+		QFile destFile(destPath);
+		if (!destFile.open(IO_WriteOnly)) {
+			logWarning(i18n("Could not open file '%1' for writing").arg(destPath));
+			return false;
+		}
+		if (destFile.writeBlock(data) != (Q_LONG)data.size()) {
+			logWarning(i18n("Could not save image to file '%1'").arg(destPath));
+			return false;
+		}
+		return true;
+	}
+
 	
 	void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName, const QString& fileName, const QImage& image) {
 		XMLAttributeList attrList;
@@ -223,26 +236,27 @@ struct Generator::Private {
 		imageFile.open(IO_ReadOnly);
 
 		QByteArray imageData = imageFile.readAll();
-		QImage image;
-		if (!image.loadFromData(imageData) ) {
+		QImage originalImage;
+		if (!originalImage.loadFromData(imageData) ) {
 			logWarning(i18n("Error loading image '%1'").arg(path));
 			return;
 		}
 
 		// Process images
-		if (!mInfo->useOriginalImage()) {
+		QImage fullImage = originalImage;
+		if (!mInfo->useOriginalImageAsFullImage()) {
 			if (mInfo->fullResize()) {
 				int size = mInfo->fullSize();
-				image = image.smoothScale(size, size, QImage::ScaleMin);
+				fullImage = fullImage.smoothScale(size, size, QImage::ScaleMin);
 			}
 			if (info.angle() != 0) {
 				QWMatrix matrix;
 				matrix.rotate(info.angle());
-				image = image.xForm(matrix);
+				fullImage = fullImage.xForm(matrix);
 			}
 		}
 
-		QImage thumbnail = generateSquareThumbnail(image, mInfo->thumbnailSize());
+		QImage thumbnail = generateSquareThumbnail(fullImage, mInfo->thumbnailSize());
 
 		// Save images
 		QString baseFileName = webifyFileName(info.title());
@@ -250,23 +264,26 @@ struct Generator::Private {
 
 		// Save full
 		QString fullFileName;
-		if (mInfo->useOriginalImage()) {
+		if (mInfo->useOriginalImageAsFullImage()) {
 			fullFileName = baseFileName + "." + imageFormat.lower();
-			QString destPath = destDir + "/" + fullFileName;
-			QFile destFile(destPath);
-			if (!destFile.open(IO_WriteOnly)) {
-				logWarning(i18n("Could not open file '%1' for writing").arg(fullFileName));
+			if (!writeDataToFile(imageData, destDir + "/" + fullFileName)) {
 				return;
 			}
-			if (destFile.writeBlock(imageData) != (Q_LONG)imageData.size()) {
-				logWarning(i18n("Could not save image to file '%1'").arg(fullFileName));
-				return;
-			}
+
 		} else {
 			fullFileName = baseFileName + "." + mInfo->fullFormatString().lower();
 			QString destPath = destDir + "/" + fullFileName;
-			if (!image.save(destPath, mInfo->fullFormatString().ascii(), mInfo->fullQuality())) {
+			if (!fullImage.save(destPath, mInfo->fullFormatString().ascii(), mInfo->fullQuality())) {
 				logWarning(i18n("Could not save image '%1' to '%2'").arg(path).arg(destPath));
+				return;
+			}
+		}
+
+		// Save original
+		QString originalFileName;
+		if (mInfo->copyOriginalImage()) {
+			originalFileName = "original_" + fullFileName;
+			if (!writeDataToFile(imageData, destDir + "/" + originalFileName)) {
 				return;
 			}
 		}
@@ -283,9 +300,12 @@ struct Generator::Private {
 		XMLElement imageX(xmlWriter, "image");
 		xmlWriter.writeElement("title", info.title());
 		xmlWriter.writeElement("description", info.description());
-		
-		appendImageElementToXML(xmlWriter, "full", fullFileName, image);
+
+		appendImageElementToXML(xmlWriter, "full", fullFileName, fullImage);
 		appendImageElementToXML(xmlWriter, "thumbnail", thumbnailFileName, thumbnail);
+		if (mInfo->copyOriginalImage()) {
+			appendImageElementToXML(xmlWriter, "original", originalFileName, originalImage);
+		}
 	}
 
 

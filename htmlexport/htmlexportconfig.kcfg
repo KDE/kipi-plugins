@@ -6,7 +6,7 @@
 		<entry name="theme" type="String">
 		</entry>
 
-		<entry name="useOriginalImage" type="Bool">
+		<entry name="useOriginalImageAsFullImage" type="Bool">
 			<default>false</default>
 		</entry>
 
@@ -29,6 +29,10 @@
 
 		<entry name="fullQuality" type="Int">
 			<default>80</default>
+		</entry>
+
+		<entry name="copyOriginalImage" type="Bool">
+			<default>false</default>
 		</entry>
 
 		<entry name="thumbnailSize" type="Int">
