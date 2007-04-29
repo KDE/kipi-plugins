@@ -1,1 +1,5 @@
-SUBDIRS = matrix snow simple
+SUBDIRS = \
+	matrix \
+	snow \
+	simple \
+	frames
