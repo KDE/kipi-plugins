@@ -55,6 +55,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 namespace KIPIHTMLExport {
 
 
+typedef QMap<QCString,QCString> XsltParameterMap;
+
+
 /**
  * Produce a web-friendly file name 
  */
@@ -355,6 +358,24 @@ struct Generator::Private {
 	}
 
 
+	void addI18nParameters(XsltParameterMap& map) {
+		map["i18nPrevious"] = makeXsltParam(i18n("Previous"));
+		map["i18nNext"] = makeXsltParam(i18n("Next"));
+		map["i18nCollectionList"] = makeXsltParam(i18n("Collection List"));
+	}
+
+
+	void addThemeParameters(XsltParameterMap& map) {
+		GalleryInfo::ThemeParameterMap themeParameterMap = mInfo->themeParameterMap();
+		GalleryInfo::ThemeParameterMap::ConstIterator
+			it = themeParameterMap.begin(),
+			end = themeParameterMap.end();
+		for (;it!=end; ++it) {
+			map[it.key().utf8()] = makeXsltParam(it.data());
+		}
+	}
+
+
 	bool generateHTML() {
 		logInfo(i18n("Generating HTML files"));
 
@@ -372,16 +393,14 @@ struct Generator::Private {
 			return false;
 		}
 		
-		// Prepare i18n params
-		typedef QMap<QCString,QCString> I18nMap;
-		I18nMap map;
-		map["i18nPrevious"]=makeXsltParam(i18n("Previous"));
-		map["i18nNext"]=makeXsltParam(i18n("Next"));
-		map["i18nCollectionList"]=makeXsltParam(i18n("Collection List"));
+		// Prepare parameters
+		XsltParameterMap map;
+		addI18nParameters(map);
+		addThemeParameters(map);
 
 		const char** params=new const char*[map.size()*2+1];
 		
-		I18nMap::Iterator it=map.begin(), end=map.end();
+		XsltParameterMap::Iterator it=map.begin(), end=map.end();
 		const char** ptr=params;
 		for (;it!=end; ++it) {
 			*ptr=it.key().data();

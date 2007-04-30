@@ -26,12 +26,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include <qcombobox.h>
 #include <qdir.h>
 #include <qfileinfo.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qobjectlist.h>
 #include <qpainter.h>
 #include <qspinbox.h>
 
 // KDE
 #include <kconfigdialogmanager.h>
 #include <kdebug.h>
+#include <kdialog.h>
 #include <klistbox.h>
 #include <klocale.h>
 #include <ktextbrowser.h>
@@ -45,12 +49,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include <libkipi/imagecollectionselector.h>
 
 // Local
+#include "abstractthemeparameter.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "galleryinfo.h"
 #include "imagesettingspage.h"
 #include "theme.h"
 #include "themepage.h"
+#include "themeparameterspage.h"
 #include "outputpage.h"
 #include "kpaboutdata.h"
 
@@ -74,9 +80,11 @@ struct Wizard::Private {
 	
 	KIPI::ImageCollectionSelector* mCollectionSelector;
 	ThemePage* mThemePage;
+	ThemeParametersPage* mThemeParametersPage;
 	ImageSettingsPage* mImageSettingsPage;
 	OutputPage* mOutputPage;
 	KIPIPlugins::KPAboutData* mAbout;
+	QMap<QCString, QWidget*> mThemeParameterWidgetFromName;
 	
 	void initThemePage() {
 		KListBox* listBox=mThemePage->mThemeList;
@@ -88,6 +96,52 @@ struct Wizard::Private {
 				listBox->setCurrentItem(item);
 			}
 		}
+	}
+
+	void fillThemeParametersPage(Theme::Ptr theme) {
+		// Delete any previous widgets
+		QFrame* content = mThemeParametersPage->content;
+		if (content->layout()) {
+			QObjectList* list = content->queryList("QWidget");
+			QObjectListIterator it(*list);
+			for( ; it.current(); ++it) {
+				delete it.current();
+			}
+
+			delete content->layout();
+		}
+		mThemeParameterWidgetFromName.clear();
+
+		// Create layout
+		QGridLayout* layout = new QGridLayout(content, 0, 2);
+		layout->setSpacing(KDialog::spacingHint());
+
+		// Create widgets
+		Theme::ParameterList parameterList = theme->parameterList();
+		Theme::ParameterList::ConstIterator
+			it = parameterList.begin(),
+			end = parameterList.end();
+		for (; it!=end; ++it) {
+			AbstractThemeParameter* themeParameter = *it;
+			QCString name = themeParameter->name();
+			QString title = themeParameter->title();
+			title = i18n("'%1' is a label for a theme parameter", "%1:").arg(title);
+
+			QLabel* label = new QLabel(title, content);
+			QWidget* widget = themeParameter->createWidget(content);
+			label->setBuddy(widget);
+
+			int row = layout->numRows();
+			layout->addWidget(label, row, 0);
+			layout->addWidget(widget, row, 1);
+
+			mThemeParameterWidgetFromName[name] = widget;
+		}
+
+		// Add spacer at the end, so that widgets aren't spread on the whole
+		// parent height
+		QSpacerItem* spacer = new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding);
+		layout->addItem(spacer, layout->numRows(), 0);
 	}
 };
 
@@ -121,6 +175,9 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface, GalleryInfo* info)
 	addPage(d->mThemePage, i18n("Theme"));
 	connect(d->mThemePage->mThemeList, SIGNAL(selectionChanged()),
 		this, SLOT(slotThemeSelectionChanged()) );
+
+	d->mThemeParametersPage = new ThemeParametersPage(this);
+	addPage(d->mThemeParametersPage, i18n("Theme Parameters"));
 
 	d->mImageSettingsPage=new ImageSettingsPage(this);
 	addPage(d->mImageSettingsPage, i18n("Image Settings"));
@@ -173,6 +230,8 @@ void Wizard::slotThemeSelectionChanged() {
 			+ i18n("Author: %1").arg(author);
 		browser->setText(txt);
 		setNextEnabled(d->mThemePage, true);
+
+		d->fillThemeParametersPage(theme);
 	} else {
 		browser->clear();
 		setNextEnabled(d->mThemePage, false);
@@ -188,6 +247,19 @@ void Wizard::accept() {
 
 	Theme::Ptr theme=static_cast<ThemeListBoxItem*>(d->mThemePage->mThemeList->selectedItem())->mTheme;
 	d->mInfo->setTheme(theme->path());
+
+	Theme::ParameterList parameterList = theme->parameterList();
+	Theme::ParameterList::ConstIterator
+		it = parameterList.begin(),
+		   end = parameterList.end();
+	for (; it!=end; ++it) {
+		AbstractThemeParameter* themeParameter = *it;
+		QCString name = themeParameter->name();
+		QWidget* widget = d->mThemeParameterWidgetFromName[name];
+		QString value = themeParameter->valueFromWidget(widget);
+
+		d->mInfo->themeParameterMap()[name] = value;
+	}
 
 	d->mConfigManager->updateSettings();
 

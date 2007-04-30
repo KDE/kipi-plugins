@@ -18,55 +18,47 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
 
 */
-#ifndef THEME_H
-#define THEME_H   
-
-// Qt
-#include <qstring.h>
-#include <qvaluelist.h>
+// Self
+#include "abstractthemeparameter.h"
 
 // KDE
-#include <ksharedptr.h>
+#include <kconfigbase.h>
+
+static const char TITLE_KEY[] = "Title";
 
 namespace KIPIHTMLExport {
 
-class AbstractThemeParameter;
+const char* AbstractThemeParameter::DEFAULT_VALUE_KEY = "Default";
 
-
-class Theme : public KShared {
-public:
-	typedef KSharedPtr<Theme> Ptr;
-	typedef QValueList<Ptr> List;
-	typedef QValueList<AbstractThemeParameter*> ParameterList;
-
-	~Theme();
-	QString name() const;
-	QString comment() const;
-
-	QString authorName() const;
-	QString authorUrl() const;
-
-	/**
-	 * Theme path, on hard disk
-	 */
-	QString path() const;
-
-	/**
-	 * Theme directory on hard disk
-	 */
-	QString directory() const;
-
-	ParameterList parameterList() const;
-
-	static const List& getList();
-	static Ptr findByPath(const QString& path);
-
-private:
-	Theme();
-	struct Private;
-	Private* d;
+struct AbstractThemeParameter::Private {
+	QCString mName;
+	QString mTitle;
 };
 
-} // namespace
+AbstractThemeParameter::AbstractThemeParameter() {
+	d = new Private;
+}
 
-#endif /* THEME_H */
+
+AbstractThemeParameter::~AbstractThemeParameter() {
+	delete d;
+}
+
+
+void AbstractThemeParameter::init(const QCString& name, const KConfigBase* configFile) {
+	d->mName = name;
+	d->mTitle = configFile->readEntry(TITLE_KEY);
+}
+
+
+QCString AbstractThemeParameter::name() const {
+	return d->mName;
+}
+
+
+QString AbstractThemeParameter::title() const {
+	return d->mTitle;
+}
+
+
+} // namespace

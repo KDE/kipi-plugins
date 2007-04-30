@@ -18,55 +18,45 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
 
 */
-#ifndef THEME_H
-#define THEME_H   
+// Self
+#include "stringthemeparameter.h"
 
 // Qt
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <qlineedit.h>
 
 // KDE
-#include <ksharedptr.h>
+#include <kconfigbase.h>
 
 namespace KIPIHTMLExport {
 
-class AbstractThemeParameter;
-
-
-class Theme : public KShared {
-public:
-	typedef KSharedPtr<Theme> Ptr;
-	typedef QValueList<Ptr> List;
-	typedef QValueList<AbstractThemeParameter*> ParameterList;
-
-	~Theme();
-	QString name() const;
-	QString comment() const;
-
-	QString authorName() const;
-	QString authorUrl() const;
-
-	/**
-	 * Theme path, on hard disk
-	 */
-	QString path() const;
-
-	/**
-	 * Theme directory on hard disk
-	 */
-	QString directory() const;
-
-	ParameterList parameterList() const;
-
-	static const List& getList();
-	static Ptr findByPath(const QString& path);
-
-private:
-	Theme();
-	struct Private;
-	Private* d;
+struct StringThemeParameter::Private {
+	QString mDefaultValue;
 };
 
-} // namespace
+StringThemeParameter::StringThemeParameter() {
+	d = new Private;
+}
 
-#endif /* THEME_H */
+StringThemeParameter::~StringThemeParameter() {
+	delete d;
+}
+
+void StringThemeParameter::init(const QCString& name, const KConfigBase* configFile) {
+	AbstractThemeParameter::init(name, configFile);
+	d->mDefaultValue = configFile->readEntry(AbstractThemeParameter::DEFAULT_VALUE_KEY);
+}
+
+QWidget* StringThemeParameter::createWidget(QWidget* parent) const {
+	QLineEdit* edit = new QLineEdit(parent);
+	edit->setText(d->mDefaultValue);
+
+	return edit;
+}
+
+QString StringThemeParameter::valueFromWidget(QWidget* widget) const {
+	Q_ASSERT(widget);
+	QLineEdit* edit = static_cast<QLineEdit*>(widget);
+	return edit->text();
+}
+
+} // namespace

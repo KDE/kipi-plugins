@@ -23,15 +23,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include "theme.h"
 
 // KDE
+#include <kdebug.h>
 #include <kdesktopfile.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
 
+// Local
+#include "stringthemeparameter.h"
 
 namespace KIPIHTMLExport {
 
 
-static const char* AUTHOR_GROUP="X-HTMLExport Author";
+static const char* AUTHOR_GROUP = "X-HTMLExport Author";
+static const char* PARAMETER_GROUP_PREFIX = "X-HTMLExport Parameter ";
+static const char* PARAMETER_TYPE_KEY = "Type";
+static const char* STRING_PARAMETER_TYPE = "string";
 
 static Theme::List sList;
 
@@ -39,10 +45,38 @@ static Theme::List sList;
 struct Theme::Private {
 	KDesktopFile* mDesktopFile;
 	KURL mURL;
+	ParameterList mParameterList;
 
 	void init(const QString& desktopFileName) {
 		mDesktopFile=new KDesktopFile(desktopFileName, true /*read only*/);
 		mURL.setPath(desktopFileName);
+
+		readParameters();
+	}
+
+	void readParameters() {
+		QStringList list = mDesktopFile->groupList();
+		QStringList::Iterator it=list.begin(), end=list.end();
+		for (;it!=end; ++it) {
+			QString group = *it;
+			if (!group.startsWith(PARAMETER_GROUP_PREFIX)) {
+				continue;
+			}
+
+			QCString name = group.mid(qstrlen(PARAMETER_GROUP_PREFIX) ).utf8();
+
+			KConfigGroupSaver saver(mDesktopFile, group);
+			QString type = mDesktopFile->readEntry(PARAMETER_TYPE_KEY);
+			AbstractThemeParameter* parameter;
+			if (type == STRING_PARAMETER_TYPE) {
+				parameter = new StringThemeParameter();
+			} else {
+				kdWarning() << "Parameter '" << name << "' has unknown type '" << type << "'. Falling back to string type\n";
+				parameter = new StringThemeParameter();
+			}
+			parameter->init(name, mDesktopFile);
+			mParameterList << parameter;
+		}
 	}
 };
 
@@ -113,6 +147,11 @@ QString Theme::authorName() const {
 QString Theme::authorUrl() const {
 	KConfigGroupSaver saver(d->mDesktopFile, AUTHOR_GROUP);
 	return d->mDesktopFile->readEntry("Url");
+}
+
+
+Theme::ParameterList Theme::parameterList() const {
+	return d->mParameterList;
 }
 
 

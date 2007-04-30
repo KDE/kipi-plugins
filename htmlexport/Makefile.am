@@ -10,12 +10,15 @@ kipiplugin_htmlexport_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 kipiplugin_htmlexport_la_SOURCES = \
 	generator.cpp \
 	themepage.ui \
+	themeparameterspage.ui \
 	imagesettingspage.ui \
 	outputpage.ui \
 	plugin.cpp \
 	wizard.cpp \
 	theme.cpp \
-	htmlexportconfig.kcfgc
+	htmlexportconfig.kcfgc \
+	abstractthemeparameter.cpp \
+	stringthemeparameter.cpp
 
 kde_kcfg_DATA = \
 	htmlexportconfig.kcfg

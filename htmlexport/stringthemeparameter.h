@@ -18,55 +18,27 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
 
 */
-#ifndef THEME_H
-#define THEME_H   
+#ifndef STRINGTHEMEPARAMETER_H
+#define STRINGTHEMEPARAMETER_H
 
-// Qt
-#include <qstring.h>
-#include <qvaluelist.h>
-
-// KDE
-#include <ksharedptr.h>
+// Local
+#include "abstractthemeparameter.h"
 
 namespace KIPIHTMLExport {
-
-class AbstractThemeParameter;
-
-
-class Theme : public KShared {
+class StringThemeParameter : public AbstractThemeParameter {
 public:
-	typedef KSharedPtr<Theme> Ptr;
-	typedef QValueList<Ptr> List;
-	typedef QValueList<AbstractThemeParameter*> ParameterList;
+	StringThemeParameter();
+	~StringThemeParameter();
 
-	~Theme();
-	QString name() const;
-	QString comment() const;
-
-	QString authorName() const;
-	QString authorUrl() const;
-
-	/**
-	 * Theme path, on hard disk
-	 */
-	QString path() const;
-
-	/**
-	 * Theme directory on hard disk
-	 */
-	QString directory() const;
-
-	ParameterList parameterList() const;
-
-	static const List& getList();
-	static Ptr findByPath(const QString& path);
+	virtual void init(const QCString& name, const KConfigBase* configFile);
+	virtual QWidget* createWidget(QWidget* parent) const;
+	virtual QString valueFromWidget(QWidget*) const;
 
 private:
-	Theme();
 	struct Private;
 	Private* d;
 };
 
 } // namespace
 
-#endif /* THEME_H */
+#endif /* STRINGTHEMEPARAMETER_H */

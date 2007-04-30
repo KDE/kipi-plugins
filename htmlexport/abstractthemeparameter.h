@@ -18,55 +18,38 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
 
 */
-#ifndef THEME_H
-#define THEME_H   
+#ifndef ABSTRACTTHEMEPARAMETER_H
+#define ABSTRACTTHEMEPARAMETER_H
 
-// Qt
-#include <qstring.h>
-#include <qvaluelist.h>
-
-// KDE
-#include <ksharedptr.h>
+class QCString;
+class QString;
+class QWidget;
+class KConfigBase;
 
 namespace KIPIHTMLExport {
 
-class AbstractThemeParameter;
-
-
-class Theme : public KShared {
+class AbstractThemeParameter {
 public:
-	typedef KSharedPtr<Theme> Ptr;
-	typedef QValueList<Ptr> List;
-	typedef QValueList<AbstractThemeParameter*> ParameterList;
+	static const char* DEFAULT_VALUE_KEY;
 
-	~Theme();
-	QString name() const;
-	QString comment() const;
+	AbstractThemeParameter();
+	virtual ~AbstractThemeParameter();
 
-	QString authorName() const;
-	QString authorUrl() const;
+	virtual void init(const QCString& name, const KConfigBase* configFile);
 
-	/**
-	 * Theme path, on hard disk
-	 */
-	QString path() const;
+	QCString name() const;
 
-	/**
-	 * Theme directory on hard disk
-	 */
-	QString directory() const;
+	QString title() const;
 
-	ParameterList parameterList() const;
+	virtual QWidget* createWidget(QWidget* parent) const = 0;
 
-	static const List& getList();
-	static Ptr findByPath(const QString& path);
+	virtual QString valueFromWidget(QWidget*) const = 0;
 
-private:
-	Theme();
-	struct Private;
+protected:
+	class Private;
 	Private* d;
 };
 
 } // namespace
 
-#endif /* THEME_H */
+#endif /* ABSTRACTTHEMEPARAMETER_H */

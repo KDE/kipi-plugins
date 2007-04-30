@@ -38,6 +38,8 @@ namespace KIPIHTMLExport {
 
 class GalleryInfo : public Config {
 public:
+	typedef QMap<QString, QString> ThemeParameterMap;
+
 	/**
 	 * Convenience method to get destURL as a KURL rather than a QString
 	 */
@@ -54,6 +56,10 @@ public:
 	}
 
 	QValueList<KIPI::ImageCollection> mCollectionList;
+
+	ThemeParameterMap& themeParameterMap() {
+		return mThemeParameterMap;
+	}
 
 private:
 
@@ -82,6 +88,8 @@ private:
 		}
 		return QString::null;
 	}
+
+	ThemeParameterMap mThemeParameterMap;
 };
 
 } // namespace
