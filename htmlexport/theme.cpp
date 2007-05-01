@@ -99,27 +99,40 @@ Theme::~Theme() {
 
 const Theme::List& Theme::getList() {
 	if (sList.isEmpty()) {
+		QStringList internalNameList;
 		QStringList list=KGlobal::instance()->dirs()->findAllResources("data", "kipiplugin_htmlexport/themes/*/*.desktop");
 		QStringList::Iterator it=list.begin(), end=list.end();
 		for (;it!=end; ++it) {
 			Theme* theme=new Theme;
 			theme->d->init(*it);
-			sList << Theme::Ptr(theme);
+			QString internalName = theme->internalName();
+			if (!internalNameList.contains(internalName)) {
+				sList << Theme::Ptr(theme);
+				internalNameList << internalName;
+			}
 		}
 	}
 	return sList;
 }
 
 
-Theme::Ptr Theme::findByPath(const QString& path) {
+Theme::Ptr Theme::findByInternalName(const QString& internalName) {
 	const Theme::List& lst=getList();
 	Theme::List::ConstIterator it=lst.begin(), end=lst.end();
 	for (; it!=end; ++it) {
-		if ((*it)->path()==path) {
-			return *it;
+		Theme::Ptr theme = *it;
+		if (theme->internalName() == internalName) {
+			return theme;
 		}
 	}
 	return 0;
+}
+
+
+QString Theme::internalName() const {
+	KURL url = d->mURL;
+	url.setFileName("");
+	return url.fileName();
 }
 
 
@@ -130,11 +143,6 @@ QString Theme::name() const {
 
 QString Theme::comment() const {
 	return d->mDesktopFile->readComment();
-}
-
-
-QString Theme::path() const {
-	return d->mURL.path();
 }
 
 

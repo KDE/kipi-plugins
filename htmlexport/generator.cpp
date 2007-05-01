@@ -169,7 +169,7 @@ struct Generator::Private {
 	UniqueNameHelper mUniqueNameHelper;
 
 	bool init() {
-		mTheme=Theme::findByPath(mInfo->theme());
+		mTheme=Theme::findByInternalName(mInfo->theme());
 		if (!mTheme) {
 			logError( i18n("Could not find theme in '%1'").arg(mInfo->theme()) );
 			return false;

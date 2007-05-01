@@ -91,8 +91,9 @@ struct Wizard::Private {
 		Theme::List list=Theme::getList();
 		Theme::List::Iterator it=list.begin(), end=list.end();
 		for (; it!=end; ++it) {
-			ThemeListBoxItem* item=new ThemeListBoxItem(listBox, *it);
-			if ( (*it)->path()==mInfo->theme() ) {
+			Theme::Ptr theme = *it;
+			ThemeListBoxItem* item=new ThemeListBoxItem(listBox, theme);
+			if ( theme->internalName()==mInfo->theme() ) {
 				listBox->setCurrentItem(item);
 			}
 		}
@@ -246,7 +247,7 @@ void Wizard::accept() {
 	d->mInfo->mCollectionList=d->mCollectionSelector->selectedImageCollections();
 
 	Theme::Ptr theme=static_cast<ThemeListBoxItem*>(d->mThemePage->mThemeList->selectedItem())->mTheme;
-	d->mInfo->setTheme(theme->path());
+	d->mInfo->setTheme(theme->internalName());
 
 	Theme::ParameterList parameterList = theme->parameterList();
 	Theme::ParameterList::ConstIterator

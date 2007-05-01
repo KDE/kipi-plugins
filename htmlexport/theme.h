@@ -40,16 +40,15 @@ public:
 	typedef QValueList<AbstractThemeParameter*> ParameterList;
 
 	~Theme();
+	/**
+	 * Internal theme name == name of theme folder
+	 */
+	QString internalName() const;
 	QString name() const;
 	QString comment() const;
 
 	QString authorName() const;
 	QString authorUrl() const;
-
-	/**
-	 * Theme path, on hard disk
-	 */
-	QString path() const;
 
 	/**
 	 * Theme directory on hard disk
@@ -59,7 +58,7 @@ public:
 	ParameterList parameterList() const;
 
 	static const List& getList();
-	static Ptr findByPath(const QString& path);
+	static Ptr findByInternalName(const QString& internalName);
 
 private:
 	Theme();
