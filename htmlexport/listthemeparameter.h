@@ -30,7 +30,7 @@ public:
 	ListThemeParameter();
 	~ListThemeParameter();
 
-	virtual void init(const QCString& name, const KConfigBase* configFile);
+	virtual void init(const QCString& internalName, const KConfigBase* configFile);
 	virtual QWidget* createWidget(QWidget* parent) const;
 	virtual QString valueFromWidget(QWidget*) const;
 

@@ -35,11 +35,11 @@ public:
 	AbstractThemeParameter();
 	virtual ~AbstractThemeParameter();
 
-	virtual void init(const QCString& name, const KConfigBase* configFile);
+	virtual void init(const QCString& internalName, const KConfigBase* configFile);
 
-	QCString name() const;
+	QCString internalName() const;
 
-	QString title() const;
+	QString name() const;
 
 	virtual QWidget* createWidget(QWidget* parent) const = 0;
 

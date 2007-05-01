@@ -41,8 +41,8 @@ StringThemeParameter::~StringThemeParameter() {
 	delete d;
 }
 
-void StringThemeParameter::init(const QCString& name, const KConfigBase* configFile) {
-	AbstractThemeParameter::init(name, configFile);
+void StringThemeParameter::init(const QCString& internalName, const KConfigBase* configFile) {
+	AbstractThemeParameter::init(internalName, configFile);
 	d->mDefaultValue = configFile->readEntry(AbstractThemeParameter::DEFAULT_VALUE_KEY);
 }
 

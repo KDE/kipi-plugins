@@ -38,6 +38,7 @@ namespace KIPIHTMLExport {
 static const char* AUTHOR_GROUP = "X-HTMLExport Author";
 static const char* PARAMETER_GROUP_PREFIX = "X-HTMLExport Parameter ";
 static const char* PARAMETER_TYPE_KEY = "Type";
+
 static const char* STRING_PARAMETER_TYPE = "string";
 static const char* LIST_PARAMETER_TYPE = "list";
 
@@ -65,7 +66,7 @@ struct Theme::Private {
 				continue;
 			}
 
-			QCString name = group.mid(qstrlen(PARAMETER_GROUP_PREFIX) ).utf8();
+			QCString internalName = group.mid(qstrlen(PARAMETER_GROUP_PREFIX) ).utf8();
 
 			KConfigGroupSaver saver(mDesktopFile, group);
 			QString type = mDesktopFile->readEntry(PARAMETER_TYPE_KEY);
@@ -75,10 +76,10 @@ struct Theme::Private {
 			} else if (type == LIST_PARAMETER_TYPE) {
 				parameter = new ListThemeParameter();
 			} else {
-				kdWarning() << "Parameter '" << name << "' has unknown type '" << type << "'. Falling back to string type\n";
+				kdWarning() << "Parameter '" << internalName << "' has unknown type '" << type << "'. Falling back to string type\n";
 				parameter = new StringThemeParameter();
 			}
-			parameter->init(name, mDesktopFile);
+			parameter->init(internalName, mDesktopFile);
 			mParameterList << parameter;
 		}
 	}

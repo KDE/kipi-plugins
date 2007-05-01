@@ -24,15 +24,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 // KDE
 #include <kconfigbase.h>
 
-static const char TITLE_KEY[] = "Title";
+static const char NAME_KEY[] = "Name";
 
 namespace KIPIHTMLExport {
 
 const char* AbstractThemeParameter::DEFAULT_VALUE_KEY = "Default";
 
 struct AbstractThemeParameter::Private {
-	QCString mName;
-	QString mTitle;
+	QCString mInternalName;
+	QString mName;
 };
 
 AbstractThemeParameter::AbstractThemeParameter() {
@@ -45,19 +45,19 @@ AbstractThemeParameter::~AbstractThemeParameter() {
 }
 
 
-void AbstractThemeParameter::init(const QCString& name, const KConfigBase* configFile) {
-	d->mName = name;
-	d->mTitle = configFile->readEntry(TITLE_KEY);
+void AbstractThemeParameter::init(const QCString& internalName, const KConfigBase* configFile) {
+	d->mInternalName = internalName;
+	d->mName = configFile->readEntry(NAME_KEY);
 }
 
 
-QCString AbstractThemeParameter::name() const {
+QCString AbstractThemeParameter::internalName() const {
+	return d->mInternalName;
+}
+
+
+QString AbstractThemeParameter::name() const {
 	return d->mName;
-}
-
-
-QString AbstractThemeParameter::title() const {
-	return d->mTitle;
 }
 
 

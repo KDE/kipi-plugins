@@ -123,11 +123,11 @@ struct Wizard::Private {
 			end = parameterList.end();
 		for (; it!=end; ++it) {
 			AbstractThemeParameter* themeParameter = *it;
-			QCString name = themeParameter->name();
-			QString title = themeParameter->title();
-			title = i18n("'%1' is a label for a theme parameter", "%1:").arg(title);
+			QCString internalName = themeParameter->internalName();
+			QString name = themeParameter->name();
+			name = i18n("'%1' is a label for a theme parameter", "%1:").arg(name);
 
-			QLabel* label = new QLabel(title, content);
+			QLabel* label = new QLabel(name, content);
 			QWidget* widget = themeParameter->createWidget(content);
 			label->setBuddy(widget);
 
@@ -135,7 +135,7 @@ struct Wizard::Private {
 			layout->addWidget(label, row, 0);
 			layout->addWidget(widget, row, 1);
 
-			mThemeParameterWidgetFromName[name] = widget;
+			mThemeParameterWidgetFromName[internalName] = widget;
 		}
 
 		// Add spacer at the end, so that widgets aren't spread on the whole
@@ -254,11 +254,11 @@ void Wizard::accept() {
 		   end = parameterList.end();
 	for (; it!=end; ++it) {
 		AbstractThemeParameter* themeParameter = *it;
-		QCString name = themeParameter->name();
-		QWidget* widget = d->mThemeParameterWidgetFromName[name];
+		QCString internalName = themeParameter->internalName();
+		QWidget* widget = d->mThemeParameterWidgetFromName[internalName];
 		QString value = themeParameter->valueFromWidget(widget);
 
-		d->mInfo->themeParameterMap()[name] = value;
+		d->mInfo->themeParameterMap()[internalName] = value;
 	}
 
 	d->mConfigManager->updateSettings();
