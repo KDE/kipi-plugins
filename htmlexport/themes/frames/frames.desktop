@@ -1,6 +1,15 @@
 [Desktop Entry]
 Name=Frames
+Name[is]=Rammar
+Name[pt]=Molduras
+Name[pt_BR]=Molduras
+Name[sv]=Ramar
 Comment=A frame theme
+Comment[is]=Þema með römmum
+Comment[nl]=Een frame-thema
+Comment[pt]=Um tema de molduras
+Comment[pt_BR]=Um tema de molduras
+Comment[sv]=Ett tema med ramar
 
 [X-HTMLExport Author]
 Name=Ruediger Bente
