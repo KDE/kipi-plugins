@@ -119,17 +119,23 @@ struct Wizard::Private {
 
 		// Create widgets
 		Theme::ParameterList parameterList = theme->parameterList();
+		QString themeInternalName = theme->internalName();
 		Theme::ParameterList::ConstIterator
 			it = parameterList.begin(),
 			end = parameterList.end();
 		for (; it!=end; ++it) {
 			AbstractThemeParameter* themeParameter = *it;
 			QCString internalName = themeParameter->internalName();
+			QString value = mInfo->getThemeParameterValue(
+				themeInternalName,
+				internalName,
+				themeParameter->defaultValue());
+
 			QString name = themeParameter->name();
 			name = i18n("'%1' is a label for a theme parameter", "%1:").arg(name);
 
 			QLabel* label = new QLabel(name, content);
-			QWidget* widget = themeParameter->createWidget(content);
+			QWidget* widget = themeParameter->createWidget(content, value);
 			label->setBuddy(widget);
 
 			int row = layout->numRows();
@@ -247,7 +253,8 @@ void Wizard::accept() {
 	d->mInfo->mCollectionList=d->mCollectionSelector->selectedImageCollections();
 
 	Theme::Ptr theme=static_cast<ThemeListBoxItem*>(d->mThemePage->mThemeList->selectedItem())->mTheme;
-	d->mInfo->setTheme(theme->internalName());
+	QString themeInternalName = theme->internalName();
+	d->mInfo->setTheme(themeInternalName);
 
 	Theme::ParameterList parameterList = theme->parameterList();
 	Theme::ParameterList::ConstIterator
@@ -255,11 +262,14 @@ void Wizard::accept() {
 		   end = parameterList.end();
 	for (; it!=end; ++it) {
 		AbstractThemeParameter* themeParameter = *it;
-		QCString internalName = themeParameter->internalName();
-		QWidget* widget = d->mThemeParameterWidgetFromName[internalName];
+		QCString parameterInternalName = themeParameter->internalName();
+		QWidget* widget = d->mThemeParameterWidgetFromName[parameterInternalName];
 		QString value = themeParameter->valueFromWidget(widget);
 
-		d->mInfo->themeParameterMap()[internalName] = value;
+		d->mInfo->setThemeParameterValue(
+			themeInternalName,
+			parameterInternalName,
+			value);
 	}
 
 	d->mConfigManager->updateSettings();

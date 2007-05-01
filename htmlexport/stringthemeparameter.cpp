@@ -30,7 +30,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 namespace KIPIHTMLExport {
 
 struct StringThemeParameter::Private {
-	QString mDefaultValue;
 };
 
 StringThemeParameter::StringThemeParameter() {
@@ -43,12 +42,11 @@ StringThemeParameter::~StringThemeParameter() {
 
 void StringThemeParameter::init(const QCString& internalName, const KConfigBase* configFile) {
 	AbstractThemeParameter::init(internalName, configFile);
-	d->mDefaultValue = configFile->readEntry(AbstractThemeParameter::DEFAULT_VALUE_KEY);
 }
 
-QWidget* StringThemeParameter::createWidget(QWidget* parent) const {
+QWidget* StringThemeParameter::createWidget(QWidget* parent, const QString& value) const {
 	QLineEdit* edit = new QLineEdit(parent);
-	edit->setText(d->mDefaultValue);
+	edit->setText(value);
 
 	return edit;
 }

@@ -48,6 +48,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <libexslt/exslt.h>
 
 // Local
+#include "abstractthemeparameter.h"
 #include "galleryinfo.h"
 #include "theme.h"
 #include "xmlutils.h"
@@ -366,12 +367,20 @@ struct Generator::Private {
 
 
 	void addThemeParameters(XsltParameterMap& map) {
-		GalleryInfo::ThemeParameterMap themeParameterMap = mInfo->themeParameterMap();
-		GalleryInfo::ThemeParameterMap::ConstIterator
-			it = themeParameterMap.begin(),
-			end = themeParameterMap.end();
-		for (;it!=end; ++it) {
-			map[it.key().utf8()] = makeXsltParam(it.data());
+		Theme::ParameterList parameterList = mTheme->parameterList();
+		QString themeInternalName = mTheme->internalName();
+		Theme::ParameterList::ConstIterator
+			it = parameterList.begin(),
+			end = parameterList.end();
+		for (; it!=end; ++it) {
+			AbstractThemeParameter* themeParameter = *it;
+			QCString internalName = themeParameter->internalName();
+			QString value = mInfo->getThemeParameterValue(
+				themeInternalName,
+				internalName,
+				themeParameter->defaultValue());
+
+			map[internalName] = makeXsltParam(value);
 		}
 	}
 

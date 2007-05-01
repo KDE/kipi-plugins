@@ -33,7 +33,6 @@ static const char* ITEM_VALUE_KEY = "Value_";
 static const char* ITEM_CAPTION_KEY = "Caption_";
 
 struct ListThemeParameter::Private {
-	QString mDefaultValue;
 	QStringList mOrderedValueList;
 	QMap<QString, QString> mContentMap;
 };
@@ -48,7 +47,6 @@ ListThemeParameter::~ListThemeParameter() {
 
 void ListThemeParameter::init(const QCString& internalName, const KConfigBase* configFile) {
 	AbstractThemeParameter::init(internalName, configFile);
-	d->mDefaultValue = configFile->readEntry(AbstractThemeParameter::DEFAULT_VALUE_KEY);
 
 	for (int pos=0;; ++pos) {
 		QString valueKey = QString("%1%2").arg(ITEM_VALUE_KEY).arg(pos);
@@ -65,7 +63,7 @@ void ListThemeParameter::init(const QCString& internalName, const KConfigBase* c
 	}
 }
 
-QWidget* ListThemeParameter::createWidget(QWidget* parent) const {
+QWidget* ListThemeParameter::createWidget(QWidget* parent, const QString& widgetDefaultValue) const {
 	QComboBox* comboBox = new QComboBox(parent);
 
 	QStringList::ConstIterator
@@ -75,7 +73,7 @@ QWidget* ListThemeParameter::createWidget(QWidget* parent) const {
 		QString value = *it;
 		QString caption = d->mContentMap[value];
 		comboBox->insertItem(caption);
-		if (value == d->mDefaultValue) {
+		if (value == widgetDefaultValue) {
 			comboBox->setCurrentItem(comboBox->count() - 1);
 		}
 	}

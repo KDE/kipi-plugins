@@ -19,7 +19,8 @@ kipiplugin_htmlexport_la_SOURCES = \
 	htmlexportconfig.kcfgc \
 	abstractthemeparameter.cpp \
 	stringthemeparameter.cpp \
-	listthemeparameter.cpp
+	listthemeparameter.cpp \
+	galleryinfo.cpp
 
 kde_kcfg_DATA = \
 	htmlexportconfig.kcfg

@@ -31,7 +31,7 @@ public:
 	~ListThemeParameter();
 
 	virtual void init(const QCString& internalName, const KConfigBase* configFile);
-	virtual QWidget* createWidget(QWidget* parent) const;
+	virtual QWidget* createWidget(QWidget* parent, const QString& value) const;
 	virtual QString valueFromWidget(QWidget*) const;
 
 private:

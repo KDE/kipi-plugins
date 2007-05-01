@@ -30,8 +30,6 @@ namespace KIPIHTMLExport {
 
 class AbstractThemeParameter {
 public:
-	static const char* DEFAULT_VALUE_KEY;
-
 	AbstractThemeParameter();
 	virtual ~AbstractThemeParameter();
 
@@ -41,7 +39,9 @@ public:
 
 	QString name() const;
 
-	virtual QWidget* createWidget(QWidget* parent) const = 0;
+	QString defaultValue() const;
+
+	virtual QWidget* createWidget(QWidget* parent, const QString& value) const = 0;
 
 	virtual QString valueFromWidget(QWidget*) const = 0;
 

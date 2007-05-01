@@ -19,52 +19,43 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 */
 // Self
-#include "abstractthemeparameter.h"
+#include "galleryinfo.h"
+
+// Qt
 
 // KDE
 #include <kconfigbase.h>
 
-static const char* NAME_KEY = "Name";
-static const char* DEFAULT_VALUE_KEY = "Default";
+// Local
 
 namespace KIPIHTMLExport {
 
-struct AbstractThemeParameter::Private {
-	QCString mInternalName;
-	QString mName;
-	QString mDefaultValue;
-};
+static const char* THEME_GROUP_PREFIX="Theme ";
 
-AbstractThemeParameter::AbstractThemeParameter() {
-	d = new Private;
+QString GalleryInfo::getThemeParameterValue(
+	const QString& theme,
+	const QString& parameter,
+	const QString& defaultValue) const
+{
+	QString groupName = THEME_GROUP_PREFIX + theme;
+	KConfigGroupSaver saver(config(), groupName);
+	return config()->readEntry(parameter, defaultValue);
 }
 
 
-AbstractThemeParameter::~AbstractThemeParameter() {
-	delete d;
+void GalleryInfo::setThemeParameterValue(
+	const QString& theme,
+	const QString& parameter,
+	const QString& value)
+{
+	// FIXME: This is hackish, but config() is const :'(
+	KConfig* localConfig = const_cast<KConfig*>(config());
+
+	QString groupName = THEME_GROUP_PREFIX + theme;
+	KConfigGroupSaver saver(localConfig, groupName);
+	return localConfig->writeEntry(parameter, value);
 }
 
-
-void AbstractThemeParameter::init(const QCString& internalName, const KConfigBase* configFile) {
-	d->mInternalName = internalName;
-	d->mName = configFile->readEntry(NAME_KEY);
-	d->mDefaultValue = configFile->readEntry(DEFAULT_VALUE_KEY);
-}
-
-
-QCString AbstractThemeParameter::internalName() const {
-	return d->mInternalName;
-}
-
-
-QString AbstractThemeParameter::name() const {
-	return d->mName;
-}
-
-
-QString AbstractThemeParameter::defaultValue() const {
-	return d->mDefaultValue;
-}
 
 
 } // namespace
