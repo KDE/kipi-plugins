@@ -363,6 +363,7 @@ struct Generator::Private {
 		map["i18nPrevious"] = makeXsltParam(i18n("Previous"));
 		map["i18nNext"] = makeXsltParam(i18n("Next"));
 		map["i18nCollectionList"] = makeXsltParam(i18n("Collection List"));
+		map["i18nOriginalImage"] = makeXsltParam(i18n("Original Image"));
 	}
 
 

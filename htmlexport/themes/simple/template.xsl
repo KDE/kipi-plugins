@@ -63,6 +63,12 @@
 			<p>
 			<xsl:value-of select="description"/>
 			</p>
+			<xsl:if test="original/@fileName != ''">
+				<p>
+				<a href="{original/@fileName}"><xsl:value-of select="$i18nOriginalImage"/></a>
+				(<xsl:value-of select="original/@width"/>x<xsl:value-of select="original/@height"/>)
+				</p>
+			</xsl:if>
 		</div>
 	</div>
 	</body>

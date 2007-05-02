@@ -30,6 +30,12 @@
 		<tr>
 			<td align="center">
 				<img src="{full/@fileName}" width="{full/@width}" height="{full/@height}" />
+				<xsl:if test="original/@fileName != ''">
+					<p>
+					<a href="{original/@fileName}"><xsl:value-of select="$i18nOriginalImage"/></a>
+					(<xsl:value-of select="original/@width"/>x<xsl:value-of select="original/@height"/>)
+					</p>
+				</xsl:if>
 ´			</td>
 		</tr>
 		</table>
