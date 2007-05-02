@@ -20,6 +20,7 @@ kipiplugin_htmlexport_la_SOURCES = \
 	abstractthemeparameter.cpp \
 	stringthemeparameter.cpp \
 	listthemeparameter.cpp \
+	colorthemeparameter.cpp \
 	galleryinfo.cpp
 
 kde_kcfg_DATA = \
