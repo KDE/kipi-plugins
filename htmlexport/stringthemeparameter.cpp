@@ -29,21 +29,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 namespace KIPIHTMLExport {
 
-struct StringThemeParameter::Private {
-};
-
-StringThemeParameter::StringThemeParameter() {
-	d = new Private;
-}
-
-StringThemeParameter::~StringThemeParameter() {
-	delete d;
-}
-
-void StringThemeParameter::init(const QCString& internalName, const KConfigBase* configFile) {
-	AbstractThemeParameter::init(internalName, configFile);
-}
-
 QWidget* StringThemeParameter::createWidget(QWidget* parent, const QString& value) const {
 	QLineEdit* edit = new QLineEdit(parent);
 	edit->setText(value);

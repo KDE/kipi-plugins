@@ -27,16 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 namespace KIPIHTMLExport {
 class StringThemeParameter : public AbstractThemeParameter {
 public:
-	StringThemeParameter();
-	~StringThemeParameter();
-
-	virtual void init(const QCString& internalName, const KConfigBase* configFile);
 	virtual QWidget* createWidget(QWidget* parent, const QString& value) const;
 	virtual QString valueFromWidget(QWidget*) const;
-
-private:
-	struct Private;
-	Private* d;
 };
 
 } // namespace
