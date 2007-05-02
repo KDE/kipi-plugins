@@ -1,8 +1,9 @@
 /* ============================================================
- * Authors: Ralf Hoelzer <kde at ralfhoelzer.com>
- *          Marcel Wiesweg <marcel.wiesweg@gmx.de>
- *          Gilles Caulier <caulier dot gilles at gmail dot com>
- * Date   : 2004-06-08
+ * Authors     : Ralf Hoelzer 
+ *               Marcel Wiesweg 
+ *               Gilles Caulier 
+ * Date        : 2004-06-08
+ * Description : Loss less JPEG files transformations.
  * 
  * Copyright 2004 by  Ralf Hoelzer <kde at ralfhoelzer.com>
  * Copyright 2004-2005 by Marcel Wiesweg <marcel.wiesweg@gmx.de>

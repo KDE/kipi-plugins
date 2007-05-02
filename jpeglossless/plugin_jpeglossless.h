@@ -1,8 +1,8 @@
 /* ============================================================
- * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- *          Gilles Caulier <caulier dot gilles at gmail dot com>
- * Date   : 2003-09-26
- * Description : JPEG loss less operations plugin
+ * Authors     : Renchi Raju
+ *               Gilles Caulier
+ * Date        : 2003-09-26
+ * Description : loss less image transformations plugin
  *
  * Copyright 2003-2005 by Renchi Raju & Gilles Caulier <renchi@pooh.tam.uiuc.edu>
  * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
