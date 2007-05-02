@@ -114,7 +114,7 @@ struct Wizard::Private {
 		mThemeParameterWidgetFromName.clear();
 
 		// Create layout
-		QGridLayout* layout = new QGridLayout(content, 0, 2);
+		QGridLayout* layout = new QGridLayout(content, 0, 3);
 		layout->setSpacing(KDialog::spacingHint());
 
 		// Create widgets
@@ -137,10 +137,12 @@ struct Wizard::Private {
 			QLabel* label = new QLabel(name, content);
 			QWidget* widget = themeParameter->createWidget(content, value);
 			label->setBuddy(widget);
+			QSpacerItem* spacer = new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
 			int row = layout->numRows();
 			layout->addWidget(label, row, 0);
 			layout->addWidget(widget, row, 1);
+			layout->addItem(spacer, row, 2);
 
 			mThemeParameterWidgetFromName[internalName] = widget;
 		}
