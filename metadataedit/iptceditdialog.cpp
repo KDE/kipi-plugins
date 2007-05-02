@@ -1,6 +1,6 @@
 /* ============================================================
- * Authors: Caulier Gilles <caulier dot gilles at gmail dot com>
- * Date   : 2006-10-12
+ * Authors     : Caulier Gilles 
+ * Date        : 2006-10-12
  * Description : a dialog to edit IPTC metadata
  * 
  * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -178,7 +178,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface
                                             NULL,
                                             KAboutData::License_GPL,
                                             I18N_NOOP("A Plugin to edit pictures metadata"),
-                                            "(c) 2006, Gilles Caulier");
+                                            "(c) 2006-2007, Gilles Caulier");
 
     d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");

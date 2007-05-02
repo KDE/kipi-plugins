@@ -1,6 +1,6 @@
 /* ============================================================
- * Authors: Gilles Caulier <caulier dot gilles at gmail dot com>
- * Date   : 2006-10-12
+ * Authors     : Gilles Caulier
+ * Date        : 2006-10-12
  * Description : IPTC date and time settings page.
  * 
  * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>

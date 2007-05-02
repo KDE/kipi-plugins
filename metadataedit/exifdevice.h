@@ -1,6 +1,6 @@
 /* ============================================================
- * Authors: Gilles Caulier <caulier dot gilles at gmail dot com>
- * Date   : 2006-10-18
+ * Authors     : Gilles Caulier
+ * Date        : 2006-10-18
  * Description : EXIF device settings page.
  * 
  * Copyright 2006 by Gilles Caulier <caulier dot gilles at gmail dot com>

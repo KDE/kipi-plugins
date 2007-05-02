@@ -1,6 +1,6 @@
 /* ============================================================
- * Authors: Gilles Caulier <caulier dot gilles at gmail dot com>
- * Date   : 2006-10-11
+ * Authors     : Gilles Caulier 
+ * Date        : 2006-10-11
  * Description : a plugin to edit pictures metadata
  *
  * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
