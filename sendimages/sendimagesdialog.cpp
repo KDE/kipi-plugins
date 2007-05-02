@@ -3,7 +3,7 @@
  * Date   : 2003-10-01
  * Description : a kipi plugin to e-mailing images
  * 
- * Copyright 2003-2005 by Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Copyright 2003-2005 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright 2006 by Tom Albers <tomalbers at kde.nl>
  *
  * This program is free software; you can redistribute it
@@ -159,7 +159,7 @@ SendImagesDialog::SendImagesDialog(QWidget *parent, KIPI::Interface* interface,
                                            "(c) 2003-2005, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                       "caulier dot gilles at kdemail dot net");
+                       "caulier dot gilles at gmail dot com");
 
     m_helpButton        = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);

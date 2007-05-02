@@ -1,11 +1,11 @@
 /* ============================================================
  * Authors: Jesper K. Pedersen <blackie@kde.org>
- *          Gilles Caulier <caulier dot gilles at kdemail dot net>
+ *          Gilles Caulier <caulier dot gilles at gmail dot com>
  * Date   : 2004-05-16
  * Description : a plugin to set time stamp of picture files.
  *
  * Copyright 2003-2005 by Jesper Pedersen <blackie@kde.org>
- * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at kdemail dot net>
+ * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -152,7 +152,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
                        "blackie@kde.org");
 
     d->about->addAuthor("Gilles Caulier", I18N_NOOP("Developper"),
-                       "caulier dot gilles at kdemail dot net");
+                       "caulier dot gilles at gmail dot com");
 
     QPushButton *helpButton = actionButton(Help);
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
