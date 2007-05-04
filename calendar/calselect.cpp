@@ -31,7 +31,9 @@
 
 // KDE includes.
 
+#include <kglobal.h>
 #include <klocale.h>
+#include <kcalendarsystem.h>
 #include <kstandarddirs.h>
 
 // Local includes.
@@ -40,13 +42,16 @@
 #include "calsettings.h"
 #include "monthwidget.h"
 
+#define MAX_MONTHS (13)
+
 namespace KIPICalendarPlugin
 {
 
 CalSelect::CalSelect(KIPI::Interface* interface, QWidget *parent, const char* name)
          : QWidget(parent, name)
 {
-    mwVector_ = new QPtrVector<MonthWidget>(12);
+    mwVector_ = new QPtrVector<MonthWidget>(MAX_MONTHS);
+    monthBoxLayout_ = NULL;
     setupView( interface );
 }
 
@@ -88,8 +93,10 @@ void CalSelect::setupView( KIPI::Interface* interface )
     yearBox->layout()->addItem(new QSpacerItem(5,5,
                                                QSizePolicy::Expanding,
                                                QSizePolicy::Minimum));
-    yearSpin_ = new QSpinBox(1900,3000,1,yearBox);
-    yearSpin_->setValue(QDate::currentDate().year());
+    yearSpin_ = new QSpinBox(KGlobal::locale()->calendar()->minValidYear(),
+                             KGlobal::locale()->calendar()->maxValidYear(),
+                             1,yearBox);
+    yearSpin_->setValue(KGlobal::locale()->calendar()->year(QDate::currentDate()));
     slotYearChanged(yearSpin_->value());
 
     connect(yearSpin_, SIGNAL(valueChanged(int)),
@@ -106,25 +113,30 @@ void CalSelect::setupView( KIPI::Interface* interface )
     monthBox->layout()->setSpacing( 6 );
     monthBox->layout()->setMargin( 11 );
 
-    QGridLayout *monthBoxLayout = new QGridLayout(monthBox->layout());
-    monthBoxLayout->setAlignment( Qt::AlignCenter );
+    monthBoxLayout_ = new QGridLayout(monthBox->layout());
+    monthBoxLayout_->setAlignment( Qt::AlignCenter );
 
     KURL::List urlList;
     KIPI::ImageCollection images = interface->currentSelection();
     if ( images.isValid() && !images.images().isEmpty())
         urlList = images.images();
 
+    QDate d;
+    KGlobal::locale()->calendar()->setYMD(d, yearSpin_->value(), 1, 1);
+    unsigned int months = KGlobal::locale()->calendar()->monthsInYear(d);
+    // span the monthWidgets over 2 rows. inRow should usually be 6 or 7 (for 12 or 13 months)
+    int inRow = (months / 2) + ((months % 2) != 0);
     MonthWidget *w;
-    int index = 0;
-    for (int i=0; i<2; i++) {
-        for (int j=0; j<6; j++) {
-            w = new MonthWidget( interface, monthBox,index+1);
-            if (index < urlList.count())
-                w->setImage(urlList[index]);
-            mwVector_->insert(index,w);
-            monthBoxLayout->addWidget(w, i, j);
-            index++;
-        }
+
+    for (unsigned int i=0; i<MAX_MONTHS; i++) {
+        w = new MonthWidget( interface, monthBox, i+1);
+        if (i < urlList.count())
+            w->setImage(urlList[i]);
+        if (i<months)
+            monthBoxLayout_->addWidget(w, i / inRow, i % inRow);
+        else
+            w->hide();
+        mwVector_->insert(i, w);
     }
 
     QLabel* tLabel =
@@ -133,7 +145,7 @@ void CalSelect::setupView( KIPI::Interface* interface )
                         "You can also drag and drop images onto the Months"),
                                 monthBox);
 
-    monthBoxLayout->addMultiCellWidget(tLabel, 2, 2, 0, 5);
+    monthBoxLayout_->addMultiCellWidget(tLabel, 2, 2, 0, 5);
 
     mainLayout->addWidget(monthBox);
 
@@ -145,6 +157,31 @@ void CalSelect::setupView( KIPI::Interface* interface )
 
 void CalSelect::slotYearChanged(int year)
 {
+    int i, months;
+    QDate d, oldD;
+    KGlobal::locale()->calendar()->setYMD(d, year, 1, 1);
+    KGlobal::locale()->calendar()->setYMD(oldD, CalSettings::instance()->getYear(), 1, 1);
+    months = KGlobal::locale()->calendar()->monthsInYear(d);
+
+    if ((KGlobal::locale()->calendar()->monthsInYear(oldD) != months) && !mwVector_->isEmpty())
+    {
+        // hide the last months that are not present on the current year
+        for (i=months; (i<KGlobal::locale()->calendar()->monthsInYear(oldD)) && (i<(int)mwVector_->count()); i++)
+            mwVector_->at(i)->hide();
+
+        // span the monthWidgets over 2 rows. inRow should usually be 6 or 7 (for 12 or 13 months)
+        int inRow = (months / 2) + ((months % 2) != 0);
+        // remove all the monthWidgets, then readd the needed ones
+        for (i=0; i<KGlobal::locale()->calendar()->monthsInYear(oldD); i++) {
+            monthBoxLayout_->remove(mwVector_->at(i));
+        }
+        for (i=0; (i<months) && (i<(int)mwVector_->count()); i++) {
+            monthBoxLayout_->addWidget(mwVector_->at(i), i / inRow, i % inRow);
+            if (mwVector_->at(i)->isHidden())
+                mwVector_->at(i)->show();
+            mwVector_->at(i)->update();
+        }
+    }
     CalSettings::instance()->setYear(year);
 }
 

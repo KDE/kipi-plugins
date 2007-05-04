@@ -19,6 +19,12 @@
  *
  * ============================================================ */
 
+// KDE includes.
+
+#include <kglobal.h>
+#include <klocale.h>
+#include <kcalendarsystem.h>
+
 // Local includes.
 
 #include "calsettings.h"
@@ -31,7 +37,7 @@ CalSettings* CalSettings::instance_ = 0;
 CalSettings::CalSettings()
 {
     instance_ = this;
-    year_ = 1975;
+    year_ = KGlobal::locale()->calendar()->minValidYear() + 1;
 }
 
 CalSettings::~CalSettings()

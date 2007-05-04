@@ -30,6 +30,12 @@
 #include <qimage.h>
 #include <qpainter.h>
 
+// KDE includes.
+
+#include <kglobal.h>
+#include <klocale.h>
+#include <kcalendarsystem.h>
+
 // Local includes.
 
 #include "calwidget.h"
@@ -72,10 +78,10 @@ void CalWidget::recreate()
     if (!calPainter_)
         calPainter_ = new CalPainter(pix_);
 
-    calPainter_->setYearMonth(QDate::currentDate().year(),
-                              QDate::currentDate().month());
+    calPainter_->setYearMonth(KGlobal::locale()->calendar()->year(QDate::currentDate()),
+                              KGlobal::locale()->calendar()->month(QDate::currentDate()));
     calPainter_->paint();
-    update();    
+    update();
 }
 
 }  // NameSpace KIPICalendarPlugin

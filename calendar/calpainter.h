@@ -31,6 +31,11 @@
 
 #include <kurl.h>
 
+// Local includes
+
+#include "calformatter.h"
+
+
 class QPaintDevice;
 class QPainter;
 class QString;
@@ -57,10 +62,6 @@ private:
     int           month_;
 };
 
-void paintCalendar(int year, int month, const QString& imagePath,
-                   QPainter *painter,
-                   bool useDeviceMetrics=false);
-
 class CalBlockPainter : public QObject
 {
     Q_OBJECT
@@ -68,7 +69,7 @@ class CalBlockPainter : public QObject
 public:
 
     CalBlockPainter(QObject *parent, int year, int month,
-                    const KURL& imagePath, int angle, QPainter *painter);
+                    const KURL& imagePath, int angle, CalFormatter* formatter, QPainter *painter);
     ~CalBlockPainter();
 
 signals:

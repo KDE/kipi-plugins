@@ -47,6 +47,7 @@
 #include <kstandarddirs.h>
 #include <kdeversion.h>
 #include <kcalendarsystem.h>
+#include <klineedit.h>
 
 // LibKipi includes.
 
@@ -62,6 +63,7 @@
 #include "calpainter.h"
 #include "calwizard.h"
 #include "calwizard.moc"
+#include "calevents.h"
 
 namespace KIPICalendarPlugin
 {
@@ -81,6 +83,12 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
     wTemplate_ = new CalTemplate(this, "wTemplate");
     addPage(wTemplate_, i18n("Create Template for Calendar"));
     setHelpEnabled(wTemplate_, true);
+
+    // ---------------------------------------------------------------
+
+    wEvents_ = new CalEvents(this, "wEvents");
+    addPage(wEvents_, i18n("Choose the events to show on the Calendar"));
+    setHelpEnabled(wEvents_, true);
 
     // ---------------------------------------------------------------
 
@@ -186,6 +194,8 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
     printer_  = 0;
     painter_  = 0;
 
+    formatter_ = new CalFormatter();
+
     connect(this, SIGNAL(selected(const QString&)),
             SLOT(slotPageSelected(const QString&)));
 
@@ -201,6 +211,8 @@ CalWizard::~CalWizard()
     delete cSettings_;
 
     delete m_about;
+
+    delete formatter_;
 }
 
 void CalWizard::slotHelp()
@@ -220,9 +232,11 @@ void CalWizard::slotPageSelected(const QString&)
         KURL image;
         QString month;
         QStringList printList;
-        for (int i=1; i<=12; i++) {
+        QDate d;
+        KGlobal::locale()->calendar()->setYMD(d, cSettings_->getYear(), 1, 1);
+        for (int i=1; i<=KGlobal::locale()->calendar()->monthsInYear(d); i++) {
 #if KDE_IS_VERSION(3,2,0)
-            month = KGlobal::locale()->calendar()->monthName(i, false);
+            month = KGlobal::locale()->calendar()->monthName(i, cSettings_->getYear(), false);
 #else
             month = KGlobal::locale()->monthName(i);
 #endif
@@ -238,9 +252,9 @@ void CalWizard::slotPageSelected(const QString&)
             QString year = QString::number(cSettings_->getYear());
 
             QString extra;
-            if ((QDate::currentDate().month() >= 6 &&
-                 QDate::currentDate().year() == cSettings_->getYear()) ||
-                QDate::currentDate().year() > cSettings_->getYear())
+            if ((KGlobal::locale()->calendar()->month(QDate::currentDate()) >= 6 &&
+                 KGlobal::locale()->calendar()->year(QDate::currentDate()) == cSettings_->getYear()) ||
+                KGlobal::locale()->calendar()->year(QDate::currentDate()) > cSettings_->getYear())
                 extra = "<br><br><b>"+i18n("Please note that you are making a "
                         "calendar for<br>the current year or a year in the "
                         "past.")+"</b>";
@@ -340,9 +354,12 @@ void CalWizard::slotPrintOnePage()
 
     QString yearName = QString::number(cSettings_->getYear());
 
+
+    formatter_->init(cSettings_->getYear(), wEvents_->ohFileEdit->text(), wEvents_->fhFileEdit->text());
+
 #if KDE_IS_VERSION(3,2,0)
     wFinishLabel_->setText(i18n("Printing Calendar Page for %1 of %2")
-                    .arg(KGlobal::locale()->calendar()->monthName(month, false))
+                    .arg(KGlobal::locale()->calendar()->monthName(month, cSettings_->getYear(), false))
                     .arg(yearName));
 #else
     wFinishLabel_->setText(i18n("Printing Calendar Page for %1 of %2")
@@ -358,7 +375,8 @@ void CalWizard::slotPrintOnePage()
     int angle = interface_->info( image ).angle();
 
     cb_ = new CalBlockPainter(this, cSettings_->getYear(), month,
-                              image, angle, painter_);
+                              image, angle, formatter_, painter_);
+
     connect(cb_, SIGNAL(signalCompleted()),
             SLOT(slotPrintOnePage()));
     connect(cb_, SIGNAL(signalProgress(int,int)),

@@ -53,6 +53,7 @@ private:
 
     QPtrVector<MonthWidget> *mwVector_;
     QSpinBox                *yearSpin_;
+    QGridLayout             *monthBoxLayout_;
 
 private slots:
 

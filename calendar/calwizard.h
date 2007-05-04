@@ -53,6 +53,8 @@ namespace KIPICalendarPlugin
 class CalTemplate;
 class CalSelect;
 class CalSettings;
+class CalEvents;
+class CalFormatter;
 class CalBlockPainter;
 
 class CalWizard : public KWizard
@@ -69,6 +71,7 @@ private:
     CalSettings  *cSettings_;
     CalTemplate  *wTemplate_;
     CalSelect    *wSelect_;
+    CalEvents    *wEvents_;
     QVBox        *wPrint_;
     QLabel       *wPrintLabel_;
     QWidget      *wFinish_;
@@ -80,6 +83,8 @@ private:
     
     KPrinter     *printer_;
     QPainter     *painter_;
+
+    CalFormatter *formatter_;
 
     QValueList<int>   monthNumbers_;
     KURL::List        monthImages_;

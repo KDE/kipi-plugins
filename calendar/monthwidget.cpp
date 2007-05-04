@@ -86,7 +86,7 @@ void MonthWidget::drawContents(QPainter *p)
 {
 
 #if KDE_IS_VERSION(3,2,0)
-    QString name = KGlobal::locale()->calendar()->monthName(month_, true);
+    QString name = KGlobal::locale()->calendar()->monthName(month_, CalSettings::instance()->getYear(), true);
 #else
     QString name = KGlobal::locale()->monthName(month_, true);
 #endif
