@@ -42,3 +42,12 @@ Comment[zh_CN]=简洁明快的主题
 Name=Aurélien Gâteau
 Name[ja]=Aurelien Gateau
 Url=mailto:aurelien.gateau@free.fr
+
+[X-HTMLExport Parameter style]
+Name=Style
+Type=list
+Default=natural.css
+Value_0=natural.css
+Caption_0=Natural
+Value_1=dark.css
+Caption_1=Dark

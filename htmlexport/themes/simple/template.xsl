@@ -13,7 +13,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><xsl:value-of select="title"/></title>
-		<link rel="stylesheet" type="text/css" href="../simple/style.css"/>
+		<link rel="stylesheet" type="text/css">
+			<xsl:attribute name="href">../simple/<xsl:value-of select="$style"/></xsl:attribute>
+		</link>
 	</head>
 	<body id="imagePage">
 	<h1>
@@ -81,7 +83,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><xsl:value-of select="name"/></title>
-		<link rel="stylesheet" type="text/css" href="simple/style.css"/>
+		<link rel="stylesheet" type="text/css">
+			<xsl:attribute name="href">simple/<xsl:value-of select="$style"/></xsl:attribute>
+		</link>
 	</head>
 	<body id="collectionPage">
 	<h1>
@@ -98,9 +102,7 @@
 				<li>
 					<a href='{$folder}/{full/@fileName}.html'>
 						<img src="{$folder}/{thumbnail/@fileName}" width="{thumbnail/@width}" height="{thumbnail/@height}" />
-					</a>
-					<br/>
-					<a href='{$folder}/{full/@fileName}.html'>
+						<br/>
 						<xsl:value-of select="title"/>
 					</a>
 				</li>
@@ -120,9 +122,11 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><xsl:value-of select="$i18nCollectionList"/></title>
-		<link rel="stylesheet" type="text/css" href="simple/style.css"/>
+		<link rel="stylesheet" type="text/css">
+			<xsl:attribute name="href">simple/<xsl:value-of select="$style"/></xsl:attribute>
+		</link>
 	</head>
-	<body>
+	<body id="collectionListPage">
 	<h1><xsl:value-of select="$i18nCollectionList"/></h1>
 	<div id="content">
 		<ul>
