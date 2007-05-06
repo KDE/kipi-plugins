@@ -113,6 +113,7 @@ libkexiv2   >= 0.1.2                        http://www.kipi-plugins.org
 libkdcraw   >= 0.1                          http://www.kipi-plugins.org
 libxslt     >= 1.1                          http://xmlsoft.org/XSLT
 libgpod     >= 0.4.2                        http://www.gtkpod.org/libgpod
+libkcal     >= 3.4.x                        http://pim.kde.org
 ImageMagick >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
 MJPEGTools  >= 1.6.0 (runtime dependency)   http://mjpeg.sourceforge.net
 K3b         >= 0.11  (runtime dependency)   http://www.k3b.org
@@ -133,3 +134,4 @@ rawconverter       : libtiff
 acquireimages      : libtiff
 htmlexport         : libxslt
 ipodexport         : libgpod
+calendar           : libkcal
