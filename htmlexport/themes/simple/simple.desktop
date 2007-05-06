@@ -45,6 +45,8 @@ Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter style]
 Name=Style
+Name[xh]=Uhlobo
+Name[zu]=Uhlobo
 Type=list
 Default=natural.css
 Value_0=natural.css
