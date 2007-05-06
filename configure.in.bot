@@ -61,6 +61,18 @@ else
   echo "-- libtiff found.................. YES"
 fi
 
+if test "x$have_libkcal" != "xyes"; then
+  echo "-- libkcal found.................. NO"
+  echo ""
+  echo "Calendar plugin needs libkcal. This plugin will not be compiled!"
+  echo "To complile this plugin, please install libkcal development package."
+  echo "libkcal is part of kde-pim package, http://pim.kde.org"
+  echo ""
+  all_tests=bad
+else
+  echo "-- libkcal found.................. YES"
+fi
+
 if test -z "$ac_imlib2_config"; then
   echo "-- imlib2 found................... NO"
   echo ""

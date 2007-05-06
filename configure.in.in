@@ -296,6 +296,25 @@ fi
 
 AM_CONDITIONAL(compile_IPODEXPORT,  [test x$have_libgpod = xyes])
 
+#------------------------------------------------------------------
+#
+# Check for libkcal - iCalendar support library
+#
+#------------------------------------------------------------------
+
+have_libkcal=no
+
+KDE_CHECK_HEADERS(libkcal/calendarlocal.h, have_libkcal=yes, have_libkcal=no)
+if test "x$have_libkcal" != "xyes"; then
+  AC_WARN([libkcal not found, calendar plugin will not be compiled.])
+else
+  LIB_KCAL="-llibkcal"
+  AC_SUBST(LIB_KCAL)
+fi
+
+AM_CONDITIONAL(compile_CALENDAR, [test x$have_libkcal = xyes])
+
+
 # ----------------------------------------------------------
 #
 # Qt OpenGl check (fudged from Amarok) - Slideshow plugin
