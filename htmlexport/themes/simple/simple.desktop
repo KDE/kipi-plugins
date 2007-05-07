@@ -45,6 +45,8 @@ Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter style]
 Name=Style
+Name[pt]=Estilo
+Name[pt_BR]=Estilo
 Name[xh]=Uhlobo
 Name[zu]=Uhlobo
 Type=list
