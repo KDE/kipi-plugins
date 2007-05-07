@@ -205,7 +205,10 @@ void Plugin_JPEGLossless::slotFlip()
     m_failed  = false;
 
     if (m_progressDlg) 
+    {
         delete m_progressDlg;
+        m_progressDlg = 0;
+    }
 
     m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
                         i18n("Flip images %1").arg(title));
@@ -258,7 +261,10 @@ void Plugin_JPEGLossless::slotRotate()
     m_failed  = false;
 
     if (m_progressDlg) 
+    {
         delete m_progressDlg;
+        m_progressDlg = 0;
+    }
 
     m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
                         i18n("Rotate images %1").arg(title));
@@ -288,7 +294,10 @@ void Plugin_JPEGLossless::slotConvert2GrayScale()
     m_failed  = false;
 
     if (m_progressDlg) 
+    {
         delete m_progressDlg;
+        m_progressDlg = 0;
+    }
 
     m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
                         i18n("Convert images to black & white"));
@@ -441,6 +450,7 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
         {
             slotCancel();
             m_progressDlg->close();
+            m_progressDlg = 0;
         }
 
         KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
