@@ -2,6 +2,7 @@
 Name=Frames
 Name[de]=Rahmen
 Name[el]=Καρέ
+Name[es]=Marcos
 Name[is]=Rammar
 Name[it]=Riquadri
 Name[pt]=Molduras
@@ -10,6 +11,7 @@ Name[sv]=Ramar
 Comment=A frame theme
 Comment[de]=Ein Rahmen-Stil
 Comment[el]=Ένα θέμα καρέ
+Comment[es]=Un tema con marcos
 Comment[is]=Þema með römmum
 Comment[it]=Un tema a riquadri
 Comment[nl]=Een frame-thema
