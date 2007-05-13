@@ -28,11 +28,20 @@ class KConfigBase;
 
 namespace KIPIHTMLExport {
 
+/**
+ * Represents a theme parameter. For each type of parameter, one should inherit
+ * from this class and add the necessary code in the Theme class to load the
+ * new type.
+ */
 class AbstractThemeParameter {
 public:
 	AbstractThemeParameter();
 	virtual ~AbstractThemeParameter();
 
+	/**
+	 * Reads theme parameters from configFile. Initializes the internalName,
+	 * name and defaultValue fields.
+	 */
 	virtual void init(const QCString& internalName, const KConfigBase* configFile);
 
 	QCString internalName() const;
@@ -41,8 +50,16 @@ public:
 
 	QString defaultValue() const;
 
+	/**
+	 * This method should return a QWidget representing the parameter,
+	 * initialized with value.
+	 */
 	virtual QWidget* createWidget(QWidget* parent, const QString& value) const = 0;
 
+	/**
+	 * The opposite of createWidget: given a widget previously created with
+	 * createWidget, this method returns the current widget value.
+	 */
 	virtual QString valueFromWidget(QWidget*) const = 0;
 
 protected:

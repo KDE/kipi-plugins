@@ -33,6 +33,10 @@ namespace KIPIHTMLExport {
 class AbstractThemeParameter;
 
 
+/**
+ * An HTML theme. This class gives access to the various theme properties,
+ * including the theme parameters.
+ */
 class Theme : public KShared {
 public:
 	typedef KSharedPtr<Theme> Ptr;
@@ -57,6 +61,9 @@ public:
 
 	ParameterList parameterList() const;
 
+	/**
+	 * Returns the list of available themes
+	 */
 	static const List& getList();
 	static Ptr findByInternalName(const QString& internalName);
 
