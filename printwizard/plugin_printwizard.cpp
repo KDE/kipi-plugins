@@ -1,5 +1,4 @@
 /* ============================================================
- * File  : plugin_printwizard.cpp
  * Author: Todd Shoemaker <todd@theshoemakers.net>
  * Date  : 2003-09-30
  * Description :
@@ -45,9 +44,9 @@ extern "C"
 
 // Local includes
 
-#include "plugin_printwizard.h"
 #include "frmprintwizard.h"
-
+#include "plugin_printwizard.h"
+#include "plugin_printwizard.moc"
 
 typedef KGenericFactory<Plugin_PrintWizard> Factory;
 
@@ -67,7 +66,7 @@ void Plugin_PrintWizard::setup( QWidget* widget )
 
     m_printAction =  new KAction (i18n("Print Wizard..."),
                                   "fileprint",
-                                  0,
+                                  CTRL+Key_P,
                                   this,
                                   SLOT(slotActivate()),
                                   actionCollection(),
@@ -78,10 +77,10 @@ void Plugin_PrintWizard::setup( QWidget* widget )
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
         
     if ( !m_interface ) 
-       {
+    {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
        return;
-       }
+    }
     
     KIPI::ImageCollection selection = m_interface->currentSelection();
     m_printAction->setEnabled( selection.isValid() &&
@@ -91,11 +90,9 @@ void Plugin_PrintWizard::setup( QWidget* widget )
              m_printAction, SLOT( setEnabled( bool ) )  );
 }
 
-
 Plugin_PrintWizard::~Plugin_PrintWizard()
 {
 }
-
 
 void Plugin_PrintWizard::slotActivate()
 {
@@ -107,11 +104,11 @@ void Plugin_PrintWizard::slotActivate()
     KURL::List fileList = album.images();
 
     if (fileList.count() == 0)
-        {
+    {
         KMessageBox::sorry(kapp->activeWindow(), i18n("Please select one or more photos to print."),
                            i18n("Print Wizard"));
         return;
-        }
+    }
 
     KIPIPrintWizardPlugin::FrmPrintWizard frm(kapp->activeWindow());
     KStandardDirs dir;
@@ -123,10 +120,9 @@ void Plugin_PrintWizard::slotActivate()
 KIPI::Category Plugin_PrintWizard::category( KAction* action ) const
 {
     if ( action == m_printAction )
-       return KIPI::EXPORTPLUGIN;
+       return KIPI::IMAGESPLUGIN;
     
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
-    return KIPI::EXPORTPLUGIN; // no warning from compiler, please
+    return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
 
-#include "plugin_printwizard.moc"

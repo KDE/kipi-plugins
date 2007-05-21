@@ -1,5 +1,4 @@
 /* ============================================================
- * File  : plugin_printwizard.h
  * Author: Todd Shoemaker <todd@theshoemakers.net>
  * Date  : 2003-09-30
  * Description :
