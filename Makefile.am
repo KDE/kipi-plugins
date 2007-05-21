@@ -24,11 +24,15 @@ if compile_IPODEXPORT
 IPODEXPORTDIR = ipodexport
 endif
 
-SUBDIRS = common printwizard calendar mpegencoder cdarchiving simpleviewerexport \
+if compile_CALENDAR
+CALENDARDIR = calendar
+endif
+
+SUBDIRS = common printwizard mpegencoder cdarchiving simpleviewerexport \
 	      sendimages batchprocessimages wallpaper findimages galleryexport flickrexport \
 	      jpeglossless timeadjust gpssync metadataedit imageviewer \
 	      $(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR) \
-	      $(HTMLEXPORTDIR) $(IPODEXPORTDIR) 
+	      $(HTMLEXPORTDIR) $(IPODEXPORTDIR) $(CALENDARDIR)
 
 rcdir = $(kde_datadir)/kipi
 rc_DATA = tips
