@@ -103,7 +103,10 @@ struct Wizard::Private {
 		// Delete any previous widgets
 		QFrame* content = mThemeParametersPage->content;
 		if (content->layout()) {
-			QObjectList* list = content->queryList("QWidget");
+			// Setting recursiveSearch to false is very important, if we don't
+			// we will end up deleting subwidgets of our child widgets
+			QObjectList* list = content->queryList("QWidget", 0 /*objName*/, 
+				false /*regexpMatch*/, false /*recursiveSearch*/);
 			QObjectListIterator it(*list);
 			for( ; it.current(); ++it) {
 				delete it.current();
@@ -113,7 +116,8 @@ struct Wizard::Private {
 		}
 		mThemeParameterWidgetFromName.clear();
 
-		// Create layout
+		// Create layout. We need to recreate it everytime, to get rid of
+		// spacers
 		QGridLayout* layout = new QGridLayout(content, 0, 3);
 		layout->setSpacing(KDialog::spacingHint());
 
@@ -239,6 +243,10 @@ void Wizard::slotThemeSelectionChanged() {
 			+ i18n("Author: %1").arg(author);
 		browser->setText(txt);
 		setNextEnabled(d->mThemePage, true);
+
+		// Enable theme parameter page if there is any parameter
+		Theme::ParameterList parameterList = theme->parameterList();
+		setAppropriate(d->mThemeParametersPage, parameterList.size() > 0);
 
 		d->fillThemeParametersPage(theme);
 	} else {
