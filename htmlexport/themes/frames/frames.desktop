@@ -6,6 +6,7 @@ Name[es]=Marcos
 Name[et]=Raamid
 Name[is]=Rammar
 Name[it]=Riquadri
+Name[nds]=Rahmens
 Name[pt]=Molduras
 Name[pt_BR]=Molduras
 Name[sv]=Ramar
@@ -16,6 +17,7 @@ Comment[es]=Un tema con marcos
 Comment[et]=Raamiteema
 Comment[is]=Þema með römmum
 Comment[it]=Un tema a riquadri
+Comment[nds]=En Rahmen-Muster
 Comment[nl]=Een frame-thema
 Comment[pt]=Um tema de molduras
 Comment[pt_BR]=Um tema de molduras
@@ -23,4 +25,5 @@ Comment[sv]=Ett tema med ramar
 
 [X-HTMLExport Author]
 Name=Ruediger Bente
+Name[nds]=Rüdiger Bente
 Url=mailto:ruediger.bente@gmx.de
