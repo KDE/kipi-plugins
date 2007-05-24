@@ -1,15 +1,15 @@
 Begin4
 Title: kipi-plugins
-Version: 0.1.3
+Version: 0.1.4-beta1
 Entered-date: 2007-01-24
 Description: Plugins for KIPI, the KDE Image Plugin Interface
-Keywords: kde image plugins
+Keywords: kde image plugins, digiKam, photo management
 Author: renchi at pooh.tam.uiuc.edu (Renchi Raju)
  caulier dot gilles at free.fr (Gilles Caulier)
  blackie at kde.org (Jesper K. Pedersen)
  aurelien dot gateau at free.fr (Aurelien Gateau)
 Maintained-by:
-Primary-site: http://extragear.kde.org/apps/kipi
+Primary-site: http://www.kipi-plugins.org
 Alternate-site:
 Original-site:
 Platforms:
