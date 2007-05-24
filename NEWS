@@ -11,10 +11,11 @@ ImageViewer    : initial import of new OpenGL based image viewer.
 RAWConverter   : Port plugin to libkdcraw shared library.
 Printwizard    : Printwizard can print 8 photos per page (A4)
 MPEGEncoder    : Avoid to pass img2mpg script unmanaged file path.
-GPSSync        : New plugin to export GPS postion from pictures to Google Maps / Google Earth.
+GPSSync        : New plugin to export GPS locations from pictures to Google Maps / Google Earth.
 
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
 001 ==> 139264 : General      : Prefer Exif DateTimeOriginal for image date/time (DateTimeDigitized and DateTime only used as fallback)
 002 ==> 139074 : SendImages   : Format missmatch at sendimages.cpp ('int' vs. 'size_t').
 003 ==> 140132 : MetadataEdit : Comments should sync to IPTC Caption First.
@@ -27,7 +28,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 012 ==> 143594 : GPSSync      : Bad Interpolation in correlate gpssync.
 014 ==> 139793 : GPSSync      : KML google export import.
 015 ==> 142259 : GalleruExport: Export to Gallery 2.2-RC-1 fails.
-016 ==> 
+016 ==> 135945 : FLickrExport : Tags with spaces are exported as multible tags.
+017 ==> 
 
 v 0.1.3 
 ----------------------------------------------------------------------------
