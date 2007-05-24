@@ -300,7 +300,15 @@ namespace KIPIFlickrExportPlugin
 		form.addPair("is_friend",isfriend);
 		headers.append("is_friend="+ isfriend);
 
-		QString tags=info.tags.join(" ");
+		QStringList taglist;
+		for(QStringList::Iterator iter = info.tags.begin(); iter != info.tags.end(); iter++) {
+			if((*iter).find(' ') != -1) {
+				taglist.append('"' + *iter + '"');
+			} else {
+				taglist.append(*iter);
+				}
+		}
+		QString tags=taglist.join(" ");
 		if(tags.length()>0){	
 			form.addPair("tags",tags);
 			headers.append("tags="+ tags);
