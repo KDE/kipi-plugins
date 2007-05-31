@@ -29,7 +29,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 014 ==> 139793 : GPSSync      : KML google export import.
 015 ==> 142259 : GalleruExport: Export to Gallery 2.2-RC-1 fails.
 016 ==> 135945 : FLickrExport : Tags with spaces are exported as multible tags.
-017 ==> 
+017 ==> 146084 : SLideShow    : Slide show interface suggestions.
+018 ==> 
 
 v 0.1.3 
 ----------------------------------------------------------------------------
