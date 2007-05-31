@@ -94,14 +94,24 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const 
 
     selectedFilesButton_->setEnabled( allowSelectedOnly );
 
+    
+    delayMsMaxValue_ = 100000;
+    delayMsMinValue_ = 100;
+    delayMsLineStep_ = 10;
+    
+    delaySpinBox_->setMinValue(delayMsMinValue_);
+    delaySpinBox_->setMaxValue(delayMsMaxValue_);
+    delaySpinBox_->setLineStep(delayMsLineStep_); 
+    
     // Signal to Slot connections
 
     connect(openglCheckBox_, SIGNAL(toggled(bool)), SLOT(slotOpenGLToggled()));
-    connect(buttonOk, SIGNAL(clicked()), this, SLOT(slotOkClicked()));
+    connect(buttonStart, SIGNAL(clicked()), this, SLOT(slotStartClicked()));
     connect(printCommentsCheckBox_, SIGNAL(toggled(bool)), this, SLOT(slotPrintCommentsToggled()));
     connect(m_commentsFontColor, SIGNAL(changed(const QColor &)), this, SLOT(slotCommentsFontColorChanged()));
     connect(m_commentsBgColor, SIGNAL(changed(const QColor &)), this, SLOT(slotCommentsBgColorChanged()));
-
+    connect(useMillisecondsCheckBox_, SIGNAL(toggled(bool)), SLOT(slotUseMillisecondsToggled()));
+    
     // Configuration file management 
 
     config_ = new KConfig("kipirc");
@@ -109,6 +119,8 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const 
 
     readSettings();
 
+    slotUseMillisecondsToggled();
+    
     // Comments tab management
 
     m_commentsFontChooser->setSampleText(
@@ -192,6 +204,8 @@ void SlideShowConfig::readSettings()
     effectName_           = config_->readEntry("Effect Name", "Random");
     effectNameGL_         = config_->readEntry("Effect Name (OpenGL)", "Random");
     
+    useMillisecondsCheckBox_->setChecked(config_->readBoolEntry("Use Milliseconds", false));
+    
     // Comments tab settings
     uint  commentsFontColor;
     uint  commentsBgColor;
@@ -243,15 +257,22 @@ void SlideShowConfig::saveSettings()
 {
     if (!config_) return;
 
+    bool useMilliseconds = useMillisecondsCheckBox_->isChecked();
+
     config_->writeEntry("OpenGL", openglCheckBox_->isChecked());
-    config_->writeEntry("Delay", delaySpinBox_->value());
+
+    // Delay will be always saved as millisecond value, to keep compatibility
+    if ( useMilliseconds ) config_->writeEntry("Delay", delaySpinBox_->value());
+    else config_->writeEntry("Delay", delaySpinBox_->value()*1000); 
+
     config_->writeEntry("Print Filename", printNameCheckBox_->isChecked());
     config_->writeEntry("Print Comments", printCommentsCheckBox_->isChecked());
     config_->writeEntry("Loop", loopCheckBox_->isChecked());
     config_->writeEntry("Shuffle", shuffleCheckBox_->isChecked());
     config_->writeEntry("Show Selected Files Only", selectedFilesButton_->isChecked());
 
-    
+    config_->writeEntry("Use Milliseconds", useMilliseconds); 
+
     // Comments tab settings
     QFont* commentsFont = new QFont(m_commentsFontChooser->font());
     config_->writeEntry("Comments Font Family", commentsFont->family());
@@ -327,6 +348,33 @@ void SlideShowConfig::slotPrintCommentsToggled()
     m_tabWidget->setTabEnabled(commentsTab, printCommentsCheckBox_->isChecked());
 }
 
+void SlideShowConfig::slotUseMillisecondsToggled()
+{
+
+    int delayValue = delaySpinBox_->value();
+    
+    delaySpinBox_->setValue(0);
+    
+    if ( useMillisecondsCheckBox_ -> isChecked() ) {
+        delayLabel_->setText(QString("Delay between images (ms):"));
+
+        delaySpinBox_->setMinValue(delayMsMinValue_);
+        delaySpinBox_->setMaxValue(delayMsMaxValue_);
+        delaySpinBox_->setLineStep(delayMsLineStep_); 
+        
+        delaySpinBox_->setValue(delayValue*1000);
+    }
+    else { 
+        delayLabel_->setText(QString("Delay between images  (s):"));
+        
+        delaySpinBox_->setMinValue(delayMsMinValue_/1000);
+        delaySpinBox_->setMaxValue(delayMsMaxValue_/100);
+        delaySpinBox_->setLineStep(delayMsLineStep_/10); 
+        
+        delaySpinBox_->setValue(delayValue/1000);
+    }
+}
+
 void SlideShowConfig::slotOpenGLToggled()
 {
     if (openglCheckBox_->isChecked()) {
@@ -337,7 +385,7 @@ void SlideShowConfig::slotOpenGLToggled()
     }
 }
 
-void SlideShowConfig::slotOkClicked()
+void SlideShowConfig::slotStartClicked()
 {
     saveSettings();
 

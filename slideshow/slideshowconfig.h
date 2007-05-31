@@ -50,11 +50,16 @@ private:
     void readSettings();
     void saveSettings();
 
+    int delayMsMaxValue_;
+    int delayMsMinValue_;
+    int delayMsLineStep_;
+
 private slots:
 
-    void slotOkClicked();
+    void slotStartClicked();
     void slotHelp();
     void slotOpenGLToggled();
+    void slotUseMillisecondsToggled();
     void slotPrintCommentsToggled();
     void slotCommentsFontColorChanged();
     void slotCommentsBgColorChanged();
