@@ -2,4 +2,5 @@ SUBDIRS = \
 	matrix \
 	snow \
 	simple \
-	frames
+	frames \
+	cleanframes
