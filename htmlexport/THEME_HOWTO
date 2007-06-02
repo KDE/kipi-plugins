@@ -162,6 +162,7 @@ For now, the available "i18n parameters" are:
 - i18nNext
 - i18nCollectionList
 - i18nOriginalImage
+- i18nUp
 
 *generated from 'grep \"i18n generator.cpp'*
 
