@@ -3,4 +3,5 @@ SUBDIRS = \
 	snow \
 	simple \
 	frames \
-	cleanframes
+	cleanframes \
+	s0
