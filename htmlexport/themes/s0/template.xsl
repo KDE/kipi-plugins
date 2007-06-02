@@ -45,7 +45,7 @@
         </div>
         <div id="up">
                 <a href="../index.html">
-                        <img src="../s0/up.png" alt="Up" title="Up" />
+                        <img src="../s0/up.png" alt="{$i18nUp}" title="{$i18nUp}" />
                 </a>
         </div>
         <div id="next">
@@ -74,7 +74,6 @@
             </p>
         </xsl:if>
     </div>
-    <xsl:call-template name="footer"/>
     </body>
     </html>
 </xsl:template>
@@ -111,7 +110,6 @@
                 </exsl:document>
             </xsl:for-each>
     </div> <!-- /content -->
-    <xsl:call-template name="footer"/>
     </body>
     </html>
 </xsl:template>
@@ -142,7 +140,6 @@
                 </exsl:document>
             </xsl:for-each>
     </div> <!-- /content -->
-    <xsl:call-template name="footer"/>
     </body>
     </html>
 </xsl:template>
@@ -159,13 +156,6 @@
             </xsl:for-each>
         </xsl:otherwise>
     </xsl:choose>
-</xsl:template>
-
-<xsl:template name="footer">
-    <div id="footer">
-    <p>Created by Digikam's export plugin. Theme s0: simple and clean one.
-       You can <a href="http://www.yarpen.cz/digikam/">download</a> it and use it for free.</p>
-    </div>
 </xsl:template>
 
 </xsl:transform>
