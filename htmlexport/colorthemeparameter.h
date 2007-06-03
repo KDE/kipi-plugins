@@ -31,6 +31,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 namespace KIPIHTMLExport {
 
 
+/**
+ * A theme parameter to select a color.
+ */
 class ColorThemeParameter : public AbstractThemeParameter {
 public:
 	virtual QWidget* createWidget(QWidget* parent, const QString& value) const;

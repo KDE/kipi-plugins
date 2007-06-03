@@ -28,6 +28,9 @@ class KAction;
 namespace KIPIHTMLExport {
 
 
+/**
+ * Implementation of the KIPI::Plugin abstract class for HTMLExport.
+ */
 class Plugin : public KIPI::Plugin {
 	Q_OBJECT
 

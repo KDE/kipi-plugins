@@ -31,7 +31,12 @@ class Interface;
 namespace KIPIHTMLExport {
 
 class GalleryInfo;
-	
+
+
+/**
+ * This class is responsible for generating the HTML and scaling the images
+ * according to the settings specified by the user.
+ */
 class Generator : public QObject {
 Q_OBJECT
 public:

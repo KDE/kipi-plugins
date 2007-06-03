@@ -25,6 +25,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include "abstractthemeparameter.h"
 
 namespace KIPIHTMLExport {
+
+
+/**
+ * A theme parameter to select a value in a list
+ */
 class ListThemeParameter : public AbstractThemeParameter {
 public:
 	ListThemeParameter();

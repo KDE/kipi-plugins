@@ -210,7 +210,9 @@ struct Generator::Private {
 		return true;
 	}
 
-	
+	/**
+	 * Helper class for generateImageAndXMLForURL
+	 */
 	void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName, const QString& fileName, const QImage& image) {
 		XMLAttributeList attrList;
 		attrList.append("fileName", fileName);
@@ -220,6 +222,10 @@ struct Generator::Private {
 	}
 
 
+	/**
+	 * Generate images (full and thumbnail) for imageURL
+	 * Fills xmlWriter with info about this image
+	 */
 	void generateImageAndXMLForURL(XMLWriter& xmlWriter, const QString& destDir, const KURL& imageURL) {
 		KIPI::ImageInfo info=mInterface->info(imageURL);
 	
@@ -359,6 +365,9 @@ struct Generator::Private {
 	}
 
 
+	/**
+	 * Add to map all the i18n parameters.
+	 */
 	void addI18nParameters(XsltParameterMap& map) {
 		map["i18nPrevious"] = makeXsltParam(i18n("Previous"));
 		map["i18nNext"] = makeXsltParam(i18n("Next"));
@@ -368,6 +377,9 @@ struct Generator::Private {
 	}
 
 
+	/**
+	 * Add to map all the theme parameters, as specified by the user.
+	 */
 	void addThemeParameters(XsltParameterMap& map) {
 		Theme::ParameterList parameterList = mTheme->parameterList();
 		QString themeInternalName = mTheme->internalName();

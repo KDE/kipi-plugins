@@ -36,6 +36,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 namespace KIPIHTMLExport {
 
+/**
+ * This class stores all the export settings. It is initialized by the
+ * Wizard and read by the Generator.
+ */
 class GalleryInfo : public Config {
 public:
 	/**

@@ -32,6 +32,9 @@ namespace KIPIHTMLExport {
 
 class GalleryInfo;
 
+/**
+ * The wizard used by the user to select the various settings.
+ */
 class Wizard : public KWizard {
 Q_OBJECT
 public:
