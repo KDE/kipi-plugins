@@ -1,3 +1,37 @@
+V 0.1.4-beta1 - 2007-06-04
+----------------------------------------------------------------------------
+
+2007-06-03 21:49  anaselli
+
+	* [r671143] kipi-plugins/mpegencoder/kimg2mpg.cpp:
+	  sigkill wrongly sent to application
+	  BUG: 145771
+
+2007-06-03 15:31  gateau
+
+	* [r671035] kipi-plugins/htmlexport/colorthemeparameter.h,
+	  kipi-plugins/htmlexport/galleryinfo.h,
+	  kipi-plugins/htmlexport/generator.cpp,
+	  kipi-plugins/htmlexport/generator.h,
+	  kipi-plugins/htmlexport/listthemeparameter.h,
+	  kipi-plugins/htmlexport/plugin.h,
+	  kipi-plugins/htmlexport/stringthemeparameter.h,
+	  kipi-plugins/htmlexport/wizard.h:
+	  Updated Doxygen doc.
+
+2007-06-03 14:01  gkulzer
+
+	* [r671014] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/metadataedit/exifeditdialog.cpp,
+	  kipi-plugins/metadataedit/iptceditdialog.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  i18n patch from Frank Siegert
+
+2007-06-02 14:14  helio
+
+	* [r670712] ., trunk/extragear/libs:
+	  - First directory to move. No 4.x apps here yet.
 
 2007-06-02 10:57  gateau
 
