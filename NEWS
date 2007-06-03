@@ -13,7 +13,6 @@ Printwizard    : Printwizard can print 8 photos per page (A4)
 MPEGEncoder    : Avoid to pass img2mpg script unmanaged file path.
 GPSSync        : New plugin to export GPS locations from pictures to Google Maps / Google Earth.
 
-
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 139264 : General      : Prefer Exif DateTimeOriginal for image date/time (DateTimeDigitized and DateTime only used as fallback)
@@ -30,7 +29,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 015 ==> 142259 : GalleruExport: Export to Gallery 2.2-RC-1 fails.
 016 ==> 135945 : FLickrExport : Tags with spaces are exported as multible tags.
 017 ==> 146084 : SlideShow    : Slide show interface suggestions.
-018 ==> 
+018 ==> 145771 : MPEGEncoder  : Gnome Desktop crashes and restarts when select Cancel option for Mpeg Slideshow plugin
 
 v 0.1.3 
 ----------------------------------------------------------------------------
