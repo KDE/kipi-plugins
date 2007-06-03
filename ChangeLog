@@ -12,11 +12,6 @@ V 0.1.3 - 2007-01-24
 	* [r626836] kipi-plugins/kameraklient/gpcamera.cpp:
 	  Fix compilation.
 
-2007-01-24 10:42  scripty
-
-	* [r626695] kipi-plugins/sync/kipiplugin_sync.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
 2007-01-24 07:56  seb
 
 	* [r626678] kipi-plugins/Makefile.am,
@@ -54,12 +49,6 @@ V 0.1.3 - 2007-01-24
 	  fixed libgpod test
 	  
 	  CCMAIL: <kde-imaging@kde.org>
-
-2007-01-22 10:45  scripty
-
-	* [r626155] kipi-plugins/gpssync/kipiplugin_gpssync.desktop,
-	  kipi-plugins/sync/kipiplugin_sync.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2007-01-22 08:54  cguthrie
 
@@ -100,22 +89,6 @@ V 0.1.3 - 2007-01-24
 	  The only changes were to add 0 values for position and rotation
 	  in two functions calls, so I shouldn't expect too much fall out.
 	  CCBUG: 67873
-
-2007-01-20 10:42  scripty
-
-	* [r625542] kipi-plugins/sync/kipiplugin_sync.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
-2007-01-18 10:58  scripty
-
-	* [r624897] kipi-plugins/calendar/kipiplugin_calendar.desktop,
-	  kipi-plugins/sync/kipiplugin_sync.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
-2007-01-17 10:55  scripty
-
-	* [r624564] kipi-plugins/sync/kipiplugin_sync.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2007-01-16 15:18  hoechstetter
 
@@ -170,39 +143,6 @@ V 0.1.3 - 2007-01-24
 	  Lamprecht to port Google maps interface from HTML to XHTML
 	  
 	  CCMAIL: heiner@heiner-lamprecht.net
-
-2007-01-06 14:02  scripty
-
-	* [r620524]
-	  kipi-plugins/acquireimages/kipiplugin_acquireimages.desktop,
-	  kipi-plugins/batchprocessimages/kipiplugin_batchprocessimages.desktop,
-	  kipi-plugins/calendar/kipiplugin_calendar.desktop,
-	  kipi-plugins/cdarchiving/kipiplugin_cdarchiving.desktop,
-	  kipi-plugins/findimages/kipiplugin_findimages.desktop,
-	  kipi-plugins/flickrexport/kipiplugin_flickrexport.desktop,
-	  kipi-plugins/galleryexport/kipiplugin_galleryexport.desktop,
-	  kipi-plugins/gpssync/kipiplugin_gpssync.desktop,
-	  kipi-plugins/helloworld/kipiplugin_helloworld.desktop,
-	  kipi-plugins/htmlexport/kipiplugin_htmlexport.desktop,
-	  kipi-plugins/htmlexport/themes/matrix/matrix.desktop,
-	  kipi-plugins/htmlexport/themes/s0/s0.desktop,
-	  kipi-plugins/htmlexport/themes/simple/simple.desktop,
-	  kipi-plugins/htmlexport/themes/snow/snow.desktop,
-	  kipi-plugins/imagesgallery/kipiplugin_imagesgallery.desktop,
-	  kipi-plugins/ipodexport/kipiplugin_ipodexport.desktop,
-	  kipi-plugins/jpeglossless/kipiplugin_jpeglossless.desktop,
-	  kipi-plugins/kameraklient/kipiplugin_kameraklient.desktop,
-	  kipi-plugins/metadataedit/kipiplugin_metadataedit.desktop,
-	  kipi-plugins/mpegencoder/kipiplugin_mpegencoder.desktop,
-	  kipi-plugins/printwizard/kipiplugin_printwizard.desktop,
-	  kipi-plugins/rawconverter/kipiplugin_rawconverter.desktop,
-	  kipi-plugins/sendimages/kipiplugin_sendimages.desktop,
-	  kipi-plugins/simpleviewerexport/kipiplugin_simpleviewer.desktop,
-	  kipi-plugins/slideshow/kipiplugin_slideshow.desktop,
-	  kipi-plugins/timeadjust/kipiplugin_timeadjust.desktop,
-	  kipi-plugins/wallpaper/kipiplugin_wallpaper.desktop,
-	  libkipi/libkipi/kipiplugin.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2007-01-06 11:28  hoechstetter
 
@@ -303,12 +243,6 @@ V 0.1.3 - 2007-01-24
 	* [r617540] kipi-plugins/NEWS:
 	  updated
 
-2006-12-29 13:40  scripty
-
-	* [r617531]
-	  kipi-plugins/simpleviewerexport/kipiplugin_simpleviewer.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
 2006-12-28 01:08  anaselli
 
 	* [r617108] kipi-plugins/TODO:
@@ -330,37 +264,15 @@ V 0.1.3-rc1 - 2006-12-28
 	* [r617080] kipi-plugins/NEWS:
 	  prepare 0.1.3 rc1
 
-2006-12-22 13:46  scripty
-
-	* [r615737]
-	  kipi-plugins/printwizard/kipiplugin_printwizard.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
 2006-12-19 17:12  vkrause
 
 	* [r614961] kipi-plugins/slideshow/slideshowconfig.cpp:
 	  compile
 
-2006-12-19 13:59  vfuoglio
-
-	* [r614922] kipi-plugins/slideshow/slideshowgl.cpp:
-	  Fixed distance between comments lines.
-	  
-	  SVN_SILENT
-
 2006-12-18 19:27  cgilles
 
 	* [r614741] kipi-plugins/configure.in.bot:
 	  fix Exiv2 detection error message
-
-2006-12-17 12:14  bram
-
-	* [r614335] kipi-plugins/batchprocessimages/renameimagesbase.ui,
-	  kipi-plugins/htmlexport/imagesettingspage.ui,
-	  kipi-plugins/mpegencoder/kimg2mpgbase.ui,
-	  kipi-plugins/printwizard/frmprintwizardbase.ui,
-	  kipi-plugins/slideshow/slideshowconfigbase.ui:
-	  SVN_SILENT: fixuifiles
 
 2006-12-14 22:04  anaselli
 
@@ -380,14 +292,6 @@ V 0.1.3-rc1 - 2006-12-28
 	  
 	  CCMAIL: kde-imaging@kde.org
 	  BUG: 108147
-
-2006-12-13 14:01  scripty
-
-	* [r613180] kipi-plugins/htmlexport/themes/s0/s0.desktop,
-	  kipi-plugins/htmlexport/themes/snow/snow.desktop,
-	  kipi-plugins/jpeglossless/kipiplugin_jpeglossless.desktop,
-	  kipi-plugins/simpleviewerexport/kipiplugin_simpleviewer.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-12-13 08:32  cgilles
 
@@ -493,14 +397,6 @@ V 0.1.3-rc1 - 2006-12-28
 	  - now libkipi 0.1.5 is required
 	  
 	  CCMAIL: <kde-imaging@kde.org>
-
-2006-12-07 13:36  scripty
-
-	* [r611267] kipi-plugins/gpssync/kipiplugin_gpssync.desktop,
-	  kipi-plugins/htmlexport/themes/s0/s0.desktop,
-	  kipi-plugins/ipodexport/kipiplugin_ipodexport.desktop,
-	  kipi-plugins/metadataedit/kipiplugin_metadataedit.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-12-07 12:33  cgilles
 
@@ -1409,11 +1305,6 @@ v 0.1.3-beta1 - 2006-11-29
 	  metadataedit/iptceditdialog.cpp:
 	  fix i18n
 
-2006-11-11 13:04  scripty
-
-	* [r604059] htmlexport/themes/s0/s0.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
 2006-11-10 15:30  gateau
 
 	* [r603870] batchprocessimages/renameimagesbase.ui,
@@ -1510,13 +1401,6 @@ v 0.1.3-beta1 - 2006-11-29
 	  Clean up: moved some code from generateImagesAndXML to a new
 	  method.
 
-2006-11-03 13:05  scripty
-
-	* [r601495] gpssync/kipiplugin_gpssync.desktop,
-	  htmlexport/themes/s0/s0.desktop,
-	  metadataedit/kipiplugin_metadataedit.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
 2006-11-03 12:19  cgilles
 
 	* [r601480] NEWS:
@@ -1597,13 +1481,6 @@ v 0.1.3-beta1 - 2006-11-29
 	* [r600640] gpssync/plugin_gpssync.cpp:
 	  show warning message when GPS info will be removed
 
-2006-10-30 13:09  scripty
-
-	* [r600403] gpssync/kipiplugin_gpssync.desktop,
-	  htmlexport/themes/s0/s0.desktop,
-	  metadataedit/kipiplugin_metadataedit.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
 2006-10-30 09:47  cgilles
 
 	* [r600299] metadataedit/Makefile.am,
@@ -1624,16 +1501,6 @@ v 0.1.3-beta1 - 2006-11-29
 	  common/exiv2iface/exiv2iface.h:
 	  kipiplugins from trunk : Exiv2 interface : new methods to
 	  set/get IPTC Subjects data.
-
-2006-10-28 12:59  scripty
-
-	* [r599743] htmlexport/themes/s0/s0.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
-2006-10-27 11:42  scripty
-
-	* [r599489] htmlexport/themes/s0/s0.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-10-27 07:35  cgilles
 
@@ -1683,11 +1550,6 @@ v 0.1.3-beta1 - 2006-11-29
 	* [r599250] metadataedit/exiflens.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin : Exif Lens editor
 	  : add MetadataCheckBox support
-
-2006-10-26 11:55  scripty
-
-	* [r599243] htmlexport/themes/s0/s0.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-10-26 11:16  cgilles
 
@@ -1837,15 +1699,6 @@ v 0.1.3-beta1 - 2006-11-29
 	  Adjustments informations editor
 	  
 	  CCBUGS: 103255
-
-2006-10-24 11:56  scripty
-
-	* [r598726] gpssync/kipiplugin_gpssync.desktop,
-	  htmlexport/themes/matrix/matrix.desktop,
-	  ipodexport/kipiplugin_ipodexport.desktop,
-	  metadataedit/kipiplugin_metadataedit.desktop,
-	  simpleviewerexport/kipiplugin_simpleviewer.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-10-24 11:02  cgilles
 
@@ -2031,17 +1884,6 @@ v 0.1.3-beta1 - 2006-11-29
 	* [r597836] metadataedit/iptckeywords.cpp:
 	  typo
 
-2006-10-21 11:43  scripty
-
-	* [r597684] cdarchiving/kipiplugin_cdarchiving.desktop,
-	  htmlexport/kipiplugin_htmlexport.desktop,
-	  htmlexport/themes/matrix/matrix.desktop,
-	  imagesgallery/kipiplugin_imagesgallery.desktop,
-	  jpeglossless/kipiplugin_jpeglossless.desktop,
-	  mpegencoder/kipiplugin_mpegencoder.desktop,
-	  rawconverter/kipiplugin_rawconverter.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
 2006-10-20 18:07  dfaure
 
 	* [r597552] gpssync/gpssyncdialog.cpp:
@@ -2076,17 +1918,6 @@ v 0.1.3-beta1 - 2006-11-29
 	  informations editor: added Flash Mode settings.
 	  
 	  CCBUGS: 103255
-
-2006-10-20 11:41  scripty
-
-	* [r597437] htmlexport/kipiplugin_htmlexport.desktop,
-	  htmlexport/themes/matrix/matrix.desktop,
-	  htmlexport/themes/simple/simple.desktop,
-	  htmlexport/themes/snow/snow.desktop,
-	  ipodexport/kipiplugin_ipodexport.desktop,
-	  metadataedit/kipiplugin_metadataedit.desktop,
-	  simpleviewerexport/kipiplugin_simpleviewer.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-10-20 11:11  cgilles
 
@@ -2317,15 +2148,6 @@ v 0.1.3-beta1 - 2006-11-29
 	* [r596404] NEWS:
 	  update
 
-2006-10-17 11:35  scripty
-
-	* [r596396] gpssync/kipiplugin_gpssync.desktop,
-	  ipodexport/kipiplugin_ipodexport.desktop,
-	  metadataedit/kipiplugin_metadataedit.desktop,
-	  mpegencoder/kipiplugin_mpegencoder.desktop,
-	  simpleviewerexport/kipiplugin_simpleviewer.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
 2006-10-17 09:53  cgilles
 
 	* [r596376] metadataedit/iptcorigin.cpp:
@@ -2433,13 +2255,6 @@ v 0.1.3-beta1 - 2006-11-29
 	  CCMAIL: digikam-devel@kde.org, kde-imaging@kde.org
 	  CCBUGS: 91812, 133276, 103255
 
-2006-10-15 11:34  scripty
-
-	* [r595674] gpssync/kipiplugin_gpssync.desktop,
-	  ipodexport/kipiplugin_ipodexport.desktop,
-	  metadataedit/kipiplugin_metadataedit.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
 2006-10-14 12:54  cgilles
 
 	* [r595477] metadataedit/iptcorigin.cpp:
@@ -2454,13 +2269,6 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r595464] metadataedit/iptccredits.cpp:
 	  kipi-plugins from trunk : IPTC credit page can set/unset tags
-
-2006-10-14 11:42  scripty
-
-	* [r595460] gpssync/kipiplugin_gpssync.desktop,
-	  metadataedit/kipiplugin_metadataedit.desktop,
-	  printwizard/kipiplugin_printwizard.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-10-13 20:41  cgilles
 
@@ -2522,11 +2330,6 @@ v 0.1.3-beta1 - 2006-11-29
 	  
 	  CCMAIL: kde-imaging@kde.org
 	  CCBUGS: 91812, 133276, 103255
-
-2006-10-13 11:41  scripty
-
-	* [r595148] gpssync/kipiplugin_gpssync.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-10-13 09:16  cgilles
 
@@ -2817,12 +2620,6 @@ v 0.1.3-beta1 - 2006-11-29
 	* [r592750] NEWS:
 	  update
 
-2006-10-05 12:23  scripty
-
-	* [r592695] gpssync/kipiplugin_gpssync.desktop,
-	  ipodexport/kipiplugin_ipodexport.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
 2006-10-05 07:41  cgilles
 
 	* [r592623] gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h:
@@ -2849,12 +2646,6 @@ v 0.1.3-beta1 - 2006-11-29
 	  rawconverter/Makefile.am, timeadjust/Makefile.am:
 	  kipi-plugins from trunk : check libexiv2iface depency when it's
 	  mandatory
-
-2006-10-04 11:29  scripty
-
-	* [r592306] gpssync/kipiplugin_gpssync.desktop,
-	  ipodexport/kipiplugin_ipodexport.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-10-04 10:25  anaselli
 
@@ -2913,12 +2704,6 @@ v 0.1.3-beta1 - 2006-11-29
 	* [r591444] gpssync/gpsmapwidget.cpp:
 	  kipi-plugins from trunk: GPSSync: Fix broken mouse release event
 	  with google map widget. Thanks to Marcel for this report
-
-2006-10-02 11:40  scripty
-
-	* [r591426] gpssync/kipiplugin_gpssync.desktop,
-	  ipodexport/kipiplugin_ipodexport.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-10-01 18:18  cgilles
 
@@ -3048,12 +2833,6 @@ v 0.1.3-beta1 - 2006-11-29
 	* [r589704] gpssync/gpseditdialog.cpp:
 	  kipi-plugins from trunk : GPSSync tool : fix layout
 
-2006-09-28 11:47  scripty
-
-	* [r589637] gpssync/kipiplugin_gpssync.desktop,
-	  ipodexport/kipiplugin_ipodexport.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
 2006-09-28 10:51  cgilles
 
 	* [r589554] gpssync/Makefile.am, gpssync/getlonlat.php,
@@ -3178,13 +2957,6 @@ v 0.1.3-beta1 - 2006-11-29
 	  
 	  CCBUGS: 133359, 111560
 
-2006-09-26 11:35  scripty
-
-	* [r588564] gpssync/kipiplugin_gpssync.desktop,
-	  ipodexport/kipiplugin_ipodexport.desktop,
-	  trunk/extragear/libs/libkipi/libkipi/kipiplugin.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
 2006-09-26 09:14  cgilles
 
 	* [r588511] gpssync/gpseditdialog.cpp:
@@ -3281,13 +3053,6 @@ v 0.1.3-beta1 - 2006-11-29
 	* [r588242] common/exiv2iface/exiv2iface.cpp,
 	  common/exiv2iface/exiv2iface.h:
 	  new method to erase all GPS Exif tags
-
-2006-09-25 11:38  scripty
-
-	* [r588226] flickrexport/kipiplugin_flickrexport.desktop,
-	  gpssync/kipiplugin_gpssync.desktop,
-	  ipodexport/kipiplugin_ipodexport.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-09-25 08:41  cgilles
 
@@ -3453,12 +3218,6 @@ v 0.1.3-beta1 - 2006-11-29
 	  gerhard@kulzer.net
 	  
 	  CCBUGS: 133359, 111560
-
-2006-09-22 11:32  scripty
-
-	* [r587330] galleryexport/kipiplugin_galleryexport.desktop,
-	  gpssync/kipiplugin_gpssync.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-09-22 10:42  cgilles
 
@@ -3645,12 +3404,6 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r587069] Makefile.am:
 	  GPSSync kipi plugin can be compiled and used now.
-
-2006-09-21 11:43  scripty
-
-	* [r587043] gpssync/kipiplugin_gpssync.desktop,
-	  trunk/extragear/libs/libkipi/libkipi/kipiplugin.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-09-21 08:11  cgilles
 
@@ -4394,32 +4147,6 @@ v 0.1.3-beta1 - 2006-11-29
 	  BUG: 128394
 	  CCBUGS: 107905
 
-2006-09-13 11:40  scripty
-
-	* [r583774]
-	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
-	  calendar/kipiplugin_calendar.desktop,
-	  cdarchiving/kipiplugin_cdarchiving.desktop,
-	  findimages/kipiplugin_findimages.desktop,
-	  flickrexport/kipiplugin_flickrexport.desktop,
-	  galleryexport/kipiplugin_galleryexport.desktop,
-	  helloworld/kipiplugin_helloworld.desktop,
-	  htmlexport/kipiplugin_htmlexport.desktop,
-	  htmlexport/themes/matrix/matrix.desktop,
-	  htmlexport/themes/simple/simple.desktop,
-	  htmlexport/themes/snow/snow.desktop,
-	  imagesgallery/kipiplugin_imagesgallery.desktop,
-	  jpeglossless/kipiplugin_jpeglossless.desktop,
-	  kameraklient/kipiplugin_kameraklient.desktop,
-	  mpegencoder/kipiplugin_mpegencoder.desktop,
-	  printwizard/kipiplugin_printwizard.desktop,
-	  rawconverter/kipiplugin_rawconverter.desktop,
-	  sendimages/kipiplugin_sendimages.desktop,
-	  slideshow/kipiplugin_slideshow.desktop,
-	  timeadjust/kipiplugin_timeadjust.desktop,
-	  wallpaper/kipiplugin_wallpaper.desktop:
-	  SVN_SILENT made messages (.desktop file)
-
 2006-09-12 08:56  cgilles
 
 	* [r583399] jpeglossless/actionthread.h:
@@ -4586,36 +4313,6 @@ v 0.1.3-beta1 - 2006-11-29
 	  kipi JPEGLossLess plugin : missing namesapce with transupp.c
 	  transupp.c ==> transupp.cpp
 
-2006-08-18 10:48  bram
-
-	* [r574180]
-	  trunk/extragear/graphics/kphotoalbum/kexi/3rdparty/kolibs/KoPageLayoutColumnsBase.ui,
-	  
-	  trunk/extragear/graphics/kphotoalbum/kexi/3rdparty/kolibs/KoPageLayoutHeaderBase.ui,
-	  trunk/extragear/graphics/kst/src/libkstapp/csddialogwidget.ui,
-	  trunk/extragear/graphics/kst/src/libkstapp/datawizard.ui,
-	  trunk/extragear/graphics/kst/src/libkstapp/imagedialogwidget.ui,
-	  trunk/extragear/graphics/kst/src/widgets/colorpalettewidget.ui,
-	  batchprocessimages/renameimagesbase.ui,
-	  trunk/extragear/multimedia/amarok/src/Options2.ui,
-	  trunk/extragear/multimedia/amarok/src/Options8.ui,
-	  trunk/extragear/multimedia/amarok/src/mediadevice/generic/genericmediadeviceconfigdialog.ui,
-	  
-	  trunk/extragear/multimedia/k3b/plugins/encoder/external/base_k3bexternalencoderconfigwidget.ui,
-	  
-	  trunk/extragear/multimedia/k3b/plugins/encoder/external/base_k3bexternalencodereditwidget.ui,
-	  
-	  trunk/extragear/multimedia/k3b/src/rip/base_k3bvideodvdrippingwidget.ui,
-	  
-	  trunk/extragear/network/kftpgrabber/src/ui/kftpquickconnectlayout.ui,
-	  
-	  trunk/extragear/network/kmyfirewall/kmyfirewall/kmfwidgets/kmyfirewallhostwidget.ui,
-	  
-	  trunk/extragear/network/kmyfirewall/kmyfirewall/kmfwidgets/kmyfirewallmynetworkwidget.ui,
-	  trunk/extragear/network/knemo/kcm/configdlg.ui,
-	  trunk/extragear/utils/filelight/src/part/dialog.ui:
-	  SVN_SILENT: fixuifiles
-
 2006-08-17 13:22  cgilles
 
 	* [r573896] batchprocessimages/renameimagesoptionsdialog.cpp,
@@ -4647,12 +4344,6 @@ v 0.1.3-beta1 - 2006-11-29
 	  simpleviewerexport/simpleviewerexport.h:
 	  simpleviewerexport is now able to upload the created gallery to
 	  a webserver
-
-2006-08-06 15:44  scripty
-
-	* [r570385] acquireimages/kipiplugin_acquireimages.desktop,
-	  htmlexport/themes/snow/snow.desktop:
-	  SVN_SILENT made messages (.desktop file)
 
 2006-08-03 09:06  jahrens
 
@@ -4863,12 +4554,6 @@ v 0.1.0 - 2006-06-22
 	  album ref_num when in g1 mode. * Don't display the 'name' in g2
 	  mode (in g2 this 'name' is actually a ref_num) CCMAIL:
 	  kde-imaging@kde.org
-
-2006-05-30 12:59 +0000 [r546571]  cguthrie
-
-	* kipi-plugins/AUTHORS: Just update my email address as listed in
-	  the AUTHORS file to be one that I use for KDE specific stuff.
-	  SVN_SILENT:
 
 2006-05-28 15:13 +0000 [r545933]  anaselli
 
@@ -5386,11 +5071,6 @@ v0.1.0-rc2 - Last Changed Rev: 538177 - 2006-05-03
 	  B.K.O file can be toggle from critic to normal. CCMAIL:
 	  kde-imaging@kde.org CCBUGS: 123499
 
-2006-05-01 17:32  bram
-
-	* trunk/extragear/libs/kipi-plugins/htmlexport/themepage.ui:
-	  SVN_SILENT: fixuifiles
-
 2006-05-01 16:39  anaselli
 
 	* trunk/extragear/libs/kipi-plugins/AUTHORS: Added me as a
@@ -5766,11 +5446,6 @@ v0.1.0-rc2 - Last Changed Rev: 538177 - 2006-05-03
 	  Moved xml classes to their own files - Reimplemented xml
 	  generation using libxml
 
-2006-03-03 20:00  toma
-
-	* trunk/extragear/libs/kipi-plugins/htmlgallery,
-	  trunk/extragear/libs/libkipi/libkipi: SVN_SILENT ignores
-
 2006-03-03 19:52  toma
 
 	* trunk/extragear/libs/kipi-plugins/configure.in.bot: Adds libxslt
@@ -5921,11 +5596,6 @@ v0.1.0-rc2 - Last Changed Rev: 538177 - 2006-05-03
 	* trunk/extragear/libs/kipi-plugins/slideshow/toolbar.cpp: He is
 	  talking about the slideshow, where we used indeed different
 	  icons. BUG: 119867
-
-2006-01-08 02:57  jahrens
-
-	* trunk/extragear/libs/kipi-plugins/simpleviewerexport/simpleviewerexport.cpp:
-	  SVN_SILENT cleanup
 
 2006-01-07 23:37  jahrens
 
@@ -6387,18 +6057,6 @@ v0.1.0-rc1                                                        2005-02-08
 	  BUGS:110391,110659,110698,110575,99895,104032,105727,110508,104511
 	  great work!
 
-2005-08-14 07:56  binner
-
-	* trunk/extragear/libs/kipi-plugins/flickrexport/flickrwidget.cpp,
-	  trunk/extragear/libs/kipi-plugins/galleryexport/gallerywidget.cpp,
-	  trunk/extragear/libs/kipi-plugins/galleryexport/gallerywindow.cpp,
-	  trunk/extragear/libs/kipi-plugins/mpegencoder/plugin_mpegencoder.cpp,
-	  trunk/extragear/libs/kipi-plugins/slideshow/slideshowconfig.cpp,
-	  trunk/extragear/libs/kipi-plugins/timeadjust/timeadjustdialog.cpp,
-	  trunk/extragear/libs/libkexif/kexifdialog.cpp: SVN_SILENT i18n
-	  style guide fixes, reference:
-	  http://developer.kde.org/documentation/standards/kde/style/basics/labels.html
-
 2005-08-07 21:00  pahlibar
 
 	* trunk/extragear/libs/kipi-plugins/jpeglossless/actionthread.cpp:
@@ -6637,11 +6295,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  "-profile" option for resolve this problem.  Note: ImageMagick
 	  "Convert" program preverve it! CCMAIL: kde-imaging@kde.org,
 	  digikam-devel@lists.sourceforge.net
-
-2005-01-25 12:57  cartman
-
-	* galleryexport/.cvsignore:
-	  CVS_SILENT Silence
 
 2005-01-25 11:52  adridg
 
@@ -7060,14 +6713,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  replaced mmap based file copy with regular readblock/writeblock.
 	  fixes issues with file copies on a nfs mounted partition
 
-2004-11-09 20:39  ach
-
-	* README, jpeglossless/libjpeg62.README: CVS_SILENT: This should be
-	  enough to fulfill the libjpeg62 distribution requirements (1) and
-	  (2).
-
-	  CCMAIL: kde-imaging@kde.org
-
 2004-11-09 16:50  pahlibar
 
 	* jpeglossless/: jpegtransform.cpp, jpegtransform.h:
@@ -7082,75 +6727,6 @@ v0.1.0-beta2                                                      2005-02-08
 
 	* calendar/main.cpp:
 	  removed stale file
-
-2004-11-08 21:27  ach
-
-	* calendar/calpainter.cpp, calendar/calpainter.h,
-	  calendar/calprint.h, calendar/calselect.cpp,
-	  calendar/calselect.h, calendar/calsettings.cpp,
-	  calendar/calsettings.h, calendar/caltemplate.cpp,
-	  calendar/caltemplate.h, calendar/calwidget.cpp,
-	  calendar/calwidget.h, calendar/calwizard.cpp,
-	  calendar/calwizard.h, calendar/monthwidget.cpp,
-	  calendar/monthwidget.h, calendar/plugin_calendar.cpp,
-	  calendar/plugin_calendar.h, helloworld/plugin_helloworld.cpp,
-	  helloworld/plugin_helloworld.h, imagesgallery/exifrestorer.cpp,
-	  imagesgallery/exifrestorer.h, imagesgallery/jpegsection.h,
-	  jpeglossless/actions.h, jpeglossless/actionthread.cpp,
-	  jpeglossless/actionthread.h, jpeglossless/convert2grayscale.cpp,
-	  jpeglossless/convert2grayscale.h, jpeglossless/imageflip.cpp,
-	  jpeglossless/imageflip.h, jpeglossless/imagerotate.cpp,
-	  jpeglossless/imagerotate.h, jpeglossless/jpegtransform.cpp,
-	  jpeglossless/jpegtransform.h, jpeglossless/messagebox.cpp,
-	  jpeglossless/messagebox.h, jpeglossless/plugin_jpeglossless.cpp,
-	  jpeglossless/plugin_jpeglossless.h, jpeglossless/progressdlg.cpp,
-	  jpeglossless/progressdlg.h, jpeglossless/utils.cpp,
-	  jpeglossless/utils.h, kameraklient/camerafolderitem.cpp,
-	  kameraklient/camerafolderitem.h,
-	  kameraklient/camerafolderview.cpp,
-	  kameraklient/camerafolderview.h, kameraklient/cameraiconitem.cpp,
-	  kameraklient/cameraiconitem.h, kameraklient/cameraiconview.cpp,
-	  kameraklient/cameraiconview.h, kameraklient/cameralist.cpp,
-	  kameraklient/cameralist.h, kameraklient/cameratype.cpp,
-	  kameraklient/cameratype.h, kameraklient/cameraui.cpp,
-	  kameraklient/cameraui.h, kameraklient/dmessagebox.cpp,
-	  kameraklient/dmessagebox.h, kameraklient/gpcamera.cpp,
-	  kameraklient/gpcamera.h, kameraklient/gpcommand.h,
-	  kameraklient/gpcontroller.cpp, kameraklient/gpcontroller.h,
-	  kameraklient/gpeventfilter.cpp, kameraklient/gpeventfilter.h,
-	  kameraklient/gpevents.h, kameraklient/gpfileitemcontainer.cpp,
-	  kameraklient/gpfileitemcontainer.h,
-	  kameraklient/gpfileiteminfo.cpp, kameraklient/gpfileiteminfo.h,
-	  kameraklient/gpfileiteminfodlg.cpp,
-	  kameraklient/gpfileiteminfodlg.h, kameraklient/gpiface.cpp,
-	  kameraklient/gpiface.h, kameraklient/gpstatus.cpp,
-	  kameraklient/gpstatus.h, kameraklient/kameraklient.cpp,
-	  kameraklient/kameraklient.h, kameraklient/setupcamera.cpp,
-	  kameraklient/setupcamera.h, mpegencoder/plugin_mpegencoder.cpp,
-	  mpegencoder/plugin_mpegencoder.h,
-	  printwizard/plugin_printwizard.cpp,
-	  printwizard/plugin_printwizard.h, rawconverter/batchdialog.cpp,
-	  rawconverter/batchdialog.h, rawconverter/clistviewitem.h,
-	  rawconverter/cspinbox.h, rawconverter/dcrawprocess.cpp,
-	  rawconverter/dmessagebox.cpp, rawconverter/dmessagebox.h,
-	  rawconverter/plugin_rawconverter.cpp,
-	  rawconverter/plugin_rawconverter.h,
-	  rawconverter/previewwidget.cpp, rawconverter/previewwidget.h,
-	  rawconverter/processcontroller.cpp,
-	  rawconverter/processcontroller.h, rawconverter/singledialog.cpp,
-	  rawconverter/singledialog.h, sendimages/exifrestorer.cpp,
-	  sendimages/exifrestorer.h, sendimages/jpegsection.h,
-	  slideshow/imlibiface.cpp, slideshow/imlibiface.h,
-	  slideshow/plugin_slideshow.cpp, slideshow/plugin_slideshow.h,
-	  slideshow/slideshow.cpp, slideshow/slideshow.h,
-	  slideshow/slideshowconfig.cpp, slideshow/slideshowconfig.h,
-	  slideshow/slideshowgl.cpp, slideshow/slideshowgl.h,
-	  slideshow/toolbar.cpp, slideshow/toolbar.h,
-	  timeadjust/plugin_timeadjust.cpp, timeadjust/plugin_timeadjust.h,
-	  timeadjust/timeadjustdialog.cpp, timeadjust/timeadjustdialog.h,
-	  wallpaper/plugin_wallpaper.cpp, wallpaper/plugin_wallpaper.h:
-	  CVS_SILENT: Fix typo s/bythe/by the/ in the distribution right
-	  header CCMAIL: kde-imaging@kde.org
 
 2004-11-07 13:02  coolo
 
@@ -7190,26 +6766,10 @@ v0.1.0-beta2                                                      2005-02-08
 
 	* batchprocessimages/batchprocessimagesdialog.cpp: fix layout
 
-2004-11-01 10:21  binner
-
-	* findimages/finddupplicatedialog.cpp,
-	  kameraklient/savefiledialog.cpp: CVS_SILENT i18n style guide
-	  fixes
-
 2004-10-27 23:10  gateau
 
 	* kipi-plugins.lsm: Initial import of .lsm files, needed to upload
 	  to upload.kde.org.
-
-2004-10-27 16:06  binner
-
-	* findimages/finddupplicatedialog.cpp,
-	  rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
-	  CVS_SILENT i18n style guide fixes
-
-2004-10-24 22:54  cgilles
-
-	* TODO: CVS_SILENT Updated
 
 2004-10-24 05:40  pahlibar
 
@@ -7257,10 +6817,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  bug #91596 CCMAIL: kde-imaging@kde.org,
 	  digikam-devel@lists.sourceforge.net
 
-2004-10-19 13:27  cgilles
-
-	* README: CVS_SILENT Added libtiff depency
-
 2004-10-18 15:57  mlaurent
 
 	* kameraklient/: cameraui.cpp, gpeventfilter.cpp,
@@ -7284,22 +6840,10 @@ v0.1.0-beta2                                                      2005-02-08
 	  selects slideshow with selected items only option and there are
 	  no selected items
 
-2004-10-17 23:00  cgilles
-
-	* tips: CVS_SILENT FIxed tip of day reported by Michał Kosmulski
-
 2004-10-13 21:33  pahlibar
 
 	* INSTALL:
 	  updated INSTALL file
-
-2004-10-12 17:30  coles
-
-	* tips:
-
-	  CVS_SILENT
-
-	  Corrected typos.
 
 2004-10-11 18:07  pahlibar
 
@@ -7318,11 +6862,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  timeadjust/Makefile.am, wallpaper/Makefile.am:
 	  fixed hardcoded libkipi path
 
-2004-10-11 14:07  cgilles
-
-	* sendimages/sendimagesdialog.cpp: CVS_SILENT Fixed default and
-	  standard thunderbird bin file name
-
 2004-10-11 13:57  cgilles
 
 	* Makefile.am: Fixed i18n extraction for tips
@@ -7332,22 +6871,10 @@ v0.1.0-beta2                                                      2005-02-08
 	* Makefile.am, README: Removed 'GammaCalibration' kipi plugin (must
 	  be implemented in the hosts) CCMAIL: kde-imaging@kde.org
 
-2004-10-11 13:12  cgilles
-
-	* README: CVS_SILENT Update
-
 2004-10-11 13:11  cgilles
 
 	* Makefile.am: Removed 'DirOperation' kipi-plugin This feature must
 	  been implemented in the hosts.  CCMAIL: kde-imaging@kde.org
-
-2004-10-11 10:33  cgilles
-
-	* tips: CVS_SILENT Fixed icon size
-
-2004-10-11 06:36  cgilles
-
-	* sendimages/sendimagesdialog.cpp: CVS_SILENT Fixed i18n
 
 2004-10-10 22:32  cgilles
 
@@ -7357,39 +6884,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  resizeimagesdialog.cpp: Fixed bug relevant of a preview fix about
 	  embeded image conversion. The fix must be done only for
 	  BatchConvertImage
-
-2004-10-10 19:21  cgilles
-
-	* tips: CVS_SILENT Fixed i18n
-
-2004-10-09 19:12  binner
-
-	* acquireimages/acquireimagedialog.cpp,
-	  acquireimages/screenshotdialog.cpp,
-	  batchprocessimages/batchprocessimagesdialog.cpp,
-	  batchprocessimages/borderimagesdialog.cpp,
-	  batchprocessimages/colorimagesdialog.cpp,
-	  batchprocessimages/convertimagesdialog.cpp,
-	  batchprocessimages/effectimagesdialog.cpp,
-	  batchprocessimages/filterimagesdialog.cpp,
-	  batchprocessimages/imagepreview.cpp,
-	  batchprocessimages/outputdialog.cpp,
-	  batchprocessimages/recompressimagesdialog.cpp,
-	  batchprocessimages/renameimagesdialog.cpp,
-	  batchprocessimages/resizeimagesdialog.cpp,
-	  calendar/calwizard.cpp, cdarchiving/cdarchivingdialog.cpp,
-	  findimages/displaycompare.cpp,
-	  findimages/finddupplicatedialog.cpp,
-	  imagesgallery/imgallerydialog.cpp,
-	  kameraklient/cameraselection.cpp, kameraklient/cameraui.cpp,
-	  kameraklient/gpfileiteminfodlg.cpp,
-	  kameraklient/savefiledialog.cpp, kameraklient/setupcamera.cpp,
-	  mpegencoder/kimg2mpg.cpp, printwizard/frmprintwizard.cpp,
-	  rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp,
-	  sendimages/plugin_sendimages.cpp,
-	  sendimages/sendimagesdialog.cpp, slideshow/slideshowconfig.cpp,
-	  timeadjust/timeadjustdialog.cpp: CVS_SILENT i18n style guide
-	  fixes
 
 2004-10-08 15:53  cgilles
 
@@ -7517,22 +7011,6 @@ v0.1.0-beta2                                                      2005-02-08
 
 	* printwizard/frmprintwizard.cpp: i18n fix
 
-2004-09-26 18:24  mhunter
-
-	* mpegencoder/kimg2mpg.cpp: CVS_SILENT Typographical corrections
-	  and changes
-
-2004-09-26 18:20  mhunter
-
-	* findimages/displaycompare.cpp: CVS_SILENT Typographical
-	  corrections and changes
-
-2004-09-26 18:16  mhunter
-
-	* batchprocessimages/: batchprocessimagesdialog.cpp,
-	  convertimagesdialog.cpp, renameimagesdialog.cpp: CVS_SILENT
-	  Typographical corrections and changes
-
 2004-09-25 23:34  todd
 
 	* printwizard/: frmprintwizard.cpp, frmprintwizard.h,
@@ -7554,10 +7032,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  resized JPEG images don't lost the EXIF informations ! CCMAIL:
 	  kde-imaging@kde.org, digikam-users@lists.sourceforge.net
 
-2004-09-25 14:58  cgilles
-
-	* imagesgallery/imagesgallery.cpp: CVS_SILENT Fix header
-
 2004-09-24 15:50  cgilles
 
 	* imagesgallery/: Makefile.am, exifrestorer.cpp, exifrestorer.h,
@@ -7566,14 +7040,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  exif data stored to the JPEG target images.  CCMAIL:
 	  kde-imaging@kde.org, digikam-users@lists.sourceforge.net
 
-2004-09-24 15:46  cgilles
-
-	* cdarchiving/cdarchiving.cpp: CVS_SILENT Fixed
-
-2004-09-24 14:52  cgilles
-
-	* cdarchiving/cdarchiving.cpp: CVS_SILENT Fixed
-
 2004-09-24 14:46  cgilles
 
 	* cdarchiving/: cdarchiving.cpp, cdarchiving.h,
@@ -7581,29 +7047,11 @@ v0.1.0-beta2                                                      2005-02-08
 	  plugin: fixed threaded implementation ! CCMAIL:
 	  renchi@pooh.tam.uiuc.edu
 
-2004-09-24 13:34  cgilles
-
-	* imagesgallery/imagesgallery.cpp: CVS_SILENT Added comments
-
 2004-09-24 10:59  cgilles
 
 	* batchprocessimages/resizeoptionsdialog.cpp: Added 1400dpi support
 	  in Prepare to print (request by Richard Taylor) CCMAIL:
 	  rjt-digicam@thegrindstone.me.uk
-
-2004-09-24 10:29  cgilles
-
-	* imagesgallery/imagesgallery.cpp: CVS_SILENT Fixed
-
-2004-09-24 10:10  cgilles
-
-	* imagesgallery/imagesgallery.cpp: CVS_SILENT Fixed url and host
-	  name
-
-2004-09-24 10:03  cgilles
-
-	* imagesgallery/: imagesgallery.cpp, imagesgallery.h: CVS_SILENT
-	  Fixed header.
 
 2004-09-23 15:33  cgilles
 
@@ -7613,16 +7061,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  to store the Albums data from the hosts.  All kipi interface call
 	  and GUI call run on 'prepare' unthreaded method.  Must be
 	  tested...  CCMAIL: renchi@pooh.tam.uiuc.edu
-
-2004-09-23 15:01  cgilles
-
-	* cdarchiving/: cdarchivingdialog.cpp, plugin_cdarchiving.cpp:
-	  CVS_SILENT Fixed i18n
-
-2004-09-23 14:55  cgilles
-
-	* findimages/plugin_findimages.cpp, mpegencoder/kimg2mpg.cpp,
-	  mpegencoder/plugin_mpegencoder.cpp: CVS_SILENT Fixed i18n
 
 2004-09-23 12:26  cgilles
 
@@ -7790,15 +7228,6 @@ v0.1.0-beta2                                                      2005-02-08
 	* slideshow/slideshowconfig.cpp: Added kipi graphic titles on the
 	  dialog top.
 
-2004-09-20 09:42  cgilles
-
-	* batchprocessimages/: batchprocessimagesdialog.cpp,
-	  borderimagesdialog.cpp, colorimagesdialog.cpp,
-	  convertimagesdialog.cpp, effectimagesdialog.cpp,
-	  filterimagesdialog.cpp, recompressimagesdialog.cpp,
-	  renameimagesdialog.cpp, resizeimagesdialog.cpp: CVS_SILENT Fixed
-	  i18n
-
 2004-09-19 21:22  cgilles
 
 	* batchprocessimages/: batchprocessimagesdialog.cpp,
@@ -7808,11 +7237,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  recompressimagesdialog.cpp, renameimagesdialog.cpp,
 	  resizeimagesdialog.cpp: BatchProcessImages kipi plugins : Added
 	  graphic border in dialog
-
-2004-09-19 18:50  mlaurent
-
-	* slideshow/slideshow.cpp, mpegencoder/optionsdialog.cpp:
-	  CVS_SILENT QString(i18n(...)) -> i18n(...)
 
 2004-09-18 23:38  gateau
 
@@ -7830,24 +7254,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  ImageCollectionSelector widget from Renchi.  CCMAIL:
 	  kde-imaging@kde.org
 
-2004-09-16 18:00  cgilles
-
-	* imagesgallery/imgallerydialog.cpp: CVS_SILENT Fixed dialog
-
-2004-09-16 18:00  cgilles
-
-	* cdarchiving/: cdarchiving.cpp, cdarchivingdialog.cpp: CVS_SILENT
-	  FIxed dialog
-
-2004-09-16 16:10  cgilles
-
-	* imagesgallery/: imagesgallery.cpp, imagesgallery.h: CVS_SILENT
-	  Fixed
-
-2004-09-16 15:51  cgilles
-
-	* batchprocessimages/batchprocessimagesdialog.cpp: CVS_SILENT Fixed
-
 2004-09-16 14:39  cgilles
 
 	* imagesgallery/imagesgallery.cpp: Fixed partially kipi access in
@@ -7860,19 +7266,11 @@ v0.1.0-beta2                                                      2005-02-08
 	  acces under threaded implementation Todo : fix kipi interface
 	  access.  CCMAIL: kde-imageing@kde.org
 
-2004-09-16 12:35  cgilles
-
-	* sendimages/plugin_sendimages.cpp: CVS_SILENT Fix i18n
-
 2004-09-16 10:52  cgilles
 
 	* batchprocessimages/: batchprocessimagesdialog.cpp,
 	  imagepreview.cpp, renameimagesdialog.cpp: Fixed depreciate method
 	  in according with KDE version CCMAIL: oliver@doerr-privat.de
-
-2004-09-16 08:37  cgilles
-
-	* findimages/finddupplicateimages.cpp: CVS_SILENT Added comments
 
 2004-09-16 08:35  cgilles
 
@@ -7898,15 +7296,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  cdarchivingdialog.h: CDArchiving Kipi plugin: support
 	  ImageCollection selector widget.  CCMAIL:kde-imaging@kde.org
 
-2004-09-15 14:09  cgilles
-
-	* imagesgallery/: imgallerydialog.cpp, imgallerydialog.h:
-	  CVS_SILENT Fixed indent
-
-2004-09-15 13:55  cgilles
-
-	* imagesgallery/imgallerydialog.cpp: CVS_SILENT Fixed indent
-
 2004-09-15 03:07  todd
 
 	* printwizard/frmprintwizard.cpp: Added thumbnails to A4 and A6
@@ -7922,10 +7311,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  lower left corner of the image in white sans font. Will  improve
 	  the font and give it a black border later.
 
-2004-09-14 16:34  cgilles
-
-	* findimages/kipiplugin_findimages.desktop: CVS_SILENT Fixed
-
 2004-09-14 16:11  cgilles
 
 	* batchprocessimages/batchprocessimagesdialog.cpp,
@@ -7935,10 +7320,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  Fixed warning for depreceate KDE API methods.  - Using new
 	  getImageURLs method from Renchi.  SendImages Kipi plugin: - Using
 	  new getImageURLs method from Renchi.	CCMAIL: kde-imaging@kde.org
-
-2004-09-14 12:43  cgilles
-
-	* ChangeLog: CVS_SILENT Updated
 
 2004-09-14 12:35  cgilles
 
@@ -7964,10 +7345,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  setupcamera.h, thumbitem.cpp, thumbitem.h, thumbview.cpp,
 	  thumbview.h: Patch by Tudor Calin to add back the namespace.
 
-2004-09-13 15:49  cgilles
-
-	* findimages/hi32-action-findcomments.png: CVS_SILENT remove
-
 2004-09-13 15:48  cgilles
 
 	* findimages/: displaycompare.cpp, displaycompare.h:
@@ -7982,11 +7359,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  function to imagecollection(shared) isDirectory().	base
 	  implementation returns false.  CCMAIL: kde-imaging@kde.org
 
-2004-09-10 09:10  cgilles
-
-	* helloworld/Makefile.am: CVS_SILENT Remove i18n creation for
-	  helloworld. No need
-
 2004-09-09 20:57  pahlibar
 
 	* mpegencoder/kimg2mpg.cpp:
@@ -7996,73 +7368,9 @@ v0.1.0-beta2                                                      2005-02-08
 	  selection changed to use the new multiple selection	mode, as an
 	  example CCMAIL: kde-imaging@kde.org
 
-2004-09-09 15:49  cgilles
-
-	* calendar/calwizard.cpp, cdarchiving/cdarchivingdialog.cpp,
-	  findimages/displaycompare.cpp,
-	  findimages/finddupplicatedialog.cpp,
-	  imagesgallery/imgallerydialog.cpp,
-	  kameraklient/cameraselection.cpp, kameraklient/cameraui.cpp,
-	  kameraklient/setupcamera.cpp, mpegencoder/kimg2mpg.cpp,
-	  printwizard/frmprintwizard.cpp, rawconverter/batchdialog.cpp,
-	  rawconverter/singledialog.cpp, sendimages/sendimagesdialog.cpp,
-	  slideshow/slideshowconfig.cpp, timeadjust/timeadjustdialog.cpp:
-	  CVS_SILENT Added common release ID
-
-2004-09-09 15:21  coles
-
-	* findimages/plugin_findimages.cpp:
-
-	  CVS_SILENT
-
-	  Corrected i18n plural-form usage.
-
-2004-09-09 15:02  cgilles
-
-	* acquireimages/acquireimagedialog.cpp,
-	  acquireimages/screenshotdialog.cpp,
-	  batchprocessimages/borderimagesdialog.cpp,
-	  batchprocessimages/colorimagesdialog.cpp,
-	  batchprocessimages/convertimagesdialog.cpp,
-	  batchprocessimages/effectimagesdialog.cpp,
-	  batchprocessimages/filterimagesdialog.cpp,
-	  batchprocessimages/imagepreview.cpp,
-	  batchprocessimages/outputdialog.cpp,
-	  batchprocessimages/recompressimagesdialog.cpp,
-	  batchprocessimages/renameimagesdialog.cpp,
-	  batchprocessimages/resizeimagesdialog.cpp: CVS_SILENT Common
-	  release ID
-
-2004-09-09 08:34  cgilles
-
-	* kipiplugins.kdevelop, acquireimages/acquireimagedialog.cpp,
-	  acquireimages/screenshotdialog.cpp,
-	  batchprocessimages/borderimagesdialog.cpp,
-	  batchprocessimages/colorimagesdialog.cpp,
-	  batchprocessimages/convertimagesdialog.cpp,
-	  batchprocessimages/effectimagesdialog.cpp,
-	  batchprocessimages/filterimagesdialog.cpp,
-	  batchprocessimages/recompressimagesdialog.cpp,
-	  batchprocessimages/renameimagesdialog.cpp,
-	  batchprocessimages/resizeimagesdialog.cpp,
-	  calendar/calwizard.cpp, findimages/displaycompare.cpp,
-	  findimages/finddupplicatedialog.cpp,
-	  imagesgallery/imgallerydialog.cpp,
-	  jpeglossless/plugin_jpeglossless.cpp,
-	  kameraklient/cameraselection.cpp, kameraklient/cameraui.cpp,
-	  kameraklient/setupcamera.cpp, mpegencoder/kimg2mpg.cpp,
-	  printwizard/frmprintwizard.cpp, rawconverter/batchdialog.cpp,
-	  rawconverter/singledialog.cpp, sendimages/sendimagesdialog.cpp,
-	  slideshow/slideshowconfig.cpp, timeadjust/timeadjustdialog.cpp:
-	  CVS_SILENT Fixed typo and i18n
-
 2004-09-08 17:35  adrian
 
 	* kameraklient/gpstatus.cpp: add missing return statement
-
-2004-09-08 15:50  cgilles
-
-	* ChangeLog: CVS_SILENT Update
 
 2004-09-08 15:40  cgilles
 
@@ -8082,19 +7390,6 @@ v0.1.0-beta2                                                      2005-02-08
 
 	  CCMAIL: kde-imaging@kde.org
 
-2004-09-08 12:27  coles
-
-	* calendar/calwizard.cpp, imagesgallery/imgallerydialog.cpp,
-	  printwizard/frmprintwizard.cpp:
-
-	  CVS_SILENT
-
-	  Corrected typos.
-
-2004-09-08 10:33  cgilles
-
-	* AUTHORS: CVS_SILENT Updated
-
 2004-09-08 08:09  cgilles
 
 	* cdarchiving/kipiplugin_cdarchiving.desktop,
@@ -8108,14 +7403,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  makes it possible to enable the slideshow plugin build if qt is
 	  not linked with libGL, but loads it up dynamically (for qt >=
 	  3.2.0) CCMAIL: kde-imaging@kde.org
-
-2004-09-07 15:53  cgilles
-
-	* kipiplugins.kdevelop: CVS_SILENt Update
-
-2004-09-07 15:51  cgilles
-
-	* ChangeLog: CVS_SILENT Update
 
 2004-09-07 15:50  cgilles
 
@@ -8138,14 +7425,6 @@ v0.1.0-beta2                                                      2005-02-08
 	  About data in KIPI ImageGallery plugin.  CCMAIL:
 	  kde-imaging@kde.org
 
-2004-09-07 11:12  cgilles
-
-	* cdarchiving/cdarchivingdialog.cpp: CVS_SILENT Fixed email @
-
-2004-09-07 11:08  cgilles
-
-	* cdarchiving/cdarchivingdialog.h: CVS_SILENT Fixed
-
 2004-09-07 11:04  cgilles
 
 	* rawconverter/: batchdialog.cpp, batchdialog.h, singledialog.cpp,
@@ -8162,14 +7441,6 @@ v0.1.0-beta2                                                      2005-02-08
 
 	* slideshow/: slideshowconfig.cpp, slideshowconfig.h: Added About
 	  data in KIPI Slideshow plugin.  CCMAIL: kde-imaging@kde.org
-
-2004-09-07 09:25  cgilles
-
-	* README: CVS_SLIENT Update
-
-2004-09-07 09:21  cgilles
-
-	* README: CVS_SILENT Update
 
 2004-09-07 09:17  cgilles
 
@@ -8327,11 +7598,6 @@ v0.1.0-beta1                                                      2004-09-06
 	  * use qfile::encodename instead of latin1 * the messagebox got
 	  embedded in the mainwindow. fixed
 
-2004-08-15 00:34  jahrens
-
-	* slideshow/: pausetimer.h, slideshow.cpp: CVS_SILENT: Forgot
-	  deleting the old PauseTimer source
-
 2004-08-15 00:05  jahrens
 
 	* slideshow/: Makefile.am, pausetimer.cpp, pausetimer.h,
@@ -8448,26 +7714,6 @@ v0.1.0-beta1                                                      2004-09-06
 	  Huss at gmx.at> for this solution).  CCMAIL: kde-imaging@kde.org,
 	  renchi@pooh.tam.uiuc.edu
 
-2004-07-09 13:17  cgilles
-
-	* cdarchiving/: cdarchiving.cpp, plugin_cdarchiving.cpp: CVS_SILENt
-	  Fixed messages and comments
-
-2004-07-09 12:51  cgilles
-
-	* imagesgallery/: imagesgallery.cpp, imagesgallery.h: CVS_SILENT
-	  Added missing code for a possible subfolders support. untested.
-	  disable...
-
-2004-07-09 12:19  cgilles
-
-	* sendimages/: sendimages.cpp, sendimages.h: CVS_SILENT Fixed no
-	  void fonction
-
-2004-07-09 12:16  cgilles
-
-	* sendimages/sendimages.h: CVS_SILENt Fixed obsolete slot
-
 2004-07-09 09:45  gateau
 
 	* kameraklient/: cameradragobject.cpp, cameradragobject.h,
@@ -8496,21 +7742,6 @@ v0.1.0-beta1                                                      2004-09-06
 	  sendimages.cpp, sendimages.h, sendimagesdialog.cpp,
 	  sendimagesdialog.h: Fixed drag and drop capability in sendImages
 	  plugin dialog.  CCMAil: kde-imaging@kde.org
-
-2004-07-08 14:33  cgilles
-
-	* imagesgallery/imgallerydialog.cpp: CVS_SILENT Fixed icons on
-	  dialog.
-
-2004-07-08 09:25  cgilles
-
-	* cdarchiving/cdarchivingdialog.cpp,
-	  cdarchiving/cdarchivingdialog.h,
-	  findimages/finddupplicatedialog.cpp,
-	  findimages/finddupplicatedialog.h,
-	  imagesgallery/imgallerydialog.cpp,
-	  imagesgallery/imgallerydialog.h: CVS_SILENT Using KListView
-	  instead QListView
 
 2004-07-08 08:39  cgilles
 
@@ -8556,21 +7787,6 @@ v0.1.0-beta1                                                      2004-09-06
 	  finddupplicateimages.cpp: Added progress dialog during Albums
 	  parsing.  CCMAIL: kde-imaging@kde.org
 
-2004-07-06 15:45  cgilles
-
-	* imagesgallery/: imagesgallery.cpp, imagesgallery.h: CVS_SILENT
-	  Fixed obsolote m_canceled variable !
-
-2004-07-06 15:36  cgilles
-
-	* imagesgallery/: imagesgallery.cpp, plugin_imagesgallery.cpp:
-	  CVS_SLIENT Fixed thumbs creation condition
-
-2004-07-06 15:35  cgilles
-
-	* cdarchiving/cdarchiving.cpp: CVS_SILENT Fixed thumbs creation
-	  condition.
-
 2004-07-06 15:10  cgilles
 
 	* imagesgallery/: Makefile.am, actions.h, batchprogressdialog.cpp,
@@ -8595,39 +7811,12 @@ v0.1.0-beta1                                                      2004-09-06
 	* kameraklient/Makefile.am: Fixed include directive, thanks to Jean
 	  Michel Fayard.
 
-2004-07-06 09:18  cgilles
-
-	* cdarchiving/: actions.h, cdarchiving.cpp, cdarchiving.h,
-	  cdarchivingdialog.h, plugin_cdarchiving.cpp: CVS_SILENT Fixed
-	  thread post event.  Fixed coding style.
-
-2004-07-05 16:13  cgilles
-
-	* imagesgallery/: Makefile.am, actions.h, batchprogressdialog.cpp,
-	  batchprogressdialog.h, imagesgallery.cpp, imagesgallery.h,
-	  imgallerydialog.cpp, imgallerydialog.h, plugin_imagesgallery.cpp,
-	  plugin_imagesgallery.h: CVS_SILENT Fixed depreciate.	Prepare to
-	  multithreading
-
-2004-07-05 16:06  cgilles
-
-	* cdarchiving/cdarchiving.h: CVS_SILENT Fixed #define by const int
-
-2004-07-05 15:46  cgilles
-
-	* cdarchiving/actions.h: CVS_SILENT Fix coding style.
-
 2004-07-05 14:10  cgilles
 
 	* cdarchiving/: batchprogressdialog.cpp, batchprogressdialog.h,
 	  cdarchiving.cpp, cdarchivingdialog.cpp, cdarchivingdialog.h,
 	  plugin_cdarchiving.cpp: Improved batchProgress dialog and thread
 	  post event.  CCMAIL: kde-imaging@kde.org
-
-2004-07-05 09:02  cgilles
-
-	* kameraklient/kipiplugin_kameraklient.desktop: CVS_SILENT Fixed
-	  comments
 
 2004-07-04 23:32  gateau
 
@@ -8705,12 +7894,6 @@ v0.1.0-beta1                                                      2004-09-06
 	  using multithreading capabilities done ! CCMAIL:
 	  kde-imaging@kde.org
 
-2004-07-03 01:12  cgilles
-
-	* cdarchiving/: actions.h, batchprogressdialog.cpp,
-	  batchprogressdialog.h, cdarchiving.cpp, plugin_cdarchiving.cpp:
-	  CVS_SILENT Fixed progess dialog. Done !
-
 2004-07-02 18:02  cgilles
 
 	* cdarchiving/: Makefile.am, actions.h, batchprogressdialog.cpp,
@@ -8721,15 +7904,6 @@ v0.1.0-beta1                                                      2004-09-06
 	  based on JPEGLossLess implementation.  - Added an actions
 	  progress dialog (uncomplete).  Work fine but must be improved!
 	  CCMAIL: kde-imaging@kde.org, renchi@pooh.tam.uiuc.edu
-
-2004-07-02 14:49  cgilles
-
-	* sendimages/sendimagesdialog.cpp: CVS_SILENT Fixed close event
-
-2004-07-02 08:53  cgilles
-
-	* sendimages/: plugin_sendimages.cpp, plugin_sendimages.h,
-	  sendimages.cpp, sendimages.h: CVS_SILENT Fixed coding style
 
 2004-07-01 17:50  cgilles
 
@@ -8751,11 +7925,6 @@ v0.1.0-beta1                                                      2004-09-06
 
 	* mpegencoder/: kimg2mpg.cpp, kimg2mpg.h: Fixed missing preview
 	  failed slot.
-
-2004-06-29 15:17  cgilles
-
-	* findimages/: actions.h, finddupplicateimages.cpp,
-	  plugin_findimages.cpp: CVS_SILENT Fixed NameSpace wrapper
 
 2004-06-29 14:12  cgilles
 
@@ -8800,11 +7969,6 @@ v0.1.0-beta1                                                      2004-09-06
 2004-06-29 10:01  gateau
 
 	* TODO: Updated to what we agreed on the mailing list.
-
-2004-06-29 09:10  cgilles
-
-	* printwizard/frmprintwizardbase.ui: CVS_SILENT remove kipi name in
-	  labels
 
 2004-06-28 16:02  cgilles
 
@@ -8851,11 +8015,6 @@ v0.1.0-beta1                                                      2004-09-06
 	  cdarchivingdialog.h: CDArchiving plugin : fixed all pending tasks
 	  !!! CCMAIL: kde-imaging@kde.org
 
-2004-06-24 23:10  cgilles
-
-	* imagesgallery/: listimageserrordialog.cpp,
-	  listimageserrordialog.h: CVS_SILENT Fix comments
-
 2004-06-24 15:56  cgilles
 
 	* findimages/: displaycompare.cpp, displaycompare.h,
@@ -8901,28 +8060,6 @@ v0.1.0-beta1                                                      2004-09-06
 	  and KIPI::ImageCollectionShared class in according with this new
 	  features.  CCMAIL: kde-imaging@kde.org
 
-2004-06-24 08:17  cgilles
-
-	* cdarchiving/cdarchivingdialog.cpp,
-	  findimages/finddupplicatedialog.cpp,
-	  imagesgallery/imgallerydialog.cpp: CVS_SILENT Fix icon in dialog
-
-2004-06-24 08:16  cgilles
-
-	* rawconverter/: batchdialog.cpp, batchdialog.h, clistviewitem.h,
-	  cspinbox.h, dmessagebox.cpp, dmessagebox.h,
-	  plugin_rawconverter.cpp, previewwidget.cpp, previewwidget.h,
-	  processcontroller.cpp, processcontroller.h, singledialog.cpp,
-	  singledialog.h: CVS_SILENT Fix namespace in according with others
-	  KIPI plugins namespace
-
-2004-06-23 15:57  cgilles
-
-	* printwizard/: cropframe.cpp, cropframe.h, frmprintwizard.cpp,
-	  frmprintwizard.h, plugin_printwizard.cpp, plugin_printwizard.h,
-	  tphoto.cpp, tphoto.h, utils.cpp, utils.h: CVS_SILENT Prepared to
-	  namespace
-
 2004-06-23 14:56  cgilles
 
 	* cdarchiving/cdarchiving.cpp, cdarchiving/cdarchiving.h,
@@ -8937,26 +8074,6 @@ v0.1.0-beta1                                                      2004-09-06
 	  convertimagesdialog.cpp, renameimagesdialog.cpp: Fixed a missing
 	  statusbar refresh (probably removed during the KIPI port).
 
-2004-06-23 09:47  cgilles
-
-	* printwizard/frmprintwizardbase.ui: CVS_SILENT Remove Digikam name
-
-2004-06-23 09:36  cgilles
-
-	* calendar/: calpainter.cpp, calpainter.h, calselect.cpp,
-	  calselect.h, calsettings.cpp, calsettings.h, caltemplate.cpp,
-	  caltemplate.h, calwidget.cpp, calwidget.h, calwizard.cpp,
-	  calwizard.h, monthwidget.cpp, monthwidget.h, plugin_calendar.cpp:
-	  CVS_SILENT Fix namespace
-
-2004-06-23 08:49  cgilles
-
-	* batchprocessimages/renameimagesdialog.cpp,
-	  sendimages/plugin_sendimages.cpp, slideshow/plugin_slideshow.cpp,
-	  slideshow/plugin_slideshow.h, timeadjust/plugin_timeadjust.cpp,
-	  wallpaper/plugin_wallpaper.cpp: CVS_SILENT Fix indent.  Fix
-	  namespace.  Remove Digikam namespaces references
-
 2004-06-22 17:46  cgilles
 
 	* batchprocessimages/plugin_batchprocessimages.cpp,
@@ -8967,11 +8084,6 @@ v0.1.0-beta1                                                      2004-09-06
 	  printwizard/plugin_printwizard.cpp: In according with Renchi Raju
 	  : Fixed static_cast to dynamic_cast.	Added test if kipi
 	  interface is valid.
-
-2004-06-22 14:57  cgilles
-
-	* batchprocessimages/: batchprocessimagesdialog.cpp,
-	  batchprocessimagesitem.cpp: CVS_SILENT Added debug messages
 
 2004-06-22 13:49  cgilles
 
@@ -8992,15 +8104,6 @@ v0.1.0-beta1                                                      2004-09-06
 	  rawconverter/plugin_rawconverter.cpp,
 	  slideshow/plugin_slideshow.cpp, wallpaper/plugin_wallpaper.cpp:
 	  Fix static_cast by dynamic_cast pointer on host kipi interface
-
-2004-06-22 08:41  cgilles
-
-	* batchprocessimages/: batchprocessimagesdialog.cpp,
-	  borderimagesdialog.cpp, colorimagesdialog.cpp,
-	  convertimagesdialog.cpp, effectimagesdialog.cpp,
-	  filterimagesdialog.cpp, recompressimagesdialog.cpp,
-	  renameimagesdialog.cpp, resizeimagesdialog.cpp: CVS_SILENT Fix
-	  handbooks links
 
 2004-06-21 16:09  cgilles
 
@@ -9198,10 +8301,6 @@ v0.1.0-beta1                                                      2004-09-06
 	  sendimages/sendimagesdialog.cpp: Added new method
 	  'fileExtensions()' for images files sorting in plugins instead
 	  digikamrc config file parsing.  CCMAIL: kde-imaging@kde.org
-
-2004-06-16 21:08  binner
-
-	* printwizard/frmprintwizardbase.ui: CVS_SILENT fixuifiles
 
 2004-06-16 15:29  cgilles
 
@@ -9416,10 +8515,6 @@ v0.1.0-beta1                                                      2004-09-06
 
 	  CCMAIL: kde-imaging@kde.org, digikam-devel@lists.sourceforge.net
 
-2004-06-13 15:45  cgilles
-
-	* batchprocessimages/Makefile.am: CVS_SILENT Fix indent
-
 2004-06-13 12:36  faure
 
 	* configure.in.bot, configure.in.in: No idea why AC_MSG_WARN fails
@@ -9468,10 +8563,6 @@ v0.1.0-beta1                                                      2004-09-06
 
 	* jpeglossless/Makefile.am: Fix compiling with srcdir != builddir
 	  and no preinstalled libkexif.
-
-2004-06-10 13:11  cgilles
-
-	* README, AUTHORS, COPYING: CVS_SILENT Update
 
 2004-06-10 12:56  cgilles
 
