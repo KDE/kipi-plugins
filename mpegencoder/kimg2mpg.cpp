@@ -703,8 +703,9 @@ void KImg2mpgData::slotEncode( void )
   connect(m_Proc, SIGNAL(receivedStderr(KProcess *,char*,int)),this,
           SLOT(readStderr(KProcess*,char*,int)));
 
+  m_Img2mpgPidNum = -1;
   bool result = m_Proc->start(KProcess::NotifyOnExit , KProcess::All);
-
+  
   if(!result)
     {
     QString str = i18n("Cannot start 'images2mpg' bash script : fork failed.");
@@ -998,7 +999,7 @@ void KImg2mpgData::reset()
   {
   m_Encoding = false;
 
-  if (m_Proc)
+  if (m_Proc && m_Img2mpgPidNum > 0)
     {
         ::kill(m_Img2mpgPidNum, SIGKILL);
     }
