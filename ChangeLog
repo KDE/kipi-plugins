@@ -1,5 +1,2291 @@
+
+2007-06-02 10:57  gateau
+
+	* [r670657] kipi-plugins/htmlexport/themes/s0/template.xsl:
+	  Make theme use only i18n parameters for texts.
+
+2007-06-02 10:55  gateau
+
+	* [r670656] kipi-plugins/htmlexport/themes/Makefile.am,
+	  kipi-plugins/htmlexport/themes/s0/Makefile.am:
+	  Fix install of s0 theme.
+
+2007-06-02 10:53  gateau
+
+	* [r670655] kipi-plugins/htmlexport/THEME_HOWTO,
+	  kipi-plugins/htmlexport/generator.cpp:
+	  Added new i18n parameter: i18nUp
+
+2007-06-01 21:31  gateau
+
+	* [r670526] kipi-plugins/htmlexport/themes/Makefile.am,
+	  kipi-plugins/htmlexport/themes/cleanframes,
+	  kipi-plugins/htmlexport/themes/cleanframes/Makefile.am,
+	  kipi-plugins/htmlexport/themes/cleanframes/Makefile.in,
+	  kipi-plugins/htmlexport/themes/cleanframes/cleanframes.desktop,
+	  kipi-plugins/htmlexport/themes/cleanframes/style.css,
+	  kipi-plugins/htmlexport/themes/cleanframes/template.xsl:
+	  Added a new theme: "Clean Frames", from Elizabeth Marmorstein
+
+2007-05-31 15:09  cgilles
+
+	* [r670170] kipi-plugins/NEWS:
+	  typo
+
+2007-05-31 15:05  cgilles
+
+	* [r670168] kipi-plugins/NEWS:
+	  update
+
+2007-05-31 14:49  vfuoglio
+
+	* [r670164] kipi-plugins/slideshow/slideshowconfig.cpp,
+	  kipi-plugins/slideshow/slideshowconfig.h,
+	  kipi-plugins/slideshow/slideshowconfigbase.ui:
+	  Changed start and exit buttons name.
+	  Added possibility to use seconds instead of milliseconds.
+	  'Seconds' is the new default unit.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  BUG: 146084
+	  GUI:
+
+2007-05-24 13:39  cgilles
+
+	* [r667931] kipi-plugins/common/include/kpaboutdata.h:
+	  fix date
+
+2007-05-24 13:38  cgilles
+
+	* [r667930] kipi-plugins/kipi-plugins.lsm:
+	  update
+
+2007-05-24 13:37  cgilles
+
+	* [r667929] kipi-plugins/NEWS:
+	  update
+
+2007-05-24 13:34  cgilles
+
+	* [r667926] kipi-plugins/flickrexport/flickrtalker.cpp:
+	  kipi-plugins from trunk : patch from Andrew Wilkinson to prevent
+	  multiple Tags creation with Flickr Export plugin when Tags
+	  strings include spaces.
+	  CCMAIL: ajw140@york.ac.uk
+	  BUG: 135945
+
+2007-05-22 08:17  gateau
+
+	* [r667224] kipi-plugins/htmlexport/wizard.cpp:
+	  - Do not crash when switching between themes.
+	  - Skip the "Theme Parameters" page if the selected theme does not
+	  contain any
+	  parameter.
+
+2007-05-21 10:25  cgilles
+
+	* [r666938] kipi-plugins/printwizard/plugin_printwizard.cpp,
+	  kipi-plugins/printwizard/plugin_printwizard.h:
+	  kipi-plugins from trunk : Print Wizard tool :
+	  
+	  - Add CTRL+P shortcut.
+	  - Change EXPORTPLUGIN plugin category to IMAGESPLUGIN. The tool
+	  never work on a complete album, only with a selection of
+	  pictures.
+	  
+	  BUG : 144640
+
+2007-05-21 09:28  fsalvi
+
+	* [r666920] kipi-plugins/Makefile.am:
+	  Prevent calendar from being compiled when libkcal test is
+	  negative.
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2007-05-16 07:23  cgilles
+
+	* [r665214] kipi-plugins/AUTHORS:
+	  update
+
+2007-05-13 18:46  gateau
+
+	* [r664351] kipi-plugins/htmlexport/THEME_HOWTO,
+	  kipi-plugins/htmlexport/TODO:
+	  Added a theme howto. Would be nice to have someone review it :-)
+	  CCMAIL:kde-imaging@kde.org
+
+2007-05-13 18:45  gateau
+
+	* [r664350] kipi-plugins/htmlexport/abstractthemeparameter.h,
+	  kipi-plugins/htmlexport/theme.h:
+	  Added some Doxygen info
+
+2007-05-07 20:08  cgilles
+
+	* [r662290] kipi-plugins/jpeglossless/plugin_jpeglossless.cpp:
+	  kipi-plugins from trunk : JPEGLossLess : fix crash with
+	  auto-close of progress dialog when kipi host is closed.
+
+2007-05-06 17:42  orgads
+
+	* [r661820] kipi-plugins/configure.in.bot,
+	  kipi-plugins/configure.in.in:
+	  * Added checking for libkcal (calendar plugin) and appropriate
+	  messages
+
+2007-05-06 17:23  orgads
+
+	* [r661814] kipi-plugins/README:
+	  * Added dependency for calendar: libkcal
+
+2007-05-05 10:53  gateau
+
+	* [r661368] kipi-plugins/htmlexport/themes/simple/Makefile.am,
+	  kipi-plugins/htmlexport/themes/simple/dark.css,
+	  kipi-plugins/htmlexport/themes/simple/natural.css,
+	  kipi-plugins/htmlexport/themes/simple/simple.desktop,
+	  kipi-plugins/htmlexport/themes/simple/style.css,
+	  kipi-plugins/htmlexport/themes/simple/template.xsl:
+	  Added a theme variant to the "Simple" theme. This variant is
+	  called "Dark".
+	  Now you get to see what I have been doing with those theme
+	  parameters.
+	  CCMAIL: kde-imaging@kde.org
+
+2007-05-04 12:43  orgads
+
+	* [r661032] kipi-plugins/calendar/calevents.cpp,
+	  kipi-plugins/calendar/calevents.h,
+	  kipi-plugins/calendar/caleventsbase.ui,
+	  kipi-plugins/calendar/calformatter.cpp,
+	  kipi-plugins/calendar/calformatter.h:
+	  * Added some missing files.
+
+2007-05-04 12:38  orgads
+
+	* [r661026] kipi-plugins/calendar/Makefile.am,
+	  kipi-plugins/calendar/calpainter.cpp,
+	  kipi-plugins/calendar/calpainter.h,
+	  kipi-plugins/calendar/calselect.cpp,
+	  kipi-plugins/calendar/calselect.h,
+	  kipi-plugins/calendar/calsettings.cpp,
+	  kipi-plugins/calendar/calwidget.cpp,
+	  kipi-plugins/calendar/calwizard.cpp,
+	  kipi-plugins/calendar/calwizard.h,
+	  kipi-plugins/calendar/monthwidget.cpp:
+	  * Added support for non-gregorian calendar system (active
+	  calendar system by locale settings)
+	  * The calendar cells have different width and heights in order to
+	  fill the complete page width.
+	  * The font is bigger
+	  * The calendar lines are printed by default.
+	  * The unused "printCalendar" function is deleted (why was it
+	  there?).
+	  * There is a new page in the wizard that lets you choose 2
+	  iCalendar files.
+	  This step is totally optional. The events from the first file are
+	  going to be
+	  printed on red and the second one on green. This lets you print
+	  the official
+	  holidays (red) and your private ones (green).
+	  * Because of e) the libkcal (kdepim) dependency has been
+	  introduced.
+	  (thanks to Maciek Borowka)
+
+2007-05-02 19:54  gateau
+
+	* [r660468] kipi-plugins/htmlexport/Makefile.am,
+	  kipi-plugins/htmlexport/colorthemeparameter.cpp,
+	  kipi-plugins/htmlexport/colorthemeparameter.h,
+	  kipi-plugins/htmlexport/theme.cpp:
+	  Added new type of theme parameter: color.
+
+2007-05-02 19:53  gateau
+
+	* [r660466] kipi-plugins/htmlexport/stringthemeparameter.cpp,
+	  kipi-plugins/htmlexport/stringthemeparameter.h:
+	  Removed useless overload and d pointer.
+
+2007-05-02 08:03  gateau
+
+	* [r660294] kipi-plugins/htmlexport/wizard.cpp:
+	  Add a spacer on the right of theme parameter widgets.
+
+2007-05-02 08:01  gateau
+
+	* [r660293] kipi-plugins/htmlexport/generator.cpp,
+	  kipi-plugins/htmlexport/themes/frames/template.xsl,
+	  kipi-plugins/htmlexport/themes/matrix/template.xsl,
+	  kipi-plugins/htmlexport/themes/s0/template.xsl,
+	  kipi-plugins/htmlexport/themes/simple/template.xsl,
+	  kipi-plugins/htmlexport/themes/snow/template.xsl:
+	  Applied modified version of Colin McMillen which add links to
+	  download original
+	  images.
+	  
+	  Just replaced the english text for "View original image" with a
+	  new $i18n
+	  variable: $i18nOriginalImage. This way themes remain fully
+	  translated.
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2007-05-02 07:26  cgilles
+
+	* [r660288] kipi-plugins/gpssync/getlonlat.php:
+	  fix email
+
+2007-05-02 07:24  cgilles
+
+	* [r660287] kipi-plugins/metadataedit/commenteditdialog.cpp,
+	  kipi-plugins/metadataedit/commenteditdialog.h,
+	  kipi-plugins/metadataedit/commentremovedialog.cpp,
+	  kipi-plugins/metadataedit/commentremovedialog.h,
+	  kipi-plugins/metadataedit/exifadjust.cpp,
+	  kipi-plugins/metadataedit/exifadjust.h,
+	  kipi-plugins/metadataedit/exifcaption.cpp,
+	  kipi-plugins/metadataedit/exifcaption.h,
+	  kipi-plugins/metadataedit/exifdatetime.cpp,
+	  kipi-plugins/metadataedit/exifdatetime.h,
+	  kipi-plugins/metadataedit/exifdevice.cpp,
+	  kipi-plugins/metadataedit/exifdevice.h,
+	  kipi-plugins/metadataedit/exifeditdialog.cpp,
+	  kipi-plugins/metadataedit/exifeditdialog.h,
+	  kipi-plugins/metadataedit/exiflens.cpp,
+	  kipi-plugins/metadataedit/exiflens.h,
+	  kipi-plugins/metadataedit/exiflight.cpp,
+	  kipi-plugins/metadataedit/exiflight.h,
+	  kipi-plugins/metadataedit/iptccaption.cpp,
+	  kipi-plugins/metadataedit/iptccaption.h,
+	  kipi-plugins/metadataedit/iptccategories.cpp,
+	  kipi-plugins/metadataedit/iptccategories.h,
+	  kipi-plugins/metadataedit/iptccredits.cpp,
+	  kipi-plugins/metadataedit/iptccredits.h,
+	  kipi-plugins/metadataedit/iptcdatetime.cpp,
+	  kipi-plugins/metadataedit/iptcdatetime.h,
+	  kipi-plugins/metadataedit/iptceditdialog.cpp,
+	  kipi-plugins/metadataedit/iptceditdialog.h,
+	  kipi-plugins/metadataedit/iptckeywords.cpp,
+	  kipi-plugins/metadataedit/iptckeywords.h,
+	  kipi-plugins/metadataedit/iptcorigin.cpp,
+	  kipi-plugins/metadataedit/iptcorigin.h,
+	  kipi-plugins/metadataedit/iptcstatus.cpp,
+	  kipi-plugins/metadataedit/iptcstatus.h,
+	  kipi-plugins/metadataedit/iptcsubjects.cpp,
+	  kipi-plugins/metadataedit/iptcsubjects.h,
+	  kipi-plugins/metadataedit/metadatacheckbox.cpp,
+	  kipi-plugins/metadataedit/metadatacheckbox.h,
+	  kipi-plugins/metadataedit/plugin_metadataedit.cpp,
+	  kipi-plugins/metadataedit/plugin_metadataedit.h:
+	  fix headers
+
+2007-05-02 07:05  cgilles
+
+	* [r660281] kipi-plugins/jpeglossless/actionthread.cpp,
+	  kipi-plugins/jpeglossless/actionthread.h,
+	  kipi-plugins/jpeglossless/convert2grayscale.cpp,
+	  kipi-plugins/jpeglossless/convert2grayscale.h,
+	  kipi-plugins/jpeglossless/imageflip.cpp,
+	  kipi-plugins/jpeglossless/imageflip.h,
+	  kipi-plugins/jpeglossless/imagerotate.cpp,
+	  kipi-plugins/jpeglossless/imagerotate.h,
+	  kipi-plugins/jpeglossless/jpegtransform.cpp,
+	  kipi-plugins/jpeglossless/jpegtransform.h,
+	  kipi-plugins/jpeglossless/mtqueue.h,
+	  kipi-plugins/jpeglossless/plugin_jpeglossless.cpp,
+	  kipi-plugins/jpeglossless/plugin_jpeglossless.h,
+	  kipi-plugins/jpeglossless/utils.cpp,
+	  kipi-plugins/jpeglossless/utils.h:
+	  fix headers
+
+2007-05-02 06:55  cgilles
+
+	* [r660278] kipi-plugins/gpssync/gpsbabelbinary.cpp,
+	  kipi-plugins/gpssync/gpsbabelbinary.h,
+	  kipi-plugins/gpssync/gpsdatacontainer.h,
+	  kipi-plugins/gpssync/gpsdataparser.cpp,
+	  kipi-plugins/gpssync/gpsdataparser.h,
+	  kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpseditdialog.h,
+	  kipi-plugins/gpssync/gpslistviewitem.cpp,
+	  kipi-plugins/gpssync/gpslistviewitem.h,
+	  kipi-plugins/gpssync/gpsmapwidget.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.h,
+	  kipi-plugins/gpssync/gpssyncdialog.cpp,
+	  kipi-plugins/gpssync/gpssyncdialog.h,
+	  kipi-plugins/gpssync/kipiplugin_gpssync.desktop,
+	  kipi-plugins/gpssync/plugin_gpssync.cpp,
+	  kipi-plugins/gpssync/plugin_gpssync.h,
+	  kipi-plugins/jpeglossless/actions.h,
+	  kipi-plugins/jpeglossless/actionthread.cpp,
+	  kipi-plugins/jpeglossless/actionthread.h,
+	  kipi-plugins/jpeglossless/convert2grayscale.cpp,
+	  kipi-plugins/jpeglossless/convert2grayscale.h,
+	  kipi-plugins/jpeglossless/imageflip.cpp,
+	  kipi-plugins/jpeglossless/imageflip.h,
+	  kipi-plugins/jpeglossless/imagerotate.cpp,
+	  kipi-plugins/jpeglossless/imagerotate.h,
+	  kipi-plugins/jpeglossless/jpegtransform.cpp,
+	  kipi-plugins/jpeglossless/jpegtransform.h,
+	  kipi-plugins/jpeglossless/mtqueue.h,
+	  kipi-plugins/jpeglossless/utils.cpp,
+	  kipi-plugins/jpeglossless/utils.h,
+	  kipi-plugins/metadataedit/commenteditdialog.cpp,
+	  kipi-plugins/metadataedit/commenteditdialog.h,
+	  kipi-plugins/metadataedit/commentremovedialog.cpp,
+	  kipi-plugins/metadataedit/commentremovedialog.h,
+	  kipi-plugins/metadataedit/exifadjust.cpp,
+	  kipi-plugins/metadataedit/exifadjust.h,
+	  kipi-plugins/metadataedit/exifcaption.cpp,
+	  kipi-plugins/metadataedit/exifcaption.h,
+	  kipi-plugins/metadataedit/exifdatetime.cpp,
+	  kipi-plugins/metadataedit/exifdatetime.h,
+	  kipi-plugins/metadataedit/exifdevice.cpp,
+	  kipi-plugins/metadataedit/exifdevice.h,
+	  kipi-plugins/metadataedit/exifeditdialog.cpp,
+	  kipi-plugins/metadataedit/exifeditdialog.h,
+	  kipi-plugins/metadataedit/exiflens.cpp,
+	  kipi-plugins/metadataedit/exiflens.h,
+	  kipi-plugins/metadataedit/exiflight.cpp,
+	  kipi-plugins/metadataedit/exiflight.h,
+	  kipi-plugins/metadataedit/iptccaption.cpp,
+	  kipi-plugins/metadataedit/iptccaption.h,
+	  kipi-plugins/metadataedit/iptccategories.cpp,
+	  kipi-plugins/metadataedit/iptccategories.h,
+	  kipi-plugins/metadataedit/iptccredits.cpp,
+	  kipi-plugins/metadataedit/iptccredits.h,
+	  kipi-plugins/metadataedit/iptcdatetime.cpp,
+	  kipi-plugins/metadataedit/iptcdatetime.h,
+	  kipi-plugins/metadataedit/iptceditdialog.cpp,
+	  kipi-plugins/metadataedit/iptceditdialog.h,
+	  kipi-plugins/metadataedit/iptckeywords.cpp,
+	  kipi-plugins/metadataedit/iptckeywords.h,
+	  kipi-plugins/metadataedit/iptcorigin.cpp,
+	  kipi-plugins/metadataedit/iptcorigin.h,
+	  kipi-plugins/metadataedit/iptcstatus.cpp,
+	  kipi-plugins/metadataedit/iptcstatus.h,
+	  kipi-plugins/metadataedit/iptcsubjects.cpp,
+	  kipi-plugins/metadataedit/iptcsubjects.h,
+	  kipi-plugins/metadataedit/kipiplugin_metadataedit.desktop,
+	  kipi-plugins/metadataedit/metadatacheckbox.cpp,
+	  kipi-plugins/metadataedit/metadatacheckbox.h,
+	  kipi-plugins/metadataedit/plugin_metadataedit.cpp,
+	  kipi-plugins/metadataedit/plugin_metadataedit.h,
+	  kipi-plugins/mpegencoder/plugin_mpegencoder.cpp,
+	  kipi-plugins/mpegencoder/plugin_mpegencoder.h,
+	  kipi-plugins/sendimages/actions.h,
+	  kipi-plugins/sendimages/listimageserrordialog.cpp,
+	  kipi-plugins/sendimages/listimageserrordialog.h,
+	  kipi-plugins/sendimages/plugin_sendimages.cpp,
+	  kipi-plugins/sendimages/plugin_sendimages.h,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.h,
+	  kipi-plugins/timeadjust/plugin_timeadjust.cpp,
+	  kipi-plugins/timeadjust/plugin_timeadjust.h,
+	  kipi-plugins/timeadjust/timeadjustdialog.cpp,
+	  kipi-plugins/timeadjust/timeadjustdialog.h:
+	  fix email
+
+2007-05-01 23:08  gateau
+
+	* [r660206] kipi-plugins/htmlexport/Makefile.am,
+	  kipi-plugins/htmlexport/abstractthemeparameter.cpp,
+	  kipi-plugins/htmlexport/abstractthemeparameter.h,
+	  kipi-plugins/htmlexport/galleryinfo.cpp,
+	  kipi-plugins/htmlexport/galleryinfo.h,
+	  kipi-plugins/htmlexport/generator.cpp,
+	  kipi-plugins/htmlexport/listthemeparameter.cpp,
+	  kipi-plugins/htmlexport/listthemeparameter.h,
+	  kipi-plugins/htmlexport/stringthemeparameter.cpp,
+	  kipi-plugins/htmlexport/stringthemeparameter.h,
+	  kipi-plugins/htmlexport/wizard.cpp:
+	  Save values of theme parameters.
+
+2007-05-01 22:13  gateau
+
+	* [r660196] kipi-plugins/htmlexport/generator.cpp,
+	  kipi-plugins/htmlexport/theme.cpp,
+	  kipi-plugins/htmlexport/theme.h,
+	  kipi-plugins/htmlexport/wizard.cpp:
+	  Identify theme by internal name, not by path.
+
+2007-05-01 21:39  gateau
+
+	* [r660187] kipi-plugins/htmlexport/abstractthemeparameter.cpp,
+	  kipi-plugins/htmlexport/abstractthemeparameter.h,
+	  kipi-plugins/htmlexport/listthemeparameter.cpp,
+	  kipi-plugins/htmlexport/listthemeparameter.h,
+	  kipi-plugins/htmlexport/stringthemeparameter.cpp,
+	  kipi-plugins/htmlexport/stringthemeparameter.h,
+	  kipi-plugins/htmlexport/theme.cpp,
+	  kipi-plugins/htmlexport/wizard.cpp:
+	  Renamed ThemeParameter::name to internalName and
+	  ThemeParameter::title to name.
+	  This is more consistent with the Theme class.
+
+2007-05-01 21:28  gateau
+
+	* [r660186] kipi-plugins/htmlexport/Makefile.am,
+	  kipi-plugins/htmlexport/listthemeparameter.cpp,
+	  kipi-plugins/htmlexport/listthemeparameter.h,
+	  kipi-plugins/htmlexport/theme.cpp:
+	  Implemented a new type of theme parameter: List.
+
+2007-04-30 20:15  gateau
+
+	* [r659794] kipi-plugins/htmlexport/Makefile.am,
+	  kipi-plugins/htmlexport/abstractthemeparameter.cpp,
+	  kipi-plugins/htmlexport/abstractthemeparameter.h,
+	  kipi-plugins/htmlexport/galleryinfo.h,
+	  kipi-plugins/htmlexport/generator.cpp,
+	  kipi-plugins/htmlexport/stringthemeparameter.cpp,
+	  kipi-plugins/htmlexport/stringthemeparameter.h,
+	  kipi-plugins/htmlexport/theme.cpp,
+	  kipi-plugins/htmlexport/theme.h,
+	  kipi-plugins/htmlexport/themeparameterspage.ui,
+	  kipi-plugins/htmlexport/wizard.cpp:
+	  Started to add support for theme parameters.
+
+2007-04-29 15:03  gateau
+
+	* [r659139] kipi-plugins/htmlexport/themes/Makefile.am,
+	  kipi-plugins/htmlexport/themes/frames,
+	  kipi-plugins/htmlexport/themes/frames/Makefile.am,
+	  kipi-plugins/htmlexport/themes/frames/frames.desktop,
+	  kipi-plugins/htmlexport/themes/frames/style.css,
+	  kipi-plugins/htmlexport/themes/frames/template.xsl:
+	  Added new theme by Rüdiger Bente. Thanks!
+
+2007-04-28 22:37  gateau
+
+	* [r658936] kipi-plugins/htmlexport/imagesettingspage.ui:
+	  Oups, forgot to rename widget.
+
+2007-04-28 22:16  gateau
+
+	* [r658933] kipi-plugins/htmlexport/generator.cpp,
+	  kipi-plugins/htmlexport/plugin.cpp,
+	  kipi-plugins/htmlexport/wizard.cpp,
+	  kipi-plugins/htmlexport/wizard.h:
+	  Fix indentation and coding style.
+
+2007-04-28 22:04  gateau
+
+	* [r658930] kipi-plugins/htmlexport/generator.cpp,
+	  kipi-plugins/htmlexport/htmlexportconfig.kcfg,
+	  kipi-plugins/htmlexport/imagesettingspage.ui:
+	  Added support for including original image for download, based on
+	  a patch by
+	  Colin McMillen. Thanks Colin!
+
+2007-04-28 19:40  gkulzer
+
+	* [r658898] kipi-plugins/acquireimages/acquireimagedialog.cpp,
+	  kipi-plugins/acquireimages/acquireimagedialog.h,
+	  kipi-plugins/acquireimages/plugin_acquireimages.cpp,
+	  kipi-plugins/acquireimages/plugin_acquireimages.h,
+	  kipi-plugins/acquireimages/screenshotdialog.cpp,
+	  kipi-plugins/acquireimages/screenshotdialog.h,
+	  kipi-plugins/batchprocessimages/batchprocessimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimagesdialog.h,
+	  kipi-plugins/batchprocessimages/batchprocessimagesitem.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimagesitem.h,
+	  kipi-plugins/batchprocessimages/batchprocessimageslist.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimageslist.h,
+	  kipi-plugins/batchprocessimages/borderimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/borderimagesdialog.h,
+	  kipi-plugins/batchprocessimages/borderoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/borderoptionsdialog.h,
+	  kipi-plugins/batchprocessimages/colorimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/colorimagesdialog.h,
+	  kipi-plugins/batchprocessimages/coloroptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/coloroptionsdialog.h,
+	  kipi-plugins/batchprocessimages/convertimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/convertimagesdialog.h,
+	  kipi-plugins/batchprocessimages/convertoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/convertoptionsdialog.h,
+	  kipi-plugins/batchprocessimages/effectimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/effectimagesdialog.h,
+	  kipi-plugins/batchprocessimages/effectoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/effectoptionsdialog.h,
+	  kipi-plugins/batchprocessimages/filterimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/filterimagesdialog.h,
+	  kipi-plugins/batchprocessimages/filteroptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/filteroptionsdialog.h,
+	  kipi-plugins/batchprocessimages/imagepreview.cpp,
+	  kipi-plugins/batchprocessimages/imagepreview.h,
+	  kipi-plugins/batchprocessimages/outputdialog.cpp,
+	  kipi-plugins/batchprocessimages/outputdialog.h,
+	  kipi-plugins/batchprocessimages/plugin_batchprocessimages.cpp,
+	  kipi-plugins/batchprocessimages/plugin_batchprocessimages.h,
+	  kipi-plugins/batchprocessimages/recompressimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/recompressimagesdialog.h,
+	  kipi-plugins/batchprocessimages/recompressoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/recompressoptionsdialog.h,
+	  kipi-plugins/batchprocessimages/renameimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/renameimagesdialog.h,
+	  kipi-plugins/batchprocessimages/renameimageswidget.cpp,
+	  kipi-plugins/batchprocessimages/renameimageswidget.h,
+	  kipi-plugins/batchprocessimages/resizeimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/resizeimagesdialog.h,
+	  kipi-plugins/batchprocessimages/resizeoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/resizeoptionsdialog.h,
+	  kipi-plugins/calendar/calpainter.cpp,
+	  kipi-plugins/calendar/calpainter.h,
+	  kipi-plugins/calendar/calprint.h,
+	  kipi-plugins/calendar/calselect.cpp,
+	  kipi-plugins/calendar/calselect.h,
+	  kipi-plugins/calendar/calsettings.cpp,
+	  kipi-plugins/calendar/calsettings.h,
+	  kipi-plugins/calendar/caltemplate.cpp,
+	  kipi-plugins/calendar/caltemplate.h,
+	  kipi-plugins/calendar/calwidget.cpp,
+	  kipi-plugins/calendar/calwidget.h,
+	  kipi-plugins/calendar/calwizard.cpp,
+	  kipi-plugins/calendar/calwizard.h,
+	  kipi-plugins/calendar/monthwidget.cpp,
+	  kipi-plugins/calendar/monthwidget.h,
+	  kipi-plugins/calendar/plugin_calendar.cpp,
+	  kipi-plugins/calendar/plugin_calendar.h,
+	  kipi-plugins/cdarchiving/actions.h,
+	  kipi-plugins/cdarchiving/cdarchiving.cpp,
+	  kipi-plugins/cdarchiving/cdarchiving.h,
+	  kipi-plugins/cdarchiving/cdarchivingdialog.cpp,
+	  kipi-plugins/cdarchiving/cdarchivingdialog.h,
+	  kipi-plugins/cdarchiving/plugin_cdarchiving.cpp,
+	  kipi-plugins/cdarchiving/plugin_cdarchiving.h,
+	  kipi-plugins/common/include/kpaboutdata.h,
+	  kipi-plugins/common/include/pluginsversion.h,
+	  kipi-plugins/common/libkipiplugins/kpaboutdata.cpp,
+	  kipi-plugins/findimages/actions.cpp,
+	  kipi-plugins/findimages/actions.h,
+	  kipi-plugins/findimages/compareoperation.h,
+	  kipi-plugins/findimages/displaycompare.cpp,
+	  kipi-plugins/findimages/displaycompare.h,
+	  kipi-plugins/findimages/fastcompare.cpp,
+	  kipi-plugins/findimages/fastcompare.h,
+	  kipi-plugins/findimages/finddupplicatedialog.cpp,
+	  kipi-plugins/findimages/finddupplicatedialog.h,
+	  kipi-plugins/findimages/finddupplicateimages.cpp,
+	  kipi-plugins/findimages/finddupplicateimages.h,
+	  kipi-plugins/findimages/fuzzycompare.cpp,
+	  kipi-plugins/findimages/fuzzycompare.h,
+	  kipi-plugins/findimages/imagesimilaritydata.h,
+	  kipi-plugins/findimages/plugin_findimages.cpp,
+	  kipi-plugins/findimages/plugin_findimages.h,
+	  kipi-plugins/flickrexport/exifrestorer.cpp,
+	  kipi-plugins/flickrexport/exifrestorer.h,
+	  kipi-plugins/flickrexport/flickritem.h,
+	  kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrtalker.h,
+	  kipi-plugins/flickrexport/flickrviewitem.cpp,
+	  kipi-plugins/flickrexport/flickrviewitem.h,
+	  kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h,
+	  kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.h,
+	  kipi-plugins/flickrexport/jpegsection.h,
+	  kipi-plugins/flickrexport/login.cpp,
+	  kipi-plugins/flickrexport/login.h,
+	  kipi-plugins/flickrexport/mpform.cpp,
+	  kipi-plugins/flickrexport/mpform.h,
+	  kipi-plugins/flickrexport/plugin_flickrexport.cpp,
+	  kipi-plugins/flickrexport/plugin_flickrexport.h,
+	  kipi-plugins/galleryexport/galleries.cpp,
+	  kipi-plugins/galleryexport/galleries.h,
+	  kipi-plugins/galleryexport/galleryconfig.cpp,
+	  kipi-plugins/galleryexport/galleryconfig.h,
+	  kipi-plugins/galleryexport/galleryitem.h,
+	  kipi-plugins/galleryexport/gallerylist.cpp,
+	  kipi-plugins/galleryexport/gallerylist.h,
+	  kipi-plugins/galleryexport/gallerympform.cpp,
+	  kipi-plugins/galleryexport/gallerympform.h,
+	  kipi-plugins/galleryexport/gallerytalker.cpp,
+	  kipi-plugins/galleryexport/gallerytalker.h,
+	  kipi-plugins/galleryexport/galleryviewitem.cpp,
+	  kipi-plugins/galleryexport/galleryviewitem.h,
+	  kipi-plugins/galleryexport/gallerywidget.cpp,
+	  kipi-plugins/galleryexport/gallerywidget.h,
+	  kipi-plugins/galleryexport/gallerywindow.cpp,
+	  kipi-plugins/galleryexport/gallerywindow.h,
+	  kipi-plugins/galleryexport/plugin_galleryexport.cpp,
+	  kipi-plugins/galleryexport/plugin_galleryexport.h,
+	  kipi-plugins/gpssync/getlonlat.php,
+	  kipi-plugins/gpssync/gpsbabelbinary.cpp,
+	  kipi-plugins/gpssync/gpsbabelbinary.h,
+	  kipi-plugins/gpssync/gpsdatacontainer.h,
+	  kipi-plugins/gpssync/gpsdataparser.cpp,
+	  kipi-plugins/gpssync/gpsdataparser.h,
+	  kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpseditdialog.h,
+	  kipi-plugins/gpssync/gpslistviewitem.cpp,
+	  kipi-plugins/gpssync/gpslistviewitem.h,
+	  kipi-plugins/gpssync/gpsmapwidget.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.h,
+	  kipi-plugins/gpssync/gpssyncdialog.cpp,
+	  kipi-plugins/gpssync/gpssyncdialog.h,
+	  kipi-plugins/gpssync/plugin_gpssync.cpp,
+	  kipi-plugins/gpssync/plugin_gpssync.h,
+	  kipi-plugins/helloworld/plugin_helloworld.cpp,
+	  kipi-plugins/helloworld/plugin_helloworld.h,
+	  kipi-plugins/htmlexport/galleryinfo.h,
+	  kipi-plugins/htmlexport/generator.cpp,
+	  kipi-plugins/htmlexport/generator.h,
+	  kipi-plugins/htmlexport/plugin.cpp,
+	  kipi-plugins/htmlexport/plugin.h,
+	  kipi-plugins/htmlexport/theme.cpp,
+	  kipi-plugins/htmlexport/theme.h,
+	  kipi-plugins/htmlexport/wizard.cpp,
+	  kipi-plugins/htmlexport/wizard.h,
+	  kipi-plugins/htmlexport/xmlutils.h,
+	  kipi-plugins/imagesgallery/actions.h,
+	  kipi-plugins/imagesgallery/exifrestorer.cpp,
+	  kipi-plugins/imagesgallery/exifrestorer.h,
+	  kipi-plugins/imagesgallery/imagesgallery.cpp,
+	  kipi-plugins/imagesgallery/imagesgallery.h,
+	  kipi-plugins/imagesgallery/imgallerydialog.cpp,
+	  kipi-plugins/imagesgallery/imgallerydialog.h,
+	  kipi-plugins/imagesgallery/jpegsection.h,
+	  kipi-plugins/imagesgallery/plugin_imagesgallery.cpp,
+	  kipi-plugins/imagesgallery/plugin_imagesgallery.h,
+	  kipi-plugins/imageviewer/ogl.cpp, kipi-plugins/imageviewer/ogl.h,
+	  kipi-plugins/imageviewer/plugin_viewer.cpp,
+	  kipi-plugins/imageviewer/plugin_viewer.h,
+	  kipi-plugins/imageviewer/texture.cpp,
+	  kipi-plugins/imageviewer/texture.h,
+	  kipi-plugins/imageviewer/timer.cpp,
+	  kipi-plugins/imageviewer/timer.h,
+	  kipi-plugins/ipodexport/imagelist.h,
+	  kipi-plugins/jpeglossless/actions.h,
+	  kipi-plugins/jpeglossless/actionthread.cpp,
+	  kipi-plugins/jpeglossless/actionthread.h,
+	  kipi-plugins/jpeglossless/convert2grayscale.cpp,
+	  kipi-plugins/jpeglossless/convert2grayscale.h,
+	  kipi-plugins/jpeglossless/imageflip.cpp,
+	  kipi-plugins/jpeglossless/imageflip.h,
+	  kipi-plugins/jpeglossless/imagerotate.cpp,
+	  kipi-plugins/jpeglossless/imagerotate.h,
+	  kipi-plugins/jpeglossless/jpegtransform.cpp,
+	  kipi-plugins/jpeglossless/jpegtransform.h,
+	  kipi-plugins/jpeglossless/mtqueue.h,
+	  kipi-plugins/jpeglossless/plugin_jpeglossless.cpp,
+	  kipi-plugins/jpeglossless/plugin_jpeglossless.h,
+	  kipi-plugins/jpeglossless/utils.cpp,
+	  kipi-plugins/jpeglossless/utils.h,
+	  kipi-plugins/kameraklient/camerafolderitem.cpp,
+	  kipi-plugins/kameraklient/camerafolderitem.h,
+	  kipi-plugins/kameraklient/camerafolderview.cpp,
+	  kipi-plugins/kameraklient/camerafolderview.h,
+	  kipi-plugins/kameraklient/cameraiconitem.cpp,
+	  kipi-plugins/kameraklient/cameraiconitem.h,
+	  kipi-plugins/kameraklient/cameraiconview.cpp,
+	  kipi-plugins/kameraklient/cameraiconview.h,
+	  kipi-plugins/kameraklient/cameralist.cpp,
+	  kipi-plugins/kameraklient/cameralist.h,
+	  kipi-plugins/kameraklient/cameraselection.cpp,
+	  kipi-plugins/kameraklient/cameraselection.h,
+	  kipi-plugins/kameraklient/cameratype.cpp,
+	  kipi-plugins/kameraklient/cameratype.h,
+	  kipi-plugins/kameraklient/cameraui.cpp,
+	  kipi-plugins/kameraklient/cameraui.h,
+	  kipi-plugins/kameraklient/dmessagebox.cpp,
+	  kipi-plugins/kameraklient/dmessagebox.h,
+	  kipi-plugins/kameraklient/gpcamera.cpp,
+	  kipi-plugins/kameraklient/gpcamera.h,
+	  kipi-plugins/kameraklient/gpcommand.h,
+	  kipi-plugins/kameraklient/gpcontroller.cpp,
+	  kipi-plugins/kameraklient/gpcontroller.h,
+	  kipi-plugins/kameraklient/gpeventfilter.cpp,
+	  kipi-plugins/kameraklient/gpeventfilter.h,
+	  kipi-plugins/kameraklient/gpevents.h,
+	  kipi-plugins/kameraklient/gpfileitemcontainer.cpp,
+	  kipi-plugins/kameraklient/gpfileitemcontainer.h,
+	  kipi-plugins/kameraklient/gpfileiteminfo.cpp,
+	  kipi-plugins/kameraklient/gpfileiteminfo.h,
+	  kipi-plugins/kameraklient/gpfileiteminfodlg.cpp,
+	  kipi-plugins/kameraklient/gpfileiteminfodlg.h,
+	  kipi-plugins/kameraklient/gpiface.cpp,
+	  kipi-plugins/kameraklient/gpiface.h,
+	  kipi-plugins/kameraklient/gpstatus.cpp,
+	  kipi-plugins/kameraklient/gpstatus.h,
+	  kipi-plugins/kameraklient/kameraklient.cpp,
+	  kipi-plugins/kameraklient/kameraklient.h,
+	  kipi-plugins/kameraklient/mtlist.h,
+	  kipi-plugins/kameraklient/mtqueue.h,
+	  kipi-plugins/kameraklient/savefiledialog.cpp,
+	  kipi-plugins/kameraklient/savefiledialog.h,
+	  kipi-plugins/kameraklient/setupcamera.cpp,
+	  kipi-plugins/kameraklient/setupcamera.h,
+	  kipi-plugins/kameraklient/thumbitem.cpp,
+	  kipi-plugins/kameraklient/thumbitem.h,
+	  kipi-plugins/kameraklient/thumbview.cpp,
+	  kipi-plugins/kameraklient/thumbview.h,
+	  kipi-plugins/metadataedit/commenteditdialog.cpp,
+	  kipi-plugins/metadataedit/commenteditdialog.h,
+	  kipi-plugins/metadataedit/commentremovedialog.cpp,
+	  kipi-plugins/metadataedit/commentremovedialog.h,
+	  kipi-plugins/metadataedit/exifadjust.cpp,
+	  kipi-plugins/metadataedit/exifadjust.h,
+	  kipi-plugins/metadataedit/exifcaption.cpp,
+	  kipi-plugins/metadataedit/exifcaption.h,
+	  kipi-plugins/metadataedit/exifdatetime.cpp,
+	  kipi-plugins/metadataedit/exifdatetime.h,
+	  kipi-plugins/metadataedit/exifdevice.cpp,
+	  kipi-plugins/metadataedit/exifdevice.h,
+	  kipi-plugins/metadataedit/exifeditdialog.cpp,
+	  kipi-plugins/metadataedit/exifeditdialog.h,
+	  kipi-plugins/metadataedit/exiflens.cpp,
+	  kipi-plugins/metadataedit/exiflens.h,
+	  kipi-plugins/metadataedit/exiflight.cpp,
+	  kipi-plugins/metadataedit/exiflight.h,
+	  kipi-plugins/metadataedit/iptccaption.cpp,
+	  kipi-plugins/metadataedit/iptccaption.h,
+	  kipi-plugins/metadataedit/iptccategories.cpp,
+	  kipi-plugins/metadataedit/iptccategories.h,
+	  kipi-plugins/metadataedit/iptccredits.cpp,
+	  kipi-plugins/metadataedit/iptccredits.h,
+	  kipi-plugins/metadataedit/iptcdatetime.cpp,
+	  kipi-plugins/metadataedit/iptcdatetime.h,
+	  kipi-plugins/metadataedit/iptceditdialog.cpp,
+	  kipi-plugins/metadataedit/iptceditdialog.h,
+	  kipi-plugins/metadataedit/iptckeywords.cpp,
+	  kipi-plugins/metadataedit/iptckeywords.h,
+	  kipi-plugins/metadataedit/iptcorigin.cpp,
+	  kipi-plugins/metadataedit/iptcorigin.h,
+	  kipi-plugins/metadataedit/iptcstatus.cpp,
+	  kipi-plugins/metadataedit/iptcstatus.h,
+	  kipi-plugins/metadataedit/iptcsubjects.cpp,
+	  kipi-plugins/metadataedit/iptcsubjects.h,
+	  kipi-plugins/metadataedit/metadatacheckbox.cpp,
+	  kipi-plugins/metadataedit/metadatacheckbox.h,
+	  kipi-plugins/metadataedit/plugin_metadataedit.cpp,
+	  kipi-plugins/metadataedit/plugin_metadataedit.h,
+	  kipi-plugins/mpegencoder/checkbinprog.cpp,
+	  kipi-plugins/mpegencoder/checkbinprog.h,
+	  kipi-plugins/mpegencoder/kimg2mpg.cpp,
+	  kipi-plugins/mpegencoder/kimg2mpg.h,
+	  kipi-plugins/mpegencoder/kshowdebuggingoutput.cpp,
+	  kipi-plugins/mpegencoder/kshowdebuggingoutput.h,
+	  kipi-plugins/mpegencoder/optionsdialog.cpp,
+	  kipi-plugins/mpegencoder/optionsdialog.h,
+	  kipi-plugins/mpegencoder/plugin_mpegencoder.cpp,
+	  kipi-plugins/mpegencoder/plugin_mpegencoder.h,
+	  kipi-plugins/printwizard/cropframe.cpp,
+	  kipi-plugins/printwizard/plugin_printwizard.cpp,
+	  kipi-plugins/printwizard/plugin_printwizard.h,
+	  kipi-plugins/printwizard/tphoto.cpp,
+	  kipi-plugins/rawconverter/actions.h,
+	  kipi-plugins/rawconverter/actionthread.cpp,
+	  kipi-plugins/rawconverter/actionthread.h,
+	  kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/batchdialog.h,
+	  kipi-plugins/rawconverter/clistviewitem.h,
+	  kipi-plugins/rawconverter/mtqueue.h,
+	  kipi-plugins/rawconverter/plugin_rawconverter.cpp,
+	  kipi-plugins/rawconverter/plugin_rawconverter.h,
+	  kipi-plugins/rawconverter/previewwidget.cpp,
+	  kipi-plugins/rawconverter/previewwidget.h,
+	  kipi-plugins/rawconverter/rawdecodingiface.cpp,
+	  kipi-plugins/rawconverter/rawdecodingiface.h,
+	  kipi-plugins/rawconverter/savesettingswidget.cpp,
+	  kipi-plugins/rawconverter/savesettingswidget.h,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.h,
+	  kipi-plugins/sendimages/actions.h,
+	  kipi-plugins/sendimages/listimageserrordialog.cpp,
+	  kipi-plugins/sendimages/listimageserrordialog.h,
+	  kipi-plugins/sendimages/plugin_sendimages.cpp,
+	  kipi-plugins/sendimages/plugin_sendimages.h,
+	  kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimages.h,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.h,
+	  kipi-plugins/simpleviewerexport/firstrundlg.cpp,
+	  kipi-plugins/simpleviewerexport/firstrundlg.h,
+	  kipi-plugins/simpleviewerexport/plugin_simpleviewer.cpp,
+	  kipi-plugins/simpleviewerexport/plugin_simpleviewer.h,
+	  kipi-plugins/simpleviewerexport/simpleviewerexport.cpp,
+	  kipi-plugins/simpleviewerexport/simpleviewerexport.h,
+	  kipi-plugins/simpleviewerexport/svedialog.cpp,
+	  kipi-plugins/simpleviewerexport/svedialog.h,
+	  kipi-plugins/slideshow/imlibiface.cpp,
+	  kipi-plugins/slideshow/imlibiface.h,
+	  kipi-plugins/slideshow/plugin_slideshow.cpp,
+	  kipi-plugins/slideshow/plugin_slideshow.h,
+	  kipi-plugins/slideshow/slideshow.cpp,
+	  kipi-plugins/slideshow/slideshow.h,
+	  kipi-plugins/slideshow/slideshowconfig.cpp,
+	  kipi-plugins/slideshow/slideshowconfig.h,
+	  kipi-plugins/slideshow/slideshowgl.cpp,
+	  kipi-plugins/slideshow/slideshowgl.h,
+	  kipi-plugins/slideshow/toolbar.cpp,
+	  kipi-plugins/slideshow/toolbar.h,
+	  kipi-plugins/sync/galleryconfig.cpp,
+	  kipi-plugins/sync/galleryconfig.h,
+	  kipi-plugins/sync/galleryitem.h,
+	  kipi-plugins/sync/galleryviewitem.cpp,
+	  kipi-plugins/sync/galleryviewitem.h,
+	  kipi-plugins/sync/gallerywidget.cpp,
+	  kipi-plugins/sync/gallerywidget.h,
+	  kipi-plugins/sync/gallerywindow.cpp,
+	  kipi-plugins/sync/gallerywindow.h,
+	  kipi-plugins/sync/libkipi2/collection.cpp,
+	  kipi-plugins/sync/libkipi2/collection.h,
+	  kipi-plugins/sync/libkipi2/interface.h,
+	  kipi-plugins/sync/libkipi2/item.cpp,
+	  kipi-plugins/sync/libkipi2/item.h,
+	  kipi-plugins/sync/plugin_sync.cpp,
+	  kipi-plugins/sync/plugin_sync.h, kipi-plugins/sync/sink.cpp,
+	  kipi-plugins/sync/sink.h, kipi-plugins/sync/sinkfactory.cpp,
+	  kipi-plugins/sync/sinkfactory.h, kipi-plugins/sync/sinklist.cpp,
+	  kipi-plugins/sync/sinklist.h, kipi-plugins/sync/sinks.cpp,
+	  kipi-plugins/sync/sinks.h,
+	  kipi-plugins/sync/sinks/gallery/gallerycollection.cpp,
+	  kipi-plugins/sync/sinks/gallery/gallerycollection.h,
+	  kipi-plugins/sync/sinks/gallery/galleryform.cpp,
+	  kipi-plugins/sync/sinks/gallery/galleryform.h,
+	  kipi-plugins/sync/sinks/gallery/galleryitem.cpp,
+	  kipi-plugins/sync/sinks/gallery/galleryitem.h,
+	  kipi-plugins/sync/sinks/gallery/gallerysink.cpp,
+	  kipi-plugins/sync/sinks/gallery/gallerysink.h,
+	  kipi-plugins/timeadjust/plugin_timeadjust.cpp,
+	  kipi-plugins/timeadjust/plugin_timeadjust.h,
+	  kipi-plugins/timeadjust/timeadjustdialog.cpp,
+	  kipi-plugins/timeadjust/timeadjustdialog.h,
+	  kipi-plugins/wallpaper/plugin_wallpaper.cpp,
+	  kipi-plugins/wallpaper/plugin_wallpaper.h:
+	  BUG:144455
+	  thanks a lot to Stéphane Pontier
+
+2007-04-28 13:28  gateau
+
+	* [r658763] kipi-plugins/htmlexport/generator.cpp:
+	  Applied variant of the patch by Colin McMillen to rotate images
+	  according to
+	  angle() info.
+
+2007-04-26 10:45  fsalvi
+
+	* [r658210] kipi-plugins/gpssync/kmlexport.cpp,
+	  kipi-plugins/gpssync/kmlexport.h,
+	  kipi-plugins/gpssync/kmlexportconfig.cpp,
+	  kipi-plugins/gpssync/kmlexportconfig.h,
+	  kipi-plugins/gpssync/kmlgpsdataparser.cpp,
+	  kipi-plugins/gpssync/kmlgpsdataparser.h,
+	  kipi-plugins/gpssync/plugin_gpssync.cpp:
+	  Apply patch from Stephane Pontier.
+	  Fix i18n issues reported by Brian Remedios.
+	  
+	  CCBUG: 139793
+	  CCMAIL: shadow.walker@free.fr
+
+2007-04-25 16:50  anaselli
+
+	* [r657992] kipi-plugins/sendimages/Makefile.am,
+	  kipi-plugins/sendimages/sendimages.cpp:
+	  Added raw support to sendimage plugin using Gilles' patch
+	  CCMAIL: michael.hoechstetter@gmx.de, caulier.gilles@gmail.com
+
+2007-04-20 13:31  cgilles
+
+	* [r656158] kipi-plugins/configure.in.bot:
+	  xstl ==> xslt
+
+2007-04-18 04:17  cgilles
+
+	* [r655252] kipi-plugins/README:
+	  update
+
+2007-04-18 04:14  cgilles
+
+	* [r655251] kipi-plugins/NEWS:
+	  update
+
+2007-04-18 00:50  cguthrie
+
+	* [r655231] kipi-plugins/galleryexport/gallerympform.cpp,
+	  kipi-plugins/galleryexport/gallerytalker.cpp:
+	  Fix login to Gallery 2.2.
+	  
+	  This was a very annoying bug to track down but it essentially
+	  relates
+	  to a bug in the generation of Cookies in Gallery 2.2.
+	  
+	  Gallery actually generates 3 Set-Cookie headers in it's response
+	  which
+	  seems excessive. The first one is a GALLERYSID=<blank> and the
+	  other
+	  two set it to the correct value. The routine that parses cookies
+	  is
+	  somewhat dumb and just passes any cookies it receives back to the
+	  server on the next request. By passing the blank GALLERYSID,
+	  Gallery
+	  ensured that it did not connect to your logged in session.
+	  
+	  The cookie parsing code should be make more intellegent, but in
+	  the
+	  mean time I've put in a very simple fix.
+	  
+	  Testing and feedback appreciated.
+	  
+	  This also applies the patch by Martin Kaufmann - thanks.
+	  BUG: 142259
+
+2007-04-13 11:13  scripty
+
+	* [r653450] kipi-plugins/flickrexport/exifrestorer.cpp,
+	  kipi-plugins/flickrexport/exifrestorer.h,
+	  kipi-plugins/flickrexport/jpegsection.h:
+	  C++ files should not be executable
+	  (goutte)
+
+2007-04-10 21:04  djarvie
+
+	* [r652387]
+	  trunk/extragear/graphics/digikam/digikam/albumfiletip.cpp,
+	  trunk/extragear/graphics/digikam/digikam/albumiconitem.cpp,
+	  trunk/extragear/graphics/digikam/digikam/kdateedit.cpp,
+	  trunk/extragear/graphics/digikam/libs/imageproperties/cameraitempropertiestab.cpp,
+	  trunk/extragear/graphics/digikam/libs/imageproperties/imagepropertiestab.cpp,
+	  trunk/extragear/graphics/digikam/libs/thumbbar/thumbbar.cpp,
+	  trunk/extragear/graphics/digikam/utilities/slideshow/slideshow.cpp,
+	  trunk/extragear/graphics/kgraphviewer/src/printing/simpleprintingengine.cpp,
+	  trunk/extragear/graphics/kphotoalbum/DateBar/ViewHandler.cpp,
+	  trunk/extragear/graphics/showimg/showimg/batchrenamer.cpp,
+	  trunk/extragear/graphics/showimg/showimg/mainwindow.cpp,
+	  kipi-plugins/rawconverter/actionthread.cpp,
+	  trunk/extragear/multimedia/kaffeine/src/input/dvb/kevents.cpp,
+	  trunk/extragear/network/kchat/kchatmainwindow.cpp,
+	  trunk/extragear/network/knemo/knemod/interfacestatisticsdialog.cpp,
+	  trunk/extragear/office/datakiosk/datakiosk/src/dateedit.cpp,
+	  trunk/extragear/office/datakiosk/src/dateedit.cpp,
+	  trunk/extragear/utils/kedit/kedit.cpp,
+	  trunk/extragear/utils/krecipes/src/widgets/kdateedit.cpp:
+	  Revert KLocale::formatDate(), formatDateTime() commit for KDE3
+	  modules
+
+2007-04-10 19:03  djarvie
+
+	* [r652351]
+	  trunk/extragear/graphics/digikam/digikam/albumfiletip.cpp,
+	  trunk/extragear/graphics/digikam/digikam/albumiconitem.cpp,
+	  trunk/extragear/graphics/digikam/digikam/kdateedit.cpp,
+	  trunk/extragear/graphics/digikam/libs/imageproperties/cameraitempropertiestab.cpp,
+	  trunk/extragear/graphics/digikam/libs/imageproperties/imagepropertiestab.cpp,
+	  trunk/extragear/graphics/digikam/libs/thumbbar/thumbbar.cpp,
+	  trunk/extragear/graphics/digikam/utilities/slideshow/slideshow.cpp,
+	  trunk/extragear/graphics/kgraphviewer/src/printing/simpleprintingengine.cpp,
+	  trunk/extragear/graphics/kphotoalbum/DateBar/ViewHandler.cpp,
+	  trunk/extragear/graphics/kst/src/extdate/kstextdatepicker.cpp,
+	  trunk/extragear/graphics/showimg/showimg/batchrenamer.cpp,
+	  trunk/extragear/graphics/showimg/showimg/mainwindow.cpp,
+	  kipi-plugins/rawconverter/actionthread.cpp,
+	  trunk/extragear/multimedia/amarok/src/tagdialog.cpp,
+	  trunk/extragear/multimedia/kaffeine/src/input/dvb/kevents.cpp,
+	  trunk/extragear/network/kchat/kchatmainwindow.cpp,
+	  trunk/extragear/network/knemo/knemod/interfacestatisticsdialog.cpp,
+	  trunk/extragear/office/datakiosk/datakiosk/src/dateedit.cpp,
+	  trunk/extragear/office/datakiosk/src/dateedit.cpp,
+	  trunk/extragear/office/kile/kile/quickdocumentdialog.cpp,
+	  trunk/extragear/utils/kedit/kedit.cpp,
+	  trunk/extragear/utils/krecipes/src/widgets/kdateedit.cpp:
+	  Add fancy date option to KLocale::formatDate(),
+	  KLocale::formatDateTime()
+
+2007-04-09 17:58  anaselli
+
+	* [r651952] kipi-plugins/README:
+	  Added missed requirements to run images2mpg (mpegencoder plugin)
+	  
+	  CCBUG:143979
+
+2007-04-08 20:14  kusi
+
+	* [r651660] kipi-plugins/imageviewer/Makefile.am,
+	  kipi-plugins/imageviewer/help.ui,
+	  kipi-plugins/imageviewer/ogl.cpp:
+	  display a help dialog if an unsupported key was pressed
+
+2007-04-07 15:42  cgilles
+
+	* [r651404] kipi-plugins/NEWS:
+	  update
+
+2007-04-07 15:41  cgilles
+
+	* [r651403] kipi-plugins/NEWS:
+	  update
+
+2007-04-07 15:39  cgilles
+
+	* [r651402] kipi-plugins/gpssync/Makefile.am,
+	  kipi-plugins/gpssync/gpsdataparser.h,
+	  kipi-plugins/gpssync/kmlexport.cpp,
+	  kipi-plugins/gpssync/kmlexport.h,
+	  kipi-plugins/gpssync/kmlexportconfig.cpp,
+	  kipi-plugins/gpssync/kmlexportconfig.h,
+	  kipi-plugins/gpssync/kmlgpsdataparser.cpp,
+	  kipi-plugins/gpssync/kmlgpsdataparser.h,
+	  kipi-plugins/gpssync/plugin_gpssync.cpp,
+	  kipi-plugins/gpssync/plugin_gpssync.h:
+	  kipi-plugins from trunk : GPSSync : patch from Stéphane Pontier
+	  to add new option for export GPS position from pictures to a KML
+	  file. This one can be viewed in GoogleEarth or GoogleMaps !
+	  
+	  BUG: 139793
+	  CCMAIL: shadow.walker@free.fr
+	  CCMAIL: kde-imaging@kde.org
+
+2007-04-01 20:38  anaselli
+
+	* [r648990] kipi-plugins/mpegencoder/kimg2mpg.cpp:
+	  Added a test to avoid files not reachable are passed to img2mpg
+	  script as reported by a Mandriva user:
+	  "open gwenview from konqueror when it is using the protocol
+	  system:/ so the path is something like
+	  /media/hdxx/user_home/file.jpg
+	  instead of /home/user_home/file.jpg"
+	  
+	  CCMAIL:kde-imaging@kde.org
+
+2007-03-30 08:34  cgilles
+
+	* [r648022] kipi-plugins/NEWS:
+	  update
+
+2007-03-30 08:12  gkulzer
+
+	* [r648020] kipi-plugins/gpssync/gpsdataparser.cpp:
+	  correcting interpolation
+	  CCMAIL:caulier.gilles@gmail.com, shadow.walker@free.fr
+	  BUG:143594
+
+2007-03-29 20:46  anaselli
+
+	* [r647905] kipi-plugins/printwizard/frmprintwizard.cpp:
+	  Added 8 photos per page (A4) option
+	  
+	  CCMAIL:cannewilson@googlemail.com
+
+2007-03-24 17:24  lure
+
+	* [r646131] kipi-plugins/jpeglossless/plugin_jpeglossless.cpp:
+	  Use Ctrl-Shift-arrow as shortcut for Rotate-Left/Right
+	  
+	  Ctrl-arrow is used in some other applications and may confuse
+	  users.
+	  
+	  CCBUG: 141530
+
+2007-03-18 13:17  cguthrie
+
+	* [r643808] kipi-plugins/sync/libkipi2/collection.cpp,
+	  kipi-plugins/sync/libkipi2/interface.cpp,
+	  kipi-plugins/sync/libkipi2/interface.h,
+	  kipi-plugins/sync/sink.cpp, kipi-plugins/sync/sink.h,
+	  kipi-plugins/sync/sinkfactory.cpp,
+	  kipi-plugins/sync/sinkfactory.h, kipi-plugins/sync/sinks.cpp,
+	  kipi-plugins/sync/sinks.h,
+	  kipi-plugins/sync/sinks/gallery/gallerysink.cpp,
+	  kipi-plugins/sync/sinks/gallery/gallerysink.h:
+	  Some more moves towards this plugin. Slow going as not got much
+	  time to concentrate on it.
+
+2007-03-17 16:24  kusi
+
+	* [r643495] kipi-plugins/imageviewer/ogl.cpp:
+	  don't zoom if zoomdelta=0. This fixes corruption if you try to
+	  zoom with a horizontal mouse move (+right button)
+
+2007-03-14 12:13  cgilles
+
+	* [r642433] kipi-plugins/NEWS:
+	  update
+
+2007-03-13 16:49  mueller
+
+	* [r642206] kipi-plugins/flickrexport/flickrtalker.cpp:
+	  compile++
+
+2007-03-12 08:47  cgilles
+
+	* [r641671] kipi-plugins/NEWS:
+	  update
+
+2007-03-12 08:47  cgilles
+
+	* [r641670] kipi-plugins/gpssync/gpssyncdialog.cpp,
+	  kipi-plugins/gpssync/gpssyncdialog.h:
+	  kipi-plugins from trunk : GPS Sync dialog : add missing GMT+13
+	  and GMT+14 time zone
+	  BUG: 142848
+
+2007-03-09 23:40  kusi
+
+	* [r641087] kipi-plugins/imageviewer/ogl.cpp,
+	  kipi-plugins/imageviewer/ogl.h,
+	  kipi-plugins/imageviewer/plugin_viewer.cpp:
+	  proper error handling in case no OpenGL context is found or
+	  GL_ARB_texture_rectangle is not supported
+
+2007-03-06 09:22  lure
+
+	* [r639921] kipi-plugins/NEWS,
+	  kipi-plugins/jpeglossless/plugin_jpeglossless.cpp:
+	  JPEGLossLess: Use Rotate Left/Right actions instead of rotate
+	  by degree (90/180/270). This is more intuitive and easier for
+	  user.
+	  Use Ctrl-Left and Ctrl-Right as keyboard shortcuts.
+	  
+	  BUG: 141530
+
+2007-03-06 08:38  cgilles
+
+	* [r639912] kipi-plugins/NEWS:
+	  update
+
+2007-03-03 14:05  kusi
+
+	* [r638833] kipi-plugins/imageviewer/texture.cpp:
+	  fixing "zoom to original size"
+
+2007-03-03 12:41  kusi
+
+	* [r638817] kipi-plugins/imageviewer/ogl.cpp:
+	  ctrl + scrollwheel does zooming now
+
+2007-03-03 11:56  kusi
+
+	* [r638798] kipi-plugins/imageviewer/README,
+	  kipi-plugins/imageviewer/ogl.h:
+	  updated README
+
+2007-03-03 03:38  gkulzer
+
+	* [r638734] kipi-plugins/jpeglossless/plugin_jpeglossless.cpp,
+	  kipi-plugins/jpeglossless/plugin_jpeglossless.h:
+	  If no error occurs, run dialog will be automatically closed.
+	  BUG:141528
+	  CCMAIL:caulier.gilles@gmail.com
+
+2007-02-24 13:18  gkulzer
+
+	* [r636853] kipi-plugins/gpssync/gpssyncdialog.cpp:
+	  clean out formatting from i18n
+
+2007-02-24 09:50  gkulzer
+
+	* [r636811] kipi-plugins/gpssync/gpssyncdialog.cpp:
+	  missing blanc in i18n
+
+2007-02-24 09:47  gkulzer
+
+	* [r636810] kipi-plugins/gpssync/gpssyncdialog.cpp:
+	  improve i18n strings for better understanding
+	  CCMAIL:caulier.gilles@gmail.com
+
+2007-02-24 09:17  gkulzer
+
+	* [r636808] kipi-plugins/gpssync/gpssyncdialog.cpp:
+	  correct and improve i18n strings (distance time -> time distance,
+	  gap time -> time gap)
+	  CCMAIL:caulier.gilles@gmail.com
+
+2007-02-24 08:25  gkulzer
+
+	* [r636799] kipi-plugins/gpssync/gpssyncdialog.cpp:
+	  correct and improve i18n strings
+
+2007-02-23 11:49  cgilles
+
+	* [r636507] kipi-plugins/rawconverter/actionthread.cpp,
+	  kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/savesettingswidget.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp:
+	  fix i18n
+
+2007-02-23 11:47  cgilles
+
+	* [r636506] kipi-plugins/rawconverter/singledialog.cpp:
+	  using PPM to faster preview
+
+2007-02-23 11:44  cgilles
+
+	* [r636505] kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/batchdialog.h,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.h:
+	  disable settings if busy
+
+2007-02-23 06:56  cgilles
+
+	* [r636447] kipi-plugins/rawconverter/actionthread.cpp:
+	  polish
+
+2007-02-22 14:59  cgilles
+
+	* [r636239] kipi-plugins/rawconverter/previewwidget.cpp:
+	  refresh preview properlly if dialog is resized
+
+2007-02-22 12:01  cgilles
+
+	* [r636211] kipi-plugins/kipiplugins.kdevelop,
+	  kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  libkdcraw/dcraw/dcraw.c, libkdcraw/dcraw/kdcraw.1,
+	  libkdcraw/dcrawbinary.cpp, libkdcraw/dcrawsettingswidget.cpp,
+	  libkdcraw/dcrawsettingswidget.h, libkdcraw/kdcraw.cpp,
+	  libkdcraw/libkdcraw.kdevelop, libkdcraw/rawdecodingsettings.h,
+	  libkexiv2/libkexiv2.kdevelop:
+	  libkdcraw from trunk : backport last dcraw implementation "8.60"
+	  : the old noise reduction algorithm used with 8.54 version have
+	  been remplaced by a wavelet algorithm witch is more intuitive,
+	  more easy to use (just one threshold setting) and very powerfull.
+	  
+	  Kipi-plugins RAWConverter from svn trunk is fixed.
+	  The patch to use libkdcraw with current implementation of digiKam
+	  have been updated :
+	  
+	  http://digikam3rdparty.free.fr/misc.tarballs/libkdcrawdigikamport.patch
+	  
+	  CCMAIL: digikam-users@kde.org
+	  CCMAIL: digikam-devel@kde.org
+	  CCMAIL: kde-imaging@kde.org
+
+2007-02-20 19:41  cgilles
+
+	* [r635741] kipi-plugins/acquireimages/acquireimagedialog.cpp,
+	  kipi-plugins/acquireimages/kipiplugin_acquireimages.desktop,
+	  kipi-plugins/acquireimages/plugin_acquireimages.cpp,
+	  kipi-plugins/acquireimages/screenshotdialog.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimagesdialog.h,
+	  kipi-plugins/batchprocessimages/batchprocessimagesitem.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimagesitem.h,
+	  kipi-plugins/batchprocessimages/batchprocessimageslist.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimageslist.h,
+	  kipi-plugins/batchprocessimages/borderimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/borderimagesdialog.h,
+	  kipi-plugins/batchprocessimages/borderoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/borderoptionsdialog.h,
+	  kipi-plugins/batchprocessimages/colorimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/colorimagesdialog.h,
+	  kipi-plugins/batchprocessimages/coloroptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/coloroptionsdialog.h,
+	  kipi-plugins/batchprocessimages/convertimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/convertimagesdialog.h,
+	  kipi-plugins/batchprocessimages/convertoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/convertoptionsdialog.h,
+	  kipi-plugins/batchprocessimages/effectimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/effectimagesdialog.h,
+	  kipi-plugins/batchprocessimages/effectoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/effectoptionsdialog.h,
+	  kipi-plugins/batchprocessimages/filterimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/filterimagesdialog.h,
+	  kipi-plugins/batchprocessimages/filteroptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/filteroptionsdialog.h,
+	  kipi-plugins/batchprocessimages/imagepreview.cpp,
+	  kipi-plugins/batchprocessimages/imagepreview.h,
+	  kipi-plugins/batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  kipi-plugins/batchprocessimages/outputdialog.cpp,
+	  kipi-plugins/batchprocessimages/outputdialog.h,
+	  kipi-plugins/batchprocessimages/plugin_batchprocessimages.cpp,
+	  kipi-plugins/batchprocessimages/plugin_batchprocessimages.h,
+	  kipi-plugins/batchprocessimages/recompressimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/recompressimagesdialog.h,
+	  kipi-plugins/batchprocessimages/recompressoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/recompressoptionsdialog.h,
+	  kipi-plugins/batchprocessimages/renameimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/renameimagesdialog.h,
+	  kipi-plugins/batchprocessimages/renameimageswidget.cpp,
+	  kipi-plugins/batchprocessimages/renameimageswidget.h,
+	  kipi-plugins/batchprocessimages/resizeimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/resizeimagesdialog.h,
+	  kipi-plugins/batchprocessimages/resizeoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/resizeoptionsdialog.h,
+	  kipi-plugins/cdarchiving/actions.h,
+	  kipi-plugins/cdarchiving/cdarchiving.cpp,
+	  kipi-plugins/cdarchiving/cdarchiving.h,
+	  kipi-plugins/cdarchiving/cdarchivingdialog.cpp,
+	  kipi-plugins/cdarchiving/cdarchivingdialog.h,
+	  kipi-plugins/cdarchiving/kipiplugin_cdarchiving.desktop,
+	  kipi-plugins/cdarchiving/plugin_cdarchiving.cpp,
+	  kipi-plugins/cdarchiving/plugin_cdarchiving.h,
+	  kipi-plugins/findimages/actions.h,
+	  kipi-plugins/findimages/displaycompare.cpp,
+	  kipi-plugins/findimages/displaycompare.h,
+	  kipi-plugins/findimages/fastcompare.cpp,
+	  kipi-plugins/findimages/fastcompare.h,
+	  kipi-plugins/findimages/finddupplicatedialog.cpp,
+	  kipi-plugins/findimages/finddupplicatedialog.h,
+	  kipi-plugins/findimages/finddupplicateimages.cpp,
+	  kipi-plugins/findimages/finddupplicateimages.h,
+	  kipi-plugins/findimages/fuzzycompare.cpp,
+	  kipi-plugins/findimages/fuzzycompare.h,
+	  kipi-plugins/findimages/imagesimilaritydata.h,
+	  kipi-plugins/findimages/kipiplugin_findimages.desktop,
+	  kipi-plugins/findimages/plugin_findimages.cpp,
+	  kipi-plugins/findimages/plugin_findimages.h,
+	  kipi-plugins/ipodexport/imagelist.h,
+	  kipi-plugins/jpeglossless/mtqueue.h,
+	  kipi-plugins/mpegencoder/checkbinprog.cpp,
+	  kipi-plugins/mpegencoder/checkbinprog.h,
+	  kipi-plugins/mpegencoder/images2mpg,
+	  kipi-plugins/mpegencoder/kimg2mpg.cpp,
+	  kipi-plugins/mpegencoder/kimg2mpg.h,
+	  kipi-plugins/mpegencoder/kipiplugin_mpegencoder.desktop,
+	  kipi-plugins/mpegencoder/kshowdebuggingoutput.cpp,
+	  kipi-plugins/mpegencoder/kshowdebuggingoutput.h,
+	  kipi-plugins/mpegencoder/optionsdialog.cpp,
+	  kipi-plugins/mpegencoder/optionsdialog.h,
+	  kipi-plugins/mpegencoder/plugin_mpegencoder.cpp,
+	  kipi-plugins/mpegencoder/plugin_mpegencoder.h,
+	  kipi-plugins/rawconverter/mtqueue.h,
+	  kipi-plugins/sendimages/actions.h,
+	  kipi-plugins/sendimages/kipiplugin_sendimages.desktop,
+	  kipi-plugins/sendimages/listimageserrordialog.cpp,
+	  kipi-plugins/sendimages/listimageserrordialog.h,
+	  kipi-plugins/sendimages/plugin_sendimages.cpp,
+	  kipi-plugins/sendimages/plugin_sendimages.h,
+	  kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimages.h,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.h,
+	  kipi-plugins/wallpaper/plugin_wallpaper.cpp,
+	  kipi-plugins/wallpaper/plugin_wallpaper.h,
+	  libkipi/libkipi/batchprogressdialog.cpp,
+	  libkipi/libkipi/batchprogressdialog.h, libkipi/libkipi/version.h:
+	  fix email
+
+2007-02-20 14:20  cgilles
+
+	* [r635648] kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  libkdcraw/dcrawsettingswidget.cpp,
+	  libkdcraw/dcrawsettingswidget.h, libkdcraw/kdcraw.cpp,
+	  libkdcraw/rawdecodingsettings.h:
+	  libkdcraw from trunk : introduce the color balance multipliers
+	  settings
+
+2007-02-20 10:38  cgilles
+
+	* [r635569] kipi-plugins/imageviewer/Makefile.am,
+	  kipi-plugins/imageviewer/hi16-action-ogl.png,
+	  kipi-plugins/imageviewer/hi16-app-ogl.png,
+	  kipi-plugins/imageviewer/hi32-action-ogl.png,
+	  kipi-plugins/imageviewer/hi32-app-ogl.png,
+	  kipi-plugins/imageviewer/plugin_viewer.cpp:
+	  fix plugin icons : they are action like not app. Install it
+	  properlly.
+
+2007-02-20 10:32  cgilles
+
+	* [r635566] kipi-plugins/imageviewer/kipiplugin_viewer.desktop:
+	  missing Comment (used by libkipi setup widget)
+
+2007-02-20 10:26  vfuoglio
+
+	* [r635564] kipi-plugins/slideshow/Makefile.am,
+	  kipi-plugins/slideshow/imlibiface.cpp:
+	  Added libkdcraw support.
+	  Thanks to Gilles for the patch.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  CCMAIL: caulier.gilles@gmail.com
+
+2007-02-20 09:49  cgilles
+
+	* [r635552] kipi-plugins/rawconverter/previewwidget.cpp,
+	  kipi-plugins/rawconverter/previewwidget.h,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.h:
+	  kipi-plugins from trunk : RAWConverter : draw raw preview image
+	  under photo info in single dialog
+
+2007-02-20 08:47  cgilles
+
+	* [r635528] kipi-plugins/rawconverter/previewwidget.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp:
+	  kipi-plugins from trunk : RAWConverter : remove temp file after
+	  raw conversion at the wrong place
+
+2007-02-20 08:40  cgilles
+
+	* [r635524] kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/previewwidget.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp:
+	  kipi-plugins from trunk : RAWConverter : bugfix: missing to
+	  remove temp file after raw conversion
+
+2007-02-20 08:23  cgilles
+
+	* [r635520] kipi-plugins/rawconverter/actions.h,
+	  kipi-plugins/rawconverter/actionthread.cpp,
+	  kipi-plugins/rawconverter/actionthread.h,
+	  kipi-plugins/rawconverter/singledialog.cpp:
+	  kipi-plugins from trunk : RAWConverter : capability to show more
+	  photo infos in single dailog
+
+2007-02-19 22:44  kusi
+
+	* [r635415] kipi-plugins/imageviewer/Makefile.am,
+	  kipi-plugins/imageviewer/ogl.cpp,
+	  kipi-plugins/imageviewer/texture.cpp:
+	  applying slightly modified patch from Gilles
+	  - fix Makefile.am
+	  - initial RAW support: please note that not the entire RAW image
+	  is loaded but only a preview -> fast image loading but crappy
+	  zooming
+
+2007-02-19 22:15  cgilles
+
+	* [r635401] kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp:
+	  compile
+
+2007-02-19 15:05  cgilles
+
+	* [r635242] kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  libkdcraw/dcrawsettingswidget.cpp,
+	  libkdcraw/dcrawsettingswidget.h, libkdcraw/kdcraw.cpp,
+	  libkdcraw/rawdecodingsettings.h:
+	  libkdcraw from trunk : introduce the blackpoint compensation
+	  value settings
+
+2007-02-19 13:22  cgilles
+
+	* [r635218] kipi-plugins/README:
+	  fix
+
+2007-02-19 13:19  cgilles
+
+	* [r635217] kipi-plugins/README:
+	  update
+
+2007-02-19 13:11  cgilles
+
+	* [r635214] kipi-plugins/AUTHORS:
+	  update
+
+2007-02-19 13:09  cgilles
+
+	* [r635213] kipi-plugins/rawconverter/actions.h,
+	  kipi-plugins/rawconverter/actionthread.cpp,
+	  kipi-plugins/rawconverter/actionthread.h,
+	  kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/batchdialog.h,
+	  kipi-plugins/rawconverter/clistviewitem.h,
+	  kipi-plugins/rawconverter/plugin_rawconverter.cpp,
+	  kipi-plugins/rawconverter/plugin_rawconverter.h,
+	  kipi-plugins/rawconverter/previewwidget.cpp,
+	  kipi-plugins/rawconverter/previewwidget.h,
+	  kipi-plugins/rawconverter/rawdecodingiface.cpp,
+	  kipi-plugins/rawconverter/rawdecodingiface.h,
+	  kipi-plugins/rawconverter/savesettingswidget.cpp,
+	  kipi-plugins/rawconverter/savesettingswidget.h,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.h:
+	  optimize layout. fix email
+
+2007-02-19 12:26  nikolaus
+
+	* [r635200] kipi-plugins/imageviewer/Makefile.am:
+	  Build. It's $(LIB_KPARTS), not $(LIB KPARTS).
+
+2007-02-19 12:01  cgilles
+
+	* [r635196] kipi-plugins/NEWS:
+	  update
+
+2007-02-19 11:56  cgilles
+
+	* [r635195] kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  libkdcraw/dcraw/README, libkdcraw/dcraw/dcraw.c,
+	  libkdcraw/dcrawbinary.cpp, libkdcraw/dcrawbinary.h,
+	  libkdcraw/dcrawinfocontainer.h,
+	  libkdcraw/dcrawsettingswidget.cpp,
+	  libkdcraw/dcrawsettingswidget.h, libkdcraw/kdcraw.cpp,
+	  libkdcraw/rawdecodingsettings.h:
+	  After 8 days of intensive work, I'm very proud to announce the
+	  first LibKdcraw shared library 0.1.0 beta release.
+	  
+	  LibKdcraw is a C++ interface around dcraw binary program used to
+	  decode RAW picture files. This library is actually used by
+	  kipi-plugins (trunk), and later by digiKam (with future 0.9.2
+	  release).
+	  
+	  http://digikam3rdparty.free.fr/Screenshots/newkipirawconverter.png
+	  
+	  The library documentation is available on header files. Check svn
+	  trunk repository for details :
+	  
+	  http://websvn.kde.org/trunk/extragear/libs/libkdcraw
+	  
+	  Libkdcraw include the last dcraw program (version 8.54) from Dave
+	  Coffin. It provide a kdcraw binary witch is used instead dcraw.
+	  This way prevent _all_ compatibility problems with all options
+	  see with dcraw. In fact the dcraw author to not respect a
+	  compatibilty between dcraw release witch break all RAW workflow !
+	  Also, he won't provide dcraw as a shared library. We have lost a
+	  waste a time with these problems in digiKam project. Using a
+	  specific version of dcraw in the library, we will valid this one
+	  with the library API and preserve the compatibility for the
+	  future.
+	  
+	  The dcraw source code can be updated easily using the
+	  libkdcraw/dcraw/README file where i have written a notice for
+	  that. The library don't touch the content of dcraw source code.
+	  It use it as well...
+	  
+	  With this library, you can extract preview image (used by camera
+	  to display picture on TV screen) as a QImage, and extract all
+	  informations given by dcraw to identify a RAW file. Of course,
+	  you can decode and extract the RAW pictures with a lot of
+	  settings. The image data (8 or 16 bits color depth) is returned
+	  in a QByteArray container. The library include a widget to
+	  control all RAW decoding settings in your application :
+	  
+	  http://digikam3rdparty.free.fr/Screenshots/rawsettings.png
+	  
+	  Using the last dcraw source code, the libary support all last
+	  Camera models, especially all models out at Christmas 2006. The
+	  complete list is given below :
+	  
+	  Adobe Digital Negative (DNG)
+	  AVT F-145C
+	  AVT F-201C
+	  AVT F-510C
+	  AVT F-810C
+	  Canon PowerShot 600
+	  Canon PowerShot A5
+	  Canon PowerShot A5 Zoom
+	  Canon PowerShot A50
+	  Canon PowerShot A610
+	  Canon PowerShot A620
+	  Canon PowerShot Pro70
+	  Canon PowerShot Pro90 IS
+	  Canon PowerShot G1
+	  Canon PowerShot G2
+	  Canon PowerShot G3
+	  Canon PowerShot G5
+	  Canon PowerShot G6
+	  Canon PowerShot S2 IS
+	  Canon PowerShot S3 IS
+	  Canon PowerShot S30
+	  Canon PowerShot S40
+	  Canon PowerShot S45
+	  Canon PowerShot S50
+	  Canon PowerShot S60
+	  Canon PowerShot S70
+	  Canon PowerShot Pro1
+	  Canon EOS D30
+	  Canon EOS D60
+	  Canon EOS 5D
+	  Canon EOS 10D
+	  Canon EOS 20D
+	  Canon EOS 30D
+	  Canon EOS 300D / Digital Rebel / Kiss Digital
+	  Canon EOS 350D / Digital Rebel XT / Kiss Digital N
+	  Canon EOS 400D / Digital Rebel XTi / Kiss Digital X
+	  Canon EOS D2000C
+	  Canon EOS-1D
+	  Canon EOS-1DS
+	  Canon EOS-1D Mark II
+	  Canon EOS-1D Mark II N
+	  Canon EOS-1Ds Mark II
+	  Casio QV-2000UX
+	  Casio QV-3000EX
+	  Casio QV-3500EX
+	  Casio QV-4000
+	  Casio QV-5700
+	  Casio QV-R51
+	  Casio QV-R61
+	  Casio EX-S100
+	  Casio EX-Z4
+	  Casio EX-Z50
+	  Casio EX-Z55
+	  Casio Exlim Pro 505
+	  Casio Exlim Pro 600
+	  Casio Exlim Pro 700
+	  Contax N Digital
+	  Creative PC-CAM 600
+	  Epson R-D1
+	  Foculus 531C
+	  Fuji FinePix E550
+	  Fuji FinePix E900
+	  Fuji FinePix F700
+	  Fuji FinePix F710
+	  Fuji FinePix F800
+	  Fuji FinePix F810
+	  Fuji FinePix S2Pro
+	  Fuji FinePix S3Pro
+	  Fuji FinePix S20Pro
+	  Fuji FinePix S5000
+	  Fuji FinePix S5100/S5500
+	  Fuji FinePix S5200/S5600
+	  Fuji FinePix S6000fd
+	  Fuji FinePix S7000
+	  Fuji FinePix S9000/S9500
+	  Imacon Ixpress 16-megapixel
+	  Imacon Ixpress 22-megapixel
+	  Imacon Ixpress 39-megapixel
+	  ISG 2020x1520
+	  Kodak DC20 (see Oliver Hartman's page)
+	  Kodak DC25 (see Jun-ichiro Itoh's page)
+	  Kodak DC40
+	  Kodak DC50
+	  Kodak DC120 (also try kdc2tiff)
+	  Kodak DCS200
+	  Kodak DCS315C
+	  Kodak DCS330C
+	  Kodak DCS420
+	  Kodak DCS460
+	  Kodak DCS460A
+	  Kodak DCS520C
+	  Kodak DCS560C
+	  Kodak DCS620C
+	  Kodak DCS620X
+	  Kodak DCS660C
+	  Kodak DCS660M
+	  Kodak DCS720X
+	  Kodak DCS760C
+	  Kodak DCS760M
+	  Kodak EOSDCS1
+	  Kodak EOSDCS3B
+	  Kodak NC2000F
+	  Kodak ProBack
+	  Kodak PB645C
+	  Kodak PB645H
+	  Kodak PB645M
+	  Kodak DCS Pro 14n
+	  Kodak DCS Pro 14nx
+	  Kodak DCS Pro SLR/c
+	  Kodak DCS Pro SLR/n
+	  Kodak P850
+	  Kodak P880
+	  Kodak KAI-0340
+	  Konica KD-400Z
+	  Konica KD-510Z
+	  Leaf Aptus 17
+	  Leaf Aptus 22
+	  Leaf Aptus 65
+	  Leaf Aptus 75
+	  Leaf Cantare
+	  Leaf CatchLight
+	  Leaf CMost
+	  Leaf DCB2
+	  Leaf Valeo 6
+	  Leaf Valeo 11
+	  Leaf Valeo 17
+	  Leaf Valeo 22
+	  Leaf Volare
+	  Leica Digilux 2
+	  Leica Digilux 3
+	  Leica D-LUX2
+	  Leica D-LUX3
+	  Leica V-LUX1
+	  Logitech Fotoman Pixtura
+	  Micron 2010
+	  Minolta RD175
+	  Minolta DiMAGE 5
+	  Minolta DiMAGE 7
+	  Minolta DiMAGE 7i
+	  Minolta DiMAGE 7Hi
+	  Minolta DiMAGE A1
+	  Minolta DiMAGE A2
+	  Minolta DiMAGE A200
+	  Minolta DiMAGE G400
+	  Minolta DiMAGE G500
+	  Minolta DiMAGE G530
+	  Minolta DiMAGE G600
+	  Minolta DiMAGE Z2
+	  Minolta Alpha/Dynax/Maxxum 5D
+	  Minolta Alpha/Dynax/Maxxum 7D
+	  Nikon D1
+	  Nikon D1H
+	  Nikon D1X
+	  Nikon D2H
+	  Nikon D2Hs
+	  Nikon D2X
+	  Nikon D40
+	  Nikon D50
+	  Nikon D70
+	  Nikon D70s
+	  Nikon D80
+	  Nikon D100
+	  Nikon D200
+	  Nikon E700 ("DIAG RAW" hack)
+	  Nikon E800 ("DIAG RAW" hack)
+	  Nikon E880 ("DIAG RAW" hack)
+	  Nikon E900 ("DIAG RAW" hack)
+	  Nikon E950 ("DIAG RAW" hack)
+	  Nikon E990 ("DIAG RAW" hack)
+	  Nikon E995 ("DIAG RAW" hack)
+	  Nikon E2100 ("DIAG RAW" hack)
+	  Nikon E2500 ("DIAG RAW" hack)
+	  Nikon E3200 ("DIAG RAW" hack)
+	  Nikon E3700 ("DIAG RAW" hack)
+	  Nikon E4300 ("DIAG RAW" hack)
+	  Nikon E4500 ("DIAG RAW" hack)
+	  Nikon E5000
+	  Nikon E5400
+	  Nikon E5700
+	  Nikon E8400
+	  Nikon E8700
+	  Nikon E8800
+	  Olympus C3030Z
+	  Olympus C5050Z
+	  Olympus C5060WZ
+	  Olympus C7070WZ
+	  Olympus C70Z,C7000Z
+	  Olympus C740UZ
+	  Olympus C770UZ
+	  Olympus C8080WZ
+	  Olympus E-1
+	  Olympus E-10
+	  Olympus E-20
+	  Olympus E-300
+	  Olympus E-330
+	  Olympus E-400
+	  Olympus E-500
+	  Olympus SP310
+	  Olympus SP320
+	  Olympus SP350
+	  Olympus SP500UZ
+	  Panasonic DMC-FZ30
+	  Panasonic DMC-FZ50
+	  Panasonic DMC-L1
+	  Panasonic DMC-LC1
+	  Panasonic DMC-LX1
+	  Panasonic DMC-LX2
+	  Pentax *ist D
+	  Pentax *ist DL
+	  Pentax *ist DL2
+	  Pentax *ist DS
+	  Pentax *ist DS2
+	  Pentax K10D
+	  Pentax K100D
+	  Pentax Optio S
+	  Pentax Optio S4
+	  Pentax Optio 33WR
+	  Phase One LightPhase
+	  Phase One H 10
+	  Phase One H 20
+	  Phase One H 25
+	  Phase One P 20
+	  Phase One P 25
+	  Phase One P 30
+	  Phase One P 45
+	  Pixelink A782
+	  Polaroid x530
+	  Rollei d530flex
+	  RoverShot 3320af
+	  Samsung GX-1S
+	  Sarnoff 4096x5440
+	  Sigma SD9
+	  Sigma SD10
+	  Sinar 3072x2048
+	  Sinar 4080x4080
+	  Sinar 4080x5440
+	  Sinar STI format
+	  SMaL Ultra-Pocket 3
+	  SMaL Ultra-Pocket 4
+	  SMaL Ultra-Pocket 5
+	  Sony DSC-F828
+	  Sony DSC-R1
+	  Sony DSC-V3
+	  Sony DSLR-A100
+	  Sony XCD-SX910CR
+	  STV680 VGA
+	  
+	  About digiKam and this library, I have a big patch on my computer
+	  to use this library with all RAW files. I will commit this code
+	  in svn repository later digiKam 0.9.1 release. It will be
+	  available for 0.9.2 release. If you is impatient to test it, the
+	  patch against current svn implementation of digiKam can be
+	  downloaded at this url :
+	  
+	  http://digikam3rdparty.free.fr/misc.tarballs/libkdcrawdigikamport.patch
+	  
+	  Of course, you need to checkout, compile and install LibKdcraw
+	  first. It is stored on extragear/libs folder of svn trunk.
+	  
+	  All feedbacks are welcome, especially all RAW pictures sample
+	  taken with a recent camera to perform advanced test. Thanks in
+	  advance for your help...
+	  
+	  Gilles Caulier
+	  digiKam team
+	  
+	  BUG: 140865
+	  CCBUG : 138744
+	  CCMAIL: digikam-users@kde.org, digikam-devel@kde.org,
+	  kde-imaging@kde.org
+
+2007-02-18 16:27  cgilles
+
+	* [r634859] kipi-plugins/rawconverter/rawdecodingiface.cpp,
+	  kipi-plugins/rawconverter/rawdecodingiface.h:
+	  compile with last libkdcraw
+
+2007-02-18 15:53  anaselli
+
+	* [r634852] kipi-plugins/imageviewer/Makefile.am:
+	  fixed libkipi dependency when compiling under svn tree
+
+2007-02-17 20:56  cgilles
+
+	* [r634617] kipi-plugins/rawconverter/rawdecodingiface.cpp:
+	  compile
+
+2007-02-17 17:21  cgilles
+
+	* [r634582] kipi-plugins/rawconverter/plugin_rawconverter.cpp:
+	  compile
+
+2007-02-16 22:01  cgilles
+
+	* [r634334] kipi-plugins/rawconverter/actionthread.cpp,
+	  kipi-plugins/rawconverter/rawdecodingiface.cpp,
+	  libkdcraw/kdcraw.cpp, libkexiv2/kexiv2.cpp:
+	  fix comments
+
+2007-02-16 13:38  cgilles
+
+	* [r634151] kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/batchdialog.h,
+	  kipi-plugins/rawconverter/plugin_rawconverter.cpp,
+	  kipi-plugins/rawconverter/plugin_rawconverter.h,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.h:
+	  update
+
+2007-02-16 12:30  cgilles
+
+	* [r634130] kipi-plugins/rawconverter/dcrawsettingswidget.cpp,
+	  kipi-plugins/rawconverter/dcrawsettingswidget.h:
+	  obsolete files
+
+2007-02-16 12:29  cgilles
+
+	* [r634129] kipi-plugins/common/include/rawfiles.h,
+	  kipi-plugins/imageviewer/ogl.cpp,
+	  kipi-plugins/jpeglossless/utils.cpp:
+	  Kipi-Plugins from trunk : using RAW files extensions string given
+	  by libkdcraw
+
+2007-02-16 12:25  cgilles
+
+	* [r634123] kipi-plugins/common/include/pluginsversion.h:
+	  update
+
+2007-02-16 12:24  cgilles
+
+	* [r634121] kipi-plugins/NEWS:
+	  update
+
+2007-02-16 12:21  cgilles
+
+	* [r634120] Makefile.am.in, kipi-plugins/README,
+	  kipi-plugins/configure.in.bot, kipi-plugins/configure.in.in,
+	  kipi-plugins/rawconverter/Makefile.am,
+	  kipi-plugins/rawconverter/actions.h,
+	  kipi-plugins/rawconverter/actionthread.cpp,
+	  kipi-plugins/rawconverter/actionthread.h,
+	  kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/batchdialog.h,
+	  kipi-plugins/rawconverter/clistviewitem.h,
+	  kipi-plugins/rawconverter/dcraw.c,
+	  kipi-plugins/rawconverter/dcrawbinary.cpp,
+	  kipi-plugins/rawconverter/dcrawbinary.h,
+	  kipi-plugins/rawconverter/dcrawiface.cpp,
+	  kipi-plugins/rawconverter/dcrawiface.h,
+	  kipi-plugins/rawconverter/mtqueue.h,
+	  kipi-plugins/rawconverter/plugin_rawconverter.cpp,
+	  kipi-plugins/rawconverter/plugin_rawconverter.h,
+	  kipi-plugins/rawconverter/rawdecodingiface.cpp,
+	  kipi-plugins/rawconverter/rawdecodingiface.h,
+	  kipi-plugins/rawconverter/rawdecodingsettings.h,
+	  kipi-plugins/rawconverter/savesettingswidget.cpp,
+	  kipi-plugins/rawconverter/savesettingswidget.h,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.h:
+	  Kipi-Plugins from trunk : RAW Pictures Converter : using the new
+	  libkdcraw shared library to decode RAW images.
+	  
+	  The new libkdcraw library implementation is now ready to use on
+	  extragear/libs. I have work hard to merge digiKam dcraw interface
+	  and the old RAW Converter dcraw interface. Now a common
+	  implementation is available and this kipi-plugins is the first
+	  one to use it. Next stage is to port digiKam core, but i will do
+	  it later 0.9.1-final release.
+	  
+	  To Kipi-Plugins developpers : The API is documented into all
+	  header files. It's simple to use. You can extract RAW preview
+	  pictures for example to send it by mail, Export an HTML page,
+	  Slide pictures to screen, etc. The Preview image extraction is
+	  very fast and a QImage instance is returned. You can take a look
+	  into RAW Converter code to see how i use this library. If you
+	  want more informations, lets me hear on kde-imaging@kde.org
+	  mailing list.
+	  
+	  Marcel, i will port digiKam core on my computer using current
+	  implementation from trunk. I will send you a patch to test at
+	  soon...
+	  
+	  To digiKam users : the dcraw version in libkdcraw still the 8.41.
+	  I will update it later when digiKam core will be ported to
+	  libkdcraw. In fact it will be more easy to do because just one
+	  common implementation need to be fixed in likdcraw (instead RAW
+	  converter and digiKam core).
+	  
+	  To packagers : this shared library must be packaged later digiKam
+	  0.9.1-final, not now. All the API are not yet finalized. I will
+	  need to polish it when i will port digiKam core. This one require
+	  more options, especially to decode 16 bits RAW images.
+	  
+	  CCMAIL: digikam-devel@kde.org, kde-imaging@kde.org,
+	  marcel.wiesweg@gmx.de
+
+2007-02-16 08:26  cgilles
+
+	* [r634062] kipi-plugins/rawconverter/Makefile.am:
+	  polish
+
+2007-02-16 08:08  cgilles
+
+	* [r634061] kipi-plugins/rawconverter/Makefile.am:
+	  polish
+
+2007-02-13 22:34  kusi
+
+	* [r633375] kipi-plugins/imageviewer/cursors/nullImage.png:
+	  nullImage which is displayed in case QImage couldn't load the
+	  image
+
+2007-02-13 22:29  kusi
+
+	* [r633373] kipi-plugins/imageviewer/cursors/Makefile.am,
+	  kipi-plugins/imageviewer/ogl.cpp, kipi-plugins/imageviewer/ogl.h,
+	  kipi-plugins/imageviewer/texture.cpp:
+	  drop support for RAW files
+	  do not crash in case QImage can't load the file
+
+2007-02-13 21:03  kusi
+
+	* [r633341] kipi-plugins/imageviewer/ogl.cpp,
+	  kipi-plugins/imageviewer/ogl.h,
+	  kipi-plugins/imageviewer/plugin_viewer.cpp,
+	  kipi-plugins/imageviewer/plugin_viewer.h,
+	  kipi-plugins/imageviewer/texture.cpp,
+	  kipi-plugins/imageviewer/texture.h,
+	  kipi-plugins/imageviewer/timer.cpp,
+	  kipi-plugins/imageviewer/timer.h:
+	  introducing namespace KIPIviewer
+	  fixing compiler warning
+
+2007-02-13 16:54  kusi
+
+	* [r633261] kipi-plugins/Makefile.am:
+	  add imageviewer to Makefile.am
+	  TODO: check for OpenGL?
+
+2007-02-13 08:39  kusi
+
+	* [r633109] kipi-plugins/imageviewer/ogl.cpp,
+	  kipi-plugins/imageviewer/ogl.h,
+	  kipi-plugins/imageviewer/plugin_viewer.cpp,
+	  kipi-plugins/imageviewer/plugin_viewer.h,
+	  kipi-plugins/imageviewer/texture.cpp,
+	  kipi-plugins/imageviewer/texture.h,
+	  kipi-plugins/imageviewer/timer.cpp,
+	  kipi-plugins/imageviewer/timer.h:
+	  fix GPL license (wrong address)
+
+2007-02-12 11:39  cgilles
+
+	* [r632812] kipi-plugins/configure.in.in:
+	  removing unused compile variable
+
+2007-02-12 10:09  cgilles
+
+	* [r632782] kipi-plugins/NEWS:
+	  update
+
+2007-02-11 23:11  hoechstetter
+
+	* [r632707] kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp:
+	  BUG:138241;
+	  Added a patch that adds support for the Claws Mail MUA by
+	  paul@claws-mail.org
+
+2007-02-11 21:20  kusi
+
+	* [r632663] kipi-plugins/imageviewer/timer.h:
+	  cleanup in comments
+
+2007-02-11 21:06  kusi
+
+	* [r632659] kipi-plugins/NEWS:
+	  added imageviewer to NEWS
+
+2007-02-11 20:54  kusi
+
+	* [r632655] kipi-plugins/AUTHORS, kipi-plugins/imageviewer,
+	  kipi-plugins/imageviewer/Makefile.am,
+	  kipi-plugins/imageviewer/README, kipi-plugins/imageviewer/TODO,
+	  kipi-plugins/imageviewer/cursors,
+	  kipi-plugins/imageviewer/cursors/Makefile.am,
+	  kipi-plugins/imageviewer/cursors/hand.png,
+	  kipi-plugins/imageviewer/cursors/zoom.png,
+	  kipi-plugins/imageviewer/hi16-app-ogl.png,
+	  kipi-plugins/imageviewer/hi32-app-ogl.png,
+	  kipi-plugins/imageviewer/kipiplugin_viewer.desktop,
+	  kipi-plugins/imageviewer/ogl.cpp, kipi-plugins/imageviewer/ogl.h,
+	  kipi-plugins/imageviewer/plugin_viewer.cpp,
+	  kipi-plugins/imageviewer/plugin_viewer.h,
+	  kipi-plugins/imageviewer/texture.cpp,
+	  kipi-plugins/imageviewer/texture.h,
+	  kipi-plugins/imageviewer/timer.cpp,
+	  kipi-plugins/imageviewer/timer.h:
+	  initial checkin of an OpenGL image viewer
+
+2007-02-10 18:37  cgilles
+
+	* [r632341] kipi-plugins/slideshow/plugin_slideshow.cpp:
+	  kipi-plugins from trunk : SlideShow tool : fix menu entry from
+	  "SlideShow" to "Advanced SlideShow"
+	  CCBUGS: 129739
+
+2007-02-04 21:09  cguthrie
+
+	* [r630245] kipi-plugins/sync/Makefile.am,
+	  kipi-plugins/sync/gallerympform.cpp,
+	  kipi-plugins/sync/gallerympform.h,
+	  kipi-plugins/sync/gallerytalker.cpp,
+	  kipi-plugins/sync/gallerytalker.h, kipi-plugins/sync/libkipi2,
+	  kipi-plugins/sync/libkipi2/collection.cpp,
+	  kipi-plugins/sync/libkipi2/collection.h,
+	  kipi-plugins/sync/libkipi2/interface.cpp,
+	  kipi-plugins/sync/libkipi2/interface.h,
+	  kipi-plugins/sync/libkipi2/item.cpp,
+	  kipi-plugins/sync/libkipi2/item.h, kipi-plugins/sync/sink.cpp,
+	  kipi-plugins/sync/sink.h, kipi-plugins/sync/sinkfactory.cpp,
+	  kipi-plugins/sync/sinkfactory.h, kipi-plugins/sync/sinks,
+	  kipi-plugins/sync/sinks.cpp, kipi-plugins/sync/sinks/gallery,
+	  kipi-plugins/sync/sinks/gallery/gallerycollection.cpp,
+	  kipi-plugins/sync/sinks/gallery/gallerycollection.h,
+	  kipi-plugins/sync/sinks/gallery/galleryform.cpp,
+	  kipi-plugins/sync/sinks/gallery/galleryform.h,
+	  kipi-plugins/sync/sinks/gallery/galleryitem.cpp,
+	  kipi-plugins/sync/sinks/gallery/galleryitem.h,
+	  kipi-plugins/sync/sinks/gallery/gallerysink.cpp,
+	  kipi-plugins/sync/sinks/gallery/gallerysink.h:
+	  Some more work on the Sync Framework.
+	  This is still very much work in progress so it is not yet usable.
+	  Some of the concepts may be subject to change as I work through
+	  some ideas.
+
+2007-02-03 09:13  cgilles
+
+	* [r629585] kipi-plugins/NEWS:
+	  update
+
+2007-02-03 09:10  cgilles
+
+	* [r629584] kipi-plugins/NEWS:
+	  update
+
+2007-01-30 12:11  cgilles
+
+	* [r628568] kipi-plugins/README:
+	  update
+
+2007-01-30 10:22  cgilles
+
+	* [r628540] kipi-plugins/galleryexport/gallerytalker.cpp,
+	  kipi-plugins/gpssync/gpslistviewitem.cpp,
+	  kipi-plugins/gpssync/plugin_gpssync.cpp,
+	  kipi-plugins/jpeglossless/jpegtransform.h,
+	  kipi-plugins/metadataedit/exifadjust.cpp,
+	  kipi-plugins/metadataedit/exifcaption.cpp,
+	  kipi-plugins/metadataedit/exifdatetime.cpp,
+	  kipi-plugins/metadataedit/exifdevice.cpp,
+	  kipi-plugins/metadataedit/exifeditdialog.cpp,
+	  kipi-plugins/metadataedit/exiflens.cpp,
+	  kipi-plugins/metadataedit/exiflight.cpp,
+	  kipi-plugins/metadataedit/iptccaption.cpp,
+	  kipi-plugins/metadataedit/iptccategories.cpp,
+	  kipi-plugins/metadataedit/iptccredits.cpp,
+	  kipi-plugins/metadataedit/iptcdatetime.cpp,
+	  kipi-plugins/metadataedit/iptceditdialog.cpp,
+	  kipi-plugins/metadataedit/iptckeywords.cpp,
+	  kipi-plugins/metadataedit/iptcorigin.cpp,
+	  kipi-plugins/metadataedit/iptcstatus.cpp,
+	  kipi-plugins/metadataedit/iptcsubjects.cpp,
+	  kipi-plugins/metadataedit/plugin_metadataedit.cpp,
+	  kipi-plugins/rawconverter/dcrawiface.cpp,
+	  kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/timeadjust/timeadjustdialog.cpp,
+	  libkexiv2/Makefile.am, libkexiv2/kexiv2.cpp, libkexiv2/kexiv2.h,
+	  libkexiv2/kexiv2_export.h, libkexiv2/libkexiv2.cpp,
+	  libkexiv2/libkexiv2.h:
+	  kipi-plugins from trunk : fix libkexiv2 header file name
+
+2007-01-30 09:45  cgilles
+
+	* [r628536] kipi-plugins/galleryexport/gallerytalker.cpp,
+	  kipi-plugins/gpssync/gpslistviewitem.cpp,
+	  kipi-plugins/gpssync/plugin_gpssync.cpp,
+	  kipi-plugins/jpeglossless/jpegtransform.cpp,
+	  kipi-plugins/jpeglossless/jpegtransform.h,
+	  kipi-plugins/metadataedit/exifadjust.cpp,
+	  kipi-plugins/metadataedit/exifcaption.cpp,
+	  kipi-plugins/metadataedit/exifdatetime.cpp,
+	  kipi-plugins/metadataedit/exifdevice.cpp,
+	  kipi-plugins/metadataedit/exifeditdialog.cpp,
+	  kipi-plugins/metadataedit/exiflens.cpp,
+	  kipi-plugins/metadataedit/exiflight.cpp,
+	  kipi-plugins/metadataedit/iptccaption.cpp,
+	  kipi-plugins/metadataedit/iptccategories.cpp,
+	  kipi-plugins/metadataedit/iptccredits.cpp,
+	  kipi-plugins/metadataedit/iptcdatetime.cpp,
+	  kipi-plugins/metadataedit/iptceditdialog.cpp,
+	  kipi-plugins/metadataedit/iptckeywords.cpp,
+	  kipi-plugins/metadataedit/iptcorigin.cpp,
+	  kipi-plugins/metadataedit/iptcstatus.cpp,
+	  kipi-plugins/metadataedit/iptcsubjects.cpp,
+	  kipi-plugins/metadataedit/plugin_metadataedit.cpp,
+	  kipi-plugins/rawconverter/dcrawiface.cpp,
+	  kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/timeadjust/timeadjustdialog.cpp,
+	  libkexiv2/libkexiv2.cpp, libkexiv2/libkexiv2.h:
+	  kipi-plugins from trunk : fix libkexiv2 namespace and interface
+	  class name
+
+2007-01-28 20:58  coolo
+
+	* [r628018] kipi-plugins/jpeglossless/imageflip.cpp,
+	  kipi-plugins/jpeglossless/imagerotate.cpp,
+	  kipi-plugins/jpeglossless/jpegtransform.cpp,
+	  kipi-plugins/jpeglossless/jpegtransform.h:
+	  it's a _very_ bad idea to overwrite the identity matrix
+	  or you'll get strange results on the next rotation (as I did)
+
+2007-01-28 19:42  cgilles
+
+	* [r627984] kipi-plugins/rawconverter/dcrawiface.h:
+	  compile under OpenBSD
+
+2007-01-27 10:37  cgilles
+
+	* [r627589] kipi-plugins/configure.in.bot,
+	  kipi-plugins/configure.in.in:
+	  cleanup and backport KDE hiden visiblity detection from digiKam
+
+2007-01-26 20:40  cgilles
+
+	* [r627501] kipi-plugins/NEWS, kipi-plugins/README,
+	  kipi-plugins/common/Makefile.am, kipi-plugins/common/exiv2iface,
+	  kipi-plugins/configure.in.bot, kipi-plugins/configure.in.in,
+	  kipi-plugins/galleryexport/Makefile.am,
+	  kipi-plugins/galleryexport/gallerytalker.cpp,
+	  kipi-plugins/gpssync/Makefile.am,
+	  kipi-plugins/gpssync/gpslistviewitem.cpp,
+	  kipi-plugins/gpssync/gpslistviewitem.h,
+	  kipi-plugins/gpssync/plugin_gpssync.cpp,
+	  kipi-plugins/gpssync/plugin_gpssync.h,
+	  kipi-plugins/jpeglossless/Makefile.am,
+	  kipi-plugins/jpeglossless/jpegtransform.cpp,
+	  kipi-plugins/jpeglossless/jpegtransform.h,
+	  kipi-plugins/metadataedit/Makefile.am,
+	  kipi-plugins/metadataedit/exifadjust.cpp,
+	  kipi-plugins/metadataedit/exifcaption.cpp,
+	  kipi-plugins/metadataedit/exifdatetime.cpp,
+	  kipi-plugins/metadataedit/exifdevice.cpp,
+	  kipi-plugins/metadataedit/exifeditdialog.cpp,
+	  kipi-plugins/metadataedit/exiflens.cpp,
+	  kipi-plugins/metadataedit/exiflight.cpp,
+	  kipi-plugins/metadataedit/iptccaption.cpp,
+	  kipi-plugins/metadataedit/iptccategories.cpp,
+	  kipi-plugins/metadataedit/iptccredits.cpp,
+	  kipi-plugins/metadataedit/iptcdatetime.cpp,
+	  kipi-plugins/metadataedit/iptceditdialog.cpp,
+	  kipi-plugins/metadataedit/iptckeywords.cpp,
+	  kipi-plugins/metadataedit/iptcorigin.cpp,
+	  kipi-plugins/metadataedit/iptcstatus.cpp,
+	  kipi-plugins/metadataedit/iptcsubjects.cpp,
+	  kipi-plugins/metadataedit/plugin_metadataedit.cpp,
+	  kipi-plugins/rawconverter/Makefile.am,
+	  kipi-plugins/rawconverter/dcrawiface.cpp,
+	  kipi-plugins/rawconverter/dcrawiface.h,
+	  kipi-plugins/sendimages/Makefile.am,
+	  kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimages.h,
+	  kipi-plugins/sync/Makefile.am,
+	  kipi-plugins/sync/gallerytalker.cpp,
+	  kipi-plugins/timeadjust/Makefile.am,
+	  kipi-plugins/timeadjust/timeadjustdialog.cpp,
+	  kipi-plugins/timeadjust/timeadjustdialog.h,
+	  libkexiv2/libkexiv2.cpp, libkexiv2/libkexiv2.h:
+	  kipi-plugins from trunk : all plugins use the new shared library
+	  libkexiv2 instead KipiPlugins::EXiv2Iface class.
+	  
+	  Marcel, next stage is to derivate the DigiKam::DMetadata class
+	  from LibKExiv2. Let's me hear when you whant to do it...
+	  
+	  CCMAIL: digikam-devel@kde.org, kde-imaging@kde.org,
+	  marcel.wiesweg@gmx.de
+
+2007-01-26 17:50  hoechstetter
+
+	* [r627469] kipi-plugins/sendimages/listimageserrordialog.cpp,
+	  kipi-plugins/sendimages/listimageserrordialog.h,
+	  kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimages.h:
+	  qDebug Translation to english
+	  Adding comments
+
+2007-01-25 15:55  lure
+
+	* [r627061] kipi-plugins/NEWS,
+	  kipi-plugins/common/exiv2iface/exiv2iface.cpp:
+	  Prefer Exif DateTimeOriginal for image date/time
+	  (DateTimeDigitized and DateTime only used as fallback)
+	  
+	  CCBUG: 139264
+
+2007-01-25 01:04  hoechstetter
+
+	* [r626934] kipi-plugins/sendimages/sendimages.cpp:
+	  BUG: 139074;
+	  Changed the qDebug messages to an int-cast
+
+2007-01-24 23:15  anaselli
+
+	* [r626918] kipi-plugins/ipodexport/Makefile.am:
+	  Added message target for translators
+	  
+	  CCMAIL:kde-i18n-doc@kde.org
+	  CCMAIL:kde-imaging@kde.org
+
+----------------------------------------------------------------------------
 V 0.1.3 - 2007-01-24
 ----------------------------------------------------------------------------
+
+2007-01-24 20:46  anaselli
+
+	* [r626875] kipi-plugins/ChangeLog,
+	  kipi-plugins/common/include/pluginsversion.h,
+	  kipi-plugins/kipi-plugins.lsm:
+	  Kipi-plugins 0.1.3 final
+	  
+	  CCMAIL: <kde-imaging@kde.org>
+
 2007-01-24 20:38  anaselli
 
 	* [r626873] kipi-plugins/README:
