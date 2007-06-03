@@ -133,11 +133,11 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface
 
     // ---------------------------------------------------------------
 
-    d->page_caption  = addPage(i18n("Caption"), i18n("Caption Informations"),
+    d->page_caption  = addPage(i18n("Caption"), i18n("Caption Information"),
                                BarIcon("editclear", KIcon::SizeMedium));
     d->captionPage   = new EXIFCaption(d->page_caption);
 
-    d->page_datetime = addPage(i18n("Date & Time"), i18n("Date and Time Informations"),
+    d->page_datetime = addPage(i18n("Date & Time"), i18n("Date and Time"),
                                  BarIcon("today", KIcon::SizeMedium));
     d->datetimePage  = new EXIFDateTime(d->page_datetime);
 
@@ -149,11 +149,11 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface
                                BarIcon("scanner", KIcon::SizeMedium));
     d->devicePage    = new EXIFDevice(d->page_device);
 
-    d->page_light    = addPage(i18n("Light"), i18n("Light Source Informations"),
+    d->page_light    = addPage(i18n("Light"), i18n("Light Source Information"),
                                BarIcon("idea", KIcon::SizeMedium));
     d->lightPage     = new EXIFLight(d->page_light);
 
-    d->page_adjust   = addPage(i18n("Adjustments"), i18n("Pictures Adjustments Informations"),
+    d->page_adjust   = addPage(i18n("Adjustments"), i18n("Pictures Adjustments"),
                                BarIcon("blend", KIcon::SizeMedium));
     d->adjustPage    = new EXIFAdjust(d->page_adjust);
 

@@ -234,7 +234,7 @@ void SendImagesDialog::setupImagesList(void)
     QString whatsThis;
 
     page_setupImagesList = addPage(i18n("Images"),
-                                   i18n("Image List to Email"),
+                                   i18n("Images to EMail"),
                                    BarIcon("image", KIcon::SizeMedium));
 
     QVBoxLayout *vlay = new QVBoxLayout( page_setupImagesList, 0, spacingHint() );
@@ -252,9 +252,9 @@ void SendImagesDialog::setupImagesList(void)
     grid->addMultiCellWidget(m_ImagesFilesListBox, 0, 2, 0, 1);
 
     KButtonBox* imagesListButtonBox = new KButtonBox( m_groupBoxImageList, Vertical );
-    QPushButton* m_addImagesButton = imagesListButtonBox->addButton ( i18n( "&Add Images..." ) );
+    QPushButton* m_addImagesButton = imagesListButtonBox->addButton ( i18n( "&Add ..." ) );
     QWhatsThis::add( m_addImagesButton, i18n("<p>Add images to the list.") );
-    QPushButton* m_remImagesButton = imagesListButtonBox->addButton ( i18n( "&Remove Images" ));
+    QPushButton* m_remImagesButton = imagesListButtonBox->addButton ( i18n( "&Remove" ));
     QWhatsThis::add( m_remImagesButton, i18n("<p>Remove selected images from the list.") );
     imagesListButtonBox->layout();
     grid->addMultiCellWidget(imagesListButtonBox, 0, 1, 2, 2);
@@ -415,7 +415,7 @@ void SendImagesDialog::setupEmailOptions(void)
 
     //---------------------------------------------
 
-    QGroupBox * groupBox2 = new QGroupBox( i18n("Images Properties"), page_setupEmailOptions );
+    QGroupBox * groupBox2 = new QGroupBox( i18n("Image Properties"), page_setupEmailOptions );
     groupBox2->setColumnLayout(0, Qt::Vertical );
     groupBox2->layout()->setSpacing( 6 );
     groupBox2->layout()->setMargin( 11 );
@@ -424,7 +424,7 @@ void SendImagesDialog::setupEmailOptions(void)
     QVBoxLayout * groupBox2Layout = new QVBoxLayout( groupBox2->layout() );
     groupBox2Layout->setAlignment( Qt::AlignTop );
 
-    m_changeImagesProp = new QCheckBox(i18n("Change properties of images"), groupBox2);
+    m_changeImagesProp = new QCheckBox(i18n("Adjust image properties"), groupBox2);
     QWhatsThis::add( m_changeImagesProp, i18n("<p>If you enable this option, "
                      "all images to send can be resized and recompressed.") );
     m_changeImagesProp->setChecked( true );
@@ -460,7 +460,7 @@ void SendImagesDialog::setupEmailOptions(void)
 		     .arg(i18n("huge - for printing (1600 pixels)"));
     QWhatsThis::add( m_imagesResize, whatsThis );
 
-    m_labelImageSize = new QLabel( i18n("New images size:"), groupBox2);
+    m_labelImageSize = new QLabel( i18n("Sent image size:"), groupBox2);
     hlay12->addWidget( m_labelImageSize );
     m_labelImageSize->setBuddy( m_imagesResize );
     hlay12->addStretch( 1 );
@@ -470,7 +470,7 @@ void SendImagesDialog::setupEmailOptions(void)
 
     m_imageCompression = new KIntNumInput(75, groupBox2);
     m_imageCompression->setRange(1, 100, 1, true );
-    m_imageCompression->setLabel( i18n("New images compression:") );
+    m_imageCompression->setLabel( i18n("Sent image quality level:") );
     groupBox2Layout->addWidget( m_imageCompression );
     whatsThis = i18n("<p>The new compression value of images to send:<p>");
     whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
@@ -501,7 +501,7 @@ void SendImagesDialog::setupEmailOptions(void)
                 "and chromaticity data for improved color matching on heterogeneous platforms.");
     QWhatsThis::add( m_imagesFormat, whatsThis );
 
-    m_labelImageFormat = new QLabel(i18n("Images file format:"), groupBox2);
+    m_labelImageFormat = new QLabel(i18n("Image file format:"), groupBox2);
     hlay13->addWidget(m_labelImageFormat);
     m_labelImageFormat->setBuddy(m_imagesFormat);
     hlay13->addStretch(1);
@@ -512,7 +512,7 @@ void SendImagesDialog::setupEmailOptions(void)
 
     m_attachmentlimit = new KIntNumInput(17, page_setupEmailOptions);
     m_attachmentlimit->setRange(1, 50, 1, true );
-    m_attachmentlimit->setLabel( i18n("Maximum Email Size:"));
+    m_attachmentlimit->setLabel( i18n("Maximum Email size limit:"));
     m_attachmentlimit->setSuffix(i18n("MB"));
     vlay->addWidget( m_attachmentlimit );
 		    

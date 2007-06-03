@@ -203,8 +203,8 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     space->setFixedWidth(15);
     d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
     
-    d->syncEXIFDateCheck = new QCheckBox(i18n("Sync EXIF creation date"), d->adjustTypeGrp);
-    d->syncIPTCDateCheck = new QCheckBox(i18n("Sync IPTC creation date"), d->adjustTypeGrp);
+    d->syncEXIFDateCheck = new QCheckBox(i18n("Update Exif creation date"), d->adjustTypeGrp);
+    d->syncIPTCDateCheck = new QCheckBox(i18n("Update IPTC creation date"), d->adjustTypeGrp);
 
     vlay->addWidget(adjGB);
 

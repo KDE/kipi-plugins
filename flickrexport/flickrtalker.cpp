@@ -158,8 +158,8 @@ namespace KIPIFlickrExportPlugin
 		QString queryStr=headers.join("&");
 		const QString completeUrl=url+queryStr;
 		KApplication::kApplication()->invokeBrowser(completeUrl);
-		int valueOk=KMessageBox::questionYesNo(0, i18n("Please Follow through the instructions in the browser window and "
-              "return back to press ok if you are authenticated or press No"), i18n("Flickr::Kipi Plugin:Web Authorization")); 
+		int valueOk=KMessageBox::questionYesNo(0, i18n("Please follow the instructions in the browser window and "
+              "return to press Yes if you were able to log in or No to cancel the export"), i18n("Flickr:Web Authorization"));
 
 					if(valueOk==KMessageBox::Yes){
 						getToken(); 
