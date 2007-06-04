@@ -178,6 +178,20 @@ If you need other i18n parameters, let us know.
 You are free to use images, CSS files or other files in your theme: just put
 them in the theme folder and the plugin will copy them in the output folder.
 
+## Original images
+
+As explained before, if the user selects the option "include original images",
+the gallery.xml file will contain `<original />` tags. If this tag is present,
+the image page should contain a link to download the original image. 
+
+Here is an example:
+
+	<xsl:if test="original/@fileName != ''">
+		<p>
+			<a href="{original/@fileName}"><xsl:value-of select="$i18nOriginalImage"/></a>
+		</p>
+	</xsl:if>
+
 ## Going further, theme parameters
 
 You might want to provide a way for your user to customize your theme, for
