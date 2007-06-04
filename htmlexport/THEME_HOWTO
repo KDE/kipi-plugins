@@ -156,6 +156,11 @@ Do this:
 It's quite a lot more verbose, but this way your user will get localized HTML
 output.
 
+If you want to use "i18n parameters" in attributes, do it like this:
+
+	<a href="previous" title="{$i18nPrevious}"><img src="previous.png"/></a>
+	| <a href="next" title="{$i18nNext}"><img src="next.png"/></a>
+
 For now, the available "i18n parameters" are:
 
 - i18nPrevious
@@ -201,10 +206,7 @@ In template.xsl, you can get the value of your parameter like this:
 To change the background color of the "body" tag, you would write something
 like this:
 
-	<body>
-		<xsl:attribute name="bgcolor">
-			<xsl:value-of select="$bgColor"/>
-		</xsl:attribute>
+	<body bgcolor="{$bgColor}">
 	...
 	</body>
 
