@@ -4,4 +4,5 @@ SUBDIRS = \
 	simple \
 	frames \
 	cleanframes \
-	s0
+	s0 \
+	classic
