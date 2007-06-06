@@ -152,34 +152,74 @@ void SendImages::run()
         QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 
         // Prepare resized target images to send.
+        QString imageFileName="";
+        
+        KIPI::ImageInfo info = m_interface->info( *it );
+        QString commentItem = info.description();
 
-        QString imageFileName = ItemName;
+            if ( commentItem.isEmpty() )
+            {
+                commentItem = ItemName.left(ItemName.findRev('.'));
+                qDebug("commentItem is empty");
+            }
+            else
+            {
+                qDebug("commentItem: %s",commentItem.ascii());
+            }
+        
+        
         //QString TempFileName             = (*it).directory().section('/', -1);
-        QString TempFileName=(*it).path().section('/', -2,-1);
+        QString TempFileName=(*it).path().section('/', -2,-2)+"/"+commentItem+
+                             +"."+(*it).path().section('.', -1,-1);
         qDebug("TempFileName: %s",TempFileName.ascii());
-        TempFileName.replace(QChar('/'), "-");
+        
         
         // Thunderbird does not like (). Replace them, BUG:131343
         TempFileName.replace(QChar('('), "_").replace(QChar(')'), "_");
         // and these characters are better eliminated, too ;-)
         TempFileName.replace(QChar(','), "_").replace(QChar(' '), "_");
         TempFileName.replace(QChar(';'), "_").replace(QChar('%'), "_");
+        TempFileName.replace(QChar('/'), "-");
+
+        //If TempFileName already exists, add a number oder increase number
+        if (entry_already_exists(m_filesSendList,m_tmp + TempFileName))
+        {
+                qDebug ("I entered");
+                QString secondpart=(m_tmp+TempFileName).section(".",-1,-1);
+                QString firstpart=
+                (m_tmp+TempFileName).left((m_tmp+TempFileName).length()-secondpart.length()-1);
+                qDebug("Firstpart: %s \n Secondpart: %s",firstpart.ascii(), secondpart.ascii());
+                //Add _integer value in the end and prove again
+                int int_index=2;
+                QString index=QString::number(int_index,10);
+                while (entry_already_exists(m_filesSendList,firstpart + "_"+index+"."+secondpart))
+                {
+                        int_index++;
+                        index=QString::number(int_index,10);
+                        qDebug("Index: %s",index.ascii());
+                }
+                QString temp=firstpart + "_"+index+"."+secondpart;
+                TempFileName=temp.right(temp.length()-m_tmp.length());
+       // .section("-",-2,-1);
+       //         m_tmp=(firstpart + "_"+index+"."+secondpart).section("-",-2);
+        }
+
 
         if ( m_changeProp == true )
         {
             // Prepare resizing images.
 
-            QString imageNameFormat = TempFileName.replace(QChar('.'), "_") +
-                                      extension(m_imageFormat);
+            //QString imageNameFormat = TempFileName.replace(QChar('.'), "_") +
+            //                          extension(m_imageFormat);
    
             qDebug( "Resizing %s-> '%s %s ' (%s ; %d )",imageName.ascii(),
-            m_tmp.ascii(),imageNameFormat.ascii(),m_imageFormat.ascii(),m_sizeFactor);
+            m_tmp.ascii(),TempFileName.ascii(),m_imageFormat.ascii(),m_sizeFactor);
  
             // Return value for resizeImageProcess-function, in order to avoid reopening 
             // the image for exiv-writing.
             QSize newsize;
     
-            if ( resizeImageProcess( imageName, m_tmp, m_imageFormat, imageNameFormat,
+            if ( resizeImageProcess( imageName, m_tmp, m_imageFormat, TempFileName,
                                         m_sizeFactor, m_imageCompression, newsize) == false )
             {
                 // Resized images failed...
@@ -201,7 +241,7 @@ void SendImages::run()
                 if (QString(QImageIO::imageFormat(imageName)).upper() == "JPEG" && 
                     m_imageFormat.upper() == "JPEG")
                 {
-                    QString targetFile = m_tmp + imageNameFormat;
+                    QString targetFile = m_tmp + TempFileName;
                     KExiv2Iface::KExiv2 exiv2Iface;
 
                     if (exiv2Iface.load(imageName))
@@ -215,7 +255,7 @@ void SendImages::run()
                 {
                     qWarning( "createThumb::No Exif Data Found") ;
                 }
-        
+
                 d = new KIPISendimagesPlugin::EventData;
                 d->action    = KIPISendimagesPlugin::ResizeImages;
                 d->fileName  = (*it).fileName();
@@ -223,10 +263,10 @@ void SendImages::run()
                 d->starting  = false;
                 d->success   = true;
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-    
-                m_filesSendList.append(m_tmp + imageNameFormat);
+
+                m_filesSendList.append(m_tmp + TempFileName);
                 m_imagesPackage.append(*it);
-                m_imagesPackage.append(m_tmp + imageNameFormat);
+                m_imagesPackage.append(m_tmp + TempFileName);
             }
         }
         else     // No resize images operations...
@@ -253,6 +293,17 @@ void SendImages::run()
     d->starting = false;
     d->success = true;
     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+}
+
+bool SendImages::entry_already_exists(KURL::List filenamelist,QString entry)
+{
+        KURL::List::Iterator it = filenamelist.begin();
+        while( it != filenamelist.end() )
+        {
+                if ((*it)==entry) return true;
+                it++;
+        }
+        return false;
 }
 
 /// Creates a text file with the images comments.

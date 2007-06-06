@@ -121,6 +121,9 @@ private:
     bool copyImageProcess(const QString &oldFilePath, const QString &DestPath,
                                   const QString &ImageName);
     
+    ///Tests if an entry already exists in the filename list
+    bool entry_already_exists(KURL::List filenamelist,QString entry);
+
     ///Makes a deep copy of a KURL-list: Real and slow copying instead of only pointer arithmetics
     bool kurllistdeepcopy(KURL::List &Destination, KURL::List Source);
 private:
