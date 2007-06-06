@@ -82,7 +82,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const 
     about->addAuthor("Renchi Raju", I18N_NOOP("Author"),
                      "renchi@pooh.tam.uiuc.edu");
     about->addAuthor("Valerio Fuoglio", I18N_NOOP("Maintainer"),
-                     "valerio.fuoglio@kdemail.net");
+                     "valerio@ulteo.com");
 
      KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
      helpMenu->menu()->removeItemAt(0);
