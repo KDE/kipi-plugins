@@ -1,5 +1,16 @@
 Note: for details and info about current version, see ChangeLog.
 
+v 0.1.4 beta2
+----------------------------------------------------------------------------
+
+Kipi-plugins NEW FEATURES
+
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
+001 ==> 140477 : SendImages   : Ability to rename images being sent via email.
+002 ==> 
+
 v 0.1.4 beta1 
 ----------------------------------------------------------------------------
 
@@ -55,7 +66,6 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 002 ==> 106133 : Slideshow   : Show image comments in slideshow mode.
 003 ==> 124057 : SendImages  : Problems sending jpeg-pictures from digiKam using the "send picture"-feature.
 004 ==> 108147 : Slideshow   : Interval below 1 second.
-
 
 v 0.1.3 beta1
 ----------------------------------------------------------------------------
@@ -117,7 +127,6 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 020 ==> 135408 : BatchProcess : Window does not fit on screen.
 021 ==> 117399 : BatchProcess : Usability of Target folder.
 022 ==> 137921 : MetadataEdit : wrong country code in IPTC.
-
 
 v 0.1.2                                                           2006-07-08
 ----------------------------------------------------------------------------
