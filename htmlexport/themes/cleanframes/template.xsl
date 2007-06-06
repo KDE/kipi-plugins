@@ -17,7 +17,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><xsl:value-of select="title"/></title>
-		<link rel="stylesheet" type="text/css" href="../cleanframes/style.css"/>
+		<link rel="stylesheet" type="text/css">
+                        <xsl:attribute name="href">../cleanframes/<xsl:value-of select="$style"/></xsl:attribute>
+                </link>
 	</head>
 	<body id="imagePage">
 		<table border="0" width="100%">
@@ -49,7 +51,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><xsl:value-of select="name"/></title>
-		<link rel="stylesheet" type="text/css" href="cleanframes/style.css"/>
+		<link rel="stylesheet" type="text/css">
+                        <xsl:attribute name="href">cleanframes/<xsl:value-of select="$style"/></xsl:attribute>
+                </link>
 	</head>
 		<h1>
 		<span>
@@ -90,7 +94,9 @@
 		<title>
 		<xsl:value-of select="name"/>
 		</title>
-		<link rel="stylesheet" type="text/css" href="cleanframes/style.css"/>
+		<link rel="stylesheet" type="text/css">
+                        <xsl:attribute name="href">cleanframes/<xsl:value-of select="$style"/></xsl:attribute>
+                </link>
 	</head>
 	<frameset cols="{$tsize},*" noresize="1" border="0">
 		<frame src="thmbs.html" name="mythmbs"/>
@@ -110,7 +116,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><xsl:value-of select="$i18nCollectionList"/></title>
-		<link rel="stylesheet" type="text/css" href="cleanframes/style.css"/>
+		<link rel="stylesheet" type="text/css">
+                        <xsl:attribute name="href">cleanframes/<xsl:value-of select="$style"/></xsl:attribute>
+                </link>
 	</head>
 	<body id="collectPage">
 			<xsl:for-each select="collections/collection">
@@ -150,7 +158,9 @@
 		<title>
 		<xsl:value-of select="name"/>
 		</title>
-		<link rel="stylesheet" type="text/css" href="cleanframes/style.css"/>
+		<link rel="stylesheet" type="text/css">
+                        <xsl:attribute name="href">cleanframes/<xsl:value-of select="$style"/></xsl:attribute>
+                </link>
 	</head>
 	<frameset rows="40,*" noresize="1" border="0">
 		<frame src="collect.html" name="collection"/>
@@ -177,7 +187,9 @@
 		<title>
 		<xsl:value-of select="name"/>
 		</title>
-		<link rel="stylesheet" type="text/css" href="cleanframes/style.css"/>
+		<link rel="stylesheet" type="text/css">
+                        <xsl:attribute name="href">cleanframes/<xsl:value-of select="$style"/></xsl:attribute>
+                </link>
 	</head>
 	<body id="collectionPage">
 		<xsl:value-of select="title"/>
