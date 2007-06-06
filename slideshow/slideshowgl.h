@@ -68,53 +68,53 @@ private:
 
     // config ------------------
 
-    int         delay_;
-    QString     effectName_;
-    bool        loop_;
-    bool        printName_;
-    bool        printComments_;
+    int         m_delay;
+    QString     m_effectName;
+    bool        m_loop;
+    bool        m_printName;
+    bool        m_printComments;
     
-    bool        ImagesHasComments_;
+    bool        m_imagesHasComments;
     
-    QFont       commentsFont_;
-    uint        commentsFontColor_;
-    uint        commentsBgColor_;
-    int         commentsLinesLength_;
+    QFont       m_commentsFont;
+    uint        m_commentsFontColor;
+    uint        m_commentsBgColor;
+    int         m_commentsLinesLength;
 
     // -------------------------
     
     typedef void (SlideShowGL::*EffectMethod)();
-    QMap<QString, EffectMethod> Effects;
+    QMap<QString, EffectMethod> m_effects;
 
-    QValueList<QPair<QString, int> >  fileList_;
-    QStringList  commentsList_;
-    QTimer*      timer_;
-    int          fileIndex_;
+    QValueList<QPair<QString, int> >  m_fileList;
+    QStringList  m_commentsList;
+    QTimer*      m_timer;
+    int          m_fileIndex;
 
-    GLuint       texture_[2];
-    bool         tex1First_;
-    int          curr_;
+    GLuint       m_texture[2];
+    bool         m_tex1First;
+    int          m_curr;
     
-    int          width_;
-    int          height_;
+    int          m_width;
+    int          m_height;
 
-    EffectMethod effect_;
-    bool         effectRunning_;
-    int          timeout_;
-    bool         random_;
-    bool         endOfShow_;
+    EffectMethod m_effect;
+    bool         m_effectRunning;
+    int          m_timeout;
+    bool         m_random;
+    bool         m_endOfShow;
 
     int          m_i;
     int          m_dir;
     float        m_points[40][40][3];
 
-    ToolBar*     toolBar_;
-    QTimer*      mouseMoveTimer_;
+    ToolBar*     m_toolBar;
+    QTimer*      m_mouseMoveTimer;
 
-    int          deskX_;
-    int          deskY_;
-    int          deskWidth_;
-    int          deskHeight_;
+    int          m_deskX;
+    int          m_deskY;
+    int          m_deskWidth;
+    int          m_deskHeight;
     
 private:
 

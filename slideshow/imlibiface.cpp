@@ -77,7 +77,7 @@ public:
 
 ImImageSS::ImImageSS(ImlibIface *imIface, const QString& file, int angle)
 {
-    imIface_ = imIface;
+    m_imIface = imIface;
     
     d = new ImImageSSPrivate;
     d->filename = file;
@@ -91,7 +91,7 @@ ImImageSS::ImImageSS(ImlibIface *imIface, const QString& file, int angle)
     d->fitWidth   = 0;
     d->fitHeight  = 0;
 
-    imlib_context_push(imIface_->d->context);
+    imlib_context_push(m_imIface->d->context);
     
     QString rawFilesExt(raw_file_extentions);
 
@@ -143,7 +143,7 @@ ImImageSS::ImImageSS(ImlibIface *imIface, const QString& file, int angle)
 ImImageSS::~ImImageSS()
 {
     if (d->image) {
-        imlib_context_push(imIface_->d->context);
+        imlib_context_push(m_imIface->d->context);
         imlib_context_set_image(d->image);
         imlib_free_image();
         imlib_context_pop();
@@ -196,7 +196,7 @@ void ImImageSS::render()
     int x = cx - d->width/2;
     int y = cy - d->height/2;
 
-    imlib_context_push(imIface_->d->context);
+    imlib_context_push(m_imIface->d->context);
 
     imlib_context_set_image(d->image);
     imlib_context_set_drawable(d->qpixmap.handle());

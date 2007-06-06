@@ -116,13 +116,13 @@ void Plugin_SlideShow::slotActivate()
         allowSelectedOnly = false;
     }
 
-    m_ImagesHasComments = interface->hasFeature(KIPI::ImagesHasComments);
+    m_imagesHasComments = interface->hasFeature(KIPI::ImagesHasComments);
 
     KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
             = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, kapp->activeWindow(), i18n("Slide Show").ascii(),
-                                                        m_ImagesHasComments);
+                                                        m_imagesHasComments);
 
-    connect(slideShowConfig, SIGNAL(okButtonClicked()),
+    connect(slideShowConfig, SIGNAL(buttonStartClicked()),
              this, SLOT(slotSlideShow()));
 
      slideShowConfig->show();
@@ -273,7 +273,7 @@ void Plugin_SlideShow::slotSlideShow()
 
     if (!opengl) {
         KIPISlideShowPlugin::SlideShow *slideShow =
-                new KIPISlideShowPlugin::SlideShow(fileList, commentsList, m_ImagesHasComments, delay, 
+                new KIPISlideShowPlugin::SlideShow(fileList, commentsList, m_imagesHasComments, delay, 
                                                    printFileName, printFileComments, loop, effectName, 
                                                    commentsFont, commentsFontColor, commentsBgColor, commentsLinesLength);
         slideShow->show();
@@ -284,7 +284,7 @@ void Plugin_SlideShow::slotSlideShow()
                                i18n("Sorry. OpenGL support not available on your system"));
         else {
             KIPISlideShowPlugin::SlideShowGL *slideShow =
-                    new KIPISlideShowPlugin::SlideShowGL(fileList, commentsList, m_ImagesHasComments, delay,
+                    new KIPISlideShowPlugin::SlideShowGL(fileList, commentsList, m_imagesHasComments, delay,
                                                          printFileName, printFileComments, loop, effectName,
                            commentsFont, commentsFontColor, commentsBgColor, commentsLinesLength);
             slideShow->show();

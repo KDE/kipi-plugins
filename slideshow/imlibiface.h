@@ -52,7 +52,7 @@ public:
 private:
 
     ImImageSSPrivate *d;
-    ImlibIface     *imIface_;
+    ImlibIface     *m_imIface;
 };
 
 // ---------------------------------------------------------------

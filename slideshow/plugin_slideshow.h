@@ -55,7 +55,7 @@ private:
 
     KAction *m_actionSlideShow;
 
-    bool m_ImagesHasComments;
+    bool m_imagesHasComments;
 };
 
 #endif

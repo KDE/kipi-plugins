@@ -11,7 +11,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>601</width>
+            <width>606</width>
             <height>570</height>
         </rect>
     </property>
@@ -73,7 +73,7 @@
                 </property>
                 <widget class="QLabel" row="0" column="1">
                     <property name="name">
-                        <cstring>labelTitle</cstring>
+                        <cstring>m_labelTitle</cstring>
                     </property>
                     <property name="sizePolicy">
                         <sizepolicy>
@@ -108,7 +108,7 @@
                 </widget>
                 <widget class="QLabel" row="0" column="0">
                     <property name="name">
-                        <cstring>pixmapLabelLeft</cstring>
+                        <cstring>m_pixmapLabelLeft</cstring>
                     </property>
                     <property name="sizePolicy">
                         <sizepolicy>
@@ -164,7 +164,7 @@
                     </property>
                     <widget class="QButtonGroup">
                         <property name="name">
-                            <cstring>FileSrcButtonGroup_</cstring>
+                            <cstring>m_fileSrcButtonGroup</cstring>
                         </property>
                         <property name="sizePolicy">
                             <sizepolicy>
@@ -183,7 +183,7 @@
                             </property>
                             <widget class="QRadioButton">
                                 <property name="name">
-                                    <cstring>allFilesButton_</cstring>
+                                    <cstring>m_allFilesButton</cstring>
                                 </property>
                                 <property name="sizePolicy">
                                     <sizepolicy>
@@ -196,10 +196,13 @@
                                 <property name="text">
                                     <string>Show all images in current al&amp;bum</string>
                                 </property>
+                                <property name="accel">
+                                    <string>Alt+B</string>
+                                </property>
                             </widget>
                             <widget class="QRadioButton">
                                 <property name="name">
-                                    <cstring>selectedFilesButton_</cstring>
+                                    <cstring>m_selectedFilesButton</cstring>
                                 </property>
                                 <property name="sizePolicy">
                                     <sizepolicy>
@@ -211,6 +214,9 @@
                                 </property>
                                 <property name="text">
                                     <string>Show onl&amp;y selected images</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+Y</string>
                                 </property>
                             </widget>
                         </vbox>
@@ -252,7 +258,7 @@
                                             </property>
                                             <widget class="QCheckBox">
                                                 <property name="name">
-                                                    <cstring>openglCheckBox_</cstring>
+                                                    <cstring>m_openglCheckBox</cstring>
                                                 </property>
                                                 <property name="sizePolicy">
                                                     <sizepolicy>
@@ -270,6 +276,9 @@
                                                 </property>
                                                 <property name="text">
                                                     <string>Use Open&amp;GL slideshow transitions</string>
+                                                </property>
+                                                <property name="accel">
+                                                    <string>Alt+G</string>
                                                 </property>
                                                 <property name="checked">
                                                     <bool>true</bool>
@@ -315,7 +324,7 @@
                                             </property>
                                             <widget class="QCheckBox">
                                                 <property name="name">
-                                                    <cstring>printNameCheckBox_</cstring>
+                                                    <cstring>m_printNameCheckBox</cstring>
                                                 </property>
                                                 <property name="sizePolicy">
                                                     <sizepolicy>
@@ -328,13 +337,16 @@
                                                 <property name="text">
                                                     <string>P&amp;rint filename</string>
                                                 </property>
+                                                <property name="accel">
+                                                    <string>Alt+R</string>
+                                                </property>
                                                 <property name="checked">
                                                     <bool>true</bool>
                                                 </property>
                                             </widget>
                                             <widget class="QCheckBox">
                                                 <property name="name">
-                                                    <cstring>printCommentsCheckBox_</cstring>
+                                                    <cstring>m_printCommentsCheckBox</cstring>
                                                 </property>
                                                 <property name="sizePolicy">
                                                     <sizepolicy>
@@ -346,6 +358,9 @@
                                                 </property>
                                                 <property name="text">
                                                     <string>Pr&amp;int comments </string>
+                                                </property>
+                                                <property name="accel">
+                                                    <string>Alt+I</string>
                                                 </property>
                                                 <property name="checked">
                                                     <bool>true</bool>
@@ -393,7 +408,7 @@
                                     </property>
                                     <widget class="QCheckBox">
                                         <property name="name">
-                                            <cstring>loopCheckBox_</cstring>
+                                            <cstring>m_loopCheckBox</cstring>
                                         </property>
                                         <property name="enabled">
                                             <bool>true</bool>
@@ -415,10 +430,13 @@
                                         <property name="text">
                                             <string>&amp;Loop</string>
                                         </property>
+                                        <property name="accel">
+                                            <string>Alt+L</string>
+                                        </property>
                                     </widget>
                                     <widget class="QCheckBox">
                                         <property name="name">
-                                            <cstring>shuffleCheckBox_</cstring>
+                                            <cstring>m_shuffleCheckBox</cstring>
                                         </property>
                                         <property name="sizePolicy">
                                             <sizepolicy>
@@ -451,7 +469,7 @@
                                             </property>
                                             <widget class="QLabel">
                                                 <property name="name">
-                                                    <cstring>delayLabel_</cstring>
+                                                    <cstring>m_delayLabel</cstring>
                                                 </property>
                                                 <property name="sizePolicy">
                                                     <sizepolicy>
@@ -473,7 +491,7 @@
                                             </widget>
                                             <widget class="QSpinBox">
                                                 <property name="name">
-                                                    <cstring>delaySpinBox_</cstring>
+                                                    <cstring>m_delaySpinBox</cstring>
                                                 </property>
                                                 <property name="sizePolicy">
                                                     <sizepolicy>
@@ -536,7 +554,7 @@
                                             </widget>
                                             <widget class="QComboBox">
                                                 <property name="name">
-                                                    <cstring>effectsComboBox_</cstring>
+                                                    <cstring>m_effectsComboBox</cstring>
                                                 </property>
                                                 <property name="sizePolicy">
                                                     <sizepolicy>
@@ -612,7 +630,7 @@
                             </property>
                             <widget class="QCheckBox">
                                 <property name="name">
-                                    <cstring>useMillisecondsCheckBox_</cstring>
+                                    <cstring>m_useMillisecondsCheckBox</cstring>
                                 </property>
                                 <property name="text">
                                     <string>Use milliseconds instead of seconds</string>
@@ -884,7 +902,7 @@
                 </spacer>
                 <widget class="QPushButton" row="0" column="3">
                     <property name="name">
-                        <cstring>buttonExit</cstring>
+                        <cstring>m_buttonExit</cstring>
                     </property>
                     <property name="sizePolicy">
                         <sizepolicy>
@@ -906,7 +924,7 @@
                 </widget>
                 <widget class="QPushButton" row="0" column="2">
                     <property name="name">
-                        <cstring>buttonStart</cstring>
+                        <cstring>m_buttonStart</cstring>
                     </property>
                     <property name="sizePolicy">
                         <sizepolicy>
@@ -962,24 +980,24 @@
 </images>
 <connections>
     <connection>
-        <sender>buttonExit</sender>
+        <sender>m_buttonExit</sender>
         <signal>clicked()</signal>
         <receiver>SlideShowConfigBase</receiver>
         <slot>close()</slot>
     </connection>
 </connections>
 <tabstops>
-    <tabstop>buttonExit</tabstop>
-    <tabstop>buttonStart</tabstop>
+    <tabstop>m_buttonExit</tabstop>
+    <tabstop>m_buttonStart</tabstop>
     <tabstop>m_helpButton</tabstop>
-    <tabstop>delaySpinBox_</tabstop>
-    <tabstop>shuffleCheckBox_</tabstop>
-    <tabstop>loopCheckBox_</tabstop>
-    <tabstop>openglCheckBox_</tabstop>
-    <tabstop>printNameCheckBox_</tabstop>
-    <tabstop>effectsComboBox_</tabstop>
-    <tabstop>allFilesButton_</tabstop>
-    <tabstop>selectedFilesButton_</tabstop>
+    <tabstop>m_delaySpinBox</tabstop>
+    <tabstop>m_shuffleCheckBox</tabstop>
+    <tabstop>m_loopCheckBox</tabstop>
+    <tabstop>m_openglCheckBox</tabstop>
+    <tabstop>m_printNameCheckBox</tabstop>
+    <tabstop>m_effectsComboBox</tabstop>
+    <tabstop>m_allFilesButton</tabstop>
+    <tabstop>m_selectedFilesButton</tabstop>
 </tabstops>
 <variables>
     <variable>QString effectName_;</variable>
@@ -988,7 +1006,7 @@
 </variables>
 <slots>
     <slot access="protected">slotOpenGLToggled()</slot>
-    <slot access="protected">slotOkClicked()</slot>
+    <slot access="protected">slotStartClicked()</slot>
     <slot access="protected">slotHelp()</slot>
     <slot access="protected">slotUseMillisecondsToggled()</slot>
 </slots>

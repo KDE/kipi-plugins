@@ -81,50 +81,50 @@ private:
 private:
 
     // config ------------------
-    int         delay_;
-    bool        printName_;
-    bool        printComments_;
-    QString     effectName_;
-    bool        loop_;
+    int         m_delay;
+    bool        m_printName;
+    bool        m_printComments;
+    QString     m_effectName;
+    bool        m_loop;
 
-    bool        ImagesHasComments_;
+    bool        m_ImagesHasComments;
 
-    QFont       commentsFont_;
-    uint        commentsFontColor_;
-    uint        commentsBgColor_;
-    int         commentsLinesLength_;
+    QFont       m_commentsFont;
+    uint        m_commentsFontColor;
+    uint        m_commentsBgColor;
+    int         m_commentsLinesLength;
     // -------------------------
     
     QMap<QString, EffectMethod> Effects;
 
-    ImlibIface   *imIface_;
-    ImImageSS    *currImage_;
+    ImlibIface   *m_imIface;
+    ImImageSS    *m_currImage;
     
-    FileList    fileList_;
-    QStringList commentsList_;
-    QTimer*     timer_;
-    int         fileIndex_;
+    FileList    m_fileList;
+    QStringList m_commentsList;
+    QTimer*     m_timer;
+    int         m_fileIndex;
 
-    EffectMethod effect_;
-    bool         effectRunning_;
+    EffectMethod m_effect;
+    bool         m_effectRunning;
 
     int m_commentsLinesLenght;
     
     // values for state of various effects:
-    int      mx, my, mw, mh, mdx, mdy, mix, miy, mi, mj, mSubType;
-    int      mx0, my0, mx1, my1, mwait;
-    double   mfx, mfy, mAlpha, mfd;
-    int*     mIntArray;
-    QPainter mPainter;
+    int      m_x, m_y, m_w, m_h, m_dx, m_dy, m_ix, m_iy, m_i, m_j, m_subType;
+    int      m_x0, m_y0, m_x1, m_y1, m_wait;
+    double   m_fx, m_fy, m_alpha, m_fd;
+    int*     m_intArray;
+    QPainter m_painter;
 
-    ToolBar*     toolBar_;
-    QTimer*      mouseMoveTimer_;
-    bool         endOfShow_;
+    ToolBar*     m_toolBar;
+    QTimer*      m_mouseMoveTimer;
+    bool         m_endOfShow;
     
-    int          deskX_;
-    int          deskY_;
-    int          deskWidth_;
-    int          deskHeight_;
+    int          m_deskX;
+    int          m_deskY;
+    int          m_deskWidth;
+    int          m_deskHeight;
     
 protected:
 
@@ -138,7 +138,7 @@ protected:
     int effectSweep(bool doInit);
     int effectRandom(bool doInit);
     int effectGrowing(bool doInit);
-    int effectIncomingEdges(bool doInit);
+    int effectIncom_ingEdges(bool doInit);
     int effectHorizLines(bool doInit);
     int effectVertLines(bool doInit);
     int effectMultiCircleOut(bool doInit);

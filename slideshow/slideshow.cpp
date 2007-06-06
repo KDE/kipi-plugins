@@ -63,89 +63,89 @@ SlideShow::SlideShow(const FileList& fileList,
 {
 #if KDE_IS_VERSION(3,2,0)
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
-    deskX_      = deskRect.x();
-    deskY_      = deskRect.y();
-    deskWidth_  = deskRect.width();
-    deskHeight_ = deskRect.height();
+    m_deskX      = deskRect.x();
+    m_deskY      = deskRect.y();
+    m_deskWidth  = deskRect.width();
+    m_deskHeight = deskRect.height();
 #else
     QRect deskRect = QApplication::desktop()->screenGeometry(this);
-    deskX_      = deskRect.x();
-    deskY_      = deskRect.y();
-    deskWidth_  = deskRect.width();
-    deskHeight_ = deskRect.height();
+    m_deskX      = deskRect.x();
+    m_deskY      = deskRect.y();
+    m_deskWidth  = deskRect.width();
+    m_deskHeight = deskRect.height();
 #endif    
     
-    move(deskX_, deskY_);
-    resize(deskWidth_, deskHeight_);
+    move(m_deskX, m_deskY);
+    resize(m_deskWidth, m_deskHeight);
     setPaletteBackgroundColor(black);
 
-    toolBar_ = new ToolBar(this);
-    toolBar_->hide();
+    m_toolBar = new ToolBar(this);
+    m_toolBar->hide();
     if (!loop)
     {
-        toolBar_->setEnabledPrev(false);
+        m_toolBar->setEnabledPrev(false);
     }
-    connect(toolBar_, SIGNAL(signalPause()),
+    connect(m_toolBar, SIGNAL(signalPause()),
             SLOT(slotPause()));
-    connect(toolBar_, SIGNAL(signalPlay()),
+    connect(m_toolBar, SIGNAL(signalPlay()),
             SLOT(slotPlay()));
-    connect(toolBar_, SIGNAL(signalNext()),
+    connect(m_toolBar, SIGNAL(signalNext()),
             SLOT(slotNext()));
-    connect(toolBar_, SIGNAL(signalPrev()),
+    connect(m_toolBar, SIGNAL(signalPrev()),
             SLOT(slotPrev()));
-    connect(toolBar_, SIGNAL(signalClose()),
+    connect(m_toolBar, SIGNAL(signalClose()),
             SLOT(slotClose()));
 
     // ---------------------------------------------------------------
     
-    imIface_   = new ImlibIface(this);
-    currImage_ = 0;
-    fileIndex_ = -1; // start with -1
-    effect_        = 0;
-    effectRunning_ = false;
-    timer_ = new QTimer();
-    connect(timer_, SIGNAL(timeout()), SLOT(slotTimeOut()));
-    mIntArray  = 0;
-    endOfShow_ = false;
+    m_imIface   = new ImlibIface(this);
+    m_currImage = 0;
+    m_fileIndex = -1; // start with -1
+    m_effect        = 0;
+    m_effectRunning = false;
+    m_timer = new QTimer();
+    connect(m_timer, SIGNAL(timeout()), SLOT(slotTimeOut()));
+    m_intArray  = 0;
+    m_endOfShow = false;
 
     // --------------------------------------------------
 
-    fileList_       = fileList;
-    commentsList_   = commentsList;
-    delay_          = QMAX(delay, 300); // at least have 0.3 second delay
-    loop_           = loop;
-    printName_      = printName;
-    printComments_  = printComments;
-    effectName_     = effectName;
+    m_fileList       = fileList;
+    m_commentsList   = commentsList;
+    m_delay          = QMAX(delay, 300); // at least have 0.3 second delay
+    m_loop           = loop;
+    m_printName      = printName;
+    m_printComments  = printComments;
+    m_effectName     = effectName;
 
-    ImagesHasComments_   = ImagesHasComments; 
+    m_ImagesHasComments   = ImagesHasComments; 
 
-    commentsFont_        = commentsFont;
-    commentsFontColor_   = commentsFontColor;
-    commentsBgColor_     = commentsBgColor;
-    commentsLinesLength_ = commentsLinesLength;
+    m_commentsFont        = commentsFont;
+    m_commentsFontColor   = commentsFontColor;
+    m_commentsBgColor     = commentsBgColor;
+    m_commentsLinesLength = commentsLinesLength;
 
     // --------------------------------------------------
 
     registerEffects();
 
-    if (effectName_ == "Random")
-        effect_ = getRandomEffect();
+    if (m_effectName == "Random")
+        m_effect = getRandomEffect();
     else
     {
-        effect_ = Effects[effectName_];
-        if (!effect_)
+        m_effect = Effects[m_effectName];
+        if (!m_effect)
         {
-            effect_ = Effects["None"];
+            m_effect = Effects["None"];
         }
     }
 
-    timer_->start(10, true);
+    m_timer->start(10, true);
 
     // -- hide cursor when not moved --------------------
 
-    mouseMoveTimer_ = new QTimer;
-    connect(mouseMoveTimer_, SIGNAL(timeout()),
+    m_mouseMoveTimer = new QTimer;
+    connect(m_mouseMoveTimer, SIGNAL(timeout()),
             SLOT(slotMouseMoveTimeOut()));
     
     setMouseTracking(true);
@@ -157,21 +157,21 @@ SlideShow::SlideShow(const FileList& fileList,
 
 SlideShow::~SlideShow()
 {
-    timer_->stop();
-    delete timer_;
-    mouseMoveTimer_->stop();
-    delete mouseMoveTimer_;
+    m_timer->stop();
+    delete m_timer;
+    m_mouseMoveTimer->stop();
+    delete m_mouseMoveTimer;
 
-    if (mPainter.isActive())
-        mPainter.end();
+    if (m_painter.isActive())
+        m_painter.end();
 
-    if (mIntArray)
-        delete [] mIntArray;
+    if (m_intArray)
+        delete [] m_intArray;
 
-    if (currImage_)
-        delete currImage_;
-    if (imIface_)
-        delete imIface_;
+    if (m_currImage)
+        delete m_currImage;
+    if (m_imIface)
+        delete m_imIface;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -184,7 +184,7 @@ void SlideShow::registerEffects()
     Effects.insert("Sweep", &SlideShow::effectSweep);
     Effects.insert("Noise", &SlideShow::effectRandom);
     Effects.insert("Growing", &SlideShow::effectGrowing);
-    Effects.insert("Incoming Edges", &SlideShow::effectIncomingEdges);
+    Effects.insert("Incom_ing Edges", &SlideShow::effectIncom_ingEdges);
     Effects.insert("Horizontal Lines", &SlideShow::effectHorizLines);
     Effects.insert("Vertical Lines", &SlideShow::effectVertLines);
     Effects.insert("Circle Out", &SlideShow::effectCircleOut);
@@ -206,7 +206,7 @@ QStringList SlideShow::effectNames()
     effects.append("Sweep");
     effects.append("Noise");
     effects.append("Growing");
-    effects.append("Incoming Edges");
+    effects.append("Incom_ing Edges");
     effects.append("Horizontal Lines");
     effects.append("Vertical Lines");
     effects.append("Circle Out");
@@ -231,7 +231,7 @@ QMap<QString,QString> SlideShow::effectNamesI18N()
     effects["Sweep"] = i18n("Sweep");
     effects["Noise"] = i18n("Noise");
     effects["Growing"] = i18n("Growing");
-    effects["Incoming Edges"] = i18n("Incoming Edges");
+    effects["Incom_ing Edges"] = i18n("Incom_ing Edges");
     effects["Horizontal Lines"] = i18n("Horizontal Lines");
     effects["Vertical Lines"] = i18n("Vertical Lines");
     effects["Circle Out"] = i18n("Circle Out");
@@ -248,41 +248,41 @@ QMap<QString,QString> SlideShow::effectNamesI18N()
 
 void SlideShow::slotTimeOut()
 {
-    if (!effect_) return;                         // No effect -> bye !
+    if (!m_effect) return;                         // No effect -> bye !
 
     int tmout = -1;
 
-    if (effectRunning_)                           // Effect under progress ?
+    if (m_effectRunning)                           // Effect under progress ?
     {
-        tmout = (this->*effect_)(false);
+        tmout = (this->*m_effect)(false);
     }
     else
     {
         loadNextImage();
 
-	if (!currImage_ || fileList_.isEmpty())   // End of slideshow ?
+	if (!m_currImage || m_fileList.isEmpty())   // End of slideshow ?
         {
             showEndOfShow();
             return;
         }
 
-        if (effectName_ == "Random")              // Take a random effect.
+        if (m_effectName == "Random")              // Take a random effect.
         {
-            effect_ = getRandomEffect();
-            if (!effect_) return;
+            m_effect = getRandomEffect();
+            if (!m_effect) return;
         }
 
-        effectRunning_ = true;
-        tmout = (this->*effect_)(true);
+        m_effectRunning = true;
+        tmout = (this->*m_effect)(true);
     }
 
     if (tmout <= 0)                               // Effect finished -> delay.
     {
-        tmout = delay_;
-        effectRunning_ = false;
+        tmout = m_delay;
+        m_effectRunning = false;
     }
 
-    timer_->start(tmout, true);
+    m_timer->start(tmout, true);
 }
 
 
@@ -290,43 +290,43 @@ void SlideShow::slotTimeOut()
 
 void SlideShow::loadNextImage()
 {
-    if (currImage_)
-        delete currImage_;
-    currImage_ = 0;
+    if (m_currImage)
+        delete m_currImage;
+    m_currImage = 0;
 
-    fileIndex_++;
-    int num = fileList_.count();
-    if (fileIndex_ >= num)
+    m_fileIndex++;
+    int num = m_fileList.count();
+    if (m_fileIndex >= num)
     {
-        if (loop_)
+        if (m_loop)
         {
-            fileIndex_ = 0;
+            m_fileIndex = 0;
         }
         else
         {
-            fileIndex_ = num-1;
+            m_fileIndex = num-1;
             return;
         }
     }
 
-    if (!loop_)
+    if (!m_loop)
     {
-        toolBar_->setEnabledPrev(fileIndex_ > 0);
-        toolBar_->setEnabledNext(fileIndex_ < num-1);
+        m_toolBar->setEnabledPrev(m_fileIndex > 0);
+        m_toolBar->setEnabledNext(m_fileIndex < num-1);
     }
 
-    FileAnglePair fileAngle = fileList_[fileIndex_];
+    FileAnglePair fileAngle = m_fileList[m_fileIndex];
     QString file(fileAngle.first);
     int     angle(fileAngle.second);
     
-    currImage_ = new ImImageSS(imIface_, file, angle);
-    currImage_->fitSize(width(), height());
-    currImage_->render();
+    m_currImage = new ImImageSS(m_imIface, file, angle);
+    m_currImage->fitSize(width(), height());
+    m_currImage->render();
 
-    if (printName_)
+    if (m_printName)
         printFilename();
     
-    if (printComments_ && ImagesHasComments_)
+    if (m_printComments && m_ImagesHasComments)
         printComments();
 }
 
@@ -335,43 +335,43 @@ void SlideShow::loadNextImage()
 
 void SlideShow::loadPrevImage()
 {
-    if (currImage_)
-        delete currImage_;
-    currImage_ = 0;
+    if (m_currImage)
+        delete m_currImage;
+    m_currImage = 0;
 
-    fileIndex_--;
-    int num = fileList_.count();
-    if (fileIndex_ < 0)
+    m_fileIndex--;
+    int num = m_fileList.count();
+    if (m_fileIndex < 0)
     {
-        if (loop_)
+        if (m_loop)
         {
-            fileIndex_ = num-1;
+            m_fileIndex = num-1;
         }
         else
         {
-            fileIndex_ = -1; // set this to -1.
+            m_fileIndex = -1; // set this to -1.
             return;
         }
     }
 
-    if (!loop_)
+    if (!m_loop)
     {
-        toolBar_->setEnabledPrev(fileIndex_ > 0);
-        toolBar_->setEnabledNext(fileIndex_ < num-1);
+        m_toolBar->setEnabledPrev(m_fileIndex > 0);
+        m_toolBar->setEnabledNext(m_fileIndex < num-1);
     }
     
-    FileAnglePair fileAngle = fileList_[fileIndex_];
+    FileAnglePair fileAngle = m_fileList[m_fileIndex];
     QString file(fileAngle.first);
     int     angle(fileAngle.second);
     
-    currImage_ = new ImImageSS(imIface_, file, angle);
-    currImage_->fitSize(width(), height());
-    currImage_->render();
+    m_currImage = new ImImageSS(m_imIface, file, angle);
+    m_currImage->fitSize(width(), height());
+    m_currImage->render();
 
-    if (printName_)
+    if (m_printName)
         printFilename();
     
-    if (printComments_)
+    if (m_printComments)
         printComments();
 }
 
@@ -380,12 +380,12 @@ void SlideShow::loadPrevImage()
 
 void SlideShow::showCurrentImage()
 {
-    if (!currImage_)
+    if (!m_currImage)
         return;
     
-    bitBlt(this, 0, 0, currImage_->qpixmap(),
-           0, 0, currImage_->qpixmap()->width(),
-           currImage_->qpixmap()->height(), Qt::CopyROP, true);
+    bitBlt(this, 0, 0, m_currImage->qpixmap(),
+           0, 0, m_currImage->qpixmap()->width(),
+           m_currImage->qpixmap()->height(), Qt::CopyROP, true);
 }
 
 
@@ -393,16 +393,16 @@ void SlideShow::showCurrentImage()
 
 void SlideShow::printFilename()
 {
-    if (!currImage_) return;
+    if (!m_currImage) return;
 
     QPainter p;
-    p.begin(currImage_->qpixmap());
+    p.begin(m_currImage->qpixmap());
 
-    QString filename(currImage_->filename());
+    QString filename(m_currImage->filename());
     filename += " (";
-    filename += QString::number(fileIndex_ + 1);
+    filename += QString::number(m_fileIndex + 1);
     filename += "/";
-    filename += QString::number(fileList_.count());
+    filename += QString::number(m_fileList.count());
     filename += ")";
 
     p.setPen(QColor("black"));
@@ -419,12 +419,12 @@ void SlideShow::printFilename()
 
 void SlideShow::printComments()
 {
-    if (!currImage_) return;
+    if (!m_currImage) return;
 
-    QString comments = commentsList_[fileIndex_];
+    QString comments = m_commentsList[m_fileIndex];
 
     int yPos = 20; // Text Y coordinate
-    if (printName_) yPos = 40;
+    if (m_printName) yPos = 40;
 
     QStringList commentsByLines;
 
@@ -436,9 +436,9 @@ void SlideShow::printComments()
         bool breakLine = FALSE; // End Of Line found
         uint currIndex; //  Comments QString current index
 
-        // Check miminal lines dimension
+        // Check m_im_inal lines dimension
 
-        uint commentsLinesLengthLocal = commentsLinesLength_;
+        uint commentsLinesLengthLocal = m_commentsLinesLength;
 
         for ( currIndex = commentsIndex; currIndex < comments.length() && !breakLine; currIndex++ )
             if( comments[currIndex] == QChar('\n') || comments[currIndex].isSpace() ) breakLine = TRUE;
@@ -473,23 +473,23 @@ void SlideShow::printComments()
     }
 
     QPainter p;
-    p.begin(currImage_->qpixmap());
-    p.setFont(commentsFont_);
+    p.begin(m_currImage->qpixmap());
+    p.setFont(m_commentsFont);
 
     for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ ) {
 
-        p.setPen(QColor(commentsBgColor_));
+        p.setPen(QColor(m_commentsBgColor));
 
         // coefficient 1.5 is used to maintain distance between different lines
 
          for (int x=9; x<=11; x++)
-             for (int y = (int)(yPos + lineNumber * 1.5 * commentsFont_.pointSize()  + 1); 
-                      y >= (int)(yPos + lineNumber* 1.5 * commentsFont_.pointSize()  - 1); y--)
+             for (int y = (int)(yPos + lineNumber * 1.5 * m_commentsFont.pointSize()  + 1); 
+                      y >= (int)(yPos + lineNumber* 1.5 * m_commentsFont.pointSize()  - 1); y--)
                 p.drawText(x, height()-y, commentsByLines[lineNumber]);
 
-        p.setPen(QColor(commentsFontColor_));
+        p.setPen(QColor(m_commentsFontColor));
 
-        p.drawText(10, height()-(int)(lineNumber * 1.5 * commentsFont_.pointSize() + yPos), commentsByLines[lineNumber]);
+        p.drawText(10, height()-(int)(lineNumber * 1.5 * m_commentsFont.pointSize() + yPos), commentsByLines[lineNumber]);
     }
 }
 
@@ -528,10 +528,10 @@ void SlideShow::showEndOfShow()
     p.drawText(100, 150, i18n("Click To Exit..."));
     p.end();
 
-    endOfShow_ = true;
-    toolBar_->setEnabledPlay(false);
-    toolBar_->setEnabledNext(false);
-    toolBar_->setEnabledPrev(false);
+    m_endOfShow = true;
+    m_toolBar->setEnabledPlay(false);
+    m_toolBar->setEnabledNext(false);
+    m_toolBar->setEnabledPrev(false);
 }
 
 
@@ -542,14 +542,14 @@ void SlideShow::keyPressEvent(QKeyEvent *event)
     if (!event)
         return;
 
-    toolBar_->keyPressEvent(event);
+    m_toolBar->keyPressEvent(event);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void SlideShow::mousePressEvent(QMouseEvent *)
 {
-    if (endOfShow_)
+    if (m_endOfShow)
         close();
 }
 
@@ -559,45 +559,45 @@ void SlideShow::mousePressEvent(QMouseEvent *)
 void SlideShow::mouseMoveEvent(QMouseEvent *e)
 {
     setCursor(QCursor(Qt::ArrowCursor));
-    mouseMoveTimer_->start(1000, true);
+    m_mouseMoveTimer->start(1000, true);
 
-    if (!toolBar_->canHide())
+    if (!m_toolBar->canHide())
         return;
     
     QPoint pos(e->pos());
     
-    if ((pos.y() > (deskY_+20)) &&
-        (pos.y() < (deskY_+deskHeight_-20-1)))
+    if ((pos.y() > (m_deskY+20)) &&
+        (pos.y() < (m_deskY+m_deskHeight-20-1)))
     {
-        if (toolBar_->isHidden())
+        if (m_toolBar->isHidden())
             return;
         else
-            toolBar_->hide();
+            m_toolBar->hide();
         return;
     }
 
-    int w = toolBar_->width();
-    int h = toolBar_->height();
+    int w = m_toolBar->width();
+    int h = m_toolBar->height();
     
-    if (pos.y() < (deskY_+20))
+    if (pos.y() < (m_deskY+20))
     {
-        if (pos.x() <= (deskX_+deskWidth_/2))
+        if (pos.x() <= (m_deskX+m_deskWidth/2))
             // position top left
-            toolBar_->move(deskX_, deskY_);
+            m_toolBar->move(m_deskX, m_deskY);
         else
             // position top right
-            toolBar_->move(deskX_+deskWidth_-w-1, deskY_);
+            m_toolBar->move(m_deskX+m_deskWidth-w-1, m_deskY);
     }
     else
     {
-        if (pos.x() <= (deskX_+deskWidth_/2))
+        if (pos.x() <= (m_deskX+m_deskWidth/2))
             // position bot left
-            toolBar_->move(deskX_, deskY_+deskHeight_-h-1);
+            m_toolBar->move(m_deskX, m_deskY+m_deskHeight-h-1);
         else
             // position bot right
-            toolBar_->move(deskX_+deskWidth_-w-1, deskY_+deskHeight_-h-1);
+            m_toolBar->move(m_deskX+m_deskWidth-w-1, m_deskY+m_deskHeight-h-1);
     }
-    toolBar_->show();
+    m_toolBar->show();
 }
 
 
@@ -606,8 +606,8 @@ void SlideShow::mouseMoveEvent(QMouseEvent *e)
 void SlideShow::slotMouseMoveTimeOut()
 {
     QPoint pos(QCursor::pos());
-    if ((pos.y() < (deskY_+20)) ||
-        (pos.y() > (deskY_+deskHeight_-20-1)))
+    if ((pos.y() < (m_deskY+20)) ||
+        (pos.y() > (m_deskY+m_deskHeight-20-1)))
         return;
     
     setCursor(QCursor(Qt::BlankCursor));
@@ -631,38 +631,38 @@ int SlideShow::effectChessboard(bool aInit)
 
     if (aInit)
     {
-        mw  = width();
-        mh  = height();
-        mdx = 8;         // width of one tile
-        mdy = 8;         // height of one tile
-        mj  = (mw+mdx-1)/mdx; // number of tiles
-        mx  = mj*mdx;    // shrinking x-offset from screen border
-        mix = 0;         // growing x-offset from screen border
-        miy = 0;         // 0 or mdy for growing tiling effect
-        my  = mj&1 ? 0 : mdy; // 0 or mdy for shrinking tiling effect
-        mwait = 800 / mj; // timeout between effects
+        m_w  = width();
+        m_h  = height();
+        m_dx = 8;         // width of one tile
+        m_dy = 8;         // height of one tile
+        m_j  = (m_w+m_dx-1)/m_dx; // number of tiles
+        m_x  = m_j*m_dx;    // shrinking x-offset from screen border
+        m_ix = 0;         // growing x-offset from screen border
+        m_iy = 0;         // 0 or m_dy for growing tiling effect
+        m_y  = m_j&1 ? 0 : m_dy; // 0 or m_dy for shrinking tiling effect
+        m_wait = 800 / m_j; // timeout between effects
     }
 
-    if (mix >= mw)
+    if (m_ix >= m_w)
     {
         showCurrentImage();
         return -1;
     }
 
-    mix += mdx;
-    mx  -= mdx;
-    miy = miy ? 0 : mdy;
-    my  = my ? 0 : mdy;
+    m_ix += m_dx;
+    m_x  -= m_dx;
+    m_iy = m_iy ? 0 : m_dy;
+    m_y  = m_y ? 0 : m_dy;
 
-    for (y=0; y<mw; y+=(mdy<<1))
+    for (y=0; y<m_w; y+=(m_dy<<1))
     {
-        bitBlt(this, mix, y+miy, currImage_->qpixmap(), mix, y+miy,
-               mdx, mdy, CopyROP, true);
-        bitBlt(this, mx, y+my, currImage_->qpixmap(), mx, y+my,
-               mdx, mdy, CopyROP, true);
+        bitBlt(this, m_ix, y+m_iy, m_currImage->qpixmap(), m_ix, y+m_iy,
+               m_dx, m_dy, CopyROP, true);
+        bitBlt(this, m_x, y+m_y, m_currImage->qpixmap(), m_x, y+m_y,
+               m_dx, m_dy, CopyROP, true);
     }
 
-    return mwait;
+    return m_wait;
 }
 
 
@@ -675,33 +675,33 @@ int SlideShow::effectMeltdown(bool aInit)
 
     if (aInit)
     {
-        delete [] mIntArray;
-        mw = width();
-        mh = height();
-        mdx = 4;
-        mdy = 16;
-        mix = mw / mdx;
-        mIntArray = new int[mix];
-        for (i=mix-1; i>=0; i--)
-            mIntArray[i] = 0;
+        delete [] m_intArray;
+        m_w = width();
+        m_h = height();
+        m_dx = 4;
+        m_dy = 16;
+        m_ix = m_w / m_dx;
+        m_intArray = new int[m_ix];
+        for (i=m_ix-1; i>=0; i--)
+            m_intArray[i] = 0;
     }
 
     done = true;
-    for (i=0,x=0; i<mix; i++,x+=mdx)
+    for (i=0,x=0; i<m_ix; i++,x+=m_dx)
     {
-        y = mIntArray[i];
-        if (y >= mh) continue;
+        y = m_intArray[i];
+        if (y >= m_h) continue;
         done = false;
         if ((rand()&15) < 6) continue;
-        bitBlt(this, x, y+mdy, this, x, y, mdx, mh-y-mdy, CopyROP, true);
-        bitBlt(this, x, y, currImage_->qpixmap(), x, y, mdx, mdy, CopyROP, true);
-        mIntArray[i] += mdy;
+        bitBlt(this, x, y+m_dy, this, x, y, m_dx, m_h-y-m_dy, CopyROP, true);
+        bitBlt(this, x, y, m_currImage->qpixmap(), x, y, m_dx, m_dy, CopyROP, true);
+        m_intArray[i] += m_dy;
     }
 
     if (done)
     {
-        delete [] mIntArray;
-        mIntArray = NULL;
+        delete [] m_intArray;
+        m_intArray = NULL;
         return -1;
     }
 
@@ -719,42 +719,42 @@ int SlideShow::effectSweep(bool aInit)
     {
         // subtype: 0=sweep right to left, 1=sweep left to right
         //          2=sweep bottom to top, 3=sweep top to bottom
-        mSubType = rand() % 4;
-        mw  = width();
-        mh  = height();
-        mdx = (mSubType==1 ? 16 : -16);
-        mdy = (mSubType==3 ? 16 : -16);
-        mx  = (mSubType==1 ? 0 : mw);
-        my  = (mSubType==3 ? 0 : mh);
+        m_subType = rand() % 4;
+        m_w  = width();
+        m_h  = height();
+        m_dx = (m_subType==1 ? 16 : -16);
+        m_dy = (m_subType==3 ? 16 : -16);
+        m_x  = (m_subType==1 ? 0 : m_w);
+        m_y  = (m_subType==3 ? 0 : m_h);
     }
 
-    if (mSubType==0 || mSubType==1)
+    if (m_subType==0 || m_subType==1)
     {
         // horizontal sweep
-        if ((mSubType==0 && mx < -64) ||
-            (mSubType==1 && mx > mw+64))
+        if ((m_subType==0 && m_x < -64) ||
+            (m_subType==1 && m_x > m_w+64))
         {
             return -1;
         }
-        for (w=2,i=4,x=mx; i>0; i--, w<<=1, x-=mdx)
+        for (w=2,i=4,x=m_x; i>0; i--, w<<=1, x-=m_dx)
         {
-            bitBlt(this, x, 0, currImage_->qpixmap(), x, 0, w, mh, CopyROP, true);
+            bitBlt(this, x, 0, m_currImage->qpixmap(), x, 0, w, m_h, CopyROP, true);
         }
-        mx += mdx;
+        m_x += m_dx;
     }
     else
     {
         // vertical sweep
-        if ((mSubType==2 && my < -64) ||
-            (mSubType==3 && my > mh+64))
+        if ((m_subType==2 && m_y < -64) ||
+            (m_subType==3 && m_y > m_h+64))
         {
             return -1;
         }
-        for (h=2,i=4,y=my; i>0; i--, h<<=1, y-=mdy)
+        for (h=2,i=4,y=m_y; i>0; i--, h<<=1, y-=m_dy)
         {
-            bitBlt(this, 0, y, currImage_->qpixmap(), 0, y, mw, h, CopyROP, true);
+            bitBlt(this, 0, y, m_currImage->qpixmap(), 0, y, m_w, h, CopyROP, true);
         }
-        my += mdy;
+        m_y += m_dy;
     }
 
     return 20;
@@ -777,7 +777,7 @@ int SlideShow::effectRandom(bool /*aInit*/)
     {
         x = (rand() % w) << fact;
         y = (rand() % h) << fact;
-        bitBlt(this, x, y, currImage_->qpixmap(), x, y, sz, sz, CopyROP, true);
+        bitBlt(this, x, y, m_currImage->qpixmap(), x, y, sz, sz, CopyROP, true);
     }
 
     showCurrentImage();
@@ -792,27 +792,27 @@ int SlideShow::effectGrowing(bool aInit)
 {
     if (aInit)
     {
-        mw = width();
-        mh = height();
-        mx = mw >> 1;
-        my = mh >> 1;
-        mi = 0;
-        mfx = mx / 100.0;
-        mfy = my / 100.0;
+        m_w = width();
+        m_h = height();
+        m_x = m_w >> 1;
+        m_y = m_h >> 1;
+        m_i = 0;
+        m_fx = m_x / 100.0;
+        m_fy = m_y / 100.0;
     }
 
-    mx = (mw>>1) - (int)(mi * mfx);
-    my = (mh>>1) - (int)(mi * mfy);
-    mi++;
+    m_x = (m_w>>1) - (int)(m_i * m_fx);
+    m_y = (m_h>>1) - (int)(m_i * m_fy);
+    m_i++;
 
-    if (mx<0 || my<0)
+    if (m_x<0 || m_y<0)
     {
         showCurrentImage();
         return -1;
     }
 
-    bitBlt(this, mx, my, currImage_->qpixmap(), mx, my,
-           mw - (mx<<1), mh - (my<<1), CopyROP, true);
+    bitBlt(this, m_x, m_y, m_currImage->qpixmap(), m_x, m_y,
+           m_w - (m_x<<1), m_h - (m_y<<1), CopyROP, true);
 
     return 20;
 }
@@ -820,50 +820,50 @@ int SlideShow::effectGrowing(bool aInit)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int SlideShow::effectIncomingEdges(bool aInit)
+int SlideShow::effectIncom_ingEdges(bool aInit)
 {
     int x1, y1;
 
     if (aInit)
     {
-        mw = width();
-        mh = height();
-        mix = mw >> 1;
-        miy = mh >> 1;
-        mfx = mix / 100.0;
-        mfy = miy / 100.0;
-        mi = 0;
-        mSubType = rand() & 1;
+        m_w = width();
+        m_h = height();
+        m_ix = m_w >> 1;
+        m_iy = m_h >> 1;
+        m_fx = m_ix / 100.0;
+        m_fy = m_iy / 100.0;
+        m_i = 0;
+        m_subType = rand() & 1;
     }
 
-    mx = (int)(mfx * mi);
-    my = (int)(mfy * mi);
+    m_x = (int)(m_fx * m_i);
+    m_y = (int)(m_fy * m_i);
 
-    if (mx>mix || my>miy)
+    if (m_x>m_ix || m_y>m_iy)
     {
         showCurrentImage();
         return -1;
     }
 
-    x1 = mw - mx;
-    y1 = mh - my;
-    mi++;
+    x1 = m_w - m_x;
+    y1 = m_h - m_y;
+    m_i++;
 
-    if (mSubType)
+    if (m_subType)
     {
         // moving image edges
-        bitBlt(this,  0,  0, currImage_->qpixmap(), mix-mx, miy-my, mx, my, CopyROP, true);
-        bitBlt(this, x1,  0, currImage_->qpixmap(), mix, miy-my, mx, my, CopyROP, true);
-        bitBlt(this,  0, y1, currImage_->qpixmap(), mix-mx, miy, mx, my, CopyROP, true);
-        bitBlt(this, x1, y1, currImage_->qpixmap(), mix, miy, mx, my, CopyROP, true);
+        bitBlt(this,  0,  0, m_currImage->qpixmap(), m_ix-m_x, m_iy-m_y, m_x, m_y, CopyROP, true);
+        bitBlt(this, x1,  0, m_currImage->qpixmap(), m_ix, m_iy-m_y, m_x, m_y, CopyROP, true);
+        bitBlt(this,  0, y1, m_currImage->qpixmap(), m_ix-m_x, m_iy, m_x, m_y, CopyROP, true);
+        bitBlt(this, x1, y1, m_currImage->qpixmap(), m_ix, m_iy, m_x, m_y, CopyROP, true);
     }
     else
     {
         // fixed image edges
-        bitBlt(this,  0,  0, currImage_->qpixmap(),  0,  0, mx, my, CopyROP, true);
-        bitBlt(this, x1,  0, currImage_->qpixmap(), x1,  0, mx, my, CopyROP, true);
-        bitBlt(this,  0, y1, currImage_->qpixmap(),  0, y1, mx, my, CopyROP, true);
-        bitBlt(this, x1, y1, currImage_->qpixmap(), x1, y1, mx, my, CopyROP, true);
+        bitBlt(this,  0,  0, m_currImage->qpixmap(),  0,  0, m_x, m_y, CopyROP, true);
+        bitBlt(this, x1,  0, m_currImage->qpixmap(), x1,  0, m_x, m_y, CopyROP, true);
+        bitBlt(this,  0, y1, m_currImage->qpixmap(),  0, y1, m_x, m_y, CopyROP, true);
+        bitBlt(this, x1, y1, m_currImage->qpixmap(), x1, y1, m_x, m_y, CopyROP, true);
     }
     return 20;
 }
@@ -878,20 +878,20 @@ int SlideShow::effectHorizLines(bool aInit)
 
     if (aInit)
     {
-        mw = width();
-        mh = height();
-        mi = 0;
+        m_w = width();
+        m_h = height();
+        m_i = 0;
     }
 
-    if (iyPos[mi] < 0) return -1;
+    if (iyPos[m_i] < 0) return -1;
 
-    for (y=iyPos[mi]; y<mh; y+=8)
+    for (y=iyPos[m_i]; y<m_h; y+=8)
     {
-        bitBlt(this, 0, y, currImage_->qpixmap(), 0, y, mw, 1, CopyROP, true);
+        bitBlt(this, 0, y, m_currImage->qpixmap(), 0, y, m_w, 1, CopyROP, true);
     }
 
-    mi++;
-    if (iyPos[mi] >= 0) return 160;
+    m_i++;
+    if (iyPos[m_i] >= 0) return 160;
     return -1;
 }
 
@@ -905,20 +905,20 @@ int SlideShow::effectVertLines(bool aInit)
 
     if (aInit)
     {
-        mw = width();
-        mh = height();
-        mi = 0;
+        m_w = width();
+        m_h = height();
+        m_i = 0;
     }
 
-    if (ixPos[mi] < 0) return -1;
+    if (ixPos[m_i] < 0) return -1;
 
-    for (x=ixPos[mi]; x<mw; x+=8)
+    for (x=ixPos[m_i]; x<m_w; x+=8)
     {
-        bitBlt(this, x, 0, currImage_->qpixmap(), x, 0, 1, mh, CopyROP, true);
+        bitBlt(this, x, 0, m_currImage->qpixmap(), x, 0, 1, m_h, CopyROP, true);
     }
 
-    mi++;
-    if (ixPos[mi] >= 0) return 160;
+    m_i++;
+    if (ixPos[m_i] >= 0) return 160;
     return -1;
 }
 
@@ -934,44 +934,44 @@ int SlideShow::effectMultiCircleOut(bool aInit)
     if (aInit)
     {
         startPainter();
-        mw = width();
-        mh = height();
-        mx = mw;
-        my = mh>>1;
-        pa.setPoint(0, mw>>1, mh>>1);
-        pa.setPoint(3, mw>>1, mh>>1);
-        mfy = sqrt((double)mw*mw + mh*mh) / 2;
-        mi  = rand()%15 + 2;
-        mfd = M_PI*2/mi;
-        mAlpha = mfd;
-        mwait = 10 * mi;
-        mfx = M_PI/32;  // divisor must be powers of 8
+        m_w = width();
+        m_h = height();
+        m_x = m_w;
+        m_y = m_h>>1;
+        pa.setPoint(0, m_w>>1, m_h>>1);
+        pa.setPoint(3, m_w>>1, m_h>>1);
+        m_fy = sqrt((double)m_w*m_w + m_h*m_h) / 2;
+        m_i  = rand()%15 + 2;
+        m_fd = M_PI*2/m_i;
+        m_alpha = m_fd;
+        m_wait = 10 * m_i;
+        m_fx = M_PI/32;  // divisor must be powers of 8
     }
 
-    if (mAlpha < 0)
+    if (m_alpha < 0)
     {
-        mPainter.end();
+        m_painter.end();
         showCurrentImage();
         return -1;
     }
 
-    for (alpha=mAlpha, i=mi; i>=0; i--, alpha+=mfd)
+    for (alpha=m_alpha, i=m_i; i>=0; i--, alpha+=m_fd)
     {
-        x = (mw>>1) + (int)(mfy * cos(-alpha));
-        y = (mh>>1) + (int)(mfy * sin(-alpha));
+        x = (m_w>>1) + (int)(m_fy * cos(-alpha));
+        y = (m_h>>1) + (int)(m_fy * sin(-alpha));
 
-        mx = (mw>>1) + (int)(mfy * cos(-alpha + mfx));
-        my = (mh>>1) + (int)(mfy * sin(-alpha + mfx));
+        m_x = (m_w>>1) + (int)(m_fy * cos(-alpha + m_fx));
+        m_y = (m_h>>1) + (int)(m_fy * sin(-alpha + m_fx));
 
         pa.setPoint(1, x, y);
-        pa.setPoint(2, mx, my);
+        pa.setPoint(2, m_x, m_y);
 
-        mPainter.drawPolygon(pa);
+        m_painter.drawPolygon(pa);
     }
 
-    mAlpha -= mfx;
+    m_alpha -= m_fx;
 
-    return mwait;
+    return m_wait;
 }
 
 
@@ -982,63 +982,63 @@ int SlideShow::effectSpiralIn(bool aInit)
     if (aInit)
     {
         startPainter();
-        mw = width();
-        mh = height();
-        mix = mw / 8;
-        miy = mh / 8;
-        mx0 = 0;
-        mx1 = mw - mix;
-        my0 = miy;
-        my1 = mh - miy;
-        mdx = mix;
-        mdy = 0;
-        mi = 0;
-        mj = 16 * 16;
-        mx = 0;
-        my = 0;
+        m_w = width();
+        m_h = height();
+        m_ix = m_w / 8;
+        m_iy = m_h / 8;
+        m_x0 = 0;
+        m_x1 = m_w - m_ix;
+        m_y0 = m_iy;
+        m_y1 = m_h - m_iy;
+        m_dx = m_ix;
+        m_dy = 0;
+        m_i = 0;
+        m_j = 16 * 16;
+        m_x = 0;
+        m_y = 0;
     }
 
-    if (mi==0 && mx0>=mx1)
+    if (m_i==0 && m_x0>=m_x1)
     {
-        mPainter.end();
+        m_painter.end();
         showCurrentImage();
         return -1;
     }
 
-    if (mi==0 && mx>=mx1) // switch to: down on right side
+    if (m_i==0 && m_x>=m_x1) // switch to: down on right side
     {
-        mi = 1;
-        mdx = 0;
-        mdy = miy;
-        mx1 -= mix;
+        m_i = 1;
+        m_dx = 0;
+        m_dy = m_iy;
+        m_x1 -= m_ix;
     }
-    else if (mi==1 && my>=my1) // switch to: right to left on bottom side
+    else if (m_i==1 && m_y>=m_y1) // switch to: right to left on bottom side
     {
-        mi = 2;
-        mdx = -mix;
-        mdy = 0;
-        my1 -= miy;
+        m_i = 2;
+        m_dx = -m_ix;
+        m_dy = 0;
+        m_y1 -= m_iy;
     }
-    else if (mi==2 && mx<=mx0) // switch to: up on left side
+    else if (m_i==2 && m_x<=m_x0) // switch to: up on left side
     {
-        mi = 3;
-        mdx = 0;
-        mdy = -miy;
-        mx0 += mix;
+        m_i = 3;
+        m_dx = 0;
+        m_dy = -m_iy;
+        m_x0 += m_ix;
     }
-    else if (mi==3 && my<=my0) // switch to: left to right on top side
+    else if (m_i==3 && m_y<=m_y0) // switch to: left to right on top side
     {
-        mi = 0;
-        mdx = mix;
-        mdy = 0;
-        my0 += miy;
+        m_i = 0;
+        m_dx = m_ix;
+        m_dy = 0;
+        m_y0 += m_iy;
     }
 
-    bitBlt(this, mx, my, currImage_->qpixmap(), mx, my, mix, miy, CopyROP, true);
+    bitBlt(this, m_x, m_y, m_currImage->qpixmap(), m_x, m_y, m_ix, m_iy, CopyROP, true);
 
-    mx += mdx;
-    my += mdy;
-    mj--;
+    m_x += m_dx;
+    m_y += m_dy;
+    m_j--;
 
     return 8;
 }
@@ -1054,34 +1054,34 @@ int SlideShow::effectCircleOut(bool aInit)
     if (aInit)
     {
         startPainter();
-        mw = width();
-        mh = height();
-        mx = mw;
-        my = mh>>1;
-        mAlpha = 2*M_PI;
-        pa.setPoint(0, mw>>1, mh>>1);
-        pa.setPoint(3, mw>>1, mh>>1);
-        mfx = M_PI/16;  // divisor must be powers of 8
-        mfy = sqrt((double)mw*mw + mh*mh) / 2;
+        m_w = width();
+        m_h = height();
+        m_x = m_w;
+        m_y = m_h>>1;
+        m_alpha = 2*M_PI;
+        pa.setPoint(0, m_w>>1, m_h>>1);
+        pa.setPoint(3, m_w>>1, m_h>>1);
+        m_fx = M_PI/16;  // divisor must be powers of 8
+        m_fy = sqrt((double)m_w*m_w + m_h*m_h) / 2;
     }
 
-    if (mAlpha < 0)
+    if (m_alpha < 0)
     {
-        mPainter.end();
+        m_painter.end();
         showCurrentImage();
         return -1;
     }
 
-    x = mx;
-    y = my;
-    mx = (mw>>1) + (int)(mfy * cos(mAlpha));
-    my = (mh>>1) + (int)(mfy * sin(mAlpha));
-    mAlpha -= mfx;
+    x = m_x;
+    y = m_y;
+    m_x = (m_w>>1) + (int)(m_fy * cos(m_alpha));
+    m_y = (m_h>>1) + (int)(m_fy * sin(m_alpha));
+    m_alpha -= m_fx;
 
     pa.setPoint(1, x, y);
-    pa.setPoint(2, mx, my);
+    pa.setPoint(2, m_x, m_y);
 
-    mPainter.drawPolygon(pa);
+    m_painter.drawPolygon(pa);
 
     return 20;
 }
@@ -1096,25 +1096,25 @@ int SlideShow::effectBlobs(bool aInit)
     if (aInit)
     {
         startPainter();
-        mAlpha = M_PI * 2;
-        mw = width();
-        mh = height();
-        mi = 150;
+        m_alpha = M_PI * 2;
+        m_w = width();
+        m_h = height();
+        m_i = 150;
     }
 
-    if (mi <= 0)
+    if (m_i <= 0)
     {
-        mPainter.end();
+        m_painter.end();
         showCurrentImage();
         return -1;
     }
 
-    mx = rand() % mw;
-    my = rand() % mh;
+    m_x = rand() % m_w;
+    m_y = rand() % m_h;
     r = (rand() % 200) + 50;
 
-    mPainter.drawEllipse(mx-r, my-r, r, r);
-    mi--;
+    m_painter.drawEllipse(m_x-r, m_y-r, r, r);
+    m_i--;
 
     return 10;
 }
@@ -1125,55 +1125,55 @@ int SlideShow::effectBlobs(bool aInit)
 void SlideShow::startPainter(Qt::PenStyle aPen)
 {
     QBrush brush;
-    brush.setPixmap(*(currImage_->qpixmap()));
+    brush.setPixmap(*(m_currImage->qpixmap()));
 
-    if (mPainter.isActive())
-        mPainter.end();
+    if (m_painter.isActive())
+        m_painter.end();
 
-    mPainter.begin(this);
-    mPainter.setBrush(brush);
-    mPainter.setPen(aPen);
+    m_painter.begin(this);
+    m_painter.setBrush(brush);
+    m_painter.setPen(aPen);
 }
 
 void SlideShow::slotPause()
 {
-    timer_->stop();
+    m_timer->stop();
 
-    if (toolBar_->isHidden())
+    if (m_toolBar->isHidden())
     {
-        int w = toolBar_->width();
-        toolBar_->move(deskWidth_-w-1,0);
-        toolBar_->show();
+        int w = m_toolBar->width();
+        m_toolBar->move(m_deskWidth-w-1,0);
+        m_toolBar->show();
     }
 }
 
 void SlideShow::slotPlay()
 {
-    toolBar_->hide();
+    m_toolBar->hide();
     slotTimeOut();
 }
 
 void SlideShow::slotPrev()
 {
     loadPrevImage();
-    if (!currImage_ || fileList_.isEmpty())   
+    if (!m_currImage || m_fileList.isEmpty())   
     {
         showEndOfShow();
         return;
     }
-    effectRunning_ = false;
+    m_effectRunning = false;
     showCurrentImage();
 }
 
 void SlideShow::slotNext()
 {
     loadNextImage();
-    if (!currImage_ || fileList_.isEmpty())   
+    if (!m_currImage || m_fileList.isEmpty())   
     {
         showEndOfShow();
         return;
     }
-    effectRunning_ = false;
+    m_effectRunning = false;
     showCurrentImage();
 }
 

@@ -55,98 +55,98 @@ SlideShowGL::SlideShowGL(const QValueList<QPair<QString, int> >& fileList,
 {
 #if KDE_IS_VERSION(3,2,0)
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
-    deskX_      = deskRect.x();
-    deskY_      = deskRect.y();
-    deskWidth_  = deskRect.width();
-    deskHeight_ = deskRect.height();
+    m_deskX      = deskRect.x();
+    m_deskY      = deskRect.y();
+    m_deskWidth  = deskRect.width();
+    m_deskHeight = deskRect.height();
 #else
     QRect deskRect = QApplication::desktop()->screenGeometry(this);
-    deskX_      = deskRect.x();
-    deskY_      = deskRect.y();
-    deskWidth_  = deskRect.width();
-    deskHeight_ = deskRect.height();
+    m_deskX      = deskRect.x();
+    m_deskY      = deskRect.y();
+    m_deskWidth  = deskRect.width();
+    m_deskHeight = deskRect.height();
 #endif    
     
-    move(deskX_, deskY_);
-    resize(deskWidth_, deskHeight_);
+    move(m_deskX, m_deskY);
+    resize(m_deskWidth, m_deskHeight);
 
-    toolBar_ = new ToolBar(this);
-    toolBar_->hide();
+    m_toolBar = new ToolBar(this);
+    m_toolBar->hide();
     if (!loop)
     {
-        toolBar_->setEnabledPrev(false);
+        m_toolBar->setEnabledPrev(false);
     }
-    connect(toolBar_, SIGNAL(signalPause()),
+    connect(m_toolBar, SIGNAL(signalPause()),
             SLOT(slotPause()));
-    connect(toolBar_, SIGNAL(signalPlay()),
+    connect(m_toolBar, SIGNAL(signalPlay()),
             SLOT(slotPlay()));
-    connect(toolBar_, SIGNAL(signalNext()),
+    connect(m_toolBar, SIGNAL(signalNext()),
             SLOT(slotNext()));
-    connect(toolBar_, SIGNAL(signalPrev()),
+    connect(m_toolBar, SIGNAL(signalPrev()),
             SLOT(slotPrev()));
-    connect(toolBar_, SIGNAL(signalClose()),
+    connect(m_toolBar, SIGNAL(signalClose()),
             SLOT(slotClose()));
     
     // -- Minimal texture size (opengl specs) --------------
     
-    width_  = 64;
-    height_ = 64;
+    m_width  = 64;
+    m_height = 64;
 
     // --------------------------------------------------
 
-    fileList_       = fileList;
-    commentsList_   = commentsList;
-    delay_          = QMAX(delay, 1000);   // at least have 1 second delay
-    loop_           = loop;
-    effectName_     = effectName;
-    printName_      = printName;
-    printComments_  = printComments;
+    m_fileList       = fileList;
+    m_commentsList   = commentsList;
+    m_delay          = QMAX(delay, 1000);   // at least have 1 second delay
+    m_loop           = loop;
+    m_effectName     = effectName;
+    m_printName      = printName;
+    m_printComments  = printComments;
 
-    ImagesHasComments_   = ImagesHasComments;
+    m_imagesHasComments   = ImagesHasComments;
 
-    commentsFont_        = commentsFont;
-    commentsFontColor_   = commentsFontColor;
-    commentsBgColor_     = commentsBgColor;
-    commentsLinesLength_ = commentsLinesLength;
+    m_commentsFont        = commentsFont;
+    m_commentsFontColor   = commentsFontColor;
+    m_commentsBgColor     = commentsBgColor;
+    m_commentsLinesLength = commentsLinesLength;
 
     // ------------------------------------------------------------------
 
-    fileIndex_  = 0;
+    m_fileIndex  = 0;
 
-    texture_[0] = 0;
-    texture_[1] = 0;
-    curr_       = 0;
-    tex1First_  = true;
-    timeout_    = delay_;
-    effectRunning_ = false;
-    endOfShow_     = false;
+    m_texture[0] = 0;
+    m_texture[1] = 0;
+    m_curr       = 0;
+    m_tex1First  = true;
+    m_timeout    = m_delay;
+    m_effectRunning = false;
+    m_endOfShow     = false;
 
     // --------------------------------------------------
 
     registerEffects();
 
-    if (effectName_ == "Random") {
-        effect_ = getRandomEffect();
-        random_ = true;
+    if (m_effectName == "Random") {
+        m_effect = getRandomEffect();
+        m_random = true;
     }
     else {
-        effect_ = Effects[effectName_];
-        if (!effect_)
-            effect_ = Effects["None"];
-        random_ = false;
+        m_effect = m_effects[m_effectName];
+        if (!m_effect)
+            m_effect = m_effects["None"];
+        m_random = false;
     }
 
     // --------------------------------------------------
 
-    timer_ = new QTimer();
-    connect(timer_, SIGNAL(timeout()),
+    m_timer = new QTimer();
+    connect(m_timer, SIGNAL(timeout()),
             SLOT(slotTimeOut()));
-    timer_->start(timeout_, true);
+    m_timer->start(m_timeout, true);
 
     // -- hide cursor when not moved --------------------
 
-    mouseMoveTimer_ = new QTimer;
-    connect(mouseMoveTimer_, SIGNAL(timeout()),
+    m_mouseMoveTimer = new QTimer;
+    connect(m_mouseMoveTimer, SIGNAL(timeout()),
             SLOT(slotMouseMoveTimeOut()));
     
     setMouseTracking(true);
@@ -155,13 +155,13 @@ SlideShowGL::SlideShowGL(const QValueList<QPair<QString, int> >& fileList,
 
 SlideShowGL::~SlideShowGL()
 {
-    delete timer_;
-    delete mouseMoveTimer_;
+    delete m_timer;
+    delete m_mouseMoveTimer;
   
-    if (texture_[0])
-        glDeleteTextures(1, &texture_[0]);
-    if (texture_[1])
-        glDeleteTextures(1, &texture_[1]);
+    if (m_texture[0])
+        glDeleteTextures(1, &m_texture[0]);
+    if (m_texture[1])
+        glDeleteTextures(1, &m_texture[1]);
 }
 
 void SlideShowGL::initializeGL()
@@ -186,14 +186,14 @@ void SlideShowGL::initializeGL()
     // allow only maximum texture value of 1024. anything bigger and things slow down
     maxTexVal = QMIN(1024, maxTexVal);
 
-    width_  = QApplication::desktop()->width();
-    height_ = QApplication::desktop()->height();
+    m_width  = QApplication::desktop()->width();
+    m_height = QApplication::desktop()->height();
 
-    width_  = 1 << (int)ceil(log((float)width_)/log((float)2)) ;
-    height_ = 1 << (int)ceil(log((float)height_)/log((float)2));
+    m_width  = 1 << (int)ceil(log((float)m_width)/log((float)2)) ;
+    m_height = 1 << (int)ceil(log((float)m_height)/log((float)2));
     
-    width_  = QMIN( maxTexVal, width_ );
-    height_ = QMIN( maxTexVal, height_ );
+    m_width  = QMIN( maxTexVal, m_width );
+    m_height = QMIN( maxTexVal, m_height );
 
     // load the first image
 
@@ -213,11 +213,11 @@ void SlideShowGL::paintGL()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    if (endOfShow_)
+    if (m_endOfShow)
         showEndOfShow();
     else {
-        if (effectRunning_ && effect_)
-            (this->*effect_)();
+        if (m_effectRunning && m_effect)
+            (this->*m_effect)();
         else
             paintTexture();
     }
@@ -237,70 +237,70 @@ void SlideShowGL::keyPressEvent(QKeyEvent *event)
     if(!event)
         return;
 
-    toolBar_->keyPressEvent(event);
+    m_toolBar->keyPressEvent(event);
 }
 
 void SlideShowGL::mousePressEvent(QMouseEvent *)
 {
-    if (endOfShow_)
+    if (m_endOfShow)
         close();
 }
 
 void SlideShowGL::mouseMoveEvent(QMouseEvent *e)
 {
     setCursor(QCursor(Qt::ArrowCursor));
-    mouseMoveTimer_->start(1000, true);
+    m_mouseMoveTimer->start(1000, true);
 
-    if (!toolBar_->canHide())
+    if (!m_toolBar->canHide())
         return;
     
     QPoint pos(e->pos());
     
-    if ((pos.y() > (deskY_+20)) &&
-        (pos.y() < (deskY_+deskHeight_-20-1)))
+    if ((pos.y() > (m_deskY+20)) &&
+        (pos.y() < (m_deskY+m_deskHeight-20-1)))
     {
-        if (toolBar_->isHidden())
+        if (m_toolBar->isHidden())
             return;
         else
-            toolBar_->hide();
+            m_toolBar->hide();
         return;
     }
 
-    int w = toolBar_->width();
-    int h = toolBar_->height();
+    int w = m_toolBar->width();
+    int h = m_toolBar->height();
     
-    if (pos.y() < (deskY_+20))
+    if (pos.y() < (m_deskY+20))
     {
-        if (pos.x() <= (deskX_+deskWidth_/2))
+        if (pos.x() <= (m_deskX+m_deskWidth/2))
             // position top left
-            toolBar_->move(deskX_, deskY_);
+            m_toolBar->move(m_deskX, m_deskY);
         else
             // position top right
-            toolBar_->move(deskX_+deskWidth_-w-1, deskY_);
+            m_toolBar->move(m_deskX+m_deskWidth-w-1, m_deskY);
     }
     else
     {
-        if (pos.x() <= (deskX_+deskWidth_/2))
+        if (pos.x() <= (m_deskX+m_deskWidth/2))
             // position bot left
-            toolBar_->move(deskX_, deskY_+deskHeight_-h-1);
+            m_toolBar->move(m_deskX, m_deskY+m_deskHeight-h-1);
         else
             // position bot right
-            toolBar_->move(deskX_+deskWidth_-w-1, deskY_+deskHeight_-h-1);
+            m_toolBar->move(m_deskX+m_deskWidth-w-1, m_deskY+m_deskHeight-h-1);
     }
-    toolBar_->show();
+    m_toolBar->show();
 }
 
 void SlideShowGL::registerEffects()
 {
-    Effects.insert("None", &SlideShowGL::effectNone);
-    Effects.insert("Blend", &SlideShowGL::effectBlend);
-    Effects.insert("Fade", &SlideShowGL::effectFade);
-    Effects.insert("Rotate", &SlideShowGL::effectRotate);
-    Effects.insert("Bend", &SlideShowGL::effectBend);
-    Effects.insert("In Out", &SlideShowGL::effectInOut);
-    Effects.insert("Slide", &SlideShowGL::effectSlide);
-    Effects.insert("Flutter", &SlideShowGL::effectFlutter);
-    Effects.insert("Cube", &SlideShowGL::effectCube);
+    m_effects.insert("None", &SlideShowGL::effectNone);
+    m_effects.insert("Blend", &SlideShowGL::effectBlend);
+    m_effects.insert("Fade", &SlideShowGL::effectFade);
+    m_effects.insert("Rotate", &SlideShowGL::effectRotate);
+    m_effects.insert("Bend", &SlideShowGL::effectBend);
+    m_effects.insert("In Out", &SlideShowGL::effectInOut);
+    m_effects.insert("Slide", &SlideShowGL::effectSlide);
+    m_effects.insert("Flutter", &SlideShowGL::effectFlutter);
+    m_effects.insert("Cube", &SlideShowGL::effectCube);
 }
 
 QStringList SlideShowGL::effectNames()
@@ -341,7 +341,7 @@ QMap<QString,QString> SlideShowGL::effectNamesI18N()
 
 SlideShowGL::EffectMethod SlideShowGL::getRandomEffect()
 {
-    QMap<QString,EffectMethod>  tmpMap(Effects);
+    QMap<QString,EffectMethod>  tmpMap(m_effects);
 
     tmpMap.remove("None");
     QStringList t = tmpMap.keys();
@@ -356,65 +356,65 @@ SlideShowGL::EffectMethod SlideShowGL::getRandomEffect()
 
 void SlideShowGL::advanceFrame()
 {
-    fileIndex_++;
-    int num = fileList_.count();
-    if (fileIndex_ >= num) {
-        if (loop_)
+    m_fileIndex++;
+    int num = m_fileList.count();
+    if (m_fileIndex >= num) {
+        if (m_loop)
         {
-            fileIndex_ = 0;
+            m_fileIndex = 0;
         }
         else
         {
-            fileIndex_ = num-1;
-            endOfShow_ = true;
-            toolBar_->setEnabledPlay(false);
-            toolBar_->setEnabledNext(false);
-            toolBar_->setEnabledPrev(false);
+            m_fileIndex = num-1;
+            m_endOfShow = true;
+            m_toolBar->setEnabledPlay(false);
+            m_toolBar->setEnabledNext(false);
+            m_toolBar->setEnabledPrev(false);
         }
     }
 
-    if (!loop_ && !endOfShow_)
+    if (!m_loop && !m_endOfShow)
     {
-        toolBar_->setEnabledPrev(fileIndex_ > 0);
-        toolBar_->setEnabledNext(fileIndex_ < num-1);
+        m_toolBar->setEnabledPrev(m_fileIndex > 0);
+        m_toolBar->setEnabledNext(m_fileIndex < num-1);
     }
 
-    tex1First_ = !tex1First_;
-    curr_      = (curr_ == 0) ? 1 : 0;
+    m_tex1First = !m_tex1First;
+    m_curr      = (m_curr == 0) ? 1 : 0;
 }
 
 void SlideShowGL::previousFrame()
 {
-    fileIndex_--;
-    int num = fileList_.count();
-    if (fileIndex_ < 0) {
-        if (loop_)
+    m_fileIndex--;
+    int num = m_fileList.count();
+    if (m_fileIndex < 0) {
+        if (m_loop)
         {
-            fileIndex_ = num-1;
+            m_fileIndex = num-1;
         }
         else
         {
-            fileIndex_ = 0;
-            endOfShow_ = true;
-            toolBar_->setEnabledPlay(false);
-            toolBar_->setEnabledNext(false);
-            toolBar_->setEnabledPrev(false);
+            m_fileIndex = 0;
+            m_endOfShow = true;
+            m_toolBar->setEnabledPlay(false);
+            m_toolBar->setEnabledNext(false);
+            m_toolBar->setEnabledPrev(false);
         }
     }
 
-    if (!loop_ && !endOfShow_)
+    if (!m_loop && !m_endOfShow)
     {
-        toolBar_->setEnabledPrev(fileIndex_ > 0);
-        toolBar_->setEnabledNext(fileIndex_ < num-1);
+        m_toolBar->setEnabledPrev(m_fileIndex > 0);
+        m_toolBar->setEnabledNext(m_fileIndex < num-1);
     }
 
-    tex1First_ = !tex1First_;
-    curr_      = (curr_ == 0) ? 1 : 0;
+    m_tex1First = !m_tex1First;
+    m_curr      = (m_curr == 0) ? 1 : 0;
 }
 
 void SlideShowGL::loadImage()
 {
-    QPair<QString, int> fileAngle = fileList_[fileIndex_];
+    QPair<QString, int> fileAngle = m_fileList[m_fileIndex];
     QString path(fileAngle.first);
     int     angle(fileAngle.second);
     QImage image(path);
@@ -427,8 +427,8 @@ void SlideShowGL::loadImage()
 
     if (!image.isNull()) {
 
-        int a  = tex1First_ ? 0 : 1;
-        GLuint& tex = texture_[a];
+        int a  = m_tex1First ? 0 : 1;
+        GLuint& tex = m_texture[a];
 
         if (tex)
             glDeleteTextures(1, &tex);
@@ -440,12 +440,12 @@ void SlideShowGL::loadImage()
                                   QImage::ScaleMin);
         montage(image, black);
 
-        black = black.smoothScale(width_, height_);
+        black = black.smoothScale(m_width, m_height);
         
-	if (printName_)
+	if (m_printName)
 	    printFilename(black);
 	
-        if (printComments_ && ImagesHasComments_)
+        if (m_printComments && m_imagesHasComments)
             printComments(black);
         
 	QImage t = convertToGLFormat(black);
@@ -496,12 +496,12 @@ void SlideShowGL::montage(QImage& top, QImage& bot)
 
 void SlideShowGL::printFilename(QImage& layer)
 { 
-    QFileInfo fileinfo(fileList_[fileIndex_].first);
+    QFileInfo fileinfo(m_fileList[m_fileIndex].first);
     QString filename = fileinfo.fileName();
     filename += " (";
-    filename += QString::number(fileIndex_ + 1);
+    filename += QString::number(m_fileIndex + 1);
     filename += "/";
-    filename += QString::number(fileList_.count());
+    filename += QString::number(m_fileList.count());
     filename += ")";    
        
     QFont fn(font());
@@ -522,15 +522,15 @@ void SlideShowGL::printFilename(QImage& layer)
     p.end();
    
     QImage textimage(pix.convertToImage());
-    KImageEffect::blendOnLower(0,height_-rect.height(),textimage,layer);
+    KImageEffect::blendOnLower(0,m_height-rect.height(),textimage,layer);
 }
 
 void SlideShowGL::printComments(QImage& layer)
 { 
-    QString comments = commentsList_[fileIndex_];
+    QString comments = m_commentsList[m_fileIndex];
 
     int yPos = 5; // Text Y coordinate
-    if (printName_) yPos += 20;
+    if (m_printName) yPos += 20;
 
     QStringList commentsByLines;
 
@@ -544,7 +544,7 @@ void SlideShowGL::printComments(QImage& layer)
 
         // Check miminal lines dimension
 
-        int commentsLinesLengthLocal = commentsLinesLength_;
+        int commentsLinesLengthLocal = m_commentsLinesLength;
 
         for ( currIndex = commentsIndex; currIndex < comments.length() && !breakLine; currIndex++ )
             if( comments[currIndex] == QChar('\n') || comments[currIndex].isSpace() ) breakLine = TRUE;
@@ -578,26 +578,26 @@ void SlideShowGL::printComments(QImage& layer)
         commentsByLines.prepend(newLine.stripWhiteSpace());
     }
 
-    QFontMetrics fm(commentsFont_);
+    QFontMetrics fm(m_commentsFont);
 
     for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ ) {
 
-        yPos += 1.5 * commentsFont_.pointSize();
+        yPos += 1.5 * m_commentsFont.pointSize();
 
         QRect rect=fm.boundingRect(commentsByLines[lineNumber]);
         rect.addCoords( 0, 0, 2, 2 );
 
         QPixmap pix(rect.width(),rect.height());
-        pix.fill(QColor(commentsBgColor_)); 
+        pix.fill(QColor(m_commentsBgColor)); 
 
         QPainter p(&pix);
-        p.setPen(QColor(commentsFontColor_));
-        p.setFont(commentsFont_);
-        p.drawText(1,commentsFont_.pointSize()+0 , commentsByLines[lineNumber]);
+        p.setPen(QColor(m_commentsFontColor));
+        p.setFont(m_commentsFont);
+        p.drawText(1,m_commentsFont.pointSize()+0 , commentsByLines[lineNumber]);
         p.end();
 
         QImage textimage(pix.convertToImage());
-        KImageEffect::blendOnLower(0,height_-rect.height()-yPos,textimage,layer);
+        KImageEffect::blendOnLower(0,m_height-rect.height()-yPos,textimage,layer);
     }
 }
 
@@ -660,52 +660,52 @@ void SlideShowGL::showEndOfShow()
 
 void SlideShowGL::slotTimeOut()
 {
-    if (!effect_) {
+    if (!m_effect) {
         kdWarning( 51000 ) << "SlideShowGL: No transition method"
                     << endl;
-        effect_ = &SlideShowGL::effectNone;
+        m_effect = &SlideShowGL::effectNone;
     }
 
-    if (effectRunning_) {
-        timeout_ = 10;
+    if (m_effectRunning) {
+        m_timeout = 10;
     }
     else {
-        if (timeout_ == -1) {
+        if (m_timeout == -1) {
             // effect was running and is complete now
             // run timer while showing current image
-            timeout_ = delay_;
+            m_timeout = m_delay;
             m_i     = 0;
         }
         else {
 
             // timed out after showing current image
             // load next image and start effect
-            if (random_)
-                effect_ = getRandomEffect();
+            if (m_random)
+                m_effect = getRandomEffect();
 
             advanceFrame();
-            if (endOfShow_) {
+            if (m_endOfShow) {
                 updateGL();
                 return;
             }
 
             loadImage();
-            timeout_ = 10;
-            effectRunning_ = true;
+            m_timeout = 10;
+            m_effectRunning = true;
             m_i = 0;
 
         }
     }
 
     updateGL();
-    timer_->start(timeout_, true);
+    m_timer->start(m_timeout, true);
 }
 
 void SlideShowGL::slotMouseMoveTimeOut()
 {
     QPoint pos(QCursor::pos());
-    if ((pos.y() < (deskY_+20)) ||
-        (pos.y() > (deskY_+deskHeight_-20-1)))
+    if ((pos.y() < (m_deskY+20)) ||
+        (pos.y() > (m_deskY+m_deskHeight-20-1)))
         return;
 
     setCursor(QCursor(Qt::BlankCursor));
@@ -716,7 +716,7 @@ void SlideShowGL::paintTexture()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    GLuint& tex = texture_[curr_];
+    GLuint& tex = m_texture[m_curr];
 
     glBindTexture(GL_TEXTURE_2D, tex);
     glBegin(GL_QUADS);
@@ -740,8 +740,8 @@ void SlideShowGL::paintTexture()
 void SlideShowGL::effectNone()
 {
     paintTexture();
-    effectRunning_ = false;
-    timeout_ = -1;
+    m_effectRunning = false;
+    m_timeout = -1;
     return;
 }
 
@@ -749,16 +749,16 @@ void SlideShowGL::effectBlend()
 {
     if (m_i > 100) {
         paintTexture();
-        effectRunning_ = false;
-        timeout_ = -1;
+        m_effectRunning = false;
+        m_timeout = -1;
         return;
     }
 
-    int a = (curr_ == 0) ? 1 : 0;
-    int b =  curr_;
+    int a = (m_curr == 0) ? 1 : 0;
+    int b =  m_curr;
 
-    GLuint& ta = texture_[a];
-    GLuint& tb = texture_[b];
+    GLuint& ta = m_texture[a];
+    GLuint& tb = m_texture[b];
 
     glBindTexture(GL_TEXTURE_2D, ta);
     glBegin(GL_QUADS);
@@ -803,23 +803,23 @@ void SlideShowGL::effectFade()
 {
     if (m_i > 100) {
         paintTexture();
-        effectRunning_ = false;
-        timeout_ = -1;
+        m_effectRunning = false;
+        m_timeout = -1;
         return;
     }
 
     int a;
     float opacity;
     if (m_i <= 50) {
-        a =  (curr_ == 0) ? 1 : 0;
+        a =  (m_curr == 0) ? 1 : 0;
         opacity = 1.0 - 1.0/50.0*(float)(m_i);
     }
     else {
         opacity = 1.0/50.0*(float)(m_i-50.0);
-        a = curr_;
+        a = m_curr;
     }
 
-    GLuint& ta = texture_[a];
+    GLuint& ta = m_texture[a];
 
     glBindTexture(GL_TEXTURE_2D, ta);
     glBegin(GL_QUADS);
@@ -847,19 +847,19 @@ void SlideShowGL::effectRotate()
 {
     if (m_i > 100) {
         paintTexture();
-        effectRunning_ = false;
-        timeout_ = -1;
+        m_effectRunning = false;
+        m_timeout = -1;
         return;
     }
 
     if (m_i == 0)
         m_dir = (int)((2.0*rand()/(RAND_MAX+1.0)));
 
-    int a = (curr_ == 0) ? 1 : 0;
-    int b =  curr_;
+    int a = (m_curr == 0) ? 1 : 0;
+    int b =  m_curr;
 
-    GLuint& ta = texture_[a];
-    GLuint& tb = texture_[b];
+    GLuint& ta = m_texture[a];
+    GLuint& tb = m_texture[b];
 
     glBindTexture(GL_TEXTURE_2D, tb);
     glBegin(GL_QUADS);
@@ -912,19 +912,19 @@ void SlideShowGL::effectBend()
 {
     if (m_i > 100) {
         paintTexture();
-        effectRunning_ = false;
-        timeout_ = -1;
+        m_effectRunning = false;
+        m_timeout = -1;
         return;
     }
 
     if (m_i == 0)
         m_dir = (int)((2.0*rand()/(RAND_MAX+1.0)));
 
-    int a = (curr_ == 0) ? 1 : 0;
-    int b =  curr_;
+    int a = (m_curr == 0) ? 1 : 0;
+    int b =  m_curr;
 
-    GLuint& ta = texture_[a];
-    GLuint& tb = texture_[b];
+    GLuint& ta = m_texture[a];
+    GLuint& tb = m_texture[b];
 
     glBindTexture(GL_TEXTURE_2D, tb);
     glBegin(GL_QUADS);
@@ -976,8 +976,8 @@ void SlideShowGL::effectInOut()
 {
     if (m_i > 100) {
         paintTexture();
-        effectRunning_ = false;
-        timeout_ = -1;
+        m_effectRunning = false;
+        m_timeout = -1;
         return;
     }
 
@@ -988,15 +988,15 @@ void SlideShowGL::effectInOut()
     int a;
     bool out;
     if (m_i <= 50) {
-        a   = (curr_ == 0) ? 1 : 0;
+        a   = (m_curr == 0) ? 1 : 0;
         out = 1;
     }
     else {
-        a   = curr_;
+        a   = m_curr;
         out = 0;
     }
 
-    GLuint& ta = texture_[a];
+    GLuint& ta = m_texture[a];
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -1035,19 +1035,19 @@ void SlideShowGL::effectSlide()
 {
     if (m_i > 100) {
         paintTexture();
-        effectRunning_ = false;
-        timeout_ = -1;
+        m_effectRunning = false;
+        m_timeout = -1;
         return;
     }
 
     if (m_i == 0)
         m_dir = 1 + (int)((4.0*rand()/(RAND_MAX+1.0)));
 
-    int a = (curr_ == 0) ? 1 : 0;
-    int b =  curr_;
+    int a = (m_curr == 0) ? 1 : 0;
+    int b =  m_curr;
 
-    GLuint& ta = texture_[a];
-    GLuint& tb = texture_[b];
+    GLuint& ta = m_texture[a];
+    GLuint& tb = m_texture[b];
 
     glBindTexture(GL_TEXTURE_2D, tb);
     glBegin(GL_QUADS);
@@ -1101,16 +1101,16 @@ void SlideShowGL::effectFlutter()
 {
     if (m_i > 100) {
         paintTexture();
-        effectRunning_ = false;
-        timeout_ = -1;
+        m_effectRunning = false;
+        m_timeout = -1;
         return;
     }
 
-    int a = (curr_ == 0) ? 1 : 0;
-    int b =  curr_;
+    int a = (m_curr == 0) ? 1 : 0;
+    int b =  m_curr;
 
-    GLuint& ta = texture_[a];
-    GLuint& tb = texture_[b];
+    GLuint& ta = m_texture[a];
+    GLuint& tb = m_texture[b];
 
     if (m_i == 0) {
         for (int x = 0; x<40; x++) {
@@ -1207,8 +1207,8 @@ void SlideShowGL::effectCube()
 
     if (m_i > tot) {
         paintTexture();
-        effectRunning_ = false;
-        timeout_ = -1;
+        m_effectRunning = false;
+        m_timeout = -1;
         return;
     }
 
@@ -1217,11 +1217,11 @@ void SlideShowGL::effectCube()
     glDepthFunc(GL_LEQUAL);
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-    int a = (curr_ == 0) ? 1 : 0;
-    int b =  curr_;
+    int a = (m_curr == 0) ? 1 : 0;
+    int b =  m_curr;
 
-    GLuint& ta = texture_[a];
-    GLuint& tb = texture_[b];
+    GLuint& ta = m_texture[a];
+    GLuint& tb = m_texture[b];
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -1360,31 +1360,31 @@ void SlideShowGL::effectCube()
 
 void SlideShowGL::slotPause()
 {
-    timer_->stop();
+    m_timer->stop();
 
-    if (toolBar_->isHidden())
+    if (m_toolBar->isHidden())
     {
-        int w = toolBar_->width();
-        toolBar_->move(deskWidth_-w-1,0);
-        toolBar_->show();
+        int w = m_toolBar->width();
+        m_toolBar->move(m_deskWidth-w-1,0);
+        m_toolBar->show();
     }
 }
 
 void SlideShowGL::slotPlay()
 {
-    toolBar_->hide();
+    m_toolBar->hide();
     slotTimeOut();
 }
 
 void SlideShowGL::slotPrev()
 {
     previousFrame();
-    if (endOfShow_) {
+    if (m_endOfShow) {
         updateGL();
         return;
     }
 
-    effectRunning_ = false;
+    m_effectRunning = false;
     loadImage();
     updateGL();
 }
@@ -1392,12 +1392,12 @@ void SlideShowGL::slotPrev()
 void SlideShowGL::slotNext()
 {
     advanceFrame();
-    if (endOfShow_) {
+    if (m_endOfShow) {
         updateGL();
         return;
     }
 
-    effectRunning_ = false;
+    m_effectRunning = false;
     loadImage();
     updateGL();
 }

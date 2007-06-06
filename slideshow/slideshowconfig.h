@@ -50,9 +50,9 @@ private:
     void readSettings();
     void saveSettings();
 
-    int delayMsMaxValue_;
-    int delayMsMinValue_;
-    int delayMsLineStep_;
+    int m_delayMsMaxValue;
+    int m_delayMsMinValue;
+    int m_delayMsLineStep;
 
 private slots:
 
@@ -65,7 +65,7 @@ private slots:
     void slotCommentsBgColorChanged();
 
 signals:
-    void okButtonClicked(); // Signal needed by plugin_slideshow class
+    void buttonStartClicked(); // Signal needed by plugin_slideshow class
 
 };
 

@@ -92,25 +92,25 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const 
 
     // Switch to selected files only (it depends on allowSelectedOnly)
 
-    selectedFilesButton_->setEnabled( allowSelectedOnly );
+    m_selectedFilesButton->setEnabled( allowSelectedOnly );
 
     
-    delayMsMaxValue_ = 100000;
-    delayMsMinValue_ = 100;
-    delayMsLineStep_ = 10;
+    m_delayMsMaxValue = 100000;
+    m_delayMsMinValue = 100;
+    m_delayMsLineStep = 10;
     
-    delaySpinBox_->setMinValue(delayMsMinValue_);
-    delaySpinBox_->setMaxValue(delayMsMaxValue_);
-    delaySpinBox_->setLineStep(delayMsLineStep_); 
+    m_delaySpinBox->setMinValue(m_delayMsMinValue);
+    m_delaySpinBox->setMaxValue(m_delayMsMaxValue);
+    m_delaySpinBox->setLineStep(m_delayMsLineStep); 
     
     // Signal to Slot connections
 
-    connect(openglCheckBox_, SIGNAL(toggled(bool)), SLOT(slotOpenGLToggled()));
-    connect(buttonStart, SIGNAL(clicked()), this, SLOT(slotStartClicked()));
-    connect(printCommentsCheckBox_, SIGNAL(toggled(bool)), this, SLOT(slotPrintCommentsToggled()));
+    connect(m_openglCheckBox, SIGNAL(toggled(bool)), SLOT(slotOpenGLToggled()));
+    connect(m_buttonStart, SIGNAL(clicked()), this, SLOT(slotStartClicked()));
+    connect(m_printCommentsCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotPrintCommentsToggled()));
     connect(m_commentsFontColor, SIGNAL(changed(const QColor &)), this, SLOT(slotCommentsFontColorChanged()));
     connect(m_commentsBgColor, SIGNAL(changed(const QColor &)), this, SLOT(slotCommentsBgColorChanged()));
-    connect(useMillisecondsCheckBox_, SIGNAL(toggled(bool)), SLOT(slotUseMillisecondsToggled()));
+    connect(m_useMillisecondsCheckBox, SIGNAL(toggled(bool)), SLOT(slotUseMillisecondsToggled()));
     
     // Configuration file management 
 
@@ -128,7 +128,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const 
 
     // Host application images has comments
     if ( ! ImagesHasComments ) {
-        printCommentsCheckBox_->setEnabled(FALSE);
+        m_printCommentsCheckBox->setEnabled(FALSE);
         m_tabWidget->setTabEnabled(commentsTab, FALSE);
     }
 }
@@ -143,7 +143,7 @@ SlideShowConfig::~SlideShowConfig()
 
 void SlideShowConfig::loadEffectNames()
 {
-    effectsComboBox_->clear();
+    m_effectsComboBox->clear();
 
     QMap<QString,QString> effectNames = SlideShow::effectNamesI18N();
     QStringList effects;
@@ -152,11 +152,11 @@ void SlideShowConfig::loadEffectNames()
     for (it = effectNames.begin(); it != effectNames.end(); ++it)
         effects.append(it.data());
 
-    effectsComboBox_->insertStringList(effects);
+    m_effectsComboBox->insertStringList(effects);
 
-    for (int i=0; i<effectsComboBox_->count(); i++) {
-        if (effectNames[effectName_] == effectsComboBox_->text(i)) {
-            effectsComboBox_->setCurrentItem(i);
+    for (int i=0; i<m_effectsComboBox->count(); i++) {
+        if (effectNames[effectName_] == m_effectsComboBox->text(i)) {
+            m_effectsComboBox->setCurrentItem(i);
             break;
         }
     }
@@ -164,7 +164,7 @@ void SlideShowConfig::loadEffectNames()
 
 void SlideShowConfig::loadEffectNamesGL()
 {
-    effectsComboBox_->clear();
+    m_effectsComboBox->clear();
 
     QMap<QString,QString> effectNames = SlideShowGL::effectNamesI18N();
     QStringList effects;
@@ -173,11 +173,11 @@ void SlideShowConfig::loadEffectNamesGL()
     for (it = effectNames.begin(); it != effectNames.end(); ++it)
         effects.append(it.data());
 
-    effectsComboBox_->insertStringList(effects);
+    m_effectsComboBox->insertStringList(effects);
 
-    for (int i=0; i<effectsComboBox_->count(); i++) {
-        if (effectNames[effectNameGL_] == effectsComboBox_->text(i)) {
-            effectsComboBox_->setCurrentItem(i);
+    for (int i=0; i<m_effectsComboBox->count(); i++) {
+        if (effectNames[effectNameGL_] == m_effectsComboBox->text(i)) {
+            m_effectsComboBox->setCurrentItem(i);
             break;
         }
     }
@@ -204,7 +204,7 @@ void SlideShowConfig::readSettings()
     effectName_           = config_->readEntry("Effect Name", "Random");
     effectNameGL_         = config_->readEntry("Effect Name (OpenGL)", "Random");
     
-    useMillisecondsCheckBox_->setChecked(config_->readBoolEntry("Use Milliseconds", false));
+    m_useMillisecondsCheckBox->setChecked(config_->readBoolEntry("Use Milliseconds", false));
     
     // Comments tab settings
     uint  commentsFontColor;
@@ -227,22 +227,22 @@ void SlideShowConfig::readSettings()
     commentsLinesLength   = config_->readNumEntry("Comments Lines Length", 72);
     // -- Apply Settings to widgets ------------------------------
 
-    openglCheckBox_->setChecked(opengl);
+    m_openglCheckBox->setChecked(opengl);
 
-    delaySpinBox_->setValue(delay);
+    m_delaySpinBox->setValue(delay);
 
-    printNameCheckBox_->setChecked(printFileName);
+    m_printNameCheckBox->setChecked(printFileName);
 
-    printCommentsCheckBox_->setChecked(printFileComments);
+    m_printCommentsCheckBox->setChecked(printFileComments);
 
-    loopCheckBox_->setChecked(loop);
+    m_loopCheckBox->setChecked(loop);
 
-    shuffleCheckBox_->setChecked(shuffle);
+    m_shuffleCheckBox->setChecked(shuffle);
 
-    if (showSelectedFilesOnly && selectedFilesButton_->isEnabled() )
-        selectedFilesButton_->setChecked(true);
+    if (showSelectedFilesOnly && m_selectedFilesButton->isEnabled() )
+        m_selectedFilesButton->setChecked(true);
     else
-        allFilesButton_->setChecked(true);
+        m_allFilesButton->setChecked(true);
 
     m_commentsLinesLengthSpinBox->setValue(commentsLinesLength);
     m_commentsFontColor->setColor(QColor(commentsFontColor));
@@ -257,19 +257,19 @@ void SlideShowConfig::saveSettings()
 {
     if (!config_) return;
 
-    bool useMilliseconds = useMillisecondsCheckBox_->isChecked();
+    bool useMilliseconds = m_useMillisecondsCheckBox->isChecked();
 
-    config_->writeEntry("OpenGL", openglCheckBox_->isChecked());
+    config_->writeEntry("OpenGL", m_openglCheckBox->isChecked());
 
     // Delay will be always saved as millisecond value, to keep compatibility
-    if ( useMilliseconds ) config_->writeEntry("Delay", delaySpinBox_->value());
-    else config_->writeEntry("Delay", delaySpinBox_->value()*1000); 
+    if ( useMilliseconds ) config_->writeEntry("Delay", m_delaySpinBox->value());
+    else config_->writeEntry("Delay", m_delaySpinBox->value()*1000); 
 
-    config_->writeEntry("Print Filename", printNameCheckBox_->isChecked());
-    config_->writeEntry("Print Comments", printCommentsCheckBox_->isChecked());
-    config_->writeEntry("Loop", loopCheckBox_->isChecked());
-    config_->writeEntry("Shuffle", shuffleCheckBox_->isChecked());
-    config_->writeEntry("Show Selected Files Only", selectedFilesButton_->isChecked());
+    config_->writeEntry("Print Filename", m_printNameCheckBox->isChecked());
+    config_->writeEntry("Print Comments", m_printCommentsCheckBox->isChecked());
+    config_->writeEntry("Loop", m_loopCheckBox->isChecked());
+    config_->writeEntry("Shuffle", m_shuffleCheckBox->isChecked());
+    config_->writeEntry("Show Selected Files Only", m_selectedFilesButton->isChecked());
 
     config_->writeEntry("Use Milliseconds", useMilliseconds); 
 
@@ -297,14 +297,14 @@ void SlideShowConfig::saveSettings()
 
     config_->writeEntry("Comments Lines Length", m_commentsLinesLengthSpinBox->value());
     
-    if (!openglCheckBox_->isChecked()) {
+    if (!m_openglCheckBox->isChecked()) {
 
         QString effect;
         QMap<QString,QString> effectNames = SlideShow::effectNamesI18N();
         QMap<QString,QString>::Iterator it;
 
         for (it = effectNames.begin(); it != effectNames.end(); ++it) {
-            if (it.data() == effectsComboBox_->currentText()) {
+            if (it.data() == m_effectsComboBox->currentText()) {
                 effect = it.key();
                 break;
             }
@@ -320,7 +320,7 @@ void SlideShowConfig::saveSettings()
         QMap<QString,QString>::Iterator it;
 
         for (it = effectNames.begin(); it != effectNames.end(); ++it) {
-            if (it.data() == effectsComboBox_->currentText()) {
+            if (it.data() == m_effectsComboBox->currentText()) {
                 effect = it.key();
                 break;
             }
@@ -345,39 +345,39 @@ void SlideShowConfig::slotCommentsFontColorChanged()
 
 void SlideShowConfig::slotPrintCommentsToggled()
 {
-    m_tabWidget->setTabEnabled(commentsTab, printCommentsCheckBox_->isChecked());
+    m_tabWidget->setTabEnabled(commentsTab, m_printCommentsCheckBox->isChecked());
 }
 
 void SlideShowConfig::slotUseMillisecondsToggled()
 {
 
-    int delayValue = delaySpinBox_->value();
+    int delayValue = m_delaySpinBox->value();
     
-    delaySpinBox_->setValue(0);
+    m_delaySpinBox->setValue(0);
     
-    if ( useMillisecondsCheckBox_ -> isChecked() ) {
-        delayLabel_->setText(QString("Delay between images (ms):"));
+    if ( m_useMillisecondsCheckBox -> isChecked() ) {
+        m_delayLabel->setText(QString("Delay between images (ms):"));
 
-        delaySpinBox_->setMinValue(delayMsMinValue_);
-        delaySpinBox_->setMaxValue(delayMsMaxValue_);
-        delaySpinBox_->setLineStep(delayMsLineStep_); 
+        m_delaySpinBox->setMinValue(m_delayMsMinValue);
+        m_delaySpinBox->setMaxValue(m_delayMsMaxValue);
+        m_delaySpinBox->setLineStep(m_delayMsLineStep); 
         
-        delaySpinBox_->setValue(delayValue*1000);
+        m_delaySpinBox->setValue(delayValue*1000);
     }
     else { 
-        delayLabel_->setText(QString("Delay between images  (s):"));
+        m_delayLabel->setText(QString("Delay between images  (s):"));
         
-        delaySpinBox_->setMinValue(delayMsMinValue_/1000);
-        delaySpinBox_->setMaxValue(delayMsMaxValue_/100);
-        delaySpinBox_->setLineStep(delayMsLineStep_/10); 
+        m_delaySpinBox->setMinValue(m_delayMsMinValue/1000);
+        m_delaySpinBox->setMaxValue(m_delayMsMaxValue/100);
+        m_delaySpinBox->setLineStep(m_delayMsLineStep/10); 
         
-        delaySpinBox_->setValue(delayValue/1000);
+        m_delaySpinBox->setValue(delayValue/1000);
     }
 }
 
 void SlideShowConfig::slotOpenGLToggled()
 {
-    if (openglCheckBox_->isChecked()) {
+    if (m_openglCheckBox->isChecked()) {
         loadEffectNamesGL();
     }
     else {
@@ -389,7 +389,7 @@ void SlideShowConfig::slotStartClicked()
 {
     saveSettings();
 
-    emit okButtonClicked();
+    emit buttonStartClicked();
 }
 
 void SlideShowConfig::slotHelp()
