@@ -6,6 +6,11 @@ find_package(JPEG REQUIRED)
 find_package(PNG REQUIRED)
 find_package(TIFF REQUIRED)
 
+# TODO: others main depencies to check
+# libkipi.
+# libkdcraw.
+# libkexiv2.
+
 # Optional depencies detection require by any plugins
 macro_optional_find_package(Gphoto2)
 macro_optional_find_package(OpenGL)
@@ -27,9 +32,10 @@ if(KDEPIMLIBS_FOUND)
    macro_optional_add_subdirectory(calendar)
 endif(KDEPIMLIBS_FOUND)
 
-#TODO : htmlexport need XSLT library
-#       slideshow need Imlib2 library
-#       ipodexport need Gpod library
+# TODO: others optional depencies to check
+# htmlexport need XSLT library
+# slideshow need Imlib2 library
+# ipodexport need Gpod library
       
 # Plugins witch will be always compiled
 subdirs(wallpaper)
