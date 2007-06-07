@@ -27,15 +27,11 @@ if(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
    macro_optional_add_subdirectory(kameraklient)
 endif(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 
-# Plugins witch depand of KDEPim Library
-if(KDEPIMLIBS_FOUND)
-   macro_optional_add_subdirectory(calendar)
-endif(KDEPIMLIBS_FOUND)
-
 # TODO: others optional depencies to check
 # htmlexport need XSLT library
 # slideshow need Imlib2 library
 # ipodexport need Gpod library
+# calendar need kcal library (KDEPIM)
       
 # Plugins witch will be always compiled
 subdirs(wallpaper)
