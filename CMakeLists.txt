@@ -10,5 +10,17 @@ find_package(TIFF REQUIRED)
 macro_optional_find_package(Gphoto2)
 macro_optional_find_package(OpenGL)
 
+# Plugins witch depand of OpenGL
+if(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+   macro_optional_add_subdirectory(slideshow)
+   macro_optional_add_subdirectory(imageviewer)
+endif(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+
+# Plugins witch depand of GPhoto2
+if(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
+   macro_optional_add_subdirectory(kameraklient)
+endif(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
+      
+# Plugins witch will be always compiled
 subdirs(wallpaper)
 
