@@ -6,6 +6,11 @@ v 0.1.4 beta2
 Kipi-plugins NEW FEATURES
 
 SlideShow      : Skip to next or previous image by a right or left click
+HTMLExport     : Option to specify whether the original images should be included
+HTMLExport     : Support for theme variants
+HTMLExport     : New theme: "frames", by Rüdiger Bente
+HTMLExport     : New theme: "cleanframes", by Beth and Robert Marmorstein
+HTMLExport     : New theme: "classic", simulating the output of the old HTML Gallery plugin
 
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
