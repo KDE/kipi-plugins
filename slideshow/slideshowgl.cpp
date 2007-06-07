@@ -240,10 +240,23 @@ void SlideShowGL::keyPressEvent(QKeyEvent *event)
     m_toolBar->keyPressEvent(event);
 }
 
-void SlideShowGL::mousePressEvent(QMouseEvent *)
+void SlideShowGL::mousePressEvent(QMouseEvent *e)
 {
     if (m_endOfShow)
-        close();
+        slotClose();
+
+    if (e->button() == Qt::LeftButton)
+    {
+        m_timer->stop();
+        m_toolBar->setPaused(true);
+        slotNext();
+    }
+    else if (e->button() == Qt::RightButton && m_fileIndex-1 >= 0)
+    {
+        m_timer->stop();
+        m_toolBar->setPaused(true);
+        slotPrev();
+    }
 }
 
 void SlideShowGL::mouseMoveEvent(QMouseEvent *e)

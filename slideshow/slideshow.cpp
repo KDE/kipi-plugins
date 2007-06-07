@@ -547,12 +547,24 @@ void SlideShow::keyPressEvent(QKeyEvent *event)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void SlideShow::mousePressEvent(QMouseEvent *)
+void SlideShow::mousePressEvent(QMouseEvent *e)
 {
     if (m_endOfShow)
-        close();
-}
+        slotClose();
 
+    if (e->button() == Qt::LeftButton)
+    {
+        m_timer->stop();
+        m_toolBar->setPaused(true);
+        slotNext();
+    }
+    else if (e->button() == Qt::RightButton && m_fileIndex-1 >= 0)
+    {
+        m_timer->stop();
+        m_toolBar->setPaused(true);
+        slotPrev();
+    }
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1118,6 +1130,7 @@ int SlideShow::effectBlobs(bool aInit)
 
     return 10;
 }
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
