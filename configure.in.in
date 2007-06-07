@@ -158,8 +158,8 @@ fi
 AC_MSG_CHECKING([for libkdcraw in our sources])
 if test -d $srcdir/libkdcraw; then
     have_libkdcraw=yes
-    LIBKDCRAW_CFLAGS='-I$(top_srcdir)'
-    LIBKDCRAW_LIBS='$(top_builddir)/libkdcraw/libkdcraw.la'
+    LIBKDCRAW_CFLAGS='-I$(top_builddir)/libkdcraw/src -I$(top_srcdir)/libkdcraw/src'
+    LIBKDCRAW_LIBS='$(top_builddir)/libkdcraw/src/libkdcraw.la'
     LIBKDCRAW_LIBS_DEP='$(LIBKDCRAW_LIBS)'
     AC_MSG_RESULT([found])
     AC_SUBST(LIBKDCRAW_CFLAGS)
