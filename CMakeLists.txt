@@ -14,7 +14,6 @@ find_package(TIFF REQUIRED)
 # Optional depencies detection require by any plugins
 macro_optional_find_package(Gphoto2)
 macro_optional_find_package(OpenGL)
-macro_optional_find_package(KdePimLibs)
 
 # Plugins witch depand of OpenGL
 if(OPENGL_FOUND AND OPENGL_GLU_FOUND)
