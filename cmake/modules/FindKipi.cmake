@@ -43,7 +43,7 @@ else (KIPI_INCLUDE_DIR AND KIPI_LIBRARIES)
     
     if(_KIPILinkFlags)
         # query pkg-config asking for a libkipi >= 0.2.0
-        EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --atleast-version=0.2.0 kipi RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
+        EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --atleast-version=0.2.0 libkipi RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
         if(_return_VALUE STREQUAL "0")
             message(STATUS "Found libkipi release >= 0.2.0")
             set(KIPI_VERSION_GOOD_FOUND TRUE)
