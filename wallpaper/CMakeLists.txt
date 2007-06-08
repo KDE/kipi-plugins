@@ -6,7 +6,7 @@ set(kipiplugin_wallpaper_PART_SRCS plugin_wallpaper.cpp)
 
 kde4_automoc(${kipiplugin_wallpaper_PART_SRCS})
 
-kde4_add_kpart(kipiplugin_wallpaper ${kipiplugin_wallpaper_PART_SRCS})
+kde4_add_plugin(kipiplugin_wallpaper ${kipiplugin_wallpaper_PART_SRCS})
 
 target_link_libraries(kipiplugin_wallpaper ${QT_AND_KDECORE_LIBS} )
 
