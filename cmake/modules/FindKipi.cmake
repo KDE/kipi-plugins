@@ -44,18 +44,18 @@ else (KIPI_INCLUDE_DIR AND KIPI_LIBRARIES)
     PKGCONFIG(kipi _KIPIIncDir _KIPILinkDir _KIPILinkFlags _KIPICflags)
     
     if(_KIPILinkFlags)
-        # query pkg-config asking for a Exiv2 >= 0.1.5
-        EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --atleast-version=0.1.5 kipi RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
+        # query pkg-config asking for a libkipi >= 0.2.0
+        EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --atleast-version=0.2.0 kipi RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
         if(_return_VALUE STREQUAL "0")
-            message(STATUS "Found libkipi release >= 0.1.5")
+            message(STATUS "Found libkipi release >= 0.2.0")
             set(KIPI_VERSION_GOOD_FOUND TRUE)
         else(_return_VALUE STREQUAL "0")
-            message(FATAL_ERROR "Found libkipi release < 0.1.5")
+            message(FATAL_ERROR "Found libkipi release < 0.2.0")
         endif(_return_VALUE STREQUAL "0")
     endif(_KIPILinkFlags)
     
     if(KIPI_VERSION_GOOD_FOUND)
-        set(KIPI_DEFINITIONS ${_EXIV2Cflags})
+        set(KIPI_DEFINITIONS ${_KIPICflags})
     
         FIND_PATH(KIPI_INCLUDE_DIR libkipi/version.h
         ${_KIPIIncDir}
@@ -76,7 +76,7 @@ else (KIPI_INCLUDE_DIR AND KIPI_LIBRARIES)
     
         if (KIPI_FOUND)
             if (NOT Kipi_FIND_QUIETLY)
-                message(STATUS "Found libkipi: ${EXIV2_LIBRARIES}")
+                message(STATUS "Found libkipi: ${KIPI_LIBRARIES}")
             endif (NOT Kipi_FIND_QUIETLY)
         else (KIPI_FOUND)
             if (Kipi_FIND_REQUIRED)
@@ -95,4 +95,3 @@ else (KIPI_INCLUDE_DIR AND KIPI_LIBRARIES)
   endif(KIPI_LOCAL_FOUND)
   
 endif (KIPI_INCLUDE_DIR AND KIPI_LIBRARIES)
-
