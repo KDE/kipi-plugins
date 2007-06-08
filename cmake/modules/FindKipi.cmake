@@ -10,26 +10,32 @@
 
 if (KIPI_INCLUDE_DIR AND KIPI_LIBRARIES)
 
+  message(STATUS "Found Kipi library in cache: ${KIPI_LIBRARIES}")
+
   # in cache already
   SET(KIPI_FOUND TRUE)
 
 else (KIPI_INCLUDE_DIR AND KIPI_LIBRARIES)
 
+  message(STATUS "Check Kipi library in local sub-folder...")
+
   # Check if library is not in local sub-folder
   
-  FIND_PATH(KIPI_INCLUDE_DIR version.h ${CMAKE_CURRENT_SOURCE_DIR}/libkipi/libkipi)
-  FIND_LIBRARY(KIPI_LIBRARIES NAMES kipi ${CMAKE_CURRENT_SOURCE_DIR}/libkipi/libkipi)
+  FIND_PATH(KIPI_INCLUDE_DIR version.h ${CMAKE_CURRENT_SOURCE_DIR}/../libkipi/libkipi)
 
-  if (KIPI_INCLUDE_DIR AND KIPI_LIBRARIES)
-    message(STATUS "Found Kipi library in local sub-folder: ${KIPI_LIBRARIES}")
-    set(KIPI_DEFINITIONS -I${CMAKE_CURRENT_SOURCE_DIR}/libkipi)
+  if (KIPI_INCLUDE_DIR)
+    set(KIPI_DEFINITIONS -I${CMAKE_CURRENT_SOURCE_DIR}/../libkipi)
+    set(KIPI_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/../libkipi/libkipi/libkipi.la)
     set(KIPI_LOCAL_FOUND TRUE)
-  endif (KIPI_INCLUDE_DIR AND KIPI_LIBRARIES)
+  endif (KIPI_INCLUDE_DIR)
 
   if(KIPI_LOCAL_FOUND)
+    message(STATUS "Found Kipi library in local sub-folder: ${KIPI_LIBRARIES}")
     set(KIPI_FOUND TRUE)
     MARK_AS_ADVANCED(KIPI_INCLUDE_DIR KIPI_LIBRARIES)
   else(KIPI_LOCAL_FOUND)
+
+    message(STATUS "Check Kipi library using pkg-config...")
 
     # use pkg-config to get the directories and then use these values
     # in the FIND_PATH() and FIND_LIBRARY() calls
