@@ -27,10 +27,10 @@ if(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 endif(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 
 # TODO: others optional depencies to check
-# htmlexport need XSLT library
+# htmlexport need Xslt library
 # slideshow need Imlib2 library
 # ipodexport need Gpod library
-# calendar need kcal library (KDEPIM)
+# calendar need Kcal library (KDEPIM)
       
 # Plugins witch will be always compiled
 subdirs(wallpaper)
