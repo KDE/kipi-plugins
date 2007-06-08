@@ -1,15 +1,18 @@
-KIPIPLUGINS PROJECT
+KIPIPLUGINS PROJECT (http://www.kipi-plugins.org)
+
+-- AUTHORS ------------------------------------------------------------
+
+See AUTHORS file for details.
+
+-- ABOUT --------------------------------------------------------------
+
+Libkipi and kipi-plugins allows image applications to use a plugin architecture for additional functionalities.
 
 Note: Most of the KipiPlugins have previously been Digikamplugins.
 
       kipi-plugins is based in part on the work of the Independent
       JPEG Group.
 
-Please visit this url: http://www.kipi-plugins.org
-
-Summary:
-----------------------------------------------------------------------
-Libkipi and kipi-plugins allows image applications to use a plugin architecture for additional functionalities.
 Currently implemented plugins are:
 
  1) RawConverter       : A Raw Image Converter for digital cameras 
@@ -69,43 +72,11 @@ Currently implemented plugins are:
 
 20) MetadataEdit       : Plugin to edit EXIF and IPTC pictures metadata.
 
+-- DEPENDENCIES -------------------------------------------------------
 
-Remark : "HelloWorld" plugin is just a tutorial plugin implementation for developpers.
-       : "ImagesGallery" plugin is obsolete and no more maintained at the moment.
-
-
-Contact :
------------------------------------------------------------------------
-If you have questions, comments, suggestions to make do email at :
-
-kde-imaging@kde.org
-
-
-IMPORTANT : the bugreports and wishlist are hosted by the KDE bugs report 
-system who can be contacted by the standard Kde help menu of plugins dialog. 
-A mail will be automaticly sent to the Kipi mailing list.
-There is no need to contact directly the Kipi mailing list for a bug report 
-or a devel wish.
-
-The current Kipi bugs and devel wish reported to the Kde bugs report can be see 
-at this url :
-
-http://bugs.kde.org/buglist.cgi?product=kipiplugins&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED
-
-
-Notes :
-------------------------------------------------------------------------
-
-- More specific compilation and installation options can be used with the 'configure' script.
-Check this with './configure --help' command line.
-
-Dependencies :
------------------------------------------------------------------------
-
-AutoConf    >= 2.5.x                        http://www.gnu.org/software/autoconf
-AutoMake    >= 1.7.x                        http://www.gnu.org/software/automake
-libqt       >= 3.3.x                        http://www.trolltech.com
-libkde      >= 3.4.x (>=3.5.x recommended)  http://www.kde.org
+CMake       >= 2.4.x                        http://www.cmake.org
+libqt       >= 4.2.x                        http://www.trolltech.com
+libkde      >= 4.0.x                        http://www.kde.org
 imlib2      >= 1.1.0                        http://www.enlightenment.org/Libraries/Imlib2
 libgphoto2  >= 2.x   (>=2.2.x recommended)  http://www.gphoto.org
 libtiff     >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/libtiff
@@ -118,8 +89,8 @@ ImageMagick >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
 MJPEGTools  >= 1.6.0 (runtime dependency)   http://mjpeg.sourceforge.net
 K3b         >= 0.11  (runtime dependency)   http://www.k3b.org
 
+
 Plugin Specific Dependencies (for compiling and for running) :
--------------------------------------------------------------------------
 
 jpeglossless       : imagemagick (runtime dependency)
 slideshow          : libimlib2, OpenGL support for libqt
@@ -135,3 +106,39 @@ acquireimages      : libtiff
 htmlexport         : libxslt
 ipodexport         : libgpod
 calendar           : libkcal
+
+-- CONTACT ------------------------------------------------------------
+
+If you have questions, comments, suggestions to make do email at :
+
+kde-imaging@kde.org
+
+IMPORTANT : the bugreports and wishlist are hosted by the KDE bugs report 
+system who can be contacted by the standard Kde help menu of plugins dialog. 
+A mail will be automaticly sent to the Kipi mailing list.
+There is no need to contact directly the Kipi mailing list for a bug report 
+or a devel wish.
+
+The current Kipi bugs and devel wish reported to the Kde bugs report can be see 
+at this url :
+
+http://bugs.kde.org/buglist.cgi?product=kipiplugins&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED
+
+-- INSTALL ------------------------------------------------------------
+
+In order to compile, especially when QT3/Qt4 are installed at the same time, 
+just use something like that:
+
+# export QTDIR=/usr/lib/qt4/  
+# export PATH=$QTDIR/bin:$PATH 
+# cmake .
+# make
+
+Common CMake options :
+
+-DCMAKE_INSTALL_PREFIX : cmake . -DCMAKE_INSTALL_PREFIX=/usr is the equivalent to ./configure --prefix=/usr 
+-DCMAKE_BUILD_TYPE     : decide which type of build you want. You can chose between "debugfull", "debug", "profile", "relwithdebinfo" and "release". 
+The default is "relwithdebinfo" (-O2 -g). 
+
+More details can be found ata this url: http://techbase.kde.org/Development/Tutorials/CMake#Environment_Variables
+
