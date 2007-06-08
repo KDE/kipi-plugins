@@ -26,8 +26,7 @@
 
 // KIPI includes
 
-#include "../../libkipi/libkipi/plugin.h"
-//#include <libkipi/plugin.h>
+#include <libkipi/plugin.h>
 
 class KActionMenu;
 class KAction;
