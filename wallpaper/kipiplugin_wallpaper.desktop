@@ -55,4 +55,4 @@ Comment[zh_CN]=KIPI 设定壁纸插件
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_wallpaper
-author=Gregory KOKANOSKY, gregory.kokanosky@free.fr
+author=Gilles Caulier, caulier dot gilles at gmail dot com
