@@ -2,7 +2,6 @@
 # Once done this will define
 #
 #  KIPI_FOUND - system has libkipi
-#  KIPI_LOCAL_FOUND - local sub-folder include libkipi
 #  KIPI_INCLUDE_DIR - the libkipi include directory
 #  KIPI_LIBRARIES - Link these to use libkipi
 #  KIPI_DEFINITIONS - Compiler switches required for using libkipi
@@ -21,18 +20,17 @@ else (KIPI_INCLUDE_DIR AND KIPI_LIBRARIES)
 
   # Check if library is not in local sub-folder
   
-  FIND_PATH(KIPI_INCLUDE_DIR libkipi/version.h ${CMAKE_SOURCE_DIR}/libkipi)
+  FIND_FILE(KIPI_LOCAL_FOUND libkipi/version.h ${CMAKE_SOURCE_DIR}/libkipi NO_DEFAULT_PATH)
 
-  if (KIPI_INCLUDE_DIR)
-    set(KIPI_DEFINITIONS -I${CMAKE_SOURCE_DIR}/libkipi)
+  if (KIPI_LOCAL_FOUND)
+
+    set(KIPI_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/libkipi)
+    set(KIPI_DEFINITIONS -I${KIPI_INCLUDE_DIR})
     set(KIPI_LIBRARIES ${CMAKE_BINARY_DIR}/lib/libkipi.so)
-    set(KIPI_LOCAL_FOUND TRUE)
-  endif (KIPI_INCLUDE_DIR)
-
-  if(KIPI_LOCAL_FOUND)
     message(STATUS "Found Kipi library in local sub-folder: ${KIPI_LIBRARIES}")
     set(KIPI_FOUND TRUE)
     MARK_AS_ADVANCED(KIPI_INCLUDE_DIR KIPI_LIBRARIES)
+
   else(KIPI_LOCAL_FOUND)
 
     message(STATUS "Check Kipi library using pkg-config...")
@@ -41,7 +39,7 @@ else (KIPI_INCLUDE_DIR AND KIPI_LIBRARIES)
     # in the FIND_PATH() and FIND_LIBRARY() calls
     INCLUDE(UsePkgConfig)
     
-    PKGCONFIG(kipi _KIPIIncDir _KIPILinkDir _KIPILinkFlags _KIPICflags)
+    PKGCONFIG(libkipi _KIPIIncDir _KIPILinkDir _KIPILinkFlags _KIPICflags)
     
     if(_KIPILinkFlags)
         # query pkg-config asking for a libkipi >= 0.2.0
