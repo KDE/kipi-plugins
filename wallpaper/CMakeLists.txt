@@ -1,7 +1,4 @@
-set(CMAKE_VERBOSE_MAKEFILE ON)
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} 
-                    ${KDE4_INCLUDES} ${QT4_INCLUDES} ${KIPI_INCLUDE_DIR})
+include_directories(${KIPI_INCLUDE_DIR} ${KDE4_INCLUDES} ${QT4_INCLUDES})
 
 set(kipiplugin_wallpaper_PART_SRCS plugin_wallpaper.cpp)
 
@@ -9,7 +6,7 @@ kde4_automoc(${kipiplugin_wallpaper_PART_SRCS})
 
 kde4_add_plugin(kipiplugin_wallpaper ${kipiplugin_wallpaper_PART_SRCS})
 
-target_link_libraries(kipiplugin_wallpaper ${QT_AND_KDECORE_LIBS} )
+target_link_libraries(kipiplugin_wallpaper ${QT_AND_KDECORE_LIBS} ${KIPI_LIBRARIES})
 
 install(TARGETS kipiplugin_wallpaper DESTINATION ${PLUGIN_INSTALL_DIR})
 

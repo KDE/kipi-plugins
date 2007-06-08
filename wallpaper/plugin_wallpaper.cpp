@@ -30,12 +30,10 @@
 #include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kdeversion.h>
 #include <krun.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <ktextbrowser.h>
-#include <kdeversion.h>
 #include <kfiledialog.h>
 #include <kio/netaccess.h>
 
@@ -52,10 +50,10 @@
 typedef KGenericFactory<Plugin_WallPaper> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_wallpaper,
-                            Factory("kipiplugin_wallpaper"))
+                            KGenericFactory<Plugin_WallPaper>("kipiplugin_wallpaper"))
 
 Plugin_WallPaper::Plugin_WallPaper(QObject *parent, const char*, const QStringList&)
-                : KIPI::Plugin( Factory::instance(), parent, "WallPaper")
+                : KIPI::Plugin( Factory::componentData(), parent, "WallPaper")
 {
     kDebug( 51001 ) << "Plugin_WallPaper plugin loaded" << endl;
 }
