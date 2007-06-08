@@ -55,7 +55,7 @@ typedef KGenericFactory<Plugin_WallPaper> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_wallpaper,
                             KGenericFactory<Plugin_WallPaper>("kipiplugin_wallpaper"))
 
-Plugin_WallPaper::Plugin_WallPaper(QObject *parent, const char*, const QStringList&)
+Plugin_WallPaper::Plugin_WallPaper(QObject *parent, const QStringList&)
                 : KIPI::Plugin(Factory::componentData(), parent, "WallPaper")
 {
     kDebug( 51001 ) << "Plugin_WallPaper plugin loaded" << endl;
