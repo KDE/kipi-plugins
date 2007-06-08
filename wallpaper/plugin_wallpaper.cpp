@@ -24,11 +24,9 @@
 // KDE includes
 
 #include <klocale.h>
-#include <kaction.h>
-#include <k3process.h>
+#include <kactionmenu.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
-#include <kconfig.h>
 #include <kdebug.h>
 #include <krun.h>
 #include <kapplication.h>
@@ -39,8 +37,13 @@
 
 // KIPI includes
 
+#include "../../libkipi/libkipi/interface.h"
+#include "../../libkipi/libkipi/imagecollection.h"
+
+/*
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
+*/
 
 // Local includes
 
@@ -53,7 +56,7 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_wallpaper,
                             KGenericFactory<Plugin_WallPaper>("kipiplugin_wallpaper"))
 
 Plugin_WallPaper::Plugin_WallPaper(QObject *parent, const char*, const QStringList&)
-                : KIPI::Plugin( Factory::componentData(), parent, "WallPaper")
+                : KIPI::Plugin(Factory::componentData(), parent, "WallPaper")
 {
     kDebug( 51001 ) << "Plugin_WallPaper plugin loaded" << endl;
 }
@@ -62,67 +65,38 @@ void Plugin_WallPaper::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_Background = new KActionMenu(i18n("&Set as Background"),
-                          actionCollection(),
-                          "images2desktop");
+    m_actionBackground = new KActionMenu(i18n("&Set as Background"),
+                         actionCollection());
 
-    m_action_Background->insert(new KAction (i18n("Centered"),
-                         0,
-                         this,
-                         SLOT(slotSetCenter()),
-                         actionCollection(),
-                         "images2desktop_center"));
+    KAction *centered = new KAction(i18n("Centered"), actionCollection());
+    connect(centered, SIGNAL(triggered(bool)), this, SLOT(slotSetCenter()));
+    m_actionBackground->addAction(centered);
 
-    m_action_Background->insert(new KAction (i18n("Tiled"),
-                         0,
-                         this,
-                         SLOT(slotSetTiled()),
-                         actionCollection(),
-                         "images2desktop_tiled"));
+    KAction *centeredTiled = new KAction(i18n("Centered Tiled"), actionCollection());
+    connect(centeredTiled, SIGNAL(triggered(bool)), this, SLOT(slotSetCenterTiled()));
+    m_actionBackground->addAction(centeredTiled);
 
-    m_action_Background->insert(new KAction (i18n("Centered Tiled"),
-                         0,
-                         this,
-                         SLOT(slotSetCenterTiled()),
-                         actionCollection(),
-                         "images2desktop_center_tiled"));
+    KAction *centeredMax = new KAction(i18n("Centered Max-Aspect"), actionCollection());
+    connect(centeredMax, SIGNAL(triggered(bool)), this, SLOT(slotSetCenteredMaxpect()));
+    m_actionBackground->addAction(centeredMax);
 
-    m_action_Background->insert(new KAction (i18n("Centered Max-Aspect"),
-                         0,
-                         this,
-                         SLOT(slotSetCenteredMaxpect()),
-                         actionCollection(),
-                         "images2desktop_center_maxpect"));
+    KAction *tiledMax = new KAction(i18n("Tiled Max-Aspect"), actionCollection());
+    connect(tiledMax, SIGNAL(triggered(bool)), this, SLOT(slotSetTiledMaxpect()));
+    m_actionBackground->addAction(tiledMax);
 
-    m_action_Background->insert(new KAction (i18n("Tiled Max-Aspect"),
-                         0,
-                         this,
-                         SLOT(slotSetTiledMaxpect()),
-                         actionCollection(),
-                         "images2desktop_tiled_maxpect"));
+    KAction *scaled = new KAction(i18n("Scaled"), actionCollection());
+    connect(scaled, SIGNAL(triggered(bool)), this, SLOT(slotSetScaled()));
+    m_actionBackground->addAction(scaled);
 
-    m_action_Background->insert(new KAction (i18n("Scaled"),
-                         0,
-                         this,
-                         SLOT(slotSetScaled()),
-                         actionCollection(),
-                         "images2desktop_scaled"));
+    KAction *centeredAutoFit = new KAction(i18n("Centered Auto Fit"), actionCollection());
+    connect(centeredAutoFit, SIGNAL(triggered(bool)), this, SLOT(slotSetCenteredAutoFit()));
+    m_actionBackground->addAction(centeredAutoFit);
 
-    m_action_Background->insert(new KAction (i18n("Centered Auto Fit"),
-                         0,
-                         this,
-                         SLOT(slotSetCenteredAutoFit()),
-                         actionCollection(),
-                         "images2desktop_centered_auto_fit"));
+    KAction *scaleCrop = new KAction(i18n("Scale && Crop"), actionCollection());
+    connect(scaleCrop, SIGNAL(triggered(bool)), this, SLOT(slotSetScaleAndCrop()));
+    m_actionBackground->addAction(scaleCrop);
 
-    m_action_Background->insert(new KAction (i18n("Scale && Crop"),
-			 0,
-			 this,
-			 SLOT(slotSetScaleAndCrop()),
-			 actionCollection(),
-			 "images2desktop_scale_and_crop"));
-    
-    addAction( m_action_Background );
+    addAction( m_actionBackground );
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
@@ -133,10 +107,10 @@ void Plugin_WallPaper::setup( QWidget* widget )
     }
 
     KIPI::ImageCollection selection = interface->currentSelection();
-    m_action_Background->setEnabled( selection.isValid() );
+    m_actionBackground->setEnabled( selection.isValid() );
 
     connect( interface, SIGNAL(selectionChanged(bool)),
-             m_action_Background, SLOT(setEnabled(bool)));
+             m_actionBackground, SLOT(setEnabled(bool)));
  }
 
 void Plugin_WallPaper::slotSetCenter()
@@ -196,7 +170,7 @@ void Plugin_WallPaper::setWallpaper(int layout)
 
    if (!images.isValid() ) return;
 
-   KURL url=images.images()[0];
+   KUrl url=images.images()[0];
    QString path;
    if (url.isLocalFile())
    {
@@ -224,7 +198,7 @@ void Plugin_WallPaper::setWallpaper(int layout)
 
 KIPI::Category  Plugin_WallPaper::category( KAction* action ) const
 {
-    if ( action == m_action_Background )
+    if ( action == m_actionBackground )
        return KIPI::IMAGESPLUGIN;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification" 

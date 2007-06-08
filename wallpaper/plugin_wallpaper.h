@@ -26,7 +26,8 @@
 
 // KIPI includes
 
-#include <libkipi/plugin.h>
+#include "../../libkipi/libkipi/plugin.h"
+//#include <libkipi/plugin.h>
 
 class KActionMenu;
 class KAction;
@@ -70,7 +71,7 @@ private:
         SCALE_AND_CROP   = 8
     };
 
-    KActionMenu *m_action_Background;
+    KActionMenu *m_actionBackground;
 };
 
 #endif // PLUGIN_WALLPAPER_H
