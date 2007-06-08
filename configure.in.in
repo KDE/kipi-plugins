@@ -112,8 +112,8 @@ fi
 AC_MSG_CHECKING([for libkexiv2 in our sources])
 if test -d $srcdir/libkexiv2; then
     have_libkexiv2=yes
-    LIBKEXIV2_CFLAGS='-I$(top_srcdir)'
-    LIBKEXIV2_LIBS='$(top_builddir)/libkexiv2/libkexiv2.la'
+    LIBKEXIV2_CFLAGS='-I$(top_srcdir)/libkexiv2'
+    LIBKEXIV2_LIBS='$(top_builddir)/libkexiv2/libkexiv2/libkexiv2.la'
     LIBKEXIV2_LIBS_DEP='$(LIBKEXIV2_LIBS)'
     AC_MSG_RESULT([found])
     AC_SUBST(LIBKEXIV2_CFLAGS)
