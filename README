@@ -69,6 +69,8 @@ Currently implemented plugins are:
 
 20) MetadataEdit       : Plugin to edit EXIF and IPTC pictures metadata.
 
+21) ImageViewer        : Fast OpenGL Image Viewer
+
 
 Remark : "HelloWorld" plugin is just a tutorial plugin implementation for developpers.
        : "ImagesGallery" plugin is obsolete and no more maintained at the moment.
