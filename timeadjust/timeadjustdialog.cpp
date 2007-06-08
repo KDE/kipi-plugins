@@ -1,24 +1,10 @@
-/* ============================================================
- * Authors: Jesper K. Pedersen <blackie@kde.org>
- *          Gilles Caulier <caulier dot gilles at gmail dot com>
- * Date   : 2004-05-16
- * Description : a plugin to set time stamp of picture files.
- *
- * Copyright 2003-2005 by Jesper Pedersen <blackie@kde.org>
- * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
- *
- * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * ============================================================ */
+7
+// C Ansi includes.
+
+extern "C"
+{
+#include <utime.h>
+}
 
 // Qt includes.
 
@@ -30,6 +16,7 @@
 #include <qhbox.h>
 #include <qcheckbox.h>
 #include <qradiobutton.h>
+#include <qfile.h>
 #include <qspinbox.h>
 #include <qgrid.h>
 #include <qpushbutton.h>
@@ -148,11 +135,11 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
                                            "(c) 2003-2005, Jesper K. Pedersen\n"
                                            "(c) 2006, Gilles Caulier");
 
-    d->about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Author and maintainer"),
-                       "blackie@kde.org");
+    d->about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Author"),
+                        "blackie@kde.org");
 
-    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Developper"),
-                       "caulier dot gilles at gmail dot com");
+    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Developper and maintainer"),
+                        "caulier dot gilles at gmail dot com");
 
     QPushButton *helpButton = actionButton(Help);
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
@@ -433,6 +420,12 @@ void TimeAdjustDialog::slotOk()
         QDateTime dateTime   = info.time();
         dateTime             = updateTime(info.path(), info.time());
         info.setTime(dateTime);
+
+        // See B.K.O #138880: set the file acess and modification time.
+        struct utimbuf ut;
+        ut.modtime = dateTime.toTime_t();
+        ut.actime  = dateTime.toTime_t();
+        ::utime(QFile::encodeName(url.path()), &ut);
 
         if (!d->exif->isChecked())
         {
