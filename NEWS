@@ -17,7 +17,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 140477 : SendImages   : Ability to rename images being sent via email.
 002 ==> 143450 : SlideShow    : Skip to next or previous image by a right or left click
-003 ==>
+003 ==> 138880 : TimeAdjust   : digikam 0.9rc2 - 0.9.1rc1 setting file date to exif doesn't work.
+004 ==> 
 
 v 0.1.4 beta1 
 ----------------------------------------------------------------------------
