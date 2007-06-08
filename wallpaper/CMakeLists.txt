@@ -1,5 +1,3 @@
-include_directories(${KIPI_INCLUDE_DIR} ${KDE4_INCLUDES} ${QT4_INCLUDES})
-
 set(kipiplugin_wallpaper_PART_SRCS plugin_wallpaper.cpp)
 
 kde4_automoc(${kipiplugin_wallpaper_PART_SRCS})
