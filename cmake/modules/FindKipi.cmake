@@ -25,7 +25,7 @@ else (KIPI_INCLUDE_DIR AND KIPI_LIBRARIES)
 
   if (KIPI_INCLUDE_DIR)
     set(KIPI_DEFINITIONS -I${CMAKE_CURRENT_SOURCE_DIR}/../libkipi)
-    set(KIPI_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/../libkipi/libkipi/libkipi.la)
+    set(KIPI_LIBRARIES ${CMAKE_BINARY_DIR}/lib/libkipi.so)
     set(KIPI_LOCAL_FOUND TRUE)
   endif (KIPI_INCLUDE_DIR)
 
