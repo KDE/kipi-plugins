@@ -1,6 +1,7 @@
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDES} ${QT4_INCLUDES})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} 
+                    ${KDE4_INCLUDES} ${QT4_INCLUDES} ${KIPI_INCLUDE_DIR})
 
 set(kipiplugin_wallpaper_PART_SRCS plugin_wallpaper.cpp)
 

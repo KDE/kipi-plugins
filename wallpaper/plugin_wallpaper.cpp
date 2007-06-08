@@ -25,6 +25,7 @@
 
 #include <klocale.h>
 #include <kaction.h>
+#include <k3process.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
@@ -64,8 +65,8 @@ void Plugin_WallPaper::setup( QWidget* widget )
     KIPI::Plugin::setup( widget );
 
     m_action_Background = new KActionMenu(i18n("&Set as Background"),
-                         actionCollection(),
-                         "images2desktop");
+                          actionCollection(),
+                          "images2desktop");
 
     m_action_Background->insert(new KAction (i18n("Centered"),
                          0,
@@ -228,6 +229,7 @@ KIPI::Category  Plugin_WallPaper::category( KAction* action ) const
     if ( action == m_action_Background )
        return KIPI::IMAGESPLUGIN;
 
-    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification" 
+                      << endl;
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }

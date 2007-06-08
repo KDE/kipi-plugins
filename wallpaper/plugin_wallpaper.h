@@ -24,10 +24,6 @@
 #ifndef PLUGIN_WALLPAPER_H
 #define PLUGIN_WALLPAPER_H
 
-// KDE includes
-
-#include <kprocess.h>
-
 // KIPI includes
 
 #include <libkipi/plugin.h>
@@ -64,14 +60,14 @@ private:
 
     enum 
     {
-        CENTER = 1,
-        TILED = 2,
-        CENTER_TILED = 3,
-        CENTER_MAXPECT = 4,
-        TILED_MAXPECT = 5,
-        SCALED = 6,
+        CENTER           = 1,
+        TILED            = 2,
+        CENTER_TILED     = 3,
+        CENTER_MAXPECT   = 4,
+        TILED_MAXPECT    = 5,
+        SCALED           = 6,
         CENTERED_AUTOFIT = 7,
-        SCALE_AND_CROP = 8
+        SCALE_AND_CROP   = 8
     };
 
     KActionMenu *m_action_Background;
