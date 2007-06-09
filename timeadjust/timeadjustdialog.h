@@ -54,17 +54,18 @@ public:
     
     void setImages(const KURL::List& images);
 
-protected slots:
+protected:
+
+    void closeEvent(QCloseEvent *);
+
+private slots:
 
     void slotUpdateExample();
     void slotAdjustmentTypeChanged();
     void slotOk();
     void slotCancel();
     void slotHelp();
-
-protected:
-
-    void closeEvent(QCloseEvent *);
+    void slotResetDateToCurrent();
 
 private:
 
@@ -75,7 +76,6 @@ private:
 private:
 
     TimeAdjustDialogPrivate *d;
-
 };
 
 }  // NameSpace KIPITimeAdjustPlugin

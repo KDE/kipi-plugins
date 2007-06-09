@@ -30,6 +30,7 @@ extern "C"
 
 // Qt includes.
 
+#include <qtooltip.h>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qvbuttongroup.h>
@@ -43,9 +44,11 @@ extern "C"
 #include <qgrid.h>
 #include <qpushbutton.h>
 #include <qframe.h>
+#include <qtoolbutton.h>
 
 // KDE includes.
 
+#include <kiconloader.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kapplication.h>
@@ -104,12 +107,15 @@ public:
         dateCreatedSel    = 0;
         interface         = 0;
         about             = 0;
+        todayBtn          = 0;
     }
 
     QRadioButton             *add;
     QRadioButton             *subtract;
     QRadioButton             *exif;
     QRadioButton             *custom;
+
+    QToolButton              *todayBtn;
 
     QCheckBox                *syncEXIFDateCheck;
     QCheckBox                *syncIPTCDateCheck;
@@ -195,22 +201,26 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     // -- Adjustment type ------------------------------------------------------------
 
     QVGroupBox *adjGB = new QVGroupBox(i18n("Adjustment Type"), plainPage());
-    d->adjustTypeGrp   = new QButtonGroup(1, Qt::Horizontal, adjGB);
-    d->add             = new QRadioButton(i18n("Add"), d->adjustTypeGrp);
-    d->subtract        = new QRadioButton(i18n("Subtract"), d->adjustTypeGrp);
-    d->exif            = new QRadioButton(i18n("Set file date to EXIF/IPTC creation date"), d->adjustTypeGrp);
-    d->custom          = new QRadioButton(i18n("Custom date"), d->adjustTypeGrp);
+    d->adjustTypeGrp  = new QButtonGroup(1, Qt::Horizontal, adjGB);
+    d->add            = new QRadioButton(i18n("Add"), d->adjustTypeGrp);
+    d->subtract       = new QRadioButton(i18n("Subtract"), d->adjustTypeGrp);
+    d->exif           = new QRadioButton(i18n("Set file date to EXIF/IPTC creation date"), d->adjustTypeGrp);
+    d->custom         = new QRadioButton(i18n("Custom date"), d->adjustTypeGrp);
 
     d->adjustTypeGrp->setFrameStyle(QFrame::NoFrame);
     d->adjustTypeGrp->setInsideMargin(0); 
     d->adjustTypeGrp->setRadioButtonExclusive(true);
 
     QHBox *hbox       = new QHBox(d->adjustTypeGrp);
-    QLabel *space     = new QLabel(hbox);
+    QLabel *space1     = new QLabel(hbox);
+    space1->setFixedWidth(15);
     d->dateCreatedSel = new KDateTimeWidget(hbox);
+    QLabel *space2     = new QLabel(hbox);
+    space2->setFixedWidth(15);
+    d->todayBtn       = new QToolButton(hbox);   
+    d->todayBtn->setIconSet(SmallIcon("today"));
+    QToolTip::add(d->todayBtn, i18n("Reset to current date"));
     new QLabel(hbox);
-    space->setFixedWidth(15);
-    d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
     
     d->syncEXIFDateCheck = new QCheckBox(i18n("Update Exif creation date"), d->adjustTypeGrp);
     d->syncIPTCDateCheck = new QCheckBox(i18n("Update IPTC creation date"), d->adjustTypeGrp);
@@ -291,6 +301,9 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->years, SIGNAL( valueChanged( int ) ),
             this, SLOT( slotUpdateExample() ));
 
+    connect(d->todayBtn, SIGNAL(clicked()),
+            this, SLOT(slotResetDateToCurrent()));
+
     // -----------------------------------------------------------------------
 
     readSettings();
@@ -306,6 +319,11 @@ TimeAdjustDialog::~TimeAdjustDialog()
 void TimeAdjustDialog::slotHelp()
 {
     KApplication::kApplication()->invokeHelp("timeadjust", "kipi-plugins");
+}
+
+void TimeAdjustDialog::slotResetDateToCurrent()
+{
+    d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
 }
 
 void TimeAdjustDialog::closeEvent(QCloseEvent *e)
@@ -332,6 +350,9 @@ void TimeAdjustDialog::readSettings()
     if (adjType == 2) d->exif->setChecked(true);
     if (adjType == 3) d->custom->setChecked(true);
 
+    QDateTime current = QDateTime::currentDateTime();
+    d->dateCreatedSel->setDateTime(config.readDateTimeEntry("Custom Date", &current));
+
     d->syncEXIFDateCheck->setChecked(config.readBoolEntry("Sync EXIF Date", true));
     d->syncIPTCDateCheck->setChecked(config.readBoolEntry("Sync IPTC Date", true));
     resize(configDialogSize(config, QString("Time Adjust Dialog")));
@@ -347,6 +368,8 @@ void TimeAdjustDialog::saveSettings()
     if (d->exif->isChecked())     adjType = 2;
     if (d->custom->isChecked())   adjType = 3;
     config.writeEntry("Adjustment Type", adjType);
+
+    config.writeEntry("Custom Date", d->dateCreatedSel->dateTime());
 
     config.writeEntry("Sync EXIF Date", d->syncEXIFDateCheck->isChecked());
     config.writeEntry("Sync IPTC Date", d->syncIPTCDateCheck->isChecked());
@@ -402,7 +425,7 @@ void TimeAdjustDialog::slotUpdateExample()
     QString newDate = date.toString(Qt::LocalDate);
     d->exampleAdj->setText(i18n("<b>%1</b><br>would, for example, "
                                "change into<br><b>%2</b>")
-                          .arg(oldDate).arg(newDate));
+                           .arg(oldDate).arg(newDate));
 }
 
 void TimeAdjustDialog::slotAdjustmentTypeChanged()
@@ -410,6 +433,7 @@ void TimeAdjustDialog::slotAdjustmentTypeChanged()
     d->exampleBox->setEnabled(false);
     d->adjustValGrp->setEnabled(false);
     d->dateCreatedSel->setEnabled(false);
+    d->todayBtn->setEnabled(false);
     d->syncEXIFDateCheck->setEnabled(false);
     d->syncIPTCDateCheck->setEnabled(false);
 
@@ -423,6 +447,7 @@ void TimeAdjustDialog::slotAdjustmentTypeChanged()
     else if (d->custom->isChecked())
     {
         d->dateCreatedSel->setEnabled(true);
+        d->todayBtn->setEnabled(true);
         d->syncEXIFDateCheck->setEnabled(true);
         d->syncIPTCDateCheck->setEnabled(true);
     }
