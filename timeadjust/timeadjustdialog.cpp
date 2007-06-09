@@ -30,32 +30,33 @@ extern "C"
 
 // Qt includes.
 
+#include <Q3VButtonGroup>
+#include <Q3ButtonGroup>
+#include <Q3VGroupBox>
+#include <Q3Grid>
+#include <Q3HBox>
 #include <QToolTip>
 #include <QLayout>
 #include <QLabel>
-#include <QVBbuttonGroup>
-#include <QVGroupBox>
 #include <QGroupBox>
-#include <QHbox>
 #include <QCheckBox>
 #include <QRadioButton>
 #include <QFile>
 #include <QSpinBox>
-#include <QGrid>
 #include <QPushButton>
 #include <QFrame>
 #include <QToolButton>
+#include <QWidget>
 
 // KDE includes.
 
+#include <kvbox.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
-#include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
 #include <kstandarddirs.h>
 #include <kdatetimewidget.h>
 #include <kconfig.h>
@@ -72,8 +73,6 @@ extern "C"
 
 // Local includes.
 
-#include "kpaboutdata.h"
-#include "pluginsversion.h"
 #include "timeadjustdialog.h"
 #include "timeadjustdialog.moc"
 
@@ -106,7 +105,6 @@ public:
         years             = 0;
         dateCreatedSel    = 0;
         interface         = 0;
-        about             = 0;
         todayBtn          = 0;
     }
 
@@ -120,9 +118,9 @@ public:
     QCheckBox                *syncEXIFDateCheck;
     QCheckBox                *syncIPTCDateCheck;
 
-    QVGroupBox               *exampleBox;
-    QVButtonGroup            *adjustValGrp;
-    QButtonGroup             *adjustTypeGrp;
+    Q3VGroupBox              *exampleBox;
+    Q3VButtonGroup           *adjustValGrp;
+    Q3ButtonGroup            *adjustTypeGrp;
     
     QLabel                   *infoLabel;
     QLabel                   *exampleAdj;
@@ -138,88 +136,47 @@ public:
 
     KDateTimeWidget          *dateCreatedSel;
 
-    KURL::List                images;
+    KUrl::List                images;
 
     KIPI::Interface          *interface;
-
-    KIPIPlugins::KPAboutData *about;
 };
 
 TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
-                : KDialog(Plain, i18n("Adjust Time & Date"), Help|Ok|Cancel, 
-                              Ok, parent, 0, true, true)
+                : KDialog(parent)
 {
     d = new TimeAdjustDialogPrivate;
     d->interface = interface;
 
-    QVBoxLayout *vlay = new QVBoxLayout(plainPage(), 6);
+    setButtons(KDialog::Help | KDialog::Ok | KDialog::Cancel);
+    setCaption(i18n("Adjust Time & Date"));
+    setHelp("timeadjust", "kipi-plugins");
 
-    // -- About data and help button ----------------------------------------
-
-    d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("Time Adjust"),
-                                           NULL,
-                                           KAboutData::License_GPL,
-                                           I18N_NOOP("A Kipi plugin for adjusting time stamp of picture files"),
-                                           "(c) 2003-2005, Jesper K. Pedersen\n"
-                                           "(c) 2006, Gilles Caulier");
-
-    d->about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Author"),
-                        "blackie@kde.org");
-
-    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Developper and maintainer"),
-                        "caulier dot gilles at gmail dot com");
-
-    QPushButton *helpButton = actionButton(Help);
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("Time Adjust Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    helpButton->setPopup(helpMenu->menu());
-
-    // -- Banner ------------------------------------------------------------
-
-    QFrame *headerFrame = new QFrame(plainPage());
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout = new QHBoxLayout(headerFrame);
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-    layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel(headerFrame, "pixmapLabelLeft");
-    pixmapLabelLeft->setScaledContents( false );
-    layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Adjust Time Stamp of Picture Files"), headerFrame, "labelTitle" );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-    vlay->addWidget( headerFrame );
-
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    KVBox *box = new KVBox( this );
+    setMainWidget( box );
+    QVBoxLayout *vlay = new QVBoxLayout(box);
 
     // -- Adjustment type ------------------------------------------------------------
 
-    QVGroupBox *adjGB = new QVGroupBox(i18n("Adjustment Type"), plainPage());
-    d->adjustTypeGrp  = new QButtonGroup(1, Qt::Horizontal, adjGB);
-    d->add            = new QRadioButton(i18n("Add"), d->adjustTypeGrp);
-    d->subtract       = new QRadioButton(i18n("Subtract"), d->adjustTypeGrp);
-    d->exif           = new QRadioButton(i18n("Set file date to EXIF/IPTC creation date"), d->adjustTypeGrp);
-    d->custom         = new QRadioButton(i18n("Custom date"), d->adjustTypeGrp);
+    Q3VGroupBox *adjGB = new Q3VGroupBox(i18n("Adjustment Type"), box);
+    d->adjustTypeGrp   = new Q3ButtonGroup(1, Qt::Horizontal, adjGB);
+    d->add             = new QRadioButton(i18n("Add"), d->adjustTypeGrp);
+    d->subtract        = new QRadioButton(i18n("Subtract"), d->adjustTypeGrp);
+    d->exif            = new QRadioButton(i18n("Set file date to EXIF/IPTC creation date"), d->adjustTypeGrp);
+    d->custom          = new QRadioButton(i18n("Custom date"), d->adjustTypeGrp);
 
     d->adjustTypeGrp->setFrameStyle(QFrame::NoFrame);
     d->adjustTypeGrp->setInsideMargin(0); 
     d->adjustTypeGrp->setRadioButtonExclusive(true);
 
-    QHBox *hbox       = new QHBox(d->adjustTypeGrp);
+    Q3HBox *hbox       = new Q3HBox(d->adjustTypeGrp);
     QLabel *space1     = new QLabel(hbox);
     space1->setFixedWidth(15);
-    d->dateCreatedSel = new KDateTimeWidget(hbox);
+    d->dateCreatedSel  = new KDateTimeWidget(hbox);
     QLabel *space2     = new QLabel(hbox);
     space2->setFixedWidth(15);
-    d->todayBtn       = new QToolButton(hbox);   
-    d->todayBtn->setIconSet(SmallIcon("today"));
-    QToolTip::add(d->todayBtn, i18n("Reset to current date"));
+    d->todayBtn        = new QToolButton(hbox);   
+    d->todayBtn->setIcon(SmallIcon("today"));
+    d->todayBtn->setToolTip(i18n("Reset to current date"));
     new QLabel(hbox);
     
     d->syncEXIFDateCheck = new QCheckBox(i18n("Update Exif creation date"), d->adjustTypeGrp);
@@ -229,47 +186,60 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
 
     // -- Adjustments ------------------------------------------------------------
 
-    d->adjustValGrp = new QVButtonGroup(i18n("Adjustments"), plainPage());
+    d->adjustValGrp = new Q3VButtonGroup(i18n("Adjustments"), box);
     vlay->addWidget(d->adjustValGrp);
 
     QWidget* grid        = new QWidget(d->adjustValGrp);
-    QGridLayout* gridLay = new QGridLayout(grid, 1, 7, spacingHint());
-    gridLay->setColStretch( 2, 1 );
-    gridLay->setColStretch( 5, 1 );
+    QGridLayout* gridLay = new QGridLayout(grid);
+    gridLay->setSpacing(spacingHint());
+    gridLay->setColumnStretch( 2, 1 );
+    gridLay->setColumnStretch( 5, 1 );
 
     QLabel* label = new QLabel( i18n("Hours:"), grid );
-    d->hours       = new QSpinBox( 0, 1000, 1, grid );
+    d->hours      = new QSpinBox(grid);
+    d->hours->setRange(0, 1000);
+    d->hours->setSingleStep(1);
     gridLay->addWidget( label, 0, 0 );
     gridLay->addWidget( d->hours, 0, 1 );
 
     label      = new QLabel( i18n("Minutes:"), grid );
-    d->minutes = new QSpinBox( 0, 1000, 1, grid );
+    d->minutes = new QSpinBox(grid);
+    d->minutes->setRange(0, 1000);
+    d->minutes->setSingleStep(1);
     gridLay->addWidget( label, 0, 3 );
     gridLay->addWidget( d->minutes, 0, 4 );
 
     label   = new QLabel( i18n("Seconds:"), grid );
-    d->secs = new QSpinBox( 0, 1000, 1, grid );
+    d->secs = new QSpinBox(grid);
+    d->secs->setRange(0, 1000);
+    d->secs->setSingleStep(1);
     gridLay->addWidget( label, 0, 6 );
     gridLay->addWidget( d->secs, 0, 7 );
 
     label   = new QLabel( i18n("Days:"), grid );
-    d->days = new QSpinBox( 0, 1000, 1, grid );
+    d->days = new QSpinBox(grid);
+    d->days->setRange(0, 1000);
+    d->days->setSingleStep(1);
     gridLay->addWidget( label, 1, 0 );
     gridLay->addWidget( d->days, 1, 1 );
 
     label     = new QLabel( i18n("Months:"), grid );
-    d->months = new QSpinBox( 0, 1000, 1, grid );
+    d->months = new QSpinBox(grid);
+    d->months->setRange(0, 1000);
+    d->months->setSingleStep(1);
     gridLay->addWidget( label, 1, 3 );
     gridLay->addWidget( d->months, 1, 4 );
 
     label    = new QLabel( i18n("Years:"), grid );
-    d->years = new QSpinBox( 0, 1000, 1, grid );
+    d->years = new QSpinBox(grid);
+    d->years->setRange(0, 1000);
+    d->years->setSingleStep(1);
     gridLay->addWidget( label, 1, 6 );
     gridLay->addWidget( d->years, 1, 7 );
 
     // -- Example ------------------------------------------------------------
 
-    d->exampleBox = new QVGroupBox(i18n("Example"), plainPage());
+    d->exampleBox = new Q3VGroupBox(i18n("Example"), box);
     vlay->addWidget(d->exampleBox);
 
     d->infoLabel  = new QLabel(d->exampleBox);
@@ -312,13 +282,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
 
 TimeAdjustDialog::~TimeAdjustDialog()
 {
-    delete d->about;
     delete d;
-}
-
-void TimeAdjustDialog::slotHelp()
-{
-    KApplication::kApplication()->invokeHelp("timeadjust", "kipi-plugins");
 }
 
 void TimeAdjustDialog::slotResetDateToCurrent()
@@ -377,13 +341,13 @@ void TimeAdjustDialog::saveSettings()
     config.sync();
 }
 
-void TimeAdjustDialog::setImages(const KURL::List& images)
+void TimeAdjustDialog::setImages(const KUrl::List& images)
 {
     d->images.clear();
     int exactCount   = 0;
     int inexactCount = 0;
 
-    for( KURL::List::ConstIterator it = images.begin(); it != images.end(); ++it ) 
+    for( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it ) 
     {
         KIPI::ImageInfo info = d->interface->info( *it );
         if (info.isTimeExact()) 
@@ -421,7 +385,7 @@ void TimeAdjustDialog::setImages(const KURL::List& images)
 void TimeAdjustDialog::slotUpdateExample()
 {
     QString oldDate = d->exampleDate.toString(Qt::LocalDate);
-    QDateTime date  = updateTime(KURL(), d->exampleDate);
+    QDateTime date  = updateTime(KUrl(), d->exampleDate);
     QString newDate = date.toString(Qt::LocalDate);
     d->exampleAdj->setText(i18n("<b>%1</b><br>would, for example, "
                                "change into<br><b>%2</b>")
@@ -455,12 +419,12 @@ void TimeAdjustDialog::slotAdjustmentTypeChanged()
 
 void TimeAdjustDialog::slotOk()
 {
-    KURL::List  updatedURLs;
+    KUrl::List  updatedURLs;
     QStringList errorFiles;
 
-    for( KURL::List::ConstIterator it = d->images.begin(); it != d->images.end(); ++it )
+    for( KUrl::List::ConstIterator it = d->images.begin(); it != d->images.end(); ++it )
     {
-        KURL url             = *it;
+        KUrl url             = *it;
         KIPI::ImageInfo info = d->interface->info(url);
         QDateTime dateTime   = info.time();
         dateTime             = updateTime(info.path(), info.time());
@@ -500,12 +464,12 @@ void TimeAdjustDialog::slotOk()
 
                     if (!ret)
                     {
-                        kdDebug() << "Failed to save metadata to file " << url.fileName() << endl;
+                        kDebug() << "Failed to save metadata to file " << url.fileName() << endl;
                     }
                 }
                 else
                 {
-                    kdDebug() << "Failed to load metadata from file " << url.fileName() << endl;
+                    kDebug() << "Failed to load metadata from file " << url.fileName() << endl;
                 }
             }
     
@@ -533,7 +497,7 @@ void TimeAdjustDialog::slotOk()
     accept();
 }
 
-QDateTime TimeAdjustDialog::updateTime(const KURL& url, const QDateTime& time) const
+QDateTime TimeAdjustDialog::updateTime(const KUrl& url, const QDateTime& time) const
 {
     if (d->custom->isChecked())
     {
