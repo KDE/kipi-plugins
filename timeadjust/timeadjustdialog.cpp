@@ -474,7 +474,7 @@ void TimeAdjustDialog::slotOk()
 
         if (d->syncEXIFDateCheck->isChecked() || d->syncIPTCDateCheck->isChecked())
         {
-            bool ret = false;
+            bool ret = true;
             if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
             {
                 KExiv2Iface::KExiv2 exiv2Iface;
