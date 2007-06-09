@@ -33,5 +33,6 @@ endif(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 # calendar need Kcal library (KDEPIM)
       
 # Plugins witch will be always compiled
+subdirs(timeadjust)
 subdirs(wallpaper)
 
