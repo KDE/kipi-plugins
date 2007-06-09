@@ -460,9 +460,7 @@ void TimeAdjustDialog::slotOk()
 
     for( KURL::List::ConstIterator it = d->images.begin(); it != d->images.end(); ++it )
     {
-        KURL url = *it;
-        bool ret = false;
-
+        KURL url             = *it;
         KIPI::ImageInfo info = d->interface->info(url);
         QDateTime dateTime   = info.time();
         dateTime             = updateTime(info.path(), info.time());
@@ -478,9 +476,9 @@ void TimeAdjustDialog::slotOk()
         {
             if (d->syncEXIFDateCheck->isChecked() || d->syncIPTCDateCheck->isChecked())
             {
+                bool ret = false;
                 if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
                 {
-                    ret = true;
                     KExiv2Iface::KExiv2 exiv2Iface;
     
                     ret &= exiv2Iface.load(url.path());
@@ -502,6 +500,10 @@ void TimeAdjustDialog::slotOk()
         
                         ret &= exiv2Iface.save(url.path());
                     }
+                    else
+                    {
+                       kdDebug() << "Failed to load metadata from file " << url.fileName() << endl;
+                    }
                 }
         
                 if (!ret)
@@ -516,7 +518,7 @@ void TimeAdjustDialog::slotOk()
     // metadata from pictures have changed and need to be re-read.
     d->interface->refreshImages(d->images);
 
-    if (!errorFiles.isEmpty())
+    if (!errorFiles.isEmpty() && !d->exif->isChecked())
     {
         KMessageBox::informationList(
                      kapp->activeWindow(),
