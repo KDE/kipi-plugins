@@ -30,21 +30,21 @@ extern "C"
 
 // Qt includes.
 
-#include <qtooltip.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qvbuttongroup.h>
-#include <qvgroupbox.h>
-#include <qgroupbox.h>
-#include <qhbox.h>
-#include <qcheckbox.h>
-#include <qradiobutton.h>
-#include <qfile.h>
-#include <qspinbox.h>
-#include <qgrid.h>
-#include <qpushbutton.h>
-#include <qframe.h>
-#include <qtoolbutton.h>
+#include <QToolTip>
+#include <QLayout>
+#include <QLabel>
+#include <QVBbuttonGroup>
+#include <QVGroupBox>
+#include <QGroupBox>
+#include <QHbox>
+#include <QCheckBox>
+#include <QRadioButton>
+#include <QFile>
+#include <QSpinBox>
+#include <QGrid>
+#include <QPushButton>
+#include <QFrame>
+#include <QToolButton>
 
 // KDE includes.
 
@@ -146,7 +146,7 @@ public:
 };
 
 TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
-                : KDialogBase(Plain, i18n("Adjust Time & Date"), Help|Ok|Cancel, 
+                : KDialog(Plain, i18n("Adjust Time & Date"), Help|Ok|Cancel, 
                               Ok, parent, 0, true, true)
 {
     d = new TimeAdjustDialogPrivate;
