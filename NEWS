@@ -19,7 +19,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 002 ==> 143450 : SlideShow    : Skip to next or previous image by a right or left click
 003 ==> 138880 : TimeAdjust   : digikam 0.9rc2 - 0.9.1rc1 setting file date to exif doesn't work.
 004 ==> 140890 : The preview does not display date and time properly for Japanese locale.
-005 ==> 
+005 ==> 144185 : Adjust date-time tool should remember previous fixed date.
+006 ==> 
 
 v 0.1.4 beta1 
 ----------------------------------------------------------------------------
