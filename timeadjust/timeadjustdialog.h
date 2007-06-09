@@ -30,7 +30,7 @@
 
 // KDE includes.
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kurl.h>
 
 namespace KIPI
@@ -43,7 +43,7 @@ namespace KIPITimeAdjustPlugin
 
 class TimeAdjustDialogPrivate;
 
-class TimeAdjustDialog :public KDialogBase 
+class TimeAdjustDialog : public KDialog
 {
     Q_OBJECT
 
@@ -51,8 +51,8 @@ public:
 
     TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent);
     ~TimeAdjustDialog();
-    
-    void setImages(const KURL::List& images);
+
+    void setImages(const KUrl::List& images);
 
 protected:
 
@@ -71,8 +71,8 @@ private:
 
     void readSettings();
     void saveSettings();
-    QDateTime updateTime(const KURL& url, const QDateTime& time) const;
-    
+    QDateTime updateTime(const KUrl& url, const QDateTime& time) const;
+
 private:
 
     TimeAdjustDialogPrivate *d;

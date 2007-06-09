@@ -23,6 +23,7 @@
 
 // KDE includes.
 
+#include <kiconloader.h>
 #include <klocale.h>
 #include <kaction.h>
 #include <kapplication.h>
@@ -47,7 +48,7 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_timeadjust,
                             Factory("kipiplugin_timeadjust"))
 
 Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent, const QStringList&)
-                 : KIPI::Plugin( Factory::instance(), parent, "TimeAdjust")
+                 : KIPI::Plugin( Factory::componentData(), parent, "TimeAdjust")
 {
     kDebug( 51001 ) << "Plugin_TimeAdjust plugin loaded" << endl;
 }
@@ -56,16 +57,8 @@ void Plugin_TimeAdjust::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    // this is our action shown in the menubar/toolbar of the mainwindow
-
-    m_actionTimeAjust = new KAction (i18n("Adjust Time && Date..."),
-                                     "clock",
-                                     0,
-                                     this,
-                                     SLOT(slotActivate()),
-                                     actionCollection(),
-                                     "timeadjust");
-
+    m_actionTimeAjust = new KAction(KIcon("clock"), i18n("Adjust Time && Date..."), actionCollection());
+    connect(m_actionTimeAjust, SIGNAL(triggered(bool)), this, SLOT(slotActivate()));
     addAction(m_actionTimeAjust);
 
     m_interface = dynamic_cast< KIPI::Interface* >(parent());
