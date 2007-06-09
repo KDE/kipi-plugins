@@ -472,53 +472,50 @@ void TimeAdjustDialog::slotOk()
         ut.actime  = dateTime.toTime_t();
         ::utime(QFile::encodeName(url.path()), &ut);
 
-        if (!d->exif->isChecked())
+        if (d->syncEXIFDateCheck->isChecked() || d->syncIPTCDateCheck->isChecked())
         {
-            if (d->syncEXIFDateCheck->isChecked() || d->syncIPTCDateCheck->isChecked())
+            bool ret = false;
+            if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
             {
-                bool ret = false;
-                if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
+                KExiv2Iface::KExiv2 exiv2Iface;
+
+                ret &= exiv2Iface.load(url.path());
+                if (ret)
                 {
-                    KExiv2Iface::KExiv2 exiv2Iface;
+                    if (d->syncEXIFDateCheck->isChecked())
+                    {
+                        ret &= exiv2Iface.setExifTagString("Exif.Image.DateTime",
+                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
+                    }
+        
+                    if (d->syncIPTCDateCheck->isChecked())
+                    {
+                        ret &= exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
+                            dateTime.date().toString(Qt::ISODate));
+                        ret &= exiv2Iface.setIptcTagString("Iptc.Application2.TimeCreated",
+                            dateTime.time().toString(Qt::ISODate));
+                    }
     
-                    ret &= exiv2Iface.load(url.path());
-                    if (ret)
-                    {
-                        if (d->syncEXIFDateCheck->isChecked())
-                        {
-                            ret &= exiv2Iface.setExifTagString("Exif.Image.DateTime",
-                                dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
-                        }
-            
-                        if (d->syncIPTCDateCheck->isChecked())
-                        {
-                            ret &= exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
-                                dateTime.date().toString(Qt::ISODate));
-                            ret &= exiv2Iface.setIptcTagString("Iptc.Application2.TimeCreated",
-                                dateTime.time().toString(Qt::ISODate));
-                        }
-        
-                        ret &= exiv2Iface.save(url.path());
-                    }
-                    else
-                    {
-                       kdDebug() << "Failed to load metadata from file " << url.fileName() << endl;
-                    }
+                    ret &= exiv2Iface.save(url.path());
                 }
-        
-                if (!ret)
-                    errorFiles.append(url.fileName());
-                else 
-                    updatedURLs.append(url);
+                else
+                {
+                    kdDebug() << "Failed to load metadata from file " << url.fileName() << endl;
+                }
             }
-        }        
+    
+            if (!ret)
+                errorFiles.append(url.fileName());
+            else 
+                updatedURLs.append(url);
+        }
     }
 
     // We use kipi interface refreshImages() method to tell to host than 
     // metadata from pictures have changed and need to be re-read.
     d->interface->refreshImages(d->images);
 
-    if (!errorFiles.isEmpty() && !d->exif->isChecked())
+    if (!errorFiles.isEmpty() && (d->syncEXIFDateCheck->isChecked() || d->syncIPTCDateCheck->isChecked()))
     {
         KMessageBox::informationList(
                      kapp->activeWindow(),
