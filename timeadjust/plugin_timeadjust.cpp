@@ -46,10 +46,10 @@ typedef KGenericFactory<Plugin_TimeAdjust> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_timeadjust,
                             Factory("kipiplugin_timeadjust"))
 
-Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent, const char*, const QStringList&)
+Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent, const QStringList&)
                  : KIPI::Plugin( Factory::instance(), parent, "TimeAdjust")
 {
-    kdDebug( 51001 ) << "Plugin_TimeAdjust plugin loaded" << endl;
+    kDebug( 51001 ) << "Plugin_TimeAdjust plugin loaded" << endl;
 }
 
 void Plugin_TimeAdjust::setup(QWidget* widget)
@@ -72,7 +72,7 @@ void Plugin_TimeAdjust::setup(QWidget* widget)
 
     if (!m_interface)
     {
-       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       kError( 51000 ) << "Kipi interface is null!" << endl;
        return;
     }
 
@@ -101,6 +101,6 @@ KIPI::Category Plugin_TimeAdjust::category( KAction* action ) const
     if ( action == m_actionTimeAjust )
        return KIPI::IMAGESPLUGIN;
 
-    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
