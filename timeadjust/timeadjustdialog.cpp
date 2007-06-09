@@ -497,6 +497,11 @@ void TimeAdjustDialog::slotOk()
                     }
     
                     ret &= exiv2Iface.save(url.path());
+
+                    if (!ret)
+                    {
+                        kdDebug() << "Failed to save metadata to file " << url.fileName() << endl;
+                    }
                 }
                 else
                 {
