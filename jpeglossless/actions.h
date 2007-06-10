@@ -50,10 +50,10 @@ enum RotateAction
 enum FlipAction
 {
     FlipHorizontal = 0,
-    FlipVertical = 1
+    FlipVertical   = 1
 };
 
-class EventData : QEvent
+class EventData : public QEvent
 {
 
 public:
