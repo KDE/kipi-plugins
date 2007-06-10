@@ -46,7 +46,7 @@ extern "C"
 #include <QPushButton>
 #include <QFrame>
 #include <QToolButton>
-#include <QWidget>
+#include <QCloseEvent>
 
 // KDE includes.
 
@@ -274,6 +274,12 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->todayBtn, SIGNAL(clicked()),
             this, SLOT(slotResetDateToCurrent()));
 
+    connect(this, SIGNAL(okClicked()),
+            this, SLOT(slotOk()));
+
+    connect(this, SIGNAL(cancelClicked()),
+            this, SLOT(slotCancel()));
+
     // -----------------------------------------------------------------------
 
     readSettings();
@@ -300,13 +306,13 @@ void TimeAdjustDialog::closeEvent(QCloseEvent *e)
 void TimeAdjustDialog::slotCancel()
 {
     saveSettings();
-    KDialogBase::slotCancel();
+    reject();
 }
 
 void TimeAdjustDialog::readSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("Time Adjust Settings");
+    config.group("Time Adjust Settings");
 
     int adjType = config.readNumEntry("Adjustment Type", 0);   // add by default.
     if (adjType == 0) d->add->setChecked(true);
@@ -319,13 +325,15 @@ void TimeAdjustDialog::readSettings()
 
     d->syncEXIFDateCheck->setChecked(config.readBoolEntry("Sync EXIF Date", true));
     d->syncIPTCDateCheck->setChecked(config.readBoolEntry("Sync IPTC Date", true));
-    resize(configDialogSize(config, QString("Time Adjust Dialog")));
+
+    KConfigGroup group = config.group(QString("Time Adjust Dialog"));
+    restoreDialogSize(group);
 }
 
 void TimeAdjustDialog::saveSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("Time Adjust Settings");
+    config.group("Time Adjust Settings");
 
     int adjType = 0;              // add
     if (d->subtract->isChecked()) adjType = 1;
@@ -337,7 +345,9 @@ void TimeAdjustDialog::saveSettings()
 
     config.writeEntry("Sync EXIF Date", d->syncEXIFDateCheck->isChecked());
     config.writeEntry("Sync IPTC Date", d->syncIPTCDateCheck->isChecked());
-    saveDialogSize(config, QString("Time Adjust Dialog"));
+
+    KConfigGroup group = config.group(QString("Time Adjust Dialog"));
+    saveDialogSize(group);
     config.sync();
 }
 
@@ -449,7 +459,7 @@ void TimeAdjustDialog::slotOk()
                     if (d->syncEXIFDateCheck->isChecked())
                     {
                         ret &= exiv2Iface.setExifTagString("Exif.Image.DateTime",
-                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
+                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     }
         
                     if (d->syncIPTCDateCheck->isChecked())
