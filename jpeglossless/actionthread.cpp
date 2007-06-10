@@ -172,7 +172,7 @@ void ActionThread::run()
                 d->action   = Rotate;
                 d->fileName = t->filePath;
                 d->starting = true;
-                QApplication::postEvent(m_parent, static_cast<QEvent*>(d));
+                QApplication::postEvent(m_parent, d);
     
                 bool result = true;
                 ImageRotate imageRotate;
