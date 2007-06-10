@@ -372,20 +372,20 @@ void TimeAdjustDialog::setImages(const KUrl::List& images)
 
     if ( inexactCount > 0 ) 
     {
-        QString tmpLabel = i18n("1 image will be changed; ",
-                                "%n images will be changed; ",
-                                exactCount)
-                         + i18n("1 image will be skipped due to an inexact date.",
-                                "%n images will be skipped due to inexact dates.",
-                                inexactCount );
+        QString tmpLabel = i18np("1 image will be changed; ",
+                                 "%n images will be changed; ",
+                                 exactCount)
+                         + i18np("1 image will be skipped due to an inexact date.",
+                                 "%n images will be skipped due to inexact dates.",
+                                 inexactCount );
 
         d->infoLabel->setText(tmpLabel);
     }
     else 
     {
-        d->infoLabel->setText(i18n("1 image will be changed",
-                                  "%n images will be changed",
-                                  d->images.count()));
+        d->infoLabel->setText(i18np("1 image will be changed",
+                                    "%n images will be changed",
+                                    d->images.count()));
     }
     // PENDING(blackie) handle all images being inexact.
 
