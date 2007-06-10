@@ -39,13 +39,12 @@ extern "C"
 // Qt includes.
 
 #include <QImage>
-#include <QWmatrix>
 #include <QFile>
 #include <QFileInfo>
 
 // KDE includes.
 
-#include <kprocess.h>
+#include <k3process.h>
 #include <klocale.h>
 #include <kdebug.h>
 
@@ -138,7 +137,7 @@ bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateActi
         }
         default:
         {
-            kdError( 51000 ) << "ImageRotate: Nonstandard rotation angle" << endl;
+            kError( 51000 ) << "ImageRotate: Nonstandard rotation angle" << endl;
             err = i18n("Nonstandard rotation angle");
             return false;
         }
@@ -150,7 +149,7 @@ bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateActi
 bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest, 
                                     RotateAction angle, QString& err)
 {
-    KProcess process;
+    K3Process process;
     process.clearArguments();
     process << "convert" << "-rotate";    
 
@@ -177,7 +176,7 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
         }
         default:
         {
-            kdError() << "ImageRotate: Nonstandard rotation angle" << endl;
+            kError() << "ImageRotate: Nonstandard rotation angle" << endl;
             err = i18n("Nonstandard rotation angle");
             return false;
         }
@@ -185,12 +184,12 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
 
     process << src + QString("[0]") << dest;
 
-    kdDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;    
+    kDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;    
 
-    connect(&process, SIGNAL(receivedStderr(KProcess *, char*, int)),
-            this, SLOT(slotReadStderr(KProcess*, char*, int)));
+    connect(&process, SIGNAL(receivedStderr(K3Process *, char*, int)),
+            this, SLOT(slotReadStderr(K3Process*, char*, int)));
 
-    if (!process.start(KProcess::Block, KProcess::Stderr))
+    if (!process.start(K3Process::Block, K3Process::Stderr))
         return false;
 
     switch (process.exitStatus())
@@ -212,7 +211,7 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
     return false;
 }
 
-void ImageRotate::slotReadStderr(KProcess*, char* buffer, int buflen)
+void ImageRotate::slotReadStderr(K3Process*, char* buffer, int buflen)
 {
     m_stdErr.append(QString::fromLocal8Bit(buffer, buflen));
 }
