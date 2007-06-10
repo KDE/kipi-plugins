@@ -44,7 +44,7 @@ extern "C"
 
 // KDE includes.
 
-#include <kprocess.h>
+#include <k3process.h>
 #include <klocale.h>
 #include <kdebug.h>
 
@@ -126,7 +126,7 @@ bool ImageFlip::flipJPEG(const QString& src, const QString& dest, FlipAction act
         }
         default:
         {
-            kdError( 51000 ) << "ImageFlip: Nonstandard flip action" << endl;
+            kError( 51000 ) << "ImageFlip: Nonstandard flip action" << endl;
             err = i18n("Nonstandard flip action");
             return false;
         }
@@ -137,7 +137,7 @@ bool ImageFlip::flipJPEG(const QString& src, const QString& dest, FlipAction act
 
 bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAction action, QString& err)
 {
-    KProcess process;
+    K3Process process;
     process.clearArguments();
     process << "convert";    
 
@@ -155,7 +155,7 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
         }
         default:
         {
-            kdError() << "ImageFlip: Nonstandard flip action" << endl;
+            kError() << "ImageFlip: Nonstandard flip action" << endl;
             err = i18n("Nonstandard flip action");
             return false;
         }
@@ -163,12 +163,12 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
 
     process << src + QString("[0]") << dest;
 
-    kdDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;    
+    kDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;    
 
-    connect(&process, SIGNAL(receivedStderr(KProcess *, char*, int)),
-            this, SLOT(slotReadStderr(KProcess*, char*, int)));
+    connect(&process, SIGNAL(receivedStderr(K3Process *, char*, int)),
+            this, SLOT(slotReadStderr(K3Process*, char*, int)));
 
-    if (!process.start(KProcess::Block, KProcess::Stderr))
+    if (!process.start(K3Process::Block, K3Process::Stderr))
         return false;
 
     switch (process.exitStatus())
@@ -190,7 +190,7 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
     return false;
 }
 
-void ImageFlip::slotReadStderr(KProcess*, char* buffer, int buflen)
+void ImageFlip::slotReadStderr(K3Process*, char* buffer, int buflen)
 {
     m_stdErr.append(QString::fromLocal8Bit(buffer, buflen));
 }

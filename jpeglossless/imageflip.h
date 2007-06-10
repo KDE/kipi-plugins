@@ -33,7 +33,7 @@
 
 class QString;
 
-class KProcess;
+class K3Process;
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -51,12 +51,12 @@ public:
 
 private slots:
 
-    void slotReadStderr(KProcess*, char*, int);
+    void slotReadStderr(K3Process*, char*, int);
 
 private:
 
     bool flipJPEG(const QString& src, const QString& dest, FlipAction action, QString& err);
-    
+
     bool flipImageMagick(const QString& src, const QString& dest, FlipAction action, QString& err);
 
 
