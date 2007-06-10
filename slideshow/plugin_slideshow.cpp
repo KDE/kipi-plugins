@@ -166,48 +166,16 @@ void Plugin_SlideShow::slotSlideShow()
     }
 
     KConfig config("kipirc");
-
+     
     bool    opengl;
-    int     delay;
-    bool    printFileName;
-    bool    printFileComments;
-    bool    loop;
     bool    shuffle;
     bool    showSelectedFilesOnly;
-    QString effectName;
-
+    
     config.setGroup("SlideShow Settings");
     opengl                = config.readBoolEntry("OpenGL");
-    delay                 = config.readNumEntry("Delay");
-    printFileName         = config.readBoolEntry("Print Filename");
-    printFileComments     = config.readBoolEntry("Print Comments");
-    loop                  = config.readBoolEntry("Loop");
     shuffle               = config.readBoolEntry("Shuffle");
     showSelectedFilesOnly = config.readBoolEntry("Show Selected Files Only");
-    if (!opengl)
-        effectName        = config.readEntry("Effect Name");
-    else
-        effectName        = config.readEntry("Effect Name (OpenGL)");
 
-    // Comments tab settings
-
-    uint  commentsFontColor;
-    uint  commentsBgColor;
-    QFont commentsFont;
-    int commentsLinesLength;
-    commentsFont.setFamily(config.readEntry("Comments Font Family"));
-    commentsFont.setPointSize(config.readNumEntry("Comments Font Size", 10 ));
-    commentsFont.setBold(config.readBoolEntry("Comments Font Bold", false));
-    commentsFont.setItalic(config.readBoolEntry("Comments Font Italic", false));
-    commentsFont.setUnderline(config.readBoolEntry("Comments Font Underline", false));
-    commentsFont.setOverline(config.readBoolEntry("Comments Font Overline", false));
-    commentsFont.setStrikeOut(config.readBoolEntry("Comments Font StrikeOut", false));
-    commentsFont.setFixedPitch(config.readBoolEntry("Comments Font FixedPitch", false));
-
-    commentsFontColor     = config.readUnsignedNumEntry("Comments Font Color", 0xffffff);
-    commentsBgColor       = config.readUnsignedNumEntry("Comments Bg Color", 0x000000);
-
-    commentsLinesLength   = config.readNumEntry("Comments Lines Length", 72);
 
     KURL::List urlList;
     if (showSelectedFilesOnly)
@@ -273,9 +241,7 @@ void Plugin_SlideShow::slotSlideShow()
 
     if (!opengl) {
         KIPISlideShowPlugin::SlideShow *slideShow =
-                new KIPISlideShowPlugin::SlideShow(fileList, commentsList, m_imagesHasComments, delay, 
-                                                   printFileName, printFileComments, loop, effectName, 
-                                                   commentsFont, commentsFontColor, commentsBgColor, commentsLinesLength);
+                new KIPISlideShowPlugin::SlideShow(fileList, commentsList, m_imagesHasComments);
         slideShow->show();
     }
     else {
@@ -284,9 +250,7 @@ void Plugin_SlideShow::slotSlideShow()
                                i18n("Sorry. OpenGL support not available on your system"));
         else {
             KIPISlideShowPlugin::SlideShowGL *slideShow =
-                    new KIPISlideShowPlugin::SlideShowGL(fileList, commentsList, m_imagesHasComments, delay,
-                                                         printFileName, printFileComments, loop, effectName,
-                           commentsFont, commentsFontColor, commentsBgColor, commentsLinesLength);
+                    new KIPISlideShowPlugin::SlideShowGL(fileList, commentsList, m_imagesHasComments);
             slideShow->show();
         }
     }

@@ -22,6 +22,12 @@
 #ifndef SLIDESHOW_H
 #define SLIDESHOW_H
 
+// KDE includes
+
+#include <kconfig.h>
+
+// QT includes
+
 #include <qvaluelist.h>
 #include <qstringlist.h>
 #include <qpair.h>
@@ -57,10 +63,7 @@ class SlideShow : public QWidget
     
 public:
 
-    SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments,
-              int delay, bool printName, bool printComments, bool loop,
-              const QString& effectName,
-              const QFont& commentsFont, uint commentsFontColor, uint commentsBgColor, int commentsLinesLength);
+    SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments);
     ~SlideShow();
 
     void registerEffects();
@@ -78,9 +81,14 @@ private:
     EffectMethod  getRandomEffect();
     void          showEndOfShow();
     
+    void          readSettings();
+    
 private:
 
     // config ------------------
+    
+    KConfig*    m_config;
+    
     int         m_delay;
     bool        m_printName;
     bool        m_printComments;
@@ -89,16 +97,18 @@ private:
 
     bool        m_ImagesHasComments;
 
-    QFont       m_commentsFont;
+    QFont*      m_commentsFont;
     uint        m_commentsFontColor;
     uint        m_commentsBgColor;
     int         m_commentsLinesLength;
+    
+    bool        m_enableMouseWheel;
     // -------------------------
     
     QMap<QString, EffectMethod> Effects;
 
-    ImlibIface   *m_imIface;
-    ImImageSS    *m_currImage;
+    ImlibIface*   m_imIface;
+    ImImageSS*    m_currImage;
     
     FileList    m_fileList;
     QStringList m_commentsList;
@@ -108,7 +118,7 @@ private:
     EffectMethod m_effect;
     bool         m_effectRunning;
 
-    int m_commentsLinesLenght;
+    int         m_commentsLinesLenght;
     
     // values for state of various effects:
     int      m_x, m_y, m_w, m_h, m_dx, m_dy, m_ix, m_iy, m_i, m_j, m_subType;
@@ -130,6 +140,7 @@ protected:
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *);
+    void wheelEvent(QWheelEvent *);
     void keyPressEvent(QKeyEvent *event);
     
     int effectNone(bool);

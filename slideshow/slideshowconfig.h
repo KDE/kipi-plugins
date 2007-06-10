@@ -26,6 +26,10 @@
 
 #include <qstring.h>
 
+// KDE includes
+
+#include <kconfig.h>
+
 // SlideShow includes
 
 #include "slideshowconfigbase.h"
@@ -53,6 +57,11 @@ private:
     int m_delayMsMaxValue;
     int m_delayMsMinValue;
     int m_delayMsLineStep;
+    
+    KConfig*    m_config;
+    
+    QString     m_effectName;
+    QString     m_effectNameGL;
 
 private slots:
 

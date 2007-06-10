@@ -53,11 +53,7 @@ namespace KIPISlideShowPlugin
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SlideShow::SlideShow(const FileList& fileList,
-                     const QStringList& commentsList, bool ImagesHasComments,
-                     int delay, bool printName, bool printComments, bool loop,
-                     const QString& effectName,
-                     const QFont &commentsFont, uint commentsFontColor, uint commentsBgColor, int commentsLinesLength)
+SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments)
                      : QWidget(0, 0, WStyle_StaysOnTop | WType_Popup |
                                WX11BypassWM | WDestructiveClose)
 {
@@ -81,7 +77,7 @@ SlideShow::SlideShow(const FileList& fileList,
 
     m_toolBar = new ToolBar(this);
     m_toolBar->hide();
-    if (!loop)
+    if (!m_loop)
     {
         m_toolBar->setEnabledPrev(false);
     }
@@ -112,19 +108,13 @@ SlideShow::SlideShow(const FileList& fileList,
 
     m_fileList       = fileList;
     m_commentsList   = commentsList;
-    m_delay          = QMAX(delay, 300); // at least have 0.3 second delay
-    m_loop           = loop;
-    m_printName      = printName;
-    m_printComments  = printComments;
-    m_effectName     = effectName;
 
     m_ImagesHasComments   = ImagesHasComments; 
+    
+    m_config = new KConfig("kipirc");
+    m_config->setGroup("SlideShow Settings");
 
-    m_commentsFont        = commentsFont;
-    m_commentsFontColor   = commentsFontColor;
-    m_commentsBgColor     = commentsBgColor;
-    m_commentsLinesLength = commentsLinesLength;
-
+    readSettings();
     // --------------------------------------------------
 
     registerEffects();
@@ -150,6 +140,7 @@ SlideShow::SlideShow(const FileList& fileList,
     
     setMouseTracking(true);
     slotMouseMoveTimeOut();
+
 }
 
 
@@ -172,7 +163,43 @@ SlideShow::~SlideShow()
         delete m_currImage;
     if (m_imIface)
         delete m_imIface;
+    
+    if (m_config) {
+        delete m_config;
+    }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void SlideShow::readSettings()
+{
+    m_delay                 = m_config->readNumEntry("Delay", 1500);
+    m_printName         = m_config->readBoolEntry("Print Filename", true);
+    m_printComments     = m_config->readBoolEntry("Print Comments", false);
+    m_loop                  = m_config->readBoolEntry("Loop", false);
+    
+    m_effectName           = m_config->readEntry("Effect Name", "Random");
+
+    m_enableMouseWheel      = m_config->readBoolEntry("Enable Mouse Wheel", true);
+ 
+    // Comments tab settings
+    
+    m_commentsFont = new QFont();
+    m_commentsFont->setFamily(m_config->readEntry("Comments Font Family"));
+    m_commentsFont->setPointSize(m_config->readNumEntry("Comments Font Size", 10 ));
+    m_commentsFont->setBold(m_config->readBoolEntry("Comments Font Bold", false));
+    m_commentsFont->setItalic(m_config->readBoolEntry("Comments Font Italic", false));
+    m_commentsFont->setUnderline(m_config->readBoolEntry("Comments Font Underline", false));
+    m_commentsFont->setOverline(m_config->readBoolEntry("Comments Font Overline", false));
+    m_commentsFont->setStrikeOut(m_config->readBoolEntry("Comments Font StrikeOut", false));
+    m_commentsFont->setFixedPitch(m_config->readBoolEntry("Comments Font FixedPitch", false));
+    
+    m_commentsFontColor     = m_config->readUnsignedNumEntry("Comments Font Color", 0xffffff);
+    m_commentsBgColor       = m_config->readUnsignedNumEntry("Comments Bg Color", 0x000000);
+    
+    m_commentsLinesLength   = m_config->readNumEntry("Comments Lines Length", 72);
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -474,7 +501,7 @@ void SlideShow::printComments()
 
     QPainter p;
     p.begin(m_currImage->qpixmap());
-    p.setFont(m_commentsFont);
+    p.setFont(*m_commentsFont);
 
     for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ ) {
 
@@ -483,13 +510,13 @@ void SlideShow::printComments()
         // coefficient 1.5 is used to maintain distance between different lines
 
          for (int x=9; x<=11; x++)
-             for (int y = (int)(yPos + lineNumber * 1.5 * m_commentsFont.pointSize()  + 1); 
-                      y >= (int)(yPos + lineNumber* 1.5 * m_commentsFont.pointSize()  - 1); y--)
+             for (int y = (int)(yPos + lineNumber * 1.5 * m_commentsFont->pointSize()  + 1); 
+                      y >= (int)(yPos + lineNumber* 1.5 * m_commentsFont->pointSize()  - 1); y--)
                 p.drawText(x, height()-y, commentsByLines[lineNumber]);
 
         p.setPen(QColor(m_commentsFontColor));
 
-        p.drawText(10, height()-(int)(lineNumber * 1.5 * m_commentsFont.pointSize() + yPos), commentsByLines[lineNumber]);
+        p.drawText(10, height()-(int)(lineNumber * 1.5 * m_commentsFont->pointSize() + yPos), commentsByLines[lineNumber]);
     }
 }
 
@@ -612,6 +639,30 @@ void SlideShow::mouseMoveEvent(QMouseEvent *e)
     m_toolBar->show();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void SlideShow::wheelEvent(QWheelEvent *e)
+{
+    if (!m_enableMouseWheel) return;
+    
+    if (m_endOfShow)
+        slotClose();
+
+    int delta = e->delta();
+    
+    if (delta < 0)
+    {
+        m_timer->stop();
+        m_toolBar->setPaused(true);
+        slotNext();
+    }
+    else if (delta > 0 && m_fileIndex-1 >= 0)
+    {
+        m_timer->stop();
+        m_toolBar->setPaused(true);
+        slotPrev();
+    } 
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 

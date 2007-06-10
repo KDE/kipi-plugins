@@ -22,6 +22,8 @@
 #ifndef SLIDESHOWGL_H
 #define SLIDESHOWGL_H
 
+#include <kconfig.h>
+
 #include <qvaluelist.h>
 #include <qstringlist.h>
 #include <qpair.h>
@@ -43,10 +45,7 @@ class SlideShowGL : public QGLWidget
 public:
 
     SlideShowGL(const QValueList<QPair<QString, int> >& fileList,
-                const QStringList& commentsList, bool ImagesHasComments,
-                int delay, bool printName, bool printComments, bool loop,
-                const QString& effectName,
-                const QFont& commentsFont, uint commentsFontColor, uint commentsBgColor, int commentsLinesLength);
+                const QStringList& commentsList, bool ImagesHasComments);
     ~SlideShowGL();
 
     void registerEffects();
@@ -62,12 +61,15 @@ protected:
     
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *);
+    void wheelEvent(QWheelEvent *e);
     void keyPressEvent(QKeyEvent *event);
         
 private:
 
     // config ------------------
 
+    KConfig*    m_config;
+    
     int         m_delay;
     QString     m_effectName;
     bool        m_loop;
@@ -76,10 +78,12 @@ private:
     
     bool        m_imagesHasComments;
     
-    QFont       m_commentsFont;
+    QFont*      m_commentsFont;
     uint        m_commentsFontColor;
     uint        m_commentsBgColor;
     int         m_commentsLinesLength;
+    
+    bool        m_enableMouseWheel;
 
     // -------------------------
     
@@ -127,6 +131,8 @@ private:
     void          showEndOfShow();
     void          printFilename(QImage& layer);
     void          printComments(QImage& layer);
+    
+    void          readSettings();
     
     void          effectNone();
     void          effectBlend();

@@ -11,6 +11,7 @@ HTMLExport     : Support for theme variants
 HTMLExport     : New theme: "frames", by Rüdiger Bente
 HTMLExport     : New theme: "cleanframes", by Beth and Robert Marmorstein
 HTMLExport     : New theme: "classic", simulating the output of the old HTML Gallery plugin
+SlideShow      : Skip to next or previous image by mouse wheel scrolling
 
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):

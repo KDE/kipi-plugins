@@ -632,8 +632,32 @@
                                 <property name="name">
                                     <cstring>m_useMillisecondsCheckBox</cstring>
                                 </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>1</hsizetype>
+                                        <vsizetype>1</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
                                 <property name="text">
                                     <string>Use milliseconds instead of seconds</string>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>m_enableMouseWheelCheckBox</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>1</hsizetype>
+                                        <vsizetype>1</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="text">
+                                    <string>Enable mouse wheel (move between images)</string>
                                 </property>
                             </widget>
                         </vbox>
@@ -651,7 +675,7 @@
                         <property name="sizeHint">
                             <size>
                                 <width>31</width>
-                                <height>128</height>
+                                <height>70</height>
                             </size>
                         </property>
                     </spacer>
@@ -999,11 +1023,6 @@
     <tabstop>m_allFilesButton</tabstop>
     <tabstop>m_selectedFilesButton</tabstop>
 </tabstops>
-<variables>
-    <variable>QString effectName_;</variable>
-    <variable>KConfig* config_;</variable>
-    <variable>QString effectNameGL_;</variable>
-</variables>
 <slots>
     <slot access="protected">slotOpenGLToggled()</slot>
     <slot access="protected">slotStartClicked()</slot>

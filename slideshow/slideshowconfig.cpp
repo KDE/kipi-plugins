@@ -114,8 +114,8 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const 
     
     // Configuration file management 
 
-    config_ = new KConfig("kipirc");
-    config_->setGroup("SlideShow Settings");
+    m_config = new KConfig("kipirc");
+    m_config->setGroup("SlideShow Settings");
 
     readSettings();
 
@@ -135,8 +135,8 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const 
 
 SlideShowConfig::~SlideShowConfig()
 {
-    if (config_) {
-        delete config_;
+    if (m_config) {
+        delete m_config;
     }
 }
 
@@ -155,7 +155,7 @@ void SlideShowConfig::loadEffectNames()
     m_effectsComboBox->insertStringList(effects);
 
     for (int i=0; i<m_effectsComboBox->count(); i++) {
-        if (effectNames[effectName_] == m_effectsComboBox->text(i)) {
+        if (effectNames[m_effectName] == m_effectsComboBox->text(i)) {
             m_effectsComboBox->setCurrentItem(i);
             break;
         }
@@ -176,7 +176,7 @@ void SlideShowConfig::loadEffectNamesGL()
     m_effectsComboBox->insertStringList(effects);
 
     for (int i=0; i<m_effectsComboBox->count(); i++) {
-        if (effectNames[effectNameGL_] == m_effectsComboBox->text(i)) {
+        if (effectNames[m_effectNameGL] == m_effectsComboBox->text(i)) {
             m_effectsComboBox->setCurrentItem(i);
             break;
         }
@@ -192,19 +192,23 @@ void SlideShowConfig::readSettings()
     bool  loop;
     bool  shuffle;
     bool  showSelectedFilesOnly;
-
-
-    opengl                = config_->readBoolEntry("OpenGL", false);
-    delay                 = config_->readNumEntry("Delay", 1500);
-    printFileName         = config_->readBoolEntry("Print Filename", true);
-    printFileComments     = config_->readBoolEntry("Print Comments", false);
-    loop                  = config_->readBoolEntry("Loop", false);
-    shuffle               = config_->readBoolEntry("Shuffle", false);
-    showSelectedFilesOnly = config_->readBoolEntry("Show Selected Files Only", false);
-    effectName_           = config_->readEntry("Effect Name", "Random");
-    effectNameGL_         = config_->readEntry("Effect Name (OpenGL)", "Random");
+    bool  useMilliseconds;
+    bool  enableMouseWheel;
     
-    m_useMillisecondsCheckBox->setChecked(config_->readBoolEntry("Use Milliseconds", false));
+
+
+    opengl                = m_config->readBoolEntry("OpenGL", false);
+    delay                 = m_config->readNumEntry("Delay", 1500);
+    printFileName         = m_config->readBoolEntry("Print Filename", true);
+    printFileComments     = m_config->readBoolEntry("Print Comments", false);
+    loop                  = m_config->readBoolEntry("Loop", false);
+    shuffle               = m_config->readBoolEntry("Shuffle", false);
+    showSelectedFilesOnly = m_config->readBoolEntry("Show Selected Files Only", false);
+    m_effectName           = m_config->readEntry("Effect Name", "Random");
+    m_effectNameGL         = m_config->readEntry("Effect Name (OpenGL)", "Random");
+    
+    useMilliseconds       = m_config->readBoolEntry("Use Milliseconds", false);
+    enableMouseWheel      = m_config->readNumEntry("Enable Mouse Wheel", true);
     
     // Comments tab settings
     uint  commentsFontColor;
@@ -212,19 +216,20 @@ void SlideShowConfig::readSettings()
     int   commentsLinesLength;
     
     QFont *savedFont = new QFont();
-    savedFont->setFamily(config_->readEntry("Comments Font Family"));
-    savedFont->setPointSize(config_->readNumEntry("Comments Font Size", 10 ));
-    savedFont->setBold(config_->readBoolEntry("Comments Font Bold", false));
-    savedFont->setItalic(config_->readBoolEntry("Comments Font Italic", false));
-    savedFont->setUnderline(config_->readBoolEntry("Comments Font Underline", false));
-    savedFont->setOverline(config_->readBoolEntry("Comments Font Overline", false));
-    savedFont->setStrikeOut(config_->readBoolEntry("Comments Font StrikeOut", false));
-    savedFont->setFixedPitch(config_->readBoolEntry("Comments Font FixedPitch", false));
+    savedFont->setFamily(m_config->readEntry("Comments Font Family"));
+    savedFont->setPointSize(m_config->readNumEntry("Comments Font Size", 10 ));
+    savedFont->setBold(m_config->readBoolEntry("Comments Font Bold", false));
+    savedFont->setItalic(m_config->readBoolEntry("Comments Font Italic", false));
+    savedFont->setUnderline(m_config->readBoolEntry("Comments Font Underline", false));
+    savedFont->setOverline(m_config->readBoolEntry("Comments Font Overline", false));
+    savedFont->setStrikeOut(m_config->readBoolEntry("Comments Font StrikeOut", false));
+    savedFont->setFixedPitch(m_config->readBoolEntry("Comments Font FixedPitch", false));
     
-    commentsFontColor     = config_->readUnsignedNumEntry("Comments Font Color", 0xffffff);
-    commentsBgColor       = config_->readUnsignedNumEntry("Comments Bg Color", 0x000000);
+    commentsFontColor     = m_config->readUnsignedNumEntry("Comments Font Color", 0xffffff);
+    commentsBgColor       = m_config->readUnsignedNumEntry("Comments Bg Color", 0x000000);
     
-    commentsLinesLength   = config_->readNumEntry("Comments Lines Length", 72);
+    commentsLinesLength   = m_config->readNumEntry("Comments Lines Length", 72);
+
     // -- Apply Settings to widgets ------------------------------
 
     m_openglCheckBox->setChecked(opengl);
@@ -238,6 +243,9 @@ void SlideShowConfig::readSettings()
     m_loopCheckBox->setChecked(loop);
 
     m_shuffleCheckBox->setChecked(shuffle);
+    
+    m_enableMouseWheelCheckBox->setChecked(enableMouseWheel);
+    m_useMillisecondsCheckBox->setChecked(useMilliseconds);
 
     if (showSelectedFilesOnly && m_selectedFilesButton->isEnabled() )
         m_selectedFilesButton->setChecked(true);
@@ -255,47 +263,48 @@ void SlideShowConfig::readSettings()
 
 void SlideShowConfig::saveSettings()
 {
-    if (!config_) return;
+    if (!m_config) return;
 
-    bool useMilliseconds = m_useMillisecondsCheckBox->isChecked();
-
-    config_->writeEntry("OpenGL", m_openglCheckBox->isChecked());
+    m_config->writeEntry("OpenGL", m_openglCheckBox->isChecked());
 
     // Delay will be always saved as millisecond value, to keep compatibility
-    if ( useMilliseconds ) config_->writeEntry("Delay", m_delaySpinBox->value());
-    else config_->writeEntry("Delay", m_delaySpinBox->value()*1000); 
+    if ( m_useMillisecondsCheckBox->isChecked() ) 
+        m_config->writeEntry("Delay", m_delaySpinBox->value());
+    else 
+        m_config->writeEntry("Delay", m_delaySpinBox->value()*1000); 
 
-    config_->writeEntry("Print Filename", m_printNameCheckBox->isChecked());
-    config_->writeEntry("Print Comments", m_printCommentsCheckBox->isChecked());
-    config_->writeEntry("Loop", m_loopCheckBox->isChecked());
-    config_->writeEntry("Shuffle", m_shuffleCheckBox->isChecked());
-    config_->writeEntry("Show Selected Files Only", m_selectedFilesButton->isChecked());
+    m_config->writeEntry("Print Filename", m_printNameCheckBox->isChecked());
+    m_config->writeEntry("Print Comments", m_printCommentsCheckBox->isChecked());
+    m_config->writeEntry("Loop", m_loopCheckBox->isChecked());
+    m_config->writeEntry("Shuffle", m_shuffleCheckBox->isChecked());
+    m_config->writeEntry("Show Selected Files Only", m_selectedFilesButton->isChecked());
 
-    config_->writeEntry("Use Milliseconds", useMilliseconds); 
+    m_config->writeEntry("Use Milliseconds", m_useMillisecondsCheckBox->isChecked()); 
+    m_config->writeEntry("Enable Mouse Wheel", m_enableMouseWheelCheckBox->isChecked());
 
     // Comments tab settings
     QFont* commentsFont = new QFont(m_commentsFontChooser->font());
-    config_->writeEntry("Comments Font Family", commentsFont->family());
-    config_->writeEntry("Comments Font Size", commentsFont->pointSize());
-    config_->writeEntry("Comments Font Bold", commentsFont->bold());
-    config_->writeEntry("Comments Font Italic", commentsFont->italic());
-    config_->writeEntry("Comments Font Underline", commentsFont->underline());
-    config_->writeEntry("Comments Font Overline", commentsFont->overline());
-    config_->writeEntry("Comments Font StrikeOut", commentsFont->strikeOut());
-    config_->writeEntry("Comments Font FixedPitch", commentsFont->fixedPitch());
+    m_config->writeEntry("Comments Font Family", commentsFont->family());
+    m_config->writeEntry("Comments Font Size", commentsFont->pointSize());
+    m_config->writeEntry("Comments Font Bold", commentsFont->bold());
+    m_config->writeEntry("Comments Font Italic", commentsFont->italic());
+    m_config->writeEntry("Comments Font Underline", commentsFont->underline());
+    m_config->writeEntry("Comments Font Overline", commentsFont->overline());
+    m_config->writeEntry("Comments Font StrikeOut", commentsFont->strikeOut());
+    m_config->writeEntry("Comments Font FixedPitch", commentsFont->fixedPitch());
     delete commentsFont;
     
     QColor* fontColor = new QColor(m_commentsFontColor->color());
     uint commentsFontColorRGB = fontColor->rgb(); 
     delete fontColor;
-    config_->writeEntry("Comments Font Color", commentsFontColorRGB);
+    m_config->writeEntry("Comments Font Color", commentsFontColorRGB);
 
     QColor* bgColor = new QColor(m_commentsBgColor->color());
     uint commentsBgColorRGB = bgColor->rgb();
     delete bgColor;
-    config_->writeEntry("Comments Bg Color", commentsBgColorRGB);
+    m_config->writeEntry("Comments Bg Color", commentsBgColorRGB);
 
-    config_->writeEntry("Comments Lines Length", m_commentsLinesLengthSpinBox->value());
+    m_config->writeEntry("Comments Lines Length", m_commentsLinesLengthSpinBox->value());
     
     if (!m_openglCheckBox->isChecked()) {
 
@@ -310,7 +319,7 @@ void SlideShowConfig::saveSettings()
             }
         }
 
-        config_->writeEntry("Effect Name", effect);
+        m_config->writeEntry("Effect Name", effect);
 
     }
     else {
@@ -326,11 +335,11 @@ void SlideShowConfig::saveSettings()
             }
         }
 
-        config_->writeEntry("Effect Name (OpenGL)", effect);
+        m_config->writeEntry("Effect Name (OpenGL)", effect);
 
     }
 
-    config_->sync();
+    m_config->sync();
 }
 
 void SlideShowConfig::slotCommentsBgColorChanged()
