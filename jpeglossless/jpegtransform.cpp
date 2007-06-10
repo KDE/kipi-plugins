@@ -40,14 +40,13 @@ extern "C"
 // Qt includes.
 
 #include <QString>
-//#include <QMatrix>
 #include <QFile>
 
 // KDE includes.
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 
 // Local includes.
 
@@ -203,9 +202,9 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     // If twoPass is true, we need another file (src -> tempFile -> destGiven)
     if (twoPass) 
     {
-        KTempFile tempFile;
-        tempFile.setAutoDelete(false);
-        dest=tempFile.name();
+        KTemporaryFile tempFile;
+        tempFile.setAutoRemove(false);
+        dest=tempFile.fileName();
     }
 
     output_file = fopen(QFile::encodeName(dest), "wb");
