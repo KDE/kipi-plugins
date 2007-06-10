@@ -33,6 +33,7 @@
 
 #include <klocale.h>
 #include <kaction.h>
+#include <kactionmenu.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
@@ -78,32 +79,21 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_AutoExif = new KAction(i18n("Auto Rotate/Flip Using Exif Information"),
-                                  0, 0,
-                                  this,
-                                  SLOT(slotRotate()),
-                                  actionCollection(),
-                                  "rotate_exif");    
+    m_action_AutoExif = new KAction(i18n("Auto Rotate/Flip Using Exif Information"), actionCollection());
+    connect(m_action_AutoExif, SIGNAL(triggered(bool)), this, SLOT(slotRotate()));
+    addAction(m_action_AutoExif);
 
-    m_action_RotateImage = new KActionMenu(i18n("Rotate"),
-                                  "rotate_cw",
-                                  actionCollection(),
-                                  "jpeglossless_rotate");
+    m_action_RotateImage = new KActionMenu(i18n("Rotate"), actionCollection());
 
-    m_action_RotateImage->insert( new KAction(i18n("Left"),
-                                  "rotate_ccw",
-                                  SHIFT+CTRL+Key_Left,
-                                  this,
-                                  SLOT(slotRotate()),
-                                  actionCollection(),
-                                  "rotate_ccw") );
-    m_action_RotateImage->insert( new KAction(i18n("Right"),
-                                  "rotate_cw",
-                                  SHIFT+CTRL+Key_Right,
-                                  this,
-                                  SLOT(slotRotate()),
-                                  actionCollection(),
-                                  "rotate_cw") );
+    KAction left = new KAction(i18n("Left"), actionCollection());
+    setShortcut(SHIFT+CTRL+Key_Left);
+    connect(left, SIGNAL(triggered(bool)), this, SLOT(slotRotate()));
+    m_action_RotateImage->addAction(left);
+
+    KAction right = new KAction(i18n("Right"), actionCollection());
+    setShortcut(SHIFT+CTRL+Key_Right);
+    connect(right, SIGNAL(triggered(bool)), this, SLOT(slotRotate()));
+    m_action_RotateImage->addAction(right);
 
     m_action_FlipImage = new KActionMenu(i18n("Flip"),
                                   "flip",
