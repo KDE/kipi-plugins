@@ -19,8 +19,8 @@ else (KDCRAW_INCLUDE_DIR AND KDCRAW_LIBRARIES)
   message(STATUS "Check Kdcraw library in local sub-folder...")
 
   # Check if library is not in local sub-folder
-  
-  FIND_FILE(KDCRAW_LOCAL_FOUND libkdcraw/version.h ${CMAKE_SOURCE_DIR}/libkdcraw NO_DEFAULT_PATH)
+ 
+  FIND_FILE(KDCRAW_LOCAL_FOUND libkdcraw/version.h ${CMAKE_BINARY_DIR}/libkdcraw NO_DEFAULT_PATH)
 
   if (KDCRAW_LOCAL_FOUND)
 
