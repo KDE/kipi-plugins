@@ -58,7 +58,7 @@ class EventData : QEvent
 
 public:
 
-    EventData() : QEvent(User)
+    EventData() : QEvent(QEvent::User)
     {
         starting = false;
         success  = false;
