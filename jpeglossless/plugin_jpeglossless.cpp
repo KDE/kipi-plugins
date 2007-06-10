@@ -27,7 +27,7 @@
 
 // Qt includes.
 
-#include <KUrl>
+#include <kurl.h>
 
 // KDE includes.
 
@@ -58,8 +58,8 @@ typedef KGenericFactory<Plugin_JPEGLossless> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_jpeglossless,
                             Factory("kipiplugin_jpeglossless"))
 
-Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent, const char*, const QStringList &)
-                   : KIPI::Plugin( Factory::instance(), parent, "JPEGLossless")
+Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent, const QStringList &)
+                   : KIPI::Plugin( Factory::componentData(), parent, "JPEGLossless")
 {
     m_total                    = 0;
     m_current                  = 0;
@@ -175,7 +175,7 @@ Plugin_JPEGLossless::~Plugin_JPEGLossless()
 
 void Plugin_JPEGLossless::slotFlip()
 {
-    KURL::List items = images();
+    KUrl::List items = images();
     if (items.count() <= 0) return;
 
     QString from(sender()->name());
@@ -225,7 +225,7 @@ void Plugin_JPEGLossless::slotFlip()
 
 void Plugin_JPEGLossless::slotRotate()
 {
-    KURL::List items = images();
+    KUrl::List items = images();
     if (items.count() <= 0) return;
 
     QString from(sender()->name());
@@ -281,7 +281,7 @@ void Plugin_JPEGLossless::slotRotate()
 
 void Plugin_JPEGLossless::slotConvert2GrayScale()
 {
-    KURL::List items = images();
+    KUrl::List items = images();
     if (items.count() <= 0 ||
         KMessageBox::No==KMessageBox::warningYesNo(kapp->activeWindow(),
                      i18n("<p>Are you sure you wish to convert the selected image(s) to "
@@ -481,19 +481,19 @@ KIPI::Category Plugin_JPEGLossless::category( KAction* action ) const
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
 
-KURL::List Plugin_JPEGLossless::images()
+KUrl::List Plugin_JPEGLossless::images()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
     if ( !interface ) 
     {
         kdError( 51000 ) << "Kipi interface is null!" << endl;
-        return KURL::List();
+        return KUrl::List();
     }
 
     KIPI::ImageCollection images = interface->currentSelection();
     if ( !images.isValid() )
-        return KURL::List();
+        return KUrl::List();
 
     // We don't want the set of images to change before we are done
     // and tells the host app to refresh the images.
