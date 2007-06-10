@@ -49,5 +49,5 @@ Comment[zh_CN]=KIPI JPEG 无损插件
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_jpeglossless
-author=Renchi Raju, renchi@pooh.tam.uiuc.edu
+author=Gilles Caulier, caulier dot gilles at gmail dot com
 X-KIPI-MergeMenu=true
