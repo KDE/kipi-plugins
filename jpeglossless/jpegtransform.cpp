@@ -40,7 +40,7 @@ extern "C"
 // Qt includes.
 
 #include <QString>
-#include <QWmatrix>
+//#include <QMatrix>
 #include <QFile>
 
 // KDE includes.
@@ -333,7 +333,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     // And set finaly update the metadata to target file.
 
     QImage img(destGiven);
-    QImage exifThumbnail = img.scale(160, 120, QImage::ScaleMin);
+    QImage exifThumbnail = img.scaled(160, 120, Qt::KeepAspectRatio);
     exiv2Iface.load(destGiven);
     exiv2Iface.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
     exiv2Iface.setImageProgramId(QString("Kipi JPEGLossLess"), QString(kipiplugins_version));
