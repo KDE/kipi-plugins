@@ -71,7 +71,7 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent, const QStringList &)
     m_thread                   = 0;
     m_failed                   = false;
 
-    kdDebug( 51001 ) << "Plugin_JPEGLossless plugin loaded" << endl;
+    kDebug( 51001 ) << "Plugin_JPEGLossless plugin loaded" << endl;
 }
 
 void Plugin_JPEGLossless::setup( QWidget* widget )
@@ -143,7 +143,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     if ( !interface ) 
     {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
@@ -196,7 +196,7 @@ void Plugin_JPEGLossless::slotFlip()
     }
     else 
     {
-        kdWarning( 51000 ) << "The impossible happened... unknown flip specified" << endl;
+        kWarning( 51000 ) << "The impossible happened... unknown flip specified" << endl;
         return;
     }
 
@@ -252,7 +252,7 @@ void Plugin_JPEGLossless::slotRotate()
     }
     else 
     {
-        kdWarning( 51000 ) << "The impossible happened... unknown rotation angle specified" << endl;
+        kWarning( 51000 ) << "The impossible happened... unknown rotation angle specified" << endl;
         return;
     }
 
@@ -321,7 +321,7 @@ void Plugin_JPEGLossless::slotCancel()
 
     if ( !interface ) 
     {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
@@ -358,7 +358,7 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
             }
             default:
             {
-                kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event" << endl;
+                kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event" << endl;
             }
         }
 
@@ -389,7 +389,7 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
                 }
                 default: 
                 {
-                    kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event" << endl;
+                    kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event" << endl;
                 }
             }
 
@@ -419,7 +419,7 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
                 }
                 default: 
                 {
-                    kdWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event" << endl;
+                    kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event" << endl;
                 }
             }
 
@@ -458,7 +458,7 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
 
         if ( !interface ) 
         {
-           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           kError( 51000 ) << "Kipi interface is null!" << endl;
            return;
         }
 
@@ -477,7 +477,7 @@ KIPI::Category Plugin_JPEGLossless::category( KAction* action ) const
     else if ( action == m_action_Convert2GrayScale )
        return KIPI::IMAGESPLUGIN;
 
-    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
 
@@ -487,7 +487,7 @@ KUrl::List Plugin_JPEGLossless::images()
 
     if ( !interface ) 
     {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" << endl;
         return KUrl::List();
     }
 
