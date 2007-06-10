@@ -64,6 +64,8 @@ public:
         success  = false;
     }
 
+    virtual ~EventData(){};
+
     bool    starting;
     bool    success;
 
