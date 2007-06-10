@@ -31,6 +31,7 @@
 
 // KDE includes.
 
+#include <kshortcut.h>
 #include <klocale.h>
 #include <kaction.h>
 #include <kactionmenu.h>
@@ -41,6 +42,7 @@
 #include <kurl.h>
 #include <kmessagebox.h>
 #include <kapplication.h>
+#include <kstandardguiitem.h>
 
 // LibKipi includes.
 
@@ -85,49 +87,31 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     m_action_RotateImage = new KActionMenu(i18n("Rotate"), actionCollection());
 
-    KAction left = new KAction(i18n("Left"), actionCollection());
-    setShortcut(SHIFT+CTRL+Key_Left);
+    KAction *left = new KAction(i18n("Left"), actionCollection());
+    left->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left);
     connect(left, SIGNAL(triggered(bool)), this, SLOT(slotRotate()));
     m_action_RotateImage->addAction(left);
 
-    KAction right = new KAction(i18n("Right"), actionCollection());
-    setShortcut(SHIFT+CTRL+Key_Right);
+    KAction *right = new KAction(i18n("Right"), actionCollection());
+    right->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right);
     connect(right, SIGNAL(triggered(bool)), this, SLOT(slotRotate()));
     m_action_RotateImage->addAction(right);
 
-    m_action_FlipImage = new KActionMenu(i18n("Flip"),
-                                  "flip",
-                                  actionCollection(),
-                                  "jpeglossless_flip");
+    m_action_FlipImage = new KActionMenu(i18n("Flip"), actionCollection());
 
-    m_action_FlipImage->insert( new KAction(i18n("Horizontally"),
-                                  0,
-                                  CTRL+Key_Asterisk,
-                                  this,
-                                  SLOT(slotFlip()),
-                                  actionCollection(),
-                                  "flip_horizontal") );
+    KAction *hori = new KAction(i18n("Horizontally"), actionCollection());
+    hori->setShortcut(Qt::CTRL+Qt::Key_Asterisk);
+    connect(hori, SIGNAL(triggered(bool)), this, SLOT(slotFlip()));
+    m_action_FlipImage->addAction(hori);
 
-    m_action_FlipImage->insert( new KAction(i18n("Vertically"),
-                                  0,
-                                  CTRL+Key_Slash,
-                                  this,
-                                  SLOT(slotFlip()),
-                                  actionCollection(),
-                                  "flip_vertical") );
+    KAction *verti = new KAction(i18n("Vertically"), actionCollection());
+    verti->setShortcut(Qt::CTRL+Qt::Key_Slash);
+    connect(verti, SIGNAL(triggered(bool)), this, SLOT(slotFlip()));
+    m_action_FlipImage->addAction(verti);
 
-    m_action_Convert2GrayScale = new KAction(i18n("Convert to Black && White"),
-                                  "grayscaleconvert",
-                                  0,
-                                  this,
-                                  SLOT(slotConvert2GrayScale()),
-                                  actionCollection(),
-                                  "jpeglossless_convert2grayscale");
-
-    addAction( m_action_AutoExif );
-    addAction( m_action_RotateImage );
-    addAction( m_action_FlipImage );
-    addAction( m_action_Convert2GrayScale );
+    m_action_Convert2GrayScale = new KAction(i18n("Convert to Black && White"), actionCollection());
+    connect(m_action_Convert2GrayScale, SIGNAL(triggered(bool)), this, SLOT(slotConvert2GrayScale()));
+    addAction(m_action_Convert2GrayScale);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
@@ -168,7 +152,7 @@ void Plugin_JPEGLossless::slotFlip()
     KUrl::List items = images();
     if (items.count() <= 0) return;
 
-    QString from(sender()->name());
+    QString from(sender()->objectName());
     QString title;
     bool proceed = false;
 
@@ -209,7 +193,7 @@ void Plugin_JPEGLossless::slotFlip()
 
     m_progressDlg->show();
 
-    if (!m_thread->running())
+    if (!m_thread->isRunning())
         m_thread->start();
 }
 
@@ -218,7 +202,7 @@ void Plugin_JPEGLossless::slotRotate()
     KUrl::List items = images();
     if (items.count() <= 0) return;
 
-    QString from(sender()->name());
+    QString from(sender()->objectName());
     QString title;
     bool proceed = false;
 
@@ -265,7 +249,7 @@ void Plugin_JPEGLossless::slotRotate()
 
     m_progressDlg->show();
 
-    if (!m_thread->running())
+    if (!m_thread->isRunning())
         m_thread->start();
 }
 
@@ -278,7 +262,7 @@ void Plugin_JPEGLossless::slotConvert2GrayScale()
                          "black and white? This operation <b>cannot</b> be undone.</p>")))
         return;
 
-    QString from(sender()->name());
+    QString from(sender()->objectName());
 
     m_total   = items.count();
     m_current = 0;
@@ -299,7 +283,7 @@ void Plugin_JPEGLossless::slotConvert2GrayScale()
     m_progressDlg->show();
 
     m_thread->convert2grayscale(items);
-    if (!m_thread->running())
+    if (!m_thread->isRunning())
         m_thread->start();
 }
 
@@ -318,11 +302,11 @@ void Plugin_JPEGLossless::slotCancel()
     interface->refreshImages( m_images );
 }
 
-void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
+void Plugin_JPEGLossless::customEvent(QEvent *event)
 {
     if (!event) return;
 
-    KIPIJPEGLossLessPlugin::EventData *d = (KIPIJPEGLossLessPlugin::EventData*) event->data();
+    KIPIJPEGLossLessPlugin::EventData *d = (KIPIJPEGLossLessPlugin::EventData*) event;
     if (!d) return;
 
     QString text;
@@ -428,14 +412,10 @@ void Plugin_JPEGLossless::customEvent(QCustomEvent *event)
 
         if (m_failed)
         {
-#if KDE_VERSION >= 0x30200
-            m_progressDlg->setButtonCancel( KStdGuiItem::close() );
-#else
-            m_progressDlg->setButtonCancelText( i18n("&Close") );
-#endif
+            m_progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
 
             disconnect(m_progressDlg, SIGNAL(cancelClicked()),
-                    this, SLOT(slotCancel()));
+                       this, SLOT(slotCancel()));
         }
         else 
         {

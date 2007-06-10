@@ -26,6 +26,7 @@
 
 // Qt includes.
 
+#include <QEvent>
 #include <QString>
 
 namespace KIPIJPEGLossLessPlugin
@@ -52,12 +53,12 @@ enum FlipAction
     FlipVertical = 1
 };
 
-class EventData
+class EventData : QEvent
 {
 
 public:
 
-    EventData() 
+    EventData() : QEvent(User)
     {
         starting = false;
         success  = false;

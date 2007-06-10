@@ -54,7 +54,7 @@ public:
 
 protected:
 
-    void customEvent(QCustomEvent *event);
+    void customEvent(QEvent *event);
     KUrl::List images();
 
 private slots:
