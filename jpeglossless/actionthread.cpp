@@ -33,7 +33,6 @@ extern "C"
 
 #include <QApplication>
 #include <QDir>
-#include <QDeepCopy>
 
 // KDE includes.
 
@@ -107,7 +106,7 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
         }
 
         Task *t      = new Task;
-        t->filePath  = QDeepCopy<QString>((*it).path()); //deep copy
+        t->filePath  = (*it).path(); 
         t->action    = Rotate;
         t->rotAction = val;
         m_taskQueue.enqueue(t);
@@ -131,7 +130,7 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
         }
 
         Task *t       = new Task;
-        t->filePath   = QDeepCopy<QString>((*it).path()); //deep copy
+        t->filePath   = (*it).path();
         t->action     = Flip;
         t->flipAction = val;
         m_taskQueue.enqueue(t);
@@ -144,7 +143,7 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
          it != urlList.end(); ++it ) 
     {
         Task *t     = new Task;
-        t->filePath = QDeepCopy<QString>((*it).path()); //deep copy
+        t->filePath = (*it).path();
         t->action   = GrayScale;
         m_taskQueue.enqueue(t);
     }
@@ -168,12 +167,12 @@ void ActionThread::run()
 
         switch (t->action) 
         {
-            case Rotate : 
+            case Rotate: 
             {
                 d->action   = Rotate;
                 d->fileName = t->filePath;
                 d->starting = true;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                QApplication::postEvent(m_parent, d);
     
                 bool result = true;
                 ImageRotate imageRotate;
@@ -184,7 +183,7 @@ void ActionThread::run()
                 r->fileName  = t->filePath;
                 r->success   = result;
                 r->errString = errString;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, r));
+                QApplication::postEvent(m_parent, r);
                 break;
             }
             case Flip: 
@@ -192,17 +191,17 @@ void ActionThread::run()
                 d->action   = Flip;
                 d->fileName = t->filePath;
                 d->starting = true;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-                
+                QApplication::postEvent(m_parent, d);
+
                 ImageFlip imageFlip;
                 bool result = imageFlip.flip(t->filePath, t->flipAction, m_tmpFolder, errString);
-    
+
                 EventData *r = new EventData;
                 r->action    = Flip;
                 r->fileName  = t->filePath;
                 r->success   = result;
                 r->errString = errString;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, r));
+                QApplication::postEvent(m_parent, r);
                 break;
             }
             case GrayScale: 
@@ -210,7 +209,7 @@ void ActionThread::run()
                 d->action   = GrayScale;
                 d->fileName = t->filePath;
                 d->starting = true;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                QApplication::postEvent(m_parent, d);
     
                 ImageGrayScale imageGrayScale;
                 bool result = imageGrayScale.image2GrayScale(t->filePath, m_tmpFolder, errString);
@@ -220,7 +219,7 @@ void ActionThread::run()
                 r->fileName  = t->filePath;
                 r->success   = result;
                 r->errString = errString;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, r));
+                QApplication::postEvent(m_parent, r);
                 break;
             }
             default: 
