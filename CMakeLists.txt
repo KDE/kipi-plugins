@@ -35,4 +35,5 @@ endif(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 # Plugins witch will be always compiled
 add_subdirectory(timeadjust)
 add_subdirectory(wallpaper)
+add_subdirectory(jpeglossless)
 
