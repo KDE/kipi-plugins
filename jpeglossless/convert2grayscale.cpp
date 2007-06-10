@@ -39,13 +39,12 @@ extern "C"
 
 #include <QImage>
 #include <QString>
-#include <QWMatrix>
-#include <Qfile>
+#include <QFile>
 #include <QFileInfo>
 
 // KDE includes.
 
-#include <kprocess.h>
+#include <k3process.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kurl.h>
@@ -59,7 +58,6 @@ extern "C"
 
 namespace KIPIJPEGLossLessPlugin
 {
-
 
 ImageGrayScale::ImageGrayScale()
               : QObject()
@@ -140,7 +138,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     input_file = fopen(QFile::encodeName(src), "rb");
     if (!input_file)
     {
-        kdError( 51000 ) << "Image2GrayScale: Error in opening input file" << endl;
+        kError( 51000 ) << "Image2GrayScale: Error in opening input file" << endl;
         err = i18n("Error in opening input file");
         return false;
     }
@@ -149,7 +147,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     if (!output_file)
     {
         fclose(input_file);
-        kdError( 51000 ) << "Image2GrayScale: Error in opening output file" << endl;
+        kError( 51000 ) << "Image2GrayScale: Error in opening output file" << endl;
         err = i18n("Error in opening output file");
         return false;
     }
@@ -204,17 +202,17 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
 
 bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QString& dest, QString& err)
 {
-    KProcess process;
+    K3Process process;
     process.clearArguments();
     process << "convert" << "-type" << "Grayscale";   
     process << src + QString("[0]") << dest;
 
-    kdDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;    
+    kDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;    
 
-    connect(&process, SIGNAL(receivedStderr(KProcess *, char*, int)),
-            this, SLOT(slotReadStderr(KProcess*, char*, int)));
+    connect(&process, SIGNAL(receivedStderr(K3Process *, char*, int)),
+            this, SLOT(slotReadStderr(K3Process*, char*, int)));
 
-    if (!process.start(KProcess::Block, KProcess::Stderr))
+    if (!process.start(K3Process::Block, K3Process::Stderr))
         return false;
 
     switch (process.exitStatus())
@@ -236,7 +234,7 @@ bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QStrin
     return false;
 }
 
-void ImageGrayScale::slotReadStderr(KProcess*, char* buffer, int buflen)
+void ImageGrayScale::slotReadStderr(K3Process*, char* buffer, int buflen)
 {
     m_stdErr.append(QString::fromLocal8Bit(buffer, buflen));
 }

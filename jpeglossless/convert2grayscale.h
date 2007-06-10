@@ -29,7 +29,7 @@
 
 class QString;
 
-class KProcess;
+class K3Process;
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -47,12 +47,12 @@ public:
 
 private slots:
 
-    void slotReadStderr(KProcess*, char*, int);
+    void slotReadStderr(K3Process*, char*, int);
 
 private:
 
     bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err);
-    
+
     bool image2GrayScaleImageMagick(const QString& src, const QString& dest, QString& err);
 
 private:
