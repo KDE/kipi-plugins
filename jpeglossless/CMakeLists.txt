@@ -3,7 +3,7 @@
 # So make sure nofinal is always used here!
 kde4_no_enable_final(kipiplugin_jpeglossless)
 
-set(kipiplugin_jpeglossless_PART_SRCS plugin_jpeglossless.cpp transupp.cpp jpegtransform.cpp actionthread.cpp utils.cpp  imagerotate.cpp convert2grayscale.cpp imageflip.cpp)
+set(kipiplugin_jpeglossless_PART_SRCS plugin_jpeglossless.cpp transupp.cpp jpegtransform.cpp utils.cpp imagerotate.cpp convert2grayscale.cpp imageflip.cpp actionthread.cpp)
 
 kde4_automoc(${kipiplugin_jpeglossless_PART_SRCS})
 
