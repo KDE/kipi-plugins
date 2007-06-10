@@ -27,7 +27,7 @@
 
 // Qt includes.
 
-#include <QDir>
+#include <KUrl>
 
 // KDE includes.
 

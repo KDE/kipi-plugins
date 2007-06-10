@@ -26,7 +26,7 @@
 
 // Qt includes.
 
-#include <QPtrQueue>
+#include <QQueue>
 #include <QMutex>
 
 namespace KIPIJPEGLossLessPlugin
@@ -79,8 +79,8 @@ public:
 
 private:
 
-  QPtrQueue<Type> m_queue;
-  QMutex          m_mutex;
+  QQueue<Type> m_queue;
+  QMutex       m_mutex;
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin

@@ -70,9 +70,9 @@ ActionThread::~ActionThread()
     wait();
 }
 
-void ActionThread::rotate(const KURL::List& urlList, RotateAction val)
+void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
 {
-    for (KURL::List::const_iterator it = urlList.begin();
+    for (KUrl::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
         KIPI::ImageInfo info = m_interface->info( *it );
@@ -114,9 +114,9 @@ void ActionThread::rotate(const KURL::List& urlList, RotateAction val)
     }
 }
 
-void ActionThread::flip(const KURL::List& urlList, FlipAction val)
+void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
 {
-    for (KURL::List::const_iterator it = urlList.begin();
+    for (KUrl::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
         KIPI::ImageInfo info = m_interface->info( *it );
@@ -138,9 +138,9 @@ void ActionThread::flip(const KURL::List& urlList, FlipAction val)
     }
 }
 
-void ActionThread::convert2grayscale(const KURL::List& urlList)
+void ActionThread::convert2grayscale(const KUrl::List& urlList)
 {
-    for (KURL::List::const_iterator it = urlList.begin();
+    for (KUrl::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
         Task *t     = new Task;

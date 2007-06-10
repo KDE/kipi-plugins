@@ -55,7 +55,7 @@ public:
 protected:
 
     void customEvent(QCustomEvent *event);
-    KURL::List images();
+    KUrl::List images();
 
 private slots:
 
@@ -77,7 +77,7 @@ private:
     KActionMenu                          *m_action_RotateImage;
     KActionMenu                          *m_action_FlipImage;
 
-    KURL::List                            m_images;
+    KUrl::List                            m_images;
 
     KIPI::BatchProgressDialog            *m_progressDlg;
 

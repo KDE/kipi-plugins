@@ -35,6 +35,7 @@
 #include <kurl.h>
 
 // LibKipi includes.
+
 #include <libkipi/interface.h>
 
 // Local includes.
@@ -54,9 +55,9 @@ public:
     ActionThread( KIPI::Interface* interface, QObject *parent);
     ~ActionThread();
 
-    void rotate(const KURL::List& urlList, RotateAction val);
-    void flip(const KURL::List& urlList, FlipAction val);
-    void convert2grayscale(const KURL::List& urlList);
+    void rotate(const KUrl::List& urlList, RotateAction val);
+    void flip(const KUrl::List& urlList, FlipAction val);
+    void convert2grayscale(const KUrl::List& urlList);
     void cancel();
 
 protected:
