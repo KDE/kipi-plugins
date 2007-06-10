@@ -66,7 +66,7 @@ bool Utils::isRAW(const QString& file)
     QString rawFilesExt(raw_file_extentions);
 
     QFileInfo fileInfo(file);
-    if (rawFilesExt.toUpper().contains( fileInfo.suffix(false).toUpper() ))
+    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
         return true;
 
     return false;
@@ -77,10 +77,10 @@ bool Utils::CopyFile(const QString& src, const QString& dst)
     QFile sFile(src);
     QFile dFile(dst);
 
-    if ( !sFile.open(IO_ReadOnly) )
+    if ( !sFile.open(QIODevice::ReadOnly) )
         return false;
 
-    if ( !dFile.open(IO_WriteOnly) )
+    if ( !dFile.open(QIODevice::WriteOnly) )
     {
         sFile.close();
         return false;
@@ -89,10 +89,10 @@ bool Utils::CopyFile(const QString& src, const QString& dst)
     const int MAX_IPC_SIZE = (1024*32);
     char buffer[MAX_IPC_SIZE];
 
-    Q_LONG len;
-    while ((len = sFile.readBlock(buffer, MAX_IPC_SIZE)) != 0)
+    qint64 len;
+    while ((len = sFile.read(buffer, MAX_IPC_SIZE)) != 0)
     {
-        if (len == -1 || dFile.writeBlock(buffer, (Q_ULONG)len) == -1)
+        if (len == -1 || dFile.write(buffer, (qint64)len) == -1)
         {
             sFile.close();
             dFile.close();
@@ -115,7 +115,7 @@ bool Utils::MoveFile(const QString& src, const QString& dst)
                           << endl;
         return false;
     }
-    
+
     if (!CopyFile(src, dst))
         return false;
 
@@ -127,7 +127,7 @@ bool Utils::MoveFile(const QString& src, const QString& dst)
         kWarning( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to update dst time"
                           << endl;
     }
-    
+
     if (::unlink(QFile::encodeName(src).data()) != 0)
     {
         kWarning( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to unlink src"
@@ -144,28 +144,33 @@ bool Utils::deleteDir(const QString& dirPath)
 
     dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoSymLinks);
 
-    const QFileInfoList* infoList = dir.entryInfoList();
-    if (!infoList) 
+    QFileInfoList infoList = dir.entryInfoList();
+    if (infoList.isEmpty()) 
         return false;
 
-    QFileInfoListIterator it(*infoList);
-    QFileInfo* fi;
+    QFileInfoList::iterator it = infoList.begin();
+    QFileInfo fi;
 
-    while( (fi = it.current()) ) 
+    while( it != infoList.end() ) 
     {
-        ++it;
-        if(fi->fileName() == "." || fi->fileName() == ".." )
-            continue;
-
-        if( fi->isDir() ) 
+        fi = *it;
+        if(fi.fileName() == "." || fi.fileName() == ".." )
         {
-            deleteDir(fi->absFilePath());
+            ++it;
+            continue;
         }
-        else if( fi->isFile() )
-            dir.remove(fi->absFilePath());
+
+        if( fi.isDir() ) 
+        {
+            deleteDir(fi.absoluteFilePath());
+        }
+        else if( fi.isFile() )
+            dir.remove(fi.absoluteFilePath());
+
+        ++it;
     }
 
-    dir.rmdir(dir.absPath());
+    dir.rmdir(dir.absolutePath());
     return true;
 }
 
