@@ -64,7 +64,6 @@ private slots:
     void slotAdjustmentTypeChanged();
     void slotOk();
     void slotCancel();
-    void slotHelp();
     void slotResetDateToCurrent();
 
 private:
