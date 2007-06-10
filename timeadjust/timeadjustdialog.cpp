@@ -333,21 +333,21 @@ void TimeAdjustDialog::readSettings()
 void TimeAdjustDialog::saveSettings()
 {
     KConfig config("kipirc");
-    config.group("Time Adjust Settings");
+    KConfigGroup group = config.group(QString("Time Adjust Settings"));
 
     int adjType = 0;              // add
     if (d->subtract->isChecked()) adjType = 1;
     if (d->exif->isChecked())     adjType = 2;
     if (d->custom->isChecked())   adjType = 3;
-    config.writeEntry("Adjustment Type", adjType);
+    group.writeEntry("Adjustment Type", adjType);
 
-    config.writeEntry("Custom Date", d->dateCreatedSel->dateTime());
+    group.writeEntry("Custom Date", d->dateCreatedSel->dateTime());
 
-    config.writeEntry("Sync EXIF Date", d->syncEXIFDateCheck->isChecked());
-    config.writeEntry("Sync IPTC Date", d->syncIPTCDateCheck->isChecked());
+    group.writeEntry("Sync EXIF Date", d->syncEXIFDateCheck->isChecked());
+    group.writeEntry("Sync IPTC Date", d->syncIPTCDateCheck->isChecked());
 
-    KConfigGroup group = config.group(QString("Time Adjust Dialog"));
-    saveDialogSize(group);
+    KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
+    saveDialogSize(group2);
     config.sync();
 }
 
