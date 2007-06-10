@@ -9,7 +9,7 @@ kde4_automoc(${kipiplugin_jpeglossless_PART_SRCS})
 
 kde4_add_plugin(kipiplugin_jpeglossless ${kipiplugin_jpeglossless_PART_SRCS})
 
-target_link_libraries(kipiplugin_jpeglossless ${KDE4_KPARTS_LIBS} ${QT_AND_KDECORE_LIBS} ${KIPI_LIBRARIES} ${KEXIV2_LIBRARIES} ${QT_QT3SUPPORT_LIBRARY})
+target_link_libraries(kipiplugin_jpeglossless ${KDE4_KPARTS_LIBS} ${QT_AND_KDECORE_LIBS} ${KIPI_LIBRARIES} ${KEXIV2_LIBRARIES} ${QT_QT3SUPPORT_LIBRARY} ${JPEG_LIBRARY})
 
 install(TARGETS kipiplugin_jpeglossless DESTINATION ${PLUGIN_INSTALL_DIR})
 
