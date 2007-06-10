@@ -34,6 +34,7 @@ extern "C"
 // Qt includes.
 
 #include <QFileInfo>
+#include <QImageReader>
 #include <QImage>
 #include <QString>
 #include <QFile>
@@ -56,7 +57,7 @@ namespace KIPIJPEGLossLessPlugin
 
 bool Utils::isJPEG(const QString& file)
 {
-    QString format = QString(QImageIO::imageFormat(file)).upper();
+    QString format = QString(QImageReader::imageFormat(file)).toUpper();
     return format=="JPEG";
 }
 
@@ -65,7 +66,7 @@ bool Utils::isRAW(const QString& file)
     QString rawFilesExt(raw_file_extentions);
 
     QFileInfo fileInfo(file);
-    if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
+    if (rawFilesExt.toUpper().contains( fileInfo.suffix(false).toUpper() ))
         return true;
 
     return false;
