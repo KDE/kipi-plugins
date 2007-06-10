@@ -312,22 +312,21 @@ void TimeAdjustDialog::slotCancel()
 void TimeAdjustDialog::readSettings()
 {
     KConfig config("kipirc");
-    config.group("Time Adjust Settings");
+    KConfigGroup group = config.group(QString("Time Adjust Settings"));
 
-    int adjType = config.readNumEntry("Adjustment Type", 0);   // add by default.
+    int adjType = group.readEntry("Adjustment Type", 0);   // add by default.
     if (adjType == 0) d->add->setChecked(true);
     if (adjType == 1) d->subtract->setChecked(true);
     if (adjType == 2) d->exif->setChecked(true);
     if (adjType == 3) d->custom->setChecked(true);
 
-    QDateTime current = QDateTime::currentDateTime();
-    d->dateCreatedSel->setDateTime(config.readDateTimeEntry("Custom Date", &current));
+    d->dateCreatedSel->setDateTime(group.readEntry("Custom Date", QDateTime::currentDateTime()));
 
-    d->syncEXIFDateCheck->setChecked(config.readBoolEntry("Sync EXIF Date", true));
-    d->syncIPTCDateCheck->setChecked(config.readBoolEntry("Sync IPTC Date", true));
+    d->syncEXIFDateCheck->setChecked(group.readEntry("Sync EXIF Date", true));
+    d->syncIPTCDateCheck->setChecked(group.readEntry("Sync IPTC Date", true));
 
-    KConfigGroup group = config.group(QString("Time Adjust Dialog"));
-    restoreDialogSize(group);
+    KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
+    restoreDialogSize(group2);
 }
 
 void TimeAdjustDialog::saveSettings()
