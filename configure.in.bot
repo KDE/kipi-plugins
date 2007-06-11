@@ -30,7 +30,7 @@ fi
 if test "x$have_libkexiv2" != "xyes"; then
   echo "-- libkexiv2 library found........ NO"
   echo ""
-  echo "Kipi-Plugins needs libkexiv2 library >= 0.1. You need to install libkexiv2 first"
+  echo "Kipi-Plugins needs libkexiv2 library >= 0.1.5. You need to install libkexiv2 first"
   echo "libkexiv2 website is at http://www.kipi-plugins.org"
   echo ""
   all_tests=bad
@@ -41,7 +41,7 @@ fi
 if test "x$have_libkdcraw" != "xyes"; then
   echo "-- libkdcraw library found........ NO"
   echo ""
-  echo "Kipi-Plugins needs libkdcraw library >= 0.1. You need to install libkdcraw first"
+  echo "Kipi-Plugins needs libkdcraw library >= 0.1.1. You need to install libkdcraw first"
   echo "libkdcraw website is at http://www.kipi-plugins.org"
   echo ""
   all_tests=bad
