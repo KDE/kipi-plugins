@@ -1,25 +1,18 @@
 [Desktop Entry]
 Name=Clean Frames
-Name[de]=Saubern Sie Rahmen
-Name[el]=καθαρά πλαίσια
-Name[es]=Limpie los Marcos
-Name[et]=Puhas Raamid
-Name[is]=Hreinsa Rammi
-Name[it]=Pulisca le Strutture
-Name[pt]=Limpe Molduras
-Name[pt_BR]=Limpe Molduras
-Name[sv]=Rensa Ramar
+Name[de]=Saubere Rahmen
+Name[it]=Riquadri puliti
+Name[nds]=Kloor Rahmens
+Name[pt]=Molduras Simples
+Name[pt_BR]=Molduras Simples
+Name[sv]=Rena ramar
 Comment=A frame theme based on Ruediger Bente's frame theme
-Comment[de]=Ein Rahmen-Stil
-Comment[el]=Ένα θέμα καρέ
-Comment[es]=Un tema con marcos
-Comment[et]=Raamiteema
-Comment[is]=Þema með römmum
-Comment[it]=Un tema a riquadri
-Comment[nl]=Een frame-thema
-Comment[pt]=Um tema de molduras
-Comment[pt_BR]=Um tema de molduras
-Comment[sv]=Ett tema med ramar
+Comment[de]=Ein rahmenbasiertes Design das auf das Rahmendesign von Ruediger Bente basiert.
+Comment[it]=Un tema a riquadri basato sul tema a riquadri di Rüdiger Bente
+Comment[nds]=En Rahmenmuster, buut op Rüdiger Bente sien Rahmenmuster
+Comment[pt]=Um tema de molduras baseado no tema de Ruediger Bente
+Comment[pt_BR]=Um tema de molduras baseado no tema de Ruediger Bente
+Comment[sv]=Ett ramtema baserat på Ruediger Bentes ramtema
 
 [X-HTMLExport Author]
 Name=Elizabeth Marmorstein
@@ -27,6 +20,20 @@ Url=mailto:purplegamba@cox.net
 
 [X-HTMLExport Parameter style]
 Name=Style
+Name[br]=Giz
+Name[de]=Stil
+Name[el]=Στυλ
+Name[es]=Estilo
+Name[et]=Stiil
+Name[is]=Stíll
+Name[it]=Stile
+Name[nds]=Stil
+Name[nl]=Stijl
+Name[pt]=Estilo
+Name[pt_BR]=Estilo
+Name[sv]=Stil
+Name[xh]=Uhlobo
+Name[zu]=Uhlobo
 Type=list
 Default=pink.css
 Value_0=pink.css
