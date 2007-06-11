@@ -108,14 +108,15 @@ AutoConf    >= 2.5.x                        http://www.gnu.org/software/autoconf
 AutoMake    >= 1.7.x                        http://www.gnu.org/software/automake
 libqt       >= 3.3.x                        http://www.trolltech.com
 libkde      >= 3.4.x (>=3.5.x recommended)  http://www.kde.org
-imlib2      >= 1.1.0                        http://www.enlightenment.org/Libraries/Imlib2
 libgphoto2  >= 2.x   (>=2.2.x recommended)  http://www.gphoto.org
 libtiff     >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/libtiff
-libkexiv2   >= 0.1.2                        http://www.kipi-plugins.org
-libkdcraw   >= 0.1                          http://www.kipi-plugins.org
+libkipi     >= 0.1                          http://www.kipi-plugins.org
+libkexiv2   >= 0.1.5                        http://www.kipi-plugins.org
+libkdcraw   >= 0.1.1                        http://www.kipi-plugins.org
 libxslt     >= 1.1                          http://xmlsoft.org/XSLT
 libgpod     >= 0.4.2                        http://www.gtkpod.org/libgpod
 libkcal     >= 3.4.x                        http://pim.kde.org
+imlib2      >= 1.1.0                        http://www.enlightenment.org/Libraries/Imlib2
 ImageMagick >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
 MJPEGTools  >= 1.6.0 (runtime dependency)   http://mjpeg.sourceforge.net
 K3b         >= 0.11  (runtime dependency)   http://www.k3b.org
