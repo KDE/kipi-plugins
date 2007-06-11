@@ -1,3 +1,4 @@
+SUBDIRS = pics
 METASOURCES = AUTO
 INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(LIBKEXIV2_CFLAGS) $(LIBKDCRAW_CFLAGS) $(LIBKIPI_CFLAGS) $(all_includes)
 
@@ -26,5 +27,3 @@ kde_services_DATA = kipiplugin_jpeglossless.desktop
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_jpeglossless.pot
 
-kipijpeglosslessicondir = $(kde_datadir)/kipiplugin_jpeglossless/icons
-kipijpeglosslessicon_ICON = AUTO
