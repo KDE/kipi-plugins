@@ -1,5 +1,5 @@
 METASOURCES = AUTO
-SUBDIRS = profiles
+SUBDIRS = profiles pics
 
 INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(LIBKIPI_CFLAGS) $(LIBKEXIV2_CFLAGS) \
            $(LIBKDCRAW_CFLAGS) $(all_includes)
@@ -23,9 +23,6 @@ kipiplugin_rawconverter_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KD
 
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = kipiplugin_rawconverter.desktop
-
-kipirawconvertericondir = $(kde_datadir)/kipiplugin_rawconverter/icons
-kipirawconvertericon_ICON = AUTO
 
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_rawconverter.pot
