@@ -50,4 +50,4 @@ Comment[zh_CN]=KIPI 原始图像转换器
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_rawconverter
-author=Renchi Raju, renchi@pooh.tam.uiuc.edu
+author=Gilles Caulier, caulier dot gilles at gmail dot com
