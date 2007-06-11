@@ -1,3 +1,5 @@
+subdirs(pics)
+
 # enable final triggers: http://bugs.kde.org/show_bug.cgi?id=126326
 # digikam: camera download: auto-rotated images loose EXIF info ...
 # So make sure nofinal is always used here!
@@ -14,4 +16,3 @@ target_link_libraries(kipiplugin_jpeglossless ${KDE4_KPARTS_LIBS} ${QT_AND_KDECO
 install(TARGETS kipiplugin_jpeglossless DESTINATION ${PLUGIN_INSTALL_DIR})
 
 install(FILES kipiplugin_jpeglossless.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-kde4_install_icons ( ${ICON_INSTALL_DIR} )
