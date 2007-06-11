@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>KIPIMPEGEncoderPlugin::KImg2mpgBase</class>
 <widget class="QDialog">
     <property name="name">
@@ -11,7 +11,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>625</width>
+            <width>639</width>
             <height>521</height>
         </rect>
     </property>
@@ -40,6 +40,9 @@
             <width>0</width>
             <height>0</height>
         </size>
+    </property>
+    <property name="caption">
+        <string>Kimg2mpgBase</string>
     </property>
     <property name="sizeGripEnabled">
         <bool>false</bool>
@@ -863,7 +866,10 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                                 <pixmap>image1</pixmap>
                             </property>
                             <property name="scaledContents">
-                                <bool>true</bool>
+                                <bool>false</bool>
+                            </property>
+                            <property name="alignment">
+                                <set>AlignCenter</set>
                             </property>
                             <property name="whatsThis" stdset="0">
                                 <string>Preview the currently selected image.</string>
