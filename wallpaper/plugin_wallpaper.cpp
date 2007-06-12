@@ -188,7 +188,7 @@ void Plugin_WallPaper::setWallpaper(int layout)
    QString cmd = QString("dcop kdesktop KBackgroundIface setWallpaper '%1' %2")
                          .arg(path).arg(layout);
 
-   KRun::runCommand(cmd);
+   KRun::runCommand(cmd,0L);
 }
 
 KIPI::Category  Plugin_WallPaper::category( KAction* action ) const
