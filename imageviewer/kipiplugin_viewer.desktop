@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=Viewer
 Name[br]=Gweler
+Name[ca]=Visualitzador
 Name[de]=Betrachter
 Name[el]=Προβολέας
 Name[es]=Visor
@@ -14,6 +15,7 @@ Name[pt]=Visualizador
 Name[pt_BR]=Visualizador
 Name[sv]=Visning
 Comment=KIPI OpenGL Image Viewer
+Comment[ca]=Visualitzador d'imatges OpenGL del KIPI
 Comment[de]=Ein KIPI-Modul zum betrachten von Bildern mittels OpenGL
 Comment[el]=Προβολέας εικόνων OpenGL των KIPI
 Comment[es]=Visor KIPI de imágenes OpenGL

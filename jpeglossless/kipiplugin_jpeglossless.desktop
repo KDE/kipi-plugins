@@ -21,6 +21,7 @@ Name[tr]=KayıpsızJPEG
 Name[xx]=xxJPEGLosslessxx
 Name[zh_CN]=JPEG 无损
 Comment=KIPI JPEG Lossless Plugin
+Comment[ca]=Connector del KIPI pel JPEG sense pèrdua
 Comment[cs]=KIPI modul bezztrátového JPEGu
 Comment[da]=KIPI-plugin: Tabsfri JPEG
 Comment[de]=Ein KIPI-Modul zur verlustlosen Bearbeitung von JPEG-Bildern

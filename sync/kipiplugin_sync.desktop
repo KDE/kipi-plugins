@@ -8,6 +8,7 @@ Name[pl]=Synchronizacja
 Name[pt]=Sincronização
 Name[sv]=Synkronisering
 Comment=KIPI Synchronization Plugin
+Comment[ca]=Connector del KIPI de sincronització
 Comment[da]=KIPI Synkroniserings-plugin
 Comment[de]=Ein KIPI-Modul zur Synchronisation
 Comment[el]=Πρόσθετο συγχρονισμού του KIPI

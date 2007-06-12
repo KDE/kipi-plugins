@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Classic
 Comment=A port of the old HTML Export plugin theme
+Comment[ca]=Un port de l'antic tema del connector d'exportació a HTML
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
@@ -9,10 +10,12 @@ Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter bgColor]
 Name=Background Color
+Name[ca]=Color de fons
 Type=color
 Default=#333333
 
 [X-HTMLExport Parameter fgColor]
 Name=Foreground Color
+Name[ca]=Color de primer pla
 Type=color
 Default=#d0ffd0
