@@ -44,6 +44,7 @@
 
 #include "plugin_wallpaper.h"
 #include "plugin_wallpaper.moc"
+#include "kdesktop_interface.h"
 
 typedef KGenericFactory<Plugin_WallPaper> Factory;
 
@@ -184,11 +185,11 @@ void Plugin_WallPaper::setWallpaper(int layout)
       if (path.isNull()) return;
       KIO::NetAccess::download(url, path, 0L);
    }
-
-   QString cmd = QString("dcop kdesktop KBackgroundIface setWallpaper '%1' %2")
-                         .arg(path).arg(layout);
-
-   KRun::runCommand(cmd,0L);
+   //TODO verify when we change it with plasma
+   OrgKdeKdesktopBackgroundInterface desktopInterface("org.kde.kdesktop", "/Background", QDBusConnection::sessionBus());
+   QDBusReply<void> reply = desktopInterface.setWallpaper(path,layout);
+   if(!reply.isValid())
+	KMessageBox::information(0L,i18n("Change Background"),i18n("We can not change background."));
 }
 
 KIPI::Category  Plugin_WallPaper::category( KAction* action ) const
