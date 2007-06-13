@@ -34,6 +34,8 @@
 #include <qtabwidget.h>
 #include <qcolor.h>
 #include <qnamespace.h>
+#include <qlistbox.h>
+#include <qfileinfo.h>
 
 // Kde includes.
 
@@ -48,10 +50,13 @@
 #include <kstandarddirs.h>
 #include <kfontdialog.h>
 #include <kcolorbutton.h>
+#include <kio/previewjob.h>
+#include <kurl.h>
 
 // libkipi includes
 
 #include <libkipi/interface.h>
+#include <libkipi/imagedialog.h>
 
 // Common includes.
 
@@ -60,6 +65,7 @@
 
 // Local includes
 
+#include "listimageitems.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowconfig.h"
@@ -68,7 +74,9 @@
 namespace KIPISlideShowPlugin
 {
 
-SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const char* name, bool ImagesHasComments)
+SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * interface, 
+                                 QWidget *parent, const char* name, bool ImagesHasComments,
+                                 KURL::List *urlList)
     :SlideShowConfigBase(parent, name) 
 {
     // About data and help button.
@@ -94,7 +102,6 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const 
 
     m_selectedFilesButton->setEnabled( allowSelectedOnly );
 
-    
     m_delayMsMaxValue = 100000;
     m_delayMsMinValue = 100;
     m_delayMsLineStep = 10;
@@ -103,14 +110,34 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const 
     m_delaySpinBox->setMaxValue(m_delayMsMaxValue);
     m_delaySpinBox->setLineStep(m_delayMsLineStep); 
     
+    m_interface = interface;
+    
     // Signal to Slot connections
 
-    connect(m_openglCheckBox, SIGNAL(toggled(bool)), SLOT(slotOpenGLToggled()));
+    connect(m_openglCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotOpenGLToggled()));
     connect(m_buttonStart, SIGNAL(clicked()), this, SLOT(slotStartClicked()));
     connect(m_printCommentsCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotPrintCommentsToggled()));
     connect(m_commentsFontColor, SIGNAL(changed(const QColor &)), this, SLOT(slotCommentsFontColorChanged()));
     connect(m_commentsBgColor, SIGNAL(changed(const QColor &)), this, SLOT(slotCommentsBgColorChanged()));
     connect(m_useMillisecondsCheckBox, SIGNAL(toggled(bool)), SLOT(slotUseMillisecondsToggled()));
+    connect(m_delaySpinBox, SIGNAL(valueChanged(int)), this, SLOT(slotDelayChanged()));
+
+    connect(m_fileSrcButtonGroup, SIGNAL(clicked(int)), this, SLOT(slotSelection()));
+
+    connect( m_ImagesFilesListBox, SIGNAL( currentChanged( QListBoxItem * ) ),
+             this, SLOT( slotImagesFilesSelected(QListBoxItem *) ) );
+    connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(KURL::List) ),
+            this, SLOT( slotAddDropItems(KURL::List)));
+    connect( m_ImagesFilesButtonAdd, SIGNAL( clicked() ),
+             this, SLOT( slotImagesFilesButtonAdd() ) );
+    connect( m_ImagesFilesButtonDelete, SIGNAL( clicked() ),
+             this, SLOT( slotImagesFilesButtonDelete() ) );
+    connect( m_ImagesFilesButtonUp, SIGNAL( clicked() ),
+             this, SLOT( slotImagesFilesButtonUp() ) );
+    connect( m_ImagesFilesButtonDown, SIGNAL( clicked() ),
+             this, SLOT( slotImagesFilesButtonDown() ) );
+    
+    m_thumbJob = 0L;
     
     // Configuration file management 
 
@@ -131,13 +158,17 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const 
         m_printCommentsCheckBox->setEnabled(FALSE);
         m_tabWidget->setTabEnabled(commentsTab, FALSE);
     }
+    
+    m_urlList = urlList;
+    
+    slotSelection();
 }
+
 
 SlideShowConfig::~SlideShowConfig()
 {
-    if (m_config) {
-        delete m_config;
-    }
+    if ( m_thumbJob )   delete m_thumbJob;
+    if ( m_config )     delete m_config;
 }
 
 
@@ -162,6 +193,7 @@ void SlideShowConfig::loadEffectNames()
     }
 }
 
+
 void SlideShowConfig::loadEffectNamesGL()
 {
     m_effectsComboBox->clear();
@@ -182,6 +214,7 @@ void SlideShowConfig::loadEffectNamesGL()
         }
     }
 }
+
 
 void SlideShowConfig::readSettings()
 {
@@ -260,6 +293,7 @@ void SlideShowConfig::readSettings()
 
     slotOpenGLToggled();
 }
+
 
 void SlideShowConfig::saveSettings()
 {
@@ -342,20 +376,61 @@ void SlideShowConfig::saveSettings()
     m_config->sync();
 }
 
+
+void SlideShowConfig::addItems(const KURL::List& fileList)
+{
+    if (fileList.isEmpty()) return;
+    KURL::List Files = fileList;
+
+    for ( KURL::List::Iterator it = Files.begin() ; it != Files.end() ; ++it )
+    {
+        KURL currentFile = *it;
+
+        QFileInfo fi(currentFile.path());
+        QString Temp = fi.dirPath();
+        QString albumName = Temp.section('/', -1);
+
+        KIPI::ImageInfo info = m_interface->info(currentFile);
+        QString comments = info.description();
+
+        ImageItem *item = new ImageItem( m_ImagesFilesListBox,
+                                         currentFile.path().section('/', -1 ),   // File name with extension.
+                                                 comments,                               // Image comments.
+                                                         currentFile.path().section('/', 0, -1), // Complete path with file name.
+                                                                 albumName                               // Album name.
+                                       );
+
+        item->setName( currentFile.path().section('/', -1) );
+    }
+
+    ShowNumberImages( m_ImagesFilesListBox->count() );
+    m_ImagesFilesListBox->setCurrentItem( m_ImagesFilesListBox->count()-1) ;
+    slotImagesFilesSelected(m_ImagesFilesListBox->item(m_ImagesFilesListBox->currentItem()));
+    m_ImagesFilesListBox->centerCurrentItem();
+}
+
+
+
+// ============================= SLOTS ===========================================
+
+
 void SlideShowConfig::slotCommentsBgColorChanged()
 {
     m_commentsFontChooser->setBackgroundColor(m_commentsBgColor->color());
 }
+
 
 void SlideShowConfig::slotCommentsFontColorChanged()
 {
     m_commentsFontChooser->setColor(m_commentsFontColor->color());
 }
 
+
 void SlideShowConfig::slotPrintCommentsToggled()
 {
     m_tabWidget->setTabEnabled(commentsTab, m_printCommentsCheckBox->isChecked());
 }
+
 
 void SlideShowConfig::slotUseMillisecondsToggled()
 {
@@ -384,6 +459,7 @@ void SlideShowConfig::slotUseMillisecondsToggled()
     }
 }
 
+
 void SlideShowConfig::slotOpenGLToggled()
 {
     if (m_openglCheckBox->isChecked()) {
@@ -392,20 +468,272 @@ void SlideShowConfig::slotOpenGLToggled()
     else {
         loadEffectNames();
     }
+    
+    ShowNumberImages( m_ImagesFilesListBox->count() );
 }
+
+
+void SlideShowConfig::slotDelayChanged()
+{
+    ShowNumberImages( m_ImagesFilesListBox->count() );
+}
+
+
+void SlideShowConfig::slotSelection()
+{
+    KURL::List urlList;
+    if (m_selectedFilesButton->isChecked())
+    {
+        urlList = m_interface->currentSelection().images();
+        
+        m_ImagesFilesButtonAdd->setEnabled(FALSE);
+        m_ImagesFilesButtonDelete->setEnabled(FALSE);
+        m_ImagesFilesButtonUp->setEnabled(FALSE);
+        m_ImagesFilesButtonDown->setEnabled(FALSE);
+    }   
+    else
+        if (m_allFilesButton->isChecked())
+        {
+            KURL currentPath = m_interface->currentAlbum().path();
+            QValueList<KIPI::ImageCollection> albumList;
+            albumList = m_interface->allAlbums();
+            QValueList<KIPI::ImageCollection>::iterator it;
+    
+            urlList = m_interface->currentAlbum().images();
+            for ( it = albumList.begin(); it != albumList.end(); ++it )
+                if (currentPath.isParentOf((*it).path()) && !((*it).path() == currentPath))
+                    urlList += (*it).images();
+            
+            m_ImagesFilesButtonAdd->setEnabled(FALSE);
+            m_ImagesFilesButtonDelete->setEnabled(FALSE);
+            m_ImagesFilesButtonUp->setEnabled(FALSE);
+            m_ImagesFilesButtonDown->setEnabled(FALSE);
+        }
+     
+    if ( m_customButton->isChecked() )    // Custom selected
+    {
+        m_ImagesFilesButtonAdd->setEnabled(TRUE);
+        m_ImagesFilesButtonDelete->setEnabled(TRUE);
+        m_ImagesFilesButtonUp->setEnabled(TRUE);
+        m_ImagesFilesButtonDown->setEnabled(TRUE);
+    }
+    else
+    {
+        if (!urlList.isEmpty()) 
+        {
+            m_ImagesFilesListBox->clear();
+            addItems(urlList);
+        }
+    }
+}
+
+
+void SlideShowConfig::slotImagesFilesSelected( QListBoxItem *item )
+{
+    
+    if ( !item || m_ImagesFilesListBox->count() == 0 )
+    {
+        m_label7->setText("");
+        m_ImageLabel->clear();
+        return;
+    }
+
+    ImageItem *pitem = static_cast<ImageItem*>( item );
+
+    if ( !pitem ) return;
+
+    KURL url;
+    url.setPath(pitem->path());
+
+    m_ImageLabel->clear();
+
+    if ( m_thumbJob ) delete m_thumbJob;
+
+    m_thumbJob = KIO::filePreview( url, m_ImageLabel->width() );
+
+    connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
+    connect(m_thumbJob, SIGNAL(failed(const KFileItem*)),
+            SLOT(slotFailedPreview(const KFileItem*)));
+
+    int index = m_ImagesFilesListBox->index ( item );
+    m_label7->setText(i18n("Image no. %1").arg(index + 1));
+}
+
+
+void SlideShowConfig::slotAddDropItems(KURL::List filesUrl)
+{
+    addItems(filesUrl);
+}
+
+
+void SlideShowConfig::slotImagesFilesButtonAdd( void )
+{
+    KURL::List ImageFilesList =
+            KIPI::ImageDialog::getImageURLs( this, m_interface );
+    if ( !ImageFilesList.isEmpty() )
+        addItems( ImageFilesList );
+}
+
+
+void SlideShowConfig::slotImagesFilesButtonDelete( void )
+{
+    for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
+    {
+        if (m_ImagesFilesListBox->isSelected(i))
+        {
+            m_ImagesFilesListBox->removeItem(i);
+            m_ImagesFilesListBox->setCurrentItem(i);
+            --i;
+        }
+    }
+
+    m_ImagesFilesListBox->setSelected(m_ImagesFilesListBox->item(m_ImagesFilesListBox->currentItem()), true);
+    slotImagesFilesSelected(m_ImagesFilesListBox->item(m_ImagesFilesListBox->currentItem()));
+    ShowNumberImages( m_ImagesFilesListBox->count() );
+}
+
+
+void SlideShowConfig::slotImagesFilesButtonUp( void )
+{
+    int Cpt = 0;
+
+    for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
+        if (m_ImagesFilesListBox->isSelected(i))
+            ++Cpt;
+
+    if  (Cpt == 0)
+        return;
+
+    if  (Cpt > 1)
+    {
+        KMessageBox::error(this, i18n("You can only move up one image file at once."));
+        return;
+    }
+
+    unsigned int Index = m_ImagesFilesListBox->currentItem();
+
+    if (Index == 0)
+        return;
+
+    ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(Index) );
+    QString path(pitem->path());
+    QString comment(pitem->comments());
+    QString name(pitem->name());
+    QString album(pitem->album());
+    m_ImagesFilesListBox->removeItem(Index);
+    ImageItem *item = new ImageItem( 0, name, comment, path, album );
+    item->setName( name );
+    m_ImagesFilesListBox->insertItem(item, Index-1);
+    m_ImagesFilesListBox->setSelected(Index-1, true);
+    m_ImagesFilesListBox->setCurrentItem(Index-1);
+}
+
+
+void SlideShowConfig::slotImagesFilesButtonDown( void )
+{
+    int Cpt = 0;
+
+    for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
+        if (m_ImagesFilesListBox->isSelected(i))
+            ++Cpt;
+
+    if (Cpt == 0)
+        return;
+
+    if (Cpt > 1)
+    {
+        KMessageBox::error(this, i18n("You can only move down one image file at once."));
+        return;
+    }
+
+    unsigned int Index = m_ImagesFilesListBox->currentItem();
+
+    if (Index == m_ImagesFilesListBox->count())
+        return;
+
+    ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(Index) );
+    QString path(pitem->path());
+    QString comment(pitem->comments());
+    QString name(pitem->name());
+    QString album(pitem->name());
+    m_ImagesFilesListBox->removeItem(Index);
+    ImageItem *item = new ImageItem( 0, name, comment, path, album );
+    item->setName( name );
+    m_ImagesFilesListBox->insertItem(item, Index+1);
+    m_ImagesFilesListBox->setSelected(Index+1, true);
+    m_ImagesFilesListBox->setCurrentItem(Index+1);
+}
+
+
+void SlideShowConfig::ShowNumberImages( int Number )
+{
+    QTime TotalDuration (0, 0, 0);
+    
+    int TransitionDuration = 2000;
+    
+    if ( m_openglCheckBox->isChecked() )
+        TransitionDuration += 500;
+    
+    if ( m_useMillisecondsCheckBox->isChecked() )
+        TotalDuration = TotalDuration.addMSecs(Number * m_delaySpinBox->text().toInt());
+    else
+        TotalDuration = TotalDuration.addSecs(Number * m_delaySpinBox->text().toInt());
+    
+    TotalDuration = TotalDuration.addMSecs((Number-1)*TransitionDuration);
+
+    if ( Number < 2)
+        m_label6->setText(i18n("%1 image [%2]").arg(Number).arg(TotalDuration.toString()));
+    else
+        m_label6->setText(i18n("%1 images [%2]").arg(Number).arg(TotalDuration.toString()));
+}
+
+
+void SlideShowConfig::slotGotPreview(const KFileItem*, const QPixmap &pixmap)
+{
+    m_ImageLabel->setPixmap(pixmap);
+    m_thumbJob = 0L;
+}
+
+
+void SlideShowConfig::slotFailedPreview(const KFileItem*)
+{
+    m_thumbJob = 0L;
+}
+
+
+void SlideShowConfig::SlotPortfolioDurationChanged ( int )
+{
+    ShowNumberImages( m_ImagesFilesListBox->count() );
+}
+
 
 void SlideShowConfig::slotStartClicked()
 {
     saveSettings();
 
+    for (uint i=0 ; i < m_ImagesFilesListBox->count() ; ++i)
+    {
+        ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(i) );
+        if (!QFile::exists(pitem->path()))
+        {
+            KMessageBox::error(this,
+                               i18n("Cannot access to file %1, please check the path is right.").arg(pitem->path()));
+            return;
+        }
+        m_urlList->append(pitem->path());                              // Input images files.
+    }
+    
     emit buttonStartClicked();
 }
+
 
 void SlideShowConfig::slotHelp()
 {
     KApplication::kApplication()->invokeHelp("slideshow",
                                              "kipi-plugins");
 }
+
 
 }  // NameSpace KIPISlideShowPlugin
 

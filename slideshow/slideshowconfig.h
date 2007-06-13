@@ -25,10 +25,18 @@
 // Qt includes.
 
 #include <qstring.h>
+#include <qlistbox.h>
 
 // KDE includes
 
 #include <kconfig.h>
+#include <kio/previewjob.h>
+#include <kurl.h>
+
+// libkipi includes
+
+#include <libkipi/imagedialog.h>
+#include <libkipi/interface.h>
 
 // SlideShow includes
 
@@ -37,14 +45,16 @@
 
 namespace KIPISlideShowPlugin
 {
-
+    
 class SlideShowConfig : public SlideShowConfigBase
 {
     Q_OBJECT
 
 public:
 
-    SlideShowConfig(bool allowSelectedOnly, QWidget *parent, const char* name, bool ImagesHasComments);
+    SlideShowConfig(bool allowSelectedOnly, KIPI::Interface* interface,
+                    QWidget *parent, const char* name, bool ImagesHasComments,
+                    KURL::List* urlList);
     ~SlideShowConfig();
 
 private:
@@ -53,6 +63,9 @@ private:
     void loadEffectNamesGL();
     void readSettings();
     void saveSettings();
+    
+    void ShowNumberImages( int Number );
+    void addItems(const KURL::List& fileList);
 
     int m_delayMsMaxValue;
     int m_delayMsMinValue;
@@ -62,16 +75,36 @@ private:
     
     QString     m_effectName;
     QString     m_effectNameGL;
-
+    
+    KIO::PreviewJob*      m_thumbJob;
+    KURL::List*           m_urlList;
+    
+    KIPI::Interface*      m_interface;
+    
+    
 private slots:
 
     void slotStartClicked();
     void slotHelp();
     void slotOpenGLToggled();
+    void slotDelayChanged();
     void slotUseMillisecondsToggled();
     void slotPrintCommentsToggled();
     void slotCommentsFontColorChanged();
     void slotCommentsBgColorChanged();
+    
+    void slotSelection();
+    
+    void SlotPortfolioDurationChanged ( int );
+    void slotImagesFilesSelected( QListBoxItem *item );
+    void slotAddDropItems(KURL::List filesUrl);
+    void slotImagesFilesButtonAdd( void );
+    void slotImagesFilesButtonDelete( void );
+    void slotImagesFilesButtonUp( void );
+    void slotImagesFilesButtonDown( void );
+    void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
+    void slotFailedPreview(const KFileItem*);
+
 
 signals:
     void buttonStartClicked(); // Signal needed by plugin_slideshow class

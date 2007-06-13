@@ -22,9 +22,14 @@
 #ifndef PLUGIN_SLIDESHOW_H
 #define PLUGIN_SLIDESHOW_H
 
+// KDE includes
+
+#include <kurl.h>
+
 // libKIPI includes.
 
 #include <libkipi/plugin.h>
+#include <libkipi/interface.h>
 
 class KAction;
 
@@ -53,7 +58,9 @@ private slots:
 
 private:
 
-    KAction *m_actionSlideShow;
+    KAction*         m_actionSlideShow;
+    KIPI::Interface* m_interface;
+    KURL::List*      m_urlList;
 
     bool m_imagesHasComments;
 };

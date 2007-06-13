@@ -9,7 +9,7 @@ kde_module_LTLIBRARIES = kipiplugin_slideshow.la
 kipiplugin_slideshow_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKDCRAW_LIBS_DEP) 
 
 kipiplugin_slideshow_la_SOURCES = plugin_slideshow.cpp slideshow.cpp \
-	slideshowconfig.cpp imlibiface.cpp slideshowgl.cpp toolbar.cpp slideshowconfigbase.ui
+	slideshowconfig.cpp imlibiface.cpp slideshowgl.cpp toolbar.cpp slideshowconfigbase.ui listimageitems.cpp
 
 #kipiplugin_slideshow_la_LIBADD = -lkdefx $(LIB_IMLIB2) $(GL_LIBS) $(LIBKIPI_LIBS) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 kipiplugin_slideshow_la_LIBADD = -lkdefx -lImlib2 $(GL_LIBS) $(LIBKIPI_LIBS) $(LIBKDCRAW_LIBS)  \

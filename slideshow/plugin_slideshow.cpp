@@ -76,17 +76,17 @@ void Plugin_SlideShow::setup( QWidget* widget )
                                      actionCollection(),
                                      "slideshow");
 
-    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+    m_interface = dynamic_cast< KIPI::Interface* >( parent() );
     
-    if ( !interface ) 
+    if ( !m_interface ) 
     {
-       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       kdError( 51000 ) << "Kipi m_interface is null!" << endl;
        return;
     }
 
     m_actionSlideShow->setEnabled( false );
     
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
+    connect( m_interface, SIGNAL( currentAlbumChanged( bool ) ),
              SLOT( slotAlbumChanged( bool ) ) );
 
     addAction( m_actionSlideShow );
@@ -95,32 +95,36 @@ void Plugin_SlideShow::setup( QWidget* widget )
 
 Plugin_SlideShow::~Plugin_SlideShow()
 {
+    if (m_urlList)
+        delete m_urlList;
 }
 
 
 void Plugin_SlideShow::slotActivate()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !interface ) 
+    if ( !m_interface ) 
     {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        kdError( 51000 ) << "Kipi m_interface is null!" << endl;
         return;
     }
 
     bool allowSelectedOnly = true;
 
-    KIPI::ImageCollection currSel = interface->currentSelection();
+    KIPI::ImageCollection currSel = m_interface->currentSelection();
     if ( !currSel.isValid() || currSel.images().isEmpty() )
     {
         allowSelectedOnly = false;
     }
 
-    m_imagesHasComments = interface->hasFeature(KIPI::ImagesHasComments);
+    m_imagesHasComments = m_interface->hasFeature(KIPI::ImagesHasComments);
 
+    m_urlList = new KURL::List();
+    
     KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
-            = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, kapp->activeWindow(), i18n("Slide Show").ascii(),
-                                                        m_imagesHasComments);
+            = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, m_interface,kapp->activeWindow(), 
+                                                        i18n("Slide Show").ascii(), m_imagesHasComments,
+                                                        m_urlList);
 
     connect(slideShowConfig, SIGNAL(buttonStartClicked()),
              this, SLOT(slotSlideShow()));
@@ -136,15 +140,15 @@ void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
         return;
     }
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-    if ( !interface ) 
+    KIPI::Interface* m_interface = dynamic_cast<KIPI::Interface*>( parent() );
+    if ( !m_interface ) 
     {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        kdError( 51000 ) << "Kipi m_interface is null!" << endl;
         m_actionSlideShow->setEnabled( false );
         return;
     }
 
-    KIPI::ImageCollection currAlbum = interface->currentAlbum();
+    KIPI::ImageCollection currAlbum = m_interface->currentAlbum();
     if ( !currAlbum.isValid() )
     {
         kdError( 51000 ) << "Current image collection is not valid." << endl;
@@ -157,11 +161,10 @@ void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
 
 void Plugin_SlideShow::slotSlideShow()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !interface ) 
+    if ( !m_interface ) 
     {
-           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           kdError( 51000 ) << "Kipi m_interface is null!" << endl;
            return;
     }
 
@@ -169,31 +172,14 @@ void Plugin_SlideShow::slotSlideShow()
      
     bool    opengl;
     bool    shuffle;
-    bool    showSelectedFilesOnly;
     
     config.setGroup("SlideShow Settings");
     opengl                = config.readBoolEntry("OpenGL");
     shuffle               = config.readBoolEntry("Shuffle");
-    showSelectedFilesOnly = config.readBoolEntry("Show Selected Files Only");
 
+    if ( !m_urlList ) {kdDebug() << "ERRORE m_urlList NON ALLOCATO!!!"; return;}
 
-    KURL::List urlList;
-    if (showSelectedFilesOnly)
-        urlList = interface->currentSelection().images();
-    else
-    {
-        KURL currentPath = interface->currentAlbum().path();
-        QValueList<KIPI::ImageCollection> albumList;
-        albumList = interface->allAlbums();
-        QValueList<KIPI::ImageCollection>::iterator it;
-
-        urlList = interface->currentAlbum().images();
-        for ( it = albumList.begin(); it != albumList.end(); ++it )
-            if (currentPath.isParentOf((*it).path()) && !((*it).path() == currentPath))
-                urlList += (*it).images();
-    }
-
-    if ( urlList.isEmpty() )
+    if ( m_urlList->isEmpty() )
     {
         KMessageBox::sorry(kapp->activeWindow(), i18n("There are no images to show."));
 	return;
@@ -204,13 +190,15 @@ void Plugin_SlideShow::slotSlideShow()
     FileList fileList;
     QStringList commentsList;
 
-    for( KURL::List::Iterator urlIt = urlList.begin(); urlIt != urlList.end(); ++urlIt )
+    for( KURL::List::Iterator urlIt = m_urlList->begin(); urlIt != m_urlList->end(); ++urlIt )
     {
-        KIPI::ImageInfo info = interface->info( *urlIt );
+        KIPI::ImageInfo info = m_interface->info( *urlIt );
         fileList.append( FileAnglePair((*urlIt).path(), info.angle()) );
         commentsList.append(info.description());
     }
 
+    m_urlList->clear();
+    
     if (shuffle)
     {
         struct timeval tv;
