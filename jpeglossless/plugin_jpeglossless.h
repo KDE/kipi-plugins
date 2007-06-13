@@ -29,7 +29,6 @@
 #include <libkipi/plugin.h>
 #include <libkipi/imagecollection.h>
 
-class QCustomEvent;
 
 class KActionMenu;
 class KAction;
@@ -37,7 +36,6 @@ class KAction;
 namespace KIPIJPEGLossLessPlugin
 {
 class ActionThread;
-class ProgressDlg;
 }
 
 class Plugin_JPEGLossless : public KIPI::Plugin
