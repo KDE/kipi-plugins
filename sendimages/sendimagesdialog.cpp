@@ -210,6 +210,11 @@ void SendImagesDialog::readSettings(void)
         m_addComments->setChecked( true );
     else
         m_addComments->setChecked( false );
+
+    if (config.readEntry("Comment2ImageName", "true") == "true")
+        m_comment2ImageName->setChecked( true );
+    else
+        m_comment2ImageName->setChecked( false );
 }
 
 void SendImagesDialog::writeSettings(void)
@@ -225,7 +230,8 @@ void SendImagesDialog::writeSettings(void)
     config.writeEntry("ImageResize", m_imagesResize->currentItem());
     config.writeEntry("ImageCompression", m_imageCompression->value());
     config.writeEntry("ImageFormat", m_imagesFormat->currentText());
-    config.writeEntry("AttachmentLimit", m_attachmentlimit->value());	
+    config.writeEntry("AttachmentLimit", m_attachmentlimit->value());
+    config.writeEntry("Comment2ImageName", m_comment2ImageName->isChecked());
     config.sync();
 }
 
@@ -412,6 +418,8 @@ void SendImagesDialog::setupEmailOptions(void)
     QWhatsThis::add( m_addComments, i18n("<p>If you enable this option, all images comments and tags "
                                          "will be added as an attached file.") );
     vlay->addWidget( m_addComments );
+    m_comment2ImageName = new QCheckBox( i18n("Generate new filenames from image comments (if comment available)"), page_setupEmailOptions);
+    vlay->addWidget( m_comment2ImageName );
 
     //---------------------------------------------
 

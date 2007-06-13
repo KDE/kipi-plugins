@@ -155,19 +155,20 @@ void SendImages::run()
         QString imageFileName="";
         
         KIPI::ImageInfo info = m_interface->info( *it );
+
+        ///Generate filename of destination image
         QString commentItem = info.description();
 
-            if ( commentItem.isEmpty() )
-            {
+        if ((m_sendImagesDialog->m_comment2ImageName->isChecked() == true ) && 
+                !commentItem.isEmpty() )
+        {
+                qDebug("commentItem: %s",commentItem.ascii());
+        }
+        else {
                 commentItem = ItemName.left(ItemName.findRev('.'));
                 qDebug("commentItem is empty");
-            }
-            else
-            {
-                qDebug("commentItem: %s",commentItem.ascii());
-            }
-        
-        
+        }
+
         //QString TempFileName             = (*it).directory().section('/', -1);
         QString TempFileName=(*it).path().section('/', -2,-2)+"/"+commentItem+
                              +"."+(*it).path().section('.', -1,-1);
@@ -179,8 +180,8 @@ void SendImages::run()
         // and these characters are better eliminated, too ;-)
         TempFileName.replace(QChar(','), "_").replace(QChar(' '), "_");
         TempFileName.replace(QChar(';'), "_").replace(QChar('%'), "_");
-        TempFileName.replace(QChar('/'), "-");
-
+        TempFileName.replace(QChar('/'), "-").replace(QChar('?'), "");
+        TempFileName.replace(QChar('"'), "");
         //If TempFileName already exists, add a number oder increase number
         if (entry_already_exists(m_filesSendList,m_tmp + TempFileName))
         {

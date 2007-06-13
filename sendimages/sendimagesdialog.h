@@ -97,6 +97,7 @@ public:
    QComboBox      *m_mailAgentName;
 
    QCheckBox      *m_addComments;
+   QCheckBox      *m_comment2ImageName;
    QCheckBox      *m_changeImagesProp;
              
    KURLRequester  *m_ThunderbirdBinPath;
