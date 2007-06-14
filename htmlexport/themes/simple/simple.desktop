@@ -43,7 +43,6 @@ Comment[zh_CN]=简洁明快的主题
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
-Name[ja]=Aurelien Gateau
 Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter style]
@@ -55,6 +54,7 @@ Name[es]=Estilo
 Name[et]=Stiil
 Name[is]=Stíll
 Name[it]=Stile
+Name[ja]=スタイル
 Name[nds]=Stil
 Name[nl]=Stijl
 Name[pt]=Estilo

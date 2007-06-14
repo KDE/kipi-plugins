@@ -1,21 +1,44 @@
 [Desktop Entry]
 Name=Classic
+Name[it]=Classico
+Name[ja]=クラシック
+Name[nl]=Klassiek
+Name[pt]=Clássico
+Name[pt_BR]=Clássico
+Name[sv]=Klassiskt
 Comment=A port of the old HTML Export plugin theme
 Comment[ca]=Un port de l'antic tema del connector d'exportació a HTML
+Comment[it]=Un trasferimento del vecchio tema di esportazione HTML
+Comment[ja]=以前の HTML エクスポートプラグインから移植したテーマ
+Comment[nl]=Het klassieke thema van de HTML-exportplugin
+Comment[pt]=Uma versão do antigo tema de Exportação para HTML
+Comment[pt_BR]=Uma versão do antigo tema de Exportação para HTML
+Comment[sv]=En överföring av det gamla temat för insticksprogrammet HTML-export
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
-Name[ja]=Aurelien Gateau
 Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter bgColor]
 Name=Background Color
 Name[ca]=Color de fons
+Name[it]=Colore di sfondo
+Name[ja]=背景色
+Name[nl]=Achtergrondkleur
+Name[pt]=Cor de Fundo
+Name[pt_BR]=Cor de Fundo
+Name[sv]=Bakgrundsfärg
 Type=color
 Default=#333333
 
 [X-HTMLExport Parameter fgColor]
 Name=Foreground Color
 Name[ca]=Color de primer pla
+Name[it]=Colore di primo piano
+Name[ja]=前景色
+Name[nl]=Voorgrondkleur
+Name[pt]=Cor Principal
+Name[pt_BR]=Cor Principal
+Name[sv]=Förgrundsfärg
 Type=color
 Default=#d0ffd0
