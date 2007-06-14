@@ -22,7 +22,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 003 ==> 138880 : TimeAdjust   : digiKam 0.9rc2 - 0.9.1rc1 setting file date to exif doesn't work.
 004 ==> 140890 : TimeAdjust   : The preview does not display date and time properly for Japanese locale.
 005 ==> 144185 : TimeAdjust   : Adjust date-time tool should remember previous fixed date.
-006 ==> 
+006 ==> 146799 : SlideShow    : digikam 0.9.2 crashes when exiting - slideshow error
+007 ==>
 
 v 0.1.4 beta1 
 ----------------------------------------------------------------------------
