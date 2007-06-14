@@ -78,6 +78,8 @@ void Plugin_SlideShow::setup( QWidget* widget )
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
     
+    m_urlList = new KURL::List();
+
     if ( !m_interface ) 
     {
        kdError( 51000 ) << "Kipi m_interface is null!" << endl;
@@ -118,8 +120,6 @@ void Plugin_SlideShow::slotActivate()
     }
 
     m_imagesHasComments = m_interface->hasFeature(KIPI::ImagesHasComments);
-
-    m_urlList = new KURL::List();
     
     KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
             = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, m_interface,kapp->activeWindow(), 
