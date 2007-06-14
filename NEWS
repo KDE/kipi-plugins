@@ -5,12 +5,12 @@ v 0.1.4 beta2
 
 Kipi-plugins NEW FEATURES
 
-SlideShow      : Skip to next or previous image by a right or left click
 HTMLExport     : Option to specify whether the original images should be included
 HTMLExport     : Support for theme variants
 HTMLExport     : New theme: "frames", by Rüdiger Bente
 HTMLExport     : New theme: "cleanframes", by Beth and Robert Marmorstein
 HTMLExport     : New theme: "classic", simulating the output of the old HTML Gallery plugin
+SlideShow      : Skip to next or previous image by a right or left click
 SlideShow      : Skip to next or previous image by mouse wheel scrolling
 SlideShow      : Images can be sorted/added/removed manually.
 
@@ -19,9 +19,9 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 140477 : SendImages   : Ability to rename images being sent via email.
 002 ==> 143450 : SlideShow    : Skip to next or previous image by a right or left click
-003 ==> 138880 : TimeAdjust   : digikam 0.9rc2 - 0.9.1rc1 setting file date to exif doesn't work.
-004 ==> 140890 : The preview does not display date and time properly for Japanese locale.
-005 ==> 144185 : Adjust date-time tool should remember previous fixed date.
+003 ==> 138880 : TimeAdjust   : digiKam 0.9rc2 - 0.9.1rc1 setting file date to exif doesn't work.
+004 ==> 140890 : TimeAdjust   : The preview does not display date and time properly for Japanese locale.
+005 ==> 144185 : TimeAdjust   : Adjust date-time tool should remember previous fixed date.
 006 ==> 
 
 v 0.1.4 beta1 
