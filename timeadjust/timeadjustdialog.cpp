@@ -51,7 +51,6 @@ extern "C"
 // KDE includes.
 
 #include <kvbox.h>
-#include <kiconloader.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kapplication.h>
