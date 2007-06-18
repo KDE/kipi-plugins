@@ -13,6 +13,7 @@ HTMLExport     : New theme: "classic", simulating the output of the old HTML Gal
 SlideShow      : Skip to next or previous image by a right or left click
 SlideShow      : Skip to next or previous image by mouse wheel scrolling
 SlideShow      : Images can be sorted/added/removed manually.
+SlideShow      : Progress indicator printing doesn't depend on file name printing anymore.
 
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
