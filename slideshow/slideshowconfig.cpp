@@ -221,6 +221,7 @@ void SlideShowConfig::readSettings()
     bool  opengl;
     int   delay;
     bool  printFileName;
+    bool  printProgress;
     bool  printFileComments;
     bool  loop;
     bool  shuffle;
@@ -233,6 +234,7 @@ void SlideShowConfig::readSettings()
     opengl                = m_config->readBoolEntry("OpenGL", false);
     delay                 = m_config->readNumEntry("Delay", 1500);
     printFileName         = m_config->readBoolEntry("Print Filename", true);
+    printProgress         = m_config->readBoolEntry("Print Progress Inticator", true);
     printFileComments     = m_config->readBoolEntry("Print Comments", false);
     loop                  = m_config->readBoolEntry("Loop", false);
     shuffle               = m_config->readBoolEntry("Shuffle", false);
@@ -270,6 +272,8 @@ void SlideShowConfig::readSettings()
     m_delaySpinBox->setValue(delay);
 
     m_printNameCheckBox->setChecked(printFileName);
+    
+    m_printProgressCheckBox->setChecked(printProgress);
 
     m_printCommentsCheckBox->setChecked(printFileComments);
 
@@ -308,6 +312,7 @@ void SlideShowConfig::saveSettings()
         m_config->writeEntry("Delay", m_delaySpinBox->value()*1000); 
 
     m_config->writeEntry("Print Filename", m_printNameCheckBox->isChecked());
+    m_config->writeEntry("Print Progress Indicator", m_printProgressCheckBox->isChecked());
     m_config->writeEntry("Print Comments", m_printCommentsCheckBox->isChecked());
     m_config->writeEntry("Loop", m_loopCheckBox->isChecked());
     m_config->writeEntry("Shuffle", m_shuffleCheckBox->isChecked());

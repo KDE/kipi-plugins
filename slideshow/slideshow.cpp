@@ -175,6 +175,7 @@ void SlideShow::readSettings()
 {
     m_delay                 = m_config->readNumEntry("Delay", 1500);
     m_printName         = m_config->readBoolEntry("Print Filename", true);
+    m_printProgress     = m_config->readBoolEntry("Print Progress Indicator", true);
     m_printComments     = m_config->readBoolEntry("Print Comments", false);
     m_loop                  = m_config->readBoolEntry("Loop", false);
     
@@ -353,6 +354,9 @@ void SlideShow::loadNextImage()
     if (m_printName)
         printFilename();
     
+    if (m_printProgress)
+        printProgress();
+    
     if (m_printComments && m_ImagesHasComments)
         printComments();
 }
@@ -398,6 +402,9 @@ void SlideShow::loadPrevImage()
     if (m_printName)
         printFilename();
     
+    if (m_printProgress)
+        printProgress();
+    
     if (m_printComments)
         printComments();
 }
@@ -426,11 +433,6 @@ void SlideShow::printFilename()
     p.begin(m_currImage->qpixmap());
 
     QString filename(m_currImage->filename());
-    filename += " (";
-    filename += QString::number(m_fileIndex + 1);
-    filename += "/";
-    filename += QString::number(m_fileList.count());
-    filename += ")";
 
     p.setPen(QColor("black"));
     for (int x=9; x<=11; x++)
@@ -518,6 +520,29 @@ void SlideShow::printComments()
 
         p.drawText(10, height()-(int)(lineNumber * 1.5 * m_commentsFont->pointSize() + yPos), commentsByLines[lineNumber]);
     }
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void SlideShow::printProgress()
+{
+    if (!m_currImage) return;
+
+    QPainter p;
+    p.begin(m_currImage->qpixmap());
+
+    QString progress(QString::number(m_fileIndex+1) + "/" + QString::number(m_fileList.count()));
+
+    int stringLenght = p.fontMetrics().width(progress) * progress.length();
+    
+    p.setPen(QColor("black"));
+    for (int x=9; x<=11; x++)
+        for (int y=21; y>=19; y--)
+            p.drawText(x, height()-y, progress);
+
+    p.setPen(QColor("white"));
+    p.drawText(width() - stringLenght - 10, 20, progress);
 }
 
 

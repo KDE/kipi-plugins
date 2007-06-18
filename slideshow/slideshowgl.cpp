@@ -165,6 +165,7 @@ void SlideShowGL::readSettings()
 {
     m_delay                 = m_config->readNumEntry("Delay", 1500);
     m_printName         = m_config->readBoolEntry("Print Filename", true);
+    m_printProgress     = m_config->readBoolEntry("Print Progress Indicator", true);
     m_printComments     = m_config->readBoolEntry("Print Comments", false);
     m_loop                  = m_config->readBoolEntry("Loop", false);
     
@@ -507,8 +508,11 @@ void SlideShowGL::loadImage()
 	if (m_printName)
 	    printFilename(black);
 	
-        if (m_printComments && m_imagesHasComments)
-            printComments(black);
+    if (m_printProgress)
+        printProgress(black);
+    
+    if (m_printComments && m_imagesHasComments)
+        printComments(black);
         
 	QImage t = convertToGLFormat(black);
 
@@ -560,11 +564,6 @@ void SlideShowGL::printFilename(QImage& layer)
 { 
     QFileInfo fileinfo(m_fileList[m_fileIndex].first);
     QString filename = fileinfo.fileName();
-    filename += " (";
-    filename += QString::number(m_fileIndex + 1);
-    filename += "/";
-    filename += QString::number(m_fileList.count());
-    filename += ")";    
        
     QFont fn(font());
     fn.setPointSize(fn.pointSize());
@@ -585,6 +584,35 @@ void SlideShowGL::printFilename(QImage& layer)
    
     QImage textimage(pix.convertToImage());
     KImageEffect::blendOnLower(0,m_height-rect.height(),textimage,layer);
+}
+
+void SlideShowGL::printProgress(QImage& layer)
+{ 
+    QString progress(QString::number(m_fileIndex + 1) + "/" + QString::number(m_fileList.count()));
+       
+    QFont fn(font());
+    fn.setPointSize(fn.pointSize());
+    fn.setBold(true);
+   
+    QFontMetrics fm(fn);
+    QRect rect=fm.boundingRect(progress);
+    rect.addCoords( 0, 0, 2, 2 );
+    
+    QPixmap pix(rect.width(),rect.height());
+    pix.fill(Qt::black);    
+
+    QPainter p(&pix);
+    
+    int stringLenght = p.fontMetrics().width(progress) * progress.length();
+    
+    p.setPen(Qt::white);
+    p.setFont(fn);
+    p.drawText(1,fn.pointSize()+1 , progress);
+    p.end();
+   
+    QImage textimage(pix.convertToImage());
+    KImageEffect::blendOnLower(m_width - stringLenght - 10,
+                               20,textimage,layer);
 }
 
 void SlideShowGL::printComments(QImage& layer)
@@ -644,7 +672,7 @@ void SlideShowGL::printComments(QImage& layer)
 
     for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ ) {
 
-        yPos += 1.5 * m_commentsFont->pointSize();
+        yPos += int(1.5 * m_commentsFont->pointSize());
 
         QRect rect=fm.boundingRect(commentsByLines[lineNumber]);
         rect.addCoords( 0, 0, 2, 2 );

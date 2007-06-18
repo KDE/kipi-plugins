@@ -78,6 +78,7 @@ private:
     void          showCurrentImage();
     void          printFilename();
     void          printComments();
+    void          printProgress();
     EffectMethod  getRandomEffect();
     void          showEndOfShow();
     
@@ -92,6 +93,7 @@ private:
     int         m_delay;
     bool        m_printName;
     bool        m_printComments;
+    bool        m_printProgress;
     QString     m_effectName;
     bool        m_loop;
 

@@ -74,6 +74,7 @@ private:
     QString     m_effectName;
     bool        m_loop;
     bool        m_printName;
+    bool        m_printProgress;
     bool        m_printComments;
     
     bool        m_imagesHasComments;
@@ -130,6 +131,7 @@ private:
     EffectMethod  getRandomEffect();
     void          showEndOfShow();
     void          printFilename(QImage& layer);
+    void          printProgress(QImage& layer);
     void          printComments(QImage& layer);
     
     void          readSettings();

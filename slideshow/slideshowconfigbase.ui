@@ -11,8 +11,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>606</width>
-            <height>603</height>
+            <width>678</width>
+            <height>613</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -605,31 +605,69 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                                         <property name="title">
                                             <string>Content options</string>
                                         </property>
+                                        <property name="checkable">
+                                            <bool>false</bool>
+                                        </property>
+                                        <property name="checked">
+                                            <bool>false</bool>
+                                        </property>
                                         <vbox>
                                             <property name="name">
                                                 <cstring>unnamed</cstring>
                                             </property>
-                                            <widget class="QCheckBox">
+                                            <widget class="QLayoutWidget">
                                                 <property name="name">
-                                                    <cstring>m_printNameCheckBox</cstring>
+                                                    <cstring>layout14</cstring>
                                                 </property>
-                                                <property name="sizePolicy">
-                                                    <sizepolicy>
-                                                        <hsizetype>7</hsizetype>
-                                                        <vsizetype>7</vsizetype>
-                                                        <horstretch>0</horstretch>
-                                                        <verstretch>0</verstretch>
-                                                    </sizepolicy>
-                                                </property>
-                                                <property name="text">
-                                                    <string>P&amp;rint filename</string>
-                                                </property>
-                                                <property name="accel">
-                                                    <string>Alt+R</string>
-                                                </property>
-                                                <property name="checked">
-                                                    <bool>true</bool>
-                                                </property>
+                                                <hbox>
+                                                    <property name="name">
+                                                        <cstring>unnamed</cstring>
+                                                    </property>
+                                                    <widget class="QCheckBox">
+                                                        <property name="name">
+                                                            <cstring>m_printNameCheckBox</cstring>
+                                                        </property>
+                                                        <property name="sizePolicy">
+                                                            <sizepolicy>
+                                                                <hsizetype>7</hsizetype>
+                                                                <vsizetype>7</vsizetype>
+                                                                <horstretch>0</horstretch>
+                                                                <verstretch>0</verstretch>
+                                                            </sizepolicy>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>P&amp;rint filename</string>
+                                                        </property>
+                                                        <property name="accel">
+                                                            <string>Alt+R</string>
+                                                        </property>
+                                                        <property name="checked">
+                                                            <bool>true</bool>
+                                                        </property>
+                                                    </widget>
+                                                    <widget class="QCheckBox">
+                                                        <property name="name">
+                                                            <cstring>m_printProgressCheckBox</cstring>
+                                                        </property>
+                                                        <property name="sizePolicy">
+                                                            <sizepolicy>
+                                                                <hsizetype>1</hsizetype>
+                                                                <vsizetype>1</vsizetype>
+                                                                <horstretch>0</horstretch>
+                                                                <verstretch>0</verstretch>
+                                                            </sizepolicy>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>Progress indicator</string>
+                                                        </property>
+                                                        <property name="accel">
+                                                            <string></string>
+                                                        </property>
+                                                        <property name="checked">
+                                                            <bool>true</bool>
+                                                        </property>
+                                                    </widget>
+                                                </hbox>
                                             </widget>
                                             <widget class="QCheckBox">
                                                 <property name="name">
@@ -666,7 +704,7 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                                                 <property name="sizeHint">
                                                     <size>
                                                         <width>21</width>
-                                                        <height>2</height>
+                                                        <height>16</height>
                                                     </size>
                                                 </property>
                                             </spacer>
