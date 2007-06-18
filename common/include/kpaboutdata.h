@@ -25,10 +25,12 @@
 
 #include <kaboutdata.h>
 
+#include <libkipi/libkipi_export.h>
+
 namespace KIPIPlugins
 {
 
-  class KPAboutData : public KAboutData
+  class LIBKIPI_EXPORT KPAboutData : public KAboutData
   {
     private:
       QString KipiPluginsVersionString;
