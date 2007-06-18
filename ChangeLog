@@ -1,3 +1,487 @@
+V 0.1.4-beta2 - 2007-06-18
+----------------------------------------------------------------------------
+2007-06-18 16:11  vfuoglio
+
+	* [r677174] kipi-plugins/NEWS:
+	  Updated NEWS file
+	  
+	  SVN_SILENT:
+
+2007-06-18 00:08  vfuoglio
+
+	* [r676928] kipi-plugins/slideshow/slideshow.cpp,
+	  kipi-plugins/slideshow/slideshow.h,
+	  kipi-plugins/slideshow/slideshowconfig.cpp,
+	  kipi-plugins/slideshow/slideshowconfigbase.ui,
+	  kipi-plugins/slideshow/slideshowgl.cpp,
+	  kipi-plugins/slideshow/slideshowgl.h:
+	  Progress indicator printing doesn't depend from file name
+	  printing anymore.
+	  
+	  GUI:
+	  CCMAIL: kde-imaging@kde.org
+
+2007-06-16 06:41  scripty
+
+	* [r676166] kipi-plugins/htmlexport/themes/classic/classic.desktop,
+	  kipi-plugins/htmlexport/themes/cleanframes/cleanframes.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2007-06-14 22:31  vfuoglio
+
+	* [r675745] kipi-plugins/NEWS:
+	  Updated NEWS file
+	  
+	  SVN_SILENT:
+
+2007-06-14 22:23  vfuoglio
+
+	* [r675742] kipi-plugins/slideshow/plugin_slideshow.cpp:
+	  Fixed BUG 146799 , titled "digikam 0.9.2 crashes when exiting -
+	  slideshow error".
+	  
+	  BUG: 146799
+	  CCMAIL: kde-imaging@kde.org
+	  CCMAIL: digikam-users@kde.org
+
+2007-06-14 19:30  scripty
+
+	* [r675710] kipi-plugins/gpssync/kipiplugin_gpssync.desktop,
+	  kipi-plugins/htmlexport/themes/classic/classic.desktop,
+	  kipi-plugins/htmlexport/themes/cleanframes/cleanframes.desktop,
+	  kipi-plugins/htmlexport/themes/frames/frames.desktop,
+	  kipi-plugins/htmlexport/themes/matrix/matrix.desktop,
+	  kipi-plugins/htmlexport/themes/s0/s0.desktop,
+	  kipi-plugins/htmlexport/themes/simple/simple.desktop,
+	  kipi-plugins/htmlexport/themes/snow/snow.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2007-06-14 05:39  cgilles
+
+	* [r675348] kipi-plugins/NEWS:
+	  update
+
+2007-06-13 21:17  vfuoglio
+
+	* [r675261] kipi-plugins/NEWS, kipi-plugins/slideshow/Makefile.am,
+	  kipi-plugins/slideshow/listimageitems.cpp,
+	  kipi-plugins/slideshow/listimageitems.h,
+	  kipi-plugins/slideshow/plugin_slideshow.cpp,
+	  kipi-plugins/slideshow/plugin_slideshow.h,
+	  kipi-plugins/slideshow/slideshowconfig.cpp,
+	  kipi-plugins/slideshow/slideshowconfig.h,
+	  kipi-plugins/slideshow/slideshowconfigbase.ui:
+	  Images can be sorted/added/removed manually.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  GUI:
+
+2007-06-13 06:13  hoechstetter
+
+	* [r674794] kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.h:
+	  M sendimages/sendimages.cpp
+	  M sendimages/sendimagesdialog.cpp
+	  M sendimages/sendimagesdialog.h
+
+2007-06-12 01:28  scripty
+
+	* [r674292]
+	  kipi-plugins/acquireimages/kipiplugin_acquireimages.desktop,
+	  kipi-plugins/batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  kipi-plugins/calendar/kipiplugin_calendar.desktop,
+	  kipi-plugins/cdarchiving/kipiplugin_cdarchiving.desktop,
+	  kipi-plugins/findimages/kipiplugin_findimages.desktop,
+	  kipi-plugins/flickrexport/kipiplugin_flickrexport.desktop,
+	  kipi-plugins/galleryexport/kipiplugin_galleryexport.desktop,
+	  kipi-plugins/gpssync/kipiplugin_gpssync.desktop,
+	  kipi-plugins/helloworld/kipiplugin_helloworld.desktop,
+	  kipi-plugins/htmlexport/kipiplugin_htmlexport.desktop,
+	  kipi-plugins/htmlexport/themes/classic/classic.desktop,
+	  kipi-plugins/htmlexport/themes/cleanframes/cleanframes.desktop,
+	  kipi-plugins/htmlexport/themes/frames/frames.desktop,
+	  kipi-plugins/htmlexport/themes/matrix/matrix.desktop,
+	  kipi-plugins/htmlexport/themes/s0/s0.desktop,
+	  kipi-plugins/htmlexport/themes/simple/simple.desktop,
+	  kipi-plugins/htmlexport/themes/snow/snow.desktop,
+	  kipi-plugins/imagesgallery/kipiplugin_imagesgallery.desktop,
+	  kipi-plugins/imageviewer/kipiplugin_viewer.desktop,
+	  kipi-plugins/ipodexport/kipiplugin_ipodexport.desktop,
+	  kipi-plugins/jpeglossless/kipiplugin_jpeglossless.desktop,
+	  kipi-plugins/kameraklient/kipiplugin_kameraklient.desktop,
+	  kipi-plugins/metadataedit/kipiplugin_metadataedit.desktop,
+	  kipi-plugins/mpegencoder/kipiplugin_mpegencoder.desktop,
+	  kipi-plugins/printwizard/kipiplugin_printwizard.desktop,
+	  kipi-plugins/rawconverter/kipiplugin_rawconverter.desktop,
+	  kipi-plugins/sendimages/kipiplugin_sendimages.desktop,
+	  kipi-plugins/simpleviewerexport/kipiplugin_simpleviewer.desktop,
+	  kipi-plugins/slideshow/kipiplugin_slideshow.desktop,
+	  kipi-plugins/sync/kipiplugin_sync.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2007-06-11 15:41  scripty
+
+	* [r674021]
+	  kipi-plugins/acquireimages/kipiplugin_acquireimages.desktop,
+	  kipi-plugins/batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  kipi-plugins/calendar/kipiplugin_calendar.desktop,
+	  kipi-plugins/htmlexport/themes/cleanframes/cleanframes.desktop,
+	  kipi-plugins/mpegencoder/kipiplugin_mpegencoder.desktop,
+	  kipi-plugins/printwizard/kipiplugin_printwizard.desktop,
+	  kipi-plugins/slideshow/kipiplugin_slideshow.desktop,
+	  kipi-plugins/timeadjust/kipiplugin_timeadjust.desktop,
+	  kipi-plugins/wallpaper/kipiplugin_wallpaper.desktop,
+	  libkipi/kipiplugin.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2007-06-11 12:09  cgilles
+
+	* [r673925] kipi-plugins/README:
+	  fix depencies
+
+2007-06-11 12:07  cgilles
+
+	* [r673924] kipi-plugins/configure.in.bot,
+	  kipi-plugins/configure.in.in:
+	  fix depencies
+
+2007-06-11 07:53  cgilles
+
+	* [r673866]
+	  kipi-plugins/rawconverter/kipiplugin_rawconverter.desktop:
+	  fix author
+
+2007-06-11 07:50  cgilles
+
+	* [r673865] kipi-plugins/rawconverter/actions.h,
+	  kipi-plugins/rawconverter/actionthread.cpp,
+	  kipi-plugins/rawconverter/actionthread.h,
+	  kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/batchdialog.h,
+	  kipi-plugins/rawconverter/clistviewitem.h,
+	  kipi-plugins/rawconverter/mtqueue.h,
+	  kipi-plugins/rawconverter/plugin_rawconverter.cpp,
+	  kipi-plugins/rawconverter/plugin_rawconverter.h,
+	  kipi-plugins/rawconverter/previewwidget.cpp,
+	  kipi-plugins/rawconverter/previewwidget.h,
+	  kipi-plugins/rawconverter/rawdecodingiface.cpp,
+	  kipi-plugins/rawconverter/rawdecodingiface.h,
+	  kipi-plugins/rawconverter/savesettingswidget.cpp,
+	  kipi-plugins/rawconverter/savesettingswidget.h,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.h:
+	  fix header
+
+2007-06-11 06:46  cgilles
+
+	* [r673857] kipi-plugins/rawconverter/Makefile.am,
+	  kipi-plugins/rawconverter/hi32-action-rawconverterbatch.png,
+	  kipi-plugins/rawconverter/hi32-action-rawconvertersingle.png,
+	  kipi-plugins/rawconverter/pics,
+	  kipi-plugins/rawconverter/pics/Makefile.am,
+	  kipi-plugins/rawconverter/pics/hi32-action-rawconverterbatch.png,
+	  kipi-plugins/rawconverter/pics/hi32-action-rawconvertersingle.png:
+	  move png files to pics sub-folder
+
+2007-06-11 06:41  cgilles
+
+	* [r673855] kipi-plugins/jpeglossless/Makefile.am,
+	  kipi-plugins/jpeglossless/hi32-action-flip.png,
+	  kipi-plugins/jpeglossless/hi32-action-grayscaleconvert.png,
+	  kipi-plugins/jpeglossless/pics,
+	  kipi-plugins/jpeglossless/pics/Makefile.am,
+	  kipi-plugins/jpeglossless/pics/hi32-action-flip.png,
+	  kipi-plugins/jpeglossless/pics/hi32-action-grayscaleconvert.png:
+	  move png files to pics sub-folder
+
+2007-06-11 06:20  cgilles
+
+	* [r673854] kipi-plugins/timeadjust/kipiplugin_timeadjust.desktop:
+	  fix email
+
+2007-06-11 06:12  cgilles
+
+	* [r673850] kipi-plugins/jpeglossless/actions.h,
+	  kipi-plugins/jpeglossless/actionthread.cpp,
+	  kipi-plugins/jpeglossless/actionthread.h,
+	  kipi-plugins/jpeglossless/convert2grayscale.cpp,
+	  kipi-plugins/jpeglossless/convert2grayscale.h,
+	  kipi-plugins/jpeglossless/imageflip.cpp,
+	  kipi-plugins/jpeglossless/imageflip.h,
+	  kipi-plugins/jpeglossless/imagerotate.cpp,
+	  kipi-plugins/jpeglossless/imagerotate.h,
+	  kipi-plugins/jpeglossless/jpegtransform.cpp,
+	  kipi-plugins/jpeglossless/jpegtransform.h,
+	  kipi-plugins/jpeglossless/kipiplugin_jpeglossless.desktop,
+	  kipi-plugins/jpeglossless/mtqueue.h,
+	  kipi-plugins/jpeglossless/plugin_jpeglossless.cpp,
+	  kipi-plugins/jpeglossless/plugin_jpeglossless.h,
+	  kipi-plugins/jpeglossless/utils.cpp,
+	  kipi-plugins/jpeglossless/utils.h:
+	  fix header
+
+2007-06-11 00:39  vfuoglio
+
+	* [r673751] kipi-plugins/mpegencoder/kimg2mpgbase.ui:
+	  Fixed preview's stretch error.
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2007-06-10 00:05  vfuoglio
+
+	* [r673346] kipi-plugins/NEWS,
+	  kipi-plugins/slideshow/plugin_slideshow.cpp,
+	  kipi-plugins/slideshow/slideshow.cpp,
+	  kipi-plugins/slideshow/slideshow.h,
+	  kipi-plugins/slideshow/slideshowconfig.cpp,
+	  kipi-plugins/slideshow/slideshowconfig.h,
+	  kipi-plugins/slideshow/slideshowconfigbase.ui,
+	  kipi-plugins/slideshow/slideshowgl.cpp,
+	  kipi-plugins/slideshow/slideshowgl.h:
+	  Added possibility to navigate between images using mouse wheel
+	  scroll.
+	  
+	  CCMAIL : kde-imaging@kde.org
+	  GUI :
+
+2007-06-09 09:59  cgilles
+
+	* [r673188] kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  more debug info
+
+2007-06-09 09:57  cgilles
+
+	* [r673187] kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  polish
+
+2007-06-09 09:49  cgilles
+
+	* [r673186] kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  polish
+
+2007-06-09 09:35  cgilles
+
+	* [r673184] kipi-plugins/kipiplugins.kdevelop,
+	  kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  only show error dialog if meatadata has changed
+
+2007-06-09 09:07  cgilles
+
+	* [r673179] kipi-plugins/NEWS:
+	  --Cetupdatete ligne, et les suivantes ci-dessous, seront
+	  ignorées--
+	  
+	  M NEWS
+
+2007-06-09 09:06  cgilles
+
+	* [r673178] kipi-plugins/timeadjust/timeadjustdialog.cpp,
+	  kipi-plugins/timeadjust/timeadjustdialog.h:
+	  kipi-plugins from KDE3 branch : TimeAdjust : remember the custom
+	  date set by user between session. Add button to reset custom date
+	  to current date.
+	  BUG: 144185
+
+2007-06-09 08:21  cgilles
+
+	* [r673173] kipi-plugins/NEWS:
+	  update
+
+2007-06-09 08:20  cgilles
+
+	* [r673172] kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  kipi-plugins from KDE3 branch : TimeAdjust : use local date time
+	  encoding to display exemple on bottom of dialog
+	  BUG: 140890
+
+2007-06-08 20:41  cgilles
+
+	* [r673047] kipi-plugins/NEWS:
+	  --Cette ligupdatene, et les suivantes ci-dessous, seront
+	  ignorées--
+	  
+	  M NEWS
+
+2007-06-08 20:40  cgilles
+
+	* [r673045] kipi-plugins/timeadjust/plugin_timeadjust.cpp,
+	  kipi-plugins/timeadjust/plugin_timeadjust.h,
+	  kipi-plugins/timeadjust/timeadjustdialog.cpp,
+	  kipi-plugins/timeadjust/timeadjustdialog.h:
+	  kipi-plugins from KDE3 branch : Time Adjust plugin : fix
+	  modification and access file date accordinly to setting of tool.
+	  BUG: 138880
+
+2007-06-08 19:18  cgilles
+
+	* [r673016] kipi-plugins/configure.in.in:
+	  compile
+
+2007-06-08 19:16  kusi
+
+	* [r673014] kipi-plugins/README:
+	  adding KIPI imageviewer
+
+2007-06-08 12:18  cgilles
+
+	* [r672887] kipi-plugins/kipi-plugins.lsm:
+	  fix email
+
+2007-06-07 22:11  gateau
+
+	* [r672709] kipi-plugins/AUTHORS:
+	  Added HTMLExport theme authors
+
+2007-06-07 22:11  gateau
+
+	* [r672708] kipi-plugins/NEWS:
+	  Added latest changes from HTMLExport
+
+2007-06-07 15:30  cgilles
+
+	* [r672585] kipi-plugins/jpeglossless/Makefile.am:
+	  libkdcraw rules are missing
+
+2007-06-07 15:13  cgilles
+
+	* [r672578] kipi-plugins/htmlexport/themes/cleanframes/Makefile.in:
+	  rm
+
+2007-06-07 15:12  cgilles
+
+	* [r672577] kipi-plugins/configure.in.in,
+	  kipi-plugins/htmlexport/themes/cleanframes/Makefile.in:
+	  compile--Cette ligne, et les suivantes ci-dessous, seront
+	  ignorées--
+	  
+	  M kipi-plugins/htmlexport/themes/cleanframes/Makefile.in
+	  M kipi-plugins/configure.in.in
+
+2007-06-07 14:56  cgilles
+
+	* [r672569] kipi-plugins/configure.in.in:
+	  compile
+
+2007-06-07 03:57  vfuoglio
+
+	* [r672427] kipi-plugins/NEWS,
+	  kipi-plugins/slideshow/slideshow.cpp,
+	  kipi-plugins/slideshow/slideshowgl.cpp:
+	  Skip to next or previous image can be also done with a mouse
+	  click.
+	  
+	  Backported some code from digiKam's slideshow (thanks to Gilles).
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  BUG: 143450
+
+2007-06-06 23:25  vfuoglio
+
+	* [r672402] kipi-plugins/slideshow/imlibiface.cpp,
+	  kipi-plugins/slideshow/imlibiface.h,
+	  kipi-plugins/slideshow/plugin_slideshow.cpp,
+	  kipi-plugins/slideshow/plugin_slideshow.h,
+	  kipi-plugins/slideshow/slideshow.cpp,
+	  kipi-plugins/slideshow/slideshow.h,
+	  kipi-plugins/slideshow/slideshowconfig.cpp,
+	  kipi-plugins/slideshow/slideshowconfig.h,
+	  kipi-plugins/slideshow/slideshowconfigbase.ui,
+	  kipi-plugins/slideshow/slideshowgl.cpp,
+	  kipi-plugins/slideshow/slideshowgl.h:
+	  Changed members' names (adding 'm_' in the head instead of '_' in
+	  the tail)
+	  
+	  SVN_SILENT:
+
+2007-06-06 21:50  vfuoglio
+
+	* [r672386] kipi-plugins/slideshow/slideshowconfig.cpp:
+	  Updated my mail address
+	  
+	  SVN_SILENT:
+
+2007-06-06 21:07  gateau
+
+	* [r672369] kipi-plugins/htmlexport/themes/cleanframes/Makefile.am,
+	  kipi-plugins/htmlexport/themes/cleanframes/black.css,
+	  kipi-plugins/htmlexport/themes/cleanframes/blue.css,
+	  kipi-plugins/htmlexport/themes/cleanframes/brown.css,
+	  kipi-plugins/htmlexport/themes/cleanframes/cleanframes.desktop,
+	  kipi-plugins/htmlexport/themes/cleanframes/green.css,
+	  kipi-plugins/htmlexport/themes/cleanframes/lavender.css,
+	  kipi-plugins/htmlexport/themes/cleanframes/pink.css,
+	  kipi-plugins/htmlexport/themes/cleanframes/red.css,
+	  kipi-plugins/htmlexport/themes/cleanframes/star.png,
+	  kipi-plugins/htmlexport/themes/cleanframes/style.css,
+	  kipi-plugins/htmlexport/themes/cleanframes/template.xsl,
+	  kipi-plugins/htmlexport/themes/cleanframes/yellow.css:
+	  New version, featuring several color variants. Many thanks to
+	  Beth Marmorstein!
+	  CCMAIL: purplegamba@verizon.net
+
+2007-06-06 16:34  anaselli
+
+	* [r672285] kipi-plugins/configure.in.in:
+	  Rex Dieter reported a libgobject2-0 problem and a patch to fix
+	  it.
+	  
+	  Please check if there are problems.
+	  CCMAIL: kde-imaging@kde.org
+
+2007-06-06 06:49  cgilles
+
+	* [r672128] kipi-plugins/NEWS:
+	  update
+
+2007-06-06 00:56  hoechstetter
+
+	* [r672009] kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimages.h:
+	  If a description is available, it is used as name for the new
+	  generated foto. This is the most simple and cleanest solution;
+	  BUG: 140477;
+
+2007-06-04 22:42  gateau
+
+	* [r671521] kipi-plugins/htmlexport/THEME_HOWTO:
+	  Added doc about original images.
+
+2007-06-04 22:35  gateau
+
+	* [r671519] kipi-plugins/htmlexport/THEME_HOWTO:
+	  - Explained how to use i18n parameters in attributes.
+	  - Simplified theme parameters example.
+
+2007-06-04 22:31  gateau
+
+	* [r671518] kipi-plugins/htmlexport/themes/Makefile.am,
+	  kipi-plugins/htmlexport/themes/classic,
+	  kipi-plugins/htmlexport/themes/classic/Makefile.am,
+	  kipi-plugins/htmlexport/themes/classic/classic.desktop,
+	  kipi-plugins/htmlexport/themes/classic/gohome.png,
+	  kipi-plugins/htmlexport/themes/classic/template.xsl,
+	  kipi-plugins/htmlexport/themes/classic/up.png:
+	  Added port of the theme from the old plugin. Not finished, but
+	  working.
+
+2007-06-03 22:08  anaselli
+
+	* [r671150] kipi-plugins/ChangeLog, kipi-plugins/kipi-plugins.lsm:
+	  Release 0.1.4 - beta1
+
+2007-06-03 22:05  anaselli
+
+	* [r671149] kipi-plugins/NEWS:
+	  SVN_SILENT: added bko 145771 fixed
+
+2007-06-03 21:58  anaselli
+
+	* [r671146] kipi-plugins/ChangeLog:
+	  SNV_SILENT: released part of Changelog with old script to skip
+	  trunk path (svn2cl issue)
+
+----------------------------------------------------------------------------
 V 0.1.4-beta1 - 2007-06-04
 ----------------------------------------------------------------------------
 
