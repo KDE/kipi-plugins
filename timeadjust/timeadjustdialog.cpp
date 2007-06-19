@@ -150,6 +150,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     setDefaultButton(KDialog::Ok);
     setCaption(i18n("Adjust Time & Date"));
     setHelp("timeadjust", "kipi-plugins");
+    setModal(true);
 
     KVBox *box = new KVBox( this );
     setMainWidget( box );
