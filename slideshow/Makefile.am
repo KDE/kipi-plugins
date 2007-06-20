@@ -13,7 +13,7 @@ kipiplugin_slideshow_la_SOURCES = plugin_slideshow.cpp slideshow.cpp \
 
 #kipiplugin_slideshow_la_LIBADD = -lkdefx $(LIB_IMLIB2) $(GL_LIBS) $(LIBKIPI_LIBS) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 kipiplugin_slideshow_la_LIBADD = -lkdefx -lImlib2 $(GL_LIBS) $(LIBKIPI_LIBS) $(LIBKDCRAW_LIBS)  \
-	                         $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
+	                         $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_KIO) $(LIB_QT)
 
 kipiplugin_slideshow_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
 
