@@ -461,17 +461,21 @@ struct Generator::Private {
 	}
 	
 
-	bool createDir(QDir dir) {
-		if (dir.exists()) return true;
-		
-		QDir parent=dir;
-		parent.cdUp();
-		bool ok=createDir(parent);
-		if (!ok) {
-			logError(i18n("Could not create '%1").arg(parent.path()));
-			return false;
+	bool createDir(const QString& dirName) {
+		QStringList parts = QStringList::split('/', dirName);
+		QStringList::ConstIterator it = parts.begin(), end = parts.end();
+		QDir dir = QDir::root();
+		for( ;it!=end; ++it) {
+			QString part = *it;
+			if (!dir.exists(part)) {
+				if (!dir.mkdir(part)) {
+					logError(i18n("Could not create folder '%1' in '%2'").arg(part).arg(dir.absPath()));
+					return false;
+				}
+			}
+			dir.cd(part);
 		}
-		return parent.mkdir(dir.dirName());
+		return true;
 	}
 
 
