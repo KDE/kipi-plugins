@@ -27,6 +27,13 @@ Comment[sv]=En överföring av det gamla temat för insticksprogrammet HTML-expo
 Name=Aurélien Gâteau
 Url=mailto:aurelien.gateau@free.fr
 
+[X-HTMLExport Parameter thumbnailPerRow]
+Name=Thumbnails per row
+Type=int
+Default=4
+Min=1
+Max=100
+
 [X-HTMLExport Parameter bgColor]
 Name=Background Color
 Name[ca]=Color de fons
@@ -58,3 +65,17 @@ Name[pt_BR]=Cor Principal
 Name[sv]=Förgrundsfärg
 Type=color
 Default=#d0ffd0
+
+[X-HTMLExport Parameter fontSize]
+Name=Font Size
+Type=int
+Default=14
+Min=1
+Max=100
+
+[X-HTMLExport Parameter imgBorderSize]
+Name=Image Border Size
+Type=int
+Default=1
+Min=1
+Max=50

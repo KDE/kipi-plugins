@@ -14,7 +14,7 @@
 		color: <xsl:value-of select="$fgColor"/>;
 		background: <xsl:value-of select="$bgColor"/>;
 		font-family: /*param*/Helvetica, sans-serif;
-		font-size: /*param*/ 14pt;
+		font-size: <xsl:value-of select="$fontSize"/>pt;
 		margin: 4%;
 	}
 
@@ -34,7 +34,7 @@
 	}
 
 	img.photo {
-		border: /*param*/ 1px solid /*param*/ #d0ffd0;
+		border: <xsl:value-of select="$imgBorderSize"/>px solid /*param*/ #d0ffd0;
 	}
 
 	a:link {
@@ -128,9 +128,6 @@
 <!-- Called only once per table, use recursion to generate every row -->
 <xsl:template name="thumbnailTable">
 	<xsl:param name="index" select="1"/>
-
-	<!-- FIXME: Parameter -->
-	<xsl:variable name="thumbnailPerRow" select="4"/>
 
 	<xsl:if test="$index &lt; count(image)+1">
 		<tr>
