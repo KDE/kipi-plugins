@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 // Local
 #include "colorthemeparameter.h"
+#include "intthemeparameter.h"
 #include "listthemeparameter.h"
 #include "stringthemeparameter.h"
 
@@ -43,6 +44,7 @@ static const char* PARAMETER_TYPE_KEY = "Type";
 static const char* STRING_PARAMETER_TYPE = "string";
 static const char* LIST_PARAMETER_TYPE = "list";
 static const char* COLOR_PARAMETER_TYPE = "color";
+static const char* INT_PARAMETER_TYPE = "int";
 
 static Theme::List sList;
 
@@ -79,6 +81,8 @@ struct Theme::Private {
 				parameter = new ListThemeParameter();
 			} else if (type == COLOR_PARAMETER_TYPE) {
 				parameter = new ColorThemeParameter();
+			} else if (type == INT_PARAMETER_TYPE) {
+				parameter = new IntThemeParameter();
 			} else {
 				kdWarning() << "Parameter '" << internalName << "' has unknown type '" << type << "'. Falling back to string type\n";
 				parameter = new StringThemeParameter();

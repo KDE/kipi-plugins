@@ -237,6 +237,7 @@ of this writing it can be one of:
  - string
  - color
  - list
+ - int
 - The `Default` key defines the default value of the
 parameter.
 
@@ -266,6 +267,21 @@ Here is an example: the "style" parameter from the "Simple" theme:
 As you can see, the user will be able to choose either "Natural" or "Dark".
 Depending on the user choice, `<xsl:value-of select='$style'/>` will expand to
 either "natural.css" or "dark.css".
+
+#### Int parameter keys
+
+An int parameter lets the user select an integer using a spinbox. In addition
+to the default value, you can define the minimum and maximum values, using the
+`Min` and `Max` keys.
+
+Here is an example:
+
+	[X-HTMLExport Parameter size]
+	Name=Size
+	Type=int
+	Default=12
+	Min=4
+	Max=28
 
 ## Final words
 
