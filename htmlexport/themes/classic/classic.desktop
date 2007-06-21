@@ -79,3 +79,18 @@ Type=int
 Default=1
 Min=1
 Max=50
+
+[X-HTMLExport Parameter imgBorderColor]
+Name=Image Border Color
+Type=color
+Default=#d0ffd0
+
+[X-HTMLExport Parameter linkColor]
+Name=Link Color
+Type=color
+Default=#b3b3b3
+
+[X-HTMLExport Parameter visitedLinkColor]
+Name=Visited Link Color
+Type=color
+Default=#b3b3b3

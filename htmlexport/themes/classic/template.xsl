@@ -34,15 +34,15 @@
 	}
 
 	img.photo {
-		border: <xsl:value-of select="$imgBorderSize"/>px solid /*param*/ #d0ffd0;
+		border: <xsl:value-of select="$imgBorderSize"/>px solid <xsl:value-of select="$imgBorderColor"/>;
 	}
 
 	a:link {
-		color: /*param*/ #b3b3b3;
+		color: <xsl:value-of select="$linkColor"/>;
 	}
 
 	a:visited {
-		color: /*param*/ #b3b3b3;
+		color: <xsl:value-of select="$visitedLinkColor"/>;
 	}
 	</style>
 </xsl:template>
