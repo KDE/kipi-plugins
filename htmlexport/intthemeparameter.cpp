@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 // KDE
 #include <kconfigbase.h>
-#include <kdebug.h>
 
 // Local
 
@@ -53,7 +52,6 @@ IntThemeParameter::~IntThemeParameter() {
 
 
 void IntThemeParameter::init(const QCString& internalName, const KConfigBase* configFile) {
-	kdDebug() << "internalName:" << internalName << endl;
 	AbstractThemeParameter::init(internalName, configFile);
 
 	d->mMinValue = configFile->readNumEntry(MIN_VALUE_KEY, 0);
