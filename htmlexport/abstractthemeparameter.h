@@ -62,7 +62,7 @@ public:
 	 */
 	virtual QString valueFromWidget(QWidget*) const = 0;
 
-protected:
+private:
 	class Private;
 	Private* d;
 };
