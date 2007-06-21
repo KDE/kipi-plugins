@@ -22,6 +22,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 // Self
 #include "theme.h"
 
+// Qt
+#include <qfile.h>
+#include <qtextstream.h>
+
 // KDE
 #include <kdebug.h>
 #include <kdesktopfile.h>
@@ -54,23 +58,51 @@ struct Theme::Private {
 	KURL mURL;
 	ParameterList mParameterList;
 
+	/**
+	 * Return the list of parameters defined in the desktop file. We need to
+	 * parse the file ourself to preserve parameter order.
+	 */
+	QStringList readParameterNameList(const QString& desktopFileName) {
+		QStringList list;
+		QFile file(desktopFileName);
+		if (!file.open(IO_ReadOnly)) {
+			return QStringList();
+		}
+
+		QTextStream stream(&file);
+		stream.setEncoding(QTextStream::UnicodeUTF8);
+		QString prefix = QString("[") + PARAMETER_GROUP_PREFIX;
+		while (!stream.atEnd()) {
+			QString line = stream.readLine();
+			line = line.stripWhiteSpace();
+			if (!line.startsWith(prefix)) {
+				continue;
+			}
+			// Remove opening bracket and group prefix
+			line = line.mid(prefix.length());
+
+			// Remove closing bracket
+			line.truncate(line.length() - 1);
+
+			list.append(line);
+		}
+
+		return list;
+	}
+
 	void init(const QString& desktopFileName) {
 		mDesktopFile=new KDesktopFile(desktopFileName, true /*read only*/);
 		mURL.setPath(desktopFileName);
 
-		readParameters();
+		QStringList parameterNameList = readParameterNameList(desktopFileName);
+		readParameters(parameterNameList);
 	}
 
-	void readParameters() {
-		QStringList list = mDesktopFile->groupList();
-		QStringList::Iterator it=list.begin(), end=list.end();
+	void readParameters(const QStringList& list) {
+		QStringList::ConstIterator it=list.begin(), end=list.end();
 		for (;it!=end; ++it) {
-			QString group = *it;
-			if (!group.startsWith(PARAMETER_GROUP_PREFIX)) {
-				continue;
-			}
-
-			QCString internalName = group.mid(qstrlen(PARAMETER_GROUP_PREFIX) ).utf8();
+			QString group = PARAMETER_GROUP_PREFIX + *it;
+			QCString internalName = (*it).utf8();
 
 			KConfigGroupSaver saver(mDesktopFile, group);
 			QString type = mDesktopFile->readEntry(PARAMETER_TYPE_KEY);
