@@ -141,12 +141,19 @@ struct Wizard::Private {
 			QLabel* label = new QLabel(name, content);
 			QWidget* widget = themeParameter->createWidget(content, value);
 			label->setBuddy(widget);
-			QSpacerItem* spacer = new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
 			int row = layout->numRows();
 			layout->addWidget(label, row, 0);
-			layout->addWidget(widget, row, 1);
-			layout->addItem(spacer, row, 2);
+
+			if (widget->sizePolicy().expanding() & QSizePolicy::Horizontally) {
+				// Widget wants full width
+				layout->addMultiCellWidget(widget, row, row, 1, 2);
+			} else {
+				// Widget doesn't like to be stretched, add a spacer next to it
+				layout->addWidget(widget, row, 1);
+				QSpacerItem* spacer = new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum);
+				layout->addItem(spacer, row, 2);
+			}
 
 			mThemeParameterWidgetFromName[internalName] = widget;
 		}
