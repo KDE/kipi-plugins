@@ -30,6 +30,9 @@ Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter thumbnailPerRow]
 Name=Thumbnails per row
+Name[ja]=横一列あたりのサムネイル数
+Name[pt]=Miniaturas por linha
+Name[pt_BR]=Miniaturas por linha
 Type=int
 Default=4
 Min=1
@@ -71,6 +74,9 @@ Default=#d0ffd0
 
 [X-HTMLExport Parameter fontSize]
 Name=Font Size
+Name[ja]=フォントサイズ
+Name[pt]=Tamanho da Letra
+Name[pt_BR]=Tamanho da Letra
 Type=int
 Default=14
 Min=1
@@ -78,6 +84,9 @@ Max=100
 
 [X-HTMLExport Parameter imgBorderSize]
 Name=Image Border Size
+Name[ja]=画像の縁取りの幅
+Name[pt]=Tamanho do Contorno da Imagem
+Name[pt_BR]=Tamanho do Contorno da Imagem
 Type=int
 Default=1
 Min=1
@@ -85,15 +94,24 @@ Max=50
 
 [X-HTMLExport Parameter imgBorderColor]
 Name=Image Border Color
+Name[ja]=画像の縁取りの色
+Name[pt]=Cor do Contorno da Imagem
+Name[pt_BR]=Cor do Contorno da Imagem
 Type=color
 Default=#d0ffd0
 
 [X-HTMLExport Parameter linkColor]
 Name=Link Color
+Name[ja]=リンクの色
+Name[pt]=Cor da Hiperligação
+Name[pt_BR]=Cor da Hiperligação
 Type=color
 Default=#b3b3b3
 
 [X-HTMLExport Parameter visitedLinkColor]
 Name=Visited Link Color
+Name[ja]=訪問済みリンクの色
+Name[pt]=Cor da Ligação Visitada
+Name[pt_BR]=Cor da Ligação Visitada
 Type=color
 Default=#b3b3b3
