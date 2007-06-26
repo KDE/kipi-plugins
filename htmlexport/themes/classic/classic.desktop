@@ -31,6 +31,7 @@ Url=mailto:aurelien.gateau@free.fr
 [X-HTMLExport Parameter thumbnailPerRow]
 Name=Thumbnails per row
 Name[de]=Vorschaubilder pro Zeile
+Name[el]=Εικόνες επισκόπησης ανά γραμμή
 Name[it]=Miniature per riga
 Name[ja]=横一列あたりのサムネイル数
 Name[pt]=Miniaturas por linha
@@ -78,6 +79,7 @@ Default=#d0ffd0
 [X-HTMLExport Parameter fontSize]
 Name=Font Size
 Name[de]=Zeichensatzgröße
+Name[el]=Μέγεθος γραμματοσειράς
 Name[it]=Dimensione dei caratteri
 Name[ja]=フォントサイズ
 Name[pt]=Tamanho da Letra
@@ -91,6 +93,7 @@ Max=100
 [X-HTMLExport Parameter imgBorderSize]
 Name=Image Border Size
 Name[de]=Größe des Bildrahmens
+Name[el]=Μέγεθος περιγράμματος εικόνας
 Name[it]=Dimensione del bordo delle immagini
 Name[ja]=画像の縁取りの幅
 Name[pt]=Tamanho do Contorno da Imagem
@@ -104,6 +107,7 @@ Max=50
 [X-HTMLExport Parameter imgBorderColor]
 Name=Image Border Color
 Name[de]=Farbe des Bildrahmens
+Name[el]=Χρώμα περιγράμματος εικόνας
 Name[it]=Colore del bordo delle immagini
 Name[ja]=画像の縁取りの色
 Name[pt]=Cor do Contorno da Imagem
@@ -115,6 +119,7 @@ Default=#d0ffd0
 [X-HTMLExport Parameter linkColor]
 Name=Link Color
 Name[de]=Verknüpfungsfarbe
+Name[el]=Χρώμα δεσμού
 Name[it]=Colore dei collegamenti
 Name[ja]=リンクの色
 Name[pt]=Cor da Hiperligação
@@ -126,6 +131,7 @@ Default=#b3b3b3
 [X-HTMLExport Parameter visitedLinkColor]
 Name=Visited Link Color
 Name[de]=Farbe der besuchten Verknüpfungen
+Name[el]=Χρώμα ακολουθημένου δεσμού
 Name[it]=Colore dei collegamenti visitati
 Name[ja]=訪問済みリンクの色
 Name[pt]=Cor da Ligação Visitada
