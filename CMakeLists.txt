@@ -23,7 +23,7 @@ endif(OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
 # Plugins witch depand of GPhoto2
 if(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
-   macro_optional_add_subdirectory(kameraklient)
+	#macro_optional_add_subdirectory(kameraklient)
 endif(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 
 # TODO: others optional depencies to check
