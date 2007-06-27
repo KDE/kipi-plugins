@@ -1,13 +1,11 @@
 Note: for details and info about current version, see ChangeLog.
 
-v 0.1.4 final
+v 0.1.4
 ----------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
-
-Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
-
-001 ==> 
+Note on release: 
+Due to missing files on svn, docbook "pt" and "da" have been removed form this 
+final release, apologize for that.
 
 v 0.1.4 beta2
 ----------------------------------------------------------------------------
