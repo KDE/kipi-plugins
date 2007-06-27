@@ -1,3 +1,61 @@
+V 0.1.4 - 2007-06-28
+----------------------------------------------------------------------------
+
+2007-06-21 22:11  gateau
+
+	* [r678657] kipi-plugins/htmlexport/wizard.cpp:
+	  Make sure widgets which do not want to get stretched aren't.
+
+2007-06-21 22:01  gateau
+
+	* [r678652] kipi-plugins/htmlexport/theme.cpp:
+	  Display parameters in the same order as in the desktop file.
+
+2007-06-21 22:01  gateau
+
+	* [r678651] kipi-plugins/htmlexport/intthemeparameter.cpp:
+	  Remove useless kdebug
+
+2007-06-21 21:24  gateau
+
+	* [r678631] kipi-plugins/htmlexport/themes/classic/classic.desktop,
+	  kipi-plugins/htmlexport/themes/classic/template.xsl:
+	  Added missing color parameters.
+
+2007-06-21 21:23  gateau
+
+	* [r678630] kipi-plugins/htmlexport/themes/classic/classic.desktop,
+	  kipi-plugins/htmlexport/themes/classic/template.xsl:
+	  Make use of the new int parameter type.
+
+2007-06-21 21:23  gateau
+
+	* [r678629] kipi-plugins/htmlexport/Makefile.am,
+	  kipi-plugins/htmlexport/THEME_HOWTO,
+	  kipi-plugins/htmlexport/intthemeparameter.cpp,
+	  kipi-plugins/htmlexport/intthemeparameter.h,
+	  kipi-plugins/htmlexport/theme.cpp:
+	  Added a new theme parameter type: int.
+
+2007-06-21 21:23  gateau
+
+	* [r678627] kipi-plugins/htmlexport/abstractthemeparameter.h:
+	  Prevent troubles. d pointer should be private, not protected.
+
+2007-06-20 21:18  gateau
+
+	* [r678196] kipi-plugins/htmlexport/generator.cpp:
+	  Fixed crash when trying to create /a/b/c if b does not exist.
+
+2007-06-20 17:06  vfuoglio
+
+	* [r678081] kipi-plugins/slideshow/Makefile.am:
+	  Fixed problem with libkio linking into Makefile.am.
+	  Thanks to Rex Dieter for the patch.
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+----------------------------------------------------------------------------
 V 0.1.4-beta2 - 2007-06-20
 ----------------------------------------------------------------------------
 2007-06-20 17:06  vfuoglio
