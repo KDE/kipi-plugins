@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Frames
+Name[da]=Rammer
 Name[de]=Rahmen
 Name[el]=Καρέ
 Name[es]=Marcos
@@ -13,6 +14,7 @@ Name[pt_BR]=Molduras
 Name[sv]=Ramar
 Comment=A frame theme
 Comment[ca]=Un tema de marcs
+Comment[da]=Et tema med rammer
 Comment[de]=Ein Rahmen-Stil
 Comment[el]=Ένα θέμα καρέ
 Comment[es]=Un tema con marcos

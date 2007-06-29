@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Clean Frames
+Name[da]=Rene rammer
 Name[de]=Saubere Rahmen
 Name[es]=Marcos limpios
 Name[is]=Hreinsa ramma
@@ -12,6 +13,7 @@ Name[pt_BR]=Molduras Simples
 Name[sv]=Rena ramar
 Comment=A frame theme based on Ruediger Bente's frame theme
 Comment[ca]=Un tema de marcs basat en el tema de marcs del Ruediger Bente
+Comment[da]=Et rammetema baseret på Ruediger Bentes rammetema
 Comment[de]=Ein rahmenbasiertes Design das auf das Rahmendesign von Ruediger Bente basiert.
 Comment[el]=Ένα θέμα με πλαίσια βασισμένο στο θέμα του Ruediger Bente
 Comment[es]=Un tema de marcos basado en el tema de Ruediger Bente
@@ -32,6 +34,7 @@ Url=mailto:purplegamba@cox.net
 [X-HTMLExport Parameter style]
 Name=Style
 Name[br]=Giz
+Name[da]=Stil
 Name[de]=Stil
 Name[el]=Στυλ
 Name[es]=Estilo
