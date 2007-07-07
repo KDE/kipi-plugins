@@ -1,4 +1,16 @@
 Note: for details and info about current version, see ChangeLog.
+v 0.1.5 - SVN
+
+Kipi-plugins NEW FEATURES
+PrintWizard: added exif management
+PrintWizard: prints exif date-time info
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
+001 ==> 133193 : PrintWizard : Data on the photo
+002 ==> 111454 : PrintWizard : Print photo's date into one corner like print assistant
+003 ==> 146457 : PrintWizard : rotation is not done correctly exif
+004 ==>
 
 v 0.1.4
 ----------------------------------------------------------------------------
