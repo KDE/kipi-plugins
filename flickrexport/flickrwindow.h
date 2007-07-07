@@ -130,6 +130,7 @@ private slots:
     void slotAddPhotoCancel();
     void slotAuthCancel();
     void slotHelp();
+    void slotClose();
 };
 
 }

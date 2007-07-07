@@ -123,8 +123,11 @@ namespace KIPIFlickrExportPlugin
 		headers.append("method=flickr.auth.checkToken");
 		headers.append("api_key="+ m_apikey);
 		headers.append("auth_token="+ token);
+		QString md5=getApiSig(m_secret, headers);
+		headers.append("api_sig="+ md5);
 		QString queryStr=headers.join("&");
 		QString postUrl=url+queryStr;
+        kdDebug() << "Check token url " << postUrl <<endl;
 		QByteArray tmp;
 		KIO::TransferJob* job = KIO::http_post(postUrl,tmp,false);
 
@@ -158,8 +161,8 @@ namespace KIPIFlickrExportPlugin
 		QString queryStr=headers.join("&");
 		const QString completeUrl=url+queryStr;
 		KApplication::kApplication()->invokeBrowser(completeUrl);
-		int valueOk=KMessageBox::questionYesNo(0, i18n("Please follow the instructions in the browser window and "
-              "return to press Yes if you were able to log in or No to cancel the export"), i18n("Flickr:Web Authorization"));
+		int valueOk=KMessageBox::questionYesNo(0, i18n("Please Follow through the instructions in the browser window and "
+              "return back to press ok if you are authenticated or press No"), i18n("Flickr::Kipi Plugin:Web Authorization")); 
 
 					if(valueOk==KMessageBox::Yes){
 						getToken(); 
@@ -300,15 +303,7 @@ namespace KIPIFlickrExportPlugin
 		form.addPair("is_friend",isfriend);
 		headers.append("is_friend="+ isfriend);
 
-		QStringList taglist;
-		for(QStringList::Iterator iter = info.tags.begin(); iter != info.tags.end(); iter++) {
-			if((*iter).find(' ') != -1) {
-				taglist.append('"' + *iter + '"');
-			} else {
-				taglist.append(*iter);
-				}
-		}
-		QString tags=taglist.join(" ");
+		QString tags=info.tags.join(" ");
 		if(tags.length()>0){	
 			form.addPair("tags",tags);
 			headers.append("tags="+ tags);
@@ -584,22 +579,6 @@ namespace KIPIFlickrExportPlugin
 					}	
 					details=details.nextSibling();
 				}
-				/*int valueOk=KMessageBox::questionYesNo(0, i18n("You are currently signed "
-										"with username: \"%1\" and "
-										"\"%2\" permissions, \nClick Yes to "
-										"proceed or No to change the username OR " 
-										"permissions ?\n[Upload "
-										"requires write permissions]").arg( username ).arg( transReturn )
-									);
-							if(valueOk==KMessageBox::No){
-								getFrob(); 
-								return;
-							}
-							else{	
-								authProgressDlg->hide();
-								emit signalTokenObtained(m_token);
-							}
-				*/
 				
 				authProgressDlg->hide();
 				emit signalTokenObtained(m_token);

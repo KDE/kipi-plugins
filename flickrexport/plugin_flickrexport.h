@@ -47,7 +47,7 @@ public slots:
     void slotActivate();
 
 private:
-
+    KIPIFlickrExportPlugin::FlickrWindow *dlg;
     KAction *m_action;
 };
 

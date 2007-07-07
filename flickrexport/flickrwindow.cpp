@@ -228,6 +228,11 @@ void FlickrWindow::slotHelp()
 void FlickrWindow::slotDoLogin()
 {
 }
+
+void FlickrWindow::slotClose(){
+    delete this;
+}
+
 void FlickrWindow::slotTokenObtained( const QString& token ){
 	m_token=token;
 	m_username=m_talker->getUserName();
