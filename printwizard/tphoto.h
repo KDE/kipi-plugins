@@ -28,6 +28,7 @@
 // KDE includes.
 
 #include <kurl.h>
+#include <libkexiv2/kexiv2.h>
 
 class QImage;
 class QPixmap;
@@ -55,12 +56,14 @@ public:
     QRect cropRegion;
     int copies;
     int rotation;
+    KExiv2Iface::KExiv2 *exiv2Iface();
 
 private:
     QPixmap *m_thumbnail;
     void loadCache();
     QSize & size();
     QSize * m_size;
+	KExiv2Iface::KExiv2 *m_exiv2Iface;
 };
 
 bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
