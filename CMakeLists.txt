@@ -35,13 +35,13 @@ endif(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 # Plugins witch will be always compiled
 add_subdirectory(timeadjust)
 
-find_file(KDESKTOP_INTERFACE_FILE_FOUND org.kde.kdesktop.Background.xml PATHS ${DBUS_INTERFACES_DIR} )
+#find_file(KDESKTOP_INTERFACE_FILE_FOUND org.kde.kdesktop.Background.xml PATHS ${DBUS_INTERFACES_DIR} )
 
-if(KDESKTOP_INTERFACE_FILE_FOUND)
-        add_subdirectory( wallpaper )
-else(KDESKTOP_INTERFACE_FILE_FOUND)
-        MESSAGE(STATUS "Wallpaper plugins will not compile. Kdebase (kdesktop) must be installed before compiling it")
-endif(KDESKTOP_INTERFACE_FILE_FOUND)
+#if(KDESKTOP_INTERFACE_FILE_FOUND)
+#        add_subdirectory( wallpaper )
+#else(KDESKTOP_INTERFACE_FILE_FOUND)
+#        MESSAGE(STATUS "Wallpaper plugins will not compile. Kdebase (kdesktop) must be installed before compiling it")
+#endif(KDESKTOP_INTERFACE_FILE_FOUND)
 
 add_subdirectory(jpeglossless)
 
