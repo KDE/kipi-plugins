@@ -7,7 +7,6 @@ kde4_no_enable_final(kipiplugin_jpeglossless)
 
 set(kipiplugin_jpeglossless_PART_SRCS plugin_jpeglossless.cpp transupp.cpp jpegtransform.cpp utils.cpp imagerotate.cpp convert2grayscale.cpp imageflip.cpp actionthread.cpp)
 
-kde4_automoc(${kipiplugin_jpeglossless_PART_SRCS})
 
 kde4_add_plugin(kipiplugin_jpeglossless ${kipiplugin_jpeglossless_PART_SRCS})
 
