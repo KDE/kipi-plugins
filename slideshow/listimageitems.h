@@ -17,6 +17,9 @@
  *
  * ============================================================ */
 
+#ifndef LISTIMAGEITEM_H
+#define LISTIMAGEITEM_H
+
 // QT includes
 
 #include <qevent.h>
@@ -69,3 +72,4 @@ namespace KIPISlideShowPlugin
 
 }  // NameSpace KIPISlideShowPlugin
 
+#endif /* LISTIMAGEITEM_H */
