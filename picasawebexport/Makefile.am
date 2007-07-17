@@ -7,7 +7,7 @@ kde_module_LTLIBRARIES = kipiplugin_picasawebexport.la
 
 kipiplugin_picasawebexport_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
 
-kipiplugin_picasawebexport_la_SOURCES = plugin_picasawebexport.cpp PicasawebNewAlbumDialog.ui\ 
+kipiplugin_picasawebexport_la_SOURCES = plugin_picasawebexport.cpp PicasawebNewAlbumDialog.ui \
 		                     picasawebwindow.cpp picasaweblogin.cpp picasawebtalker.cpp \
 		                     picasawebwidget.cpp mpform.cpp picasawebviewitem.cpp exifrestorer.cpp uploadwidget.ui
 #PicasawebNewAlbumDialog.ui
