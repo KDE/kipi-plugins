@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Picasaweb Exporter
+Comment=KIPI Remote Picasaweb Export Plugin
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_picasawebexport
+author=Vardhman Jain, vardhman@gmail.com

@@ -30,7 +30,7 @@ endif
 
 SUBDIRS = common printwizard mpegencoder cdarchiving simpleviewerexport \
 	      sendimages batchprocessimages wallpaper findimages galleryexport flickrexport \
-	      jpeglossless timeadjust gpssync metadataedit imageviewer \
+	      jpeglossless timeadjust gpssync metadataedit imageviewer picasawebexport\
 	      $(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR) \
 	      $(HTMLEXPORTDIR) $(IPODEXPORTDIR) $(CALENDARDIR)
 
