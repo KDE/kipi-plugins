@@ -1,15 +1,19 @@
 Note: for details and info about current version, see ChangeLog.
+
 v 0.1.5 - SVN
+----------------------------------------------------------------------------
 
 Kipi-plugins NEW FEATURES
-PrintWizard: added exif management
-PrintWizard: prints exif date-time info
+
+PrintWizard    : Added exif management.
+PrintWizard    : Prints exif date-time info.
+PicasaWebExport: New plugin to export pictures to Picasa web service (by Vardhman Jain).
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
-001 ==> 133193 : PrintWizard : Data on the photo
-002 ==> 111454 : PrintWizard : Print photo's date into one corner like print assistant
-003 ==> 146457 : PrintWizard : rotation is not done correctly exif
+001 ==> 133193 : PrintWizard : Data on the photo.
+002 ==> 111454 : PrintWizard : Print photo's date into one corner like print assistant.
+003 ==> 146457 : PrintWizard : Rotation is not done correctly Exif.
 004 ==>
 
 v 0.1.4
@@ -252,7 +256,7 @@ v0.1.0-rc1                                                        2005-09-04
 
 Kipi-plugins NEW FEATURES
 
-New Plugin     : FlickrExport : new plugin to upload pictures on Flickr web service.
+New Plugin     : FlickrExport : new plugin to upload pictures on Flickr web service (by Vardhman Jain).
 
 SendImages     : support for Thunderbird and GmailAgent.
 Calendar       : The weekdays are now localized.
