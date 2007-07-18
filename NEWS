@@ -14,7 +14,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 001 ==> 133193 : PrintWizard : Data on the photo.
 002 ==> 111454 : PrintWizard : Print photo's date into one corner like print assistant.
 003 ==> 146457 : PrintWizard : Rotation is not done correctly Exif.
-004 ==>
+004 ==> 138838 : Digikam Picasaweb export plugin.
+005 ==> 
 
 v 0.1.4
 ----------------------------------------------------------------------------
