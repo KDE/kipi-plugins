@@ -21,7 +21,7 @@ Currently implemented plugins are:
  4) PrintWizard        : Print multiple images/index pages in one page
 
  5) JpegLossLess       : Batch images processing (rotation/flipping) without
- 			             losing meta information embedded in the image
+                                     losing meta information embedded in the image
                          and without recompression of the jpeg data.
 
  6) CdArchiving        : Albums CD archiving via K3b cd burning program 
@@ -51,17 +51,17 @@ Currently implemented plugins are:
 
 12) WallPaper          : Image to KDE Desktop.
 
-13) FindImages         : Find duplicate images in albums
+13) FindImages         : Find duplicate images in albums.
 
 14) GalleryExport      : Plugin to export images to a remote Gallery (and Gallery 2) server
-                         (http://gallery.sf.net)
+                         (http://gallery.sf.net).
 
 15) FlickrExport       : Plugin to export images to a remote Flickr web service (http://www.flickr.com)
 
-16) HTMLExport         : New plugin to export images collections into HTML page (under developpment)
+16) HTMLExport         : Plugin to export images collections into XHTML page.
 
 17) SimpleViewerExport : Plugin to export images to SimpleViewer
-                         (http://www.airtightinteractive.com/simpleviewer/)
+                         (http://www.airtightinteractive.com/simpleviewer).
 
 18) GPSSync            : Plugin to geolocalize pictures.
 
@@ -69,8 +69,7 @@ Currently implemented plugins are:
 
 20) MetadataEdit       : Plugin to edit EXIF and IPTC pictures metadata.
 
-21) ImageViewer        : Fast OpenGL Image Viewer
-
+21) PicasaWebExport    : Plugin to export images to a remote Picasa web service (http://www.picasaweb.com)
 
 Remark : "HelloWorld" plugin is just a tutorial plugin implementation for developpers.
        : "ImagesGallery" plugin is obsolete and no more maintained at the moment.
