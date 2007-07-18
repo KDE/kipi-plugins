@@ -54,23 +54,25 @@ Currently implemented plugins are:
 
 12) WallPaper          : Image to KDE Desktop.
 
-13) FindImages         : Find duplicate images in albums
+13) FindImages         : Find duplicate images in albums.
 
 14) GalleryExport      : Plugin to export images to a remote Gallery (and Gallery 2) server
-                         (http://gallery.sf.net)
+                         (http://gallery.sf.net).
 
 15) FlickrExport       : Plugin to export images to a remote Flickr web service (http://www.flickr.com)
 
-16) HTMLExport         : New plugin to export images collections into HTML page (under developpment)
+16) HTMLExport         : Plugin to export images collections into XHTML page.
 
 17) SimpleViewerExport : Plugin to export images to SimpleViewer
-                         (http://www.airtightinteractive.com/simpleviewer/)
+                         (http://www.airtightinteractive.com/simpleviewer).
 
 18) GPSSync            : Plugin to geolocalize pictures.
 
 19) IpodExport (beta)  : Plugin to export pictures with an Ipod device.
 
 20) MetadataEdit       : Plugin to edit EXIF and IPTC pictures metadata.
+
+21) PicasaWebExport    : Plugin to export images to a remote Picasa web service (http://www.picasaweb.com)
 
 -- DEPENDENCIES -------------------------------------------------------
 
