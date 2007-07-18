@@ -2,28 +2,28 @@ AUTHORS AND MAINTAINERS :
 
 MAIN DEVELOPERS:
 Gilles Caulier      <caulier dot gilles at gmail dot com>
-Tom Albers          <tomalbers at kde.nl>
-Joern Ahrens        <joern dot ahrens at kdemail dot net>
-Owen Hirst          <n8rider at sbcglobal.net>
 Vardhman Jain       <vardhman at gmail.com>
-Jesper K. Pedersen  <blackie at kde.org>
+Colin Guthrie       <kde at colin dot guthr dot ie>
 Aurelien Gateau     <aurelien dot gateau at free.fr>
+Valerio Fuoglio     <valerio dot ulteo dot com>
+Angelo Naselli      <anaselli at linux dot it>
 Seb Ruiz            <me at sebruiz dot net>
+Jesper K. Pedersen  <blackie at kde.org>
 
 CONTRIBUTORS:
-Angelo Naselli      <anaselli at linux dot it>
-Ralf Hoelzer        <kde at ralfhoelzer dot com>
-Richard Groult      <Richard dot Groult at jalix.org>
-Tudor Calin         <tudor at 1xtech.com>
-Todd Shoemaker      <todd at theshoemakers.net>
-Gregory Kokanosky   <gregory dot kokanosky at free.fr>
-Colin Guthrie       <kde at colin dot guthr dot ie>
-Valerio Fuoglio     <valerio dot ulteo dot com>
-Orgad Shaneh        <orgads at gmail dot com>
 Gerhard Kulzer      <gerhard at kulzer dot net>
+Orgad Shaneh        <orgads at gmail dot com>
+Achim Bohnet        <ach at mpe dot mpg dot de>
+Michael Höchstetter <michae dot hoechstetter at gmx dot de> 
+Joern Ahrens        <joern dot ahrens at kdemail dot net>
+Tudor Calin         <tudor at 1xtech.com>
 Rüdiger Bente       <ruediger dot bente at gmx dot de>
 Beth Marmorstein    <purplegamba at cox dot net>
 Robert Marmorstein  <rmmarm at sdf dot lonestar dot org>
+Owen Hirst          <n8rider at sbcglobal.net>
+Todd Shoemaker      <todd at theshoemakers.net>
+Gregory Kokanosky   <gregory dot kokanosky at free.fr>
+Richard Groult      <Richard dot Groult at jalix.org>
 
 PLUGINS MAINTAINERS
 Acquire images      : Jesper K. Pedersen
@@ -41,9 +41,10 @@ Jpeglossless        : Gilles Caulier
 Kamera Klient       : Aurelien Gateau and Michael J Gruber
 MetadataEdit        : Gilles Caulier
 Mpeg encoder        : Angelo Naselli and Valerio Fuoglio
-Print wizard        :
+PicasaWeb export    : Vardhman jain
+Print wizard        : Angelo Naselli
 Raw converter       : Gilles Caulier
-Sendimages          : Gilles Caulier
+Sendimages          : Michael Höchstette
 Simpleviewer export : Joern Ahrens
 Slideshow           : Valerio Fuoglio
 Time adjust         : Gilles Caulier
@@ -54,4 +55,5 @@ Angelo Naselli      <anaselli at linux dot it>
 
 FORMER MAINTAINER:
 Renchi Raju         <renchi at pooh.tam.uiuc.edu> 
-
+Tom Albers          <tomalbers at kde.nl>
+Ralf Hoelzer        <kde at ralfhoelzer dot com>
