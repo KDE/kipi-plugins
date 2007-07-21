@@ -1,10 +1,12 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Picasaweb Exporter
+Name[de]=Picasaweb-Exporter
 Name[pt]=Exportação para o Picasaweb
 Name[pt_BR]=Exportação para o Picasaweb
 Name[sv]=Export till Picasa webbalbum
 Comment=KIPI Remote Picasaweb Export Plugin
+Comment[de]=Ein KIPI-Modul zum Exportieren von Bildern zu Picasaweb
 Comment[ja]=Kipi リモート Picasaweb エクスポートプラグイン
 Comment[pt]='Plugin' do KIPI de Exportação para o Picasaweb Remoto
 Comment[pt_BR]='Plugin' do KIPI de Exportação para o Picasaweb Remoto
