@@ -115,7 +115,6 @@ libkdcraw   >= 0.1.1                        http://www.kipi-plugins.org
 libxslt     >= 1.1                          http://xmlsoft.org/XSLT
 libgpod     >= 0.4.2                        http://www.gtkpod.org/libgpod
 libkcal     >= 3.4.x                        http://pim.kde.org
-imlib2      >= 1.1.0                        http://www.enlightenment.org/Libraries/Imlib2
 ImageMagick >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
 MJPEGTools  >= 1.6.0 (runtime dependency)   http://mjpeg.sourceforge.net
 K3b         >= 0.11  (runtime dependency)   http://www.k3b.org
@@ -124,7 +123,7 @@ Plugin Specific Dependencies (for compiling and for running) :
 -------------------------------------------------------------------------
 
 jpeglossless       : imagemagick (runtime dependency)
-slideshow          : libimlib2, OpenGL support for libqt
+slideshow          : OpenGL support for libqt
 batchprocessimages : imagemagick (runtime dependency)
 cdarchiving        : k3b (runtime dependency)
 kameraklient       : libgphoto2

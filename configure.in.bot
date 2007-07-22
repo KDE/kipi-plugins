@@ -73,18 +73,6 @@ else
   echo "-- libkcal found.................. YES"
 fi
 
-if test -z "$ac_imlib2_config"; then
-  echo "-- imlib2 found................... NO"
-  echo ""
-  echo "SlideShow plugin needs imlib2-config. This plugin will not be compiled!"
-  echo "To complile this plugin, please install imlib2 development package."
-  echo "imlib2 website is at http://www.enlightenment.org/Libraries/Imlib2"
-  echo ""
-  all_tests=bad
-else
-  echo "-- imlib2 found................... YES"
-fi
-
 if test "x$have_GL" != "xyes"; then
   echo "-- OpenGL found................... NO"
   echo ""

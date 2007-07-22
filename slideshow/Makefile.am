@@ -1,6 +1,6 @@
 METASOURCES = AUTO
 
-INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(IMLIB2_CFLAGS)  $(LIBKIPI_CFLAGS) \
+INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(LIBKIPI_CFLAGS) \
 	   $(LIBKDCRAW_CFLAGS) $(all_includes)
 
 # Install this plugin in the KDE modules directory
@@ -9,10 +9,10 @@ kde_module_LTLIBRARIES = kipiplugin_slideshow.la
 kipiplugin_slideshow_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKDCRAW_LIBS_DEP) 
 
 kipiplugin_slideshow_la_SOURCES = plugin_slideshow.cpp slideshow.cpp \
-	slideshowconfig.cpp imlibiface.cpp slideshowgl.cpp toolbar.cpp slideshowconfigbase.ui listimageitems.cpp
+	slideshowconfig.cpp slideshowgl.cpp toolbar.cpp slideshowconfigbase.ui listimageitems.cpp
 
-#kipiplugin_slideshow_la_LIBADD = -lkdefx $(LIB_IMLIB2) $(GL_LIBS) $(LIBKIPI_LIBS) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
-kipiplugin_slideshow_la_LIBADD = -lkdefx -lImlib2 $(GL_LIBS) $(LIBKIPI_LIBS) $(LIBKDCRAW_LIBS)  \
+#kipiplugin_slideshow_la_LIBADD = -lkdefx  $(GL_LIBS) $(LIBKIPI_LIBS) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
+kipiplugin_slideshow_la_LIBADD = -lkdefx $(GL_LIBS) $(LIBKIPI_LIBS) $(LIBKDCRAW_LIBS)  \
 	                         $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_KIO) $(LIB_QT)
 
 kipiplugin_slideshow_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins

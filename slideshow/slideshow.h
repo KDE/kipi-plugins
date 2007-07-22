@@ -25,6 +25,7 @@
 // KDE includes
 
 #include <kconfig.h>
+#include <kurl.h>
 
 // QT includes
 
@@ -34,8 +35,10 @@
 #include <qstring.h>
 #include <qwidget.h>
 #include <qpainter.h>
+#include <qpixmap.h>
 #include <qmap.h>
 #include <qfont.h>
+#include <qstring.h>
 
 // Includes for libKIPI.
 #include <libkipi/imagecollection.h>
@@ -49,13 +52,37 @@ typedef QValueList<FileAnglePair > FileList;
 namespace KIPISlideShowPlugin
 {
 
-class ImlibIface;
-class ImImageSS;
 class ToolBar;
 
 class SlideShow;
 
 typedef int (SlideShow::*EffectMethod)(bool);
+
+//////////////////////////////////////   SlideShowImage CLASS   /////////////////////////////////////////
+
+class SlideShowImage
+{
+  public:
+    
+    SlideShowImage(QString path, int angle);    
+    ~SlideShowImage();
+  
+  public:
+    QPixmap* qpixmap();
+    QString filename();
+    void scale(int width, int height);
+    int height();
+    int width();
+    
+  private:
+    
+    QPixmap* m_qpixmap;
+    QString* m_filename;
+    KURL*    m_path;
+    int      m_angle;
+};
+
+/////////////////////////////////////////   SlideShow CLASS   //////////////////////////////////////////
 
 class SlideShow : public QWidget
 {
@@ -109,8 +136,7 @@ private:
     
     QMap<QString, EffectMethod> Effects;
 
-    ImlibIface*   m_imIface;
-    ImImageSS*    m_currImage;
+    SlideShowImage*   m_currImage;
     
     FileList    m_fileList;
     QStringList m_commentsList;

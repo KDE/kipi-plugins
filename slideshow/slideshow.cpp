@@ -25,13 +25,16 @@
 
 #include <qtimer.h>
 #include <qpixmap.h>
+#include <qimage.h>
 #include <qapplication.h>
 #include <qdesktopwidget.h>
 #include <qevent.h>
 #include <qcursor.h>
 #include <qfont.h>
+#include <qwmatrix.h>
 
 #include <kdebug.h>
+#include <kurl.h>
 #include <qtextcodec.h>
 
 extern "C"
@@ -42,16 +45,72 @@ extern "C"
 #include <time.h>
 }
 
-#include "imlibiface.h"
 #include "slideshow.h"
 #include "toolbar.h"
 
 #include <kdebug.h>
 
 namespace KIPISlideShowPlugin
-{
+{ 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////   SlideShowImage CLASS   /////////////////////////////////////////
+
+SlideShowImage::SlideShowImage(QString path, int angle)
+{
+  m_path      =  new KURL(path);
+  m_filename = new QString(m_path->fileName());
+
+  m_angle     =  angle;
+  
+  // Rotate according to angle
+  if ( m_angle != 0 ) 
+  {
+    QWMatrix matrix;
+    matrix.rotate((double)m_angle);
+    
+    QImage toRotate(path);
+    m_qpixmap = new QPixmap(toRotate.xForm( matrix ));
+  }
+  else
+    m_qpixmap   =  new QPixmap(path);
+  
+}
+
+SlideShowImage::~SlideShowImage() {
+  if (m_filename)
+    delete(m_filename);
+  
+  if (m_qpixmap)
+    delete (m_qpixmap);
+  
+  if (m_path)
+    delete (m_path);
+}
+
+QPixmap* SlideShowImage::qpixmap() { return m_qpixmap; }
+QString SlideShowImage::filename() { return *m_filename; }
+
+void SlideShowImage::scale(int width, int height)
+{ 
+  QPixmap pixmap(width,height);
+  pixmap.fill(Qt::black);
+  QPainter p(&pixmap);
+  
+  QPixmap pix((m_qpixmap->convertToImage()).smoothScale(width, height, QImage::ScaleMin));
+  p.drawPixmap((width-pix.width())/2,
+                (height-pix.height())/2, pix,
+                 0, 0, pix.width(), pix.height());
+  
+  if ( m_qpixmap )
+    delete(m_qpixmap);
+  
+  m_qpixmap = new QPixmap(pixmap);
+}
+
+int SlideShowImage::height() { return m_qpixmap->height(); }
+int SlideShowImage::width() { return m_qpixmap->width();}
+
+/////////////////////////////////////////   SlideShow CLASS   //////////////////////////////////////////
 
 SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments)
                      : QWidget(0, 0, WStyle_StaysOnTop | WType_Popup |
@@ -94,7 +153,6 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
 
     // ---------------------------------------------------------------
     
-    m_imIface   = new ImlibIface(this);
     m_currImage = 0;
     m_fileIndex = -1; // start with -1
     m_effect        = 0;
@@ -161,8 +219,6 @@ SlideShow::~SlideShow()
 
     if (m_currImage)
         delete m_currImage;
-    if (m_imIface)
-        delete m_imIface;
     
     if (m_config) {
         delete m_config;
@@ -346,11 +402,10 @@ void SlideShow::loadNextImage()
     FileAnglePair fileAngle = m_fileList[m_fileIndex];
     QString file(fileAngle.first);
     int     angle(fileAngle.second);
-    
-    m_currImage = new ImImageSS(m_imIface, file, angle);
-    m_currImage->fitSize(width(), height());
-    m_currImage->render();
 
+    m_currImage = new SlideShowImage(file,angle);
+    m_currImage->scale(width(), height());
+    
     if (m_printName)
         printFilename();
     
@@ -395,9 +450,8 @@ void SlideShow::loadPrevImage()
     QString file(fileAngle.first);
     int     angle(fileAngle.second);
     
-    m_currImage = new ImImageSS(m_imIface, file, angle);
-    m_currImage->fitSize(width(), height());
-    m_currImage->render();
+    m_currImage = new SlideShowImage(file,angle);
+    m_currImage->scale(width(), height());
 
     if (m_printName)
         printFilename();
@@ -418,8 +472,8 @@ void SlideShow::showCurrentImage()
         return;
     
     bitBlt(this, 0, 0, m_currImage->qpixmap(),
-           0, 0, m_currImage->qpixmap()->width(),
-           m_currImage->qpixmap()->height(), Qt::CopyROP, true);
+           0, 0, m_currImage->width(),
+           m_currImage->height(), Qt::CopyROP, true);
 }
 
 
@@ -465,7 +519,7 @@ void SlideShow::printComments()
         bool breakLine = FALSE; // End Of Line found
         uint currIndex; //  Comments QString current index
 
-        // Check m_im_inal lines dimension
+        // Check minimal lines dimension
 
         uint commentsLinesLengthLocal = m_commentsLinesLength;
 

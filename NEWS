@@ -8,6 +8,7 @@ Kipi-plugins NEW FEATURES
 PrintWizard    : Added exif management.
 PrintWizard    : Prints exif date-time info.
 PicasaWebExport: New plugin to export pictures to Picasa web service (by Vardhman Jain).
+SlideShow      : Dropped imlib2 dependency
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 

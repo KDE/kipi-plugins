@@ -1,9 +1,5 @@
 # Do *NOT* indent the content of the ifs, this will break the generated
 # Makefile
-if compile_SLIDESHOW
-SLIDESHOWDIR = slideshow
-endif
-
 if compile_KAMERAKLIENT
 KAMERAKLIENTDIR = kameraklient
 endif
@@ -30,9 +26,9 @@ endif
 
 SUBDIRS = common printwizard mpegencoder cdarchiving simpleviewerexport \
 	      sendimages batchprocessimages wallpaper findimages galleryexport flickrexport \
-	      jpeglossless timeadjust gpssync metadataedit imageviewer picasawebexport\
-	      $(SLIDESHOWDIR) $(KAMERAKLIENTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR) \
-	      $(HTMLEXPORTDIR) $(IPODEXPORTDIR) $(CALENDARDIR)
+	      jpeglossless timeadjust gpssync metadataedit imageviewer picasawebexport slideshow \
+	      $(KAMERAKLIENTDIR) $(ACQUIREIMAGESDIR) $(RAWCONVERTERDIR) $(HTMLEXPORTDIR)  \
+              $(IPODEXPORTDIR) $(CALENDARDIR)
 
 rcdir = $(kde_datadir)/kipi
 rc_DATA = tips
