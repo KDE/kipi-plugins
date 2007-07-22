@@ -30,13 +30,10 @@ extern "C"
 
 // Qt includes.
 
-#include <Q3VButtonGroup>
-#include <Q3ButtonGroup>
-#include <Q3VGroupBox>
-#include <Q3Grid>
-#include <Q3HBox>
+#include <QButtonGroup>
+#include <QGridLayout>
 #include <QToolTip>
-#include <QLayout>
+#include <QVBoxLayout>
 #include <QLabel>
 #include <QGroupBox>
 #include <QCheckBox>
@@ -85,6 +82,8 @@ public:
 
     TimeAdjustDialogPrivate()
     {
+        adjGB             = 0;
+        adjTypeGB         = 0;
         add               = 0;
         subtract          = 0;
         exif              = 0;
@@ -107,37 +106,40 @@ public:
         todayBtn          = 0;
     }
 
-    QRadioButton             *add;
-    QRadioButton             *subtract;
-    QRadioButton             *exif;
-    QRadioButton             *custom;
+    QRadioButton           *add;
+    QRadioButton           *subtract;
+    QRadioButton           *exif;
+    QRadioButton           *custom;
 
-    QToolButton              *todayBtn;
+    QToolButton            *todayBtn;
 
-    QCheckBox                *syncEXIFDateCheck;
-    QCheckBox                *syncIPTCDateCheck;
+    QCheckBox              *syncEXIFDateCheck;
+    QCheckBox              *syncIPTCDateCheck;
 
-    Q3VGroupBox              *exampleBox;
-    Q3VButtonGroup           *adjustValGrp;
-    Q3ButtonGroup            *adjustTypeGrp;
+    QGroupBox              *exampleBox;
+    QGroupBox              *adjGB;
+    QGroupBox              *adjTypeGB;
+
+    QButtonGroup           *adjustValGrp;
+    QButtonGroup           *adjustTypeGrp;
     
-    QLabel                   *infoLabel;
-    QLabel                   *exampleAdj;
+    QLabel                 *infoLabel;
+    QLabel                 *exampleAdj;
     
-    QSpinBox                 *secs;
-    QSpinBox                 *minutes;
-    QSpinBox                 *hours;
-    QSpinBox                 *days;
-    QSpinBox                 *months;
-    QSpinBox                 *years;
+    QSpinBox               *secs;
+    QSpinBox               *minutes;
+    QSpinBox               *hours;
+    QSpinBox               *days;
+    QSpinBox               *months;
+    QSpinBox               *years;
     
-    QDateTime                 exampleDate;
+    QDateTime               exampleDate;
 
-    KDateTimeWidget          *dateCreatedSel;
+    KDateTimeWidget        *dateCreatedSel;
 
-    KUrl::List                images;
+    KUrl::List              images;
 
-    KIPI::Interface          *interface;
+    KIPI::Interface        *interface;
 };
 
 TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
@@ -152,106 +154,128 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     setHelp("timeadjust", "kipi-plugins");
     setModal(true);
 
-    KVBox *box = new KVBox( this );
-    setMainWidget( box );
-    QVBoxLayout *vlay = new QVBoxLayout(box);
+    setMainWidget(new QWidget(this));
+    QVBoxLayout *vlay = new QVBoxLayout(mainWidget());
 
     // -- Adjustment type ------------------------------------------------------------
 
-    Q3VGroupBox *adjGB = new Q3VGroupBox(i18n("Adjustment Type"), box);
-    d->adjustTypeGrp   = new Q3ButtonGroup(1, Qt::Horizontal, adjGB);
-    d->add             = new QRadioButton(i18n("Add"), d->adjustTypeGrp);
-    d->subtract        = new QRadioButton(i18n("Subtract"), d->adjustTypeGrp);
-    d->exif            = new QRadioButton(i18n("Set file date to EXIF/IPTC creation date"), d->adjustTypeGrp);
-    d->custom          = new QRadioButton(i18n("Custom date"), d->adjustTypeGrp);
+    d->adjTypeGB       = new QGroupBox(i18n("Adjustment Type"), mainWidget());
+    QVBoxLayout *vlay2 = new QVBoxLayout(d->adjTypeGB);
+    d->adjustTypeGrp   = new QButtonGroup(d->adjTypeGB);
+    d->adjustTypeGrp->setExclusive(true);
 
-    d->adjustTypeGrp->setFrameStyle(QFrame::NoFrame);
-    d->adjustTypeGrp->setInsideMargin(0); 
-    d->adjustTypeGrp->setRadioButtonExclusive(true);
+    d->add            = new QRadioButton(i18n("Add"), d->adjTypeGB);
+    d->subtract       = new QRadioButton(i18n("Subtract"), d->adjTypeGB);
+    d->exif           = new QRadioButton(i18n("Set file date to EXIF/IPTC creation date"), d->adjTypeGB);
+    d->custom         = new QRadioButton(i18n("Custom date"), d->adjTypeGB);
 
-    Q3HBox *hbox       = new Q3HBox(d->adjustTypeGrp);
-    QLabel *space1     = new QLabel(hbox);
+    d->adjustTypeGrp->addButton(d->add, 0);
+    d->adjustTypeGrp->addButton(d->subtract, 1);
+    d->adjustTypeGrp->addButton(d->exif, 2);
+    d->adjustTypeGrp->addButton(d->custom, 3);
+
+    KHBox *hbox       = new KHBox(d->adjTypeGB);
+    QLabel *space1    = new QLabel(hbox);
     space1->setFixedWidth(15);
     d->dateCreatedSel  = new KDateTimeWidget(hbox);
     QLabel *space2     = new QLabel(hbox);
     space2->setFixedWidth(15);
     d->todayBtn        = new QToolButton(hbox);   
-    d->todayBtn->setIcon(SmallIcon("today"));
+    d->todayBtn->setIcon(SmallIcon("calendar-today"));
     d->todayBtn->setToolTip(i18n("Reset to current date"));
     new QLabel(hbox);
     
-    d->syncEXIFDateCheck = new QCheckBox(i18n("Update Exif creation date"), d->adjustTypeGrp);
-    d->syncIPTCDateCheck = new QCheckBox(i18n("Update IPTC creation date"), d->adjustTypeGrp);
-
-    vlay->addWidget(adjGB);
+    d->syncEXIFDateCheck = new QCheckBox(i18n("Update Exif creation date"), d->adjTypeGB);
+    d->syncIPTCDateCheck = new QCheckBox(i18n("Update IPTC creation date"), d->adjTypeGB);
+    
+    vlay2->setMargin(spacingHint());
+    vlay2->setSpacing(spacingHint());
+    vlay2->addWidget(d->add);
+    vlay2->addWidget(d->subtract);
+    vlay2->addWidget(d->exif);
+    vlay2->addWidget(d->custom);
+    vlay2->addWidget(hbox);
+    vlay2->addWidget(d->syncEXIFDateCheck);
+    vlay2->addWidget(d->syncIPTCDateCheck);
 
     // -- Adjustments ------------------------------------------------------------
 
-    d->adjustValGrp = new Q3VButtonGroup(i18n("Adjustments"), box);
-    vlay->addWidget(d->adjustValGrp);
+    d->adjGB             = new QGroupBox(i18n("Adjustments"), mainWidget());
+    QGridLayout* gridLay = new QGridLayout(d->adjGB);
 
-    QWidget* grid        = new QWidget(d->adjustValGrp);
-    QGridLayout* gridLay = new QGridLayout(grid);
-    gridLay->setSpacing(spacingHint());
-    gridLay->setColumnStretch( 2, 1 );
-    gridLay->setColumnStretch( 5, 1 );
-
-    QLabel* label = new QLabel( i18n("Hours:"), grid );
-    d->hours      = new QSpinBox(grid);
+    QLabel* label1 = new QLabel( i18n("Hours:"), d->adjGB);
+    d->hours       = new QSpinBox(d->adjGB);
     d->hours->setRange(0, 1000);
     d->hours->setSingleStep(1);
-    gridLay->addWidget( label, 0, 0 );
-    gridLay->addWidget( d->hours, 0, 1 );
 
-    label      = new QLabel( i18n("Minutes:"), grid );
-    d->minutes = new QSpinBox(grid);
+    QLabel* label2 = new QLabel( i18n("Minutes:"), d->adjGB);
+    d->minutes     = new QSpinBox(d->adjGB);
     d->minutes->setRange(0, 1000);
     d->minutes->setSingleStep(1);
-    gridLay->addWidget( label, 0, 3 );
-    gridLay->addWidget( d->minutes, 0, 4 );
 
-    label   = new QLabel( i18n("Seconds:"), grid );
-    d->secs = new QSpinBox(grid);
+    QLabel* label3 = new QLabel( i18n("Seconds:"), d->adjGB);
+    d->secs        = new QSpinBox(d->adjGB);
     d->secs->setRange(0, 1000);
     d->secs->setSingleStep(1);
-    gridLay->addWidget( label, 0, 6 );
-    gridLay->addWidget( d->secs, 0, 7 );
 
-    label   = new QLabel( i18n("Days:"), grid );
-    d->days = new QSpinBox(grid);
+    QLabel* label4 = new QLabel( i18n("Days:"), d->adjGB);
+    d->days        = new QSpinBox(d->adjGB);
     d->days->setRange(0, 1000);
     d->days->setSingleStep(1);
-    gridLay->addWidget( label, 1, 0 );
-    gridLay->addWidget( d->days, 1, 1 );
 
-    label     = new QLabel( i18n("Months:"), grid );
-    d->months = new QSpinBox(grid);
+    QLabel* label5 = new QLabel( i18n("Months:"), d->adjGB);
+    d->months      = new QSpinBox(d->adjGB);
     d->months->setRange(0, 1000);
     d->months->setSingleStep(1);
-    gridLay->addWidget( label, 1, 3 );
-    gridLay->addWidget( d->months, 1, 4 );
 
-    label    = new QLabel( i18n("Years:"), grid );
-    d->years = new QSpinBox(grid);
+    QLabel* label6 = new QLabel( i18n("Years:"), d->adjGB );
+    d->years       = new QSpinBox(d->adjGB);
     d->years->setRange(0, 1000);
     d->years->setSingleStep(1);
-    gridLay->addWidget( label, 1, 6 );
-    gridLay->addWidget( d->years, 1, 7 );
+
+    gridLay->setMargin(spacingHint());
+    gridLay->setSpacing(spacingHint());
+    gridLay->setColumnStretch(2, 1);
+    gridLay->setColumnStretch(5, 1);
+    gridLay->addWidget(label1, 0, 0, 1, 1);
+    gridLay->addWidget(d->hours, 0, 1, 1, 1);
+    gridLay->addWidget(label2, 0, 3, 1, 1);
+    gridLay->addWidget(d->minutes, 0, 4, 1, 1);
+    gridLay->addWidget(label3, 0, 6, 1, 1);
+    gridLay->addWidget(d->secs, 0, 7, 1, 1);
+    gridLay->addWidget(label4, 1, 0, 1, 1);
+    gridLay->addWidget(d->days, 1, 1, 1, 1);
+    gridLay->addWidget(label5, 1, 3, 1, 1);
+    gridLay->addWidget(d->months, 1, 4, 1, 1);
+    gridLay->addWidget(label6, 1, 6, 1, 1);
+    gridLay->addWidget(d->years, 1, 7, 1, 1);
 
     // -- Example ------------------------------------------------------------
 
-    d->exampleBox = new Q3VGroupBox(i18n("Example"), box);
-    vlay->addWidget(d->exampleBox);
+    d->exampleBox      = new QGroupBox(i18n("Example"), mainWidget());
+    QVBoxLayout *vlay3 = new QVBoxLayout(d->exampleBox);
 
     d->infoLabel  = new QLabel(d->exampleBox);
     d->exampleAdj = new QLabel(d->exampleBox);
     d->exampleAdj->setAlignment(Qt::AlignCenter);
 
+    vlay3->setMargin(spacingHint());
+    vlay3->setSpacing(spacingHint());
+    vlay3->addWidget(d->infoLabel);
+    vlay3->addWidget(d->exampleAdj);
+
+    // -----------------------------------------------------------------------
+
+    vlay->setMargin(0);
+    vlay->setSpacing(spacingHint());
+    vlay->addWidget(d->adjTypeGB);
+    vlay->addWidget(d->adjGB);
+    vlay->addWidget(d->exampleBox);
     vlay->addStretch();
 
     // -- Slots/Signals ------------------------------------------------------
 
-    connect(d->adjustTypeGrp, SIGNAL( clicked(int) ),
+    connect(d->adjustTypeGrp, SIGNAL( buttonReleased(int) ),
             this, SLOT( slotAdjustmentTypeChanged() ));
 
     connect(d->secs, SIGNAL( valueChanged( int ) ), 
@@ -377,7 +401,7 @@ void TimeAdjustDialog::setImages(const KUrl::List& images)
                                  exactCount)
                          + i18np("1 image will be skipped due to an inexact date.",
                                  "%n images will be skipped due to inexact dates.",
-                                 inexactCount );
+                                 inexactCount);
 
         d->infoLabel->setText(tmpLabel);
     }
@@ -398,14 +422,14 @@ void TimeAdjustDialog::slotUpdateExample()
     QDateTime date  = updateTime(KUrl(), d->exampleDate);
     QString newDate = date.toString(Qt::LocalDate);
     d->exampleAdj->setText(i18n("<b>%1</b><br>would, for example, "
-                               "change into<br><b>%2</b>")
-                           .arg(oldDate).arg(newDate));
+                                "change into<br><b>%2</b>", 
+                                oldDate, newDate));
 }
 
 void TimeAdjustDialog::slotAdjustmentTypeChanged()
 {
     d->exampleBox->setEnabled(false);
-    d->adjustValGrp->setEnabled(false);
+    d->adjGB->setEnabled(false);
     d->dateCreatedSel->setEnabled(false);
     d->todayBtn->setEnabled(false);
     d->syncEXIFDateCheck->setEnabled(false);
@@ -414,7 +438,7 @@ void TimeAdjustDialog::slotAdjustmentTypeChanged()
     if (d->add->isChecked() || d->subtract->isChecked())
     {
         d->exampleBox->setEnabled(true);
-        d->adjustValGrp->setEnabled(true);
+        d->adjGB->setEnabled(true);
         d->syncEXIFDateCheck->setEnabled(true);
         d->syncIPTCDateCheck->setEnabled(true);
     }
