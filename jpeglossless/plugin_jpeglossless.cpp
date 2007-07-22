@@ -51,7 +51,6 @@
 
 // Local includes.
 
-#include "actions.h"
 #include "actionthread.h"
 #include "plugin_jpeglossless.h"
 #include "plugin_jpeglossless.moc"
@@ -82,31 +81,33 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     KIPI::Plugin::setup( widget );
 
     m_action_AutoExif = new KAction(i18n("Auto Rotate/Flip Using Exif Information"), actionCollection());
-    connect(m_action_AutoExif, SIGNAL(triggered(bool)), this, SLOT(slotRotate()));
+    connect(m_action_AutoExif, SIGNAL(triggered(bool)), this, SLOT(slotRotateExif()));
     addAction(m_action_AutoExif);
 
     m_action_RotateImage = new KActionMenu(i18n("Rotate"), actionCollection());
+    addAction(m_action_RotateImage);
 
     KAction *left = new KAction(i18n("Left"), actionCollection());
     left->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left);
-    connect(left, SIGNAL(triggered(bool)), this, SLOT(slotRotate()));
+    connect(left, SIGNAL(triggered(bool)), this, SLOT(slotRotateLeft()));
     m_action_RotateImage->addAction(left);
 
     KAction *right = new KAction(i18n("Right"), actionCollection());
     right->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right);
-    connect(right, SIGNAL(triggered(bool)), this, SLOT(slotRotate()));
+    connect(right, SIGNAL(triggered(bool)), this, SLOT(slotRotateRight()));
     m_action_RotateImage->addAction(right);
 
     m_action_FlipImage = new KActionMenu(i18n("Flip"), actionCollection());
+    addAction(m_action_FlipImage);
 
     KAction *hori = new KAction(i18n("Horizontally"), actionCollection());
     hori->setShortcut(Qt::CTRL+Qt::Key_Asterisk);
-    connect(hori, SIGNAL(triggered(bool)), this, SLOT(slotFlip()));
+    connect(hori, SIGNAL(triggered(bool)), this, SLOT(slotFlipHorizontally()));
     m_action_FlipImage->addAction(hori);
 
     KAction *verti = new KAction(i18n("Vertically"), actionCollection());
     verti->setShortcut(Qt::CTRL+Qt::Key_Slash);
-    connect(verti, SIGNAL(triggered(bool)), this, SLOT(slotFlip()));
+    connect(verti, SIGNAL(triggered(bool)), this, SLOT(slotFlipVertically()));
     m_action_FlipImage->addAction(verti);
 
     m_action_Convert2GrayScale = new KAction(i18n("Convert to Black && White"), actionCollection());
@@ -147,34 +148,23 @@ Plugin_JPEGLossless::~Plugin_JPEGLossless()
     delete m_progressDlg;
 }
 
-void Plugin_JPEGLossless::slotFlip()
+void Plugin_JPEGLossless::slotFlipHorizontally()
+{
+    flip(KIPIJPEGLossLessPlugin::FlipHorizontal, i18n("horizontally"));
+}
+
+void Plugin_JPEGLossless::slotFlipVertically()
+{
+    flip(KIPIJPEGLossLessPlugin::FlipVertical, i18n("vertically"));
+}
+
+void Plugin_JPEGLossless::flip(KIPIJPEGLossLessPlugin::FlipAction action, const QString &title)
 {
     KUrl::List items = images();
     if (items.count() <= 0) return;
 
-    QString from(sender()->objectName());
-    QString title;
-    bool proceed = false;
+    m_thread->flip(items, action);
 
-    if (from == "flip_horizontal") 
-    {
-        m_thread->flip(items, KIPIJPEGLossLessPlugin::FlipHorizontal);
-        title = i18n("horizontaly");
-        proceed = true;
-    }
-    else if (from == "flip_vertical") 
-    {
-        m_thread->flip(items, KIPIJPEGLossLessPlugin::FlipVertical);
-        title = i18n("vertically");
-        proceed = true;
-    }
-    else 
-    {
-        kWarning( 51000 ) << "The impossible happened... unknown flip specified" << endl;
-        return;
-    }
-
-    if (!proceed) return;
     m_total   = items.count();
     m_current = 0;
     m_failed  = false;
@@ -197,40 +187,28 @@ void Plugin_JPEGLossless::slotFlip()
         m_thread->start();
 }
 
-void Plugin_JPEGLossless::slotRotate()
+void Plugin_JPEGLossless::slotRotateRight()
+{
+    rotate(KIPIJPEGLossLessPlugin::Rot90, i18n("right (clockwise)"));
+}
+
+void Plugin_JPEGLossless::slotRotateLeft()
+{
+    rotate(KIPIJPEGLossLessPlugin::Rot270, i18n("left (counterclockwise)"));
+}
+
+void Plugin_JPEGLossless::slotRotateExif()
+{
+    rotate(KIPIJPEGLossLessPlugin::Rot0, i18n("using Exif orientation tag"));
+}
+
+void Plugin_JPEGLossless::rotate(KIPIJPEGLossLessPlugin::RotateAction action, const QString &title)
 {
     KUrl::List items = images();
     if (items.count() <= 0) return;
 
-    QString from(sender()->objectName());
-    QString title;
-    bool proceed = false;
+    m_thread->rotate(items, action);
 
-    if (from == "rotate_cw") 
-    {
-        m_thread->rotate(items, KIPIJPEGLossLessPlugin::Rot90);
-        title = i18n("right (clockwise)");
-        proceed = true;
-    }
-    else if (from == "rotate_ccw") 
-    {
-        m_thread->rotate(items, KIPIJPEGLossLessPlugin::Rot270);
-        title = i18n("left (counterclockwise)");
-        proceed = true;
-    }
-    else if (from == "rotate_exif") 
-    {
-        m_thread->rotate(items, KIPIJPEGLossLessPlugin::Rot0);
-        title = i18n("using Exif orientation tag");
-        proceed = true;
-    }
-    else 
-    {
-        kWarning( 51000 ) << "The impossible happened... unknown rotation angle specified" << endl;
-        return;
-    }
-
-    if (!proceed) return;
     m_total   = items.count();
     m_current = 0;
     m_failed  = false;

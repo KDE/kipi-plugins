@@ -29,6 +29,9 @@
 #include <libkipi/plugin.h>
 #include <libkipi/imagecollection.h>
 
+// Local includes
+
+#include "actions.h"
 
 class KActionMenu;
 class KAction;
@@ -57,12 +60,18 @@ protected:
 
 private slots:
 
-    void slotRotate();
-    void slotFlip();
+    void slotFlipHorizontally();
+    void slotFlipVertically();
+    void slotRotateRight();
+    void slotRotateLeft();
+    void slotRotateExif();
     void slotConvert2GrayScale();
     void slotCancel();
 
 private:
+
+    void flip(KIPIJPEGLossLessPlugin::FlipAction action, const QString &title);
+    void rotate(KIPIJPEGLossLessPlugin::RotateAction action, const QString &title);
 
     bool                                  m_failed;
 
