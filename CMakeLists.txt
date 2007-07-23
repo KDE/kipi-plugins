@@ -35,7 +35,7 @@ endif(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 # Plugins witch will be always compiled
 add_subdirectory(timeadjust)
 
-#find_file(KDESKTOP_INTERFACE_FILE_FOUND org.kde.kdesktop.Background.xml PATHS ${DBUS_INTERFACES_DIR} )
+#find_file(KDESKTOP_INTERFACE_FILE_FOUND org.kde.kdesktop.Background.xml PATHS ${DBUS_INTERFACES_INSTALL_DIR} )
 
 #if(KDESKTOP_INTERFACE_FILE_FOUND)
 #        add_subdirectory( wallpaper )
