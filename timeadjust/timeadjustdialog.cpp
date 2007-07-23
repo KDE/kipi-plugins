@@ -350,6 +350,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
 
 TimeAdjustDialog::~TimeAdjustDialog()
 {
+    delete d->about;
     delete d;
 }
 
