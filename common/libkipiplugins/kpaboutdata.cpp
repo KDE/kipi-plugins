@@ -1,50 +1,58 @@
-//////////////////////////////////////////////////////////////////////////////
-//
-//    KPABOUTDATA.CPP
-//
-//    Copyright (C) 2006 Angelo Naselli <anaselli at linux dot it>
-//
-//    This program is free software; you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation; either version 2 of the License, or
-//    (at your option) any later version.
-//
-//    This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with this program; if not, write to the Free Software
-//    Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
-//
-//////////////////////////////////////////////////////////////////////////////
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2006-14-09
+ * Description : Kipi-Plugins shared library.
+ * 
+ * Copyright (C) 2006 Angelo Naselli <anaselli at linux dot it>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * ============================================================ */
 
-#include <qglobal.h>
+// Qt includes.
+
+#include <QGlobal>
+
+// KDE includes.
+
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
 #include <kdeversion.h>
 
-#include "kpaboutdata.h"
-#include "pluginsversion.h"
+// Local includes.
+
 #include "kdebug.h"
+#include "pluginsversion.h"
+#include "kpaboutdata.h"
 
 namespace KIPIPlugins
 {
 
-  KPAboutData::KPAboutData(const char *pluginName,
-                      const char *pluginVersion,
-                      int licenseType,
-                      const char *pluginDescription,
-                      const char *copyrightStatement) : KAboutData ("kipi-plugins", pluginName,
-                                                                  pluginVersion,
-                                                                  0, licenseType,
-                                                                  copyrightStatement,
-                                                                  pluginDescription,
-                                                                  "http://www.kipi-plugins.org")
-  {
-#if KDE_IS_VERSION(3,4,0)
+KPAboutData::KPAboutData(const char *pluginName,
+                         const char *pluginVersion,
+                         int licenseType,
+                         const char *pluginDescription,
+                         const char *copyrightStatement) 
+           : KAboutData ("kipi-plugins", 
+                         pluginName,
+                         pluginVersion,
+                         0, licenseType,
+                         copyrightStatement,
+                         pluginDescription,
+                         "http://www.kipi-plugins.org")
+{
     // setProgramLogo is defined from kde 3.4.0 on
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_plugins_logo", KGlobal::dirs()->kde_default("data") + "kipi/data");
@@ -64,6 +72,6 @@ namespace KIPIPlugins
 
     // and set the string into the short description
     setShortDescription(KipiPluginsVersionString.ascii());
-  }
-
 }
+
+}   // namespace KIPIPlugins

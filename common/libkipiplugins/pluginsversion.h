@@ -26,4 +26,3 @@
 static const char kipiplugins_version[] = "0.2.0";
 
 #endif // KIPIPLUGINS_VERSION_H
-
