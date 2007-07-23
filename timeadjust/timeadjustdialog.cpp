@@ -161,7 +161,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin for adjusting time stamp of picture files"),
                                            "(c) 2003-2005, Jesper K. Pedersen\n"
-                                           "(c) 2006, Gilles Caulier");
+                                           "(c) 2006-2007, Gilles Caulier");
 
     d->about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Author"),
                         "blackie@kde.org");
