@@ -32,8 +32,6 @@ endif(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 # ipodexport need Gpod library
 # calendar need Kcal library (KDEPIM)
       
-# Plugins witch will be always compiled
-add_subdirectory(timeadjust)
 
 #find_file(KDESKTOP_INTERFACE_FILE_FOUND org.kde.kdesktop.Background.xml PATHS ${DBUS_INTERFACES_INSTALL_DIR} )
 
@@ -43,5 +41,8 @@ add_subdirectory(timeadjust)
 #        MESSAGE(STATUS "Wallpaper plugins will not compile. Kdebase (kdesktop) must be installed before compiling it")
 #endif(KDESKTOP_INTERFACE_FILE_FOUND)
 
+# Plugins witch will be always compiled
+add_subdirectory(common)
+add_subdirectory(timeadjust)
 add_subdirectory(jpeglossless)
 
