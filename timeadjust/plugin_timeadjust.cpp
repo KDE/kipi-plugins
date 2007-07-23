@@ -57,7 +57,7 @@ void Plugin_TimeAdjust::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    m_actionTimeAjust = new KAction(KIcon("clock"), i18n("Adjust Time && Date..."), actionCollection());
+    m_actionTimeAjust = new KAction(KIcon("timeadjust"), i18n("Adjust Time && Date..."), actionCollection());
     connect(m_actionTimeAjust, SIGNAL(triggered(bool)), this, SLOT(slotActivate()));
     addAction(m_actionTimeAjust);
 
