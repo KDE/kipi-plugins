@@ -20,16 +20,11 @@
  * 
  * ============================================================ */
 
-// Qt includes.
-
-#include <QGlobal>
-
 // KDE includes.
 
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
-#include <kdeversion.h>
 
 // Local includes.
 
@@ -40,38 +35,40 @@
 namespace KIPIPlugins
 {
 
-KPAboutData::KPAboutData(const char *pluginName,
-                         const char *pluginVersion,
-                         int licenseType,
-                         const char *pluginDescription,
-                         const char *copyrightStatement) 
-           : KAboutData ("kipi-plugins", 
+KPAboutData::KPAboutData(const KLocalizedString& pluginName,
+                         const QByteArray& pluginVersion,
+                         enum LicenseKey licenseType,
+                         const KLocalizedString& pluginDescription,
+                         const KLocalizedString& copyrightStatement) 
+           : KAboutData (QByteArray("kipi-plugins"), 
+                         QByteArray(), 
                          pluginName,
-                         pluginVersion,
-                         0, licenseType,
+                         QByteArray(pluginVersion),
+                         KLocalizedString(), 
+                         licenseType,
                          copyrightStatement,
                          pluginDescription,
-                         "http://www.kipi-plugins.org")
+                         QByteArray("http://www.kipi-plugins.org"))
 {
     // setProgramLogo is defined from kde 3.4.0 on
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_plugins_logo", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_plugins_logo", "kipi-plugins_logo.png");
+    QString directory = KStandardDirs::locate("data", "kipi/data/kipi-plugins_logo.png");
 
     // set the kipiplugins logo inside the about dialog
-    setProgramLogo(QImage(directory + "kipi-plugins_logo.png"));
-#endif
+    setProgramLogo(QImage(directory));
+
     // set the plugin description into long text description
     setOtherText(pluginDescription);
 
     // put the plugin name and version with kipi-plugins and kipi-plugins version 
-    KipiPluginsVersionString = QString(pluginName) + " " + QString(pluginVersion) + 
-                              " - Kipi-plugins " + QString(kipiplugins_version) ;
+    KLocalizedString shortDesc = ki18n("%1 %2 - Kipi-plugins %3")
+                                       .subs(pluginName.toString())
+                                       .subs(QString(pluginVersion))
+                                       .subs(QString(kipiplugins_version));
 
-    kdDebug( 51001 ) << "Kipi-plugins - " << KipiPluginsVersionString.ascii() << endl;
+    kDebug( 51001 ) << shortDesc.toString() << endl;
 
     // and set the string into the short description
-    setShortDescription(KipiPluginsVersionString.ascii());
+    setShortDescription(shortDesc);
 }
 
 }   // namespace KIPIPlugins

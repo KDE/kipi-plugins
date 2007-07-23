@@ -36,17 +36,14 @@ namespace KIPIPlugins
 
 class LIBKIPI_EXPORT KPAboutData : public KAboutData
 {
-    private:
-      QString KipiPluginsVersionString;
 
     public:
 
-      KPAboutData(const char *pluginName,
-                  const char *pluginVersion=0,
-                  int licenseType=License_Unknown,
-                  const char *pluginDescription=0,
-                  const char *copyrightStatement="Copyright 2003-2007, kipi-plugins team");
-
+      KPAboutData(const KLocalizedString& pluginName,
+                  const QByteArray& pluginVersion=QByteArray(),
+                  enum LicenseKey licenseType=License_Unknown,
+                  const KLocalizedString& pluginDescription=KLocalizedString(),
+                  const KLocalizedString& copyrightStatement=ki18n("Copyright 2003-2007, kipi-plugins team"));
 };
 
 } // namespace KIPIPlugins
