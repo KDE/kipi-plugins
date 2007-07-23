@@ -28,6 +28,8 @@
 // KDE includes.
 
 #include <kprinter.h>
+#include <kglobal.h>
+#include <klocale.h>
 #include <kdebug.h>
 
 // Local includes.
@@ -224,7 +226,8 @@ bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
 			}
 			else if (captionType == 2) // exif date
 			{
-				caption = photo->exiv2Iface()->getImageDateTime().toString("ddd MMMM d yyyy hh:mm:ss");
+				caption = KGlobal::locale()->formatDateTime(photo->exiv2Iface()->getImageDateTime(),
+										  					false, false);
 				kdDebug( 51000 ) << "exif date  " << caption << endl;
 			}
 	  // draw the text at (0,0), but we will translate and rotate the world
@@ -397,7 +400,8 @@ bool paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
 			}
 			else if (captionType == 2) // exif date
 			{
-				caption = photo->exiv2Iface()->getImageDateTime().toString("ddd MMMM d yyyy hh:mm:ss");
+				caption = KGlobal::locale()->formatDateTime(photo->exiv2Iface()->getImageDateTime(),
+										  					false, false);
 				kdDebug( 51000 ) << "exif date  " << caption << endl;
 			}
 			int captionW = w-2;
