@@ -13,7 +13,13 @@ find_package(TIFF REQUIRED)
 macro_optional_find_package(Gphoto2)
 macro_optional_find_package(OpenGL)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins ${KEXIV2_INCLUDE_DIR} ${KDCRAW_INCLUDE_DIR} ${KIPI_INCLUDE_DIR} ${KDE4_INCLUDES} ${QT4_INCLUDES})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins 
+                    ${KEXIV2_INCLUDE_DIR} 
+		    ${KDCRAW_INCLUDE_DIR} 
+		    ${KIPI_INCLUDE_DIR} 
+		    ${KDE4_INCLUDES} 
+		    ${QT4_INCLUDES}
+		   )
 
 # Plugins witch depand of OpenGL
 if(OPENGL_FOUND AND OPENGL_GLU_FOUND)
