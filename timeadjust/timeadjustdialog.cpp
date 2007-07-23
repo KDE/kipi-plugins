@@ -47,6 +47,7 @@ extern "C"
 
 // KDE includes.
 
+#include <kmenu.h>
 #include <kvbox.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -57,6 +58,8 @@ extern "C"
 #include <kdatetimewidget.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
+#include <kpushbutton.h>
+#include <khelpmenu.h>
 
 // LibKipi includes.
 
@@ -69,6 +72,8 @@ extern "C"
 
 // Local includes.
 
+#include "kpaboutdata.h"
+#include "pluginsversion.h"
 #include "timeadjustdialog.h"
 #include "timeadjustdialog.moc"
 
@@ -104,42 +109,45 @@ public:
         dateCreatedSel    = 0;
         interface         = 0;
         todayBtn          = 0;
+        about             = 0;
     }
 
-    QRadioButton           *add;
-    QRadioButton           *subtract;
-    QRadioButton           *exif;
-    QRadioButton           *custom;
+    QRadioButton             *add;
+    QRadioButton             *subtract;
+    QRadioButton             *exif;
+    QRadioButton             *custom;
 
-    QToolButton            *todayBtn;
+    QToolButton              *todayBtn;
 
-    QCheckBox              *syncEXIFDateCheck;
-    QCheckBox              *syncIPTCDateCheck;
+    QCheckBox                *syncEXIFDateCheck;
+    QCheckBox                *syncIPTCDateCheck;
 
-    QGroupBox              *exampleBox;
-    QGroupBox              *adjGB;
-    QGroupBox              *adjTypeGB;
+    QGroupBox                *exampleBox;
+    QGroupBox                *adjGB;
+    QGroupBox                *adjTypeGB;
 
-    QButtonGroup           *adjustValGrp;
-    QButtonGroup           *adjustTypeGrp;
-    
-    QLabel                 *infoLabel;
-    QLabel                 *exampleAdj;
-    
-    QSpinBox               *secs;
-    QSpinBox               *minutes;
-    QSpinBox               *hours;
-    QSpinBox               *days;
-    QSpinBox               *months;
-    QSpinBox               *years;
-    
-    QDateTime               exampleDate;
+    QButtonGroup             *adjustValGrp;
+    QButtonGroup             *adjustTypeGrp;
 
-    KDateTimeWidget        *dateCreatedSel;
+    QLabel                   *infoLabel;
+    QLabel                   *exampleAdj;
 
-    KUrl::List              images;
+    QSpinBox                 *secs;
+    QSpinBox                 *minutes;
+    QSpinBox                 *hours;
+    QSpinBox                 *days;
+    QSpinBox                 *months;
+    QSpinBox                 *years;
 
-    KIPI::Interface        *interface;
+    QDateTime                 exampleDate;
+
+    KDateTimeWidget          *dateCreatedSel;
+
+    KUrl::List                images;
+
+    KIPI::Interface          *interface;
+
+    KIPIPlugins::KPAboutData *about;
 };
 
 TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
@@ -156,6 +164,35 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
 
     setMainWidget(new QWidget(this));
     QVBoxLayout *vlay = new QVBoxLayout(mainWidget());
+
+    // -- About data and help button ----------------------------------------
+
+    d->about = new KIPIPlugins::KPAboutData(ki18n("Time Adjust"),
+                   QByteArray(),
+                   KAboutData::License_GPL,
+                   ki18n("A Kipi plugin for adjusting time stamp of picture files"),
+                   ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
+                         "(c) 2006-2007, Gilles Caulier"));
+
+    d->about->addAuthor(ki18n("Jesper K. Pedersen"), 
+                        ki18n("Author"),
+                        "blackie@kde.org");
+
+    d->about->addAuthor(ki18n("Gilles Caulier"), 
+                        ki18n("Developper and maintainer"),
+                        "caulier dot gilles at gmail dot com");
+
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KPushButton *helpButton = button( Help );
+    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    helpButton->setDelayedMenu( helpMenu->menu() );
 
     // -- Adjustment type ------------------------------------------------------------
 
