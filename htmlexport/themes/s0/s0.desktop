@@ -16,10 +16,16 @@ Comment[pa]=ਹੋਰ ਵੀ ਸੋਹਣਾ ਸਰੂਪ ਹੈ। ਬਹੁਤ
 Comment[pl]=Jeszcze jeden przyjemny motyw. Bardzo prosty i schludny, korzysta z ikon "calligraphics".
 Comment[pt]=Mais outro tema bonito. Aparência muito simples e limpa, com ícones "caligrafados".
 Comment[pt_BR]=Mais um tema. Muito simples e com aparência limpa com ícones "caligráficos".
+Comment[sr]=Још једна лепа тема. Веома једноставан и прегледан изглед са „калиграфским“ иконама.
+Comment[sr@Latn]=Još jedna lepa tema. Veoma jednostavan i pregledan izgled sa „kaligrafskim“ ikonama.
 Comment[sv]=Ytterligare ett snyggt tema. Mycket enkelt och rent utseende med "kalligrafiska" ikoner.
 Icon=
 Name=S0
+Name[sr]=СО
+Name[sr@Latn]=SO
 
 [X-HTMLExport Author]
 Name=Petr Vaněk
+Name[sr]=Петр Ванек
+Name[sr@Latn]=Petr Vanek
 Url=mailto:petr@scribus.info

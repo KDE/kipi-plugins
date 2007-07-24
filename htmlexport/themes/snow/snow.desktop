@@ -19,6 +19,8 @@ Name[nl]=Sneeuw
 Name[pa]=ਬਰਫ਼
 Name[pl]=Śnieg
 Name[pt]=Neve
+Name[sr]=Снег
+Name[sr@Latn]=Sneg
 Name[sv]=Snö
 Name[zh_CN]=雪月
 Comment=A perfect match for your mountain holidays
@@ -41,9 +43,13 @@ Comment[pa]=ਤੁਹਾਡੀ ਪਹਾੜੀ ਉੱਤੇ ਮਨਾਈਆਂ �
 Comment[pl]=Idealnie pasuje do prezentacji zdjęć z Twoich górskich wakacji
 Comment[pt]=A combinação perfeita com as suas férias na montanha
 Comment[pt_BR]=um companheiro perfeito para suas férias nas montanhas
+Comment[sr]=Савршено за ваш одмор на планини
+Comment[sr@Latn]=Savršeno za vaš odmor na planini
 Comment[sv]=Passar perfekt med din alpinsemester
 Comment[zh_CN]=野营的绝配
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
+Name[sr]=Орелиен Гато
+Name[sr@Latn]=Orelien Gato
 Url=mailto:aurelien.gateau@free.fr

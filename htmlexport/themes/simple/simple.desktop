@@ -17,6 +17,8 @@ Name[nl]=Eenvoudig
 Name[pa]=ਸਧਾਰਨ
 Name[pl]=Prosty
 Name[pt]=Simples
+Name[sr]=Једноставно
+Name[sr@Latn]=Jednostavno
 Name[sv]=Enkelt
 Name[zh_CN]=简单
 Comment=A simple and light theme
@@ -39,11 +41,15 @@ Comment[pa]=ਇੱਕ ਸਧਾਰਨ ਅਤੇ ਹਲਕਾ ਸਰੂਪ
 Comment[pl]=Prosty i lekki motyw
 Comment[pt]=Ajuste de Data e Hora do KIPI
 Comment[pt_BR]=Um tema simples e leve
+Comment[sr]=Једноставна и лагана тема
+Comment[sr@Latn]=Jednostavna i lagana tema
 Comment[sv]=Ett enkelt och lättviktigt tema
 Comment[zh_CN]=简洁明快的主题
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
+Name[sr]=Орелиен Гато
+Name[sr@Latn]=Orelien Gato
 Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter style]
@@ -61,6 +67,8 @@ Name[nds]=Stil
 Name[nl]=Stijl
 Name[pt]=Estilo
 Name[pt_BR]=Estilo
+Name[sr]=Стил
+Name[sr@Latn]=Stil
 Name[sv]=Stil
 Name[xh]=Uhlobo
 Name[zu]=Uhlobo

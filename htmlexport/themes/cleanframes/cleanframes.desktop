@@ -10,6 +10,8 @@ Name[nds]=Kloor Rahmens
 Name[nl]=Nette frames
 Name[pt]=Molduras Simples
 Name[pt_BR]=Molduras Simples
+Name[sr]=Чисти оквири
+Name[sr@Latn]=Čisti okviri
 Name[sv]=Rena ramar
 Comment=A frame theme based on Ruediger Bente's frame theme
 Comment[ca]=Un tema de marcs basat en el tema de marcs del Ruediger Bente
@@ -25,10 +27,14 @@ Comment[nds]=En Rahmenmuster, buut op Rüdiger Bente sien Rahmenmuster
 Comment[nl]=Een framethema gebaseerd op het framethema van  Ruediger Bente
 Comment[pt]=Um tema de molduras baseado no tema de Ruediger Bente
 Comment[pt_BR]=Um tema de molduras baseado no tema de Ruediger Bente
+Comment[sr]=Тема оквира заснована на теми Рудигера Бентеа
+Comment[sr@Latn]=Tema okvira zasnovana na temi Rudigera Bentea
 Comment[sv]=Ett ramtema baserat på Ruediger Bentes ramtema
 
 [X-HTMLExport Author]
 Name=Elizabeth Marmorstein
+Name[sr]=Елизабет Марморштајн
+Name[sr@Latn]=Elizabet Marmorštajn
 Url=mailto:purplegamba@cox.net
 
 [X-HTMLExport Parameter style]
@@ -46,6 +52,8 @@ Name[nds]=Stil
 Name[nl]=Stijl
 Name[pt]=Estilo
 Name[pt_BR]=Estilo
+Name[sr]=Стил
+Name[sr@Latn]=Stil
 Name[sv]=Stil
 Name[xh]=Uhlobo
 Name[zu]=Uhlobo

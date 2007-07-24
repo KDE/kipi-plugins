@@ -11,6 +11,8 @@ Name[ja]=フレーム
 Name[nds]=Rahmens
 Name[pt]=Molduras
 Name[pt_BR]=Molduras
+Name[sr]=Оквири
+Name[sr@Latn]=Okviri
 Name[sv]=Ramar
 Comment=A frame theme
 Comment[ca]=Un tema de marcs
@@ -27,9 +29,13 @@ Comment[nds]=En Rahmen-Muster
 Comment[nl]=Een frame-thema
 Comment[pt]=Um tema de molduras
 Comment[pt_BR]=Um tema de molduras
+Comment[sr]=Тема оквира
+Comment[sr@Latn]=Tema okvira
 Comment[sv]=Ett tema med ramar
 
 [X-HTMLExport Author]
 Name=Ruediger Bente
 Name[nds]=Rüdiger Bente
+Name[sr]=Рудигер Бенте
+Name[sr@Latn]=Rudiger Bente
 Url=mailto:ruediger.bente@gmx.de

@@ -2,6 +2,8 @@
 Name=Matrix
 Name[cy]=Matrics
 Name[pa]=ਮੈਟਰਿਕਸ
+Name[sr]=Матрикс
+Name[sr@Latn]=Matriks
 Name[zh_CN]=黑客帝国
 Comment=Show your photos with Matrix style
 Comment[ca]=Visualitza les fotos amb l'estil Matrix
@@ -23,9 +25,13 @@ Comment[pa]=ਆਪਣੀਆਂ ਫੋਟੋ ਮਟੈਰਕਿਸ ਸ਼ੈਲ�
 Comment[pl]=Pokaż swoje zdjęcia w stylu Matrixa
 Comment[pt]=A suas fotos no estilo Matrix
 Comment[pt_BR]=Mostrar suas fotos com estilo matrix
+Comment[sr]=Прикажите ваше слике у Матрикс стилу
+Comment[sr@Latn]=Prikažite vaše slike u Matriks stilu
 Comment[sv]=Visa foton med Matrix-stil
 Comment[zh_CN]=以黑客帝国风格显示您的照片
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
+Name[sr]=Орелиен Гато
+Name[sr@Latn]=Orelien Gato
 Url=mailto:aurelien.gateau@free.fr
