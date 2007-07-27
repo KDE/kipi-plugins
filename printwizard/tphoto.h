@@ -66,11 +66,6 @@ private:
 	KExiv2Iface::KExiv2 *m_exiv2Iface;
 };
 
-bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
-                  int captionType, unsigned int &current, bool useThumbnails = false);
-
-bool paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
-                  int captionType, unsigned int &current);
 
 }  // NameSpace KIPIPrintWizardPlugin
                   

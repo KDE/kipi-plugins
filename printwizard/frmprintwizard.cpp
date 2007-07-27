@@ -32,6 +32,7 @@ extern "C"
 #include <qbuttongroup.h>
 #include <qradiobutton.h>
 #include <qdir.h>
+#include <qslider.h>
 
 // Include files for KDE
 
@@ -55,6 +56,8 @@ extern "C"
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <kdeversion.h>
+#include <kfontcombo.h>
+#include <kcolorcombo.h>
 
 // Local includes
 
@@ -401,6 +404,371 @@ int FrmPrintWizard::getPageCount() {
   return pageCount;
 }
 
+const float FONT_HEIGHT_RATIO = 0.08;
+
+bool FrmPrintWizard::paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
+  int captionType, unsigned int &current, bool useThumbnails)
+{
+	Q_ASSERT(layouts.count() > 1);
+
+	QRect *srcPage = layouts.at(0);
+	QRect *layout = layouts.at(1);
+
+  // scale the page size to best fit the painter
+  // size the rectangle based on the minimum image dimension
+	int destW = p.window().width();
+	int destH = p.window().height();
+
+	int srcW = srcPage->width();
+	int srcH = srcPage->height();
+	if (destW < destH)
+	{
+		destH = NINT((double)destW * ((double)srcH / (double)srcW));
+		if (destH > p.window().height())
+		{
+			destH = p.window().height();
+			destW = NINT((double)destH * ((double)srcW / (double)srcH));
+		}
+	}
+	else
+	{
+		destW = NINT((double)destH * ((double)srcW / (double)srcH));
+		if (destW > p.window().width())
+		{
+			destW = p.window().width();
+			destH = NINT((double)destW * ((double)srcH / (double)srcW));
+		}
+	}
+
+	double xRatio = (double)destW / (double)srcPage->width();
+	double yRatio = (double)destH / (double)srcPage->height();
+
+	int left = (p.window().width()  - destW) / 2;
+	int top  = (p.window().height() - destH) / 2;
+
+  // FIXME: may not want to erase the background page
+	p.eraseRect(left, top,
+				NINT((double)srcPage->width() * xRatio),
+					  NINT((double)srcPage->height() * yRatio));
+
+	for(; current < photos.count(); current++)
+	{
+		TPhoto *photo = photos.at(current);
+    // crop
+		QImage img;
+		if (useThumbnails)
+			img = photo->thumbnail().convertToImage();
+		else
+			img.load(photo->filename.path()); // PENDING(blackie) handle general URL case
+
+	// next, do we rotate?
+		if (photo->rotation != 0)
+		{
+      // rotate
+			QWMatrix matrix;
+			matrix.rotate(photo->rotation);
+			img = img.xForm(matrix);
+		}
+
+		if (useThumbnails)
+		{
+      // scale the crop region to thumbnail coords
+			double xRatio = 0.0;
+			double yRatio = 0.0;
+
+			if (photo->thumbnail().width() != 0)
+				xRatio = (double)photo->thumbnail().width() / (double) photo->width();
+			if (photo->thumbnail().height() != 0)
+				yRatio = (double)photo->thumbnail().height() / (double) photo->height();
+
+			int x1 = NINT((double)photo->cropRegion.left() * xRatio);
+			int y1 = NINT((double)photo->cropRegion.top()  * yRatio);
+
+			int w = NINT((double)photo->cropRegion.width()  * xRatio);
+			int h = NINT((double)photo->cropRegion.height() * yRatio);
+
+			img = img.copy(QRect(x1, y1, w, h));
+		}
+		else
+			img = img.copy(photo->cropRegion);
+
+		int x1 = NINT((double)layout->left() * xRatio);
+		int y1 = NINT((double)layout->top()  * yRatio);
+		int w  = NINT((double)layout->width() * xRatio);
+		int h  = NINT((double)layout->height() * yRatio);
+
+		p.drawImage( QRect(x1 + left, y1 + top, w, h), img );
+
+		if (captionType > 0)
+		{
+			p.save();
+			QString caption;
+			if (captionType == 1)
+			{
+				QFileInfo fi(photo->filename.path());
+				caption = fi.fileName();
+			}
+			else if (captionType == 2) // exif date
+			{
+				caption = KGlobal::locale()->formatDateTime(photo->exiv2Iface()->getImageDateTime(),
+										  					false, false);
+				kdDebug( 51000 ) << "exif date  " << caption << endl;
+			}
+	  // draw the text at (0,0), but we will translate and rotate the world
+      // before drawing so the text will be in the correct location
+      // next, do we rotate?
+			int captionW = w-2;
+			int captionH = (int)(QMIN(w, h) * FONT_HEIGHT_RATIO);
+	  	 
+			int exifOrientation = photo->exiv2Iface()->getImageOrientation();
+			int orientatation = photo->rotation;
+
+
+			//ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
+			//TODO check 270 degrees
+			if (exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP ||
+						 exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90 ||
+						 exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP ||
+						 exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_270)
+				orientatation = (photo->rotation + 270) % 360; // -90 degrees
+
+			if(orientatation == 90 || orientatation == 270)
+			{
+				captionW = h;
+			}
+			p.rotate(orientatation);
+			kdDebug( 51000 ) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
+			int tx = left;
+			int ty = top;
+
+			switch(orientatation) {
+				case 0 : { 
+					tx += x1 + 1;
+					ty += y1 + (h - captionH - 1);
+					break;
+				}
+				case 90 : { 
+					tx = top + y1 + 1;
+					ty = -left - x1 - captionH - 1;
+					break;
+				}
+				case 180 : { 
+					tx = -left - x1 - w + 1;
+					ty = -top -y1 - (captionH + 1);
+					break;
+				}
+				case 270 : { 
+					tx = -top - y1 - h + 1;
+					ty = left + x1 + (w - captionH)- 1;
+					break;
+				}
+			}
+			p.translate(tx, ty);
+
+			// Now draw the caption
+			QFont font(m_font_name->currentFont());
+			font.setStyleHint(QFont::SansSerif);
+			double ratio = m_font_size->value() * 0.1;
+			font.setPixelSize( (int)(captionH * ratio) );
+			font.setWeight(QFont::Normal);
+
+			p.setFont(font);
+			p.setPen(m_font_color->color());
+
+			QRect r(0, 0, captionW, captionH);
+			p.drawText(r, Qt::AlignLeft, caption, -1, &r);
+			p.restore();
+		} // caption
+
+    	// iterate to the next position
+		layout = layouts.next();
+		if (layout == 0)
+		{
+			current++;
+			break;
+		}
+	}
+	// did we print the last photo?
+	return (current < photos.count());
+}
+
+
+// Like above, but outputs to an initialized QImage.  UseThumbnails is
+// not an option.
+// We have to use QImage for saving to a file, otherwise we would have
+// to use a QPixmap, which will have the same bit depth as the display.
+// So someone with an 8-bit display would not be able to save 24-bit
+// images!
+bool FrmPrintWizard::paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
+  int captionType, unsigned int &current)
+{
+	Q_ASSERT(layouts.count() > 1);
+
+	QRect *srcPage = layouts.at(0);
+	QRect *layout = layouts.at(1);
+
+  // scale the page size to best fit the painter
+  // size the rectangle based on the minimum image dimension
+	int destW = p.width();
+	int destH = p.height();
+
+	int srcW = srcPage->width();
+	int srcH = srcPage->height();
+	if (destW < destH)
+	{
+		destH = NINT((double)destW * ((double)srcH / (double)srcW));
+		if (destH > p.height())
+		{
+			destH = p.height();
+			destW = NINT((double)destH * ((double)srcW / (double)srcH));
+		}
+	}
+	else
+	{
+		destW = NINT((double)destH * ((double)srcW / (double)srcH));
+		if (destW > p.width())
+		{
+			destW = p.width();
+			destH = NINT((double)destW * ((double)srcH / (double)srcW));
+		}
+	}
+
+	double xRatio = (double)destW / (double)srcPage->width();
+	double yRatio = (double)destH / (double)srcPage->height();
+
+	int left = (p.width()  - destW) / 2;
+	int top  = (p.height() - destH) / 2;
+
+
+	p.fill(0xffffff);
+
+	for(; current < photos.count(); current++)
+	{
+		TPhoto *photo = photos.at(current);
+    // crop
+		QImage img;
+		img.load(photo->filename.path()); // PENDING(blackie) handle general URL case
+
+    // next, do we rotate?
+		if (photo->rotation != 0)
+		{
+      // rotate
+			QWMatrix matrix;
+			matrix.rotate(photo->rotation);
+			img = img.xForm(matrix);
+		}
+
+		img = img.copy(photo->cropRegion);
+
+		int x1 = NINT((double)layout->left() * xRatio);
+		int y1 = NINT((double)layout->top()  * yRatio);
+		int w  = NINT((double)layout->width() * xRatio);
+		int h  = NINT((double)layout->height() * yRatio);
+
+    // We can use scaleFree because the crop frame should have the proper dimensions.
+		img = img.smoothScale(w, h, QImage::ScaleFree);
+    // don't have drawimage, so we copy the pixels over manually
+		for(int srcY = 0; srcY < img.height(); srcY++)
+			for(int srcX = 0; srcX < img.width(); srcX++)
+		{
+			p.setPixel(x1 + left + srcX, y1 + top + srcY, img.pixel(srcX, srcY));
+		}
+
+		if (captionType > 0)
+		{
+      // Now draw the caption
+			QString caption;
+			if (captionType == 1) //filename
+			{
+				QFileInfo fi(photo->filename.path());
+				caption = fi.fileName();
+			}
+			else if (captionType == 2) // exif date
+			{
+				caption = KGlobal::locale()->formatDateTime(photo->exiv2Iface()->getImageDateTime(),
+										  					false, false);
+				kdDebug( 51000 ) << "exif date  " << caption << endl;
+			}
+			int captionW = w-2;
+			int captionH = (int)(QMIN(w, h) * FONT_HEIGHT_RATIO);
+      
+			int exifOrientation = photo->exiv2Iface()->getImageOrientation();
+			int orientatation = photo->rotation;
+
+			//ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
+			//TODO check 270 degrees
+			if (exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP ||
+						 exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90 ||
+						 exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP ||
+						 exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_270)
+				orientatation = (photo->rotation + 270) % 360; // -90 degrees
+	  
+			if (orientatation == 90 || orientatation == 270)    
+			{
+				captionW = h;
+			}
+						// Now draw the caption
+			QFont font(m_font_name->currentFont());
+			font.setStyleHint(QFont::SansSerif);
+			double ratio = m_font_size->value() * 0.1;
+			font.setPixelSize( (int)(captionH * ratio) );
+			font.setWeight(QFont::Normal);
+
+			QPixmap pixmap(w, captionH);
+			pixmap.fill(Qt::black);
+			QPainter painter;
+			painter.begin(&pixmap);
+			painter.setFont(font);
+
+			painter.setPen(m_font_color->color());
+			QRect r(1, 1, w-2, captionH - 2);
+			painter.drawText(r, Qt::AlignLeft, caption, -1, &r);
+			painter.end();
+			QImage fontImage = pixmap.convertToImage();
+			QRgb black = QColor(0, 0, 0).rgb();
+			for(int srcY = 0; srcY < fontImage.height(); srcY++)
+				for(int srcX = 0; srcX < fontImage.width(); srcX++)
+			{
+				int destX = x1 + left + srcX;
+				int destY = y1 + top + h - (captionH + 1) + srcY;
+
+				// adjust the destination coordinates for rotation/orientation
+				switch(orientatation) {
+					case 90 : { 
+						destX = left + x1 + (captionH - srcY);
+						destY = top + y1 + srcX;
+						break;
+					}
+					case 180 : { 
+						destX = left + x1 + w - srcX;
+						destY = top + y1 + (captionH - srcY);
+						break;
+					}
+					case 270 : { 
+						destX = left + x1 + (w - captionH) + srcY;
+						destY = top + y1 + h - srcX;
+						break;
+					}
+				}
+
+				if (fontImage.pixel(srcX, srcY) != black)
+					p.setPixel(destX, destY, fontImage.pixel(srcX, srcY));
+			}
+		} // caption
+
+		// iterate to the next position
+		layout = layouts.next();
+		if (layout == 0)
+		{
+			current++;
+			break;
+		}
+	}
+	// did we print the last photo?
+	return (current < photos.count());
+}
+
+
 // update the pages to be printed and preview first/last pages
 void FrmPrintWizard::previewPhotos()
 {
@@ -653,6 +1021,17 @@ void FrmPrintWizard::loadSettings()
   // captions
   int captions = config.readNumEntry("ImageCaptions", 0);
   GrpImageCaptions->setButton(captions);
+  // caption color
+  QColor defColor(Qt::yellow);
+  QColor color = config.readColorEntry("CaptionColor", &defColor);
+  m_font_color->setColor(color);
+  // caption font
+  QFont defFont("Sans Serif");
+  QFont font = config.readFontEntry ( "CaptionFont", &defFont);
+  m_font_name->setCurrentFont(font.family());
+  // caption size
+  int fontSize = config.readNumEntry("CaptionSize", 4);
+  m_font_size->setValue(fontSize);
 
   // set the last output path
   QString outputPath = config.readPathEntry("OutputPath", EditOutputPath->text());
@@ -699,6 +1078,12 @@ void FrmPrintWizard::saveSettings()
 
   // image captions
   config.writeEntry("ImageCaptions", buttonGroupSelectedId(GrpImageCaptions));
+  // caption color
+  config.writeEntry("CaptionColor", m_font_color->color());
+  // caption font
+  config.writeEntry ("CaptionFont", QFont(m_font_name->currentFont()));
+  // caption size
+  config.writeEntry("CaptionSize", m_font_size->value());
 
   // output path
   config.writePathEntry("OutputPath", EditOutputPath->text());

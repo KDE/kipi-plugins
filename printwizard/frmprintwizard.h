@@ -80,6 +80,14 @@ private:
   void saveSettings();
 
   int getPageCount();
+  
+  
+bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
+                  int captionType, unsigned int &current, bool useThumbnails = false);
+
+bool paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
+                  int captionType, unsigned int &current);
+                  
 public:
   
   FrmPrintWizard(QWidget *parent=0, const char *name=0);
