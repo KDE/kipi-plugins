@@ -163,7 +163,7 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
 
     process << src + QString("[0]") << dest;
 
-    kDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;    
+    kDebug( 51000 ) << "ImageMagick Command line: " << process.args();    
 
     connect(&process, SIGNAL(receivedStderr(K3Process *, char*, int)),
             this, SLOT(slotReadStderr(K3Process*, char*, int)));

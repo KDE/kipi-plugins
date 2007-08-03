@@ -73,7 +73,7 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent, const QStringList &)
     m_thread                   = 0;
     m_failed                   = false;
 
-    kDebug( 51001 ) << "Plugin_JPEGLossless plugin loaded" << endl;
+    kDebug( 51001 ) << "Plugin_JPEGLossless plugin loaded";
 }
 
 void Plugin_JPEGLossless::setup( QWidget* widget )
@@ -310,7 +310,7 @@ void Plugin_JPEGLossless::customEvent(QEvent *event)
             }
             default:
             {
-                kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event" << endl;
+                kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event";
             }
         }
 
@@ -341,7 +341,7 @@ void Plugin_JPEGLossless::customEvent(QEvent *event)
                 }
                 default: 
                 {
-                    kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event" << endl;
+                    kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event";
                 }
             }
 
@@ -371,7 +371,7 @@ void Plugin_JPEGLossless::customEvent(QEvent *event)
                 }
                 default: 
                 {
-                    kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event" << endl;
+                    kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event";
                 }
             }
 
@@ -425,7 +425,7 @@ KIPI::Category Plugin_JPEGLossless::category( KAction* action ) const
     else if ( action == m_action_Convert2GrayScale )
        return KIPI::IMAGESPLUGIN;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
 

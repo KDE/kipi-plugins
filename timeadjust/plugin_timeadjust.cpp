@@ -50,7 +50,7 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_timeadjust,
 Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent, const QStringList&)
                  : KIPI::Plugin( Factory::componentData(), parent, "TimeAdjust")
 {
-    kDebug( 51001 ) << "Plugin_TimeAdjust plugin loaded" << endl;
+    kDebug( 51001 ) << "Plugin_TimeAdjust plugin loaded";
 }
 
 void Plugin_TimeAdjust::setup(QWidget* widget)
@@ -94,6 +94,6 @@ KIPI::Category Plugin_TimeAdjust::category( KAction* action ) const
     if ( action == m_actionTimeAjust )
        return KIPI::IMAGESPLUGIN;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
