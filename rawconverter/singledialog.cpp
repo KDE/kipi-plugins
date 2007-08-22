@@ -231,6 +231,9 @@ void SingleDialog::readSettings()
     m_decodingSettingsBox->setUseBlackPoint(config.readBoolEntry("Use Black Point", false));
     m_decodingSettingsBox->setBlackPoint(config.readNumEntry("Black Point", 0));
     m_decodingSettingsBox->setNRThreshold(config.readNumEntry("NR Threshold", 100));
+    m_decodingSettingsBox->setUseCACorrection(config.readBoolEntry("EnableCACorrection", false));
+    m_decodingSettingsBox->setcaRedMultiplier(config.readDoubleNumEntry("caRedMultiplier", 1.0));
+    m_decodingSettingsBox->setcaBlueMultiplier(config.readDoubleNumEntry("caBlueMultiplier", 1.0));
     m_decodingSettingsBox->setUseColorMultipliers(config.readBoolEntry("Use Color Multipliers", false));
     m_decodingSettingsBox->setcolorMultiplier1(config.readDoubleNumEntry("Color Multiplier1", 1.0));
     m_decodingSettingsBox->setcolorMultiplier2(config.readDoubleNumEntry("Color Multiplier2", 1.0));
@@ -271,6 +274,9 @@ void SingleDialog::saveSettings()
     config.writeEntry("Use Black Point", m_decodingSettingsBox->useBlackPoint());
     config.writeEntry("Black Point", m_decodingSettingsBox->blackPoint());
     config.writeEntry("NR Threshold", m_decodingSettingsBox->NRThreshold());
+    config.writeEntry("EnableCACorrection", m_decodingSettingsBox->useCACorrection());
+    config.writeEntry("caRedMultiplier", m_decodingSettingsBox->caRedMultiplier());
+    config.writeEntry("caBlueMultiplier", m_decodingSettingsBox->caBlueMultiplier());
     config.writeEntry("Decoding Quality", (int)m_decodingSettingsBox->quality());
     config.writeEntry("Output Color Space", (int)m_decodingSettingsBox->outputColorSpace());
     config.writeEntry("Use Color Multipliers", m_decodingSettingsBox->useColorMultipliers());
@@ -305,6 +311,9 @@ void SingleDialog::slotUser1()
     rawDecodingSettings.enableBlackPoint           = m_decodingSettingsBox->useBlackPoint();
     rawDecodingSettings.blackPoint                 = m_decodingSettingsBox->blackPoint();
     rawDecodingSettings.NRThreshold                = m_decodingSettingsBox->NRThreshold();
+    rawDecodingSettings.enableCACorrection         = m_decodingSettingsBox->useCACorrection();
+    rawDecodingSettings.caMultiplier[0]            = m_decodingSettingsBox->caRedMultiplier();
+    rawDecodingSettings.caMultiplier[1]            = m_decodingSettingsBox->caBlueMultiplier();
     rawDecodingSettings.RAWQuality                 = m_decodingSettingsBox->quality();
     rawDecodingSettings.outputColorSpace           = m_decodingSettingsBox->outputColorSpace();
     rawDecodingSettings.enableColorMultipliers     = m_decodingSettingsBox->useColorMultipliers();
@@ -333,6 +342,9 @@ void SingleDialog::slotUser2()
     rawDecodingSettings.enableBlackPoint           = m_decodingSettingsBox->useBlackPoint();
     rawDecodingSettings.blackPoint                 = m_decodingSettingsBox->blackPoint();
     rawDecodingSettings.NRThreshold                = m_decodingSettingsBox->NRThreshold();
+    rawDecodingSettings.enableCACorrection         = m_decodingSettingsBox->useCACorrection();
+    rawDecodingSettings.caMultiplier[0]            = m_decodingSettingsBox->caRedMultiplier();
+    rawDecodingSettings.caMultiplier[1]            = m_decodingSettingsBox->caBlueMultiplier();
     rawDecodingSettings.RAWQuality                 = m_decodingSettingsBox->quality();
     rawDecodingSettings.outputColorSpace           = m_decodingSettingsBox->outputColorSpace();
     rawDecodingSettings.enableColorMultipliers     = m_decodingSettingsBox->useColorMultipliers();
