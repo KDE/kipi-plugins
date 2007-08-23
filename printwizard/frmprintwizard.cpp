@@ -103,11 +103,11 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
                                          NULL,
                                          KAboutData::License_GPL,
                                          I18N_NOOP("A KIPI plugin to print images"),
-                                         "(c) 2003-2004, Todd Shoemaker");
+                                         "(c) 2003-2004, Todd Shoemaker\n(c) 2007, Angelo Naselli");
 
   m_about->addAuthor("Todd Shoemaker", I18N_NOOP("Author"),
                      "todd@theshoemakers.net");
-  m_about->addAuthor("Angelo Naselli", I18N_NOOP("Contributor"),
+  m_about->addAuthor("Angelo Naselli", I18N_NOOP("Maintainer"),
                      "anaselli@linux.it");
 
   m_helpButton = helpButton();
@@ -116,6 +116,8 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
   helpMenu->menu()->insertItem(i18n("Print Wizard Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
   m_helpButton->setPopup( helpMenu->menu() );
 
+  // NOTE does it work????
+   setModal(false);
   // ---------------------------------------------------------------
      
   // turn off back button for first and last page
@@ -169,6 +171,11 @@ FrmPrintWizard::~FrmPrintWizard()
     if (m_photos.at(i))
       delete m_photos.at(i);
   m_photos.clear();
+
+  for(unsigned int i=0; i < m_photoSizes.count(); i++)
+    if (m_photoSizes.at(i))
+      delete m_photoSizes.at(i);
+  m_photoSizes.clear();
 
   delete m_about;
 }
@@ -410,6 +417,8 @@ bool FrmPrintWizard::paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList
   int captionType, unsigned int &current, bool useThumbnails)
 {
 	Q_ASSERT(layouts.count() > 1);
+	
+	if (photos.count() == 0) return true; // no photos => last photo
 
 	QRect *srcPage = layouts.at(0);
 	QRect *layout = layouts.at(1);
@@ -1008,7 +1017,8 @@ void FrmPrintWizard::loadSettings()
   KSimpleConfig config("kipirc");
   config.setGroup("PrintWizard");
 
-  int pageSize = config.readNumEntry("PageSize", (int)m_pageSize);
+  // TODO anaselli fix page layout management
+  int pageSize = config.readNumEntry("PageSize", (int)KPrinter::A4); //Default A4
   initPhotoSizes((KPrinter::PageSize)pageSize);
 
   if (m_pageSize == KPrinter::A6)
@@ -1239,7 +1249,13 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
     return;
 
   m_pageSize = pageSize;
+
+  // cleanng m_pageSize memory before invoking clear()
+  for(unsigned int i=0; i < m_photoSizes.count(); i++)
+    if (m_photoSizes.at(i))
+      delete m_photoSizes.at(i);
   m_photoSizes.clear();
+
   // ====================== LETTER SIZE =====================
   if (pageSize == KPrinter::Letter)
   {
@@ -1474,7 +1490,7 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
   else if (pageSize == KPrinter::A6)
   {
       // A6 is 10.5 x 14.8 cm
-      // but let's pretend it is 10.2 x 15.3 cm
+      // but let's pretend it is 10.16 x 15.24 cm (e.g. 4x6")
       TPhotoSize *p;
       // ========== 9x13
       p = new TPhotoSize;
@@ -1483,7 +1499,7 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
       p->label = i18n("9 x 13cm");
       // page size
       //    p->layouts.append(new QRect(0, 0, 1050, 1480));
-      p->layouts.append(new QRect(0, 0, 1020, 1530));
+      p->layouts.append(new QRect(0, 0, 1016, 1524));
       // photo layouts
       p->layouts.append(new QRect( 50,  100, 900, 1300));
       // add to the list
@@ -1497,19 +1513,19 @@ void FrmPrintWizard::initPhotoSizes(KPrinter::PageSize pageSize)
       // page size
       //     p->layouts.append(new
       //     QRect(0, 0, 1050, 1480));
-      p->layouts.append(new QRect(0, 0, 1020, 1530));
+      p->layouts.append(new QRect(0, 0, 1016, 1524));
       // photo layouts
-      p->layouts.append(new QRect( 0, 0, 1020, 1530));
+      p->layouts.append(new QRect(0, 0, 1016, 1524));
       // add to the list
       m_photoSizes.append(p);
                                                          
       // thumbnails
-      m_photoSizes.append(createPhotoGrid(1020, 1530, i18n("Thumbnails"), 5, 4));
+      m_photoSizes.append(createPhotoGrid(1016, 1524, i18n("Thumbnails"), 5, 4));
 
       // small thumbnails
-      m_photoSizes.append(createPhotoGrid(1020, 1530, i18n("Small Thumbnails"), 6, 5));
+      m_photoSizes.append(createPhotoGrid(1016, 1524, i18n("Small Thumbnails"), 6, 5));
 
-  } // A6
+  } // 10x15 cm
   // ====================== UNSUPPORTED SIZE =====================
   else
   {
