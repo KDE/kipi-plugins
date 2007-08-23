@@ -30,9 +30,6 @@ int MAX(int a, int b);
 
 bool launchExternalApp(QStringList &args);
 bool checkTempPath(QWidget *parent, QString tempPath);
-bool checkRootPath(QWidget *parent, QString rootPath);
-bool copyFile(QString src, QString dest);
-bool moveFile(QString src, QString dest);
 
 }  // NameSpace KIPIPrintWizardPlugin
 

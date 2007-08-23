@@ -61,21 +61,6 @@ int MAX(int a, int b)
     return b;
 }
 
-bool copyFile(QString src, QString dest)
-{
-  return KIO::NetAccess::copy(src, dest);
-}
-
-bool moveFile(QString src, QString dest)
-{
-  if (copyFile(src, dest))
-  {
-    return KIO::NetAccess::del(src);
-  }
-  else
-    return false;
-}
-
 // given a list of args, launch this app as a separate thread.
 // args[0] is the application to run.
 bool launchExternalApp(QStringList &args)
