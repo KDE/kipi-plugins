@@ -5,9 +5,11 @@ v 0.1.5 - SVN
 
 Kipi-plugins NEW FEATURES
 
+PrintWizard    : Wizard GUI review
 PrintWizard    : Added exif management.
 PrintWizard    : Prints exif date-time info.
 PrintWizard    : Font, color and size of captions.
+PrintWizard    : Added a no margins print option.
 PicasaWebExport: New plugin to export pictures to Picasa web service (by Vardhman Jain).
 SlideShow      : Dropped imlib2 dependency
 
@@ -17,7 +19,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 002 ==> 111454 : PrintWizard : Print photo's date into one corner like print assistant.
 003 ==> 146457 : PrintWizard : Rotation is not done correctly Exif.
 004 ==> 138838 : Digikam Picasaweb export plugin.
-005 ==> 
+005 ==> 103152 : PrintWizard : Improvement suggestions for printing wizard
+006 ==>
 
 v 0.1.4
 ----------------------------------------------------------------------------
