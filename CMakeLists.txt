@@ -3,15 +3,24 @@ PROJECT(kipi-plugins)
 # =======================================================
 # Informations to update before to release this package.
 
-# Library API version
+# kipi-plugins version
 SET(KIPIPLUGINS_MAJOR_VERSION "0")
 SET(KIPIPLUGINS_MINOR_VERSION "2")
 SET(KIPIPLUGINS_PATCH_VERSION "0")
 
+# Suffix to add at end of version string. Usual values are:
+# "-svn"   : alpha code unstable from svn. Do not use in production
+# "-beta1" : beta1 release.
+# "-beta2" : beta2 release.
+# "-beta3" : beta3 release.
+# "-rc"    : release candidate.
+# ""       : final relase. Can be used in production.
+SET(KIPIPLUGINS_SUFFIX_VERSION "-svn")
+
 # =======================================================
 # Set env. variables accordinly.
 
-SET(KIPIPLUGINS_VERSION_STRING "${KIPIPLUGINS_MAJOR_VERSION}.${KIPIPLUGINS_MINOR_VERSION}.${KIPIPLUGINS_PATCH_VERSION}")
+SET(KIPIPLUGINS_VERSION_STRING "${KIPIPLUGINS_MAJOR_VERSION}.${KIPIPLUGINS_MINOR_VERSION}.${KIPIPLUGINS_PATCH_VERSION}${KIPIPLUGINS_SUFFIX_VERSION}")
 
 # =======================================================
 
