@@ -1,36 +1,51 @@
-project(kipi-plugins)
+PROJECT(kipi-plugins)
+
+# =======================================================
+# Informations to update before to release this package.
+
+# Library API version
+SET(KIPIPLUGINS_MAJOR_VERSION "0")
+SET(KIPIPLUGINS_MINOR_VERSION "2")
+SET(KIPIPLUGINS_PATCH_VERSION "0")
+
+# =======================================================
+# Set env. variables accordinly.
+
+SET(KIPIPLUGINS_VERSION_STRING "${KIPIPLUGINS_MAJOR_VERSION}.${KIPIPLUGINS_MINOR_VERSION}.${KIPIPLUGINS_PATCH_VERSION}")
+
+# =======================================================
 
 # Depencies detection require by all plugins
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
-find_package(Kexiv2 REQUIRED)
-find_package(Kdcraw REQUIRED)
-find_package(Kipi REQUIRED)
-find_package(JPEG REQUIRED)
-find_package(PNG REQUIRED)
-find_package(TIFF REQUIRED)
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+FIND_PACKAGE(Kexiv2 REQUIRED)
+FIND_PACKAGE(Kdcraw REQUIRED)
+FIND_PACKAGE(Kipi REQUIRED)
+FIND_PACKAGE(JPEG REQUIRED)
+FIND_PACKAGE(PNG REQUIRED)
+FIND_PACKAGE(TIFF REQUIRED)
 
 # Optional depencies detection require by any plugins
-macro_optional_find_package(Gphoto2)
-macro_optional_find_package(OpenGL)
+MACRO_OPTIONAL_FIND_PACKAGE(Gphoto2)
+MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins 
                     ${KEXIV2_INCLUDE_DIR} 
-		    ${KDCRAW_INCLUDE_DIR} 
-		    ${KIPI_INCLUDE_DIR} 
-		    ${KDE4_INCLUDES} 
-		    ${QT4_INCLUDES}
-		   )
+                    ${KDCRAW_INCLUDE_DIR} 
+                    ${KIPI_INCLUDE_DIR} 
+                    ${KDE4_INCLUDES} 
+                    ${QT4_INCLUDES}
+		           )
 
 # Plugins witch depand of OpenGL
-if(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-   macro_optional_add_subdirectory(slideshow)
-   macro_optional_add_subdirectory(imageviewer)
-endif(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+   MACRO_OPTIONAL_ADD_SUBDIRECTORY(slideshow)
+   MACRO_OPTIONAL_ADD_SUBDIRECTORY(imageviewer)
+ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
 # Plugins witch depand of GPhoto2
-if(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
+IF(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 	#macro_optional_add_subdirectory(kameraklient)
-endif(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
+ENDIF(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 
 # TODO: others optional depencies to check
 # htmlexport need Xslt library
@@ -41,14 +56,17 @@ endif(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 
 #find_file(KDESKTOP_INTERFACE_FILE_FOUND org.kde.kdesktop.Background.xml PATHS ${DBUS_INTERFACES_INSTALL_DIR} )
 
-#if(KDESKTOP_INTERFACE_FILE_FOUND)
+#IF(KDESKTOP_INTERFACE_FILE_FOUND)
 #        add_subdirectory( wallpaper )
-#else(KDESKTOP_INTERFACE_FILE_FOUND)
+#ELSE(KDESKTOP_INTERFACE_FILE_FOUND)
 #        MESSAGE(STATUS "Wallpaper plugins will not compile. Kdebase (kdesktop) must be installed before compiling it")
-#endif(KDESKTOP_INTERFACE_FILE_FOUND)
+#ENDIF(KDESKTOP_INTERFACE_FILE_FOUND)
 
 # Plugins witch will be always compiled
-add_subdirectory(common)
-add_subdirectory(timeadjust)
-add_subdirectory(jpeglossless)
+ADD_SUBDIRECTORY(common)
+ADD_SUBDIRECTORY(timeadjust)
+ADD_SUBDIRECTORY(jpeglossless)
 
+IF(NOT WIN32)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/kipi-plugins.lsm.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
+ENDIF(NOT WIN32)
