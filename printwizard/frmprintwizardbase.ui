@@ -441,7 +441,17 @@ Click the 'Next' button to begin.</string>
                                         </item>
                                         <item>
                                             <property name="text">
+                                                <string>A6</string>
+                                            </property>
+                                        </item>
+                                        <item>
+                                            <property name="text">
                                                 <string>10x15cm</string>
+                                            </property>
+                                        </item>
+                                        <item>
+                                            <property name="text">
+                                                <string>13x17cm</string>
                                             </property>
                                         </item>
                                         <property name="name">

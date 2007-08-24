@@ -52,15 +52,24 @@ class FrmPrintWizard : public FrmPrintWizardBase
    Q_OBJECT
 
 private:
-  
+
+  enum PageSize {
+   Unknown = -1,
+   Letter  = 0,
+   A4,
+   A6,
+   P10X15,
+   P13X18
+  };
+
   QPtrList<TPhoto> m_photos;
   QPtrList<TPhotoSize> m_photoSizes;
 
-  KPrinter::PageSize m_pageSize;
-  KProcess           *m_Proc;
+  PageSize     m_pageSize;
+  KProcess    *m_Proc;
   QString      m_tempPath;
 
-  int m_currentPreviewPage;
+  int          m_currentPreviewPage;
   QStringList  m_gimpFiles;
 
   QPushButton *m_helpButton;
@@ -72,7 +81,7 @@ private:
   void updateCropFrame(TPhoto *, int);
   void setBtnCropEnabled();
   void removeGimpFiles();
-  void initPhotoSizes(KPrinter::PageSize);
+  void initPhotoSizes(PageSize pageSize);
   void previewPhotos();
   void printPhotos(QPtrList<TPhoto> photos, QPtrList<QRect> layouts, KPrinter &printer);
   QStringList printPhotosToFile(QPtrList<TPhoto> photos, QString &baseFilename, TPhotoSize *layouts);
