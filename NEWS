@@ -6,10 +6,14 @@ v 0.1.5 - Beta1
 Kipi-plugins NEW FEATURES
 
 PrintWizard    : Wizard GUI review
-PrintWizard    : Added exif management.
-PrintWizard    : Prints exif date-time info.
-PrintWizard    : Font, color and size of captions.
-PrintWizard    : Added a no margins print option.
+                 Added exif management.
+                 Prints exif date-time info.
+                 Font, color and size of captions.
+                 Added an option to to print without margins.
+                 Added 10x13.33cm into a4 (provided by Joerg Kuehne)
+                 Added A6 size to get the old configuration for 10x15cm page
+                 Changed page size to real 10x15cm instead of A6 (need to set up right page size on kprinter)
+                 Added a new page size 13x18cm (need to set up right page size on kprinter)
 PicasaWebExport: New plugin to export pictures to Picasa web service (by Vardhman Jain).
 SlideShow      : Dropped imlib2 dependency
 
