@@ -252,52 +252,6 @@ Click the 'Next' button to begin.</string>
                             <property name="name">
                                 <cstring>unnamed</cstring>
                             </property>
-                            <widget class="QLayoutWidget" row="0" column="0">
-                                <property name="name">
-                                    <cstring>layout36</cstring>
-                                </property>
-                                <hbox>
-                                    <property name="name">
-                                        <cstring>unnamed</cstring>
-                                    </property>
-                                    <widget class="QLabel">
-                                        <property name="name">
-                                            <cstring>textLabel1</cstring>
-                                        </property>
-                                        <property name="sizePolicy">
-                                            <sizepolicy>
-                                                <hsizetype>5</hsizetype>
-                                                <vsizetype>5</vsizetype>
-                                                <horstretch>0</horstretch>
-                                                <verstretch>0</verstretch>
-                                            </sizepolicy>
-                                        </property>
-                                        <property name="text">
-                                            <string>Paper size:</string>
-                                        </property>
-                                    </widget>
-                                    <widget class="KComboBox">
-                                        <item>
-                                            <property name="text">
-                                                <string>Letter</string>
-                                            </property>
-                                        </item>
-                                        <item>
-                                            <property name="text">
-                                                <string>A4</string>
-                                            </property>
-                                        </item>
-                                        <item>
-                                            <property name="text">
-                                                <string>10x15cm</string>
-                                            </property>
-                                        </item>
-                                        <property name="name">
-                                            <cstring>CmbPaperSize</cstring>
-                                        </property>
-                                    </widget>
-                                </hbox>
-                            </widget>
                             <widget class="QButtonGroup" row="1" column="0">
                                 <property name="name">
                                     <cstring>GrpImageCaptions</cstring>
@@ -347,7 +301,7 @@ Click the 'Next' button to begin.</string>
                                     </widget>
                                 </grid>
                             </widget>
-                            <widget class="QFrame" row="1" column="1">
+                            <widget class="QGroupBox" row="1" column="1" rowspan="1" colspan="2">
                                 <property name="name">
                                     <cstring>m_font_frame</cstring>
                                 </property>
@@ -359,6 +313,12 @@ Click the 'Next' button to begin.</string>
                                 </property>
                                 <property name="frameShadow">
                                     <enum>Sunken</enum>
+                                </property>
+                                <property name="title">
+                                    <string>Caption font</string>
+                                </property>
+                                <property name="toolTip" stdset="0">
+                                    <string>Choose the caption font size</string>
                                 </property>
                                 <grid>
                                     <property name="name">
@@ -444,6 +404,77 @@ Click the 'Next' button to begin.</string>
                                     </widget>
                                 </grid>
                             </widget>
+                            <widget class="QLayoutWidget" row="0" column="0">
+                                <property name="name">
+                                    <cstring>layout36</cstring>
+                                </property>
+                                <hbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>textLabel1</cstring>
+                                        </property>
+                                        <property name="sizePolicy">
+                                            <sizepolicy>
+                                                <hsizetype>5</hsizetype>
+                                                <vsizetype>5</vsizetype>
+                                                <horstretch>0</horstretch>
+                                                <verstretch>0</verstretch>
+                                            </sizepolicy>
+                                        </property>
+                                        <property name="text">
+                                            <string>Paper size:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="KComboBox">
+                                        <item>
+                                            <property name="text">
+                                                <string>Letter</string>
+                                            </property>
+                                        </item>
+                                        <item>
+                                            <property name="text">
+                                                <string>A4</string>
+                                            </property>
+                                        </item>
+                                        <item>
+                                            <property name="text">
+                                                <string>10x15cm</string>
+                                            </property>
+                                        </item>
+                                        <property name="name">
+                                            <cstring>CmbPaperSize</cstring>
+                                        </property>
+                                    </widget>
+                                </hbox>
+                            </widget>
+                            <widget class="QCheckBox" row="0" column="2">
+                                <property name="name">
+                                    <cstring>m_fullbleed</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>No margins</string>
+                                </property>
+                            </widget>
+                            <spacer row="0" column="1">
+                                <property name="name">
+                                    <cstring>spacer19</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>40</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
                         </grid>
                     </widget>
                     <widget class="QButtonGroup">
@@ -1777,6 +1808,18 @@ Click the 'Next' button to begin.</string>
         <receiver>m_font_frame</receiver>
         <slot>setDisabled(bool)</slot>
     </connection>
+    <connection>
+        <sender>ListPrintOrder</sender>
+        <signal>selected(QListBoxItem*)</signal>
+        <receiver>FrmPrintWizardBase</receiver>
+        <slot>ListPrintOrder_selected(QListBoxItem*)</slot>
+    </connection>
+    <connection>
+        <sender>ListPrintOrder</sender>
+        <signal>highlighted(int)</signal>
+        <receiver>FrmPrintWizardBase</receiver>
+        <slot>ListPhotoOrder_highlighted(int)</slot>
+    </connection>
 </connections>
 <slots>
     <slot>BtnCropNext_clicked()</slot>
@@ -1785,13 +1828,15 @@ Click the 'Next' button to begin.</string>
     <slot>ListPhotoSizes_selected( QListBoxItem * )</slot>
     <slot>ListPhotoSizes_highlighted( int )</slot>
     <slot>EditCopies_valueChanged( int )</slot>
+    <slot>ListPrintOrder_selected( QListBoxItem * )</slot>
+    <slot>ListPhotoOrder_highlighted( int )</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>kcombobox.h</includehint>
     <includehint>kfontcombo.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kcolorcombo.h</includehint>
+    <includehint>kcombobox.h</includehint>
     <includehint>kurllabel.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>

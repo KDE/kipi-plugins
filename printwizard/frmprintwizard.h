@@ -80,14 +80,17 @@ private:
   void saveSettings();
 
   int getPageCount();
-  
-  
-bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
-                  int captionType, unsigned int &current, bool useThumbnails = false);
 
-bool paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
-                  int captionType, unsigned int &current);
-                  
+
+  bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
+                    int captionType, unsigned int &current, bool useThumbnails = false);
+
+  bool paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
+                    int captionType, unsigned int &current);
+
+  void manageBtnPrintOrder();
+  void manageBtnPreviewPage();
+
 public:
   
   FrmPrintWizard(QWidget *parent=0, const char *name=0);
@@ -103,6 +106,8 @@ public slots:
   void FrmPrintWizardBaseSelected(const QString &);
   void ListPhotoSizes_selected( QListBoxItem * );
   void ListPhotoSizes_highlighted ( int );
+  void ListPrintOrder_selected( QListBoxItem * );
+  void ListPhotoOrder_highlighted ( int );
   void EditCopies_valueChanged( int );
   void GrpOutputSettings_clicked(int id);
   void EditOutputPath_textChanged(const QString &);

@@ -110,6 +110,32 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
   m_about->addAuthor("Angelo Naselli", I18N_NOOP("Maintainer"),
                      "anaselli@linux.it");
 
+  // setting-up icons on buttons
+  BtnBrowseOutputPath->setText("");
+  BtnBrowseOutputPath->setIconSet( SmallIconSet( "fileopen" ) );
+  BtnPrintOrderDown->setText("");
+  BtnPrintOrderDown->setIconSet( SmallIconSet( "down" ) );
+  BtnPrintOrderUp->setText("");
+  BtnPrintOrderUp->setIconSet( SmallIconSet( "up" ) );
+  BtnPreviewPageUp->setText("");
+  BtnPreviewPageUp->setIconSet( SmallIconSet( "next" ) );
+  BtnPreviewPageDown->setText("");
+  BtnPreviewPageDown->setIconSet( SmallIconSet( "previous" ) );
+  BtnCropPrev->setText("");
+  BtnCropPrev->setIconSet( SmallIconSet( "previous" ) );
+  BtnCropNext->setText("");
+  BtnCropNext->setIconSet( SmallIconSet( "next" ) );
+  BtnCropRotate->setText("");
+  BtnCropRotate->setIconSet( SmallIconSet( "rotate" ) );
+
+  // wizard buttons
+  QPushButton *pBtn = backButton ();
+  pBtn->setText("");
+  pBtn->setIconSet( SmallIconSet( "previous" ) );
+  pBtn = nextButton ();
+  pBtn->setText("");
+  pBtn->setIconSet( SmallIconSet( "next" ) );
+
   m_helpButton = helpButton();
   KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
   helpMenu->menu()->removeItemAt(0);
@@ -310,8 +336,14 @@ void FrmPrintWizard::FrmPrintWizardBaseSelected(const QString &)
 
     if (RdoOutputPrinter->isChecked())
     {
-      KPrinter printer;
+      KPrinter printer(false);
       printer.setPageSize(m_pageSize);
+      if (m_fullbleed->isChecked())
+      {
+        printer.setFullPage(true);
+        printer.setMargins (0, 0, 0, 0);
+      }
+
 #if KDE_IS_VERSION(3,2,0)
       printer.setUsePrinterResolution(true);
 #endif    
@@ -836,6 +868,9 @@ void FrmPrintWizard::previewPhotos()
   BmpFirstPagePreview->setPixmap(img);
   LblPreview->setText(i18n("Page ") + QString::number(m_currentPreviewPage + 1) + i18n(" of ") + QString::number(getPageCount()));
   LblPreview->setText(i18n("Page %1 of %2").arg(m_currentPreviewPage + 1).arg(getPageCount()));
+
+  manageBtnPreviewPage();
+  manageBtnPrintOrder();
 }
 
 void FrmPrintWizard::ListPhotoSizes_highlighted ( int )
@@ -852,6 +887,48 @@ void FrmPrintWizard::ListPhotoSizes_highlighted ( int )
 void FrmPrintWizard::ListPhotoSizes_selected( QListBoxItem * )
 {
   previewPhotos();
+}
+
+void FrmPrintWizard::manageBtnPreviewPage()
+{
+	BtnPreviewPageDown->setEnabled(true);
+	BtnPreviewPageUp->setEnabled(true);
+	if (m_currentPreviewPage == 0)
+	{
+		BtnPreviewPageDown->setEnabled(false);
+	}
+  
+	if ((m_currentPreviewPage + 1) == getPageCount())
+	{
+		BtnPreviewPageUp->setEnabled(false);
+	}
+}
+
+void FrmPrintWizard::manageBtnPrintOrder()
+{
+	if (ListPrintOrder->currentItem() == -1)
+		return;
+
+	BtnPrintOrderDown->setEnabled(true);
+	BtnPrintOrderUp->setEnabled(true);
+	if (ListPrintOrder->currentItem() == 0)
+	{
+		BtnPrintOrderUp->setEnabled(false);
+	}
+	if (uint(ListPrintOrder->currentItem() + 1) == ListPrintOrder->count())
+	{
+		BtnPrintOrderDown->setEnabled(false);
+	}
+}
+
+void FrmPrintWizard::ListPhotoOrder_highlighted ( int )
+{
+	manageBtnPrintOrder();
+}
+
+void FrmPrintWizard::ListPrintOrder_selected( QListBoxItem * )
+{
+	manageBtnPrintOrder();
 }
 
 void FrmPrintWizard::EditCopies_valueChanged( int copies )
@@ -1028,6 +1105,9 @@ void FrmPrintWizard::loadSettings()
   else
       CmbPaperSize->setCurrentItem(0);
 
+  //Use Margins
+  m_fullbleed->setChecked(config.readBoolEntry("NoMargins", false));
+
   // captions
   int captions = config.readNumEntry("ImageCaptions", 0);
   GrpImageCaptions->setButton(captions);
@@ -1073,6 +1153,7 @@ void FrmPrintWizard::saveSettings()
   config.setGroup("PrintWizard");
 
   config.writeEntry("PageSize", (int)m_pageSize);
+  config.writeEntry("NoMargins", m_fullbleed->isChecked());
 
   // output
   int output = 0;
