@@ -38,6 +38,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(Gphoto2)
 MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins 
+                    ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins
                     ${KEXIV2_INCLUDE_DIR} 
                     ${KDCRAW_INCLUDE_DIR} 
                     ${KIPI_INCLUDE_DIR} 
