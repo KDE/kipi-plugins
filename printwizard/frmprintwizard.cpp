@@ -145,14 +145,8 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
   // NOTE does it work????
    setModal(false);
   // ---------------------------------------------------------------
-     
   // turn off back button for first and last page
   setBackEnabled(page(0), false);
-
-  // turn off unimplemented controls
-  LblCopies->hide();
-  LineCopies->hide();
-  EditCopies->hide();
 
   m_currentPreviewPage = 0;
   //TODO fix next two steps
@@ -214,6 +208,9 @@ void FrmPrintWizard::slotHelp()
 
 void FrmPrintWizard::print( KURL::List fileList, QString tempPath)
 {
+  for(unsigned int i=0; i < m_photos.count(); i++)
+    if (m_photos.at(i))
+      delete m_photos.at(i);
   m_photos.clear();
   ListPrintOrder->clear();
 
@@ -421,37 +418,35 @@ double getMaxDPI(QPtrList<TPhoto> photos, QPtrList<QRect> layouts, unsigned int 
 
 QRect * FrmPrintWizard::getLayout(int photoIndex)
 {
-  TPhotoSize *s = m_photoSizes.at(ListPhotoSizes->currentItem());
-
-  int photoCopies = EditCopies->value();
-  // how many photos would actually be printed, including copies?
-  int photoCount  = photoCopies * (photoIndex + 1);
-  // how many pages?  Recall that the first layout item is the paper size
-  int photosPerPage = s->layouts.count() - 1;
-  int remainder = photoCount % photosPerPage;
-
-  int retVal = remainder;
-  if (remainder == 0)
-    retVal = photosPerPage;
-  return s->layouts.at(retVal);
+	TPhotoSize *s = m_photoSizes.at(ListPhotoSizes->currentItem());
+	
+	// how many photos would actually be printed, including copies?
+	int photoCount  = (photoIndex + 1);
+	// how many pages?  Recall that the first layout item is the paper size
+	int photosPerPage = s->layouts.count() - 1;
+	int remainder = photoCount % photosPerPage;
+	
+	int retVal = remainder;
+	if (remainder == 0)
+	retVal = photosPerPage;
+	return s->layouts.at(retVal);
 }
 
 int FrmPrintWizard::getPageCount() {
-  // get the selected layout
-  TPhotoSize *s = m_photoSizes.at(ListPhotoSizes->currentItem());
-
-  int photoCopies = EditCopies->value();
-  int photoCount  = photoCopies * m_photos.count();
-  // how many pages?  Recall that the first layout item is the paper size
-  int photosPerPage = s->layouts.count() - 1;
-  int remainder = photoCount % photosPerPage;
-  int emptySlots = 0;
-  if (remainder > 0)
-    emptySlots = photosPerPage - remainder;
-  int pageCount = photoCount / photosPerPage;
-  if (emptySlots > 0)
-    pageCount++;
-  return pageCount;
+	// get the selected layout
+	TPhotoSize *s = m_photoSizes.at(ListPhotoSizes->currentItem());
+	
+	int photoCount  =  m_photos.count();
+	// how many pages?  Recall that the first layout item is the paper size
+	int photosPerPage = s->layouts.count() - 1;
+	int remainder = photoCount % photosPerPage;
+	int emptySlots = 0;
+	if (remainder > 0)
+	emptySlots = photosPerPage - remainder;
+	int pageCount = photoCount / photosPerPage;
+	if (emptySlots > 0)
+	pageCount++;
+	return pageCount;
 }
 
 const float FONT_HEIGHT_RATIO = 0.08;
@@ -827,8 +822,7 @@ void FrmPrintWizard::previewPhotos()
   // get the selected layout
   TPhotoSize *s = m_photoSizes.at(ListPhotoSizes->currentItem());
 
-  int photoCopies = EditCopies->value();
-  int photoCount  = photoCopies * m_photos.count();
+  int photoCount  =  m_photos.count();
   // how many pages?  Recall that the first layout item is the paper size
   int photosPerPage = s->layouts.count() - 1;
   int remainder = photoCount % photosPerPage;
@@ -886,13 +880,13 @@ void FrmPrintWizard::previewPhotos()
 
 void FrmPrintWizard::ListPhotoSizes_highlighted ( int )
 {
-  m_currentPreviewPage = 0;
-  for (TPhoto *photo = m_photos.first(); photo != 0; photo = m_photos.next())
-  {
-    photo->cropRegion.setRect(-1, -1, -1, -1);
-    photo->rotation = 0;
-  }
-  previewPhotos();
+	m_currentPreviewPage = 0;
+	for (TPhoto *photo = m_photos.first(); photo != 0; photo = m_photos.next())
+	{
+		photo->cropRegion.setRect(-1, -1, -1, -1);
+		photo->rotation = 0;
+	}
+	previewPhotos();
 }
 
 void FrmPrintWizard::ListPhotoSizes_selected( QListBoxItem * )
@@ -932,21 +926,89 @@ void FrmPrintWizard::manageBtnPrintOrder()
 	}
 }
 
-void FrmPrintWizard::ListPhotoOrder_highlighted ( int )
+void FrmPrintWizard::ListPhotoOrder_highlighted ( int index )
 {
+	EditCopies->blockSignals(true);
+	EditCopies->setValue ( m_photos.at(index)->copies );
+	EditCopies->blockSignals(false);
+
 	manageBtnPrintOrder();
 }
 
 void FrmPrintWizard::ListPrintOrder_selected( QListBoxItem * )
 {
+	int currentIndex = ListPrintOrder->currentItem();
+	EditCopies->blockSignals(true);
+	EditCopies->setValue ( m_photos.at(currentIndex)->copies );
+	EditCopies->blockSignals(false);
+
 	manageBtnPrintOrder();
 }
 
 void FrmPrintWizard::EditCopies_valueChanged( int copies )
 {
-  for (TPhoto *photo = m_photos.first(); photo != 0; photo = m_photos.next())
-      photo->copies = copies;
-  previewPhotos();
+	if (copies < 1)
+		return;
+
+	int currentIndex = ListPrintOrder->currentItem();
+	QString item = ListPrintOrder->selectedItem()->text();
+	TPhoto *pCurPhoto = m_photos.at(currentIndex);
+	KURL fileName = pCurPhoto->filename;
+
+	if ( pCurPhoto->copies >= copies )
+	{
+		// removing copies
+		if (pCurPhoto->copies == 1 || pCurPhoto->copies == copies)
+			return;
+		
+		ListPrintOrder->blockSignals(true);
+		ListPrintOrder->setSelected (currentIndex, false);
+		for (int removing = pCurPhoto->copies - copies; removing >0 ;removing--)
+		{
+			for (unsigned int index = 0; index < ListPrintOrder->count(); index++)
+			{
+				if (ListPrintOrder->text(index) == item)
+				{
+					TPhoto *pPhoto = m_photos.at(index);
+					m_photos.remove(index);
+					delete (pPhoto);
+					ListPrintOrder->removeItem(index);
+					break;
+				} 
+			}
+		}
+		ListPrintOrder->blockSignals(false);
+		currentIndex = -1;
+	}
+	else
+	{
+		// adding copies
+		for (int adding = copies - pCurPhoto->copies; adding >0 ;adding--)
+		{
+			TPhoto *pPhoto = new TPhoto(150);
+			pPhoto->filename = pCurPhoto->filename;
+			m_photos.insert(currentIndex, pPhoto);
+			ListPrintOrder->insertItem(pPhoto->filename.filename(), currentIndex);
+		}
+	}
+
+	LblPhotoCount->setText(QString::number(m_photos.count()));
+
+	int index = 0;
+	for (TPhoto *pPhoto = m_photos.first(); pPhoto != 0; pPhoto = m_photos.next(), index++)
+	{
+		if (pPhoto->filename == fileName)
+		{
+			pPhoto->copies = copies;
+			if (currentIndex == -1)
+				currentIndex = index;
+		}
+	}
+	ListPrintOrder->blockSignals(true);
+	ListPrintOrder->setCurrentItem(currentIndex);
+	ListPrintOrder->setSelected( currentIndex, true );
+	ListPrintOrder->blockSignals(false);
+	previewPhotos();
 }
 
 void FrmPrintWizard::removeGimpFiles()
@@ -1105,7 +1167,7 @@ void FrmPrintWizard::loadSettings()
   KSimpleConfig config("kipirc");
   config.setGroup("PrintWizard");
 
-  // TODO anaselli fix page layout management
+  //internal PageSize
   PageSize pageSize = (PageSize)config.readNumEntry("PageSize", (int)A4); //Default A4
   initPhotoSizes(pageSize);
   CmbPaperSize->setCurrentItem(int(pageSize));
@@ -1146,8 +1208,6 @@ void FrmPrintWizard::loadSettings()
 
   // kjobviewer
   m_kjobviewer->setChecked(config.readBoolEntry("KjobViewer", true));
-
-  EditCopies->setValue(config.readNumEntry("Copies", EditCopies->value()));
 }
 
 
@@ -1186,11 +1246,9 @@ void FrmPrintWizard::saveSettings()
 
   // photo size
   config.writeEntry("PhotoSize", ListPhotoSizes->currentText());
-  config.writeEntry("Copies", EditCopies->value());
 
   // kjobviewer
   config.writeEntry("KjobViewer", m_kjobviewer->isChecked());
-
 }
 
 void FrmPrintWizard::GrpOutputSettings_clicked(int id)
@@ -1287,7 +1345,7 @@ void FrmPrintWizard::BtnPrintOrderDown_clicked() {
   m_photos.insert(currentIndex, photo2);
   previewPhotos();
 }
-                                                                           
+
 void FrmPrintWizard::BtnPreviewPageDown_clicked() {
   if (m_currentPreviewPage == 0)
     return;

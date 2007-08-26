@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>682</width>
-            <height>518</height>
+            <width>658</width>
+            <height>549</height>
         </rect>
     </property>
     <property name="caption">
@@ -467,6 +467,12 @@ Click the 'Next' button to begin.</string>
                                 <property name="text">
                                     <string>No margins</string>
                                 </property>
+                                <property name="toolTip" stdset="0">
+                                    <string>Full-bleed mode</string>
+                                </property>
+                                <property name="whatsThis" stdset="0">
+                                    <string>Full-bleed mode</string>
+                                </property>
                             </widget>
                             <spacer row="0" column="1">
                                 <property name="name">
@@ -701,530 +707,577 @@ Click the 'Next' button to begin.</string>
         <attribute name="title">
             <string>Select Photo Layout</string>
         </attribute>
-        <hbox>
+        <grid>
             <property name="name">
                 <cstring>unnamed</cstring>
             </property>
-            <widget class="QLayoutWidget">
+            <widget class="QLayoutWidget" row="0" column="0">
                 <property name="name">
-                    <cstring>Layout16</cstring>
+                    <cstring>layout51</cstring>
                 </property>
-                <vbox>
-                    <property name="name">
-                        <cstring>unnamed</cstring>
-                    </property>
-                    <property name="margin">
-                        <number>0</number>
-                    </property>
-                    <property name="spacing">
-                        <number>6</number>
-                    </property>
-                    <widget class="QLabel">
-                        <property name="name">
-                            <cstring>PixmapLabel3</cstring>
-                        </property>
-                        <property name="sizePolicy">
-                            <sizepolicy>
-                                <hsizetype>0</hsizetype>
-                                <vsizetype>0</vsizetype>
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                            </sizepolicy>
-                        </property>
-                        <property name="pixmap">
-                            <pixmap>image2</pixmap>
-                        </property>
-                        <property name="scaledContents">
-                            <bool>false</bool>
-                        </property>
-                    </widget>
-                    <spacer>
-                        <property name="name">
-                            <cstring>Spacer10</cstring>
-                        </property>
-                        <property name="orientation">
-                            <enum>Vertical</enum>
-                        </property>
-                        <property name="sizeType">
-                            <enum>Expanding</enum>
-                        </property>
-                        <property name="sizeHint">
-                            <size>
-                                <width>0</width>
-                                <height>20</height>
-                            </size>
-                        </property>
-                    </spacer>
-                </vbox>
-            </widget>
-            <widget class="Line">
-                <property name="name">
-                    <cstring>Line3</cstring>
-                </property>
-                <property name="frameShape">
-                    <enum>VLine</enum>
-                </property>
-                <property name="frameShadow">
-                    <enum>Sunken</enum>
-                </property>
-                <property name="orientation">
-                    <enum>Vertical</enum>
-                </property>
-            </widget>
-            <widget class="QLayoutWidget">
-                <property name="name">
-                    <cstring>layout30</cstring>
-                </property>
-                <vbox>
+                <hbox>
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
                     <widget class="QLayoutWidget">
                         <property name="name">
-                            <cstring>layout66</cstring>
+                            <cstring>Layout16</cstring>
                         </property>
-                        <hbox>
+                        <vbox>
                             <property name="name">
                                 <cstring>unnamed</cstring>
                             </property>
-                            <widget class="QLayoutWidget">
+                            <property name="margin">
+                                <number>0</number>
+                            </property>
+                            <property name="spacing">
+                                <number>6</number>
+                            </property>
+                            <widget class="QLabel">
                                 <property name="name">
-                                    <cstring>Layout19</cstring>
+                                    <cstring>PixmapLabel3</cstring>
                                 </property>
-                                <vbox>
-                                    <property name="name">
-                                        <cstring>unnamed</cstring>
-                                    </property>
-                                    <property name="margin">
-                                        <number>0</number>
-                                    </property>
-                                    <property name="spacing">
-                                        <number>6</number>
-                                    </property>
-                                    <widget class="QLabel">
-                                        <property name="name">
-                                            <cstring>TextLabel2</cstring>
-                                        </property>
-                                        <property name="text">
-                                            <string>Select the photo size to print:</string>
-                                        </property>
-                                    </widget>
-                                    <widget class="KListBox">
-                                        <item>
-                                            <property name="text">
-                                                <string>Photo Sizes</string>
-                                            </property>
-                                        </item>
-                                        <property name="name">
-                                            <cstring>ListPhotoSizes</cstring>
-                                        </property>
-                                        <property name="minimumSize">
-                                            <size>
-                                                <width>200</width>
-                                                <height>200</height>
-                                            </size>
-                                        </property>
-                                    </widget>
-                                </vbox>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="pixmap">
+                                    <pixmap>image2</pixmap>
+                                </property>
+                                <property name="scaledContents">
+                                    <bool>false</bool>
+                                </property>
                             </widget>
-                            <widget class="QLayoutWidget">
+                            <spacer>
                                 <property name="name">
-                                    <cstring>layout65</cstring>
+                                    <cstring>Spacer10</cstring>
                                 </property>
-                                <vbox>
-                                    <property name="name">
-                                        <cstring>unnamed</cstring>
-                                    </property>
-                                    <widget class="QLayoutWidget">
-                                        <property name="name">
-                                            <cstring>layout58</cstring>
-                                        </property>
-                                        <hbox>
-                                            <property name="name">
-                                                <cstring>unnamed</cstring>
-                                            </property>
-                                            <widget class="QLabel">
-                                                <property name="name">
-                                                    <cstring>LblPreview</cstring>
-                                                </property>
-                                                <property name="text">
-                                                    <string>Preview</string>
-                                                </property>
-                                            </widget>
-                                            <spacer>
-                                                <property name="name">
-                                                    <cstring>spacer23</cstring>
-                                                </property>
-                                                <property name="orientation">
-                                                    <enum>Horizontal</enum>
-                                                </property>
-                                                <property name="sizeType">
-                                                    <enum>Fixed</enum>
-                                                </property>
-                                                <property name="sizeHint">
-                                                    <size>
-                                                        <width>40</width>
-                                                        <height>20</height>
-                                                    </size>
-                                                </property>
-                                            </spacer>
-                                            <widget class="QPushButton">
-                                                <property name="name">
-                                                    <cstring>BtnPreviewPageDown</cstring>
-                                                </property>
-                                                <property name="maximumSize">
-                                                    <size>
-                                                        <width>30</width>
-                                                        <height>32767</height>
-                                                    </size>
-                                                </property>
-                                                <property name="text">
-                                                    <string>&lt;</string>
-                                                </property>
-                                            </widget>
-                                            <widget class="QPushButton">
-                                                <property name="name">
-                                                    <cstring>BtnPreviewPageUp</cstring>
-                                                </property>
-                                                <property name="maximumSize">
-                                                    <size>
-                                                        <width>30</width>
-                                                        <height>32767</height>
-                                                    </size>
-                                                </property>
-                                                <property name="text">
-                                                    <string>&gt;</string>
-                                                </property>
-                                            </widget>
-                                        </hbox>
-                                    </widget>
-                                    <widget class="QLabel">
-                                        <property name="name">
-                                            <cstring>BmpFirstPagePreview</cstring>
-                                        </property>
-                                        <property name="sizePolicy">
-                                            <sizepolicy>
-                                                <hsizetype>0</hsizetype>
-                                                <vsizetype>0</vsizetype>
-                                                <horstretch>0</horstretch>
-                                                <verstretch>0</verstretch>
-                                            </sizepolicy>
-                                        </property>
-                                        <property name="minimumSize">
-                                            <size>
-                                                <width>200</width>
-                                                <height>200</height>
-                                            </size>
-                                        </property>
-                                        <property name="maximumSize">
-                                            <size>
-                                                <width>200</width>
-                                                <height>200</height>
-                                            </size>
-                                        </property>
-                                        <property name="frameShape">
-                                            <enum>Box</enum>
-                                        </property>
-                                        <property name="pixmap">
-                                            <pixmap>image3</pixmap>
-                                        </property>
-                                        <property name="scaledContents">
-                                            <bool>true</bool>
-                                        </property>
-                                        <property name="alignment">
-                                            <set>AlignVCenter</set>
-                                        </property>
-                                    </widget>
-                                    <spacer>
-                                        <property name="name">
-                                            <cstring>spacer24</cstring>
-                                        </property>
-                                        <property name="orientation">
-                                            <enum>Vertical</enum>
-                                        </property>
-                                        <property name="sizeType">
-                                            <enum>Expanding</enum>
-                                        </property>
-                                        <property name="sizeHint">
-                                            <size>
-                                                <width>20</width>
-                                                <height>0</height>
-                                            </size>
-                                        </property>
-                                    </spacer>
-                                </vbox>
-                            </widget>
-                        </hbox>
-                    </widget>
-                    <widget class="Line">
-                        <property name="name">
-                            <cstring>Line4</cstring>
-                        </property>
-                        <property name="frameShape">
-                            <enum>HLine</enum>
-                        </property>
-                        <property name="frameShadow">
-                            <enum>Sunken</enum>
-                        </property>
-                        <property name="orientation">
-                            <enum>Horizontal</enum>
-                        </property>
+                                <property name="orientation">
+                                    <enum>Vertical</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>0</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </vbox>
                     </widget>
                     <widget class="QLayoutWidget">
                         <property name="name">
-                            <cstring>layout29</cstring>
+                            <cstring>layout50</cstring>
                         </property>
-                        <hbox>
+                        <vbox>
                             <property name="name">
                                 <cstring>unnamed</cstring>
                             </property>
-                            <widget class="QGroupBox">
+                            <widget class="QLayoutWidget">
                                 <property name="name">
-                                    <cstring>groupBox2</cstring>
+                                    <cstring>layout66</cstring>
                                 </property>
-                                <property name="title">
-                                    <string></string>
-                                </property>
-                                <vbox>
+                                <hbox>
                                     <property name="name">
                                         <cstring>unnamed</cstring>
                                     </property>
                                     <widget class="QLayoutWidget">
                                         <property name="name">
-                                            <cstring>layout38</cstring>
+                                            <cstring>Layout19</cstring>
                                         </property>
-                                        <hbox>
+                                        <vbox>
                                             <property name="name">
                                                 <cstring>unnamed</cstring>
                                             </property>
+                                            <property name="margin">
+                                                <number>0</number>
+                                            </property>
+                                            <property name="spacing">
+                                                <number>6</number>
+                                            </property>
                                             <widget class="QLabel">
                                                 <property name="name">
-                                                    <cstring>LblCopies</cstring>
+                                                    <cstring>TextLabel2</cstring>
                                                 </property>
                                                 <property name="text">
-                                                    <string>Number of times to print each photo:</string>
+                                                    <string>Select the photo size to print:</string>
+                                                </property>
+                                            </widget>
+                                            <widget class="KListBox">
+                                                <item>
+                                                    <property name="text">
+                                                        <string>Photo Sizes</string>
+                                                    </property>
+                                                </item>
+                                                <property name="name">
+                                                    <cstring>ListPhotoSizes</cstring>
+                                                </property>
+                                                <property name="minimumSize">
+                                                    <size>
+                                                        <width>200</width>
+                                                        <height>200</height>
+                                                    </size>
+                                                </property>
+                                            </widget>
+                                        </vbox>
+                                    </widget>
+                                    <widget class="QLayoutWidget">
+                                        <property name="name">
+                                            <cstring>layout65</cstring>
+                                        </property>
+                                        <vbox>
+                                            <property name="name">
+                                                <cstring>unnamed</cstring>
+                                            </property>
+                                            <widget class="QLayoutWidget">
+                                                <property name="name">
+                                                    <cstring>layout58</cstring>
+                                                </property>
+                                                <hbox>
+                                                    <property name="name">
+                                                        <cstring>unnamed</cstring>
+                                                    </property>
+                                                    <widget class="QLabel">
+                                                        <property name="name">
+                                                            <cstring>LblPreview</cstring>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>Preview</string>
+                                                        </property>
+                                                    </widget>
+                                                    <spacer>
+                                                        <property name="name">
+                                                            <cstring>spacer23</cstring>
+                                                        </property>
+                                                        <property name="orientation">
+                                                            <enum>Horizontal</enum>
+                                                        </property>
+                                                        <property name="sizeType">
+                                                            <enum>Fixed</enum>
+                                                        </property>
+                                                        <property name="sizeHint">
+                                                            <size>
+                                                                <width>40</width>
+                                                                <height>20</height>
+                                                            </size>
+                                                        </property>
+                                                    </spacer>
+                                                    <widget class="QPushButton">
+                                                        <property name="name">
+                                                            <cstring>BtnPreviewPageDown</cstring>
+                                                        </property>
+                                                        <property name="maximumSize">
+                                                            <size>
+                                                                <width>30</width>
+                                                                <height>32767</height>
+                                                            </size>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>&lt;</string>
+                                                        </property>
+                                                        <property name="toolTip" stdset="0">
+                                                            <string>Previous photo</string>
+                                                        </property>
+                                                        <property name="whatsThis" stdset="0">
+                                                            <string>Previous photo</string>
+                                                        </property>
+                                                    </widget>
+                                                    <widget class="QPushButton">
+                                                        <property name="name">
+                                                            <cstring>BtnPreviewPageUp</cstring>
+                                                        </property>
+                                                        <property name="maximumSize">
+                                                            <size>
+                                                                <width>30</width>
+                                                                <height>32767</height>
+                                                            </size>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>&gt;</string>
+                                                        </property>
+                                                        <property name="toolTip" stdset="0">
+                                                            <string>Next page</string>
+                                                        </property>
+                                                        <property name="whatsThis" stdset="0">
+                                                            <string>Next page</string>
+                                                        </property>
+                                                    </widget>
+                                                </hbox>
+                                            </widget>
+                                            <widget class="QLabel">
+                                                <property name="name">
+                                                    <cstring>BmpFirstPagePreview</cstring>
+                                                </property>
+                                                <property name="sizePolicy">
+                                                    <sizepolicy>
+                                                        <hsizetype>0</hsizetype>
+                                                        <vsizetype>0</vsizetype>
+                                                        <horstretch>0</horstretch>
+                                                        <verstretch>0</verstretch>
+                                                    </sizepolicy>
+                                                </property>
+                                                <property name="minimumSize">
+                                                    <size>
+                                                        <width>200</width>
+                                                        <height>200</height>
+                                                    </size>
+                                                </property>
+                                                <property name="maximumSize">
+                                                    <size>
+                                                        <width>200</width>
+                                                        <height>200</height>
+                                                    </size>
+                                                </property>
+                                                <property name="frameShape">
+                                                    <enum>Box</enum>
+                                                </property>
+                                                <property name="pixmap">
+                                                    <pixmap>image3</pixmap>
+                                                </property>
+                                                <property name="scaledContents">
+                                                    <bool>true</bool>
                                                 </property>
                                                 <property name="alignment">
-                                                    <set>AlignVCenter|AlignRight</set>
+                                                    <set>AlignVCenter</set>
                                                 </property>
                                             </widget>
-                                            <widget class="QSpinBox">
-                                                <property name="name">
-                                                    <cstring>EditCopies</cstring>
-                                                </property>
-                                                <property name="enabled">
-                                                    <bool>false</bool>
-                                                </property>
-                                                <property name="minValue">
-                                                    <number>1</number>
-                                                </property>
-                                                <property name="toolTip" stdset="0">
-                                                    <string>Not Yet Implemented</string>
-                                                </property>
-                                            </widget>
-                                        </hbox>
-                                    </widget>
-                                    <widget class="Line">
-                                        <property name="name">
-                                            <cstring>LineCopies</cstring>
-                                        </property>
-                                        <property name="frameShape">
-                                            <enum>HLine</enum>
-                                        </property>
-                                        <property name="frameShadow">
-                                            <enum>Sunken</enum>
-                                        </property>
-                                        <property name="orientation">
-                                            <enum>Horizontal</enum>
-                                        </property>
-                                    </widget>
-                                    <widget class="QLayoutWidget">
-                                        <property name="name">
-                                            <cstring>layout34</cstring>
-                                        </property>
-                                        <hbox>
-                                            <property name="name">
-                                                <cstring>unnamed</cstring>
-                                            </property>
-                                            <widget class="QLayoutWidget">
-                                                <property name="name">
-                                                    <cstring>layout32</cstring>
-                                                </property>
-                                                <vbox>
-                                                    <property name="name">
-                                                        <cstring>unnamed</cstring>
-                                                    </property>
-                                                    <widget class="QLabel">
-                                                        <property name="name">
-                                                            <cstring>TextLabel4_2</cstring>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Number of photos to print:</string>
-                                                        </property>
-                                                        <property name="alignment">
-                                                            <set>AlignVCenter|AlignRight</set>
-                                                        </property>
-                                                    </widget>
-                                                    <widget class="QLabel">
-                                                        <property name="name">
-                                                            <cstring>TextLabel4</cstring>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Number of sheets to print:</string>
-                                                        </property>
-                                                        <property name="alignment">
-                                                            <set>AlignVCenter|AlignRight</set>
-                                                        </property>
-                                                    </widget>
-                                                    <widget class="QLabel">
-                                                        <property name="name">
-                                                            <cstring>TextLabel6</cstring>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Number of empty slots on the last page:</string>
-                                                        </property>
-                                                        <property name="alignment">
-                                                            <set>AlignVCenter|AlignRight</set>
-                                                        </property>
-                                                    </widget>
-                                                </vbox>
-                                            </widget>
-                                            <widget class="QLayoutWidget">
-                                                <property name="name">
-                                                    <cstring>layout33</cstring>
-                                                </property>
-                                                <vbox>
-                                                    <property name="name">
-                                                        <cstring>unnamed</cstring>
-                                                    </property>
-                                                    <widget class="QLabel">
-                                                        <property name="name">
-                                                            <cstring>LblPhotoCount</cstring>
-                                                        </property>
-                                                        <property name="minimumSize">
-                                                            <size>
-                                                                <width>30</width>
-                                                                <height>0</height>
-                                                            </size>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="alignment">
-                                                            <set>AlignVCenter|AlignLeft</set>
-                                                        </property>
-                                                    </widget>
-                                                    <widget class="QLabel">
-                                                        <property name="name">
-                                                            <cstring>LblSheetsPrinted</cstring>
-                                                        </property>
-                                                        <property name="minimumSize">
-                                                            <size>
-                                                                <width>30</width>
-                                                                <height>0</height>
-                                                            </size>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="alignment">
-                                                            <set>AlignVCenter|AlignLeft</set>
-                                                        </property>
-                                                    </widget>
-                                                    <widget class="QLabel">
-                                                        <property name="name">
-                                                            <cstring>LblEmptySlots</cstring>
-                                                        </property>
-                                                        <property name="minimumSize">
-                                                            <size>
-                                                                <width>30</width>
-                                                                <height>0</height>
-                                                            </size>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="alignment">
-                                                            <set>AlignVCenter|AlignLeft</set>
-                                                        </property>
-                                                    </widget>
-                                                </vbox>
-                                            </widget>
-                                        </hbox>
-                                    </widget>
-                                </vbox>
-                            </widget>
-                            <widget class="QGroupBox">
-                                <property name="name">
-                                    <cstring>groupBox3</cstring>
-                                </property>
-                                <property name="title">
-                                    <string>Print Order</string>
-                                </property>
-                                <vbox>
-                                    <property name="name">
-                                        <cstring>unnamed</cstring>
-                                    </property>
-                                    <widget class="QListBox">
-                                        <item>
-                                            <property name="text">
-                                                <string>New Item</string>
-                                            </property>
-                                        </item>
-                                        <property name="name">
-                                            <cstring>ListPrintOrder</cstring>
-                                        </property>
-                                    </widget>
-                                    <widget class="QLayoutWidget">
-                                        <property name="name">
-                                            <cstring>layout28</cstring>
-                                        </property>
-                                        <hbox>
-                                            <property name="name">
-                                                <cstring>unnamed</cstring>
-                                            </property>
                                             <spacer>
                                                 <property name="name">
-                                                    <cstring>spacer17</cstring>
+                                                    <cstring>spacer24</cstring>
                                                 </property>
                                                 <property name="orientation">
-                                                    <enum>Horizontal</enum>
+                                                    <enum>Vertical</enum>
                                                 </property>
                                                 <property name="sizeType">
                                                     <enum>Expanding</enum>
                                                 </property>
                                                 <property name="sizeHint">
                                                     <size>
-                                                        <width>5</width>
-                                                        <height>20</height>
+                                                        <width>20</width>
+                                                        <height>0</height>
                                                     </size>
                                                 </property>
                                             </spacer>
-                                            <widget class="QPushButton">
-                                                <property name="name">
-                                                    <cstring>BtnPrintOrderUp</cstring>
-                                                </property>
-                                                <property name="text">
-                                                    <string>Move Up</string>
-                                                </property>
-                                            </widget>
-                                            <widget class="QPushButton">
-                                                <property name="name">
-                                                    <cstring>BtnPrintOrderDown</cstring>
-                                                </property>
-                                                <property name="text">
-                                                    <string>Move Down</string>
-                                                </property>
-                                            </widget>
-                                        </hbox>
+                                        </vbox>
                                     </widget>
-                                </vbox>
+                                </hbox>
                             </widget>
-                        </hbox>
+                            <widget class="Line">
+                                <property name="name">
+                                    <cstring>Line4</cstring>
+                                </property>
+                                <property name="frameShape">
+                                    <enum>HLine</enum>
+                                </property>
+                                <property name="frameShadow">
+                                    <enum>Sunken</enum>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                            </widget>
+                            <widget class="QLayoutWidget">
+                                <property name="name">
+                                    <cstring>layout49</cstring>
+                                </property>
+                                <hbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QGroupBox">
+                                        <property name="name">
+                                            <cstring>groupBox2</cstring>
+                                        </property>
+                                        <property name="title">
+                                            <string>Print Summary</string>
+                                        </property>
+                                        <grid>
+                                            <property name="name">
+                                                <cstring>unnamed</cstring>
+                                            </property>
+                                            <widget class="QLayoutWidget" row="0" column="0">
+                                                <property name="name">
+                                                    <cstring>layout48</cstring>
+                                                </property>
+                                                <hbox>
+                                                    <property name="name">
+                                                        <cstring>unnamed</cstring>
+                                                    </property>
+                                                    <widget class="QLayoutWidget">
+                                                        <property name="name">
+                                                            <cstring>layout47</cstring>
+                                                        </property>
+                                                        <vbox>
+                                                            <property name="name">
+                                                                <cstring>unnamed</cstring>
+                                                            </property>
+                                                            <widget class="QLabel">
+                                                                <property name="name">
+                                                                    <cstring>TextLabel4_2</cstring>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string>Photos:</string>
+                                                                </property>
+                                                                <property name="alignment">
+                                                                    <set>AlignVCenter|AlignRight</set>
+                                                                </property>
+                                                            </widget>
+                                                            <widget class="QLabel">
+                                                                <property name="name">
+                                                                    <cstring>TextLabel4</cstring>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string>Sheets:</string>
+                                                                </property>
+                                                                <property name="alignment">
+                                                                    <set>AlignVCenter|AlignRight</set>
+                                                                </property>
+                                                            </widget>
+                                                            <widget class="QLabel">
+                                                                <property name="name">
+                                                                    <cstring>TextLabel6</cstring>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string>Empty slots:</string>
+                                                                </property>
+                                                                <property name="alignment">
+                                                                    <set>WordBreak|AlignVCenter|AlignRight</set>
+                                                                </property>
+                                                            </widget>
+                                                        </vbox>
+                                                    </widget>
+                                                    <widget class="QLayoutWidget">
+                                                        <property name="name">
+                                                            <cstring>layout46</cstring>
+                                                        </property>
+                                                        <vbox>
+                                                            <property name="name">
+                                                                <cstring>unnamed</cstring>
+                                                            </property>
+                                                            <widget class="QLabel">
+                                                                <property name="name">
+                                                                    <cstring>LblPhotoCount</cstring>
+                                                                </property>
+                                                                <property name="minimumSize">
+                                                                    <size>
+                                                                        <width>30</width>
+                                                                        <height>0</height>
+                                                                    </size>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string>&lt;p align="right"&gt;0&lt;/p&gt;</string>
+                                                                </property>
+                                                                <property name="alignment">
+                                                                    <set>WordBreak|AlignVCenter|AlignLeft</set>
+                                                                </property>
+                                                            </widget>
+                                                            <widget class="QLabel">
+                                                                <property name="name">
+                                                                    <cstring>LblSheetsPrinted</cstring>
+                                                                </property>
+                                                                <property name="minimumSize">
+                                                                    <size>
+                                                                        <width>30</width>
+                                                                        <height>0</height>
+                                                                    </size>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string>&lt;p align="right"&gt;0&lt;/p&gt;</string>
+                                                                </property>
+                                                                <property name="alignment">
+                                                                    <set>WordBreak|AlignVCenter|AlignLeft</set>
+                                                                </property>
+                                                            </widget>
+                                                            <widget class="QLabel">
+                                                                <property name="name">
+                                                                    <cstring>LblEmptySlots</cstring>
+                                                                </property>
+                                                                <property name="minimumSize">
+                                                                    <size>
+                                                                        <width>30</width>
+                                                                        <height>0</height>
+                                                                    </size>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string>&lt;p align="right"&gt;0&lt;/p&gt;</string>
+                                                                </property>
+                                                                <property name="alignment">
+                                                                    <set>WordBreak|AlignVCenter|AlignLeft</set>
+                                                                </property>
+                                                            </widget>
+                                                        </vbox>
+                                                    </widget>
+                                                </hbox>
+                                            </widget>
+                                        </grid>
+                                    </widget>
+                                    <widget class="QGroupBox">
+                                        <property name="name">
+                                            <cstring>groupBox3</cstring>
+                                        </property>
+                                        <property name="title">
+                                            <string>Print Order</string>
+                                        </property>
+                                        <grid>
+                                            <property name="name">
+                                                <cstring>unnamed</cstring>
+                                            </property>
+                                            <widget class="QLayoutWidget" row="0" column="0">
+                                                <property name="name">
+                                                    <cstring>layout45</cstring>
+                                                </property>
+                                                <vbox>
+                                                    <property name="name">
+                                                        <cstring>unnamed</cstring>
+                                                    </property>
+                                                    <widget class="QLayoutWidget">
+                                                        <property name="name">
+                                                            <cstring>layout44</cstring>
+                                                        </property>
+                                                        <hbox>
+                                                            <property name="name">
+                                                                <cstring>unnamed</cstring>
+                                                            </property>
+                                                            <widget class="QListBox">
+                                                                <item>
+                                                                    <property name="text">
+                                                                        <string>New Item</string>
+                                                                    </property>
+                                                                </item>
+                                                                <property name="name">
+                                                                    <cstring>ListPrintOrder</cstring>
+                                                                </property>
+                                                            </widget>
+                                                            <widget class="QLayoutWidget">
+                                                                <property name="name">
+                                                                    <cstring>layout36</cstring>
+                                                                </property>
+                                                                <vbox>
+                                                                    <property name="name">
+                                                                        <cstring>unnamed</cstring>
+                                                                    </property>
+                                                                    <widget class="QPushButton">
+                                                                        <property name="name">
+                                                                            <cstring>BtnPrintOrderUp</cstring>
+                                                                        </property>
+                                                                        <property name="text">
+                                                                            <string>Up</string>
+                                                                            <comment>Move Up</comment>
+                                                                        </property>
+                                                                        <property name="toolTip" stdset="0">
+                                                                            <string>Move Up selected photo</string>
+                                                                        </property>
+                                                                        <property name="whatsThis" stdset="0">
+                                                                            <string>Move Up selected photo</string>
+                                                                        </property>
+                                                                    </widget>
+                                                                    <spacer>
+                                                                        <property name="name">
+                                                                            <cstring>spacer20</cstring>
+                                                                        </property>
+                                                                        <property name="orientation">
+                                                                            <enum>Vertical</enum>
+                                                                        </property>
+                                                                        <property name="sizeType">
+                                                                            <enum>Expanding</enum>
+                                                                        </property>
+                                                                        <property name="sizeHint">
+                                                                            <size>
+                                                                                <width>20</width>
+                                                                                <height>16</height>
+                                                                            </size>
+                                                                        </property>
+                                                                    </spacer>
+                                                                    <widget class="QPushButton">
+                                                                        <property name="name">
+                                                                            <cstring>BtnPrintOrderDown</cstring>
+                                                                        </property>
+                                                                        <property name="text">
+                                                                            <string>Down</string>
+                                                                        </property>
+                                                                        <property name="toolTip" stdset="0">
+                                                                            <string>Move Down selected photo</string>
+                                                                        </property>
+                                                                        <property name="whatsThis" stdset="0">
+                                                                            <string>Move Down selected photo</string>
+                                                                        </property>
+                                                                    </widget>
+                                                                </vbox>
+                                                            </widget>
+                                                        </hbox>
+                                                    </widget>
+                                                    <widget class="QLayoutWidget">
+                                                        <property name="name">
+                                                            <cstring>layout43</cstring>
+                                                        </property>
+                                                        <hbox>
+                                                            <property name="name">
+                                                                <cstring>unnamed</cstring>
+                                                            </property>
+                                                            <widget class="QLabel">
+                                                                <property name="name">
+                                                                    <cstring>LblCopies_2</cstring>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string>Number of times to print selected photo:</string>
+                                                                </property>
+                                                                <property name="alignment">
+                                                                    <set>AlignVCenter|AlignRight</set>
+                                                                </property>
+                                                            </widget>
+                                                            <spacer>
+                                                                <property name="name">
+                                                                    <cstring>spacer17</cstring>
+                                                                </property>
+                                                                <property name="orientation">
+                                                                    <enum>Horizontal</enum>
+                                                                </property>
+                                                                <property name="sizeType">
+                                                                    <enum>Expanding</enum>
+                                                                </property>
+                                                                <property name="sizeHint">
+                                                                    <size>
+                                                                        <width>16</width>
+                                                                        <height>20</height>
+                                                                    </size>
+                                                                </property>
+                                                            </spacer>
+                                                            <widget class="QSpinBox">
+                                                                <property name="name">
+                                                                    <cstring>EditCopies</cstring>
+                                                                </property>
+                                                                <property name="enabled">
+                                                                    <bool>true</bool>
+                                                                </property>
+                                                                <property name="minValue">
+                                                                    <number>1</number>
+                                                                </property>
+                                                                <property name="toolTip" stdset="0">
+                                                                    <string>Number of copies of selected photo</string>
+                                                                </property>
+                                                                <property name="whatsThis" stdset="0">
+                                                                    <string>Number of copies of selected photo</string>
+                                                                </property>
+                                                            </widget>
+                                                        </hbox>
+                                                    </widget>
+                                                </vbox>
+                                            </widget>
+                                        </grid>
+                                    </widget>
+                                </hbox>
+                            </widget>
+                        </vbox>
                     </widget>
-                </vbox>
+                </hbox>
             </widget>
-        </hbox>
+        </grid>
     </widget>
     <widget class="QWidget">
         <property name="name">
@@ -1351,6 +1404,12 @@ Click the 'Next' button to begin.</string>
                         <property name="text">
                             <string>Rotate</string>
                         </property>
+                        <property name="toolTip" stdset="0">
+                            <string>Rotate photo</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>Rotate photo</string>
+                        </property>
                     </widget>
                     <spacer>
                         <property name="name">
@@ -1376,6 +1435,12 @@ Click the 'Next' button to begin.</string>
                         <property name="text">
                             <string>&lt;&lt; Previous Photo</string>
                         </property>
+                        <property name="toolTip" stdset="0">
+                            <string>Previous photo</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>Previous photo</string>
+                        </property>
                     </widget>
                     <widget class="QPushButton">
                         <property name="name">
@@ -1383,6 +1448,12 @@ Click the 'Next' button to begin.</string>
                         </property>
                         <property name="text">
                             <string>Next Photo &gt;&gt;</string>
+                        </property>
+                        <property name="toolTip" stdset="0">
+                            <string>Next photo</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>Next photo</string>
                         </property>
                     </widget>
                     <spacer>
@@ -1829,6 +1900,12 @@ Click the 'Next' button to begin.</string>
         <signal>highlighted(int)</signal>
         <receiver>FrmPrintWizardBase</receiver>
         <slot>ListPhotoOrder_highlighted(int)</slot>
+    </connection>
+    <connection>
+        <sender>EditCopies</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>FrmPrintWizardBase</receiver>
+        <slot>EditCopies_valueChanged(int)</slot>
     </connection>
 </connections>
 <slots>
