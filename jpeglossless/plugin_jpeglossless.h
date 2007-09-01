@@ -47,7 +47,7 @@ class Plugin_JPEGLossless : public KIPI::Plugin
 
 public:
 
-    Plugin_JPEGLossless(QObject *parent, const QStringList &args);
+    Plugin_JPEGLossless(QObject *parent, const QVariantList &args);
     ~Plugin_JPEGLossless();
 
     KIPI::Category category( KAction* action ) const;

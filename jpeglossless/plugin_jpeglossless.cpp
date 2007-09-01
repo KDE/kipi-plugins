@@ -55,13 +55,11 @@
 #include "plugin_jpeglossless.h"
 #include "plugin_jpeglossless.moc"
 
-typedef KGenericFactory<Plugin_JPEGLossless> Factory;
+K_PLUGIN_FACTORY( JPEGLosslessFactory, registerPlugin<Plugin_JPEGLossless>(); )
+K_EXPORT_PLUGIN ( JPEGLosslessFactory("kipiplugin_jpeglossless") )
 
-K_EXPORT_COMPONENT_FACTORY( kipiplugin_jpeglossless,
-                            Factory("kipiplugin_jpeglossless"))
-
-Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent, const QStringList &)
-                   : KIPI::Plugin( Factory::componentData(), parent, "JPEGLossless")
+Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent, const QVariantList &)
+                   : KIPI::Plugin( JPEGLosslessFactory::componentData(), parent, "JPEGLossless")
 {
     m_total                    = 0;
     m_current                  = 0;

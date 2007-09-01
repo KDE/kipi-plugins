@@ -42,13 +42,11 @@
 #include "plugin_timeadjust.h"
 #include "plugin_timeadjust.moc"
 
-typedef KGenericFactory<Plugin_TimeAdjust> Factory;
+K_PLUGIN_FACTORY( TimeAdjustFactory, registerPlugin<Plugin_TimeAdjust>(); )
+K_EXPORT_PLUGIN ( TimeAdjustFactory("kipiplugin_timeadjust") )
 
-K_EXPORT_COMPONENT_FACTORY( kipiplugin_timeadjust,
-                            Factory("kipiplugin_timeadjust"))
-
-Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent, const QStringList&)
-                 : KIPI::Plugin( Factory::componentData(), parent, "TimeAdjust")
+Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent, const QVariantList&)
+                 : KIPI::Plugin( TimeAdjustFactory::componentData(), parent, "TimeAdjust")
 {
     kDebug( 51001 ) << "Plugin_TimeAdjust plugin loaded";
 }

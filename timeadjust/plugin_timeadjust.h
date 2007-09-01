@@ -36,7 +36,7 @@ class Plugin_TimeAdjust : public KIPI::Plugin
 
 public:
 
-    Plugin_TimeAdjust(QObject *parent, const QStringList &args);
+    Plugin_TimeAdjust(QObject *parent, const QVariantList &args);
     virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* );
 

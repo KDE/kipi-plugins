@@ -37,7 +37,7 @@ Q_OBJECT
 
 public:
 
-    Plugin_WallPaper(QObject *parent, const QStringList &args);
+    Plugin_WallPaper(QObject *parent, const QVariantList &args);
     virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* );
 

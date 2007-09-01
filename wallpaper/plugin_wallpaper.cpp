@@ -46,13 +46,11 @@
 #include "plugin_wallpaper.moc"
 #include "kdesktop_interface.h"
 
-typedef KGenericFactory<Plugin_WallPaper> Factory;
+K_PLUGIN_FACTORY( WallPaperFactory, registerPlugin<Plugin_WallPaper>(); )
+K_EXPORT_PLUGIN ( WallPaperFactory("kipiplugin_wallpaper") )
 
-K_EXPORT_COMPONENT_FACTORY( kipiplugin_wallpaper,
-                            KGenericFactory<Plugin_WallPaper>("kipiplugin_wallpaper"))
-
-Plugin_WallPaper::Plugin_WallPaper(QObject *parent, const QStringList&)
-                : KIPI::Plugin(Factory::componentData(), parent, "WallPaper")
+Plugin_WallPaper::Plugin_WallPaper(QObject *parent, const QVariantList&)
+                : KIPI::Plugin(WallPaperFactory::componentData(), parent, "WallPaper")
 {
     kDebug( 51001 ) << "Plugin_WallPaper plugin loaded";
 }
