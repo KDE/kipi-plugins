@@ -76,6 +76,13 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
     {
         KIPI::ImageInfo info = m_interface->info( *it );
 
+        /*
+        Removing this code:
+         - for JPEGs, jpegtransform is using the Exiv2Iface and matrix multiplication
+           to compute the mathematically correct rotation (taking flip operations into account,
+           the code below only angles). Metadata tag is reset.
+         - For ImageMagick, no metadata is taken into account, and no metadata is changed!
+           Angle from host application still applies.
         // Don't use the host angle in case of auto-rotation (Rot0)
         if (val != Rot0)
         {
@@ -104,6 +111,7 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
             else
                 val = Rot0;
         }
+        */
 
         Task *t      = new Task;
         t->filePath  = (*it).path(); 
