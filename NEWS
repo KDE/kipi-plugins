@@ -21,14 +21,15 @@ SlideShow      : Dropped imlib2 dependency
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
-001 ==> 133193 : PrintWizard : Data on the photo.
-002 ==> 111454 : PrintWizard : Print photo's date into one corner like print assistant.
-003 ==> 146457 : PrintWizard : Rotation is not done correctly Exif.
-004 ==> 138838 : Digikam Picasaweb export plugin.
-005 ==> 103152 : PrintWizard : Improvement suggestions for printing wizard
-006 ==> 117085 : PrintWizard : Have pictures fit a whole, single sheet.
-007 ==> 100471 : PrintWizard : Can't print the same image more than once on the same page
-008 ==>
+001 ==> 133193 : PrintWizard  : Data on the photo.
+002 ==> 111454 : PrintWizard  : Print photo's date into one corner like print assistant.
+003 ==> 146457 : PrintWizard  : Rotation is not done correctly Exif.
+004 ==> 138838 : NewPlugin    : Digikam Picasaweb export plugin.
+005 ==> 103152 : PrintWizard  : Improvement suggestions for printing wizard.
+006 ==> 117085 : PrintWizard  : Have pictures fit a whole, single sheet.
+007 ==> 100471 : PrintWizard  : Can't print the same image more than once on the same page.
+008 ==> 148621 : JPEGLossLess : Image rotation not working properly.
+009 ==> 
 
 v 0.1.4
 ----------------------------------------------------------------------------
