@@ -55,7 +55,6 @@ public:
 
 protected:
 
-    void customEvent(QEvent *event);
     KUrl::List images();
 
 private slots:
@@ -67,11 +66,15 @@ private slots:
     void slotRotateExif();
     void slotConvert2GrayScale();
     void slotCancel();
+    void slotStarting(const QString &filePath, int action);
+    void slotFinished(const QString &filePath, int action);
+    void slotFailed(const QString &filePath, int action, const QString &errString);
 
 private:
 
     void flip(KIPIJPEGLossLessPlugin::FlipAction action, const QString &title);
     void rotate(KIPIJPEGLossLessPlugin::RotateAction action, const QString &title);
+    void oneTaskCompleted();
 
     bool                                  m_failed;
 

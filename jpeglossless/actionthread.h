@@ -29,6 +29,8 @@
 
 #include <QThread>
 #include <QStringList>
+#include <QMutex>
+#include <QWaitCondition>
 
 // KDE includes.
 
@@ -41,15 +43,15 @@
 // Local includes.
 
 #include "actions.h"
-#include "mtqueue.h"
-
-class QObject;
 
 namespace KIPIJPEGLossLessPlugin
 {
 
 class ActionThread : public QThread
 {
+
+    Q_OBJECT
+
 public:
 
     ActionThread( KIPI::Interface* interface, QObject *parent);
@@ -64,22 +66,28 @@ protected:
 
     void run();
 
+signals:
+
+    void starting(const QString &filePath, int action);
+    void finished(const QString &filePath, int action);
+    void failed(const QString &filePath, int action, const QString &errString);
+
 private:
 
-    struct Task_ 
+    class Task
     {
-        QString      filePath;
-        Action       action;
-        RotateAction rotAction;
-        FlipAction   flipAction;
+        public:
+            QString      filePath;
+            Action       action;
+            RotateAction rotAction;
+            FlipAction   flipAction;
     };
 
-    typedef struct Task_ Task;
-
-    QObject         *m_parent;
     QString          m_tmpFolder;
-
-    MTQueue<Task>    m_taskQueue;
+    QMutex           m_mutex;
+    QWaitCondition   m_condVar;
+    bool             m_running;
+    QList<Task*>     m_todo;
 
     KIPI::Interface *m_interface;
 };

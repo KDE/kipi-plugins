@@ -33,6 +33,7 @@ extern "C"
 
 #include <QApplication>
 #include <QDir>
+#include <QMutexLocker>
 
 // KDE includes.
 
@@ -46,12 +47,13 @@ extern "C"
 #include "imageflip.h"
 #include "convert2grayscale.h"
 #include "actionthread.h"
+#include "actionthread.moc"
 
 namespace KIPIJPEGLossLessPlugin
 {
 
 ActionThread::ActionThread( KIPI::Interface* interface, QObject *parent)
-            : QThread(), m_parent(parent), m_interface( interface )
+            : QThread(parent), m_interface( interface )
 {
     // Create a KIPI JPEGLossLess plugin temporary folder in KDE tmp directory.
     KStandardDirs dir;
@@ -117,7 +119,10 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
         t->filePath  = (*it).path(); 
         t->action    = Rotate;
         t->rotAction = val;
-        m_taskQueue.enqueue(t);
+
+        QMutexLocker lock(&m_mutex);
+        m_todo << t;
+        m_condVar.wakeAll();
     }
 }
 
@@ -128,7 +133,7 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
     {
         KIPI::ImageInfo info = m_interface->info( *it );
         int angle = (info.angle() + 360) % 360;
-    
+
         if ( (90-45 <= angle && angle < 90+45) || (270-45) < angle && angle < (270+45) ) 
         {
             // The image is rotated 90 or 270 degrees, which means that the flip operations 
@@ -141,7 +146,10 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
         t->filePath   = (*it).path();
         t->action     = Flip;
         t->flipAction = val;
-        m_taskQueue.enqueue(t);
+
+        QMutexLocker lock(&m_mutex);
+        m_todo << t;
+        m_condVar.wakeAll();
     }
 }
 
@@ -153,93 +161,95 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
         Task *t     = new Task;
         t->filePath = (*it).path();
         t->action   = GrayScale;
-        m_taskQueue.enqueue(t);
+
+        QMutexLocker lock(&m_mutex);
+        m_todo << t;
+        m_condVar.wakeAll();
     }
 }
 
 void ActionThread::cancel()
 {
-    m_taskQueue.flush();
+    QMutexLocker lock(&m_mutex);
+    m_todo.clear();
+    m_running = false;
+    m_condVar.wakeAll();
 }
 
 void ActionThread::run()
 {
-    while (!m_taskQueue.isEmpty()) 
+    m_running = true;
+    while (m_running)
     {
-        Task *t = m_taskQueue.dequeue();
-        if (!t) continue;
-
-        QString errString;
-
-        EventData *d = new EventData;
-
-        switch (t->action) 
+        Task *t = 0;
         {
-            case Rotate: 
-            {
-                d->action   = Rotate;
-                d->fileName = t->filePath;
-                d->starting = true;
-                QApplication::postEvent(m_parent, d);
-    
-                bool result = true;
-                ImageRotate imageRotate;
-                result = imageRotate.rotate(t->filePath, t->rotAction, m_tmpFolder, errString);
-    
-                EventData *r = new EventData;
-                r->action    = Rotate;
-                r->fileName  = t->filePath;
-                r->success   = result;
-                r->errString = errString;
-                QApplication::postEvent(m_parent, r);
-                break;
-            }
-            case Flip: 
-            {
-                d->action   = Flip;
-                d->fileName = t->filePath;
-                d->starting = true;
-                QApplication::postEvent(m_parent, d);
-
-                ImageFlip imageFlip;
-                bool result = imageFlip.flip(t->filePath, t->flipAction, m_tmpFolder, errString);
-
-                EventData *r = new EventData;
-                r->action    = Flip;
-                r->fileName  = t->filePath;
-                r->success   = result;
-                r->errString = errString;
-                QApplication::postEvent(m_parent, r);
-                break;
-            }
-            case GrayScale: 
-            {
-                d->action   = GrayScale;
-                d->fileName = t->filePath;
-                d->starting = true;
-                QApplication::postEvent(m_parent, d);
-    
-                ImageGrayScale imageGrayScale;
-                bool result = imageGrayScale.image2GrayScale(t->filePath, m_tmpFolder, errString);
-    
-                EventData *r = new EventData;
-                r->action    = GrayScale;
-                r->fileName  = t->filePath;
-                r->success   = result;
-                r->errString = errString;
-                QApplication::postEvent(m_parent, r);
-                break;
-            }
-            default: 
-            {
-                kWarning( 51000 ) << "KIPIJPEGLossLessPlugin:ActionThread: "
-                                  << "Unknown action specified"
-                                  << endl;
-                delete d;
-            }
+            QMutexLocker lock(&m_mutex);
+            if (!m_todo.isEmpty())
+                t = m_todo.takeFirst();
+            else
+                m_condVar.wait(&m_mutex);
         }
 
-        delete t;
+        if (t)
+        {
+            QString errString;
+
+            switch (t->action)
+            {
+                case Rotate:
+                {
+                    kDebug() << "Emitting starting" << endl;
+                    emit starting(t->filePath, Rotate);
+
+                    bool result = true;
+                    ImageRotate imageRotate;
+                    result = imageRotate.rotate(t->filePath, t->rotAction, m_tmpFolder, errString);
+
+                    kDebug() << "Emitting finished/failed " << result << endl;
+                    if (result)
+                        emit finished(t->filePath, Rotate);
+                    else
+                        emit failed(t->filePath, Rotate, errString);
+                    break;
+                }
+                case Flip:
+                {
+                    kDebug() << "Emitting starting" << endl;
+                    emit starting(t->filePath, Flip);
+
+                    ImageFlip imageFlip;
+                    bool result = imageFlip.flip(t->filePath, t->flipAction, m_tmpFolder, errString);
+
+                    kDebug() << "Emitting finished/failed " << result << endl;
+                    if (result)
+                        emit finished(t->filePath, Flip);
+                    else
+                        emit failed(t->filePath, Flip, errString);
+                    break;
+                }
+                case GrayScale:
+                {
+                    emit starting(t->filePath, GrayScale);
+
+                    ImageGrayScale imageGrayScale;
+                    bool result = imageGrayScale.image2GrayScale(t->filePath, m_tmpFolder, errString);
+
+                    if (result)
+                        emit finished(t->filePath, GrayScale);
+                    else
+                        emit failed(t->filePath, GrayScale, errString);
+                    break;
+                }
+                default:
+                {
+                    kWarning( 51000 ) << "KIPIJPEGLossLessPlugin:ActionThread: "
+                            << "Unknown action specified"
+                            << endl;
+                }
+            }
+
+            delete t;
+        }
     }
 }
 

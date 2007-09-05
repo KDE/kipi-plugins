@@ -53,28 +53,6 @@ enum FlipAction
     FlipVertical   = 1
 };
 
-class EventData : public QEvent
-{
-
-public:
-
-    EventData() : QEvent(QEvent::User)
-    {
-        starting = false;
-        success  = false;
-    }
-
-    virtual ~EventData(){};
-
-    bool    starting;
-    bool    success;
-
-    QString fileName;
-    QString errString;
-
-    Action  action;
-};
-
 }  // NameSpace KIPIJPEGLossLessPlugin
 
 #endif /* ACTIONS_H */

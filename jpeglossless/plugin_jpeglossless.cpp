@@ -127,6 +127,16 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     m_thread = new KIPIJPEGLossLessPlugin::ActionThread(interface, this);
 
+    connect( m_thread, SIGNAL(starting(const QString &, int)),
+             this, SLOT(slotStarting(const QString &, int)));
+
+    connect( m_thread, SIGNAL(finished(const QString &, int)),
+             this, SLOT(slotFinished(const QString &, int)));
+
+    connect( m_thread, SIGNAL(failed(const QString &, int, const QString &)),
+             this, SLOT(slotFailed(const QString &, int, const QString &)));
+
+
     connect( interface, SIGNAL( selectionChanged( bool ) ),
              m_action_AutoExif, SLOT( setEnabled( bool ) ) );
 
@@ -142,7 +152,6 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
 Plugin_JPEGLossless::~Plugin_JPEGLossless()
 {
-    delete m_thread;
     delete m_progressDlg;
 }
 
@@ -278,111 +287,116 @@ void Plugin_JPEGLossless::slotCancel()
     interface->refreshImages( m_images );
 }
 
-void Plugin_JPEGLossless::customEvent(QEvent *event)
+void Plugin_JPEGLossless::slotStarting(const QString &filePath, int action)
 {
-    if (!event) return;
+    kDebug() << "slotStarting " << endl;
+    QString text;
 
-    KIPIJPEGLossLessPlugin::EventData *d = (KIPIJPEGLossLessPlugin::EventData*) event;
-    if (!d) return;
+    switch ((KIPIJPEGLossLessPlugin::Action)action)
+    {
+        case(KIPIJPEGLossLessPlugin::Rotate):
+        {
+            text = i18n("Rotating Image \"%1\"").arg(filePath.section('/', -1));
+            break;
+        }
+        case(KIPIJPEGLossLessPlugin::Flip):
+        {
+            text = i18n("Flipping Image \"%1\"").arg(filePath.section('/', -1));
+            break;
+        }
+        case(KIPIJPEGLossLessPlugin::GrayScale):
+        {
+            text = i18n("Converting to Black & White \"%1\"").arg(filePath.section('/', -1));
+            break;
+        }
+        default:
+        {
+            kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event";
+        }
+    }
+
+    m_progressDlg->addedAction(text, KIPI::StartingMessage);
+}
+
+void Plugin_JPEGLossless::slotFinished(const QString &filePath, int action)
+{
+    Q_UNUSED(filePath);
+    kDebug() << "slotFinished" << endl;
 
     QString text;
 
-    if (d->starting) 
+    switch ((KIPIJPEGLossLessPlugin::Action)action)
     {
-        switch (d->action) 
+        case(KIPIJPEGLossLessPlugin::Rotate):
         {
-            case(KIPIJPEGLossLessPlugin::Rotate): 
-            {
-                text = i18n("Rotating Image \"%1\"").arg(d->fileName.section('/', -1));
-                break;
-            }
-            case(KIPIJPEGLossLessPlugin::Flip): 
-            {
-                text = i18n("Flipping Image \"%1\"").arg(d->fileName.section('/', -1));
-                break;
-            }
-            case(KIPIJPEGLossLessPlugin::GrayScale): 
-            {
-                text = i18n("Converting to Black & White \"%1\"").arg(d->fileName.section('/', -1));
-                break;
-            }
-            default:
-            {
-                kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event";
-            }
+            text = i18n("Rotate image complete");
+            break;
         }
-
-        m_progressDlg->addedAction(text, KIPI::StartingMessage);
-    }
-    else
-    {
-        if (!d->success) 
+        case(KIPIJPEGLossLessPlugin::Flip):
         {
-            m_failed = true;
-
-            switch (d->action) 
-            {
-                case(KIPIJPEGLossLessPlugin::Rotate): 
-                {
-                    text = i18n("Failed to Rotate image");
-                    break;
-                }
-                case(KIPIJPEGLossLessPlugin::Flip): 
-                {
-                    text = i18n("Failed to Flip image");
-                    break;
-                }
-                case(KIPIJPEGLossLessPlugin::GrayScale): 
-                {
-                    text = i18n("Failed to convert image to Black & White");
-                    break;
-                }
-                default: 
-                {
-                    kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event";
-                }
-            }
-
-            m_progressDlg->addedAction(text, KIPI::WarningMessage);
-
-            if (!d->errString.isEmpty())
-                m_progressDlg->addedAction(d->errString, KIPI::WarningMessage);
+            text = i18n("Flip image complete");
+            break;
         }
-        else
+        case(KIPIJPEGLossLessPlugin::GrayScale):
         {
-            switch (d->action)
-            {
-                case(KIPIJPEGLossLessPlugin::Rotate): 
-                {
-                    text = i18n("Rotate image complete");
-                    break;
-                }
-                case(KIPIJPEGLossLessPlugin::Flip): 
-                {
-                    text = i18n("Flip image complete");
-                    break;
-                }
-                case(KIPIJPEGLossLessPlugin::GrayScale): 
-                {
-                    text = i18n("Convert to Black & White complete");
-                    break;
-                }
-                default: 
-                {
-                    kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event";
-                }
-            }
-
-        m_progressDlg->addedAction(text, KIPI::SuccessMessage);
+            text = i18n("Convert to Black & White complete");
+            break;
         }
-
-        m_current++;
-        m_progressDlg->setProgress(m_current, m_total);
+        default:
+        {
+            kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event";
+        }
     }
 
-    delete d;
+    m_progressDlg->addedAction(text, KIPI::SuccessMessage);
 
-    if (m_current >= m_total) 
+    oneTaskCompleted();
+}
+
+void Plugin_JPEGLossless::slotFailed(const QString &filePath, int action, const QString &errString)
+{
+    Q_UNUSED(filePath);
+
+    m_failed = true;
+    QString text;
+
+    switch ((KIPIJPEGLossLessPlugin::Action)action)
+    {
+        case(KIPIJPEGLossLessPlugin::Rotate):
+        {
+            text = i18n("Failed to Rotate image");
+            break;
+        }
+        case(KIPIJPEGLossLessPlugin::Flip):
+        {
+            text = i18n("Failed to Flip image");
+            break;
+        }
+        case(KIPIJPEGLossLessPlugin::GrayScale):
+        {
+            text = i18n("Failed to convert image to Black & White");
+            break;
+        }
+        default:
+        {
+            kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event";
+        }
+    }
+
+    m_progressDlg->addedAction(text, KIPI::WarningMessage);
+
+    if (!errString.isEmpty())
+        m_progressDlg->addedAction(errString, KIPI::WarningMessage);
+
+    oneTaskCompleted();
+}
+
+void Plugin_JPEGLossless::oneTaskCompleted()
+{
+    m_current++;
+    m_progressDlg->setProgress(m_current, m_total);
+
+    if (m_current >= m_total)
     {
         m_current = 0;
 
