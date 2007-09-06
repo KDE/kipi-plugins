@@ -183,7 +183,7 @@ void Plugin_JPEGLossless::flip(KIPIJPEGLossLessPlugin::FlipAction action, const 
     }
 
     m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
-                        i18n("Flip images %1").arg(title));
+                        i18n("Flip images %1", title));
 
     connect(m_progressDlg, SIGNAL(cancelClicked()),
             this, SLOT(slotCancel()));
@@ -227,7 +227,7 @@ void Plugin_JPEGLossless::rotate(KIPIJPEGLossLessPlugin::RotateAction action, co
     }
 
     m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
-                        i18n("Rotate images %1").arg(title));
+                        i18n("Rotate images %1", title));
 
     connect(m_progressDlg, SIGNAL(cancelClicked()),
             this, SLOT(slotCancel()));
@@ -296,17 +296,17 @@ void Plugin_JPEGLossless::slotStarting(const QString &filePath, int action)
     {
         case(KIPIJPEGLossLessPlugin::Rotate):
         {
-            text = i18n("Rotating Image \"%1\"").arg(filePath.section('/', -1));
+            text = i18n("Rotating Image \"%1\"", filePath.section('/', -1));
             break;
         }
         case(KIPIJPEGLossLessPlugin::Flip):
         {
-            text = i18n("Flipping Image \"%1\"").arg(filePath.section('/', -1));
+            text = i18n("Flipping Image \"%1\"", filePath.section('/', -1));
             break;
         }
         case(KIPIJPEGLossLessPlugin::GrayScale):
         {
-            text = i18n("Converting to Black & White \"%1\"").arg(filePath.section('/', -1));
+            text = i18n("Converting to Black & White \"%1\"", filePath.section('/', -1));
             break;
         }
         default:
