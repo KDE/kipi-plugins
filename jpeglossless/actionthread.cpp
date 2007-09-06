@@ -198,14 +198,12 @@ void ActionThread::run()
             {
                 case Rotate:
                 {
-                    kDebug() << "Emitting starting" << endl;
                     emit starting(t->filePath, Rotate);
 
                     bool result = true;
                     ImageRotate imageRotate;
                     result = imageRotate.rotate(t->filePath, t->rotAction, m_tmpFolder, errString);
 
-                    kDebug() << "Emitting finished/failed " << result << endl;
                     if (result)
                         emit finished(t->filePath, Rotate);
                     else
@@ -214,13 +212,11 @@ void ActionThread::run()
                 }
                 case Flip:
                 {
-                    kDebug() << "Emitting starting" << endl;
                     emit starting(t->filePath, Flip);
 
                     ImageFlip imageFlip;
                     bool result = imageFlip.flip(t->filePath, t->flipAction, m_tmpFolder, errString);
 
-                    kDebug() << "Emitting finished/failed " << result << endl;
                     if (result)
                         emit finished(t->filePath, Flip);
                     else

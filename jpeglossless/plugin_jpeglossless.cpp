@@ -289,7 +289,6 @@ void Plugin_JPEGLossless::slotCancel()
 
 void Plugin_JPEGLossless::slotStarting(const QString &filePath, int action)
 {
-    kDebug() << "slotStarting " << endl;
     QString text;
 
     switch ((KIPIJPEGLossLessPlugin::Action)action)
@@ -321,7 +320,6 @@ void Plugin_JPEGLossless::slotStarting(const QString &filePath, int action)
 void Plugin_JPEGLossless::slotFinished(const QString &filePath, int action)
 {
     Q_UNUSED(filePath);
-    kDebug() << "slotFinished" << endl;
 
     QString text;
 
