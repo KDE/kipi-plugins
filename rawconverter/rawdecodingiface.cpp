@@ -223,10 +223,17 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             cinfo.input_components = 3;
             cinfo.in_color_space   = JCS_RGB;
             jpeg_set_defaults(&cinfo);
-            // B.K.O #130996: set horizontal and vertical Subsampling factor 
-            // to 1 for a best quality of color picture compression. 
-            cinfo.comp_info[0].h_samp_factor = 1;
-            cinfo.comp_info[0].v_samp_factor = 1; 
+
+            // B.K.O #149578: set encoder horizontal and vertical chroma subsampling 
+            // factor to 2x1, 1x1, 1x1 (4:2:2) : Medium subsampling.
+            // See this page for details: http://en.wikipedia.org/wiki/Chroma_subsampling 
+            cinfo.comp_info[0].h_samp_factor = 2;
+            cinfo.comp_info[0].v_samp_factor = 1;
+            cinfo.comp_info[1].h_samp_factor = 1;
+            cinfo.comp_info[1].v_samp_factor = 1;
+            cinfo.comp_info[2].h_samp_factor = 1;
+            cinfo.comp_info[2].v_samp_factor = 1;
+
             jpeg_set_quality(&cinfo, 100, true);
             jpeg_start_compress(&cinfo, true);
 
