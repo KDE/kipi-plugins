@@ -1,4 +1,4 @@
-AUTHORS AND MAINTAINERS :
+KIPI-PLUGINS TEAM :
 
 MAIN DEVELOPERS:
 Gilles Caulier      <caulier dot gilles at gmail dot com>
@@ -10,48 +10,51 @@ Valerio Fuoglio     <valerio dot ulteo dot com>
 Angelo Naselli      <anaselli at linux dot it>
 Seb Ruiz            <me at sebruiz dot net>
 Jesper K. Pedersen  <blackie at kde.org>
+Kare Sars           <kare dot sars at kolumbus dot fi>
 
 CONTRIBUTORS:
-Gerhard Kulzer      <gerhard at kulzer dot net>
-Orgad Shaneh        <orgads at gmail dot com>
-Achim Bohnet        <ach at mpe dot mpg dot de>
-Michael Höchstetter <michae dot hoechstetter at gmx dot de> 
-Joern Ahrens        <joern dot ahrens at kdemail dot net>
-Tudor Calin         <tudor at 1xtech.com>
-Rüdiger Bente       <ruediger dot bente at gmx dot de>
-Beth Marmorstein    <purplegamba at cox dot net>
-Robert Marmorstein  <rmmarm at sdf dot lonestar dot org>
-Owen Hirst          <n8rider at sbcglobal.net>
-Todd Shoemaker      <todd at theshoemakers.net>
-Gregory Kokanosky   <gregory dot kokanosky at free.fr>
-Richard Groult      <Richard dot Groult at jalix.org>
+Gerhard Kulzer       <gerhard at kulzer dot net>
+Orgad Shaneh         <orgads at gmail dot com>
+Achim Bohnet         <ach at mpe dot mpg dot de>
+Michael Hoechstetter <michae dot hoechstetter at gmx dot de> 
+Joern Ahrens         <joern dot ahrens at kdemail dot net>
+Ruediger Bente       <ruediger dot bente at gmx dot de>
+Beth Marmorstein     <purplegamba at cox dot net>
+Robert Marmorstein   <rmmarm at sdf dot lonestar dot org>
+Richard Groult       <Richard dot Groult at jalix.org>
+
+OLD CONTRIBUTORS:
+Tudor Calin          <tudor at 1xtech dot com>
+Owen Hirst           <n8rider at sbcglobal dot net>
+Todd Shoemaker       <todd at theshoemakers dot net>
+Gregory Kokanosky    <gregory dot kokanosky at free dot fr>
 
 PLUGINS MAINTAINERS
-Acquire images      : Jesper K. Pedersen
-Batch Process       : Aurelien Gateau 
-Calendar            : Orgad Shaneh
-Cd archiving        : Angelo Naselli
-Find images         : Jesper K. Pedersen and Richard Groult
-Flickr export       : Vardhman jain
-Gallery export      : Colin Guthrie
+Acquire images      : Gilles Caulier and Kare Sars
+Jpeglossless        : Gilles Caulier and Marcel Wiesweg
+Raw converter       : Gilles Caulier and Marcel Wiesweg
 GPSSync             : Gilles Caulier
-HTML export         : Aurelien Gateau
-Image viewer        : Markus Leuthold
-Ipod export         : Seb Ruiz
-Jpeglossless        : Gilles Caulier
-Kamera Klient       : Aurelien Gateau and Michael J Gruber
 MetadataEdit        : Gilles Caulier
-Mpeg encoder        : Angelo Naselli and Valerio Fuoglio
-PicasaWeb export    : Vardhman jain
-Print wizard        : Angelo Naselli
-Raw converter       : Gilles Caulier
-Sendimages          : Michael Höchstette
-Simpleviewer export : Joern Ahrens
-Slideshow           : Valerio Fuoglio
 Time adjust         : Gilles Caulier
+Flickr export       : Vardhman jain
+PicasaWeb export    : Vardhman jain
+Gallery export      : Colin Guthrie
+Cd archiving        : Angelo Naselli
+Print wizard        : Angelo Naselli
+Mpeg encoder        : Angelo Naselli and Valerio Fuoglio
+Slideshow           : Valerio Fuoglio
+Batch Process       : Aurelien Gateau 
+HTML export         : Aurelien Gateau
+Kamera Klient       : Aurelien Gateau and Michael J Gruber
+Ipod export         : Seb Ruiz
+Calendar            : Orgad Shaneh
+Image viewer        : Markus Leuthold
+Sendimages          : Michael Hoechstetter
+Simpleviewer export : Joern Ahrens
+Find images         : Jesper K. Pedersen and Richard Groult
 Wallpaper           : Jesper K. Pedersen
 
-PROJECT COORDINATOR
+PROJECT COORDINATOR:
 Angelo Naselli      <anaselli at linux dot it>
 
 FORMER MAINTAINER:
