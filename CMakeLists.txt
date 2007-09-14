@@ -25,39 +25,42 @@ SET(KIPIPLUGINS_VERSION_STRING "${KIPIPLUGINS_MAJOR_VERSION}.${KIPIPLUGINS_MINOR
 # =======================================================
 
 # Depencies detection require by all plugins
-SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 FIND_PACKAGE(Kexiv2 REQUIRED)
 FIND_PACKAGE(Kdcraw REQUIRED)
+FIND_PACKAGE(Ksane REQUIRED)
 FIND_PACKAGE(Kipi REQUIRED)
 FIND_PACKAGE(JPEG REQUIRED)
 FIND_PACKAGE(PNG REQUIRED)
 FIND_PACKAGE(TIFF REQUIRED)
 
 # Optional depencies detection require by any plugins
-MACRO_OPTIONAL_FIND_PACKAGE(Gphoto2)
-MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)
+#MACRO_OPTIONAL_FIND_PACKAGE(Gphoto2)
+#MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins 
                     ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins
                     ${KEXIV2_INCLUDE_DIR} 
                     ${KDCRAW_INCLUDE_DIR} 
+                    ${KSANE_INCLUDE_DIR} 
                     ${KIPI_INCLUDE_DIR} 
                     ${KDE4_INCLUDES} 
                     ${QT4_INCLUDES}
-		           )
+	           )
 
-# Plugins witch depand of OpenGL
-IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-   MACRO_OPTIONAL_ADD_SUBDIRECTORY(slideshow)
-   MACRO_OPTIONAL_ADD_SUBDIRECTORY(imageviewer)
-ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-
+# TODO: others optional depencies to check when others plugins will be ported to KDE4
+#
 # Plugins witch depand of GPhoto2
-IF(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
-	#macro_optional_add_subdirectory(kameraklient)
-ENDIF(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
-
-# TODO: others optional depencies to check
+#IF(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
+#	macro_optional_add_subdirectory(kameraklient)
+#ENDIF(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
+#
+# Plugins witch depand of OpenGL
+#IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+#   MACRO_OPTIONAL_ADD_SUBDIRECTORY(slideshow)
+#   MACRO_OPTIONAL_ADD_SUBDIRECTORY(imageviewer)
+#ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+#
 # htmlexport need Xslt library
 # slideshow need Imlib2 library
 # ipodexport need Gpod library
@@ -76,6 +79,7 @@ ENDIF(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 ADD_SUBDIRECTORY(common)
 ADD_SUBDIRECTORY(timeadjust)
 ADD_SUBDIRECTORY(jpeglossless)
+ADD_SUBDIRECTORY(acquireimages)
 
 IF(NOT WIN32)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/kipi-plugins.lsm.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
