@@ -20,20 +20,19 @@
  * 
  * ============================================================ */
 
-
 #ifndef SAVESETTINGSWIDGET_H
 #define SAVESETTINGSWIDGET_H
 
 // Qt includes.
 
-#include <qgroupbox.h>
+#include <qwidget.h>
 
 namespace KIPIRawConverterPlugin
 {
 
 class SaveSettingsWidgetPriv;
 
-class SaveSettingsWidget : public QGroupBox
+class SaveSettingsWidget : public QWidget
 {
     Q_OBJECT
     

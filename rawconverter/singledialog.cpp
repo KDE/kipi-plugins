@@ -42,7 +42,6 @@ extern "C"
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <qfileinfo.h>
-#include <qgroupbox.h>
 #include <qevent.h>
 #include <qpushbutton.h>
 #include <qfile.h>
@@ -89,22 +88,20 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
     
     QWidget *page = new QWidget( this );
     setMainWidget( page );
-    QGridLayout *mainLayout = new QGridLayout(page, 2, 1, 0, spacingHint());
+    QGridLayout *mainLayout = new QGridLayout(page, 1, 1, 0, spacingHint());
 
     m_previewWidget = new PreviewWidget(page);
-    mainLayout->addMultiCellWidget(m_previewWidget, 0, 2, 0, 0);
 
     // ---------------------------------------------------------------
 
-    m_rawSettingsGroup    = new QGroupBox(1, Qt::Vertical, i18n("RAW Decoding Settings"), page);
-    m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(m_rawSettingsGroup, false, true, true);
-    m_saveSettingsBox     = new SaveSettingsWidget(page);
+    m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(page, false, true, true);
+    m_saveSettingsBox     = new SaveSettingsWidget(m_decodingSettingsBox);
+    m_decodingSettingsBox->insertTab(m_saveSettingsBox, i18n("Save settings"));
 
-    mainLayout->addMultiCellWidget(m_rawSettingsGroup, 0, 0, 1, 1);
-    mainLayout->addMultiCellWidget(m_saveSettingsBox, 1, 1, 1, 1);
-
+    mainLayout->addMultiCellWidget(m_previewWidget, 0, 1, 0, 0);
+    mainLayout->addMultiCellWidget(m_decodingSettingsBox, 0, 0, 1, 1);
     mainLayout->setColStretch(0, 10);
-    mainLayout->setRowStretch(2, 10);
+    mainLayout->setRowStretch(1, 10);
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -349,7 +346,7 @@ void SingleDialog::slotIdentify()
 
 void SingleDialog::busy(bool val)
 {   
-    m_rawSettingsGroup->setEnabled(!val);
+    m_decodingSettingsBox->setEnabled(!val);
     m_saveSettingsBox->setEnabled(!val);
     enableButton (User1, !val);
     enableButton (User2, !val);

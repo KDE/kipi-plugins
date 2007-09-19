@@ -41,7 +41,6 @@ extern "C"
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <qtimer.h>
-#include <qgroupbox.h>
 #include <qfileinfo.h>
 #include <qevent.h>
 #include <qpixmap.h>
@@ -92,7 +91,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     m_thread             = 0;
     m_page = new QWidget( this );
     setMainWidget( m_page );
-    QGridLayout *mainLayout = new QGridLayout(m_page, 3, 1, 0, spacingHint());
+    QGridLayout *mainLayout = new QGridLayout(m_page, 2, 1, 0, spacingHint());
 
     //---------------------------------------------
 
@@ -107,24 +106,22 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     m_listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_listView->setSelectionMode(QListView::Single);
     m_listView->setMinimumWidth(450);
-    mainLayout->addMultiCellWidget(m_listView, 0, 3, 0, 0);
 
     // ---------------------------------------------------------------
 
-    m_rawSettingsGroup    = new QGroupBox(1, Qt::Vertical, i18n("RAW Decoding Settings"), m_page);
-    m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(m_rawSettingsGroup, false, true, true);
+    m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(m_page, false, true, true);
     m_saveSettingsBox     = new SaveSettingsWidget(m_page);
-
-    mainLayout->addMultiCellWidget(m_rawSettingsGroup, 0, 0, 1, 1);
-    mainLayout->addMultiCellWidget(m_saveSettingsBox, 1, 1, 1, 1);
+    m_decodingSettingsBox->insertTab(m_saveSettingsBox, i18n("Save settings"));
 
     m_progressBar = new KProgress(m_page);
     m_progressBar->setMaximumHeight( fontMetrics().height()+2 );
     m_progressBar->setEnabled(false);
-    mainLayout->addMultiCellWidget(m_progressBar, 2, 2, 1, 1);
 
+    mainLayout->addMultiCellWidget(m_listView, 0, 2, 0, 0);
+    mainLayout->addMultiCellWidget(m_decodingSettingsBox, 0, 0, 1, 1);
+    mainLayout->addMultiCellWidget(m_progressBar, 1, 1, 1, 1);
     mainLayout->setColStretch(0, 10);
-    mainLayout->setRowStretch(3, 10);
+    mainLayout->setRowStretch(2, 10);
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -462,7 +459,7 @@ void BatchDialog::busy(bool busy)
     enableButton(User2, busy);
     enableButton(Close, !busy);
 
-    m_rawSettingsGroup->setEnabled(!busy);
+    m_decodingSettingsBox->setEnabled(!busy);
     m_saveSettingsBox->setEnabled(!busy);
     m_listView->setEnabled(!busy);
 

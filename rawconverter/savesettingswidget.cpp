@@ -69,10 +69,10 @@ public:
 };
 
 SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
-                  : QGroupBox(0, Qt::Vertical, i18n("Save Settings"), parent)
+                  : QWidget(parent, 0, Qt::WDestructiveClose)
 {
     d = new SaveSettingsWidgetPriv;
-    QGridLayout* settingsBoxLayout = new QGridLayout(layout(), 2, 1, KDialog::spacingHint());
+    QGridLayout* settingsBoxLayout = new QGridLayout(this, 3, 1, KDialog::spacingHint());
 
     d->formatLabel    = new QLabel(i18n("Output file format:"), this);
     d->formatComboBox = new QComboBox( false, this );
@@ -113,6 +113,7 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
     settingsBoxLayout->addMultiCellWidget(d->formatComboBox, 0, 0, 1, 1);   
     settingsBoxLayout->addMultiCellWidget(d->conflictLabel, 1, 1, 0, 1);   
     settingsBoxLayout->addMultiCellWidget(d->conflictButtonGroup, 2, 2, 0, 1);   
+    settingsBoxLayout->setRowStretch(3, 10);   
 
     connect(d->formatComboBox, SIGNAL(activated(int)),
             this, SIGNAL(signalSaveFormatChanged()));
@@ -150,4 +151,3 @@ void SaveSettingsWidget::setConflictRule(SaveSettingsWidget::ConflictRule r)
 }
 
 } // NameSpace KIPIRawConverterPlugin
-

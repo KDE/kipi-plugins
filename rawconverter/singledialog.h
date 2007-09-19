@@ -39,7 +39,6 @@
 class QCloseEvent;
 class QCustomEvent;
 class QTimer;
-class QGroupBox;
 
 namespace KDcrawIface
 {
@@ -108,8 +107,6 @@ private:
     
     QTimer                           *m_blinkPreviewTimer;
     QTimer                           *m_blinkConvertTimer;
-
-    QGroupBox                        *m_rawSettingsGroup;
 
     PreviewWidget                    *m_previewWidget;
 
