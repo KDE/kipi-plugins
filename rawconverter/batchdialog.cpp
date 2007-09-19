@@ -92,32 +92,9 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     m_thread             = 0;
     m_page = new QWidget( this );
     setMainWidget( m_page );
-    QGridLayout *mainLayout = new QGridLayout(m_page, 5, 1, 0, spacingHint());
+    QGridLayout *mainLayout = new QGridLayout(m_page, 3, 1, 0, spacingHint());
 
     //---------------------------------------------
-
-    QFrame *headerFrame = new QFrame( m_page );
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-    layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
-    pixmapLabelLeft->setScaledContents( false );
-    layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Raw Images Batch Converter"), headerFrame, "labelTitle" );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-    mainLayout->addMultiCellWidget(headerFrame, 0, 0, 0, 1);
-
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-
-    // --------------------------------------------------------------
 
     m_listView = new KListView(m_page);
     m_listView->addColumn( i18n("Thumbnail") );
@@ -130,7 +107,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     m_listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_listView->setSelectionMode(QListView::Single);
     m_listView->setMinimumWidth(450);
-    mainLayout->addMultiCellWidget(m_listView, 1, 5, 0, 0);
+    mainLayout->addMultiCellWidget(m_listView, 0, 3, 0, 0);
 
     // ---------------------------------------------------------------
 
@@ -138,16 +115,16 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(m_rawSettingsGroup, false, true, true);
     m_saveSettingsBox     = new SaveSettingsWidget(m_page);
 
-    mainLayout->addMultiCellWidget(m_rawSettingsGroup, 1, 1, 1, 1);
-    mainLayout->addMultiCellWidget(m_saveSettingsBox, 2, 3, 1, 1);
+    mainLayout->addMultiCellWidget(m_rawSettingsGroup, 0, 0, 1, 1);
+    mainLayout->addMultiCellWidget(m_saveSettingsBox, 1, 1, 1, 1);
 
     m_progressBar = new KProgress(m_page);
     m_progressBar->setMaximumHeight( fontMetrics().height()+2 );
     m_progressBar->setEnabled(false);
-    mainLayout->addMultiCellWidget(m_progressBar, 4, 4, 1, 1);
+    mainLayout->addMultiCellWidget(m_progressBar, 2, 2, 1, 1);
 
     mainLayout->setColStretch(0, 10);
-    mainLayout->setRowStretch(5, 10);
+    mainLayout->setRowStretch(3, 10);
 
     // ---------------------------------------------------------------
     // About data and help button.

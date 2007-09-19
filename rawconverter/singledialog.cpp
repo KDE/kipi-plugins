@@ -89,35 +89,10 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
     
     QWidget *page = new QWidget( this );
     setMainWidget( page );
-    QGridLayout *mainLayout = new QGridLayout(page, 3, 1, 0, spacingHint());
-
-    // --------------------------------------------------------------
-
-    QFrame *headerFrame = new QFrame( page );
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-    layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
-    pixmapLabelLeft->setScaledContents( false );
-    layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Raw Image Converter"), headerFrame, "labelTitle" );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-    mainLayout->addMultiCellWidget(headerFrame, 0, 0, 0, 1);
-
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-
-    // --------------------------------------------------------------
+    QGridLayout *mainLayout = new QGridLayout(page, 2, 1, 0, spacingHint());
 
     m_previewWidget = new PreviewWidget(page);
-    mainLayout->addMultiCellWidget(m_previewWidget, 1, 3, 0, 0);
+    mainLayout->addMultiCellWidget(m_previewWidget, 0, 2, 0, 0);
 
     // ---------------------------------------------------------------
 
@@ -125,11 +100,11 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
     m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(m_rawSettingsGroup, false, true, true);
     m_saveSettingsBox     = new SaveSettingsWidget(page);
 
-    mainLayout->addMultiCellWidget(m_rawSettingsGroup, 1, 1, 1, 1);
-    mainLayout->addMultiCellWidget(m_saveSettingsBox, 2, 2, 1, 1);
+    mainLayout->addMultiCellWidget(m_rawSettingsGroup, 0, 0, 1, 1);
+    mainLayout->addMultiCellWidget(m_saveSettingsBox, 1, 1, 1, 1);
 
     mainLayout->setColStretch(0, 10);
-    mainLayout->setRowStretch(3, 10);
+    mainLayout->setRowStretch(2, 10);
 
     // ---------------------------------------------------------------
     // About data and help button.
