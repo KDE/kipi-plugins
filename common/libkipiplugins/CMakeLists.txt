@@ -1,6 +1,6 @@
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/pluginsversion.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/pluginsversion.h)
 
-SET(kipiplugins_LIB_SRCS kpaboutdata.cpp)
+SET(kipiplugins_LIB_SRCS kpaboutdata.cpp kpwriteimage.cpp)
 
 KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})
 
