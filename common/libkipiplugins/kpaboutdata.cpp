@@ -25,10 +25,10 @@
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
+#include <kdebug.h>
 
 // Local includes.
 
-#include "kdebug.h"
 #include "pluginsversion.h"
 #include "kpaboutdata.h"
 
@@ -65,7 +65,7 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                                        .subs(QString(pluginVersion))
                                        .subs(QString(kipiplugins_version));
 
-    kDebug( 51001 ) << shortDesc.toString();
+    kDebug( 51001 ) << shortDesc.toString() << endl;
 
     // and set the string into the short description
     setShortDescription(shortDesc);
