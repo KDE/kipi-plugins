@@ -22,6 +22,7 @@
 
 // Qt includes.
 
+#include <QDateTime>
 #include <QString>
 #include <QProgressBar>
 #include <QGridLayout>
@@ -350,6 +351,9 @@ void ScanDialog::slotSaveImage()
     meta.setImagePreview(prev);
     meta.setExifThumbnail(thumb);
     meta.setExifTagString("Exif.Image.DocumentName", QString("Scanned Image"));
+    meta.setExifTagString("Exif.Image.Make", d->saneWidget->make());
+    meta.setExifTagString("Exif.Image.Model", d->saneWidget->model());
+    meta.setImageDateTime(QDateTime::currentDateTime());
 
     KIPIPlugins::KPWriteImage wImageIface;
     wImageIface.setImageData(data, img.width(), img.height(), false, true, prof, meta);
