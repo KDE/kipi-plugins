@@ -212,18 +212,6 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
 
 bool KPWriteImage::write2PNG(const QString& destPath)
 {
-    if (d->sixteenBit)
-    {
-        qDebug("PNG 16 bits color depth support not yet implemented");
-        return false;
-    }
-
-    if (d->hasAlpha)
-    {
-        qDebug("PNG alpha channel support not yet implemented");
-        return false;
-    }
-
     FILE* f = 0;
     f = fopen(QFile::encodeName(destPath), "wb");
 
@@ -233,18 +221,42 @@ bool KPWriteImage::write2PNG(const QString& destPath)
         return false;
     }
 
-    png_color_8 sig_bit;
-    png_bytep   row_ptr;
-    png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-    png_infop info_ptr  = png_create_info_struct(png_ptr);
+    uchar       *data       = 0;
+    int          bitsDepth  = d->sixteenBit ? 16 : 8;
+    int          bytesDepth = d->sixteenBit ? 8 : 4;
+    png_color_8  sig_bit;
+    png_bytep    row_ptr;
+    png_structp  png_ptr    = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    png_infop    info_ptr   = png_create_info_struct(png_ptr);
     png_init_io(png_ptr, f);
-    png_set_IHDR(png_ptr, info_ptr, d->width, d->height, 8, 
-                 PNG_COLOR_TYPE_RGB,        PNG_INTERLACE_NONE, 
-                 PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
-    sig_bit.red   = 8;
-    sig_bit.green = 8;
-    sig_bit.blue  = 8;
-    sig_bit.alpha = 8;
+
+    if (d->hasAlpha)
+    {
+        png_set_IHDR(png_ptr, info_ptr, d->width, d->height, bitsDepth,
+                     PNG_COLOR_TYPE_RGB_ALPHA,  PNG_INTERLACE_NONE,
+                     PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
+
+        if (d->sixteenBit)
+            data = new uchar[d->width * 8 * sizeof(uchar)];
+        else
+            data = new uchar[d->width * 4 * sizeof(uchar)];
+    }
+    else
+    {
+        png_set_IHDR(png_ptr, info_ptr, d->width, d->height, bitsDepth, 
+                     PNG_COLOR_TYPE_RGB,        PNG_INTERLACE_NONE, 
+                     PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
+
+        if (d->sixteenBit)
+            data = new uchar[d->width * 6 * sizeof(uchar)];
+        else
+            data = new uchar[d->width * 3 * sizeof(uchar)];
+    }
+
+    sig_bit.red   = bitsDepth;
+    sig_bit.green = bitsDepth;
+    sig_bit.blue  = bitsDepth;
+    sig_bit.alpha = bitsDepth;
     png_set_sBIT(png_ptr, info_ptr, &sig_bit);
     png_set_compression_level(png_ptr, 9);
 
@@ -255,6 +267,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
                      d->iccProfile.data(), d->iccProfile.size());
     }    
 
+    // Write Software info.
     QString libpngver(PNG_HEADER_VERSION_STRING);
     libpngver.replace('\n', ' ');
     QString soft = d->kipipluginsVer;
@@ -280,19 +293,70 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     png_write_info(png_ptr, info_ptr);
     png_set_shift(png_ptr, &sig_bit);
     png_set_packing(png_ptr);
-    unsigned char* ptr = (unsigned char*)d->data.data();
 
-    for (uint y = 0; !cancel() && (y < d->height); y++)
+    uchar* ptr = (uchar*)d->data.data();
+    uint   x, y, j;
+
+    for (y = 0; !cancel() && (y < d->height); y++)
     {
-        row_ptr = (png_bytep) ptr;
+        j = 0;
+
+        for (x = 0; !cancel() && (x < d->width*bytesDepth); x+=bytesDepth)
+        {
+            if (d->sixteenBit)
+            {
+                if (d->hasAlpha)
+                {
+                    data[j++] = ptr[x+5];  // Blue
+                    data[j++] = ptr[x+4];
+                    data[j++] = ptr[x+3];  // Green
+                    data[j++] = ptr[x+2];  
+                    data[j++] = ptr[x+1];  // Red
+                    data[j++] = ptr[ x ];
+                    data[j++] = ptr[x+7];  // Alpha
+                    data[j++] = ptr[x+6];
+                }
+                else
+                {    
+                    data[j++] = ptr[x+5];  // Blue
+                    data[j++] = ptr[x+4];
+                    data[j++] = ptr[x+3];  // Green
+                    data[j++] = ptr[x+2];  
+                    data[j++] = ptr[x+1];  // Red
+                    data[j++] = ptr[ x ];
+                }
+            }
+            else
+            {
+                if (d->hasAlpha)
+                {
+                    data[j++] = ptr[x+2];  // Blue
+                    data[j++] = ptr[x+1];  // Green
+                    data[j++] = ptr[ x ];  // Red
+                    data[j++] = ptr[x+3];  // Alpha
+                }
+                else
+                {    
+                    data[j++] = ptr[x+2];  // Blue
+                    data[j++] = ptr[x+1];  // Green
+                    data[j++] = ptr[ x ];  // Red
+                }
+            }
+        }
+
+        row_ptr = (png_bytep) data;
+
         png_write_rows(png_ptr, &row_ptr, 1);
-        ptr += (d->width * 3);
+        ptr += (d->width * bytesDepth);
     }
+
+    delete [] data;
 
     png_write_end(png_ptr, info_ptr);
     png_destroy_write_struct(&png_ptr, (png_infopp) & info_ptr);
     png_destroy_info_struct(png_ptr, (png_infopp) & info_ptr);
     fclose(f);
+
     return true;
 }
 
