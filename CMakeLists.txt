@@ -33,6 +33,7 @@ FIND_PACKAGE(Kipi REQUIRED)
 FIND_PACKAGE(JPEG REQUIRED)
 FIND_PACKAGE(PNG REQUIRED)
 FIND_PACKAGE(TIFF REQUIRED)
+macro_optional_find_package(Sane)
 
 # Optional depencies detection require by any plugins
 #MACRO_OPTIONAL_FIND_PACKAGE(Gphoto2)
@@ -79,8 +80,9 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
 ADD_SUBDIRECTORY(common)
 ADD_SUBDIRECTORY(timeadjust)
 ADD_SUBDIRECTORY(jpeglossless)
-ADD_SUBDIRECTORY(acquireimages)
-
+if(SANE_FOUND)
+   ADD_SUBDIRECTORY(acquireimages)
+endif(SANE_FOUND)
 IF(NOT WIN32)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/kipi-plugins.lsm.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
 ENDIF(NOT WIN32)

@@ -1,12 +1,14 @@
 SET(kipiplugin_acquireimages_PART_SRCS plugin_acquireimages.cpp scandialog.cpp)
 
+include_directories(${SANE_INCLUDE_DIR})
+
 KDE4_ADD_PLUGIN(kipiplugin_acquireimages ${kipiplugin_acquireimages_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_acquireimages 
                       ${KDE4_KPARTS_LIBS} 
                       ${QT_AND_KDECORE_LIBS} 
                       ${KIPI_LIBRARIES} 
-                      ${KSANE_LIBRARIES} 
+                      ${KSANE_LIBRARIES}
                       ${KEXIV2_LIBRARIES} 
                       ${QT_QT3SUPPORT_LIBRARY}
                       kipiplugins
