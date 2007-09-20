@@ -432,8 +432,6 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     tiffSetExifAsciiTag(tif, TIFFTAG_ARTIST,           d->metadata, "Exif.Image.Artist");
     tiffSetExifAsciiTag(tif, TIFFTAG_COPYRIGHT,        d->metadata, "Exif.Image.Copyright");
 
-    tiffSetExifDataTag(tif,  TIFFTAG_ORIENTATION,      d->metadata, "Exif.Image.Orientation");
-
     QString libtiffver(TIFFLIB_VERSION_STR);
     libtiffver.replace('\n', ' ');
     QString soft = d->kipipluginsVer;
