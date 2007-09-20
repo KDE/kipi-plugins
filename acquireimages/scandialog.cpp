@@ -350,10 +350,12 @@ void ScanDialog::slotSaveImage()
     meta.setImageDimensions(img.size());
     meta.setImagePreview(prev);
     meta.setExifThumbnail(thumb);
-    meta.setExifTagString("Exif.Image.DocumentName", QString("Scanned Image"));
+    meta.setExifTagString("Exif.Image.DocumentName", QString("Scanned Image")); // not i18n
     meta.setExifTagString("Exif.Image.Make", d->saneWidget->make());
     meta.setExifTagString("Exif.Image.Model", d->saneWidget->model());
     meta.setImageDateTime(QDateTime::currentDateTime());
+    meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
+    meta.setImageColorWorkSpace(KExiv2Iface::KExiv2::WORKSPACE_SRGB);
 
     KIPIPlugins::KPWriteImage wImageIface;
     wImageIface.setImageData(data, img.width(), img.height(), false, true, prof, meta);
