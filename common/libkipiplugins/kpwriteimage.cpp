@@ -266,13 +266,8 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     png_set_text(png_ptr, info_ptr, &(text), 1);
 
     // Store Exif data.
-    QByteArray ba            = d->metadata.getExif();
-    const uchar ExifHeader[] = {0x45, 0x78, 0x69, 0x66, 0x00, 0x00};
-    QByteArray profile       = QByteArray();
-    profile.resize(ba.size() + sizeof(ExifHeader));
-    memcpy(profile.data(), ExifHeader, sizeof(ExifHeader));
-    memcpy(profile.data()+sizeof(ExifHeader), ba.data(), ba.size());
-    writeRawProfile(png_ptr, info_ptr, (png_charp)"exif", profile.data(), (png_uint_32) profile.size());
+    QByteArray ba = d->metadata.getExif(true);
+    writeRawProfile(png_ptr, info_ptr, (png_charp)"exif", ba.data(), (png_uint_32) ba.size());
 
     // Store Iptc data.
     QByteArray ba2 = d->metadata.getIptc();
