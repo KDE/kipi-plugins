@@ -113,12 +113,6 @@ void KPWriteImage::setImageData(const QByteArray& data, uint width, uint height,
 
 bool KPWriteImage::write2JPEG(const QString& destPath)
 {
-    if (d->sixteenBit)
-    {
-        qDebug("JPEG file format do not support 16 bits color depth image");
-        return false;
-    }
-
     FILE* f = 0;
     f = fopen(QFile::encodeName(destPath), "wb");
 
@@ -159,8 +153,8 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
         write_icc_profile (&cinfo, (JOCTET *)d->iccProfile.data(), d->iccProfile.size());
 
     // Write image data
-    uchar* line       = new uchar[d->width*3];
-    uchar* dstPtr     = 0;
+    uchar* line   = new uchar[d->width*3];
+    uchar* dstPtr = 0;
 
     if (!d->sixteenBit)     // 8 bits image.
     {
