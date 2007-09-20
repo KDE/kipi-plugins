@@ -253,11 +253,9 @@ void ScanDialog::slotSaveImage()
     writableMimetypes.removeAll("image/jpeg");
     writableMimetypes.removeAll("image/tiff");
     writableMimetypes.removeAll("image/png");
-    writableMimetypes.removeAll("image/jpeg2000");
     writableMimetypes.insert(0, "image/png");
     writableMimetypes.insert(1, "image/jpeg");
-    writableMimetypes.insert(2, "image/jpeg2000");
-    writableMimetypes.insert(3, "image/tiff");
+    writableMimetypes.insert(2, "image/tiff");
 
     kDebug() << "slotSaveImage: Offered mimetypes: " << writableMimetypes << endl;
 
@@ -341,20 +339,20 @@ void ScanDialog::slotSaveImage()
     saveSettings();
 
     // TODO : support 16 bits color depth image.
-    QImage img = d->saneWidget->getFinalImage()->copy();
+    QImage img   = d->saneWidget->getFinalImage()->copy();
+    QImage prev  = img.scaled(800, 600, Qt::KeepAspectRatio);
+    QImage thumb = img.scaled(160, 120, Qt::KeepAspectRatio);
     QByteArray data((const char*)img.bits(), img.numBytes());
     QByteArray prof = KIPIPlugins::KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::SRGB);
     KExiv2Iface::KExiv2 meta;    
     meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
     meta.setImageDimensions(img.size());
-    meta.setExifThumbnail(img.scaled(160, 120, Qt::KeepAspectRatio));
-    meta.setImagePreview(img.scaled(800, 600, Qt::KeepAspectRatio));
+    meta.setImagePreview(prev);
+    meta.setExifThumbnail(thumb);
     meta.setExifTagString("Exif.Image.DocumentName", QString("Scanned Image"));
 
     KIPIPlugins::KPWriteImage wImageIface;
     wImageIface.setImageData(data, img.width(), img.height(), false, true, prof, meta);
-
-    kDebug() << "target image file format " << format << endl;
 
     if (format == QString("JPEG"))
     {
