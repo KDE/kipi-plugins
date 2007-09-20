@@ -204,7 +204,8 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     {
         KTemporaryFile tempFile;
         tempFile.setAutoRemove(false);
-        dest=tempFile.fileName();
+        tempFile.open();
+        dest = tempFile.fileName();
     }
 
     output_file = fopen(QFile::encodeName(dest), "wb");
