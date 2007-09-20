@@ -30,8 +30,11 @@
 extern "C"
 {
 #include <png.h>
-#include <stdarg.h>
 }
+
+// C++ includes.
+
+#include <cstdarg>
 
 // Qt Includes.
 
