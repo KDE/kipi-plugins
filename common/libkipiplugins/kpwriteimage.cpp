@@ -432,6 +432,8 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     tiffSetExifAsciiTag(tif, TIFFTAG_ARTIST,           d->metadata, "Exif.Image.Artist");
     tiffSetExifAsciiTag(tif, TIFFTAG_COPYRIGHT,        d->metadata, "Exif.Image.Copyright");
 
+    tiffSetExifDataTag(tif,  TIFFTAG_ORIENTATION,      d->metadata, "Exif.Image.Orientation");
+
     QString libtiffver(TIFFLIB_VERSION_STR);
     libtiffver.replace('\n', ' ');
     QString soft = d->kipipluginsVer;
@@ -822,6 +824,17 @@ void KPWriteImage::tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag,
     {
         QByteArray str(tag.data(), tag.size());
         TIFFSetField(tif, tiffTag, (const char*)str);
+    }
+}
+
+void KPWriteImage::tiffSetExifDataTag(TIFF* tif, ttag_t tiffTag, 
+                                      const KExiv2Iface::KExiv2 &metadata, 
+                                      const char* exifTagName)
+{
+    QByteArray tag = metadata.getExifTagData(exifTagName);
+    if (!tag.isEmpty()) 
+    {
+        TIFFSetField (tif, tiffTag, (uint32)tag.size(), (char *)tag.data());
     }
 }
 

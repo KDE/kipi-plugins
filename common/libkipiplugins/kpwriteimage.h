@@ -98,6 +98,9 @@ private:
     void tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag, 
                              const KExiv2Iface::KExiv2& metadata, 
                              const char* exifTagName);
+    void tiffSetExifDataTag(TIFF* tif, ttag_t tiffTag, 
+                            const KExiv2Iface::KExiv2& metadata, 
+                            const char* exifTagName);
 
 private: 
 
