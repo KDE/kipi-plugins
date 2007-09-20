@@ -362,22 +362,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
 
 bool KPWriteImage::write2TIFF(const QString& destPath)
 {
-    if (d->sixteenBit)
-    {
-        qDebug("TIFF 16 bits color depth support not yet implemented");
-        return false;
-    }
-
-    if (d->hasAlpha)
-    {
-        qDebug("TIFF alpha channel support not yet implemented");
-        return false;
-    }
-
-    TIFF          *tif=0;
-    unsigned char *data=0;
-    uint           y;
-    int            w;
+    TIFF *tif=0;
     
     tif = TIFFOpen(QFile::encodeName(destPath), "wb");
 
@@ -387,27 +372,37 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
         return false;
     }
 
-    TIFFSetField(tif, TIFFTAG_IMAGEWIDTH,      d->width);
-    TIFFSetField(tif, TIFFTAG_IMAGELENGTH,     d->height);
-    TIFFSetField(tif, TIFFTAG_ORIENTATION,     ORIENTATION_TOPLEFT);
-    TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE,   8);
-    TIFFSetField(tif, TIFFTAG_PLANARCONFIG,    PLANARCONFIG_CONTIG);
-    TIFFSetField(tif, TIFFTAG_COMPRESSION,     COMPRESSION_ADOBE_DEFLATE);
-    TIFFSetField(tif, TIFFTAG_ZIPQUALITY,      9);
+    int bitsDepth  = d->sixteenBit ? 16 : 8;
+    int bytesDepth = d->sixteenBit ? 8 : 4;
+
+    TIFFSetField(tif, TIFFTAG_IMAGEWIDTH,          d->width);
+    TIFFSetField(tif, TIFFTAG_IMAGELENGTH,         d->height);
+    TIFFSetField(tif, TIFFTAG_PHOTOMETRIC,         PHOTOMETRIC_RGB);
+    TIFFSetField(tif, TIFFTAG_PLANARCONFIG,        PLANARCONFIG_CONTIG);
+    TIFFSetField(tif, TIFFTAG_ORIENTATION,         ORIENTATION_TOPLEFT);
+    TIFFSetField(tif, TIFFTAG_RESOLUTIONUNIT,      RESUNIT_NONE);
+    TIFFSetField(tif, TIFFTAG_COMPRESSION,         COMPRESSION_ADOBE_DEFLATE);
+    TIFFSetField(tif, TIFFTAG_ZIPQUALITY,          9);
     // NOTE : this tag values aren't defined in libtiff 3.6.1. '2' is PREDICTOR_HORIZONTAL.
     //        Use horizontal differencing for images which are
     //        likely to be continuous tone. The TIFF spec says that this
     //        usually leads to better compression.
     //        See this url for more details:
     //        http://www.awaresystems.be/imaging/tiff/tifftags/predictor.html
-    TIFFSetField(tif, TIFFTAG_PREDICTOR,       2); 
-    TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, 3);
-    TIFFSetField(tif, TIFFTAG_PHOTOMETRIC,     PHOTOMETRIC_RGB);
-    w = TIFFScanlineSize(tif);
-    TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP,    TIFFDefaultStripSize(tif, 0));
+    TIFFSetField(tif, TIFFTAG_PREDICTOR,           2); 
 
-    // Store Exif data.
-    // TODO
+    if (d->hasAlpha)
+    {
+        TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, 4);
+        TIFFSetField(tif, TIFFTAG_EXTRASAMPLES,    EXTRASAMPLE_ASSOCALPHA);
+    }
+    else
+    {
+        TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, 3);
+    }
+
+    TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE,       (uint16)bitsDepth);
+    TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP,        TIFFDefaultStripSize(tif, 0));
 
     // Store Iptc data.
     QByteArray ba2 = d->metadata.getIptc(true);
@@ -420,6 +415,16 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 #if defined(TIFFTAG_XMLPACKET)
     TIFFSetField(tif, TIFFTAG_XMLPACKET, (uint32)ba3.size(), (uchar *)ba3.data());
 #endif
+
+    // Standard Exif Ascii tags (available with libtiff 3.6.1)    
+
+    tiffSetExifAsciiTag(tif, TIFFTAG_DOCUMENTNAME,     d->metadata, "Exif.Image.DocumentName");
+    tiffSetExifAsciiTag(tif, TIFFTAG_IMAGEDESCRIPTION, d->metadata, "Exif.Image.ImageDescription");
+    tiffSetExifAsciiTag(tif, TIFFTAG_MAKE,             d->metadata, "Exif.Image.Make");
+    tiffSetExifAsciiTag(tif, TIFFTAG_MODEL,            d->metadata, "Exif.Image.Model");
+    tiffSetExifAsciiTag(tif, TIFFTAG_DATETIME,         d->metadata, "Exif.Image.DateTime");
+    tiffSetExifAsciiTag(tif, TIFFTAG_ARTIST,           d->metadata, "Exif.Image.Artist");
+    tiffSetExifAsciiTag(tif, TIFFTAG_COPYRIGHT,        d->metadata, "Exif.Image.Copyright");
 
     QString libtiffver(TIFFLIB_VERSION_STR);
     libtiffver.replace('\n', ' ');
@@ -436,11 +441,157 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 #endif      
     }    
 
-    // Write image data
+    // Write full image data in tiff directory IFD0
+
+    uint8  *buf=0;
+    uchar  *pixel;
+    double  alpha_factor;
+    uint32  x, y;
+    uint8   r8, g8, b8, a8=0;
+    uint16  r16, g16, b16, a16=0;
+    int     i=0;
+
+    buf = (uint8 *) _TIFFmalloc(TIFFScanlineSize(tif));
+    if (!buf)
+    {
+        qDebug("Cannot allocate memory buffer for main TIFF image.");
+        TIFFClose(tif);
+        return false;
+    }
+
+    uchar* data = (uchar*)d->data.data();
+
     for (y = 0; !cancel() && (y < d->height); y++)
     {
-        data = (unsigned char*)d->data.data() + (y * d->width * 3);
-        TIFFWriteScanline(tif, data, y, 0);
+        i = 0;
+
+        for (x = 0; !cancel() && (x < d->width); x++)
+        {
+            pixel = &data[((y * d->width) + x) * bytesDepth];
+
+            if ( d->sixteenBit )        // 16 bits image.
+            {
+                b16 = (uint16)(pixel[4]+256*pixel[5]);
+                g16 = (uint16)(pixel[2]+256*pixel[3]);
+                r16 = (uint16)(pixel[0]+256*pixel[1]);
+
+                if (d->hasAlpha)
+                {
+                    // TIFF makes you pre-mutiply the rgb components by alpha 
+
+                    a16          = (uint16)(pixel[6]+256*pixel[7]);
+                    alpha_factor = ((double)a16 / 65535.0);
+                    r16          = (uint16)(r16*alpha_factor);
+                    g16          = (uint16)(g16*alpha_factor);
+                    b16          = (uint16)(b16*alpha_factor);
+                }
+
+                // This might be endian dependent 
+
+                buf[i++] = (uint8)(r16);
+                buf[i++] = (uint8)(r16 >> 8);
+                buf[i++] = (uint8)(g16);
+                buf[i++] = (uint8)(g16 >> 8);
+                buf[i++] = (uint8)(b16);
+                buf[i++] = (uint8)(b16 >> 8);
+
+                if (d->hasAlpha)
+                {
+                    buf[i++] = (uint8)(a16) ;
+                    buf[i++] = (uint8)(a16 >> 8) ;
+                }
+            }
+            else                            // 8 bits image.
+            {
+                b8 = (uint8)pixel[2];
+                g8 = (uint8)pixel[1];
+                r8 = (uint8)pixel[0];
+
+                if (d->hasAlpha)
+                {
+                    // TIFF makes you pre-mutiply the rgb components by alpha 
+
+                    a8           = (uint8)(pixel[3]);
+                    alpha_factor = ((double)a8 / 255.0);
+                    r8           = (uint8)(r8*alpha_factor);
+                    g8           = (uint8)(g8*alpha_factor);
+                    b8           = (uint8)(b8*alpha_factor);
+                }
+
+                // This might be endian dependent 
+
+                buf[i++] = r8;
+                buf[i++] = g8;
+                buf[i++] = b8;
+
+                if (d->hasAlpha)
+                    buf[i++] = a8;
+            }
+        }
+
+        if (!TIFFWriteScanline(tif, buf, y, 0))
+        {
+            qDebug("Cannot write main TIFF image to target file.");
+            _TIFFfree(buf);
+            TIFFClose(tif);
+            return false;
+        }
+    }
+
+    _TIFFfree(buf);
+    TIFFWriteDirectory(tif);
+
+    // Write thumbnail in tiff directory IFD1
+
+    QImage thumb = d->metadata.getExifThumbnail(false);
+    if (!thumb.isNull())
+    {
+        TIFFSetField(tif, TIFFTAG_IMAGEWIDTH,      (uint32)thumb.width());
+        TIFFSetField(tif, TIFFTAG_IMAGELENGTH,     (uint32)thumb.height());
+        TIFFSetField(tif, TIFFTAG_PHOTOMETRIC,     PHOTOMETRIC_RGB);
+        TIFFSetField(tif, TIFFTAG_PLANARCONFIG,    PLANARCONFIG_CONTIG);
+        TIFFSetField(tif, TIFFTAG_ORIENTATION,     ORIENTATION_TOPLEFT);
+        TIFFSetField(tif, TIFFTAG_RESOLUTIONUNIT,  RESUNIT_NONE);
+        TIFFSetField(tif, TIFFTAG_COMPRESSION,     COMPRESSION_NONE);
+        TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, 3);
+        TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE,   8);
+        TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP,    TIFFDefaultStripSize(tif, 0));
+    
+        uchar *pixelThumb;
+        uchar *dataThumb = thumb.bits();
+        uint8 *bufThumb  = (uint8 *) _TIFFmalloc(TIFFScanlineSize(tif));
+    
+        if (!bufThumb)
+        {
+            qDebug("Cannot allocate memory buffer for TIFF thumbnail.");
+            TIFFClose(tif);
+            return false;
+        }
+    
+        for (y = 0 ; !cancel() && (y < uint32(thumb.height())) ; y++)
+        {
+            i = 0;
+    
+            for (x = 0 ; !cancel() && (x < uint32(thumb.width())) ; x++)
+            {
+                pixelThumb = &dataThumb[((y * thumb.width()) + x) * 4];
+    
+                // This might be endian dependent 
+                bufThumb[i++] = (uint8)pixelThumb[2];
+                bufThumb[i++] = (uint8)pixelThumb[1];
+                bufThumb[i++] = (uint8)pixelThumb[0];
+            }
+    
+            if (!TIFFWriteScanline(tif, bufThumb, y, 0))
+            {
+                qDebug("Cannot write TIFF thumbnail to target file.");
+                _TIFFfree(bufThumb);
+                TIFFClose(tif);
+                return false;
+            }
+        }
+    
+        _TIFFfree(bufThumb);
     }
 
     TIFFClose(tif);
@@ -654,6 +805,18 @@ long KPWriteImage::formatStringList(char *string, const size_t length, const cha
         string[length-1] = '\0';
     
     return((long) n);
+}
+
+void KPWriteImage::tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag, 
+                                       const KExiv2Iface::KExiv2& metadata, 
+                                       const char* exifTagName)
+{
+    QByteArray tag = metadata.getExifTagData(exifTagName);
+    if (!tag.isEmpty()) 
+    {
+        QByteArray str(tag.data(), tag.size());
+        TIFFSetField(tif, tiffTag, (const char*)str);
+    }
 }
 
 }  // NameSpace KIPIPlugins

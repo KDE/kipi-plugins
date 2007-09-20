@@ -95,6 +95,10 @@ private:
     long   formatString(char *string, const size_t length, const char *format,...);
     long   formatStringList(char *string, const size_t length, const char *format, va_list operands);
 
+    void tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag, 
+                             const KExiv2Iface::KExiv2& metadata, 
+                             const char* exifTagName);
+
 private: 
 
     KPWriteImagePriv* d;
