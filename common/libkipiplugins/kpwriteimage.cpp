@@ -66,7 +66,8 @@ public:
     uint                 width;
     uint                 height;
 
-    QByteArray           data;         // RGB(A) image data.
+    QByteArray           data;         // BGR(A) image data
+                                       // data[0] = blue, data[1] = green, data[2] = red, data[3] = alpha.
     QByteArray           iccProfile;   // ICC color profile data.
 
     QString              kipipluginsVer;
@@ -166,9 +167,9 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
             
             for (uint i = 0; !cancel() && (i < d->width); i++)
             {
-                dstPtr[0] = srcPtr[0];
-                dstPtr[1] = srcPtr[1];
-                dstPtr[2] = srcPtr[2];
+                dstPtr[2] = srcPtr[0];  // Blue
+                dstPtr[1] = srcPtr[1];  // Green
+                dstPtr[0] = srcPtr[2];  // Red
 
                 d->hasAlpha ? srcPtr += 4 : srcPtr += 3;
                 dstPtr += 3;
@@ -187,9 +188,9 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
             
             for (uint i = 0; !cancel() && (i < d->width); i++)
             {
-                dstPtr[0] = (srcPtr[0] * 255UL)/65535UL;
-                dstPtr[1] = (srcPtr[1] * 255UL)/65535UL;
-                dstPtr[2] = (srcPtr[2] * 255UL)/65535UL;
+                dstPtr[2] = (srcPtr[0] * 255UL)/65535UL;    // Blue
+                dstPtr[1] = (srcPtr[1] * 255UL)/65535UL;    // Green
+                dstPtr[0] = (srcPtr[2] * 255UL)/65535UL;    // Red
 
                 d->hasAlpha ? srcPtr += 4 : srcPtr += 3;
                 dstPtr += 3;
@@ -229,6 +230,11 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     png_structp  png_ptr    = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     png_infop    info_ptr   = png_create_info_struct(png_ptr);
     png_init_io(png_ptr, f);
+
+    if (QSysInfo::ByteOrder == QSysInfo::LittleEndian)      // Intel
+        png_set_bgr(png_ptr);
+    else                                                    // PPC
+        png_set_swap_alpha(png_ptr);
 
     if (d->hasAlpha)
     {
@@ -307,39 +313,39 @@ bool KPWriteImage::write2PNG(const QString& destPath)
             {
                 if (d->hasAlpha)
                 {
-                    data[j++] = ptr[x+5];  // Blue
-                    data[j++] = ptr[x+4];
+                    data[j++] = ptr[x+1];  // Blue
+                    data[j++] = ptr[ x ];
                     data[j++] = ptr[x+3];  // Green
                     data[j++] = ptr[x+2];  
-                    data[j++] = ptr[x+1];  // Red
-                    data[j++] = ptr[ x ];
+                    data[j++] = ptr[x+5];  // Red
+                    data[j++] = ptr[x+4];
                     data[j++] = ptr[x+7];  // Alpha
                     data[j++] = ptr[x+6];
                 }
                 else
                 {    
-                    data[j++] = ptr[x+5];  // Blue
-                    data[j++] = ptr[x+4];
+                    data[j++] = ptr[x+1];  // Blue
+                    data[j++] = ptr[ x ];
                     data[j++] = ptr[x+3];  // Green
                     data[j++] = ptr[x+2];  
-                    data[j++] = ptr[x+1];  // Red
-                    data[j++] = ptr[ x ];
+                    data[j++] = ptr[x+5];  // Red
+                    data[j++] = ptr[x+4];
                 }
             }
             else
             {
                 if (d->hasAlpha)
                 {
-                    data[j++] = ptr[x+2];  // Blue
+                    data[j++] = ptr[ x ];  // Blue
                     data[j++] = ptr[x+1];  // Green
-                    data[j++] = ptr[ x ];  // Red
+                    data[j++] = ptr[x+2];  // Red
                     data[j++] = ptr[x+3];  // Alpha
                 }
                 else
                 {    
-                    data[j++] = ptr[x+2];  // Blue
+                    data[j++] = ptr[ x ];  // Blue
                     data[j++] = ptr[x+1];  // Green
-                    data[j++] = ptr[ x ];  // Red
+                    data[j++] = ptr[x+2];  // Red
                 }
             }
         }
@@ -471,9 +477,9 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
             if ( d->sixteenBit )        // 16 bits image.
             {
-                b16 = (uint16)(pixel[4]+256*pixel[5]);
+                b16 = (uint16)(pixel[0]+256*pixel[1]);
                 g16 = (uint16)(pixel[2]+256*pixel[3]);
-                r16 = (uint16)(pixel[0]+256*pixel[1]);
+                r16 = (uint16)(pixel[4]+256*pixel[5]);
 
                 if (d->hasAlpha)
                 {
@@ -503,9 +509,9 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
             }
             else                            // 8 bits image.
             {
-                b8 = (uint8)pixel[2];
+                b8 = (uint8)pixel[0];
                 g8 = (uint8)pixel[1];
-                r8 = (uint8)pixel[0];
+                r8 = (uint8)pixel[2];
 
                 if (d->hasAlpha)
                 {
