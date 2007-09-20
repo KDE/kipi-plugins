@@ -21,7 +21,6 @@
  * 
  * ============================================================ */
 
-
 #ifndef RAW_DECODING_IFACE_H
 #define RAW_DECODING_IFACE_H
 
