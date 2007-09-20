@@ -259,6 +259,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             }
             
             jpeg_finish_compress(&cinfo);
+            jpeg_destroy_compress(&cinfo);
             fclose(f);
 
             exiv2Iface.save(destPath);
