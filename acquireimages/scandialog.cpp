@@ -55,6 +55,7 @@
 // Local includes.
 
 #include "kpaboutdata.h"
+#include "kpwriteimage.h"
 #include "pluginsversion.h"
 #include "scandialog.h"
 #include "scandialog.moc"
@@ -256,7 +257,7 @@ void ScanDialog::slotSaveImage()
     writableMimetypes.insert(0, "image/png");
     writableMimetypes.insert(1, "image/jpeg");
     writableMimetypes.insert(2, "image/jpeg2000");
-//FIXME    writableMimetypes.insert(3, "image/tiff");
+    writableMimetypes.insert(3, "image/tiff");
 
     kDebug() << "slotSaveImage: Offered mimetypes: " << writableMimetypes << endl;
 
@@ -285,25 +286,23 @@ void ScanDialog::slotSaveImage()
     QStringList mimes = KImageIO::typeForMime(imageFileSaveDialog.currentMimeFilter());
     if (!mimes.isEmpty())
     {
-        format = mimes.first();
+        format = mimes.first().toUpper();
     }
     else
     {
         // Else, check if target image format have been add to target image file name using extension.
 
-        format = fi.suffix();
+        format = fi.suffix().toUpper();
 
         // Check if format from file name extension is include on file mime type list.
 
         QStringList imgExtList = KImageIO::types(KImageIO::Writing);
-        /*FIXME 
         imgExtList << "TIF";
         imgExtList << "TIFF";
-        */
         imgExtList << "JPG";
         imgExtList << "JPE";
 
-        if ( !imgExtList.contains( format.toUpper() ) )
+        if ( !imgExtList.contains( format ) )
         {
             KMessageBox::error(0, i18n("Target image file format \"%1\" unsupported.", format));
             kWarning() << "target image file format " << format << " unsupported!" << endl;
@@ -342,8 +341,38 @@ void ScanDialog::slotSaveImage()
     saveSettings();
 
     // TODO : support 16 bits color depth image.
-    d->saneWidget->getFinalImage()->save(newURL.path(), format.toAscii().data());
+    QImage img = d->saneWidget->getFinalImage()->copy();
+    QByteArray data((const char*)img.bits(), img.numBytes());
+    QByteArray prof = KIPIPlugins::KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::SRGB);
+    KExiv2Iface::KExiv2 meta;    
+    meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+    meta.setImageDimensions(img.size());
+    meta.setExifThumbnail(img.scaled(160, 120, Qt::KeepAspectRatio));
+    meta.setImagePreview(img.scaled(800, 600, Qt::KeepAspectRatio));
+    meta.setExifTagString("Exif.Image.DocumentName", QString("Scanned Image"));
 
+    KIPIPlugins::KPWriteImage wImageIface;
+    wImageIface.setImageData(data, img.width(), img.height(), false, true, prof, meta);
+
+    kDebug() << "target image file format " << format << endl;
+
+    if (format == QString("JPEG"))
+    {
+        wImageIface.write2JPEG(newURL.path());
+    }
+    else if (format == QString("PNG"))
+    {
+        wImageIface.write2PNG(newURL.path());
+    }
+    else if (format == QString("TIFF"))
+    {
+        wImageIface.write2TIFF(newURL.path());
+    }
+    else
+    {
+        img.save(newURL.path(), format.toAscii().data());
+    }    
+    
     d->interface->refreshImages( KUrl::List(newURL) );
     kapp->restoreOverrideCursor();
 }
