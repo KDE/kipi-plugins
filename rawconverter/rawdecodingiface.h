@@ -24,16 +24,17 @@
 #ifndef RAW_DECODING_IFACE_H
 #define RAW_DECODING_IFACE_H
 
-// C Ansi includes.
+// C++ includes.
+
+#include <cstdarg>
+
+// LibPNG includes.
 
 extern "C"
 {
 #include <png.h>
 }
 
-// C++ includes.
-
-#include <cstdarg>
 
 // Qt Includes.
 
