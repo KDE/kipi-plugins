@@ -195,6 +195,15 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     destPath = fi.dirPath(true) + QString("/") + ".kipi-rawconverter-tmp-" 
                                 + QString::number(::time(0));
 
+    // Metadata restoration and update.
+    KExiv2Iface::KExiv2 exiv2Iface;
+    exiv2Iface.load(filePath);
+    exiv2Iface.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
+    exiv2Iface.setImageDimensions(QSize(width, height));
+    exiv2Iface.setExifThumbnail(exifThumbnail);
+    exiv2Iface.setImagePreview(iptcPreview);
+    exiv2Iface.setExifTagString("Exif.Image.DocumentName", fi.fileName());
+
     switch(outputFileFormat)
     {
         case SaveSettingsWidget::OUTPUT_JPEG:
@@ -252,13 +261,6 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             jpeg_finish_compress(&cinfo);
             fclose(f);
 
-            // Metadata restoration and update.
-            KExiv2Iface::KExiv2 exiv2Iface;
-            exiv2Iface.load(filePath);
-            exiv2Iface.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
-            exiv2Iface.setImageDimensions(QSize(width, height));
-            exiv2Iface.setExifThumbnail(exifThumbnail);
-            exiv2Iface.setExifTagString("Exif.Image.DocumentName", fi.fileName());
             exiv2Iface.save(destPath);
             break;
         }
@@ -304,15 +306,6 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             text.text = (char *)soft.ascii();
             text.compression = PNG_TEXT_COMPRESSION_zTXt;
             png_set_text(png_ptr, info_ptr, &(text), 1);
-
-            // Metadata restoration and update.
-            KExiv2Iface::KExiv2 exiv2Iface;
-            exiv2Iface.load(filePath);
-            exiv2Iface.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
-            exiv2Iface.setImageDimensions(QSize(width, height));
-            exiv2Iface.setExifThumbnail(exifThumbnail);
-            exiv2Iface.setImagePreview(iptcPreview);
-            exiv2Iface.setExifTagString("Exif.Image.DocumentName", fi.fileName());
 
             // Store Exif data.
             QByteArray ba = exiv2Iface.getExif();
@@ -379,15 +372,6 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             w = TIFFScanlineSize(tif);
             TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP,    TIFFDefaultStripSize(tif, 0));
 
-
-            // Metadata restoration and update.
-            KExiv2Iface::KExiv2 exiv2Iface;
-            exiv2Iface.load(filePath);
-            exiv2Iface.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
-            exiv2Iface.setImageDimensions(QSize(width, height));
-            exiv2Iface.setExifThumbnail(exifThumbnail);
-            exiv2Iface.setImagePreview(iptcPreview);
-            exiv2Iface.setExifTagString("Exif.Image.DocumentName", fi.fileName());
 
             // Store Exif data.
             // TODO
