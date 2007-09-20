@@ -119,12 +119,6 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
         return false;
     }
 
-    if (d->hasAlpha)
-    {
-        qDebug("JPEG file format do not support alpha channel");
-        return false;
-    }
-
     FILE* f = 0;
     f = fopen(QFile::encodeName(destPath), "wb");
 
@@ -136,9 +130,6 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
 
     struct jpeg_compress_struct cinfo;
     struct jpeg_error_mgr       jerr;
-
-    int      row_stride;
-    JSAMPROW row_pointer[1];
 
     // Init JPEG compressor.    
     cinfo.err = jpeg_std_error(&jerr);
@@ -168,14 +159,56 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
         write_icc_profile (&cinfo, (JOCTET *)d->iccProfile.data(), d->iccProfile.size());
 
     // Write image data
-    row_stride = cinfo.image_width * 3;
-    while (!cancel() && (cinfo.next_scanline < cinfo.image_height))
+    uchar* line       = new uchar[d->width*3];
+    uchar* dstPtr     = 0;
+
+    if (!d->sixteenBit)     // 8 bits image.
     {
-        row_pointer[0] = (uchar*)d->data.data() + (cinfo.next_scanline * row_stride);
-        jpeg_write_scanlines(&cinfo, row_pointer, 1);
+        uchar* srcPtr = (uchar*)d->data.data();
+
+        for (uint j=0; !cancel() && (j < d->height); j++)
+        {
+            dstPtr = line;
+            
+            for (uint i = 0; !cancel() && (i < d->width); i++)
+            {
+                dstPtr[0] = srcPtr[0];
+                dstPtr[1] = srcPtr[1];
+                dstPtr[2] = srcPtr[2];
+
+                d->hasAlpha ? srcPtr += 4 : srcPtr += 3;
+                dstPtr += 3;
+            }
+
+            jpeg_write_scanlines(&cinfo, &line, 1);
+        }
     }
+    else                    // 16 bits image
+    {
+        unsigned short* srcPtr = (unsigned short*)d->data.data();
+
+        for (uint j=0; !cancel() && (j < d->height); j++)
+        {
+            dstPtr = line;
+            
+            for (uint i = 0; !cancel() && (i < d->width); i++)
+            {
+                dstPtr[0] = (srcPtr[0] * 255UL)/65535UL;
+                dstPtr[1] = (srcPtr[1] * 255UL)/65535UL;
+                dstPtr[2] = (srcPtr[2] * 255UL)/65535UL;
+
+                d->hasAlpha ? srcPtr += 4 : srcPtr += 3;
+                dstPtr += 3;
+            }
     
+            jpeg_write_scanlines(&cinfo, &line, 1);
+        }
+    }
+
+    delete [] line;
+
     jpeg_finish_compress(&cinfo);
+    jpeg_destroy_compress(&cinfo);
     fclose(f);
 
     d->metadata.save(destPath);

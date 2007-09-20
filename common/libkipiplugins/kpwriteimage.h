@@ -79,11 +79,11 @@ public:
     void setCancel(bool* cancel);
     bool cancel() const;
 
-    QByteArray getICCProfilFromFile(KDcrawIface::RawDecodingSettings::OutputColorSpace colorSpace);
-
     bool write2JPEG(const QString& destPath);
     bool write2PNG(const QString& destPath);
     bool write2TIFF(const QString& destPath);
+
+    static QByteArray getICCProfilFromFile(KDcrawIface::RawDecodingSettings::OutputColorSpace colorSpace);
 
 private:
     
