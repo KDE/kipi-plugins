@@ -24,6 +24,30 @@
 #ifndef KIPI_WRITE_IMAGE_H
 #define KIPI_WRITE_IMAGE_H
 
+// C++ includes.
+
+#include <cstdlib>
+#include <cstring>
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <cstdarg>
+
+// C Ansi includes.
+
+extern "C"
+{
+#include <unistd.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/types.h>
+#include <jpeglib.h>
+#include <tiffio.h>
+#include <tiffvers.h>
+#include "iccjpeg.h"
+#include <png.h>
+}
+
 // Libkipi includes.
 
 #include <libkipi/libkipi_export.h>
@@ -32,20 +56,48 @@
 
 #include <libkdcraw/rawdecodingsettings.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/kexiv2.h>
+
 namespace KIPIPlugins
 {
+class KPWriteImagePriv;
 
 class LIBKIPI_EXPORT KPWriteImage
 {
 public:
  
-    KPWriteImage(){};
-    ~KPWriteImage(){};
+    KPWriteImage();
+    ~KPWriteImage();
 
-private: 
+    void setImageData(const QByteArray& data, uint width, uint height, 
+                      bool sixteenBit, bool hasAlpha, 
+                      const QByteArray& iccProfile,
+                      const KExiv2Iface::KExiv2& metadata);
+
+    void setCancel(bool* cancel);
+    bool cancel() const;
 
     QByteArray getICCProfilFromFile(KDcrawIface::RawDecodingSettings::OutputColorSpace colorSpace);
 
+    bool write2JPEG(const QString& destPath);
+    bool write2PNG(const QString& destPath);
+    bool write2TIFF(const QString& destPath);
+
+private:
+    
+    void   writeRawProfile(png_struct *ping, png_info *ping_info, char *profile_type, 
+                           char *profile_data, png_uint_32 length);
+
+    size_t concatenateString(char *destination, const char *source, const size_t length);
+    size_t copyString(char *destination, const char *source, const size_t length);
+    long   formatString(char *string, const size_t length, const char *format,...);
+    long   formatStringList(char *string, const size_t length, const char *format, va_list operands);
+
+private: 
+
+    KPWriteImagePriv* d;
 };
 
 }  // NameSpace KIPIPlugins
