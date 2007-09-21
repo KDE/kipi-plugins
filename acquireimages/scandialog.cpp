@@ -88,18 +88,21 @@ public:
     KSaneIface::SaneWidget   *saneWidget;
 };
 
-ScanDialog::ScanDialog(KIPI::Interface* interface, QWidget *parent)
+ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneWidget, 
+                       QWidget *parent)
           : KDialog(parent)
 {
     d = new ScanDialogPriv;
-    d->interface = interface;
-
+    d->saneWidget = saneWidget;
+    d->interface  = interface;
+    
     setButtons(None);
     setCaption(i18n("Scan Image"));
     setModal(true);
 
     QWidget *main     = new QWidget(this);
     QGridLayout *grid = new QGridLayout(main);
+    d->saneWidget->setParent(main);
 
     // -- About data and help button ----------------------------------------
 
@@ -131,15 +134,6 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, QWidget *parent)
     help->setDelayedMenu( helpMenu->menu() );
 
     // ------------------------------------------------------------------------
-
-    d->saneWidget = new KSaneIface::SaneWidget(main);
-    QString dev   = d->saneWidget->selectDevice(0);
-    if (!d->saneWidget->openDevice(dev)) 
-    {
-        // could not open a scanner
-        KMessageBox::sorry(0, i18n("No scanner device has been found."));
-        slotClose();
-    }
 
     KPushButton *close = new KPushButton(KStandardGuiItem::close(), main);
     d->progress        = new QProgressBar(main);

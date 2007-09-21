@@ -38,6 +38,11 @@ namespace KIPI
     class Interface;
 }
 
+namespace KSaneIface
+{
+    class SaneWidget;
+}
+
 namespace KIPIAcquireImagesPlugin
 {
 
@@ -49,7 +54,8 @@ class ScanDialog : public KDialog
 
 public:
 
-    ScanDialog(KIPI::Interface* interface, QWidget *parent);
+    ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneWidget,
+               QWidget *parent);
     ~ScanDialog();
 
 protected:

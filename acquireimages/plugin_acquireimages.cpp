@@ -30,6 +30,11 @@
 #include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kmessagebox.h>
+
+// LibKSane includes.
+
+#include <libksane/sane_widget.h>
 
 // LibKIPI includes.
 
@@ -72,7 +77,20 @@ Plugin_AcquireImages::~Plugin_AcquireImages()
 
 void Plugin_AcquireImages::slotActivate()
 {
-    KIPIAcquireImagesPlugin::ScanDialog dlg(m_interface, kapp->activeWindow());
+    KSaneIface::SaneWidget *saneWidget = new KSaneIface::SaneWidget(0);
+
+    QString dev = saneWidget->selectDevice(0);
+    if (dev.isEmpty())
+        return;
+    
+    if (!saneWidget->openDevice(dev)) 
+    {
+        // could not open a scanner
+        KMessageBox::sorry(0, i18n("Cannot open scanner device."));
+        return;
+    }
+
+    KIPIAcquireImagesPlugin::ScanDialog dlg(m_interface, saneWidget, kapp->activeWindow());
     dlg.exec();
 }
 
