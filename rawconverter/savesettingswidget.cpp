@@ -76,45 +76,49 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
     QGridLayout* settingsBoxLayout = new QGridLayout(this);
 
     d->formatLabel    = new QLabel(i18n("Output file format:"), this);
-    d->formatComboBox = new QComboBox( false, this );
-    QWhatsThis::add(d->formatComboBox, i18n("<p>Set here the output file format to use:<p>"
-                                       "<b>JPEG</b>: output the processed image in JPEG Format. "
-                                       "this format will give smaller-sized files. Minimum JPEG "
-                                       "compression level will be used during Raw conversion.<p>"
-                                       "<b>Warning!!! duing of destructive compression algorithm, "
-                                       "JPEG is a lossy quality format.</b><p>"
-                                       "<b>TIFF</b>: output the processed image in TIFF Format. "
-                                       "This generates larges, without "
-                                       "losing quality. Adobe Deflate compression "
-                                       "will be used during conversion.<p>"
-                                       "<b>PPM</b>: output the processed image in PPM Format. "
-                                       "This generates the largest files, without "
-                                       "losing quality.<p>"
-                                       "<b>PNG</b>: output the processed image in PNG Format. "
-                                       "This generates larges, without "
-                                       "losing quality. Maximum PNG compression "
-                                       "will be used during conversion."));
+    d->formatComboBox = new QComboBox( this );
+    d->formatComboBox->setWhatsThis(i18n("<p>Set here the output file format to use:<p>"
+                                         "<b>JPEG</b>: output the processed image in JPEG Format. "
+                                         "this format will give smaller-sized files. Minimum JPEG "
+                                         "compression level will be used during Raw conversion.<p>"
+                                         "<b>Warning!!! duing of destructive compression algorithm, "
+                                         "JPEG is a lossy quality format.</b><p>"
+                                         "<b>TIFF</b>: output the processed image in TIFF Format. "
+                                         "This generates larges, without "
+                                         "losing quality. Adobe Deflate compression "
+                                         "will be used during conversion.<p>"
+                                         "<b>PPM</b>: output the processed image in PPM Format. "
+                                         "This generates the largest files, without "
+                                         "losing quality.<p>"
+                                         "<b>PNG</b>: output the processed image in PNG Format. "
+                                         "This generates larges, without "
+                                         "losing quality. Maximum PNG compression "
+                                         "will be used during conversion."));
     slotPopulateImageFormat(false);
 
     d->conflictLabel       = new QLabel(i18n("If Target File Exists:"), this);
-    d->conflictButtonGroup = new QVButtonGroup(this);
-    d->overwriteButton     = new QRadioButton(i18n("Overwrite automatically"), d->conflictButtonGroup);
-    d->promptButton        = new QRadioButton(i18n("Open rename-file dialog"), d->conflictButtonGroup);
-    d->conflictButtonGroup->insert(d->overwriteButton, OVERWRITE);
-    d->conflictButtonGroup->insert(d->promptButton,    ASKTOUSER);
-    d->conflictButtonGroup->setRadioButtonExclusive(true);
+    QWidget *conflictBox   = new QWidget(this);
+    QVBoxLayout *vlay      = new QVBoxLayout(conflictBox);
+    d->conflictButtonGroup = new QButtonGroup(conflictBox);
+    d->overwriteButton     = new QRadioButton(i18n("Overwrite automatically"), conflictBox);
+    d->promptButton        = new QRadioButton(i18n("Open rename-file dialog"), conflictBox);
+    d->conflictButtonGroup->addButton(d->overwriteButton, OVERWRITE);
+    d->conflictButtonGroup->addButton(d->promptButton,    ASKTOUSER);
+    d->conflictButtonGroup->setExclusive(true);
     d->overwriteButton->setChecked(true);
-    d->conflictButtonGroup->setFrameStyle(QFrame::NoFrame|QFrame::Plain);
-    d->conflictButtonGroup->setInsideMargin(0);
     
+    vlay->setMargin(KDialog::spacingHint());
+    vlay->setSpacing(KDialog::spacingHint());
+    vlay->addWidget(d->overwriteButton);
+    vlay->addWidget(d->promptButton);
 
-    settingsBoxLayout->setMargin(0);
-    settingsBoxLayout->setSpacing(spacingHint());
-    settingsBoxLayout->addMultiCellWidget(d->formatLabel, 0, 0, 0, 0);   
-    settingsBoxLayout->addMultiCellWidget(d->formatComboBox, 0, 0, 1, 1);   
-    settingsBoxLayout->addMultiCellWidget(d->conflictLabel, 1, 1, 0, 1);   
-    settingsBoxLayout->addMultiCellWidget(d->conflictButtonGroup, 2, 2, 0, 1);   
+    settingsBoxLayout->addWidget(d->formatLabel, 0, 0, 1, 1);   
+    settingsBoxLayout->addWidget(d->formatComboBox, 0, 1, 1, 1);   
+    settingsBoxLayout->addWidget(d->conflictLabel, 1, 0, 1, 1);   
+    settingsBoxLayout->addWidget(conflictBox, 2, 0, 1, 1);   
     settingsBoxLayout->setRowStretch(3, 10);   
+    settingsBoxLayout->setMargin(0);
+    settingsBoxLayout->setSpacing(KDialog::spacingHint());
 
     connect(d->formatComboBox, SIGNAL(activated(int)),
             this, SIGNAL(signalSaveFormatChanged()));
@@ -133,34 +137,34 @@ void SaveSettingsWidget::setDefaultSettings()
 
 SaveSettingsWidget::OutputFormat SaveSettingsWidget::fileFormat()
 {
-    return(OutputFormat)(d->formatComboBox->currentItem());
+    return(OutputFormat)(d->formatComboBox->currentIndex());
 }
 
 void SaveSettingsWidget::setFileFormat(SaveSettingsWidget::OutputFormat f)
 {
-    d->formatComboBox->setCurrentItem((int)f);
+    d->formatComboBox->setCurrentIndex((int)f);
 }
 
 SaveSettingsWidget::ConflictRule SaveSettingsWidget::conflictRule()
 {
-    return((ConflictRule)(d->conflictButtonGroup->selectedId()));
+    return((ConflictRule)(d->conflictButtonGroup->checkedId()));
 }
 
 void SaveSettingsWidget::setConflictRule(SaveSettingsWidget::ConflictRule r)
 {
-    d->conflictButtonGroup->setButton((int)r);
+    d->conflictButtonGroup->button((int)r)->setChecked(true);
 }
 
 void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
 {
     d->formatComboBox->clear();
-    d->formatComboBox->insertItem( "PNG",  OUTPUT_PNG );
-    d->formatComboBox->insertItem( "TIFF", OUTPUT_TIFF );
+    d->formatComboBox->insertItem( OUTPUT_PNG,  "PNG" );
+    d->formatComboBox->insertItem( OUTPUT_TIFF, "TIFF" );
 
     if (!sixteenBits)
     {    
-        d->formatComboBox->insertItem( "JPEG", OUTPUT_JPEG );
-        d->formatComboBox->insertItem( "PPM",  OUTPUT_PPM );
+        d->formatComboBox->insertItem( OUTPUT_JPEG, "JPEG" );
+        d->formatComboBox->insertItem( OUTPUT_PPM,  "PPM" );
     }
 }
 
