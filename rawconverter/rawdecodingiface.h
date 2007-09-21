@@ -24,27 +24,11 @@
 #ifndef RAW_DECODING_IFACE_H
 #define RAW_DECODING_IFACE_H
 
-// C++ includes.
-
-#include <cstdarg>
-
-// LibPNG includes.
-
-extern "C"
-{
-#include <png.h>
-}
-
-
 // Qt Includes.
 
-#include <qstring.h>
-#include <qobject.h>
-#include <qimage.h>
-
-// LibKExiv2 includes. 
-
-#include <libkexiv2/kexiv2.h>
+#include <QString>
+#include <QObject>
+#include <QImage>
 
 // LibKDcraw includes.
 
@@ -85,25 +69,9 @@ public:
 
 private:
 
-    QByteArray getICCProfilFromFile(KDcrawIface::RawDecodingSettings::OutputColorSpace colorSpace);
-
-    void tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag, 
-                             KExiv2Iface::KExiv2 *metaData, const char* exifTagName);
-
     bool loadedFromDcraw(const QString& filePath, 
                          QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
                          QByteArray imageData, int width, int height, int rgbmax, bool sixteenBits);
-
-    void writeRawProfile(png_struct *ping, png_info *ping_info, char *profile_type, 
-                         char *profile_data, png_uint_32 length);
-
-    size_t concatenateString(char *destination, const char *source, const size_t length);
-    size_t copyString(char *destination, const char *source, const size_t length);
-    long   formatString(char *string, const size_t length, const char *format,...);
-    long   formatStringList(char *string, const size_t length, const char *format, va_list operands);
-
-    static void tiff_warning_function(const char* module, const char* format, va_list warnings);
-    static void tiff_error_function(const char* module, const char* format, va_list errors);
 };
 
 }  // namespace KIPIRawConverterPlugin
