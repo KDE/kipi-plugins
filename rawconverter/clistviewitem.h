@@ -28,6 +28,8 @@
 
 #include <QString>
 #include <QPainter>
+#include <QColorGroup>
+#include <QPalette>
 
 // KDE includes.
 
@@ -50,7 +52,7 @@ struct RawItem
     CListViewItem *viewItem;
 };
 
-class CListViewItem : public KListViewItem
+class CListViewItem : public K3ListViewItem
 {
 
 public:
@@ -59,8 +61,8 @@ public:
 
 public:
 
-    CListViewItem(KListView *view, const QPixmap& pixmap, 
-                  RawItem *item, QListViewItem *after)
+    CListViewItem(K3ListView *view, const QPixmap& pixmap, 
+                  RawItem *item, Q3ListViewItem *after)
                 : K3ListViewItem(view, after), rawItem(item) 
     {
          rawItem->viewItem = this;
@@ -94,14 +96,14 @@ protected:
     {
         if (m_enabled)
         {
-            KListViewItem::paintCell(p, cg, column, width, alignment);
+            K3ListViewItem::paintCell(p, cg, column, width, alignment);
         }
         else
         {
             QColorGroup _cg( cg );
             QColor c = _cg.text();
             _cg.setColor( QColorGroup::Text, Qt::gray );
-            KListViewItem::paintCell( p, _cg, column, width, alignment );
+            K3ListViewItem::paintCell( p, _cg, column, width, alignment );
             _cg.setColor( QColorGroup::Text, c );
         }
     }

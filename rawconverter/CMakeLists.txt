@@ -1,5 +1,9 @@
 SUBDIRS(pics)
 
+ADD_DEFINITIONS(-DQT3_SUPPORT 
+                -DQT3_SUPPORT_WARNINGS
+               )
+
 SET(kipiplugin_rawconverter_PART_SRCS plugin_rawconverter.cpp 
                                       previewwidget.cpp 
                                       savesettingswidget.cpp 

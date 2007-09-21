@@ -45,6 +45,7 @@ extern "C"
 #include <QEvent>
 #include <QPushButton>
 #include <QFile>
+#include <QPixmap>
 
 // KDE includes.
 

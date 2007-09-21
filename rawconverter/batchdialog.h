@@ -41,7 +41,7 @@ class QTimer;
 class QWidget;
 class QEvent;
 class QCloseEvent;
-class QProgress;
+class QProgressBar;
 
 class K3ListView;
 
@@ -110,7 +110,7 @@ private:
 
     QStringList                       m_fileList;
 
-    QProgress                        *m_progressBar;
+    QProgressBar                     *m_progressBar;
 
     K3ListView                       *m_listView;
 
