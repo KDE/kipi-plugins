@@ -1,9 +1,9 @@
 SUBDIRS(pics)
 
 SET(kipiplugin_rawconverter_PART_SRCS plugin_rawconverter.cpp 
-                                      rawdecodingiface.cpp 
-                                      savesettingswidget.cpp 
                                       previewwidget.cpp 
+                                      savesettingswidget.cpp 
+                                      rawdecodingiface.cpp 
                                       actionthread.cpp 
                                       batchdialog.cpp 
                                       singledialog.cpp

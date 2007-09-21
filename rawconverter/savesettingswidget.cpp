@@ -22,13 +22,12 @@
 
 // Qt includes.
 
-#include <qcombobox.h>
-#include <qvbuttongroup.h>
-#include <qradiobutton.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qstring.h>
+#include <QComboBox>
+#include <QButtonGroup>
+#include <QRadioButton>
+#include <QLabel>
+#include <QLayout>
+#include <QString>
 
 // KDE includes.
 
@@ -57,22 +56,24 @@ public:
         promptButton        = 0;
     }
 
-    QLabel        *formatLabel;
-    QLabel        *conflictLabel;
+    QLabel       *formatLabel;
+    QLabel       *conflictLabel;
 
-    QVButtonGroup *conflictButtonGroup;
+    QButtonGroup *conflictButtonGroup;
 
-    QComboBox     *formatComboBox;
+    QComboBox    *formatComboBox;
 
-    QRadioButton  *overwriteButton;
-    QRadioButton  *promptButton;
+    QRadioButton *overwriteButton;
+    QRadioButton *promptButton;
 };
 
 SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
-                  : QWidget(parent, 0, Qt::WDestructiveClose)
+                  : QWidget(parent)
 {
     d = new SaveSettingsWidgetPriv;
-    QGridLayout* settingsBoxLayout = new QGridLayout(this, 3, 1, KDialog::spacingHint());
+    setAttribute(Qt::WA_DeleteOnClose);
+
+    QGridLayout* settingsBoxLayout = new QGridLayout(this);
 
     d->formatLabel    = new QLabel(i18n("Output file format:"), this);
     d->formatComboBox = new QComboBox( false, this );
@@ -106,6 +107,9 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
     d->conflictButtonGroup->setFrameStyle(QFrame::NoFrame|QFrame::Plain);
     d->conflictButtonGroup->setInsideMargin(0);
     
+
+    settingsBoxLayout->setMargin(0);
+    settingsBoxLayout->setSpacing(spacingHint());
     settingsBoxLayout->addMultiCellWidget(d->formatLabel, 0, 0, 0, 0);   
     settingsBoxLayout->addMultiCellWidget(d->formatComboBox, 0, 0, 1, 1);   
     settingsBoxLayout->addMultiCellWidget(d->conflictLabel, 1, 1, 0, 1);   
