@@ -26,12 +26,12 @@
 
 // Qt includes.
 
-#include <qstringlist.h>
-#include <qdict.h>
+#include <Q3Dict>
+#include <QStringList>
 
 // KDE includes.
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 // Local includes
 
@@ -39,11 +39,11 @@
 
 class QTimer;
 class QWidget;
-class QCustomEvent;
+class QEvent;
 class QCloseEvent;
+class QProgress;
 
-class KListView;
-class KProgress;
+class K3ListView;
 
 namespace KDcrawIface
 {
@@ -57,7 +57,7 @@ class  ActionThread;
 class  SaveSettingsWidget;
 struct RawItem;
 
-class BatchDialog : public KDialogBase
+class BatchDialog : public KDialog
 {
 
 Q_OBJECT
@@ -71,7 +71,7 @@ public:
 
 protected:
 
-    void customEvent(QCustomEvent *event);
+    void customEvent(QEvent *event);
     void closeEvent(QCloseEvent *e);
 
 private:
@@ -106,13 +106,13 @@ private:
 
     QWidget                          *m_page;
 
-    QDict<RawItem>                    m_itemDict;
+    Q3Dict<RawItem>                   m_itemDict;
 
     QStringList                       m_fileList;
 
-    KProgress                        *m_progressBar;
+    QProgress                        *m_progressBar;
 
-    KListView                        *m_listView;
+    K3ListView                       *m_listView;
 
     RawItem                          *m_currentConvertItem;
 
