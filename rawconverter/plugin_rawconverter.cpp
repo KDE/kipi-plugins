@@ -58,15 +58,15 @@ extern "C"
 
 // Local includes.
 
-#include "singledialog.h"
-#include "batchdialog.h"
+/*#include "singledialog.h"
+#include "batchdialog.h"*/
 #include "plugin_rawconverter.h"
 #include "plugin_rawconverter.moc"
 
 K_PLUGIN_FACTORY( RawConverterFactory, registerPlugin<Plugin_RawConverter>(); )
 K_EXPORT_PLUGIN ( RawConverterFactory("kipiplugin_rawconverter") )
 
-Plugin_RawConverter::Plugin_RawConverter(QObject *parent, const QVariantList &args)
+Plugin_RawConverter::Plugin_RawConverter(QObject *parent, const QVariantList &)
                    : KIPI::Plugin( RawConverterFactory::componentData(), parent, "RawConverter")
 {
     kDebug( 51001 ) << "Plugin_RawConverter plugin loaded" << endl;
@@ -113,7 +113,7 @@ bool Plugin_RawConverter::isRAWFile(const QString& filePath)
     QString rawFilesExt(raw_file_extentions);
 
     QFileInfo fileInfo(filePath);
-    if (rawFilesExt.toUpper().contains( fileInfo.extension(false).toUpper() ))
+    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
         return true;
 
     return false;
@@ -152,11 +152,11 @@ void Plugin_RawConverter::slotActivateSingle()
         return;
     }
 
-    KIPIRawConverterPlugin::SingleDialog *converter = 
+/*/    KIPIRawConverterPlugin::SingleDialog *converter = 
         new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), 
             kapp->activeWindow()); 
 
-    converter->show();
+    converter->show();*/
 }
 
 void Plugin_RawConverter::slotActivateBatch()
@@ -177,7 +177,7 @@ void Plugin_RawConverter::slotActivateBatch()
 
     if (!checkBinaries()) 
         return;
-
+/*
     KIPIRawConverterPlugin::BatchDialog *converter =
         new KIPIRawConverterPlugin::BatchDialog(kapp->activeWindow());
 
@@ -191,14 +191,14 @@ void Plugin_RawConverter::slotActivateBatch()
     }
 
     converter->addItems(files);
-    converter->show();
+    converter->show();*/
 }
 
 KIPI::Category Plugin_RawConverter::category( KAction* action ) const
 {
-    if ( action == singleAction_ )
+    if ( action == m_singleAction )
        return KIPI::TOOLSPLUGIN;
-    else if ( action == batchAction_ )
+    else if ( action == m_batchAction )
        return KIPI::BATCHPLUGIN;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
