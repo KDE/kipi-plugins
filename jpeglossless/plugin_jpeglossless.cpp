@@ -82,7 +82,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     connect(m_action_AutoExif, SIGNAL(triggered(bool)), this, SLOT(slotRotateExif()));
     addAction(m_action_AutoExif);
 
-    m_action_RotateImage = new KActionMenu(i18n("Rotate"), actionCollection());
+    m_action_RotateImage = new KActionMenu(KIcon("rotate"), i18n("Rotate"), actionCollection());
     addAction(m_action_RotateImage);
 
     KAction *left = new KAction(i18n("Left"), actionCollection());
@@ -95,7 +95,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     connect(right, SIGNAL(triggered(bool)), this, SLOT(slotRotateRight()));
     m_action_RotateImage->addAction(right);
 
-    m_action_FlipImage = new KActionMenu(i18n("Flip"), actionCollection());
+    m_action_FlipImage = new KActionMenu(KIcon("flip"), i18n("Flip"), actionCollection());
     addAction(m_action_FlipImage);
 
     KAction *hori = new KAction(i18n("Horizontally"), actionCollection());
@@ -108,7 +108,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     connect(verti, SIGNAL(triggered(bool)), this, SLOT(slotFlipVertically()));
     m_action_FlipImage->addAction(verti);
 
-    m_action_Convert2GrayScale = new KAction(i18n("Convert to Black && White"), actionCollection());
+    m_action_Convert2GrayScale = new KAction(KIcon("grayscaleconvert"), i18n("Convert to Black && White"), actionCollection());
     connect(m_action_Convert2GrayScale, SIGNAL(triggered(bool)), this, SLOT(slotConvert2GrayScale()));
     addAction(m_action_Convert2GrayScale);
 
@@ -135,7 +135,6 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     connect( m_thread, SIGNAL(failed(const QString &, int, const QString &)),
              this, SLOT(slotFailed(const QString &, int, const QString &)));
-
 
     connect( interface, SIGNAL( selectionChanged( bool ) ),
              m_action_AutoExif, SLOT( setEnabled( bool ) ) );
