@@ -26,12 +26,12 @@
 
 // Qt includes.
 
-#include <qstring.h>
-#include <qpainter.h>
+#include <QString>
+#include <QPainter>
 
 // KDE includes.
 
-#include <klistview.h>
+#include <k3listview.h>
 
 class QPixmap;
 
@@ -61,7 +61,7 @@ public:
 
     CListViewItem(KListView *view, const QPixmap& pixmap, 
                   RawItem *item, QListViewItem *after)
-                : KListViewItem(view, after), rawItem(item) 
+                : K3ListViewItem(view, after), rawItem(item) 
     {
          rawItem->viewItem = this;
          setThumbnail(pixmap);
