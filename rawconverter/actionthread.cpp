@@ -34,9 +34,8 @@ extern "C"
 
 // Qt includes.
 
-#include <qapplication.h>
-#include <qdir.h>
-#include <qdeepcopy.h>
+#include <QApplication>
+#include <QDir>
 
 // KDE includes.
 
@@ -67,35 +66,35 @@ ActionThread::~ActionThread()
     wait();
 }
 
-void ActionThread::identifyRawFile(const KURL& url, bool full)
+void ActionThread::identifyRawFile(const KUrl& url, bool full)
 {
-    KURL::List oneFile;
+    KUrl::List oneFile;
     oneFile.append(url);
     identifyRawFiles(oneFile, full);
 }
 
-void ActionThread::identifyRawFiles(const KURL::List& urlList, bool full)
+void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
 {
-    for (KURL::List::const_iterator it = urlList.begin();
+    for (KUrl::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
         Task *t     = new Task;
-        t->filePath = QDeepCopy<QString>((*it).path()); //deep copy
+        t->filePath = (*it).path();
         t->action   = full ? IDENTIFY_FULL : IDENTIFY;
         m_taskQueue.enqueue(t);
     }
 }
 
-void ActionThread::processRawFile(const KURL& url)
+void ActionThread::processRawFile(const KUrl& url)
 {
-    KURL::List oneFile;
+    KUrl::List oneFile;
     oneFile.append(url);
     processRawFiles(oneFile);
 }
 
-void ActionThread::processHalfRawFile(const KURL& url)
+void ActionThread::processHalfRawFile(const KUrl& url)
 {
-    KURL::List oneFile;
+    KUrl::List oneFile;
     oneFile.append(url);
     processHalfRawFiles(oneFile);
 }
@@ -107,13 +106,13 @@ void ActionThread::setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDe
     m_outputFormat        = outputFormat;
 }
 
-void ActionThread::processRawFiles(const KURL::List& urlList)
+void ActionThread::processRawFiles(const KUrl::List& urlList)
 {
-    for (KURL::List::const_iterator it = urlList.begin();
+    for (KUrl::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
         Task *t             = new Task;
-        t->filePath         = QDeepCopy<QString>((*it).path()); //deep copy
+        t->filePath         = (*it).path();
         t->outputFormat     = m_outputFormat;
         t->decodingSettings = m_rawDecodingSettings;
         t->action           = PROCESS;
@@ -121,13 +120,13 @@ void ActionThread::processRawFiles(const KURL::List& urlList)
     }
 }
 
-void ActionThread::processHalfRawFiles(const KURL::List& urlList)
+void ActionThread::processHalfRawFiles(const KUrl::List& urlList)
 {
-    for (KURL::List::const_iterator it = urlList.begin();
+    for (KUrl::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
         Task *t             = new Task;
-        t->filePath         = QDeepCopy<QString>((*it).path()); //deep copy
+        t->filePath         = (*it).path(); //deep copy
         t->outputFormat     = m_outputFormat;
         t->decodingSettings = m_rawDecodingSettings;
         t->action           = PREVIEW;
@@ -178,7 +177,7 @@ void ActionThread::run()
                         if (info.dateTime.isValid())
                         {
                             identify.append(i18n("Created: %1\n")
-                                    .arg(KGlobal::locale()->formatDateTime(info.dateTime, true, true)));
+                                    .arg(KGlobal::locale()->formatDateTime(info.dateTime, KLocale::ShortDate, true)));
                         }
 
                         if (info.aperture != -1.0)
@@ -209,7 +208,7 @@ void ActionThread::run()
                 r->image     = image;
                 r->message   = identify;
                 r->success   = true;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, r));
+                QApplication::postEvent(m_parent, r);
                 break;
             }
 
@@ -218,7 +217,7 @@ void ActionThread::run()
                 d->action    = PREVIEW;
                 d->filePath  = t->filePath;
                 d->starting  = true;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                QApplication::postEvent(m_parent, d);
 
                 QString destPath;
                 bool result  = m_dcrawIface.decodeHalfRAWImage(t->filePath, destPath, 
@@ -229,7 +228,7 @@ void ActionThread::run()
                 r->filePath  = t->filePath;
                 r->destPath  = destPath;
                 r->success   = result;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, r));
+                QApplication::postEvent(m_parent, r);
                 break;
             }
 
@@ -238,7 +237,7 @@ void ActionThread::run()
                 d->action    = PROCESS;
                 d->filePath  = t->filePath;
                 d->starting  = true;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
+                QApplication::postEvent(m_parent, d);
 
                 QString destPath;
                 bool result  = m_dcrawIface.decodeRAWImage(t->filePath, destPath, 
@@ -249,7 +248,7 @@ void ActionThread::run()
                 r->filePath  = t->filePath;
                 r->destPath  = destPath;
                 r->success   = result;
-                QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, r));
+                QApplication::postEvent(m_parent, r);
                 break;
             }
 

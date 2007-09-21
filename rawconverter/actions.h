@@ -41,7 +41,7 @@ enum Action
     PROCESS
 };
 
-class EventData : QEvent
+class EventData : public QEvent
 {
 
 public:
