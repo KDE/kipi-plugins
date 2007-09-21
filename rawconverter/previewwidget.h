@@ -21,16 +21,15 @@
  * 
  * ============================================================ */
 
-
 #ifndef PREVIEWWIDGET_H
 #define PREVIEWWIDGET_H
 
 // Qt includes.
 
-#include <qcolor.h>
-#include <qframe.h>
-#include <qpixmap.h>
-#include <qstring.h>
+#include <QColor>
+#include <QWidget>
+#include <QPixmap>
+#include <QString>
 
 class QPaintEvent;
 class QResizeEvent;
@@ -39,7 +38,7 @@ namespace KIPIRawConverterPlugin
 {
 class PreviewWidgetPriv;
 
-class PreviewWidget : public QFrame
+class PreviewWidget : public QWidget
 {
     Q_OBJECT
     

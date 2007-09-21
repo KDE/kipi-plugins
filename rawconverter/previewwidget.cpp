@@ -23,12 +23,13 @@
 
 // Qt includes.
 
-#include <qpainter.h>
-#include <qimage.h>
-#include <qstring.h>
-#include <qevent.h>
-#include <qtimer.h>
-#include <qfile.h>
+#include <QPainter>
+#include <QImage>
+#include <QString>
+#include <QEvent>
+#include <QPaintEvent>
+#include <QTimer>
+#include <QFile>
 
 // KDE includes.
 
@@ -63,13 +64,10 @@ public:
 };
 
 PreviewWidget::PreviewWidget(QWidget *parent)
-             : QFrame(parent, 0, Qt::WRepaintNoErase)
+             : QWidget(parent)
 {
     d = new PreviewWidgetPriv;
-    setFrameStyle(QFrame::GroupBoxPanel|QFrame::Plain); 
-    setMargin(0); 
-    setLineWidth(1); 
-
+    setAttribute(Qt::WA_DeleteOnClose);
     setMinimumSize(QSize(400, 300));
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -77,6 +75,7 @@ PreviewWidget::PreviewWidget(QWidget *parent)
     d->pix->fill(Qt::black);
 
     d->timer = new QTimer(this);
+    d->timer->setSingleShot(true);
 
     connect(d->timer, SIGNAL(timeout()),
             this, SLOT(slotResize()));
@@ -95,8 +94,8 @@ void PreviewWidget::load(const QString& file)
 
     if (!d->image.isNull()) 
     {
-        QImage img = d->image.scale(width(),height(),QImage::ScaleMin);
-        int x = d->pix->width()/2 - img.width()/2;
+        QImage img = d->image.scaled(width(), height(), Qt::KeepAspectRatio);
+        int x = d->pix->width()/2  - img.width()/2;
         int y = d->pix->height()/2 - img.height()/2;
 
         QPainter p(d->pix);
@@ -127,12 +126,12 @@ void PreviewWidget::setInfo(const QString& text, const QColor& color, const QPix
         p.drawPixmap(d->pix->width()/2-d->preview.width()/2, d->pix->height()/4-d->preview.height()/2, 
                      d->preview, 0, 0, d->preview.width(), d->preview.height());
         p.drawText(0, d->pix->height()/2, d->pix->width(), d->pix->height()/2,
-                   Qt::AlignCenter|Qt::WordBreak, d->text);
+                   Qt::AlignCenter|Qt::TextWordWrap, d->text);
     }
     else
     {
         p.drawText(0, 0, d->pix->width(), d->pix->height(),
-                   Qt::AlignCenter|Qt::WordBreak, d->text);
+                   Qt::AlignCenter|Qt::TextWordWrap, d->text);
     }
     p.end();
     update();
@@ -140,20 +139,21 @@ void PreviewWidget::setInfo(const QString& text, const QColor& color, const QPix
 
 void PreviewWidget::paintEvent(QPaintEvent *e)
 {
-    QRect r(e->rect());
-    bitBlt(this, r.topLeft(), d->pix, r, Qt::CopyROP);
+    QPainter p(this);
+    p.drawPixmap(e->rect(), *d->pix);
+    p.end();
 }
 
 void PreviewWidget::resizeEvent(QResizeEvent*)
 {
-    d->timer->start(10,true);
+    d->timer->start(10);
 }
 
 void PreviewWidget::slotResize()
 {
     if (d->timer->isActive()) return;
 
-    d->pix->resize(width(),height());
+    d->pix->scaled(width(), height());
     d->pix->fill(Qt::black);
     if (!d->text.isEmpty()) 
     {
@@ -165,12 +165,12 @@ void PreviewWidget::slotResize()
             p.drawPixmap(d->pix->width()/2-d->preview.width()/2, d->pix->height()/4-d->preview.height()/2, 
                         d->preview, 0, 0, d->preview.width(), d->preview.height());
             p.drawText(0, d->pix->height()/2, d->pix->width(), d->pix->height()/2,
-                    Qt::AlignCenter|Qt::WordBreak, d->text);
+                    Qt::AlignCenter|Qt::TextWordWrap, d->text);
         }
         else
         {
             p.drawText(0, 0, d->pix->width(), d->pix->height(),
-                    Qt::AlignCenter|Qt::WordBreak, d->text);
+                    Qt::AlignCenter|Qt::TextWordWrap, d->text);
         }
 
         p.end();
@@ -179,14 +179,14 @@ void PreviewWidget::slotResize()
     {
         if (!d->image.isNull()) 
         {
-            QImage img = d->image.scale(width(),height(), QImage::ScaleMin);
-            int x = d->pix->width()/2 - img.width()/2;
+            QImage img = d->image.scaled(width(),height(), Qt::KeepAspectRatio);
+            int x = d->pix->width()/2  - img.width()/2;
             int y = d->pix->height()/2 - img.height()/2;
 
             QPainter p(d->pix);
             p.drawImage(x, y, img);
             p.setPen(QPen(Qt::white));
-            p.drawRect(x,y,img.width(),img.height());
+            p.drawRect(x, y, img.width(), img.height());
             p.end();
         }
     }
@@ -195,4 +195,3 @@ void PreviewWidget::slotResize()
 }
 
 } // NameSpace KIPIRawConverterPlugin
-
