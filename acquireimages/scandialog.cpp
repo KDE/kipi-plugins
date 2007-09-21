@@ -207,7 +207,7 @@ void ScanDialog::saveSettings()
 void ScanDialog::slotClose()
 {
     saveSettings();
-    done(Cancel);
+    done(Close);
 }
 
 void ScanDialog::closeEvent(QCloseEvent *e)
