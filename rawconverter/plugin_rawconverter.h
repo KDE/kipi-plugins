@@ -25,7 +25,7 @@
 #ifndef PLUGIN_RAWCONVERTER_H
 #define PLUGIN_RAWCONVERTER_H
 
-// LibKIPi includes.
+// LibKipi includes.
 
 #include <libkipi/plugin.h>
 
@@ -37,13 +37,11 @@ class Plugin_RawConverter : public KIPI::Plugin
 
 public:
 
-    Plugin_RawConverter(QObject *parent,
-                        const char* name,
-                        const QStringList &args);
+    Plugin_RawConverter(QObject *parent, const QVariantList &args);
     ~Plugin_RawConverter();
     
     KIPI::Category category( KAction* action ) const;
-    virtual void setup( QWidget* widget );
+    void setup( QWidget* widget );
     
 private:
 
@@ -57,8 +55,8 @@ private slots:
 
 private:
 
-    KAction *singleAction_;
-    KAction *batchAction_;
+    KAction *m_singleAction;
+    KAction *m_batchAction;
 };
 
 #endif /* PLUGIN_RAWCONVERTER_H */

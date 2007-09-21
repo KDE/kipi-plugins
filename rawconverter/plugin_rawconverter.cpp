@@ -22,7 +22,7 @@
  * 
  * ============================================================ */
 
-// C ANSI Includes.
+// C ANSI includes.
 
 extern "C"
 {
@@ -63,52 +63,45 @@ extern "C"
 #include "plugin_rawconverter.h"
 #include "plugin_rawconverter.moc"
 
-typedef KGenericFactory<Plugin_RawConverter> Factory;
+K_PLUGIN_FACTORY( RawConverterFactory, registerPlugin<Plugin_RawConverter>(); )
+K_EXPORT_PLUGIN ( RawConverterFactory("kipiplugin_rawconverter") )
 
-K_EXPORT_COMPONENT_FACTORY( kipiplugin_rawconverter,
-                            Factory("kipiplugin_rawconverter"))
-
-Plugin_RawConverter::Plugin_RawConverter(QObject *parent, const char*, const QStringList&)
-                   : KIPI::Plugin( Factory::instance(), parent, "RawConverter")
+Plugin_RawConverter::Plugin_RawConverter(QObject *parent, const QVariantList &args)
+                   : KIPI::Plugin( RawConverterFactory::componentData(), parent, "RawConverter")
 {
-    kdDebug( 51001 ) << "Loaded RawConverter" << endl;
+    kDebug( 51001 ) << "Plugin_RawConverter plugin loaded" << endl;
 }
 
 void Plugin_RawConverter::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    singleAction_ = new KAction (i18n("Raw Image Converter (Single)..."),
-                                 "rawconvertersingle",
-                                 0,
-                                 this,
-                                 SLOT(slotActivateSingle()),
-                                 actionCollection(),
-                                 "raw_converter_single");
 
-    batchAction_ = new KAction (i18n("Raw Images Converter (Batch)..."),
-                                 "rawconverterbatch",
-                                 0,
-                                 this,
-                                 SLOT(slotActivateBatch()),
-                                 actionCollection(),
-                                 "raw_converter_batch");
+    m_singleAction = new KAction(KIcon("rawconvertersingle"), i18n("Raw Image Converter (Single)..."),
+                                 actionCollection());
+    connect(m_singleAction, SIGNAL(triggered(bool)), this, SLOT(slotActivateSingle()));
+    addAction(m_singleAction);
 
-    addAction( singleAction_ );
-    addAction( batchAction_ );
+    m_batchAction = new KAction(KIcon("rawconverterbatch"), i18n("Raw Images Converter (Batch)..."),
+                                 actionCollection());
+    connect(m_batchAction, SIGNAL(triggered(bool)), this, SLOT(slotActivateBatch()));
+    addAction(m_batchAction);
+
+    addAction( m_singleAction );
+    addAction( m_batchAction );
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
     if ( !interface )
     {
-           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           kError( 51000 ) << "Kipi interface is null!" << endl;
            return;
     }
 
     connect( interface, SIGNAL( selectionChanged( bool ) ),
-             singleAction_, SLOT( setEnabled( bool ) ) );
+             m_singleAction, SLOT( setEnabled( bool ) ) );
 
     connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
-             batchAction_, SLOT( setEnabled( bool ) ) );
+             m_batchAction, SLOT( setEnabled( bool ) ) );
 }
 
 Plugin_RawConverter::~Plugin_RawConverter()
@@ -120,7 +113,7 @@ bool Plugin_RawConverter::isRAWFile(const QString& filePath)
     QString rawFilesExt(raw_file_extentions);
 
     QFileInfo fileInfo(filePath);
-    if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
+    if (rawFilesExt.toUpper().contains( fileInfo.extension(false).toUpper() ))
         return true;
 
     return false;
@@ -139,7 +132,7 @@ void Plugin_RawConverter::slotActivateSingle()
 
     if (!interface)
     {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
@@ -172,7 +165,7 @@ void Plugin_RawConverter::slotActivateBatch()
 
     if (!interface)
     {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
@@ -208,7 +201,6 @@ KIPI::Category Plugin_RawConverter::category( KAction* action ) const
     else if ( action == batchAction_ )
        return KIPI::BATCHPLUGIN;
 
-    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }
-
