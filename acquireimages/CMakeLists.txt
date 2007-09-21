@@ -1,6 +1,6 @@
 SET(kipiplugin_acquireimages_PART_SRCS plugin_acquireimages.cpp scandialog.cpp)
 
-include_directories(${SANE_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(${SANE_INCLUDE_DIR})
 
 KDE4_ADD_PLUGIN(kipiplugin_acquireimages ${kipiplugin_acquireimages_PART_SRCS})
 
