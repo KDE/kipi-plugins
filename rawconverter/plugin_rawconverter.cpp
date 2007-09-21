@@ -37,8 +37,7 @@ extern "C"
 
 // Qt Includes.
 
-#include <qprocess.h>
-#include <qfileinfo.h>
+#include <QFileInfo>
 
 // KDE includes.
 
@@ -58,8 +57,8 @@ extern "C"
 
 // Local includes.
 
-/*#include "singledialog.h"
-#include "batchdialog.h"*/
+/*#include "singledialog.h"*/
+#include "batchdialog.h"
 #include "plugin_rawconverter.h"
 #include "plugin_rawconverter.moc"
 
@@ -177,21 +176,21 @@ void Plugin_RawConverter::slotActivateBatch()
 
     if (!checkBinaries()) 
         return;
-/*
+
     KIPIRawConverterPlugin::BatchDialog *converter =
         new KIPIRawConverterPlugin::BatchDialog(kapp->activeWindow());
 
-    KURL::List urls = images.images();
+    KUrl::List urls = images.images();
     QStringList files;
 
-    for( KURL::List::Iterator it = urls.begin(); it != urls.end(); ++it ) 
+    for( KUrl::List::Iterator it = urls.begin(); it != urls.end(); ++it ) 
     {
         if (isRAWFile((*it).path()))
             files.append( (*it).path() );
     }
 
     converter->addItems(files);
-    converter->show();*/
+    converter->show();
 }
 
 KIPI::Category Plugin_RawConverter::category( KAction* action ) const
