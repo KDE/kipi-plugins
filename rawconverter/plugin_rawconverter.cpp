@@ -57,7 +57,7 @@ extern "C"
 
 // Local includes.
 
-/*#include "singledialog.h"*/
+#include "singledialog.h"
 #include "batchdialog.h"
 #include "plugin_rawconverter.h"
 #include "plugin_rawconverter.moc"
@@ -151,11 +151,11 @@ void Plugin_RawConverter::slotActivateSingle()
         return;
     }
 
-/*/    KIPIRawConverterPlugin::SingleDialog *converter = 
+    KIPIRawConverterPlugin::SingleDialog *converter = 
         new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), 
             kapp->activeWindow()); 
 
-    converter->show();*/
+    converter->show();
 }
 
 void Plugin_RawConverter::slotActivateBatch()

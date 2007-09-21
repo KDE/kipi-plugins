@@ -26,18 +26,18 @@
 
 // Qt includes.
 
-#include <qstring.h>
+#include <QString>
 
 // KDE includes.
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 // Local includes
 
 #include "kpaboutdata.h"
 
 class QCloseEvent;
-class QCustomEvent;
+class QEvent;
 class QTimer;
 
 namespace KDcrawIface
@@ -52,7 +52,7 @@ class PreviewWidget;
 class ActionThread;
 class SaveSettingsWidget;
 
-class SingleDialog : public KDialogBase
+class SingleDialog : public KDialog
 {
     Q_OBJECT
 
@@ -63,7 +63,7 @@ public:
 
 protected:
 
-    void customEvent(QCustomEvent *event);
+    void customEvent(QEvent *event);
     void closeEvent(QCloseEvent *e);
     
 private:
