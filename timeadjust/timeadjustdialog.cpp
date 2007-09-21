@@ -60,6 +60,7 @@ extern "C"
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <khelpmenu.h>
+#include <ktoolinvocation.h>
 
 // LibKipi includes.
 
@@ -159,7 +160,6 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     setButtons(KDialog::Help | KDialog::Ok | KDialog::Cancel);
     setDefaultButton(KDialog::Ok);
     setCaption(i18n("Adjust Time & Date"));
-    setHelp("timeadjust", "kipi-plugins");
     setModal(true);
 
     setMainWidget(new QWidget(this));
@@ -352,6 +352,11 @@ TimeAdjustDialog::~TimeAdjustDialog()
 {
     delete d->about;
     delete d;
+}
+
+void TimeAdjustDialog::slotHelp()
+{
+    KToolInvocation::invokeHelp("timeadjust", "kipi-plugins");
 }
 
 void TimeAdjustDialog::slotResetDateToCurrent()
