@@ -23,6 +23,12 @@
 #ifndef ACTIONS_H
 #define ACTIONS_H
 
+// Qt includes.
+
+#include <QEvent>
+#include <QImage>
+#include <QString>
+
 namespace KIPIRawConverterPlugin
 {
 
@@ -35,12 +41,12 @@ enum Action
     PROCESS
 };
 
-class EventData
+class EventData : QEvent
 {
 
 public:
 
-    EventData() 
+    EventData() : QEvent(User)
     {
         starting = false;
         success  = false;

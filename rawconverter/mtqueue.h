@@ -25,8 +25,8 @@
 
 // Qt includes.
 
-#include <qptrqueue.h>
-#include <qmutex.h>
+#include <QQueue>
+#include <QMutex>
 
 namespace KIPIRawConverterPlugin
 {
@@ -78,8 +78,8 @@ public:
 
 private:
 
-  QPtrQueue<Type> m_queue;
-  QMutex          m_mutex;
+    QQueue<Type> m_queue;
+    QMutex       m_mutex;
 };
 
 }  // NameSpace KIPIRawConverterPlugin

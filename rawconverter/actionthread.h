@@ -26,8 +26,8 @@
 
 // Qt includes.
 
-#include <qthread.h>
-#include <qstring.h>
+#include <QThread>
+#include <QString>
 
 // KDE includes.
 
@@ -60,14 +60,14 @@ public:
     void setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings, 
                                 SaveSettingsWidget::OutputFormat outputFormat);
 
-    void identifyRawFile(const KURL& url, bool full=false);
-    void identifyRawFiles(const KURL::List& urlList, bool full=false);
+    void identifyRawFile(const KUrl& url, bool full=false);
+    void identifyRawFiles(const KUrl::List& urlList, bool full=false);
 
-    void processHalfRawFile(const KURL& url);
-    void processHalfRawFiles(const KURL::List& urlList);
+    void processHalfRawFile(const KUrl& url);
+    void processHalfRawFiles(const KUrl::List& urlList);
 
-    void processRawFile(const KURL& url);
-    void processRawFiles(const KURL::List& urlList);
+    void processRawFile(const KUrl& url);
+    void processRawFiles(const KUrl::List& urlList);
 
     void cancel();
 

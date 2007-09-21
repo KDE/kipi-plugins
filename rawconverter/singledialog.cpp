@@ -36,18 +36,18 @@ extern "C"
 
 // Qt includes.
 
-#include <qtimer.h>
-#include <qframe.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qfileinfo.h>
-#include <qevent.h>
-#include <qpushbutton.h>
-#include <qfile.h>
+#include <QTimer>
+#include <QFrame>
+#include <QLabel>
+#include <QLayout>
+#include <QFileInfo>
+#include <QEvent>
+#include <QPushButton>
+#include <QFile>
 
 // KDE includes.
 
+#include <k3popupmenu.h>
 #include <kcursor.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -56,9 +56,9 @@ extern "C"
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
+#include <ktoolinvocation.h>
 
 // LibKDcraw includes.
 
@@ -79,10 +79,17 @@ namespace KIPIRawConverterPlugin
 {
 
 SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
-            : KDialogBase(0, 0, false, i18n("Raw Image Converter"),
-                          Help|Default|User1|User2|User3|Close, Close, true,
-                          i18n("&Preview"), i18n("Con&vert"), i18n("&Abort"))
+            : KDialog(0)
 {
+    setButtons(KDialog::Help | KDialog::Default | KDialog::User1 | KDialog::User2 | 
+               KDialog::User3 | KDialog::Close);
+    setDefaultButton(KDialog::Close);
+    setButtonText(KDialog::User1, i18n("&Preview"));
+    setButtonText(KDialog::User2, i18n("Con&vert"));
+    setButtonText(KDialog::User3, i18n("&Abort"));
+    setCaption(i18n("Raw Image Converter"));
+    setModal(false);
+
     m_inputFile     = file;
     m_inputFileName = QFileInfo(file).fileName();
     
@@ -164,6 +171,11 @@ SingleDialog::~SingleDialog()
 {
     delete m_about;
     delete m_thread;
+}
+
+void SingleDialog::slotHelp()
+{
+    KToolInvocation::invokeHelp("rawconverter", "kipi-plugins");
 }
 
 void SingleDialog::closeEvent(QCloseEvent *e)
