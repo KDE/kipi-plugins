@@ -41,24 +41,26 @@ extern "C"
 #include <QLabel>
 #include <QLayout>
 #include <QFileInfo>
+#include <QCloseEvent>
 #include <QEvent>
 #include <QPushButton>
 #include <QFile>
 
 // KDE includes.
 
-#include <k3popupmenu.h>
+#include <kmenu.h>
 #include <kcursor.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
-#include <kio/renamedlg.h>
+#include <kio/renamedialog.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <ktoolinvocation.h>
+#include <kpushbutton.h>
 
 // LibKDcraw includes.
 
@@ -81,12 +83,11 @@ namespace KIPIRawConverterPlugin
 SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
             : KDialog(0)
 {
-    setButtons(KDialog::Help | KDialog::Default | KDialog::User1 | KDialog::User2 | 
-               KDialog::User3 | KDialog::Close);
+    setButtons(Help | Default | User1 | User2 | User3 | Close);
     setDefaultButton(KDialog::Close);
-    setButtonText(KDialog::User1, i18n("&Preview"));
-    setButtonText(KDialog::User2, i18n("Con&vert"));
-    setButtonText(KDialog::User3, i18n("&Abort"));
+    setButtonText(User1, i18n("&Preview"));
+    setButtonText(User2, i18n("Con&vert"));
+    setButtonText(User3, i18n("&Abort"));
     setCaption(i18n("Raw Image Converter"));
     setModal(false);
 
@@ -95,7 +96,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
     
     QWidget *page = new QWidget( this );
     setMainWidget( page );
-    QGridLayout *mainLayout = new QGridLayout(page, 1, 1, 0, spacingHint());
+    QGridLayout *mainLayout = new QGridLayout(page);
 
     m_previewWidget = new PreviewWidget(page);
 
@@ -103,47 +104,57 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
 
     m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(page, true, true, true);
     m_saveSettingsBox     = new SaveSettingsWidget(m_decodingSettingsBox);
-    m_decodingSettingsBox->insertTab(m_saveSettingsBox, i18n("Save settings"));
+    m_decodingSettingsBox->addTab(m_saveSettingsBox, i18n("Save settings"));
 
-    mainLayout->addMultiCellWidget(m_previewWidget, 0, 1, 0, 0);
-    mainLayout->addMultiCellWidget(m_decodingSettingsBox, 0, 0, 1, 1);
-    mainLayout->setColStretch(0, 10);
+    mainLayout->addWidget(m_previewWidget, 0, 0, 2, 1);
+    mainLayout->addWidget(m_decodingSettingsBox, 0, 1, 1, 1);
+    mainLayout->setColumnStretch(0, 10);
     mainLayout->setRowStretch(1, 10);
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(spacingHint());
 
     // ---------------------------------------------------------------
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("RAW Image Converter"),
-                                           NULL,
-                                           KAboutData::License_GPL,
-                                           I18N_NOOP("A Kipi plugin to convert Raw images\n"
-                                                     "Using KDcraw library"),
-                                           "(c) 2003-2005, Renchi Raju\n"
-                                           "(c) 2006-2007, Gilles Caulier");
+    m_about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
+                   QByteArray(),
+                   KAboutData::License_GPL,
+                   ki18n("A Kipi plugin to convert Raw images using KDcraw library"),
+                   ki18n("(c) 2003-2005, Renchi Raju\n"
+                         "(c) 2006-2007, Gilles Caulier"));
 
-    m_about->addAuthor("Renchi Raju", I18N_NOOP("Original author"),
-                       "renchi@pooh.tam.uiuc.edu");
+    m_about->addAuthor(ki18n("Renchi Raju"), 
+                       ki18n("Author"),
+                             "renchi at pooh dot tam dot uiuc dot edu");
 
-    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Maintainer"),
-                       "caulier dot gilles at gmail dot com");
+    m_about->addAuthor(ki18n("Gilles Caulier"), 
+                       ki18n("Developper and maintainer"),
+                             "caulier dot gilles at gmail dot com");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("RAW Converter Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    actionButton(Help)->setPopup( helpMenu->menu() );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KPushButton *helpButton = button( Help );
+    KHelpMenu* helpMenu     = new KHelpMenu(this, m_about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    helpButton->setDelayedMenu( helpMenu->menu() );
 
     // ---------------------------------------------------------------
 
-    setButtonTip( User1, i18n("<p>Generate a Preview from current settings. "
-                              "Uses a simple bilinear interpolation for "
-                              "quick results."));
+    setButtonToolTip(User1, i18n("<p>Generate a Preview from current settings. "
+                                 "Uses a simple bilinear interpolation for "
+                                 "quick results."));
 
-    setButtonTip( User2, i18n("<p>Convert the Raw Image from current settings. "
-                              "This uses a high-quality adaptive algorithm."));
+    setButtonToolTip(User2, i18n("<p>Convert the Raw Image from current settings. "
+                                 "This uses a high-quality adaptive algorithm."));
 
-    setButtonTip( User3, i18n("<p>Abort the current Raw file conversion"));
+    setButtonToolTip(User3, i18n("<p>Abort the current Raw file conversion"));
     
-    setButtonTip( Close, i18n("<p>Exit Raw Converter"));
+    setButtonToolTip(Close, i18n("<p>Exit Raw Converter"));
 
     m_blinkPreviewTimer = new QTimer(this);
     m_blinkConvertTimer = new QTimer(this);
@@ -159,7 +170,22 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
 
     connect(m_decodingSettingsBox, SIGNAL(signalSixteenBitsImageToggled(bool)),
             m_saveSettingsBox, SLOT(slotPopulateImageFormat(bool)));
-    
+
+    connect(this, SIGNAL(closeClicked()),
+            this, SLOT(slotClose()));
+
+    connect(this, SIGNAL(defaultClicked()),
+            this, SLOT(slotDefault()));
+
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotUser1()));
+
+    connect(this, SIGNAL(user2Clicked()),
+            this, SLOT(slotUser2()));
+
+    connect(this, SIGNAL(user3Clicked()),
+            this, SLOT(slotUser3()));
+
     // ---------------------------------------------------------------
 
     busy(false);
@@ -194,7 +220,7 @@ void SingleDialog::slotClose()
     m_blinkConvertTimer->stop();
     m_thread->cancel();
     saveSettings();
-    KDialogBase::slotClose();
+    done(Close);
 }
 
 void SingleDialog::slotDefault()
@@ -206,86 +232,83 @@ void SingleDialog::slotDefault()
 void SingleDialog::readSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("RawConverter Settings");
+    KConfigGroup group = config.group(QString("RawConverter Settings"));
 
-    m_decodingSettingsBox->setSixteenBits(config.readBoolEntry("Sixteen Bits", false));
-    m_decodingSettingsBox->setCameraWB(config.readBoolEntry("Use Camera WB", true));
-    m_decodingSettingsBox->setAutoColorBalance(config.readBoolEntry("Use Auto Color Balance", true));
-    m_decodingSettingsBox->setFourColor(config.readBoolEntry("Four Color RGB", false));
-    m_decodingSettingsBox->setUnclipColor(config.readNumEntry("Unclip Color", 0));
-    m_decodingSettingsBox->setDontStretchPixels(config.readBoolEntry("Dont Stretch Pixels", false));
-    m_decodingSettingsBox->setNoiseReduction(config.readBoolEntry("Use Noise Reduction", false));
-    m_decodingSettingsBox->setBrightness(config.readDoubleNumEntry("Brightness Multiplier", 1.0));
-    m_decodingSettingsBox->setUseBlackPoint(config.readBoolEntry("Use Black Point", false));
-    m_decodingSettingsBox->setBlackPoint(config.readNumEntry("Black Point", 0));
-    m_decodingSettingsBox->setNRThreshold(config.readNumEntry("NR Threshold", 100));
-    m_decodingSettingsBox->setUseCACorrection(config.readBoolEntry("EnableCACorrection", false));
-    m_decodingSettingsBox->setcaRedMultiplier(config.readDoubleNumEntry("caRedMultiplier", 1.0));
-    m_decodingSettingsBox->setcaBlueMultiplier(config.readDoubleNumEntry("caBlueMultiplier", 1.0));
-    m_decodingSettingsBox->setUseColorMultipliers(config.readBoolEntry("Use Color Multipliers", false));
-    m_decodingSettingsBox->setcolorMultiplier1(config.readDoubleNumEntry("Color Multiplier1", 1.0));
-    m_decodingSettingsBox->setcolorMultiplier2(config.readDoubleNumEntry("Color Multiplier2", 1.0));
-    m_decodingSettingsBox->setcolorMultiplier3(config.readDoubleNumEntry("Color Multiplier3", 1.0));
-    m_decodingSettingsBox->setcolorMultiplier4(config.readDoubleNumEntry("Color Multiplier4", 1.0));
+    m_decodingSettingsBox->setSixteenBits(group.readEntry("Sixteen Bits", false));
+    m_decodingSettingsBox->setCameraWB(group.readEntry("Use Camera WB", true));
+    m_decodingSettingsBox->setAutoColorBalance(group.readEntry("Use Auto Color Balance", true));
+    m_decodingSettingsBox->setFourColor(group.readEntry("Four Color RGB", false));
+    m_decodingSettingsBox->setUnclipColor(group.readEntry("Unclip Color", 0));
+    m_decodingSettingsBox->setDontStretchPixels(group.readEntry("Dont Stretch Pixels", false));
+    m_decodingSettingsBox->setNoiseReduction(group.readEntry("Use Noise Reduction", false));
+    m_decodingSettingsBox->setBrightness(group.readEntry("Brightness Multiplier", 1.0));
+    m_decodingSettingsBox->setUseBlackPoint(group.readEntry("Use Black Point", false));
+    m_decodingSettingsBox->setBlackPoint(group.readEntry("Black Point", 0));
+    m_decodingSettingsBox->setNRThreshold(group.readEntry("NR Threshold", 100));
+    m_decodingSettingsBox->setUseCACorrection(group.readEntry("EnableCACorrection", false));
+    m_decodingSettingsBox->setcaRedMultiplier(group.readEntry("caRedMultiplier", 1.0));
+    m_decodingSettingsBox->setcaBlueMultiplier(group.readEntry("caBlueMultiplier", 1.0));
+    m_decodingSettingsBox->setUseColorMultipliers(group.readEntry("Use Color Multipliers", false));
+    m_decodingSettingsBox->setcolorMultiplier1(group.readEntry("Color Multiplier1", 1.0));
+    m_decodingSettingsBox->setcolorMultiplier2(group.readEntry("Color Multiplier2", 1.0));
+    m_decodingSettingsBox->setcolorMultiplier3(group.readEntry("Color Multiplier3", 1.0));
+    m_decodingSettingsBox->setcolorMultiplier4(group.readEntry("Color Multiplier4", 1.0));
 
     m_decodingSettingsBox->setQuality(
-        (KDcrawIface::RawDecodingSettings::DecodingQuality)config.readNumEntry("Decoding Quality", 
+        (KDcrawIface::RawDecodingSettings::DecodingQuality)group.readEntry("Decoding Quality", 
             (int)(KDcrawIface::RawDecodingSettings::BILINEAR))); 
 
     m_decodingSettingsBox->setOutputColorSpace(
-        (KDcrawIface::RawDecodingSettings::OutputColorSpace)config.readNumEntry("Output Color Space", 
+        (KDcrawIface::RawDecodingSettings::OutputColorSpace)group.readEntry("Output Color Space", 
             (int)(KDcrawIface::RawDecodingSettings::SRGB))); 
 
     m_saveSettingsBox->setFileFormat(
-        (SaveSettingsWidget::OutputFormat)config.readNumEntry("Output Format", 
+        (SaveSettingsWidget::OutputFormat)group.readEntry("Output Format", 
             (int)(SaveSettingsWidget::OUTPUT_PNG))); 
 
     m_saveSettingsBox->setConflictRule(
-        (SaveSettingsWidget::ConflictRule)config.readNumEntry("Conflict",
+        (SaveSettingsWidget::ConflictRule)group.readEntry("Conflict",
             (int)(SaveSettingsWidget::OVERWRITE)));
 
     m_saveSettingsBox->slotPopulateImageFormat(m_decodingSettingsBox->sixteenBits());
 
-    resize(configDialogSize(config, QString("Single Raw Converter Dialog")));
+    KConfigGroup group2 = config.group(QString("Single Raw Converter Dialog"));
+    restoreDialogSize(group2);
 }
 
 void SingleDialog::saveSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("RawConverter Settings");
+    KConfigGroup group = config.group(QString("RawConverter Settings"));
 
-    config.writeEntry("Sixteen Bits", m_decodingSettingsBox->sixteenBits());
-    config.writeEntry("Use Camera WB", m_decodingSettingsBox->useCameraWB());
-    config.writeEntry("Use Auto Color Balance", m_decodingSettingsBox->useAutoColorBalance());
-    config.writeEntry("Four Color RGB", m_decodingSettingsBox->useFourColor());
-    config.writeEntry("Unclip Color", m_decodingSettingsBox->unclipColor());
-    config.writeEntry("Dont Stretch Pixels", m_decodingSettingsBox->useDontStretchPixels());
-    config.writeEntry("Use Noise Reduction", m_decodingSettingsBox->useNoiseReduction());
-    config.writeEntry("Brightness Multiplier", m_decodingSettingsBox->brightness());
-    config.writeEntry("Use Black Point", m_decodingSettingsBox->useBlackPoint());
-    config.writeEntry("Black Point", m_decodingSettingsBox->blackPoint());
-    config.writeEntry("NR Threshold", m_decodingSettingsBox->NRThreshold());
-    config.writeEntry("EnableCACorrection", m_decodingSettingsBox->useCACorrection());
-    config.writeEntry("caRedMultiplier", m_decodingSettingsBox->caRedMultiplier());
-    config.writeEntry("caBlueMultiplier", m_decodingSettingsBox->caBlueMultiplier());
-    config.writeEntry("Decoding Quality", (int)m_decodingSettingsBox->quality());
-    config.writeEntry("Output Color Space", (int)m_decodingSettingsBox->outputColorSpace());
-    config.writeEntry("Use Color Multipliers", m_decodingSettingsBox->useColorMultipliers());
-    config.writeEntry("Color Multiplier1", m_decodingSettingsBox->colorMultiplier1());
-    config.writeEntry("Color Multiplier2", m_decodingSettingsBox->colorMultiplier2());
-    config.writeEntry("Color Multiplier3", m_decodingSettingsBox->colorMultiplier3());
-    config.writeEntry("Color Multiplier4", m_decodingSettingsBox->colorMultiplier4());
+    group.writeEntry("Sixteen Bits", m_decodingSettingsBox->sixteenBits());
+    group.writeEntry("Use Camera WB", m_decodingSettingsBox->useCameraWB());
+    group.writeEntry("Use Auto Color Balance", m_decodingSettingsBox->useAutoColorBalance());
+    group.writeEntry("Four Color RGB", m_decodingSettingsBox->useFourColor());
+    group.writeEntry("Unclip Color", m_decodingSettingsBox->unclipColor());
+    group.writeEntry("Dont Stretch Pixels", m_decodingSettingsBox->useDontStretchPixels());
+    group.writeEntry("Use Noise Reduction", m_decodingSettingsBox->useNoiseReduction());
+    group.writeEntry("Brightness Multiplier", m_decodingSettingsBox->brightness());
+    group.writeEntry("Use Black Point", m_decodingSettingsBox->useBlackPoint());
+    group.writeEntry("Black Point", m_decodingSettingsBox->blackPoint());
+    group.writeEntry("NR Threshold", m_decodingSettingsBox->NRThreshold());
+    group.writeEntry("EnableCACorrection", m_decodingSettingsBox->useCACorrection());
+    group.writeEntry("caRedMultiplier", m_decodingSettingsBox->caRedMultiplier());
+    group.writeEntry("caBlueMultiplier", m_decodingSettingsBox->caBlueMultiplier());
+    group.writeEntry("Decoding Quality", (int)m_decodingSettingsBox->quality());
+    group.writeEntry("Output Color Space", (int)m_decodingSettingsBox->outputColorSpace());
+    group.writeEntry("Use Color Multipliers", m_decodingSettingsBox->useColorMultipliers());
+    group.writeEntry("Color Multiplier1", m_decodingSettingsBox->colorMultiplier1());
+    group.writeEntry("Color Multiplier2", m_decodingSettingsBox->colorMultiplier2());
+    group.writeEntry("Color Multiplier3", m_decodingSettingsBox->colorMultiplier3());
+    group.writeEntry("Color Multiplier4", m_decodingSettingsBox->colorMultiplier4());
 
-    config.writeEntry("Output Format", (int)m_saveSettingsBox->fileFormat());
-    config.writeEntry("Conflict", (int)m_saveSettingsBox->conflictRule());
+    group.writeEntry("Output Format", (int)m_saveSettingsBox->fileFormat());
+    group.writeEntry("Conflict", (int)m_saveSettingsBox->conflictRule());
 
-    saveDialogSize(config, QString("Single Raw Converter Dialog"));
+    KConfigGroup group2 = config.group(QString("Single Raw Converter Dialog"));
+    saveDialogSize(group2);
     config.sync();
-}
-
-void SingleDialog::slotHelp()
-{
-    KApplication::kApplication()->invokeHelp("rawconverter", "kipi-plugins");
 }
 
 // 'Preview' dialog button.
@@ -315,8 +338,8 @@ void SingleDialog::slotUser1()
     rawDecodingSettings.colorBalanceMultipliers[3] = m_decodingSettingsBox->colorMultiplier4();
     
     m_thread->setRawDecodingSettings(rawDecodingSettings, SaveSettingsWidget::OUTPUT_PNG);
-    m_thread->processHalfRawFile(KURL(m_inputFile));
-    if (!m_thread->running())
+    m_thread->processHalfRawFile(KUrl(m_inputFile));
+    if (!m_thread->isRunning())
         m_thread->start();
 }
 
@@ -347,8 +370,8 @@ void SingleDialog::slotUser2()
     rawDecodingSettings.colorBalanceMultipliers[3] = m_decodingSettingsBox->colorMultiplier4();
 
     m_thread->setRawDecodingSettings(rawDecodingSettings, m_saveSettingsBox->fileFormat());
-    m_thread->processRawFile(KURL(m_inputFile));
-    if (!m_thread->running())
+    m_thread->processRawFile(KUrl(m_inputFile));
+    if (!m_thread->isRunning())
         m_thread->start();
 }
 
@@ -360,8 +383,8 @@ void SingleDialog::slotUser3()
 
 void SingleDialog::slotIdentify()
 {
-    m_thread->identifyRawFile(KURL(m_inputFile), true);
-    if (!m_thread->running())
+    m_thread->identifyRawFile(KUrl(m_inputFile), true);
+    if (!m_thread->isRunning())
         m_thread->start();
 }
 
@@ -369,10 +392,10 @@ void SingleDialog::busy(bool val)
 {   
     m_decodingSettingsBox->setEnabled(!val);
     m_saveSettingsBox->setEnabled(!val);
-    enableButton (User1, !val);
-    enableButton (User2, !val);
-    enableButton (User3, val);
-    enableButton (Close, !val);
+    enableButton(User1, !val);
+    enableButton(User2, !val);
+    enableButton(User3, val);
+    enableButton(Close, !val);
 }
 
 void SingleDialog::identified(const QString&, const QString& identity, const QPixmap& preview)
@@ -383,7 +406,7 @@ void SingleDialog::identified(const QString&, const QString& identity, const QPi
 void SingleDialog::previewing(const QString&)
 {
     m_previewBlink = false;
-    m_previewWidget->setCursor( KCursor::waitCursor() );
+    m_previewWidget->setCursor( Qt::WaitCursor );
     m_blinkPreviewTimer->start(200);
 }
 
@@ -405,7 +428,7 @@ void SingleDialog::previewFailed(const QString&)
 void SingleDialog::processing(const QString&)
 {
     m_convertBlink = false;
-    m_previewWidget->setCursor( KCursor::waitCursor() );
+    m_previewWidget->setCursor( Qt::WaitCursor );
     m_blinkConvertTimer->start(200);
 }
 
@@ -435,16 +458,16 @@ void SingleDialog::processed(const QString&, const QString& tmpFile)
 
     filter += ext;
     QFileInfo fi(m_inputFile);
-    QString destFile = fi.dirPath(true) + QString("/") + fi.baseName() + QString(".") + ext;
+    QString destFile = fi.absolutePath() + QString("/") + fi.baseName() + QString(".") + ext;
 
     if (m_saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
     {
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0) 
         {
-            KIO::RenameDlg dlg(this, i18n("Save Raw Image converted from '%1' as").arg(fi.fileName()),
-                               tmpFile, destFile,
-                               KIO::RenameDlg_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
+            KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as").arg(fi.fileName()),
+                                  tmpFile, destFile,
+                                  KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
 
             switch (dlg.exec())
             {
@@ -456,7 +479,7 @@ void SingleDialog::processed(const QString&, const QString& tmpFile)
                 }
                 case KIO::R_RENAME:
                 {
-                    destFile = dlg.newDestURL().path();
+                    destFile = dlg.newDestUrl().path();
                     break;
                 }
                 default:    // Overwrite.
@@ -507,11 +530,11 @@ void SingleDialog::slotConvertBlinkTimerDone()
     m_blinkConvertTimer->start(200);
 }
 
-void SingleDialog::customEvent(QCustomEvent *event)
+void SingleDialog::customEvent(QEvent *event)
 {
     if (!event) return;
 
-    EventData *d = (EventData*) event->data();
+    EventData *d = (EventData*)event;
     if (!d) return;
 
     QString text;
@@ -536,7 +559,7 @@ void SingleDialog::customEvent(QCustomEvent *event)
             }
             default: 
             {
-                kdWarning( 51000 ) << "KIPIRawConverterPlugin: Unknown event" << endl;
+                kWarning( 51000 ) << "KIPIRawConverterPlugin: Unknown event" << endl;
                 break;
             }
         }
@@ -563,7 +586,7 @@ void SingleDialog::customEvent(QCustomEvent *event)
                 }
                 default: 
                 {
-                    kdWarning( 51000 ) << "KIPIRawConverterPlugin: Unknown event" << endl;
+                    kWarning( 51000 ) << "KIPIRawConverterPlugin: Unknown event" << endl;
                     break;
                 }
             }
@@ -574,7 +597,7 @@ void SingleDialog::customEvent(QCustomEvent *event)
             {
                 case(IDENTIFY_FULL): 
                 {
-                    QPixmap pix = QPixmap(d->image.scale(256, 256, QImage::ScaleMin));
+                    QPixmap pix = QPixmap::fromImage(d->image.scaled(256, 256, Qt::KeepAspectRatio));
                     identified(d->filePath, d->message, pix);
                     busy(false);
                     break;
@@ -593,7 +616,7 @@ void SingleDialog::customEvent(QCustomEvent *event)
                 }
                 default: 
                 {
-                    kdWarning( 51000 ) << "KIPIRawConverterPlugin: Unknown event" << endl;
+                    kWarning( 51000 ) << "KIPIRawConverterPlugin: Unknown event" << endl;
                     break;
                 }
             }
