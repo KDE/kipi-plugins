@@ -624,7 +624,9 @@ void SingleDialog::customEvent(QEvent *event)
         }
     }
 
-    delete d;
+// FIXME : this is a temporary fix to comments this line to prevent a crash with Qt4.
+//         Marcel, we need to use your implementation about multithreading management from JPEGLossLess.
+//    delete d;
 }
 
 } // NameSpace KIPIRawConverterPlugin
