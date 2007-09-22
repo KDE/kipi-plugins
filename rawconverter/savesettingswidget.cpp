@@ -117,7 +117,7 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
     settingsBoxLayout->addWidget(d->conflictLabel, 1, 0, 1, 1);   
     settingsBoxLayout->addWidget(conflictBox, 2, 0, 1, 1);   
     settingsBoxLayout->setRowStretch(3, 10);   
-    settingsBoxLayout->setMargin(0);
+    settingsBoxLayout->setMargin(KDialog::spacingHint());
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
 
     connect(d->formatComboBox, SIGNAL(activated(int)),
