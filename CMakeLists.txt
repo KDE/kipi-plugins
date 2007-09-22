@@ -80,6 +80,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
 ADD_SUBDIRECTORY(common)
 ADD_SUBDIRECTORY(timeadjust)
 ADD_SUBDIRECTORY(jpeglossless)
+ADD_SUBDIRECTORY(rawconverter)
 if(SANE_FOUND)
    ADD_SUBDIRECTORY(acquireimages)
 endif(SANE_FOUND)
