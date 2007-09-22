@@ -466,7 +466,7 @@ void SingleDialog::processed(const QString&, const QString& tmpFile)
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0) 
         {
-            KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as").arg(fi.fileName()),
+            KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as", fi.fileName()),
                                   tmpFile, destFile,
                                   KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
 
@@ -493,7 +493,7 @@ void SingleDialog::processed(const QString&, const QString& tmpFile)
     {
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
-            KMessageBox::error(this, i18n("Failed to save image %1").arg( destFile ));
+            KMessageBox::error(this, i18n("Failed to save image %1", destFile));
         }
     }
 }

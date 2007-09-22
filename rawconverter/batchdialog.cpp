@@ -545,8 +545,8 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0) 
         {
-            KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as")
-                                  .arg(m_currentConvertItem->src),
+            KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as",
+                                  m_currentConvertItem->src),
                                   tmpFile, destFile,
                                   KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
 
@@ -574,7 +574,7 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
     {
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
-            KMessageBox::error(this, i18n("Failed to save image %1").arg( destFile ));
+            KMessageBox::error(this, i18n("Failed to save image %1", destFile));
             m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("cancel"));
         }
         else 

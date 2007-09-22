@@ -171,33 +171,34 @@ void ActionThread::run()
                         identify = info.make + QString("-") + info.model;
                     else
                     {
-                        identify = i18n("Make: %1\n").arg(info.make); 
-                        identify.append(i18n("Model: %1\n").arg(info.model));
+                        identify = i18n("Make: %1\n", info.make); 
+                        identify.append(i18n("Model: %1\n", info.model));
 
                         if (info.dateTime.isValid())
                         {
-                            identify.append(i18n("Created: %1\n")
-                                    .arg(KGlobal::locale()->formatDateTime(info.dateTime, KLocale::ShortDate, true)));
+                            identify.append(i18n("Created: %1\n",
+                                     KGlobal::locale()->formatDateTime(info.dateTime,
+                                                                       KLocale::ShortDate, true)));
                         }
 
                         if (info.aperture != -1.0)
                         {
-                            identify.append(i18n("Aperture: f/%1\n").arg(QString::number(info.aperture)));
+                            identify.append(i18n("Aperture: f/%1\n", QString::number(info.aperture)));
                         }
 
                         if (info.focalLength != -1.0)
                         {
-                            identify.append(i18n("Focal: %1 mm\n").arg(info.focalLength));
+                            identify.append(i18n("Focal: %1 mm\n", info.focalLength));
                         }                        
 
                         if (info.exposureTime != -1.0)
                         {
-                            identify.append(i18n("Exposure: 1/%1 s\n").arg(info.exposureTime));
+                            identify.append(i18n("Exposure: 1/%1 s\n", info.exposureTime));
                         }
    
                         if (info.sensitivity != -1)
                         {
-                            identify.append(i18n("Sensitivity: %1 ISO").arg(info.sensitivity));
+                            identify.append(i18n("Sensitivity: %1 ISO", info.sensitivity));
                         }
                     }
                 }

@@ -147,7 +147,7 @@ void Plugin_RawConverter::slotActivateSingle()
     if (!isRAWFile(images.images()[0].path()))
     {
         KMessageBox::error(kapp->activeWindow(), 
-                           i18n("\"%1\" is not a Raw file.").arg(images.images()[0].fileName()));
+                           i18n("\"%1\" is not a Raw file.", images.images()[0].fileName()));
         return;
     }
 
