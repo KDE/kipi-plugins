@@ -681,7 +681,7 @@ void BatchDialog::customEvent(QEvent *event)
         }
     }
 
-    delete d;
+//    delete d;
 }
 
 } // NameSpace KIPIRawConverterPlugin
