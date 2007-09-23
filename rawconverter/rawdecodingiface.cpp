@@ -165,7 +165,7 @@ bool RawDecodingIface::decodeRAWImage(const QString& filePath,
 
 bool RawDecodingIface::loadedFromDcraw(const QString& filePath, 
                                        QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
-                                       QByteArray imageData, int width, int height)
+                                       const QByteArray& imageData, int width, int height)
 {
     // -- Use a QImage instance to write IPTC preview and Exif thumbnail -------
 

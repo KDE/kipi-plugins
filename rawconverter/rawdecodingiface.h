@@ -85,7 +85,7 @@ private:
 
     bool loadedFromDcraw(const QString& filePath, 
                          QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
-                         QByteArray imageData, int width, int height);
+                         const QByteArray& imageData, int width, int height);
 
     void writeRawProfile(png_struct *ping, png_info *ping_info, char *profile_type, 
                          char *profile_data, png_uint_32 length);
