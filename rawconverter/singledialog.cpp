@@ -81,9 +81,47 @@ extern "C"
 namespace KIPIRawConverterPlugin
 {
 
+class SingleDialogPriv
+{
+public:
+
+    SingleDialogPriv()
+    {
+        previewBlink        = false;
+        convertBlink        = false;
+        blinkPreviewTimer   = 0;
+        blinkConvertTimer   = 0;
+        previewWidget       = 0;
+        thread              = 0;
+        saveSettingsBox     = 0;
+        decodingSettingsBox = 0;
+        about               = 0;
+    }
+
+    bool                              previewBlink;
+    bool                              convertBlink;
+
+    QString                           inputFile;
+    QString                           inputFileName;
+    
+    QTimer                           *blinkPreviewTimer;
+    QTimer                           *blinkConvertTimer;
+
+    PreviewWidget                    *previewWidget;
+
+    ActionThread                     *thread;
+
+    SaveSettingsWidget               *saveSettingsBox;
+
+    KDcrawIface::DcrawSettingsWidget *decodingSettingsBox;
+
+    KIPIPlugins::KPAboutData         *about; 
+};
+
 SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
             : KDialog(0)
 {
+    d = new SingleDialogPriv;
     setButtons(Help | Default | User1 | User2 | User3 | Close);
     setDefaultButton(KDialog::Close);
     setButtonText(User1, i18n("&Preview"));
@@ -92,23 +130,23 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
     setCaption(i18n("Raw Image Converter"));
     setModal(false);
 
-    m_inputFile     = file;
-    m_inputFileName = QFileInfo(file).fileName();
+    d->inputFile     = file;
+    d->inputFileName = QFileInfo(file).fileName();
     
     QWidget *page = new QWidget( this );
     setMainWidget( page );
     QGridLayout *mainLayout = new QGridLayout(page);
 
-    m_previewWidget = new PreviewWidget(page);
+    d->previewWidget = new PreviewWidget(page);
 
     // ---------------------------------------------------------------
 
-    m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(page, true, true, true);
-    m_saveSettingsBox     = new SaveSettingsWidget(m_decodingSettingsBox);
-    m_decodingSettingsBox->addTab(m_saveSettingsBox, i18n("Save settings"));
+    d->decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(page, true, true, true);
+    d->saveSettingsBox     = new SaveSettingsWidget(d->decodingSettingsBox);
+    d->decodingSettingsBox->addTab(d->saveSettingsBox, i18n("Save settings"));
 
-    mainLayout->addWidget(m_previewWidget, 0, 0, 2, 1);
-    mainLayout->addWidget(m_decodingSettingsBox, 0, 1, 1, 1);
+    mainLayout->addWidget(d->previewWidget, 0, 0, 2, 1);
+    mainLayout->addWidget(d->decodingSettingsBox, 0, 1, 1, 1);
     mainLayout->setColumnStretch(0, 10);
     mainLayout->setRowStretch(1, 10);
     mainLayout->setMargin(0);
@@ -117,18 +155,18 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
+    d->about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
                    QByteArray(),
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to convert a Raw image"),
                    ki18n("(c) 2003-2005, Renchi Raju\n"
                          "(c) 2006-2007, Gilles Caulier"));
 
-    m_about->addAuthor(ki18n("Renchi Raju"), 
+    d->about->addAuthor(ki18n("Renchi Raju"), 
                        ki18n("Author"),
                              "renchi at pooh dot tam dot uiuc dot edu");
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), 
+    d->about->addAuthor(ki18n("Gilles Caulier"), 
                        ki18n("Developper and maintainer"),
                              "caulier dot gilles at gmail dot com");
 
@@ -136,7 +174,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
                this, SLOT(slotHelp()));
 
     KPushButton *helpButton = button( Help );
-    KHelpMenu* helpMenu     = new KHelpMenu(this, m_about, false);
+    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
     QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
@@ -157,20 +195,20 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
     
     setButtonToolTip(Close, i18n("<p>Exit Raw Converter"));
 
-    m_blinkPreviewTimer = new QTimer(this);
-    m_blinkConvertTimer = new QTimer(this);
-    m_thread            = new ActionThread(this);
+    d->blinkPreviewTimer = new QTimer(this);
+    d->blinkConvertTimer = new QTimer(this);
+    d->thread            = new ActionThread(this);
 
     // ---------------------------------------------------------------
 
-    connect(m_blinkPreviewTimer, SIGNAL(timeout()),
+    connect(d->blinkPreviewTimer, SIGNAL(timeout()),
             this, SLOT(slotPreviewBlinkTimerDone()));
     
-    connect(m_blinkConvertTimer, SIGNAL(timeout()),
+    connect(d->blinkConvertTimer, SIGNAL(timeout()),
             this, SLOT(slotConvertBlinkTimerDone()));
 
-    connect(m_decodingSettingsBox, SIGNAL(signalSixteenBitsImageToggled(bool)),
-            m_saveSettingsBox, SLOT(slotPopulateImageFormat(bool)));
+    connect(d->decodingSettingsBox, SIGNAL(signalSixteenBitsImageToggled(bool)),
+            d->saveSettingsBox, SLOT(slotPopulateImageFormat(bool)));
 
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
@@ -196,8 +234,9 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
 
 SingleDialog::~SingleDialog()
 {
-    delete m_about;
-    delete m_thread;
+    delete d->about;
+    delete d->thread;
+    delete d;
 }
 
 void SingleDialog::slotHelp()
@@ -208,26 +247,26 @@ void SingleDialog::slotHelp()
 void SingleDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
-    m_blinkPreviewTimer->stop();
-    m_blinkConvertTimer->stop();
-    m_thread->cancel();
+    d->blinkPreviewTimer->stop();
+    d->blinkConvertTimer->stop();
+    d->thread->cancel();
     saveSettings();
     e->accept();
 }
 
 void SingleDialog::slotClose()
 {
-    m_blinkPreviewTimer->stop();
-    m_blinkConvertTimer->stop();
-    m_thread->cancel();
+    d->blinkPreviewTimer->stop();
+    d->blinkConvertTimer->stop();
+    d->thread->cancel();
     saveSettings();
     done(Close);
 }
 
 void SingleDialog::slotDefault()
 {
-    m_decodingSettingsBox->setDefaultSettings();
-    m_saveSettingsBox->setDefaultSettings();
+    d->decodingSettingsBox->setDefaultSettings();
+    d->saveSettingsBox->setDefaultSettings();
 }
 
 void SingleDialog::readSettings()
@@ -235,43 +274,43 @@ void SingleDialog::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("RawConverter Settings"));
 
-    m_decodingSettingsBox->setSixteenBits(group.readEntry("Sixteen Bits", false));
-    m_decodingSettingsBox->setCameraWB(group.readEntry("Use Camera WB", true));
-    m_decodingSettingsBox->setAutoColorBalance(group.readEntry("Use Auto Color Balance", true));
-    m_decodingSettingsBox->setFourColor(group.readEntry("Four Color RGB", false));
-    m_decodingSettingsBox->setUnclipColor(group.readEntry("Unclip Color", 0));
-    m_decodingSettingsBox->setDontStretchPixels(group.readEntry("Dont Stretch Pixels", false));
-    m_decodingSettingsBox->setNoiseReduction(group.readEntry("Use Noise Reduction", false));
-    m_decodingSettingsBox->setBrightness(group.readEntry("Brightness Multiplier", 1.0));
-    m_decodingSettingsBox->setUseBlackPoint(group.readEntry("Use Black Point", false));
-    m_decodingSettingsBox->setBlackPoint(group.readEntry("Black Point", 0));
-    m_decodingSettingsBox->setNRThreshold(group.readEntry("NR Threshold", 100));
-    m_decodingSettingsBox->setUseCACorrection(group.readEntry("EnableCACorrection", false));
-    m_decodingSettingsBox->setcaRedMultiplier(group.readEntry("caRedMultiplier", 1.0));
-    m_decodingSettingsBox->setcaBlueMultiplier(group.readEntry("caBlueMultiplier", 1.0));
-    m_decodingSettingsBox->setUseColorMultipliers(group.readEntry("Use Color Multipliers", false));
-    m_decodingSettingsBox->setcolorMultiplier1(group.readEntry("Color Multiplier1", 1.0));
-    m_decodingSettingsBox->setcolorMultiplier2(group.readEntry("Color Multiplier2", 1.0));
-    m_decodingSettingsBox->setcolorMultiplier3(group.readEntry("Color Multiplier3", 1.0));
-    m_decodingSettingsBox->setcolorMultiplier4(group.readEntry("Color Multiplier4", 1.0));
+    d->decodingSettingsBox->setSixteenBits(group.readEntry("Sixteen Bits", false));
+    d->decodingSettingsBox->setCameraWB(group.readEntry("Use Camera WB", true));
+    d->decodingSettingsBox->setAutoColorBalance(group.readEntry("Use Auto Color Balance", true));
+    d->decodingSettingsBox->setFourColor(group.readEntry("Four Color RGB", false));
+    d->decodingSettingsBox->setUnclipColor(group.readEntry("Unclip Color", 0));
+    d->decodingSettingsBox->setDontStretchPixels(group.readEntry("Dont Stretch Pixels", false));
+    d->decodingSettingsBox->setNoiseReduction(group.readEntry("Use Noise Reduction", false));
+    d->decodingSettingsBox->setBrightness(group.readEntry("Brightness Multiplier", 1.0));
+    d->decodingSettingsBox->setUseBlackPoint(group.readEntry("Use Black Point", false));
+    d->decodingSettingsBox->setBlackPoint(group.readEntry("Black Point", 0));
+    d->decodingSettingsBox->setNRThreshold(group.readEntry("NR Threshold", 100));
+    d->decodingSettingsBox->setUseCACorrection(group.readEntry("EnableCACorrection", false));
+    d->decodingSettingsBox->setcaRedMultiplier(group.readEntry("caRedMultiplier", 1.0));
+    d->decodingSettingsBox->setcaBlueMultiplier(group.readEntry("caBlueMultiplier", 1.0));
+    d->decodingSettingsBox->setUseColorMultipliers(group.readEntry("Use Color Multipliers", false));
+    d->decodingSettingsBox->setcolorMultiplier1(group.readEntry("Color Multiplier1", 1.0));
+    d->decodingSettingsBox->setcolorMultiplier2(group.readEntry("Color Multiplier2", 1.0));
+    d->decodingSettingsBox->setcolorMultiplier3(group.readEntry("Color Multiplier3", 1.0));
+    d->decodingSettingsBox->setcolorMultiplier4(group.readEntry("Color Multiplier4", 1.0));
 
-    m_decodingSettingsBox->setQuality(
+    d->decodingSettingsBox->setQuality(
         (KDcrawIface::RawDecodingSettings::DecodingQuality)group.readEntry("Decoding Quality", 
             (int)(KDcrawIface::RawDecodingSettings::BILINEAR))); 
 
-    m_decodingSettingsBox->setOutputColorSpace(
+    d->decodingSettingsBox->setOutputColorSpace(
         (KDcrawIface::RawDecodingSettings::OutputColorSpace)group.readEntry("Output Color Space", 
             (int)(KDcrawIface::RawDecodingSettings::SRGB))); 
 
-    m_saveSettingsBox->setFileFormat(
+    d->saveSettingsBox->setFileFormat(
         (SaveSettingsWidget::OutputFormat)group.readEntry("Output Format", 
             (int)(SaveSettingsWidget::OUTPUT_PNG))); 
 
-    m_saveSettingsBox->setConflictRule(
+    d->saveSettingsBox->setConflictRule(
         (SaveSettingsWidget::ConflictRule)group.readEntry("Conflict",
             (int)(SaveSettingsWidget::OVERWRITE)));
 
-    m_saveSettingsBox->slotPopulateImageFormat(m_decodingSettingsBox->sixteenBits());
+    d->saveSettingsBox->slotPopulateImageFormat(d->decodingSettingsBox->sixteenBits());
 
     KConfigGroup group2 = config.group(QString("Single Raw Converter Dialog"));
     restoreDialogSize(group2);
@@ -282,30 +321,30 @@ void SingleDialog::saveSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("RawConverter Settings"));
 
-    group.writeEntry("Sixteen Bits", m_decodingSettingsBox->sixteenBits());
-    group.writeEntry("Use Camera WB", m_decodingSettingsBox->useCameraWB());
-    group.writeEntry("Use Auto Color Balance", m_decodingSettingsBox->useAutoColorBalance());
-    group.writeEntry("Four Color RGB", m_decodingSettingsBox->useFourColor());
-    group.writeEntry("Unclip Color", m_decodingSettingsBox->unclipColor());
-    group.writeEntry("Dont Stretch Pixels", m_decodingSettingsBox->useDontStretchPixels());
-    group.writeEntry("Use Noise Reduction", m_decodingSettingsBox->useNoiseReduction());
-    group.writeEntry("Brightness Multiplier", m_decodingSettingsBox->brightness());
-    group.writeEntry("Use Black Point", m_decodingSettingsBox->useBlackPoint());
-    group.writeEntry("Black Point", m_decodingSettingsBox->blackPoint());
-    group.writeEntry("NR Threshold", m_decodingSettingsBox->NRThreshold());
-    group.writeEntry("EnableCACorrection", m_decodingSettingsBox->useCACorrection());
-    group.writeEntry("caRedMultiplier", m_decodingSettingsBox->caRedMultiplier());
-    group.writeEntry("caBlueMultiplier", m_decodingSettingsBox->caBlueMultiplier());
-    group.writeEntry("Decoding Quality", (int)m_decodingSettingsBox->quality());
-    group.writeEntry("Output Color Space", (int)m_decodingSettingsBox->outputColorSpace());
-    group.writeEntry("Use Color Multipliers", m_decodingSettingsBox->useColorMultipliers());
-    group.writeEntry("Color Multiplier1", m_decodingSettingsBox->colorMultiplier1());
-    group.writeEntry("Color Multiplier2", m_decodingSettingsBox->colorMultiplier2());
-    group.writeEntry("Color Multiplier3", m_decodingSettingsBox->colorMultiplier3());
-    group.writeEntry("Color Multiplier4", m_decodingSettingsBox->colorMultiplier4());
+    group.writeEntry("Sixteen Bits", d->decodingSettingsBox->sixteenBits());
+    group.writeEntry("Use Camera WB", d->decodingSettingsBox->useCameraWB());
+    group.writeEntry("Use Auto Color Balance", d->decodingSettingsBox->useAutoColorBalance());
+    group.writeEntry("Four Color RGB", d->decodingSettingsBox->useFourColor());
+    group.writeEntry("Unclip Color", d->decodingSettingsBox->unclipColor());
+    group.writeEntry("Dont Stretch Pixels", d->decodingSettingsBox->useDontStretchPixels());
+    group.writeEntry("Use Noise Reduction", d->decodingSettingsBox->useNoiseReduction());
+    group.writeEntry("Brightness Multiplier", d->decodingSettingsBox->brightness());
+    group.writeEntry("Use Black Point", d->decodingSettingsBox->useBlackPoint());
+    group.writeEntry("Black Point", d->decodingSettingsBox->blackPoint());
+    group.writeEntry("NR Threshold", d->decodingSettingsBox->NRThreshold());
+    group.writeEntry("EnableCACorrection", d->decodingSettingsBox->useCACorrection());
+    group.writeEntry("caRedMultiplier", d->decodingSettingsBox->caRedMultiplier());
+    group.writeEntry("caBlueMultiplier", d->decodingSettingsBox->caBlueMultiplier());
+    group.writeEntry("Decoding Quality", (int)d->decodingSettingsBox->quality());
+    group.writeEntry("Output Color Space", (int)d->decodingSettingsBox->outputColorSpace());
+    group.writeEntry("Use Color Multipliers", d->decodingSettingsBox->useColorMultipliers());
+    group.writeEntry("Color Multiplier1", d->decodingSettingsBox->colorMultiplier1());
+    group.writeEntry("Color Multiplier2", d->decodingSettingsBox->colorMultiplier2());
+    group.writeEntry("Color Multiplier3", d->decodingSettingsBox->colorMultiplier3());
+    group.writeEntry("Color Multiplier4", d->decodingSettingsBox->colorMultiplier4());
 
-    group.writeEntry("Output Format", (int)m_saveSettingsBox->fileFormat());
-    group.writeEntry("Conflict", (int)m_saveSettingsBox->conflictRule());
+    group.writeEntry("Output Format", (int)d->saveSettingsBox->fileFormat());
+    group.writeEntry("Conflict", (int)d->saveSettingsBox->conflictRule());
 
     KConfigGroup group2 = config.group(QString("Single Raw Converter Dialog"));
     saveDialogSize(group2);
@@ -316,83 +355,83 @@ void SingleDialog::saveSettings()
 void SingleDialog::slotUser1()
 {
     KDcrawIface::RawDecodingSettings rawDecodingSettings;
-    rawDecodingSettings.sixteenBitsImage           = m_decodingSettingsBox->sixteenBits();
-    rawDecodingSettings.cameraColorBalance         = m_decodingSettingsBox->useCameraWB();
-    rawDecodingSettings.automaticColorBalance      = m_decodingSettingsBox->useAutoColorBalance();
-    rawDecodingSettings.RGBInterpolate4Colors      = m_decodingSettingsBox->useFourColor();
-    rawDecodingSettings.unclipColors               = m_decodingSettingsBox->unclipColor();
-    rawDecodingSettings.DontStretchPixels          = m_decodingSettingsBox->useDontStretchPixels();
-    rawDecodingSettings.enableNoiseReduction       = m_decodingSettingsBox->useNoiseReduction();
-    rawDecodingSettings.brightness                 = m_decodingSettingsBox->brightness();
-    rawDecodingSettings.enableBlackPoint           = m_decodingSettingsBox->useBlackPoint();
-    rawDecodingSettings.blackPoint                 = m_decodingSettingsBox->blackPoint();
-    rawDecodingSettings.NRThreshold                = m_decodingSettingsBox->NRThreshold();
-    rawDecodingSettings.enableCACorrection         = m_decodingSettingsBox->useCACorrection();
-    rawDecodingSettings.caMultiplier[0]            = m_decodingSettingsBox->caRedMultiplier();
-    rawDecodingSettings.caMultiplier[1]            = m_decodingSettingsBox->caBlueMultiplier();
-    rawDecodingSettings.RAWQuality                 = m_decodingSettingsBox->quality();
-    rawDecodingSettings.outputColorSpace           = m_decodingSettingsBox->outputColorSpace();
-    rawDecodingSettings.enableColorMultipliers     = m_decodingSettingsBox->useColorMultipliers();
-    rawDecodingSettings.colorBalanceMultipliers[0] = m_decodingSettingsBox->colorMultiplier1();
-    rawDecodingSettings.colorBalanceMultipliers[1] = m_decodingSettingsBox->colorMultiplier2();
-    rawDecodingSettings.colorBalanceMultipliers[2] = m_decodingSettingsBox->colorMultiplier3();
-    rawDecodingSettings.colorBalanceMultipliers[3] = m_decodingSettingsBox->colorMultiplier4();
+    rawDecodingSettings.sixteenBitsImage           = d->decodingSettingsBox->sixteenBits();
+    rawDecodingSettings.cameraColorBalance         = d->decodingSettingsBox->useCameraWB();
+    rawDecodingSettings.automaticColorBalance      = d->decodingSettingsBox->useAutoColorBalance();
+    rawDecodingSettings.RGBInterpolate4Colors      = d->decodingSettingsBox->useFourColor();
+    rawDecodingSettings.unclipColors               = d->decodingSettingsBox->unclipColor();
+    rawDecodingSettings.DontStretchPixels          = d->decodingSettingsBox->useDontStretchPixels();
+    rawDecodingSettings.enableNoiseReduction       = d->decodingSettingsBox->useNoiseReduction();
+    rawDecodingSettings.brightness                 = d->decodingSettingsBox->brightness();
+    rawDecodingSettings.enableBlackPoint           = d->decodingSettingsBox->useBlackPoint();
+    rawDecodingSettings.blackPoint                 = d->decodingSettingsBox->blackPoint();
+    rawDecodingSettings.NRThreshold                = d->decodingSettingsBox->NRThreshold();
+    rawDecodingSettings.enableCACorrection         = d->decodingSettingsBox->useCACorrection();
+    rawDecodingSettings.caMultiplier[0]            = d->decodingSettingsBox->caRedMultiplier();
+    rawDecodingSettings.caMultiplier[1]            = d->decodingSettingsBox->caBlueMultiplier();
+    rawDecodingSettings.RAWQuality                 = d->decodingSettingsBox->quality();
+    rawDecodingSettings.outputColorSpace           = d->decodingSettingsBox->outputColorSpace();
+    rawDecodingSettings.enableColorMultipliers     = d->decodingSettingsBox->useColorMultipliers();
+    rawDecodingSettings.colorBalanceMultipliers[0] = d->decodingSettingsBox->colorMultiplier1();
+    rawDecodingSettings.colorBalanceMultipliers[1] = d->decodingSettingsBox->colorMultiplier2();
+    rawDecodingSettings.colorBalanceMultipliers[2] = d->decodingSettingsBox->colorMultiplier3();
+    rawDecodingSettings.colorBalanceMultipliers[3] = d->decodingSettingsBox->colorMultiplier4();
     
-    m_thread->setRawDecodingSettings(rawDecodingSettings, SaveSettingsWidget::OUTPUT_PNG);
-    m_thread->processHalfRawFile(KUrl(m_inputFile));
-    if (!m_thread->isRunning())
-        m_thread->start();
+    d->thread->setRawDecodingSettings(rawDecodingSettings, SaveSettingsWidget::OUTPUT_PNG);
+    d->thread->processHalfRawFile(KUrl(d->inputFile));
+    if (!d->thread->isRunning())
+        d->thread->start();
 }
 
 // 'Convert' dialog button.
 void SingleDialog::slotUser2()
 {
     KDcrawIface::RawDecodingSettings rawDecodingSettings;
-    rawDecodingSettings.sixteenBitsImage           = m_decodingSettingsBox->sixteenBits();
-    rawDecodingSettings.cameraColorBalance         = m_decodingSettingsBox->useCameraWB();
-    rawDecodingSettings.automaticColorBalance      = m_decodingSettingsBox->useAutoColorBalance();
-    rawDecodingSettings.RGBInterpolate4Colors      = m_decodingSettingsBox->useFourColor();
-    rawDecodingSettings.unclipColors               = m_decodingSettingsBox->unclipColor();
-    rawDecodingSettings.DontStretchPixels          = m_decodingSettingsBox->useDontStretchPixels();
-    rawDecodingSettings.enableNoiseReduction       = m_decodingSettingsBox->useNoiseReduction();
-    rawDecodingSettings.brightness                 = m_decodingSettingsBox->brightness();
-    rawDecodingSettings.enableBlackPoint           = m_decodingSettingsBox->useBlackPoint();
-    rawDecodingSettings.blackPoint                 = m_decodingSettingsBox->blackPoint();
-    rawDecodingSettings.NRThreshold                = m_decodingSettingsBox->NRThreshold();
-    rawDecodingSettings.enableCACorrection         = m_decodingSettingsBox->useCACorrection();
-    rawDecodingSettings.caMultiplier[0]            = m_decodingSettingsBox->caRedMultiplier();
-    rawDecodingSettings.caMultiplier[1]            = m_decodingSettingsBox->caBlueMultiplier();
-    rawDecodingSettings.RAWQuality                 = m_decodingSettingsBox->quality();
-    rawDecodingSettings.outputColorSpace           = m_decodingSettingsBox->outputColorSpace();
-    rawDecodingSettings.enableColorMultipliers     = m_decodingSettingsBox->useColorMultipliers();
-    rawDecodingSettings.colorBalanceMultipliers[0] = m_decodingSettingsBox->colorMultiplier1();
-    rawDecodingSettings.colorBalanceMultipliers[1] = m_decodingSettingsBox->colorMultiplier2();
-    rawDecodingSettings.colorBalanceMultipliers[2] = m_decodingSettingsBox->colorMultiplier3();
-    rawDecodingSettings.colorBalanceMultipliers[3] = m_decodingSettingsBox->colorMultiplier4();
+    rawDecodingSettings.sixteenBitsImage           = d->decodingSettingsBox->sixteenBits();
+    rawDecodingSettings.cameraColorBalance         = d->decodingSettingsBox->useCameraWB();
+    rawDecodingSettings.automaticColorBalance      = d->decodingSettingsBox->useAutoColorBalance();
+    rawDecodingSettings.RGBInterpolate4Colors      = d->decodingSettingsBox->useFourColor();
+    rawDecodingSettings.unclipColors               = d->decodingSettingsBox->unclipColor();
+    rawDecodingSettings.DontStretchPixels          = d->decodingSettingsBox->useDontStretchPixels();
+    rawDecodingSettings.enableNoiseReduction       = d->decodingSettingsBox->useNoiseReduction();
+    rawDecodingSettings.brightness                 = d->decodingSettingsBox->brightness();
+    rawDecodingSettings.enableBlackPoint           = d->decodingSettingsBox->useBlackPoint();
+    rawDecodingSettings.blackPoint                 = d->decodingSettingsBox->blackPoint();
+    rawDecodingSettings.NRThreshold                = d->decodingSettingsBox->NRThreshold();
+    rawDecodingSettings.enableCACorrection         = d->decodingSettingsBox->useCACorrection();
+    rawDecodingSettings.caMultiplier[0]            = d->decodingSettingsBox->caRedMultiplier();
+    rawDecodingSettings.caMultiplier[1]            = d->decodingSettingsBox->caBlueMultiplier();
+    rawDecodingSettings.RAWQuality                 = d->decodingSettingsBox->quality();
+    rawDecodingSettings.outputColorSpace           = d->decodingSettingsBox->outputColorSpace();
+    rawDecodingSettings.enableColorMultipliers     = d->decodingSettingsBox->useColorMultipliers();
+    rawDecodingSettings.colorBalanceMultipliers[0] = d->decodingSettingsBox->colorMultiplier1();
+    rawDecodingSettings.colorBalanceMultipliers[1] = d->decodingSettingsBox->colorMultiplier2();
+    rawDecodingSettings.colorBalanceMultipliers[2] = d->decodingSettingsBox->colorMultiplier3();
+    rawDecodingSettings.colorBalanceMultipliers[3] = d->decodingSettingsBox->colorMultiplier4();
 
-    m_thread->setRawDecodingSettings(rawDecodingSettings, m_saveSettingsBox->fileFormat());
-    m_thread->processRawFile(KUrl(m_inputFile));
-    if (!m_thread->isRunning())
-        m_thread->start();
+    d->thread->setRawDecodingSettings(rawDecodingSettings, d->saveSettingsBox->fileFormat());
+    d->thread->processRawFile(KUrl(d->inputFile));
+    if (!d->thread->isRunning())
+        d->thread->start();
 }
 
 // 'Abort' dialog button.
 void SingleDialog::slotUser3()
 {
-    m_thread->cancel();
+    d->thread->cancel();
 }
 
 void SingleDialog::slotIdentify()
 {
-    m_thread->identifyRawFile(KUrl(m_inputFile), true);
-    if (!m_thread->isRunning())
-        m_thread->start();
+    d->thread->identifyRawFile(KUrl(d->inputFile), true);
+    if (!d->thread->isRunning())
+        d->thread->start();
 }
 
 void SingleDialog::busy(bool val)
 {   
-    m_decodingSettingsBox->setEnabled(!val);
-    m_saveSettingsBox->setEnabled(!val);
+    d->decodingSettingsBox->setEnabled(!val);
+    d->saveSettingsBox->setEnabled(!val);
     enableButton(User1, !val);
     enableButton(User2, !val);
     enableButton(User3, val);
@@ -401,47 +440,47 @@ void SingleDialog::busy(bool val)
 
 void SingleDialog::identified(const QString&, const QString& identity, const QPixmap& preview)
 {
-    m_previewWidget->setInfo(m_inputFileName + QString(" :\n") + identity, Qt::white, preview);
+    d->previewWidget->setInfo(d->inputFileName + QString(" :\n") + identity, Qt::white, preview);
 }
 
 void SingleDialog::previewing(const QString&)
 {
-    m_previewBlink = false;
-    m_previewWidget->setCursor( Qt::WaitCursor );
-    m_blinkPreviewTimer->start(200);
+    d->previewBlink = false;
+    d->previewWidget->setCursor( Qt::WaitCursor );
+    d->blinkPreviewTimer->start(200);
 }
 
 void SingleDialog::previewed(const QString&, const QString& tmpFile)
 {
-    m_previewWidget->unsetCursor();
-    m_blinkPreviewTimer->stop();
-    m_previewWidget->load(tmpFile);
+    d->previewWidget->unsetCursor();
+    d->blinkPreviewTimer->stop();
+    d->previewWidget->load(tmpFile);
     ::remove(QFile::encodeName(tmpFile));
 }
 
 void SingleDialog::previewFailed(const QString&)
 {
-    m_previewWidget->unsetCursor();
-    m_blinkPreviewTimer->stop();
-    m_previewWidget->setInfo(i18n("Failed to generate preview"), Qt::red);
+    d->previewWidget->unsetCursor();
+    d->blinkPreviewTimer->stop();
+    d->previewWidget->setInfo(i18n("Failed to generate preview"), Qt::red);
 }
 
 void SingleDialog::processing(const QString&)
 {
-    m_convertBlink = false;
-    m_previewWidget->setCursor( Qt::WaitCursor );
-    m_blinkConvertTimer->start(200);
+    d->convertBlink = false;
+    d->previewWidget->setCursor( Qt::WaitCursor );
+    d->blinkConvertTimer->start(200);
 }
 
 void SingleDialog::processed(const QString&, const QString& tmpFile)
 {
-    m_previewWidget->unsetCursor();
-    m_blinkConvertTimer->stop();
-    m_previewWidget->load(tmpFile);
+    d->previewWidget->unsetCursor();
+    d->blinkConvertTimer->stop();
+    d->previewWidget->load(tmpFile);
     QString filter("*.");
     QString ext;
 
-    switch(m_saveSettingsBox->fileFormat())
+    switch(d->saveSettingsBox->fileFormat())
     {
         case SaveSettingsWidget::OUTPUT_JPEG:
             ext = "jpg";
@@ -458,10 +497,10 @@ void SingleDialog::processed(const QString&, const QString& tmpFile)
     }
 
     filter += ext;
-    QFileInfo fi(m_inputFile);
+    QFileInfo fi(d->inputFile);
     QString destFile = fi.absolutePath() + QString("/") + fi.baseName() + QString(".") + ext;
 
-    if (m_saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
+    if (d->saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
     {
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0) 
@@ -500,35 +539,35 @@ void SingleDialog::processed(const QString&, const QString& tmpFile)
 
 void SingleDialog::processingFailed(const QString&)
 {
-    m_previewWidget->unsetCursor();
-    m_blinkConvertTimer->stop();
-    m_previewWidget->setInfo(i18n("Failed to convert Raw image"), Qt::red);
+    d->previewWidget->unsetCursor();
+    d->blinkConvertTimer->stop();
+    d->previewWidget->setInfo(i18n("Failed to convert Raw image"), Qt::red);
 }
 
 void SingleDialog::slotPreviewBlinkTimerDone()
 {
     QString preview = i18n("Generating Preview...");
 
-    if (m_previewBlink)
-        m_previewWidget->setInfo(preview, Qt::green);
+    if (d->previewBlink)
+        d->previewWidget->setInfo(preview, Qt::green);
     else
-        m_previewWidget->setInfo(preview, Qt::darkGreen);
+        d->previewWidget->setInfo(preview, Qt::darkGreen);
 
-    m_previewBlink = !m_previewBlink;
-    m_blinkPreviewTimer->start(200);
+    d->previewBlink = !d->previewBlink;
+    d->blinkPreviewTimer->start(200);
 }
 
 void SingleDialog::slotConvertBlinkTimerDone()
 {
     QString convert = i18n("Converting Raw Image...");
 
-    if (m_convertBlink)
-        m_previewWidget->setInfo(convert, Qt::green);
+    if (d->convertBlink)
+        d->previewWidget->setInfo(convert, Qt::green);
     else
-        m_previewWidget->setInfo(convert, Qt::darkGreen);
+        d->previewWidget->setInfo(convert, Qt::darkGreen);
 
-    m_convertBlink = !m_convertBlink;
-    m_blinkConvertTimer->start(200);
+    d->convertBlink = !d->convertBlink;
+    d->blinkConvertTimer->start(200);
 }
 
 void SingleDialog::customEvent(QEvent *event)

@@ -38,19 +38,11 @@
 
 class QCloseEvent;
 class QEvent;
-class QTimer;
-
-namespace KDcrawIface
-{
-class DcrawSettingsWidget;
-}
 
 namespace KIPIRawConverterPlugin
 {
 
-class PreviewWidget;
-class ActionThread;
-class SaveSettingsWidget;
+class SingleDialogPriv;
 
 class SingleDialog : public KDialog
 {
@@ -99,24 +91,7 @@ private slots:
     
 private:
 
-    bool                              m_previewBlink;
-    bool                              m_convertBlink;
-
-    QString                           m_inputFile;
-    QString                           m_inputFileName;
-    
-    QTimer                           *m_blinkPreviewTimer;
-    QTimer                           *m_blinkConvertTimer;
-
-    PreviewWidget                    *m_previewWidget;
-
-    ActionThread                     *m_thread;
-
-    SaveSettingsWidget               *m_saveSettingsBox;
-
-    KDcrawIface::DcrawSettingsWidget *m_decodingSettingsBox;
-
-    KIPIPlugins::KPAboutData         *m_about; 
+    SingleDialogPriv* d;
 };
 
 } // NameSpace KIPIRawConverterPlugin
