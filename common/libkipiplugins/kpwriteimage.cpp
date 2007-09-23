@@ -144,10 +144,8 @@ void KPWriteImage::setImageData(const QByteArray& data, uint width, uint height,
 
 bool KPWriteImage::write2JPEG(const QString& destPath)
 {
-    FILE* f = 0;
-    f = fopen(QFile::encodeName(destPath), "wb");
-
-    if (!f) 
+    FILE* file = fopen(QFile::encodeName(destPath), "wb");
+    if (!file) 
     {
         qDebug("Failed to open JPEG file for writing");
         return false;
@@ -159,7 +157,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     // Init JPEG compressor.    
     cinfo.err = jpeg_std_error(&jerr);
     jpeg_create_compress(&cinfo);
-    jpeg_stdio_dest(&cinfo, f);
+    jpeg_stdio_dest(&cinfo, file);
     cinfo.image_width      = d->width;
     cinfo.image_height     = d->height;
     cinfo.input_components = 3;
@@ -191,11 +189,19 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     {
         uchar* srcPtr = (uchar*)d->data.data();
 
-        for (uint j=0; !cancel() && (j < d->height); j++)
+        for (uint j=0; j < d->height; j++)
         {
+            if (cancel())
+            {
+                delete [] line;
+                jpeg_destroy_compress(&cinfo);
+                fclose(file);
+                return false;
+            }
+
             dstPtr = line;
             
-            for (uint i = 0; !cancel() && (i < d->width); i++)
+            for (uint i = 0; i < d->width; i++)
             {
                 dstPtr[2] = srcPtr[0];  // Blue
                 dstPtr[1] = srcPtr[1];  // Green
@@ -212,11 +218,19 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     {
         unsigned short* srcPtr = (unsigned short*)d->data.data();
 
-        for (uint j=0; !cancel() && (j < d->height); j++)
+        for (uint j=0; j < d->height; j++)
         {
+            if (cancel())
+            {
+                delete [] line;
+                jpeg_destroy_compress(&cinfo);
+                fclose(file);
+                return false;
+            }
+
             dstPtr = line;
             
-            for (uint i = 0; !cancel() && (i < d->width); i++)
+            for (uint i = 0; i < d->width; i++)
             {
                 dstPtr[2] = (srcPtr[0] * 255UL)/65535UL;    // Blue
                 dstPtr[1] = (srcPtr[1] * 255UL)/65535UL;    // Green
@@ -234,7 +248,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
 
     jpeg_finish_compress(&cinfo);
     jpeg_destroy_compress(&cinfo);
-    fclose(f);
+    fclose(file);
 
     d->metadata.save(destPath);
 
@@ -243,14 +257,14 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
 
 bool KPWriteImage::write2PPM(const QString& destPath)
 {
-    FILE* f = fopen(QFile::encodeName(destPath), "wb");
-    if (!f) 
+    FILE* file = fopen(QFile::encodeName(destPath), "wb");
+    if (!file) 
     {
         qDebug("Failed to open ppm file for writing");
         return false;
     }
 
-    fprintf(f, "P6\n%d %d\n255\n", d->width, d->height);
+    fprintf(file, "P6\n%d %d\n255\n", d->width, d->height);
 
     // Write image data
     uchar* line   = new uchar[d->width*3];
@@ -260,11 +274,18 @@ bool KPWriteImage::write2PPM(const QString& destPath)
     {
         uchar* srcPtr = (uchar*)d->data.data();
 
-        for (uint j=0; !cancel() && (j < d->height); j++)
+        for (uint j=0; j < d->height; j++)
         {
+            if (cancel())
+            {
+                delete [] line;
+                fclose(file);
+                return false;
+            }
+
             dstPtr = line;
             
-            for (uint i = 0; !cancel() && (i < d->width); i++)
+            for (uint i = 0; i < d->width; i++)
             {
                 dstPtr[2] = srcPtr[0];  // Blue
                 dstPtr[1] = srcPtr[1];  // Green
@@ -274,18 +295,25 @@ bool KPWriteImage::write2PPM(const QString& destPath)
                 dstPtr += 3;
             }
 
-            fwrite(line, 1, d->width*3, f);
+            fwrite(line, 1, d->width*3, file);
         }
     }
     else                    // 16 bits image
     {
         unsigned short* srcPtr = (unsigned short*)d->data.data();
 
-        for (uint j=0; !cancel() && (j < d->height); j++)
+        for (uint j=0; j < d->height; j++)
         {
+            if (cancel())
+            {
+                delete [] line;
+                fclose(file);
+                return false;
+            }
+
             dstPtr = line;
             
-            for (uint i = 0; !cancel() && (i < d->width); i++)
+            for (uint i = 0; i < d->width; i++)
             {
                 dstPtr[2] = (srcPtr[0] * 255UL)/65535UL;    // Blue
                 dstPtr[1] = (srcPtr[1] * 255UL)/65535UL;    // Green
@@ -295,22 +323,20 @@ bool KPWriteImage::write2PPM(const QString& destPath)
                 dstPtr += 3;
             }
     
-            fwrite(line, 1, d->width*3, f);
+            fwrite(line, 1, d->width*3, file);
         }
     }
 
     delete [] line;
+    fclose(file);
 
-    fclose(f);
     return true;
 }
 
 bool KPWriteImage::write2PNG(const QString& destPath)
 {
-    FILE* f = 0;
-    f = fopen(QFile::encodeName(destPath), "wb");
-
-    if (!f) 
+    FILE* file = fopen(QFile::encodeName(destPath), "wb");
+    if (!file) 
     {
         qDebug("Failed to open PNG file for writing");
         return false;
@@ -322,7 +348,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     png_bytep    row_ptr;
     png_structp  png_ptr    = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     png_infop    info_ptr   = png_create_info_struct(png_ptr);
-    png_init_io(png_ptr, f);
+    png_init_io(png_ptr, file);
 
     if (QSysInfo::ByteOrder == QSysInfo::LittleEndian)      // Intel
         png_set_bgr(png_ptr);
@@ -396,11 +422,20 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     uchar* ptr = (uchar*)d->data.data();
     uint   x, y, j;
 
-    for (y = 0; !cancel() && (y < d->height); y++)
+    for (y = 0; y < d->height; y++)
     {
+        if (cancel())
+        {
+            delete [] data;
+            fclose(file);
+            png_destroy_write_struct(&png_ptr, (png_infopp) & info_ptr);
+            png_destroy_info_struct(png_ptr, (png_infopp) & info_ptr);
+            return false;
+        }
+
         j = 0;
 
-        for (x = 0; !cancel() && (x < d->width*bytesDepth()); x+=bytesDepth())
+        for (x = 0; x < d->width*bytesDepth(); x+=bytesDepth())
         {
             if (d->sixteenBit)
             {
@@ -454,7 +489,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     png_write_end(png_ptr, info_ptr);
     png_destroy_write_struct(&png_ptr, (png_infopp) & info_ptr);
     png_destroy_info_struct(png_ptr, (png_infopp) & info_ptr);
-    fclose(f);
+    fclose(file);
 
     return true;
 }
@@ -565,11 +600,18 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
         return false;
     }
 
-    for (y = 0; !cancel() && (y < h); y++)
+    for (y = 0; y < h; y++)
     {
+        if (cancel())
+        {
+            _TIFFfree(buf);
+            TIFFClose(tif);
+            return false;
+        }
+
         i = 0;
 
-        for (x = 0; !cancel() && (x < w); x++)
+        for (x = 0; x < w; x++)
         {
             pixel = &data[((y * w) + x) * bytesDepth()];
 
@@ -672,11 +714,11 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
             return false;
         }
     
-        for (y = 0 ; !cancel() && (y < uint32(thumb.height())) ; y++)
+        for (y = 0 ; y < uint32(thumb.height()) ; y++)
         {
             i = 0;
     
-            for (x = 0 ; !cancel() && (x < uint32(thumb.width())) ; x++)
+            for (x = 0 ; x < uint32(thumb.width()) ; x++)
             {
                 pixelThumb = &dataThumb[((y * thumb.width()) + x) * 4];
     
