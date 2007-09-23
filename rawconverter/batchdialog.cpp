@@ -412,7 +412,7 @@ void BatchDialog::addItems(const QStringList& itemList)
 
     KUrl::List urlList;
 
-    QPixmap pix(SmallIcon("file_broken", K3Icon::SizeLarge, K3Icon::DisabledState ));
+    QPixmap pix(SmallIcon("file-broken", K3Icon::SizeLarge, K3Icon::DisabledState ));
     
     for (QStringList::const_iterator  it = itemList.begin();
          it != itemList.end(); ++it) 
@@ -508,12 +508,12 @@ void BatchDialog::slotConvertBlinkTimerDone()
     if(m_convertBlink)
     {
         if (m_currentConvertItem)
-            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("1rightarrow"));
+            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("arrow-right"));
     }
     else
     {
         if (m_currentConvertItem)
-            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("2rightarrow"));
+            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("arrow-right-double"));
     }
 
     m_convertBlink = !m_convertBlink;
@@ -556,7 +556,7 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
                 case KIO::R_SKIP:
                 {
                     destFile = QString();
-                    m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("cancel"));
+                    m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
                     break;
                 }
                 case KIO::R_RENAME:
@@ -575,13 +575,13 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));
-            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("cancel"));
+            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
         }
         else 
         {
             m_currentConvertItem->dest = QFileInfo(destFile).fileName();
             m_currentConvertItem->viewItem->setText(2, m_currentConvertItem->dest);
-            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("ok"));
+            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-ok"));
         }
     }
 
@@ -592,7 +592,7 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
 void BatchDialog::processingFailed(const QString& file)
 {
     QString filename = QFileInfo(file).fileName();
-    m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("no"));
+    m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
     m_progressBar->setValue(m_progressBar->value()+1);
     m_currentConvertItem = 0;
 }
@@ -685,4 +685,3 @@ void BatchDialog::customEvent(QEvent *event)
 }
 
 } // NameSpace KIPIRawConverterPlugin
-
