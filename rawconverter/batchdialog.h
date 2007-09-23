@@ -26,7 +26,6 @@
 
 // Qt includes.
 
-#include <Q3Dict>
 #include <QStringList>
 
 // KDE includes.
@@ -37,25 +36,13 @@
 
 #include "kpaboutdata.h"
 
-class QTimer;
-class QWidget;
 class QEvent;
 class QCloseEvent;
-class QProgressBar;
-
-class K3ListView;
-
-namespace KDcrawIface
-{
-class DcrawSettingsWidget;
-}
 
 namespace KIPIRawConverterPlugin
 {
 
-class  ActionThread;
-class  SaveSettingsWidget;
-struct RawItem;
+class BatchDialogPriv;
 
 class BatchDialog : public KDialog
 {
@@ -100,29 +87,7 @@ private slots:
 
 private:
 
-    bool                              m_convertBlink;
-
-    QTimer                           *m_blinkConvertTimer;
-
-    QWidget                          *m_page;
-
-    Q3Dict<RawItem>                   m_itemDict;
-
-    QStringList                       m_fileList;
-
-    QProgressBar                     *m_progressBar;
-
-    K3ListView                       *m_listView;
-
-    RawItem                          *m_currentConvertItem;
-
-    ActionThread                     *m_thread;
-
-    SaveSettingsWidget               *m_saveSettingsBox;
-
-    KDcrawIface::DcrawSettingsWidget *m_decodingSettingsBox;
-
-    KIPIPlugins::KPAboutData         *m_about;
+    BatchDialogPriv* d;
 };
 
 } // NameSpace KIPIRawConverterPlugin

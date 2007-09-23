@@ -36,6 +36,7 @@ extern "C"
 
 // Qt includes.
 
+#include <Q3Dict>
 #include <QTimer>
 #include <QFrame>
 #include <QLabel>
@@ -82,9 +83,53 @@ extern "C"
 namespace KIPIRawConverterPlugin
 {
 
+class BatchDialogPriv
+{
+public:
+
+    BatchDialogPriv()
+    {
+        convertBlink        = false;
+        blinkConvertTimer   = 0;
+        page                = 0;
+        progressBar         = 0;
+        listView            = 0;
+        currentConvertItem  = 0;
+        thread              = 0;
+        saveSettingsBox     = 0;
+        decodingSettingsBox = 0;
+        about               = 0;
+    }
+
+    bool                              convertBlink;
+
+    QTimer                           *blinkConvertTimer;
+
+    QWidget                          *page;
+
+    Q3Dict<RawItem>                   itemDict;
+
+    QStringList                       fileList;
+
+    QProgressBar                     *progressBar;
+
+    K3ListView                       *listView;
+
+    RawItem                          *currentConvertItem;
+
+    ActionThread                     *thread;
+
+    SaveSettingsWidget               *saveSettingsBox;
+
+    KDcrawIface::DcrawSettingsWidget *decodingSettingsBox;
+
+    KIPIPlugins::KPAboutData         *about;
+};
+
 BatchDialog::BatchDialog(QWidget* /*parent*/)
            : KDialog(0)
 {
+    d = new BatchDialogPriv;
     setButtons(Help | Default | User1 | User2 | Close);
     setDefaultButton(KDialog::Close);
     setButtonText(User1, i18n("Con&vert"));
@@ -92,40 +137,40 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     setCaption(i18n("Raw Images Batch Converter"));
     setModal(false);
 
-    m_currentConvertItem = 0;
-    m_thread             = 0;
+    d->currentConvertItem = 0;
+    d->thread             = 0;
 
-    m_page = new QWidget( this );
-    setMainWidget( m_page );
-    QGridLayout *mainLayout = new QGridLayout(m_page);
+    d->page = new QWidget( this );
+    setMainWidget( d->page );
+    QGridLayout *mainLayout = new QGridLayout(d->page);
 
     //---------------------------------------------
 
-    m_listView = new K3ListView(m_page);
-    m_listView->addColumn( i18n("Thumbnail") );
-    m_listView->addColumn( i18n("Raw File") );
-    m_listView->addColumn( i18n("Target File") );
-    m_listView->addColumn( i18n("Camera") );
-    m_listView->setResizeMode(Q3ListView::AllColumns);
-    m_listView->setAllColumnsShowFocus(true);
-    m_listView->setSorting(-1);
-    m_listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    m_listView->setSelectionMode(Q3ListView::Single);
-    m_listView->setMinimumWidth(450);
+    d->listView = new K3ListView(d->page);
+    d->listView->addColumn( i18n("Thumbnail") );
+    d->listView->addColumn( i18n("Raw File") );
+    d->listView->addColumn( i18n("Target File") );
+    d->listView->addColumn( i18n("Camera") );
+    d->listView->setResizeMode(Q3ListView::AllColumns);
+    d->listView->setAllColumnsShowFocus(true);
+    d->listView->setSorting(-1);
+    d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    d->listView->setSelectionMode(Q3ListView::Single);
+    d->listView->setMinimumWidth(450);
 
     // ---------------------------------------------------------------
 
-    m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(m_page, true, true, true);
-    m_saveSettingsBox     = new SaveSettingsWidget(m_page);
-    m_decodingSettingsBox->addTab(m_saveSettingsBox, i18n("Save settings"));
+    d->decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(d->page, true, true, true);
+    d->saveSettingsBox     = new SaveSettingsWidget(d->page);
+    d->decodingSettingsBox->addTab(d->saveSettingsBox, i18n("Save settings"));
 
-    m_progressBar = new QProgressBar(m_page);
-    m_progressBar->setMaximumHeight( fontMetrics().height()+2 );
-    m_progressBar->hide();
+    d->progressBar = new QProgressBar(d->page);
+    d->progressBar->setMaximumHeight( fontMetrics().height()+2 );
+    d->progressBar->hide();
 
-    mainLayout->addWidget(m_listView, 0, 0, 3, 1);
-    mainLayout->addWidget(m_decodingSettingsBox, 0, 1, 1, 1);
-    mainLayout->addWidget(m_progressBar, 1, 1, 1, 1);
+    mainLayout->addWidget(d->listView, 0, 0, 3, 1);
+    mainLayout->addWidget(d->decodingSettingsBox, 0, 1, 1, 1);
+    mainLayout->addWidget(d->progressBar, 1, 1, 1, 1);
     mainLayout->setColumnStretch(0, 10);
     mainLayout->setRowStretch(2, 10);
     mainLayout->setMargin(0);
@@ -134,18 +179,18 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
+    d->about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
                    QByteArray(),
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to batch convert Raw images"),
                    ki18n("(c) 2003-2005, Renchi Raju\n"
                          "(c) 2006-2007, Gilles Caulier"));
 
-    m_about->addAuthor(ki18n("Renchi Raju"), 
+    d->about->addAuthor(ki18n("Renchi Raju"), 
                        ki18n("Author"),
                              "renchi at pooh dot tam dot uiuc dot edu");
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), 
+    d->about->addAuthor(ki18n("Gilles Caulier"), 
                        ki18n("Developper and maintainer"),
                              "caulier dot gilles at gmail dot com");
 
@@ -153,7 +198,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
                this, SLOT(slotHelp()));
 
     KPushButton *helpButton = button( Help );
-    KHelpMenu* helpMenu     = new KHelpMenu(this, m_about, false);
+    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
     QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
@@ -167,19 +212,19 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     setButtonToolTip( User2, i18n("<p>Abort the current Raw files conversion"));
     setButtonToolTip( Close, i18n("<p>Exit Raw Converter"));
 
-    m_blinkConvertTimer = new QTimer(this);
-    m_thread            = new ActionThread(this);
+    d->blinkConvertTimer = new QTimer(this);
+    d->thread            = new ActionThread(this);
 
     // ---------------------------------------------------------------
 
-    connect(m_blinkConvertTimer, SIGNAL(timeout()),
+    connect(d->blinkConvertTimer, SIGNAL(timeout()),
             this, SLOT(slotConvertBlinkTimerDone()));
 
-    connect(m_saveSettingsBox, SIGNAL(signalSaveFormatChanged()),
+    connect(d->saveSettingsBox, SIGNAL(signalSaveFormatChanged()),
             this, SLOT(slotSaveFormatChanged()));
 
-    connect(m_decodingSettingsBox, SIGNAL(signalSixteenBitsImageToggled(bool)),
-            m_saveSettingsBox, SLOT(slotPopulateImageFormat(bool)));
+    connect(d->decodingSettingsBox, SIGNAL(signalSixteenBitsImageToggled(bool)),
+            d->saveSettingsBox, SLOT(slotPopulateImageFormat(bool)));
 
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
@@ -195,15 +240,16 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
 
     // ---------------------------------------------------------------
 
-    m_itemDict.setAutoDelete(true);
+    d->itemDict.setAutoDelete(true);
     busy(false);
     readSettings();
 }
 
 BatchDialog::~BatchDialog()
 {
-    delete m_about;
-    delete m_thread;
+    delete d->about;
+    delete d->thread;
+    delete d;
 }
 
 void BatchDialog::slotHelp()
@@ -214,24 +260,24 @@ void BatchDialog::slotHelp()
 void BatchDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
-    m_blinkConvertTimer->stop();
-    m_thread->cancel();
+    d->blinkConvertTimer->stop();
+    d->thread->cancel();
     saveSettings();
     e->accept();
 }
 
 void BatchDialog::slotClose()
 {
-    m_blinkConvertTimer->stop();
-    m_thread->cancel();
+    d->blinkConvertTimer->stop();
+    d->thread->cancel();
     saveSettings();
     done(Close);
 }
 
 void BatchDialog::slotDefault()
 {
-    m_decodingSettingsBox->setDefaultSettings();
-    m_saveSettingsBox->setDefaultSettings();
+    d->decodingSettingsBox->setDefaultSettings();
+    d->saveSettingsBox->setDefaultSettings();
 }
 
 void BatchDialog::readSettings()
@@ -239,43 +285,43 @@ void BatchDialog::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("RawConverter Settings"));
 
-    m_decodingSettingsBox->setSixteenBits(group.readEntry("Sixteen Bits", false));
-    m_decodingSettingsBox->setCameraWB(group.readEntry("Use Camera WB", true));
-    m_decodingSettingsBox->setAutoColorBalance(group.readEntry("Use Auto Color Balance", true));
-    m_decodingSettingsBox->setFourColor(group.readEntry("Four Color RGB", false));
-    m_decodingSettingsBox->setUnclipColor(group.readEntry("Unclip Color", 0));
-    m_decodingSettingsBox->setDontStretchPixels(group.readEntry("Dont Stretch Pixels", false));
-    m_decodingSettingsBox->setNoiseReduction(group.readEntry("Use Noise Reduction", false));
-    m_decodingSettingsBox->setBrightness(group.readEntry("Brightness Multiplier", 1.0));
-    m_decodingSettingsBox->setUseBlackPoint(group.readEntry("Use Black Point", false));
-    m_decodingSettingsBox->setBlackPoint(group.readEntry("Black Point", 0));
-    m_decodingSettingsBox->setNRThreshold(group.readEntry("NR Threshold", 100));
-    m_decodingSettingsBox->setUseCACorrection(group.readEntry("EnableCACorrection", false));
-    m_decodingSettingsBox->setcaRedMultiplier(group.readEntry("caRedMultiplier", 1.0));
-    m_decodingSettingsBox->setcaBlueMultiplier(group.readEntry("caBlueMultiplier", 1.0));
-    m_decodingSettingsBox->setUseColorMultipliers(group.readEntry("Use Color Multipliers", false));
-    m_decodingSettingsBox->setcolorMultiplier1(group.readEntry("Color Multiplier1", 1.0));
-    m_decodingSettingsBox->setcolorMultiplier2(group.readEntry("Color Multiplier2", 1.0));
-    m_decodingSettingsBox->setcolorMultiplier3(group.readEntry("Color Multiplier3", 1.0));
-    m_decodingSettingsBox->setcolorMultiplier4(group.readEntry("Color Multiplier4", 1.0));
+    d->decodingSettingsBox->setSixteenBits(group.readEntry("Sixteen Bits", false));
+    d->decodingSettingsBox->setCameraWB(group.readEntry("Use Camera WB", true));
+    d->decodingSettingsBox->setAutoColorBalance(group.readEntry("Use Auto Color Balance", true));
+    d->decodingSettingsBox->setFourColor(group.readEntry("Four Color RGB", false));
+    d->decodingSettingsBox->setUnclipColor(group.readEntry("Unclip Color", 0));
+    d->decodingSettingsBox->setDontStretchPixels(group.readEntry("Dont Stretch Pixels", false));
+    d->decodingSettingsBox->setNoiseReduction(group.readEntry("Use Noise Reduction", false));
+    d->decodingSettingsBox->setBrightness(group.readEntry("Brightness Multiplier", 1.0));
+    d->decodingSettingsBox->setUseBlackPoint(group.readEntry("Use Black Point", false));
+    d->decodingSettingsBox->setBlackPoint(group.readEntry("Black Point", 0));
+    d->decodingSettingsBox->setNRThreshold(group.readEntry("NR Threshold", 100));
+    d->decodingSettingsBox->setUseCACorrection(group.readEntry("EnableCACorrection", false));
+    d->decodingSettingsBox->setcaRedMultiplier(group.readEntry("caRedMultiplier", 1.0));
+    d->decodingSettingsBox->setcaBlueMultiplier(group.readEntry("caBlueMultiplier", 1.0));
+    d->decodingSettingsBox->setUseColorMultipliers(group.readEntry("Use Color Multipliers", false));
+    d->decodingSettingsBox->setcolorMultiplier1(group.readEntry("Color Multiplier1", 1.0));
+    d->decodingSettingsBox->setcolorMultiplier2(group.readEntry("Color Multiplier2", 1.0));
+    d->decodingSettingsBox->setcolorMultiplier3(group.readEntry("Color Multiplier3", 1.0));
+    d->decodingSettingsBox->setcolorMultiplier4(group.readEntry("Color Multiplier4", 1.0));
 
-    m_decodingSettingsBox->setQuality(
+    d->decodingSettingsBox->setQuality(
         (KDcrawIface::RawDecodingSettings::DecodingQuality)group.readEntry("Decoding Quality", 
             (int)(KDcrawIface::RawDecodingSettings::BILINEAR))); 
 
-    m_decodingSettingsBox->setOutputColorSpace(
+    d->decodingSettingsBox->setOutputColorSpace(
         (KDcrawIface::RawDecodingSettings::OutputColorSpace)group.readEntry("Output Color Space", 
             (int)(KDcrawIface::RawDecodingSettings::SRGB))); 
 
-    m_saveSettingsBox->setFileFormat(
+    d->saveSettingsBox->setFileFormat(
         (SaveSettingsWidget::OutputFormat)group.readEntry("Output Format", 
             (int)(SaveSettingsWidget::OUTPUT_PNG))); 
 
-    m_saveSettingsBox->setConflictRule(
+    d->saveSettingsBox->setConflictRule(
         (SaveSettingsWidget::ConflictRule)group.readEntry("Conflict",
             (int)(SaveSettingsWidget::OVERWRITE)));
 
-    m_saveSettingsBox->slotPopulateImageFormat(m_decodingSettingsBox->sixteenBits());
+    d->saveSettingsBox->slotPopulateImageFormat(d->decodingSettingsBox->sixteenBits());
 
     KConfigGroup group2 = config.group(QString("Batch Raw Converter Dialog"));
     restoreDialogSize(group2);
@@ -286,30 +332,30 @@ void BatchDialog::saveSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("RawConverter Settings"));
 
-    group.writeEntry("Sixteen Bits", m_decodingSettingsBox->sixteenBits());
-    group.writeEntry("Use Camera WB", m_decodingSettingsBox->useCameraWB());
-    group.writeEntry("Use Auto Color Balance", m_decodingSettingsBox->useAutoColorBalance());
-    group.writeEntry("Four Color RGB", m_decodingSettingsBox->useFourColor());
-    group.writeEntry("Unclip Color", m_decodingSettingsBox->unclipColor());
-    group.writeEntry("Dont Stretch Pixels", m_decodingSettingsBox->useDontStretchPixels());
-    group.writeEntry("Use Noise Reduction", m_decodingSettingsBox->useNoiseReduction());
-    group.writeEntry("Brightness Multiplier", m_decodingSettingsBox->brightness());
-    group.writeEntry("Use Black Point", m_decodingSettingsBox->useBlackPoint());
-    group.writeEntry("Black Point", m_decodingSettingsBox->blackPoint());
-    group.writeEntry("NR Threshold", m_decodingSettingsBox->NRThreshold());
-    group.writeEntry("EnableCACorrection", m_decodingSettingsBox->useCACorrection());
-    group.writeEntry("caRedMultiplier", m_decodingSettingsBox->caRedMultiplier());
-    group.writeEntry("caBlueMultiplier", m_decodingSettingsBox->caBlueMultiplier());
-    group.writeEntry("Decoding Quality", (int)m_decodingSettingsBox->quality());
-    group.writeEntry("Output Color Space", (int)m_decodingSettingsBox->outputColorSpace());
-    group.writeEntry("Use Color Multipliers", m_decodingSettingsBox->useColorMultipliers());
-    group.writeEntry("Color Multiplier1", m_decodingSettingsBox->colorMultiplier1());
-    group.writeEntry("Color Multiplier2", m_decodingSettingsBox->colorMultiplier2());
-    group.writeEntry("Color Multiplier3", m_decodingSettingsBox->colorMultiplier3());
-    group.writeEntry("Color Multiplier4", m_decodingSettingsBox->colorMultiplier4());
+    group.writeEntry("Sixteen Bits", d->decodingSettingsBox->sixteenBits());
+    group.writeEntry("Use Camera WB", d->decodingSettingsBox->useCameraWB());
+    group.writeEntry("Use Auto Color Balance", d->decodingSettingsBox->useAutoColorBalance());
+    group.writeEntry("Four Color RGB", d->decodingSettingsBox->useFourColor());
+    group.writeEntry("Unclip Color", d->decodingSettingsBox->unclipColor());
+    group.writeEntry("Dont Stretch Pixels", d->decodingSettingsBox->useDontStretchPixels());
+    group.writeEntry("Use Noise Reduction", d->decodingSettingsBox->useNoiseReduction());
+    group.writeEntry("Brightness Multiplier", d->decodingSettingsBox->brightness());
+    group.writeEntry("Use Black Point", d->decodingSettingsBox->useBlackPoint());
+    group.writeEntry("Black Point", d->decodingSettingsBox->blackPoint());
+    group.writeEntry("NR Threshold", d->decodingSettingsBox->NRThreshold());
+    group.writeEntry("EnableCACorrection", d->decodingSettingsBox->useCACorrection());
+    group.writeEntry("caRedMultiplier", d->decodingSettingsBox->caRedMultiplier());
+    group.writeEntry("caBlueMultiplier", d->decodingSettingsBox->caBlueMultiplier());
+    group.writeEntry("Decoding Quality", (int)d->decodingSettingsBox->quality());
+    group.writeEntry("Output Color Space", (int)d->decodingSettingsBox->outputColorSpace());
+    group.writeEntry("Use Color Multipliers", d->decodingSettingsBox->useColorMultipliers());
+    group.writeEntry("Color Multiplier1", d->decodingSettingsBox->colorMultiplier1());
+    group.writeEntry("Color Multiplier2", d->decodingSettingsBox->colorMultiplier2());
+    group.writeEntry("Color Multiplier3", d->decodingSettingsBox->colorMultiplier3());
+    group.writeEntry("Color Multiplier4", d->decodingSettingsBox->colorMultiplier4());
 
-    group.writeEntry("Output Format", (int)m_saveSettingsBox->fileFormat());
-    group.writeEntry("Conflict", (int)m_saveSettingsBox->conflictRule());
+    group.writeEntry("Output Format", (int)d->saveSettingsBox->fileFormat());
+    group.writeEntry("Conflict", (int)d->saveSettingsBox->conflictRule());
 
     KConfigGroup group2 = config.group(QString("Batch Raw Converter Dialog"));
     saveDialogSize(group2);
@@ -318,21 +364,21 @@ void BatchDialog::saveSettings()
 
 void BatchDialog::slotUser1()
 {
-    m_fileList.clear();
+    d->fileList.clear();
 
-    Q3ListViewItemIterator it( m_listView );
+    Q3ListViewItemIterator it( d->listView );
     while ( it.current() ) 
     {
         CListViewItem *item = (CListViewItem*) it.current();
         if (item->isEnabled())
         {
             item->setPixmap(1, 0);
-            m_fileList.append(item->rawItem->directory + QString("/") + item->rawItem->src);
+            d->fileList.append(item->rawItem->directory + QString("/") + item->rawItem->src);
         }
         ++it;
     }
 
-    if (m_fileList.empty()) 
+    if (d->fileList.empty()) 
     {
         KMessageBox::error(this, i18n("There is no Raw file to process in the list!"));
         busy(false);
@@ -340,61 +386,61 @@ void BatchDialog::slotUser1()
         return;
     }
 
-    m_progressBar->setMaximum(m_fileList.count());
-    m_progressBar->setValue(0);
-    m_progressBar->show();
+    d->progressBar->setMaximum(d->fileList.count());
+    d->progressBar->setValue(0);
+    d->progressBar->show();
 
     KDcrawIface::RawDecodingSettings rawDecodingSettings;
-    rawDecodingSettings.sixteenBitsImage           = m_decodingSettingsBox->sixteenBits();
-    rawDecodingSettings.cameraColorBalance         = m_decodingSettingsBox->useCameraWB();
-    rawDecodingSettings.automaticColorBalance      = m_decodingSettingsBox->useAutoColorBalance();
-    rawDecodingSettings.RGBInterpolate4Colors      = m_decodingSettingsBox->useFourColor();
-    rawDecodingSettings.unclipColors               = m_decodingSettingsBox->unclipColor();
-    rawDecodingSettings.DontStretchPixels          = m_decodingSettingsBox->useDontStretchPixels();
-    rawDecodingSettings.enableNoiseReduction       = m_decodingSettingsBox->useNoiseReduction();
-    rawDecodingSettings.brightness                 = m_decodingSettingsBox->brightness();
-    rawDecodingSettings.enableBlackPoint           = m_decodingSettingsBox->useBlackPoint();
-    rawDecodingSettings.blackPoint                 = m_decodingSettingsBox->blackPoint();
-    rawDecodingSettings.NRThreshold                = m_decodingSettingsBox->NRThreshold();
-    rawDecodingSettings.enableCACorrection         = m_decodingSettingsBox->useCACorrection();
-    rawDecodingSettings.caMultiplier[0]            = m_decodingSettingsBox->caRedMultiplier();
-    rawDecodingSettings.caMultiplier[1]            = m_decodingSettingsBox->caBlueMultiplier();
-    rawDecodingSettings.RAWQuality                 = m_decodingSettingsBox->quality();
-    rawDecodingSettings.outputColorSpace           = m_decodingSettingsBox->outputColorSpace();
-    rawDecodingSettings.enableColorMultipliers     = m_decodingSettingsBox->useColorMultipliers();
-    rawDecodingSettings.colorBalanceMultipliers[0] = m_decodingSettingsBox->colorMultiplier1();
-    rawDecodingSettings.colorBalanceMultipliers[1] = m_decodingSettingsBox->colorMultiplier2();
-    rawDecodingSettings.colorBalanceMultipliers[2] = m_decodingSettingsBox->colorMultiplier3();
-    rawDecodingSettings.colorBalanceMultipliers[3] = m_decodingSettingsBox->colorMultiplier4();
+    rawDecodingSettings.sixteenBitsImage           = d->decodingSettingsBox->sixteenBits();
+    rawDecodingSettings.cameraColorBalance         = d->decodingSettingsBox->useCameraWB();
+    rawDecodingSettings.automaticColorBalance      = d->decodingSettingsBox->useAutoColorBalance();
+    rawDecodingSettings.RGBInterpolate4Colors      = d->decodingSettingsBox->useFourColor();
+    rawDecodingSettings.unclipColors               = d->decodingSettingsBox->unclipColor();
+    rawDecodingSettings.DontStretchPixels          = d->decodingSettingsBox->useDontStretchPixels();
+    rawDecodingSettings.enableNoiseReduction       = d->decodingSettingsBox->useNoiseReduction();
+    rawDecodingSettings.brightness                 = d->decodingSettingsBox->brightness();
+    rawDecodingSettings.enableBlackPoint           = d->decodingSettingsBox->useBlackPoint();
+    rawDecodingSettings.blackPoint                 = d->decodingSettingsBox->blackPoint();
+    rawDecodingSettings.NRThreshold                = d->decodingSettingsBox->NRThreshold();
+    rawDecodingSettings.enableCACorrection         = d->decodingSettingsBox->useCACorrection();
+    rawDecodingSettings.caMultiplier[0]            = d->decodingSettingsBox->caRedMultiplier();
+    rawDecodingSettings.caMultiplier[1]            = d->decodingSettingsBox->caBlueMultiplier();
+    rawDecodingSettings.RAWQuality                 = d->decodingSettingsBox->quality();
+    rawDecodingSettings.outputColorSpace           = d->decodingSettingsBox->outputColorSpace();
+    rawDecodingSettings.enableColorMultipliers     = d->decodingSettingsBox->useColorMultipliers();
+    rawDecodingSettings.colorBalanceMultipliers[0] = d->decodingSettingsBox->colorMultiplier1();
+    rawDecodingSettings.colorBalanceMultipliers[1] = d->decodingSettingsBox->colorMultiplier2();
+    rawDecodingSettings.colorBalanceMultipliers[2] = d->decodingSettingsBox->colorMultiplier3();
+    rawDecodingSettings.colorBalanceMultipliers[3] = d->decodingSettingsBox->colorMultiplier4();
 
-    m_thread->setRawDecodingSettings(rawDecodingSettings, m_saveSettingsBox->fileFormat());
+    d->thread->setRawDecodingSettings(rawDecodingSettings, d->saveSettingsBox->fileFormat());
     processOne();
 }
 
 void BatchDialog::slotUser2()
 {
-    m_blinkConvertTimer->stop();
-    m_fileList.clear();
-    m_thread->cancel();
+    d->blinkConvertTimer->stop();
+    d->fileList.clear();
+    d->thread->cancel();
     busy(false);
 
-    if (m_currentConvertItem)
-        m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
+    if (d->currentConvertItem)
+        d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
 
     QTimer::singleShot(500, this, SLOT(slotAborted()));
 }
 
 void BatchDialog::slotAborted()
 {
-    m_progressBar->setValue(0);
-    m_progressBar->hide();
+    d->progressBar->setValue(0);
+    d->progressBar->hide();
 }
 
 void BatchDialog::addItems(const QStringList& itemList)
 {
     QString ext;
 
-    switch(m_saveSettingsBox->fileFormat())
+    switch(d->saveSettingsBox->fileFormat())
     {
         case SaveSettingsWidget::OUTPUT_JPEG:
             ext = "jpg";
@@ -418,23 +464,23 @@ void BatchDialog::addItems(const QStringList& itemList)
          it != itemList.end(); ++it) 
     {
         QFileInfo fi(*it);
-        if (fi.exists() && !m_itemDict.find(fi.fileName())) 
+        if (fi.exists() && !d->itemDict.find(fi.fileName())) 
         {
             RawItem *item = new RawItem;
             item->directory = fi.path();
             item->src  = fi.fileName();
             item->dest = fi.baseName() + QString(".") + ext;
-            new CListViewItem(m_listView, pix, item, m_listView->lastItem());
-            m_itemDict.insert(item->src, item);
+            new CListViewItem(d->listView, pix, item, d->listView->lastItem());
+            d->itemDict.insert(item->src, item);
             urlList.append(fi.absoluteFilePath());
         }
     }
 
     if (!urlList.empty()) 
     {
-        m_thread->identifyRawFiles(urlList);
-        if (!m_thread->isRunning())
-            m_thread->start();
+        d->thread->identifyRawFiles(urlList);
+        if (!d->thread->isRunning())
+            d->thread->start();
     }
 }
 
@@ -442,7 +488,7 @@ void BatchDialog::slotSaveFormatChanged()
 {
     QString ext;
 
-    switch(m_saveSettingsBox->fileFormat())
+    switch(d->saveSettingsBox->fileFormat())
     {
         case SaveSettingsWidget::OUTPUT_JPEG:
             ext = "jpg";
@@ -458,7 +504,7 @@ void BatchDialog::slotSaveFormatChanged()
             break;
     }
     
-    Q3ListViewItemIterator it( m_listView );
+    Q3ListViewItemIterator it( d->listView );
     while ( it.current() ) 
     {
         CListViewItem *item = (CListViewItem*) it.current();
@@ -475,19 +521,19 @@ void BatchDialog::slotSaveFormatChanged()
 
 void BatchDialog::processOne()
 {
-    if (m_fileList.empty()) 
+    if (d->fileList.empty()) 
     {
         busy(false);
         slotAborted();
         return;
     }
     
-    QString file(m_fileList.first());
-    m_fileList.pop_front();
+    QString file(d->fileList.first());
+    d->fileList.pop_front();
 
-    m_thread->processRawFile(KUrl(file));
-    if (!m_thread->isRunning())
-        m_thread->start();
+    d->thread->processRawFile(KUrl(file));
+    if (!d->thread->isRunning())
+        d->thread->start();
 }
 
 void BatchDialog::busy(bool busy)
@@ -496,57 +542,57 @@ void BatchDialog::busy(bool busy)
     enableButton(User2, busy);
     enableButton(Close, !busy);
 
-    m_decodingSettingsBox->setEnabled(!busy);
-    m_saveSettingsBox->setEnabled(!busy);
-    m_listView->setEnabled(!busy);
+    d->decodingSettingsBox->setEnabled(!busy);
+    d->saveSettingsBox->setEnabled(!busy);
+    d->listView->setEnabled(!busy);
 
-    busy ? m_page->setCursor(Qt::WaitCursor) : m_page->unsetCursor();
+    busy ? d->page->setCursor(Qt::WaitCursor) : d->page->unsetCursor();
 }
 
 void BatchDialog::slotConvertBlinkTimerDone()
 {
-    if(m_convertBlink)
+    if(d->convertBlink)
     {
-        if (m_currentConvertItem)
-            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("arrow-right"));
+        if (d->currentConvertItem)
+            d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("arrow-right"));
     }
     else
     {
-        if (m_currentConvertItem)
-            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("arrow-right-double"));
+        if (d->currentConvertItem)
+            d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("arrow-right-double"));
     }
 
-    m_convertBlink = !m_convertBlink;
-    m_blinkConvertTimer->start(500);
+    d->convertBlink = !d->convertBlink;
+    d->blinkConvertTimer->start(500);
 }
 
 void BatchDialog::processing(const QString& file)
 {
     QString filename     = QFileInfo(file).fileName();
-    m_currentConvertItem = m_itemDict.find(filename);
-    if (m_currentConvertItem) 
+    d->currentConvertItem = d->itemDict.find(filename);
+    if (d->currentConvertItem) 
     {
-        m_listView->setSelected(m_currentConvertItem->viewItem, true);
-        m_listView->ensureItemVisible(m_currentConvertItem->viewItem);
+        d->listView->setSelected(d->currentConvertItem->viewItem, true);
+        d->listView->ensureItemVisible(d->currentConvertItem->viewItem);
     }
 
-    m_convertBlink = false;
-    m_blinkConvertTimer->start(500);
+    d->convertBlink = false;
+    d->blinkConvertTimer->start(500);
 }
 
 void BatchDialog::processed(const QString& file, const QString& tmpFile)
 {
-    m_blinkConvertTimer->stop();
+    d->blinkConvertTimer->stop();
     QString filename = QFileInfo(file).fileName();
-    QString destFile(m_currentConvertItem->directory + QString("/") + m_currentConvertItem->dest);
+    QString destFile(d->currentConvertItem->directory + QString("/") + d->currentConvertItem->dest);
 
-    if (m_saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
+    if (d->saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
     {
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0) 
         {
             KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as",
-                                  m_currentConvertItem->src),
+                                  d->currentConvertItem->src),
                                   tmpFile, destFile,
                                   KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
 
@@ -556,7 +602,7 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
                 case KIO::R_SKIP:
                 {
                     destFile = QString();
-                    m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
+                    d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
                     break;
                 }
                 case KIO::R_RENAME:
@@ -575,47 +621,47 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));
-            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
+            d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
         }
         else 
         {
-            m_currentConvertItem->dest = QFileInfo(destFile).fileName();
-            m_currentConvertItem->viewItem->setText(2, m_currentConvertItem->dest);
-            m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-ok"));
+            d->currentConvertItem->dest = QFileInfo(destFile).fileName();
+            d->currentConvertItem->viewItem->setText(2, d->currentConvertItem->dest);
+            d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-ok"));
         }
     }
 
-    m_progressBar->setValue(m_progressBar->value()+1);
-    m_currentConvertItem = 0;
+    d->progressBar->setValue(d->progressBar->value()+1);
+    d->currentConvertItem = 0;
 }
 
 void BatchDialog::processingFailed(const QString& file)
 {
     QString filename = QFileInfo(file).fileName();
-    m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
-    m_progressBar->setValue(m_progressBar->value()+1);
-    m_currentConvertItem = 0;
+    d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
+    d->progressBar->setValue(d->progressBar->value()+1);
+    d->currentConvertItem = 0;
 }
 
 void BatchDialog::customEvent(QEvent *event)
 {
     if (!event) return;
 
-    EventData *d = (EventData*)event;
-    if (!d) return;
+    EventData *ev = (EventData*)event;
+    if (!ev) return;
 
     QString text;
 
-    if (d->starting)            // Something have been started...
+    if (ev->starting)            // Something have been started...
     {
-        switch (d->action) 
+        switch (ev->action) 
         {
             case(IDENTIFY): 
                 break;
             case(PROCESS):
             {
                 busy(true);
-                processing(d->filePath);
+                processing(ev->filePath);
                 break;
             }
             default: 
@@ -627,15 +673,15 @@ void BatchDialog::customEvent(QEvent *event)
     }
     else                 
     {
-        if (!d->success)        // Something is failed...
+        if (!ev->success)        // Something is failed...
         {
-            switch (d->action) 
+            switch (ev->action) 
             {
                 case(IDENTIFY): 
                     break;
                 case(PROCESS):
                 {
-                    processingFailed(d->filePath);
+                    processingFailed(ev->filePath);
                     processOne();
                     break;
                 }
@@ -648,27 +694,27 @@ void BatchDialog::customEvent(QEvent *event)
         }
         else                    // Something is done...
         {
-            switch (d->action)
+            switch (ev->action)
             {
                 case(IDENTIFY): 
                 {
-                    QFileInfo fi(d->filePath);
-                    RawItem *rawItem = m_itemDict.find(fi.fileName());
+                    QFileInfo fi(ev->filePath);
+                    RawItem *rawItem = d->itemDict.find(fi.fileName());
                     if (rawItem) 
                     {
-                        if (!d->image.isNull())
+                        if (!ev->image.isNull())
                         {
-                            QPixmap pix = QPixmap::fromImage(d->image.scaled(64, 64, Qt::KeepAspectRatio));
+                            QPixmap pix = QPixmap::fromImage(ev->image.scaled(64, 64, Qt::KeepAspectRatio));
                             rawItem->viewItem->setThumbnail(pix);
                         }
-                        rawItem->viewItem->setText(3, d->message);
-                        rawItem->identity = d->message;
+                        rawItem->viewItem->setText(3, ev->message);
+                        rawItem->identity = ev->message;
                     }
                     break;
                 }
                 case(PROCESS):
                 {
-                    processed(d->filePath, d->destPath);
+                    processed(ev->filePath, ev->destPath);
                     processOne();
                     break;
                 }
@@ -683,7 +729,7 @@ void BatchDialog::customEvent(QEvent *event)
 
 // FIXME : this is a temporary fix to comments this line to prevent a crash with Qt4.
 //         Marcel, we need to use your implementation about multithreading management from JPEGLossLess.
-//    delete d;
+//    delete ev;
 }
 
 } // NameSpace KIPIRawConverterPlugin
