@@ -85,6 +85,22 @@ KPWriteImage::~KPWriteImage()
     delete d;
 }
 
+int KPWriteImage::bytesDepth() const
+{
+    if (d->sixteenBit)
+    {
+        if (d->hasAlpha)
+            return 8;
+        else
+            return 6;
+    }
+    
+    if (d->hasAlpha)
+        return 4;
+
+    return 3;
+}
+
 void KPWriteImage::setCancel(bool* cancel)
 {
     d->cancel = cancel;
@@ -224,7 +240,6 @@ bool KPWriteImage::write2PNG(const QString& destPath)
 
     uchar       *data       = 0;
     int          bitsDepth  = d->sixteenBit ? 16 : 8;
-    int          bytesDepth = d->sixteenBit ? 8 : 4;
     png_color_8  sig_bit;
     png_bytep    row_ptr;
     png_structp  png_ptr    = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
@@ -307,7 +322,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     {
         j = 0;
 
-        for (x = 0; !cancel() && (x < d->width*bytesDepth); x+=bytesDepth)
+        for (x = 0; !cancel() && (x < d->width*bytesDepth()); x+=bytesDepth())
         {
             if (d->sixteenBit)
             {
@@ -353,7 +368,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
         row_ptr = (png_bytep) data;
 
         png_write_rows(png_ptr, &row_ptr, 1);
-        ptr += (d->width * bytesDepth);
+        ptr += (d->width * bytesDepth());
     }
 
     delete [] data;
@@ -378,8 +393,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
         return false;
     }
 
-    int bitsDepth  = d->sixteenBit ? 16 : 8;
-    int bytesDepth = d->sixteenBit ? 8 : 4;
+    int bitsDepth = d->sixteenBit ? 16 : 8;
 
     TIFFSetField(tif, TIFFTAG_IMAGEWIDTH,          d->width);
     TIFFSetField(tif, TIFFTAG_IMAGELENGTH,         d->height);
@@ -473,7 +487,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
         for (x = 0; !cancel() && (x < d->width); x++)
         {
-            pixel = &data[((y * d->width) + x) * bytesDepth];
+            pixel = &data[((y * d->width) + x) * bytesDepth()];
 
             if ( d->sixteenBit )        // 16 bits image.
             {

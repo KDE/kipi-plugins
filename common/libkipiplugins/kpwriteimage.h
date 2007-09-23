@@ -102,6 +102,8 @@ private:
                             const KExiv2Iface::KExiv2& metadata, 
                             const char* exifTagName);
 
+    int bytesDepth() const;
+
 private: 
 
     KPWriteImagePriv* d;
