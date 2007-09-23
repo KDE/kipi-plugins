@@ -3,16 +3,17 @@ v 0.2.0
 
 Port to CMake/KDE4/QT4
 
+
+
 v 0.1.4 beta2
 ----------------------------------------------------------------------------
 
 Kipi-plugins NEW FEATURES
 
-
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 140477 : SendImages   : Ability to rename images being sent via email.
-002 ==> 
+002 ==> 146259 : RAWConverter : Raw Converter won't convert to 16bit PNG.
 
 v 0.1.4 beta1 
 ----------------------------------------------------------------------------
