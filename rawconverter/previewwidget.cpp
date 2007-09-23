@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2003-10-22
- * Description : preview raw file widget used in single convert
+ * Description : widget to render preview of raw file.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -86,7 +86,7 @@ void PreviewWidget::load(const QString& file)
         QPainter p(&d->pix);
         p.drawImage(x, y, img);
         p.setPen(QPen(Qt::white));
-        p.drawRect(x,y,img.width(),img.height());
+        p.drawRect(x, y, img.width(), img.height());
         p.end();
     }
     else 
@@ -142,14 +142,14 @@ void PreviewWidget::resizeEvent(QResizeEvent*)
         if (!d->preview.isNull())
         {
             p.drawPixmap(d->pix.width()/2-d->preview.width()/2, d->pix.height()/4-d->preview.height()/2, 
-                        d->preview, 0, 0, d->preview.width(), d->preview.height());
+                         d->preview, 0, 0, d->preview.width(), d->preview.height());
             p.drawText(0, d->pix.height()/2, d->pix.width(), d->pix.height()/2,
-                    Qt::AlignCenter|Qt::TextWordWrap, d->text);
+                       Qt::AlignCenter|Qt::TextWordWrap, d->text);
         }
         else
         {
             p.drawText(0, 0, d->pix.width(), d->pix.height(),
-                    Qt::AlignCenter|Qt::TextWordWrap, d->text);
+                       Qt::AlignCenter|Qt::TextWordWrap, d->text);
         }
 
         p.end();
