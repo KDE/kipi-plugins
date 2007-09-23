@@ -71,7 +71,7 @@ private:
 
     bool loadedFromDcraw(const QString& filePath, 
                          QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
-                         QByteArray imageData, int width, int height, int rgbmax, bool sixteenBits);
+                         const QByteArray& imageData, int width, int height, int rgbmax, bool sixteenBits);
 };
 
 }  // namespace KIPIRawConverterPlugin
