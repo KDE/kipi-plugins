@@ -183,18 +183,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         }
         case SaveSettingsWidget::OUTPUT_PPM:
         {
-            if (sixteenBits) return false;
-
-            FILE* f = fopen(QFile::encodeName(destPath), "wb");
-            if (!f) 
-            {
-                qDebug("Failed to open ppm file for writing");
-                return false;
-            }
-    
-            fprintf(f, "P6\n%d %d\n255\n", width, height);
-            fwrite(imageData.data(), 1, width*height*3, f);
-            fclose(f);
+            if (!wImageIface.write2PPM(destPath)) return false;
             break;
         }
         default:

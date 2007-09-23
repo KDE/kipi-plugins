@@ -227,6 +227,70 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     return true;
 }
 
+bool KPWriteImage::write2PPM(const QString& destPath)
+{
+    FILE* f = fopen(QFile::encodeName(destPath), "wb");
+    if (!f) 
+    {
+        qDebug("Failed to open ppm file for writing");
+        return false;
+    }
+
+    fprintf(f, "P6\n%d %d\n255\n", d->width, d->height);
+
+    // Write image data
+    uchar* line   = new uchar[d->width*3];
+    uchar* dstPtr = 0;
+
+    if (!d->sixteenBit)     // 8 bits image.
+    {
+        uchar* srcPtr = (uchar*)d->data.data();
+
+        for (uint j=0; !cancel() && (j < d->height); j++)
+        {
+            dstPtr = line;
+            
+            for (uint i = 0; !cancel() && (i < d->width); i++)
+            {
+                dstPtr[2] = srcPtr[0];  // Blue
+                dstPtr[1] = srcPtr[1];  // Green
+                dstPtr[0] = srcPtr[2];  // Red
+
+                d->hasAlpha ? srcPtr += 4 : srcPtr += 3;
+                dstPtr += 3;
+            }
+
+            fwrite(line, 1, d->width*3, f);
+        }
+    }
+    else                    // 16 bits image
+    {
+        unsigned short* srcPtr = (unsigned short*)d->data.data();
+
+        for (uint j=0; !cancel() && (j < d->height); j++)
+        {
+            dstPtr = line;
+            
+            for (uint i = 0; !cancel() && (i < d->width); i++)
+            {
+                dstPtr[2] = (srcPtr[0] * 255UL)/65535UL;    // Blue
+                dstPtr[1] = (srcPtr[1] * 255UL)/65535UL;    // Green
+                dstPtr[0] = (srcPtr[2] * 255UL)/65535UL;    // Red
+
+                d->hasAlpha ? srcPtr += 4 : srcPtr += 3;
+                dstPtr += 3;
+            }
+    
+            fwrite(line, 1, d->width*3, f);
+        }
+    }
+
+    delete [] line;
+
+    fclose(f);
+    return true;
+}
+
 bool KPWriteImage::write2PNG(const QString& destPath)
 {
     FILE* f = 0;
