@@ -137,7 +137,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     m_about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
                    QByteArray(),
                    KAboutData::License_GPL,
-                   ki18n("A Kipi plugin to convert Raw images using KDcraw library"),
+                   ki18n("A Kipi plugin to batch convert Raw images"),
                    ki18n("(c) 2003-2005, Renchi Raju\n"
                          "(c) 2006-2007, Gilles Caulier"));
 
@@ -379,7 +379,7 @@ void BatchDialog::slotUser2()
     busy(false);
 
     if (m_currentConvertItem)
-        m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("cancel"));
+        m_currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
 
     QTimer::singleShot(500, this, SLOT(slotAborted()));
 }
@@ -412,7 +412,7 @@ void BatchDialog::addItems(const QStringList& itemList)
 
     KUrl::List urlList;
 
-    QPixmap pix(SmallIcon("file-broken", K3Icon::SizeLarge, K3Icon::DisabledState ));
+    QPixmap pix(SmallIcon("empty", K3Icon::SizeLarge, K3Icon::DisabledState));
     
     for (QStringList::const_iterator  it = itemList.begin();
          it != itemList.end(); ++it) 
