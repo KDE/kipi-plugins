@@ -121,7 +121,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
 
     m_progressBar = new QProgressBar(m_page);
     m_progressBar->setMaximumHeight( fontMetrics().height()+2 );
-    m_progressBar->setEnabled(false);
+    m_progressBar->hide();
 
     mainLayout->addWidget(m_listView, 0, 0, 3, 1);
     mainLayout->addWidget(m_decodingSettingsBox, 0, 1, 1, 1);
@@ -342,7 +342,7 @@ void BatchDialog::slotUser1()
 
     m_progressBar->setMaximum(m_fileList.count());
     m_progressBar->setValue(0);
-    m_progressBar->setEnabled(true);
+    m_progressBar->show();
 
     KDcrawIface::RawDecodingSettings rawDecodingSettings;
     rawDecodingSettings.sixteenBitsImage           = m_decodingSettingsBox->sixteenBits();
@@ -387,7 +387,7 @@ void BatchDialog::slotUser2()
 void BatchDialog::slotAborted()
 {
     m_progressBar->setValue(0);
-    m_progressBar->setEnabled(false);
+    m_progressBar->hide();
 }
 
 void BatchDialog::addItems(const QStringList& itemList)
