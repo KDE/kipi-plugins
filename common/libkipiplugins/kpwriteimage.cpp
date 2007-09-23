@@ -25,7 +25,7 @@
  * 
  * ============================================================ */
 
-#define ENABLE_DEBUG_MESSAGES 1
+//#define ENABLE_DEBUG_MESSAGES 1
 
 // C Ansi includes.
 
@@ -461,6 +461,10 @@ bool KPWriteImage::write2PNG(const QString& destPath)
 
 bool KPWriteImage::write2TIFF(const QString& destPath)
 {
+    uint32 w    = d->width;
+    uint32 h    = d->height;
+    uchar* data = (uchar*)d->data.data();
+
     // TIFF error handling. If an errors/warnings occurs during reading, 
     // libtiff will call these methods
 
@@ -469,10 +473,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
     // Open target file 
 
-    TIFF *tif=0;
-    
-    tif = TIFFOpen(QFile::encodeName(destPath), "wb");
-
+    TIFF *tif = TIFFOpen(QFile::encodeName(destPath), "w");
     if (!tif) 
     {
         qDebug("Failed to open TIFF file for writing");
@@ -481,8 +482,8 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
     int bitsDepth = d->sixteenBit ? 16 : 8;
 
-    TIFFSetField(tif, TIFFTAG_IMAGEWIDTH,          d->width);
-    TIFFSetField(tif, TIFFTAG_IMAGELENGTH,         d->height);
+    TIFFSetField(tif, TIFFTAG_IMAGEWIDTH,          w);
+    TIFFSetField(tif, TIFFTAG_IMAGELENGTH,         h);
     TIFFSetField(tif, TIFFTAG_PHOTOMETRIC,         PHOTOMETRIC_RGB);
     TIFFSetField(tif, TIFFTAG_PLANARCONFIG,        PLANARCONFIG_CONTIG);
     TIFFSetField(tif, TIFFTAG_ORIENTATION,         ORIENTATION_TOPLEFT);
@@ -549,7 +550,6 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
     // Write full image data in tiff directory IFD0
 
-    uint8  *buf=0;
     uchar  *pixel;
     double  alpha_factor;
     uint32  x, y;
@@ -557,7 +557,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     uint16  r16, g16, b16, a16=0;
     int     i=0;
 
-    buf = (uint8 *) _TIFFmalloc(TIFFScanlineSize(tif));
+    uint8 *buf = (uint8 *)_TIFFmalloc(TIFFScanlineSize(tif));
     if (!buf)
     {
         qDebug("Cannot allocate memory buffer for main TIFF image.");
@@ -565,15 +565,13 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
         return false;
     }
 
-    uchar* data = (uchar*)d->data.data();
-
-    for (y = 0; !cancel() && (y < d->height); y++)
+    for (y = 0; !cancel() && (y < h); y++)
     {
         i = 0;
 
-        for (x = 0; !cancel() && (x < d->width); x++)
+        for (x = 0; !cancel() && (x < w); x++)
         {
-            pixel = &data[((y * d->width) + x) * bytesDepth()];
+            pixel = &data[((y * w) + x) * bytesDepth()];
 
             if ( d->sixteenBit )        // 16 bits image.
             {
