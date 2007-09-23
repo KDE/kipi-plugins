@@ -104,7 +104,8 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     uint*  dptr  = (uint*)img.bits();
     uchar* sptr  = (uchar*)imageData.data();
     float factor = 65535.0 / rgbmax;
-    uchar temp[4];
+    uchar tmp8[2];
+    unsigned short tmp16[3];
 
     // Set RGB color components.
     for (int i = 0 ; i < width * height ; i++)
@@ -114,12 +115,12 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             *dptr++ = qRgba(sptr[0], sptr[1], sptr[2], 0xFF);
 
             // Swap Red and Blue
-            temp[0] = sptr[2];
-            temp[1] = sptr[0];
-            sptr[0] = temp[0];
-            sptr[2] = temp[1];
+            tmp8[0] = sptr[2];
+            tmp8[1] = sptr[0];
+            sptr[0] = tmp8[0];
+            sptr[2] = tmp8[1];
 
-            sptr    += 3;
+            sptr += 3;
         }
         else
         {
@@ -128,17 +129,14 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
                             (uchar)(((sptr[4]*256 + sptr[5]) * factor * 255UL)/65535UL),
                             0xFF);
 
-            // Swap Red and Blue
-            temp[0] = sptr[4];
-            temp[1] = sptr[5];
-            temp[2] = sptr[0];
-            temp[3] = sptr[1];
-            sptr[0] = temp[0];
-            sptr[1] = temp[1];
-            sptr[4] = temp[2];
-            sptr[5] = temp[3];
+            // Swap Red and Blue and re-ajust color component values?
+            tmp16[0] = (unsigned short)((sptr[4]*256 + sptr[5]) * factor);      // Blue
+            tmp16[1] = (unsigned short)((sptr[2]*256 + sptr[3]) * factor);      // Green
+            tmp16[2] = (unsigned short)((sptr[0]*256 + sptr[1]) * factor);      // Red
 
-            sptr    += 6;
+            memcpy(&sptr[0], &tmp16[0], 6);
+
+            sptr += 6;
         }
     }
 
