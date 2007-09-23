@@ -97,12 +97,14 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
                                        QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
                                        const QByteArray& imageData, int width, int height, int rgbmax, bool sixteenBits)
 {
-    // -- Use a QImage instance to write IPTC preview and Exif thumbnail -------
+    // Use a QImage instance to write IPTC preview and Exif thumbnail
+    // and adapt color component order to KPWriteImage data format (RGB ==> BGR)
 
     QImage img(width, height, QImage::Format_ARGB32);
     uint*  dptr  = (uint*)img.bits();
     uchar* sptr  = (uchar*)imageData.data();
     float factor = 65535.0 / rgbmax;
+    uchar temp[4];
 
     // Set RGB color components.
     for (int i = 0 ; i < width * height ; i++)
@@ -110,6 +112,13 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         if (!sixteenBits)
         {
             *dptr++ = qRgba(sptr[0], sptr[1], sptr[2], 0xFF);
+
+            // Swap Red and Blue
+            temp[0] = sptr[2];
+            temp[1] = sptr[0];
+            sptr[0] = temp[0];
+            sptr[2] = temp[1];
+
             sptr    += 3;
         }
         else
@@ -118,6 +127,17 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
                             (uchar)(((sptr[2]*256 + sptr[3]) * factor * 255UL)/65535UL),
                             (uchar)(((sptr[4]*256 + sptr[5]) * factor * 255UL)/65535UL),
                             0xFF);
+
+            // Swap Red and Blue
+            temp[0] = sptr[4];
+            temp[1] = sptr[5];
+            temp[2] = sptr[0];
+            temp[3] = sptr[1];
+            sptr[0] = temp[0];
+            sptr[1] = temp[1];
+            sptr[4] = temp[2];
+            sptr[5] = temp[3];
+
             sptr    += 6;
         }
     }
