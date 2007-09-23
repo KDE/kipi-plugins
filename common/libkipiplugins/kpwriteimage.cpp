@@ -93,7 +93,7 @@ void KPWriteImage::setCancel(bool* cancel)
 bool KPWriteImage::cancel() const
 {
     if (d->cancel)
-        return &d->cancel;
+        return *d->cancel;
 
     return false;
 }
