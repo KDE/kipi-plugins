@@ -123,7 +123,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     m_progressBar->setMaximumHeight( fontMetrics().height()+2 );
     m_progressBar->setEnabled(false);
 
-    mainLayout->addWidget(m_listView, 0, 0, 2, 1);
+    mainLayout->addWidget(m_listView, 0, 0, 3, 1);
     mainLayout->addWidget(m_decodingSettingsBox, 0, 1, 1, 1);
     mainLayout->addWidget(m_progressBar, 1, 1, 1, 1);
     mainLayout->setColumnStretch(0, 10);
