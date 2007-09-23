@@ -56,10 +56,6 @@ protected:
     void paintEvent(QPaintEvent *e);
     void resizeEvent(QResizeEvent *e);
 
-private slots:
-
-    void slotResize();
-    
 private:
 
     PreviewWidgetPriv* d;
