@@ -574,27 +574,27 @@ void SingleDialog::customEvent(QEvent *event)
 {
     if (!event) return;
 
-    EventData *d = (EventData*)event;
-    if (!d) return;
+    EventData *ev = (EventData*)event;
+    if (!ev) return;
 
     QString text;
 
-    if (d->starting)            // Something have been started...
+    if (ev->starting)            // Something have been started...
     {
-        switch (d->action) 
+        switch (ev->action) 
         {
             case(IDENTIFY_FULL): 
                 break;
             case(PREVIEW):
             {
                 busy(true);
-                previewing(d->filePath);
+                previewing(ev->filePath);
                 break;
             }
             case(PROCESS):
             {
                 busy(true);
-                processing(d->filePath);
+                processing(ev->filePath);
                 break;
             }
             default: 
@@ -606,21 +606,21 @@ void SingleDialog::customEvent(QEvent *event)
     }
     else                 
     {
-        if (!d->success)        // Something is failed...
+        if (!ev->success)        // Something is failed...
         {
-            switch (d->action) 
+            switch (ev->action) 
             {
                 case(IDENTIFY_FULL): 
                     break;
                 case(PREVIEW):
                 {
-                    previewFailed(d->filePath);
+                    previewFailed(ev->filePath);
                     busy(false);
                     break;
                 }
                 case(PROCESS):
                 {
-                    processingFailed(d->filePath);
+                    processingFailed(ev->filePath);
                     busy(false);
                     break;
                 }
@@ -633,24 +633,24 @@ void SingleDialog::customEvent(QEvent *event)
         }
         else                    // Something is done...
         {
-            switch (d->action)
+            switch (ev->action)
             {
                 case(IDENTIFY_FULL): 
                 {
-                    QPixmap pix = QPixmap::fromImage(d->image.scaled(256, 256, Qt::KeepAspectRatio));
-                    identified(d->filePath, d->message, pix);
+                    QPixmap pix = QPixmap::fromImage(ev->image.scaled(256, 256, Qt::KeepAspectRatio));
+                    identified(ev->filePath, ev->message, pix);
                     busy(false);
                     break;
                 }
                 case(PREVIEW):
                 {
-                    previewed(d->filePath, d->destPath);
+                    previewed(ev->filePath, ev->destPath);
                     busy(false);
                     break;
                 }
                 case(PROCESS):
                 {
-                    processed(d->filePath, d->destPath);
+                    processed(ev->filePath, ev->destPath);
                     busy(false);
                     break;
                 }
@@ -665,7 +665,7 @@ void SingleDialog::customEvent(QEvent *event)
 
 // FIXME : this is a temporary fix to comments this line to prevent a crash with Qt4.
 //         Marcel, we need to use your implementation about multithreading management from JPEGLossLess.
-//    delete d;
+//    delete ev;
 }
 
 } // NameSpace KIPIRawConverterPlugin
