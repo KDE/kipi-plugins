@@ -37,14 +37,9 @@
 
 extern "C"
 {
-#include <unistd.h>
-#include <sys/ipc.h>
-#include <sys/shm.h>
-#include <sys/types.h>
 #include <jpeglib.h>
 #include <tiffio.h>
-#include <tiffvers.h>
-#include "iccjpeg.h"
+#include <tiff.h>
 #include <png.h>
 }
 
@@ -104,6 +99,9 @@ private:
                             const char* exifTagName);
 
     int bytesDepth() const;
+
+    static void kipi_tiff_warning(const char* module, const char* format, va_list warnings);
+    static void kipi_tiff_error(const char* module, const char* format, va_list errors);
 
 private: 
 

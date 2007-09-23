@@ -25,6 +25,20 @@
  * 
  * ============================================================ */
 
+#define ENABLE_DEBUG_MESSAGES 1
+
+// C Ansi includes.
+
+extern "C"
+{
+#include <unistd.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/types.h>
+#include <tiffvers.h>
+#include "iccjpeg.h"
+}
+
 // Qt includes.
 
 #include <QString>
@@ -447,6 +461,14 @@ bool KPWriteImage::write2PNG(const QString& destPath)
 
 bool KPWriteImage::write2TIFF(const QString& destPath)
 {
+    // TIFF error handling. If an errors/warnings occurs during reading, 
+    // libtiff will call these methods
+
+    TIFFSetWarningHandler(kipi_tiff_warning);
+    TIFFSetErrorHandler(kipi_tiff_error);
+
+    // Open target file 
+
     TIFF *tif=0;
     
     tif = TIFFOpen(QFile::encodeName(destPath), "wb");
@@ -912,6 +934,34 @@ void KPWriteImage::tiffSetExifDataTag(TIFF* tif, ttag_t tiffTag,
     {
         TIFFSetField (tif, tiffTag, (uint32)tag.size(), (char *)tag.data());
     }
+}
+
+// To manage Errors/Warnings handling provide by libtiff
+
+void KPWriteImage::kipi_tiff_warning(const char* module, const char* format, va_list warnings)
+{
+#ifdef ENABLE_DEBUG_MESSAGES    
+    char message[4096];
+    vsnprintf(message, 4096, format, warnings);
+    qDebug("%s::%s", module, message);
+#else
+    Q_UNUSED(module);
+    Q_UNUSED(format);
+    Q_UNUSED(warnings);
+#endif
+}
+
+void KPWriteImage::kipi_tiff_error(const char* module, const char* format, va_list errors)
+{
+#ifdef ENABLE_DEBUG_MESSAGES    
+    char message[4096];
+    vsnprintf(message, 4096, format, errors);
+    qDebug("%s::%s", module, message);
+#else
+    Q_UNUSED(module);
+    Q_UNUSED(format);
+    Q_UNUSED(errors);
+#endif
 }
 
 }  // NameSpace KIPIPlugins
