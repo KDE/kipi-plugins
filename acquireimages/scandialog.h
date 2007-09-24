@@ -64,8 +64,6 @@ protected:
 
 private slots:
 
-    void slotScanStart();
-    void slotScanEnd();
     void slotScanFailed();
     void slotSaveImage();
     void slotClose();

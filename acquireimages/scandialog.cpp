@@ -71,15 +71,9 @@ public:
     ScanDialogPriv()
     {
         saneWidget = 0;
-        progress   = 0;
         interface  = 0;
-        cancel     = 0;
         about      = 0;
     }
-
-    QProgressBar             *progress;
-
-    QPushButton              *cancel;
 
     KIPI::Interface          *interface;
 
@@ -136,18 +130,9 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneW
     // ------------------------------------------------------------------------
 
     KPushButton *close = new KPushButton(KStandardGuiItem::close(), main);
-    d->progress        = new QProgressBar(main);
-    d->progress->setMaximumHeight(fontMetrics().height()+4);
-    d->progress->hide();
-    d->cancel          = new QPushButton(main);
-    d->cancel->setIcon(SmallIcon("dialog-cancel"));
-    d->cancel->setMaximumHeight(fontMetrics().height()+4);
-    d->cancel->hide();
 
     grid->addWidget(d->saneWidget, 0, 0, 1, 6);
     grid->addWidget(help, 1, 0, 1, 1);
-    grid->addWidget(d->progress, 1, 2, 1, 1);
-    grid->addWidget(d->cancel, 1, 3, 1, 1);
     grid->addWidget(close, 1, 5, 1, 1);
     grid->setColumnStretch(1, 50);
     grid->setColumnStretch(2, 100);
@@ -164,23 +149,8 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneW
     connect(close, SIGNAL(clicked()), 
             this, SLOT(slotClose()));
 
-    connect(d->saneWidget, SIGNAL(scanStart()), 
-            this, SLOT(slotScanStart()));
-
-    connect(d->saneWidget, SIGNAL(scanFaild()), 
-            this, SLOT(slotScanFailed()));
-
-    connect(d->saneWidget, SIGNAL(scanDone()), 
-            this, SLOT(slotScanEnd()));
-
     connect(d->saneWidget, SIGNAL(imageReady()), 
             this, SLOT(slotSaveImage()));
-
-    connect(d->cancel, SIGNAL(clicked()), 
-            d->saneWidget, SLOT(scanCancel()));
-
-    connect(d->saneWidget, SIGNAL(scanProgress(int)), 
-            d->progress, SLOT(setValue(int)));
 }
 
 ScanDialog::~ScanDialog()
@@ -222,22 +192,8 @@ void ScanDialog::slotHelp()
     KToolInvocation::invokeHelp("acquireimages", "kipi-plugins");
 }
 
-void ScanDialog::slotScanStart()
-{
-    d->progress->show();
-    d->cancel->show();
-}
-
-void ScanDialog::slotScanEnd()
-{
-    d->progress->hide();
-    d->cancel->hide();
-}
-
 void ScanDialog::slotScanFailed()
 {
-    d->progress->hide();
-    d->cancel->hide();
     KMessageBox::error(0, i18n("Scanning failed!"));
 }
 
