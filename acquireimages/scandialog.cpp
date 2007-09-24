@@ -90,13 +90,12 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneW
     d->saneWidget = saneWidget;
     d->interface  = interface;
     
-    setButtons(None);
+    setButtons(Help|Close);
     setCaption(i18n("Scan Image"));
     setModal(true);
 
-    QWidget *main     = new QWidget(this);
-    QGridLayout *grid = new QGridLayout(main);
-    d->saneWidget->setParent(main);
+//    d->saneWidget->setParent(main);
+    setMainWidget(d->saneWidget);
 
     // -- About data and help button ----------------------------------------
 
@@ -118,35 +117,22 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneW
                         ki18n("Developper"),
                         "kare dot sars at kolumbus dot fi");
 
-    KPushButton *help   = new KPushButton(KStandardGuiItem::help(), main);
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
+    KPushButton *helpButton = button( Help );
+    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Plugin Handbook"), this);
+    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    help->setDelayedMenu( helpMenu->menu() );
+    helpButton->setDelayedMenu( helpMenu->menu() );
 
     // ------------------------------------------------------------------------
 
-    KPushButton *close = new KPushButton(KStandardGuiItem::close(), main);
-
-    grid->addWidget(d->saneWidget, 0, 0, 1, 6);
-    grid->addWidget(help, 1, 0, 1, 1);
-    grid->addWidget(close, 1, 5, 1, 1);
-    grid->setColumnStretch(1, 50);
-    grid->setColumnStretch(2, 100);
-    grid->setColumnStretch(4, 10);
-    grid->setRowStretch(0, 10);
-    grid->setMargin(0);
-    grid->setSpacing(spacingHint());
-
-    setMainWidget(main);
     readSettings();
 
     // ------------------------------------------------------------------------
 
-    connect(close, SIGNAL(clicked()), 
+    connect(this, SIGNAL(closeClicked()), 
             this, SLOT(slotClose()));
 
     connect(d->saneWidget, SIGNAL(imageReady()), 
