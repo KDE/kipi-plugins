@@ -109,13 +109,12 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("RAW Image Converter"),
                                            NULL,
                                            KAboutData::License_GPL,
-                                           I18N_NOOP("A Kipi plugin to convert Raw images\n"
-                                                     "Using KDcraw library"),
+                                           I18N_NOOP("A Kipi plugin to convert a Raw image"),
                                            "(c) 2003-2005, Renchi Raju\n"
                                            "(c) 2006-2007, Gilles Caulier");
 
     m_about->addAuthor("Renchi Raju", I18N_NOOP("Original author"),
-                       "renchi@pooh.tam.uiuc.edu");
+                       "renchi at pooh dot tam dot uiuc dot edu");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Maintainer"),
                        "caulier dot gilles at gmail dot com");

@@ -115,7 +115,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
 
     m_progressBar = new KProgress(m_page);
     m_progressBar->setMaximumHeight( fontMetrics().height()+2 );
-    m_progressBar->setEnabled(false);
+    m_progressBar->hide();
 
     mainLayout->addMultiCellWidget(m_listView, 0, 2, 0, 0);
     mainLayout->addMultiCellWidget(m_decodingSettingsBox, 0, 0, 1, 1);
@@ -126,16 +126,15 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("RAW Images Batch Converter"),
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("RAW Image Converter"),
                                            NULL,
                                            KAboutData::License_GPL,
-                                           I18N_NOOP("A Kipi plugin to convert Raw images\n"
-                                                     "Using KDcraw library"),
+                                           I18N_NOOP("A Kipi plugin to batch convert Raw images"),
                                            "(c) 2003-2005, Renchi Raju\n"
                                            "(c) 2006-2007, Gilles Caulier");
 
     m_about->addAuthor("Renchi Raju", I18N_NOOP("Original author"),
-                       "renchi@pooh.tam.uiuc.edu");
+                       "renchi at pooh dot tam dot uiuc dot edu");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Maintainer"),
                        "caulier dot gilles at gmail dot com");
@@ -306,7 +305,7 @@ void BatchDialog::slotUser1()
 
     m_progressBar->setTotalSteps(m_fileList.count());
     m_progressBar->setProgress(0);
-    m_progressBar->setEnabled(true);
+    m_progressBar->show();
 
     KDcrawIface::RawDecodingSettings rawDecodingSettings;
     rawDecodingSettings.cameraColorBalance         = m_decodingSettingsBox->useCameraWB();
@@ -350,7 +349,7 @@ void BatchDialog::slotUser2()
 void BatchDialog::slotAborted()
 {
     m_progressBar->setProgress(0);
-    m_progressBar->setEnabled(false);
+    m_progressBar->hide();
 }
 
 void BatchDialog::addItems(const QStringList& itemList)
