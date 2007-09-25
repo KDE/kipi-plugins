@@ -25,15 +25,28 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-class QString;
+// Qt includes.
+
+#include <qobject.h>
+#include <qstring.h>
+
+class KProcess;
 
 namespace KIPIJPEGLossLessPlugin
 {
 
-class Utils
+class Utils : public QObject
 {
+    Q_OBJECT
 
 public:
+
+    Utils(QObject *parent);
+    ~Utils();
+
+    bool updateMetadataImageMagick(const QString& src, QString& err);
+
+public: // Static methods.
 
     /** Test if a file is a JPEG file.
     */
@@ -54,6 +67,14 @@ public:
     */
     
     static bool deleteDir(const QString& dirPath);
+
+private slots:
+
+    void slotReadStderr(KProcess*, char*, int);
+
+private:
+
+    QString m_stdErr;
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin

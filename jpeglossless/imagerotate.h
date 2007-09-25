@@ -59,6 +59,7 @@ private:
 
     bool rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QString& err);
     bool rotateImageMagick(const QString& src, const QString& dest, RotateAction angle, QString& err);
+    bool updateMetadataImageMagick(const QString& src, QString& err);
 
 private:
 

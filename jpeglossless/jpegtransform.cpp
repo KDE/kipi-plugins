@@ -339,7 +339,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     QImage exifThumbnail = img.scale(160, 120, QImage::ScaleMin);
     exiv2Iface.load(destGiven);
     exiv2Iface.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
-    exiv2Iface.setImageProgramId(QString("Kipi JPEGLossLess"), QString(kipiplugins_version));
+    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
     exiv2Iface.setImageDimensions(img.size());
     exiv2Iface.setExifThumbnail(exifThumbnail);
     exiv2Iface.save(destGiven);

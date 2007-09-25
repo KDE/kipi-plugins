@@ -101,6 +101,11 @@ bool ImageGrayScale::image2GrayScale(const QString& src, const QString& TmpFolde
         // else RAW/TIFF/PNG 16 bits image are broken!
         if (!image2GrayScaleImageMagick(src, tmp, err))
             return false;
+
+        // We update metadata on new image.
+        Utils tools(this);
+        if (!tools.updateMetadataImageMagick(tmp, err))
+            return false;
     }
 
     // Move back to original file

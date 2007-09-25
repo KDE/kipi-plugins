@@ -50,6 +50,7 @@ extern "C"
 
 // KDE includes.
 
+#include <ktempfile.h>
 #include <kprocess.h>
 #include <klocale.h>
 #include <kurl.h>
@@ -103,6 +104,11 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, const QString& 
         // else TIFF/PNG 16 bits image are broken!
         if (!rotateImageMagick(src, tmp, angle, err))
             return false;
+
+        // We update metadata on new image.
+        Utils tools(this);
+        if (!tools.updateMetadataImageMagick(tmp, err))
+            return false;
     }
 
     // Move back to original file
@@ -155,6 +161,8 @@ bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateActi
 bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest, 
                                     RotateAction angle, QString& err)
 {
+    // ImageMagick query --------------------------------------------
+
     KProcess process;
     process.clearArguments();
     process << "convert";
@@ -201,6 +209,9 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
             this, SLOT(slotReadStderr(KProcess*, char*, int)));
 
     if (!process.start(KProcess::Block, KProcess::Stderr))
+        return false;
+
+    if (!process.normalExit())
         return false;
 
     switch (process.exitStatus())

@@ -101,6 +101,11 @@ bool ImageFlip::flip(const QString& src, FlipAction action, const QString& TmpFo
         // else TIFF/PNG 16 bits image are broken!
         if (!flipImageMagick(src, tmp, action, err))
             return false;
+
+        // We update metadata on new image.
+        Utils tools(this);
+        if (!tools.updateMetadataImageMagick(tmp, err))
+            return false;
     }
 
     // Move back to original file

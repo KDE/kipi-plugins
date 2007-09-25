@@ -44,16 +44,137 @@ extern "C"
 #include <qfile.h>
 #include <qdir.h>
 
+// KDE includes.
+
+#include <ktempfile.h>
+#include <kprocess.h>
+#include <klocale.h>
+#include <kurl.h>
+
+// LibKExiv2 includes. 
+
+#include <libkexiv2/kexiv2.h>
+
 // LibKDcraw includes.
 
 #include <libkdcraw/rawfiles.h>
 
 // Local includes.
 
+#include "pluginsversion.h"
 #include "utils.h"
+#include "utils.moc"
 
 namespace KIPIJPEGLossLessPlugin
 {
+
+Utils::Utils(QObject *parent)
+     : QObject(parent)
+{
+}
+
+Utils::~Utils()
+{
+}
+
+bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
+{
+    QFileInfo finfo(src);
+    if (src.isEmpty() || !finfo.isReadable())
+    {
+        err = i18n("unable to open source file");
+        return false;
+    }
+
+    QImage img(src);
+    QImage iptcPreview   = img.scale(800, 600, QImage::ScaleMin);
+    QImage exifThumbnail = iptcPreview.scale(160, 120, QImage::ScaleMin);
+
+    KExiv2Iface::KExiv2 meta;
+    meta.load(src);
+    meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
+    meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+    meta.setImageDimensions(img.size());
+    meta.setExifThumbnail(exifThumbnail);
+    meta.setImagePreview(iptcPreview);
+    QByteArray ba = meta.getExif();
+    const uchar exifHeader[] = {0x45, 0x78, 0x69, 0x66, 0x00, 0x00};
+    QByteArray exifData = QByteArray(ba.size() + sizeof(exifHeader));
+    memcpy(exifData.data(), exifHeader, sizeof(exifHeader));
+    memcpy(exifData.data()+sizeof(exifHeader), ba.data(), ba.size());
+    QByteArray iptcData = meta.getIptc(true);
+
+    KTempFile exifTemp(QString(), "kipipluginsiptc.app1");
+    exifTemp.setAutoDelete(true);
+    QFile *exifFile = exifTemp.file();
+    if ( !exifFile )
+    {
+        err = i18n("unable to open temp file");
+        return false;
+    }
+    QDataStream streamExif( exifFile );
+    streamExif.writeRawBytes(exifData.data(), exifData.size());
+    exifFile->close();
+
+    KTempFile iptcTemp(QString(), "kipipluginsiptc.8bim");
+    iptcTemp.setAutoDelete(true);
+    QFile *iptcFile = iptcTemp.file();
+    if ( !iptcFile )
+    {
+        err = i18n("Cannot rotate: unable to open temp file");
+        return false;
+    }
+    QDataStream streamIptc( iptcFile );
+    streamIptc.writeRawBytes(iptcData.data(), iptcData.size());
+    iptcFile->close();
+
+    KProcess process;
+    process.clearArguments();
+    process << "mogrify";
+    process << "-verbose";
+
+    process << "-profile";
+    process << exifTemp.name();
+
+    process << "-profile";
+    process << iptcTemp.name();
+
+    process << src + QString("[0]");
+
+    qDebug("ImageMagick Command line args:");
+    QValueList<QCString> args = process.args();
+    for (QValueList<QCString>::iterator it = args.begin(); it != args.end(); ++it)
+        qDebug("%s", (const char*)(*it));
+
+    connect(&process, SIGNAL(receivedStderr(KProcess *, char*, int)),
+            this, SLOT(slotReadStderr(KProcess*, char*, int)));
+
+    if (!process.start(KProcess::Block, KProcess::Stderr))
+        return false;
+
+    switch (process.exitStatus())
+    {
+        case 0:  // Process finished successfully !
+        {
+            return true;
+            break;
+        }
+        case 15: //  process aborted !
+        {
+            return false;
+            break;
+        }
+    }
+
+    // Processing error !
+    err = i18n("Cannot update metadata: %1").arg(m_stdErr.replace('\n', ' '));
+    return false;
+}
+
+void Utils::slotReadStderr(KProcess*, char* buffer, int buflen)
+{
+    m_stdErr.append(QString::fromLocal8Bit(buffer, buflen));
+}
 
 bool Utils::isJPEG(const QString& file)
 {
