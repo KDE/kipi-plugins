@@ -156,7 +156,9 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
 {
     K3Process process;
     process.clearArguments();
-    process << "convert" << "-rotate";    
+    process << "convert";
+    process << "-verbose";    
+    process << "-rotate";    
 
     switch(angle)
     {

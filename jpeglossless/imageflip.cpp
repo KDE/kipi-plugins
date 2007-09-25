@@ -144,7 +144,8 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
 {
     K3Process process;
     process.clearArguments();
-    process << "convert";    
+    process << "convert";
+    process << "-verbose";     
 
     switch(action)
     {

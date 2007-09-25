@@ -209,7 +209,9 @@ bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QStrin
 {
     K3Process process;
     process.clearArguments();
-    process << "convert" << "-type" << "Grayscale";   
+    process << "convert";
+    process << "-verbose";    
+    process << "-type" << "Grayscale";   
     process << src + QString("[0]") << dest;
 
     qDebug() << "ImageMagick Command line: " << process.args();    
