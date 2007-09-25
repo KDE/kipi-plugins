@@ -369,15 +369,10 @@ void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
     else
         exiv2Iface.removeExifTag("Exif.Photo.UserComment");
 
-    const KAboutData *data = KApplication::kApplication()->aboutData();
-    // This Exif tag must be in English. Not i18n !
-    exiv2Iface.setImageProgramId(QString("%1 (Using Kipi MetadataEdit plugin %2)")
-                                 .arg(data->appName()).arg(QString(kipiplugins_version)),
-                                 data->version());
+    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 
     exifData = exiv2Iface.getExif();
     iptcData = exiv2Iface.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin
-
