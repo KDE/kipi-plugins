@@ -102,6 +102,11 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, const QString& 
         // else TIFF/PNG 16 bits image are broken!
         if (!rotateImageMagick(src, tmp, angle, err))
             return false;
+
+        // We update metadata on new image.
+        Utils tools(this);
+        if (!tools.updateMetadataImageMagick(tmp, err))
+            return false;
     }
 
     // Move back to original file
@@ -197,6 +202,9 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
             this, SLOT(slotReadStderr(K3Process*, char*, int)));
 
     if (!process.start(K3Process::Block, K3Process::Stderr))
+        return false;
+
+    if (!process.normalExit())
         return false;
 
     switch (process.exitStatus())

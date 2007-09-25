@@ -222,7 +222,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     }
 
     // First rotate - execute even if rotate is JXFORM_NONE to apply new EXIF settings
-    transformoption.transform=rotate;
+    transformoption.transform = rotate;
 
     jtransform_request_workspace(&srcinfo, &transformoption);
 

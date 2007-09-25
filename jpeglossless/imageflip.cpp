@@ -101,6 +101,12 @@ bool ImageFlip::flip(const QString& src, FlipAction action, const QString& TmpFo
         // else TIFF/PNG 16 bits image are broken!
         if (!flipImageMagick(src, tmp, action, err))
             return false;
+
+
+        // We update metadata on new image.
+        Utils tools(this);
+        if (!tools.updateMetadataImageMagick(tmp, err))
+            return false;
     }
 
     // Move back to original file
@@ -175,6 +181,9 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
             this, SLOT(slotReadStderr(K3Process*, char*, int)));
 
     if (!process.start(K3Process::Block, K3Process::Stderr))
+        return false;
+
+    if (!process.normalExit())
         return false;
 
     switch (process.exitStatus())

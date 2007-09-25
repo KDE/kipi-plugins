@@ -25,33 +25,56 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-class QString;
+// Qt includes.
+
+#include <qobject.h>
+#include <qstring.h>
+
+class KProcess;
 
 namespace KIPIJPEGLossLessPlugin
 {
 
-class Utils
+class Utils : public QObject
 {
+    Q_OBJECT
 
 public:
+
+    Utils(QObject *parent);
+    ~Utils();
+
+    bool updateMetadataImageMagick(const QString& src, QString& err);
+
+public: // Static methods.
 
     /** Test if a file is a JPEG file.
     */
     static bool isJPEG(const QString& file);
-
+    
     /** Test if a file is a RAW file supported by dcraw.
     */
     static bool isRAW(const QString& file);
-
+    
     /** POSIX Compliant File Copy and Move -
         Can't use KIO based operations as we need to use these in a thread
     */
+    
     static bool CopyFile(const QString& src, const QString& dst);
     static bool MoveFile(const QString& src, const QString& dst);
-
+    
     /** Thread-safe recursive dir deletion.
     */
+    
     static bool deleteDir(const QString& dirPath);
+
+private slots:
+
+    void slotReadStderr(KProcess*, char*, int);
+
+private:
+
+    QString m_stdErr;
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin
