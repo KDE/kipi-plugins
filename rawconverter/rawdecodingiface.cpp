@@ -190,7 +190,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     // -- Write image data into destination file -------------------------------
 
     QByteArray ICCColorProfile = getICCProfilFromFile(m_rawDecodingSettings.outputColorSpace);
-    QString soft = QString("Kipi Raw Converter v.%1").arg(kipiplugins_version);
+    QString soft = QString("Kipi-plugins v.%1").arg(kipiplugins_version);
     QFileInfo fi(filePath);
     destPath = fi.dirPath(true) + QString("/") + ".kipi-rawconverter-tmp-" 
                                 + QString::number(::time(0));
@@ -198,7 +198,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     // Metadata restoration and update.
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.load(filePath);
-    exiv2Iface.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
+    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
     exiv2Iface.setImageDimensions(QSize(width, height));
     exiv2Iface.setExifThumbnail(exifThumbnail);
     exiv2Iface.setImagePreview(iptcPreview);
