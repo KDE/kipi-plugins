@@ -185,6 +185,9 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
     if (!process.start(KProcess::Block, KProcess::Stderr))
         return false;
 
+    if (!process.normalExit())
+        return false;
+
     switch (process.exitStatus())
     {
         case 0:  // Process finished successfully !

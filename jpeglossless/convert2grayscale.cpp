@@ -230,6 +230,9 @@ bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QStrin
     if (!process.start(KProcess::Block, KProcess::Stderr))
         return false;
 
+    if (!process.normalExit())
+        return false;
+
     switch (process.exitStatus())
     {
         case 0:  // Process finished successfully !

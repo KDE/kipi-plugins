@@ -160,8 +160,6 @@ bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateActi
 bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest, 
                                     RotateAction angle, QString& err)
 {
-    // ImageMagick query --------------------------------------------
-
     KProcess process;
     process.clearArguments();
     process << "convert";
