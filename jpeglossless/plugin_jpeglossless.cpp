@@ -80,14 +80,17 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     KIPI::Plugin::setup( widget );
 
     m_action_AutoExif = new KAction(i18n("Auto Rotate/Flip Using Exif Information"), actionCollection());
+    m_action_AutoExif->setObjectName("rotate_exif");
     connect(m_action_AutoExif, SIGNAL(triggered(bool)), 
             this, SLOT(slotRotateExif()));
     addAction(m_action_AutoExif);
 
     m_action_RotateImage = new KActionMenu(KIcon("rotate"), i18n("Rotate"), actionCollection());
+    m_action_RotateImage->setObjectName("jpeglossless_rotate");
     addAction(m_action_RotateImage);
 
     KAction *left = new KAction(i18n("Left"), actionCollection());
+    left->setObjectName("rotate_ccw");
     left->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left);
     connect(left, SIGNAL(triggered(bool)), 
             this, SLOT(slotRotateLeft()));
@@ -95,6 +98,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     KAction *right = new KAction(i18n("Right"), actionCollection());
     right->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right);
+    right->setObjectName("rotate_cw");
     connect(right, SIGNAL(triggered(bool)), 
             this, SLOT(slotRotateRight()));
     m_action_RotateImage->addAction(right);
@@ -104,23 +108,25 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     KAction *hori = new KAction(i18n("Horizontally"), actionCollection());
     hori->setShortcut(Qt::CTRL+Qt::Key_Asterisk);
+    hori->setObjectName("flip_horizontal");
     connect(hori, SIGNAL(triggered(bool)), 
             this, SLOT(slotFlipHorizontally()));
     m_action_FlipImage->addAction(hori);
 
     KAction *verti = new KAction(i18n("Vertically"), actionCollection());
     verti->setShortcut(Qt::CTRL+Qt::Key_Slash);
+    verti->setObjectName("flip_vertical");
     connect(verti, SIGNAL(triggered(bool)), 
             this, SLOT(slotFlipVertically()));
     m_action_FlipImage->addAction(verti);
 
     m_action_Convert2GrayScale = new KAction(KIcon("grayscaleconvert"), i18n("Convert to Black && White"), actionCollection());
+    m_action_Convert2GrayScale->setObjectName("jpeglossless_convert2grayscale");
     connect(m_action_Convert2GrayScale, SIGNAL(triggered(bool)), 
             this, SLOT(slotConvert2GrayScale()));
     addAction(m_action_Convert2GrayScale);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-
     if ( !interface ) 
     {
         kError( 51000 ) << "Kipi interface is null!" << endl;
