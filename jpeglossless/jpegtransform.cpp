@@ -10,6 +10,10 @@
  * Copyright (C) 2004-2005 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
  * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
+ * NOTE: Do not use kdDebug() in this implementation because 
+ *       it will be multithreaded. Use qDebug() instead. 
+ *       See B.K.O #133026 for details.
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -45,7 +49,6 @@ extern "C"
 
 // KDE includes.
 
-#include <kdebug.h>
 #include <klocale.h>
 #include <ktempfile.h>
 
@@ -89,7 +92,7 @@ static void jpegtransform_jpeg_error_exit(j_common_ptr cinfo)
     (*cinfo->err->format_message)(cinfo, buffer);
 
 #ifdef ENABLE_DEBUG_MESSAGES
-    kdDebug() << k_funcinfo << buffer << endl;
+    qDebug("%s", buffer)
 #endif
 
     longjmp(myerr->setjmp_buffer, 1);
@@ -102,7 +105,7 @@ static void jpegtransform_jpeg_emit_message(j_common_ptr cinfo, int msg_level)
     (*cinfo->err->format_message)(cinfo, buffer);
 
 #ifdef ENABLE_DEBUG_MESSAGES
-    kdDebug() << k_funcinfo << buffer << " (" << msg_level << ")" << endl;
+    qDebug("%s (%i)", buffer, msg_level);
 #endif
 }
 
@@ -112,7 +115,7 @@ static void jpegtransform_jpeg_output_message(j_common_ptr cinfo)
     (*cinfo->err->format_message)(cinfo, buffer);
 
 #ifdef ENABLE_DEBUG_MESSAGES
-    kdDebug() << k_funcinfo << buffer << endl;
+    qDebug("%s", buffer)
 #endif
 }
 
@@ -134,8 +137,8 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     jvirt_barray_ptr * src_coef_arrays;
     jvirt_barray_ptr * dst_coef_arrays;
 
-    Matrix exifAction, action;
-    JXFORM_CODE flip,rotate;
+    Matrix      exifAction, action;
+    JXFORM_CODE flip, rotate;
 
     // Initialize the JPEG decompression object with default error handling
     srcinfo.err                 = jpeg_std_error(&jsrcerr);
@@ -155,7 +158,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     input_file = fopen(QFile::encodeName(src), "rb");
     if (!input_file)
     {
-        kdError() << "ImageRotate/ImageFlip: Error in opening input file" << endl;
+        qDebug("ImageRotate/ImageFlip: Error in opening input file");
         err = i18n("Error in opening input file");
         return false;
     }
@@ -164,7 +167,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     if (!output_file)
     {
         fclose(input_file);
-        kdError() << "ImageRotate/ImageFlip: Error in opening output file" << endl;
+        qDebug("ImageRotate/ImageFlip: Error in opening output file");
         err = i18n("Error in opening output file");
         return false;
     }
@@ -197,7 +200,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
 
     // Convert action into flip+rotate action
     convertTransform(action, flip, rotate);
-    kdDebug() << "Transforming with option " << flip << " " << rotate <<endl;
+    qDebug("Transforming with option %i %i", flip, rotate);
     bool twoPass = (flip != JXFORM_NONE);
 
     // If twoPass is true, we need another file (src -> tempFile -> destGiven)
@@ -212,7 +215,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     if (!output_file)
     {
         fclose(input_file);
-        kdError() << "ImageRotate/ImageFlip: Error in opening output file" << endl;
+        qDebug("ImageRotate/ImageFlip: Error in opening output file");
         err = i18n("Error in opening output file");
         return false;
     }
@@ -269,7 +272,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         input_file = fopen(QFile::encodeName(dest), "rb");
         if (!input_file)
         {
-            kdError() << "ImageRotate/ImageFlip: Error in opening input file" << endl;
+            qDebug("ImageRotate/ImageFlip: Error in opening input file");
             err = i18n("Error in opening input file");
             return false;
         }
@@ -278,7 +281,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         if (!output_file)
         {
             fclose(input_file);
-            kdError() << "ImageRotate/ImageFlip: Error in opening output file" << endl;
+            qDebug("ImageRotate/ImageFlip: Error in opening output file");
             err = i18n("Error in opening output file");
             return false;
         }

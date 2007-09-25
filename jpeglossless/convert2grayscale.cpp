@@ -6,7 +6,12 @@
  * Date        : 2003-10-14
  * Description : batch images grayscale conversion
  *
+ * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  * Copyright (C) 2003-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * NOTE: Do not use kdDebug() in this implementation because 
+ *       it will be multithreaded. Use qDebug() instead. 
+ *       See B.K.O #133026 for details.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -47,7 +52,6 @@ extern "C"
 
 #include <kprocess.h>
 #include <klocale.h>
-#include <kdebug.h>
 #include <kurl.h>
 
 // Local includes.
@@ -59,7 +63,6 @@ extern "C"
 
 namespace KIPIJPEGLossLessPlugin
 {
-
 
 ImageGrayScale::ImageGrayScale()
               : QObject()
@@ -140,7 +143,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     input_file = fopen(QFile::encodeName(src), "rb");
     if (!input_file)
     {
-        kdError( 51000 ) << "Image2GrayScale: Error in opening input file" << endl;
+        qDebug("Image2GrayScale: Error in opening input file");
         err = i18n("Error in opening input file");
         return false;
     }
@@ -149,7 +152,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     if (!output_file)
     {
         fclose(input_file);
-        kdError( 51000 ) << "Image2GrayScale: Error in opening output file" << endl;
+        qDebug("Image2GrayScale: Error in opening output file");
         err = i18n("Error in opening output file");
         return false;
     }
@@ -206,10 +209,15 @@ bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QStrin
 {
     KProcess process;
     process.clearArguments();
-    process << "convert" << "-type" << "Grayscale";   
+    process << "convert";
+    process << "-verbose";
+    process << "-type" << "Grayscale";
     process << src + QString("[0]") << dest;
 
-    kdDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;    
+    qDebug("ImageMagick Command line args:");
+    QValueList<QCString> args = process.args();
+    for (QValueList<QCString>::iterator it = args.begin(); it != args.end(); ++it)
+        qDebug("%s", (const char*)(*it));
 
     connect(&process, SIGNAL(receivedStderr(KProcess *, char*, int)),
             this, SLOT(slotReadStderr(KProcess*, char*, int)));
