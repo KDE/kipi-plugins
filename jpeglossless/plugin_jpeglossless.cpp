@@ -7,6 +7,7 @@
  * Description : loss less images transformations plugin.
  *
  * Copyright (C) 2003-2005 by Renchi Raju & Gilles Caulier <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -79,7 +80,8 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     KIPI::Plugin::setup( widget );
 
     m_action_AutoExif = new KAction(i18n("Auto Rotate/Flip Using Exif Information"), actionCollection());
-    connect(m_action_AutoExif, SIGNAL(triggered(bool)), this, SLOT(slotRotateExif()));
+    connect(m_action_AutoExif, SIGNAL(triggered(bool)), 
+            this, SLOT(slotRotateExif()));
     addAction(m_action_AutoExif);
 
     m_action_RotateImage = new KActionMenu(KIcon("rotate"), i18n("Rotate"), actionCollection());
@@ -87,12 +89,14 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     KAction *left = new KAction(i18n("Left"), actionCollection());
     left->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left);
-    connect(left, SIGNAL(triggered(bool)), this, SLOT(slotRotateLeft()));
+    connect(left, SIGNAL(triggered(bool)), 
+            this, SLOT(slotRotateLeft()));
     m_action_RotateImage->addAction(left);
 
     KAction *right = new KAction(i18n("Right"), actionCollection());
     right->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right);
-    connect(right, SIGNAL(triggered(bool)), this, SLOT(slotRotateRight()));
+    connect(right, SIGNAL(triggered(bool)), 
+            this, SLOT(slotRotateRight()));
     m_action_RotateImage->addAction(right);
 
     m_action_FlipImage = new KActionMenu(KIcon("flip"), i18n("Flip"), actionCollection());
@@ -100,16 +104,19 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     KAction *hori = new KAction(i18n("Horizontally"), actionCollection());
     hori->setShortcut(Qt::CTRL+Qt::Key_Asterisk);
-    connect(hori, SIGNAL(triggered(bool)), this, SLOT(slotFlipHorizontally()));
+    connect(hori, SIGNAL(triggered(bool)), 
+            this, SLOT(slotFlipHorizontally()));
     m_action_FlipImage->addAction(hori);
 
     KAction *verti = new KAction(i18n("Vertically"), actionCollection());
     verti->setShortcut(Qt::CTRL+Qt::Key_Slash);
-    connect(verti, SIGNAL(triggered(bool)), this, SLOT(slotFlipVertically()));
+    connect(verti, SIGNAL(triggered(bool)), 
+            this, SLOT(slotFlipVertically()));
     m_action_FlipImage->addAction(verti);
 
     m_action_Convert2GrayScale = new KAction(KIcon("grayscaleconvert"), i18n("Convert to Black && White"), actionCollection());
-    connect(m_action_Convert2GrayScale, SIGNAL(triggered(bool)), this, SLOT(slotConvert2GrayScale()));
+    connect(m_action_Convert2GrayScale, SIGNAL(triggered(bool)), 
+            this, SLOT(slotConvert2GrayScale()));
     addAction(m_action_Convert2GrayScale);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
