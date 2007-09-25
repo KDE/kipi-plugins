@@ -99,13 +99,9 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     meta.setImageDimensions(img.size());
     meta.setExifThumbnail(exifThumbnail);
     meta.setImagePreview(iptcPreview);
-    QByteArray ba = meta.getExif();
-    const uchar exifHeader[] = {0x45, 0x78, 0x69, 0x66, 0x00, 0x00};
-    QByteArray exifData;
-    exifData.resize(ba.size() + sizeof(exifHeader));
-    memcpy(exifData.data(), exifHeader, sizeof(exifHeader));
-    memcpy(exifData.data()+sizeof(exifHeader), ba.data(), ba.size());
+    QByteArray exifData = meta.getExif(true);
     QByteArray iptcData = meta.getIptc(true);
+    QByteArray xmpData  = meta.getXmp();
 
     KTemporaryFile exifTemp;
     exifTemp.setSuffix(QString("kipipluginsiptc.app1"));
@@ -132,6 +128,18 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     streamIptc.writeRawData(iptcData.data(), iptcData.size());
     iptcTemp.close();
 
+    KTemporaryFile xmpTemp;
+    xmpTemp.setSuffix(QString("kipipluginsxmp.xmp"));
+    xmpTemp.setAutoRemove(true);
+    if ( !xmpTemp.open() )
+    {
+        err = i18n("unable to open temp file");
+        return false;
+    }
+    QDataStream streamXmp( &xmpTemp );
+    streamXmp.writeRawData(xmpData.data(), xmpData.size());
+    xmpTemp.close();
+
     K3Process process;
     process.clearArguments();
     process << "mogrify";
@@ -143,12 +151,15 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     process << "-profile";
     process << iptcTemp.fileName();
 
+    process << "-profile";
+    process << xmpTemp.fileName();
+
     process << src + QString("[0]");
 
     qDebug() << "ImageMagick Command line: " << process.args();   
 
-    connect(&process, SIGNAL(receivedStderr(KProcess *, char*, int)),
-            this, SLOT(slotReadStderr(KProcess*, char*, int)));
+    connect(&process, SIGNAL(receivedStderr(K3Process *, char*, int)),
+            this, SLOT(slotReadStderr(K3Process*, char*, int)));
 
     if (!process.start(K3Process::Block, K3Process::Stderr))
         return false;
@@ -175,7 +186,7 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     return false;
 }
 
-void Utils::slotReadStderr(KProcess*, char* buffer, int buflen)
+void Utils::slotReadStderr(K3Process*, char* buffer, int buflen)
 {
     m_stdErr.append(QString::fromLocal8Bit(buffer, buflen));
 }
