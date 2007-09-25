@@ -104,13 +104,14 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     QByteArray xmpData  = meta.getXmp();
 
     KTemporaryFile exifTemp;
-    exifTemp.setSuffix(QString("kipipluginsiptc.app1"));
+    exifTemp.setSuffix(QString("kipipluginsexif.app1"));
     exifTemp.setAutoRemove(true);
     if ( !exifTemp.open() )
     {
         err = i18n("unable to open temp file");
         return false;
     }
+    QString exifFile = exifTemp.fileName();
     QDataStream streamExif( &exifTemp );
     streamExif.writeRawData(exifData.data(), exifData.size());
     exifTemp.close();
@@ -124,6 +125,7 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
         err = i18n("Cannot rotate: unable to open temp file");
         return false;
     }
+    QString iptcFile = iptcTemp.fileName();
     QDataStream streamIptc( &iptcTemp );
     streamIptc.writeRawData(iptcData.data(), iptcData.size());
     iptcTemp.close();
@@ -136,6 +138,7 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
         err = i18n("unable to open temp file");
         return false;
     }
+    QString xmpFile = xmpTemp.fileName();
     QDataStream streamXmp( &xmpTemp );
     streamXmp.writeRawData(xmpData.data(), xmpData.size());
     xmpTemp.close();
@@ -146,13 +149,13 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     process << "-verbose";
 
     process << "-profile";
-    process << exifTemp.fileName();
+    process << exifFile;
 
     process << "-profile";
-    process << iptcTemp.fileName();
+    process << iptcFile;
 
     process << "-profile";
-    process << xmpTemp.fileName();
+    process << xmpFile;
 
     process << src + QString("[0]");
 
