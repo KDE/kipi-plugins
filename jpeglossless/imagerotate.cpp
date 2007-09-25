@@ -50,7 +50,6 @@ extern "C"
 
 // KDE includes.
 
-#include <ktempfile.h>
 #include <kprocess.h>
 #include <klocale.h>
 #include <kurl.h>
