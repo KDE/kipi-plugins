@@ -7,7 +7,12 @@
  * Description : batch image rotation
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * NOTE: Do not use kdDebug() in this implementation because 
+ *       it will be multithreaded. Use qDebug() instead. 
+ *       See B.K.O #133026 for details.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -47,7 +52,6 @@ extern "C"
 
 #include <kprocess.h>
 #include <klocale.h>
-#include <kdebug.h>
 #include <kurl.h>
 
 // Local includes.
@@ -87,7 +91,7 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, const QString& 
     {
         err = i18n("Cannot rotate RAW file");
         return false;
-    }    
+    }
     else if (Utils::isJPEG(src))
     {
         if (!rotateJPEG(src, tmp, angle, err))
@@ -139,7 +143,7 @@ bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateActi
         }
         default:
         {
-            kdError( 51000 ) << "ImageRotate: Nonstandard rotation angle" << endl;
+            qDebug("ImageRotate: Nonstandard rotation angle");
             err = i18n("Nonstandard rotation angle");
             return false;
         }
@@ -153,7 +157,9 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
 {
     KProcess process;
     process.clearArguments();
-    process << "convert" << "-rotate";    
+    process << "convert";
+    process << "-verbose";
+    process << "-rotate";
 
     switch(angle)
     {
@@ -178,7 +184,7 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
         }
         default:
         {
-            kdError() << "ImageRotate: Nonstandard rotation angle" << endl;
+            qDebug("ImageRotate: Nonstandard rotation angle");
             err = i18n("Nonstandard rotation angle");
             return false;
         }
@@ -186,7 +192,10 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
 
     process << src + QString("[0]") << dest;
 
-    kdDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;    
+    qDebug("ImageMagick Command line args:");
+    QValueList<QCString> args = process.args();
+    for (QValueList<QCString>::iterator it = args.begin(); it != args.end(); ++it)
+        qDebug("%s", (const char*)(*it));
 
     connect(&process, SIGNAL(receivedStderr(KProcess *, char*, int)),
             this, SLOT(slotReadStderr(KProcess*, char*, int)));

@@ -7,6 +7,7 @@
  * Description : batch image rotation
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -57,7 +58,7 @@ private slots:
 private:
 
     bool rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QString& err);
-    
+
     bool rotateImageMagick(const QString& src, const QString& dest, RotateAction angle, QString& err);
 
 private:
