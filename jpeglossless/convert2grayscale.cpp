@@ -6,7 +6,12 @@
  * Date        : 2003-10-14
  * Description : batch images grayscale conversion
  *
+ * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  * Copyright (C) 2003-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * NOTE: Do not use kdDebug() in this implementation because 
+ *       it will be multithreaded. Use qDebug() instead. 
+ *       See B.K.O #133026 for details.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -41,12 +46,12 @@ extern "C"
 #include <QString>
 #include <QFile>
 #include <QFileInfo>
+#include <QtDebug>
 
 // KDE includes.
 
 #include <k3process.h>
 #include <klocale.h>
-#include <kdebug.h>
 #include <kurl.h>
 
 // Local includes.
@@ -138,7 +143,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     input_file = fopen(QFile::encodeName(src), "rb");
     if (!input_file)
     {
-        kError( 51000 ) << "Image2GrayScale: Error in opening input file" << endl;
+        qCritical() << "Image2GrayScale: Error in opening input file" << endl;
         err = i18n("Error in opening input file");
         return false;
     }
@@ -147,7 +152,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     if (!output_file)
     {
         fclose(input_file);
-        kError( 51000 ) << "Image2GrayScale: Error in opening output file" << endl;
+        qCritical() << "Image2GrayScale: Error in opening output file" << endl;
         err = i18n("Error in opening output file");
         return false;
     }
@@ -207,7 +212,7 @@ bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QStrin
     process << "convert" << "-type" << "Grayscale";   
     process << src + QString("[0]") << dest;
 
-    kDebug( 51000 ) << "ImageMagick Command line: " << process.args();    
+    qDebug() << "ImageMagick Command line: " << process.args();    
 
     connect(&process, SIGNAL(receivedStderr(K3Process *, char*, int)),
             this, SLOT(slotReadStderr(K3Process*, char*, int)));

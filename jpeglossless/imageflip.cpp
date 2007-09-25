@@ -6,7 +6,12 @@
  * Date        : 2003-10-14
  * Description : batch image flip
  *
+ * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  * Copyright (C) 2003-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * NOTE: Do not use kdDebug() in this implementation because 
+ *       it will be multithreaded. Use qDebug() instead. 
+ *       See B.K.O #133026 for details.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -41,12 +46,12 @@ extern "C"
 #include <QString>
 #include <QFile>
 #include <QFileInfo>
+#include <QtDebug>
 
 // KDE includes.
 
 #include <k3process.h>
 #include <klocale.h>
-#include <kdebug.h>
 
 // Local includes
 
@@ -126,7 +131,7 @@ bool ImageFlip::flipJPEG(const QString& src, const QString& dest, FlipAction act
         }
         default:
         {
-            kError( 51000 ) << "ImageFlip: Nonstandard flip action" << endl;
+            qCritical() << "ImageFlip: Nonstandard flip action" << endl;
             err = i18n("Nonstandard flip action");
             return false;
         }
@@ -155,7 +160,7 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
         }
         default:
         {
-            kError() << "ImageFlip: Nonstandard flip action" << endl;
+            qCritical() << "ImageFlip: Nonstandard flip action" << endl;
             err = i18n("Nonstandard flip action");
             return false;
         }
@@ -163,7 +168,7 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
 
     process << src + QString("[0]") << dest;
 
-    kDebug( 51000 ) << "ImageMagick Command line: " << process.args();    
+    qDebug() << "ImageMagick Command line: " << process.args();    
 
     connect(&process, SIGNAL(receivedStderr(K3Process *, char*, int)),
             this, SLOT(slotReadStderr(K3Process*, char*, int)));
@@ -196,4 +201,3 @@ void ImageFlip::slotReadStderr(K3Process*, char* buffer, int buflen)
 }
 
 }  // NameSpace KIPIJPEGLossLessPlugin
-

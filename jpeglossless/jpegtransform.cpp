@@ -4,11 +4,15 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2004-06-08
- * Description : Loss less JPEG files transformations.
+ * Description : Lossless JPEG files transformations.
  * 
- * Copyright (C) 2004      by  Ralf Hoelzer <kde at ralfhoelzer.com>
- * Copyright (C) 2004-2005 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
+ * Copyright (C) 2004 by  Ralf Hoelzer <kde at ralfhoelzer.com>
+ * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * NOTE: Do not use kdDebug() in this implementation because 
+ *       it will be multithreaded. Use qDebug() instead. 
+ *       See B.K.O #133026 for details.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -41,10 +45,10 @@ extern "C"
 
 #include <QString>
 #include <QFile>
+#include <QtDebug>
 
 // KDE includes.
 
-#include <kdebug.h>
 #include <klocale.h>
 #include <ktemporaryfile.h>
 
@@ -88,7 +92,7 @@ static void jpegtransform_jpeg_error_exit(j_common_ptr cinfo)
     (*cinfo->err->format_message)(cinfo, buffer);
 
 #ifdef ENABLE_DEBUG_MESSAGES
-    kdDebug() << buffer << endl;
+    qDebug() << buffer << endl;
 #endif
 
     longjmp(myerr->setjmp_buffer, 1);
@@ -101,7 +105,7 @@ static void jpegtransform_jpeg_emit_message(j_common_ptr cinfo, int msg_level)
     (*cinfo->err->format_message)(cinfo, buffer);
 
 #ifdef ENABLE_DEBUG_MESSAGES
-    kdDebug() << buffer << " (" << msg_level << ")" << endl;
+    qDebug() << buffer << " (" << msg_level << ")" << endl;
 #endif
 }
 
@@ -111,7 +115,7 @@ static void jpegtransform_jpeg_output_message(j_common_ptr cinfo)
     (*cinfo->err->format_message)(cinfo, buffer);
 
 #ifdef ENABLE_DEBUG_MESSAGES
-    kdDebug() << buffer << endl;
+    qDebug() << buffer << endl;
 #endif
 }
 
@@ -119,8 +123,8 @@ bool transformJPEG(const QString& src, const QString& destGiven,
                    Matrix &userAction, QString& err)
 {
     //may be modified
-    QString dest(destGiven);   
-    
+    QString dest(destGiven);
+
     JCOPY_OPTION copyoption = JCOPYOPT_ALL;
     jpeg_transform_info transformoption;
 
@@ -154,7 +158,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     input_file = fopen(QFile::encodeName(src), "rb");
     if (!input_file)
     {
-        kError() << "ImageRotate/ImageFlip: Error in opening input file" << endl;
+        qCritical() << "ImageRotate/ImageFlip: Error in opening input file" << endl;
         err = i18n("Error in opening input file");
         return false;
     }
@@ -163,7 +167,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     if (!output_file)
     {
         fclose(input_file);
-        kError() << "ImageRotate/ImageFlip: Error in opening output file" << endl;
+        qCritical() << "ImageRotate/ImageFlip: Error in opening output file" << endl;
         err = i18n("Error in opening output file");
         return false;
     }
@@ -196,7 +200,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
 
     // Convert action into flip+rotate action
     convertTransform(action, flip, rotate);
-    kDebug() << "Transforming with option " << flip << " " << rotate;
+    qDebug() << "Transforming with option " << flip << " " << rotate;
     bool twoPass = (flip != JXFORM_NONE);
 
     // If twoPass is true, we need another file (src -> tempFile -> destGiven)
@@ -212,7 +216,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     if (!output_file)
     {
         fclose(input_file);
-        kError() << "ImageRotate/ImageFlip: Error in opening output file" << endl;
+        qCritical() << "ImageRotate/ImageFlip: Error in opening output file" << endl;
         err = i18n("Error in opening output file");
         return false;
     }
@@ -233,7 +237,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
 
     // Specify data destination for compression
     jpeg_stdio_dest(&dstinfo, output_file);
-    
+
     // Do not write a JFIF header if previously the image did not contain it
     dstinfo.write_JFIF_header = false;
 
@@ -269,7 +273,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         input_file = fopen(QFile::encodeName(dest), "rb");
         if (!input_file)
         {
-            kError() << "ImageRotate/ImageFlip: Error in opening input file" << endl;
+            qCritical() << "ImageRotate/ImageFlip: Error in opening input file" << endl;
             err = i18n("Error in opening input file");
             return false;
         }
@@ -278,7 +282,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         if (!output_file)
         {
             fclose(input_file);
-            kError() << "ImageRotate/ImageFlip: Error in opening output file" << endl;
+            qCritical() << "ImageRotate/ImageFlip: Error in opening output file" << endl;
             err = i18n("Error in opening output file");
             return false;
         }
@@ -351,7 +355,7 @@ void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate)
 {
     flip   = JXFORM_NONE;
     rotate = JXFORM_NONE;
-    
+
     if (action == Matrix::rotate90) 
     {
         rotate = JXFORM_ROT_90;
