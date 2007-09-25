@@ -60,7 +60,9 @@ void Plugin_AcquireImages::setup(QWidget* widget)
     KIPI::Plugin::setup(widget);
 
     m_action_scanimages = new KAction(KIcon("scanner"), i18n("Scan Images..."), actionCollection());
-    connect(m_action_scanimages, SIGNAL(triggered(bool)), this, SLOT(slotActivate()));
+    m_action_scanimages->setObjectName("scan_images");
+    connect(m_action_scanimages, SIGNAL(triggered(bool)), 
+            this, SLOT(slotActivate()));
     addAction(m_action_scanimages);
 
     m_interface = dynamic_cast< KIPI::Interface* >(parent());
