@@ -247,7 +247,7 @@ void SendImages::run()
 
                     if (exiv2Iface.load(imageName))
                     {
-                        exiv2Iface.setImageProgramId(QString("Kipi SendImages"), QString(kipiplugins_version));
+                        exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
                         exiv2Iface.setImageDimensions(newsize);
                         exiv2Iface.save(targetFile);
                     }
