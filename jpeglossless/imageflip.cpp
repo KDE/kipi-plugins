@@ -6,7 +6,12 @@
  * Date        : 2003-10-14
  * Description : batch image flip
  *
- * Copyright (C) 2003-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * NOTE: Do not use kdDebug() in this implementation because 
+ *       it will be multithreaded. Use qDebug() instead. 
+ *       See B.K.O #133026 for details.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -46,7 +51,6 @@ extern "C"
 
 #include <kprocess.h>
 #include <klocale.h>
-#include <kdebug.h>
 #include <kurl.h>
 
 // Local includes
@@ -127,7 +131,7 @@ bool ImageFlip::flipJPEG(const QString& src, const QString& dest, FlipAction act
         }
         default:
         {
-            kdError( 51000 ) << "ImageFlip: Nonstandard flip action" << endl;
+            qDebug("ImageFlip: Nonstandard flip action");
             err = i18n("Nonstandard flip action");
             return false;
         }
@@ -140,7 +144,8 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
 {
     KProcess process;
     process.clearArguments();
-    process << "convert";    
+    process << "convert";
+    process << "-verbose";
 
     switch(action)
     {
@@ -156,7 +161,7 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
         }
         default:
         {
-            kdError() << "ImageFlip: Nonstandard flip action" << endl;
+            qDebug("ImageFlip: Nonstandard flip action");
             err = i18n("Nonstandard flip action");
             return false;
         }
@@ -164,7 +169,10 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
 
     process << src + QString("[0]") << dest;
 
-    kdDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;    
+    qDebug("ImageMagick Command line args:");
+    QValueList<QCString> args = process.args();
+    for (QValueList<QCString>::iterator it = args.begin(); it != args.end(); ++it)
+        qDebug("%s", (const char*)(*it));
 
     connect(&process, SIGNAL(receivedStderr(KProcess *, char*, int)),
             this, SLOT(slotReadStderr(KProcess*, char*, int)));
