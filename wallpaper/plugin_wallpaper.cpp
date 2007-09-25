@@ -42,9 +42,9 @@
 
 // Local includes
 
+#include "kdesktop_interface.h"
 #include "plugin_wallpaper.h"
 #include "plugin_wallpaper.moc"
-#include "kdesktop_interface.h"
 
 K_PLUGIN_FACTORY( WallPaperFactory, registerPlugin<Plugin_WallPaper>(); )
 K_EXPORT_PLUGIN ( WallPaperFactory("kipiplugin_wallpaper") )
@@ -61,33 +61,48 @@ void Plugin_WallPaper::setup( QWidget* widget )
 
     m_actionBackground = new KActionMenu(i18n("&Set as Background"),
                          actionCollection());
+    m_actionBackground->setObjectName("images2desktop");
 
     KAction *centered = new KAction(i18n("Centered"), actionCollection());
-    connect(centered, SIGNAL(triggered(bool)), this, SLOT(slotSetCenter()));
+    centered->setObjectName("images2desktop_center");
+    connect(centered, SIGNAL(triggered(bool)), 
+            this, SLOT(slotSetCenter()));
     m_actionBackground->addAction(centered);
 
     KAction *centeredTiled = new KAction(i18n("Centered Tiled"), actionCollection());
-    connect(centeredTiled, SIGNAL(triggered(bool)), this, SLOT(slotSetCenterTiled()));
+    centeredTiled->setObjectName("images2desktop_center_tiled");
+    connect(centeredTiled, SIGNAL(triggered(bool)), 
+            this, SLOT(slotSetCenterTiled()));
     m_actionBackground->addAction(centeredTiled);
 
     KAction *centeredMax = new KAction(i18n("Centered Max-Aspect"), actionCollection());
-    connect(centeredMax, SIGNAL(triggered(bool)), this, SLOT(slotSetCenteredMaxpect()));
+    centeredMax->setObjectName("images2desktop_center_maxpect");
+    connect(centeredMax, SIGNAL(triggered(bool)), 
+            this, SLOT(slotSetCenteredMaxpect()));
     m_actionBackground->addAction(centeredMax);
 
     KAction *tiledMax = new KAction(i18n("Tiled Max-Aspect"), actionCollection());
-    connect(tiledMax, SIGNAL(triggered(bool)), this, SLOT(slotSetTiledMaxpect()));
+    tiledMax->setObjectName("images2desktop_tiled_maxpect");
+    connect(tiledMax, SIGNAL(triggered(bool)), 
+            this, SLOT(slotSetTiledMaxpect()));
     m_actionBackground->addAction(tiledMax);
 
     KAction *scaled = new KAction(i18n("Scaled"), actionCollection());
-    connect(scaled, SIGNAL(triggered(bool)), this, SLOT(slotSetScaled()));
+    scaled->setObjectName("images2desktop_scaled");
+    connect(scaled, SIGNAL(triggered(bool)), 
+            this, SLOT(slotSetScaled()));
     m_actionBackground->addAction(scaled);
 
     KAction *centeredAutoFit = new KAction(i18n("Centered Auto Fit"), actionCollection());
-    connect(centeredAutoFit, SIGNAL(triggered(bool)), this, SLOT(slotSetCenteredAutoFit()));
+    centeredAutoFit->setObjectName("images2desktop_centered_auto_fit");
+    connect(centeredAutoFit, SIGNAL(triggered(bool)), 
+            this, SLOT(slotSetCenteredAutoFit()));
     m_actionBackground->addAction(centeredAutoFit);
 
     KAction *scaleCrop = new KAction(i18n("Scale && Crop"), actionCollection());
-    connect(scaleCrop, SIGNAL(triggered(bool)), this, SLOT(slotSetScaleAndCrop()));
+    scaleCrop->setObjectName("images2desktop_scale_and_crop");
+    connect(scaleCrop, SIGNAL(triggered(bool)), 
+            this, SLOT(slotSetScaleAndCrop()));
     m_actionBackground->addAction(scaleCrop);
 
     addAction( m_actionBackground );
@@ -173,7 +188,7 @@ void Plugin_WallPaper::setWallpaper(int layout)
    else
    {
       // PENDING We need a way to get a parent widget
-      // Sun, 06 Jun 2004 - Aur�ien
+      // Sun, 06 Jun 2004 - Aurelien
 
       KMessageBox::information( kapp->activeWindow(), i18n(
          "<qt><p>You selected a remote image. It needs to be saved to your local disk to be used as a wallpaper."
@@ -187,7 +202,7 @@ void Plugin_WallPaper::setWallpaper(int layout)
    OrgKdeKdesktopBackgroundInterface desktopInterface("org.kde.kdesktop", "/Background", QDBusConnection::sessionBus());
    QDBusReply<void> reply = desktopInterface.setWallpaper(path,layout);
    if(!reply.isValid())
-	KMessageBox::information(0L,i18n("Change Background"),i18n("We can not change background."));
+      KMessageBox::information(0L,i18n("Change Background"),i18n("We can not change background."));
 }
 
 KIPI::Category  Plugin_WallPaper::category( KAction* action ) const
