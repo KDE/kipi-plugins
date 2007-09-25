@@ -154,7 +154,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     // Metadata restoration and update.
     KExiv2Iface::KExiv2 meta;
     meta.load(filePath);
-    meta.setImageProgramId(QString("Kipi Raw Converter"), QString(kipiplugins_version));
+    meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
     meta.setImageDimensions(QSize(width, height));
     meta.setExifThumbnail(exifThumbnail);
     meta.setImagePreview(iptcPreview);
