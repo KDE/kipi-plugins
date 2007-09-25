@@ -324,13 +324,18 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &tmpPath)
             this, SLOT(slotPreviewReadStd(KProcess*, char*, int)));
 
     bool result = m_PreviewProc->start(KProcess::NotifyOnExit, KProcess::All);
-
     if(!result)
-       {
-       KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
-                                     "please check your installation."));
-       return;
-       }
+    {
+        KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
+                                      "please check your installation."));
+        return;
+    }
+
+    if (!m_PreviewProc->normalExit())
+    {
+        KMessageBox::error(this, i18n("Cannot run properly 'convert' program from 'ImageMagick' package"));
+        return;
+    }
 }
 
 

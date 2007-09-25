@@ -655,13 +655,18 @@ bool BatchProcessImagesDialog::startProcess(void)
             this, SLOT(slotReadStd(KProcess*, char*, int)));
 
     bool result = m_ProcessusProc->start(KProcess::NotifyOnExit, KProcess::All);
-
     if(!result)
-       {
+    {
        KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
                                      "please check your installation."));
        return false;
-       }
+    }
+
+    if (!m_ProcessusProc->normalExit())
+    {
+        KMessageBox::error(this, i18n("Cannot run properly 'convert' program from 'ImageMagick' package"));
+        return false;
+    }
 
     return true;
 }
@@ -849,14 +854,20 @@ void BatchProcessImagesDialog::slotPreview(void)
             this, SLOT(slotPreviewReadStd(KProcess*, char*, int)));
 
     bool result = m_PreviewProc->start(KProcess::NotifyOnExit, KProcess::All);
-
     if(!result)
-       {
-       KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
-                                     "please check your installation."));
-       m_previewButton->setEnabled(true);
-       return;
-       }
+    {
+        KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
+                                      "please check your installation."));
+        m_previewButton->setEnabled(true);
+        return;
+    }
+
+    if (!m_PreviewProc->normalExit())
+    {
+        KMessageBox::error(this, i18n("Cannot run properly 'convert' program from 'ImageMagick' package."));
+        m_previewButton->setEnabled(true);
+        return;
+    }
 }
 
 
