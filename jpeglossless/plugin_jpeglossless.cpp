@@ -59,72 +59,104 @@
 K_PLUGIN_FACTORY( JPEGLosslessFactory, registerPlugin<Plugin_JPEGLossless>(); )
 K_EXPORT_PLUGIN ( JPEGLosslessFactory("kipiplugin_jpeglossless") )
 
+class Plugin_JPEGLosslessPriv
+{
+public:
+
+    Plugin_JPEGLosslessPriv()
+    {
+        total                    = 0;
+        current                  = 0;
+        action_Convert2GrayScale = 0;
+        action_AutoExif          = 0;
+        action_RotateImage       = 0;
+        action_FlipImage         = 0;
+        progressDlg              = 0;
+        thread                   = 0;
+        failed                   = false;
+    }
+
+    bool                                  failed;
+
+    int                                   total;
+    int                                   current;
+
+    KAction                              *action_Convert2GrayScale;
+    KAction                              *action_AutoExif;
+
+    KActionMenu                          *action_RotateImage;
+    KActionMenu                          *action_FlipImage;
+
+    KUrl::List                            images;
+
+    KIPI::BatchProgressDialog            *progressDlg;
+
+    KIPIJPEGLossLessPlugin::ActionThread *thread;
+};
+
 Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent, const QVariantList &)
                    : KIPI::Plugin( JPEGLosslessFactory::componentData(), parent, "JPEGLossless")
 {
-    m_total                    = 0;
-    m_current                  = 0;
-    m_action_Convert2GrayScale = 0;
-    m_action_AutoExif          = 0;
-    m_action_RotateImage       = 0;
-    m_action_FlipImage         = 0;
-    m_progressDlg              = 0;
-    m_thread                   = 0;
-    m_failed                   = false;
-
+    d = new Plugin_JPEGLosslessPriv;
     kDebug( 51001 ) << "Plugin_JPEGLossless plugin loaded";
+}
+
+Plugin_JPEGLossless::~Plugin_JPEGLossless()
+{
+    delete d->progressDlg;
+    delete d;
 }
 
 void Plugin_JPEGLossless::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_AutoExif = new KAction(i18n("Auto Rotate/Flip Using Exif Information"), actionCollection());
-    m_action_AutoExif->setObjectName("rotate_exif");
-    connect(m_action_AutoExif, SIGNAL(triggered(bool)), 
+    d->action_AutoExif = new KAction(i18n("Auto Rotate/Flip Using Exif Information"), actionCollection());
+    d->action_AutoExif->setObjectName("rotate_exif");
+    connect(d->action_AutoExif, SIGNAL(triggered(bool)), 
             this, SLOT(slotRotateExif()));
-    addAction(m_action_AutoExif);
+    addAction(d->action_AutoExif);
 
-    m_action_RotateImage = new KActionMenu(KIcon("rotate"), i18n("Rotate"), actionCollection());
-    m_action_RotateImage->setObjectName("jpeglossless_rotate");
-    addAction(m_action_RotateImage);
+    d->action_RotateImage = new KActionMenu(KIcon("rotate"), i18n("Rotate"), actionCollection());
+    d->action_RotateImage->setObjectName("jpeglossless_rotate");
+    addAction(d->action_RotateImage);
 
     KAction *left = new KAction(i18n("Left"), actionCollection());
     left->setObjectName("rotate_ccw");
     left->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left);
     connect(left, SIGNAL(triggered(bool)), 
             this, SLOT(slotRotateLeft()));
-    m_action_RotateImage->addAction(left);
+    d->action_RotateImage->addAction(left);
 
     KAction *right = new KAction(i18n("Right"), actionCollection());
     right->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right);
     right->setObjectName("rotate_cw");
     connect(right, SIGNAL(triggered(bool)), 
             this, SLOT(slotRotateRight()));
-    m_action_RotateImage->addAction(right);
+    d->action_RotateImage->addAction(right);
 
-    m_action_FlipImage = new KActionMenu(KIcon("flip"), i18n("Flip"), actionCollection());
-    addAction(m_action_FlipImage);
+    d->action_FlipImage = new KActionMenu(KIcon("flip"), i18n("Flip"), actionCollection());
+    addAction(d->action_FlipImage);
 
     KAction *hori = new KAction(i18n("Horizontally"), actionCollection());
     hori->setShortcut(Qt::CTRL+Qt::Key_Asterisk);
     hori->setObjectName("flip_horizontal");
     connect(hori, SIGNAL(triggered(bool)), 
             this, SLOT(slotFlipHorizontally()));
-    m_action_FlipImage->addAction(hori);
+    d->action_FlipImage->addAction(hori);
 
     KAction *verti = new KAction(i18n("Vertically"), actionCollection());
     verti->setShortcut(Qt::CTRL+Qt::Key_Slash);
     verti->setObjectName("flip_vertical");
     connect(verti, SIGNAL(triggered(bool)), 
             this, SLOT(slotFlipVertically()));
-    m_action_FlipImage->addAction(verti);
+    d->action_FlipImage->addAction(verti);
 
-    m_action_Convert2GrayScale = new KAction(KIcon("grayscaleconvert"), i18n("Convert to Black && White"), actionCollection());
-    m_action_Convert2GrayScale->setObjectName("jpeglossless_convert2grayscale");
-    connect(m_action_Convert2GrayScale, SIGNAL(triggered(bool)), 
+    d->action_Convert2GrayScale = new KAction(KIcon("grayscaleconvert"), i18n("Convert to Black && White"), actionCollection());
+    d->action_Convert2GrayScale->setObjectName("jpeglossless_convert2grayscale");
+    connect(d->action_Convert2GrayScale, SIGNAL(triggered(bool)), 
             this, SLOT(slotConvert2GrayScale()));
-    addAction(m_action_Convert2GrayScale);
+    addAction(d->action_Convert2GrayScale);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !interface ) 
@@ -133,38 +165,33 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
         return;
     }
 
-    m_action_AutoExif->setEnabled( false );
-    m_action_RotateImage->setEnabled( false );
-    m_action_FlipImage->setEnabled( false );
-    m_action_Convert2GrayScale->setEnabled( false );
+    d->action_AutoExif->setEnabled( false );
+    d->action_RotateImage->setEnabled( false );
+    d->action_FlipImage->setEnabled( false );
+    d->action_Convert2GrayScale->setEnabled( false );
 
-    m_thread = new KIPIJPEGLossLessPlugin::ActionThread(interface, this);
+    d->thread = new KIPIJPEGLossLessPlugin::ActionThread(interface, this);
 
-    connect( m_thread, SIGNAL(starting(const QString &, int)),
+    connect( d->thread, SIGNAL(starting(const QString &, int)),
              this, SLOT(slotStarting(const QString &, int)));
 
-    connect( m_thread, SIGNAL(finished(const QString &, int)),
+    connect( d->thread, SIGNAL(finished(const QString &, int)),
              this, SLOT(slotFinished(const QString &, int)));
 
-    connect( m_thread, SIGNAL(failed(const QString &, int, const QString &)),
+    connect( d->thread, SIGNAL(failed(const QString &, int, const QString &)),
              this, SLOT(slotFailed(const QString &, int, const QString &)));
 
     connect( interface, SIGNAL( selectionChanged( bool ) ),
-             m_action_AutoExif, SLOT( setEnabled( bool ) ) );
+             d->action_AutoExif, SLOT( setEnabled( bool ) ) );
 
     connect( interface, SIGNAL( selectionChanged( bool ) ),
-             m_action_RotateImage, SLOT( setEnabled( bool ) ) );
+             d->action_RotateImage, SLOT( setEnabled( bool ) ) );
 
     connect( interface, SIGNAL( selectionChanged( bool ) ),
-             m_action_FlipImage, SLOT( setEnabled( bool ) ) );
+             d->action_FlipImage, SLOT( setEnabled( bool ) ) );
 
     connect( interface, SIGNAL( selectionChanged( bool ) ),
-             m_action_Convert2GrayScale, SLOT( setEnabled( bool ) ) );
-}
-
-Plugin_JPEGLossless::~Plugin_JPEGLossless()
-{
-    delete m_progressDlg;
+             d->action_Convert2GrayScale, SLOT( setEnabled( bool ) ) );
 }
 
 void Plugin_JPEGLossless::slotFlipHorizontally()
@@ -182,28 +209,28 @@ void Plugin_JPEGLossless::flip(KIPIJPEGLossLessPlugin::FlipAction action, const 
     KUrl::List items = images();
     if (items.count() <= 0) return;
 
-    m_thread->flip(items, action);
+    d->thread->flip(items, action);
 
-    m_total   = items.count();
-    m_current = 0;
-    m_failed  = false;
+    d->total   = items.count();
+    d->current = 0;
+    d->failed  = false;
 
-    if (m_progressDlg) 
+    if (d->progressDlg) 
     {
-        delete m_progressDlg;
-        m_progressDlg = 0;
+        delete d->progressDlg;
+        d->progressDlg = 0;
     }
 
-    m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
+    d->progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
                         i18n("Flip images %1", title));
 
-    connect(m_progressDlg, SIGNAL(cancelClicked()),
+    connect(d->progressDlg, SIGNAL(cancelClicked()),
             this, SLOT(slotCancel()));
 
-    m_progressDlg->show();
+    d->progressDlg->show();
 
-    if (!m_thread->isRunning())
-        m_thread->start();
+    if (!d->thread->isRunning())
+        d->thread->start();
 }
 
 void Plugin_JPEGLossless::slotRotateRight()
@@ -226,28 +253,28 @@ void Plugin_JPEGLossless::rotate(KIPIJPEGLossLessPlugin::RotateAction action, co
     KUrl::List items = images();
     if (items.count() <= 0) return;
 
-    m_thread->rotate(items, action);
+    d->thread->rotate(items, action);
 
-    m_total   = items.count();
-    m_current = 0;
-    m_failed  = false;
+    d->total   = items.count();
+    d->current = 0;
+    d->failed  = false;
 
-    if (m_progressDlg) 
+    if (d->progressDlg) 
     {
-        delete m_progressDlg;
-        m_progressDlg = 0;
+        delete d->progressDlg;
+        d->progressDlg = 0;
     }
 
-    m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
+    d->progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
                         i18n("Rotate images %1", title));
 
-    connect(m_progressDlg, SIGNAL(cancelClicked()),
+    connect(d->progressDlg, SIGNAL(cancelClicked()),
             this, SLOT(slotCancel()));
 
-    m_progressDlg->show();
+    d->progressDlg->show();
 
-    if (!m_thread->isRunning())
-        m_thread->start();
+    if (!d->thread->isRunning())
+        d->thread->start();
 }
 
 void Plugin_JPEGLossless::slotConvert2GrayScale()
@@ -261,32 +288,32 @@ void Plugin_JPEGLossless::slotConvert2GrayScale()
 
     QString from(sender()->objectName());
 
-    m_total   = items.count();
-    m_current = 0;
-    m_failed  = false;
+    d->total   = items.count();
+    d->current = 0;
+    d->failed  = false;
 
-    if (m_progressDlg) 
+    if (d->progressDlg) 
     {
-        delete m_progressDlg;
-        m_progressDlg = 0;
+        delete d->progressDlg;
+        d->progressDlg = 0;
     }
 
-    m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
+    d->progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
                         i18n("Convert images to black & white"));
 
-    connect(m_progressDlg, SIGNAL(cancelClicked()),
+    connect(d->progressDlg, SIGNAL(cancelClicked()),
             this, SLOT(slotCancel()));
 
-    m_progressDlg->show();
+    d->progressDlg->show();
 
-    m_thread->convert2grayscale(items);
-    if (!m_thread->isRunning())
-        m_thread->start();
+    d->thread->convert2grayscale(items);
+    if (!d->thread->isRunning())
+        d->thread->start();
 }
 
 void Plugin_JPEGLossless::slotCancel()
 {
-    m_thread->cancel();
+    d->thread->cancel();
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
@@ -296,7 +323,7 @@ void Plugin_JPEGLossless::slotCancel()
         return;
     }
 
-    interface->refreshImages( m_images );
+    interface->refreshImages( d->images );
 }
 
 void Plugin_JPEGLossless::slotStarting(const QString &filePath, int action)
@@ -326,7 +353,7 @@ void Plugin_JPEGLossless::slotStarting(const QString &filePath, int action)
         }
     }
 
-    m_progressDlg->addedAction(text, KIPI::StartingMessage);
+    d->progressDlg->addedAction(text, KIPI::StartingMessage);
 }
 
 void Plugin_JPEGLossless::slotFinished(const QString &filePath, int action)
@@ -358,7 +385,7 @@ void Plugin_JPEGLossless::slotFinished(const QString &filePath, int action)
         }
     }
 
-    m_progressDlg->addedAction(text, KIPI::SuccessMessage);
+    d->progressDlg->addedAction(text, KIPI::SuccessMessage);
 
     oneTaskCompleted();
 }
@@ -367,7 +394,7 @@ void Plugin_JPEGLossless::slotFailed(const QString &filePath, int action, const 
 {
     Q_UNUSED(filePath);
 
-    m_failed = true;
+    d->failed = true;
     QString text;
 
     switch ((KIPIJPEGLossLessPlugin::Action)action)
@@ -393,35 +420,35 @@ void Plugin_JPEGLossless::slotFailed(const QString &filePath, int action, const 
         }
     }
 
-    m_progressDlg->addedAction(text, KIPI::WarningMessage);
+    d->progressDlg->addedAction(text, KIPI::WarningMessage);
 
     if (!errString.isEmpty())
-        m_progressDlg->addedAction(errString, KIPI::WarningMessage);
+        d->progressDlg->addedAction(errString, KIPI::WarningMessage);
 
     oneTaskCompleted();
 }
 
 void Plugin_JPEGLossless::oneTaskCompleted()
 {
-    m_current++;
-    m_progressDlg->setProgress(m_current, m_total);
+    d->current++;
+    d->progressDlg->setProgress(d->current, d->total);
 
-    if (m_current >= m_total)
+    if (d->current >= d->total)
     {
-        m_current = 0;
+        d->current = 0;
 
-        if (m_failed)
+        if (d->failed)
         {
-            m_progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
+            d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
 
-            disconnect(m_progressDlg, SIGNAL(cancelClicked()),
+            disconnect(d->progressDlg, SIGNAL(cancelClicked()),
                        this, SLOT(slotCancel()));
         }
         else 
         {
             slotCancel();
-            m_progressDlg->close();
-            m_progressDlg = 0;
+            d->progressDlg->close();
+            d->progressDlg = 0;
         }
 
         KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
@@ -432,19 +459,19 @@ void Plugin_JPEGLossless::oneTaskCompleted()
            return;
         }
 
-        interface->refreshImages( m_images );
+        interface->refreshImages( d->images );
     }
 }
 
 KIPI::Category Plugin_JPEGLossless::category( KAction* action ) const
 {
-    if (action == m_action_AutoExif)
+    if (action == d->action_AutoExif)
         return KIPI::IMAGESPLUGIN;
-    else if ( action == m_action_RotateImage )
+    else if ( action == d->action_RotateImage )
        return KIPI::IMAGESPLUGIN;
-    else if ( action == m_action_FlipImage )
+    else if ( action == d->action_FlipImage )
        return KIPI::IMAGESPLUGIN;
-    else if ( action == m_action_Convert2GrayScale )
+    else if ( action == d->action_Convert2GrayScale )
        return KIPI::IMAGESPLUGIN;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification";
@@ -467,6 +494,6 @@ KUrl::List Plugin_JPEGLossless::images()
 
     // We don't want the set of images to change before we are done
     // and tells the host app to refresh the images.
-    m_images = images.images();
+    d->images = images.images();
     return images.images();
 }

@@ -34,13 +34,7 @@
 
 #include "actions.h"
 
-class KActionMenu;
-class KAction;
-
-namespace KIPIJPEGLossLessPlugin
-{
-class ActionThread;
-}
+class Plugin_JPEGLosslessPriv;
 
 class Plugin_JPEGLossless : public KIPI::Plugin
 {
@@ -77,22 +71,9 @@ private:
     void rotate(KIPIJPEGLossLessPlugin::RotateAction action, const QString &title);
     void oneTaskCompleted();
 
-    bool                                  m_failed;
+private:
 
-    int                                   m_total;
-    int                                   m_current;
-
-    KAction                              *m_action_Convert2GrayScale;
-    KAction                              *m_action_AutoExif;
-
-    KActionMenu                          *m_action_RotateImage;
-    KActionMenu                          *m_action_FlipImage;
-
-    KUrl::List                            m_images;
-
-    KIPI::BatchProgressDialog            *m_progressDlg;
-
-    KIPIJPEGLossLessPlugin::ActionThread *m_thread;
+    Plugin_JPEGLosslessPriv *d;
 };
 
 #endif /* PLUGIN_JPEGLOSSLESS_H */
