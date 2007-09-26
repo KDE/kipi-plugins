@@ -63,12 +63,14 @@ public:
         running = false;
     }
 
-    struct Task 
+    class Task 
     {
-        QString                          filePath;
-        Action                           action;
-        SaveSettingsWidget::OutputFormat outputFormat;
-        KDcrawIface::RawDecodingSettings decodingSettings;
+        public:
+
+            QString                          filePath;
+            Action                           action;
+            SaveSettingsWidget::OutputFormat outputFormat;
+            KDcrawIface::RawDecodingSettings decodingSettings;
     };
 
     bool                             running;
