@@ -36,7 +36,6 @@
 // KDE includes.
 
 #include <kdebug.h>
-#include <kstandarddirs.h>
 
 // Local includes.
 
