@@ -36,6 +36,7 @@ extern "C"
 
 #include <QApplication>
 #include <QDir>
+#include <QtDebug>
 
 // KDE includes.
 
@@ -255,7 +256,9 @@ void ActionThread::run()
 
             default: 
             {
-                qWarning("KIPIRawConverterPlugin:ActionThread: Unknown action specified");
+                qCritical() << "KIPIRawConverterPlugin:ActionThread: "
+                            << "Unknown action specified"
+                            << endl;
                 delete d;
             }
         }
