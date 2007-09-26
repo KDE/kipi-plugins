@@ -157,6 +157,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     d->listView->setSorting(-1);
     d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     d->listView->setSelectionMode(Q3ListView::Single);
+    d->listView->setFullWidth(true);
     d->listView->setMinimumWidth(450);
 
     // ---------------------------------------------------------------
