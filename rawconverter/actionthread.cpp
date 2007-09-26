@@ -31,6 +31,9 @@
 #include <QDir>
 #include <QtDebug>
 #include <QMutexLocker>
+#include <QMutex>
+#include <QWaitCondition>
+#include <QString>
 
 // KDE includes.
 
@@ -43,15 +46,50 @@
 
 // Local includes.
 
+#include "actions.h"
+#include "rawdecodingiface.h"
 #include "actionthread.h"
 #include "actionthread.moc"
 
 namespace KIPIRawConverterPlugin
 {
 
+class ActionThreadPriv
+{
+public:
+
+    ActionThreadPriv()
+    {
+        running = false;
+    }
+
+    struct Task 
+    {
+        QString                          filePath;
+        Action                           action;
+        SaveSettingsWidget::OutputFormat outputFormat;
+        KDcrawIface::RawDecodingSettings decodingSettings;
+    };
+
+    bool                             running;
+
+    QMutex                           mutex;
+
+    QWaitCondition                   condVar;
+
+    QList<Task*>                     todo;
+
+    RawDecodingIface                 dcrawIface;
+
+    SaveSettingsWidget::OutputFormat outputFormat;
+
+    KDcrawIface::RawDecodingSettings rawDecodingSettings;
+};
+
 ActionThread::ActionThread(QObject *parent)
             : QThread(parent)
 {
+    d = new ActionThreadPriv;
     qRegisterMetaType<ActionData>("ActionData");
 }
 
@@ -61,13 +99,15 @@ ActionThread::~ActionThread()
     cancel();
     // wait for the thread to finish
     wait();
+
+    delete d;
 }
 
 void ActionThread::setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings, 
                                           SaveSettingsWidget::OutputFormat outputFormat)
 {
-    m_rawDecodingSettings = rawDecodingSettings;
-    m_outputFormat        = outputFormat;
+    d->rawDecodingSettings = rawDecodingSettings;
+    d->outputFormat        = outputFormat;
 }
 
 void ActionThread::processRawFile(const KUrl& url)
@@ -96,13 +136,13 @@ void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
     for (KUrl::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
-        Task *t     = new Task;
-        t->filePath = (*it).path();
-        t->action   = full ? IDENTIFY_FULL : IDENTIFY;
+        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        t->filePath               = (*it).path();
+        t->action                 = full ? IDENTIFY_FULL : IDENTIFY;
 
-        QMutexLocker lock(&m_mutex);
-        m_todo << t;
-        m_condVar.wakeAll();
+        QMutexLocker lock(&d->mutex);
+        d->todo << t;
+        d->condVar.wakeAll();
     }
 }
 
@@ -111,15 +151,15 @@ void ActionThread::processRawFiles(const KUrl::List& urlList)
     for (KUrl::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
-        Task *t             = new Task;
-        t->filePath         = (*it).path();
-        t->outputFormat     = m_outputFormat;
-        t->decodingSettings = m_rawDecodingSettings;
-        t->action           = PROCESS;
+        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        t->filePath               = (*it).path();
+        t->outputFormat           = d->outputFormat;
+        t->decodingSettings       = d->rawDecodingSettings;
+        t->action                 = PROCESS;
 
-        QMutexLocker lock(&m_mutex);
-        m_todo << t;
-        m_condVar.wakeAll();
+        QMutexLocker lock(&d->mutex);
+        d->todo << t;
+        d->condVar.wakeAll();
     }
 }
 
@@ -128,39 +168,39 @@ void ActionThread::processHalfRawFiles(const KUrl::List& urlList)
     for (KUrl::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
-        Task *t             = new Task;
-        t->filePath         = (*it).path(); //deep copy
-        t->outputFormat     = m_outputFormat;
-        t->decodingSettings = m_rawDecodingSettings;
-        t->action           = PREVIEW;
+        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        t->filePath               = (*it).path(); //deep copy
+        t->outputFormat           = d->outputFormat;
+        t->decodingSettings       = d->rawDecodingSettings;
+        t->action                 = PREVIEW;
 
-        QMutexLocker lock(&m_mutex);
-        m_todo << t;
-        m_condVar.wakeAll();
+        QMutexLocker lock(&d->mutex);
+        d->todo << t;
+        d->condVar.wakeAll();
     }
 }
 
 void ActionThread::cancel()
 {
-    QMutexLocker lock(&m_mutex);
-    m_todo.clear();
-    m_running = false;
-    m_condVar.wakeAll();
-    m_dcrawIface.cancel();
+    QMutexLocker lock(&d->mutex);
+    d->todo.clear();
+    d->running = false;
+    d->condVar.wakeAll();
+    d->dcrawIface.cancel();
 }
 
 void ActionThread::run()
 {
-    m_running = true;
-    while (m_running)
+    d->running = true;
+    while (d->running)
     {
-        Task *t = 0;
+        ActionThreadPriv::Task *t = 0;
         {
-            QMutexLocker lock(&m_mutex);
-            if (!m_todo.isEmpty())
-                t = m_todo.takeFirst();
+            QMutexLocker lock(&d->mutex);
+            if (!d->todo.isEmpty())
+                t = d->todo.takeFirst();
             else
-                m_condVar.wait(&m_mutex);
+                d->condVar.wait(&d->mutex);
         }
 
         if (t)
@@ -172,11 +212,11 @@ void ActionThread::run()
                 {
                     // Get embedded RAW file thumbnail.
                     QImage image;
-                    m_dcrawIface.loadDcrawPreview(image, t->filePath);
+                    d->dcrawIface.loadDcrawPreview(image, t->filePath);
     
                     // Identify Camera model.    
                     KDcrawIface::DcrawInfoContainer info;
-                    m_dcrawIface.rawFileIdentify(info, t->filePath);
+                    d->dcrawIface.rawFileIdentify(info, t->filePath);
     
                     QString identify = i18n("Cannot identify Raw image");
                     if (info.isDecodable)
@@ -236,7 +276,7 @@ void ActionThread::run()
                     emit starting(ad1);
     
                     QString destPath;
-                    bool result = m_dcrawIface.decodeHalfRAWImage(t->filePath, destPath, 
+                    bool result = d->dcrawIface.decodeHalfRAWImage(t->filePath, destPath, 
                                                                   t->outputFormat, t->decodingSettings);
     
                     ActionData ad2;
@@ -257,7 +297,7 @@ void ActionThread::run()
                     emit starting(ad1);
     
                     QString destPath;
-                    bool result = m_dcrawIface.decodeRAWImage(t->filePath, destPath, 
+                    bool result = d->dcrawIface.decodeRAWImage(t->filePath, destPath, 
                                                               t->outputFormat, t->decodingSettings);
     
                     ActionData ad2;

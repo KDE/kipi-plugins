@@ -69,6 +69,7 @@ extern "C"
 
 // Local includes.
 
+#include "actions.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "previewwidget.h"

@@ -27,9 +27,6 @@
 // Qt includes.
 
 #include <QThread>
-#include <QString>
-#include <QMutex>
-#include <QWaitCondition>
 
 // KDE includes.
 
@@ -41,12 +38,13 @@
 
 // Local includes.
 
-#include "rawdecodingiface.h"
 #include "savesettingswidget.h"
-#include "actions.h"
 
 namespace KIPIRawConverterPlugin
 {
+
+class ActionData;
+class ActionThreadPriv;
 
 class ActionThread : public QThread
 {
@@ -82,23 +80,7 @@ protected:
 
 private:
 
-    struct Task 
-    {
-        QString                          filePath;
-        Action                           action;
-        SaveSettingsWidget::OutputFormat outputFormat;
-        KDcrawIface::RawDecodingSettings decodingSettings;
-    };
-
-    SaveSettingsWidget::OutputFormat  m_outputFormat;
-
-    KDcrawIface::RawDecodingSettings  m_rawDecodingSettings;
-
-    RawDecodingIface                  m_dcrawIface;
-    QMutex                            m_mutex;
-    QWaitCondition                    m_condVar;
-    bool                              m_running;
-    QList<Task*>                      m_todo;
+    ActionThreadPriv *d;
 };
 
 }  // NameSpace KIPIRawConverterPlugin
