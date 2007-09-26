@@ -42,6 +42,7 @@ class QCloseEvent;
 namespace KIPIRawConverterPlugin
 {
 
+class ActionData;
 class BatchDialogPriv;
 
 class BatchDialog : public KDialog
@@ -58,7 +59,6 @@ public:
 
 protected:
 
-    void customEvent(QEvent *event);
     void closeEvent(QCloseEvent *e);
 
 private:
@@ -84,6 +84,8 @@ private slots:
 
     void slotSaveFormatChanged();
     void slotConvertBlinkTimerDone();
+
+    void slotAction(const ActionData&);
 
 private:
 

@@ -25,9 +25,8 @@
 
 // Qt includes.
 
-#include <QEvent>
-#include <QImage>
 #include <QString>
+#include <QImage>
 
 namespace KIPIRawConverterPlugin
 {
@@ -41,12 +40,12 @@ enum Action
     PROCESS
 };
 
-class EventData : public QEvent
+class ActionData
 {
 
 public:
 
-    EventData() : QEvent(User)
+    ActionData() 
     {
         starting = false;
         success  = false;

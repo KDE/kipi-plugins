@@ -238,6 +238,12 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     connect(this, SIGNAL(user2Clicked()),
             this, SLOT(slotUser2()));
 
+    connect(d->thread, SIGNAL(starting(const ActionData&)),
+            this, SLOT(slotAction(const ActionData&)));
+
+    connect(d->thread, SIGNAL(finished(const ActionData&)),
+            this, SLOT(slotAction(const ActionData&)));
+
     // ---------------------------------------------------------------
 
     d->itemDict.setAutoDelete(true);
@@ -248,7 +254,6 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
 BatchDialog::~BatchDialog()
 {
     delete d->about;
-    delete d->thread;
     delete d;
 }
 
@@ -643,93 +648,84 @@ void BatchDialog::processingFailed(const QString& file)
     d->currentConvertItem = 0;
 }
 
-void BatchDialog::customEvent(QEvent *event)
+void BatchDialog::slotAction(const ActionData& ad)
 {
-    if (!event) return;
-
-    EventData *ev = (EventData*)event;
-    if (!ev) return;
-
     QString text;
 
-    if (ev->starting)            // Something have been started...
+    if (ad.starting)            // Something have been started...
     {
-        switch (ev->action) 
+        switch (ad.action) 
         {
             case(IDENTIFY): 
                 break;
             case(PROCESS):
             {
                 busy(true);
-                processing(ev->filePath);
+                processing(ad.filePath);
                 break;
             }
             default: 
             {
-                kWarning( 51000 ) << "KIPIRawConverterPlugin: Unknown event" << endl;
+                kWarning(51000) << "KIPIRawConverterPlugin: Unknown action" << endl;
                 break;
             }
         }
     }
     else                 
     {
-        if (!ev->success)        // Something is failed...
+        if (!ad.success)        // Something is failed...
         {
-            switch (ev->action) 
+            switch (ad.action) 
             {
                 case(IDENTIFY): 
                     break;
                 case(PROCESS):
                 {
-                    processingFailed(ev->filePath);
+                    processingFailed(ad.filePath);
                     processOne();
                     break;
                 }
                 default: 
                 {
-                    kWarning( 51000 ) << "KIPIRawConverterPlugin: Unknown event" << endl;
+                    kWarning(51000) << "KIPIRawConverterPlugin: Unknown action" << endl;
                     break;
                 }
             }
         }
         else                    // Something is done...
         {
-            switch (ev->action)
+            switch (ad.action)
             {
                 case(IDENTIFY): 
                 {
-                    QFileInfo fi(ev->filePath);
+                    QFileInfo fi(ad.filePath);
                     RawItem *rawItem = d->itemDict.find(fi.fileName());
                     if (rawItem) 
                     {
-                        if (!ev->image.isNull())
+                        if (!ad.image.isNull())
                         {
-                            QPixmap pix = QPixmap::fromImage(ev->image.scaled(64, 64, Qt::KeepAspectRatio));
+                            QPixmap pix = QPixmap::fromImage(ad.image.scaled(64, 64, Qt::KeepAspectRatio));
                             rawItem->viewItem->setThumbnail(pix);
                         }
-                        rawItem->viewItem->setText(3, ev->message);
-                        rawItem->identity = ev->message;
+                        rawItem->viewItem->setText(3, ad.message);
+                        rawItem->identity = ad.message;
                     }
                     break;
                 }
                 case(PROCESS):
                 {
-                    processed(ev->filePath, ev->destPath);
+                    processed(ad.filePath, ad.destPath);
                     processOne();
                     break;
                 }
                 default: 
                 {
-                    kWarning( 51000 ) << "KIPIRawConverterPlugin: Unknown event" << endl;
+                    kWarning(51000) << "KIPIRawConverterPlugin: Unknown action" << endl;
                     break;
                 }
             }
         }
     }
-
-// FIXME : this is a temporary fix to comments this line to prevent a crash with Qt4.
-//         Marcel, we need to use your implementation about multithreading management from JPEGLossLess.
-//    delete ev;
 }
 
 } // NameSpace KIPIRawConverterPlugin

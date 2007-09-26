@@ -8,9 +8,9 @@ SET(kipiplugin_rawconverter_PART_SRCS plugin_rawconverter.cpp
                                       previewwidget.cpp 
                                       savesettingswidget.cpp 
                                       rawdecodingiface.cpp 
-                                      singledialog.cpp
-                                      batchdialog.cpp 
                                       actionthread.cpp 
+                                      batchdialog.cpp 
+                                      singledialog.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_rawconverter ${kipiplugin_rawconverter_PART_SRCS})

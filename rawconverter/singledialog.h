@@ -32,16 +32,13 @@
 
 #include <kdialog.h>
 
-// Local includes
-
-#include "kpaboutdata.h"
-
 class QCloseEvent;
 class QEvent;
 
 namespace KIPIRawConverterPlugin
 {
 
+class ActionData;
 class SingleDialogPriv;
 
 class SingleDialog : public KDialog
@@ -55,7 +52,6 @@ public:
 
 protected:
 
-    void customEvent(QEvent *event);
     void closeEvent(QCloseEvent *e);
     
 private:
@@ -88,6 +84,8 @@ private slots:
 
     void slotPreviewBlinkTimerDone();
     void slotConvertBlinkTimerDone();
+
+    void slotAction(const ActionData&);
     
 private:
 

@@ -37,6 +37,7 @@ extern "C"
 #include <QApplication>
 #include <QDir>
 #include <QtDebug>
+#include <QMutexLocker>
 
 // KDE includes.
 
@@ -50,13 +51,15 @@ extern "C"
 // Local includes.
 
 #include "actionthread.h"
+#include "actionthread.moc"
 
 namespace KIPIRawConverterPlugin
 {
 
 ActionThread::ActionThread(QObject *parent)
-            : QThread(), m_parent(parent)
+            : QThread(parent)
 {
+    qRegisterMetaType<ActionData>("ActionData");
 }
 
 ActionThread::~ActionThread()
@@ -65,12 +68,6 @@ ActionThread::~ActionThread()
     cancel();
     // wait for the thread to finish
     wait();
-}
-
-void ActionThread::cancel()
-{
-    m_taskQueue.flush();
-    m_dcrawIface.cancel();
 }
 
 void ActionThread::setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings, 
@@ -109,7 +106,10 @@ void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
         Task *t     = new Task;
         t->filePath = (*it).path();
         t->action   = full ? IDENTIFY_FULL : IDENTIFY;
-        m_taskQueue.enqueue(t);
+
+        QMutexLocker lock(&m_mutex);
+        m_todo << t;
+        m_condVar.wakeAll();
     }
 }
 
@@ -123,7 +123,10 @@ void ActionThread::processRawFiles(const KUrl::List& urlList)
         t->outputFormat     = m_outputFormat;
         t->decodingSettings = m_rawDecodingSettings;
         t->action           = PROCESS;
-        m_taskQueue.enqueue(t);
+
+        QMutexLocker lock(&m_mutex);
+        m_todo << t;
+        m_condVar.wakeAll();
     }
 }
 
@@ -137,130 +140,150 @@ void ActionThread::processHalfRawFiles(const KUrl::List& urlList)
         t->outputFormat     = m_outputFormat;
         t->decodingSettings = m_rawDecodingSettings;
         t->action           = PREVIEW;
-        m_taskQueue.enqueue(t);
+
+        QMutexLocker lock(&m_mutex);
+        m_todo << t;
+        m_condVar.wakeAll();
     }
+}
+
+void ActionThread::cancel()
+{
+    QMutexLocker lock(&m_mutex);
+    m_todo.clear();
+    m_running = false;
+    m_condVar.wakeAll();
+    m_dcrawIface.cancel();
 }
 
 void ActionThread::run()
 {
-    while (!m_taskQueue.isEmpty()) 
+    m_running = true;
+    while (m_running)
     {
-        Task *t = m_taskQueue.dequeue();
-        if (!t) continue;
-
-        QString errString;
-
-        EventData *d = new EventData;
-
-        switch (t->action) 
+        Task *t = 0;
         {
-            case IDENTIFY: 
-            case IDENTIFY_FULL: 
+            QMutexLocker lock(&m_mutex);
+            if (!m_todo.isEmpty())
+                t = m_todo.takeFirst();
+            else
+                m_condVar.wait(&m_mutex);
+        }
+
+        if (t)
+        {
+            switch (t->action) 
             {
-                // Get embedded RAW file thumbnail.
-                QImage image;
-                m_dcrawIface.loadDcrawPreview(image, t->filePath);
-
-                // Identify Camera model.    
-                KDcrawIface::DcrawInfoContainer info;
-                m_dcrawIface.rawFileIdentify(info, t->filePath);
-
-                QString identify = i18n("Cannot identify Raw image");
-                if (info.isDecodable)
+                case IDENTIFY: 
+                case IDENTIFY_FULL: 
                 {
-                    if (t->action == IDENTIFY)
-                        identify = info.make + QString("-") + info.model;
-                    else
+                    // Get embedded RAW file thumbnail.
+                    QImage image;
+                    m_dcrawIface.loadDcrawPreview(image, t->filePath);
+    
+                    // Identify Camera model.    
+                    KDcrawIface::DcrawInfoContainer info;
+                    m_dcrawIface.rawFileIdentify(info, t->filePath);
+    
+                    QString identify = i18n("Cannot identify Raw image");
+                    if (info.isDecodable)
                     {
-                        identify = i18n("Make: %1\n", info.make); 
-                        identify.append(i18n("Model: %1\n", info.model));
-
-                        if (info.dateTime.isValid())
+                        if (t->action == IDENTIFY)
+                            identify = info.make + QString("-") + info.model;
+                        else
                         {
-                            identify.append(i18n("Created: %1\n",
-                                     KGlobal::locale()->formatDateTime(info.dateTime,
-                                                                       KLocale::ShortDate, true)));
-                        }
-
-                        if (info.aperture != -1.0)
-                        {
-                            identify.append(i18n("Aperture: f/%1\n", QString::number(info.aperture)));
-                        }
-
-                        if (info.focalLength != -1.0)
-                        {
-                            identify.append(i18n("Focal: %1 mm\n", info.focalLength));
-                        }                        
-
-                        if (info.exposureTime != -1.0)
-                        {
-                            identify.append(i18n("Exposure: 1/%1 s\n", info.exposureTime));
-                        }
-   
-                        if (info.sensitivity != -1)
-                        {
-                            identify.append(i18n("Sensitivity: %1 ISO", info.sensitivity));
+                            identify = i18n("Make: %1\n", info.make); 
+                            identify.append(i18n("Model: %1\n", info.model));
+    
+                            if (info.dateTime.isValid())
+                            {
+                                identify.append(i18n("Created: %1\n",
+                                        KGlobal::locale()->formatDateTime(info.dateTime,
+                                                                        KLocale::ShortDate, true)));
+                            }
+    
+                            if (info.aperture != -1.0)
+                            {
+                                identify.append(i18n("Aperture: f/%1\n", QString::number(info.aperture)));
+                            }
+    
+                            if (info.focalLength != -1.0)
+                            {
+                                identify.append(i18n("Focal: %1 mm\n", info.focalLength));
+                            }                        
+    
+                            if (info.exposureTime != -1.0)
+                            {
+                                identify.append(i18n("Exposure: 1/%1 s\n", info.exposureTime));
+                            }
+    
+                            if (info.sensitivity != -1)
+                            {
+                                identify.append(i18n("Sensitivity: %1 ISO", info.sensitivity));
+                            }
                         }
                     }
+    
+                    ActionData ad;
+                    ad.action   = t->action;
+                    ad.filePath = t->filePath;
+                    ad.image    = image;
+                    ad.message  = identify;
+                    ad.success  = true;
+                    emit finished(ad);
+                    break;
                 }
-
-                EventData *r = new EventData;
-                r->action    = t->action;
-                r->filePath  = t->filePath;
-                r->image     = image;
-                r->message   = identify;
-                r->success   = true;
-                QApplication::postEvent(m_parent, r);
-                break;
+    
+                case PREVIEW: 
+                {
+                    ActionData ad1;
+                    ad1.action   = PREVIEW;
+                    ad1.filePath = t->filePath;
+                    ad1.starting = true;
+                    emit starting(ad1);
+    
+                    QString destPath;
+                    bool result = m_dcrawIface.decodeHalfRAWImage(t->filePath, destPath, 
+                                                                  t->outputFormat, t->decodingSettings);
+    
+                    ActionData ad2;
+                    ad2.action   = PREVIEW;
+                    ad2.filePath = t->filePath;
+                    ad2.destPath = destPath;
+                    ad2.success  = result;
+                    emit finished(ad2);
+                    break;
+                }
+    
+                case PROCESS: 
+                {
+                    ActionData ad1;
+                    ad1.action   = PROCESS;
+                    ad1.filePath = t->filePath;
+                    ad1.starting = true;
+                    emit starting(ad1);
+    
+                    QString destPath;
+                    bool result = m_dcrawIface.decodeRAWImage(t->filePath, destPath, 
+                                                              t->outputFormat, t->decodingSettings);
+    
+                    ActionData ad2;
+                    ad2.action   = PROCESS;
+                    ad2.filePath = t->filePath;
+                    ad2.destPath = destPath;
+                    ad2.success  = result;
+                    emit starting(ad2);
+                    break;
+                }
+    
+                default: 
+                {
+                    qCritical() << "KIPIRawConverterPlugin:ActionThread: "
+                                << "Unknown action specified"
+                                << endl;
+                }
             }
 
-            case PREVIEW: 
-            {
-                d->action    = PREVIEW;
-                d->filePath  = t->filePath;
-                d->starting  = true;
-                QApplication::postEvent(m_parent, d);
-
-                QString destPath;
-                bool result  = m_dcrawIface.decodeHalfRAWImage(t->filePath, destPath, 
-                                                               t->outputFormat, t->decodingSettings);
-
-                EventData *r = new EventData;
-                r->action    = PREVIEW;
-                r->filePath  = t->filePath;
-                r->destPath  = destPath;
-                r->success   = result;
-                QApplication::postEvent(m_parent, r);
-                break;
-            }
-
-            case PROCESS: 
-            {
-                d->action    = PROCESS;
-                d->filePath  = t->filePath;
-                d->starting  = true;
-                QApplication::postEvent(m_parent, d);
-
-                QString destPath;
-                bool result  = m_dcrawIface.decodeRAWImage(t->filePath, destPath, 
-                                                           t->outputFormat, t->decodingSettings);
-
-                EventData *r = new EventData;
-                r->action    = PROCESS;
-                r->filePath  = t->filePath;
-                r->destPath  = destPath;
-                r->success   = result;
-                QApplication::postEvent(m_parent, r);
-                break;
-            }
-
-            default: 
-            {
-                qCritical() << "KIPIRawConverterPlugin:ActionThread: "
-                            << "Unknown action specified"
-                            << endl;
-                delete d;
-            }
         }
 
         delete t;
