@@ -32,6 +32,7 @@
 
 // Qt includes.
 
+#include <qstring.h>
 #include <qthread.h>
 #include <qstringlist.h>
 
@@ -82,7 +83,6 @@ private:
     typedef struct Task_ Task;
 
     QObject         *m_parent;
-    QString          m_tmpFolder;
 
     MTQueue<Task>    m_taskQueue;
 

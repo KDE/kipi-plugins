@@ -32,9 +32,9 @@
 // Qt includes.
 
 #include <qobject.h>
+#include <qstring.h>
 
-class QString;
-
+class KTempFile;
 class KProcess;
 
 namespace KIPIJPEGLossLessPlugin
@@ -49,7 +49,7 @@ public:
     ImageRotate();
     ~ImageRotate();
 
-    bool rotate(const QString& src, RotateAction angle, const QString& TmpFolder, QString& err);
+    bool rotate(const QString& src, RotateAction angle, QString& err);
 
 private slots:
 
@@ -62,7 +62,9 @@ private:
 
 private:
 
-    QString m_stdErr;
+    QString    m_stdErr;
+
+    KTempFile *m_tmpFile;
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin

@@ -27,9 +27,9 @@
 // Qt includes.
 
 #include <qobject.h>
+#include <qstring.h>
 
-class QString;
-
+class KTempFile;
 class KProcess;
 
 namespace KIPIJPEGLossLessPlugin
@@ -44,7 +44,7 @@ public:
     ImageGrayScale();
     ~ImageGrayScale();
 
-    bool image2GrayScale(const QString& src, const QString& TmpFolder, QString& err);
+    bool image2GrayScale(const QString& src, QString& err);
 
 private slots:
 
@@ -57,7 +57,9 @@ private:
 
 private:
 
-    QString m_stdErr;
+    QString    m_stdErr;
+
+    KTempFile *m_tmpFile;
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin

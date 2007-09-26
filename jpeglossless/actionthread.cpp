@@ -27,13 +27,6 @@
  * 
  * ============================================================ */
 
-// C Ansi includes.
-
-extern "C"
-{
-#include <unistd.h>
-}
-
 // Qt includes.
 
 #include <qapplication.h>
@@ -59,18 +52,12 @@ namespace KIPIJPEGLossLessPlugin
 ActionThread::ActionThread( KIPI::Interface* interface, QObject *parent)
             : QThread(), m_parent(parent), m_interface( interface )
 {
-    // Create a KIPI JPEGLossLess plugin temporary folder in KDE tmp directory.
-    KStandardDirs dir;
-    m_tmpFolder = dir.saveLocation("tmp", "kipi-jpeglosslessplugin-" +
-                                   QString::number(getpid()) + "/");
 }
 
 ActionThread::~ActionThread()
 {
     // cancel the thread
     cancel();
-    // delete the temporary folder
-    Utils::deleteDir(m_tmpFolder);
     // wait for the thread to finish
     wait();
 }
@@ -187,11 +174,11 @@ void ActionThread::run()
                 d->fileName = t->filePath;
                 d->starting = true;
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
-    
+
                 bool result = true;
                 ImageRotate imageRotate;
-                result = imageRotate.rotate(t->filePath, t->rotAction, m_tmpFolder, errString);
-    
+                result = imageRotate.rotate(t->filePath, t->rotAction, errString);
+
                 EventData *r = new EventData;
                 r->action    = Rotate;
                 r->fileName  = t->filePath;
@@ -208,7 +195,7 @@ void ActionThread::run()
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
                 
                 ImageFlip imageFlip;
-                bool result = imageFlip.flip(t->filePath, t->flipAction, m_tmpFolder, errString);
+                bool result = imageFlip.flip(t->filePath, t->flipAction, errString);
     
                 EventData *r = new EventData;
                 r->action    = Flip;
@@ -226,7 +213,7 @@ void ActionThread::run()
                 QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
     
                 ImageGrayScale imageGrayScale;
-                bool result = imageGrayScale.image2GrayScale(t->filePath, m_tmpFolder, errString);
+                bool result = imageGrayScale.image2GrayScale(t->filePath, errString);
     
                 EventData *r = new EventData;
                 r->action    = GrayScale;

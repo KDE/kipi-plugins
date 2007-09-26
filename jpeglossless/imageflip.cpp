@@ -52,6 +52,7 @@ extern "C"
 #include <kprocess.h>
 #include <klocale.h>
 #include <kurl.h>
+#include <ktempfile.h>
 
 // Local includes
 
@@ -67,29 +68,38 @@ namespace KIPIJPEGLossLessPlugin
 ImageFlip::ImageFlip()
          : QObject()
 {
+    m_tmpFile = new KTempFile(QString(), QString("kipiplugin-flip"));
+    m_tmpFile->setAutoDelete(true);
 }
 
 ImageFlip::~ImageFlip()
 {
+    delete m_tmpFile;
 }
 
-bool ImageFlip::flip(const QString& src, FlipAction action, const QString& TmpFolder, QString& err)
+bool ImageFlip::flip(const QString& src, FlipAction action, QString& err)
 {
     QFileInfo fi(src);
+
     if (!fi.exists() || !fi.isReadable() || !fi.isWritable()) 
     {
         err = i18n("Error in opening input file");
         return false;
     }
 
-    /* Generate temporary filename */
-    QString tmp = TmpFolder + "imageflip-" + fi.fileName();
+    if ( !m_tmpFile->file() )
+    {
+        err = i18n("Error in opening temporary file");
+        return false;
+    }
+
+    QString tmp = m_tmpFile->name();
 
     if (Utils::isRAW(src))
     {
         err = i18n("Cannot rotate RAW file");
         return false;
-    }    
+    }
     else if (Utils::isJPEG(src))
     {
         if (!flipJPEG(src, tmp, action, err))

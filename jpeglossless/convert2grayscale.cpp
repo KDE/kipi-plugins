@@ -53,6 +53,7 @@ extern "C"
 #include <kprocess.h>
 #include <klocale.h>
 #include <kurl.h>
+#include <ktempfile.h>
 
 // Local includes.
 
@@ -67,29 +68,38 @@ namespace KIPIJPEGLossLessPlugin
 ImageGrayScale::ImageGrayScale()
               : QObject()
 {
+    m_tmpFile = new KTempFile(QString(), QString("kipiplugin-grayscale"));
+    m_tmpFile->setAutoDelete(true);
 }
 
 ImageGrayScale::~ImageGrayScale()
 {
+    delete m_tmpFile;
 }
 
-bool ImageGrayScale::image2GrayScale(const QString& src, const QString& TmpFolder, QString& err)
+bool ImageGrayScale::image2GrayScale(const QString& src, QString& err)
 {
     QFileInfo fi(src);
+
     if (!fi.exists() || !fi.isReadable() || !fi.isWritable()) 
     {
         err = i18n("Error in opening input file");
         return false;
     }
 
-    // Generate temporary filename 
-    QString tmp = TmpFolder + "convert2grayscale-" + fi.fileName();
+    if ( !m_tmpFile->file() )
+    {
+        err = i18n("Error in opening temporary file");
+        return false;
+    }
+
+    QString tmp = m_tmpFile->name();
 
     if (Utils::isRAW(src))
     {
         err = i18n("Cannot convert to gray scale RAW file");
         return false;
-    }    
+    }
     else if (Utils::isJPEG(src))
     {
         if (!image2GrayScaleJPEG(src, tmp, err))
