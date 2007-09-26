@@ -56,11 +56,12 @@ void Plugin_TimeAdjust::setup(QWidget* widget)
     KIPI::Plugin::setup(widget);
 
     m_actionTimeAjust = new KAction(KIcon("timeadjust"), i18n("Adjust Time && Date..."), actionCollection());
-    connect(m_actionTimeAjust, SIGNAL(triggered(bool)), this, SLOT(slotActivate()));
+    m_actionTimeAjust->setObjectName("timeadjust");
+    connect(m_actionTimeAjust, SIGNAL(triggered(bool)), 
+            this, SLOT(slotActivate()));
     addAction(m_actionTimeAjust);
 
     m_interface = dynamic_cast< KIPI::Interface* >(parent());
-
     if (!m_interface)
     {
        kError( 51000 ) << "Kipi interface is null!" << endl;
