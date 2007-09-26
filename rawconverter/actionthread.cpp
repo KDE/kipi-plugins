@@ -25,13 +25,6 @@
  * 
  * ============================================================ */
 
-// C Ansi includes.
-
-extern "C"
-{
-#include <unistd.h>
-}
-
 // Qt includes.
 
 #include <QApplication>
