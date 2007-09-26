@@ -40,10 +40,16 @@ extern "C"
 #include <QDir>
 #include <QMutexLocker>
 #include <QtDebug>
+#include <QMutex>
+#include <QWaitCondition>
 
 // KDE includes.
 
 #include <kstandarddirs.h>
+
+// LibKipi includes.
+
+#include <libkipi/interface.h>
 
 // Local includes.
 
@@ -57,12 +63,48 @@ extern "C"
 namespace KIPIJPEGLossLessPlugin
 {
 
-ActionThread::ActionThread( KIPI::Interface* interface, QObject *parent)
-            : QThread(parent), m_interface( interface )
+class ActionThreadPriv
 {
+public:
+
+    ActionThreadPriv()
+    {
+        interface = 0;
+        running   = false;
+    }
+
+    class Task
+    {
+        public:
+
+            QString      filePath;
+            Action       action;
+            RotateAction rotAction;
+            FlipAction   flipAction;
+    };
+
+    bool             running;
+
+    QString          tmpFolder;
+
+    QMutex           mutex;
+
+    QWaitCondition   condVar;
+
+    QList<Task*>     todo;
+
+    KIPI::Interface *interface;
+};
+
+ActionThread::ActionThread( KIPI::Interface* interface, QObject *parent)
+            : QThread(parent)
+{
+    d = new ActionThreadPriv;
+    d->interface = interface;
+
     // Create a KIPI JPEGLossLess plugin temporary folder in KDE tmp directory.
     KStandardDirs dir;
-    m_tmpFolder = dir.saveLocation("tmp", "kipi-jpeglosslessplugin-" +
+    d->tmpFolder = dir.saveLocation("tmp", "kipi-jpeglosslessplugin-" +
                                    QString::number(getpid()) + "/");
 }
 
@@ -71,9 +113,11 @@ ActionThread::~ActionThread()
     // cancel the thread
     cancel();
     // delete the temporary folder
-    Utils::deleteDir(m_tmpFolder);
+    Utils::deleteDir(d->tmpFolder);
     // wait for the thread to finish
     wait();
+
+    delete d;
 }
 
 void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
@@ -81,7 +125,7 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
     for (KUrl::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
-        KIPI::ImageInfo info = m_interface->info( *it );
+        KIPI::ImageInfo info = d->interface->info( *it );
 
         /*
         Removing this code:
@@ -120,14 +164,14 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
         }
         */
 
-        Task *t      = new Task;
-        t->filePath  = (*it).path(); 
-        t->action    = Rotate;
-        t->rotAction = val;
+        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        t->filePath               = (*it).path(); 
+        t->action                 = Rotate;
+        t->rotAction              = val;
 
-        QMutexLocker lock(&m_mutex);
-        m_todo << t;
-        m_condVar.wakeAll();
+        QMutexLocker lock(&d->mutex);
+        d->todo << t;
+        d->condVar.wakeAll();
     }
 }
 
@@ -136,7 +180,7 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
     for (KUrl::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
-        KIPI::ImageInfo info = m_interface->info( *it );
+        KIPI::ImageInfo info = d->interface->info( *it );
         int angle = (info.angle() + 360) % 360;
 
         if ( (90-45 <= angle && angle < 90+45) ||
@@ -148,14 +192,14 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
             val = (FlipAction) !val;
         }
 
-        Task *t       = new Task;
-        t->filePath   = (*it).path();
-        t->action     = Flip;
-        t->flipAction = val;
+        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        t->filePath               = (*it).path();
+        t->action                 = Flip;
+        t->flipAction             = val;
 
-        QMutexLocker lock(&m_mutex);
-        m_todo << t;
-        m_condVar.wakeAll();
+        QMutexLocker lock(&d->mutex);
+        d->todo << t;
+        d->condVar.wakeAll();
     }
 }
 
@@ -164,36 +208,36 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
     for (KUrl::List::const_iterator it = urlList.begin();
          it != urlList.end(); ++it ) 
     {
-        Task *t     = new Task;
-        t->filePath = (*it).path();
-        t->action   = GrayScale;
+        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        t->filePath               = (*it).path();
+        t->action                 = GrayScale;
 
-        QMutexLocker lock(&m_mutex);
-        m_todo << t;
-        m_condVar.wakeAll();
+        QMutexLocker lock(&d->mutex);
+        d->todo << t;
+        d->condVar.wakeAll();
     }
 }
 
 void ActionThread::cancel()
 {
-    QMutexLocker lock(&m_mutex);
-    m_todo.clear();
-    m_running = false;
-    m_condVar.wakeAll();
+    QMutexLocker lock(&d->mutex);
+    d->todo.clear();
+    d->running = false;
+    d->condVar.wakeAll();
 }
 
 void ActionThread::run()
 {
-    m_running = true;
-    while (m_running)
+    d->running = true;
+    while (d->running)
     {
-        Task *t = 0;
+        ActionThreadPriv::Task *t = 0;
         {
-            QMutexLocker lock(&m_mutex);
-            if (!m_todo.isEmpty())
-                t = m_todo.takeFirst();
+            QMutexLocker lock(&d->mutex);
+            if (!d->todo.isEmpty())
+                t = d->todo.takeFirst();
             else
-                m_condVar.wait(&m_mutex);
+                d->condVar.wait(&d->mutex);
         }
 
         if (t)
@@ -208,7 +252,7 @@ void ActionThread::run()
 
                     bool result = true;
                     ImageRotate imageRotate;
-                    result = imageRotate.rotate(t->filePath, t->rotAction, m_tmpFolder, errString);
+                    result = imageRotate.rotate(t->filePath, t->rotAction, d->tmpFolder, errString);
 
                     if (result)
                         emit finished(t->filePath, Rotate);
@@ -221,7 +265,7 @@ void ActionThread::run()
                     emit starting(t->filePath, Flip);
 
                     ImageFlip imageFlip;
-                    bool result = imageFlip.flip(t->filePath, t->flipAction, m_tmpFolder, errString);
+                    bool result = imageFlip.flip(t->filePath, t->flipAction, d->tmpFolder, errString);
 
                     if (result)
                         emit finished(t->filePath, Flip);
@@ -234,7 +278,7 @@ void ActionThread::run()
                     emit starting(t->filePath, GrayScale);
 
                     ImageGrayScale imageGrayScale;
-                    bool result = imageGrayScale.image2GrayScale(t->filePath, m_tmpFolder, errString);
+                    bool result = imageGrayScale.image2GrayScale(t->filePath, d->tmpFolder, errString);
 
                     if (result)
                         emit finished(t->filePath, GrayScale);

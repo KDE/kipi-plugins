@@ -30,16 +30,10 @@
 
 #include <QThread>
 #include <QStringList>
-#include <QMutex>
-#include <QWaitCondition>
 
 // KDE includes.
 
 #include <kurl.h>
-
-// LibKipi includes.
-
-#include <libkipi/interface.h>
 
 // Local includes.
 
@@ -47,6 +41,8 @@
 
 namespace KIPIJPEGLossLessPlugin
 {
+
+class ActionThreadPriv;
 
 class ActionThread : public QThread
 {
@@ -74,23 +70,7 @@ signals:
 
 private:
 
-    class Task
-    {
-        public:
-
-            QString      filePath;
-            Action       action;
-            RotateAction rotAction;
-            FlipAction   flipAction;
-    };
-
-    QString          m_tmpFolder;
-    QMutex           m_mutex;
-    QWaitCondition   m_condVar;
-    bool             m_running;
-    QList<Task*>     m_todo;
-
-    KIPI::Interface *m_interface;
+    ActionThreadPriv *d;
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin
