@@ -50,7 +50,6 @@ namespace KIPIJPEGLossLessPlugin
 
 class ActionThread : public QThread
 {
-
     Q_OBJECT
 
 public:
@@ -78,6 +77,7 @@ private:
     class Task
     {
         public:
+
             QString      filePath;
             Action       action;
             RotateAction rotAction;
