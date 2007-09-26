@@ -67,23 +67,31 @@ namespace KIPIJPEGLossLessPlugin
 ImageGrayScale::ImageGrayScale()
               : QObject()
 {
+    m_tmpFile.setSuffix("kipiplugin-grayscale");
+    m_tmpFile.setAutoRemove(true);
 }
 
 ImageGrayScale::~ImageGrayScale()
 {
 }
 
-bool ImageGrayScale::image2GrayScale(const QString& src, const QString& TmpFolder, QString& err)
+bool ImageGrayScale::image2GrayScale(const QString& src, QString& err)
 {
     QFileInfo fi(src);
+
     if (!fi.exists() || !fi.isReadable() || !fi.isWritable()) 
     {
         err = i18n("Error in opening input file");
         return false;
     }
 
-    // Generate temporary filename 
-    QString tmp = TmpFolder + "convert2grayscale-" + fi.fileName();
+    if ( !m_tmpFile.open() )
+    {
+        err = i18n("Error in opening temporary file");
+        return false;
+    }
+
+    QString tmp = m_tmpFile.fileName();
 
     if (Utils::isRAW(src))
     {

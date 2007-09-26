@@ -67,23 +67,31 @@ namespace KIPIJPEGLossLessPlugin
 ImageFlip::ImageFlip()
          : QObject()
 {
+    m_tmpFile.setSuffix("kipiplugin-flip");
+    m_tmpFile.setAutoRemove(true);
 }
 
 ImageFlip::~ImageFlip()
 {
 }
 
-bool ImageFlip::flip(const QString& src, FlipAction action, const QString& TmpFolder, QString& err)
+bool ImageFlip::flip(const QString& src, FlipAction action, QString& err)
 {
     QFileInfo fi(src);
+
     if (!fi.exists() || !fi.isReadable() || !fi.isWritable()) 
     {
         err = i18n("Error in opening input file");
         return false;
     }
 
-    /* Generate temporary filename */
-    QString tmp = TmpFolder + "imageflip-" + fi.fileName();
+    if ( !m_tmpFile.open() )
+    {
+        err = i18n("Error in opening temporary file");
+        return false;
+    }
+
+    QString tmp = m_tmpFile.fileName();
 
     if (Utils::isRAW(src))
     {
@@ -101,7 +109,6 @@ bool ImageFlip::flip(const QString& src, FlipAction action, const QString& TmpFo
         // else TIFF/PNG 16 bits image are broken!
         if (!flipImageMagick(src, tmp, action, err))
             return false;
-
 
         // We update metadata on new image.
         Utils tools(this);

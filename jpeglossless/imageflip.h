@@ -31,6 +31,11 @@
 // Qt includes.
 
 #include <QObject>
+#include <QString>
+
+// KDE includes.
+
+#include <KTemporaryFile>
 
 class QString;
 
@@ -48,7 +53,7 @@ public:
     ImageFlip();
     ~ImageFlip();
 
-    bool flip(const QString& src, FlipAction action, const QString& TmpFolder, QString& err);
+    bool flip(const QString& src, FlipAction action, QString& err);
 
 private slots:
 
@@ -60,10 +65,11 @@ private:
 
     bool flipImageMagick(const QString& src, const QString& dest, FlipAction action, QString& err);
 
-
 private:
 
-    QString m_stdErr;
+    QString        m_stdErr;
+
+    KTemporaryFile m_tmpFile;
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin

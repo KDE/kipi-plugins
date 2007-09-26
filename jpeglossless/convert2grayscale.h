@@ -27,8 +27,11 @@
 // Qt includes.
 
 #include <QObject>
+#include <QString>
 
-class QString;
+// KDE includes.
+
+#include <KTemporaryFile>
 
 class K3Process;
 
@@ -44,7 +47,7 @@ public:
     ImageGrayScale();
     ~ImageGrayScale();
 
-    bool image2GrayScale(const QString& src, const QString& TmpFolder, QString& err);
+    bool image2GrayScale(const QString& src, QString& err);
 
 private slots:
 
@@ -58,7 +61,9 @@ private:
 
 private:
 
-    QString m_stdErr;
+    QString        m_stdErr;
+
+    KTemporaryFile m_tmpFile;
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin

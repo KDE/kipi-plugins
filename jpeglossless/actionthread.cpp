@@ -43,10 +43,6 @@ extern "C"
 #include <QMutex>
 #include <QWaitCondition>
 
-// KDE includes.
-
-#include <kstandarddirs.h>
-
 // LibKipi includes.
 
 #include <libkipi/interface.h>
@@ -85,8 +81,6 @@ public:
 
     bool             running;
 
-    QString          tmpFolder;
-
     QMutex           mutex;
 
     QWaitCondition   condVar;
@@ -101,19 +95,12 @@ ActionThread::ActionThread( KIPI::Interface* interface, QObject *parent)
 {
     d = new ActionThreadPriv;
     d->interface = interface;
-
-    // Create a KIPI JPEGLossLess plugin temporary folder in KDE tmp directory.
-    KStandardDirs dir;
-    d->tmpFolder = dir.saveLocation("tmp", "kipi-jpeglosslessplugin-" +
-                                   QString::number(getpid()) + "/");
 }
 
 ActionThread::~ActionThread()
 {
     // cancel the thread
     cancel();
-    // delete the temporary folder
-    Utils::deleteDir(d->tmpFolder);
     // wait for the thread to finish
     wait();
 
@@ -252,7 +239,7 @@ void ActionThread::run()
 
                     bool result = true;
                     ImageRotate imageRotate;
-                    result = imageRotate.rotate(t->filePath, t->rotAction, d->tmpFolder, errString);
+                    result = imageRotate.rotate(t->filePath, t->rotAction, errString);
 
                     if (result)
                         emit finished(t->filePath, Rotate);
@@ -265,7 +252,7 @@ void ActionThread::run()
                     emit starting(t->filePath, Flip);
 
                     ImageFlip imageFlip;
-                    bool result = imageFlip.flip(t->filePath, t->flipAction, d->tmpFolder, errString);
+                    bool result = imageFlip.flip(t->filePath, t->flipAction, errString);
 
                     if (result)
                         emit finished(t->filePath, Flip);
@@ -278,7 +265,7 @@ void ActionThread::run()
                     emit starting(t->filePath, GrayScale);
 
                     ImageGrayScale imageGrayScale;
-                    bool result = imageGrayScale.image2GrayScale(t->filePath, d->tmpFolder, errString);
+                    bool result = imageGrayScale.image2GrayScale(t->filePath, errString);
 
                     if (result)
                         emit finished(t->filePath, GrayScale);

@@ -67,13 +67,15 @@ namespace KIPIJPEGLossLessPlugin
 ImageRotate::ImageRotate()
            : QObject()
 {
+    m_tmpFile.setSuffix("kipiplugin-rotate");
+    m_tmpFile.setAutoRemove(true);
 }
 
 ImageRotate::~ImageRotate()
 {
 }
 
-bool ImageRotate::rotate(const QString& src, RotateAction angle, const QString& TmpFolder, QString& err)
+bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err)
 {
     QFileInfo fi(src);
 
@@ -83,8 +85,13 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, const QString& 
         return false;
     }
 
-    // Generate temporary filename 
-    QString tmp = TmpFolder + "imagerotation-" + fi.fileName();
+    if ( !m_tmpFile.open() )
+    {
+        err = i18n("Error in opening temporary file");
+        return false;
+    }
+
+    QString tmp = m_tmpFile.fileName();
 
     if (Utils::isRAW(src))
     {

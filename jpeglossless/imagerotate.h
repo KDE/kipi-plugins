@@ -28,12 +28,15 @@
 // Qt includes.
 
 #include <QObject>
+#include <QString>
+
+// KDE includes.
+
+#include <KTemporaryFile>
 
 // Local includes.
 
 #include "actions.h"
-
-class QString;
 
 class K3Process;
 
@@ -49,7 +52,7 @@ public:
     ImageRotate();
     ~ImageRotate();
 
-    bool rotate(const QString& src, RotateAction angle, const QString& TmpFolder, QString& err);
+    bool rotate(const QString& src, RotateAction angle, QString& err);
 
 private slots:
 
@@ -63,7 +66,9 @@ private:
 
 private:
 
-    QString m_stdErr;
+    QString        m_stdErr;
+
+    KTemporaryFile m_tmpFile;
 };
 
 }  // NameSpace KIPIJPEGLossLessPlugin
