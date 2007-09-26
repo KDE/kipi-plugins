@@ -66,6 +66,33 @@ ActionThread::~ActionThread()
     wait();
 }
 
+void ActionThread::cancel()
+{
+    m_taskQueue.flush();
+    m_dcrawIface.cancel();
+}
+
+void ActionThread::setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings, 
+                                          SaveSettingsWidget::OutputFormat outputFormat)
+{
+    m_rawDecodingSettings = rawDecodingSettings;
+    m_outputFormat        = outputFormat;
+}
+
+void ActionThread::processRawFile(const KUrl& url)
+{
+    KUrl::List oneFile;
+    oneFile.append(url);
+    processRawFiles(oneFile);
+}
+
+void ActionThread::processHalfRawFile(const KUrl& url)
+{
+    KUrl::List oneFile;
+    oneFile.append(url);
+    processHalfRawFiles(oneFile);
+}
+
 void ActionThread::identifyRawFile(const KUrl& url, bool full)
 {
     KUrl::List oneFile;
@@ -83,27 +110,6 @@ void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
         t->action   = full ? IDENTIFY_FULL : IDENTIFY;
         m_taskQueue.enqueue(t);
     }
-}
-
-void ActionThread::processRawFile(const KUrl& url)
-{
-    KUrl::List oneFile;
-    oneFile.append(url);
-    processRawFiles(oneFile);
-}
-
-void ActionThread::processHalfRawFile(const KUrl& url)
-{
-    KUrl::List oneFile;
-    oneFile.append(url);
-    processHalfRawFiles(oneFile);
-}
-
-void ActionThread::setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings, 
-                                          SaveSettingsWidget::OutputFormat outputFormat)
-{
-    m_rawDecodingSettings = rawDecodingSettings;
-    m_outputFormat        = outputFormat;
 }
 
 void ActionThread::processRawFiles(const KUrl::List& urlList)
@@ -132,12 +138,6 @@ void ActionThread::processHalfRawFiles(const KUrl::List& urlList)
         t->action           = PREVIEW;
         m_taskQueue.enqueue(t);
     }
-}
-
-void ActionThread::cancel()
-{
-    m_taskQueue.flush();
-    m_dcrawIface.cancel();
 }
 
 void ActionThread::run()
