@@ -159,6 +159,8 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     meta.setExifThumbnail(exifThumbnail);
     meta.setImagePreview(iptcPreview);
     meta.setExifTagString("Exif.Image.DocumentName", fi.fileName());
+    meta.setXmpTagString("Xmp.tiff.Make", meta.getExifTagString("Exif.Image.Make"));
+    meta.setXmpTagString("Xmp.tiff.Model", meta.getExifTagString("Exif.Image.Model"));
 
     KIPIPlugins::KPWriteImage wImageIface;
     wImageIface.setImageData(imageData, width, height, sixteenBits, false, prof, meta);
