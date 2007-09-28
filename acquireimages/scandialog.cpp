@@ -288,7 +288,9 @@ void ScanDialog::slotSaveImage()
     meta.setExifThumbnail(thumb);
     meta.setExifTagString("Exif.Image.DocumentName", QString("Scanned Image")); // not i18n
     meta.setExifTagString("Exif.Image.Make", d->saneWidget->make());
+    meta.setXmpTagString("Xmp.tiff.Make", d->saneWidget->make());
     meta.setExifTagString("Exif.Image.Model", d->saneWidget->model());
+    meta.setXmpTagString("Xmp.tiff.Model", d->saneWidget->model());
     meta.setImageDateTime(QDateTime::currentDateTime());
     meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
     meta.setImageColorWorkSpace(KExiv2Iface::KExiv2::WORKSPACE_SRGB);
