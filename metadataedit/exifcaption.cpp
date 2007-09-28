@@ -105,8 +105,8 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     d->documentNameEdit->setValidator(asciiValidator);
     vlay->addWidget(d->documentNameCheck);
     vlay->addWidget(d->documentNameEdit);
-    QWhatsThis::add(d->documentNameEdit, i18n("<p>Set here the name of the document from which "
-                                         "this picture was been scanned. This field is limited "
+    QWhatsThis::add(d->documentNameEdit, i18n("<p>Enter the name of the document from which "
+                                         "this image was been scanned. This field is limited "
                                          "to ASCII characters."));
 
     // --------------------------------------------------------
@@ -116,7 +116,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     d->imageDescEdit->setValidator(asciiValidator);
     vlay->addWidget(d->imageDescCheck);
     vlay->addWidget(d->imageDescEdit);
-    QWhatsThis::add(d->imageDescEdit, i18n("<p>Set here the picture title. This field is limited "
+    QWhatsThis::add(d->imageDescEdit, i18n("<p>Enter the image title. This field is limited "
                                       "to ASCII characters."));
         
     // --------------------------------------------------------
@@ -126,7 +126,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     d->artistEdit->setValidator(asciiValidator);
     vlay->addWidget(d->artistCheck);
     vlay->addWidget(d->artistEdit);
-    QWhatsThis::add(d->artistEdit, i18n("<p>Set here the name of the person who created the picture. "
+    QWhatsThis::add(d->artistEdit, i18n("<p>Enter the image author's name. "
                                    "This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
@@ -136,19 +136,19 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     d->copyrightEdit->setValidator(asciiValidator);
     vlay->addWidget(d->copyrightCheck);
     vlay->addWidget(d->copyrightEdit);
-    QWhatsThis::add(d->copyrightEdit, i18n("<p>Set here the copyright holder of picture. "
+    QWhatsThis::add(d->copyrightEdit, i18n("<p>Enter the copyright owner of the image. "
                                       "This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->userCommentCheck = new QCheckBox(i18n("User comments:"), parent);
+    d->userCommentCheck = new QCheckBox(i18n("Caption:"), parent);
     d->userCommentEdit  = new KTextEdit(parent);
-    QWhatsThis::add(d->userCommentEdit, i18n("<p>Set here the picture user comments. "
+    QWhatsThis::add(d->userCommentEdit, i18n("<p>Enter the image's caption. "
                                              "This field is not limited. UTF8 encoding "
-                                             "will be used to save text."));
+                                             "will be used to save the text."));
 
-    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF comment section"), parent);
-    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync comment hosted by %1")
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF captions"), parent);
+    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync captions entered through %1")
                                             .arg(KApplication::kApplication()->aboutData()->appName()), 
                                             parent);
     d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: ASCII limited)"), parent);
@@ -161,7 +161,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     // --------------------------------------------------------
 
-    QLabel *exifNote = new QLabel(i18n("<b>Note: EXIF text tags annoted by (*) only support printable "
+    QLabel *exifNote = new QLabel(i18n("<b>Note: EXIF text tags marked by (*) only support printable "
                                        "ASCII characters set.</b>"), parent);
     vlay->addWidget(exifNote);
     vlay->addStretch();

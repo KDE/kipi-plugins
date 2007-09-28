@@ -414,11 +414,11 @@ void SendImagesDialog::setupEmailOptions(void)
 
     //---------------------------------------------
 
-    m_addComments = new QCheckBox( i18n("Attach a file with comments and tags"), page_setupEmailOptions);
-    QWhatsThis::add( m_addComments, i18n("<p>If you enable this option, all images comments and tags "
+    m_addComments = new QCheckBox( i18n("Attach a file with caption and tags"), page_setupEmailOptions);
+    QWhatsThis::add( m_addComments, i18n("<p>If you enable this option, all image captions and tags "
                                          "will be added as an attached file.") );
     vlay->addWidget( m_addComments );
-    m_comment2ImageName = new QCheckBox( i18n("Generate new filenames from image comments (if comment available)"), page_setupEmailOptions);
+    m_comment2ImageName = new QCheckBox( i18n("Generate new filenames from image captions (if available)"), page_setupEmailOptions);
     vlay->addWidget( m_comment2ImageName );
 
     //---------------------------------------------
@@ -611,7 +611,7 @@ void SendImagesDialog::slotImageSelected( QListBoxItem * item )
 
     if ( !pitem ) return;
 
-    m_ImageComments->setText( i18n("Comments: %1").arg(pitem->comments()) );
+    m_ImageComments->setText( i18n("Caption: %1").arg(pitem->comments()) );
     m_ImageAlbum->setText( i18n("Album: %1").arg(pitem->album()) );
     m_imageLabel->clear();
 

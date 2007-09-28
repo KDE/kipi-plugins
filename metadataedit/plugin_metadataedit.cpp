@@ -120,7 +120,7 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
 
     m_actionMetadataEdit->popupMenu()->insertSeparator();
 
-    m_actionMetadataEdit->insert(new KAction (i18n("Edit Comments..."),
+    m_actionMetadataEdit->insert(new KAction (i18n("Edit Captions..."),
                                      0,
                                      0,     
                                      this,
@@ -128,7 +128,7 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
                                      actionCollection(),
                                      "editcomments"));
 
-    m_actionMetadataEdit->insert(new KAction (i18n("Remove Comments..."),
+    m_actionMetadataEdit->insert(new KAction (i18n("Remove Captions..."),
                                      0,
                                      0,     
                                      this,
@@ -503,9 +503,9 @@ void Plugin_MetadataEdit::slotEditComments()
     {
         KMessageBox::informationList(
                      kapp->activeWindow(),
-                     i18n("Unable to set comments like picture metadata from:"),
+                     i18n("Unable to set captions as image metadata from:"),
                      errorFiles,
-                     i18n("Edit Pictures Comments"));  
+                     i18n("Edit Image Caption"));  
     }
 }
 
@@ -570,9 +570,9 @@ void Plugin_MetadataEdit::slotRemoveComments()
     {
         KMessageBox::informationList(
                      kapp->activeWindow(),
-                     i18n("Unable to remove Comments like picture metadata from:"),
+                     i18n("Unable to remove caption as image metadata from:"),
                      errorFiles,
-                     i18n("Remove Pictures Comments"));  
+                     i18n("Remove Image Caption"));  
     }
 }
 

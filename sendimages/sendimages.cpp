@@ -326,11 +326,11 @@ void SendImages::makeCommentsFile(void)
             QString targetFile = (*it).filename();
 
             if ( commentItem.isEmpty() )
-                commentItem = i18n("no comment");
+                commentItem = i18n("no caption");
             else
                 anyCommentsPresent = true;
 
-            ImageCommentsText += i18n("Comments for image \"%1\": %2\n")
+            ImageCommentsText += i18n("Caption for image \"%1\": %2\n")
                                       .arg(targetFile).arg(commentItem);
             
             //Tags from the database

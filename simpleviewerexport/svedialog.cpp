@@ -350,11 +350,11 @@ void SVEDialog::generalPage()
     // ------------------------------------------------------------------------
     // show EXIF comments
     // ------------------------------------------------------------------------
-    m_showExifComments = new QCheckBox(i18n("Display EXIF Comments"), vgroupbox);
+    m_showExifComments = new QCheckBox(i18n("Display EXIF Captions"), vgroupbox);
     m_showExifComments->setChecked(true);
     mainLayout->addWidget(m_showExifComments);
     QWhatsThis::add(m_showExifComments, i18n("<p>If you enable this option, "
-                                             "the EXIF comments of the images will be shown"));
+                                             "the EXIF caption of the images will be shown"));
 
     mainLayout->addStretch(1);
 }

@@ -98,11 +98,11 @@ IPTCCaption::IPTCCaption(QWidget* parent)
 
     d->captionCheck         = new QCheckBox(i18n("Caption:"), parent);
     d->captionEdit          = new KTextEdit(parent);
-    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF comment section"), parent);
-    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync comment hosted by %1")
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF caption"), parent);
+    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync caption entered through %1")
                                             .arg(KApplication::kApplication()->aboutData()->appName()), 
                                             parent);
-    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF comment"), parent);
+    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF caption"), parent);
     KSeparator *line        = new KSeparator(Horizontal, parent);
 
 /*    d->captionEdit->setValidator(asciiValidator);
@@ -113,7 +113,7 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     vlay->addWidget(d->syncHOSTCommentCheck);
     vlay->addWidget(d->syncEXIFCommentCheck);
     vlay->addWidget(line);
-    QWhatsThis::add(d->captionEdit, i18n("<p>Set here the content description. This field is limited "
+    QWhatsThis::add(d->captionEdit, i18n("<p>Enter the content description. This field is limited "
                                          "to 2000 ASCII characters."));
 
     // --------------------------------------------------------
@@ -124,7 +124,7 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     d->writerEdit->setMaxLength(32);
     vlay->addWidget(d->writerCheck);
     vlay->addWidget(d->writerEdit);
-    QWhatsThis::add(d->writerEdit, i18n("<p>Set here the person responsible for caption. This field is limited "
+    QWhatsThis::add(d->writerEdit, i18n("<p>Enter the name of the caption author. This field is limited "
                                         "to 32 ASCII characters."));
         
     // --------------------------------------------------------
@@ -135,7 +135,7 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     d->headlineEdit->setMaxLength(256);
     vlay->addWidget(d->headlineCheck);
     vlay->addWidget(d->headlineEdit);
-    QWhatsThis::add(d->headlineEdit, i18n("<p>Set here the content synopsis. This field is limited "
+    QWhatsThis::add(d->headlineEdit, i18n("<p>Enter here the content synopsis. This field is limited "
                                           "to 256 ASCII characters."));
 
     // --------------------------------------------------------
@@ -146,13 +146,13 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     d->specialInstructionEdit->setMaxLength(256);*/
     vlay->addWidget(d->specialInstructionCheck);
     vlay->addWidget(d->specialInstructionEdit);
-    QWhatsThis::add(d->specialInstructionEdit, i18n("<p>Set here the editorial usage instructions. "
+    QWhatsThis::add(d->specialInstructionEdit, i18n("<p>Enter the editorial usage instructions. "
                                                     "This field is limited to 256 ASCII characters."));
 
     // --------------------------------------------------------
 
-    QLabel *iptcNote = new QLabel(i18n("<b>Note: IPTC text tags only support printable "
-                                       "ASCII characters set.</b>"), parent);
+    QLabel *iptcNote = new QLabel(i18n("<b>Note: IPTC text tags support printable "
+                                       "ASCII character sets only.</b>"), parent);
     vlay->addWidget(iptcNote);
     vlay->addStretch();
 

@@ -70,7 +70,7 @@ public:
 };
 
 CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
-                 : KDialogBase(Plain, i18n("Remove Pictures Comments"),
+                 : KDialogBase(Plain, i18n("Remove Image Captions"),
                                Help|Ok|Cancel, Ok,
                                parent, 0, true, true)
 {
@@ -98,14 +98,14 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
 
     QVBoxLayout *vlay = new QVBoxLayout(plainPage(), 0, KDialog::spacingHint());
 
-    d->removeHOSTCommentCheck = new QCheckBox(i18n("Remove comment hosted by %1")
+    d->removeHOSTCommentCheck = new QCheckBox(i18n("Remove caption created by %1")
                                     .arg(KApplication::kApplication()->aboutData()->appName()), 
                                     plainPage());
-    d->removeJFIFCommentCheck = new QCheckBox(i18n("Remove JFIF comment section"), plainPage());
-    d->removeEXIFCommentCheck = new QCheckBox(i18n("Remove EXIF user comment"), plainPage());
+    d->removeJFIFCommentCheck = new QCheckBox(i18n("Remove JFIF caption section"), plainPage());
+    d->removeEXIFCommentCheck = new QCheckBox(i18n("Remove EXIF caption"), plainPage());
     d->removeIPTCCaptionCheck = new QCheckBox(i18n("Remove IPTC caption"), plainPage());
 
-    QLabel *note = new QLabel(i18n("<b>Note: Comments from current selected pictures "
+    QLabel *note = new QLabel(i18n("<b>Note: Captions from currently selected images "
                                    "will be permanently removed.</b>"), plainPage());
     
 

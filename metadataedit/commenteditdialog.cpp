@@ -72,7 +72,7 @@ public:
 };
 
 CommentEditDialog::CommentEditDialog(QWidget* parent)
-                 : KDialogBase(Plain, i18n("Edit Pictures Comments"),
+                 : KDialogBase(Plain, i18n("Edit Image Caption"),
                                Help|Ok|Cancel, Ok,
                                parent, 0, true, true)
 {
@@ -84,7 +84,7 @@ CommentEditDialog::CommentEditDialog(QWidget* parent)
     d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("Edit Metadata"),
                                             NULL,
                                             KAboutData::License_GPL,
-                                            I18N_NOOP("A Plugin to edit pictures metadata"),
+                                            I18N_NOOP("A Plugin to edit images' metadata"),
                                             "(c) 2006-2007, Gilles Caulier");
 
     d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
@@ -100,7 +100,7 @@ CommentEditDialog::CommentEditDialog(QWidget* parent)
 
     QVBoxLayout *vlay = new QVBoxLayout(plainPage(), 0, KDialog::spacingHint());
 
-    QLabel *title = new QLabel(i18n("<p>Set here the picture user comments hosted by <b>%1</b>. "
+    QLabel *title = new QLabel(i18n("<p>Enter the image caption created by <b>%1</b>. "
                                     "This field is not limited. UTF8 encoding "
                                     "will be used to save text.")
                                     .arg(KApplication::kApplication()->aboutData()->appName()),
@@ -108,11 +108,11 @@ CommentEditDialog::CommentEditDialog(QWidget* parent)
 
     d->userCommentEdit  = new KTextEdit(plainPage());
 
-    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF comment section"), plainPage());
-    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF user comment"), plainPage());
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF caption section"), plainPage());
+    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF image caption"), plainPage());
     d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: ASCII limited)"), plainPage());
 
-    QLabel *note = new QLabel(i18n("<b>Note: Comments from current selected pictures "
+    QLabel *note = new QLabel(i18n("<b>Note: captions from currently selected images "
                                    "will be permanently replaced.</b>"), plainPage());
     
 

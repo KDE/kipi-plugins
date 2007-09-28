@@ -464,21 +464,21 @@ void KIGPDialog::setupAlbumPage(void)
 
     //---------------------------------------------
 
-    m_useCommentFile = new QCheckBox(i18n("Use images album &comments"), page_setupAlbum);
+    m_useCommentFile = new QCheckBox(i18n("Use images album &captions"), page_setupAlbum);
     m_useCommentFile->setChecked(true);
     dvlay->addWidget(m_useCommentFile);
 
     QWhatsThis::add( m_useCommentFile, i18n("<p>If you enable this option, "
-                                            "the images Album comments will be used for generating "
+                                            "the images Album captions will be used for generating "
                                             "subtitles for the images.") );
 
     //---------------------------------------------
 
-    m_useCommentsAlbum = new QCheckBox(i18n("Show album commen&ts"), page_setupAlbum);
+    m_useCommentsAlbum = new QCheckBox(i18n("Show album cap&tion"), page_setupAlbum);
     m_useCommentsAlbum->setChecked(true);
     dvlay->addWidget(m_useCommentsAlbum);
     QWhatsThis::add( m_useCommentsAlbum, i18n("<p>If you enable this option, "
-                                              "the Album comments will be shown in the gallery.") );
+                                              "the Album caption will be shown in the gallery.") );
 
     //---------------------------------------------
 

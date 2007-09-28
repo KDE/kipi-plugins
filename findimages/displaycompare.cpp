@@ -460,7 +460,7 @@ void DisplayCompare::slotDisplayRight(QListViewItem * item)
                                                       .formatDateTime(QFileInfo(pitem->fullpath())
                                                       .lastModified())));
        similarInfoLabel4->setText(i18n("Album: %1").arg(pitem->album()));
-       similarInfoLabel5->setText(i18n("Comments: %1").arg(pitem->comments()));
+       similarInfoLabel5->setText(i18n("Caption: %1").arg(pitem->comments()));
        }
 
     preview2->clear();

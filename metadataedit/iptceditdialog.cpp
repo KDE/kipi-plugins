@@ -177,7 +177,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface
     d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("Edit Metadata"),
                                             NULL,
                                             KAboutData::License_GPL,
-                                            I18N_NOOP("A Plugin to edit pictures metadata"),
+                                            I18N_NOOP("A Plugin to edit image metadata"),
                                             "(c) 2006-2007, Gilles Caulier");
 
     d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
