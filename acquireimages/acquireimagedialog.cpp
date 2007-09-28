@@ -205,8 +205,8 @@ void AcquireImageDialog::setupImageOptions(void)
 
     QGroupBox * groupBox1 = new QGroupBox( page_setupImageOptions );
     groupBox1->setFlat(false);
-    groupBox1->setTitle(i18n("File Name && Comments"));
-    QWhatsThis::add( groupBox1, i18n("<p>The target image preview with the file name and comments.") );
+    groupBox1->setTitle(i18n("File Name && Caption"));
+    QWhatsThis::add( groupBox1, i18n("<p>The target image preview with the file name and caption.") );
     QGridLayout* grid2 = new QGridLayout( groupBox1, 3, 3 , 20, 10);
 
     m_ImageFileName = new QLabel( i18n("File name (without suffix):"), groupBox1);
@@ -219,12 +219,12 @@ void AcquireImageDialog::setupImageOptions(void)
     m_ImageFileName->setBuddy(m_FileName);
     grid2->addMultiCellWidget(m_FileName, 1, 1, 0, 3);
 
-    m_ImageComments = new QLabel( i18n("Comments:"), groupBox1);
+    m_ImageComments = new QLabel( i18n("Caption:"), groupBox1);
     grid2->addMultiCellWidget(m_ImageComments, 2, 2, 0, 3);
 
     m_CommentsEdit = new QTextEdit(groupBox1);
     m_CommentsEdit->setMaximumHeight( 200 );
-    QWhatsThis::add( m_CommentsEdit, i18n("<p>Enter here the target image's comments.") );
+    QWhatsThis::add( m_CommentsEdit, i18n("<p>Enter here the target image's caption.") );
     grid2->addMultiCellWidget(m_CommentsEdit, 3, 3, 0, 2);
 
     m_preview = new QLabel( groupBox1, "preview" );
@@ -414,7 +414,7 @@ void AcquireImageDialog::slotAlbumSelected( const KURL &url )
        items.setNum((*albumIt).images().count());
        }
         
-    m_AlbumComments->setText( i18n("Comment: %1").arg(comments) );
+    m_AlbumComments->setText( i18n("Caption: %1").arg(comments) );
     m_AlbumCollection->setText( i18n("Collection: %1").arg(category) );
     m_AlbumDate->setText( i18n("Date: %1").arg(date) );
     m_AlbumItems->setText( i18n("Items: %1").arg( items ) );
