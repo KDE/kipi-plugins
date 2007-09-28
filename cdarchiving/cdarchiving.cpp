@@ -749,7 +749,7 @@ void CDArchiving::createBody(QTextStream& stream,
     stream << "<tr valign=top><td align=left>\n" << endl;
 
     if (m_interface->hasFeature(KIPI::AlbumsHaveComments))
-        stream << i18n("<i>Comment:</i>") << "<br>\n" << endl;
+        stream << i18n("<i>Caption:</i>") << "<br>\n" << endl;
 
     if (m_interface->hasFeature(KIPI::AlbumsHaveCategory))        
         stream << i18n("<i>Collection:</i>") << "<br>\n" << endl;
