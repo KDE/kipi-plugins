@@ -102,7 +102,7 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneW
     d->about = new KIPIPlugins::KPAboutData(ki18n("Acquire images"),
                    QByteArray(),
                    KAboutData::License_GPL,
-                   ki18n("A Kipi plugin to acquire images using a flat scanner"),
+                   ki18n("A Kipi plugin to acquire images using a flat bed scanner"),
                    ki18n("(c) 2003-2007, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), 
@@ -239,8 +239,8 @@ void ScanDialog::slotSaveImage()
 
         if ( !imgExtList.contains( format ) )
         {
-            KMessageBox::error(0, i18n("Target image file format \"%1\" unsupported.", format));
-            kWarning() << "target image file format " << format << " unsupported!" << endl;
+            KMessageBox::error(0, i18n("The target image file format \"%1\" is unsupported.", format));
+            kWarning() << "target image file format " << format << " is unsupported!" << endl;
             return;
         }
     }
