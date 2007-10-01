@@ -465,7 +465,7 @@ void BatchDialog::addItems(const QStringList& itemList)
 
     KUrl::List urlList;
 
-    QPixmap pix(SmallIcon("empty", K3Icon::SizeLarge, K3Icon::DisabledState));
+    QPixmap pix(SmallIcon("empty", KIconLoader::SizeLarge, KIconLoader::DisabledState));
     
     for (QStringList::const_iterator  it = itemList.begin();
          it != itemList.end(); ++it) 
