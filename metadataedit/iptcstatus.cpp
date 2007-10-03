@@ -204,12 +204,12 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: These informations are used to set "
-                   "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> tags contents. "
-                   "Take a care than IPTC text tags only support the printable "
-                   "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b>"
-                   "characters set and limit strings size. "
-                   "Use contextual help for details.</b>"), parent);
+    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: "
+                 "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
+                 "text tags only support the printable "
+                 "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b>"
+                 "characters set and limit strings size. "
+                 "Use contextual help for details.</b>"), parent);
 
     grid->addMultiCellWidget(note, 10, 10, 0, 2);
     grid->setColStretch(2, 10);                     
