@@ -38,6 +38,7 @@
 #include <ktextedit.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
+#include <kactivelabel.h>
 
 // LibKExiv2 includes. 
 
@@ -163,9 +164,12 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     // --------------------------------------------------------
 
-    QLabel *exifNote = new QLabel(i18n("<b>Note: EXIF text tags marked by (*) only support printable "
-                                       "ASCII characters set.</b>"), parent);
-    vlay->addWidget(exifNote);
+    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: "
+                 "<b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> "
+                 "text tags marked by (*) only support printable "
+                 "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
+                 "characters set.</b>"), parent);
+    vlay->addWidget(note);
     vlay->addStretch();
 
     // --------------------------------------------------------

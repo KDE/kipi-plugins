@@ -39,6 +39,7 @@
 #include <knuminput.h>
 #include <klineedit.h>
 #include <kseparator.h>
+#include <kactivelabel.h>
 
 // LibKExiv2 includes. 
 
@@ -160,8 +161,11 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     QWhatsThis::add(d->deviceTypeCB, i18n("<p>Select here the image input equipment type used to "
                                      "take the picture."));
 
-    QLabel *warning = new QLabel(i18n("<b>Warning: EXIF Makernotes can be unreadable if you set "
-                                      "wrong device manufacturer/model description.</b>"), parent);
+    KActiveLabel *warning = new KActiveLabel(i18n("<b>Warning: EXIF <b><a href="
+                 "'http://en.wikipedia.org/wiki/Exchangeable_image_file_format#MakerNote_Information'>"
+                 "Makernotes</a></b> can be unreadable if you set "
+                 "wrong device manufacturer/model description.</b>"), parent);
+
     KSeparator *line = new KSeparator(Horizontal, parent);
     grid->addMultiCellWidget(warning, 3, 3, 0, 5);
     grid->addMultiCellWidget(line, 4, 4, 0, 5);
@@ -331,10 +335,13 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     // --------------------------------------------------------
 
-    QLabel *exifNote = new QLabel(i18n("<b>Note: EXIF text tags annoted by (*) only support printable "
-                                       "ASCII characters set.</b>"), parent);
-    grid->addMultiCellWidget(exifNote, 15, 15, 0, 5);
+    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: "
+                 "<b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> "
+                 "text tags marked by (*) only support printable "
+                 "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
+                 "characters set.</b>"), parent);
 
+    grid->addMultiCellWidget(note, 15, 15, 0, 5);
     grid->setColStretch(1, 10);                     
     grid->setColStretch(5, 10);                     
     grid->setRowStretch(16, 10);                     
