@@ -1,15 +1,17 @@
 /* ============================================================
- * Authors     : Gilles Caulier
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
  * Date        : 2006-10-12
  * Description : IPTC caption settings page.
- * 
- * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,6 +39,7 @@
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kseparator.h>
+#include <kactivelabel.h>
 
 // LibKExiv2 includes. 
 
@@ -151,9 +154,13 @@ IPTCCaption::IPTCCaption(QWidget* parent)
 
     // --------------------------------------------------------
 
-    QLabel *iptcNote = new QLabel(i18n("<b>Note: IPTC text tags support printable "
-                                       "ASCII character sets only.</b>"), parent);
-    vlay->addWidget(iptcNote);
+    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: These informations are used to set "
+                   "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> tags contents. "
+                   "Take a care than IPTC text tags only support the printable "
+                   "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b>"
+                   "characters set and limit strings size. "
+                   "Use contextual help for details.</b>"), parent);
+    vlay->addWidget(note);
     vlay->addStretch();
 
     // --------------------------------------------------------
