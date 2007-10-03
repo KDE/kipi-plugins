@@ -116,6 +116,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
                  "characters set and limit strings size. "
                  "Use contextual help for details.</b>"), parent);
+    note->setMaximumWidth(150);
 
     grid->addMultiCellWidget(note, 4, 4, 1, 1);
     grid->setColStretch(0, 10);                     
