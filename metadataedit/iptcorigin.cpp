@@ -35,6 +35,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
+#include <kactivelabel.h>
 
 // LibKExiv2 includes. 
 
@@ -445,9 +446,14 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     // --------------------------------------------------------
 
-    QLabel *iptcNote = new QLabel(i18n("<b>Note: IPTC text tags only support printable "
-                                       "ASCII characters set.</b>"), parent);
-    grid->addMultiCellWidget(iptcNote, 9, 9, 0, 2);
+    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: These informations are used to set "
+                   "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> tags contents. "
+                   "Take a care than IPTC text tags only support the printable "
+                   "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b>"
+                   "characters set and limit strings size. "
+                   "Use contextual help for details.</b>"), parent);
+
+    grid->addMultiCellWidget(note, 9, 9, 0, 2);
     grid->setColStretch(2, 10);                     
     grid->setRowStretch(10, 10);                     
 
