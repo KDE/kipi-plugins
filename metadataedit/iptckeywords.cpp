@@ -113,7 +113,7 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
     KActiveLabel *note = new KActiveLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
-                 "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b>"
+                 "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
                  "characters set and limit strings size. "
                  "Use contextual help for details.</b>"), parent);
 
