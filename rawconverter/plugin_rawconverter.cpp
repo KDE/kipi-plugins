@@ -77,7 +77,7 @@ Plugin_RawConverter::Plugin_RawConverter(QObject *parent, const char*, const QSt
 void Plugin_RawConverter::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    singleAction_ = new KAction (i18n("Raw Image Converter (Single)..."),
+    singleAction_ = new KAction (i18n("Raw Image Converter..."),
                                  "rawconvertersingle",
                                  0,
                                  this,
@@ -85,7 +85,7 @@ void Plugin_RawConverter::setup( QWidget* widget )
                                  actionCollection(),
                                  "raw_converter_single");
 
-    batchAction_ = new KAction (i18n("Raw Images Converter (Batch)..."),
+    batchAction_ = new KAction (i18n("Batch Raw Converter..."),
                                  "rawconverterbatch",
                                  0,
                                  this,
@@ -211,4 +211,3 @@ KIPI::Category Plugin_RawConverter::category( KAction* action ) const
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }
-
