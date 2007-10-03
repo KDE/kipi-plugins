@@ -31,7 +31,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 008 ==> 148621 : JPEGLossLess : Image rotation not working properly.
 009 ==> 144388 : JPEGLOssLess : Cache is not updated after rotating pictures.
 010 ==> 144604 : JPEGLossLess : Rotation causes Exif data corruption.
-011 ==> 
+011 ==> 150063 : JPEGLossLess : Rotating JPEG produces error and truncates original file.
+012 ==> 
 
 v 0.1.4
 ----------------------------------------------------------------------------
