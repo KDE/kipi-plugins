@@ -72,25 +72,27 @@ public:
 
     IPTCEditDialogDialogPrivate()
     {
-        modified      = false;
-        isReadOnly    = false;
-        page_caption  = 0;
-        page_datetime = 0;
-        page_subjects = 0;
-        page_keywords = 0;
-        page_credits  = 0;
-        page_status   = 0;
-        page_origin   = 0;
+        modified        = false;
+        isReadOnly      = false;
+        page_caption    = 0;
+        page_datetime   = 0;
+        page_subjects   = 0;
+        page_keywords   = 0;
+        page_categories = 0;
+        page_credits    = 0;
+        page_status     = 0;
+        page_origin     = 0;
 
-        about         = 0;
+        about           = 0;
 
-        captionPage   = 0;
-        datetimePage  = 0;
-        subjectsPage  = 0;
-        keywordsPage  = 0;
-        creditsPage   = 0;
-        statusPage    = 0;
-        originPage    = 0;
+        captionPage     = 0;
+        datetimePage    = 0;
+        subjectsPage    = 0;
+        keywordsPage    = 0;
+        categoriesPage  = 0;
+        creditsPage     = 0;
+        statusPage      = 0;
+        originPage      = 0;
     }
 
     bool                      modified;
