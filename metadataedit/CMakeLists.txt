@@ -1,5 +1,4 @@
-SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp 
-                                      metadatacheckbox.cpp
+SET(kipiplugin_metadataedit_PART_SRCS metadatacheckbox.cpp
                                       exifeditdialog.cpp
                                       exifcaption.cpp
                                       exifdatetime.cpp
@@ -18,6 +17,7 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       iptccategories.cpp
                                       commenteditdialog.cpp
                                       commentremovedialog.cpp
+                                      plugin_metadataedit.cpp 
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_metadataedit ${kipiplugin_metadataedit_PART_SRCS})

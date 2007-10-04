@@ -28,7 +28,7 @@
 
 // QT includes.
 
-#include <qcheckbox.h>
+#include <QCheckBox>
 
 namespace KIPIMetadataEditPlugin
 {
