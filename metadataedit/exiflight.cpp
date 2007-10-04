@@ -26,11 +26,10 @@
 
 // QT includes.
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qwhatsthis.h>
-#include <qcombobox.h>
-#include <qmap.h>
+#include <QLayout>
+#include <QLabel>
+#include <QComboBox>
+#include <QMap>
 
 // KDE includes.
 
@@ -128,78 +127,81 @@ EXIFLight::EXIFLight(QWidget* parent)
 {
     d = new EXIFLightPriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 4, 3, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent);
 
     // --------------------------------------------------------
 
     d->lightSourceCheck = new MetadataCheckBox(i18n("Light source:"), parent);
-    d->lightSourceCB    = new QComboBox(false, parent);
-    d->lightSourceCB->insertItem(i18n("Unknown"),                                 0);
-    d->lightSourceCB->insertItem(i18n("Daylight"),                                1);
-    d->lightSourceCB->insertItem(i18n("Fluorescent"),                             2);
-    d->lightSourceCB->insertItem(i18n("Tungsten (incandescent light)"),           3);
-    d->lightSourceCB->insertItem(i18n("Flash"),                                   4);
-    d->lightSourceCB->insertItem(i18n("Fine weather"),                            5);
-    d->lightSourceCB->insertItem(i18n("Cloudy weather"),                          6);
-    d->lightSourceCB->insertItem(i18n("Shade"),                                   7);
-    d->lightSourceCB->insertItem(i18n("Daylight fluorescent (D 5700 - 7100K)"),   8);
-    d->lightSourceCB->insertItem(i18n("Day white fluorescent (N 4600 - 5400K)"),  9);
-    d->lightSourceCB->insertItem(i18n("Cool white fluorescent (W 3900 - 4500K)"), 10);
-    d->lightSourceCB->insertItem(i18n("White fluorescent (WW 3200 - 3700K)"),     11);
-    d->lightSourceCB->insertItem(i18n("Standard light A"),                        12);
-    d->lightSourceCB->insertItem(i18n("Standard light B"),                        13);
-    d->lightSourceCB->insertItem(i18n("Standard light C"),                        14);
-    d->lightSourceCB->insertItem(i18n("D55"),                                     15);
-    d->lightSourceCB->insertItem(i18n("D65"),                                     16);
-    d->lightSourceCB->insertItem(i18n("D75"),                                     17);
-    d->lightSourceCB->insertItem(i18n("D50"),                                     18);
-    d->lightSourceCB->insertItem(i18n("ISO studio tungsten"),                     19);
-    d->lightSourceCB->insertItem(i18n("Other light source"),                      20);
-    grid->addMultiCellWidget(d->lightSourceCheck, 0, 0, 0, 0);
-    grid->addMultiCellWidget(d->lightSourceCB, 0, 0, 2, 3);
-    QWhatsThis::add(d->lightSourceCB, i18n("<p>Select here the kind of light source used "
-                                           "to take the picture."));
+    d->lightSourceCB    = new QComboBox(parent);
+    d->lightSourceCB->insertItem(0, i18n("Unknown"));
+    d->lightSourceCB->insertItem(1, i18n("Daylight"));
+    d->lightSourceCB->insertItem(2, i18n("Fluorescent"));
+    d->lightSourceCB->insertItem(3, i18n("Tungsten (incandescent light)"));
+    d->lightSourceCB->insertItem(4, i18n("Flash"));
+    d->lightSourceCB->insertItem(5, i18n("Fine weather"));
+    d->lightSourceCB->insertItem(6, i18n("Cloudy weather"));
+    d->lightSourceCB->insertItem(7, i18n("Shade"));
+    d->lightSourceCB->insertItem(8, i18n("Daylight fluorescent (D 5700 - 7100K)"));
+    d->lightSourceCB->insertItem(9, i18n("Day white fluorescent (N 4600 - 5400K)"));
+    d->lightSourceCB->insertItem(10, i18n("Cool white fluorescent (W 3900 - 4500K)"));
+    d->lightSourceCB->insertItem(11, i18n("White fluorescent (WW 3200 - 3700K)"));
+    d->lightSourceCB->insertItem(12, i18n("Standard light A"));
+    d->lightSourceCB->insertItem(13, i18n("Standard light B"));
+    d->lightSourceCB->insertItem(14, i18n("Standard light C"));
+    d->lightSourceCB->insertItem(15, i18n("D55"));
+    d->lightSourceCB->insertItem(16, i18n("D65"));
+    d->lightSourceCB->insertItem(17, i18n("D75"));
+    d->lightSourceCB->insertItem(18, i18n("D50"));
+    d->lightSourceCB->insertItem(19, i18n("ISO studio tungsten"));
+    d->lightSourceCB->insertItem(20, i18n("Other light source"));
+    d->lightSourceCB->setWhatsThis(i18n("<p>Select here the kind of light source used "
+                                        "to take the picture."));
 
     // --------------------------------------------------------
 
     d->flashModeCheck = new MetadataCheckBox(i18n("Flash mode:"), parent);
-    d->flashModeCB    = new QComboBox(false, parent);
+    d->flashModeCB    = new QComboBox(parent);
 
     for (EXIFLightPriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
         it != d->flashModeMap.end(); ++it )
-       d->flashModeCB->insertItem(it.data().desc());
+       d->flashModeCB->addItem(it.value().desc());
 
-    grid->addMultiCellWidget(d->flashModeCheck, 1, 1, 0, 0);
-    grid->addMultiCellWidget(d->flashModeCB, 1, 1, 2, 3);
-    QWhatsThis::add(d->flashModeCB, i18n("<p>Select here the flash program mode used by camera "
-                                         "to take the picture."));
+    d->flashModeCB->setWhatsThis(i18n("<p>Select here the flash program mode used by camera "
+                                      "to take the picture."));
 
     // --------------------------------------------------------
 
     d->flashEnergyCheck = new QCheckBox(i18n("Flash energy (BCPS):"), parent);
-    d->flashEnergyEdit  = new KDoubleSpinBox(1, 10000, 1, 1, 1, parent);
-    grid->addMultiCellWidget(d->flashEnergyCheck, 2, 2, 0, 0);
-    grid->addMultiCellWidget(d->flashEnergyEdit, 2, 2, 2, 2);
-    QWhatsThis::add(d->flashEnergyEdit, i18n("<p>Set here the flash energy used to take the picture "
-                                             "in BCPS unit. Beam Candle Power Seconds is the measure "
-                                             "of effective intensity of a light source when it is "
-                                             "focused into a beam by a reflector or lens. This value "
-                                             "is the effective intensity for a period of one second."));
+    d->flashEnergyEdit  = new KDoubleSpinBox(1.0, 10000.0, 1.0, 1.0, parent, 1);
+    d->flashEnergyEdit->setWhatsThis(i18n("<p>Set here the flash energy used to take the picture "
+                                          "in BCPS unit. Beam Candle Power Seconds is the measure "
+                                          "of effective intensity of a light source when it is "
+                                          "focused into a beam by a reflector or lens. This value "
+                                          "is the effective intensity for a period of one second."));
 
     // --------------------------------------------------------
 
     d->whiteBalanceCheck = new MetadataCheckBox(i18n("White balance:"), parent);
-    d->whiteBalanceCB    = new QComboBox(false, parent);
-    d->whiteBalanceCB->insertItem(i18n("Auto"),   0);
-    d->whiteBalanceCB->insertItem(i18n("Manual"), 1);
-    grid->addMultiCellWidget(d->whiteBalanceCheck, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->whiteBalanceCB, 3, 3, 2, 2);
-    QWhatsThis::add(d->whiteBalanceCB, i18n("<p>Select here the white balance mode set by camera when "
-                                           "the picture have been shot."));
+    d->whiteBalanceCB    = new QComboBox(parent);
+    d->whiteBalanceCB->insertItem(0, i18n("Auto"));
+    d->whiteBalanceCB->insertItem(1, i18n("Manual"));
+    d->whiteBalanceCB->setWhatsThis(i18n("<p>Select here the white balance mode set by camera when "
+                                         "the picture have been shot."));
 
+    // --------------------------------------------------------
 
-    grid->setColStretch(1, 10);                     
+    grid->addWidget(d->lightSourceCheck, 0, 0, 1, 1);
+    grid->addWidget(d->lightSourceCB, 0, 2, 1, 3- 2+1);
+    grid->addWidget(d->flashModeCheck, 1, 0, 1, 1);
+    grid->addWidget(d->flashModeCB, 1, 2, 1, 3- 2+1);
+    grid->addWidget(d->flashEnergyCheck, 2, 0, 1, 1);
+    grid->addWidget(d->flashEnergyEdit, 2, 2, 1, 1);
+    grid->addWidget(d->whiteBalanceCheck, 3, 0, 1, 1);
+    grid->addWidget(d->whiteBalanceCB, 3, 2, 1, 1);
+    grid->setColumnStretch(1, 10);                     
     grid->setRowStretch(4, 10);                     
+    grid->setMargin(0);
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -257,7 +259,7 @@ void EXIFLight::readMetadata(QByteArray& exifData)
     long int num=1, den=1;
     long     val=0;
 
-    d->lightSourceCB->setCurrentItem(0);
+    d->lightSourceCB->setCurrentIndex(0);
     d->lightSourceCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.LightSource", val))
     {
@@ -270,7 +272,7 @@ void EXIFLight::readMetadata(QByteArray& exifData)
             else if (val == 255)    
                 val = 20;
     
-            d->lightSourceCB->setCurrentItem(val);
+            d->lightSourceCB->setCurrentIndex(val);
             d->lightSourceCheck->setChecked(true);
         }
         else 
@@ -278,7 +280,7 @@ void EXIFLight::readMetadata(QByteArray& exifData)
     }
     d->lightSourceCB->setEnabled(d->lightSourceCheck->isChecked());
 
-    d->flashModeCB->setCurrentItem(0);
+    d->flashModeCB->setCurrentIndex(0);
     d->flashModeCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.Flash", val))
     {
@@ -286,13 +288,13 @@ void EXIFLight::readMetadata(QByteArray& exifData)
         for (EXIFLightPriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
             it != d->flashModeMap.end(); ++it )
         {
-            if (it.data().id() == val)
+            if (it.value().id() == val)
                 item = it.key();
         }
         
         if (item != -1)
         {
-            d->flashModeCB->setCurrentItem(item);
+            d->flashModeCB->setCurrentIndex(item);
             d->flashModeCheck->setChecked(true);
         }
         else
@@ -309,13 +311,13 @@ void EXIFLight::readMetadata(QByteArray& exifData)
     }
     d->flashEnergyEdit->setEnabled(d->flashEnergyCheck->isChecked());
 
-    d->whiteBalanceCB->setCurrentItem(0);
+    d->whiteBalanceCB->setCurrentIndex(0);
     d->whiteBalanceCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.WhiteBalance", val))
     {
         if (val>=0 && val<=1)
         {
-            d->whiteBalanceCB->setCurrentItem(val);
+            d->whiteBalanceCB->setCurrentIndex(val);
             d->whiteBalanceCheck->setChecked(true);
         }
         else
@@ -334,7 +336,7 @@ void EXIFLight::applyMetadata(QByteArray& exifData)
 
     if (d->lightSourceCheck->isChecked())
     {
-        long val = d->lightSourceCB->currentItem();
+        long val = d->lightSourceCB->currentIndex();
         if (val > 4 && val < 12)
             val = val + 4;
         else if (val > 11 && val < 20)
@@ -349,7 +351,7 @@ void EXIFLight::applyMetadata(QByteArray& exifData)
 
     if (d->flashModeCheck->isChecked())
     {
-        long val = d->flashModeCB->currentItem();
+        long val = d->flashModeCB->currentIndex();
         exiv2Iface.setExifTagLong("Exif.Photo.Flash", d->flashModeMap[val].id());
     }
     else if (d->flashModeCheck->isValid())
@@ -364,7 +366,7 @@ void EXIFLight::applyMetadata(QByteArray& exifData)
         exiv2Iface.removeExifTag("Exif.Photo.FlashEnergy");
 
     if (d->whiteBalanceCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.WhiteBalance", d->whiteBalanceCB->currentItem());
+        exiv2Iface.setExifTagLong("Exif.Photo.WhiteBalance", d->whiteBalanceCB->currentIndex());
     else if (d->whiteBalanceCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.WhiteBalance");
 
@@ -372,4 +374,3 @@ void EXIFLight::applyMetadata(QByteArray& exifData)
 }
 
 }  // namespace KIPIMetadataEditPlugin
-
