@@ -26,10 +26,9 @@
 
 // QT includes.
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qwhatsthis.h>
-#include <qcombobox.h>
+#include <QLayout>
+#include <QLabel>
+#include <QComboBox>
 
 // KDE includes.
 
@@ -92,80 +91,82 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
 {
     d = new EXIFAdjustPriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 6, 2, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent);
 
     // --------------------------------------------------------
 
     d->brightnessCheck = new QCheckBox(i18n("Brightness (APEX):"), parent);
-    d->brightnessEdit  = new KDoubleSpinBox(-99.99, 99.99, 0.1, 0.0, 2, parent);
-    grid->addMultiCellWidget(d->brightnessCheck, 0, 0, 0, 0);
-    grid->addMultiCellWidget(d->brightnessEdit, 0, 0, 2, 2);
-    QWhatsThis::add(d->brightnessEdit, i18n("<p>Set here the brightness adjustment value in APEX unit "
-                                             "used by camera to take the picture."));
+    d->brightnessEdit  = new KDoubleSpinBox(-99.99, 99.99, 0.1, 0.0, parent);
+    d->brightnessEdit->setWhatsThis(i18n("<p>Set here the brightness adjustment value in APEX unit "
+                                         "used by camera to take the picture."));
 
     // --------------------------------------------------------
 
     d->gainControlCheck = new MetadataCheckBox(i18n("Gain Control:"), parent);
-    d->gainControlCB    = new QComboBox(false, parent);
-    d->gainControlCB->insertItem(i18n("None"),           0);
-    d->gainControlCB->insertItem(i18n("Low gain up"),    1);
-    d->gainControlCB->insertItem(i18n("High gain up"),   2);
-    d->gainControlCB->insertItem(i18n("Low gain down"),  3);
-    d->gainControlCB->insertItem(i18n("High gain down"), 4);
-    grid->addMultiCellWidget(d->gainControlCheck, 1, 1, 0, 0);
-    grid->addMultiCellWidget(d->gainControlCB, 1, 1, 2, 2);
-    QWhatsThis::add(d->gainControlCB, i18n("<p>Set here the degree of overall image gain adjustment "
-                                             "used by camera to take the picture."));
+    d->gainControlCB    = new QComboBox(parent);
+    d->gainControlCB->insertItem(0, i18n("None"));
+    d->gainControlCB->insertItem(1, i18n("Low gain up"));
+    d->gainControlCB->insertItem(2, i18n("High gain up"));
+    d->gainControlCB->insertItem(3, i18n("Low gain down"));
+    d->gainControlCB->insertItem(4, i18n("High gain down"));
+    d->gainControlCB->setWhatsThis(i18n("<p>Set here the degree of overall image gain adjustment "
+                                        "used by camera to take the picture."));
 
     // --------------------------------------------------------
 
     d->contrastCheck = new MetadataCheckBox(i18n("Contrast:"), parent);
-    d->contrastCB    = new QComboBox(false, parent);
-    d->contrastCB->insertItem(i18n("Normal"), 0);
-    d->contrastCB->insertItem(i18n("Soft"),   1);
-    d->contrastCB->insertItem(i18n("Hard"),   2);
-    grid->addMultiCellWidget(d->contrastCheck, 2, 2, 0, 0);
-    grid->addMultiCellWidget(d->contrastCB, 2, 2, 2, 2);
-    QWhatsThis::add(d->contrastCB, i18n("<p>Set here the direction of contrast processing "
-                                        "applied by the camera to take the picture."));
+    d->contrastCB    = new QComboBox(parent);
+    d->contrastCB->insertItem(0, i18n("Normal"));
+    d->contrastCB->insertItem(1, i18n("Soft"));
+    d->contrastCB->insertItem(2, i18n("Hard"));
+    d->contrastCB->setWhatsThis(i18n("<p>Set here the direction of contrast processing "
+                                     "applied by the camera to take the picture."));
 
     // --------------------------------------------------------
 
     d->saturationCheck = new MetadataCheckBox(i18n("Saturation:"), parent);
-    d->saturationCB    = new QComboBox(false, parent);
-    d->saturationCB->insertItem(i18n("Normal"), 0);
-    d->saturationCB->insertItem(i18n("Low"),    1);
-    d->saturationCB->insertItem(i18n("High"),   2);
-    grid->addMultiCellWidget(d->saturationCheck, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->saturationCB, 3, 3, 2, 2);
-    QWhatsThis::add(d->saturationCB, i18n("<p>Set here the direction of saturation processing "
-                                          "applied by the camera to take the picture."));
+    d->saturationCB    = new QComboBox(parent);
+    d->saturationCB->insertItem(0, i18n("Normal"));
+    d->saturationCB->insertItem(1, i18n("Low"));
+    d->saturationCB->insertItem(2, i18n("High"));
+    d->saturationCB->setWhatsThis(i18n("<p>Set here the direction of saturation processing "
+                                       "applied by the camera to take the picture."));
 
     // --------------------------------------------------------
 
     d->sharpnessCheck = new MetadataCheckBox(i18n("Sharpness:"), parent);
-    d->sharpnessCB    = new QComboBox(false, parent);
-    d->sharpnessCB->insertItem(i18n("Normal"), 0);
-    d->sharpnessCB->insertItem(i18n("Soft"),   1);
-    d->sharpnessCB->insertItem(i18n("Hard"),   2);
-    grid->addMultiCellWidget(d->sharpnessCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->sharpnessCB, 4, 4, 2, 2);
-    QWhatsThis::add(d->sharpnessCB, i18n("<p>Set here the direction of sharpness processing "
-                                         "applied by the camera to take the picture."));
+    d->sharpnessCB    = new QComboBox(parent);
+    d->sharpnessCB->insertItem(0, i18n("Normal"));
+    d->sharpnessCB->insertItem(1, i18n("Soft"));
+    d->sharpnessCB->insertItem(2, i18n("Hard"));
+    d->sharpnessCB->setWhatsThis(i18n("<p>Set here the direction of sharpness processing "
+                                      "applied by the camera to take the picture."));
 
     // --------------------------------------------------------
 
     d->customRenderedCheck = new MetadataCheckBox(i18n("Custom rendered:"), parent);
-    d->customRenderedCB    = new QComboBox(false, parent);
-    d->customRenderedCB->insertItem(i18n("Normal process"), 0);
-    d->customRenderedCB->insertItem(i18n("Custom process"), 1);
-    grid->addMultiCellWidget(d->customRenderedCheck, 5, 5, 0, 0);
-    grid->addMultiCellWidget(d->customRenderedCB, 5, 5, 2, 2);
-    QWhatsThis::add(d->customRenderedCB, i18n("<p>Set here the use of special processing on "
-                                              "image data, such as rendering geared to output."));
+    d->customRenderedCB    = new QComboBox(parent);
+    d->customRenderedCB->insertItem(0, i18n("Normal process"));
+    d->customRenderedCB->insertItem(1, i18n("Custom process"));
+    d->customRenderedCB->setWhatsThis(i18n("<p>Set here the use of special processing on "
+                                           "image data, such as rendering geared to output."));
 
-    grid->setColStretch(1, 10);                     
-    grid->setRowStretch(6, 10);                     
+    grid->addWidget(d->brightnessCheck, 0, 0, 1, 1);
+    grid->addWidget(d->brightnessEdit, 0, 2, 1, 1);
+    grid->addWidget(d->gainControlCheck, 1, 0, 1, 1);
+    grid->addWidget(d->gainControlCB, 1, 2, 1, 1);
+    grid->addWidget(d->contrastCheck, 2, 0, 1, 1);
+    grid->addWidget(d->contrastCB, 2, 2, 1, 1);
+    grid->addWidget(d->saturationCheck, 3, 0, 1, 1);
+    grid->addWidget(d->saturationCB, 3, 2, 1, 1);
+    grid->addWidget(d->sharpnessCheck, 4, 0, 1, 1);
+    grid->addWidget(d->sharpnessCB, 4, 2, 1, 1);
+    grid->addWidget(d->customRenderedCheck, 5, 0, 1, 1);
+    grid->addWidget(d->customRenderedCB, 5, 2, 1, 1);
+    grid->setColumnStretch(1, 10);                     
+    grid->setRowStretch(6, 10);    
+    grid->setMargin(0);
+    grid->setSpacing(KDialog::spacingHint());                 
 
     // --------------------------------------------------------
 
@@ -250,13 +251,13 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
     }
     d->brightnessEdit->setEnabled(d->brightnessCheck->isChecked());
 
-    d->gainControlCB->setCurrentItem(0);
+    d->gainControlCB->setCurrentIndex(0);
     d->gainControlCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.GainControl", val))
     {
         if (val >= 0 && val <= 4)
         {
-            d->gainControlCB->setCurrentItem(val);
+            d->gainControlCB->setCurrentIndex(val);
             d->gainControlCheck->setChecked(true);
         }
         else
@@ -264,13 +265,13 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
     }
     d->gainControlCB->setEnabled(d->gainControlCheck->isChecked());
     
-    d->contrastCB->setCurrentItem(0);
+    d->contrastCB->setCurrentIndex(0);
     d->contrastCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.Contrast", val))
     {
         if (val >= 0 && val <= 2)
         {
-            d->contrastCB->setCurrentItem(val);
+            d->contrastCB->setCurrentIndex(val);
             d->contrastCheck->setChecked(true);
         }
         else
@@ -278,13 +279,13 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
     }
     d->contrastCB->setEnabled(d->contrastCheck->isChecked());
 
-    d->saturationCB->setCurrentItem(0);
+    d->saturationCB->setCurrentIndex(0);
     d->saturationCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.Saturation", val))
     {
         if (val >= 0 && val <= 2)
         {
-            d->saturationCB->setCurrentItem(val);
+            d->saturationCB->setCurrentIndex(val);
             d->saturationCheck->setChecked(true);
         }
         else
@@ -292,13 +293,13 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
     }
     d->saturationCB->setEnabled(d->saturationCheck->isChecked());
 
-    d->sharpnessCB->setCurrentItem(0);
+    d->sharpnessCB->setCurrentIndex(0);
     d->sharpnessCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.Sharpness", val))
     {
         if (val >= 0 && val <= 2)
         {
-            d->sharpnessCB->setCurrentItem(val);
+            d->sharpnessCB->setCurrentIndex(val);
             d->sharpnessCheck->setChecked(true);
         }
         else
@@ -306,13 +307,13 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
     }
     d->sharpnessCB->setEnabled(d->sharpnessCheck->isChecked());
 
-    d->customRenderedCB->setCurrentItem(0);
+    d->customRenderedCB->setCurrentIndex(0);
     d->customRenderedCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.CustomRendered", val))
     {
         if (val >= 0 && val <= 1)
         {
-            d->customRenderedCB->setCurrentItem(val);
+            d->customRenderedCB->setCurrentIndex(val);
             d->customRenderedCheck->setChecked(true);
         }
         else
@@ -338,27 +339,27 @@ void EXIFAdjust::applyMetadata(QByteArray& exifData)
         exiv2Iface.removeExifTag("Exif.Photo.BrightnessValue");
 
     if (d->gainControlCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.GainControl", d->gainControlCB->currentItem());
+        exiv2Iface.setExifTagLong("Exif.Photo.GainControl", d->gainControlCB->currentIndex());
     else if (d->gainControlCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.GainControl");
 
     if (d->contrastCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.Contrast", d->contrastCB->currentItem());
+        exiv2Iface.setExifTagLong("Exif.Photo.Contrast", d->contrastCB->currentIndex());
     else if (d->contrastCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.Contrast");
 
     if (d->saturationCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.Saturation", d->saturationCB->currentItem());
+        exiv2Iface.setExifTagLong("Exif.Photo.Saturation", d->saturationCB->currentIndex());
     else if (d->saturationCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.Saturation");
 
     if (d->sharpnessCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.Sharpness", d->sharpnessCB->currentItem());
+        exiv2Iface.setExifTagLong("Exif.Photo.Sharpness", d->sharpnessCB->currentIndex());
     else if (d->sharpnessCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.Sharpness");
 
     if (d->customRenderedCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.CustomRendered", d->customRenderedCB->currentItem());
+        exiv2Iface.setExifTagLong("Exif.Photo.CustomRendered", d->customRenderedCB->currentIndex());
     else if (d->customRenderedCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.CustomRendered");
 
@@ -366,4 +367,3 @@ void EXIFAdjust::applyMetadata(QByteArray& exifData)
 }
 
 }  // namespace KIPIMetadataEditPlugin
-
