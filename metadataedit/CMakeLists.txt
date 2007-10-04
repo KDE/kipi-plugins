@@ -1,12 +1,11 @@
 SET(kipiplugin_metadataedit_PART_SRCS metadatacheckbox.cpp
-                                      exifeditdialog.cpp
                                       exifcaption.cpp
                                       exifdatetime.cpp
                                       exifadjust.cpp
                                       exiflens.cpp 
                                       exifdevice.cpp
                                       exiflight.cpp
-                                      iptceditdialog.cpp 
+                                      exifeditdialog.cpp
                                       iptccaption.cpp
                                       iptcsubjects.cpp
                                       iptccredits.cpp
@@ -15,6 +14,7 @@ SET(kipiplugin_metadataedit_PART_SRCS metadatacheckbox.cpp
                                       iptcdatetime.cpp
                                       iptckeywords.cpp
                                       iptccategories.cpp
+                                      iptceditdialog.cpp 
                                       commenteditdialog.cpp
                                       commentremovedialog.cpp
                                       plugin_metadataedit.cpp 

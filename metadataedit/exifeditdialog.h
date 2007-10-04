@@ -25,12 +25,16 @@
 
 // Qt includes.
 
-#include <qcstring.h>
+#include <QByteArray>
 
 // KDE includes.
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kurl.h>
+
+class QCloseEvent;
+class QEvent;
+class QObject;
 
 namespace KIPI
 {
@@ -42,13 +46,13 @@ namespace KIPIMetadataEditPlugin
 
 class EXIFEditDialogDialogPrivate;
 
-class EXIFEditDialog : public KDialogBase
+class EXIFEditDialog : public KDialog
 {
     Q_OBJECT
 
 public:
 
-    EXIFEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface *iface);
+    EXIFEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *iface);
     ~EXIFEditDialog();
 
 public slots:

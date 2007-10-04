@@ -25,8 +25,8 @@
 
 // Qt includes.
 
-#include <qwidget.h>
-#include <qcstring.h>
+#include <QWidget>
+#include <QByteArray>
 
 namespace KIPIMetadataEditPlugin
 {

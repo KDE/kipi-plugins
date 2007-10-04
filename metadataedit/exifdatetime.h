@@ -25,9 +25,9 @@
 
 // Qt includes.
 
-#include <qwidget.h>
-#include <qcstring.h>
-#include <qdatetime.h>
+#include <QWidget>
+#include <QByteArray>
+#include <QDateTime>
 
 namespace KIPIMetadataEditPlugin
 {
