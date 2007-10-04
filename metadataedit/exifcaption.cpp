@@ -22,23 +22,21 @@
 
 // QT includes.
 
-#include <qlayout.h>
-#include <qhgroupbox.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qwhatsthis.h>
-#include <qvalidator.h>
-#include <qcheckbox.h>
+#include <QLayout>
+#include <QLabel>
+#include <QGroupBox>
+#include <QValidator>
+#include <QCheckBox>
 
 // KDE includes.
 
+#include <kcomponentdata.h>
+#include <kglobal.h>
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
-#include <kapplication.h>
 #include <kaboutdata.h>
-#include <kactivelabel.h>
 
 // LibKExiv2 includes. 
 
@@ -95,7 +93,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
            : QWidget(parent)
 {
     d = new EXIFCaptionPriv;
-    QVBoxLayout *vlay = new QVBoxLayout( parent, 0, KDialog::spacingHint() );
+    QVBoxLayout *vlay = new QVBoxLayout( parent );
 
     // EXIF only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -106,71 +104,77 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     d->documentNameCheck = new QCheckBox(i18n("Document name (*):"), parent);
     d->documentNameEdit  = new KLineEdit(parent);
     d->documentNameEdit->setValidator(asciiValidator);
-    vlay->addWidget(d->documentNameCheck);
-    vlay->addWidget(d->documentNameEdit);
-    QWhatsThis::add(d->documentNameEdit, i18n("<p>Enter the name of the document from which "
-                                         "this image was been scanned. This field is limited "
-                                         "to ASCII characters."));
+    d->documentNameEdit->setWhatsThis(i18n("<p>Enter the name of the document from which "
+                                           "this image was been scanned. This field is limited "
+                                           "to ASCII characters."));
 
     // --------------------------------------------------------
 
     d->imageDescCheck = new QCheckBox(i18n("Image description (*):"), parent);
     d->imageDescEdit  = new KLineEdit(parent);
     d->imageDescEdit->setValidator(asciiValidator);
-    vlay->addWidget(d->imageDescCheck);
-    vlay->addWidget(d->imageDescEdit);
-    QWhatsThis::add(d->imageDescEdit, i18n("<p>Enter the image title. This field is limited "
-                                      "to ASCII characters."));
+    d->imageDescEdit->setWhatsThis(i18n("<p>Enter the image title. This field is limited "
+                                        "to ASCII characters."));
         
     // --------------------------------------------------------
 
     d->artistCheck = new QCheckBox(i18n("Artist (*):"), parent);
     d->artistEdit  = new KLineEdit(parent);
     d->artistEdit->setValidator(asciiValidator);
-    vlay->addWidget(d->artistCheck);
-    vlay->addWidget(d->artistEdit);
-    QWhatsThis::add(d->artistEdit, i18n("<p>Enter the image author's name. "
-                                   "This field is limited to ASCII characters."));
+    d->artistEdit->setWhatsThis(i18n("<p>Enter the image author's name. "
+                                     "This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
     d->copyrightCheck = new QCheckBox(i18n("Copyright (*):"), parent);
     d->copyrightEdit  = new KLineEdit(parent);
     d->copyrightEdit->setValidator(asciiValidator);
-    vlay->addWidget(d->copyrightCheck);
-    vlay->addWidget(d->copyrightEdit);
-    QWhatsThis::add(d->copyrightEdit, i18n("<p>Enter the copyright owner of the image. "
-                                      "This field is limited to ASCII characters."));
+    d->copyrightEdit->setWhatsThis(i18n("<p>Enter the copyright owner of the image. "
+                                        "This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
     d->userCommentCheck = new QCheckBox(i18n("Caption:"), parent);
     d->userCommentEdit  = new KTextEdit(parent);
-    QWhatsThis::add(d->userCommentEdit, i18n("<p>Enter the image's caption. "
-                                             "This field is not limited. UTF8 encoding "
-                                             "will be used to save the text."));
+    d->userCommentEdit->setWhatsThis(i18n("<p>Enter the image's caption. "
+                                          "This field is not limited. UTF8 encoding "
+                                          "will be used to save the text."));
 
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF captions"), parent);
     d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync captions entered through %1")
-                                            .arg(KApplication::kApplication()->aboutData()->appName()), 
+                                            .arg(KGlobal::mainComponent().aboutData()->programName()), 
                                             parent);
     d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: ASCII limited)"), parent);
 
+    // --------------------------------------------------------
+
+    QLabel *note = new QLabel(i18n("<b>Note: "
+                 "<b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> "
+                 "text tags marked by (*) only support printable "
+                 "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
+                 "characters set.</b>"), parent);
+    note->setOpenExternalLinks(true);
+    note->setWordWrap(true);
+
+    // --------------------------------------------------------
+
+    vlay->addWidget(d->documentNameCheck);
+    vlay->addWidget(d->documentNameEdit);
+    vlay->addWidget(d->imageDescCheck);
+    vlay->addWidget(d->imageDescEdit);
+    vlay->addWidget(d->artistCheck);
+    vlay->addWidget(d->artistEdit);
+    vlay->addWidget(d->copyrightCheck);
+    vlay->addWidget(d->copyrightEdit);
     vlay->addWidget(d->userCommentCheck);
     vlay->addWidget(d->userCommentEdit);
     vlay->addWidget(d->syncJFIFCommentCheck);
     vlay->addWidget(d->syncHOSTCommentCheck);
     vlay->addWidget(d->syncIPTCCaptionCheck);
-
-    // --------------------------------------------------------
-
-    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: "
-                 "<b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> "
-                 "text tags marked by (*) only support printable "
-                 "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
-                 "characters set.</b>"), parent);
     vlay->addWidget(note);
     vlay->addStretch();
+    vlay->setMargin(0);
+    vlay->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -255,7 +259,7 @@ bool EXIFCaption::syncIPTCCaptionIsChecked()
 
 QString EXIFCaption::getEXIFUserComments()
 {
-    return d->userCommentEdit->text();
+    return d->userCommentEdit->toPlainText();
 }
 
 void EXIFCaption::setCheckedSyncJFIFComment(bool c)
@@ -364,13 +368,13 @@ void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 
     if (d->userCommentCheck->isChecked())
     {
-        exiv2Iface.setExifComment(d->userCommentEdit->text());
+        exiv2Iface.setExifComment(d->userCommentEdit->toPlainText());
         
         if (syncJFIFCommentIsChecked())
-            exiv2Iface.setComments(d->userCommentEdit->text().utf8());
+            exiv2Iface.setComments(d->userCommentEdit->toPlainText().toUtf8());
         
         if (syncIPTCCaptionIsChecked())
-            exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->userCommentEdit->text());
+            exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->userCommentEdit->toPlainText());
     }
     else
         exiv2Iface.removeExifTag("Exif.Photo.UserComment");
