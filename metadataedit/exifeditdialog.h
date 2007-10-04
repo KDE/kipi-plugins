@@ -29,7 +29,7 @@
 
 // KDE includes.
 
-#include <kdialog.h>
+#include <kpagedialog.h>
 #include <kurl.h>
 
 class QCloseEvent;
@@ -46,7 +46,7 @@ namespace KIPIMetadataEditPlugin
 
 class EXIFEditDialogDialogPrivate;
 
-class EXIFEditDialog : public KDialog
+class EXIFEditDialog : public KPageDialog
 {
     Q_OBJECT
 
@@ -81,6 +81,9 @@ private:
 
     void readSettings();
     void saveSettings();
+
+    int  activePageIndex();
+    void showPage(int page);
 
 private:
 

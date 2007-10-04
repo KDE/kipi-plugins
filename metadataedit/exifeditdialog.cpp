@@ -22,10 +22,11 @@
 
 // Qt includes.
 
-#include <qtimer.h>
-#include <qframe.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
+#include <QTimer>
+#include <QFrame>
+#include <QLayout>
+#include <QCloseEvent>
+#include <QKeyEvent>
 
 // KDE includes.
 
@@ -35,8 +36,11 @@
 #include <kiconloader.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
+#include <kpushbutton.h>
+#include <kmenu.h>
 #include <khelpmenu.h>
-#include <kpopupmenu.h>
+#include <ktoolinvocation.h>
+#include <kguiitem.h>
 
 // LibKIPI includes.
 
@@ -97,16 +101,16 @@ public:
     QByteArray                exifData;
     QByteArray                iptcData;
 
-    QFrame                   *page_caption;
-    QFrame                   *page_datetime;
-    QFrame                   *page_lens;
-    QFrame                   *page_device;
-    QFrame                   *page_light;
-    QFrame                   *page_adjust;
+    KPageWidgetItem          *page_caption;
+    KPageWidgetItem          *page_datetime;
+    KPageWidgetItem          *page_lens;
+    KPageWidgetItem          *page_device;
+    KPageWidgetItem          *page_light;
+    KPageWidgetItem          *page_adjust;
 
-    KURL::List                urls;
+    KUrl::List                urls;
 
-    KURL::List::iterator      currItem;
+    KUrl::List::iterator      currItem;
 
     EXIFCaption              *captionPage;
     EXIFDateTime             *datetimePage;
@@ -120,62 +124,78 @@ public:
     KIPIPlugins::KPAboutData *about;
 };
 
-EXIFEditDialog::EXIFEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface *iface)
-              : KDialogBase(IconList, QString::null, 
-                            urls.count() > 1 ? Help|User1|User2|Stretch|Ok|Apply|Close 
-                                             : Help|Stretch|Ok|Apply|Close, 
-                            Ok, parent, 0, true, true,
-                            KStdGuiItem::guiItem(KStdGuiItem::Forward),
-                            KStdGuiItem::guiItem(KStdGuiItem::Back) )
+EXIFEditDialog::EXIFEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *iface)
+              : KPageDialog(parent)
 {
     d = new EXIFEditDialogDialogPrivate;
     d->urls      = urls;
     d->interface = iface;
     d->currItem  = d->urls.begin();
 
+    setButtons(d->urls.count() > 1 ? Help|User1|User2|Ok|Apply|Close 
+                                   : Help|Ok|Apply|Close);
+    setDefaultButton(Ok);
+    setButtonIcon(User1, KIcon("go-next"));
+    setButtonIcon(User2, KIcon("go-previous"));
+    setCaption(i18n("Adjust Time & Date"));
+    setFaceType(List);
+    setModal(true);
+
     // ---------------------------------------------------------------
 
-    d->page_caption  = addPage(i18n("Caption"), i18n("Caption Information"),
-                               BarIcon("editclear", KIcon::SizeMedium));
-    d->captionPage   = new EXIFCaption(d->page_caption);
+    d->captionPage   = new EXIFCaption(this);
+    d->page_caption  = addPage(d->captionPage, i18n("Caption"));
+    d->page_caption->setHeader(i18n("Caption Information"));
+    d->page_caption->setIcon(KIcon("edit-clear"));
 
-    d->page_datetime = addPage(i18n("Date & Time"), i18n("Date and Time"),
-                                 BarIcon("today", KIcon::SizeMedium));
-    d->datetimePage  = new EXIFDateTime(d->page_datetime);
+    d->datetimePage  = new EXIFDateTime(this);
+    d->page_datetime = addPage(d->datetimePage, i18n("Date & Time"));
+    d->page_datetime->setHeader(i18n("Date and Time"));
+    d->page_datetime->setIcon(KIcon("calendar-today"));
 
-    d->page_lens     = addPage(i18n("Lens"), i18n("Lens Settings"),
-                               BarIcon("camera", KIcon::SizeMedium));
-    d->lensPage      = new EXIFLens(d->page_lens);
+    d->lensPage      = new EXIFLens(this);
+    d->page_lens     = addPage(d->lensPage, i18n("Lens"));
+    d->page_lens->setHeader(i18n("Lens Settings"));
+    d->page_lens->setIcon(KIcon("camera-photo"));
 
-    d->page_device   = addPage(i18n("Device"), i18n("Capture Device Settings"),
-                               BarIcon("scanner", KIcon::SizeMedium));
-    d->devicePage    = new EXIFDevice(d->page_device);
+    d->devicePage    = new EXIFDevice(this);
+    d->page_device   = addPage(d->devicePage, i18n("Device"));
+    d->page_device->setHeader(i18n("Capture Device Settings"));
+    d->page_device->setIcon(KIcon("scanner"));
 
-    d->page_light    = addPage(i18n("Light"), i18n("Light Source Information"),
-                               BarIcon("idea", KIcon::SizeMedium));
-    d->lightPage     = new EXIFLight(d->page_light);
+    d->lightPage     = new EXIFLight(this);
+    d->page_light    = addPage(d->lightPage, i18n("Light"));
+    d->page_light->setHeader(i18n("Light Source Information"));
+    d->page_light->setIcon(KIcon("image-jpeg2000"));
 
-    d->page_adjust   = addPage(i18n("Adjustments"), i18n("Pictures Adjustments"),
-                               BarIcon("blend", KIcon::SizeMedium));
-    d->adjustPage    = new EXIFAdjust(d->page_adjust);
+    d->adjustPage    = new EXIFAdjust(this);
+    d->page_adjust   = addPage(d->adjustPage, i18n("Adjustments"));
+    d->page_adjust->setHeader(i18n("Pictures Adjustments"));
+    d->page_adjust->setIcon(KIcon("color-fill"));
 
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("Edit Metadata"),
+    d->about = new KIPIPlugins::KPAboutData(ki18n("Edit Metadata"),
                                             NULL,
                                             KAboutData::License_GPL,
-                                            I18N_NOOP("A Plugin to edit pictures metadata"),
-                                            "(c) 2006-2007, Gilles Caulier");
+                                            ki18n("A Plugin to edit pictures metadata"),
+                                            ki18n("(c) 2006-2007, Gilles Caulier"));
 
-    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
+    d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("Edit Metadata Handbook"),
-                                 this, SLOT(slotHelp()), 0, -1, 0);
-    actionButton(Help)->setPopup( helpMenu->menu() );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KPushButton *helpButton = button( Help );
+    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    helpButton->setDelayedMenu( helpMenu->menu() );
 
     // ------------------------------------------------------------
 
@@ -197,6 +217,21 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface
     connect(d->adjustPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotUser1()));
+
+    connect(this, SIGNAL(user2Clicked()),
+            this, SLOT(slotUser2()));
+
+    connect(this, SIGNAL(applyClicked()),
+            this, SLOT(slotApply()));
+
+    connect(this, SIGNAL(closeClicked()),
+            this, SLOT(slotClose()));
+
+    connect(this, SIGNAL(okClicked()),
+            this, SLOT(slotOk()));
+
     // ------------------------------------------------------------
 
     readSettings();
@@ -211,7 +246,7 @@ EXIFEditDialog::~EXIFEditDialog()
 
 void EXIFEditDialog::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("metadataedit", "kipi-plugins");
+    KToolInvocation::invokeHelp("metadataedit", "kipi-plugins");
 }
 
 void EXIFEditDialog::closeEvent(QCloseEvent *e)
@@ -224,33 +259,35 @@ void EXIFEditDialog::closeEvent(QCloseEvent *e)
 void EXIFEditDialog::slotClose()
 {
     saveSettings();
-    KDialogBase::slotClose();
+    close();
 }
 
 void EXIFEditDialog::readSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("Metadata Edit Settings");
-    showPage(config.readNumEntry("EXIF Edit Page", 0));
-    d->captionPage->setCheckedSyncJFIFComment(config.readBoolEntry("Sync JFIF Comment", true));
-    d->captionPage->setCheckedSyncHOSTComment(config.readBoolEntry("Sync Host Comment", true));
-    d->captionPage->setCheckedSyncIPTCCaption(config.readBoolEntry("Sync IPTC Caption", true));
-    d->datetimePage->setCheckedSyncHOSTDate(config.readBoolEntry("Sync Host Date", true));
-    d->datetimePage->setCheckedSyncIPTCDate(config.readBoolEntry("Sync IPTC Date", true));
-    resize(configDialogSize(config, QString("EXIF Edit Dialog")));
+    KConfigGroup group = config.group("Metadata Edit Settings");
+    showPage(group.readEntry("EXIF Edit Page", 0));
+    d->captionPage->setCheckedSyncJFIFComment(group.readEntry("Sync JFIF Comment", true));
+    d->captionPage->setCheckedSyncHOSTComment(group.readEntry("Sync Host Comment", true));
+    d->captionPage->setCheckedSyncIPTCCaption(group.readEntry("Sync IPTC Caption", true));
+    d->datetimePage->setCheckedSyncHOSTDate(group.readEntry("Sync Host Date", true));
+    d->datetimePage->setCheckedSyncIPTCDate(group.readEntry("Sync IPTC Date", true));
+    KConfigGroup group2 = config.group(QString("EXIF Edit Dialog"));
+    restoreDialogSize(group2);
 }
 
 void EXIFEditDialog::saveSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("Metadata Edit Settings");
-    config.writeEntry("EXIF Edit Page", activePageIndex());
-    config.writeEntry("Sync JFIF Comment", d->captionPage->syncJFIFCommentIsChecked());
-    config.writeEntry("Sync Host Comment", d->captionPage->syncHOSTCommentIsChecked());
-    config.writeEntry("Sync IPTC Caption", d->captionPage->syncIPTCCaptionIsChecked());
-    config.writeEntry("Sync Host Date", d->datetimePage->syncHOSTDateIsChecked());
-    config.writeEntry("Sync IPTC Date", d->datetimePage->syncIPTCDateIsChecked());
-    saveDialogSize(config, QString("EXIF Edit Dialog"));
+    KConfigGroup group = config.group("Metadata Edit Settings");
+    group.writeEntry("EXIF Edit Page", activePageIndex());
+    group.writeEntry("Sync JFIF Comment", d->captionPage->syncJFIFCommentIsChecked());
+    group.writeEntry("Sync Host Comment", d->captionPage->syncHOSTCommentIsChecked());
+    group.writeEntry("Sync IPTC Caption", d->captionPage->syncIPTCCaptionIsChecked());
+    group.writeEntry("Sync Host Date", d->datetimePage->syncHOSTDateIsChecked());
+    group.writeEntry("Sync IPTC Date", d->datetimePage->syncIPTCDateIsChecked());
+    KConfigGroup group2 = config.group(QString("EXIF Edit Dialog"));
+    saveDialogSize(group2);
     config.sync();
 }
 
@@ -277,8 +314,8 @@ void EXIFEditDialog::slotItemChanged()
     enableButton(Apply, !d->isReadOnly);
     
     setCaption(QString("%1 (%2/%3) - %4")
-               .arg((*d->currItem).filename())
-               .arg(d->urls.findIndex(*(d->currItem))+1)
+               .arg((*d->currItem).fileName())
+               .arg(d->urls.indexOf(*(d->currItem))+1)
                .arg(d->urls.count())
                .arg(i18n("Edit EXIF Metadata")) + 
                (d->isReadOnly ? QString(" - ") + i18n("(read only)") : QString::null));
@@ -354,22 +391,22 @@ bool EXIFEditDialog::eventFilter(QObject *, QEvent *e)
     {
         QKeyEvent *k = (QKeyEvent *)e;
 
-        if (k->state() == Qt::ControlButton &&
+        if (k->modifiers() == Qt::ControlModifier &&
             (k->key() == Qt::Key_Enter || k->key() == Qt::Key_Return))
         {
             slotApply();
 
-            if (actionButton(User1)->isEnabled())
+            if (isButtonEnabled(User1))
                 slotUser1();
 
             return true;
         }
-        else if (k->state() == Qt::ShiftButton &&
+        else if (k->modifiers() == Qt::ShiftModifier &&
                  (k->key() == Qt::Key_Enter || k->key() == Qt::Key_Return))
         {
             slotApply();
 
-            if (actionButton(User2)->isEnabled())
+            if (isButtonEnabled(User2))
                 slotUser2();
 
             return true;
@@ -379,6 +416,48 @@ bool EXIFEditDialog::eventFilter(QObject *, QEvent *e)
     }
 
     return false;
+}
+
+void EXIFEditDialog::showPage(int page)
+{
+    switch(page)
+    {
+        case 0:
+            setCurrentPage(d->page_caption); 
+            break;
+        case 1:
+            setCurrentPage(d->page_datetime); 
+            break;
+        case 2:
+            setCurrentPage(d->page_lens); 
+            break;
+        case 3:
+            setCurrentPage(d->page_device); 
+            break;
+        case 4:
+            setCurrentPage(d->page_light); 
+            break;
+        case 5:
+            setCurrentPage(d->page_adjust); 
+            break;
+        default: 
+            setCurrentPage(d->page_caption); 
+            break;
+    }
+}
+
+int EXIFEditDialog::activePageIndex()
+{
+    KPageWidgetItem *cur = currentPage();
+
+    if (cur == d->page_caption)  return 0;
+    if (cur == d->page_datetime) return 1;
+    if (cur == d->page_lens)     return 2;
+    if (cur == d->page_device)   return 3;
+    if (cur == d->page_light)    return 4;
+    if (cur == d->page_adjust)   return 5;
+
+    return 0;
 }
 
 }  // namespace KIPIMetadataEditPlugin
