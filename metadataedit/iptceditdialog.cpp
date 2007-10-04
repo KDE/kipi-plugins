@@ -165,7 +165,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->subjectsPage  = new IPTCSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
     d->page_subjects->setHeader(i18n("Subjects Information"));
-    d->page_subjects->setIcon(KIcon("cookie"));
+    d->page_subjects->setIcon(KIcon("note2"));
 
     d->keywordsPage  = new IPTCKeywords(this);
     d->page_keywords = addPage(d->keywordsPage, i18n("Keywords"));
@@ -175,7 +175,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->categoriesPage  = new IPTCCategories(this);
     d->page_categories = addPage(d->categoriesPage, i18n("Categories"));
     d->page_categories->setHeader(i18n("Categories Information"));
-    d->page_categories->setIcon(KIcon("bookmark_folder"));
+    d->page_categories->setIcon(KIcon("bookmark-folder"));
 
     d->creditsPage  = new IPTCCredits(this);
     d->page_credits = addPage(d->creditsPage, i18n("Credits"));
@@ -185,12 +185,12 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->statusPage  = new IPTCStatus(this);
     d->page_status = addPage(d->statusPage, i18n("Status"));
     d->page_status->setHeader(i18n("Status Information"));
-    d->page_status->setIcon(KIcon("messagebox_info"));
+    d->page_status->setIcon(KIcon("dialog-information"));
   
     d->originPage  = new IPTCOrigin(this);
     d->page_origin = addPage(d->originPage, i18n("Origin"));
     d->page_origin->setHeader(i18n("Origin Information"));
-    d->page_origin->setIcon(KIcon("www"));
+    d->page_origin->setIcon(KIcon("network"));
 
     // ---------------------------------------------------------------
     // About data and help button.
