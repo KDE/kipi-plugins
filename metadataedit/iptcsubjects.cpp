@@ -36,6 +36,7 @@
 #include <klistbox.h>
 #include <klineedit.h>
 #include <kactivelabel.h>
+#include <kiconloader.h>
 
 // LibKExiv2 includes. 
 
@@ -100,6 +101,8 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     
     d->addSubjectButton = new QPushButton( i18n("&Add"), parent);
     d->delSubjectButton = new QPushButton( i18n("&Delete"), parent);
+    d->addSubjectButton->setIconSet(SmallIcon("add"));
+    d->delSubjectButton->setIconSet(SmallIcon("remove"));
     d->delSubjectButton->setEnabled(false);
 
     grid->addMultiCellWidget(d->subjectsCheck, 0, 0, 0, 1);

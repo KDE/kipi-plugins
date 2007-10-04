@@ -111,6 +111,8 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     
     d->addSubCategoryButton = new QPushButton( i18n("&Add"), parent);
     d->delSubCategoryButton = new QPushButton( i18n("&Delete"), parent);
+    d->addSubCategoryButton->setIconSet(SmallIcon("add"));
+    d->delSubCategoryButton->setIconSet(SmallIcon("remove"));
     d->delSubCategoryButton->setEnabled(false);
 
     grid->addMultiCellWidget(d->categoryCheck, 0, 0, 0, 1);

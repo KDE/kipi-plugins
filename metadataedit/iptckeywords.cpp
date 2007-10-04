@@ -36,6 +36,7 @@
 #include <klistbox.h>
 #include <klineedit.h>
 #include <kactivelabel.h>
+#include <kiconloader.h>
 
 // LibKExiv2 includes. 
 
@@ -100,6 +101,8 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
     
     d->addKeywordButton = new QPushButton( i18n("&Add"), parent);
     d->delKeywordButton = new QPushButton( i18n("&Delete"), parent);
+    d->addKeywordButton->setIconSet(SmallIcon("add"));
+    d->delKeywordButton->setIconSet(SmallIcon("remove"));
     d->delKeywordButton->setEnabled(false);
 
     grid->addMultiCellWidget(d->keywordsCheck, 0, 0, 0, 1);
