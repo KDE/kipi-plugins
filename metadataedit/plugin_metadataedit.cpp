@@ -24,15 +24,16 @@
 
 #include <klocale.h>
 #include <kaction.h>
+#include <kactionmenu.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kpopupmenu.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
+#include <kmenu.h>
 
 // LibKIPI includes.
 
@@ -51,108 +52,89 @@
 #include "plugin_metadataedit.h"
 #include "plugin_metadataedit.moc"
 
-typedef KGenericFactory<Plugin_MetadataEdit> Factory;
+K_PLUGIN_FACTORY( MetadataEditFactory, registerPlugin<Plugin_MetadataEdit>(); )
+K_EXPORT_PLUGIN ( MetadataEditFactory("kipiplugin_metadataedit") )
 
-K_EXPORT_COMPONENT_FACTORY( kipiplugin_metadataedit, Factory("kipiplugin_metadataedit"))
-
-Plugin_MetadataEdit::Plugin_MetadataEdit(QObject *parent, const char*, const QStringList&)
-                   : KIPI::Plugin( Factory::instance(), parent, "MetadataEdit")
+Plugin_MetadataEdit::Plugin_MetadataEdit(QObject *parent, const QVariantList&)
+                   : KIPI::Plugin(MetadataEditFactory::componentData(), parent, "MetadataEdit")
 {
-    kdDebug( 51001 ) << "Plugin_MetadataEdit plugin loaded" << endl;
+    kDebug( 51001 ) << "Plugin_MetadataEdit plugin loaded" << endl;
 }
 
 void Plugin_MetadataEdit::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_actionMetadataEdit = new KActionMenu(i18n("Metadata"),
-                               0,
-                               actionCollection(),
-                               "metadataedit");
+    m_actionMetadataEdit = new KActionMenu(KIcon("metadataedit"), i18n("Metadata"), actionCollection());
+    m_actionMetadataEdit->setObjectName("metadataedit");
+    addAction(m_actionMetadataEdit);
 
-    m_actionMetadataEdit->insert(new KAction (i18n("Edit EXIF..."),
-                                     0,
-                                     0,     
-                                     this,
-                                     SLOT(slotEditExif()),
-                                     actionCollection(),
-                                     "editexif"));
+    KAction *editEXIF = new KAction(i18n("Edit EXIF..."), actionCollection());
+    editEXIF->setObjectName("editexif");
+    connect(editEXIF, SIGNAL(triggered(bool)), 
+            this, SLOT(slotEditExif()));
+    m_actionMetadataEdit->addAction(editEXIF);
 
-    m_actionMetadataEdit->insert(new KAction (i18n("Remove EXIF..."),
-                                     0,
-                                     0,     
-                                     this,
-                                     SLOT(slotRemoveExif()),
-                                     actionCollection(),
-                                     "removeexif"));
+    KAction *removeEXIF = new KAction(i18n("Remove EXIF..."), actionCollection());
+    removeEXIF->setObjectName("removeexif");
+    connect(removeEXIF, SIGNAL(triggered(bool)), 
+            this, SLOT(slotRemoveExif()));
+    m_actionMetadataEdit->addAction(removeEXIF);
 
-    m_actionMetadataEdit->insert(new KAction (i18n("Import EXIF..."),
-                                     0,
-                                     0,     
-                                     this,
-                                     SLOT(slotImportExif()),
-                                     actionCollection(),
-                                     "importexif"));
+    KAction *importEXIF = new KAction(i18n("Import EXIF..."), actionCollection());
+    importEXIF->setObjectName("importexif");
+    connect(importEXIF, SIGNAL(triggered(bool)), 
+            this, SLOT(slotImportExif()));
+    m_actionMetadataEdit->addAction(importEXIF);
 
-    m_actionMetadataEdit->popupMenu()->insertSeparator();
+    m_actionMetadataEdit->menu()->addSeparator();
 
-    m_actionMetadataEdit->insert(new KAction (i18n("Edit IPTC..."),
-                                     0,
-                                     0,     
-                                     this,
-                                     SLOT(slotEditIptc()),
-                                     actionCollection(),
-                                     "editiptc"));
+    KAction *editIPTC = new KAction(i18n("Edit IPTC..."), actionCollection());
+    editIPTC->setObjectName("editiptc");
+    connect(editIPTC, SIGNAL(triggered(bool)), 
+            this, SLOT(slotEditIptc()));
+    m_actionMetadataEdit->addAction(editIPTC);
 
-    m_actionMetadataEdit->insert(new KAction (i18n("Remove IPTC..."),
-                                     0,
-                                     0,     
-                                     this,
-                                     SLOT(slotRemoveIptc()),
-                                     actionCollection(),
-                                     "removeiptc"));
+    KAction *removeIPTC = new KAction(i18n("Remove IPTC..."), actionCollection());
+    removeIPTC->setObjectName("removeiptc");
+    connect(removeIPTC, SIGNAL(triggered(bool)), 
+            this, SLOT(slotRemoveIptc()));
+    m_actionMetadataEdit->addAction(removeIPTC);
 
-    m_actionMetadataEdit->insert(new KAction (i18n("Import IPTC..."),
-                                     0,
-                                     0,     
-                                     this,
-                                     SLOT(slotImportIptc()),
-                                     actionCollection(),
-                                     "importiptc"));
+    KAction *importIPTC = new KAction(i18n("Import IPTC..."), actionCollection());
+    importIPTC->setObjectName("importiptc");
+    connect(importIPTC, SIGNAL(triggered(bool)), 
+            this, SLOT(slotImportIptc()));
+    m_actionMetadataEdit->addAction(importIPTC);
 
-    m_actionMetadataEdit->popupMenu()->insertSeparator();
+    m_actionMetadataEdit->menu()->addSeparator();
 
-    m_actionMetadataEdit->insert(new KAction (i18n("Edit Captions..."),
-                                     0,
-                                     0,     
-                                     this,
-                                     SLOT(slotEditComments()),
-                                     actionCollection(),
-                                     "editcomments"));
+    KAction *editComments = new KAction(i18n("Edit Captions..."), actionCollection());
+    editComments->setObjectName("editcomments");
+    connect(editComments, SIGNAL(triggered(bool)), 
+            this, SLOT(slotEditComments()));
+    m_actionMetadataEdit->addAction(editComments);
 
-    m_actionMetadataEdit->insert(new KAction (i18n("Remove Captions..."),
-                                     0,
-                                     0,     
-                                     this,
-                                     SLOT(slotRemoveComments()),
-                                     actionCollection(),
-                                     "removecomments"));
+    KAction *removeComments = new KAction(i18n("Remove Captions..."), actionCollection());
+    removeComments->setObjectName("removecomments");
+    connect(removeComments, SIGNAL(triggered(bool)), 
+            this, SLOT(slotRemoveComments()));
+    m_actionMetadataEdit->addAction(removeComments);
 
     addAction( m_actionMetadataEdit );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
-
     if ( !m_interface )
     {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
     KIPI::ImageCollection selection = m_interface->currentSelection();
     m_actionMetadataEdit->setEnabled( selection.isValid() && !selection.images().isEmpty() );
 
-    connect( m_interface, SIGNAL(selectionChanged(bool)),
-             m_actionMetadataEdit, SLOT(setEnabled(bool)));
+    connect(m_interface, SIGNAL(selectionChanged(bool)),
+            m_actionMetadataEdit, SLOT(setEnabled(bool)));
 }
 
 void Plugin_MetadataEdit::slotEditExif()
@@ -181,14 +163,14 @@ void Plugin_MetadataEdit::slotRemoveExif()
                      i18n("Remove EXIF Metadata")) != KMessageBox::Yes)
         return;
 
-    KURL::List  imageURLs = images.images();
-    KURL::List  updatedURLs;
+    KUrl::List  imageURLs = images.images();
+    KUrl::List  updatedURLs;
     QStringList errorFiles;
 
-    for( KURL::List::iterator it = imageURLs.begin() ; 
+    for( KUrl::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
     {
-        KURL url = *it;
+        KUrl url = *it;
         bool ret = false;
 
         if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
@@ -228,7 +210,7 @@ void Plugin_MetadataEdit::slotImportExif()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KURL importEXIFFile = KFileDialog::getOpenURL(KGlobalSettings::documentPath(),
+    KUrl importEXIFFile = KFileDialog::getOpenUrl(KGlobalSettings::documentPath(),
                                                   QString::null, kapp->activeWindow(),
                                                   i18n("Select File to Import EXIF metadata") );
     if( importEXIFFile.isEmpty() )
@@ -261,14 +243,14 @@ void Plugin_MetadataEdit::slotImportExif()
         return;
 
 
-    KURL::List  imageURLs = images.images();
-    KURL::List  updatedURLs;
+    KUrl::List  imageURLs = images.images();
+    KUrl::List  updatedURLs;
     QStringList errorFiles;
 
-    for( KURL::List::iterator it = imageURLs.begin() ; 
+    for( KUrl::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
     {
-        KURL url = *it;
+        KUrl url = *it;
         bool ret = false;
 
         if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
@@ -327,14 +309,14 @@ void Plugin_MetadataEdit::slotRemoveIptc()
                      i18n("Remove IPTC Metadata")) != KMessageBox::Yes)
         return;
 
-    KURL::List  imageURLs = images.images();
-    KURL::List  updatedURLs;
+    KUrl::List  imageURLs = images.images();
+    KUrl::List  updatedURLs;
     QStringList errorFiles;
 
-    for( KURL::List::iterator it = imageURLs.begin() ; 
+    for( KUrl::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
     {
-        KURL url = *it;
+        KUrl url = *it;
         bool ret = false;
 
         if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
@@ -374,7 +356,7 @@ void Plugin_MetadataEdit::slotImportIptc()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KURL importIPTCFile = KFileDialog::getOpenURL(KGlobalSettings::documentPath(),
+    KUrl importIPTCFile = KFileDialog::getOpenUrl(KGlobalSettings::documentPath(),
                                                   QString::null, kapp->activeWindow(),
                                                   i18n("Select File to Import IPTC metadata") );
     if( importIPTCFile.isEmpty() )
@@ -407,14 +389,14 @@ void Plugin_MetadataEdit::slotImportIptc()
         return;
 
 
-    KURL::List  imageURLs = images.images();
-    KURL::List  updatedURLs;
+    KUrl::List  imageURLs = images.images();
+    KUrl::List  updatedURLs;
     QStringList errorFiles;
 
-    for( KURL::List::iterator it = imageURLs.begin() ; 
+    for( KUrl::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
     {
-        KURL url = *it;
+        KUrl url = *it;
         bool ret = false;
 
         if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
@@ -459,14 +441,14 @@ void Plugin_MetadataEdit::slotEditComments()
     if (dlg.exec() != KMessageBox::Ok)
         return;
 
-    KURL::List  imageURLs = images.images();
-    KURL::List  updatedURLs;
+    KUrl::List  imageURLs = images.images();
+    KUrl::List  updatedURLs;
     QStringList errorFiles;
 
-    for( KURL::List::iterator it = imageURLs.begin() ; 
+    for( KUrl::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
     {
-        KURL url = *it;
+        KUrl url = *it;
         bool ret = false;
 
         KIPI::ImageInfo info = m_interface->info(url);
@@ -482,7 +464,7 @@ void Plugin_MetadataEdit::slotEditComments()
                 ret &= exiv2Iface.setExifComment(dlg.getComments());
         
             if (dlg.syncJFIFCommentIsChecked())
-                ret &= exiv2Iface.setComments(dlg.getComments().utf8());
+                ret &= exiv2Iface.setComments(dlg.getComments().toUtf8());
         
             if (dlg.syncIPTCCaptionIsChecked())
                 ret &= exiv2Iface.setIptcTagString("Iptc.Application2.Caption", dlg.getComments());
@@ -523,14 +505,14 @@ void Plugin_MetadataEdit::slotRemoveComments()
     if (dlg.exec() != KMessageBox::Ok)
         return;
 
-    KURL::List  imageURLs = images.images();
-    KURL::List  updatedURLs;
+    KUrl::List  imageURLs = images.images();
+    KUrl::List  updatedURLs;
     QStringList errorFiles;
 
-    for( KURL::List::iterator it = imageURLs.begin() ; 
+    for( KUrl::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
     {
-        KURL url = *it;
+        KUrl url = *it;
         bool ret = false;
 
         if (dlg.removeHOSTCommentIsChecked())
@@ -583,6 +565,6 @@ KIPI::Category Plugin_MetadataEdit::category( KAction* action ) const
     if ( action == m_actionMetadataEdit )
        return KIPI::IMAGESPLUGIN;
 
-    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }

@@ -30,7 +30,7 @@
 // KDE includes.
 
 #include <kpagedialog.h>
-#include <KUrl.h>
+#include <kurl.h>
 
 class QCloseEvent;
 class QEvent;
