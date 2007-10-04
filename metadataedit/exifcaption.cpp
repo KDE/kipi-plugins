@@ -24,7 +24,6 @@
 
 #include <QLayout>
 #include <QLabel>
-#include <QGroupBox>
 #include <QValidator>
 #include <QCheckBox>
 

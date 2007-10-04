@@ -22,24 +22,21 @@
 
 // QT includes.
 
-#include <qlayout.h>
-#include <qhgroupbox.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qwhatsthis.h>
-#include <qvalidator.h>
-#include <qcheckbox.h>
+#include <QLayout>
+#include <QLabel>
+#include <QValidator>
+#include <QCheckBox>
 
 // KDE includes.
 
+#include <kcomponentdata.h>
+#include <kglobal.h>
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
-#include <kapplication.h>
 #include <kaboutdata.h>
 #include <kseparator.h>
-#include <kactivelabel.h>
 
 // LibKExiv2 includes. 
 
@@ -91,7 +88,7 @@ IPTCCaption::IPTCCaption(QWidget* parent)
            : QWidget(parent)
 {
     d = new IPTCCaptionPriv;
-    QVBoxLayout *vlay = new QVBoxLayout( parent, 0, KDialog::spacingHint() );
+    QVBoxLayout *vlay = new QVBoxLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -99,69 +96,76 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     
     // --------------------------------------------------------
 
-    d->captionCheck         = new QCheckBox(i18n("Caption:"), parent);
-    d->captionEdit          = new KTextEdit(parent);
-    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF caption"), parent);
+    d->captionCheck         = new QCheckBox(i18n("Caption:"), this);
+    d->captionEdit          = new KTextEdit(this);
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF caption"), this);
     d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync caption entered through %1")
-                                            .arg(KApplication::kApplication()->aboutData()->appName()), 
-                                            parent);
-    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF caption"), parent);
-    KSeparator *line        = new KSeparator(Horizontal, parent);
+                                            .arg(KGlobal::mainComponent().aboutData()->programName()), 
+                                            this);
+    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF caption"), this);
+    KSeparator *line        = new KSeparator(Qt::Horizontal, this);
 
 /*    d->captionEdit->setValidator(asciiValidator);
     d->captionEdit->setMaxLength(2000);*/
+    d->captionEdit->setWhatsThis(i18n("<p>Enter the content description. This field is limited "
+                                      "to 2000 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->writerCheck = new QCheckBox(i18n("Caption Writer:"), this);
+    d->writerEdit  = new KLineEdit(this);
+    d->writerEdit->setValidator(asciiValidator);
+    d->writerEdit->setMaxLength(32);
+    d->writerEdit->setWhatsThis(("<p>Enter the name of the caption author. This field is limited "
+                                 "to 32 ASCII characters."));
+        
+    // --------------------------------------------------------
+
+    d->headlineCheck = new QCheckBox(i18n("Headline:"), this);
+    d->headlineEdit  = new KLineEdit(this);
+    d->headlineEdit->setValidator(asciiValidator);
+    d->headlineEdit->setMaxLength(256);
+    d->headlineEdit->setWhatsThis(i18n("<p>Enter here the content synopsis. This field is limited "
+                                       "to 256 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->specialInstructionCheck = new QCheckBox(i18n("Special Instructions:"), this);
+    d->specialInstructionEdit  = new KTextEdit(this);
+/*    d->specialInstructionEdit->setValidator(asciiValidator);
+    d->specialInstructionEdit->setMaxLength(256);*/
+    d->specialInstructionEdit->setWhatsThis(i18n("<p>Enter the editorial usage instructions. "
+                                                 "This field is limited to 256 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    QLabel *note = new QLabel(i18n("<b>Note: "
+                 "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
+                 "text tags only support the printable "
+                 "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
+                 "characters set and limit strings size. "
+                 "Use contextual help for details.</b>"), this);
+    note->setOpenExternalLinks(true);
+    note->setWordWrap(true);
+
+    // --------------------------------------------------------
+
     vlay->addWidget(d->captionCheck);
     vlay->addWidget(d->captionEdit);
     vlay->addWidget(d->syncJFIFCommentCheck);
     vlay->addWidget(d->syncHOSTCommentCheck);
     vlay->addWidget(d->syncEXIFCommentCheck);
     vlay->addWidget(line);
-    QWhatsThis::add(d->captionEdit, i18n("<p>Enter the content description. This field is limited "
-                                         "to 2000 ASCII characters."));
-
-    // --------------------------------------------------------
-
-    d->writerCheck = new QCheckBox(i18n("Caption Writer:"), parent);
-    d->writerEdit  = new KLineEdit(parent);
-    d->writerEdit->setValidator(asciiValidator);
-    d->writerEdit->setMaxLength(32);
     vlay->addWidget(d->writerCheck);
     vlay->addWidget(d->writerEdit);
-    QWhatsThis::add(d->writerEdit, i18n("<p>Enter the name of the caption author. This field is limited "
-                                        "to 32 ASCII characters."));
-        
-    // --------------------------------------------------------
-
-    d->headlineCheck = new QCheckBox(i18n("Headline:"), parent);
-    d->headlineEdit  = new KLineEdit(parent);
-    d->headlineEdit->setValidator(asciiValidator);
-    d->headlineEdit->setMaxLength(256);
     vlay->addWidget(d->headlineCheck);
     vlay->addWidget(d->headlineEdit);
-    QWhatsThis::add(d->headlineEdit, i18n("<p>Enter here the content synopsis. This field is limited "
-                                          "to 256 ASCII characters."));
-
-    // --------------------------------------------------------
-
-    d->specialInstructionCheck = new QCheckBox(i18n("Special Instructions:"), parent);
-    d->specialInstructionEdit  = new KTextEdit(parent);
-/*    d->specialInstructionEdit->setValidator(asciiValidator);
-    d->specialInstructionEdit->setMaxLength(256);*/
     vlay->addWidget(d->specialInstructionCheck);
     vlay->addWidget(d->specialInstructionEdit);
-    QWhatsThis::add(d->specialInstructionEdit, i18n("<p>Enter the editorial usage instructions. "
-                                                    "This field is limited to 256 ASCII characters."));
-
-    // --------------------------------------------------------
-
-    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: "
-                 "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
-                 "text tags only support the printable "
-                 "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
-                 "characters set and limit strings size. "
-                 "Use contextual help for details.</b>"), parent);
     vlay->addWidget(note);
     vlay->addStretch();
+    vlay->setMargin(0);
+    vlay->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
                                      
@@ -237,7 +241,7 @@ bool IPTCCaption::syncEXIFCommentIsChecked()
 
 QString IPTCCaption::getIPTCCaption()
 {
-    return d->captionEdit->text();
+    return d->captionEdit->toPlainText();
 }
 
 void IPTCCaption::setCheckedSyncJFIFComment(bool c)
@@ -316,13 +320,13 @@ void IPTCCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 
     if (d->captionCheck->isChecked())
     {
-        exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->captionEdit->text());
+        exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->captionEdit->toPlainText());
 
         if (syncEXIFCommentIsChecked())
-            exiv2Iface.setExifComment(d->captionEdit->text());
+            exiv2Iface.setExifComment(d->captionEdit->toPlainText());
 
         if (syncJFIFCommentIsChecked())
-            exiv2Iface.setComments(d->captionEdit->text().utf8());
+            exiv2Iface.setComments(d->captionEdit->toPlainText().toUtf8());
     }
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
@@ -338,7 +342,7 @@ void IPTCCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
         exiv2Iface.removeIptcTag("Iptc.Application2.Headline");
 
     if (d->specialInstructionCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.SpecialInstructions", d->specialInstructionEdit->text());
+        exiv2Iface.setIptcTagString("Iptc.Application2.SpecialInstructions", d->specialInstructionEdit->toPlainText());
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.SpecialInstructions");
 

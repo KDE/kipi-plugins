@@ -6,7 +6,7 @@ SET(kipiplugin_metadataedit_PART_SRCS metadatacheckbox.cpp
                                       exifdevice.cpp
                                       exiflight.cpp
                                       exifeditdialog.cpp
-#                                       iptccaption.cpp
+                                      iptccaption.cpp
 #                                       iptcsubjects.cpp
 #                                       iptccredits.cpp
 #                                       iptcstatus.cpp
