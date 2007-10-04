@@ -297,7 +297,7 @@ void Plugin_MetadataEdit::slotEditIptc()
 
 void Plugin_MetadataEdit::slotRemoveIptc()
 {
-/*    KIPI::ImageCollection images = m_interface->currentSelection();
+    KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -346,12 +346,12 @@ void Plugin_MetadataEdit::slotRemoveIptc()
                     i18n("Unable to remove IPTC metadata from:"),
                     errorFiles,
                     i18n("Remove IPTC Metadata"));  
-    }*/
+    }
 }
 
 void Plugin_MetadataEdit::slotImportIptc()
 {
-/*    KIPI::ImageCollection images = m_interface->currentSelection();
+    KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -426,7 +426,7 @@ void Plugin_MetadataEdit::slotImportIptc()
                     i18n("Unable to set IPTC metadata from:"),
                     errorFiles,
                     i18n("Import IPTC Metadata"));  
-    }*/
+    }
 }
 
 void Plugin_MetadataEdit::slotEditComments()
