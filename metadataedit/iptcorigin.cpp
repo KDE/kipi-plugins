@@ -22,20 +22,17 @@
 
 // QT includes.
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qwhatsthis.h>
-#include <qvalidator.h>
-#include <qlistbox.h>
-#include <qcombobox.h>
-#include <qmap.h>
+#include <QLayout>
+#include <QLabel>
+#include <QValidator>
+#include <QComboBox>
+#include <QMap>
 
 // KDE includes.
 
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <kactivelabel.h>
 
 // LibKExiv2 includes. 
 
@@ -357,7 +354,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 {
     d = new IPTCOriginPriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 10, 2, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -365,97 +362,102 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->objectNameCheck = new QCheckBox(i18n("Object name:"), parent);
-    d->objectNameEdit  = new KLineEdit(parent);
+    d->objectNameCheck = new QCheckBox(i18n("Object name:"), this);
+    d->objectNameEdit  = new KLineEdit(this);
     d->objectNameEdit->setValidator(asciiValidator);
     d->objectNameEdit->setMaxLength(64);
-    grid->addMultiCellWidget(d->objectNameCheck, 0, 0, 0, 2);
-    grid->addMultiCellWidget(d->objectNameEdit, 1, 1, 0, 2);
-    QWhatsThis::add(d->objectNameEdit, i18n("<p>Set here the shorthand reference of content. "
-                    "This field is limited to 64 ASCII characters."));
+    d->objectNameEdit->setWhatsThis(i18n("<p>Set here the shorthand reference of content. "
+                                         "This field is limited to 64 ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->locationCheck = new QCheckBox(i18n("Location:"), parent);
-    d->locationEdit  = new KLineEdit(parent);
+    d->locationCheck = new QCheckBox(i18n("Location:"), this);
+    d->locationEdit  = new KLineEdit(this);
     d->locationEdit->setValidator(asciiValidator);
     d->locationEdit->setMaxLength(64);
-    grid->addMultiCellWidget(d->locationCheck, 2, 2, 0, 0);
-    grid->addMultiCellWidget(d->locationEdit, 2, 2, 1, 2);
-    QWhatsThis::add(d->locationEdit, i18n("<p>Set here the full country name referenced by the content. "
-                                          "This field is limited to 64 ASCII characters."));
+    d->locationEdit->setWhatsThis(i18n("<p>Set here the full country name referenced by the content. "
+                                       "This field is limited to 64 ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->sublocationCheck = new QCheckBox(i18n("Sublocation:"), parent);
-    d->sublocationEdit  = new KLineEdit(parent);
+    d->sublocationCheck = new QCheckBox(i18n("Sublocation:"), this);
+    d->sublocationEdit  = new KLineEdit(this);
     d->sublocationEdit->setValidator(asciiValidator);
     d->sublocationEdit->setMaxLength(32);
-    grid->addMultiCellWidget(d->sublocationCheck, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->sublocationEdit, 3, 3, 1, 2);
-    QWhatsThis::add(d->sublocationEdit, i18n("<p>Set here the content location within city. "
-                                             "This field is limited to 32 ASCII characters."));
-
-    // --------------------------------------------------------
-
-    d->cityCheck = new QCheckBox(i18n("City:"), parent);
-    d->cityEdit  = new KLineEdit(parent);
-    d->cityEdit->setValidator(asciiValidator);
-    d->cityEdit->setMaxLength(32);
-    grid->addMultiCellWidget(d->cityCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->cityEdit, 4, 4, 1, 2);
-    QWhatsThis::add(d->cityEdit, i18n("<p>Set here the city of content origin. "
-                                      "This field is limited to 32 ASCII characters."));
-
-    // --------------------------------------------------------
-
-    d->provinceCheck = new QCheckBox(i18n("State/Province:"), parent);
-    d->provinceEdit  = new KLineEdit(parent);
-    d->provinceEdit->setValidator(asciiValidator);
-    d->provinceEdit->setMaxLength(32);
-    grid->addMultiCellWidget(d->provinceCheck, 5, 5, 0, 0);
-    grid->addMultiCellWidget(d->provinceEdit, 5, 5, 1, 2);
-    QWhatsThis::add(d->provinceEdit, i18n("<p>Set here the Province or State of content origin. "
+    d->sublocationEdit->setWhatsThis(i18n("<p>Set here the content location within city. "
                                           "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->countryCheck = new MetadataCheckBox(i18n("Country:"), parent);
-    d->countryCB    = new QComboBox(false, parent);
+    d->cityCheck = new QCheckBox(i18n("City:"), this);
+    d->cityEdit  = new KLineEdit(this);
+    d->cityEdit->setValidator(asciiValidator);
+    d->cityEdit->setMaxLength(32);
+    d->cityEdit->setWhatsThis(i18n("<p>Set here the city of content origin. "
+                                   "This field is limited to 32 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->provinceCheck = new QCheckBox(i18n("State/Province:"), this);
+    d->provinceEdit  = new KLineEdit(this);
+    d->provinceEdit->setValidator(asciiValidator);
+    d->provinceEdit->setMaxLength(32);
+    d->provinceEdit->setWhatsThis(i18n("<p>Set here the Province or State of content origin. "
+                                       "This field is limited to 32 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->countryCheck = new MetadataCheckBox(i18n("Country:"), this);
+    d->countryCB    = new QComboBox(this);
 
     for (IPTCOriginPriv::CountryCodeMap::Iterator it = d->countryCodeMap.begin();
          it != d->countryCodeMap.end(); ++it )
-        d->countryCB->insertItem(QString("%1 - %2").arg(it.key()).arg(it.data()));
+        d->countryCB->addItem(QString("%1 - %2").arg(it.key()).arg(it.value()));
 
-    d->countryCB->listBox()->sort();
-
-    grid->addMultiCellWidget(d->countryCheck, 6, 6, 0, 0);
-    grid->addMultiCellWidget(d->countryCB, 6, 6, 1, 2);
-    QWhatsThis::add(d->countryCB, i18n("<p>Select here country name of content origin."));
+    d->countryCB->model()->sort(0);
+    d->countryCB->setWhatsThis(i18n("<p>Select here country name of content origin."));
 
     // --------------------------------------------------------
 
-    d->originalTransCheck = new QCheckBox(i18n("Original transmission reference:"), parent);
-    d->originalTransEdit  = new KLineEdit(parent);
+    d->originalTransCheck = new QCheckBox(i18n("Original transmission reference:"), this);
+    d->originalTransEdit  = new KLineEdit(this);
     d->originalTransEdit->setValidator(asciiValidator);
     d->originalTransEdit->setMaxLength(32);
-    grid->addMultiCellWidget(d->originalTransCheck, 7, 7, 0, 2);
-    grid->addMultiCellWidget(d->originalTransEdit, 8, 8, 0, 2);
-    QWhatsThis::add(d->originalTransEdit, i18n("<p>Set here the location of original content transmission. "
-                    "This field is limited to 32 ASCII characters."));
+    d->originalTransEdit->setWhatsThis(i18n("<p>Set here the location of original content transmission. "
+                                            "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
-    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: "
+    QLabel *note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
                  "characters set and limit strings size. "
-                 "Use contextual help for details.</b>"), parent);
+                 "Use contextual help for details.</b>"), this);
+    note->setOpenExternalLinks(true);
+    note->setWordWrap(true);
 
-    grid->addMultiCellWidget(note, 9, 9, 0, 2);
-    grid->setColStretch(2, 10);                     
-    grid->setRowStretch(10, 10);                     
+    // --------------------------------------------------------
+
+    grid->addWidget(d->objectNameCheck, 0, 0, 1, 3 );
+    grid->addWidget(d->objectNameEdit, 1, 0, 1, 3 );
+    grid->addWidget(d->locationCheck, 2, 0, 1, 1);
+    grid->addWidget(d->locationEdit, 2, 1, 1, 2);
+    grid->addWidget(d->sublocationCheck, 3, 0, 1, 1);
+    grid->addWidget(d->sublocationEdit, 3, 1, 1, 2);
+    grid->addWidget(d->cityCheck, 4, 0, 1, 1);
+    grid->addWidget(d->cityEdit, 4, 1, 1, 2);
+    grid->addWidget(d->provinceCheck, 5, 0, 1, 1);
+    grid->addWidget(d->provinceEdit, 5, 1, 1, 2);
+    grid->addWidget(d->countryCheck, 6, 0, 1, 1);
+    grid->addWidget(d->countryCB, 6, 1, 1, 2);
+    grid->addWidget(d->originalTransCheck, 7, 0, 1, 3 );
+    grid->addWidget(d->originalTransEdit, 8, 0, 1, 3 );
+    grid->addWidget(note, 9, 0, 1, 3 );
+    grid->setColumnStretch(2, 10);                     
+    grid->setRowStretch(10, 10);  
+    grid->setMargin(0);
+    grid->setSpacing(KDialog::spacingHint());                    
 
     // --------------------------------------------------------
 
@@ -592,19 +594,19 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     // Country code/name rules: we trying to check if "CountryCode" tag exists else "LocationCode" tag.
     // Both are the same.
 
-    d->countryCB->setCurrentItem(0);
+    d->countryCB->setCurrentIndex(0);
     d->countryCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.CountryCode", false);    
     if (!data.isNull())
     {
         int item = -1;
         for (int i = 0 ; i < d->countryCB->count() ; i++)
-            if (d->countryCB->text(i).left(3) == data)
+            if (d->countryCB->itemText(i).left(3) == data)
                 item = i;
 
         if (item != -1)
         {
-            d->countryCB->setCurrentItem(item);
+            d->countryCB->setCurrentIndex(item);
             d->countryCheck->setChecked(true);
         }
         else
@@ -617,12 +619,12 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
         {
             int item = -1;
             for (int i = 0 ; i < d->countryCB->count() ; i++)
-                if (d->countryCB->text(i).left(3) == data)
+                if (d->countryCB->itemText(i).left(3) == data)
                     item = i;
     
             if (item != -1)
             {
-                d->countryCB->setCurrentItem(item);
+                d->countryCB->setCurrentIndex(item);
                 d->countryCheck->setChecked(true);
             }
             else
@@ -698,4 +700,3 @@ void IPTCOrigin::applyMetadata(QByteArray& iptcData)
 }
 
 }  // namespace KIPIMetadataEditPlugin
-
