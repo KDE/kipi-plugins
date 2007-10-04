@@ -351,4 +351,3 @@ void IPTCCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 }
 
 }  // namespace KIPIMetadataEditPlugin
-
