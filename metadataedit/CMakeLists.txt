@@ -13,7 +13,7 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       iptccategories.cpp
                                       iptccredits.cpp
                                       iptcdatetime.cpp
-#                                       iptcstatus.cpp
+                                      iptcstatus.cpp
 #                                       iptcorigin.cpp
 #                                       iptceditdialog.cpp 
 #                                       commenteditdialog.cpp

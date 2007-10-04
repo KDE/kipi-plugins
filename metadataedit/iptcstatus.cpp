@@ -22,20 +22,16 @@
 
 // QT includes.
 
-#include <qlayout.h>
-#include <qcombobox.h>
-#include <qlabel.h>
-#include <qwhatsthis.h>
-#include <qvalidator.h>
+#include <QLayout>
+#include <QLabel>
+#include <QValidator>
+#include <QComboBox>
 
 // KDE includes.
 
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <kactivelabel.h>
 
 // LibKExiv2 includes. 
 
@@ -93,7 +89,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 {
     d = new IPTCStatusPriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 11, 2, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -101,119 +97,125 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->statusCheck = new QCheckBox(i18n("Edit Status:"), parent);
-    d->statusEdit  = new KLineEdit(parent);
+    d->statusCheck = new QCheckBox(i18n("Edit Status:"), this);
+    d->statusEdit  = new KLineEdit(this);
     d->statusEdit->setValidator(asciiValidator);
     d->statusEdit->setMaxLength(64);
-    grid->addMultiCellWidget(d->statusCheck, 0, 0, 0, 2);
-    grid->addMultiCellWidget(d->statusEdit, 1, 1, 0, 2);
-    QWhatsThis::add(d->statusEdit, i18n("<p>Set here the content status. This field is limited "
-                                        "to 64 ASCII characters."));
+    d->statusEdit->setWhatsThis(i18n("<p>Set here the content status. This field is limited "
+                                     "to 64 ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->priorityCheck = new MetadataCheckBox(i18n("Priority:"), parent);
-    d->priorityCB    = new QComboBox(false, parent);
-    d->priorityCB->insertItem(i18n("0: None"), 0);
-    d->priorityCB->insertItem(i18n("1: High"), 1);
-    d->priorityCB->insertItem("2", 2);
-    d->priorityCB->insertItem("3", 3);
-    d->priorityCB->insertItem("4", 4);
-    d->priorityCB->insertItem(i18n("5: Normal"), 5);
-    d->priorityCB->insertItem("6", 6);
-    d->priorityCB->insertItem("7", 7);
-    d->priorityCB->insertItem(i18n("8: Low"), 8);
-    grid->addMultiCellWidget(d->priorityCheck, 2, 2, 0, 0);
-    grid->addMultiCellWidget(d->priorityCB, 2, 2, 1, 1);
-    QWhatsThis::add(d->priorityCB, i18n("<p>Select here the editorial urgency of content."));
+    d->priorityCheck = new MetadataCheckBox(i18n("Priority:"), this);
+    d->priorityCB    = new QComboBox(this);
+    d->priorityCB->insertItem(0, i18n("0: None"));
+    d->priorityCB->insertItem(1, i18n("1: High"));
+    d->priorityCB->insertItem(2, "2");
+    d->priorityCB->insertItem(3, "3");
+    d->priorityCB->insertItem(4, "4");
+    d->priorityCB->insertItem(5, i18n("5: Normal"));
+    d->priorityCB->insertItem(6, "6");
+    d->priorityCB->insertItem(7, "7");
+    d->priorityCB->insertItem(8, i18n("8: Low"));
+    d->priorityCB->setWhatsThis(i18n("<p>Select here the editorial urgency of content."));
 
     // --------------------------------------------------------
 
-    d->objectCycleCheck = new MetadataCheckBox(i18n("Object Cycle:"), parent);
-    d->objectCycleCB    = new QComboBox(false, parent);
-    d->objectCycleCB->insertItem(i18n("Morning"),   0);
-    d->objectCycleCB->insertItem(i18n("Afternoon"), 1);
-    d->objectCycleCB->insertItem(i18n("Evening"),   2);
-    grid->addMultiCellWidget(d->objectCycleCheck, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->objectCycleCB, 3, 3, 1, 1);
-    QWhatsThis::add(d->objectCycleCB, i18n("<p>Select here the editorial cycle of content."));
+    d->objectCycleCheck = new MetadataCheckBox(i18n("Object Cycle:"), this);
+    d->objectCycleCB    = new QComboBox(this);
+    d->objectCycleCB->insertItem(0, i18n("Morning"));
+    d->objectCycleCB->insertItem(1, i18n("Afternoon"));
+    d->objectCycleCB->insertItem(2, i18n("Evening"));
+    d->objectCycleCB->setWhatsThis(i18n("<p>Select here the editorial cycle of content."));
       
     // --------------------------------------------------------
 
-    d->objectTypeCheck    = new MetadataCheckBox(i18n("Object Type:"), parent);
-    d->objectTypeCB       = new QComboBox(false, parent);
-    d->objectTypeDescEdit = new KLineEdit(parent);
+    d->objectTypeCheck    = new MetadataCheckBox(i18n("Object Type:"), this);
+    d->objectTypeCB       = new QComboBox(this);
+    d->objectTypeDescEdit = new KLineEdit(this);
     d->objectTypeDescEdit->setValidator(asciiValidator);
     d->objectTypeDescEdit->setMaxLength(64);
-    d->objectTypeCB->insertItem(i18n("News"),     0);
-    d->objectTypeCB->insertItem(i18n("Data"),     1);
-    d->objectTypeCB->insertItem(i18n("Advisory"), 2);
-    grid->addMultiCellWidget(d->objectTypeCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->objectTypeCB, 4, 4, 1, 1);
-    grid->addMultiCellWidget(d->objectTypeDescEdit, 5, 5, 0, 2);
-    QWhatsThis::add(d->objectTypeCB, i18n("<p>Select here the editorial type of content."));
-    QWhatsThis::add(d->objectTypeDescEdit, i18n("<p>Set here the editorial type description of content. "
-                                                "This field is limited to 64 ASCII characters."));
+    d->objectTypeCB->insertItem(0, i18n("News"));
+    d->objectTypeCB->insertItem(1, i18n("Data"));
+    d->objectTypeCB->insertItem(2, i18n("Advisory"));
+    d->objectTypeCB->setWhatsThis(i18n("<p>Select here the editorial type of content."));
+    d->objectTypeDescEdit->setWhatsThis(i18n("<p>Set here the editorial type description of content. "
+                                             "This field is limited to 64 ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->objectAttributeCheck    = new MetadataCheckBox(i18n("Object Attribute:"), parent);
-    d->objectAttributeCB       = new QComboBox(false, parent);
-    d->objectAttributeDescEdit = new KLineEdit(parent);
+    d->objectAttributeCheck    = new MetadataCheckBox(i18n("Object Attribute:"), this);
+    d->objectAttributeCB       = new QComboBox(this);
+    d->objectAttributeDescEdit = new KLineEdit(this);
     d->objectAttributeDescEdit->setValidator(asciiValidator);
     d->objectAttributeDescEdit->setMaxLength(64);
-    d->objectAttributeCB->insertItem(i18n("Current"),                           0);
-    d->objectAttributeCB->insertItem(i18n("Analysis"),                          1);
-    d->objectAttributeCB->insertItem(i18n("Archive material"),                  2);
-    d->objectAttributeCB->insertItem(i18n("Background"),                        3);
-    d->objectAttributeCB->insertItem(i18n("Feature"),                           4);
-    d->objectAttributeCB->insertItem(i18n("Forecast"),                          5);
-    d->objectAttributeCB->insertItem(i18n("History"),                           6);
-    d->objectAttributeCB->insertItem(i18n("Obituary"),                          7);
-    d->objectAttributeCB->insertItem(i18n("Opinion"),                           8);
-    d->objectAttributeCB->insertItem(i18n("Polls & Surveys"),                   9);
-    d->objectAttributeCB->insertItem(i18n("Profile"),                           10);
-    d->objectAttributeCB->insertItem(i18n("Results Listings & Table"),          11);
-    d->objectAttributeCB->insertItem(i18n("Side bar & Supporting information"), 12);
-    d->objectAttributeCB->insertItem(i18n("Summary"),                           13);
-    d->objectAttributeCB->insertItem(i18n("Transcript & Verbatim"),             14);
-    d->objectAttributeCB->insertItem(i18n("Interview"),                         15);
-    d->objectAttributeCB->insertItem(i18n("From the Scene"),                    16);
-    d->objectAttributeCB->insertItem(i18n("Retrospective"),                     17);
-    d->objectAttributeCB->insertItem(i18n("Statistics"),                        18);
-    d->objectAttributeCB->insertItem(i18n("Update"),                            19);
-    d->objectAttributeCB->insertItem(i18n("Wrap-up"),                           20);
-    d->objectAttributeCB->insertItem(i18n("Press Release"),                     21);
-    grid->addMultiCellWidget(d->objectAttributeCheck, 6, 6, 0, 0);
-    grid->addMultiCellWidget(d->objectAttributeCB, 6, 6, 1, 2);
-    grid->addMultiCellWidget(d->objectAttributeDescEdit, 7, 7, 0, 2);
-    QWhatsThis::add(d->objectAttributeCB, i18n("<p>Select here the editorial attribute of content."));
-    QWhatsThis::add(d->objectAttributeDescEdit, i18n("<p>Set here the editorial attribute description of "
-                                                     "content. This field is limited to 64 ASCII characters."));
+    d->objectAttributeCB->insertItem(0, i18n("Current"));
+    d->objectAttributeCB->insertItem(1, i18n("Analysis"));
+    d->objectAttributeCB->insertItem(2, i18n("Archive material"));
+    d->objectAttributeCB->insertItem(3, i18n("Background"));
+    d->objectAttributeCB->insertItem(4, i18n("Feature"));
+    d->objectAttributeCB->insertItem(5, i18n("Forecast"));
+    d->objectAttributeCB->insertItem(6, i18n("History"));
+    d->objectAttributeCB->insertItem(7, i18n("Obituary"));
+    d->objectAttributeCB->insertItem(8, i18n("Opinion"));
+    d->objectAttributeCB->insertItem(9, i18n("Polls & Surveys"));
+    d->objectAttributeCB->insertItem(10, i18n("Profile"));
+    d->objectAttributeCB->insertItem(11, i18n("Results Listings & Table"));
+    d->objectAttributeCB->insertItem(12, i18n("Side bar & Supporting information"));
+    d->objectAttributeCB->insertItem(13, i18n("Summary"));
+    d->objectAttributeCB->insertItem(14, i18n("Transcript & Verbatim"));
+    d->objectAttributeCB->insertItem(15, i18n("Interview"));
+    d->objectAttributeCB->insertItem(16, i18n("From the Scene"));
+    d->objectAttributeCB->insertItem(17, i18n("Retrospective"));
+    d->objectAttributeCB->insertItem(18, i18n("Statistics"));
+    d->objectAttributeCB->insertItem(19, i18n("Update"));
+    d->objectAttributeCB->insertItem(20, i18n("Wrap-up"));
+    d->objectAttributeCB->insertItem(21, i18n("Press Release"));
+    d->objectAttributeCB->setWhatsThis(i18n("<p>Select here the editorial attribute of content."));
+    d->objectAttributeDescEdit->setWhatsThis(i18n("<p>Set here the editorial attribute description of "
+                                                  "content. This field is limited to 64 ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->JobIDCheck = new QCheckBox(i18n("Job Identification:"), parent);
-    d->JobIDEdit  = new KLineEdit(parent);
+    d->JobIDCheck = new QCheckBox(i18n("Job Identification:"), this);
+    d->JobIDEdit  = new KLineEdit(this);
     d->JobIDEdit->setValidator(asciiValidator);
     d->JobIDEdit->setMaxLength(32);
-    grid->addMultiCellWidget(d->JobIDCheck, 8, 8, 0, 2);
-    grid->addMultiCellWidget(d->JobIDEdit, 9, 9, 0, 2);
-    QWhatsThis::add(d->JobIDEdit, i18n("<p>Set here the string that identifies content that recurs. "
-                                       "This field is limited to 32 ASCII characters."));
+    d->JobIDEdit->setWhatsThis(i18n("<p>Set here the string that identifies content that recurs. "
+                                    "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
-    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: "
+    QLabel *note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
                  "characters set and limit strings size. "
-                 "Use contextual help for details.</b>"), parent);
+                 "Use contextual help for details.</b>"), this);
+    note->setOpenExternalLinks(true);
+    note->setWordWrap(true);
 
-    grid->addMultiCellWidget(note, 10, 10, 0, 2);
-    grid->setColStretch(2, 10);                     
+    // --------------------------------------------------------
+
+    grid->addWidget(d->statusCheck, 0, 0, 1, 3 );
+    grid->addWidget(d->statusEdit, 1, 0, 1, 3 );
+    grid->addWidget(d->priorityCheck, 2, 0, 1, 1);
+    grid->addWidget(d->priorityCB, 2, 1, 1, 1);
+    grid->addWidget(d->objectCycleCheck, 3, 0, 1, 1);
+    grid->addWidget(d->objectCycleCB, 3, 1, 1, 1);
+    grid->addWidget(d->objectTypeCheck, 4, 0, 1, 1);
+    grid->addWidget(d->objectTypeCB, 4, 1, 1, 1);
+    grid->addWidget(d->objectTypeDescEdit, 5, 0, 1, 3 );
+    grid->addWidget(d->objectAttributeCheck, 6, 0, 1, 1);
+    grid->addWidget(d->objectAttributeCB, 6, 1, 1, 2);
+    grid->addWidget(d->objectAttributeDescEdit, 7, 0, 1, 3 );
+    grid->addWidget(d->JobIDCheck, 8, 0, 1, 3 );
+    grid->addWidget(d->JobIDEdit, 9, 0, 1, 3 );
+    grid->addWidget(note, 10, 0, 1, 3 );
+    grid->setColumnStretch(2, 10);                     
     grid->setRowStretch(11, 10);                     
+    grid->setMargin(0);
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -317,7 +319,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     }
     d->statusEdit->setEnabled(d->statusCheck->isChecked());
 
-    d->priorityCB->setCurrentItem(0);
+    d->priorityCB->setCurrentIndex(0);
     d->priorityCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Urgency", false);    
     if (!data.isNull())
@@ -325,7 +327,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
         val = data.toInt(); 
         if (val >= 0 && val <= 8)
         {
-            d->priorityCB->setCurrentItem(val);
+            d->priorityCB->setCurrentIndex(val);
             d->priorityCheck->setChecked(true);
         }
         else
@@ -333,24 +335,24 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     }
     d->priorityCB->setEnabled(d->priorityCheck->isChecked());
 
-    d->objectCycleCB->setCurrentItem(0);
+    d->objectCycleCB->setCurrentIndex(0);
     d->objectCycleCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectCycle", false);    
     if (!data.isNull())
     {
         if (data == QString("a"))
         {
-            d->objectCycleCB->setCurrentItem(0);
+            d->objectCycleCB->setCurrentIndex(0);
             d->objectCycleCheck->setChecked(true);
         }
         else if (data == QString("b"))
         {
-            d->objectCycleCB->setCurrentItem(1);
+            d->objectCycleCB->setCurrentIndex(1);
             d->objectCycleCheck->setChecked(true);
         }
         else if (data == QString("c"))
         {
-            d->objectCycleCB->setCurrentItem(2);
+            d->objectCycleCB->setCurrentIndex(2);
             d->objectCycleCheck->setChecked(true);
         }
         else 
@@ -358,7 +360,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     }
     d->objectCycleCB->setEnabled(d->objectCycleCheck->isChecked());
 
-    d->objectTypeCB->setCurrentItem(0);
+    d->objectTypeCB->setCurrentIndex(0);
     d->objectTypeDescEdit->clear();
     d->objectTypeCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectType", false);    
@@ -370,7 +372,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
             int type = typeSec.toInt()-1;
             if (type >= 0 && type < 3)
             {
-                d->objectTypeCB->setCurrentItem(type);
+                d->objectTypeCB->setCurrentIndex(type);
                 d->objectTypeDescEdit->setText(data.section(":", -1));
                 d->objectTypeCheck->setChecked(true);
             }
@@ -381,7 +383,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     d->objectTypeCB->setEnabled(d->objectTypeCheck->isChecked());
     d->objectTypeDescEdit->setEnabled(d->objectTypeCheck->isChecked());
 
-    d->objectAttributeCB->setCurrentItem(0);
+    d->objectAttributeCB->setCurrentIndex(0);
     d->objectAttributeDescEdit->clear();
     d->objectAttributeCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectAttribute", false);    
@@ -393,7 +395,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
             int att = attSec.toInt()-1;
             if (att >= 0 && att < 21)
             {
-                d->objectAttributeCB->setCurrentItem(att);
+                d->objectAttributeCB->setCurrentIndex(att);
                 d->objectAttributeDescEdit->setText(data.section(":", -1));
                 d->objectAttributeCheck->setChecked(true);
             }
@@ -428,13 +430,13 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
         exiv2Iface.removeIptcTag("Iptc.Application2.EditStatus");
 
     if (d->priorityCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Urgency", QString::number(d->priorityCB->currentItem()));
+        exiv2Iface.setIptcTagString("Iptc.Application2.Urgency", QString::number(d->priorityCB->currentIndex()));
     else if (d->priorityCheck->isValid())
         exiv2Iface.removeIptcTag("Iptc.Application2.Urgency");
 
     if (d->objectCycleCheck->isChecked())
     {
-        switch (d->objectCycleCB->currentItem())
+        switch (d->objectCycleCB->currentIndex())
         {
             case(0):
                 exiv2Iface.setIptcTagString("Iptc.Application2.ObjectCycle", QString("a"));
@@ -455,7 +457,7 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
     if (d->objectTypeCheck->isChecked())
     {
         QString objectType;
-        objectType.sprintf("%2d", d->objectTypeCB->currentItem()+1);
+        objectType.sprintf("%2d", d->objectTypeCB->currentIndex()+1);
         objectType.append(QString(":%1").arg(d->objectTypeDescEdit->text()));
         exiv2Iface.setIptcTagString("Iptc.Application2.ObjectType", objectType);
     }
@@ -465,7 +467,7 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
     if (d->objectAttributeCheck->isChecked())
     {
         QString objectAttribute;
-        objectAttribute.sprintf("%3d", d->objectAttributeCB->currentItem()+1);
+        objectAttribute.sprintf("%3d", d->objectAttributeCB->currentIndex()+1);
         objectAttribute.append(QString(":%1").arg(d->objectAttributeDescEdit->text()));
         exiv2Iface.setIptcTagString("Iptc.Application2.ObjectAttribute", objectAttribute);
     }
