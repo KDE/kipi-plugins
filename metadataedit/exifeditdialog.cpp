@@ -137,7 +137,8 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     setDefaultButton(Ok);
     setButtonIcon(User1, KIcon("go-next"));
     setButtonIcon(User2, KIcon("go-previous"));
-    setCaption(i18n("Adjust Time & Date"));
+    setButtonText(User1, i18n("Next"));
+    setButtonText(User2, i18n("Previous"));
     setFaceType(List);
     setModal(true);
 
