@@ -22,20 +22,17 @@
 
 // QT includes.
 
-#include <qlayout.h>
-#include <qhgroupbox.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qwhatsthis.h>
-#include <qvalidator.h>
-#include <qcheckbox.h>
+#include <QLayout>
+#include <QLabel>
+#include <QValidator>
+#include <QCheckBox>
+#include <QPushButton>
 
 // KDE includes.
 
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <kactivelabel.h>
 
 // LibKExiv2 includes. 
 
@@ -88,7 +85,7 @@ IPTCCredits::IPTCCredits(QWidget* parent)
            : QWidget(parent)
 {
     d = new IPTCCreditsPriv;
-    QVBoxLayout *vlay = new QVBoxLayout( parent, 0, KDialog::spacingHint() );
+    QVBoxLayout *vlay = new QVBoxLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -96,82 +93,88 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->copyrightCheck = new QCheckBox(i18n("Copyright:"), parent);
-    d->copyrightEdit  = new KLineEdit(parent);
+    d->copyrightCheck = new QCheckBox(i18n("Copyright:"), this);
+    d->copyrightEdit  = new KLineEdit(this);
     d->copyrightEdit->setValidator(asciiValidator);
     d->copyrightEdit->setMaxLength(128);
-    vlay->addWidget(d->copyrightCheck);
-    vlay->addWidget(d->copyrightEdit);
-    QWhatsThis::add(d->copyrightEdit, i18n("<p>Set here the necessary copyright notice. This field is limited "
-                                           "to 128 ASCII characters."));
+    d->copyrightEdit->setWhatsThis(i18n("<p>Set here the necessary copyright notice. This field is limited "
+                                        "to 128 ASCII characters."));
     
     // --------------------------------------------------------
 
-    d->bylineCheck = new QCheckBox(i18n("Byline:"), parent);
-    d->bylineEdit  = new KLineEdit(parent);
+    d->bylineCheck = new QCheckBox(i18n("Byline:"), this);
+    d->bylineEdit  = new KLineEdit(this);
     d->bylineEdit->setValidator(asciiValidator);
     d->bylineEdit->setMaxLength(32);
-    vlay->addWidget(d->bylineCheck);
-    vlay->addWidget(d->bylineEdit);
-    QWhatsThis::add(d->bylineEdit, i18n("<p>Set here the name of content creator. This field is limited "
-                                        "to 32 ASCII characters."));
+    d->bylineEdit->setWhatsThis(i18n("<p>Set here the name of content creator. This field is limited "
+                                     "to 32 ASCII characters."));
         
     // --------------------------------------------------------
 
-    d->bylineTitleCheck = new QCheckBox(i18n("Byline Title:"), parent);
-    d->bylineTitleEdit  = new KLineEdit(parent);
+    d->bylineTitleCheck = new QCheckBox(i18n("Byline Title:"), this);
+    d->bylineTitleEdit  = new KLineEdit(this);
     d->bylineTitleEdit->setValidator(asciiValidator);
     d->bylineTitleEdit->setMaxLength(32);
-    vlay->addWidget(d->bylineTitleCheck);
-    vlay->addWidget(d->bylineTitleEdit);
-    QWhatsThis::add(d->bylineTitleEdit, i18n("<p>Set here the title of content creator. This field is limited "
-                                             "to 32 ASCII characters."));
+    d->bylineTitleEdit->setWhatsThis(i18n("<p>Set here the title of content creator. This field is limited "
+                                          "to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->creditCheck = new QCheckBox(i18n("Credit:"), parent);
-    d->creditEdit  = new KLineEdit(parent);
+    d->creditCheck = new QCheckBox(i18n("Credit:"), this);
+    d->creditEdit  = new KLineEdit(this);
     d->creditEdit->setValidator(asciiValidator);
     d->creditEdit->setMaxLength(32);
-    vlay->addWidget(d->creditCheck);
-    vlay->addWidget(d->creditEdit);
-    QWhatsThis::add(d->creditEdit, i18n("<p>Set here the content provider. "
-                                        "This field is limited to 32 ASCII characters."));
+    d->creditEdit->setWhatsThis(i18n("<p>Set here the content provider. "
+                                     "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->sourceCheck = new QCheckBox(i18n("Source:"), parent);
-    d->sourceEdit  = new KLineEdit(parent);
+    d->sourceCheck = new QCheckBox(i18n("Source:"), this);
+    d->sourceEdit  = new KLineEdit(this);
     d->sourceEdit->setValidator(asciiValidator);
     d->sourceEdit->setMaxLength(32);
-    vlay->addWidget(d->sourceCheck);
-    vlay->addWidget(d->sourceEdit);
-    QWhatsThis::add(d->sourceEdit, i18n("<p>Set here the original owner of content. "
-                                        "This field is limited to 32 ASCII characters."));
+    d->sourceEdit->setWhatsThis(i18n("<p>Set here the original owner of content. "
+                                     "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->contactCheck = new QCheckBox(i18n("Contact:"), parent);
-    d->contactEdit  = new KLineEdit(parent);
+    d->contactCheck = new QCheckBox(i18n("Contact:"), this);
+    d->contactEdit  = new KLineEdit(this);
     d->contactEdit->setValidator(asciiValidator);
     d->contactEdit->setMaxLength(128);
-    vlay->addWidget(d->contactCheck);
-    vlay->addWidget(d->contactEdit);
-    QWhatsThis::add(d->contactEdit, i18n("<p>Set here the person or organisation to contact. "
-                                         "This field is limited to 128 ASCII characters."));
+    d->contactEdit->setWhatsThis(i18n("<p>Set here the person or organisation to contact. "
+                                      "This field is limited to 128 ASCII characters."));
 
     // --------------------------------------------------------
 
-    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: "
+    QLabel *note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
                  "characters set and limit strings size. "
-                 "Use contextual help for details.</b>"), parent);
+                 "Use contextual help for details.</b>"), this);
+    note->setOpenExternalLinks(true);
+    note->setWordWrap(true);
 
+    // --------------------------------------------------------
+
+    vlay->addWidget(d->copyrightCheck);
+    vlay->addWidget(d->copyrightEdit);
+    vlay->addWidget(d->bylineCheck);
+    vlay->addWidget(d->bylineEdit);
+    vlay->addWidget(d->bylineTitleCheck);
+    vlay->addWidget(d->bylineTitleEdit);
+    vlay->addWidget(d->creditCheck);
+    vlay->addWidget(d->creditEdit);
+    vlay->addWidget(d->sourceCheck);
+    vlay->addWidget(d->sourceEdit);
+    vlay->addWidget(d->contactCheck);
+    vlay->addWidget(d->contactEdit);
     vlay->addWidget(note);
     vlay->addStretch();
-                                         
+    vlay->setMargin(0);
+    vlay->setSpacing(KDialog::spacingHint());
+              
     // --------------------------------------------------------
 
     connect(d->copyrightCheck, SIGNAL(toggled(bool)),
@@ -347,4 +350,3 @@ void IPTCCredits::applyMetadata(QByteArray& iptcData)
 }
 
 }  // namespace KIPIMetadataEditPlugin
-
