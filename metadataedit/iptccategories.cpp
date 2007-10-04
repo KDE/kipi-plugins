@@ -22,20 +22,19 @@
 
 // QT includes.
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qwhatsthis.h>
-#include <qvalidator.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <QLayout>
+#include <QLabel>
+#include <QValidator>
+#include <QCheckBox>
+#include <QPushButton>
 
 // KDE includes.
 
 #include <klocale.h>
 #include <kdialog.h>
-#include <klistbox.h>
+#include <klistwidget.h>
 #include <klineedit.h>
-#include <kactivelabel.h>
+#include <kiconloader.h>
 
 // LibKExiv2 includes. 
 
@@ -75,15 +74,14 @@ public:
     KLineEdit   *categoryEdit;
     KLineEdit   *subCategoryEdit;
 
-    KListBox    *subCategoriesBox;
+    KListWidget *subCategoriesBox;
 };
 
 IPTCCategories::IPTCCategories(QWidget* parent)
               : QWidget(parent)
 {
     d = new IPTCCategoriesPriv;
-    QGridLayout *grid = new QGridLayout(parent, 6, 1, 0, KDialog::spacingHint());
-    grid->setAlignment( Qt::AlignTop );
+    QGridLayout *grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -91,49 +89,57 @@ IPTCCategories::IPTCCategories(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->categoryCheck = new QCheckBox(i18n("Identify subject of content (3 chars max):"), parent);    
-    d->categoryEdit  = new KLineEdit(parent);
+    d->categoryCheck = new QCheckBox(i18n("Identify subject of content (3 chars max):"), this);    
+    d->categoryEdit  = new KLineEdit(this);
     d->categoryEdit->setValidator(asciiValidator);
     d->categoryEdit->setMaxLength(3);
-    QWhatsThis::add(d->categoryEdit, i18n("<p>Set here the category of content. This field is limited "
-                                         "to 3 ASCII characters."));
+    d->categoryEdit->setWhatsThis(i18n("<p>Set here the category of content. This field is limited "
+                                       "to 3 ASCII characters."));
 
-    d->subCategoriesCheck = new QCheckBox(i18n("Supplemental categories:"), parent);    
+    d->subCategoriesCheck = new QCheckBox(i18n("Supplemental categories:"), this);    
 
-    d->subCategoryEdit = new KLineEdit(parent);
+    d->subCategoryEdit = new KLineEdit(this);
     d->subCategoryEdit->setValidator(asciiValidator);
     d->subCategoryEdit->setMaxLength(32);
-    QWhatsThis::add(d->subCategoryEdit, i18n("<p>Enter here a new supplemental category of content. "
-                    "This field is limited to 32 ASCII characters."));
+    d->subCategoryEdit->setWhatsThis(i18n("<p>Enter here a new supplemental category of content. "
+                                          "This field is limited to 32 ASCII characters."));
 
-    d->subCategoriesBox = new KListBox(parent);
-    d->subCategoriesBox->setVScrollBarMode(QScrollView::AlwaysOn);
+    d->subCategoriesBox = new KListWidget(this);
+    d->subCategoriesBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     
-    d->addSubCategoryButton = new QPushButton( i18n("&Add"), parent);
-    d->delSubCategoryButton = new QPushButton( i18n("&Delete"), parent);
+    d->addSubCategoryButton = new QPushButton( i18n("&Add"), this);
+    d->delSubCategoryButton = new QPushButton( i18n("&Delete"), this);
+    d->addSubCategoryButton->setIcon(SmallIcon("edit-add"));
+    d->delSubCategoryButton->setIcon(SmallIcon("edit-delete"));
     d->delSubCategoryButton->setEnabled(false);
-
-    grid->addMultiCellWidget(d->categoryCheck, 0, 0, 0, 1);
-    grid->addMultiCellWidget(d->categoryEdit, 0, 0, 1, 1);
-    grid->addMultiCellWidget(d->subCategoriesCheck, 1, 1, 0, 1);
-    grid->addMultiCellWidget(d->subCategoryEdit, 2, 2, 0, 0);
-    grid->addMultiCellWidget(d->subCategoriesBox, 3, 6, 0, 0);
-    grid->addMultiCellWidget(d->addSubCategoryButton, 3, 3, 1, 1);
-    grid->addMultiCellWidget(d->delSubCategoryButton, 4, 4, 1, 1);
 
     // --------------------------------------------------------
 
-    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: "
+    QLabel *note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
                  "characters set and limit strings size. "
-                 "Use contextual help for details.</b>"), parent);
+                 "Use contextual help for details.</b>"), this);
     note->setMaximumWidth(150);
+    note->setOpenExternalLinks(true);
+    note->setWordWrap(true);
 
-    grid->addMultiCellWidget(note, 5, 5, 1, 1);
-    grid->setColStretch(0, 10);                     
-    grid->setRowStretch(6, 10);      
+    // --------------------------------------------------------
+
+    grid->setAlignment( Qt::AlignTop );
+    grid->addWidget(d->categoryCheck, 0, 0, 1, 2 );
+    grid->addWidget(d->categoryEdit, 0, 1, 1, 1);
+    grid->addWidget(d->subCategoriesCheck, 1, 0, 1, 2 );
+    grid->addWidget(d->subCategoryEdit, 2, 0, 1, 1);
+    grid->addWidget(d->subCategoriesBox, 3, 0, 6- 3+1, 1);
+    grid->addWidget(d->addSubCategoryButton, 3, 1, 1, 1);
+    grid->addWidget(d->delSubCategoryButton, 4, 1, 1, 1);
+    grid->addWidget(note, 5, 1, 1, 1);
+    grid->setColumnStretch(0, 10);                     
+    grid->setRowStretch(6, 10);    
+    grid->setMargin(0);
+    grid->setSpacing(KDialog::spacingHint());      
                                          
     // --------------------------------------------------------
 
@@ -208,18 +214,15 @@ IPTCCategories::~IPTCCategories()
 
 void IPTCCategories::slotDelCategory()
 {
-    int index = d->subCategoriesBox->currentItem();
-    if (index == -1)
-        return;
-
-    QListBoxItem* item = d->subCategoriesBox->item(index);
+    QListWidgetItem *item = d->subCategoriesBox->currentItem();
     if (!item) return;
+    d->subCategoriesBox->takeItem(d->subCategoriesBox->row(item));
     delete item;
 }
 
 void IPTCCategories::slotCategorySelectionChanged()
 {
-    if (d->subCategoriesBox->currentItem() != -1)
+    if (d->subCategoriesBox->currentItem())
         d->delSubCategoryButton->setEnabled(true);
     else
         d->delSubCategoryButton->setEnabled(false);
@@ -231,9 +234,9 @@ void IPTCCategories::slotAddCategory()
     if (newCategory.isEmpty()) return;
 
     bool found = false;
-    for (QListBoxItem *item = d->subCategoriesBox->firstItem();
-         item; item = item->next()) 
+    for (int i = 0 ; i < d->subCategoriesBox->count(); i++)
     {
+        QListWidgetItem *item = d->subCategoriesBox->item(i);
         if (newCategory == item->text()) 
         {
             found = true;
@@ -242,7 +245,7 @@ void IPTCCategories::slotAddCategory()
     }
 
     if (!found)
-        d->subCategoriesBox->insertItem(newCategory);
+        d->subCategoriesBox->insertItem(d->subCategoriesBox->count(), newCategory);
 }
 
 void IPTCCategories::readMetadata(QByteArray& iptcData)
@@ -265,10 +268,10 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
 
     d->subCategoriesBox->clear();
     d->subCategoriesCheck->setChecked(false);
-    d->oldSubCategories = exiv2Iface.getImageSubCategories();
+    d->oldSubCategories = exiv2Iface.getIptcSubCategories();
     if (!d->oldSubCategories.isEmpty())
     {
-        d->subCategoriesBox->insertStringList(d->oldSubCategories);
+        d->subCategoriesBox->insertItems(0, d->oldSubCategories);
         d->subCategoriesCheck->setChecked(true);
     }
     d->subCategoryEdit->setEnabled(d->categoryCheck->isChecked() && d->subCategoriesCheck->isChecked());
@@ -290,17 +293,18 @@ void IPTCCategories::applyMetadata(QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Category");
 
-    for (QListBoxItem *item = d->subCategoriesBox->firstItem();
-         item; item = item->next()) 
+    for (int i = 0 ; i < d->subCategoriesBox->count(); i++)
+    {
+        QListWidgetItem *item = d->subCategoriesBox->item(i);
         newCategories.append(item->text());
+    }
 
     if (d->categoryCheck->isChecked() && d->subCategoriesCheck->isChecked())
-        exiv2Iface.setImageSubCategories(d->oldSubCategories, newCategories);
+        exiv2Iface.setIptcSubCategories(d->oldSubCategories, newCategories);
     else
-        exiv2Iface.setImageSubCategories(d->oldSubCategories, QStringList());
+        exiv2Iface.setIptcSubCategories(d->oldSubCategories, QStringList());
 
     iptcData = exiv2Iface.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin
-

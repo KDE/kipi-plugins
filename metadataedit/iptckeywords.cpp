@@ -98,6 +98,8 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
     
     d->addKeywordButton = new QPushButton( i18n("&Add"), this);
     d->delKeywordButton = new QPushButton( i18n("&Delete"), this);
+    d->addKeywordButton->setIcon(SmallIcon("edit-add"));
+    d->delKeywordButton->setIcon(SmallIcon("edit-delete"));
     d->delKeywordButton->setEnabled(false);
 
     // --------------------------------------------------------
