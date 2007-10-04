@@ -26,10 +26,9 @@
 
 // QT includes.
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qwhatsthis.h>
-#include <qcombobox.h>
+#include <QLayout>
+#include <QLabel>
+#include <QComboBox>
 
 // KDE includes.
 
@@ -150,58 +149,60 @@ EXIFLens::EXIFLens(QWidget* parent)
 {
     d = new EXIFLensPriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 5, 2, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(parent);
 
     // --------------------------------------------------------
 
     d->focalLengthCheck = new QCheckBox(i18n("Focal length (mm):"), parent);
-    d->focalLengthEdit  = new KDoubleSpinBox(1.0, 10000.0, 1.0, 50.0, 1, parent);
-    grid->addMultiCellWidget(d->focalLengthCheck, 0, 0, 0, 0);
-    grid->addMultiCellWidget(d->focalLengthEdit, 0, 0, 2, 2);
-    QWhatsThis::add(d->focalLengthEdit, i18n("<p>Set here the lens focal length in milimeters "
-                                             "used by camera to take the picture."));
+    d->focalLengthEdit  = new KDoubleSpinBox(1.0, 10000.0, 1.0, 50.0, parent, 1);
+    d->focalLengthEdit->setWhatsThis(i18n("<p>Set here the lens focal length in milimeters "
+                                          "used by camera to take the picture."));
 
     // --------------------------------------------------------
 
     d->focalLength35mmCheck = new QCheckBox(i18n("Focal length in 35mm film (mm):"), parent);
-    d->focalLength35mmEdit  = new KIntSpinBox(1, 10000, 1, 1, 10, parent);
-    grid->addMultiCellWidget(d->focalLength35mmCheck, 1, 1, 0, 0);
-    grid->addMultiCellWidget(d->focalLength35mmEdit, 1, 1, 2, 2);
-    QWhatsThis::add(d->focalLength35mmEdit, i18n("<p>Set here equivalent focal length assuming "
-                                            "a 35mm film camera, in mm. A value of 0 means the focal "
-                                            "length is unknown."));
+    d->focalLength35mmEdit  = new KIntSpinBox(1, 10000, 1, 1, parent);
+    d->focalLength35mmEdit->setWhatsThis(i18n("<p>Set here equivalent focal length assuming "
+                                              "a 35mm film camera, in mm. A value of 0 means the focal "
+                                              "length is unknown."));
 
     // --------------------------------------------------------
 
     d->digitalZoomRatioCheck = new QCheckBox(i18n("Digital zoom ratio:"), parent);
-    d->digitalZoomRatioEdit  = new KDoubleSpinBox(0.0, 100.0, 0.1, 1.0, 1, parent);
-    grid->addMultiCellWidget(d->digitalZoomRatioCheck, 2, 2, 0, 0);
-    grid->addMultiCellWidget(d->digitalZoomRatioEdit, 2, 2, 2, 2);
-    QWhatsThis::add(d->digitalZoomRatioEdit, i18n("<p>Set here the digital zoom ratio "
-                                             "used by camera to take the picture."));
+    d->digitalZoomRatioEdit  = new KDoubleSpinBox(0.0, 100.0, 0.1, 1.0, parent, 1);
+    d->digitalZoomRatioEdit->setWhatsThis(i18n("<p>Set here the digital zoom ratio "
+                                               "used by camera to take the picture."));
 
     // --------------------------------------------------------
 
     d->apertureCheck = new MetadataCheckBox(i18n("Lens aperture (f-number):"), parent);
-    d->apertureCB    = new QComboBox(false, parent);
-    d->apertureCB->insertStringList(d->apertureValues);
-    grid->addMultiCellWidget(d->apertureCheck, 3, 3, 0, 0);
-    grid->addMultiCellWidget(d->apertureCB, 3, 3, 2, 2);
-    QWhatsThis::add(d->apertureCB, i18n("<p>Select here the lens aperture used by camera "
-                                        "to take the picture."));
+    d->apertureCB    = new QComboBox(parent);
+    d->apertureCB->insertItems(0, d->apertureValues);
+    d->apertureCB->setWhatsThis(i18n("<p>Select here the lens aperture used by camera "
+                                     "to take the picture."));
 
     // --------------------------------------------------------
 
     d->maxApertureCheck = new MetadataCheckBox(i18n("Max. lens aperture (f-number):"), parent);
-    d->maxApertureCB    = new QComboBox(false, parent);
-    d->maxApertureCB->insertStringList(d->apertureValues);
-    grid->addMultiCellWidget(d->maxApertureCheck, 4, 4, 0, 0);
-    grid->addMultiCellWidget(d->maxApertureCB, 4, 4, 2, 2);
-    QWhatsThis::add(d->maxApertureCB, i18n("<p>Select here the smallest aperture of the lens used by camera "
-                                           "to take the picture."));
+    d->maxApertureCB    = new QComboBox(parent);
+    d->maxApertureCB->insertItems(0, d->apertureValues);
+    d->maxApertureCB->setWhatsThis(i18n("<p>Select here the smallest aperture of the lens used by camera "
+                                        "to take the picture."));
 
-    grid->setColStretch(1, 10);                     
-    grid->setRowStretch(5, 10);                     
+    grid->addWidget(d->focalLengthCheck, 0, 0, 1, 1);
+    grid->addWidget(d->focalLengthEdit, 0, 2, 1, 1);
+    grid->addWidget(d->focalLength35mmCheck, 1, 0, 1, 1);
+    grid->addWidget(d->focalLength35mmEdit, 1, 2, 1, 1);
+    grid->addWidget(d->digitalZoomRatioCheck, 2, 0, 1, 1);
+    grid->addWidget(d->digitalZoomRatioEdit, 2, 2, 1, 1);
+    grid->addWidget(d->apertureCheck, 3, 0, 1, 1);
+    grid->addWidget(d->apertureCB, 3, 2, 1, 1);
+    grid->addWidget(d->maxApertureCheck, 4, 0, 1, 1);
+    grid->addWidget(d->maxApertureCB, 4, 2, 1, 1);
+    grid->setColumnStretch(1, 10);                     
+    grid->setRowStretch(5, 10);  
+    grid->setMargin(0);
+    grid->setSpacing(KDialog::spacingHint());                        
 
     // --------------------------------------------------------
 
@@ -295,7 +296,7 @@ void EXIFLens::readMetadata(QByteArray& exifData)
     }
     d->digitalZoomRatioEdit->setEnabled(d->digitalZoomRatioCheck->isChecked());
 
-    d->apertureCB->setCurrentItem(0);
+    d->apertureCB->setCurrentIndex(0);
     d->apertureCheck->setChecked(false);
     if (exiv2Iface.getExifTagRational("Exif.Photo.FNumber", num, den))
     {
@@ -304,13 +305,13 @@ void EXIFLens::readMetadata(QByteArray& exifData)
         int item = -1;
         for (int i = 0 ; i < d->apertureCB->count() ; i++)
         {
-            if (d->apertureCB->text(i).remove(0, 2) == fnumber)
+            if (d->apertureCB->itemText(i).remove(0, 2) == fnumber)
                 item = i;
         }
 
         if (item != -1)
         {
-            d->apertureCB->setCurrentItem(item);
+            d->apertureCB->setCurrentIndex(item);
             d->apertureCheck->setChecked(true);
         }
     }
@@ -323,13 +324,13 @@ void EXIFLens::readMetadata(QByteArray& exifData)
         int item = -1;
         for (int i = 0 ; i < d->apertureCB->count() ; i++)
         {
-            if (d->apertureCB->text(i).remove(0, 2) == fnumber)
+            if (d->apertureCB->itemText(i).remove(0, 2) == fnumber)
                 item = i;
         }
 
         if (item != -1)
         {
-            d->apertureCB->setCurrentItem(item);
+            d->apertureCB->setCurrentIndex(item);
             d->apertureCheck->setChecked(true);
         }
         else
@@ -337,7 +338,7 @@ void EXIFLens::readMetadata(QByteArray& exifData)
     }
     d->apertureCB->setEnabled(d->apertureCheck->isChecked());
     
-    d->maxApertureCB->setCurrentItem(0);
+    d->maxApertureCB->setCurrentIndex(0);
     d->maxApertureCheck->setChecked(false);
     if (exiv2Iface.getExifTagRational("Exif.Photo.MaxApertureValue", num, den))
     {
@@ -348,13 +349,13 @@ void EXIFLens::readMetadata(QByteArray& exifData)
         int item = -1;
         for (int i = 0 ; i < d->apertureCB->count() ; i++)
         {
-            if (d->maxApertureCB->text(i).remove(0, 2) == fnumber)
+            if (d->maxApertureCB->itemText(i).remove(0, 2) == fnumber)
                 item = i;
         }
 
         if (item != -1)
         {
-            d->maxApertureCB->setCurrentItem(item);
+            d->maxApertureCB->setCurrentIndex(item);
             d->maxApertureCheck->setChecked(true);
         }
         else
@@ -422,4 +423,3 @@ void EXIFLens::applyMetadata(QByteArray& exifData)
 }
 
 }  // namespace KIPIMetadataEditPlugin
-
