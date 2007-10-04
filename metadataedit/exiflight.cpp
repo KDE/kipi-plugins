@@ -177,7 +177,7 @@ EXIFLight::EXIFLight(QWidget* parent)
     // --------------------------------------------------------
 
     d->flashEnergyCheck = new QCheckBox(i18n("Flash energy (BCPS):"), parent);
-    d->flashEnergyEdit  = new KDoubleSpinBox(1, 10000, 1, 1, 1, parent);
+    d->flashEnergyEdit  = new KDoubleSpinBox(1.0, 10000.0, 1.0, 1.0, 1, parent);
     grid->addMultiCellWidget(d->flashEnergyCheck, 2, 2, 0, 0);
     grid->addMultiCellWidget(d->flashEnergyEdit, 2, 2, 2, 2);
     QWhatsThis::add(d->flashEnergyEdit, i18n("<p>Set here the flash energy used to take the picture "
