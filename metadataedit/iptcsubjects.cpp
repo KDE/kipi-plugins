@@ -22,20 +22,19 @@
 
 // QT includes.
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qwhatsthis.h>
-#include <qvalidator.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <QLayout>
+#include <QLabel>
+#include <QValidator>
+#include <QCheckBox>
+#include <QPushButton>
 
 // KDE includes.
 
 #include <klocale.h>
 #include <kdialog.h>
-#include <klistbox.h>
+#include <klistwidget.h>
 #include <klineedit.h>
-#include <kactivelabel.h>
+#include <kiconloader.h>
 
 // LibKExiv2 includes. 
 
@@ -71,15 +70,14 @@ public:
 
     KLineEdit   *subjectEdit;
 
-    KListBox    *subjectsBox;
+    KListWidget *subjectsBox;
 };
 
 IPTCSubjects::IPTCSubjects(QWidget* parent)
             : QWidget(parent)
 {
     d = new IPTCSubjectsPriv;
-    QGridLayout *grid = new QGridLayout(parent, 5, 2, 0, KDialog::spacingHint());
-    grid->setAlignment( Qt::AlignTop );
+    QGridLayout *grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -87,44 +85,52 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->subjectsCheck = new QCheckBox(i18n("Use structured definition of the subject matter:"), parent);    
+    d->subjectsCheck = new QCheckBox(i18n("Use structured definition of the subject matter:"), this);    
 
-    d->subjectEdit   = new KLineEdit(parent);
+    d->subjectEdit   = new KLineEdit(this);
     d->subjectEdit->setValidator(asciiValidator);
     d->subjectEdit->setMaxLength(236);
-    QWhatsThis::add(d->subjectEdit, i18n("<p>Enter here a new subject. "
-                    "This field is limited to 236 ASCII characters."));
+    d->subjectEdit->setWhatsThis(i18n("<p>Enter here a new subject. "
+                                      "This field is limited to 236 ASCII characters."));
 
-    d->subjectsBox   = new KListBox(parent);
-    d->subjectsBox->setVScrollBarMode(QScrollView::AlwaysOn);
+    d->subjectsBox   = new KListWidget(this);
+    d->subjectsBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     
-    d->addSubjectButton = new QPushButton( i18n("&Add"), parent);
-    d->delSubjectButton = new QPushButton( i18n("&Delete"), parent);
+    d->addSubjectButton = new QPushButton( i18n("&Add"), this);
+    d->delSubjectButton = new QPushButton( i18n("&Delete"), this);
+    d->addSubjectButton->setIcon(SmallIcon("edit-add"));
+    d->delSubjectButton->setIcon(SmallIcon("edit-delete"));
     d->delSubjectButton->setEnabled(false);
-
-    grid->addMultiCellWidget(d->subjectsCheck, 0, 0, 0, 1);
-    grid->addMultiCellWidget(d->subjectEdit, 1, 1, 0, 0);
-    grid->addMultiCellWidget(d->subjectsBox, 2, 5, 0, 0);
-    grid->addMultiCellWidget(d->addSubjectButton, 2, 2, 1, 1);
-    grid->addMultiCellWidget(d->delSubjectButton, 3, 3, 1, 1);
 
     // --------------------------------------------------------
 
-    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: "
+    QLabel *note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
                  "characters set and limit strings size. "
-                 "Use contextual help for details.</b>"), parent);
+                 "Use contextual help for details.</b>"), this);
     note->setMaximumWidth(150);
+    note->setOpenExternalLinks(true);
+    note->setWordWrap(true);
 
-    grid->addMultiCellWidget(note, 4, 4, 1, 1);
-    grid->setColStretch(0, 10);                     
-    grid->setRowStretch(5, 10);      
+    // --------------------------------------------------------
+
+    grid->setAlignment( Qt::AlignTop );
+    grid->addWidget(d->subjectsCheck, 0, 0, 1, 2 );
+    grid->addWidget(d->subjectEdit, 1, 0, 1, 1);
+    grid->addWidget(d->subjectsBox, 2, 0, 5- 2+1, 1);
+    grid->addWidget(d->addSubjectButton, 2, 1, 1, 1);
+    grid->addWidget(d->delSubjectButton, 3, 1, 1, 1);
+    grid->addWidget(note, 4, 1, 1, 1);
+    grid->setColumnStretch(0, 10);                     
+    grid->setRowStretch(5, 10);  
+    grid->setMargin(0);
+    grid->setSpacing(KDialog::spacingHint());    
                                          
     // --------------------------------------------------------
 
-    connect(d->subjectsBox, SIGNAL(selectionChanged()),
+    connect(d->subjectsBox, SIGNAL(itemSelectionChanged()),
             this, SLOT(slotSubjectSelectionChanged()));
     
     connect(d->addSubjectButton, SIGNAL(clicked()),
@@ -166,18 +172,15 @@ IPTCSubjects::~IPTCSubjects()
 
 void IPTCSubjects::slotDelSubject()
 {
-    int index = d->subjectsBox->currentItem();
-    if (index == -1)
-        return;
-
-    QListBoxItem* item = d->subjectsBox->item(index);
+    QListWidgetItem *item = d->subjectsBox->currentItem();
     if (!item) return;
+    d->subjectsBox->takeItem(d->subjectsBox->row(item));
     delete item;
 }
 
 void IPTCSubjects::slotSubjectSelectionChanged()
 {
-    if (d->subjectsBox->currentItem() != -1)
+    if (d->subjectsBox->currentItem())
         d->delSubjectButton->setEnabled(true);
     else
         d->delSubjectButton->setEnabled(false);
@@ -189,9 +192,9 @@ void IPTCSubjects::slotAddSubject()
     if (newSubject.isEmpty()) return;
 
     bool found = false;
-    for (QListBoxItem *item = d->subjectsBox->firstItem();
-         item; item = item->next()) 
+    for (int i = 0 ; i < d->subjectsBox->count(); i++)
     {
+        QListWidgetItem *item = d->subjectsBox->item(i);
         if (newSubject == item->text()) 
         {
             found = true;
@@ -200,7 +203,7 @@ void IPTCSubjects::slotAddSubject()
     }
 
     if (!found)
-        d->subjectsBox->insertItem(newSubject);
+        d->subjectsBox->insertItem(d->subjectsBox->count(), newSubject);
 }
 
 void IPTCSubjects::readMetadata(QByteArray& iptcData)
@@ -208,13 +211,13 @@ void IPTCSubjects::readMetadata(QByteArray& iptcData)
     blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
-    d->oldSubjects = exiv2Iface.getImageSubjects();
+    d->oldSubjects = exiv2Iface.getIptcSubjects();
 
     d->subjectsBox->clear();
     d->subjectsCheck->setChecked(false);
     if (!d->oldSubjects.isEmpty())
     {
-        d->subjectsBox->insertStringList(d->oldSubjects);
+        d->subjectsBox->insertItems(0, d->oldSubjects);
         d->subjectsCheck->setChecked(true);
     }
     d->subjectEdit->setEnabled(d->subjectsCheck->isChecked());
@@ -231,17 +234,18 @@ void IPTCSubjects::applyMetadata(QByteArray& iptcData)
     exiv2Iface.setIptc(iptcData);
     QStringList newSubjects;    
 
-    for (QListBoxItem *item = d->subjectsBox->firstItem();
-         item; item = item->next()) 
+    for (int i = 0 ; i < d->subjectsBox->count(); i++)
+    {
+        QListWidgetItem *item = d->subjectsBox->item(i);
         newSubjects.append(item->text());
+    }
 
     if (d->subjectsCheck->isChecked())
-        exiv2Iface.setImageSubjects(d->oldSubjects, newSubjects);
+        exiv2Iface.setIptcSubjects(d->oldSubjects, newSubjects);
     else
-        exiv2Iface.setImageSubjects(d->oldSubjects, QStringList());
+        exiv2Iface.setIptcSubjects(d->oldSubjects, QStringList());
 
     iptcData = exiv2Iface.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin
-
