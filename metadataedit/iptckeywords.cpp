@@ -22,20 +22,19 @@
 
 // QT includes.
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qwhatsthis.h>
-#include <qvalidator.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <QLayout>
+#include <QLabel>
+#include <QValidator>
+#include <QCheckBox>
+#include <QPushButton>
 
 // KDE includes.
 
 #include <klocale.h>
 #include <kdialog.h>
-#include <klistbox.h>
+#include <klistwidget.h>
 #include <klineedit.h>
-#include <kactivelabel.h>
+#include <kiconloader.h>
 
 // LibKExiv2 includes. 
 
@@ -71,15 +70,14 @@ public:
 
     KLineEdit   *keywordEdit;
 
-    KListBox    *keywordsBox;
+    KListWidget *keywordsBox;
 };
 
 IPTCKeywords::IPTCKeywords(QWidget* parent)
             : QWidget(parent)
 {
     d = new IPTCKeywordsPriv;
-    QGridLayout *grid = new QGridLayout(parent, 5, 2, 0, KDialog::spacingHint());
-    grid->setAlignment( Qt::AlignTop );
+    QGridLayout *grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -87,40 +85,46 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->keywordsCheck = new QCheckBox(i18n("Use information retrieval words:"), parent);    
+    d->keywordsCheck = new QCheckBox(i18n("Use information retrieval words:"), this);    
 
-    d->keywordEdit   = new KLineEdit(parent);
+    d->keywordEdit   = new KLineEdit(this);
     d->keywordEdit->setValidator(asciiValidator);
     d->keywordEdit->setMaxLength(64);
-    QWhatsThis::add(d->keywordEdit, i18n("<p>Enter here a new keyword. "
-                    "This field is limited to 64 ASCII characters."));
+    d->keywordEdit->setWhatsThis(i18n("<p>Enter here a new keyword. "
+                                      "This field is limited to 64 ASCII characters."));
 
-    d->keywordsBox   = new KListBox(parent);
-    d->keywordsBox->setVScrollBarMode(QScrollView::AlwaysOn);
+    d->keywordsBox   = new KListWidget(this);
+    d->keywordsBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     
-    d->addKeywordButton = new QPushButton( i18n("&Add"), parent);
-    d->delKeywordButton = new QPushButton( i18n("&Delete"), parent);
+    d->addKeywordButton = new QPushButton( i18n("&Add"), this);
+    d->delKeywordButton = new QPushButton( i18n("&Delete"), this);
     d->delKeywordButton->setEnabled(false);
-
-    grid->addMultiCellWidget(d->keywordsCheck, 0, 0, 0, 1);
-    grid->addMultiCellWidget(d->keywordEdit, 1, 1, 0, 0);
-    grid->addMultiCellWidget(d->keywordsBox, 2, 5, 0, 0);
-    grid->addMultiCellWidget(d->addKeywordButton, 2, 2, 1, 1);
-    grid->addMultiCellWidget(d->delKeywordButton, 3, 3, 1, 1);
 
     // --------------------------------------------------------
 
-    KActiveLabel *note = new KActiveLabel(i18n("<b>Note: "
+    QLabel *note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
                  "characters set and limit strings size. "
-                 "Use contextual help for details.</b>"), parent);
+                 "Use contextual help for details.</b>"), this);
     note->setMaximumWidth(150);
+    note->setOpenExternalLinks(true);
+    note->setWordWrap(true);
 
-    grid->addMultiCellWidget(note, 4, 4, 1, 1);
-    grid->setColStretch(0, 10);                     
+    // --------------------------------------------------------
+
+    grid->setAlignment( Qt::AlignTop );
+    grid->addWidget(d->keywordsCheck, 0, 0, 1, 2 );
+    grid->addWidget(d->keywordEdit, 1, 0, 1, 1);
+    grid->addWidget(d->keywordsBox, 2, 0, 5- 2+1, 1);
+    grid->addWidget(d->addKeywordButton, 2, 1, 1, 1);
+    grid->addWidget(d->delKeywordButton, 3, 1, 1, 1);
+    grid->addWidget(note, 4, 1, 1, 1);
+    grid->setColumnStretch(0, 10);                     
     grid->setRowStretch(5, 10);      
+    grid->setMargin(0);
+    grid->setSpacing(KDialog::spacingHint());    
                                          
     // --------------------------------------------------------
 
@@ -166,18 +170,15 @@ IPTCKeywords::~IPTCKeywords()
 
 void IPTCKeywords::slotDelKeyword()
 {
-    int index = d->keywordsBox->currentItem();
-    if (index == -1)
-        return;
-
-    QListBoxItem* item = d->keywordsBox->item(index);
+    QListWidgetItem *item = d->keywordsBox->currentItem();
     if (!item) return;
+    d->keywordsBox->takeItem(d->keywordsBox->row(item));
     delete item;
 }
 
 void IPTCKeywords::slotKeywordSelectionChanged()
 {
-    if (d->keywordsBox->currentItem() != -1)
+    if (d->keywordsBox->currentItem())
         d->delKeywordButton->setEnabled(true);
     else
         d->delKeywordButton->setEnabled(false);
@@ -189,9 +190,9 @@ void IPTCKeywords::slotAddKeyword()
     if (newKeyword.isEmpty()) return;
 
     bool found = false;
-    for (QListBoxItem *item = d->keywordsBox->firstItem();
-         item; item = item->next()) 
+    for (int i = 0 ; i < d->keywordsBox->count(); i++)
     {
+        QListWidgetItem *item = d->keywordsBox->item(i);
         if (newKeyword == item->text()) 
         {
             found = true;
@@ -200,7 +201,7 @@ void IPTCKeywords::slotAddKeyword()
     }
 
     if (!found)
-        d->keywordsBox->insertItem(newKeyword);
+        d->keywordsBox->insertItem(d->keywordsBox->count(), newKeyword);
 }
 
 void IPTCKeywords::readMetadata(QByteArray& iptcData)
@@ -208,13 +209,13 @@ void IPTCKeywords::readMetadata(QByteArray& iptcData)
     blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
-    d->oldKeywords = exiv2Iface.getImageKeywords();
+    d->oldKeywords = exiv2Iface.getIptcKeywords();
 
     d->keywordsBox->clear();
     d->keywordsCheck->setChecked(false);
     if (!d->oldKeywords.isEmpty())
     {
-        d->keywordsBox->insertStringList(d->oldKeywords);
+        d->keywordsBox->insertItems(0, d->oldKeywords);
         d->keywordsCheck->setChecked(true);
     }
     d->keywordEdit->setEnabled(d->keywordsCheck->isChecked());
@@ -231,17 +232,18 @@ void IPTCKeywords::applyMetadata(QByteArray& iptcData)
     exiv2Iface.setIptc(iptcData);
     QStringList newKeywords;    
 
-    for (QListBoxItem *item = d->keywordsBox->firstItem();
-         item; item = item->next()) 
+    for (int i = 0 ; i < d->keywordsBox->count(); i++)
+    {
+        QListWidgetItem *item = d->keywordsBox->item(i);
         newKeywords.append(item->text());
+    }
 
     if (d->keywordsCheck->isChecked())
-        exiv2Iface.setImageKeywords(d->oldKeywords, newKeywords);
+        exiv2Iface.setIptcKeywords(d->oldKeywords, newKeywords);
     else
-        exiv2Iface.setImageKeywords(d->oldKeywords, QStringList());
+        exiv2Iface.setIptcKeywords(d->oldKeywords, QStringList());
 
     iptcData = exiv2Iface.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin
-
