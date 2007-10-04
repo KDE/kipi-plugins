@@ -285,14 +285,14 @@ void Plugin_MetadataEdit::slotImportExif()
 
 void Plugin_MetadataEdit::slotEditIptc()
 {
-/*    KIPI::ImageCollection images = m_interface->currentSelection();
+    KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
     KIPIMetadataEditPlugin::IPTCEditDialog dialog(kapp->activeWindow(), images.images(), m_interface);
     dialog.exec();
-    m_interface->refreshImages(images.images());*/
+    m_interface->refreshImages(images.images());
 }
 
 void Plugin_MetadataEdit::slotRemoveIptc()

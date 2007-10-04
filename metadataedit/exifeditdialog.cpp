@@ -151,7 +151,7 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
 
     d->datetimePage  = new EXIFDateTime(this);
     d->page_datetime = addPage(d->datetimePage, i18n("Date & Time"));
-    d->page_datetime->setHeader(i18n("Date and Time"));
+    d->page_datetime->setHeader(i18n("Date and Time Information"));
     d->page_datetime->setIcon(KIcon("calendar-today"));
 
     d->lensPage      = new EXIFLens(this);

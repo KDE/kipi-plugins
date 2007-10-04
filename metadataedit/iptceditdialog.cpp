@@ -22,10 +22,11 @@
 
 // Qt includes.
 
-#include <qtimer.h>
-#include <qframe.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
+#include <QTimer>
+#include <QFrame>
+#include <QLayout>
+#include <QCloseEvent>
+#include <QKeyEvent>
 
 // KDE includes.
 
@@ -35,8 +36,11 @@
 #include <kiconloader.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
+#include <kpushbutton.h>
+#include <kmenu.h>
 #include <khelpmenu.h>
-#include <kpopupmenu.h>
+#include <ktoolinvocation.h>
+#include <kguiitem.h>
 
 // LibKIPI includes.
 
@@ -72,25 +76,27 @@ public:
 
     IPTCEditDialogDialogPrivate()
     {
-        modified      = false;
-        isReadOnly    = false;
-        page_caption  = 0;
-        page_datetime = 0;
-        page_subjects = 0;
-        page_keywords = 0;
-        page_credits  = 0;
-        page_status   = 0;
-        page_origin   = 0;
+        modified        = false;
+        isReadOnly      = false;
+        page_caption    = 0;
+        page_datetime   = 0;
+        page_subjects   = 0;
+        page_keywords   = 0;
+        page_categories = 0;
+        page_credits    = 0;
+        page_status     = 0;
+        page_origin     = 0;
 
-        about         = 0;
+        about           = 0;
 
-        captionPage   = 0;
-        datetimePage  = 0;
-        subjectsPage  = 0;
-        keywordsPage  = 0;
-        creditsPage   = 0;
-        statusPage    = 0;
-        originPage    = 0;
+        captionPage     = 0;
+        datetimePage    = 0;
+        subjectsPage    = 0;
+        keywordsPage    = 0;
+        categoriesPage  = 0;
+        creditsPage     = 0;
+        statusPage      = 0;
+        originPage      = 0;
     }
 
     bool                      modified;
@@ -99,18 +105,18 @@ public:
     QByteArray                exifData;
     QByteArray                iptcData;
 
-    QFrame                   *page_caption;
-    QFrame                   *page_datetime;
-    QFrame                   *page_subjects;
-    QFrame                   *page_keywords;
-    QFrame                   *page_categories;
-    QFrame                   *page_credits;
-    QFrame                   *page_status;
-    QFrame                   *page_origin;
+    KPageWidgetItem          *page_caption;
+    KPageWidgetItem          *page_datetime;
+    KPageWidgetItem          *page_subjects;
+    KPageWidgetItem          *page_keywords;
+    KPageWidgetItem          *page_categories;
+    KPageWidgetItem          *page_credits;
+    KPageWidgetItem          *page_status;
+    KPageWidgetItem          *page_origin;
 
-    KURL::List                urls;
+    KUrl::List                urls;
 
-    KURL::List::iterator      currItem;
+    KUrl::List::iterator      currItem;
 
     IPTCCaption              *captionPage;
     IPTCDateTime             *datetimePage;
@@ -126,70 +132,89 @@ public:
     KIPIPlugins::KPAboutData *about;
 };
 
-IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface *iface)
-              : KDialogBase(IconList, QString::null, 
-                            urls.count() > 1 ? Help|User1|User2|Stretch|Ok|Apply|Close 
-                                             : Help|Stretch|Ok|Apply|Close, 
-                            Ok, parent, 0, true, true,
-                            KStdGuiItem::guiItem(KStdGuiItem::Forward),
-                            KStdGuiItem::guiItem(KStdGuiItem::Back) )
+IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *iface)
+              : KPageDialog(parent)
 {
     d = new IPTCEditDialogDialogPrivate;
     d->urls      = urls;
     d->interface = iface;
     d->currItem  = d->urls.begin();
 
+    setButtons(d->urls.count() > 1 ? Help|User1|User2|Ok|Apply|Close 
+                                   : Help|Ok|Apply|Close);
+    setDefaultButton(Ok);
+    setButtonIcon(User1, KIcon("go-next"));
+    setButtonIcon(User2, KIcon("go-previous"));
+    setButtonText(User1, i18n("Next"));
+    setButtonText(User2, i18n("Previous"));
+    setFaceType(List);
+    setModal(true);
+
     // ---------------------------------------------------------------
 
-    d->page_caption    = addPage(i18n("Caption"), i18n("Caption Information"),
-                                 BarIcon("editclear", KIcon::SizeMedium));
-    d->captionPage     = new IPTCCaption(d->page_caption);
+    d->captionPage   = new IPTCCaption(this);
+    d->page_caption  = addPage(d->captionPage, i18n("Caption"));
+    d->page_caption->setHeader(i18n("Caption Information"));
+    d->page_caption->setIcon(KIcon("edit-clear"));
 
-    d->page_datetime   = addPage(i18n("Date & Time"), i18n("Date and Time Information"),
-                                 BarIcon("today", KIcon::SizeMedium));
-    d->datetimePage    = new IPTCDateTime(d->page_datetime);
+    d->datetimePage  = new IPTCDateTime(this);
+    d->page_datetime = addPage(d->datetimePage, i18n("Date & Time"));
+    d->page_datetime->setHeader(i18n("Date and Time Information"));
+    d->page_datetime->setIcon(KIcon("calendar-today"));
 
-    d->page_subjects   = addPage(i18n("Subjects"), i18n("Subjects Information"),
-                                 BarIcon("cookie", KIcon::SizeMedium));
-    d->subjectsPage    = new IPTCSubjects(d->page_subjects);
+    d->subjectsPage  = new IPTCSubjects(this);
+    d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
+    d->page_subjects->setHeader(i18n("Subjects Information"));
+    d->page_subjects->setIcon(KIcon("cookie"));
 
-    d->page_keywords   = addPage(i18n("Keywords"), i18n("Keywords Information"),
-                                 BarIcon("bookmark", KIcon::SizeMedium));
-    d->keywordsPage    = new IPTCKeywords(d->page_keywords);
+    d->keywordsPage  = new IPTCKeywords(this);
+    d->page_keywords = addPage(d->keywordsPage, i18n("Keywords"));
+    d->page_keywords->setHeader(i18n("Keywords Information"));
+    d->page_keywords->setIcon(KIcon("bookmark"));
 
-    d->page_categories = addPage(i18n("Categories"), i18n("Categories Information"),
-                                 BarIcon("bookmark_folder", KIcon::SizeMedium));
-    d->categoriesPage  = new IPTCCategories(d->page_categories);
+    d->categoriesPage  = new IPTCCategories(this);
+    d->page_categories = addPage(d->categoriesPage, i18n("Categories"));
+    d->page_categories->setHeader(i18n("Categories Information"));
+    d->page_categories->setIcon(KIcon("bookmark_folder"));
 
-    d->page_credits    = addPage(i18n("Credits"), i18n("Credits Information"),
-                                 BarIcon("identity", KIcon::SizeMedium));
-    d->creditsPage     = new IPTCCredits(d->page_credits);
+    d->creditsPage  = new IPTCCredits(this);
+    d->page_credits = addPage(d->creditsPage, i18n("Credits"));
+    d->page_credits->setHeader(i18n("Credits Information"));
+    d->page_credits->setIcon(KIcon("identity"));
+
+    d->statusPage  = new IPTCStatus(this);
+    d->page_status = addPage(d->statusPage, i18n("Status"));
+    d->page_status->setHeader(i18n("Status Information"));
+    d->page_status->setIcon(KIcon("messagebox_info"));
   
-    d->page_status     = addPage(i18n("Status"), i18n("Status Information"),
-                                 BarIcon("messagebox_info", KIcon::SizeMedium));
-    d->statusPage      = new IPTCStatus(d->page_status);
-
-    d->page_origin     = addPage(i18n("Origin"), i18n("Origin Information"),
-                                 BarIcon("www", KIcon::SizeMedium));
-    d->originPage      = new IPTCOrigin(d->page_origin);
+    d->originPage  = new IPTCOrigin(this);
+    d->page_origin = addPage(d->originPage, i18n("Origin"));
+    d->page_origin->setHeader(i18n("Origin Information"));
+    d->page_origin->setIcon(KIcon("www"));
 
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("Edit Metadata"),
+    d->about = new KIPIPlugins::KPAboutData(ki18n("Edit Metadata"),
                                             NULL,
                                             KAboutData::License_GPL,
-                                            I18N_NOOP("A Plugin to edit image metadata"),
-                                            "(c) 2006-2007, Gilles Caulier");
+                                            ki18n("A Plugin to edit pictures metadata"),
+                                            ki18n("(c) 2006-2007, Gilles Caulier"));
 
-    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
+    d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("Edit Metadata Handbook"),
-                                 this, SLOT(slotHelp()), 0, -1, 0);
-    actionButton(Help)->setPopup( helpMenu->menu() );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KPushButton *helpButton = button( Help );
+    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    helpButton->setDelayedMenu( helpMenu->menu() );
 
     // ------------------------------------------------------------
 
@@ -217,6 +242,21 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface
     connect(d->originPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotUser1()));
+
+    connect(this, SIGNAL(user2Clicked()),
+            this, SLOT(slotUser2()));
+
+    connect(this, SIGNAL(applyClicked()),
+            this, SLOT(slotApply()));
+
+    connect(this, SIGNAL(closeClicked()),
+            this, SLOT(slotClose()));
+
+    connect(this, SIGNAL(okClicked()),
+            this, SLOT(slotOk()));
+
     // ------------------------------------------------------------
 
     readSettings();
@@ -231,7 +271,7 @@ IPTCEditDialog::~IPTCEditDialog()
 
 void IPTCEditDialog::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("metadataedit", "kipi-plugins");
+    KToolInvocation::invokeHelp("metadataedit", "kipi-plugins");
 }
 
 void IPTCEditDialog::closeEvent(QCloseEvent *e)
@@ -244,33 +284,35 @@ void IPTCEditDialog::closeEvent(QCloseEvent *e)
 void IPTCEditDialog::slotClose()
 {
     saveSettings();
-    KDialogBase::slotClose();
+    close();
 }
 
 void IPTCEditDialog::readSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("Metadata Edit Settings");
-    showPage(config.readNumEntry("IPTC Edit Page", 0));
-    d->captionPage->setCheckedSyncJFIFComment(config.readBoolEntry("Sync JFIF Comment", true));
-    d->captionPage->setCheckedSyncHOSTComment(config.readBoolEntry("Sync Host Comment", true));
-    d->captionPage->setCheckedSyncEXIFComment(config.readBoolEntry("Sync EXIF Comment", true));
-    d->datetimePage->setCheckedSyncHOSTDate(config.readBoolEntry("Sync Host Date", true));
-    d->datetimePage->setCheckedSyncEXIFDate(config.readBoolEntry("Sync EXIF Date", true));
-    resize(configDialogSize(config, QString("IPTC Edit Dialog")));
+    KConfigGroup group = config.group("Metadata Edit Settings");
+    showPage(group.readEntry("IPTC Edit Page", 0));
+    d->captionPage->setCheckedSyncJFIFComment(group.readEntry("Sync JFIF Comment", true));
+    d->captionPage->setCheckedSyncHOSTComment(group.readEntry("Sync Host Comment", true));
+    d->captionPage->setCheckedSyncEXIFComment(group.readEntry("Sync EXIF Comment", true));
+    d->datetimePage->setCheckedSyncHOSTDate(group.readEntry("Sync Host Date", true));
+    d->datetimePage->setCheckedSyncEXIFDate(group.readEntry("Sync EXIF Date", true));
+    KConfigGroup group2 = config.group(QString("IPTC Edit Dialog"));
+    restoreDialogSize(group2);
 }
 
 void IPTCEditDialog::saveSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("Metadata Edit Settings");
-    config.writeEntry("IPTC Edit Page", activePageIndex());
-    config.writeEntry("Sync JFIF Comment", d->captionPage->syncJFIFCommentIsChecked());
-    config.writeEntry("Sync Host Comment", d->captionPage->syncHOSTCommentIsChecked());
-    config.writeEntry("Sync EXIF Comment", d->captionPage->syncEXIFCommentIsChecked());
-    config.writeEntry("Sync Host Date", d->datetimePage->syncHOSTDateIsChecked());
-    config.writeEntry("Sync EXIF Date", d->datetimePage->syncEXIFDateIsChecked());
-    saveDialogSize(config, QString("IPTC Edit Dialog"));
+    KConfigGroup group = config.group("Metadata Edit Settings");
+    group.writeEntry("IPTC Edit Page", activePageIndex());
+    group.writeEntry("Sync JFIF Comment", d->captionPage->syncJFIFCommentIsChecked());
+    group.writeEntry("Sync Host Comment", d->captionPage->syncHOSTCommentIsChecked());
+    group.writeEntry("Sync EXIF Comment", d->captionPage->syncEXIFCommentIsChecked());
+    group.writeEntry("Sync Host Date", d->datetimePage->syncHOSTDateIsChecked());
+    group.writeEntry("Sync EXIF Date", d->datetimePage->syncEXIFDateIsChecked());
+    KConfigGroup group2 = config.group(QString("IPTC Edit Dialog"));
+    saveDialogSize(group2);
     config.sync();
 }
 
@@ -301,8 +343,8 @@ void IPTCEditDialog::slotItemChanged()
     enableButton(Apply, !d->isReadOnly);
     
     setCaption(QString("%1 (%2/%3) - %4")
-               .arg((*d->currItem).filename())
-               .arg(d->urls.findIndex(*(d->currItem))+1)
+               .arg((*d->currItem).fileName())
+               .arg(d->urls.indexOf(*(d->currItem))+1)
                .arg(d->urls.count())
                .arg(i18n("Edit IPTC Metadata")) + 
                (d->isReadOnly ? QString(" - ") + i18n("(read only)") : QString::null));
@@ -380,22 +422,22 @@ bool IPTCEditDialog::eventFilter(QObject *, QEvent *e)
     {
         QKeyEvent *k = (QKeyEvent *)e;
 
-        if (k->state() == Qt::ControlButton &&
+        if (k->modifiers() == Qt::ControlModifier &&
             (k->key() == Qt::Key_Enter || k->key() == Qt::Key_Return))
         {
             slotApply();
 
-            if (actionButton(User1)->isEnabled())
+            if (isButtonEnabled(User1))
                 slotUser1();
 
             return true;
         }
-        else if (k->state() == Qt::ShiftButton &&
+        else if (k->modifiers() == Qt::ShiftModifier &&
                  (k->key() == Qt::Key_Enter || k->key() == Qt::Key_Return))
         {
             slotApply();
 
-            if (actionButton(User2)->isEnabled())
+            if (isButtonEnabled(User2))
                 slotUser2();
 
             return true;
@@ -405,6 +447,56 @@ bool IPTCEditDialog::eventFilter(QObject *, QEvent *e)
     }
 
     return false;
+}
+
+void IPTCEditDialog::showPage(int page)
+{
+    switch(page)
+    {
+        case 0:
+            setCurrentPage(d->page_caption); 
+            break;
+        case 1:
+            setCurrentPage(d->page_datetime); 
+            break;
+        case 2:
+            setCurrentPage(d->page_subjects); 
+            break;
+        case 3:
+            setCurrentPage(d->page_keywords); 
+            break;
+        case 4:
+            setCurrentPage(d->page_categories); 
+            break;
+        case 5:
+            setCurrentPage(d->page_credits); 
+            break;
+        case 6:
+            setCurrentPage(d->page_status); 
+            break;
+        case 7:
+            setCurrentPage(d->page_origin); 
+            break;
+        default: 
+            setCurrentPage(d->page_caption); 
+            break;
+    }
+}
+
+int IPTCEditDialog::activePageIndex()
+{
+    KPageWidgetItem *cur = currentPage();
+
+    if (cur == d->page_caption)    return 0;
+    if (cur == d->page_datetime)   return 1;
+    if (cur == d->page_subjects)   return 2;
+    if (cur == d->page_keywords)   return 3;
+    if (cur == d->page_categories) return 4;
+    if (cur == d->page_credits)    return 5;
+    if (cur == d->page_status)     return 6;
+    if (cur == d->page_origin)     return 7;
+
+    return 0;
 }
 
 }  // namespace KIPIMetadataEditPlugin
