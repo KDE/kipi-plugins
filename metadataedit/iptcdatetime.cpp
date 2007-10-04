@@ -22,20 +22,20 @@
 
 // QT includes.
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qdatetime.h>
-#include <qwhatsthis.h>
-#include <qvalidator.h>
-#include <qcheckbox.h>
+#include <QDateTime>
+#include <QLayout>
+#include <QLabel>
+#include <QValidator>
+#include <QCheckBox>
+#include <QTimeEdit>
 
 // KDE includes.
 
 #include <klocale.h>
 #include <kdialog.h>
 #include <kdatewidget.h>
-#include <ktimewidget.h>
-#include <kapplication.h>
+#include <kcomponentdata.h>
+#include <kglobal.h>
 #include <kaboutdata.h>
 #include <kseparator.h>
 
@@ -89,15 +89,15 @@ public:
     QCheckBox   *syncHOSTDateCheck;
     QCheckBox   *syncEXIFDateCheck;
 
+    QTimeEdit   *timeCreatedSel;
+    QTimeEdit   *timeReleasedSel;
+    QTimeEdit   *timeExpiredSel;
+    QTimeEdit   *timeDigitalizedSel;
+
     KDateWidget *dateCreatedSel;
     KDateWidget *dateReleasedSel;
     KDateWidget *dateExpiredSel;
     KDateWidget *dateDigitalizedSel;
-
-    KTimeWidget *timeCreatedSel;
-    KTimeWidget *timeReleasedSel;
-    KTimeWidget *timeExpiredSel;
-    KTimeWidget *timeDigitalizedSel;
 };
 
 IPTCDateTime::IPTCDateTime(QWidget* parent)
@@ -105,86 +105,90 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
 {
     d = new IPTCDateTimePriv;
 
-    QGridLayout* grid = new QGridLayout(parent, 11, 2, KDialog::spacingHint());
+    QGridLayout* grid = new QGridLayout(this);
 
     // --------------------------------------------------------
 
-    d->dateCreatedCheck  = new QCheckBox(i18n("Creation date"), parent);
-    d->timeCreatedCheck  = new QCheckBox(i18n("Creation time"), parent);
-    d->dateCreatedSel    = new KDateWidget(parent);
-    d->timeCreatedSel    = new KTimeWidget(parent);
-    d->syncHOSTDateCheck = new QCheckBox(i18n("Sync creation date hosted by %1")
-                                              .arg(KApplication::kApplication()->aboutData()->appName()), 
-                                              parent);
-    d->syncEXIFDateCheck = new QCheckBox(i18n("Sync EXIF creation date"), parent);
-    KSeparator *line     = new KSeparator(Horizontal, parent);
+    d->dateCreatedCheck  = new QCheckBox(i18n("Creation date"), this);
+    d->timeCreatedCheck  = new QCheckBox(i18n("Creation time"), this);
+    d->dateCreatedSel    = new KDateWidget(this);
+    d->timeCreatedSel    = new QTimeEdit(this);
+    d->syncHOSTDateCheck = new QCheckBox(i18n("Sync creation date hosted by %1",
+                                              KGlobal::mainComponent().aboutData()->programName()), 
+                                              this);
+    d->syncEXIFDateCheck = new QCheckBox(i18n("Sync EXIF creation date"), this);
+    KSeparator *line     = new KSeparator(Qt::Horizontal, this);
     d->dateCreatedSel->setDate(QDate::currentDate());
     d->timeCreatedSel->setTime(QTime::currentTime());
-    grid->addMultiCellWidget(d->dateCreatedCheck, 0, 0, 0, 0);
-    grid->addMultiCellWidget(d->timeCreatedCheck, 0, 0, 1, 2);
-    grid->addMultiCellWidget(d->dateCreatedSel, 1, 1, 0, 0);
-    grid->addMultiCellWidget(d->timeCreatedSel, 1, 1, 1, 1);
-    grid->addMultiCellWidget(d->syncHOSTDateCheck, 2, 2, 0, 2);
-    grid->addMultiCellWidget(d->syncEXIFDateCheck, 3, 3, 0, 2);
-    grid->addMultiCellWidget(line, 4, 4, 0, 2);
-    QWhatsThis::add(d->dateCreatedSel, i18n("<p>Set here the creation date of "
-                    "intellectual content."));
-    QWhatsThis::add(d->timeCreatedSel, i18n("<p>Set here the creation time of "
-                    "intellectual content."));
+    d->dateCreatedSel->setWhatsThis(i18n("<p>Set here the creation date of "
+                                         "intellectual content."));
+    d->timeCreatedSel->setWhatsThis(i18n("<p>Set here the creation time of "
+                                         "intellectual content."));
 
     // --------------------------------------------------------
 
-    d->dateReleasedCheck = new QCheckBox(i18n("Release date"), parent);
-    d->timeReleasedCheck = new QCheckBox(i18n("Release time"), parent);
-    d->dateReleasedSel   = new KDateWidget(parent);
-    d->timeReleasedSel   = new KTimeWidget(parent);
+    d->dateReleasedCheck = new QCheckBox(i18n("Release date"), this);
+    d->timeReleasedCheck = new QCheckBox(i18n("Release time"), this);
+    d->dateReleasedSel   = new KDateWidget(this);
+    d->timeReleasedSel   = new QTimeEdit(this);
     d->dateReleasedSel->setDate(QDate::currentDate());
     d->timeReleasedSel->setTime(QTime::currentTime());
-    grid->addMultiCellWidget(d->dateReleasedCheck, 5, 5, 0, 0);
-    grid->addMultiCellWidget(d->timeReleasedCheck, 5, 5, 1, 2);
-    grid->addMultiCellWidget(d->dateReleasedSel, 6, 6, 0, 0);
-    grid->addMultiCellWidget(d->timeReleasedSel, 6, 6, 1, 1);
-    QWhatsThis::add(d->dateReleasedSel, i18n("<p>Set here the earliest intended usable date of "
-                    "intellectual content."));
-    QWhatsThis::add(d->timeReleasedSel, i18n("<p>Set here the earliest intended usable time of "
-                    "intellectual content."));
+    d->dateReleasedSel->setWhatsThis(i18n("<p>Set here the earliest intended usable date of "
+                                          "intellectual content."));
+    d->timeReleasedSel->setWhatsThis(i18n("<p>Set here the earliest intended usable time of "
+                                          "intellectual content."));
 
     // --------------------------------------------------------
 
-    d->dateExpiredCheck = new QCheckBox(i18n("Expiration date"), parent);
-    d->timeExpiredCheck = new QCheckBox(i18n("Expiration time"), parent);
-    d->dateExpiredSel   = new KDateWidget(parent);
-    d->timeExpiredSel   = new KTimeWidget(parent);
+    d->dateExpiredCheck = new QCheckBox(i18n("Expiration date"), this);
+    d->timeExpiredCheck = new QCheckBox(i18n("Expiration time"), this);
+    d->dateExpiredSel   = new KDateWidget(this);
+    d->timeExpiredSel   = new QTimeEdit(this);
     d->dateExpiredSel->setDate(QDate::currentDate());
     d->timeExpiredSel->setTime(QTime::currentTime());
-    grid->addMultiCellWidget(d->dateExpiredCheck, 7, 7, 0, 0);
-    grid->addMultiCellWidget(d->timeExpiredCheck, 7, 7, 1, 2);
-    grid->addMultiCellWidget(d->dateExpiredSel, 8, 8, 0, 0);
-    grid->addMultiCellWidget(d->timeExpiredSel, 8, 8, 1, 1);
-    QWhatsThis::add(d->dateExpiredSel, i18n("<p>Set here the latest intended usable date of "
-                    "intellectual content."));
-    QWhatsThis::add(d->timeExpiredSel, i18n("<p>Set here the latest intended usable time of "
-                    "intellectual content."));
+    d->dateExpiredSel->setWhatsThis(i18n("<p>Set here the latest intended usable date of "
+                                         "intellectual content."));
+    d->timeExpiredSel->setWhatsThis(i18n("<p>Set here the latest intended usable time of "
+                                         "intellectual content."));
 
     // --------------------------------------------------------
 
-    d->dateDigitalizedCheck = new QCheckBox(i18n("Digitization date"), parent);
-    d->timeDigitalizedCheck = new QCheckBox(i18n("Digitization time"), parent);
-    d->dateDigitalizedSel   = new KDateWidget(parent);
-    d->timeDigitalizedSel   = new KTimeWidget(parent);
+    d->dateDigitalizedCheck = new QCheckBox(i18n("Digitization date"), this);
+    d->timeDigitalizedCheck = new QCheckBox(i18n("Digitization time"), this);
+    d->dateDigitalizedSel   = new KDateWidget(this);
+    d->timeDigitalizedSel   = new QTimeEdit(this);
     d->dateDigitalizedSel->setDate(QDate::currentDate());
     d->timeDigitalizedSel->setTime(QTime::currentTime());
-    grid->addMultiCellWidget(d->dateDigitalizedCheck, 9, 9, 0, 0);
-    grid->addMultiCellWidget(d->timeDigitalizedCheck, 9, 9, 1, 2);
-    grid->addMultiCellWidget(d->dateDigitalizedSel, 10, 10, 0, 0);
-    grid->addMultiCellWidget(d->timeDigitalizedSel, 10, 10, 1, 1);
-    QWhatsThis::add(d->dateDigitalizedSel, i18n("<p>Set here the creation date of "
-                    "digital representation."));
-    QWhatsThis::add(d->timeDigitalizedSel, i18n("<p>Set here the creation time of "
-                    "digital representation."));
+    d->dateDigitalizedSel->setWhatsThis(i18n("<p>Set here the creation date of "
+                                             "digital representation."));
+    d->timeDigitalizedSel->setWhatsThis(i18n("<p>Set here the creation time of "
+                                             "digital representation."));
 
-    grid->setColStretch(2, 10);                     
+    // --------------------------------------------------------
+
+    grid->addWidget(d->dateCreatedCheck, 0, 0, 1, 1);
+    grid->addWidget(d->timeCreatedCheck, 0, 1, 1, 2);
+    grid->addWidget(d->dateCreatedSel, 1, 0, 1, 1);
+    grid->addWidget(d->timeCreatedSel, 1, 1, 1, 1);
+    grid->addWidget(d->syncHOSTDateCheck, 2, 0, 1, 3 );
+    grid->addWidget(d->syncEXIFDateCheck, 3, 0, 1, 3 );
+    grid->addWidget(line, 4, 0, 1, 3 ); 
+    grid->addWidget(d->dateReleasedCheck, 5, 0, 1, 1);
+    grid->addWidget(d->timeReleasedCheck, 5, 1, 1, 2);
+    grid->addWidget(d->dateReleasedSel, 6, 0, 1, 1);
+    grid->addWidget(d->timeReleasedSel, 6, 1, 1, 1);
+    grid->addWidget(d->dateExpiredCheck, 7, 0, 1, 1);
+    grid->addWidget(d->timeExpiredCheck, 7, 1, 1, 2);
+    grid->addWidget(d->dateExpiredSel, 8, 0, 1, 1);
+    grid->addWidget(d->timeExpiredSel, 8, 1, 1, 1);
+    grid->addWidget(d->dateDigitalizedCheck, 9, 0, 1, 1);
+    grid->addWidget(d->timeDigitalizedCheck, 9, 1, 1, 2);
+    grid->addWidget(d->dateDigitalizedSel, 10, 0, 1, 1);
+    grid->addWidget(d->timeDigitalizedSel, 10, 1, 1, 1);
+    grid->setColumnStretch(2, 10);                     
     grid->setRowStretch(11, 10);                     
+    grid->setMargin(0);
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -246,28 +250,28 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->dateCreatedSel, SIGNAL(changed(QDate)),
+    connect(d->dateCreatedSel, SIGNAL(changed(const QDate&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->dateReleasedSel, SIGNAL(changed(QDate)),
+    connect(d->dateReleasedSel, SIGNAL(changed(const QDate&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->dateExpiredSel, SIGNAL(changed(QDate)),
+    connect(d->dateExpiredSel, SIGNAL(changed(const QDate&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->dateDigitalizedSel, SIGNAL(changed(QDate)),
+    connect(d->dateDigitalizedSel, SIGNAL(changed(const QDate&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeCreatedSel, SIGNAL(valueChanged(const QTime &)),
+    connect(d->timeCreatedSel, SIGNAL(timeChanged(const QTime &)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeReleasedSel, SIGNAL(valueChanged(const QTime &)),
+    connect(d->timeReleasedSel, SIGNAL(timeChanged(const QTime &)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeExpiredSel, SIGNAL(valueChanged(const QTime &)),
+    connect(d->timeExpiredSel, SIGNAL(timeChanged(const QTime &)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeDigitalizedSel, SIGNAL(valueChanged(const QTime &)),
+    connect(d->timeDigitalizedSel, SIGNAL(timeChanged(const QTime &)),
             this, SIGNAL(signalModified()));
 }
 
@@ -445,7 +449,7 @@ void IPTCDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
         if (syncEXIFDateIsChecked())
         {
             exiv2Iface.setExifTagString("Exif.Image.DateTime",
-                    getIPTCCreationDate().toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
+                    getIPTCCreationDate().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
         }
     }
     else
@@ -498,4 +502,3 @@ void IPTCDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 }
 
 }  // namespace KIPIMetadataEditPlugin
-
