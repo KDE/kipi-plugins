@@ -25,14 +25,14 @@
 
 // KDE includes.
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 namespace KIPIMetadataEditPlugin
 {
 
 class CommentRemoveDialogDialogPrivate;
 
-class CommentRemoveDialog : public KDialogBase
+class CommentRemoveDialog : public KDialog
 {
     Q_OBJECT
 

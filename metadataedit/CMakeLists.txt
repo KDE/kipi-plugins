@@ -6,17 +6,17 @@ SET(kipiplugin_metadataedit_PART_SRCS metadatacheckbox.cpp
                                       exifdevice.cpp
                                       exiflight.cpp
                                       exifeditdialog.cpp
-                                      iptccaption.cpp
-                                      iptcsubjects.cpp
-                                      iptccredits.cpp
-                                      iptcstatus.cpp
-                                      iptcorigin.cpp
-                                      iptcdatetime.cpp
-                                      iptckeywords.cpp
-                                      iptccategories.cpp
-                                      iptceditdialog.cpp 
-                                      commenteditdialog.cpp
-                                      commentremovedialog.cpp
+#                                       iptccaption.cpp
+#                                       iptcsubjects.cpp
+#                                       iptccredits.cpp
+#                                       iptcstatus.cpp
+#                                       iptcorigin.cpp
+#                                       iptcdatetime.cpp
+#                                       iptckeywords.cpp
+#                                       iptccategories.cpp
+#                                       iptceditdialog.cpp 
+#                                       commenteditdialog.cpp
+#                                       commentremovedialog.cpp
                                       plugin_metadataedit.cpp 
    )
 
@@ -28,7 +28,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_metadataedit
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       ${QT_QT3SUPPORT_LIBRARY}
-		      kipiplugins
+                      kipiplugins
                      )
 
 KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})

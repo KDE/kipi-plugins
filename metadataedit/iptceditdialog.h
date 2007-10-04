@@ -25,25 +25,29 @@
 
 // Qt includes.
 
-#include <qcstring.h>
+#include <QByteArray>
 
 // KDE includes.
 
-#include <kdialogbase.h>
-#include <kurl.h>
+#include <kpagedialog.h>
+#include <KUrl.h>
+
+class QCloseEvent;
+class QEvent;
+class QObject;
 
 namespace KIPIMetadataEditPlugin
 {
 
 class IPTCEditDialogDialogPrivate;
 
-class IPTCEditDialog : public KDialogBase
+class IPTCEditDialog : public KPageDialog
 {
     Q_OBJECT
 
 public:
 
-    IPTCEditDialog(QWidget* parent, KURL::List urls, KIPI::Interface *iface);
+    IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *iface);
     ~IPTCEditDialog();
 
 public slots:
@@ -72,6 +76,9 @@ private:
 
     void readSettings();
     void saveSettings();
+
+    int  activePageIndex();
+    void showPage(int page);
 
 private:
 

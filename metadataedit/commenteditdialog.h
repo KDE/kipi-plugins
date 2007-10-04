@@ -25,18 +25,18 @@
 
 // Qt includes.
 
-#include <qstring.h>
+#include <QByteArray>
 
 // KDE includes.
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 namespace KIPIMetadataEditPlugin
 {
 
 class CommentEditDialogDialogPrivate;
 
-class CommentEditDialog : public KDialogBase
+class CommentEditDialog : public KDialog
 {
     Q_OBJECT
 
