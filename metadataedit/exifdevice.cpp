@@ -121,7 +121,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 {
     d = new EXIFDevicePriv;
 
-    QGridLayout* grid = new QGridLayout(parent);
+    QGridLayout* grid = new QGridLayout(this);
 
     // EXIF only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -129,24 +129,24 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->makeCheck = new QCheckBox(i18n("Device manufacturer (*):"), parent);
-    d->makeEdit  = new KLineEdit(parent);
+    d->makeCheck = new QCheckBox(i18n("Device manufacturer (*):"), this);
+    d->makeEdit  = new KLineEdit(this);
     d->makeEdit->setValidator(asciiValidator);
     d->makeEdit->setWhatsThis(i18n("<p>Set here the manufacturer of image input equipment used to "
                                    "take the picture. This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->modelCheck = new QCheckBox(i18n("Device model (*):"), parent);
-    d->modelEdit  = new KLineEdit(parent);
+    d->modelCheck = new QCheckBox(i18n("Device model (*):"), this);
+    d->modelEdit  = new KLineEdit(this);
     d->modelEdit->setValidator(asciiValidator);
     d->modelEdit->setWhatsThis(i18n("<p>Set here the model of image input equipment used to "
                                     "take the picture. This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->deviceTypeCheck = new MetadataCheckBox(i18n("Device type:"), parent);
-    d->deviceTypeCB    = new QComboBox(parent);
+    d->deviceTypeCheck = new MetadataCheckBox(i18n("Device type:"), this);
+    d->deviceTypeCB    = new QComboBox(this);
     d->deviceTypeCB->insertItem(0, i18n("Film scanner"));
     d->deviceTypeCB->insertItem(1, i18n("Reflection print scanner"));
     d->deviceTypeCB->insertItem(2, i18n("Digital still camera"));
@@ -156,26 +156,26 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     QLabel *warning = new QLabel(i18n("<b>Warning: EXIF <b><a href="
                  "'http://en.wikipedia.org/wiki/Exchangeable_image_file_format#MakerNote_Information'>"
                  "Makernotes</a></b> can be unreadable if you set "
-                 "wrong device manufacturer/model description.</b>"), parent);
+                 "wrong device manufacturer/model description.</b>"), this);
     warning->setOpenExternalLinks(true);
     warning->setWordWrap(true);
 
-    KSeparator *line = new KSeparator(Qt::Horizontal, parent);
+    KSeparator *line = new KSeparator(Qt::Horizontal, this);
 
     // --------------------------------------------------------
 
-    d->exposureTimeCheck   = new QCheckBox(i18n("Exposure time (seconds):"), parent);
-    d->exposureTimeNumEdit = new KIntSpinBox(1, 100000, 1, 1, parent);
-    d->exposureTimeDenEdit = new KIntSpinBox(1, 100000, 1, 1, parent);
-    QLabel *exposureLabel  = new QLabel("/", parent);
+    d->exposureTimeCheck   = new QCheckBox(i18n("Exposure time (seconds):"), this);
+    d->exposureTimeNumEdit = new KIntSpinBox(1, 100000, 1, 1, this);
+    d->exposureTimeDenEdit = new KIntSpinBox(1, 100000, 1, 1, this);
+    QLabel *exposureLabel  = new QLabel("/", this);
     exposureLabel->setAlignment (Qt::AlignRight|Qt::AlignVCenter);
     d->exposureTimeCheck->setWhatsThis(i18n("<p>Set on this option to set the exposure time "
                                             "of picture, given in seconds."));
 
     // --------------------------------------------------------
 
-    d->exposureProgramCheck = new MetadataCheckBox(i18n("Exposure program:"), parent);
-    d->exposureProgramCB    = new QComboBox(parent);
+    d->exposureProgramCheck = new MetadataCheckBox(i18n("Exposure program:"), this);
+    d->exposureProgramCB    = new QComboBox(this);
     d->exposureProgramCB->insertItem(0, i18n("Not defined"));
     d->exposureProgramCB->insertItem(1, i18n("Manual"));
     d->exposureProgramCB->insertItem(2, i18n("Auto"));
@@ -190,8 +190,8 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->exposureModeCheck = new MetadataCheckBox(i18n("Exposure mode:"), parent);
-    d->exposureModeCB    = new QComboBox(parent);
+    d->exposureModeCheck = new MetadataCheckBox(i18n("Exposure mode:"), this);
+    d->exposureModeCB    = new QComboBox(this);
     d->exposureModeCB->insertItem(0, i18n("Auto"));
     d->exposureModeCB->insertItem(1, i18n("Manual"));
     d->exposureModeCB->insertItem(2, i18n("Auto bracket"));
@@ -203,17 +203,17 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->exposureBiasCheck = new QCheckBox(i18n("Exposure bias (APEX):"), parent);
-    d->exposureBiasEdit  = new KDoubleSpinBox(-99.99, 99.99, 0.1, 0.0, parent);
+    d->exposureBiasCheck = new QCheckBox(i18n("Exposure bias (APEX):"), this);
+    d->exposureBiasEdit  = new KDoubleSpinBox(-99.99, 99.99, 0.1, 0.0, this);
     d->exposureBiasEdit->setWhatsThis(i18n("<p>Set here the exposure bias value in APEX unit "
                                            "used by camera to take the picture."));
 
-    KSeparator *line2 = new KSeparator(Qt::Horizontal, parent);
+    KSeparator *line2 = new KSeparator(Qt::Horizontal, this);
 
     // --------------------------------------------------------
 
-    d->meteringModeCheck = new MetadataCheckBox(i18n("Metering mode:"), parent);
-    d->meteringModeCB    = new QComboBox(parent);
+    d->meteringModeCheck = new MetadataCheckBox(i18n("Metering mode:"), this);
+    d->meteringModeCB    = new QComboBox(this);
     d->meteringModeCB->insertItem(0, i18n("Unknown"));
     d->meteringModeCB->insertItem(1, i18n("Average"));
     d->meteringModeCB->insertItem(2, i18n("Center weighted average"));
@@ -227,8 +227,8 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->ISOSpeedCheck = new MetadataCheckBox(i18n("Sensitivity (ISO):"), parent);
-    d->ISOSpeedCB    = new QComboBox(parent);
+    d->ISOSpeedCheck = new MetadataCheckBox(i18n("Sensitivity (ISO):"), this);
+    d->ISOSpeedCB    = new QComboBox(this);
     d->ISOSpeedCB->insertItem(1, "10");
     d->ISOSpeedCB->insertItem(2, "12");
     d->ISOSpeedCB->insertItem(3, "16");
@@ -270,8 +270,8 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->sensingMethodCheck = new MetadataCheckBox(i18n("Sensing method:"), parent);
-    d->sensingMethodCB    = new QComboBox(parent);
+    d->sensingMethodCheck = new MetadataCheckBox(i18n("Sensing method:"), this);
+    d->sensingMethodCB    = new QComboBox(this);
     d->sensingMethodCB->insertItem(0, i18n("Not defined"));
     d->sensingMethodCB->insertItem(1, i18n("One-chip color area"));
     d->sensingMethodCB->insertItem(2, i18n("Two-chip color area"));
@@ -284,8 +284,8 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->sceneTypeCheck = new MetadataCheckBox(i18n("Scene capture type:"), parent);
-    d->sceneTypeCB    = new QComboBox(parent);
+    d->sceneTypeCheck = new MetadataCheckBox(i18n("Scene capture type:"), this);
+    d->sceneTypeCB    = new QComboBox(this);
     d->sceneTypeCB->insertItem(0, i18n("Standard"));
     d->sceneTypeCB->insertItem(1, i18n("Landscape"));
     d->sceneTypeCB->insertItem(2, i18n("Portrait"));
@@ -295,8 +295,8 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->subjectDistanceTypeCheck = new MetadataCheckBox(i18n("Subject distance type:"), parent);
-    d->subjectDistanceTypeCB    = new QComboBox(parent);
+    d->subjectDistanceTypeCheck = new MetadataCheckBox(i18n("Subject distance type:"), this);
+    d->subjectDistanceTypeCB    = new QComboBox(this);
     d->subjectDistanceTypeCB->insertItem(1, i18n("Unknow"));
     d->subjectDistanceTypeCB->insertItem(2, i18n("Macro"));
     d->subjectDistanceTypeCB->insertItem(3, i18n("Close view"));
@@ -310,7 +310,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
                  "<b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> "
                  "text tags marked by (*) only support printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
-                 "characters set.</b>"), parent);
+                 "characters set.</b>"), this);
     note->setOpenExternalLinks(true);
     note->setWordWrap(true);
 

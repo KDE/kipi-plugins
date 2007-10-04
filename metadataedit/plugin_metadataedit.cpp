@@ -285,19 +285,19 @@ void Plugin_MetadataEdit::slotImportExif()
 
 void Plugin_MetadataEdit::slotEditIptc()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+/*    KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
     KIPIMetadataEditPlugin::IPTCEditDialog dialog(kapp->activeWindow(), images.images(), m_interface);
     dialog.exec();
-    m_interface->refreshImages(images.images());
+    m_interface->refreshImages(images.images());*/
 }
 
 void Plugin_MetadataEdit::slotRemoveIptc()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+/*    KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -346,12 +346,12 @@ void Plugin_MetadataEdit::slotRemoveIptc()
                     i18n("Unable to remove IPTC metadata from:"),
                     errorFiles,
                     i18n("Remove IPTC Metadata"));  
-    }
+    }*/
 }
 
 void Plugin_MetadataEdit::slotImportIptc()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+/*    KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -426,12 +426,12 @@ void Plugin_MetadataEdit::slotImportIptc()
                     i18n("Unable to set IPTC metadata from:"),
                     errorFiles,
                     i18n("Import IPTC Metadata"));  
-    }
+    }*/
 }
 
 void Plugin_MetadataEdit::slotEditComments()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+/*    KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -490,12 +490,12 @@ void Plugin_MetadataEdit::slotEditComments()
                      i18n("Unable to set captions as image metadata from:"),
                      errorFiles,
                      i18n("Edit Image Caption"));  
-    }
+    }*/
 }
 
 void Plugin_MetadataEdit::slotRemoveComments()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+/*    KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -557,7 +557,7 @@ void Plugin_MetadataEdit::slotRemoveComments()
                      i18n("Unable to remove caption as image metadata from:"),
                      errorFiles,
                      i18n("Remove Image Caption"));  
-    }
+    }*/
 }
 
 KIPI::Category Plugin_MetadataEdit::category( KAction* action ) const

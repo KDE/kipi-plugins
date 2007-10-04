@@ -149,42 +149,42 @@ EXIFLens::EXIFLens(QWidget* parent)
 {
     d = new EXIFLensPriv;
 
-    QGridLayout* grid = new QGridLayout(parent);
+    QGridLayout* grid = new QGridLayout(this);
 
     // --------------------------------------------------------
 
-    d->focalLengthCheck = new QCheckBox(i18n("Focal length (mm):"), parent);
-    d->focalLengthEdit  = new KDoubleSpinBox(1.0, 10000.0, 1.0, 50.0, parent, 1);
+    d->focalLengthCheck = new QCheckBox(i18n("Focal length (mm):"), this);
+    d->focalLengthEdit  = new KDoubleSpinBox(1.0, 10000.0, 1.0, 50.0, this, 1);
     d->focalLengthEdit->setWhatsThis(i18n("<p>Set here the lens focal length in milimeters "
                                           "used by camera to take the picture."));
 
     // --------------------------------------------------------
 
-    d->focalLength35mmCheck = new QCheckBox(i18n("Focal length in 35mm film (mm):"), parent);
-    d->focalLength35mmEdit  = new KIntSpinBox(1, 10000, 1, 1, parent);
+    d->focalLength35mmCheck = new QCheckBox(i18n("Focal length in 35mm film (mm):"), this);
+    d->focalLength35mmEdit  = new KIntSpinBox(1, 10000, 1, 1, this);
     d->focalLength35mmEdit->setWhatsThis(i18n("<p>Set here equivalent focal length assuming "
                                               "a 35mm film camera, in mm. A value of 0 means the focal "
                                               "length is unknown."));
 
     // --------------------------------------------------------
 
-    d->digitalZoomRatioCheck = new QCheckBox(i18n("Digital zoom ratio:"), parent);
-    d->digitalZoomRatioEdit  = new KDoubleSpinBox(0.0, 100.0, 0.1, 1.0, parent, 1);
+    d->digitalZoomRatioCheck = new QCheckBox(i18n("Digital zoom ratio:"), this);
+    d->digitalZoomRatioEdit  = new KDoubleSpinBox(0.0, 100.0, 0.1, 1.0, this, 1);
     d->digitalZoomRatioEdit->setWhatsThis(i18n("<p>Set here the digital zoom ratio "
                                                "used by camera to take the picture."));
 
     // --------------------------------------------------------
 
-    d->apertureCheck = new MetadataCheckBox(i18n("Lens aperture (f-number):"), parent);
-    d->apertureCB    = new QComboBox(parent);
+    d->apertureCheck = new MetadataCheckBox(i18n("Lens aperture (f-number):"), this);
+    d->apertureCB    = new QComboBox(this);
     d->apertureCB->insertItems(0, d->apertureValues);
     d->apertureCB->setWhatsThis(i18n("<p>Select here the lens aperture used by camera "
                                      "to take the picture."));
 
     // --------------------------------------------------------
 
-    d->maxApertureCheck = new MetadataCheckBox(i18n("Max. lens aperture (f-number):"), parent);
-    d->maxApertureCB    = new QComboBox(parent);
+    d->maxApertureCheck = new MetadataCheckBox(i18n("Max. lens aperture (f-number):"), this);
+    d->maxApertureCB    = new QComboBox(this);
     d->maxApertureCB->insertItems(0, d->apertureValues);
     d->maxApertureCB->setWhatsThis(i18n("<p>Select here the smallest aperture of the lens used by camera "
                                         "to take the picture."));

@@ -96,20 +96,20 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
 {
     d = new EXIFDateTimePriv;
 
-    QGridLayout* grid = new QGridLayout(parent);
+    QGridLayout* grid = new QGridLayout(this);
 
     // --------------------------------------------------------
 
-    d->dateCreatedCheck       = new QCheckBox(i18n("Creation date and time"), parent);
-    d->dateCreatedSubSecCheck = new QCheckBox(i18n("Creation sub-second"), parent);
-    d->dateCreatedSel         = new KDateTimeWidget(parent);
-    d->dateCreatedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, parent);
+    d->dateCreatedCheck       = new QCheckBox(i18n("Creation date and time"), this);
+    d->dateCreatedSubSecCheck = new QCheckBox(i18n("Creation sub-second"), this);
+    d->dateCreatedSel         = new KDateTimeWidget(this);
+    d->dateCreatedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
     d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
-    d->syncHOSTDateCheck      = new QCheckBox(i18n("Sync creation date hosted by %1")
-                                              .arg(KGlobal::mainComponent().aboutData()->programName()), 
-                                              parent);
-    d->syncIPTCDateCheck      = new QCheckBox(i18n("Sync IPTC creation date"), parent);
-    KSeparator *line          = new KSeparator(Qt::Horizontal, parent);
+    d->syncHOSTDateCheck      = new QCheckBox(i18n("Sync creation date hosted by %1",
+                                              KGlobal::mainComponent().aboutData()->programName()), 
+                                              this);
+    d->syncIPTCDateCheck      = new QCheckBox(i18n("Sync IPTC creation date"), this);
+    KSeparator *line          = new KSeparator(Qt::Horizontal, this);
 
     d->dateCreatedSel->setWhatsThis(i18n("<p>Set here the date and time of image creation. "
                                        "In this standard it is the date and time the file was changed."));
@@ -118,10 +118,10 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->dateOriginalCheck       = new QCheckBox(i18n("Original date and time"), parent);
-    d->dateOriginalSubSecCheck = new QCheckBox(i18n("Original sub-second"), parent);
-    d->dateOriginalSel         = new KDateTimeWidget(parent);
-    d->dateOriginalSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, parent);
+    d->dateOriginalCheck       = new QCheckBox(i18n("Original date and time"), this);
+    d->dateOriginalSubSecCheck = new QCheckBox(i18n("Original sub-second"), this);
+    d->dateOriginalSel         = new KDateTimeWidget(this);
+    d->dateOriginalSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
     d->dateOriginalSel->setDateTime(QDateTime::currentDateTime());
 
     d->dateOriginalSel->setWhatsThis(i18n("<p>Set here the date and time when the original image "
@@ -132,10 +132,10 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->dateDigitalizedCheck       = new QCheckBox(i18n("Digitization date and time"), parent);
-    d->dateDigitalizedSubSecCheck = new QCheckBox(i18n("Digitization sub-second"), parent);
-    d->dateDigitalizedSel         = new KDateTimeWidget(parent);
-    d->dateDigitalizedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, parent);
+    d->dateDigitalizedCheck       = new QCheckBox(i18n("Digitization date and time"), this);
+    d->dateDigitalizedSubSecCheck = new QCheckBox(i18n("Digitization sub-second"), this);
+    d->dateDigitalizedSel         = new KDateTimeWidget(this);
+    d->dateDigitalizedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
     d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
 
     d->dateDigitalizedSel->setWhatsThis(i18n("<p>Set here the date and time when the image was "

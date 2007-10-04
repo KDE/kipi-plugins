@@ -93,7 +93,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
            : QWidget(parent)
 {
     d = new EXIFCaptionPriv;
-    QVBoxLayout *vlay = new QVBoxLayout( parent );
+    QVBoxLayout *vlay = new QVBoxLayout(this);
 
     // EXIF only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -101,8 +101,8 @@ EXIFCaption::EXIFCaption(QWidget* parent)
   
     // --------------------------------------------------------
 
-    d->documentNameCheck = new QCheckBox(i18n("Document name (*):"), parent);
-    d->documentNameEdit  = new KLineEdit(parent);
+    d->documentNameCheck = new QCheckBox(i18n("Document name (*):"), this);
+    d->documentNameEdit  = new KLineEdit(this);
     d->documentNameEdit->setValidator(asciiValidator);
     d->documentNameEdit->setWhatsThis(i18n("<p>Enter the name of the document from which "
                                            "this image was been scanned. This field is limited "
@@ -110,41 +110,41 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->imageDescCheck = new QCheckBox(i18n("Image description (*):"), parent);
-    d->imageDescEdit  = new KLineEdit(parent);
+    d->imageDescCheck = new QCheckBox(i18n("Image description (*):"), this);
+    d->imageDescEdit  = new KLineEdit(this);
     d->imageDescEdit->setValidator(asciiValidator);
     d->imageDescEdit->setWhatsThis(i18n("<p>Enter the image title. This field is limited "
                                         "to ASCII characters."));
         
     // --------------------------------------------------------
 
-    d->artistCheck = new QCheckBox(i18n("Artist (*):"), parent);
-    d->artistEdit  = new KLineEdit(parent);
+    d->artistCheck = new QCheckBox(i18n("Artist (*):"), this);
+    d->artistEdit  = new KLineEdit(this);
     d->artistEdit->setValidator(asciiValidator);
     d->artistEdit->setWhatsThis(i18n("<p>Enter the image author's name. "
                                      "This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->copyrightCheck = new QCheckBox(i18n("Copyright (*):"), parent);
-    d->copyrightEdit  = new KLineEdit(parent);
+    d->copyrightCheck = new QCheckBox(i18n("Copyright (*):"), this);
+    d->copyrightEdit  = new KLineEdit(this);
     d->copyrightEdit->setValidator(asciiValidator);
     d->copyrightEdit->setWhatsThis(i18n("<p>Enter the copyright owner of the image. "
                                         "This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->userCommentCheck = new QCheckBox(i18n("Caption:"), parent);
-    d->userCommentEdit  = new KTextEdit(parent);
+    d->userCommentCheck = new QCheckBox(i18n("Caption:"), this);
+    d->userCommentEdit  = new KTextEdit(this);
     d->userCommentEdit->setWhatsThis(i18n("<p>Enter the image's caption. "
                                           "This field is not limited. UTF8 encoding "
                                           "will be used to save the text."));
 
-    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF captions"), parent);
-    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync captions entered through %1")
-                                            .arg(KGlobal::mainComponent().aboutData()->programName()), 
-                                            parent);
-    d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: ASCII limited)"), parent);
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF captions"), this);
+    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync captions entered through %1", 
+                                            KGlobal::mainComponent().aboutData()->programName()), 
+                                            this);
+    d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: ASCII limited)"), this);
 
     // --------------------------------------------------------
 
@@ -152,7 +152,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
                  "<b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> "
                  "text tags marked by (*) only support printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
-                 "characters set.</b>"), parent);
+                 "characters set.</b>"), this);
     note->setOpenExternalLinks(true);
     note->setWordWrap(true);
 

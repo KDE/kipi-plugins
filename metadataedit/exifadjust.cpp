@@ -91,19 +91,19 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
 {
     d = new EXIFAdjustPriv;
 
-    QGridLayout* grid = new QGridLayout(parent);
+    QGridLayout* grid = new QGridLayout(this);
 
     // --------------------------------------------------------
 
-    d->brightnessCheck = new QCheckBox(i18n("Brightness (APEX):"), parent);
-    d->brightnessEdit  = new KDoubleSpinBox(-99.99, 99.99, 0.1, 0.0, parent);
+    d->brightnessCheck = new QCheckBox(i18n("Brightness (APEX):"), this);
+    d->brightnessEdit  = new KDoubleSpinBox(-99.99, 99.99, 0.1, 0.0, this);
     d->brightnessEdit->setWhatsThis(i18n("<p>Set here the brightness adjustment value in APEX unit "
                                          "used by camera to take the picture."));
 
     // --------------------------------------------------------
 
-    d->gainControlCheck = new MetadataCheckBox(i18n("Gain Control:"), parent);
-    d->gainControlCB    = new QComboBox(parent);
+    d->gainControlCheck = new MetadataCheckBox(i18n("Gain Control:"), this);
+    d->gainControlCB    = new QComboBox(this);
     d->gainControlCB->insertItem(0, i18n("None"));
     d->gainControlCB->insertItem(1, i18n("Low gain up"));
     d->gainControlCB->insertItem(2, i18n("High gain up"));
@@ -114,8 +114,8 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->contrastCheck = new MetadataCheckBox(i18n("Contrast:"), parent);
-    d->contrastCB    = new QComboBox(parent);
+    d->contrastCheck = new MetadataCheckBox(i18n("Contrast:"), this);
+    d->contrastCB    = new QComboBox(this);
     d->contrastCB->insertItem(0, i18n("Normal"));
     d->contrastCB->insertItem(1, i18n("Soft"));
     d->contrastCB->insertItem(2, i18n("Hard"));
@@ -124,8 +124,8 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->saturationCheck = new MetadataCheckBox(i18n("Saturation:"), parent);
-    d->saturationCB    = new QComboBox(parent);
+    d->saturationCheck = new MetadataCheckBox(i18n("Saturation:"), this);
+    d->saturationCB    = new QComboBox(this);
     d->saturationCB->insertItem(0, i18n("Normal"));
     d->saturationCB->insertItem(1, i18n("Low"));
     d->saturationCB->insertItem(2, i18n("High"));
@@ -134,8 +134,8 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->sharpnessCheck = new MetadataCheckBox(i18n("Sharpness:"), parent);
-    d->sharpnessCB    = new QComboBox(parent);
+    d->sharpnessCheck = new MetadataCheckBox(i18n("Sharpness:"), this);
+    d->sharpnessCB    = new QComboBox(this);
     d->sharpnessCB->insertItem(0, i18n("Normal"));
     d->sharpnessCB->insertItem(1, i18n("Soft"));
     d->sharpnessCB->insertItem(2, i18n("Hard"));
@@ -144,8 +144,8 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->customRenderedCheck = new MetadataCheckBox(i18n("Custom rendered:"), parent);
-    d->customRenderedCB    = new QComboBox(parent);
+    d->customRenderedCheck = new MetadataCheckBox(i18n("Custom rendered:"), this);
+    d->customRenderedCB    = new QComboBox(this);
     d->customRenderedCB->insertItem(0, i18n("Normal process"));
     d->customRenderedCB->insertItem(1, i18n("Custom process"));
     d->customRenderedCB->setWhatsThis(i18n("<p>Set here the use of special processing on "

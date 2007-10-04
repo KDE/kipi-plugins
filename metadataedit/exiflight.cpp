@@ -127,12 +127,12 @@ EXIFLight::EXIFLight(QWidget* parent)
 {
     d = new EXIFLightPriv;
 
-    QGridLayout* grid = new QGridLayout(parent);
+    QGridLayout* grid = new QGridLayout(this);
 
     // --------------------------------------------------------
 
-    d->lightSourceCheck = new MetadataCheckBox(i18n("Light source:"), parent);
-    d->lightSourceCB    = new QComboBox(parent);
+    d->lightSourceCheck = new MetadataCheckBox(i18n("Light source:"), this);
+    d->lightSourceCB    = new QComboBox(this);
     d->lightSourceCB->insertItem(0, i18n("Unknown"));
     d->lightSourceCB->insertItem(1, i18n("Daylight"));
     d->lightSourceCB->insertItem(2, i18n("Fluorescent"));
@@ -159,8 +159,8 @@ EXIFLight::EXIFLight(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->flashModeCheck = new MetadataCheckBox(i18n("Flash mode:"), parent);
-    d->flashModeCB    = new QComboBox(parent);
+    d->flashModeCheck = new MetadataCheckBox(i18n("Flash mode:"), this);
+    d->flashModeCB    = new QComboBox(this);
 
     for (EXIFLightPriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
         it != d->flashModeMap.end(); ++it )
@@ -171,8 +171,8 @@ EXIFLight::EXIFLight(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->flashEnergyCheck = new QCheckBox(i18n("Flash energy (BCPS):"), parent);
-    d->flashEnergyEdit  = new KDoubleSpinBox(1.0, 10000.0, 1.0, 1.0, parent, 1);
+    d->flashEnergyCheck = new QCheckBox(i18n("Flash energy (BCPS):"), this);
+    d->flashEnergyEdit  = new KDoubleSpinBox(1.0, 10000.0, 1.0, 1.0, this, 1);
     d->flashEnergyEdit->setWhatsThis(i18n("<p>Set here the flash energy used to take the picture "
                                           "in BCPS unit. Beam Candle Power Seconds is the measure "
                                           "of effective intensity of a light source when it is "
@@ -181,8 +181,8 @@ EXIFLight::EXIFLight(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->whiteBalanceCheck = new MetadataCheckBox(i18n("White balance:"), parent);
-    d->whiteBalanceCB    = new QComboBox(parent);
+    d->whiteBalanceCheck = new MetadataCheckBox(i18n("White balance:"), this);
+    d->whiteBalanceCB    = new QComboBox(this);
     d->whiteBalanceCB->insertItem(0, i18n("Auto"));
     d->whiteBalanceCB->insertItem(1, i18n("Manual"));
     d->whiteBalanceCB->setWhatsThis(i18n("<p>Select here the white balance mode set by camera when "
