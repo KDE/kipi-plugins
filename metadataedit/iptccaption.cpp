@@ -102,7 +102,7 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     d->captionCheck         = new QCheckBox(i18n("Caption:"), parent);
     d->captionEdit          = new KTextEdit(parent);
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), parent);
-    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync caption entered through <b>%1</b>")
+    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync caption entered through %1")
                                             .arg(KApplication::kApplication()->aboutData()->appName()), 
                                             parent);
     d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF Comment"), parent);

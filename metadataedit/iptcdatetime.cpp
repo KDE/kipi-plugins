@@ -113,7 +113,7 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
     d->timeCreatedCheck  = new QCheckBox(i18n("Creation time"), parent);
     d->dateCreatedSel    = new KDateWidget(parent);
     d->timeCreatedSel    = new KTimeWidget(parent);
-    d->syncHOSTDateCheck = new QCheckBox(i18n("Sync creation date hosted by <b>%1</b>")
+    d->syncHOSTDateCheck = new QCheckBox(i18n("Sync creation date entered through %1")
                                               .arg(KApplication::kApplication()->aboutData()->appName()), 
                                               parent);
     d->syncEXIFDateCheck = new QCheckBox(i18n("Sync EXIF creation date"), parent);
