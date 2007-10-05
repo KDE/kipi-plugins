@@ -449,194 +449,194 @@ int FrmPrintWizard::getPageCount() {
 	return pageCount;
 }
 
-const float FONT_HEIGHT_RATIO = 0.08;
+const float FONT_HEIGHT_RATIO = 0.8;
 
 bool FrmPrintWizard::paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
   int captionType, unsigned int &current, bool useThumbnails)
 {
-	Q_ASSERT(layouts.count() > 1);
-	
-	if (photos.count() == 0) return true; // no photos => last photo
+  Q_ASSERT(layouts.count() > 1);
 
-	QRect *srcPage = layouts.at(0);
-	QRect *layout = layouts.at(1);
+  if (photos.count() == 0) return true; // no photos => last photo
+
+  QRect *srcPage = layouts.at(0);
+  QRect *layout = layouts.at(1);
 
   // scale the page size to best fit the painter
   // size the rectangle based on the minimum image dimension
-	int destW = p.window().width();
-	int destH = p.window().height();
+  int destW = p.window().width();
+  int destH = p.window().height();
 
-	int srcW = srcPage->width();
-	int srcH = srcPage->height();
-	if (destW < destH)
-	{
-		destH = NINT((double)destW * ((double)srcH / (double)srcW));
-		if (destH > p.window().height())
-		{
-			destH = p.window().height();
-			destW = NINT((double)destH * ((double)srcW / (double)srcH));
-		}
-	}
-	else
-	{
-		destW = NINT((double)destH * ((double)srcW / (double)srcH));
-		if (destW > p.window().width())
-		{
-			destW = p.window().width();
-			destH = NINT((double)destW * ((double)srcH / (double)srcW));
-		}
-	}
+  int srcW = srcPage->width();
+  int srcH = srcPage->height();
+  if (destW < destH)
+  {
+    destH = NINT((double)destW * ((double)srcH / (double)srcW));
+    if (destH > p.window().height())
+    {
+      destH = p.window().height();
+      destW = NINT((double)destH * ((double)srcW / (double)srcH));
+    }
+  }
+  else
+  {
+    destW = NINT((double)destH * ((double)srcW / (double)srcH));
+    if (destW > p.window().width())
+    {
+      destW = p.window().width();
+      destH = NINT((double)destW * ((double)srcH / (double)srcW));
+    }
+  }
 
-	double xRatio = (double)destW / (double)srcPage->width();
-	double yRatio = (double)destH / (double)srcPage->height();
+  double xRatio = (double)destW / (double)srcPage->width();
+  double yRatio = (double)destH / (double)srcPage->height();
 
-	int left = (p.window().width()  - destW) / 2;
-	int top  = (p.window().height() - destH) / 2;
+  int left = (p.window().width()  - destW) / 2;
+  int top  = (p.window().height() - destH) / 2;
 
   // FIXME: may not want to erase the background page
-	p.eraseRect(left, top,
-				NINT((double)srcPage->width() * xRatio),
-					  NINT((double)srcPage->height() * yRatio));
+  p.eraseRect(left, top,
+              NINT((double)srcPage->width() * xRatio),
+                    NINT((double)srcPage->height() * yRatio));
 
-	for(; current < photos.count(); current++)
-	{
-		TPhoto *photo = photos.at(current);
+  for(; current < photos.count(); current++)
+  {
+    TPhoto *photo = photos.at(current);
     // crop
-		QImage img;
-		if (useThumbnails)
-			img = photo->thumbnail().convertToImage();
-		else
-			img.load(photo->filename.path()); // PENDING(blackie) handle general URL case
+    QImage img;
+    if (useThumbnails)
+      img = photo->thumbnail().convertToImage();
+    else
+      img.load(photo->filename.path()); // PENDING(blackie) handle general URL case
 
-	// next, do we rotate?
-		if (photo->rotation != 0)
-		{
+    // next, do we rotate?
+    if (photo->rotation != 0)
+    {
       // rotate
-			QWMatrix matrix;
-			matrix.rotate(photo->rotation);
-			img = img.xForm(matrix);
-		}
+      QWMatrix matrix;
+      matrix.rotate(photo->rotation);
+      img = img.xForm(matrix);
+    }
 
-		if (useThumbnails)
-		{
+    if (useThumbnails)
+    {
       // scale the crop region to thumbnail coords
-			double xRatio = 0.0;
-			double yRatio = 0.0;
+      double xRatio = 0.0;
+      double yRatio = 0.0;
 
-			if (photo->thumbnail().width() != 0)
-				xRatio = (double)photo->thumbnail().width() / (double) photo->width();
-			if (photo->thumbnail().height() != 0)
-				yRatio = (double)photo->thumbnail().height() / (double) photo->height();
+      if (photo->thumbnail().width() != 0)
+        xRatio = (double)photo->thumbnail().width() / (double) photo->width();
+      if (photo->thumbnail().height() != 0)
+        yRatio = (double)photo->thumbnail().height() / (double) photo->height();
 
-			int x1 = NINT((double)photo->cropRegion.left() * xRatio);
-			int y1 = NINT((double)photo->cropRegion.top()  * yRatio);
+      int x1 = NINT((double)photo->cropRegion.left() * xRatio);
+      int y1 = NINT((double)photo->cropRegion.top()  * yRatio);
 
-			int w = NINT((double)photo->cropRegion.width()  * xRatio);
-			int h = NINT((double)photo->cropRegion.height() * yRatio);
+      int w = NINT((double)photo->cropRegion.width()  * xRatio);
+      int h = NINT((double)photo->cropRegion.height() * yRatio);
 
-			img = img.copy(QRect(x1, y1, w, h));
-		}
-		else
-			img = img.copy(photo->cropRegion);
+      img = img.copy(QRect(x1, y1, w, h));
+    }
+    else
+      img = img.copy(photo->cropRegion);
 
-		int x1 = NINT((double)layout->left() * xRatio);
-		int y1 = NINT((double)layout->top()  * yRatio);
-		int w  = NINT((double)layout->width() * xRatio);
-		int h  = NINT((double)layout->height() * yRatio);
+    int x1 = NINT((double)layout->left() * xRatio);
+    int y1 = NINT((double)layout->top()  * yRatio);
+    int w  = NINT((double)layout->width() * xRatio);
+    int h  = NINT((double)layout->height() * yRatio);
 
-		p.drawImage( QRect(x1 + left, y1 + top, w, h), img );
+    p.drawImage( QRect(x1 + left, y1 + top, w, h), img );
 
-		if (captionType > 0)
-		{
-			p.save();
-			QString caption;
-			if (captionType == 1)
-			{
-				QFileInfo fi(photo->filename.path());
-				caption = fi.fileName();
-			}
-			else if (captionType == 2) // exif date
-			{
-				caption = KGlobal::locale()->formatDateTime(photo->exiv2Iface()->getImageDateTime(),
-										  					false, false);
-				kdDebug( 51000 ) << "exif date  " << caption << endl;
-			}
-	  // draw the text at (0,0), but we will translate and rotate the world
+    if (captionType > 0)
+    {
+      p.save();
+      QString caption;
+      if (captionType == 1)
+      {
+        QFileInfo fi(photo->filename.path());
+        caption = fi.fileName();
+      }
+      else if (captionType == 2) // exif date
+      {
+        caption = KGlobal::locale()->formatDateTime(photo->exiv2Iface()->getImageDateTime(),
+                                  false, false);
+        kdDebug( 51000 ) << "exif date  " << caption << endl;
+      }
+      // draw the text at (0,0), but we will translate and rotate the world
       // before drawing so the text will be in the correct location
       // next, do we rotate?
-			int captionW = w-2;
-			int captionH = (int)(QMIN(w, h) * FONT_HEIGHT_RATIO);
-	  	 
-			int exifOrientation = photo->exiv2Iface()->getImageOrientation();
-			int orientatation = photo->rotation;
+      int captionW = w-2;
+      double ratio = m_font_size->value() * 0.01;
+      int captionH = (int)(QMIN(w, h) * ratio);
+
+      int exifOrientation = photo->exiv2Iface()->getImageOrientation();
+      int orientatation = photo->rotation;
 
 
-			//ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
-			//TODO check 270 degrees
-			if (exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP ||
-						 exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90 ||
-						 exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP ||
-						 exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_270)
-				orientatation = (photo->rotation + 270) % 360; // -90 degrees
+      //ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
+      //TODO check 270 degrees
+      if (exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP ||
+          exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90 ||
+          exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP ||
+          exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_270)
+        orientatation = (photo->rotation + 270) % 360; // -90 degrees
 
-			if(orientatation == 90 || orientatation == 270)
-			{
-				captionW = h;
-			}
-			p.rotate(orientatation);
-			kdDebug( 51000 ) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
-			int tx = left;
-			int ty = top;
+      if(orientatation == 90 || orientatation == 270)
+      {
+        captionW = h;
+      }
+      p.rotate(orientatation);
+      kdDebug( 51000 ) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
+      int tx = left;
+      int ty = top;
 
-			switch(orientatation) {
-				case 0 : { 
-					tx += x1 + 1;
-					ty += y1 + (h - captionH - 1);
-					break;
-				}
-				case 90 : { 
-					tx = top + y1 + 1;
-					ty = -left - x1 - captionH - 1;
-					break;
-				}
-				case 180 : { 
-					tx = -left - x1 - w + 1;
-					ty = -top -y1 - (captionH + 1);
-					break;
-				}
-				case 270 : { 
-					tx = -top - y1 - h + 1;
-					ty = left + x1 + (w - captionH)- 1;
-					break;
-				}
-			}
-			p.translate(tx, ty);
+      switch(orientatation) {
+        case 0 : {
+          tx += x1 + 1;
+          ty += y1 + (h - captionH - 1);
+          break;
+        }
+        case 90 : {
+          tx = top + y1 + 1;
+          ty = -left - x1 - captionH - 1;
+          break;
+        }
+        case 180 : {
+          tx = -left - x1 - w + 1;
+          ty = -top -y1 - (captionH + 1);
+          break;
+        }
+        case 270 : {
+          tx = -top - y1 - h + 1;
+          ty = left + x1 + (w - captionH)- 1;
+          break;
+        }
+      }
+      p.translate(tx, ty);
 
-			// Now draw the caption
-			QFont font(m_font_name->currentFont());
-			font.setStyleHint(QFont::SansSerif);
-			double ratio = m_font_size->value() * 0.1;
-			font.setPixelSize( (int)(captionH * ratio) );
-			font.setWeight(QFont::Normal);
+      // Now draw the caption
+      QFont font(m_font_name->currentFont());
+      font.setStyleHint(QFont::SansSerif);
+      font.setPixelSize( (int)(captionH * FONT_HEIGHT_RATIO) );
+      font.setWeight(QFont::Normal);
 
-			p.setFont(font);
-			p.setPen(m_font_color->color());
+      p.setFont(font);
+      p.setPen(m_font_color->color());
 
-			QRect r(0, 0, captionW, captionH);
-			p.drawText(r, Qt::AlignLeft, caption, -1, &r);
-			p.restore();
-		} // caption
+      QRect r(0, 0, captionW, captionH);
+      p.drawText(r, Qt::AlignLeft, caption, -1, &r);
+      p.restore();
+    } // caption
 
-    	// iterate to the next position
-		layout = layouts.next();
-		if (layout == 0)
-		{
-			current++;
-			break;
-		}
-	}
-	// did we print the last photo?
-	return (current < photos.count());
+    // iterate to the next position
+    layout = layouts.next();
+    if (layout == 0)
+    {
+      current++;
+      break;
+    }
+  }
+  // did we print the last photo?
+  return (current < photos.count());
 }
 
 
@@ -649,170 +649,170 @@ bool FrmPrintWizard::paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList
 bool FrmPrintWizard::paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
   int captionType, unsigned int &current)
 {
-	Q_ASSERT(layouts.count() > 1);
+  Q_ASSERT(layouts.count() > 1);
 
-	QRect *srcPage = layouts.at(0);
-	QRect *layout = layouts.at(1);
+  QRect *srcPage = layouts.at(0);
+  QRect *layout = layouts.at(1);
 
   // scale the page size to best fit the painter
   // size the rectangle based on the minimum image dimension
-	int destW = p.width();
-	int destH = p.height();
+  int destW = p.width();
+  int destH = p.height();
 
-	int srcW = srcPage->width();
-	int srcH = srcPage->height();
-	if (destW < destH)
-	{
-		destH = NINT((double)destW * ((double)srcH / (double)srcW));
-		if (destH > p.height())
-		{
-			destH = p.height();
-			destW = NINT((double)destH * ((double)srcW / (double)srcH));
-		}
-	}
-	else
-	{
-		destW = NINT((double)destH * ((double)srcW / (double)srcH));
-		if (destW > p.width())
-		{
-			destW = p.width();
-			destH = NINT((double)destW * ((double)srcH / (double)srcW));
-		}
-	}
+  int srcW = srcPage->width();
+  int srcH = srcPage->height();
+  if (destW < destH)
+  {
+    destH = NINT((double)destW * ((double)srcH / (double)srcW));
+    if (destH > p.height())
+    {
+      destH = p.height();
+      destW = NINT((double)destH * ((double)srcW / (double)srcH));
+    }
+  }
+  else
+  {
+    destW = NINT((double)destH * ((double)srcW / (double)srcH));
+    if (destW > p.width())
+    {
+      destW = p.width();
+      destH = NINT((double)destW * ((double)srcH / (double)srcW));
+    }
+  }
 
-	double xRatio = (double)destW / (double)srcPage->width();
-	double yRatio = (double)destH / (double)srcPage->height();
+  double xRatio = (double)destW / (double)srcPage->width();
+  double yRatio = (double)destH / (double)srcPage->height();
 
-	int left = (p.width()  - destW) / 2;
-	int top  = (p.height() - destH) / 2;
+  int left = (p.width()  - destW) / 2;
+  int top  = (p.height() - destH) / 2;
 
 
-	p.fill(0xffffff);
+  p.fill(0xffffff);
 
-	for(; current < photos.count(); current++)
-	{
-		TPhoto *photo = photos.at(current);
+  for(; current < photos.count(); current++)
+  {
+    TPhoto *photo = photos.at(current);
     // crop
-		QImage img;
-		img.load(photo->filename.path()); // PENDING(blackie) handle general URL case
+    QImage img;
+    img.load(photo->filename.path()); // PENDING(blackie) handle general URL case
 
     // next, do we rotate?
-		if (photo->rotation != 0)
-		{
+    if (photo->rotation != 0)
+    {
       // rotate
-			QWMatrix matrix;
-			matrix.rotate(photo->rotation);
-			img = img.xForm(matrix);
-		}
+      QWMatrix matrix;
+      matrix.rotate(photo->rotation);
+      img = img.xForm(matrix);
+    }
 
-		img = img.copy(photo->cropRegion);
+    img = img.copy(photo->cropRegion);
 
-		int x1 = NINT((double)layout->left() * xRatio);
-		int y1 = NINT((double)layout->top()  * yRatio);
-		int w  = NINT((double)layout->width() * xRatio);
-		int h  = NINT((double)layout->height() * yRatio);
+    int x1 = NINT((double)layout->left() * xRatio);
+    int y1 = NINT((double)layout->top()  * yRatio);
+    int w  = NINT((double)layout->width() * xRatio);
+    int h  = NINT((double)layout->height() * yRatio);
 
     // We can use scaleFree because the crop frame should have the proper dimensions.
-		img = img.smoothScale(w, h, QImage::ScaleFree);
+    img = img.smoothScale(w, h, QImage::ScaleFree);
     // don't have drawimage, so we copy the pixels over manually
-		for(int srcY = 0; srcY < img.height(); srcY++)
-			for(int srcX = 0; srcX < img.width(); srcX++)
-		{
-			p.setPixel(x1 + left + srcX, y1 + top + srcY, img.pixel(srcX, srcY));
-		}
+    for(int srcY = 0; srcY < img.height(); srcY++)
+      for(int srcX = 0; srcX < img.width(); srcX++)
+    {
+      p.setPixel(x1 + left + srcX, y1 + top + srcY, img.pixel(srcX, srcY));
+    }
 
-		if (captionType > 0)
-		{
+    if (captionType > 0)
+    {
       // Now draw the caption
-			QString caption;
-			if (captionType == 1) //filename
-			{
-				QFileInfo fi(photo->filename.path());
-				caption = fi.fileName();
-			}
-			else if (captionType == 2) // exif date
-			{
-				caption = KGlobal::locale()->formatDateTime(photo->exiv2Iface()->getImageDateTime(),
-										  					false, false);
-				kdDebug( 51000 ) << "exif date  " << caption << endl;
-			}
-			int captionW = w-2;
-			int captionH = (int)(QMIN(w, h) * FONT_HEIGHT_RATIO);
-      
-			int exifOrientation = photo->exiv2Iface()->getImageOrientation();
-			int orientatation = photo->rotation;
+      QString caption;
+      if (captionType == 1) //filename
+      {
+        QFileInfo fi(photo->filename.path());
+        caption = fi.fileName();
+      }
+      else if (captionType == 2) // exif date
+      {
+        caption = KGlobal::locale()->formatDateTime(photo->exiv2Iface()->getImageDateTime(),
+                                  false, false);
+        kdDebug( 51000 ) << "exif date  " << caption << endl;
+      }
+      int captionW = w-2;
+      double ratio = m_font_size->value() * 0.01;
+      int captionH = (int)(QMIN(w, h) * ratio);
 
-			//ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
-			//TODO check 270 degrees
-			if (exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP ||
-						 exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90 ||
-						 exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP ||
-						 exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_270)
-				orientatation = (photo->rotation + 270) % 360; // -90 degrees
-	  
-			if (orientatation == 90 || orientatation == 270)    
-			{
-				captionW = h;
-			}
-						// Now draw the caption
-			QFont font(m_font_name->currentFont());
-			font.setStyleHint(QFont::SansSerif);
-			double ratio = m_font_size->value() * 0.1;
-			font.setPixelSize( (int)(captionH * ratio) );
-			font.setWeight(QFont::Normal);
+      int exifOrientation = photo->exiv2Iface()->getImageOrientation();
+      int orientatation = photo->rotation;
 
-			QPixmap pixmap(w, captionH);
-			pixmap.fill(Qt::black);
-			QPainter painter;
-			painter.begin(&pixmap);
-			painter.setFont(font);
+      //ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
+      //TODO check 270 degrees
+      if (exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP ||
+          exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90 ||
+          exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP ||
+          exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_270)
+        orientatation = (photo->rotation + 270) % 360; // -90 degrees
 
-			painter.setPen(m_font_color->color());
-			QRect r(1, 1, w-2, captionH - 2);
-			painter.drawText(r, Qt::AlignLeft, caption, -1, &r);
-			painter.end();
-			QImage fontImage = pixmap.convertToImage();
-			QRgb black = QColor(0, 0, 0).rgb();
-			for(int srcY = 0; srcY < fontImage.height(); srcY++)
-				for(int srcX = 0; srcX < fontImage.width(); srcX++)
-			{
-				int destX = x1 + left + srcX;
-				int destY = y1 + top + h - (captionH + 1) + srcY;
+      if (orientatation == 90 || orientatation == 270)
+      {
+        captionW = h;
+      }
+      // Now draw the caption
+      QFont font(m_font_name->currentFont());
+      font.setStyleHint(QFont::SansSerif);
+      font.setPixelSize( (int)(captionH * FONT_HEIGHT_RATIO) );
+      font.setWeight(QFont::Normal);
+
+      QPixmap pixmap(w, captionH);
+      pixmap.fill(Qt::black);
+      QPainter painter;
+      painter.begin(&pixmap);
+      painter.setFont(font);
+
+      painter.setPen(m_font_color->color());
+      QRect r(1, 1, w-2, captionH - 2);
+      painter.drawText(r, Qt::AlignLeft, caption, -1, &r);
+      painter.end();
+      QImage fontImage = pixmap.convertToImage();
+      QRgb black = QColor(0, 0, 0).rgb();
+      for(int srcY = 0; srcY < fontImage.height(); srcY++)
+        for(int srcX = 0; srcX < fontImage.width(); srcX++)
+      {
+        int destX = x1 + left + srcX;
+        int destY = y1 + top + h - (captionH + 1) + srcY;
 
 				// adjust the destination coordinates for rotation/orientation
-				switch(orientatation) {
-					case 90 : { 
-						destX = left + x1 + (captionH - srcY);
-						destY = top + y1 + srcX;
-						break;
-					}
-					case 180 : { 
-						destX = left + x1 + w - srcX;
-						destY = top + y1 + (captionH - srcY);
-						break;
-					}
-					case 270 : { 
-						destX = left + x1 + (w - captionH) + srcY;
-						destY = top + y1 + h - srcX;
-						break;
-					}
-				}
+        switch(orientatation) {
+          case 90 : {
+            destX = left + x1 + (captionH - srcY);
+            destY = top + y1 + srcX;
+            break;
+          }
+          case 180 : {
+            destX = left + x1 + w - srcX;
+            destY = top + y1 + (captionH - srcY);
+            break;
+          }
+          case 270 : {
+            destX = left + x1 + (w - captionH) + srcY;
+            destY = top + y1 + h - srcX;
+            break;
+          }
+        }
 
-				if (fontImage.pixel(srcX, srcY) != black)
-					p.setPixel(destX, destY, fontImage.pixel(srcX, srcY));
-			}
-		} // caption
+        if (fontImage.pixel(srcX, srcY) != black)
+          p.setPixel(destX, destY, fontImage.pixel(srcX, srcY));
+      }
+    } // caption
 
-		// iterate to the next position
-		layout = layouts.next();
-		if (layout == 0)
-		{
-			current++;
-			break;
-		}
-	}
-	// did we print the last photo?
-	return (current < photos.count());
+    // iterate to the next position
+    layout = layouts.next();
+    if (layout == 0)
+    {
+      current++;
+      break;
+    }
+  }
+  // did we print the last photo?
+  return (current < photos.count());
 }
 
 
