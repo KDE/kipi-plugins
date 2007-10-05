@@ -7,8 +7,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_timeadjust
                       ${QT_AND_KDECORE_LIBS} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
-                      ${QT_QT3SUPPORT_LIBRARY}
-		              kipiplugins
+                      kipiplugins
                      )
 
 KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
