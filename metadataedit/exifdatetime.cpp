@@ -105,7 +105,7 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateCreatedSel         = new KDateTimeWidget(this);
     d->dateCreatedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
     d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
-    d->syncHOSTDateCheck      = new QCheckBox(i18n("Sync creation date hosted by %1",
+    d->syncHOSTDateCheck      = new QCheckBox(i18n("Sync creation date hosted by <b>%1</b>",
                                               KGlobal::mainComponent().aboutData()->programName()), 
                                               this);
     d->syncIPTCDateCheck      = new QCheckBox(i18n("Sync IPTC creation date"), this);

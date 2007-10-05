@@ -495,7 +495,7 @@ void Plugin_MetadataEdit::slotEditComments()
 
 void Plugin_MetadataEdit::slotRemoveComments()
 {
-/*    KIPI::ImageCollection images = m_interface->currentSelection();
+    KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -557,7 +557,7 @@ void Plugin_MetadataEdit::slotRemoveComments()
                      i18n("Unable to remove caption as image metadata from:"),
                      errorFiles,
                      i18n("Remove Image Caption"));  
-    }*/
+    }
 }
 
 KIPI::Category Plugin_MetadataEdit::category( KAction* action ) const

@@ -17,7 +17,7 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       iptcorigin.cpp
                                       iptceditdialog.cpp 
                                       commenteditdialog.cpp
-#                                       commentremovedialog.cpp
+                                      commentremovedialog.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_metadataedit ${kipiplugin_metadataedit_PART_SRCS})
@@ -27,7 +27,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_metadataedit
                       ${QT_AND_KDECORE_LIBS} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
-                      ${QT_QT3SUPPORT_LIBRARY}
                       kipiplugins
                      )
 

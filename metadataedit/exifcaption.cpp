@@ -139,8 +139,8 @@ EXIFCaption::EXIFCaption(QWidget* parent)
                                           "This field is not limited. UTF8 encoding "
                                           "will be used to save the text."));
 
-    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF captions"), this);
-    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync captions entered through %1", 
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), this);
+    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync captions entered through <b>%1</b>", 
                                             KGlobal::mainComponent().aboutData()->programName()), 
                                             this);
     d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: ASCII limited)"), this);

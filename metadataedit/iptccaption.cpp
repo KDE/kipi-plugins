@@ -98,11 +98,11 @@ IPTCCaption::IPTCCaption(QWidget* parent)
 
     d->captionCheck         = new QCheckBox(i18n("Caption:"), this);
     d->captionEdit          = new KTextEdit(this);
-    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF caption"), this);
-    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync caption entered through %1",
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), this);
+    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync caption entered through <b>%1</b>",
                                               KGlobal::mainComponent().aboutData()->programName()), 
                                             this);
-    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF caption"), this);
+    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF Comment"), this);
     KSeparator *line        = new KSeparator(Qt::Horizontal, this);
 
 /*    d->captionEdit->setValidator(asciiValidator);

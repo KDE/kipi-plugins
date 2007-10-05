@@ -22,23 +22,25 @@
 
 // Qt includes.
 
-#include <qtimer.h>
-#include <qlabel.h>
-#include <qframe.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qcheckbox.h>
-#include <qwhatsthis.h>
+#include <QLabel>
+#include <QFrame>
+#include <QLayout>
+#include <QCheckBox>
+#include <QCloseEvent>
 
 // KDE includes.
 
 #include <klocale.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <ktextedit.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <kpushbutton.h>
+#include <kmenu.h>
 #include <khelpmenu.h>
-#include <kpopupmenu.h>
+#include <ktoolinvocation.h>
+#include <kcomponentdata.h>
+#include <kglobal.h>
 
 // Local includes.
 
@@ -72,50 +74,64 @@ public:
 };
 
 CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
-                 : KDialogBase(Plain, i18n("Remove Image Captions"),
-                               Help|Ok|Cancel, Ok,
-                               parent, 0, true, true)
+                   : KDialog(parent)
 {
     d = new CommentRemoveDialogDialogPrivate;
+
+    setButtons(Help | Ok | Cancel);
+    setDefaultButton(Ok);
+    setCaption(i18n("Remove Image Caption"));
+    setModal(true);
 
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("Edit Metadata"),
+    d->about = new KIPIPlugins::KPAboutData(ki18n("Edit Metadata"),
                                             NULL,
                                             KAboutData::License_GPL,
-                                            I18N_NOOP("A Plugin to edit pictures metadata"),
-                                            "(c) 2006, Gilles Caulier");
+                                            ki18n("A Plugin to edit pictures metadata"),
+                                            ki18n("(c) 2006-2007, Gilles Caulier"));
 
-    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
+    d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("Edit Metadata Handbook"),
-                                 this, SLOT(slotHelp()), 0, -1, 0);
-    actionButton(Help)->setPopup( helpMenu->menu() );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KPushButton *helpButton = button( Help );
+    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    helpButton->setDelayedMenu( helpMenu->menu() );
 
     // ------------------------------------------------------------
 
-    QVBoxLayout *vlay = new QVBoxLayout(plainPage(), 0, KDialog::spacingHint());
+    setMainWidget(new QWidget(this));
+    QVBoxLayout *vlay = new QVBoxLayout(mainWidget());
 
-    d->removeHOSTCommentCheck = new QCheckBox(i18n("Remove caption created by %1")
-                                    .arg(KApplication::kApplication()->aboutData()->appName()), 
-                                    plainPage());
-    d->removeJFIFCommentCheck = new QCheckBox(i18n("Remove JFIF caption section"), plainPage());
-    d->removeEXIFCommentCheck = new QCheckBox(i18n("Remove EXIF caption"), plainPage());
-    d->removeIPTCCaptionCheck = new QCheckBox(i18n("Remove IPTC caption"), plainPage());
+    d->removeHOSTCommentCheck = new QCheckBox(i18n("Remove caption created by <b>%1</b>", 
+                                    KGlobal::mainComponent().aboutData()->programName()), 
+                                    mainWidget());
+    d->removeJFIFCommentCheck = new QCheckBox(i18n("Remove JFIF Comment section"), mainWidget());
+    d->removeEXIFCommentCheck = new QCheckBox(i18n("Remove EXIF Comment"), mainWidget());
+    d->removeIPTCCaptionCheck = new QCheckBox(i18n("Remove IPTC Caption"), mainWidget());
 
     QLabel *note = new QLabel(i18n("<b>Note: Captions from currently selected images "
-                                   "will be permanently removed.</b>"), plainPage());
-    
+                                   "will be permanently removed.</b>"), mainWidget());
+    note->setWordWrap(true);
+
+    // ------------------------------------------------------------
 
     vlay->addWidget(d->removeHOSTCommentCheck);
     vlay->addWidget(d->removeJFIFCommentCheck);
     vlay->addWidget(d->removeEXIFCommentCheck);
     vlay->addWidget(d->removeIPTCCaptionCheck);
     vlay->addWidget(note);
+    vlay->setMargin(0);
+    vlay->setSpacing(KDialog::spacingHint());
 
     // ------------------------------------------------------------
 
@@ -130,7 +146,7 @@ CommentRemoveDialog::~CommentRemoveDialog()
 
 void CommentRemoveDialog::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("metadataedit", "kipi-plugins");
+    KToolInvocation::invokeHelp("metadataedit", "kipi-plugins");
 }
 
 void CommentRemoveDialog::closeEvent(QCloseEvent *e)
@@ -143,29 +159,31 @@ void CommentRemoveDialog::closeEvent(QCloseEvent *e)
 void CommentRemoveDialog::slotCancel()
 {
     saveSettings();
-    KDialogBase::slotCancel();
+    reject();
 }
 
 void CommentRemoveDialog::readSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("Comments Remove Settings");
-    setCheckedRemoveHOSTComment(config.readBoolEntry("Remove HOST Comment", true));
-    setCheckedRemoveJFIFComment(config.readBoolEntry("Remove JFIF Comment", true));
-    setCheckedRemoveEXIFComment(config.readBoolEntry("Remove EXIF Comment", true));
-    setCheckedRemoveIPTCCaption(config.readBoolEntry("Remove IPTC Caption", true));
-    resize(configDialogSize(config, QString("Comments Remove Dialog")));
+    KConfigGroup group = config.group("Comments Remove Settings");
+    setCheckedRemoveHOSTComment(group.readEntry("Remove HOST Comment", true));
+    setCheckedRemoveJFIFComment(group.readEntry("Remove JFIF Comment", true));
+    setCheckedRemoveEXIFComment(group.readEntry("Remove EXIF Comment", true));
+    setCheckedRemoveIPTCCaption(group.readEntry("Remove IPTC Caption", true));
+    KConfigGroup group2 = config.group(QString("Comments Remove Dialog"));
+    restoreDialogSize(group2);
 }
 
 void CommentRemoveDialog::saveSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("Comments Remove Settings");
-    config.writeEntry("Remove HOST Comment", removeHOSTCommentIsChecked());
-    config.writeEntry("Remove JFIF Comment", removeJFIFCommentIsChecked());
-    config.writeEntry("Remove EXIF Comment", removeEXIFCommentIsChecked());
-    config.writeEntry("Remove IPTC Caption", removeIPTCCaptionIsChecked());
-    saveDialogSize(config, QString("Comments Remove Dialog"));
+    KConfigGroup group = config.group("Comments Remove Settings");
+    group.writeEntry("Remove HOST Comment", removeHOSTCommentIsChecked());
+    group.writeEntry("Remove JFIF Comment", removeJFIFCommentIsChecked());
+    group.writeEntry("Remove EXIF Comment", removeEXIFCommentIsChecked());
+    group.writeEntry("Remove IPTC Caption", removeIPTCCaptionIsChecked());
+    KConfigGroup group2 = config.group(QString("Comments Remove Dialog"));
+    saveDialogSize(group2);
     config.sync();
 }
 
