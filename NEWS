@@ -5,6 +5,7 @@ General        : Port to CMake/KDE4/QT4.
 JPEGLossLess   : XMP metadata support. 
 RAWConverter   : XMP metadata support. 
 TimeAdjust     : XMP metadata support. 
+MetadataEdit   : XMP metadata support with EXIF, IPTC, and Comments editor to sync XMP tags.
 
 
 v 0.1.4 beta2
