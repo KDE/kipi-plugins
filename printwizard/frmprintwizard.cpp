@@ -379,7 +379,7 @@ void FrmPrintWizard::FrmPrintWizardBaseSelected(const QString &)
         removeGimpFiles();
       m_gimpFiles = printPhotosToFile(m_photos, path, s);
       QStringList args;
-      args << "gimp";
+      args << "gimp-remote";
       for(QStringList::Iterator it = m_gimpFiles.begin(); it != m_gimpFiles.end(); ++it)
           args << (*it);
       if (!launchExternalApp(args))
