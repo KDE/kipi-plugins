@@ -123,7 +123,7 @@ CommentEditDialog::CommentEditDialog(QWidget* parent)
     d->userCommentEdit  = new KTextEdit(mainWidget());
 
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), mainWidget());
-    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF image caption"), mainWidget());
+    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF Comment"), mainWidget());
     d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: limited to 2000 printable "
                                                  "Ascii characters set)"), mainWidget());
 
