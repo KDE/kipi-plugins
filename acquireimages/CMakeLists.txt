@@ -10,7 +10,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_acquireimages
                       ${KIPI_LIBRARIES} 
                       ${KSANE_LIBRARIES}
                       ${KEXIV2_LIBRARIES} 
-                      ${QT_QT3SUPPORT_LIBRARY}
                       kipiplugins
                      )
 
