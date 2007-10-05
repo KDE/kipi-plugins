@@ -431,7 +431,7 @@ void Plugin_MetadataEdit::slotImportIptc()
 
 void Plugin_MetadataEdit::slotEditComments()
 {
-/*    KIPI::ImageCollection images = m_interface->currentSelection();
+    KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -490,7 +490,7 @@ void Plugin_MetadataEdit::slotEditComments()
                      i18n("Unable to set captions as image metadata from:"),
                      errorFiles,
                      i18n("Edit Image Caption"));  
-    }*/
+    }
 }
 
 void Plugin_MetadataEdit::slotRemoveComments()

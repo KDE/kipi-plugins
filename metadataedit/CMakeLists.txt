@@ -16,7 +16,7 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       iptcstatus.cpp
                                       iptcorigin.cpp
                                       iptceditdialog.cpp 
-#                                       commenteditdialog.cpp
+                                      commenteditdialog.cpp
 #                                       commentremovedialog.cpp
    )
 

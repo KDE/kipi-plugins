@@ -22,13 +22,11 @@
 
 // Qt includes.
 
-#include <qtimer.h>
-#include <qlabel.h>
-#include <qframe.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qcheckbox.h>
-#include <qwhatsthis.h>
+#include <QLabel>
+#include <QFrame>
+#include <QLayout>
+#include <QCheckBox>
+#include <QCloseEvent>
 
 // KDE includes.
 
@@ -37,9 +35,12 @@
 #include <kdebug.h>
 #include <ktextedit.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <kpushbutton.h>
+#include <kmenu.h>
 #include <khelpmenu.h>
-#include <kpopupmenu.h>
+#include <ktoolinvocation.h>
+#include <kcomponentdata.h>
+#include <kglobal.h>
 
 // Local includes.
 
@@ -74,49 +75,63 @@ public:
 };
 
 CommentEditDialog::CommentEditDialog(QWidget* parent)
-                 : KDialogBase(Plain, i18n("Edit Image Caption"),
-                               Help|Ok|Cancel, Ok,
-                               parent, 0, true, true)
+                 : KDialog(parent)
 {
     d = new CommentEditDialogDialogPrivate;
+
+    setButtons(Help | Ok | Cancel);
+    setDefaultButton(Ok);
+    setCaption(i18n("Edit Image Caption"));
+    setModal(true);
 
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("Edit Metadata"),
+    d->about = new KIPIPlugins::KPAboutData(ki18n("Edit Metadata"),
                                             NULL,
                                             KAboutData::License_GPL,
-                                            I18N_NOOP("A Plugin to edit images' metadata"),
-                                            "(c) 2006-2007, Gilles Caulier");
+                                            ki18n("A Plugin to edit pictures metadata"),
+                                            ki18n("(c) 2006-2007, Gilles Caulier"));
 
-    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
+    d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("Edit Metadata Handbook"),
-                                 this, SLOT(slotHelp()), 0, -1, 0);
-    actionButton(Help)->setPopup( helpMenu->menu() );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KPushButton *helpButton = button( Help );
+    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    helpButton->setDelayedMenu( helpMenu->menu() );
 
     // ------------------------------------------------------------
 
-    QVBoxLayout *vlay = new QVBoxLayout(plainPage(), 0, KDialog::spacingHint());
+    setMainWidget(new QWidget(this));
+    QVBoxLayout *vlay = new QVBoxLayout(mainWidget());
 
     QLabel *title = new QLabel(i18n("<p>Enter the image caption created by <b>%1</b>. "
-                                    "This field is not limited. UTF8 encoding "
-                                    "will be used to save text.")
-                                    .arg(KApplication::kApplication()->aboutData()->appName()),
-                               plainPage());
+                                    "This field is not limited (excepted with IPTC). UTF-8 encoding "
+                                    "will be used to save text.", 
+                                    KGlobal::mainComponent().aboutData()->programName()),
+                               mainWidget());
+    title->setWordWrap(true);
 
-    d->userCommentEdit  = new KTextEdit(plainPage());
+    d->userCommentEdit  = new KTextEdit(mainWidget());
 
-    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF caption section"), plainPage());
-    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF image caption"), plainPage());
-    d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: ASCII limited)"), plainPage());
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), mainWidget());
+    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF image caption"), mainWidget());
+    d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: limited to 2000 printable "
+                                                 "Ascii characters set)"), mainWidget());
 
     QLabel *note = new QLabel(i18n("<b>Note: captions from currently selected images "
-                                   "will be permanently replaced.</b>"), plainPage());
-    
+                                   "will be permanently replaced.</b>"), mainWidget());
+    note->setWordWrap(true);
+
+    // ------------------------------------------------------------
 
     vlay->addWidget(title);
     vlay->addWidget(d->userCommentEdit);
@@ -124,6 +139,16 @@ CommentEditDialog::CommentEditDialog(QWidget* parent)
     vlay->addWidget(d->syncEXIFCommentCheck);
     vlay->addWidget(d->syncIPTCCaptionCheck);
     vlay->addWidget(note);
+    vlay->setMargin(0);
+    vlay->setSpacing(KDialog::spacingHint());
+
+    // ------------------------------------------------------------
+
+    connect(this, SIGNAL(cancelClicked()),
+            this, SLOT(slotCancel()));
+
+    connect(this, SIGNAL(okClicked()),
+            this, SLOT(slotOk()));
 
     // ------------------------------------------------------------
 
@@ -138,7 +163,7 @@ CommentEditDialog::~CommentEditDialog()
 
 void CommentEditDialog::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("metadataedit", "kipi-plugins");
+    KToolInvocation::invokeHelp("metadataedit", "kipi-plugins");
 }
 
 void CommentEditDialog::closeEvent(QCloseEvent *e)
@@ -151,27 +176,29 @@ void CommentEditDialog::closeEvent(QCloseEvent *e)
 void CommentEditDialog::slotCancel()
 {
     saveSettings();
-    KDialogBase::slotCancel();
+    reject();
 }
 
 void CommentEditDialog::readSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("Comments Edit Settings");
-    setCheckedSyncJFIFComment(config.readBoolEntry("Sync JFIF Comment", true));
-    setCheckedSyncEXIFComment(config.readBoolEntry("Sync EXIF Comment", true));
-    setCheckedSyncIPTCCaption(config.readBoolEntry("Sync IPTC Caption", true));
-    resize(configDialogSize(config, QString("Comments Edit Dialog")));
+    KConfigGroup group = config.group("Comments Edit Settings");
+    setCheckedSyncJFIFComment(group.readEntry("Sync JFIF Comment", true));
+    setCheckedSyncEXIFComment(group.readEntry("Sync EXIF Comment", true));
+    setCheckedSyncIPTCCaption(group.readEntry("Sync IPTC Caption", true));
+    KConfigGroup group2 = config.group(QString("Comments Edit Dialog"));
+    restoreDialogSize(group2);
 }
 
 void CommentEditDialog::saveSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("Comments Edit Settings");
-    config.writeEntry("Sync JFIF Comment", syncJFIFCommentIsChecked());
-    config.writeEntry("Sync EXIF Comment", syncEXIFCommentIsChecked());
-    config.writeEntry("Sync IPTC Caption", syncIPTCCaptionIsChecked());
-    saveDialogSize(config, QString("Comments Edit Dialog"));
+    KConfigGroup group = config.group("Comments Edit Settings");
+    group.writeEntry("Sync JFIF Comment", syncJFIFCommentIsChecked());
+    group.writeEntry("Sync EXIF Comment", syncEXIFCommentIsChecked());
+    group.writeEntry("Sync IPTC Caption", syncIPTCCaptionIsChecked());
+    KConfigGroup group2 = config.group(QString("Comments Edit Dialog"));
+    saveDialogSize(group2);
     config.sync();
 }
 
@@ -198,7 +225,7 @@ bool CommentEditDialog::syncIPTCCaptionIsChecked()
 
 QString CommentEditDialog::getComments()
 {
-    return d->userCommentEdit->text();
+    return d->userCommentEdit->toPlainText();
 }
 
 void CommentEditDialog::setCheckedSyncJFIFComment(bool c)
