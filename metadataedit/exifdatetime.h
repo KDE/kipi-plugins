@@ -43,13 +43,15 @@ public:
     EXIFDateTime(QWidget* parent);
     ~EXIFDateTime();
 
-    void applyMetadata(QByteArray& exifData, QByteArray& iptcData);
+    void applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData);
     void readMetadata(QByteArray& exifData);
 
     bool syncHOSTDateIsChecked();
+    bool syncXMPDateIsChecked();
     bool syncIPTCDateIsChecked();
 
     void setCheckedSyncHOSTDate(bool c);
+    void setCheckedSyncXMPDate(bool c);
     void setCheckedSyncIPTCDate(bool c);
 
     QDateTime getEXIFCreationDate();

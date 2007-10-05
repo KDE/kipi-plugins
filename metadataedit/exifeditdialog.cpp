@@ -100,6 +100,7 @@ public:
 
     QByteArray                exifData;
     QByteArray                iptcData;
+    QByteArray                xmpData;
 
     KPageWidgetItem          *page_caption;
     KPageWidgetItem          *page_datetime;
@@ -270,8 +271,10 @@ void EXIFEditDialog::readSettings()
     showPage(group.readEntry("EXIF Edit Page", 0));
     d->captionPage->setCheckedSyncJFIFComment(group.readEntry("Sync JFIF Comment", true));
     d->captionPage->setCheckedSyncHOSTComment(group.readEntry("Sync Host Comment", true));
+    d->captionPage->setCheckedSyncXMPCaption(group.readEntry("Sync XMP Caption", true));
     d->captionPage->setCheckedSyncIPTCCaption(group.readEntry("Sync IPTC Caption", true));
     d->datetimePage->setCheckedSyncHOSTDate(group.readEntry("Sync Host Date", true));
+    d->datetimePage->setCheckedSyncXMPDate(group.readEntry("Sync XMP Date", true));
     d->datetimePage->setCheckedSyncIPTCDate(group.readEntry("Sync IPTC Date", true));
     KConfigGroup group2 = config.group(QString("EXIF Edit Dialog"));
     restoreDialogSize(group2);
@@ -284,8 +287,10 @@ void EXIFEditDialog::saveSettings()
     group.writeEntry("EXIF Edit Page", activePageIndex());
     group.writeEntry("Sync JFIF Comment", d->captionPage->syncJFIFCommentIsChecked());
     group.writeEntry("Sync Host Comment", d->captionPage->syncHOSTCommentIsChecked());
+    group.writeEntry("Sync XMP Caption", d->captionPage->syncXMPCaptionIsChecked());
     group.writeEntry("Sync IPTC Caption", d->captionPage->syncIPTCCaptionIsChecked());
     group.writeEntry("Sync Host Date", d->datetimePage->syncHOSTDateIsChecked());
+    group.writeEntry("Sync XMP Date", d->datetimePage->syncXMPDateIsChecked());
     group.writeEntry("Sync IPTC Date", d->datetimePage->syncIPTCDateIsChecked());
     KConfigGroup group2 = config.group(QString("EXIF Edit Dialog"));
     saveDialogSize(group2);
@@ -298,6 +303,7 @@ void EXIFEditDialog::slotItemChanged()
     exiv2Iface.load((*d->currItem).path());
     d->exifData = exiv2Iface.getExif();
     d->iptcData = exiv2Iface.getIptc();
+    d->xmpData  = exiv2Iface.getXmp();
     d->captionPage->readMetadata(d->exifData);
     d->datetimePage->readMetadata(d->exifData);
     d->lensPage->readMetadata(d->exifData);
@@ -335,23 +341,26 @@ void EXIFEditDialog::slotApply()
         {
             info.setDescription(d->captionPage->getEXIFUserComments());
         }
-        d->captionPage->applyMetadata(d->exifData, d->iptcData);
+        d->captionPage->applyMetadata(d->exifData, d->iptcData, d->xmpData);
 
         if (d->datetimePage->syncHOSTDateIsChecked())
         {
             info.setTime(d->datetimePage->getEXIFCreationDate());
         }
-        d->datetimePage->applyMetadata(d->exifData, d->iptcData);
+        d->datetimePage->applyMetadata(d->exifData, d->iptcData, d->xmpData);
 
         d->lensPage->applyMetadata(d->exifData);
         d->devicePage->applyMetadata(d->exifData);
         d->lightPage->applyMetadata(d->exifData);
         d->adjustPage->applyMetadata(d->exifData);
+
         KExiv2Iface::KExiv2 exiv2Iface;
         exiv2Iface.load((*d->currItem).path());
         exiv2Iface.setExif(d->exifData);
         exiv2Iface.setIptc(d->iptcData);
+        exiv2Iface.setXmp(d->xmpData);
         exiv2Iface.save((*d->currItem).path());
+
         d->modified = false;
     }
 }

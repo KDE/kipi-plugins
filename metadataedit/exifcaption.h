@@ -43,15 +43,17 @@ public:
     EXIFCaption(QWidget* parent);
     ~EXIFCaption();
 
-    void applyMetadata(QByteArray& exifData, QByteArray& iptcData);
+    void applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData);
     void readMetadata(QByteArray& exifData);
 
     bool syncJFIFCommentIsChecked();
     bool syncHOSTCommentIsChecked();
+    bool syncXMPCaptionIsChecked();
     bool syncIPTCCaptionIsChecked();
 
     void setCheckedSyncJFIFComment(bool c);
     void setCheckedSyncHOSTComment(bool c);
+    void setCheckedSyncXMPCaption(bool c);
     void setCheckedSyncIPTCCaption(bool c);
 
     QString getEXIFUserComments();

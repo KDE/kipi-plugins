@@ -68,6 +68,7 @@ public:
         copyrightCheck       = 0;
         syncJFIFCommentCheck = 0;
         syncHOSTCommentCheck = 0;
+        syncXMPCaptionCheck  = 0;
         syncIPTCCaptionCheck = 0;
     }
 
@@ -78,6 +79,7 @@ public:
     QCheckBox *userCommentCheck;
     QCheckBox *syncJFIFCommentCheck;
     QCheckBox *syncHOSTCommentCheck;
+    QCheckBox *syncXMPCaptionCheck;
     QCheckBox *syncIPTCCaptionCheck;
 
     KTextEdit *userCommentEdit;
@@ -142,8 +144,13 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync captions entered through %1", 
                                             KGlobal::mainComponent().aboutData()->programName()), 
                                             this);
-    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), this);    d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: limited to 2000 printable "
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), this);   
+    d->syncXMPCaptionCheck  = new QCheckBox(i18n("Sync XMP caption"), this);
+    d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: limited to 2000 printable "
                                                  "Ascii characters set)"), this);
+
+    if (!KExiv2Iface::KExiv2::supportXmp())
+        d->syncXMPCaptionCheck->setEnabled(false);
 
     // --------------------------------------------------------
 
@@ -169,6 +176,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     vlay->addWidget(d->userCommentEdit);
     vlay->addWidget(d->syncHOSTCommentCheck);
     vlay->addWidget(d->syncJFIFCommentCheck);
+    vlay->addWidget(d->syncXMPCaptionCheck);
     vlay->addWidget(d->syncIPTCCaptionCheck);
     vlay->addWidget(note);
     vlay->addStretch();
@@ -197,6 +205,9 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     connect(d->userCommentCheck, SIGNAL(toggled(bool)),
             d->syncHOSTCommentCheck, SLOT(setEnabled(bool)));
+
+    connect(d->userCommentCheck, SIGNAL(toggled(bool)),
+            d->syncXMPCaptionCheck, SLOT(setEnabled(bool)));
 
     connect(d->userCommentCheck, SIGNAL(toggled(bool)),
             d->syncIPTCCaptionCheck, SLOT(setEnabled(bool)));
@@ -251,6 +262,11 @@ bool EXIFCaption::syncHOSTCommentIsChecked()
     return d->syncHOSTCommentCheck->isChecked();
 }
 
+bool EXIFCaption::syncXMPCaptionIsChecked()
+{
+    return d->syncXMPCaptionCheck->isChecked();
+}
+
 bool EXIFCaption::syncIPTCCaptionIsChecked()
 {
     return d->syncIPTCCaptionCheck->isChecked();
@@ -269,6 +285,11 @@ void EXIFCaption::setCheckedSyncJFIFComment(bool c)
 void EXIFCaption::setCheckedSyncHOSTComment(bool c)
 {
     d->syncHOSTCommentCheck->setChecked(c);
+}
+
+void EXIFCaption::setCheckedSyncXMPCaption(bool c)
+{
+    d->syncXMPCaptionCheck->setChecked(c);
 }
 
 void EXIFCaption::setCheckedSyncIPTCCaption(bool c)
@@ -334,16 +355,18 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
     d->userCommentEdit->setEnabled(d->userCommentCheck->isChecked());
     d->syncJFIFCommentCheck->setEnabled(d->userCommentCheck->isChecked());
     d->syncHOSTCommentCheck->setEnabled(d->userCommentCheck->isChecked());
+    d->syncXMPCaptionCheck->setEnabled(d->userCommentCheck->isChecked());
     d->syncIPTCCaptionCheck->setEnabled(d->userCommentCheck->isChecked());
 
     blockSignals(false);
 }
 
-void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
+void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData)
 {
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
+    exiv2Iface.setXmp(xmpData);
 
     if (d->documentNameCheck->isChecked())
         exiv2Iface.setExifTagString("Exif.Image.DocumentName", d->documentNameEdit->text());
@@ -372,6 +395,17 @@ void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
         if (syncJFIFCommentIsChecked())
             exiv2Iface.setComments(d->userCommentEdit->toPlainText().toUtf8());
         
+        if (exiv2Iface.supportXmp() && syncXMPCaptionIsChecked())
+        {
+            exiv2Iface.setXmpTagStringLangAlt("Xmp.dc.description", 
+                                              d->userCommentEdit->toPlainText(), 
+                                              QString(), false);
+        
+            exiv2Iface.setXmpTagStringLangAlt("Xmp.exif.UserComment",
+                                              d->userCommentEdit->toPlainText(), 
+                                              QString(), false);
+        }
+
         if (syncIPTCCaptionIsChecked())
             exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->userCommentEdit->toPlainText());
     }
@@ -382,6 +416,7 @@ void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 
     exifData = exiv2Iface.getExif();
     iptcData = exiv2Iface.getIptc();
+    xmpData = exiv2Iface.getXmp();
 }
 
 }  // namespace KIPIMetadataEditPlugin
