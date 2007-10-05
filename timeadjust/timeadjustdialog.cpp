@@ -96,6 +96,7 @@ public:
         custom            = 0;
         syncEXIFDateCheck = 0;
         syncIPTCDateCheck = 0;
+        syncXMPDateCheck  = 0;
         exampleBox        = 0;
         adjustValGrp      = 0;
         adjustTypeGrp     = 0;
@@ -122,6 +123,7 @@ public:
 
     QCheckBox                *syncEXIFDateCheck;
     QCheckBox                *syncIPTCDateCheck;
+    QCheckBox                *syncXMPDateCheck;
 
     QGroupBox                *exampleBox;
     QGroupBox                *adjGB;
@@ -203,7 +205,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->add            = new QRadioButton(i18n("Add"), d->adjTypeGB);
     d->subtract       = new QRadioButton(i18n("Subtract"), d->adjTypeGB);
-    d->exif           = new QRadioButton(i18n("Set file date to EXIF/IPTC creation date"), d->adjTypeGB);
+    d->exif           = new QRadioButton(i18n("Set file date to EXIF/IPTC/XMP creation date"), d->adjTypeGB);
     d->custom         = new QRadioButton(i18n("Custom date"), d->adjTypeGB);
 
     d->adjustTypeGrp->addButton(d->add, 0);
@@ -222,9 +224,13 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     d->todayBtn->setToolTip(i18n("Reset to current date"));
     new QLabel(hbox);
     
-    d->syncEXIFDateCheck = new QCheckBox(i18n("Update Exif creation date"), d->adjTypeGB);
+    d->syncEXIFDateCheck = new QCheckBox(i18n("Update EXIF creation date"), d->adjTypeGB);
     d->syncIPTCDateCheck = new QCheckBox(i18n("Update IPTC creation date"), d->adjTypeGB);
-    
+    d->syncXMPDateCheck = new QCheckBox(i18n("Update XMP creation date"), d->adjTypeGB);
+
+    if (!KExiv2Iface::KExiv2::supportXmp())
+        d->syncXMPDateCheck->setEnabled(false);
+
     vlay2->setMargin(spacingHint());
     vlay2->setSpacing(spacingHint());
     vlay2->addWidget(d->add);
@@ -234,6 +240,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     vlay2->addWidget(hbox);
     vlay2->addWidget(d->syncEXIFDateCheck);
     vlay2->addWidget(d->syncIPTCDateCheck);
+    vlay2->addWidget(d->syncXMPDateCheck);
 
     // -- Adjustments ------------------------------------------------------------
 
@@ -392,6 +399,7 @@ void TimeAdjustDialog::readSettings()
 
     d->syncEXIFDateCheck->setChecked(group.readEntry("Sync EXIF Date", true));
     d->syncIPTCDateCheck->setChecked(group.readEntry("Sync IPTC Date", true));
+    d->syncXMPDateCheck->setChecked(group.readEntry("Sync XMP Date", true));
 
     KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
     restoreDialogSize(group2);
@@ -412,6 +420,7 @@ void TimeAdjustDialog::saveSettings()
 
     group.writeEntry("Sync EXIF Date", d->syncEXIFDateCheck->isChecked());
     group.writeEntry("Sync IPTC Date", d->syncIPTCDateCheck->isChecked());
+    group.writeEntry("Sync XMP Date", d->syncXMPDateCheck->isChecked());
 
     KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
     saveDialogSize(group2);
@@ -477,6 +486,7 @@ void TimeAdjustDialog::slotAdjustmentTypeChanged()
     d->todayBtn->setEnabled(false);
     d->syncEXIFDateCheck->setEnabled(false);
     d->syncIPTCDateCheck->setEnabled(false);
+    d->syncXMPDateCheck->setEnabled(false);
 
     if (d->add->isChecked() || d->subtract->isChecked())
     {
@@ -484,6 +494,7 @@ void TimeAdjustDialog::slotAdjustmentTypeChanged()
         d->adjGB->setEnabled(true);
         d->syncEXIFDateCheck->setEnabled(true);
         d->syncIPTCDateCheck->setEnabled(true);
+        d->syncXMPDateCheck->setEnabled(true);
     }
     else if (d->custom->isChecked())
     {
@@ -491,6 +502,7 @@ void TimeAdjustDialog::slotAdjustmentTypeChanged()
         d->todayBtn->setEnabled(true);
         d->syncEXIFDateCheck->setEnabled(true);
         d->syncIPTCDateCheck->setEnabled(true);
+        d->syncXMPDateCheck->setEnabled(true);
     }
 }
 
@@ -513,7 +525,8 @@ void TimeAdjustDialog::slotOk()
         ut.actime  = dateTime.toTime_t();
         ::utime(QFile::encodeName(url.path()), &ut);
 
-        if (d->syncEXIFDateCheck->isChecked() || d->syncIPTCDateCheck->isChecked())
+        if (d->syncEXIFDateCheck->isChecked() || d->syncIPTCDateCheck->isChecked() ||
+            d->syncXMPDateCheck->isChecked())
         {
             bool ret = true;
             if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
@@ -535,6 +548,22 @@ void TimeAdjustDialog::slotOk()
                             dateTime.date().toString(Qt::ISODate));
                         ret &= exiv2Iface.setIptcTagString("Iptc.Application2.TimeCreated",
                             dateTime.time().toString(Qt::ISODate));
+                    }
+
+                    if (exiv2Iface.supportXmp() && d->syncXMPDateCheck->isChecked())
+                    {
+                        ret &= exiv2Iface.setXmpTagString("Xmp.exif.DateTimeOriginal",
+                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        ret &= exiv2Iface.setXmpTagString("Xmp.photoshop.DateCreated",
+                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        ret &= exiv2Iface.setXmpTagString("Xmp.tiff.DateTime",
+                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        ret &= exiv2Iface.setXmpTagString("Xmp.xmp.CreateDate",
+                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        ret &= exiv2Iface.setXmpTagString("Xmp.xmp.MetadataDate",
+                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        ret &= exiv2Iface.setXmpTagString("Xmp.xmp.ModifyDate",
+                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     }
     
                     ret &= exiv2Iface.save(url.path());
