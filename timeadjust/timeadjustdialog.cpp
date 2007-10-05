@@ -157,8 +157,8 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     d = new TimeAdjustDialogPrivate;
     d->interface = interface;
 
-    setButtons(KDialog::Help | KDialog::Ok | KDialog::Cancel);
-    setDefaultButton(KDialog::Ok);
+    setButtons(Help | Ok | Cancel);
+    setDefaultButton(Ok);
     setCaption(i18n("Adjust Time & Date"));
     setModal(true);
 
