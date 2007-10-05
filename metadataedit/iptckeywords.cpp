@@ -56,6 +56,7 @@ public:
     {
         addKeywordButton = 0;
         delKeywordButton = 0;
+        repKeywordButton = 0;
         keywordsBox      = 0;
         keywordsCheck    = 0;
         keywordEdit      = 0;
@@ -65,6 +66,7 @@ public:
 
     QPushButton *addKeywordButton;
     QPushButton *delKeywordButton;
+    QPushButton *repKeywordButton;
 
     QCheckBox   *keywordsCheck;
 
@@ -98,8 +100,10 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
     
     d->addKeywordButton = new QPushButton( i18n("&Add"), this);
     d->delKeywordButton = new QPushButton( i18n("&Delete"), this);
+    d->repKeywordButton = new QPushButton( i18n("&Replace"), this);
     d->addKeywordButton->setIcon(SmallIcon("edit-add"));
     d->delKeywordButton->setIcon(SmallIcon("edit-delete"));
+    d->repKeywordButton->setIcon(SmallIcon("view-refresh"));
     d->delKeywordButton->setEnabled(false);
 
     // --------------------------------------------------------
@@ -119,25 +123,29 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
     grid->setAlignment( Qt::AlignTop );
     grid->addWidget(d->keywordsCheck, 0, 0, 1, 2 );
     grid->addWidget(d->keywordEdit, 1, 0, 1, 1);
-    grid->addWidget(d->keywordsBox, 2, 0, 5- 2+1, 1);
+    grid->addWidget(d->keywordsBox, 2, 0, 5, 1);
     grid->addWidget(d->addKeywordButton, 2, 1, 1, 1);
     grid->addWidget(d->delKeywordButton, 3, 1, 1, 1);
-    grid->addWidget(note, 4, 1, 1, 1);
+    grid->addWidget(d->repKeywordButton, 4, 1, 1, 1);
+    grid->addWidget(note, 5, 1, 1, 1);
     grid->setColumnStretch(0, 10);                     
-    grid->setRowStretch(5, 10);      
+    grid->setRowStretch(6, 10);      
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());    
                                          
     // --------------------------------------------------------
 
-    connect(d->keywordsBox, SIGNAL(selectionChanged()),
-            this, SLOT(slotKeywordSelectionChanged()));
+    connect(d->keywordsBox, SIGNAL(currentRowChanged(int)),
+            this, SLOT(slotKeywordSelectionChanged(int)));
     
     connect(d->addKeywordButton, SIGNAL(clicked()),
             this, SLOT(slotAddKeyword()));
     
     connect(d->delKeywordButton, SIGNAL(clicked()),
             this, SLOT(slotDelKeyword()));
+
+    connect(d->repKeywordButton, SIGNAL(clicked()),
+            this, SLOT(slotRepKeyword()));
 
     // --------------------------------------------------------
 
@@ -178,12 +186,25 @@ void IPTCKeywords::slotDelKeyword()
     delete item;
 }
 
-void IPTCKeywords::slotKeywordSelectionChanged()
+void IPTCKeywords::slotRepKeyword()
 {
-    if (d->keywordsBox->currentItem())
+    slotDelKeyword();
+    slotAddKeyword();
+}
+
+void IPTCKeywords::slotKeywordSelectionChanged(int i)
+{
+    if (i != -1)
+    {
+        d->keywordEdit->setText(d->keywordsBox->currentItem()->text());
         d->delKeywordButton->setEnabled(true);
+        d->repKeywordButton->setEnabled(true);
+    }
     else
+    {
         d->delKeywordButton->setEnabled(false);
+        d->repKeywordButton->setEnabled(false);
+    }
 }
 
 void IPTCKeywords::slotAddKeyword()

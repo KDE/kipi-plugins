@@ -132,7 +132,7 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     grid->addWidget(d->categoryEdit, 0, 1, 1, 1);
     grid->addWidget(d->subCategoriesCheck, 1, 0, 1, 2 );
     grid->addWidget(d->subCategoryEdit, 2, 0, 1, 1);
-    grid->addWidget(d->subCategoriesBox, 3, 0, 6- 3+1, 1);
+    grid->addWidget(d->subCategoriesBox, 3, 0, 4, 1);
     grid->addWidget(d->addSubCategoryButton, 3, 1, 1, 1);
     grid->addWidget(d->delSubCategoryButton, 4, 1, 1, 1);
     grid->addWidget(note, 5, 1, 1, 1);
@@ -180,7 +180,7 @@ IPTCCategories::IPTCCategories(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->subCategoriesBox, SIGNAL(selectionChanged()),
+    connect(d->subCategoriesBox, SIGNAL(itemSelectionChanged()),
             this, SLOT(slotCategorySelectionChanged()));
     
     connect(d->addSubCategoryButton, SIGNAL(clicked()),

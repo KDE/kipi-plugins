@@ -51,9 +51,10 @@ signals:
 
 private slots:
 
-    void slotKeywordSelectionChanged();
+    void slotKeywordSelectionChanged(int);
     void slotAddKeyword();
     void slotDelKeyword();
+    void slotRepKeyword();
 
 private:
 
