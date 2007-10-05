@@ -56,6 +56,7 @@ public:
     {
         addSubjectButton = 0;
         delSubjectButton = 0;
+        repSubjectButton = 0;
         subjectsBox      = 0;
         subjectsCheck    = 0;
         subjectEdit      = 0;
@@ -65,6 +66,7 @@ public:
 
     QPushButton *addSubjectButton;
     QPushButton *delSubjectButton;
+    QPushButton *repSubjectButton;
 
     QCheckBox   *subjectsCheck;
 
@@ -88,6 +90,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->subjectsCheck = new QCheckBox(i18n("Use structured definition of the subject matter:"), this);    
 
     d->subjectEdit   = new KLineEdit(this);
+    d->subjectEdit->setClearButtonShown(true);
     d->subjectEdit->setValidator(asciiValidator);
     d->subjectEdit->setMaxLength(236);
     d->subjectEdit->setWhatsThis(i18n("<p>Enter here a new subject. "
@@ -98,9 +101,12 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     
     d->addSubjectButton = new QPushButton( i18n("&Add"), this);
     d->delSubjectButton = new QPushButton( i18n("&Delete"), this);
+    d->repSubjectButton = new QPushButton( i18n("&Replace"), this);
     d->addSubjectButton->setIcon(SmallIcon("edit-add"));
     d->delSubjectButton->setIcon(SmallIcon("edit-delete"));
+    d->repSubjectButton->setIcon(SmallIcon("view-refresh"));
     d->delSubjectButton->setEnabled(false);
+    d->repSubjectButton->setEnabled(false);
 
     // --------------------------------------------------------
 
@@ -119,12 +125,13 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     grid->setAlignment( Qt::AlignTop );
     grid->addWidget(d->subjectsCheck, 0, 0, 1, 2 );
     grid->addWidget(d->subjectEdit, 1, 0, 1, 1);
-    grid->addWidget(d->subjectsBox, 2, 0, 4, 1);
+    grid->addWidget(d->subjectsBox, 2, 0, 5, 1);
     grid->addWidget(d->addSubjectButton, 2, 1, 1, 1);
     grid->addWidget(d->delSubjectButton, 3, 1, 1, 1);
-    grid->addWidget(note, 4, 1, 1, 1);
+    grid->addWidget(d->repSubjectButton, 4, 1, 1, 1);
+    grid->addWidget(note, 5, 1, 1, 1);
     grid->setColumnStretch(0, 10);                     
-    grid->setRowStretch(5, 10);  
+    grid->setRowStretch(6, 10);  
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());    
                                          
@@ -138,6 +145,9 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     
     connect(d->delSubjectButton, SIGNAL(clicked()),
             this, SLOT(slotDelSubject()));
+
+    connect(d->repSubjectButton, SIGNAL(clicked()),
+            this, SLOT(slotRepSubject()));
 
     // --------------------------------------------------------
 
@@ -153,6 +163,9 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     connect(d->subjectsCheck, SIGNAL(toggled(bool)),
             d->delSubjectButton, SLOT(setEnabled(bool)));
 
+    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
+            d->repSubjectButton, SLOT(setEnabled(bool)));
+
     // --------------------------------------------------------
 
     connect(d->subjectsCheck, SIGNAL(toggled(bool)),
@@ -162,6 +175,9 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->delSubjectButton, SIGNAL(clicked()),
+            this, SIGNAL(signalModified()));
+
+    connect(d->repSubjectButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
 }
 
@@ -178,12 +194,31 @@ void IPTCSubjects::slotDelSubject()
     delete item;
 }
 
+void IPTCSubjects::slotRepSubject()
+{
+    QString newSubject = d->subjectEdit->text();
+    if (newSubject.isEmpty()) return;
+
+    if (!d->subjectsBox->selectedItems().isEmpty())
+    {
+        d->subjectsBox->selectedItems()[0]->setText(newSubject);
+        d->subjectEdit->clear();
+    }
+}
+
 void IPTCSubjects::slotSubjectSelectionChanged()
 {
-    if (d->subjectsBox->currentItem())
+    if (!d->subjectsBox->selectedItems().isEmpty())
+    {
+        d->subjectEdit->setText(d->subjectsBox->selectedItems()[0]->text());
         d->delSubjectButton->setEnabled(true);
+        d->repSubjectButton->setEnabled(true);
+    }
     else
+    {
         d->delSubjectButton->setEnabled(false);
+        d->repSubjectButton->setEnabled(false);
+    }
 }
 
 void IPTCSubjects::slotAddSubject()
@@ -203,7 +238,10 @@ void IPTCSubjects::slotAddSubject()
     }
 
     if (!found)
+    {
         d->subjectsBox->insertItem(d->subjectsBox->count(), newSubject);
+        d->subjectEdit->clear();
+    }
 }
 
 void IPTCSubjects::readMetadata(QByteArray& iptcData)

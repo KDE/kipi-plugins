@@ -220,6 +220,9 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     connect(d->delSubCategoryButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
 
+    connect(d->repSubCategoryButton, SIGNAL(clicked()),
+            this, SIGNAL(signalModified()));
+
     connect(d->categoryEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 }

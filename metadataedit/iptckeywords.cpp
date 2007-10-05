@@ -182,6 +182,9 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
     
     connect(d->delKeywordButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
+
+    connect(d->repKeywordButton, SIGNAL(clicked()),
+            this, SIGNAL(signalModified()));
 }
 
 IPTCKeywords::~IPTCKeywords()

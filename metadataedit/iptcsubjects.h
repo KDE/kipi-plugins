@@ -54,6 +54,7 @@ private slots:
     void slotSubjectSelectionChanged();
     void slotAddSubject();
     void slotDelSubject();
+    void slotRepSubject();
 
 private:
 
