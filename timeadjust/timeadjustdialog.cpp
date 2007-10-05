@@ -222,7 +222,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     QToolTip::add(d->todayBtn, i18n("Reset to current date"));
     new QLabel(hbox);
     
-    d->syncEXIFDateCheck = new QCheckBox(i18n("Update Exif creation date"), d->adjustTypeGrp);
+    d->syncEXIFDateCheck = new QCheckBox(i18n("Update EXIF creation date"), d->adjustTypeGrp);
     d->syncIPTCDateCheck = new QCheckBox(i18n("Update IPTC creation date"), d->adjustTypeGrp);
 
     vlay->addWidget(adjGB);
