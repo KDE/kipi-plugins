@@ -22,7 +22,6 @@
 
 // Qt includes.
 
-#include <qtimer.h>
 #include <qlabel.h>
 #include <qframe.h>
 #include <qlayout.h>
@@ -103,20 +102,22 @@ CommentEditDialog::CommentEditDialog(QWidget* parent)
     QVBoxLayout *vlay = new QVBoxLayout(plainPage(), 0, KDialog::spacingHint());
 
     QLabel *title = new QLabel(i18n("<p>Enter the image caption created by <b>%1</b>. "
-                                    "This field is not limited. UTF8 encoding "
+                                    "This field is not limited (excepted with IPTC). UTF8 encoding "
                                     "will be used to save text.")
                                     .arg(KApplication::kApplication()->aboutData()->appName()),
                                plainPage());
 
     d->userCommentEdit  = new KTextEdit(plainPage());
 
-    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF caption section"), plainPage());
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), plainPage());
     d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF image caption"), plainPage());
-    d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: ASCII limited)"), plainPage());
+    d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: limited to 2000 printable "
+                                                 "Ascii characters set)"), plainPage());
 
     QLabel *note = new QLabel(i18n("<b>Note: captions from currently selected images "
                                    "will be permanently replaced.</b>"), plainPage());
     
+    // ------------------------------------------------------------
 
     vlay->addWidget(title);
     vlay->addWidget(d->userCommentEdit);
