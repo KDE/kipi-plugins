@@ -22,7 +22,6 @@
 
 // Qt includes.
 
-#include <qtimer.h>
 #include <qlabel.h>
 #include <qframe.h>
 #include <qlayout.h>
@@ -72,9 +71,9 @@ public:
 };
 
 CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
-                 : KDialogBase(Plain, i18n("Remove Image Captions"),
-                               Help|Ok|Cancel, Ok,
-                               parent, 0, true, true)
+                   : KDialogBase(Plain, i18n("Remove Image Captions"),
+                                 Help|Ok|Cancel, Ok,
+                                 parent, 0, true, true)
 {
     d = new CommentRemoveDialogDialogPrivate;
 
@@ -85,7 +84,7 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
                                             NULL,
                                             KAboutData::License_GPL,
                                             I18N_NOOP("A Plugin to edit pictures metadata"),
-                                            "(c) 2006, Gilles Caulier");
+                                            "(c) 2006-2007, Gilles Caulier");
 
     d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
@@ -109,7 +108,8 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
 
     QLabel *note = new QLabel(i18n("<b>Note: Captions from currently selected images "
                                    "will be permanently removed.</b>"), plainPage());
-    
+
+    // ------------------------------------------------------------    
 
     vlay->addWidget(d->removeHOSTCommentCheck);
     vlay->addWidget(d->removeJFIFCommentCheck);
