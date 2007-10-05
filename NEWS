@@ -1,8 +1,10 @@
 v 0.2.0
 ------------------------------------------------------------------------
 
-Port to CMake/KDE4/QT4
-
+General        : Port to CMake/KDE4/QT4. 
+JPEGLossLess   : XMP metadata support. 
+RAWConverter   : XMP metadata support. 
+TimeAdjust     : XMP metadata support. 
 
 
 v 0.1.4 beta2
