@@ -34,6 +34,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <klistbox.h>
+#include <kiconloader.h>
 #include <klineedit.h>
 #include <kactivelabel.h>
 
