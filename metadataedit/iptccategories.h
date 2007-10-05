@@ -54,6 +54,7 @@ private slots:
     void slotCategorySelectionChanged();
     void slotAddCategory();
     void slotDelCategory();
+    void slotRepCategory();
 
 private:
 

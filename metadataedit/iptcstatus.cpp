@@ -99,6 +99,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     d->statusCheck = new QCheckBox(i18n("Edit Status:"), this);
     d->statusEdit  = new KLineEdit(this);
+    d->statusEdit->setClearButtonShown(true);
     d->statusEdit->setValidator(asciiValidator);
     d->statusEdit->setMaxLength(64);
     d->statusEdit->setWhatsThis(i18n("<p>Set here the content status. This field is limited "

@@ -56,6 +56,7 @@ public:
     {
         addSubCategoryButton = 0;
         delSubCategoryButton = 0;
+        repSubCategoryButton = 0;
         subCategoriesBox     = 0;
         subCategoriesCheck   = 0;
         categoryCheck        = 0;
@@ -67,6 +68,7 @@ public:
 
     QPushButton *addSubCategoryButton;
     QPushButton *delSubCategoryButton;
+    QPushButton *repSubCategoryButton;
 
     QCheckBox   *subCategoriesCheck;
     QCheckBox   *categoryCheck;
@@ -91,6 +93,7 @@ IPTCCategories::IPTCCategories(QWidget* parent)
 
     d->categoryCheck = new QCheckBox(i18n("Identify subject of content (3 chars max):"), this);    
     d->categoryEdit  = new KLineEdit(this);
+    d->categoryEdit->setClearButtonShown(true);
     d->categoryEdit->setValidator(asciiValidator);
     d->categoryEdit->setMaxLength(3);
     d->categoryEdit->setWhatsThis(i18n("<p>Set here the category of content. This field is limited "
@@ -99,6 +102,7 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     d->subCategoriesCheck = new QCheckBox(i18n("Supplemental categories:"), this);    
 
     d->subCategoryEdit = new KLineEdit(this);
+    d->subCategoryEdit->setClearButtonShown(true);
     d->subCategoryEdit->setValidator(asciiValidator);
     d->subCategoryEdit->setMaxLength(32);
     d->subCategoryEdit->setWhatsThis(i18n("<p>Enter here a new supplemental category of content. "
@@ -109,9 +113,12 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     
     d->addSubCategoryButton = new QPushButton( i18n("&Add"), this);
     d->delSubCategoryButton = new QPushButton( i18n("&Delete"), this);
+    d->repSubCategoryButton = new QPushButton( i18n("&Replace"), this);
     d->addSubCategoryButton->setIcon(SmallIcon("edit-add"));
     d->delSubCategoryButton->setIcon(SmallIcon("edit-delete"));
+    d->repSubCategoryButton->setIcon(SmallIcon("view-refresh"));
     d->delSubCategoryButton->setEnabled(false);
+    d->repSubCategoryButton->setEnabled(false);
 
     // --------------------------------------------------------
 
@@ -132,12 +139,13 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     grid->addWidget(d->categoryEdit, 0, 1, 1, 1);
     grid->addWidget(d->subCategoriesCheck, 1, 0, 1, 2 );
     grid->addWidget(d->subCategoryEdit, 2, 0, 1, 1);
-    grid->addWidget(d->subCategoriesBox, 3, 0, 4, 1);
+    grid->addWidget(d->subCategoriesBox, 3, 0, 5, 1);
     grid->addWidget(d->addSubCategoryButton, 3, 1, 1, 1);
     grid->addWidget(d->delSubCategoryButton, 4, 1, 1, 1);
-    grid->addWidget(note, 5, 1, 1, 1);
+    grid->addWidget(d->repSubCategoryButton, 5, 1, 1, 1);
+    grid->addWidget(note, 6, 1, 1, 1);
     grid->setColumnStretch(0, 10);                     
-    grid->setRowStretch(6, 10);    
+    grid->setRowStretch(7, 10);    
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());      
                                          
@@ -164,6 +172,9 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     connect(d->categoryCheck, SIGNAL(toggled(bool)),
             d->delSubCategoryButton, SLOT(setEnabled(bool)));
 
+    connect(d->categoryCheck, SIGNAL(toggled(bool)),
+            d->repSubCategoryButton, SLOT(setEnabled(bool)));
+
     // --------------------------------------------------------
 
     connect(d->subCategoriesCheck, SIGNAL(toggled(bool)),
@@ -178,6 +189,9 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     connect(d->subCategoriesCheck, SIGNAL(toggled(bool)),
             d->delSubCategoryButton, SLOT(setEnabled(bool)));
 
+    connect(d->subCategoriesCheck, SIGNAL(toggled(bool)),
+            d->repSubCategoryButton, SLOT(setEnabled(bool)));
+
     // --------------------------------------------------------
 
     connect(d->subCategoriesBox, SIGNAL(itemSelectionChanged()),
@@ -188,6 +202,9 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     
     connect(d->delSubCategoryButton, SIGNAL(clicked()),
             this, SLOT(slotDelCategory()));
+
+    connect(d->repSubCategoryButton, SIGNAL(clicked()),
+            this, SLOT(slotRepCategory()));
 
     // --------------------------------------------------------
 
@@ -220,12 +237,31 @@ void IPTCCategories::slotDelCategory()
     delete item;
 }
 
+void IPTCCategories::slotRepCategory()
+{
+    QString newCategory = d->subCategoryEdit->text();
+    if (newCategory.isEmpty()) return;
+
+    if (!d->subCategoriesBox->selectedItems().isEmpty())
+    {
+        d->subCategoriesBox->selectedItems()[0]->setText(newCategory);
+        d->subCategoryEdit->clear();
+    }
+}
+
 void IPTCCategories::slotCategorySelectionChanged()
 {
-    if (d->subCategoriesBox->currentItem())
+    if (!d->subCategoriesBox->selectedItems().isEmpty())
+    {
+        d->subCategoryEdit->setText(d->subCategoriesBox->selectedItems()[0]->text());
         d->delSubCategoryButton->setEnabled(true);
+        d->repSubCategoryButton->setEnabled(true);
+    }
     else
+    {
         d->delSubCategoryButton->setEnabled(false);
+        d->repSubCategoryButton->setEnabled(false);
+    }
 }
 
 void IPTCCategories::slotAddCategory()
@@ -245,7 +281,10 @@ void IPTCCategories::slotAddCategory()
     }
 
     if (!found)
+    {
         d->subCategoriesBox->insertItem(d->subCategoriesBox->count(), newCategory);
+        d->subCategoryEdit->clear();
+    }
 }
 
 void IPTCCategories::readMetadata(QByteArray& iptcData)
