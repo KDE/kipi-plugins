@@ -101,7 +101,7 @@ CommentEditDialog::CommentEditDialog(QWidget* parent)
 
     QVBoxLayout *vlay = new QVBoxLayout(plainPage(), 0, KDialog::spacingHint());
 
-    QLabel *title = new QLabel(i18n("<p>Enter the image caption created by <b>%1</b>. "
+    QLabel *title = new QLabel(i18n("<p>Enter the image caption hosted by <b>%1</b>. "
                                     "This field is not limited (excepted with IPTC). UTF-8 encoding "
                                     "will be used to save text.")
                                     .arg(KApplication::kApplication()->aboutData()->appName()),

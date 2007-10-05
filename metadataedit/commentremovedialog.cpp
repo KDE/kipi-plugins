@@ -99,7 +99,7 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
 
     QVBoxLayout *vlay = new QVBoxLayout(plainPage(), 0, KDialog::spacingHint());
 
-    d->removeHOSTCommentCheck = new QCheckBox(i18n("Remove caption created by <b>%1</b>")
+    d->removeHOSTCommentCheck = new QCheckBox(i18n("Remove caption created by %1")
                                     .arg(KApplication::kApplication()->aboutData()->appName()), 
                                     plainPage());
     d->removeJFIFCommentCheck = new QCheckBox(i18n("Remove JFIF Comment section"), plainPage());
