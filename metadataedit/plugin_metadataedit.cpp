@@ -465,6 +465,15 @@ void Plugin_MetadataEdit::slotEditComments()
         
             if (dlg.syncJFIFCommentIsChecked())
                 ret &= exiv2Iface.setComments(dlg.getComments().toUtf8());
+
+            if (exiv2Iface.supportXmp() && dlg.syncXMPCaptionIsChecked())
+            {
+                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.dc.description", dlg.getComments(), 
+                                                         QString(), false);
+            
+                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.exif.UserComment", dlg.getComments(), 
+                                                         QString(), false);
+            }
         
             if (dlg.syncIPTCCaptionIsChecked())
                 ret &= exiv2Iface.setIptcTagString("Iptc.Application2.Caption", dlg.getComments());

@@ -47,10 +47,12 @@ public:
 
     bool syncJFIFCommentIsChecked();
     bool syncEXIFCommentIsChecked();
+    bool syncXMPCaptionIsChecked();
     bool syncIPTCCaptionIsChecked();
 
     void setCheckedSyncJFIFComment(bool c);
     void setCheckedSyncEXIFComment(bool c);
+    void setCheckedSyncXMPCaption(bool c);
     void setCheckedSyncIPTCCaption(bool c);
 
     QString getComments();

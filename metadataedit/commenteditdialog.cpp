@@ -42,6 +42,10 @@
 #include <kcomponentdata.h>
 #include <kglobal.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/kexiv2.h>
+
 // Local includes.
 
 #include "kpaboutdata.h"
@@ -62,12 +66,14 @@ public:
         about                = 0;
         syncJFIFCommentCheck = 0;
         syncEXIFCommentCheck = 0;
+        syncXMPCaptionCheck  = 0;
         syncIPTCCaptionCheck = 0;
     }
 
     QCheckBox                *syncJFIFCommentCheck;
     QCheckBox                *syncEXIFCommentCheck;
     QCheckBox                *syncIPTCCaptionCheck;
+    QCheckBox                *syncXMPCaptionCheck;
 
     KTextEdit                *userCommentEdit;
 
@@ -124,8 +130,12 @@ CommentEditDialog::CommentEditDialog(QWidget* parent)
 
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), mainWidget());
     d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF Comment"), mainWidget());
+    d->syncXMPCaptionCheck  = new QCheckBox(i18n("Sync XMP Caption"), mainWidget());
     d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: limited to 2000 printable "
                                                  "Ascii characters set)"), mainWidget());
+
+    if (!KExiv2Iface::KExiv2::supportXmp())
+        d->syncXMPCaptionCheck->setEnabled(false);
 
     QLabel *note = new QLabel(i18n("<b>Note: captions from currently selected images "
                                    "will be permanently replaced.</b>"), mainWidget());
@@ -137,6 +147,7 @@ CommentEditDialog::CommentEditDialog(QWidget* parent)
     vlay->addWidget(d->userCommentEdit);
     vlay->addWidget(d->syncJFIFCommentCheck);
     vlay->addWidget(d->syncEXIFCommentCheck);
+    vlay->addWidget(d->syncXMPCaptionCheck);
     vlay->addWidget(d->syncIPTCCaptionCheck);
     vlay->addWidget(note);
     vlay->setMargin(0);
@@ -185,6 +196,7 @@ void CommentEditDialog::readSettings()
     KConfigGroup group = config.group("Comments Edit Settings");
     setCheckedSyncJFIFComment(group.readEntry("Sync JFIF Comment", true));
     setCheckedSyncEXIFComment(group.readEntry("Sync EXIF Comment", true));
+    setCheckedSyncXMPCaption(group.readEntry("Sync XMP Caption", true));
     setCheckedSyncIPTCCaption(group.readEntry("Sync IPTC Caption", true));
     KConfigGroup group2 = config.group(QString("Comments Edit Dialog"));
     restoreDialogSize(group2);
@@ -196,6 +208,7 @@ void CommentEditDialog::saveSettings()
     KConfigGroup group = config.group("Comments Edit Settings");
     group.writeEntry("Sync JFIF Comment", syncJFIFCommentIsChecked());
     group.writeEntry("Sync EXIF Comment", syncEXIFCommentIsChecked());
+    group.writeEntry("Sync XMP Caption", syncXMPCaptionIsChecked());
     group.writeEntry("Sync IPTC Caption", syncIPTCCaptionIsChecked());
     KConfigGroup group2 = config.group(QString("Comments Edit Dialog"));
     saveDialogSize(group2);
@@ -218,6 +231,11 @@ bool CommentEditDialog::syncEXIFCommentIsChecked()
     return d->syncEXIFCommentCheck->isChecked();
 }
 
+bool CommentEditDialog::syncXMPCaptionIsChecked()
+{
+    return d->syncXMPCaptionCheck->isChecked();
+}
+
 bool CommentEditDialog::syncIPTCCaptionIsChecked()
 {
     return d->syncIPTCCaptionCheck->isChecked();
@@ -236,6 +254,11 @@ void CommentEditDialog::setCheckedSyncJFIFComment(bool c)
 void CommentEditDialog::setCheckedSyncEXIFComment(bool c)
 {
     d->syncEXIFCommentCheck->setChecked(c);
+}
+
+void CommentEditDialog::setCheckedSyncXMPCaption(bool c)
+{
+    d->syncXMPCaptionCheck->setChecked(c);
 }
 
 void CommentEditDialog::setCheckedSyncIPTCCaption(bool c)
