@@ -134,6 +134,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
     d->objectTypeCheck    = new MetadataCheckBox(i18n("Object Type:"), this);
     d->objectTypeCB       = new QComboBox(this);
     d->objectTypeDescEdit = new KLineEdit(this);
+    d->objectTypeDescEdit->setClearButtonShown(true);
     d->objectTypeDescEdit->setValidator(asciiValidator);
     d->objectTypeDescEdit->setMaxLength(64);
     d->objectTypeCB->insertItem(0, i18n("News"));
@@ -148,6 +149,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
     d->objectAttributeCheck    = new MetadataCheckBox(i18n("Object Attribute:"), this);
     d->objectAttributeCB       = new QComboBox(this);
     d->objectAttributeDescEdit = new KLineEdit(this);
+    d->objectAttributeDescEdit->setClearButtonShown(true);
     d->objectAttributeDescEdit->setValidator(asciiValidator);
     d->objectAttributeDescEdit->setMaxLength(64);
     d->objectAttributeCB->insertItem(0, i18n("Current"));
@@ -180,6 +182,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     d->JobIDCheck = new QCheckBox(i18n("Job Identification:"), this);
     d->JobIDEdit  = new KLineEdit(this);
+    d->JobIDEdit->setClearButtonShown(true);
     d->JobIDEdit->setValidator(asciiValidator);
     d->JobIDEdit->setMaxLength(32);
     d->JobIDEdit->setWhatsThis(i18n("<p>Set here the string that identifies content that recurs. "
