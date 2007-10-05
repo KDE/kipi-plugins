@@ -42,6 +42,10 @@
 #include <kcomponentdata.h>
 #include <kglobal.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/kexiv2.h>
+
 // Local includes.
 
 #include "kpaboutdata.h"
@@ -62,12 +66,14 @@ public:
         removeHOSTCommentCheck = 0;
         removeJFIFCommentCheck = 0;
         removeEXIFCommentCheck = 0;
+        removeXMPCaptionCheck  = 0;
         removeIPTCCaptionCheck = 0;
     }
 
     QCheckBox                *removeHOSTCommentCheck;
     QCheckBox                *removeJFIFCommentCheck;
     QCheckBox                *removeEXIFCommentCheck;
+    QCheckBox                *removeXMPCaptionCheck;
     QCheckBox                *removeIPTCCaptionCheck;
 
     KIPIPlugins::KPAboutData *about;
@@ -112,12 +118,16 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
     setMainWidget(new QWidget(this));
     QVBoxLayout *vlay = new QVBoxLayout(mainWidget());
 
-    d->removeHOSTCommentCheck = new QCheckBox(i18n("Remove caption created by <b>%1</b>", 
+    d->removeHOSTCommentCheck = new QCheckBox(i18n("Remove caption hosted by %1", 
                                     KGlobal::mainComponent().aboutData()->programName()), 
                                     mainWidget());
     d->removeJFIFCommentCheck = new QCheckBox(i18n("Remove JFIF Comment section"), mainWidget());
     d->removeEXIFCommentCheck = new QCheckBox(i18n("Remove EXIF Comment"), mainWidget());
+    d->removeXMPCaptionCheck = new QCheckBox(i18n("Remove XMP Caption"), mainWidget());
     d->removeIPTCCaptionCheck = new QCheckBox(i18n("Remove IPTC Caption"), mainWidget());
+
+    if (!KExiv2Iface::KExiv2::supportXmp())
+        d->removeXMPCaptionCheck->setEnabled(false);
 
     QLabel *note = new QLabel(i18n("<b>Note: Captions from currently selected images "
                                    "will be permanently removed.</b>"), mainWidget());
@@ -128,6 +138,7 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
     vlay->addWidget(d->removeHOSTCommentCheck);
     vlay->addWidget(d->removeJFIFCommentCheck);
     vlay->addWidget(d->removeEXIFCommentCheck);
+    vlay->addWidget(d->removeXMPCaptionCheck);
     vlay->addWidget(d->removeIPTCCaptionCheck);
     vlay->addWidget(note);
     vlay->setMargin(0);
@@ -169,6 +180,7 @@ void CommentRemoveDialog::readSettings()
     setCheckedRemoveHOSTComment(group.readEntry("Remove HOST Comment", true));
     setCheckedRemoveJFIFComment(group.readEntry("Remove JFIF Comment", true));
     setCheckedRemoveEXIFComment(group.readEntry("Remove EXIF Comment", true));
+    setCheckedRemoveXMPCaption(group.readEntry("Remove XMP Caption", true));
     setCheckedRemoveIPTCCaption(group.readEntry("Remove IPTC Caption", true));
     KConfigGroup group2 = config.group(QString("Comments Remove Dialog"));
     restoreDialogSize(group2);
@@ -181,6 +193,7 @@ void CommentRemoveDialog::saveSettings()
     group.writeEntry("Remove HOST Comment", removeHOSTCommentIsChecked());
     group.writeEntry("Remove JFIF Comment", removeJFIFCommentIsChecked());
     group.writeEntry("Remove EXIF Comment", removeEXIFCommentIsChecked());
+    group.writeEntry("Remove XMP Caption", removeXMPCaptionIsChecked());
     group.writeEntry("Remove IPTC Caption", removeIPTCCaptionIsChecked());
     KConfigGroup group2 = config.group(QString("Comments Remove Dialog"));
     saveDialogSize(group2);
@@ -208,6 +221,11 @@ bool CommentRemoveDialog::removeEXIFCommentIsChecked()
     return d->removeEXIFCommentCheck->isChecked();
 }
 
+bool CommentRemoveDialog::removeXMPCaptionIsChecked()
+{
+    return d->removeXMPCaptionCheck->isChecked();
+}
+
 bool CommentRemoveDialog::removeIPTCCaptionIsChecked()
 {
     return d->removeIPTCCaptionCheck->isChecked();
@@ -226,6 +244,11 @@ void CommentRemoveDialog::setCheckedRemoveJFIFComment(bool c)
 void CommentRemoveDialog::setCheckedRemoveEXIFComment(bool c)
 {
     d->removeEXIFCommentCheck->setChecked(c);
+}
+
+void CommentRemoveDialog::setCheckedRemoveXMPCaption(bool c)
+{
+    d->removeXMPCaptionCheck->setChecked(c);
 }
 
 void CommentRemoveDialog::setCheckedRemoveIPTCCaption(bool c)

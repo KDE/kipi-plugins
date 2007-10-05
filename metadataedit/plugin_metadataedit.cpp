@@ -542,6 +542,12 @@ void Plugin_MetadataEdit::slotRemoveComments()
             if (dlg.removeJFIFCommentIsChecked())
                 ret &= exiv2Iface.setComments(QByteArray());
         
+            if (exiv2Iface.supportXmp() && dlg.removeXMPCaptionIsChecked())
+            {
+                ret &= exiv2Iface.removeXmpTag("Xmp.dc.description");
+                ret &= exiv2Iface.removeXmpTag("Xmp.exif.UserComment");
+            }
+
             if (dlg.removeIPTCCaptionIsChecked())
                 ret &= exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
 

@@ -44,11 +44,13 @@ public:
     bool removeHOSTCommentIsChecked();
     bool removeJFIFCommentIsChecked();
     bool removeEXIFCommentIsChecked();
+    bool removeXMPCaptionIsChecked();
     bool removeIPTCCaptionIsChecked();
 
     void setCheckedRemoveHOSTComment(bool c);
     void setCheckedRemoveJFIFComment(bool c);
     void setCheckedRemoveEXIFComment(bool c);
+    void setCheckedRemoveXMPCaption(bool c);
     void setCheckedRemoveIPTCCaption(bool c);
 
 protected slots:
