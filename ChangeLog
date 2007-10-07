@@ -1,3 +1,603 @@
+V 0.1.5-beta1 - 2007-10-07
+----------------------------------------------------------------------------
+2007-10-07 17:58  anaselli
+
+	* [r722604] kipi-plugins/Makefile.am, kipi-plugins/NEWS,
+	  kipi-plugins/configure.in.bot, kipi-plugins/configure.in.in:
+	  Added configure options to disable plugins provided by Matej
+	  Laitl
+	  CCBUG: 149666
+
+2007-10-05 21:19  anaselli
+
+	* [r721684] kipi-plugins/printwizard/frmprintwizard.cpp:
+	  Accepted patch provided by Joerg for caption size
+	  
+	  CCMAIL: joerg.kuehne@web.de
+
+2007-10-05 20:31  anaselli
+
+	* [r721662] kipi-plugins/printwizard/frmprintwizard.cpp:
+	  changed tha call from gimp to gimp-remote
+	  
+	  CCMAIL: joerg.kuehne@web.de
+
+2007-10-05 10:49  cgilles
+
+	* [r721492] kipi-plugins/metadataedit/exifcaption.cpp,
+	  kipi-plugins/metadataedit/exifdatetime.cpp,
+	  kipi-plugins/metadataedit/iptccaption.cpp,
+	  kipi-plugins/metadataedit/iptcdatetime.cpp:
+	  fix i18n
+
+2007-10-05 10:43  cgilles
+
+	* [r721488] kipi-plugins/metadataedit/commenteditdialog.cpp,
+	  kipi-plugins/metadataedit/commentremovedialog.cpp:
+	  fix i18n
+
+2007-10-05 10:23  cgilles
+
+	* [r721477] kipi-plugins/metadataedit/commenteditdialog.cpp:
+	  fix i18n
+
+2007-10-05 07:27  cgilles
+
+	* [r721403] kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  fix i18n
+
+2007-10-05 07:14  cgilles
+
+	* [r721390] kipi-plugins/metadataedit/exifcaption.cpp:
+	  fix i18n
+
+2007-10-05 07:09  cgilles
+
+	* [r721386] kipi-plugins/metadataedit/commentremovedialog.cpp,
+	  kipi-plugins/metadataedit/exifcaption.cpp,
+	  kipi-plugins/metadataedit/exifdatetime.cpp,
+	  kipi-plugins/metadataedit/iptccaption.cpp,
+	  kipi-plugins/metadataedit/iptcdatetime.cpp:
+	  Gerhard, something is wrong with Comments/Caption terminology.
+	  Let's me explain why :
+	  
+	  In genral, i'm agree to use "Caption" as generic and common term
+	  to define a text embeded in a picture as a description.
+	  But with Metadata Edit kipi-plugins, the technical term as used
+	  to said what field with be changed accordinly with user settings:
+	  
+	  JFIF caption ==> no, the JPEG spec said than the field name is
+	  "JFIF Comments Section (COM marker)".
+	  (http://en.wikipedia.org/wiki/JPEG#JPEG_Interchange_Format_file_format)
+	  EXIF caption ==> no, the EXIF spec said than the tag name
+	  Exif.UserComment
+	  (http://www.digicamsoft.com/exif22/exif22/html/exif22_34.htm?gInitialPosX=10px&gInitialPosY=10px&gZoomValue=100)
+	  
+	  If we don't repect the right terms, it can be confuse for end
+	  users.
+	  
+	  Note : For IPTC and XMP, using Caption term is fine.
+	  
+	  CCMAIL: gerhard@kulzer.net
+
+2007-10-05 06:47  cgilles
+
+	* [r721380] kipi-plugins/metadataedit/commentremovedialog.cpp:
+	  polish
+
+2007-10-05 06:33  cgilles
+
+	* [r721376] kipi-plugins/metadataedit/commenteditdialog.cpp,
+	  kipi-plugins/metadataedit/iptccategories.cpp:
+	  compile
+
+2007-10-05 06:31  cgilles
+
+	* [r721373] kipi-plugins/metadataedit/commenteditdialog.cpp:
+	  polish
+
+2007-10-04 19:16  cgilles
+
+	* [r721187] kipi-plugins/metadataedit/iptccategories.cpp,
+	  kipi-plugins/metadataedit/iptckeywords.cpp,
+	  kipi-plugins/metadataedit/iptcsubjects.cpp:
+	  polish
+
+2007-10-04 19:13  cgilles
+
+	* [r721186] kipi-plugins/metadataedit/iptceditdialog.cpp:
+	  polish
+
+2007-10-04 08:58  cgilles
+
+	* [r720991] kipi-plugins/metadataedit/exiflight.cpp:
+	  polish
+
+2007-10-03 16:24  cgilles
+
+	* [r720746] kipi-plugins/rawconverter/plugin_rawconverter.cpp:
+	  fix i18n
+
+2007-10-03 12:48  cgilles
+
+	* [r720664] kipi-plugins/metadataedit/exifcaption.cpp,
+	  kipi-plugins/metadataedit/exifdevice.cpp:
+	  add ink to wikipedia
+
+2007-10-03 12:35  cgilles
+
+	* [r720661] kipi-plugins/metadataedit/iptccategories.cpp,
+	  kipi-plugins/metadataedit/iptckeywords.cpp,
+	  kipi-plugins/metadataedit/iptcsubjects.cpp:
+	  fix layout
+
+2007-10-03 12:26  cgilles
+
+	* [r720658] kipi-plugins/metadataedit/iptccaption.cpp,
+	  kipi-plugins/metadataedit/iptccategories.cpp,
+	  kipi-plugins/metadataedit/iptccredits.cpp,
+	  kipi-plugins/metadataedit/iptckeywords.cpp,
+	  kipi-plugins/metadataedit/iptcorigin.cpp,
+	  kipi-plugins/metadataedit/iptcstatus.cpp,
+	  kipi-plugins/metadataedit/iptcsubjects.cpp:
+	  polish
+
+2007-10-03 12:24  cgilles
+
+	* [r720656] kipi-plugins/metadataedit/iptccaption.cpp,
+	  kipi-plugins/metadataedit/iptccategories.cpp,
+	  kipi-plugins/metadataedit/iptckeywords.cpp,
+	  kipi-plugins/metadataedit/iptcorigin.cpp,
+	  kipi-plugins/metadataedit/iptcstatus.cpp,
+	  kipi-plugins/metadataedit/iptcsubjects.cpp:
+	  fix i18n
+
+2007-10-03 12:05  cgilles
+
+	* [r720650] kipi-plugins/metadataedit/iptccategories.cpp,
+	  kipi-plugins/metadataedit/iptccredits.cpp,
+	  kipi-plugins/metadataedit/iptckeywords.cpp,
+	  kipi-plugins/metadataedit/iptcorigin.cpp,
+	  kipi-plugins/metadataedit/iptcstatus.cpp,
+	  kipi-plugins/metadataedit/iptcsubjects.cpp:
+	  add link to wikipedia
+
+2007-10-03 12:00  cgilles
+
+	* [r720647] kipi-plugins/metadataedit/exifadjust.cpp,
+	  kipi-plugins/metadataedit/exifadjust.h,
+	  kipi-plugins/metadataedit/exifcaption.cpp,
+	  kipi-plugins/metadataedit/exifcaption.h,
+	  kipi-plugins/metadataedit/exifdatetime.cpp,
+	  kipi-plugins/metadataedit/exifdatetime.h,
+	  kipi-plugins/metadataedit/exifdevice.cpp,
+	  kipi-plugins/metadataedit/exifdevice.h,
+	  kipi-plugins/metadataedit/exifeditdialog.cpp,
+	  kipi-plugins/metadataedit/exifeditdialog.h,
+	  kipi-plugins/metadataedit/exiflens.cpp,
+	  kipi-plugins/metadataedit/exiflens.h,
+	  kipi-plugins/metadataedit/exiflight.cpp,
+	  kipi-plugins/metadataedit/exiflight.h:
+	  fix header
+
+2007-10-03 11:56  cgilles
+
+	* [r720642] kipi-plugins/metadataedit/commenteditdialog.cpp,
+	  kipi-plugins/metadataedit/commenteditdialog.h,
+	  kipi-plugins/metadataedit/commentremovedialog.cpp,
+	  kipi-plugins/metadataedit/commentremovedialog.h,
+	  kipi-plugins/metadataedit/iptccaption.cpp,
+	  kipi-plugins/metadataedit/iptccaption.h,
+	  kipi-plugins/metadataedit/iptccategories.cpp,
+	  kipi-plugins/metadataedit/iptccategories.h,
+	  kipi-plugins/metadataedit/iptccredits.cpp,
+	  kipi-plugins/metadataedit/iptccredits.h,
+	  kipi-plugins/metadataedit/iptcdatetime.cpp,
+	  kipi-plugins/metadataedit/iptcdatetime.h,
+	  kipi-plugins/metadataedit/iptceditdialog.cpp,
+	  kipi-plugins/metadataedit/iptceditdialog.h,
+	  kipi-plugins/metadataedit/iptckeywords.cpp,
+	  kipi-plugins/metadataedit/iptckeywords.h,
+	  kipi-plugins/metadataedit/iptcorigin.cpp,
+	  kipi-plugins/metadataedit/iptcorigin.h,
+	  kipi-plugins/metadataedit/iptcstatus.cpp,
+	  kipi-plugins/metadataedit/iptcstatus.h,
+	  kipi-plugins/metadataedit/iptcsubjects.cpp,
+	  kipi-plugins/metadataedit/iptcsubjects.h,
+	  kipi-plugins/metadataedit/metadatacheckbox.cpp,
+	  kipi-plugins/metadataedit/metadatacheckbox.h,
+	  kipi-plugins/metadataedit/plugin_metadataedit.cpp,
+	  kipi-plugins/metadataedit/plugin_metadataedit.h:
+	  fix header
+
+2007-09-28 14:27  gkulzer
+
+	* [r718359] kipi-plugins/findimages/displaycompare.cpp,
+	  kipi-plugins/imagesgallery/imgallerydialog.cpp,
+	  kipi-plugins/metadataedit/commenteditdialog.cpp,
+	  kipi-plugins/metadataedit/commentremovedialog.cpp,
+	  kipi-plugins/metadataedit/exifcaption.cpp,
+	  kipi-plugins/metadataedit/iptccaption.cpp,
+	  kipi-plugins/metadataedit/iptceditdialog.cpp,
+	  kipi-plugins/metadataedit/plugin_metadataedit.cpp,
+	  kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  kipi-plugins/simpleviewerexport/svedialog.cpp,
+	  kipi-plugins/slideshow/slideshowconfigbase.ui,
+	  libkipi/libkipi/imagecollectionselector.cpp:
+	  comment->caption = better English
+
+2007-09-28 14:22  gkulzer
+
+	* [r718356] kipi-plugins/acquireimages/acquireimagedialog.cpp:
+	  comments->caption = clearer English
+
+2007-09-28 14:20  gkulzer
+
+	* [r718354] kipi-plugins/cdarchiving/cdarchiving.cpp:
+	  comments->caption = clearer English
+
+2007-09-26 11:52  cgilles
+
+	* [r717247] kipi-plugins/jpeglossless/actionthread.cpp:
+	  polish
+
+2007-09-26 11:51  cgilles
+
+	* [r717246] kipi-plugins/jpeglossless/actionthread.cpp,
+	  kipi-plugins/jpeglossless/actionthread.h,
+	  kipi-plugins/jpeglossless/convert2grayscale.cpp,
+	  kipi-plugins/jpeglossless/convert2grayscale.h,
+	  kipi-plugins/jpeglossless/imageflip.cpp,
+	  kipi-plugins/jpeglossless/imageflip.h,
+	  kipi-plugins/jpeglossless/imagerotate.cpp,
+	  kipi-plugins/jpeglossless/imagerotate.h:
+	  backport commit #717239 from KDE4 branch
+
+2007-09-26 06:40  cgilles
+
+	* [r717144] kipi-plugins/jpeglossless/plugin_jpeglossless.cpp,
+	  kipi-plugins/jpeglossless/plugin_jpeglossless.h:
+	  fix header
+
+2007-09-25 19:27  cgilles
+
+	* [r716980] kipi-plugins/jpeglossless/utils.cpp:
+	  polish
+
+2007-09-25 18:15  cgilles
+
+	* [r716958] kipi-plugins/jpeglossless/convert2grayscale.cpp,
+	  kipi-plugins/jpeglossless/imageflip.cpp,
+	  kipi-plugins/jpeglossless/imagerotate.cpp:
+	  polish
+
+2007-09-25 17:01  cgilles
+
+	* [r716939] kipi-plugins/jpeglossless/imagerotate.cpp,
+	  kipi-plugins/jpeglossless/imagerotate.h:
+	  polish
+
+2007-09-25 14:16  cgilles
+
+	* [r716889] kipi-plugins/jpeglossless/convert2grayscale.cpp,
+	  kipi-plugins/jpeglossless/imageflip.cpp,
+	  kipi-plugins/jpeglossless/imagerotate.cpp,
+	  kipi-plugins/jpeglossless/imagerotate.h,
+	  kipi-plugins/jpeglossless/jpegtransform.cpp,
+	  kipi-plugins/jpeglossless/utils.cpp,
+	  kipi-plugins/jpeglossless/utils.h:
+	  kipi-plugins from KDE3 branch : JPEGLossLess plugin : new method
+	  to update metadata from non-JPEG pictures processed with
+	  ImageMagick (TIFF/PNG for Ex.)
+	  Updating include IPTC preview image used to render thumbnails in
+	  digiKam.
+	  CCBUGS: 144388
+
+2007-09-25 13:32  cgilles
+
+	* [r716878]
+	  kipi-plugins/batchprocessimages/batchprocessimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/imagepreview.cpp:
+	  kipi-plugins from KDE3 branch : Bugfix with ImageMagick
+	  background process creation : always checking if process
+	  (KProcess) is ended properlly (no ImageMagick crash for ex.)
+
+2007-09-25 11:00  cgilles
+
+	* [r716838] kipi-plugins/metadataedit/exifcaption.cpp,
+	  kipi-plugins/metadataedit/iptcstatus.cpp:
+	  fixw app name
+
+2007-09-25 10:54  cgilles
+
+	* [r716837] kipi-plugins/sendimages/sendimages.cpp:
+	  fix app name
+
+2007-09-25 10:53  cgilles
+
+	* [r716836] kipi-plugins/rawconverter/rawdecodingiface.cpp:
+	  fix apps name
+
+2007-09-25 10:31  cgilles
+
+	* [r716830] kipi-plugins/jpeglossless/convert2grayscale.cpp,
+	  kipi-plugins/jpeglossless/convert2grayscale.h,
+	  kipi-plugins/jpeglossless/jpegtransform.cpp,
+	  kipi-plugins/jpeglossless/mtqueue.h,
+	  kipi-plugins/jpeglossless/plugin_jpeglossless.cpp,
+	  kipi-plugins/jpeglossless/plugin_jpeglossless.h,
+	  kipi-plugins/jpeglossless/utils.cpp,
+	  kipi-plugins/jpeglossless/utils.h:
+	  kDebug => qDebug
+
+2007-09-25 10:23  cgilles
+
+	* [r716825] kipi-plugins/jpeglossless/imageflip.cpp,
+	  kipi-plugins/jpeglossless/imageflip.h,
+	  kipi-plugins/jpeglossless/imagerotate.h:
+	  kDegug => qDebug
+
+2007-09-25 10:20  cgilles
+
+	* [r716824] kipi-plugins/jpeglossless/actions.h,
+	  kipi-plugins/jpeglossless/actionthread.cpp,
+	  kipi-plugins/jpeglossless/actionthread.h:
+	  kDebug => qDebug
+
+2007-09-25 10:17  cgilles
+
+	* [r716823] kipi-plugins/jpeglossless/imagerotate.cpp,
+	  kipi-plugins/jpeglossless/imagerotate.h:
+	  kDebug => qDebug
+
+2007-09-24 11:47  cgilles
+
+	* [r716268]
+	  kipi-plugins/rawconverter/pics/hi128-action-rawconverterbatch.png,
+	  kipi-plugins/rawconverter/pics/hi128-action-rawconvertersingle.png,
+	  kipi-plugins/rawconverter/pics/hi32-action-rawconverterbatch.png,
+	  kipi-plugins/rawconverter/pics/hi32-action-rawconvertersingle.png:
+	  new icons
+
+2007-09-24 09:21  cgilles
+
+	* [r716230] kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp:
+	  polish
+
+2007-09-23 08:30  cgilles
+
+	* [r715842] kipi-plugins/rawconverter/rawdecodingiface.cpp,
+	  kipi-plugins/rawconverter/rawdecodingiface.h:
+	  use const ref
+
+2007-09-20 10:26  cgilles
+
+	* [r714710] kipi-plugins/rawconverter/rawdecodingiface.cpp:
+	  missing to detroy JPEG encoder instance
+
+2007-09-20 08:05  cgilles
+
+	* [r714675] kipi-plugins/rawconverter/rawdecodingiface.h:
+	  fix includes order
+
+2007-09-20 07:36  cgilles
+
+	* [r714669] kipi-plugins/rawconverter/rawdecodingiface.cpp:
+	  factorize metadata handling source code
+
+2007-09-20 06:34  cgilles
+
+	* [r714654] kipi-plugins/rawconverter/rawdecodingiface.h:
+	  polish
+
+2007-09-20 06:33  cgilles
+
+	* [r714653] kipi-plugins/rawconverter/rawdecodingiface.h:
+	  polish
+
+2007-09-19 10:45  cgilles
+
+	* [r714356] kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/batchdialog.h,
+	  kipi-plugins/rawconverter/savesettingswidget.cpp,
+	  kipi-plugins/rawconverter/savesettingswidget.h,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.h:
+	  optimize layout
+
+2007-09-19 10:24  cgilles
+
+	* [r714353] kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp:
+	  optimize layout
+
+2007-09-14 12:01  mueller
+
+	* [r712436] kipi-plugins/rawconverter/rawdecodingiface.cpp:
+	  fix compiler warning
+
+2007-09-08 15:49  cgilles
+
+	* [r709928] kipi-plugins/rawconverter/rawdecodingiface.cpp:
+	  kipi-plugins RAW converter : set JPEG subsampling factor to
+	  Medium.
+	  CCBUGS: 149578
+
+2007-09-02 13:25  mwiesweg
+
+	* [r707626] kipi-plugins/jpeglossless/actionthread.cpp:
+	  If the image had already an exif rotation flag set, this code
+	  part would cause
+	  this taken into account twice, add the JPEG specific code does
+	  its own
+	  sophisticated checking with matrix multiplication.
+	  
+	  BUG: 148621
+
+2007-08-26 22:07  anaselli
+
+	* [r705018] kipi-plugins/printwizard/frmprintwizard.cpp,
+	  kipi-plugins/printwizard/frmprintwizardbase.ui:
+	  now we can print each photo more than once
+	  
+	  GUI:
+	  BUG: 100471
+	  CCMAIL: kde-imaging@kde.org
+
+2007-08-24 15:47  anaselli
+
+	* [r704311] kipi-plugins/printwizard/frmprintwizard.cpp,
+	  kipi-plugins/printwizard/frmprintwizard.h,
+	  kipi-plugins/printwizard/frmprintwizardbase.ui:
+	  - Added 10x13.33cm into a4 (provided by Joerg Kuehne)
+	  - Added A6 size to get the old configuration for 10x15cm page
+	  - Changed page size to real 10x15cm instead of A6 (need to set up
+	  right page size)
+	  - Added a new page size 13x18cm (need to set up right page size)
+	  
+	  CCMAIL: joerg.kuehne@gmx.de, kde-imaging@kde.org
+	  GUI:
+
+2007-08-24 09:09  anaselli
+
+	* [r704188] kipi-plugins/printwizard/frmprintwizard.cpp,
+	  kipi-plugins/printwizard/frmprintwizard.h,
+	  kipi-plugins/printwizard/frmprintwizardbase.ui:
+	  - minimal gui review (used some icons on wizard)
+	  - added a checkbox to print out with no margins
+	  
+	  GUI:
+	  BUG: 103152
+	  CCMAIL: kde-imaging@kde.org
+
+2007-08-23 11:30  anaselli
+
+	* [r703811] kipi-plugins/printwizard/frmprintwizard.cpp:
+	  - Clean m_photoSize memory if page layout is changed
+	  - A4 is really default by now
+	  - 10x15 photos layout fixing to print with hp driver (4x6" full
+	  bleed mode)
+	  it needs test with other printers
+	  
+	  TODO
+	  - A6 is not good for 10x15cm, better implementation of pagesize
+	  should be needed
+	  - need to add 13x18cm (5x7") managed by hp driver
+	  - add dpi management, with some tests has improved my print-out
+	  quality (needs a code review though)
+	  
+	  Comments and help are welcome :)
+	  CCMAIL: kde-imaging@kde.org
+
+2007-08-23 11:21  anaselli
+
+	* [r703809] kipi-plugins/printwizard/utils.cpp,
+	  kipi-plugins/printwizard/utils.h:
+	  Removed useless code
+
+2007-08-22 13:25  cgilles
+
+	* [r703417] kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp:
+	  kipi-plugins from KDE3 branch : RAW Converter : patch from
+	  Guillaume Castagnino to support new chromatic aberration
+	  reduction options from libkdcraw
+	  
+	  CCBUGS: 148561
+	  CCMAIL: casta@xwing.info
+
+2007-07-27 22:37  anaselli
+
+	* [r693423] kipi-plugins/printwizard/frmprintwizard.cpp,
+	  kipi-plugins/printwizard/frmprintwizard.h,
+	  kipi-plugins/printwizard/frmprintwizardbase.ui,
+	  kipi-plugins/printwizard/tphoto.cpp,
+	  kipi-plugins/printwizard/tphoto.h:
+	  Added font management for captions
+	  - font family
+	  - font color
+	  - caption size
+	  CCMAIL: kde-imaging@kde.org, digikam-devel@kde.org
+	  GUI:
+
+2007-07-23 21:39  anaselli
+
+	* [r691547] kipi-plugins/printwizard/tphoto.cpp:
+	  Date is now printed following locale KDE settings
+	  CCMAIL: joerg.kuehne@gmx.de, kde-imaging@kde.org
+
+2007-07-23 14:32  cgilles
+
+	* [r691383] kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  update
+
+2007-07-22 17:18  vfuoglio
+
+	* [r690988] kipi-plugins/Makefile.am, kipi-plugins/NEWS,
+	  kipi-plugins/README, kipi-plugins/configure.in.bot,
+	  kipi-plugins/configure.in.in, kipi-plugins/slideshow/Makefile.am,
+	  kipi-plugins/slideshow/imlibiface.cpp,
+	  kipi-plugins/slideshow/imlibiface.h,
+	  kipi-plugins/slideshow/slideshow.cpp,
+	  kipi-plugins/slideshow/slideshow.h:
+	  Dropped imlib2 dipendency from SlideShow plugin
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2007-07-22 12:58  cgilles
+
+	* [r690887] kipi-plugins/AUTHORS:
+	  update
+
+2007-07-18 09:18  cgilles
+
+	* [r689447] kipi-plugins/README:
+	  update
+
+2007-07-18 09:12  cgilles
+
+	* [r689443] kipi-plugins/AUTHORS:
+	  update
+
+2007-07-17 18:06  jaiva
+
+	* [r689130] kipi-plugins/Makefile.am, kipi-plugins/picasawebexport,
+	  kipi-plugins/picasawebexport/Makefile,
+	  kipi-plugins/picasawebexport/Makefile.am,
+	  kipi-plugins/picasawebexport/Makefile.in,
+	  kipi-plugins/picasawebexport/PicasawebNewAlbumDialog.ui,
+	  kipi-plugins/picasawebexport/PicasawebNewAlbumDialog.ui.h,
+	  kipi-plugins/picasawebexport/exifrestorer.cpp,
+	  kipi-plugins/picasawebexport/exifrestorer.h,
+	  kipi-plugins/picasawebexport/jpegsection.h,
+	  kipi-plugins/picasawebexport/kipiplugin_picasawebexport.desktop,
+	  kipi-plugins/picasawebexport/mpform.cpp,
+	  kipi-plugins/picasawebexport/mpform.h,
+	  kipi-plugins/picasawebexport/newAlbumWindow.cpp,
+	  kipi-plugins/picasawebexport/newAlbumWindow.h,
+	  kipi-plugins/picasawebexport/picasawebitem.cpp,
+	  kipi-plugins/picasawebexport/picasawebitem.h,
+	  kipi-plugins/picasawebexport/picasaweblogin.cpp,
+	  kipi-plugins/picasawebexport/picasaweblogin.h,
+	  kipi-plugins/picasawebexport/picasawebtalker.cpp,
+	  kipi-plugins/picasawebexport/picasawebtalker.h,
+	  kipi-plugins/picasawebexport/picasawebviewitem.cpp,
+	  kipi-plugins/picasawebexport/picasawebviewitem.h,
+	  kipi-plugins/picasawebexport/picasawebwidget.cpp,
+	  kipi-plugins/picasawebexport/picasawebwidget.h,
+	  kipi-plugins/picasawebexport/picasawebwindow.cpp,
+	  kipi-plugins/picasawebexport/picasawebwindow.h,
+	  kipi-plugins/picasawebexport/plugin_picasawebexport.cpp,
+	  kipi-plugins/picasawebexport/plugin_picasawebexport.h,
+	  kipi-plugins/picasawebexport/uploadwidget.ui:
+	  First release PicasaWeb Exporter plugin. Features include
+	  Uploading photos, Creating Albums and support Tags and resize on
+	  photos.
+	  Some more GUI improvements would be done soon.
+
+----------------------------------------------------------------------------
 V 0.1.4 - 2007-06-28
 ----------------------------------------------------------------------------
 
