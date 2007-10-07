@@ -64,9 +64,9 @@ fi
 #
 # ----------------------------------------------------------
 
+AC_MSG_CHECKING([for libkipi in our sources])
 if test -d $srcdir/libkipi; then
     have_libkipi=yes
-    AC_MSG_CHECKING([for libkipi in our sources])
     LIBKIPI_CFLAGS='-I$(top_builddir)/libkipi -I$(top_srcdir)/libkipi'
     LIBKIPI_LIBS='$(top_builddir)/libkipi/libkipi/libkipi.la'
     LIBKIPI_LIBS_DEP='$(LIBKIPI_LIBS)'
@@ -74,8 +74,9 @@ if test -d $srcdir/libkipi; then
     AC_SUBST(LIBKIPI_CFLAGS)
     AC_SUBST(LIBKIPI_LIBS)
     AC_SUBST(LIBKIPI_LIBS_DEP)
+    AC_MSG_RESULT([found])
 else
-
+    AC_MSG_RESULT([not found in sources])
     if test "$PKGCONFIGFOUND" = "yes" ; then
         # check for libkipi
         have_libkipi=no
@@ -86,20 +87,17 @@ else
 	if test "x$have_libkipi" = "xno"; then
 	   LIBKIPI_CFLAGS=""
 	   LIBKIPI_LIBS=""
-           AC_MSG_RESULT([not found])
-	else
-	   AC_MSG_RESULT([found])
 	fi
      else
         LIBKIPI_CFLAGS=""
 	LIBKIPI_LIBS=""
-        AC_MSG_RESULT([not found])
      fi
      AC_SUBST(LIBKIPI_CFLAGS)
      AC_SUBST(LIBKIPI_LIBS)
 fi
 
 if test "x$have_libkipi" != "xyes"; then
+     AC_MSG_ERROR([libkipi library is required by kipi-plugins.])
      DO_NOT_COMPILE="$DO_NOT_COMPILE kipi-plugins"
 fi
 
@@ -120,7 +118,7 @@ if test -d $srcdir/libkexiv2; then
     AC_SUBST(LIBKEXIV2_LIBS)
     AC_SUBST(LIBKEXIV2_LIBS_DEP)
 else
-
+    AC_MSG_RESULT([not found in sources])
     if test "$PKGCONFIGFOUND" = "yes" ; then
         # check for libkexiv2
         have_libkexiv2=no
@@ -131,14 +129,10 @@ else
         if test "x$have_libkexiv2" = "xno"; then
            LIBKEXIV2_CFLAGS=""
            LIBKEXIV2_LIBS=""
-           AC_MSG_RESULT([not found])
-        else
-           AC_MSG_RESULT([found])
         fi
      else
         LIBKEXIV2_CFLAGS=""
         LIBKEXIV2_LIBS=""
-        AC_MSG_RESULT([not found])
      fi
      AC_SUBST(LIBKEXIV2_CFLAGS)
      AC_SUBST(LIBKEXIV2_LIBS)
@@ -165,8 +159,9 @@ if test -d $srcdir/libkdcraw; then
     AC_SUBST(LIBKDCRAW_CFLAGS)
     AC_SUBST(LIBKDCRAW_LIBS)
     AC_SUBST(LIBKDCRAW_LIBS_DEP)
+    AC_MSG_RESULT([found])
 else
-
+    AC_MSG_RESULT([not found in sources])
     if test "$PKGCONFIGFOUND" = "yes" ; then
         # check for libkdcraw
         have_libkdcraw=no
@@ -177,14 +172,10 @@ else
         if test "x$have_libkdcraw" = "xno"; then
            LIBKDCRAW_CFLAGS=""
            LIBKDCRAW_LIBS=""
-           AC_MSG_RESULT([not found])
-        else
-           AC_MSG_RESULT([found])
         fi
      else
         LIBKDCRAW_CFLAGS=""
         LIBKDCRAW_LIBS=""
-        AC_MSG_RESULT([not found])
      fi
      AC_SUBST(LIBKDCRAW_CFLAGS)
      AC_SUBST(LIBKDCRAW_LIBS)
@@ -197,29 +188,92 @@ fi
 
 #------------------------------------------------------------------
 #
+# Ability to fine-tune what plugins to build
+#
+#------------------------------------------------------------------
+
+# Following macro sets up individual kipi-plugins. It generates AC_ARG_ENABLE.
+# Third argument, plugin_dependencies is an optional space-separated list of dependencies.
+# In case the plugin is enabled, it sets build_${dependency}=yes (for every dependency)
+# KIPI_PLUGIN_PRE(plugin_directory, plugin_name[, plugin_depencencies])
+AC_DEFUN([KIPI_PLUGIN_PRE], [
+  AC_ARG_ENABLE([$1],
+    AC_HELP_STRING([--disable-$1], [$2 kipi plugin.] m4_if([$3], [], [], [[ Requires $3.]]) [ [[enable]]]),
+    [enable_$1="$enableval"],
+    [enable_$1="check"],
+  )
+  if test "${enable_$1}" != "yes" -a "${enable_$1}" != "no"; then
+    enable_$1="check"
+  fi
+  kipi_plug_deps_$1="$3"
+  kipi_plug_name_$1="$2"
+  if test "$enable_$1" != "no" -a -n "$3"; then
+    for dep in $3; do
+      eval build_${dep}="yes"   # we must use eval because we use shell variable inside variable name
+    done
+  fi
+])
+
+# Add entry for every new conditional dependency here
+build_gphoto=no
+build_libgpod=no
+build_libkcal=no
+build_tiff=no
+build_xslt=no
+build_opengl=no
+
+# Please keep this list sorted and add all new plugins
+KIPI_PLUGIN_PRE([acquireimages], [Acquire Images], [tiff])
+KIPI_PLUGIN_PRE([batchprocessimages], [Batch Process Images])
+KIPI_PLUGIN_PRE([calendar], [Calendar], [libkcal])
+KIPI_PLUGIN_PRE([cdarchiving], [CD Archiving])
+KIPI_PLUGIN_PRE([findimages], [Find Images])
+KIPI_PLUGIN_PRE([flickrexport], [Flickr Exporter])
+KIPI_PLUGIN_PRE([galleryexport], [Remote Gallery Export])
+KIPI_PLUGIN_PRE([gpssync], [GPS Synchronization])
+KIPI_PLUGIN_PRE([htmlexport], [HTML Gallery], [xslt])
+#KIPI_PLUGIN_PRE([imagesgallery], [Images Gallery])      # ???
+KIPI_PLUGIN_PRE([imageviewer], [Viewer])
+KIPI_PLUGIN_PRE([ipodexport], [iPod Export], [libgpod])
+KIPI_PLUGIN_PRE([jpeglossless], [JPEG Lossless]) # Does it depend on tiff?
+KIPI_PLUGIN_PRE([kameraklient], [Kamera Klient], [gphoto])
+KIPI_PLUGIN_PRE([metadataedit], [Metadata Editor])
+KIPI_PLUGIN_PRE([mpegencoder], [MPEG Encoder])
+KIPI_PLUGIN_PRE([picasawebexport], [Picasaweb Exporter])
+KIPI_PLUGIN_PRE([printwizard], [Print Wizard])
+KIPI_PLUGIN_PRE([rawconverter], [RAW converter], [tiff])
+KIPI_PLUGIN_PRE([sendimages], [Send Images])
+KIPI_PLUGIN_PRE([simpleviewerexport], [Simple Viewer])
+KIPI_PLUGIN_PRE([slideshow], [Slideshow], [opengl])
+#KIPI_PLUGIN_PRE([sync], [Sync])   # ???
+KIPI_PLUGIN_PRE([timeadjust], [Date & Time Adjust])
+KIPI_PLUGIN_PRE([wallpaper], [Wallpaper])
+
+#------------------------------------------------------------------
+#
 # Check for libtiff
 #
 #------------------------------------------------------------------
 
 have_tiff=no
-AC_CHECK_LIB(tiff, TIFFWriteScanline,
-  have_tiff=yes,
-  AC_MSG_WARN([TIFF library not found]),
-  $all_libraries -ljpeg -lz -lm)
 
-if test "x$have_tiff" = "xyes"; then
-  KDE_CHECK_HEADER(tiffio.h, have_tiff=yes, have_tiff=no)
+if test "x$build_tiff" != "xno"; then
+  AC_CHECK_LIB(tiff, TIFFWriteScanline,
+    have_tiff=yes,
+    AC_MSG_WARN([TIFF library not found]),
+    $all_libraries -ljpeg -lz -lm)
+
+  if test "x$have_tiff" = "xyes"; then
+    KDE_CHECK_HEADER(tiffio.h, have_tiff=yes, have_tiff=no)
+  fi
+
+  if test "x$have_tiff" != "xyes"; then
+    AC_WARN([TIFF library not found, some plugins will not be compiled.])
+  else
+    LIB_TIFF="-ltiff"
+    AC_SUBST(LIB_TIFF)
+  fi
 fi
-
-if test "x$have_tiff" != "xyes"; then
-  AC_WARN([TIFF library not found, acquireimages, jpeglossless and rawconverter plugins will not be compiled.])
-else
-  LIB_TIFF="-ltiff"
-  AC_SUBST(LIB_TIFF)
-fi
-
-AM_CONDITIONAL(compile_ACQUIREIMAGES, [test x$have_tiff = xyes])
-AM_CONDITIONAL(compile_RAWCONVERTER,  [test x$have_tiff = xyes])
 
 #---------------------------------------------------------
 #
@@ -228,22 +282,20 @@ AM_CONDITIONAL(compile_RAWCONVERTER,  [test x$have_tiff = xyes])
 #---------------------------------------------------------
 
 have_gphoto=no
-AC_PATH_PROG(GPHOTO_CONFIG,gphoto2-config)
-AC_PATH_PROG(GPHOTO_PORT_CONFIG,gphoto2-port-config)
-if test -n "${GPHOTO_CONFIG}"; then
-  GPHOTO_CFLAGS="`$GPHOTO_CONFIG --cflags`"
-  AC_SUBST(GPHOTO_CFLAGS)
-  LIB_GPHOTO="`$GPHOTO_CONFIG --libs` `$GPHOTO_PORT_CONFIG --libs`"
-  AC_SUBST(LIB_GPHOTO)
-  have_gphoto=yes
-else
-  AC_MSG_WARN([
-gPhoto2 is required for the kameraklient plugin.
-It's available from gPhoto's Sourceforge CVS.
-Check http://www.gphoto.org/download.html for detail])
-fi
 
-AM_CONDITIONAL(compile_KAMERAKLIENT, test -n "${GPHOTO_CONFIG}")
+if test "x$build_gphoto" != "xno"; then
+  AC_PATH_PROG(GPHOTO_CONFIG,gphoto2-config)
+  AC_PATH_PROG(GPHOTO_PORT_CONFIG,gphoto2-port-config)
+  if test -n "${GPHOTO_CONFIG}"; then
+    GPHOTO_CFLAGS="`$GPHOTO_CONFIG --cflags`"
+    AC_SUBST(GPHOTO_CFLAGS)
+    LIB_GPHOTO="`$GPHOTO_CONFIG --libs` `$GPHOTO_PORT_CONFIG --libs`"
+    AC_SUBST(LIB_GPHOTO)
+    have_gphoto=yes
+  else
+    AC_MSG_WARN([gPhoto2 not found, some plugins will not be compiled.])
+  fi
+fi
 
 #---------------------------------------------------------
 #
@@ -252,20 +304,19 @@ AM_CONDITIONAL(compile_KAMERAKLIENT, test -n "${GPHOTO_CONFIG}")
 #---------------------------------------------------------
 
 have_xslt=no
-AC_PATH_PROG(XSLT_CONFIG,xslt-config)
-if test -n "${XSLT_CONFIG}"; then
-  LIBXSLT_CFLAGS="`$XSLT_CONFIG --cflags`"
-  AC_SUBST(LIBXSLT_CFLAGS)
-  LIBXSLT_LIBS="`$XSLT_CONFIG --libs`"
-  AC_SUBST(LIBXSLT_LIBS)
-  have_xslt=yes
-else
-  AC_MSG_WARN([
-libxslt is required for the htmlexport plugin.
-])
-fi
 
-AM_CONDITIONAL(compile_HTMLEXPORT, test -n "${XSLT_CONFIG}")
+if test "x$build_xslt" != "xno"; then
+  AC_PATH_PROG(XSLT_CONFIG,xslt-config)
+  if test -n "${XSLT_CONFIG}"; then
+    LIBXSLT_CFLAGS="`$XSLT_CONFIG --cflags`"
+    AC_SUBST(LIBXSLT_CFLAGS)
+    LIBXSLT_LIBS="`$XSLT_CONFIG --libs`"
+    AC_SUBST(LIBXSLT_LIBS)
+    have_xslt=yes
+  else
+    AC_MSG_WARN([libxslt library not found, some plugins will not be compiled])
+  fi
+fi
 
 #------------------------------------------------------------------
 #
@@ -274,7 +325,8 @@ AM_CONDITIONAL(compile_HTMLEXPORT, test -n "${XSLT_CONFIG}")
 #------------------------------------------------------------------
 
 have_libgpod=no
-if test "$build_libgpod" != "no"; then
+
+if test "x$build_libgpod" != "xno"; then
     if test "$PKGCONFIGFOUND" = "yes" ; then
 
         KDE_PKG_CHECK_MODULES(LIBGPOD, libgpod-1.0 >= 0.4.2 gobject-2.0, have_libgpod=yes,have_libgpod=no)
@@ -294,8 +346,6 @@ if test "$build_libgpod" != "no"; then
     fi
 fi
 
-AM_CONDITIONAL(compile_IPODEXPORT,  [test x$have_libgpod = xyes])
-
 #------------------------------------------------------------------
 #
 # Check for libkcal - iCalendar support library
@@ -304,16 +354,15 @@ AM_CONDITIONAL(compile_IPODEXPORT,  [test x$have_libgpod = xyes])
 
 have_libkcal=no
 
-KDE_CHECK_HEADERS(libkcal/calendarlocal.h, have_libkcal=yes, have_libkcal=no)
-if test "x$have_libkcal" != "xyes"; then
-  AC_WARN([libkcal not found, calendar plugin will not be compiled.])
-else
-  LIB_KCAL="-llibkcal"
-  AC_SUBST(LIB_KCAL)
+if test "x$build_libkcal" != "xno"; then
+  KDE_CHECK_HEADERS(libkcal/calendarlocal.h, have_libkcal=yes, have_libkcal=no)
+  if test "x$have_libkcal" != "xyes"; then
+    AC_WARN([libkcal not found, some plugins will not be compiled.])
+  else
+    LIB_KCAL="-llibkcal"
+    AC_SUBST(LIB_KCAL)
+  fi
 fi
-
-AM_CONDITIONAL(compile_CALENDAR, [test x$have_libkcal = xyes])
-
 
 # ----------------------------------------------------------
 #
@@ -321,13 +370,9 @@ AM_CONDITIONAL(compile_CALENDAR, [test x$have_libkcal = xyes])
 #
 # ----------------------------------------------------------
 
-AC_ARG_WITH(opengl,
-    AC_HELP_STRING([--without-opengl],[build kipi-plugins without OpenGL [default=with]]),
-    [build_opengl=$withval],
-    [build_opengl=yes]
-)
+have_opengl=no
 
-if test "$build_opengl" != "no"; then
+if test "x$build_opengl" != "xno"; then
     AC_MSG_CHECKING(for Qt with OpenGL support)
     AC_CACHE_VAL(ac_cv_kde_qt_has_opengl,
     [
@@ -359,15 +404,73 @@ if test "$build_opengl" != "no"; then
     AC_MSG_RESULT($ac_cv_kde_qt_has_opengl)
 
     if test x$ac_cv_kde_qt_has_opengl = xyes; then
-       have_GL="yes"
+       have_opengl="yes"
        GL_LIBS="-lGL"
     else
-       have_GL="no"
+       have_opengl="no"
        GL_LIBS=""
     fi
 
     AC_SUBST(GL_LIBS)
 fi
 
+# ----------------------------------------------------------
+#
+# Second stage of kipi-plugin fine-tuning.
+#
+# ----------------------------------------------------------
 
+# Following macro checks if particular plugin should be enabled and for
+# its dependencies. (have_$dependency must be either yes or no). Sets
+# AM_CONDITIONAL accordingly. KIPI_PLUGIN_PRE must precede it.
+# KIPI_PLUGIN_POST([plugin_directory])
+AC_DEFUN([KIPI_PLUGIN_POST], [
+  test="test $enable_$1 != no"
+  if test $enable_$1 != no; then
+    for dep in $kipi_plug_deps_$1; do
+      test="${test} -a \$have_${dep} = yes"
+      if eval test \$have_${dep} != "yes"; then   # we must use eval cos we use shell variable inside variable name
+        AC_MSG_WARN([$dep could not be found, $kipi_plug_name_$1 ($1) plugin will not be built.])
+      fi
+    done
+  fi
+  if eval $test; then
+    enabled_kipi_plugins="$enabled_kipi_plugins $1"
+  else
+    disabled_kipi_plugins="$disabled_kipi_plugins $1"
+    if test $enable_$1 = yes; then
+      AC_MSG_ERROR([Failing as hard-enabled plugin cannot be compiled.])
+    fi
+  fi
+  AM_CONDITIONAL([compile_]m4_toupper($1), [eval $test])
+])
 
+enabled_kipi_plugins=""
+disabled_kipi_plugins=""
+
+# Please keep this list sorted and add all new plugins
+KIPI_PLUGIN_POST([acquireimages])
+KIPI_PLUGIN_POST([batchprocessimages])
+KIPI_PLUGIN_POST([calendar])
+KIPI_PLUGIN_POST([cdarchiving])
+KIPI_PLUGIN_POST([findimages])
+KIPI_PLUGIN_POST([flickrexport])
+KIPI_PLUGIN_POST([galleryexport])
+KIPI_PLUGIN_POST([gpssync])
+KIPI_PLUGIN_POST([htmlexport])
+#KIPI_PLUGIN_POST([imagesgallery])   # ???
+KIPI_PLUGIN_POST([imageviewer])
+KIPI_PLUGIN_POST([ipodexport])
+KIPI_PLUGIN_POST([jpeglossless])
+KIPI_PLUGIN_POST([kameraklient])
+KIPI_PLUGIN_POST([metadataedit])
+KIPI_PLUGIN_POST([mpegencoder])
+KIPI_PLUGIN_POST([picasawebexport])
+KIPI_PLUGIN_POST([printwizard])
+KIPI_PLUGIN_POST([rawconverter])
+KIPI_PLUGIN_POST([sendimages])
+KIPI_PLUGIN_POST([simpleviewerexport])
+KIPI_PLUGIN_POST([slideshow])
+#KIPI_PLUGIN_POST([sync])   # ???
+KIPI_PLUGIN_POST([timeadjust])
+KIPI_PLUGIN_POST([wallpaper])

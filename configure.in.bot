@@ -4,17 +4,7 @@ dnl about additional packages to install.
 echo ""
 echo "-- Kipi-Plugins configure results -------------------"
 
-if test "x$have_gphoto" != "xyes"; then
-  echo "-- gphoto2 found.................. NO"
-  echo ""
-  echo "KameraKlient plugin needs gPhoto2. This plugin will not be compiled!"
-  echo "To complile this plugins, please install gPhoto2, e.g. from"
-  echo "http://www.gphoto.org/download.html"
-  echo ""
-  all_tests=bad
-else
-  echo "-- gphoto2 found.................. YES"
-fi
+# mandatory dependencies
 
 if test "x$have_libkipi" != "xyes"; then
   echo "-- libkipi found.................. NO"
@@ -49,63 +39,120 @@ else
   echo "-- libkdcraw library found........ YES"
 fi
 
-if test "x$have_tiff" != "xyes"; then
-  echo "-- libtiff found.................. NO"
-  echo ""
-  echo "AcquireImages/JpegLossless/RawConverter plugins needs libtiff. These plugins will not be compiled!"
-  echo "To complile these plugins, please install libtiff development package."
-  echo "libtiff website is at http://www.remotesensing.org/libtiff"
-  echo ""
-  all_tests=bad
+# optional dependencies
+
+if test "x$build_gphoto" != "xno"; then
+  if test "x$have_gphoto" != "xyes"; then
+    echo "-- gphoto2 found.................. NO"
+    echo ""
+    echo "KameraKlient plugin needs gPhoto2. This plugin will not be compiled!"
+    echo "To complile this plugins, please install gPhoto2, e.g. from"
+    echo "http://www.gphoto.org/download.html"
+    echo ""
+    all_tests=bad
+  else
+    echo "-- gphoto2 found.................. YES"
+  fi
 else
-  echo "-- libtiff found.................. YES"
+  echo "-- gphoto2................. NOT NEEDED"
 fi
 
-if test "x$have_libkcal" != "xyes"; then
-  echo "-- libkcal found.................. NO"
-  echo ""
-  echo "Calendar plugin needs libkcal. This plugin will not be compiled!"
-  echo "To complile this plugin, please install libkcal development package."
-  echo "libkcal is part of kde-pim package, http://pim.kde.org"
-  echo ""
-  all_tests=bad
+if test "x$build_tiff" != "xno"; then
+  if test "x$have_tiff" != "xyes"; then
+    echo "-- libtiff found.................. NO"
+    echo ""
+    echo "AcquireImages/JpegLossless/RawConverter plugins needs libtiff. These plugins will not be compiled!"
+    echo "To complile these plugins, please install libtiff development package."
+    echo "libtiff website is at http://www.remotesensing.org/libtiff"
+    echo ""
+    all_tests=bad
+  else
+    echo "-- libtiff library found.......... YES"
+  fi
 else
-  echo "-- libkcal found.................. YES"
+  echo "-- libtiff library......... NOT NEEDED"
 fi
 
-if test "x$have_GL" != "xyes"; then
-  echo "-- OpenGL found................... NO"
-  echo ""
-  echo "SlideShow plugin needs OpenGL support. This plugin will not be compiled!"
-  echo "To complile this plugin, please install OpenGL support."
-  echo ""
-  all_tests=bad
+if test "x$build_libkcal" != "xno"; then
+  if test "x$have_libkcal" != "xyes"; then
+    echo "-- libkcal found.................. NO"
+    echo ""
+    echo "Calendar plugin needs libkcal. This plugin will not be compiled!"
+    echo "To complile this plugin, please install libkcal development package."
+    echo "libkcal is part of kde-pim package, http://pim.kde.org"
+    echo ""
+    all_tests=bad
+  else
+    echo "-- libkcal found.................. YES"
+  fi
 else
-  echo "-- OpenGL found................... YES"
+  echo "-- libkcal................. NOT NEEDED"
 fi
 
-if test "x$have_xslt" != "xyes"; then
-  echo "-- libxslt found.................. NO"
-  echo ""
-  echo "HtmlExport plugin needs XSLT library. This plugin will not be compiled!"
-  echo "To complile this plugin, please install libxslt development package."
-  echo "libxslt website is at http://xmlsoft.org/XSLT"
-  echo ""
-  all_tests=bad
+if test "x$build_opengl" != "xno"; then
+  if test "x$have_opengl" != "xyes"; then
+    echo "-- OpenGL found................... NO"
+    echo ""
+    echo "SlideShow plugin needs OpenGL support. This plugin will not be compiled!"
+    echo "To complile this plugin, please install OpenGL support."
+    echo ""
+    all_tests=bad
+  else
+    echo "-- OpenGL found................... YES"
+  fi
 else
-  echo "-- libxslt found.................. YES"
+  echo "-- OpenGL.................. NOT NEEDED"
 fi
 
-if test "x$have_libgpod" != "xyes"; then
-  echo "-- libgpod found.................. NO"
-  echo ""
-  echo "iPodExport plugin needs the libgpod library, version 0.4.2 or greater. This plugin will not be compiled!"
-  echo "To complile this plugin, please install libgpod development package."
-  echo "libgpod website is at http://gtkpod.org/libgpod.html"
-  echo ""
-  all_tests=bad
+if test "x$build_xslt" != "xno"; then
+  if test "x$have_xslt" != "xyes"; then
+    echo "-- libxslt found.................. NO"
+    echo ""
+    echo "HtmlExport plugin needs XSLT library. This plugin will not be compiled!"
+    echo "To complile this plugin, please install libxslt development package."
+    echo "libxslt website is at http://xmlsoft.org/XSLT"
+    echo ""
+    all_tests=bad
+  else
+    echo "-- libxslt found.................. YES"
+  fi
 else
-  echo "-- libgpod found.................. YES"
+  echo "-- libxslt library......... NOT NEEDED"
 fi
 
+if test "x$build_libgpod" != "xno"; then
+  if test "x$have_libgpod" != "xyes"; then
+    echo "-- libgpod found.................. NO"
+    echo ""
+    echo "iPodExport plugin needs the libgpod library, version 0.4.2 or greater. This plugin will not be compiled!"
+    echo "To complile this plugin, please install libgpod development package."
+    echo "libgpod website is at http://gtkpod.org/libgpod.html"
+    echo ""
+    all_tests=bad
+  else
+    echo "-- libgpod found.................. YES"
+  fi
+else
+  echo "-- libgpod library......... NOT NEEDED"
+fi
 
+echo ""
+
+if test -n "$enabled_kipi_plugins"; then
+  echo "-- Enabled kipi plugins:"
+  for plugin in $enabled_kipi_plugins; do
+    eval echo "+ \$kipi_plug_name_$plugin \($plugin\)"
+  done
+  echo ""
+fi
+if test -n "$disabled_kipi_plugins"; then
+  echo "-- Disabled kipi plugins:"
+  for plugin in $disabled_kipi_plugins; do
+    eval echo -n "- \$kipi_plug_name_$plugin \($plugin\)"
+    if eval test x\$enable_$plugin != xno; then
+      eval echo \" - dependencies: \$kipi_plug_deps_$plugin\"
+    else
+      echo ""   # add newline
+    fi
+  done
+fi

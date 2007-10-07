@@ -4,6 +4,8 @@ v 0.1.5 - Beta1
 ----------------------------------------------------------------------------
 
 Kipi-plugins NEW FEATURES
+General        : Added configure options to allow disabling plugins (--disable-XXXX)
+                 provided by Matej Laitl (bug #149666)
 
 PrintWizard    : Wizard GUI review
                  Added exif management.
@@ -32,7 +34,6 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 009 ==> 144388 : JPEGLOssLess : Cache is not updated after rotating pictures.
 010 ==> 144604 : JPEGLossLess : Rotation causes Exif data corruption.
 011 ==> 150063 : JPEGLossLess : Rotating JPEG produces error and truncates original file.
-012 ==> 
 
 v 0.1.4
 ----------------------------------------------------------------------------
