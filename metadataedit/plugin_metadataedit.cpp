@@ -220,7 +220,7 @@ void Plugin_MetadataEdit::slotImportExif()
     if (!exiv2Iface.load(importEXIFFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(), 
-                           i18n("Cannot load metadata from \"%1\"").arg(importEXIFFile.fileName()), 
+                           i18n("Cannot load metadata from \"%1\"",importEXIFFile.fileName()), 
                            i18n("Import EXIF Metadata"));    
         return;
     }
@@ -229,7 +229,7 @@ void Plugin_MetadataEdit::slotImportExif()
     if (exifData.isEmpty())
     {
         KMessageBox::error(kapp->activeWindow(), 
-                           i18n("\"%1\" do not have EXIF metadata").arg(importEXIFFile.fileName()), 
+                           i18n("\"%1\" do not have EXIF metadata",importEXIFFile.fileName()), 
                            i18n("Import EXIF Metadata"));    
         return;
     }        
@@ -238,7 +238,7 @@ void Plugin_MetadataEdit::slotImportExif()
                      kapp->activeWindow(),
                      i18n("EXIF metadata from current selected pictures will be permanently "
                           "replaced by the EXIF content of \"%1\".\n"
-                          "Do you want to continue ?").arg(importEXIFFile.fileName()),
+                          "Do you want to continue ?",importEXIFFile.fileName()),
                      i18n("Import EXIF Metadata")) != KMessageBox::Yes)
         return;
 
@@ -366,7 +366,7 @@ void Plugin_MetadataEdit::slotImportIptc()
     if (!exiv2Iface.load(importIPTCFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(), 
-                           i18n("Cannot load metadata from \"%1\"").arg(importIPTCFile.fileName()), 
+                           i18n("Cannot load metadata from \"%1\"",importIPTCFile.fileName()), 
                            i18n("Import IPTC Metadata"));    
         return;
     }
@@ -375,7 +375,7 @@ void Plugin_MetadataEdit::slotImportIptc()
     if (iptcData.isEmpty())
     {
         KMessageBox::error(kapp->activeWindow(), 
-                           i18n("\"%1\" do not have IPTC metadata").arg(importIPTCFile.fileName()), 
+                           i18n("\"%1\" do not have IPTC metadata",importIPTCFile.fileName()), 
                            i18n("Import IPTC Metadata"));    
         return;
     }        
@@ -384,7 +384,7 @@ void Plugin_MetadataEdit::slotImportIptc()
                      kapp->activeWindow(),
                      i18n("IPTC metadata from current selected pictures will be permanently "
                           "replaced by the IPTC content of \"%1\".\n"
-                          "Do you want to continue ?").arg(importIPTCFile.fileName()),
+                          "Do you want to continue ?",importIPTCFile.fileName()),
                      i18n("Import IPTC Metadata")) != KMessageBox::Yes)
         return;
 
