@@ -114,6 +114,7 @@ IPTCCaption::IPTCCaption(QWidget* parent)
 
     d->writerCheck = new QCheckBox(i18n("Caption Writer:"), this);
     d->writerEdit  = new KLineEdit(this);
+    d->writerEdit->setClearButtonShown(true);
     d->writerEdit->setValidator(asciiValidator);
     d->writerEdit->setMaxLength(32);
     d->writerEdit->setWhatsThis(("<p>Enter the name of the caption author. This field is limited "
@@ -123,6 +124,7 @@ IPTCCaption::IPTCCaption(QWidget* parent)
 
     d->headlineCheck = new QCheckBox(i18n("Headline:"), this);
     d->headlineEdit  = new KLineEdit(this);
+    d->headlineEdit->setClearButtonShown(true);
     d->headlineEdit->setValidator(asciiValidator);
     d->headlineEdit->setMaxLength(256);
     d->headlineEdit->setWhatsThis(i18n("<p>Enter here the content synopsis. This field is limited "
