@@ -128,9 +128,9 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(d->subjectsCheck, 0, 0, 1, 2 );
-    grid->addWidget(d->subjectEdit, 1, 0, 1, 2);
-    grid->addWidget(codeDesc, 2, 0, 1, 2);
+    grid->addWidget(codeDesc, 0, 0, 1, 2);
+    grid->addWidget(d->subjectsCheck, 1, 0, 1, 2 );
+    grid->addWidget(d->subjectEdit, 2, 0, 1, 1);
     grid->addWidget(d->subjectsBox, 3, 0, 5, 1);
     grid->addWidget(d->addSubjectButton, 3, 1, 1, 1);
     grid->addWidget(d->delSubjectButton, 4, 1, 1, 1);
