@@ -364,6 +364,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     d->objectNameCheck = new QCheckBox(i18n("Object name:"), this);
     d->objectNameEdit  = new KLineEdit(this);
+    d->objectNameEdit->setClearButtonShown(true);
     d->objectNameEdit->setValidator(asciiValidator);
     d->objectNameEdit->setMaxLength(64);
     d->objectNameEdit->setWhatsThis(i18n("<p>Set here the shorthand reference of content. "
@@ -373,6 +374,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     d->locationCheck = new QCheckBox(i18n("Location:"), this);
     d->locationEdit  = new KLineEdit(this);
+    d->locationEdit->setClearButtonShown(true);
     d->locationEdit->setValidator(asciiValidator);
     d->locationEdit->setMaxLength(64);
     d->locationEdit->setWhatsThis(i18n("<p>Set here the full country name referenced by the content. "
@@ -382,6 +384,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     d->sublocationCheck = new QCheckBox(i18n("Sublocation:"), this);
     d->sublocationEdit  = new KLineEdit(this);
+    d->sublocationEdit->setClearButtonShown(true);
     d->sublocationEdit->setValidator(asciiValidator);
     d->sublocationEdit->setMaxLength(32);
     d->sublocationEdit->setWhatsThis(i18n("<p>Set here the content location within city. "
@@ -391,6 +394,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     d->cityCheck = new QCheckBox(i18n("City:"), this);
     d->cityEdit  = new KLineEdit(this);
+    d->cityEdit->setClearButtonShown(true);
     d->cityEdit->setValidator(asciiValidator);
     d->cityEdit->setMaxLength(32);
     d->cityEdit->setWhatsThis(i18n("<p>Set here the city of content origin. "
@@ -400,6 +404,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     d->provinceCheck = new QCheckBox(i18n("State/Province:"), this);
     d->provinceEdit  = new KLineEdit(this);
+    d->provinceEdit->setClearButtonShown(true);
     d->provinceEdit->setValidator(asciiValidator);
     d->provinceEdit->setMaxLength(32);
     d->provinceEdit->setWhatsThis(i18n("<p>Set here the Province or State of content origin. "
@@ -421,6 +426,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     d->originalTransCheck = new QCheckBox(i18n("Original transmission reference:"), this);
     d->originalTransEdit  = new KLineEdit(this);
+    d->originalTransEdit->setClearButtonShown(true);
     d->originalTransEdit->setValidator(asciiValidator);
     d->originalTransEdit->setMaxLength(32);
     d->originalTransEdit->setWhatsThis(i18n("<p>Set here the location of original content transmission. "
