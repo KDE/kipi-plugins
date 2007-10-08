@@ -40,6 +40,7 @@
 
 // Local includes.
 
+#include "multistringsedit.h"
 #include "metadatacheckbox.h"
 #include "iptcorigin.h"
 #include "iptcorigin.moc"
@@ -64,7 +65,6 @@ public:
         sublocationCheck   = 0;
         provinceCheck      = 0;
         countryCheck       = 0;
-        locationCheck      = 0;
         originalTransCheck = 0;
 
         // Standard ISO 3166 country codes.
@@ -336,15 +336,15 @@ public:
     QCheckBox        *cityCheck;
     QCheckBox        *sublocationCheck;
     QCheckBox        *provinceCheck;
-    QCheckBox        *locationCheck;
     QCheckBox        *originalTransCheck;
 
     KLineEdit        *objectNameEdit;
     KLineEdit        *cityEdit;
     KLineEdit        *sublocationEdit;
     KLineEdit        *provinceEdit;
-    KLineEdit        *locationEdit;
     KLineEdit        *originalTransEdit;
+
+    MultiStringsEdit *locationEdit;
 
     MetadataCheckBox *countryCheck;
 };
@@ -372,13 +372,9 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->locationCheck = new QCheckBox(i18n("Location:"), this);
-    d->locationEdit  = new KLineEdit(this);
-    d->locationEdit->setClearButtonShown(true);
-    d->locationEdit->setValidator(asciiValidator);
-    d->locationEdit->setMaxLength(64);
-    d->locationEdit->setWhatsThis(i18n("<p>Set here the full country name referenced by the content. "
-                                       "This field is limited to 64 ASCII characters."));
+    d->locationEdit  = new MultiStringsEdit(this, i18n("Location:"), 
+                                          i18n("<p>Set here the full country name referenced by the content."), 
+                                          true, 64);
 
     // --------------------------------------------------------
 
@@ -447,8 +443,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     grid->addWidget(d->objectNameCheck, 0, 0, 1, 3 );
     grid->addWidget(d->objectNameEdit, 1, 0, 1, 3 );
-    grid->addWidget(d->locationCheck, 2, 0, 1, 1);
-    grid->addWidget(d->locationEdit, 2, 1, 1, 2);
+    grid->addWidget(d->locationEdit, 2, 0, 1, 3);
     grid->addWidget(d->sublocationCheck, 3, 0, 1, 1);
     grid->addWidget(d->sublocationEdit, 3, 1, 1, 2);
     grid->addWidget(d->cityCheck, 4, 0, 1, 1);
@@ -482,9 +477,6 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     connect(d->countryCheck, SIGNAL(toggled(bool)),
             d->countryCB, SLOT(setEnabled(bool)));
 
-    connect(d->locationCheck, SIGNAL(toggled(bool)),
-            d->locationEdit, SLOT(setEnabled(bool)));
-
     connect(d->originalTransCheck, SIGNAL(toggled(bool)),
             d->originalTransEdit, SLOT(setEnabled(bool)));
 
@@ -505,7 +497,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     connect(d->countryCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
-    connect(d->locationCheck, SIGNAL(toggled(bool)),
+    connect(d->locationEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
     connect(d->originalTransCheck, SIGNAL(toggled(bool)),
@@ -528,9 +520,6 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     connect(d->provinceEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 
-    connect(d->locationEdit, SIGNAL(textChanged(const QString &)),
-            this, SIGNAL(signalModified()));
-
     connect(d->originalTransEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 }
@@ -545,7 +534,8 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
-    QString data;
+    QString     data;
+    QStringList list;
 
     d->objectNameEdit->clear();
     d->objectNameCheck->setChecked(false);
@@ -557,15 +547,8 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     }
     d->objectNameEdit->setEnabled(d->objectNameCheck->isChecked());
 
-    d->locationEdit->clear();
-    d->locationCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.LocationName", false);    
-    if (!data.isNull())
-    {
-        d->locationEdit->setText(data);
-        d->locationCheck->setChecked(true);
-    }
-    d->locationEdit->setEnabled(d->locationCheck->isChecked());
+    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.LocationName", false);
+    d->locationEdit->setValues(list);
 
     d->cityEdit->clear();
     d->cityCheck->setChecked(false);
@@ -662,8 +645,9 @@ void IPTCOrigin::applyMetadata(QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.ObjectName");
 
-    if (d->locationCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.LocationName", d->locationEdit->text());
+    QStringList oldList, newList;
+    if (d->locationEdit->getValues(oldList, newList))
+        exiv2Iface.setIptcTagsStringList("Iptc.Application2.LocationName", 64, oldList, newList);
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.LocationName");
 

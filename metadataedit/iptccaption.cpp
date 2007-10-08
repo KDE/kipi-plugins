@@ -206,9 +206,6 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     connect(d->specialInstructionEdit, SIGNAL(textChanged()),
             this, SIGNAL(signalModified()));
 
-    connect(d->writerEdit, SIGNAL(textChanged(const QString &)),
-            this, SIGNAL(signalModified()));
-
     connect(d->headlineEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 }

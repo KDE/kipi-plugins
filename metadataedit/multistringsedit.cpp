@@ -96,7 +96,7 @@ MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
 
     if (ascii || size != -1)
     {
-        whatsThis.append(i18n("This field is limited to:"));
+        whatsThis.append(i18n(" This field is limited to:"));
     }
 
     if (ascii)
