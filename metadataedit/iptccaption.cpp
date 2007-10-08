@@ -103,7 +103,6 @@ IPTCCaption::IPTCCaption(QWidget* parent)
                                               KGlobal::mainComponent().aboutData()->programName()), 
                                             this);
     d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF Comment"), this);
-    KSeparator *line        = new KSeparator(Qt::Horizontal, this);
 
 /*    d->captionEdit->setValidator(asciiValidator);
     d->captionEdit->setMaxLength(2000);*/
@@ -153,7 +152,7 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     vlay->addWidget(d->syncJFIFCommentCheck);
     vlay->addWidget(d->syncHOSTCommentCheck);
     vlay->addWidget(d->syncEXIFCommentCheck);
-    vlay->addWidget(line);
+    vlay->addWidget(new KSeparator(Qt::Horizontal, this));
     vlay->addWidget(d->writerEdit);
     vlay->addWidget(d->headlineCheck);
     vlay->addWidget(d->headlineEdit);
