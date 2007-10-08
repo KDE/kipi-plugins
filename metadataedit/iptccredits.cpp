@@ -40,6 +40,7 @@
 
 // Local includes.
 
+#include "multistringsedit.h"
 #include "iptccredits.h"
 #include "iptccredits.moc"
 
@@ -66,19 +67,20 @@ public:
         contactCheck     = 0;
     }
 
-    QCheckBox *copyrightCheck;
-    QCheckBox *bylineCheck;
-    QCheckBox *bylineTitleCheck;
-    QCheckBox *creditCheck;
-    QCheckBox *sourceCheck;
-    QCheckBox *contactCheck;
+    QCheckBox        *copyrightCheck;
+    QCheckBox        *bylineCheck;
+    QCheckBox        *bylineTitleCheck;
+    QCheckBox        *creditCheck;
+    QCheckBox        *sourceCheck;
+    QCheckBox        *contactCheck;
 
-    KLineEdit *copyrightEdit;
-    KLineEdit *bylineEdit;
-    KLineEdit *bylineTitleEdit;
-    KLineEdit *creditEdit;
-    KLineEdit *sourceEdit;
-    KLineEdit *contactEdit;
+    KLineEdit        *copyrightEdit;
+    KLineEdit        *creditEdit;
+    KLineEdit        *sourceEdit;
+
+    MultiStringsEdit *bylineEdit;
+    MultiStringsEdit *bylineTitleEdit;
+    MultiStringsEdit *contactEdit;
 };
 
 IPTCCredits::IPTCCredits(QWidget* parent)
@@ -103,23 +105,15 @@ IPTCCredits::IPTCCredits(QWidget* parent)
     
     // --------------------------------------------------------
 
-    d->bylineCheck = new QCheckBox(i18n("Byline:"), this);
-    d->bylineEdit  = new KLineEdit(this);
-    d->bylineEdit->setClearButtonShown(true);
-    d->bylineEdit->setValidator(asciiValidator);
-    d->bylineEdit->setMaxLength(32);
-    d->bylineEdit->setWhatsThis(i18n("<p>Set here the name of content creator. This field is limited "
-                                     "to 32 ASCII characters."));
-        
+    d->bylineEdit  = new MultiStringsEdit(this, i18n("Byline:"), 
+                                          i18n("<p>Set here the name of content creator."), 
+                                          true, 32);
+
     // --------------------------------------------------------
 
-    d->bylineTitleCheck = new QCheckBox(i18n("Byline Title:"), this);
-    d->bylineTitleEdit  = new KLineEdit(this);
-    d->bylineTitleEdit->setClearButtonShown(true);
-    d->bylineTitleEdit->setValidator(asciiValidator);
-    d->bylineTitleEdit->setMaxLength(32);
-    d->bylineTitleEdit->setWhatsThis(i18n("<p>Set here the title of content creator. This field is limited "
-                                          "to 32 ASCII characters."));
+    d->bylineTitleEdit  = new MultiStringsEdit(this, i18n("Byline Title:"), 
+                                               i18n("<p>Set here the title of content creator."), 
+                                               true, 32);
 
     // --------------------------------------------------------
 
@@ -143,13 +137,9 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->contactCheck = new QCheckBox(i18n("Contact:"), this);
-    d->contactEdit  = new KLineEdit(this);
-    d->contactEdit->setClearButtonShown(true);
-    d->contactEdit->setValidator(asciiValidator);
-    d->contactEdit->setMaxLength(128);
-    d->contactEdit->setWhatsThis(i18n("<p>Set here the person or organisation to contact. "
-                                      "This field is limited to 128 ASCII characters."));
+    d->contactEdit  = new MultiStringsEdit(this, i18n("Contact:"), 
+                                           i18n("<p>Set here the person or organisation to contact."), 
+                                           true, 128);
 
     // --------------------------------------------------------
 
@@ -166,15 +156,12 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     vlay->addWidget(d->copyrightCheck);
     vlay->addWidget(d->copyrightEdit);
-    vlay->addWidget(d->bylineCheck);
     vlay->addWidget(d->bylineEdit);
-    vlay->addWidget(d->bylineTitleCheck);
     vlay->addWidget(d->bylineTitleEdit);
     vlay->addWidget(d->creditCheck);
     vlay->addWidget(d->creditEdit);
     vlay->addWidget(d->sourceCheck);
     vlay->addWidget(d->sourceEdit);
-    vlay->addWidget(d->contactCheck);
     vlay->addWidget(d->contactEdit);
     vlay->addWidget(note);
     vlay->addStretch();
@@ -186,11 +173,6 @@ IPTCCredits::IPTCCredits(QWidget* parent)
     connect(d->copyrightCheck, SIGNAL(toggled(bool)),
             d->copyrightEdit, SLOT(setEnabled(bool)));
 
-    connect(d->bylineCheck, SIGNAL(toggled(bool)),
-            d->bylineEdit, SLOT(setEnabled(bool)));
-
-    connect(d->bylineTitleCheck, SIGNAL(toggled(bool)),
-            d->bylineTitleEdit, SLOT(setEnabled(bool)));
 
     connect(d->creditCheck, SIGNAL(toggled(bool)),
             d->creditEdit, SLOT(setEnabled(bool)));
@@ -198,18 +180,15 @@ IPTCCredits::IPTCCredits(QWidget* parent)
     connect(d->sourceCheck, SIGNAL(toggled(bool)),
             d->sourceEdit, SLOT(setEnabled(bool)));
 
-    connect(d->contactCheck, SIGNAL(toggled(bool)),
-            d->contactEdit, SLOT(setEnabled(bool)));
-
     // --------------------------------------------------------
 
     connect(d->copyrightCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
-    connect(d->bylineCheck, SIGNAL(toggled(bool)),
+    connect(d->bylineEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
-    connect(d->bylineTitleCheck, SIGNAL(toggled(bool)),
+    connect(d->bylineTitleEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
     connect(d->creditCheck, SIGNAL(toggled(bool)),
@@ -218,7 +197,7 @@ IPTCCredits::IPTCCredits(QWidget* parent)
     connect(d->sourceCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
-    connect(d->contactCheck, SIGNAL(toggled(bool)),
+    connect(d->contactEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------
@@ -226,19 +205,10 @@ IPTCCredits::IPTCCredits(QWidget* parent)
     connect(d->copyrightEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 
-    connect(d->bylineEdit, SIGNAL(textChanged(const QString &)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->bylineTitleEdit, SIGNAL(textChanged(const QString &)),
-            this, SIGNAL(signalModified()));
-
     connect(d->creditEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 
     connect(d->sourceEdit, SIGNAL(textChanged(const QString &)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->contactEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 }
 
@@ -252,7 +222,8 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
-    QString data;
+    QString     data;
+    QStringList list;
 
     d->copyrightEdit->clear();
     d->copyrightCheck->setChecked(false);
@@ -264,25 +235,11 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     }
     d->copyrightEdit->setEnabled(d->copyrightCheck->isChecked());
 
-    d->bylineEdit->clear();
-    d->bylineCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Byline", false);    
-    if (!data.isNull())
-    {
-        d->bylineEdit->setText(data);
-        d->bylineCheck->setChecked(true);
-    }
-    d->bylineEdit->setEnabled(d->bylineCheck->isChecked());
+    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Byline", false);    
+    d->bylineEdit->setValues(list);
 
-    d->bylineTitleEdit->clear();
-    d->bylineTitleCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.BylineTitle", false);    
-    if (!data.isNull())
-    {
-        d->bylineTitleEdit->setText(data);
-        d->bylineTitleCheck->setChecked(true);
-    }
-    d->bylineTitleEdit->setEnabled(d->bylineTitleCheck->isChecked());
+    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.BylineTitle", false);    
+    d->bylineTitleEdit->setValues(list);
 
     d->creditEdit->clear();
     d->creditCheck->setChecked(false);
@@ -304,21 +261,15 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     }
     d->sourceEdit->setEnabled(d->sourceCheck->isChecked());
 
-    d->contactEdit->clear();
-    d->contactCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Contact", false);    
-    if (!data.isNull())
-    {
-        d->contactEdit->setText(data);
-        d->contactCheck->setChecked(true);
-    }
-    d->contactEdit->setEnabled(d->contactCheck->isChecked());
+    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Contact", false);    
+    d->contactEdit->setValues(list);
 
     blockSignals(false);
 }
 
 void IPTCCredits::applyMetadata(QByteArray& iptcData)
 {
+    QStringList oldList, newList;
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
@@ -327,13 +278,13 @@ void IPTCCredits::applyMetadata(QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Copyright");
 
-    if (d->bylineCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Byline", d->bylineEdit->text());
+    if (d->bylineEdit->getValues(oldList, newList))
+        exiv2Iface.setIptcTagsStringList("Iptc.Application2.Byline", 32, oldList, newList);
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Byline");
 
-    if (d->bylineTitleCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.BylineTitle", d->bylineTitleEdit->text());
+    if (d->bylineTitleEdit->getValues(oldList, newList))
+        exiv2Iface.setIptcTagsStringList("Iptc.Application2.BylineTitle", 32, oldList, newList);
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.BylineTitle");
 
@@ -347,8 +298,8 @@ void IPTCCredits::applyMetadata(QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Source");
 
-    if (d->contactCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Contact", d->contactEdit->text());
+    if (d->contactEdit->getValues(oldList, newList))
+        exiv2Iface.setIptcTagsStringList("Iptc.Application2.Contact", 128, oldList, newList);
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Contact");
 

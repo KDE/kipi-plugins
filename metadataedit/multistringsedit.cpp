@@ -274,13 +274,15 @@ void MultiStringsEdit::setValues(const QStringList& values)
 
 bool MultiStringsEdit::getValues(QStringList& oldValues, QStringList& newValues)
 {
+    oldValues = d->oldValues;
+
+    newValues.clear();
     for (int i = 0 ; i < d->valueBox->count(); i++)
     {
         QListWidgetItem *item = d->valueBox->item(i);
         newValues.append(item->text());
     }
 
-    oldValues = d->oldValues;
     return d->valueCheck->isChecked();
 }
 
