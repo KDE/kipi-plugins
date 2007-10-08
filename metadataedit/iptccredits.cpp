@@ -95,6 +95,7 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     d->copyrightCheck = new QCheckBox(i18n("Copyright:"), this);
     d->copyrightEdit  = new KLineEdit(this);
+    d->copyrightEdit->setClearButtonShown(true);
     d->copyrightEdit->setValidator(asciiValidator);
     d->copyrightEdit->setMaxLength(128);
     d->copyrightEdit->setWhatsThis(i18n("<p>Set here the necessary copyright notice. This field is limited "
@@ -104,6 +105,7 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     d->bylineCheck = new QCheckBox(i18n("Byline:"), this);
     d->bylineEdit  = new KLineEdit(this);
+    d->bylineEdit->setClearButtonShown(true);
     d->bylineEdit->setValidator(asciiValidator);
     d->bylineEdit->setMaxLength(32);
     d->bylineEdit->setWhatsThis(i18n("<p>Set here the name of content creator. This field is limited "
@@ -113,6 +115,7 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     d->bylineTitleCheck = new QCheckBox(i18n("Byline Title:"), this);
     d->bylineTitleEdit  = new KLineEdit(this);
+    d->bylineTitleEdit->setClearButtonShown(true);
     d->bylineTitleEdit->setValidator(asciiValidator);
     d->bylineTitleEdit->setMaxLength(32);
     d->bylineTitleEdit->setWhatsThis(i18n("<p>Set here the title of content creator. This field is limited "
@@ -122,6 +125,7 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     d->creditCheck = new QCheckBox(i18n("Credit:"), this);
     d->creditEdit  = new KLineEdit(this);
+    d->creditEdit->setClearButtonShown(true);
     d->creditEdit->setValidator(asciiValidator);
     d->creditEdit->setMaxLength(32);
     d->creditEdit->setWhatsThis(i18n("<p>Set here the content provider. "
@@ -131,6 +135,7 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     d->sourceCheck = new QCheckBox(i18n("Source:"), this);
     d->sourceEdit  = new KLineEdit(this);
+    d->sourceEdit->setClearButtonShown(true);
     d->sourceEdit->setValidator(asciiValidator);
     d->sourceEdit->setMaxLength(32);
     d->sourceEdit->setWhatsThis(i18n("<p>Set here the original owner of content. "
@@ -140,6 +145,7 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     d->contactCheck = new QCheckBox(i18n("Contact:"), this);
     d->contactEdit  = new KLineEdit(this);
+    d->contactEdit->setClearButtonShown(true);
     d->contactEdit->setValidator(asciiValidator);
     d->contactEdit->setMaxLength(128);
     d->contactEdit->setWhatsThis(i18n("<p>Set here the person or organisation to contact. "
