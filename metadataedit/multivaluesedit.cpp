@@ -42,6 +42,7 @@
 
 // Local includes.
 
+#include "metadatacheckbox.h"
 #include "multivaluesedit.h"
 #include "multivaluesedit.moc"
 
@@ -62,17 +63,17 @@ public:
         dataList      = 0;
     }
 
-    QStringList  oldValues;
+    QStringList       oldValues;
 
-    QPushButton *addValueButton;
-    QPushButton *delValueButton;
-    QPushButton *repValueButton;
+    QPushButton      *addValueButton;
+    QPushButton      *delValueButton;
+    QPushButton      *repValueButton;
 
-    QCheckBox   *valueCheck;
+    QComboBox        *dataList;
 
-    QComboBox   *dataList;
+    KListWidget      *valueBox;
 
-    KListWidget *valueBox;
+    MetadataCheckBox *valueCheck;
 };
 
 MultiValuesEdit::MultiValuesEdit(QWidget* parent, const QString& title, const QString& desc)
@@ -83,7 +84,7 @@ MultiValuesEdit::MultiValuesEdit(QWidget* parent, const QString& title, const QS
 
     // --------------------------------------------------------
 
-    d->valueCheck = new QCheckBox(title, this);    
+    d->valueCheck = new MetadataCheckBox(title, this);    
 
     d->dataList   = new QComboBox(this);
     d->dataList->model()->sort(0);
@@ -260,6 +261,16 @@ bool MultiValuesEdit::getValues(QStringList& oldValues, QStringList& newValues)
     }
 
     return d->valueCheck->isChecked();
+}
+
+void MultiValuesEdit::setValid(bool v) 
+{
+    d->valueCheck->setValid(v); 
+}
+
+bool MultiValuesEdit::isValid() const 
+{
+    return d->valueCheck->isValid(); 
 }
 
 }  // namespace KIPIMetadataEditPlugin

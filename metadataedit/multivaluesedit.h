@@ -41,6 +41,9 @@ public:
     MultiValuesEdit(QWidget* parent, const QString& title, const QString& desc);
     ~MultiValuesEdit();
 
+    void setValid(bool v);
+    bool isValid() const;
+
     void setData(const QStringList& data);
 
     void setValues(const QStringList& values);
