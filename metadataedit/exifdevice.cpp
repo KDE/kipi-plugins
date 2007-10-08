@@ -131,6 +131,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     d->makeCheck = new QCheckBox(i18n("Device manufacturer (*):"), this);
     d->makeEdit  = new KLineEdit(this);
+    d->makeEdit->setClearButtonShown(true);
     d->makeEdit->setValidator(asciiValidator);
     d->makeEdit->setWhatsThis(i18n("<p>Set here the manufacturer of image input equipment used to "
                                    "take the picture. This field is limited to ASCII characters."));
@@ -139,6 +140,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     d->modelCheck = new QCheckBox(i18n("Device model (*):"), this);
     d->modelEdit  = new KLineEdit(this);
+    d->modelEdit->setClearButtonShown(true);
     d->modelEdit->setValidator(asciiValidator);
     d->modelEdit->setWhatsThis(i18n("<p>Set here the model of image input equipment used to "
                                     "take the picture. This field is limited to ASCII characters."));
