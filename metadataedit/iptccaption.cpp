@@ -44,6 +44,7 @@
 
 // Local includes.
 
+#include "multistringsedit.h"
 #include "iptccaption.h"
 #include "iptccaption.moc"
 
@@ -62,26 +63,25 @@ public:
         specialInstructionEdit  = 0;
         captionCheck            = 0;
         specialInstructionCheck = 0;
-        writerCheck             = 0;
         headlineCheck           = 0;
         syncJFIFCommentCheck    = 0;
         syncHOSTCommentCheck    = 0;
         syncEXIFCommentCheck    = 0;
     }
 
-    QCheckBox *captionCheck;
-    QCheckBox *specialInstructionCheck;
-    QCheckBox *writerCheck;
-    QCheckBox *headlineCheck;
-    QCheckBox *syncJFIFCommentCheck;
-    QCheckBox *syncHOSTCommentCheck;
-    QCheckBox *syncEXIFCommentCheck;
+    QCheckBox        *captionCheck;
+    QCheckBox        *specialInstructionCheck;
+    QCheckBox        *headlineCheck;
+    QCheckBox        *syncJFIFCommentCheck;
+    QCheckBox        *syncHOSTCommentCheck;
+    QCheckBox        *syncEXIFCommentCheck;
 
-    KTextEdit *captionEdit;
-    KTextEdit *specialInstructionEdit;
+    KTextEdit        *captionEdit;
+    KTextEdit        *specialInstructionEdit;
 
-    KLineEdit *writerEdit;
-    KLineEdit *headlineEdit;
+    KLineEdit        *headlineEdit;
+
+    MultiStringsEdit *writerEdit;
 };
 
 IPTCCaption::IPTCCaption(QWidget* parent)
@@ -112,13 +112,9 @@ IPTCCaption::IPTCCaption(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->writerCheck = new QCheckBox(i18n("Caption Writer:"), this);
-    d->writerEdit  = new KLineEdit(this);
-    d->writerEdit->setClearButtonShown(true);
-    d->writerEdit->setValidator(asciiValidator);
-    d->writerEdit->setMaxLength(32);
-    d->writerEdit->setWhatsThis(("<p>Enter the name of the caption author. This field is limited "
-                                 "to 32 ASCII characters."));
+    d->writerEdit  = new MultiStringsEdit(this, i18n("Caption Writer:"), 
+                                          i18n("<p>Enter the name of the caption author."), 
+                                          true, 32);
         
     // --------------------------------------------------------
 
@@ -158,7 +154,6 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     vlay->addWidget(d->syncHOSTCommentCheck);
     vlay->addWidget(d->syncEXIFCommentCheck);
     vlay->addWidget(line);
-    vlay->addWidget(d->writerCheck);
     vlay->addWidget(d->writerEdit);
     vlay->addWidget(d->headlineCheck);
     vlay->addWidget(d->headlineEdit);
@@ -183,9 +178,6 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     connect(d->captionCheck, SIGNAL(toggled(bool)),
             d->syncEXIFCommentCheck, SLOT(setEnabled(bool)));
 
-    connect(d->writerCheck, SIGNAL(toggled(bool)),
-            d->writerEdit, SLOT(setEnabled(bool)));
-
     connect(d->headlineCheck, SIGNAL(toggled(bool)),
             d->headlineEdit, SLOT(setEnabled(bool)));
     
@@ -197,7 +189,7 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     connect(d->captionCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
-    connect(d->writerCheck, SIGNAL(toggled(bool)),
+    connect(d->writerEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
     connect(d->headlineCheck, SIGNAL(toggled(bool)),
@@ -266,7 +258,8 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
     blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
-    QString data;
+    QString     data;
+    QStringList list;
 
     d->captionEdit->clear();
     d->captionCheck->setChecked(false);
@@ -281,15 +274,8 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
     d->syncHOSTCommentCheck->setEnabled(d->captionCheck->isChecked());
     d->syncEXIFCommentCheck->setEnabled(d->captionCheck->isChecked());
 
-    d->writerEdit->clear();
-    d->writerCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Writer", false);    
-    if (!data.isNull())
-    {
-        d->writerEdit->setText(data);
-        d->writerCheck->setChecked(true);
-    }
-    d->writerEdit->setEnabled(d->writerCheck->isChecked());
+    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Writer", false);    
+    d->writerEdit->setValues(list);
 
     d->headlineEdit->clear();
     d->headlineCheck->setChecked(false);
@@ -333,8 +319,9 @@ void IPTCCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
 
-    if (d->writerCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Writer", d->writerEdit->text());
+    QStringList oldList, newList;
+    if (d->writerEdit->getValues(oldList, newList))
+        exiv2Iface.setIptcTagsStringList("Iptc.Application2.Writer", 32, oldList, newList);
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Writer");
 
