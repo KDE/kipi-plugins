@@ -96,6 +96,11 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->subjectEdit->setWhatsThis(i18n("<p>Enter here a new subject. "
                                       "This field is limited to 236 ASCII characters."));
 
+    QLabel *codeDesc = new QLabel(i18n("Subject codes are defined at "
+           "<b><a href='http://www.iptc.org/NewsCodes'>www.iptc.org/NewsCodes</a></b></b>"), this);
+    codeDesc->setOpenExternalLinks(true);
+    codeDesc->setWordWrap(true);
+
     d->subjectsBox   = new KListWidget(this);
     d->subjectsBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     
@@ -124,14 +129,15 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     grid->setAlignment( Qt::AlignTop );
     grid->addWidget(d->subjectsCheck, 0, 0, 1, 2 );
-    grid->addWidget(d->subjectEdit, 1, 0, 1, 1);
-    grid->addWidget(d->subjectsBox, 2, 0, 5, 1);
-    grid->addWidget(d->addSubjectButton, 2, 1, 1, 1);
-    grid->addWidget(d->delSubjectButton, 3, 1, 1, 1);
-    grid->addWidget(d->repSubjectButton, 4, 1, 1, 1);
-    grid->addWidget(note, 5, 1, 1, 1);
+    grid->addWidget(d->subjectEdit, 1, 0, 1, 2);
+    grid->addWidget(codeDesc, 2, 0, 1, 2);
+    grid->addWidget(d->subjectsBox, 3, 0, 5, 1);
+    grid->addWidget(d->addSubjectButton, 3, 1, 1, 1);
+    grid->addWidget(d->delSubjectButton, 4, 1, 1, 1);
+    grid->addWidget(d->repSubjectButton, 5, 1, 1, 1);
+    grid->addWidget(note, 6, 1, 1, 1);
     grid->setColumnStretch(0, 10);                     
-    grid->setRowStretch(6, 10);  
+    grid->setRowStretch(7, 10);  
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());    
                                          
