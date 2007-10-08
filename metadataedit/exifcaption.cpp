@@ -104,6 +104,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     d->documentNameCheck = new QCheckBox(i18n("Document name (*):"), this);
     d->documentNameEdit  = new KLineEdit(this);
+    d->documentNameEdit->setClearButtonShown(true);
     d->documentNameEdit->setValidator(asciiValidator);
     d->documentNameEdit->setWhatsThis(i18n("<p>Enter the name of the document from which "
                                            "this image was been scanned. This field is limited "
@@ -113,6 +114,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     d->imageDescCheck = new QCheckBox(i18n("Image description (*):"), this);
     d->imageDescEdit  = new KLineEdit(this);
+    d->imageDescEdit->setClearButtonShown(true);
     d->imageDescEdit->setValidator(asciiValidator);
     d->imageDescEdit->setWhatsThis(i18n("<p>Enter the image title. This field is limited "
                                         "to ASCII characters."));
@@ -121,6 +123,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     d->artistCheck = new QCheckBox(i18n("Artist (*):"), this);
     d->artistEdit  = new KLineEdit(this);
+    d->artistEdit->setClearButtonShown(true);
     d->artistEdit->setValidator(asciiValidator);
     d->artistEdit->setWhatsThis(i18n("<p>Enter the image author's name. "
                                      "This field is limited to ASCII characters."));
@@ -129,6 +132,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     d->copyrightCheck = new QCheckBox(i18n("Copyright (*):"), this);
     d->copyrightEdit  = new KLineEdit(this);
+    d->copyrightEdit->setClearButtonShown(true);
     d->copyrightEdit->setValidator(asciiValidator);
     d->copyrightEdit->setWhatsThis(i18n("<p>Enter the copyright owner of the image. "
                                         "This field is limited to ASCII characters."));
