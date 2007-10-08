@@ -137,6 +137,8 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateOriginalSubSecEdit->setWhatsThis(i18n("<p>Set here the fractions of seconds for the date "
                                                  "and time when the original image data was generated."));
 
+    KSeparator *line2          = new KSeparator(Qt::Horizontal, this);
+
     // --------------------------------------------------------
 
     d->dateDigitalizedCheck       = new QCheckBox(i18n("Digitization date and time"), this);
@@ -153,6 +155,8 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateDigitalizedSubSecEdit->setWhatsThis(i18n("<p>Set here the fractions of seconds for the date "
                                                     "and time when the image was stored as digital data."));
 
+    // --------------------------------------------------------
+
     grid->addWidget(d->dateCreatedCheck, 0, 0, 1, 1);
     grid->addWidget(d->dateCreatedSubSecCheck, 0, 1, 1, 2);
     grid->addWidget(d->dateCreatedSel, 1, 0, 1, 1);
@@ -165,12 +169,13 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     grid->addWidget(d->dateOriginalSubSecCheck, 6, 1, 1, 2);
     grid->addWidget(d->dateOriginalSel, 7, 0, 1, 1);
     grid->addWidget(d->dateOriginalSubSecEdit, 7, 1, 1, 1);
-    grid->addWidget(d->dateDigitalizedCheck, 8, 0, 1, 1);
-    grid->addWidget(d->dateDigitalizedSubSecCheck, 8, 1, 1, 2);
-    grid->addWidget(d->dateDigitalizedSel, 9, 0, 1, 1);
-    grid->addWidget(d->dateDigitalizedSubSecEdit, 9, 1, 1, 1);
+    grid->addWidget(line2, 8, 0, 1, 4 );
+    grid->addWidget(d->dateDigitalizedCheck, 9, 0, 1, 1);
+    grid->addWidget(d->dateDigitalizedSubSecCheck, 9, 1, 1, 2);
+    grid->addWidget(d->dateDigitalizedSel, 10, 0, 1, 1);
+    grid->addWidget(d->dateDigitalizedSubSecEdit, 10, 1, 1, 1);
     grid->setColumnStretch(3, 10);                     
-    grid->setRowStretch(10, 10);                     
+    grid->setRowStretch(11, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
