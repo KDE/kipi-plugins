@@ -166,12 +166,6 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
     connect(d->keywordsCheck, SIGNAL(toggled(bool)),
             d->keywordsBox, SLOT(setEnabled(bool)));
 
-    connect(d->keywordsCheck, SIGNAL(toggled(bool)),
-            d->addKeywordButton, SLOT(setEnabled(bool)));
-
-    connect(d->keywordsCheck, SIGNAL(toggled(bool)),
-            d->delKeywordButton, SLOT(setEnabled(bool)));
-
     // --------------------------------------------------------
 
     connect(d->keywordsCheck, SIGNAL(toggled(bool)),
