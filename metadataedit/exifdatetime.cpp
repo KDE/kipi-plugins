@@ -26,9 +26,12 @@
 #include <QLabel>
 #include <QValidator>
 #include <QCheckBox>
+#include <QPushButton>
+#include <QSpacerItem>
 
 // KDE includes.
 
+#include <kiconloader.h>
 #include <klocale.h>
 #include <kdialog.h>
 #include <kdatetimewidget.h>
@@ -72,6 +75,10 @@ public:
         syncHOSTDateCheck          = 0;
         syncXMPDateCheck           = 0;
         syncIPTCDateCheck          = 0;
+
+        setTodayCreatedBtn         = 0;
+        setTodayOriginalBtn        = 0;
+        setTodayDigitalizedBtn     = 0;
     }
 
     QCheckBox       *dateCreatedCheck;
@@ -83,6 +90,10 @@ public:
     QCheckBox       *syncHOSTDateCheck;
     QCheckBox       *syncXMPDateCheck;
     QCheckBox       *syncIPTCDateCheck;
+
+    QPushButton     *setTodayCreatedBtn;
+    QPushButton     *setTodayOriginalBtn;
+    QPushButton     *setTodayDigitalizedBtn;
 
     KIntSpinBox     *dateCreatedSubSecEdit;
     KIntSpinBox     *dateOriginalSubSecEdit;
@@ -106,22 +117,27 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateCreatedSubSecCheck = new QCheckBox(i18n("Creation sub-second"), this);
     d->dateCreatedSel         = new KDateTimeWidget(this);
     d->dateCreatedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
-    d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
     d->syncHOSTDateCheck      = new QCheckBox(i18n("Sync creation date hosted by %1",
                                               KGlobal::mainComponent().aboutData()->programName()), 
                                               this);
     d->syncXMPDateCheck       = new QCheckBox(i18n("Sync XMP creation date"), this);
     d->syncIPTCDateCheck      = new QCheckBox(i18n("Sync IPTC creation date"), this);
 
+    d->setTodayCreatedBtn     = new QPushButton();
+    d->setTodayCreatedBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayCreatedBtn->setWhatsThis(i18n("Set creation date to today"));
+
     if (!KExiv2Iface::KExiv2::supportXmp())
         d->syncXMPDateCheck->setEnabled(false);
-
-    KSeparator *line          = new KSeparator(Qt::Horizontal, this);
 
     d->dateCreatedSel->setWhatsThis(i18n("<p>Set here the date and time of image creation. "
                                        "In this standard it is the date and time the file was changed."));
     d->dateCreatedSubSecEdit->setWhatsThis(i18n("<p>Set here the fractions of seconds for the date "
                                                 "and time of image creation."));
+
+    KSeparator *line          = new KSeparator(Qt::Horizontal, this);
+
+    slotSetTodayCreated();
 
     // --------------------------------------------------------
 
@@ -129,7 +145,10 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateOriginalSubSecCheck = new QCheckBox(i18n("Original sub-second"), this);
     d->dateOriginalSel         = new KDateTimeWidget(this);
     d->dateOriginalSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
-    d->dateOriginalSel->setDateTime(QDateTime::currentDateTime());
+
+    d->setTodayOriginalBtn      = new QPushButton();
+    d->setTodayOriginalBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayOriginalBtn->setWhatsThis(i18n("Set original date to today"));
 
     d->dateOriginalSel->setWhatsThis(i18n("<p>Set here the date and time when the original image "
                                           "data was generated. For a digital still camera the date and "
@@ -139,13 +158,17 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
 
     KSeparator *line2          = new KSeparator(Qt::Horizontal, this);
 
+    slotSetTodayOriginal();
+
     // --------------------------------------------------------
 
     d->dateDigitalizedCheck       = new QCheckBox(i18n("Digitization date and time"), this);
     d->dateDigitalizedSubSecCheck = new QCheckBox(i18n("Digitization sub-second"), this);
     d->dateDigitalizedSel         = new KDateTimeWidget(this);
     d->dateDigitalizedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
-    d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
+    d->setTodayDigitalizedBtn        = new QPushButton();
+    d->setTodayDigitalizedBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayDigitalizedBtn->setWhatsThis(i18n("Set digitization date to today"));
 
     d->dateDigitalizedSel->setWhatsThis(i18n("<p>Set here the date and time when the image was "
                                              "stored as digital data. If, for example, an image was "
@@ -155,12 +178,15 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateDigitalizedSubSecEdit->setWhatsThis(i18n("<p>Set here the fractions of seconds for the date "
                                                     "and time when the image was stored as digital data."));
 
+    slotSetTodayDigitalized();
+
     // --------------------------------------------------------
 
     grid->addWidget(d->dateCreatedCheck, 0, 0, 1, 1);
     grid->addWidget(d->dateCreatedSubSecCheck, 0, 1, 1, 2);
     grid->addWidget(d->dateCreatedSel, 1, 0, 1, 1);
     grid->addWidget(d->dateCreatedSubSecEdit, 1, 1, 1, 1);
+    grid->addWidget(d->setTodayCreatedBtn, 1, 3, 1, 1);
     grid->addWidget(d->syncHOSTDateCheck, 2, 0, 1, 4 );
     grid->addWidget(d->syncXMPDateCheck, 3, 0, 1, 4 );
     grid->addWidget(d->syncIPTCDateCheck, 4, 0, 1, 4 );
@@ -169,12 +195,14 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     grid->addWidget(d->dateOriginalSubSecCheck, 6, 1, 1, 2);
     grid->addWidget(d->dateOriginalSel, 7, 0, 1, 1);
     grid->addWidget(d->dateOriginalSubSecEdit, 7, 1, 1, 1);
+    grid->addWidget(d->setTodayOriginalBtn, 7, 3, 1, 1);
     grid->addWidget(line2, 8, 0, 1, 4 );
     grid->addWidget(d->dateDigitalizedCheck, 9, 0, 1, 1);
     grid->addWidget(d->dateDigitalizedSubSecCheck, 9, 1, 1, 2);
     grid->addWidget(d->dateDigitalizedSel, 10, 0, 1, 1);
     grid->addWidget(d->dateDigitalizedSubSecEdit, 10, 1, 1, 1);
-    grid->setColumnStretch(3, 10);                     
+    grid->addWidget(d->setTodayDigitalizedBtn, 10, 3, 1, 1);
+    grid->setColumnStretch(2, 10);                     
     grid->setRowStretch(11, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
@@ -247,11 +275,40 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
 
     connect(d->dateDigitalizedSel, SIGNAL(valueChanged (const QDateTime &)),
             this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->setTodayCreatedBtn, SIGNAL(clicked()),
+            this, SLOT(slotSetTodayCreated()));
+
+    connect(d->setTodayOriginalBtn, SIGNAL(clicked()),
+            this, SLOT(slotSetTodayOriginal()));
+
+    connect(d->setTodayDigitalizedBtn, SIGNAL(clicked()),
+            this, SLOT(slotSetTodayDigitalized()));
 }
 
 EXIFDateTime::~EXIFDateTime()
 {
     delete d;
+}
+
+void EXIFDateTime::slotSetTodayCreated()
+{
+    d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
+    d->dateCreatedSubSecEdit->setValue(0.0);
+}
+
+void EXIFDateTime::slotSetTodayOriginal()
+{
+    d->dateOriginalSel->setDateTime(QDateTime::currentDateTime());
+    d->dateOriginalSubSecEdit->setValue(0.0);
+}
+
+void EXIFDateTime::slotSetTodayDigitalized()
+{
+    d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
+    d->dateDigitalizedSubSecEdit->setValue(0.0);
 }
 
 bool EXIFDateTime::syncHOSTDateIsChecked()

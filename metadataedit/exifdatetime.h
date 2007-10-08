@@ -60,6 +60,12 @@ signals:
 
     void signalModified();
 
+private slots:
+
+    void slotSetTodayCreated();
+    void slotSetTodayOriginal();
+    void slotSetTodayDigitalized();
+
 private:
 
     EXIFDateTimePriv* d;
