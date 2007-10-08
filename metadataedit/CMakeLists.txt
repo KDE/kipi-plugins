@@ -19,6 +19,7 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       commenteditdialog.cpp
                                       commentremovedialog.cpp
 				      multistringsedit.cpp
+				      multivaluesedit.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_metadataedit ${kipiplugin_metadataedit_PART_SRCS})
