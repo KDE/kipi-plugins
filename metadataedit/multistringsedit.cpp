@@ -123,6 +123,9 @@ MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
     d->addValueButton->setIcon(SmallIcon("edit-add"));
     d->delValueButton->setIcon(SmallIcon("edit-delete"));
     d->repValueButton->setIcon(SmallIcon("view-refresh"));
+    d->addValueButton->setWhatsThis(i18n("Add a new value to the list"));
+    d->delValueButton->setWhatsThis(i18n("Remove the current selected value from the list"));
+    d->repValueButton->setWhatsThis(i18n("Replace the current selected value from the list"));
     d->delValueButton->setEnabled(false);
     d->repValueButton->setEnabled(false);
 
@@ -269,13 +272,15 @@ void MultiStringsEdit::setValues(const QStringList& values)
     blockSignals(false);
 }
 
-bool MultiStringsEdit::getValues(QStringList& newValues)
+bool MultiStringsEdit::getValues(QStringList& oldValues, QStringList& newValues)
 {
     for (int i = 0 ; i < d->valueBox->count(); i++)
     {
         QListWidgetItem *item = d->valueBox->item(i);
         newValues.append(item->text());
     }
+
+    oldValues = d->oldValues;
     return d->valueCheck->isChecked();
 }
 

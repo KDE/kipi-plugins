@@ -43,7 +43,7 @@ public:
     ~MultiStringsEdit();
 
     void setValues(const QStringList& values);
-    bool getValues(QStringList& newValues);
+    bool getValues(QStringList& oldValues, QStringList& newValues);
 
 signals:
 
