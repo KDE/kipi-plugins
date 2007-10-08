@@ -28,9 +28,11 @@
 #include <QValidator>
 #include <QCheckBox>
 #include <QTimeEdit>
+#include <QPushButton>
 
 // KDE includes.
 
+#include <kiconloader.h>
 #include <klocale.h>
 #include <kdialog.h>
 #include <kdatewidget.h>
@@ -57,25 +59,30 @@ public:
 
     IPTCDateTimePriv()
     {
-        dateCreatedSel       = 0;
-        dateReleasedSel      = 0;
-        dateExpiredSel       = 0;
-        dateDigitalizedSel   = 0;
-        timeCreatedSel       = 0;
-        timeReleasedSel      = 0;
-        timeExpiredSel       = 0;
-        timeDigitalizedSel   = 0;
+        dateCreatedSel         = 0;
+        dateReleasedSel        = 0;
+        dateExpiredSel         = 0;
+        dateDigitalizedSel     = 0;
+        timeCreatedSel         = 0;
+        timeReleasedSel        = 0;
+        timeExpiredSel         = 0;
+        timeDigitalizedSel     = 0;
 
-        dateCreatedCheck     = 0;
-        dateReleasedCheck    = 0;
-        dateExpiredCheck     = 0;
-        dateDigitalizedCheck = 0;
-        timeCreatedCheck     = 0;
-        timeReleasedCheck    = 0;
-        timeExpiredCheck     = 0;
-        timeDigitalizedCheck = 0;
-        syncHOSTDateCheck    = 0;
-        syncEXIFDateCheck    = 0;
+        dateCreatedCheck       = 0;
+        dateReleasedCheck      = 0;
+        dateExpiredCheck       = 0;
+        dateDigitalizedCheck   = 0;
+        timeCreatedCheck       = 0;
+        timeReleasedCheck      = 0;
+        timeExpiredCheck       = 0;
+        timeDigitalizedCheck   = 0;
+        syncHOSTDateCheck      = 0;
+        syncEXIFDateCheck      = 0;
+
+        setTodayCreatedBtn     = 0;
+        setTodayReleasedBtn    = 0;
+        setTodayExpiredBtn     = 0;
+        setTodayDigitalizedBtn = 0;
     }
 
     QCheckBox   *dateCreatedCheck;
@@ -94,6 +101,11 @@ public:
     QTimeEdit   *timeExpiredSel;
     QTimeEdit   *timeDigitalizedSel;
 
+    QPushButton *setTodayCreatedBtn;
+    QPushButton *setTodayReleasedBtn;
+    QPushButton *setTodayExpiredBtn;
+    QPushButton *setTodayDigitalizedBtn;
+
     KDateWidget *dateCreatedSel;
     KDateWidget *dateReleasedSel;
     KDateWidget *dateExpiredSel;
@@ -109,84 +121,108 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->dateCreatedCheck  = new QCheckBox(i18n("Creation date"), this);
-    d->timeCreatedCheck  = new QCheckBox(i18n("Creation time"), this);
-    d->dateCreatedSel    = new KDateWidget(this);
-    d->timeCreatedSel    = new QTimeEdit(this);
-    d->syncHOSTDateCheck = new QCheckBox(i18n("Sync creation date hosted by %1",
-                                              KGlobal::mainComponent().aboutData()->programName()), 
-                                              this);
-    d->syncEXIFDateCheck = new QCheckBox(i18n("Sync EXIF creation date"), this);
-    KSeparator *line     = new KSeparator(Qt::Horizontal, this);
-    d->dateCreatedSel->setDate(QDate::currentDate());
-    d->timeCreatedSel->setTime(QTime::currentTime());
+    d->dateCreatedCheck   = new QCheckBox(i18n("Creation date"), this);
+    d->timeCreatedCheck   = new QCheckBox(i18n("Creation time"), this);
+    d->dateCreatedSel     = new KDateWidget(this);
+    d->timeCreatedSel     = new QTimeEdit(this);
+    d->syncHOSTDateCheck  = new QCheckBox(i18n("Sync creation date hosted by %1",
+                                               KGlobal::mainComponent().aboutData()->programName()), 
+                                               this);
+    d->syncEXIFDateCheck  = new QCheckBox(i18n("Sync EXIF creation date"), this);
+
+    d->setTodayCreatedBtn = new QPushButton();
+    d->setTodayCreatedBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayCreatedBtn->setWhatsThis(i18n("Set creation date to today"));
+
     d->dateCreatedSel->setWhatsThis(i18n("<p>Set here the creation date of "
                                          "intellectual content."));
     d->timeCreatedSel->setWhatsThis(i18n("<p>Set here the creation time of "
                                          "intellectual content."));
 
+    slotSetTodayCreated();
+
     // --------------------------------------------------------
 
-    d->dateReleasedCheck = new QCheckBox(i18n("Release date"), this);
-    d->timeReleasedCheck = new QCheckBox(i18n("Release time"), this);
-    d->dateReleasedSel   = new KDateWidget(this);
-    d->timeReleasedSel   = new QTimeEdit(this);
-    d->dateReleasedSel->setDate(QDate::currentDate());
-    d->timeReleasedSel->setTime(QTime::currentTime());
+    d->dateReleasedCheck   = new QCheckBox(i18n("Release date"), this);
+    d->timeReleasedCheck   = new QCheckBox(i18n("Release time"), this);
+    d->dateReleasedSel     = new KDateWidget(this);
+    d->timeReleasedSel     = new QTimeEdit(this);
+
+    d->setTodayReleasedBtn = new QPushButton();
+    d->setTodayReleasedBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayReleasedBtn->setWhatsThis(i18n("Set release date to today"));
+
     d->dateReleasedSel->setWhatsThis(i18n("<p>Set here the earliest intended usable date of "
                                           "intellectual content."));
     d->timeReleasedSel->setWhatsThis(i18n("<p>Set here the earliest intended usable time of "
                                           "intellectual content."));
+    slotSetTodayReleased();
 
     // --------------------------------------------------------
 
-    d->dateExpiredCheck = new QCheckBox(i18n("Expiration date"), this);
-    d->timeExpiredCheck = new QCheckBox(i18n("Expiration time"), this);
-    d->dateExpiredSel   = new KDateWidget(this);
-    d->timeExpiredSel   = new QTimeEdit(this);
-    d->dateExpiredSel->setDate(QDate::currentDate());
-    d->timeExpiredSel->setTime(QTime::currentTime());
+    d->dateExpiredCheck   = new QCheckBox(i18n("Expiration date"), this);
+    d->timeExpiredCheck   = new QCheckBox(i18n("Expiration time"), this);
+    d->dateExpiredSel     = new KDateWidget(this);
+    d->timeExpiredSel     = new QTimeEdit(this);
+
+    d->setTodayExpiredBtn = new QPushButton();
+    d->setTodayExpiredBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayExpiredBtn->setWhatsThis(i18n("Set expiration date to today"));
+
     d->dateExpiredSel->setWhatsThis(i18n("<p>Set here the latest intended usable date of "
                                          "intellectual content."));
     d->timeExpiredSel->setWhatsThis(i18n("<p>Set here the latest intended usable time of "
                                          "intellectual content."));
 
+    slotSetTodayExpired();
+
     // --------------------------------------------------------
 
-    d->dateDigitalizedCheck = new QCheckBox(i18n("Digitization date"), this);
-    d->timeDigitalizedCheck = new QCheckBox(i18n("Digitization time"), this);
-    d->dateDigitalizedSel   = new KDateWidget(this);
-    d->timeDigitalizedSel   = new QTimeEdit(this);
-    d->dateDigitalizedSel->setDate(QDate::currentDate());
-    d->timeDigitalizedSel->setTime(QTime::currentTime());
+    d->dateDigitalizedCheck   = new QCheckBox(i18n("Digitization date"), this);
+    d->timeDigitalizedCheck   = new QCheckBox(i18n("Digitization time"), this);
+    d->dateDigitalizedSel     = new KDateWidget(this);
+    d->timeDigitalizedSel     = new QTimeEdit(this);
+
+    d->setTodayDigitalizedBtn = new QPushButton();
+    d->setTodayDigitalizedBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayDigitalizedBtn->setWhatsThis(i18n("Set digitization date to today"));
+
     d->dateDigitalizedSel->setWhatsThis(i18n("<p>Set here the creation date of "
                                              "digital representation."));
     d->timeDigitalizedSel->setWhatsThis(i18n("<p>Set here the creation time of "
                                              "digital representation."));
 
+    slotSetTodayDigitalized();
+
     // --------------------------------------------------------
 
     grid->addWidget(d->dateCreatedCheck, 0, 0, 1, 1);
-    grid->addWidget(d->timeCreatedCheck, 0, 1, 1, 2);
+    grid->addWidget(d->timeCreatedCheck, 0, 1, 1, 3);
     grid->addWidget(d->dateCreatedSel, 1, 0, 1, 1);
     grid->addWidget(d->timeCreatedSel, 1, 1, 1, 1);
-    grid->addWidget(d->syncHOSTDateCheck, 2, 0, 1, 3 );
-    grid->addWidget(d->syncEXIFDateCheck, 3, 0, 1, 3 );
-    grid->addWidget(line, 4, 0, 1, 3 ); 
+    grid->addWidget(d->setTodayCreatedBtn, 1, 3, 1, 1);
+    grid->addWidget(d->syncHOSTDateCheck, 2, 0, 1, 3);
+    grid->addWidget(d->syncEXIFDateCheck, 3, 0, 1, 3);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 4, 0, 1, 4); 
     grid->addWidget(d->dateReleasedCheck, 5, 0, 1, 1);
-    grid->addWidget(d->timeReleasedCheck, 5, 1, 1, 2);
+    grid->addWidget(d->timeReleasedCheck, 5, 1, 1, 3);
     grid->addWidget(d->dateReleasedSel, 6, 0, 1, 1);
     grid->addWidget(d->timeReleasedSel, 6, 1, 1, 1);
-    grid->addWidget(d->dateExpiredCheck, 7, 0, 1, 1);
-    grid->addWidget(d->timeExpiredCheck, 7, 1, 1, 2);
-    grid->addWidget(d->dateExpiredSel, 8, 0, 1, 1);
-    grid->addWidget(d->timeExpiredSel, 8, 1, 1, 1);
-    grid->addWidget(d->dateDigitalizedCheck, 9, 0, 1, 1);
-    grid->addWidget(d->timeDigitalizedCheck, 9, 1, 1, 2);
-    grid->addWidget(d->dateDigitalizedSel, 10, 0, 1, 1);
-    grid->addWidget(d->timeDigitalizedSel, 10, 1, 1, 1);
+    grid->addWidget(d->setTodayReleasedBtn, 6, 3, 1, 1);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 7, 0, 1, 4); 
+    grid->addWidget(d->dateExpiredCheck, 8, 0, 1, 1);
+    grid->addWidget(d->timeExpiredCheck, 8, 1, 1, 3);
+    grid->addWidget(d->dateExpiredSel, 9, 0, 1, 1);
+    grid->addWidget(d->timeExpiredSel, 9, 1, 1, 1);
+    grid->addWidget(d->setTodayExpiredBtn, 9, 3, 1, 1);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 10, 0, 1, 4); 
+    grid->addWidget(d->dateDigitalizedCheck, 11, 0, 1, 1);
+    grid->addWidget(d->timeDigitalizedCheck, 11, 1, 1, 3);
+    grid->addWidget(d->dateDigitalizedSel, 12, 0, 1, 1);
+    grid->addWidget(d->timeDigitalizedSel, 12, 1, 1, 1);
+    grid->addWidget(d->setTodayDigitalizedBtn, 12, 3, 1, 1);
     grid->setColumnStretch(2, 10);                     
-    grid->setRowStretch(11, 10);                     
+    grid->setRowStretch(13, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -273,11 +309,49 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
 
     connect(d->timeDigitalizedSel, SIGNAL(timeChanged(const QTime &)),
             this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->setTodayCreatedBtn, SIGNAL(clicked()),
+            this, SLOT(slotSetTodayCreated()));
+
+    connect(d->setTodayReleasedBtn, SIGNAL(clicked()),
+            this, SLOT(slotSetTodayReleased()));
+
+    connect(d->setTodayExpiredBtn, SIGNAL(clicked()),
+            this, SLOT(slotSetTodayExpired()));
+
+    connect(d->setTodayDigitalizedBtn, SIGNAL(clicked()),
+            this, SLOT(slotSetTodayDigitalized()));
 }
 
 IPTCDateTime::~IPTCDateTime()
 {
     delete d;
+}
+
+void IPTCDateTime::slotSetTodayCreated()
+{
+    d->dateCreatedSel->setDate(QDate::currentDate());
+    d->timeCreatedSel->setTime(QTime::currentTime());
+}
+
+void IPTCDateTime::slotSetTodayReleased()
+{
+    d->dateReleasedSel->setDate(QDate::currentDate());
+    d->timeReleasedSel->setTime(QTime::currentTime());
+}
+
+void IPTCDateTime::slotSetTodayExpired()
+{
+    d->dateExpiredSel->setDate(QDate::currentDate());
+    d->timeExpiredSel->setTime(QTime::currentTime());
+}
+
+void IPTCDateTime::slotSetTodayDigitalized()
+{
+    d->dateDigitalizedSel->setDate(QDate::currentDate());
+    d->timeDigitalizedSel->setTime(QTime::currentTime());
 }
 
 bool IPTCDateTime::syncHOSTDateIsChecked()

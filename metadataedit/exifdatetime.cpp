@@ -27,7 +27,6 @@
 #include <QValidator>
 #include <QCheckBox>
 #include <QPushButton>
-#include <QSpacerItem>
 
 // KDE includes.
 
@@ -135,8 +134,6 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateCreatedSubSecEdit->setWhatsThis(i18n("<p>Set here the fractions of seconds for the date "
                                                 "and time of image creation."));
 
-    KSeparator *line          = new KSeparator(Qt::Horizontal, this);
-
     slotSetTodayCreated();
 
     // --------------------------------------------------------
@@ -156,8 +153,6 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateOriginalSubSecEdit->setWhatsThis(i18n("<p>Set here the fractions of seconds for the date "
                                                  "and time when the original image data was generated."));
 
-    KSeparator *line2          = new KSeparator(Qt::Horizontal, this);
-
     slotSetTodayOriginal();
 
     // --------------------------------------------------------
@@ -166,7 +161,8 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateDigitalizedSubSecCheck = new QCheckBox(i18n("Digitization sub-second"), this);
     d->dateDigitalizedSel         = new KDateTimeWidget(this);
     d->dateDigitalizedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
-    d->setTodayDigitalizedBtn        = new QPushButton();
+
+    d->setTodayDigitalizedBtn     = new QPushButton();
     d->setTodayDigitalizedBtn->setIcon(SmallIcon("calendar-today"));
     d->setTodayDigitalizedBtn->setWhatsThis(i18n("Set digitization date to today"));
 
@@ -183,22 +179,22 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     // --------------------------------------------------------
 
     grid->addWidget(d->dateCreatedCheck, 0, 0, 1, 1);
-    grid->addWidget(d->dateCreatedSubSecCheck, 0, 1, 1, 2);
+    grid->addWidget(d->dateCreatedSubSecCheck, 0, 1, 1, 3);
     grid->addWidget(d->dateCreatedSel, 1, 0, 1, 1);
     grid->addWidget(d->dateCreatedSubSecEdit, 1, 1, 1, 1);
     grid->addWidget(d->setTodayCreatedBtn, 1, 3, 1, 1);
-    grid->addWidget(d->syncHOSTDateCheck, 2, 0, 1, 4 );
-    grid->addWidget(d->syncXMPDateCheck, 3, 0, 1, 4 );
-    grid->addWidget(d->syncIPTCDateCheck, 4, 0, 1, 4 );
-    grid->addWidget(line, 5, 0, 1, 4 );
+    grid->addWidget(d->syncHOSTDateCheck, 2, 0, 1, 4);
+    grid->addWidget(d->syncXMPDateCheck, 3, 0, 1, 4);
+    grid->addWidget(d->syncIPTCDateCheck, 4, 0, 1, 4);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 5, 0, 1, 4);
     grid->addWidget(d->dateOriginalCheck, 6, 0, 1, 1);
-    grid->addWidget(d->dateOriginalSubSecCheck, 6, 1, 1, 2);
+    grid->addWidget(d->dateOriginalSubSecCheck, 6, 1, 1, 3);
     grid->addWidget(d->dateOriginalSel, 7, 0, 1, 1);
     grid->addWidget(d->dateOriginalSubSecEdit, 7, 1, 1, 1);
     grid->addWidget(d->setTodayOriginalBtn, 7, 3, 1, 1);
-    grid->addWidget(line2, 8, 0, 1, 4 );
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 8, 0, 1, 4);
     grid->addWidget(d->dateDigitalizedCheck, 9, 0, 1, 1);
-    grid->addWidget(d->dateDigitalizedSubSecCheck, 9, 1, 1, 2);
+    grid->addWidget(d->dateDigitalizedSubSecCheck, 9, 1, 1, 3);
     grid->addWidget(d->dateDigitalizedSel, 10, 0, 1, 1);
     grid->addWidget(d->dateDigitalizedSubSecEdit, 10, 1, 1, 1);
     grid->addWidget(d->setTodayDigitalizedBtn, 10, 3, 1, 1);

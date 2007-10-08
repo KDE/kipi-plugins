@@ -57,6 +57,13 @@ signals:
 
     void signalModified();
 
+private slots:
+
+    void slotSetTodayCreated();
+    void slotSetTodayReleased();
+    void slotSetTodayExpired();
+    void slotSetTodayDigitalized();
+
 private:
 
     IPTCDateTimePriv* d;

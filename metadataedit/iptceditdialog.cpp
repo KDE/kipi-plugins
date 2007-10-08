@@ -160,7 +160,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->datetimePage  = new IPTCDateTime(this);
     d->page_datetime = addPage(d->datetimePage, i18n("Date & Time"));
     d->page_datetime->setHeader(i18n("Date and Time Information"));
-    d->page_datetime->setIcon(KIcon("calendar-today"));
+    d->page_datetime->setIcon(KIcon("1day"));
 
     d->subjectsPage  = new IPTCSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
