@@ -33,6 +33,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
+#include <kseparator.h>
 
 // LibKExiv2 includes. 
 
@@ -373,18 +374,8 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     // --------------------------------------------------------
 
     d->locationEdit  = new MultiStringsEdit(this, i18n("Location:"), 
-                                          i18n("<p>Set here the full country name referenced by the content."), 
-                                          true, 64);
-
-    // --------------------------------------------------------
-
-    d->sublocationCheck = new QCheckBox(i18n("Sublocation:"), this);
-    d->sublocationEdit  = new KLineEdit(this);
-    d->sublocationEdit->setClearButtonShown(true);
-    d->sublocationEdit->setValidator(asciiValidator);
-    d->sublocationEdit->setMaxLength(32);
-    d->sublocationEdit->setWhatsThis(i18n("<p>Set here the content location within city. "
-                                          "This field is limited to 32 ASCII characters."));
+                           i18n("<p>Set here the full country name referenced by the content."), 
+                           true, 64);
 
     // --------------------------------------------------------
 
@@ -395,6 +386,16 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     d->cityEdit->setMaxLength(32);
     d->cityEdit->setWhatsThis(i18n("<p>Set here the city of content origin. "
                                    "This field is limited to 32 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->sublocationCheck = new QCheckBox(i18n("Sublocation:"), this);
+    d->sublocationEdit  = new KLineEdit(this);
+    d->sublocationEdit->setClearButtonShown(true);
+    d->sublocationEdit->setValidator(asciiValidator);
+    d->sublocationEdit->setMaxLength(32);
+    d->sublocationEdit->setWhatsThis(i18n("<p>Set here the content location within city. "
+                                          "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
@@ -444,19 +445,21 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     grid->addWidget(d->objectNameCheck, 0, 0, 1, 3 );
     grid->addWidget(d->objectNameEdit, 1, 0, 1, 3 );
     grid->addWidget(d->locationEdit, 2, 0, 1, 3);
-    grid->addWidget(d->sublocationCheck, 3, 0, 1, 1);
-    grid->addWidget(d->sublocationEdit, 3, 1, 1, 2);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 3, 0, 1, 3);
     grid->addWidget(d->cityCheck, 4, 0, 1, 1);
     grid->addWidget(d->cityEdit, 4, 1, 1, 2);
-    grid->addWidget(d->provinceCheck, 5, 0, 1, 1);
-    grid->addWidget(d->provinceEdit, 5, 1, 1, 2);
-    grid->addWidget(d->countryCheck, 6, 0, 1, 1);
-    grid->addWidget(d->countryCB, 6, 1, 1, 2);
-    grid->addWidget(d->originalTransCheck, 7, 0, 1, 3 );
-    grid->addWidget(d->originalTransEdit, 8, 0, 1, 3 );
-    grid->addWidget(note, 9, 0, 1, 3 );
+    grid->addWidget(d->sublocationCheck, 5, 0, 1, 1);
+    grid->addWidget(d->sublocationEdit, 5, 1, 1, 2);
+    grid->addWidget(d->provinceCheck, 6, 0, 1, 1);
+    grid->addWidget(d->provinceEdit, 6, 1, 1, 2);
+    grid->addWidget(d->countryCheck, 7, 0, 1, 1);
+    grid->addWidget(d->countryCB, 7, 1, 1, 2);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 8, 0, 1, 3);
+    grid->addWidget(d->originalTransCheck, 9, 0, 1, 3 );
+    grid->addWidget(d->originalTransEdit, 10, 0, 1, 3 );
+    grid->addWidget(note, 11, 0, 1, 3 );
     grid->setColumnStretch(2, 10);                     
-    grid->setRowStretch(10, 10);  
+    grid->setRowStretch(12, 10);  
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());                    
 
@@ -580,9 +583,6 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     }
     d->provinceEdit->setEnabled(d->provinceCheck->isChecked());
 
-    // Country code/name rules: we trying to check if "CountryCode" tag exists else "LocationCode" tag.
-    // Both are the same.
-
     d->countryCB->setCurrentIndex(0);
     d->countryCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.CountryCode", false);    
@@ -600,25 +600,6 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
         }
         else
             d->countryCheck->setValid(false);
-    }
-    else
-    {
-        data = exiv2Iface.getIptcTagString("Iptc.Application2.LocationCode", false);    
-        if (!data.isNull())
-        {
-            int item = -1;
-            for (int i = 0 ; i < d->countryCB->count() ; i++)
-                if (d->countryCB->itemText(i).left(3) == data)
-                    item = i;
-    
-            if (item != -1)
-            {
-                d->countryCB->setCurrentIndex(item);
-                d->countryCheck->setChecked(true);
-            }
-            else
-                d->countryCheck->setValid(false);
-        }
     }
     d->countryCB->setEnabled(d->countryCheck->isChecked());
 
@@ -672,13 +653,11 @@ void IPTCOrigin::applyMetadata(QByteArray& iptcData)
         QString countryCode = d->countryCB->currentText().left(3);
         exiv2Iface.setIptcTagString("Iptc.Application2.CountryCode", countryCode);
         exiv2Iface.setIptcTagString("Iptc.Application2.CountryName", countryName);
-        exiv2Iface.setIptcTagString("Iptc.Application2.LocationCode", countryCode);
     }
     else if (d->countryCheck->isValid())
     {
         exiv2Iface.removeIptcTag("Iptc.Application2.CountryCode");
         exiv2Iface.removeIptcTag("Iptc.Application2.CountryName");
-        exiv2Iface.removeIptcTag("Iptc.Application2.LocationCode");
     }
 
     if (d->originalTransCheck->isChecked())
