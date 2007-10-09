@@ -114,7 +114,6 @@ MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
     d->valueEdit->setWhatsThis(whatsThis);
 
     d->valueBox = new KListWidget(this);
-    d->valueBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Ignored);
     
     d->addValueButton = new QPushButton(this);
     d->delValueButton = new QPushButton(this);

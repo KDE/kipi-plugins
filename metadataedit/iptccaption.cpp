@@ -88,7 +88,8 @@ IPTCCaption::IPTCCaption(QWidget* parent)
            : QWidget(parent)
 {
     d = new IPTCCaptionPriv;
-    QVBoxLayout *vlay = new QVBoxLayout(this);
+
+    QGridLayout* grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -147,21 +148,22 @@ IPTCCaption::IPTCCaption(QWidget* parent)
 
     // --------------------------------------------------------
 
-    vlay->addWidget(d->captionCheck);
-    vlay->addWidget(d->captionEdit);
-    vlay->addWidget(d->syncJFIFCommentCheck);
-    vlay->addWidget(d->syncHOSTCommentCheck);
-    vlay->addWidget(d->syncEXIFCommentCheck);
-    vlay->addWidget(new KSeparator(Qt::Horizontal, this));
-    vlay->addWidget(d->writerEdit);
-    vlay->addWidget(d->headlineCheck);
-    vlay->addWidget(d->headlineEdit);
-    vlay->addWidget(d->specialInstructionCheck);
-    vlay->addWidget(d->specialInstructionEdit);
-    vlay->addWidget(note);
-    vlay->addStretch();
-    vlay->setMargin(0);
-    vlay->setSpacing(KDialog::spacingHint());
+    grid->addWidget(d->captionCheck, 0, 0, 1, 3 );
+    grid->addWidget(d->captionEdit, 1, 0, 1, 3 );
+    grid->addWidget(d->syncJFIFCommentCheck, 2, 0, 1, 3);
+    grid->addWidget(d->syncHOSTCommentCheck, 3, 0, 1, 3);
+    grid->addWidget(d->syncEXIFCommentCheck, 4, 0, 1, 3);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 5, 0, 1, 3);
+    grid->addWidget(d->writerEdit, 6, 0, 1, 3);
+    grid->addWidget(d->headlineCheck, 7, 0, 1, 1);
+    grid->addWidget(d->headlineEdit, 7, 1, 1, 2);
+    grid->addWidget(d->specialInstructionCheck, 8, 0, 1, 3 );
+    grid->addWidget(d->specialInstructionEdit, 9, 0, 1, 3 );
+    grid->addWidget(note, 10, 0, 1, 3 );
+    grid->setColumnStretch(2, 10);                     
+    grid->setRowStretch(11, 10);  
+    grid->setMargin(0);
+    grid->setSpacing(KDialog::spacingHint());    
 
     // --------------------------------------------------------
                                      

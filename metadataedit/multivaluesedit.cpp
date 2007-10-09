@@ -91,7 +91,6 @@ MultiValuesEdit::MultiValuesEdit(QWidget* parent, const QString& title, const QS
     d->dataList->setWhatsThis(desc);
 
     d->valueBox   = new KListWidget(this);
-    d->valueBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Ignored);
     
     d->addValueButton = new QPushButton(this);
     d->delValueButton = new QPushButton(this);
