@@ -87,8 +87,9 @@ IPTCCredits::IPTCCredits(QWidget* parent)
            : QWidget(parent)
 {
     d = new IPTCCreditsPriv;
-    QVBoxLayout *vlay = new QVBoxLayout(this);
 
+    QGridLayout* grid = new QGridLayout(this);
+    
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
     QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
@@ -154,20 +155,21 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     // --------------------------------------------------------
 
-    vlay->addWidget(d->copyrightCheck);
-    vlay->addWidget(d->copyrightEdit);
-    vlay->addWidget(d->bylineEdit);
-    vlay->addWidget(d->bylineTitleEdit);
-    vlay->addWidget(d->creditCheck);
-    vlay->addWidget(d->creditEdit);
-    vlay->addWidget(d->sourceCheck);
-    vlay->addWidget(d->sourceEdit);
-    vlay->addWidget(d->contactEdit);
-    vlay->addWidget(note);
-    vlay->addStretch();
-    vlay->setMargin(0);
-    vlay->setSpacing(KDialog::spacingHint());
-              
+    grid->addWidget(d->bylineEdit, 0, 0, 1, 3);
+    grid->addWidget(d->bylineTitleEdit, 1, 0, 1, 3);
+    grid->addWidget(d->contactEdit, 2, 0, 1, 3);
+    grid->addWidget(d->creditCheck, 3, 0, 1, 1);
+    grid->addWidget(d->creditEdit, 3, 1, 1, 2);
+    grid->addWidget(d->sourceCheck, 4, 0, 1, 1);
+    grid->addWidget(d->sourceEdit, 4, 1, 1, 2);
+    grid->addWidget(d->copyrightCheck, 5, 0, 1, 1);
+    grid->addWidget(d->copyrightEdit, 5, 1, 1, 2);
+    grid->addWidget(note, 6, 0, 1, 3 );
+    grid->setColumnStretch(2, 10);                     
+    grid->setRowStretch(7, 10);  
+    grid->setMargin(0);
+    grid->setSpacing(KDialog::spacingHint());    
+
     // --------------------------------------------------------
 
     connect(d->copyrightCheck, SIGNAL(toggled(bool)),
