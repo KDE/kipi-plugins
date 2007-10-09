@@ -105,7 +105,14 @@ public:
      * highlighted item.
      * @return full text of the highlighted item
      */
-    QString itemHighlighted( );
+    QString itemHighlighted();
+
+    /**
+     * This method returns the full text (not squeezed) for the index.
+     * @param index the position in the widget.
+     * @return full text of the item
+     */
+    QString item(int index);
 
     /**
      * Sets the sizeHint() of this widget.
@@ -115,18 +122,20 @@ public:
 private slots:
 
     void slotTimeOut();
-    void slotUpdateToolTip( int index );
+    void slotUpdateToolTip(int index);
 
 private:
 
-    void resizeEvent ( QResizeEvent * );
-    QString squeezeText( const QString& original);
+    void resizeEvent(QResizeEvent *);
+    QString squeezeText(const QString& original);
 
     // Prevent these from being used.
+    QString currentText() const;
     void setCurrentText(const QString& itemText);
     void insertItem(const QString &text);
     void insertItem(qint32 index, const QString &text);
     void addItem(const QString &text);
+    QString itemText(int index) const;
 
 private:
 

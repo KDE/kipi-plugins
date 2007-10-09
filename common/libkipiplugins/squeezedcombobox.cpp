@@ -183,4 +183,9 @@ QString SqueezedComboBox::itemHighlighted()
     return d->originalItems[curItem];
 }
 
+QString SqueezedComboBox::item(int index)
+{
+    return d->originalItems[index];
+}
+
 }  // namespace KIPIPlugins
