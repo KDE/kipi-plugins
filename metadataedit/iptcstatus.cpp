@@ -39,6 +39,7 @@
 
 // Local includes.
 
+#include "squeezedcombobox.h"
 #include "metadatacheckbox.h"
 #include "pluginsversion.h"
 #include "iptcstatus.h"
@@ -65,23 +66,24 @@ public:
         JobIDCheck          = 0;
     }
 
-    QCheckBox        *statusCheck;
-    QCheckBox        *JobIDCheck;
+    QCheckBox                     *statusCheck;
+    QCheckBox                     *JobIDCheck;
 
-    QComboBox        *priorityCB;
-    QComboBox        *objectCycleCB;
-    QComboBox        *objectTypeCB;
-    QComboBox        *objectAttributeCB;
+    QComboBox                     *priorityCB;
+    QComboBox                     *objectCycleCB;
+    QComboBox                     *objectTypeCB;
 
-    KLineEdit        *statusEdit;
-    KLineEdit        *objectTypeDescEdit;
-    KLineEdit        *objectAttributeDescEdit;
-    KLineEdit        *JobIDEdit;
+    KLineEdit                     *statusEdit;
+    KLineEdit                     *objectTypeDescEdit;
+    KLineEdit                     *objectAttributeDescEdit;
+    KLineEdit                     *JobIDEdit;
 
-    MetadataCheckBox *priorityCheck;
-    MetadataCheckBox *objectCycleCheck;
-    MetadataCheckBox *objectTypeCheck;
-    MetadataCheckBox *objectAttributeCheck;
+    MetadataCheckBox              *priorityCheck;
+    MetadataCheckBox              *objectCycleCheck;
+    MetadataCheckBox              *objectTypeCheck;
+    MetadataCheckBox              *objectAttributeCheck;
+
+    KIPIPlugins::SqueezedComboBox *objectAttributeCB;
 };
 
 IPTCStatus::IPTCStatus(QWidget* parent)
@@ -147,33 +149,33 @@ IPTCStatus::IPTCStatus(QWidget* parent)
     // --------------------------------------------------------
 
     d->objectAttributeCheck    = new MetadataCheckBox(i18n("Object Attribute:"), this);
-    d->objectAttributeCB       = new QComboBox(this);
+    d->objectAttributeCB       = new KIPIPlugins::SqueezedComboBox(this);
     d->objectAttributeDescEdit = new KLineEdit(this);
     d->objectAttributeDescEdit->setClearButtonShown(true);
     d->objectAttributeDescEdit->setValidator(asciiValidator);
     d->objectAttributeDescEdit->setMaxLength(64);
-    d->objectAttributeCB->insertItem(0, i18n("Current"));
-    d->objectAttributeCB->insertItem(1, i18n("Analysis"));
-    d->objectAttributeCB->insertItem(2, i18n("Archive material"));
-    d->objectAttributeCB->insertItem(3, i18n("Background"));
-    d->objectAttributeCB->insertItem(4, i18n("Feature"));
-    d->objectAttributeCB->insertItem(5, i18n("Forecast"));
-    d->objectAttributeCB->insertItem(6, i18n("History"));
-    d->objectAttributeCB->insertItem(7, i18n("Obituary"));
-    d->objectAttributeCB->insertItem(8, i18n("Opinion"));
-    d->objectAttributeCB->insertItem(9, i18n("Polls & Surveys"));
-    d->objectAttributeCB->insertItem(10, i18n("Profile"));
-    d->objectAttributeCB->insertItem(11, i18n("Results Listings & Table"));
-    d->objectAttributeCB->insertItem(12, i18n("Side bar & Supporting information"));
-    d->objectAttributeCB->insertItem(13, i18n("Summary"));
-    d->objectAttributeCB->insertItem(14, i18n("Transcript & Verbatim"));
-    d->objectAttributeCB->insertItem(15, i18n("Interview"));
-    d->objectAttributeCB->insertItem(16, i18n("From the Scene"));
-    d->objectAttributeCB->insertItem(17, i18n("Retrospective"));
-    d->objectAttributeCB->insertItem(18, i18n("Statistics"));
-    d->objectAttributeCB->insertItem(19, i18n("Update"));
-    d->objectAttributeCB->insertItem(20, i18n("Wrap-up"));
-    d->objectAttributeCB->insertItem(21, i18n("Press Release"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Current"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Analysis"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Archive material"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Background"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Feature"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Forecast"));
+    d->objectAttributeCB->addSqueezedItem(i18n("History"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Obituary"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Opinion"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Polls & Surveys"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Profile"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Results Listings & Table"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Side bar & Supporting information"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Summary"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Transcript & Verbatim"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Interview"));
+    d->objectAttributeCB->addSqueezedItem(i18n("From the Scene"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Retrospective"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Statistics"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Update"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Wrap-up"));
+    d->objectAttributeCB->addSqueezedItem(i18n("Press Release"));
     d->objectAttributeCB->setWhatsThis(i18n("<p>Select here the editorial attribute of content."));
     d->objectAttributeDescEdit->setWhatsThis(i18n("<p>Set here the editorial attribute description of "
                                                   "content. This field is limited to 64 ASCII characters."));

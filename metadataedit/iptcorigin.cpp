@@ -41,7 +41,8 @@
 
 // Local includes.
 
-#include "multistringsedit.h"
+#include "squeezedcombobox.h"
+#include "multivaluesedit.h"
 #include "metadatacheckbox.h"
 #include "iptcorigin.h"
 #include "iptcorigin.moc"
@@ -329,25 +330,26 @@ public:
 
     typedef QMap<QString, QString> CountryCodeMap; 
 
-    CountryCodeMap    countryCodeMap;
+    CountryCodeMap                 countryCodeMap;
 
-    QComboBox        *countryCB;
 
-    QCheckBox        *objectNameCheck;
-    QCheckBox        *cityCheck;
-    QCheckBox        *sublocationCheck;
-    QCheckBox        *provinceCheck;
-    QCheckBox        *originalTransCheck;
+    QCheckBox                     *objectNameCheck;
+    QCheckBox                     *cityCheck;
+    QCheckBox                     *sublocationCheck;
+    QCheckBox                     *provinceCheck;
+    QCheckBox                     *originalTransCheck;
 
-    KLineEdit        *objectNameEdit;
-    KLineEdit        *cityEdit;
-    KLineEdit        *sublocationEdit;
-    KLineEdit        *provinceEdit;
-    KLineEdit        *originalTransEdit;
+    KLineEdit                     *objectNameEdit;
+    KLineEdit                     *cityEdit;
+    KLineEdit                     *sublocationEdit;
+    KLineEdit                     *provinceEdit;
+    KLineEdit                     *originalTransEdit;
 
-    MultiStringsEdit *locationEdit;
+    MultiValuesEdit               *locationEdit;
 
-    MetadataCheckBox *countryCheck;
+    MetadataCheckBox              *countryCheck;
+
+    KIPIPlugins::SqueezedComboBox *countryCB;
 };
 
 IPTCOrigin::IPTCOrigin(QWidget* parent)
@@ -373,9 +375,15 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->locationEdit  = new MultiStringsEdit(this, i18n("Location:"), 
-                           i18n("<p>Set here the full country name referenced by the content."), 
-                           true, 64);
+    d->locationEdit = new MultiValuesEdit(this, i18n("Location:"), 
+                          i18n("<p>Set here the full country name referenced by the content."));
+ 
+    QStringList list;
+    for (IPTCOriginPriv::CountryCodeMap::Iterator it = d->countryCodeMap.begin();
+         it != d->countryCodeMap.end(); ++it)
+        list.append(QString("%1 - %2").arg(it.key()).arg(it.value()));
+ 
+    d->locationEdit->setData(list);
 
     // --------------------------------------------------------
 
@@ -410,11 +418,11 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     // --------------------------------------------------------
 
     d->countryCheck = new MetadataCheckBox(i18n("Country:"), this);
-    d->countryCB    = new QComboBox(this);
+    d->countryCB    = new KIPIPlugins::SqueezedComboBox(this);
 
     for (IPTCOriginPriv::CountryCodeMap::Iterator it = d->countryCodeMap.begin();
-         it != d->countryCodeMap.end(); ++it )
-        d->countryCB->addItem(QString("%1 - %2").arg(it.key()).arg(it.value()));
+         it != d->countryCodeMap.end(); ++it)
+        d->countryCB->addSqueezedItem(QString("%1 - %2").arg(it.key()).arg(it.value()));
 
     d->countryCB->model()->sort(0);
     d->countryCB->setWhatsThis(i18n("<p>Select here country name of content origin."));
@@ -538,7 +546,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString     data;
-    QStringList list;
+    QStringList code, list;
 
     d->objectNameEdit->clear();
     d->objectNameCheck->setChecked(false);
@@ -550,7 +558,22 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     }
     d->objectNameEdit->setEnabled(d->objectNameCheck->isChecked());
 
-    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.LocationName", false);
+    code = exiv2Iface.getIptcTagsStringList("Iptc.Application2.LocationCode", false);
+    for (QStringList::Iterator it = code.begin(); it != code.end(); ++it)
+    {
+        QStringList data = d->locationEdit->getData();
+        QStringList::Iterator it2;
+        for (it2 = data.begin(); it2 != data.end(); ++it2)        
+        {
+            if ((*it2).left(3) == (*it))
+            {
+                list.append(*it2);
+                break;
+            }
+        }
+        if (it2 == data.end())  
+            d->locationEdit->setValid(false);
+    }
     d->locationEdit->setValues(list);
 
     d->cityEdit->clear();
@@ -590,7 +613,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     {
         int item = -1;
         for (int i = 0 ; i < d->countryCB->count() ; i++)
-            if (d->countryCB->itemText(i).left(3) == data)
+            if (d->countryCB->item(i).left(3) == data)
                 item = i;
 
         if (item != -1)
@@ -628,9 +651,29 @@ void IPTCOrigin::applyMetadata(QByteArray& iptcData)
 
     QStringList oldList, newList;
     if (d->locationEdit->getValues(oldList, newList))
-        exiv2Iface.setIptcTagsStringList("Iptc.Application2.LocationName", 64, oldList, newList);
+    {
+        QStringList oldCode, newCode, oldName, newName;
+
+        for (QStringList::Iterator it = oldList.begin(); it != oldList.end(); ++it)
+        {
+            oldCode.append((*it).left(3));
+            oldName.append((*it).mid(6));
+        }
+
+        for (QStringList::Iterator it2 = newList.begin(); it2 != newList.end(); ++it2)
+        {
+            newCode.append((*it2).left(3));
+            newName.append((*it2).mid(6));
+        }
+
+        exiv2Iface.setIptcTagsStringList("Iptc.Application2.LocationCode", 3, oldCode, newCode);
+        exiv2Iface.setIptcTagsStringList("Iptc.Application2.LocationName", 64, oldName, newName);
+    }
     else
+    {
+        exiv2Iface.removeIptcTag("Iptc.Application2.LocationCode");
         exiv2Iface.removeIptcTag("Iptc.Application2.LocationName");
+    }
 
     if (d->cityCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Application2.City", d->cityEdit->text());
@@ -649,8 +692,8 @@ void IPTCOrigin::applyMetadata(QByteArray& iptcData)
 
     if (d->countryCheck->isChecked())
     {
-        QString countryName = d->countryCB->currentText().mid(6);
-        QString countryCode = d->countryCB->currentText().left(3);
+        QString countryName = d->countryCB->itemHighlighted().mid(6);
+        QString countryCode = d->countryCB->itemHighlighted().left(3);
         exiv2Iface.setIptcTagString("Iptc.Application2.CountryCode", countryCode);
         exiv2Iface.setIptcTagString("Iptc.Application2.CountryName", countryName);
     }

@@ -45,6 +45,7 @@ public:
     bool isValid() const;
 
     void setData(const QStringList& data);
+    QStringList getData() const;
 
     void setValues(const QStringList& values);
     bool getValues(QStringList& oldValues, QStringList& newValues);

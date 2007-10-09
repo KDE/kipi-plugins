@@ -184,7 +184,7 @@ void MultiValuesEdit::slotDeleteValue()
 
 void MultiValuesEdit::slotReplaceValue()
 {
-    QString newValue = d->dataList->currentText();
+    QString newValue = d->dataList->itemHighlighted();
     if (newValue.isEmpty()) return;
 
     if (!d->valueBox->selectedItems().isEmpty())
@@ -208,7 +208,7 @@ void MultiValuesEdit::slotSelectionChanged()
 
 void MultiValuesEdit::slotAddValue()
 {
-    QString newValue = d->dataList->currentText();
+    QString newValue = d->dataList->itemHighlighted();
     if (newValue.isEmpty()) return;
 
     bool found = false;
@@ -231,6 +231,16 @@ void MultiValuesEdit::setData(const QStringList& data)
     d->dataList->clear();
     for (QStringList::const_iterator it = data.begin(); it != data.end(); ++it )
         d->dataList->addSqueezedItem(*it);
+}
+
+QStringList MultiValuesEdit::getData() const
+{
+    QStringList data;
+    for (int i = 0 ; i < d->dataList->count(); i++)
+    {
+        data.append(d->dataList->item(i));
+    }
+    return data;
 }
 
 void MultiValuesEdit::setValues(const QStringList& values)
