@@ -53,12 +53,12 @@ public:
         timer = 0;
     }
 
-    QMap<int, QString>   originalItems;
+    QMap<int, QString>  originalItems;
 
-    QTimer              *timer;
+    QTimer             *timer;
 };
 
-SqueezedComboBox::SqueezedComboBox( QWidget *parent, const char *name )
+SqueezedComboBox::SqueezedComboBox(QWidget *parent, const char *name)
                 : QComboBox(parent)
 {
     d = new SqueezedComboBoxPriv;
@@ -70,8 +70,8 @@ SqueezedComboBox::SqueezedComboBox( QWidget *parent, const char *name )
     connect(d->timer, SIGNAL(timeout()),
             this, SLOT(slotTimeOut()));
 
-    connect(this, SIGNAL(activated( int )),
-            SLOT(slotUpdateToolTip( int )));
+    connect(this, SIGNAL(activated(int)),
+            SLOT(slotUpdateToolTip(int)));
 }
 
 SqueezedComboBox::~SqueezedComboBox()
@@ -80,19 +80,18 @@ SqueezedComboBox::~SqueezedComboBox()
     delete d;
 }
 
-bool SqueezedComboBox::contains( const QString& _text ) const
+bool SqueezedComboBox::contains(const QString& text) const
 {
-    if ( _text.isEmpty() )
+    if (text.isEmpty())
         return false;
 
     for (QMap<int, QString>::const_iterator it = d->originalItems.begin() ; it != d->originalItems.end();
          ++it)
     {
-        if (it.value() == _text)
-        {
+        if (it.value() == text)
             return true;
-        }
     }
+
     return false;
 }
 
@@ -148,7 +147,7 @@ void SqueezedComboBox::slotTimeOut()
     }
 }
 
-QString SqueezedComboBox::squeezeText( const QString& original)
+QString SqueezedComboBox::squeezeText(const QString& original)
 {
     // not the complete widgetSize is usable. Need to compensate for that.
     int widgetSize = width()-30;
