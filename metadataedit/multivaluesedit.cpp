@@ -42,6 +42,7 @@
 
 // Local includes.
 
+#include "squeezedcombobox.h"
 #include "metadatacheckbox.h"
 #include "multivaluesedit.h"
 #include "multivaluesedit.moc"
@@ -60,38 +61,33 @@ public:
         repValueButton = 0;
         valueBox       = 0;
         valueCheck     = 0;
-        dataList      = 0;
+        dataList       = 0;
     }
 
-    QStringList       oldValues;
+    QStringList                    oldValues;
 
-    QPushButton      *addValueButton;
-    QPushButton      *delValueButton;
-    QPushButton      *repValueButton;
+    QPushButton                   *addValueButton;
+    QPushButton                   *delValueButton;
+    QPushButton                   *repValueButton;
 
-    QComboBox        *dataList;
+    KListWidget                   *valueBox;
 
-    KListWidget      *valueBox;
-
-    MetadataCheckBox *valueCheck;
+    MetadataCheckBox              *valueCheck;
+ 
+    KIPIPlugins::SqueezedComboBox *dataList;
 };
 
 MultiValuesEdit::MultiValuesEdit(QWidget* parent, const QString& title, const QString& desc)
                : QWidget(parent)
 {
     d = new MultiValuesEditPriv;
+
     QGridLayout *grid = new QGridLayout(this);
 
     // --------------------------------------------------------
 
     d->valueCheck = new MetadataCheckBox(title, this);    
 
-    d->dataList   = new QComboBox(this);
-    d->dataList->model()->sort(0);
-    d->dataList->setWhatsThis(desc);
-
-    d->valueBox   = new KListWidget(this);
-    
     d->addValueButton = new QPushButton(this);
     d->delValueButton = new QPushButton(this);
     d->repValueButton = new QPushButton(this);
@@ -104,6 +100,14 @@ MultiValuesEdit::MultiValuesEdit(QWidget* parent, const QString& title, const QS
     d->delValueButton->setEnabled(false);
     d->repValueButton->setEnabled(false);
 
+    d->valueBox = new KListWidget(this);
+    d->valueBox->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Ignored);
+    d->valueBox->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    d->dataList = new KIPIPlugins::SqueezedComboBox(this);
+    d->dataList->model()->sort(0);
+    d->dataList->setWhatsThis(desc);
+    
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
@@ -111,10 +115,11 @@ MultiValuesEdit::MultiValuesEdit(QWidget* parent, const QString& title, const QS
     grid->addWidget(d->addValueButton, 0, 1, 1, 1);
     grid->addWidget(d->delValueButton, 0, 2, 1, 1);
     grid->addWidget(d->repValueButton, 0, 3, 1, 1);
+    grid->addWidget(d->valueBox, 0, 4, 3, 1);
     grid->addWidget(d->dataList, 1, 0, 1, 4);
-    grid->addWidget(d->valueBox, 0, 4, 2, 1);
+    grid->setRowStretch(2, 10);                     
     grid->setColumnStretch(0, 10);                     
-    grid->setColumnStretch(4, 10);                     
+    grid->setColumnStretch(4, 100);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());    
                                          
@@ -225,7 +230,7 @@ void MultiValuesEdit::setData(const QStringList& data)
 {
     d->dataList->clear();
     for (QStringList::const_iterator it = data.begin(); it != data.end(); ++it )
-        d->dataList->addItem(*it);
+        d->dataList->addSqueezedItem(*it);
 }
 
 void MultiValuesEdit::setValues(const QStringList& values)

@@ -80,6 +80,7 @@ MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
                 : QWidget(parent)
 {
     d = new MultiStringsEditPriv;
+
     QGridLayout *grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
@@ -90,7 +91,23 @@ MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
 
     d->valueCheck = new QCheckBox(title, this);    
 
-    d->valueEdit  = new KLineEdit(this);
+    d->addValueButton = new QPushButton(this);
+    d->delValueButton = new QPushButton(this);
+    d->repValueButton = new QPushButton(this);
+    d->addValueButton->setIcon(SmallIcon("edit-add"));
+    d->delValueButton->setIcon(SmallIcon("edit-delete"));
+    d->repValueButton->setIcon(SmallIcon("view-refresh"));
+    d->addValueButton->setWhatsThis(i18n("Add a new value to the list"));
+    d->delValueButton->setWhatsThis(i18n("Remove the current selected value from the list"));
+    d->repValueButton->setWhatsThis(i18n("Replace the current selected value from the list"));
+    d->delValueButton->setEnabled(false);
+    d->repValueButton->setEnabled(false);
+
+    d->valueBox  = new KListWidget(this);
+    d->valueBox->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Ignored);
+    d->valueBox->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    d->valueEdit = new KLineEdit(this);
     d->valueEdit->setClearButtonShown(true);
     QString whatsThis = desc;
 
@@ -112,21 +129,7 @@ MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
     }
 
     d->valueEdit->setWhatsThis(whatsThis);
-
-    d->valueBox = new KListWidget(this);
-    
-    d->addValueButton = new QPushButton(this);
-    d->delValueButton = new QPushButton(this);
-    d->repValueButton = new QPushButton(this);
-    d->addValueButton->setIcon(SmallIcon("edit-add"));
-    d->delValueButton->setIcon(SmallIcon("edit-delete"));
-    d->repValueButton->setIcon(SmallIcon("view-refresh"));
-    d->addValueButton->setWhatsThis(i18n("Add a new value to the list"));
-    d->delValueButton->setWhatsThis(i18n("Remove the current selected value from the list"));
-    d->repValueButton->setWhatsThis(i18n("Replace the current selected value from the list"));
-    d->delValueButton->setEnabled(false);
-    d->repValueButton->setEnabled(false);
-
+   
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
@@ -134,10 +137,11 @@ MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
     grid->addWidget(d->addValueButton, 0, 1, 1, 1);
     grid->addWidget(d->delValueButton, 0, 2, 1, 1);
     grid->addWidget(d->repValueButton, 0, 3, 1, 1);
+    grid->addWidget(d->valueBox, 0, 4, 3, 1);
     grid->addWidget(d->valueEdit, 1, 0, 1, 4);
-    grid->addWidget(d->valueBox, 0, 4, 2, 1);
-    grid->setColumnStretch(0, 10);                     
-    grid->setColumnStretch(4, 10);                     
+    grid->setRowStretch(2, 10);                     
+    grid->setColumnStretch(0, 10);   
+    grid->setColumnStretch(4, 100);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());    
                                          
