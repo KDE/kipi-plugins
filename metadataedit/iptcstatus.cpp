@@ -316,8 +316,9 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
-    QString data;
-    int     val;
+    QString     data;
+    QStringList list;
+    int         val;
 
     d->objectNameEdit->clear();
     d->objectNameCheck->setChecked(false);
@@ -423,29 +424,9 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     d->objectTypeCB->setEnabled(d->objectTypeCheck->isChecked());
     d->objectTypeDescEdit->setEnabled(d->objectTypeCheck->isChecked());
 
-/*    d->objectAttributeCB->setCurrentIndex(0);
-    d->objectAttributeDescEdit->clear();
-    d->objectAttributeCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectAttribute", false);    
-    if (!data.isNull())
-    {
-        QString attSec = data.section(":", 0, 0);
-        if (!attSec.isEmpty())
-        {
-            int att = attSec.toInt()-1;
-            if (att >= 0 && att < 21)
-            {
-                d->objectAttributeCB->setCurrentIndex(att);
-                d->objectAttributeDescEdit->setText(data.section(":", -1));
-                d->objectAttributeCheck->setChecked(true);
-            }
-            else 
-                d->objectAttributeCheck->setValid(false);
-        }
-    }
-    d->objectAttributeCB->setEnabled(d->objectAttributeCheck->isChecked());
-    d->objectAttributeDescEdit->setEnabled(d->objectAttributeCheck->isChecked());
-*/
+    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.ObjectAttribute", false);    
+    d->objectAttribute->setValues(list);
+
     blockSignals(false);
 }
 
@@ -509,15 +490,11 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
     else if (d->objectTypeCheck->isValid())
         exiv2Iface.removeIptcTag("Iptc.Application2.ObjectType");
 
-/*    if (d->objectAttributeCheck->isChecked())
-    {
-        QString objectAttribute;
-        objectAttribute.sprintf("%03d", d->objectAttributeCB->currentIndex()+1);
-        objectAttribute.append(QString(":%1").arg(d->objectAttributeDescEdit->text()));
-        exiv2Iface.setIptcTagString("Iptc.Application2.ObjectAttribute", objectAttribute);
-    }
-    else if (d->objectAttributeCheck->isValid())
-        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectAttribute");*/
+    QStringList oldList, newList;
+    if (d->objectAttribute->getValues(oldList, newList))
+        exiv2Iface.setIptcTagsStringList("Iptc.Application2.ObjectAttribute", 64, oldList, newList);
+    else if (d->objectAttribute->isValid())
+        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectAttribute");
 
     exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 
