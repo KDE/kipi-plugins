@@ -46,17 +46,17 @@
 
 #include "squeezedcombobox.h"
 #include "metadatacheckbox.h"
-#include "objectattributeedit.h"
-#include "objectattributeedit.moc"
+#include "objectattributesedit.h"
+#include "objectattributesedit.moc"
 
 namespace KIPIMetadataEditPlugin
 {
 
-class ObjectAttributeEditPriv
+class ObjectAttributesEditPriv
 {
 public:
 
-    ObjectAttributeEditPriv()
+    ObjectAttributesEditPriv()
     {
         addValueButton = 0;
         delValueButton = 0;
@@ -82,11 +82,10 @@ public:
     KIPIPlugins::SqueezedComboBox *dataList;
 };
 
-ObjectAttributeEdit::ObjectAttributeEdit(QWidget* parent, const QString& title, const QString& descCombo,
-                                         const QString& descLineEdit, bool ascii, int size)
-                   : QWidget(parent)
+ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size)
+                    : QWidget(parent)
 {
-    d = new ObjectAttributeEditPriv;
+    d = new ObjectAttributesEditPriv;
 
     QGridLayout *grid = new QGridLayout(this);
 
@@ -96,7 +95,7 @@ ObjectAttributeEdit::ObjectAttributeEdit(QWidget* parent, const QString& title, 
 
     // --------------------------------------------------------
 
-    d->valueCheck = new MetadataCheckBox(title, this);    
+    d->valueCheck = new MetadataCheckBox(i18n("Attribute:"), this);    
 
     d->addValueButton = new QPushButton(this);
     d->delValueButton = new QPushButton(this);
@@ -118,13 +117,36 @@ ObjectAttributeEdit::ObjectAttributeEdit(QWidget* parent, const QString& title, 
 
     d->dataList = new KIPIPlugins::SqueezedComboBox(this);
     d->dataList->model()->sort(0);
-    d->dataList->setWhatsThis(descCombo);
+    d->dataList->setWhatsThis(i18n("<p>Select here the editorial attribute of content."));
+    d->dataList->addSqueezedItem(QString("001 - ") + i18n("Current"));
+    d->dataList->addSqueezedItem(QString("002 - ") + i18n("Analysis"));
+    d->dataList->addSqueezedItem(QString("003 - ") + i18n("Archive material"));
+    d->dataList->addSqueezedItem(QString("004 - ") + i18n("Background"));
+    d->dataList->addSqueezedItem(QString("005 - ") + i18n("Feature"));
+    d->dataList->addSqueezedItem(QString("006 - ") + i18n("Forecast"));
+    d->dataList->addSqueezedItem(QString("007 - ") + i18n("History"));
+    d->dataList->addSqueezedItem(QString("008 - ") + i18n("Obituary"));
+    d->dataList->addSqueezedItem(QString("009 - ") + i18n("Opinion"));
+    d->dataList->addSqueezedItem(QString("010 - ") + i18n("Polls & Surveys"));
+    d->dataList->addSqueezedItem(QString("011 - ") + i18n("Profile"));
+    d->dataList->addSqueezedItem(QString("012 - ") + i18n("Results Listings & Table"));
+    d->dataList->addSqueezedItem(QString("013 - ") + i18n("Side bar & Supporting information"));
+    d->dataList->addSqueezedItem(QString("014 - ") + i18n("Summary"));
+    d->dataList->addSqueezedItem(QString("015 - ") + i18n("Transcript & Verbatim"));
+    d->dataList->addSqueezedItem(QString("016 - ") + i18n("Interview"));
+    d->dataList->addSqueezedItem(QString("017 - ") + i18n("From the Scene"));
+    d->dataList->addSqueezedItem(QString("018 - ") + i18n("Retrospective"));
+    d->dataList->addSqueezedItem(QString("019 - ") + i18n("Statistics"));
+    d->dataList->addSqueezedItem(QString("020 - ") + i18n("Update"));
+    d->dataList->addSqueezedItem(QString("021 - ") + i18n("Wrap-up"));
+    d->dataList->addSqueezedItem(QString("022 - ") + i18n("Press Release"));
 
     // --------------------------------------------------------
 
     d->valueEdit = new KLineEdit(this);
     d->valueEdit->setClearButtonShown(true);
-    QString whatsThis = descLineEdit;
+    QString whatsThis = i18n("<p>Set here the editorial attribute description of "
+                             "content. This field is limited to 64 ASCII characters.");
 
     if (ascii || size != -1)
     {
@@ -152,10 +174,10 @@ ObjectAttributeEdit::ObjectAttributeEdit(QWidget* parent, const QString& title, 
     grid->addWidget(d->addValueButton, 0, 1, 1, 1);
     grid->addWidget(d->delValueButton, 0, 2, 1, 1);
     grid->addWidget(d->repValueButton, 0, 3, 1, 1);
-    grid->addWidget(d->valueBox, 0, 4, 3, 1);
+    grid->addWidget(d->valueBox, 0, 4, 4, 1);
     grid->addWidget(d->dataList, 1, 0, 1, 4);
     grid->addWidget(d->valueEdit, 2, 0, 1, 4);
-//    grid->setRowStretch(2, 10);                     
+    grid->setRowStretch(3, 10);                     
     grid->setColumnStretch(0, 10);                     
     grid->setColumnStretch(4, 100);                     
     grid->setMargin(0);
@@ -210,12 +232,12 @@ ObjectAttributeEdit::ObjectAttributeEdit(QWidget* parent, const QString& title, 
             this, SIGNAL(signalModified()));
 }
 
-ObjectAttributeEdit::~ObjectAttributeEdit()
+ObjectAttributesEdit::~ObjectAttributesEdit()
 {
     delete d;
 }
 
-void ObjectAttributeEdit::slotDeleteValue()
+void ObjectAttributesEdit::slotDeleteValue()
 {
     QListWidgetItem *item = d->valueBox->currentItem();
     if (!item) return;
@@ -223,42 +245,39 @@ void ObjectAttributeEdit::slotDeleteValue()
     delete item;
 }
 
-void ObjectAttributeEdit::slotReplaceValue()
+void ObjectAttributesEdit::slotReplaceValue()
 {
-/*    QString newValue = d->dataList->itemHighlighted();
-    if (newValue.isEmpty()) return;
+    QString newValue = d->dataList->itemHighlighted().left(3);
+    newValue.append(QString(":%1").arg(d->valueEdit->text()));
 
     if (!d->valueBox->selectedItems().isEmpty())
         d->valueBox->selectedItems()[0]->setText(newValue);
-
-    QString newText = d->valueEdit->text();
-    if (!d->valueBox->selectedItems().isEmpty())
-    {
-        d->valueBox->selectedItems()[0]->setText(newValue);
-        d->valueEdit->clear();
-    }*/
 }
 
-void ObjectAttributeEdit::slotSelectionChanged()
+void ObjectAttributesEdit::slotSelectionChanged()
 {
     if (!d->valueBox->selectedItems().isEmpty())
     {
-        d->dataList->findText(d->valueBox->selectedItems()[0]->text());
-        d->delValueButton->setEnabled(true);
-        d->repValueButton->setEnabled(true);
+        bool ok   = false;
+        int index = d->valueBox->selectedItems()[0]->text().section(":", 0, 0).toInt(&ok);
+        if (ok)
+        {
+            d->dataList->setCurrentIndex(index-1);
+            d->valueEdit->setText(d->valueBox->selectedItems()[0]->text().section(":", -1));
+            d->delValueButton->setEnabled(true);
+            d->repValueButton->setEnabled(true);
+            return;
+        }
     }
-    else
-    {
-        d->delValueButton->setEnabled(false);
-        d->repValueButton->setEnabled(false);
-    }
+
+    d->delValueButton->setEnabled(false);
+    d->repValueButton->setEnabled(false);
 }
 
-void ObjectAttributeEdit::slotAddValue()
+void ObjectAttributesEdit::slotAddValue()
 {
-    QString newValue;
-    newValuesprintf("%03d", d->objectAttributeCB->currentIndex()+1));
-    if (newValue.isEmpty()) return;
+    QString newValue = d->dataList->itemHighlighted().left(3);
+    newValue.append(QString(":%1").arg(d->valueEdit->text()));
 
     bool found = false;
     for (int i = 0 ; i < d->valueBox->count(); i++)
@@ -275,24 +294,7 @@ void ObjectAttributeEdit::slotAddValue()
         d->valueBox->insertItem(d->valueBox->count(), newValue);
 }
 
-void ObjectAttributeEdit::setData(const QStringList& data)
-{
-    d->dataList->clear();
-    for (QStringList::const_iterator it = data.begin(); it != data.end(); ++it )
-        d->dataList->addSqueezedItem(*it);
-}
-
-QStringList ObjectAttributeEdit::getData() const
-{
-    QStringList data;
-    for (int i = 0 ; i < d->dataList->count(); i++)
-    {
-        data.append(d->dataList->item(i));
-    }
-    return data;
-}
-
-void ObjectAttributeEdit::setValues(const QStringList& values)
+void ObjectAttributesEdit::setValues(const QStringList& values)
 {
     blockSignals(true);
     d->oldValues = values;
@@ -312,7 +314,7 @@ void ObjectAttributeEdit::setValues(const QStringList& values)
     blockSignals(false);
 }
 
-bool ObjectAttributeEdit::getValues(QStringList& oldValues, QStringList& newValues)
+bool ObjectAttributesEdit::getValues(QStringList& oldValues, QStringList& newValues)
 {
     oldValues = d->oldValues;
 
@@ -326,12 +328,12 @@ bool ObjectAttributeEdit::getValues(QStringList& oldValues, QStringList& newValu
     return d->valueCheck->isChecked();
 }
 
-void ObjectAttributeEdit::setValid(bool v) 
+void ObjectAttributesEdit::setValid(bool v) 
 {
     d->valueCheck->setValid(v); 
 }
 
-bool ObjectAttributeEdit::isValid() const 
+bool ObjectAttributesEdit::isValid() const 
 {
     return d->valueCheck->isValid(); 
 }

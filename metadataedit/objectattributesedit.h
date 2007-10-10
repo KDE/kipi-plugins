@@ -21,8 +21,8 @@
  * 
  * ============================================================ */
 
-#ifndef OBJECT_ATTRIBUTE_EDIT_H
-#define OBJECT_ATTRIBUTE_EDIT_H
+#ifndef OBJECT_ATTRIBUTES_EDIT_H
+#define OBJECT_ATTRIBUTES_EDIT_H
 
 // Qt includes.
 
@@ -31,23 +31,19 @@
 namespace KIPIMetadataEditPlugin
 {
 
-class ObjectAttributeEditPriv;
+class ObjectAttributesEditPriv;
 
-class ObjectAttributeEdit : public QWidget
+class ObjectAttributesEdit : public QWidget
 {
     Q_OBJECT
     
 public:
 
-    ObjectAttributeEdit(QWidget* parent, const QString& title, const QString& descCombo,
-                        const QString& descLineEdit, bool ascii, int size);
-    ~ObjectAttributeEdit();
+    ObjectAttributesEdit(QWidget* parent, bool ascii, int size);
+    ~ObjectAttributesEdit();
 
     void setValid(bool v);
     bool isValid() const;
-
-    void setData(const QStringList& data);
-    QStringList getData() const;
 
     void setValues(const QStringList& values);
     bool getValues(QStringList& oldValues, QStringList& newValues);
@@ -65,9 +61,9 @@ private slots:
 
 private:
 
-    ObjectAttributeEditPriv* d;
+    ObjectAttributesEditPriv* d;
 };
 
 }  // namespace KIPIMetadataEditPlugin
 
-#endif // OBJECT_ATTRIBUTE_EDIT_H
+#endif // OBJECT_ATTRIBUTES_EDIT_H

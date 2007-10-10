@@ -42,6 +42,7 @@
 
 #include "squeezedcombobox.h"
 #include "metadatacheckbox.h"
+#include "objectattributesedit.h"
 #include "pluginsversion.h"
 #include "iptcstatus.h"
 #include "iptcstatus.moc"
@@ -69,31 +70,30 @@ public:
         specialInstructionCheck = 0;
         objectNameEdit          = 0;
         objectNameCheck         = 0;
+        objectAttribute         = 0;
     }
 
-    QCheckBox                     *statusCheck;
-    QCheckBox                     *JobIDCheck;
-    QCheckBox                     *specialInstructionCheck;
-    QCheckBox                     *objectNameCheck;
+    QCheckBox            *statusCheck;
+    QCheckBox            *JobIDCheck;
+    QCheckBox            *specialInstructionCheck;
+    QCheckBox            *objectNameCheck;
 
-    QComboBox                     *priorityCB;
-    QComboBox                     *objectCycleCB;
-    QComboBox                     *objectTypeCB;
+    QComboBox            *priorityCB;
+    QComboBox            *objectCycleCB;
+    QComboBox            *objectTypeCB;
 
-    KLineEdit                     *objectNameEdit;
-    KLineEdit                     *statusEdit;
-    KLineEdit                     *objectTypeDescEdit;
-    KLineEdit                     *objectAttributeDescEdit;
-    KLineEdit                     *JobIDEdit;
+    KLineEdit            *objectNameEdit;
+    KLineEdit            *statusEdit;
+    KLineEdit            *objectTypeDescEdit;
+    KLineEdit            *JobIDEdit;
 
-    KTextEdit                     *specialInstructionEdit;
+    KTextEdit            *specialInstructionEdit;
 
-    MetadataCheckBox              *priorityCheck;
-    MetadataCheckBox              *objectCycleCheck;
-    MetadataCheckBox              *objectTypeCheck;
-    MetadataCheckBox              *objectAttributeCheck;
+    MetadataCheckBox     *priorityCheck;
+    MetadataCheckBox     *objectCycleCheck;
+    MetadataCheckBox     *objectTypeCheck;
 
-    KIPIPlugins::SqueezedComboBox *objectAttributeCB;
+    ObjectAttributesEdit *objectAttribute;
 };
 
 IPTCStatus::IPTCStatus(QWidget* parent)
@@ -187,37 +187,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->objectAttributeCheck    = new MetadataCheckBox(i18n("Attribute:"), this);
-    d->objectAttributeCB       = new KIPIPlugins::SqueezedComboBox(this);
-    d->objectAttributeDescEdit = new KLineEdit(this);
-    d->objectAttributeDescEdit->setClearButtonShown(true);
-    d->objectAttributeDescEdit->setValidator(asciiValidator);
-    d->objectAttributeDescEdit->setMaxLength(64);
-    d->objectAttributeCB->addSqueezedItem(i18n("Current"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Analysis"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Archive material"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Background"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Feature"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Forecast"));
-    d->objectAttributeCB->addSqueezedItem(i18n("History"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Obituary"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Opinion"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Polls & Surveys"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Profile"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Results Listings & Table"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Side bar & Supporting information"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Summary"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Transcript & Verbatim"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Interview"));
-    d->objectAttributeCB->addSqueezedItem(i18n("From the Scene"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Retrospective"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Statistics"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Update"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Wrap-up"));
-    d->objectAttributeCB->addSqueezedItem(i18n("Press Release"));
-    d->objectAttributeCB->setWhatsThis(i18n("<p>Select here the editorial attribute of content."));
-    d->objectAttributeDescEdit->setWhatsThis(i18n("<p>Set here the editorial attribute description of "
-                                                  "content. This field is limited to 64 ASCII characters."));
+    d->objectAttribute = new ObjectAttributesEdit(this, true, 64);
 
     // --------------------------------------------------------
 
@@ -247,12 +217,10 @@ IPTCStatus::IPTCStatus(QWidget* parent)
     grid->addWidget(d->objectTypeCheck, 7, 0, 1, 1);
     grid->addWidget(d->objectTypeCB, 7, 1, 1, 1);
     grid->addWidget(d->objectTypeDescEdit, 8, 0, 1, 3 );
-    grid->addWidget(d->objectAttributeCheck, 9, 0, 1, 1);
-    grid->addWidget(d->objectAttributeCB, 9, 1, 1, 2);
-    grid->addWidget(d->objectAttributeDescEdit, 10, 0, 1, 3 );
-    grid->addWidget(note, 11, 0, 1, 3 );
+    grid->addWidget(d->objectAttribute, 9, 0, 1, 3);
+    grid->addWidget(note, 10, 0, 1, 3 );
     grid->setColumnStretch(2, 10);                     
-    grid->setRowStretch(12, 10);                     
+    grid->setRowStretch(11, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -272,12 +240,6 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     connect(d->objectTypeCheck, SIGNAL(toggled(bool)),
             d->objectTypeDescEdit, SLOT(setEnabled(bool)));
-
-    connect(d->objectAttributeCheck, SIGNAL(toggled(bool)),
-            d->objectAttributeCB, SLOT(setEnabled(bool)));
-
-    connect(d->objectAttributeCheck, SIGNAL(toggled(bool)),
-            d->objectAttributeDescEdit, SLOT(setEnabled(bool)));
 
     connect(d->statusCheck, SIGNAL(toggled(bool)),
             d->statusEdit, SLOT(setEnabled(bool)));
@@ -305,10 +267,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
     connect(d->objectTypeCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
-    connect(d->objectAttributeCheck, SIGNAL(toggled(bool)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->objectAttributeCheck, SIGNAL(toggled(bool)),
+    connect(d->objectAttribute, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
     connect(d->statusCheck, SIGNAL(toggled(bool)),
@@ -331,9 +290,6 @@ IPTCStatus::IPTCStatus(QWidget* parent)
     connect(d->objectTypeCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
 
-    connect(d->objectAttributeCB, SIGNAL(activated(int)),
-            this, SIGNAL(signalModified()));
-
     connect(d->objectNameEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 
@@ -341,9 +297,6 @@ IPTCStatus::IPTCStatus(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->objectTypeDescEdit, SIGNAL(textChanged(const QString &)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->objectAttributeDescEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 
     connect(d->JobIDEdit, SIGNAL(textChanged(const QString &)),
@@ -470,7 +423,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     d->objectTypeCB->setEnabled(d->objectTypeCheck->isChecked());
     d->objectTypeDescEdit->setEnabled(d->objectTypeCheck->isChecked());
 
-    d->objectAttributeCB->setCurrentIndex(0);
+/*    d->objectAttributeCB->setCurrentIndex(0);
     d->objectAttributeDescEdit->clear();
     d->objectAttributeCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectAttribute", false);    
@@ -492,7 +445,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     }
     d->objectAttributeCB->setEnabled(d->objectAttributeCheck->isChecked());
     d->objectAttributeDescEdit->setEnabled(d->objectAttributeCheck->isChecked());
-
+*/
     blockSignals(false);
 }
 
@@ -556,16 +509,15 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
     else if (d->objectTypeCheck->isValid())
         exiv2Iface.removeIptcTag("Iptc.Application2.ObjectType");
 
-    if (d->objectAttributeCheck->isChecked())
+/*    if (d->objectAttributeCheck->isChecked())
     {
         QString objectAttribute;
-        objectAttribute.sprintf("%3d", d->objectAttributeCB->currentIndex()+1);
+        objectAttribute.sprintf("%03d", d->objectAttributeCB->currentIndex()+1);
         objectAttribute.append(QString(":%1").arg(d->objectAttributeDescEdit->text()));
         exiv2Iface.setIptcTagString("Iptc.Application2.ObjectAttribute", objectAttribute);
     }
     else if (d->objectAttributeCheck->isValid())
-        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectAttribute");
-
+        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectAttribute");*/
 
     exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 
