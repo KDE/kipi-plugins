@@ -86,9 +86,7 @@ public:
         page_credits    = 0;
         page_status     = 0;
         page_origin     = 0;
-
         about           = 0;
-
         captionPage     = 0;
         datetimePage    = 0;
         subjectsPage    = 0;
@@ -153,43 +151,51 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     // ---------------------------------------------------------------
 
     d->captionPage   = new IPTCCaption(this);
-    d->page_caption  = addPage(d->captionPage, i18n("Caption"));
-    d->page_caption->setHeader(i18n("Caption Information"));
+    d->page_caption  = addPage(d->captionPage, i18n("Content"));
+    d->page_caption->setHeader(i18n("<qt>Content Information<br>"
+                     "<i>Use this panel to describe the visual content of the image</i></qt>"));
     d->page_caption->setIcon(KIcon("edit-clear"));
 
     d->datetimePage  = new IPTCDateTime(this);
     d->page_datetime = addPage(d->datetimePage, i18n("Date & Time"));
-    d->page_datetime->setHeader(i18n("Date and Time Information"));
+    d->page_datetime->setHeader(i18n("<qt>Date and Time<br>"
+                      "<i>Use this panel to record time stamps</i></qt>"));
     d->page_datetime->setIcon(KIcon("1day"));
 
     d->subjectsPage  = new IPTCSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
-    d->page_subjects->setHeader(i18n("Subjects Information"));
+    d->page_subjects->setHeader(i18n("<qt>Subjects Information<br>"
+                      "<i>Use this panel to record subjects about the image</i></qt>"));
     d->page_subjects->setIcon(KIcon("note2"));
 
     d->keywordsPage  = new IPTCKeywords(this);
     d->page_keywords = addPage(d->keywordsPage, i18n("Keywords"));
-    d->page_keywords->setHeader(i18n("Keywords Information"));
+    d->page_keywords->setHeader(i18n("<qt>Keywords Informations<br>"
+                      "<i>Use this panel to record keywords about the image</i></qt>"));
     d->page_keywords->setIcon(KIcon("bookmark"));
 
     d->categoriesPage  = new IPTCCategories(this);
     d->page_categories = addPage(d->categoriesPage, i18n("Categories"));
-    d->page_categories->setHeader(i18n("Categories Information"));
+    d->page_categories->setHeader(i18n("<qt>Categories Informations<br>"
+                        "<i>Use this panel to record categories about the image</i></qt>"));
     d->page_categories->setIcon(KIcon("bookmark-folder"));
 
     d->creditsPage  = new IPTCCredits(this);
     d->page_credits = addPage(d->creditsPage, i18n("Credits"));
-    d->page_credits->setHeader(i18n("Credits Information"));
+    d->page_credits->setHeader(i18n("<qt>Credits Information<br>"
+                     "<i>Use this panel to record copyright information</i></qt>"));
     d->page_credits->setIcon(KIcon("identity"));
 
     d->statusPage  = new IPTCStatus(this);
     d->page_status = addPage(d->statusPage, i18n("Status"));
-    d->page_status->setHeader(i18n("Status Information"));
+    d->page_status->setHeader(i18n("<qt>Status Information<br>"
+                    "<i>Use this panel to record workflow information</i></qt>"));
     d->page_status->setIcon(KIcon("dialog-information"));
   
     d->originPage  = new IPTCOrigin(this);
     d->page_origin = addPage(d->originPage, i18n("Origin"));
-    d->page_origin->setHeader(i18n("Origin Information"));
+    d->page_origin->setHeader(i18n("<qt>Origin Information<br>"
+                    "<i>Use this panel for formal descriptive information about the image</i></qt>"));
     d->page_origin->setIcon(KIcon("network"));
 
     // ---------------------------------------------------------------
