@@ -2,7 +2,7 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       metadatacheckbox.cpp
                                       multistringsedit.cpp
                                       multivaluesedit.cpp
-                                      objectattributeedit.cpp
+                                      objectattributesedit.cpp
                                       exifcaption.cpp
                                       exifdatetime.cpp
                                       exifadjust.cpp
