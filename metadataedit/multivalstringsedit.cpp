@@ -4,7 +4,8 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-10-08
- * Description : a widget to edit a tag with multiple fixed values.
+ * Description : a widget to edit Application2 ObjectAttribute 
+ *               Iptc tag.
  *
  * Copyright (C) 2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -35,6 +36,7 @@
 #include <kdialog.h>
 #include <klistwidget.h>
 #include <kiconloader.h>
+#include <klineedit.h>
 
 // LibKExiv2 includes. 
 
@@ -44,23 +46,24 @@
 
 #include "squeezedcombobox.h"
 #include "metadatacheckbox.h"
-#include "multivalstringsedit.h"
-#include "multivalstringsedit.moc"
+#include "objectattributeedit.h"
+#include "objectattributeedit.moc"
 
 namespace KIPIMetadataEditPlugin
 {
 
-class MultiValStringsEditPriv
+class ObjectAttributeEditPriv
 {
 public:
 
-    MultiValStringsEditPriv()
+    ObjectAttributeEditPriv()
     {
         addValueButton = 0;
         delValueButton = 0;
         repValueButton = 0;
         valueBox       = 0;
         valueCheck     = 0;
+        valueEdit      = 0;
         dataList       = 0;
     }
 
@@ -70,6 +73,8 @@ public:
     QPushButton                   *delValueButton;
     QPushButton                   *repValueButton;
 
+    KLineEdit                     *valueEdit;
+
     KListWidget                   *valueBox;
 
     MetadataCheckBox              *valueCheck;
@@ -77,12 +82,17 @@ public:
     KIPIPlugins::SqueezedComboBox *dataList;
 };
 
-MultiValStringsEdit::MultiValStringsEdit(QWidget* parent, const QString& title, const QString& desc)
-               : QWidget(parent)
+ObjectAttributeEdit::ObjectAttributeEdit(QWidget* parent, const QString& title, const QString& descCombo,
+                                         const QString& descLineEdit, bool ascii, int size)
+                   : QWidget(parent)
 {
-    d = new MultiValStringsEditPriv;
+    d = new ObjectAttributeEditPriv;
 
     QGridLayout *grid = new QGridLayout(this);
+
+    // IPTC only accept printable Ascii char.
+    QRegExp asciiRx("[\x20-\x7F]+$");
+    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
 
     // --------------------------------------------------------
 
@@ -104,9 +114,36 @@ MultiValStringsEdit::MultiValStringsEdit(QWidget* parent, const QString& title, 
     d->valueBox->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Ignored);
     d->valueBox->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    // --------------------------------------------------------
+
     d->dataList = new KIPIPlugins::SqueezedComboBox(this);
     d->dataList->model()->sort(0);
-    d->dataList->setWhatsThis(desc);
+    d->dataList->setWhatsThis(descCombo);
+
+    // --------------------------------------------------------
+
+    d->valueEdit = new KLineEdit(this);
+    d->valueEdit->setClearButtonShown(true);
+    QString whatsThis = descLineEdit;
+
+    if (ascii || size != -1)
+    {
+        whatsThis.append(i18n(" This field is limited to:"));
+    }
+
+    if (ascii)
+    {
+        d->valueEdit->setValidator(asciiValidator);
+        whatsThis.append(i18n("<p>Printable ASCII characters set.</p>"));
+    }
+
+    if (size != -1)
+    {
+        d->valueEdit->setMaxLength(size);
+        whatsThis.append(i18n("<p>Size of %1 characters.</p>", size));
+    }
+
+    d->valueEdit->setWhatsThis(whatsThis);
     
     // --------------------------------------------------------
 
@@ -117,7 +154,8 @@ MultiValStringsEdit::MultiValStringsEdit(QWidget* parent, const QString& title, 
     grid->addWidget(d->repValueButton, 0, 3, 1, 1);
     grid->addWidget(d->valueBox, 0, 4, 3, 1);
     grid->addWidget(d->dataList, 1, 0, 1, 4);
-    grid->setRowStretch(2, 10);                     
+    grid->addWidget(d->valueEdit, 2, 0, 1, 4);
+//    grid->setRowStretch(2, 10);                     
     grid->setColumnStretch(0, 10);                     
     grid->setColumnStretch(4, 100);                     
     grid->setMargin(0);
@@ -138,6 +176,9 @@ MultiValStringsEdit::MultiValStringsEdit(QWidget* parent, const QString& title, 
             this, SLOT(slotReplaceValue()));
 
     // --------------------------------------------------------
+
+    connect(d->valueCheck, SIGNAL(toggled(bool)),
+            d->valueEdit, SLOT(setEnabled(bool)));
 
     connect(d->valueCheck, SIGNAL(toggled(bool)),
             d->dataList, SLOT(setEnabled(bool)));
@@ -169,12 +210,12 @@ MultiValStringsEdit::MultiValStringsEdit(QWidget* parent, const QString& title, 
             this, SIGNAL(signalModified()));
 }
 
-MultiValStringsEdit::~MultiValStringsEdit()
+ObjectAttributeEdit::~ObjectAttributeEdit()
 {
     delete d;
 }
 
-void MultiValStringsEdit::slotDeleteValue()
+void ObjectAttributeEdit::slotDeleteValue()
 {
     QListWidgetItem *item = d->valueBox->currentItem();
     if (!item) return;
@@ -182,16 +223,23 @@ void MultiValStringsEdit::slotDeleteValue()
     delete item;
 }
 
-void MultiValStringsEdit::slotReplaceValue()
+void ObjectAttributeEdit::slotReplaceValue()
 {
-    QString newValue = d->dataList->itemHighlighted();
+/*    QString newValue = d->dataList->itemHighlighted();
     if (newValue.isEmpty()) return;
 
     if (!d->valueBox->selectedItems().isEmpty())
         d->valueBox->selectedItems()[0]->setText(newValue);
+
+    QString newText = d->valueEdit->text();
+    if (!d->valueBox->selectedItems().isEmpty())
+    {
+        d->valueBox->selectedItems()[0]->setText(newValue);
+        d->valueEdit->clear();
+    }*/
 }
 
-void MultiValStringsEdit::slotSelectionChanged()
+void ObjectAttributeEdit::slotSelectionChanged()
 {
     if (!d->valueBox->selectedItems().isEmpty())
     {
@@ -206,9 +254,10 @@ void MultiValStringsEdit::slotSelectionChanged()
     }
 }
 
-void MultiValStringsEdit::slotAddValue()
+void ObjectAttributeEdit::slotAddValue()
 {
-    QString newValue = d->dataList->itemHighlighted();
+    QString newValue;
+    newValuesprintf("%03d", d->objectAttributeCB->currentIndex()+1));
     if (newValue.isEmpty()) return;
 
     bool found = false;
@@ -226,14 +275,14 @@ void MultiValStringsEdit::slotAddValue()
         d->valueBox->insertItem(d->valueBox->count(), newValue);
 }
 
-void MultiValStringsEdit::setData(const QStringList& data)
+void ObjectAttributeEdit::setData(const QStringList& data)
 {
     d->dataList->clear();
     for (QStringList::const_iterator it = data.begin(); it != data.end(); ++it )
         d->dataList->addSqueezedItem(*it);
 }
 
-QStringList MultiValStringsEdit::getData() const
+QStringList ObjectAttributeEdit::getData() const
 {
     QStringList data;
     for (int i = 0 ; i < d->dataList->count(); i++)
@@ -243,7 +292,7 @@ QStringList MultiValStringsEdit::getData() const
     return data;
 }
 
-void MultiValStringsEdit::setValues(const QStringList& values)
+void ObjectAttributeEdit::setValues(const QStringList& values)
 {
     blockSignals(true);
     d->oldValues = values;
@@ -263,7 +312,7 @@ void MultiValStringsEdit::setValues(const QStringList& values)
     blockSignals(false);
 }
 
-bool MultiValStringsEdit::getValues(QStringList& oldValues, QStringList& newValues)
+bool ObjectAttributeEdit::getValues(QStringList& oldValues, QStringList& newValues)
 {
     oldValues = d->oldValues;
 
@@ -277,12 +326,12 @@ bool MultiValStringsEdit::getValues(QStringList& oldValues, QStringList& newValu
     return d->valueCheck->isChecked();
 }
 
-void MultiValStringsEdit::setValid(bool v) 
+void ObjectAttributeEdit::setValid(bool v) 
 {
     d->valueCheck->setValid(v); 
 }
 
-bool MultiValStringsEdit::isValid() const 
+bool ObjectAttributeEdit::isValid() const 
 {
     return d->valueCheck->isValid(); 
 }

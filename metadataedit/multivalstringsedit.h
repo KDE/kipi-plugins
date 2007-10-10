@@ -4,7 +4,8 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-10-08
- * Description : a widget to edit a tag with multiple fixed values.
+ * Description : a widget to edit Application2 ObjectAttribute 
+ *               Iptc tag.
  *
  * Copyright (C) 2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -20,8 +21,8 @@
  * 
  * ============================================================ */
 
-#ifndef MULTI_VALSTRINGS_EDIT_H
-#define MULTI_VALSTRINGS_EDIT_H
+#ifndef OBJECT_ATTRIBUTE_EDIT_H
+#define OBJECT_ATTRIBUTE_EDIT_H
 
 // Qt includes.
 
@@ -30,16 +31,17 @@
 namespace KIPIMetadataEditPlugin
 {
 
-class MultiValStringsEditPriv;
+class ObjectAttributeEditPriv;
 
-class MultiValStringsEdit : public QWidget
+class ObjectAttributeEdit : public QWidget
 {
     Q_OBJECT
     
 public:
 
-    MultiValStringsEdit(QWidget* parent, const QString& title, const QString& desc);
-    ~MultiValStringsEdit();
+    ObjectAttributeEdit(QWidget* parent, const QString& title, const QString& descCombo,
+                        const QString& descLineEdit, bool ascii, int size);
+    ~ObjectAttributeEdit();
 
     void setValid(bool v);
     bool isValid() const;
@@ -63,9 +65,9 @@ private slots:
 
 private:
 
-    MultiValStringsEditPriv* d;
+    ObjectAttributeEditPriv* d;
 };
 
 }  // namespace KIPIMetadataEditPlugin
 
-#endif // MULTI_VALSTRINGS_EDIT_H
+#endif // OBJECT_ATTRIBUTE_EDIT_H
