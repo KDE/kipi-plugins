@@ -20,8 +20,8 @@
  * 
  * ============================================================ */
 
-#ifndef IPTC_CAPTION_H
-#define IPTC_CAPTION_H
+#ifndef IPTC_CONTENT_H
+#define IPTC_CONTENT_H
 
 // Qt includes.
 
@@ -31,16 +31,16 @@
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCCaptionPriv;
+class IPTCContentPriv;
 
-class IPTCCaption : public QWidget
+class IPTCContent : public QWidget
 {
     Q_OBJECT
     
 public:
 
-    IPTCCaption(QWidget* parent);
-    ~IPTCCaption();
+    IPTCContent(QWidget* parent);
+    ~IPTCContent();
 
     void applyMetadata(QByteArray& exifData, QByteArray& iptcData);
     void readMetadata(QByteArray& iptcData);
@@ -61,9 +61,9 @@ signals:
 
 private:
 
-    IPTCCaptionPriv* d;
+    IPTCContentPriv* d;
 };
 
 }  // namespace KIPIMetadataEditPlugin
 
-#endif // IPTC_CAPTION_H 
+#endif // IPTC_CONTENT_H 

@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2006-10-12
- * Description : IPTC caption settings page.
+ * Description : IPTC content settings page.
  *
  * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -45,17 +45,17 @@
 // Local includes.
 
 #include "multistringsedit.h"
-#include "iptccaption.h"
-#include "iptccaption.moc"
+#include "iptccontent.h"
+#include "iptccontent.moc"
 
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCCaptionPriv
+class IPTCContentPriv
 {
 public:
 
-    IPTCCaptionPriv()
+    IPTCContentPriv()
     {
         headlineCheck           = 0;
         captionEdit             = 0;
@@ -80,10 +80,10 @@ public:
     MultiStringsEdit *writerEdit;
 };
 
-IPTCCaption::IPTCCaption(QWidget* parent)
+IPTCContent::IPTCContent(QWidget* parent)
            : QWidget(parent)
 {
-    d = new IPTCCaptionPriv;
+    d = new IPTCContentPriv;
 
     QGridLayout* grid = new QGridLayout(this);
 
@@ -187,47 +187,47 @@ IPTCCaption::IPTCCaption(QWidget* parent)
             this, SIGNAL(signalModified()));
 }
 
-IPTCCaption::~IPTCCaption()
+IPTCContent::~IPTCContent()
 {
     delete d;
 }
 
-bool IPTCCaption::syncJFIFCommentIsChecked()
+bool IPTCContent::syncJFIFCommentIsChecked()
 {
     return d->syncJFIFCommentCheck->isChecked();
 }
 
-bool IPTCCaption::syncHOSTCommentIsChecked()
+bool IPTCContent::syncHOSTCommentIsChecked()
 {
     return d->syncHOSTCommentCheck->isChecked();
 }
 
-bool IPTCCaption::syncEXIFCommentIsChecked()
+bool IPTCContent::syncEXIFCommentIsChecked()
 {
     return d->syncEXIFCommentCheck->isChecked();
 }
 
-QString IPTCCaption::getIPTCCaption()
+QString IPTCContent::getIPTCCaption()
 {
     return d->captionEdit->toPlainText();
 }
 
-void IPTCCaption::setCheckedSyncJFIFComment(bool c)
+void IPTCContent::setCheckedSyncJFIFComment(bool c)
 {
     d->syncJFIFCommentCheck->setChecked(c);
 }
 
-void IPTCCaption::setCheckedSyncHOSTComment(bool c)
+void IPTCContent::setCheckedSyncHOSTComment(bool c)
 {
     d->syncHOSTCommentCheck->setChecked(c);
 }
 
-void IPTCCaption::setCheckedSyncEXIFComment(bool c)
+void IPTCContent::setCheckedSyncEXIFComment(bool c)
 {
     d->syncEXIFCommentCheck->setChecked(c);
 }
 
-void IPTCCaption::readMetadata(QByteArray& iptcData)
+void IPTCContent::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
@@ -264,7 +264,7 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
     blockSignals(false);
 }
 
-void IPTCCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
+void IPTCContent::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);

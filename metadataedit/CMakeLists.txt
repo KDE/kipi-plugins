@@ -10,7 +10,7 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       exifdevice.cpp
                                       exiflight.cpp
                                       exifeditdialog.cpp
-                                      iptccaption.cpp
+                                      iptccontent.cpp
                                       iptcsubjects.cpp
                                       iptckeywords.cpp
                                       iptccategories.cpp
