@@ -57,27 +57,23 @@ public:
 
     IPTCCaptionPriv()
     {
+        headlineCheck           = 0;
         captionEdit             = 0;
         writerEdit              = 0;
         headlineEdit            = 0;
-        specialInstructionEdit  = 0;
         captionCheck            = 0;
-        specialInstructionCheck = 0;
-        headlineCheck           = 0;
         syncJFIFCommentCheck    = 0;
         syncHOSTCommentCheck    = 0;
         syncEXIFCommentCheck    = 0;
     }
 
     QCheckBox        *captionCheck;
-    QCheckBox        *specialInstructionCheck;
     QCheckBox        *headlineCheck;
     QCheckBox        *syncJFIFCommentCheck;
     QCheckBox        *syncHOSTCommentCheck;
     QCheckBox        *syncEXIFCommentCheck;
 
     KTextEdit        *captionEdit;
-    KTextEdit        *specialInstructionEdit;
 
     KLineEdit        *headlineEdit;
 
@@ -94,6 +90,16 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
     QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+
+    // --------------------------------------------------------
+
+    d->headlineCheck = new QCheckBox(i18n("Headline:"), this);
+    d->headlineEdit  = new KLineEdit(this);
+    d->headlineEdit->setClearButtonShown(true);
+    d->headlineEdit->setValidator(asciiValidator);
+    d->headlineEdit->setMaxLength(256);
+    d->headlineEdit->setWhatsThis(i18n("<p>Enter here the content synopsis. This field is limited "
+                                       "to 256 ASCII characters."));
     
     // --------------------------------------------------------
 
@@ -118,25 +124,6 @@ IPTCCaption::IPTCCaption(QWidget* parent)
         
     // --------------------------------------------------------
 
-    d->headlineCheck = new QCheckBox(i18n("Headline:"), this);
-    d->headlineEdit  = new KLineEdit(this);
-    d->headlineEdit->setClearButtonShown(true);
-    d->headlineEdit->setValidator(asciiValidator);
-    d->headlineEdit->setMaxLength(256);
-    d->headlineEdit->setWhatsThis(i18n("<p>Enter here the content synopsis. This field is limited "
-                                       "to 256 ASCII characters."));
-
-    // --------------------------------------------------------
-
-    d->specialInstructionCheck = new QCheckBox(i18n("Special Instructions:"), this);
-    d->specialInstructionEdit  = new KTextEdit(this);
-/*    d->specialInstructionEdit->setValidator(asciiValidator);
-    d->specialInstructionEdit->setMaxLength(256);*/
-    d->specialInstructionEdit->setWhatsThis(i18n("<p>Enter the editorial usage instructions. "
-                                                 "This field is limited to 256 ASCII characters."));
-
-    // --------------------------------------------------------
-
     QLabel *note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
@@ -148,20 +135,18 @@ IPTCCaption::IPTCCaption(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->captionCheck, 0, 0, 1, 3 );
-    grid->addWidget(d->captionEdit, 1, 0, 1, 3 );
-    grid->addWidget(d->syncJFIFCommentCheck, 2, 0, 1, 3);
-    grid->addWidget(d->syncHOSTCommentCheck, 3, 0, 1, 3);
-    grid->addWidget(d->syncEXIFCommentCheck, 4, 0, 1, 3);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 5, 0, 1, 3);
-    grid->addWidget(d->writerEdit, 6, 0, 1, 3);
-    grid->addWidget(d->headlineCheck, 7, 0, 1, 1);
-    grid->addWidget(d->headlineEdit, 7, 1, 1, 2);
-    grid->addWidget(d->specialInstructionCheck, 8, 0, 1, 3 );
-    grid->addWidget(d->specialInstructionEdit, 9, 0, 1, 3 );
-    grid->addWidget(note, 10, 0, 1, 3 );
+    grid->addWidget(d->headlineCheck, 0, 0, 1, 3);
+    grid->addWidget(d->headlineEdit, 1, 0, 1, 3);
+    grid->addWidget(d->captionCheck, 2, 0, 1, 3);
+    grid->addWidget(d->captionEdit, 3, 0, 1, 3);
+    grid->addWidget(d->syncJFIFCommentCheck, 4, 0, 1, 3);
+    grid->addWidget(d->syncHOSTCommentCheck, 5, 0, 1, 3);
+    grid->addWidget(d->syncEXIFCommentCheck, 6, 0, 1, 3);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 7, 0, 1, 3);
+    grid->addWidget(d->writerEdit, 8, 0, 1, 3);
+    grid->addWidget(note, 9, 0, 1, 3 );
     grid->setColumnStretch(2, 10);                     
-    grid->setRowStretch(11, 10);  
+    grid->setRowStretch(10, 10);  
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());    
 
@@ -181,9 +166,6 @@ IPTCCaption::IPTCCaption(QWidget* parent)
 
     connect(d->headlineCheck, SIGNAL(toggled(bool)),
             d->headlineEdit, SLOT(setEnabled(bool)));
-    
-    connect(d->specialInstructionCheck, SIGNAL(toggled(bool)),
-            d->specialInstructionEdit, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
 
@@ -196,17 +178,11 @@ IPTCCaption::IPTCCaption(QWidget* parent)
     connect(d->headlineCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
     
-    connect(d->specialInstructionCheck, SIGNAL(toggled(bool)),
-            this, SIGNAL(signalModified()));
-
     // --------------------------------------------------------
 
     connect(d->captionEdit, SIGNAL(textChanged()),
             this, SIGNAL(signalModified()));
     
-    connect(d->specialInstructionEdit, SIGNAL(textChanged()),
-            this, SIGNAL(signalModified()));
-
     connect(d->headlineEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 }
@@ -285,16 +261,6 @@ void IPTCCaption::readMetadata(QByteArray& iptcData)
     }
     d->headlineEdit->setEnabled(d->headlineCheck->isChecked());
 
-    d->specialInstructionEdit->clear();
-    d->specialInstructionCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.SpecialInstructions", false);    
-    if (!data.isNull())
-    {
-        d->specialInstructionEdit->setText(data);
-        d->specialInstructionCheck->setChecked(true);
-    }
-    d->specialInstructionEdit->setEnabled(d->specialInstructionCheck->isChecked());
-
     blockSignals(false);
 }
 
@@ -327,11 +293,6 @@ void IPTCCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
         exiv2Iface.setIptcTagString("Iptc.Application2.Headline", d->headlineEdit->text());
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Headline");
-
-    if (d->specialInstructionCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.SpecialInstructions", d->specialInstructionEdit->toPlainText());
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.SpecialInstructions");
 
     exifData = exiv2Iface.getExif();
     iptcData = exiv2Iface.getIptc();

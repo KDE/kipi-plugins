@@ -32,6 +32,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
+#include <ktextedit.h>
 
 // LibKExiv2 includes. 
 
@@ -54,29 +55,38 @@ public:
 
     IPTCStatusPriv()
     {
-        priorityCB          = 0;
-        objectCycleCB       = 0;
-        objectTypeCB        = 0;
-        statusEdit          = 0;
-        JobIDEdit           = 0;
-        priorityCheck       = 0;
-        objectCycleCheck    = 0;
-        objectTypeCheck     = 0;
-        statusCheck         = 0;
-        JobIDCheck          = 0;
+        priorityCB              = 0;
+        objectCycleCB           = 0;
+        objectTypeCB            = 0;
+        statusEdit              = 0;
+        JobIDEdit               = 0;
+        priorityCheck           = 0;
+        objectCycleCheck        = 0;
+        objectTypeCheck         = 0;
+        statusCheck             = 0;
+        JobIDCheck              = 0;
+        specialInstructionEdit  = 0;
+        specialInstructionCheck = 0;
+        objectNameEdit          = 0;
+        objectNameCheck         = 0;
     }
 
     QCheckBox                     *statusCheck;
     QCheckBox                     *JobIDCheck;
+    QCheckBox                     *specialInstructionCheck;
+    QCheckBox                     *objectNameCheck;
 
     QComboBox                     *priorityCB;
     QComboBox                     *objectCycleCB;
     QComboBox                     *objectTypeCB;
 
+    KLineEdit                     *objectNameEdit;
     KLineEdit                     *statusEdit;
     KLineEdit                     *objectTypeDescEdit;
     KLineEdit                     *objectAttributeDescEdit;
     KLineEdit                     *JobIDEdit;
+
+    KTextEdit                     *specialInstructionEdit;
 
     MetadataCheckBox              *priorityCheck;
     MetadataCheckBox              *objectCycleCheck;
@@ -99,13 +109,42 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
+    d->objectNameCheck = new QCheckBox(i18n("Title:"), this);
+    d->objectNameEdit  = new KLineEdit(this);
+    d->objectNameEdit->setClearButtonShown(true);
+    d->objectNameEdit->setValidator(asciiValidator);
+    d->objectNameEdit->setMaxLength(64);
+    d->objectNameEdit->setWhatsThis(i18n("<p>Set here the shorthand reference of content. "
+                                         "This field is limited to 64 ASCII characters."));
+
+    // --------------------------------------------------------
+
     d->statusCheck = new QCheckBox(i18n("Edit Status:"), this);
     d->statusEdit  = new KLineEdit(this);
     d->statusEdit->setClearButtonShown(true);
     d->statusEdit->setValidator(asciiValidator);
     d->statusEdit->setMaxLength(64);
-    d->statusEdit->setWhatsThis(i18n("<p>Set here the content status. This field is limited "
+    d->statusEdit->setWhatsThis(i18n("<p>Set here the title of content status. This field is limited "
                                      "to 64 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->JobIDCheck = new QCheckBox(i18n("Job Identifier:"), this);
+    d->JobIDEdit  = new KLineEdit(this);
+    d->JobIDEdit->setClearButtonShown(true);
+    d->JobIDEdit->setValidator(asciiValidator);
+    d->JobIDEdit->setMaxLength(32);
+    d->JobIDEdit->setWhatsThis(i18n("<p>Set here the string that identifies content that recurs. "
+                                    "This field is limited to 32 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->specialInstructionCheck = new QCheckBox(i18n("Special Instructions:"), this);
+    d->specialInstructionEdit  = new KTextEdit(this);
+/*    d->specialInstructionEdit->setValidator(asciiValidator);
+    d->specialInstructionEdit->setMaxLength(256);*/
+    d->specialInstructionEdit->setWhatsThis(i18n("<p>Enter the editorial usage instructions. "
+                                                 "This field is limited to 256 ASCII characters."));
 
     // --------------------------------------------------------
 
@@ -124,7 +163,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->objectCycleCheck = new MetadataCheckBox(i18n("Object Cycle:"), this);
+    d->objectCycleCheck = new MetadataCheckBox(i18n("Cycle:"), this);
     d->objectCycleCB    = new QComboBox(this);
     d->objectCycleCB->insertItem(0, i18n("Morning"));
     d->objectCycleCB->insertItem(1, i18n("Afternoon"));
@@ -133,7 +172,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
       
     // --------------------------------------------------------
 
-    d->objectTypeCheck    = new MetadataCheckBox(i18n("Object Type:"), this);
+    d->objectTypeCheck    = new MetadataCheckBox(i18n("Type:"), this);
     d->objectTypeCB       = new QComboBox(this);
     d->objectTypeDescEdit = new KLineEdit(this);
     d->objectTypeDescEdit->setClearButtonShown(true);
@@ -148,7 +187,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->objectAttributeCheck    = new MetadataCheckBox(i18n("Object Attribute:"), this);
+    d->objectAttributeCheck    = new MetadataCheckBox(i18n("Attribute:"), this);
     d->objectAttributeCB       = new KIPIPlugins::SqueezedComboBox(this);
     d->objectAttributeDescEdit = new KLineEdit(this);
     d->objectAttributeDescEdit->setClearButtonShown(true);
@@ -182,16 +221,6 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->JobIDCheck = new QCheckBox(i18n("Job Identification:"), this);
-    d->JobIDEdit  = new KLineEdit(this);
-    d->JobIDEdit->setClearButtonShown(true);
-    d->JobIDEdit->setValidator(asciiValidator);
-    d->JobIDEdit->setMaxLength(32);
-    d->JobIDEdit->setWhatsThis(i18n("<p>Set here the string that identifies content that recurs. "
-                                    "This field is limited to 32 ASCII characters."));
-
-    // --------------------------------------------------------
-
     QLabel *note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
@@ -203,27 +232,34 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->statusCheck, 0, 0, 1, 3 );
-    grid->addWidget(d->statusEdit, 1, 0, 1, 3 );
-    grid->addWidget(d->priorityCheck, 2, 0, 1, 1);
-    grid->addWidget(d->priorityCB, 2, 1, 1, 1);
-    grid->addWidget(d->objectCycleCheck, 3, 0, 1, 1);
-    grid->addWidget(d->objectCycleCB, 3, 1, 1, 1);
-    grid->addWidget(d->objectTypeCheck, 4, 0, 1, 1);
-    grid->addWidget(d->objectTypeCB, 4, 1, 1, 1);
-    grid->addWidget(d->objectTypeDescEdit, 5, 0, 1, 3 );
-    grid->addWidget(d->objectAttributeCheck, 6, 0, 1, 1);
-    grid->addWidget(d->objectAttributeCB, 6, 1, 1, 2);
-    grid->addWidget(d->objectAttributeDescEdit, 7, 0, 1, 3 );
-    grid->addWidget(d->JobIDCheck, 8, 0, 1, 3 );
-    grid->addWidget(d->JobIDEdit, 9, 0, 1, 3 );
-    grid->addWidget(note, 10, 0, 1, 3 );
+    grid->addWidget(d->objectNameCheck, 0, 0, 1, 1 );
+    grid->addWidget(d->objectNameEdit, 0, 1, 1, 2 );
+    grid->addWidget(d->statusCheck, 1, 0, 1, 1 );
+    grid->addWidget(d->statusEdit, 1, 1, 1, 2 );
+    grid->addWidget(d->JobIDCheck, 2, 0, 1, 1 );
+    grid->addWidget(d->JobIDEdit, 2, 1, 1, 2 );
+    grid->addWidget(d->specialInstructionCheck, 3, 0, 1, 3 );
+    grid->addWidget(d->specialInstructionEdit, 4, 0, 1, 3 );
+    grid->addWidget(d->priorityCheck, 5, 0, 1, 1);
+    grid->addWidget(d->priorityCB, 5, 1, 1, 1);
+    grid->addWidget(d->objectCycleCheck, 6, 0, 1, 1);
+    grid->addWidget(d->objectCycleCB, 6, 1, 1, 1);
+    grid->addWidget(d->objectTypeCheck, 7, 0, 1, 1);
+    grid->addWidget(d->objectTypeCB, 7, 1, 1, 1);
+    grid->addWidget(d->objectTypeDescEdit, 8, 0, 1, 3 );
+    grid->addWidget(d->objectAttributeCheck, 9, 0, 1, 1);
+    grid->addWidget(d->objectAttributeCB, 9, 1, 1, 2);
+    grid->addWidget(d->objectAttributeDescEdit, 10, 0, 1, 3 );
+    grid->addWidget(note, 11, 0, 1, 3 );
     grid->setColumnStretch(2, 10);                     
-    grid->setRowStretch(11, 10);                     
+    grid->setRowStretch(12, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
+
+    connect(d->objectNameCheck, SIGNAL(toggled(bool)),
+            d->objectNameEdit, SLOT(setEnabled(bool)));
 
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
             d->priorityCB, SLOT(setEnabled(bool)));
@@ -249,7 +285,13 @@ IPTCStatus::IPTCStatus(QWidget* parent)
     connect(d->JobIDCheck, SIGNAL(toggled(bool)),
             d->JobIDEdit, SLOT(setEnabled(bool)));
 
+    connect(d->specialInstructionCheck, SIGNAL(toggled(bool)),
+            d->specialInstructionEdit, SLOT(setEnabled(bool)));
+
     // --------------------------------------------------------
+
+    connect(d->objectNameCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
 
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
@@ -275,6 +317,9 @@ IPTCStatus::IPTCStatus(QWidget* parent)
     connect(d->JobIDCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
+    connect(d->specialInstructionCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
     // --------------------------------------------------------
 
     connect(d->priorityCB, SIGNAL(activated(int)),
@@ -289,6 +334,9 @@ IPTCStatus::IPTCStatus(QWidget* parent)
     connect(d->objectAttributeCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
 
+    connect(d->objectNameEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
     connect(d->statusEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 
@@ -299,6 +347,9 @@ IPTCStatus::IPTCStatus(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->JobIDEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->specialInstructionEdit, SIGNAL(textChanged()),
             this, SIGNAL(signalModified()));
 }
 
@@ -315,6 +366,16 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     QString data;
     int     val;
 
+    d->objectNameEdit->clear();
+    d->objectNameCheck->setChecked(false);
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectName", false);    
+    if (!data.isNull())
+    {
+        d->objectNameEdit->setText(data);
+        d->objectNameCheck->setChecked(true);
+    }
+    d->objectNameEdit->setEnabled(d->objectNameCheck->isChecked());
+
     d->statusEdit->clear();
     d->statusCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.EditStatus", false);    
@@ -324,6 +385,26 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
         d->statusCheck->setChecked(true);
     }
     d->statusEdit->setEnabled(d->statusCheck->isChecked());
+
+    d->JobIDEdit->clear();
+    d->JobIDCheck->setChecked(false);
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.FixtureId", false);    
+    if (!data.isNull())
+    {
+        d->JobIDEdit->setText(data);
+        d->JobIDCheck->setChecked(true);
+    }
+    d->JobIDEdit->setEnabled(d->JobIDCheck->isChecked());
+
+    d->specialInstructionEdit->clear();
+    d->specialInstructionCheck->setChecked(false);
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.SpecialInstructions", false);    
+    if (!data.isNull())
+    {
+        d->specialInstructionEdit->setText(data);
+        d->specialInstructionCheck->setChecked(true);
+    }
+    d->specialInstructionEdit->setEnabled(d->specialInstructionCheck->isChecked());
 
     d->priorityCB->setCurrentIndex(0);
     d->priorityCheck->setChecked(false);
@@ -412,16 +493,6 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     d->objectAttributeCB->setEnabled(d->objectAttributeCheck->isChecked());
     d->objectAttributeDescEdit->setEnabled(d->objectAttributeCheck->isChecked());
 
-    d->JobIDEdit->clear();
-    d->JobIDCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.FixtureId", false);    
-    if (!data.isNull())
-    {
-        d->JobIDEdit->setText(data);
-        d->JobIDCheck->setChecked(true);
-    }
-    d->JobIDEdit->setEnabled(d->JobIDCheck->isChecked());
-
     blockSignals(false);
 }
 
@@ -430,10 +501,25 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
+    if (d->objectNameCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.ObjectName", d->objectNameEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectName");
+
     if (d->statusCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Application2.EditStatus", d->statusEdit->text());
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.EditStatus");
+
+    if (d->JobIDCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.FixtureId", d->JobIDEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.FixtureId");
+
+    if (d->specialInstructionCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.SpecialInstructions", d->specialInstructionEdit->toPlainText());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.SpecialInstructions");
 
     if (d->priorityCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Application2.Urgency", QString::number(d->priorityCB->currentIndex()));
@@ -480,10 +566,6 @@ void IPTCStatus::applyMetadata(QByteArray& iptcData)
     else if (d->objectAttributeCheck->isValid())
         exiv2Iface.removeIptcTag("Iptc.Application2.ObjectAttribute");
 
-    if (d->JobIDCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.FixtureId", d->JobIDEdit->text());
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.FixtureId");
 
     exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 
