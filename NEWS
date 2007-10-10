@@ -7,6 +7,7 @@ RAWConverter   : XMP metadata support.
 TimeAdjust     : XMP metadata support. 
 MetadataEdit   : XMP metadata support with EXIF, IPTC, and Comments editor to sync XMP tags.
 MetadataEdit   : IPTC Editor dialog is more compliant with IPTC.org recommendations.
+MetadataEdit   : IPTC Editor add the capability to set multiple values for a tag.
 
 v 0.1.4 beta2
 ----------------------------------------------------------------------------
