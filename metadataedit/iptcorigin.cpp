@@ -415,13 +415,13 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->originalTransCheck = new QCheckBox(i18n("Original transmission reference:"), this);
+    d->originalTransCheck = new QCheckBox(i18n("Reference:"), this);
     d->originalTransEdit  = new KLineEdit(this);
     d->originalTransEdit->setClearButtonShown(true);
     d->originalTransEdit->setValidator(asciiValidator);
     d->originalTransEdit->setMaxLength(32);
-    d->originalTransEdit->setWhatsThis(i18n("<p>Set here the location of original content transmission. "
-                                            "This field is limited to 32 ASCII characters."));
+    d->originalTransEdit->setWhatsThis(i18n("<p>Set here the location of original content transmission "
+                                            "reference. This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
@@ -447,11 +447,11 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     grid->addWidget(d->countryCheck, 7, 0, 1, 1);
     grid->addWidget(d->countryCB, 7, 1, 1, 2);
     grid->addWidget(new KSeparator(Qt::Horizontal, this), 8, 0, 1, 3);
-    grid->addWidget(d->originalTransCheck, 9, 0, 1, 3 );
-    grid->addWidget(d->originalTransEdit, 10, 0, 1, 3 );
-    grid->addWidget(note, 11, 0, 1, 3 );
+    grid->addWidget(d->originalTransCheck, 9, 0, 1, 1);
+    grid->addWidget(d->originalTransEdit, 9, 1, 1, 2);
+    grid->addWidget(note, 10, 0, 1, 3);
     grid->setColumnStretch(2, 10);                     
-    grid->setRowStretch(12, 10);  
+    grid->setRowStretch(11, 10);  
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());                    
 

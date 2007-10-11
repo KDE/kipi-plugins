@@ -202,25 +202,25 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->objectNameCheck, 0, 0, 1, 1 );
-    grid->addWidget(d->objectNameEdit, 0, 1, 1, 2 );
-    grid->addWidget(d->statusCheck, 1, 0, 1, 1 );
-    grid->addWidget(d->statusEdit, 1, 1, 1, 2 );
-    grid->addWidget(d->JobIDCheck, 2, 0, 1, 1 );
-    grid->addWidget(d->JobIDEdit, 2, 1, 1, 2 );
-    grid->addWidget(d->specialInstructionCheck, 3, 0, 1, 3 );
-    grid->addWidget(d->specialInstructionEdit, 4, 0, 1, 3 );
+    grid->addWidget(d->objectNameCheck, 0, 0, 1, 1);
+    grid->addWidget(d->objectNameEdit, 0, 1, 1, 2);
+    grid->addWidget(d->statusCheck, 1, 0, 1, 1);
+    grid->addWidget(d->statusEdit, 1, 1, 1, 2);
+    grid->addWidget(d->JobIDCheck, 2, 0, 1, 1);
+    grid->addWidget(d->JobIDEdit, 2, 1, 1, 2);
+    grid->addWidget(d->specialInstructionCheck, 3, 0, 1, 3);
+    grid->addWidget(d->specialInstructionEdit, 4, 0, 1, 3);
     grid->addWidget(d->priorityCheck, 5, 0, 1, 1);
     grid->addWidget(d->priorityCB, 5, 1, 1, 1);
     grid->addWidget(d->objectCycleCheck, 6, 0, 1, 1);
     grid->addWidget(d->objectCycleCB, 6, 1, 1, 1);
     grid->addWidget(d->objectTypeCheck, 7, 0, 1, 1);
     grid->addWidget(d->objectTypeCB, 7, 1, 1, 1);
-    grid->addWidget(d->objectTypeDescEdit, 8, 0, 1, 3 );
-    grid->addWidget(d->objectAttribute, 9, 0, 1, 3);
-    grid->addWidget(note, 10, 0, 1, 3 );
+    grid->addWidget(d->objectTypeDescEdit, 7, 2, 1, 1);
+    grid->addWidget(d->objectAttribute, 8, 0, 1, 3);
+    grid->addWidget(note, 9, 0, 1, 3);
     grid->setColumnStretch(2, 10);                     
-    grid->setRowStretch(11, 10);                     
+    grid->setRowStretch(10, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
