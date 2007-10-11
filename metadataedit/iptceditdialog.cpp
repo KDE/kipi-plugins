@@ -181,13 +181,13 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
 
     d->keywordsPage  = new IPTCKeywords(this);
     d->page_keywords = addPage(d->keywordsPage, i18n("Keywords"));
-    d->page_keywords->setHeader(i18n("<qt>Keywords Informations<br>"
+    d->page_keywords->setHeader(i18n("<qt>Keywords Information<br>"
                       "<i>Use this panel to record keywords about the image</i></qt>"));
     d->page_keywords->setIcon(KIcon("bookmark"));
 
     d->categoriesPage  = new IPTCCategories(this);
     d->page_categories = addPage(d->categoriesPage, i18n("Categories"));
-    d->page_categories->setHeader(i18n("<qt>Categories Informations<br>"
+    d->page_categories->setHeader(i18n("<qt>Categories Information<br>"
                         "<i>Use this panel to record categories about the image</i></qt>"));
     d->page_categories->setIcon(KIcon("bookmark-folder"));
 
@@ -205,7 +205,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
 
     d->envelopePage  = new IPTCEnvelope(this);
     d->page_envelope = addPage(d->envelopePage, i18n("Envelope"));
-    d->page_envelope->setHeader(i18n("<qt>Envelope Informations<br>"
+    d->page_envelope->setHeader(i18n("<qt>Envelope Information<br>"
                       "<i>Use this panel to record editorial description</i></qt>"));
     d->page_envelope->setIcon(KIcon("mail"));
   

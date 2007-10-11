@@ -26,6 +26,7 @@
 #include <QLabel>
 #include <QValidator>
 #include <QCheckBox>
+#include <QComboBox>
 
 // KDE includes.
 
@@ -41,6 +42,7 @@
 // Local includes.
 
 #include "pluginsversion.h"
+#include "metadatacheckbox.h"
 #include "iptcenvelope.h"
 #include "iptcenvelope.moc"
 
@@ -61,18 +63,25 @@ public:
         productIDEdit    = 0;
         envelopeIDCheck  = 0;
         envelopeIDEdit   = 0;
+        priorityCB       = 0;
+        priorityCheck    = 0;
+
     }
 
-    QCheckBox *destinationCheck;
-    QCheckBox *serviceIDCheck;
-    QCheckBox *productIDCheck;
-    QCheckBox *envelopeIDCheck;
+    QComboBox        *priorityCB;
 
-    KLineEdit *envelopeIDEdit;
-    KLineEdit *serviceIDEdit;
-    KLineEdit *productIDEdit;
+    QCheckBox        *destinationCheck;
+    QCheckBox        *serviceIDCheck;
+    QCheckBox        *productIDCheck;
+    QCheckBox        *envelopeIDCheck;
 
-    KTextEdit *destinationEdit;
+    KLineEdit        *envelopeIDEdit;
+    KLineEdit        *serviceIDEdit;
+    KLineEdit        *productIDEdit;
+
+    KTextEdit        *destinationEdit;
+
+    MetadataCheckBox *priorityCheck;
 };
 
 IPTCEnvelope::IPTCEnvelope(QWidget* parent)
@@ -127,6 +136,21 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
 
     // --------------------------------------------------------
 
+    d->priorityCheck = new MetadataCheckBox(i18n("Priority:"), this);
+    d->priorityCB    = new QComboBox(this);
+    d->priorityCB->insertItem(0, i18n("0: None"));
+    d->priorityCB->insertItem(1, i18n("1: High"));
+    d->priorityCB->insertItem(2, "2");
+    d->priorityCB->insertItem(3, "3");
+    d->priorityCB->insertItem(4, "4");
+    d->priorityCB->insertItem(5, i18n("5: Normal"));
+    d->priorityCB->insertItem(6, "6");
+    d->priorityCB->insertItem(7, "7");
+    d->priorityCB->insertItem(8, i18n("8: Low"));
+    d->priorityCB->setWhatsThis(i18n("<p>Select here the envelope priority."));
+
+    // --------------------------------------------------------
+
     QLabel *note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
@@ -147,6 +171,8 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     grid->addWidget(d->serviceIDEdit, 3, 1, 1, 1);
     grid->addWidget(d->envelopeIDCheck, 4, 0, 1, 1);
     grid->addWidget(d->envelopeIDEdit, 4, 1, 1, 1);
+    grid->addWidget(d->priorityCheck, 5, 0, 1, 1);
+    grid->addWidget(d->priorityCB, 5, 1, 1, 1);
     grid->addWidget(note, 9, 0, 1, 3);
     grid->setColumnStretch(2, 10);                     
     grid->setRowStretch(10, 10);                     
@@ -167,6 +193,9 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     connect(d->productIDCheck, SIGNAL(toggled(bool)),
             d->productIDEdit, SLOT(setEnabled(bool)));
 
+    connect(d->priorityCheck, SIGNAL(toggled(bool)),
+            d->priorityCB, SLOT(setEnabled(bool)));
+
     // --------------------------------------------------------
 
     connect(d->envelopeIDCheck, SIGNAL(toggled(bool)),
@@ -179,6 +208,9 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->productIDCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->priorityCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------
@@ -194,6 +226,9 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
 
     connect(d->productIDEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
+
+    connect(d->priorityCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
 }
 
 IPTCEnvelope::~IPTCEnvelope()
@@ -207,6 +242,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
+    int         val;
     QString     data;
     QStringList list;
 
@@ -250,6 +286,23 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
     }
     d->productIDEdit->setEnabled(d->productIDCheck->isChecked());
 
+    d->priorityCB->setCurrentIndex(0);
+    d->priorityCheck->setChecked(false);
+    data = exiv2Iface.getIptcTagString("Iptc.Envelope.EnvelopePriority", false);    
+    if (!data.isNull())
+    {
+        val = data.toInt(); 
+        if (val >= 0 && val <= 8)
+        {
+            d->priorityCB->setCurrentIndex(val);
+            d->priorityCheck->setChecked(true);
+        }
+        else
+            d->priorityCheck->setValid(false);
+    }
+    d->priorityCB->setEnabled(d->priorityCheck->isChecked());
+
+
     blockSignals(false);
 }
 
@@ -277,6 +330,11 @@ void IPTCEnvelope::applyMetadata(QByteArray& iptcData)
         exiv2Iface.setIptcTagString("Iptc.Envelope.ProductId", d->productIDEdit->text());
     else
         exiv2Iface.removeIptcTag("Iptc.Envelope.ProductId");
+
+    if (d->priorityCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Envelope.EnvelopePriority", QString::number(d->priorityCB->currentIndex()));
+    else if (d->priorityCheck->isValid())
+        exiv2Iface.removeIptcTag("Iptc.Envelope.EnvelopePriority");
 
     exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 

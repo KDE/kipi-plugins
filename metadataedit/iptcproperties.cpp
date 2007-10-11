@@ -76,9 +76,9 @@ public:
         setTodayReleasedBtn = 0;
         setTodayExpiredBtn  = 0;
         priorityCB          = 0;
+        priorityCheck       = 0;
         objectCycleCB       = 0;
         objectTypeCB        = 0;
-        priorityCheck       = 0;
         objectCycleCheck    = 0;
         objectTypeCheck     = 0;
         objectAttribute     = 0;
