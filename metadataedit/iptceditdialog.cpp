@@ -58,8 +58,8 @@
 #include "iptccontent.h"
 #include "iptccredits.h"
 #include "iptcstatus.h"
+#include "iptcproperties.h"
 #include "iptcorigin.h"
-#include "iptcdatetime.h"
 #include "iptckeywords.h"
 #include "iptcsubjects.h"
 #include "iptccategories.h"
@@ -79,7 +79,7 @@ public:
         modified        = false;
         isReadOnly      = false;
         page_content    = 0;
-        page_datetime   = 0;
+        page_properties = 0;
         page_subjects   = 0;
         page_keywords   = 0;
         page_categories = 0;
@@ -88,7 +88,7 @@ public:
         page_origin     = 0;
         about           = 0;
         contentPage     = 0;
-        datetimePage    = 0;
+        propertiesPage  = 0;
         subjectsPage    = 0;
         keywordsPage    = 0;
         categoriesPage  = 0;
@@ -104,7 +104,7 @@ public:
     QByteArray                iptcData;
 
     KPageWidgetItem          *page_content;
-    KPageWidgetItem          *page_datetime;
+    KPageWidgetItem          *page_properties;
     KPageWidgetItem          *page_subjects;
     KPageWidgetItem          *page_keywords;
     KPageWidgetItem          *page_categories;
@@ -117,7 +117,7 @@ public:
     KUrl::List::iterator      currItem;
 
     IPTCContent              *contentPage;
-    IPTCDateTime             *datetimePage;
+    IPTCProperties           *propertiesPage;
     IPTCSubjects             *subjectsPage;
     IPTCKeywords             *keywordsPage;
     IPTCCategories           *categoriesPage;
@@ -156,12 +156,6 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
                      "<i>Use this panel to describe the visual content of the image</i></qt>"));
     d->page_content->setIcon(KIcon("edit-clear"));
 
-    d->datetimePage  = new IPTCDateTime(this);
-    d->page_datetime = addPage(d->datetimePage, i18n("Date & Time"));
-    d->page_datetime->setHeader(i18n("<qt>Date and Time<br>"
-                      "<i>Use this panel to record time stamps</i></qt>"));
-    d->page_datetime->setIcon(KIcon("1day"));
-
     d->subjectsPage  = new IPTCSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
     d->page_subjects->setHeader(i18n("<qt>Subjects Information<br>"
@@ -189,8 +183,14 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->statusPage  = new IPTCStatus(this);
     d->page_status = addPage(d->statusPage, i18n("Status"));
     d->page_status->setHeader(i18n("<qt>Status Information<br>"
-                    "<i>Use this panel to record workflow information</i></qt>"));
-    d->page_status->setIcon(KIcon("dialog-information"));
+                    "<i>Use this panel to record workflow description</i></qt>"));
+    d->page_status->setIcon(KIcon("kontact-todo"));
+
+    d->propertiesPage  = new IPTCProperties(this);
+    d->page_properties = addPage(d->propertiesPage, i18n("Properties"));
+    d->page_properties->setHeader(i18n("<qt>Status Properties<br>"
+                      "<i>Use this panel to record workflow properties</i></qt>"));
+    d->page_properties->setIcon(KIcon("document-properties"));
   
     d->originPage  = new IPTCOrigin(this);
     d->page_origin = addPage(d->originPage, i18n("Origin"));
@@ -227,7 +227,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     connect(d->contentPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
-    connect(d->datetimePage, SIGNAL(signalModified()),
+    connect(d->propertiesPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
     connect(d->subjectsPage, SIGNAL(signalModified()),
@@ -329,22 +329,22 @@ void IPTCEditDialog::slotItemChanged()
     d->exifData = exiv2Iface.getExif();
     d->iptcData = exiv2Iface.getIptc();
     d->contentPage->readMetadata(d->iptcData);
-    d->datetimePage->readMetadata(d->iptcData);
     d->subjectsPage->readMetadata(d->iptcData);
     d->keywordsPage->readMetadata(d->iptcData);
     d->categoriesPage->readMetadata(d->iptcData);
     d->creditsPage->readMetadata(d->iptcData);
     d->statusPage->readMetadata(d->iptcData);
+    d->propertiesPage->readMetadata(d->iptcData);
     d->originPage->readMetadata(d->iptcData);
 
     d->isReadOnly = KExiv2Iface::KExiv2::isReadOnly((*d->currItem).path()); 
     d->page_content->setEnabled(!d->isReadOnly);
-    d->page_datetime->setEnabled(!d->isReadOnly);
     d->page_subjects->setEnabled(!d->isReadOnly);
     d->page_keywords->setEnabled(!d->isReadOnly);
     d->page_categories->setEnabled(!d->isReadOnly);
     d->page_credits->setEnabled(!d->isReadOnly);
     d->page_status->setEnabled(!d->isReadOnly);
+    d->page_properties->setEnabled(!d->isReadOnly);
     d->page_origin->setEnabled(!d->isReadOnly);
     enableButton(Apply, !d->isReadOnly);
     
@@ -377,11 +377,11 @@ void IPTCEditDialog::slotApply()
         }
         d->originPage->applyMetadata(d->exifData, d->iptcData);
 
-        d->datetimePage->applyMetadata(d->iptcData);
         d->subjectsPage->applyMetadata(d->iptcData);
         d->keywordsPage->applyMetadata(d->iptcData);
         d->categoriesPage->applyMetadata(d->iptcData);
         d->creditsPage->applyMetadata(d->iptcData);
+        d->propertiesPage->applyMetadata(d->iptcData);
         d->statusPage->applyMetadata(d->iptcData);
 
         KExiv2Iface::KExiv2 exiv2Iface;
@@ -464,22 +464,22 @@ void IPTCEditDialog::showPage(int page)
             setCurrentPage(d->page_content); 
             break;
         case 1:
-            setCurrentPage(d->page_datetime); 
-            break;
-        case 2:
             setCurrentPage(d->page_subjects); 
             break;
-        case 3:
+        case 2:
             setCurrentPage(d->page_keywords); 
             break;
-        case 4:
+        case 3:
             setCurrentPage(d->page_categories); 
             break;
-        case 5:
+        case 4:
             setCurrentPage(d->page_credits); 
             break;
-        case 6:
+        case 5:
             setCurrentPage(d->page_status); 
+            break;
+        case 6:
+            setCurrentPage(d->page_properties); 
             break;
         case 7:
             setCurrentPage(d->page_origin); 
@@ -495,12 +495,12 @@ int IPTCEditDialog::activePageIndex()
     KPageWidgetItem *cur = currentPage();
 
     if (cur == d->page_content)    return 0;
-    if (cur == d->page_datetime)   return 1;
-    if (cur == d->page_subjects)   return 2;
-    if (cur == d->page_keywords)   return 3;
-    if (cur == d->page_categories) return 4;
-    if (cur == d->page_credits)    return 5;
-    if (cur == d->page_status)     return 6;
+    if (cur == d->page_subjects)   return 1;
+    if (cur == d->page_keywords)   return 2;
+    if (cur == d->page_categories) return 3;
+    if (cur == d->page_credits)    return 4;
+    if (cur == d->page_status)     return 5;
+    if (cur == d->page_properties) return 6;
     if (cur == d->page_origin)     return 7;
 
     return 0;

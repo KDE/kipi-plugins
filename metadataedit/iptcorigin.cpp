@@ -515,17 +515,14 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     grid->addWidget(d->dateDigitalizedSel, 1, 0, 1, 2);
     grid->addWidget(d->timeDigitalizedSel, 1, 2, 1, 1);
     grid->addWidget(d->setTodayDigitalizedBtn, 1, 4, 1, 1);
-
     grid->addWidget(d->dateCreatedCheck, 2, 0, 1, 2);
     grid->addWidget(d->timeCreatedCheck, 2, 2, 1, 2);
     grid->addWidget(d->dateCreatedSel, 3, 0, 1, 2);
     grid->addWidget(d->timeCreatedSel, 3, 2, 1, 1);
     grid->addWidget(d->setTodayCreatedBtn, 3, 4, 1, 1);
-
     grid->addWidget(d->syncHOSTDateCheck, 4, 0, 1, 5);
     grid->addWidget(d->syncEXIFDateCheck, 5, 0, 1, 5);
     grid->addWidget(d->locationEdit, 6, 0, 1, 5);
-
     grid->addWidget(new KSeparator(Qt::Horizontal, this), 7, 0, 1, 5);
     grid->addWidget(d->cityCheck, 8, 0, 1, 1);
     grid->addWidget(d->cityEdit, 8, 1, 1, 4);

@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2006-10-12
- * Description : IPTC date and time settings page.
+ * Date        : 2007-11-10
+ * Description : IPTC workflow status properties settings page.
  *
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,8 +20,8 @@
  * 
  * ============================================================ */
 
-#ifndef IPTC_DATETIME_H
-#define IPTC_DATETIME_H
+#ifndef IPTC_PROPERTIES_H
+#define IPTC_PROPERTIES_H
 
 // Qt includes.
 
@@ -31,16 +31,16 @@
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCDateTimePriv;
+class IPTCPropertiesPriv;
 
-class IPTCDateTime : public QWidget
+class IPTCProperties : public QWidget
 {
     Q_OBJECT
     
 public:
 
-    IPTCDateTime(QWidget* parent);
-    ~IPTCDateTime();
+    IPTCProperties(QWidget* parent);
+    ~IPTCProperties();
 
     void applyMetadata(QByteArray& iptcData);
     void readMetadata(QByteArray& iptcData);
@@ -56,9 +56,9 @@ private slots:
 
 private:
 
-    IPTCDateTimePriv* d;
+    IPTCPropertiesPriv* d;
 };
 
 }  // namespace KIPIMetadataEditPlugin
 
-#endif // IPTC_DATETIME_H 
+#endif // IPTC_PROPERTIES_H 
