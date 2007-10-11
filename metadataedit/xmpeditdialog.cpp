@@ -55,7 +55,7 @@
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "iptccontent.h"
+/*#include "iptccontent.h"
 #include "iptccredits.h"
 #include "iptcstatus.h"
 #include "iptcproperties.h"
@@ -63,7 +63,7 @@
 #include "iptckeywords.h"
 #include "iptcsubjects.h"
 #include "iptccategories.h"
-#include "iptcenvelope.h"
+#include "iptcenvelope.h"*/
 #include "xmpeditdialog.h"
 #include "xmpeditdialog.moc"
 
@@ -89,7 +89,7 @@ public:
         page_origin     = 0;
         page_envelope   = 0;
         about           = 0;
-        contentPage     = 0;
+/*        contentPage     = 0;
         propertiesPage  = 0;
         subjectsPage    = 0;
         keywordsPage    = 0;
@@ -97,14 +97,14 @@ public:
         creditsPage     = 0;
         statusPage      = 0;
         originPage      = 0;
-        envelopePage    = 0;
+        envelopePage    = 0;*/
     }
 
     bool                      modified;
     bool                      isReadOnly;
 
     QByteArray                exifData;
-    QByteArray                iptcData;
+    QByteArray                xmpData;
 
     KPageWidgetItem          *page_content;
     KPageWidgetItem          *page_properties;
@@ -120,15 +120,15 @@ public:
 
     KUrl::List::iterator      currItem;
 
-    IPTCContent              *contentPage;
-    IPTCProperties           *propertiesPage;
-    IPTCSubjects             *subjectsPage;
-    IPTCKeywords             *keywordsPage;
-    IPTCCategories           *categoriesPage;
-    IPTCCredits              *creditsPage;
-    IPTCStatus               *statusPage;
-    IPTCOrigin               *originPage;
-    IPTCEnvelope             *envelopePage;
+/*    XMPContent               *contentPage;
+    XMPProperties            *propertiesPage;
+    XMPSubjects              *subjectsPage;
+    XMPKeywords              *keywordsPage;
+    XMPCategories            *categoriesPage;
+    XMPCredits               *creditsPage;
+    XMPStatus                *statusPage;
+    XMPOrigin                *originPage;
+    XMPEnvelope              *envelopePage;*/
 
     KIPI::Interface          *interface;
 
@@ -155,60 +155,60 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
 
     // ---------------------------------------------------------------
 
-    d->contentPage   = new IPTCContent(this);
+/*    d->contentPage   = new XMPContent(this);
     d->page_content  = addPage(d->contentPage, i18n("Content"));
     d->page_content->setHeader(i18n("<qt>Content Information<br>"
                      "<i>Use this panel to describe the visual content of the image</i></qt>"));
     d->page_content->setIcon(KIcon("edit-clear"));
 
-    d->originPage  = new IPTCOrigin(this);
+    d->originPage  = new XMPOrigin(this);
     d->page_origin = addPage(d->originPage, i18n("Origin"));
     d->page_origin->setHeader(i18n("<qt>Origin Information<br>"
                     "<i>Use this panel for formal descriptive information about the image</i></qt>"));
     d->page_origin->setIcon(KIcon("network"));
 
-    d->creditsPage  = new IPTCCredits(this);
+    d->creditsPage  = new XMPCredits(this);
     d->page_credits = addPage(d->creditsPage, i18n("Credits"));
     d->page_credits->setHeader(i18n("<qt>Credits Information<br>"
                      "<i>Use this panel to record copyright information about the image</i></qt>"));
     d->page_credits->setIcon(KIcon("identity"));
 
-    d->subjectsPage  = new IPTCSubjects(this);
+    d->subjectsPage  = new XMPSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
     d->page_subjects->setHeader(i18n("<qt>Subjects Information<br>"
                       "<i>Use this panel to record subjects about the image</i></qt>"));
     d->page_subjects->setIcon(KIcon("note2"));
 
-    d->keywordsPage  = new IPTCKeywords(this);
+    d->keywordsPage  = new XMPKeywords(this);
     d->page_keywords = addPage(d->keywordsPage, i18n("Keywords"));
     d->page_keywords->setHeader(i18n("<qt>Keywords Information<br>"
                       "<i>Use this panel to record keywords about the image</i></qt>"));
     d->page_keywords->setIcon(KIcon("bookmark"));
 
-    d->categoriesPage  = new IPTCCategories(this);
+    d->categoriesPage  = new XMPCategories(this);
     d->page_categories = addPage(d->categoriesPage, i18n("Categories"));
     d->page_categories->setHeader(i18n("<qt>Categories Information<br>"
                         "<i>Use this panel to record categories about the image</i></qt>"));
     d->page_categories->setIcon(KIcon("bookmark-folder"));
 
-    d->statusPage  = new IPTCStatus(this);
+    d->statusPage  = new XMPStatus(this);
     d->page_status = addPage(d->statusPage, i18n("Status"));
     d->page_status->setHeader(i18n("<qt>Status Information<br>"
                     "<i>Use this panel to record workflow description</i></qt>"));
     d->page_status->setIcon(KIcon("kontact-todo"));
 
-    d->propertiesPage  = new IPTCProperties(this);
+    d->propertiesPage  = new XMPProperties(this);
     d->page_properties = addPage(d->propertiesPage, i18n("Properties"));
     d->page_properties->setHeader(i18n("<qt>Status Properties<br>"
                       "<i>Use this panel to record workflow properties</i></qt>"));
     d->page_properties->setIcon(KIcon("document-properties"));
 
-    d->envelopePage  = new IPTCEnvelope(this);
+    d->envelopePage  = new XMPEnvelope(this);
     d->page_envelope = addPage(d->envelopePage, i18n("Envelope"));
     d->page_envelope->setHeader(i18n("<qt>Envelope Information<br>"
                       "<i>Use this panel to record editorial description</i></qt>"));
     d->page_envelope->setIcon(KIcon("mail"));
-  
+*/  
     // ---------------------------------------------------------------
     // About data and help button.
 
@@ -234,7 +234,7 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
     helpButton->setDelayedMenu( helpMenu->menu() );
 
     // ------------------------------------------------------------
-
+/*
     connect(d->contentPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
@@ -261,7 +261,7 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
 
     connect(d->envelopePage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
-
+*/
     // ------------------------------------------------------------
 
     connect(this, SIGNAL(user1Clicked()),
@@ -313,13 +313,13 @@ void XMPEditDialog::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("Metadata Edit Settings");
-    showPage(group.readEntry("IPTC Edit Page", 0));
+/*    showPage(group.readEntry("XMP Edit Page", 0));
     d->contentPage->setCheckedSyncJFIFComment(group.readEntry("Sync JFIF Comment", true));
     d->contentPage->setCheckedSyncHOSTComment(group.readEntry("Sync Host Comment", true));
     d->contentPage->setCheckedSyncEXIFComment(group.readEntry("Sync EXIF Comment", true));
     d->originPage->setCheckedSyncHOSTDate(group.readEntry("Sync Host Date", true));
-    d->originPage->setCheckedSyncEXIFDate(group.readEntry("Sync EXIF Date", true));
-    KConfigGroup group2 = config.group(QString("IPTC Edit Dialog"));
+    d->originPage->setCheckedSyncEXIFDate(group.readEntry("Sync EXIF Date", true));*/
+    KConfigGroup group2 = config.group(QString("XMP Edit Dialog"));
     restoreDialogSize(group2);
 }
 
@@ -327,20 +327,20 @@ void XMPEditDialog::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("Metadata Edit Settings");
-    group.writeEntry("IPTC Edit Page", activePageIndex());
+/*    group.writeEntry("XMP Edit Page", activePageIndex());
     group.writeEntry("Sync JFIF Comment", d->contentPage->syncJFIFCommentIsChecked());
     group.writeEntry("Sync Host Comment", d->contentPage->syncHOSTCommentIsChecked());
     group.writeEntry("Sync EXIF Comment", d->contentPage->syncEXIFCommentIsChecked());
     group.writeEntry("Sync Host Date", d->originPage->syncHOSTDateIsChecked());
-    group.writeEntry("Sync EXIF Date", d->originPage->syncEXIFDateIsChecked());
-    KConfigGroup group2 = config.group(QString("IPTC Edit Dialog"));
+    group.writeEntry("Sync EXIF Date", d->originPage->syncEXIFDateIsChecked());*/
+    KConfigGroup group2 = config.group(QString("XMP Edit Dialog"));
     saveDialogSize(group2);
     config.sync();
 }
 
 void XMPEditDialog::slotItemChanged()
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+/*    KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.load((*d->currItem).path());
     d->exifData = exiv2Iface.getExif();
     d->iptcData = exiv2Iface.getIptc();
@@ -365,12 +365,12 @@ void XMPEditDialog::slotItemChanged()
     d->page_properties->setEnabled(!d->isReadOnly);
     d->page_envelope->setEnabled(!d->isReadOnly);
     enableButton(Apply, !d->isReadOnly);
-    
+*/    
     setCaption(QString("%1 (%2/%3) - %4")
                .arg((*d->currItem).fileName())
                .arg(d->urls.indexOf(*(d->currItem))+1)
                .arg(d->urls.count())
-               .arg(i18n("Edit IPTC Metadata")) + 
+               .arg(i18n("Edit XMP Metadata")) + 
                (d->isReadOnly ? QString(" - ") + i18n("(read only)") : QString::null));
     enableButton(User1, *(d->currItem) != d->urls.last());
     enableButton(User2, *(d->currItem) != d->urls.first());
@@ -379,19 +379,19 @@ void XMPEditDialog::slotItemChanged()
 
 void XMPEditDialog::slotApply()
 {
-    if (d->modified && !d->isReadOnly) 
+/*/    if (d->modified && !d->isReadOnly) 
     {
         KIPI::ImageInfo info = d->interface->info(*d->currItem);
 
         if (d->contentPage->syncHOSTCommentIsChecked())
         {
-            info.setDescription(d->contentPage->getIPTCCaption());
+            info.setDescription(d->contentPage->getXMPCaption());
         }
         d->contentPage->applyMetadata(d->exifData, d->iptcData);
 
         if (d->originPage->syncHOSTDateIsChecked())
         {
-            info.setTime(d->originPage->getIPTCCreationDate());
+            info.setTime(d->originPage->getXMPCreationDate());
         }
         d->originPage->applyMetadata(d->exifData, d->iptcData);
 
@@ -409,7 +409,7 @@ void XMPEditDialog::slotApply()
         exiv2Iface.setIptc(d->iptcData);
         exiv2Iface.save((*d->currItem).path());
         d->modified = false;
-    }
+    }*/
 }
 
 void XMPEditDialog::slotUser1()
@@ -477,7 +477,7 @@ bool XMPEditDialog::eventFilter(QObject *, QEvent *e)
 
 void XMPEditDialog::showPage(int page)
 {
-    switch(page)
+/*    switch(page)
     {
         case 0:
             setCurrentPage(d->page_content); 
@@ -509,12 +509,12 @@ void XMPEditDialog::showPage(int page)
         default: 
             setCurrentPage(d->page_content); 
             break;
-    }
+    }*/
 }
 
 int XMPEditDialog::activePageIndex()
 {
-    KPageWidgetItem *cur = currentPage();
+/*    KPageWidgetItem *cur = currentPage();
 
     if (cur == d->page_content)    return 0;
     if (cur == d->page_origin)     return 1;
@@ -524,7 +524,7 @@ int XMPEditDialog::activePageIndex()
     if (cur == d->page_categories) return 5;
     if (cur == d->page_status)     return 6;
     if (cur == d->page_properties) return 7;
-    if (cur == d->page_envelope)   return 8;
+    if (cur == d->page_envelope)   return 8;*/
 
     return 0;
 }
