@@ -156,6 +156,18 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
                      "<i>Use this panel to describe the visual content of the image</i></qt>"));
     d->page_content->setIcon(KIcon("edit-clear"));
 
+    d->originPage  = new IPTCOrigin(this);
+    d->page_origin = addPage(d->originPage, i18n("Origin"));
+    d->page_origin->setHeader(i18n("<qt>Origin Information<br>"
+                    "<i>Use this panel for formal descriptive information about the image</i></qt>"));
+    d->page_origin->setIcon(KIcon("network"));
+
+    d->creditsPage  = new IPTCCredits(this);
+    d->page_credits = addPage(d->creditsPage, i18n("Credits"));
+    d->page_credits->setHeader(i18n("<qt>Credits Information<br>"
+                     "<i>Use this panel to record copyright information about the image</i></qt>"));
+    d->page_credits->setIcon(KIcon("identity"));
+
     d->subjectsPage  = new IPTCSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
     d->page_subjects->setHeader(i18n("<qt>Subjects Information<br>"
@@ -174,12 +186,6 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
                         "<i>Use this panel to record categories about the image</i></qt>"));
     d->page_categories->setIcon(KIcon("bookmark-folder"));
 
-    d->creditsPage  = new IPTCCredits(this);
-    d->page_credits = addPage(d->creditsPage, i18n("Credits"));
-    d->page_credits->setHeader(i18n("<qt>Credits Information<br>"
-                     "<i>Use this panel to record copyright information</i></qt>"));
-    d->page_credits->setIcon(KIcon("identity"));
-
     d->statusPage  = new IPTCStatus(this);
     d->page_status = addPage(d->statusPage, i18n("Status"));
     d->page_status->setHeader(i18n("<qt>Status Information<br>"
@@ -192,12 +198,6 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
                       "<i>Use this panel to record workflow properties</i></qt>"));
     d->page_properties->setIcon(KIcon("document-properties"));
   
-    d->originPage  = new IPTCOrigin(this);
-    d->page_origin = addPage(d->originPage, i18n("Origin"));
-    d->page_origin->setHeader(i18n("<qt>Origin Information<br>"
-                    "<i>Use this panel for formal descriptive information about the image</i></qt>"));
-    d->page_origin->setIcon(KIcon("network"));
-
     // ---------------------------------------------------------------
     // About data and help button.
 
@@ -329,23 +329,23 @@ void IPTCEditDialog::slotItemChanged()
     d->exifData = exiv2Iface.getExif();
     d->iptcData = exiv2Iface.getIptc();
     d->contentPage->readMetadata(d->iptcData);
+    d->originPage->readMetadata(d->iptcData);
+    d->creditsPage->readMetadata(d->iptcData);
     d->subjectsPage->readMetadata(d->iptcData);
     d->keywordsPage->readMetadata(d->iptcData);
     d->categoriesPage->readMetadata(d->iptcData);
-    d->creditsPage->readMetadata(d->iptcData);
     d->statusPage->readMetadata(d->iptcData);
     d->propertiesPage->readMetadata(d->iptcData);
-    d->originPage->readMetadata(d->iptcData);
 
     d->isReadOnly = KExiv2Iface::KExiv2::isReadOnly((*d->currItem).path()); 
     d->page_content->setEnabled(!d->isReadOnly);
+    d->page_origin->setEnabled(!d->isReadOnly);
+    d->page_credits->setEnabled(!d->isReadOnly);
     d->page_subjects->setEnabled(!d->isReadOnly);
     d->page_keywords->setEnabled(!d->isReadOnly);
     d->page_categories->setEnabled(!d->isReadOnly);
-    d->page_credits->setEnabled(!d->isReadOnly);
     d->page_status->setEnabled(!d->isReadOnly);
     d->page_properties->setEnabled(!d->isReadOnly);
-    d->page_origin->setEnabled(!d->isReadOnly);
     enableButton(Apply, !d->isReadOnly);
     
     setCaption(QString("%1 (%2/%3) - %4")
@@ -377,12 +377,12 @@ void IPTCEditDialog::slotApply()
         }
         d->originPage->applyMetadata(d->exifData, d->iptcData);
 
+        d->creditsPage->applyMetadata(d->iptcData);
         d->subjectsPage->applyMetadata(d->iptcData);
         d->keywordsPage->applyMetadata(d->iptcData);
         d->categoriesPage->applyMetadata(d->iptcData);
-        d->creditsPage->applyMetadata(d->iptcData);
-        d->propertiesPage->applyMetadata(d->iptcData);
         d->statusPage->applyMetadata(d->iptcData);
+        d->propertiesPage->applyMetadata(d->iptcData);
 
         KExiv2Iface::KExiv2 exiv2Iface;
         exiv2Iface.load((*d->currItem).path());
@@ -464,25 +464,25 @@ void IPTCEditDialog::showPage(int page)
             setCurrentPage(d->page_content); 
             break;
         case 1:
-            setCurrentPage(d->page_subjects); 
+            setCurrentPage(d->page_origin); 
             break;
         case 2:
-            setCurrentPage(d->page_keywords); 
-            break;
-        case 3:
-            setCurrentPage(d->page_categories); 
-            break;
-        case 4:
             setCurrentPage(d->page_credits); 
             break;
+        case 3:
+            setCurrentPage(d->page_subjects); 
+            break;
+        case 4:
+            setCurrentPage(d->page_keywords); 
+            break;
         case 5:
-            setCurrentPage(d->page_status); 
+            setCurrentPage(d->page_categories); 
             break;
         case 6:
-            setCurrentPage(d->page_properties); 
+            setCurrentPage(d->page_status); 
             break;
         case 7:
-            setCurrentPage(d->page_origin); 
+            setCurrentPage(d->page_properties); 
             break;
         default: 
             setCurrentPage(d->page_content); 
@@ -495,13 +495,13 @@ int IPTCEditDialog::activePageIndex()
     KPageWidgetItem *cur = currentPage();
 
     if (cur == d->page_content)    return 0;
-    if (cur == d->page_subjects)   return 1;
-    if (cur == d->page_keywords)   return 2;
-    if (cur == d->page_categories) return 3;
-    if (cur == d->page_credits)    return 4;
-    if (cur == d->page_status)     return 5;
-    if (cur == d->page_properties) return 6;
-    if (cur == d->page_origin)     return 7;
+    if (cur == d->page_origin)     return 1;
+    if (cur == d->page_credits)    return 2;
+    if (cur == d->page_subjects)   return 3;
+    if (cur == d->page_keywords)   return 4;
+    if (cur == d->page_categories) return 5;
+    if (cur == d->page_status)     return 6;
+    if (cur == d->page_properties) return 7;
 
     return 0;
 }
