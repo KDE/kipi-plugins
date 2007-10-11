@@ -136,16 +136,16 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(d->categoryCheck, 0, 0, 1, 2 );
-    grid->addWidget(d->categoryEdit, 0, 1, 1, 1);
-    grid->addWidget(d->subCategoriesCheck, 1, 0, 1, 2 );
-    grid->addWidget(d->subCategoryEdit, 2, 0, 1, 1);
-    grid->addWidget(d->subCategoriesBox, 3, 0, 5, 1);
-    grid->addWidget(d->addSubCategoryButton, 3, 1, 1, 1);
-    grid->addWidget(d->delSubCategoryButton, 4, 1, 1, 1);
-    grid->addWidget(d->repSubCategoryButton, 5, 1, 1, 1);
-    grid->addWidget(note, 6, 1, 1, 1);
-    grid->setColumnStretch(0, 10);                     
+    grid->addWidget(d->categoryCheck, 0, 0, 1, 2);
+    grid->addWidget(d->categoryEdit, 0, 2, 1, 1);
+    grid->addWidget(d->subCategoriesCheck, 1, 0, 1, 3);
+    grid->addWidget(d->subCategoryEdit, 2, 0, 1, 3);
+    grid->addWidget(d->subCategoriesBox, 3, 0, 5, 3);
+    grid->addWidget(d->addSubCategoryButton, 3, 3, 1, 1);
+    grid->addWidget(d->delSubCategoryButton, 4, 3, 1, 1);
+    grid->addWidget(d->repSubCategoryButton, 5, 3, 1, 1);
+    grid->addWidget(note, 6, 3, 1, 1);
+    grid->setColumnStretch(1, 10);                     
     grid->setRowStretch(7, 10);    
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());      
