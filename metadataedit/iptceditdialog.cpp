@@ -63,6 +63,7 @@
 #include "iptckeywords.h"
 #include "iptcsubjects.h"
 #include "iptccategories.h"
+#include "iptcenvelope.h"
 #include "iptceditdialog.h"
 #include "iptceditdialog.moc"
 
@@ -86,6 +87,7 @@ public:
         page_credits    = 0;
         page_status     = 0;
         page_origin     = 0;
+        page_envelope   = 0;
         about           = 0;
         contentPage     = 0;
         propertiesPage  = 0;
@@ -95,6 +97,7 @@ public:
         creditsPage     = 0;
         statusPage      = 0;
         originPage      = 0;
+        envelopePage    = 0;
     }
 
     bool                      modified;
@@ -111,6 +114,7 @@ public:
     KPageWidgetItem          *page_credits;
     KPageWidgetItem          *page_status;
     KPageWidgetItem          *page_origin;
+    KPageWidgetItem          *page_envelope;
 
     KUrl::List                urls;
 
@@ -124,6 +128,7 @@ public:
     IPTCCredits              *creditsPage;
     IPTCStatus               *statusPage;
     IPTCOrigin               *originPage;
+    IPTCEnvelope             *envelopePage;
 
     KIPI::Interface          *interface;
 
@@ -197,6 +202,12 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->page_properties->setHeader(i18n("<qt>Status Properties<br>"
                       "<i>Use this panel to record workflow properties</i></qt>"));
     d->page_properties->setIcon(KIcon("document-properties"));
+
+    d->envelopePage  = new IPTCEnvelope(this);
+    d->page_envelope = addPage(d->envelopePage, i18n("Envelope"));
+    d->page_envelope->setHeader(i18n("<qt>Envelope Informations<br>"
+                      "<i>Use this panel to record editorial description</i></qt>"));
+    d->page_envelope->setIcon(KIcon("mail"));
   
     // ---------------------------------------------------------------
     // About data and help button.
@@ -247,6 +258,11 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
 
     connect(d->originPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
+
+    connect(d->envelopePage, SIGNAL(signalModified()),
+            this, SLOT(slotModified()));
+
+    // ------------------------------------------------------------
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotUser1()));
@@ -336,6 +352,7 @@ void IPTCEditDialog::slotItemChanged()
     d->categoriesPage->readMetadata(d->iptcData);
     d->statusPage->readMetadata(d->iptcData);
     d->propertiesPage->readMetadata(d->iptcData);
+    d->envelopePage->readMetadata(d->iptcData);
 
     d->isReadOnly = KExiv2Iface::KExiv2::isReadOnly((*d->currItem).path()); 
     d->page_content->setEnabled(!d->isReadOnly);
@@ -346,6 +363,7 @@ void IPTCEditDialog::slotItemChanged()
     d->page_categories->setEnabled(!d->isReadOnly);
     d->page_status->setEnabled(!d->isReadOnly);
     d->page_properties->setEnabled(!d->isReadOnly);
+    d->page_envelope->setEnabled(!d->isReadOnly);
     enableButton(Apply, !d->isReadOnly);
     
     setCaption(QString("%1 (%2/%3) - %4")
@@ -383,6 +401,7 @@ void IPTCEditDialog::slotApply()
         d->categoriesPage->applyMetadata(d->iptcData);
         d->statusPage->applyMetadata(d->iptcData);
         d->propertiesPage->applyMetadata(d->iptcData);
+        d->envelopePage->applyMetadata(d->iptcData);
 
         KExiv2Iface::KExiv2 exiv2Iface;
         exiv2Iface.load((*d->currItem).path());
@@ -484,6 +503,9 @@ void IPTCEditDialog::showPage(int page)
         case 7:
             setCurrentPage(d->page_properties); 
             break;
+        case 8:
+            setCurrentPage(d->page_envelope); 
+            break;
         default: 
             setCurrentPage(d->page_content); 
             break;
@@ -502,6 +524,7 @@ int IPTCEditDialog::activePageIndex()
     if (cur == d->page_categories) return 5;
     if (cur == d->page_status)     return 6;
     if (cur == d->page_properties) return 7;
+    if (cur == d->page_envelope)   return 8;
 
     return 0;
 }

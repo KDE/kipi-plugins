@@ -18,6 +18,7 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       iptcproperties.cpp
                                       iptcstatus.cpp
                                       iptcorigin.cpp
+                                      iptcenvelope.cpp
                                       iptceditdialog.cpp 
                                       commenteditdialog.cpp
                                       commentremovedialog.cpp
