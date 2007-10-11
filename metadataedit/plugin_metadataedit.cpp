@@ -47,6 +47,7 @@
 
 #include "exifeditdialog.h"
 #include "iptceditdialog.h"
+#include "xmpeditdialog.h"
 #include "commenteditdialog.h"
 #include "commentremovedialog.h"
 #include "plugin_metadataedit.h"
@@ -457,14 +458,24 @@ void Plugin_MetadataEdit::slotImportIptc()
 
 void Plugin_MetadataEdit::slotEditXmp()
 {
+    KIPI::ImageCollection images = m_interface->currentSelection();
+
+    if ( !images.isValid() || images.images().isEmpty() )
+        return;
+
+    KIPIMetadataEditPlugin::XMPEditDialog dialog(kapp->activeWindow(), images.images(), m_interface);
+    dialog.exec();
+    m_interface->refreshImages(images.images());
 }
 
 void Plugin_MetadataEdit::slotRemoveXmp()
 {
+// TODO
 }
 
 void Plugin_MetadataEdit::slotImportXmp()
 {
+// TODO 
 }
 
 void Plugin_MetadataEdit::slotEditComments()
