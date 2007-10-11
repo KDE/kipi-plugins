@@ -63,16 +63,16 @@ public:
         objectNameCheck         = 0;
     }
 
-    QCheckBox            *statusCheck;
-    QCheckBox            *JobIDCheck;
-    QCheckBox            *specialInstructionCheck;
-    QCheckBox            *objectNameCheck;
+    QCheckBox *statusCheck;
+    QCheckBox *JobIDCheck;
+    QCheckBox *specialInstructionCheck;
+    QCheckBox *objectNameCheck;
 
-    KLineEdit            *objectNameEdit;
-    KLineEdit            *statusEdit;
-    KLineEdit            *JobIDEdit;
+    KLineEdit *objectNameEdit;
+    KLineEdit *statusEdit;
+    KLineEdit *JobIDEdit;
 
-    KTextEdit            *specialInstructionEdit;
+    KTextEdit *specialInstructionEdit;
 };
 
 IPTCStatus::IPTCStatus(QWidget* parent)
