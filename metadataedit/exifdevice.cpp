@@ -161,6 +161,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
                  "wrong device manufacturer/model description.</b>"), this);
     warning->setOpenExternalLinks(true);
     warning->setWordWrap(true);
+    warning->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 
     KSeparator *line = new KSeparator(Qt::Horizontal, this);
 
@@ -315,6 +316,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
                  "characters set.</b>"), this);
     note->setOpenExternalLinks(true);
     note->setWordWrap(true);
+    note->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 
     // --------------------------------------------------------
 

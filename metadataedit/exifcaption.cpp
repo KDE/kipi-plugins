@@ -165,6 +165,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
                  "characters set.</b>"), this);
     note->setOpenExternalLinks(true);
     note->setWordWrap(true);
+    note->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 
     // --------------------------------------------------------
 
