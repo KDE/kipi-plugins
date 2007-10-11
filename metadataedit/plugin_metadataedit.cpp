@@ -87,6 +87,8 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
             this, SLOT(slotImportExif()));
     m_actionMetadataEdit->addAction(importEXIF);
 
+    // -----------------------------------------------------
+
     m_actionMetadataEdit->menu()->addSeparator();
 
     KAction *editIPTC = new KAction(i18n("Edit IPTC..."), actionCollection());
@@ -106,6 +108,30 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
     connect(importIPTC, SIGNAL(triggered(bool)), 
             this, SLOT(slotImportIptc()));
     m_actionMetadataEdit->addAction(importIPTC);
+
+    // -----------------------------------------------------
+
+    m_actionMetadataEdit->menu()->addSeparator();
+
+    KAction *editXMP = new KAction(i18n("Edit XMP..."), actionCollection());
+    editXMP->setObjectName("editxmp");
+    connect(editXMP, SIGNAL(triggered(bool)), 
+            this, SLOT(slotEditXmp()));
+    m_actionMetadataEdit->addAction(editXMP);
+
+    KAction *removeXMP = new KAction(i18n("Remove XMP..."), actionCollection());
+    removeXMP->setObjectName("removexmp");
+    connect(removeXMP, SIGNAL(triggered(bool)), 
+            this, SLOT(slotRemoveXmp()));
+    m_actionMetadataEdit->addAction(removeXMP);
+
+    KAction *importXMP = new KAction(i18n("Import XMP..."), actionCollection());
+    importXMP->setObjectName("importxmp");
+    connect(importXMP, SIGNAL(triggered(bool)), 
+            this, SLOT(slotImportXmp()));
+    m_actionMetadataEdit->addAction(importXMP);
+
+    // -----------------------------------------------------
 
     m_actionMetadataEdit->menu()->addSeparator();
 
@@ -427,6 +453,18 @@ void Plugin_MetadataEdit::slotImportIptc()
                     errorFiles,
                     i18n("Import IPTC Metadata"));  
     }
+}
+
+void Plugin_MetadataEdit::slotEditXmp()
+{
+}
+
+void Plugin_MetadataEdit::slotRemoveXmp()
+{
+}
+
+void Plugin_MetadataEdit::slotImportXmp()
+{
 }
 
 void Plugin_MetadataEdit::slotEditComments()

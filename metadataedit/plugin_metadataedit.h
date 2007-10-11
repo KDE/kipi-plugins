@@ -50,6 +50,10 @@ protected slots:
     void slotRemoveIptc();
     void slotImportIptc();
 
+    void slotEditXmp();
+    void slotRemoveXmp();
+    void slotImportXmp();
+
     void slotEditComments();
     void slotRemoveComments();
 
