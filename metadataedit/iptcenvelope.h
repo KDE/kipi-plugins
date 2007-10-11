@@ -49,6 +49,10 @@ signals:
 
     void signalModified();
 
+private slots:
+
+    void slotSetTodaySent();
+
 private:
 
     IPTCEnvelopePriv* d;

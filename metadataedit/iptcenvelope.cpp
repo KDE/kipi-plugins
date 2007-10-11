@@ -22,11 +22,14 @@
 
 // QT includes.
 
+#include <QDateTime>
+#include <QTimeEdit>
 #include <QLayout>
 #include <QLabel>
 #include <QValidator>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QPushButton>
 
 // KDE includes.
 
@@ -34,6 +37,8 @@
 #include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
+#include <kdatewidget.h>
+#include <kiconloader.h>
 
 // LibKExiv2 includes. 
 
@@ -65,8 +70,14 @@ public:
         envelopeIDEdit   = 0;
         priorityCB       = 0;
         priorityCheck    = 0;
-
+        dateSentSel      = 0;
+        timeSentSel      = 0;
+        dateSentCheck    = 0;
+        timeSentCheck    = 0;
+        setTodaySentBtn  = 0;
     }
+
+    QTimeEdit        *timeSentSel;
 
     QComboBox        *priorityCB;
 
@@ -74,10 +85,16 @@ public:
     QCheckBox        *serviceIDCheck;
     QCheckBox        *productIDCheck;
     QCheckBox        *envelopeIDCheck;
+    QCheckBox        *dateSentCheck;
+    QCheckBox        *timeSentCheck;
+
+    QPushButton      *setTodaySentBtn;
 
     KLineEdit        *envelopeIDEdit;
     KLineEdit        *serviceIDEdit;
     KLineEdit        *productIDEdit;
+
+    KDateWidget      *dateSentSel;
 
     KTextEdit        *destinationEdit;
 
@@ -151,6 +168,21 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
 
     // --------------------------------------------------------
 
+    d->dateSentCheck   = new QCheckBox(i18n("Sent date:"), this);
+    d->timeSentCheck   = new QCheckBox(i18n("Sent time:"), this);
+    d->dateSentSel     = new KDateWidget(this);
+    d->timeSentSel     = new QTimeEdit(this);
+
+    d->setTodaySentBtn = new QPushButton();
+    d->setTodaySentBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodaySentBtn->setWhatsThis(i18n("Set envelope sent date to today"));
+
+    d->dateSentSel->setWhatsThis(i18n("<p>Set here the date when the service sent the material."));
+    d->timeSentSel->setWhatsThis(i18n("<p>Set here the time when the service sent the material."));
+    slotSetTodaySent();
+
+    // --------------------------------------------------------
+
     QLabel *note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
@@ -163,19 +195,24 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->destinationCheck, 0, 0, 1, 3);
-    grid->addWidget(d->destinationEdit, 1, 0, 1, 3);
+    grid->addWidget(d->destinationCheck, 0, 0, 1, 5);
+    grid->addWidget(d->destinationEdit, 1, 0, 1, 5);
     grid->addWidget(d->productIDCheck, 2, 0, 1, 1);
-    grid->addWidget(d->productIDEdit, 2, 1, 1, 2);
+    grid->addWidget(d->productIDEdit, 2, 1, 1, 4);
     grid->addWidget(d->serviceIDCheck, 3, 0, 1, 1);
     grid->addWidget(d->serviceIDEdit, 3, 1, 1, 1);
     grid->addWidget(d->envelopeIDCheck, 4, 0, 1, 1);
     grid->addWidget(d->envelopeIDEdit, 4, 1, 1, 1);
     grid->addWidget(d->priorityCheck, 5, 0, 1, 1);
     grid->addWidget(d->priorityCB, 5, 1, 1, 1);
-    grid->addWidget(note, 9, 0, 1, 3);
-    grid->setColumnStretch(2, 10);                     
-    grid->setRowStretch(10, 10);                     
+    grid->addWidget(d->dateSentCheck, 6, 0, 1, 2);
+    grid->addWidget(d->timeSentCheck, 6, 2, 1, 2);
+    grid->addWidget(d->dateSentSel, 7, 0, 1, 2);
+    grid->addWidget(d->timeSentSel, 7, 2, 1, 1);
+    grid->addWidget(d->setTodaySentBtn, 7, 4, 1, 1);
+    grid->addWidget(note, 8, 0, 1, 5);
+    grid->setColumnStretch(3, 10);                     
+    grid->setRowStretch(9, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -196,6 +233,12 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
             d->priorityCB, SLOT(setEnabled(bool)));
 
+    connect(d->dateSentCheck, SIGNAL(toggled(bool)),
+            d->dateSentSel, SLOT(setEnabled(bool)));
+
+    connect(d->timeSentCheck, SIGNAL(toggled(bool)),
+            d->timeSentSel, SLOT(setEnabled(bool)));
+
     // --------------------------------------------------------
 
     connect(d->envelopeIDCheck, SIGNAL(toggled(bool)),
@@ -211,6 +254,12 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateSentCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeSentCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------
@@ -229,11 +278,28 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
 
     connect(d->priorityCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
+
+    connect(d->dateSentSel, SIGNAL(changed(const QDate&)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeSentSel, SIGNAL(timeChanged(const QTime &)),
+            this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->setTodaySentBtn, SIGNAL(clicked()),
+            this, SLOT(slotSetTodaySent()));
 }
 
 IPTCEnvelope::~IPTCEnvelope()
 {
     delete d;
+}
+
+void IPTCEnvelope::slotSetTodaySent()
+{
+    d->dateSentSel->setDate(QDate::currentDate());
+    d->timeSentSel->setTime(QTime::currentTime());
 }
 
 void IPTCEnvelope::readMetadata(QByteArray& iptcData)
@@ -245,6 +311,9 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
     int         val;
     QString     data;
     QStringList list;
+    QDate       date;
+    QTime       time;
+    QString     dateStr, timeStr;
 
     d->destinationEdit->clear();
     d->destinationCheck->setChecked(false);
@@ -302,6 +371,34 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
     }
     d->priorityCB->setEnabled(d->priorityCheck->isChecked());
 
+    dateStr = exiv2Iface.getIptcTagString("Iptc.Envelope.DateSent", false);
+    timeStr = exiv2Iface.getIptcTagString("Iptc.Envelope.TimeSent", false);
+
+    d->dateSentSel->setDate(QDate::currentDate());
+    d->dateSentCheck->setChecked(false);
+    if (!dateStr.isEmpty()) 
+    {
+        date = QDate::fromString(dateStr, Qt::ISODate);
+        if (date.isValid())
+        {
+            d->dateSentSel->setDate(date);
+            d->dateSentCheck->setChecked(true);
+        }
+    }    
+    d->dateSentSel->setEnabled(d->dateSentCheck->isChecked());
+
+    d->timeSentSel->setTime(QTime::currentTime());
+    d->timeSentCheck->setChecked(false);
+    if (!timeStr.isEmpty()) 
+    {
+        time = QTime::fromString(timeStr, Qt::ISODate);
+        if (time.isValid())
+        {
+            d->timeSentSel->setTime(time);
+            d->timeSentCheck->setChecked(true);
+        }
+    }    
+    d->timeSentSel->setEnabled(d->timeSentCheck->isChecked());
 
     blockSignals(false);
 }
@@ -335,6 +432,18 @@ void IPTCEnvelope::applyMetadata(QByteArray& iptcData)
         exiv2Iface.setIptcTagString("Iptc.Envelope.EnvelopePriority", QString::number(d->priorityCB->currentIndex()));
     else if (d->priorityCheck->isValid())
         exiv2Iface.removeIptcTag("Iptc.Envelope.EnvelopePriority");
+
+    if (d->dateSentCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Envelope.DateSent",
+                                    d->dateSentSel->date().toString(Qt::ISODate));
+    else
+        exiv2Iface.removeIptcTag("Iptc.Envelope.DateSent");
+
+    if (d->timeSentCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Envelope.TimeSent",
+                                    d->timeSentSel->time().toString(Qt::ISODate));
+    else
+        exiv2Iface.removeIptcTag("Iptc.Envelope.TimeSent");
 
     exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 

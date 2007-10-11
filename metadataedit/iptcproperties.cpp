@@ -23,11 +23,11 @@
 // QT includes.
 
 #include <QDateTime>
+#include <QTimeEdit>
 #include <QLayout>
 #include <QLabel>
 #include <QValidator>
 #include <QCheckBox>
-#include <QTimeEdit>
 #include <QPushButton>
 #include <QComboBox>
 
@@ -37,9 +37,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <kdatewidget.h>
-#include <kcomponentdata.h>
 #include <kglobal.h>
-#include <kaboutdata.h>
 #include <kseparator.h>
 #include <klineedit.h>
 
@@ -85,8 +83,8 @@ public:
     }
 
     QCheckBox            *dateReleasedCheck;
-    QCheckBox            *dateExpiredCheck;
     QCheckBox            *timeReleasedCheck;
+    QCheckBox            *dateExpiredCheck;
     QCheckBox            *timeExpiredCheck;
 
     QTimeEdit            *timeReleasedSel;
