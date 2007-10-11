@@ -60,6 +60,8 @@ public:
 
     IPTCEnvelopePriv()
     {
+        unoIDCheck       = 0;
+        unoIDEdit        = 0;
         destinationCheck = 0;
         destinationEdit  = 0;
         serviceIDCheck   = 0;
@@ -81,6 +83,7 @@ public:
 
     QComboBox        *priorityCB;
 
+    QCheckBox        *unoIDCheck;
     QCheckBox        *destinationCheck;
     QCheckBox        *serviceIDCheck;
     QCheckBox        *productIDCheck;
@@ -90,6 +93,7 @@ public:
 
     QPushButton      *setTodaySentBtn;
 
+    KLineEdit        *unoIDEdit;
     KLineEdit        *envelopeIDEdit;
     KLineEdit        *serviceIDEdit;
     KLineEdit        *productIDEdit;
@@ -120,6 +124,16 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     d->specialInstructionEdit->document()->setMaxLength;*/
     d->destinationEdit->setWhatsThis(i18n("<p>Enter the envelope destination. "
                                           "This field is limited to 1024 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->unoIDCheck = new QCheckBox(i18n("U.N.O ID:"), this);
+    d->unoIDEdit  = new KLineEdit(this);
+    d->unoIDEdit->setClearButtonShown(true);
+    d->unoIDEdit->setValidator(asciiValidator);
+    d->unoIDEdit->setMaxLength(80);
+    d->unoIDEdit->setWhatsThis(i18n("<p>Set here the Unique Name of Object identifier. "
+                                  "This field is limited to 80 ASCII characters."));
 
     // --------------------------------------------------------
 
@@ -197,22 +211,24 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
 
     grid->addWidget(d->destinationCheck, 0, 0, 1, 5);
     grid->addWidget(d->destinationEdit, 1, 0, 1, 5);
-    grid->addWidget(d->productIDCheck, 2, 0, 1, 1);
-    grid->addWidget(d->productIDEdit, 2, 1, 1, 4);
-    grid->addWidget(d->serviceIDCheck, 3, 0, 1, 1);
-    grid->addWidget(d->serviceIDEdit, 3, 1, 1, 1);
-    grid->addWidget(d->envelopeIDCheck, 4, 0, 1, 1);
-    grid->addWidget(d->envelopeIDEdit, 4, 1, 1, 1);
-    grid->addWidget(d->priorityCheck, 5, 0, 1, 1);
-    grid->addWidget(d->priorityCB, 5, 1, 1, 1);
-    grid->addWidget(d->dateSentCheck, 6, 0, 1, 2);
-    grid->addWidget(d->timeSentCheck, 6, 2, 1, 2);
-    grid->addWidget(d->dateSentSel, 7, 0, 1, 2);
-    grid->addWidget(d->timeSentSel, 7, 2, 1, 1);
-    grid->addWidget(d->setTodaySentBtn, 7, 4, 1, 1);
-    grid->addWidget(note, 8, 0, 1, 5);
+    grid->addWidget(d->unoIDCheck, 2, 0, 1, 1);
+    grid->addWidget(d->unoIDEdit, 2, 1, 1, 4);
+    grid->addWidget(d->productIDCheck, 3, 0, 1, 1);
+    grid->addWidget(d->productIDEdit, 3, 1, 1, 4);
+    grid->addWidget(d->serviceIDCheck, 4, 0, 1, 1);
+    grid->addWidget(d->serviceIDEdit, 4, 1, 1, 1);
+    grid->addWidget(d->envelopeIDCheck, 5, 0, 1, 1);
+    grid->addWidget(d->envelopeIDEdit, 5, 1, 1, 1);
+    grid->addWidget(d->priorityCheck, 6, 0, 1, 1);
+    grid->addWidget(d->priorityCB, 6, 1, 1, 1);
+    grid->addWidget(d->dateSentCheck, 7, 0, 1, 2);
+    grid->addWidget(d->timeSentCheck, 7, 2, 1, 2);
+    grid->addWidget(d->dateSentSel, 8, 0, 1, 2);
+    grid->addWidget(d->timeSentSel, 8, 2, 1, 1);
+    grid->addWidget(d->setTodaySentBtn, 8, 4, 1, 1);
+    grid->addWidget(note, 9, 0, 1, 5);
     grid->setColumnStretch(3, 10);                     
-    grid->setRowStretch(9, 10);                     
+    grid->setRowStretch(10, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -229,6 +245,9 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
 
     connect(d->productIDCheck, SIGNAL(toggled(bool)),
             d->productIDEdit, SLOT(setEnabled(bool)));
+
+    connect(d->unoIDCheck, SIGNAL(toggled(bool)),
+            d->unoIDEdit, SLOT(setEnabled(bool)));
 
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
             d->priorityCB, SLOT(setEnabled(bool)));
@@ -253,6 +272,9 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     connect(d->productIDCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
+    connect(d->unoIDCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
@@ -274,6 +296,9 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->productIDEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->unoIDEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 
     connect(d->priorityCB, SIGNAL(activated(int)),
@@ -344,6 +369,16 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
         d->serviceIDCheck->setChecked(true);
     }
     d->serviceIDEdit->setEnabled(d->serviceIDCheck->isChecked());
+
+    d->unoIDEdit->clear();
+    d->unoIDCheck->setChecked(false);
+    data = exiv2Iface.getIptcTagString("Iptc.Envelope.UNO", false);    
+    if (!data.isNull())
+    {
+        d->unoIDEdit->setText(data);
+        d->unoIDCheck->setChecked(true);
+    }
+    d->unoIDEdit->setEnabled(d->unoIDCheck->isChecked());
 
     d->productIDEdit->clear();
     d->productIDCheck->setChecked(false);
@@ -422,6 +457,11 @@ void IPTCEnvelope::applyMetadata(QByteArray& iptcData)
         exiv2Iface.setIptcTagString("Iptc.Envelope.ServiceId", d->serviceIDEdit->text());
     else
         exiv2Iface.removeIptcTag("Iptc.Envelope.ServiceId");
+
+    if (d->unoIDCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Envelope.UNO", d->unoIDEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Envelope.UNO");
 
     if (d->productIDCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Envelope.ProductId", d->productIDEdit->text());
