@@ -131,6 +131,7 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     note->setMaximumWidth(150);
     note->setOpenExternalLinks(true);
     note->setWordWrap(true);
+    note->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 
     // --------------------------------------------------------
 

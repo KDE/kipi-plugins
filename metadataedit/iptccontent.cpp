@@ -132,6 +132,7 @@ IPTCContent::IPTCContent(QWidget* parent)
                  "Use contextual help for details.</b>"), this);
     note->setOpenExternalLinks(true);
     note->setWordWrap(true);
+    note->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 
     // --------------------------------------------------------
 
