@@ -42,16 +42,8 @@ public:
     IPTCDateTime(QWidget* parent);
     ~IPTCDateTime();
 
-    void applyMetadata(QByteArray& exifData, QByteArray& iptcData);
+    void applyMetadata(QByteArray& iptcData);
     void readMetadata(QByteArray& iptcData);
-
-    bool syncHOSTDateIsChecked();
-    bool syncEXIFDateIsChecked();
-
-    void setCheckedSyncHOSTDate(bool c);
-    void setCheckedSyncEXIFDate(bool c);
-
-    QDateTime getIPTCCreationDate();
 
 signals:
 
@@ -59,10 +51,8 @@ signals:
 
 private slots:
 
-    void slotSetTodayCreated();
     void slotSetTodayReleased();
     void slotSetTodayExpired();
-    void slotSetTodayDigitalized();
 
 private:
 

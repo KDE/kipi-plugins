@@ -301,8 +301,8 @@ void IPTCEditDialog::readSettings()
     d->contentPage->setCheckedSyncJFIFComment(group.readEntry("Sync JFIF Comment", true));
     d->contentPage->setCheckedSyncHOSTComment(group.readEntry("Sync Host Comment", true));
     d->contentPage->setCheckedSyncEXIFComment(group.readEntry("Sync EXIF Comment", true));
-    d->datetimePage->setCheckedSyncHOSTDate(group.readEntry("Sync Host Date", true));
-    d->datetimePage->setCheckedSyncEXIFDate(group.readEntry("Sync EXIF Date", true));
+    d->originPage->setCheckedSyncHOSTDate(group.readEntry("Sync Host Date", true));
+    d->originPage->setCheckedSyncEXIFDate(group.readEntry("Sync EXIF Date", true));
     KConfigGroup group2 = config.group(QString("IPTC Edit Dialog"));
     restoreDialogSize(group2);
 }
@@ -315,8 +315,8 @@ void IPTCEditDialog::saveSettings()
     group.writeEntry("Sync JFIF Comment", d->contentPage->syncJFIFCommentIsChecked());
     group.writeEntry("Sync Host Comment", d->contentPage->syncHOSTCommentIsChecked());
     group.writeEntry("Sync EXIF Comment", d->contentPage->syncEXIFCommentIsChecked());
-    group.writeEntry("Sync Host Date", d->datetimePage->syncHOSTDateIsChecked());
-    group.writeEntry("Sync EXIF Date", d->datetimePage->syncEXIFDateIsChecked());
+    group.writeEntry("Sync Host Date", d->originPage->syncHOSTDateIsChecked());
+    group.writeEntry("Sync EXIF Date", d->originPage->syncEXIFDateIsChecked());
     KConfigGroup group2 = config.group(QString("IPTC Edit Dialog"));
     saveDialogSize(group2);
     config.sync();
@@ -371,18 +371,19 @@ void IPTCEditDialog::slotApply()
         }
         d->contentPage->applyMetadata(d->exifData, d->iptcData);
 
-        if (d->datetimePage->syncHOSTDateIsChecked())
+        if (d->originPage->syncHOSTDateIsChecked())
         {
-            info.setTime(d->datetimePage->getIPTCCreationDate());
+            info.setTime(d->originPage->getIPTCCreationDate());
         }
-        d->datetimePage->applyMetadata(d->exifData, d->iptcData);
+        d->originPage->applyMetadata(d->exifData, d->iptcData);
 
+        d->datetimePage->applyMetadata(d->iptcData);
         d->subjectsPage->applyMetadata(d->iptcData);
         d->keywordsPage->applyMetadata(d->iptcData);
         d->categoriesPage->applyMetadata(d->iptcData);
         d->creditsPage->applyMetadata(d->iptcData);
         d->statusPage->applyMetadata(d->iptcData);
-        d->originPage->applyMetadata(d->iptcData);
+
         KExiv2Iface::KExiv2 exiv2Iface;
         exiv2Iface.load((*d->currItem).path());
         exiv2Iface.setExif(d->exifData);

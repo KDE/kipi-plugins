@@ -25,6 +25,7 @@
 
 // Qt includes.
 
+#include <QDateTime>
 #include <QWidget>
 #include <QByteArray>
 
@@ -42,12 +43,25 @@ public:
     IPTCOrigin(QWidget* parent);
     ~IPTCOrigin();
 
-    void applyMetadata(QByteArray& iptcData);
+    void applyMetadata(QByteArray& exifData, QByteArray& iptcData);
     void readMetadata(QByteArray& iptcData);
+
+    bool syncHOSTDateIsChecked();
+    bool syncEXIFDateIsChecked();
+
+    void setCheckedSyncHOSTDate(bool c);
+    void setCheckedSyncEXIFDate(bool c);
+
+    QDateTime getIPTCCreationDate();
 
 signals:
 
     void signalModified();
+
+private slots:
+
+    void slotSetTodayCreated();
+    void slotSetTodayDigitalized();
 
 private:
 

@@ -59,57 +59,31 @@ public:
 
     IPTCDateTimePriv()
     {
-        dateCreatedSel         = 0;
         dateReleasedSel        = 0;
         dateExpiredSel         = 0;
-        dateDigitalizedSel     = 0;
-        timeCreatedSel         = 0;
         timeReleasedSel        = 0;
         timeExpiredSel         = 0;
-        timeDigitalizedSel     = 0;
-
-        dateCreatedCheck       = 0;
         dateReleasedCheck      = 0;
         dateExpiredCheck       = 0;
-        dateDigitalizedCheck   = 0;
-        timeCreatedCheck       = 0;
         timeReleasedCheck      = 0;
         timeExpiredCheck       = 0;
-        timeDigitalizedCheck   = 0;
-        syncHOSTDateCheck      = 0;
-        syncEXIFDateCheck      = 0;
-
-        setTodayCreatedBtn     = 0;
         setTodayReleasedBtn    = 0;
         setTodayExpiredBtn     = 0;
-        setTodayDigitalizedBtn = 0;
     }
 
-    QCheckBox   *dateCreatedCheck;
     QCheckBox   *dateReleasedCheck;
     QCheckBox   *dateExpiredCheck;
-    QCheckBox   *dateDigitalizedCheck;
-    QCheckBox   *timeCreatedCheck;
     QCheckBox   *timeReleasedCheck;
     QCheckBox   *timeExpiredCheck;
-    QCheckBox   *timeDigitalizedCheck;
-    QCheckBox   *syncHOSTDateCheck;
-    QCheckBox   *syncEXIFDateCheck;
 
-    QTimeEdit   *timeCreatedSel;
     QTimeEdit   *timeReleasedSel;
     QTimeEdit   *timeExpiredSel;
-    QTimeEdit   *timeDigitalizedSel;
 
-    QPushButton *setTodayCreatedBtn;
     QPushButton *setTodayReleasedBtn;
     QPushButton *setTodayExpiredBtn;
-    QPushButton *setTodayDigitalizedBtn;
 
-    KDateWidget *dateCreatedSel;
     KDateWidget *dateReleasedSel;
     KDateWidget *dateExpiredSel;
-    KDateWidget *dateDigitalizedSel;
 };
 
 IPTCDateTime::IPTCDateTime(QWidget* parent)
@@ -118,46 +92,6 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
     d = new IPTCDateTimePriv;
 
     QGridLayout* grid = new QGridLayout(this);
-
-    // --------------------------------------------------------
-
-    d->dateDigitalizedCheck   = new QCheckBox(i18n("Digitization date"), this);
-    d->timeDigitalizedCheck   = new QCheckBox(i18n("Digitization time"), this);
-    d->dateDigitalizedSel     = new KDateWidget(this);
-    d->timeDigitalizedSel     = new QTimeEdit(this);
-
-    d->setTodayDigitalizedBtn = new QPushButton();
-    d->setTodayDigitalizedBtn->setIcon(SmallIcon("calendar-today"));
-    d->setTodayDigitalizedBtn->setWhatsThis(i18n("Set digitization date to today"));
-
-    d->dateDigitalizedSel->setWhatsThis(i18n("<p>Set here the creation date of "
-                                             "digital representation."));
-    d->timeDigitalizedSel->setWhatsThis(i18n("<p>Set here the creation time of "
-                                             "digital representation."));
-
-    slotSetTodayDigitalized();
-
-    // --------------------------------------------------------
-
-    d->dateCreatedCheck   = new QCheckBox(i18n("Creation date"), this);
-    d->timeCreatedCheck   = new QCheckBox(i18n("Creation time"), this);
-    d->dateCreatedSel     = new KDateWidget(this);
-    d->timeCreatedSel     = new QTimeEdit(this);
-    d->syncHOSTDateCheck  = new QCheckBox(i18n("Sync creation date hosted by %1",
-                                               KGlobal::mainComponent().aboutData()->programName()), 
-                                               this);
-    d->syncEXIFDateCheck  = new QCheckBox(i18n("Sync EXIF creation date"), this);
-
-    d->setTodayCreatedBtn = new QPushButton();
-    d->setTodayCreatedBtn->setIcon(SmallIcon("calendar-today"));
-    d->setTodayCreatedBtn->setWhatsThis(i18n("Set creation date to today"));
-
-    d->dateCreatedSel->setWhatsThis(i18n("<p>Set here the creation date of "
-                                         "intellectual content."));
-    d->timeCreatedSel->setWhatsThis(i18n("<p>Set here the creation time of "
-                                         "intellectual content."));
-
-    slotSetTodayCreated();
 
     // --------------------------------------------------------
 
@@ -196,19 +130,6 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->dateDigitalizedCheck, 0, 0, 1, 1);
-    grid->addWidget(d->timeDigitalizedCheck, 0, 1, 1, 3);
-    grid->addWidget(d->dateDigitalizedSel, 1, 0, 1, 1);
-    grid->addWidget(d->timeDigitalizedSel, 1, 1, 1, 1);
-    grid->addWidget(d->setTodayDigitalizedBtn, 1, 3, 1, 1);
-    grid->addWidget(d->dateCreatedCheck, 2, 0, 1, 1);
-    grid->addWidget(d->timeCreatedCheck, 2, 1, 1, 3);
-    grid->addWidget(d->dateCreatedSel, 3, 0, 1, 1);
-    grid->addWidget(d->timeCreatedSel, 3, 1, 1, 1);
-    grid->addWidget(d->setTodayCreatedBtn, 3, 3, 1, 1);
-    grid->addWidget(d->syncHOSTDateCheck, 4, 0, 1, 3);
-    grid->addWidget(d->syncEXIFDateCheck, 5, 0, 1, 3);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 6, 0, 1, 4); 
     grid->addWidget(d->dateReleasedCheck, 7, 0, 1, 1);
     grid->addWidget(d->timeReleasedCheck, 7, 1, 1, 3);
     grid->addWidget(d->dateReleasedSel, 8, 0, 1, 1);
@@ -226,20 +147,11 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
-            d->dateCreatedSel, SLOT(setEnabled(bool)));
-
     connect(d->dateReleasedCheck, SIGNAL(toggled(bool)),
             d->dateReleasedSel, SLOT(setEnabled(bool)));
 
     connect(d->dateExpiredCheck, SIGNAL(toggled(bool)),
             d->dateExpiredSel, SLOT(setEnabled(bool)));
-
-    connect(d->dateDigitalizedCheck, SIGNAL(toggled(bool)),
-            d->dateDigitalizedSel, SLOT(setEnabled(bool)));
-
-    connect(d->timeCreatedCheck, SIGNAL(toggled(bool)),
-            d->timeCreatedSel, SLOT(setEnabled(bool)));
 
     connect(d->timeReleasedCheck, SIGNAL(toggled(bool)),
             d->timeReleasedSel, SLOT(setEnabled(bool)));
@@ -247,30 +159,12 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
     connect(d->timeExpiredCheck, SIGNAL(toggled(bool)),
             d->timeExpiredSel, SLOT(setEnabled(bool)));
 
-    connect(d->timeDigitalizedCheck, SIGNAL(toggled(bool)),
-            d->timeDigitalizedSel, SLOT(setEnabled(bool)));
-
-    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
-            d->syncHOSTDateCheck, SLOT(setEnabled(bool)));
-
-    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
-            d->syncEXIFDateCheck, SLOT(setEnabled(bool)));
-
     // --------------------------------------------------------
-
-    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
-            this, SIGNAL(signalModified()));
 
     connect(d->dateReleasedCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
     connect(d->dateExpiredCheck, SIGNAL(toggled(bool)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->dateDigitalizedCheck, SIGNAL(toggled(bool)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->timeCreatedCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
     connect(d->timeReleasedCheck, SIGNAL(toggled(bool)),
@@ -279,24 +173,12 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
     connect(d->timeExpiredCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeDigitalizedCheck, SIGNAL(toggled(bool)),
-            this, SIGNAL(signalModified()));
-
     // --------------------------------------------------------
-
-    connect(d->dateCreatedSel, SIGNAL(changed(const QDate&)),
-            this, SIGNAL(signalModified()));
 
     connect(d->dateReleasedSel, SIGNAL(changed(const QDate&)),
             this, SIGNAL(signalModified()));
 
     connect(d->dateExpiredSel, SIGNAL(changed(const QDate&)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->dateDigitalizedSel, SIGNAL(changed(const QDate&)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->timeCreatedSel, SIGNAL(timeChanged(const QTime &)),
             this, SIGNAL(signalModified()));
 
     connect(d->timeReleasedSel, SIGNAL(timeChanged(const QTime &)),
@@ -305,33 +187,18 @@ IPTCDateTime::IPTCDateTime(QWidget* parent)
     connect(d->timeExpiredSel, SIGNAL(timeChanged(const QTime &)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeDigitalizedSel, SIGNAL(timeChanged(const QTime &)),
-            this, SIGNAL(signalModified()));
-
     // --------------------------------------------------------
-
-    connect(d->setTodayCreatedBtn, SIGNAL(clicked()),
-            this, SLOT(slotSetTodayCreated()));
 
     connect(d->setTodayReleasedBtn, SIGNAL(clicked()),
             this, SLOT(slotSetTodayReleased()));
 
     connect(d->setTodayExpiredBtn, SIGNAL(clicked()),
             this, SLOT(slotSetTodayExpired()));
-
-    connect(d->setTodayDigitalizedBtn, SIGNAL(clicked()),
-            this, SLOT(slotSetTodayDigitalized()));
 }
 
 IPTCDateTime::~IPTCDateTime()
 {
     delete d;
-}
-
-void IPTCDateTime::slotSetTodayCreated()
-{
-    d->dateCreatedSel->setDate(QDate::currentDate());
-    d->timeCreatedSel->setTime(QTime::currentTime());
 }
 
 void IPTCDateTime::slotSetTodayReleased()
@@ -346,37 +213,6 @@ void IPTCDateTime::slotSetTodayExpired()
     d->timeExpiredSel->setTime(QTime::currentTime());
 }
 
-void IPTCDateTime::slotSetTodayDigitalized()
-{
-    d->dateDigitalizedSel->setDate(QDate::currentDate());
-    d->timeDigitalizedSel->setTime(QTime::currentTime());
-}
-
-bool IPTCDateTime::syncHOSTDateIsChecked()
-{
-    return d->syncHOSTDateCheck->isChecked();
-}
-
-bool IPTCDateTime::syncEXIFDateIsChecked()
-{
-    return d->syncEXIFDateCheck->isChecked();
-}
-
-void IPTCDateTime::setCheckedSyncHOSTDate(bool c)
-{
-    d->syncHOSTDateCheck->setChecked(c);
-}
-
-void IPTCDateTime::setCheckedSyncEXIFDate(bool c)
-{
-    d->syncEXIFDateCheck->setChecked(c);
-}
-
-QDateTime IPTCDateTime::getIPTCCreationDate()
-{
-    return QDateTime(d->dateCreatedSel->date(), d->timeCreatedSel->time());
-}
-
 void IPTCDateTime::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
@@ -386,37 +222,6 @@ void IPTCDateTime::readMetadata(QByteArray& iptcData)
     QDate date;
     QTime time;
     QString dateStr, timeStr;
-
-    dateStr = exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated", false);
-    timeStr = exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated", false);
-
-    d->dateCreatedSel->setDate(QDate::currentDate());
-    d->dateCreatedCheck->setChecked(false);
-    if (!dateStr.isEmpty()) 
-    {
-        date = QDate::fromString(dateStr, Qt::ISODate);
-        if (date.isValid())
-        {
-            d->dateCreatedSel->setDate(date);
-            d->dateCreatedCheck->setChecked(true);
-        }
-    }    
-    d->dateCreatedSel->setEnabled(d->dateCreatedCheck->isChecked());
-    d->syncHOSTDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
-    d->syncEXIFDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
-
-    d->timeCreatedSel->setTime(QTime::currentTime());
-    d->timeCreatedCheck->setChecked(false);
-    if (!timeStr.isEmpty()) 
-    {
-        time = QTime::fromString(timeStr, Qt::ISODate);
-        if (time.isValid())
-        {
-            d->timeCreatedSel->setTime(time);
-            d->timeCreatedCheck->setChecked(true);
-        }
-    }    
-    d->timeCreatedSel->setEnabled(d->timeCreatedCheck->isChecked());
 
     dateStr = exiv2Iface.getIptcTagString("Iptc.Application2.ReleaseDate", false);
     timeStr = exiv2Iface.getIptcTagString("Iptc.Application2.ReleaseTime", false);
@@ -475,57 +280,14 @@ void IPTCDateTime::readMetadata(QByteArray& iptcData)
         }
     }   
     d->timeExpiredSel->setEnabled(d->timeExpiredCheck->isChecked());
-
-    dateStr = exiv2Iface.getIptcTagString("Iptc.Application2.DigitizationDate", false);
-    timeStr = exiv2Iface.getIptcTagString("Iptc.Application2.DigitizationTime", false);
-
-    d->dateDigitalizedSel->setDate(QDate::currentDate());
-    d->dateDigitalizedCheck->setChecked(false);
-    if (!dateStr.isEmpty()) 
-    {
-        date = QDate::fromString(dateStr, Qt::ISODate);
-        if (date.isValid())
-        {
-            d->dateDigitalizedSel->setDate(date);
-            d->dateDigitalizedCheck->setChecked(true);
-        }
-    }    
-    d->dateDigitalizedSel->setEnabled(d->dateDigitalizedCheck->isChecked());
-
-    d->timeDigitalizedSel->setTime(QTime::currentTime());
-    d->timeDigitalizedCheck->setChecked(false);
-    if (!timeStr.isEmpty()) 
-    {
-        time = QTime::fromString(timeStr, Qt::ISODate);
-        if (time.isValid())
-        {
-            d->timeDigitalizedSel->setTime(time);
-            d->timeDigitalizedCheck->setChecked(true);
-        }
-    }   
-    d->timeDigitalizedSel->setEnabled(d->timeDigitalizedCheck->isChecked());
-
+    
     blockSignals(false);
 }
 
-void IPTCDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
+void IPTCDateTime::applyMetadata(QByteArray& iptcData)
 {
     KExiv2Iface::KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
-
-    if (d->dateCreatedCheck->isChecked())
-    {
-        exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
-                                    d->dateCreatedSel->date().toString(Qt::ISODate));
-        if (syncEXIFDateIsChecked())
-        {
-            exiv2Iface.setExifTagString("Exif.Image.DateTime",
-                    getIPTCCreationDate().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-        }
-    }
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.DateCreated");
 
     if (d->dateReleasedCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Application2.ReleaseDate",
@@ -539,18 +301,6 @@ void IPTCDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.ExpirationDate");
 
-    if (d->dateDigitalizedCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.DigitizationDate",
-                                    d->dateDigitalizedSel->date().toString(Qt::ISODate));
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.DigitizationDate");
-
-    if (d->timeCreatedCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.TimeCreated",
-                                    d->timeCreatedSel->time().toString(Qt::ISODate));
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.TimeCreated");
-
     if (d->timeReleasedCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Application2.ReleaseTime",
                                     d->timeReleasedSel->time().toString(Qt::ISODate));
@@ -563,13 +313,6 @@ void IPTCDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.ExpirationTime");
 
-    if (d->timeDigitalizedCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.DigitizationTime",
-                                    d->timeDigitalizedSel->time().toString(Qt::ISODate));
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.DigitizationTime");
-
-    exifData = exiv2Iface.getExif();
     iptcData = exiv2Iface.getIptc();
 }
 

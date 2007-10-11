@@ -27,12 +27,20 @@
 #include <QValidator>
 #include <QComboBox>
 #include <QMap>
+#include <QTimeEdit>
+#include <QPushButton>
+#include <QCheckBox>
 
 // KDE includes.
 
+#include <klineedit.h>
+#include <kiconloader.h>
 #include <klocale.h>
 #include <kdialog.h>
-#include <klineedit.h>
+#include <kdatewidget.h>
+#include <kcomponentdata.h>
+#include <kglobal.h>
+#include <kaboutdata.h>
 #include <kseparator.h>
 
 // LibKExiv2 includes. 
@@ -56,16 +64,28 @@ public:
 
     IPTCOriginPriv()
     {
-        cityEdit           = 0;
-        sublocationEdit    = 0;
-        provinceEdit       = 0;
-        locationEdit       = 0;
-        originalTransEdit  = 0;
-        cityCheck          = 0;
-        sublocationCheck   = 0;
-        provinceCheck      = 0;
-        countryCheck       = 0;
-        originalTransCheck = 0;
+        cityEdit               = 0;
+        sublocationEdit        = 0;
+        provinceEdit           = 0;
+        locationEdit           = 0;
+        originalTransEdit      = 0;
+        cityCheck              = 0;
+        sublocationCheck       = 0;
+        provinceCheck          = 0;
+        countryCheck           = 0;
+        originalTransCheck     = 0;
+        dateCreatedSel         = 0;
+        dateDigitalizedSel     = 0;
+        timeCreatedSel         = 0;
+        timeDigitalizedSel     = 0;
+        dateCreatedCheck       = 0;
+        dateDigitalizedCheck   = 0;
+        timeCreatedCheck       = 0;
+        timeDigitalizedCheck   = 0;
+        syncHOSTDateCheck      = 0;
+        syncEXIFDateCheck      = 0;
+        setTodayCreatedBtn     = 0;
+        setTodayDigitalizedBtn = 0;
 
         // Standard ISO 3166 country codes.
 
@@ -330,11 +350,25 @@ public:
 
     CountryCodeMap                 countryCodeMap;
 
-
+    QCheckBox                     *dateCreatedCheck;
+    QCheckBox                     *dateDigitalizedCheck;
+    QCheckBox                     *timeCreatedCheck;
+    QCheckBox                     *timeDigitalizedCheck;
+    QCheckBox                     *syncHOSTDateCheck;
+    QCheckBox                     *syncEXIFDateCheck;
     QCheckBox                     *cityCheck;
     QCheckBox                     *sublocationCheck;
     QCheckBox                     *provinceCheck;
     QCheckBox                     *originalTransCheck;
+
+    QTimeEdit                     *timeCreatedSel;
+    QTimeEdit                     *timeDigitalizedSel;
+
+    QPushButton                   *setTodayCreatedBtn;
+    QPushButton                   *setTodayDigitalizedBtn;
+
+    KDateWidget                   *dateCreatedSel;
+    KDateWidget                   *dateDigitalizedSel;
 
     KLineEdit                     *cityEdit;
     KLineEdit                     *sublocationEdit;
@@ -358,6 +392,46 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
     QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+
+    // --------------------------------------------------------
+
+    d->dateDigitalizedCheck   = new QCheckBox(i18n("Digitization date"), this);
+    d->timeDigitalizedCheck   = new QCheckBox(i18n("Digitization time"), this);
+    d->dateDigitalizedSel     = new KDateWidget(this);
+    d->timeDigitalizedSel     = new QTimeEdit(this);
+
+    d->setTodayDigitalizedBtn = new QPushButton();
+    d->setTodayDigitalizedBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayDigitalizedBtn->setWhatsThis(i18n("Set digitization date to today"));
+
+    d->dateDigitalizedSel->setWhatsThis(i18n("<p>Set here the creation date of "
+                                             "digital representation."));
+    d->timeDigitalizedSel->setWhatsThis(i18n("<p>Set here the creation time of "
+                                             "digital representation."));
+
+    slotSetTodayDigitalized();
+
+    // --------------------------------------------------------
+
+    d->dateCreatedCheck   = new QCheckBox(i18n("Creation date"), this);
+    d->timeCreatedCheck   = new QCheckBox(i18n("Creation time"), this);
+    d->dateCreatedSel     = new KDateWidget(this);
+    d->timeCreatedSel     = new QTimeEdit(this);
+    d->syncHOSTDateCheck  = new QCheckBox(i18n("Sync creation date hosted by %1",
+                                               KGlobal::mainComponent().aboutData()->programName()), 
+                                               this);
+    d->syncEXIFDateCheck  = new QCheckBox(i18n("Sync EXIF creation date"), this);
+
+    d->setTodayCreatedBtn = new QPushButton();
+    d->setTodayCreatedBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayCreatedBtn->setWhatsThis(i18n("Set creation date to today"));
+
+    d->dateCreatedSel->setWhatsThis(i18n("<p>Set here the creation date of "
+                                         "intellectual content."));
+    d->timeCreatedSel->setWhatsThis(i18n("<p>Set here the creation time of "
+                                         "intellectual content."));
+
+    slotSetTodayCreated();
 
     // --------------------------------------------------------
 
@@ -436,26 +510,59 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->locationEdit, 2, 0, 1, 3);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 3, 0, 1, 3);
-    grid->addWidget(d->cityCheck, 4, 0, 1, 1);
-    grid->addWidget(d->cityEdit, 4, 1, 1, 2);
-    grid->addWidget(d->sublocationCheck, 5, 0, 1, 1);
-    grid->addWidget(d->sublocationEdit, 5, 1, 1, 2);
-    grid->addWidget(d->provinceCheck, 6, 0, 1, 1);
-    grid->addWidget(d->provinceEdit, 6, 1, 1, 2);
-    grid->addWidget(d->countryCheck, 7, 0, 1, 1);
-    grid->addWidget(d->countryCB, 7, 1, 1, 2);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 8, 0, 1, 3);
-    grid->addWidget(d->originalTransCheck, 9, 0, 1, 1);
-    grid->addWidget(d->originalTransEdit, 9, 1, 1, 2);
-    grid->addWidget(note, 10, 0, 1, 3);
-    grid->setColumnStretch(2, 10);                     
-    grid->setRowStretch(11, 10);  
+    grid->addWidget(d->dateDigitalizedCheck, 0, 0, 1, 2);
+    grid->addWidget(d->timeDigitalizedCheck, 0, 2, 1, 2);
+    grid->addWidget(d->dateDigitalizedSel, 1, 0, 1, 2);
+    grid->addWidget(d->timeDigitalizedSel, 1, 2, 1, 1);
+    grid->addWidget(d->setTodayDigitalizedBtn, 1, 4, 1, 1);
+
+    grid->addWidget(d->dateCreatedCheck, 2, 0, 1, 2);
+    grid->addWidget(d->timeCreatedCheck, 2, 2, 1, 2);
+    grid->addWidget(d->dateCreatedSel, 3, 0, 1, 2);
+    grid->addWidget(d->timeCreatedSel, 3, 2, 1, 1);
+    grid->addWidget(d->setTodayCreatedBtn, 3, 4, 1, 1);
+
+    grid->addWidget(d->syncHOSTDateCheck, 4, 0, 1, 5);
+    grid->addWidget(d->syncEXIFDateCheck, 5, 0, 1, 5);
+    grid->addWidget(d->locationEdit, 6, 0, 1, 5);
+
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 7, 0, 1, 5);
+    grid->addWidget(d->cityCheck, 8, 0, 1, 1);
+    grid->addWidget(d->cityEdit, 8, 1, 1, 4);
+    grid->addWidget(d->sublocationCheck, 9, 0, 1, 1);
+    grid->addWidget(d->sublocationEdit, 9, 1, 1, 4);
+    grid->addWidget(d->provinceCheck, 10, 0, 1, 1);
+    grid->addWidget(d->provinceEdit, 10, 1, 1, 4);
+    grid->addWidget(d->countryCheck, 11, 0, 1, 1);
+    grid->addWidget(d->countryCB, 11, 1, 1, 4);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 12, 0, 1, 5);
+    grid->addWidget(d->originalTransCheck, 13, 0, 1, 1);
+    grid->addWidget(d->originalTransEdit, 13, 1, 1, 4);
+    grid->addWidget(note, 14, 0, 1, 5);
+    grid->setColumnStretch(3, 10);                     
+    grid->setRowStretch(15, 10);  
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());                    
 
     // --------------------------------------------------------
+
+    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
+            d->dateCreatedSel, SLOT(setEnabled(bool)));
+
+    connect(d->dateDigitalizedCheck, SIGNAL(toggled(bool)),
+            d->dateDigitalizedSel, SLOT(setEnabled(bool)));
+
+    connect(d->timeCreatedCheck, SIGNAL(toggled(bool)),
+            d->timeCreatedSel, SLOT(setEnabled(bool)));
+
+    connect(d->timeDigitalizedCheck, SIGNAL(toggled(bool)),
+            d->timeDigitalizedSel, SLOT(setEnabled(bool)));
+
+    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
+            d->syncHOSTDateCheck, SLOT(setEnabled(bool)));
+
+    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
+            d->syncEXIFDateCheck, SLOT(setEnabled(bool)));
 
     connect(d->cityCheck, SIGNAL(toggled(bool)),
             d->cityEdit, SLOT(setEnabled(bool)));
@@ -474,6 +581,18 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     // --------------------------------------------------------
 
+    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateDigitalizedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeCreatedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeDigitalizedCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
     connect(d->cityCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
@@ -491,6 +610,28 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     connect(d->originalTransCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->dateCreatedSel, SIGNAL(changed(const QDate&)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->dateDigitalizedSel, SIGNAL(changed(const QDate&)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeCreatedSel, SIGNAL(timeChanged(const QTime &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->timeDigitalizedSel, SIGNAL(timeChanged(const QTime &)),
+            this, SIGNAL(signalModified()));
+
+    // --------------------------------------------------------
+
+    connect(d->setTodayCreatedBtn, SIGNAL(clicked()),
+            this, SLOT(slotSetTodayCreated()));
+
+    connect(d->setTodayDigitalizedBtn, SIGNAL(clicked()),
+            this, SLOT(slotSetTodayDigitalized()));
 
     // --------------------------------------------------------
 
@@ -515,13 +656,115 @@ IPTCOrigin::~IPTCOrigin()
     delete d;
 }
 
+void IPTCOrigin::slotSetTodayCreated()
+{
+    d->dateCreatedSel->setDate(QDate::currentDate());
+    d->timeCreatedSel->setTime(QTime::currentTime());
+}
+
+void IPTCOrigin::slotSetTodayDigitalized()
+{
+    d->dateDigitalizedSel->setDate(QDate::currentDate());
+    d->timeDigitalizedSel->setTime(QTime::currentTime());
+}
+
+bool IPTCOrigin::syncHOSTDateIsChecked()
+{
+    return d->syncHOSTDateCheck->isChecked();
+}
+
+bool IPTCOrigin::syncEXIFDateIsChecked()
+{
+    return d->syncEXIFDateCheck->isChecked();
+}
+
+void IPTCOrigin::setCheckedSyncHOSTDate(bool c)
+{
+    d->syncHOSTDateCheck->setChecked(c);
+}
+
+void IPTCOrigin::setCheckedSyncEXIFDate(bool c)
+{
+    d->syncEXIFDateCheck->setChecked(c);
+}
+
+QDateTime IPTCOrigin::getIPTCCreationDate()
+{
+    return QDateTime(d->dateCreatedSel->date(), d->timeCreatedSel->time());
+}
+
 void IPTCOrigin::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
+ 
     QString     data;
     QStringList code, list;
+    QDate       date;
+    QTime       time;
+    QString     dateStr, timeStr;
+
+    dateStr = exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated", false);
+    timeStr = exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated", false);
+
+    d->dateCreatedSel->setDate(QDate::currentDate());
+    d->dateCreatedCheck->setChecked(false);
+    if (!dateStr.isEmpty()) 
+    {
+        date = QDate::fromString(dateStr, Qt::ISODate);
+        if (date.isValid())
+        {
+            d->dateCreatedSel->setDate(date);
+            d->dateCreatedCheck->setChecked(true);
+        }
+    }    
+    d->dateCreatedSel->setEnabled(d->dateCreatedCheck->isChecked());
+    d->syncHOSTDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
+    d->syncEXIFDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
+
+    d->timeCreatedSel->setTime(QTime::currentTime());
+    d->timeCreatedCheck->setChecked(false);
+    if (!timeStr.isEmpty()) 
+    {
+        time = QTime::fromString(timeStr, Qt::ISODate);
+        if (time.isValid())
+        {
+            d->timeCreatedSel->setTime(time);
+            d->timeCreatedCheck->setChecked(true);
+        }
+    }    
+    d->timeCreatedSel->setEnabled(d->timeCreatedCheck->isChecked());
+
+    dateStr = exiv2Iface.getIptcTagString("Iptc.Application2.DigitizationDate", false);
+    timeStr = exiv2Iface.getIptcTagString("Iptc.Application2.DigitizationTime", false);
+
+    d->dateDigitalizedSel->setDate(QDate::currentDate());
+    d->dateDigitalizedCheck->setChecked(false);
+    if (!dateStr.isEmpty()) 
+    {
+        date = QDate::fromString(dateStr, Qt::ISODate);
+        if (date.isValid())
+        {
+            d->dateDigitalizedSel->setDate(date);
+            d->dateDigitalizedCheck->setChecked(true);
+        }
+    }    
+    d->dateDigitalizedSel->setEnabled(d->dateDigitalizedCheck->isChecked());
+
+    d->timeDigitalizedSel->setTime(QTime::currentTime());
+    d->timeDigitalizedCheck->setChecked(false);
+    if (!timeStr.isEmpty()) 
+    {
+        time = QTime::fromString(timeStr, Qt::ISODate);
+        if (time.isValid())
+        {
+            d->timeDigitalizedSel->setTime(time);
+            d->timeDigitalizedCheck->setChecked(true);
+        }
+    }   
+    d->timeDigitalizedSel->setEnabled(d->timeDigitalizedCheck->isChecked());
+
 
     code = exiv2Iface.getIptcTagsStringList("Iptc.Application2.LocationCode", false);
     for (QStringList::Iterator it = code.begin(); it != code.end(); ++it)
@@ -604,10 +847,42 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     blockSignals(false);
 }
 
-void IPTCOrigin::applyMetadata(QByteArray& iptcData)
+void IPTCOrigin::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
     KExiv2Iface::KExiv2 exiv2Iface;
+    exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
+
+    if (d->dateCreatedCheck->isChecked())
+    {
+        exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
+                                    d->dateCreatedSel->date().toString(Qt::ISODate));
+        if (syncEXIFDateIsChecked())
+        {
+            exiv2Iface.setExifTagString("Exif.Image.DateTime",
+                    getIPTCCreationDate().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+        }
+    }
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.DateCreated");
+
+    if (d->dateDigitalizedCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.DigitizationDate",
+                                    d->dateDigitalizedSel->date().toString(Qt::ISODate));
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.DigitizationDate");
+
+    if (d->timeCreatedCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.TimeCreated",
+                                    d->timeCreatedSel->time().toString(Qt::ISODate));
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.TimeCreated");
+
+    if (d->timeDigitalizedCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.DigitizationTime",
+                                    d->timeDigitalizedSel->time().toString(Qt::ISODate));
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.DigitizationTime");
 
     QStringList oldList, newList;
     if (d->locationEdit->getValues(oldList, newList))
@@ -668,6 +943,7 @@ void IPTCOrigin::applyMetadata(QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.TransmissionReference");
 
+    exifData = exiv2Iface.getExif();
     iptcData = exiv2Iface.getIptc();
 }
 
