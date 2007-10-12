@@ -30,11 +30,13 @@
 #include <QCheckBox>
 #include <QPushButton>
 #include <QComboBox>
+#include <QtCore/QtDebug>
 
 // KDE includes.
 
 #include <kiconloader.h>
 #include <klocale.h>
+#include <klanguagebutton.h>
 #include <kdialog.h>
 #include <kdatewidget.h>
 #include <kglobal.h>
@@ -80,33 +82,38 @@ public:
         objectCycleCheck    = 0;
         objectTypeCheck     = 0;
         objectAttribute     = 0;
+        languageBtn         = 0;
+        languageCheck       = 0;
     }
 
-    QCheckBox            *dateReleasedCheck;
-    QCheckBox            *timeReleasedCheck;
-    QCheckBox            *dateExpiredCheck;
-    QCheckBox            *timeExpiredCheck;
+    QCheckBox                     *dateReleasedCheck;
+    QCheckBox                     *timeReleasedCheck;
+    QCheckBox                     *dateExpiredCheck;
+    QCheckBox                     *timeExpiredCheck;
 
-    QTimeEdit            *timeReleasedSel;
-    QTimeEdit            *timeExpiredSel;
+    QTimeEdit                     *timeReleasedSel;
+    QTimeEdit                     *timeExpiredSel;
 
-    QPushButton          *setTodayReleasedBtn;
-    QPushButton          *setTodayExpiredBtn;
+    QPushButton                   *setTodayReleasedBtn;
+    QPushButton                   *setTodayExpiredBtn;
 
-    QComboBox            *priorityCB;
-    QComboBox            *objectCycleCB;
-    QComboBox            *objectTypeCB;
+    QComboBox                     *priorityCB;
+    QComboBox                     *objectCycleCB;
+    QComboBox                     *objectTypeCB;
 
-    KLineEdit            *objectTypeDescEdit;
+    KLineEdit                     *objectTypeDescEdit;
 
-    KDateWidget          *dateReleasedSel;
-    KDateWidget          *dateExpiredSel;
+    KLanguageButton               *languageBtn;
 
-    MetadataCheckBox     *priorityCheck;
-    MetadataCheckBox     *objectCycleCheck;
-    MetadataCheckBox     *objectTypeCheck;
+    KDateWidget                   *dateReleasedSel;
+    KDateWidget                   *dateExpiredSel;
 
-    ObjectAttributesEdit *objectAttribute;
+    MetadataCheckBox              *priorityCheck;
+    MetadataCheckBox              *objectCycleCheck;
+    MetadataCheckBox              *objectTypeCheck;
+    MetadataCheckBox              *languageCheck;
+
+    ObjectAttributesEdit          *objectAttribute;
 };
 
 IPTCProperties::IPTCProperties(QWidget* parent)
@@ -154,6 +161,22 @@ IPTCProperties::IPTCProperties(QWidget* parent)
                                          "intellectual content."));
 
     slotSetTodayExpired();
+
+    // --------------------------------------------------------
+
+    d->languageCheck = new MetadataCheckBox(i18n("Language:"), this);
+    d->languageBtn   = new KLanguageButton(this);
+
+    QStringList list = KGlobal::locale()->allLanguagesList();
+    for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
+    {
+        // Only get all ISO 639 language code based on 2 characters
+        // http://xml.coverpages.org/iso639a.html
+        if ((*it).size() == 2 )
+            d->languageBtn->insertLanguage(*it);
+    }
+
+    d->languageBtn->setWhatsThis(i18n("<p>Select here the language of content."));
 
     // --------------------------------------------------------
 
@@ -223,18 +246,20 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     grid->addWidget(d->timeExpiredSel, 3, 2, 1, 1);
     grid->addWidget(d->setTodayExpiredBtn, 3, 4, 1, 1);
     grid->addWidget(new KSeparator(Qt::Horizontal, this), 4, 0, 1, 5);
-    grid->addWidget(d->priorityCheck, 5, 0, 1, 1);
-    grid->addWidget(d->priorityCB, 5, 1, 1, 1);
-    grid->addWidget(d->objectCycleCheck, 6, 0, 1, 1);
-    grid->addWidget(d->objectCycleCB, 6, 1, 1, 1);
-    grid->addWidget(d->objectTypeCheck, 7, 0, 1, 1);
-    grid->addWidget(d->objectTypeCB, 7, 1, 1, 1);
-    grid->addWidget(d->objectTypeDescEdit, 7, 2, 1, 3);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 8, 0, 1, 5);
-    grid->addWidget(d->objectAttribute, 9, 0, 1, 5);
-    grid->addWidget(note, 10, 0, 1, 5);
+    grid->addWidget(d->languageCheck, 5, 0, 1, 1);
+    grid->addWidget(d->languageBtn, 5, 1, 1, 1);
+    grid->addWidget(d->priorityCheck, 6, 0, 1, 1);
+    grid->addWidget(d->priorityCB, 6, 1, 1, 1);
+    grid->addWidget(d->objectCycleCheck, 7, 0, 1, 1);
+    grid->addWidget(d->objectCycleCB, 7, 1, 1, 1);
+    grid->addWidget(d->objectTypeCheck, 8, 0, 1, 1);
+    grid->addWidget(d->objectTypeCB, 8, 1, 1, 1);
+    grid->addWidget(d->objectTypeDescEdit, 8, 2, 1, 3);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 9, 0, 1, 5);
+    grid->addWidget(d->objectAttribute, 10, 0, 1, 5);
+    grid->addWidget(note, 11, 0, 1, 5);
     grid->setColumnStretch(3, 10);                     
-    grid->setRowStretch(11, 10);                     
+    grid->setRowStretch(12, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -251,6 +276,9 @@ IPTCProperties::IPTCProperties(QWidget* parent)
 
     connect(d->timeExpiredCheck, SIGNAL(toggled(bool)),
             d->timeExpiredSel, SLOT(setEnabled(bool)));
+
+    connect(d->languageCheck, SIGNAL(toggled(bool)),
+            d->languageBtn, SLOT(setEnabled(bool)));
 
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
             d->priorityCB, SLOT(setEnabled(bool)));
@@ -276,6 +304,9 @@ IPTCProperties::IPTCProperties(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->timeExpiredCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->languageCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
@@ -313,6 +344,9 @@ IPTCProperties::IPTCProperties(QWidget* parent)
             this, SLOT(slotSetTodayExpired()));
 
     // --------------------------------------------------------
+
+    connect(d->languageBtn, SIGNAL(activated(const QString&)),
+            this, SIGNAL(signalModified()));
 
     connect(d->priorityCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
@@ -415,6 +449,20 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
         }
     }   
     d->timeExpiredSel->setEnabled(d->timeExpiredCheck->isChecked());
+
+    d->languageCheck->setChecked(false);
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Language", false);    
+    if (!data.isNull())
+    {
+        if (d->languageBtn->contains(data))
+        {
+            d->languageBtn->setCurrentItem(data);
+            d->languageCheck->setChecked(true);
+        }
+        else
+            d->languageCheck->setValid(false);
+    }
+    d->languageBtn->setEnabled(d->languageCheck->isChecked());
     
     d->priorityCB->setCurrentIndex(0);
     d->priorityCheck->setChecked(false);
@@ -514,6 +562,11 @@ void IPTCProperties::applyMetadata(QByteArray& iptcData)
                                     d->timeExpiredSel->time().toString(Qt::ISODate));
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.ExpirationTime");
+
+    if (d->languageCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.Language", d->languageBtn->current());
+    else if (d->languageCheck->isValid())
+        exiv2Iface.removeIptcTag("Iptc.Application2.Language");
 
     if (d->priorityCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Application2.Urgency", QString::number(d->priorityCB->currentIndex()));
