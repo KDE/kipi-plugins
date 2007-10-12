@@ -47,6 +47,7 @@
 // Local includes.
 
 #include "pluginsversion.h"
+#include "squeezedcombobox.h"
 #include "metadatacheckbox.h"
 #include "iptcenvelope.h"
 #include "iptcenvelope.moc"
@@ -77,32 +78,81 @@ public:
         dateSentCheck    = 0;
         timeSentCheck    = 0;
         setTodaySentBtn  = 0;
+        formatCB         = 0;
+        formatCheck      = 0;
+
+        // Map : "file format - version"  ==> description
+                  
+        fileFormatMap.insert( "00-00", i18n("No ObjectData") );
+        fileFormatMap.insert( "01-01", i18n("IPTC-NAA Digital Newsphoto Parameter Record (version 1)") );
+        fileFormatMap.insert( "01-02", i18n("IPTC-NAA Digital Newsphoto Parameter Record (version 2)") );
+        fileFormatMap.insert( "01-03", i18n("IPTC-NAA Digital Newsphoto Parameter Record (version 3)") );
+        fileFormatMap.insert( "01-04", i18n("IPTC-NAA Digital Newsphoto Parameter Record (version 4)") );
+        fileFormatMap.insert( "02-04", i18n("IPTC7901 Recommended Message Format") );
+        fileFormatMap.insert( "03-01", i18n("Tagged Image File Format (version 5.0)") );
+        fileFormatMap.insert( "03-02", i18n("Tagged Image File Format (version 6.0)") );
+        fileFormatMap.insert( "04-01", i18n("Illustrator") );
+        fileFormatMap.insert( "05-01", i18n("AppleSingle") );
+        fileFormatMap.insert( "06-01", i18n("NAA 89-3 (ANPA 1312)") );
+        fileFormatMap.insert( "07-01", i18n("MacBinary II") );
+        fileFormatMap.insert( "08-01", i18n("IPTC Unstructured Character Oriented File Format") );
+        fileFormatMap.insert( "09-01", i18n("United Press International ANPA 1312 variant") );
+        fileFormatMap.insert( "10-01", i18n("United Press International Down-Load Message") );
+        fileFormatMap.insert( "11-01", i18n("JPEG File Interchange") );
+        fileFormatMap.insert( "12-01", i18n("Photo-CD Image-Pac") );
+        fileFormatMap.insert( "13-01", i18n("Microsoft Bit Mapped Graphics File [*.BMP]") );
+        fileFormatMap.insert( "14-01", i18n("Digital Audio File [*.WAV]") );
+        fileFormatMap.insert( "15-01", i18n("Audio plus Moving Video [*.AVI]") );
+        fileFormatMap.insert( "16-01", i18n("PC DOS/Windows Executable Files [*.COM][*.EXE]") );
+        fileFormatMap.insert( "17-01", i18n("Compressed Binary File [*.ZIP]") );
+        fileFormatMap.insert( "18-01", i18n("Audio Interchange File Format AIFF") );
+        fileFormatMap.insert( "19-01", i18n("RIFF Wave (Microsoft Corporation)") );
+        fileFormatMap.insert( "20-01", i18n("Freehand (version 3.1)") );
+        fileFormatMap.insert( "20-02", i18n("Freehand (version 4.0)") );
+        fileFormatMap.insert( "20-03", i18n("Freehand (version 5.0)") );
+        fileFormatMap.insert( "20-04", i18n("Freehand (version 5.5)") );
+        fileFormatMap.insert( "21-01", i18n("Hypertext Markup Language \"HTML\"") );
+        fileFormatMap.insert( "22-01", i18n("MPEG 2 Audio Layer 2 (Musicom), ISO/IEC") );
+        fileFormatMap.insert( "23-01", i18n("MPEG 2 Audio Layer 3, ISO/IEC") );
+        fileFormatMap.insert( "24-01", i18n("Portable Document File [*.PDF] Adobe") );
+        fileFormatMap.insert( "25-01", i18n("News Industry Text Format") );
+        fileFormatMap.insert( "26-01", i18n("Tape Archive [*.TAR]") );
+        fileFormatMap.insert( "27-01", i18n("Tidningarnas Telegrambyra NITF version (TTNITF DTD)") );
+        fileFormatMap.insert( "28-01", i18n("Ritzaus Bureau NITF version (RBNITF DTD)") );
+        fileFormatMap.insert( "29-01", i18n("Corel Draw [*.CDR]") );
     }
 
-    QTimeEdit        *timeSentSel;
+    typedef QMap<QString, QString> FileFormatMap; 
 
-    QComboBox        *priorityCB;
+    FileFormatMap                  fileFormatMap;
 
-    QCheckBox        *unoIDCheck;
-    QCheckBox        *destinationCheck;
-    QCheckBox        *serviceIDCheck;
-    QCheckBox        *productIDCheck;
-    QCheckBox        *envelopeIDCheck;
-    QCheckBox        *dateSentCheck;
-    QCheckBox        *timeSentCheck;
+    QTimeEdit                     *timeSentSel;
 
-    QPushButton      *setTodaySentBtn;
+    QComboBox                     *priorityCB;
 
-    KLineEdit        *unoIDEdit;
-    KLineEdit        *envelopeIDEdit;
-    KLineEdit        *serviceIDEdit;
-    KLineEdit        *productIDEdit;
+    QCheckBox                     *unoIDCheck;
+    QCheckBox                     *destinationCheck;
+    QCheckBox                     *serviceIDCheck;
+    QCheckBox                     *productIDCheck;
+    QCheckBox                     *envelopeIDCheck;
+    QCheckBox                     *dateSentCheck;
+    QCheckBox                     *timeSentCheck;
 
-    KDateWidget      *dateSentSel;
+    QPushButton                   *setTodaySentBtn;
 
-    KTextEdit        *destinationEdit;
+    KLineEdit                     *unoIDEdit;
+    KLineEdit                     *envelopeIDEdit;
+    KLineEdit                     *serviceIDEdit;
+    KLineEdit                     *productIDEdit;
 
-    MetadataCheckBox *priorityCheck;
+    KDateWidget                   *dateSentSel;
+
+    KTextEdit                     *destinationEdit;
+
+    MetadataCheckBox              *priorityCheck;
+    MetadataCheckBox              *formatCheck;
+
+    KIPIPlugins::SqueezedComboBox *formatCB;
 };
 
 IPTCEnvelope::IPTCEnvelope(QWidget* parent)
@@ -182,6 +232,22 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
 
     // --------------------------------------------------------
 
+    d->formatCheck = new MetadataCheckBox(i18n("Format:"), this);
+    d->formatCB    = new KIPIPlugins::SqueezedComboBox(this);
+
+    int index = 0;
+    for (IPTCEnvelopePriv::FileFormatMap::Iterator it = d->fileFormatMap.begin();
+         it != d->fileFormatMap.end(); ++it)
+    {
+        d->formatCB->insertSqueezedItem(it.value(), index);
+        index++;
+    }
+
+    d->formatCB->model()->sort(0);
+    d->formatCB->setWhatsThis(i18n("<p>Select here envelope file format."));
+
+    // --------------------------------------------------------
+
     d->dateSentCheck   = new QCheckBox(i18n("Sent date:"), this);
     d->timeSentCheck   = new QCheckBox(i18n("Sent time:"), this);
     d->dateSentSel     = new KDateWidget(this);
@@ -221,14 +287,16 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     grid->addWidget(d->envelopeIDEdit, 5, 1, 1, 1);
     grid->addWidget(d->priorityCheck, 6, 0, 1, 1);
     grid->addWidget(d->priorityCB, 6, 1, 1, 1);
-    grid->addWidget(d->dateSentCheck, 7, 0, 1, 2);
-    grid->addWidget(d->timeSentCheck, 7, 2, 1, 2);
-    grid->addWidget(d->dateSentSel, 8, 0, 1, 2);
-    grid->addWidget(d->timeSentSel, 8, 2, 1, 1);
-    grid->addWidget(d->setTodaySentBtn, 8, 4, 1, 1);
-    grid->addWidget(note, 9, 0, 1, 5);
+    grid->addWidget(d->formatCheck, 7, 0, 1, 1);
+    grid->addWidget(d->formatCB, 7, 1, 1, 4);
+    grid->addWidget(d->dateSentCheck, 8, 0, 1, 2);
+    grid->addWidget(d->timeSentCheck, 8, 2, 1, 2);
+    grid->addWidget(d->dateSentSel, 9, 0, 1, 2);
+    grid->addWidget(d->timeSentSel, 9, 2, 1, 1);
+    grid->addWidget(d->setTodaySentBtn, 9, 4, 1, 1);
+    grid->addWidget(note, 10, 0, 1, 5);
     grid->setColumnStretch(3, 10);                     
-    grid->setRowStretch(10, 10);                     
+    grid->setRowStretch(11, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -251,6 +319,9 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
 
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
             d->priorityCB, SLOT(setEnabled(bool)));
+
+    connect(d->formatCheck, SIGNAL(toggled(bool)),
+            d->formatCB, SLOT(setEnabled(bool)));
 
     connect(d->dateSentCheck, SIGNAL(toggled(bool)),
             d->dateSentSel, SLOT(setEnabled(bool)));
@@ -278,6 +349,9 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
+    connect(d->formatCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
     connect(d->dateSentCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
@@ -302,6 +376,9 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->priorityCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->formatCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
 
     connect(d->dateSentSel, SIGNAL(changed(const QDate&)),
@@ -334,7 +411,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
     exiv2Iface.setIptc(iptcData);
 
     int         val;
-    QString     data;
+    QString     data, format, version;
     QStringList list;
     QDate       date;
     QTime       time;
@@ -406,6 +483,38 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
     }
     d->priorityCB->setEnabled(d->priorityCheck->isChecked());
 
+    d->formatCB->setCurrentIndex(0);
+    d->formatCheck->setChecked(false);
+    format  = exiv2Iface.getIptcTagString("Iptc.Envelope.FileFormat", false);    
+    version = exiv2Iface.getIptcTagString("Iptc.Envelope.FileVersion", false);    
+    if (!format.isNull())
+    {
+        if (!version.isNull())
+        {
+            if (format.size() == 1) format.prepend("0");
+            if (version.size() == 1) version.prepend("0");
+            QString key = QString("%1-%2").arg(format).arg(version);
+            int index = -1, i = 0;
+            for (IPTCEnvelopePriv::FileFormatMap::Iterator it = d->fileFormatMap.begin();
+                 it != d->fileFormatMap.end(); ++it)
+            {
+                if (it.key() == key) index = i;
+                i++;
+            }
+            
+            if (index != -1)
+            {
+                d->formatCB->setCurrentIndex(index);
+                d->formatCheck->setChecked(true);
+            }
+            else
+                d->formatCheck->setValid(false);
+        }
+        else
+            d->formatCheck->setValid(false);
+    }
+    d->formatCB->setEnabled(d->formatCheck->isChecked());
+
     dateStr = exiv2Iface.getIptcTagString("Iptc.Envelope.DateSent", false);
     timeStr = exiv2Iface.getIptcTagString("Iptc.Envelope.TimeSent", false);
 
@@ -472,6 +581,29 @@ void IPTCEnvelope::applyMetadata(QByteArray& iptcData)
         exiv2Iface.setIptcTagString("Iptc.Envelope.EnvelopePriority", QString::number(d->priorityCB->currentIndex()));
     else if (d->priorityCheck->isValid())
         exiv2Iface.removeIptcTag("Iptc.Envelope.EnvelopePriority");
+
+    if (d->formatCheck->isChecked())
+    {
+        QString key;
+        int i = 0;
+        
+        for (IPTCEnvelopePriv::FileFormatMap::Iterator it = d->fileFormatMap.begin();
+             it != d->fileFormatMap.end(); ++it)
+        {
+            if (i == d->formatCB->currentIndex()) key = it.key();
+            i++;
+        }
+
+        QString format  = key.section('-', 0, 0);
+        QString version = key.section('-', -1);
+        exiv2Iface.setIptcTagString("Iptc.Envelope.FileFormat", format);
+        exiv2Iface.setIptcTagString("Iptc.Envelope.FileVersion", version);
+    }
+    else if (d->priorityCheck->isValid())
+    {
+        exiv2Iface.removeIptcTag("Iptc.Envelope.FileFormat");
+        exiv2Iface.removeIptcTag("Iptc.Envelope.FileVersion");
+    }
 
     if (d->dateSentCheck->isChecked())
         exiv2Iface.setIptcTagString("Iptc.Envelope.DateSent",
