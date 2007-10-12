@@ -87,6 +87,10 @@ public:
         setTodayCreatedBtn     = 0;
         setTodayDigitalizedBtn = 0;
 
+        // We cannot use KLocale::allCountriesList() here because KDE only 
+        // support 2 characters country codes. IPTC require 3 characters country 
+        // following ISO 3166 (http://userpage.chemie.fu-berlin.de/diverse/doc/ISO_3166.html)
+
         // Standard ISO 3166 country codes.
 
         countryCodeMap.insert( "AFG", i18n("Afghanistan") );
