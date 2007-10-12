@@ -185,7 +185,7 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     }
 
     // Processing error !
-    err = i18n("Cannot update metadata: %1").arg(m_stdErr.replace('\n', ' '));
+    err = i18n("Cannot update metadata: %1",m_stdErr.replace('\n', ' '));
     return false;
 }
 

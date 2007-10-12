@@ -208,7 +208,7 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
     }
 
     // Processing error !
-    err = i18n("Cannot flip: %1").arg(m_stdErr.replace('\n', ' '));
+    err = i18n("Cannot flip: %1",m_stdErr.replace('\n', ' '));
     return false;
 }
 

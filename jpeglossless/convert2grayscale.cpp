@@ -253,7 +253,7 @@ bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QStrin
     }
 
     // Processing error !
-    err = i18n("Cannot convert to gray scale: %1").arg(m_stdErr.replace('\n', ' '));
+    err = i18n("Cannot convert to gray scale: %1",m_stdErr.replace('\n', ' '));
     return false;
 }
 

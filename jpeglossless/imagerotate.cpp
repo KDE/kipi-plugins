@@ -229,7 +229,7 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
     }
 
     // Processing error !
-    err = i18n("Cannot rotate: %1").arg(m_stdErr.replace('\n', ' '));
+    err = i18n("Cannot rotate: %1",m_stdErr.replace('\n', ' '));
     return false;
 }
 
