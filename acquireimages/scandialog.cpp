@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -47,7 +47,7 @@
 
 // LibKSane includes.
 
-#include <libksane/sane_widget.h>
+#include <libksane/ksane.h>
 
 // LibKipi includes.
 
@@ -82,14 +82,14 @@ public:
     KSaneIface::SaneWidget   *saneWidget;
 };
 
-ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneWidget, 
+ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneWidget,
                        QWidget *parent)
           : KDialog(parent)
 {
     d = new ScanDialogPriv;
     d->saneWidget = saneWidget;
     d->interface  = interface;
-    
+
     setButtons(Help|Close);
     setCaption(i18n("Scan Image"));
     setModal(true);
@@ -105,15 +105,15 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneW
                    ki18n("A Kipi plugin to acquire images using a flat bed scanner"),
                    ki18n("(c) 2003-2007, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Gilles Caulier"), 
+    d->about->addAuthor(ki18n("Gilles Caulier"),
                         ki18n("Author"),
                         "caulier dot gilles at gmail dot com");
 
-    d->about->addAuthor(ki18n("Angelo Naselli"), 
+    d->about->addAuthor(ki18n("Angelo Naselli"),
                         ki18n("Developper"),
                         "anaselli at linux dot it");
 
-    d->about->addAuthor(ki18n("Kare Sars"), 
+    d->about->addAuthor(ki18n("Kare Sars"),
                         ki18n("Developper"),
                         "kare dot sars at kolumbus dot fi");
 
@@ -132,10 +132,10 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneW
 
     // ------------------------------------------------------------------------
 
-    connect(this, SIGNAL(closeClicked()), 
+    connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
 
-    connect(d->saneWidget, SIGNAL(imageReady()), 
+    connect(d->saneWidget, SIGNAL(imageReady()),
             this, SLOT(slotSaveImage()));
 }
 
@@ -281,7 +281,7 @@ void ScanDialog::slotSaveImage()
     QImage thumb = img.scaled(160, 120, Qt::KeepAspectRatio);
     QByteArray data((const char*)img.bits(), img.numBytes());
     QByteArray prof = KIPIPlugins::KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::SRGB);
-    KExiv2Iface::KExiv2 meta;    
+    KExiv2Iface::KExiv2 meta;
     meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
     meta.setImageDimensions(img.size());
     meta.setImagePreview(prev);
@@ -313,8 +313,8 @@ void ScanDialog::slotSaveImage()
     else
     {
         img.save(newURL.path(), format.toAscii().data());
-    }    
-    
+    }
+
     d->interface->refreshImages( KUrl::List(newURL) );
     kapp->restoreOverrideCursor();
 }

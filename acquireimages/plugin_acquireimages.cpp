@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // KDE includes.
@@ -34,7 +34,7 @@
 
 // LibKSane includes.
 
-#include <libksane/sane_widget.h>
+#include <libksane/ksane.h>
 
 // LibKIPI includes.
 
@@ -61,7 +61,7 @@ void Plugin_AcquireImages::setup(QWidget* widget)
 
     m_action_scanimages = new KAction(KIcon("scanner"), i18n("Scan Images..."), actionCollection());
     m_action_scanimages->setObjectName("scan_images");
-    connect(m_action_scanimages, SIGNAL(triggered(bool)), 
+    connect(m_action_scanimages, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
     addAction(m_action_scanimages);
 
@@ -84,8 +84,8 @@ void Plugin_AcquireImages::slotActivate()
     QString dev = saneWidget->selectDevice(0);
     if (dev.isEmpty())
         return;
-    
-    if (!saneWidget->openDevice(dev)) 
+
+    if (!saneWidget->openDevice(dev))
     {
         // could not open a scanner
         KMessageBox::sorry(0, i18n("Cannot open scanner device."));
@@ -102,5 +102,5 @@ KIPI::Category Plugin_AcquireImages::category( KAction* action ) const
        return KIPI::IMPORTPLUGIN;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
-    return KIPI::IMPORTPLUGIN; // no warning from compiler, please   
+    return KIPI::IMPORTPLUGIN; // no warning from compiler, please
 }
