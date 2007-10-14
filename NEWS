@@ -1,5 +1,17 @@
 Note: for details and info about current version, see ChangeLog.
 
+v 0.1.5 - RC1
+---------------------------------------------------------------------------
+Kipi-plugins NEW FEATURES
+
+General        : Added the availability to disable plugins we don't want to build.
+               : This feature is very useful for source based distros (Matej Laitl)
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
+001 ==> 149666 : iPod Export kipi plugin cannot be disabled at compile time when libgpod is present on system
+002 ==>
+
 v 0.1.5 - Beta1
 ----------------------------------------------------------------------------
 
