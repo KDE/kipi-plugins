@@ -155,7 +155,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->detailEdit->setWhatsThis(i18n("<p>Enter here the Subject Detail Name. "
                                      "This field is limited to 64 ASCII characters."));
 
-    d->subjectsBox   = new KListWidget(this);
+    d->subjectsBox = new KListWidget(this);
     d->subjectsBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     
     d->addSubjectButton = new QPushButton( i18n("&Add"), this);
@@ -167,16 +167,11 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->delSubjectButton->setEnabled(false);
     d->repSubjectButton->setEnabled(false);
 
-    d->iprLabel    = new QLabel(i18n("<b>I.P.R</b>"), this);
-    d->refLabel    = new QLabel(i18n("<b>Reference</b>"), this);
-    d->nameLabel   = new QLabel(i18n("<b>Name</b>"), this);
-    d->matterLabel = new QLabel(i18n("<b>Matter</b>"), this);
-    d->detailLabel = new QLabel(i18n("<b>Detail</b>"), this);
-    d->iprLabel->setAlignment(Qt::AlignCenter);
-    d->refLabel->setAlignment(Qt::AlignCenter);
-    d->nameLabel->setAlignment(Qt::AlignCenter);
-    d->matterLabel->setAlignment(Qt::AlignCenter);
-    d->detailLabel->setAlignment(Qt::AlignCenter);
+    d->iprLabel    = new QLabel(i18n("I.P.R:"), this);
+    d->refLabel    = new QLabel(i18n("Reference:"), this);
+    d->nameLabel   = new QLabel(i18n("Name:"), this);
+    d->matterLabel = new QLabel(i18n("Matter:"), this);
+    d->detailLabel = new QLabel(i18n("Detail:"), this);
 
     // --------------------------------------------------------
 
@@ -186,7 +181,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
                  "characters set and limit strings size. "
                  "Use contextual help for details.</b>"), this);
-    note->setMinimumWidth(150);
+    note->setMaximumWidth(150);
     note->setOpenExternalLinks(true);
     note->setWordWrap(true);
     note->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
@@ -194,29 +189,25 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(codeDesc, 0, 0, 1, 10);
-    grid->addWidget(d->subjectsCheck, 1, 0, 1, 10);
+    grid->addWidget(codeDesc, 0, 0, 1, 4);
+    grid->addWidget(d->subjectsCheck, 1, 0, 1, 4);
     grid->addWidget(d->iprLabel, 2, 0, 1, 1);
-    grid->addWidget(d->iprEdit, 3, 0, 1, 1);
-    grid->addWidget(new QLabel(":", this), 3, 1, 1, 1);
-    grid->addWidget(d->refLabel, 2, 2, 1, 1);
-    grid->addWidget(d->refEdit, 3, 2, 1, 1);
-    grid->addWidget(new QLabel(":", this), 3, 3, 1, 1);
-    grid->addWidget(d->nameLabel,  2, 4, 1, 1);
-    grid->addWidget(d->nameEdit, 3, 4, 1, 1);
-    grid->addWidget(new QLabel(":", this), 3, 5, 1, 1);
-    grid->addWidget(d->matterLabel, 2, 6, 1, 1);
-    grid->addWidget(d->matterEdit, 3, 6, 1, 1);
-    grid->addWidget(new QLabel(":", this), 3, 7, 1, 1);
-    grid->addWidget(d->detailLabel, 2, 8, 1, 1);
-    grid->addWidget(d->detailEdit, 3, 8, 1, 1);
-    grid->addWidget(d->subjectsBox, 4, 0, 5, 9);
-    grid->addWidget(d->addSubjectButton, 4, 9, 1, 1);
-    grid->addWidget(d->delSubjectButton, 5, 9, 1, 1);
-    grid->addWidget(d->repSubjectButton, 6, 9, 1, 1);
-    grid->addWidget(note, 7, 9, 1, 1);
-    grid->setColumnStretch(9, 1);                     
-    grid->setRowStretch(8, 10);  
+    grid->addWidget(d->iprEdit, 2, 1, 1, 2);
+    grid->addWidget(d->refLabel, 3, 0, 1, 1);
+    grid->addWidget(d->refEdit, 3, 1, 1, 1);
+    grid->addWidget(d->nameLabel,  4, 0, 1, 1);
+    grid->addWidget(d->nameEdit, 4, 1, 1, 2);
+    grid->addWidget(d->matterLabel, 5, 0, 1, 1);
+    grid->addWidget(d->matterEdit, 5, 1, 1, 2);
+    grid->addWidget(d->detailLabel, 6, 0, 1, 1);
+    grid->addWidget(d->detailEdit, 6, 1, 1, 2);
+    grid->addWidget(d->subjectsBox, 7, 0, 5, 3);
+    grid->addWidget(d->addSubjectButton, 7, 3, 1, 1);
+    grid->addWidget(d->delSubjectButton, 8, 3, 1, 1);
+    grid->addWidget(d->repSubjectButton, 9, 3, 1, 1);
+    grid->addWidget(note, 10, 3, 1, 1);
+    grid->setColumnStretch(2, 1);                     
+    grid->setRowStretch(11, 10);  
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());    
                                          
