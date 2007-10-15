@@ -186,7 +186,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
                  "characters set and limit strings size. "
                  "Use contextual help for details.</b>"), this);
-    note->setMaximumWidth(150);
+    note->setMinimumWidth(150);
     note->setOpenExternalLinks(true);
     note->setWordWrap(true);
     note->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
