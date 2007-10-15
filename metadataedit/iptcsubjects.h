@@ -58,6 +58,10 @@ private slots:
 
 private:
 
+    QString buildSubject() const;
+
+private:
+
     IPTCSubjectsPriv* d;
 };
 

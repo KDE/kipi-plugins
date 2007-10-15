@@ -59,7 +59,16 @@ public:
         repSubjectButton = 0;
         subjectsBox      = 0;
         subjectsCheck    = 0;
-        subjectEdit      = 0;
+        iprEdit          = 0;
+        refEdit          = 0;
+        nameEdit         = 0;
+        matterEdit       = 0;
+        detailEdit       = 0;
+        iprLabel         = 0;
+        refLabel         = 0;
+        nameLabel        = 0;
+        matterLabel      = 0;
+        detailLabel      = 0;
     }
 
     QStringList  oldSubjects;
@@ -70,7 +79,17 @@ public:
 
     QCheckBox   *subjectsCheck;
 
-    KLineEdit   *subjectEdit;
+    QLabel      *iprLabel;
+    QLabel      *refLabel;
+    QLabel      *nameLabel;
+    QLabel      *matterLabel;
+    QLabel      *detailLabel;
+
+    KLineEdit   *iprEdit;
+    KLineEdit   *refEdit;
+    KLineEdit   *nameEdit;
+    KLineEdit   *matterEdit;
+    KLineEdit   *detailEdit;
 
     KListWidget *subjectsBox;
 };
@@ -81,25 +100,60 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d = new IPTCSubjectsPriv;
     QGridLayout *grid = new QGridLayout(this);
 
-    // IPTC only accept printable Ascii char.
-    QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+    // Subject string only accept printable Ascii char excepted these one:
+    // - '*' (\x2A)
+    // - ':' (\x3A)
+    // - '?' (\x3F)
+    QRegExp subjectAsciiRx("[\x20-\x29\x2B-\x39\x3B-\x3E\x40-\x7F]+$");
+    QValidator *subjectAsciiValidator = new QRegExpValidator(subjectAsciiRx, this);
+
+    // Subject Reference Number only accept digit.
+    QRegExp refDigitRx("^[0-9]{8}$");
+    QValidator *refValidator = new QRegExpValidator(refDigitRx, this);
 
     // --------------------------------------------------------
-
-    d->subjectsCheck = new QCheckBox(i18n("Use structured definition of the subject matter:"), this);    
-
-    d->subjectEdit   = new KLineEdit(this);
-    d->subjectEdit->setClearButtonShown(true);
-    d->subjectEdit->setValidator(asciiValidator);
-    d->subjectEdit->setMaxLength(236);
-    d->subjectEdit->setWhatsThis(i18n("<p>Enter here a new subject. "
-                                      "This field is limited to 236 ASCII characters."));
 
     QLabel *codeDesc = new QLabel(i18n("Subject codes are defined at "
            "<b><a href='http://www.iptc.org/NewsCodes'>www.iptc.org/NewsCodes</a></b></b>"), this);
     codeDesc->setOpenExternalLinks(true);
     codeDesc->setWordWrap(true);
+
+    d->subjectsCheck = new QCheckBox(i18n("Use structured definition of the subject matter:"), this);    
+
+    d->iprEdit = new KLineEdit(this);
+    d->iprEdit->setClearButtonShown(true);
+    d->iprEdit->setValidator(subjectAsciiValidator);
+    d->iprEdit->setMaxLength(32);
+    d->iprEdit->setWhatsThis(i18n("<p>Enter here the Informative Provider Reference. "
+                                  "This field is limited to 32 ASCII characters."));
+
+    d->refEdit = new KLineEdit(this);
+    d->refEdit->setClearButtonShown(true);
+    d->refEdit->setValidator(refValidator);
+    d->refEdit->setMaxLength(8);
+    d->refEdit->setWhatsThis(i18n("<p>Enter here the Subject Reference Number. "
+                                  "This field is limited to 8 ASCII digit code."));
+
+    d->nameEdit = new KLineEdit(this);
+    d->nameEdit->setClearButtonShown(true);
+    d->nameEdit->setValidator(subjectAsciiValidator);
+    d->nameEdit->setMaxLength(64);
+    d->nameEdit->setWhatsThis(i18n("<p>Enter here the Subject Name. "
+                                   "This field is limited to 64 ASCII characters."));
+
+    d->matterEdit = new KLineEdit(this);
+    d->matterEdit->setClearButtonShown(true);
+    d->matterEdit->setValidator(subjectAsciiValidator);
+    d->matterEdit->setMaxLength(64);
+    d->matterEdit->setWhatsThis(i18n("<p>Enter here the Subject Matter Name. "
+                                     "This field is limited to 64 ASCII characters."));
+
+    d->detailEdit = new KLineEdit(this);
+    d->detailEdit->setClearButtonShown(true);
+    d->detailEdit->setValidator(subjectAsciiValidator);
+    d->detailEdit->setMaxLength(64);
+    d->detailEdit->setWhatsThis(i18n("<p>Enter here the Subject Detail Name. "
+                                     "This field is limited to 64 ASCII characters."));
 
     d->subjectsBox   = new KListWidget(this);
     d->subjectsBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -112,6 +166,17 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->repSubjectButton->setIcon(SmallIcon("view-refresh"));
     d->delSubjectButton->setEnabled(false);
     d->repSubjectButton->setEnabled(false);
+
+    d->iprLabel    = new QLabel(i18n("<b>I.P.R</b>"), this);
+    d->refLabel    = new QLabel(i18n("<b>Reference</b>"), this);
+    d->nameLabel   = new QLabel(i18n("<b>Name</b>"), this);
+    d->matterLabel = new QLabel(i18n("<b>Matter</b>"), this);
+    d->detailLabel = new QLabel(i18n("<b>Detail</b>"), this);
+    d->iprLabel->setAlignment(Qt::AlignCenter);
+    d->refLabel->setAlignment(Qt::AlignCenter);
+    d->nameLabel->setAlignment(Qt::AlignCenter);
+    d->matterLabel->setAlignment(Qt::AlignCenter);
+    d->detailLabel->setAlignment(Qt::AlignCenter);
 
     // --------------------------------------------------------
 
@@ -129,16 +194,29 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(codeDesc, 0, 0, 1, 2);
-    grid->addWidget(d->subjectsCheck, 1, 0, 1, 2 );
-    grid->addWidget(d->subjectEdit, 2, 0, 1, 1);
-    grid->addWidget(d->subjectsBox, 3, 0, 5, 1);
-    grid->addWidget(d->addSubjectButton, 3, 1, 1, 1);
-    grid->addWidget(d->delSubjectButton, 4, 1, 1, 1);
-    grid->addWidget(d->repSubjectButton, 5, 1, 1, 1);
-    grid->addWidget(note, 6, 1, 1, 1);
-    grid->setColumnStretch(0, 10);                     
-    grid->setRowStretch(7, 10);  
+    grid->addWidget(codeDesc, 0, 0, 1, 10);
+    grid->addWidget(d->subjectsCheck, 1, 0, 1, 10);
+    grid->addWidget(d->iprLabel, 2, 0, 1, 1);
+    grid->addWidget(d->iprEdit, 3, 0, 1, 1);
+    grid->addWidget(new QLabel(":", this), 3, 1, 1, 1);
+    grid->addWidget(d->refLabel, 2, 2, 1, 1);
+    grid->addWidget(d->refEdit, 3, 2, 1, 1);
+    grid->addWidget(new QLabel(":", this), 3, 3, 1, 1);
+    grid->addWidget(d->nameLabel,  2, 4, 1, 1);
+    grid->addWidget(d->nameEdit, 3, 4, 1, 1);
+    grid->addWidget(new QLabel(":", this), 3, 5, 1, 1);
+    grid->addWidget(d->matterLabel, 2, 6, 1, 1);
+    grid->addWidget(d->matterEdit, 3, 6, 1, 1);
+    grid->addWidget(new QLabel(":", this), 3, 7, 1, 1);
+    grid->addWidget(d->detailLabel, 2, 8, 1, 1);
+    grid->addWidget(d->detailEdit, 3, 8, 1, 1);
+    grid->addWidget(d->subjectsBox, 4, 0, 5, 9);
+    grid->addWidget(d->addSubjectButton, 4, 9, 1, 1);
+    grid->addWidget(d->delSubjectButton, 5, 9, 1, 1);
+    grid->addWidget(d->repSubjectButton, 6, 9, 1, 1);
+    grid->addWidget(note, 7, 9, 1, 1);
+    grid->setColumnStretch(9, 1);                     
+    grid->setRowStretch(8, 10);  
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());    
                                          
@@ -159,7 +237,34 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     // --------------------------------------------------------
 
     connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->subjectEdit, SLOT(setEnabled(bool)));
+            d->iprEdit, SLOT(setEnabled(bool)));
+
+    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
+            d->iprLabel, SLOT(setEnabled(bool)));
+
+    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
+            d->refEdit, SLOT(setEnabled(bool)));
+
+    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
+            d->refLabel, SLOT(setEnabled(bool)));
+
+    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
+            d->nameEdit, SLOT(setEnabled(bool)));
+
+    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
+            d->nameLabel, SLOT(setEnabled(bool)));
+
+    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
+            d->matterEdit, SLOT(setEnabled(bool)));
+
+    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
+            d->matterLabel, SLOT(setEnabled(bool)));
+
+    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
+            d->detailEdit, SLOT(setEnabled(bool)));
+
+    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
+            d->detailLabel, SLOT(setEnabled(bool)));
 
     connect(d->subjectsCheck, SIGNAL(toggled(bool)),
             d->subjectsBox, SLOT(setEnabled(bool)));
@@ -193,6 +298,20 @@ IPTCSubjects::~IPTCSubjects()
     delete d;
 }
 
+QString IPTCSubjects::buildSubject() const
+{
+    QString subject = d->iprEdit->text();
+    subject.append(":");
+    subject.append(d->refEdit->text());
+    subject.append(":");
+    subject.append(d->nameEdit->text());
+    subject.append(":");
+    subject.append(d->matterEdit->text());
+    subject.append(":");
+    subject.append(d->detailEdit->text());
+    return subject;
+}
+
 void IPTCSubjects::slotDelSubject()
 {
     QListWidgetItem *item = d->subjectsBox->currentItem();
@@ -203,13 +322,17 @@ void IPTCSubjects::slotDelSubject()
 
 void IPTCSubjects::slotRepSubject()
 {
-    QString newSubject = d->subjectEdit->text();
+    QString newSubject = buildSubject();
     if (newSubject.isEmpty()) return;
 
     if (!d->subjectsBox->selectedItems().isEmpty())
     {
         d->subjectsBox->selectedItems()[0]->setText(newSubject);
-        d->subjectEdit->clear();
+        d->iprEdit->clear();
+        d->refEdit->clear();
+        d->nameEdit->clear();
+        d->matterEdit->clear();
+        d->detailEdit->clear();
     }
 }
 
@@ -217,7 +340,12 @@ void IPTCSubjects::slotSubjectSelectionChanged()
 {
     if (!d->subjectsBox->selectedItems().isEmpty())
     {
-        d->subjectEdit->setText(d->subjectsBox->selectedItems()[0]->text());
+        QString subject = d->subjectsBox->selectedItems()[0]->text();
+        d->iprEdit->setText(subject.section(':', 0, 0));
+        d->refEdit->setText(subject.section(':', 1, 1));
+        d->nameEdit->setText(subject.section(':', 2, 2));
+        d->matterEdit->setText(subject.section(':', 3, 3));
+        d->detailEdit->setText(subject.section(':', 4, 4));
         d->delSubjectButton->setEnabled(true);
         d->repSubjectButton->setEnabled(true);
     }
@@ -230,7 +358,7 @@ void IPTCSubjects::slotSubjectSelectionChanged()
 
 void IPTCSubjects::slotAddSubject()
 {
-    QString newSubject = d->subjectEdit->text();
+    QString newSubject = buildSubject();
     if (newSubject.isEmpty()) return;
 
     bool found = false;
@@ -247,7 +375,11 @@ void IPTCSubjects::slotAddSubject()
     if (!found)
     {
         d->subjectsBox->insertItem(d->subjectsBox->count(), newSubject);
-        d->subjectEdit->clear();
+        d->iprEdit->clear();
+        d->refEdit->clear();
+        d->nameEdit->clear();
+        d->matterEdit->clear();
+        d->detailEdit->clear();
     }
 }
 
@@ -265,7 +397,11 @@ void IPTCSubjects::readMetadata(QByteArray& iptcData)
         d->subjectsBox->insertItems(0, d->oldSubjects);
         d->subjectsCheck->setChecked(true);
     }
-    d->subjectEdit->setEnabled(d->subjectsCheck->isChecked());
+    d->iprEdit->setEnabled(d->subjectsCheck->isChecked());
+    d->refEdit->setEnabled(d->subjectsCheck->isChecked());
+    d->nameEdit->setEnabled(d->subjectsCheck->isChecked());
+    d->matterEdit->setEnabled(d->subjectsCheck->isChecked());
+    d->detailEdit->setEnabled(d->subjectsCheck->isChecked());
     d->subjectsBox->setEnabled(d->subjectsCheck->isChecked());
     d->addSubjectButton->setEnabled(d->subjectsCheck->isChecked());
     d->delSubjectButton->setEnabled(d->subjectsCheck->isChecked());
