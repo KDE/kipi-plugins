@@ -98,7 +98,6 @@ public:
         syncIPTCDateCheck = 0;
         syncXMPDateCheck  = 0;
         exampleBox        = 0;
-        adjustValGrp      = 0;
         adjustTypeGrp     = 0;
         infoLabel         = 0;
         exampleAdj        = 0;
@@ -129,7 +128,6 @@ public:
     QGroupBox                *adjGB;
     QGroupBox                *adjTypeGB;
 
-    QButtonGroup             *adjustValGrp;
     QButtonGroup             *adjustTypeGrp;
 
     QLabel                   *infoLabel;
