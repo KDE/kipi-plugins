@@ -76,7 +76,7 @@ public:
 };
 
 XMPKeywords::XMPKeywords(QWidget* parent)
-            : QWidget(parent)
+           : QWidget(parent)
 {
     d = new XMPKeywordsPriv;
     QGridLayout *grid = new QGridLayout(this);
