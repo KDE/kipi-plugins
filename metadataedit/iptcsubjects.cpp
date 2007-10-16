@@ -28,6 +28,9 @@
 #include <QValidator>
 #include <QCheckBox>
 #include <QPushButton>
+#include <QButtonGroup>
+#include <QRadioButton>
+#include <QComboBox>
 
 // KDE includes.
 
@@ -69,6 +72,12 @@ class IPTCSubjectsPriv
 {
 public:
 
+    enum EditionMode 
+    {
+        STANDARD = 0,
+        CUSTOM
+    };
+
     IPTCSubjectsPriv()
     {
         addSubjectButton = 0;
@@ -86,6 +95,11 @@ public:
         nameLabel        = 0;
         matterLabel      = 0;
         detailLabel      = 0;
+        btnGroup         = 0;
+        stdBtn           = 0;
+        customBtn        = 0;
+        refCB            = 0;
+        optionsBox       = 0;
 
         // Subject Codes map contents defined into IPTC/IIM spec.
         // http://www.iptc.org/std/IIM/4.1/specification/IIMV4.1.pdf
@@ -452,6 +466,8 @@ public:
 
     QStringList                         oldSubjects;
 
+    QWidget                            *optionsBox;
+
     QPushButton                        *addSubjectButton;
     QPushButton                        *delSubjectButton;
     QPushButton                        *repSubjectButton;
@@ -463,6 +479,13 @@ public:
     QLabel                             *nameLabel;
     QLabel                             *matterLabel;
     QLabel                             *detailLabel;
+
+    QButtonGroup                       *btnGroup;
+
+    QRadioButton                       *stdBtn;
+    QRadioButton                       *customBtn;
+
+    QComboBox                          *refCB;
 
     KLineEdit                          *iprEdit;
     KLineEdit                          *refEdit;
@@ -499,40 +522,96 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     d->subjectsCheck = new QCheckBox(i18n("Use structured definition of the subject matter:"), this);    
 
-    d->iprEdit = new KLineEdit(this);
+    // --------------------------------------------------------
+
+    d->optionsBox      = new QWidget(this);
+    QGridLayout *grid2 = new QGridLayout(d->optionsBox);
+    d->btnGroup        = new QButtonGroup(d->optionsBox);
+    d->stdBtn          = new QRadioButton(i18n("Use standard reference code"), d->optionsBox);
+    d->refCB           = new QComboBox(d->optionsBox);
+    d->customBtn       = new QRadioButton(i18n("Use custom definition"), d->optionsBox);
+    d->btnGroup->addButton(d->stdBtn,    IPTCSubjectsPriv::STANDARD);
+    d->btnGroup->addButton(d->customBtn, IPTCSubjectsPriv::CUSTOM);
+    d->btnGroup->setExclusive(true);
+    d->stdBtn->setChecked(true);
+
+    for (IPTCSubjectsPriv::SubjectCodesMap::Iterator it = d->subMap.begin();
+         it != d->subMap.end(); ++it)
+        d->refCB->addItem(it.key());
+
+    // --------------------------------------------------------
+
+    d->iprEdit = new KLineEdit(d->optionsBox);
     d->iprEdit->setClearButtonShown(true);
     d->iprEdit->setValidator(subjectAsciiValidator);
     d->iprEdit->setMaxLength(32);
     d->iprEdit->setWhatsThis(i18n("<p>Enter here the Informative Provider Reference. "
                                   "This field is limited to 32 ASCII characters."));
 
-    d->refEdit = new KLineEdit(this);
+    // --------------------------------------------------------
+
+    d->refEdit = new KLineEdit(d->optionsBox);
     d->refEdit->setClearButtonShown(true);
     d->refEdit->setValidator(refValidator);
     d->refEdit->setMaxLength(8);
     d->refEdit->setWhatsThis(i18n("<p>Enter here the Subject Reference Number. "
                                   "This field is limited to 8 ASCII digit code."));
 
-    d->nameEdit = new KLineEdit(this);
+    // --------------------------------------------------------
+
+    d->nameEdit = new KLineEdit(d->optionsBox);
     d->nameEdit->setClearButtonShown(true);
     d->nameEdit->setValidator(subjectAsciiValidator);
     d->nameEdit->setMaxLength(64);
     d->nameEdit->setWhatsThis(i18n("<p>Enter here the Subject Name. "
                                    "This field is limited to 64 ASCII characters."));
 
-    d->matterEdit = new KLineEdit(this);
+    // --------------------------------------------------------
+
+    d->matterEdit = new KLineEdit(d->optionsBox);
     d->matterEdit->setClearButtonShown(true);
     d->matterEdit->setValidator(subjectAsciiValidator);
     d->matterEdit->setMaxLength(64);
     d->matterEdit->setWhatsThis(i18n("<p>Enter here the Subject Matter Name. "
                                      "This field is limited to 64 ASCII characters."));
 
-    d->detailEdit = new KLineEdit(this);
+    // --------------------------------------------------------
+
+    d->detailEdit = new KLineEdit(d->optionsBox);
     d->detailEdit->setClearButtonShown(true);
     d->detailEdit->setValidator(subjectAsciiValidator);
     d->detailEdit->setMaxLength(64);
     d->detailEdit->setWhatsThis(i18n("<p>Enter here the Subject Detail Name. "
                                      "This field is limited to 64 ASCII characters."));
+
+    // --------------------------------------------------------
+
+    d->iprLabel    = new QLabel(i18n("I.P.R:"), d->optionsBox);
+    d->refLabel    = new QLabel(i18n("Reference:"), d->optionsBox);
+    d->nameLabel   = new QLabel(i18n("Name:"), d->optionsBox);
+    d->matterLabel = new QLabel(i18n("Matter:"), d->optionsBox);
+    d->detailLabel = new QLabel(i18n("Detail:"), d->optionsBox);
+
+    // --------------------------------------------------------
+
+    grid2->addWidget(d->stdBtn, 0, 0, 1, 2);
+    grid2->addWidget(d->refCB, 0, 2, 1, 1);
+    grid2->addWidget(d->customBtn, 1, 0, 1, 4);
+    grid2->addWidget(d->iprLabel, 2, 0, 1, 1);
+    grid2->addWidget(d->iprEdit, 2, 1, 1, 4);
+    grid2->addWidget(d->refLabel, 3, 0, 1, 1);
+    grid2->addWidget(d->refEdit, 3, 1, 1, 1);
+    grid2->addWidget(d->nameLabel,  4, 0, 1, 1);
+    grid2->addWidget(d->nameEdit, 4, 1, 1, 4);
+    grid2->addWidget(d->matterLabel, 5, 0, 1, 1);
+    grid2->addWidget(d->matterEdit, 5, 1, 1, 4);
+    grid2->addWidget(d->detailLabel, 6, 0, 1, 1);
+    grid2->addWidget(d->detailEdit, 6, 1, 1, 4);
+    grid2->setColumnStretch(4, 10);                     
+    grid2->setMargin(0);
+    grid2->setSpacing(KDialog::spacingHint());
+
+    // --------------------------------------------------------
 
     d->subjectsBox = new KListWidget(this);
     d->subjectsBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -545,12 +624,6 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->repSubjectButton->setIcon(SmallIcon("view-refresh"));
     d->delSubjectButton->setEnabled(false);
     d->repSubjectButton->setEnabled(false);
-
-    d->iprLabel    = new QLabel(i18n("I.P.R:"), this);
-    d->refLabel    = new QLabel(i18n("Reference:"), this);
-    d->nameLabel   = new QLabel(i18n("Name:"), this);
-    d->matterLabel = new QLabel(i18n("Matter:"), this);
-    d->detailLabel = new QLabel(i18n("Detail:"), this);
 
     // --------------------------------------------------------
 
@@ -570,23 +643,14 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     grid->setAlignment( Qt::AlignTop );
     grid->addWidget(codeDesc, 0, 0, 1, 4);
     grid->addWidget(d->subjectsCheck, 1, 0, 1, 4);
-    grid->addWidget(d->iprLabel, 2, 0, 1, 1);
-    grid->addWidget(d->iprEdit, 2, 1, 1, 2);
-    grid->addWidget(d->refLabel, 3, 0, 1, 1);
-    grid->addWidget(d->refEdit, 3, 1, 1, 1);
-    grid->addWidget(d->nameLabel,  4, 0, 1, 1);
-    grid->addWidget(d->nameEdit, 4, 1, 1, 2);
-    grid->addWidget(d->matterLabel, 5, 0, 1, 1);
-    grid->addWidget(d->matterEdit, 5, 1, 1, 2);
-    grid->addWidget(d->detailLabel, 6, 0, 1, 1);
-    grid->addWidget(d->detailEdit, 6, 1, 1, 2);
-    grid->addWidget(d->subjectsBox, 7, 0, 5, 3);
-    grid->addWidget(d->addSubjectButton, 7, 3, 1, 1);
-    grid->addWidget(d->delSubjectButton, 8, 3, 1, 1);
-    grid->addWidget(d->repSubjectButton, 9, 3, 1, 1);
-    grid->addWidget(note, 10, 3, 1, 1);
+    grid->addWidget(d->optionsBox, 2, 0, 1, 4);
+    grid->addWidget(d->subjectsBox, 3, 0, 5, 3);
+    grid->addWidget(d->addSubjectButton, 3, 3, 1, 1);
+    grid->addWidget(d->delSubjectButton, 4, 3, 1, 1);
+    grid->addWidget(d->repSubjectButton, 5, 3, 1, 1);
+    grid->addWidget(note, 6, 3, 1, 1);
+    grid->setRowStretch(7, 10);  
     grid->setColumnStretch(2, 1);                     
-    grid->setRowStretch(11, 10);  
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());    
                                          
@@ -604,38 +668,17 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     connect(d->repSubjectButton, SIGNAL(clicked()),
             this, SLOT(slotRepSubject()));
 
+    connect(d->btnGroup, SIGNAL(buttonReleased(int)),
+            this, SLOT(slotEditOptionChanged(int)));
+
+    connect(d->refCB, SIGNAL(activated(int)),
+            this, SLOT(slotRefChanged()));
+
     // --------------------------------------------------------
 
     connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->iprEdit, SLOT(setEnabled(bool)));
-
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->iprLabel, SLOT(setEnabled(bool)));
-
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->refEdit, SLOT(setEnabled(bool)));
-
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->refLabel, SLOT(setEnabled(bool)));
-
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->nameEdit, SLOT(setEnabled(bool)));
-
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->nameLabel, SLOT(setEnabled(bool)));
-
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->matterEdit, SLOT(setEnabled(bool)));
-
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->matterLabel, SLOT(setEnabled(bool)));
-
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->detailEdit, SLOT(setEnabled(bool)));
-
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->detailLabel, SLOT(setEnabled(bool)));
-
+            d->optionsBox, SLOT(setEnabled(bool)));
+    
     connect(d->subjectsCheck, SIGNAL(toggled(bool)),
             d->subjectsBox, SLOT(setEnabled(bool)));
 
@@ -666,6 +709,61 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 IPTCSubjects::~IPTCSubjects()
 {
     delete d;
+}
+
+void IPTCSubjects::slotEditOptionChanged(int b)
+{
+    if (b == IPTCSubjectsPriv::CUSTOM)
+    {
+        d->refCB->setEnabled(false);
+        d->iprLabel->setEnabled(true);
+        d->refLabel->setEnabled(true);
+        d->nameLabel->setEnabled(true);
+        d->matterLabel->setEnabled(true);
+        d->detailLabel->setEnabled(true);
+        d->iprEdit->setEnabled(true);
+        d->refEdit->setEnabled(true);
+        d->nameEdit->setEnabled(true);
+        d->matterEdit->setEnabled(true);
+        d->detailEdit->setEnabled(true);
+    }
+    else
+    {
+        d->refCB->setEnabled(true);
+        d->iprLabel->setEnabled(false);
+        d->refLabel->setEnabled(false);
+        d->nameLabel->setEnabled(false);
+        d->matterLabel->setEnabled(false);
+        d->detailLabel->setEnabled(false);
+        d->iprEdit->setEnabled(false);
+        d->refEdit->setEnabled(false);
+        d->nameEdit->setEnabled(false);
+        d->matterEdit->setEnabled(false);
+        d->detailEdit->setEnabled(false);
+    }
+}
+
+void IPTCSubjects::slotRefChanged()
+{
+    QString key = d->refCB->currentText();
+    QString name, matter, detail;
+
+    for (IPTCSubjectsPriv::SubjectCodesMap::Iterator it = d->subMap.begin();
+         it != d->subMap.end(); ++it)
+    {
+        if (key == it.key())
+        {
+            name   = it.value().name;
+            matter = it.value().matter;
+            detail = it.value().detail;
+        }
+    }
+
+    d->iprEdit->setText("IPTC");
+    d->refEdit->setText(key);
+    d->nameEdit->setText(name);
+    d->matterEdit->setText(matter);
+    d->detailEdit->setText(detail);
 }
 
 QString IPTCSubjects::buildSubject() const
