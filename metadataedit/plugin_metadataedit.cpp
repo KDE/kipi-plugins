@@ -247,7 +247,7 @@ void Plugin_MetadataEdit::slotImportExif()
     if (!exiv2Iface.load(importEXIFFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(), 
-                           i18n("Cannot load metadata from \"%1\"",importEXIFFile.fileName()), 
+                           i18n("Cannot load metadata from \"%1\"", importEXIFFile.fileName()), 
                            i18n("Import EXIF Metadata"));    
         return;
     }
@@ -256,7 +256,7 @@ void Plugin_MetadataEdit::slotImportExif()
     if (exifData.isEmpty())
     {
         KMessageBox::error(kapp->activeWindow(), 
-                           i18n("\"%1\" do not have EXIF metadata",importEXIFFile.fileName()), 
+                           i18n("\"%1\" do not have EXIF metadata", importEXIFFile.fileName()), 
                            i18n("Import EXIF Metadata"));    
         return;
     }        
@@ -265,10 +265,9 @@ void Plugin_MetadataEdit::slotImportExif()
                      kapp->activeWindow(),
                      i18n("EXIF metadata from current selected pictures will be permanently "
                           "replaced by the EXIF content of \"%1\".\n"
-                          "Do you want to continue ?",importEXIFFile.fileName()),
+                          "Do you want to continue ?", importEXIFFile.fileName()),
                      i18n("Import EXIF Metadata")) != KMessageBox::Yes)
         return;
-
 
     KUrl::List  imageURLs = images.images();
     KUrl::List  updatedURLs;
@@ -393,7 +392,7 @@ void Plugin_MetadataEdit::slotImportIptc()
     if (!exiv2Iface.load(importIPTCFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(), 
-                           i18n("Cannot load metadata from \"%1\"",importIPTCFile.fileName()), 
+                           i18n("Cannot load metadata from \"%1\"", importIPTCFile.fileName()), 
                            i18n("Import IPTC Metadata"));    
         return;
     }
@@ -402,7 +401,7 @@ void Plugin_MetadataEdit::slotImportIptc()
     if (iptcData.isEmpty())
     {
         KMessageBox::error(kapp->activeWindow(), 
-                           i18n("\"%1\" do not have IPTC metadata",importIPTCFile.fileName()), 
+                           i18n("\"%1\" do not have IPTC metadata", importIPTCFile.fileName()), 
                            i18n("Import IPTC Metadata"));    
         return;
     }        
@@ -411,10 +410,9 @@ void Plugin_MetadataEdit::slotImportIptc()
                      kapp->activeWindow(),
                      i18n("IPTC metadata from current selected pictures will be permanently "
                           "replaced by the IPTC content of \"%1\".\n"
-                          "Do you want to continue ?",importIPTCFile.fileName()),
+                          "Do you want to continue ?", importIPTCFile.fileName()),
                      i18n("Import IPTC Metadata")) != KMessageBox::Yes)
         return;
-
 
     KUrl::List  imageURLs = images.images();
     KUrl::List  updatedURLs;
@@ -524,7 +522,81 @@ void Plugin_MetadataEdit::slotRemoveXmp()
 
 void Plugin_MetadataEdit::slotImportXmp()
 {
-// TODO 
+    KIPI::ImageCollection images = m_interface->currentSelection();
+
+    if ( !images.isValid() || images.images().isEmpty() )
+        return;
+
+    KUrl importXMPFile = KFileDialog::getOpenUrl(KGlobalSettings::documentPath(),
+                                                 QString::null, kapp->activeWindow(),
+                                                 i18n("Select File to Import XMP metadata") );
+    if( importXMPFile.isEmpty() )
+       return;
+    
+    KExiv2Iface::KExiv2 exiv2Iface;
+    if (!exiv2Iface.load(importXMPFile.path()))
+    {
+        KMessageBox::error(kapp->activeWindow(), 
+                           i18n("Cannot load metadata from \"%1\"", importXMPFile.fileName()), 
+                           i18n("Import XMP Metadata"));    
+        return;
+    }
+    
+    QByteArray xmpData = exiv2Iface.getXmp();
+    if (xmpData.isEmpty())
+    {
+        KMessageBox::error(kapp->activeWindow(), 
+                           i18n("\"%1\" do not have XMP metadata", importXMPFile.fileName()), 
+                           i18n("Import XMP Metadata"));    
+        return;
+    }        
+
+    if (KMessageBox::warningYesNo(
+                     kapp->activeWindow(),
+                     i18n("XMP metadata from current selected pictures will be permanently "
+                          "replaced by the XMP content of \"%1\".\n"
+                          "Do you want to continue ?", importXMPFile.fileName()),
+                     i18n("Import XMP Metadata")) != KMessageBox::Yes)
+        return;
+
+    KUrl::List  imageURLs = images.images();
+    KUrl::List  updatedURLs;
+    QStringList errorFiles;
+
+    for( KUrl::List::iterator it = imageURLs.begin() ; 
+         it != imageURLs.end(); ++it)
+    {
+        KUrl url = *it;
+        bool ret = false;
+
+        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
+        {
+            ret = true;
+            KExiv2Iface::KExiv2 exiv2Iface;
+            ret &= exiv2Iface.load(url.path());
+            ret &= exiv2Iface.setXmp(xmpData);
+            ret &= exiv2Iface.save(url.path());
+        }
+        
+        if (!ret)
+            errorFiles.append(url.fileName());
+        else 
+            updatedURLs.append(url);
+    }
+
+    // We use kipi interface refreshImages() method to tell to host than 
+    // metadata from pictures have changed and need to be re-read.
+    
+    m_interface->refreshImages(updatedURLs);
+
+    if (!errorFiles.isEmpty())
+    {
+        KMessageBox::errorList(
+                    kapp->activeWindow(),
+                    i18n("Unable to set XMP metadata from:"),
+                    errorFiles,
+                    i18n("Import XMP Metadata"));  
+    }
 }
 
 void Plugin_MetadataEdit::slotEditComments()
