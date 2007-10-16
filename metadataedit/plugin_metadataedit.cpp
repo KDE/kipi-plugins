@@ -470,7 +470,56 @@ void Plugin_MetadataEdit::slotEditXmp()
 
 void Plugin_MetadataEdit::slotRemoveXmp()
 {
-// TODO
+    KIPI::ImageCollection images = m_interface->currentSelection();
+
+    if ( !images.isValid() || images.images().isEmpty() )
+        return;
+
+    if (KMessageBox::warningYesNo(
+                     kapp->activeWindow(),
+                     i18n("XMP metadata will be permanently removed from all current selected pictures.\n"
+                          "Do you want to continue ?"),
+                     i18n("Remove XMP Metadata")) != KMessageBox::Yes)
+        return;
+
+    KUrl::List  imageURLs = images.images();
+    KUrl::List  updatedURLs;
+    QStringList errorFiles;
+
+    for( KUrl::List::iterator it = imageURLs.begin() ; 
+         it != imageURLs.end(); ++it)
+    {
+        KUrl url = *it;
+        bool ret = false;
+
+        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
+        {
+            ret = true;
+            KExiv2Iface::KExiv2 exiv2Iface;
+            ret &= exiv2Iface.load(url.path());
+            ret &= exiv2Iface.clearXmp();
+            ret &= exiv2Iface.save(url.path());
+        }
+        
+        if (!ret)
+            errorFiles.append(url.fileName());
+        else 
+            updatedURLs.append(url);
+    }
+
+    // We use kipi interface refreshImages() method to tell to host than 
+    // metadata from pictures have changed and need to be re-read.
+    
+    m_interface->refreshImages(updatedURLs);
+
+    if (!errorFiles.isEmpty())
+    {
+        KMessageBox::errorList(
+                    kapp->activeWindow(),
+                    i18n("Unable to remove XMP metadata from:"),
+                    errorFiles,
+                    i18n("Remove XMP Metadata"));  
+    }
 }
 
 void Plugin_MetadataEdit::slotImportXmp()
