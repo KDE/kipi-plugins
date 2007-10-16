@@ -165,9 +165,6 @@ IPTCCategories::IPTCCategories(QWidget* parent)
             d->subCategoryEdit, SLOT(setEnabled(bool)));
 
     connect(d->categoryCheck, SIGNAL(toggled(bool)),
-            d->subCategoriesBox, SLOT(setEnabled(bool)));
-
-    connect(d->categoryCheck, SIGNAL(toggled(bool)),
             d->addSubCategoryButton, SLOT(setEnabled(bool)));
 
     connect(d->categoryCheck, SIGNAL(toggled(bool)),
@@ -298,6 +295,19 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
     exiv2Iface.setIptc(iptcData);
     QString data;
 
+    // In first we handle all sub-categories.
+
+    d->subCategoriesBox->clear();
+    d->subCategoriesCheck->setChecked(false);
+    d->oldSubCategories = exiv2Iface.getIptcSubCategories();
+    if (!d->oldSubCategories.isEmpty())
+    {
+        d->subCategoriesBox->insertItems(0, d->oldSubCategories);
+        d->subCategoriesCheck->setChecked(true);
+    }
+
+    // And in second, the main category because all sub-categories status depand of this one.
+
     d->categoryEdit->clear();
     d->categoryCheck->setChecked(false);
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Category", false);    
@@ -308,15 +318,6 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
     }
     d->categoryEdit->setEnabled(d->categoryCheck->isChecked());
     d->subCategoriesCheck->setEnabled(d->categoryCheck->isChecked());
-
-    d->subCategoriesBox->clear();
-    d->subCategoriesCheck->setChecked(false);
-    d->oldSubCategories = exiv2Iface.getIptcSubCategories();
-    if (!d->oldSubCategories.isEmpty())
-    {
-        d->subCategoriesBox->insertItems(0, d->oldSubCategories);
-        d->subCategoriesCheck->setChecked(true);
-    }
     d->subCategoryEdit->setEnabled(d->categoryCheck->isChecked() && d->subCategoriesCheck->isChecked());
     d->subCategoriesBox->setEnabled(d->categoryCheck->isChecked() && d->subCategoriesCheck->isChecked());
     d->addSubCategoryButton->setEnabled(d->categoryCheck->isChecked() && d->subCategoriesCheck->isChecked());
