@@ -103,7 +103,10 @@ public:
         optionsBox       = 0;
 
         // Subject Codes map contents defined into IPTC/IIM spec.
+        // NOTE: Strings are not internationalized following IPTC spec. page 29.
         // http://www.iptc.org/std/IIM/4.1/specification/IIMV4.1.pdf
+        // The map is defined like this:
+        // Reference Number, Subject Name, Subject Matter Name, and Subject Detail Name.
 
         subMap.insert("01000000", SubjectData("Arts, Culture & Entertainment", "", ""));
         subMap.insert("01001000", SubjectData("Arts, Culture & Entertainment", "Archaeology", ""));
