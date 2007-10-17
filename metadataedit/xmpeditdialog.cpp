@@ -57,6 +57,7 @@
 #include "pluginsversion.h"
 #include "xmpkeywords.h"
 #include "xmpcategories.h"
+#include "xmpsubjects.h"
 
 /*
 #include "xmpcontent.h"
@@ -64,7 +65,6 @@
 #include "xmpstatus.h"
 #include "xmpproperties.h"
 #include "xmporigin.h"
-#include "xmpsubjects.h"
 #include "xmpenvelope.h"
 */
 
@@ -95,10 +95,10 @@ public:
         about           = 0;
         keywordsPage    = 0;
         categoriesPage  = 0;
+        subjectsPage    = 0;
 /*
         contentPage     = 0;
         propertiesPage  = 0;
-        subjectsPage    = 0;
         creditsPage     = 0;
         statusPage      = 0;
         originPage      = 0;
@@ -129,11 +129,11 @@ public:
 
     XMPKeywords              *keywordsPage;
     XMPCategories            *categoriesPage;
+    XMPSubjects              *subjectsPage;
 
 /*
     XMPContent               *contentPage;
     XMPProperties            *propertiesPage;
-    XMPSubjects              *subjectsPage;
     XMPCredits               *creditsPage;
     XMPStatus                *statusPage;
     XMPOrigin                *originPage;
@@ -183,13 +183,12 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
     d->page_credits->setHeader(i18n("<qt>Credits Information<br>"
                      "<i>Use this panel to record copyright information about the image</i></qt>"));
     d->page_credits->setIcon(KIcon("identity"));
-
+*/
     d->subjectsPage  = new XMPSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
     d->page_subjects->setHeader(i18n("<qt>Subjects Information<br>"
                       "<i>Use this panel to record subjects about the image</i></qt>"));
     d->page_subjects->setIcon(KIcon("note2"));
-*/
 
     d->keywordsPage  = new XMPKeywords(this);
     d->page_keywords = addPage(d->keywordsPage, i18n("Keywords"));
@@ -253,10 +252,9 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
 
     connect(d->propertiesPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
-
+*/
     connect(d->subjectsPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
-*/
 
     connect(d->keywordsPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
@@ -367,8 +365,8 @@ void XMPEditDialog::slotItemChanged()
     d->contentPage->readMetadata(d->xmpData);
     d->originPage->readMetadata(d->xmpData);
     d->creditsPage->readMetadata(d->xmpData);
-    d->subjectsPage->readMetadata(d->xmpData);
 */
+    d->subjectsPage->readMetadata(d->xmpData);
     d->keywordsPage->readMetadata(d->xmpData);
     d->categoriesPage->readMetadata(d->xmpData);
 /*
@@ -381,8 +379,8 @@ void XMPEditDialog::slotItemChanged()
     d->page_content->setEnabled(!d->isReadOnly);
     d->page_origin->setEnabled(!d->isReadOnly);
     d->page_credits->setEnabled(!d->isReadOnly);
-    d->page_subjects->setEnabled(!d->isReadOnly);
 */
+    d->page_subjects->setEnabled(!d->isReadOnly);
     d->page_keywords->setEnabled(!d->isReadOnly);
     d->page_categories->setEnabled(!d->isReadOnly);
 /*
@@ -421,8 +419,8 @@ void XMPEditDialog::slotApply()
         d->originPage->applyMetadata(d->exifData, d->xmpData);
 
         d->creditsPage->applyMetadata(d->xmpData);
-        d->subjectsPage->applyMetadata(d->xmpData);
 */
+        d->subjectsPage->applyMetadata(d->xmpData);
         d->keywordsPage->applyMetadata(d->xmpData);
         d->categoriesPage->applyMetadata(d->xmpData);
 /*

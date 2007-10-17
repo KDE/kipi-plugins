@@ -21,8 +21,9 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       iptcenvelope.cpp
                                       iptceditdialog.cpp 
                                       xmpeditdialog.cpp 
-				      xmpkeywords.cpp
-				      xmpcategories.cpp
+                                      xmpkeywords.cpp
+                                      xmpcategories.cpp
+                                      xmpsubjects.cpp
                                       commenteditdialog.cpp
                                       commentremovedialog.cpp
    )
