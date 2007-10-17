@@ -644,7 +644,7 @@ bool XMPSubjects::loadSubjectCodesFromXML(const KUrl& url)
         if (it.key().endsWith("000"))
         {
             keyPrefix = it.key().left(5);
-            matter     = it.value().matter;
+            matter    = it.value().matter;
 
             for (XMPSubjectsPriv::SubjectCodesMap::Iterator it2 = d->subMap.begin();
                 it2 != d->subMap.end(); ++it2)
