@@ -51,6 +51,7 @@ signals:
 
 private slots:
 
+    void slotSubjectsToggled(bool);
     void slotRefChanged();
     void slotEditOptionChanged(int);
     void slotSubjectSelectionChanged();

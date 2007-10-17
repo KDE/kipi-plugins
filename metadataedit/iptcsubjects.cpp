@@ -525,13 +525,12 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     QGridLayout *grid2 = new QGridLayout(d->optionsBox);
     d->btnGroup        = new QButtonGroup(d->optionsBox);
     KHBox *hbox        = new KHBox(d->optionsBox);
-    d->stdBtn          = new QRadioButton(i18n("Use standard "), hbox);
-    QLabel *codeDesc   = new QLabel("<b><a href='http://www.iptc.org/NewsCodes'>reference code</a></b>",
-                                    hbox);
+    d->stdBtn          = new QRadioButton(i18n("Use standard"), hbox);
+    QLabel *codeLink   = new QLabel("<b><a href='http://www.iptc.org/NewsCodes'>reference code</a></b>", hbox);
     d->refCB           = new QComboBox(d->optionsBox);
     d->customBtn       = new QRadioButton(i18n("Use custom definition"), d->optionsBox);
-    codeDesc->setOpenExternalLinks(true);
-    codeDesc->setWordWrap(true);
+    codeLink->setOpenExternalLinks(true);
+    codeLink->setWordWrap(true);
     hbox->setMargin(0);
     hbox->setSpacing(0);
 
@@ -681,19 +680,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     // --------------------------------------------------------
 
     connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->optionsBox, SLOT(setEnabled(bool)));
-    
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->subjectsBox, SLOT(setEnabled(bool)));
-
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->addSubjectButton, SLOT(setEnabled(bool)));
-
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->delSubjectButton, SLOT(setEnabled(bool)));
-
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
-            d->repSubjectButton, SLOT(setEnabled(bool)));
+            this, SLOT(slotSubjectsToggled(bool)));
 
     // --------------------------------------------------------
 
@@ -713,6 +700,16 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 IPTCSubjects::~IPTCSubjects()
 {
     delete d;
+}
+
+void IPTCSubjects::slotSubjectsToggled(bool b)
+{
+    d->optionsBox->setEnabled(b);
+    d->subjectsBox->setEnabled(b);
+    d->addSubjectButton->setEnabled(b);
+    d->delSubjectButton->setEnabled(b);
+    d->repSubjectButton->setEnabled(b);
+    slotEditOptionChanged(d->btnGroup->id(d->btnGroup->checkedButton()));
 }
 
 void IPTCSubjects::slotEditOptionChanged(int b)
@@ -744,6 +741,7 @@ void IPTCSubjects::slotEditOptionChanged(int b)
         d->nameEdit->setEnabled(false);
         d->matterEdit->setEnabled(false);
         d->detailEdit->setEnabled(false);
+        slotRefChanged(); 
     }
 }
 
@@ -869,16 +867,8 @@ void IPTCSubjects::readMetadata(QByteArray& iptcData)
         d->subjectsBox->insertItems(0, d->oldSubjects);
         d->subjectsCheck->setChecked(true);
     }
-    d->iprEdit->setEnabled(d->subjectsCheck->isChecked());
-    d->refEdit->setEnabled(d->subjectsCheck->isChecked());
-    d->nameEdit->setEnabled(d->subjectsCheck->isChecked());
-    d->matterEdit->setEnabled(d->subjectsCheck->isChecked());
-    d->detailEdit->setEnabled(d->subjectsCheck->isChecked());
-    d->subjectsBox->setEnabled(d->subjectsCheck->isChecked());
-    d->addSubjectButton->setEnabled(d->subjectsCheck->isChecked());
-    d->delSubjectButton->setEnabled(d->subjectsCheck->isChecked());
-
     blockSignals(false);
+    slotSubjectsToggled(d->subjectsCheck->isChecked());
 }
 
 void IPTCSubjects::applyMetadata(QByteArray& iptcData)
