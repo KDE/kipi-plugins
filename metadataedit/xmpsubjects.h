@@ -28,6 +28,10 @@
 #include <QWidget>
 #include <QByteArray>
 
+// KDE includes.
+
+#include <kurl.h>
+
 namespace KIPIMetadataEditPlugin
 {
 
@@ -61,6 +65,7 @@ private slots:
 
 private:
 
+    bool loadSubjectCodesFromXML(const KUrl& url);
     QString buildSubject() const;
 
 private:
