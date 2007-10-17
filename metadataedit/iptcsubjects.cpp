@@ -34,6 +34,7 @@
 
 // KDE includes.
 
+#include <khbox.h>
 #include <klocale.h>
 #include <kdialog.h>
 #include <klistwidget.h>
@@ -513,13 +514,6 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     QRegExp refDigitRx("^[0-9]{8}$");
     QValidator *refValidator = new QRegExpValidator(refDigitRx, this);
 
-    // --------------------------------------------------------
-
-    QLabel *codeDesc = new QLabel(i18n("Subject codes are defined at "
-           "<b><a href='http://www.iptc.org/NewsCodes'>www.iptc.org/NewsCodes</a></b></b>"), this);
-    codeDesc->setOpenExternalLinks(true);
-    codeDesc->setWordWrap(true);
-
     d->subjectsCheck = new QCheckBox(i18n("Use structured definition of the subject matter:"), this);    
 
     // --------------------------------------------------------
@@ -527,9 +521,17 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->optionsBox      = new QWidget(this);
     QGridLayout *grid2 = new QGridLayout(d->optionsBox);
     d->btnGroup        = new QButtonGroup(d->optionsBox);
-    d->stdBtn          = new QRadioButton(i18n("Use standard reference code"), d->optionsBox);
+    KHBox *hbox        = new KHBox(d->optionsBox);
+    d->stdBtn          = new QRadioButton(i18n("Use standard "), hbox);
+    QLabel *codeDesc   = new QLabel("<b><a href='http://www.iptc.org/NewsCodes'>reference code</a></b>",
+                                    hbox);
     d->refCB           = new QComboBox(d->optionsBox);
     d->customBtn       = new QRadioButton(i18n("Use custom definition"), d->optionsBox);
+    codeDesc->setOpenExternalLinks(true);
+    codeDesc->setWordWrap(true);
+    hbox->setMargin(0);
+    hbox->setSpacing(0);
+
     d->btnGroup->addButton(d->stdBtn,    IPTCSubjectsPriv::STANDARD);
     d->btnGroup->addButton(d->customBtn, IPTCSubjectsPriv::CUSTOM);
     d->btnGroup->setExclusive(true);
@@ -594,7 +596,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid2->addWidget(d->stdBtn, 0, 0, 1, 2);
+    grid2->addWidget(hbox, 0, 0, 1, 2);
     grid2->addWidget(d->refCB, 0, 2, 1, 1);
     grid2->addWidget(d->customBtn, 1, 0, 1, 4);
     grid2->addWidget(d->iprLabel, 2, 0, 1, 1);
@@ -641,15 +643,14 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(codeDesc, 0, 0, 1, 4);
-    grid->addWidget(d->subjectsCheck, 1, 0, 1, 4);
-    grid->addWidget(d->optionsBox, 2, 0, 1, 4);
-    grid->addWidget(d->subjectsBox, 3, 0, 5, 3);
-    grid->addWidget(d->addSubjectButton, 3, 3, 1, 1);
-    grid->addWidget(d->delSubjectButton, 4, 3, 1, 1);
-    grid->addWidget(d->repSubjectButton, 5, 3, 1, 1);
-    grid->addWidget(note, 6, 3, 1, 1);
-    grid->setRowStretch(7, 10);  
+    grid->addWidget(d->subjectsCheck, 0, 0, 1, 4);
+    grid->addWidget(d->optionsBox, 1, 0, 1, 4);
+    grid->addWidget(d->subjectsBox, 2, 0, 5, 3);
+    grid->addWidget(d->addSubjectButton, 2, 3, 1, 1);
+    grid->addWidget(d->delSubjectButton, 3, 3, 1, 1);
+    grid->addWidget(d->repSubjectButton, 4, 3, 1, 1);
+    grid->addWidget(note, 5, 3, 1, 1);
+    grid->setRowStretch(6, 10);  
     grid->setColumnStretch(2, 1);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());    
