@@ -1,5 +1,6 @@
 SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp 
                                       metadatacheckbox.cpp
+                                      altlangstringedit.cpp
                                       multistringsedit.cpp
                                       multivaluesedit.cpp
                                       objectattributesedit.cpp
@@ -21,6 +22,7 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       iptcenvelope.cpp
                                       iptceditdialog.cpp 
                                       xmpeditdialog.cpp 
+				      xmpcontent.cpp
                                       xmpkeywords.cpp
                                       xmpcategories.cpp
                                       xmpsubjects.cpp
