@@ -136,18 +136,18 @@ IPTCContent::IPTCContent(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->headlineCheck, 0, 0, 1, 3);
-    grid->addWidget(d->headlineEdit, 1, 0, 1, 3);
-    grid->addWidget(d->captionCheck, 2, 0, 1, 3);
-    grid->addWidget(d->captionEdit, 3, 0, 1, 3);
-    grid->addWidget(d->syncJFIFCommentCheck, 4, 0, 1, 3);
-    grid->addWidget(d->syncHOSTCommentCheck, 5, 0, 1, 3);
-    grid->addWidget(d->syncEXIFCommentCheck, 6, 0, 1, 3);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 7, 0, 1, 3);
-    grid->addWidget(d->writerEdit, 8, 0, 1, 3);
-    grid->addWidget(note, 9, 0, 1, 3 );
+    grid->addWidget(d->headlineCheck, 0, 0, 1, 1);
+    grid->addWidget(d->headlineEdit, 0, 1, 1, 2);
+    grid->addWidget(d->captionCheck, 1, 0, 1, 3);
+    grid->addWidget(d->captionEdit, 2, 0, 1, 3);
+    grid->addWidget(d->syncJFIFCommentCheck, 3, 0, 1, 3);
+    grid->addWidget(d->syncHOSTCommentCheck, 4, 0, 1, 3);
+    grid->addWidget(d->syncEXIFCommentCheck, 5, 0, 1, 3);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 6, 0, 1, 3);
+    grid->addWidget(d->writerEdit, 7, 0, 1, 3);
+    grid->addWidget(note, 8, 0, 1, 3 );
+    grid->setRowStretch(9, 10);  
     grid->setColumnStretch(2, 10);                     
-    grid->setRowStretch(10, 10);  
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());    
 
