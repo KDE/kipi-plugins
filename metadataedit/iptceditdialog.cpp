@@ -171,7 +171,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->page_credits = addPage(d->creditsPage, i18n("Credits"));
     d->page_credits->setHeader(i18n("<qt>Credits Information<br>"
                      "<i>Use this panel to record copyright information about the image</i></qt>"));
-    d->page_credits->setIcon(KIcon("identity"));
+    d->page_credits->setIcon(KIcon("kontact-contacts"));
 
     d->subjectsPage  = new IPTCSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
@@ -189,7 +189,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->page_categories = addPage(d->categoriesPage, i18n("Categories"));
     d->page_categories->setHeader(i18n("<qt>Categories Information<br>"
                         "<i>Use this panel to record categories about the image</i></qt>"));
-    d->page_categories->setIcon(KIcon("bookmark-folder"));
+    d->page_categories->setIcon(KIcon("flag"));
 
     d->statusPage  = new IPTCStatus(this);
     d->page_status = addPage(d->statusPage, i18n("Status"));
