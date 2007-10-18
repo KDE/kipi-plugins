@@ -94,7 +94,8 @@ EXIFCaption::EXIFCaption(QWidget* parent)
            : QWidget(parent)
 {
     d = new EXIFCaptionPriv;
-    QVBoxLayout *vlay = new QVBoxLayout(this);
+
+    QGridLayout* grid = new QGridLayout(this);
 
     // EXIF only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
@@ -102,7 +103,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
   
     // --------------------------------------------------------
 
-    d->documentNameCheck = new QCheckBox(i18n("Document name (*):"), this);
+    d->documentNameCheck = new QCheckBox(i18n("Name (*):"), this);
     d->documentNameEdit  = new KLineEdit(this);
     d->documentNameEdit->setClearButtonShown(true);
     d->documentNameEdit->setValidator(asciiValidator);
@@ -112,7 +113,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->imageDescCheck = new QCheckBox(i18n("Image description (*):"), this);
+    d->imageDescCheck = new QCheckBox(i18n("Title (*):"), this);
     d->imageDescEdit  = new KLineEdit(this);
     d->imageDescEdit->setClearButtonShown(true);
     d->imageDescEdit->setValidator(asciiValidator);
@@ -169,24 +170,25 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     // --------------------------------------------------------
 
-    vlay->addWidget(d->documentNameCheck);
-    vlay->addWidget(d->documentNameEdit);
-    vlay->addWidget(d->imageDescCheck);
-    vlay->addWidget(d->imageDescEdit);
-    vlay->addWidget(d->artistCheck);
-    vlay->addWidget(d->artistEdit);
-    vlay->addWidget(d->copyrightCheck);
-    vlay->addWidget(d->copyrightEdit);
-    vlay->addWidget(d->userCommentCheck);
-    vlay->addWidget(d->userCommentEdit);
-    vlay->addWidget(d->syncHOSTCommentCheck);
-    vlay->addWidget(d->syncJFIFCommentCheck);
-    vlay->addWidget(d->syncXMPCaptionCheck);
-    vlay->addWidget(d->syncIPTCCaptionCheck);
-    vlay->addWidget(note);
-    vlay->addStretch();
-    vlay->setMargin(0);
-    vlay->setSpacing(KDialog::spacingHint());
+    grid->addWidget(d->documentNameCheck, 0, 0, 1, 1);
+    grid->addWidget(d->documentNameEdit, 0, 1, 1, 2);
+    grid->addWidget(d->imageDescCheck, 1, 0, 1, 1);
+    grid->addWidget(d->imageDescEdit, 1, 1, 1, 2);
+    grid->addWidget(d->artistCheck, 2, 0, 1, 1);
+    grid->addWidget(d->artistEdit, 2, 1, 1, 2);
+    grid->addWidget(d->copyrightCheck, 3, 0, 1, 1);
+    grid->addWidget(d->copyrightEdit, 3, 1, 1, 2);
+    grid->addWidget(d->userCommentCheck, 4, 0, 1, 3);
+    grid->addWidget(d->userCommentEdit, 5, 0, 1, 3);
+    grid->addWidget(d->syncHOSTCommentCheck, 6, 0, 1, 3);
+    grid->addWidget(d->syncJFIFCommentCheck, 7, 0, 1, 3);
+    grid->addWidget(d->syncXMPCaptionCheck, 8, 0, 1, 3);
+    grid->addWidget(d->syncIPTCCaptionCheck, 9, 0, 1, 3);
+    grid->addWidget(note, 10, 0, 1, 3);
+    grid->setRowStretch(11, 10);  
+    grid->setColumnStretch(2, 10);      
+    grid->setMargin(0);
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
