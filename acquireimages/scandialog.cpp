@@ -135,7 +135,7 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneW
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
 
-    connect(d->saneWidget, SIGNAL(imageReady()),
+    connect(d->saneWidget, SIGNAL(imageReady(uchar*, int, int, int, int)),
             this, SLOT(slotSaveImage()));
 }
 
