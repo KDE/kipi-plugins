@@ -210,9 +210,7 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     exiv2Iface.setXmp(xmpData);
     QString     data;
     QStringList list;
-
-/*    d->captionEdit->clear();
-    d->captionCheck->setChecked(false);
+/*
     data = exiv2Iface.getIptcTagString("Iptc.Application2.Caption", false);    
     if (!data.isNull())
     {

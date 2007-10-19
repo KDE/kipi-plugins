@@ -48,7 +48,6 @@ public:
     QString text;  
 };
 
-
 class AltLangStringsEdit : public QWidget
 {
     Q_OBJECT
@@ -64,6 +63,9 @@ public:
 
     void setValues(const AltLangDataList& values);
     bool getValues(AltLangDataList& oldValues, AltLangDataList& newValues);
+
+    void setValid(bool v);
+    bool isValid() const;
 
 signals:
 

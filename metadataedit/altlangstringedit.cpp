@@ -23,7 +23,6 @@
 
 // QT includes.
 
-#include <Q3Header>
 #include <QLayout>
 #include <QLabel>
 #include <QCheckBox>
@@ -31,7 +30,7 @@
 
 // KDE includes.
 
-#include <k3listview.h>
+#include <klistwidget.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kdialog.h>
@@ -45,6 +44,7 @@
 
 // Local includes.
 
+#include "metadatacheckbox.h"
 #include "altlangstringedit.h"
 #include "altlangstringedit.moc"
 
@@ -60,9 +60,9 @@ public:
         addValueButton = 0;
         delValueButton = 0;
         repValueButton = 0;
-        listView       = 0;
+        valueBox       = 0;
         valueCheck     = 0;
-        textEdit       = 0;
+        valueBox       = 0;
         languageBtn    = 0;
     }
 
@@ -72,17 +72,16 @@ public:
     QPushButton                         *delValueButton;
     QPushButton                         *repValueButton;
 
-    QCheckBox                           *valueCheck;
-
-    K3ListView                          *listView;
+    KListWidget                         *valueBox;
 
     KLanguageButton                     *languageBtn;
 
-    KTextEdit                           *textEdit;
+    KTextEdit                           *valueEdit;
+
+    MetadataCheckBox                    *valueCheck;
 };
 
-AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title,
-                                       const QString& desc)
+AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, const QString& desc)
                   : QWidget(parent)
 {
     d = new AltLangStringsEditPriv;
@@ -91,7 +90,7 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title,
 
     // --------------------------------------------------------
 
-    d->valueCheck = new QCheckBox(title, this);    
+    d->valueCheck = new MetadataCheckBox(title, this);  
 
     d->addValueButton = new QPushButton(this);
     d->delValueButton = new QPushButton(this);
@@ -105,33 +104,21 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title,
     d->delValueButton->setEnabled(false);
     d->repValueButton->setEnabled(false);
 
-    d->listView = new K3ListView(this);
-    d->listView->header()->hide();
-    d->listView->addColumn("Language"); // No need i18n here
-    d->listView->addColumn("Text");     // No need i18n here
-    d->listView->setResizeMode(Q3ListView::AllColumns);
-    d->listView->setAllColumnsShowFocus(true);
-    d->listView->setSorting(-1);
-    d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->listView->setSelectionMode(Q3ListView::Single);
-    d->listView->setFullWidth(true);
-
-    new K3ListViewItem(d->listView, d->listView->lastItem(), QString("default"), 
-                       QString("zobby la mouche"));
-    new K3ListViewItem(d->listView, d->listView->lastItem(), QString("French"), 
-                       QString("zobby la mouche"));
-    new K3ListViewItem(d->listView, d->listView->lastItem(), QString("English"), 
-                       QString("zobby la mouche"));
+    d->valueBox  = new KListWidget(this);
+    d->valueBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    d->valueBox->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     d->languageBtn   = new KLanguageButton(this);
+    d->languageBtn->insertLanguage("x-default", "Default");
+    d->languageBtn->insertSeparator();
     d->languageBtn->setMaximumHeight( fontMetrics().height()+2 );
     QStringList list = KGlobal::locale()->allLanguagesList();
     for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
         d->languageBtn->insertLanguage(*it);
 
-    d->textEdit = new KTextEdit(this);
-    d->textEdit->setWhatsThis(desc);
-    d->textEdit->setMaximumHeight( fontMetrics().height()*3 ); // 3 lines used to edit text.
+    d->valueEdit = new KTextEdit(this);
+    d->valueEdit->setWhatsThis(desc);
+    d->valueEdit->setMaximumHeight( fontMetrics().height()*3 ); // 3 lines used to edit text.
 
     // --------------------------------------------------------
 
@@ -142,8 +129,8 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title,
     grid->addWidget(d->repValueButton, 0, 4, 1, 1);
     grid->addWidget(new QLabel(i18n("Language:")), 1, 0, 1, 1);
     grid->addWidget(d->languageBtn, 1, 1, 1, 4);
-    grid->addWidget(d->textEdit, 2, 0, 1, 5);
-    grid->addWidget(d->listView, 0, 5, 3, 1);
+    grid->addWidget(d->valueEdit, 2, 0, 1, 5);
+    grid->addWidget(d->valueBox, 0, 5, 3, 1);
     grid->setColumnStretch(1, 10);   
     grid->setColumnStretch(5, 100);                     
     grid->setMargin(0);
@@ -151,7 +138,7 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title,
                                          
     // --------------------------------------------------------
 
-    connect(d->listView, SIGNAL(selectionChanged()),
+    connect(d->valueBox, SIGNAL(itemSelectionChanged()),
             this, SLOT(slotSelectionChanged()));
     
     connect(d->addValueButton, SIGNAL(clicked()),
@@ -169,7 +156,7 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title,
             this, SIGNAL(signalToggled(bool)));
 
     connect(d->valueCheck, SIGNAL(toggled(bool)),
-            d->textEdit, SLOT(setEnabled(bool)));
+            d->valueEdit, SLOT(setEnabled(bool)));
 
     connect(d->valueCheck, SIGNAL(toggled(bool)),
             d->addValueButton, SLOT(setEnabled(bool)));
@@ -181,7 +168,7 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title,
             d->repValueButton, SLOT(setEnabled(bool)));
 
     connect(d->valueCheck, SIGNAL(toggled(bool)),
-            d->listView, SLOT(setEnabled(bool)));
+            d->valueBox, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
 
@@ -201,6 +188,16 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title,
 AltLangStringsEdit::~AltLangStringsEdit()
 {
     delete d;
+}
+
+void AltLangStringsEdit::setValid(bool v) 
+{
+    d->valueCheck->setValid(v); 
+}
+
+bool AltLangStringsEdit::isValid() const 
+{
+    return d->valueCheck->isValid(); 
 }
 
 void AltLangStringsEdit::slotDeleteValue()
@@ -240,8 +237,11 @@ void AltLangStringsEdit::slotSelectionChanged()
 
 void AltLangStringsEdit::slotAddValue()
 {
-/*    QString newValue = d->valueEdit->text();
-    if (newValue.isEmpty()) return;
+    QString lang = d->languageBtn->current();
+    QString text = d->valueEdit->toPlainText();
+    if (text.isEmpty()) return;
+    
+    QString newValue = QString("[%1] %2").arg(lang).arg(text);
 
     bool found = false;
     for (int i = 0 ; i < d->valueBox->count(); i++)
@@ -258,7 +258,7 @@ void AltLangStringsEdit::slotAddValue()
     {
         d->valueBox->insertItem(d->valueBox->count(), newValue);
         d->valueEdit->clear();
-    }*/
+    }
 }
 
 void AltLangStringsEdit::setValues(const AltLangDataList& values)
@@ -266,17 +266,22 @@ void AltLangStringsEdit::setValues(const AltLangDataList& values)
     blockSignals(true);
     d->oldValues = values;
 
-/*    d->valueBox->clear();
+    d->valueBox->clear();
     d->valueCheck->setChecked(false);
     if (!d->oldValues.isEmpty())
     {
-        d->valueBox->insertItems(0, d->oldValues);
+        for (AltLangDataList::Iterator it = d->oldValues.begin(); it != d->oldValues.end(); ++it)
+        {
+            QString newValue = QString("[%1] %2").arg((*it).lang).arg((*it).text);
+            d->valueBox->insertItem(0, newValue);    
+        }
+
         d->valueCheck->setChecked(true);
     }
     d->valueEdit->setEnabled(d->valueCheck->isChecked());
     d->valueBox->setEnabled(d->valueCheck->isChecked());
     d->addValueButton->setEnabled(d->valueCheck->isChecked());
-    d->delValueButton->setEnabled(d->valueCheck->isChecked());*/
+    d->delValueButton->setEnabled(d->valueCheck->isChecked());
 
     blockSignals(false);
 }
@@ -286,11 +291,13 @@ bool AltLangStringsEdit::getValues(AltLangDataList& oldValues, AltLangDataList& 
     oldValues = d->oldValues;
 
     newValues.clear();
-/*    for (int i = 0 ; i < d->valueBox->count(); i++)
+    for (int i = 0 ; i < d->valueBox->count(); i++)
     {
         QListWidgetItem *item = d->valueBox->item(i);
-        newValues.append(item->text());
-    }*/
+        QString lang = item->text().left(item->text().indexOf("] ")).right(1);
+        QString text = item->text().right(item->text().indexOf("] ")+2);
+        newValues.append(AltLangData(lang, text));
+    }
 
     return d->valueCheck->isChecked();
 }
