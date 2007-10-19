@@ -45,7 +45,6 @@
 // Local includes.
 
 #include "altlangstringedit.h"
-#include "multistringsedit.h"
 #include "xmpcontent.h"
 #include "xmpcontent.moc"
 
@@ -58,6 +57,7 @@ public:
 
     XMPContentPriv()
     {
+        writerCheck             = 0;
         headlineCheck           = 0;
         captionEdit             = 0;
         writerEdit              = 0;
@@ -71,12 +71,13 @@ public:
     QCheckBox          *syncJFIFCommentCheck;
     QCheckBox          *syncHOSTCommentCheck;
     QCheckBox          *syncEXIFCommentCheck;
+    QCheckBox          *writerCheck;
 
     KLineEdit          *headlineEdit;
 
     AltLangStringsEdit *captionEdit;
 
-    MultiStringsEdit   *writerEdit;
+    KLineEdit          *writerEdit;
 };
 
 XMPContent::XMPContent(QWidget* parent)
@@ -106,9 +107,10 @@ XMPContent::XMPContent(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->writerEdit  = new MultiStringsEdit(this, i18n("Caption Writer:"), 
-                                          i18n("<p>Enter the name of the caption author."), 
-                                          false);
+    d->writerCheck = new QCheckBox(i18n("Caption Writer:"), this);
+    d->writerEdit  = new KLineEdit(this);
+    d->writerEdit->setClearButtonShown(true);
+    d->writerEdit->setWhatsThis(i18n("<p>Enter the name of the caption author."));
         
     // --------------------------------------------------------
 
@@ -119,7 +121,8 @@ XMPContent::XMPContent(QWidget* parent)
     grid->addWidget(d->syncHOSTCommentCheck, 3, 0, 1, 3);
     grid->addWidget(d->syncEXIFCommentCheck, 4, 0, 1, 3);
     grid->addWidget(new KSeparator(Qt::Horizontal, this), 5, 0, 1, 3);
-    grid->addWidget(d->writerEdit, 6, 0, 1, 3);
+    grid->addWidget(d->writerCheck, 6, 0, 1, 1);
+    grid->addWidget(d->writerEdit, 6, 1, 1, 2);
     grid->setRowStretch(7, 10);  
     grid->setColumnStretch(2, 10);                     
     grid->setMargin(0);
@@ -142,12 +145,15 @@ XMPContent::XMPContent(QWidget* parent)
     connect(d->headlineCheck, SIGNAL(toggled(bool)),
             d->headlineEdit, SLOT(setEnabled(bool)));
 
+    connect(d->writerCheck, SIGNAL(toggled(bool)),
+            d->writerEdit, SLOT(setEnabled(bool)));
+
     // --------------------------------------------------------
 
     connect(d->captionEdit, SIGNAL(signalToggled(bool)),
             this, SIGNAL(signalModified()));
 
-    connect(d->writerEdit, SIGNAL(signalModified()),
+    connect(d->writerCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
     connect(d->headlineCheck, SIGNAL(toggled(bool)),
@@ -159,6 +165,9 @@ XMPContent::XMPContent(QWidget* parent)
             this, SIGNAL(signalModified()));
     
     connect(d->headlineEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->writerEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 }
 
@@ -237,10 +246,15 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     d->syncJFIFCommentCheck->setEnabled(d->captionEdit->isValid());
     d->syncHOSTCommentCheck->setEnabled(d->captionEdit->isValid());
     d->syncEXIFCommentCheck->setEnabled(d->captionEdit->isValid());
-/*
-    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Writer", false);    
-    d->writerEdit->setValues(list);
-*/
+
+    data = exiv2Iface.getXmpTagString("Xmp.photoshop.CaptionWriter", false);    
+    if (!data.isNull())
+    {
+        d->writerEdit->setText(data);
+        d->writerCheck->setChecked(true);
+    }
+    d->writerEdit->setEnabled(d->writerCheck->isChecked());
+
     blockSignals(false);
 }
 
@@ -268,13 +282,13 @@ void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
     }
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
-
-    QStringList oldList, newList;
-    if (d->writerEdit->getValues(oldList, newList))
-        exiv2Iface.setIptcTagsStringList("Iptc.Application2.Writer", 32, oldList, newList);
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Writer");
 */
+
+    if (d->writerCheck->isChecked())
+        exiv2Iface.setXmpTagString("Xmp.photoshop.CaptionWriter", d->writerEdit->text());
+    else
+        exiv2Iface.removeXmpTag("Xmp.photoshop.CaptionWriter");
+
     exifData = exiv2Iface.getExif();
     xmpData = exiv2Iface.getXmp();
 }
