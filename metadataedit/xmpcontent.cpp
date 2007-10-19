@@ -210,24 +210,10 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     exiv2Iface.setXmp(xmpData);
     QString     data;
     QStringList list;
-/*
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Caption", false);    
-    if (!data.isNull())
-    {
-        d->captionEdit->setText(data);
-        d->captionCheck->setChecked(true);
-    }
-    d->captionEdit->setEnabled(d->captionCheck->isChecked());
-    d->syncJFIFCommentCheck->setEnabled(d->captionCheck->isChecked());
-    d->syncHOSTCommentCheck->setEnabled(d->captionCheck->isChecked());
-    d->syncEXIFCommentCheck->setEnabled(d->captionCheck->isChecked());
-
-    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Writer", false);    
-    d->writerEdit->setValues(list);
 
     d->headlineEdit->clear();
     d->headlineCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Headline", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Headline", false);    
     if (!data.isNull())
     {
         d->headlineEdit->setText(data);
@@ -235,7 +221,27 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     }
     d->headlineEdit->setEnabled(d->headlineCheck->isChecked());
 
-    blockSignals(false);*/
+    d->captionEdit->setValid(false);
+    list = exiv2Iface.getXmpRedondantTagsString("Xmp.dc.description", false);    
+    if (!list.isEmpty())
+    {
+        AltLangDataList altLangList;
+        for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
+        {
+            QString lang;
+            QString text = KExiv2Iface::KExiv2::detectLanguageAlt(*it, lang);
+            altLangList.append(AltLangData(lang, text));
+        }
+        d->captionEdit->setValues(altLangList);
+    }
+    d->syncJFIFCommentCheck->setEnabled(d->captionEdit->isValid());
+    d->syncHOSTCommentCheck->setEnabled(d->captionEdit->isValid());
+    d->syncEXIFCommentCheck->setEnabled(d->captionEdit->isValid());
+/*
+    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Writer", false);    
+    d->writerEdit->setValues(list);
+*/
+    blockSignals(false);
 }
 
 void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
@@ -243,6 +249,12 @@ void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     exiv2Iface.setXmp(xmpData);
+
+    if (d->headlineCheck->isChecked())
+        exiv2Iface.setXmpTagString("Xmp.photoshop.Headline", d->headlineEdit->text());
+    else
+        exiv2Iface.removeXmpTag("Xmp.photoshop.Headline");
+
 /*
     if (d->captionCheck->isChecked())
     {
@@ -262,11 +274,6 @@ void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
         exiv2Iface.setIptcTagsStringList("Iptc.Application2.Writer", 32, oldList, newList);
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Writer");
-
-    if (d->headlineCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Headline", d->headlineEdit->text());
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Headline");
 */
     exifData = exiv2Iface.getExif();
     xmpData = exiv2Iface.getXmp();

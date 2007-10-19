@@ -48,14 +48,12 @@ public:
     QString text;  
 };
 
+typedef QList<AltLangData> AltLangDataList; 
+
 class AltLangStringsEdit : public QWidget
 {
     Q_OBJECT
     
-public:
-
-    typedef QList<AltLangData> AltLangDataList; 
-
 public:
 
     AltLangStringsEdit(QWidget* parent, const QString& title, const QString& desc);

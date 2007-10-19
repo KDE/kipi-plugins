@@ -66,19 +66,19 @@ public:
         languageBtn    = 0;
     }
 
-    AltLangStringsEdit::AltLangDataList  oldValues;
+    AltLangDataList   oldValues;
 
-    QPushButton                         *addValueButton;
-    QPushButton                         *delValueButton;
-    QPushButton                         *repValueButton;
+    QPushButton      *addValueButton;
+    QPushButton      *delValueButton;
+    QPushButton      *repValueButton;
 
-    KListWidget                         *valueBox;
+    KListWidget      *valueBox;
 
-    KLanguageButton                     *languageBtn;
+    KLanguageButton  *languageBtn;
 
-    KTextEdit                           *valueEdit;
+    KTextEdit        *valueEdit;
 
-    MetadataCheckBox                    *valueCheck;
+    MetadataCheckBox *valueCheck;
 };
 
 AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, const QString& desc)
