@@ -131,9 +131,6 @@ XMPContent::XMPContent(QWidget* parent)
     // --------------------------------------------------------
                                      
     connect(d->captionEdit, SIGNAL(signalToggled(bool)),
-            d->captionEdit, SLOT(setEnabled(bool)));
-
-    connect(d->captionEdit, SIGNAL(signalToggled(bool)),
             d->syncJFIFCommentCheck, SLOT(setEnabled(bool)));
 
     connect(d->captionEdit, SIGNAL(signalToggled(bool)),
@@ -269,20 +266,15 @@ void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
     else
         exiv2Iface.removeXmpTag("Xmp.photoshop.Headline");
 
-/*
-    if (d->captionCheck->isChecked())
+    AltLangDataList oldAltLangList, newAltLangList;
+    if (d->captionEdit->getValues(oldAltLangList, newAltLangList))
     {
-        exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->captionEdit->toPlainText());
-
-        if (syncEXIFCommentIsChecked())
-            exiv2Iface.setExifComment(d->captionEdit->toPlainText());
-
-        if (syncJFIFCommentIsChecked())
-            exiv2Iface.setComments(d->captionEdit->toPlainText().toUtf8());
+        exiv2Iface.removeXmpTag("Xmp.dc.description");
+        for (AltLangDataList::Iterator it = newAltLangList.begin(); it != newAltLangList.end(); ++it)
+            exiv2Iface.setXmpTagStringLangAlt("Xmp.dc.description", (*it).text, (*it).lang, false);
     }
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
-*/
+    else if (d->captionEdit->isValid())
+        exiv2Iface.removeXmpTag("Xmp.dc.description");
 
     if (d->writerCheck->isChecked())
         exiv2Iface.setXmpTagString("Xmp.photoshop.CaptionWriter", d->writerEdit->text());
@@ -290,7 +282,7 @@ void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
         exiv2Iface.removeXmpTag("Xmp.photoshop.CaptionWriter");
 
     exifData = exiv2Iface.getExif();
-    xmpData = exiv2Iface.getXmp();
+    xmpData  = exiv2Iface.getXmp();
 }
 
 }  // namespace KIPIMetadataEditPlugin
