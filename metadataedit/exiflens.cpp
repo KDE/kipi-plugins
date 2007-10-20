@@ -137,8 +137,8 @@ public:
 
     KIntSpinBox      *focalLength35mmEdit;
 
-    KDoubleSpinBox   *focalLengthEdit;
-    KDoubleSpinBox   *digitalZoomRatioEdit;
+    QDoubleSpinBox   *focalLengthEdit;
+    QDoubleSpinBox   *digitalZoomRatioEdit;
 
     MetadataCheckBox *apertureCheck;
     MetadataCheckBox *maxApertureCheck;
@@ -154,7 +154,11 @@ EXIFLens::EXIFLens(QWidget* parent)
     // --------------------------------------------------------
 
     d->focalLengthCheck = new QCheckBox(i18n("Focal length (mm):"), this);
-    d->focalLengthEdit  = new KDoubleSpinBox(1.0, 10000.0, 1.0, 50.0, this, 1);
+    d->focalLengthEdit  = new QDoubleSpinBox(this);
+    d->focalLengthEdit->setRange(1.0, 10000.0);
+    d->focalLengthEdit->setSingleStep(1.0);
+    d->focalLengthEdit->setValue(50.0);
+    d->focalLengthEdit->setDecimals(1);
     d->focalLengthEdit->setWhatsThis(i18n("<p>Set here the lens focal length in milimeters "
                                           "used by camera to take the picture."));
 
@@ -169,7 +173,11 @@ EXIFLens::EXIFLens(QWidget* parent)
     // --------------------------------------------------------
 
     d->digitalZoomRatioCheck = new QCheckBox(i18n("Digital zoom ratio:"), this);
-    d->digitalZoomRatioEdit  = new KDoubleSpinBox(0.0, 100.0, 0.1, 1.0, this, 1);
+    d->digitalZoomRatioEdit  = new QDoubleSpinBox(this);
+    d->digitalZoomRatioEdit->setRange(0.0, 100.0);
+    d->digitalZoomRatioEdit->setSingleStep(0.1);
+    d->digitalZoomRatioEdit->setValue(1.0);
+    d->digitalZoomRatioEdit->setDecimals(1);
     d->digitalZoomRatioEdit->setWhatsThis(i18n("<p>Set here the digital zoom ratio "
                                                "used by camera to take the picture."));
 

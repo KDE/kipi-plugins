@@ -104,7 +104,7 @@ public:
     KIntSpinBox      *exposureTimeNumEdit;
     KIntSpinBox      *exposureTimeDenEdit;
 
-    KDoubleSpinBox   *exposureBiasEdit;
+    QDoubleSpinBox   *exposureBiasEdit;
 
     MetadataCheckBox *deviceTypeCheck;
     MetadataCheckBox *exposureProgramCheck;
@@ -207,7 +207,10 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     // --------------------------------------------------------
 
     d->exposureBiasCheck = new QCheckBox(i18n("Exposure bias (APEX):"), this);
-    d->exposureBiasEdit  = new KDoubleSpinBox(-99.99, 99.99, 0.1, 0.0, this);
+    d->exposureBiasEdit  = new QDoubleSpinBox(this);
+    d->exposureBiasEdit->setRange(-99.99, 99.99);
+    d->exposureBiasEdit->setSingleStep(0.1);
+    d->exposureBiasEdit->setValue(0.0);
     d->exposureBiasEdit->setWhatsThis(i18n("<p>Set here the exposure bias value in APEX unit "
                                            "used by camera to take the picture."));
 

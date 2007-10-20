@@ -77,7 +77,7 @@ public:
     QComboBox        *sharpnessCB;
     QComboBox        *customRenderedCB;
    
-    KDoubleSpinBox   *brightnessEdit;
+    QDoubleSpinBox   *brightnessEdit;
 
     MetadataCheckBox *gainControlCheck;
     MetadataCheckBox *contrastCheck;
@@ -96,7 +96,10 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
     // --------------------------------------------------------
 
     d->brightnessCheck = new QCheckBox(i18n("Brightness (APEX):"), this);
-    d->brightnessEdit  = new KDoubleSpinBox(-99.99, 99.99, 0.1, 0.0, this);
+    d->brightnessEdit  = new QDoubleSpinBox(this);
+    d->brightnessEdit->setRange(-99.99, 99.99);
+    d->brightnessEdit->setSingleStep(0.1);
+    d->brightnessEdit->setValue(0.0);
     d->brightnessEdit->setWhatsThis(i18n("<p>Set here the brightness adjustment value in APEX unit "
                                          "used by camera to take the picture."));
 

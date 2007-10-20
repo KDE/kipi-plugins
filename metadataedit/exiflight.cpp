@@ -115,7 +115,7 @@ public:
     QComboBox        *flashModeCB;
     QComboBox        *whiteBalanceCB;
 
-    KDoubleSpinBox   *flashEnergyEdit;
+    QDoubleSpinBox   *flashEnergyEdit;
 
     MetadataCheckBox *lightSourceCheck;
     MetadataCheckBox *flashModeCheck;
@@ -172,7 +172,11 @@ EXIFLight::EXIFLight(QWidget* parent)
     // --------------------------------------------------------
 
     d->flashEnergyCheck = new QCheckBox(i18n("Flash energy (BCPS):"), this);
-    d->flashEnergyEdit  = new KDoubleSpinBox(1.0, 10000.0, 1.0, 1.0, this, 1);
+    d->flashEnergyEdit  = new QDoubleSpinBox(this);
+    d->flashEnergyEdit->setRange(1.0, 10000.0);
+    d->flashEnergyEdit->setSingleStep(1.0);
+    d->flashEnergyEdit->setValue(1.0);
+    d->flashEnergyEdit->setDecimals(1);
     d->flashEnergyEdit->setWhatsThis(i18n("<p>Set here the flash energy used to take the picture "
                                           "in BCPS unit. Beam Candle Power Seconds is the measure "
                                           "of effective intensity of a light source when it is "
