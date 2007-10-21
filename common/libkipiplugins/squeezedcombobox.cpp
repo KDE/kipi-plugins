@@ -166,7 +166,7 @@ QString SqueezedComboBox::squeezeText(const QString& original)
     {
         if ( (int)fm.width(original.right(i)) > widgetSize)
         {
-            sqItem = QString("..." + original.right(--i));
+            sqItem = QString(original.left(i) + "...");
             break;
         }
     }
