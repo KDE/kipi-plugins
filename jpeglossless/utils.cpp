@@ -30,10 +30,10 @@
 
 extern "C" 
 {
-#include <utime.h>
-#include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <utime.h>
+#include <unistd.h>
 }
 
 // Qt includes.

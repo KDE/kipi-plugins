@@ -25,6 +25,7 @@
 
 extern "C"
 {
+#include <sys/types.h>
 #include <utime.h>
 }
 
