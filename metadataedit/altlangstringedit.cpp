@@ -499,8 +499,9 @@ bool AltLangStringsEdit::getValues(AltLangDataList& oldValues, AltLangDataList& 
     for (int i = 0 ; i < d->valueBox->count(); i++)
     {
         QListWidgetItem *item = d->valueBox->item(i);
-        QString lang          = item->text().left(item->text().indexOf("] ")+1);
-        QString text          = item->text().remove(0, lang.size()+1);
+        QString lang          = item->text().left(item->text().indexOf("] "));
+        lang.remove(0, 1);
+        QString text          = item->text().remove(0, lang.size()+3);
         newValues.append(AltLangData(lang, text));
     }
 
