@@ -123,7 +123,7 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->syncIPTCDateCheck      = new QCheckBox(i18n("Sync IPTC creation date"), this);
 
     d->setTodayCreatedBtn     = new QPushButton();
-    d->setTodayCreatedBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayCreatedBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayCreatedBtn->setWhatsThis(i18n("Set creation date to today"));
 
     if (!KExiv2Iface::KExiv2::supportXmp())
@@ -144,7 +144,7 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateOriginalSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
 
     d->setTodayOriginalBtn      = new QPushButton();
-    d->setTodayOriginalBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayOriginalBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayOriginalBtn->setWhatsThis(i18n("Set original date to today"));
 
     d->dateOriginalSel->setWhatsThis(i18n("<p>Set here the date and time when the original image "
@@ -163,7 +163,7 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateDigitalizedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
 
     d->setTodayDigitalizedBtn     = new QPushButton();
-    d->setTodayDigitalizedBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayDigitalizedBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayDigitalizedBtn->setWhatsThis(i18n("Set digitization date to today"));
 
     d->dateDigitalizedSel->setWhatsThis(i18n("<p>Set here the date and time when the image was "

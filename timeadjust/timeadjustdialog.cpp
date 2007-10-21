@@ -218,7 +218,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     QLabel *space2     = new QLabel(hbox);
     space2->setFixedWidth(15);
     d->todayBtn        = new QToolButton(hbox);   
-    d->todayBtn->setIcon(SmallIcon("calendar-today"));
+    d->todayBtn->setIcon(SmallIcon("go-jump-today"));
     d->todayBtn->setToolTip(i18n("Reset to current date"));
     new QLabel(hbox);
     

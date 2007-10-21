@@ -135,7 +135,7 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     d->timeReleasedSel     = new QTimeEdit(this);
 
     d->setTodayReleasedBtn = new QPushButton();
-    d->setTodayReleasedBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayReleasedBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayReleasedBtn->setWhatsThis(i18n("Set release date to today"));
 
     d->dateReleasedSel->setWhatsThis(i18n("<p>Set here the earliest intended usable date of "
@@ -152,7 +152,7 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     d->timeExpiredSel     = new QTimeEdit(this);
 
     d->setTodayExpiredBtn = new QPushButton();
-    d->setTodayExpiredBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayExpiredBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayExpiredBtn->setWhatsThis(i18n("Set expiration date to today"));
 
     d->dateExpiredSel->setWhatsThis(i18n("<p>Set here the latest intended usable date of "

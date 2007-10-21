@@ -405,7 +405,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     d->timeDigitalizedSel     = new QTimeEdit(this);
 
     d->setTodayDigitalizedBtn = new QPushButton();
-    d->setTodayDigitalizedBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayDigitalizedBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayDigitalizedBtn->setWhatsThis(i18n("Set digitization date to today"));
 
     d->dateDigitalizedSel->setWhatsThis(i18n("<p>Set here the creation date of "
@@ -427,7 +427,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     d->syncEXIFDateCheck  = new QCheckBox(i18n("Sync EXIF creation date"), this);
 
     d->setTodayCreatedBtn = new QPushButton();
-    d->setTodayCreatedBtn->setIcon(SmallIcon("calendar-today"));
+    d->setTodayCreatedBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayCreatedBtn->setWhatsThis(i18n("Set creation date to today"));
 
     d->dateCreatedSel->setWhatsThis(i18n("<p>Set here the creation date of "
