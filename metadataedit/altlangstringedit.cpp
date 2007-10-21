@@ -414,7 +414,7 @@ void AltLangStringsEdit::slotSelectionChanged()
     {
         QString current = d->valueBox->selectedItems()[0]->text();
         QString lang    = current.left(current.indexOf("] ")+1);
-        QString text    = current.remove(0, lang.size());
+        QString text    = current.remove(0, lang.size()+1);
         d->valueEdit->setText(text);
 
         for (int i = 0; i < d->languageCB->count(); i++)
@@ -500,7 +500,7 @@ bool AltLangStringsEdit::getValues(AltLangDataList& oldValues, AltLangDataList& 
     {
         QListWidgetItem *item = d->valueBox->item(i);
         QString lang          = item->text().left(item->text().indexOf("] ")+1);
-        QString text          = item->text().remove(0, lang.size());
+        QString text          = item->text().remove(0, lang.size()+1);
         newValues.append(AltLangData(lang, text));
     }
 
