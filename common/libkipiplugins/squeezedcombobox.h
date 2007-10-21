@@ -89,8 +89,8 @@ public:
                             const QVariant& userData=QVariant());
 
     /**
-     * This inserts items to the list. See QComboBox::insertStringList()
-     * for details. Please do not use QComboBox::insertStringList() to this
+     * This inserts items to the list. See QComboBox::insertItems()
+     * for details. Please do not use QComboBox::insertItems() to this
      * widget, as that will fail.
      * @param newItems the originals (long version) of the items which needs
      *                 to be added to the combobox
