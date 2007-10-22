@@ -228,7 +228,7 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     d->headlineEdit->setEnabled(d->headlineCheck->isChecked());
 
     d->captionEdit->setValid(false);
-    list = exiv2Iface.getXmpRedondantTagsString("Xmp.dc.description", false);    
+    list = exiv2Iface.getXmpTagStringListLangAlt("Xmp.dc.description", false);    
     if (!list.isEmpty())
     {
         AltLangDataList altLangList;
@@ -269,9 +269,11 @@ void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
     AltLangDataList oldAltLangList, newAltLangList;
     if (d->captionEdit->getValues(oldAltLangList, newAltLangList))
     {
-        exiv2Iface.removeXmpTag("Xmp.dc.description");
+        QStringList list;
         for (AltLangDataList::Iterator it = newAltLangList.begin(); it != newAltLangList.end(); ++it)
-            exiv2Iface.setXmpTagStringLangAlt("Xmp.dc.description", (*it).text, (*it).lang, false);
+            list.append(QString("lang=\"%1\" %2").arg((*it).lang).arg((*it).text));
+
+            exiv2Iface.setXmpTagStringListLangAlt("Xmp.dc.description", list, false);
     }
     else if (d->captionEdit->isValid())
         exiv2Iface.removeXmpTag("Xmp.dc.description");
