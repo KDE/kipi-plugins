@@ -158,7 +158,7 @@ XMPContent::XMPContent(QWidget* parent)
     
     // --------------------------------------------------------
 
-    connect(d->captionEdit, SIGNAL(textChanged()),
+    connect(d->captionEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
     
     connect(d->headlineEdit, SIGNAL(textChanged(const QString &)),
