@@ -252,6 +252,12 @@ void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
     if (d->captionEdit->getValues(oldAltLangMap, newAltLangMap))
     {
         exiv2Iface.setXmpTagStringListLangAlt("Xmp.dc.description", newAltLangMap, false);
+
+        if (syncEXIFCommentIsChecked())
+            exiv2Iface.setExifComment(getXMPCaption());
+
+        if (syncJFIFCommentIsChecked())
+            exiv2Iface.setComments(getXMPCaption().toUtf8());
     }
     else if (d->captionEdit->isValid())
         exiv2Iface.removeXmpTag("Xmp.dc.description");
