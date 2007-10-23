@@ -70,6 +70,9 @@ public:
         // support 2 characters country codes. XMP require 2+2 characters language+country 
         // following ISO 3066 (http://babelwiki.babelzilla.org/index.php?title=Language_codes)
 
+        // The first one from the list is the Default Language code specified by XMP paper
+        languageCodeMap.insert( "x-default", i18n("Default Language") );
+
         // Standard ISO 3066 country codes.
 
         languageCodeMap.insert( "af-ZA", i18n("Afrikaans (South Africa)") );
@@ -294,7 +297,6 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
     d->valueBox->setSortingEnabled(true);
 
     d->languageCB = new KIPIPlugins::SqueezedComboBox(this);
-    d->languageCB->model()->sort(0);
     d->languageCB->setWhatsThis(i18n("<p>Select here language code."));
 
     d->valueEdit = new KTextEdit(this);
@@ -390,23 +392,6 @@ void AltLangStringsEdit::slotDeleteValue()
     loadLangAltListEntries();
 }
 
-void AltLangStringsEdit::slotReplaceValue()
-{
-    QString langCode = d->languageCB->itemHighlighted();
-    QString text     = d->valueEdit->toPlainText();
-    if (text.isEmpty()) return;
-
-    QString lang     = langCode.left(langCode.indexOf("] ")+1);
-    QString newValue = QString("%1 %2").arg(lang).arg(text);
-
-    if (!d->valueBox->selectedItems().isEmpty())
-    {
-        d->valueBox->currentItem()->setText(newValue);
-        d->valueEdit->clear();
-        loadLangAltListEntries();
-    }
-}
-
 void AltLangStringsEdit::slotSelectionChanged()
 {
     if (!d->valueBox->selectedItems().isEmpty())
@@ -447,20 +432,67 @@ void AltLangStringsEdit::slotAddValue()
     QString lang     = langCode.left(langCode.indexOf("] ")+1);
     QString newValue = QString("%1 %2").arg(lang).arg(text);
 
-    bool found = false;
-    for (int i = 0 ; i < d->valueBox->count(); i++)
+    bool found            = false;
+    QListWidgetItem *item = 0;
+
+    for (int row = 0 ; row < d->valueBox->count(); row++)
     {
-        QListWidgetItem *item = d->valueBox->item(i);
-        if (newValue == item->text()) 
+        item             = d->valueBox->item(row);
+        QString language = item->text().left(item->text().indexOf("] "));
+        language.remove(0, 1);
+
+        if (lang.contains(language)) 
         {
             found = true;
             break;
         }
     }
 
-    if (!found)
+    if (found)
     {
-        d->valueBox->insertItem(d->valueBox->count(), newValue);
+        d->valueBox->takeItem(d->valueBox->row(item));
+        delete item;
+    }
+
+    d->valueBox->insertItem(d->valueBox->count(), newValue);
+    d->valueEdit->clear();
+    loadLangAltListEntries();
+}
+
+void AltLangStringsEdit::slotReplaceValue()
+{
+    QString langCode = d->languageCB->itemHighlighted();
+    QString text     = d->valueEdit->toPlainText();
+    if (text.isEmpty()) return;
+
+    QString lang     = langCode.left(langCode.indexOf("] ")+1);
+    QString newValue = QString("%1 %2").arg(lang).arg(text);
+
+    bool found            = false;
+    QListWidgetItem *item = 0;
+
+    for (int row = 0 ; row < d->valueBox->count(); row++)
+    {
+        item             = d->valueBox->item(row);
+        QString language = item->text().left(item->text().indexOf("] "));
+        language.remove(0, 1);
+
+        if (lang.contains(language)) 
+        {
+            found = true;
+            break;
+        }
+    }
+    
+    if (found)
+    {
+        slotAddValue();
+        return;
+    }
+
+    if (!d->valueBox->selectedItems().isEmpty())
+    {
+        d->valueBox->currentItem()->setText(newValue);
         d->valueEdit->clear();
         loadLangAltListEntries();
     }
@@ -515,6 +547,7 @@ bool AltLangStringsEdit::getValues(KExiv2Iface::KExiv2::AltLangMap& oldValues,
 
 void AltLangStringsEdit::loadLangAltListEntries()
 {
+
     QStringList list;
     for (int i = 0 ; i < d->valueBox->count(); i++)
     {
@@ -528,8 +561,9 @@ void AltLangStringsEdit::loadLangAltListEntries()
     for (AltLangStringsEditPriv::LanguageCodeMap::Iterator it = d->languageCodeMap.begin();
          it != d->languageCodeMap.end(); ++it)
     {
-        if (!list.contains(it.key()))
-            d->languageCB->addSqueezedItem(QString("[%1] %2").arg(it.key()).arg(it.value()));
+        d->languageCB->addSqueezedItem(QString("[%1] %2").arg(it.key()).arg(it.value()));
+        if (list.contains(it.key()))
+            d->languageCB->setItemIcon(d->languageCB->count()-1, SmallIcon("checkmark-korganizer"));
     }
 }
 
