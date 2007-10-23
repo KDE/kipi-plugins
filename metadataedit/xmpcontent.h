@@ -59,6 +59,10 @@ signals:
 
     void signalModified();
 
+private slots:
+    
+    void slotSyncOptionsEnabled(bool);
+
 private:
 
     XMPContentPriv* d;

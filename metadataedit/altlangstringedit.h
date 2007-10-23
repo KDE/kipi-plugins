@@ -56,6 +56,7 @@ signals:
 
     void signalToggled(bool);
     void signalModified();
+    void signalDefaultLanguageEnabled(bool);
 
 private slots:
 

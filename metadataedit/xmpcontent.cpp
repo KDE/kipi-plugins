@@ -98,12 +98,12 @@ XMPContent::XMPContent(QWidget* parent)
 
     d->captionEdit          = new AltLangStringsEdit(this, i18n("Caption:"), 
                                                      i18n("<p>Enter the content description."));
+
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), this);
     d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync caption entered through %1",
                                               KGlobal::mainComponent().aboutData()->programName()), 
                                             this);
     d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF Comment"), this);
-    d->captionEdit->setWhatsThis(i18n("<p>Enter the content description."));
 
     // --------------------------------------------------------
 
@@ -130,14 +130,8 @@ XMPContent::XMPContent(QWidget* parent)
 
     // --------------------------------------------------------
                                      
-    connect(d->captionEdit, SIGNAL(signalToggled(bool)),
-            d->syncJFIFCommentCheck, SLOT(setEnabled(bool)));
-
-    connect(d->captionEdit, SIGNAL(signalToggled(bool)),
-            d->syncHOSTCommentCheck, SLOT(setEnabled(bool)));
-
-    connect(d->captionEdit, SIGNAL(signalToggled(bool)),
-            d->syncEXIFCommentCheck, SLOT(setEnabled(bool)));
+    connect(d->captionEdit, SIGNAL(signalDefaultLanguageEnabled(bool)),
+            this, SLOT(slotSyncOptionsEnabled(bool)));
 
     connect(d->headlineCheck, SIGNAL(toggled(bool)),
             d->headlineEdit, SLOT(setEnabled(bool)));
@@ -231,12 +225,7 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     d->captionEdit->setValid(false);
     map = exiv2Iface.getXmpTagStringListLangAlt("Xmp.dc.description", false);
     if (!map.isEmpty())
-    {
         d->captionEdit->setValues(map);
-    }
-    d->syncJFIFCommentCheck->setEnabled(d->captionEdit->isValid());
-    d->syncHOSTCommentCheck->setEnabled(d->captionEdit->isValid());
-    d->syncEXIFCommentCheck->setEnabled(d->captionEdit->isValid());
 
     data = exiv2Iface.getXmpTagString("Xmp.photoshop.CaptionWriter", false);    
     if (!data.isNull())
@@ -275,6 +264,14 @@ void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
 
     exifData = exiv2Iface.getExif();
     xmpData  = exiv2Iface.getXmp();
+}
+
+void XMPContent::slotSyncOptionsEnabled(bool defaultLangAlt)
+{
+    bool cond = defaultLangAlt & d->captionEdit->isValid();
+    d->syncJFIFCommentCheck->setEnabled(cond);
+    d->syncHOSTCommentCheck->setEnabled(cond);
+    d->syncEXIFCommentCheck->setEnabled(cond);
 }
 
 }  // namespace KIPIMetadataEditPlugin

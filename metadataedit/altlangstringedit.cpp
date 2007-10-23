@@ -556,7 +556,7 @@ void AltLangStringsEdit::loadLangAltListEntries()
         lang.remove(0, 1);
         list.append(lang);
     }
-
+    
     d->languageCB->clear();
     for (AltLangStringsEditPriv::LanguageCodeMap::Iterator it = d->languageCodeMap.begin();
          it != d->languageCodeMap.end(); ++it)
@@ -565,6 +565,8 @@ void AltLangStringsEdit::loadLangAltListEntries()
         if (list.contains(it.key()))
             d->languageCB->setItemIcon(d->languageCB->count()-1, SmallIcon("checkmark-korganizer"));
     }
+
+    emit signalDefaultLanguageEnabled(list.contains(QString("x-default")));
 }
 
 }  // namespace KIPIMetadataEditPlugin
