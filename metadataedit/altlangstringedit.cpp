@@ -538,7 +538,6 @@ bool AltLangStringsEdit::getValues(KExiv2Iface::KExiv2::AltLangMap& oldValues,
         QString lang          = item->text().left(item->text().indexOf("] "));
         lang.remove(0, 1);
         QString text          = item->text().remove(0, lang.size()+3);
-        qDebug() << i << lang << text << endl;
         newValues.insert(lang, text);
     }
 
@@ -567,6 +566,33 @@ void AltLangStringsEdit::loadLangAltListEntries()
     }
 
     emit signalDefaultLanguageEnabled(list.contains(QString("x-default")));
+}
+
+QString AltLangStringsEdit::defaultAltLang() const
+{
+    for (int i = 0 ; i < d->valueBox->count(); i++)
+    {
+        QListWidgetItem *item = d->valueBox->item(i);
+        QString lang          = item->text().left(item->text().indexOf("] "));
+        lang.remove(0, 1);
+        QString text          = item->text().remove(0, lang.size()+3);
+        if (lang == QString("x-default"))
+            return text;
+    }
+    return QString();
+}
+
+bool AltLangStringsEdit::asDefaultAltLang() const
+{
+    for (int i = 0 ; i < d->valueBox->count(); i++)
+    {
+        QListWidgetItem *item = d->valueBox->item(i);
+        QString lang          = item->text().left(item->text().indexOf("] "));
+        lang.remove(0, 1);
+        if (lang == QString("x-default"))
+            return true;
+    }
+    return false;
 }
 
 }  // namespace KIPIMetadataEditPlugin

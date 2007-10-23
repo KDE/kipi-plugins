@@ -52,6 +52,9 @@ public:
     void setValid(bool v);
     bool isValid() const;
 
+    QString defaultAltLang() const; 
+    bool    asDefaultAltLang() const;
+
 signals:
 
     void signalToggled(bool);
