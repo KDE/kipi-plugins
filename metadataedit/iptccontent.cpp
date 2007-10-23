@@ -276,10 +276,10 @@ void IPTCContent::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
         exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->captionEdit->toPlainText());
 
         if (syncEXIFCommentIsChecked())
-            exiv2Iface.setExifComment(d->captionEdit->toPlainText());
+            exiv2Iface.setExifComment(getIPTCCaption());
 
         if (syncJFIFCommentIsChecked())
-            exiv2Iface.setComments(d->captionEdit->toPlainText().toUtf8());
+            exiv2Iface.setComments(getIPTCCaption().toUtf8());
     }
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
