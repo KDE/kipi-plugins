@@ -184,8 +184,7 @@ bool XMPContent::syncEXIFCommentIsChecked()
 
 QString XMPContent::getXMPCaption()
 {
-    return QString();
-//TODO    return d->captionEdit->toPlainText();
+    return d->captionEdit->defaultAltLang();
 }
 
 void XMPContent::setCheckedSyncJFIFComment(bool c)
