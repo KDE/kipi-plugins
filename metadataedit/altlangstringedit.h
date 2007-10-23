@@ -66,6 +66,10 @@ private slots:
 
 private:
 
+    void loadLangAltListEntries();
+
+private: 
+
     AltLangStringsEditPriv* d;
 };
 

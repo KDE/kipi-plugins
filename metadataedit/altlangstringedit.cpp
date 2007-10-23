@@ -294,11 +294,6 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
     d->valueBox->setSortingEnabled(true);
 
     d->languageCB = new KIPIPlugins::SqueezedComboBox(this);
-
-    for (AltLangStringsEditPriv::LanguageCodeMap::Iterator it = d->languageCodeMap.begin();
-         it != d->languageCodeMap.end(); ++it)
-        d->languageCB->addSqueezedItem(QString("[%1] %2").arg(it.key()).arg(it.value()));
-
     d->languageCB->model()->sort(0);
     d->languageCB->setWhatsThis(i18n("<p>Select here language code."));
 
@@ -392,6 +387,7 @@ void AltLangStringsEdit::slotDeleteValue()
     if (!item) return;
     d->valueBox->takeItem(d->valueBox->row(item));
     delete item;
+    loadLangAltListEntries();
 }
 
 void AltLangStringsEdit::slotReplaceValue()
@@ -407,6 +403,7 @@ void AltLangStringsEdit::slotReplaceValue()
     {
         d->valueBox->currentItem()->setText(newValue);
         d->valueEdit->clear();
+        loadLangAltListEntries();
     }
 }
 
@@ -465,6 +462,7 @@ void AltLangStringsEdit::slotAddValue()
     {
         d->valueBox->insertItem(d->valueBox->count(), newValue);
         d->valueEdit->clear();
+        loadLangAltListEntries();
     }
 }
 
@@ -492,6 +490,8 @@ void AltLangStringsEdit::setValues(const KExiv2Iface::KExiv2::AltLangMap& values
     d->delValueButton->setEnabled(d->valueCheck->isChecked());
 
     blockSignals(false);
+
+    loadLangAltListEntries();
 }
 
 bool AltLangStringsEdit::getValues(KExiv2Iface::KExiv2::AltLangMap& oldValues,
@@ -511,6 +511,26 @@ bool AltLangStringsEdit::getValues(KExiv2Iface::KExiv2::AltLangMap& oldValues,
     }
 
     return d->valueCheck->isChecked();
+}
+
+void AltLangStringsEdit::loadLangAltListEntries()
+{
+    QStringList list;
+    for (int i = 0 ; i < d->valueBox->count(); i++)
+    {
+        QListWidgetItem *item = d->valueBox->item(i);
+        QString lang          = item->text().left(item->text().indexOf("] "));
+        lang.remove(0, 1);
+        list.append(lang);
+    }
+
+    d->languageCB->clear();
+    for (AltLangStringsEditPriv::LanguageCodeMap::Iterator it = d->languageCodeMap.begin();
+         it != d->languageCodeMap.end(); ++it)
+    {
+        if (!list.contains(it.key()))
+            d->languageCB->addSqueezedItem(QString("[%1] %2").arg(it.key()).arg(it.value()));
+    }
 }
 
 }  // namespace KIPIMetadataEditPlugin
