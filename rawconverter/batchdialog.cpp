@@ -69,6 +69,11 @@ extern "C"
 
 #include <libkdcraw/dcrawsettingswidget.h>
 
+// LibKipi includes.
+
+#include <libkipi/interface.h>
+#include <libkipi/imageinfo.h>
+
 // Local includes.
 
 #include "actions.h"
@@ -100,6 +105,7 @@ public:
         saveSettingsBox     = 0;
         decodingSettingsBox = 0;
         about               = 0;
+        iface               = 0;
     }
 
     bool                              convertBlink;
@@ -125,21 +131,22 @@ public:
     KDcrawIface::DcrawSettingsWidget *decodingSettingsBox;
 
     KIPIPlugins::KPAboutData         *about;
+
+    KIPI::Interface                  *iface;
 };
 
-BatchDialog::BatchDialog(QWidget* /*parent*/)
+BatchDialog::BatchDialog(KIPI::Interface* iface)
            : KDialog(0)
 {
     d = new BatchDialogPriv;
+    d->iface = iface;
+
     setButtons(Help | Default | User1 | User2 | Close);
     setDefaultButton(KDialog::Close);
     setButtonText(User1, i18n("Con&vert"));
     setButtonText(User2, i18n("&Abort"));
     setCaption(i18n("Raw Images Batch Converter"));
     setModal(false);
-
-    d->currentConvertItem = 0;
-    d->thread             = 0;
 
     d->page = new QWidget( this );
     setMainWidget( d->page );
@@ -635,6 +642,12 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
             d->currentConvertItem->dest = QFileInfo(destFile).fileName();
             d->currentConvertItem->viewItem->setText(2, d->currentConvertItem->dest);
             d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-ok"));
+
+            // Assign Kipi host attributes from original RAW image.
+
+            KIPI::ImageInfo orgInfo = d->iface->info(KUrl(file));
+            KIPI::ImageInfo newInfo = d->iface->info(KUrl(destFile));
+            newInfo.cloneData(orgInfo);
         }
     }
 

@@ -67,6 +67,11 @@ extern "C"
 
 #include <libkdcraw/dcrawsettingswidget.h>
 
+// LibKipi includes.
+
+#include <libkipi/interface.h>
+#include <libkipi/imageinfo.h>
+
 // Local includes.
 
 #include "actions.h"
@@ -97,6 +102,7 @@ public:
         saveSettingsBox     = 0;
         decodingSettingsBox = 0;
         about               = 0;
+        iface               = 0;
     }
 
     bool                              previewBlink;
@@ -117,12 +123,18 @@ public:
     KDcrawIface::DcrawSettingsWidget *decodingSettingsBox;
 
     KIPIPlugins::KPAboutData         *about; 
+
+    KIPI::Interface                  *iface;
 };
 
-SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
+SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
             : KDialog(0)
 {
     d = new SingleDialogPriv;
+    d->iface         = iface;
+    d->inputFile     = file;
+    d->inputFileName = QFileInfo(file).fileName();
+
     setButtons(Help | Default | User1 | User2 | User3 | Close);
     setDefaultButton(KDialog::Close);
     setButtonText(User1, i18n("&Preview"));
@@ -131,9 +143,6 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
     setCaption(i18n("Raw Image Converter"));
     setModal(false);
 
-    d->inputFile     = file;
-    d->inputFileName = QFileInfo(file).fileName();
-    
     QWidget *page = new QWidget( this );
     setMainWidget( page );
     QGridLayout *mainLayout = new QGridLayout(page);
@@ -479,7 +488,7 @@ void SingleDialog::processing(const QString&)
     d->blinkConvertTimer->start(200);
 }
 
-void SingleDialog::processed(const QString&, const QString& tmpFile)
+void SingleDialog::processed(const QString& file, const QString& tmpFile)
 {
     d->previewWidget->unsetCursor();
     d->blinkConvertTimer->stop();
@@ -540,6 +549,14 @@ void SingleDialog::processed(const QString&, const QString& tmpFile)
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));
+        }
+        else
+        {
+            // Assign Kipi host attributes from original RAW image.
+
+            KIPI::ImageInfo orgInfo = d->iface->info(KUrl(file));
+            KIPI::ImageInfo newInfo = d->iface->info(KUrl(destFile));
+            newInfo.cloneData(orgInfo);
         }
     }
 }

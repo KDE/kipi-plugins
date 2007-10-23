@@ -39,6 +39,11 @@
 class QEvent;
 class QCloseEvent;
 
+namespace KIPI
+{
+    class Interface;
+}
+
 namespace KIPIRawConverterPlugin
 {
 
@@ -52,7 +57,7 @@ Q_OBJECT
 
 public:
 
-    BatchDialog(QWidget *parent);
+    BatchDialog(KIPI::Interface* iface);
     ~BatchDialog();
 
     void addItems(const QStringList& itemList);
