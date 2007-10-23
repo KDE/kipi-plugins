@@ -65,8 +65,6 @@ public:
         valueCheck     = 0;
         valueBox       = 0;
         languageCB     = 0;
-        moveUpButton   = 0;
-        moveDownButton = 0;
 
         // We cannot use KLocale::allLanguagesList() here because KDE only 
         // support 2 characters country codes. XMP require 2+2 characters language+country 
@@ -256,8 +254,6 @@ public:
     QPushButton                     *addValueButton;
     QPushButton                     *delValueButton;
     QPushButton                     *repValueButton;
-    QPushButton                     *moveUpButton;
-    QPushButton                     *moveDownButton;
 
     KListWidget                     *valueBox;
     
@@ -277,23 +273,17 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
 
     // --------------------------------------------------------
 
-    d->valueCheck = new MetadataCheckBox(title, this);  
+    d->valueCheck     = new MetadataCheckBox(title, this);  
 
     d->addValueButton = new QPushButton(this);
     d->delValueButton = new QPushButton(this);
     d->repValueButton = new QPushButton(this);
-    d->moveUpButton   = new QPushButton(this);
-    d->moveDownButton = new QPushButton(this);
     d->addValueButton->setIcon(SmallIcon("edit-add"));
     d->delValueButton->setIcon(SmallIcon("edit-delete"));
     d->repValueButton->setIcon(SmallIcon("view-refresh"));
-    d->moveUpButton->setIcon(SmallIcon("go-up"));
-    d->moveDownButton->setIcon(SmallIcon("go-down"));
     d->addValueButton->setWhatsThis(i18n("Add a new value to the list"));
     d->delValueButton->setWhatsThis(i18n("Remove the current selected value from the list"));
     d->repValueButton->setWhatsThis(i18n("Replace the current selected value from the list"));
-    d->moveUpButton->setWhatsThis(i18n("Move up the current selected value from the list"));
-    d->moveDownButton->setWhatsThis(i18n("Move down the current selected value from the list"));
     d->delValueButton->setEnabled(false);
     d->repValueButton->setEnabled(false);
 
@@ -301,6 +291,7 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
     d->valueBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     d->valueBox->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     d->valueBox->setSelectionMode(QAbstractItemView::SingleSelection);
+    d->valueBox->setSortingEnabled(true);
 
     d->languageCB = new KIPIPlugins::SqueezedComboBox(this);
 
@@ -322,14 +313,12 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
     grid->addWidget(d->addValueButton, 0, 2, 1, 1);
     grid->addWidget(d->delValueButton, 0, 3, 1, 1);
     grid->addWidget(d->repValueButton, 0, 4, 1, 1);
-    grid->addWidget(d->moveUpButton, 0, 5, 1, 1);
-    grid->addWidget(d->moveDownButton, 0, 6, 1, 1);
     grid->addWidget(new QLabel(i18n("Language:")), 1, 0, 1, 1);
-    grid->addWidget(d->languageCB, 1, 1, 1, 6);
-    grid->addWidget(d->valueEdit, 2, 0, 1, 7);
-    grid->addWidget(d->valueBox, 0, 7, 3, 1);
+    grid->addWidget(d->languageCB, 1, 1, 1, 4);
+    grid->addWidget(d->valueEdit, 2, 0, 1, 5);
+    grid->addWidget(d->valueBox, 0, 5, 3, 1);
     grid->setColumnStretch(1, 5);   
-    grid->setColumnStretch(7, 10);                     
+    grid->setColumnStretch(5, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());    
                                          
@@ -346,12 +335,6 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
 
     connect(d->repValueButton, SIGNAL(clicked()),
             this, SLOT(slotReplaceValue()));
-
-    connect(d->moveUpButton, SIGNAL(clicked()),
-            this, SLOT(slotMoveUpValue()));
-
-    connect(d->moveDownButton, SIGNAL(clicked()),
-            this, SLOT(slotMoveDownValue()));
 
     // --------------------------------------------------------
 
@@ -386,12 +369,6 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
 
     connect(d->repValueButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
-
-    connect(d->moveUpButton, SIGNAL(clicked()),
-            this, SIGNAL(signalModified()));
-
-    connect(d->moveDownButton, SIGNAL(clicked()),
-            this, SIGNAL(signalModified()));
 }
 
 AltLangStringsEdit::~AltLangStringsEdit()
@@ -407,28 +384,6 @@ void AltLangStringsEdit::setValid(bool v)
 bool AltLangStringsEdit::isValid() const 
 {
     return d->valueCheck->isValid(); 
-}
-
-void AltLangStringsEdit::slotMoveUpValue()
-{
-    QListWidgetItem *item = d->valueBox->currentItem();
-    if (!item) return;
-    int row = d->valueBox->row(item);
-    if (row == 0) return;
-    d->valueBox->takeItem(row);
-    d->valueBox->insertItem(row-1, item);
-    d->valueBox->setCurrentItem(item);
-}
-
-void AltLangStringsEdit::slotMoveDownValue()
-{
-    QListWidgetItem *item = d->valueBox->currentItem();
-    if (!item) return;
-    int row = d->valueBox->row(item);
-    if (row == d->valueBox->count()) return;
-    d->valueBox->takeItem(row);
-    d->valueBox->insertItem(row+1, item);
-    d->valueBox->setCurrentItem(item);
 }
 
 void AltLangStringsEdit::slotDeleteValue()
@@ -478,15 +433,11 @@ void AltLangStringsEdit::slotSelectionChanged()
 
         d->delValueButton->setEnabled(true);
         d->repValueButton->setEnabled(true);
-        d->moveUpButton->setEnabled(true);
-        d->moveDownButton->setEnabled(true);
     }
     else
     {
         d->delValueButton->setEnabled(false);
         d->repValueButton->setEnabled(false);
-        d->moveUpButton->setEnabled(false);
-        d->moveDownButton->setEnabled(false);
     }
 }
 
@@ -555,6 +506,7 @@ bool AltLangStringsEdit::getValues(KExiv2Iface::KExiv2::AltLangMap& oldValues,
         QString lang          = item->text().left(item->text().indexOf("] "));
         lang.remove(0, 1);
         QString text          = item->text().remove(0, lang.size()+3);
+        qDebug() << i << lang << text << endl;
         newValues.insert(lang, text);
     }
 

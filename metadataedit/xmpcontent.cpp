@@ -214,8 +214,10 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
-    QString     data;
-    
+
+    KExiv2Iface::KExiv2::AltLangMap map;   
+    QString data;
+
     d->headlineEdit->clear();
     d->headlineCheck->setChecked(false);
     data = exiv2Iface.getXmpTagString("Xmp.photoshop.Headline", false);    
@@ -227,7 +229,7 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     d->headlineEdit->setEnabled(d->headlineCheck->isChecked());
 
     d->captionEdit->setValid(false);
-    KExiv2Iface::KExiv2::AltLangMap map = exiv2Iface.getXmpTagStringListLangAlt("Xmp.dc.description", false);
+    map = exiv2Iface.getXmpTagStringListLangAlt("Xmp.dc.description", false);
     if (!map.isEmpty())
     {
         d->captionEdit->setValues(map);

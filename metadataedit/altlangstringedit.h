@@ -63,8 +63,6 @@ private slots:
     void slotAddValue();
     void slotDeleteValue();
     void slotReplaceValue();
-    void slotMoveUpValue();
-    void slotMoveDownValue();
 
 private:
 
