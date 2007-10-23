@@ -26,6 +26,7 @@
 #include <QLabel>
 #include <QValidator>
 #include <QCheckBox>
+#include <QGroupBox>
 
 // KDE includes.
 
@@ -99,11 +100,20 @@ XMPContent::XMPContent(QWidget* parent)
     d->captionEdit          = new AltLangStringsEdit(this, i18n("Caption:"), 
                                                      i18n("<p>Enter the content description."));
 
-    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), this);
+    QGroupBox *syncOptions  = new QGroupBox(i18n("Default Language Caption Options"), this);
+    QVBoxLayout *vlay       = new QVBoxLayout(syncOptions);
+
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), syncOptions);
     d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync caption entered through %1",
-                                              KGlobal::mainComponent().aboutData()->programName()), 
-                                            this);
-    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF Comment"), this);
+                                            KGlobal::mainComponent().aboutData()->programName()), 
+                                            syncOptions);
+    d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF Comment"), syncOptions);
+
+    vlay->setMargin(KDialog::spacingHint());
+    vlay->setSpacing(KDialog::spacingHint());
+    vlay->addWidget(d->syncJFIFCommentCheck);
+    vlay->addWidget(d->syncHOSTCommentCheck);
+    vlay->addWidget(d->syncEXIFCommentCheck);
 
     // --------------------------------------------------------
 
@@ -116,14 +126,12 @@ XMPContent::XMPContent(QWidget* parent)
 
     grid->addWidget(d->headlineCheck, 0, 0, 1, 1);
     grid->addWidget(d->headlineEdit, 0, 1, 1, 2);
-    grid->addWidget(d->captionEdit, 1, 0, 1, 3);
-    grid->addWidget(d->syncJFIFCommentCheck, 2, 0, 1, 3);
-    grid->addWidget(d->syncHOSTCommentCheck, 3, 0, 1, 3);
-    grid->addWidget(d->syncEXIFCommentCheck, 4, 0, 1, 3);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 5, 0, 1, 3);
-    grid->addWidget(d->writerCheck, 6, 0, 1, 1);
-    grid->addWidget(d->writerEdit, 6, 1, 1, 2);
-    grid->setRowStretch(7, 10);  
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 1, 0, 1, 3);
+    grid->addWidget(d->captionEdit, 2, 0, 1, 3);
+    grid->addWidget(syncOptions, 3, 0, 1, 3);
+    grid->addWidget(d->writerCheck, 4, 0, 1, 1);
+    grid->addWidget(d->writerEdit, 4, 1, 1, 2);
+    grid->setRowStretch(5, 10);  
     grid->setColumnStretch(2, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());    
