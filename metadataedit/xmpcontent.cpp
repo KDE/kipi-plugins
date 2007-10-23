@@ -215,8 +215,7 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
     QString     data;
-    QStringList list;
-
+    
     d->headlineEdit->clear();
     d->headlineCheck->setChecked(false);
     data = exiv2Iface.getXmpTagString("Xmp.photoshop.Headline", false);    
@@ -228,17 +227,10 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     d->headlineEdit->setEnabled(d->headlineCheck->isChecked());
 
     d->captionEdit->setValid(false);
-    list = exiv2Iface.getXmpTagStringListLangAlt("Xmp.dc.description", false);    
-    if (!list.isEmpty())
+    KExiv2Iface::KExiv2::AltLangMap map = exiv2Iface.getXmpTagStringListLangAlt("Xmp.dc.description", false);
+    if (!map.isEmpty())
     {
-        AltLangDataList altLangList;
-        for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
-        {
-            QString lang;
-            QString text = KExiv2Iface::KExiv2::detectLanguageAlt(*it, lang);
-            altLangList.append(AltLangData(lang, text));
-        }
-        d->captionEdit->setValues(altLangList);
+        d->captionEdit->setValues(map);
     }
     d->syncJFIFCommentCheck->setEnabled(d->captionEdit->isValid());
     d->syncHOSTCommentCheck->setEnabled(d->captionEdit->isValid());
@@ -266,14 +258,10 @@ void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
     else
         exiv2Iface.removeXmpTag("Xmp.photoshop.Headline");
 
-    AltLangDataList oldAltLangList, newAltLangList;
-    if (d->captionEdit->getValues(oldAltLangList, newAltLangList))
+    KExiv2Iface::KExiv2::AltLangMap oldAltLangMap, newAltLangMap;
+    if (d->captionEdit->getValues(oldAltLangMap, newAltLangMap))
     {
-        QStringList list;
-        for (AltLangDataList::Iterator it = newAltLangList.begin(); it != newAltLangList.end(); ++it)
-            list.append(QString("lang=\"%1\" %2").arg((*it).lang).arg((*it).text));
-
-            exiv2Iface.setXmpTagStringListLangAlt("Xmp.dc.description", list, false);
+        exiv2Iface.setXmpTagStringListLangAlt("Xmp.dc.description", newAltLangMap, false);
     }
     else if (d->captionEdit->isValid())
         exiv2Iface.removeXmpTag("Xmp.dc.description");

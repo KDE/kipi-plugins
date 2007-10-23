@@ -27,28 +27,15 @@
 // Qt includes.
 
 #include <QWidget>
-#include <QList>
+
+// LibKExiv2 includes. 
+
+#include <libkexiv2/kexiv2.h>
 
 namespace KIPIMetadataEditPlugin
 {
 
 class AltLangStringsEditPriv;
-
-class AltLangData
-{
-public:
-
-    AltLangData(const QString& l, const QString& t)
-    {
-        lang = l;
-        text = t;
-    }
-
-    QString lang;  
-    QString text;  
-};
-
-typedef QList<AltLangData> AltLangDataList; 
 
 class AltLangStringsEdit : public QWidget
 {
@@ -59,8 +46,8 @@ public:
     AltLangStringsEdit(QWidget* parent, const QString& title, const QString& desc);
     ~AltLangStringsEdit();
 
-    void setValues(const AltLangDataList& values);
-    bool getValues(AltLangDataList& oldValues, AltLangDataList& newValues);
+    void setValues(const KExiv2Iface::KExiv2::AltLangMap& values);
+    bool getValues(KExiv2Iface::KExiv2::AltLangMap& oldValues, KExiv2Iface::KExiv2::AltLangMap& newValues);
 
     void setValid(bool v);
     bool isValid() const;

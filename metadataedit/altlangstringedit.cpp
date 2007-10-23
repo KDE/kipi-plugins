@@ -247,23 +247,23 @@ public:
         languageCodeMap.insert( "zu-ZA", i18n("isiZulu Zulu (South Africa)") );
     }
 
-    typedef QMap<QString, QString>  LanguageCodeMap; 
+    typedef QMap<QString, QString>   LanguageCodeMap; 
 
-    LanguageCodeMap                 languageCodeMap;
+    LanguageCodeMap                  languageCodeMap;
 
-    AltLangDataList                 oldValues;
+    KExiv2Iface::KExiv2::AltLangMap  oldValues;
 
-    QPushButton                    *addValueButton;
-    QPushButton                    *delValueButton;
-    QPushButton                    *repValueButton;
-    QPushButton                    *moveUpButton;
-    QPushButton                    *moveDownButton;
+    QPushButton                     *addValueButton;
+    QPushButton                     *delValueButton;
+    QPushButton                     *repValueButton;
+    QPushButton                     *moveUpButton;
+    QPushButton                     *moveDownButton;
 
-    KListWidget                    *valueBox;
+    KListWidget                     *valueBox;
     
-    KTextEdit                      *valueEdit;
+    KTextEdit                       *valueEdit;
 
-    KIPIPlugins::SqueezedComboBox  *languageCB;
+    KIPIPlugins::SqueezedComboBox   *languageCB;
 
     MetadataCheckBox               *valueCheck;
 };
@@ -517,7 +517,7 @@ void AltLangStringsEdit::slotAddValue()
     }
 }
 
-void AltLangStringsEdit::setValues(const AltLangDataList& values)
+void AltLangStringsEdit::setValues(const KExiv2Iface::KExiv2::AltLangMap& values)
 {
     blockSignals(true);
     d->oldValues = values;
@@ -526,9 +526,10 @@ void AltLangStringsEdit::setValues(const AltLangDataList& values)
     d->valueCheck->setChecked(false);
     if (!d->oldValues.isEmpty())
     {
-        for (AltLangDataList::Iterator it = d->oldValues.begin(); it != d->oldValues.end(); ++it)
+        for (KExiv2Iface::KExiv2::AltLangMap::Iterator it = d->oldValues.begin(); 
+             it != d->oldValues.end(); ++it)
         {
-            QString newValue = QString("[%1] %2").arg((*it).lang).arg((*it).text);
+            QString newValue = QString("[%1] %2").arg(it.key()).arg(it.value());
             d->valueBox->insertItem(0, newValue);    
         }
 
@@ -542,7 +543,8 @@ void AltLangStringsEdit::setValues(const AltLangDataList& values)
     blockSignals(false);
 }
 
-bool AltLangStringsEdit::getValues(AltLangDataList& oldValues, AltLangDataList& newValues)
+bool AltLangStringsEdit::getValues(KExiv2Iface::KExiv2::AltLangMap& oldValues,
+                                   KExiv2Iface::KExiv2::AltLangMap& newValues)
 {
     oldValues = d->oldValues;
 
@@ -553,7 +555,7 @@ bool AltLangStringsEdit::getValues(AltLangDataList& oldValues, AltLangDataList& 
         QString lang          = item->text().left(item->text().indexOf("] "));
         lang.remove(0, 1);
         QString text          = item->text().remove(0, lang.size()+3);
-        newValues.append(AltLangData(lang, text));
+        newValues.insert(lang, text);
     }
 
     return d->valueCheck->isChecked();
