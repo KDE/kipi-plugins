@@ -858,7 +858,7 @@ void IPTCOrigin::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
     if (d->dateCreatedCheck->isChecked())
     {
         exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
-                                    d->dateCreatedSel->date().toString(Qt::ISODate));
+                                    getIPTCCreationDate().toString(Qt::ISODate));
         if (syncEXIFDateIsChecked())
         {
             exiv2Iface.setExifTagString("Exif.Image.DateTime",
