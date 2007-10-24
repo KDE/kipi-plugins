@@ -28,6 +28,7 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       xmpsubjects.cpp
 				      xmporigin.cpp
 				      xmpcredits.cpp
+				      xmpstatus.cpp
                                       commenteditdialog.cpp
                                       commentremovedialog.cpp
    )

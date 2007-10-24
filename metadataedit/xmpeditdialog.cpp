@@ -61,13 +61,7 @@
 #include "xmpsubjects.h"
 #include "xmporigin.h"
 #include "xmpcredits.h"
-
-/*
 #include "xmpstatus.h"
-#include "xmpproperties.h"
-#include "xmpenvelope.h"
-*/
-
 #include "xmpeditdialog.h"
 #include "xmpeditdialog.moc"
 
@@ -99,11 +93,7 @@ public:
         subjectsPage    = 0;
         originPage      = 0;
         creditsPage     = 0;
-/*
-        propertiesPage  = 0;
         statusPage      = 0;
-        envelopePage    = 0;
-*/
     }
 
     bool                      modified;
@@ -133,11 +123,7 @@ public:
     XMPSubjects              *subjectsPage;
     XMPOrigin                *originPage;
     XMPCredits               *creditsPage;
-/*
-    XMPProperties            *propertiesPage;
     XMPStatus                *statusPage;
-    XMPEnvelope              *envelopePage;
-*/
 
     KIPI::Interface          *interface;
 
@@ -200,25 +186,12 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
                         "<i>Use this panel to record categories about the image</i></qt>"));
     d->page_categories->setIcon(KIcon("flag"));
 
-/*
     d->statusPage  = new XMPStatus(this);
     d->page_status = addPage(d->statusPage, i18n("Status"));
     d->page_status->setHeader(i18n("<qt>Status Information<br>"
                     "<i>Use this panel to record workflow description</i></qt>"));
     d->page_status->setIcon(KIcon("kontact-todo"));
 
-    d->propertiesPage  = new XMPProperties(this);
-    d->page_properties = addPage(d->propertiesPage, i18n("Properties"));
-    d->page_properties->setHeader(i18n("<qt>Status Properties<br>"
-                      "<i>Use this panel to record workflow properties</i></qt>"));
-    d->page_properties->setIcon(KIcon("document-properties"));
-
-    d->envelopePage  = new XMPEnvelope(this);
-    d->page_envelope = addPage(d->envelopePage, i18n("Envelope"));
-    d->page_envelope->setHeader(i18n("<qt>Envelope Information<br>"
-                      "<i>Use this panel to record editorial description</i></qt>"));
-    d->page_envelope->setIcon(KIcon("mail"));
-*/  
     // ---------------------------------------------------------------
     // About data and help button.
 
@@ -262,16 +235,10 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
 
     connect(d->creditsPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
-/*
+
     connect(d->statusPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
-    connect(d->propertiesPage, SIGNAL(signalModified()),
-            this, SLOT(slotModified()));
-
-    connect(d->envelopePage, SIGNAL(signalModified()),
-            this, SLOT(slotModified()));
-*/
     // ------------------------------------------------------------
 
     connect(this, SIGNAL(user1Clicked()),
@@ -366,11 +333,7 @@ void XMPEditDialog::slotItemChanged()
     d->keywordsPage->readMetadata(d->xmpData);
     d->categoriesPage->readMetadata(d->xmpData);
     d->creditsPage->readMetadata(d->xmpData);
-/*
     d->statusPage->readMetadata(d->xmpData);
-    d->propertiesPage->readMetadata(d->xmpData);
-    d->envelopePage->readMetadata(d->xmpData);
-*/
     d->isReadOnly = KExiv2Iface::KExiv2::isReadOnly((*d->currItem).path()); 
 
     d->page_content->setEnabled(!d->isReadOnly);
@@ -379,11 +342,8 @@ void XMPEditDialog::slotItemChanged()
     d->page_keywords->setEnabled(!d->isReadOnly);
     d->page_categories->setEnabled(!d->isReadOnly);
     d->page_credits->setEnabled(!d->isReadOnly);
-/*
     d->page_status->setEnabled(!d->isReadOnly);
-    d->page_properties->setEnabled(!d->isReadOnly);
-    d->page_envelope->setEnabled(!d->isReadOnly);
-*/    
+
     enableButton(Apply, !d->isReadOnly);
     setCaption(QString("%1 (%2/%3) - %4")
                .arg((*d->currItem).fileName())
@@ -418,11 +378,8 @@ void XMPEditDialog::slotApply()
         d->keywordsPage->applyMetadata(d->xmpData);
         d->categoriesPage->applyMetadata(d->xmpData);
         d->creditsPage->applyMetadata(d->xmpData);
-/*
         d->statusPage->applyMetadata(d->xmpData);
-        d->propertiesPage->applyMetadata(d->xmpData);
-        d->envelopePage->applyMetadata(d->xmpData);
-*/
+
         KExiv2Iface::KExiv2 exiv2Iface;
         exiv2Iface.load((*d->currItem).path());
         exiv2Iface.setExif(d->exifData);
@@ -496,9 +453,9 @@ bool XMPEditDialog::eventFilter(QObject *, QEvent *e)
     return false;
 }
 
-void XMPEditDialog::showPage(int /*page*/)
+void XMPEditDialog::showPage(int page)
 {
-/*    switch(page)
+    switch(page)
     {
         case 0:
             setCurrentPage(d->page_content); 
@@ -521,21 +478,15 @@ void XMPEditDialog::showPage(int /*page*/)
         case 6:
             setCurrentPage(d->page_status); 
             break;
-        case 7:
-            setCurrentPage(d->page_properties); 
-            break;
-        case 8:
-            setCurrentPage(d->page_envelope); 
-            break;
         default: 
             setCurrentPage(d->page_content); 
             break;
-    }*/
+    }
 }
 
 int XMPEditDialog::activePageIndex()
 {
-/*    KPageWidgetItem *cur = currentPage();
+    KPageWidgetItem *cur = currentPage();
 
     if (cur == d->page_content)    return 0;
     if (cur == d->page_origin)     return 1;
@@ -544,8 +495,6 @@ int XMPEditDialog::activePageIndex()
     if (cur == d->page_keywords)   return 4;
     if (cur == d->page_categories) return 5;
     if (cur == d->page_status)     return 6;
-    if (cur == d->page_properties) return 7;
-    if (cur == d->page_envelope)   return 8;*/
 
     return 0;
 }
