@@ -60,9 +60,9 @@
 #include "xmpcategories.h"
 #include "xmpsubjects.h"
 #include "xmporigin.h"
+#include "xmpcredits.h"
 
 /*
-#include "xmpcredits.h"
 #include "xmpstatus.h"
 #include "xmpproperties.h"
 #include "xmpenvelope.h"
@@ -98,9 +98,9 @@ public:
         contentPage     = 0;
         subjectsPage    = 0;
         originPage      = 0;
+        creditsPage     = 0;
 /*
         propertiesPage  = 0;
-        creditsPage     = 0;
         statusPage      = 0;
         envelopePage    = 0;
 */
@@ -132,10 +132,9 @@ public:
     XMPCategories            *categoriesPage;
     XMPSubjects              *subjectsPage;
     XMPOrigin                *originPage;
-
+    XMPCredits               *creditsPage;
 /*
     XMPProperties            *propertiesPage;
-    XMPCredits               *creditsPage;
     XMPStatus                *statusPage;
     XMPEnvelope              *envelopePage;
 */
@@ -176,13 +175,13 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
     d->page_origin->setHeader(i18n("<qt>Origin Information<br>"
                     "<i>Use this panel for formal descriptive information about the image</i></qt>"));
     d->page_origin->setIcon(KIcon("network"));
-/*
+
     d->creditsPage  = new XMPCredits(this);
     d->page_credits = addPage(d->creditsPage, i18n("Credits"));
     d->page_credits->setHeader(i18n("<qt>Credits Information<br>"
                      "<i>Use this panel to record copyright information about the image</i></qt>"));
     d->page_credits->setIcon(KIcon("kontact-contacts"));
-*/
+
     d->subjectsPage  = new XMPSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
     d->page_subjects->setHeader(i18n("<qt>Subjects Information<br>"
@@ -260,10 +259,10 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
 
     connect(d->categoriesPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
-/*
+
     connect(d->creditsPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
-
+/*
     connect(d->statusPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
@@ -366,8 +365,8 @@ void XMPEditDialog::slotItemChanged()
     d->subjectsPage->readMetadata(d->xmpData);
     d->keywordsPage->readMetadata(d->xmpData);
     d->categoriesPage->readMetadata(d->xmpData);
-/*
     d->creditsPage->readMetadata(d->xmpData);
+/*
     d->statusPage->readMetadata(d->xmpData);
     d->propertiesPage->readMetadata(d->xmpData);
     d->envelopePage->readMetadata(d->xmpData);
@@ -379,8 +378,8 @@ void XMPEditDialog::slotItemChanged()
     d->page_subjects->setEnabled(!d->isReadOnly);
     d->page_keywords->setEnabled(!d->isReadOnly);
     d->page_categories->setEnabled(!d->isReadOnly);
-/*
     d->page_credits->setEnabled(!d->isReadOnly);
+/*
     d->page_status->setEnabled(!d->isReadOnly);
     d->page_properties->setEnabled(!d->isReadOnly);
     d->page_envelope->setEnabled(!d->isReadOnly);
@@ -418,8 +417,8 @@ void XMPEditDialog::slotApply()
         d->subjectsPage->applyMetadata(d->xmpData);
         d->keywordsPage->applyMetadata(d->xmpData);
         d->categoriesPage->applyMetadata(d->xmpData);
-/*
         d->creditsPage->applyMetadata(d->xmpData);
+/*
         d->statusPage->applyMetadata(d->xmpData);
         d->propertiesPage->applyMetadata(d->xmpData);
         d->envelopePage->applyMetadata(d->xmpData);
