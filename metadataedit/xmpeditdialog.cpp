@@ -59,12 +59,12 @@
 #include "xmpkeywords.h"
 #include "xmpcategories.h"
 #include "xmpsubjects.h"
+#include "xmporigin.h"
 
 /*
 #include "xmpcredits.h"
 #include "xmpstatus.h"
 #include "xmpproperties.h"
-#include "xmporigin.h"
 #include "xmpenvelope.h"
 */
 
@@ -97,11 +97,11 @@ public:
         categoriesPage  = 0;
         contentPage     = 0;
         subjectsPage    = 0;
+        originPage      = 0;
 /*
         propertiesPage  = 0;
         creditsPage     = 0;
         statusPage      = 0;
-        originPage      = 0;
         envelopePage    = 0;
 */
     }
@@ -131,12 +131,12 @@ public:
     XMPKeywords              *keywordsPage;
     XMPCategories            *categoriesPage;
     XMPSubjects              *subjectsPage;
+    XMPOrigin                *originPage;
 
 /*
     XMPProperties            *propertiesPage;
     XMPCredits               *creditsPage;
     XMPStatus                *statusPage;
-    XMPOrigin                *originPage;
     XMPEnvelope              *envelopePage;
 */
 
@@ -165,19 +165,18 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
 
     // ---------------------------------------------------------------
 
-
     d->contentPage   = new XMPContent(this);
     d->page_content  = addPage(d->contentPage, i18n("Content"));
     d->page_content->setHeader(i18n("<qt>Content Information<br>"
                      "<i>Use this panel to describe the visual content of the image</i></qt>"));
     d->page_content->setIcon(KIcon("edit-clear"));
-/*
+
     d->originPage  = new XMPOrigin(this);
     d->page_origin = addPage(d->originPage, i18n("Origin"));
     d->page_origin->setHeader(i18n("<qt>Origin Information<br>"
                     "<i>Use this panel for formal descriptive information about the image</i></qt>"));
     d->page_origin->setIcon(KIcon("network"));
-
+/*
     d->creditsPage  = new XMPCredits(this);
     d->page_credits = addPage(d->creditsPage, i18n("Credits"));
     d->page_credits->setHeader(i18n("<qt>Credits Information<br>"
@@ -249,10 +248,10 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
 
     connect(d->contentPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
-/*
-    connect(d->propertiesPage, SIGNAL(signalModified()),
+
+    connect(d->originPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
-*/
+
     connect(d->subjectsPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
@@ -268,7 +267,7 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
     connect(d->statusPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
-    connect(d->originPage, SIGNAL(signalModified()),
+    connect(d->propertiesPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
     connect(d->envelopePage, SIGNAL(signalModified()),
@@ -330,9 +329,9 @@ void XMPEditDialog::readSettings()
     d->contentPage->setCheckedSyncJFIFComment(group.readEntry("Sync JFIF Comment", true));
     d->contentPage->setCheckedSyncHOSTComment(group.readEntry("Sync Host Comment", true));
     d->contentPage->setCheckedSyncEXIFComment(group.readEntry("Sync EXIF Comment", true));
-/*    d->originPage->setCheckedSyncHOSTDate(group.readEntry("Sync Host Date", true));
+    d->originPage->setCheckedSyncHOSTDate(group.readEntry("Sync Host Date", true));
     d->originPage->setCheckedSyncEXIFDate(group.readEntry("Sync EXIF Date", true));
-*/
+
     KConfigGroup group2 = config.group(QString("XMP Edit Dialog"));
     restoreDialogSize(group2);
 }
@@ -346,9 +345,9 @@ void XMPEditDialog::saveSettings()
     group.writeEntry("Sync JFIF Comment", d->contentPage->syncJFIFCommentIsChecked());
     group.writeEntry("Sync Host Comment", d->contentPage->syncHOSTCommentIsChecked());
     group.writeEntry("Sync EXIF Comment", d->contentPage->syncEXIFCommentIsChecked());
-/*    group.writeEntry("Sync Host Date", d->originPage->syncHOSTDateIsChecked());
+    group.writeEntry("Sync Host Date", d->originPage->syncHOSTDateIsChecked());
     group.writeEntry("Sync EXIF Date", d->originPage->syncEXIFDateIsChecked());
-*/
+
     KConfigGroup group2 = config.group(QString("XMP Edit Dialog"));
     saveDialogSize(group2);
     config.sync();
@@ -361,15 +360,14 @@ void XMPEditDialog::slotItemChanged()
     d->exifData = exiv2Iface.getExif();
     d->iptcData = exiv2Iface.getIptc();
     d->xmpData  = exiv2Iface.getXmp();
-/*
-    d->originPage->readMetadata(d->xmpData);
-    d->creditsPage->readMetadata(d->xmpData);
-*/
+
     d->contentPage->readMetadata(d->xmpData);
+    d->originPage->readMetadata(d->xmpData);
     d->subjectsPage->readMetadata(d->xmpData);
     d->keywordsPage->readMetadata(d->xmpData);
     d->categoriesPage->readMetadata(d->xmpData);
 /*
+    d->creditsPage->readMetadata(d->xmpData);
     d->statusPage->readMetadata(d->xmpData);
     d->propertiesPage->readMetadata(d->xmpData);
     d->envelopePage->readMetadata(d->xmpData);
@@ -377,13 +375,12 @@ void XMPEditDialog::slotItemChanged()
     d->isReadOnly = KExiv2Iface::KExiv2::isReadOnly((*d->currItem).path()); 
 
     d->page_content->setEnabled(!d->isReadOnly);
-/*    d->page_origin->setEnabled(!d->isReadOnly);
-    d->page_credits->setEnabled(!d->isReadOnly);
-*/
+    d->page_origin->setEnabled(!d->isReadOnly);
     d->page_subjects->setEnabled(!d->isReadOnly);
     d->page_keywords->setEnabled(!d->isReadOnly);
     d->page_categories->setEnabled(!d->isReadOnly);
 /*
+    d->page_credits->setEnabled(!d->isReadOnly);
     d->page_status->setEnabled(!d->isReadOnly);
     d->page_properties->setEnabled(!d->isReadOnly);
     d->page_envelope->setEnabled(!d->isReadOnly);
@@ -411,19 +408,18 @@ void XMPEditDialog::slotApply()
             info.setDescription(d->contentPage->getXMPCaption());
         }
         d->contentPage->applyMetadata(d->exifData, d->xmpData);
-/*
+
         if (d->originPage->syncHOSTDateIsChecked())
         {
             info.setTime(d->originPage->getXMPCreationDate());
         }
         d->originPage->applyMetadata(d->exifData, d->xmpData);
 
-        d->creditsPage->applyMetadata(d->xmpData);
-*/
         d->subjectsPage->applyMetadata(d->xmpData);
         d->keywordsPage->applyMetadata(d->xmpData);
         d->categoriesPage->applyMetadata(d->xmpData);
 /*
+        d->creditsPage->applyMetadata(d->xmpData);
         d->statusPage->applyMetadata(d->xmpData);
         d->propertiesPage->applyMetadata(d->xmpData);
         d->envelopePage->applyMetadata(d->xmpData);
