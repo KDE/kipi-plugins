@@ -43,6 +43,7 @@
 // Local includes.
 
 #include "pluginsversion.h"
+#include "multistringsedit.h"
 #include "altlangstringedit.h"
 #include "xmpstatus.h"
 #include "xmpstatus.moc"
@@ -61,6 +62,7 @@ public:
         specialInstructionCheck = 0;
         nicknameEdit            = 0;
         nicknameCheck           = 0;
+        identifiersEdit         = 0;
     }
 
     QCheckBox          *nicknameCheck;
@@ -69,6 +71,8 @@ public:
     KLineEdit          *nicknameEdit;
 
     KTextEdit          *specialInstructionEdit;
+
+    MultiStringsEdit   *identifiersEdit;
 
     AltLangStringsEdit *objectNameEdit;
 };
@@ -87,12 +91,6 @@ XMPStatus::XMPStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->specialInstructionCheck = new QCheckBox(i18n("Special Instructions:"), this);
-    d->specialInstructionEdit  = new KTextEdit(this);
-    d->specialInstructionEdit->setWhatsThis(i18n("<p>Enter the editorial usage instructions."));
-
-    // --------------------------------------------------------
-
     d->nicknameCheck = new QCheckBox(i18n("Nickname:"), this);
     d->nicknameEdit  = new KLineEdit(this);
     d->nicknameEdit->setClearButtonShown(true);
@@ -100,12 +98,24 @@ XMPStatus::XMPStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
+    d->identifiersEdit  = new MultiStringsEdit(this, i18n("Identifiers:"), 
+                              i18n("<p>Set here the strings that identifies content that recurs."));
+
+    // --------------------------------------------------------
+
+    d->specialInstructionCheck = new QCheckBox(i18n("Special Instructions:"), this);
+    d->specialInstructionEdit  = new KTextEdit(this);
+    d->specialInstructionEdit->setWhatsThis(i18n("<p>Enter the editorial usage instructions."));
+
+    // --------------------------------------------------------
+
     grid->addWidget(d->objectNameEdit, 0, 0, 1, 3);
     grid->addWidget(d->nicknameCheck, 1, 0, 1, 1);
     grid->addWidget(d->nicknameEdit, 1, 1, 1, 2);
-    grid->addWidget(d->specialInstructionCheck, 2, 0, 1, 3);
-    grid->addWidget(d->specialInstructionEdit, 3, 0, 1, 3);
-    grid->setRowStretch(3, 10);                     
+    grid->addWidget(d->identifiersEdit, 2, 0, 1, 3);
+    grid->addWidget(d->specialInstructionCheck, 3, 0, 1, 3);
+    grid->addWidget(d->specialInstructionEdit, 4, 0, 1, 3);
+    grid->setRowStretch(5, 10);                     
     grid->setColumnStretch(3, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
@@ -117,6 +127,9 @@ XMPStatus::XMPStatus(QWidget* parent)
 
     connect(d->nicknameCheck, SIGNAL(toggled(bool)),
             d->nicknameEdit, SLOT(setEnabled(bool)));
+
+    connect(d->identifiersEdit, SIGNAL(signalModified()),
+            this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------
 
@@ -153,6 +166,7 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
     exiv2Iface.setXmp(xmpData);
 
     QString                         data;
+    QStringList                     list;
     KExiv2Iface::KExiv2::AltLangMap map;   
 
     d->objectNameEdit->setValid(false);
@@ -170,6 +184,9 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
     }
     d->nicknameEdit->setEnabled(d->nicknameCheck->isChecked());
 
+    list = exiv2Iface.getXmpTagStringSeq("Xmp.xmp.Identifier", false);    
+    d->identifiersEdit->setValues(list);
+
     d->specialInstructionEdit->clear();
     d->specialInstructionCheck->setChecked(false);
     data = exiv2Iface.getXmpTagString("Xmp.photoshop.Instructions", false);    
@@ -185,6 +202,7 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
 
 void XMPStatus::applyMetadata(QByteArray& xmpData)
 {
+    QStringList oldList, newList;
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
 
@@ -198,6 +216,11 @@ void XMPStatus::applyMetadata(QByteArray& xmpData)
         exiv2Iface.setXmpTagString("Xmp.xmp.Nickname", d->nicknameEdit->text());
     else
         exiv2Iface.removeXmpTag("Xmp.xmp.Nickname");
+
+    if (d->identifiersEdit->getValues(oldList, newList))
+        exiv2Iface.setXmpTagStringSeq("Xmp.xmp.Identifier", newList);
+    else
+        exiv2Iface.removeXmpTag("Xmp.xmp.Identifier");
 
     if (d->specialInstructionCheck->isChecked())
         exiv2Iface.setXmpTagString("Xmp.photoshop.Instructions", d->specialInstructionEdit->toPlainText());
