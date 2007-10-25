@@ -116,8 +116,8 @@ MultiValuesEdit::MultiValuesEdit(QWidget* parent, const QString& title, const QS
     grid->addWidget(d->delValueButton, 0, 2, 1, 1);
     grid->addWidget(d->repValueButton, 0, 3, 1, 1);
     grid->addWidget(d->valueBox, 0, 4, 3, 1);
-    grid->addWidget(d->dataList, 1, 0, 1, 4);
-    grid->setRowStretch(2, 10);                     
+    grid->addWidget(d->dataList, 2, 0, 1, 4);
+    grid->setRowStretch(1, 10);                     
     grid->setColumnStretch(0, 10);                     
     grid->setColumnStretch(4, 100);                     
     grid->setMargin(0);
