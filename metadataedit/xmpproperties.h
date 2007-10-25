@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-10-24
- * Description : XMP workflow status settings page.
+ * Description : XMP workflow status properties settings page.
  *
  * Copyright (C) 2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -20,8 +20,8 @@
  * 
  * ============================================================ */
 
-#ifndef XMP_STATUS_H
-#define XMP_STATUS_H
+#ifndef XMP_PROPERTIES_H
+#define XMP_PROPERTIES_H
 
 // Qt includes.
 
@@ -31,16 +31,16 @@
 namespace KIPIMetadataEditPlugin
 {
 
-class XMPStatusPriv;
+class XMPPropertiesPriv;
 
-class XMPStatus : public QWidget
+class XMPProperties : public QWidget
 {
     Q_OBJECT
     
 public:
 
-    XMPStatus(QWidget* parent);
-    ~XMPStatus();
+    XMPProperties(QWidget* parent);
+    ~XMPProperties();
 
     void applyMetadata(QByteArray& xmpData);
     void readMetadata(QByteArray& xmpData);
@@ -51,9 +51,9 @@ signals:
 
 private:
 
-    XMPStatusPriv* d;
+    XMPPropertiesPriv* d;
 };
 
 }  // namespace KIPIMetadataEditPlugin
 
-#endif // XMP_STATUS_H 
+#endif // XMP_PROPERTIES_H 

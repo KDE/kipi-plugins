@@ -22,13 +22,14 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       iptcenvelope.cpp
                                       iptceditdialog.cpp 
                                       xmpeditdialog.cpp 
-				      xmpcontent.cpp
+                                      xmpcontent.cpp
                                       xmpkeywords.cpp
                                       xmpcategories.cpp
                                       xmpsubjects.cpp
-				      xmporigin.cpp
-				      xmpcredits.cpp
-				      xmpstatus.cpp
+                                      xmporigin.cpp
+                                      xmpcredits.cpp
+                                      xmpstatus.cpp
+                                      xmpproperties.cpp
                                       commenteditdialog.cpp
                                       commentremovedialog.cpp
    )

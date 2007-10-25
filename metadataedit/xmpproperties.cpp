@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-10-24
- * Description : XMP workflow status settings page.
+ * Description : XMP workflow status properties settings page.
  *
  * Copyright (C) 2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -52,21 +52,18 @@
 #include "multivaluesedit.h"
 #include "altlangstringedit.h"
 #include "objectattributesedit.h"
-#include "xmpstatus.h"
-#include "xmpstatus.moc"
+#include "xmpproperties.h"
+#include "xmpproperties.moc"
 
 namespace KIPIMetadataEditPlugin
 {
 
-class XMPStatusPriv
+class XMPPropertiesPriv
 {
 public:
 
-    XMPStatusPriv()
+    XMPPropertiesPriv()
     {
-        specialInstructionCheck = 0;
-        objectNameEdit          = 0;
-        specialInstructionEdit  = 0;
         priorityCB              = 0;
         priorityCheck           = 0;
         sceneEdit               = 0;
@@ -106,18 +103,12 @@ public:
 
     SceneCodeMap                    sceneCodeMap;
 
-    QCheckBox                      *specialInstructionCheck;
-
     QComboBox                      *priorityCB;
     QComboBox                      *objectTypeCB;
 
     KLineEdit                      *objectTypeDescEdit;
 
-    KTextEdit                      *specialInstructionEdit;
-
     KLanguageButton                *languageBtn;
-
-    AltLangStringsEdit             *objectNameEdit;
 
     MetadataCheckBox               *priorityCheck;
     MetadataCheckBox               *objectTypeCheck;
@@ -128,23 +119,12 @@ public:
     ObjectAttributesEdit           *objectAttribute;
 };
 
-XMPStatus::XMPStatus(QWidget* parent)
+XMPProperties::XMPProperties(QWidget* parent)
          : QWidget(parent)
 {
-    d = new XMPStatusPriv;
+    d = new XMPPropertiesPriv;
 
     QGridLayout* grid = new QGridLayout(this);
-
-    // --------------------------------------------------------
-
-    d->objectNameEdit  = new AltLangStringsEdit(this, i18n("Title:"), 
-                                                i18n("<p>Set here the shorthand reference of content."));
-
-    // --------------------------------------------------------
-
-    d->specialInstructionCheck = new QCheckBox(i18n("Special Instructions:"), this);
-    d->specialInstructionEdit  = new KTextEdit(this);
-    d->specialInstructionEdit->setWhatsThis(i18n("<p>Enter the editorial usage instructions."));
 
     // --------------------------------------------------------
 
@@ -183,7 +163,7 @@ XMPStatus::XMPStatus(QWidget* parent)
                        i18n("<p>Select here the scene type of content."));
  
     QStringList list2;
-    for (XMPStatusPriv::SceneCodeMap::Iterator it = d->sceneCodeMap.begin();
+    for (XMPPropertiesPriv::SceneCodeMap::Iterator it = d->sceneCodeMap.begin();
          it != d->sceneCodeMap.end(); ++it)
         list2.append(QString("%1 - %2").arg(it.key()).arg(it.value()));
  
@@ -207,28 +187,22 @@ XMPStatus::XMPStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->objectNameEdit, 0, 0, 1, 5);
-    grid->addWidget(d->specialInstructionCheck, 1, 0, 1, 5);
-    grid->addWidget(d->specialInstructionEdit, 2, 0, 1, 5);
-    grid->addWidget(d->languageCheck, 3, 0, 1, 1);
-    grid->addWidget(d->languageBtn, 3, 1, 1, 1);
-    grid->addWidget(d->priorityCheck, 4, 0, 1, 1);
-    grid->addWidget(d->priorityCB, 4, 1, 1, 1);
-    grid->addWidget(d->sceneEdit, 5, 0, 1, 5);
-    grid->addWidget(d->objectTypeCheck, 6, 0, 1, 1);
-    grid->addWidget(d->objectTypeCB, 6, 1, 1, 1);
-    grid->addWidget(d->objectTypeDescEdit, 6, 2, 1, 3);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 7, 0, 1, 5);
-    grid->addWidget(d->objectAttribute, 8, 0, 1, 5);
-    grid->setRowStretch(9, 10);                     
+    grid->addWidget(d->languageCheck, 0, 0, 1, 1);
+    grid->addWidget(d->languageBtn, 0, 1, 1, 1);
+    grid->addWidget(d->priorityCheck, 1, 0, 1, 1);
+    grid->addWidget(d->priorityCB, 1, 1, 1, 1);
+    grid->addWidget(d->sceneEdit, 2, 0, 1, 5);
+    grid->addWidget(d->objectTypeCheck, 3, 0, 1, 1);
+    grid->addWidget(d->objectTypeCB, 3, 1, 1, 1);
+    grid->addWidget(d->objectTypeDescEdit, 3, 2, 1, 3);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 4, 0, 1, 5);
+    grid->addWidget(d->objectAttribute, 5, 0, 1, 5);
+    grid->setRowStretch(6, 10);                     
     grid->setColumnStretch(3, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
-
-    connect(d->specialInstructionCheck, SIGNAL(toggled(bool)),
-            d->specialInstructionEdit, SLOT(setEnabled(bool)));
 
     connect(d->languageCheck, SIGNAL(toggled(bool)),
             d->languageBtn, SLOT(setEnabled(bool)));
@@ -243,12 +217,6 @@ XMPStatus::XMPStatus(QWidget* parent)
             d->objectTypeDescEdit, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
-
-    connect(d->objectNameEdit, SIGNAL(signalToggled(bool)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->specialInstructionCheck, SIGNAL(toggled(bool)),
-            this, SIGNAL(signalModified()));
 
     connect(d->languageCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
@@ -267,12 +235,6 @@ XMPStatus::XMPStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->objectNameEdit, SIGNAL(signalModified()),
-            this, SIGNAL(signalModified()));
-
-    connect(d->specialInstructionEdit, SIGNAL(textChanged()),
-            this, SIGNAL(signalModified()));
-
     connect(d->languageBtn, SIGNAL(activated(const QString&)),
             this, SIGNAL(signalModified()));
 
@@ -286,12 +248,12 @@ XMPStatus::XMPStatus(QWidget* parent)
             this, SIGNAL(signalModified()));
 }
 
-XMPStatus::~XMPStatus()
+XMPProperties::~XMPProperties()
 {
     delete d;
 }
 
-void XMPStatus::readMetadata(QByteArray& xmpData)
+void XMPProperties::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
@@ -302,21 +264,6 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
     QStringList code, list;
     QString     dateStr, timeStr;
     KExiv2Iface::KExiv2::AltLangMap map;   
-
-    d->objectNameEdit->setValid(false);
-    map = exiv2Iface.getXmpTagStringListLangAlt("Xmp.dc.title", false);
-    if (!map.isEmpty())
-        d->objectNameEdit->setValues(map);
-
-    d->specialInstructionEdit->clear();
-    d->specialInstructionCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Instructions", false);    
-    if (!data.isNull())
-    {
-        d->specialInstructionEdit->setText(data);
-        d->specialInstructionCheck->setChecked(true);
-    }
-    d->specialInstructionEdit->setEnabled(d->specialInstructionCheck->isChecked());
 
     d->languageCheck->setChecked(false);
     data = exiv2Iface.getXmpTagString("Xmp.dc.language", false);    
@@ -395,21 +342,10 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
     blockSignals(false);
 }
 
-void XMPStatus::applyMetadata(QByteArray& xmpData)
+void XMPProperties::applyMetadata(QByteArray& xmpData)
 {
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
-
-    KExiv2Iface::KExiv2::AltLangMap oldAltLangMap, newAltLangMap;
-    if (d->objectNameEdit->getValues(oldAltLangMap, newAltLangMap))
-        exiv2Iface.setXmpTagStringListLangAlt("Xmp.dc.title", newAltLangMap, false);
-    else if (d->objectNameEdit->isValid())
-        exiv2Iface.removeXmpTag("Xmp.dc.title");
-
-    if (d->specialInstructionCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.photoshop.Instructions", d->specialInstructionEdit->toPlainText());
-    else
-        exiv2Iface.removeXmpTag("Xmp.photoshop.Instructions");
 
     if (d->languageCheck->isChecked())
         exiv2Iface.setXmpTagString("Xmp.dc.language", d->languageBtn->current());
