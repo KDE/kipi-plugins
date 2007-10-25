@@ -59,13 +59,18 @@ public:
         objectNameEdit          = 0;
         specialInstructionEdit  = 0;
         specialInstructionCheck = 0;
+        nicknameEdit            = 0;
+        nicknameCheck           = 0;
     }
 
-    QCheckBox                      *specialInstructionCheck;
+    QCheckBox          *nicknameCheck;
+    QCheckBox          *specialInstructionCheck;
 
-    KTextEdit                      *specialInstructionEdit;
+    KLineEdit          *nicknameEdit;
 
-    AltLangStringsEdit             *objectNameEdit;
+    KTextEdit          *specialInstructionEdit;
+
+    AltLangStringsEdit *objectNameEdit;
 };
 
 XMPStatus::XMPStatus(QWidget* parent)
@@ -88,12 +93,18 @@ XMPStatus::XMPStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
+    d->nicknameCheck = new QCheckBox(i18n("Nickname:"), this);
+    d->nicknameEdit  = new KLineEdit(this);
+    d->nicknameEdit->setClearButtonShown(true);
+    d->nicknameEdit->setWhatsThis(i18n("<p>A short informal name for the ressource."));
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->objectNameEdit, 0, 0, 1, 5);
-    grid->addWidget(d->specialInstructionCheck, 1, 0, 1, 5);
-    grid->addWidget(d->specialInstructionEdit, 2, 0, 1, 5);
+    grid->addWidget(d->objectNameEdit, 0, 0, 1, 3);
+    grid->addWidget(d->nicknameCheck, 1, 0, 1, 1);
+    grid->addWidget(d->nicknameEdit, 1, 1, 1, 2);
+    grid->addWidget(d->specialInstructionCheck, 2, 0, 1, 3);
+    grid->addWidget(d->specialInstructionEdit, 3, 0, 1, 3);
     grid->setRowStretch(3, 10);                     
     grid->setColumnStretch(3, 10);                     
     grid->setMargin(0);
@@ -104,9 +115,15 @@ XMPStatus::XMPStatus(QWidget* parent)
     connect(d->specialInstructionCheck, SIGNAL(toggled(bool)),
             d->specialInstructionEdit, SLOT(setEnabled(bool)));
 
+    connect(d->nicknameCheck, SIGNAL(toggled(bool)),
+            d->nicknameEdit, SLOT(setEnabled(bool)));
+
     // --------------------------------------------------------
 
     connect(d->objectNameEdit, SIGNAL(signalToggled(bool)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->nicknameCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
     connect(d->specialInstructionCheck, SIGNAL(toggled(bool)),
@@ -115,6 +132,9 @@ XMPStatus::XMPStatus(QWidget* parent)
     // --------------------------------------------------------
 
     connect(d->objectNameEdit, SIGNAL(signalModified()),
+            this, SIGNAL(signalModified()));
+
+    connect(d->nicknameEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 
     connect(d->specialInstructionEdit, SIGNAL(textChanged()),
@@ -140,6 +160,16 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
     if (!map.isEmpty())
         d->objectNameEdit->setValues(map);
 
+    d->nicknameEdit->clear();
+    d->nicknameCheck->setChecked(false);
+    data = exiv2Iface.getXmpTagString("Xmp.xmp.Nickname", false);    
+    if (!data.isNull())
+    {
+        d->nicknameEdit->setText(data);
+        d->nicknameCheck->setChecked(true);
+    }
+    d->nicknameEdit->setEnabled(d->nicknameCheck->isChecked());
+
     d->specialInstructionEdit->clear();
     d->specialInstructionCheck->setChecked(false);
     data = exiv2Iface.getXmpTagString("Xmp.photoshop.Instructions", false);    
@@ -163,6 +193,11 @@ void XMPStatus::applyMetadata(QByteArray& xmpData)
         exiv2Iface.setXmpTagStringListLangAlt("Xmp.dc.title", newAltLangMap, false);
     else if (d->objectNameEdit->isValid())
         exiv2Iface.removeXmpTag("Xmp.dc.title");
+
+    if (d->nicknameCheck->isChecked())
+        exiv2Iface.setXmpTagString("Xmp.xmp.Nickname", d->nicknameEdit->text());
+    else
+        exiv2Iface.removeXmpTag("Xmp.xmp.Nickname");
 
     if (d->specialInstructionCheck->isChecked())
         exiv2Iface.setXmpTagString("Xmp.photoshop.Instructions", d->specialInstructionEdit->toPlainText());
