@@ -67,8 +67,7 @@ public:
         priorityCB              = 0;
         priorityCheck           = 0;
         sceneEdit               = 0;
-        objectTypeCB            = 0;
-        objectTypeCheck         = 0;
+        objectTypeEdit          = 0;
         objectAttribute         = 0;
         languageBtn             = 0;
         languageCheck           = 0;
@@ -97,30 +96,44 @@ public:
         sceneCodeMap.insert( "012200", i18n("Symbolic") );
         sceneCodeMap.insert( "012300", i18n("Off-beat") );
         sceneCodeMap.insert( "012400", i18n("Movie scene") );
+
+        typeCodeMap.insert( "Advisory",           i18n("Advisory") );
+        typeCodeMap.insert( "Alert",              i18n("Alert") );
+        typeCodeMap.insert( "Catalog",            i18n("Catalog") );
+        typeCodeMap.insert( "Data",               i18n("Data") );
+        typeCodeMap.insert( "Document",           i18n("Document") );
+        typeCodeMap.insert( "DTD",                i18n("DTD") );
+        typeCodeMap.insert( "Maintenance",        i18n("Maintenance") );
+        typeCodeMap.insert( "News",               i18n("News") );
+        typeCodeMap.insert( "NewsManagementMode", i18n("News Management Mode") );
+        typeCodeMap.insert( "Package",            i18n("Package") );
+        typeCodeMap.insert( "Schema",             i18n("Schema") );
+        typeCodeMap.insert( "Topic",              i18n("Topic") );
+        typeCodeMap.insert( "TopicSet",           i18n("Topic Set") );
     }
 
     typedef QMap<QString, QString>  SceneCodeMap; 
+    typedef QMap<QString, QString>  TypeCodeMap;
 
     SceneCodeMap                    sceneCodeMap;
+    TypeCodeMap                     typeCodeMap;
 
     QComboBox                      *priorityCB;
     QComboBox                      *objectTypeCB;
 
-    KLineEdit                      *objectTypeDescEdit;
-
     KLanguageButton                *languageBtn;
 
     MetadataCheckBox               *priorityCheck;
-    MetadataCheckBox               *objectTypeCheck;
     MetadataCheckBox               *languageCheck;
 
     MultiValuesEdit                *sceneEdit;
+    MultiValuesEdit                *objectTypeEdit;
 
     ObjectAttributesEdit           *objectAttribute;
 };
 
 XMPProperties::XMPProperties(QWidget* parent)
-         : QWidget(parent)
+             : QWidget(parent)
 {
     d = new XMPPropertiesPriv;
 
@@ -171,15 +184,15 @@ XMPProperties::XMPProperties(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->objectTypeCheck    = new MetadataCheckBox(i18n("Type:"), this);
-    d->objectTypeCB       = new QComboBox(this);
-    d->objectTypeDescEdit = new KLineEdit(this);
-    d->objectTypeDescEdit->setClearButtonShown(true);
-    d->objectTypeCB->insertItem(0, i18n("News"));
-    d->objectTypeCB->insertItem(1, i18n("Data"));
-    d->objectTypeCB->insertItem(2, i18n("Advisory"));
-    d->objectTypeCB->setWhatsThis(i18n("<p>Select here the editorial type of content."));
-    d->objectTypeDescEdit->setWhatsThis(i18n("<p>Set here the editorial type description of content."));
+    d->objectTypeEdit = new MultiValuesEdit(this, i18n("Type:"), 
+                            i18n("<p>Select here the editorial type of content."));
+
+    QStringList list3;
+    for (XMPPropertiesPriv::TypeCodeMap::Iterator it = d->typeCodeMap.begin();
+         it != d->typeCodeMap.end(); ++it)
+        list3.append(it.value());
+ 
+    d->objectTypeEdit->setData(list3);
 
     // --------------------------------------------------------
 
@@ -192,9 +205,7 @@ XMPProperties::XMPProperties(QWidget* parent)
     grid->addWidget(d->priorityCheck, 1, 0, 1, 1);
     grid->addWidget(d->priorityCB, 1, 1, 1, 1);
     grid->addWidget(d->sceneEdit, 2, 0, 1, 5);
-    grid->addWidget(d->objectTypeCheck, 3, 0, 1, 1);
-    grid->addWidget(d->objectTypeCB, 3, 1, 1, 1);
-    grid->addWidget(d->objectTypeDescEdit, 3, 2, 1, 3);
+    grid->addWidget(d->objectTypeEdit, 3, 0, 1, 5);
     grid->addWidget(new KSeparator(Qt::Horizontal, this), 4, 0, 1, 5);
     grid->addWidget(d->objectAttribute, 5, 0, 1, 5);
     grid->setRowStretch(6, 10);                     
@@ -210,12 +221,6 @@ XMPProperties::XMPProperties(QWidget* parent)
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
             d->priorityCB, SLOT(setEnabled(bool)));
 
-    connect(d->objectTypeCheck, SIGNAL(toggled(bool)),
-            d->objectTypeCB, SLOT(setEnabled(bool)));
-
-    connect(d->objectTypeCheck, SIGNAL(toggled(bool)),
-            d->objectTypeDescEdit, SLOT(setEnabled(bool)));
-
     // --------------------------------------------------------
 
     connect(d->languageCheck, SIGNAL(toggled(bool)),
@@ -227,7 +232,7 @@ XMPProperties::XMPProperties(QWidget* parent)
     connect(d->sceneEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
-    connect(d->objectTypeCheck, SIGNAL(toggled(bool)),
+    connect(d->objectTypeEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
     connect(d->objectAttribute, SIGNAL(signalModified()),
@@ -239,12 +244,6 @@ XMPProperties::XMPProperties(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->priorityCB, SIGNAL(activated(int)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->objectTypeCB, SIGNAL(activated(int)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->objectTypeDescEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 }
 
@@ -261,7 +260,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
 
     int         val;
     QString     data;
-    QStringList code, list;
+    QStringList code, list, list2;
     QString     dateStr, timeStr;
     KExiv2Iface::KExiv2::AltLangMap map;   
 
@@ -312,30 +311,26 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
             d->sceneEdit->setValid(false);
     }
     d->sceneEdit->setValues(list);
-/*
-    d->objectTypeCB->setCurrentIndex(0);
-    d->objectTypeDescEdit->clear();
-    d->objectTypeCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.dc.Type", false);    
-    if (!data.isNull())
-    {
-        QString typeSec = data.section(":", 0, 0);
-        if (!typeSec.isEmpty())
-        {
-            int type = typeSec.toInt()-1;
-            if (type >= 0 && type < 3)
-            {
-                d->objectTypeCB->setCurrentIndex(type);
-                d->objectTypeDescEdit->setText(data.section(":", -1));
-                d->objectTypeCheck->setChecked(true);
-            }
-            else
-                d->objectTypeCheck->setValid(false);
-        }
-    }
-    d->objectTypeCB->setEnabled(d->objectTypeCheck->isChecked());
-    d->objectTypeDescEdit->setEnabled(d->objectTypeCheck->isChecked());
 
+    code = exiv2Iface.getXmpTagStringBag("Xmp.dc.Type", false);
+    for (QStringList::Iterator it3 = code.begin(); it3 != code.end(); ++it3)
+    {
+        QStringList data = d->objectTypeEdit->getData();
+        QStringList::Iterator it4;
+        for (it4 = data.begin(); it4 != data.end(); ++it4)        
+        {
+            if ((*it4) == (*it3))
+            {
+                list2.append(*it4);
+                break;
+            }
+        }
+        if (it4 == data.end())  
+            d->objectTypeEdit->setValid(false);
+    }
+    d->objectTypeEdit->setValues(list2);
+
+/*
     list = exiv2Iface.getXmpTagsStringList("Xmp.iptc.IntellectualGenre", false);    
     d->objectAttribute->setValues(list);
 */
@@ -344,6 +339,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
 
 void XMPProperties::applyMetadata(QByteArray& xmpData)
 {
+    QStringList oldList, newList;
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
 
@@ -357,7 +353,6 @@ void XMPProperties::applyMetadata(QByteArray& xmpData)
     else if (d->priorityCheck->isValid())
         exiv2Iface.removeXmpTag("Xmp.photoshop.Urgency");
 
-    QStringList oldList, newList;
     if (d->sceneEdit->getValues(oldList, newList))
     {
         QStringList newCode;
@@ -371,17 +366,13 @@ void XMPProperties::applyMetadata(QByteArray& xmpData)
     {
         exiv2Iface.removeXmpTag("Xmp.iptc.Scene");
     }
-/*
-    if (d->objectTypeCheck->isChecked())
-    {
-        QString objectType;
-        objectType.sprintf("%2d", d->objectTypeCB->currentIndex()+1);
-        objectType.append(QString(":%1").arg(d->objectTypeDescEdit->text()));
-        exiv2Iface.setXmpTagString("Xmp.dc.Type", objectType);
-    }
-    else if (d->objectTypeCheck->isValid())
-        exiv2Iface.removeIptcTag("Xmp.dc.Type");
 
+    if (d->objectTypeEdit->getValues(oldList, newList))
+        exiv2Iface.setXmpTagStringBag("Xmp.dc.Type", newList, false);
+    else
+        exiv2Iface.removeXmpTag("Xmp.dc.Type");
+
+/*
     QStringList oldList, newList;
     if (d->objectAttribute->getValues(oldList, newList))
         exiv2Iface.setXmpTagsStringList("Xmp.iptc.IntellectualGenre", 64, oldList, newList);
