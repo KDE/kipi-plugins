@@ -62,6 +62,7 @@
 #include "xmporigin.h"
 #include "xmpcredits.h"
 #include "xmpstatus.h"
+#include "xmpproperties.h"
 #include "xmpeditdialog.h"
 #include "xmpeditdialog.moc"
 
@@ -85,7 +86,6 @@ public:
         page_credits    = 0;
         page_status     = 0;
         page_origin     = 0;
-        page_envelope   = 0;
         about           = 0;
         keywordsPage    = 0;
         categoriesPage  = 0;
@@ -94,6 +94,7 @@ public:
         originPage      = 0;
         creditsPage     = 0;
         statusPage      = 0;
+        propertiesPage  = 0;
     }
 
     bool                      modified;
@@ -104,14 +105,13 @@ public:
     QByteArray                xmpData;
 
     KPageWidgetItem          *page_content;
-    KPageWidgetItem          *page_properties;
+    KPageWidgetItem          *page_origin;
     KPageWidgetItem          *page_subjects;
     KPageWidgetItem          *page_keywords;
     KPageWidgetItem          *page_categories;
     KPageWidgetItem          *page_credits;
     KPageWidgetItem          *page_status;
-    KPageWidgetItem          *page_origin;
-    KPageWidgetItem          *page_envelope;
+    KPageWidgetItem          *page_properties;
 
     KUrl::List                urls;
 
@@ -124,6 +124,7 @@ public:
     XMPOrigin                *originPage;
     XMPCredits               *creditsPage;
     XMPStatus                *statusPage;
+    XMPProperties            *propertiesPage;
 
     KIPI::Interface          *interface;
 
@@ -192,6 +193,12 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
                     "<i>Use this panel to record workflow description</i></qt>"));
     d->page_status->setIcon(KIcon("kontact-todo"));
 
+    d->propertiesPage  = new XMPProperties(this);
+    d->page_properties = addPage(d->propertiesPage, i18n("Properties"));
+    d->page_properties->setHeader(i18n("<qt>Status Properties<br>"
+                      "<i>Use this panel to record workflow properties</i></qt>"));
+    d->page_properties->setIcon(KIcon("document-properties"));
+
     // ---------------------------------------------------------------
     // About data and help button.
 
@@ -219,6 +226,9 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
     // ------------------------------------------------------------
 
     connect(d->contentPage, SIGNAL(signalModified()),
+            this, SLOT(slotModified()));
+
+    connect(d->propertiesPage, SIGNAL(signalModified()),
             this, SLOT(slotModified()));
 
     connect(d->originPage, SIGNAL(signalModified()),
@@ -334,6 +344,7 @@ void XMPEditDialog::slotItemChanged()
     d->categoriesPage->readMetadata(d->xmpData);
     d->creditsPage->readMetadata(d->xmpData);
     d->statusPage->readMetadata(d->xmpData);
+    d->propertiesPage->readMetadata(d->xmpData);
     d->isReadOnly = KExiv2Iface::KExiv2::isReadOnly((*d->currItem).path()); 
 
     d->page_content->setEnabled(!d->isReadOnly);
@@ -343,6 +354,7 @@ void XMPEditDialog::slotItemChanged()
     d->page_categories->setEnabled(!d->isReadOnly);
     d->page_credits->setEnabled(!d->isReadOnly);
     d->page_status->setEnabled(!d->isReadOnly);
+    d->page_properties->setEnabled(!d->isReadOnly);
 
     enableButton(Apply, !d->isReadOnly);
     setCaption(QString("%1 (%2/%3) - %4")
@@ -379,6 +391,7 @@ void XMPEditDialog::slotApply()
         d->categoriesPage->applyMetadata(d->xmpData);
         d->creditsPage->applyMetadata(d->xmpData);
         d->statusPage->applyMetadata(d->xmpData);
+        d->propertiesPage->applyMetadata(d->xmpData);
 
         KExiv2Iface::KExiv2 exiv2Iface;
         exiv2Iface.load((*d->currItem).path());
@@ -478,6 +491,9 @@ void XMPEditDialog::showPage(int page)
         case 6:
             setCurrentPage(d->page_status); 
             break;
+        case 7:
+            setCurrentPage(d->page_properties); 
+            break;
         default: 
             setCurrentPage(d->page_content); 
             break;
@@ -495,6 +511,7 @@ int XMPEditDialog::activePageIndex()
     if (cur == d->page_keywords)   return 4;
     if (cur == d->page_categories) return 5;
     if (cur == d->page_status)     return 6;
+    if (cur == d->page_properties) return 7;
 
     return 0;
 }
