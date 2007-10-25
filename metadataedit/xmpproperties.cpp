@@ -64,13 +64,16 @@ public:
 
     XMPPropertiesPriv()
     {
-        priorityCB              = 0;
-        priorityCheck           = 0;
-        sceneEdit               = 0;
-        objectTypeEdit          = 0;
-        objectAttribute         = 0;
-        languageBtn             = 0;
-        languageCheck           = 0;
+        priorityCB           = 0;
+        objectTypeCB         = 0;
+        languageBtn          = 0;
+        priorityCheck        = 0;
+        languageCheck        = 0;
+        objectAttributeCheck = 0;
+        sceneEdit            = 0;
+        objectTypeEdit       = 0;
+        objectAttributeEdit  = 0;
+        objectAttributeCB    = 0;
 
         sceneCodeMap.insert( "010100", i18n("Headshot") );
         sceneCodeMap.insert( "010200", i18n("Half-length") );
@@ -123,13 +126,16 @@ public:
 
     KLanguageButton                *languageBtn;
 
+    KLineEdit                      *objectAttributeEdit;
+
     MetadataCheckBox               *priorityCheck;
     MetadataCheckBox               *languageCheck;
-
+    MetadataCheckBox               *objectAttributeCheck;
+ 
     MultiValuesEdit                *sceneEdit;
     MultiValuesEdit                *objectTypeEdit;
 
-    ObjectAttributesEdit           *objectAttribute;
+    KIPIPlugins::SqueezedComboBox  *objectAttributeCB;
 };
 
 XMPProperties::XMPProperties(QWidget* parent)
@@ -196,7 +202,35 @@ XMPProperties::XMPProperties(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->objectAttribute = new ObjectAttributesEdit(this, false);
+    d->objectAttributeCheck = new MetadataCheckBox(i18n("Attribute:"), this);
+    d->objectAttributeCB    = new KIPIPlugins::SqueezedComboBox(this);
+    d->objectAttributeEdit  = new KLineEdit(this);
+    d->objectAttributeEdit->setClearButtonShown(true);
+    d->objectAttributeEdit->setWhatsThis(i18n("<p><p>Set here the editorial attribute description of content."));
+
+    d->objectAttributeCB->setWhatsThis(i18n("<p>Select here the editorial attribute of content."));
+    d->objectAttributeCB->addSqueezedItem(QString("001 - ") + i18n("Current"));
+    d->objectAttributeCB->addSqueezedItem(QString("002 - ") + i18n("Analysis"));
+    d->objectAttributeCB->addSqueezedItem(QString("003 - ") + i18n("Archive material"));
+    d->objectAttributeCB->addSqueezedItem(QString("004 - ") + i18n("Background"));
+    d->objectAttributeCB->addSqueezedItem(QString("005 - ") + i18n("Feature"));
+    d->objectAttributeCB->addSqueezedItem(QString("006 - ") + i18n("Forecast"));
+    d->objectAttributeCB->addSqueezedItem(QString("007 - ") + i18n("History"));
+    d->objectAttributeCB->addSqueezedItem(QString("008 - ") + i18n("Obituary"));
+    d->objectAttributeCB->addSqueezedItem(QString("009 - ") + i18n("Opinion"));
+    d->objectAttributeCB->addSqueezedItem(QString("010 - ") + i18n("Polls & Surveys"));
+    d->objectAttributeCB->addSqueezedItem(QString("011 - ") + i18n("Profile"));
+    d->objectAttributeCB->addSqueezedItem(QString("012 - ") + i18n("Results Listings & Table"));
+    d->objectAttributeCB->addSqueezedItem(QString("013 - ") + i18n("Side bar & Supporting information"));
+    d->objectAttributeCB->addSqueezedItem(QString("014 - ") + i18n("Summary"));
+    d->objectAttributeCB->addSqueezedItem(QString("015 - ") + i18n("Transcript & Verbatim"));
+    d->objectAttributeCB->addSqueezedItem(QString("016 - ") + i18n("Interview"));
+    d->objectAttributeCB->addSqueezedItem(QString("017 - ") + i18n("From the Scene"));
+    d->objectAttributeCB->addSqueezedItem(QString("018 - ") + i18n("Retrospective"));
+    d->objectAttributeCB->addSqueezedItem(QString("019 - ") + i18n("Statistics"));
+    d->objectAttributeCB->addSqueezedItem(QString("020 - ") + i18n("Update"));
+    d->objectAttributeCB->addSqueezedItem(QString("021 - ") + i18n("Wrap-up"));
+    d->objectAttributeCB->addSqueezedItem(QString("022 - ") + i18n("Press Release"));
 
     // --------------------------------------------------------
 
@@ -207,9 +241,11 @@ XMPProperties::XMPProperties(QWidget* parent)
     grid->addWidget(d->sceneEdit, 2, 0, 1, 5);
     grid->addWidget(d->objectTypeEdit, 3, 0, 1, 5);
     grid->addWidget(new KSeparator(Qt::Horizontal, this), 4, 0, 1, 5);
-    grid->addWidget(d->objectAttribute, 5, 0, 1, 5);
+    grid->addWidget(d->objectAttributeCheck, 5, 0, 1, 1);
+    grid->addWidget(d->objectAttributeCB, 5, 1, 1, 2);
+    grid->addWidget(d->objectAttributeEdit, 5, 3, 1, 2);
     grid->setRowStretch(6, 10);                     
-    grid->setColumnStretch(3, 10);                     
+    grid->setColumnStretch(4, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -220,6 +256,12 @@ XMPProperties::XMPProperties(QWidget* parent)
 
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
             d->priorityCB, SLOT(setEnabled(bool)));
+
+    connect(d->objectAttributeCheck, SIGNAL(toggled(bool)),
+            d->objectAttributeCB, SLOT(setEnabled(bool)));
+
+    connect(d->objectAttributeCheck, SIGNAL(toggled(bool)),
+            d->objectAttributeEdit, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
 
@@ -235,7 +277,7 @@ XMPProperties::XMPProperties(QWidget* parent)
     connect(d->objectTypeEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
-    connect(d->objectAttribute, SIGNAL(signalModified()),
+    connect(d->objectAttributeCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------
@@ -244,6 +286,12 @@ XMPProperties::XMPProperties(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->priorityCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->objectAttributeCB, SIGNAL(activated(int)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->objectAttributeEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 }
 
@@ -330,10 +378,29 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
     }
     d->objectTypeEdit->setValues(list2);
 
-/*
-    list = exiv2Iface.getXmpTagsStringList("Xmp.iptc.IntellectualGenre", false);    
-    d->objectAttribute->setValues(list);
-*/
+    d->objectAttributeCB->setCurrentIndex(0);
+    d->objectAttributeEdit->clear();
+    d->objectAttributeCheck->setChecked(false);
+    data = exiv2Iface.getXmpTagString("Xmp.iptc.IntellectualGenre", false);    
+    if (!data.isNull())
+    {
+        QString attrSec = data.section(":", 0, 0);
+        if (!attrSec.isEmpty())
+        {
+            int attr = attrSec.toInt()-1;
+            if (attr >= 0 && attr < 23)
+            {
+                d->objectAttributeCB->setCurrentIndex(attr);
+                d->objectAttributeEdit->setText(data.section(":", -1));
+                d->objectAttributeCheck->setChecked(true);
+            }
+            else
+                d->objectAttributeCheck->setValid(false);
+        }
+    }
+    d->objectAttributeCB->setEnabled(d->objectAttributeCheck->isChecked());
+    d->objectAttributeEdit->setEnabled(d->objectAttributeCheck->isChecked());
+
     blockSignals(false);
 }
 
@@ -372,13 +439,16 @@ void XMPProperties::applyMetadata(QByteArray& xmpData)
     else
         exiv2Iface.removeXmpTag("Xmp.dc.Type");
 
-/*
-    QStringList oldList, newList;
-    if (d->objectAttribute->getValues(oldList, newList))
-        exiv2Iface.setXmpTagsStringList("Xmp.iptc.IntellectualGenre", 64, oldList, newList);
-    else if (d->objectAttribute->isValid())
+    if (d->objectAttributeCheck->isChecked())
+    {
+        QString objectAttribute;
+        objectAttribute.sprintf("%3d", d->objectAttributeCB->currentIndex()+1);
+        objectAttribute.append(QString(":%1").arg(d->objectAttributeEdit->text()));
+        exiv2Iface.setXmpTagString("Xmp.iptc.IntellectualGenre", objectAttribute);
+    }
+    else if (d->objectAttributeCheck->isValid())
         exiv2Iface.removeXmpTag("Xmp.iptc.IntellectualGenre");
-*/
+
     exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 
     xmpData = exiv2Iface.getXmp();
