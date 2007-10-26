@@ -33,7 +33,6 @@
 #include <kdialog.h>
 
 class QCloseEvent;
-class QEvent;
 
 namespace KIPI
 {

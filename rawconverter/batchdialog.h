@@ -36,7 +36,6 @@
 
 #include "kpaboutdata.h"
 
-class QEvent;
 class QCloseEvent;
 
 namespace KIPI
