@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-// Include files for Qt
+// Qt includes.
 
 #include <qvbox.h>
 #include <qlayout.h>
@@ -42,7 +42,7 @@
 #include <qfileinfo.h>
 #include <qpushbutton.h>
 
-// Include files for KDE
+// KDE includes.
 
 #include <klocale.h>
 #include <klineedit.h>
@@ -61,11 +61,11 @@
 #include <kpopupmenu.h>
 #include <kurlrequester.h>
 
-// Include files for KIPI
+// LibKipi includes.
 
 #include <libkipi/imagedialog.h>
 
-// Local include files
+// Local includes.
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
@@ -81,7 +81,7 @@ class ImageItem : public QListBoxText
 
 public:
     ImageItem(QListBox * parent, QString const & comments, KURL const & url)
-            : QListBoxText(parent), _comments(comments), _url(url)
+        : QListBoxText(parent), _comments(comments), _url(url)
     {}
 
     QString comments()                   { return _comments;                         }
@@ -251,7 +251,7 @@ void SendImagesDialog::setupImagesList(void)
 
     m_groupBoxImageList = new QGroupBox( page_setupImagesList );
     m_groupBoxImageList->setFlat(false);
-    QGridLayout* grid = new QGridLayout( m_groupBoxImageList, 2, 2 , 20, 20);
+    QGridLayout* grid   = new QGridLayout( m_groupBoxImageList, 2, 2 , 20, 20);
 
     m_ImagesFilesListBox = new ListImageItems( m_groupBoxImageList, "ListImageItems" );
     QWhatsThis::add( m_ImagesFilesListBox, i18n( "<p>This is the list of images  to email. "
@@ -260,9 +260,9 @@ void SendImagesDialog::setupImagesList(void)
     grid->addMultiCellWidget(m_ImagesFilesListBox, 0, 2, 0, 1);
 
     KButtonBox* imagesListButtonBox = new KButtonBox( m_groupBoxImageList, Vertical );
-    QPushButton* m_addImagesButton = imagesListButtonBox->addButton ( i18n( "&Add ..." ) );
+    QPushButton* m_addImagesButton  = imagesListButtonBox->addButton ( i18n( "&Add ..." ) );
     QWhatsThis::add( m_addImagesButton, i18n("<p>Add images to the list.") );
-    QPushButton* m_remImagesButton = imagesListButtonBox->addButton ( i18n( "&Remove" ));
+    QPushButton* m_remImagesButton  = imagesListButtonBox->addButton ( i18n( "&Remove" ));
     QWhatsThis::add( m_remImagesButton, i18n("<p>Remove selected images from the list.") );
     imagesListButtonBox->layout();
     grid->addMultiCellWidget(imagesListButtonBox, 0, 1, 2, 2);

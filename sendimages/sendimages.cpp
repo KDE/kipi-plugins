@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-// Include files for Qt
+// Qt includes.
 
 #include <qfileinfo.h>
 #include <qdir.h>
@@ -34,7 +34,7 @@
 #include <qurl.h>
 #include <qdeepcopy.h>
 
-// Include files for KDE
+// KDE includes
 
 #include <klocale.h>
 #include <kinstance.h>
@@ -62,7 +62,7 @@
 #include <libkdcraw/rawfiles.h>
 #include <libkdcraw/kdcraw.h>
 
-// Local include files
+// Local includes.
 
 #include "sendimagesdialog.h"
 #include "listimageserrordialog.h"
@@ -79,12 +79,12 @@ SendImages::SendImages(KIPI::Interface* interface, const QString &tmpFolder,
                        const KIPI::ImageCollection& imagesCollection, QObject *parent)
           : QObject(parent), QThread()
 {
-    m_invokedBefore=false;
-    m_interface    = interface;
-    m_tmp          = tmpFolder;
-    m_collection   = imagesCollection;
-    m_parent       = parent;
-    m_mozillaTimer = new QTimer(this);
+    m_invokedBefore = false;
+    m_interface     = interface;
+    m_tmp           = tmpFolder;
+    m_collection    = imagesCollection;
+    m_parent        = parent;
+    m_mozillaTimer  = new QTimer(this);
     KImageIO::registerFormats();
 
     connect(m_mozillaTimer, SIGNAL(timeout()),
