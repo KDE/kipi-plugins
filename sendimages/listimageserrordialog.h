@@ -40,8 +40,8 @@ class listImagesErrorDialog : public KDialogBase
 public:
 
     listImagesErrorDialog(QWidget* parent, QString Caption,
-                            const QString &Mess1, const QString &Mess2,
-                            KURL::List ListOfiles);
+                          const QString &Mess1, const QString &Mess2,
+                          KURL::List ListOfiles);
 
     ~listImagesErrorDialog();
 

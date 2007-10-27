@@ -55,6 +55,7 @@ class SendImages : public QObject, public QThread
 Q_OBJECT
 
 public:
+
     ///Constructor: saves system handoff parameters in member variables
     SendImages(KIPI::Interface* interface, const QString &tmpFolder, 
                 const KIPI::ImageCollection& imagesCollection, QObject *parent=0);
@@ -89,6 +90,7 @@ public:
     KURL::List divideEmails(void);
 	   
 private slots:   
+
     ///If Mozilla wasn't started before, now it is and so we can begin with the transmission
     void slotMozillaTimeout(void);
 
@@ -100,6 +102,7 @@ private slots:
     void slotMozillaReadStderr(KProcess* proc, char *buffer, int buflen);
 
 private:
+
     ///Returns the file-extension of the corresponding fileformat
     QString extension(const QString& imageFileFormat);
 
@@ -128,9 +131,12 @@ private:
 
     ///Makes a deep copy of a KURL-list: Real and slow copying instead of only pointer arithmetics
     bool kurllistdeepcopy(KURL::List &Destination, KURL::List Source);
+
 private:
+
     bool m_invokedBefore;
     /** Change image properties options in setup dialog.*/
+
     bool                   m_changeProp;                
     
     /** Image size factor in the setup dialog.*/

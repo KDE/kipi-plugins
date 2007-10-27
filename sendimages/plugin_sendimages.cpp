@@ -45,7 +45,7 @@ extern "C"
 #include <kimageio.h>
 #include <kdeversion.h>
 
-// Lib KIPI includes.
+// LibKipi includes.
 
 #include <libkipi/batchprogressdialog.h>
 
@@ -84,7 +84,6 @@ void Plugin_SendImages::setup( QWidget* widget )
     addAction( m_action_sendimages );
 
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
-
     if ( !interface )
     {
         kdError( 51000 ) << "Kipi interface is null!" << endl;
@@ -108,7 +107,6 @@ void Plugin_SendImages::slotActivate()
     m_progressDlg = 0;
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-
     if ( !interface )
     {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
@@ -264,7 +262,7 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
 #endif
 
             disconnect(m_progressDlg, SIGNAL(cancelClicked()),
-                        this, SLOT(slotCancel()));
+                       this, SLOT(slotCancel()));
     
             // Create a text file with images comments if necessary.
     
@@ -292,4 +290,3 @@ KIPI::Category Plugin_SendImages::category( KAction* action ) const
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
-

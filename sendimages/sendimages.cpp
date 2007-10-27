@@ -73,6 +73,7 @@
 
 namespace KIPISendimagesPlugin
 {
+
 ///Constructor: saves system handoff parameters in member variables
 SendImages::SendImages(KIPI::Interface* interface, const QString &tmpFolder,
                        const KIPI::ImageCollection& imagesCollection, QObject *parent)
@@ -97,7 +98,6 @@ SendImages::~SendImages()
     wait();
 }
 
-
 ///Invokes the User Dialog Window
 void SendImages::showDialog()
 {
@@ -109,8 +109,8 @@ void SendImages::showDialog()
             m_parent, SLOT(slotAcceptedConfigDlg()));
 }
 
-/** Execute the no threadable operations before the real thread.*/
-///Gets input from the user dialog and store it into member variables
+/** Execute the no threadable operations before the real thread.
+    Gets input from the user dialog and store it into member variables */
 void SendImages::prepare(void)
 {
     m_filesSendList.clear();
@@ -126,9 +126,9 @@ void SendImages::prepare(void)
     m_attachmentlimit = m_sendImagesDialog->m_attachmentlimit->value()*770000-2000; 
 }
 
-/** List of threaded operations.*/
-///Prepares the image list. This includes resizing, copying, maintaining an image's exif, 
-///and dropping evil characters out of filenames ;-)
+/** List of threaded operations.
+    Prepares the image list. This includes resizing, copying, maintaining an image's exif, 
+    and dropping evil characters out of filenames ;-) */
 void SendImages::run()
 {
     KIPISendimagesPlugin::EventData *d;
@@ -166,7 +166,8 @@ void SendImages::run()
         {
                 qDebug("commentItem: %s",commentItem.ascii());
         }
-        else {
+        else 
+        {
                 commentItem = ItemName.left(ItemName.findRev('.'));
                 qDebug("commentItem is empty");
         }
@@ -187,26 +188,25 @@ void SendImages::run()
         //If TempFileName already exists, add a number oder increase number
         if (entry_already_exists(m_filesSendList,m_tmp + TempFileName))
         {
-                qDebug ("I entered");
-                QString secondpart=(m_tmp+TempFileName).section(".",-1,-1);
-                QString firstpart=
-                (m_tmp+TempFileName).left((m_tmp+TempFileName).length()-secondpart.length()-1);
-                qDebug("Firstpart: %s \n Secondpart: %s",firstpart.ascii(), secondpart.ascii());
-                //Add _integer value in the end and prove again
-                int int_index=2;
-                QString index=QString::number(int_index,10);
-                while (entry_already_exists(m_filesSendList,firstpart + "_"+index+"."+secondpart))
-                {
-                        int_index++;
-                        index=QString::number(int_index,10);
-                        qDebug("Index: %s",index.ascii());
-                }
-                QString temp=firstpart + "_"+index+"."+secondpart;
-                TempFileName=temp.right(temp.length()-m_tmp.length());
-       // .section("-",-2,-1);
-       //         m_tmp=(firstpart + "_"+index+"."+secondpart).section("-",-2);
+            qDebug ("I entered");
+            QString secondpart=(m_tmp+TempFileName).section(".",-1,-1);
+            QString firstpart=
+            (m_tmp+TempFileName).left((m_tmp+TempFileName).length()-secondpart.length()-1);
+            qDebug("Firstpart: %s \n Secondpart: %s",firstpart.ascii(), secondpart.ascii());
+            //Add _integer value in the end and prove again
+            int int_index=2;
+            QString index=QString::number(int_index,10);
+            while (entry_already_exists(m_filesSendList,firstpart + "_"+index+"."+secondpart))
+            {
+                    int_index++;
+                    index=QString::number(int_index,10);
+                    qDebug("Index: %s",index.ascii());
+            }
+            QString temp=firstpart + "_"+index+"."+secondpart;
+            TempFileName=temp.right(temp.length()-m_tmp.length());
+            // .section("-",-2,-1);
+            // m_tmp=(firstpart + "_"+index+"."+secondpart).section("-",-2);
         }
-
 
         if ( m_changeProp == true )
         {
@@ -223,7 +223,7 @@ void SendImages::run()
             QSize newsize;
     
             if ( resizeImageProcess( imageName, m_tmp, m_imageFormat, TempFileName,
-                                        m_sizeFactor, m_imageCompression, newsize) == false )
+                                     m_sizeFactor, m_imageCompression, newsize) == false )
             {
                 // Resized images failed...
     
@@ -294,7 +294,7 @@ void SendImages::run()
     d = new KIPISendimagesPlugin::EventData;
     d->action   = KIPISendimagesPlugin::Progress;
     d->starting = false;
-    d->success = true;
+    d->success  = true;
     QApplication::postEvent(m_parent, new QCustomEvent(QEvent::User, d));
 }
 
@@ -384,7 +384,7 @@ bool SendImages::showErrors()
                 for ( KURL::List::Iterator it = m_imagesResizedWithError.begin();
                       it != m_imagesResizedWithError.end(); ++it )
                 {
-                    m_filesSendList.append (*it);
+                    m_filesSendList.append(*it);
                     m_imagesPackage.append(*it);
                     m_imagesPackage.append(*it);
                 }
@@ -404,7 +404,7 @@ bool SendImages::showErrors()
 }
 
 /** Returns a list of Filenames, whose sum filesize is smaller than the quota
-    The returned images are deleted from the m_filesSendList*/
+    The returned images are deleted from the m_filesSendList */
 KURL::List SendImages::divideEmails(void)
 {
     unsigned long mylistsize=0;
@@ -432,7 +432,7 @@ KURL::List SendImages::divideEmails(void)
             filesSendList.append(*it);
         }
         }
-        m_filesSendList=filesSendList;
+        m_filesSendList = filesSendList;
   
         return sendnow;
 }
@@ -446,12 +446,10 @@ bool SendImages::invokeMailAgent(void)
     KURL::List filelist;
     kurllistdeepcopy(m_filesSendList_copy,m_filesSendList);
 
-
     qDebug("invokeMailagent1: Number of elements in m_filesSendList=%d, and in m_filesSendList_copy=%d)",(int)m_filesSendList.size(),(int)m_filesSendList_copy.size());
 
     while (!((filelist=divideEmails()).empty()))
     {
-
         qDebug("invokeMailagent2: Number of elements in m_filesSendList=%d, and in m_filesSendList_copy=%d)",(int) m_filesSendList.size(),(int)m_filesSendList_copy.size());
         qDebug("number of elements in filelist %d",(int)filelist.size());
         qDebug("number of elements in m_filelist %d", (int)m_filesSendList.size());     
@@ -493,13 +491,13 @@ bool SendImages::invokeMailAgent(void)
         // Claws Mail and Sylpheed mail agent call.
     
         if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Claws Mail" ||
-	     m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed" ||
+	         m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed" ||
              m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed-Claws" )
         {
             m_mailAgentProc = new KProcess;
 
             if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Claws Mail")
-               *m_mailAgentProc << "claws-mail";
+                *m_mailAgentProc << "claws-mail";
             else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed")
                 *m_mailAgentProc << "sylpheed";
             else
@@ -614,10 +612,10 @@ bool SendImages::invokeMailAgent(void)
             if (!m_invokedBefore)
             {
                 connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)),
-                    this, SLOT(slotMozillaExited(KProcess*)));
+                        this, SLOT(slotMozillaExited(KProcess*)));
         
                 connect(m_mailAgentProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
-                    this, SLOT(slotMozillaReadStderr(KProcess*, char*, int)));
+                        this, SLOT(slotMozillaReadStderr(KProcess*, char*, int)));
             }
             qDebug ("%s", Temp.ascii());
         
@@ -630,7 +628,6 @@ bool SendImages::invokeMailAgent(void)
             {   agentInvoked = true;
                 m_invokedBefore=true;
             }
-            
         }
     }
     
@@ -718,8 +715,8 @@ QString SendImages::extension(const QString& imageFileFormat)
     return "";
 }
 
-///in sendimagesplugin dialog the user can select a compression of images
-///this function returns the pixel-size of the selected entry
+/** in sendimagesplugin dialog the user can select a compression of images
+    this function returns the pixel-size of the selected entry */
 int SendImages::getSize ( int choice )
 {
     switch (choice)
@@ -748,9 +745,9 @@ int SendImages::getSize ( int choice )
     }
 }
 
-///This function should copy the images to tempfolder in order to avoid suspicious filenames
-///It is used, when no resizing should take place
-// This function can be replaced with Qt4 QFile.copy
+/** This function should copy the images to tempfolder in order to avoid suspicious filenames
+    It is used, when no resizing should take place
+    This function can be replaced with Qt4 QFile.copy */
 bool SendImages::copyImageProcess(const QString &oldFilePath, const QString &DestPath,
                                   const QString &ImageName)
 {
@@ -783,6 +780,7 @@ bool SendImages::copyImageProcess(const QString &oldFilePath, const QString &Des
         buffer = NULL;
         return true;
 }
+
 ///Resizes the Images before Sending...
 bool SendImages::resizeImageProcess(const QString &SourcePath, const QString &DestPath,
                                     const QString &ImageFormat, const QString &ImageName,
@@ -848,18 +846,18 @@ bool SendImages::resizeImageProcess(const QString &SourcePath, const QString &De
     return false;
 }
 
-///If mozilla, or thunderbird or any derivate isn't already running, start it now, wait 5 seconds and start SlotMozillaTimeout()
+/** If mozilla, or thunderbird or any derivate isn't already running, start it now, 
+    wait 5 seconds and start SlotMozillaTimeout() */
 void SendImages::slotMozillaExited(KProcess*)
 {
     qDebug("slotMozillaExited");
     ///Here would be the right point to clear the sendlist in order to avoid infinite resendings!!
     m_filesSendList.clear();
     ///Also disconnect SLOT
-    m_mailAgentProc->disconnect(SIGNAL(processExited(KProcess *)),
-                    this, SLOT(slotMozillaExited(KProcess*)));
+    m_mailAgentProc->disconnect(SIGNAL(processExited(KProcess *)), this, SLOT(slotMozillaExited(KProcess*)));
 
     qDebug("Number of elements in m_filesSendList=%d, and in m_filesSendList_copy=%d)",(int)m_filesSendList.size(),(int)m_filesSendList_copy.size()); 
-   if ( m_mozillaStdErr.find("No running window found") != -1 )   // No remote Mozilla | Netscape |
+    if ( m_mozillaStdErr.find("No running window found") != -1 )   // No remote Mozilla | Netscape |
     {                                                              // Thunderbird env. loaded !
         m_mailAgentProc2 = new KProcess;                           // Init a new env.
 
@@ -893,8 +891,7 @@ void SendImages::slotMozillaExited(KProcess*)
 
 ///If Mozilla wasn't started before, now it is and so we can begin with the transmission
 void SendImages::slotMozillaTimeout(void)
-{
-        
+{        
     m_mozillaTimer->disconnect(SIGNAL(timeout()), this, SLOT(slotMozillaTimeout()));
 
     qDebug("slotMozillaTimeout: Number of elements in m_filesSendList=%d, and in m_filesSendList_copy=%d)",(int)m_filesSendList.size(),(int)m_filesSendList_copy.size());
@@ -908,7 +905,6 @@ void SendImages::slotMozillaReadStderr(KProcess*, char *buffer, int buflen)
 {
     m_mozillaStdErr = QString::fromLocal8Bit(buffer, buflen);
 }
-
 
 ///Makes a deep copy of a KURL-list: Real and slow copying instead of only pointer arithmetics
 bool SendImages::kurllistdeepcopy(KURL::List &Destination, KURL::List Source)
@@ -924,15 +920,17 @@ bool SendImages::kurllistdeepcopy(KURL::List &Destination, KURL::List Source)
         qDebug("%s",Tempstring.ascii());
     }
     
-    /*qDebug("deepcopytest");
+    /*
+    qDebug("deepcopytest");
     Source.clear();
     for ( KURL::List::Iterator it = Destination.begin() ; it != Destination.end() ; ++it )
     {
         qDebug("%s",(*it).path().ascii());
-    }*/
+    }
+    */
+
     qDebug("kurllistdeepcopy ended\n");
     return true;
 }
 
 }  // NameSpace KIPISendimagesPlugin
-

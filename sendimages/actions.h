@@ -34,22 +34,26 @@ enum Action
     ResizeImages
 };
 
-
 class EventData
 {
+
 public:
+
     EventData() 
-       {
-       starting = false;
-       success  = false;
-       }
+    {
+        starting = false;
+        success  = false;
+    }
+
+    bool    starting;
+    bool    success;
+
+    int     total;
 
     QString fileName;
     QString albumName;
     QString errString;
-    int     total;
-    bool    starting;
-    bool    success;
+
     Action  action;
 };
 
