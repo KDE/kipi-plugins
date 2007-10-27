@@ -1,21 +1,24 @@
-/***************************************************************************
- *   Copyright (C) 2006-2007 by Stéphane Pontier <shadow.walker@free.fr>   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
- ***************************************************************************/
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2006-05-16
+ * Description : a tool to export GPS data to KML file.
+ *
+ * Copyright (C) 2006-2007 by Stéphane Pontier <shadow dot walker at free dot fr>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 // Local includes.
 
@@ -26,19 +29,20 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-namespace KIPIGPSSyncPlugin {
+namespace KIPIGPSSyncPlugin 
+{
 
 KMLGPSDataParser::KMLGPSDataParser()
- : GPSDataParser()
+                : GPSDataParser()
 {
 }
-
 
 KMLGPSDataParser::~KMLGPSDataParser()
 {
 }
 
-QString KMLGPSDataParser::lineString() {
+QString KMLGPSDataParser::lineString() 
+{
     QString line = "";
     // cache the end to not recalculate it with large number of points
     GPSDataMap::ConstIterator end (m_GPSDataMap.constEnd());
@@ -48,8 +52,6 @@ QString KMLGPSDataParser::lineString() {
         line += QString("%1,%2,%3 ").arg(it.data().longitude()).arg(it.data().latitude()).arg(it.data().altitude());
     }
     return line;
-}
-
 }
 
 /*!
@@ -65,14 +67,20 @@ void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackLine(QDomElement &parent, Q
     QDomElement kmlLineString = addKmlElement(kmlPlacemark, "LineString");
     addKmlTextElement(kmlLineString, "coordinates", lineString());
     addKmlTextElement(kmlPlacemark, "styleUrl", "#linetrack");
-    if (altitudeMode == 2 ) {
+    if (altitudeMode == 2 ) 
+    {
         addKmlTextElement(kmlLineString, "altitudeMode", "absolute");
-    } else if (altitudeMode == 1 ) {
+    } 
+    else if (altitudeMode == 1 ) 
+    {
         addKmlTextElement(kmlLineString, "altitudeMode", "relativeToGround");
-    } else {
+    } 
+    else 
+    {
         addKmlTextElement(kmlLineString, "altitudeMode", "clampToGround");
     }
 }
+
 /*!
 \fn void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode)
  */
@@ -105,19 +113,28 @@ void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent,
         addKmlTextElement(kmlTimeStamp, "when", GPSLocalizedTime.toString("yyyy-MM-ddThh:mm:ssZ"));
         QDomElement kmlGeometry = addKmlElement(kmlPointPlacemark, "Point");
         addKmlTextElement(kmlPointPlacemark, "visibility", "0");
-        if (it.data().latitude()) {
+        if (it.data().latitude()) 
+        {
             addKmlTextElement(kmlGeometry, "coordinates",
                               QString("%1,%2,%3").arg(it.data().longitude()).arg(it.data().latitude()).arg(it.data().altitude()));
-        } else {
+        } 
+        else 
+        {
             addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2").arg(it.data().longitude()).arg(it.data().latitude()));
         }
-        if (altitudeMode == 2 ) {
+        if (altitudeMode == 2 ) 
+        {
             addKmlTextElement(kmlGeometry, "altitudeMode", "absolute");
-        } else if (altitudeMode == 1 ) {
+        } 
+        else if (altitudeMode == 1 ) 
+        {
             addKmlTextElement(kmlGeometry, "altitudeMode", "relativeToGround");
-        } else {
+        } 
+        else 
+        {
             addKmlTextElement(kmlGeometry, "altitudeMode", "clampToGround");
         }
     }
-
 }
+
+} // namespace KIPIGPSSyncPlugin 

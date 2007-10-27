@@ -1,21 +1,24 @@
-/***************************************************************************
- *   Copyright (C) 2006-2007 by Stéphane Pontier <shadow.walker@free.fr>   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
- ***************************************************************************/
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2006-05-16
+ * Description : a tool to export GPS data to KML file.
+ *
+ * Copyright (C) 2006-2007 by Stéphane Pontier <shadow dot walker at free dot fr>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 #ifndef KIPIGPSSYNCPLUGINKMLGPSDATAPARSER_H
 #define KIPIGPSSYNCPLUGINKMLGPSDATAPARSER_H
@@ -28,17 +31,18 @@
 
 #include <qdom.h>
 
-
-namespace KIPIGPSSyncPlugin {
+namespace KIPIGPSSyncPlugin 
+{
 
 /*! a classe derivated from GPSDataParser mainly to transform GPS data to KML
  *  @author Stéphane Pontier shadow.walker@free.fr
  */
 class KMLGPSDataParser : public GPSDataParser
 {
-public:
-    KMLGPSDataParser();
 
+public:
+
+    KMLGPSDataParser();
     ~KMLGPSDataParser();
 
     /*! KIPIGPSSyncPlugin::KMLGPSDataParser::lineString()
@@ -50,6 +54,7 @@ public:
      *  @param root the QDomDocument used to create all elements
      *  @param altitudeMode altitude mode of the line and points
      */
+
     void CreateTrackLine(QDomElement &parent, QDomDocument &root, int altitudeMode);
     /*! Create a KML Element that will contain the points and of the GPS
      *  @param parent the QDomElement to which the track will be added
@@ -60,6 +65,7 @@ public:
     void CreateTrackPoints(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode);
     
 private:
+
     /*! @todo maybe initialize it in the constructor */
     /*! the root document, used to create all QDomElements */
     QDomDocument *kmlDocument;
@@ -96,6 +102,6 @@ private:
     }
 };
 
-}
+} // namespace KIPIGPSSyncPlugin 
 
-#endif
+#endif // KIPIGPSSYNCPLUGINKMLGPSDATAPARSER_H
