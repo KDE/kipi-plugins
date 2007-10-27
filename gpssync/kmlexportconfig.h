@@ -60,35 +60,43 @@ public:
 
 public:
 
-    QLabel* ImageSizeLabel;
-    KIntNumInput* ImageSizeInput_;
-    QLabel* IconSizeLabel;
-    KIntNumInput* IconSizeInput_;
-    QGroupBox* TargetPreferenceGroupBox;
-    QButtonGroup* buttonGroupTargetType;
-    QRadioButton* LocalTargetRadioButton_;
-    QRadioButton* GoogleMapTargetRadioButton_;
-    QComboBox* AltitudeCB_;
-    QLabel* destinationDirectoryLabel_;
-    KURLRequester* DestinationDirectory_;
-    QLineEdit* DestinationURL_;
-    QLabel* FileNameLabel_;
-    QLineEdit* FileName_;
-    QLabel* DestinationUrlLabel_;
+    QLabel        *ImageSizeLabel;
+    QLabel        *IconSizeLabel;
+    QLabel        *destinationDirectoryLabel_;
+    QLabel        *FileNameLabel_;
+    QLabel        *DestinationUrlLabel_;
+    QLabel        *GPXFileLabel_;
+    QLabel        *timeZoneLabel_;
+    QLabel        *GPXLineWidthLabel_;
+    QLabel        *GPXColorLabel_;
+    QLabel        *GPXTracksOpacityLabel_;
+    QLabel        *GPXAltitudeLabel_;
 
-    KURLRequester* GPXFileKURLRequester_;
-    QCheckBox* GPXTracksCheckBox_;
-    QLabel* GPXFileLabel_;
-    QLabel* timeZoneLabel_;
-    QComboBox* timeZoneCB;
-    QLabel* GPXColorLabel_;
-    KColorButton* GPXTrackColor_;
-    QLabel* GPXTracksOpacityLabel_;
-    KIntNumInput* GPXTracksOpacityInput_;
-    QLabel* GPXAltitudeLabel_;
-    QComboBox* GPXAltitudeCB_;
-    QLabel *GPXLineWidthLabel_;
-    KIntNumInput* GPXLineWidthInput_;
+    QGroupBox     *TargetPreferenceGroupBox;
+
+    QButtonGroup  *buttonGroupTargetType;
+
+    QRadioButton  *LocalTargetRadioButton_;
+    QRadioButton  *GoogleMapTargetRadioButton_;
+
+    QLineEdit     *DestinationURL_;
+    QLineEdit     *FileName_;
+
+    QCheckBox     *GPXTracksCheckBox_;
+
+    QComboBox     *AltitudeCB_;
+    QComboBox     *timeZoneCB;
+    QComboBox     *GPXAltitudeCB_;
+
+    KColorButton  *GPXTrackColor_;
+
+    KURLRequester *DestinationDirectory_;
+    KURLRequester *GPXFileKURLRequester_;
+
+    KIntNumInput  *ImageSizeInput_;
+    KIntNumInput  *IconSizeInput_;
+    KIntNumInput  *GPXTracksOpacityInput_;
+    KIntNumInput  *GPXLineWidthInput_;
 
 public slots:
 
@@ -101,15 +109,17 @@ signals:
 
 protected:
 
-    KConfig*     config_;
-    QGridLayout* KMLExportConfigLayout;
-    QGridLayout* SizeGroupBoxLayout;
-    QSpacerItem* spacer3;
-    QSpacerItem* spacer4;
-    QGridLayout* TargetPreferenceGroupBoxLayout;
-    QGridLayout* buttonGroupTargetTypeLayout;
+    QSpacerItem              *spacer3;
+    QSpacerItem              *spacer4;
 
-    KIPIPlugins::KPAboutData * m_about;
+    QGridLayout              *KMLExportConfigLayout;
+    QGridLayout              *SizeGroupBoxLayout;
+    QGridLayout              *TargetPreferenceGroupBoxLayout;
+    QGridLayout              *buttonGroupTargetTypeLayout;
+
+    KConfig                  *config_;
+
+    KIPIPlugins::KPAboutData *m_about;
 
 protected:
 
