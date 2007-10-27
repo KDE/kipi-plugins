@@ -1,26 +1,31 @@
-/***************************************************************************
- *   Copyright (C) 2006-2007 by Stéphane Pontier <shadow.walker@free.fr>   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
- ***************************************************************************/
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2006-05-16
+ * Description : a tool to export GPS data to KML file.
+ *
+ * Copyright (C) 2006-2007 by Stéphane Pontier <shadow dot walker at free dot fr>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 #ifndef KMLEXPORTCONFIG_H
 #define KMLEXPORTCONFIG_H
 
-// Qt includes.
+// KDE includes.
+
+#include <kdialogbase.h>
 
 class QButtonGroup;
 class QCheckBox;
@@ -32,24 +37,28 @@ class QLineEdit;
 class QRadioButton;
 class QSpacerItem;
 
-// KDE includes.
-
-#include <kdialogbase.h>
 class KColorButton;
 class KIntNumInput;
 class KURLRequester;
-namespace KIPIPlugins {
+
+namespace KIPIPlugins 
+{
     class KPAboutData;
 }
 
-namespace KIPIGPSSyncPlugin {
+namespace KIPIGPSSyncPlugin 
+{
+
 class KMLExportConfig : public KDialogBase
 {
     Q_OBJECT
 
 public:
+
     explicit KMLExportConfig( QWidget* parent = 0, const char* name = 0);
     ~KMLExportConfig();
+
+public:
 
     QLabel* ImageSizeLabel;
     KIntNumInput* ImageSizeInput_;
@@ -82,15 +91,17 @@ public:
     KIntNumInput* GPXLineWidthInput_;
 
 public slots:
+
     void GoogleMapTargetRadioButton__toggled(bool);
     void KMLTracksCheckButton__toggled(bool);
 
+signals:
+
+    void okButtonClicked(); // Signal needed by plugin_kmlexport class
+
 protected:
-    KConfig* config_;
 
-    void saveSettings();
-    void readSettings();
-
+    KConfig*     config_;
     QGridLayout* KMLExportConfigLayout;
     QGridLayout* SizeGroupBoxLayout;
     QSpacerItem* spacer3;
@@ -100,14 +111,16 @@ protected:
 
     KIPIPlugins::KPAboutData * m_about;
 
+protected:
+
+    void saveSettings();
+    void readSettings();
+
 protected slots:
+
     void slotOk();
     //	void slotOkClicked();
     void slotHelp();
-
-
-signals:
-    void okButtonClicked(); // Signal needed by plugin_kmlexport class
 };
 
 } // namespace

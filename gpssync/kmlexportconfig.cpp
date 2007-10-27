@@ -1,25 +1,24 @@
-/***************************************************************************
- *   Copyright (C) 2006-2007 by Stéphane Pontier <shadow.walker@free.fr>   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
- ***************************************************************************/
-
-// Local includes.
-
-#include "kmlexportconfig.h"
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2006-05-16
+ * Description : a tool to export GPS data to KML file.
+ *
+ * Copyright (C) 2006-2007 by Stéphane Pontier <shadow dot walker at free dot fr>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 // Qt includes.
 
@@ -50,17 +49,22 @@
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
 
-namespace KIPIGPSSyncPlugin {
+// Local includes.
 
+#include "kmlexportconfig.h"
+#include "kmlexportconfig.moc"
+
+namespace KIPIGPSSyncPlugin 
+{
 
 /*
  *  Constructs a KIPIKMLExport::KMLExportConfig which is a child of 'parent', with the
  *  name 'name'.' 
  */
 KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
-    : KDialogBase(Plain, i18n("KML Export"), 
-                Help|Ok|Cancel, Ok, 
-                parent, 0, true, true )
+               : KDialogBase(Plain, i18n("KML Export"), 
+                             Help|Ok|Cancel, Ok, 
+                             parent, 0, true, true )
 {
     if ( !name )
         setName( "KMLExportConfig" );
@@ -116,8 +120,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     QToolTip::add( GoogleMapTargetRadioButton_, i18n(
         "When using GoogleMap, all image must have complete URL, icons are squared and when drawing a track, only linetrack is exported" ) );
 
-
-
+    // --------------------------------------------------------------
     // target preference, suite
     TargetPreferenceGroupBoxLayout->addMultiCellWidget( buttonGroupTargetType, 0, 1, 0, 4 );
 
@@ -141,7 +144,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
                                              TargetPreferenceGroupBox, "destinationDirectoryLabel_" );
     TargetPreferenceGroupBoxLayout->addMultiCellWidget( destinationDirectoryLabel_, 3, 3, 0, 2 );
 
-    //    DestinationDirectory_ = new QLineEdit( TargetPreferenceGroupBox, "DestinationDirectory_" );
+    // DestinationDirectory_ = new QLineEdit( TargetPreferenceGroupBox, "DestinationDirectory_" );
     DestinationDirectory_= new KURLRequester( TargetPreferenceGroupBox, "DestinationDirectory_");
     DestinationDirectory_->setCaption(i18n("Select a directory to save the kml file and pictures"));
     DestinationDirectory_->setMode(KFile::Directory | KFile::LocalOnly );
@@ -163,7 +166,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
 
     KMLExportConfigLayout->addWidget( TargetPreferenceGroupBox, 1, 0 );
 
-
+    // --------------------------------------------------------------
     // Sizes
     QGroupBox *SizeGroupBox = new QGroupBox(0, Qt::Vertical, i18n( "Sizes" ), plainPage() );
     SizeGroupBox->setColumnLayout(0, Qt::Vertical );
@@ -193,7 +196,6 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     SizeGroupBoxLayout->addItem( spacer4, 1, 2 );
 
     KMLExportConfigLayout->addWidget( SizeGroupBox, 2, 0 );
-
 
     // --------------------------------------------------------------
     // GPX Tracks
@@ -288,9 +290,13 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
 
     KMLExportConfigLayout->addWidget( GPXTracksGroupBox, 3, 0 );
 
-    connect( GoogleMapTargetRadioButton_, SIGNAL( toggled(bool) ), this, SLOT( GoogleMapTargetRadioButton__toggled(bool) ) );
-    connect( GPXTracksCheckBox_, SIGNAL( toggled(bool) ), this, SLOT( KMLTracksCheckButton__toggled(bool) ) );
+    connect( GoogleMapTargetRadioButton_, SIGNAL( toggled(bool) ), 
+             this, SLOT( GoogleMapTargetRadioButton__toggled(bool) ) );
 
+    connect( GPXTracksCheckBox_, SIGNAL( toggled(bool) ), 
+             this, SLOT( KMLTracksCheckButton__toggled(bool) ) );
+
+    // --------------------------------------------------------------
     // About data and help button.
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("KML Export"),
                                             NULL,
@@ -306,12 +312,15 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     helpMenu->menu()->insertItem(i18n("KMLExport Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     actionButton(Help)->setPopup( helpMenu->menu() );
 
+    // --------------------------------------------------------------
     // Configuration file management 
 
     config_ = new KConfig("kipirc");
     config_->setGroup("KMLExport Settings");
 
     readSettings();
+
+    // --------------------------------------------------------------
     // Just to initialize the UI
     GoogleMapTargetRadioButton__toggled(true);
     KMLTracksCheckButton__toggled(false);
@@ -323,9 +332,8 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
 KMLExportConfig::~KMLExportConfig()
 {
     // no need to delete child widgets, Qt does it all for us
-    if(config_) {
+    if(config_) 
         delete config_;
-    }
     delete m_about;
 }
 
@@ -341,18 +349,20 @@ void KMLExportConfig::slotOk()
 
 void KMLExportConfig::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("KMLExport",
-                                             "kipi-plugins");
+    KApplication::kApplication()->invokeHelp("KMLExport", "kipi-plugins");
 }
 
 void KMLExportConfig::GoogleMapTargetRadioButton__toggled(bool)
 {
-    if (GoogleMapTargetRadioButton_->isChecked()) {
+    if (GoogleMapTargetRadioButton_->isChecked()) 
+    {
         DestinationUrlLabel_->setEnabled(true);
         DestinationURL_->setEnabled(true);
         IconSizeLabel->setEnabled(false);
         IconSizeInput_->setEnabled(false);
-    } else {
+    } 
+    else 
+    {
         DestinationUrlLabel_->setEnabled(false);
         DestinationURL_->setEnabled(false);
         IconSizeLabel->setEnabled(true);
@@ -361,8 +371,10 @@ void KMLExportConfig::GoogleMapTargetRadioButton__toggled(bool)
 }
 
 
-void KMLExportConfig::KMLTracksCheckButton__toggled(bool) {
-    if (GPXTracksCheckBox_->isChecked()) {
+void KMLExportConfig::KMLTracksCheckButton__toggled(bool) 
+{
+    if (GPXTracksCheckBox_->isChecked()) 
+    {
         GPXFileKURLRequester_->setEnabled(true);
         GPXFileLabel_->setEnabled(true);
         timeZoneCB->setEnabled(true);
@@ -374,7 +386,9 @@ void KMLExportConfig::KMLTracksCheckButton__toggled(bool) {
         GPXLineWidthLabel_->setEnabled(true);
         GPXLineWidthInput_->setEnabled(true);
         GPXTracksOpacityInput_->setEnabled(true);
-    } else {
+    } 
+    else 
+    {
         GPXFileKURLRequester_->setEnabled(false);
         GPXFileLabel_->setEnabled(false);
         timeZoneCB->setEnabled(false);
@@ -398,12 +412,14 @@ void KMLExportConfig::saveSettings()
     config_->writeEntry("iconSize", IconSizeInput_->value());
     config_->writeEntry("size", ImageSizeInput_->value());
     QString destination = DestinationDirectory_->url();
-    if (!destination.endsWith("/")) {
+    if (!destination.endsWith("/")) 
+    {
         destination.append("/");
     }
     config_->writeEntry("baseDestDir",destination);
     QString url = DestinationURL_->text();
-    if (!url.endsWith("/")) {
+    if (!url.endsWith("/")) 
+    {
         url.append("/");
     }
     config_->writeEntry("UrlDestDir",url);
@@ -483,5 +499,3 @@ void KMLExportConfig::readSettings()
 }
 
 } //namespace
-
-#include "kmlexportconfig.moc"

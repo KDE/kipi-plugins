@@ -1,21 +1,23 @@
 /* ============================================================
- * Authors: Gilles Caulier <caulier dot gilles at gmail dot com>
- * Date   : 2006-09-19
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2006-09-19
  * Description : GPS data container.
- * 
- * Copyright 2006 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- * 
+ * either version 2, or (at your option) any later version.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #ifndef GPSDATACONTAINER_H
@@ -29,7 +31,7 @@ namespace KIPIGPSSyncPlugin
 class GPSDataContainer
 {
 public:
-    
+
     GPSDataContainer(): m_interpolated(false), m_altitude(0.0), 
                         m_latitude(0.0), m_longitude(0.0) 
     {};
@@ -48,7 +50,7 @@ public:
         m_interpolated = data.isInterpolated();
         m_altitude     = data.altitude();
         m_latitude     = data.latitude();
-        m_longitude    = data.longitude();        
+        m_longitude    = data.longitude();
         return *this;
     };
 
@@ -61,9 +63,9 @@ public:
     double altitude()       const { return m_altitude;     };
     double latitude()       const { return m_latitude;     };
     double longitude()      const { return m_longitude;    };
-    
+
 private:
-    
+
     bool   m_interpolated;
 
     double m_altitude;
