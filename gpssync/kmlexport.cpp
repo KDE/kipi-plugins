@@ -25,7 +25,7 @@ extern "C"
 #include <unistd.h>
 }
 
-// Qt
+// Qt includes.
 
 #include <qpainter.h>
 #include <qregexp.h>
@@ -54,9 +54,9 @@ namespace KIPIGPSSyncPlugin
 
 kmlExport::kmlExport(KIPI::Interface* interface)
 {
-    m_interface = interface;
-    QWidget* parent=KApplication::kApplication()->mainWidget();
-    m_progressDialog=new KIPI::BatchProgressDialog(parent, i18n("Generating KML file..."));
+    m_interface      = interface;
+    QWidget* parent  = KApplication::kApplication()->mainWidget();
+    m_progressDialog = new KIPI::BatchProgressDialog(parent, i18n("Generating KML file..."));
 }
 
 kmlExport::~kmlExport()
@@ -132,8 +132,7 @@ QImage kmlExport::generateBorderedThumbnail(const QImage& fullImage, int size)
     int image_border = 3;
 
     // getting an image minus the border 
-    QImage image = fullImage.smoothScale(size -(2*image_border), size - (2*image_border) , QImage::ScaleMax);
-
+    QImage image = fullImage.smoothScale(size -(2*image_border), size - (2*image_border), QImage::ScaleMax);
 
     QPixmap croppedPix(image.width() + (2*image_border), image.height() + (2*image_border));
     QPainter painter(&croppedPix);
@@ -153,11 +152,11 @@ QImage kmlExport::generateBorderedThumbnail(const QImage& fullImage, int size)
  */
 void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imageURL, QDomElement &kmlAlbum ) 
 {
-    KIPI::Interface* mInterface=interface;
-    KIPI::ImageInfo info=mInterface->info(imageURL);
+    KIPI::Interface* mInterface = interface;
+    KIPI::ImageInfo info        = mInterface->info(imageURL);
 
     // Load image
-    QString path=imageURL.path();
+    QString path = imageURL.path();
     QFile imageFile(path);
     if (!imageFile.open(IO_ReadOnly)) 
     {
@@ -213,7 +212,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imag
     QString baseFileName = webifyFileName(info.title());
     //	baseFileName = mUniqueNameHelper.makeNameUnique(baseFileName);
     QString fullFileName;
-    fullFileName = baseFileName + '.' + imageFormat.lower();
+    fullFileName     = baseFileName + '.' + imageFormat.lower();
     QString destPath = m_tempDestDir + m_imageDir + fullFileName;
     if (!image.save(destPath, imageFormat.ascii(), 85)) 
     {
@@ -257,22 +256,22 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imag
 
         // we try to load exif value if any otherwise, try the application db
         /** we need to take the DateTimeOriginal
-            * if we refer to http://www.exif.org/Exif2-2.PDF
-            * (standard)DateTime: is The date and time of image creation. In this standard it is the date and time the file was changed
-            * DateTimeOriginal: The date and time when the original image data was generated. 
-            *                   For a DSC the date and time the picture was taken are recorded.
-            * DateTimeDigitized: The date and time when the image was stored as digital data.
-            * So for:
-            * - a DSC: the right time is the DateTimeDigitized which is also DateTimeOriginal
-            *          if the picture has been modified the (standard)DateTime should change.
-            * - a scanned picture, the right time is the DateTimeOriginal which should also be the the DateTime
-            *          the (standard)DateTime should be the same except if the picture is modified
-            * - a panorama created from several pictures, the right time is the DateTimeOriginal (average of DateTimeOriginal actually)
-            *          The (standard)DateTime is the creation date of the panorama.
-            * it's seems the time to take into acccount is the DateTimeOriginal.
-            * but the exiv2Iface.getImageDateTime() return the (standard)DateTime first
-            * libkexiv2 seems to take Original dateTime first so it shoul be alright now.
-            */
+          * if we refer to http://www.exif.org/Exif2-2.PDF
+          * (standard)DateTime: is The date and time of image creation. In this standard it is the date and time the file was changed
+          * DateTimeOriginal: The date and time when the original image data was generated. 
+          *                   For a DSC the date and time the picture was taken are recorded.
+          * DateTimeDigitized: The date and time when the image was stored as digital data.
+          * So for:
+          * - a DSC: the right time is the DateTimeDigitized which is also DateTimeOriginal
+          *          if the picture has been modified the (standard)DateTime should change.
+          * - a scanned picture, the right time is the DateTimeOriginal which should also be the the DateTime
+          *          the (standard)DateTime should be the same except if the picture is modified
+          * - a panorama created from several pictures, the right time is the DateTimeOriginal (average of DateTimeOriginal actually)
+          *          The (standard)DateTime is the creation date of the panorama.
+          * it's seems the time to take into acccount is the DateTimeOriginal.
+          * but the exiv2Iface.getImageDateTime() return the (standard)DateTime first
+          * libkexiv2 seems to take Original dateTime first so it shoul be alright now.
+          */
         QDateTime datetime = exiv2Iface.getImageDateTime();
         if (datetime.isValid()) 
         {
@@ -302,7 +301,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imag
 
         // Save icon
         QString iconFileName = "thumb_" + baseFileName + '.' + imageFormat.lower();
-        QString destPath = m_tempDestDir + m_imageDir + iconFileName;
+        QString destPath     = m_tempDestDir + m_imageDir + iconFileName;
         if (!icon.save(destPath, imageFormat.ascii(), 85)) 
         {
             logWarning(i18n("Could not save icon for image '%1' to '%2'").arg(path).arg(destPath));
@@ -311,9 +310,9 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imag
         {
             //logInfo(i18n("Creation of icon '%1'").arg(iconFileName));
             // style et icon
-            QDomElement kmlStyle = addKmlElement(kmlPlacemark, "Style");
+            QDomElement kmlStyle     = addKmlElement(kmlPlacemark, "Style");
             QDomElement kmlIconStyle = addKmlElement(kmlStyle, "IconStyle");
-            QDomElement kmlIcon = addKmlElement(kmlIconStyle, "Icon");
+            QDomElement kmlIcon      = addKmlElement(kmlIconStyle, "Icon");
             if (m_optimize_googlemap) 
             {
                 addKmlTextElement(kmlIcon, "href", m_UrlDestDir + m_imageDir + iconFileName);
@@ -344,8 +343,7 @@ void kmlExport::addTrack(QDomElement &kmlAlbum)
 
     if (!ret)
     {
-        logError(i18n("Cannot parse %1 GPX file!")
-                 .arg(m_GPXFile));
+        logError(i18n("Cannot parse %1 GPX file!").arg(m_GPXFile));
         return;
     }
 
@@ -366,7 +364,7 @@ void kmlExport::addTrack(QDomElement &kmlAlbum)
         QDomElement kmlTrackStyle = addKmlElement(kmlAlbum, "Style");
         kmlTrackStyle.setAttribute("id","track");
         QDomElement kmlIconStyle = addKmlElement(kmlTrackStyle, "IconStyle");
-        QDomElement kmlIcon = addKmlElement(kmlIconStyle, "Icon");
+        QDomElement kmlIcon      = addKmlElement(kmlIconStyle, "Icon");
         //! FIXME is there a way to be sure of the location of the icon?
         addKmlTextElement(kmlIcon, "href", "http://maps.google.com/mapfiles/kml/pal4/icon60.png");
 
@@ -399,7 +397,7 @@ void kmlExport::generate()
 
     m_progressDialog->show();
     KIPI::ImageCollection selection = m_interface->currentSelection();
-    KIPI::ImageCollection album = m_interface->currentAlbum();
+    KIPI::ImageCollection album     = m_interface->currentAlbum();
     // create the document, and it's root
     kmlDocument = new QDomDocument("");
     QDomImplementation impl;
@@ -418,9 +416,9 @@ void kmlExport::generate()
     }
 
     KURL::List images = selection.images();
-    int defectImage =0;
-    int pos = 1;
-    int count = images.count();
+    int defectImage   = 0;
+    int pos           = 1;
+    int count         = images.count();
     KURL::List::ConstIterator imagesEnd (images.constEnd());
     for( KURL::List::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos) 
     {
@@ -448,7 +446,7 @@ void kmlExport::generate()
     if (defectImage) 
     {
         /** @todo if defectImage==count there are no pictures exported, does it worst to continue? */
-        QWidget* parent=KApplication::kApplication()->mainWidget();
+        QWidget* parent = KApplication::kApplication()->mainWidget();
         KMessageBox::information(parent, i18n("No position data for 1 picture",
                                               "No position data for %n pictures", defectImage));
     }
@@ -495,9 +493,8 @@ int kmlExport::getConfig()
     m_GPXAltitudeMode       = config.readNumEntry("GPX Altitude Mode", 0);
 
     KStandardDirs dir;
-    m_tempDestDir = dir.saveLocation("tmp", "kipi-kmlrexportplugin-" + QString::number(getpid()) + '/');
-
-    m_imageDir = "images/";
+    m_tempDestDir   = dir.saveLocation("tmp", "kipi-kmlrexportplugin-" + QString::number(getpid()) + '/');
+    m_imageDir      = "images/";
     m_googlemapSize = 32;
     return 1;
 }
