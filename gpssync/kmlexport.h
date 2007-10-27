@@ -1,60 +1,72 @@
-/***************************************************************************
- *   Copyright (C) 2006-2007 by Stéphane Pontier <shadow.walker@free.fr>   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
- ***************************************************************************/
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2006-05-16
+ * Description : a tool to export GPS data to KML file.
+ *
+ * Copyright (C) 2006-2007 by Stéphane Pontier <shadow dot walker at free dot fr>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 #ifndef KIPIKMLEXPORTKMLEXPORT_H
 #define KIPIKMLEXPORTKMLEXPORT_H
 
-// KIPI
-namespace KIPI {
-    class BatchProgressDialog;
-    class Interface;
-}
-// Qt
+// Qt includes.
+
 #include <qcolor.h>
 #include <qdir.h>
 #include <qdom.h>
-class QImage;
 
-// locale include
+// Local includes.
+
 #include "kmlgpsdataparser.h"
 
+class QImage;
 
-namespace KIPIGPSSyncPlugin {
+namespace KIPI 
+{
+    class BatchProgressDialog;
+    class Interface;
+}
+
+namespace KIPIGPSSyncPlugin 
+{
 
 /**
 Exporter to KML
 
 	@author KIPI dev. team
 */
-class kmlExport{
+class kmlExport
+{
+
 public:
+
     kmlExport(KIPI::Interface* interface);
 
     ~kmlExport();
 
     bool createDir(QDir dir);
+
     /*! generate the kml element for pictures with tumbnails
      *  @param interface the kipi interface
      *  @param KURL the URL of the picture
      *  @param kmlAlbum the album used
      */
     void generateImagesthumb(KIPI::Interface* interface, const KURL&, QDomElement &kmlAlbum);
+
     /*! Produce a web-friendly file name
      *  otherwise, while google earth works fine, maps.google.com may not find pictures and thumbnail
      *  thank htmlexport
@@ -62,12 +74,14 @@ public:
      *  @return the webifyed filename
      */
     QString webifyFileName(const QString &fileName);
+
     /*! Generate a square thumbnail from @fullImage of @size x @size pixels
      *  @param fullImage the original image
      *  @param size the size of the thumbnail
      *  @return the thumbnail
      */
     QImage generateSquareThumbnail(const QImage& fullImage, int size);
+
     /*! Generate a square thumbnail from @fullImage of @size x @size pixels
      *  with a white border
      *  @param fullImage the original image
@@ -81,6 +95,7 @@ public:
 
     /** temporary directory where everything will be created */
     QString m_tempDestDir;
+
     /** directory selected by user*/
     QString m_baseDestDir;
     QString m_imgdir;
@@ -90,28 +105,30 @@ public:
     /** directory used in kmldocument structure */
     QString m_imageDir;
 
-    bool m_localTarget;
-    int m_iconSize;
-    int m_googlemapSize;
-    bool m_optimize_googlemap;
-    int m_size;
-    QString m_UrlDestDir;
-    int m_altitudeMode;
-    bool m_GPXtracks;
+    bool    m_localTarget;
+    bool    m_optimize_googlemap;
+    bool    m_GPXtracks;
+
+    int     m_iconSize;
+    int     m_googlemapSize;
+    int     m_size;
+    int     m_altitudeMode;
+    int     m_TimeZone;
+    int     m_LineWidth;
+    int     m_GPXOpacity;
+    int     m_GPXAltitudeMode;
+
     QString m_GPXFile;
-    int m_TimeZone;
-    int m_LineWidth;
-    QColor m_GPXColor;
-    int m_GPXOpacity;
-    int m_GPXAltitudeMode;
+    QString m_UrlDestDir;
+    QColor  m_GPXColor;
 
 private:
+
     KIPI::BatchProgressDialog* m_progressDialog;
     /*! the root document, used to create all QDomElements */
     QDomDocument *kmlDocument;
     /*! the GPS parsed data */
     KMLGPSDataParser m_gpxParser;
-
 
     void logInfo(const QString& msg);
     void logError(const QString& msg);
@@ -166,6 +183,6 @@ private:
     }
 };
 
-}
+} // namespace KIPIGPSSyncPlugin
 
-#endif
+#endif // KIPIKMLEXPORTKMLEXPORT_H
