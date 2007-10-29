@@ -51,6 +51,10 @@ Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent, const QVariantList&)
     kDebug( 51001 ) << "Plugin_TimeAdjust plugin loaded";
 }
 
+Plugin_TimeAdjust::~Plugin_TimeAdjust()
+{
+}
+
 void Plugin_TimeAdjust::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
