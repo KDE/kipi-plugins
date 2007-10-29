@@ -36,14 +36,13 @@ extern "C"
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
-#include <kdebug.h>
 #include <kiconloader.h>
-#include <kinstance.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <ktempfile.h>
 #include <kimageio.h>
 #include <kdeversion.h>
+#include <kdebug.h>
 
 // LibKipi includes.
 
@@ -51,42 +50,38 @@ extern "C"
 
 // Local includes
 
-#include "actions.h"
-#include "sendimages.h"
+//#include "actions.h"
+//#include "sendimages.h"
 #include "plugin_sendimages.h"
 #include "plugin_sendimages.moc"
 
-typedef KGenericFactory<Plugin_SendImages> Factory;
+K_PLUGIN_FACTORY( SendImagesFactory, registerPlugin<Plugin_SendImages>(); )
+K_EXPORT_PLUGIN ( SendImagesFactory("kipiplugin_sendimages") )
 
-K_EXPORT_COMPONENT_FACTORY( kipiplugin_sendimages,
-                            Factory("kipiplugin_sendimages"))
-
-// -----------------------------------------------------------
-Plugin_SendImages::Plugin_SendImages(QObject *parent, const char*, const QStringList&)
-                 : KIPI::Plugin( Factory::instance(), parent, "SendImages")
+Plugin_SendImages::Plugin_SendImages(QObject *parent, const QVariantList&)
+                 : KIPI::Plugin(SendImagesFactory::componentData(), parent, "SendImages")
 {
-    kdDebug( 51001 ) << "Plugin_SendImages plugin loaded" << endl;
+    kDebug( 51001 ) << "Plugin_SendImages plugin loaded" << endl;
+}
 
+Plugin_SendImages::~Plugin_SendImages()
+{
 }
 
 void Plugin_SendImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_sendimages = new KAction (i18n("Email Images..."),    // Menu message.
-                                       "mail_new",                 // Menu icon.
-                                       0,
-                                       this,
-                                       SLOT(slotActivate()),
-                                       actionCollection(),
-                                       "send_images");
-
-    addAction( m_action_sendimages );
+    m_action_sendimages = new KAction(KIcon("mail_new"), i18n("Email Images..."), actionCollection());
+    m_action_sendimages->setObjectName("send_images");
+    connect(m_action_sendimages, SIGNAL(triggered(bool)), 
+            this, SLOT(slotActivate()));
+    addAction(m_action_sendimages);
 
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
     if ( !interface )
     {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
@@ -94,12 +89,8 @@ void Plugin_SendImages::setup( QWidget* widget )
     m_action_sendimages->setEnabled( selection.isValid() &&
                                    !selection.images().isEmpty() );
 
-    connect( interface, SIGNAL(selectionChanged(bool)),
-             m_action_sendimages, SLOT(setEnabled(bool)));
-}
-
-Plugin_SendImages::~Plugin_SendImages()
-{
+    connect(interface, SIGNAL(selectionChanged(bool)),
+            m_action_sendimages, SLOT(setEnabled(bool)));
 }
 
 void Plugin_SendImages::slotActivate()
@@ -109,7 +100,7 @@ void Plugin_SendImages::slotActivate()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !interface )
     {
-       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       kError( 51000 ) << "Kipi interface is null!" << endl;
        return;
     }
 
@@ -117,31 +108,34 @@ void Plugin_SendImages::slotActivate()
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
-
+/*
     KStandardDirs dir;
     QString Tmp = dir.saveLocation("tmp", "kipi-sendimagesplugin-" + QString::number(getpid()) + "/");
 
     m_sendImagesOperation = new KIPISendimagesPlugin::SendImages( interface, Tmp, images, this );
 
-    m_sendImagesOperation->showDialog();
+    m_sendImagesOperation->showDialog();*/
 }
 
 void Plugin_SendImages::slotAcceptedConfigDlg()
 {
+/*
     m_sendImagesOperation->prepare();
-    m_sendImagesOperation->start();
+    m_sendImagesOperation->start();*/
 }
 
 void Plugin_SendImages::slotCancel()
 {
+/*
     m_sendImagesOperation->terminate();
     m_sendImagesOperation->wait();
     m_sendImagesOperation->removeTmpFiles();
+*/
 }
 
-void Plugin_SendImages::customEvent(QCustomEvent *event)
+void Plugin_SendImages::customEvent(QEvent *event)
 {
-    if (!event) return;
+/*    if (!event) return;
 
     if (!m_progressDlg)
     {
@@ -279,7 +273,7 @@ void Plugin_SendImages::customEvent(QCustomEvent *event)
     }
 
     kapp->processEvents();
-    delete d;
+    delete d;*/
 }
 
 KIPI::Category Plugin_SendImages::category( KAction* action ) const
@@ -287,6 +281,6 @@ KIPI::Category Plugin_SendImages::category( KAction* action ) const
     if ( action == m_action_sendimages )
        return KIPI::IMAGESPLUGIN;
 
-    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }

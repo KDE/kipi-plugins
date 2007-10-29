@@ -30,20 +30,25 @@
 class QCustomEvent;
 
 class KAction;
-class KIPISendimagesPlugin::SendImages;
 
 namespace KIPI
 {
     class BatchProgressDialog;
 }
 
+namespace KIPISendimagesPlugin
+{
+    class SendImages;
+}
+
 class Plugin_SendImages : public KIPI::Plugin
 {
+
 Q_OBJECT
 
 public:
 
-   Plugin_SendImages(QObject *parent, const char* name, const QStringList &args);
+   Plugin_SendImages(QObject *parent, const QVariantList &args);
    ~Plugin_SendImages();
    
    virtual KIPI::Category category( KAction* action ) const;
@@ -57,7 +62,7 @@ public slots:
 
 private:
 
-   void customEvent(QCustomEvent *event);
+   void customEvent(QEvent *event);
    
 private:
 
