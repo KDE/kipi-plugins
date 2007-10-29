@@ -20,13 +20,6 @@
  *
  * ============================================================ */
  
-// C Ansi includes
-
-extern "C"
-{
-#include <unistd.h>
-}
-
 // Include files for KDE
 
 #include <klocale.h>
@@ -86,8 +79,7 @@ void Plugin_SendImages::setup( QWidget* widget )
     }
 
     KIPI::ImageCollection selection = interface->currentSelection();
-    m_action_sendimages->setEnabled( selection.isValid() &&
-                                   !selection.images().isEmpty() );
+    m_action_sendimages->setEnabled(selection.isValid() && !selection.images().isEmpty() );
 
     connect(interface, SIGNAL(selectionChanged(bool)),
             m_action_sendimages, SLOT(setEnabled(bool)));
