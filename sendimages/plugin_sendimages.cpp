@@ -32,7 +32,6 @@
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
-#include <ktempfile.h>
 #include <kimageio.h>
 #include <kdeversion.h>
 #include <kdebug.h>
