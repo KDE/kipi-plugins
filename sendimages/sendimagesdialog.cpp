@@ -469,12 +469,12 @@ void SendImagesDialog::setupEmailOptions(void)
                      "and if the target mailbox size is not limited.<p>"
                      "<b>%5</b>: use this if you have no size or speed restrictions.<p>"
                      "<b>%6</b>: use this only for printing purpose.<p>")
-                     .arg(i18n("very small (320 pixels)"))
-                     .arg(i18n("small (640 pixels)"))
-                     .arg(i18n("medium (800 pixels)"))
-                     .arg(i18n("big (1024 pixels)"))
-                     .arg(i18n("very big (1280 pixels)"))
-		     .arg(i18n("huge - for printing (1600 pixels)"));
+                     ,i18n("very small (320 pixels)")
+                     ,i18n("small (640 pixels)")
+                     ,i18n("medium (800 pixels)")
+                     ,i18n("big (1024 pixels)")
+                     ,i18n("very big (1280 pixels)")
+		     ,i18n("huge - for printing (1600 pixels)");
     QWhatsThis::add( m_imagesResize, whatsThis );
 
     m_labelImageSize = new QLabel( i18n("Sent image size:"), groupBox2);
@@ -620,8 +620,8 @@ void SendImagesDialog::slotImageSelected( QListBoxItem * item )
 
     if ( !pitem ) return;
 
-    m_ImageComments->setText( i18n("Caption: %1").arg(pitem->comments()) );
-    m_ImageAlbum->setText( i18n("Album: %1").arg(pitem->album()) );
+    m_ImageComments->setText( i18n("Caption: %1",pitem->comments()) );
+    m_ImageAlbum->setText( i18n("Album: %1",pitem->album()) );
     m_imageLabel->clear();
 
     if ( m_thumbJob ) 

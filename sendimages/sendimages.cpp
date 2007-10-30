@@ -332,8 +332,8 @@ void SendImages::makeCommentsFile(void)
             else
                 anyCommentsPresent = true;
 
-            ImageCommentsText += i18n("Caption for image \"%1\": %2\n")
-                                      .arg(targetFile).arg(commentItem);
+            ImageCommentsText += i18n("Caption for image \"%1\": %2\n"
+                                      ,targetFile,commentItem);
             
             //Tags from the database
             if (m_interface->hasFeature(KIPI::HostSupportsTags))
@@ -341,7 +341,7 @@ void SendImages::makeCommentsFile(void)
                 QMap <QString, QVariant> attribs=info.attributes();
                 if (attribs["tags"].asStringList().count() > 0)
                 {
-                    ImageCommentsText += i18n("Tags: %2\n").arg(attribs["tags"].asStringList().join(","));
+                    ImageCommentsText += i18n("Tags: %2\n",attribs["tags"].asStringList().join(","));
                     anyCommentsPresent = true;
                 }
             }
@@ -482,8 +482,8 @@ bool SendImages::invokeMailAgent(void)
         if ( m_mailAgentProc->start() == false )
             KMessageBox::error(kapp->activeWindow(), 
                                i18n("Cannot start '%1' program;\nplease "
-                                    "check your installation.")
-                                    .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+                                    "check your installation."
+                                    ,m_sendImagesDialog->m_mailAgentName->currentText()));
         else
             agentInvoked = true;
         }
@@ -511,8 +511,8 @@ bool SendImages::invokeMailAgent(void)
             if ( m_mailAgentProc->start() == false )
                 KMessageBox::error(kapp->activeWindow(), 
                                    i18n("Cannot start '%1' program;\nplease "
-                                        "check your installation.")
-                                        .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+                                        "check your installation."
+                                        ,m_sendImagesDialog->m_mailAgentName->currentText()));
             else
                 agentInvoked = true;
         }
@@ -533,8 +533,8 @@ bool SendImages::invokeMailAgent(void)
             if ( m_mailAgentProc->start() == false )
                 KMessageBox::error(kapp->activeWindow(), 
                                    i18n("Cannot start '%1' program;\nplease "
-                                        "check your installation.")
-                                        .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+                                        "check your installation."
+                                        ,m_sendImagesDialog->m_mailAgentName->currentText()));
             else
                 agentInvoked = true;
         }
@@ -559,8 +559,8 @@ bool SendImages::invokeMailAgent(void)
             if ( m_mailAgentProc->start() == false )
                 KMessageBox::error(kapp->activeWindow(), 
                                    i18n("Cannot start '%1' program;\nplease "
-                                        "check your installation.")
-                                        .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+                                        "check your installation."
+                                        ,m_sendImagesDialog->m_mailAgentName->currentText()));
             else
                 agentInvoked = true;
         }
@@ -622,8 +622,8 @@ bool SendImages::invokeMailAgent(void)
             if ( m_mailAgentProc->start(KProcess::NotifyOnExit , KProcess::All) == false )
                 KMessageBox::error(kapp->activeWindow(), 
                                    i18n("Cannot start '%1' program;\nplease "
-                                        "check your installation.")
-                                        .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+                                        "check your installation."
+                                        ,m_sendImagesDialog->m_mailAgentName->currentText()));
             else
             {   agentInvoked = true;
                 m_invokedBefore=true;
@@ -638,7 +638,7 @@ bool SendImages::invokeMailAgent(void)
 void SendImages::removeTmpFiles(void)
 {
     if (DeleteDir(m_tmp) == false)
-       KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove temporary folder %1.").arg(m_tmp));
+       KMessageBox::error(kapp->activeWindow(), i18n("Cannot remove temporary folder %1.",m_tmp));
 }
 
 ///Checks if directory is empty and invokes its deletion
@@ -875,8 +875,8 @@ void SendImages::slotMozillaExited(KProcess*)
         {
             KMessageBox::error(kapp->activeWindow(), 
                                i18n("Cannot start '%1' program;\nplease "
-                                    "check your installation.")
-                                    .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
+                                    "check your installation."
+                                    ,m_sendImagesDialog->m_mailAgentName->currentText()));
         }
         else
         {
