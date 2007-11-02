@@ -256,7 +256,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
                     "anaselli at linux dot it");
 
   m_about->addAuthor("Valerio Fuoglio", I18N_NOOP("Maintainer"),
-                     "valerio dot fuoglio at kdemail dot net");
+                     "valerio dot fuoglio at gmail dot com");
 
   KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
   helpMenu->menu()->removeItemAt(0);

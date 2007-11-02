@@ -90,7 +90,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
     about->addAuthor("Renchi Raju", I18N_NOOP("Author"),
                      "renchi@pooh.tam.uiuc.edu");
     about->addAuthor("Valerio Fuoglio", I18N_NOOP("Maintainer"),
-                     "valerio@ulteo.com");
+                     "valerio.fuoglio@gmail.com");
 
      KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
      helpMenu->menu()->removeItemAt(0);
