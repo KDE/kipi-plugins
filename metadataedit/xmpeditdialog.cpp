@@ -173,7 +173,7 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
     d->page_subjects->setHeader(i18n("<qt>Subjects Information<br>"
                       "<i>Use this panel to record subjects about the image</i></qt>"));
-    d->page_subjects->setIcon(KIcon("note2"));
+    d->page_subjects->setIcon(KIcon("rss-tag"));
 
     d->keywordsPage  = new XMPKeywords(this);
     d->page_keywords = addPage(d->keywordsPage, i18n("Keywords"));
