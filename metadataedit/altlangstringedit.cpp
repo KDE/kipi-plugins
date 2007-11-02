@@ -562,7 +562,7 @@ void AltLangStringsEdit::loadLangAltListEntries()
     {
         d->languageCB->addSqueezedItem(QString("[%1] %2").arg(it.key()).arg(it.value()));
         if (list.contains(it.key()))
-            d->languageCB->setItemIcon(d->languageCB->count()-1, SmallIcon("checkmark-korganizer"));
+            d->languageCB->setItemIcon(d->languageCB->count()-1, SmallIcon("ok"));
     }
 
     emit signalDefaultLanguageEnabled(list.contains(QString("x-default")));
