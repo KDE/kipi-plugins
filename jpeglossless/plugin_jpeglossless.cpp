@@ -135,7 +135,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
             this, SLOT(slotRotateRight()));
     d->action_RotateImage->addAction(right);
 
-    d->action_FlipImage = new KActionMenu(KIcon("flip"), i18n("Flip"), actionCollection());
+    d->action_FlipImage = new KActionMenu(KIcon("flip-horizontal"), i18n("Flip"), actionCollection());
     addAction(d->action_FlipImage);
 
     KAction *hori = new KAction(i18n("Horizontally"), actionCollection());
