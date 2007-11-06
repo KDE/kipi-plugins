@@ -117,7 +117,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
             this, SLOT(slotRotateExif()));
     addAction(d->action_AutoExif);
 
-    d->action_RotateImage = new KActionMenu(KIcon("transform-rotate"), i18n("Rotate"), actionCollection());
+    d->action_RotateImage = new KActionMenu(KIcon("object-rotate-right"), i18n("Rotate"), actionCollection());
     d->action_RotateImage->setObjectName("jpeglossless_rotate");
     addAction(d->action_RotateImage);
 
