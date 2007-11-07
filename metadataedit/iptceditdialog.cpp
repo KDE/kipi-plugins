@@ -70,12 +70,12 @@
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCEditDialogDialogPrivate
+class IPTCEditDialogPrivate
 {
 
 public:
 
-    IPTCEditDialogDialogPrivate()
+    IPTCEditDialogPrivate()
     {
         modified        = false;
         isReadOnly      = false;
@@ -138,7 +138,7 @@ public:
 IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *iface)
               : KPageDialog(parent)
 {
-    d = new IPTCEditDialogDialogPrivate;
+    d = new IPTCEditDialogPrivate;
     d->urls      = urls;
     d->interface = iface;
     d->currItem  = d->urls.begin();

@@ -39,7 +39,7 @@ class QObject;
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCEditDialogDialogPrivate;
+class IPTCEditDialogPrivate;
 
 class IPTCEditDialog : public KPageDialog
 {
@@ -82,7 +82,7 @@ private:
 
 private:
 
-    IPTCEditDialogDialogPrivate *d;
+    IPTCEditDialogPrivate *d;
 };
 
 }  // namespace KIPIMetadataEditPlugin

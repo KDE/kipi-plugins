@@ -44,7 +44,7 @@ namespace KIPI
 namespace KIPIMetadataEditPlugin
 {
 
-class EXIFEditDialogDialogPrivate;
+class EXIFEditDialogPrivate;
 
 class EXIFEditDialog : public KPageDialog
 {
@@ -87,7 +87,7 @@ private:
 
 private:
 
-    EXIFEditDialogDialogPrivate *d;
+    EXIFEditDialogPrivate *d;
 };
 
 }  // namespace KIPIMetadataEditPlugin

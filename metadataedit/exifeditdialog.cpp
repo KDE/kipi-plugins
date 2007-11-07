@@ -67,12 +67,12 @@
 namespace KIPIMetadataEditPlugin
 {
 
-class EXIFEditDialogDialogPrivate
+class EXIFEditDialogPrivate
 {
 
 public:
 
-    EXIFEditDialogDialogPrivate()
+    EXIFEditDialogPrivate()
     {
         modified      = false;
         isReadOnly    = false;
@@ -128,7 +128,7 @@ public:
 EXIFEditDialog::EXIFEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *iface)
               : KPageDialog(parent)
 {
-    d = new EXIFEditDialogDialogPrivate;
+    d = new EXIFEditDialogPrivate;
     d->urls      = urls;
     d->interface = iface;
     d->currItem  = d->urls.begin();
