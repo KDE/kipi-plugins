@@ -155,7 +155,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     //---------------------------------------------
 
     d->listView = new K3ListView(d->page);
-    d->listView->addColumn( i18n("Thumbnail") );
+    d->listView->addColumn( i18n("Thumb") );
     d->listView->addColumn( i18n("Raw File") );
     d->listView->addColumn( i18n("Target File") );
     d->listView->addColumn( i18n("Camera") );
