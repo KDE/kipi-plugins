@@ -176,7 +176,7 @@ void SendImagesDialog::closeEvent(QCloseEvent *e)
 void SendImagesDialog::slotCancel()
 {
     saveSettings();
-    close();
+    reject();
 }
 
 void SendImagesDialog::slotOk()
