@@ -1,5 +1,6 @@
 SET(kipiplugin_sendimages_PART_SRCS plugin_sendimages.cpp 
-                                    #sendimagesdialog.cpp 
+                                    sendimagesdialog.cpp 
+                                    imagespage.cpp
                                     #listimageserrordialog.cpp 
                                     #sendimages.cpp
    )
@@ -11,6 +12,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_sendimages
                       ${QT_AND_KDECORE_LIBS} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
+                      ${KDCRAW_LIBRARIES} 
+                      ${QT_QT3SUPPORT_LIBRARY} 
                       kipiplugins
                      )
 

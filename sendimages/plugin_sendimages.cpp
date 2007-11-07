@@ -43,7 +43,7 @@
 // Local includes
 
 //#include "actions.h"
-//#include "sendimages.h"
+#include "sendimagesdialog.h"
 #include "plugin_sendimages.h"
 #include "plugin_sendimages.moc"
 
@@ -99,13 +99,9 @@ void Plugin_SendImages::slotActivate()
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
-/*
-    KStandardDirs dir;
-    QString Tmp = dir.saveLocation("tmp", "kipi-sendimagesplugin-" + QString::number(getpid()) + "/");
 
-    m_sendImagesOperation = new KIPISendimagesPlugin::SendImages( interface, Tmp, images, this );
-
-    m_sendImagesOperation->showDialog();*/
+    KIPISendimagesPlugin::SendImagesDialog dialog(kapp->activeWindow(), interface, images.images());
+    dialog.exec();
 }
 
 void Plugin_SendImages::slotAcceptedConfigDlg()

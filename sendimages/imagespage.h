@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2003-10-01
- * Description : a kipi plugin to e-mailing images
+ * Date        : 2006-10-18
+ * Description : images list to e-mail settings page.
  *
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,21 +20,16 @@
  * 
  * ============================================================ */
 
-#ifndef SENDIMAGESDIALOG_H
-#define SENDIMAGESDIALOG_H
+#ifndef IMAGES_PAGE_H
+#define IMAGES_PAGE_H
 
 // Qt includes.
 
-#include <QByteArray>
+#include <QWidget>
 
 // KDE includes.
 
-#include <kpagedialog.h>
 #include <kurl.h>
-
-class QCloseEvent;
-class QEvent;
-class QObject;
 
 namespace KIPI
 {
@@ -44,40 +39,29 @@ namespace KIPI
 namespace KIPISendimagesPlugin
 {
 
-class SendImagesDialogPrivate;
+class ImagesPagePriv;
 
-class SendImagesDialog : public KPageDialog
+class ImagesPage : public QWidget
 {
     Q_OBJECT
-
+    
 public:
 
-    SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl::List urls);
-    ~SendImagesDialog();
+    ImagesPage(QWidget* parent, KIPI::Interface *iface);
+    ~ImagesPage();
 
-protected slots:
+    void addImages(const KUrl::List& list);
 
-    void slotOk();
-    void slotHelp();
-    void slotCancel();
+private slots:
 
-protected:
-
-    void closeEvent(QCloseEvent *);
+    void slotAddItems();
+    void slotRemoveItems();
 
 private:
 
-    void readSettings();
-    void saveSettings();
-
-    int  activePageIndex();
-    void showPage(int page);
-
-private:
-
-    SendImagesDialogPrivate *d;
+    ImagesPagePriv* d;
 };
 
 }  // namespace KIPISendimagesPlugin
 
-#endif /* SENDIMAGESDIALOG_H */
+#endif // IMAGES_PAGE_H 
