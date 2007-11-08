@@ -231,7 +231,7 @@ EmailPage::EmailPage(QWidget* parent)
     grid2->addWidget(d->labelImagesFormat, 2, 0, 1, 1);
     grid2->addWidget(d->imagesFormat, 2, 1, 1, 2);
     grid2->setRowStretch(4, 10);    
-    grid2->setColumnStretch(3, 10);                     
+    grid2->setColumnStretch(2, 10);                     
     grid2->setMargin(KDialog::spacingHint());
     grid2->setSpacing(KDialog::spacingHint());        
     grid2->setAlignment(Qt::AlignTop);
