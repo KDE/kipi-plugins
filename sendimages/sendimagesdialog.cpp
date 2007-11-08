@@ -375,7 +375,7 @@ void SendImagesDialog::setupEmailOptions(void)
     QLabel *m_mailAgentLabel = new QLabel( i18n("Mail agent:"), page_setupEmailOptions);
 
     m_mailAgentName = new QComboBox( false, page_setupEmailOptions );
-    m_mailAgentName->insertItem( "Default" );
+    m_mailAgentName->insertItem( i18n("Default") );
     m_mailAgentName->insertItem( "Balsa" );
     m_mailAgentName->insertItem( "Claws Mail" );
     m_mailAgentName->insertItem( "Evolution" );
@@ -386,7 +386,7 @@ void SendImagesDialog::setupEmailOptions(void)
     m_mailAgentName->insertItem( "Sylpheed" );
     m_mailAgentName->insertItem( "Sylpheed-Claws" );
     m_mailAgentName->insertItem( "Thunderbird" );
-    m_mailAgentName->setCurrentText( "Default" );
+    m_mailAgentName->setCurrentText( i18n("Default") );
     QWhatsThis::add( m_mailAgentName, i18n("<p>Select here your preferred external mail agent program."
                                            "These mail agent versions are supported:<p>"
                                            "<b>Balsa</b>: >= 2.x<p>"
