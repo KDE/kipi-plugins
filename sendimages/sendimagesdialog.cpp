@@ -55,6 +55,7 @@
 #include "pluginsversion.h"
 #include "imagespage.h"
 #include "emailpage.h"
+#include "emailsettingscontainer.h"
 #include "sendimagesdialog.h"
 #include "sendimagesdialog.moc"
 

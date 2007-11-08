@@ -1,18 +1,17 @@
 /* ============================================================
  *
- * This file is a part of digiKam project
- * http://www.digikam.org
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
  *
- * Date        : 2006-21-07
- * Description : Camera item download settings container.
- * 
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com> 
+ * Date        : 2007-11-07
+ * Description : e-mail settings container.
+ *
+ * Copyright (C) 2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,59 +20,55 @@
  * 
  * ============================================================ */
 
-#ifndef DOWNLOADSETTINGSCONTAINER_H
-#define DOWNLOADSETTINGSCONTAINER_H
+#ifndef EMAILSETTINGSCONTAINER_H
+#define EMAILSETTINGSCONTAINER_H
 
 // Qt includes.
 
 #include <QString>
-#include <QDateTime>
 
-namespace Digikam
+// Local includes.
+
+#include "emailpage.h"
+
+namespace KIPISendimagesPlugin
 {
 
-class DownloadSettingsContainer
+class EmailSettingsContainer
 {
 
 public:
     
-    DownloadSettingsContainer()
+    EmailSettingsContainer()
     {
-        autoRotate        = true;
-        fixDateTime       = false;
-        setPhotographerId = false;
-        setCredits        = false;
-        convertJpeg       = false;
+        addCommentsAndTags = false;
+        imagesChangeProp   = false;
+        attachmentLimit    = 17;
+        imageCompression   = 75;
+        emailProgram       = EmailPage::KMAIL;
+        imageSize          = EmailPage::MEDIUM;
+        imageFormat        = EmailPage::JPEG;
     };
     
-    ~DownloadSettingsContainer(){};
+    ~EmailSettingsContainer(){};
 
 public:
 
-    bool      autoRotate;
-    bool      fixDateTime;
-    bool      setPhotographerId;
-    bool      setCredits;
-    bool      convertJpeg;
+    bool                   addCommentsAndTags;
+    bool                   imagesChangeProp;
 
-    QDateTime newDateTime;
+    int                    attachmentLimit;
+    int                    imageCompression;
 
-    // File path to download.
-    QString   folder;
-    QString   file;
-    QString   dest;
+    QString                thunderbirdPath;
 
-    // New format to convert Jpeg files.
-    QString   losslessFormat;
+    EmailPage::EmailClient emailProgram;
 
-    // IPTC settings
-    QString   author;
-    QString   authorTitle;
-    QString   credit;
-    QString   source;
-    QString   copyright;
+    EmailPage::ImageSize   imageSize;
+
+    EmailPage::ImageFormat imageFormat;
 };
 
-}  // namespace Digikam
+}  // namespace KIPISendimagesPlugin
 
-#endif  // DOWNLOADSETTINGSCONTAINER_H
+#endif  // EMAILSETTINGSCONTAINER_H
