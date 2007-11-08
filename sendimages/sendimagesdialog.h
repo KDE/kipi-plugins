@@ -55,15 +55,17 @@ public:
     SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl::List urls);
     ~SendImagesDialog();
 
-protected slots:
+protected:
+
+    void closeEvent(QCloseEvent *);
+
+
+private slots:
 
     void slotOk();
     void slotHelp();
     void slotCancel();
-
-protected:
-
-    void closeEvent(QCloseEvent *);
+    void slotEnableButtonOK(bool);
 
 private:
 

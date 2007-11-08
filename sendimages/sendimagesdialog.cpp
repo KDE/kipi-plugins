@@ -106,7 +106,7 @@ SendImagesDialog::SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl
     d->page_images->setIcon(KIcon("image-jpeg2000"));
     d->imagesPage->addImages(urls);
 
-    d->emailPage  = new EmailPage(this, iface);
+    d->emailPage  = new EmailPage(this);
     d->page_email = addPage(d->emailPage, i18n("Mail"));
     d->page_email->setHeader(i18n("Mail Options"));
     d->page_email->setIcon(KIcon("email"));
@@ -148,6 +148,10 @@ SendImagesDialog::SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl
 
     connect(this, SIGNAL(okClicked()),
             this, SLOT(slotOk()));
+
+    connect(d->emailPage, SIGNAL(signalEnableButtonOK(bool)),
+            this, SLOT(slotEnableButtonOK(bool)));
+
 
     // ------------------------------------------------------------
 
@@ -234,6 +238,11 @@ int SendImagesDialog::activePageIndex()
     if (cur == d->page_email)   return 1;
 
     return 0;
+}
+
+void SendImagesDialog::slotEnableButtonOK(bool b)
+{
+    enableButton(Ok, b);
 }
 
 }  // namespace KIPISendimagesPlugin

@@ -27,11 +27,6 @@
 
 #include <QWidget>
 
-namespace KIPI
-{
-    class Interface;
-}
-
 namespace KIPISendimagesPlugin
 {
 
@@ -40,14 +35,37 @@ class EmailPagePriv;
 class EmailPage : public QWidget
 {
     Q_OBJECT
-    
+
 public:
 
-    EmailPage(QWidget* parent, KIPI::Interface *iface);
+    enum EmailClient 
+    {
+        DEFAULT = 0,
+        BALSA,
+        CLAWSMAIL,
+        EVOLUTION,
+        GMAILAGENT,
+        KMAIL,
+        MOZILLA,
+        NETSCAPE,
+        SYLPHEED,
+        SYLPHEEDCLAWS,
+        THUNDERBIRD
+    };
+
+public:
+
+    EmailPage(QWidget* parent);
     ~EmailPage();
+
+signals:
+
+    void signalEnableButtonOK(bool);
 
 private slots:
 
+    void slotMailAgentChanged(int);
+    void slotThunderbirdBinPathChanged(const QString&);
 
 private:
 
