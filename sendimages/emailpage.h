@@ -53,6 +53,22 @@ public:
         THUNDERBIRD
     };
 
+    enum ImageSize 
+    {
+        VERYSMALL = 0,
+        SMALL,
+        MEDIUM,
+        BIG,
+        VERYBIG,
+        HUGE
+    };
+
+    enum ImageFormat 
+    {
+        JPEG = 0,
+        PNG
+    };
+
 public:
 
     EmailPage(QWidget* parent);

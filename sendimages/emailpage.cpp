@@ -55,21 +55,36 @@ public:
 
     EmailPagePriv()
     {
-        mailAgentLabel          = 0;
+        labelMailAgent          = 0;
         mailAgentName           = 0;
         labelThunderbirdBinPath = 0;
         thunderbirdBinPath      = 0;
+        imagesResize            = 0;
         addComments             = 0;
+        changeImagesProp        = 0;
+        imageCompression        = 0;
+        labelImagesResize       = 0;
+        imagesFormat            = 0;
+        labelImagesFormat       = 0;
+        attachmentlimit         = 0;
     }
     
-    QLabel          *mailAgentLabel;
-    QLabel          *labelThunderbirdBinPath;
+    QLabel        *labelMailAgent;
+    QLabel        *labelThunderbirdBinPath;
+    QLabel        *labelImagesResize;
+    QLabel        *labelImagesFormat;
 
-    QComboBox       *mailAgentName;
+    QComboBox     *mailAgentName;
+    QComboBox     *imagesResize;
+    QComboBox     *imagesFormat;
 
-    QCheckBox       *addComments;
+    QCheckBox     *changeImagesProp;
+    QCheckBox     *addComments;
 
-    KUrlRequester   *thunderbirdBinPath;
+    KIntNumInput  *imageCompression;
+    KIntNumInput  *attachmentlimit;
+
+    KUrlRequester *thunderbirdBinPath;
 };
 
 EmailPage::EmailPage(QWidget* parent)
@@ -81,14 +96,14 @@ EmailPage::EmailPage(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->mailAgentLabel = new QLabel(i18n("Mail program:"), this);
+    d->labelMailAgent = new QLabel(i18n("Mail program:"), this);
 
     d->mailAgentName = new QComboBox(this);
     d->mailAgentName->insertItem(DEFAULT,       i18n("Default"));
     d->mailAgentName->insertItem(BALSA,         "Balsa");
     d->mailAgentName->insertItem(CLAWSMAIL,     "Claws Mail");
     d->mailAgentName->insertItem(EVOLUTION,     "Evolution");
-    d->mailAgentName->insertItem(GMAILAGENT,    "GmailAgent");
+    d->mailAgentName->insertItem(GMAILAGENT,    "Gmail-Agent");
     d->mailAgentName->insertItem(KMAIL,         "KMail");
     d->mailAgentName->insertItem(MOZILLA,       "Mozilla");
     d->mailAgentName->insertItem(NETSCAPE,      "Netscape");
@@ -101,7 +116,7 @@ EmailPage::EmailPage(QWidget* parent)
                                         "<b>Balsa</b>: >= 2.x<p>"
                                         "<b>Claws Mail</b>: >= 2.6.1<p>"
                                         "<b>Evolution</b>: >= 1.4<p>"
-                                        "<b>GmailAgent</b>: >= 0.2<p>"
+                                        "<b>Gmail-Agent</b>: >= 0.2<p>"
                                         "<b>KMail</b>: >= 1.3<p>"
                                         "<b>Mozilla</b>: >= 1.4<p>"
                                         "<b>Netscape</b>: >= 7.x<p>"
@@ -124,65 +139,61 @@ EmailPage::EmailPage(QWidget* parent)
     d->addComments->setWhatsThis(i18n("<p>If you enable this option, all image captions and tags "
                                       "will be added as an attached file."));
 
-    //---------------------------------------------
-/*
-    QGroupBox * groupBox2 = new QGroupBox( i18n("Image Properties"), page_setupEmailOptions );
-    groupBox2->setColumnLayout(0, Qt::Vertical );
-    groupBox2->layout()->setSpacing( 6 );
-    groupBox2->layout()->setMargin( 11 );
-    QWhatsThis::add( groupBox2, i18n("<p>The properties of images to send.") );
+    // --------------------------------------------------------
 
-    QVBoxLayout * groupBox2Layout = new QVBoxLayout( groupBox2->layout() );
-    groupBox2Layout->setAlignment( Qt::AlignTop );
-
-    m_changeImagesProp = new QCheckBox(i18n("Adjust image properties"), groupBox2);
-    QWhatsThis::add( m_changeImagesProp, i18n("<p>If you enable this option, "
-                     "all images to send can be resized and recompressed.") );
-    m_changeImagesProp->setChecked( true );
-    groupBox2Layout->addWidget( m_changeImagesProp );
-
-    QHBoxLayout *hlay12  = new QHBoxLayout();
-    groupBox2Layout->addLayout( hlay12 );
-
-    m_imagesResize = new QComboBox(false, groupBox2);
-    m_imagesResize->insertItem(i18n("Very Small (320 pixels)"));
-    m_imagesResize->insertItem(i18n("Small (640 pixels)"));
-    m_imagesResize->insertItem(i18n("Medium (800 pixels)"));
-    m_imagesResize->insertItem(i18n("Big (1024 pixels)"));
-    m_imagesResize->insertItem(i18n("Very Big (1280 pixels)"));
-    m_imagesResize->insertItem(i18n("Huge - for printing (1600 pixels)"));
-    m_imagesResize->setCurrentText (i18n("Medium (800 pixels)"));
-    whatsThis = i18n("<p>Select here the images size to send:<p>"
-                     "<b>%1</b>: use this if you have a very slow internet "
-                     "connection or if the target mailbox size is very limited.<p>"
-                     "<b>%2</b>: use this if you have a slow internet connection "
-                     "and if the target mailbox size is limited.<p>"
-                     "<b>%3</b>: this is the default value for a medium internet connection "
-                     "and a target mailbox size.<p>"
-                     "<b>%4</b>: use this if you have a high-speed internet connection "
-                     "and if the target mailbox size is not limited.<p>"
-                     "<b>%5</b>: use this if you have no size or speed restrictions.<p>"
-                     "<b>%6</b>: use this only for printing purpose.<p>")
-                     ,i18n("very small (320 pixels)")
-                     ,i18n("small (640 pixels)")
-                     ,i18n("medium (800 pixels)")
-                     ,i18n("big (1024 pixels)")
-                     ,i18n("very big (1280 pixels)")
-             ,i18n("huge - for printing (1600 pixels)");
-    QWhatsThis::add( m_imagesResize, whatsThis );
-
-    m_labelImageSize = new QLabel( i18n("Sent image size:"), groupBox2);
-    hlay12->addWidget( m_labelImageSize );
-    m_labelImageSize->setBuddy( m_imagesResize );
-    hlay12->addStretch( 1 );
-    hlay12->addWidget(m_imagesResize);
+    d->attachmentlimit = new KIntNumInput(this);
+    d->attachmentlimit->setRange(1, 50, 1);
+    d->attachmentlimit->setValue(17);
+    d->attachmentlimit->setLabel( i18n("Maximum e-mail size limit:"), Qt::AlignLeft | Qt::AlignVCenter);
+    d->attachmentlimit->setSuffix(i18n("MB"));
 
     //---------------------------------------------
 
-    m_imageCompression = new KIntNumInput(75, groupBox2);
-    m_imageCompression->setRange(1, 100, 1, true );
-    m_imageCompression->setLabel( i18n("Sent image quality level:") );
-    groupBox2Layout->addWidget( m_imageCompression );
+    d->changeImagesProp  = new QCheckBox(i18n("Adjust image properties"), this);
+    d->changeImagesProp->setChecked(true);
+    d->changeImagesProp->setWhatsThis(i18n("<p>If you enable this option, "
+                                           "all images to send can be resized and recompressed."));
+
+    QGroupBox * groupBox = new QGroupBox(i18n("Image Properties"), this);
+    QGridLayout* grid2   = new QGridLayout(groupBox);
+
+    d->imagesResize = new QComboBox(groupBox);
+    d->imagesResize->insertItem(VERYSMALL, i18n("Very Small (320 pixels)"));
+    d->imagesResize->insertItem(SMALL,     i18n("Small (640 pixels)"));
+    d->imagesResize->insertItem(MEDIUM,    i18n("Medium (800 pixels)"));
+    d->imagesResize->insertItem(BIG,       i18n("Big (1024 pixels)"));
+    d->imagesResize->insertItem(VERYBIG,   i18n("Very Big (1280 pixels)"));
+    d->imagesResize->insertItem(HUGE,      i18n("Huge - for printing (1600 pixels)"));
+    d->imagesResize->setCurrentIndex(MEDIUM);
+    QString whatsThis = i18n("<p>Select here the images size to send:<p>"
+                             "<b>%1</b>: use this if you have a very slow internet "
+                             "connection or if the target mailbox size is very limited.<p>"
+                             "<b>%2</b>: use this if you have a slow internet connection "
+                             "and if the target mailbox size is limited.<p>"
+                             "<b>%3</b>: this is the default value for a medium internet connection "
+                             "and a target mailbox size.<p>"
+                             "<b>%4</b>: use this if you have a high-speed internet connection "
+                             "and if the target mailbox size is not limited.<p>"
+                             "<b>%5</b>: use this if you have no size or speed restrictions.<p>"
+                             "<b>%6</b>: use this only for printing purpose.<p>",
+                             i18n("very small (320 pixels)"),
+                             i18n("small (640 pixels)"),
+                             i18n("medium (800 pixels)"),
+                             i18n("big (1024 pixels)"),
+                             i18n("very big (1280 pixels)"),
+                             i18n("huge - for printing (1600 pixels)"));
+    d->imagesResize->setWhatsThis(whatsThis);
+
+
+    d->labelImagesResize = new QLabel( i18n("Image size:"), groupBox);
+    d->labelImagesResize->setBuddy(d->imagesResize);
+
+    //---------------------------------------------
+
+    d->imageCompression = new KIntNumInput(groupBox);
+    d->imageCompression->setRange(1, 100, 1);
+    d->imageCompression->setValue(75);
+    d->imageCompression->setLabel(i18n("Image quality:"), Qt::AlignLeft | Qt::AlignVCenter);
     whatsThis = i18n("<p>The new compression value of images to send:<p>");
     whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
                                  "<b>25</b>: high compression<p>"
@@ -190,17 +201,14 @@ EmailPage::EmailPage(QWidget* parent)
                                  "<b>75</b>: low compression (default value)<p>"
                                  "<b>100</b>: no compression");
 
-    QWhatsThis::add( m_imageCompression, whatsThis);
+    d->imageCompression->setWhatsThis(whatsThis);
 
     //---------------------------------------------
 
-    QHBoxLayout *hlay13  = new QHBoxLayout();
-    groupBox2Layout->addLayout( hlay13 );
-
-    m_imagesFormat = new QComboBox(false, groupBox2);
-    m_imagesFormat->insertItem("JPEG");
-    m_imagesFormat->insertItem("PNG");
-    m_imagesFormat->setCurrentText ("JPEG");
+    d->imagesFormat = new QComboBox(groupBox);
+    d->imagesFormat->insertItem(JPEG, "JPEG");
+    d->imagesFormat->insertItem(PNG,  "PNG");
+    d->imagesFormat->setCurrentIndex(JPEG);
     whatsThis = i18n("<p>Select here the images files format to send.<p>");
     whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group's file format "
                 "is a good Web file format but it uses lossy compression.<p>"
@@ -210,32 +218,36 @@ EmailPage::EmailPage(QWidget* parent)
                 "PNG is designed to work well in online viewing applications, such as the World Wide Web, "
                 "so it is fully streamable with a progressive display option. Also, PNG can store gamma "
                 "and chromaticity data for improved color matching on heterogeneous platforms.");
-    QWhatsThis::add( m_imagesFormat, whatsThis );
+    d->imagesFormat->setWhatsThis(whatsThis);
 
-    m_labelImageFormat = new QLabel(i18n("Image file format:"), groupBox2);
-    hlay13->addWidget(m_labelImageFormat);
-    m_labelImageFormat->setBuddy(m_imagesFormat);
-    hlay13->addStretch(1);
-    hlay13->addWidget(m_imagesFormat);
-
-    vlay->addWidget(groupBox2);
-    vlay->addStretch(1);
-
-    m_attachmentlimit = new KIntNumInput(17, page_setupEmailOptions);
-    m_attachmentlimit->setRange(1, 50, 1, true );
-    m_attachmentlimit->setLabel( i18n("Maximum Email size limit:"));
-    m_attachmentlimit->setSuffix(i18n("MB"));
-    vlay->addWidget( m_attachmentlimit );
-*/            
+    d->labelImagesFormat = new QLabel(i18n("Image file format:"), groupBox);
+    d->labelImagesFormat->setBuddy(d->imagesFormat);
+    
     // --------------------------------------------------------
 
-    grid->addWidget(d->mailAgentLabel, 0, 0, 1, 1);
+    grid2->addWidget(d->labelImagesResize, 0, 0, 1, 1);
+    grid2->addWidget(d->imagesResize, 0, 1, 1, 2);
+    grid2->addWidget(d->imageCompression, 1, 0, 1, 3);
+    grid2->addWidget(d->labelImagesFormat, 2, 0, 1, 1);
+    grid2->addWidget(d->imagesFormat, 2, 1, 1, 2);
+    grid2->setRowStretch(4, 10);    
+    grid2->setColumnStretch(3, 10);                     
+    grid2->setMargin(KDialog::spacingHint());
+    grid2->setSpacing(KDialog::spacingHint());        
+    grid2->setAlignment(Qt::AlignTop);
+            
+    // --------------------------------------------------------
+
+    grid->addWidget(d->labelMailAgent, 0, 0, 1, 1);
     grid->addWidget(d->mailAgentName, 0, 1, 1, 2);
     grid->addWidget(d->labelThunderbirdBinPath, 1, 0, 1, 1);
     grid->addWidget(d->thunderbirdBinPath, 1, 1, 1, 3);
-    grid->addWidget(d->addComments, 2, 0, 1, 4);
+    grid->addWidget(d->attachmentlimit, 2, 0, 1, 4);
+    grid->addWidget(d->addComments, 3, 0, 1, 4);
+    grid->addWidget(d->changeImagesProp, 4, 0, 1, 4);
+    grid->addWidget(groupBox, 5, 0, 1, 4);
+    grid->setRowStretch(6, 10);    
     grid->setColumnStretch(3, 10);                     
-    grid->setRowStretch(3, 10);    
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());        
 
@@ -247,22 +259,9 @@ EmailPage::EmailPage(QWidget* parent)
     connect(d->thunderbirdBinPath, SIGNAL(textChanged(const QString&)),
             this, SLOT(slotThunderbirdBinPathChanged(const QString&)));
 
-/*
-    connect(m_changeImagesProp, SIGNAL(toggled(bool)),
-            m_labelImageSize, SLOT(setEnabled(bool)));
+    connect(d->changeImagesProp, SIGNAL(toggled(bool)),
+            groupBox, SLOT(setEnabled(bool)));
 
-    connect(m_changeImagesProp, SIGNAL(toggled(bool)),
-            m_imagesResize, SLOT(setEnabled(bool)));
-
-    connect(m_changeImagesProp, SIGNAL(toggled(bool)),
-            m_imageCompression, SLOT(setEnabled(bool)));
-
-    connect(m_changeImagesProp, SIGNAL(toggled(bool)),
-            m_labelImageFormat, SLOT(setEnabled(bool)));
-
-    connect(m_changeImagesProp, SIGNAL(toggled(bool)),
-            m_imagesFormat, SLOT(setEnabled(bool)));
-*/
     // --------------------------------------------------------
 
     slotMailAgentChanged(d->mailAgentName->currentIndex());
