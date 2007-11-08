@@ -27,6 +27,10 @@
 
 #include <QWidget>
 
+// Local includes.
+
+#include <emailsettingscontainer.h>
+
 namespace KIPISendimagesPlugin
 {
 
@@ -38,41 +42,11 @@ class EmailPage : public QWidget
 
 public:
 
-    enum EmailClient 
-    {
-        DEFAULT = 0,
-        BALSA,
-        CLAWSMAIL,
-        EVOLUTION,
-        GMAILAGENT,
-        KMAIL,
-        MOZILLA,
-        NETSCAPE,
-        SYLPHEED,
-        SYLPHEEDCLAWS,
-        THUNDERBIRD
-    };
-
-    enum ImageSize 
-    {
-        VERYSMALL = 0,
-        SMALL,
-        MEDIUM,
-        BIG,
-        VERYBIG,
-        HUGE
-    };
-
-    enum ImageFormat 
-    {
-        JPEG = 0,
-        PNG
-    };
-
-public:
-
     EmailPage(QWidget* parent);
     ~EmailPage();
+
+    void setEmailSettings(const EmailSettingsContainer& settings);
+    EmailSettingsContainer emailSettings();
 
 signals:
 

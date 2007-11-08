@@ -23,9 +23,9 @@
 #ifndef EMAILSETTINGSCONTAINER_H
 #define EMAILSETTINGSCONTAINER_H
 
-// Qt includes.
+// KDE includes.
 
-#include <QString>
+#include <kurl.h>
 
 // Local includes.
 
@@ -38,6 +38,39 @@ class EmailSettingsContainer
 {
 
 public:
+
+    enum EmailClient 
+    {
+        DEFAULT = 0,
+        BALSA,
+        CLAWSMAIL,
+        EVOLUTION,
+        GMAILAGENT,
+        KMAIL,
+        MOZILLA,
+        NETSCAPE,
+        SYLPHEED,
+        SYLPHEEDCLAWS,
+        THUNDERBIRD
+    };
+
+    enum ImageSize 
+    {
+        VERYSMALL = 0,
+        SMALL,
+        MEDIUM,
+        BIG,
+        VERYBIG,
+        HUGE
+    };
+
+    enum ImageFormat 
+    {
+        JPEG = 0,
+        PNG
+    };
+
+public:
     
     EmailSettingsContainer()
     {
@@ -45,28 +78,28 @@ public:
         imagesChangeProp   = false;
         attachmentLimit    = 17;
         imageCompression   = 75;
-        emailProgram       = EmailPage::KMAIL;
-        imageSize          = EmailPage::MEDIUM;
-        imageFormat        = EmailPage::JPEG;
+        emailProgram       = KMAIL;
+        imageSize          = MEDIUM;
+        imageFormat        = JPEG;
     };
     
     ~EmailSettingsContainer(){};
 
 public:
 
-    bool                   addCommentsAndTags;
-    bool                   imagesChangeProp;
+    bool        addCommentsAndTags;
+    bool        imagesChangeProp;
 
-    int                    attachmentLimit;
-    int                    imageCompression;
+    int         attachmentLimit;
+    int         imageCompression;
 
-    QString                thunderbirdPath;
+    KUrl        thunderbirdPath;
 
-    EmailPage::EmailClient emailProgram;
+    EmailClient emailProgram;
 
-    EmailPage::ImageSize   imageSize;
+    ImageSize   imageSize;
 
-    EmailPage::ImageFormat imageFormat;
+    ImageFormat imageFormat;
 };
 
 }  // namespace KIPISendimagesPlugin

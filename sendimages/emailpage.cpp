@@ -99,18 +99,18 @@ EmailPage::EmailPage(QWidget* parent)
     d->labelMailAgent = new QLabel(i18n("Mail program:"), this);
 
     d->mailAgentName = new QComboBox(this);
-    d->mailAgentName->insertItem(DEFAULT,       i18n("Default"));
-    d->mailAgentName->insertItem(BALSA,         "Balsa");
-    d->mailAgentName->insertItem(CLAWSMAIL,     "Claws Mail");
-    d->mailAgentName->insertItem(EVOLUTION,     "Evolution");
-    d->mailAgentName->insertItem(GMAILAGENT,    "Gmail-Agent");
-    d->mailAgentName->insertItem(KMAIL,         "KMail");
-    d->mailAgentName->insertItem(MOZILLA,       "Mozilla");
-    d->mailAgentName->insertItem(NETSCAPE,      "Netscape");
-    d->mailAgentName->insertItem(SYLPHEED,      "Sylpheed");
-    d->mailAgentName->insertItem(SYLPHEEDCLAWS, "Sylpheed-Claws");
-    d->mailAgentName->insertItem(THUNDERBIRD,   "Thunderbird");
-    d->mailAgentName->setCurrentIndex(DEFAULT);
+    d->mailAgentName->insertItem(EmailSettingsContainer::DEFAULT,       i18n("Default"));
+    d->mailAgentName->insertItem(EmailSettingsContainer::BALSA,         "Balsa");
+    d->mailAgentName->insertItem(EmailSettingsContainer::CLAWSMAIL,     "Claws Mail");
+    d->mailAgentName->insertItem(EmailSettingsContainer::EVOLUTION,     "Evolution");
+    d->mailAgentName->insertItem(EmailSettingsContainer::GMAILAGENT,    "Gmail-Agent");
+    d->mailAgentName->insertItem(EmailSettingsContainer::KMAIL,         "KMail");
+    d->mailAgentName->insertItem(EmailSettingsContainer::MOZILLA,       "Mozilla");
+    d->mailAgentName->insertItem(EmailSettingsContainer::NETSCAPE,      "Netscape");
+    d->mailAgentName->insertItem(EmailSettingsContainer::SYLPHEED,      "Sylpheed");
+    d->mailAgentName->insertItem(EmailSettingsContainer::SYLPHEEDCLAWS, "Sylpheed-Claws");
+    d->mailAgentName->insertItem(EmailSettingsContainer::THUNDERBIRD,   "Thunderbird");
+    d->mailAgentName->setCurrentIndex(EmailSettingsContainer::DEFAULT);
     d->mailAgentName->setWhatsThis(i18n("<p>Select here your preferred external mail program."
                                         "These mail program versions are supported:<p>"
                                         "<b>Balsa</b>: >= 2.x<p>"
@@ -158,13 +158,13 @@ EmailPage::EmailPage(QWidget* parent)
     QGridLayout* grid2   = new QGridLayout(groupBox);
 
     d->imagesResize = new QComboBox(groupBox);
-    d->imagesResize->insertItem(VERYSMALL, i18n("Very Small (320 pixels)"));
-    d->imagesResize->insertItem(SMALL,     i18n("Small (640 pixels)"));
-    d->imagesResize->insertItem(MEDIUM,    i18n("Medium (800 pixels)"));
-    d->imagesResize->insertItem(BIG,       i18n("Big (1024 pixels)"));
-    d->imagesResize->insertItem(VERYBIG,   i18n("Very Big (1280 pixels)"));
-    d->imagesResize->insertItem(HUGE,      i18n("Huge - for printing (1600 pixels)"));
-    d->imagesResize->setCurrentIndex(MEDIUM);
+    d->imagesResize->insertItem(EmailSettingsContainer::VERYSMALL, i18n("Very Small (320 pixels)"));
+    d->imagesResize->insertItem(EmailSettingsContainer::SMALL,     i18n("Small (640 pixels)"));
+    d->imagesResize->insertItem(EmailSettingsContainer::MEDIUM,    i18n("Medium (800 pixels)"));
+    d->imagesResize->insertItem(EmailSettingsContainer::BIG,       i18n("Big (1024 pixels)"));
+    d->imagesResize->insertItem(EmailSettingsContainer::VERYBIG,   i18n("Very Big (1280 pixels)"));
+    d->imagesResize->insertItem(EmailSettingsContainer::HUGE,      i18n("Huge - for printing (1600 pixels)"));
+    d->imagesResize->setCurrentIndex(EmailSettingsContainer::MEDIUM);
     QString whatsThis = i18n("<p>Select here the images size to send:<p>"
                              "<b>%1</b>: use this if you have a very slow internet "
                              "connection or if the target mailbox size is very limited.<p>"
@@ -206,9 +206,9 @@ EmailPage::EmailPage(QWidget* parent)
     //---------------------------------------------
 
     d->imagesFormat = new QComboBox(groupBox);
-    d->imagesFormat->insertItem(JPEG, "JPEG");
-    d->imagesFormat->insertItem(PNG,  "PNG");
-    d->imagesFormat->setCurrentIndex(JPEG);
+    d->imagesFormat->insertItem(EmailSettingsContainer::JPEG, "JPEG");
+    d->imagesFormat->insertItem(EmailSettingsContainer::PNG,  "PNG");
+    d->imagesFormat->setCurrentIndex(EmailSettingsContainer::JPEG);
     whatsThis = i18n("<p>Select here the images files format to send.<p>");
     whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group's file format "
                 "is a good Web file format but it uses lossy compression.<p>"
@@ -261,10 +261,6 @@ EmailPage::EmailPage(QWidget* parent)
 
     connect(d->changeImagesProp, SIGNAL(toggled(bool)),
             groupBox, SLOT(setEnabled(bool)));
-
-    // --------------------------------------------------------
-
-    slotMailAgentChanged(d->mailAgentName->currentIndex());
 }
 
 EmailPage::~EmailPage()
@@ -274,7 +270,7 @@ EmailPage::~EmailPage()
 
 void EmailPage::slotMailAgentChanged(int i)
 {
-    if ( i == THUNDERBIRD )
+    if ( i == EmailSettingsContainer::THUNDERBIRD )
     {
         d->labelThunderbirdBinPath->setEnabled(true);
         d->thunderbirdBinPath->setEnabled(true);
@@ -288,8 +284,43 @@ void EmailPage::slotMailAgentChanged(int i)
 
 void EmailPage::slotThunderbirdBinPathChanged(const QString& url )
 {
-    if ( d->mailAgentName->currentIndex() == THUNDERBIRD )
+    if ( d->mailAgentName->currentIndex() == EmailSettingsContainer::THUNDERBIRD )
        emit signalEnableButtonOK( !url.isEmpty());
+}
+
+void EmailPage::setEmailSettings(const EmailSettingsContainer& settings)
+{
+    d->mailAgentName->setCurrentIndex((int)settings.emailProgram);
+    d->imagesResize->setCurrentIndex((int)settings.imageSize);
+    d->imagesFormat->setCurrentIndex((int)settings.imageFormat);
+
+    d->changeImagesProp->setChecked(settings.imagesChangeProp);
+    d->addComments->setChecked(settings.addCommentsAndTags);
+
+    d->imageCompression->setValue(settings.imageCompression);
+    d->attachmentlimit->setValue(settings.attachmentLimit);
+
+    d->thunderbirdBinPath->setUrl(settings.thunderbirdPath);
+
+    slotMailAgentChanged(d->mailAgentName->currentIndex());
+}
+                                    
+EmailSettingsContainer EmailPage::emailSettings()
+{
+    EmailSettingsContainer settings;
+    settings.emailProgram       = EmailSettingsContainer::EmailClient(d->mailAgentName->currentIndex());
+    settings.imageSize          = EmailSettingsContainer::ImageSize(d->imagesResize->currentIndex());
+    settings.imageFormat        = EmailSettingsContainer::ImageFormat(d->imagesFormat->currentIndex());
+
+    settings.imagesChangeProp   = d->changeImagesProp->isChecked();
+    settings.addCommentsAndTags = d->addComments->isChecked();
+
+    settings.imageCompression   = d->imageCompression->value();
+    settings.attachmentLimit    = d->attachmentlimit->value();
+
+    settings.thunderbirdPath    = d->thunderbirdBinPath->url();
+
+    return settings;
 }
 
 }  // namespace KIPISendimagesPlugin

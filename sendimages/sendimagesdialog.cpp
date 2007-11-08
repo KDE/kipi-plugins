@@ -196,7 +196,16 @@ void SendImagesDialog::readSettings()
     KConfigGroup group = config.group("SendImages Settings");
     showPage(group.readEntry("SendImages Page", 0));
 
-    // TODO    
+    EmailSettingsContainer settings;
+    settings.emailProgram       = (EmailSettingsContainer::EmailClient)group.readEntry("EmailProgram", (int)EmailSettingsContainer::KMAIL);
+    settings.imageSize          = (EmailSettingsContainer::ImageSize)group.readEntry("ImageResize",    (int)EmailSettingsContainer::MEDIUM);
+    settings.imageFormat        = (EmailSettingsContainer::ImageFormat)group.readEntry("ImageFormat",  (int)EmailSettingsContainer::JPEG);
+    settings.imagesChangeProp   = group.readEntry("ImagesChangeProp", false);
+    settings.addCommentsAndTags = group.readEntry("AddCommentsAndTags", false);
+    settings.imageCompression   = group.readEntry("ImageCompression", 75);
+    settings.attachmentLimit    = group.readEntry("AttachmentLimit", 17);
+    settings.thunderbirdPath    = group.readEntry("ThunderbirdPath", KUrl());
+    d->emailPage->setEmailSettings(settings);
 
     KConfigGroup group2 = config.group(QString("SendImages Dialog"));
     restoreDialogSize(group2);
@@ -208,7 +217,15 @@ void SendImagesDialog::saveSettings()
     KConfigGroup group = config.group("SendImages Settings");
     group.writeEntry("SendImages Page", activePageIndex());
 
-    // TODO    
+    EmailSettingsContainer settings = d->emailPage->emailSettings();
+    group.writeEntry("EmailProgram",       (int)settings.emailProgram);
+    group.writeEntry("ImageResize",        (int)settings.imageSize);
+    group.writeEntry("ImageFormat",        (int)settings.imageFormat);
+    group.writeEntry("ImagesChangeProp",   settings.imagesChangeProp);
+    group.writeEntry("AddCommentsAndTags", settings.addCommentsAndTags);
+    group.writeEntry("ImageCompression",   settings.imageCompression);
+    group.writeEntry("AttachmentLimit",    settings.attachmentLimit);
+    group.writeEntry("ThunderbirdPath",    settings.thunderbirdPath);
 
     KConfigGroup group2 = config.group(QString("SendImages Dialog"));
     saveDialogSize(group2);
