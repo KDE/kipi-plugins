@@ -194,7 +194,7 @@ void SendImagesDialog::readSettings(void)
     KConfig config("kipirc");
     config.setGroup("SendImages Settings");
 
-    QString t = config.readPathEntry("MailAgentName", "Default");
+    QString t = config.readEntry("MailAgentName", "Default");
 
     // The _old_ Kmail (mind the lowercase 'm') called the default mailer.
     // this is now renamed to 'Default'. It should not interfere with KMail, which
@@ -232,7 +232,7 @@ void SendImagesDialog::writeSettings(void)
 
     KConfig config("kipirc");
     config.setGroup("SendImages Settings");
-    config.writePathEntry("MailAgentName", m_mailAgentName->currentText());
+    config.writeEntry("MailAgentName", m_mailAgentName->currentText());
     config.writeEntry("ThunderbirdBinPath", m_ThunderbirdBinPath->url());
     config.writeEntry("AddComments", m_addComments->isChecked());
     config.writeEntry("ImagesChangeProp", m_changeImagesProp->isChecked());
