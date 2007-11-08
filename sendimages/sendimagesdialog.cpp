@@ -54,7 +54,7 @@
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "imagespage.h"
-//#include "emailpage.h"
+#include "emailpage.h"
 #include "sendimagesdialog.h"
 #include "sendimagesdialog.moc"
 
@@ -72,7 +72,7 @@ public:
         page_images = 0;
         page_email  = 0;
         imagesPage  = 0;
-//        emailPage   = 0;
+        emailPage   = 0;
     }
 
     KPageWidgetItem          *page_images;
@@ -81,7 +81,7 @@ public:
     KUrl::List                urls;
 
     ImagesPage               *imagesPage;
-//    EmailPage                *emailPage;
+    EmailPage                *emailPage;
 
     KIPIPlugins::KPAboutData *about;
 };
@@ -106,11 +106,10 @@ SendImagesDialog::SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl
     d->page_images->setIcon(KIcon("image-jpeg2000"));
     d->imagesPage->addImages(urls);
 
-/*
-    d->emailPage  = new EmailPage(this);
+    d->emailPage  = new EmailPage(this, iface);
     d->page_email = addPage(d->emailPage, i18n("Mail"));
     d->page_email->setHeader(i18n("Mail Options"));
-    d->page_email->setIcon(KIcon("email"));*/
+    d->page_email->setIcon(KIcon("email"));
 
     // ---------------------------------------------------------------
     // About data and help button.
