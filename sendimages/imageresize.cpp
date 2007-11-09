@@ -26,6 +26,7 @@
 
 // Qt includes.
 
+#include <QImageReader>
 #include <QImage>
 #include <QFile>
 #include <QFileInfo>
@@ -35,22 +36,33 @@
 
 #include <klocale.h>
 
+// LibKExiv2 includes. 
+
+#include <libkexiv2/kexiv2.h>
+
+// LibKDcraw includes.
+
+#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/kdcraw.h>
+
 // Local includes.
 
+#include "pluginsversion.h"
 #include "imageresize.h"
 
 namespace KIPISendimagesPlugin
 {
 
-ImageResize::ImageResize()
+ImageResize::ImageResize(const EmailSettingsContainer& settings)
 {
+    m_settings = settings;
 }
 
 ImageResize::~ImageResize()
 {
 }
 
-bool ImageResize::resize(const KUrl& src, const EmailSettingsContainer& settings, QString& err)
+bool ImageResize::resize(const KUrl& src, const QString destName, QString& err)
 {
     QFileInfo fi(src.path());
 
@@ -60,46 +72,94 @@ bool ImageResize::resize(const KUrl& src, const EmailSettingsContainer& settings
         return false;
     }
 
-/*
-    if ( !m_tmpFile.open() )
+    QFileInfo tmp(m_settings.tempPath);
+
+    if (!tmp.exists() || !tmp.isWritable())
     {
-        err = i18n("Error in opening temporary file");
+        err = i18n("Error in opening temporary folder");
         return false;
     }
 
-    QString tmp = m_tmpFile.fileName();
+    QImage img;
 
-    if (Utils::isRAW(src))
-    {
-        err = i18n("Cannot rotate RAW file");
-        return false;
-    }    
-    else if (Utils::isJPEG(src))
-    {
-        if (!rotateJPEG(src, tmp, angle, err))
-            return false;
-    }
+    // Check if RAW file.
+    QString rawFilesExt(raw_file_extentions);
+    if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
+        KDcrawIface::KDcraw::loadDcrawPreview(img, src.path());
     else
-    {
-        // B.K.O #123499 : we using Image Magick API here instead QT API 
-        // else TIFF/PNG 16 bits image are broken!
-        if (!rotateImageMagick(src, tmp, angle, err))
-            return false;
+        img.load(src.path());
 
-        // We update metadata on new image.
-        Utils tools(this);
-        if (!tools.updateMetadataImageMagick(tmp, err))
+    int sizeFactor = m_settings.size();
+
+    if ( !img.isNull() )
+    {
+        int w = img.width();
+        int h = img.height();
+
+        if( w > sizeFactor || h > sizeFactor )
+        {
+            if( w > h )
+            {
+                h = (int)( (double)( h * sizeFactor ) / w );
+    
+                if ( h == 0 ) h = 1;
+    
+                w = sizeFactor;
+                Q_ASSERT( h <= sizeFactor );
+            }
+            else
+            {
+                w = (int)( (double)( w * sizeFactor ) / h );
+    
+                if ( w == 0 ) w = 1;
+    
+                h = sizeFactor;
+                Q_ASSERT( w <= sizeFactor );
+            }
+    
+            const QImage scaledImg(img.scaled( w, h, Qt::KeepAspectRatio ));
+    
+            if ( scaledImg.width() != w || scaledImg.height() != h )
+            {
+                err = i18n("Cannot resizing image. Aborting.");
+                return false;
+            }
+    
+            img = scaledImg;
+        }
+    
+        QString destPath = m_settings.tempPath + QString("/") + destName;
+
+        if ( !img.save(destPath,  m_settings.format().toLatin1(), m_settings.imageCompression) )
+        {
+            err = i18n("Saving resized image failed with specific compression value. Aborting.");
             return false;
+        }
+    
+        // Only try to write Exif if both src and destination are JPEG files.
+    
+        if (QString(QImageReader::imageFormat(destPath)).toUpper() == "JPEG" && 
+            m_settings.format().toUpper() == "JPEG")
+        {
+            KExiv2Iface::KExiv2 meta;
+    
+            if (meta.load(destPath))
+            {
+                meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+                meta.setImageDimensions(img.size());
+                meta.save(destPath);
+            }
+            else
+            {
+                err = i18n("Cannot update metadata to resized image. Aborting.");
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    // Move back to original file
-    if (!Utils::MoveFile(tmp, src)) 
-    {
-        err = i18n("Cannot update source image");
-        return false;
-    }
-*/
-    return true;
+    return false;
 }
 
 }  // NameSpace KIPISendimagesPlugin

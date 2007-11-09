@@ -44,10 +44,15 @@ class ImageResize
 
 public:
 
-    ImageResize();
+    ImageResize(const EmailSettingsContainer& settings);
     ~ImageResize();
 
-    bool resize(const KUrl& src, const EmailSettingsContainer& settings, QString& err);
+    bool resize(const KUrl& src, const QString destName, QString& err);
+
+private :
+
+    EmailSettingsContainer m_settings;
+
 };
 
 }  // NameSpace KIPISendimagesPlugin

@@ -99,6 +99,31 @@ public:
     
     ~EmailSettingsContainer(){};
 
+    int size()
+    {
+        if(imageSize == SMALL)
+            return 640;
+        else if(imageSize == MEDIUM)
+            return 800;
+        else if(imageSize == BIG)
+            return 1024;
+        else if(imageSize == VERYBIG)
+            return 1280;
+        else if(imageSize == HUGE)
+            return 1600;
+        else
+            return 320; // VERYSMALL
+    };
+
+    QString format()
+    {
+        if (imageFormat == JPEG)
+            return QString("JPEG");
+        
+        return QString("PNG");
+    };
+
+
 public:
 
     bool             addCommentsAndTags;
