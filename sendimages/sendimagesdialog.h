@@ -32,6 +32,10 @@
 #include <kpagedialog.h>
 #include <kurl.h>
 
+// Local includes.
+
+#include "emailsettingscontainer.h"
+
 class QCloseEvent;
 class QEvent;
 class QObject;
@@ -55,10 +59,11 @@ public:
     SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl::List urls);
     ~SendImagesDialog();
 
+    EmailSettingsContainer emailSettings();
+
 protected:
 
     void closeEvent(QCloseEvent *);
-
 
 private slots:
 

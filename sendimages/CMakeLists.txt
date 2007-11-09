@@ -1,9 +1,10 @@
 SET(kipiplugin_sendimages_PART_SRCS plugin_sendimages.cpp 
                                     sendimagesdialog.cpp 
                                     imagespage.cpp
-				    emailpage.cpp
+                                    emailpage.cpp
+                                    actionthread.cpp
+                                    sendimages.cpp
                                     #listimageserrordialog.cpp 
-                                    #sendimages.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_sendimages ${kipiplugin_sendimages_PART_SRCS})

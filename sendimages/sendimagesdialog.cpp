@@ -55,7 +55,6 @@
 #include "pluginsversion.h"
 #include "imagespage.h"
 #include "emailpage.h"
-#include "emailsettingscontainer.h"
 #include "sendimagesdialog.h"
 #include "sendimagesdialog.moc"
 
@@ -83,6 +82,8 @@ public:
 
     ImagesPage               *imagesPage;
     EmailPage                *emailPage;
+
+    EmailSettingsContainer    settings;
 
     KIPIPlugins::KPAboutData *about;
 };
@@ -189,9 +190,14 @@ void SendImagesDialog::slotOk()
     accept();
     
     // Get Email settings.
-    EmailSettingsContainer settings = d->emailPage->emailSettings(); 
+    d->settings = d->emailPage->emailSettings(); 
     // Get List of all items to send
-    settings.itemsList = d->imagesPage->imagesList(); 
+    d->settings.itemsList = d->imagesPage->imagesList(); 
+}
+
+EmailSettingsContainer SendImagesDialog::emailSettings()
+{
+    return d->settings;
 }
 
 void SendImagesDialog::readSettings()

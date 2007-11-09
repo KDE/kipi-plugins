@@ -26,6 +26,7 @@
 // Qt includes.
 
 #include <QList>
+#include <QString>
 
 // KDE includes.
 
@@ -105,6 +106,8 @@ public:
 
     int              attachmentLimit;
     int              imageCompression;
+
+    QString          tempPath;
 
     KUrl             thunderbirdPath;
 

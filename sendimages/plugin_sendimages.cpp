@@ -50,25 +50,51 @@
 K_PLUGIN_FACTORY( SendImagesFactory, registerPlugin<Plugin_SendImages>(); )
 K_EXPORT_PLUGIN ( SendImagesFactory("kipiplugin_sendimages") )
 
+class Plugin_SendImagesPriv
+{
+public:
+
+    Plugin_SendImagesPriv()
+    {
+        total               = 0;
+        current             = 0;
+        action_sendimages   = 0;
+        progressDlg         = 0;
+        sendImagesOperation = 0;
+    }
+
+   int                               current;
+   int                               total;
+
+   KAction                          *action_sendimages;
+   
+   KIPI::BatchProgressDialog        *progressDlg;
+   
+   KIPISendimagesPlugin::SendImages *sendImagesOperation;
+};
+
 Plugin_SendImages::Plugin_SendImages(QObject *parent, const QVariantList&)
                  : KIPI::Plugin(SendImagesFactory::componentData(), parent, "SendImages")
 {
+    d = new Plugin_SendImagesPriv;
     kDebug( 51001 ) << "Plugin_SendImages plugin loaded" << endl;
 }
 
 Plugin_SendImages::~Plugin_SendImages()
 {
+    delete d->progressDlg;
+    delete d;
 }
 
 void Plugin_SendImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_sendimages = new KAction(KIcon("mail-send"), i18n("Email Images..."), actionCollection());
-    m_action_sendimages->setObjectName("send_images");
-    connect(m_action_sendimages, SIGNAL(triggered(bool)), 
+    d->action_sendimages = new KAction(KIcon("mail-send"), i18n("Email Images..."), actionCollection());
+    d->action_sendimages->setObjectName("send_images");
+    connect(d->action_sendimages, SIGNAL(triggered(bool)), 
             this, SLOT(slotActivate()));
-    addAction(m_action_sendimages);
+    addAction(d->action_sendimages);
 
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
     if ( !interface )
@@ -78,15 +104,15 @@ void Plugin_SendImages::setup( QWidget* widget )
     }
 
     KIPI::ImageCollection selection = interface->currentSelection();
-    m_action_sendimages->setEnabled(selection.isValid() && !selection.images().isEmpty() );
+    d->action_sendimages->setEnabled(selection.isValid() && !selection.images().isEmpty() );
 
     connect(interface, SIGNAL(selectionChanged(bool)),
-            m_action_sendimages, SLOT(setEnabled(bool)));
+            d->action_sendimages, SLOT(setEnabled(bool)));
 }
 
 void Plugin_SendImages::slotActivate()
 {
-    m_progressDlg = 0;
+    d->progressDlg = 0;
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !interface )
@@ -101,14 +127,11 @@ void Plugin_SendImages::slotActivate()
         return;
 
     KIPISendimagesPlugin::SendImagesDialog dialog(kapp->activeWindow(), interface, images.images());
-    dialog.exec();
-}
-
-void Plugin_SendImages::slotAcceptedConfigDlg()
-{
-/*
-    m_sendImagesOperation->prepare();
-    m_sendImagesOperation->start();*/
+    if (dialog.exec() == KDialog::Ok)
+    {
+        KIPISendimagesPlugin::EmailSettingsContainer settings = dialog.emailSettings();
+        // TODO
+    }
 }
 
 void Plugin_SendImages::slotCancel()
@@ -265,7 +288,7 @@ void Plugin_SendImages::customEvent(QEvent *event)
 
 KIPI::Category Plugin_SendImages::category( KAction* action ) const
 {
-    if ( action == m_action_sendimages )
+    if ( action == d->action_sendimages )
        return KIPI::IMAGESPLUGIN;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;

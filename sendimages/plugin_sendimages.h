@@ -31,6 +31,8 @@ class QCustomEvent;
 
 class KAction;
 
+class Plugin_SendImagesPriv;
+
 namespace KIPI
 {
     class BatchProgressDialog;
@@ -58,7 +60,6 @@ public slots:
 
    void slotActivate();
    void slotCancel();
-   void slotAcceptedConfigDlg();
 
 private:
 
@@ -66,14 +67,7 @@ private:
    
 private:
 
-   int                               m_current;
-   int                               m_total;
-
-   KAction                          *m_action_sendimages;
-   
-   KIPI::BatchProgressDialog        *m_progressDlg;
-   
-   KIPISendimagesPlugin::SendImages *m_sendImagesOperation;
+    Plugin_SendImagesPriv *d;
 };
 
 #endif // PLUGIN_SENDIMAGES_H 
