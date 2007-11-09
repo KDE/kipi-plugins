@@ -42,6 +42,7 @@ public:
 
     ActionThreadPriv()
     {
+        count   = 0;
         running = false;
     }
 
@@ -57,6 +58,8 @@ public:
     };
 
     bool             running;
+    
+    int              count;
 
     QMutex           mutex;
 
@@ -83,7 +86,8 @@ ActionThread::~ActionThread()
 
 void ActionThread::resize(const EmailSettingsContainer& settings)
 {
-    int i = 1;
+    d->count = 0;
+    int i    = 1;
 
     for (QList<EmailItem>::const_iterator it = settings.itemsList.begin();
          it != settings.itemsList.end(); ++it) 
@@ -94,7 +98,7 @@ void ActionThread::resize(const EmailSettingsContainer& settings)
         t->fileUrl                = (*it).url; 
         t->action                 = Resize;
         t->settings               = settings;
-        t->destName               = tmp.sprintf("%03i", i) + t->settings.format();
+        t->destName               = QString("%1.%2").arg(tmp.sprintf("%03i", i)).arg(t->settings.format().toLower());
 
         QMutexLocker lock(&d->mutex);
         d->todo << t;
@@ -108,6 +112,7 @@ void ActionThread::cancel()
     QMutexLocker lock(&d->mutex);
     d->todo.clear();
     d->running = false;
+    d->count   = 0;
     d->condVar.wakeAll();
 }
 
@@ -143,6 +148,14 @@ void ActionThread::run()
                         emit finished(t->fileUrl, Resize);
                     else
                         emit failed(t->fileUrl, Resize, errString);
+
+                    d->count++;
+                    
+                    if (t->settings.itemsList.count() == d->count)
+                    {
+                        emit complete(Resize);
+                        d->count = 0;
+                    }
                     break;
                 }
                 default:

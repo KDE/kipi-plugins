@@ -43,11 +43,19 @@ Q_OBJECT
 
 public:
 
-    SendImages(QObject *parent=0);
+    SendImages(const EmailSettingsContainer& settings, QObject *parent=0);
     ~SendImages();
 
-    void setSettings(const EmailSettingsContainer& settings);
-	   
+    void sendImages();
+	
+private slots:
+   
+    void slotStarting(const KUrl&, int);
+    void slotFinished(const KUrl&, int);
+    void slotFailed(const KUrl&, int, const QString&);
+    void slotComplete(int action);
+    void slotCancel();
+
 private:
 
     SendImagesPriv *d;

@@ -117,7 +117,7 @@ bool ImageResize::resize(const KUrl& src, const QString& destName, QString& err)
                 Q_ASSERT( w <= sizeFactor );
             }
     
-            const QImage scaledImg(img.scaled( w, h, Qt::KeepAspectRatio ));
+            const QImage scaledImg(img.scaled(w, h));
     
             if ( scaledImg.width() != w || scaledImg.height() != h )
             {
@@ -128,11 +128,12 @@ bool ImageResize::resize(const KUrl& src, const QString& destName, QString& err)
             img = scaledImg;
         }
     
-        QString destPath = m_settings.tempPath + QString("/") + destName;
+        QString destPath = m_settings.tempPath + destName;
+        qDebug() << destPath << endl;
 
-        if ( !img.save(destPath,  m_settings.format().toLatin1(), m_settings.imageCompression) )
+        if ( !img.save(destPath, m_settings.format().toLatin1(), m_settings.imageCompression) )
         {
-            err = i18n("Saving resized image failed with specific compression value. Aborting.");
+            err = i18n("Cannot save resized image. Aborting.");
             return false;
         }
     

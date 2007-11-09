@@ -60,9 +60,10 @@ protected:
 
 signals:
 
-    void starting(const KUrl &filePath, int action);
-    void finished(const KUrl &filePath, int action);
-    void failed(const KUrl &filePath, int action, const QString &errString);
+    void starting(const KUrl &fileUrl, int action);
+    void finished(const KUrl &fileUrl, int action);
+    void failed(const KUrl &fileUrl, int action, const QString &errString);
+    void complete(int action);
 
 private:
 

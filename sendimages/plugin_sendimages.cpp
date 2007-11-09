@@ -107,12 +107,11 @@ void Plugin_SendImages::slotActivate()
         return;
 
     KIPISendimagesPlugin::SendImagesDialog dialog(kapp->activeWindow(), interface, images.images());
-    if (dialog.exec() == KDialog::Ok)
+    if (dialog.exec() == QDialog::Accepted)
     {
         KIPISendimagesPlugin::EmailSettingsContainer settings = dialog.emailSettings();
-        d->sendImagesOperation = new KIPISendimagesPlugin::SendImages(this);
-        d->sendImagesOperation->setSettings(settings);
-        //  TODO
+        d->sendImagesOperation = new KIPISendimagesPlugin::SendImages(settings, this);
+        d->sendImagesOperation->sendImages();
     }
 }
 
