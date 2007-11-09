@@ -27,21 +27,12 @@
 
 #include <libkipi/plugin.h>
 
-class QCustomEvent;
+class QWidget;
+class QObject;
 
 class KAction;
 
 class Plugin_SendImagesPriv;
-
-namespace KIPI
-{
-    class BatchProgressDialog;
-}
-
-namespace KIPISendimagesPlugin
-{
-    class SendImages;
-}
 
 class Plugin_SendImages : public KIPI::Plugin
 {
@@ -59,12 +50,7 @@ public:
 public slots:
 
    void slotActivate();
-   void slotCancel();
-
-private:
-
-   void customEvent(QEvent *event);
-   
+  
 private:
 
     Plugin_SendImagesPriv *d;

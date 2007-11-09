@@ -29,20 +29,11 @@
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
-#include <kiconloader.h>
-#include <kmessagebox.h>
-#include <kstandarddirs.h>
-#include <kimageio.h>
-#include <kdeversion.h>
 #include <kdebug.h>
-
-// LibKipi includes.
-
-#include <libkipi/batchprogressdialog.h>
 
 // Local includes
 
-//#include "actions.h"
+#include "sendimages.h"
 #include "sendimagesdialog.h"
 #include "plugin_sendimages.h"
 #include "plugin_sendimages.moc"
@@ -56,19 +47,11 @@ public:
 
     Plugin_SendImagesPriv()
     {
-        total               = 0;
-        current             = 0;
         action_sendimages   = 0;
-        progressDlg         = 0;
         sendImagesOperation = 0;
     }
 
-   int                               current;
-   int                               total;
-
    KAction                          *action_sendimages;
-   
-   KIPI::BatchProgressDialog        *progressDlg;
    
    KIPISendimagesPlugin::SendImages *sendImagesOperation;
 };
@@ -82,7 +65,6 @@ Plugin_SendImages::Plugin_SendImages(QObject *parent, const QVariantList&)
 
 Plugin_SendImages::~Plugin_SendImages()
 {
-    delete d->progressDlg;
     delete d;
 }
 
@@ -112,8 +94,6 @@ void Plugin_SendImages::setup( QWidget* widget )
 
 void Plugin_SendImages::slotActivate()
 {
-    d->progressDlg = 0;
-
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !interface )
     {
@@ -130,160 +110,10 @@ void Plugin_SendImages::slotActivate()
     if (dialog.exec() == KDialog::Ok)
     {
         KIPISendimagesPlugin::EmailSettingsContainer settings = dialog.emailSettings();
-        // TODO
+        d->sendImagesOperation = new KIPISendimagesPlugin::SendImages(this);
+        d->sendImagesOperation->setSettings(settings);
+        //  TODO
     }
-}
-
-void Plugin_SendImages::slotCancel()
-{
-/*
-    m_sendImagesOperation->terminate();
-    m_sendImagesOperation->wait();
-    m_sendImagesOperation->removeTmpFiles();
-*/
-}
-
-void Plugin_SendImages::customEvent(QEvent *event)
-{
-/*    if (!event) return;
-
-    if (!m_progressDlg)
-    {
-        m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), i18n("Preparing images to send"));
-
-        connect(m_progressDlg, SIGNAL(cancelClicked()),
-                this, SLOT(slotCancel()));
-
-        m_current = 0;
-        m_progressDlg->show();
-    }
-
-    KIPISendimagesPlugin::EventData *d = (KIPISendimagesPlugin::EventData*) event->data();
-
-    if (!d) return;
-
-    if (d->starting)
-    {
-        QString text;
-
-        switch (d->action)
-        {
-            case(KIPISendimagesPlugin::Initialize):
-            {
-                m_total = d->total;
-                text = i18n("Preparing 1 image to send....", "Preparing %n images to send....", d->total);
-                break;
-            }
-
-            case(KIPISendimagesPlugin::ResizeImages):
-            {
-                text = i18n("Resizing '%1' from Album '%2'...")
-                            .arg(d->fileName).arg(d->albumName);
-                break;
-            }
-
-            case(KIPISendimagesPlugin::Progress):
-            {
-                text = i18n("Using '%1' from Album '%2' without resizing...")
-                            .arg(d->fileName).arg(d->albumName);
-                break;
-            }
-
-            default:
-            {
-                kdWarning( 51000 ) << "Plugin_SendImages: Unknown 'Starting' event: " << d->action << endl;
-            }
-        }
-
-        m_progressDlg->addedAction(text, KIPI::StartingMessage);
-    }
-    else
-    {
-        QString text;
-
-        if (!d->success)
-        {
-            switch (d->action)
-            {
-                case(KIPISendimagesPlugin::ResizeImages):
-                {
-                    text = i18n("Failed to resize '%1' from Album '%2'")
-                                .arg(d->fileName).arg(d->albumName);
-                    break;
-                }
-
-                default:
-                {
-                    kdWarning( 51000 ) << "Plugin_SendImages: Unknown 'Failed' event: " << d->action << endl;
-                }
-            }
-
-            m_progressDlg->addedAction(text, KIPI::WarningMessage);
-        }
-        else
-        {
-            switch (d->action)
-            {
-                case(KIPISendimagesPlugin::ResizeImages):
-                {
-                    text = i18n("Resizing '%1' from Album '%2' completed.")
-                                .arg(d->fileName).arg(d->albumName);
-                    break;
-                }
-
-                case(KIPISendimagesPlugin::Progress):
-                {
-                    text = i18n("All preparatory operations completed.");
-                    break;
-                }
-    
-                default:
-                {
-                    kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Success' event: " << d->action << endl;
-                }
-            }
-
-            m_progressDlg->addedAction(text, KIPI::SuccessMessage);
-        }
-
-        ++m_current;
-        m_progressDlg->setProgress(m_current, m_total);
-
-        if( d->action == KIPISendimagesPlugin::Progress )
-        {
-            // If we have some errors during the resizing images process, show an error dialog.
-    
-            if ( m_sendImagesOperation->showErrors() == false )
-            {
-                delete m_progressDlg;
-                return;
-            }
-
-#if KDE_VERSION >= 0x30200
-            m_progressDlg->setButtonCancel( KStdGuiItem::close() );
-#else
-            m_progressDlg->setButtonCancelText( i18n("&Close") );
-#endif
-
-            disconnect(m_progressDlg, SIGNAL(cancelClicked()),
-                       this, SLOT(slotCancel()));
-    
-            // Create a text file with images comments if necessary.
-    
-            m_sendImagesOperation->makeCommentsFile();
-            m_progressDlg->addedAction(i18n("Creating comments file if necessary..."),
-                                        KIPI::StartingMessage);
-    
-            // Invoke mailer agent call.
-            int type = m_sendImagesOperation->invokeMailAgent() ? KIPI::SuccessMessage : KIPI::ErrorMessage;
-            m_progressDlg->addedAction(i18n("Starting mailer agent..."), type);
-    
-            m_progressDlg->setProgress(m_total, m_total); 
-        }
-    }
-
-    kapp->processEvents();
-    delete d;*/
 }
 
 KIPI::Category Plugin_SendImages::category( KAction* action ) const
