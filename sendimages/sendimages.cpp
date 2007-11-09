@@ -58,6 +58,8 @@ public:
         progressDlg = 0;
     }
 
+    KUrl::List                 imagesFailed2Resize;
+
     KIPI::BatchProgressDialog *progressDlg;
 
     EmailSettingsContainer     settings;
@@ -111,17 +113,27 @@ void SendImages::sendImages()
 
     d->progressDlg->show();
     d->settings.attachedfilePaths.clear();
-
-    // Resize all images if necessary
+    d->imagesFailed2Resize.clear();
 
     if (d->settings.imagesChangeProp)
     {
+        // Resize all images if necessary in a separate thread.
+        // Attachements list is updated by slotFinishedResize().
+
         d->thread->resize(d->settings);
         d->thread->start();
     }
     else
     {
-        // TODO
+        // Add all original files to the attachments list.
+
+        for (QList<EmailItem>::const_iterator it = d->settings.itemsList.begin();
+            it != d->settings.itemsList.end(); ++it) 
+        {
+            d->settings.attachedfilePaths.append((*it).url.path());
+        }    
+
+        // TODO: call second stage...
     }
 }
 
@@ -140,6 +152,7 @@ void SendImages::slotFinishedResize(const KUrl& url, const QString& resizedImgPa
 {
     kDebug() << resizedImgPath << endl;
     d->settings.attachedfilePaths.append(resizedImgPath);
+
     QString text = i18n("%1 resized succesfully", url.fileName());
     d->progressDlg->addedAction(text, KIPI::StartingMessage);
 }
@@ -148,10 +161,13 @@ void SendImages::slotFailedResize(const KUrl& url, const QString& error)
 {
     QString text = i18n("Failed to resize %1 : %2", url.fileName(), error);
     d->progressDlg->addedAction(text, KIPI::StartingMessage);
+
+    d->imagesFailed2Resize.append(url);
 }
 
 void SendImages::slotCompleteResize()
 {
+        // TODO: call second stage...
 }
 
 }  // NameSpace KIPISendimagesPlugin
