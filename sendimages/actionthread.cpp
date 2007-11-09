@@ -22,8 +22,6 @@
 
 // Qt includes.
 
-#include <QApplication>
-#include <QDir>
 #include <QMutexLocker>
 #include <QtDebug>
 #include <QMutex>
@@ -44,7 +42,7 @@ public:
 
     ActionThreadPriv()
     {
-        running   = false;
+        running = false;
     }
 
     class Task

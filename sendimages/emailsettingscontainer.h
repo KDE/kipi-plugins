@@ -27,6 +27,7 @@
 
 #include <QList>
 #include <QString>
+#include <QStringList>
 
 // KDE includes.
 
