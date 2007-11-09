@@ -3,6 +3,7 @@
                              -------------------
     begin                : Thu Sep 12 2002
     copyright            : (C) 2002 by Todd Shoemaker
+                         : (C) 2007 Angelo Naselli
     email                : jtshoe11@yahoo.com
 ***************************************************************************/
 
@@ -40,13 +41,14 @@ namespace KIPIPrintWizardPlugin
 
 class TPhoto 
 {
-public:
+  public:
     TPhoto(int thumbnailSize);
     ~TPhoto();
 
     KURL filename; // full path
 
     QPixmap & thumbnail();
+    QImage    loadPhoto();
 
     int m_thumbnailSize;
 
@@ -58,16 +60,15 @@ public:
     int rotation;
     KExiv2Iface::KExiv2 *exiv2Iface();
 
-private:
+  private:
     QPixmap *m_thumbnail;
     void loadCache();
     QSize & size();
     QSize * m_size;
-	KExiv2Iface::KExiv2 *m_exiv2Iface;
+    KExiv2Iface::KExiv2 *m_exiv2Iface;
 };
 
-
 }  // NameSpace KIPIPrintWizardPlugin
-                  
+
 #endif // TPHOTO_H
 

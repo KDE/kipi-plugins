@@ -3,6 +3,7 @@
                              -------------------
     begin                : Thu Sep 12 2002
     copyright            : (C) 2002 by Todd Shoemaker
+                         : (C) 2007 Angelo Naselli
     email                : jtshoe11@yahoo.com
  ***************************************************************************/
 
@@ -37,6 +38,12 @@
 #include "tphoto.h"
 #include "utils.h"
 
+// LibKDcraw includes.
+
+#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/kdcraw.h>
+
+
 #define IMAGE_FILE_MASK "*"
 //"*.jpg;*.jpeg;*.JPG;*.JPEG;*.png;*.PNG"
 
@@ -53,7 +60,7 @@ TPhoto::TPhoto(int thumbnailSize)
   filename = "";
   m_exiv2Iface = NULL;
 
-  m_thumbnail = 0;
+  m_thumbnail = NULL;
 
   this->m_thumbnailSize = thumbnailSize;
 }
@@ -74,23 +81,36 @@ void TPhoto::loadCache()
   if (m_thumbnail)
     delete m_thumbnail;
 
-  QImage photo;
-  photo.load(filename.path()); // PENDING(blackie) handle URL
+
+  QImage photo = loadPhoto();
+
   m_thumbnail = new QPixmap(QImage( photo.scale(m_thumbnailSize, m_thumbnailSize, QImage::ScaleMin) ));
 
   if (m_size)
     delete m_size;
   m_size = new QSize(photo.width(), photo.height());
-  
- 
-
 }
 
 QPixmap & TPhoto::thumbnail()
 {
-  if (m_thumbnail == 0)
+  if (!m_thumbnail)
     loadCache();
   return *m_thumbnail;
+}
+
+QImage  TPhoto::loadPhoto()
+{
+  QImage photo;
+
+  // Check if RAW file.
+  QString rawFilesExt(raw_file_extentions);
+  QFileInfo fileInfo(filename.path());
+  if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
+    KDcrawIface::KDcraw::loadDcrawPreview(photo, filename.path());
+  else
+    photo.load(filename.path()); // PENDING(blackie) handle URL
+
+  return photo;
 }
 
 QSize & TPhoto::size()  // private

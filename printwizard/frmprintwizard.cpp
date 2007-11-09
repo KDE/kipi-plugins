@@ -3,6 +3,7 @@
                              -------------------
     begin                : Mon Sep 30 2002
     copyright            : (C) 2002 by Todd Shoemaker
+                         : (C) 2007 Angelo Naselli
     email                : todd@theshoemakers.net
  ***************************************************************************/
 
@@ -506,7 +507,7 @@ bool FrmPrintWizard::paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList
     if (useThumbnails)
       img = photo->thumbnail().convertToImage();
     else
-      img.load(photo->filename.path()); // PENDING(blackie) handle general URL case
+      img = photo->loadPhoto();
 
     // next, do we rotate?
     if (photo->rotation != 0)
@@ -694,7 +695,7 @@ bool FrmPrintWizard::paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<Q
     TPhoto *photo = photos.at(current);
     // crop
     QImage img;
-    img.load(photo->filename.path()); // PENDING(blackie) handle general URL case
+    img = photo->loadPhoto();
 
     // next, do we rotate?
     if (photo->rotation != 0)
