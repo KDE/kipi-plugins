@@ -112,13 +112,6 @@ public:
 private: 
 
     EmailItem   m_item;
-
-    int         m_rating;
-
-    QString     m_comments;
-    QStringList m_tags;
-
-    KUrl        m_url;
 };
 
 class ImagesPagePriv
