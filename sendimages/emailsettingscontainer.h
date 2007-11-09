@@ -23,16 +23,29 @@
 #ifndef EMAILSETTINGSCONTAINER_H
 #define EMAILSETTINGSCONTAINER_H
 
+// Qt includes.
+
+#include <QList>
+
 // KDE includes.
 
 #include <kurl.h>
 
-// Local includes.
-
-#include "emailpage.h"
-
 namespace KIPISendimagesPlugin
 {
+
+class EmailItem
+{
+
+public:
+
+    int         rating;
+
+    QString     comments;
+    QStringList tags;
+
+    KUrl        url;
+};
 
 class EmailSettingsContainer
 {
@@ -87,19 +100,21 @@ public:
 
 public:
 
-    bool        addCommentsAndTags;
-    bool        imagesChangeProp;
+    bool             addCommentsAndTags;
+    bool             imagesChangeProp;
 
-    int         attachmentLimit;
-    int         imageCompression;
+    int              attachmentLimit;
+    int              imageCompression;
 
-    KUrl        thunderbirdPath;
+    KUrl             thunderbirdPath;
 
-    EmailClient emailProgram;
+    EmailClient      emailProgram;
 
-    ImageSize   imageSize;
+    ImageSize        imageSize;
 
-    ImageFormat imageFormat;
+    ImageFormat      imageFormat;
+
+    QList<EmailItem> itemsList;
 };
 
 }  // namespace KIPISendimagesPlugin

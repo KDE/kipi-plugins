@@ -47,6 +47,7 @@
 
 // Local includes.
 
+#include "emailsettingscontainer.h"
 #include "imagespage.h"
 #include "imagespage.moc"
 
@@ -86,29 +87,31 @@ public:
 
     void setUrl(const KUrl& url)
     {
-        m_url = url;
-        setText(1, m_url.fileName());
+        m_item.url = url;
+        setText(1, m_item.url.fileName());
     }
 
-    KUrl url() { return m_url; }
+    KUrl url() { return m_item.url; }
 
     void setComments(const QString& comments)
     {
-        m_comments = comments;
-        setText(2, m_comments);
+        m_item.comments = comments;
+        setText(2, m_item.comments);
     }
 
-    QString comments() { return m_comments; }
+    QString comments() { return m_item.comments; }
 
-    void setTags(const QStringList& tags) { m_tags = tags; }
-    QStringList tags() { return m_tags; }
+    void setTags(const QStringList& tags) { m_item.tags = tags; }
+    QStringList tags() { return m_item.tags; }
 
-    void setRating(int rating) { m_rating = rating; }
-    int rating() { return m_rating; }
+    void setRating(int rating) { m_item.rating = rating; }
+    int rating() { return m_item.rating; }
 
     void setThumb(const QPixmap& pix) { setPixmap(0, pix); }
     
 private: 
+
+    EmailItem   m_item;
 
     int         m_rating;
 
