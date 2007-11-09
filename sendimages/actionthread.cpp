@@ -52,7 +52,6 @@ public:
 
             KUrl                   fileUrl;
             QString                destName;
-            Action                 action;
             EmailSettingsContainer settings;
             
     };
@@ -96,7 +95,6 @@ void ActionThread::resize(const EmailSettingsContainer& settings)
 
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
         t->fileUrl                = (*it).url; 
-        t->action                 = Resize;
         t->settings               = settings;
         t->destName               = QString("%1.%2").arg(tmp.sprintf("%03i", i)).arg(t->settings.format().toLower());
 
@@ -134,36 +132,26 @@ void ActionThread::run()
         {
             QString errString;
 
-            switch (t->action)
+            emit startingResize(t->fileUrl);
+
+            bool result = true;
+            ImageResize imageResize(t->settings);
+            result      = imageResize.resize(t->fileUrl, t->destName, errString);
+
+            if (result)
             {
-                case Resize:
-                {
-                    emit starting(t->fileUrl, Resize);
+                QString resizedImgPath = t->settings.tempPath + t->destName;
+                emit finishedResize(t->fileUrl, resizedImgPath);
+            }
+            else
+                emit failedResize(t->fileUrl, errString);
 
-                    bool result = true;
-                    ImageResize imageResize(t->settings);
-                    result      = imageResize.resize(t->fileUrl, t->destName, errString);
-
-                    if (result)
-                        emit finished(t->fileUrl, Resize);
-                    else
-                        emit failed(t->fileUrl, Resize, errString);
-
-                    d->count++;
-                    
-                    if (t->settings.itemsList.count() == d->count)
-                    {
-                        emit complete(Resize);
-                        d->count = 0;
-                    }
-                    break;
-                }
-                default:
-                {
-                    qCritical() << "KIPISendimagesPlugin:ActionThread: "
-                                << "Unknown action specified"
-                                << endl;
-                }
+            d->count++;
+            
+            if (t->settings.itemsList.count() == d->count)
+            {
+                emit completeResize();
+                d->count = 0;
             }
 
             delete t;

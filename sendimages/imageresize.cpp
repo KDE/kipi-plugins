@@ -129,7 +129,6 @@ bool ImageResize::resize(const KUrl& src, const QString& destName, QString& err)
         }
     
         QString destPath = m_settings.tempPath + destName;
-        qDebug() << destPath << endl;
 
         if ( !img.save(destPath, m_settings.format().toLatin1(), m_settings.imageCompression) )
         {

@@ -135,6 +135,8 @@ public:
 
     QString          tempPath;
 
+    QStringList      attachedfilePaths;
+
     KUrl             thunderbirdPath;
 
     EmailClient      emailProgram;

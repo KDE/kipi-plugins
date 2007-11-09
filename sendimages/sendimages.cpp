@@ -29,6 +29,7 @@
 // KDE includes
 
 #include <kstandarddirs.h>
+#include <kdebug.h>
 #include <ktempdir.h>
 #include <klocale.h>
 #include <kapplication.h>
@@ -39,7 +40,6 @@
 
 // Local includes.
 
-#include "actions.h"
 #include "actionthread.h"
 #include "emailsettingscontainer.h"
 #include "sendimages.h"
@@ -72,17 +72,17 @@ SendImages::SendImages(const EmailSettingsContainer& settings, QObject *parent)
     d->settings = settings;
     d->thread = new KIPISendimagesPlugin::ActionThread(this);
 
-    connect(d->thread, SIGNAL(starting(const KUrl&, int)),
-            this, SLOT(slotStarting(const KUrl&, int)));
+    connect(d->thread, SIGNAL(startingResize(const KUrl&)),
+            this, SLOT(slotStartingResize(const KUrl&)));
 
-    connect(d->thread, SIGNAL(finished(const KUrl&, int)),
-            this, SLOT(slotFinished(const KUrl&, int)));
+    connect(d->thread, SIGNAL(finishedResize(const KUrl&, const QString&)),
+            this, SLOT(slotFinishedResize(const KUrl&, const QString&)));
 
-    connect(d->thread, SIGNAL(failed(const KUrl&, int, const QString&)),
-            this, SLOT(slotFailed(const KUrl&, int, const QString&)));
+    connect(d->thread, SIGNAL(failedResize(const KUrl&, const QString&)),
+            this, SLOT(slotFailedResize(const KUrl&, const QString&)));
 
-    connect(d->thread, SIGNAL(complete(int)),
-            this, SLOT(slotComplete(int)));
+    connect(d->thread, SIGNAL(completeResize()),
+            this, SLOT(slotCompleteResize()));
 }
 
 SendImages::~SendImages()
@@ -93,7 +93,13 @@ SendImages::~SendImages()
 
 void SendImages::sendImages()
 {
-    KTempDir tmpDir(KStandardDirs::locateLocal("tmp", "kipiplugin-sendimages"));
+    if (!d->thread->isRunning())
+    {
+        d->thread->cancel();
+        d->thread->wait();
+    }
+
+    KTempDir tmpDir(KStandardDirs::locateLocal("tmp", "kipiplugin-sendimages"), 0700);
     tmpDir.setAutoRemove(false);
     d->settings.tempPath = tmpDir.name();
 
@@ -104,14 +110,14 @@ void SendImages::sendImages()
             this, SLOT(slotCancel()));
 
     d->progressDlg->show();
+    d->settings.attachedfilePaths.clear();
 
     // Resize all images if necessary
 
     if (d->settings.imagesChangeProp)
     {
         d->thread->resize(d->settings);
-        if (!d->thread->isRunning())
-            d->thread->start();
+        d->thread->start();
     }
     else
     {
@@ -121,28 +127,30 @@ void SendImages::sendImages()
 
 void SendImages::slotCancel()
 {
-        // TODO
+    KTempDir::removeDir(d->settings.tempPath);
 }
 
-void SendImages::slotStarting(const KUrl& url, int)
+void SendImages::slotStartingResize(const KUrl& url)
 {
     QString text = i18n("Resizing %1", url.fileName());
     d->progressDlg->addedAction(text, KIPI::StartingMessage);
 }
 
-void SendImages::slotFinished(const KUrl& url, int)
+void SendImages::slotFinishedResize(const KUrl& url, const QString& resizedImgPath)
 {
+    kDebug() << resizedImgPath << endl;
+    d->settings.attachedfilePaths.append(resizedImgPath);
     QString text = i18n("%1 resized succesfully", url.fileName());
     d->progressDlg->addedAction(text, KIPI::StartingMessage);
 }
 
-void SendImages::slotFailed(const KUrl& url, int, const QString& error)
+void SendImages::slotFailedResize(const KUrl& url, const QString& error)
 {
     QString text = i18n("Failed to resize %1 : %2", url.fileName(), error);
     d->progressDlg->addedAction(text, KIPI::StartingMessage);
 }
 
-void SendImages::slotComplete(int)
+void SendImages::slotCompleteResize()
 {
 }
 

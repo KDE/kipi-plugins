@@ -34,7 +34,6 @@
 // Local includes.
 
 #include "emailsettingscontainer.h"
-#include "actions.h"
 
 namespace KIPISendimagesPlugin
 {
@@ -52,7 +51,6 @@ public:
 private :
 
     EmailSettingsContainer m_settings;
-
 };
 
 }  // NameSpace KIPISendimagesPlugin

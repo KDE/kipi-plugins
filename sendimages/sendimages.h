@@ -29,7 +29,6 @@
 
 // Local includes.
 
-#include "actions.h"
 #include "emailsettingscontainer.h"
 
 namespace KIPISendimagesPlugin
@@ -50,10 +49,10 @@ public:
 	
 private slots:
    
-    void slotStarting(const KUrl&, int);
-    void slotFinished(const KUrl&, int);
-    void slotFailed(const KUrl&, int, const QString&);
-    void slotComplete(int action);
+    void slotStartingResize(const KUrl&);
+    void slotFinishedResize(const KUrl&, const QString&);
+    void slotFailedResize(const KUrl&, const QString&);
+    void slotCompleteResize();
     void slotCancel();
 
 private:

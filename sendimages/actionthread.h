@@ -35,7 +35,6 @@
 // Local includes.
 
 #include "emailsettingscontainer.h"
-#include "actions.h"
 
 namespace KIPISendimagesPlugin
 {
@@ -60,10 +59,10 @@ protected:
 
 signals:
 
-    void starting(const KUrl &fileUrl, int action);
-    void finished(const KUrl &fileUrl, int action);
-    void failed(const KUrl &fileUrl, int action, const QString &errString);
-    void complete(int action);
+    void startingResize(const KUrl &fileUrl);
+    void finishedResize(const KUrl &fileUrl, const QString& resizedImgPath);
+    void failedResize(const KUrl &fileUrl, const QString &errString);
+    void completeResize();
 
 private:
 
