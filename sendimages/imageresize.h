@@ -47,7 +47,7 @@ public:
     ImageResize(const EmailSettingsContainer& settings);
     ~ImageResize();
 
-    bool resize(const KUrl& src, const QString destName, QString& err);
+    bool resize(const KUrl& src, const QString& destName, QString& err);
 
 private :
 

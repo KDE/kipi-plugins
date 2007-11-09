@@ -62,7 +62,7 @@ ImageResize::~ImageResize()
 {
 }
 
-bool ImageResize::resize(const KUrl& src, const QString destName, QString& err)
+bool ImageResize::resize(const KUrl& src, const QString& destName, QString& err)
 {
     QFileInfo fi(src.path());
 
