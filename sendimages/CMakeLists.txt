@@ -4,6 +4,7 @@ SET(kipiplugin_sendimages_PART_SRCS plugin_sendimages.cpp
                                     emailpage.cpp
                                     actionthread.cpp
                                     sendimages.cpp
+                                    imageresize.cpp
                                     #listimageserrordialog.cpp 
    )
 
