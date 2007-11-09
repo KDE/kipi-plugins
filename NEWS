@@ -6,11 +6,14 @@ Kipi-plugins NEW FEATURES
 
 General        : Added the availability to disable plugins we don't want to build.
                : This feature is very useful for source based distros (Matej Laitl)
+PrintWizard    : Adedd raw file management, now raw files can be printed.
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
-001 ==> 149666 : iPod Export kipi plugin cannot be disabled at compile time when libgpod is present on system
-002 ==>
+001 ==> 149666 : General     : iPod Export kipi plugin cannot be disabled at compile 
+                               time when libgpod is present on system
+002 ==> 151604 : PrintWizard : Print Wizard does not recognize raw images
+003 ==>
 
 v 0.1.5 - Beta1
 ----------------------------------------------------------------------------
@@ -187,7 +190,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 015 ==> 136257 : MetadataEdit : Editing the EXIF-data overwrites all the data for selected files.
 016 ==> 128341 : HTMLExport   : kipi html export should not resize images if "resize target images" 
                                 is not checked.
-017 ==> 127476 : PrintWizzard : Printing as very very slow (added a workaround running kjobviewer)
+017 ==> 127476 : PrintWizard  : Printing as very very slow (added a workaround running kjobviewer)
 018 ==> 136941 : BatchProcess : graphical picture ordering and renaming.
 019 ==> 136855 : MetadataEdit : Editing metadata on a few selected imagefiles and clicking forward 
                                 or apply crashes digiKam.
