@@ -110,7 +110,7 @@ SendImagesDialog::SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl
     d->emailPage  = new EmailPage(this);
     d->page_email = addPage(d->emailPage, i18n("Mail"));
     d->page_email->setHeader(i18n("Mail Options"));
-    d->page_email->setIcon(KIcon("email"));
+    d->page_email->setIcon(KIcon("kontact"));
 
     // ---------------------------------------------------------------
     // About data and help button.

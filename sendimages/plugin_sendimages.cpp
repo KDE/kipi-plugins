@@ -64,7 +64,7 @@ void Plugin_SendImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_sendimages = new KAction(KIcon("mail-flag"), i18n("Email Images..."), actionCollection());
+    m_action_sendimages = new KAction(KIcon("mail-send"), i18n("Email Images..."), actionCollection());
     m_action_sendimages->setObjectName("send_images");
     connect(m_action_sendimages, SIGNAL(triggered(bool)), 
             this, SLOT(slotActivate()));
