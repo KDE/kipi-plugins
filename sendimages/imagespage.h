@@ -31,6 +31,10 @@
 
 #include <kurl.h>
 
+// Local includes.
+
+#include "emailsettingscontainer.h"
+
 namespace KIPI
 {
     class Interface;
@@ -51,6 +55,8 @@ public:
     ~ImagesPage();
 
     void addImages(const KUrl::List& list);
+
+    QList<EmailItem> imagesList();
 
 private slots:
 

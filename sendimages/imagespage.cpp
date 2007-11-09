@@ -47,7 +47,6 @@
 
 // Local includes.
 
-#include "emailsettingscontainer.h"
 #include "imagespage.h"
 #include "imagespage.moc"
 
@@ -108,10 +107,12 @@ public:
     int rating() { return m_item.rating; }
 
     void setThumb(const QPixmap& pix) { setPixmap(0, pix); }
+
+    EmailItem emailItem() { return m_item; }
     
 private: 
 
-    EmailItem   m_item;
+    EmailItem m_item;
 };
 
 class ImagesPagePriv
@@ -265,6 +266,18 @@ void ImagesPage::slotRemoveItems()
         }
     }
     while(find);
+}
+
+QList<EmailItem> ImagesPage::imagesList()
+{
+    QList<EmailItem> list;
+    Q3ListViewItemIterator it(d->listView);
+    for ( ; it.current(); ++it )
+    {
+        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(it.current());
+        list.append(item->emailItem());
+    }
+    return list;
 }
 
 }  // namespace KIPISendimagesPlugin

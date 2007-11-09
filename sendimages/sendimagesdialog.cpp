@@ -187,7 +187,11 @@ void SendImagesDialog::slotOk()
 {
     saveSettings();
     accept();
-    // TODO    
+    
+    // Get Email settings.
+    EmailSettingsContainer settings = d->emailPage->emailSettings(); 
+    // Get List of all items to send
+    settings.itemsList = d->imagesPage->imagesList(); 
 }
 
 void SendImagesDialog::readSettings()
