@@ -50,10 +50,14 @@ public:
 private slots:
    
     void slotStartingResize(const KUrl&);
-    void slotFinishedResize(const KUrl&, const QString&);
+    void slotFinishedResize(const KUrl&, const KUrl&);
     void slotFailedResize(const KUrl&, const QString&);
     void slotCompleteResize();
     void slotCancel();
+
+private:
+
+    void buildPropertiesFile();
 
 private:
 

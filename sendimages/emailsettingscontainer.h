@@ -44,9 +44,11 @@ public:
     int         rating;
 
     QString     comments;
+
     QStringList tags;
 
-    KUrl        url;
+    KUrl        orgUrl;
+    KUrl        emailUrl;
 };
 
 class EmailSettingsContainer
@@ -124,6 +126,18 @@ public:
         return QString("PNG");
     };
 
+    void setEmailUrl(const KUrl& orgUrl, const KUrl& emailUrl)
+    {
+        for (QList<EmailItem>::iterator it = itemsList.begin();
+            it != itemsList.end(); ++it) 
+        {
+            if ((*it).orgUrl == orgUrl)
+            {
+                (*it).emailUrl = emailUrl;
+                return;
+            }
+        }
+    }
 
 public:
 
@@ -134,8 +148,6 @@ public:
     int              imageCompression;
 
     QString          tempPath;
-
-    QStringList      attachedfilePaths;
 
     KUrl             thunderbirdPath;
 

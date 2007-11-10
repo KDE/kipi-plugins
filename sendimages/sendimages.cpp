@@ -24,7 +24,10 @@
 
 // Qt includes.
 
-#include <qtimer.h>
+#include <QTimer>
+#include <QFile>
+#include <QTextStream>
+#include <QTextCodec>
 
 // KDE includes
 
@@ -58,6 +61,7 @@ public:
         progressDlg     = 0;
     }
 
+    KUrl::List                 attachementFiles;
     KUrl::List                 imagesFailed2Resize;
 
     KIPI::BatchProgressDialog *progressDlg;
@@ -77,8 +81,8 @@ SendImages::SendImages(const EmailSettingsContainer& settings, QObject *parent)
     connect(d->threadImgResize, SIGNAL(startingResize(const KUrl&)),
             this, SLOT(slotStartingResize(const KUrl&)));
 
-    connect(d->threadImgResize, SIGNAL(finishedResize(const KUrl&, const QString&)),
-            this, SLOT(slotFinishedResize(const KUrl&, const QString&)));
+    connect(d->threadImgResize, SIGNAL(finishedResize(const KUrl&, const KUrl&)),
+            this, SLOT(slotFinishedResize(const KUrl&, const KUrl&)));
 
     connect(d->threadImgResize, SIGNAL(failedResize(const KUrl&, const QString&)),
             this, SLOT(slotFailedResize(const KUrl&, const QString&)));
@@ -112,7 +116,7 @@ void SendImages::sendImages()
             this, SLOT(slotCancel()));
 
     d->progressDlg->show();
-    d->settings.attachedfilePaths.clear();
+    d->attachementFiles.clear();
     d->imagesFailed2Resize.clear();
 
     if (d->settings.imagesChangeProp)
@@ -130,7 +134,7 @@ void SendImages::sendImages()
         for (QList<EmailItem>::const_iterator it = d->settings.itemsList.begin();
             it != d->settings.itemsList.end(); ++it) 
         {
-            d->settings.attachedfilePaths.append((*it).url.path());
+            d->attachementFiles.append((*it).orgUrl.path());
         }    
 
         // TODO: call second stage...
@@ -142,32 +146,70 @@ void SendImages::slotCancel()
     KTempDir::removeDir(d->settings.tempPath);
 }
 
-void SendImages::slotStartingResize(const KUrl& url)
+void SendImages::slotStartingResize(const KUrl& orgUrl)
 {
-    QString text = i18n("Resizing %1", url.fileName());
+    QString text = i18n("Resizing %1", orgUrl.fileName());
     d->progressDlg->addedAction(text, KIPI::StartingMessage);
 }
 
-void SendImages::slotFinishedResize(const KUrl& url, const QString& resizedImgPath)
+void SendImages::slotFinishedResize(const KUrl& orgUrl, const KUrl& emailUrl)
 {
-    kDebug() << resizedImgPath << endl;
-    d->settings.attachedfilePaths.append(resizedImgPath);
+    kDebug() << emailUrl << endl;
+    d->attachementFiles.append(emailUrl);
+    d->settings.setEmailUrl(orgUrl, emailUrl);
 
-    QString text = i18n("%1 resized succesfully", url.fileName());
+    QString text = i18n("%1 resized succesfully", orgUrl.fileName());
     d->progressDlg->addedAction(text, KIPI::SuccessMessage);
 }
 
-void SendImages::slotFailedResize(const KUrl& url, const QString& error)
+void SendImages::slotFailedResize(const KUrl& orgUrl, const QString& error)
 {
-    QString text = i18n("Failed to resize %1 : %2", url.fileName(), error);
+    QString text = i18n("Failed to resize %1 : %2", orgUrl.fileName(), error);
     d->progressDlg->addedAction(text, KIPI::ErrorMessage);
 
-    d->imagesFailed2Resize.append(url);
+    d->imagesFailed2Resize.append(orgUrl);
 }
 
 void SendImages::slotCompleteResize()
 {
-        // TODO: call second stage...
+    // TODO: call second stage...
+}
+
+/** Creates a text file with all images Comments, Tags, and Rating. */
+void SendImages::buildPropertiesFile()
+{
+    if (d->settings.addCommentsAndTags)
+    {
+        QString propertiesText;
+        
+        for (QList<EmailItem>::const_iterator it = d->settings.itemsList.begin();
+            it != d->settings.itemsList.end(); ++it) 
+        {
+            EmailItem item     = *it;
+            QString comments   = item.comments;
+            QString tags       = item.tags.join(", ");
+            QString rating     = QString::number(item.rating);
+            QString targetFile = item.emailUrl.fileName();
+
+            if (comments.isEmpty())
+                comments = i18n("no caption");
+
+            if (tags.isEmpty())
+                tags = i18n("no keywords");
+
+            propertiesText += i18n("Image \"%1\":\nComments: %2\nTags: %3\nRating: %4\n\n",
+                                   targetFile, comments, tags, rating);
+        }
+
+        QFile propertiesFile( d->settings.tempPath + i18n("properties.txt") );
+        QTextStream stream( &propertiesFile );
+        stream.setCodec(QTextCodec::codecForName("UTF-8"));
+        stream.setAutoDetectUnicode(true);
+        propertiesFile.open(QIODevice::WriteOnly);
+        stream << propertiesText << "\n";
+        propertiesFile.close();
+        d->attachementFiles.append(propertiesFile.fileName());
+    }
 }
 
 }  // NameSpace KIPISendimagesPlugin

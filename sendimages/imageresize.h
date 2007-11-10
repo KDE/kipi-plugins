@@ -58,13 +58,13 @@ private:
 
     void run();
     bool imageResize(const EmailSettingsContainer& settings, 
-                     const KUrl& src, const QString& destName, QString& err);
+                     const KUrl& orgUrl, const QString& destName, QString& err);
 
 signals:
 
-    void startingResize(const KUrl &fileUrl);
-    void finishedResize(const KUrl &fileUrl, const QString& resizedImgPath);
-    void failedResize(const KUrl &fileUrl, const QString &errString);
+    void startingResize(const KUrl &orgUrl);
+    void finishedResize(const KUrl &orgUrl, const KUrl& emailUrl);
+    void failedResize(const KUrl &orgUrl, const QString &errString);
     void completeResize();
 
 private:

@@ -86,11 +86,11 @@ public:
 
     void setUrl(const KUrl& url)
     {
-        m_item.url = url;
-        setText(1, m_item.url.fileName());
+        m_item.orgUrl = url;
+        setText(1, m_item.orgUrl.fileName());
     }
 
-    KUrl url() { return m_item.url; }
+    KUrl url() { return m_item.orgUrl; }
 
     void setComments(const QString& comments)
     {

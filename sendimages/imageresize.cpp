@@ -67,7 +67,7 @@ public:
     {
         public:
 
-            KUrl                   fileUrl;
+            KUrl                   orgUrl;
             QString                destName;
             EmailSettingsContainer settings;
             
@@ -111,9 +111,9 @@ void ImageResize::resize(const EmailSettingsContainer& settings)
         QString tmp;
 
         ImageResizePriv::Task *t = new ImageResizePriv::Task;
-        t->fileUrl                = (*it).url; 
-        t->settings               = settings;
-        t->destName               = QString("%1.%2").arg(tmp.sprintf("%03i", i)).arg(t->settings.format().toLower());
+        t->orgUrl                = (*it).orgUrl; 
+        t->settings              = settings;
+        t->destName              = QString("%1.%2").arg(tmp.sprintf("%03i", i)).arg(t->settings.format().toLower());
 
         QMutexLocker lock(&d->mutex);
         d->todo << t;
@@ -149,16 +149,16 @@ void ImageResize::run()
         {
             QString errString;
 
-            emit startingResize(t->fileUrl);
+            emit startingResize(t->orgUrl);
 
-            if (imageResize(t->settings, t->fileUrl, t->destName, errString))
+            if (imageResize(t->settings, t->orgUrl, t->destName, errString))
             {
-                QString resizedImgPath = t->settings.tempPath + t->destName;
-                emit finishedResize(t->fileUrl, resizedImgPath);
+                KUrl emailUrl(t->settings.tempPath + t->destName);
+                emit finishedResize(t->orgUrl, emailUrl);
             }
             else
             {
-                emit failedResize(t->fileUrl, errString);
+                emit failedResize(t->orgUrl, errString);
             }
 
             d->count++;
@@ -175,10 +175,10 @@ void ImageResize::run()
 }
 
 bool ImageResize::imageResize(const EmailSettingsContainer& settings,
-                               const KUrl& src, const QString& destName, QString& err)
+                              const KUrl& orgUrl, const QString& destName, QString& err)
 {
     EmailSettingsContainer emailSettings = settings;
-    QFileInfo fi(src.path());
+    QFileInfo fi(orgUrl.path());
 
     if (!fi.exists() || !fi.isReadable()) 
     {
@@ -199,9 +199,9 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
     // Check if RAW file.
     QString rawFilesExt(raw_file_extentions);
     if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
-        KDcrawIface::KDcraw::loadDcrawPreview(img, src.path());
+        KDcrawIface::KDcraw::loadDcrawPreview(img, orgUrl.path());
     else
-        img.load(src.path());
+        img.load(orgUrl.path());
 
     int sizeFactor = emailSettings.size();
 
