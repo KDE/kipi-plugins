@@ -154,13 +154,13 @@ void SendImages::slotFinishedResize(const KUrl& url, const QString& resizedImgPa
     d->settings.attachedfilePaths.append(resizedImgPath);
 
     QString text = i18n("%1 resized succesfully", url.fileName());
-    d->progressDlg->addedAction(text, KIPI::StartingMessage);
+    d->progressDlg->addedAction(text, KIPI::SuccessMessage);
 }
 
 void SendImages::slotFailedResize(const KUrl& url, const QString& error)
 {
     QString text = i18n("Failed to resize %1 : %2", url.fileName(), error);
-    d->progressDlg->addedAction(text, KIPI::StartingMessage);
+    d->progressDlg->addedAction(text, KIPI::ErrorMessage);
 
     d->imagesFailed2Resize.append(url);
 }
