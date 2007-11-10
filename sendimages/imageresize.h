@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-11-09
- * Description : batch image resize
+ * Description : a class to resize image in a separate thread.
  *
  * Copyright (C) 2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -25,7 +25,9 @@
 
 // Qt includes.
 
+#include <QThread>
 #include <QString>
+#include <QStringList>
 
 // KDE includes.
 
@@ -38,19 +40,36 @@
 namespace KIPISendimagesPlugin
 {
 
-class ImageResize
+class ImageResizePriv;
+
+class ImageResize : public QThread
 {
+    Q_OBJECT
 
 public:
 
-    ImageResize(const EmailSettingsContainer& settings);
+    ImageResize(QObject *parent);
     ~ImageResize();
 
-    bool resize(const KUrl& src, const QString& destName, QString& err);
+    void resize(const EmailSettingsContainer& settings);
+    void cancel();
 
-private :
+private:
 
-    EmailSettingsContainer m_settings;
+    void run();
+    bool imageResize(const EmailSettingsContainer& settings, 
+                     const KUrl& src, const QString& destName, QString& err);
+
+signals:
+
+    void startingResize(const KUrl &fileUrl);
+    void finishedResize(const KUrl &fileUrl, const QString& resizedImgPath);
+    void failedResize(const KUrl &fileUrl, const QString &errString);
+    void completeResize();
+
+private:
+
+    ImageResizePriv *d;
 };
 
 }  // NameSpace KIPISendimagesPlugin

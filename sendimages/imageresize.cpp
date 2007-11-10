@@ -4,13 +4,9 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-11-09
- * Description : batch image resize
+ * Description : a class to resize image in a separate thread.
  *
  * Copyright (C) 2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
- *
- * NOTE: Do not use kdDebug() in this implementation because 
- *       it will be multithreaded. Use qDebug() instead. 
- *       See B.K.O #133026 for details.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -30,7 +26,10 @@
 #include <QImage>
 #include <QFile>
 #include <QFileInfo>
+#include <QMutexLocker>
 #include <QtDebug>
+#include <QMutex>
+#include <QWaitCondition>
 
 // KDE includes.
 
@@ -49,21 +48,136 @@
 
 #include "pluginsversion.h"
 #include "imageresize.h"
+#include "imageresize.moc"
 
 namespace KIPISendimagesPlugin
 {
 
-ImageResize::ImageResize(const EmailSettingsContainer& settings)
+class ImageResizePriv
 {
-    m_settings = settings;
+public:
+
+    ImageResizePriv()
+    {
+        count   = 0;
+        running = false;
+    }
+
+    class Task
+    {
+        public:
+
+            KUrl                   fileUrl;
+            QString                destName;
+            EmailSettingsContainer settings;
+            
+    };
+
+    bool             running;
+    
+    int              count;
+
+    QMutex           mutex;
+
+    QWaitCondition   condVar;
+
+    QList<Task*>     todo;
+};
+
+ImageResize::ImageResize(QObject *parent)
+            : QThread(parent)
+{
+    d = new ImageResizePriv;
 }
 
 ImageResize::~ImageResize()
 {
+    // cancel the thread
+    cancel();
+    // wait for the thread to finish
+    wait();
+
+    delete d;
 }
 
-bool ImageResize::resize(const KUrl& src, const QString& destName, QString& err)
+void ImageResize::resize(const EmailSettingsContainer& settings)
 {
+    d->count = 0;
+    int i    = 1;
+
+    for (QList<EmailItem>::const_iterator it = settings.itemsList.begin();
+         it != settings.itemsList.end(); ++it) 
+    {
+        QString tmp;
+
+        ImageResizePriv::Task *t = new ImageResizePriv::Task;
+        t->fileUrl                = (*it).url; 
+        t->settings               = settings;
+        t->destName               = QString("%1.%2").arg(tmp.sprintf("%03i", i)).arg(t->settings.format().toLower());
+
+        QMutexLocker lock(&d->mutex);
+        d->todo << t;
+        d->condVar.wakeAll();
+        i++;
+    }
+}
+
+void ImageResize::cancel()
+{
+    QMutexLocker lock(&d->mutex);
+    d->todo.clear();
+    d->running = false;
+    d->count   = 0;
+    d->condVar.wakeAll();
+}
+
+void ImageResize::run()
+{
+    d->running = true;
+    while (d->running)
+    {
+        ImageResizePriv::Task *t = 0;
+        {
+            QMutexLocker lock(&d->mutex);
+            if (!d->todo.isEmpty())
+                t = d->todo.takeFirst();
+            else
+                d->condVar.wait(&d->mutex);
+        }
+
+        if (t)
+        {
+            QString errString;
+
+            emit startingResize(t->fileUrl);
+
+            if (imageResize(t->settings, t->fileUrl, t->destName, errString))
+            {
+                QString resizedImgPath = t->settings.tempPath + t->destName;
+                emit finishedResize(t->fileUrl, resizedImgPath);
+            }
+            else
+            {
+                emit failedResize(t->fileUrl, errString);
+            }
+
+            d->count++;
+            
+            if (t->settings.itemsList.count() == d->count)
+            {
+                emit completeResize();
+                d->count = 0;
+            }
+
+            delete t;
+        }
+    }
+}
+
+bool ImageResize::imageResize(const EmailSettingsContainer& settings,
+                               const KUrl& src, const QString& destName, QString& err)
+{
+    EmailSettingsContainer emailSettings = settings;
     QFileInfo fi(src.path());
 
     if (!fi.exists() || !fi.isReadable()) 
@@ -72,7 +186,7 @@ bool ImageResize::resize(const KUrl& src, const QString& destName, QString& err)
         return false;
     }
 
-    QFileInfo tmp(m_settings.tempPath);
+    QFileInfo tmp(emailSettings.tempPath);
 
     if (!tmp.exists() || !tmp.isWritable())
     {
@@ -89,7 +203,7 @@ bool ImageResize::resize(const KUrl& src, const QString& destName, QString& err)
     else
         img.load(src.path());
 
-    int sizeFactor = m_settings.size();
+    int sizeFactor = emailSettings.size();
 
     if ( !img.isNull() )
     {
@@ -128,9 +242,9 @@ bool ImageResize::resize(const KUrl& src, const QString& destName, QString& err)
             img = scaledImg;
         }
     
-        QString destPath = m_settings.tempPath + destName;
+        QString destPath = emailSettings.tempPath + destName;
 
-        if ( !img.save(destPath, m_settings.format().toLatin1(), m_settings.imageCompression) )
+        if ( !img.save(destPath, emailSettings.format().toLatin1(), emailSettings.imageCompression) )
         {
             err = i18n("Cannot save resized image. Aborting.");
             return false;
@@ -139,7 +253,7 @@ bool ImageResize::resize(const KUrl& src, const QString& destName, QString& err)
         // Only try to write Exif if both src and destination are JPEG files.
     
         if (QString(QImageReader::imageFormat(destPath)).toUpper() == "JPEG" && 
-            m_settings.format().toUpper() == "JPEG")
+            emailSettings.format().toUpper() == "JPEG")
         {
             KExiv2Iface::KExiv2 meta;
     

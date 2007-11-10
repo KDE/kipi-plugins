@@ -40,7 +40,7 @@
 
 // Local includes.
 
-#include "actionthread.h"
+#include "imageresize.h"
 #include "emailsettingscontainer.h"
 #include "sendimages.h"
 #include "sendimages.moc"
@@ -54,8 +54,8 @@ public:
 
     SendImagesPriv()
     {
-        thread      = 0;
-        progressDlg = 0;
+        threadImgResize = 0;
+        progressDlg     = 0;
     }
 
     KUrl::List                 imagesFailed2Resize;
@@ -64,7 +64,7 @@ public:
 
     EmailSettingsContainer     settings;
 
-    ActionThread              *thread;
+    ImageResize               *threadImgResize;
 };
 
 SendImages::SendImages(const EmailSettingsContainer& settings, QObject *parent)
@@ -72,18 +72,18 @@ SendImages::SendImages(const EmailSettingsContainer& settings, QObject *parent)
 {
     d = new SendImagesPriv;
     d->settings = settings;
-    d->thread = new KIPISendimagesPlugin::ActionThread(this);
+    d->threadImgResize = new KIPISendimagesPlugin::ImageResize(this);
 
-    connect(d->thread, SIGNAL(startingResize(const KUrl&)),
+    connect(d->threadImgResize, SIGNAL(startingResize(const KUrl&)),
             this, SLOT(slotStartingResize(const KUrl&)));
 
-    connect(d->thread, SIGNAL(finishedResize(const KUrl&, const QString&)),
+    connect(d->threadImgResize, SIGNAL(finishedResize(const KUrl&, const QString&)),
             this, SLOT(slotFinishedResize(const KUrl&, const QString&)));
 
-    connect(d->thread, SIGNAL(failedResize(const KUrl&, const QString&)),
+    connect(d->threadImgResize, SIGNAL(failedResize(const KUrl&, const QString&)),
             this, SLOT(slotFailedResize(const KUrl&, const QString&)));
 
-    connect(d->thread, SIGNAL(completeResize()),
+    connect(d->threadImgResize, SIGNAL(completeResize()),
             this, SLOT(slotCompleteResize()));
 }
 
@@ -95,10 +95,10 @@ SendImages::~SendImages()
 
 void SendImages::sendImages()
 {
-    if (!d->thread->isRunning())
+    if (!d->threadImgResize->isRunning())
     {
-        d->thread->cancel();
-        d->thread->wait();
+        d->threadImgResize->cancel();
+        d->threadImgResize->wait();
     }
 
     KTempDir tmpDir(KStandardDirs::locateLocal("tmp", "kipiplugin-sendimages"), 0700);
@@ -117,11 +117,11 @@ void SendImages::sendImages()
 
     if (d->settings.imagesChangeProp)
     {
-        // Resize all images if necessary in a separate thread.
+        // Resize all images if necessary in a separate threadImgResize.
         // Attachements list is updated by slotFinishedResize().
 
-        d->thread->resize(d->settings);
-        d->thread->start();
+        d->threadImgResize->resize(d->settings);
+        d->threadImgResize->start();
     }
     else
     {

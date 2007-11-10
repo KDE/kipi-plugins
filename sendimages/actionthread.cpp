@@ -22,14 +22,31 @@
 
 // Qt includes.
 
+#include <QImageReader>
+#include <QImage>
+#include <QFile>
+#include <QFileInfo>
 #include <QMutexLocker>
 #include <QtDebug>
 #include <QMutex>
 #include <QWaitCondition>
 
+// KDE includes.
+
+#include <klocale.h>
+
+// LibKExiv2 includes. 
+
+#include <libkexiv2/kexiv2.h>
+
+// LibKDcraw includes.
+
+#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/kdcraw.h>
+
 // Local includes.
 
-#include "imageresize.h"
+#include "pluginsversion.h"
 #include "actionthread.h"
 #include "actionthread.moc"
 
@@ -134,17 +151,15 @@ void ActionThread::run()
 
             emit startingResize(t->fileUrl);
 
-            bool result = true;
-            ImageResize imageResize(t->settings);
-            result      = imageResize.resize(t->fileUrl, t->destName, errString);
-
-            if (result)
+            if (imageResize(t->settings, t->fileUrl, t->destName, errString))
             {
                 QString resizedImgPath = t->settings.tempPath + t->destName;
                 emit finishedResize(t->fileUrl, resizedImgPath);
             }
             else
+            {
                 emit failedResize(t->fileUrl, errString);
+            }
 
             d->count++;
             
@@ -157,6 +172,108 @@ void ActionThread::run()
             delete t;
         }
     }
+}
+
+bool ActionThread::imageResize(const EmailSettingsContainer& settings,
+                               const KUrl& src, const QString& destName, QString& err)
+{
+    EmailSettingsContainer emailSettings = settings;
+    QFileInfo fi(src.path());
+
+    if (!fi.exists() || !fi.isReadable()) 
+    {
+        err = i18n("Error in opening input file");
+        return false;
+    }
+
+    QFileInfo tmp(emailSettings.tempPath);
+
+    if (!tmp.exists() || !tmp.isWritable())
+    {
+        err = i18n("Error in opening temporary folder");
+        return false;
+    }
+
+    QImage img;
+
+    // Check if RAW file.
+    QString rawFilesExt(raw_file_extentions);
+    if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
+        KDcrawIface::KDcraw::loadDcrawPreview(img, src.path());
+    else
+        img.load(src.path());
+
+    int sizeFactor = emailSettings.size();
+
+    if ( !img.isNull() )
+    {
+        int w = img.width();
+        int h = img.height();
+
+        if( w > sizeFactor || h > sizeFactor )
+        {
+            if( w > h )
+            {
+                h = (int)( (double)( h * sizeFactor ) / w );
+    
+                if ( h == 0 ) h = 1;
+    
+                w = sizeFactor;
+                Q_ASSERT( h <= sizeFactor );
+            }
+            else
+            {
+                w = (int)( (double)( w * sizeFactor ) / h );
+    
+                if ( w == 0 ) w = 1;
+    
+                h = sizeFactor;
+                Q_ASSERT( w <= sizeFactor );
+            }
+    
+            const QImage scaledImg(img.scaled(w, h));
+    
+            if ( scaledImg.width() != w || scaledImg.height() != h )
+            {
+                err = i18n("Cannot resizing image. Aborting.");
+                return false;
+            }
+    
+            img = scaledImg;
+        }
+    
+        QString destPath = emailSettings.tempPath + destName;
+
+        if ( !img.save(destPath, emailSettings.format().toLatin1(), emailSettings.imageCompression) )
+        {
+            err = i18n("Cannot save resized image. Aborting.");
+            return false;
+        }
+    
+        // Only try to write Exif if both src and destination are JPEG files.
+    
+        if (QString(QImageReader::imageFormat(destPath)).toUpper() == "JPEG" && 
+            emailSettings.format().toUpper() == "JPEG")
+        {
+            KExiv2Iface::KExiv2 meta;
+    
+            if (meta.load(destPath))
+            {
+                meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+                meta.setImageDimensions(img.size());
+                meta.save(destPath);
+            }
+            else
+            {
+                err = i18n("Cannot update metadata to resized image. Aborting.");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    return false;
 }
 
 }  // NameSpace KIPISendimagesPlugin

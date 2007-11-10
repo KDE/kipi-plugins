@@ -26,6 +26,7 @@
 // Qt includes.
 
 #include <QThread>
+#include <QString>
 #include <QStringList>
 
 // KDE includes.
@@ -53,9 +54,11 @@ public:
     void resize(const EmailSettingsContainer& settings);
     void cancel();
 
-protected:
+private:
 
     void run();
+    bool imageResize(const EmailSettingsContainer& settings, 
+                     const KUrl& src, const QString& destName, QString& err);
 
 signals:
 
