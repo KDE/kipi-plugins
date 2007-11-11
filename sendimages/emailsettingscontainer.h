@@ -41,14 +41,14 @@ class EmailItem
 
 public:
 
-    int         rating;
+    int         rating;         // Image Rating from Kipi host.
 
-    QString     comments;
+    QString     comments;       // Image comments from Kipi host.
 
-    QStringList tags;
+    QStringList tags;           // List of keywords from Kipi host.
 
-    KUrl        orgUrl;
-    KUrl        emailUrl;
+    KUrl        orgUrl;         // Url of original image.
+    KUrl        emailUrl;       // Url of attached image in e-mail (can be resized).
 };
 
 class EmailSettingsContainer
@@ -137,7 +137,19 @@ public:
                 return;
             }
         }
-    }
+    };
+
+    KUrl emailUrl(const KUrl& orgUrl)
+    {
+        for (QList<EmailItem>::iterator it = itemsList.begin();
+            it != itemsList.end(); ++it) 
+        {
+            if ((*it).orgUrl == orgUrl)
+            {
+                return (*it).emailUrl;
+            }
+        }
+    };
 
 public:
 
