@@ -8,8 +8,9 @@ kde_module_LTLIBRARIES = kipiplugin_slideshow.la
 
 kipiplugin_slideshow_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKDCRAW_LIBS_DEP) 
 
-kipiplugin_slideshow_la_SOURCES = plugin_slideshow.cpp slideshow.cpp \
-	slideshowconfig.cpp slideshowgl.cpp toolbar.cpp slideshowconfigbase.ui listimageitems.cpp
+kipiplugin_slideshow_la_SOURCES = listimageitems.cpp plugin_slideshow.cpp \
+	slideshow.cpp slideshowconfig.cpp slideshowconfigbase.ui slideshowgl.cpp \
+	slideshowloader.cpp toolbar.cpp
 
 #kipiplugin_slideshow_la_LIBADD = -lkdefx  $(GL_LIBS) $(LIBKIPI_LIBS) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 kipiplugin_slideshow_la_LIBADD = -lkdefx $(GL_LIBS) $(LIBKIPI_LIBS) $(LIBKDCRAW_LIBS)  \
@@ -24,4 +25,5 @@ kipiplugin_slideshowicon_ICON = AUTO
 
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_slideshow.pot
+
 

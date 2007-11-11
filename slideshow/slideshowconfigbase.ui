@@ -1264,6 +1264,84 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                             </widget>
                         </vbox>
                     </widget>
+                    <widget class="QButtonGroup">
+                        <property name="name">
+                            <cstring>buttonGroup2</cstring>
+                        </property>
+                        <property name="title">
+                            <string>Others</string>
+                        </property>
+                        <vbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>m_cacheCheckBox</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Enable cache</string>
+                                </property>
+                                <property name="checked">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                            <widget class="QLayoutWidget">
+                                <property name="name">
+                                    <cstring>layout15</cstring>
+                                </property>
+                                <hbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>m_cacheSizeLabel1</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Cache size:</string>
+                                        </property>
+                                    </widget>
+                                    <spacer>
+                                        <property name="name">
+                                            <cstring>spacer14_4</cstring>
+                                        </property>
+                                        <property name="orientation">
+                                            <enum>Horizontal</enum>
+                                        </property>
+                                        <property name="sizeType">
+                                            <enum>Expanding</enum>
+                                        </property>
+                                        <property name="sizeHint">
+                                            <size>
+                                                <width>31</width>
+                                                <height>21</height>
+                                            </size>
+                                        </property>
+                                    </spacer>
+                                    <widget class="QSpinBox">
+                                        <property name="name">
+                                            <cstring>m_cacheSizeSpinBox</cstring>
+                                        </property>
+                                        <property name="maxValue">
+                                            <number>20</number>
+                                        </property>
+                                        <property name="minValue">
+                                            <number>5</number>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>m_cacheSizeLabel2</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>images</string>
+                                        </property>
+                                    </widget>
+                                </hbox>
+                            </widget>
+                        </vbox>
+                    </widget>
                     <spacer>
                         <property name="name">
                             <cstring>spacer10_2</cstring>
@@ -1277,7 +1355,7 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                         <property name="sizeHint">
                             <size>
                                 <width>41</width>
-                                <height>5</height>
+                                <height>140</height>
                             </size>
                         </property>
                     </spacer>
@@ -1466,6 +1544,7 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
     <slot specifier="non virtual">slotGotPreview( const KFileItem *, const QPixmap &amp; pixmap )</slot>
     <slot specifier="non virtual">slotFailedPreview( const KFileItem * )</slot>
     <slot specifier="non virtual">slotAddDropItems( KURL::List filesUrl )</slot>
+    <slot access="protected">slotCacheToggled()</slot>
 </slots>
 <functions>
     <function access="protected">loadEffectNames()</function>

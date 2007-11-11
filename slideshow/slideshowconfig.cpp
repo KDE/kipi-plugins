@@ -5,6 +5,7 @@
  * Description : KIPI slideshow plugin.
  *
  * Copyright 2003-2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -85,11 +86,11 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
                                         NULL,
                                         KAboutData::License_GPL,
                                         I18N_NOOP("A Kipi plugin for image slideshow"),
-                                        "(c) 2003-2004, Renchi Raju");
+                                        "(c) 2003-2004, Renchi Raju\n(c) 2007, Valerio Fuoglio");
 
     about->addAuthor("Renchi Raju", I18N_NOOP("Author"),
                      "renchi@pooh.tam.uiuc.edu");
-    about->addAuthor("Valerio Fuoglio", I18N_NOOP("Maintainer"),
+    about->addAuthor("Valerio Fuoglio", I18N_NOOP("Author and maintainer"),
                      "valerio.fuoglio@gmail.com");
 
      KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
@@ -136,6 +137,8 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
              this, SLOT( slotImagesFilesButtonUp() ) );
     connect( m_ImagesFilesButtonDown, SIGNAL( clicked() ),
              this, SLOT( slotImagesFilesButtonDown() ) );
+    
+    connect(m_cacheCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotCacheToggled()));
     
     m_thumbJob = 0L;
     
@@ -265,6 +268,12 @@ void SlideShowConfig::readSettings()
     
     commentsLinesLength   = m_config->readNumEntry("Comments Lines Length", 72);
 
+    // Advanced tab
+    bool enableCache;
+
+    enableCache = m_config->readBoolEntry("Enable Cache", false);
+    m_cacheSize  = m_config->readNumEntry("Cache Size", 5);
+    
     // -- Apply Settings to widgets ------------------------------
 
     m_openglCheckBox->setChecked(opengl);
@@ -295,7 +304,10 @@ void SlideShowConfig::readSettings()
     m_commentsFontChooser->setFont(*savedFont);
     delete savedFont;
 
+    m_cacheCheckBox->setChecked(enableCache);
+    
     slotOpenGLToggled();
+    slotCacheToggled();
 }
 
 
@@ -378,6 +390,10 @@ void SlideShowConfig::saveSettings()
 
     }
 
+    // Advanced settings
+    m_config->writeEntry("Enable Cache", m_cacheCheckBox->isChecked());
+    m_config->writeEntry("Cache Size", m_cacheSizeSpinBox->value());
+    
     m_config->sync();
 }
 
@@ -464,6 +480,14 @@ void SlideShowConfig::slotUseMillisecondsToggled()
     }
 }
 
+void SlideShowConfig::slotCacheToggled()
+{
+  bool isEnabled = m_cacheCheckBox->isChecked();
+  
+  m_cacheSizeLabel1->setEnabled(isEnabled);
+  m_cacheSizeLabel2->setEnabled(isEnabled);
+  m_cacheSizeSpinBox->setEnabled(isEnabled);
+}
 
 void SlideShowConfig::slotOpenGLToggled()
 {

@@ -5,7 +5,8 @@
  * Description :
  *
  * Copyright 2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
-
+ * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -114,6 +115,8 @@ SlideShowGL::SlideShowGL(const QValueList<QPair<QString, int> >& fileList,
     m_effectRunning = false;
     m_endOfShow     = false;
 
+    m_imageLoader = new SlideShowLoader(m_fileList, m_cacheSize, width(), height());
+
     // --------------------------------------------------
 
     registerEffects();
@@ -189,6 +192,13 @@ void SlideShowGL::readSettings()
     m_commentsBgColor       = m_config->readUnsignedNumEntry("Comments Bg Color", 0x000000);
     
     m_commentsLinesLength   = m_config->readNumEntry("Comments Lines Length", 72);
+    
+    // Advanced settings
+    bool enableCache = m_config->readBoolEntry("Enable Cache", false);
+    if (enableCache)
+      m_cacheSize  = m_config->readNumEntry("Cache Size", 1);
+    else
+      m_cacheSize = 1;
 }
 
 void SlideShowGL::initializeGL()
@@ -420,6 +430,7 @@ SlideShowGL::EffectMethod SlideShowGL::getRandomEffect()
 void SlideShowGL::advanceFrame()
 {
     m_fileIndex++;
+    m_imageLoader->next();
     int num = m_fileList.count();
     if (m_fileIndex >= num) {
         if (m_loop)
@@ -449,6 +460,7 @@ void SlideShowGL::advanceFrame()
 void SlideShowGL::previousFrame()
 {
     m_fileIndex--;
+    m_imageLoader->prev();
     int num = m_fileList.count();
     if (m_fileIndex < 0) {
         if (m_loop)
@@ -477,17 +489,19 @@ void SlideShowGL::previousFrame()
 
 void SlideShowGL::loadImage()
 {
-    QPair<QString, int> fileAngle = m_fileList[m_fileIndex];
-    QString path(fileAngle.first);
-    int     angle(fileAngle.second);
-    QImage image(path);
-    if (angle != 0)
-    {
-        QWMatrix wm;
-        wm.rotate(angle);
-        image = image.xForm(wm);
-    }
+//     QPair<QString, int> fileAngle = m_fileList[m_fileIndex];
+//     QString path(fileAngle.first);
+//     int     angle(fileAngle.second);
+//     QImage image(path);
+//     if (angle != 0)
+//     {
+//         QWMatrix wm;
+//         wm.rotate(angle);
+//         image = image.xForm(wm);
+//     }
 
+    QImage image = m_imageLoader->getCurrent();
+  
     if (!image.isNull()) {
 
         int a  = m_tex1First ? 0 : 1;
@@ -499,8 +513,8 @@ void SlideShowGL::loadImage()
         QImage black(width(), height(), 32);
         black.fill(Qt::black.rgb());
 	    
-        image = image.smoothScale(width(), height(),
-                                  QImage::ScaleMin);
+/*        image = image.smoothScale(width(), height(),
+                                  QImage::ScaleMin);*/
         montage(image, black);
 
         black = black.smoothScale(m_width, m_height);

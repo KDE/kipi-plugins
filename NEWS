@@ -8,6 +8,7 @@ General        : Added the availability to disable plugins we don't want to buil
                : This feature is very useful for source based distros (Matej Laitl)
 PrintWizard    : Added raw file management, now raw files can be printed.
 SlideShow      : Solved minor issue in filename printing (2D slideshow).
+SlideShow      : New caching mechanism
 
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):

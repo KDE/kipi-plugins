@@ -5,6 +5,7 @@
  * Description : Digikam slideshow plugin.
  * 
  * Copyright 2003-2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -71,6 +72,8 @@ private:
     int m_delayMsMinValue;
     int m_delayMsLineStep;
     
+    uint m_cacheSize;
+    
     KConfig*    m_config;
     
     QString     m_effectName;
@@ -94,6 +97,7 @@ private slots:
     void slotCommentsBgColorChanged();
     
     void slotSelection();
+    void slotCacheToggled();
     
     void SlotPortfolioDurationChanged ( int );
     void slotImagesFilesSelected( QListBoxItem *item );
@@ -104,7 +108,6 @@ private slots:
     void slotImagesFilesButtonDown( void );
     void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
     void slotFailedPreview(const KFileItem*);
-
 
 signals:
     void buttonStartClicked(); // Signal needed by plugin_slideshow class
