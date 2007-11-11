@@ -294,7 +294,7 @@ KUrl::List SendImages::checkAttachementLimit()
     return removedFiles;
 }
 
-/** Shows up an error dialog about the problematic resized images. */
+/** Shows up an error dialog about the images wich are over the attachment limit. */
 bool SendImages::showImagesOverAttachementLimit(const KUrl::List& removedFiles)
 {
     if (removedFiles.isEmpty())
