@@ -156,8 +156,9 @@ public:
     bool             addCommentsAndTags;
     bool             imagesChangeProp;
 
-    int              attachmentLimit;
     int              imageCompression;
+
+    qint64           attachmentLimit;
 
     QString          tempPath;
 

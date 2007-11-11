@@ -58,7 +58,8 @@ private slots:
 private:
 
     void buildPropertiesFile();
-    bool showFailedResizedImages();    
+    bool showFailedResizedImages();
+    KUrl::List checkAttachementLimit();
 
 private:
 

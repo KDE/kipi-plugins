@@ -259,4 +259,39 @@ bool SendImages::showFailedResizedImages()
     return true;
 }
 
+/** Returns a list of file-names, whose sum file-size is smaller than the quota set in dialog.
+    The returned list are images removed from d->attachementFiles list. */
+KUrl::List SendImages::checkAttachementLimit()
+{
+    qint64 myListSize=0;
+    
+    KUrl::List removedFiles;
+    KUrl::List newAttachementFiles;
+
+    kDebug() << "Attachment limit: " << d->settings.attachmentLimit << endl;
+
+    for (KUrl::List::const_iterator it = d->attachementFiles.begin();
+        it != d->attachementFiles.end(); ++it) 
+    {
+        QFile file((*it).path());
+        kDebug() << "File: " << file.fileName() << " Size: " << file.size() << endl;
+
+        if ((myListSize + file.size()) <= d->settings.attachmentLimit)
+        {
+            myListSize += file.size();
+            newAttachementFiles.append(*it);
+            kDebug() << "Current list size: " << myListSize << endl;
+        }
+        else 
+        {
+            kDebug() << "File \"" << file.fileName() << "\" is out of attachement limit!" << endl;
+            removedFiles.append(*it);
+        }
+    }
+
+    d->attachementFiles = newAttachementFiles;
+  
+    return removedFiles;
+}
+
 }  // NameSpace KIPISendimagesPlugin
