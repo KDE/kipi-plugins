@@ -58,6 +58,7 @@ private slots:
 private:
 
     void buildPropertiesFile();
+    bool showFailedResizedImages();    
 
 private:
 

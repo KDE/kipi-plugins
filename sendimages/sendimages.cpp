@@ -36,6 +36,7 @@
 #include <ktempdir.h>
 #include <klocale.h>
 #include <kapplication.h>
+#include <kmessagebox.h>
 
 // LibKipi includes.
 
@@ -62,7 +63,7 @@ public:
     }
 
     KUrl::List                 attachementFiles;
-    KUrl::List                 imagesFailed2Resize;
+    KUrl::List                 failedResizedImages;
 
     KIPI::BatchProgressDialog *progressDlg;
 
@@ -117,7 +118,7 @@ void SendImages::sendImages()
 
     d->progressDlg->show();
     d->attachementFiles.clear();
-    d->imagesFailed2Resize.clear();
+    d->failedResizedImages.clear();
 
     if (d->settings.imagesChangeProp)
     {
@@ -134,7 +135,8 @@ void SendImages::sendImages()
         for (QList<EmailItem>::const_iterator it = d->settings.itemsList.begin();
             it != d->settings.itemsList.end(); ++it) 
         {
-            d->attachementFiles.append((*it).orgUrl.path());
+            d->attachementFiles.append((*it).orgUrl);            
+            d->settings.setEmailUrl((*it).orgUrl, (*it).orgUrl);
         }    
 
         // TODO: call second stage...
@@ -167,7 +169,7 @@ void SendImages::slotFailedResize(const KUrl& orgUrl, const QString& error)
     QString text = i18n("Failed to resize %1 : %2", orgUrl.fileName(), error);
     d->progressDlg->addedAction(text, KIPI::ErrorMessage);
 
-    d->imagesFailed2Resize.append(orgUrl);
+    d->failedResizedImages.append(orgUrl);
 }
 
 void SendImages::slotCompleteResize()
@@ -210,6 +212,50 @@ void SendImages::buildPropertiesFile()
         propertiesFile.close();
         d->attachementFiles.append(propertiesFile.fileName());
     }
+}
+
+/** Shows up an error dialog about the problematic resized images. */
+bool SendImages::showFailedResizedImages()
+{
+    if (!d->failedResizedImages.isEmpty())
+    {
+        QStringList list;
+        for (KUrl::List::const_iterator it = d->failedResizedImages.begin();
+            it != d->failedResizedImages.end(); ++it) 
+        {
+            list.append((*it).fileName());
+        }
+        
+        int valRet = KMessageBox::warningYesNoCancelList(kapp->activeWindow(), 
+                                  i18n("The images listed below cannot be resized.\n"
+                                       "Do you want them to be added as attachments "
+                                       "(without resizing)?"), 
+                                  list, 
+                                  i18n("Failed to resize images"));
+
+        switch (valRet)
+        {
+            case KMessageBox::Yes :        // Added source image files instead resized images...
+        
+                for (KUrl::List::const_iterator it = d->failedResizedImages.begin();
+                    it != d->failedResizedImages.end(); ++it) 
+                {
+                    d->attachementFiles.append(*it);            
+                    d->settings.setEmailUrl(*it, *it);
+                }
+                break;
+        
+            case KMessageBox::No :         // Do nothing...
+                break;
+        
+            case KMessageBox::Cancel :     // Stop process...
+                slotCancel();
+                return false;
+                break;
+        }
+    }
+
+    return true;
 }
 
 }  // NameSpace KIPISendimagesPlugin
