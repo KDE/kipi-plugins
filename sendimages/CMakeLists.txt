@@ -4,7 +4,6 @@ SET(kipiplugin_sendimages_PART_SRCS plugin_sendimages.cpp
                                     emailpage.cpp
                                     imageresize.cpp
                                     sendimages.cpp
-                                    #listimageserrordialog.cpp 
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_sendimages ${kipiplugin_sendimages_PART_SRCS})
