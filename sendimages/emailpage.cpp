@@ -111,18 +111,9 @@ EmailPage::EmailPage(QWidget* parent)
     d->mailAgentName->insertItem(EmailSettingsContainer::SYLPHEEDCLAWS, "Sylpheed-Claws");
     d->mailAgentName->insertItem(EmailSettingsContainer::THUNDERBIRD,   "Thunderbird");
     d->mailAgentName->setCurrentIndex(EmailSettingsContainer::DEFAULT);
-    d->mailAgentName->setWhatsThis(i18n("<p>Select here your preferred external mail program."
-                                        "These mail program versions are supported:<p>"
-                                        "<b>Balsa</b>: >= 2.x<p>"
-                                        "<b>Claws Mail</b>: >= 2.6.1<p>"
-                                        "<b>Evolution</b>: >= 1.4<p>"
-                                        "<b>Gmail-Agent</b>: >= 0.2<p>"
-                                        "<b>KMail</b>: >= 1.3<p>"
-                                        "<b>Mozilla</b>: >= 1.4<p>"
-                                        "<b>Netscape</b>: >= 7.x<p>"
-                                        "<b>Sylpheed</b>: >= 0.9<p>"
-                                        "<b>Sylpheed-Claws</b>: >= 0.9<p>"
-                                        "<b>Thunderbird</b>: >= 0.4<p>"));
+    d->mailAgentName->setWhatsThis(i18n("<p>Select here your preferred external e-mail program. "
+                                        "<b>Default</b> is the current e-mail program set on KDE "
+                                        "Control Panel."));
 
     //---------------------------------------------
 

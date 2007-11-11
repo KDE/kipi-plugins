@@ -61,9 +61,9 @@ private:
     void buildPropertiesFile();
     bool showFailedResizedImages();
     KUrl::List divideEmails();
-    bool showImagesOverAttachementLimit(const KUrl::List& removedFiles);
-
     bool invokeMailAgent();
+    void invokeMailAgentError(const QString& prog);
+    void invokeMailAgentDone();
 
 private:
 

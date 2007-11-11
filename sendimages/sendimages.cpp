@@ -28,9 +28,11 @@
 #include <QFile>
 #include <QTextStream>
 #include <QTextCodec>
+#include <QProcess>
 
 // KDE includes
 
+#include <kguiitem.h>
 #include <ktoolinvocation.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
@@ -308,39 +310,6 @@ KUrl::List SendImages::divideEmails()
     return processedNow;
 }
 
-/** Shows up an error dialog about the images wich are over the attachment limit. */
-bool SendImages::showImagesOverAttachementLimit(const KUrl::List& removedFiles)
-{
-    if (removedFiles.isEmpty())
-    {
-        QStringList list;
-        for (KUrl::List::const_iterator it = removedFiles.begin();
-            it != removedFiles.end(); ++it) 
-        {
-            list.append((*it).fileName());
-        }
-        
-        int valRet = KMessageBox::warningYesNoList(kapp->activeWindow(), 
-                                  i18n("The images are bigger than attachement limit and will not sent\n"
-                                       "Do you want to continue ?"), 
-                                  list, 
-                                  i18n("Failed to attach images"));
-
-        switch (valRet)
-        {
-            case KMessageBox::Yes :       
-                break;
-        
-            case KMessageBox::No :      
-                slotCancel();
-                return false;
-                break;
-        }
-    }
-
-    return true;
-}
-
 /** Invokes mail agent. Depending on which mail agent to be used, we have different
     proceedings. Easy for every agent except of mozilla derivates */
 bool SendImages::invokeMailAgent()
@@ -371,6 +340,71 @@ bool SendImages::invokeMailAgent()
                     
                     agentInvoked = true;
                     break;      
+                }
+
+                case EmailSettingsContainer::BALSA:
+                {
+                    break;
+                }
+
+                case EmailSettingsContainer::CLAWSMAIL:
+                {
+                    break;
+                }
+
+                case EmailSettingsContainer::EVOLUTION:
+                {
+                    break;
+                }
+
+                case EmailSettingsContainer::GMAILAGENT:
+                {
+                    break;
+                }
+
+                case EmailSettingsContainer::KMAIL:
+                {
+                    QStringList args;            
+                    for (KUrl::List::Iterator it = fileList.begin() ; it != fileList.end() ; ++it )
+                    {
+                        args.append("--attach");
+                        args.append(QFile::encodeName((*it).path()));
+                    }
+                
+                    if (!QProcess::startDetached("kmail", args))
+                        invokeMailAgentError("KMail");
+                    else
+                    {
+                        invokeMailAgentDone();
+                        agentInvoked = true;
+                    }
+
+                    break;
+                }
+
+                case EmailSettingsContainer::MOZILLA:
+                {
+                    break;
+                }
+
+                case EmailSettingsContainer::NETSCAPE:
+                {
+                    break;
+                }
+
+                case EmailSettingsContainer::SYLPHEED:
+                {
+                    break;
+                }
+
+                case EmailSettingsContainer::SYLPHEEDCLAWS:
+                {
+                    break;
+                }
+
+                case EmailSettingsContainer::THUNDERBIRD:
+                {
+                    break;
                 }
             }
         }
@@ -545,6 +579,20 @@ bool SendImages::invokeMailAgent()
 */
   
     return agentInvoked;
+}
+
+void SendImages::invokeMailAgentError(const QString& prog)
+{
+    QString text = i18n("Failed to start \"%1\" program. Check your system.", prog);
+    d->progressDlg->addedAction(text, KIPI::ErrorMessage);
+}
+
+void SendImages::invokeMailAgentDone()
+{
+    d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
+
+    disconnect(d->progressDlg, SIGNAL(cancelClicked()),
+               this, SLOT(slotCancel()));
 }
 
 }  // NameSpace KIPISendimagesPlugin

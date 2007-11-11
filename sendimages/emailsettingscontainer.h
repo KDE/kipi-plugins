@@ -58,7 +58,7 @@ public:
 
     enum EmailClient 
     {
-        DEFAULT = 0,
+        DEFAULT = 0,        // Default e-mail settings from KDE control panel.
         BALSA,
         CLAWSMAIL,
         EVOLUTION,
