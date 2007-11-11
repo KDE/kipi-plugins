@@ -490,11 +490,11 @@ void SlideShow::printFilename()
 
     p.setPen(QColor("black"));
     for (int x=9; x<=11; x++)
-        for (int y=21; y>=19; y--)
+        for (int y=31; y>=29; y--)
             p.drawText(x, height()-y, filename);
 
     p.setPen(QColor("white"));
-    p.drawText(10, height()-20, filename);
+    p.drawText(10, height()-30, filename);
 }
 
 
@@ -506,8 +506,8 @@ void SlideShow::printComments()
 
     QString comments = m_commentsList[m_fileIndex];
 
-    int yPos = 20; // Text Y coordinate
-    if (m_printName) yPos = 40;
+    int yPos = 30; // Text Y coordinate
+    if (m_printName) yPos = 50;
 
     QStringList commentsByLines;
 
