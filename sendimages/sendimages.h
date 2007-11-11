@@ -60,6 +60,7 @@ private:
     void buildPropertiesFile();
     bool showFailedResizedImages();
     KUrl::List checkAttachementLimit();
+    bool showImagesOverAttachementLimit(const KUrl::List& removedFiles);
 
 private:
 

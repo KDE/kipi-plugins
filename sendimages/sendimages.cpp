@@ -294,4 +294,37 @@ KUrl::List SendImages::checkAttachementLimit()
     return removedFiles;
 }
 
+/** Shows up an error dialog about the problematic resized images. */
+bool SendImages::showImagesOverAttachementLimit(const KUrl::List& removedFiles)
+{
+    if (removedFiles.isEmpty())
+    {
+        QStringList list;
+        for (KUrl::List::const_iterator it = removedFiles.begin();
+            it != removedFiles.end(); ++it) 
+        {
+            list.append((*it).fileName());
+        }
+        
+        int valRet = KMessageBox::warningYesNoList(kapp->activeWindow(), 
+                                  i18n("The images are bigger than attachement limit and will not sent\n"
+                                       "Do you want to continue ?"), 
+                                  list, 
+                                  i18n("Failed to attach images"));
+
+        switch (valRet)
+        {
+            case KMessageBox::Yes :       
+                break;
+        
+            case KMessageBox::No :      
+                slotCancel();
+                return false;
+                break;
+        }
+    }
+
+    return true;
+}
+
 }  // NameSpace KIPISendimagesPlugin
