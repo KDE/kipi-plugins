@@ -187,11 +187,12 @@ void SendImages::buildPropertiesFile()
         for (QList<EmailItem>::const_iterator it = d->settings.itemsList.begin();
             it != d->settings.itemsList.end(); ++it) 
         {
-            EmailItem item     = *it;
-            QString comments   = item.comments;
-            QString tags       = item.tags.join(", ");
-            QString rating     = QString::number(item.rating);
-            QString targetFile = item.emailUrl.fileName();
+            EmailItem item    = *it;
+            QString comments  = item.comments;
+            QString tags      = item.tags.join(", ");
+            QString rating    = QString::number(item.rating);
+            QString orgFile   = item.orgUrl.fileName();
+            QString emailFile = item.emailUrl.fileName();
 
             if (comments.isEmpty())
                 comments = i18n("no caption");
@@ -199,8 +200,8 @@ void SendImages::buildPropertiesFile()
             if (tags.isEmpty())
                 tags = i18n("no keywords");
 
-            propertiesText += i18n("Image \"%1\":\nComments: %2\nTags: %3\nRating: %4\n\n",
-                                   targetFile, comments, tags, rating);
+            propertiesText += i18n("file \"%1\":\nOriginal images: %2\nComments: %3\nTags: %4\nRating: %5\n\n",
+                                   emailFile, orgFile, comments, tags, rating);
         }
 
         QFile propertiesFile( d->settings.tempPath + i18n("properties.txt") );
