@@ -91,13 +91,13 @@ public:
     
     EmailSettingsContainer()
     {
-        addCommentsAndTags = false;
-        imagesChangeProp   = false;
-        attachmentLimit    = 17;
-        imageCompression   = 75;
-        emailProgram       = KMAIL;
-        imageSize          = MEDIUM;
-        imageFormat        = JPEG;
+        addCommentsAndTags      = false;
+        imagesChangeProp        = false;
+        attachmentLimitInMbytes = 17;
+        imageCompression        = 75;
+        emailProgram            = KMAIL;
+        imageSize               = MEDIUM;
+        imageFormat             = JPEG;
     };
     
     ~EmailSettingsContainer(){};
@@ -151,6 +151,12 @@ public:
         }
     };
 
+    qint64 attachementLimitInBytes()
+    {
+        qint64 val = attachmentLimitInMbytes * 1024 * 1024;
+        return val;
+    }
+
 public:
 
     bool             addCommentsAndTags;
@@ -158,7 +164,7 @@ public:
 
     int              imageCompression;
 
-    qint64           attachmentLimit;
+    int              attachmentLimitInMbytes;
 
     QString          tempPath;
 

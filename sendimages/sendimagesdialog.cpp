@@ -208,14 +208,14 @@ void SendImagesDialog::readSettings()
     showPage(group.readEntry("SendImages Page", 0));
 
     EmailSettingsContainer settings;
-    settings.emailProgram       = (EmailSettingsContainer::EmailClient)group.readEntry("EmailProgram", (int)EmailSettingsContainer::KMAIL);
-    settings.imageSize          = (EmailSettingsContainer::ImageSize)group.readEntry("ImageResize",    (int)EmailSettingsContainer::MEDIUM);
-    settings.imageFormat        = (EmailSettingsContainer::ImageFormat)group.readEntry("ImageFormat",  (int)EmailSettingsContainer::JPEG);
-    settings.imagesChangeProp   = group.readEntry("ImagesChangeProp", false);
-    settings.addCommentsAndTags = group.readEntry("AddCommentsAndTags", false);
-    settings.imageCompression   = group.readEntry("ImageCompression", 75);
-    settings.attachmentLimit    = group.readEntry("AttachmentLimit", 17);
-    settings.thunderbirdPath    = group.readEntry("ThunderbirdPath", KUrl());
+    settings.emailProgram            = (EmailSettingsContainer::EmailClient)group.readEntry("EmailProgram", (int)EmailSettingsContainer::KMAIL);
+    settings.imageSize               = (EmailSettingsContainer::ImageSize)group.readEntry("ImageResize",    (int)EmailSettingsContainer::MEDIUM);
+    settings.imageFormat             = (EmailSettingsContainer::ImageFormat)group.readEntry("ImageFormat",  (int)EmailSettingsContainer::JPEG);
+    settings.imagesChangeProp        = group.readEntry("ImagesChangeProp", false);
+    settings.addCommentsAndTags      = group.readEntry("AddCommentsAndTags", false);
+    settings.imageCompression        = group.readEntry("ImageCompression", 75);
+    settings.attachmentLimitInMbytes = group.readEntry("AttachmentLimit", 17);
+    settings.thunderbirdPath         = group.readEntry("ThunderbirdPath", KUrl());
     d->emailPage->setEmailSettings(settings);
 
     KConfigGroup group2 = config.group(QString("SendImages Dialog"));
@@ -235,7 +235,7 @@ void SendImagesDialog::saveSettings()
     group.writeEntry("ImagesChangeProp",   settings.imagesChangeProp);
     group.writeEntry("AddCommentsAndTags", settings.addCommentsAndTags);
     group.writeEntry("ImageCompression",   settings.imageCompression);
-    group.writeEntry("AttachmentLimit",    settings.attachmentLimit);
+    group.writeEntry("AttachmentLimit",    settings.attachmentLimitInMbytes);
     group.writeEntry("ThunderbirdPath",    settings.thunderbirdPath);
 
     KConfigGroup group2 = config.group(QString("SendImages Dialog"));

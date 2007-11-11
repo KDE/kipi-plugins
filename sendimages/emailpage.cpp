@@ -298,7 +298,7 @@ void EmailPage::setEmailSettings(const EmailSettingsContainer& settings)
     d->addComments->setChecked(settings.addCommentsAndTags);
 
     d->imageCompression->setValue(settings.imageCompression);
-    d->attachmentlimit->setValue(settings.attachmentLimit);
+    d->attachmentlimit->setValue(settings.attachmentLimitInMbytes);
 
     d->thunderbirdBinPath->setUrl(settings.thunderbirdPath);
 
@@ -308,17 +308,17 @@ void EmailPage::setEmailSettings(const EmailSettingsContainer& settings)
 EmailSettingsContainer EmailPage::emailSettings()
 {
     EmailSettingsContainer settings;
-    settings.emailProgram       = EmailSettingsContainer::EmailClient(d->mailAgentName->currentIndex());
-    settings.imageSize          = EmailSettingsContainer::ImageSize(d->imagesResize->currentIndex());
-    settings.imageFormat        = EmailSettingsContainer::ImageFormat(d->imagesFormat->currentIndex());
+    settings.emailProgram            = EmailSettingsContainer::EmailClient(d->mailAgentName->currentIndex());
+    settings.imageSize               = EmailSettingsContainer::ImageSize(d->imagesResize->currentIndex());
+    settings.imageFormat             = EmailSettingsContainer::ImageFormat(d->imagesFormat->currentIndex());
 
-    settings.imagesChangeProp   = d->changeImagesProp->isChecked();
-    settings.addCommentsAndTags = d->addComments->isChecked();
+    settings.imagesChangeProp        = d->changeImagesProp->isChecked();
+    settings.addCommentsAndTags      = d->addComments->isChecked();
 
-    settings.imageCompression   = d->imageCompression->value();
-    settings.attachmentLimit    = d->attachmentlimit->value();
+    settings.imageCompression        = d->imageCompression->value();
+    settings.attachmentLimitInMbytes = d->attachmentlimit->value();
 
-    settings.thunderbirdPath    = d->thunderbirdBinPath->url();
+    settings.thunderbirdPath         = d->thunderbirdBinPath->url();
 
     return settings;
 }
