@@ -412,28 +412,6 @@ bool SendImages::invokeMailAgent()
     while(!fileList.isEmpty());
 
 /*        
-        // KMail mail agent call.
-    
-        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "KMail" )
-        {
-            m_mailAgentProc = new KProcess;
-            *m_mailAgentProc << "kmail";
-    
-            for ( KURL::List::Iterator it = filelist.begin() ; it != filelist.end() ; ++it )
-            {
-                *m_mailAgentProc << "--attach";
-                *m_mailAgentProc << QFile::encodeName((*it).path());
-            }
-        
-            if ( m_mailAgentProc->start() == false )
-                KMessageBox::error(kapp->activeWindow(), 
-                                i18n("Cannot start '%1' program;\nplease "
-                                        "check your installation.")
-                                        .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
-            else
-                agentInvoked = true;
-        }
-
     
         // Claws Mail and Sylpheed mail agent call.
     
