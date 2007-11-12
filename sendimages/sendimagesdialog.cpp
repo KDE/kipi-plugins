@@ -151,10 +151,6 @@ SendImagesDialog::SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl
     connect(this, SIGNAL(okClicked()),
             this, SLOT(slotOk()));
 
-    connect(d->emailPage, SIGNAL(signalEnableButtonOK(bool)),
-            this, SLOT(slotEnableButtonOK(bool)));
-
-
     // ------------------------------------------------------------
 
     readSettings();
@@ -265,11 +261,6 @@ int SendImagesDialog::activePageIndex()
     if (cur == d->page_email)   return 1;
 
     return 0;
-}
-
-void SendImagesDialog::slotEnableButtonOK(bool b)
-{
-    enableButton(Ok, b);
 }
 
 }  // namespace KIPISendimagesPlugin

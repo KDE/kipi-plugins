@@ -70,7 +70,6 @@ private slots:
     void slotOk();
     void slotHelp();
     void slotCancel();
-    void slotEnableButtonOK(bool);
 
 private:
 
