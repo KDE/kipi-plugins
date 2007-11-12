@@ -8,6 +8,7 @@ TimeAdjust     : XMP metadata support.
 MetadataEdit   : XMP metadata support with EXIF, IPTC, and Comments editor to sync XMP tags.
 MetadataEdit   : IPTC Editor dialog is more compliant with IPTC.org recommendations.
 MetadataEdit   : IPTC Editor add the capability to set multiple values for a tag.
+SendImages     : Complete re-write of emailing tool.
 
 v 0.1.4 beta2
 ----------------------------------------------------------------------------
@@ -18,6 +19,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 140477 : SendImages   : Ability to rename images being sent via email.
 002 ==> 146259 : RAWConverter : Raw Converter won't convert to 16bit PNG.
+003 ==> 148186 : "send by email" function does not attach images in Thunderbird 2.0.0.5.
+004 ==> 150453 : Emailing a RAW image creates an incorrect filename.
 
 v 0.1.4 beta1 
 ----------------------------------------------------------------------------
