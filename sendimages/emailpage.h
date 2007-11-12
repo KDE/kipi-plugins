@@ -54,6 +54,7 @@ signals:
 
 private slots:
 
+    void slotImagesFormatChanged(int);
     void slotMailAgentChanged(int);
     void slotThunderbirdBinPathChanged(const QString&);
 

@@ -181,21 +181,6 @@ EmailPage::EmailPage(QWidget* parent)
 
     //---------------------------------------------
 
-    d->imageCompression = new KIntNumInput(groupBox);
-    d->imageCompression->setRange(1, 100, 1);
-    d->imageCompression->setValue(75);
-    d->imageCompression->setLabel(i18n("Image quality:"), Qt::AlignLeft | Qt::AlignVCenter);
-    whatsThis = i18n("<p>The new compression value of images to send:<p>");
-    whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
-                                 "<b>25</b>: high compression<p>"
-                                 "<b>50</b>: medium compression<p>"
-                                 "<b>75</b>: low compression (default value)<p>"
-                                 "<b>100</b>: no compression");
-
-    d->imageCompression->setWhatsThis(whatsThis);
-
-    //---------------------------------------------
-
     d->imagesFormat = new QComboBox(groupBox);
     d->imagesFormat->insertItem(EmailSettingsContainer::JPEG, "JPEG");
     d->imagesFormat->insertItem(EmailSettingsContainer::PNG,  "PNG");
@@ -216,11 +201,25 @@ EmailPage::EmailPage(QWidget* parent)
     
     // --------------------------------------------------------
 
+    d->imageCompression = new KIntNumInput(groupBox);
+    d->imageCompression->setRange(1, 100, 1);
+    d->imageCompression->setValue(75);
+    d->imageCompression->setLabel(i18n("Image quality:"), Qt::AlignLeft | Qt::AlignVCenter);
+    whatsThis = i18n("<p>The new compression value of JPEG images to send:<p>");
+    whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
+                                 "<b>25</b>: high compression<p>"
+                                 "<b>50</b>: medium compression<p>"
+                                 "<b>75</b>: low compression (default value)<p>"
+                                 "<b>100</b>: no compression");
+
+    d->imageCompression->setWhatsThis(whatsThis);
+
+    //---------------------------------------------
     grid2->addWidget(d->labelImagesResize, 0, 0, 1, 1);
     grid2->addWidget(d->imagesResize, 0, 1, 1, 2);
-    grid2->addWidget(d->imageCompression, 1, 0, 1, 3);
-    grid2->addWidget(d->labelImagesFormat, 2, 0, 1, 1);
-    grid2->addWidget(d->imagesFormat, 2, 1, 1, 2);
+    grid2->addWidget(d->labelImagesFormat, 1, 0, 1, 1);
+    grid2->addWidget(d->imagesFormat, 1, 1, 1, 2);
+    grid2->addWidget(d->imageCompression, 2, 0, 1, 3);
     grid2->setRowStretch(4, 10);    
     grid2->setColumnStretch(2, 10);                     
     grid2->setMargin(KDialog::spacingHint());
@@ -244,6 +243,9 @@ EmailPage::EmailPage(QWidget* parent)
 
     //---------------------------------------------
 
+    connect(d->imagesFormat, SIGNAL(activated(int)),
+            this, SLOT(slotImagesFormatChanged(int)));
+
     connect(d->mailAgentName, SIGNAL(activated(int)),
             this, SLOT(slotMailAgentChanged(int)));
 
@@ -257,6 +259,14 @@ EmailPage::EmailPage(QWidget* parent)
 EmailPage::~EmailPage()
 {
     delete d;
+}
+
+void EmailPage::slotImagesFormatChanged(int i)
+{
+    if ( i == EmailSettingsContainer::JPEG )
+        d->imageCompression->setEnabled(true);
+    else
+        d->imageCompression->setEnabled(false);
 }
 
 void EmailPage::slotMailAgentChanged(int i)
@@ -273,7 +283,7 @@ void EmailPage::slotMailAgentChanged(int i)
     }
 }
 
-void EmailPage::slotThunderbirdBinPathChanged(const QString& url )
+void EmailPage::slotThunderbirdBinPathChanged(const QString& url)
 {
     if ( d->mailAgentName->currentIndex() == EmailSettingsContainer::THUNDERBIRD )
        emit signalEnableButtonOK( !url.isEmpty());
@@ -293,6 +303,7 @@ void EmailPage::setEmailSettings(const EmailSettingsContainer& settings)
 
     d->thunderbirdBinPath->setUrl(settings.thunderbirdPath);
 
+    slotImagesFormatChanged(d->imagesFormat->currentIndex());
     slotMailAgentChanged(d->mailAgentName->currentIndex());
 }
                                     
