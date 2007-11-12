@@ -47,6 +47,7 @@
 // Local includes.
 
 #include "pluginsversion.h"
+#include "kpwriteimage.h"
 #include "imageresize.h"
 #include "imageresize.moc"
 
@@ -244,28 +245,32 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
     
         QString destPath = emailSettings.tempPath + destName;
 
-        if ( !img.save(destPath, emailSettings.format().toLatin1(), emailSettings.imageCompression) )
+        KExiv2Iface::KExiv2 meta;
+
+        meta.load(orgUrl.path());
+        meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+        meta.setImageDimensions(img.size());
+        
+        if (emailSettings.format() == QString("JPEG"))
         {
-            err = i18n("Cannot save resized image. Aborting.");
-            return false;
-        }
-    
-        // Only try to write Exif if both src and destination are JPEG files.
-    
-        if (QString(QImageReader::imageFormat(destPath)).toUpper() == "JPEG" && 
-            emailSettings.format().toUpper() == "JPEG")
-        {
-            KExiv2Iface::KExiv2 meta;
-    
-            if (meta.load(destPath))
+            if ( !img.save(destPath, emailSettings.format().toLatin1(), emailSettings.imageCompression) )
             {
-                meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-                meta.setImageDimensions(img.size());
-                meta.save(destPath);
+                err = i18n("Cannot save resized image (JPEG). Aborting.");
+                return false;
             }
             else
             {
-                err = i18n("Cannot update metadata to resized image. Aborting.");
+                meta.save(destPath);
+            }
+        }
+        else if (emailSettings.format() == QString("PNG"))
+        {
+            QByteArray data((const char*)img.bits(), img.numBytes());
+            KIPIPlugins::KPWriteImage wImageIface;
+            wImageIface.setImageData(data, img.width(), img.height(), false, true, QByteArray(), meta);
+            if ( !wImageIface.write2PNG(destPath) )
+            {
+                err = i18n("Cannot save resized image (PNG). Aborting.");
                 return false;
             }
         }
