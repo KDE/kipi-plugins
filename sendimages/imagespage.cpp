@@ -58,7 +58,7 @@ ImagesListViewItem::ImagesListViewItem(K3ListView *view, KIPI::Interface *iface,
     connect(iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
             this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
 
-    iface->thumbnail(url, 128);
+    iface->thumbnail(url, 64);
 
     KIPI::ImageInfo imageInfo = iface->info(url);
     
