@@ -314,9 +314,7 @@ KUrl::List SendImages::divideEmails()
     proceedings. Easy for every agent except of mozilla derivates */
 bool SendImages::invokeMailAgent()
 {
-    bool agentInvoked = false;
-    d->progressDlg->addedAction(i18n("Invoke e-mail program"), KIPI::StartingMessage);
-
+    bool       agentInvoked = false;
     KUrl::List fileList;
 
     do
@@ -344,6 +342,7 @@ bool SendImages::invokeMailAgent()
 
                 case EmailSettingsContainer::BALSA:
                 {
+                    QString prog("balsa");
                     QStringList args;            
                     args.append("-m");
                     args.append("mailto:");
@@ -353,11 +352,11 @@ bool SendImages::invokeMailAgent()
                         args.append(QFile::encodeName((*it).path()));
                     }
 
-                    if (!QProcess::startDetached("balsa", args))
-                        invokeMailAgentError("balsa");
+                    if (!QProcess::startDetached(prog, args))
+                        invokeMailAgentError(prog);
                     else
                     {
-                        invokeMailAgentDone();
+                        invokeMailAgentDone(prog);
                         agentInvoked = true;
                     }
 
@@ -388,7 +387,7 @@ bool SendImages::invokeMailAgent()
                         invokeMailAgentError(prog);
                     else
                     {
-                        invokeMailAgentDone();
+                        invokeMailAgentDone(prog);
                         agentInvoked = true;
                     }
 
@@ -397,6 +396,7 @@ bool SendImages::invokeMailAgent()
 
                 case EmailSettingsContainer::EVOLUTION:
                 {
+                    QString prog("evolution");
                     QStringList args;                    
                     QString tmp = "mailto:?subject=";
                     for (KUrl::List::Iterator it = fileList.begin() ; it != fileList.end() ; ++it )
@@ -406,11 +406,11 @@ bool SendImages::invokeMailAgent()
                     }
                     args.append(tmp);                
     
-                    if (!QProcess::startDetached("evolution", args))
-                        invokeMailAgentError("evolution");
+                    if (!QProcess::startDetached(prog, args))
+                        invokeMailAgentError(prog);
                     else
                     {
-                        invokeMailAgentDone();
+                        invokeMailAgentDone(prog);
                         agentInvoked = true;
                     }
 
@@ -419,6 +419,7 @@ bool SendImages::invokeMailAgent()
 
                 case EmailSettingsContainer::KMAIL:
                 {
+                    QString prog("kmail");
                     QStringList args;            
                     for (KUrl::List::Iterator it = fileList.begin() ; it != fileList.end() ; ++it )
                     {
@@ -426,11 +427,11 @@ bool SendImages::invokeMailAgent()
                         args.append(QFile::encodeName((*it).path()));
                     }
                 
-                    if (!QProcess::startDetached("kmail", args))
-                        invokeMailAgentError("kmail");
+                    if (!QProcess::startDetached(prog, args))
+                        invokeMailAgentError(prog);
                     else
                     {
-                        invokeMailAgentDone();
+                        invokeMailAgentDone(prog);
                         agentInvoked = true;
                     }
 
@@ -538,8 +539,10 @@ void SendImages::invokeMailAgentError(const QString& prog)
     d->progressDlg->addedAction(text, KIPI::ErrorMessage);
 }
 
-void SendImages::invokeMailAgentDone()
+void SendImages::invokeMailAgentDone(const QString& prog)
 {
+    QString text = i18n("Starting \"%1\" program...", prog);
+    d->progressDlg->addedAction(text, KIPI::StartingMessage);
     d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
 
     disconnect(d->progressDlg, SIGNAL(cancelClicked()),

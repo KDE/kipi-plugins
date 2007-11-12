@@ -63,7 +63,7 @@ private:
     KUrl::List divideEmails();
     bool invokeMailAgent();
     void invokeMailAgentError(const QString& prog);
-    void invokeMailAgentDone();
+    void invokeMailAgentDone(const QString& prog);
 
 private:
 
