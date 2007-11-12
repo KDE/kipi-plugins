@@ -47,9 +47,8 @@ namespace KIPISendimagesPlugin
 
 class ImagesPagePriv;
 
-class ImagesListViewItem : public QObject, public K3ListViewItem
+class ImagesListViewItem : public K3ListViewItem
 {
-    Q_OBJECT
 
 public:
 
@@ -72,10 +71,6 @@ public:
 
     EmailItem emailItem();
     
-private slots: 
-
-    void slotThumbnail(const KUrl& url, const QPixmap& pix);
-
 private: 
 
     EmailItem m_item;
@@ -98,6 +93,7 @@ private slots:
 
     void slotAddItems();
     void slotRemoveItems();
+    void slotThumbnail(const KUrl& url, const QPixmap& pix);
 
 private:
 

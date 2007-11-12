@@ -33,6 +33,7 @@
 #include <kiconloader.h>
 #include <kfiledialog.h>
 #include <kimageio.h>
+#include <kdebug.h>
 
 // LibKIPI includes.
 
@@ -55,11 +56,6 @@ namespace KIPISendimagesPlugin
 ImagesListViewItem::ImagesListViewItem(K3ListView *view, KIPI::Interface *iface, const KUrl& url)
                   : K3ListViewItem(view)
 {
-    connect(iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
-
-    iface->thumbnail(url, 64);
-
     KIPI::ImageInfo imageInfo = iface->info(url);
     
     setThumb(SmallIcon("empty", KIconLoader::SizeLarge, KIconLoader::DisabledState));
@@ -138,16 +134,6 @@ EmailItem ImagesListViewItem::emailItem()
     return m_item; 
 }
 
-void ImagesListViewItem::slotThumbnail(const KUrl& url, const QPixmap& pix)
-{
-    if (m_item.orgUrl != url) return;
-
-    if (pix.isNull())
-        setThumb(SmallIcon("empty", 128, KIconLoader::DisabledState));
-    else
-        setThumb(pix);
-}
-
 // ---------------------------------------------------------------------------
 
 class ImagesPagePriv
@@ -215,6 +201,9 @@ ImagesPage::ImagesPage(QWidget* parent, KIPI::Interface *iface)
 
     connect(d->removeButton, SIGNAL(clicked()),
             this, SLOT(slotRemoveItems()));         
+
+    connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
 }
 
 ImagesPage::~ImagesPage()
@@ -246,6 +235,25 @@ void ImagesPage::addImages(const KUrl::List& list)
         if (!find)
         {
             new ImagesListViewItem(d->listView, d->iface, imageUrl);
+            d->iface->thumbnail(imageUrl, 64);
+        }
+    }
+}
+
+void ImagesPage::slotThumbnail(const KUrl& url, const QPixmap& pix)
+{
+    Q3ListViewItemIterator it(d->listView);
+    for ( ; it.current(); ++it )
+    {
+        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(it.current());
+        if (item->url() == url)
+        {
+            if (pix.isNull())
+                item->setThumb(SmallIcon("empty", 64, KIconLoader::DisabledState));
+            else
+                item->setThumb(pix.scaled(64, 64, Qt::KeepAspectRatio));
+
+            return;
         }
     }
 }
