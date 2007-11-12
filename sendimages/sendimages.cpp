@@ -344,21 +344,76 @@ bool SendImages::invokeMailAgent()
 
                 case EmailSettingsContainer::BALSA:
                 {
+                    QStringList args;            
+                    args.append("-m");
+                    args.append("mailto:");
+                    for (KUrl::List::Iterator it = fileList.begin() ; it != fileList.end() ; ++it )
+                    {
+                        args.append("-a");
+                        args.append(QFile::encodeName((*it).path()));
+                    }
+
+                    if (!QProcess::startDetached("balsa", args))
+                        invokeMailAgentError("balsa");
+                    else
+                    {
+                        invokeMailAgentDone();
+                        agentInvoked = true;
+                    }
+
                     break;
                 }
 
                 case EmailSettingsContainer::CLAWSMAIL:
+                case EmailSettingsContainer::SYLPHEED:
+                case EmailSettingsContainer::SYLPHEEDCLAWS:
                 {
+                    QStringList args;            
+                    args.append("--compose");
+                    args.append("--attach");
+                    for (KUrl::List::Iterator it = fileList.begin() ; it != fileList.end() ; ++it )
+                    {
+                        args.append(QFile::encodeName((*it).path()));
+                    }
+
+                    QString prog;
+                    if (d->settings.emailProgram == EmailSettingsContainer::CLAWSMAIL)
+                        prog = QString("claws-mail");
+                    else if (d->settings.emailProgram == EmailSettingsContainer::SYLPHEED)
+                        prog = QString("sylpheed");
+                    else
+                        prog = QString("sylpheed-claws");
+                
+                    if (!QProcess::startDetached(prog, args))
+                        invokeMailAgentError(prog);
+                    else
+                    {
+                        invokeMailAgentDone();
+                        agentInvoked = true;
+                    }
+
                     break;
                 }
 
                 case EmailSettingsContainer::EVOLUTION:
                 {
-                    break;
-                }
+                    QStringList args;                    
+                    QString tmp = "mailto:?subject=";
+                    for (KUrl::List::Iterator it = fileList.begin() ; it != fileList.end() ; ++it )
+                    {
+                        tmp.append("&attach=");
+                        tmp.append( QFile::encodeName((*it).path()) );
+                    }
+                    args.append(tmp);                
+    
+                    if (!QProcess::startDetached("evolution", args))
+                        invokeMailAgentError("evolution");
+                    else
+                    {
+                        invokeMailAgentDone();
+                        agentInvoked = true;
+                    }
 
-                case EmailSettingsContainer::GMAILAGENT:
-                {
                     break;
                 }
 
@@ -372,7 +427,7 @@ bool SendImages::invokeMailAgent()
                     }
                 
                     if (!QProcess::startDetached("kmail", args))
-                        invokeMailAgentError("KMail");
+                        invokeMailAgentError("kmail");
                     else
                     {
                         invokeMailAgentDone();
@@ -382,22 +437,17 @@ bool SendImages::invokeMailAgent()
                     break;
                 }
 
+                case EmailSettingsContainer::GMAILAGENT:
+                {
+                    break;
+                }
+
                 case EmailSettingsContainer::MOZILLA:
                 {
                     break;
                 }
 
                 case EmailSettingsContainer::NETSCAPE:
-                {
-                    break;
-                }
-
-                case EmailSettingsContainer::SYLPHEED:
-                {
-                    break;
-                }
-
-                case EmailSettingsContainer::SYLPHEEDCLAWS:
                 {
                     break;
                 }
@@ -412,57 +462,6 @@ bool SendImages::invokeMailAgent()
     while(!fileList.isEmpty());
 
 /*        
-    
-        // Claws Mail and Sylpheed mail agent call.
-    
-        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Claws Mail" ||
-             m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed" ||
-             m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed-Claws" )
-        {
-            m_mailAgentProc = new KProcess;
-
-            if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Claws Mail")
-                *m_mailAgentProc << "claws-mail";
-            else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Sylpheed")
-                *m_mailAgentProc << "sylpheed";
-            else
-                *m_mailAgentProc << "sylpheed-claws";
-        
-            *m_mailAgentProc << "--compose" << "--attach";
-        
-            for ( KURL::List::Iterator it = filelist.begin() ; it != filelist.end() ; ++it )
-                *m_mailAgentProc << QFile::encodeName((*it).path());
-        
-            if ( m_mailAgentProc->start() == false )
-                KMessageBox::error(kapp->activeWindow(), 
-                                   i18n("Cannot start '%1' program;\nplease "
-                                        "check your installation.")
-                                        .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
-            else
-                agentInvoked = true;
-        }
-    
-        // Balsa mail agent call.
-    
-        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Balsa" )
-        {
-            m_mailAgentProc = new KProcess;
-            *m_mailAgentProc << "balsa" << "-m" << "mailto:";
-        
-            for ( KURL::List::Iterator it = filelist.begin() ; it != filelist.end() ; ++it )
-            {
-                *m_mailAgentProc << "-a";
-                *m_mailAgentProc << QFile::encodeName((*it).path());
-            }
-        
-            if ( m_mailAgentProc->start() == false )
-                KMessageBox::error(kapp->activeWindow(), 
-                                   i18n("Cannot start '%1' program;\nplease "
-                                        "check your installation.")
-                                        .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
-            else
-                agentInvoked = true;
-        }
     
         // Evolution mail agent call.
 
