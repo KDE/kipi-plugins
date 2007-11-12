@@ -463,32 +463,6 @@ bool SendImages::invokeMailAgent()
 
 /*        
     
-        // Evolution mail agent call.
-
-        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Evolution" )    
-        {
-            m_mailAgentProc = new KProcess;
-            *m_mailAgentProc << "evolution";
-        
-            QString Temp = "mailto:?subject=";
-        
-            for ( KURL::List::Iterator it = filelist.begin() ; it != filelist.end() ; ++it )
-            {
-                Temp.append("&attach=");
-                Temp.append( QFile::encodeName((*it).path()) );
-            }
-        
-            *m_mailAgentProc << Temp;
-        
-            if ( m_mailAgentProc->start() == false )
-                KMessageBox::error(kapp->activeWindow(), 
-                                   i18n("Cannot start '%1' program;\nplease "
-                                        "check your installation.")
-                                        .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
-            else
-                agentInvoked = true;
-        }
-    
         // Mozilla | Netscape | Thunderbird mail agent call.
     
         if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" ||
