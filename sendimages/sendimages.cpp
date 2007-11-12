@@ -335,6 +335,8 @@ bool SendImages::invokeMailAgent()
                         QString::null,                     // Message Body.
                         QString::null,                     // Message Body File.
                         fileList.toStringList());          // Images attachments (+ image properties file).
+                
+                    d->progressDlg->addedAction(i18n("Starting default KDE e-mail program..."), KIPI::StartingMessage);
                     
                     agentInvoked = true;
                     break;      
@@ -353,10 +355,10 @@ bool SendImages::invokeMailAgent()
                     }
 
                     if (!QProcess::startDetached(prog, args))
-                        invokeMailAgentError(prog);
+                        invokeMailAgentError(prog, args);
                     else
                     {
-                        invokeMailAgentDone(prog);
+                        invokeMailAgentDone(prog, args);
                         agentInvoked = true;
                     }
 
@@ -384,10 +386,10 @@ bool SendImages::invokeMailAgent()
                         prog = QString("sylpheed-claws");
                 
                     if (!QProcess::startDetached(prog, args))
-                        invokeMailAgentError(prog);
+                        invokeMailAgentError(prog, args);
                     else
                     {
-                        invokeMailAgentDone(prog);
+                        invokeMailAgentDone(prog, args);
                         agentInvoked = true;
                     }
 
@@ -407,10 +409,10 @@ bool SendImages::invokeMailAgent()
                     args.append(tmp);                
     
                     if (!QProcess::startDetached(prog, args))
-                        invokeMailAgentError(prog);
+                        invokeMailAgentError(prog, args);
                     else
                     {
-                        invokeMailAgentDone(prog);
+                        invokeMailAgentDone(prog, args);
                         agentInvoked = true;
                     }
 
@@ -428,10 +430,10 @@ bool SendImages::invokeMailAgent()
                     }
                 
                     if (!QProcess::startDetached(prog, args))
-                        invokeMailAgentError(prog);
+                        invokeMailAgentError(prog, args);
                     else
                     {
-                        invokeMailAgentDone(prog);
+                        invokeMailAgentDone(prog, args);
                         agentInvoked = true;
                     }
 
@@ -533,14 +535,16 @@ bool SendImages::invokeMailAgent()
     return agentInvoked;
 }
 
-void SendImages::invokeMailAgentError(const QString& prog)
+void SendImages::invokeMailAgentError(const QString& prog, const QStringList& args)
 {
+    kDebug() << "Command Line: " << prog << args << endl;
     QString text = i18n("Failed to start \"%1\" program. Check your system.", prog);
     d->progressDlg->addedAction(text, KIPI::ErrorMessage);
 }
 
-void SendImages::invokeMailAgentDone(const QString& prog)
+void SendImages::invokeMailAgentDone(const QString& prog, const QStringList& args)
 {
+    kDebug() << "Command Line: " << prog << args << endl;
     QString text = i18n("Starting \"%1\" program...", prog);
     d->progressDlg->addedAction(text, KIPI::StartingMessage);
     d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());

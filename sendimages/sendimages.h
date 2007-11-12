@@ -62,8 +62,8 @@ private:
     bool showFailedResizedImages();
     KUrl::List divideEmails();
     bool invokeMailAgent();
-    void invokeMailAgentError(const QString& prog);
-    void invokeMailAgentDone(const QString& prog);
+    void invokeMailAgentError(const QString& prog, const QStringList& args);
+    void invokeMailAgentDone(const QString& prog, const QStringList& args);
 
 private:
 
