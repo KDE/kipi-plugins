@@ -48,15 +48,9 @@ public:
     void setEmailSettings(const EmailSettingsContainer& settings);
     EmailSettingsContainer emailSettings();
 
-signals:
-
-    void signalEnableButtonOK(bool);
-
 private slots:
 
     void slotImagesFormatChanged(int);
-    void slotMailAgentChanged(int);
-    void slotThunderbirdBinPathChanged(const QString&);
 
 private:
 

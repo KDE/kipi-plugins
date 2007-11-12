@@ -215,7 +215,6 @@ void SendImagesDialog::readSettings()
     settings.addCommentsAndTags      = group.readEntry("AddCommentsAndTags", false);
     settings.imageCompression        = group.readEntry("ImageCompression", 75);
     settings.attachmentLimitInMbytes = group.readEntry("AttachmentLimit", 17);
-    settings.thunderbirdPath         = group.readEntry("ThunderbirdPath", KUrl());
     d->emailPage->setEmailSettings(settings);
 
     KConfigGroup group2 = config.group(QString("SendImages Dialog"));
@@ -236,7 +235,6 @@ void SendImagesDialog::saveSettings()
     group.writeEntry("AddCommentsAndTags", settings.addCommentsAndTags);
     group.writeEntry("ImageCompression",   settings.imageCompression);
     group.writeEntry("AttachmentLimit",    settings.attachmentLimitInMbytes);
-    group.writeEntry("ThunderbirdPath",    settings.thunderbirdPath);
 
     KConfigGroup group2 = config.group(QString("SendImages Dialog"));
     saveDialogSize(group2);

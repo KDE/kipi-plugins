@@ -168,8 +168,6 @@ public:
 
     QString          tempPath;
 
-    KUrl             thunderbirdPath;
-
     EmailClient      emailProgram;
 
     ImageSize        imageSize;

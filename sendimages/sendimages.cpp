@@ -61,9 +61,12 @@ public:
 
     SendImagesPriv()
     {
+        invokedBefore   = false;
         threadImgResize = 0;
         progressDlg     = 0;
     }
+
+    bool                       invokedBefore;
 
     KUrl::List                 attachementFiles;
     KUrl::List                 failedResizedImages;
@@ -440,97 +443,53 @@ bool SendImages::invokeMailAgent()
                     break;
                 }
 
-                case EmailSettingsContainer::GMAILAGENT:
-                {
-                    break;
-                }
+                // More info about command lines options with Mozilla & co: 
+                // http://www.mozilla.org/docs/command-line-args.html#Syntax_Rules
 
                 case EmailSettingsContainer::MOZILLA:
-                {
-                    break;
-                }
-
                 case EmailSettingsContainer::NETSCAPE:
-                {
-                    break;
-                }
-
                 case EmailSettingsContainer::THUNDERBIRD:
+                case EmailSettingsContainer::GMAILAGENT:
                 {
+                    QString prog;
+                    if (d->settings.emailProgram == EmailSettingsContainer::MOZILLA)
+                        prog = QString("mozila");
+                    else if (d->settings.emailProgram == EmailSettingsContainer::NETSCAPE)
+                        prog = QString("netscape");
+                    else if (d->settings.emailProgram == EmailSettingsContainer::THUNDERBIRD)
+                        prog = QString("thunderbird");
+                    else
+                        prog = QString("gmailagent");
+
+                    QStringList args;            
+                    args.append("-compose");
+                    QString tmp = "attachment='";
+                    for (KUrl::List::Iterator it = fileList.begin() ; it != fileList.end() ; ++it )
+                    {
+                        tmp.append( "file://" );
+                        QString toencode=(*it).encodedPathAndQuery();
+                        tmp.append(toencode);
+                        tmp.append( "," );
+                    }
+                    tmp.remove(tmp.length()-1, 1);
+                    tmp.append("'");
+                    
+                    args.append(tmp);
+  
+                    if (!QProcess::startDetached(prog, args))
+                        invokeMailAgentError(prog, args);
+                    else
+                    {
+                        invokeMailAgentDone(prog, args);
+                        agentInvoked = true;
+                    }
+          
                     break;
                 }
             }
         }
     }
     while(!fileList.isEmpty());
-
-/*        
-    
-        // Mozilla | Netscape | Thunderbird mail agent call.
-    
-        if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" ||
-             m_sendImagesDialog->m_mailAgentName->currentText() == "Netscape" ||
-             m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" ||
-             m_sendImagesDialog->m_mailAgentName->currentText() == "GmailAgent")
-        {
-            m_mailAgentProc = new KProcess;
-        
-            m_thunderbirdUrl = m_sendImagesDialog->m_ThunderbirdBinPath->url();
-        
-            if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Mozilla" )
-            {
-                *m_mailAgentProc << "mozilla" << "-remote";
-            }
-            else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "Thunderbird" )
-            {
-                *m_mailAgentProc << m_thunderbirdUrl << "-remote";
-                qDebug("URL: %s", m_thunderbirdUrl.ascii());
-            }
-            else if ( m_sendImagesDialog->m_mailAgentName->currentText() == "GmailAgent" )
-            {
-                *m_mailAgentProc << "gmailagent" << "-remote";
-            }
-            else
-            {
-                *m_mailAgentProc << "netscape" << "-remote";
-            }
-        
-            QString Temp = " xfeDoCommand(composeMessage,attachment='";
-        
-            for ( KURL::List::Iterator it = filelist.begin() ; it != filelist.end() ; ++it )
-            {
-                Temp.append( "file://" );
-                QString toencode=(*it).encodedPathAndQuery();
-                Temp.append(toencode);
-                Temp.append( "," );
-            }
-    
-            Temp.remove(Temp.length()-1,1);
-            Temp.append("')");
-            
-            *m_mailAgentProc << Temp;
-       
-            if (!m_invokedBefore)
-            {
-                connect(m_mailAgentProc, SIGNAL(processExited(KProcess *)),
-                        this, SLOT(slotMozillaExited(KProcess*)));
-        
-                connect(m_mailAgentProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
-                        this, SLOT(slotMozillaReadStderr(KProcess*, char*, int)));
-            }
-            qDebug ("%s", Temp.ascii());
-        
-            if ( m_mailAgentProc->start(KProcess::NotifyOnExit , KProcess::All) == false )
-                KMessageBox::error(kapp->activeWindow(), 
-                                   i18n("Cannot start '%1' program;\nplease "
-                                        "check your installation.")
-                                        .arg(m_sendImagesDialog->m_mailAgentName->currentText()));
-            else
-            {   agentInvoked = true;
-                m_invokedBefore=true;
-            }
-        }
-*/
   
     return agentInvoked;
 }

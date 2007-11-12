@@ -24,6 +24,7 @@
 
 #include <QLayout>
 #include <QLabel>
+#include <QGroupBox>
 #include <QComboBox>
 #include <QCheckBox>
 #include <QPushButton>
@@ -34,7 +35,6 @@
 #include <kdialog.h>
 #include <knuminput.h>
 #include <kiconloader.h>
-#include <kurlrequester.h>
 
 // LibKDcraw includes.
 
@@ -57,8 +57,6 @@ public:
     {
         labelMailAgent          = 0;
         mailAgentName           = 0;
-        labelThunderbirdBinPath = 0;
-        thunderbirdBinPath      = 0;
         imagesResize            = 0;
         addComments             = 0;
         changeImagesProp        = 0;
@@ -70,7 +68,6 @@ public:
     }
     
     QLabel        *labelMailAgent;
-    QLabel        *labelThunderbirdBinPath;
     QLabel        *labelImagesResize;
     QLabel        *labelImagesFormat;
 
@@ -83,8 +80,6 @@ public:
 
     KIntNumInput  *imageCompression;
     KIntNumInput  *attachmentlimit;
-
-    KUrlRequester *thunderbirdBinPath;
 };
 
 EmailPage::EmailPage(QWidget* parent)
@@ -117,15 +112,6 @@ EmailPage::EmailPage(QWidget* parent)
 
     //---------------------------------------------
 
-    d->labelThunderbirdBinPath = new QLabel(i18n("&Thunderbird path:"), this);
-
-    d->thunderbirdBinPath      = new KUrlRequester(this);
-    d->thunderbirdBinPath->setUrl(KUrl("/usr/bin/thunderbird"));
-    d->labelThunderbirdBinPath->setBuddy( d->thunderbirdBinPath );
-    d->thunderbirdBinPath->setWhatsThis(i18n("<p>The path name to the Thunderbird program."));
-
-    //---------------------------------------------
-
     d->addComments = new QCheckBox(i18n("Attach a file with caption and tags"), this);
     d->addComments->setWhatsThis(i18n("<p>If you enable this option, all image captions and tags "
                                       "will be added as an attached file."));
@@ -145,8 +131,8 @@ EmailPage::EmailPage(QWidget* parent)
     d->changeImagesProp->setWhatsThis(i18n("<p>If you enable this option, "
                                            "all images to send can be resized and recompressed."));
 
-    QGroupBox * groupBox = new QGroupBox(i18n("Image Properties"), this);
-    QGridLayout* grid2   = new QGridLayout(groupBox);
+    QGroupBox *groupBox = new QGroupBox(i18n("Image Properties"), this);
+    QGridLayout *grid2  = new QGridLayout(groupBox);
 
     d->imagesResize = new QComboBox(groupBox);
     d->imagesResize->insertItem(EmailSettingsContainer::VERYSMALL, i18n("Very Small (320 pixels)"));
@@ -230,13 +216,11 @@ EmailPage::EmailPage(QWidget* parent)
 
     grid->addWidget(d->labelMailAgent, 0, 0, 1, 1);
     grid->addWidget(d->mailAgentName, 0, 1, 1, 2);
-    grid->addWidget(d->labelThunderbirdBinPath, 1, 0, 1, 1);
-    grid->addWidget(d->thunderbirdBinPath, 1, 1, 1, 3);
-    grid->addWidget(d->attachmentlimit, 2, 0, 1, 4);
-    grid->addWidget(d->addComments, 3, 0, 1, 4);
-    grid->addWidget(d->changeImagesProp, 4, 0, 1, 4);
-    grid->addWidget(groupBox, 5, 0, 1, 4);
-    grid->setRowStretch(6, 10);    
+    grid->addWidget(d->attachmentlimit, 1, 0, 1, 4);
+    grid->addWidget(d->addComments, 2, 0, 1, 4);
+    grid->addWidget(d->changeImagesProp, 3, 0, 1, 4);
+    grid->addWidget(groupBox, 4, 0, 1, 4);
+    grid->setRowStretch(5, 10);    
     grid->setColumnStretch(3, 10);                     
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());        
@@ -245,12 +229,6 @@ EmailPage::EmailPage(QWidget* parent)
 
     connect(d->imagesFormat, SIGNAL(activated(int)),
             this, SLOT(slotImagesFormatChanged(int)));
-
-    connect(d->mailAgentName, SIGNAL(activated(int)),
-            this, SLOT(slotMailAgentChanged(int)));
-
-    connect(d->thunderbirdBinPath, SIGNAL(textChanged(const QString&)),
-            this, SLOT(slotThunderbirdBinPathChanged(const QString&)));
 
     connect(d->changeImagesProp, SIGNAL(toggled(bool)),
             groupBox, SLOT(setEnabled(bool)));
@@ -269,26 +247,6 @@ void EmailPage::slotImagesFormatChanged(int i)
         d->imageCompression->setEnabled(false);
 }
 
-void EmailPage::slotMailAgentChanged(int i)
-{
-    if ( i == EmailSettingsContainer::THUNDERBIRD )
-    {
-        d->labelThunderbirdBinPath->setEnabled(true);
-        d->thunderbirdBinPath->setEnabled(true);
-    }
-    else
-    {
-       d->labelThunderbirdBinPath->setEnabled(false);
-       d->thunderbirdBinPath->setEnabled(false);
-    }
-}
-
-void EmailPage::slotThunderbirdBinPathChanged(const QString& url)
-{
-    if ( d->mailAgentName->currentIndex() == EmailSettingsContainer::THUNDERBIRD )
-       emit signalEnableButtonOK( !url.isEmpty());
-}
-
 void EmailPage::setEmailSettings(const EmailSettingsContainer& settings)
 {
     d->mailAgentName->setCurrentIndex((int)settings.emailProgram);
@@ -301,10 +259,7 @@ void EmailPage::setEmailSettings(const EmailSettingsContainer& settings)
     d->imageCompression->setValue(settings.imageCompression);
     d->attachmentlimit->setValue(settings.attachmentLimitInMbytes);
 
-    d->thunderbirdBinPath->setUrl(settings.thunderbirdPath);
-
     slotImagesFormatChanged(d->imagesFormat->currentIndex());
-    slotMailAgentChanged(d->mailAgentName->currentIndex());
 }
                                     
 EmailSettingsContainer EmailPage::emailSettings()
@@ -319,8 +274,6 @@ EmailSettingsContainer EmailPage::emailSettings()
 
     settings.imageCompression        = d->imageCompression->value();
     settings.attachmentLimitInMbytes = d->attachmentlimit->value();
-
-    settings.thunderbirdPath         = d->thunderbirdBinPath->url();
 
     return settings;
 }
