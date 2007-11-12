@@ -27,7 +27,6 @@
 
 // KDE includes.
 
-#include <k3listview.h>
 #include <klocale.h>
 #include <kdialog.h>
 #include <knuminput.h>
@@ -53,67 +52,103 @@
 namespace KIPISendimagesPlugin
 {
 
-class ImagesListViewItem : public K3ListViewItem
+ImagesListViewItem::ImagesListViewItem(K3ListView *view, KIPI::Interface *iface, const KUrl& url)
+                  : K3ListViewItem(view)
 {
+    connect(iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
 
-public:
+    iface->thumbnail(url, 128);
 
-    ImagesListViewItem(K3ListView *view, KIPI::Interface *iface, const KUrl& url)
-        : K3ListViewItem(view)
-    {
-        KIPI::ImageInfo imageInfo = iface->info(url);
-
-        setThumb(SmallIcon("empty", KIconLoader::SizeLarge, KIconLoader::DisabledState));
-        setUrl(url);
-        setComments(imageInfo.description());
-
-        setTags(QStringList());
-        if (iface->hasFeature(KIPI::HostSupportsTags))
-        {
-            QMap<QString, QVariant> attribs = imageInfo.attributes();
-            setTags(attribs["tags"].toStringList());    
-        }
-
-        setRating(-1);
-        if (iface->hasFeature(KIPI::HostSupportsRating))
-        {
-            QMap<QString, QVariant> attribs = imageInfo.attributes();
-            setRating(attribs["rating"].toInt());    
-        }
-    }
-
-    ~ImagesListViewItem(){}
-
-    void setUrl(const KUrl& url)
-    {
-        m_item.orgUrl = url;
-        setText(1, m_item.orgUrl.fileName());
-    }
-
-    KUrl url() { return m_item.orgUrl; }
-
-    void setComments(const QString& comments)
-    {
-        m_item.comments = comments;
-        setText(2, m_item.comments);
-    }
-
-    QString comments() { return m_item.comments; }
-
-    void setTags(const QStringList& tags) { m_item.tags = tags; }
-    QStringList tags() { return m_item.tags; }
-
-    void setRating(int rating) { m_item.rating = rating; }
-    int rating() { return m_item.rating; }
-
-    void setThumb(const QPixmap& pix) { setPixmap(0, pix); }
-
-    EmailItem emailItem() { return m_item; }
+    KIPI::ImageInfo imageInfo = iface->info(url);
     
-private: 
+    setThumb(SmallIcon("empty", KIconLoader::SizeLarge, KIconLoader::DisabledState));
 
-    EmailItem m_item;
-};
+    setUrl(url);
+    setComments(imageInfo.description());
+
+    setTags(QStringList());
+    if (iface->hasFeature(KIPI::HostSupportsTags))
+    {
+        QMap<QString, QVariant> attribs = imageInfo.attributes();
+        setTags(attribs["tags"].toStringList());    
+    }
+
+    setRating(-1);
+    if (iface->hasFeature(KIPI::HostSupportsRating))
+    {
+        QMap<QString, QVariant> attribs = imageInfo.attributes();
+        setRating(attribs["rating"].toInt());    
+    }
+}
+
+ImagesListViewItem::~ImagesListViewItem()
+{
+}
+
+void ImagesListViewItem::setUrl(const KUrl& url)
+{
+    m_item.orgUrl = url;
+    setText(1, m_item.orgUrl.fileName());
+}
+
+KUrl ImagesListViewItem::url() 
+{
+    return m_item.orgUrl; 
+}
+
+void ImagesListViewItem::setComments(const QString& comments)
+{
+    m_item.comments = comments;
+    setText(2, m_item.comments);
+}
+
+QString ImagesListViewItem::comments() 
+{ 
+    return m_item.comments; 
+}
+
+void ImagesListViewItem::setTags(const QStringList& tags) 
+{ 
+    m_item.tags = tags; 
+}
+
+QStringList ImagesListViewItem::tags() 
+{ 
+    return m_item.tags; 
+}
+
+void ImagesListViewItem::setRating(int rating) 
+{ 
+    m_item.rating = rating; 
+}
+
+int ImagesListViewItem::rating() 
+{ 
+    return m_item.rating; 
+}
+
+void ImagesListViewItem::setThumb(const QPixmap& pix) 
+{ 
+    setPixmap(0, pix); 
+}
+
+EmailItem ImagesListViewItem::emailItem() 
+{ 
+    return m_item; 
+}
+
+void ImagesListViewItem::slotThumbnail(const KUrl& url, const QPixmap& pix)
+{
+    if (m_item.orgUrl != url) return;
+
+    if (pix.isNull())
+        setThumb(SmallIcon("empty", 128, KIconLoader::DisabledState));
+    else
+        setThumb(pix);
+}
+
+// ---------------------------------------------------------------------------
 
 class ImagesPagePriv
 {
