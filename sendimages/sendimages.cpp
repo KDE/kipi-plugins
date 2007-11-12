@@ -61,12 +61,9 @@ public:
 
     SendImagesPriv()
     {
-        invokedBefore   = false;
         threadImgResize = 0;
         progressDlg     = 0;
     }
-
-    bool                       invokedBefore;
 
     KUrl::List                 attachementFiles;
     KUrl::List                 failedResizedImages;
