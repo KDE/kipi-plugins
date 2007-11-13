@@ -54,6 +54,7 @@ private slots:
     void slotFailedResize(const KUrl&, const QString&, int);
     void slotCompleteResize();
     void slotCancel();
+    void slotCleanUp();
 
 private:
 

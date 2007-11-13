@@ -152,7 +152,11 @@ void SendImages::slotCancel()
     d->progressDlg->addedAction(i18n("Operation canceled by user"), KIPI::WarningMessage);
     d->progressDlg->setProgress(0, 100);
     d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
-    KTempDir::removeDir(d->settings.tempPath);
+
+    disconnect(d->progressDlg, SIGNAL(cancelClicked()),
+               this, SLOT(slotCancel()));
+
+    slotCleanUp();
 }
 
 void SendImages::slotStartingResize(const KUrl& orgUrl)
@@ -513,6 +517,12 @@ void SendImages::invokeMailAgentError(const QString& prog, const QStringList& ar
     kDebug() << "Command Line: " << prog << args << endl;
     QString text = i18n("Failed to start \"%1\" program. Check your system.", prog);
     d->progressDlg->addedAction(text, KIPI::ErrorMessage);
+    d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
+
+    disconnect(d->progressDlg, SIGNAL(cancelClicked()),
+               this, SLOT(slotCancel()));
+
+    slotCleanUp();
 }
 
 void SendImages::invokeMailAgentDone(const QString& prog, const QStringList& args)
@@ -524,6 +534,16 @@ void SendImages::invokeMailAgentDone(const QString& prog, const QStringList& arg
 
     disconnect(d->progressDlg, SIGNAL(cancelClicked()),
                this, SLOT(slotCancel()));
+
+    connect(d->progressDlg, SIGNAL(cancelClicked()),
+            this, SLOT(slotCleanUp()));
+    
+    d->progressDlg->addedAction(i18n("Press 'Close' button to clean-up temporary files"), KIPI::WarningMessage);
+}
+
+void SendImages::slotCleanUp()
+{
+    KTempDir::removeDir(d->settings.tempPath);
 }
 
 }  // NameSpace KIPISendimagesPlugin
