@@ -215,6 +215,8 @@ void ImagesPage::addImages(const KUrl::List& list)
 {
     if ( list.count() == 0 ) return;
 
+    KUrl::List urls;
+
     for( KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
     {
         KUrl imageUrl = *it;
@@ -235,9 +237,11 @@ void ImagesPage::addImages(const KUrl::List& list)
         if (!find)
         {
             new ImagesListViewItem(d->listView, d->iface, imageUrl);
-            d->iface->thumbnail(imageUrl, 64);
+            urls.append(imageUrl);
         }
     }
+
+    d->iface->thumbnails(urls, 64);
 }
 
 void ImagesPage::slotThumbnail(const KUrl& url, const QPixmap& pix)

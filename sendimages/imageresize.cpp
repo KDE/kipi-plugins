@@ -70,8 +70,7 @@ public:
 
             KUrl                   orgUrl;
             QString                destName;
-            EmailSettingsContainer settings;
-            
+            EmailSettingsContainer settings;            
     };
 
     bool             running;
@@ -151,18 +150,18 @@ void ImageResize::run()
             QString errString;
 
             emit startingResize(t->orgUrl);
+            d->count++;
+            int percent = (int)(((float)d->count/(float)t->settings.itemsList.count())*100.0);
 
             if (imageResize(t->settings, t->orgUrl, t->destName, errString))
             {
                 KUrl emailUrl(t->settings.tempPath + t->destName);
-                emit finishedResize(t->orgUrl, emailUrl);
+                emit finishedResize(t->orgUrl, emailUrl, percent);
             }
             else
             {
-                emit failedResize(t->orgUrl, errString);
+                emit failedResize(t->orgUrl, errString, percent);
             }
-
-            d->count++;
             
             if (t->settings.itemsList.count() == d->count)
             {

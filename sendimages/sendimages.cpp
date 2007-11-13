@@ -85,11 +85,11 @@ SendImages::SendImages(const EmailSettingsContainer& settings, QObject *parent)
     connect(d->threadImgResize, SIGNAL(startingResize(const KUrl&)),
             this, SLOT(slotStartingResize(const KUrl&)));
 
-    connect(d->threadImgResize, SIGNAL(finishedResize(const KUrl&, const KUrl&)),
-            this, SLOT(slotFinishedResize(const KUrl&, const KUrl&)));
+    connect(d->threadImgResize, SIGNAL(finishedResize(const KUrl&, const KUrl&, int)),
+            this, SLOT(slotFinishedResize(const KUrl&, const KUrl&, int)));
 
-    connect(d->threadImgResize, SIGNAL(failedResize(const KUrl&, const QString&)),
-            this, SLOT(slotFailedResize(const KUrl&, const QString&)));
+    connect(d->threadImgResize, SIGNAL(failedResize(const KUrl&, const QString&, int)),
+            this, SLOT(slotFailedResize(const KUrl&, const QString&, int)));
 
     connect(d->threadImgResize, SIGNAL(completeResize()),
             this, SLOT(slotCompleteResize()));
@@ -120,6 +120,7 @@ void SendImages::sendImages()
             this, SLOT(slotCancel()));
 
     d->progressDlg->show();
+    d->progressDlg->setProgress(0, 100);
     d->attachementFiles.clear();
     d->failedResizedImages.clear();
 
@@ -141,7 +142,7 @@ void SendImages::sendImages()
             d->attachementFiles.append((*it).orgUrl);            
             d->settings.setEmailUrl((*it).orgUrl, (*it).orgUrl);
         }    
-
+        d->progressDlg->setProgress(50, 100);
         secondStage();
     }
 }
@@ -157,8 +158,9 @@ void SendImages::slotStartingResize(const KUrl& orgUrl)
     d->progressDlg->addedAction(text, KIPI::StartingMessage);
 }
 
-void SendImages::slotFinishedResize(const KUrl& orgUrl, const KUrl& emailUrl)
+void SendImages::slotFinishedResize(const KUrl& orgUrl, const KUrl& emailUrl, int percent)
 {
+    d->progressDlg->setProgress((int)(80.0*(percent/100.0)), 100);
     kDebug() << emailUrl << endl;
     d->attachementFiles.append(emailUrl);
     d->settings.setEmailUrl(orgUrl, emailUrl);
@@ -167,8 +169,9 @@ void SendImages::slotFinishedResize(const KUrl& orgUrl, const KUrl& emailUrl)
     d->progressDlg->addedAction(text, KIPI::SuccessMessage);
 }
 
-void SendImages::slotFailedResize(const KUrl& orgUrl, const QString& error)
+void SendImages::slotFailedResize(const KUrl& orgUrl, const QString& error, int percent)
 {
+    d->progressDlg->setProgress((int)(80.0*(percent/100.0)), 100);
     QString text = i18n("Failed to resize %1 : %2", orgUrl.fileName(), error);
     d->progressDlg->addedAction(text, KIPI::ErrorMessage);
 
@@ -184,7 +187,9 @@ void SendImages::slotCompleteResize()
 void SendImages::secondStage()
 {
     buildPropertiesFile();
+    d->progressDlg->setProgress(90, 100);
     invokeMailAgent();
+    d->progressDlg->setProgress(100, 100);
 }
 
 /** Creates a text file with all images Comments, Tags, and Rating. */

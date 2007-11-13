@@ -50,8 +50,8 @@ public:
 private slots:
    
     void slotStartingResize(const KUrl&);
-    void slotFinishedResize(const KUrl&, const KUrl&);
-    void slotFailedResize(const KUrl&, const QString&);
+    void slotFinishedResize(const KUrl&, const KUrl&, int);
+    void slotFailedResize(const KUrl&, const QString&, int);
     void slotCompleteResize();
     void slotCancel();
 
