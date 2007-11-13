@@ -159,9 +159,11 @@ SlideShowGL::~SlideShowGL()
     if (m_texture[1])
         glDeleteTextures(1, &m_texture[1]);
 
-    if (m_config) {
+    if (m_imageLoader)
+      delete m_imageLoader;
+
+    if (m_config)
         delete m_config;
-    }
 }
 
 void SlideShowGL::readSettings()
