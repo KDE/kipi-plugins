@@ -149,6 +149,9 @@ void SendImages::sendImages()
 
 void SendImages::slotCancel()
 {
+    d->progressDlg->addedAction(i18n("Operation canceled by user"), KIPI::WarningMessage);
+    d->progressDlg->setProgress(0, 100);
+    d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
     KTempDir::removeDir(d->settings.tempPath);
 }
 
@@ -180,7 +183,11 @@ void SendImages::slotFailedResize(const KUrl& orgUrl, const QString& error, int 
 
 void SendImages::slotCompleteResize()
 {
-    if (!showFailedResizedImages()) return;
+    if (!showFailedResizedImages())
+    {
+        slotCancel();
+        return;
+    }
     secondStage();
 }
 
@@ -255,8 +262,9 @@ bool SendImages::showFailedResizedImages()
 
         switch (valRet)
         {
-            case KMessageBox::Yes :        // Added source image files instead resized images...
-        
+            case KMessageBox::Yes:        
+            {
+                // Added source image files instead resized images...
                 for (KUrl::List::const_iterator it = d->failedResizedImages.begin();
                     it != d->failedResizedImages.end(); ++it) 
                 {
@@ -264,14 +272,18 @@ bool SendImages::showFailedResizedImages()
                     d->settings.setEmailUrl(*it, *it);
                 }
                 break;
-        
-            case KMessageBox::No :         // Do nothing...
+            }
+            case KMessageBox::No:         
+            {
+                // Do nothing...
                 break;
-        
-            case KMessageBox::Cancel :     // Stop process...
-                slotCancel();
+            }
+            case KMessageBox::Cancel:
+            {
+                // Stop process...
                 return false;
                 break;
+            }
         }
     }
 
@@ -286,8 +298,8 @@ KUrl::List SendImages::divideEmails()
 {
     qint64 myListSize=0;
     
-    KUrl::List processedNow;            // files witch can be processed now.
-    KUrl::List todoAttachement;          // Still todo list
+    KUrl::List processedNow;            // List witch can be processed now.
+    KUrl::List todoAttachement;         // Still todo list
 
     kDebug() << "Attachment limit: " << d->settings.attachementLimitInBytes() << endl;
 
