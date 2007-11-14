@@ -491,16 +491,6 @@ void SlideShowGL::previousFrame()
 
 void SlideShowGL::loadImage()
 {
-//     QPair<QString, int> fileAngle = m_fileList[m_fileIndex];
-//     QString path(fileAngle.first);
-//     int     angle(fileAngle.second);
-//     QImage image(path);
-//     if (angle != 0)
-//     {
-//         QWMatrix wm;
-//         wm.rotate(angle);
-//         image = image.xForm(wm);
-//     }
 
     QImage image = m_imageLoader->getCurrent();
   

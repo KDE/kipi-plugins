@@ -69,6 +69,7 @@
 #include "listimageitems.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
+#include "slideshowkb.h"
 #include "slideshowconfig.h"
 #include "slideshowconfig.moc"
 
@@ -122,6 +123,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
     connect(m_commentsBgColor, SIGNAL(changed(const QColor &)), this, SLOT(slotCommentsBgColorChanged()));
     connect(m_useMillisecondsCheckBox, SIGNAL(toggled(bool)), SLOT(slotUseMillisecondsToggled()));
     connect(m_delaySpinBox, SIGNAL(valueChanged(int)), this, SLOT(slotDelayChanged()));
+    connect(m_effectsComboBox, SIGNAL(activated(int)), this,  SLOT(slotEffectChanged()));
 
     connect(m_fileSrcButtonGroup, SIGNAL(clicked(int)), this, SLOT(slotSelection()));
 
@@ -165,6 +167,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
     m_urlList = urlList;
     
     slotSelection();
+    slotEffectChanged();
 }
 
 
@@ -201,20 +204,31 @@ void SlideShowConfig::loadEffectNamesGL()
 {
     m_effectsComboBox->clear();
 
-    QMap<QString,QString> effectNames = SlideShowGL::effectNamesI18N();
     QStringList effects;
-
+    QMap<QString,QString> effectNames;
     QMap<QString,QString>::Iterator it;
+    
+    // Load slideshowgl effects
+    effectNames = SlideShowGL::effectNamesI18N();
+
     for (it = effectNames.begin(); it != effectNames.end(); ++it)
         effects.append(it.data());
 
+    // Load Ken Burns effect
+    effectNames = SlideShowKB::effectNamesI18N();
+    for (it = effectNames.begin(); it != effectNames.end(); ++it)
+      effects.append(it.data());
+
+    // Update GUI
+    
+    effects.sort();
     m_effectsComboBox->insertStringList(effects);
 
     for (int i=0; i<m_effectsComboBox->count(); i++) {
-        if (effectNames[m_effectNameGL] == m_effectsComboBox->text(i)) {
-            m_effectsComboBox->setCurrentItem(i);
-            break;
-        }
+      if (effectNames[m_effectNameGL] == m_effectsComboBox->text(i)) {
+        m_effectsComboBox->setCurrentItem(i);
+        break;
+      }
     }
 }
 
@@ -248,6 +262,7 @@ void SlideShowConfig::readSettings()
     useMilliseconds       = m_config->readBoolEntry("Use Milliseconds", false);
     enableMouseWheel      = m_config->readNumEntry("Enable Mouse Wheel", true);
     
+
     // Comments tab settings
     uint  commentsFontColor;
     uint  commentsBgColor;
@@ -269,10 +284,14 @@ void SlideShowConfig::readSettings()
     commentsLinesLength   = m_config->readNumEntry("Comments Lines Length", 72);
 
     // Advanced tab
-    bool enableCache;
-
+    bool enableCache, kbDisableFadeInOut, kbDisableCrossFade;
+    
+    kbDisableFadeInOut = m_config->readBoolEntry("KB Disable FadeInOut", false);
+    kbDisableCrossFade = m_config->readBoolEntry("KB Disable Crossfade", false);
+    
     enableCache = m_config->readBoolEntry("Enable Cache", false);
     m_cacheSize  = m_config->readNumEntry("Cache Size", 5);
+    
     
     // -- Apply Settings to widgets ------------------------------
 
@@ -304,6 +323,9 @@ void SlideShowConfig::readSettings()
     m_commentsFontChooser->setFont(*savedFont);
     delete savedFont;
 
+    m_kbDisableFadeCheckBox->setChecked(kbDisableFadeInOut);
+    m_kbDisableCrossfadeCheckBox->setChecked(kbDisableCrossFade);
+    
     m_cacheCheckBox->setChecked(enableCache);
     
     slotOpenGLToggled();
@@ -374,14 +396,27 @@ void SlideShowConfig::saveSettings()
 
     }
     else {
+      QStringList effects;
+      QMap<QString,QString> effectNames;
+      QMap<QString,QString>::Iterator it;
+    
+    // Load slideshowgl effects
+      effectNames = SlideShowGL::effectNamesI18N();
+
+      for (it = effectNames.begin(); it != effectNames.end(); ++it)
+        effects.append(it.data());
+
+    // Load Ken Burns effect
+      effectNames = SlideShowKB::effectNamesI18N();
+      for (it = effectNames.begin(); it != effectNames.end(); ++it)
+        effects.append(it.data());
 
         QString effect;
-        QMap<QString,QString> effectNames = SlideShowGL::effectNamesI18N();
-        QMap<QString,QString>::Iterator it;
+        QStringList::Iterator it1;
 
-        for (it = effectNames.begin(); it != effectNames.end(); ++it) {
-            if (it.data() == m_effectsComboBox->currentText()) {
-                effect = it.key();
+        for (it1 = effects.begin(); it1 != effects.end(); ++it1) {
+            if ( *it1 == m_effectsComboBox->currentText()) {
+                effect = *it1;
                 break;
             }
         }
@@ -391,6 +426,9 @@ void SlideShowConfig::saveSettings()
     }
 
     // Advanced settings
+    m_config->writeEntry("KB Disable FadeInOut", m_kbDisableFadeCheckBox->isChecked());
+    m_config->writeEntry("KB Disable Crossfade", m_kbDisableCrossfadeCheckBox->isChecked());
+    
     m_config->writeEntry("Enable Cache", m_cacheCheckBox->isChecked());
     m_config->writeEntry("Cache Size", m_cacheSizeSpinBox->value());
     
@@ -480,6 +518,17 @@ void SlideShowConfig::slotUseMillisecondsToggled()
     }
 }
 
+void SlideShowConfig::slotEffectChanged()
+{
+  bool isKB = m_effectsComboBox->currentText() == i18n("Ken Burns");
+  
+  m_printNameCheckBox->setEnabled(!isKB);
+  m_printProgressCheckBox->setEnabled(!isKB);
+  m_printCommentsCheckBox->setEnabled(!isKB);
+  
+  m_cacheButtonGroup->setEnabled(!isKB);
+}
+
 void SlideShowConfig::slotCacheToggled()
 {
   bool isEnabled = m_cacheCheckBox->isChecked();
@@ -499,6 +548,8 @@ void SlideShowConfig::slotOpenGLToggled()
     }
     
     ShowNumberImages( m_ImagesFilesListBox->count() );
+    
+    slotEffectChanged();
 }
 
 

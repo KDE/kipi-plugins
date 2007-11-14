@@ -43,6 +43,7 @@
 
 #include "slideshow.h"
 #include "slideshowgl.h"
+#include "slideshowkb.h"
 #include "slideshowconfig.h"
 #include "plugin_slideshow.h"
 
@@ -173,13 +174,13 @@ void Plugin_SlideShow::slotSlideShow()
      
     bool    opengl;
     bool    shuffle;
+    bool    wantKB;
     
     config.setGroup("SlideShow Settings");
     opengl                = config.readBoolEntry("OpenGL");
     shuffle               = config.readBoolEntry("Shuffle");
-
-    if ( !m_urlList ) {kdDebug() << "ERRORE m_urlList NON ALLOCATO!!!"; return;}
-
+    wantKB                = config.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
+    
     if ( m_urlList->isEmpty() )
     {
         KMessageBox::sorry(kapp->activeWindow(), i18n("There are no images to show."));
@@ -227,10 +228,8 @@ void Plugin_SlideShow::slotSlideShow()
         }
     }
 
-
     if (!opengl) {
-        KIPISlideShowPlugin::SlideShow *slideShow =
-                new KIPISlideShowPlugin::SlideShow(fileList, commentsList, m_imagesHasComments);
+      KIPISlideShowPlugin::SlideShow* slideShow = new KIPISlideShowPlugin::SlideShow(fileList, commentsList, m_imagesHasComments);
         slideShow->show();
     }
     else {
@@ -238,9 +237,16 @@ void Plugin_SlideShow::slotSlideShow()
             KMessageBox::error(kapp->activeWindow(),
                                i18n("Sorry. OpenGL support not available on your system"));
         else {
-            KIPISlideShowPlugin::SlideShowGL *slideShow =
-                    new KIPISlideShowPlugin::SlideShowGL(fileList, commentsList, m_imagesHasComments);
+          if (wantKB) {
+            KIPISlideShowPlugin::SlideShowKB* slideShow = 
+                new KIPISlideShowPlugin::SlideShowKB(fileList, commentsList, m_imagesHasComments);
             slideShow->show();
+          }
+          else {
+            KIPISlideShowPlugin::SlideShowGL * slideShow = 
+                new KIPISlideShowPlugin::SlideShowGL(fileList, commentsList, m_imagesHasComments);
+            slideShow->show();
+          }
         }
     }
 }

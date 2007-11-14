@@ -10,7 +10,8 @@ kipiplugin_slideshow_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKDCRAW_LIBS_DEP)
 
 kipiplugin_slideshow_la_SOURCES = listimageitems.cpp plugin_slideshow.cpp \
 	slideshow.cpp slideshowconfig.cpp slideshowconfigbase.ui slideshowgl.cpp \
-	slideshowloader.cpp toolbar.cpp
+	slideshowloader.cpp toolbar.cpp imageloadthread.cpp kbeffect.cpp screenproperties.cpp \
+	slideshowkb.cpp
 
 #kipiplugin_slideshow_la_LIBADD = -lkdefx  $(GL_LIBS) $(LIBKIPI_LIBS) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 kipiplugin_slideshow_la_LIBADD = -lkdefx $(GL_LIBS) $(LIBKIPI_LIBS) $(LIBKDCRAW_LIBS)  \

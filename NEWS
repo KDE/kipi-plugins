@@ -9,6 +9,7 @@ General        : Added the availability to disable plugins we don't want to buil
 PrintWizard    : Added raw file management, now raw files can be printed.
 SlideShow      : Solved minor issue in filename printing (2D slideshow).
 SlideShow      : New caching mechanism
+SlideShow      : Added Ken Burns effect
 
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
@@ -16,7 +17,10 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 001 ==> 149666 : General     : iPod Export kipi plugin cannot be disabled at compile 
                                time when libgpod is present on system
 002 ==> 151604 : PrintWizard : Print Wizard does not recognize raw images
-003 ==>
+003 ==> 102021 : SlideShow   : Pan and Zoom on Slideshow viewing (not a transition) 
+                               a la iPhoto
+004 ==>
+
 
 v 0.1.5 - Beta1
 ----------------------------------------------------------------------------

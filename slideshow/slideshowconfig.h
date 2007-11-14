@@ -90,6 +90,7 @@ private slots:
     void slotStartClicked();
     void slotHelp();
     void slotOpenGLToggled();
+    void slotEffectChanged();
     void slotDelayChanged();
     void slotUseMillisecondsToggled();
     void slotPrintCommentsToggled();
@@ -98,7 +99,7 @@ private slots:
     
     void slotSelection();
     void slotCacheToggled();
-    
+   
     void SlotPortfolioDurationChanged ( int );
     void slotImagesFilesSelected( QListBoxItem *item );
     void slotAddDropItems(KURL::List filesUrl);

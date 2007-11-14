@@ -1266,7 +1266,39 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                     </widget>
                     <widget class="QButtonGroup">
                         <property name="name">
-                            <cstring>buttonGroup2</cstring>
+                            <cstring>buttonGroup3</cstring>
+                        </property>
+                        <property name="title">
+                            <string>Ken Burns effect</string>
+                        </property>
+                        <hbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>m_kbDisableFadeCheckBox</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Disable fade-in / fade-out</string>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>m_kbDisableCrossfadeCheckBox</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Disable crossfade</string>
+                                </property>
+                            </widget>
+                        </hbox>
+                    </widget>
+                    <widget class="QButtonGroup">
+                        <property name="name">
+                            <cstring>m_cacheButtonGroup</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>true</bool>
                         </property>
                         <property name="title">
                             <string>Others</string>
@@ -1340,6 +1372,18 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                                     </widget>
                                 </hbox>
                             </widget>
+                            <widget class="QLabel">
+                                <property name="name">
+                                    <cstring>m_KBCacheLabel</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>true</bool>
+                                </property>
+                                <property name="text">
+                                    <string>&lt;b&gt;Notice&lt;/b&gt;:
+Ken Burns effect doesn't use this cache mechanism.</string>
+                                </property>
+                            </widget>
                         </vbox>
                     </widget>
                     <spacer>
@@ -1355,7 +1399,7 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                         <property name="sizeHint">
                             <size>
                                 <width>41</width>
-                                <height>140</height>
+                                <height>90</height>
                             </size>
                         </property>
                     </spacer>
