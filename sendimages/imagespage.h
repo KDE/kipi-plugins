@@ -25,12 +25,13 @@
 
 // Qt includes.
 
+#include <QListWidget>
 #include <QObject>
 #include <QWidget>
+#include <QPixmap>
 
 // KDE includes.
 
-#include <k3listview.h>
 #include <kurl.h>
 
 // Local includes.
@@ -47,12 +48,12 @@ namespace KIPISendimagesPlugin
 
 class ImagesPagePriv;
 
-class ImagesListViewItem : public K3ListViewItem
+class ImagesListViewItem : public QListWidgetItem
 {
 
 public:
 
-    ImagesListViewItem(K3ListView *view, KIPI::Interface *iface, const KUrl& url);
+    ImagesListViewItem(QListWidget *view, KIPI::Interface *iface, const KUrl& url);
     ~ImagesListViewItem();
 
     void setUrl(const KUrl& url);

@@ -14,7 +14,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_sendimages
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       ${KDCRAW_LIBRARIES} 
-                      ${QT_QT3SUPPORT_LIBRARY} 
                       kipiplugins
                      )
 

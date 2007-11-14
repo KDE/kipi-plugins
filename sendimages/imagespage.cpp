@@ -20,10 +20,14 @@
  * 
  * ============================================================ */
 
+#define ICONSIZE 64
+
 // QT includes.
 
 #include <QLayout>
 #include <QPushButton>
+#include <QPainter>
+#include <QPalette>
 
 // KDE includes.
 
@@ -53,8 +57,8 @@
 namespace KIPISendimagesPlugin
 {
 
-ImagesListViewItem::ImagesListViewItem(K3ListView *view, KIPI::Interface *iface, const KUrl& url)
-                  : K3ListViewItem(view)
+ImagesListViewItem::ImagesListViewItem(QListWidget *view, KIPI::Interface *iface, const KUrl& url)
+                  : QListWidgetItem(view)
 {
     KIPI::ImageInfo imageInfo = iface->info(url);
     
@@ -85,7 +89,7 @@ ImagesListViewItem::~ImagesListViewItem()
 void ImagesListViewItem::setUrl(const KUrl& url)
 {
     m_item.orgUrl = url;
-    setText(1, m_item.orgUrl.fileName());
+    setText(m_item.orgUrl.fileName());
 }
 
 KUrl ImagesListViewItem::url() 
@@ -96,7 +100,6 @@ KUrl ImagesListViewItem::url()
 void ImagesListViewItem::setComments(const QString& comments)
 {
     m_item.comments = comments;
-    setText(2, m_item.comments);
 }
 
 QString ImagesListViewItem::comments() 
@@ -126,7 +129,11 @@ int ImagesListViewItem::rating()
 
 void ImagesListViewItem::setThumb(const QPixmap& pix) 
 { 
-    setPixmap(0, pix); 
+    QPixmap pixmap(ICONSIZE+2, ICONSIZE+2);
+    pixmap.fill(Qt::color0);
+    QPainter p(&pixmap);
+    p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
+    setIcon(QIcon(pixmap)); 
 }
 
 EmailItem ImagesListViewItem::emailItem() 
@@ -151,7 +158,7 @@ public:
     QPushButton     *addButton;
     QPushButton     *removeButton;
 
-    K3ListView      *listView;
+    QListWidget     *listView;
 
     KIPI::Interface *iface;
 };
@@ -166,13 +173,9 @@ ImagesPage::ImagesPage(QWidget* parent, KIPI::Interface *iface)
 
     // --------------------------------------------------------
 
-    d->listView = new K3ListView(this);
-    d->listView->addColumn( i18n("Thumb") );
-    d->listView->addColumn( i18n("Name") );
-    d->listView->addColumn( i18n("Comments") );
-    d->listView->setAllColumnsShowFocus(true);
-    d->listView->setSelectionMode(Q3ListView::Multi);
-    d->listView->setFullWidth(true);
+    d->listView = new QListWidget(this);
+    d->listView->setIconSize(QSize(ICONSIZE, ICONSIZE));
+    d->listView->setSelectionMode(QAbstractItemView::MultiSelection);    
     d->listView->setWhatsThis(i18n("<p>This is the list of images to e-mail."));
 
     // --------------------------------------------------------
@@ -225,10 +228,9 @@ void ImagesPage::addImages(const KUrl::List& list)
     
         bool find = false;
 
-        Q3ListViewItemIterator it(d->listView);
-        for ( ; it.current(); ++it )
+        for (int i = 0 ; i < d->listView->count(); i++)
         {
-            ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(it.current());
+            ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(d->listView->item(i));
     
             if (item->url() == imageUrl)
                 find = true;
@@ -241,21 +243,20 @@ void ImagesPage::addImages(const KUrl::List& list)
         }
     }
 
-    d->iface->thumbnails(urls, 64);
+    d->iface->thumbnails(urls, ICONSIZE);
 }
 
 void ImagesPage::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
-    Q3ListViewItemIterator it(d->listView);
-    for ( ; it.current(); ++it )
+    for (int i = 0 ; i < d->listView->count(); i++)
     {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(it.current());
+        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(d->listView->item(i));
         if (item->url() == url)
         {
             if (pix.isNull())
-                item->setThumb(SmallIcon("empty", 64, KIconLoader::DisabledState));
+                item->setThumb(SmallIcon("empty", ICONSIZE, KIconLoader::DisabledState));
             else
-                item->setThumb(pix.scaled(64, 64, Qt::KeepAspectRatio));
+                item->setThumb(pix.scaled(ICONSIZE, ICONSIZE, Qt::KeepAspectRatio));
 
             return;
         }
@@ -300,10 +301,9 @@ void ImagesPage::slotRemoveItems()
     do
     {
         find = false;
-        Q3ListViewItemIterator it(d->listView);
-        for ( ; it.current(); ++it )
+        for (int i = 0 ; i < d->listView->count(); i++)
         {
-            ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(it.current());
+            ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(d->listView->item(i));
             if (item->isSelected())
             {
                 delete item;
@@ -318,10 +318,9 @@ void ImagesPage::slotRemoveItems()
 QList<EmailItem> ImagesPage::imagesList()
 {
     QList<EmailItem> list;
-    Q3ListViewItemIterator it(d->listView);
-    for ( ; it.current(); ++it )
+    for (int i = 0 ; i < d->listView->count(); i++)
     {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(it.current());
+        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(d->listView->item(i));
         list.append(item->emailItem());
     }
     return list;
