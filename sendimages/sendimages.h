@@ -31,6 +31,11 @@
 
 #include "emailsettingscontainer.h"
 
+namespace KIPI
+{
+    class Interface;
+}
+
 namespace KIPISendimagesPlugin
 {
 class SendImagesPriv;
@@ -42,7 +47,7 @@ Q_OBJECT
 
 public:
 
-    SendImages(const EmailSettingsContainer& settings, QObject *parent=0);
+    SendImages(const EmailSettingsContainer& settings, QObject *parent, KIPI::Interface *iface);
     ~SendImages();
 
     void sendImages();

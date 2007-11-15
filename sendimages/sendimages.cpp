@@ -44,6 +44,7 @@
 // LibKipi includes.
 
 #include <libkipi/batchprogressdialog.h>
+#include <libkipi/interface.h>
 
 // Local includes.
 
@@ -63,23 +64,26 @@ public:
     {
         threadImgResize = 0;
         progressDlg     = 0;
+        iface           = 0;
     }
 
     KUrl::List                 attachementFiles;
     KUrl::List                 failedResizedImages;
 
     KIPI::BatchProgressDialog *progressDlg;
+    KIPI::Interface           *iface;
 
     EmailSettingsContainer     settings;
 
     ImageResize               *threadImgResize;
 };
 
-SendImages::SendImages(const EmailSettingsContainer& settings, QObject *parent)
+SendImages::SendImages(const EmailSettingsContainer& settings, QObject *parent, KIPI::Interface *iface)
           : QObject(parent)
 {
     d = new SendImagesPriv;
     d->settings = settings;
+    d->iface    = iface;
     d->threadImgResize = new KIPISendimagesPlugin::ImageResize(this);
 
     connect(d->threadImgResize, SIGNAL(startingResize(const KUrl&)),
@@ -228,8 +232,18 @@ void SendImages::buildPropertiesFile()
             if (tags.isEmpty())
                 tags = i18n("no keywords");
 
-            propertiesText += i18n("file \"%1\":\nOriginal images: %2\nComments: %3\nTags: %4\nRating: %5\n\n",
-                                   emailFile, orgFile, comments, tags, rating);
+            propertiesText.append(i18n("file \"%1\":\nOriginal images: %2\n"));
+
+            if (d->iface->hasFeature(KIPI::ImagesHasComments))
+                propertiesText.append(i18n("Comments: %1\n", comments));
+            
+            if (d->iface->hasFeature(KIPI::HostSupportsTags))
+                propertiesText.append(i18n("Tags: %1\n", tags));
+
+            if (d->iface->hasFeature(KIPI::HostSupportsRating))
+                propertiesText.append(i18n("Rating: %1\n", rating));
+   
+            propertiesText.append("\n");
         }
 
         QFile propertiesFile( d->settings.tempPath + i18n("properties.txt") );
