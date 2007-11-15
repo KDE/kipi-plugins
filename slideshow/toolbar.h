@@ -6,6 +6,7 @@
  * Date        : 2004-10-05
  * Description : a kipi plugin to slide images.
  *
+ * Copyright (C) 2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2006-2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
@@ -26,7 +27,8 @@
 
 // Qt includes.
 
-#include <qwidget.h>
+#include <QWidget>
+#include <QKeyEvent>
 
 class QToolButton;
 
