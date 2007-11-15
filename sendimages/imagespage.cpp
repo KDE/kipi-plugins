@@ -28,6 +28,8 @@
 #include <QPushButton>
 #include <QPainter>
 #include <QPalette>
+#include <QDragEnterEvent>
+#include <QUrl>
 
 // KDE includes.
 
@@ -143,6 +145,45 @@ EmailItem ImagesListViewItem::emailItem()
 
 // ---------------------------------------------------------------------------
 
+ImagesListView::ImagesListView(QWidget *parent)
+              : QListWidget(parent)
+{
+    setIconSize(QSize(ICONSIZE, ICONSIZE));
+    setSelectionMode(QAbstractItemView::MultiSelection);    
+    setWhatsThis(i18n("<p>This is the list of images to e-mail."));
+    setAcceptDrops(true);
+}
+
+ImagesListView::~ImagesListView()
+{
+}
+
+void ImagesListView::dragEnterEvent(QDragEnterEvent *e)
+{
+     if (e->mimeData()->hasUrls())
+         e->acceptProposedAction();
+}
+
+void ImagesListView::dropEvent(QDropEvent *e)
+{
+    QList<QUrl> list = e->mimeData()->urls();
+    KUrl::List  urls;
+
+    foreach (QUrl url, list)
+    {
+        QFileInfo fi(url.path());
+        if (fi.isFile() && fi.exists())
+            urls.append(KUrl(url));    
+    }
+
+    e->acceptProposedAction();
+
+    if (!urls.isEmpty())
+       emit addedDropedItems(urls);
+}
+
+// ---------------------------------------------------------------------------
+
 class ImagesPagePriv
 {
 public:
@@ -158,7 +199,7 @@ public:
     QPushButton     *addButton;
     QPushButton     *removeButton;
 
-    QListWidget     *listView;
+    ImagesListView  *listView;
 
     KIPI::Interface *iface;
 };
@@ -169,14 +210,10 @@ ImagesPage::ImagesPage(QWidget* parent, KIPI::Interface *iface)
     d = new ImagesPagePriv;
     d->iface = iface;
 
-    QGridLayout* grid = new QGridLayout(this);
-
     // --------------------------------------------------------
 
-    d->listView = new QListWidget(this);
-    d->listView->setIconSize(QSize(ICONSIZE, ICONSIZE));
-    d->listView->setSelectionMode(QAbstractItemView::MultiSelection);    
-    d->listView->setWhatsThis(i18n("<p>This is the list of images to e-mail."));
+    QGridLayout* grid = new QGridLayout(this);
+    d->listView       = new ImagesListView(this);
 
     // --------------------------------------------------------
 
@@ -199,6 +236,9 @@ ImagesPage::ImagesPage(QWidget* parent, KIPI::Interface *iface)
 
     // --------------------------------------------------------
 
+    connect(d->listView, SIGNAL(addedDropedItems(const KUrl::List&)),
+            this, SLOT(slotAddImages(const KUrl::List&)));
+
     connect(d->addButton, SIGNAL(clicked()),
             this, SLOT(slotAddItems()));
 
@@ -214,7 +254,7 @@ ImagesPage::~ImagesPage()
     delete d;
 }
 
-void ImagesPage::addImages(const KUrl::List& list)
+void ImagesPage::slotAddImages(const KUrl::List& list)
 {
     if ( list.count() == 0 ) return;
 
@@ -292,7 +332,7 @@ void ImagesPage::slotAddItems()
                                                fileformats, this, i18n("Add Images"));
 
     if (!urls.isEmpty())
-        addImages(urls);
+        slotAddImages(urls);
 }
 
 void ImagesPage::slotRemoveItems()

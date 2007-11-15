@@ -92,13 +92,13 @@ SendImagesDialog::SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl
                 : KPageDialog(parent)
 {
     d = new SendImagesDialogPrivate;
-    d->urls  = urls;
+    d->urls = urls;
 
     setCaption(i18n("E-Mail Images Options"));
     setButtons(Help|Ok|Cancel);
     setDefaultButton(Ok);
     setFaceType(List);
-    setModal(true);
+    setModal(false);
 
     // ---------------------------------------------------------------
 
@@ -106,7 +106,7 @@ SendImagesDialog::SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl
     d->page_images = addPage(d->imagesPage, i18n("Images"));
     d->page_images->setHeader(i18n("Images List"));
     d->page_images->setIcon(KIcon("image-jpeg2000"));
-    d->imagesPage->addImages(urls);
+    d->imagesPage->slotAddImages(urls);
 
     d->emailPage  = new EmailPage(this);
     d->page_email = addPage(d->emailPage, i18n("Mail"));

@@ -77,6 +77,26 @@ private:
     EmailItem m_item;
 };
 
+class ImagesListView : public QListWidget
+{
+
+    Q_OBJECT
+    
+public:
+
+    ImagesListView(QWidget *parent);
+    ~ImagesListView();
+
+signals:
+
+    void addedDropedItems(const KUrl::List& urls);
+
+private:
+
+    void dragEnterEvent(QDragEnterEvent *e);
+    void dropEvent(QDropEvent *e);
+};
+
 class ImagesPage : public QWidget
 {
     Q_OBJECT
@@ -86,11 +106,14 @@ public:
     ImagesPage(QWidget* parent, KIPI::Interface *iface);
     ~ImagesPage();
 
-    void addImages(const KUrl::List& list);
-
     QList<EmailItem> imagesList();
 
+public slots:
+
+    void slotAddImages(const KUrl::List& list);
+
 private slots:
+
 
     void slotAddItems();
     void slotRemoveItems();
