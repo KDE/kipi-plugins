@@ -1,32 +1,38 @@
 /* ============================================================
- * File  : screenproperties.cpp
- * Author: Valerio Fuoglio <valerio.fuoglio@gmail.com>
- * Date  : 2007-11-14
- * Description : 
- * 
- * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2007-11-14
+ * Description : a kipi plugin to slide images.
+ *
+ * Copyright (C) 2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ *
+ * Parts of this code are based on smoothslidesaver by Carsten Weinhold 
+ * <carsten dot weinhold at gmx dot de>                                           
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- * 
+ * either version 2, or (at your option) any later version.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
-/***************************************************************************
- *   Parts of this code are based on smoothslidesaver by Carsten Weinhold  *
- *   <carsten.weinhold@gmx.de>                                             *
- **************************************************************************/
+// Qt includes.
 
 #include <qapplication.h>
+
+// X11 includes.
+
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
+
+// Local includes.
 
 #include "screenproperties.h"
 
@@ -37,8 +43,7 @@ namespace KIPISlideShowPlugin
   
       activeScreen = QApplication::desktop()->screenNumber(mainWidget);
   }
-  
-  
+    
   unsigned ScreenProperties::suggestFrameRate() {
   
       int eventBase, errorBase;
@@ -87,8 +92,7 @@ namespace KIPISlideShowPlugin
       return bestRate;
   }
   
-  
-  bool ScreenProperties::enableVSync() {
+    bool ScreenProperties::enableVSync() {
   
       // currently only supported on NVidia hardware using the
       // proprietary driver
