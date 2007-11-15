@@ -43,45 +43,45 @@
 namespace KIPISlideShowPlugin
 {
 
-    ListImageItems::ListImageItems(QWidget *parent, const char *name)
-                  : KListBox(parent, name)
+ListImageItems::ListImageItems(QWidget *parent, const char *name)
+              : KListBox(parent, name)
+{
+    setSelectionMode (QListBox::Extended);
+    setAcceptDrops(true);
+}
+
+void ListImageItems::dragEnterEvent(QDragEnterEvent *e)
+{
+    e->accept(QUriDrag::canDecode(e));
+}
+
+void ListImageItems::dropEvent(QDropEvent *e)
+{
+    QStrList strList;
+    KURL::List filesUrl;
+
+    if ( !QUriDrag::decode(e, strList) ) return;
+
+    QStrList stringList;
+    QStrListIterator it(strList);
+    char *str;
+
+    while ( (str = it.current()) != 0 )
     {
-        setSelectionMode (QListBox::Extended);
-        setAcceptDrops(true);
-    }
+        QString filePath = QUriDrag::uriToLocalFile(str);
+        QFileInfo fileInfo(filePath);
 
-    void ListImageItems::dragEnterEvent(QDragEnterEvent *e)
-    {
-        e->accept(QUriDrag::canDecode(e));
-    }
-
-    void ListImageItems::dropEvent(QDropEvent *e)
-    {
-        QStrList strList;
-        KURL::List filesUrl;
-
-        if ( !QUriDrag::decode(e, strList) ) return;
-
-        QStrList stringList;
-        QStrListIterator it(strList);
-        char *str;
-
-        while ( (str = it.current()) != 0 )
+        if (fileInfo.isFile() && fileInfo.exists())
         {
-            QString filePath = QUriDrag::uriToLocalFile(str);
-            QFileInfo fileInfo(filePath);
-
-            if (fileInfo.isFile() && fileInfo.exists())
-            {
-                KURL url(fileInfo.filePath());
-                filesUrl.append(url);
-            }
-
-            ++it;
+            KURL url(fileInfo.filePath());
+            filesUrl.append(url);
         }
 
-        if (filesUrl.isEmpty() == false)
-            emit addedDropItems(filesUrl);
+        ++it;
     }
+
+    if (filesUrl.isEmpty() == false)
+        emit addedDropItems(filesUrl);
+}
 
 }  // NameSpace KIPISlideShowPlugin
