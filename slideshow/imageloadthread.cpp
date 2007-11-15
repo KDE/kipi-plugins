@@ -60,7 +60,6 @@ ImageLoadThread::ImageLoadThread(QValueList<QPair<QString, int> >& fileList,
     m_height = height;
 }
 
-
 void ImageLoadThread::quit() {
 
     QMutexLocker locker(&m_condLock);
@@ -68,7 +67,6 @@ void ImageLoadThread::quit() {
     m_quitRequested = true;
     m_imageRequest.wakeOne();
 }
-
 
 void ImageLoadThread::requestNewImage() {
 
@@ -79,7 +77,6 @@ void ImageLoadThread::requestNewImage() {
         m_imageRequest.wakeOne();
     }
 }
-
 
 void ImageLoadThread::run() {
 
@@ -142,7 +139,6 @@ void ImageLoadThread::run() {
     }
 }
 
-
 bool ImageLoadThread::loadImage() {
 
     QPair<QString, int> fileAngle = m_fileList[m_fileIndex];
@@ -175,7 +171,6 @@ bool ImageLoadThread::loadImage() {
 
     return true;
 }
-
 
 void ImageLoadThread::invalidateCurrentImageName() {
     m_fileList.remove(m_fileList[m_fileIndex]);
