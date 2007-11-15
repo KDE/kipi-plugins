@@ -538,6 +538,7 @@ void SendImages::invokeMailAgentDone(const QString& prog, const QStringList& arg
     connect(d->progressDlg, SIGNAL(cancelClicked()),
             this, SLOT(slotCleanUp()));
     
+    d->progressDlg->addedAction(i18n("After to have sent your images by e-mail..."), KIPI::WarningMessage);
     d->progressDlg->addedAction(i18n("Press 'Close' button to clean-up temporary files"), KIPI::WarningMessage);
 }
 
