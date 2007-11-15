@@ -49,11 +49,24 @@ public:
     void setEnabledPlay(bool val);
     void setEnabledNext(bool val);
     void setEnabledPrev(bool val);
+    
+signals:
+
+    void signalNext();
+    void signalPrev();
+    void signalClose();
+    void signalPlay();
+    void signalPause();
 
 protected:
 
     void keyPressEvent(QKeyEvent *event);
     
+private slots:
+
+    void slotPlayBtnToggled();
+    void slotNexPrevClicked();
+
 private:
 
     QToolButton* m_playBtn;
@@ -64,19 +77,6 @@ private:
 
     friend class SlideShow;
     friend class SlideShowGL;
-    
-signals:
-
-    void signalNext();
-    void signalPrev();
-    void signalClose();
-    void signalPlay();
-    void signalPause();
-
-private slots:
-
-    void slotPlayBtnToggled();
-    void slotNexPrevClicked();
 };
 
 } // namespace KIPISlideShowPlugin
