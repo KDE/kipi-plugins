@@ -1,34 +1,37 @@
 /* ============================================================
-* File  : slideshowkb.h
-* Author: Valerio Fuoglio <valerio.fuoglio@gmail.com>
-* Date  : 2007-11-14
-* Description : 
-* 
-* Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
-*
-* This program is free software; you can redistribute it
-* and/or modify it under the terms of the GNU General
-* Public License as published by the Free Software Foundation;
-* either version 2, or (at your option)
-* any later version.
-* 
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-* 
-* ============================================================ */
-
-/***************************************************************************
-*   Parts of this code are based on smoothslidesaver by Carsten Weinhold  *
-*   <carsten.weinhold@gmx.de> and slideshowgl.{cpp|h} by Renchi Raju      *
-*   <renchi@pooh.tam.uiuc.edu>                                            *
-**************************************************************************/
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2007-11-14
+ * Description : a kipi plugin to slide images.
+ *
+ * Copyright (C) 2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ *
+ * Parts of this code are based on smoothslidesaver by Carsten Weinhold 
+ * <carsten dot weinhold at gmx dot de> and slideshowgl.{cpp|h} by Renchi Raju     
+ * <renchi@pooh.tam.uiuc.edu>                                           
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 #ifndef SLIDESHOWKB_H
 #define SLIDESHOWKB_H
 
+// C++ includes.
+
 #include <cstdlib> 
+
+// Qt includes.
 
 #include <qgl.h>
 #include <qtimer.h>
@@ -39,7 +42,11 @@
 #include <qevent.h>
 #include <qmap.h>
 
+// KDE includes.
+
 #include <kconfig.h>
+
+// Local includes.
 
 #include "kbeffect.h"
 #include "screenproperties.h"
@@ -53,7 +60,9 @@ namespace KIPISlideShowPlugin
 
   class ViewTrans
   {
+
   public:
+
       ViewTrans(bool m_zoomIn, float relAspect);
 
       float transX(float pos) const { return m_baseX + m_deltaX * pos; };
@@ -63,8 +72,11 @@ namespace KIPISlideShowPlugin
       float m_yScaleCorrect() { return m_yScale; };
 
   private:
+
       double rnd() const { return (double)rand() / (double)RAND_MAX; };
       double rndSign() const { return (rand() < RAND_MAX / 2) ? 1.0 : -1.0; };
+
+  private:
 
       // delta and scale values (begin to end) and the needed offsets
       double m_deltaX, m_deltaY, m_deltaScale;
@@ -74,8 +86,11 @@ namespace KIPISlideShowPlugin
 
   // -------------------------------------------------------------------------
 
-  class Image {
+  class Image 
+  {
+
   public:
+
       Image(ViewTrans *viewTrans, float aspect = 1.0);
       ~Image();
 
@@ -91,8 +106,11 @@ namespace KIPISlideShowPlugin
 
   class SlideShowKB : public QGLWidget
   {
+
     Q_OBJECT
+
     public:
+
       SlideShowKB(const QValueList<QPair<QString, int> >& fileList,
                   const QStringList& commentsList, bool ImagesHasComments);
 
@@ -102,6 +120,7 @@ namespace KIPISlideShowPlugin
       static QMap<QString,QString> effectNamesI18N();
 
     private:
+
       float aspect() { return (float)width() / (float)height(); };
       bool  setupNewImage(int imageIndex);
       void  startSlideShowOnce();
@@ -119,10 +138,12 @@ namespace KIPISlideShowPlugin
       void readSettings();
 
     protected:
+
       void mousePressEvent(QMouseEvent *event);
       void mouseMoveEvent(QMouseEvent *);
 
     private slots:
+
       void moveSlot();
       void slotEndOfShow();
       void slotMouseMoveTimeOut();
@@ -165,4 +186,5 @@ namespace KIPISlideShowPlugin
   };
 
 }  // NameSpace KIPISlideShowPlugin
-#endif
+
+#endif // SLIDESHOWKB_H

@@ -1,32 +1,35 @@
 /* ============================================================
- * File  : slideshowkb.cpp
- * Author: Valerio Fuoglio <valerio.fuoglio@gmail.com>
- * Date  : 2007-11-14
- * Description : 
- * 
- * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2007-11-14
+ * Description : a kipi plugin to slide images.
+ *
+ * Copyright (C) 2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ *
+ * Parts of this code are based on smoothslidesaver by Carsten Weinhold 
+ * <carsten dot weinhold at gmx dot de> and slideshowgl.{cpp|h} by Renchi Raju     
+ * <renchi@pooh.tam.uiuc.edu>                                           
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- * 
+ * either version 2, or (at your option) any later version.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
-/***************************************************************************
- *   Parts of this code are based on smoothslidesaver by Carsten Weinhold  *
- *   <carsten.weinhold@gmx.de> and slideshowgl.{cpp|h} by Renchi Raju      *
- *   <renchi@pooh.tam.uiuc.edu>                                            *
- **************************************************************************/
+// C++ includes.
 
-#include <assert.h>
-#include <math.h>
+#include <cassert>
+#include <cmath>
+
+// Qt includes.
 
 #include <qapplication.h>
 #include <qimage.h>
@@ -36,6 +39,7 @@
 #include <qfont.h>
 #include <qcursor.h>
 
+// KDE includes.
 
 #include <kconfig.h>
 #include <kglobal.h>
@@ -43,8 +47,11 @@
 #include <kdeversion.h>
 #include <kglobalsettings.h>
 
+// Local includes.
+
 #include "slideshowkb.h"
 #include "imageloadthread.h"
+#include "slideshowkb.moc"
 
 namespace KIPISlideShowPlugin
 {
@@ -567,6 +574,5 @@ namespace KIPISlideShowPlugin
   {
     close();    
   }
-}  // NameSpace KIPISlideShowPlugin
 
-#include "slideshowkb.moc"
+}  // NameSpace KIPISlideShowPlugin
