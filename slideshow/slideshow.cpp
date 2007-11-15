@@ -1,28 +1,34 @@
 /* ============================================================
- * File  : slideshow.cpp
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-02-16
- * Description :
  *
- * Copyright 2003 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-02-16
+ * Description : a kipi plugin to slide images.
+ *
+ * Copyright (C) 2006-2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
 
-#include <klocale.h>
-#include <kdeversion.h>
-#include <kglobalsettings.h>
+// C++ includes.
+
+#include <cstdlib>
+#include <cassert>
+#include <cmath>
+#include <ctime>
+
+// Qt includes.
 
 #include <qtimer.h>
 #include <qpainter.h>
@@ -34,23 +40,21 @@
 #include <qcursor.h>
 #include <qfont.h>
 #include <qwmatrix.h>
-
-#include <kdebug.h>
-#include <kurl.h>
 #include <qtextcodec.h>
 
-extern "C"
-{
-#include <stdlib.h>
-#include <assert.h>
-#include <math.h>
-#include <time.h>
-}
+// KDE includes.
 
-#include "slideshow.h"
-#include "toolbar.h"
-
+#include <klocale.h>
+#include <kdeversion.h>
+#include <kglobalsettings.h>
 #include <kdebug.h>
+#include <kurl.h>
+
+// Local includes.
+
+#include "toolbar.h"
+#include "slideshow.h"
+#include "slideshow.moc"
 
 namespace KIPISlideShowPlugin
 { 
@@ -147,9 +151,6 @@ namespace KIPISlideShowPlugin
   
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   SlideShow::~SlideShow()
   {
       m_timer->stop();
@@ -173,8 +174,6 @@ namespace KIPISlideShowPlugin
           delete m_config;
       }
   }
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   void SlideShow::readSettings()
   {
@@ -213,9 +212,6 @@ namespace KIPISlideShowPlugin
         m_cacheSize = 1;
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   void SlideShow::registerEffects()
   {
       Effects.insert("None", &SlideShow::effectNone);
@@ -232,9 +228,6 @@ namespace KIPISlideShowPlugin
       Effects.insert("Spiral In", &SlideShow::effectSpiralIn);
       Effects.insert("Blobs", &SlideShow::effectBlobs);
   }
-  
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   QStringList SlideShow::effectNames()
   {
@@ -258,9 +251,6 @@ namespace KIPISlideShowPlugin
       return effects;
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   QMap<QString,QString> SlideShow::effectNamesI18N()
   {
       QMap<QString,QString> effects;
@@ -282,9 +272,6 @@ namespace KIPISlideShowPlugin
   
       return effects;
   }
-  
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   void SlideShow::slotTimeOut()
   {
@@ -324,9 +311,6 @@ namespace KIPISlideShowPlugin
   
       m_timer->start(tmout, true);
   }
-  
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   void SlideShow::loadNextImage()
   {
@@ -381,9 +365,6 @@ namespace KIPISlideShowPlugin
           printComments();
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   void SlideShow::loadPrevImage()
   {
       if (m_currImage)
@@ -437,9 +418,6 @@ namespace KIPISlideShowPlugin
           printComments();
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   void SlideShow::showCurrentImage()
   {
       if (!m_currImage)
@@ -449,9 +427,6 @@ namespace KIPISlideShowPlugin
             0, 0, m_currImage->width(),
             m_currImage->height(), Qt::CopyROP, true);
   }
-  
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   void SlideShow::printFilename()
   {
@@ -468,9 +443,6 @@ namespace KIPISlideShowPlugin
       p.setPen(QColor("white"));
       p.drawText(10, height()-30, m_imageLoader->currFileName());
   }
-  
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   void SlideShow::printComments()
   {
@@ -548,9 +520,6 @@ namespace KIPISlideShowPlugin
       }
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   void SlideShow::printProgress()
   {
       if (!m_currImage) return;
@@ -571,9 +540,6 @@ namespace KIPISlideShowPlugin
       p.drawText(width() - stringLenght - 10, 20, progress);
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   EffectMethod SlideShow::getRandomEffect()
   {
       QStringList effs = Effects.keys();
@@ -586,9 +552,6 @@ namespace KIPISlideShowPlugin
   
       return Effects[key];
   }
-  
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   void SlideShow::showEndOfShow()
   {
@@ -612,9 +575,6 @@ namespace KIPISlideShowPlugin
       m_toolBar->setEnabledPrev(false);
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   void SlideShow::keyPressEvent(QKeyEvent *event)
   {
       if (!event)
@@ -622,8 +582,6 @@ namespace KIPISlideShowPlugin
   
       m_toolBar->keyPressEvent(event);
   }
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   void SlideShow::mousePressEvent(QMouseEvent *e)
   {
@@ -643,8 +601,6 @@ namespace KIPISlideShowPlugin
           slotPrev();
       }
   }
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   void SlideShow::mouseMoveEvent(QMouseEvent *e)
   {
@@ -690,8 +646,6 @@ namespace KIPISlideShowPlugin
       m_toolBar->show();
   }
   
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   void SlideShow::wheelEvent(QWheelEvent *e)
   {
       if (!m_enableMouseWheel) return;
@@ -715,8 +669,6 @@ namespace KIPISlideShowPlugin
       } 
   }
   
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   void SlideShow::slotMouseMoveTimeOut()
   {
       QPoint pos(QCursor::pos());
@@ -727,17 +679,12 @@ namespace KIPISlideShowPlugin
       setCursor(QCursor(Qt::BlankCursor));
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   int SlideShow::effectNone(bool /* aInit */)
   {
       showCurrentImage();
       return -1;
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   int SlideShow::effectChessboard(bool aInit)
   {
@@ -779,9 +726,6 @@ namespace KIPISlideShowPlugin
       return m_wait;
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   int SlideShow::effectMeltdown(bool aInit)
   {
       int i, x, y;
@@ -821,9 +765,6 @@ namespace KIPISlideShowPlugin
   
       return 15;
   }
-  
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   int SlideShow::effectSweep(bool aInit)
   {
@@ -874,9 +815,6 @@ namespace KIPISlideShowPlugin
       return 20;
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   int SlideShow::effectRandom(bool /*aInit*/)
   {
       int x, y, i, w, h, fact, sz;
@@ -898,9 +836,6 @@ namespace KIPISlideShowPlugin
   
       return -1;
   }
-  
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   int SlideShow::effectGrowing(bool aInit)
   {
@@ -930,9 +865,6 @@ namespace KIPISlideShowPlugin
   
       return 20;
   }
-  
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   int SlideShow::effectIncom_ingEdges(bool aInit)
   {
@@ -982,9 +914,6 @@ namespace KIPISlideShowPlugin
       return 20;
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   int SlideShow::effectHorizLines(bool aInit)
   {
       static int iyPos[] = { 0, 4, 2, 6, 1, 5, 3, 7, -1 };
@@ -1009,9 +938,6 @@ namespace KIPISlideShowPlugin
       return -1;
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   int SlideShow::effectVertLines(bool aInit)
   {
       static int ixPos[] = { 0, 4, 2, 6, 1, 5, 3, 7, -1 };
@@ -1035,9 +961,6 @@ namespace KIPISlideShowPlugin
       if (ixPos[m_i] >= 0) return 160;
       return -1;
   }
-  
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   int SlideShow::effectMultiCircleOut(bool aInit)
   {
@@ -1087,9 +1010,6 @@ namespace KIPISlideShowPlugin
   
       return m_wait;
   }
-  
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   int SlideShow::effectSpiralIn(bool aInit)
   {
@@ -1157,9 +1077,6 @@ namespace KIPISlideShowPlugin
       return 8;
   }
   
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   int SlideShow::effectCircleOut(bool aInit)
   {
       int x, y;
@@ -1201,8 +1118,6 @@ namespace KIPISlideShowPlugin
   }
   
   
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   int SlideShow::effectBlobs(bool aInit)
   {
       int r;
@@ -1232,10 +1147,6 @@ namespace KIPISlideShowPlugin
   
       return 10;
   }
-  
-  
-  
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
   
   void SlideShow::startPainter(Qt::PenStyle aPen)
   {
@@ -1298,5 +1209,3 @@ namespace KIPISlideShowPlugin
   }
 
 }  // NameSpace KIPISlideShowPlugin
-
-#include "slideshow.moc"

@@ -1,34 +1,30 @@
 /* ============================================================
- * File  : slideshow.h
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-02-16
- * Description : 
- * 
- * Copyright 2003 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-02-16
+ * Description : a kipi plugin to slide images.
+ *
+ * Copyright (C) 2006-2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- * 
+ * either version 2, or (at your option) any later version.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #ifndef SLIDESHOW_H
 #define SLIDESHOW_H
 
-// KDE includes
-
-#include <kconfig.h>
-#include <kurl.h>
-
-// QT includes
+// QT includes.
 
 #include <qvaluelist.h>
 #include <qstringlist.h>
@@ -41,11 +37,18 @@
 #include <qfont.h>
 #include <qstring.h>
 
-// Includes for libKIPI.
+// KDE includes.
+
+#include <kconfig.h>
+#include <kurl.h>
+
+// Libkipi includes.
+
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-// Local includes
+// Local includes.
+
 #include "slideshowloader.h"
 
 class QTimer;
@@ -75,6 +78,40 @@ namespace KIPISlideShowPlugin
     
         static QStringList effectNames();
         static QMap<QString,QString> effectNamesI18N();
+
+    protected:
+    
+        void mousePressEvent(QMouseEvent *event);
+        void mouseMoveEvent(QMouseEvent *);
+        void wheelEvent(QWheelEvent *);
+        void keyPressEvent(QKeyEvent *event);
+        
+        int effectNone(bool);
+        int effectChessboard(bool doInit);
+        int effectMeltdown(bool doInit);
+        int effectSweep(bool doInit);
+        int effectRandom(bool doInit);
+        int effectGrowing(bool doInit);
+        int effectIncom_ingEdges(bool doInit);
+        int effectHorizLines(bool doInit);
+        int effectVertLines(bool doInit);
+        int effectMultiCircleOut(bool doInit);
+        int effectSpiralIn(bool doInit);
+        int effectCircleOut(bool doInit);
+        int effectBlobs(bool doInit);
+        
+        void startPainter(Qt::PenStyle penStyle=NoPen);
+        
+    private slots:
+    
+        void slotTimeOut();
+        void slotMouseMoveTimeOut();
+    
+        void slotPause();
+        void slotPlay();
+        void slotPrev();
+        void slotNext();
+        void slotClose();
         
     private:
     
@@ -144,40 +181,6 @@ namespace KIPISlideShowPlugin
         int          m_deskY;
         int          m_deskWidth;
         int          m_deskHeight;
-        
-    protected:
-    
-        void mousePressEvent(QMouseEvent *event);
-        void mouseMoveEvent(QMouseEvent *);
-        void wheelEvent(QWheelEvent *);
-        void keyPressEvent(QKeyEvent *event);
-        
-        int effectNone(bool);
-        int effectChessboard(bool doInit);
-        int effectMeltdown(bool doInit);
-        int effectSweep(bool doInit);
-        int effectRandom(bool doInit);
-        int effectGrowing(bool doInit);
-        int effectIncom_ingEdges(bool doInit);
-        int effectHorizLines(bool doInit);
-        int effectVertLines(bool doInit);
-        int effectMultiCircleOut(bool doInit);
-        int effectSpiralIn(bool doInit);
-        int effectCircleOut(bool doInit);
-        int effectBlobs(bool doInit);
-        
-        void startPainter(Qt::PenStyle penStyle=NoPen);
-        
-    private slots:
-    
-        void slotTimeOut();
-        void slotMouseMoveTimeOut();
-    
-        void slotPause();
-        void slotPlay();
-        void slotPrev();
-        void slotNext();
-        void slotClose();
   };
 
 }  // NameSpace KIPISlideShowPlugin
