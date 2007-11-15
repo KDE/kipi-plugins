@@ -1,21 +1,22 @@
 /* ============================================================
- * File  : slideshowconfig.h
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-02-17
- * Description : Digikam slideshow plugin.
- * 
- * Copyright 2003-2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-02-17
+ * Description : a kipi plugin to slide images.
+ *
+ * Copyright (C) 2006-2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -39,10 +40,9 @@
 #include <libkipi/imagedialog.h>
 #include <libkipi/interface.h>
 
-// SlideShow includes
+// Local includes
 
 #include "slideshowconfigbase.h"
-
 
 namespace KIPISlideShowPlugin
 {
@@ -57,33 +57,6 @@ public:
                     QWidget *parent, const char* name, bool ImagesHasComments,
                     KURL::List* urlList);
     ~SlideShowConfig();
-
-private:
-
-    void loadEffectNames();
-    void loadEffectNamesGL();
-    void readSettings();
-    void saveSettings();
-    
-    void ShowNumberImages( int Number );
-    void addItems(const KURL::List& fileList);
-
-    int m_delayMsMaxValue;
-    int m_delayMsMinValue;
-    int m_delayMsLineStep;
-    
-    uint m_cacheSize;
-    
-    KConfig*    m_config;
-    
-    QString     m_effectName;
-    QString     m_effectNameGL;
-    
-    KIO::PreviewJob*      m_thumbJob;
-    KURL::List*           m_urlList;
-    
-    KIPI::Interface*      m_interface;
-    
     
 private slots:
 
@@ -111,10 +84,38 @@ private slots:
     void slotFailedPreview(const KFileItem*);
 
 signals:
+
     void buttonStartClicked(); // Signal needed by plugin_slideshow class
 
+private:
+
+    void loadEffectNames();
+    void loadEffectNamesGL();
+    void readSettings();
+    void saveSettings();
+    
+    void ShowNumberImages( int Number );
+    void addItems(const KURL::List& fileList);
+
+private:
+
+    int              m_delayMsMaxValue;
+    int              m_delayMsMinValue;
+    int              m_delayMsLineStep;
+    
+    uint             m_cacheSize;
+    
+    KConfig*         m_config;
+    
+    QString          m_effectName;
+    QString          m_effectNameGL;
+    
+    KIO::PreviewJob* m_thumbJob;
+    KURL::List*      m_urlList;
+    
+    KIPI::Interface* m_interface;
 };
 
 }  // NameSpace KIPISlideShowPlugin
 
-#endif
+#endif // SLIDESHOWCONFIG_H

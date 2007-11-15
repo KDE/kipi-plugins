@@ -1,21 +1,22 @@
 /* ============================================================
- * File  : slideshowconfig.cpp
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-02-17
- * Description : KIPI slideshow plugin.
  *
- * Copyright 2003-2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-02-17
+ * Description : a kipi plugin to slide images.
+ *
+ * Copyright (C) 2006-2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -59,13 +60,10 @@
 #include <libkipi/interface.h>
 #include <libkipi/imagedialog.h>
 
-// Common includes.
+// Local includes.
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-
-// Local includes
-
 #include "listimageitems.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
@@ -79,7 +77,7 @@ namespace KIPISlideShowPlugin
 SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * interface, 
                                  QWidget *parent, const char* name, bool ImagesHasComments,
                                  KURL::List *urlList)
-    :SlideShowConfigBase(parent, name) 
+               :SlideShowConfigBase(parent, name) 
 {
     // About data and help button.
 
@@ -98,7 +96,6 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
      helpMenu->menu()->removeItemAt(0);
      helpMenu->menu()->insertItem(i18n("SlideShow Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
      m_helpButton->setPopup( helpMenu->menu() );
-
 
     // Switch to selected files only (it depends on allowSelectedOnly)
 
@@ -170,13 +167,11 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
     slotEffectChanged();
 }
 
-
 SlideShowConfig::~SlideShowConfig()
 {
     if ( m_thumbJob )   delete m_thumbJob;
     if ( m_config )     delete m_config;
 }
-
 
 void SlideShowConfig::loadEffectNames()
 {
@@ -198,7 +193,6 @@ void SlideShowConfig::loadEffectNames()
         }
     }
 }
-
 
 void SlideShowConfig::loadEffectNamesGL()
 {
@@ -246,8 +240,6 @@ void SlideShowConfig::readSettings()
     bool  useMilliseconds;
     bool  enableMouseWheel;
     
-
-
     opengl                = m_config->readBoolEntry("OpenGL", false);
     delay                 = m_config->readNumEntry("Delay", 1500);
     printFileName         = m_config->readBoolEntry("Print Filename", true);
@@ -332,7 +324,6 @@ void SlideShowConfig::readSettings()
     slotCacheToggled();
 }
 
-
 void SlideShowConfig::saveSettings()
 {
     if (!m_config) return;
@@ -395,7 +386,8 @@ void SlideShowConfig::saveSettings()
         m_config->writeEntry("Effect Name", effect);
 
     }
-    else {
+    else 
+    {
       QStringList effects;
       QMap<QString,QString> effectNames;
       QMap<QString,QString>::Iterator it;
@@ -422,7 +414,6 @@ void SlideShowConfig::saveSettings()
         }
 
         m_config->writeEntry("Effect Name (OpenGL)", effect);
-
     }
 
     // Advanced settings
@@ -434,7 +425,6 @@ void SlideShowConfig::saveSettings()
     
     m_config->sync();
 }
-
 
 void SlideShowConfig::addItems(const KURL::List& fileList)
 {
@@ -454,9 +444,9 @@ void SlideShowConfig::addItems(const KURL::List& fileList)
 
         ImageItem *item = new ImageItem( m_ImagesFilesListBox,
                                          currentFile.path().section('/', -1 ),   // File name with extension.
-                                                 comments,                               // Image comments.
-                                                         currentFile.path().section('/', 0, -1), // Complete path with file name.
-                                                                 albumName                               // Album name.
+                                         comments,                               // Image comments.
+                                         currentFile.path().section('/', 0, -1), // Complete path with file name.
+                                         albumName                               // Album name.
                                        );
 
         item->setName( currentFile.path().section('/', -1) );
@@ -468,28 +458,20 @@ void SlideShowConfig::addItems(const KURL::List& fileList)
     m_ImagesFilesListBox->centerCurrentItem();
 }
 
-
-
-// ============================= SLOTS ===========================================
-
-
 void SlideShowConfig::slotCommentsBgColorChanged()
 {
     m_commentsFontChooser->setBackgroundColor(m_commentsBgColor->color());
 }
-
 
 void SlideShowConfig::slotCommentsFontColorChanged()
 {
     m_commentsFontChooser->setColor(m_commentsFontColor->color());
 }
 
-
 void SlideShowConfig::slotPrintCommentsToggled()
 {
     m_tabWidget->setTabEnabled(commentsTab, m_printCommentsCheckBox->isChecked());
 }
-
 
 void SlideShowConfig::slotUseMillisecondsToggled()
 {
@@ -552,12 +534,10 @@ void SlideShowConfig::slotOpenGLToggled()
     slotEffectChanged();
 }
 
-
 void SlideShowConfig::slotDelayChanged()
 {
     ShowNumberImages( m_ImagesFilesListBox->count() );
 }
-
 
 void SlideShowConfig::slotSelection()
 {
@@ -607,7 +587,6 @@ void SlideShowConfig::slotSelection()
     }
 }
 
-
 void SlideShowConfig::slotImagesFilesSelected( QListBoxItem *item )
 {
     
@@ -640,12 +619,10 @@ void SlideShowConfig::slotImagesFilesSelected( QListBoxItem *item )
     m_label7->setText(i18n("Image no. %1").arg(index + 1));
 }
 
-
 void SlideShowConfig::slotAddDropItems(KURL::List filesUrl)
 {
     addItems(filesUrl);
 }
-
 
 void SlideShowConfig::slotImagesFilesButtonAdd( void )
 {
@@ -654,7 +631,6 @@ void SlideShowConfig::slotImagesFilesButtonAdd( void )
     if ( !ImageFilesList.isEmpty() )
         addItems( ImageFilesList );
 }
-
 
 void SlideShowConfig::slotImagesFilesButtonDelete( void )
 {
@@ -672,7 +648,6 @@ void SlideShowConfig::slotImagesFilesButtonDelete( void )
     slotImagesFilesSelected(m_ImagesFilesListBox->item(m_ImagesFilesListBox->currentItem()));
     ShowNumberImages( m_ImagesFilesListBox->count() );
 }
-
 
 void SlideShowConfig::slotImagesFilesButtonUp( void )
 {
@@ -709,7 +684,6 @@ void SlideShowConfig::slotImagesFilesButtonUp( void )
     m_ImagesFilesListBox->setCurrentItem(Index-1);
 }
 
-
 void SlideShowConfig::slotImagesFilesButtonDown( void )
 {
     int Cpt = 0;
@@ -745,7 +719,6 @@ void SlideShowConfig::slotImagesFilesButtonDown( void )
     m_ImagesFilesListBox->setCurrentItem(Index+1);
 }
 
-
 void SlideShowConfig::ShowNumberImages( int Number )
 {
     QTime TotalDuration (0, 0, 0);
@@ -768,25 +741,21 @@ void SlideShowConfig::ShowNumberImages( int Number )
         m_label6->setText(i18n("%1 images [%2]").arg(Number).arg(TotalDuration.toString()));
 }
 
-
 void SlideShowConfig::slotGotPreview(const KFileItem*, const QPixmap &pixmap)
 {
     m_ImageLabel->setPixmap(pixmap);
     m_thumbJob = 0L;
 }
 
-
 void SlideShowConfig::slotFailedPreview(const KFileItem*)
 {
     m_thumbJob = 0L;
 }
 
-
 void SlideShowConfig::SlotPortfolioDurationChanged ( int )
 {
     ShowNumberImages( m_ImagesFilesListBox->count() );
 }
-
 
 void SlideShowConfig::slotStartClicked()
 {
@@ -814,6 +783,4 @@ void SlideShowConfig::slotHelp()
                                              "kipi-plugins");
 }
 
-
 }  // NameSpace KIPISlideShowPlugin
-
