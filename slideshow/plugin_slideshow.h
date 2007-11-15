@@ -1,21 +1,22 @@
 /* ============================================================
- * File  : plugin_slideshow.h
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-01-31
- * Description :
  *
- * Copyright 2003 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-01-31
+ * Description : a kipi plugin to slide images.
+ *
+ * Copyright (C) 2006-2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -40,8 +41,7 @@ class Plugin_SlideShow : public KIPI::Plugin
 
 public:
 
-    Plugin_SlideShow(QObject *parent,
-                     const char* name,
+    Plugin_SlideShow(QObject *parent, const char* name,
                      const QStringList &args);
     ~Plugin_SlideShow();
     
@@ -63,7 +63,7 @@ private:
     KIPI::Interface* m_interface;
     KURL::List*      m_urlList;
 
-    bool m_imagesHasComments;
+    bool             m_imagesHasComments;
 };
 
-#endif
+#endif  // PLUGIN_SLIDESHOW_H

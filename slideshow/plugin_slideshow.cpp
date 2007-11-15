@@ -1,24 +1,43 @@
 /* ============================================================
- * File  : plugin_slideshow.cpp
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2003-01-31
- * Description :
  *
- * Copyright 2003 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-01-31
+ * Description : a kipi plugin to slide images.
+ *
+ * Copyright (C) 2006-2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
+// C Ansi includes.
+
+extern "C" 
+{
+#include <sys/time.h>
+}
+
+// C++ includes.
+
+#include <ctime>
+#include <cstdlib>
+
+// Qt includes.
+
+#include <qvaluelist.h>
+#include <qpair.h>
+#include <qstringlist.h>
 
  // KDE includes.
  
@@ -31,13 +50,10 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
-#include <qvaluelist.h>
-#include <qpair.h>
-#include <qstringlist.h>
-
-#include <cstdlib>
-#include <sys/time.h>
-#include <time.h>
+// Lib KIPI includes.
+ 
+#include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
 
 // Local includes.
 
@@ -46,19 +62,13 @@
 #include "slideshowkb.h"
 #include "slideshowconfig.h"
 #include "plugin_slideshow.h"
-
-// Lib KIPI includes.
- 
-#include <libkipi/interface.h>
-#include <libkipi/imagecollection.h>
+#include "plugin_slideshow.moc"
 
 typedef KGenericFactory<Plugin_SlideShow> Factory;
 
-K_EXPORT_COMPONENT_FACTORY( kipiplugin_slideshow,
-                            Factory("kipiplugin_slideshow"));
+K_EXPORT_COMPONENT_FACTORY(kipiplugin_slideshow, Factory("kipiplugin_slideshow"));
 
-Plugin_SlideShow::Plugin_SlideShow(QObject *parent,
-                                   const char*,
+Plugin_SlideShow::Plugin_SlideShow(QObject *parent, const char*,
                                    const QStringList&)
     : KIPI::Plugin( Factory::instance(), parent, "SlideShow")
 {
@@ -96,17 +106,14 @@ void Plugin_SlideShow::setup( QWidget* widget )
     addAction( m_actionSlideShow );
 }
 
-
 Plugin_SlideShow::~Plugin_SlideShow()
 {
     if (m_urlList)
         delete m_urlList;
 }
 
-
 void Plugin_SlideShow::slotActivate()
 {
-
     if ( !m_interface ) 
     {
         kdError( 51000 ) << "Kipi m_interface is null!" << endl;
@@ -163,7 +170,6 @@ void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
 
 void Plugin_SlideShow::slotSlideShow()
 {
-
     if ( !m_interface ) 
     {
            kdError( 51000 ) << "Kipi m_interface is null!" << endl;
@@ -259,6 +265,3 @@ KIPI::Category Plugin_SlideShow::category( KAction* action ) const
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }
-
-
-#include "plugin_slideshow.moc"
