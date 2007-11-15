@@ -77,7 +77,7 @@ namespace KIPISlideShowPlugin
 SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * interface, 
                                  QWidget *parent, const char* name, bool ImagesHasComments,
                                  KURL::List *urlList)
-               :SlideShowConfigBase(parent, name) 
+               : SlideShowConfigBase(parent, name) 
 {
     // About data and help button.
 
@@ -92,10 +92,10 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
     about->addAuthor("Valerio Fuoglio", I18N_NOOP("Author and maintainer"),
                      "valerio.fuoglio@gmail.com");
 
-     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
-     helpMenu->menu()->removeItemAt(0);
-     helpMenu->menu()->insertItem(i18n("SlideShow Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-     m_helpButton->setPopup( helpMenu->menu() );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("SlideShow Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    m_helpButton->setPopup( helpMenu->menu() );
 
     // Switch to selected files only (it depends on allowSelectedOnly)
 

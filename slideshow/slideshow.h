@@ -59,129 +59,130 @@ typedef QValueList<FileAnglePair > FileList;
 namespace KIPISlideShowPlugin
 {
   
-  class ToolBar;
-  
-  class SlideShow;
-  
-  typedef int (SlideShow::*EffectMethod)(bool);
-  
-  class SlideShow : public QWidget
-  {
-        Q_OBJECT
-        
-    public:
-    
-        SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments);
-        ~SlideShow();
-    
-        void registerEffects();
-    
-        static QStringList effectNames();
-        static QMap<QString,QString> effectNamesI18N();
+class ToolBar;
 
-    protected:
+class SlideShow;
+
+typedef int (SlideShow::*EffectMethod)(bool);
+  
+class SlideShow : public QWidget
+{
+
+    Q_OBJECT
     
-        void mousePressEvent(QMouseEvent *event);
-        void mouseMoveEvent(QMouseEvent *);
-        void wheelEvent(QWheelEvent *);
-        void keyPressEvent(QKeyEvent *event);
-        
-        int effectNone(bool);
-        int effectChessboard(bool doInit);
-        int effectMeltdown(bool doInit);
-        int effectSweep(bool doInit);
-        int effectRandom(bool doInit);
-        int effectGrowing(bool doInit);
-        int effectIncom_ingEdges(bool doInit);
-        int effectHorizLines(bool doInit);
-        int effectVertLines(bool doInit);
-        int effectMultiCircleOut(bool doInit);
-        int effectSpiralIn(bool doInit);
-        int effectCircleOut(bool doInit);
-        int effectBlobs(bool doInit);
-        
-        void startPainter(Qt::PenStyle penStyle=NoPen);
-        
-    private slots:
+public:
+
+    SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments);
+    ~SlideShow();
+
+    void registerEffects();
+
+    static QStringList effectNames();
+    static QMap<QString,QString> effectNamesI18N();
+
+protected:
+
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *);
+    void wheelEvent(QWheelEvent *);
+    void keyPressEvent(QKeyEvent *event);
     
-        void slotTimeOut();
-        void slotMouseMoveTimeOut();
+    int effectNone(bool);
+    int effectChessboard(bool doInit);
+    int effectMeltdown(bool doInit);
+    int effectSweep(bool doInit);
+    int effectRandom(bool doInit);
+    int effectGrowing(bool doInit);
+    int effectIncom_ingEdges(bool doInit);
+    int effectHorizLines(bool doInit);
+    int effectVertLines(bool doInit);
+    int effectMultiCircleOut(bool doInit);
+    int effectSpiralIn(bool doInit);
+    int effectCircleOut(bool doInit);
+    int effectBlobs(bool doInit);
     
-        void slotPause();
-        void slotPlay();
-        void slotPrev();
-        void slotNext();
-        void slotClose();
-        
-    private:
+    void startPainter(Qt::PenStyle penStyle=NoPen);
     
-        void          loadNextImage();
-        void          loadPrevImage();
-        void          showCurrentImage();
-        void          printFilename();
-        void          printComments();
-        void          printProgress();
-        EffectMethod  getRandomEffect();
-        void          showEndOfShow();
-        
-        void          readSettings();
-        
-    private:
+private slots:
+
+    void slotTimeOut();
+    void slotMouseMoveTimeOut();
+
+    void slotPause();
+    void slotPlay();
+    void slotPrev();
+    void slotNext();
+    void slotClose();
     
-        // config ------------------
-        
-        KConfig*    m_config;
-        
-        int         m_delay;
-        bool        m_printName;
-        bool        m_printComments;
-        bool        m_printProgress;
-        QString     m_effectName;
-        bool        m_loop;
+private:
+
+    void          loadNextImage();
+    void          loadPrevImage();
+    void          showCurrentImage();
+    void          printFilename();
+    void          printComments();
+    void          printProgress();
+    EffectMethod  getRandomEffect();
+    void          showEndOfShow();
     
-        bool        m_ImagesHasComments;
+    void          readSettings();
     
-        QFont*      m_commentsFont;
-        uint        m_commentsFontColor;
-        uint        m_commentsBgColor;
-        int         m_commentsLinesLength;
-        
-        bool        m_enableMouseWheel;
-        
-        uint        m_cacheSize;
-        // -------------------------
-        
-        QMap<QString, EffectMethod> Effects;
+private:
+
+    // config ------------------
     
-        SlideShowLoader*   m_imageLoader;
-        QPixmap* m_currImage;
-        
-        FileList    m_fileList;
-        QStringList m_commentsList;
-        QTimer*     m_timer;
-        int         m_fileIndex;
+    KConfig*    m_config;
     
-        EffectMethod m_effect;
-        bool         m_effectRunning;
+    int         m_delay;
+    bool        m_printName;
+    bool        m_printComments;
+    bool        m_printProgress;
+    QString     m_effectName;
+    bool        m_loop;
+
+    bool        m_ImagesHasComments;
+
+    QFont*      m_commentsFont;
+    uint        m_commentsFontColor;
+    uint        m_commentsBgColor;
+    int         m_commentsLinesLength;
     
-        int         m_commentsLinesLenght;
-        
-        // values for state of various effects:
-        int      m_x, m_y, m_w, m_h, m_dx, m_dy, m_ix, m_iy, m_i, m_j, m_subType;
-        int      m_x0, m_y0, m_x1, m_y1, m_wait;
-        double   m_fx, m_fy, m_alpha, m_fd;
-        int*     m_intArray;
-        QPainter m_painter;
+    bool        m_enableMouseWheel;
     
-        ToolBar*     m_toolBar;
-        QTimer*      m_mouseMoveTimer;
-        bool         m_endOfShow;
-        
-        int          m_deskX;
-        int          m_deskY;
-        int          m_deskWidth;
-        int          m_deskHeight;
-  };
+    uint        m_cacheSize;
+    // -------------------------
+    
+    QMap<QString, EffectMethod> Effects;
+
+    SlideShowLoader*   m_imageLoader;
+    QPixmap* m_currImage;
+    
+    FileList    m_fileList;
+    QStringList m_commentsList;
+    QTimer*     m_timer;
+    int         m_fileIndex;
+
+    EffectMethod m_effect;
+    bool         m_effectRunning;
+
+    int         m_commentsLinesLenght;
+    
+    // values for state of various effects:
+    int      m_x, m_y, m_w, m_h, m_dx, m_dy, m_ix, m_iy, m_i, m_j, m_subType;
+    int      m_x0, m_y0, m_x1, m_y1, m_wait;
+    double   m_fx, m_fy, m_alpha, m_fd;
+    int*     m_intArray;
+    QPainter m_painter;
+
+    ToolBar*     m_toolBar;
+    QTimer*      m_mouseMoveTimer;
+    bool         m_endOfShow;
+    
+    int          m_deskX;
+    int          m_deskY;
+    int          m_deskWidth;
+    int          m_deskHeight;
+};
 
 }  // NameSpace KIPISlideShowPlugin
 
