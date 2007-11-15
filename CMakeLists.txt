@@ -36,8 +36,8 @@ FIND_PACKAGE(TIFF REQUIRED)
 macro_optional_find_package(Sane)
 
 # Optional depencies detection require by any plugins
+MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)  # For Slideshow and ImageViewer
 #MACRO_OPTIONAL_FIND_PACKAGE(Gphoto2)
-#MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins 
                     ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins
@@ -49,6 +49,12 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
                     ${QT4_INCLUDES}
 	           )
 
+# Plugins witch depand of OpenGL
+IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+   MACRO_OPTIONAL_ADD_SUBDIRECTORY(slideshow)
+#   MACRO_OPTIONAL_ADD_SUBDIRECTORY(imageviewer)
+ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+
 # TODO: others optional depencies to check when others plugins will be ported to KDE4
 #
 # Plugins witch depand of GPhoto2
@@ -56,20 +62,15 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
 #	macro_optional_add_subdirectory(kameraklient)
 #ENDIF(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
 #
-# Plugins witch depand of OpenGL
-#IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-#   MACRO_OPTIONAL_ADD_SUBDIRECTORY(slideshow)
-#   MACRO_OPTIONAL_ADD_SUBDIRECTORY(imageviewer)
-#ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
 #
 # htmlexport need Xslt library
 # slideshow need Imlib2 library
 # ipodexport need Gpod library
 # calendar need Kcal library (KDEPIM)
-      
-
+#      
+#
 #find_file(KDESKTOP_INTERFACE_FILE_FOUND org.kde.kdesktop.Background.xml PATHS ${DBUS_INTERFACES_INSTALL_DIR} )
-
+#
 #IF(KDESKTOP_INTERFACE_FILE_FOUND)
 #        add_subdirectory( wallpaper )
 #ELSE(KDESKTOP_INTERFACE_FILE_FOUND)
