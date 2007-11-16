@@ -43,10 +43,6 @@
 #include <QMap>
 #include <QMouseEvent>
 
-// KDE includes.
-
-#include <kconfig.h>
-
 // Local includes.
 
 #include "kbeffect.h"
@@ -158,8 +154,6 @@ private:
     int m_deskWidth;
     int m_deskHeight;
 
-    KConfig* m_config;
-    
     bool m_imagesHasComments;
     QStringList  m_commentsList;
 

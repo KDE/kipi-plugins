@@ -28,19 +28,18 @@
 
 // QT includes.
 
-#include <qimage.h>
-#include <qthread.h>
-#include <qwaitcondition.h>
-#include <qmutex.h>
-#include <q3valuelist.h>
-#include <qpair.h>
-#include <qstring.h>
-#include <qobject.h>
+#include <Q3ValueList>
+#include <QImage>
+#include <QThread>
+#include <QWaitCondition>
+#include <QMutex>
+#include <QPair>
+#include <QString>
 
 namespace KIPISlideShowPlugin
 {
 
-class ImageLoadThread : public QObject, public QThread
+class ImageLoadThread : public QThread
 {
 
 Q_OBJECT
@@ -51,11 +50,11 @@ public:
     
     void  quit();
     void  requestNewImage();
-    bool  grabImage()   { m_imageLock.lock(); return m_haveImages; };
-    void  ungrabImage() { m_imageLock.unlock(); };
-    bool  ready()       { return m_initialized; };
-    const QImage &image()       { return m_texture; };
-    float imageAspect() { return m_textureAspect; };
+    bool  grabImage()     { m_imageLock.lock(); return m_haveImages; };
+    void  ungrabImage()   { m_imageLock.unlock(); };
+    bool  ready()         { return m_initialized; };
+    const QImage &image() { return m_texture; };
+    float imageAspect()   { return m_textureAspect; };
 
 signals:
 
@@ -71,7 +70,7 @@ protected:
 private:
   
     int                               m_fileIndex;
-    Q3ValueList<QPair<QString, int> >  m_fileList;
+    Q3ValueList<QPair<QString, int> > m_fileList;
     
     int                               m_width, m_height;
     

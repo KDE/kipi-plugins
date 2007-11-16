@@ -45,6 +45,7 @@
 // KDE includes.
 
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdeversion.h>
@@ -142,9 +143,12 @@ Image::~Image()
 
 SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
                          const QStringList& commentsList, bool ImagesHasComments)
-           : QGLWidget(0, 0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup |
-                       WX11BypassWM | WDestructiveClose)
+           : QGLWidget()
 {
+    setAttribute(Qt::WA_DeleteOnClose);
+    setWindowFlags(Qt::X11BypassWindowManagerHint | 
+                   Qt::WindowStaysOnTopHint | Qt::Popup);
+
 #if KDE_IS_VERSION(3,2,0)
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
     m_deskX      = deskRect.x();
@@ -170,9 +174,6 @@ SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
     // =======================================================
 
     srand(QTime::currentTime().msec());
-
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("SlideShow Settings");
     readSettings();
 
     m_screen = new ScreenProperties(this);
@@ -446,10 +447,13 @@ void SlideShowKB::paintTexture(Image *img)
 
 void SlideShowKB::readSettings() 
 {
-    m_delay            = m_config->readUnsignedNumEntry("Delay", 8000)/1000;
-    m_disableFadeInOut = m_config->readBoolEntry("KB Disable FadeInOut", false);
-    m_disableCrossFade = m_config->readBoolEntry("KB Disable Crossfade", false);
-    m_forceFrameRate   = m_config->readUnsignedNumEntry("KB Force Framerate", 0);
+    KConfig config("kipirc");
+    KConfigGroup group = config.group("SlideShow Settings");
+
+    m_delay            = group.readEntry("Delay", 8000)/1000;
+    m_disableFadeInOut = group.readEntry("KB Disable FadeInOut", false);
+    m_disableCrossFade = group.readEntry("KB Disable Crossfade", false);
+    m_forceFrameRate   = group.readEntry("KB Force Framerate", 0);
 
     if (m_delay < 5)  m_delay = 5;
 //       if (m_delay > 20) m_delay = 20;
@@ -472,8 +476,8 @@ void SlideShowKB::endOfShow()
     p.drawText(20, 100, i18n("Click To Exit..."));
     p.end();
 
-    QImage image(pix.convertToImage());
-    QImage t = convertToGLFormat(image);
+    QImage image = pix.toImage();
+    QImage t     = convertToGLFormat(image);
 
     GLuint tex;
 
@@ -546,7 +550,8 @@ void SlideShowKB::mousePressEvent(QMouseEvent *e)
 void SlideShowKB::mouseMoveEvent(QMouseEvent *e)
 {
     setCursor(QCursor(Qt::ArrowCursor));
-    m_mouseMoveTimer->start(1000, true);
+    m_mouseMoveTimer->start(1000);
+    m_mouseMoveTimer->setSingleShot(true);
     
     QPoint pos(e->pos());
 }
