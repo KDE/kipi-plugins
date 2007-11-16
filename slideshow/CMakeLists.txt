@@ -20,6 +20,7 @@ KDE4_ADD_PLUGIN(kipiplugin_slideshow ${kipiplugin_slideshow_PART_SRCS})
 TARGET_LINK_LIBRARIES(kipiplugin_slideshow 
                       ${KDE4_KPARTS_LIBS} 
                       ${QT_AND_KDECORE_LIBS} 
+                      ${QT_QTOPENGL_LIBRARY}
                       ${OPENGL_LIBRARIES} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
