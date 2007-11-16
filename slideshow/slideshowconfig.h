@@ -26,9 +26,8 @@
 
 // Qt includes.
 
-#include <qstring.h>
-#include <q3listbox.h>
-//Added by qt3to4:
+#include <Q3ListBox>
+#include <QString>
 #include <QPixmap>
 
 // KDE includes

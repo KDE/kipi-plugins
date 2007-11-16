@@ -25,10 +25,9 @@
 
 // QT includes
 
-#include <qevent.h>
-#include <qwidget.h>
-#include <qstring.h>
-//Added by qt3to4:
+#include <QEvent>
+#include <QWidget>
+#include <QString>
 #include <QDropEvent>
 #include <QDragEnterEvent>
 
@@ -68,18 +67,18 @@ class ListImageItems : public K3ListBox
 {
     Q_OBJECT
 
-    public:
+public:
 
-        ListImageItems(QWidget *parent=0, const char *name=0);
+    ListImageItems(QWidget *parent=0, const char *name=0);
 
-    signals:
+signals:
 
-        void addedDropItems(KUrl::List filesUrl);
+    void addedDropItems(KUrl::List filesUrl);
 
-    protected:
+protected:
 
-        void dragEnterEvent(QDragEnterEvent *e);
-        void dropEvent(QDropEvent *e);
+    void dragEnterEvent(QDragEnterEvent *e);
+    void dropEvent(QDropEvent *e);
 };
 
 }  // NameSpace KIPISlideShowPlugin

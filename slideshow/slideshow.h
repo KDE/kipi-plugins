@@ -26,17 +26,16 @@
 
 // QT includes.
 
-#include <q3valuelist.h>
-#include <qstringlist.h>
-#include <qpair.h>
-#include <qstring.h>
-#include <qwidget.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qmap.h>
-#include <qfont.h>
-#include <qstring.h>
-//Added by qt3to4:
+#include <Q3ValueList>
+#include <QStringList>
+#include <QPair>
+#include <QString>
+#include <QWidget>
+#include <QPainter>
+#include <QPixmap>
+#include <QMap>
+#include <QFont>
+#include <QString>
 #include <QWheelEvent>
 #include <QMouseEvent>
 #include <QKeyEvent>
@@ -120,16 +119,16 @@ private slots:
     
 private:
 
-    void          loadNextImage();
-    void          loadPrevImage();
-    void          showCurrentImage();
-    void          printFilename();
-    void          printComments();
-    void          printProgress();
-    EffectMethod  getRandomEffect();
-    void          showEndOfShow();
+    void         loadNextImage();
+    void         loadPrevImage();
+    void         showCurrentImage();
+    void         printFilename();
+    void         printComments();
+    void         printProgress();
+    EffectMethod getRandomEffect();
+    void         showEndOfShow();
     
-    void          readSettings();
+    void         readSettings();
     
 private:
 
@@ -158,34 +157,34 @@ private:
     
     QMap<QString, EffectMethod> Effects;
 
-    SlideShowLoader*   m_imageLoader;
-    QPixmap* m_currImage;
+    SlideShowLoader*            m_imageLoader;
+    QPixmap*                    m_currImage;
     
-    FileList    m_fileList;
-    QStringList m_commentsList;
-    QTimer*     m_timer;
-    int         m_fileIndex;
+    FileList                    m_fileList;
+    QStringList                 m_commentsList;
+    QTimer*                     m_timer;
+    int                         m_fileIndex;
 
-    EffectMethod m_effect;
-    bool         m_effectRunning;
+    EffectMethod                m_effect;
+    bool                        m_effectRunning;
 
-    int         m_commentsLinesLenght;
+    int                         m_commentsLinesLenght;
     
     // values for state of various effects:
-    int      m_x, m_y, m_w, m_h, m_dx, m_dy, m_ix, m_iy, m_i, m_j, m_subType;
-    int      m_x0, m_y0, m_x1, m_y1, m_wait;
-    double   m_fx, m_fy, m_alpha, m_fd;
-    int*     m_intArray;
-    QPainter m_painter;
+    int                         m_x, m_y, m_w, m_h, m_dx, m_dy, m_ix, m_iy, m_i, m_j, m_subType;
+    int                         m_x0, m_y0, m_x1, m_y1, m_wait;
+    double                      m_fx, m_fy, m_alpha, m_fd;
+    int*                        m_intArray;
+    QPainter                    m_painter;
 
-    ToolBar*     m_toolBar;
-    QTimer*      m_mouseMoveTimer;
-    bool         m_endOfShow;
+    ToolBar*                    m_toolBar;
+    QTimer*                     m_mouseMoveTimer;
+    bool                        m_endOfShow;
     
-    int          m_deskX;
-    int          m_deskY;
-    int          m_deskWidth;
-    int          m_deskHeight;
+    int                         m_deskX;
+    int                         m_deskY;
+    int                         m_deskWidth;
+    int                         m_deskHeight;
 };
 
 }  // NameSpace KIPISlideShowPlugin

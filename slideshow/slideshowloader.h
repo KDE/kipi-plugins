@@ -25,13 +25,13 @@
 
 // QT includes
 
-#include <qmap.h>
-#include <qmutex.h>
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qthread.h>
-#include <q3valuelist.h>
-#include <qpair.h>
+#include <Q3ValueList>
+#include <QMap>
+#include <QMutex>
+#include <QImage>
+#include <QPixmap>
+#include <QThread>
+#include <QPair>
 
 // KDE includes
 
@@ -43,66 +43,66 @@ typedef Q3ValueList<FileAnglePair> FileList;
 namespace KIPISlideShowPlugin
 {
 
-  typedef QMap<KUrl, QImage> LoadedImages;
-  
-  class LoadThread : public QThread
-  {
+typedef QMap<KUrl, QImage> LoadedImages;
+
+class LoadThread : public QThread
+{
 
     public:
 
-      LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl path, 
-                 const int angle, int width, int height);
-      ~LoadThread();
+    LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl path, 
+                const int angle, int width, int height);
+    ~LoadThread();
 
     protected:
 
-      void run();
+    void run();
 
     private:
 
-      QMutex*   m_imageLock;
-      LoadedImages* m_loadedImages;
+    QMutex*       m_imageLock;
+    LoadedImages* m_loadedImages;
 
-      KUrl      m_path;
-      QString   m_filename;
-      int       m_angle;
-      int       m_swidth;
-      int       m_sheight;
-  };
-  
-  typedef QMap<KUrl, LoadThread*> LoadingThreads;
-  
-  class SlideShowLoader
-  {
+    KUrl          m_path;
+    QString       m_filename;
+    int           m_angle;
+    int           m_swidth;
+    int           m_sheight;
+};
+
+typedef QMap<KUrl, LoadThread*> LoadingThreads;
+
+class SlideShowLoader
+{
 
     public: 
 
-      SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height, int beginAtIndex=0);
-      ~SlideShowLoader();
-      
-      void next();
-      void prev();
-      
-      QImage getCurrent();
-      QString currFileName();
-      KUrl    currPath();
-      
+    SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height, int beginAtIndex=0);
+    ~SlideShowLoader();
+    
+    void next();
+    void prev();
+    
+    QImage getCurrent();
+    QString currFileName();
+    KUrl    currPath();
+    
     private:
 
-      void checkIsIn(int index); 
-      
-      LoadingThreads* m_loadingThreads;
-      LoadedImages* m_loadedImages;
-      FileList m_pathList;
-  
-      QMutex* m_imageLock;
-      QMutex* m_threadLock;
-      
-      uint m_cacheSize;
-      int m_currIndex;
-      int m_swidth;
-      int m_sheight;
-  };
+    void checkIsIn(int index); 
+    
+    LoadingThreads* m_loadingThreads;
+    LoadedImages*   m_loadedImages;
+    FileList        m_pathList;
+
+    QMutex*         m_imageLock;
+    QMutex*         m_threadLock;
+    
+    uint            m_cacheSize;
+    int             m_currIndex;
+    int             m_swidth;
+    int             m_sheight;
+};
 
 }  // NameSpace KIPISlideShowPlugin
 

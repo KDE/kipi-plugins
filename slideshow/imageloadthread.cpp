@@ -25,13 +25,12 @@
 
 // Qt includes.
 
-#include <qdir.h>
-#include <q3valuevector.h>
-#include <q3deepcopy.h>
-#include <qmatrix.h>
-#include <qobject.h>
-//Added by qt3to4:
 #include <Q3ValueList>
+#include <Q3ValueVector>
+#include <Q3DeepCopy>
+#include <QDir>
+#include <QMatrix>
+#include <QObject>
              
 // KDE includes.
 
@@ -49,29 +48,28 @@ namespace KIPISlideShowPlugin
 ImageLoadThread::ImageLoadThread(Q3ValueList<QPair<QString, int> >& fileList, 
                                  int width, int height) 
 {
-
     m_initialized   = false;
     m_needImage     = true;
     m_haveImages    = false;
     m_quitRequested = false;
 
-    m_fileIndex = 0;
-    m_fileList = fileList;
+    m_fileIndex     = 0;
+    m_fileList      = fileList;
 
-    m_width = width;
-    m_height = height;
+    m_width         = width;
+    m_height        = height;
 }
 
-void ImageLoadThread::quit() {
-
+void ImageLoadThread::quit() 
+{
     QMutexLocker locker(&m_condLock);
     
     m_quitRequested = true;
     m_imageRequest.wakeOne();
 }
 
-void ImageLoadThread::requestNewImage() {
-
+void ImageLoadThread::requestNewImage()
+{
     QMutexLocker locker(&m_condLock);
     
     if ( !m_needImage) {
@@ -80,8 +78,8 @@ void ImageLoadThread::requestNewImage() {
     }
 }
 
-void ImageLoadThread::run() {
-
+void ImageLoadThread::run() 
+{
     QMutexLocker locker(&m_condLock);
 
     // we enter the loop with m_needImage==true, so we will immediatly
@@ -121,8 +119,8 @@ void ImageLoadThread::run() {
  
             if ( !ok) {
                 // generate a black dummy image
-                m_texture = QImage(128, 128, 32);
-                m_texture.fill(Qt::black.rgb());
+                m_texture = QImage(128, 128, QImage::Format_ARGB32);
+                m_texture.fill(Qt::black);
             }
 
             m_condLock.lock();
@@ -141,8 +139,8 @@ void ImageLoadThread::run() {
     }
 }
 
-bool ImageLoadThread::loadImage() {
-
+bool ImageLoadThread::loadImage() 
+{
     QPair<QString, int> fileAngle = m_fileList[m_fileIndex];
     QString path(fileAngle.first);
     int     angle(fileAngle.second);
@@ -151,16 +149,15 @@ bool ImageLoadThread::loadImage() {
     {
         QMatrix wm;
         wm.rotate(angle);
-        image = image.xForm(wm);
+        image = image.transformed(wm);
     }
     
     if (image.isNull()) {
         return false;
     }
 
-    float aspect  = (float)image.width() / (float)image.height();    
-    
-    image = image.smoothScale(m_width, m_height, Qt::ScaleMin);
+    float aspect = (float)image.width() / (float)image.height();    
+    image        = image.scaled(m_width, m_height, Qt::KeepAspectRatio);
     
     m_imageLock.lock();
     
@@ -174,7 +171,8 @@ bool ImageLoadThread::loadImage() {
     return true;
 }
 
-void ImageLoadThread::invalidateCurrentImageName() {
+void ImageLoadThread::invalidateCurrentImageName() 
+{
     m_fileList.remove(m_fileList[m_fileIndex]);
     m_fileIndex++;
 }

@@ -6,12 +6,12 @@ SET(kipiplugin_slideshow_PART_SRCS toolbar.cpp
                                    kbeffect.cpp 
                                    screenproperties.cpp
                                    slideshowkb.cpp 
+                                   imageloadthread.cpp
                                    #listimageitems.cpp 
                                    #slideshow.cpp 
                                    #slideshowconfig.cpp 
                                    #slideshowgl.cpp 
                                    #slideshowloader.cpp
-                                   #imageloadthread.cpp
                                    #plugin_slideshow.cpp 
    )
 
