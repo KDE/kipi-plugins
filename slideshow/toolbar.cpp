@@ -68,18 +68,22 @@ ToolBar::ToolBar(QWidget* parent)
     m_canHide = true;
     
     connect(m_playBtn, SIGNAL(toggled(bool)),
-            SLOT(slotPlayBtnToggled()));
+            this, SLOT(slotPlayBtnToggled()));
+	    
     connect(m_nextBtn, SIGNAL(clicked()),
-            SLOT(slotNexPrevClicked()));
+            this, SLOT(slotNexPrevClicked()));
+	    
     connect(m_prevBtn, SIGNAL(clicked()),
-            SLOT(slotNexPrevClicked()));
+            this, SLOT(slotNexPrevClicked()));
 
     connect(m_nextBtn, SIGNAL(clicked()),
-            SIGNAL(signalNext()));
+            this, SIGNAL(signalNext()));
+	    
     connect(m_prevBtn, SIGNAL(clicked()),
-            SIGNAL(signalPrev()));
+            this, SIGNAL(signalPrev()));
+	    
     connect(m_stopBtn, SIGNAL(clicked()),
-            SIGNAL(signalClose()));
+            this, SIGNAL(signalClose()));
 }
 
 ToolBar::~ToolBar()
