@@ -43,7 +43,6 @@ extern "C"
 
 // Qt includes.
 
-#include <QString>
 #include <QFile>
 #include <QtDebug>
 

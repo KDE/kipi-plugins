@@ -41,7 +41,6 @@ extern "C"
 
 // Qt includes.
 
-#include <QString>
 #include <QByteArray>
 #include <QFile>
 #include <QDataStream>

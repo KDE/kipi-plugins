@@ -27,7 +27,6 @@
 
 // Qt includes.
 
-#include <QString>
 
 // LibKExiv2 includes. 
 

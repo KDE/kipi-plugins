@@ -25,7 +25,6 @@
 
 // Qt includes.
 
-#include <QString>
 #include <QImage>
 
 namespace KIPIRawConverterPlugin

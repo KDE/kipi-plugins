@@ -60,7 +60,7 @@ Plugin_SendImages::Plugin_SendImages(QObject *parent, const QVariantList&)
                  : KIPI::Plugin(SendImagesFactory::componentData(), parent, "SendImages")
 {
     d = new Plugin_SendImagesPriv;
-    kDebug( 51001 ) << "Plugin_SendImages plugin loaded" << endl;
+    kDebug( 51001 ) << "Plugin_SendImages plugin loaded";
 }
 
 Plugin_SendImages::~Plugin_SendImages()
@@ -120,6 +120,6 @@ KIPI::Category Plugin_SendImages::category( KAction* action ) const
     if ( action == d->action_sendimages )
        return KIPI::IMAGESPLUGIN;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }

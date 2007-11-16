@@ -41,7 +41,6 @@ extern "C"
 #include <QFileInfo>
 #include <QImageReader>
 #include <QImage>
-#include <QString>
 #include <QFile>
 #include <QDir>
 #include <QtDebug>

@@ -27,7 +27,6 @@
 
 #include <QWidget>
 #include <QByteArray>
-#include <QString>
 
 namespace KIPIMetadataEditPlugin
 {

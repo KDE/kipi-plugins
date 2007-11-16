@@ -33,7 +33,6 @@
 #include <QMutexLocker>
 #include <QMutex>
 #include <QWaitCondition>
-#include <QString>
 
 // KDE includes.
 

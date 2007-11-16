@@ -27,7 +27,6 @@
 #include <QRadioButton>
 #include <QLabel>
 #include <QLayout>
-#include <QString>
 
 // KDE includes.
 

@@ -25,7 +25,6 @@
 
 #include <QPainter>
 #include <QImage>
-#include <QString>
 #include <QEvent>
 #include <QPaintEvent>
 #include <QTimer>

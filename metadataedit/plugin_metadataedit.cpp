@@ -59,7 +59,7 @@ K_EXPORT_PLUGIN ( MetadataEditFactory("kipiplugin_metadataedit") )
 Plugin_MetadataEdit::Plugin_MetadataEdit(QObject *parent, const QVariantList&)
                    : KIPI::Plugin(MetadataEditFactory::componentData(), parent, "MetadataEdit")
 {
-    kDebug( 51001 ) << "Plugin_MetadataEdit plugin loaded" << endl;
+    kDebug( 51001 ) << "Plugin_MetadataEdit plugin loaded";
 }
 
 void Plugin_MetadataEdit::setup( QWidget* widget )
@@ -750,6 +750,6 @@ KIPI::Category Plugin_MetadataEdit::category( KAction* action ) const
     if ( action == m_actionMetadataEdit )
        return KIPI::IMAGESPLUGIN;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }

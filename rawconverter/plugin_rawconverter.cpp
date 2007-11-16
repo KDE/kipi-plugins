@@ -68,7 +68,7 @@ K_EXPORT_PLUGIN ( RawConverterFactory("kipiplugin_rawconverter") )
 Plugin_RawConverter::Plugin_RawConverter(QObject *parent, const QVariantList &)
                    : KIPI::Plugin( RawConverterFactory::componentData(), parent, "RawConverter")
 {
-    kDebug( 51001 ) << "Plugin_RawConverter plugin loaded" << endl;
+    kDebug( 51001 ) << "Plugin_RawConverter plugin loaded";
 }
 
 void Plugin_RawConverter::setup( QWidget* widget )
@@ -197,6 +197,6 @@ KIPI::Category Plugin_RawConverter::category( KAction* action ) const
     else if ( action == m_batchAction )
        return KIPI::BATCHPLUGIN;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
     return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }

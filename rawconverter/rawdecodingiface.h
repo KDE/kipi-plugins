@@ -26,7 +26,6 @@
 
 // Qt Includes.
 
-#include <QString>
 #include <QObject>
 #include <QImage>
 

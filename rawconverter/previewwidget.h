@@ -29,7 +29,6 @@
 #include <QColor>
 #include <QWidget>
 #include <QPixmap>
-#include <QString>
 
 class QPaintEvent;
 class QResizeEvent;

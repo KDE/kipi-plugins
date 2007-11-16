@@ -101,6 +101,6 @@ KIPI::Category Plugin_AcquireImages::category( KAction* action ) const
     if ( action == m_action_scanimages )
        return KIPI::IMPORTPLUGIN;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
     return KIPI::IMPORTPLUGIN; // no warning from compiler, please
 }

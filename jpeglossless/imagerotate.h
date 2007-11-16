@@ -28,7 +28,6 @@
 // Qt includes.
 
 #include <QObject>
-#include <QString>
 
 // KDE includes.
 

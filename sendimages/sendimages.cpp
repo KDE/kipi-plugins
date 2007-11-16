@@ -172,7 +172,7 @@ void SendImages::slotStartingResize(const KUrl& orgUrl)
 void SendImages::slotFinishedResize(const KUrl& orgUrl, const KUrl& emailUrl, int percent)
 {
     d->progressDlg->setProgress((int)(80.0*(percent/100.0)), 100);
-    kDebug() << emailUrl << endl;
+    kDebug() << emailUrl;
     d->attachementFiles.append(emailUrl);
     d->settings.setEmailUrl(orgUrl, emailUrl);
 
@@ -319,23 +319,23 @@ KUrl::List SendImages::divideEmails()
     KUrl::List processedNow;            // List witch can be processed now.
     KUrl::List todoAttachement;         // Still todo list
 
-    kDebug() << "Attachment limit: " << d->settings.attachementLimitInBytes() << endl;
+    kDebug() << "Attachment limit: " << d->settings.attachementLimitInBytes();
 
     for (KUrl::List::const_iterator it = d->attachementFiles.begin();
         it != d->attachementFiles.end(); ++it) 
     {
         QFile file((*it).path());
-        kDebug() << "File: " << file.fileName() << " Size: " << file.size() << endl;
+        kDebug() << "File: " << file.fileName() << " Size: " << file.size();
 
         if ((myListSize + file.size()) <= d->settings.attachementLimitInBytes())
         {
             myListSize += file.size();
             processedNow.append(*it);
-            kDebug() << "Current list size: " << myListSize << endl;
+            kDebug() << "Current list size: " << myListSize;
         }
         else 
         {
-            kDebug() << "File \"" << file.fileName() << "\" is out of attachement limit!" << endl;
+            kDebug() << "File \"" << file.fileName() << "\" is out of attachement limit!";
             todoAttachement.append(*it);
         }
     }
@@ -528,7 +528,7 @@ bool SendImages::invokeMailAgent()
 
 void SendImages::invokeMailAgentError(const QString& prog, const QStringList& args)
 {
-    kDebug() << "Command Line: " << prog << args << endl;
+    kDebug() << "Command Line: " << prog << args;
     QString text = i18n("Failed to start \"%1\" program. Check your system.", prog);
     d->progressDlg->addedAction(text, KIPI::ErrorMessage);
     d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
@@ -541,7 +541,7 @@ void SendImages::invokeMailAgentError(const QString& prog, const QStringList& ar
 
 void SendImages::invokeMailAgentDone(const QString& prog, const QStringList& args)
 {
-    kDebug() << "Command Line: " << prog << args << endl;
+    kDebug() << "Command Line: " << prog << args;
     QString text = i18n("Starting \"%1\" program...", prog);
     d->progressDlg->addedAction(text, KIPI::StartingMessage);
     d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
