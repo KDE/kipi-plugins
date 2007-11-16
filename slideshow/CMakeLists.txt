@@ -3,15 +3,15 @@ ADD_DEFINITIONS(-DQT3_SUPPORT
                )
 
 SET(kipiplugin_slideshow_PART_SRCS toolbar.cpp                                   
+                                   kbeffect.cpp 
+                                   screenproperties.cpp
+                                   slideshowkb.cpp 
                                    #listimageitems.cpp 
                                    #slideshow.cpp 
                                    #slideshowconfig.cpp 
                                    #slideshowgl.cpp 
                                    #slideshowloader.cpp
                                    #imageloadthread.cpp
-                                   #kbeffect.cpp 
-                                   #screenproperties.cpp 
-                                   #slideshowkb.cpp
                                    #plugin_slideshow.cpp 
    )
 

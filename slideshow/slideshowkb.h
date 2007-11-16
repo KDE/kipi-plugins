@@ -33,15 +33,14 @@
 
 // Qt includes.
 
-#include <qgl.h>
-#include <qtimer.h>
-#include <q3valuelist.h>
-#include <qpair.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qevent.h>
-#include <qmap.h>
-//Added by qt3to4:
+#include <Q3ValueList>
+#include <QtOpenGL>
+#include <QTimer>
+#include <QPair>
+#include <QString>
+#include <QStringList>
+#include <QEvent>
+#include <QMap>
 #include <QMouseEvent>
 
 // KDE includes.
@@ -55,137 +54,138 @@
 
 namespace KIPISlideShowPlugin
 {
-  class SmoothSlideSaver;
-  class ImageLoadThread;
 
-  // -------------------------------------------------------------------------
+class SmoothSlideSaver;
+class ImageLoadThread;
 
-  class ViewTrans
-  {
+// -------------------------------------------------------------------------
 
-  public:
+class ViewTrans
+{
 
-      ViewTrans(bool m_zoomIn, float relAspect);
+public:
 
-      float transX(float pos) const { return m_baseX + m_deltaX * pos; };
-      float transY(float pos) const { return m_baseY + m_deltaY * pos; };    
-      float scale (float pos) const { return m_baseScale * (1.0 + m_deltaScale * pos); };
-      float m_xScaleCorrect() { return m_xScale; };
-      float m_yScaleCorrect() { return m_yScale; };
+    ViewTrans(bool m_zoomIn, float relAspect);
 
-  private:
+    float transX(float pos) const { return m_baseX + m_deltaX * pos; };
+    float transY(float pos) const { return m_baseY + m_deltaY * pos; };    
+    float scale (float pos) const { return m_baseScale * (1.0 + m_deltaScale * pos); };
+    float m_xScaleCorrect() { return m_xScale; };
+    float m_yScaleCorrect() { return m_yScale; };
 
-      double rnd() const { return (double)rand() / (double)RAND_MAX; };
-      double rndSign() const { return (rand() < RAND_MAX / 2) ? 1.0 : -1.0; };
+private:
 
-  private:
+    double rnd() const { return (double)rand() / (double)RAND_MAX; };
+    double rndSign() const { return (rand() < RAND_MAX / 2) ? 1.0 : -1.0; };
 
-      // delta and scale values (begin to end) and the needed offsets
-      double m_deltaX, m_deltaY, m_deltaScale;
-      double m_baseScale, m_baseX, m_baseY;
-      float  m_xScale, m_yScale;
-  };
+private:
 
-  // -------------------------------------------------------------------------
+    // delta and scale values (begin to end) and the needed offsets
+    double m_deltaX, m_deltaY, m_deltaScale;
+    double m_baseScale, m_baseX, m_baseY;
+    float  m_xScale, m_yScale;
+};
 
-  class Image 
-  {
+// -------------------------------------------------------------------------
 
-  public:
+class Image 
+{
 
-      Image(ViewTrans *viewTrans, float aspect = 1.0);
-      ~Image();
+public:
 
-      ViewTrans* m_viewTrans;
-      float      m_aspect;
-      float      m_pos;
-      float      m_opacity;
-      bool       m_paint;
-      GLuint     m_texture;
-  };
+    Image(ViewTrans *viewTrans, float aspect = 1.0);
+    ~Image();
 
-  // -------------------------------------------------------------------------
+    ViewTrans* m_viewTrans;
+    float      m_aspect;
+    float      m_pos;
+    float      m_opacity;
+    bool       m_paint;
+    GLuint     m_texture;
+};
 
-  class SlideShowKB : public QGLWidget
-  {
+// -------------------------------------------------------------------------
+
+class SlideShowKB : public QGLWidget
+{
 
     Q_OBJECT
 
-    public:
+public:
 
-      SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
-                  const QStringList& commentsList, bool ImagesHasComments);
+    SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
+                const QStringList& commentsList, bool ImagesHasComments);
 
-      ~SlideShowKB();
+    ~SlideShowKB();
 
-      static QStringList effectNames();
-      static QMap<QString,QString> effectNamesI18N();
+    static QStringList effectNames();
+    static QMap<QString,QString> effectNamesI18N();
 
-    private:
+private:
 
-      float aspect() { return (float)width() / (float)height(); };
-      bool  setupNewImage(int imageIndex);
-      void  startSlideShowOnce();
-      void  swapImages();
-      void  setNewKBEffect();
-      void  endOfShow();
+    float aspect() { return (float)width() / (float)height(); };
+    bool  setupNewImage(int imageIndex);
+    void  startSlideShowOnce();
+    void  swapImages();
+    void  setNewKBEffect();
+    void  endOfShow();
 
-      void     initializeGL();
-      void     paintGL();
-      void     resizeGL(int w, int h);
-      void     applyTexture(Image *img, const QImage &image);
-      void     paintTexture(Image *img);
-      unsigned suggestFrameRate(unsigned forceRate);
+    void     initializeGL();
+    void     paintGL();
+    void     resizeGL(int w, int h);
+    void     applyTexture(Image *img, const QImage &image);
+    void     paintTexture(Image *img);
+    unsigned suggestFrameRate(unsigned forceRate);
 
-      void readSettings();
+    void readSettings();
 
-    protected:
+protected:
 
-      void mousePressEvent(QMouseEvent *event);
-      void mouseMoveEvent(QMouseEvent *);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *);
 
-    private slots:
+private slots:
 
-      void moveSlot();
-      void slotEndOfShow();
-      void slotMouseMoveTimeOut();
-      void slotClose();
+    void moveSlot();
+    void slotEndOfShow();
+    void slotMouseMoveTimeOut();
+    void slotClose();
 
-    private:
+private:
 
-      int m_deskX;
-      int m_deskY;
-      int m_deskWidth;
-      int m_deskHeight;
+    int m_deskX;
+    int m_deskY;
+    int m_deskWidth;
+    int m_deskHeight;
 
-      KConfig* m_config;
-      
-      bool m_imagesHasComments;
-      QStringList  m_commentsList;
+    KConfig* m_config;
+    
+    bool m_imagesHasComments;
+    QStringList  m_commentsList;
 
-      ScreenProperties* m_screen;
-      QTimer           *m_timer;
-      QTimer           *m_mouseMoveTimer;
-      ImageLoadThread  *m_imageLoadThread;
-      bool              m_haveImages;
+    ScreenProperties* m_screen;
+    QTimer           *m_timer;
+    QTimer           *m_mouseMoveTimer;
+    ImageLoadThread  *m_imageLoadThread;
+    bool              m_haveImages;
 
-      Image  *m_image[2];
-      KBEffect *m_effect;
-      int     m_numKBEffectRepeated;
-      bool    m_zoomIn, m_initialized;
-      float   m_step;
+    Image  *m_image[2];
+    KBEffect *m_effect;
+    int     m_numKBEffectRepeated;
+    bool    m_zoomIn, m_initialized;
+    float   m_step;
 
-      bool    m_endOfShow;
-      bool    m_showingEnd;
+    bool    m_endOfShow;
+    bool    m_showingEnd;
 
-      // settings from config file
-      int      m_delay;
-      bool     m_disableFadeInOut;
-      bool     m_disableCrossFade;
-      unsigned m_forceFrameRate;
+    // settings from config file
+    int      m_delay;
+    bool     m_disableFadeInOut;
+    bool     m_disableCrossFade;
+    unsigned m_forceFrameRate;
 
-      friend class KBEffect;
-  };
+    friend class KBEffect;
+};
 
 }  // NameSpace KIPISlideShowPlugin
 

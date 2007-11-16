@@ -29,20 +29,21 @@
 namespace KIPISlideShowPlugin
 {
 
-  class ScreenProperties {
+class ScreenProperties
+{
 
-    public:
+public:
 
-        ScreenProperties(QWidget *mainWidget);
-        virtual ~ScreenProperties() { };
-    
-        virtual unsigned suggestFrameRate();
-        virtual bool     enableVSync();
-    
-    protected:
+    ScreenProperties(QWidget *mainWidget);
+    virtual ~ScreenProperties() { };
 
-        unsigned activeScreen;
-  };
+    virtual unsigned suggestFrameRate();
+    virtual bool     enableVSync();
+
+protected:
+
+    unsigned activeScreen;
+};
 
 }  // NameSpace KIPISlideShowPlugin
 
