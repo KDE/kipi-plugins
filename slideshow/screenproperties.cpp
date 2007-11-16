@@ -57,7 +57,7 @@ namespace KIPISlideShowPlugin
       XRRScreenConfiguration* config;
       int screenRate;
   
-      config        = XRRGetScreenInfo(QX11Info::display(), RootWindow(qt_xdisplay(),
+      config        = XRRGetScreenInfo(QX11Info::display(), RootWindow(QX11Info::display(),
                                       activeScreen));
       screenRate    = XRRConfigCurrentRate(config);
       XRRFreeScreenConfigInfo(config);
