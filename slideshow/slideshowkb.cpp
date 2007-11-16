@@ -540,7 +540,7 @@ namespace KIPISlideShowPlugin
     // =======================================================
     // Avoid boring compile time "unused parameter" warning :P
     // This parameter could be useful for future implementations
-    if ( !e );
+    if ( !e ) { /* TODO */ }
     // =======================================================
     
     if (m_endOfShow && m_showingEnd)
