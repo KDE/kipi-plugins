@@ -262,6 +262,6 @@ KIPI::Category Plugin_SlideShow::category( KAction* action ) const
     if ( action == m_actionSlideShow )
        return KIPI::TOOLSPLUGIN;
     
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
     return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }
