@@ -33,9 +33,11 @@ FIND_PACKAGE(Kipi REQUIRED)
 FIND_PACKAGE(JPEG REQUIRED)
 FIND_PACKAGE(PNG REQUIRED)
 FIND_PACKAGE(TIFF REQUIRED)
-macro_optional_find_package(Sane)
 
 # Optional depencies detection require by any plugins
+
+MACRO_OPTIONAL_FIND_PACKAGE(Sane)    # For AcquireImages
+MACRO_OPTIONAL_FIND_PACKAGE(X11)     # For Slideshow
 MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)  # For Slideshow and ImageViewer
 #MACRO_OPTIONAL_FIND_PACKAGE(Gphoto2)
 
@@ -50,10 +52,13 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
 	           )
 
 # Plugins witch depand of OpenGL
-IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+IF(OPENGL_FOUND AND OPENGL_GLU_FOUND AND X11_FOUND)
    MACRO_OPTIONAL_ADD_SUBDIRECTORY(slideshow)
+ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND AND X11_FOUND)
+
+#IF(OPENGL_FOUND AND OPENGL_GLU_FOUND AND X11_FOUND)
 #   MACRO_OPTIONAL_ADD_SUBDIRECTORY(imageviewer)
-ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+#ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
 # TODO: others optional depencies to check when others plugins will be ported to KDE4
 #

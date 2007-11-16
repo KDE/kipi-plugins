@@ -21,6 +21,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_slideshow
                       ${KDE4_KPARTS_LIBS} 
                       ${QT_AND_KDECORE_LIBS} 
                       ${QT_QTOPENGL_LIBRARY}
+                      ${X11_LIBRARIES}
                       ${OPENGL_LIBRARIES} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
