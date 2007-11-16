@@ -31,6 +31,7 @@
 
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
+#include <QX11Info>
 
 // Local includes.
 
@@ -47,7 +48,7 @@ namespace KIPISlideShowPlugin
   unsigned ScreenProperties::suggestFrameRate() {
   
       int eventBase, errorBase;
-      if ( !XRRQueryExtension(qt_xdisplay(), &eventBase, &errorBase)) {
+      if ( !XRRQueryExtension(QX11Info::display(), &eventBase, &errorBase)) {
           // No information, make a lucky guess on based on that ;)
           return 25;
       }
@@ -56,7 +57,7 @@ namespace KIPISlideShowPlugin
       XRRScreenConfiguration* config;
       int screenRate;
   
-      config        = XRRGetScreenInfo(qt_xdisplay(), RootWindow(qt_xdisplay(),
+      config        = XRRGetScreenInfo(QX11Info::display(), RootWindow(qt_xdisplay(),
                                       activeScreen));
       screenRate    = XRRConfigCurrentRate(config);
       XRRFreeScreenConfigInfo(config);
@@ -80,7 +81,7 @@ namespace KIPISlideShowPlugin
       int smallestError = 1000, i = 0;
       do {
           int r     = candidateRate[i];
-          int error = QMIN(screenRate % r, (screenRate + r) % r);
+          int error = qMin(screenRate % r, (screenRate + r) % r);
           
           if (error < smallestError) {
               smallestError = error;

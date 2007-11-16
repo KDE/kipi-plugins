@@ -1,3 +1,5 @@
+//Added by qt3to4:
+#include <QPixmap>
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>KIPISlideShowPlugin::SlideShowConfigBase</class>
 <widget class="KDialog">
@@ -479,7 +481,7 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                                             <bool>false</bool>
                                         </property>
                                         <property name="alignment">
-                                            <set>AlignCenter</set>
+                                            <set>Qt::AlignCenter</set>
                                         </property>
                                         <property name="whatsThis" stdset="0">
                                             <string>Preview the currently selected image.</string>
@@ -1567,12 +1569,12 @@ Ken Burns effect doesn't use this cache mechanism.</string>
     <include location="global" impldecl="in declaration">libkipi/interface.h</include>
     <include location="global" impldecl="in declaration">kprocess.h</include>
     <include location="global" impldecl="in declaration">kio/previewjob.h</include>
-    <include location="global" impldecl="in declaration">klistbox.h</include>
+    <include location="global" impldecl="in declaration">k3listbox.h</include>
     <include location="global" impldecl="in implementation">klineedit.h</include>
     <include location="global" impldecl="in implementation">libkipi/interface.h</include>
     <include location="global" impldecl="in implementation">kprocess.h</include>
     <include location="global" impldecl="in implementation">kio/previewjob.h</include>
-    <include location="global" impldecl="in implementation">klistbox.h</include>
+    <include location="global" impldecl="in implementation">k3listbox.h</include>
 </includes>
 <slots>
     <slot access="protected">slotOpenGLToggled()</slot>
@@ -1584,10 +1586,10 @@ Ken Burns effect doesn't use this cache mechanism.</string>
     <slot specifier="non virtual">slotImagesFilesButtonAdd( void )</slot>
     <slot specifier="non virtual">slotImagesFilesButtonDown()</slot>
     <slot specifier="non virtual">slotImagesFilesButtonDelete( void )</slot>
-    <slot specifier="non virtual">slotImagesFilesSelected( QListBoxItem * item )</slot>
-    <slot specifier="non virtual">slotGotPreview( const KFileItem *, const QPixmap &amp; pixmap )</slot>
+    <slot specifier="non virtual">slotImagesFilesSelected( Q3ListBoxItem * item )</slot>
+    <slot specifier="non virtual">slotGotPreview( const KFileItem& , const QPixmap &amp; pixmap )</slot>
     <slot specifier="non virtual">slotFailedPreview( const KFileItem * )</slot>
-    <slot specifier="non virtual">slotAddDropItems( KURL::List filesUrl )</slot>
+    <slot specifier="non virtual">slotAddDropItems( KUrl::List filesUrl )</slot>
     <slot access="protected">slotCacheToggled()</slot>
 </slots>
 <functions>

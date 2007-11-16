@@ -27,12 +27,16 @@
 #include <kconfig.h>
 
 // QT includes 
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qstringlist.h>
 #include <qpair.h>
 #include <qstring.h>
 #include <qmap.h>
 #include <qgl.h>
+//Added by qt3to4:
+#include <QWheelEvent>
+#include <QMouseEvent>
+#include <QKeyEvent>
 
 // Local includes
 #include "slideshowloader.h"
@@ -50,7 +54,7 @@ namespace KIPISlideShowPlugin
         
     public:
     
-        SlideShowGL(const QValueList<QPair<QString, int> >& fileList,
+        SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
                     const QStringList& commentsList, bool ImagesHasComments);
         ~SlideShowGL();
     
@@ -98,7 +102,7 @@ namespace KIPISlideShowPlugin
         typedef void (SlideShowGL::*EffectMethod)();
         QMap<QString, EffectMethod> m_effects;
     
-        QValueList<QPair<QString, int> >  m_fileList;
+        Q3ValueList<QPair<QString, int> >  m_fileList;
         QStringList  m_commentsList;
         QTimer*      m_timer;
         int          m_fileIndex;

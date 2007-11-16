@@ -32,7 +32,7 @@
 #include <qthread.h>
 #include <qwaitcondition.h>
 #include <qmutex.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qpair.h>
 #include <qstring.h>
 #include <qobject.h>
@@ -47,7 +47,7 @@ Q_OBJECT
 
 public:
 
-  ImageLoadThread(QValueList<QPair<QString, int> >& fileList, int width, int height);
+  ImageLoadThread(Q3ValueList<QPair<QString, int> >& fileList, int width, int height);
     
     void  quit();
     void  requestNewImage();
@@ -71,7 +71,7 @@ protected:
 private:
   
     int                               m_fileIndex;
-    QValueList<QPair<QString, int> >  m_fileList;
+    Q3ValueList<QPair<QString, int> >  m_fileList;
     
     int                               m_width, m_height;
     

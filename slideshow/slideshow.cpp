@@ -39,8 +39,13 @@
 #include <qevent.h>
 #include <qcursor.h>
 #include <qfont.h>
-#include <qwmatrix.h>
+#include <qmatrix.h>
 #include <qtextcodec.h>
+//Added by qt3to4:
+#include <QKeyEvent>
+#include <Q3PointArray>
+#include <QMouseEvent>
+#include <QWheelEvent>
 
 // KDE includes.
 
@@ -60,7 +65,7 @@ namespace KIPISlideShowPlugin
 { 
   
 SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments)
-         : QWidget(0, 0, WStyle_StaysOnTop | WType_Popup | WX11BypassWM | WDestructiveClose)
+         : QWidget(0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup | WX11BypassWM | WDestructiveClose)
 {
 #if KDE_IS_VERSION(3,2,0)
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
@@ -499,7 +504,7 @@ void SlideShow::printComments()
                 commentsIndex--;
             }
 
-        commentsByLines.prepend(newLine.stripWhiteSpace());
+        commentsByLines.prepend(newLine.trimmed());
     }
 
     QPainter p;
@@ -969,7 +974,7 @@ int SlideShow::effectMultiCircleOut(bool aInit)
 {
     int x, y, i;
     double alpha;
-    static QPointArray pa(4);
+    static Q3PointArray pa(4);
 
     if (aInit)
     {
@@ -1083,7 +1088,7 @@ int SlideShow::effectSpiralIn(bool aInit)
 int SlideShow::effectCircleOut(bool aInit)
 {
     int x, y;
-    static QPointArray pa(4);
+    static Q3PointArray pa(4);
 
     if (aInit)
     {

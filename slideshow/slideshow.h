@@ -26,7 +26,7 @@
 
 // QT includes.
 
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qstringlist.h>
 #include <qpair.h>
 #include <qstring.h>
@@ -36,6 +36,10 @@
 #include <qmap.h>
 #include <qfont.h>
 #include <qstring.h>
+//Added by qt3to4:
+#include <QWheelEvent>
+#include <QMouseEvent>
+#include <QKeyEvent>
 
 // KDE includes.
 
@@ -54,7 +58,7 @@
 class QTimer;
 
 typedef QPair<QString, int> FileAnglePair;
-typedef QValueList<FileAnglePair > FileList;
+typedef Q3ValueList<FileAnglePair > FileList;
 
 namespace KIPISlideShowPlugin
 {

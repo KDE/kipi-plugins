@@ -38,6 +38,10 @@
 #include <qobject.h>
 #include <qfont.h>
 #include <qcursor.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <QPixmap>
+#include <QMouseEvent>
 
 // KDE includes.
 
@@ -137,9 +141,9 @@ namespace KIPISlideShowPlugin
   }
 
   // -------------------------------------------------------------------------
-  SlideShowKB::SlideShowKB(const QValueList<QPair<QString, int> >& fileList,
+  SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
                            const QStringList& commentsList, bool ImagesHasComments)
-  : QGLWidget(0, 0, 0, WStyle_StaysOnTop | WType_Popup |
+  : QGLWidget(0, 0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup |
       WX11BypassWM | WDestructiveClose)
   {
   #if KDE_IS_VERSION(3,2,0)
@@ -189,7 +193,7 @@ namespace KIPISlideShowPlugin
       m_initialized = false;
       m_haveImages  = true;
 
-      QValueList<QPair<QString, int> > m_fileList = fileList;
+      Q3ValueList<QPair<QString, int> > m_fileList = fileList;
 
       m_imageLoadThread = new ImageLoadThread(m_fileList, width(), height());
       m_timer           = new QTimer(this);

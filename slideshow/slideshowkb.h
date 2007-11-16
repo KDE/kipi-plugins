@@ -35,12 +35,14 @@
 
 #include <qgl.h>
 #include <qtimer.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qpair.h>
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qevent.h>
 #include <qmap.h>
+//Added by qt3to4:
+#include <QMouseEvent>
 
 // KDE includes.
 
@@ -111,7 +113,7 @@ namespace KIPISlideShowPlugin
 
     public:
 
-      SlideShowKB(const QValueList<QPair<QString, int> >& fileList,
+      SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
                   const QStringList& commentsList, bool ImagesHasComments);
 
       ~SlideShowKB();

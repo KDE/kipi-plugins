@@ -61,7 +61,7 @@ private:
 
     KAction*         m_actionSlideShow;
     KIPI::Interface* m_interface;
-    KURL::List*      m_urlList;
+    KUrl::List*      m_urlList;
 
     bool             m_imagesHasComments;
 };

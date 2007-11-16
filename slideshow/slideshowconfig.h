@@ -27,7 +27,9 @@
 // Qt includes.
 
 #include <qstring.h>
-#include <qlistbox.h>
+#include <q3listbox.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 // KDE includes
 
@@ -55,7 +57,7 @@ public:
 
     SlideShowConfig(bool allowSelectedOnly, KIPI::Interface* interface,
                     QWidget *parent, const char* name, bool ImagesHasComments,
-                    KURL::List* urlList);
+                    KUrl::List* urlList);
     ~SlideShowConfig();
     
 private slots:
@@ -74,8 +76,8 @@ private slots:
     void slotCacheToggled();
    
     void SlotPortfolioDurationChanged ( int );
-    void slotImagesFilesSelected( QListBoxItem *item );
-    void slotAddDropItems(KURL::List filesUrl);
+    void slotImagesFilesSelected( Q3ListBoxItem *item );
+    void slotAddDropItems(KUrl::List filesUrl);
     void slotImagesFilesButtonAdd( void );
     void slotImagesFilesButtonDelete( void );
     void slotImagesFilesButtonUp( void );
@@ -95,7 +97,7 @@ private:
     void saveSettings();
     
     void ShowNumberImages( int Number );
-    void addItems(const KURL::List& fileList);
+    void addItems(const KUrl::List& fileList);
 
 private:
 
@@ -111,7 +113,7 @@ private:
     QString          m_effectNameGL;
     
     KIO::PreviewJob* m_thumbJob;
-    KURL::List*      m_urlList;
+    KUrl::List*      m_urlList;
     
     KIPI::Interface* m_interface;
 };

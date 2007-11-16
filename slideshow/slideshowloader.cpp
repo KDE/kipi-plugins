@@ -23,9 +23,9 @@
 // QT includes
 
 #include <qimage.h>
-#include <qwmatrix.h>
+#include <qmatrix.h>
 #include <qpainter.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 
 // KDE includes
 
@@ -38,7 +38,7 @@
 namespace KIPISlideShowPlugin
 { 
   
-  LoadThread::LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KURL path, 
+  LoadThread::LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl path, 
                          const int angle, int width, int height) {
 
     m_path  =  path;
@@ -58,13 +58,13 @@ namespace KIPISlideShowPlugin
     // Rotate according to angle
     if ( m_angle != 0 ) 
     {
-      QWMatrix matrix;
+      QMatrix matrix;
       matrix.rotate((double)m_angle);
       newImage.xForm( matrix );
     }
     
   
-    newImage = QImage(newImage.smoothScale(m_swidth, m_sheight, QImage::ScaleMin));
+    newImage = QImage(newImage.smoothScale(m_swidth, m_sheight, Qt::ScaleMin));
     
     m_imageLock->lock();
     m_loadedImages->insert(m_path, newImage);
@@ -86,7 +86,7 @@ namespace KIPISlideShowPlugin
     m_threadLock = new QMutex();
     
     for ( uint i = 0; i < uint(m_cacheSize/2) && i < uint(m_pathList.count()); i++ ) {
-      LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KURL(m_pathList[i].first), 
+      LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[i].first), 
                                              m_pathList[i].second, m_swidth, m_sheight);
       m_threadLock->lock();
       m_loadingThreads->insert(m_pathList[i].first, newThread);
@@ -95,7 +95,7 @@ namespace KIPISlideShowPlugin
     }  
     for ( uint i = 0; i < ( m_cacheSize%2 == 0? (m_cacheSize%2) : uint(m_cacheSize/2)+1); i++ ) {
       int toLoad = (m_currIndex - i)%m_pathList.count();
-      LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KURL(m_pathList[toLoad].first), 
+      LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[toLoad].first), 
                                              m_pathList[toLoad].second, m_swidth, m_sheight);
       m_threadLock->lock();
       m_loadingThreads->insert(m_pathList[toLoad].first, newThread);
@@ -137,7 +137,7 @@ namespace KIPISlideShowPlugin
     m_imageLock->unlock();
     m_threadLock->unlock();
     
-    LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KURL(m_pathList[newBorn].first), 
+    LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[newBorn].first), 
                                            m_pathList[newBorn].second, m_swidth, m_sheight);
     
     m_threadLock->lock();
@@ -161,7 +161,7 @@ namespace KIPISlideShowPlugin
     m_imageLock->unlock();
     m_threadLock->unlock();
     
-    LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KURL(m_pathList[newBorn].first), 
+    LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[newBorn].first), 
                                            m_pathList[newBorn].second, m_swidth, m_sheight);
 
     
@@ -187,10 +187,10 @@ namespace KIPISlideShowPlugin
   
   QString SlideShowLoader::currFileName() 
   {
-    return KURL(m_pathList[m_currIndex].first).fileName();
+    return KUrl(m_pathList[m_currIndex].first).fileName();
   }
   
-  KURL SlideShowLoader::currPath() 
+  KUrl SlideShowLoader::currPath() 
   {
     return m_pathList[m_currIndex].first;
   }
@@ -206,7 +206,7 @@ namespace KIPISlideShowPlugin
     }
     else
     {
-      LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KURL(m_pathList[index].first), 
+      LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[index].first), 
                                              m_pathList[index].second, m_swidth, m_sheight);
       
       m_loadingThreads->insert(m_pathList[index].first,newThread);

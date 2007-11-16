@@ -25,14 +25,17 @@
 #include <qstring.h>
 #include <qwidget.h>
 #include <qevent.h>
-#include <qstrlist.h>
-#include <qdragobject.h>
+#include <q3strlist.h>
+#include <q3dragobject.h>
 #include <qfileinfo.h>
-#include <qlistbox.h>
+#include <q3listbox.h>
+//Added by qt3to4:
+#include <QDropEvent>
+#include <QDragEnterEvent>
 
 // KDE includes
 
-#include <klistbox.h>
+#include <k3listbox.h>
 #include <kurl.h>
 
 // Local includes
@@ -44,36 +47,36 @@ namespace KIPISlideShowPlugin
 {
 
 ListImageItems::ListImageItems(QWidget *parent, const char *name)
-              : KListBox(parent, name)
+              : K3ListBox(parent, name)
 {
-    setSelectionMode (QListBox::Extended);
+    setSelectionMode (Q3ListBox::Extended);
     setAcceptDrops(true);
 }
 
 void ListImageItems::dragEnterEvent(QDragEnterEvent *e)
 {
-    e->accept(QUriDrag::canDecode(e));
+    e->accept(Q3UriDrag::canDecode(e));
 }
 
 void ListImageItems::dropEvent(QDropEvent *e)
 {
-    QStrList strList;
-    KURL::List filesUrl;
+    Q3StrList strList;
+    KUrl::List filesUrl;
 
-    if ( !QUriDrag::decode(e, strList) ) return;
+    if ( !Q3UriDrag::decode(e, strList) ) return;
 
-    QStrList stringList;
+    Q3StrList stringList;
     QStrListIterator it(strList);
     char *str;
 
     while ( (str = it.current()) != 0 )
     {
-        QString filePath = QUriDrag::uriToLocalFile(str);
+        QString filePath = Q3UriDrag::uriToLocalFile(str);
         QFileInfo fileInfo(filePath);
 
         if (fileInfo.isFile() && fileInfo.exists())
         {
-            KURL url(fileInfo.filePath());
+            KUrl url(fileInfo.filePath());
             filesUrl.append(url);
         }
 

@@ -36,7 +36,12 @@
 #include <qpainter.h>
 #include <qfileinfo.h>
 #include <qfontmetrics.h>
-#include <qwmatrix.h>
+#include <qmatrix.h>
+//Added by qt3to4:
+#include <QKeyEvent>
+#include <Q3ValueList>
+#include <QMouseEvent>
+#include <QWheelEvent>
 
 #include <math.h>
 #include <cstdlib>
@@ -47,9 +52,9 @@
 namespace KIPISlideShowPlugin
 {
 
-SlideShowGL::SlideShowGL(const QValueList<QPair<QString, int> >& fileList,
+SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
                          const QStringList& commentsList, bool ImagesHasComments)
-    : QGLWidget(0, 0, 0, WStyle_StaysOnTop | WType_Popup |
+    : QGLWidget(0, 0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup |
                 WX11BypassWM | WDestructiveClose)
 {
 #if KDE_IS_VERSION(3,2,0)
@@ -223,7 +228,7 @@ void SlideShowGL::initializeGL()
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexVal);
 
     // allow only maximum texture value of 1024. anything bigger and things slow down
-    maxTexVal = QMIN(1024, maxTexVal);
+    maxTexVal = qMin(1024, maxTexVal);
 
     m_width  = QApplication::desktop()->width();
     m_height = QApplication::desktop()->height();
@@ -231,8 +236,8 @@ void SlideShowGL::initializeGL()
     m_width  = 1 << (int)ceil(log((float)m_width)/log((float)2)) ;
     m_height = 1 << (int)ceil(log((float)m_height)/log((float)2));
     
-    m_width  = QMIN( maxTexVal, m_width );
-    m_height = QMIN( maxTexVal, m_height );
+    m_width  = qMin( maxTexVal, m_width );
+    m_height = qMin( maxTexVal, m_height );
 
     // load the first image
 
@@ -506,7 +511,7 @@ void SlideShowGL::loadImage()
         black.fill(Qt::black.rgb());
 	    
 /*        image = image.smoothScale(width(), height(),
-                                  QImage::ScaleMin);*/
+                                  Qt::ScaleMin);*/
         montage(image, black);
 
         black = black.smoothScale(m_width, m_height);
@@ -671,7 +676,7 @@ void SlideShowGL::printComments(QImage& layer)
             commentsIndex--;
         }
 
-        commentsByLines.prepend(newLine.stripWhiteSpace());
+        commentsByLines.prepend(newLine.trimmed());
     }
 
     QFontMetrics fm(*m_commentsFont);
@@ -757,7 +762,7 @@ void SlideShowGL::showEndOfShow()
 void SlideShowGL::slotTimeOut()
 {
     if (!m_effect) {
-        kdWarning( 51000 ) << "SlideShowGL: No transition method"
+        kWarning( 51000 ) << "SlideShowGL: No transition method"
                     << endl;
         m_effect = &SlideShowGL::effectNone;
     }

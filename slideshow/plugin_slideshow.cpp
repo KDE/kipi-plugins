@@ -35,7 +35,7 @@ extern "C"
 
 // Qt includes.
 
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qpair.h>
 #include <qstringlist.h>
 
@@ -72,7 +72,7 @@ Plugin_SlideShow::Plugin_SlideShow(QObject *parent, const char*,
                                    const QStringList&)
     : KIPI::Plugin( Factory::instance(), parent, "SlideShow")
 {
-    kdDebug( 51001 ) << "Plugin_SlideShow plugin loaded"
+    kDebug( 51001 ) << "Plugin_SlideShow plugin loaded"
                      << endl;
 }
 
@@ -90,11 +90,11 @@ void Plugin_SlideShow::setup( QWidget* widget )
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
     
-    m_urlList = new KURL::List();
+    m_urlList = new KUrl::List();
 
     if ( !m_interface ) 
     {
-       kdError( 51000 ) << "Kipi m_interface is null!" << endl;
+       kError( 51000 ) << "Kipi m_interface is null!" << endl;
        return;
     }
 
@@ -116,7 +116,7 @@ void Plugin_SlideShow::slotActivate()
 {
     if ( !m_interface ) 
     {
-        kdError( 51000 ) << "Kipi m_interface is null!" << endl;
+        kError( 51000 ) << "Kipi m_interface is null!" << endl;
         return;
     }
 
@@ -152,7 +152,7 @@ void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
     KIPI::Interface* m_interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !m_interface ) 
     {
-        kdError( 51000 ) << "Kipi m_interface is null!" << endl;
+        kError( 51000 ) << "Kipi m_interface is null!" << endl;
         m_actionSlideShow->setEnabled( false );
         return;
     }
@@ -160,7 +160,7 @@ void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
     KIPI::ImageCollection currAlbum = m_interface->currentAlbum();
     if ( !currAlbum.isValid() )
     {
-        kdError( 51000 ) << "Current image collection is not valid." << endl;
+        kError( 51000 ) << "Current image collection is not valid." << endl;
         m_actionSlideShow->setEnabled( false );
         return;
     }
@@ -172,7 +172,7 @@ void Plugin_SlideShow::slotSlideShow()
 {
     if ( !m_interface ) 
     {
-           kdError( 51000 ) << "Kipi m_interface is null!" << endl;
+           kError( 51000 ) << "Kipi m_interface is null!" << endl;
            return;
     }
 
@@ -194,11 +194,11 @@ void Plugin_SlideShow::slotSlideShow()
     }
 
     typedef QPair<QString, int> FileAnglePair;
-    typedef QValueList<FileAnglePair > FileList;
+    typedef Q3ValueList<FileAnglePair > FileList;
     FileList fileList;
     QStringList commentsList;
 
-    for( KURL::List::Iterator urlIt = m_urlList->begin(); urlIt != m_urlList->end(); ++urlIt )
+    for( KUrl::List::Iterator urlIt = m_urlList->begin(); urlIt != m_urlList->end(); ++urlIt )
     {
         KIPI::ImageInfo info = m_interface->info( *urlIt );
         fileList.append( FileAnglePair((*urlIt).path(), info.angle()) );
@@ -262,6 +262,6 @@ KIPI::Category Plugin_SlideShow::category( KAction* action ) const
     if ( action == m_actionSlideShow )
        return KIPI::TOOLSPLUGIN;
     
-    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }

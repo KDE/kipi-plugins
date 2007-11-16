@@ -30,7 +30,7 @@
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qthread.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qpair.h>
 
 // KDE includes
@@ -38,19 +38,19 @@
 #include <kurl.h>
 
 typedef QPair<QString, int> FileAnglePair;
-typedef QValueList<FileAnglePair> FileList;
+typedef Q3ValueList<FileAnglePair> FileList;
 
 namespace KIPISlideShowPlugin
 {
 
-  typedef QMap<KURL, QImage> LoadedImages;
+  typedef QMap<KUrl, QImage> LoadedImages;
   
   class LoadThread : public QThread
   {
 
     public:
 
-      LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KURL path, 
+      LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl path, 
                  const int angle, int width, int height);
       ~LoadThread();
 
@@ -63,14 +63,14 @@ namespace KIPISlideShowPlugin
       QMutex*   m_imageLock;
       LoadedImages* m_loadedImages;
 
-      KURL      m_path;
+      KUrl      m_path;
       QString   m_filename;
       int       m_angle;
       int       m_swidth;
       int       m_sheight;
   };
   
-  typedef QMap<KURL, LoadThread*> LoadingThreads;
+  typedef QMap<KUrl, LoadThread*> LoadingThreads;
   
   class SlideShowLoader
   {
@@ -85,7 +85,7 @@ namespace KIPISlideShowPlugin
       
       QImage getCurrent();
       QString currFileName();
-      KURL    currPath();
+      KUrl    currPath();
       
     private:
 

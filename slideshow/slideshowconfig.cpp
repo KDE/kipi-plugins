@@ -23,7 +23,7 @@
 
 // Qt includes.
 
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qlabel.h>
@@ -31,13 +31,16 @@
 #include <qspinbox.h>
 #include <qlayout.h>
 #include <qmap.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qpushbutton.h>
 #include <qtabwidget.h>
 #include <qcolor.h>
 #include <qnamespace.h>
-#include <qlistbox.h>
+#include <q3listbox.h>
 #include <qfileinfo.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <QPixmap>
 
 // Kde includes.
 
@@ -48,7 +51,7 @@
 #include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kstandarddirs.h>
 #include <kfontdialog.h>
 #include <kcolorbutton.h>
@@ -59,6 +62,7 @@
 
 #include <libkipi/interface.h>
 #include <libkipi/imagedialog.h>
+#include <ktoolinvocation.h>
 
 // Local includes.
 
@@ -76,7 +80,7 @@ namespace KIPISlideShowPlugin
 
 SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * interface, 
                                  QWidget *parent, const char* name, bool ImagesHasComments,
-                                 KURL::List *urlList)
+                                 KUrl::List *urlList)
                : SlideShowConfigBase(parent, name) 
 {
     // About data and help button.
@@ -124,10 +128,10 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
 
     connect(m_fileSrcButtonGroup, SIGNAL(clicked(int)), this, SLOT(slotSelection()));
 
-    connect( m_ImagesFilesListBox, SIGNAL( currentChanged( QListBoxItem * ) ),
-             this, SLOT( slotImagesFilesSelected(QListBoxItem *) ) );
-    connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(KURL::List) ),
-            this, SLOT( slotAddDropItems(KURL::List)));
+    connect( m_ImagesFilesListBox, SIGNAL( currentChanged( Q3ListBoxItem * ) ),
+             this, SLOT( slotImagesFilesSelected(Q3ListBoxItem *) ) );
+    connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(KUrl::List) ),
+            this, SLOT( slotAddDropItems(KUrl::List)));
     connect( m_ImagesFilesButtonAdd, SIGNAL( clicked() ),
              this, SLOT( slotImagesFilesButtonAdd() ) );
     connect( m_ImagesFilesButtonDelete, SIGNAL( clicked() ),
@@ -426,14 +430,14 @@ void SlideShowConfig::saveSettings()
     m_config->sync();
 }
 
-void SlideShowConfig::addItems(const KURL::List& fileList)
+void SlideShowConfig::addItems(const KUrl::List& fileList)
 {
     if (fileList.isEmpty()) return;
-    KURL::List Files = fileList;
+    KUrl::List Files = fileList;
 
-    for ( KURL::List::Iterator it = Files.begin() ; it != Files.end() ; ++it )
+    for ( KUrl::List::Iterator it = Files.begin() ; it != Files.end() ; ++it )
     {
-        KURL currentFile = *it;
+        KUrl currentFile = *it;
 
         QFileInfo fi(currentFile.path());
         QString Temp = fi.dirPath();
@@ -541,7 +545,7 @@ void SlideShowConfig::slotDelayChanged()
 
 void SlideShowConfig::slotSelection()
 {
-    KURL::List urlList;
+    KUrl::List urlList;
     if (m_selectedFilesButton->isChecked())
     {
         urlList = m_interface->currentSelection().images();
@@ -554,10 +558,10 @@ void SlideShowConfig::slotSelection()
     else
         if (m_allFilesButton->isChecked())
         {
-            KURL currentPath = m_interface->currentAlbum().path();
-            QValueList<KIPI::ImageCollection> albumList;
+            KUrl currentPath = m_interface->currentAlbum().path();
+            Q3ValueList<KIPI::ImageCollection> albumList;
             albumList = m_interface->allAlbums();
-            QValueList<KIPI::ImageCollection>::iterator it;
+            Q3ValueList<KIPI::ImageCollection>::iterator it;
     
             urlList = m_interface->currentAlbum().images();
             for ( it = albumList.begin(); it != albumList.end(); ++it )
@@ -587,7 +591,7 @@ void SlideShowConfig::slotSelection()
     }
 }
 
-void SlideShowConfig::slotImagesFilesSelected( QListBoxItem *item )
+void SlideShowConfig::slotImagesFilesSelected( Q3ListBoxItem *item )
 {
     
     if ( !item || m_ImagesFilesListBox->count() == 0 )
@@ -601,7 +605,7 @@ void SlideShowConfig::slotImagesFilesSelected( QListBoxItem *item )
 
     if ( !pitem ) return;
 
-    KURL url;
+    KUrl url;
     url.setPath(pitem->path());
 
     m_ImageLabel->clear();
@@ -619,14 +623,14 @@ void SlideShowConfig::slotImagesFilesSelected( QListBoxItem *item )
     m_label7->setText(i18n("Image no. %1").arg(index + 1));
 }
 
-void SlideShowConfig::slotAddDropItems(KURL::List filesUrl)
+void SlideShowConfig::slotAddDropItems(KUrl::List filesUrl)
 {
     addItems(filesUrl);
 }
 
 void SlideShowConfig::slotImagesFilesButtonAdd( void )
 {
-    KURL::List ImageFilesList =
+    KUrl::List ImageFilesList =
             KIPI::ImageDialog::getImageURLs( this, m_interface );
     if ( !ImageFilesList.isEmpty() )
         addItems( ImageFilesList );
@@ -779,7 +783,7 @@ void SlideShowConfig::slotStartClicked()
 
 void SlideShowConfig::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("slideshow",
+    KToolInvocation::invokeHelp("slideshow",
                                              "kipi-plugins");
 }
 

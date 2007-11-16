@@ -26,10 +26,12 @@
 // Qt includes.
 
 #include <qdir.h>
-#include <qvaluevector.h>
-#include <qdeepcopy.h>
-#include <qwmatrix.h>
+#include <q3valuevector.h>
+#include <q3deepcopy.h>
+#include <qmatrix.h>
 #include <qobject.h>
+//Added by qt3to4:
+#include <Q3ValueList>
              
 // KDE includes.
 
@@ -44,7 +46,7 @@
 namespace KIPISlideShowPlugin
 {
 
-ImageLoadThread::ImageLoadThread(QValueList<QPair<QString, int> >& fileList, 
+ImageLoadThread::ImageLoadThread(Q3ValueList<QPair<QString, int> >& fileList, 
                                  int width, int height) 
 {
 
@@ -147,7 +149,7 @@ bool ImageLoadThread::loadImage() {
     QImage image(path);
     if (angle != 0)
     {
-        QWMatrix wm;
+        QMatrix wm;
         wm.rotate(angle);
         image = image.xForm(wm);
     }
@@ -158,7 +160,7 @@ bool ImageLoadThread::loadImage() {
 
     float aspect  = (float)image.width() / (float)image.height();    
     
-    image = image.smoothScale(m_width, m_height, QImage::ScaleMin);
+    image = image.smoothScale(m_width, m_height, Qt::ScaleMin);
     
     m_imageLock.lock();
     
