@@ -23,15 +23,17 @@
  *
  * ============================================================ */
 
+// Qt includes.
+
+#include <QDataStream>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QX11Info>
+
 // X11 includes.
 
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
-
-// Qt includes.
-
-#include <QX11Info>
-#include <QApplication>
 
 // Local includes.
 
@@ -100,6 +102,8 @@ bool ScreenProperties::enableVSync()
 
     // For NVidia graphics cards: always use sync-to-vblank
     //  return (setenv("__GL_SYNC_TO_VBLANK", "1", 1) == 0);
+
+    return false; // To please compiler.
 }
 
 }  // NameSpace KIPISlideShowPlugin
