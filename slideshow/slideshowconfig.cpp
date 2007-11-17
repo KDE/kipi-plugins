@@ -215,7 +215,7 @@ void SlideShowConfig::loadEffectNamesGL()
 
     // Update GUI
     
-    effects.sort();
+   effects.sort();
     m_effectsComboBox->insertStringList(effects);
 
     for (int i=0; i<m_effectsComboBox->count(); i++) {
@@ -388,27 +388,26 @@ void SlideShowConfig::saveSettings()
     }
     else 
     {
-      QStringList effects;
+      QMap<QString,QString> effects;
       QMap<QString,QString> effectNames;
       QMap<QString,QString>::Iterator it;
     
-    // Load slideshowgl effects
+      // Load slideshowgl effects
       effectNames = SlideShowGL::effectNamesI18N();
 
       for (it = effectNames.begin(); it != effectNames.end(); ++it)
-        effects.append(it.data());
+        effects.insert(it.key(),it.data());
 
-    // Load Ken Burns effect
+      // Load Ken Burns effect
       effectNames = SlideShowKB::effectNamesI18N();
       for (it = effectNames.begin(); it != effectNames.end(); ++it)
-        effects.append(it.data());
+        effects.insert(it.key(),it.data());
 
         QString effect;
-        QStringList::Iterator it1;
 
-        for (it1 = effects.begin(); it1 != effects.end(); ++it1) {
-            if ( *it1 == m_effectsComboBox->currentText()) {
-                effect = *it1;
+        for (it = effects.begin(); it != effects.end(); ++it) {
+            if ( it.data() == m_effectsComboBox->currentText()) {
+                effect = it.key();
                 break;
             }
         }
@@ -531,7 +530,7 @@ void SlideShowConfig::slotOpenGLToggled()
     
     ShowNumberImages( m_ImagesFilesListBox->count() );
     
-    slotEffectChanged();
+//    slotEffectChanged();
 }
 
 void SlideShowConfig::slotDelayChanged()
