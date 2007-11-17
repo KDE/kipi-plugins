@@ -1,7 +1,6 @@
 ADD_DEFINITIONS(-DQT3_SUPPORT 
                 -DQT3_SUPPORT_WARNINGS
                )
-
 SET(kipiplugin_slideshow_PART_SRCS toolbar.cpp                                   
                                    kbeffect.cpp 
                                    screenproperties.cpp
@@ -27,6 +26,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_slideshow
                       ${KEXIV2_LIBRARIES} 
                       ${KDCRAW_LIBRARIES} 
                       ${QT_QT3SUPPORT_LIBRARY} 
+                      ${X11_Xrandr_LIB}
                       kipiplugins
                      )
 
