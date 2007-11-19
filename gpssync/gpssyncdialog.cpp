@@ -124,29 +124,6 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
 
     QGridLayout *mainLayout = new QGridLayout(plainPage(), 3, 1, 0, marginHint());
 
-    //---------------------------------------------
-
-    QFrame *headerFrame = new QFrame( plainPage() );
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-    layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
-    pixmapLabelLeft->setScaledContents( false );
-    layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Pictures Geolocalization"),
-                                     headerFrame, "labelTitle" );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-
     // --------------------------------------------------------------
 
     d->listView = new KListView(plainPage());
@@ -240,11 +217,10 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
 
     // ---------------------------------------------------------------
 
-    mainLayout->addMultiCellWidget(headerFrame, 0, 0, 0, 2);
-    mainLayout->addMultiCellWidget(d->listView, 1, 3, 0, 1);
-    mainLayout->addMultiCellWidget(settingsBox, 1, 1, 2, 2);
+    mainLayout->addMultiCellWidget(d->listView, 0, 2, 0, 1);
+    mainLayout->addMultiCellWidget(settingsBox, 0, 1, 2, 2);
     mainLayout->setColStretch(1, 10);
-    mainLayout->setRowStretch(3, 10);
+    mainLayout->setRowStretch(2, 10);
 
     // ---------------------------------------------------------------
     // About data and help button.
