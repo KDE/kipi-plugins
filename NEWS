@@ -19,8 +19,9 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 002 ==> 151604 : PrintWizard : Print Wizard does not recognize raw images
 003 ==> 102021 : SlideShow   : Pan and Zoom on Slideshow viewing (not a transition) 
                                a la iPhoto
-004 ==>
-
+004 ==> 151578 : Popup window says "Cannot run properly 'convert' program from 'ImageMagick'
+                 package" but it seems fine
+005 ==> 
 
 v 0.1.5 - Beta1
 ----------------------------------------------------------------------------
