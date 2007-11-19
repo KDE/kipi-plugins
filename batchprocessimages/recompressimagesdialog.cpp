@@ -53,8 +53,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
                       : BatchProcessImagesDialog( urlList, interface, i18n("Batch Recompress Images"), parent )
 {
@@ -65,10 +63,10 @@ RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interf
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to batch recompress images\n"
                                                      "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
-                                           "(c) 2003-2004, Gilles Caulier");
+                                           "(c) 2003-2007, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                     "caulier dot gilles at gmail dot com");
+                       "caulier dot gilles at gmail dot com");
 
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
@@ -95,25 +93,15 @@ RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interf
     listImageFiles();
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 RecompressImagesDialog::~RecompressImagesDialog()
 {
     delete m_about;
 }
 
-
-//////////////////////////////////////// SLOTS //////////////////////////////////////////////
-
 void RecompressImagesDialog::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("recompressimages",
-                                             "kipi-plugins");
+    KApplication::kApplication()->invokeHelp("recompressimages", "kipi-plugins");
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void RecompressImagesDialog::slotOptionsClicked(void)
 {
@@ -136,9 +124,6 @@ void RecompressImagesDialog::slotOptionsClicked(void)
 
     delete optionsDialog;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void RecompressImagesDialog::readSettings(void)
 {
@@ -168,9 +153,6 @@ void RecompressImagesDialog::readSettings(void)
     delete m_config;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void RecompressImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
@@ -191,9 +173,6 @@ void RecompressImagesDialog::saveSettings(void)
 
     delete m_config;
 }
-
-
-////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
 QString RecompressImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                                             const QString& albumDest, bool previewMode)
@@ -268,9 +247,6 @@ QString RecompressImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesIt
 
     return(extractArguments(proc));
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
                                                  const QString& /*albumDest*/)

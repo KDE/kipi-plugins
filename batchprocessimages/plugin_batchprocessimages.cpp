@@ -69,7 +69,6 @@ typedef KGenericFactory<Plugin_BatchProcessImages> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_batchprocessimages,
                             Factory("kipiplugin_batchprocessimages"))
 
-// -----------------------------------------------------------
 Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char*, const QStringList&)
             : KIPI::Plugin( Factory::instance(), parent, "BatchProcessImages")
 {
@@ -199,15 +198,9 @@ void Plugin_BatchProcessImages::setup( QWidget* widget )
              m_action_resizeimages, SLOT( setEnabled( bool ) ) );
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 Plugin_BatchProcessImages::~Plugin_BatchProcessImages()
 {
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Plugin_BatchProcessImages::slotActivate()
 {

@@ -36,8 +36,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 BatchProcessImagesItem::BatchProcessImagesItem(QListView * parent, QString const & pathSrc,
                         QString const & nameSrc, QString const & nameDest, QString const & result)
                       : KListViewItem( parent, "", nameSrc, nameDest, result),
@@ -48,15 +46,9 @@ BatchProcessImagesItem::BatchProcessImagesItem(QListView * parent, QString const
     setText(0, pathSrc.section('/', -2, -2));
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 BatchProcessImagesItem::~BatchProcessImagesItem()
 {
 }
-
-
-////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
 QString BatchProcessImagesItem::pathSrc()                   { return _pathSrc;    }
 QString BatchProcessImagesItem::nameSrc()                   { return _nameSrc;    }

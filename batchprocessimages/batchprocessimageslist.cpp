@@ -41,8 +41,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char *name)
                       : KListView(parent, name)
 {
@@ -66,39 +64,25 @@ BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char *name
                                 "the process' results will be merged to the target Album.") );
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void BatchProcessImagesList::dragEnterEvent(QDragEnterEvent *e)
 {
     e->accept(QUriDrag::canDecode(e));
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 bool BatchProcessImagesList::acceptDrag(QDropEvent* e) const
 {
     return ( QUriDrag::canDecode(e) );
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void BatchProcessImagesList::contentsDropEvent(QDropEvent* e)
 {
     droppedImagesItems(e);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void BatchProcessImagesList::dropEvent(QDropEvent *e)
 {
     droppedImagesItems(e);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void BatchProcessImagesList::droppedImagesItems(QDropEvent *e)
 {

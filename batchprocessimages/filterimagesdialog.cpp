@@ -54,8 +54,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
                   : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image Filtering"), parent )
 {
@@ -66,10 +64,10 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to batch filter images\n"
                                                     "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
-                                           "(c) 2003-2004, Gilles Caulier");
+                                           "(c) 2003-2007, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                     "caulier dot gilles at gmail dot com");
+                       "caulier dot gilles at gmail dot com");
 
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
@@ -118,25 +116,15 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
     slotTypeChanged(m_Type->currentItem());
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 FilterImagesDialog::~FilterImagesDialog()
 {
     delete m_about;
 }
 
-
-//////////////////////////////////////// SLOTS //////////////////////////////////////////////
-
 void FilterImagesDialog::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("filterimages",
-                                             "kipi-plugins");
+    KApplication::kApplication()->invokeHelp("filterimages", "kipi-plugins");
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void FilterImagesDialog::slotTypeChanged(int type)
 {
@@ -147,9 +135,6 @@ void FilterImagesDialog::slotTypeChanged(int type)
     else
        m_optionsButton->setEnabled(true);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void FilterImagesDialog::slotOptionsClicked(void)
 {
@@ -220,9 +205,6 @@ void FilterImagesDialog::slotOptionsClicked(void)
     delete optionsDialog;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void FilterImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
@@ -258,9 +240,6 @@ void FilterImagesDialog::readSettings(void)
     delete m_config;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void FilterImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
@@ -289,9 +268,6 @@ void FilterImagesDialog::saveSettings(void)
 
     delete m_config;
 }
-
-
-////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
 QString FilterImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                                         const QString& albumDest, bool previewMode)

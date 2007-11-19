@@ -46,8 +46,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
                         : KDialogBase( parent, "FilterOptionsDialog", true,
                           i18n("Filter Options"), Ok|Cancel, Ok, false)
@@ -195,9 +193,6 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        dvlay->addWidget( m_unsharpenThreshold );
        }
 }
-
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
 
 FilterOptionsDialog::~FilterOptionsDialog()
 {

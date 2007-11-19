@@ -54,8 +54,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image-Color Processing"), parent )
 {
@@ -66,7 +64,7 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin for batch image-color enhancement\n"
                                                      "This plugin use the \"convert\" program from \"ImageMagick\" package."),
-                                           "(c) 2003-2004, Gilles Caulier");
+                                           "(c) 2003-2007, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at gmail dot com");
@@ -132,25 +130,16 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
     slotTypeChanged(m_Type->currentItem());
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 ColorImagesDialog::~ColorImagesDialog()
 {
     delete m_about;
 }
-
-
-//////////////////////////////////////// SLOTS //////////////////////////////////////////////
 
 void ColorImagesDialog::slotHelp( void )
 {
     KApplication::kApplication()->invokeHelp("colorimages",
                                              "kipi-plugins");
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void ColorImagesDialog::slotTypeChanged(int type)
 {
@@ -162,9 +151,6 @@ void ColorImagesDialog::slotTypeChanged(int type)
     else
        m_optionsButton->setEnabled(false);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ColorImagesDialog::slotOptionsClicked(void)
 {
@@ -201,9 +187,6 @@ void ColorImagesDialog::slotOptionsClicked(void)
     delete optionsDialog;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void ColorImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
@@ -232,9 +215,6 @@ void ColorImagesDialog::readSettings(void)
     delete m_config;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void ColorImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
@@ -256,9 +236,6 @@ void ColorImagesDialog::saveSettings(void)
 
     delete m_config;
 }
-
-
-////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
 QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                                        const QString& albumDest, bool previewMode)

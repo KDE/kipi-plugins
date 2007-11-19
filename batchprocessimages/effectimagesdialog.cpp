@@ -54,8 +54,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
                   : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image Effects"), parent )
 {
@@ -66,10 +64,10 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin for batch image-effect transformations\n"
                                                      "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
-                                           "(c) 2003-2004, Gilles Caulier");
+                                           "(c) 2003-2007, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                     "caulier dot gilles at gmail dot com");
+                       "caulier dot gilles at gmail dot com");
 
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
@@ -130,25 +128,16 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
     listImageFiles();
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 EffectImagesDialog::~EffectImagesDialog()
 {
     delete m_about;
 }
-
-
-//////////////////////////////////////// SLOTS //////////////////////////////////////////////
 
 void EffectImagesDialog::slotHelp( void )
 {
     KApplication::kApplication()->invokeHelp("effectimages",
                                              "kipi-plugins");
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void EffectImagesDialog::slotOptionsClicked(void)
 {
@@ -259,9 +248,6 @@ void EffectImagesDialog::slotOptionsClicked(void)
     delete optionsDialog;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void EffectImagesDialog::readSettings(void)
 {
 m_config = new KConfig("kipirc");
@@ -301,9 +287,6 @@ m_config = new KConfig("kipirc");
     delete m_config;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void EffectImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
@@ -338,9 +321,6 @@ void EffectImagesDialog::saveSettings(void)
 
     delete m_config;
 }
-
-
-////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
 QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                                         const QString& albumDest, bool previewMode)

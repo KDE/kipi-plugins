@@ -46,8 +46,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
                         : KDialogBase( parent, "EffectOptionsDialog", true,
                           i18n("Effect Options"), Ok|Cancel, Ok, false)
@@ -251,9 +249,6 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        dvlay->addWidget( m_waveLenght );
        }
 }
-
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
 
 EffectOptionsDialog::~EffectOptionsDialog()
 {

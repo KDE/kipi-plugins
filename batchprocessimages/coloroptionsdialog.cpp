@@ -47,8 +47,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
                         : KDialogBase( parent, "ColorOptionsDialog", true,
                           i18n("Color Options"), Ok|Cancel, Ok, false)
@@ -106,9 +104,6 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
        dvlay->addWidget( m_segmentSmooth );
        }
 }
-
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
 
 ColorOptionsDialog::~ColorOptionsDialog()
 {

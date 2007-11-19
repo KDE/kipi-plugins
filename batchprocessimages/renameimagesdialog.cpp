@@ -45,8 +45,8 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 RenameImagesDialog::RenameImagesDialog(const KURL::List& images,
-                                 KIPI::Interface* interface,
-                                 QWidget* parent)
+                                       KIPI::Interface* interface,
+                                       QWidget* parent)
     : KDialogBase( KDialogBase::Plain, "Rename Images", Help|User1|Close,
                    Close, parent, "RenameImages",
                    false, false, i18n("&Start"))
@@ -57,10 +57,10 @@ RenameImagesDialog::RenameImagesDialog(const KURL::List& images,
                                            NULL,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to batch-rename images"),
-                                           "(c) 2003-2005, Gilles Caulier");
+                                           "(c) 2003-2007, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                     "caulier dot gilles at gmail dot com");
+                       "caulier dot gilles at gmail dot com");
 
     QPushButton* helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
@@ -91,4 +91,4 @@ void RenameImagesDialog::slotHelp(void)
    kapp->invokeHelp("renameimages", "kipi-plugins");
 }
 
-}
+}  // namespace KIPIBatchProcessImagesPlugin

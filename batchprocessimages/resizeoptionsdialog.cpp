@@ -48,8 +48,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
                    : KDialogBase( parent, "ResizeOptionsDialog", true,
                      i18n("Image-Resize Options"), Ok|Cancel, Ok, false)
@@ -335,14 +333,9 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        }
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 ResizeOptionsDialog::~ResizeOptionsDialog()
 {
 }
-
-///////////////////////////////////////// SLOTS /////////////////////////////////////////////
 
 void ResizeOptionsDialog::slotCustomSettingsEnabled(bool val)
 {
@@ -358,9 +351,6 @@ void ResizeOptionsDialog::slotCustomSettingsEnabled(bool val)
     m_label_customDpi->setEnabled( val );
     m_customDpi->setEnabled( val );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void ResizeOptionsDialog::slotOk()
 {

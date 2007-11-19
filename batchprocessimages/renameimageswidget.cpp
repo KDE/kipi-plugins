@@ -550,4 +550,4 @@ void RenameImagesWidget::slotRemoveImage()
     updateListing();
 }
 
-}
+}  // namespace KIPIBatchProcessImagesPlugin

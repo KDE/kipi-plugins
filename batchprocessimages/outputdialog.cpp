@@ -46,8 +46,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, QString Header )
             : KDialogBase( parent, "OutputDialog", true, caption, Help|User1|Ok, Ok, false,
                            i18n("Copy to Clip&board"))
@@ -61,7 +59,7 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
                                                      "Images\" Kipi plugin.\n"
                                                      "This plugin uses the \"convert\" program from \"ImageMagick\" "
                                                      "package."),
-                                           "(c) 2003-2004, Gilles Caulier"); 
+                                           "(c) 2003-2007, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                        "caulier dot gilles at gmail dot com");
@@ -116,25 +114,16 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
     resize( 600, 400 );
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 OutputDialog::~OutputDialog()
 {
     delete m_about;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void OutputDialog::slotHelp( void )
 {
     KApplication::kApplication()->invokeHelp("",
                                              "kipi-plugins");
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void OutputDialog::slotCopyToCliboard( void )
 {

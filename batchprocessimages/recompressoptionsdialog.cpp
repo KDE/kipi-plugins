@@ -45,11 +45,9 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
-                        : KDialogBase( parent, "RecompressOptionsDialog", true,
-                          i18n("Recompression Options"), Ok|Cancel, Ok, false)
+                       : KDialogBase( parent, "RecompressOptionsDialog", true,
+                         i18n("Recompression Options"), Ok|Cancel, Ok, false)
 {
     QWidget* box = new QWidget( this );
     setMainWidget(box);
@@ -129,15 +127,9 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     dvlay->addWidget( groupBox4 );
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 RecompressOptionsDialog::~RecompressOptionsDialog()
 {
 }
-
-
-///////////////////////////////////////// SLOTS /////////////////////////////////////////////
 
 void RecompressOptionsDialog::slotCompressLossLessEnabled(bool val)
 {

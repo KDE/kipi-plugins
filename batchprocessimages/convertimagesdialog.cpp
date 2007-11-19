@@ -55,8 +55,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
                    : BatchProcessImagesDialog( urlList, interface, i18n("Batch Convert Images"), parent )
 {
@@ -67,7 +65,7 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin for batch converting images\n"
                                                      "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
-                                           "(c) 2003-2004, Gilles Caulier");
+                                           "(c) 2003-2007, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                        "caulier dot gilles at gmail dot com");
@@ -137,25 +135,15 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
     slotTypeChanged(m_Type->currentItem());
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 ConvertImagesDialog::~ConvertImagesDialog()
 {
     delete m_about;
 }
 
-
-//////////////////////////////////////// SLOTS //////////////////////////////////////////////
-
 void ConvertImagesDialog::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("convertimages",
-                                             "kipi-plugins");
+    KApplication::kApplication()->invokeHelp("convertimages", "kipi-plugins");
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void ConvertImagesDialog::slotTypeChanged(int type)
 {
@@ -167,9 +155,6 @@ void ConvertImagesDialog::slotTypeChanged(int type)
     m_listFiles->clear();
     listImageFiles();
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ConvertImagesDialog::slotOptionsClicked(void)
 {
@@ -206,9 +191,6 @@ void ConvertImagesDialog::slotOptionsClicked(void)
     delete optionsDialog;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void ConvertImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
@@ -236,9 +218,6 @@ void ConvertImagesDialog::readSettings(void)
     delete m_config;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void ConvertImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
@@ -258,9 +237,6 @@ void ConvertImagesDialog::saveSettings(void)
 
     delete m_config;
 }
-
-
-////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
 QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                                          const QString& albumDest, bool previewMode)
@@ -334,9 +310,6 @@ QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem 
     return(extractArguments(proc));
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 QString ConvertImagesDialog::oldFileName2NewFileName(QString fileName)
 {
     QString Temp;
@@ -346,9 +319,6 @@ QString ConvertImagesDialog::oldFileName2NewFileName(QString fileName)
 
     return Temp;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QString ConvertImagesDialog::ImageFileExt(QString Ext)
 {

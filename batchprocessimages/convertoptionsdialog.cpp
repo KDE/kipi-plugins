@@ -45,8 +45,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
                         : KDialogBase( parent, "ConvertOptionsDialog", true,
                           i18n("Image File Format Options"), Ok|Cancel, Ok, false)
@@ -110,15 +108,9 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
        }
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 ConvertOptionsDialog::~ConvertOptionsDialog()
 {
 }
-
-
-///////////////////////////////////////// SLOTS /////////////////////////////////////////////
 
 void ConvertOptionsDialog::slotCompressLossLessEnabled(bool val)
 {

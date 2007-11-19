@@ -95,8 +95,6 @@ extern "C"
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface,
                                                     QString caption, QWidget *parent )
                         : KDialogBase( KDialogBase::Plain, caption, Help|User1|Cancel,
@@ -293,15 +291,9 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     dvlay->activate();
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 BatchProcessImagesDialog::~BatchProcessImagesDialog()
 {
 }
-
-
-//////////////////////////////////////// SLOTS //////////////////////////////////////////////
 
 void BatchProcessImagesDialog::slotImagesFilesButtonAdd( void )
 {
@@ -316,9 +308,6 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd( void )
 
     slotAddDropItems(ImageFilesList);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void BatchProcessImagesDialog::slotImagesFilesButtonRem( void )
 {
@@ -337,9 +326,6 @@ void BatchProcessImagesDialog::slotImagesFilesButtonRem( void )
            groupBox4->setTitle(i18n("Image File List (1 item)", "Image File List (%n items)", m_nbItem));
         }
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void BatchProcessImagesDialog::slotImageSelected( QListViewItem * item )
 {
@@ -364,9 +350,6 @@ void BatchProcessImagesDialog::slotImageSelected( QListViewItem * item )
             SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void BatchProcessImagesDialog::slotGotPreview(const KFileItem* url, const QPixmap &pixmap)
 {
     QPixmap pix( pixmap );
@@ -384,9 +367,6 @@ void BatchProcessImagesDialog::slotGotPreview(const KFileItem* url, const QPixma
 
     m_imageLabel->setPixmap(pix);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void BatchProcessImagesDialog::slotAddDropItems(QStringList filesPath)
 {
@@ -415,9 +395,6 @@ void BatchProcessImagesDialog::slotAddDropItems(QStringList filesPath)
     listImageFiles();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void BatchProcessImagesDialog::closeEvent ( QCloseEvent *e )
 {
     if (!e) return;
@@ -430,10 +407,6 @@ void BatchProcessImagesDialog::closeEvent ( QCloseEvent *e )
 
     e->accept();
 }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void BatchProcessImagesDialog::slotProcessStart( void )
 {
@@ -472,9 +445,6 @@ void BatchProcessImagesDialog::slotProcessStart( void )
     m_listFile2Process_iterator = new QListViewItemIterator( m_listFiles );
     startProcess();
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool BatchProcessImagesDialog::startProcess(void)
 {
@@ -527,8 +497,6 @@ bool BatchProcessImagesDialog::startProcess(void)
     if ( KIO::NetAccess::exists( desturl ) == true )
 #endif
        {
-
-
        switch (overwriteMode())
           {
           case OVERWRITE_ASK:
@@ -670,17 +638,11 @@ bool BatchProcessImagesDialog::startProcess(void)
     return true;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void BatchProcessImagesDialog::slotReadStd(KProcess* /*proc*/, char *buffer, int buflen)
 {
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     item->changeOutputMess( QString::fromLocal8Bit(buffer, buflen) );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
 {
@@ -779,9 +741,6 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
         endProcess();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void BatchProcessImagesDialog::slotListDoubleClicked(QListViewItem *itemClicked)
 {
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( itemClicked );
@@ -797,9 +756,6 @@ void BatchProcessImagesDialog::slotListDoubleClicked(QListViewItem *itemClicked)
        infoDialog->exec();
        }
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void BatchProcessImagesDialog::slotPreview(void)
 {
@@ -869,16 +825,10 @@ void BatchProcessImagesDialog::slotPreview(void)
     }
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void BatchProcessImagesDialog::slotPreviewReadStd(KProcess* /*proc*/, char *buffer, int buflen)
 {
     m_previewOutput.append( QString::fromLocal8Bit(buffer, buflen) );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void BatchProcessImagesDialog::slotPreviewProcessDone(KProcess* proc)
 {
@@ -928,9 +878,6 @@ void BatchProcessImagesDialog::slotPreviewProcessDone(KProcess* proc)
     endPreview();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void BatchProcessImagesDialog::slotPreviewStop( void )
 {
     // Try to kill the current preview process !
@@ -938,9 +885,6 @@ void BatchProcessImagesDialog::slotPreviewStop( void )
 
     endPreview();
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void BatchProcessImagesDialog::slotProcessStop( void )
 {
@@ -953,18 +897,12 @@ void BatchProcessImagesDialog::slotProcessStop( void )
     processAborted(true);
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void BatchProcessImagesDialog::slotOk()
 {
     close();
     saveSettings();
     delete this;
 }
-
-
-////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
 void BatchProcessImagesDialog::listImageFiles(void)
 {
@@ -1019,9 +957,6 @@ void BatchProcessImagesDialog::listImageFiles(void)
     m_listFiles->ensureItemVisible(m_listFiles->currentItem());
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void BatchProcessImagesDialog::endPreview(void)
 {
     m_listFiles->setEnabled(true);
@@ -1049,9 +984,6 @@ void BatchProcessImagesDialog::endPreview(void)
             this, SLOT(slotProcessStart()));
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 int BatchProcessImagesDialog::overwriteMode(void)
 {
     QString OverWrite = m_overWriteMode->currentText();
@@ -1070,9 +1002,6 @@ int BatchProcessImagesDialog::overwriteMode(void)
 
     return OVERWRITE_ASK;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void BatchProcessImagesDialog::processAborted(bool removeFlag)
 {
@@ -1101,9 +1030,6 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
     endProcess();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void BatchProcessImagesDialog::endProcess(void)
 {
     m_convertStatus = PROCESS_DONE;
@@ -1115,9 +1041,6 @@ void BatchProcessImagesDialog::endProcess(void)
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotOk()));
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
 {
@@ -1144,10 +1067,6 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
 
     return (NewDestUrl.path());
 }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QString BatchProcessImagesDialog::extractArguments(KProcess *proc)
 {

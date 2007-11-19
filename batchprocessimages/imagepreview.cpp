@@ -77,8 +77,6 @@ namespace KIPIBatchProcessImagesPlugin
 
 int INIT_ZOOM_FACTOR;
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, const QString &tmpPath,
                            bool cropActionOrig, bool cropActionDest, const QString &EffectName,
                            const QString &FileName, QWidget *parent)
@@ -192,25 +190,15 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     m_previewDest->setImage(fileDest, tmpPath);
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 ImagePreview::~ImagePreview()
 {
     delete m_about;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void ImagePreview::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("",
-                                             "kipi-plugins");
+    KApplication::kApplication()->invokeHelp("", "kipi-plugins");
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void ImagePreview::slotWheelChanged( int delta )
 {
@@ -222,9 +210,6 @@ void ImagePreview::slotWheelChanged( int delta )
     slotZoomFactorValueChanged( ZoomFactorSlider->value() );
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void ImagePreview::slotZoomFactorValueChanged( int ZoomFactorValue )
 {
     LCDZoomFactorValue->display( QString::number(ZoomFactorValue * 5) );
@@ -232,9 +217,6 @@ void ImagePreview::slotZoomFactorValueChanged( int ZoomFactorValue )
     m_previewOrig->resizeImage( ZoomFactorValue * 5 );
     m_previewDest->resizeImage( ZoomFactorValue * 5 );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 PixmapView::PixmapView(bool cropAction, QWidget *parent, const char *name)
            : QScrollView(parent, name)
@@ -253,16 +235,10 @@ PixmapView::PixmapView(bool cropAction, QWidget *parent, const char *name)
                    + "handcursor.png" );
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 PixmapView::~PixmapView()
 {
     if(m_pix) delete m_pix;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void PixmapView::setImage(const QString &ImagePath, const QString &tmpPath)
 {
@@ -288,8 +264,6 @@ void PixmapView::setImage(const QString &ImagePath, const QString &tmpPath)
           }
        }
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/)
 {
@@ -341,16 +315,10 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
     }
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void PixmapView::slotPreviewReadStd(KProcess* /*proc*/, char *buffer, int buflen)
 {
     m_previewOutput.append( QString::fromLocal8Bit(buffer, buflen) );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void PixmapView::PreviewProcessDone(KProcess* proc)
 {
@@ -392,10 +360,6 @@ void PixmapView::PreviewProcessDone(KProcess* proc)
        }
 }
 
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void PixmapView::resizeImage(int ZoomFactor)
 {
     if ( m_validPreview == false) return;
@@ -409,25 +373,16 @@ void PixmapView::resizeImage(int ZoomFactor)
     repaintContents(false);
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void PixmapView::drawContents(QPainter *p, int x, int y, int w, int h)
 {
     if(!m_pix) return;
     else p->drawPixmap(x, y, *m_pix, x, y, w, h);
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void PixmapView::contentsWheelEvent( QWheelEvent * e )
 {
     emit wheelEvent(e->delta());
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void PixmapView::contentsMousePressEvent ( QMouseEvent * e )
 {
@@ -439,16 +394,10 @@ void PixmapView::contentsMousePressEvent ( QMouseEvent * e )
        }
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void PixmapView::contentsMouseReleaseEvent ( QMouseEvent * /*e*/ )
 {
     setCursor ( KCursor::arrowCursor() );
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void PixmapView::contentsMouseMoveEvent( QMouseEvent * e )
 {

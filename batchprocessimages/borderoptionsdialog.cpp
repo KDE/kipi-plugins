@@ -47,8 +47,6 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
                         : KDialogBase( parent, "BorderOptionsDialog", true,
                           i18n("Border Options"), Ok|Cancel, Ok, false)
@@ -150,15 +148,9 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        }
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 BorderOptionsDialog::~BorderOptionsDialog()
 {
 }
-
-
-//////////////////////////////////////// SLOTS //////////////////////////////////////////////
 
 void BorderOptionsDialog::slotFrameBorderWidthChanged (int value)
 {

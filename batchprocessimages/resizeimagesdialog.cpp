@@ -55,10 +55,8 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
-                 : BatchProcessImagesDialog( urlList, interface, i18n("Batch Resize Images"), parent )
+                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch Resize Images"), parent )
 {
     // About data and help button.
 
@@ -67,10 +65,10 @@ ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* int
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to batch-resize images\n"
                                                      "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
-                                           "(c) 2003-2004, Gilles Caulier");
+                                           "(c) 2003-2007, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
-                     "caulier dot gilles at gmail dot com");
+                       "caulier dot gilles at gmail dot com");
 
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
@@ -119,25 +117,15 @@ ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* int
     listImageFiles();
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 ResizeImagesDialog::~ResizeImagesDialog()
 {
     delete m_about;
 }
 
-
-//////////////////////////////////////// SLOTS //////////////////////////////////////////////
-
 void ResizeImagesDialog::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("resizeimages",
-                                             "kipi-plugins");
+    KApplication::kApplication()->invokeHelp("resizeimages", "kipi-plugins");
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ResizeImagesDialog::slotOptionsClicked(void)
 {
@@ -222,9 +210,6 @@ void ResizeImagesDialog::slotOptionsClicked(void)
     delete optionsDialog;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void ResizeImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
@@ -273,9 +258,6 @@ void ResizeImagesDialog::readSettings(void)
     delete m_config;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void ResizeImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
@@ -311,9 +293,6 @@ void ResizeImagesDialog::saveSettings(void)
 
     delete m_config;
 }
-
-
-////////////////////////////////////////////// FONCTIONS ////////////////////////////////////////////
 
 QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                                         const QString& albumDest, bool )
@@ -548,9 +527,6 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
     return(extractArguments(proc));
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 bool ResizeImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
                                              const QString& /*albumDest*/)
 {
@@ -565,9 +541,6 @@ bool ResizeImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
 
     return true;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool ResizeImagesDialog::ResizeImage( int &w, int &h, int SizeFactor)
 {
