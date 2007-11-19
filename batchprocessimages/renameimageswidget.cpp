@@ -1,30 +1,41 @@
-// ============================================================
-// Copyright (C) 2003-2005 Gilles CAULIER <caulier dot gilles at gmail dot com>
-// Copyright (C) 2005 by Owen Hirst <n8rider@sbcglobal.net>
-//
-// This program is free software; you can redistribute it
-// and/or modify it under the terms of the GNU General
-// Public License as published by the Free Software Foundation;
-// either version 2, or (at your option)
-// any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
-// 
-// ============================================================ 
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-10-01
+ * Description : a kipi plugin to batch process images
+ *
+ * Copyright (C) 2003-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2005 by Owen Hirst <n8rider@sbcglobal.net>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
-#include <klocale.h>
-#include <kconfig.h>
-#include <kio/previewjob.h>
-#include <kio/renamedlg.h>
-#include <kdebug.h>
-#include <kdeversion.h>
+// C Ansi includes.
+
+extern "C"
+{
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+}
+
+// C++ includes.
+
+#include <cstdio>
+#include <ctime>
+
+// Qt includes.
 
 #include <qlistview.h>
 #include <qlineedit.h>
@@ -40,21 +51,26 @@
 #include <qgroupbox.h>
 #include <qpopupmenu.h>
 
+// KDE includes.
+
+#include <klocale.h>
+#include <kconfig.h>
+#include <kio/previewjob.h>
+#include <kio/renamedlg.h>
+#include <kdebug.h>
+#include <kdeversion.h>
+
+// Libkipi includes.
+
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 #include <libkipi/imagedialog.h>
 
-extern "C"
-{
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <time.h>
-}
+// Local includes.
 
 #include "batchprocessimagesitem.h"
 #include "renameimageswidget.h"
+#include "renameimageswidget.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -535,5 +551,3 @@ void RenameImagesWidget::slotRemoveImage()
 }
 
 }
-
-#include "renameimageswidget.moc"
