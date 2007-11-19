@@ -173,7 +173,7 @@ private slots:
    QString                 m_previewOutput;
    KURL::List              m_selectedImageFiles;
 
-   KIPI::Interface       *m_interface;
+   KIPI::Interface        *m_interface;
 
    // --------------------------------------------------------------------------------------------------------
    // Standards fonctions
@@ -223,6 +223,8 @@ private slots:
                                 const QString& /*albumDest*/ = QString::null,
                                 bool  /*previewMode*/ = false)
            { return QString::null; };
+
+    virtual void processDone(){};
 
    // Fonctions used for to read and to save the settings in the configuration file.
 

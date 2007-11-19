@@ -1,11 +1,11 @@
-INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(LIBKIPI_CFLAGS) $(all_includes)
+INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(LIBKIPI_CFLAGS) $(LIBKEXIV2_CFLAGS) $(all_includes)
 
 METASOURCES = AUTO
 SUBDIRS = data
 
 # Install this plugin in the KDE modules directory
 kde_module_LTLIBRARIES = kipiplugin_batchprocessimages.la
-kipiplugin_batchprocessimages_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP)
+kipiplugin_batchprocessimages_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKEXIV2_LIBS_DEP)
 # Srcs for the plugin
 kipiplugin_batchprocessimages_la_SOURCES = plugin_batchprocessimages.cpp batchprocessimagesitem.cpp \
 			   	           outputdialog.cpp imagepreview.cpp renameimagesdialog.cpp \
@@ -21,7 +21,7 @@ kipiplugin_batchprocessimages_la_SOURCES = plugin_batchprocessimages.cpp batchpr
 					   renameimagesbase.ui renameimageswidget.cpp
 
 # Libs needed by the plugin
-kipiplugin_batchprocessimages_la_LIBADD = $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
+kipiplugin_batchprocessimages_la_LIBADD = $(LIBKIPI_LIBS) $(LIBKEXIV2_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 # LD flags for the plugin
 kipiplugin_batchprocessimages_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins

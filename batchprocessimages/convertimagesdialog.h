@@ -59,6 +59,8 @@ Q_OBJECT
    QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
                        const QString& albumDest, bool previewMode);
 
+   void processDone();
+
    void readSettings(void);
    void saveSettings(void);
 

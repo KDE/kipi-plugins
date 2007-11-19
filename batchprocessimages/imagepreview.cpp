@@ -307,12 +307,6 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
                                       "please check your installation."));
         return;
     }
-
-    if (!m_PreviewProc->normalExit())
-    {
-        KMessageBox::error(this, i18n("Cannot run properly 'convert' program from 'ImageMagick' package"));
-        return;
-    }
 }
 
 void PixmapView::slotPreviewReadStd(KProcess* /*proc*/, char *buffer, int buflen)

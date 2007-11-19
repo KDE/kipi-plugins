@@ -42,6 +42,11 @@
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
+#include <kurlrequester.h>
+
+// LibKExiv2 includes. 
+
+#include <libkexiv2/kexiv2.h>
 
 // Local includes
 
@@ -162,10 +167,10 @@ void ConvertImagesDialog::slotOptionsClicked(void)
     ConvertOptionsDialog *optionsDialog = new ConvertOptionsDialog(this, Type);
 
     if (Type == 0) // JPEG
-       {
+    {
        optionsDialog->m_JPEGPNGCompression->setValue(m_JPEGPNGCompression);
        optionsDialog->m_compressLossLess->setChecked(m_compressLossLess);
-       }
+    }
     if (Type == 1) // PNG
        optionsDialog->m_JPEGPNGCompression->setValue(m_JPEGPNGCompression);
     if (Type == 2) // TIFF
@@ -174,19 +179,19 @@ void ConvertImagesDialog::slotOptionsClicked(void)
        optionsDialog->m_TGACompressionAlgo->setCurrentText(m_TGACompressionAlgo);
 
     if ( optionsDialog->exec() == KMessageBox::Ok )
-       {
+    {
        if (Type == 0) // JPEG
-          {
+       {
           m_JPEGPNGCompression = optionsDialog->m_JPEGPNGCompression->value();
           m_compressLossLess = optionsDialog->m_compressLossLess->isChecked();
-          }
+       }
        if (Type == 1) // PNG
           m_JPEGPNGCompression = optionsDialog->m_JPEGPNGCompression->value();
        if (Type == 2) // TIFF
           m_TIFFCompressionAlgo = optionsDialog->m_TIFFCompressionAlgo->currentText();
        if (Type == 5) // TGA
           m_TGACompressionAlgo = optionsDialog->m_TGACompressionAlgo->currentText();
-       }
+    }
 
     delete optionsDialog;
 }
@@ -244,70 +249,109 @@ QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem 
     *proc << "convert";
 
     if ( previewMode && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
-       {
+    {
        *m_PreviewProc << "-crop" << "300x300+0+0";
        m_previewOutput.append( " -crop 300x300+0+0 ");
-       }
+    }
 
     if (m_Type->currentItem() == 0) // JPEG
-       {
+    {
        if (m_compressLossLess == true)
-          {
+       {
           *proc << "-compress" << "Lossless";
-          }
+       }
        else
-          {
+       {
           *proc << "-quality";
           QString Temp;
           *proc << Temp.setNum( m_JPEGPNGCompression );
-          }
        }
+    }
 
     if (m_Type->currentItem() == 1) // PNG
-       {
+    {
        *proc << "-quality";
        QString Temp;
        *proc << Temp.setNum( m_JPEGPNGCompression );
-       }
+    }
 
     if (m_Type->currentItem() == 2) // TIFF
-       {
+    {
        *proc << "-compress";
 
        if (m_TIFFCompressionAlgo == i18n("None"))
-          {
+       {
           *proc << "None";
-          }
-       else
-          {
-          *proc << m_TIFFCompressionAlgo;
-          }
        }
+       else
+       {
+          *proc << m_TIFFCompressionAlgo;
+       }
+    }
 
     if (m_Type->currentItem() == 5) // TGA
-       {
+    {
        *proc << "-compress";
 
        if (m_TGACompressionAlgo == i18n("None"))
-          {
+       {
           *proc << "None";
-          }
-       else
-          {
-          *proc << m_TGACompressionAlgo;
-          }
        }
+       else
+       {
+          *proc << m_TGACompressionAlgo;
+       }
+    }
    
     *proc << "-verbose";
 
     *proc << item->pathSrc() + "[0]";
 
     if ( !previewMode )   // No preview mode !
-       {
+    {
        *proc << albumDest + "/" + item->nameDest();
-       }
+    }
 
     return(extractArguments(proc));
+}
+
+void ConvertImagesDialog::processDone()
+{
+/*  FIXME
+    if (m_Type->currentItem() == 0) 
+    {
+        // JPEG file, we remove IPTC preview.
+
+        BatchProcessImagesItem *item = dynamic_cast<BatchProcessImagesItem*>(
+                                       m_listFile2Process_iterator->current() );
+        if (item)
+        {
+            QString src = item->pathSrc();
+            QString tgt = m_destinationURL->url() + "/" + item->nameDest();
+            QFileInfo fi(tgt);
+
+            kdDebug() << src << endl;
+            kdDebug() << tgt << fi.size()<< endl;
+            
+            KExiv2Iface::KExiv2 metaSrc(src);
+    
+            // Update Iptc preview.
+            // NOTE: see B.K.O #130525. a JPEG segment is limited to 64K. If the IPTC byte array is
+            // bigger than 64K duing of image preview tag size, the target JPEG image will be
+            // broken. Note that IPTC image preview tag is limited to 256K!!!
+            // There is no limitation with TIFF and PNG about IPTC byte array size.
+        
+            metaSrc.removeIptcTag("Iptc.Application2.Preview");
+            metaSrc.removeIptcTag("Iptc.Application2.PreviewFormat");
+            metaSrc.removeIptcTag("Iptc.Application2.PreviewVersion");
+            
+            KExiv2Iface::KExiv2 metaTgt(tgt);
+            metaTgt.setIptc(metaSrc.getIptc());
+            metaTgt.applyChanges();
+        }
+    }
+*/    
+    BatchProcessImagesDialog::processDone();
 }
 
 QString ConvertImagesDialog::oldFileName2NewFileName(QString fileName)
