@@ -70,33 +70,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
         setName( "KMLExportConfig" );
     setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0,
                                 (QSizePolicy::SizeType)0, 0, 0, sizePolicy().hasHeightForWidth() ) );
-    KMLExportConfigLayout = new QGridLayout ( plainPage(), 1, 4, 0, spacingHint()); 
-
-    //---------------------------------------------
-
-    QFrame *headerFrame = new QFrame( plainPage() );
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-    layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
-    pixmapLabelLeft->setScaledContents( false );
-    layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("KML Export"),
-                                        headerFrame, "labelTitle" );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    headerFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-
-    KMLExportConfigLayout->addWidget( headerFrame, 0, 0 );	
+    KMLExportConfigLayout = new QGridLayout ( plainPage(), 1, 3, 0, spacingHint()); 
 
     // --------------------------------------------------------------
     // Target preferences
@@ -164,7 +138,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     FileName_ = new QLineEdit( TargetPreferenceGroupBox, "FileName_" );
     TargetPreferenceGroupBoxLayout->addMultiCellWidget( FileName_, 5, 5, 1, 4 );
 
-    KMLExportConfigLayout->addWidget( TargetPreferenceGroupBox, 1, 0 );
+    KMLExportConfigLayout->addWidget( TargetPreferenceGroupBox, 0, 0 );
 
     // --------------------------------------------------------------
     // Sizes
@@ -195,7 +169,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     spacer4 = new QSpacerItem( 191, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     SizeGroupBoxLayout->addItem( spacer4, 1, 2 );
 
-    KMLExportConfigLayout->addWidget( SizeGroupBox, 2, 0 );
+    KMLExportConfigLayout->addWidget( SizeGroupBox, 1, 0 );
 
     // --------------------------------------------------------------
     // GPX Tracks
@@ -288,7 +262,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
                                             "<dd>Sets the altitude of the coordinate relative to sea level, regardless of the actual elevation of the terrain beneath the element.</dd></dl>"));
     GPXTracksGroupBoxLayout->addMultiCellWidget( GPXAltitudeCB_, 5, 5, 1, 3);
 
-    KMLExportConfigLayout->addWidget( GPXTracksGroupBox, 3, 0 );
+    KMLExportConfigLayout->addWidget( GPXTracksGroupBox, 2, 0 );
 
     connect( GoogleMapTargetRadioButton_, SIGNAL( toggled(bool) ), 
              this, SLOT( GoogleMapTargetRadioButton__toggled(bool) ) );
@@ -458,25 +432,25 @@ void KMLExportConfig::readSettings()
     int GPXOpacity;
     int GPXAltitudeMode;
 
-    localTarget			= config_->readBoolEntry("localTarget", true);
-    optimize_googlemap	= config_->readBoolEntry("optimize_googlemap", false);
-    iconSize			= config_->readNumEntry("iconSize", 33);
+    localTarget	       = config_->readBoolEntry("localTarget", true);
+    optimize_googlemap = config_->readBoolEntry("optimize_googlemap", false);
+    iconSize           = config_->readNumEntry("iconSize", 33);
     // not saving this size as it should not change
-    //	googlemapSize		= config_->readNumEntry("googlemapSize", 32);
-    size				= config_->readNumEntry("size", 320);
+    //	googlemapSize = config_->readNumEntry("googlemapSize", 32);
+    size               = config_->readNumEntry("size", 320);
     // UrlDestDir have to have the trailing /
-    baseDestDir			= config_->readEntry("baseDestDir", "/tmp/");
-    UrlDestDir			= config_->readEntry("UrlDestDir", "http://www.example.com/");
-    KMLFileName			= config_->readEntry("KMLFileName", "kmldocument");
-    AltitudeMode    = config_->readNumEntry("Altitude Mode", 0);
+    baseDestDir	       = config_->readEntry("baseDestDir", "/tmp/");
+    UrlDestDir	       = config_->readEntry("UrlDestDir", "http://www.example.com/");
+    KMLFileName        = config_->readEntry("KMLFileName", "kmldocument");
+    AltitudeMode       = config_->readNumEntry("Altitude Mode", 0);
 
-    GPXtracks			= config_->readBoolEntry("UseGPXTracks", false);
-    GPXFile				= config_->readEntry("GPXFile", "");
-    TimeZone            = config_->readNumEntry("Time Zone", 12);
-    LineWidth           = config_->readNumEntry("Line Width", 4);
-    GPXColor            = config_->readEntry("Track Color", "#17eeee" );
-    GPXOpacity          = config_->readNumEntry("Track Opacity", 64 );
-    GPXAltitudeMode     = config_->readNumEntry("GPX Altitude Mode", 0);
+    GPXtracks          = config_->readBoolEntry("UseGPXTracks", false);
+    GPXFile            = config_->readEntry("GPXFile", "");
+    TimeZone           = config_->readNumEntry("Time Zone", 12);
+    LineWidth          = config_->readNumEntry("Line Width", 4);
+    GPXColor           = config_->readEntry("Track Color", "#17eeee" );
+    GPXOpacity         = config_->readNumEntry("Track Opacity", 64 );
+    GPXAltitudeMode    = config_->readNumEntry("GPX Altitude Mode", 0);
 
     // -- Apply Settings to widgets ------------------------------
 
@@ -498,4 +472,4 @@ void KMLExportConfig::readSettings()
     GPXAltitudeCB_->setCurrentItem(GPXAltitudeMode);
 }
 
-} //namespace
+} //namespace KIPIGPSSyncPlugin
