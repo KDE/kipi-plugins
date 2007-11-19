@@ -622,11 +622,43 @@ void BatchProcessImagesDialog::slotReadStd(KProcess* /*proc*/, char *buffer, int
 
 void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
 {
+    if ( m_convertStatus == PROCESS_DONE )
+    {
+        // processAborted() has already been called. No need to show the warning.
+        return;
+    }
+    
+    BatchProcessImagesItem *item = dynamic_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
+    m_listFiles->ensureItemVisible(m_listFiles->currentItem());
+    
+    if ( !m_ProcessusProc->normalExit() )
+    {
+        int code = KMessageBox::warningContinueCancel( this,
+                                i18n("The 'convert' program from 'ImageMagick' package has been stopped abnormally"),
+                                i18n("Error running 'convert'") );
+    
+        if ( code == KMessageBox::Cancel )
+        {
+            processAborted(true);
+        }
+        else
+        {
+            item->changeResult(i18n("Failed."));
+            item->changeError(i18n("'convert' program from 'ImageMagick' package has been stopped abnormally."));
+            ++*m_listFile2Process_iterator;
+            ++m_progressStatus;
+            m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
+    
+            if ( m_listFile2Process_iterator->current() )
+                startProcess();
+            else
+                endProcess();
+        }
+        return;
+    }
+
     int ValRet = proc->exitStatus();
     kdWarning() << "Convert exit (" << ValRet << ")" << endl;
-
-    BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
-    m_listFiles->ensureItemVisible(m_listFiles->currentItem());
 
     switch (ValRet)
     {
