@@ -21,7 +21,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
                                a la iPhoto
 004 ==> 151578 : Popup window says "Cannot run properly 'convert' program from 'ImageMagick'
                  package" but it seems fine
-005 ==> 
+005 ==> 152210 : Metadata lost when converting from png to jpeg (IPTC thumbnail too big).
+006 ==> 
 
 v 0.1.5 - Beta1
 ----------------------------------------------------------------------------
