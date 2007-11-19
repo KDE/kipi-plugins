@@ -317,7 +317,6 @@ QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem 
 
 void ConvertImagesDialog::processDone()
 {
-/*  FIXME
     if (m_Type->currentItem() == 0) 
     {
         // JPEG file, we remove IPTC preview.
@@ -350,7 +349,7 @@ void ConvertImagesDialog::processDone()
             metaTgt.applyChanges();
         }
     }
-*/    
+
     BatchProcessImagesDialog::processDone();
 }
 
