@@ -78,33 +78,10 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
     m_inSelect = false;
     QWidget* box = new QWidget( this );
     setMainWidget(box);
-    QVBoxLayout *layout = new QVBoxLayout(box, 4);
+    QVBoxLayout *layout = new QVBoxLayout(box);
 
     //---------------------------------------------
    
-    QFrame *headerFrame = new QFrame( box );
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout2 = new QHBoxLayout( headerFrame );
-    layout2->setMargin( 2 ); // to make sure the frame gets displayed
-    layout2->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
-    pixmapLabelLeft->setScaledContents( false );
-    layout2->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Screenshot"), headerFrame, "labelTitle" );
-    layout2->addWidget( labelTitle );
-    layout2->setStretchFactor( labelTitle, 1 );
-    layout->addWidget( headerFrame );
-    
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-
-    //---------------------------------------------
-
     QLabel *label1 = new QLabel(i18n("This dialog will grab either your desktop or a single\n"
                                      "application window. If you grab a single window your mouse\n"
                                      "cursor will change into crosshairs; then, simply select the\n"
