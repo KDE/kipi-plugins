@@ -66,29 +66,6 @@ void CalSelect::setupView( KIPI::Interface* interface )
 
     // ----------------------------------------------------------------
 
-    QFrame *headerFrame = new QFrame( this );
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-    layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
-    pixmapLabelLeft->setScaledContents( false );
-    layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Create Calendar"), headerFrame, "labelTitle" );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-    mainLayout->addWidget( headerFrame );
-
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-
-    // ----------------------------------------------------------------
-
     QHGroupBox *yearBox = new QHGroupBox(i18n("Select Year"), this);
     yearBox->layout()->addItem(new QSpacerItem(5,5,
                                                QSizePolicy::Expanding,
@@ -106,9 +83,7 @@ void CalSelect::setupView( KIPI::Interface* interface )
 
     // ----------------------------------------------------------------
 
-    QGroupBox *monthBox =
-        new QGroupBox(i18n("Select Images"),
-                      this);
+    QGroupBox *monthBox = new QGroupBox(i18n("Select Images"), this);
     monthBox->setColumnLayout(0, Qt::Vertical );
     monthBox->layout()->setSpacing( 6 );
     monthBox->layout()->setMargin( 11 );

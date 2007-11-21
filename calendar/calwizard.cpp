@@ -100,25 +100,9 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     wPrint_ = new QVBox(this, "wPrint");
 
-    QFrame *headerFrame = new QFrame( wPrint_ );
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-    layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
-    pixmapLabelLeft->setScaledContents( false );
-    layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Create Calendar"), headerFrame, "labelTitle" );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-
     wPrintLabel_ = new QLabel(wPrint_, "wPrint");
     wPrintLabel_->setIndent(20);
 
-    wPrint_->setStretchFactor(headerFrame, 0);
     wPrint_->setStretchFactor(wPrintLabel_, 2);
 
     addPage(wPrint_, i18n("Print"));
@@ -128,24 +112,7 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     wFinish_ = new QWidget(this, "wFinish");
 
-    QVBoxLayout *wFinishLayout =
-        new QVBoxLayout(wFinish_, 6, 11);
-
-    QFrame *headerFrame2 = new QFrame( wFinish_ );
-    headerFrame2->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout2 = new QHBoxLayout( headerFrame2 );
-    layout2->setMargin( 2 ); // to make sure the frame gets displayed
-    layout2->setSpacing( 0 );
-    QLabel *pixmapLabelLeft2 = new QLabel( headerFrame2, "pixmapLabelLeft" );
-    pixmapLabelLeft2->setScaledContents( false );
-    layout2->addWidget( pixmapLabelLeft2 );
-    QLabel *labelTitle2 = new QLabel( i18n("Create Calendar"), headerFrame2, "labelTitle" );
-    layout2->addWidget( labelTitle2 );
-    layout2->setStretchFactor( labelTitle2, 1 );
-    wFinishLayout->addWidget( headerFrame2 );
-    pixmapLabelLeft2->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft2->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle2->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    QVBoxLayout *wFinishLayout = new QVBoxLayout(wFinish_, 6, 11);
 
     wFinishLabel_ = new QLabel(wFinish_);
     wFinishLayout->addWidget(wFinishLabel_);

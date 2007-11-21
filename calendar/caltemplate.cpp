@@ -57,30 +57,7 @@ namespace KIPICalendarPlugin
 CalTemplate::CalTemplate(QWidget* parent, const char* name)
            : QWidget(parent, name)
 {
-    QGridLayout *mainLayout = new QGridLayout(this, 2, 1, 5, 5);
-
-    // ----------------------------------------------------------------
-
-    QFrame *headerFrame = new QFrame( this );
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-    layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
-    pixmapLabelLeft->setScaledContents( false );
-    layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Create Calendar"), headerFrame, "labelTitle" );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-    mainLayout->addMultiCellWidget( headerFrame, 0, 0, 0, 1 );
-
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    QGridLayout *mainLayout = new QGridLayout(this, 1, 1, 5, 5);
 
     // ----------------------------------------------------------------
 
@@ -94,7 +71,7 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
     calWidget_ = new CalWidget(boxPreview_);
     previewLayout->addWidget(calWidget_, 0, Qt::AlignCenter);
 
-    mainLayout->addWidget( boxPreview_, 1, 0 );
+    mainLayout->addWidget( boxPreview_, 0, 0 );
 
     // ---------------------------------------------------------------
 
@@ -201,7 +178,7 @@ CalTemplate::CalTemplate(QWidget* parent, const char* name)
     gboxLayout->addItem(new QSpacerItem(5,10,QSizePolicy::Minimum,
                                         QSizePolicy::Expanding));
 
-    mainLayout->addWidget( gbox, 1, 1 );
+    mainLayout->addWidget( gbox, 0, 1 );
 
     // ---------------------------------------------------------------
 
