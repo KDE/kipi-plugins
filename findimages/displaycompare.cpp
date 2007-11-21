@@ -158,30 +158,6 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
     QWidget* box = new QWidget( this );
     setMainWidget(box);
     QVBoxLayout* ml = new QVBoxLayout( box, 10 );
-
-    QFrame *headerFrame = new QFrame( box );
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-    layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
-    pixmapLabelLeft->setScaledContents( false );
-    layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( headerFrame, "labelTitle" );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-    ml->addWidget( headerFrame );
-
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-
-    // ----------------------------------------------------
-
     QHBoxLayout* h1 = new QHBoxLayout( ml );
     QVBoxLayout* v1 = new QVBoxLayout( h1 );
     h1->addSpacing( 5 );
@@ -282,9 +258,6 @@ DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
 
     setCaption(i18n("1 Original Image with Duplicate Images Has Been Found",
                     "%n Original Images with Duplicate Images Have Been Found", n_id));
-
-    labelTitle->setText( i18n("Find Duplicate Image Results - 1 Duplicate Found",
-                              "Find Duplicate Image Results - %n Duplicates Found", n_id));
 
     // signals and slots connections
 
