@@ -74,10 +74,6 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 {
     cSettings_ = new CalSettings();
 
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
     // ---------------------------------------------------------------
 
     wTemplate_ = new CalTemplate(this, "wTemplate");
