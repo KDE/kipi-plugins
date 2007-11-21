@@ -79,33 +79,6 @@ UploadDialog::UploadDialog(
 
     dvlay->setMargin( 2 );
 
-#if KIPI_PLUGIN
-    QFrame *headerFrame = new QFrame( box );
-    headerFrame->setFrameStyle( QFrame::Panel | QFrame::Sunken );
-
-    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
-    pixmapLabelLeft->setScaledContents( false );
-
-    QLabel *labelTitle = new QLabel( caption, headerFrame, "labelTitle" );
-
-    layout->addWidget( pixmapLabelLeft );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-
-    QString directory;
-    KGlobal::dirs()->addResourceType( "kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data" );
-    directory = KGlobal::dirs()->findResourceDir( "kipi_banner_left", "banner_left.png" );
-
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-
-    dvlay->addWidget( headerFrame );
-#endif
-
     m_ipodHeader = new IpodHeader( box );
     dvlay->addWidget( m_ipodHeader );
 
