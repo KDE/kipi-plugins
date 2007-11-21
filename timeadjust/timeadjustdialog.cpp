@@ -153,7 +153,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     d = new TimeAdjustDialogPrivate;
     d->interface = interface;
 
-    QVBoxLayout *vlay = new QVBoxLayout(plainPage(), 6);
+    QVBoxLayout *vlay = new QVBoxLayout(plainPage());
 
     // -- About data and help button ----------------------------------------
 
@@ -171,33 +171,10 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
                         "caulier dot gilles at gmail dot com");
 
     QPushButton *helpButton = actionButton(Help);
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
+    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Time Adjust Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     helpButton->setPopup(helpMenu->menu());
-
-    // -- Banner ------------------------------------------------------------
-
-    QFrame *headerFrame = new QFrame(plainPage());
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout = new QHBoxLayout(headerFrame);
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-    layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel(headerFrame, "pixmapLabelLeft");
-    pixmapLabelLeft->setScaledContents( false );
-    layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Adjust Time Stamp of Picture Files"), headerFrame, "labelTitle" );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-    vlay->addWidget( headerFrame );
-
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
     // -- Adjustment type ------------------------------------------------------------
 
@@ -213,10 +190,10 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     d->adjustTypeGrp->setRadioButtonExclusive(true);
 
     QHBox *hbox       = new QHBox(d->adjustTypeGrp);
-    QLabel *space1     = new QLabel(hbox);
+    QLabel *space1    = new QLabel(hbox);
     space1->setFixedWidth(15);
     d->dateCreatedSel = new KDateTimeWidget(hbox);
-    QLabel *space2     = new QLabel(hbox);
+    QLabel *space2    = new QLabel(hbox);
     space2->setFixedWidth(15);
     d->todayBtn       = new QToolButton(hbox);   
     d->todayBtn->setIconSet(SmallIcon("today"));
@@ -239,7 +216,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     gridLay->setColStretch( 5, 1 );
 
     QLabel* label = new QLabel( i18n("Hours:"), grid );
-    d->hours       = new QSpinBox( 0, 1000, 1, grid );
+    d->hours      = new QSpinBox( 0, 1000, 1, grid );
     gridLay->addWidget( label, 0, 0 );
     gridLay->addWidget( d->hours, 0, 1 );
 
