@@ -30,6 +30,7 @@
 #include <QPalette>
 #include <QDragEnterEvent>
 #include <QUrl>
+#include <QFileInfo>
 
 // KDE includes.
 
@@ -37,19 +38,13 @@
 #include <kdialog.h>
 #include <knuminput.h>
 #include <kiconloader.h>
-#include <kfiledialog.h>
-#include <kimageio.h>
 #include <kdebug.h>
 
 // LibKIPI includes.
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
-
-// LibKDcraw includes.
-
-#include <libkdcraw/rawfiles.h>
-#include <libkdcraw/dcrawbinary.h>
+#include <libkipi/imagedialog.h>
 
 // Local includes.
 
@@ -305,32 +300,8 @@ void ImagesPage::slotThumbnail(const KUrl& url, const QPixmap& pix)
 
 void ImagesPage::slotAddItems()
 {
-    QString fileformats;
-   
-    QStringList patternList = KImageIO::pattern(KImageIO::Reading).split('\n', QString::SkipEmptyParts);
-    
-    // All Images from list must been always the first entry given by KDE API
-    QString allPictures = patternList[0];
-    
-    // Add other files format witch are missing to All Images" type mime provided by KDE and remplace current.
-    if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
-    {
-        allPictures.insert(allPictures.indexOf("|"), QString(raw_file_extentions) + QString(" *.JPE *.TIF"));
-        patternList.removeAll(patternList[0]);
-        patternList.prepend(allPictures);
-    }
-    
-    // Added RAW file formats supported by dcraw program like a type mime. 
-    // Nota: we cannot use here "image/x-raw" type mime from KDE because it uncomplete 
-    // or unavailable(see file #121242 in B.K.O).
-    if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
-        patternList.append(i18n("\n%1|Camera RAW files",QString(raw_file_extentions)));
-    
-    fileformats = patternList.join("\n");
-    
-    KUrl::List urls = KFileDialog::getOpenUrls(d->iface->currentAlbum().path(), 
-                                               fileformats, this, i18n("Add Images"));
-
+    KIPI::ImageDialog dlg(this, d->iface, false);
+    KUrl::List urls = dlg.urls();
     if (!urls.isEmpty())
         slotAddImages(urls);
 }
