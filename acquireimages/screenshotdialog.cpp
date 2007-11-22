@@ -72,7 +72,7 @@ namespace KIPIAcquireImagesPlugin
 
 ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent, const char *name)
                 : KDialogBase(parent, name, false, i18n("Screenshot"),
-                              Help|User1|Close, Close, true, i18n("&New Snapshot")),
+                              Help|User1|Close, Close, false, i18n("&New Snapshot")),
                   m_interface( interface )
 {
     m_inSelect = false;

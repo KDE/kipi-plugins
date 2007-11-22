@@ -105,7 +105,7 @@ namespace KIPIAcquireImagesPlugin
 
 AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *parent, const QImage &img)
                   : KDialogBase( IconList, i18n("Save Target Image Options"), Help|Ok|Cancel,
-                    Ok, parent, "AcquireImageDialog", true, true ), m_interface( interface )
+                    Ok, parent, "AcquireImageDialog", true, false ), m_interface( interface )
 {
     KImageIO::registerFormats();
     m_qimageScanned = img;
