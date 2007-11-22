@@ -105,7 +105,7 @@ public:
 GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
              : KDialogBase(Plain, i18n("Geolocalization"), 
                            Help|User1|User2|User3|Apply|Close, Close, 
-                           parent, 0, true, true )
+                           parent, 0, true, false)
 {
     d = new GPSSyncDialogPriv;
     d->interface = interface;

@@ -86,7 +86,7 @@ KIO::filesize_t TargetMediaSize;
 
 CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *parent)
                  : KDialogBase( IconList, i18n("Configure Archive to CD"), Help|Ok|Cancel, Ok,
-                                parent, "CDArchivingDialog", true, true ), m_interface( interface )
+                                parent, "CDArchivingDialog", true, false ), m_interface( interface )
 {
     setCaption(i18n("Create CD/DVD Archive"));
     setupSelection();

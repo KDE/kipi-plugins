@@ -79,7 +79,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
                              const QString& fileName, bool hasGPSInfo)
              : KDialogBase(Plain, i18n("%1 - Edit Geographical Coordinates").arg(fileName),
                            Help|Ok|Cancel, Ok,
-                           parent, 0, true, true)
+                           parent, 0, true, false)
 {
     d = new GPSEditDialogDialogPrivate;
 

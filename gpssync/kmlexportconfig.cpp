@@ -64,7 +64,7 @@ namespace KIPIGPSSyncPlugin
 KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
                : KDialogBase(Plain, i18n("KML Export"), 
                              Help|Ok|Cancel, Ok, 
-                             parent, 0, true, true )
+                             parent, 0, true, false)
 {
     if ( !name )
         setName( "KMLExportConfig" );

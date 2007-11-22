@@ -2,7 +2,7 @@
 <kdevelop>
   <general>
     <author>KIPI dev. team</author>
-    <email></email>
+    <email/>
     <version>$VERSION$</version>
     <projectmanagement>KDevKDEAutoProject</projectmanagement>
     <primarylanguage>C++</primarylanguage>
@@ -12,11 +12,11 @@
     </keywords>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
-    <description></description>
+    <description/>
     <ignoreparts/>
     <secondaryLanguages/>
     <projectname>kipiplugins</projectname>
-    <defaultencoding></defaultencoding>
+    <defaultencoding/>
   </general>
   <kdevfileview>
     <groups>
@@ -76,10 +76,10 @@
     <general>
       <dbgshell>libtool</dbgshell>
       <programargs>-v -5 ./photo.mrw</programargs>
-      <gdbpath></gdbpath>
-      <configGdbScript></configGdbScript>
-      <runShellScript></runShellScript>
-      <runGdbScript></runGdbScript>
+      <gdbpath/>
+      <configGdbScript/>
+      <runShellScript/>
+      <runGdbScript/>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
@@ -113,12 +113,12 @@
       <directoryradio>custom</directoryradio>
       <customdirectory>/home/gilles/Documents/Devel/SVN/trunk/extragear/libs/libkdcraw/dcraw/</customdirectory>
       <mainprogram>/usr/bin/digikam</mainprogram>
-      <programargs>-v -5 ./photo.mrw</programargs>
+      <programargs/>
       <terminal>false</terminal>
       <autocompile>false</autocompile>
       <envvars/>
-      <globaldebugarguments></globaldebugarguments>
-      <globalcwd>/home/gilles/Documents/devel/SVN/branch/kde3/libs/kipi-plugins/../</globalcwd>
+      <globaldebugarguments/>
+      <globalcwd/>
       <useglobalprogram>true</useglobalprogram>
       <autoinstall>false</autoinstall>
       <autokdesu>false</autokdesu>
@@ -179,10 +179,12 @@
       <usePermanentCaching>true</usePermanentCaching>
       <alwaysIncludeNamespaces>false</alwaysIncludeNamespaces>
       <includePaths>.;</includePaths>
+      <parseMissingHeadersExperimental>false</parseMissingHeadersExperimental>
+      <resolveIncludePathsUsingMakeExperimental>false</resolveIncludePathsUsingMakeExperimental>
     </codecompletion>
     <references/>
     <creategettersetter>
-      <prefixGet></prefixGet>
+      <prefixGet/>
       <prefixSet>set</prefixSet>
       <prefixVariable>m_,_</prefixVariable>
       <parameterName>theValue</parameterName>

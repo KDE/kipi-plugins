@@ -75,7 +75,7 @@ namespace KIPIFindDupplicateImagesPlugin
 
 FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *parent)
                    : KDialogBase( IconList, i18n("Configure"), Help|Ok|Cancel,
-                                  Ok, parent, "FindDuplicateDialog", true, true ),
+                                  Ok, parent, "FindDuplicateDialog", true, false ),
                                   m_interface( interface )
 {
     setCaption(i18n("Find Duplicate Images"));

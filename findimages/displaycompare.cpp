@@ -124,7 +124,7 @@ private:
 DisplayCompare::DisplayCompare(QWidget* parent, KIPI::Interface* interface,
                                const QDict < QPtrVector < QFile > >& cmp )
               : KDialogBase( parent, "DisplayCompare", true, 0,
-                Help|User1|Close, Close, true, i18n("Delete")),
+                Help|User1|Close, Close, false, i18n("Delete")),
                 m_cmp(cmp), m_interface( interface )
 {
     KImageIO::registerFormats();
