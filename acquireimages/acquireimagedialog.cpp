@@ -1,24 +1,24 @@
-//////////////////////////////////////////////////////////////////////////////
-//
-//    ACQUIREIMAGEDIALOG.CPP
-//
-//    Copyright (C) 2003 Gilles Caulier <caulier.gilles at free.fr>
-//
-//    This program is free software; you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation; either version 2 of the License, or
-//    (at your option) any later version.
-//
-//    This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with this program; if not, write to the Free Software
-//    Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
-//
-//////////////////////////////////////////////////////////////////////////////
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-10-01
+ * Description : Acquire image dialog
+ *
+ * Copyright (C) 2003-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * ============================================================ */
 
 // C Ansi includes
 
@@ -101,8 +101,6 @@ namespace KIPIAcquireImagesPlugin
 #define NETACCESS_WIDGET
 #endif
 
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
-
 AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *parent, const QImage &img)
                   : KDialogBase( IconList, i18n("Save Target Image Options"), Help|Ok|Cancel,
                     Ok, parent, "AcquireImageDialog", true, false ), m_interface( interface )
@@ -135,25 +133,15 @@ AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *par
     m_helpButton->setPopup( helpMenu->menu() );
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 AcquireImageDialog::~AcquireImageDialog()
 {
     delete m_about;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void AcquireImageDialog::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("acquireimages",
-                                             "kipi-plugins");
+    KApplication::kApplication()->invokeHelp("acquireimages", "kipi-plugins");
 }    
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void AcquireImageDialog::readSettings(void)
 {
@@ -172,9 +160,6 @@ void AcquireImageDialog::readSettings(void)
     m_ImagesFilesSort = m_interface->fileExtensions();    
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void AcquireImageDialog::writeSettings(void)
 {
     // Write all settings in configuration file.
@@ -187,9 +172,6 @@ void AcquireImageDialog::writeSettings(void)
     m_config->sync();
     delete m_config;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void AcquireImageDialog::setupImageOptions(void)
 {
@@ -314,9 +296,6 @@ void AcquireImageDialog::setupImageOptions(void)
             this, SLOT(slotImageFormatChanged(const QString &)));
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void AcquireImageDialog::setupAlbumsList(void)
 {
     QString whatsThis;
@@ -391,9 +370,6 @@ void AcquireImageDialog::setupAlbumsList(void)
     slotAlbumSelected( m_uploadPath->path() );           
  }
 
-
-//////////////////////////////////////// SLOTS //////////////////////////////////////////////
-
 void AcquireImageDialog::slotAlbumSelected( const KURL &url )
 {
     QString comments, category, date, items;
@@ -401,18 +377,18 @@ void AcquireImageDialog::slotAlbumSelected( const KURL &url )
     QValueList<KIPI::ImageCollection>::Iterator albumIt;
     
     for( albumIt = albums.begin() ; albumIt != albums.end() ; ++albumIt )
-       {
+    {
        if ( (*albumIt).path() == url ) 
           break;
-       }
+    }
     
     if (albumIt != albums.end())
-       { 
+    { 
        comments = (*albumIt).comment();
        category = (*albumIt).category();
        date     = (*albumIt).date().toString( Qt::LocalDate );
        items.setNum((*albumIt).images().count());
-       }
+    }
         
     m_AlbumComments->setText( i18n("Caption: %1").arg(comments) );
     m_AlbumCollection->setText( i18n("Collection: %1").arg(category) );
@@ -420,10 +396,7 @@ void AcquireImageDialog::slotAlbumSelected( const KURL &url )
     m_AlbumItems->setText( i18n("Items: %1").arg( items ) );
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-  void AcquireImageDialog::slotOk()
+void AcquireImageDialog::slotOk()
 {
     // PENDING( aurelien)
     // It would be nice if m_uploadPath kept its value between multiple snapshots.
@@ -456,16 +429,16 @@ void AcquireImageDialog::slotAlbumSelected( const KURL &url )
     url.setFileName(fileName + ext);
 
     if (KIO::NetAccess::exists(url, false NETACCESS_WIDGET)) 
-        {
+    {
         for (int idx = 1; idx < 100 ; ++idx) 
-            {
+        {
             url.setFileName(QString("%1_%2%3").arg(fileName).arg(idx).arg(ext));
             kdDebug(51001) << "File already exist. Try to fixed target Url to: " << url.prettyURL() << endl;
             
             if (!KIO::NetAccess::exists(url, false NETACCESS_WIDGET)) 
                break;
-            }
         }
+    }
 
     kdDebug(51001) << k_funcinfo << "Saving image as " << url.prettyURL() << endl;
 
@@ -473,18 +446,26 @@ void AcquireImageDialog::slotAlbumSelected( const KURL &url )
     KTempFile tmp;
     tmp.setAutoDelete(true);
     QString imagePath;
-    if (url.isLocalFile()) {
+    if (url.isLocalFile()) 
+    {
         imagePath=url.path();
-    } else {
+    } 
+    else 
+    {
         imagePath=tmp.name();
     }
 
     bool ok=false;
-    if (imageFormat=="JPEG" || imageFormat=="PNG") {
+    if (imageFormat=="JPEG" || imageFormat=="PNG") 
+    {
         ok = m_qimageScanned.save(imagePath, imageFormat.latin1(), imageCompression);
-    } else if (imageFormat=="TIFF") {
+    }
+    else if (imageFormat=="TIFF") 
+    {
         ok = QImageToTiff(m_qimageScanned, imagePath);
-    } else {
+    }
+    else 
+    {
         ok =  m_qimageScanned.save(imagePath, imageFormat.latin1());
     }
 
@@ -495,8 +476,10 @@ void AcquireImageDialog::slotAlbumSelected( const KURL &url )
     }
 
     // Upload the image if necessary
-    if ( !url.isLocalFile()) {
-        if (!KIO::NetAccess::upload(imagePath, url NETACCESS_WIDGET)) {
+    if ( !url.isLocalFile()) 
+    {
+        if (!KIO::NetAccess::upload(imagePath, url NETACCESS_WIDGET)) 
+        {
            KMessageBox::error(this, i18n("Could not upload image to \"%1\".").arg(url.prettyURL()));
            return;
         }
@@ -505,7 +488,8 @@ void AcquireImageDialog::slotAlbumSelected( const KURL &url )
     // Save the comments for this image.
     QString err;
     ok = m_interface->addImage( url, err );
-    if ( !ok ) {
+    if ( !ok ) 
+    {
         KMessageBox::error(this, i18n("<qt>Error when informing the application about the new image. "
                                   "The error was: %1</qt>" ).arg( err ) );
         return;
@@ -520,9 +504,6 @@ void AcquireImageDialog::slotAlbumSelected( const KURL &url )
     delete this;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void AcquireImageDialog::slotImageFormatChanged(const QString &string)
 {
     if ( string == "JPEG" || string == "PNG" )
@@ -530,9 +511,6 @@ void AcquireImageDialog::slotImageFormatChanged(const QString &string)
     else
        m_imageCompression->setEnabled(false);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QString AcquireImageDialog::extension(const QString& imageFormat)
 {
@@ -555,9 +533,6 @@ QString AcquireImageDialog::extension(const QString& imageFormat)
     return "";
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 bool AcquireImageDialog::QImageToTiff(const QImage& image, const QString& dst)
 {
     TIFF               *tif;
@@ -567,14 +542,14 @@ bool AcquireImageDialog::QImageToTiff(const QImage& image, const QString& dst)
 
     tif = TIFFOpen(QFile::encodeName(dst).data(), "w");
     if ( tif )
-        {
+    {
         TIFFSetField(tif, TIFFTAG_IMAGEWIDTH, image.width());
         TIFFSetField(tif, TIFFTAG_IMAGELENGTH, image.height());
         TIFFSetField(tif, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
         TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, 8);
         TIFFSetField(tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
         TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_ADOBE_DEFLATE);
-            {
+        {
             TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, 3);
             TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
             TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP, TIFFDefaultStripSize(tif, 0));
@@ -583,29 +558,28 @@ bool AcquireImageDialog::QImageToTiff(const QImage& image, const QString& dst)
             unsigned char *dptr = 0;
 
             for (y = 0 ; y < image.height() ; ++y)
-                {
+            {
                 dptr = data;
 
                 for (x = 0 ; x < image.width() ; ++x)
-                    {
+                {
                     rgb = *((uint *)image.scanLine(y) + x);
                     *(dptr++) = qRed(rgb);
                     *(dptr++) = qGreen(rgb);
                     *(dptr++) = qBlue(rgb);
-                    }
-
-                TIFFWriteScanline(tif, data, y, 0);
                 }
 
-            delete [] data;
+                TIFFWriteScanline(tif, data, y, 0);
             }
+
+            delete [] data;
+        }
 
         TIFFClose(tif);
         return true;
-        }
+    }
 
     return false;
 }
 
 }  // NameSpace KIPIAcquireImagesPlugin
-

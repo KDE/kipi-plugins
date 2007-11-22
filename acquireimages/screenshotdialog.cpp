@@ -1,28 +1,27 @@
-//////////////////////////////////////////////////////////////////////////////
-//
-//    SCREENSHOOTDIALOG.CPP
-//
-//    Copyright (C) Richard J. Moore 1997-2002 from KSnapshot
-//    Copyright (C) Matthias Ettrich 2000 from KSnapshot
-//    Copyright (C) Aaron J. Seigo 2002 from KSnapshot
-//
-//    Copyright (C) 2004 Gilles Caulier <caulier.gilles at free.fr>
-//
-//    This program is free software; you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation; either version 2 of the License, or
-//    (at your option) any later version.
-//
-//    This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with this program; if not, write to the Free Software
-//    Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
-//
-//////////////////////////////////////////////////////////////////////////////
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2004-10-01
+ * Description : Screenshot batch dialog
+ *
+ * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) Richard J. Moore 1997-2002 from KSnapshot
+ * Copyright (C) Matthias Ettrich 2000 from KSnapshot
+ * Copyright (C) Aaron J. Seigo 2002 from KSnapshot
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * ============================================================ */
 
 // C Ansi includes
 
@@ -67,8 +66,6 @@ extern "C"
 
 namespace KIPIAcquireImagesPlugin
 {
-
-//////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent, const char *name)
                 : KDialogBase(parent, name, false, i18n("Screenshot"),
@@ -171,24 +168,14 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
     m_helpButton->setPopup( helpMenu->menu() );
 }
 
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
-
 ScreenGrabDialog::~ScreenGrabDialog()
 {
 }
 
-
-//////////////////////////////////////// SLOTS //////////////////////////////////////////////
-
 void ScreenGrabDialog::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("acquireimages",
-                                             "kipi-plugins");
+    KApplication::kApplication()->invokeHelp("acquireimages", "kipi-plugins");
 }    
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void ScreenGrabDialog::slotClose( void )
 {
@@ -206,9 +193,6 @@ void ScreenGrabDialog::slotClose( void )
     delete this;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void ScreenGrabDialog::slotGrab()
 {
     hide();
@@ -216,21 +200,21 @@ void ScreenGrabDialog::slotGrab()
     // Hiding the Host windows
     m_hiddenWindows.clear();
     if (m_hideCB->isChecked())
-        {
+    {
         QWidgetList  *list = QApplication::topLevelWidgets();
         QWidgetListIt it( *list );
         QWidget * w;
         while ( (w=it.current()) != 0 )
-            {
+        {
             ++it;
             if ( w->isVisible())
-                {
+            {
                 m_hiddenWindows.append( w );
                 w->hide();
-                }
             }
-        delete list;
         }
+        delete list;
+    }
 
     kapp->processEvents();
     QApplication::syncX();
@@ -238,14 +222,11 @@ void ScreenGrabDialog::slotGrab()
     if ( m_delay->value() != 0 )
         m_grabTimer.start( m_delay->value() * 1000, true );
     else
-        {
+    {
         m_grabber->show();
         m_grabber->grabMouse( crossCursor );
-        }
+    }
 }
-
-
-////////////////////////////////// FONCTIONS ////////////////////////////////////////////////
 
 void ScreenGrabDialog::slotPerformGrab()
 {
@@ -254,7 +235,7 @@ void ScreenGrabDialog::slotPerformGrab()
     m_grabTimer.stop();
 
     if ( m_desktopCB->isChecked() == false )
-        {
+    {
         Window root;
         Window child;
         uint mask;
@@ -271,18 +252,18 @@ void ScreenGrabDialog::slotPerformGrab()
                       &w, &h, &border, &depth );
 
         m_snapshot = QPixmap::grabWindow( qt_xrootwin(), x, y, w, h );
-        }
+    }
     else
         m_snapshot = QPixmap::grabWindow( qt_xrootwin() );
 
     if (m_snapshot.isNull())
-       {
+    {
        KMessageBox::sorry(this, i18n("Unable to take snapshot."),
                           i18n("Screenshot Error"));
 
        endGrab();
        return;
-       }
+    }
 
     QApplication::restoreOverrideCursor();
     KNotifyClient::beep();
@@ -295,32 +276,26 @@ void ScreenGrabDialog::slotPerformGrab()
     endGrab();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 void ScreenGrabDialog::endGrab(void)
 {
     // Restore the Host windows
 
     if (m_hideCB->isChecked())
-       {
+    {
        for( QValueList< QWidget* >::ConstIterator it = m_hiddenWindows.begin();
             it != m_hiddenWindows.end();
             ++it )
            (*it)->show();
        QApplication::syncX();
-       }
+    }
 
     show();
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 bool ScreenGrabDialog::eventFilter( QObject* o, QEvent* e)
 {
     if ( o == m_grabber && e->type() == QEvent::MouseButtonPress )
-        {
+    {
         QMouseEvent* me = (QMouseEvent*) e;
 
         if ( QWidget::mouseGrabber() != m_grabber )
@@ -328,10 +303,9 @@ bool ScreenGrabDialog::eventFilter( QObject* o, QEvent* e)
 
         if ( me->button() == LeftButton )
            slotPerformGrab();
-        }
+    }
 
     return false;
 }
 
 }  // NameSpace KIPIAcquireImagesPlugin
-
