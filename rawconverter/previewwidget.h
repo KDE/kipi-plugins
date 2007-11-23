@@ -47,8 +47,8 @@ public:
     ~PreviewWidget();
 
     void load(const QString& file);
-    void setInfo(const QString& text, const QColor& color=Qt::white, 
-                 const QPixmap& preview=QPixmap());
+    void setIdentity(const QString& text, const QColor& color=Qt::white);
+    void setThumbnail(const QPixmap& preview=QPixmap());
 
 protected:
 

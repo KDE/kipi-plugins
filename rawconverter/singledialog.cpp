@@ -440,6 +440,7 @@ void SingleDialog::slotUser3()
 void SingleDialog::slotIdentify()
 {
     d->thread->identifyRawFile(KUrl(d->inputFile), true);
+    d->thread->thumbRawFile(KUrl(d->inputFile));
     if (!d->thread->isRunning())
         d->thread->start();
 }
@@ -454,9 +455,14 @@ void SingleDialog::busy(bool val)
     enableButton(Close, !val);
 }
 
-void SingleDialog::identified(const QString&, const QString& identity, const QPixmap& preview)
+void SingleDialog::setIdentity(const QString&, const QString& identity)
 {
-    d->previewWidget->setInfo(d->inputFileName + QString(" :\n") + identity, Qt::white, preview);
+    d->previewWidget->setIdentity(d->inputFileName + QString(" :\n") + identity, Qt::white);
+}
+
+void SingleDialog::setThumbnail(const QString&, const QPixmap& thumbnail)
+{
+    d->previewWidget->setThumbnail(thumbnail);
 }
 
 void SingleDialog::previewing(const QString&)
@@ -478,7 +484,7 @@ void SingleDialog::previewFailed(const QString&)
 {
     d->previewWidget->unsetCursor();
     d->blinkPreviewTimer->stop();
-    d->previewWidget->setInfo(i18n("Failed to generate preview"), Qt::red);
+    d->previewWidget->setIdentity(i18n("Failed to generate preview"), Qt::red);
 }
 
 void SingleDialog::processing(const QString&)
@@ -565,7 +571,7 @@ void SingleDialog::processingFailed(const QString&)
 {
     d->previewWidget->unsetCursor();
     d->blinkConvertTimer->stop();
-    d->previewWidget->setInfo(i18n("Failed to convert Raw image"), Qt::red);
+    d->previewWidget->setIdentity(i18n("Failed to convert Raw image"), Qt::red);
 }
 
 void SingleDialog::slotPreviewBlinkTimerDone()
@@ -573,9 +579,9 @@ void SingleDialog::slotPreviewBlinkTimerDone()
     QString preview = i18n("Generating Preview...");
 
     if (d->previewBlink)
-        d->previewWidget->setInfo(preview, Qt::green);
+        d->previewWidget->setIdentity(preview, Qt::green);
     else
-        d->previewWidget->setInfo(preview, Qt::darkGreen);
+        d->previewWidget->setIdentity(preview, Qt::darkGreen);
 
     d->previewBlink = !d->previewBlink;
     d->blinkPreviewTimer->start(200);
@@ -586,9 +592,9 @@ void SingleDialog::slotConvertBlinkTimerDone()
     QString convert = i18n("Converting Raw Image...");
 
     if (d->convertBlink)
-        d->previewWidget->setInfo(convert, Qt::green);
+        d->previewWidget->setIdentity(convert, Qt::green);
     else
-        d->previewWidget->setInfo(convert, Qt::darkGreen);
+        d->previewWidget->setIdentity(convert, Qt::darkGreen);
 
     d->convertBlink = !d->convertBlink;
     d->blinkConvertTimer->start(200);
@@ -603,6 +609,7 @@ void SingleDialog::slotAction(const ActionData& ad)
         switch (ad.action) 
         {
             case(IDENTIFY_FULL): 
+            case(THUMBNAIL): 
                 break;
             case(PREVIEW):
             {
@@ -630,6 +637,7 @@ void SingleDialog::slotAction(const ActionData& ad)
             switch (ad.action) 
             {
                 case(IDENTIFY_FULL): 
+                case(THUMBNAIL): 
                     break;
                 case(PREVIEW):
                 {
@@ -656,8 +664,14 @@ void SingleDialog::slotAction(const ActionData& ad)
             {
                 case(IDENTIFY_FULL): 
                 {
+                    setIdentity(ad.filePath, ad.message);
+                    busy(false);
+                    break;
+                }
+                case(THUMBNAIL): 
+                {
                     QPixmap pix = QPixmap::fromImage(ad.image.scaled(256, 256, Qt::KeepAspectRatio));
-                    identified(ad.filePath, ad.message, pix);
+                    setThumbnail(ad.filePath, pix);
                     busy(false);
                     break;
                 }

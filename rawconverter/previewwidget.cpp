@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2003-10-22
- * Description : widget to render preview of raw file.
+ * Description : widget to render thumbnail of raw file.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -46,13 +46,16 @@ class PreviewWidgetPriv
 {
 public:
 
-    PreviewWidgetPriv(){}
+    PreviewWidgetPriv()
+    {
+        textColor = Qt::white;
+    }
 
     QPixmap  pix;
-    QPixmap  preview;
+    QPixmap  thumbnail;
 
     QString  text;
-
+    QColor   textColor;
     QImage   image;
 };
 
@@ -90,58 +93,39 @@ void PreviewWidget::load(const QString& file)
     }
     else 
     {
-        setInfo(i18n( "Failed to load image after processing" ));
+        setIdentity(i18n( "Failed to load image after processing" ));
         return;
     }
 
     update();
 }
 
-void PreviewWidget::setInfo(const QString& text, const QColor& color, const QPixmap& preview)
+void PreviewWidget::setIdentity(const QString& text, const QColor& color)
 {
-    d->text    = text;
-    d->preview = preview;
-    d->pix     = QPixmap(width(), height());
-    d->pix.fill(Qt::black);
-    QPainter p(&d->pix);
-    p.setPen(QPen(color));
+    d->text      = text;
+    d->textColor = color;
+    update();
+}
 
-    if (!d->preview.isNull())
-    {
-        p.drawPixmap(d->pix.width()/2-d->preview.width()/2, d->pix.height()/4-d->preview.height()/2, 
-                     d->preview, 0, 0, d->preview.width(), d->preview.height());
-        p.drawText(0, d->pix.height()/2, d->pix.width(), d->pix.height()/2,
-                   Qt::AlignCenter|Qt::TextWordWrap, d->text);
-    }
-    else
-    {
-        p.drawText(0, 0, d->pix.width(), d->pix.height(),
-                   Qt::AlignCenter|Qt::TextWordWrap, d->text);
-    }
-    p.end();
+void PreviewWidget::setThumbnail(const QPixmap& thumbnail)
+{
+    d->thumbnail = thumbnail;
     update();
 }
 
 void PreviewWidget::paintEvent(QPaintEvent*)
-{
-    QPainter p(this);
-    p.drawPixmap(0, 0, d->pix);
-    p.end();
-}
-
-void PreviewWidget::resizeEvent(QResizeEvent*)
 {
     d->pix = QPixmap(width(), height());
     d->pix.fill(Qt::black);
     if (!d->text.isEmpty()) 
     {
         QPainter p(&d->pix);
-        p.setPen(QPen(Qt::white));
+        p.setPen(QPen(d->textColor));
 
-        if (!d->preview.isNull())
+        if (!d->thumbnail.isNull())
         {
-            p.drawPixmap(d->pix.width()/2-d->preview.width()/2, d->pix.height()/4-d->preview.height()/2, 
-                         d->preview, 0, 0, d->preview.width(), d->preview.height());
+            p.drawPixmap(d->pix.width()/2-d->thumbnail.width()/2, d->pix.height()/4-d->thumbnail.height()/2, 
+                         d->thumbnail, 0, 0, d->thumbnail.width(), d->thumbnail.height());
             p.drawText(0, d->pix.height()/2, d->pix.width(), d->pix.height()/2,
                        Qt::AlignCenter|Qt::TextWordWrap, d->text);
         }
@@ -168,6 +152,15 @@ void PreviewWidget::resizeEvent(QResizeEvent*)
             p.end();
         }
     }
+
+    QPainter p(this);
+    p.drawPixmap(0, 0, d->pix);
+    p.end();
+}
+
+void PreviewWidget::resizeEvent(QResizeEvent*)
+{
+    update();
 }
 
 } // NameSpace KIPIRawConverterPlugin

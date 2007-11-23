@@ -61,6 +61,9 @@ public:
     void identifyRawFile(const KUrl& url, bool full=false);
     void identifyRawFiles(const KUrl::List& urlList, bool full=false);
 
+    void thumbRawFile(const KUrl& url);
+    void thumbRawFiles(const KUrl::List& urlList);
+
     void processHalfRawFile(const KUrl& url);
     void processHalfRawFiles(const KUrl::List& urlList);
 

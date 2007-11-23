@@ -147,6 +147,28 @@ void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
     }
 }
 
+void ActionThread::thumbRawFile(const KUrl& url)
+{
+    KUrl::List oneFile;
+    oneFile.append(url);
+    thumbRawFiles(oneFile);
+}
+
+void ActionThread::thumbRawFiles(const KUrl::List& urlList)
+{
+    for (KUrl::List::const_iterator it = urlList.begin();
+         it != urlList.end(); ++it ) 
+    {
+        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        t->filePath               = (*it).path();
+        t->action                 = THUMBNAIL;
+
+        QMutexLocker lock(&d->mutex);
+        d->todo << t;
+        d->condVar.wakeAll();
+    }
+}
+
 void ActionThread::processRawFiles(const KUrl::List& urlList)
 {
     for (KUrl::List::const_iterator it = urlList.begin();
@@ -211,10 +233,6 @@ void ActionThread::run()
                 case IDENTIFY: 
                 case IDENTIFY_FULL: 
                 {
-                    // Get embedded RAW file thumbnail.
-                    QImage image;
-                    d->dcrawIface.loadDcrawPreview(image, t->filePath);
-    
                     // Identify Camera model.    
                     KDcrawIface::DcrawInfoContainer info;
                     d->dcrawIface.rawFileIdentify(info, t->filePath);
@@ -261,8 +279,22 @@ void ActionThread::run()
                     ActionData ad;
                     ad.action   = t->action;
                     ad.filePath = t->filePath;
-                    ad.image    = image;
                     ad.message  = identify;
+                    ad.success  = true;
+                    emit finished(ad);
+                    break;
+                }
+
+                case THUMBNAIL: 
+                {
+                    // Get embedded RAW file thumbnail.
+                    QImage image;
+                    d->dcrawIface.loadDcrawPreview(image, t->filePath);
+    
+                    ActionData ad;
+                    ad.action   = t->action;
+                    ad.filePath = t->filePath;
+                    ad.image    = image;
                     ad.success  = true;
                     emit finished(ad);
                     break;

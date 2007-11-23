@@ -35,6 +35,7 @@ enum Action
     NONE = 0,
     IDENTIFY,
     IDENTIFY_FULL,
+    THUMBNAIL,
     PREVIEW,
     PROCESS
 };

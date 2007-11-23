@@ -64,7 +64,8 @@ private:
 
     void busy(bool busy);
 
-    void identified(const QString&, const QString& identity, const QPixmap& preview);
+    void setIdentity(const QString&, const QString& identity);
+    void setThumbnail(const QString&, const QPixmap& thumb);
 
     void previewing(const QString&);
     void previewed(const QString&, const QString& tmpFile);

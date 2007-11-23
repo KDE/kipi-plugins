@@ -506,6 +506,7 @@ void BatchDialog::addItems(const QStringList& itemList)
     if (!urlList.empty()) 
     {
         d->thread->identifyRawFiles(urlList);
+        d->thread->thumbRawFiles(urlList);
         if (!d->thread->isRunning())
             d->thread->start();
     }
@@ -696,6 +697,7 @@ void BatchDialog::slotAction(const ActionData& ad)
         switch (ad.action) 
         {
             case(IDENTIFY): 
+            case(THUMBNAIL): 
                 break;
             case(PROCESS):
             {
@@ -717,6 +719,7 @@ void BatchDialog::slotAction(const ActionData& ad)
             switch (ad.action) 
             {
                 case(IDENTIFY): 
+                case(THUMBNAIL): 
                     break;
                 case(PROCESS):
                 {
@@ -741,13 +744,22 @@ void BatchDialog::slotAction(const ActionData& ad)
                     RawItem *rawItem = d->itemDict.find(fi.fileName());
                     if (rawItem) 
                     {
+                        rawItem->viewItem->setText(3, ad.message);
+                        rawItem->identity = ad.message;
+                    }
+                    break;
+                }
+                case(THUMBNAIL): 
+                {
+                    QFileInfo fi(ad.filePath);
+                    RawItem *rawItem = d->itemDict.find(fi.fileName());
+                    if (rawItem) 
+                    {
                         if (!ad.image.isNull())
                         {
                             QPixmap pix = QPixmap::fromImage(ad.image.scaled(64, 64, Qt::KeepAspectRatio));
                             rawItem->viewItem->setThumbnail(pix);
                         }
-                        rawItem->viewItem->setText(3, ad.message);
-                        rawItem->identity = ad.message;
                     }
                     break;
                 }
