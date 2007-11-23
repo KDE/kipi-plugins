@@ -45,7 +45,6 @@ extern "C"
 #include <QEvent>
 #include <QPushButton>
 #include <QFile>
-#include <QPixmap>
 
 // KDE includes.
 
@@ -439,10 +438,26 @@ void SingleDialog::slotUser3()
 
 void SingleDialog::slotIdentify()
 {
+    if (!d->iface->hasFeature(KIPI::HostSupportsThumbnails))
+    {
+        d->thread->thumbRawFile(KUrl(d->inputFile));
+    }
+    else
+    {
+        connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+                this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+
+        d->iface->thumbnail(KUrl(d->inputFile), 256);
+    }
+
     d->thread->identifyRawFile(KUrl(d->inputFile), true);
-    d->thread->thumbRawFile(KUrl(d->inputFile));
     if (!d->thread->isRunning())
         d->thread->start();
+}
+
+void SingleDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
+{
+    setThumbnail(url.path(), pix);
 }
 
 void SingleDialog::busy(bool val)
@@ -455,24 +470,25 @@ void SingleDialog::busy(bool val)
     enableButton(Close, !val);
 }
 
-void SingleDialog::setIdentity(const QString&, const QString& identity)
+void SingleDialog::setIdentity(const QString& /*file*/, const QString& identity)
 {
     d->previewWidget->setIdentity(d->inputFileName + QString(" :\n") + identity, Qt::white);
 }
 
-void SingleDialog::setThumbnail(const QString&, const QPixmap& thumbnail)
+void SingleDialog::setThumbnail(const QString& file, const QPixmap& thumbnail)
 {
-    d->previewWidget->setThumbnail(thumbnail);
+    if (file == d->inputFile)
+        d->previewWidget->setThumbnail(thumbnail);
 }
 
-void SingleDialog::previewing(const QString&)
+void SingleDialog::previewing(const QString& /*file*/)
 {
     d->previewBlink = false;
     d->previewWidget->setCursor( Qt::WaitCursor );
     d->blinkPreviewTimer->start(200);
 }
 
-void SingleDialog::previewed(const QString&, const QString& tmpFile)
+void SingleDialog::previewed(const QString& /*file*/, const QString& tmpFile)
 {
     d->previewWidget->unsetCursor();
     d->blinkPreviewTimer->stop();
@@ -480,14 +496,14 @@ void SingleDialog::previewed(const QString&, const QString& tmpFile)
     ::remove(QFile::encodeName(tmpFile));
 }
 
-void SingleDialog::previewFailed(const QString&)
+void SingleDialog::previewFailed(const QString& /*file*/)
 {
     d->previewWidget->unsetCursor();
     d->blinkPreviewTimer->stop();
     d->previewWidget->setIdentity(i18n("Failed to generate preview"), Qt::red);
 }
 
-void SingleDialog::processing(const QString&)
+void SingleDialog::processing(const QString& /*file*/)
 {
     d->convertBlink = false;
     d->previewWidget->setCursor( Qt::WaitCursor );
@@ -567,7 +583,7 @@ void SingleDialog::processed(const QString& file, const QString& tmpFile)
     }
 }
 
-void SingleDialog::processingFailed(const QString&)
+void SingleDialog::processingFailed(const QString& /*file*/)
 {
     d->previewWidget->unsetCursor();
     d->blinkConvertTimer->stop();

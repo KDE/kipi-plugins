@@ -253,6 +253,9 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     connect(d->thread, SIGNAL(finished(const ActionData&)),
             this, SLOT(slotAction(const ActionData&)));
 
+    connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+
     // ---------------------------------------------------------------
 
     d->itemDict.setAutoDelete(true);
@@ -505,10 +508,27 @@ void BatchDialog::addItems(const QStringList& itemList)
 
     if (!urlList.empty()) 
     {
+        if (!d->iface->hasFeature(KIPI::HostSupportsThumbnails))
+            d->thread->thumbRawFiles(urlList);
+        else
+            d->iface->thumbnails(urlList, 256);
+
         d->thread->identifyRawFiles(urlList);
-        d->thread->thumbRawFiles(urlList);
         if (!d->thread->isRunning())
             d->thread->start();
+    }
+}
+
+void BatchDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
+{
+    RawItem *rawItem = d->itemDict.find(url.fileName());
+    if (rawItem) 
+    {
+        if (!pix.isNull())
+        {
+            QPixmap pixmap = pix.scaled(64, 64, Qt::KeepAspectRatio);
+            rawItem->viewItem->setThumbnail(pixmap);
+        }
     }
 }
 

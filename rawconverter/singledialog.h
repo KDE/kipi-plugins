@@ -26,10 +26,13 @@
 
 // Qt includes.
 
+#include <QString>
+#include <QPixmap>
 
 // KDE includes.
 
 #include <kdialog.h>
+#include <kurl.h>
 
 class QCloseEvent;
 
@@ -64,16 +67,16 @@ private:
 
     void busy(bool busy);
 
-    void setIdentity(const QString&, const QString& identity);
-    void setThumbnail(const QString&, const QPixmap& thumb);
+    void setIdentity(const QString& file, const QString& identity);
+    void setThumbnail(const QString& file, const QPixmap& thumb);
 
-    void previewing(const QString&);
-    void previewed(const QString&, const QString& tmpFile);
-    void previewFailed(const QString&);
+    void previewing(const QString& file);
+    void previewed(const QString& file, const QString& tmpFile);
+    void previewFailed(const QString& file);
 
-    void processing(const QString&);
-    void processed(const QString&, const QString& tmpFile);
-    void processingFailed(const QString&);
+    void processing(const QString& file);
+    void processed(const QString& file, const QString& tmpFile);
+    void processingFailed(const QString& file);
 
 private slots:
     
@@ -90,6 +93,8 @@ private slots:
     void slotConvertBlinkTimerDone();
 
     void slotAction(const ActionData&);
+
+    void slotThumbnail(const KUrl&, const QPixmap&);
     
 private:
 

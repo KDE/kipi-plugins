@@ -92,6 +92,8 @@ private slots:
 
     void slotAction(const ActionData&);
 
+    void slotThumbnail(const KUrl&, const QPixmap&);
+
 private:
 
     BatchDialogPriv* d;
