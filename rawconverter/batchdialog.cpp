@@ -95,6 +95,7 @@ public:
 
     BatchDialogPriv()
     {
+        busy                = false;
         convertBlink        = false;
         blinkConvertTimer   = 0;
         page                = 0;
@@ -108,6 +109,7 @@ public:
         iface               = 0;
     }
 
+    bool                              busy;
     bool                              convertBlink;
 
     QTimer                           *blinkConvertTimer;
@@ -141,13 +143,12 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     d = new BatchDialogPriv;
     d->iface = iface;
 
-    setButtons(Help | Default | User1 | User2 | Close);
+    setButtons(Help | Default | Apply | Close);
     setDefaultButton(KDialog::Close);
-    setButtonText(User1, i18n("Con&vert"));
-    setButtonText(User2, i18n("&Abort"));
+    setButtonToolTip(Close, i18n("<p>Exit Raw Converter"));
     setCaption(i18n("Raw Images Batch Converter"));
     setModal(false);
-
+    
     d->page = new QWidget( this );
     setMainWidget( d->page );
     QGridLayout *mainLayout = new QGridLayout(d->page);
@@ -217,10 +218,6 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
     // ---------------------------------------------------------------
 
-    setButtonToolTip( User1, i18n("<p>Start converting the Raw images from current settings"));
-    setButtonToolTip( User2, i18n("<p>Abort the current Raw files conversion"));
-    setButtonToolTip( Close, i18n("<p>Exit Raw Converter"));
-
     d->blinkConvertTimer = new QTimer(this);
     d->thread            = new ActionThread(this);
 
@@ -240,6 +237,9 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
     connect(this, SIGNAL(defaultClicked()),
             this, SLOT(slotDefault()));
+
+    connect(this, SIGNAL(applyClicked()),
+            this, SLOT(slotStartStop()));
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotUser1()));
@@ -274,16 +274,17 @@ void BatchDialog::slotHelp()
 void BatchDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
-    d->blinkConvertTimer->stop();
-    d->thread->cancel();
+
+    // Stop current conversion if necessary
+    if (d->busy) slotStartStop();
     saveSettings();
     e->accept();
 }
 
 void BatchDialog::slotClose()
 {
-    d->blinkConvertTimer->stop();
-    d->thread->cancel();
+    // Stop current conversion if necessary
+    if (d->busy) slotStartStop();
     saveSettings();
     done(Close);
 }
@@ -376,72 +377,84 @@ void BatchDialog::saveSettings()
     config.sync();
 }
 
+void BatchDialog::slotStartStop()
+{
+    if (!d->busy)
+    {
+        d->fileList.clear();
+    
+        Q3ListViewItemIterator it( d->listView );
+        while ( it.current() ) 
+        {
+            CListViewItem *item = (CListViewItem*) it.current();
+            if (item->isEnabled())
+            {
+                item->setPixmap(1, 0);
+                d->fileList.append(item->rawItem->directory + QString("/") + item->rawItem->src);
+            }
+            ++it;
+        }
+    
+        if (d->fileList.empty()) 
+        {
+            KMessageBox::error(this, i18n("There is no Raw file to process in the list!"));
+            busy(false);
+            slotAborted();
+            return;
+        }
+    
+        d->progressBar->setMaximum(d->fileList.count());
+        d->progressBar->setValue(0);
+        d->progressBar->show();
+    
+        KDcrawIface::RawDecodingSettings rawDecodingSettings;
+        rawDecodingSettings.sixteenBitsImage           = d->decodingSettingsBox->sixteenBits();
+        rawDecodingSettings.cameraColorBalance         = d->decodingSettingsBox->useCameraWB();
+        rawDecodingSettings.automaticColorBalance      = d->decodingSettingsBox->useAutoColorBalance();
+        rawDecodingSettings.RGBInterpolate4Colors      = d->decodingSettingsBox->useFourColor();
+        rawDecodingSettings.unclipColors               = d->decodingSettingsBox->unclipColor();
+        rawDecodingSettings.DontStretchPixels          = d->decodingSettingsBox->useDontStretchPixels();
+        rawDecodingSettings.enableNoiseReduction       = d->decodingSettingsBox->useNoiseReduction();
+        rawDecodingSettings.brightness                 = d->decodingSettingsBox->brightness();
+        rawDecodingSettings.enableBlackPoint           = d->decodingSettingsBox->useBlackPoint();
+        rawDecodingSettings.blackPoint                 = d->decodingSettingsBox->blackPoint();
+        rawDecodingSettings.NRThreshold                = d->decodingSettingsBox->NRThreshold();
+        rawDecodingSettings.enableCACorrection         = d->decodingSettingsBox->useCACorrection();
+        rawDecodingSettings.caMultiplier[0]            = d->decodingSettingsBox->caRedMultiplier();
+        rawDecodingSettings.caMultiplier[1]            = d->decodingSettingsBox->caBlueMultiplier();
+        rawDecodingSettings.RAWQuality                 = d->decodingSettingsBox->quality();
+        rawDecodingSettings.outputColorSpace           = d->decodingSettingsBox->outputColorSpace();
+        rawDecodingSettings.enableColorMultipliers     = d->decodingSettingsBox->useColorMultipliers();
+        rawDecodingSettings.colorBalanceMultipliers[0] = d->decodingSettingsBox->colorMultiplier1();
+        rawDecodingSettings.colorBalanceMultipliers[1] = d->decodingSettingsBox->colorMultiplier2();
+        rawDecodingSettings.colorBalanceMultipliers[2] = d->decodingSettingsBox->colorMultiplier3();
+        rawDecodingSettings.colorBalanceMultipliers[3] = d->decodingSettingsBox->colorMultiplier4();
+    
+        d->thread->setRawDecodingSettings(rawDecodingSettings, d->saveSettingsBox->fileFormat());
+        processOne();
+    }
+    else
+    {
+        d->blinkConvertTimer->stop();
+        d->fileList.clear();
+        d->thread->cancel();
+        busy(false);
+    
+        if (d->currentConvertItem)
+            d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
+    
+        QTimer::singleShot(500, this, SLOT(slotAborted()));
+    }
+}
+
 void BatchDialog::slotUser1()
 {
-    d->fileList.clear();
-
-    Q3ListViewItemIterator it( d->listView );
-    while ( it.current() ) 
-    {
-        CListViewItem *item = (CListViewItem*) it.current();
-        if (item->isEnabled())
-        {
-            item->setPixmap(1, 0);
-            d->fileList.append(item->rawItem->directory + QString("/") + item->rawItem->src);
-        }
-        ++it;
-    }
-
-    if (d->fileList.empty()) 
-    {
-        KMessageBox::error(this, i18n("There is no Raw file to process in the list!"));
-        busy(false);
-        slotAborted();
-        return;
-    }
-
-    d->progressBar->setMaximum(d->fileList.count());
-    d->progressBar->setValue(0);
-    d->progressBar->show();
-
-    KDcrawIface::RawDecodingSettings rawDecodingSettings;
-    rawDecodingSettings.sixteenBitsImage           = d->decodingSettingsBox->sixteenBits();
-    rawDecodingSettings.cameraColorBalance         = d->decodingSettingsBox->useCameraWB();
-    rawDecodingSettings.automaticColorBalance      = d->decodingSettingsBox->useAutoColorBalance();
-    rawDecodingSettings.RGBInterpolate4Colors      = d->decodingSettingsBox->useFourColor();
-    rawDecodingSettings.unclipColors               = d->decodingSettingsBox->unclipColor();
-    rawDecodingSettings.DontStretchPixels          = d->decodingSettingsBox->useDontStretchPixels();
-    rawDecodingSettings.enableNoiseReduction       = d->decodingSettingsBox->useNoiseReduction();
-    rawDecodingSettings.brightness                 = d->decodingSettingsBox->brightness();
-    rawDecodingSettings.enableBlackPoint           = d->decodingSettingsBox->useBlackPoint();
-    rawDecodingSettings.blackPoint                 = d->decodingSettingsBox->blackPoint();
-    rawDecodingSettings.NRThreshold                = d->decodingSettingsBox->NRThreshold();
-    rawDecodingSettings.enableCACorrection         = d->decodingSettingsBox->useCACorrection();
-    rawDecodingSettings.caMultiplier[0]            = d->decodingSettingsBox->caRedMultiplier();
-    rawDecodingSettings.caMultiplier[1]            = d->decodingSettingsBox->caBlueMultiplier();
-    rawDecodingSettings.RAWQuality                 = d->decodingSettingsBox->quality();
-    rawDecodingSettings.outputColorSpace           = d->decodingSettingsBox->outputColorSpace();
-    rawDecodingSettings.enableColorMultipliers     = d->decodingSettingsBox->useColorMultipliers();
-    rawDecodingSettings.colorBalanceMultipliers[0] = d->decodingSettingsBox->colorMultiplier1();
-    rawDecodingSettings.colorBalanceMultipliers[1] = d->decodingSettingsBox->colorMultiplier2();
-    rawDecodingSettings.colorBalanceMultipliers[2] = d->decodingSettingsBox->colorMultiplier3();
-    rawDecodingSettings.colorBalanceMultipliers[3] = d->decodingSettingsBox->colorMultiplier4();
-
-    d->thread->setRawDecodingSettings(rawDecodingSettings, d->saveSettingsBox->fileFormat());
-    processOne();
+    
 }
 
 void BatchDialog::slotUser2()
 {
-    d->blinkConvertTimer->stop();
-    d->fileList.clear();
-    d->thread->cancel();
-    busy(false);
 
-    if (d->currentConvertItem)
-        d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
-
-    QTimer::singleShot(500, this, SLOT(slotAborted()));
 }
 
 void BatchDialog::slotAborted()
@@ -552,15 +565,26 @@ void BatchDialog::processOne()
 
 void BatchDialog::busy(bool busy)
 {
-    enableButton(User1, !busy);
-    enableButton(User2, busy);
-    enableButton(Close, !busy);
+    d->busy = busy;
 
-    d->decodingSettingsBox->setEnabled(!busy);
-    d->saveSettingsBox->setEnabled(!busy);
-    d->listView->setEnabled(!busy);
+    if (d->busy)
+    {
+        setButtonIcon(Apply, KIcon("process-stop"));
+        setButtonText(Apply, i18n("&Abort"));
+        setButtonToolTip(Apply, i18n("<p>Abort the current Raw files conversion"));
+    }
+    else
+    {
+        setButtonIcon(Apply, KIcon("system-run"));
+        setButtonText(Apply, i18n("Con&vert"));
+        setButtonToolTip(Apply, i18n("<p>Start converting the Raw images from current settings"));
+    }
 
-    busy ? d->page->setCursor(Qt::WaitCursor) : d->page->unsetCursor();
+    d->decodingSettingsBox->setEnabled(!d->busy);
+    d->saveSettingsBox->setEnabled(!d->busy);
+    d->listView->setEnabled(!d->busy);
+
+    d->busy ? d->page->setCursor(Qt::WaitCursor) : d->page->unsetCursor();
 }
 
 void BatchDialog::slotConvertBlinkTimerDone()
