@@ -31,6 +31,7 @@
 // KDE includes.
 
 #include <kdialog.h>
+#include <kurl.h>
 
 // Local includes
 
@@ -59,7 +60,7 @@ public:
     BatchDialog(KIPI::Interface* iface);
     ~BatchDialog();
 
-    void addItems(const QStringList& itemList);
+    void addItems(const KUrl::List& itemList);
 
 protected:
 
@@ -83,8 +84,8 @@ private slots:
     void slotClose();
     void slotHelp();
     void slotStartStop();
-    void slotUser1();
-    void slotUser2();
+    void slotAddItems();
+    void slotRemoveItems();
     void slotAborted();
 
     void slotSaveFormatChanged();

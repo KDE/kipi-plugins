@@ -178,15 +178,15 @@ void Plugin_RawConverter::slotActivateBatch()
         new KIPIRawConverterPlugin::BatchDialog(interface);
 
     KUrl::List urls = images.images();
-    QStringList files;
+    KUrl::List items;
 
     for( KUrl::List::Iterator it = urls.begin(); it != urls.end(); ++it ) 
     {
         if (isRAWFile((*it).path()))
-            files.append( (*it).path() );
+            items.append((*it));
     }
 
-    converter->addItems(files);
+    converter->addItems(items);
     converter->show();
 }
 

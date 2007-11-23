@@ -73,6 +73,7 @@ extern "C"
 
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
+#include <libkipi/imagedialog.h>
 
 // Local includes.
 
@@ -143,11 +144,17 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     d = new BatchDialogPriv;
     d->iface = iface;
 
-    setButtons(Help | Default | Apply | Close);
+    setButtons(Help | Default | Apply | Close | User1 | User2);
     setDefaultButton(KDialog::Close);
     setButtonToolTip(Close, i18n("<p>Exit Raw Converter"));
     setCaption(i18n("Raw Images Batch Converter"));
     setModal(false);
+    setButtonIcon(User1, KIcon("edit-add"));
+    setButtonText(User1, i18n("&Add"));
+    setButtonToolTip(User1, i18n("<p>Add new Raw files to the list"));
+    setButtonIcon(User2, KIcon("edit-delete"));
+    setButtonText(User2, i18n("&Remove"));
+    setButtonToolTip(User2, i18n("<p>Remove selected Raw files from the list"));
     
     d->page = new QWidget( this );
     setMainWidget( d->page );
@@ -164,7 +171,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     d->listView->setAllColumnsShowFocus(true);
     d->listView->setSorting(-1);
     d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->listView->setSelectionMode(Q3ListView::Single);
+    d->listView->setSelectionMode(Q3ListView::Multi);
     d->listView->setFullWidth(true);
     d->listView->setMinimumWidth(450);
 
@@ -242,10 +249,10 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
             this, SLOT(slotStartStop()));
 
     connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotUser1()));
+            this, SLOT(slotAddItems()));
 
     connect(this, SIGNAL(user2Clicked()),
-            this, SLOT(slotUser2()));
+            this, SLOT(slotRemoveItems()));
 
     connect(d->thread, SIGNAL(starting(const ActionData&)),
             this, SLOT(slotAction(const ActionData&)));
@@ -450,14 +457,34 @@ void BatchDialog::slotStartStop()
     }
 }
 
-void BatchDialog::slotUser1()
+void BatchDialog::slotAddItems()
 {
-    
+    KIPI::ImageDialog dlg(this, d->iface, false, true);
+    KUrl::List urls = dlg.urls();
+    if (!urls.isEmpty())
+    {
+        addItems(urls);    
+    }
 }
 
-void BatchDialog::slotUser2()
+void BatchDialog::slotRemoveItems()
 {
-
+    bool find;
+    do
+    {
+        find = false;
+        for (int i = 0 ; i < d->listView->childCount(); i++)
+        {
+            CListViewItem* item = dynamic_cast<CListViewItem*>(d->listView->itemAtIndex(i));
+            if (item->isSelected())
+            {
+                delete item;
+                find = true;
+                break;
+            }
+        }
+    }
+    while(find);
 }
 
 void BatchDialog::slotAborted()
@@ -466,7 +493,7 @@ void BatchDialog::slotAborted()
     d->progressBar->hide();
 }
 
-void BatchDialog::addItems(const QStringList& itemList)
+void BatchDialog::addItems(const KUrl::List& itemList)
 {
     QString ext;
 
@@ -490,16 +517,16 @@ void BatchDialog::addItems(const QStringList& itemList)
 
     QPixmap pix(SmallIcon("empty", KIconLoader::SizeLarge, KIconLoader::DisabledState));
     
-    for (QStringList::const_iterator  it = itemList.begin();
+    for (KUrl::List::const_iterator  it = itemList.begin();
          it != itemList.end(); ++it) 
     {
-        QFileInfo fi(*it);
+        QFileInfo fi((*it).path());
         if (fi.exists() && !d->itemDict.find(fi.fileName())) 
         {
-            RawItem *item = new RawItem;
+            RawItem *item   = new RawItem;
             item->directory = fi.path();
-            item->src  = fi.fileName();
-            item->dest = fi.baseName() + QString(".") + ext;
+            item->src       = fi.fileName();
+            item->dest      = fi.baseName() + QString(".") + ext;
             new CListViewItem(d->listView, pix, item, d->listView->lastItem());
             d->itemDict.insert(item->src, item);
             urlList.append(fi.absoluteFilePath());
@@ -587,6 +614,8 @@ void BatchDialog::processOne()
 void BatchDialog::busy(bool busy)
 {
     d->busy = busy;
+    enableButton(User1, !d->busy);
+    enableButton(User2, !d->busy);
 
     if (d->busy)
     {
