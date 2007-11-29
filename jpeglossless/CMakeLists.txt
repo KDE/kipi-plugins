@@ -5,6 +5,8 @@ SUBDIRS(pics)
 # So make sure nofinal is always used here!
 KDE4_NO_ENABLE_FINAL(kipiplugin_jpeglossless)
 
+INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR})
+
 SET(kipiplugin_jpeglossless_PART_SRCS plugin_jpeglossless.cpp 
                                       transupp.cpp 
                                       jpegtransform.cpp 

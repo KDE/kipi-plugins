@@ -1,3 +1,4 @@
+INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR} ${PNG_PNG_INCLUDE_DIR})
 SET(kipiplugin_sendimages_PART_SRCS plugin_sendimages.cpp 
                                     sendimagesdialog.cpp 
                                     imagespage.cpp
