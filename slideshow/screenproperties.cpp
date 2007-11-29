@@ -28,12 +28,15 @@
 #include <QDataStream>
 #include <QApplication>
 #include <QDesktopWidget>
-#include <QX11Info>
 
-// X11 includes.
+#ifdef Q_WS_X11
+  #include <QX11Info>
 
-#include <X11/Xlib.h>
-#include <X11/extensions/Xrandr.h>
+  // X11 includes.
+
+  #include <X11/Xlib.h>
+  #include <X11/extensions/Xrandr.h>
+#endif
 
 // Local includes.
 
@@ -49,6 +52,10 @@ ScreenProperties::ScreenProperties(QWidget *mainWidget)
     
 unsigned ScreenProperties::suggestFrameRate() 
 {
+// use XRandR only in X11
+#ifndef Q_WS_X11
+    return 25;
+#else
     int eventBase, errorBase;
     if ( !XRRQueryExtension(QX11Info::display(), &eventBase, &errorBase)) {
         // No information, make a lucky guess on based on that ;)
@@ -90,9 +97,9 @@ unsigned ScreenProperties::suggestFrameRate()
             bestRate      = r;
         }
     } while (++i < 3);
-
     //qDebug("using %d Hz as framerate for effects", bestRate);
     return bestRate;
+#endif // Q_WS_X11
 }
 
 bool ScreenProperties::enableVSync() 
