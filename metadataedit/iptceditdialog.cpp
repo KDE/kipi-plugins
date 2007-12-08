@@ -159,7 +159,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->page_content  = addPage(d->contentPage, i18n("Content"));
     d->page_content->setHeader(i18n("<qt>Content Information<br>"
                      "<i>Use this panel to describe the visual content of the image</i></qt>"));
-    d->page_content->setIcon(KIcon("edit-clear"));
+    d->page_content->setIcon(KIcon("help-contents"));
 
     d->originPage  = new IPTCOrigin(this);
     d->page_origin = addPage(d->originPage, i18n("Origin"));
@@ -171,7 +171,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->page_credits = addPage(d->creditsPage, i18n("Credits"));
     d->page_credits->setHeader(i18n("<qt>Credits Information<br>"
                      "<i>Use this panel to record copyright information about the image</i></qt>"));
-    d->page_credits->setIcon(KIcon("kontact-contacts"));
+    d->page_credits->setIcon(KIcon("system-users"));
 
     d->subjectsPage  = new IPTCSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
@@ -195,7 +195,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->page_status = addPage(d->statusPage, i18n("Status"));
     d->page_status->setHeader(i18n("<qt>Status Information<br>"
                     "<i>Use this panel to record workflow description</i></qt>"));
-    d->page_status->setIcon(KIcon("kontact-todo"));
+    d->page_status->setIcon(KIcon("view-pim-tasks"));
 
     d->propertiesPage  = new IPTCProperties(this);
     d->page_properties = addPage(d->propertiesPage, i18n("Properties"));
@@ -207,7 +207,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->page_envelope = addPage(d->envelopePage, i18n("Envelope"));
     d->page_envelope->setHeader(i18n("<qt>Envelope Information<br>"
                       "<i>Use this panel to record editorial description</i></qt>"));
-    d->page_envelope->setIcon(KIcon("mail"));
+    d->page_envelope->setIcon(KIcon("mail-message"));
   
     // ---------------------------------------------------------------
     // About data and help button.
