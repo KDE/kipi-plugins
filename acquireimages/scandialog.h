@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #ifndef SCANDIALOG_H
@@ -40,7 +40,7 @@ namespace KIPI
 
 namespace KSaneIface
 {
-    class SaneWidget;
+    class KSaneWidget;
 }
 
 namespace KIPIAcquireImagesPlugin
@@ -54,7 +54,7 @@ class ScanDialog : public KDialog
 
 public:
 
-    ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneWidget,
+    ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *saneWidget,
                QWidget *parent);
     ~ScanDialog();
 
@@ -64,8 +64,7 @@ protected:
 
 private slots:
 
-    void slotScanFailed();
-    void slotSaveImage();
+    void slotSaveImage(QByteArray &, int, int, int, int);
     void slotClose();
     void slotHelp();
 

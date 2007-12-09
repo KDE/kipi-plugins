@@ -68,7 +68,7 @@ void Plugin_AcquireImages::setup(QWidget* widget)
     m_interface = dynamic_cast< KIPI::Interface* >(parent());
     if (!m_interface)
     {
-       kError( 51000 ) << "Kipi interface is null!" << endl;
+       kError( 51000 ) << "Kipi interface is null!";
        return;
     }
 }
@@ -79,7 +79,7 @@ Plugin_AcquireImages::~Plugin_AcquireImages()
 
 void Plugin_AcquireImages::slotActivate()
 {
-    KSaneIface::SaneWidget *saneWidget = new KSaneIface::SaneWidget(0);
+    KSaneIface::KSaneWidget *saneWidget = new KSaneIface::KSaneWidget(0);
 
     QString dev = saneWidget->selectDevice(0);
     if (dev.isEmpty())

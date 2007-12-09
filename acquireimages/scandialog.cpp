@@ -78,10 +78,10 @@ public:
 
     KIPIPlugins::KPAboutData *about;
 
-    KSaneIface::SaneWidget   *saneWidget;
+    KSaneIface::KSaneWidget   *saneWidget;
 };
 
-ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneWidget,
+ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *saneWidget,
                        QWidget *parent)
           : KDialog(parent)
 {
@@ -134,8 +134,8 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::SaneWidget *saneW
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
 
-    connect(d->saneWidget, SIGNAL(imageReady(uchar*, int, int, int, int)),
-            this, SLOT(slotSaveImage()));
+    connect(d->saneWidget, SIGNAL(imageReady(QByteArray &, int, int, int, int)),
+            this, SLOT(slotSaveImage(QByteArray &, int, int, int, int)));
 }
 
 ScanDialog::~ScanDialog()
@@ -177,12 +177,7 @@ void ScanDialog::slotHelp()
     KToolInvocation::invokeHelp("acquireimages", "kipi-plugins");
 }
 
-void ScanDialog::slotScanFailed()
-{
-    KMessageBox::error(0, i18n("Scanning failed!"));
-}
-
-void ScanDialog::slotSaveImage()
+void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, int bytes_per_line, int ksaneformat)
 {
     QStringList writableMimetypes = KImageIO::mimeTypes(KImageIO::Writing);
     // Put first class citizens at first place
@@ -275,7 +270,9 @@ void ScanDialog::slotSaveImage()
     saveSettings();
 
     // TODO : support 16 bits color depth image.
-    QImage img   = d->saneWidget->getFinalImage()->copy();
+    QImage img;
+    d->saneWidget->makeQImage(ksane_data, width, height, bytes_per_line,
+                              (KSaneIface::KSaneWidget::ImageFormat)ksaneformat, img);
     QImage prev  = img.scaled(800, 600, Qt::KeepAspectRatio);
     QImage thumb = img.scaled(160, 120, Qt::KeepAspectRatio);
     QByteArray data((const char*)img.bits(), img.numBytes());
