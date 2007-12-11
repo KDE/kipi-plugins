@@ -24,7 +24,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 005 ==> 152210 : BatchProcess : Metadata lost when converting from png to jpeg (IPTC thumbnail too big).
 006 ==> 152215 : GPSSync      : GPS correlator starts too many kio_thumbnail processes.
 007 ==> 149491 : GPSSync      : GPS correlator GPSSYNC do_not admit GMT+5h30 (India).
-008 ==> 
+008 ==> 150114 : GPSSync      : Max time gap is limited to 999 or 2000 seconds.
+009 ==> 
 
 v 0.1.5 - Beta1
 ----------------------------------------------------------------------------
