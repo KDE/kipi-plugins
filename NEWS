@@ -14,15 +14,15 @@ SlideShow      : Added Ken Burns effect
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
-001 ==> 149666 : General     : iPod Export kipi plugin cannot be disabled at compile 
-                               time when libgpod is present on system
-002 ==> 151604 : PrintWizard : Print Wizard does not recognize raw images
-003 ==> 102021 : SlideShow   : Pan and Zoom on Slideshow viewing (not a transition) 
-                               a la iPhoto
-004 ==> 151578 : Popup window says "Cannot run properly 'convert' program from 'ImageMagick'
-                 package" but it seems fine
-005 ==> 152210 : Metadata lost when converting from png to jpeg (IPTC thumbnail too big).
-006 ==> 
+001 ==> 149666 : General      : iPod Export kipi plugin cannot be disabled at compile 
+                                time when libgpod is present on system
+002 ==> 151604 : PrintWizard  : Print Wizard does not recognize raw images
+003 ==> 102021 : SlideShow    : Pan and Zoom on Slideshow viewing (not a transition) 
+                                a la iPhoto
+004 ==> 151578 : BatchProcess : Popup window says "Cannot run properly 'convert' program from 'ImageMagick'
+                                package" but it seems fine
+005 ==> 152210 : BatchProcess : Metadata lost when converting from png to jpeg (IPTC thumbnail too big).
+006 ==> 152215 : GPSSync      : GPS correlator starts too many kio_thumbnail processes
 
 v 0.1.5 - Beta1
 ----------------------------------------------------------------------------
