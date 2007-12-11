@@ -155,8 +155,8 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->gpxPointsLabel    = new QLabel(settingsBox);
     KSeparator *line     = new KSeparator(Horizontal, settingsBox);
 
-    QLabel *maxGapLabel = new QLabel(i18n("Max. time gap:"), settingsBox);
-    d->maxGapInput      = new KIntSpinBox(0, 2000, 1, 30, 10, settingsBox);
+    QLabel *maxGapLabel = new QLabel(i18n("Max. time gap (sec.):"), settingsBox);
+    d->maxGapInput      = new KIntSpinBox(0, 100000, 1, 30, 10, settingsBox);
     QWhatsThis::add(d->maxGapInput, i18n("<p>Sets the maximum difference in "
                     "seconds from a GPS track point to the image time to be matched. "
                     "If the time difference exceeds this setting, no match takes place."));
