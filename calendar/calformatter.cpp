@@ -116,7 +116,7 @@ void CalFormatter::init(int year, const QString & ohFile, const QString & fhFile
 			if ((*it)->doesRecur())
 			{
 				recur = (*it)->recurrence();
-				for (dtCurrent = recur->getNextDateTime(dtFirst); (dtCurrent < dtLast) && dtCurrent.isValid(); dtCurrent = recur->getNextDateTime(dtCurrent))
+				for (dtCurrent = recur->getNextDateTime(dtFirst.addDays(-1)); (dtCurrent <= dtLast) && dtCurrent.isValid(); dtCurrent = recur->getNextDateTime(dtCurrent))
 				{
 					kdDebug(51000) << dtCurrent.toString() << endl;
 					d->oh[dtCurrent.date()] = CalFormatter::Data::Day(Qt::red, (*it)->summary());
