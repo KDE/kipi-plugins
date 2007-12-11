@@ -41,8 +41,6 @@ class QPainter;
 class QColorGroup;
 class QPixmap;
 
-class KFileItem;
-
 namespace KIPIGPSSyncPlugin
 {
 class GPSListViewItemPriv;
@@ -58,11 +56,11 @@ public:
     ~GPSListViewItem();
 
     void setGPSInfo(GPSDataContainer gpsData, bool dirty=true, bool addedManually=false);
-    GPSDataContainer getGPSInfo();
+    GPSDataContainer GPSInfo();
     void eraseGPSInfo();
 
     void setDateTime(QDateTime date);
-    QDateTime getDateTime();
+    QDateTime dateTime();
 
     void setEnabled(bool e);
     bool isEnabled();
@@ -71,16 +69,12 @@ public:
     bool hasGPSInfo();
     bool isReadOnly();
 
-    KURL getUrl();
+    KURL url();
     void writeGPSInfoToFile();
 
 protected:
 
     void paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment);
-
-private slots:
-
-    void slotGotThumbnail(const KFileItem*, const QPixmap&);
 
 private: 
 

@@ -49,6 +49,7 @@
 #include <kglobalsettings.h>
 #include <knuminput.h>
 #include <kseparator.h>
+#include <kio/previewjob.h>
 
 // Local includes.
 
@@ -269,6 +270,11 @@ void GPSSyncDialog::setImages( const KURL::List& images )
 {
     for( KURL::List::ConstIterator it = images.begin(); it != images.end(); ++it )
         new GPSListViewItem(d->listView, d->listView->lastItem(), *it);
+
+    KIO::PreviewJob *thumbnailJob = KIO::filePreview(images, 64);
+
+    connect(thumbnailJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+            this, SLOT(slotGotThumbnail(const KFileItem*, const QPixmap&)));
 }
 
 void GPSSyncDialog::slotLoadGPXFile()
@@ -336,7 +342,7 @@ bool GPSSyncDialog::promptUserClose()
         GPSListViewItem *item = (GPSListViewItem*) it.current();
         if (item->isDirty())
             dirty++;
-	    
+
         ++it;
     }
 
@@ -363,7 +369,7 @@ void GPSSyncDialog::readSettings()
     d->timeZoneCB->setCurrentItem(config.readNumEntry("Time Zone", 12));
     d->interpolateBox->setChecked(config.readBoolEntry("Interpolate", false));
     d->maxTimeInput->setValue(config.readNumEntry("Max Inter Dist Time", 15));
-    
+
     d->maxTimeLabel->setEnabled(d->interpolateBox->isChecked());
     d->maxTimeInput->setEnabled(d->interpolateBox->isChecked());
     resize(configDialogSize(config, QString("GPS Sync Dialog")));
@@ -392,7 +398,7 @@ void GPSSyncDialog::slotUser1()
         GPSListViewItem *item = (GPSListViewItem*) it.current();
         GPSDataContainer gpsData;
 
-        if (d->gpxParser.matchDate(item->getDateTime(), 
+        if (d->gpxParser.matchDate(item->dateTime(), 
                                    d->maxGapInput->value(),
                                    d->timeZoneCB->currentItem()-12,
                                    d->interpolateBox->isChecked(),
@@ -431,10 +437,10 @@ void GPSSyncDialog::slotUser2()
         return;
     }
 
-    GPSListViewItem* item = (GPSListViewItem*)d->listView->currentItem();
+    GPSListViewItem *item = dynamic_cast<GPSListViewItem*>(d->listView->currentItem());
 
-    GPSEditDialog dlg(this, item->getGPSInfo(), 
-                      item->getUrl().fileName(),
+    GPSEditDialog dlg(this, item->GPSInfo(), 
+                      item->url().fileName(),
                       item->hasGPSInfo());
 
     if (dlg.exec() == KDialogBase::Accepted)
@@ -445,7 +451,7 @@ void GPSSyncDialog::slotUser2()
         {
             if (it.current()->isSelected())
             {
-                GPSListViewItem *selItem = (GPSListViewItem*)it.current();
+                GPSListViewItem *selItem = dynamic_cast<GPSListViewItem*>(it.current());
                 selItem->setGPSInfo(dlg.getGPSInfo(), true, true);
             }
             ++it;
@@ -469,7 +475,7 @@ void GPSSyncDialog::slotUser3()
     {
         if (it.current()->isSelected())
         {
-            GPSListViewItem *selItem = (GPSListViewItem*)it.current();
+            GPSListViewItem *selItem = dynamic_cast<GPSListViewItem*>(it.current());
             selItem->eraseGPSInfo();
         }
         ++it;
@@ -483,19 +489,34 @@ void GPSSyncDialog::slotApply()
     QListViewItemIterator it( d->listView );
     while ( it.current() ) 
     {
-        GPSListViewItem *item = (GPSListViewItem*) it.current();
-        d->listView->setSelected(item, true);
-        d->listView->ensureItemVisible(item);
-        item->writeGPSInfoToFile();
-        images.append(item->getUrl());
+        GPSListViewItem *selItem = dynamic_cast<GPSListViewItem*>(it.current());
+        d->listView->setSelected(selItem, true);
+        d->listView->ensureItemVisible(selItem);
+        selItem->writeGPSInfoToFile();
+        images.append(selItem->url());
         ++it;
         kapp->processEvents();
     }
 
     // We use kipi interface refreshImages() method to tell to host than 
     // metadata from pictures have changed and need to be re-readed.
-    
+
     d->interface->refreshImages(images);
+}
+
+void GPSSyncDialog::slotGotThumbnail(const KFileItem *item, const QPixmap& pix)
+{
+    QListViewItemIterator it(d->listView);
+
+    while (it.current())
+    {
+        GPSListViewItem *selItem = dynamic_cast<GPSListViewItem*>(it.current());
+        if (selItem->url() == item->url())
+        {
+            selItem->setPixmap(0, pix);
+        }
+        ++it;
+    }
 }
 
 }  // NameSpace KIPIGPSSyncPlugin

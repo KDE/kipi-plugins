@@ -28,7 +28,6 @@
 // KDE includes.
 
 #include <klocale.h>
-#include <kio/previewjob.h>
 #include <kiconloader.h>
 
 // LibKExiv2 includes. 
@@ -66,7 +65,7 @@ public:
 
     KURL             url;
 
-    GPSDataContainer gpsData;    
+    GPSDataContainer gpsData;
 };
 
 GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KURL& url)
@@ -78,7 +77,7 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
     setEnabled(false);
     setPixmap(0, SmallIcon( "file_broken", KIcon::SizeLarge, KIcon::DisabledState ));
     setText(1, d->url.fileName());
-    
+
     // We only add all JPEG files as R/W because Exiv2 can't yet 
     // update metadata on others file formats.
 
@@ -97,11 +96,6 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
     d->hasGPSInfo = exiv2Iface.getGPSInfo(alt, lat, lng);
     if (hasGPSInfo())
         setGPSInfo(GPSDataContainer(alt, lat, lng, false), false);
-
-    KIO::PreviewJob* thumbnailJob = KIO::filePreview(url, 64);
-
-    connect(thumbnailJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-            this, SLOT(slotGotThumbnail(const KFileItem*, const QPixmap&)));
 }
 
 GPSListViewItem::~GPSListViewItem()
@@ -119,7 +113,7 @@ void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty, bool adde
     setText(3, QString::number(d->gpsData.latitude(),  'g', 12));
     setText(4, QString::number(d->gpsData.longitude(), 'g', 12));
     setText(5, QString::number(d->gpsData.altitude(),  'g', 12));
-    
+
     if (isDirty())
     {
         QString status;
@@ -133,14 +127,14 @@ void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty, bool adde
             else
                 status = i18n("Found");
         }
-        
+
         setText(6, status);
     }
-    
+
     repaint();
 }
 
-GPSDataContainer GPSListViewItem::getGPSInfo()
+GPSDataContainer GPSListViewItem::GPSInfo()
 {
     return d->gpsData;
 }
@@ -169,12 +163,12 @@ void GPSListViewItem::setDateTime(QDateTime date)
     }
 }
 
-QDateTime GPSListViewItem::getDateTime()
+QDateTime GPSListViewItem::dateTime()
 {
     return d->date;
 }
 
-KURL GPSListViewItem::getUrl()
+KURL GPSListViewItem::url()
 {
     return d->url;
 }
@@ -207,13 +201,13 @@ void GPSListViewItem::writeGPSInfoToFile()
         }
 
         ret &= exiv2Iface.save(d->url.path());
-        
+
         if (ret)
             setPixmap(1, SmallIcon("ok"));
         else
             setPixmap(1, SmallIcon("cancel"));
-	
-	    d->dirty = false;
+
+        d->dirty = false;
     }
 }
 
@@ -269,12 +263,6 @@ void GPSListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, 
         KListViewItem::paintCell( p, _cg, column, width, alignment );
         _cg.setColor( QColorGroup::Text, c );
     }
-}
-
-void GPSListViewItem::slotGotThumbnail(const KFileItem*, const QPixmap& pix)
-{
-    setPixmap(0, pix);
-    repaint();
 }
 
 } // NameSpace KIPIGPSSyncPlugin

@@ -35,6 +35,8 @@
 
 class QListViewItem;
 
+class KFileItem;
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -66,6 +68,7 @@ protected slots:
 
 private slots:
 
+    void slotGotThumbnail(const KFileItem*, const QPixmap&);
     void slotLoadGPXFile(); 
 
 private:
