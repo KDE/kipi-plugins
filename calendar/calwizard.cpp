@@ -285,6 +285,7 @@ void CalWizard::slotPageSelected(const QString&)
             painter_ = new QPainter(printer_);
             totPages_ = monthImages_.count();
             currPage_ = -1;
+            formatter_->init(cSettings_->getYear(), wEvents_->ohFileEdit->text(), wEvents_->fhFileEdit->text());
             slotPrintOnePage();
 
         }
@@ -316,9 +317,6 @@ void CalWizard::slotPrintOnePage()
     monthImages_.pop_front();
 
     QString yearName = QString::number(cSettings_->getYear());
-
-
-    formatter_->init(cSettings_->getYear(), wEvents_->ohFileEdit->text(), wEvents_->fhFileEdit->text());
 
 #if KDE_IS_VERSION(3,2,0)
     wFinishLabel_->setText(i18n("Printing Calendar Page for %1 of %2")

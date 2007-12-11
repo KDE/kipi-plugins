@@ -66,6 +66,7 @@ void CalSelect::setupView( KIPI::Interface* interface )
 
     // ----------------------------------------------------------------
 
+    setCaption(i18n("Create Calendar"));
     QHGroupBox *yearBox = new QHGroupBox(i18n("Select Year"), this);
     yearBox->layout()->addItem(new QSpacerItem(5,5,
                                                QSizePolicy::Expanding,

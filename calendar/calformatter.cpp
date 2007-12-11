@@ -105,14 +105,26 @@ void CalFormatter::init(int year, const QString & ohFile, const QString & fhFile
 
                 KCal::Event::List list = calendar->rawEvents(dtFirst, dtLast);
                 KCal::Event::List::iterator it;
+		KCal::Recurrence *recur;
 
-                QString eventDate;
+		QDateTime dtCurrent;
                 int counter = 0;
                 for ( it = list.begin(); it != list.end(); ++it )
                 {
+                        kdDebug(51000) << (*it)->summary() << endl << "--------" << endl;
                         counter++;
-                        d->oh[(*it)->dtStart().date()] = CalFormatter::Data::Day(Qt::red, (*it)->summary());
-//                        kdDebug(51000) << eventDate << "----" <<  (*it)->summary() << endl;
+			if ((*it)->doesRecur())
+			{
+				recur = (*it)->recurrence();
+				for (dtCurrent = recur->getNextDateTime(dtFirst); (dtCurrent < dtLast) && dtCurrent.isValid(); dtCurrent = recur->getNextDateTime(dtCurrent))
+				{
+					kdDebug(51000) << dtCurrent.toString() << endl;
+					d->oh[dtCurrent.date()] = CalFormatter::Data::Day(Qt::red, (*it)->summary());
+				}
+				
+			}
+			else
+	                        d->oh[(*it)->dtStart().date()] = CalFormatter::Data::Day(Qt::red, (*it)->summary());
                 }
                 kdDebug(51000) << "Loaded " << counter << " events for year " << year_ << endl;
         }
