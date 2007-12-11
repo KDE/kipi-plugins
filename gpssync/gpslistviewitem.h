@@ -45,10 +45,8 @@ namespace KIPIGPSSyncPlugin
 {
 class GPSListViewItemPriv;
 
-class GPSListViewItem : public QObject, public KListViewItem
+class GPSListViewItem : public KListViewItem
 {
-
-Q_OBJECT
 
 public:
 

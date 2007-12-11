@@ -60,7 +60,7 @@ int GPSDataParser::numPoints()
     return m_GPSDataMap.count();
 }
 
-bool GPSDataParser::matchDate(QDateTime photoDateTime, int maxGapTime, int timeZone, 
+bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, int timeZone, 
                               bool interpolate, int interpolationDstTime,
                               GPSDataContainer& gpsData)
 {
@@ -78,9 +78,9 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int maxGapTime, int timeZ
     {
         // Here we check a possible accuracy in seconds between the 
         // Camera GMT time and the GPS device GMT time.
-        
+
         int nbSecs = abs(cameraGMTDateTime.secsTo( it.key() ));
-        
+
         // We tring to find the minimal accuracy.
         if( nbSecs < maxGapTime && nbSecs < nbSecItem)
         {
@@ -101,7 +101,7 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int maxGapTime, int timeZ
 
         QDateTime prevDateTime = findPrevDate(cameraGMTDateTime, interpolationDstTime);
         QDateTime nextDateTime = findNextDate(cameraGMTDateTime, interpolationDstTime);
-        
+
         if (!nextDateTime.isNull() && !prevDateTime.isNull())
         {
             GPSDataContainer prevGPSPoint = m_GPSDataMap[prevDateTime];
@@ -115,7 +115,7 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int maxGapTime, int timeZ
             double lon2 = nextGPSPoint.longitude();
             double lat2 = nextGPSPoint.latitude();
             uint   t2   = nextDateTime.toTime_t();
-            uint   tCor   = cameraGMTDateTime.toTime_t();
+            uint   tCor = cameraGMTDateTime.toTime_t();
 
             if (tCor-t1 != 0)  
             {
@@ -131,7 +131,7 @@ bool GPSDataParser::matchDate(QDateTime photoDateTime, int maxGapTime, int timeZ
     return false;
 }
 
-QDateTime GPSDataParser::findNextDate(QDateTime dateTime, int secs)
+QDateTime GPSDataParser::findNextDate(const QDateTime& dateTime, int secs)
 {
     // We will find the item in GPS data list where the time is 
     // at the maximum bigger than 'secs' mn of the value to match.
@@ -157,7 +157,7 @@ QDateTime GPSDataParser::findNextDate(QDateTime dateTime, int secs)
     return QDateTime();
 }
 
-QDateTime GPSDataParser::findPrevDate(QDateTime dateTime, int secs)
+QDateTime GPSDataParser::findPrevDate(const QDateTime& dateTime, int secs)
 {
     // We will find the item in GPS data list where the time is 
     // at the maximum smaller than 'secs' mn of the value to match.
@@ -197,7 +197,7 @@ bool GPSDataParser::loadGPXFile(const KURL& url)
     QDomElement gpxDocElem = gpxDoc.documentElement();
     if (gpxDocElem.tagName()!="gpx")
         return false;
-    
+
     for (QDomNode nTrk = gpxDocElem.firstChild();
          !nTrk.isNull(); nTrk = nTrk.nextSibling()) 
     {

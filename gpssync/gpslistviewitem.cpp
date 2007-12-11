@@ -37,7 +37,6 @@
 // Local includes.
 
 #include "gpslistviewitem.h"
-#include "gpslistviewitem.moc"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -69,7 +68,7 @@ public:
 };
 
 GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KURL& url)
-               : QObject(view), KListViewItem(view, after)
+               : KListViewItem(view, after)
 {
     d = new GPSListViewItemPriv;
     d->url = url;

@@ -42,25 +42,25 @@ namespace KIPIGPSSyncPlugin
 
 class GPSDataParser
 {
-	
+
 public:
 
     GPSDataParser();
     ~GPSDataParser(){};	
 
-    bool loadGPXFile(const KURL& url);    
+    bool loadGPXFile(const KURL& url);
 
     void clear();
     int  numPoints();
-    bool matchDate(QDateTime photoDateTime, int maxGapTime, int timeZone, 
+    bool matchDate(const QDateTime& photoDateTime, int maxGapTime, int timeZone, 
                    bool interpolate, int interpolationDstTime, 
                    GPSDataContainer& gpsData);
 
 private:
 
     // Methods used to perform interpolation.
-    QDateTime findNextDate(QDateTime dateTime, int secs);
-    QDateTime findPrevDate(QDateTime dateTime, int secs);
+    QDateTime findNextDate(const QDateTime& dateTime, int secs);
+    QDateTime findPrevDate(const QDateTime& dateTime, int secs);
 
 protected: 
 

@@ -163,33 +163,50 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
 
     QLabel *timeZoneLabel = new QLabel(i18n("Time zone:"), settingsBox);
     d->timeZoneCB         = new QComboBox( false, settingsBox );
-    d->timeZoneCB->insertItem(i18n("GMT-12:00"), 0);
-    d->timeZoneCB->insertItem(i18n("GMT-11:00"), 1);
-    d->timeZoneCB->insertItem(i18n("GMT-10:00"), 2);
-    d->timeZoneCB->insertItem(i18n("GMT-09:00"), 3);
-    d->timeZoneCB->insertItem(i18n("GMT-08:00"), 4);
-    d->timeZoneCB->insertItem(i18n("GMT-07:00"), 5);
-    d->timeZoneCB->insertItem(i18n("GMT-06:00"), 6);
-    d->timeZoneCB->insertItem(i18n("GMT-05:00"), 7);
-    d->timeZoneCB->insertItem(i18n("GMT-04:00"), 8);
-    d->timeZoneCB->insertItem(i18n("GMT-03:00"), 9);
-    d->timeZoneCB->insertItem(i18n("GMT-02:00"), 10);
-    d->timeZoneCB->insertItem(i18n("GMT-01:00"), 11);
-    d->timeZoneCB->insertItem(i18n("GMT"),       12);
-    d->timeZoneCB->insertItem(i18n("GMT+01:00"), 13);
-    d->timeZoneCB->insertItem(i18n("GMT+02:00"), 14);
-    d->timeZoneCB->insertItem(i18n("GMT+03:00"), 15);
-    d->timeZoneCB->insertItem(i18n("GMT+04:00"), 16);
-    d->timeZoneCB->insertItem(i18n("GMT+05:00"), 17);
-    d->timeZoneCB->insertItem(i18n("GMT+06:00"), 18);
-    d->timeZoneCB->insertItem(i18n("GMT+07:00"), 19);
-    d->timeZoneCB->insertItem(i18n("GMT+08:00"), 20);
-    d->timeZoneCB->insertItem(i18n("GMT+09:00"), 21);
-    d->timeZoneCB->insertItem(i18n("GMT+10:00"), 22);
-    d->timeZoneCB->insertItem(i18n("GMT+11:00"), 23);
-    d->timeZoneCB->insertItem(i18n("GMT+12:00"), 24);
-    d->timeZoneCB->insertItem(i18n("GMT+13:00"), 25);
-    d->timeZoneCB->insertItem(i18n("GMT+14:00"), 26);
+
+    // See list of time zomes over the world :
+    // http://en.wikipedia.org/wiki/List_of_time_zones
+    // NOTE: Combo box strings are not i18n.
+    d->timeZoneCB->insertItem("GMT-12:00");
+    d->timeZoneCB->insertItem("GMT-11:00");
+    d->timeZoneCB->insertItem("GMT-10:00");
+    d->timeZoneCB->insertItem("GMT-09:30");
+    d->timeZoneCB->insertItem("GMT-09:00");
+    d->timeZoneCB->insertItem("GMT-08:00");
+    d->timeZoneCB->insertItem("GMT-07:00");
+    d->timeZoneCB->insertItem("GMT-06:00");
+    d->timeZoneCB->insertItem("GMT-05:30");
+    d->timeZoneCB->insertItem("GMT-05:00");
+    d->timeZoneCB->insertItem("GMT-04:30");
+    d->timeZoneCB->insertItem("GMT-04:00");
+    d->timeZoneCB->insertItem("GMT-03:30");
+    d->timeZoneCB->insertItem("GMT-03:00");
+    d->timeZoneCB->insertItem("GMT-02:00");
+    d->timeZoneCB->insertItem("GMT-01:00");
+    d->timeZoneCB->insertItem("GMT+00:00");
+    d->timeZoneCB->insertItem("GMT+01:00");
+    d->timeZoneCB->insertItem("GMT+02:00");
+    d->timeZoneCB->insertItem("GMT+03:00");
+    d->timeZoneCB->insertItem("GMT+03:30");
+    d->timeZoneCB->insertItem("GMT+04:00");
+    d->timeZoneCB->insertItem("GMT+05:00");
+    d->timeZoneCB->insertItem("GMT+05:30");    // See B.K.O # 149491
+    d->timeZoneCB->insertItem("GMT+05:45");
+    d->timeZoneCB->insertItem("GMT+06:00");
+    d->timeZoneCB->insertItem("GMT+06:30");
+    d->timeZoneCB->insertItem("GMT+07:00");
+    d->timeZoneCB->insertItem("GMT+08:00");
+    d->timeZoneCB->insertItem("GMT+08:45");
+    d->timeZoneCB->insertItem("GMT+09:00");
+    d->timeZoneCB->insertItem("GMT+09:30");
+    d->timeZoneCB->insertItem("GMT+10:00");
+    d->timeZoneCB->insertItem("GMT+10:30");
+    d->timeZoneCB->insertItem("GMT+11:00");
+    d->timeZoneCB->insertItem("GMT+11:30");
+    d->timeZoneCB->insertItem("GMT+12:00");
+    d->timeZoneCB->insertItem("GMT+12:45");
+    d->timeZoneCB->insertItem("GMT+13:00");
+    d->timeZoneCB->insertItem("GMT+14:00");
     QWhatsThis::add(d->timeZoneCB, i18n("<p>Sets the time zone of the camera during "
                     "picture shooting, so that the time stamps of the pictures "
                     "can be converted to GMT to match the GPS time"));
@@ -366,7 +383,7 @@ void GPSSyncDialog::readSettings()
     KConfig config("kipirc");
     config.setGroup("GPS Sync Settings");
     d->maxGapInput->setValue(config.readNumEntry("Max Gap Time", 30));
-    d->timeZoneCB->setCurrentItem(config.readNumEntry("Time Zone", 12));
+    d->timeZoneCB->setCurrentItem(config.readNumEntry("Time Zone", 16));  // GMT+00:00
     d->interpolateBox->setChecked(config.readBoolEntry("Interpolate", false));
     d->maxTimeInput->setValue(config.readNumEntry("Max Inter Dist Time", 15));
 
@@ -395,12 +412,19 @@ void GPSSyncDialog::slotUser1()
     QListViewItemIterator it( d->listView );
     while ( it.current() ) 
     {
-        GPSListViewItem *item = (GPSListViewItem*) it.current();
+        GPSListViewItem *item = dynamic_cast<GPSListViewItem*>(d->listView->currentItem());
         GPSDataContainer gpsData;
+        QString tz = d->timeZoneCB->currentText();
+        int hh     = QString(QString(tz[4])+QString(tz[5])).toInt();
+        int mm     = QString(QString(tz[7])+QString(tz[8])).toInt();
+        int offset = hh*3600 + mm*60;
+
+        if (tz[3] == QChar('-'))
+            offset = (-1)*offset;
 
         if (d->gpxParser.matchDate(item->dateTime(), 
                                    d->maxGapInput->value(),
-                                   d->timeZoneCB->currentItem()-12,
+                                   offset,
                                    d->interpolateBox->isChecked(),
                                    d->maxTimeInput->value()*60, 
                                    gpsData))
