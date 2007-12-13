@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=HelloWorld
+Name[ca]=Hola món!
 Name[cs]=Hello World
 Name[da]=Hello world
 Name[de]=Hallo Welt!
@@ -20,7 +21,7 @@ Name[tg]=Салом Ҷаҳон
 Name[tr]=MerhabaDünya
 Name[zh_CN]=世界你好
 Comment=KIPI Hello World Plugin
-Comment[ca]=Connector del KIPI per fer un Hola món!
+Comment[ca]=Connector del KIPI per a fer un Hola món!
 Comment[cs]=KIPI modul Hello World
 Comment[da]=KIPI-plugin: Hello world
 Comment[de]=KIPI Hallo-Welt-Modul

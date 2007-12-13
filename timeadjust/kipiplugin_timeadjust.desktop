@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=TimeDateAdjust
+Name[ca]=Ajust de data i hora
 Name[cs]=Nastavení data
 Name[da]=Justér dato og tid
 Name[de]=Zeit und Datum anpassen
@@ -22,7 +23,7 @@ Name[tr]=ZamanTarihAyarla
 Name[xx]=xxTimeDateAdjustxx
 Name[zh_CN]=日期时间调整
 Comment=KIPI Time and Date Adjust
-Comment[ca]=Connector del KIPI per ajustar l'hora i la data
+Comment[ca]=Connector del KIPI per ajustar la data i l'hora
 Comment[cs]=KIPI nastavení času a data
 Comment[da]=KIPI-plugin: Justér dato og tid
 Comment[de]=Ein KIPI-Modul zum Setzen von Zeit und Datum

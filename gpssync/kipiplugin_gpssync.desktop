@@ -1,6 +1,6 @@
 [Desktop Entry]
 Comment=KIPI plugin to Geolocalize pictures
-Comment[ca]=Connector del KIPI per geoposicionar fotografies
+Comment[ca]=Connector del KIPI per a geolocalitzar fotografies
 Comment[da]=KIPI-plugin til at lokalisere billeder geografisk
 Comment[de]=Ein KIPI-Modul zum geographischen Zuordnen von Bildern
 Comment[el]=Πρόσθετο του KIPI για γεωτοποθέτηση εικόνων
@@ -22,6 +22,7 @@ Comment[zh_CN]=KIPI 地理化图片插件
 Encoding=UTF-8
 Icon=
 Name=GPSSync
+Name[ca]=Sincronització GPS
 Name[da]=GPS-synkronisering
 Name[el]=Συγχρονισμός GPS
 Name[pt]=Sincronização GPS

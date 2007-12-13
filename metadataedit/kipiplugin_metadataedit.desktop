@@ -23,6 +23,7 @@ Comment[zh_CN]=KIPI 图片和元数据编辑器
 Encoding=UTF-8
 Icon=
 Name=MetadataEdit
+Name[ca]=Edició de metadades
 Name[da]=Metadataeditor
 Name[de]=MetadataEditor
 Name[es]=Editar metadatos

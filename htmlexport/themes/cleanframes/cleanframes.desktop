@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Clean Frames
+Name[ca]=Marcs nets
 Name[da]=Rene rammer
 Name[de]=Saubere Rahmen
 Name[es]=Marcos limpios
@@ -45,6 +46,7 @@ Url=mailto:purplegamba@cox.net
 [X-HTMLExport Parameter style]
 Name=Style
 Name[br]=Giz
+Name[ca]=Estil
 Name[da]=Stil
 Name[de]=Stil
 Name[el]=Στυλ

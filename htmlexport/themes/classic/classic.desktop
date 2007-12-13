@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Classic
+Name[ca]=Clàssic
 Name[da]=Klassisk
 Name[de]=Klassisch
 Name[el]=Κλασικό
@@ -45,6 +46,7 @@ Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter thumbnailPerRow]
 Name=Thumbnails per row
+Name[ca]=Miniatures per fila
 Name[da]=Miniaturebilleder per linje
 Name[de]=Vorschaubilder pro Zeile
 Name[el]=Εικόνες επισκόπησης ανά γραμμή
@@ -117,6 +119,7 @@ Default=#d0ffd0
 
 [X-HTMLExport Parameter fontSize]
 Name=Font Size
+Name[ca]=Mida del tipus de lletra
 Name[da]=Tegnstørrelse
 Name[de]=Zeichensatzgröße
 Name[el]=Μέγεθος γραμματοσειράς
@@ -141,6 +144,7 @@ Max=100
 
 [X-HTMLExport Parameter imgBorderSize]
 Name=Image Border Size
+Name[ca]=Mida de la vora de la imatge
 Name[da]=Billedkantstørrelse
 Name[de]=Größe des Bildrahmens
 Name[el]=Μέγεθος περιγράμματος εικόνας
@@ -165,6 +169,7 @@ Max=50
 
 [X-HTMLExport Parameter imgBorderColor]
 Name=Image Border Color
+Name[ca]=Color de la vora de la imatge
 Name[da]=Billedkantfarve
 Name[de]=Farbe des Bildrahmens
 Name[el]=Χρώμα περιγράμματος εικόνας
@@ -187,6 +192,7 @@ Default=#d0ffd0
 
 [X-HTMLExport Parameter linkColor]
 Name=Link Color
+Name[ca]=Color de l'enllaç
 Name[da]=Linkfarve
 Name[de]=Verknüpfungsfarbe
 Name[el]=Χρώμα δεσμού
@@ -209,6 +215,7 @@ Default=#b3b3b3
 
 [X-HTMLExport Parameter visitedLinkColor]
 Name=Visited Link Color
+Name[ca]=Color de l'enllaç visitat
 Name[da]=Besøgt linkfarve
 Name[de]=Farbe der besuchten Verknüpfungen
 Name[el]=Χρώμα ακολουθημένου δεσμού
