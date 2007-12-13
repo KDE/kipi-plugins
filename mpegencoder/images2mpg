@@ -563,6 +563,25 @@ else
    IDENTIFY_BIN="$IMBINFOLDER/identify"
 fi
 
+# check if programs are installed
+if [ ! -e $MONTAGE_BIN ]; then
+	echo -e "\nCan't find $MONTAGE_BIN, please install it or check -I parameter"
+	exit -1
+fi
+if [ ! -e $COMPOSITE_BIN ]; then
+	echo -e "\nCan't find $COMPOSITE_BIN, please install it or check -I parameter"
+	exit -1
+fi
+if [ ! -e $CONVERT_BIN ]; then
+	echo -e "\nCan't find $CONVERT_BIN, please install it or check -I parameter"
+	exit -1
+fi
+if [ ! -e $IDENTIFY_BIN ]; then
+	echo -e "\nCan't find $IDENTIFY_BIN, please install it or check -I parameter"
+	exit -1
+fi
+
+
 if [ -z "$MJPEGTBINFOLDER" ]; then
    PPMTOY4M_BIN="ppmtoy4m"
    YUVSCALER_BIN="yuvscaler"
@@ -579,6 +598,35 @@ else
    OGG_BIN="$MJPEGTBINFOLDER/ogg123"
    MP3_BIN="$MJPEGTBINFOLDER/mpg123"   
    MPLEX_BIN="$MJPEGTBINFOLDER/mplex"
+fi
+# check if programs are installed
+if [ ! -e $PPMTOY4M_BIN ]; then
+	echo -e "\nCan't find $PPMTOY4M_BIN, please install it or check -M parameter"
+	exit -1
+fi
+if [ ! -e $YUVSCALER_BIN ]; then
+	echo -e "\nCan't find $YUVSCALER_BIN, please install it or check -M parameter"
+	exit -1
+fi
+if [ ! -e $MPEG2ENC_BIN ]; then
+	echo -e "\nCan't find $MPEG2ENC_BIN, please install it or check -M parameter"
+	exit -1
+fi
+if [ ! -e $MP2ENC_BIN ]; then
+	echo -e "\nCan't find $MP2ENC_BIN, please install it or check -M parameter"
+	exit -1
+fi
+if [ ! -e $OGG_BIN ]; then
+	echo -e "\nCan't find $OGG_BIN, please install it or check -M parameter"
+	exit -1
+fi
+if [ ! -e $MP3_BIN ]; then
+	echo -e "\nCan't find $MP3_BIN, please install it or check -M parameter"
+	exit -1
+fi
+if [ ! -e $MPLEX_BIN ]; then
+	echo -e "\nCan't find $MPLEX_BIN, please install it or check -M parameter"
+	exit -1
 fi
 
 # Verify if some images file have been given on the command line.
