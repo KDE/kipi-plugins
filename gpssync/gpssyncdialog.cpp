@@ -115,9 +115,9 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     setButtonText(User2, i18n("Edit..."));
     setButtonText(User3, i18n("Remove"));
 
-    setButtonTip(User1, i18n("Correlate GPX file data with all pictures from the list."));
-    setButtonTip(User2, i18n("Edit manually GPS coordinates of selected pictures from the list."));
-    setButtonTip(User3, i18n("Remove GPS coordinates of selected pictures from the list."));
+    setButtonTip(User1, i18n("Correlate in time and interpolate distance of data from GPX file with all images on the list."));
+    setButtonTip(User2, i18n("Manually edit GPS coordinates of selected images from the list."));
+    setButtonTip(User3, i18n("Remove GPS coordinates of selected images from the list."));
 
     enableButton(User1, false);
     enableButton(User2, true);
@@ -208,8 +208,8 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->timeZoneCB->insertItem("GMT+13:00");
     d->timeZoneCB->insertItem("GMT+14:00");
     QWhatsThis::add(d->timeZoneCB, i18n("<p>Sets the time zone of the camera during "
-                    "picture shooting, so that the time stamps of the pictures "
-                    "can be converted to GMT to match the GPS time"));
+                    "photo shooting, so that the time stamps of the images "
+                    "can be converted to GMT to match the GPS time reference"));
 
     d->interpolateBox = new QCheckBox(i18n("Interpolate"), settingsBox);
     QWhatsThis::add(d->interpolateBox, i18n("<p>Set this option to interpolate GPS track points "
@@ -246,7 +246,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("GPS Sync"),
                                             NULL,
                                             KAboutData::License_GPL,
-                                            I18N_NOOP("A Plugin to synchronize pictures metadata with a GPS device"),
+                                            I18N_NOOP("A plugin to synchronize images' metadata with a GPS device"),
                                             "(c) 2006-2007, Gilles Caulier");
 
     d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
@@ -365,12 +365,12 @@ bool GPSSyncDialog::promptUserClose()
 
     if (dirty > 0)
     {
-        QString msg = i18n("1 picture from the list is not updated.",
-                           "%n pictures from the list are not updated.", dirty);
+        QString msg = i18n("1 image from the list is not updated.",
+                           "%n images from the list are not updated.", dirty);
 
         if (KMessageBox::No == KMessageBox::warningYesNo(this,
                      i18n("<p>%1\n"
-                          "Do you want really to close this window without applying changes?</p>")
+                          "Do you really want to close this window without applying changes?</p>")
                           .arg(msg)))
             return false;
     }
@@ -442,11 +442,11 @@ void GPSSyncDialog::slotUser1()
         return;
     }
 
-    QString msg = i18n("GPS data of 1 picture have been updated on the list using the GPX data file.",
-                       "GPS data of %n pictures have been updated on the list using the GPX data file.",
+    QString msg = i18n("GPS data of 1 image have been updated on the list using the GPX data file.",
+                       "GPS data of %n images have been updated on the list using the GPX data file.",
                        itemsUpdated);
     msg += '\n';
-    msg += i18n("Press Apply button to update pictures metadata.");
+    msg += i18n("Press Apply button to update images metadata.");
 
     KMessageBox::information(this, msg, i18n("GPS Sync"));    
 }
@@ -456,7 +456,7 @@ void GPSSyncDialog::slotUser2()
 {
     if (!d->listView->currentItem())
     {
-        KMessageBox::information(this, i18n("Please, select at least one picture from "
+        KMessageBox::information(this, i18n("Please, select at least one image from "
                      "the list to edit GPS coordinates manually."), i18n("GPS Sync"));    
         return;
     }
@@ -488,7 +488,7 @@ void GPSSyncDialog::slotUser3()
 {
     if (!d->listView->currentItem())
     {
-        KMessageBox::information(this, i18n("Please, select at least one picture from "
+        KMessageBox::information(this, i18n("Please, select at least one image from "
                      "the list to remove GPS coordinates."), i18n("GPS Sync"));    
         return;
     }
