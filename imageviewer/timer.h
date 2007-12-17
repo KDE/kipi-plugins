@@ -21,12 +21,11 @@
 #define TIMER_H
 #include <qstring.h>
 #include <qdatetime.h>
-#include <iostream>
 
 /**
  * @short convenience class for profiling
  * @author Markus Leuthold <kusi (+at) forum.titlis.org>
- * @version 0.1
+ * @version 0.2
  */
 
 namespace KIPIviewer {

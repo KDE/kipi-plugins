@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2007 by Markus Leuthold   *
- *   <kusi at forum.titlis.org>   *
+ *   <kusi (+at) forum.titlis.org>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,6 +21,7 @@
 #ifndef _OGL_H_
 #define _OGL_H_
 
+//QT includes
 #include <qgl.h>
 #include <qdir.h>
 #include <qimage.h>
@@ -31,20 +32,25 @@
 #include <qregexp.h>
 #include <qcursor.h>
 #include <qtimer.h>
+
+//kipi includes
 #include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
+//local includes
 #include "texture.h"
 
 /**
- * @short OpenGL widget
+ * @short OpenGL widget for image viewer 
  * @author Markus Leuthold <kusi (+at) forum.titlis.org>
- * @version 0.1
+ * @version 0.2
  */
  
+
+//keep in mind that one cache entry takes 20MB for a 5mpix pic
+#define CACHESIZE 4
 #define EMPTY 99999
-#define CACHESIZE 3
 
 namespace KIPIviewer {
 using namespace std;
@@ -59,8 +65,6 @@ class ogl : public QGLWidget
 			
 public:
 	ogl(KIPI::Interface* interface);
-
-	
 	~ogl() {
 		glDeleteTextures(1,tex);
 		for(int i=0;i<CACHESIZE;i++) {
@@ -74,7 +78,6 @@ public:
     virtual void paintGL();
     void drawImage(Texture * tex);
     void downloadTex(Texture * tex);
-    void transition(int i, int j);
     Texture * loadImage(int file_index);
     void prevImage();
     void nextImage();

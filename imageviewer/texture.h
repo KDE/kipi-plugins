@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2007 by Markus Leuthold   *
- *   <kusi at forum.titlis.org>   *
+ *   <kusi (+at) forum.titlis.org>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,58 +21,50 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
+//QT includes
 #include <qgl.h>
 #include <qstring.h>
 #include <qdatetime.h>
-#include <iostream>
 #include <qimage.h>
 
 /**
  * @short Texture class
  * @author Markus Leuthold <kusi (+at) forum.titlis.org>
- * @version 0.1
+ * @version 0.2
  */
 
 namespace KIPIviewer {
 class Texture{
 public:
-	enum Type {QT, JPEGLIB};
-	enum Quality {hi,lo, hi_noalpha};
-    Texture();
-    ~Texture();
-    int height();
-    int width();
-    bool load(QString fn, QSize size, GLuint tn);
+	Texture();
+	~Texture();
+	int height();
+	int width();
+	bool load(QString fn, QSize size, GLuint tn);
 	bool load(QImage im, QSize size, GLuint tn);
-    GLvoid * data();
-    GLuint texnr();
-    Quality quality();
-    GLfloat vertex_bottom();
+	GLvoid * data();
+	GLuint texnr();
+	GLfloat vertex_bottom();
 	GLfloat vertex_top();
-    GLfloat vertex_left();
-    GLfloat vertex_right();
-    void setViewport(int w, int h);
-    void zoom(float delta, QPoint mousepos);
-    void reset();
-    void move(QPoint diff);
-    bool setSize(QSize size);
-    void rotate();
+	GLfloat vertex_left();
+	GLfloat vertex_right();
+	void setViewport(int w, int h);
+	void zoom(float delta, QPoint mousepos);
+	void reset();
+	void move(QPoint diff);
+	bool setSize(QSize size);
+	void rotate();
 	void zoomToOriginal();
 	
 protected:
 	bool _load();
 	void calcVertex();
-    
-	
+
 	int display_x, display_y;
-	Type type;
-	Quality _quality;
 	GLuint _texnr;
 	QSize initial_size;
-    QString filename;
-    QImage qimage, glimage;
-    unsigned char * imageJPEGLIB;
-    unsigned char * data_noalpha;
+	QString filename;
+	QImage qimage, glimage;
 	float rdx,rdy,z,ux,uy,rtx,rty;
 	float vtop, vbottom, vleft, vright;
 	int rotate_list[4], rotate_idx;

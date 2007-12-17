@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2007 by Markus Leuthold   *
- *   <kusi at forum.titlis.org>   *
+ *   <kusi (+at) forum.titlis.org>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,34 +17,39 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.        *
  ***************************************************************************/
-#ifndef PLUGIN_EXAMPLE_H
-#define PLUGIN_EXAMPLE_H
+#ifndef PLUGIN_VIEWER_H
+#define PLUGIN_VIEWER_H
 
+// kipi includes
 #include <libkipi/plugin.h>
+
+// local includes
 #include "ogl.h"
+
+
 class KAction;
 
 /**
  * @short integration with KIPI
  * @author Markus Leuthold <kusi (+at) forum.titlis.org>
- * @version 0.1
+ * @version 0.2
  */
 
 class Plugin_viewer :public KIPI::Plugin
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    Plugin_viewer( QObject *parent, const char* name, const QStringList&  );
-    virtual void setup( QWidget* widget );
-    virtual KIPI::Category category( KAction* action ) const;
+	Plugin_viewer( QObject *parent, const char* name, const QStringList&  );
+	virtual void setup( QWidget* widget );
+	virtual KIPI::Category category( KAction* action ) const;
 
 protected:
 	KIPIviewer::ogl * widget;
-    KAction * actionViewer;
+	KAction * actionViewer;
 	
 public slots:
-    void  slotActivate();
+	void  slotActivate();
 };
 
-#endif /* PLUGIN_EXAMPLE_H */
+#endif /* PLUGIN_VIEWER_H */
 

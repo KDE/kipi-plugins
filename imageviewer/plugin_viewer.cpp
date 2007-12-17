@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2007 by Markus Leuthold   *
- *   <kusi at forum.titlis.org>   *
+ *   <kusi (+at) forum.titlis.org>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,13 +17,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.        *
  ***************************************************************************/
-#include "plugin_viewer.h"
+
+// KDE includes
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
 #include <kurl.h>
+
+// QT includes
 #include <qmessagebox.h>
+
+// kipi includes
 #include <libkipi/imageinfo.h>
-#include <iostream>
+
+// local includes
+#include "plugin_viewer.h"
 #include "ogl.h"
 
 typedef KGenericFactory<Plugin_viewer> Factory;
@@ -39,43 +46,36 @@ Plugin_viewer::Plugin_viewer( QObject *parent, const char* name, const QStringLi
 
 void Plugin_viewer::setup( QWidget* widget )
 {
-    KIPI::Plugin::setup( widget );
-
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+	KIPI::Plugin::setup( widget );
+	
+	KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 	
 	if ( !interface ) 
-    {
-       kdError( 51000 ) << "Kipi interface is null!" << endl;
-       return;
-    }
-
+	{
+		kdError( 51000 ) << "Kipi interface is null!" << endl;
+		return;
+	}
+	
 	actionViewer = new KAction (i18n("Image Viewer"),
-                                     "ogl",
-                                     0, // do never set shortcuts from plugins.
-                                     this,
-                                     SLOT(slotActivate()),
-                                     actionCollection(),
-                                     "viewer");
+	                                    "ogl",
+	                                    0, // do never set shortcuts from plugins.
+	                                    this,
+	                                    SLOT(slotActivate()),
+	                                    actionCollection(),
+	                                    "viewer");
 	addAction(actionViewer);
 	widget=0;
-//     m_dialog = new ExampleDialog( interface, 0, "example plugin dialog" );
-//     m_dialog->resize( 800, 600 );
-// 
-//     m_imageInfo = new KAction( i18n( "Show Image Info" ), "", 0, this, SLOT( action() ), actionCollection(), "showImageInfo" );
-//     addAction( m_imageInfo );
-// 
-//     connect( interface, SIGNAL( currentAlbumChanged( bool ) ),  m_dialog, SLOT( reload() ) );
 }
 
 KIPI::Category Plugin_viewer::category( KAction* action ) const
 {
-    if ( action == actionViewer ) {
-        return KIPI::TOOLSPLUGIN;
-    }
-    else {
-        kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
-        return KIPI::TOOLSPLUGIN; // no warning from compiler, please
-    }
+	if ( action == actionViewer ) {
+		return KIPI::TOOLSPLUGIN;
+	}
+	else {
+		kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+		return KIPI::TOOLSPLUGIN; // no warning from compiler, please
+	}
 }
 
 
@@ -87,13 +87,13 @@ KIPI::Category Plugin_viewer::category( KAction* action ) const
  */
 void  Plugin_viewer::slotActivate()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+	KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 	
 	if ( !interface ) 
-    {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
-        return;
-    }
+	{
+		kdError( 51000 ) << "Kipi interface is null!" << endl;
+		return;
+	}
 	
 	widget = new KIPIviewer::ogl(interface);
 	
