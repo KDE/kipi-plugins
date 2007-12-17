@@ -312,6 +312,12 @@ void ogl::keyPressEvent(QKeyEvent *k)
 			}		
 			break;
 			
+
+		//do noting, don't trigger the help dialog
+		case Key_Shift:
+			break;
+
+		//key is not bound to any action, therefore show help dialog to enlighten the user
 		default:
 			QDialog * h = new HelpDialog;
 			h->show();
