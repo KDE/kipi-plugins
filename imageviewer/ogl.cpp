@@ -339,7 +339,7 @@ void ogl::keyPressEvent(QKeyEvent *k)
 
 		//key is not bound to any action, therefore show help dialog to enlighten the user
 		default:
-			QDialog * h = new HelpDialog;
+			QDialog * h = new HelpDialog(0,0,Qt::WStyle_StaysOnTop);
 			h->show();
 	}
 }
