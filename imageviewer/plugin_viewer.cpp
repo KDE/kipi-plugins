@@ -31,7 +31,7 @@
 
 // local includes
 #include "plugin_viewer.h"
-#include "ogl.h"
+#include "viewerwidget.h"
 
 typedef KGenericFactory<Plugin_viewer> Factory;
 
@@ -57,7 +57,7 @@ void Plugin_viewer::setup( QWidget* widget )
 	}
 	
 	actionViewer = new KAction (i18n("Image Viewer"),
-	                                    "ogl",
+	                                    "ViewerWidget",
 	                                    0, // do never set shortcuts from plugins.
 	                                    this,
 	                                    SLOT(slotActivate()),
@@ -95,7 +95,7 @@ void  Plugin_viewer::slotActivate()
 		return;
 	}
 	
-	widget = new KIPIviewer::ogl(interface);
+	widget = new KIPIviewer::ViewerWidget(interface);
 	
 	switch(widget->getOGLstate()) {
 		case KIPIviewer::oglOK:

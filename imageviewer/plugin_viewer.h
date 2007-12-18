@@ -24,7 +24,7 @@
 #include <libkipi/plugin.h>
 
 // local includes
-#include "ogl.h"
+#include "viewerwidget.h"
 
 
 class KAction;
@@ -44,7 +44,7 @@ public:
 	virtual KIPI::Category category( KAction* action ) const;
 
 protected:
-	KIPIviewer::ogl * widget;
+	KIPIviewer::ViewerWidget * widget;
 	KAction * actionViewer;
 	
 public slots:

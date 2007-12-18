@@ -18,8 +18,8 @@
  *   51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.        *
  ***************************************************************************/
 
-#ifndef _OGL_H_
-#define _OGL_H_
+#ifndef _VIEWERWIDGET_H_
+#define _VIEWERWIDGET_H_
 
 //QT includes
 #include <qgl.h>
@@ -59,13 +59,13 @@ enum OGLstate {
         oglOK, oglNoRectangularTexture, oglNoContext
 };	
 
-class ogl : public QGLWidget
+class ViewerWidget : public QGLWidget
 {
     Q_OBJECT
 			
 public:
-	ogl(KIPI::Interface* interface);
-	~ogl() {
+	ViewerWidget(KIPI::Interface* interface);
+	~ViewerWidget() {
 		glDeleteTextures(1,tex);
 		for(int i=0;i<CACHESIZE;i++) {
 			cache[i].file_index=EMPTY;
@@ -125,4 +125,4 @@ private slots:
     void timeoutMouseMove();
 };
 }; //namespace KIPIviewer
-#endif // _OGL_H_
+#endif // _VIEWERWIDGET_H_

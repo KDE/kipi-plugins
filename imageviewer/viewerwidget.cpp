@@ -33,18 +33,18 @@
 #include <kmessagebox.h>
 
 // local includes.
-#include "ogl.h"
+#include "viewerwidget.h"
 #include "texture.h"
 #include "help.h"
 #ifdef PERFORMANCE_ANALYSIS
 	#include "timer.h"
 #endif
-#include "ogl.moc"
+#include "viewerwidget.moc"
 
 // using namespace std;
 using namespace KIPIviewer;
 
-ogl::ogl(KIPI::Interface* interface) {
+ViewerWidget::ViewerWidget(KIPI::Interface* interface) {
 		KIPI::ImageCollection selection = interface->currentSelection();
 		KIPI::ImageCollection album = interface->currentAlbum();
 
@@ -133,10 +133,10 @@ ogl::ogl(KIPI::Interface* interface) {
 		 
 
 /*!
-	\fn ogl::initializeGL()
+	\fn ViewerWidget::initializeGL()
 	\todo blending
  */
-void ogl::initializeGL() {	
+void ViewerWidget::initializeGL() {	
 	glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	// Clear The Background Color
 	glClearColor(0.0, 0.0, 0.0, 1.0f);
@@ -152,9 +152,9 @@ void ogl::initializeGL() {
 
 
 /*!
-	\fn ogl::paintGL()
+	\fn ViewerWidget::paintGL()
  */
-void ogl::paintGL() {	
+void ViewerWidget::paintGL() {	
 	//prepare 1st image
 	//this test has to be performed here since QWidget::width() is only updated now
 	if (firstImage) {
@@ -174,9 +174,9 @@ void ogl::paintGL() {
 
 
 /*!
-	\fn ogl::resizeGL(int w, int h)
+	\fn ViewerWidget::resizeGL(int w, int h)
  */
-void ogl::resizeGL(int w, int h)
+void ViewerWidget::resizeGL(int w, int h)
 {
 	glViewport(0, 0, (GLint)w, (GLint)h);
 	glMatrixMode(GL_PROJECTION);
@@ -205,10 +205,10 @@ void ogl::resizeGL(int w, int h)
 
 
 /*!
-	\fn ogl::drawImage(Texture * texture)
+	\fn ViewerWidget::drawImage(Texture * texture)
 	\brief render the image
  */
-void ogl::drawImage(Texture * texture)
+void ViewerWidget::drawImage(Texture * texture)
 {
 // 	cout << "enter drawImage: target=" << texture->texnr() << " dim=" << texture->height() << " " << texture->width() << endl;	
 	glBindTexture(GL_TEXTURE_RECTANGLE_NV, texture->texnr());
@@ -229,11 +229,11 @@ void ogl::drawImage(Texture * texture)
 
 
 /*!
-	\fn ogl::keyPressEvent(QKeyEvent *k)
+	\fn ViewerWidget::keyPressEvent(QKeyEvent *k)
 	Handle all keyboard events. All events which are not handled trigger 
 	a help window.
  */
-void ogl::keyPressEvent(QKeyEvent *k)
+void ViewerWidget::keyPressEvent(QKeyEvent *k)
 {
 	QPoint middlepoint;
 
@@ -345,9 +345,9 @@ void ogl::keyPressEvent(QKeyEvent *k)
 }
 
 /*!
-    \fn ogl::keyReleaseEvent ( QKeyEvent * e )
+    \fn ViewerWidget::keyReleaseEvent ( QKeyEvent * e )
  */
-void ogl::keyReleaseEvent ( QKeyEvent * e )
+void ViewerWidget::keyReleaseEvent ( QKeyEvent * e )
 {
 	switch (e->key()) {
 		case Key_Plus:
@@ -380,10 +380,10 @@ void ogl::keyReleaseEvent ( QKeyEvent * e )
 
 
 /*!
-	\fn ogl::downloadTex(Texture * tex)
+	\fn ViewerWidget::downloadTex(Texture * tex)
 	download texture to video memory
  */
-void ogl::downloadTex(Texture * tex)
+void ViewerWidget::downloadTex(Texture * tex)
 {
 	glBindTexture(GL_TEXTURE_RECTANGLE_NV, tex->texnr());
 	// glTexParameterf(GL_TEXTURE_RECTANGLE_NV, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER_ARB);
@@ -394,11 +394,11 @@ void ogl::downloadTex(Texture * tex)
 
 
 /*!
-	\fn ogl::loadImage(int file_index)
+	\fn ViewerWidget::loadImage(int file_index)
 	\param file_index index to QStringList files
     load files[file_index] into a texture object if it is not already cached
  */
-Texture * ogl::loadImage(int file_index)
+Texture * ViewerWidget::loadImage(int file_index)
 {
 	int imod=file_index%CACHESIZE; //index for cache
 
@@ -425,9 +425,9 @@ Texture * ogl::loadImage(int file_index)
 
 
 /*!
-	\fn ogl::wheelEvent ( QWheelEvent * e )
+	\fn ViewerWidget::wheelEvent ( QWheelEvent * e )
  */
-void ogl::wheelEvent ( QWheelEvent * e )
+void ViewerWidget::wheelEvent ( QWheelEvent * e )
 {
 	switch(wheelAction) {
 		// mousewheel triggers zoom
@@ -448,9 +448,9 @@ void ogl::wheelEvent ( QWheelEvent * e )
 
 
 /*!
-	\fn ogl::mousePressEvent ( QMouseEvent * e )
+	\fn ViewerWidget::mousePressEvent ( QMouseEvent * e )
  */
-void ogl::mousePressEvent ( QMouseEvent * e )
+void ViewerWidget::mousePressEvent ( QMouseEvent * e )
 {	
 	// begin zoom
 	// scale down texture  for fast zooming
@@ -474,9 +474,9 @@ void ogl::mousePressEvent ( QMouseEvent * e )
 
 
 /*!
-	\fn ogl::mouseMoveEvent ( QMouseEvent * e ) 
+	\fn ViewerWidget::mouseMoveEvent ( QMouseEvent * e ) 
  */
-void ogl::mouseMoveEvent ( QMouseEvent * e ) 
+void ViewerWidget::mouseMoveEvent ( QMouseEvent * e ) 
 {
 	if ( e->state() == LeftButton ) {
 		//panning
@@ -504,9 +504,9 @@ void ogl::mouseMoveEvent ( QMouseEvent * e )
 
 
 /*!
-	\fn ogl::prevImage()
+	\fn ViewerWidget::prevImage()
  */
-void ogl::prevImage()
+void ViewerWidget::prevImage()
 {
 	#ifdef PERFORMANCE_ANALYSIS
 	Timer timer;
@@ -545,9 +545,9 @@ void ogl::prevImage()
 
 
 /*!
-	\fn ogl::nextImage()
+	\fn ViewerWidget::nextImage()
  */
-void ogl::nextImage()
+void ViewerWidget::nextImage()
 {
 #ifdef PERFORMANCE_ANALYSIS
 	Timer timer;
@@ -584,7 +584,7 @@ void ogl::nextImage()
 
 
 /*!
-	\fn ogl::zoom(int mdelta, QPos pos)
+	\fn ViewerWidget::zoom(int mdelta, QPos pos)
 	\param mdelta delta of mouse movement: 
 	                            mdelta>0: zoom in
 	                            mdelta<0: zoom out
@@ -592,7 +592,7 @@ void ogl::nextImage()
 	\param pos position of mouse
 	\param factor zoom factor:scrollwheel needs a higher factor that right click mouse move. factor=1 -> no zoom
  */
-void ogl::zoom(int mdelta, QPoint pos, float factor)
+void ViewerWidget::zoom(int mdelta, QPoint pos, float factor)
 {
 	if (mdelta==0) {
 		//do nothing
@@ -615,10 +615,10 @@ void ogl::zoom(int mdelta, QPoint pos, float factor)
 
 
 /*!
-	\fn ogl::mouseDoubleClickEvent(QMouseEvent * e )
+	\fn ViewerWidget::mouseDoubleClickEvent(QMouseEvent * e )
 	a double click resets the view (zoom and move)
  */
-void ogl::mouseDoubleClickEvent(QMouseEvent * )
+void ViewerWidget::mouseDoubleClickEvent(QMouseEvent * )
 {
 	texture->reset();
 	updateGL();
@@ -626,9 +626,9 @@ void ogl::mouseDoubleClickEvent(QMouseEvent * )
 
 
 /*!
-	\fn ogl::mouseReleaseEvent(QMouseEvent * e)
+	\fn ViewerWidget::mouseReleaseEvent(QMouseEvent * e)
  */
-void ogl::mouseReleaseEvent(QMouseEvent * )
+void ViewerWidget::mouseReleaseEvent(QMouseEvent * )
 {
 	timerMouseMove.start(2000);
 	unsetCursor();
@@ -640,10 +640,10 @@ void ogl::mouseReleaseEvent(QMouseEvent * )
 
 
 /*!
-	\fn ogl::timeoutMouseMove()
+	\fn ViewerWidget::timeoutMouseMove()
 	being called if user didn't move the mouse for longer than 2 sec
  */
-void ogl::timeoutMouseMove()
+void ViewerWidget::timeoutMouseMove()
 {
 	setCursor (QCursor (blankCursor));
 }
@@ -651,14 +651,14 @@ void ogl::timeoutMouseMove()
 
 
 /*!
-	\fn ogl::getOGLstate()
+	\fn ViewerWidget::getOGLstate()
 	check if OpenGL engine is ready. This function is called from outside the widget.
 	If OpenGL doen't work correctly, the widget can be destroyed
 	\return OGLstate::oglNoContext No OpenGl context could be retrieved
 	\return OGLstate::oglNoRectangularTexture GLGL_ARB_texture_rectangle is not supported
 	\return OGLstate::oglOK all is fine
  */
-OGLstate ogl::getOGLstate()
+OGLstate ViewerWidget::getOGLstate()
 {
 	//no OpenGL context is found. Are the drivers ok?
 	if ( !isValid() ) {
