@@ -75,8 +75,7 @@ ViewerWidget::ViewerWidget(KIPI::Interface* interface) {
 			// in case one image was selected and the entire album was loaded
 			QString s = (*it).path();
 			if ( s==selectedImage ) {
-				
-				kdDebug(51000) << "index for " << selectedImage << " = " << foundNumber << endl;
+				kdDebug(51000) << "selected img  " << selectedImage << " has idx=" << foundNumber << endl;
 				file_idx=foundNumber;
 			}
 			
@@ -161,13 +160,20 @@ void ViewerWidget::paintGL() {
 		texture=loadImage(file_idx);
 		texture->reset();
 		downloadTex(texture);
-		firstImage=false;
 	}	
 		
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glTranslatef(0.0f,0.0f,-5.0f);
 	drawImage(texture);
+	
+	//preload the 2nd image
+	if (firstImage) {
+		if (file_idx<(files.count()-1)) {
+			loadImage(file_idx+1);
+		}
+		firstImage=false;
+	}
 }
 
 
