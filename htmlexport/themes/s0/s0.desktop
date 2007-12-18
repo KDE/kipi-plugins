@@ -19,14 +19,17 @@ Comment[pt_BR]=Mais um bom tema. Muito simples e com aparência limpa com ícone
 Comment[sr]=Још једна лепа тема. Веома једноставан и прегледан изглед са „калиграфским“ иконама.
 Comment[sr@Latn]=Još jedna lepa tema. Veoma jednostavan i pregledan izgled sa „kaligrafskim“ ikonama.
 Comment[sv]=Ytterligare ett snyggt tema. Mycket enkelt och rent utseende med "kalligrafiska" ikoner.
+Comment[xx]=xxYet another nice theme. Very simple and clean look with "calligraphics" icons.xx
 Icon=
 Name=S0
 Name[sr]=СО
 Name[sr@Latn]=SO
+Name[xx]=xxS0xx
 
 [X-HTMLExport Author]
 Name=Petr Vaněk
 Name[sr]=Петр Ванек
 Name[sr@Latn]=Petr Vanek
+Name[xx]=xxPetr Vaněkxx
 Name[zh_CN]=Petr Vanek
 Url=mailto:petr@scribus.info

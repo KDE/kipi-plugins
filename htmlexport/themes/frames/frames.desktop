@@ -16,6 +16,7 @@ Name[pt_BR]=Bordas
 Name[sr]=Оквири
 Name[sr@Latn]=Okviri
 Name[sv]=Ramar
+Name[xx]=xxFramesxx
 Comment=A frame theme
 Comment[ca]=Un tema de marcs
 Comment[da]=Et tema med rammer
@@ -35,10 +36,12 @@ Comment[pt_BR]=Um tema de bordas
 Comment[sr]=Тема оквира
 Comment[sr@Latn]=Tema okvira
 Comment[sv]=Ett tema med ramar
+Comment[xx]=xxA frame themexx
 
 [X-HTMLExport Author]
 Name=Ruediger Bente
 Name[nds]=Rüdiger Bente
 Name[sr]=Рудигер Бенте
 Name[sr@Latn]=Rudiger Bente
+Name[xx]=xxRuediger Bentexx
 Url=mailto:ruediger.bente@gmx.de

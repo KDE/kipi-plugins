@@ -16,6 +16,7 @@ Name[pt_BR]=Bordas Limpas
 Name[sr]=Чисти оквири
 Name[sr@Latn]=Čisti okviri
 Name[sv]=Rena ramar
+Name[xx]=xxClean Framesxx
 Name[zh_CN]=简洁框架
 Comment=A frame theme based on Ruediger Bente's frame theme
 Comment[ca]=Un tema de marcs basat en el tema de marcs del Ruediger Bente
@@ -36,11 +37,13 @@ Comment[pt_BR]=Uma tema de bordas baseado no tema de bordas de Ruediger Bente
 Comment[sr]=Тема оквира заснована на теми Рудигера Бентеа
 Comment[sr@Latn]=Tema okvira zasnovana na temi Rudigera Bentea
 Comment[sv]=Ett ramtema baserat på Ruediger Bentes ramtema
+Comment[xx]=xxA frame theme based on Ruediger Bente's frame themexx
 
 [X-HTMLExport Author]
 Name=Elizabeth Marmorstein
 Name[sr]=Елизабет Марморштајн
 Name[sr@Latn]=Elizabet Marmorštajn
+Name[xx]=xxElizabeth Marmorsteinxx
 Url=mailto:purplegamba@cox.net
 
 [X-HTMLExport Parameter style]
@@ -64,6 +67,7 @@ Name[sr]=Стил
 Name[sr@Latn]=Stil
 Name[sv]=Stil
 Name[xh]=Uhlobo
+Name[xx]=xxStylexx
 Name[zh_CN]=样式
 Name[zu]=Uhlobo
 Type=list

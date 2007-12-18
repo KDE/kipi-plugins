@@ -20,6 +20,7 @@ Name[pt]=Simples
 Name[sr]=Једноставно
 Name[sr@Latn]=Jednostavno
 Name[sv]=Enkelt
+Name[xx]=xxSimplexx
 Name[zh_CN]=简单
 Comment=A simple and light theme
 Comment[ca]=Un tema senzill i lluminós
@@ -44,12 +45,14 @@ Comment[pt_BR]=Um tema simples e leve
 Comment[sr]=Једноставна и лагана тема
 Comment[sr@Latn]=Jednostavna i lagana tema
 Comment[sv]=Ett enkelt och lättviktigt tema
+Comment[xx]=xxA simple and light themexx
 Comment[zh_CN]=简洁明快的主题
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
 Name[sr]=Орелиен Гато
 Name[sr@Latn]=Orelien Gato
+Name[xx]=xxAurélien Gâteauxx
 Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter style]
@@ -73,6 +76,7 @@ Name[sr]=Стил
 Name[sr@Latn]=Stil
 Name[sv]=Stil
 Name[xh]=Uhlobo
+Name[xx]=xxStylexx
 Name[zh_CN]=样式
 Name[zu]=Uhlobo
 Type=list
