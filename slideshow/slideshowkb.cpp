@@ -34,9 +34,7 @@
 #include <Q3ValueList>
 #include <QApplication>
 #include <QImage>
-#include <QDateTime>
 #include <QPainter>
-#include <QObject>
 #include <QFont>
 #include <QCursor>
 #include <QPixmap>

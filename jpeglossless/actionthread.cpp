@@ -36,8 +36,6 @@ extern "C"
 
 // Qt includes.
 
-#include <QApplication>
-#include <QDir>
 #include <QMutexLocker>
 #include <QtDebug>
 #include <QMutex>

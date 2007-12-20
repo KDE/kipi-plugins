@@ -25,7 +25,6 @@
 
 // Qt includes.
 
-#include <QDataStream>
 #include <QApplication>
 #include <QDesktopWidget>
 

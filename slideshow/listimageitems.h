@@ -25,7 +25,6 @@
 
 // QT includes
 
-#include <QEvent>
 #include <QWidget>
 #include <QString>
 #include <QDropEvent>

@@ -26,9 +26,6 @@
  * ============================================================ */
 
 // Qt includes.
-
-#include <QApplication>
-#include <QDir>
 #include <QtDebug>
 #include <QMutexLocker>
 #include <QMutex>

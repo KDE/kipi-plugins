@@ -25,7 +25,6 @@
 // Qt includes.
 
 #include <QToolButton>
-#include <QPixmap>
 #include <QHBoxLayout>
 #include <QKeyEvent>
 

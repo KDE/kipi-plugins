@@ -26,7 +26,6 @@
 
 // Qt includes.
 
-#include <QStringList>
 
 // KDE includes.
 

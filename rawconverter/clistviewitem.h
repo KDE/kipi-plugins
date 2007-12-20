@@ -28,7 +28,6 @@
 
 #include <QPainter>
 #include <QColorGroup>
-#include <QPalette>
 
 // KDE includes.
 

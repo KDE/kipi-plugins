@@ -43,7 +43,6 @@ extern "C"
 #include <QImage>
 #include <QFile>
 #include <QDir>
-#include <QtDebug>
 
 // KDE includes.
 

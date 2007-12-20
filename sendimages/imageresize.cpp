@@ -22,12 +22,10 @@
 
 // Qt includes.
 
-#include <QImageReader>
 #include <QImage>
 #include <QFile>
 #include <QFileInfo>
 #include <QMutexLocker>
-#include <QtDebug>
 #include <QMutex>
 #include <QWaitCondition>
 

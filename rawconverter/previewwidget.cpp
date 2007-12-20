@@ -25,10 +25,7 @@
 
 #include <QPainter>
 #include <QImage>
-#include <QEvent>
 #include <QPaintEvent>
-#include <QTimer>
-#include <QFile>
 
 // KDE includes.
 

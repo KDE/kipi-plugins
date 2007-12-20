@@ -30,7 +30,6 @@
 #include <QPair>
 #include <QString>
 #include <QMap>
-#include <QtOpenGL>
 #include <QWheelEvent>
 #include <QMouseEvent>
 #include <QKeyEvent>

@@ -23,8 +23,6 @@
 // Qt includes.
 
 #include <QDateTime>
-#include <QProgressBar>
-#include <QGridLayout>
 #include <QPushButton>
 
 // KDE includes.

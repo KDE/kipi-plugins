@@ -26,11 +26,7 @@
 // Qt includes.
 
 #include <Q3ValueList>
-#include <Q3ValueVector>
-#include <Q3DeepCopy>
-#include <QDir>
 #include <QMatrix>
-#include <QObject>
              
 // KDE includes.
 

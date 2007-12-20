@@ -26,7 +26,8 @@
 #include <QButtonGroup>
 #include <QRadioButton>
 #include <QLabel>
-#include <QLayout>
+#include <QGridLayout>
+#include <QVBoxLayout>
 
 // KDE includes.
 

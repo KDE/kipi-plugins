@@ -26,8 +26,6 @@
 
 // Qt Includes.
 
-#include <QObject>
-#include <QImage>
 
 // LibKDcraw includes.
 

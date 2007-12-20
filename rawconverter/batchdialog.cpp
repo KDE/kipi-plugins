@@ -38,16 +38,13 @@ extern "C"
 
 #include <Q3Dict>
 #include <QTimer>
-#include <QFrame>
-#include <QLabel>
-#include <QLayout>
 #include <QFileInfo>
 #include <QCloseEvent>
-#include <QEvent>
 #include <QPushButton>
 #include <QFile>
 #include <QPixmap>
 #include <QProgressBar>
+#include <QGridLayout>
 
 // KDE includes.
 

@@ -27,7 +27,6 @@
 
 #include <QThread>
 #include <QString>
-#include <QStringList>
 
 // KDE includes.
 

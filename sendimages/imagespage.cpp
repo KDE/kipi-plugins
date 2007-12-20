@@ -24,13 +24,12 @@
 
 // QT includes.
 
-#include <QLayout>
 #include <QPushButton>
 #include <QPainter>
-#include <QPalette>
 #include <QDragEnterEvent>
 #include <QUrl>
 #include <QFileInfo>
+#include <QGridLayout>
 
 // KDE includes.
 

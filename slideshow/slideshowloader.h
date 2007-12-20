@@ -29,7 +29,6 @@
 #include <QMap>
 #include <QMutex>
 #include <QImage>
-#include <QPixmap>
 #include <QThread>
 #include <QPair>
 

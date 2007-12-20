@@ -39,7 +39,6 @@
 #include <QPair>
 #include <QString>
 #include <QStringList>
-#include <QEvent>
 #include <QMap>
 #include <QMouseEvent>
 

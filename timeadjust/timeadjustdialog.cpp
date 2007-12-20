@@ -32,7 +32,6 @@ extern "C"
 
 #include <QButtonGroup>
 #include <QGridLayout>
-#include <QToolTip>
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QGroupBox>
@@ -41,7 +40,6 @@ extern "C"
 #include <QFile>
 #include <QSpinBox>
 #include <QPushButton>
-#include <QFrame>
 #include <QToolButton>
 #include <QCloseEvent>
 

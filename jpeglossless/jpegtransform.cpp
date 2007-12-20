@@ -44,7 +44,6 @@ extern "C"
 // Qt includes.
 
 #include <QFile>
-#include <QtDebug>
 
 // KDE includes.
 

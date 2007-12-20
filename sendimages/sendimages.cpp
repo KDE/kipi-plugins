@@ -24,7 +24,6 @@
 
 // Qt includes.
 
-#include <QTimer>
 #include <QFile>
 #include <QTextStream>
 #include <QTextCodec>

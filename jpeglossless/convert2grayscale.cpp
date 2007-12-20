@@ -42,7 +42,6 @@ extern "C"
 
 // Qt includes.
 
-#include <QImage>
 #include <QFile>
 #include <QFileInfo>
 #include <QtDebug>

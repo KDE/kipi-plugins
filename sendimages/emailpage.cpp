@@ -22,12 +22,12 @@
 
 // QT includes.
 
-#include <QLayout>
 #include <QLabel>
 #include <QGroupBox>
 #include <QComboBox>
 #include <QCheckBox>
 #include <QPushButton>
+#include <QGridLayout>
 
 // KDE includes.
 
