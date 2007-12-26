@@ -24,6 +24,9 @@
 #include <qwmatrix.h>
 #include <qfileinfo.h>
 
+//KDE includes
+#include <kdebug.h>
+
 // LibKDcraw includes
 #include <libkdcraw/rawfiles.h>
 #include <libkdcraw/kdcraw.h>
@@ -185,7 +188,7 @@ void Texture::zoom(float delta, QPoint mousepos)
 //u: start in texture, u=[0..1], u=0 is begin, u=1 is end of texture
 //z=[0..1], z=1 -> no zoom
 //l: length of tex in glFrustum coordinate system
-//rt: ratio of tex, rt<=1
+//rt: ratio of tex, rt<=1, see _load() for definition
 //rd: ratio of display, rd>=1
 //m: mouse pos normalized, cd=[0..rd]
 //c:  mouse pos normalized to zoom*l, c=[0..1]		
@@ -213,18 +216,30 @@ void Texture::zoom(float delta, QPoint mousepos)
 	z, ux, uy are calculated in Texture::zoom()
  */
 void Texture::calcVertex()
+// rt: ratio of tex, rt<=1, see _load() for definition
+// u: start in texture, u=[0..1], u=0 is begin, u=1 is end of texture
+// l: length of tex in glFrustum coordinate system
+// halftexel: the color of a texel is determined by a corner of the texel and not its center point
+//                  this seems to introduce a visible jump on changing the tex-size.
+//
+// the glFrustum coord-sys is visible in [-rdx..rdx] ([-1..1] for square screen) for z=1 (no zoom)
+// the tex coord-sys goes from [-rtx..rtx] ([-1..1] for square texture)	
 {
-	//x part
-   	float lx=2*rtx/z;
+	// x part
+   	float lx=2*rtx/z;  //length of tex
+	float tsx=lx/(float)glimage.width(); //texelsize in glFrustum coordinates
+	float halftexel_x = tsx/2.0;
 	float wx=lx*(1-ux-z);
-	vleft = -rtx-ux*lx;   //left
-	vright = rtx+wx;      //right
+	vleft = -rtx-ux*lx - halftexel_x;   //left
+	vright = rtx+wx - halftexel_x;      //right
 	
-	//y part
+	// y part
 	float ly=2*rty/z; 
+	float tsy=ly/(float)glimage.height(); //texelsize in glFrustum coordinates
+	float halftexel_y = tsy/2.0;	
 	float wy=ly*(1-uy-z);
-	vbottom = -rty-uy*ly; //bottom
-	vtop = rty+wy;        //top
+	vbottom = -rty - uy*ly + halftexel_y; //bottom
+	vtop = rty + wy + halftexel_y;        //top
 
 }
 
@@ -267,7 +282,7 @@ GLfloat Texture::vertex_right()
 	\fn Texture::setViewport(int w, int h)
 	\param w width of window
 	\param h height of window
-	Set widget's viewport. Ensures that rdx & rdy are always > 0
+	Set widget's viewport. Ensures that rdx & rdy are always > 1
  */
 void Texture::setViewport(int w, int h)
 {
@@ -333,6 +348,10 @@ void Texture::reset()
  */
 bool Texture::setSize(QSize size)
 {
+	//don't allow larger textures than the original image. the image will be upsampled by 
+	//OpenGL if necessary and not by QImage::scale
+	size=size.boundedTo(qimage.size());
+	
 	if (glimage.width()==size.width()) {
 		return false;
 	}
@@ -345,6 +364,10 @@ bool Texture::setSize(QSize size)
 	} else {
 		glimage=QGLWidget::convertToGLFormat(qimage.scale(w,h,QImage::ScaleMin));
 	}
+	
+	//recalculate half-texel offset
+	calcVertex(); 
+	
 	return true;
 }
 

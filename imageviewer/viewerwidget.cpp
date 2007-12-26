@@ -394,6 +394,10 @@ void ViewerWidget::downloadTex(Texture * tex)
 	glBindTexture(GL_TEXTURE_RECTANGLE_NV, tex->texnr());
 	// glTexParameterf(GL_TEXTURE_RECTANGLE_NV, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER_ARB);
 	// glTexParameterf(GL_TEXTURE_RECTANGLE_NV, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER_ARB);
+
+//	uncomment the following line to enable flat shading of texels -> debugging
+//	glTexParameterf(GL_TEXTURE_RECTANGLE_NV, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+	
 	glTexImage2D( GL_TEXTURE_RECTANGLE_NV, 0, GL_RGBA, tex->width(), tex->height(), 0,GL_RGBA, GL_UNSIGNED_BYTE, tex->data());			
 }
 
