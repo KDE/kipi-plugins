@@ -1,5 +1,5 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>HelpDialog</class>
+<class>KIPIviewer::HelpDialog</class>
 <widget class="QDialog">
     <property name="name">
         <cstring>HelpDialog</cstring>
