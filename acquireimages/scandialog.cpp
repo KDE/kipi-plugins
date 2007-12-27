@@ -107,11 +107,11 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *sane
                         "caulier dot gilles at gmail dot com");
 
     d->about->addAuthor(ki18n("Angelo Naselli"),
-                        ki18n("Developper"),
+                        ki18n("Developer"),
                         "anaselli at linux dot it");
 
     d->about->addAuthor(ki18n("Kare Sars"),
-                        ki18n("Developper"),
+                        ki18n("Developer"),
                         "kare dot sars at kolumbus dot fi");
 
     KPushButton *helpButton = button( Help );
