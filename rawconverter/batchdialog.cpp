@@ -146,10 +146,10 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     setButtonToolTip(Close, i18n("<p>Exit Raw Converter"));
     setCaption(i18n("Raw Images Batch Converter"));
     setModal(false);
-    setButtonIcon(User1, KIcon("edit-add"));
+    setButtonIcon(User1, KIcon("list-add"));
     setButtonText(User1, i18n("&Add"));
     setButtonToolTip(User1, i18n("<p>Add new Raw files to the list"));
-    setButtonIcon(User2, KIcon("edit-delete"));
+    setButtonIcon(User2, KIcon("list-remove"));
     setButtonText(User2, i18n("&Remove"));
     setButtonToolTip(User2, i18n("<p>Remove selected Raw files from the list"));
     
@@ -512,7 +512,7 @@ void BatchDialog::addItems(const KUrl::List& itemList)
 
     KUrl::List urlList;
 
-    QPixmap pix(SmallIcon("empty", KIconLoader::SizeLarge, KIconLoader::DisabledState));
+    QPixmap pix(SmallIcon("image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState));
     
     for (KUrl::List::const_iterator  it = itemList.begin();
          it != itemList.end(); ++it) 
@@ -706,7 +706,7 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));
-            d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
+            d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-error"));
         }
         else 
         {

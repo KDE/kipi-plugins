@@ -100,7 +100,7 @@ ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size
     d->addValueButton = new QPushButton(this);
     d->delValueButton = new QPushButton(this);
     d->repValueButton = new QPushButton(this);
-    d->addValueButton->setIcon(SmallIcon("edit-add"));
+    d->addValueButton->setIcon(SmallIcon("list-add"));
     d->delValueButton->setIcon(SmallIcon("edit-delete"));
     d->repValueButton->setIcon(SmallIcon("view-refresh"));
     d->addValueButton->setWhatsThis(i18n("Add a new value to the list"));

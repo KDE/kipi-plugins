@@ -57,8 +57,8 @@ ImagesListViewItem::ImagesListViewItem(QListWidget *view, KIPI::Interface *iface
                   : QListWidgetItem(view)
 {
     KIPI::ImageInfo imageInfo = iface->info(url);
-    
-    setThumb(SmallIcon("empty", KIconLoader::SizeLarge, KIconLoader::DisabledState));
+
+    setThumb(SmallIcon("image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState));
 
     setUrl(url);
     setComments(imageInfo.description());
@@ -214,9 +214,9 @@ ImagesPage::ImagesPage(QWidget* parent, KIPI::Interface *iface)
     d->addButton    = new QPushButton(this);
     d->removeButton = new QPushButton(this);
     d->addButton->setText( i18n( "&Add" ) );
-    d->addButton->setIcon(SmallIcon("edit-add"));
+    d->addButton->setIcon(SmallIcon("list-add"));
     d->removeButton->setText( i18n( "&Remove" ) );
-    d->removeButton->setIcon(SmallIcon("edit-delete"));
+    d->removeButton->setIcon(SmallIcon("list-remove"));
 
     // --------------------------------------------------------
 
@@ -288,7 +288,7 @@ void ImagesPage::slotThumbnail(const KUrl& url, const QPixmap& pix)
         if (item->url() == url)
         {
             if (pix.isNull())
-                item->setThumb(SmallIcon("empty", ICONSIZE, KIconLoader::DisabledState));
+                item->setThumb(SmallIcon("image-x-generic", ICONSIZE, KIconLoader::DisabledState));
             else
                 item->setThumb(pix.scaled(ICONSIZE, ICONSIZE, Qt::KeepAspectRatio));
 

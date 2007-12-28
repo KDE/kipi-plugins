@@ -281,7 +281,7 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
     d->addValueButton = new QPushButton(this);
     d->delValueButton = new QPushButton(this);
     d->repValueButton = new QPushButton(this);
-    d->addValueButton->setIcon(SmallIcon("edit-add"));
+    d->addValueButton->setIcon(SmallIcon("list-add"));
     d->delValueButton->setIcon(SmallIcon("edit-delete"));
     d->repValueButton->setIcon(SmallIcon("view-refresh"));
     d->addValueButton->setWhatsThis(i18n("Add a new value to the list"));
@@ -562,7 +562,7 @@ void AltLangStringsEdit::loadLangAltListEntries()
     {
         d->languageCB->addSqueezedItem(QString("[%1] %2").arg(it.key()).arg(it.value()));
         if (list.contains(it.key()))
-            d->languageCB->setItemIcon(d->languageCB->count()-1, SmallIcon("ok"));
+            d->languageCB->setItemIcon(d->languageCB->count()-1, SmallIcon("dialog-ok"));
     }
 
     emit signalDefaultLanguageEnabled(list.contains(QString("x-default")));

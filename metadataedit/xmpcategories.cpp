@@ -106,7 +106,7 @@ XMPCategories::XMPCategories(QWidget* parent)
     d->addSubCategoryButton = new QPushButton( i18n("&Add"), this);
     d->delSubCategoryButton = new QPushButton( i18n("&Delete"), this);
     d->repSubCategoryButton = new QPushButton( i18n("&Replace"), this);
-    d->addSubCategoryButton->setIcon(SmallIcon("edit-add"));
+    d->addSubCategoryButton->setIcon(SmallIcon("list-add"));
     d->delSubCategoryButton->setIcon(SmallIcon("edit-delete"));
     d->repSubCategoryButton->setIcon(SmallIcon("view-refresh"));
     d->delSubCategoryButton->setEnabled(false);

@@ -102,7 +102,7 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
     d->addKeywordButton = new QPushButton( i18n("&Add"), this);
     d->delKeywordButton = new QPushButton( i18n("&Delete"), this);
     d->repKeywordButton = new QPushButton( i18n("&Replace"), this);
-    d->addKeywordButton->setIcon(SmallIcon("edit-add"));
+    d->addKeywordButton->setIcon(SmallIcon("list-add"));
     d->delKeywordButton->setIcon(SmallIcon("edit-delete"));
     d->repKeywordButton->setIcon(SmallIcon("view-refresh"));
     d->delKeywordButton->setEnabled(false);

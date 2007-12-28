@@ -290,7 +290,7 @@ XMPSubjects::XMPSubjects(QWidget* parent)
     d->addSubjectButton = new QPushButton( i18n("&Add"), this);
     d->delSubjectButton = new QPushButton( i18n("&Delete"), this);
     d->repSubjectButton = new QPushButton( i18n("&Replace"), this);
-    d->addSubjectButton->setIcon(SmallIcon("edit-add"));
+    d->addSubjectButton->setIcon(SmallIcon("list-add"));
     d->delSubjectButton->setIcon(SmallIcon("edit-delete"));
     d->repSubjectButton->setIcon(SmallIcon("view-refresh"));
     d->delSubjectButton->setEnabled(false);
