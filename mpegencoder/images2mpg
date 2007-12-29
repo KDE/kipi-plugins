@@ -556,29 +556,30 @@ if [ -z "$IMBINFOLDER" ]; then
    COMPOSITE_BIN="composite"
    CONVERT_BIN="convert"
    IDENTIFY_BIN="identify"
+   #TODO add a check also when they are in the path mayby using which command
 else
    MONTAGE_BIN="$IMBINFOLDER/montage"
    COMPOSITE_BIN="$IMBINFOLDER/composite"
    CONVERT_BIN="$IMBINFOLDER/convert"
    IDENTIFY_BIN="$IMBINFOLDER/identify"
-fi
 
-# check if programs are installed
-if [ ! -e $MONTAGE_BIN ]; then
+   # check if programs are installed
+   if [ ! -e $MONTAGE_BIN ]; then
 	echo -e "\nCan't find $MONTAGE_BIN, please install it or check -I parameter"
 	exit -1
-fi
-if [ ! -e $COMPOSITE_BIN ]; then
+   fi
+   if [ ! -e $COMPOSITE_BIN ]; then
 	echo -e "\nCan't find $COMPOSITE_BIN, please install it or check -I parameter"
 	exit -1
-fi
-if [ ! -e $CONVERT_BIN ]; then
+   fi
+   if [ ! -e $CONVERT_BIN ]; then
 	echo -e "\nCan't find $CONVERT_BIN, please install it or check -I parameter"
 	exit -1
-fi
-if [ ! -e $IDENTIFY_BIN ]; then
+   fi
+   if [ ! -e $IDENTIFY_BIN ]; then
 	echo -e "\nCan't find $IDENTIFY_BIN, please install it or check -I parameter"
 	exit -1
+   fi
 fi
 
 
