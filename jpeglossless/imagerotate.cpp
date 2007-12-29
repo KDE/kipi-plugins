@@ -103,8 +103,10 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err)
     }
     else if (Utils::isJPEG(src))
     {
-        if (!rotateJPEG(src, tmp, angle, err))
+        if (!rotateJPEG(src, tmp, angle, err)) {
+            if (err == "nothing to do") { err=QString::null; return true; }
             return false;
+        }
     }
     else
     {

@@ -201,6 +201,14 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     // Convert action into flip+rotate action
     convertTransform(action, flip, rotate);
     qDebug("Transforming with option %i %i", flip, rotate);
+    if (flip == JXFORM_NONE && rotate == JXFORM_NONE)
+    {
+        err = "nothing to do"; // magic string
+        fclose(output_file);
+        fclose(input_file);
+        return false;
+    }
+
     bool twoPass = (flip != JXFORM_NONE);
 
     // If twoPass is true, we need another file (src -> tempFile -> destGiven)
