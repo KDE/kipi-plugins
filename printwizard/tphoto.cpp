@@ -40,7 +40,7 @@
 
 // LibKDcraw includes.
 
-#include <libkdcraw/dcrawbinary.h>
+#include <libkdcraw/rawfiles.h>
 #include <libkdcraw/kdcraw.h>
 
 
@@ -103,7 +103,7 @@ QImage  TPhoto::loadPhoto()
   QImage photo;
 
   // Check if RAW file.
-  QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
+  QString rawFilesExt(raw_file_extentions);
   QFileInfo fileInfo(filename.path());
   if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
     KDcrawIface::KDcraw::loadDcrawPreview(photo, filename.path());

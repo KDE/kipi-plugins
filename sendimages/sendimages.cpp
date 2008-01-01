@@ -59,7 +59,7 @@
 
 // LibKDcraw includes.
 
-#include <libkdcraw/dcrawbinary.h>
+#include <libkdcraw/rawfiles.h>
 #include <libkdcraw/kdcraw.h>
 
 // Local includes.
@@ -789,7 +789,7 @@ bool SendImages::resizeImageProcess(const QString &SourcePath, const QString &De
     QImage img;
 
     // Check if RAW file.
-    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
+    QString rawFilesExt(raw_file_extentions);
     QFileInfo fileInfo(SourcePath);
     if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
         KDcrawIface::KDcraw::loadDcrawPreview(img, SourcePath);
