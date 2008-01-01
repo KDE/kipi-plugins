@@ -28,7 +28,7 @@
 #include <kdebug.h>
 
 // LibKDcraw includes
-#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/dcrawbinary.h>
 #include <libkdcraw/kdcraw.h>
 
 // Local includes
@@ -89,7 +89,7 @@ bool Texture::load(QString fn, QSize size, GLuint tn)
 	_texnr=tn;
 
 	// check if its a RAW file.
-	QString rawFilesExt(raw_file_extentions);
+	QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
 	QFileInfo fileInfo(fn);
 	if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() )) {
 		// it's a RAW file, use the libkdcraw loader
