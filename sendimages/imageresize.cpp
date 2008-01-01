@@ -39,7 +39,7 @@
 
 // LibKDcraw includes.
 
-#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/dcrawbinary.h>
 #include <libkdcraw/kdcraw.h>
 
 // Local includes.
@@ -195,7 +195,7 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
     QImage img;
 
     // Check if RAW file.
-    QString rawFilesExt(raw_file_extentions);
+    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
     if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
         KDcrawIface::KDcraw::loadDcrawPreview(img, orgUrl.path());
     else

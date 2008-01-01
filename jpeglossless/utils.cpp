@@ -57,7 +57,7 @@ extern "C"
 
 // LibKDcraw includes.
 
-#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/dcrawbinary.h>
 
 // Local includes.
 
@@ -200,7 +200,7 @@ bool Utils::isJPEG(const QString& file)
 
 bool Utils::isRAW(const QString& file)
 {
-    QString rawFilesExt(raw_file_extentions);
+    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
 
     QFileInfo fileInfo(file);
     if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))

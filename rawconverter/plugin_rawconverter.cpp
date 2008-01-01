@@ -52,7 +52,6 @@ extern "C"
 
 // LibKDcraw includes.
 
-#include <libkdcraw/rawfiles.h>
 #include <libkdcraw/dcrawbinary.h>
 
 // Local includes.
@@ -109,7 +108,7 @@ Plugin_RawConverter::~Plugin_RawConverter()
 
 bool Plugin_RawConverter::isRAWFile(const QString& filePath)
 {
-    QString rawFilesExt(raw_file_extentions);
+    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
 
     QFileInfo fileInfo(filePath);
     if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
