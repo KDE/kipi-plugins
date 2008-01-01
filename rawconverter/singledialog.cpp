@@ -173,7 +173,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
                              "renchi at pooh dot tam dot uiuc dot edu");
 
     d->about->addAuthor(ki18n("Gilles Caulier"), 
-                       ki18n("Developper and maintainer"),
+                       ki18n("Developer and maintainer"),
                              "caulier dot gilles at gmail dot com");
 
     disconnect(this, SIGNAL(helpClicked()),

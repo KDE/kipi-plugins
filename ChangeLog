@@ -5887,7 +5887,7 @@ v 0.1.3-beta1 - 2006-11-29
 	  kipi-plugins from trunk : removing libkexif depency ! We using
 	  Exiv2 instead everywhere.
 	  
-	  Developpers, please take a look into the new Exiv2 interface
+	  Developers, please take a look into the new Exiv2 interface
 	  kipi-plugins/common/exiv2iface.cpp to manage metadata into your
 	  kipi-plugins.
 	  This class is a simplified version of the DMetadata class from

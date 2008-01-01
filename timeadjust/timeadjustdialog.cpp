@@ -177,7 +177,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
                         "blackie@kde.org");
 
     d->about->addAuthor(ki18n("Gilles Caulier"), 
-                        ki18n("Developper and maintainer"),
+                        ki18n("Developer and maintainer"),
                         "caulier dot gilles at gmail dot com");
 
     disconnect(this, SIGNAL(helpClicked()),
