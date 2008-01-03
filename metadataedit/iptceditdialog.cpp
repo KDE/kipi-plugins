@@ -183,7 +183,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->page_keywords = addPage(d->keywordsPage, i18n("Keywords"));
     d->page_keywords->setHeader(i18n("<qt>Keywords Information<br>"
                       "<i>Use this panel to record keywords about the image</i></qt>"));
-    d->page_keywords->setIcon(KIcon("bookmark"));
+    d->page_keywords->setIcon(KIcon("bookmarks"));
 
     d->categoriesPage  = new IPTCCategories(this);
     d->page_categories = addPage(d->categoriesPage, i18n("Categories"));
