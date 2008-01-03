@@ -148,7 +148,7 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->captionPage   = new EXIFCaption(this);
     d->page_caption  = addPage(d->captionPage, i18n("Caption"));
     d->page_caption->setHeader(i18n("Caption Information"));
-    d->page_caption->setIcon(KIcon("edit-clear"));
+    d->page_caption->setIcon(KIcon("edit-rename"));
 
     d->datetimePage  = new EXIFDateTime(this);
     d->page_datetime = addPage(d->datetimePage, i18n("Date & Time"));
@@ -168,12 +168,12 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->lightPage     = new EXIFLight(this);
     d->page_light    = addPage(d->lightPage, i18n("Light"));
     d->page_light->setHeader(i18n("Light Source Information"));
-    d->page_light->setIcon(KIcon("image-jpeg2000"));
+    d->page_light->setIcon(KIcon("image-x-generic"));
 
     d->adjustPage    = new EXIFAdjust(this);
     d->page_adjust   = addPage(d->adjustPage, i18n("Adjustments"));
     d->page_adjust->setHeader(i18n("Pictures Adjustments"));
-    d->page_adjust->setIcon(KIcon("color-fill"));
+    d->page_adjust->setIcon(KIcon("fill-color"));
 
     // ---------------------------------------------------------------
     // About data and help button.
