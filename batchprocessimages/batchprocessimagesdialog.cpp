@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -825,13 +825,6 @@ void BatchProcessImagesDialog::slotPreview(void)
         m_previewButton->setEnabled(true);
         return;
     }
-
-    if (!m_PreviewProc->normalExit())
-    {
-        KMessageBox::error(this, i18n("Cannot run properly 'convert' program from 'ImageMagick' package."));
-        m_previewButton->setEnabled(true);
-        return;
-    }
 }
 
 void BatchProcessImagesDialog::slotPreviewReadStd(KProcess* /*proc*/, char *buffer, int buflen)
@@ -841,6 +834,13 @@ void BatchProcessImagesDialog::slotPreviewReadStd(KProcess* /*proc*/, char *buff
 
 void BatchProcessImagesDialog::slotPreviewProcessDone(KProcess* proc)
 {
+    if (!m_PreviewProc->normalExit())
+    {
+        KMessageBox::error(this, i18n("Cannot run properly 'convert' program from 'ImageMagick' package."));
+        m_previewButton->setEnabled(true);
+        return;
+    }
+
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFiles->currentItem() );
     int ValRet = proc->exitStatus();
 
