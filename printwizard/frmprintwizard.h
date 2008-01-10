@@ -62,6 +62,14 @@ private:
    P13X18
   };
 
+  enum AvailableCaptions {
+    NoCaptions = 0,
+    FileNames,
+    ExifDateTime,
+    Comment,
+    Free
+  };
+
   QPtrList<TPhoto> m_photos;
   QPtrList<TPhotoSize> m_photoSizes;
 
@@ -90,6 +98,8 @@ private:
 
   int getPageCount();
 
+  QString captionFormatter(TPhoto *photo, const QString& format);
+  void printCaption(QPainter &p, TPhoto*photo, int captionW, int captionH, QString caption);
 
   bool paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
                     int captionType, unsigned int &current, bool useThumbnails = false);
@@ -101,14 +111,14 @@ private:
   void manageBtnPreviewPage();
 
 public:
-  
+
   FrmPrintWizard(QWidget *parent=0, const char *name=0);
   ~FrmPrintWizard();
   void print( KURL::List fileList, QString tempPath);
   QRect * getLayout(int photoIndex);
 
 public slots:
-  
+
   void BtnCropRotate_clicked();
   void BtnCropNext_clicked();
   void BtnCropPrev_clicked();
@@ -120,6 +130,7 @@ public slots:
   void EditCopies_valueChanged( int );
   void GrpOutputSettings_clicked(int id);
   void EditOutputPath_textChanged(const QString &);
+  void CaptionChanged( int );
   void BtnBrowseOutputPath_clicked();
   void CmbPaperSize_activated( int );
 
@@ -130,7 +141,7 @@ public slots:
   void BtnPreviewPageUp_clicked();
 
 protected slots:
-  
+
   void accept();
   void reject();
   void slotHelp();

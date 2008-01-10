@@ -162,6 +162,9 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
   connect(GrpOutputSettings, SIGNAL(clicked(int)),
           this, SLOT(GrpOutputSettings_clicked(int)));
 
+  connect(m_captions, SIGNAL(activated(int)),
+          this, SLOT(CaptionChanged(int)));
+
   connect(EditOutputPath, SIGNAL(textChanged(const QString &)),
           this, SLOT(EditOutputPath_textChanged(const QString &)));
 
@@ -169,10 +172,10 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
           this, SLOT(BtnBrowseOutputPath_clicked(void)));
 
   CmbPaperSize->setCurrentItem(0);
-  
+
   connect(CmbPaperSize, SIGNAL(activated(int)), 
           this, SLOT(CmbPaperSize_activated(int)));
-          
+
   connect(BtnPrintOrderDown, SIGNAL(clicked(void)),
           this, SLOT(BtnPrintOrderDown_clicked(void)));
   connect(BtnPrintOrderUp, SIGNAL(clicked(void)),
@@ -419,38 +422,149 @@ double getMaxDPI(QPtrList<TPhoto> photos, QPtrList<QRect> layouts, unsigned int 
 
 QRect * FrmPrintWizard::getLayout(int photoIndex)
 {
-	TPhotoSize *s = m_photoSizes.at(ListPhotoSizes->currentItem());
-	
-	// how many photos would actually be printed, including copies?
-	int photoCount  = (photoIndex + 1);
-	// how many pages?  Recall that the first layout item is the paper size
-	int photosPerPage = s->layouts.count() - 1;
-	int remainder = photoCount % photosPerPage;
-	
-	int retVal = remainder;
-	if (remainder == 0)
-	retVal = photosPerPage;
-	return s->layouts.at(retVal);
+  TPhotoSize *s = m_photoSizes.at(ListPhotoSizes->currentItem());
+
+  // how many photos would actually be printed, including copies?
+  int photoCount  = (photoIndex + 1);
+  // how many pages?  Recall that the first layout item is the paper size
+  int photosPerPage = s->layouts.count() - 1;
+  int remainder = photoCount % photosPerPage;
+
+  int retVal = remainder;
+  if (remainder == 0)
+    retVal = photosPerPage;
+  return s->layouts.at(retVal);
 }
 
-int FrmPrintWizard::getPageCount() {
-	// get the selected layout
-	TPhotoSize *s = m_photoSizes.at(ListPhotoSizes->currentItem());
-	
-	int photoCount  =  m_photos.count();
-	// how many pages?  Recall that the first layout item is the paper size
-	int photosPerPage = s->layouts.count() - 1;
-	int remainder = photoCount % photosPerPage;
-	int emptySlots = 0;
-	if (remainder > 0)
-	emptySlots = photosPerPage - remainder;
-	int pageCount = photoCount / photosPerPage;
-	if (emptySlots > 0)
-	pageCount++;
-	return pageCount;
+int FrmPrintWizard::getPageCount()
+{
+  // get the selected layout
+  TPhotoSize *s = m_photoSizes.at(ListPhotoSizes->currentItem());
+
+  int photoCount  =  m_photos.count();
+  // how many pages?  Recall that the first layout item is the paper size
+  int photosPerPage = s->layouts.count() - 1;
+  int remainder = photoCount % photosPerPage;
+  int emptySlots = 0;
+  if (remainder > 0)
+    emptySlots = photosPerPage - remainder;
+  int pageCount = photoCount / photosPerPage;
+  if (emptySlots > 0)
+    pageCount++;
+  return pageCount;
 }
+
 
 const float FONT_HEIGHT_RATIO = 0.8;
+
+void FrmPrintWizard::printCaption(QPainter &p, TPhoto*photo, int captionW, int captionH, QString caption)
+{
+  // PENDING anaselli TPhoto*photo will be needed to add a per photo caption management
+  QStringList captionByLines;
+
+  uint captionIndex = 0;
+
+  while (captionIndex < caption.length())
+  {
+    QString newLine;
+    bool breakLine = false; // End Of Line found
+    uint currIndex; //  Caption QString current index
+
+    // Check minimal lines dimension
+    //TODO fix length, maybe useless
+    uint captionLineLocalLength = 40;
+
+    for ( currIndex = captionIndex; currIndex < caption.length() && !breakLine; currIndex++ )
+      if( caption[currIndex] == QChar('\n') || caption[currIndex].isSpace() )
+        breakLine = true;
+
+    if (captionLineLocalLength <= (currIndex - captionIndex))
+      captionLineLocalLength = (currIndex - captionIndex);
+
+    breakLine = false;
+
+    for ( currIndex = captionIndex;
+          currIndex <= captionIndex + captionLineLocalLength &&
+              currIndex < caption.length() && !breakLine;
+          currIndex++ )
+    {
+      breakLine = (caption[currIndex] == QChar('\n')) ? true : false;
+
+      if (breakLine)
+        newLine.append( ' ' );
+      else
+        newLine.append( caption[currIndex] );
+    }
+
+    captionIndex = currIndex; // The line is ended
+
+    if ( captionIndex != caption.length() )
+      while ( !newLine.endsWith(" ") )
+    {
+      newLine.truncate(newLine.length() - 1);
+      captionIndex--;
+    }
+
+    captionByLines.prepend(newLine.stripWhiteSpace());
+  }
+
+  QFont font(m_font_name->currentFont());
+  font.setStyleHint(QFont::SansSerif);
+  font.setPixelSize( (int)(captionH * FONT_HEIGHT_RATIO) );
+  font.setWeight(QFont::Normal);
+
+  QFontMetrics fm( font );
+  int pixelsHigh = fm.height();
+
+  p.setFont(font);
+  p.setPen(m_font_color->color());
+  kdDebug( 51000 ) << "Number of lines " << (int)captionByLines.count() << endl;
+
+  // Now draw the caption
+  // TODO allow printing captions  per photo and on top, bottom and vertically
+  for ( int lineNumber = 0; lineNumber < (int)captionByLines.count(); lineNumber++ )
+  {
+    if (lineNumber > 0)
+      p.translate(0, -(int)(pixelsHigh));
+    QRect r(0, 0, captionW, captionH);
+    p.drawText(r, Qt::AlignLeft, captionByLines[lineNumber], -1, &r);
+  }
+}
+
+
+
+QString FrmPrintWizard::captionFormatter(TPhoto *photo, const QString& format)
+{
+  QString str=format;
+
+  QFileInfo fi(photo->filename.path());
+  QString resolution;
+  QSize imageSize =  photo->exiv2Iface()->getImageDimensions();
+  if (imageSize.isValid()) {
+    resolution = QString( "%1x%2" ).arg( imageSize.width()).arg( imageSize.height());
+  }
+  str.replace("\\n", "\n");
+
+  // %f filename
+  // %c comment
+  // %d date-time
+  // %t exposure time
+  // %i iso
+  // %r resolution
+  // %a aperture
+  // %l focal length
+  str.replace("%f", fi.fileName());
+  str.replace("%c", photo->exiv2Iface()->getExifComment());
+  str.replace("%d", KGlobal::locale()->formatDateTime(photo->exiv2Iface()->getImageDateTime(),
+                                  false, false));
+  str.replace("%t", photo->exiv2Iface()->getExifTagString("Exif.Photo.ExposureTime"));
+  str.replace("%i", photo->exiv2Iface()->getExifTagString("Exif.Photo.ISOSpeedRatings"));
+  str.replace("%r", resolution);
+  str.replace("%a", photo->exiv2Iface()->getExifTagString("Exif.Photo.FNumber"));
+  str.replace("%l", photo->exiv2Iface()->getExifTagString("Exif.Photo.FocalLength"));
+
+  return str;
+}
 
 bool FrmPrintWizard::paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList<QRect> layouts,
   int captionType, unsigned int &current, bool useThumbnails)
@@ -551,17 +665,28 @@ bool FrmPrintWizard::paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList
     {
       p.save();
       QString caption;
-      if (captionType == 1)
+      QString format;
+      switch (captionType)
       {
-        QFileInfo fi(photo->filename.path());
-        caption = fi.fileName();
+        case FileNames:
+          format = "%f";
+          break;
+        case ExifDateTime:
+          format = "%d";
+          break;
+        case Comment:
+          format = "%c";
+          break;
+        case Free:
+          format = m_FreeCaptionFormat->text();
+          break;
+        default:
+          kdWarning( 51000 ) << "UNKNOWN caption type " << captionType << endl;
+          break;
       }
-      else if (captionType == 2) // exif date
-      {
-        caption = KGlobal::locale()->formatDateTime(photo->exiv2Iface()->getImageDateTime(),
-                                  false, false);
-        kdDebug( 51000 ) << "exif date  " << caption << endl;
-      }
+      caption = captionFormatter(photo, format);
+      kdDebug( 51000 ) << "Caption " << caption << endl;
+
       // draw the text at (0,0), but we will translate and rotate the world
       // before drawing so the text will be in the correct location
       // next, do we rotate?
@@ -574,7 +699,6 @@ bool FrmPrintWizard::paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList
 
 
       //ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
-      //TODO check 270 degrees
       if (exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP ||
           exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90 ||
           exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP ||
@@ -613,18 +737,7 @@ bool FrmPrintWizard::paintOnePage(QPainter &p, QPtrList<TPhoto> photos, QPtrList
         }
       }
       p.translate(tx, ty);
-
-      // Now draw the caption
-      QFont font(m_font_name->currentFont());
-      font.setStyleHint(QFont::SansSerif);
-      font.setPixelSize( (int)(captionH * FONT_HEIGHT_RATIO) );
-      font.setWeight(QFont::Normal);
-
-      p.setFont(font);
-      p.setPen(m_font_color->color());
-
-      QRect r(0, 0, captionW, captionH);
-      p.drawText(r, Qt::AlignLeft, caption, -1, &r);
+      printCaption(p, photo, captionW, captionH, caption);
       p.restore();
     } // caption
 
@@ -722,21 +835,32 @@ bool FrmPrintWizard::paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<Q
       p.setPixel(x1 + left + srcX, y1 + top + srcY, img.pixel(srcX, srcY));
     }
 
-    if (captionType > 0)
+    if (captionType != NoCaptions)
     {
       // Now draw the caption
       QString caption;
-      if (captionType == 1) //filename
+      QString format;
+      switch (captionType)
       {
-        QFileInfo fi(photo->filename.path());
-        caption = fi.fileName();
+        case FileNames:
+          format = "%f";
+          break;
+        case ExifDateTime:
+          format = "%d";
+          break;
+        case Comment:
+          format = "%c";
+          break;
+        case Free:
+          format = m_FreeCaptionFormat->text();
+          break;
+        default:
+          kdWarning( 51000 ) << "UNKNOWN caption type " << captionType << endl;
+          break;
       }
-      else if (captionType == 2) // exif date
-      {
-        caption = KGlobal::locale()->formatDateTime(photo->exiv2Iface()->getImageDateTime(),
-                                  false, false);
-        kdDebug( 51000 ) << "exif date  " << caption << endl;
-      }
+      caption = captionFormatter(photo, format);
+      kdDebug( 51000 ) << "Caption " << caption << endl;
+
       int captionW = w-2;
       double ratio = m_font_size->value() * 0.01;
       int captionH = (int)(QMIN(w, h) * ratio);
@@ -745,7 +869,6 @@ bool FrmPrintWizard::paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<Q
       int orientatation = photo->rotation;
 
       //ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
-      //TODO check 270 degrees
       if (exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP ||
           exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90 ||
           exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP ||
@@ -756,51 +879,52 @@ bool FrmPrintWizard::paintOnePage(QImage &p, QPtrList<TPhoto> photos, QPtrList<Q
       {
         captionW = h;
       }
-      // Now draw the caption
-      QFont font(m_font_name->currentFont());
-      font.setStyleHint(QFont::SansSerif);
-      font.setPixelSize( (int)(captionH * FONT_HEIGHT_RATIO) );
-      font.setWeight(QFont::Normal);
 
-      QPixmap pixmap(w, captionH);
+      QPixmap pixmap(w-2, img.height()-2);
+      //TODO black is not ok if font is black...
       pixmap.fill(Qt::black);
       QPainter painter;
       painter.begin(&pixmap);
-      painter.setFont(font);
+      painter.rotate(orientatation);
+      kdDebug( 51000 ) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
+      int tx = left;
+      int ty = top;
 
-      painter.setPen(m_font_color->color());
-      QRect r(1, 1, w-2, captionH - 2);
-      painter.drawText(r, Qt::AlignLeft, caption, -1, &r);
+      switch(orientatation) {
+        case 0 : {
+          tx += x1 + 1;
+          ty += y1 + (h - captionH - 1);
+          break;
+        }
+        case 90 : {
+          tx = top + y1 + 1;
+          ty = -left - x1 - captionH - 1;
+          break;
+        }
+        case 180 : {
+          tx = -left - x1 - w + 1;
+          ty = -top -y1 - (captionH + 1);
+          break;
+        }
+        case 270 : {
+          tx = -top - y1 - h + 1;
+          ty = left + x1 + (w - captionH)- 1;
+          break;
+        }
+      }
+
+      painter.translate(tx, ty);
+      printCaption(painter, photo, captionW, captionH, caption);
       painter.end();
+
+      // now put it on picture
       QImage fontImage = pixmap.convertToImage();
       QRgb black = QColor(0, 0, 0).rgb();
       for(int srcY = 0; srcY < fontImage.height(); srcY++)
         for(int srcX = 0; srcX < fontImage.width(); srcX++)
       {
-        int destX = x1 + left + srcX;
-        int destY = y1 + top + h - (captionH + 1) + srcY;
-
-				// adjust the destination coordinates for rotation/orientation
-        switch(orientatation) {
-          case 90 : {
-            destX = left + x1 + (captionH - srcY);
-            destY = top + y1 + srcX;
-            break;
-          }
-          case 180 : {
-            destX = left + x1 + w - srcX;
-            destY = top + y1 + (captionH - srcY);
-            break;
-          }
-          case 270 : {
-            destX = left + x1 + (w - captionH) + srcY;
-            destY = top + y1 + h - srcX;
-            break;
-          }
-        }
-
         if (fontImage.pixel(srcX, srcY) != black)
-          p.setPixel(destX, destY, fontImage.pixel(srcX, srcY));
+          p.setPixel(srcX, srcY, fontImage.pixel(srcX, srcY));
       }
     } // caption
 
@@ -869,7 +993,7 @@ void FrmPrintWizard::previewPhotos()
   QPainter p;
   p.begin(&img);
   p.fillRect(0, 0, img.width(), img.height(), this->paletteBackgroundColor());
-  paintOnePage(p, m_photos, s->layouts, buttonGroupSelectedId(GrpImageCaptions), current, true);
+  paintOnePage(p, m_photos, s->layouts, m_captions->currentItem(), current, true);
   p.end();
   BmpFirstPagePreview->setPixmap(img);
   LblPreview->setText(i18n("Page ") + QString::number(m_currentPreviewPage + 1) + i18n(" of ") + QString::number(getPageCount()));
@@ -1064,7 +1188,7 @@ void FrmPrintWizard::printPhotos(QPtrList<TPhoto> photos, QPtrList<QRect> layout
   bool printing = true;
   while(printing)
   {
-    printing = paintOnePage(p, photos, layouts, buttonGroupSelectedId(GrpImageCaptions), current);
+    printing = paintOnePage(p, photos, layouts, m_captions->currentItem(), current);
     if (printing)
       printer.newPage();
     PrgPrintProgress->setProgress(current);
@@ -1134,7 +1258,7 @@ QStringList FrmPrintWizard::printPhotosToFile(QPtrList<TPhoto> photos, QString &
 
     // paint this page, even if we aren't saving it to keep the page
     // count accurate.
-    printing = paintOnePage(*img, photos, layouts->layouts, buttonGroupSelectedId(GrpImageCaptions), current);
+    printing = paintOnePage(*img, photos, layouts->layouts, m_captions->currentItem(), current);
 
     if (saveFile)
     {
@@ -1178,7 +1302,7 @@ void FrmPrintWizard::loadSettings()
 
   // captions
   int captions = config.readNumEntry("ImageCaptions", 0);
-  GrpImageCaptions->setButton(captions);
+  m_captions->setCurrentItem(captions);
   // caption color
   QColor defColor(Qt::yellow);
   QColor color = config.readColorEntry("CaptionColor", &defColor);
@@ -1190,6 +1314,11 @@ void FrmPrintWizard::loadSettings()
   // caption size
   int fontSize = config.readNumEntry("CaptionSize", 4);
   m_font_size->setValue(fontSize);
+  // free caption
+  QString captionTxt = config.readEntry("FreeCaption");
+  m_FreeCaptionFormat->setText(captionTxt);
+  //enable right caption stuff
+  CaptionChanged(captions);
 
   // set the last output path
   QString outputPath = config.readPathEntry("OutputPath", EditOutputPath->text());
@@ -1234,13 +1363,15 @@ void FrmPrintWizard::saveSettings()
   config.writeEntry("PrintOutput", output);
 
   // image captions
-  config.writeEntry("ImageCaptions", buttonGroupSelectedId(GrpImageCaptions));
+  config.writeEntry("ImageCaptions", m_captions->currentItem());
   // caption color
   config.writeEntry("CaptionColor", m_font_color->color());
   // caption font
   config.writeEntry ("CaptionFont", QFont(m_font_name->currentFont()));
   // caption size
   config.writeEntry("CaptionSize", m_font_size->value());
+  // free caption
+  config.writeEntry("FreeCaption", m_FreeCaptionFormat->text());
 
   // output path
   config.writePathEntry("OutputPath", EditOutputPath->text());
@@ -1284,6 +1415,39 @@ void FrmPrintWizard::BtnBrowseOutputPath_clicked( void )
   EditOutputPath->setText(newPath);
   GrpOutputSettings_clicked(GrpOutputSettings->id(GrpOutputSettings->selected()));
 }
+
+
+void FrmPrintWizard::CaptionChanged(int captionUsed)
+{
+  switch (captionUsed)
+  {
+    case NoCaptions:
+      // disable m_font_frame and mFreeOutputFormat
+      m_font_frame->setEnabled(false);
+      m_FreeCaptionFormat->setEnabled(false);
+      m_free_label->setEnabled(false);
+      break;
+
+    case Free:
+      m_font_frame->setEnabled(true);
+      m_FreeCaptionFormat->setEnabled(true);
+      m_free_label->setEnabled(true);
+      break;
+
+    case FileNames:
+    case ExifDateTime:
+    case Comment:
+    default:
+      // disable mFreeOutputFormat
+      m_font_frame->setEnabled(true);
+      m_FreeCaptionFormat->setEnabled(false);
+      m_free_label->setEnabled(false);
+      break;
+  }
+
+}
+
+
 
 void FrmPrintWizard::EditOutputPath_textChanged(const QString &)
 {

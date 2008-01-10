@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>658</width>
-            <height>564</height>
+            <height>573</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -193,539 +193,605 @@ Click the 'Next' button to begin.</string>
         <attribute name="title">
             <string>Select Printer</string>
         </attribute>
-        <hbox>
+        <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>unnamed</cstring>
+                <cstring>layout40</cstring>
             </property>
-            <widget class="QLayoutWidget">
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>0</y>
+                    <width>620</width>
+                    <height>474</height>
+                </rect>
+            </property>
+            <hbox>
                 <property name="name">
-                    <cstring>Layout7</cstring>
+                    <cstring>unnamed</cstring>
                 </property>
-                <vbox>
+                <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>unnamed</cstring>
+                        <cstring>Layout7</cstring>
                     </property>
-                    <property name="margin">
-                        <number>0</number>
-                    </property>
-                    <property name="spacing">
-                        <number>6</number>
-                    </property>
-                    <widget class="QLabel">
+                    <vbox>
                         <property name="name">
-                            <cstring>PixmapLabel1</cstring>
+                            <cstring>unnamed</cstring>
                         </property>
-                        <property name="sizePolicy">
-                            <sizepolicy>
-                                <hsizetype>0</hsizetype>
-                                <vsizetype>0</vsizetype>
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                            </sizepolicy>
+                        <property name="margin">
+                            <number>0</number>
                         </property>
-                        <property name="frameShadow">
-                            <enum>Raised</enum>
+                        <property name="spacing">
+                            <number>6</number>
                         </property>
-                        <property name="pixmap">
-                            <pixmap>image0</pixmap>
-                        </property>
-                        <property name="scaledContents">
-                            <bool>false</bool>
-                        </property>
-                    </widget>
-                    <spacer>
-                        <property name="name">
-                            <cstring>Spacer3</cstring>
-                        </property>
-                        <property name="orientation">
-                            <enum>Vertical</enum>
-                        </property>
-                        <property name="sizeType">
-                            <enum>Expanding</enum>
-                        </property>
-                        <property name="sizeHint">
-                            <size>
-                                <width>16</width>
-                                <height>355</height>
-                            </size>
-                        </property>
-                    </spacer>
-                </vbox>
-            </widget>
-            <widget class="QLayoutWidget">
-                <property name="name">
-                    <cstring>layout35</cstring>
-                </property>
-                <vbox>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>PixmapLabel1</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>0</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="frameShadow">
+                                <enum>Raised</enum>
+                            </property>
+                            <property name="pixmap">
+                                <pixmap>image0</pixmap>
+                            </property>
+                            <property name="scaledContents">
+                                <bool>false</bool>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>Spacer3</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>16</width>
+                                    <height>355</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </vbox>
+                </widget>
+                <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>unnamed</cstring>
+                        <cstring>layout39</cstring>
                     </property>
-                    <widget class="QGroupBox">
+                    <vbox>
                         <property name="name">
-                            <cstring>groupBox1</cstring>
+                            <cstring>unnamed</cstring>
                         </property>
-                        <property name="sizePolicy">
-                            <sizepolicy>
-                                <hsizetype>5</hsizetype>
-                                <vsizetype>4</vsizetype>
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                            </sizepolicy>
-                        </property>
-                        <property name="title">
-                            <string>Page Settings</string>
-                        </property>
-                        <grid>
+                        <widget class="QGroupBox">
                             <property name="name">
-                                <cstring>unnamed</cstring>
+                                <cstring>groupBox1</cstring>
                             </property>
-                            <widget class="QButtonGroup" row="1" column="0">
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>5</hsizetype>
+                                    <vsizetype>4</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="title">
+                                <string>Page Settings</string>
+                            </property>
+                            <vbox>
                                 <property name="name">
-                                    <cstring>GrpImageCaptions</cstring>
+                                    <cstring>unnamed</cstring>
                                 </property>
-                                <property name="title">
-                                    <string>Image Captions</string>
-                                </property>
-                                <grid>
+                                <widget class="QLayoutWidget">
                                     <property name="name">
-                                        <cstring>unnamed</cstring>
+                                        <cstring>layout37</cstring>
                                     </property>
-                                    <widget class="QRadioButton" row="1" column="0">
+                                    <hbox>
                                         <property name="name">
-                                            <cstring>RdoCaptionFilenamesOnly</cstring>
+                                            <cstring>unnamed</cstring>
                                         </property>
-                                        <property name="text">
-                                            <string>Print image filenames</string>
-                                        </property>
-                                        <property name="buttonGroupId">
-                                            <number>1</number>
-                                        </property>
-                                    </widget>
-                                    <widget class="QRadioButton" row="0" column="0">
-                                        <property name="name">
-                                            <cstring>RdoCaptionNoCaptions</cstring>
-                                        </property>
-                                        <property name="text">
-                                            <string>Do not print image captions</string>
-                                        </property>
-                                        <property name="checked">
-                                            <bool>true</bool>
-                                        </property>
-                                        <property name="buttonGroupId">
-                                            <number>0</number>
-                                        </property>
-                                    </widget>
-                                    <widget class="QRadioButton" row="2" column="0">
-                                        <property name="name">
-                                            <cstring>m_print_exif_date</cstring>
-                                        </property>
-                                        <property name="text">
-                                            <string>Print exif date-time</string>
-                                        </property>
-                                        <property name="buttonGroupId">
-                                            <number>2</number>
-                                        </property>
-                                    </widget>
-                                </grid>
-                            </widget>
-                            <widget class="QGroupBox" row="1" column="1" rowspan="1" colspan="2">
-                                <property name="name">
-                                    <cstring>m_font_frame</cstring>
-                                </property>
-                                <property name="enabled">
-                                    <bool>false</bool>
-                                </property>
-                                <property name="frameShape">
-                                    <enum>GroupBoxPanel</enum>
-                                </property>
-                                <property name="frameShadow">
-                                    <enum>Sunken</enum>
-                                </property>
-                                <property name="title">
-                                    <string>Caption font</string>
-                                </property>
-                                <property name="toolTip" stdset="0">
-                                    <string>Choose the caption font size</string>
-                                </property>
-                                <grid>
-                                    <property name="name">
-                                        <cstring>unnamed</cstring>
-                                    </property>
-                                    <widget class="KFontCombo" row="0" column="0">
-                                        <property name="name">
-                                            <cstring>m_font_name</cstring>
-                                        </property>
-                                        <property name="sizePolicy">
-                                            <sizepolicy>
-                                                <hsizetype>0</hsizetype>
-                                                <vsizetype>0</vsizetype>
-                                                <horstretch>0</horstretch>
-                                                <verstretch>0</verstretch>
-                                            </sizepolicy>
-                                        </property>
-                                    </widget>
-                                    <widget class="KColorCombo" row="1" column="0">
-                                        <property name="name">
-                                            <cstring>m_font_color</cstring>
-                                        </property>
-                                        <property name="sizePolicy">
-                                            <sizepolicy>
-                                                <hsizetype>0</hsizetype>
-                                                <vsizetype>0</vsizetype>
-                                                <horstretch>0</horstretch>
-                                                <verstretch>0</verstretch>
-                                            </sizepolicy>
-                                        </property>
-                                        <property name="insertionPolicy">
-                                            <enum>NoInsertion</enum>
-                                        </property>
-                                    </widget>
-                                    <widget class="QLayoutWidget" row="2" column="0">
-                                        <property name="name">
-                                            <cstring>layout37</cstring>
-                                        </property>
-                                        <hbox>
+                                        <widget class="QLayoutWidget">
                                             <property name="name">
-                                                <cstring>unnamed</cstring>
+                                                <cstring>layout36</cstring>
                                             </property>
-                                            <widget class="QLabel">
+                                            <hbox>
                                                 <property name="name">
-                                                    <cstring>textLabel1_2</cstring>
+                                                    <cstring>unnamed</cstring>
                                                 </property>
-                                                <property name="text">
-                                                    <string>Size</string>
-                                                </property>
-                                            </widget>
-                                            <widget class="QSlider">
+                                                <widget class="QLabel">
+                                                    <property name="name">
+                                                        <cstring>textLabel1</cstring>
+                                                    </property>
+                                                    <property name="sizePolicy">
+                                                        <sizepolicy>
+                                                            <hsizetype>5</hsizetype>
+                                                            <vsizetype>5</vsizetype>
+                                                            <horstretch>0</horstretch>
+                                                            <verstretch>0</verstretch>
+                                                        </sizepolicy>
+                                                    </property>
+                                                    <property name="text">
+                                                        <string>Paper size:</string>
+                                                    </property>
+                                                </widget>
+                                                <widget class="KComboBox">
+                                                    <item>
+                                                        <property name="text">
+                                                            <string>Letter</string>
+                                                        </property>
+                                                    </item>
+                                                    <item>
+                                                        <property name="text">
+                                                            <string>A4</string>
+                                                        </property>
+                                                    </item>
+                                                    <item>
+                                                        <property name="text">
+                                                            <string>A6</string>
+                                                        </property>
+                                                    </item>
+                                                    <item>
+                                                        <property name="text">
+                                                            <string>10x15cm</string>
+                                                        </property>
+                                                    </item>
+                                                    <item>
+                                                        <property name="text">
+                                                            <string>13x17cm</string>
+                                                        </property>
+                                                    </item>
+                                                    <property name="name">
+                                                        <cstring>CmbPaperSize</cstring>
+                                                    </property>
+                                                </widget>
+                                            </hbox>
+                                        </widget>
+                                        <widget class="QLayoutWidget">
+                                            <property name="name">
+                                                <cstring>layout36</cstring>
+                                            </property>
+                                            <hbox>
                                                 <property name="name">
-                                                    <cstring>m_font_size</cstring>
+                                                    <cstring>unnamed</cstring>
                                                 </property>
-                                                <property name="sizePolicy">
-                                                    <sizepolicy>
-                                                        <hsizetype>0</hsizetype>
-                                                        <vsizetype>0</vsizetype>
-                                                        <horstretch>0</horstretch>
-                                                        <verstretch>0</verstretch>
-                                                    </sizepolicy>
-                                                </property>
-                                                <property name="minValue">
-                                                    <number>2</number>
-                                                </property>
-                                                <property name="maxValue">
-                                                    <number>8</number>
-                                                </property>
-                                                <property name="lineStep">
-                                                    <number>2</number>
-                                                </property>
-                                                <property name="pageStep">
-                                                    <number>2</number>
-                                                </property>
-                                                <property name="value">
-                                                    <number>4</number>
-                                                </property>
-                                                <property name="orientation">
-                                                    <enum>Horizontal</enum>
-                                                </property>
-                                            </widget>
-                                        </hbox>
-                                    </widget>
-                                </grid>
-                            </widget>
-                            <widget class="QLayoutWidget" row="0" column="0">
-                                <property name="name">
-                                    <cstring>layout36</cstring>
-                                </property>
-                                <hbox>
+                                                <spacer>
+                                                    <property name="name">
+                                                        <cstring>spacer19</cstring>
+                                                    </property>
+                                                    <property name="orientation">
+                                                        <enum>Horizontal</enum>
+                                                    </property>
+                                                    <property name="sizeType">
+                                                        <enum>Expanding</enum>
+                                                    </property>
+                                                    <property name="sizeHint">
+                                                        <size>
+                                                            <width>210</width>
+                                                            <height>20</height>
+                                                        </size>
+                                                    </property>
+                                                </spacer>
+                                                <widget class="QCheckBox">
+                                                    <property name="name">
+                                                        <cstring>m_fullbleed</cstring>
+                                                    </property>
+                                                    <property name="text">
+                                                        <string>No margins</string>
+                                                    </property>
+                                                    <property name="toolTip" stdset="0">
+                                                        <string>Full-bleed mode</string>
+                                                    </property>
+                                                    <property name="whatsThis" stdset="0">
+                                                        <string>Full-bleed mode</string>
+                                                    </property>
+                                                </widget>
+                                            </hbox>
+                                        </widget>
+                                    </hbox>
+                                </widget>
+                                <widget class="QLayoutWidget">
                                     <property name="name">
-                                        <cstring>unnamed</cstring>
+                                        <cstring>layout38</cstring>
                                     </property>
-                                    <widget class="QLabel">
+                                    <hbox>
                                         <property name="name">
-                                            <cstring>textLabel1</cstring>
+                                            <cstring>unnamed</cstring>
                                         </property>
-                                        <property name="sizePolicy">
-                                            <sizepolicy>
-                                                <hsizetype>5</hsizetype>
-                                                <vsizetype>5</vsizetype>
-                                                <horstretch>0</horstretch>
-                                                <verstretch>0</verstretch>
-                                            </sizepolicy>
-                                        </property>
-                                        <property name="text">
-                                            <string>Paper size:</string>
-                                        </property>
-                                    </widget>
-                                    <widget class="KComboBox">
-                                        <item>
-                                            <property name="text">
-                                                <string>Letter</string>
+                                        <widget class="QGroupBox">
+                                            <property name="name">
+                                                <cstring>m_imageCaptions</cstring>
                                             </property>
-                                        </item>
-                                        <item>
-                                            <property name="text">
-                                                <string>A4</string>
+                                            <property name="title">
+                                                <string>Image Captions</string>
                                             </property>
-                                        </item>
-                                        <item>
-                                            <property name="text">
-                                                <string>A6</string>
+                                            <vbox>
+                                                <property name="name">
+                                                    <cstring>unnamed</cstring>
+                                                </property>
+                                                <widget class="KComboBox">
+                                                    <item>
+                                                        <property name="text">
+                                                            <string>No captions</string>
+                                                        </property>
+                                                    </item>
+                                                    <item>
+                                                        <property name="text">
+                                                            <string>Image file names</string>
+                                                        </property>
+                                                    </item>
+                                                    <item>
+                                                        <property name="text">
+                                                            <string>Exif date-time</string>
+                                                        </property>
+                                                    </item>
+                                                    <item>
+                                                        <property name="text">
+                                                            <string>Comments</string>
+                                                        </property>
+                                                    </item>
+                                                    <item>
+                                                        <property name="text">
+                                                            <string>Free</string>
+                                                        </property>
+                                                    </item>
+                                                    <property name="name">
+                                                        <cstring>m_captions</cstring>
+                                                    </property>
+                                                </widget>
+                                                <widget class="KLineEdit">
+                                                    <property name="name">
+                                                        <cstring>m_FreeCaptionFormat</cstring>
+                                                    </property>
+                                                    <property name="enabled">
+                                                        <bool>false</bool>
+                                                    </property>
+                                                    <property name="text">
+                                                        <string>%d %c</string>
+                                                    </property>
+                                                </widget>
+                                                <widget class="QLabel">
+                                                    <property name="name">
+                                                        <cstring>m_free_label</cstring>
+                                                    </property>
+                                                    <property name="enabled">
+                                                        <bool>false</bool>
+                                                    </property>
+                                                    <property name="text">
+                                                        <string>%f  filename    %t exposure time
+%c comment  %i iso
+%d date-time  %r resolution
+%a aperture    %l focal length
+\n newline</string>
+                                                    </property>
+                                                    <property name="alignment">
+                                                        <set>WordBreak|AlignVCenter</set>
+                                                    </property>
+                                                </widget>
+                                            </vbox>
+                                        </widget>
+                                        <widget class="QGroupBox">
+                                            <property name="name">
+                                                <cstring>m_font_frame</cstring>
                                             </property>
-                                        </item>
-                                        <item>
-                                            <property name="text">
-                                                <string>10x15cm</string>
+                                            <property name="enabled">
+                                                <bool>false</bool>
                                             </property>
-                                        </item>
-                                        <item>
-                                            <property name="text">
-                                                <string>13x17cm</string>
+                                            <property name="frameShape">
+                                                <enum>GroupBoxPanel</enum>
                                             </property>
-                                        </item>
-                                        <property name="name">
-                                            <cstring>CmbPaperSize</cstring>
-                                        </property>
-                                    </widget>
-                                </hbox>
-                            </widget>
-                            <widget class="QCheckBox" row="0" column="2">
-                                <property name="name">
-                                    <cstring>m_fullbleed</cstring>
-                                </property>
-                                <property name="text">
-                                    <string>No margins</string>
-                                </property>
-                                <property name="toolTip" stdset="0">
-                                    <string>Full-bleed mode</string>
-                                </property>
-                                <property name="whatsThis" stdset="0">
-                                    <string>Full-bleed mode</string>
-                                </property>
-                            </widget>
-                            <spacer row="0" column="1">
-                                <property name="name">
-                                    <cstring>spacer19</cstring>
-                                </property>
-                                <property name="orientation">
-                                    <enum>Horizontal</enum>
-                                </property>
-                                <property name="sizeType">
-                                    <enum>Expanding</enum>
-                                </property>
-                                <property name="sizeHint">
-                                    <size>
-                                        <width>40</width>
-                                        <height>20</height>
-                                    </size>
-                                </property>
-                            </spacer>
-                        </grid>
-                    </widget>
-                    <widget class="QButtonGroup">
-                        <property name="name">
-                            <cstring>GrpOutputSettings</cstring>
-                        </property>
-                        <property name="title">
-                            <string>Output Settings</string>
-                        </property>
-                        <grid>
+                                            <property name="frameShadow">
+                                                <enum>Sunken</enum>
+                                            </property>
+                                            <property name="title">
+                                                <string>Caption font</string>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Choose the caption font size</string>
+                                            </property>
+                                            <grid>
+                                                <property name="name">
+                                                    <cstring>unnamed</cstring>
+                                                </property>
+                                                <widget class="KFontCombo" row="0" column="0">
+                                                    <property name="name">
+                                                        <cstring>m_font_name</cstring>
+                                                    </property>
+                                                    <property name="sizePolicy">
+                                                        <sizepolicy>
+                                                            <hsizetype>0</hsizetype>
+                                                            <vsizetype>0</vsizetype>
+                                                            <horstretch>0</horstretch>
+                                                            <verstretch>0</verstretch>
+                                                        </sizepolicy>
+                                                    </property>
+                                                </widget>
+                                                <widget class="KColorCombo" row="1" column="0">
+                                                    <property name="name">
+                                                        <cstring>m_font_color</cstring>
+                                                    </property>
+                                                    <property name="sizePolicy">
+                                                        <sizepolicy>
+                                                            <hsizetype>0</hsizetype>
+                                                            <vsizetype>0</vsizetype>
+                                                            <horstretch>0</horstretch>
+                                                            <verstretch>0</verstretch>
+                                                        </sizepolicy>
+                                                    </property>
+                                                    <property name="insertionPolicy">
+                                                        <enum>NoInsertion</enum>
+                                                    </property>
+                                                </widget>
+                                                <widget class="QLayoutWidget" row="2" column="0">
+                                                    <property name="name">
+                                                        <cstring>layout37</cstring>
+                                                    </property>
+                                                    <hbox>
+                                                        <property name="name">
+                                                            <cstring>unnamed</cstring>
+                                                        </property>
+                                                        <widget class="QLabel">
+                                                            <property name="name">
+                                                                <cstring>textLabel1_2</cstring>
+                                                            </property>
+                                                            <property name="text">
+                                                                <string>Size</string>
+                                                            </property>
+                                                        </widget>
+                                                        <widget class="QSlider">
+                                                            <property name="name">
+                                                                <cstring>m_font_size</cstring>
+                                                            </property>
+                                                            <property name="sizePolicy">
+                                                                <sizepolicy>
+                                                                    <hsizetype>0</hsizetype>
+                                                                    <vsizetype>0</vsizetype>
+                                                                    <horstretch>0</horstretch>
+                                                                    <verstretch>0</verstretch>
+                                                                </sizepolicy>
+                                                            </property>
+                                                            <property name="minValue">
+                                                                <number>2</number>
+                                                            </property>
+                                                            <property name="maxValue">
+                                                                <number>8</number>
+                                                            </property>
+                                                            <property name="lineStep">
+                                                                <number>2</number>
+                                                            </property>
+                                                            <property name="pageStep">
+                                                                <number>2</number>
+                                                            </property>
+                                                            <property name="value">
+                                                                <number>4</number>
+                                                            </property>
+                                                            <property name="orientation">
+                                                                <enum>Horizontal</enum>
+                                                            </property>
+                                                        </widget>
+                                                    </hbox>
+                                                </widget>
+                                            </grid>
+                                        </widget>
+                                    </hbox>
+                                </widget>
+                            </vbox>
+                        </widget>
+                        <widget class="QButtonGroup">
                             <property name="name">
-                                <cstring>unnamed</cstring>
+                                <cstring>GrpOutputSettings</cstring>
                             </property>
-                            <widget class="QLayoutWidget" row="1" column="0">
+                            <property name="title">
+                                <string>Output Settings</string>
+                            </property>
+                            <grid>
                                 <property name="name">
-                                    <cstring>layout24</cstring>
+                                    <cstring>unnamed</cstring>
                                 </property>
-                                <hbox>
+                                <widget class="QLayoutWidget" row="1" column="0">
                                     <property name="name">
-                                        <cstring>unnamed</cstring>
+                                        <cstring>layout24</cstring>
                                     </property>
-                                    <widget class="QRadioButton">
+                                    <hbox>
                                         <property name="name">
-                                            <cstring>RdoOutputGimp</cstring>
+                                            <cstring>unnamed</cstring>
                                         </property>
-                                        <property name="text">
-                                            <string>Open image using Gimp</string>
-                                        </property>
-                                    </widget>
-                                    <widget class="KURLLabel">
-                                        <property name="name">
-                                            <cstring>KURLLabel1</cstring>
-                                        </property>
-                                        <property name="enabled">
-                                            <bool>false</bool>
-                                        </property>
-                                        <property name="sizePolicy">
-                                            <sizepolicy>
-                                                <hsizetype>0</hsizetype>
-                                                <vsizetype>0</vsizetype>
-                                                <horstretch>0</horstretch>
-                                                <verstretch>0</verstretch>
-                                            </sizepolicy>
-                                        </property>
-                                        <property name="text">
-                                            <string></string>
-                                        </property>
-                                        <property name="pixmap">
-                                            <pixmap>image1</pixmap>
-                                        </property>
-                                        <property name="url" stdset="0">
-                                            <string>http://www.gimp.org</string>
-                                        </property>
-                                        <property name="toolTip" stdset="0">
-                                            <string>Visit Gimp website (www.gimp.org) using external browser</string>
-                                        </property>
-                                    </widget>
-                                    <spacer>
-                                        <property name="name">
-                                            <cstring>spacer16</cstring>
-                                        </property>
-                                        <property name="orientation">
-                                            <enum>Horizontal</enum>
-                                        </property>
-                                        <property name="sizeType">
-                                            <enum>Expanding</enum>
-                                        </property>
-                                        <property name="sizeHint">
-                                            <size>
-                                                <width>40</width>
-                                                <height>20</height>
-                                            </size>
-                                        </property>
-                                    </spacer>
-                                </hbox>
-                            </widget>
-                            <widget class="QLayoutWidget" row="2" column="0">
-                                <property name="name">
-                                    <cstring>layout24</cstring>
-                                </property>
-                                <vbox>
+                                        <widget class="QRadioButton">
+                                            <property name="name">
+                                                <cstring>RdoOutputGimp</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Open image using Gimp</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="KURLLabel">
+                                            <property name="name">
+                                                <cstring>KURLLabel1</cstring>
+                                            </property>
+                                            <property name="enabled">
+                                                <bool>false</bool>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>0</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="text">
+                                                <string></string>
+                                            </property>
+                                            <property name="pixmap">
+                                                <pixmap>image1</pixmap>
+                                            </property>
+                                            <property name="url" stdset="0">
+                                                <string>http://www.gimp.org</string>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Visit Gimp website (www.gimp.org) using external browser</string>
+                                            </property>
+                                        </widget>
+                                        <spacer>
+                                            <property name="name">
+                                                <cstring>spacer16</cstring>
+                                            </property>
+                                            <property name="orientation">
+                                                <enum>Horizontal</enum>
+                                            </property>
+                                            <property name="sizeType">
+                                                <enum>Expanding</enum>
+                                            </property>
+                                            <property name="sizeHint">
+                                                <size>
+                                                    <width>40</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </hbox>
+                                </widget>
+                                <widget class="QLayoutWidget" row="2" column="0">
                                     <property name="name">
-                                        <cstring>unnamed</cstring>
+                                        <cstring>layout24</cstring>
                                     </property>
-                                    <widget class="QRadioButton">
+                                    <vbox>
                                         <property name="name">
-                                            <cstring>RdoOutputFile</cstring>
+                                            <cstring>unnamed</cstring>
                                         </property>
-                                        <property name="text">
-                                            <string>Output to image file</string>
-                                        </property>
-                                    </widget>
-                                    <widget class="QLayoutWidget">
-                                        <property name="name">
-                                            <cstring>layout23</cstring>
-                                        </property>
-                                        <hbox>
+                                        <widget class="QRadioButton">
                                             <property name="name">
-                                                <cstring>unnamed</cstring>
+                                                <cstring>RdoOutputFile</cstring>
                                             </property>
-                                            <spacer>
-                                                <property name="name">
-                                                    <cstring>Spacer1_2_2</cstring>
-                                                </property>
-                                                <property name="orientation">
-                                                    <enum>Horizontal</enum>
-                                                </property>
-                                                <property name="sizeType">
-                                                    <enum>Fixed</enum>
-                                                </property>
-                                                <property name="sizeHint">
-                                                    <size>
-                                                        <width>19</width>
-                                                        <height>26</height>
-                                                    </size>
-                                                </property>
-                                            </spacer>
-                                            <widget class="QLabel">
-                                                <property name="name">
-                                                    <cstring>TextLabel2_2</cstring>
-                                                </property>
-                                                <property name="enabled">
-                                                    <bool>false</bool>
-                                                </property>
-                                                <property name="text">
-                                                    <string>This wizard will output each page to this folder with the filename kipi_printwizard_1, kipi_printwizard_2, etc.</string>
-                                                </property>
-                                                <property name="alignment">
-                                                    <set>WordBreak|AlignVCenter</set>
-                                                </property>
-                                            </widget>
-                                        </hbox>
-                                    </widget>
-                                    <widget class="QLayoutWidget">
-                                        <property name="name">
-                                            <cstring>layout23</cstring>
-                                        </property>
-                                        <hbox>
+                                            <property name="text">
+                                                <string>Output to image file</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QLayoutWidget">
                                             <property name="name">
-                                                <cstring>unnamed</cstring>
+                                                <cstring>layout23</cstring>
                                             </property>
-                                            <spacer>
+                                            <hbox>
                                                 <property name="name">
-                                                    <cstring>Spacer1_2</cstring>
+                                                    <cstring>unnamed</cstring>
                                                 </property>
-                                                <property name="orientation">
-                                                    <enum>Horizontal</enum>
-                                                </property>
-                                                <property name="sizeType">
-                                                    <enum>Fixed</enum>
-                                                </property>
-                                                <property name="sizeHint">
-                                                    <size>
-                                                        <width>19</width>
-                                                        <height>26</height>
-                                                    </size>
-                                                </property>
-                                            </spacer>
-                                            <widget class="KLineEdit">
+                                                <spacer>
+                                                    <property name="name">
+                                                        <cstring>Spacer1_2_2</cstring>
+                                                    </property>
+                                                    <property name="orientation">
+                                                        <enum>Horizontal</enum>
+                                                    </property>
+                                                    <property name="sizeType">
+                                                        <enum>Fixed</enum>
+                                                    </property>
+                                                    <property name="sizeHint">
+                                                        <size>
+                                                            <width>19</width>
+                                                            <height>26</height>
+                                                        </size>
+                                                    </property>
+                                                </spacer>
+                                                <widget class="QLabel">
+                                                    <property name="name">
+                                                        <cstring>TextLabel2_2</cstring>
+                                                    </property>
+                                                    <property name="enabled">
+                                                        <bool>false</bool>
+                                                    </property>
+                                                    <property name="text">
+                                                        <string>This wizard will output each page to this folder with the filename kipi_printwizard_1, kipi_printwizard_2, etc.</string>
+                                                    </property>
+                                                    <property name="alignment">
+                                                        <set>WordBreak|AlignVCenter</set>
+                                                    </property>
+                                                </widget>
+                                            </hbox>
+                                        </widget>
+                                        <widget class="QLayoutWidget">
+                                            <property name="name">
+                                                <cstring>layout23</cstring>
+                                            </property>
+                                            <hbox>
                                                 <property name="name">
-                                                    <cstring>EditOutputPath</cstring>
+                                                    <cstring>unnamed</cstring>
                                                 </property>
-                                                <property name="enabled">
-                                                    <bool>false</bool>
-                                                </property>
-                                            </widget>
-                                            <widget class="KPushButton">
-                                                <property name="name">
-                                                    <cstring>BtnBrowseOutputPath</cstring>
-                                                </property>
-                                                <property name="enabled">
-                                                    <bool>false</bool>
-                                                </property>
-                                                <property name="sizePolicy">
-                                                    <sizepolicy>
-                                                        <hsizetype>5</hsizetype>
-                                                        <vsizetype>1</vsizetype>
-                                                        <horstretch>0</horstretch>
-                                                        <verstretch>0</verstretch>
-                                                    </sizepolicy>
-                                                </property>
-                                                <property name="text">
-                                                    <string>&amp;Browse...</string>
-                                                </property>
-                                                <property name="accel">
-                                                    <string>Alt+B</string>
-                                                </property>
-                                            </widget>
-                                        </hbox>
-                                    </widget>
-                                </vbox>
-                            </widget>
-                            <widget class="QRadioButton" row="0" column="0">
-                                <property name="name">
-                                    <cstring>RdoOutputPrinter</cstring>
-                                </property>
-                                <property name="text">
-                                    <string>Output to printer</string>
-                                </property>
-                                <property name="checked">
-                                    <bool>true</bool>
-                                </property>
-                            </widget>
-                        </grid>
-                    </widget>
-                </vbox>
-            </widget>
-        </hbox>
+                                                <spacer>
+                                                    <property name="name">
+                                                        <cstring>Spacer1_2</cstring>
+                                                    </property>
+                                                    <property name="orientation">
+                                                        <enum>Horizontal</enum>
+                                                    </property>
+                                                    <property name="sizeType">
+                                                        <enum>Fixed</enum>
+                                                    </property>
+                                                    <property name="sizeHint">
+                                                        <size>
+                                                            <width>19</width>
+                                                            <height>26</height>
+                                                        </size>
+                                                    </property>
+                                                </spacer>
+                                                <widget class="KLineEdit">
+                                                    <property name="name">
+                                                        <cstring>EditOutputPath</cstring>
+                                                    </property>
+                                                    <property name="enabled">
+                                                        <bool>false</bool>
+                                                    </property>
+                                                </widget>
+                                                <widget class="KPushButton">
+                                                    <property name="name">
+                                                        <cstring>BtnBrowseOutputPath</cstring>
+                                                    </property>
+                                                    <property name="enabled">
+                                                        <bool>false</bool>
+                                                    </property>
+                                                    <property name="sizePolicy">
+                                                        <sizepolicy>
+                                                            <hsizetype>5</hsizetype>
+                                                            <vsizetype>1</vsizetype>
+                                                            <horstretch>0</horstretch>
+                                                            <verstretch>0</verstretch>
+                                                        </sizepolicy>
+                                                    </property>
+                                                    <property name="text">
+                                                        <string>&amp;Browse...</string>
+                                                    </property>
+                                                    <property name="accel">
+                                                        <string>Alt+B</string>
+                                                    </property>
+                                                </widget>
+                                            </hbox>
+                                        </widget>
+                                    </vbox>
+                                </widget>
+                                <widget class="QRadioButton" row="0" column="0">
+                                    <property name="name">
+                                        <cstring>RdoOutputPrinter</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Output to printer</string>
+                                    </property>
+                                    <property name="checked">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                            </grid>
+                        </widget>
+                    </vbox>
+                </widget>
+            </hbox>
+        </widget>
     </widget>
     <widget class="QWidget">
         <property name="name">
@@ -1884,30 +1950,6 @@ Click the 'Next' button to begin.</string>
 </images>
 <connections>
     <connection>
-        <sender>RdoOutputFile</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>EditOutputPath</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>RdoOutputFile</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>BtnBrowseOutputPath</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>RdoOutputFile</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>TextLabel2_2</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>RdoOutputGimp</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>KURLLabel1</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
         <sender>ListPhotoSizes</sender>
         <signal>highlighted(int)</signal>
         <receiver>FrmPrintWizardBase</receiver>
@@ -1938,12 +1980,6 @@ Click the 'Next' button to begin.</string>
         <slot>BtnCropNext_clicked()</slot>
     </connection>
     <connection>
-        <sender>RdoCaptionNoCaptions</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>m_font_frame</receiver>
-        <slot>setDisabled(bool)</slot>
-    </connection>
-    <connection>
         <sender>ListPrintOrder</sender>
         <signal>selected(QListBoxItem*)</signal>
         <receiver>FrmPrintWizardBase</receiver>
@@ -1961,6 +1997,30 @@ Click the 'Next' button to begin.</string>
         <receiver>FrmPrintWizardBase</receiver>
         <slot>EditCopies_valueChanged(int)</slot>
     </connection>
+    <connection>
+        <sender>RdoOutputFile</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>EditOutputPath</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>RdoOutputGimp</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>KURLLabel1</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>RdoOutputFile</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>TextLabel2_2</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>RdoOutputFile</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>BtnBrowseOutputPath</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
 </connections>
 <slots>
     <slot>BtnCropNext_clicked()</slot>
@@ -1974,10 +2034,12 @@ Click the 'Next' button to begin.</string>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>kcombobox.h</includehint>
+    <includehint>kcombobox.h</includehint>
+    <includehint>klineedit.h</includehint>
     <includehint>kfontcombo.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kcolorcombo.h</includehint>
-    <includehint>kcombobox.h</includehint>
     <includehint>kurllabel.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
