@@ -3,14 +3,14 @@ Note: for details and info about current version, see ChangeLog.
 v 0.1.5 - RC2
 ---------------------------------------------------------------------------
 Kipi-plugins NEW FEATURES
-
+PrintWizard    : caption can contain more exif info 
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 151578 : BatchProcess : Popup window says "Cannot run properly 'convert' program 
                                 from 'ImageMagick' package" but it seems fine. (really fixed)
-002 ==>
-
+002 ==> 98225  : PrintWizard  : Printing and displaying exif information over the picture
+003 ==>
 
 v 0.1.5 - RC1
 ---------------------------------------------------------------------------
