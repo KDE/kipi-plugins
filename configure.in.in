@@ -233,7 +233,7 @@ KIPI_PLUGIN_PRE([galleryexport], [Remote Gallery Export])
 KIPI_PLUGIN_PRE([gpssync], [GPS Synchronization])
 KIPI_PLUGIN_PRE([htmlexport], [HTML Gallery], [xslt])
 #KIPI_PLUGIN_PRE([imagesgallery], [Images Gallery])      # ???
-KIPI_PLUGIN_PRE([imageviewer], [Viewer])
+KIPI_PLUGIN_PRE([imageviewer], [Viewer], [opengl])
 KIPI_PLUGIN_PRE([ipodexport], [iPod Export], [libgpod])
 KIPI_PLUGIN_PRE([jpeglossless], [JPEG Lossless]) # Does it depend on tiff?
 KIPI_PLUGIN_PRE([kameraklient], [Kamera Klient], [gphoto])
