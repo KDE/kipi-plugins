@@ -104,18 +104,28 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, WFlags fl )
     QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout());
 
     // ------------------------------------------------------------------------
+    m_captTitleCheckBox = new QCheckBox(optionsBox);
+    m_captTitleCheckBox->setText(i18n("Comment sets Title"));
+    optionsBoxLayout->addMultiCellWidget(m_captTitleCheckBox, 0, 0, 0, 1);
+
+    m_captDescrCheckBox = new QCheckBox(optionsBox);
+    m_captDescrCheckBox->setText(i18n("Comment sets Description"));
+    optionsBoxLayout->addMultiCellWidget(m_captDescrCheckBox, 1, 1, 0, 1);
 
     m_resizeCheckBox = new QCheckBox(optionsBox);
     m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
-    optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox, 0, 0, 0, 1);
+    optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox, 2, 2, 0, 1);
 
     m_dimensionSpinBox  = new QSpinBox(0, 5000, 10, optionsBox);
     m_dimensionSpinBox->setValue(600);
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    optionsBoxLayout->addWidget(m_dimensionSpinBox, 1, 1);
+    optionsBoxLayout->addWidget(m_dimensionSpinBox, 3, 1);
 
     QLabel* resizeLabel = new QLabel(i18n("Maximum dimension:"), optionsBox);
-    optionsBoxLayout->addWidget(resizeLabel, 1, 0);
+    optionsBoxLayout->addWidget(resizeLabel, 3, 0);
+
+    m_captTitleCheckBox->setChecked(true);
+    m_captDescrCheckBox->setChecked(false);
 
     m_resizeCheckBox->setChecked(false);
     m_dimensionSpinBox->setEnabled(false);

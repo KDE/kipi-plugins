@@ -66,6 +66,8 @@ private:
     QPushButton              *m_newAlbumBtn;
     QPushButton              *m_addPhotoBtn;
     QPushButton              *m_helpButton;
+    QCheckBox                *m_captTitleCheckBox;
+    QCheckBox                *m_captDescrCheckBox;
     QCheckBox                *m_resizeCheckBox;
     QSpinBox                 *m_dimensionSpinBox;
     GalleryTalker            *m_talker;

@@ -104,6 +104,8 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     m_photoView        = widget->m_photoView;
     m_newAlbumBtn      = widget->m_newAlbumBtn;
     m_addPhotoBtn      = widget->m_addPhotoBtn;
+    m_captTitleCheckBox = widget->m_captTitleCheckBox;
+    m_captDescrCheckBox = widget->m_captDescrCheckBox;
     m_resizeCheckBox   = widget->m_resizeCheckBox;
     m_dimensionSpinBox = widget->m_dimensionSpinBox;
 
@@ -157,6 +159,17 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
         m_resizeCheckBox->setChecked(false);
         m_dimensionSpinBox->setEnabled(false);
     }
+
+    if (config.readBoolEntry("Set title", true))
+        m_captTitleCheckBox->setChecked(true);
+    else
+        m_captTitleCheckBox->setChecked(false);
+
+    if (config.readBoolEntry("Set description", false))
+        m_captDescrCheckBox->setChecked(true);
+    else
+        m_captDescrCheckBox->setChecked(false);
+
     m_dimensionSpinBox->setValue(config.readNumEntry("Maximum Width", 1600));
 
     QTimer::singleShot( 0, this,  SLOT( slotDoLogin() ) );
@@ -168,6 +181,8 @@ GalleryWindow::~GalleryWindow()
     KConfig config("kipirc");
     config.setGroup("GallerySync Settings");
     config.writeEntry("Resize", m_resizeCheckBox->isChecked());
+    config.writeEntry("Set title", m_captTitleCheckBox->isChecked());
+    config.writeEntry("Set description", m_captDescrCheckBox->isChecked());
     config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
 
     delete m_progressDlg;
@@ -575,6 +590,8 @@ void GalleryWindow::slotAddPhotoNext()
 
     bool res = m_talker->addPhoto( m_lastSelectedAlbum, pathComments.first,
                                    pathComments.second,
+                                   m_captTitleCheckBox->isChecked(),
+                                   m_captDescrCheckBox->isChecked(),
                                    m_resizeCheckBox->isChecked(),
                                    m_dimensionSpinBox->value() );
     if (!res)

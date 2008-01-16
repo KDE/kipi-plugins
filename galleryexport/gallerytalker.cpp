@@ -190,6 +190,7 @@ void GalleryTalker::createAlbum( const QString& parentAlbumName,
 bool GalleryTalker::addPhoto( const QString& albumName,
                               const QString& photoPath,
                               const QString& caption,
+                              bool  captionIsTitle, bool captionIsDescription,
                               bool  rescale, int maxDim )
 {
     if (m_job)
@@ -208,7 +209,12 @@ bool GalleryTalker::addPhoto( const QString& albumName,
     form.addPair("set_albumName", albumName);
 
     if (!caption.isEmpty())
-      form.addPair("caption", caption);
+    {
+      if (captionIsTitle)
+         form.addPair("caption", caption);
+      if (captionIsDescription)
+         form.addPair("extrafield.Description", caption);
+    }
     QImage image(photoPath);
 
     if (!image.isNull())

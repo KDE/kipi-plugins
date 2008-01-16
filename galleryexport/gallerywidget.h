@@ -49,6 +49,8 @@ private:
     KHTMLPart*    m_photoView;
     QPushButton*  m_newAlbumBtn;
     QPushButton*  m_addPhotoBtn;
+    QCheckBox*    m_captTitleCheckBox;
+    QCheckBox*    m_captDescrCheckBox;
     QCheckBox*    m_resizeCheckBox;
     QSpinBox*     m_dimensionSpinBox;
 

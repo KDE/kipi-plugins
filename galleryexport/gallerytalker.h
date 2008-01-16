@@ -71,6 +71,7 @@ public:
     bool addPhoto( const QString& albumName,
                    const QString& photoPath,
                    const QString& caption=QString(),
+                   bool  captionIsTitle=true, bool captionIsDescription=false,
                    bool rescale=false, int maxDim=600);
 
     void cancel();
