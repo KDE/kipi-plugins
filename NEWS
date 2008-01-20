@@ -9,7 +9,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 151578 : BatchProcess : Popup window says "Cannot run properly 'convert' program 
                                 from 'ImageMagick' package" but it seems fine. (really fixed)
-002 ==>
+002 ==> 155084 : PrintWizard  : Printing comments and EXIF tags
+003 ==> 
 
 v 0.1.5 - RC1
 ---------------------------------------------------------------------------
