@@ -17,6 +17,7 @@ Name[sr]=Оквири
 Name[sr@Latn]=Okviri
 Name[sv]=Ramar
 Name[xx]=xxFramesxx
+Name[zh_CN]=像框
 Comment=A frame theme
 Comment[ca]=Un tema de marcs
 Comment[da]=Et tema med rammer
@@ -37,6 +38,7 @@ Comment[sr]=Тема оквира
 Comment[sr@Latn]=Tema okvira
 Comment[sv]=Ett tema med ramar
 Comment[xx]=xxA frame themexx
+Comment[zh_CN]=像框主题
 
 [X-HTMLExport Author]
 Name=Ruediger Bente
