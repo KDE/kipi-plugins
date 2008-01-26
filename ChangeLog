@@ -4757,7 +4757,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r594789] gpssync/gpssyncdialog.cpp,
 	  gpssync/kipiplugin_gpssync.desktop, gpssync/plugin_gpssync.cpp:
-	  kipi-plugins from trunk : using 'geolocalization' to naming
+	  kipi-plugins from trunk : using 'geolocation' to naming
 	  GPSSync plugin on hosts.
 	  BUG: 135353
 
