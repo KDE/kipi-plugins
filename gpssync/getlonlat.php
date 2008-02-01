@@ -8,7 +8,7 @@
  * Description : a php script to show GPS locator world map
  *               this script is used by GPSSync kipi-plugin.
  *
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * Notes : This script use Google Map API version 2:
  *         http://www.google.com/apis/maps/documentation
@@ -42,6 +42,13 @@
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAy_Vv5rc03ctmYvwfsuTH6RSK29CRGKrdb78LNYpP1_riKtR3zRRxy4unyuWAi2vp7m1isLwuHObXDg" 
 type="text/javascript">
 </script>
+<style type="text/css">
+      @import url("http://www.google.com/uds/css/gsearch.css");
+      @import url("http://www.google.com/uds/solutions/localsearch/gmlocalsearch.css");
+      }
+</style>
+<script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0" type="text/javascript"></script>
+<script src="http://www.google.com/uds/solutions/localsearch/gmlocalsearch.js" type="text/javascript"></script>
 
 <style type="text/css">
     /*<![CDATA[*/
@@ -58,9 +65,13 @@ type="text/javascript">
 function loadMap()
 {
     var map = new GMap2(document.getElementById("map"));
+    var searchoptions = {
+      suppressInitialResultSelection : true
+    };
     map.addControl(new GLargeMapControl());
     map.addControl(new GMapTypeControl());
     map.addControl(new GScaleControl());
+    map.addControl(new google.maps.LocalSearch(searchoptions), new GControlPosition(G_ANCHOR_BOTTOM_RIGHT, new GSize(10,20)));
 
 <?php
     echo "map.setCenter(new GLatLng(";
