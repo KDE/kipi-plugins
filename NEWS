@@ -13,7 +13,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
                                 from 'ImageMagick' package" but it seems fine. (really fixed)
 002 ==> 155084 : PrintWizard  : Printing comments and EXIF tags.
 003 ==> 155371 : Add search feature to the embedded GPS Sync Google Maps based editor.
-004 ==> 
+004 ==> 102021 : SlideShow    : Pan and Zoom on Slideshow viewing (not a transition) a la iPhoto
 
 v 0.1.5 - RC1
 ---------------------------------------------------------------------------

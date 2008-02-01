@@ -1,3 +1,739 @@
+V 0.1.5-rc2 - 2008-02-01
+----------------------------------------------------------------------------
+2008-02-01 21:00  cgilles
+
+	* [r769693] kipi-plugins/NEWS:
+	  update
+
+2008-02-01 20:58  cgilles
+
+	* [r769692] kipi-plugins/gpssync/getlonlat.php:
+	  kipi-plugins from KDE3 branch : added Google Search widget in the
+	  map to perform fast jump to location
+	  Thanks to Trevino for this patch.
+	  BUG: 155371
+	  CCMAIL: trevi55@gmail.com
+
+2008-01-16 21:21  cguthrie
+
+	* [r762358] kipi-plugins/galleryexport/gallerytalker.cpp,
+	  kipi-plugins/galleryexport/gallerytalker.h,
+	  kipi-plugins/galleryexport/gallerywidget.cpp,
+	  kipi-plugins/galleryexport/gallerywidget.h,
+	  kipi-plugins/galleryexport/gallerywindow.cpp,
+	  kipi-plugins/galleryexport/gallerywindow.h:
+	  Add the ability to set the title and/or description of the
+	  uploaded images.
+	  Thanks to Tom Kliethermes for the patch.
+	  BUG: 153456
+
+2008-01-15 20:14  kusi
+
+	* [r761975] kipi-plugins/configure.in.in:
+	  disable imageviewer if no opengl is available
+
+2008-01-10 22:38  anaselli
+
+	* [r759603] kipi-plugins/printwizard/frmprintwizard.cpp,
+	  kipi-plugins/printwizard/frmprintwizard.h,
+	  kipi-plugins/printwizard/frmprintwizardbase.ui:
+	  printwizard now can print more exif info on caption
+	  BUG: 98225
+
+2008-01-04 12:44  cgilles
+
+	* [r757195]
+	  kipi-plugins/batchprocessimages/batchprocessimagesdialog.cpp:
+	  check if ImageMagick command line is exit normally when process
+	  is done, not just fater to startup it.
+	  
+	  BUG: 151578
+
+2008-01-01 21:47  cgilles
+
+	* [r755591] kipi-plugins/imageviewer/texture.cpp,
+	  kipi-plugins/jpeglossless/utils.cpp,
+	  kipi-plugins/printwizard/tphoto.cpp,
+	  kipi-plugins/rawconverter/plugin_rawconverter.cpp,
+	  kipi-plugins/sendimages/sendimages.cpp:
+	  prevert : plugins must still compilable with last stable release
+	  of libkdcraw until kipi-plugins will be released
+
+2008-01-01 20:03  cgilles
+
+	* [r755539] kipi-plugins/imageviewer/texture.cpp,
+	  kipi-plugins/jpeglossless/utils.cpp,
+	  kipi-plugins/printwizard/tphoto.cpp,
+	  kipi-plugins/rawconverter/plugin_rawconverter.cpp,
+	  kipi-plugins/sendimages/sendimages.cpp,
+	  libkdcraw/libkdcraw/dcrawbinary.cpp,
+	  libkdcraw/libkdcraw/dcrawbinary.h:
+	  new method to get raw files extension string depending of the
+	  libkdcraw version installled on computer.
+
+2007-12-29 13:19  coolo
+
+	* [r754274] kipi-plugins/jpeglossless/imagerotate.cpp,
+	  kipi-plugins/jpeglossless/jpegtransform.cpp:
+	  speed up autorotate of a full album in not touching files
+	  that do not need touching
+
+2007-12-27 01:29  kusi
+
+	* [r753251] kipi-plugins/imageviewer/help.ui:
+	  move HelpDialog into namespace
+
+2007-12-26 21:18  kusi
+
+	* [r753201] kipi-plugins/imageviewer/texture.cpp,
+	  kipi-plugins/imageviewer/viewerwidget.cpp:
+	  zooming is performed with an image with a reduced resolution. the
+	  downsampled img seemed to have a small offset.
+	  reason: the texels were aligned at the upper left corner instead
+	  of its center point.
+
+2007-12-18 19:49  kusi
+
+	* [r750144] kipi-plugins/imageviewer/viewerwidget.cpp:
+	  improve caching: preload 2nd image in startup sequence
+
+2007-12-18 19:27  kusi
+
+	* [r750135] kipi-plugins/imageviewer/Makefile.am,
+	  kipi-plugins/imageviewer/ogl.cpp, kipi-plugins/imageviewer/ogl.h,
+	  kipi-plugins/imageviewer/plugin_viewer.cpp,
+	  kipi-plugins/imageviewer/plugin_viewer.h,
+	  kipi-plugins/imageviewer/viewerwidget.cpp,
+	  kipi-plugins/imageviewer/viewerwidget.h:
+	  refactoring: rename class ogl to ViewerWidget
+
+2007-12-18 18:29  kusi
+
+	* [r750124] kipi-plugins/imageviewer/ogl.cpp:
+	  make help dialog stay on top (modal=true doesn't work since the
+	  help dialog becomes modal to the host app and not to the plugin)
+
+2007-12-17 23:59  kusi
+
+	* [r749829] kipi-plugins/imageviewer/help.ui:
+	  revert modal dialog to modeless. the dialog must not be modal to
+	  the hostapp but to the plugin. I'll solve that later
+
+2007-12-17 21:51  kusi
+
+	* [r749786] kipi-plugins/imageviewer/help.ui,
+	  kipi-plugins/imageviewer/ogl.cpp, kipi-plugins/imageviewer/ogl.h,
+	  kipi-plugins/imageviewer/plugin_viewer.cpp,
+	  kipi-plugins/imageviewer/plugin_viewer.h,
+	  kipi-plugins/imageviewer/texture.cpp,
+	  kipi-plugins/imageviewer/texture.h,
+	  kipi-plugins/imageviewer/timer.cpp,
+	  kipi-plugins/imageviewer/timer.h:
+	  - big cleanup, make code readable
+	  - set CACHESIZE from 3 to 4
+	  - make help dialog modal
+
+2007-12-17 18:11  kusi
+
+	* [r749724] kipi-plugins/imageviewer/ogl.cpp:
+	  pressing SHIFT doesn't open help dialog anymore.
+	  Bug 154244 on b.k.o
+
+2007-12-14 06:32  gkulzer
+
+	* [r748311] kipi-plugins/gpssync/gpssyncdialog.cpp:
+	  i18n polish
+
+2007-12-13 15:02  anaselli
+
+	* [r748080] kipi-plugins/mpegencoder/images2mpg:
+	  Added a check that programs needed are in the system
+	  CCBUG: 153962
+
+2007-12-11 13:18  cgilles
+
+	* [r747251] kipi-plugins/gpssync/gpssyncdialog.cpp:
+	  polish
+
+2007-12-11 13:18  cgilles
+
+	* [r747249] kipi-plugins/NEWS:
+	  update
+
+2007-12-11 13:17  cgilles
+
+	* [r747248] kipi-plugins/gpssync/gpssyncdialog.cpp:
+	  GPSSync kipi-plugin from KDE3 branch : increase limit of max time
+	  gap to 1000000, not 999
+	  BUG: 150114
+
+2007-12-11 13:03  cgilles
+
+	* [r747242] kipi-plugins/NEWS:
+	  update
+
+2007-12-11 13:02  cgilles
+
+	* [r747241] kipi-plugins/gpssync/gpsdataparser.cpp,
+	  kipi-plugins/gpssync/gpsdataparser.h,
+	  kipi-plugins/gpssync/gpslistviewitem.cpp,
+	  kipi-plugins/gpssync/gpslistviewitem.h,
+	  kipi-plugins/gpssync/gpssyncdialog.cpp:
+	  GPSSync kipi-plugin from KDE3 branch : add full list of time zone
+	  available over the world.
+	  
+	  Gerhard, can you test with a GPS trace generated by your GPS
+	  device if all work fine for you. Thanks in advance...
+	  
+	  BUG: 149491
+	  CCMAIL: gerhard@kulzer.net
+
+2007-12-11 11:37  orgads
+
+	* [r747219] kipi-plugins/calendar/calformatter.cpp:
+	  * recurring events now shows also on the first and last days of
+	  the year
+
+2007-12-11 09:25  orgads
+
+	* [r747183] kipi-plugins/calendar/calformatter.cpp,
+	  kipi-plugins/calendar/calselect.cpp,
+	  kipi-plugins/calendar/calwizard.cpp:
+	  * fixed recurring events not showing (only first date was showed)
+	  * setting special events only once (before printing), instead of
+	  once for every page
+
+2007-12-11 09:02  cgilles
+
+	* [r747174] kipi-plugins/NEWS:
+	  update
+
+2007-12-11 08:57  cgilles
+
+	* [r747172] kipi-plugins/gpssync/gpslistviewitem.cpp,
+	  kipi-plugins/gpssync/gpslistviewitem.h,
+	  kipi-plugins/gpssync/gpssyncdialog.cpp,
+	  kipi-plugins/gpssync/gpssyncdialog.h:
+	  GPSSync kipi-plugins from KDE3 branch : Use only one KIOslave to
+	  handle images preview
+	  BUG: 152215
+
+2007-11-22 19:40  cgilles
+
+	* [r740198] kipi-plugins/cdarchiving/cdarchivingdialog.cpp,
+	  kipi-plugins/findimages/displaycompare.cpp,
+	  kipi-plugins/findimages/finddupplicatedialog.cpp,
+	  kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpssyncdialog.cpp,
+	  kipi-plugins/gpssync/kmlexportconfig.cpp,
+	  kipi-plugins/kipiplugins.kdevelop:
+	  optimize layout: remove line on bottom of dialogs
+
+2007-11-22 17:35  cgilles
+
+	* [r740158] kipi-plugins/acquireimages/acquireimagedialog.cpp,
+	  kipi-plugins/acquireimages/acquireimagedialog.h,
+	  kipi-plugins/acquireimages/plugin_acquireimages.cpp,
+	  kipi-plugins/acquireimages/plugin_acquireimages.h,
+	  kipi-plugins/acquireimages/screenshotdialog.cpp,
+	  kipi-plugins/acquireimages/screenshotdialog.h:
+	  fix header
+
+2007-11-22 17:23  cgilles
+
+	* [r740151] kipi-plugins/acquireimages/acquireimagedialog.cpp,
+	  kipi-plugins/acquireimages/screenshotdialog.cpp:
+	  layout optimization : no separator on bottom of dialogs
+
+2007-11-21 15:09  cgilles
+
+	* [r739683] kipi-plugins/sendimages/listimageserrordialog.cpp:
+	  rm header
+
+2007-11-21 15:08  cgilles
+
+	* [r739682] kipi-plugins/calendar/calwizard.cpp:
+	  rm header
+
+2007-11-21 15:08  cgilles
+
+	* [r739681] kipi-plugins/kameraklient/cameraselection.cpp,
+	  kipi-plugins/kameraklient/cameraui.cpp,
+	  kipi-plugins/kameraklient/setupcamera.cpp:
+	  rm header
+
+2007-11-21 15:07  cgilles
+
+	* [r739680] kipi-plugins/findimages/displaycompare.cpp:
+	  rm header
+
+2007-11-21 15:05  cgilles
+
+	* [r739679] kipi-plugins/batchprocessimages/imagepreview.cpp,
+	  kipi-plugins/batchprocessimages/outputdialog.cpp:
+	  rm header
+
+2007-11-21 14:54  cgilles
+
+	* [r739672] kipi-plugins/ipodexport/ipodexportdialog.cpp:
+	  rm header
+
+2007-11-21 14:53  cgilles
+
+	* [r739667] kipi-plugins/acquireimages/screenshotdialog.cpp:
+	  rm header
+
+2007-11-21 14:50  cgilles
+
+	* [r739665] kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  rm header
+
+2007-11-21 11:38  cgilles
+
+	* [r739599] kipi-plugins/calendar/calselect.cpp,
+	  kipi-plugins/calendar/caltemplate.cpp,
+	  kipi-plugins/calendar/calwizard.cpp:
+	  rm header
+
+2007-11-21 11:26  cgilles
+
+	* [r739592] kipi-plugins/mpegencoder/kimg2mpgbase.ui:
+	  rm frame
+
+2007-11-21 11:16  cgilles
+
+	* [r739589] kipi-plugins/slideshow/slideshowconfigbase.ui:
+	  rm frame
+
+2007-11-19 21:44  cgilles
+
+	* [r738866] kipi-plugins/gpssync/kmlexportconfig.cpp:
+	  polish
+
+2007-11-19 21:41  cgilles
+
+	* [r738863] kipi-plugins/gpssync/gpssyncdialog.cpp:
+	  polish
+
+2007-11-19 21:09  cgilles
+
+	* [r738848]
+	  kipi-plugins/batchprocessimages/batchprocessimagesdialog.cpp:
+	  missing to apply a part of Pawel patch here...
+	  
+	  CCBUGS: 151578
+
+2007-11-19 20:50  cgilles
+
+	* [r738842] kipi-plugins/NEWS:
+	  update
+
+2007-11-19 20:49  cgilles
+
+	* [r738840]
+	  kipi-plugins/batchprocessimages/convertimagesdialog.cpp:
+	  Kipi-plugins from KDE3 branch : Batch Process : restore metadata
+	  properlly with JPEG file during conversion.
+	  Pawel, This patch sound like properlly under KDE3.5, but not
+	  under KDE 3.4. I suspect a bug in KProcess or something like
+	  that.
+	  BUG: 152210
+
+2007-11-19 16:00  cgilles
+
+	* [r738760] kipi-plugins/NEWS:
+	  update
+
+2007-11-19 15:59  cgilles
+
+	* [r738759] kipi-plugins/batchprocessimages/Makefile.am,
+	  kipi-plugins/batchprocessimages/batchprocessimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimagesdialog.h,
+	  kipi-plugins/batchprocessimages/convertimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/convertimagesdialog.h,
+	  kipi-plugins/batchprocessimages/imagepreview.cpp:
+	  Do not test is KProcess is out imediatly.
+	  BUG: 151578
+
+2007-11-19 13:40  cgilles
+
+	* [r738699]
+	  kipi-plugins/batchprocessimages/batchprocessimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimagesitem.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimageslist.cpp,
+	  kipi-plugins/batchprocessimages/borderimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/borderoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/colorimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/coloroptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/convertimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/convertoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/effectimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/effectoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/filterimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/filteroptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/imagepreview.cpp,
+	  kipi-plugins/batchprocessimages/outputdialog.cpp,
+	  kipi-plugins/batchprocessimages/plugin_batchprocessimages.cpp,
+	  kipi-plugins/batchprocessimages/recompressimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/recompressoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/renameimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/renameimageswidget.cpp,
+	  kipi-plugins/batchprocessimages/resizeimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/resizeoptionsdialog.cpp:
+	  polish
+
+2007-11-19 13:26  cgilles
+
+	* [r738696]
+	  kipi-plugins/batchprocessimages/batchprocessimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimagesdialog.h,
+	  kipi-plugins/batchprocessimages/batchprocessimagesitem.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimagesitem.h,
+	  kipi-plugins/batchprocessimages/batchprocessimageslist.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimageslist.h,
+	  kipi-plugins/batchprocessimages/borderimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/borderimagesdialog.h,
+	  kipi-plugins/batchprocessimages/borderoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/borderoptionsdialog.h,
+	  kipi-plugins/batchprocessimages/colorimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/colorimagesdialog.h,
+	  kipi-plugins/batchprocessimages/coloroptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/coloroptionsdialog.h,
+	  kipi-plugins/batchprocessimages/convertimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/convertimagesdialog.h,
+	  kipi-plugins/batchprocessimages/convertoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/convertoptionsdialog.h,
+	  kipi-plugins/batchprocessimages/effectimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/effectimagesdialog.h,
+	  kipi-plugins/batchprocessimages/effectoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/effectoptionsdialog.h,
+	  kipi-plugins/batchprocessimages/filterimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/filterimagesdialog.h,
+	  kipi-plugins/batchprocessimages/filteroptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/filteroptionsdialog.h,
+	  kipi-plugins/batchprocessimages/imagepreview.cpp,
+	  kipi-plugins/batchprocessimages/imagepreview.h,
+	  kipi-plugins/batchprocessimages/outputdialog.cpp,
+	  kipi-plugins/batchprocessimages/outputdialog.h,
+	  kipi-plugins/batchprocessimages/plugin_batchprocessimages.cpp,
+	  kipi-plugins/batchprocessimages/plugin_batchprocessimages.h,
+	  kipi-plugins/batchprocessimages/recompressimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/recompressimagesdialog.h,
+	  kipi-plugins/batchprocessimages/recompressoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/recompressoptionsdialog.h,
+	  kipi-plugins/batchprocessimages/renameimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/renameimagesdialog.h,
+	  kipi-plugins/batchprocessimages/renameimageswidget.cpp,
+	  kipi-plugins/batchprocessimages/renameimageswidget.h,
+	  kipi-plugins/batchprocessimages/resizeimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/resizeimagesdialog.h,
+	  kipi-plugins/batchprocessimages/resizeoptionsdialog.cpp,
+	  kipi-plugins/batchprocessimages/resizeoptionsdialog.h:
+	  fix header
+
+2007-11-17 04:06  vfuoglio
+
+	* [r737715] kipi-plugins/slideshow/slideshowconfig.cpp:
+	  Fixed OpenGL effect selection issue.
+	  
+	  Not reported in NEWS file: bug introduced in svn (rev. 736830)
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2007-11-16 14:26  cgilles
+
+	* [r737556] kipi-plugins/slideshow/slideshowkb.cpp:
+	  fix warning
+
+2007-11-16 06:44  cgilles
+
+	* [r737340] kipi-plugins/slideshow/toolbar.cpp:
+	  polish
+
+2007-11-15 17:20  cgilles
+
+	* [r737161] kipi-plugins/slideshow/toolbar.h:
+	  polish
+
+2007-11-15 17:18  cgilles
+
+	* [r737160] kipi-plugins/slideshow/slideshow.cpp,
+	  kipi-plugins/slideshow/slideshow.h,
+	  kipi-plugins/slideshow/slideshowconfig.cpp:
+	  fix indent
+
+2007-11-15 17:05  cgilles
+
+	* [r737156] kipi-plugins/slideshow/listimageitems.cpp,
+	  kipi-plugins/slideshow/listimageitems.h:
+	  fix indent
+
+2007-11-15 14:52  cgilles
+
+	* [r737120] kipi-plugins/slideshow/toolbar.cpp,
+	  kipi-plugins/slideshow/toolbar.h:
+	  Valerio, Slideshow polish is now complete. Ready to start KDE4
+	  port...
+	  
+	  CCMAIL: valerio.fuoglio@gmail.com
+
+2007-11-15 14:48  cgilles
+
+	* [r737119] kipi-plugins/slideshow/imageloadthread.cpp,
+	  kipi-plugins/slideshow/slideshowloader.cpp,
+	  kipi-plugins/slideshow/slideshowloader.h:
+	  polish
+
+2007-11-15 14:44  cgilles
+
+	* [r737117] kipi-plugins/slideshow/slideshowkb.cpp,
+	  kipi-plugins/slideshow/slideshowkb.h:
+	  polish
+
+2007-11-15 14:38  cgilles
+
+	* [r737113] kipi-plugins/slideshow/slideshow.cpp,
+	  kipi-plugins/slideshow/slideshow.h:
+	  polish
+
+2007-11-15 14:31  cgilles
+
+	* [r737111] kipi-plugins/slideshow/slideshowconfig.cpp,
+	  kipi-plugins/slideshow/slideshowconfig.h:
+	  polish
+
+2007-11-15 14:21  cgilles
+
+	* [r737108] kipi-plugins/slideshow/screenproperties.cpp,
+	  kipi-plugins/slideshow/screenproperties.h:
+	  polish
+
+2007-11-15 14:17  cgilles
+
+	* [r737107] kipi-plugins/slideshow/plugin_slideshow.cpp,
+	  kipi-plugins/slideshow/plugin_slideshow.h:
+	  polish
+
+2007-11-15 14:08  cgilles
+
+	* [r737104] kipi-plugins/slideshow/listimageitems.cpp,
+	  kipi-plugins/slideshow/listimageitems.h:
+	  polish
+
+2007-11-15 13:58  cgilles
+
+	* [r737101] kipi-plugins/slideshow/kbeffect.cpp,
+	  kipi-plugins/slideshow/kbeffect.h:
+	  polish
+
+2007-11-15 13:55  cgilles
+
+	* [r737099] kipi-plugins/printwizard/Makefile.am:
+	  compile. Mising libkdcraw header path
+
+2007-11-15 13:53  cgilles
+
+	* [r737098] kipi-plugins/slideshow/imageloadthread.cpp,
+	  kipi-plugins/slideshow/imageloadthread.h:
+	  Code polishing :
+	  
+	  - Header revamping following tip from Achim.
+	  - Always put the .moc includes with the list on local includes
+	  files. This must be the last one.
+	  - In header, place declaration in right order. It's more readable
+	  : public, signals, protected, private.
+	  
+	  Valerio, when you can, i recommend you to use a "d" private class
+	  everywhere to host all private member. This will speedup
+	  compilation and reduce
+	  depencies between other sources file (in a library, this way
+	  improve binary compatibility)
+	  
+	  CCMAIL: valerio.fuoglio@gmail.com
+
+2007-11-14 23:15  vfuoglio
+
+	* [r736830] kipi-plugins/NEWS, kipi-plugins/slideshow/Makefile.am,
+	  kipi-plugins/slideshow/imageloadthread.cpp,
+	  kipi-plugins/slideshow/imageloadthread.h,
+	  kipi-plugins/slideshow/kbeffect.cpp,
+	  kipi-plugins/slideshow/kbeffect.h,
+	  kipi-plugins/slideshow/plugin_slideshow.cpp,
+	  kipi-plugins/slideshow/screenproperties.cpp,
+	  kipi-plugins/slideshow/screenproperties.h,
+	  kipi-plugins/slideshow/slideshowconfig.cpp,
+	  kipi-plugins/slideshow/slideshowconfig.h,
+	  kipi-plugins/slideshow/slideshowconfigbase.ui,
+	  kipi-plugins/slideshow/slideshowgl.cpp,
+	  kipi-plugins/slideshow/slideshowkb.cpp,
+	  kipi-plugins/slideshow/slideshowkb.h:
+	  Added Ken Burns effect.
+	  Backported some code from SmoothSlideSaver (by Carsten Weinhold).
+	  
+	  Next step: port SlideShow to KDE4.
+	  
+	  BUG: 102021
+	  CCMAIL: kde-imaging@kde.org
+	  GUI:
+
+2007-11-11 19:57  vfuoglio
+
+	* [r735465] kipi-plugins/NEWS, kipi-plugins/slideshow/Makefile.am,
+	  kipi-plugins/slideshow/plugin_slideshow.cpp,
+	  kipi-plugins/slideshow/plugin_slideshow.h,
+	  kipi-plugins/slideshow/slideshow.cpp,
+	  kipi-plugins/slideshow/slideshow.h,
+	  kipi-plugins/slideshow/slideshowconfig.cpp,
+	  kipi-plugins/slideshow/slideshowconfig.h,
+	  kipi-plugins/slideshow/slideshowconfigbase.ui,
+	  kipi-plugins/slideshow/slideshowgl.cpp,
+	  kipi-plugins/slideshow/slideshowgl.h,
+	  kipi-plugins/slideshow/slideshowloader.cpp,
+	  kipi-plugins/slideshow/slideshowloader.h,
+	  kipi-plugins/slideshow/toolbar.cpp,
+	  kipi-plugins/slideshow/toolbar.h:
+	  Added new caching mechanism.
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2007-11-11 13:51  vfuoglio
+
+	* [r735366] kipi-plugins/NEWS,
+	  kipi-plugins/slideshow/slideshow.cpp:
+	  Solved minor issue in filename printing (2D slideshow).
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2007-11-09 21:56  anaselli
+
+	* [r734760] kipi-plugins/printwizard/Makefile.am,
+	  kipi-plugins/printwizard/frmprintwizard.cpp,
+	  kipi-plugins/printwizard/tphoto.cpp,
+	  kipi-plugins/printwizard/tphoto.h:
+	  Added raw file management with libkdcraw dependency
+	  BUG: 151604
+
+2007-11-08 21:21  cgilles
+
+	* [r734435] kipi-plugins/sendimages/sendimagesdialog.cpp:
+	  this is just a string, not a path
+
+2007-11-08 14:14  cgilles
+
+	* [r734300] kipi-plugins/sendimages/sendimagesdialog.cpp:
+	  missing i18n
+
+2007-11-07 13:05  cgilles
+
+	* [r733882] kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp:
+	  do not use UF8 encoding in source code
+
+2007-10-28 10:59  cgilles
+
+	* [r730285] kipi-plugins/AUTHORS:
+	  update
+
+2007-10-28 10:58  cgilles
+
+	* [r730283] kipi-plugins/AUTHORS,
+	  kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp:
+	  fix email
+
+2007-10-28 10:37  cgilles
+
+	* [r730275] kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp:
+	  fix credits
+
+2007-10-27 18:36  cgilles
+
+	* [r730045] kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp:
+	  polish
+
+2007-10-27 16:53  cgilles
+
+	* [r730007] kipi-plugins/sendimages/actions.h,
+	  kipi-plugins/sendimages/listimageserrordialog.h,
+	  kipi-plugins/sendimages/plugin_sendimages.cpp,
+	  kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimages.h:
+	  polish
+
+2007-10-27 16:29  cgilles
+
+	* [r729994] kipi-plugins/gpssync/kmlexport.cpp:
+	  polish
+
+2007-10-27 14:24  cgilles
+
+	* [r729962] kipi-plugins/gpssync/kmlgpsdataparser.cpp,
+	  kipi-plugins/gpssync/kmlgpsdataparser.h:
+	  polish
+
+2007-10-27 14:21  cgilles
+
+	* [r729960] kipi-plugins/gpssync/kmlexportconfig.h:
+	  polish
+
+2007-10-27 14:16  cgilles
+
+	* [r729958] kipi-plugins/gpssync/kmlexport.cpp,
+	  kipi-plugins/gpssync/kmlexport.h:
+	  polish
+
+2007-10-27 12:42  cgilles
+
+	* [r729929] kipi-plugins/gpssync/getlonlat.php,
+	  kipi-plugins/gpssync/gpsbabelbinary.cpp,
+	  kipi-plugins/gpssync/gpsbabelbinary.h,
+	  kipi-plugins/gpssync/gpsdatacontainer.h,
+	  kipi-plugins/gpssync/gpsdataparser.cpp,
+	  kipi-plugins/gpssync/gpsdataparser.h,
+	  kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpseditdialog.h,
+	  kipi-plugins/gpssync/gpslistviewitem.cpp,
+	  kipi-plugins/gpssync/gpslistviewitem.h,
+	  kipi-plugins/gpssync/gpsmapwidget.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.h,
+	  kipi-plugins/gpssync/gpssyncdialog.cpp,
+	  kipi-plugins/gpssync/gpssyncdialog.h,
+	  kipi-plugins/gpssync/kmlexportconfig.cpp,
+	  kipi-plugins/gpssync/kmlexportconfig.h:
+	  prepare to port to KDE4 : polish and fix header
+
+2007-10-27 12:41  cgilles
+
+	* [r729928] kipi-plugins/sendimages/actions.h,
+	  kipi-plugins/sendimages/listimageserrordialog.cpp,
+	  kipi-plugins/sendimages/listimageserrordialog.h,
+	  kipi-plugins/sendimages/plugin_sendimages.cpp,
+	  kipi-plugins/sendimages/plugin_sendimages.h,
+	  kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimages.h,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.h:
+	  prepare to port to KDE4 : polish and fix header
+
+2007-10-21 10:45  hasso
+
+	* [r727631] kipi-plugins/gpssync/kmlexport.cpp,
+	  kipi-plugins/jpeglossless/utils.cpp,
+	  kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  Correct includes. For getpid(2) is required, and sys/types.h has
+	  to be
+	  included before utime.h.
+	  
+	  Fixes compile problems in DragonFly BSD.
+
+2007-10-09 07:36  cgilles
+
+	* [r723280] kipi-plugins/metadataedit/iptcorigin.cpp:
+	  polish
+
+----------------------------------------------------------------------------
 V 0.1.5-rc1 - 2007-12-29
 ----------------------------------------------------------------------------
 2007-12-29 13:19  coolo
