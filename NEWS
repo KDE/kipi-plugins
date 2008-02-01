@@ -2,18 +2,22 @@ Note: for details and info about current version, see ChangeLog.
 
 v 0.1.5 - RC2
 ---------------------------------------------------------------------------
+
 Kipi-plugins NEW FEATURES
+
 PrintWizard    : caption can contain more exif info 
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 151578 : BatchProcess : Popup window says "Cannot run properly 'convert' program 
                                 from 'ImageMagick' package" but it seems fine. (really fixed)
-002 ==> 155084 : PrintWizard  : Printing comments and EXIF tags
-003 ==> 
+002 ==> 155084 : PrintWizard  : Printing comments and EXIF tags.
+003 ==> 155371 : Add search feature to the embedded GPS Sync Google Maps based editor.
+004 ==> 
 
 v 0.1.5 - RC1
 ---------------------------------------------------------------------------
+
 Kipi-plugins NEW FEATURES
 
 General        : Added the availability to disable plugins we don't want to build.
@@ -46,6 +50,7 @@ v 0.1.5 - Beta1
 ----------------------------------------------------------------------------
 
 Kipi-plugins NEW FEATURES
+
 General        : Added configure options to allow disabling plugins (--disable-XXXX)
                  provided by Matej Laitl (bug #149666)
 
