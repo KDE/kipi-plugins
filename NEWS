@@ -1,5 +1,15 @@
 Note: for details and info about current version, see ChangeLog.
 
+v 0.1.5
+---------------------------------------------------------------------------
+
+Kipi-plugins NEW FEATURES
+
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
+001 ==> 155231 : GPSSync      : Timezones are assumed to be only in hourly increments/decrements of GMT.
+
 v 0.1.5 - RC2
 ---------------------------------------------------------------------------
 
@@ -12,7 +22,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 001 ==> 151578 : BatchProcess : Popup window says "Cannot run properly 'convert' program 
                                 from 'ImageMagick' package" but it seems fine. (really fixed)
 002 ==> 155084 : PrintWizard  : Printing comments and EXIF tags.
-003 ==> 155371 : Add search feature to the embedded GPS Sync Google Maps based editor.
+003 ==> 155371 : GPSSync      : Add search feature to the embedded GPS Sync Google Maps based editor.
 004 ==> 102021 : SlideShow    : Pan and Zoom on Slideshow viewing (not a transition) a la iPhoto
 
 v 0.1.5 - RC1
