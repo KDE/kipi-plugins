@@ -412,7 +412,7 @@ void GPSSyncDialog::slotUser1()
     QListViewItemIterator it( d->listView );
     while ( it.current() ) 
     {
-        GPSListViewItem *item = dynamic_cast<GPSListViewItem*>(d->listView->currentItem());
+        GPSListViewItem *item = dynamic_cast<GPSListViewItem*>(it.current());
         GPSDataContainer gpsData;
         QString tz = d->timeZoneCB->currentText();
         int hh     = QString(QString(tz[4])+QString(tz[5])).toInt();
