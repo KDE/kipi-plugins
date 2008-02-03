@@ -9,6 +9,8 @@ Kipi-plugins NEW FEATURES
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 155231 : GPSSync      : Timezones are assumed to be only in hourly increments/decrements of GMT.
+002 ==> 154849 : GPSsync      : updates first find only, does not match other than GMT camera time.
+002 ==> 
 
 v 0.1.5 - RC2
 ---------------------------------------------------------------------------
