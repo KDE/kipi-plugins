@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2006-09-19
- * Description : GPS data file parser. 
+ * Description : GPS data file parser.
  *               (GPX format http://www.topografix.com/gpx.asp).
  *
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -60,14 +60,14 @@ int GPSDataParser::numPoints()
     return m_GPSDataMap.count();
 }
 
-bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, int timeZone, 
+bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, int timeZone,
                               bool interpolate, int interpolationDstTime,
                               GPSDataContainer& gpsData)
 {
     // GPS device are sync in time by satelite using GMT time.
     // If the camera time is different than GMT time, we need to convert it to GMT time
     // Using the time zone.
-    QDateTime cameraGMTDateTime = photoDateTime.addSecs(timeZone*3600*(-1));
+    QDateTime cameraGMTDateTime = photoDateTime.addSecs(timeZone*(-1));
 
     kdDebug() << "cameraGMTDateTime: " << cameraGMTDateTime << endl;
 
@@ -79,7 +79,7 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
     for (GPSDataMap::Iterator it = m_GPSDataMap.begin();
          it != m_GPSDataMap.end(); ++it )
     {
-        // Here we check a possible accuracy in seconds between the 
+        // Here we check a possible accuracy in seconds between the
         // Camera GMT time and the GPS device GMT time.
 
         nbSecs = abs(cameraGMTDateTime.secsTo( it.key() ));
@@ -99,7 +99,7 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
 
     if (interpolate)
     {
-        // The interpolate GPS point will be separate by at the maximum of 'interpolationDstTime' 
+        // The interpolate GPS point will be separate by at the maximum of 'interpolationDstTime'
         // seconds before and after the next and previous real GPS point found.
 
         QDateTime prevDateTime = findPrevDate(cameraGMTDateTime, interpolationDstTime);
@@ -120,7 +120,7 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
             uint   t2   = nextDateTime.toTime_t();
             uint   tCor = cameraGMTDateTime.toTime_t();
 
-            if (tCor-t1 != 0)  
+            if (tCor-t1 != 0)
             {
                 gpsData.setAltitude(alt1  + (alt2-alt1) * (tCor-t1)/(t2-t1));
                 gpsData.setLatitude(lat1  + (lat2-lat1) * (tCor-t1)/(t2-t1));
@@ -136,7 +136,7 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
 
 QDateTime GPSDataParser::findNextDate(const QDateTime& dateTime, int secs)
 {
-    // We will find the item in GPS data list where the time is 
+    // We will find the item in GPS data list where the time is
     // at the maximum bigger than 'secs' mn of the value to match.
     QDateTime itemFound = dateTime.addSecs(secs);
     bool found = false;
@@ -151,7 +151,7 @@ QDateTime GPSDataParser::findNextDate(const QDateTime& dateTime, int secs)
                 itemFound = it.key();
                 found = true;
             }
-        } 
+        }
     }
 
     if (found)
@@ -162,7 +162,7 @@ QDateTime GPSDataParser::findNextDate(const QDateTime& dateTime, int secs)
 
 QDateTime GPSDataParser::findPrevDate(const QDateTime& dateTime, int secs)
 {
-    // We will find the item in GPS data list where the time is 
+    // We will find the item in GPS data list where the time is
     // at the maximum smaller than 'secs' mn of the value to match.
     QDateTime itemFound = dateTime.addSecs((-1)*secs);
     bool found = false;
@@ -177,7 +177,7 @@ QDateTime GPSDataParser::findPrevDate(const QDateTime& dateTime, int secs)
                 itemFound = it.key();
                 found = true;
             }
-        } 
+        }
     }
 
     if (found)
@@ -202,21 +202,21 @@ bool GPSDataParser::loadGPXFile(const KURL& url)
         return false;
 
     for (QDomNode nTrk = gpxDocElem.firstChild();
-         !nTrk.isNull(); nTrk = nTrk.nextSibling()) 
+         !nTrk.isNull(); nTrk = nTrk.nextSibling())
     {
         QDomElement trkElem = nTrk.toElement();
         if (trkElem.isNull()) continue;
         if (trkElem.tagName() != "trk") continue;
 
         for (QDomNode nTrkseg = trkElem.firstChild();
-            !nTrkseg.isNull(); nTrkseg = nTrkseg.nextSibling()) 
+            !nTrkseg.isNull(); nTrkseg = nTrkseg.nextSibling())
         {
             QDomElement trksegElem = nTrkseg.toElement();
             if (trksegElem.isNull()) continue;
             if (trksegElem.tagName() != "trkseg") continue;
 
             for (QDomNode nTrkpt = trksegElem.firstChild();
-                !nTrkpt.isNull(); nTrkpt = nTrkpt.nextSibling()) 
+                !nTrkpt.isNull(); nTrkpt = nTrkpt.nextSibling())
             {
                 QDomElement trkptElem = nTrkpt.toElement();
                 if (trkptElem.isNull()) continue;
@@ -237,18 +237,18 @@ bool GPSDataParser::loadGPXFile(const KURL& url)
 
                 // Get metadata of track point (altitude and time stamp)
                 for (QDomNode nTrkptMeta = trkptElem.firstChild();
-                    !nTrkptMeta.isNull(); nTrkptMeta = nTrkptMeta.nextSibling()) 
+                    !nTrkptMeta.isNull(); nTrkptMeta = nTrkptMeta.nextSibling())
                 {
                     QDomElement trkptMetaElem = nTrkptMeta.toElement();
                     if (trkptMetaElem.isNull()) continue;
-                    if (trkptMetaElem.tagName() == QString("time")) 
+                    if (trkptMetaElem.tagName() == QString("time"))
                     {
                         // Get GPS point time stamp. If not available continue to next point.
                         QString time = trkptMetaElem.text();
                         if (time.isEmpty()) continue;
                         ptDateTime = QDateTime::fromString(time, Qt::ISODate);
                     }
-                    if (trkptMetaElem.tagName() == QString("ele")) 
+                    if (trkptMetaElem.tagName() == QString("ele"))
                     {
                         // Get GPS point altitude. If not available continue to next point.
                         QString ele = trkptMetaElem.text();
@@ -266,8 +266,8 @@ bool GPSDataParser::loadGPXFile(const KURL& url)
         }
     }
 
-    kdDebug( 51001 ) << "GPX File " << url.fileName() 
-                     << " parsed with " << numPoints() 
+    kdDebug( 51001 ) << "GPX File " << url.fileName()
+                     << " parsed with " << numPoints()
                      << " points extracted" << endl;
     return true;
 }

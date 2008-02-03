@@ -71,12 +71,12 @@ void Plugin_GPSSync::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_geolocalization = new KActionMenu(i18n("Geolocalization"),
+    m_action_geolocation = new KActionMenu(i18n("Geolocation"),
                                0,
                                actionCollection(),
-                               "geolocalization");
+                               "geolocation");
 
-    m_action_geolocalization->insert(new KAction (i18n("Correlator..."),
+    m_action_geolocation->insert(new KAction (i18n("Correlator..."),
                                      "gpsimagetag",
                                      0,     
                                      this,
@@ -84,7 +84,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
                                      actionCollection(),
                                      "gpssync"));
 
-    m_action_geolocalization->insert(new KAction (i18n("Edit Coordinates..."),
+    m_action_geolocation->insert(new KAction (i18n("Edit Coordinates..."),
                                      0,
                                      0,     
                                      this,
@@ -92,7 +92,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
                                      actionCollection(),
                                      "gpsedit"));
 
-    m_action_geolocalization->insert(new KAction (i18n("Remove Coordinates..."),
+    m_action_geolocation->insert(new KAction (i18n("Remove Coordinates..."),
                                      0,
                                      0,     
                                      this,
@@ -100,7 +100,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
                                      actionCollection(),
                                      "gpsremove"));
 
-    addAction( m_action_geolocalization );
+    addAction( m_action_geolocation );
 
    // this is our action shown in the menubar/toolbar of the mainwindow
     m_actionKMLExport = new KAction (i18n("KML Export..."),
@@ -122,10 +122,10 @@ void Plugin_GPSSync::setup( QWidget* widget )
     }
 
     KIPI::ImageCollection selection = m_interface->currentSelection();
-    m_action_geolocalization->setEnabled( selection.isValid() && !selection.images().isEmpty() );
+    m_action_geolocation->setEnabled( selection.isValid() && !selection.images().isEmpty() );
 
     connect( m_interface, SIGNAL(selectionChanged(bool)),
-             m_action_geolocalization, SLOT(setEnabled(bool)));
+             m_action_geolocation, SLOT(setEnabled(bool)));
 }
 
 bool Plugin_GPSSync::checkBinaries(QString &gpsBabelVersion)
@@ -272,7 +272,7 @@ void Plugin_GPSSync::slotGPSRemove()
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("Geographical coordinates will be definitivly removed from all current selected pictures.\n"
+                     i18n("Geographical coordinates will be definitively removed from all selected images.\n"
                           "Do you want to continue ?"),
                      i18n("Remove Geographical Coordinates")) != KMessageBox::Yes)
         return;
@@ -350,7 +350,7 @@ void Plugin_GPSSync::slotKMLGenerate()
 
 KIPI::Category Plugin_GPSSync::category( KAction* action ) const
 {
-    if ( action == m_action_geolocalization )
+    if ( action == m_action_geolocation )
        return KIPI::IMAGESPLUGIN;
     if ( action == m_actionKMLExport )
        return KIPI::EXPORTPLUGIN;

@@ -57,7 +57,7 @@ private:
 
 private:
 
-    KActionMenu     *m_action_geolocalization;
+    KActionMenu     *m_action_geolocation;
     KAction         *m_actionKMLExport;
 
     KIPI::Interface *m_interface;

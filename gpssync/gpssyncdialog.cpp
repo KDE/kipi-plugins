@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2006-05-16
- * Description : a plugin to synchronize pictures with 
+ * Description : a plugin to synchronize pictures with
  *               a GPS device.
  *
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -98,14 +98,14 @@ public:
 
     KIPI::Interface          *interface;
 
-    KIPIPlugins::KPAboutData *about; 
+    KIPIPlugins::KPAboutData *about;
 
     GPSDataParser             gpxParser;
 };
 
 GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
-             : KDialogBase(Plain, i18n("Geolocalization"), 
-                           Help|User1|User2|User3|Apply|Close, Close, 
+             : KDialogBase(Plain, i18n("Geolocation"),
+                           Help|User1|User2|User3|Apply|Close, Close,
                            parent, 0, true, false)
 {
     d = new GPSSyncDialogPriv;
@@ -130,7 +130,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->listView = new KListView(plainPage());
     d->listView->addColumn( i18n("Thumbnail") );
     d->listView->addColumn( i18n("File Name") );
-    d->listView->addColumn( i18n("Date Taken") );
+    d->listView->addColumn( i18n("Camera time stamp") );
     d->listView->addColumn( i18n("Latitude") );
     d->listView->addColumn( i18n("Longitude") );
     d->listView->addColumn( i18n("Altitude") );
@@ -159,7 +159,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->maxGapInput      = new KIntSpinBox(0, 1000000, 1, 30, 10, settingsBox);
     QWhatsThis::add(d->maxGapInput, i18n("<p>Sets the maximum difference in "
                     "seconds from a GPS track point to the image time to be matched. "
-                    "If the time difference exceeds this setting, no match takes place."));
+                    "If the time difference exceeds this setting, no match will be attempted."));
 
     QLabel *timeZoneLabel = new QLabel(i18n("Time zone:"), settingsBox);
     d->timeZoneCB         = new QComboBox( false, settingsBox );
@@ -207,9 +207,11 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->timeZoneCB->insertItem("GMT+12:45");
     d->timeZoneCB->insertItem("GMT+13:00");
     d->timeZoneCB->insertItem("GMT+14:00");
-    QWhatsThis::add(d->timeZoneCB, i18n("<p>Sets the time zone of the camera during "
-                    "photo shooting, so that the time stamps of the images "
-                    "can be converted to GMT to match the GPS time reference"));
+    QWhatsThis::add(d->timeZoneCB, i18n("<p>Sets the time zone the camera was set to "
+                    "during photo shooting, so that the time stamps of the images "
+                    "can be converted to GMT to match the GPS time reference.\n"
+                    "Note: negative offsets count eastwards from zero longitude (GMT), "
+                    "they are 'ahead of time'."));
 
     d->interpolateBox = new QCheckBox(i18n("Interpolate"), settingsBox);
     QWhatsThis::add(d->interpolateBox, i18n("<p>Set this option to interpolate GPS track points "
@@ -220,18 +222,18 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     QWhatsThis::add(d->maxTimeInput, i18n("<p>Sets the maximum time difference in minutes (240 max.)"
                     " to interpolate GPX file points to image time data."));
 
-    settingsBoxLayout->addMultiCellWidget(loadGPXButton, 0, 0, 0, 1);     
-    settingsBoxLayout->addMultiCellWidget(gpxFileLabel, 1, 1, 0, 1);     
-    settingsBoxLayout->addMultiCellWidget(d->gpxFileName, 2, 2, 0, 1);     
-    settingsBoxLayout->addMultiCellWidget(d->gpxPointsLabel, 3, 3, 0, 1);     
-    settingsBoxLayout->addMultiCellWidget(line, 4, 4, 0, 1);     
-    settingsBoxLayout->addMultiCellWidget(maxGapLabel, 5, 5, 0, 0); 
-    settingsBoxLayout->addMultiCellWidget(d->maxGapInput, 5, 5, 1, 1); 
-    settingsBoxLayout->addMultiCellWidget(timeZoneLabel, 6, 6, 0, 0); 
-    settingsBoxLayout->addMultiCellWidget(d->timeZoneCB, 6, 6, 1, 1); 
-    settingsBoxLayout->addMultiCellWidget(d->interpolateBox, 7, 7, 0, 1); 
-    settingsBoxLayout->addMultiCellWidget(d->maxTimeLabel, 8, 8, 0, 0); 
-    settingsBoxLayout->addMultiCellWidget(d->maxTimeInput, 8, 8, 1, 1); 
+    settingsBoxLayout->addMultiCellWidget(loadGPXButton, 0, 0, 0, 1);
+    settingsBoxLayout->addMultiCellWidget(gpxFileLabel, 1, 1, 0, 1);
+    settingsBoxLayout->addMultiCellWidget(d->gpxFileName, 2, 2, 0, 1);
+    settingsBoxLayout->addMultiCellWidget(d->gpxPointsLabel, 3, 3, 0, 1);
+    settingsBoxLayout->addMultiCellWidget(line, 4, 4, 0, 1);
+    settingsBoxLayout->addMultiCellWidget(maxGapLabel, 5, 5, 0, 0);
+    settingsBoxLayout->addMultiCellWidget(d->maxGapInput, 5, 5, 1, 1);
+    settingsBoxLayout->addMultiCellWidget(timeZoneLabel, 6, 6, 0, 0);
+    settingsBoxLayout->addMultiCellWidget(d->timeZoneCB, 6, 6, 1, 1);
+    settingsBoxLayout->addMultiCellWidget(d->interpolateBox, 7, 7, 0, 1);
+    settingsBoxLayout->addMultiCellWidget(d->maxTimeLabel, 8, 8, 0, 0);
+    settingsBoxLayout->addMultiCellWidget(d->maxTimeInput, 8, 8, 1, 1);
 
     // ---------------------------------------------------------------
 
@@ -308,7 +310,7 @@ void GPSSyncDialog::slotLoadGPXFile()
     if (!ret)
     {
         KMessageBox::error(this, i18n("Cannot parse %1 GPX file!")
-                           .arg(loadGPXFile.fileName()), i18n("GPS Sync"));    
+                           .arg(loadGPXFile.fileName()), i18n("GPS Sync"));
         enableButton(User1, false);
         return;
     }
@@ -316,7 +318,7 @@ void GPSSyncDialog::slotLoadGPXFile()
     if (d->gpxParser.numPoints() <= 0)
     {
         KMessageBox::sorry(this, i18n("The %1 GPX file do not have a date-time track to use!")
-                           .arg(loadGPXFile.fileName()), i18n("GPS Sync"));    
+                           .arg(loadGPXFile.fileName()), i18n("GPS Sync"));
         enableButton(User1, false);
         return;
     }
@@ -330,7 +332,7 @@ void GPSSyncDialog::slotLoadGPXFile()
 void GPSSyncDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
-    if (!promptUserClose()) 
+    if (!promptUserClose())
     {
         e->ignore();
         return;
@@ -354,7 +356,7 @@ bool GPSSyncDialog::promptUserClose()
     QListViewItemIterator it( d->listView );
     int dirty = 0;
 
-    while ( it.current() ) 
+    while ( it.current() )
     {
         GPSListViewItem *item = (GPSListViewItem*) it.current();
         if (item->isDirty())
@@ -410,7 +412,7 @@ void GPSSyncDialog::slotUser1()
     int itemsUpdated = 0;
 
     QListViewItemIterator it( d->listView );
-    while ( it.current() ) 
+    while ( it.current() )
     {
         GPSListViewItem *item = dynamic_cast<GPSListViewItem*>(it.current());
         GPSDataContainer gpsData;
@@ -422,11 +424,11 @@ void GPSSyncDialog::slotUser1()
         if (tz[3] == QChar('-'))
             offset = (-1)*offset;
 
-        if (d->gpxParser.matchDate(item->dateTime(), 
+        if (d->gpxParser.matchDate(item->dateTime(),
                                    d->maxGapInput->value(),
                                    offset,
                                    d->interpolateBox->isChecked(),
-                                   d->maxTimeInput->value()*60, 
+                                   d->maxTimeInput->value()*60,
                                    gpsData))
         {
             item->setGPSInfo(gpsData);
@@ -438,7 +440,7 @@ void GPSSyncDialog::slotUser1()
     if (itemsUpdated == 0)
     {
         KMessageBox::sorry(this, i18n("Cannot find pictures to correlate with GPX file data."),
-                           i18n("GPS Sync"));    
+                           i18n("GPS Sync"));
         return;
     }
 
@@ -448,7 +450,7 @@ void GPSSyncDialog::slotUser1()
     msg += '\n';
     msg += i18n("Press Apply button to update images metadata.");
 
-    KMessageBox::information(this, msg, i18n("GPS Sync"));    
+    KMessageBox::information(this, msg, i18n("GPS Sync"));
 }
 
 // Start the GPS coordinates editor dialog.
@@ -457,13 +459,13 @@ void GPSSyncDialog::slotUser2()
     if (!d->listView->currentItem())
     {
         KMessageBox::information(this, i18n("Please, select at least one image from "
-                     "the list to edit GPS coordinates manually."), i18n("GPS Sync"));    
+                     "the list to edit GPS coordinates manually."), i18n("GPS Sync"));
         return;
     }
 
     GPSListViewItem *item = dynamic_cast<GPSListViewItem*>(d->listView->currentItem());
 
-    GPSEditDialog dlg(this, item->GPSInfo(), 
+    GPSEditDialog dlg(this, item->GPSInfo(),
                       item->url().fileName(),
                       item->hasGPSInfo());
 
@@ -489,7 +491,7 @@ void GPSSyncDialog::slotUser3()
     if (!d->listView->currentItem())
     {
         KMessageBox::information(this, i18n("Please, select at least one image from "
-                     "the list to remove GPS coordinates."), i18n("GPS Sync"));    
+                     "the list to remove GPS coordinates."), i18n("GPS Sync"));
         return;
     }
 
@@ -511,7 +513,7 @@ void GPSSyncDialog::slotApply()
     KURL::List images;
 
     QListViewItemIterator it( d->listView );
-    while ( it.current() ) 
+    while ( it.current() )
     {
         GPSListViewItem *selItem = dynamic_cast<GPSListViewItem*>(it.current());
         d->listView->setSelected(selItem, true);
@@ -522,7 +524,7 @@ void GPSSyncDialog::slotApply()
         kapp->processEvents();
     }
 
-    // We use kipi interface refreshImages() method to tell to host than 
+    // We use kipi interface refreshImages() method to tell to host than
     // metadata from pictures have changed and need to be re-readed.
 
     d->interface->refreshImages(images);
