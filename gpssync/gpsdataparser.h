@@ -26,8 +26,8 @@
 
 // Qt includes.
 
-#include <qdatetime.h>
-#include <qmap.h>
+#include <QDateTime>
+#include <QMap>
 
 // KDE includes.
 
@@ -48,7 +48,7 @@ public:
     GPSDataParser();
     ~GPSDataParser(){};	
 
-    bool loadGPXFile(const KURL& url);
+    bool loadGPXFile(const KUrl& url);
 
     void clear();
     int  numPoints();

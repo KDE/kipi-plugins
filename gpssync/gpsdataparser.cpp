@@ -28,11 +28,11 @@
 
 // Qt includes.
 
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qfile.h>
-#include <qdom.h>
-#include <qtextstream.h>
+#include <QString>
+#include <QStringList>
+#include <QFile>
+#include <QDom>
+#include <QTextStream>
 
 // KDE includes.
 
@@ -69,7 +69,7 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
     // Using the time zone.
     QDateTime cameraGMTDateTime = photoDateTime.addSecs(timeZone*(-1));
 
-    kdDebug() << "cameraGMTDateTime: " << cameraGMTDateTime << endl;
+    kDebug() << "cameraGMTDateTime: " << cameraGMTDateTime << endl;
 
     // We trying to find the right date in the GPS points list.
     bool findItem = false;
@@ -186,7 +186,7 @@ QDateTime GPSDataParser::findPrevDate(const QDateTime& dateTime, int secs)
     return QDateTime();
 }
 
-bool GPSDataParser::loadGPXFile(const KURL& url)
+bool GPSDataParser::loadGPXFile(const KUrl& url)
 {
     QFile gpxfile(url.path());
 
@@ -266,9 +266,9 @@ bool GPSDataParser::loadGPXFile(const KURL& url)
         }
     }
 
-    kdDebug( 51001 ) << "GPX File " << url.fileName()
-                     << " parsed with " << numPoints()
-                     << " points extracted" << endl;
+    kDebug( 51001 ) << "GPX File " << url.fileName()
+                    << " parsed with " << numPoints()
+                    << " points extracted" << endl;
     return true;
 }
 
