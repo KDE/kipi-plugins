@@ -42,8 +42,7 @@ class GPSMapWidget : public KHTMLPart
 
 public:
 
-    GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon, 
-                 int zoomLevel=8, const QString& mapType=QString("G_MAP_TYPE"));
+    GPSMapWidget(QWidget* parent);
     ~GPSMapWidget();
 
     void    setGPSPosition(const QString& lat, const QString& lon);

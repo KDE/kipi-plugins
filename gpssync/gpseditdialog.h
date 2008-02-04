@@ -42,7 +42,7 @@ class GPSEditDialog : public KDialogBase
 
 public:
 
-    GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, 
+    GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData, 
                   const QString& fileName, bool hasGPSInfo);
     ~GPSEditDialog();
 

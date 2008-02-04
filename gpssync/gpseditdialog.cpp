@@ -65,7 +65,10 @@ public:
         worldMap       = 0;
         about          = 0;
         goButton       = 0;
+        hasGPSInfo     = false;
     }
+
+    bool                      hasGPSInfo;
 
     QPushButton              *goButton;
 
@@ -75,16 +78,20 @@ public:
 
     KIPIPlugins::KPAboutData *about; 
 
+    GPSDataContainer          gpsData;
+
     GPSMapWidget             *worldMap;
 };
 
-GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData, 
+GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData, 
                              const QString& fileName, bool hasGPSInfo)
              : KDialogBase(Plain, i18n("%1 - Edit Geographical Coordinates").arg(fileName),
                            Help|Ok|Cancel, Ok,
                            parent, 0, true, false)
 {
     d = new GPSEditDialogDialogPrivate;
+    d->hasGPSInfo = hasGPSInfo;
+    d->gpsData    = gpsData;
 
     QGridLayout* grid = new QGridLayout(plainPage(), 8, 3, 0, spacingHint());
 
@@ -108,29 +115,10 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     d->latitudeInput->setValidator(new QDoubleValidator(-90.0, 90.0, 12, this));
     d->longitudeInput->setValidator(new QDoubleValidator(-180.0, 180.0, 12, this));
 
-    KConfig config("kipirc");
-    config.setGroup("GPS Sync Settings");
-    int zoomLevel   = config.readNumEntry("Zoom Level", 8);
-    QString mapType = config.readEntry("Map Type", QString("G_MAP_TYPE"));
-
-    if (hasGPSInfo)
-    {
-        d->altitudeInput->setText(QString::number(gpsData.altitude(),   'g', 12));
-        d->latitudeInput->setText(QString::number(gpsData.latitude(),   'g', 12));
-        d->longitudeInput->setText(QString::number(gpsData.longitude(), 'g', 12));
-    } 
-    else 
-    {
-        d->altitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Altitude", 0.0),   'g', 12));
-        d->latitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Latitude", 0.0),   'g', 12));
-        d->longitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Longitude", 0.0), 'g', 12));
-    }
-
     d->goButton = new QPushButton(i18n("Goto Location"), plainPage());
     d->goButton->setEnabled(false);
 
-    d->worldMap = new GPSMapWidget(plainPage(), d->latitudeInput->text(), 
-                                   d->longitudeInput->text(), zoomLevel, mapType);
+    d->worldMap = new GPSMapWidget(plainPage());
     d->worldMap->show();
 
     grid->addMultiCellWidget(message,             0, 0, 0, 2);
@@ -245,6 +233,33 @@ void GPSEditDialog::readSettings()
     KConfig config("kipirc");
     config.setGroup("GPS Sync Settings");
     resize(configDialogSize(config, QString("GPS Edit Dialog")));
+
+    d->worldMap->setZoomLevel(config.readNumEntry("Zoom Level", 8));
+    d->worldMap->setMapType(config.readEntry("Map Type", QString("G_MAP_TYPE")));
+
+    d->altitudeInput->blockSignals(true);
+    d->latitudeInput->blockSignals(true);
+    d->longitudeInput->blockSignals(true);
+
+    if (d->hasGPSInfo)
+    {
+        d->altitudeInput->setText(QString::number(d->gpsData.altitude(),   'g', 12));
+        d->latitudeInput->setText(QString::number(d->gpsData.latitude(),   'g', 12));
+        d->longitudeInput->setText(QString::number(d->gpsData.longitude(), 'g', 12));
+    } 
+    else 
+    {
+        d->altitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Altitude", 0.0),   'g', 12));
+        d->latitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Latitude", 0.0),   'g', 12));
+        d->longitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Longitude", 0.0), 'g', 12));
+    }
+
+    d->altitudeInput->blockSignals(false);
+    d->latitudeInput->blockSignals(false);
+    d->longitudeInput->blockSignals(false);
+
+    d->worldMap->setGPSPosition(d->latitudeInput->text(), d->longitudeInput->text());
+    d->worldMap->resized();
 }
 
 void GPSEditDialog::saveSettings()

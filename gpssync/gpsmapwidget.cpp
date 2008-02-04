@@ -51,15 +51,10 @@ public:
     QString mapType;
 };
 
-GPSMapWidget::GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon, 
-                           int zoomLevel, const QString&  mapType)
+GPSMapWidget::GPSMapWidget(QWidget* parent)
             : KHTMLPart(parent)
 {
     d = new GPSMapWidgetPrivate;
-    d->zoomLevel = QString::number(zoomLevel);
-    d->latitude  = lat;
-    d->longitude = lon;
-    d->mapType   = mapType;
 
     setJScriptEnabled(true);
     setDNDEnabled(false);
@@ -79,7 +74,6 @@ void GPSMapWidget::setGPSPosition(const QString& lat, const QString& lon)
 {
     d->latitude  = lat;
     d->longitude = lon;
-    resized();
 }
 
 void GPSMapWidget::GPSPosition(QString& lat, QString& lon)
@@ -91,7 +85,6 @@ void GPSMapWidget::GPSPosition(QString& lat, QString& lon)
 void GPSMapWidget::setMapType(const QString& mapType)
 {
     d->mapType = mapType;
-    resized();
 }
 
 QString GPSMapWidget::mapType()
@@ -102,7 +95,6 @@ QString GPSMapWidget::mapType()
 void GPSMapWidget::setZoomLevel(int zoomLevel)
 {
     d->zoomLevel = QString::number(zoomLevel);
-    resized();
 }
 
 int GPSMapWidget::GPSMapWidget::zoomLevel()
