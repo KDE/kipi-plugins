@@ -25,13 +25,13 @@
 
 // Qt includes.
 
-#include <qdatetime.h>
-#include <qstring.h>
+#include <QDateTime>
+#include <QString>
 
 // KDE includes.
 
 #include <kurl.h>
-#include <klistview.h>
+#include <k3listview.h>
 
 // Local includes.
 
@@ -45,12 +45,12 @@ namespace KIPIGPSSyncPlugin
 {
 class GPSListViewItemPriv;
 
-class GPSListViewItem : public KListViewItem
+class GPSListViewItem : public K3ListViewItem
 {
 
 public:
 
-    GPSListViewItem(KListView *view, QListViewItem *after, const KURL& url);
+    GPSListViewItem(K3ListView *view, Q3ListViewItem *after, const KUrl& url);
     ~GPSListViewItem();
 
     void setGPSInfo(GPSDataContainer gpsData, bool dirty=true, bool addedManually=false);
@@ -67,7 +67,7 @@ public:
     bool hasGPSInfo();
     bool isReadOnly();
 
-    KURL url();
+    KUrl url();
     void writeGPSInfoToFile();
 
 protected:

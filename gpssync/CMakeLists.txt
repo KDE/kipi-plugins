@@ -1,3 +1,7 @@
+ADD_DEFINITIONS(-DQT3_SUPPORT 
+                -DQT3_SUPPORT_WARNINGS
+               )
+
 SET(kipiplugin_gpssync_PART_SRCS gpslistviewitem.cpp 
 #                                 gpsbabelbinary.cpp 
 #                                 gpsdataparser.cpp 
@@ -18,6 +22,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_gpssync
                       ${QT_AND_KDECORE_LIBS} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
+                      ${QT_QT3SUPPORT_LIBRARY} 
                       kipiplugins
                      )
 

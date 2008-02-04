@@ -62,19 +62,19 @@ public:
 
     QDateTime        date;
 
-    KURL             url;
+    KUrl             url;
 
     GPSDataContainer gpsData;
 };
 
-GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KURL& url)
-               : KListViewItem(view, after)
+GPSListViewItem::GPSListViewItem(K3ListView *view, Q3ListViewItem *after, const KUrl& url)
+               : K3ListViewItem(view, after)
 {
     d = new GPSListViewItemPriv;
     d->url = url;
 
     setEnabled(false);
-    setPixmap(0, SmallIcon( "file_broken", KIcon::SizeLarge, KIcon::DisabledState ));
+    setPixmap(0, SmallIcon( "file_broken", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
     setText(1, d->url.fileName());
 
     // We only add all JPEG files as R/W because Exiv2 can't yet 
@@ -167,7 +167,7 @@ QDateTime GPSListViewItem::dateTime()
     return d->date;
 }
 
-KURL GPSListViewItem::url()
+KUrl GPSListViewItem::url()
 {
     return d->url;
 }
@@ -240,7 +240,7 @@ void GPSListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, 
             QColorGroup _cg( cg );
             QColor c = _cg.text();
             _cg.setColor( QColorGroup::Text, Qt::red );
-            KListViewItem::paintCell( p, _cg, column, width, alignment );
+            K3ListViewItem::paintCell( p, _cg, column, width, alignment );
             _cg.setColor( QColorGroup::Text, c );
         }
         else if ( isDirty() && d->erase && column == 6)
@@ -248,18 +248,18 @@ void GPSListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, 
             QColorGroup _cg( cg );
             QColor c = _cg.text();
             _cg.setColor( QColorGroup::Text, Qt::red );
-            KListViewItem::paintCell( p, _cg, column, width, alignment );
+            K3ListViewItem::paintCell( p, _cg, column, width, alignment );
             _cg.setColor( QColorGroup::Text, c );
         }
         else
-            KListViewItem::paintCell(p, cg, column, width, alignment);
+            K3ListViewItem::paintCell(p, cg, column, width, alignment);
     }
     else
     {
         QColorGroup _cg( cg );
         QColor c = _cg.text();
         _cg.setColor( QColorGroup::Text, Qt::gray );
-        KListViewItem::paintCell( p, _cg, column, width, alignment );
+        K3ListViewItem::paintCell( p, _cg, column, width, alignment );
         _cg.setColor( QColorGroup::Text, c );
     }
 }
