@@ -108,26 +108,30 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     d->latitudeInput->setValidator(new QDoubleValidator(-90.0, 90.0, 12, this));
     d->longitudeInput->setValidator(new QDoubleValidator(-180.0, 180.0, 12, this));
 
+    int zoomLevel = 8;
+    KConfig config("kipirc");
+    config.setGroup("GPS Sync Settings");
+
     if (hasGPSInfo)
     {
         d->altitudeInput->setText(QString::number(gpsData.altitude(),   'g', 12));
         d->latitudeInput->setText(QString::number(gpsData.latitude(),   'g', 12));
         d->longitudeInput->setText(QString::number(gpsData.longitude(), 'g', 12));
+        zoomLevel = config.readNumEntry("Zoom Level", 8);
     } 
     else 
     {
-        KConfig config("kipirc");
-        config.setGroup("GPS Sync Settings");
         d->altitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Altitude", 0.0),   'g', 12));
         d->latitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Latitude", 0.0),   'g', 12));
         d->longitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Longitude", 0.0), 'g', 12));
+        zoomLevel = config.readNumEntry("Zoom Level", 8);
     }
 
     d->goButton = new QPushButton(i18n("Goto Location"), plainPage());
     d->goButton->setEnabled(false);
 
     d->worldMap = new GPSMapWidget(plainPage(), d->latitudeInput->text(), 
-                                   d->longitudeInput->text(), hasGPSInfo ? 8 : 1);
+                                   d->longitudeInput->text(), zoomLevel);
     d->worldMap->show();
 
     grid->addMultiCellWidget(message,             0, 0, 0, 2);
@@ -252,6 +256,7 @@ void GPSEditDialog::saveSettings()
     config.writeEntry("GPS Last Latitude", d->latitudeInput->text().toDouble());
     config.writeEntry("GPS Last Longitude", d->longitudeInput->text().toDouble());
     config.writeEntry("GPS Last Altitude", d->altitudeInput->text().toDouble());
+    config.writeEntry("Zoom Level", d->worldMap->zoomLevel());
     config.sync();
 }
 

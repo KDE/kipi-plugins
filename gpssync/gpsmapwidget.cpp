@@ -79,6 +79,23 @@ void GPSMapWidget::setGPSPosition(const QString& lat, const QString& lon)
     resized();
 }
 
+void GPSMapWidget::GPSPosition(QString& lat, QString& lon)
+{
+    lat = d->latitude;
+    lon = d->longitude;
+}
+
+void GPSMapWidget::setZoomLevel(int zoomLevel)
+{
+    d->zoomLevel = QString::number(zoomLevel);
+    resized();
+}
+
+int GPSMapWidget::GPSMapWidget::zoomLevel()
+{
+    return d->zoomLevel.toInt();
+}
+
 void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
 {
     QString status = jsStatusBarText();
