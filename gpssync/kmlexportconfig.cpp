@@ -66,15 +66,14 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
                              Help|Ok|Cancel, Ok, 
                              parent, 0, true, false)
 {
-    if ( !name )
-        setName( "KMLExportConfig" );
+    if ( !name ) setName( "KMLExportConfig" );
     setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0,
                                 (QSizePolicy::SizeType)0, 0, 0, sizePolicy().hasHeightForWidth() ) );
     KMLExportConfigLayout = new QGridLayout ( plainPage(), 1, 3, 0, spacingHint()); 
 
     // --------------------------------------------------------------
     // Target preferences
-    TargetPreferenceGroupBox = new QGroupBox(0, Qt::Vertical, i18n( "Target Preferences" ), plainPage());
+    TargetPreferenceGroupBox       = new QGroupBox(0, Qt::Vertical, i18n( "Target Preferences" ), plainPage());
     TargetPreferenceGroupBoxLayout = new QGridLayout( TargetPreferenceGroupBox->layout(), 6, 5, KDialog::spacingHint());
     TargetPreferenceGroupBoxLayout->setAlignment( Qt::AlignTop );
 
@@ -98,20 +97,22 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     // target preference, suite
     TargetPreferenceGroupBoxLayout->addMultiCellWidget( buttonGroupTargetType, 0, 1, 0, 4 );
 
-    QLabel *AltitudeLabel_ = new QLabel( i18n( "Picture altitude" ),
-                                               TargetPreferenceGroupBox, "AltitudeLabel_" );
+    QLabel *AltitudeLabel_ = new QLabel(i18n("Picture altitude" ),
+                                        TargetPreferenceGroupBox, "AltitudeLabel_");
     TargetPreferenceGroupBoxLayout->addMultiCellWidget( AltitudeLabel_, 2, 2, 0, 4 );
     AltitudeCB_ = new QComboBox( false, TargetPreferenceGroupBox );
     AltitudeCB_->insertItem(i18n("clamp to ground"));
     AltitudeCB_->insertItem(i18n("relative to ground"));
     AltitudeCB_->insertItem(i18n("absolute"));
     QWhatsThis::add(AltitudeCB_, i18n("<p>Specifies how pictures are displayed"
-                                         "<dl><dt>clamp to ground (default)</dt>"
-                                         "<dd>Indicates to ignore an altitude specification</dd>"
-                                         "<dt>relative to ground</dt>"
-                                         "<dd>Sets the altitude of the element relative to the actual ground elevation of a particular location.</dd>"
-                                         "<dt>absolute</dt>"
-                                         "<dd>Sets the altitude of the coordinate relative to sea level, regardless of the actual elevation of the terrain beneath the element.</dd></dl>"));
+                                      "<dl><dt>clamp to ground (default)</dt>"
+                                      "<dd>Indicates to ignore an altitude specification</dd>"
+                                      "<dt>relative to ground</dt>"
+                                      "<dd>Sets the altitude of the element relative to the actual ground "
+                                      "elevation of a particular location.</dd>"
+                                      "<dt>absolute</dt>"
+                                      "<dd>Sets the altitude of the coordinate relative to sea level, regardless "
+                                      "of the actual elevation of the terrain beneath the element.</dd></dl>"));
     TargetPreferenceGroupBoxLayout->addMultiCellWidget( AltitudeCB_, 2, 2, 2, 4 );
 
     destinationDirectoryLabel_ = new QLabel( i18n( "Destination directory" ),
@@ -173,8 +174,9 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
 
     // --------------------------------------------------------------
     // GPX Tracks
-    QGroupBox *GPXTracksGroupBox = new QGroupBox(0, Qt::Vertical, i18n( "GPX Tracks" ), plainPage());
-    QGridLayout *GPXTracksGroupBoxLayout = new QGridLayout( GPXTracksGroupBox->layout(), 5, 4, KDialog::spacingHint());
+    QGroupBox *GPXTracksGroupBox         = new QGroupBox(0, Qt::Vertical, i18n( "GPX Tracks" ), plainPage());
+    QGridLayout *GPXTracksGroupBoxLayout = new QGridLayout(GPXTracksGroupBox->layout(), 5, 4,
+                                                           KDialog::spacingHint());
     GPXTracksGroupBoxLayout->setAlignment( Qt::AlignTop );
 
     // add a gpx track checkbox
@@ -193,7 +195,7 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
 
     timeZoneLabel_ = new QLabel(i18n("Time zone"), GPXTracksGroupBox);
     GPXTracksGroupBoxLayout->addMultiCellWidget( timeZoneLabel_, 2, 2, 0, 0);
-    timeZoneCB = new QComboBox( false, GPXTracksGroupBox );
+    timeZoneCB     = new QComboBox( false, GPXTracksGroupBox );
     timeZoneCB->insertItem(i18n("GMT-12:00"), 0);
     timeZoneCB->insertItem(i18n("GMT-11:00"), 1);
     timeZoneCB->insertItem(i18n("GMT-10:00"), 2);
@@ -222,8 +224,8 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     timeZoneCB->insertItem(i18n("GMT+13:00"), 25);
     timeZoneCB->insertItem(i18n("GMT+14:00"), 26);
     QWhatsThis::add(timeZoneCB, i18n("<p>Sets the time zone of the camera during "
-                                        "picture shooting, so that the time stamps of the GPS "
-                                        "can be converted to match the local time"));
+                                     "picture shooting, so that the time stamps of the GPS "
+                                     "can be converted to match the local time"));
     GPXTracksGroupBoxLayout->addMultiCellWidget( timeZoneCB, 2, 2, 1, 3);
 
     GPXLineWidthLabel_ = new QLabel( i18n( "Track width" ),
@@ -254,12 +256,15 @@ KMLExportConfig::KMLExportConfig( QWidget* parent, const char* name)
     GPXAltitudeCB_->insertItem(i18n("relative to ground"));
     GPXAltitudeCB_->insertItem(i18n("absolute"));
     QWhatsThis::add(GPXAltitudeCB_, i18n("<p>Specifies how the points are displayed"
-                                          "<dl><dt>clamp to ground (default)</dt>"
-                                            "<dd>Indicates to ignore an altitude specification</dd>"
-                                          "<dt>relative to ground</dt>"
-                                            "<dd>Sets the altitude of the element relative to the actual ground elevation of a particular location.</dd>"
-                                          "<dt>absolute</dt>"
-                                            "<dd>Sets the altitude of the coordinate relative to sea level, regardless of the actual elevation of the terrain beneath the element.</dd></dl>"));
+                                         "<dl><dt>clamp to ground (default)</dt>"
+                                         "<dd>Indicates to ignore an altitude specification</dd>"
+                                         "<dt>relative to ground</dt>"
+                                         "<dd>Sets the altitude of the element relative to the actual ground "
+                                         "elevation of a particular location.</dd>"
+                                         "<dt>absolute</dt>"
+                                         "<dd>Sets the altitude of the coordinate relative to sea level, "
+                                         "regardless of the actual elevation of the terrain beneath "
+                                         "the element.</dd></dl>"));
     GPXTracksGroupBoxLayout->addMultiCellWidget( GPXAltitudeCB_, 5, 5, 1, 3);
 
     KMLExportConfigLayout->addWidget( GPXTracksGroupBox, 2, 0 );
@@ -320,7 +325,6 @@ void KMLExportConfig::slotOk()
     accept();
 }
 
-
 void KMLExportConfig::slotHelp()
 {
     KApplication::kApplication()->invokeHelp("KMLExport", "kipi-plugins");
@@ -343,7 +347,6 @@ void KMLExportConfig::GoogleMapTargetRadioButton__toggled(bool)
         IconSizeInput_->setEnabled(true);
     }
 }
-
 
 void KMLExportConfig::KMLTracksCheckButton__toggled(bool) 
 {

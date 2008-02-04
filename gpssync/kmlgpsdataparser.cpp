@@ -84,7 +84,8 @@ void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackLine(QDomElement &parent, Q
 /*!
 \fn void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode)
  */
-void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode)
+void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root, 
+                                                            int timeZone, int altitudeMode)
 {
     kmlDocument = &root;
     kdDebug( 51001 ) << "creation d'un trackpoint" << endl;

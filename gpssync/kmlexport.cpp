@@ -38,9 +38,13 @@ extern "C"
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
+
+// Libkexiv2 includes.
+
 #include <libkexiv2/kexiv2.h>
 
 // LibKipi includes
+
 #include <libkipi/plugin.h>
 #include <libkipi/batchprogressdialog.h>
 #include <libkipi/imageinfo.h>
@@ -392,7 +396,7 @@ void kmlExport::addTrack(QDomElement &kmlAlbum)
  */
 void kmlExport::generate()
 {
-    //! @todo faire un test ici avant d'aller plus loin
+    //! @todo perform a test here before to continue.
     createDir(m_tempDestDir + m_imageDir);
 
     m_progressDialog->show();
@@ -474,18 +478,19 @@ int kmlExport::getConfig()
     KConfig config("kipirc");
     config.setGroup("KMLExport Settings");
 
-    m_localTarget			= config.readBoolEntry("localTarget");
-    m_optimize_googlemap	= config.readBoolEntry("optimize_googlemap");
-    m_iconSize				= config.readNumEntry("iconSize");
-    //	googlemapSize		= config.readNumEntry("googlemapSize");
-    m_size					= config.readNumEntry("size");
-    // UrlDestDir have to have the trailing /
-    m_baseDestDir			= config.readEntry("baseDestDir");
-    m_UrlDestDir			= config.readEntry("UrlDestDir");
+    m_localTarget           = config.readBoolEntry("localTarget");
+    m_optimize_googlemap    = config.readBoolEntry("optimize_googlemap");
+    m_iconSize              = config.readNumEntry("iconSize");
+    //	googlemapSize       = config.readNumEntry("googlemapSize");
+    m_size                  = config.readNumEntry("size");
+
+    // UrlDestDir have to have the trailing 
+    m_baseDestDir           = config.readEntry("baseDestDir");
+    m_UrlDestDir            = config.readEntry("UrlDestDir");
     m_altitudeMode          = config.readNumEntry("Altitude Mode", 0);
-    m_KMLFileName			= config.readEntry("KMLFileName");
-    m_GPXtracks				= config.readBoolEntry("UseGPXTracks");
-    m_GPXFile				= config.readEntry("GPXFile");
+    m_KMLFileName           = config.readEntry("KMLFileName");
+    m_GPXtracks             = config.readBoolEntry("UseGPXTracks");
+    m_GPXFile               = config.readEntry("GPXFile");
     m_TimeZone              = config.readNumEntry("Time Zone", 12);
     m_LineWidth             = config.readNumEntry("Line Width", 4);
     m_GPXColor              = config.readEntry("Track Color", "#17eeee" );

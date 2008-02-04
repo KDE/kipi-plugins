@@ -55,7 +55,6 @@ class kmlExport
 public:
 
     kmlExport(KIPI::Interface* interface);
-
     ~kmlExport();
 
     bool createDir(QDir dir);
@@ -89,46 +88,54 @@ public:
      *  @return the thumbnail
      */
     QImage generateBorderedThumbnail(const QImage& fullImage, int size);
-    void addTrack(QDomElement &kmlAlbum);
-    void generate();
-    int getConfig();
+    void   addTrack(QDomElement &kmlAlbum);
+    void   generate();
+    int    getConfig();
 
-    /** temporary directory where everything will be created */
-    QString m_tempDestDir;
+public:
 
-    /** directory selected by user*/
-    QString m_baseDestDir;
-    QString m_imgdir;
-    QString m_KMLFileName;
-    KIPI::Interface* m_interface;
+    bool             m_localTarget;
+    bool             m_optimize_googlemap;
+    bool             m_GPXtracks;
+
+    int              m_iconSize;
+    int              m_googlemapSize;
+    int              m_size;
+    int              m_altitudeMode;
+    int              m_TimeZone;
+    int              m_LineWidth;
+    int              m_GPXOpacity;
+    int              m_GPXAltitudeMode;
 
     /** directory used in kmldocument structure */
-    QString m_imageDir;
+    QString          m_imageDir;
+    QString          m_GPXFile;
+    QString          m_UrlDestDir;
 
-    bool    m_localTarget;
-    bool    m_optimize_googlemap;
-    bool    m_GPXtracks;
+    /** temporary directory where everything will be created */
+    QString          m_tempDestDir;
 
-    int     m_iconSize;
-    int     m_googlemapSize;
-    int     m_size;
-    int     m_altitudeMode;
-    int     m_TimeZone;
-    int     m_LineWidth;
-    int     m_GPXOpacity;
-    int     m_GPXAltitudeMode;
+    /** directory selected by user*/
+    QString          m_baseDestDir;
 
-    QString m_GPXFile;
-    QString m_UrlDestDir;
-    QColor  m_GPXColor;
+    QString          m_imgdir;
+    QString          m_KMLFileName;
+
+    QColor           m_GPXColor;
+
+    KIPI::Interface *m_interface;
 
 private:
 
-    KIPI::BatchProgressDialog* m_progressDialog;
     /*! the root document, used to create all QDomElements */
-    QDomDocument *kmlDocument;
+    QDomDocument              *kmlDocument;
+
     /*! the GPS parsed data */
-    KMLGPSDataParser m_gpxParser;
+    KMLGPSDataParser           m_gpxParser;
+
+    KIPI::BatchProgressDialog *m_progressDialog;
+
+private:
 
     void logInfo(const QString& msg);
     void logError(const QString& msg);
@@ -158,7 +165,7 @@ private:
      */
     QDomElement addKmlTextElement(QDomElement &target, QString tag, QString text)
     {
-        QDomElement kmlElement = kmlDocument->createElement( tag );
+        QDomElement kmlElement  = kmlDocument->createElement( tag );
         target.appendChild( kmlElement );
         QDomText kmlTextElement = kmlDocument->createTextNode( text );
         kmlElement.appendChild( kmlTextElement );
@@ -175,7 +182,7 @@ private:
      */
     QDomElement addKmlHtmlElement(QDomElement &target, QString tag, QString text)
     {
-        QDomElement kmlElement = kmlDocument->createElement( tag );
+        QDomElement kmlElement  = kmlDocument->createElement( tag );
         target.appendChild( kmlElement );
         QDomText kmlTextElement = kmlDocument->createCDATASection( text );
         kmlElement.appendChild( kmlTextElement );

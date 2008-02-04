@@ -63,7 +63,7 @@ public:
      *  @param altitudeMode altitude mode of the line and points
      */
     void CreateTrackPoints(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode);
-    
+
 private:
 
     /*! @todo maybe initialize it in the constructor */
