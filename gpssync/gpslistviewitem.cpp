@@ -81,7 +81,7 @@ GPSListViewItem::GPSListViewItem(K3ListView *view, Q3ListViewItem *after, const 
     // update metadata on others file formats.
 
     QFileInfo fi(d->url.path());
-    QString ext = fi.extension(false).upper();
+    QString ext = fi.suffix().toUpper();
     if (ext != QString("JPG") && ext != QString("JPEG") && ext != QString("JPE"))
     {
         setText(6, i18n("Read only"));
