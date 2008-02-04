@@ -55,7 +55,7 @@ public:
 };
 
 GPSBabelBinary::GPSBabelBinary()
-           : QObject()
+              : QObject()
 {
     d = new GPSBabelBinaryPriv;
     checkSystem();
@@ -80,7 +80,7 @@ void GPSBabelBinary::checkSystem()
 
 void GPSBabelBinary::slotReadStdoutFromGPSBabel(KProcess*, char* buffer, int buflen)
 {
-    // The dcraw output look like this : GPSBabel Version 1.2.5
+    // The gpsbabel output look like this : GPSBabel Version 1.2.5
     QString headerStarts("GPSBabel Version ");
 
     QString stdOut    = QString::fromLocal8Bit(buffer, buflen);
