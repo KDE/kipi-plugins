@@ -56,7 +56,6 @@
 #include "kmlexport.h"
 #include "kmlexportconfig.h"
 
-
 typedef KGenericFactory<Plugin_GPSSync> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_gpssync, Factory("kipiplugin_gpssync"))
@@ -86,7 +85,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
 
     m_action_geolocation->insert(new KAction (i18n("Edit Coordinates..."),
                                      0,
-                                     0,     
+                                     0,
                                      this,
                                      SLOT(slotGPSEdit()),
                                      actionCollection(),
@@ -94,7 +93,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
 
     m_action_geolocation->insert(new KAction (i18n("Remove Coordinates..."),
                                      0,
-                                     0,     
+                                     0,
                                      this,
                                      SLOT(slotGPSRemove()),
                                      actionCollection(),
@@ -104,12 +103,12 @@ void Plugin_GPSSync::setup( QWidget* widget )
 
    // this is our action shown in the menubar/toolbar of the mainwindow
     m_actionKMLExport = new KAction (i18n("KML Export..."),
-                                     "www",	// icon
-                                   0,	// do never set shortcuts from plugins.
-                                   this,
-                                   SLOT(slotKMLExport()),
-                                   actionCollection(),
-                                   "kmlexport");
+                                     "www", // icon
+                                     0,     // do never set shortcuts from plugins.
+                                     this,
+                                     SLOT(slotKMLExport()),
+                                     actionCollection(),
+                                     "kmlexport");
 
     addAction( m_actionKMLExport );
 
@@ -216,15 +215,15 @@ void Plugin_GPSSync::slotGPSEdit()
         KURL::List  imageURLs = images.images();
         KURL::List  updatedURLs;
         QStringList errorFiles;
-    
+
         for( KURL::List::iterator it = imageURLs.begin() ; 
             it != imageURLs.end(); ++it)
         {
             KURL url = *it;
-        
+
             // We only add all JPEG files as R/W because Exiv2 can't yet 
             // update metadata on others file formats.
-        
+
             QFileInfo fi(url.path());
             QString ext = fi.extension(false).upper();
             bool ret = false;
@@ -249,7 +248,7 @@ void Plugin_GPSSync::slotGPSEdit()
 
         // We use kipi interface refreshImages() method to tell to host than 
         // metadata from pictures have changed and need to be re-readed.
-        
+
         m_interface->refreshImages(updatedURLs);
 
         if (!errorFiles.isEmpty())
@@ -285,10 +284,10 @@ void Plugin_GPSSync::slotGPSRemove()
          it != imageURLs.end(); ++it)
     {
         KURL url = *it;
-    
+
         // We only add all JPEG files as R/W because Exiv2 can't yet 
         // update metadata on others file formats.
-    
+
         QFileInfo fi(url.path());
         QString ext = fi.extension(false).upper();
         bool ret = false;
@@ -300,7 +299,7 @@ void Plugin_GPSSync::slotGPSRemove()
             ret &= exiv2Iface.removeGPSInfo();
             ret &= exiv2Iface.save(url.path());
         }
-        
+
         if (!ret)
             errorFiles.append(url.fileName());
         else 
@@ -309,7 +308,7 @@ void Plugin_GPSSync::slotGPSRemove()
 
     // We use kipi interface refreshImages() method to tell to host than 
     // metadata from pictures have changed and need to be re-readed.
-    
+
     m_interface->refreshImages(updatedURLs);
 
     if (!errorFiles.isEmpty())
@@ -322,19 +321,21 @@ void Plugin_GPSSync::slotGPSRemove()
     }
 }
 
-
 void Plugin_GPSSync::slotKMLExport()
 {
     KIPI::ImageCollection selection = m_interface->currentSelection();
 
-    if ( !selection.isValid() ) {
+    if ( !selection.isValid() ) 
+    {
         kdDebug( 51000) << "No Selection!" << endl;
     }
-    else {
-        KIPIGPSSyncPlugin::KMLExportConfig *kmlExportConfigGui = new KIPIGPSSyncPlugin::KMLExportConfig( kapp->activeWindow(), i18n("KMLExport").ascii());
-        connect(kmlExportConfigGui, SIGNAL(okButtonClicked()), this, SLOT(slotKMLGenerate()));
+    else 
+    {
+        KIPIGPSSyncPlugin::KMLExportConfig *kmlExportConfigGui = new KIPIGPSSyncPlugin::KMLExportConfig(
+                                                                 kapp->activeWindow(), i18n("KMLExport").ascii());
+        connect(kmlExportConfigGui, SIGNAL(okButtonClicked()), 
+                this, SLOT(slotKMLGenerate()));
         kmlExportConfigGui->show();
-
     }
 }
 
@@ -346,7 +347,6 @@ void Plugin_GPSSync::slotKMLGenerate()
         return;
     myExport.generate();
 }
-
 
 KIPI::Category Plugin_GPSSync::category( KAction* action ) const
 {

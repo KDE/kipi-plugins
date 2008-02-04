@@ -6,7 +6,7 @@
  * Date        : 2006-05-16
  * Description : a tool to export GPS data to KML file.
  *
- * Copyright (C) 2006-2007 by Stéphane Pontier <shadow dot walker at free dot fr>
+ * Copyright (C) 2006-2007 by Stephane Pontier <shadow dot walker at free dot fr>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
