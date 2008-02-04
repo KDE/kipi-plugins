@@ -64,7 +64,10 @@ public:
         longitudeInput = 0;
         worldMap       = 0;
         about          = 0;
+        goButton       = 0;
     }
+
+    QPushButton              *goButton;
 
     KLineEdit                *altitudeInput;
     KLineEdit                *latitudeInput;
@@ -83,11 +86,11 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
 {
     d = new GPSEditDialogDialogPrivate;
 
-    QGridLayout* grid = new QGridLayout(plainPage(), 7, 3, 0, spacingHint());
+    QGridLayout* grid = new QGridLayout(plainPage(), 8, 3, 0, spacingHint());
 
-    QLabel *message = new QLabel(i18n("<p>Use the map on the right to select the place where "
-                                      "the picture have been taken. Click with right mouse button "
-                                      "on the map to get the GPS coordinates.<p>"), plainPage());
+    QLabel *message   = new QLabel(i18n("<p>Use the map on the right to select the place where "
+                                        "the picture have been taken. Click with right mouse button "
+                                        "on the map to get the GPS coordinates.<p>"), plainPage());
 
     QLabel *altitudeLabel  = new QLabel(i18n("Altitude:"), plainPage());
     QLabel *latitudeLabel  = new QLabel(i18n("Latitude:"), plainPage());
@@ -120,24 +123,28 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
         d->longitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Longitude", 0.0), 'g', 12));
     }
 
+    d->goButton = new QPushButton(i18n("Goto Location"), plainPage());
+    d->goButton->setEnabled(false);
+
     d->worldMap = new GPSMapWidget(plainPage(), d->latitudeInput->text(), 
                                    d->longitudeInput->text(), hasGPSInfo ? 8 : 1);
     d->worldMap->show();
 
-    grid->addMultiCellWidget(message, 0, 0, 0, 2);
-    grid->addMultiCellWidget(altitudeLabel, 1, 1, 0, 2);
-    grid->addMultiCellWidget(d->altitudeInput, 2, 2, 0, 1);
-    grid->addMultiCellWidget(altResetButton, 2, 2, 2, 2);
-    grid->addMultiCellWidget(latitudeLabel, 3, 3, 0, 2);
-    grid->addMultiCellWidget(d->latitudeInput, 4, 4, 0, 1);
-    grid->addMultiCellWidget(latResetButton, 4, 4, 2, 2);
-    grid->addMultiCellWidget(longitudeLabel, 5, 5, 0, 2);
-    grid->addMultiCellWidget(d->longitudeInput, 6, 6, 0, 1);
-    grid->addMultiCellWidget(lonResetButton, 6, 6, 2, 2);
-    grid->addMultiCellWidget(d->worldMap->view(), 0, 7, 3, 3);
+    grid->addMultiCellWidget(message,             0, 0, 0, 2);
+    grid->addMultiCellWidget(altitudeLabel,       1, 1, 0, 2);
+    grid->addMultiCellWidget(d->altitudeInput,    2, 2, 0, 1);
+    grid->addMultiCellWidget(altResetButton,      2, 2, 2, 2);
+    grid->addMultiCellWidget(latitudeLabel,       3, 3, 0, 2);
+    grid->addMultiCellWidget(d->latitudeInput,    4, 4, 0, 1);
+    grid->addMultiCellWidget(latResetButton,      4, 4, 2, 2);
+    grid->addMultiCellWidget(longitudeLabel,      5, 5, 0, 2);
+    grid->addMultiCellWidget(d->longitudeInput,   6, 6, 0, 1);
+    grid->addMultiCellWidget(lonResetButton,      6, 6, 2, 2);
+    grid->addMultiCellWidget(d->goButton,         7, 7, 0, 1);
+    grid->addMultiCellWidget(d->worldMap->view(), 0, 8, 3, 3);
     grid->setColStretch(0, 3);
     grid->setColStretch(3, 10);
-    grid->setRowStretch(7, 10);
+    grid->setRowStretch(8, 10);
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -168,8 +175,22 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, GPSDataContainer gpsData,
     connect(lonResetButton, SIGNAL(released()),
             d->longitudeInput, SLOT(clear()));
 
+    connect(d->altitudeInput, SIGNAL(textChanged(const QString&)),
+            this, SLOT(slotGPSPositionChanged()));
+
+    connect(d->latitudeInput, SIGNAL(textChanged(const QString&)),
+            this, SLOT(slotGPSPositionChanged()));
+
+    connect(d->longitudeInput, SIGNAL(textChanged(const QString&)),
+            this, SLOT(slotGPSPositionChanged()));
+
     connect(d->worldMap, SIGNAL(signalNewGPSLocationFromMap(const QString&, const QString&)),
             this, SLOT(slotNewGPSLocationFromMap(const QString&, const QString&)));
+
+    connect(d->goButton, SIGNAL(released()),
+            this, SLOT(slotGotoLocation()));
+
+    // ---------------------------------------------------------------
 
     readSettings();
     QTimer::singleShot(0, this, SLOT(slotUpdateWorldMap()));
@@ -186,6 +207,17 @@ void GPSEditDialog::closeEvent(QCloseEvent *e)
     if (!e) return;
     saveSettings();
     e->accept();
+}
+
+void GPSEditDialog::slotGPSPositionChanged()
+{
+    d->goButton->setEnabled(true);
+}
+
+void GPSEditDialog::slotGotoLocation()
+{
+    if (!checkGPSLocation()) return;
+    d->worldMap->setGPSPosition(d->latitudeInput->text(), d->longitudeInput->text());
 }
 
 void GPSEditDialog::slotUpdateWorldMap()
@@ -231,7 +263,7 @@ GPSDataContainer GPSEditDialog::getGPSInfo()
                             false);
 }
 
-void GPSEditDialog::slotOk()
+bool GPSEditDialog::checkGPSLocation()
 {
     bool ok;
 
@@ -239,26 +271,32 @@ void GPSEditDialog::slotOk()
     if (!ok)
     {
         KMessageBox::error(this, i18n("Altitude value is not correct!"), 
-                           i18n("Edit Geographical Coordinates"));    
-        return;
-    }        
+                           i18n("Edit Geographical Coordinates"));
+        return false;
+    }
 
     d->latitudeInput->text().toDouble(&ok);
     if (!ok)
     {
         KMessageBox::error(this, i18n("Latitude value is not correct!"), 
-                           i18n("Edit Geographical Coordinates"));    
-        return;
-    }        
+                           i18n("Edit Geographical Coordinates"));
+        return false;
+    }
 
     d->longitudeInput->text().toDouble(&ok);
     if (!ok)
     {
         KMessageBox::error(this, i18n("Longitude value is not correct!"), 
-                           i18n("Edit Geographical Coordinates"));    
-        return;
-    }        
+                           i18n("Edit Geographical Coordinates"));
+        return false;
+    }
 
+    return true;
+}
+
+void GPSEditDialog::slotOk()
+{
+    if (!checkGPSLocation()) return;
     saveSettings();
     accept();
 }
@@ -267,6 +305,7 @@ void GPSEditDialog::slotNewGPSLocationFromMap(const QString& lat, const QString&
 {
     d->latitudeInput->setText(lat);
     d->longitudeInput->setText(lon);
+    d->goButton->setEnabled(false);
 }
 
 }  // namespace KIPIGPSSyncPlugin

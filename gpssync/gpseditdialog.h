@@ -54,6 +54,9 @@ protected slots:
     void slotCancel();
     void slotNewGPSLocationFromMap(const QString& lat, const QString& lon);
     void slotUpdateWorldMap();
+    void slotGotoLocation();
+    void slotGPSPositionChanged();
+
 
 protected:
 
@@ -64,6 +67,7 @@ private:
 
     void readSettings();
     void saveSettings();
+    bool checkGPSLocation();
 
 private:
 
