@@ -72,10 +72,17 @@ GPSMapWidget::~GPSMapWidget()
     delete d;
 }
 
+void GPSMapWidget::setGPSPosition(const QString& lat, const QString& lon)
+{
+    d->latitude  = lat;
+    d->longitude = lon;
+    resized();
+}
+
 void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
 {
     QString status = jsStatusBarText();
-    
+
     // If a new point to the map have been selected, the Status 
     // string is like : "(lat:25.5894748, lon:47.6897455478, zoom:8)"
     if (status.startsWith(QString("(lat:")))

@@ -45,6 +45,7 @@ public:
     GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon, int zoomLevel=8);
     ~GPSMapWidget();
 
+    void setGPSPosition(const QString& lat, const QString& lon);
     void resized();
 
 signals:
