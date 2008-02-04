@@ -25,11 +25,9 @@
 #include <kapplication.h>
 #include <kprocess.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kdebug.h>
-#include <kaboutdata.h>
 
 // Local includes
 
