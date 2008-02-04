@@ -3,7 +3,7 @@ ADD_DEFINITIONS(-DQT3_SUPPORT
                )
 
 SET(kipiplugin_gpssync_PART_SRCS gpslistviewitem.cpp 
-#                                 gpsbabelbinary.cpp 
+                                 gpsbabelbinary.cpp 
 #                                 gpsdataparser.cpp 
 #                                 gpseditdialog.cpp 
 #                                 gpsmapwidget.cpp 

@@ -20,21 +20,21 @@
  *
  * ============================================================ */
 
+// Qt includes.
+
+#include <QProcess>
+
 // KDE includes
 
 #include <kapplication.h>
-#include <kprocess.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kdebug.h>
-#include <kaboutdata.h>
 
 // Local includes
 
 #include "gpsbabelbinary.h"
-#include "gpsbabelbinary.moc"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -55,7 +55,6 @@ public:
 };
 
 GPSBabelBinary::GPSBabelBinary()
-           : QObject()
 {
     d = new GPSBabelBinaryPriv;
     checkSystem();
@@ -68,28 +67,20 @@ GPSBabelBinary::~GPSBabelBinary()
 
 void GPSBabelBinary::checkSystem()
 {
-    KProcess process;
-    process.clearArguments();
-    process << path() << "-V";    
+    QProcess process;
+    process.start(path(), QStringList() << "-V");
+    d->available = process.waitForFinished();
 
-    connect(&process, SIGNAL(receivedStdout(KProcess *, char*, int)),
-            this, SLOT(slotReadStdoutFromGPSBabel(KProcess*, char*, int)));
-
-    d->available = process.start(KProcess::Block, KProcess::Stdout);
-}
-
-void GPSBabelBinary::slotReadStdoutFromGPSBabel(KProcess*, char* buffer, int buflen)
-{
-    // The dcraw output look like this : GPSBabel Version 1.2.5
+    // The gpsbabel output look like this : GPSBabel Version 1.2.5
     QString headerStarts("GPSBabel Version ");
 
-    QString stdOut    = QString::fromLocal8Bit(buffer, buflen);
+    QString stdOut(process.readAll());
     QString firstLine = stdOut.section('\n', 1, 1);    
 
     if (firstLine.startsWith(headerStarts))
     {
         d->version = firstLine.remove(0, headerStarts.length());   
-        kdDebug( 51001 ) << "Found gpsbabel version: " << version() << endl;    
+        kDebug( 51001 ) << "Found gpsbabel version: " << version() << endl;    
     }
 }
 

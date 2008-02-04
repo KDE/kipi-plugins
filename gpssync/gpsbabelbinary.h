@@ -25,19 +25,15 @@
 
 // Qt includes.
 
-#include <qstring.h>
-#include <qobject.h>
-
-class KProcess;
+#include <QString>
 
 namespace KIPIGPSSyncPlugin
 {
 
 class GPSBabelBinaryPriv;
 
-class GPSBabelBinary : public QObject
+class GPSBabelBinary
 {
-    Q_OBJECT
 
 public:
 
@@ -51,10 +47,6 @@ public:
     QString minimalVersion() const;
 
     void checkSystem();
-
-private slots:
-
-    void slotReadStdoutFromGPSBabel(KProcess*, char*, int);
 
 private:
 
