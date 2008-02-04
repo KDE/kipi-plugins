@@ -20,6 +20,7 @@
  *           - 'width'     : width of map.
  *           - 'height'    : height of map.
  *           - 'zoom'      : map zoom level.
+ *           - 'maptype'   : type of map (G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP)
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -74,14 +75,19 @@ function loadMap()
     map.addControl(new google.maps.LocalSearch(searchoptions), new GControlPosition(G_ANCHOR_BOTTOM_RIGHT, new GSize(10,20)));
 
 <?php
+    $maptype = $_GET['maptype'];
+    if ($maptype == "") $maptype = "G_NORMAL_MAP";
+
     echo "map.setCenter(new GLatLng(";
     echo $_GET['latitude'];
     echo ", ";
     echo $_GET['longitude'];
     echo "), ";
     echo $_GET['zoom'];
+    echo ", ";
+    echo $maptype;
     echo ");\n";
-    
+
     echo "map.addOverlay(new GMarker(new GLatLng(";
     echo $_GET['latitude'];
     echo ", ";
@@ -107,6 +113,17 @@ function loadMap()
         function(oldLevel, newLevel)
         {
             msg = "newZoomLevel:" + newLevel;
+            window.status=msg;
+        }
+    );
+
+    GEvent.addListener(map, "maptypechanged", 
+        function()
+        {
+            var myMapType = map.getCurrentMapType(); 
+            if (myMapType == G_SATELLITE_TYPE) {msg = "newMapType:G_SATELLITE_TYPE";} 
+            if (myMapType == G_MAP_TYPE)       {msg = "newMapType:G_MAP_TYPE";} 
+            if (myMapType == G_HYBRID_TYPE)    {msg = "newMapType:G_HYBRID_TYPE";} 
             window.status=msg;
         }
     );

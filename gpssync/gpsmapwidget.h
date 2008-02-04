@@ -42,16 +42,20 @@ class GPSMapWidget : public KHTMLPart
 
 public:
 
-    GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon, int zoomLevel=8);
+    GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon, 
+                 int zoomLevel=8, const QString& mapType=QString("G_MAP_TYPE"));
     ~GPSMapWidget();
 
-    void setGPSPosition(const QString& lat, const QString& lon);
-    void GPSPosition(QString& lat, QString& lon);
+    void    setGPSPosition(const QString& lat, const QString& lon);
+    void    GPSPosition(QString& lat, QString& lon);
 
-    void setZoomLevel(int zoomLevel);
-    int  zoomLevel();
+    void    setZoomLevel(int zoomLevel);
+    int     zoomLevel();
 
-    void resized();
+    void    setMapType(const QString& mapType);
+    QString mapType();
+
+    void    resized();
 
 signals:
 

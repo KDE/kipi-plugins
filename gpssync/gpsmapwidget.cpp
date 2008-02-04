@@ -48,15 +48,18 @@ public:
     QString latitude;
     QString longitude;
     QString zoomLevel;
+    QString mapType;
 };
 
-GPSMapWidget::GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon, int zoomLevel)
+GPSMapWidget::GPSMapWidget(QWidget* parent, const QString& lat, const QString& lon, 
+                           int zoomLevel, const QString&  mapType)
             : KHTMLPart(parent)
 {
     d = new GPSMapWidgetPrivate;
     d->zoomLevel = QString::number(zoomLevel);
     d->latitude  = lat;
     d->longitude = lon;
+    d->mapType   = mapType;
 
     setJScriptEnabled(true);
     setDNDEnabled(false);
@@ -83,6 +86,17 @@ void GPSMapWidget::GPSPosition(QString& lat, QString& lon)
 {
     lat = d->latitude;
     lon = d->longitude;
+}
+
+void GPSMapWidget::setMapType(const QString& mapType)
+{
+    d->mapType = mapType;
+    resized();
+}
+
+QString GPSMapWidget::mapType()
+{
+    return d->mapType;
 }
 
 void GPSMapWidget::setZoomLevel(int zoomLevel)
@@ -122,6 +136,14 @@ void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
         d->zoomLevel = status;
     }
 
+    // If a new map type have been selected, the Status 
+    // string is like : "newMapType:G_SATELLITE_TYPE"
+    if (status.startsWith(QString("newMapType:")))
+    {
+        status.remove(0, 11);
+        d->mapType = status;
+    }
+
     KHTMLPart::khtmlMouseReleaseEvent(e);
 }
 
@@ -138,6 +160,8 @@ void GPSMapWidget::resized()
     url.append(QString::number(view()->height()));
     url.append("&zoom=");
     url.append(d->zoomLevel);
+    url.append("&maptype=");
+    url.append(d->mapType);
     openURL(KURL(url));
     kdDebug( 51001 ) << url << endl;
 }
