@@ -31,7 +31,7 @@
 #include <QString>
 #include <QStringList>
 #include <QFile>
-#include <QDom>
+#include <QDomDocument>
 #include <QTextStream>
 
 // KDE includes.
