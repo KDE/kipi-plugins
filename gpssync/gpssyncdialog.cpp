@@ -29,11 +29,14 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QCheckBox>
+#include <QCloseEvent>
 
 // KDE includes.
 
 #include <k3listview.h>
+#include <ktoolinvocation.h>
 #include <kdebug.h>
+#include <kpushbutton.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
@@ -47,7 +50,6 @@
 #include <kglobalsettings.h>
 #include <knuminput.h>
 #include <kseparator.h>
-#include <kio/previewjob.h>
 
 // Local includes.
 
@@ -147,101 +149,102 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
 
     // ---------------------------------------------------------------
 
-    QGroupBox *settingsBox         = new QGroupBox(0, Qt::Vertical, i18n("Settings"), page);
-    QGridLayout *settingsBoxLayout = new QGridLayout(settingsBox->layout(), 8, 1,
-                                                     KDialog::spacingHint());
+    QGroupBox *settingsBox         = new QGroupBox(i18n("Settings"), page);
+    QGridLayout *settingsBoxLayout = new QGridLayout(settingsBox);
 
     QPushButton *loadGPXButton = new QPushButton(i18n("Load GPX File..."), settingsBox);
 
     QLabel *gpxFileLabel = new QLabel(i18n("Current GPX file:"), settingsBox);
     d->gpxFileName       = new KSqueezedTextLabel(i18n("No GPX file"), settingsBox);
     d->gpxPointsLabel    = new QLabel(settingsBox);
-    KSeparator *line     = new KSeparator(Horizontal, settingsBox);
+    KSeparator *line     = new KSeparator(Qt::Horizontal, settingsBox);
 
     QLabel *maxGapLabel = new QLabel(i18n("Max. time gap (sec.):"), settingsBox);
-    d->maxGapInput      = new KIntSpinBox(0, 1000000, 1, 30, 10, settingsBox);
-    QWhatsThis::add(d->maxGapInput, i18n("<p>Sets the maximum difference in "
+    d->maxGapInput      = new KIntSpinBox(0, 1000000, 1, 30, settingsBox);
+    d->maxGapInput->setWhatsThis(i18n("<p>Sets the maximum difference in "
                     "seconds from a GPS track point to the image time to be matched. "
                     "If the time difference exceeds this setting, no match will be attempted."));
 
     QLabel *timeZoneLabel = new QLabel(i18n("Time zone:"), settingsBox);
-    d->timeZoneCB         = new QComboBox( false, settingsBox );
+    d->timeZoneCB         = new QComboBox(settingsBox);
 
     // See list of time zomes over the world :
     // http://en.wikipedia.org/wiki/List_of_time_zones
     // NOTE: Combo box strings are not i18n.
-    d->timeZoneCB->insertItem("GMT-12:00");
-    d->timeZoneCB->insertItem("GMT-11:00");
-    d->timeZoneCB->insertItem("GMT-10:00");
-    d->timeZoneCB->insertItem("GMT-09:30");
-    d->timeZoneCB->insertItem("GMT-09:00");
-    d->timeZoneCB->insertItem("GMT-08:00");
-    d->timeZoneCB->insertItem("GMT-07:00");
-    d->timeZoneCB->insertItem("GMT-06:00");
-    d->timeZoneCB->insertItem("GMT-05:30");
-    d->timeZoneCB->insertItem("GMT-05:00");
-    d->timeZoneCB->insertItem("GMT-04:30");
-    d->timeZoneCB->insertItem("GMT-04:00");
-    d->timeZoneCB->insertItem("GMT-03:30");
-    d->timeZoneCB->insertItem("GMT-03:00");
-    d->timeZoneCB->insertItem("GMT-02:00");
-    d->timeZoneCB->insertItem("GMT-01:00");
-    d->timeZoneCB->insertItem("GMT+00:00");
-    d->timeZoneCB->insertItem("GMT+01:00");
-    d->timeZoneCB->insertItem("GMT+02:00");
-    d->timeZoneCB->insertItem("GMT+03:00");
-    d->timeZoneCB->insertItem("GMT+03:30");
-    d->timeZoneCB->insertItem("GMT+04:00");
-    d->timeZoneCB->insertItem("GMT+05:00");
-    d->timeZoneCB->insertItem("GMT+05:30");    // See B.K.O # 149491
-    d->timeZoneCB->insertItem("GMT+05:45");
-    d->timeZoneCB->insertItem("GMT+06:00");
-    d->timeZoneCB->insertItem("GMT+06:30");
-    d->timeZoneCB->insertItem("GMT+07:00");
-    d->timeZoneCB->insertItem("GMT+08:00");
-    d->timeZoneCB->insertItem("GMT+08:45");
-    d->timeZoneCB->insertItem("GMT+09:00");
-    d->timeZoneCB->insertItem("GMT+09:30");
-    d->timeZoneCB->insertItem("GMT+10:00");
-    d->timeZoneCB->insertItem("GMT+10:30");
-    d->timeZoneCB->insertItem("GMT+11:00");
-    d->timeZoneCB->insertItem("GMT+11:30");
-    d->timeZoneCB->insertItem("GMT+12:00");
-    d->timeZoneCB->insertItem("GMT+12:45");
-    d->timeZoneCB->insertItem("GMT+13:00");
-    d->timeZoneCB->insertItem("GMT+14:00");
-    QWhatsThis::add(d->timeZoneCB, i18n("<p>Sets the time zone the camera was set to "
+    d->timeZoneCB->addItem("GMT-12:00");
+    d->timeZoneCB->addItem("GMT-11:00");
+    d->timeZoneCB->addItem("GMT-10:00");
+    d->timeZoneCB->addItem("GMT-09:30");
+    d->timeZoneCB->addItem("GMT-09:00");
+    d->timeZoneCB->addItem("GMT-08:00");
+    d->timeZoneCB->addItem("GMT-07:00");
+    d->timeZoneCB->addItem("GMT-06:00");
+    d->timeZoneCB->addItem("GMT-05:30");
+    d->timeZoneCB->addItem("GMT-05:00");
+    d->timeZoneCB->addItem("GMT-04:30");
+    d->timeZoneCB->addItem("GMT-04:00");
+    d->timeZoneCB->addItem("GMT-03:30");
+    d->timeZoneCB->addItem("GMT-03:00");
+    d->timeZoneCB->addItem("GMT-02:00");
+    d->timeZoneCB->addItem("GMT-01:00");
+    d->timeZoneCB->addItem("GMT+00:00");
+    d->timeZoneCB->addItem("GMT+01:00");
+    d->timeZoneCB->addItem("GMT+02:00");
+    d->timeZoneCB->addItem("GMT+03:00");
+    d->timeZoneCB->addItem("GMT+03:30");
+    d->timeZoneCB->addItem("GMT+04:00");
+    d->timeZoneCB->addItem("GMT+05:00");
+    d->timeZoneCB->addItem("GMT+05:30");    // See B.K.O # 149491
+    d->timeZoneCB->addItem("GMT+05:45");
+    d->timeZoneCB->addItem("GMT+06:00");
+    d->timeZoneCB->addItem("GMT+06:30");
+    d->timeZoneCB->addItem("GMT+07:00");
+    d->timeZoneCB->addItem("GMT+08:00");
+    d->timeZoneCB->addItem("GMT+08:45");
+    d->timeZoneCB->addItem("GMT+09:00");
+    d->timeZoneCB->addItem("GMT+09:30");
+    d->timeZoneCB->addItem("GMT+10:00");
+    d->timeZoneCB->addItem("GMT+10:30");
+    d->timeZoneCB->addItem("GMT+11:00");
+    d->timeZoneCB->addItem("GMT+11:30");
+    d->timeZoneCB->addItem("GMT+12:00");
+    d->timeZoneCB->addItem("GMT+12:45");
+    d->timeZoneCB->addItem("GMT+13:00");
+    d->timeZoneCB->addItem("GMT+14:00");
+    d->timeZoneCB->setWhatsThis(i18n("<p>Sets the time zone the camera was set to "
                     "during photo shooting, so that the time stamps of the images "
                     "can be converted to GMT to match the GPS time reference.\n"
                     "Note: negative offsets count eastwards from zero longitude (GMT), "
                     "they are 'ahead of time'."));
 
     d->interpolateBox = new QCheckBox(i18n("Interpolate"), settingsBox);
-    QWhatsThis::add(d->interpolateBox, i18n("<p>Set this option to interpolate GPS track points "
+    d->interpolateBox->setWhatsThis(i18n("<p>Set this option to interpolate GPS track points "
                     "which are not closely matched to the GPX data file."));
 
     d->maxTimeLabel = new QLabel(i18n("Difference in min.:"), settingsBox);
-    d->maxTimeInput = new KIntSpinBox(0, 240, 1, 15, 10, settingsBox);
-    QWhatsThis::add(d->maxTimeInput, i18n("<p>Sets the maximum time difference in minutes (240 max.)"
+    d->maxTimeInput = new KIntSpinBox(0, 240, 1, 15, settingsBox);
+    d->maxTimeInput->setWhatsThis(i18n("<p>Sets the maximum time difference in minutes (240 max.)"
                     " to interpolate GPX file points to image time data."));
 
-    settingsBoxLayout->addMultiCellWidget(loadGPXButton, 0, 0, 0, 1);
-    settingsBoxLayout->addMultiCellWidget(gpxFileLabel, 1, 1, 0, 1);
-    settingsBoxLayout->addMultiCellWidget(d->gpxFileName, 2, 2, 0, 1);
-    settingsBoxLayout->addMultiCellWidget(d->gpxPointsLabel, 3, 3, 0, 1);
-    settingsBoxLayout->addMultiCellWidget(line, 4, 4, 0, 1);
-    settingsBoxLayout->addMultiCellWidget(maxGapLabel, 5, 5, 0, 0);
-    settingsBoxLayout->addMultiCellWidget(d->maxGapInput, 5, 5, 1, 1);
-    settingsBoxLayout->addMultiCellWidget(timeZoneLabel, 6, 6, 0, 0);
-    settingsBoxLayout->addMultiCellWidget(d->timeZoneCB, 6, 6, 1, 1);
-    settingsBoxLayout->addMultiCellWidget(d->interpolateBox, 7, 7, 0, 1);
-    settingsBoxLayout->addMultiCellWidget(d->maxTimeLabel, 8, 8, 0, 0);
-    settingsBoxLayout->addMultiCellWidget(d->maxTimeInput, 8, 8, 1, 1);
+    settingsBoxLayout->addWidget(loadGPXButton, 0, 0, 1, 2 );
+    settingsBoxLayout->addWidget(gpxFileLabel, 1, 0, 1, 2 );
+    settingsBoxLayout->addWidget(d->gpxFileName, 2, 0, 1, 2 );
+    settingsBoxLayout->addWidget(d->gpxPointsLabel, 3, 0, 1, 2 );
+    settingsBoxLayout->addWidget(line, 4, 0, 1, 2 );
+    settingsBoxLayout->addWidget(maxGapLabel, 5, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->maxGapInput, 5, 1, 1, 1);
+    settingsBoxLayout->addWidget(timeZoneLabel, 6, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->timeZoneCB, 6, 1, 1, 1);
+    settingsBoxLayout->addWidget(d->interpolateBox, 7, 0, 1, 2 );
+    settingsBoxLayout->addWidget(d->maxTimeLabel, 8, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->maxTimeInput, 8, 1, 1, 1);
+    settingsBoxLayout->setSpacing(spacingHint());
+    settingsBoxLayout->setMargin(0);
 
     // ---------------------------------------------------------------
 
-    mainLayout->addMultiCellWidget(d->listView, 0, 2, 0, 1);
-    mainLayout->addMultiCellWidget(settingsBox, 0, 1, 2, 2);
+    mainLayout->addWidget(d->listView, 0, 0, 3, 2 );
+    mainLayout->addWidget(settingsBox, 0, 2, 2, 1);
     mainLayout->setColumnStretch(1, 10);
     mainLayout->setRowStretch(2, 10);
     mainLayout->setSpacing(spacingHint());
@@ -250,22 +253,47 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("GPS Sync"),
-                                            NULL,
-                                            KAboutData::License_GPL,
-                                            I18N_NOOP("A plugin to synchronize images' metadata with a GPS device"),
-                                            "(c) 2006-2008, Gilles Caulier");
+    d->about = new KIPIPlugins::KPAboutData(ki18n("GPS Sync"),
+                   QByteArray(),
+                   KAboutData::License_GPL,
+                   ki18n("A Plugin to synchronize pictures metadata with a GPS device"),
+                   ki18n("(c) 2006-2008, Gilles Caulier"));
 
-    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
-                        "caulier dot gilles at gmail dot com");
+    d->about->addAuthor(ki18n("Gilles Caulier"), 
+                        ki18n("Developer and maintainer"),
+                              "caulier dot gilles at gmail dot com");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("GPS Sync Handbook"),
-                                 this, SLOT(slotHelp()), 0, -1, 0);
-    actionButton(Help)->setPopup( helpMenu->menu() );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KPushButton *helpButton = button( Help );
+    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    helpButton->setDelayedMenu( helpMenu->menu() );
 
     // ---------------------------------------------------------------
+
+    connect(this, SIGNAL(closeClicked()),
+            this, SLOT(slotClose()));
+
+    connect(this, SIGNAL(applyClicked()),
+            this, SLOT(slotApply()));
+
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotUser1()));
+
+    connect(this, SIGNAL(user2Clicked()),
+            this, SLOT(slotUser2()));
+
+    connect(this, SIGNAL(user3Clicked()),
+            this, SLOT(slotUser3()));
+
+    connect(d->interface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
 
     connect(loadGPXButton, SIGNAL(released()),
             this, SLOT(slotLoadGPXFile()));
@@ -287,7 +315,7 @@ GPSSyncDialog::~GPSSyncDialog()
 
 void GPSSyncDialog::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("gpssync", "kipi-plugins");
+    KToolInvocation::invokeHelp("gpssync", "kipi-plugins");
 }
 
 void GPSSyncDialog::setImages( const KUrl::List& images )
@@ -295,16 +323,13 @@ void GPSSyncDialog::setImages( const KUrl::List& images )
     for( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it )
         new GPSListViewItem(d->listView, d->listView->lastItem(), *it);
 
-    KIO::PreviewJob *thumbnailJob = KIO::filePreview(images, 64);
-
-    connect(thumbnailJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-            this, SLOT(slotGotThumbnail(const KFileItem*, const QPixmap&)));
+    d->interface->thumbnails(images, 64);
 }
 
 void GPSSyncDialog::slotLoadGPXFile()
 {
-    KUrl loadGPXFile = KFileDialog::getOpenURL(KGlobalSettings::documentPath(),
-                                               i18n("%1|GPS Exchange Format").arg("*.gpx"), this,
+    KUrl loadGPXFile = KFileDialog::getOpenUrl(KGlobalSettings::documentPath(),
+                                               i18n("%1|GPS Exchange Format", QString("*.gpx")), this,
                                                i18n("Select GPX File to Load") );
     if( loadGPXFile.isEmpty() )
        return;
@@ -314,16 +339,16 @@ void GPSSyncDialog::slotLoadGPXFile()
 
     if (!ret)
     {
-        KMessageBox::error(this, i18n("Cannot parse %1 GPX file!")
-                           .arg(loadGPXFile.fileName()), i18n("GPS Sync"));
+        KMessageBox::error(this, i18n("Cannot parse %1 GPX file!",
+                           loadGPXFile.fileName()), i18n("GPS Sync"));
         enableButton(User1, false);
         return;
     }
 
     if (d->gpxParser.numPoints() <= 0)
     {
-        KMessageBox::sorry(this, i18n("The %1 GPX file do not have a date-time track to use!")
-                           .arg(loadGPXFile.fileName()), i18n("GPS Sync"));
+        KMessageBox::sorry(this, i18n("The %1 GPX file do not have a date-time track to use!",
+                           loadGPXFile.fileName()), i18n("GPS Sync"));
         enableButton(User1, false);
         return;
     }
@@ -351,14 +376,14 @@ void GPSSyncDialog::slotClose()
 {
     if (!promptUserClose()) return;
     saveSettings();
-    KDialogBase::slotClose();
+    done(Close);
 }
 
 bool GPSSyncDialog::promptUserClose()
 {
     // Check if one item is dirty in the list.
 
-    QListViewItemIterator it( d->listView );
+    Q3ListViewItemIterator it( d->listView );
     int dirty = 0;
 
     while ( it.current() )
@@ -372,7 +397,7 @@ bool GPSSyncDialog::promptUserClose()
 
     if (dirty > 0)
     {
-        QString msg = i18n("1 image from the list is not updated.",
+        QString msg = i18np("1 image from the list is not updated.",
                            "%n images from the list are not updated.", dirty);
 
         if (KMessageBox::No == KMessageBox::warningYesNo(this,
@@ -388,26 +413,32 @@ bool GPSSyncDialog::promptUserClose()
 void GPSSyncDialog::readSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("GPS Sync Settings");
-    d->maxGapInput->setValue(config.readNumEntry("Max Gap Time", 30));
-    d->timeZoneCB->setCurrentItem(config.readNumEntry("Time Zone", 16));  // GMT+00:00
-    d->interpolateBox->setChecked(config.readBoolEntry("Interpolate", false));
-    d->maxTimeInput->setValue(config.readNumEntry("Max Inter Dist Time", 15));
+    KConfigGroup group = config.group(QString("GPS Sync Settings"));
+
+    d->maxGapInput->setValue(group.readEntry("Max Gap Time", 30));
+    d->timeZoneCB->setCurrentIndex(group.readEntry("Time Zone", 16));  // GMT+00:00
+    d->interpolateBox->setChecked(group.readEntry("Interpolate", false));
+    d->maxTimeInput->setValue(group.readEntry("Max Inter Dist Time", 15));
 
     d->maxTimeLabel->setEnabled(d->interpolateBox->isChecked());
     d->maxTimeInput->setEnabled(d->interpolateBox->isChecked());
-    resize(configDialogSize(config, QString("GPS Sync Dialog")));
+
+    KConfigGroup group2 = config.group(QString("GPS Sync Dialog"));
+    restoreDialogSize(group2);
 }
 
 void GPSSyncDialog::saveSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("GPS Sync Settings");
-    config.writeEntry("Max Gap Time", d->maxGapInput->value() );
-    config.writeEntry("Time Zone", d->timeZoneCB->currentItem() );
-    config.writeEntry("Interpolate", d->interpolateBox->isChecked() );
-    config.writeEntry("Max Inter Dist Time", d->maxTimeInput->value() );
-    saveDialogSize(config, QString("GPS Sync Dialog"));
+    KConfigGroup group = config.group(QString("GPS Sync Settings"));
+    group.writeEntry("Max Gap Time", d->maxGapInput->value() );
+    group.writeEntry("Time Zone", d->timeZoneCB->currentIndex() );
+    group.writeEntry("Interpolate", d->interpolateBox->isChecked() );
+    group.writeEntry("Max Inter Dist Time", d->maxTimeInput->value() );
+
+    KConfigGroup group2 = config.group(QString("GPS Sync Dialog"));
+    saveDialogSize(group2);
+
     config.sync();
 }
 
@@ -416,7 +447,7 @@ void GPSSyncDialog::slotUser1()
 {
     int itemsUpdated = 0;
 
-    QListViewItemIterator it( d->listView );
+    Q3ListViewItemIterator it( d->listView );
     while ( it.current() )
     {
         GPSListViewItem *item = dynamic_cast<GPSListViewItem*>(it.current());
@@ -449,9 +480,9 @@ void GPSSyncDialog::slotUser1()
         return;
     }
 
-    QString msg = i18n("GPS data of 1 image have been updated on the list using the GPX data file.",
-                       "GPS data of %n images have been updated on the list using the GPX data file.",
-                       itemsUpdated);
+    QString msg = i18np("GPS data of 1 image have been updated on the list using the GPX data file.",
+                        "GPS data of %n images have been updated on the list using the GPX data file.",
+                        itemsUpdated);
     msg += '\n';
     msg += i18n("Press Apply button to update images metadata.");
 
@@ -474,9 +505,9 @@ void GPSSyncDialog::slotUser2()
                       item->url().fileName(),
                       item->hasGPSInfo());
 
-    if (dlg.exec() == KDialogBase::Accepted)
+    if (dlg.exec() == KDialog::Accepted)
     {
-        QListViewItemIterator it(d->listView);
+        Q3ListViewItemIterator it(d->listView);
 
         while (it.current())
         {
@@ -500,7 +531,7 @@ void GPSSyncDialog::slotUser3()
         return;
     }
 
-    QListViewItemIterator it(d->listView);
+    Q3ListViewItemIterator it(d->listView);
 
     while (it.current())
     {
@@ -517,7 +548,7 @@ void GPSSyncDialog::slotApply()
 {
     KUrl::List images;
 
-    QListViewItemIterator it( d->listView );
+    Q3ListViewItemIterator it( d->listView );
     while ( it.current() )
     {
         GPSListViewItem *selItem = dynamic_cast<GPSListViewItem*>(it.current());
@@ -537,7 +568,7 @@ void GPSSyncDialog::slotApply()
 
 void GPSSyncDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
-    QListViewItemIterator it(d->listView);
+    Q3ListViewItemIterator it(d->listView);
 
     while (it.current())
     {
