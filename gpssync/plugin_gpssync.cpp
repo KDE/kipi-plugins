@@ -30,6 +30,7 @@
 
 #include <klocale.h>
 #include <kaction.h>
+#include <kactionmenu.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -104,7 +105,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
 
     if ( !m_interface )
     {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
@@ -162,22 +163,24 @@ bool Plugin_GPSSync::checkBinaries(QString &gpsBabelVersion)
 
 void Plugin_GPSSync::slotGPSSync()
 {
+/* TODO
     KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
-
+*/
     /* NOTE: this plugin do not use yet GPSBabel to convert GPS data file to GPX
     QString gpsBabelVersion;
     if (!checkBinaries(gpsBabelVersion)) 
         return;
     */
-
+/*
     KIPIGPSSyncPlugin::GPSSyncDialog *dialog = new KIPIGPSSyncPlugin::GPSSyncDialog(
                                                m_interface, kapp->activeWindow());
 
     dialog->setImages( images.images() );
     dialog->show();
+*/
 }
 
 void Plugin_GPSSync::slotGPSEdit()
@@ -197,7 +200,7 @@ void Plugin_GPSSync::slotGPSEdit()
     KIPIGPSSyncPlugin::GPSEditDialog dlg(kapp->activeWindow(), 
                                          gpsData, img.fileName(), hasGPSInfo);
 
-    if (dlg.exec() == KDialogBase::Accepted)
+    if (dlg.exec() == KDialog::Accepted)
     {
         gpsData = dlg.getGPSInfo();
         KUrl::List  imageURLs = images.images();
@@ -252,6 +255,7 @@ void Plugin_GPSSync::slotGPSEdit()
 
 void Plugin_GPSSync::slotGPSRemove()
 {
+/* TODO
     KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
@@ -307,10 +311,12 @@ void Plugin_GPSSync::slotGPSRemove()
                     errorFiles,
                     i18n("Remove Geographical Coordinates"));  
     }
+*/
 }
 
 void Plugin_GPSSync::slotKMLExport()
 {
+/* TODO
     KIPI::ImageCollection selection = m_interface->currentSelection();
 
     if ( !selection.isValid() ) 
@@ -325,15 +331,19 @@ void Plugin_GPSSync::slotKMLExport()
                 this, SLOT(slotKMLGenerate()));
         kmlExportConfigGui->show();
     }
+*/
 }
 
 void Plugin_GPSSync::slotKMLGenerate()
 {
+/* TODO
+
     KIPI::ImageCollection selection = m_interface->currentSelection();
     KIPIGPSSyncPlugin::kmlExport myExport(m_interface);
     if(!myExport.getConfig())
         return;
     myExport.generate();
+*/
 }
 
 KIPI::Category Plugin_GPSSync::category( KAction* action ) const
