@@ -163,24 +163,23 @@ bool Plugin_GPSSync::checkBinaries(QString &gpsBabelVersion)
 
 void Plugin_GPSSync::slotGPSSync()
 {
-/* TODO
+
     KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
-*/
+
     /* NOTE: this plugin do not use yet GPSBabel to convert GPS data file to GPX
     QString gpsBabelVersion;
     if (!checkBinaries(gpsBabelVersion)) 
         return;
     */
-/*
+
     KIPIGPSSyncPlugin::GPSSyncDialog *dialog = new KIPIGPSSyncPlugin::GPSSyncDialog(
                                                m_interface, kapp->activeWindow());
 
     dialog->setImages( images.images() );
     dialog->show();
-*/
 }
 
 void Plugin_GPSSync::slotGPSEdit()
@@ -334,14 +333,11 @@ void Plugin_GPSSync::slotKMLExport()
 
 void Plugin_GPSSync::slotKMLGenerate()
 {
-/* TODO
-
     KIPI::ImageCollection selection = m_interface->currentSelection();
     KIPIGPSSyncPlugin::kmlExport myExport(m_interface);
     if(!myExport.getConfig())
         return;
     myExport.generate();
-*/
 }
 
 KIPI::Category Plugin_GPSSync::category( KAction* action ) const
