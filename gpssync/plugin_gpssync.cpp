@@ -69,45 +69,34 @@ void Plugin_GPSSync::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_geolocation = new KActionMenu(i18n("Geolocation"),
-                               0,
-                               actionCollection(),
-                               "geolocation");
+    m_action_geolocation = new KActionMenu(KIcon("applications-internet"), i18n("Geolocation"), actionCollection());
+    m_action_geolocation->setObjectName("geolocation");
+    addAction(m_action_geolocation);
 
-    m_action_geolocation->insert(new KAction (i18n("Correlator..."),
-                                     "gpsimagetag",
-                                     0,     
-                                     this,
-                                     SLOT(slotGPSSync()),
-                                     actionCollection(),
-                                     "gpssync"));
+    KAction *gpssync = new KAction(KIcon("gpsimagetag"), i18n("Correlator"), actionCollection());
+    gpssync->setObjectName("gpssync");
+    connect(gpssync, SIGNAL(triggered(bool)), 
+            this, SLOT(slotGPSSync()));
+    m_action_geolocation->addAction(gpssync);
 
-    m_action_geolocation->insert(new KAction (i18n("Edit Coordinates..."),
-                                     0,
-                                     0,
-                                     this,
-                                     SLOT(slotGPSEdit()),
-                                     actionCollection(),
-                                     "gpsedit"));
+    KAction *gpsedit = new KAction(i18n("Correlator"), actionCollection());
+    gpsedit->setObjectName("gpsedit");
+    connect(gpsedit, SIGNAL(triggered(bool)), 
+            this, SLOT(slotGPSEdit()));
+    m_action_geolocation->addAction(gpsedit);
 
-    m_action_geolocation->insert(new KAction (i18n("Remove Coordinates..."),
-                                     0,
-                                     0,
-                                     this,
-                                     SLOT(slotGPSRemove()),
-                                     actionCollection(),
-                                     "gpsremove"));
+    KAction *gpsremove = new KAction(i18n("Remove Coordinates..."), actionCollection());
+    gpsremove->setObjectName("gpsremove");
+    connect(gpsremove, SIGNAL(triggered(bool)), 
+            this, SLOT(slotGPSRemove()));
+    m_action_geolocation->addAction(gpsremove);
 
     addAction( m_action_geolocation );
 
-   // this is our action shown in the menubar/toolbar of the mainwindow
-    m_actionKMLExport = new KAction (i18n("KML Export..."),
-                                     "www", // icon
-                                     0,     // do never set shortcuts from plugins.
-                                     this,
-                                     SLOT(slotKMLExport()),
-                                     actionCollection(),
-                                     "kmlexport");
+    m_actionKMLExport = new KAction(KIcon("www"), i18n("KML Export..."), actionCollection());
+    m_actionKMLExport->setObjectName("kmlexport");
+    connect(m_actionKMLExport, SIGNAL(triggered(bool)), 
+            this, SLOT(slotKMLExport()));
 
     addAction( m_actionKMLExport );
 
