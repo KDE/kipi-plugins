@@ -60,8 +60,8 @@ GPSMapWidget::GPSMapWidget(QWidget* parent)
     setDNDEnabled(false);
     setEditable(false);
 
-    view()->setVScrollBarMode(QScrollView::AlwaysOff);
-    view()->setHScrollBarMode(QScrollView::AlwaysOff);
+    view()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view()->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view()->setMinimumSize(480, 360);
 }
 
@@ -154,8 +154,8 @@ void GPSMapWidget::resized()
     url.append(d->zoomLevel);
     url.append("&maptype=");
     url.append(d->mapType);
-    openURL(KURL(url));
-    kdDebug( 51001 ) << url << endl;
+    openUrl(KUrl(url));
+    kDebug( 51001 ) << url << endl;
 }
 
 }  // namespace KIPIGPSSyncPlugin
