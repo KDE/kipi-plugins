@@ -193,6 +193,11 @@ GPSEditDialog::~GPSEditDialog()
     delete d;
 }
 
+void GPSEditDialog::slotHelp()
+{
+    KApplication::kApplication()->invokeHelp("gpssync", "kipi-plugins");
+}
+
 void GPSEditDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;

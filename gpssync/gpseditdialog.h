@@ -56,7 +56,7 @@ protected slots:
     void slotUpdateWorldMap();
     void slotGotoLocation();
     void slotGPSPositionChanged();
-
+    void slotHelp();
 
 protected:
 
