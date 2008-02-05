@@ -27,14 +27,15 @@ extern "C"
 
 // Qt includes.
 
-#include <qpainter.h>
-#include <qregexp.h>
+#include <QPainter>
+#include <QRegExp>
+#include <QImageReader>
 
 // KDE includes.
 
 #include <kapplication.h>
 #include <kconfig.h>
-#include <kio/job.h>
+#include <kio/copyjob.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
@@ -91,7 +92,7 @@ bool kmlExport::createDir(QDir dir)
  */
 QString kmlExport::webifyFileName(const QString &fileName) 
 {
-    QString webFileName=fileName.lower();
+    QString webFileName=fileName.toLower();
 
     // Remove potentially troublesome chars
     webFileName=webFileName.replace(QRegExp("[^-0-9a-z]+"), "_");
@@ -104,7 +105,7 @@ QString kmlExport::webifyFileName(const QString &fileName)
  */
 QImage kmlExport::generateSquareThumbnail(const QImage& fullImage, int size) 
 {
-    QImage image = fullImage.smoothScale(size, size, QImage::ScaleMax);
+    QImage image = fullImage.scaled(size, size, Qt::KeepAspectRatioByExpanding);
 
     if (image.width() == size && image.height() == size) 
     {
@@ -136,7 +137,7 @@ QImage kmlExport::generateBorderedThumbnail(const QImage& fullImage, int size)
     int image_border = 3;
 
     // getting an image minus the border 
-    QImage image = fullImage.smoothScale(size -(2*image_border), size - (2*image_border), QImage::ScaleMax);
+    QImage image = fullImage.scaled(size -(2*image_border), size - (2*image_border), Qt::KeepAspectRatioByExpanding);
 
     QPixmap croppedPix(image.width() + (2*image_border), image.height() + (2*image_border));
     QPainter painter(&croppedPix);
@@ -152,9 +153,9 @@ QImage kmlExport::generateBorderedThumbnail(const QImage& fullImage, int size)
 }
 
 /*!
-\fn kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imageURL, QDomElement &kmlAlbum )
+\fn kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imageURL, QDomElement &kmlAlbum )
  */
-void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imageURL, QDomElement &kmlAlbum ) 
+void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imageURL, QDomElement &kmlAlbum ) 
 {
     KIPI::Interface* mInterface = interface;
     KIPI::ImageInfo info        = mInterface->info(imageURL);
@@ -168,7 +169,8 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imag
         return;
     }
 
-    QString imageFormat = QImageIO::imageFormat(&imageFile);
+    QImageReader reader(&imageFile);
+    QString imageFormat = reader.format();
     if (imageFormat.isEmpty()) 
     {
         logWarning(i18n("Format of image '%1' is unknown").arg(path));
@@ -195,7 +197,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imag
         matrix.rotate( info.angle() );
         image = image.xForm( matrix );
     }
-    image = image.smoothScale(m_size, m_size, QImage::ScaleMax);
+    image = image.scaled(m_size, m_size, Qt::KeepAspectRatioByExpanding);
 
     QImage icon;
     if (m_optimize_googlemap) 
@@ -216,9 +218,9 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imag
     QString baseFileName = webifyFileName(info.title());
     //	baseFileName = mUniqueNameHelper.makeNameUnique(baseFileName);
     QString fullFileName;
-    fullFileName     = baseFileName + '.' + imageFormat.lower();
+    fullFileName     = baseFileName + '.' + imageFormat.toLower();
     QString destPath = m_tempDestDir + m_imageDir + fullFileName;
-    if (!image.save(destPath, imageFormat.ascii(), 85)) 
+    if (!image.save(destPath, imageFormat.toAscii(), 85)) 
     {
         // if not able to save the image, it's pointless to create a placemark
         logWarning(i18n("Could not save image '%1' to '%2'").arg(path).arg(destPath));
@@ -304,9 +306,9 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KURL& imag
         logInfo(i18n("Creation of placemark '%1'").arg(fullFileName));
 
         // Save icon
-        QString iconFileName = "thumb_" + baseFileName + '.' + imageFormat.lower();
+        QString iconFileName = "thumb_" + baseFileName + '.' + imageFormat.toLower();
         QString destPath     = m_tempDestDir + m_imageDir + iconFileName;
-        if (!icon.save(destPath, imageFormat.ascii(), 85)) 
+        if (!icon.save(destPath, imageFormat.toAscii(), 85)) 
         {
             logWarning(i18n("Could not save icon for image '%1' to '%2'").arg(path).arg(destPath));
         } 
@@ -419,17 +421,17 @@ void kmlExport::generate()
         addTrack(kmlAlbum);
     }
 
-    KURL::List images = selection.images();
+    KUrl::List images = selection.images();
     int defectImage   = 0;
     int pos           = 1;
     int count         = images.count();
-    KURL::List::ConstIterator imagesEnd (images.constEnd());
-    for( KURL::List::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos) 
+    KUrl::List::ConstIterator imagesEnd (images.constEnd());
+    for( KUrl::List::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos) 
     {
         KExiv2Iface::KExiv2 exiv2Iface;
         KIPI::ImageInfo info = m_interface->info( *selIt );
         // exiv2 load from url not image
-        KURL url = *selIt;
+        KUrl url = *selIt;
         exiv2Iface.load(url.path());
         double alt, lat, lng;
         bool hasGPSInfo = exiv2Iface.getGPSInfo(alt, lat, lng);
@@ -451,8 +453,8 @@ void kmlExport::generate()
     {
         /** @todo if defectImage==count there are no pictures exported, does it worst to continue? */
         QWidget* parent = KApplication::kApplication()->mainWidget();
-        KMessageBox::information(parent, i18n("No position data for 1 picture",
-                                              "No position data for %n pictures", defectImage));
+        KMessageBox::information(parent, i18np("No position data for 1 picture",
+                                               "No position data for %n pictures", defectImage));
     }
 
     /** @todo change to kml or kmz if compressed */
@@ -476,26 +478,26 @@ void kmlExport::generate()
 int kmlExport::getConfig()
 {
     KConfig config("kipirc");
-    config.setGroup("KMLExport Settings");
+    KConfigGroup group = config.group("KMLExport Settings");
 
-    m_localTarget           = config.readBoolEntry("localTarget");
-    m_optimize_googlemap    = config.readBoolEntry("optimize_googlemap");
-    m_iconSize              = config.readNumEntry("iconSize");
-    //	googlemapSize       = config.readNumEntry("googlemapSize");
-    m_size                  = config.readNumEntry("size");
+    m_localTarget           = group.readEntry("localTarget", false);
+    m_optimize_googlemap    = group.readEntry("optimize_googlemap", false);
+    m_iconSize              = group.readEntry("iconSize", 32);
+    //	googlemapSize       = group.readNumEntry("googlemapSize");
+    m_size                  = group.readEntry("size", 320);
 
     // UrlDestDir have to have the trailing 
-    m_baseDestDir           = config.readEntry("baseDestDir");
-    m_UrlDestDir            = config.readEntry("UrlDestDir");
-    m_altitudeMode          = config.readNumEntry("Altitude Mode", 0);
-    m_KMLFileName           = config.readEntry("KMLFileName");
-    m_GPXtracks             = config.readBoolEntry("UseGPXTracks");
-    m_GPXFile               = config.readEntry("GPXFile");
-    m_TimeZone              = config.readNumEntry("Time Zone", 12);
-    m_LineWidth             = config.readNumEntry("Line Width", 4);
-    m_GPXColor              = config.readEntry("Track Color", "#17eeee" );
-    m_GPXOpacity            = config.readNumEntry("Track Opacity", 64 );
-    m_GPXAltitudeMode       = config.readNumEntry("GPX Altitude Mode", 0);
+    m_baseDestDir           = group.readEntry("baseDestDir", QString("/tmp/test/"));
+    m_UrlDestDir            = group.readEntry("UrlDestDir", QString("http://www.example.com/"));
+    m_altitudeMode          = group.readEntry("Altitude Mode", 0);
+    m_KMLFileName           = group.readEntry("KMLFileName", QString("kmldocument"));
+    m_GPXtracks             = group.readEntry("UseGPXTracks", false);
+    m_GPXFile               = group.readEntry("GPXFile", QString());
+    m_TimeZone              = group.readEntry("Time Zone", 12);
+    m_LineWidth             = group.readEntry("Line Width", 4);
+    m_GPXColor              = group.readEntry("Track Color", "#17eeee" );
+    m_GPXOpacity            = group.readEntry("Track Opacity", 64 );
+    m_GPXAltitudeMode       = group.readEntry("GPX Altitude Mode", 0);
 
     KStandardDirs dir;
     m_tempDestDir   = dir.saveLocation("tmp", "kipi-kmlrexportplugin-" + QString::number(getpid()) + '/');

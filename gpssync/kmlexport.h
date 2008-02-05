@@ -25,9 +25,9 @@
 
 // Qt includes.
 
-#include <qcolor.h>
-#include <qdir.h>
-#include <qdom.h>
+#include <QColor>
+#include <QDir>
+#include <QDomDocument>
 
 // Local includes.
 
@@ -61,10 +61,10 @@ public:
 
     /*! generate the kml element for pictures with tumbnails
      *  @param interface the kipi interface
-     *  @param KURL the URL of the picture
+     *  @param KUrl the URL of the picture
      *  @param kmlAlbum the album used
      */
-    void generateImagesthumb(KIPI::Interface* interface, const KURL&, QDomElement &kmlAlbum);
+    void generateImagesthumb(KIPI::Interface* interface, const KUrl&, QDomElement &kmlAlbum);
 
     /*! Produce a web-friendly file name
      *  otherwise, while google earth works fine, maps.google.com may not find pictures and thumbnail
