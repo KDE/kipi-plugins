@@ -55,7 +55,7 @@ class KMLExportConfig : public KDialog
 
 public:
 
-    explicit KMLExportConfig( QWidget* parent = 0, const char* name = 0);
+    KMLExportConfig(QWidget* parent = 0);
     ~KMLExportConfig();
 
 public:

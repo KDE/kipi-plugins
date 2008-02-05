@@ -2,16 +2,16 @@ ADD_DEFINITIONS(-DQT3_SUPPORT
                 -DQT3_SUPPORT_WARNINGS
                )
 
-SET(kipiplugin_gpssync_PART_SRCS gpslistviewitem.cpp 
+SET(kipiplugin_gpssync_PART_SRCS plugin_gpssync.cpp 
+                                 gpslistviewitem.cpp 
                                  gpsbabelbinary.cpp 
                                  gpsdataparser.cpp 
                                  gpsmapwidget.cpp 
                                  gpseditdialog.cpp 
                                  gpssyncdialog.cpp 
-                                 plugin_gpssync.cpp 
                                  kmlexport.cpp 
                                  kmlgpsdataparser.cpp 
-#                                 kmlexportconfig.cpp 
+                                 kmlexportconfig.cpp 
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_gpssync ${kipiplugin_gpssync_PART_SRCS})
