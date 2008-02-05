@@ -86,8 +86,8 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     GoogleMapTargetRadioButton_->setToolTip(i18n("When using GoogleMap, all image must have complete URL, icons are "
                                                  "squared and when drawing a track, only linetrack is exported" ) );
 
-    buttonGroupTargetTypeLayout->addMultiCellWidget( LocalTargetRadioButton_, 0, 0, 0, 0 );
-    buttonGroupTargetTypeLayout->addMultiCellWidget( GoogleMapTargetRadioButton_, 1, 1, 0, 0 );
+    buttonGroupTargetTypeLayout->addWidget( LocalTargetRadioButton_, 0, 0, 1, 1);
+    buttonGroupTargetTypeLayout->addWidget( GoogleMapTargetRadioButton_, 1, 0, 1, 1);
     buttonGroupTargetTypeLayout->setAlignment( Qt::AlignTop );
     buttonGroupTargetTypeLayout->setSpacing(spacingHint());
     buttonGroupTargetTypeLayout->setMargin(0);
@@ -123,15 +123,15 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     FileNameLabel_       = new QLabel( i18n( "File name" ), TargetPreferenceGroupBox);
     FileName_            = new QLineEdit( TargetPreferenceGroupBox);
 
-    TargetPreferenceGroupBoxLayout->addMultiCellWidget( buttonGroupTargetType,      0, 1, 0, 4 );
-    TargetPreferenceGroupBoxLayout->addMultiCellWidget( AltitudeLabel_,             2, 2, 0, 4 );
-    TargetPreferenceGroupBoxLayout->addMultiCellWidget( AltitudeCB_,                2, 2, 2, 4 );
-    TargetPreferenceGroupBoxLayout->addMultiCellWidget( destinationDirectoryLabel_, 3, 3, 0, 2 );
-    TargetPreferenceGroupBoxLayout->addMultiCellWidget( DestinationDirectory_,      3, 3, 3, 4 );
-    TargetPreferenceGroupBoxLayout->addMultiCellWidget( DestinationUrlLabel_,       4, 4, 0, 1 );
-    TargetPreferenceGroupBoxLayout->addMultiCellWidget( DestinationURL_,            4, 4, 2, 4 );
-    TargetPreferenceGroupBoxLayout->addMultiCellWidget( FileNameLabel_,             5, 5, 0, 0 );
-    TargetPreferenceGroupBoxLayout->addMultiCellWidget( FileName_,                  5, 5, 1, 4 );
+    TargetPreferenceGroupBoxLayout->addWidget( buttonGroupTargetType,      0, 0, 2, 5 );
+    TargetPreferenceGroupBoxLayout->addWidget( AltitudeLabel_,             2, 0, 1, 5 );
+    TargetPreferenceGroupBoxLayout->addWidget( AltitudeCB_,                2, 2, 1, 4 - 2+1);
+    TargetPreferenceGroupBoxLayout->addWidget( destinationDirectoryLabel_, 3, 0, 1, 3 );
+    TargetPreferenceGroupBoxLayout->addWidget( DestinationDirectory_,      3, 3, 1, 4 - 3+1);
+    TargetPreferenceGroupBoxLayout->addWidget( DestinationUrlLabel_,       4, 0, 1, 2 );
+    TargetPreferenceGroupBoxLayout->addWidget( DestinationURL_,            4, 2, 1, 4 - 2+1);
+    TargetPreferenceGroupBoxLayout->addWidget( FileNameLabel_,             5, 0, 1, 1);
+    TargetPreferenceGroupBoxLayout->addWidget( FileName_,                  5, 1, 1, 4 );
     TargetPreferenceGroupBoxLayout->setAlignment( Qt::AlignTop );
     TargetPreferenceGroupBoxLayout->setSpacing(spacingHint());
     TargetPreferenceGroupBoxLayout->setMargin(0);
@@ -239,18 +239,18 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
                                       "regardless of the actual elevation of the terrain beneath "
                                       "the element.</dd></dl>"));
 
-    GPXTracksGroupBoxLayout->addMultiCellWidget( GPXTracksCheckBox_, 0, 0, 0, 3);
-    GPXTracksGroupBoxLayout->addMultiCellWidget( GPXFileLabel_, 1, 1, 0, 0);
-    GPXTracksGroupBoxLayout->addMultiCellWidget( GPXFileKURLRequester_, 1, 1, 1, 3);
-    GPXTracksGroupBoxLayout->addMultiCellWidget( timeZoneLabel_, 2, 2, 0, 0);
-    GPXTracksGroupBoxLayout->addMultiCellWidget( timeZoneCB, 2, 2, 1, 3);
-    GPXTracksGroupBoxLayout->addMultiCellWidget( GPXLineWidthLabel_, 3, 3, 0, 0);
-    GPXTracksGroupBoxLayout->addMultiCellWidget( GPXLineWidthInput_, 3, 3, 1, 3);
-    GPXTracksGroupBoxLayout->addMultiCellWidget( GPXColorLabel_, 4, 4, 0, 0 );
-    GPXTracksGroupBoxLayout->addMultiCellWidget( GPXTrackColor_, 4, 4, 1, 1 );
-    GPXTracksGroupBoxLayout->addMultiCellWidget( GPXTracksOpacityInput_, 4, 4, 2, 3);
-    GPXTracksGroupBoxLayout->addMultiCellWidget( GPXAltitudeLabel_, 5, 5, 0, 0);
-    GPXTracksGroupBoxLayout->addMultiCellWidget( GPXAltitudeCB_, 5, 5, 1, 3);
+    GPXTracksGroupBoxLayout->addWidget( GPXTracksCheckBox_, 0, 0, 1, 4 );
+    GPXTracksGroupBoxLayout->addWidget( GPXFileLabel_, 1, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget( GPXFileKURLRequester_, 1, 1, 1, 3);
+    GPXTracksGroupBoxLayout->addWidget( timeZoneLabel_, 2, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget( timeZoneCB, 2, 1, 1, 3);
+    GPXTracksGroupBoxLayout->addWidget( GPXLineWidthLabel_, 3, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget( GPXLineWidthInput_, 3, 1, 1, 3);
+    GPXTracksGroupBoxLayout->addWidget( GPXColorLabel_, 4, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget( GPXTrackColor_, 4, 1, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget( GPXTracksOpacityInput_, 4, 2, 1, 3- 2+1);
+    GPXTracksGroupBoxLayout->addWidget( GPXAltitudeLabel_, 5, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget( GPXAltitudeCB_, 5, 1, 1, 3);
     GPXTracksGroupBoxLayout->setAlignment( Qt::AlignTop );
     GPXTracksGroupBoxLayout->setSpacing(spacingHint());
     GPXTracksGroupBoxLayout->setMargin(0);
