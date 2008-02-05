@@ -27,21 +27,20 @@
 #include <QComboBox>
 #include <QLayout>
 #include <QLabel>
-#include <QGrid>
 #include <QPushButton>
 #include <QCheckBox>
 
 // KDE includes.
 
+#include <k3listview.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <ksqueezedtextlabel.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kstandarddirs.h>
-#include <klistview.h>
 #include <kfiledialog.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
@@ -88,7 +87,7 @@ public:
 
     QCheckBox                *interpolateBox;
 
-    KListView                *listView;
+    K3ListView               *listView;
 
     KIntSpinBox              *maxGapInput;
     KIntSpinBox              *maxTimeInput;
@@ -103,30 +102,35 @@ public:
 };
 
 GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
-             : KDialogBase(Plain, i18n("Geolocation"),
-                           Help|User1|User2|User3|Apply|Close, Close,
-                           parent, 0, true, false)
+             : KDialog(parent)
 {
     d = new GPSSyncDialogPriv;
     d->interface = interface;
+
+    setButtons(Help|User1|User2|User3|Apply|Close);
+    setDefaultButton(Close);
+    setCaption(i18n("Geolocation"));
+    setModal(true);
 
     setButtonText(User1, i18n("Correlate"));
     setButtonText(User2, i18n("Edit..."));
     setButtonText(User3, i18n("Remove"));
 
-    setButtonTip(User1, i18n("Correlate in time and interpolate distance of data from GPX file with all images on the list."));
-    setButtonTip(User2, i18n("Manually edit GPS coordinates of selected images from the list."));
-    setButtonTip(User3, i18n("Remove GPS coordinates of selected images from the list."));
+    setButtonToolTip(User1, i18n("Correlate in time and interpolate distance of data from GPX file with all images on the list."));
+    setButtonToolTip(User2, i18n("Manually edit GPS coordinates of selected images from the list."));
+    setButtonToolTip(User3, i18n("Remove GPS coordinates of selected images from the list."));
 
     enableButton(User1, false);
     enableButton(User2, true);
     enableButton(User3, true);
 
-    QGridLayout *mainLayout = new QGridLayout(plainPage(), 3, 1, 0, marginHint());
+    QWidget *page = new QWidget( this );
+    setMainWidget( page );
+    QGridLayout *mainLayout = new QGridLayout(page);
 
     // --------------------------------------------------------------
 
-    d->listView = new KListView(plainPage());
+    d->listView = new K3ListView(page);
     d->listView->addColumn( i18n("Thumbnail") );
     d->listView->addColumn( i18n("File Name") );
     d->listView->addColumn( i18n("Camera time stamp") );
@@ -134,16 +138,16 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     d->listView->addColumn( i18n("Longitude") );
     d->listView->addColumn( i18n("Altitude") );
     d->listView->addColumn( i18n("Status") );
-    d->listView->setResizeMode(QListView::AllColumns);
+    d->listView->setResizeMode(Q3ListView::AllColumns);
     d->listView->setAllColumnsShowFocus(true);
     d->listView->setSorting(-1);
     d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->listView->setSelectionMode(QListView::Extended);
+    d->listView->setSelectionMode(Q3ListView::Extended);
     d->listView->setMinimumWidth(450);
 
     // ---------------------------------------------------------------
 
-    QGroupBox *settingsBox         = new QGroupBox(0, Qt::Vertical, i18n("Settings"), plainPage());
+    QGroupBox *settingsBox         = new QGroupBox(0, Qt::Vertical, i18n("Settings"), page);
     QGridLayout *settingsBoxLayout = new QGridLayout(settingsBox->layout(), 8, 1,
                                                      KDialog::spacingHint());
 
@@ -238,8 +242,10 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
 
     mainLayout->addMultiCellWidget(d->listView, 0, 2, 0, 1);
     mainLayout->addMultiCellWidget(settingsBox, 0, 1, 2, 2);
-    mainLayout->setColStretch(1, 10);
+    mainLayout->setColumnStretch(1, 10);
     mainLayout->setRowStretch(2, 10);
+    mainLayout->setSpacing(spacingHint());
+    mainLayout->setMargin(0);
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -529,14 +535,14 @@ void GPSSyncDialog::slotApply()
     d->interface->refreshImages(images);
 }
 
-void GPSSyncDialog::slotGotThumbnail(const KFileItem *item, const QPixmap& pix)
+void GPSSyncDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
     QListViewItemIterator it(d->listView);
 
     while (it.current())
     {
         GPSListViewItem *selItem = dynamic_cast<GPSListViewItem*>(it.current());
-        if (selItem->url() == item->url())
+        if (selItem->url() == url)
         {
             selItem->setPixmap(0, pix);
         }

@@ -68,7 +68,7 @@ protected slots:
 
 private slots:
 
-    void slotGotThumbnail(const KFileItem*, const QPixmap&);
+    void slotThumbnail(const KUrl& url, const QPixmap& pix);
     void slotLoadGPXFile(); 
 
 private:
