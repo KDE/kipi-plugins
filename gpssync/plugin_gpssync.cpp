@@ -80,7 +80,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
             this, SLOT(slotGPSSync()));
     m_action_geolocation->addAction(gpssync);
 
-    KAction *gpsedit = new KAction(i18n("Correlator"), actionCollection());
+    KAction *gpsedit = new KAction(i18n("Edit Coordinates..."), actionCollection());
     gpsedit->setObjectName("gpsedit");
     connect(gpsedit, SIGNAL(triggered(bool)), 
             this, SLOT(slotGPSEdit()));
