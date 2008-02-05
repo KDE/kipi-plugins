@@ -60,8 +60,7 @@ namespace KIPIGPSSyncPlugin
 kmlExport::kmlExport(KIPI::Interface* interface)
 {
     m_interface      = interface;
-    QWidget* parent  = KApplication::kApplication()->mainWidget();
-    m_progressDialog = new KIPI::BatchProgressDialog(parent, i18n("Generating KML file..."));
+    m_progressDialog = new KIPI::BatchProgressDialog(kapp->activeWindow(), i18n("Generating KML file..."));
 }
 
 kmlExport::~kmlExport()
@@ -126,7 +125,7 @@ QImage kmlExport::generateSquareThumbnail(const QImage& fullImage, int size)
     painter.drawImage(0, 0, image, sx, sy, size, size);
     painter.end();
 
-    return croppedPix.convertToImage();
+    return croppedPix.toImage();
 }
 
 /*!
@@ -149,7 +148,7 @@ QImage kmlExport::generateBorderedThumbnail(const QImage& fullImage, int size)
     painter.drawImage(image_border, image_border, image );
     painter.end();
 
-    return croppedPix.convertToImage();
+    return croppedPix.toImage();
 }
 
 /*!
@@ -195,7 +194,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     {
         QWMatrix matrix;
         matrix.rotate( info.angle() );
-        image = image.xForm( matrix );
+        image = image.transformed( matrix );
     }
     image = image.scaled(m_size, m_size, Qt::KeepAspectRatioByExpanding);
 
@@ -452,9 +451,9 @@ void kmlExport::generate()
     if (defectImage) 
     {
         /** @todo if defectImage==count there are no pictures exported, does it worst to continue? */
-        QWidget* parent = KApplication::kApplication()->mainWidget();
-        KMessageBox::information(parent, i18np("No position data for 1 picture",
-                                               "No position data for %n pictures", defectImage));
+        KMessageBox::information(kapp->activeWindow(), 
+                                 i18np("No position data for 1 picture",
+                                       "No position data for %n pictures", defectImage));
     }
 
     /** @todo change to kml or kmz if compressed */
