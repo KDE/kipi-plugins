@@ -129,9 +129,9 @@ bool Plugin_GPSSync::checkBinaries(QString &gpsBabelVersion)
                           "This program is required by this plugin to support GPS data file decoding. "
                           "Please install gpsbabel as a package from your distributor "
                           "or <a href=\"%1\">download the source</a>.</p>"
-                          "<p>Note: at least, gpsbabel version %2 is required by this plugin.</p></qt>")
-                          .arg("http://www.gpsbabel.org")
-                          .arg(gpsBabelBinary.minimalVersion()),
+                          "<p>Note: at least, gpsbabel version %2 is required by this plugin.</p></qt>",
+                          QString("http://www.gpsbabel.org"),
+                          gpsBabelBinary.minimalVersion()),
                      QString::null,
                      QString::null,
                      KMessageBox::Notify | KMessageBox::AllowLink);
@@ -148,10 +148,10 @@ bool Plugin_GPSSync::checkBinaries(QString &gpsBabelVersion)
                           "Please update gpsbabel as a package from your distributor "
                           "or <a href=\"%2\">download the source</a>.</p>"
                           "<p>Note: at least, gpsbabel version %3 is required by this "
-                          "plugin</p></qt>")
-                          .arg(gpsBabelVersion)
-                          .arg("http://www.gpsbabel.org")
-                          .arg(gpsBabelBinary.minimalVersion()),
+                          "plugin</p></qt>",
+                          gpsBabelVersion,
+                          QString("http://www.gpsbabel.org"),
+                          gpsBabelBinary.minimalVersion()),
                      QString::null,
                      QString::null,
                      KMessageBox::Notify | KMessageBox::AllowLink);
@@ -255,7 +255,6 @@ void Plugin_GPSSync::slotGPSEdit()
 
 void Plugin_GPSSync::slotGPSRemove()
 {
-/* TODO
     KIPI::ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
@@ -311,7 +310,6 @@ void Plugin_GPSSync::slotGPSRemove()
                     errorFiles,
                     i18n("Remove Geographical Coordinates"));  
     }
-*/
 }
 
 void Plugin_GPSSync::slotKMLExport()
