@@ -25,6 +25,7 @@
 
 #include <Q3VGroupBox>
 #include <QComboBox>
+#include <QPainter>
 #include <QLayout>
 #include <QLabel>
 #include <QPushButton>
@@ -326,6 +327,22 @@ void GPSSyncDialog::setImages( const KUrl::List& images )
     d->interface->thumbnails(images, 64);
 }
 
+void GPSSyncDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
+{
+    QPixmap pixmap = pix.scaled(64, 64, Qt::KeepAspectRatio);
+    Q3ListViewItemIterator it(d->listView);
+
+    while (it.current())
+    {
+        GPSListViewItem *selItem = dynamic_cast<GPSListViewItem*>(it.current());
+        if (selItem->url() == url)
+        {
+            selItem->setPixmap(0, pixmap);
+        }
+        ++it;
+    }
+}
+
 void GPSSyncDialog::slotLoadGPXFile()
 {
     KUrl loadGPXFile = KFileDialog::getOpenUrl(KGlobalSettings::documentPath(),
@@ -564,21 +581,6 @@ void GPSSyncDialog::slotApply()
     // metadata from pictures have changed and need to be re-readed.
 
     d->interface->refreshImages(images);
-}
-
-void GPSSyncDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
-{
-    Q3ListViewItemIterator it(d->listView);
-
-    while (it.current())
-    {
-        GPSListViewItem *selItem = dynamic_cast<GPSListViewItem*>(it.current());
-        if (selItem->url() == url)
-        {
-            selItem->setPixmap(0, pix);
-        }
-        ++it;
-    }
 }
 
 }  // NameSpace KIPIGPSSyncPlugin
