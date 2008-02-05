@@ -30,6 +30,7 @@
 
 // KDE includes.
 
+#include <ktoolinvocation.h>
 #include <klocale.h>
 #include <khelpmenu.h>
 #include <kconfig.h>
@@ -105,6 +106,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     QLabel *message   = new QLabel(i18n("<p>Use the map on the right to select the place where "
                                         "the picture have been taken. Click with right mouse button "
                                         "on the map to get the GPS coordinates.<p>"), page);
+    message->setWordWrap(true);
 
     QLabel *altitudeLabel  = new QLabel(i18n("Altitude:"), page);
     QLabel *latitudeLabel  = new QLabel(i18n("Latitude:"), page);
@@ -114,9 +116,9 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     d->latitudeInput       = new KLineEdit(page);
     d->longitudeInput      = new KLineEdit(page);
 
-    QPushButton *altResetButton = new QPushButton(SmallIcon("clear_left"), QString::null, page);
-    QPushButton *latResetButton = new QPushButton(SmallIcon("clear_left"), QString::null, page);
-    QPushButton *lonResetButton = new QPushButton(SmallIcon("clear_left"), QString::null, page);
+    d->altitudeInput->setClearButtonShown(true);
+    d->latitudeInput->setClearButtonShown(true);
+    d->longitudeInput->setClearButtonShown(true);
 
     d->altitudeInput->setValidator(new QDoubleValidator(-20000.0, 20000.0, 1, this));
     d->latitudeInput->setValidator(new QDoubleValidator(-90.0, 90.0, 12, this));
@@ -130,15 +132,12 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
 
     grid->addWidget(message,             0, 0, 1, 3);
     grid->addWidget(altitudeLabel,       1, 0, 1, 3);
-    grid->addWidget(d->altitudeInput,    2, 0, 1, 2);
-    grid->addWidget(altResetButton,      2, 2, 1, 1);
+    grid->addWidget(d->altitudeInput,    2, 0, 1, 3);
     grid->addWidget(latitudeLabel,       3, 0, 1, 3);
-    grid->addWidget(d->latitudeInput,    4, 0, 1, 2);
-    grid->addWidget(latResetButton,      4, 2, 1, 1);
+    grid->addWidget(d->latitudeInput,    4, 0, 1, 3);
     grid->addWidget(longitudeLabel,      5, 0, 1, 3);
-    grid->addWidget(d->longitudeInput,   6, 0, 1, 2);
-    grid->addWidget(lonResetButton,      6, 2, 1, 1);
-    grid->addWidget(d->goButton,         7, 0, 1, 2);
+    grid->addWidget(d->longitudeInput,   6, 0, 1, 3);
+    grid->addWidget(d->goButton,         7, 0, 1, 3);
     grid->addWidget(d->worldMap->view(), 0, 3, 9, 1);
     grid->setColumnStretch(0, 3);
     grid->setColumnStretch(3, 10);
@@ -149,7 +148,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
+    d->about = new KIPIPlugins::KPAboutData(ki18n("GPS Sync"),
                    QByteArray(),
                    KAboutData::License_GPL,
                    ki18n("A Plugin to synchronize pictures metadata with a GPS device"),
@@ -176,15 +175,6 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     connect(this, SIGNAL(cancelClicked()),
             this, SLOT(slotCancel()));
 
-    connect(altResetButton, SIGNAL(released()),
-            d->altitudeInput, SLOT(clear()));
-
-    connect(latResetButton, SIGNAL(released()),
-            d->latitudeInput, SLOT(clear()));
-
-    connect(lonResetButton, SIGNAL(released()),
-            d->longitudeInput, SLOT(clear()));
-
     connect(d->altitudeInput, SIGNAL(textChanged(const QString&)),
             this, SLOT(slotGPSPositionChanged()));
 
@@ -210,6 +200,11 @@ GPSEditDialog::~GPSEditDialog()
 {
     delete d->about;
     delete d;
+}
+
+void GPSEditDialog::slotHelp()
+{
+    KToolInvocation::invokeHelp("gpssync", "kipi-plugins");
 }
 
 void GPSEditDialog::closeEvent(QCloseEvent *e)

@@ -63,6 +63,7 @@ GPSMapWidget::GPSMapWidget(QWidget* parent)
     view()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view()->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view()->setMinimumSize(480, 360);
+    view()->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
 }
 
 GPSMapWidget::~GPSMapWidget()
