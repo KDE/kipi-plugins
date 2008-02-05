@@ -25,7 +25,7 @@
 
 // KDE includes.
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 // Local includes.
 
@@ -36,7 +36,7 @@ namespace KIPIGPSSyncPlugin
 
 class GPSEditDialogDialogPrivate;
 
-class GPSEditDialog : public KDialogBase
+class GPSEditDialog : public KDialog
 {
     Q_OBJECT
 

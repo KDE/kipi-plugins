@@ -22,11 +22,11 @@
 
 // Qt includes.
 
-#include <qtimer.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qvalidator.h>
+#include <QTimer>
+#include <QLabel>
+#include <QLayout>
+#include <QPushButton>
+#include <QValidator>
 
 // KDE includes.
 
@@ -39,7 +39,8 @@
 #include <klineedit.h>
 #include <kmessagebox.h>
 #include <khtmlview.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
+#include <kpushbutton.h>
 
 // Local includes.
 
@@ -85,77 +86,95 @@ public:
 
 GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData, 
                              const QString& fileName, bool hasGPSInfo)
-             : KDialogBase(Plain, i18n("%1 - Edit Geographical Coordinates").arg(fileName),
-                           Help|Ok|Cancel, Ok,
-                           parent, 0, true, false)
+             : KDialog(parent)
 {
     d = new GPSEditDialogDialogPrivate;
     d->hasGPSInfo = hasGPSInfo;
     d->gpsData    = gpsData;
 
-    QGridLayout* grid = new QGridLayout(plainPage(), 8, 3, 0, spacingHint());
+    setButtons(Help | Ok | Cancel);
+    setDefaultButton(Ok);
+    setCaption(i18n("%1 - Edit Geographical Coordinates", fileName));
+    setModal(true);
+
+    QWidget *page = new QWidget( this );
+    setMainWidget( page );
+
+    QGridLayout* grid = new QGridLayout(page);
 
     QLabel *message   = new QLabel(i18n("<p>Use the map on the right to select the place where "
                                         "the picture have been taken. Click with right mouse button "
-                                        "on the map to get the GPS coordinates.<p>"), plainPage());
+                                        "on the map to get the GPS coordinates.<p>"), page);
 
-    QLabel *altitudeLabel  = new QLabel(i18n("Altitude:"), plainPage());
-    QLabel *latitudeLabel  = new QLabel(i18n("Latitude:"), plainPage());
-    QLabel *longitudeLabel = new QLabel(i18n("Longitude:"), plainPage());
+    QLabel *altitudeLabel  = new QLabel(i18n("Altitude:"), page);
+    QLabel *latitudeLabel  = new QLabel(i18n("Latitude:"), page);
+    QLabel *longitudeLabel = new QLabel(i18n("Longitude:"), page);
 
-    d->altitudeInput       = new KLineEdit(plainPage());
-    d->latitudeInput       = new KLineEdit(plainPage());
-    d->longitudeInput      = new KLineEdit(plainPage());
+    d->altitudeInput       = new KLineEdit(page);
+    d->latitudeInput       = new KLineEdit(page);
+    d->longitudeInput      = new KLineEdit(page);
 
-    QPushButton *altResetButton = new QPushButton(SmallIcon("clear_left"), QString::null, plainPage());
-    QPushButton *latResetButton = new QPushButton(SmallIcon("clear_left"), QString::null, plainPage());
-    QPushButton *lonResetButton = new QPushButton(SmallIcon("clear_left"), QString::null, plainPage());
+    QPushButton *altResetButton = new QPushButton(SmallIcon("clear_left"), QString::null, page);
+    QPushButton *latResetButton = new QPushButton(SmallIcon("clear_left"), QString::null, page);
+    QPushButton *lonResetButton = new QPushButton(SmallIcon("clear_left"), QString::null, page);
 
     d->altitudeInput->setValidator(new QDoubleValidator(-20000.0, 20000.0, 1, this));
     d->latitudeInput->setValidator(new QDoubleValidator(-90.0, 90.0, 12, this));
     d->longitudeInput->setValidator(new QDoubleValidator(-180.0, 180.0, 12, this));
 
-    d->goButton = new QPushButton(i18n("Goto Location"), plainPage());
+    d->goButton = new QPushButton(i18n("Goto Location"), page);
     d->goButton->setEnabled(false);
 
-    d->worldMap = new GPSMapWidget(plainPage());
+    d->worldMap = new GPSMapWidget(page);
     d->worldMap->show();
 
-    grid->addMultiCellWidget(message,             0, 0, 0, 2);
-    grid->addMultiCellWidget(altitudeLabel,       1, 1, 0, 2);
-    grid->addMultiCellWidget(d->altitudeInput,    2, 2, 0, 1);
-    grid->addMultiCellWidget(altResetButton,      2, 2, 2, 2);
-    grid->addMultiCellWidget(latitudeLabel,       3, 3, 0, 2);
-    grid->addMultiCellWidget(d->latitudeInput,    4, 4, 0, 1);
-    grid->addMultiCellWidget(latResetButton,      4, 4, 2, 2);
-    grid->addMultiCellWidget(longitudeLabel,      5, 5, 0, 2);
-    grid->addMultiCellWidget(d->longitudeInput,   6, 6, 0, 1);
-    grid->addMultiCellWidget(lonResetButton,      6, 6, 2, 2);
-    grid->addMultiCellWidget(d->goButton,         7, 7, 0, 1);
-    grid->addMultiCellWidget(d->worldMap->view(), 0, 8, 3, 3);
-    grid->setColStretch(0, 3);
-    grid->setColStretch(3, 10);
+    grid->addWidget(message,             0, 0, 1, 3);
+    grid->addWidget(altitudeLabel,       1, 0, 1, 3);
+    grid->addWidget(d->altitudeInput,    2, 0, 1, 2);
+    grid->addWidget(altResetButton,      2, 2, 1, 1);
+    grid->addWidget(latitudeLabel,       3, 0, 1, 3);
+    grid->addWidget(d->latitudeInput,    4, 0, 1, 2);
+    grid->addWidget(latResetButton,      4, 2, 1, 1);
+    grid->addWidget(longitudeLabel,      5, 0, 1, 3);
+    grid->addWidget(d->longitudeInput,   6, 0, 1, 2);
+    grid->addWidget(lonResetButton,      6, 2, 1, 1);
+    grid->addWidget(d->goButton,         7, 0, 1, 2);
+    grid->addWidget(d->worldMap->view(), 0, 3, 9, 1);
+    grid->setColumnStretch(0, 3);
+    grid->setColumnStretch(3, 10);
     grid->setRowStretch(8, 10);
+    grid->setSpacing(spacingHint());
+    grid->setMargin(0);
 
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("GPS Sync"),
-                                            NULL,
-                                            KAboutData::License_GPL,
-                                            I18N_NOOP("A Plugin to synchronize pictures metadata with a GPS device"),
-                                            "(c) 2006-2008, Gilles Caulier");
+    d->about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
+                   QByteArray(),
+                   KAboutData::License_GPL,
+                   ki18n("A Plugin to synchronize pictures metadata with a GPS device"),
+                   ki18n("(c) 2006-2008, Gilles Caulier"));
 
-    d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
-                        "caulier dot gilles at gmail dot com");
+    d->about->addAuthor(ki18n("Gilles Caulier"), 
+                       ki18n("Developer and maintainer"),
+                             "caulier dot gilles at gmail dot com");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("GPS Sync Handbook"),
-                                 this, SLOT(slotHelp()), 0, -1, 0);
-    actionButton(Help)->setPopup( helpMenu->menu() );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KPushButton *helpButton = button( Help );
+    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    helpButton->setDelayedMenu( helpMenu->menu() );
 
     // ---------------------------------------------------------------
+
+    connect(this, SIGNAL(cancelClicked()),
+            this, SLOT(slotCancel()));
 
     connect(altResetButton, SIGNAL(released()),
             d->altitudeInput, SLOT(clear()));
@@ -225,17 +244,19 @@ void GPSEditDialog::resizeEvent(QResizeEvent *e)
 void GPSEditDialog::slotCancel()
 {
     saveSettings();
-    KDialogBase::slotCancel();
+    done(Cancel);
 }
 
 void GPSEditDialog::readSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("GPS Sync Settings");
-    resize(configDialogSize(config, QString("GPS Edit Dialog")));
+    KConfigGroup group = config.group(QString("GPS Sync Settings"));
 
-    d->worldMap->setZoomLevel(config.readNumEntry("Zoom Level", 8));
-    d->worldMap->setMapType(config.readEntry("Map Type", QString("G_MAP_TYPE")));
+    KConfigGroup group2 = config.group(QString("GPS Edit Dialog"));
+    restoreDialogSize(group2);
+
+    d->worldMap->setZoomLevel(group.readEntry("Zoom Level", 8));
+    d->worldMap->setMapType(group.readEntry("Map Type", QString("G_MAP_TYPE")));
 
     d->altitudeInput->blockSignals(true);
     d->latitudeInput->blockSignals(true);
@@ -249,9 +270,9 @@ void GPSEditDialog::readSettings()
     } 
     else 
     {
-        d->altitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Altitude", 0.0),   'g', 12));
-        d->latitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Latitude", 0.0),   'g', 12));
-        d->longitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Longitude", 0.0), 'g', 12));
+        d->altitudeInput->setText(QString::number(group.readEntry("GPS Last Altitude", 0.0),   'g', 12));
+        d->latitudeInput->setText(QString::number(group.readEntry("GPS Last Latitude", 0.0),   'g', 12));
+        d->longitudeInput->setText(QString::number(group.readEntry("GPS Last Longitude", 0.0), 'g', 12));
     }
 
     d->altitudeInput->blockSignals(false);
@@ -265,13 +286,16 @@ void GPSEditDialog::readSettings()
 void GPSEditDialog::saveSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("GPS Sync Settings");
-    saveDialogSize(config, QString("GPS Edit Dialog"));
-    config.writeEntry("GPS Last Latitude", d->latitudeInput->text().toDouble());
-    config.writeEntry("GPS Last Longitude", d->longitudeInput->text().toDouble());
-    config.writeEntry("GPS Last Altitude", d->altitudeInput->text().toDouble());
-    config.writeEntry("Zoom Level", d->worldMap->zoomLevel());
-    config.writeEntry("Map Type", d->worldMap->mapType());
+    KConfigGroup group = config.group(QString("GPS Sync Settings"));
+
+    KConfigGroup group2 = config.group(QString("GPS Edit Dialog"));
+    saveDialogSize(group2);
+
+    group.writeEntry("GPS Last Latitude", d->latitudeInput->text().toDouble());
+    group.writeEntry("GPS Last Longitude", d->longitudeInput->text().toDouble());
+    group.writeEntry("GPS Last Altitude", d->altitudeInput->text().toDouble());
+    group.writeEntry("Zoom Level", d->worldMap->zoomLevel());
+    group.writeEntry("Map Type", d->worldMap->mapType());
     config.sync();
 }
 

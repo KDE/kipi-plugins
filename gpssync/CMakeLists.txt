@@ -6,7 +6,7 @@ SET(kipiplugin_gpssync_PART_SRCS gpslistviewitem.cpp
                                  gpsbabelbinary.cpp 
                                  gpsdataparser.cpp 
                                  gpsmapwidget.cpp 
-#                                 gpseditdialog.cpp 
+                                 gpseditdialog.cpp 
 #                                 gpssyncdialog.cpp 
 #                                 plugin_gpssync.cpp 
 #                                 kmlexportconfig.cpp 
