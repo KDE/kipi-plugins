@@ -34,6 +34,7 @@
 
 // KDE includes.
 
+#include <ktoolinvocation.h>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kcolorbutton.h>
@@ -77,13 +78,13 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
 
     // target type
     buttonGroupTargetType       = new QButtonGroup(i18n( "Target Type" ), TargetPreferenceGroupBox);
-    buttonGroupTargetTypeLayout = new QGridLayout( buttonGroupTargetType->layout(), 2, 1, KDialog::spacingHint() );
+    buttonGroupTargetTypeLayout = new QGridLayout( buttonGroupTargetType );
 
     LocalTargetRadioButton_ = new QRadioButton( i18n( "&Local or web target used by GoogleEarth" ), buttonGroupTargetType);
     LocalTargetRadioButton_->setChecked( true );
 
     GoogleMapTargetRadioButton_ = new QRadioButton( i18n( "Web target used by GoogleMap" ), buttonGroupTargetType);
-    GoogleMapTargetRadioButton_->setToolTip(i18n("When using GoogleMap, all image must have complete URL, icons are "
+    GoogleMapTargetRadioButton_->setToolTip(i18n("When using GoogleMap, all image must have complete Url, icons are "
                                                  "squared and when drawing a track, only linetrack is exported" ) );
 
     buttonGroupTargetTypeLayout->addWidget( LocalTargetRadioButton_, 0, 0, 1, 1);
@@ -95,12 +96,11 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     // --------------------------------------------------------------
     // target preference, suite
 
-    QLabel *AltitudeLabel_ = new QLabel(i18n("Picture altitude" ),
-                                        TargetPreferenceGroupBox, "AltitudeLabel_");
-    AltitudeCB_ = new QComboBox( false, TargetPreferenceGroupBox );
-    AltitudeCB_->insertItem(i18n("clamp to ground"));
-    AltitudeCB_->insertItem(i18n("relative to ground"));
-    AltitudeCB_->insertItem(i18n("absolute"));
+    QLabel *AltitudeLabel_ = new QLabel(i18n("Picture altitude" ), TargetPreferenceGroupBox);
+    AltitudeCB_ = new QComboBox( TargetPreferenceGroupBox );
+    AltitudeCB_->addItem(i18n("clamp to ground"));
+    AltitudeCB_->addItem(i18n("relative to ground"));
+    AltitudeCB_->addItem(i18n("absolute"));
     AltitudeCB_->setWhatsThis(i18n("<p>Specifies how pictures are displayed"
                                    "<dl><dt>clamp to ground (default)</dt>"
                                    "<dd>Indicates to ignore an altitude specification</dd>"
@@ -114,24 +114,24 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     destinationDirectoryLabel_ = new QLabel( i18n( "Destination directory" ), TargetPreferenceGroupBox);
 
     // DestinationDirectory_ = new QLineEdit( TargetPreferenceGroupBox, "DestinationDirectory_" );
-    DestinationDirectory_= new KURLRequester( TargetPreferenceGroupBox);
+    DestinationDirectory_= new KUrlRequester( TargetPreferenceGroupBox);
     DestinationDirectory_->setCaption(i18n("Select a directory to save the kml file and pictures"));
     DestinationDirectory_->setMode(KFile::Directory | KFile::LocalOnly );
 
-    DestinationUrlLabel_ = new QLabel( i18n( "Destination URL" ), TargetPreferenceGroupBox);
-    DestinationURL_      = new QLineEdit( TargetPreferenceGroupBox);
+    DestinationUrlLabel_ = new QLabel( i18n( "Destination Url" ), TargetPreferenceGroupBox);
+    DestinationUrl_      = new QLineEdit( TargetPreferenceGroupBox);
     FileNameLabel_       = new QLabel( i18n( "File name" ), TargetPreferenceGroupBox);
     FileName_            = new QLineEdit( TargetPreferenceGroupBox);
 
-    TargetPreferenceGroupBoxLayout->addWidget( buttonGroupTargetType,      0, 0, 2, 5 );
-    TargetPreferenceGroupBoxLayout->addWidget( AltitudeLabel_,             2, 0, 1, 5 );
-    TargetPreferenceGroupBoxLayout->addWidget( AltitudeCB_,                2, 2, 1, 4 - 2+1);
-    TargetPreferenceGroupBoxLayout->addWidget( destinationDirectoryLabel_, 3, 0, 1, 3 );
-    TargetPreferenceGroupBoxLayout->addWidget( DestinationDirectory_,      3, 3, 1, 4 - 3+1);
-    TargetPreferenceGroupBoxLayout->addWidget( DestinationUrlLabel_,       4, 0, 1, 2 );
-    TargetPreferenceGroupBoxLayout->addWidget( DestinationURL_,            4, 2, 1, 4 - 2+1);
+    TargetPreferenceGroupBoxLayout->addWidget( buttonGroupTargetType,      0, 0, 2, 5);
+    TargetPreferenceGroupBoxLayout->addWidget( AltitudeLabel_,             2, 0, 1, 5);
+    TargetPreferenceGroupBoxLayout->addWidget( AltitudeCB_,                2, 2, 1, 3);
+    TargetPreferenceGroupBoxLayout->addWidget( destinationDirectoryLabel_, 3, 0, 1, 3);
+    TargetPreferenceGroupBoxLayout->addWidget( DestinationDirectory_,      3, 3, 1, 2);
+    TargetPreferenceGroupBoxLayout->addWidget( DestinationUrlLabel_,       4, 0, 1, 2);
+    TargetPreferenceGroupBoxLayout->addWidget( DestinationUrl_,            4, 2, 1, 3);
     TargetPreferenceGroupBoxLayout->addWidget( FileNameLabel_,             5, 0, 1, 1);
-    TargetPreferenceGroupBoxLayout->addWidget( FileName_,                  5, 1, 1, 4 );
+    TargetPreferenceGroupBoxLayout->addWidget( FileName_,                  5, 1, 1, 4);
     TargetPreferenceGroupBoxLayout->setAlignment( Qt::AlignTop );
     TargetPreferenceGroupBoxLayout->setSpacing(spacingHint());
     TargetPreferenceGroupBoxLayout->setMargin(0);
@@ -173,9 +173,9 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     // file selector
     GPXFileLabel_ = new QLabel( i18n( "GPX file" ), GPXTracksGroupBox);
 
-    GPXFileKURLRequester_ = new KURLRequester( GPXTracksGroupBox);
-    GPXFileKURLRequester_->setFilter(i18n("%1|GPS Exchange Format").arg("*.gpx"));
-    GPXFileKURLRequester_->setCaption(i18n("Select GPX File to Load"));
+    GPXFileKUrlRequester_ = new KUrlRequester( GPXTracksGroupBox);
+    GPXFileKUrlRequester_->setFilter(i18n("%1|GPS Exchange Format").arg("*.gpx"));
+    GPXFileKUrlRequester_->setCaption(i18n("Select GPX File to Load"));
 
     timeZoneLabel_ = new QLabel(i18n("Time zone"), GPXTracksGroupBox);
     timeZoneCB     = new QComboBox(GPXTracksGroupBox );
@@ -225,9 +225,9 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
 
     GPXAltitudeLabel_ = new QLabel( i18n( "Track altitude" ), GPXTracksGroupBox);
     GPXAltitudeCB_    = new QComboBox( GPXTracksGroupBox );
-    GPXAltitudeCB_->insertItem(i18n("clamp to ground"));
-    GPXAltitudeCB_->insertItem(i18n("relative to ground"));
-    insertItem(i18n("absolute"));
+    GPXAltitudeCB_->addItem(i18n("clamp to ground"));
+    GPXAltitudeCB_->addItem(i18n("relative to ground"));
+    GPXAltitudeCB_->addItem(i18n("absolute"));
     GPXAltitudeCB_->setWhatsThis(i18n("<p>Specifies how the points are displayed"
                                       "<dl><dt>clamp to ground (default)</dt>"
                                       "<dd>Indicates to ignore an altitude specification</dd>"
@@ -239,27 +239,27 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
                                       "regardless of the actual elevation of the terrain beneath "
                                       "the element.</dd></dl>"));
 
-    GPXTracksGroupBoxLayout->addWidget( GPXTracksCheckBox_, 0, 0, 1, 4 );
-    GPXTracksGroupBoxLayout->addWidget( GPXFileLabel_, 1, 0, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXFileKURLRequester_, 1, 1, 1, 3);
-    GPXTracksGroupBoxLayout->addWidget( timeZoneLabel_, 2, 0, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( timeZoneCB, 2, 1, 1, 3);
-    GPXTracksGroupBoxLayout->addWidget( GPXLineWidthLabel_, 3, 0, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXLineWidthInput_, 3, 1, 1, 3);
-    GPXTracksGroupBoxLayout->addWidget( GPXColorLabel_, 4, 0, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXTrackColor_, 4, 1, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXTracksOpacityInput_, 4, 2, 1, 3- 2+1);
-    GPXTracksGroupBoxLayout->addWidget( GPXAltitudeLabel_, 5, 0, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXAltitudeCB_, 5, 1, 1, 3);
+    GPXTracksGroupBoxLayout->addWidget( GPXTracksCheckBox_,     0, 0, 1, 4);
+    GPXTracksGroupBoxLayout->addWidget( GPXFileLabel_,          1, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget( GPXFileKUrlRequester_,  1, 1, 1, 3);
+    GPXTracksGroupBoxLayout->addWidget( timeZoneLabel_,         2, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget( timeZoneCB,             2, 1, 1, 3);
+    GPXTracksGroupBoxLayout->addWidget( GPXLineWidthLabel_,     3, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget( GPXLineWidthInput_,     3, 1, 1, 3);
+    GPXTracksGroupBoxLayout->addWidget( GPXColorLabel_,         4, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget( GPXTrackColor_,         4, 1, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget( GPXTracksOpacityInput_, 4, 2, 1, 2);
+    GPXTracksGroupBoxLayout->addWidget( GPXAltitudeLabel_,      5, 0, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget( GPXAltitudeCB_,         5, 1, 1, 3);
     GPXTracksGroupBoxLayout->setAlignment( Qt::AlignTop );
     GPXTracksGroupBoxLayout->setSpacing(spacingHint());
     GPXTracksGroupBoxLayout->setMargin(0);
 
     // --------------------------------------------------------------
 
-    KMLExportConfigLayout->addWidget( TargetPreferenceGroupBox, 0, 0 );
-    KMLExportConfigLayout->addWidget( SizeGroupBox,             1, 0 );
-    KMLExportConfigLayout->addWidget( GPXTracksGroupBox,        2, 0 );
+    KMLExportConfigLayout->addWidget( TargetPreferenceGroupBox, 0, 0);
+    KMLExportConfigLayout->addWidget( SizeGroupBox,             1, 0);
+    KMLExportConfigLayout->addWidget( GPXTracksGroupBox,        2, 0);
     KMLExportConfigLayout->setSpacing(spacingHint());
     KMLExportConfigLayout->setMargin(0);
 
@@ -332,7 +332,7 @@ void KMLExportConfig::slotOk()
 
 void KMLExportConfig::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("KMLExport", "kipi-plugins");
+    KToolInvocation::invokeHelp("kmlexport", "kipi-plugins");
 }
 
 void KMLExportConfig::GoogleMapTargetRadioButton__toggled(bool)
@@ -340,14 +340,14 @@ void KMLExportConfig::GoogleMapTargetRadioButton__toggled(bool)
     if (GoogleMapTargetRadioButton_->isChecked()) 
     {
         DestinationUrlLabel_->setEnabled(true);
-        DestinationURL_->setEnabled(true);
+        DestinationUrl_->setEnabled(true);
         IconSizeLabel->setEnabled(false);
         IconSizeInput_->setEnabled(false);
     } 
     else 
     {
         DestinationUrlLabel_->setEnabled(false);
-        DestinationURL_->setEnabled(false);
+        DestinationUrl_->setEnabled(false);
         IconSizeLabel->setEnabled(true);
         IconSizeInput_->setEnabled(true);
     }
@@ -357,7 +357,7 @@ void KMLExportConfig::KMLTracksCheckButton__toggled(bool)
 {
     if (GPXTracksCheckBox_->isChecked()) 
     {
-        GPXFileKURLRequester_->setEnabled(true);
+        GPXFileKUrlRequester_->setEnabled(true);
         GPXFileLabel_->setEnabled(true);
         timeZoneCB->setEnabled(true);
         GPXColorLabel_->setEnabled(true);
@@ -371,7 +371,7 @@ void KMLExportConfig::KMLTracksCheckButton__toggled(bool)
     } 
     else 
     {
-        GPXFileKURLRequester_->setEnabled(false);
+        GPXFileKUrlRequester_->setEnabled(false);
         GPXFileLabel_->setEnabled(false);
         timeZoneCB->setEnabled(false);
         GPXColorLabel_->setEnabled(false);
@@ -399,23 +399,23 @@ void KMLExportConfig::saveSettings()
         destination.append("/");
     }
     config_->writeEntry("baseDestDir",destination);
-    QString url = DestinationURL_->text();
+    QString url = DestinationUrl_->text();
     if (!url.endsWith("/")) 
     {
         url.append("/");
     }
     config_->writeEntry("UrlDestDir",url);
     config_->writeEntry("KMLFileName",FileName_->text());
-    config_->writeEntry("Altitude Mode", AltitudeCB_->currentItem() );
+    config_->writeEntry("Altitude Mode", AltitudeCB_->currentIndex() );
 
     config_->writeEntry("UseGPXTracks", GPXTracksCheckBox_->isChecked());
 
-    config_->writeEntry("GPXFile", GPXFileKURLRequester_->lineEdit()->originalText());
-    config_->writeEntry("Time Zone", timeZoneCB->currentItem() );
+    config_->writeEntry("GPXFile", GPXFileKUrlRequester_->lineEdit()->originalText());
+    config_->writeEntry("Time Zone", timeZoneCB->currentIndex() );
     config_->writeEntry("Line Width", GPXLineWidthInput_->value());
     config_->writeEntry("Track Color", GPXTrackColor_->color().name () );
     config_->writeEntry("Track Opacity", GPXTracksOpacityInput_->value() );
-    config_->writeEntry("GPX Altitude Mode", GPXAltitudeCB_->currentItem() );
+    config_->writeEntry("GPX Altitude Mode", GPXAltitudeCB_->currentIndex() );
 
     config_->sync();
 }
@@ -468,16 +468,16 @@ void KMLExportConfig::readSettings()
     IconSizeInput_->setValue(iconSize);
     ImageSizeInput_->setValue(size);
 
-    AltitudeCB_->setCurrentItem(AltitudeMode);
-    DestinationDirectory_->setURL(baseDestDir);
-    DestinationURL_->setText(UrlDestDir);
+    AltitudeCB_->setCurrentIndex(AltitudeMode);
+    DestinationDirectory_->setUrl(baseDestDir);
+    DestinationUrl_->setText(UrlDestDir);
     FileName_->setText(KMLFileName);
 
-    timeZoneCB->setCurrentItem(TimeZone);
+    timeZoneCB->setCurrentIndex(TimeZone);
     GPXLineWidthInput_->setValue(LineWidth);
     GPXTrackColor_->setColor(GPXColor);
     GPXTracksOpacityInput_->setValue(GPXOpacity);
-    GPXAltitudeCB_->setCurrentItem(GPXAltitudeMode);
+    GPXAltitudeCB_->setCurrentIndex(GPXAltitudeMode);
 }
 
 } //namespace KIPIGPSSyncPlugin

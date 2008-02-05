@@ -39,7 +39,7 @@ class QSpacerItem;
 
 class KColorButton;
 class KIntNumInput;
-class KURLRequester;
+class KUrlRequester;
 
 namespace KIPIPlugins 
 {
@@ -79,7 +79,7 @@ public:
     QRadioButton  *LocalTargetRadioButton_;
     QRadioButton  *GoogleMapTargetRadioButton_;
 
-    QLineEdit     *DestinationURL_;
+    QLineEdit     *DestinationUrl_;
     QLineEdit     *FileName_;
 
     QCheckBox     *GPXTracksCheckBox_;
@@ -90,8 +90,8 @@ public:
 
     KColorButton  *GPXTrackColor_;
 
-    KURLRequester *DestinationDirectory_;
-    KURLRequester *GPXFileKURLRequester_;
+    KUrlRequester *DestinationDirectory_;
+    KUrlRequester *GPXFileKUrlRequester_;
 
     KIntNumInput  *ImageSizeInput_;
     KIntNumInput  *IconSizeInput_;
