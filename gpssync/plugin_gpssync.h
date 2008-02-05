@@ -38,10 +38,10 @@ class Plugin_GPSSync : public KIPI::Plugin
 
 public:
 
-    Plugin_GPSSync(QObject *parent, const char* name, const QStringList &args);
+    Plugin_GPSSync(QObject *parent, const QVariantList &args);
 
-    virtual KIPI::Category category( KAction* action ) const;
-    virtual void setup( QWidget* );
+    KIPI::Category category( KAction* action ) const;
+    void setup( QWidget* );
 
 protected slots:
 

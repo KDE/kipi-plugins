@@ -25,7 +25,7 @@
 
 // KDE includes.
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 class QButtonGroup;
 class QCheckBox;
@@ -49,7 +49,7 @@ namespace KIPIPlugins
 namespace KIPIGPSSyncPlugin 
 {
 
-class KMLExportConfig : public KDialogBase
+class KMLExportConfig : public KDialog
 {
     Q_OBJECT
 

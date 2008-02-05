@@ -23,14 +23,13 @@
 
 // Qt includes.
 
-#include <qcombobox.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qvgroupbox.h>
-#include <qgrid.h>
-#include <qpushbutton.h>
-#include <qwhatsthis.h>
-#include <qcheckbox.h>
+#include <Q3VGroupBox>
+#include <QComboBox>
+#include <QLayout>
+#include <QLabel>
+#include <QGrid>
+#include <QPushButton>
+#include <QCheckBox>
 
 // KDE includes.
 
@@ -285,9 +284,9 @@ void GPSSyncDialog::slotHelp()
     KApplication::kApplication()->invokeHelp("gpssync", "kipi-plugins");
 }
 
-void GPSSyncDialog::setImages( const KURL::List& images )
+void GPSSyncDialog::setImages( const KUrl::List& images )
 {
-    for( KURL::List::ConstIterator it = images.begin(); it != images.end(); ++it )
+    for( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it )
         new GPSListViewItem(d->listView, d->listView->lastItem(), *it);
 
     KIO::PreviewJob *thumbnailJob = KIO::filePreview(images, 64);
@@ -298,7 +297,7 @@ void GPSSyncDialog::setImages( const KURL::List& images )
 
 void GPSSyncDialog::slotLoadGPXFile()
 {
-    KURL loadGPXFile = KFileDialog::getOpenURL(KGlobalSettings::documentPath(),
+    KUrl loadGPXFile = KFileDialog::getOpenURL(KGlobalSettings::documentPath(),
                                                i18n("%1|GPS Exchange Format").arg("*.gpx"), this,
                                                i18n("Select GPX File to Load") );
     if( loadGPXFile.isEmpty() )
@@ -510,7 +509,7 @@ void GPSSyncDialog::slotUser3()
 
 void GPSSyncDialog::slotApply()
 {
-    KURL::List images;
+    KUrl::List images;
 
     QListViewItemIterator it( d->listView );
     while ( it.current() )

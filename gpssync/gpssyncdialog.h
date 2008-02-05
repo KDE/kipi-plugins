@@ -26,7 +26,7 @@
 
 // KDE includes.
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kurl.h>
 
 // LibKipi includes.
@@ -42,7 +42,7 @@ namespace KIPIGPSSyncPlugin
 
 class GPSSyncDialogPriv;
 
-class GPSSyncDialog :public KDialogBase 
+class GPSSyncDialog :public KDialog
 {
     Q_OBJECT
 
@@ -51,7 +51,7 @@ public:
     GPSSyncDialog(KIPI::Interface* interface, QWidget* parent);
     ~GPSSyncDialog();
 
-    void setImages(const KURL::List& images);
+    void setImages(const KUrl::List& images);
 
 protected:
 

@@ -24,7 +24,7 @@
 
 // Qt includes.
 
-#include <qfileinfo.h>
+#include <QFileInfo>
 
 // KDE includes.
 
@@ -51,19 +51,18 @@
 #include "gpsdatacontainer.h"
 #include "gpseditdialog.h"
 #include "gpssyncdialog.h"
-#include "plugin_gpssync.h"
-#include "plugin_gpssync.moc"
 #include "kmlexport.h"
 #include "kmlexportconfig.h"
+#include "plugin_gpssync.h"
+#include "plugin_gpssync.moc"
 
-typedef KGenericFactory<Plugin_GPSSync> Factory;
+K_PLUGIN_FACTORY( GPSSyncFactory, registerPlugin<Plugin_GPSSync>(); )
+K_EXPORT_PLUGIN ( GPSSyncFactory("kipiplugin_gpssync") )
 
-K_EXPORT_COMPONENT_FACTORY( kipiplugin_gpssync, Factory("kipiplugin_gpssync"))
-
-Plugin_GPSSync::Plugin_GPSSync(QObject *parent, const char*, const QStringList&)
-              : KIPI::Plugin( Factory::instance(), parent, "GPSSync")
+Plugin_GPSSync::Plugin_GPSSync(QObject *parent, const QVariantList &)
+              : KIPI::Plugin( GPSSyncFactory::componentData(), parent, "GPSSync")
 {
-    kdDebug( 51001 ) << "Plugin_GPSSync plugin loaded" << endl;
+    kDebug( 51001 ) << "Plugin_GPSSync plugin loaded" << endl;
 }
 
 void Plugin_GPSSync::setup( QWidget* widget )
@@ -199,7 +198,7 @@ void Plugin_GPSSync::slotGPSEdit()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KURL img = images.images().first();
+    KUrl img = images.images().first();
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.load(img.path());
     double alt, lat, lng;
@@ -212,20 +211,20 @@ void Plugin_GPSSync::slotGPSEdit()
     if (dlg.exec() == KDialogBase::Accepted)
     {
         gpsData = dlg.getGPSInfo();
-        KURL::List  imageURLs = images.images();
-        KURL::List  updatedURLs;
+        KUrl::List  imageURLs = images.images();
+        KUrl::List  updatedURLs;
         QStringList errorFiles;
 
-        for( KURL::List::iterator it = imageURLs.begin() ; 
+        for( KUrl::List::iterator it = imageURLs.begin() ; 
             it != imageURLs.end(); ++it)
         {
-            KURL url = *it;
+            KUrl url = *it;
 
             // We only add all JPEG files as R/W because Exiv2 can't yet 
             // update metadata on others file formats.
 
             QFileInfo fi(url.path());
-            QString ext = fi.extension(false).upper();
+            QString ext = fi.suffix().toUpper();
             bool ret = false;
             if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
             {
@@ -276,20 +275,20 @@ void Plugin_GPSSync::slotGPSRemove()
                      i18n("Remove Geographical Coordinates")) != KMessageBox::Yes)
         return;
 
-    KURL::List  imageURLs = images.images();
-    KURL::List  updatedURLs;
+    KUrl::List  imageURLs = images.images();
+    KUrl::List  updatedURLs;
     QStringList errorFiles;
 
-    for( KURL::List::iterator it = imageURLs.begin() ; 
+    for( KUrl::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
     {
-        KURL url = *it;
+        KUrl url = *it;
 
         // We only add all JPEG files as R/W because Exiv2 can't yet 
         // update metadata on others file formats.
 
         QFileInfo fi(url.path());
-        QString ext = fi.extension(false).upper();
+        QString ext = fi.suffix().toUpper();
         bool ret = false;
         if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
         {
@@ -327,12 +326,12 @@ void Plugin_GPSSync::slotKMLExport()
 
     if ( !selection.isValid() ) 
     {
-        kdDebug( 51000) << "No Selection!" << endl;
+        kDebug( 51000) << "No Selection!" << endl;
     }
     else 
     {
         KIPIGPSSyncPlugin::KMLExportConfig *kmlExportConfigGui = new KIPIGPSSyncPlugin::KMLExportConfig(
-                                                                 kapp->activeWindow(), i18n("KMLExport").ascii());
+                                                                 kapp->activeWindow(), i18n("KMLExport").toAscii());
         connect(kmlExportConfigGui, SIGNAL(okButtonClicked()), 
                 this, SLOT(slotKMLGenerate()));
         kmlExportConfigGui->show();
@@ -355,6 +354,6 @@ KIPI::Category Plugin_GPSSync::category( KAction* action ) const
     if ( action == m_actionKMLExport )
        return KIPI::EXPORTPLUGIN;
 
-    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }

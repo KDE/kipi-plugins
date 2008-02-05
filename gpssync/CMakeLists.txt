@@ -8,10 +8,10 @@ SET(kipiplugin_gpssync_PART_SRCS gpslistviewitem.cpp
                                  gpsmapwidget.cpp 
                                  gpseditdialog.cpp 
 #                                 gpssyncdialog.cpp 
-#                                 plugin_gpssync.cpp 
-#                                 kmlexportconfig.cpp 
+                                 plugin_gpssync.cpp 
                                  kmlexport.cpp 
                                  kmlgpsdataparser.cpp 
+#                                 kmlexportconfig.cpp 
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_gpssync ${kipiplugin_gpssync_PART_SRCS})
