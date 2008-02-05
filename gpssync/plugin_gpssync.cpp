@@ -51,10 +51,10 @@
 #include "gpsdatacontainer.h"
 #include "gpseditdialog.h"
 #include "gpssyncdialog.h"
-#include "plugin_gpssync.h"
-#include "plugin_gpssync.moc"
 #include "kmlexport.h"
 #include "kmlexportconfig.h"
+#include "plugin_gpssync.h"
+#include "plugin_gpssync.moc"
 
 typedef KGenericFactory<Plugin_GPSSync> Factory;
 
