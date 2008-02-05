@@ -49,7 +49,7 @@ QString KMLGPSDataParser::lineString()
     for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
          it != end; ++it )
     {
-        line += QString("%1,%2,%3 ").arg(it.data().longitude()).arg(it.data().latitude()).arg(it.data().altitude());
+        line += QString("%1,%2,%3 ").arg(it.value().longitude()).arg(it.value().latitude()).arg(it.value().altitude());
     }
     return line;
 }
@@ -88,7 +88,7 @@ void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent,
                                                             int timeZone, int altitudeMode)
 {
     kmlDocument = &root;
-    kdDebug( 51001 ) << "creation d'un trackpoint" << endl;
+    kDebug( 51001 ) << "creation d'un trackpoint" << endl;
 
     // create the points
     QDomElement kmlPointsFolder = addKmlElement(parent, "Folder");
@@ -114,14 +114,14 @@ void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent,
         addKmlTextElement(kmlTimeStamp, "when", GPSLocalizedTime.toString("yyyy-MM-ddThh:mm:ssZ"));
         QDomElement kmlGeometry = addKmlElement(kmlPointPlacemark, "Point");
         addKmlTextElement(kmlPointPlacemark, "visibility", "0");
-        if (it.data().latitude()) 
+        if (it.value().latitude()) 
         {
             addKmlTextElement(kmlGeometry, "coordinates",
-                              QString("%1,%2,%3").arg(it.data().longitude()).arg(it.data().latitude()).arg(it.data().altitude()));
+                              QString("%1,%2,%3").arg(it.value().longitude()).arg(it.value().latitude()).arg(it.value().altitude()));
         } 
         else 
         {
-            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2").arg(it.data().longitude()).arg(it.data().latitude()));
+            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2").arg(it.value().longitude()).arg(it.value().latitude()));
         }
         if (altitudeMode == 2 ) 
         {

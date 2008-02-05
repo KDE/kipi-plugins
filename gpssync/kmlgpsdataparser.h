@@ -29,7 +29,7 @@
 
 // Qt includes.
 
-#include <qdom.h>
+#include <QDomDocument>
 
 namespace KIPIGPSSyncPlugin 
 {
