@@ -21,6 +21,7 @@
  *           - 'height'    : height of map.
  *           - 'zoom'      : map zoom level.
  *           - 'maptype'   : type of map (G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP)
+ *           - 'filename'  : photo file name as string.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -69,6 +70,16 @@ function loadMap()
     var searchoptions = {
       suppressInitialResultSelection : true
     };
+
+    var markeroptions = { 
+      autoPan : true,
+      draggable : false,
+<?php
+      $filename = $_GET['filename'];
+      if ($filename != "") echo "title : \"$filename\""; 
+?>
+    };
+
     map.addControl(new GLargeMapControl());
     map.addControl(new GMapTypeControl());
     map.addControl(new GScaleControl());
@@ -92,7 +103,9 @@ function loadMap()
     echo $_GET['latitude'];
     echo ", ";
     echo $_GET['longitude'];
-    echo ")));\n";
+    
+    echo "), markeroptions";
+    echo "));\n";
 ?>
 
     GEvent.addListener(map, "click", 

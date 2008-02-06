@@ -119,6 +119,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     d->goButton->setEnabled(false);
 
     d->worldMap = new GPSMapWidget(plainPage());
+    d->worldMap->setFileName(fileName);
     d->worldMap->show();
 
     grid->addMultiCellWidget(message,             0, 0, 0, 2);

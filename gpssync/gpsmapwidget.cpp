@@ -49,6 +49,7 @@ public:
     QString longitude;
     QString zoomLevel;
     QString mapType;
+    QString fileName;
 };
 
 GPSMapWidget::GPSMapWidget(QWidget* parent)
@@ -68,6 +69,16 @@ GPSMapWidget::GPSMapWidget(QWidget* parent)
 GPSMapWidget::~GPSMapWidget()
 {
     delete d;
+}
+
+void GPSMapWidget::setFileName(const QString& fileName)
+{
+    d->fileName = fileName;
+}
+
+QString GPSMapWidget::fileName()
+{
+    return d->fileName;
 }
 
 void GPSMapWidget::setGPSPosition(const QString& lat, const QString& lon)
@@ -154,6 +165,8 @@ void GPSMapWidget::resized()
     url.append(d->zoomLevel);
     url.append("&maptype=");
     url.append(d->mapType);
+    url.append("&filename=");
+    url.append(d->fileName);
     openURL(KURL(url));
     kdDebug( 51001 ) << url << endl;
 }
