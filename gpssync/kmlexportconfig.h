@@ -117,8 +117,6 @@ protected:
     QGridLayout              *TargetPreferenceGroupBoxLayout;
     QGridLayout              *buttonGroupTargetTypeLayout;
 
-    KConfig                  *config_;
-
     KIPIPlugins::KPAboutData *m_about;
 
 protected:

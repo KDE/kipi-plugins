@@ -479,17 +479,18 @@ int kmlExport::getConfig()
     KConfig config("kipirc");
     KConfigGroup group = config.group("KMLExport Settings");
 
-    m_localTarget           = group.readEntry("localTarget", false);
+    m_localTarget           = group.readEntry("localTarget", true);
     m_optimize_googlemap    = group.readEntry("optimize_googlemap", false);
-    m_iconSize              = group.readEntry("iconSize", 32);
+    m_iconSize              = group.readEntry("iconSize", 33);
     //	googlemapSize       = group.readNumEntry("googlemapSize");
     m_size                  = group.readEntry("size", 320);
 
     // UrlDestDir have to have the trailing 
-    m_baseDestDir           = group.readEntry("baseDestDir", QString("/tmp/test/"));
+    m_baseDestDir           = group.readEntry("baseDestDir", QString("/tmp/"));
     m_UrlDestDir            = group.readEntry("UrlDestDir", QString("http://www.example.com/"));
-    m_altitudeMode          = group.readEntry("Altitude Mode", 0);
     m_KMLFileName           = group.readEntry("KMLFileName", QString("kmldocument"));
+    m_altitudeMode          = group.readEntry("Altitude Mode", 0);
+
     m_GPXtracks             = group.readEntry("UseGPXTracks", false);
     m_GPXFile               = group.readEntry("GPXFile", QString());
     m_TimeZone              = group.readEntry("Time Zone", 12);
