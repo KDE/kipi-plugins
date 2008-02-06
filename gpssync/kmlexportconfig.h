@@ -7,6 +7,7 @@
  * Description : a tool to export GPS data to KML file.
  *
  * Copyright (C) 2006-2007 by Stephane Pontier <shadow dot walker at free dot fr>
+ * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -73,6 +74,7 @@ public:
     QLabel        *GPXAltitudeLabel_;
 
     QGroupBox     *TargetPreferenceGroupBox;
+    QGroupBox     *TargetTypeGroupBox;
 
     QButtonGroup  *buttonGroupTargetType;
 
@@ -127,7 +129,7 @@ protected:
 protected slots:
 
     void slotOk();
-    //	void slotOkClicked();
+    void slotCancel();
     void slotHelp();
 };
 

@@ -313,7 +313,6 @@ void Plugin_GPSSync::slotGPSRemove()
 
 void Plugin_GPSSync::slotKMLExport()
 {
-/* TODO
     KIPI::ImageCollection selection = m_interface->currentSelection();
 
     if ( !selection.isValid() ) 
@@ -322,13 +321,11 @@ void Plugin_GPSSync::slotKMLExport()
     }
     else 
     {
-        KIPIGPSSyncPlugin::KMLExportConfig *kmlExportConfigGui = new KIPIGPSSyncPlugin::KMLExportConfig(
-                                                                 kapp->activeWindow(), i18n("KMLExport").toAscii());
+        KIPIGPSSyncPlugin::KMLExportConfig *kmlExportConfigGui = new KIPIGPSSyncPlugin::KMLExportConfig(kapp->activeWindow());
         connect(kmlExportConfigGui, SIGNAL(okButtonClicked()), 
                 this, SLOT(slotKMLGenerate()));
         kmlExportConfigGui->show();
     }
-*/
 }
 
 void Plugin_GPSSync::slotKMLGenerate()

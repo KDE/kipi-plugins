@@ -7,6 +7,7 @@
  * Description : a tool to export GPS data to KML file.
  *
  * Copyright (C) 2006-2007 by Stephane Pontier <shadow dot walker at free dot fr>
+ * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -73,17 +74,17 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
 
     // --------------------------------------------------------------
     // Target preferences
-    TargetPreferenceGroupBox       = new QGroupBox(i18n( "Target Preferences" ), page);
+    TargetPreferenceGroupBox       = new QGroupBox(i18n("Target Preferences" ), page);
     TargetPreferenceGroupBoxLayout = new QGridLayout(TargetPreferenceGroupBox);
 
     // target type
-    buttonGroupTargetType       = new QButtonGroup(i18n( "Target Type" ), TargetPreferenceGroupBox);
-    buttonGroupTargetTypeLayout = new QGridLayout( buttonGroupTargetType );
-
-    LocalTargetRadioButton_ = new QRadioButton( i18n( "&Local or web target used by GoogleEarth" ), buttonGroupTargetType);
+    TargetTypeGroupBox          = new QGroupBox(i18n("Target Type" ), page);
+    buttonGroupTargetTypeLayout = new QGridLayout(TargetTypeGroupBox);
+    buttonGroupTargetType       = new QButtonGroup(TargetTypeGroupBox);
+    LocalTargetRadioButton_     = new QRadioButton( i18n( "&Local or web target used by GoogleEarth" ), TargetTypeGroupBox);
     LocalTargetRadioButton_->setChecked( true );
 
-    GoogleMapTargetRadioButton_ = new QRadioButton( i18n( "Web target used by GoogleMap" ), buttonGroupTargetType);
+    GoogleMapTargetRadioButton_ = new QRadioButton( i18n( "Web target used by GoogleMap" ), TargetTypeGroupBox);
     GoogleMapTargetRadioButton_->setToolTip(i18n("When using GoogleMap, all image must have complete Url, icons are "
                                                  "squared and when drawing a track, only linetrack is exported" ) );
 
@@ -96,8 +97,8 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     // --------------------------------------------------------------
     // target preference, suite
 
-    QLabel *AltitudeLabel_ = new QLabel(i18n("Picture altitude" ), TargetPreferenceGroupBox);
-    AltitudeCB_ = new QComboBox( TargetPreferenceGroupBox );
+    QLabel *AltitudeLabel_ = new QLabel(i18n("Picture Altitude:" ), TargetPreferenceGroupBox);
+    AltitudeCB_            = new QComboBox( TargetPreferenceGroupBox );
     AltitudeCB_->addItem(i18n("clamp to ground"));
     AltitudeCB_->addItem(i18n("relative to ground"));
     AltitudeCB_->addItem(i18n("absolute"));
@@ -111,73 +112,67 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
                                    "<dd>Sets the altitude of the coordinate relative to sea level, regardless "
                                    "of the actual elevation of the terrain beneath the element.</dd></dl>"));
 
-    destinationDirectoryLabel_ = new QLabel( i18n( "Destination directory" ), TargetPreferenceGroupBox);
+    destinationDirectoryLabel_ = new QLabel(i18n("Destination Directory:"), TargetPreferenceGroupBox);
 
     // DestinationDirectory_ = new QLineEdit( TargetPreferenceGroupBox, "DestinationDirectory_" );
-    DestinationDirectory_= new KUrlRequester( TargetPreferenceGroupBox);
-    DestinationDirectory_->setCaption(i18n("Select a directory to save the kml file and pictures"));
+    DestinationDirectory_= new KUrlRequester(TargetPreferenceGroupBox);
+    DestinationDirectory_->setWindowTitle(i18n("Select a directory to save the kml file and pictures"));
     DestinationDirectory_->setMode(KFile::Directory | KFile::LocalOnly );
 
-    DestinationUrlLabel_ = new QLabel( i18n( "Destination Url" ), TargetPreferenceGroupBox);
-    DestinationUrl_      = new QLineEdit( TargetPreferenceGroupBox);
-    FileNameLabel_       = new QLabel( i18n( "File name" ), TargetPreferenceGroupBox);
-    FileName_            = new QLineEdit( TargetPreferenceGroupBox);
+    DestinationUrlLabel_ = new QLabel(i18n("Destination Url:"), TargetPreferenceGroupBox);
+    DestinationUrl_      = new QLineEdit(TargetPreferenceGroupBox);
+    FileNameLabel_       = new QLabel(i18n( "File Name:" ), TargetPreferenceGroupBox);
+    FileName_            = new QLineEdit(TargetPreferenceGroupBox);
 
-    TargetPreferenceGroupBoxLayout->addWidget( buttonGroupTargetType,      0, 0, 2, 5);
-    TargetPreferenceGroupBoxLayout->addWidget( AltitudeLabel_,             2, 0, 1, 5);
-    TargetPreferenceGroupBoxLayout->addWidget( AltitudeCB_,                2, 2, 1, 3);
-    TargetPreferenceGroupBoxLayout->addWidget( destinationDirectoryLabel_, 3, 0, 1, 3);
-    TargetPreferenceGroupBoxLayout->addWidget( DestinationDirectory_,      3, 3, 1, 2);
-    TargetPreferenceGroupBoxLayout->addWidget( DestinationUrlLabel_,       4, 0, 1, 2);
-    TargetPreferenceGroupBoxLayout->addWidget( DestinationUrl_,            4, 2, 1, 3);
-    TargetPreferenceGroupBoxLayout->addWidget( FileNameLabel_,             5, 0, 1, 1);
-    TargetPreferenceGroupBoxLayout->addWidget( FileName_,                  5, 1, 1, 4);
-    TargetPreferenceGroupBoxLayout->setAlignment( Qt::AlignTop );
+    TargetPreferenceGroupBoxLayout->addWidget(TargetTypeGroupBox,         0, 0, 2, 5);
+    TargetPreferenceGroupBoxLayout->addWidget(AltitudeLabel_,             2, 0, 1, 5);
+    TargetPreferenceGroupBoxLayout->addWidget(AltitudeCB_,                2, 2, 1, 3);
+    TargetPreferenceGroupBoxLayout->addWidget(destinationDirectoryLabel_, 3, 0, 1, 3);
+    TargetPreferenceGroupBoxLayout->addWidget(DestinationDirectory_,      3, 3, 1, 2);
+    TargetPreferenceGroupBoxLayout->addWidget(DestinationUrlLabel_,       4, 0, 1, 2);
+    TargetPreferenceGroupBoxLayout->addWidget(DestinationUrl_,            4, 2, 1, 3);
+    TargetPreferenceGroupBoxLayout->addWidget(FileNameLabel_,             5, 0, 1, 1);
+    TargetPreferenceGroupBoxLayout->addWidget(FileName_,                  5, 1, 1, 4);
+    TargetPreferenceGroupBoxLayout->setAlignment(Qt::AlignTop);
     TargetPreferenceGroupBoxLayout->setSpacing(spacingHint());
     TargetPreferenceGroupBoxLayout->setMargin(0);
 
     // --------------------------------------------------------------
     // Sizes
-    QGroupBox *SizeGroupBox = new QGroupBox(i18n( "Sizes" ), page );
+    QGroupBox *SizeGroupBox = new QGroupBox(i18n("Sizes" ), page);
     SizeGroupBoxLayout      = new QGridLayout(SizeGroupBox);
-    IconSizeLabel           = new QLabel( i18n( "Icon size" ), SizeGroupBox);
-    IconSizeInput_          = new KIntNumInput( SizeGroupBox);
-    IconSizeInput_->setValue( 33 );
+    IconSizeLabel           = new QLabel(i18n("Icon Size:" ), SizeGroupBox);
+    IconSizeInput_          = new KIntNumInput(SizeGroupBox);
+    IconSizeInput_->setValue(33);
 
-    spacer3 = new QSpacerItem( 191, 21, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    ImageSizeLabel  = new QLabel(i18n("Image Size:"), SizeGroupBox);
+    ImageSizeInput_ = new KIntNumInput(SizeGroupBox);
+    ImageSizeInput_->setValue(320);
 
-    ImageSizeLabel  = new QLabel( i18n( "Image size" ), SizeGroupBox);
-    ImageSizeInput_ = new KIntNumInput( SizeGroupBox );
-    ImageSizeInput_->setValue( 320 );
-
-    spacer4 = new QSpacerItem( 191, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-
-    SizeGroupBoxLayout->addWidget( IconSizeLabel,   0, 0 );
-    SizeGroupBoxLayout->addWidget( IconSizeInput_,  0, 1 );
-    SizeGroupBoxLayout->addItem( spacer3,           0, 2 );
-    SizeGroupBoxLayout->addWidget( ImageSizeLabel,  1, 0 );
-    SizeGroupBoxLayout->addWidget( ImageSizeInput_, 1, 1 );
-    SizeGroupBoxLayout->addItem( spacer4,           1, 2 );
-    SizeGroupBoxLayout->setAlignment( Qt::AlignTop );
+    SizeGroupBoxLayout->addWidget(IconSizeLabel,   0, 0, 1, 1);
+    SizeGroupBoxLayout->addWidget(IconSizeInput_,  0, 1, 1, 1);
+    SizeGroupBoxLayout->addWidget(ImageSizeLabel,  0, 2, 1, 1);
+    SizeGroupBoxLayout->addWidget(ImageSizeInput_, 0, 3, 1, 1);
+    SizeGroupBoxLayout->setAlignment(Qt::AlignTop);
     SizeGroupBoxLayout->setSpacing(spacingHint());
     SizeGroupBoxLayout->setMargin(0);
 
     // --------------------------------------------------------------
     // GPX Tracks
-    QGroupBox *GPXTracksGroupBox         = new QGroupBox(i18n( "GPX Tracks" ), page);
+    QGroupBox *GPXTracksGroupBox         = new QGroupBox(i18n("GPX Tracks"), page);
     QGridLayout *GPXTracksGroupBoxLayout = new QGridLayout(GPXTracksGroupBox);
 
     // add a gpx track checkbox
-    GPXTracksCheckBox_ = new QCheckBox( i18n( "Draw GPX track" ), GPXTracksGroupBox);
+    GPXTracksCheckBox_ = new QCheckBox(i18n("Draw GPX Track"), GPXTracksGroupBox);
 
     // file selector
-    GPXFileLabel_ = new QLabel( i18n( "GPX file" ), GPXTracksGroupBox);
+    GPXFileLabel_ = new QLabel(i18n("GPX file:"), GPXTracksGroupBox);
 
     GPXFileKUrlRequester_ = new KUrlRequester( GPXTracksGroupBox);
     GPXFileKUrlRequester_->setFilter(i18n("%1|GPS Exchange Format",QString("*.gpx")));
-    GPXFileKUrlRequester_->setCaption(i18n("Select GPX File to Load"));
+    GPXFileKUrlRequester_->setWindowTitle(i18n("Select GPX File to Load"));
 
-    timeZoneLabel_ = new QLabel(i18n("Time zone"), GPXTracksGroupBox);
+    timeZoneLabel_ = new QLabel(i18n("Time Zone:"), GPXTracksGroupBox);
     timeZoneCB     = new QComboBox(GPXTracksGroupBox );
     timeZoneCB->addItem(i18n("GMT-12:00"), 0);
     timeZoneCB->addItem(i18n("GMT-11:00"), 1);
@@ -210,21 +205,21 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
                                   "picture shooting, so that the time stamps of the GPS "
                                   "can be converted to match the local time"));
 
-    GPXLineWidthLabel_ = new QLabel( i18n( "Track width" ), GPXTracksGroupBox);
+    GPXLineWidthLabel_ = new QLabel(i18n("Track Width:" ), GPXTracksGroupBox);
     GPXLineWidthInput_ = new KIntNumInput( GPXTracksGroupBox);
-    GPXLineWidthInput_->setValue( 4 );
+    GPXLineWidthInput_->setValue(4);
 
-    GPXColorLabel_ = new QLabel( i18n( "Track color" ), GPXTracksGroupBox);
+    GPXColorLabel_ = new QLabel(i18n("Track Color:" ), GPXTracksGroupBox);
     GPXTrackColor_ = new KColorButton(QColor("#ffffff"), GPXTracksGroupBox);
 
-    GPXTracksOpacityInput_ = new KIntNumInput( GPXTracksGroupBox);
-    GPXTracksOpacityInput_->setRange( 0, 100, 1, false );
-    GPXTracksOpacityInput_->setValue( 100 );
-    GPXTracksOpacityInput_->setLabel( i18n( "Opacity:" ), AlignVCenter);
-    GPXTracksOpacityInput_->setSuffix( QString::fromAscii( "%" ) );
+    GPXTracksOpacityInput_ = new KIntNumInput(GPXTracksGroupBox);
+    GPXTracksOpacityInput_->setRange(0, 100, 1);
+    GPXTracksOpacityInput_->setValue(100 );
+    GPXTracksOpacityInput_->setLabel(i18n("Opacity:" ), Qt::AlignVCenter);
+    GPXTracksOpacityInput_->setSuffix(QString::fromAscii("%"));
 
-    GPXAltitudeLabel_ = new QLabel( i18n( "Track altitude" ), GPXTracksGroupBox);
-    GPXAltitudeCB_    = new QComboBox( GPXTracksGroupBox );
+    GPXAltitudeLabel_ = new QLabel(i18n("Track Altitude:"), GPXTracksGroupBox);
+    GPXAltitudeCB_    = new QComboBox(GPXTracksGroupBox);
     GPXAltitudeCB_->addItem(i18n("clamp to ground"));
     GPXAltitudeCB_->addItem(i18n("relative to ground"));
     GPXAltitudeCB_->addItem(i18n("absolute"));
@@ -265,6 +260,12 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
 
     // --------------------------------------------------------------
 
+    connect(this, SIGNAL(cancelClicked()),
+            this, SLOT(slotCancel()));
+
+    connect(this, SIGNAL(okClicked()),
+            this, SLOT(slotOk()));
+
     connect( GoogleMapTargetRadioButton_, SIGNAL( toggled(bool) ), 
              this, SLOT( GoogleMapTargetRadioButton__toggled(bool) ) );
 
@@ -277,12 +278,16 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     m_about = new KIPIPlugins::KPAboutData(ki18n("KML Export"),
                    QByteArray(),
                    KAboutData::License_GPL,
-                   ki18n("A Kipi plugin for kml exporting"),
+                   ki18n("A Kipi plugin for KML exporting"),
                    ki18n("(c) 2006-2007, Stéphane Pontier"));
 
     m_about->addAuthor(ki18n("Stéphane Pontier"), 
                         ki18n("Developer and maintainer"),
                               "shadow dot walker at free dot fr");
+
+    m_about->addAuthor(ki18n("Gilles Caulier"), 
+                       ki18n("Developer and maintainer"),
+                             "caulier dot gilles at gmail dot com");
 
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));
@@ -317,12 +322,17 @@ KMLExportConfig::~KMLExportConfig()
 }
 
 void KMLExportConfig::slotOk()
-    //void KMLExportConfig::slotOkClicked()
 {
     saveSettings();
 
     emit okButtonClicked();
     accept();
+}
+
+void KMLExportConfig::slotCancel()
+{
+    saveSettings();
+    done(Close);
 }
 
 void KMLExportConfig::slotHelp()
