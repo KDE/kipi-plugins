@@ -128,6 +128,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     d->goButton->setEnabled(false);
 
     d->worldMap = new GPSMapWidget(page);
+    d->worldMap->setFileName(fileName);
     d->worldMap->show();
 
     grid->addWidget(message,             0, 0, 1, 3);

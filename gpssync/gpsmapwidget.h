@@ -54,6 +54,9 @@ public:
     void    setMapType(const QString& mapType);
     QString mapType();
 
+    void    setFileName(const QString& fileName);
+    QString fileName();
+
     void    resized();
 
 signals:
