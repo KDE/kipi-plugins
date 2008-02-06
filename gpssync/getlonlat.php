@@ -114,7 +114,7 @@ function loadMap()
             map.clearOverlays();
             if (point) 
             {
-                map.addOverlay(new GMarker(point));
+                map.addOverlay(new GMarker(point, markeroptions));
                 map.panTo(point);
                 msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ", zoom:" + map.getZoom() + ")";
                 window.status=msg;
