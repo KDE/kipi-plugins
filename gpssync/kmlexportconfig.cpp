@@ -174,7 +174,7 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     GPXFileLabel_ = new QLabel( i18n( "GPX file" ), GPXTracksGroupBox);
 
     GPXFileKUrlRequester_ = new KUrlRequester( GPXTracksGroupBox);
-    GPXFileKUrlRequester_->setFilter(i18n("%1|GPS Exchange Format").arg("*.gpx"));
+    GPXFileKUrlRequester_->setFilter(i18n("%1|GPS Exchange Format",QString("*.gpx")));
     GPXFileKUrlRequester_->setCaption(i18n("Select GPX File to Load"));
 
     timeZoneLabel_ = new QLabel(i18n("Time zone"), GPXTracksGroupBox);

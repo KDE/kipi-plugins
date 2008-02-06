@@ -80,7 +80,7 @@ bool kmlExport::createDir(QDir dir)
     bool ok = createDir(parent);
     if (!ok) 
     {
-        logError(i18n("Could not create '%1").arg(parent.path()));
+        logError(i18n("Could not create '%1",parent.path()));
         return false;
     }
     return parent.mkdir(dir.dirName());
@@ -164,7 +164,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     QFile imageFile(path);
     if (!imageFile.open(IO_ReadOnly)) 
     {
-        logWarning(i18n("Could not read image '%1'").arg(path));
+        logWarning(i18n("Could not read image '%1'",path));
         return;
     }
 
@@ -172,7 +172,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     QString imageFormat = reader.format();
     if (imageFormat.isEmpty()) 
     {
-        logWarning(i18n("Format of image '%1' is unknown").arg(path));
+        logWarning(i18n("Format of image '%1' is unknown",path));
         return;
     }
     imageFile.close();
@@ -182,7 +182,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     QImage image;
     if (!image.loadFromData(imageData) ) 
     {
-        logWarning(i18n("Error loading image '%1'").arg(path));
+        logWarning(i18n("Error loading image '%1'",path));
         return;
     }
 
@@ -222,7 +222,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     if (!image.save(destPath, imageFormat.toAscii(), 85)) 
     {
         // if not able to save the image, it's pointless to create a placemark
-        logWarning(i18n("Could not save image '%1' to '%2'").arg(path).arg(destPath));
+        logWarning(i18n("Could not save image '%1' to '%2'",path,destPath));
     }
     else 
     {
@@ -302,14 +302,14 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
             my_description += "<br/>" + info.description() ;
         }
         addKmlTextElement(kmlPlacemark, "description", my_description);
-        logInfo(i18n("Creation of placemark '%1'").arg(fullFileName));
+        logInfo(i18n("Creation of placemark '%1'",fullFileName));
 
         // Save icon
         QString iconFileName = "thumb_" + baseFileName + '.' + imageFormat.toLower();
         QString destPath     = m_tempDestDir + m_imageDir + iconFileName;
         if (!icon.save(destPath, imageFormat.toAscii(), 85)) 
         {
-            logWarning(i18n("Could not save icon for image '%1' to '%2'").arg(path).arg(destPath));
+            logWarning(i18n("Could not save icon for image '%1' to '%2'",path,destPath));
         } 
         else 
         {
@@ -348,7 +348,7 @@ void kmlExport::addTrack(QDomElement &kmlAlbum)
 
     if (!ret)
     {
-        logError(i18n("Cannot parse %1 GPX file!").arg(m_GPXFile));
+        logError(i18n("Cannot parse %1 GPX file!",m_GPXFile));
         return;
     }
 
@@ -441,7 +441,7 @@ void kmlExport::generate()
         }
         else 
         {
-            logWarning(i18n("No position data for '%1'").arg(info.title()));
+            logWarning(i18n("No position data for '%1'",info.title()));
             defectImage++;
         }
         m_progressDialog->setProgress(pos, count);
