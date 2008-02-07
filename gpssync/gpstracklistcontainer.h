@@ -26,6 +26,7 @@
 // Qt includes.
 
 #include <QList>
+#include <QString>
 
 // KDE includes.
 
@@ -61,9 +62,10 @@ public:
     void setUrl(const KUrl& url)                     { m_url     = url;     };
     void setGPSData(const GPSDataContainer& gpsData) { m_gpsData = gpsData; };
 
-    int   id()  const                { return m_id;      };
-    KUrl  url() const                { return m_url;     };
-    GPSDataContainer gpsData() const { return m_gpsData; };
+    int   id()  const                { return m_id;             };
+    KUrl  url() const                { return m_url;            };
+    QString filename() const         { return m_url.filename(); };
+    GPSDataContainer gpsData() const { return m_gpsData;        };
     
 private:
 
