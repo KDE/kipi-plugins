@@ -23,8 +23,6 @@
 #ifndef GPSDATACONTAINER_H
 #define GPSDATACONTAINER_H
 
-// Qt includes.
-
 namespace KIPIGPSSyncPlugin
 {
 

@@ -41,7 +41,7 @@ public:
 
     GPSMapWidgetPrivate()
     {
-        gpsLocalorUrl = QString("http://digikam3rdparty.free.fr/gpslocator/getlonlat.php");
+        gpsLocalorUrl = QString("http://digikam3rdparty.free.fr/gpslocator/tracklistedit.php");
     }
 
     QString gpsLocalorUrl;
