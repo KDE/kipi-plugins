@@ -109,6 +109,18 @@ function loadMap()
     echo "map.addOverlay(marker)";
 ?>
 
+    GEvent.addListener(map, "click", 
+        function(overlay, point)
+        {
+            if (point)
+            {
+                marker.setPoint(point); 
+                msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
+                window.status=msg;
+            }
+        }
+    );
+
     GEvent.addListener(marker, "dragend", 
         function()
         {
