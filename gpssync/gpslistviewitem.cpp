@@ -102,7 +102,7 @@ GPSListViewItem::~GPSListViewItem()
     delete d;
 }
 
-void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty, bool addedManually)
+void GPSListViewItem::setGPSInfo(const GPSDataContainer& gpsData, bool dirty, bool addedManually)
 {
     setEnabled(true);
     d->dirty      = dirty;
@@ -133,7 +133,7 @@ void GPSListViewItem::setGPSInfo(GPSDataContainer gpsData, bool dirty, bool adde
     repaint();
 }
 
-GPSDataContainer GPSListViewItem::GPSInfo()
+GPSDataContainer GPSListViewItem::GPSInfo() const
 {
     return d->gpsData;
 }
@@ -149,7 +149,7 @@ void GPSListViewItem::eraseGPSInfo()
     }
 }
 
-void GPSListViewItem::setDateTime(QDateTime date)
+void GPSListViewItem::setDateTime(const QDateTime& date)
 {
     if (date.isValid())
     {
@@ -162,12 +162,12 @@ void GPSListViewItem::setDateTime(QDateTime date)
     }
 }
 
-QDateTime GPSListViewItem::dateTime()
+QDateTime GPSListViewItem::dateTime() const
 {
     return d->date;
 }
 
-KUrl GPSListViewItem::url()
+KUrl GPSListViewItem::url() const
 {
     return d->url;
 }

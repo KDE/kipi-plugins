@@ -52,12 +52,12 @@ public:
     GPSListViewItem(K3ListView *view, Q3ListViewItem *after, const KUrl& url);
     ~GPSListViewItem();
 
-    void setGPSInfo(GPSDataContainer gpsData, bool dirty=true, bool addedManually=false);
-    GPSDataContainer GPSInfo();
+    void setGPSInfo(const GPSDataContainer& gpsData, bool dirty=true, bool addedManually=false);
+    GPSDataContainer GPSInfo() const;
     void eraseGPSInfo();
 
-    void setDateTime(QDateTime date);
-    QDateTime dateTime();
+    void setDateTime(const QDateTime& date);
+    QDateTime dateTime() const;
 
     void setEnabled(bool e);
     bool isEnabled();
@@ -66,7 +66,7 @@ public:
     bool hasGPSInfo();
     bool isReadOnly();
 
-    KUrl url();
+    KUrl url() const;
     void writeGPSInfoToFile();
 
 protected:
