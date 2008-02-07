@@ -34,7 +34,7 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSEditDialogDialogPrivate;
+class GPSEditDialogPrivate;
 
 class GPSEditDialog : public KDialog
 {
@@ -71,7 +71,7 @@ private:
 
 private:
 
-    GPSEditDialogDialogPrivate *d;
+    GPSEditDialogPrivate *d;
 };
 
 }  // namespace KIPIGPSSyncPlugin

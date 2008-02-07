@@ -64,7 +64,7 @@ public:
 
     int   id()  const                { return m_id;             };
     KUrl  url() const                { return m_url;            };
-    QString filename() const         { return m_url.filename(); };
+    QString fileName() const         { return m_url.fileName(); };
     GPSDataContainer gpsData() const { return m_gpsData;        };
     
 private:

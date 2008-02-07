@@ -47,6 +47,7 @@ protected slots:
 
     void slotGPSSync();
     void slotGPSEdit();
+    void slotGPSTrackListEdit();
     void slotGPSRemove();
     void slotKMLGenerate();
     void slotKMLExport();

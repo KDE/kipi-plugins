@@ -50,7 +50,9 @@
 
 #include "gpsbabelbinary.h"
 #include "gpsdatacontainer.h"
+#include "gpstracklistcontainer.h"
 #include "gpseditdialog.h"
+#include "gpstracklisteditdialog.h"
 #include "gpssyncdialog.h"
 #include "kmlexport.h"
 #include "kmlexportconfig.h"
@@ -85,6 +87,12 @@ void Plugin_GPSSync::setup( QWidget* widget )
     connect(gpsedit, SIGNAL(triggered(bool)), 
             this, SLOT(slotGPSEdit()));
     m_action_geolocation->addAction(gpsedit);
+
+    KAction *gpstracklistedit = new KAction(i18n("Track List Edit..."), actionCollection());
+    gpstracklistedit->setObjectName("gpstracklistedit");
+    connect(gpstracklistedit, SIGNAL(triggered(bool)), 
+            this, SLOT(slotGPSTrackListEdit()));
+    m_action_geolocation->addAction(gpstracklistedit);
 
     KAction *gpsremove = new KAction(i18n("Remove Coordinates..."), actionCollection());
     gpsremove->setObjectName("gpsremove");
@@ -249,6 +257,39 @@ void Plugin_GPSSync::slotGPSEdit()
                         errorFiles,
                         i18n("Edit Geographical Coordinates"));  
         }
+    }
+}
+
+void Plugin_GPSSync::slotGPSTrackListEdit()
+{
+    KIPI::ImageCollection images = m_interface->currentSelection();
+
+    if ( !images.isValid() || images.images().isEmpty() )
+        return;
+
+    int id = 0;
+    double alt, lat, lng;
+    KIPIGPSSyncPlugin::GPSTrackList trackList;
+    KUrl::List urls = images.images();
+
+    for( KUrl::List::iterator it = urls.begin() ; 
+        it != urls.end() ; ++it)
+    {
+        KExiv2Iface::KExiv2 exiv2Iface;
+        exiv2Iface.load((*it).path());
+        if(exiv2Iface.getGPSInfo(alt, lat, lng))
+        {
+            KIPIGPSSyncPlugin::GPSDataContainer gpsData(alt, lat, lng, false);
+            KIPIGPSSyncPlugin::GPSTrackListItem trackListItem(id++, *it, gpsData);
+            trackList.append(trackListItem);
+        }
+    }
+
+    KIPIGPSSyncPlugin::GPSTrackListEditDialog dlg(kapp->activeWindow(), trackList);
+
+    if (dlg.exec() == KDialog::Accepted)
+    {
+        // TODO
     }
 }
 

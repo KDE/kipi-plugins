@@ -30,7 +30,6 @@
 
 // KDE includes.
 
-#include <k3listview.h>
 #include <ktoolinvocation.h>
 #include <klocale.h>
 #include <khelpmenu.h>
@@ -55,12 +54,12 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSEditDialogDialogPrivate
+class GPSEditDialogPrivate
 {
 
 public:
 
-    GPSEditDialogDialogPrivate()
+    GPSEditDialogPrivate()
     {
         altitudeInput  = 0;
         latitudeInput  = 0;
@@ -74,8 +73,6 @@ public:
     bool                      hasGPSInfo;
 
     QPushButton              *goButton;
-
-    K3ListView               *listView;
 
     KLineEdit                *altitudeInput;
     KLineEdit                *latitudeInput;
@@ -92,7 +89,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
                              const QString& fileName, bool hasGPSInfo)
              : KDialog(parent)
 {
-    d = new GPSEditDialogDialogPrivate;
+    d = new GPSEditDialogPrivate;
     d->hasGPSInfo = hasGPSInfo;
     d->gpsData    = gpsData;
 
@@ -130,16 +127,6 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     d->goButton = new QPushButton(i18n("Goto Location"), page);
     d->goButton->setEnabled(false);
 
-    d->listView = new K3ListView(page);
-    d->listView->addColumn( i18n("Thumbnail") );
-    d->listView->addColumn( i18n("File Name") );
-    d->listView->addColumn( i18n("Id") );
-    d->listView->setResizeMode(Q3ListView::AllColumns);
-    d->listView->setAllColumnsShowFocus(true);
-    d->listView->setSorting(-1);
-    d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->listView->setSelectionMode(Q3ListView::Single);
-
     d->worldMap = new GPSMapWidget(page);
     d->worldMap->setFileName(fileName);
     d->worldMap->show();
@@ -152,11 +139,10 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     grid->addWidget(longitudeLabel,      5, 0, 1, 3);
     grid->addWidget(d->longitudeInput,   6, 0, 1, 3);
     grid->addWidget(d->goButton,         7, 0, 1, 3);
-    grid->addWidget(d->listView,         8, 0, 1, 3);
-    grid->addWidget(d->worldMap->view(), 0, 3, 10, 1);
+    grid->addWidget(d->worldMap->view(), 0, 3, 9, 1);
     grid->setColumnStretch(0, 3);
     grid->setColumnStretch(3, 10);
-    grid->setRowStretch(9, 10);
+    grid->setRowStretch(8, 10);
     grid->setSpacing(spacingHint());
     grid->setMargin(0);
 
