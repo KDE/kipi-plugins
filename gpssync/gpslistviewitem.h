@@ -39,7 +39,6 @@
 
 class QPainter;
 class QColorGroup;
-class QPixmap;
 
 namespace KIPIGPSSyncPlugin
 {
