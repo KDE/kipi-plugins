@@ -117,8 +117,8 @@ void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
 {
     QString status = jsStatusBarText();
 
-    // If a new point to the map have been selected, the Status 
-    // string is like : "(lat:25.5894748, lon:47.6897455478, zoom:8)"
+    // If a new point to the map have been moved, the Status
+    // string is like : "(lat:25.5894748, lon:47.6897455478)"
     if (status.startsWith(QString("(lat:")))
     {
         status.remove(0, 5);
@@ -126,8 +126,6 @@ void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
         d->latitude  = status.section(",", 0, 0);
         d->longitude = status.section(",", 1, 1);
         d->longitude.remove(0, 5);
-        d->zoomLevel = status.section(",", 2, 2);
-        d->zoomLevel.remove(0, 6);
         emit signalNewGPSLocationFromMap(d->latitude, d->longitude);
     }
 

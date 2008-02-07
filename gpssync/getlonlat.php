@@ -73,7 +73,7 @@ function loadMap()
 
     var markeroptions = { 
       autoPan : true,
-      draggable : false,
+      draggable : true,
 <?php
       $filename = $_GET['filename'];
       if ($filename != "") echo "title : \"$filename\""; 
@@ -99,26 +99,22 @@ function loadMap()
     echo $maptype;
     echo ");\n";
 
-    echo "map.addOverlay(new GMarker(new GLatLng(";
+    echo "var marker = new GMarker(new GLatLng(";
     echo $_GET['latitude'];
     echo ", ";
     echo $_GET['longitude'];
-    
     echo "), markeroptions";
-    echo "));\n";
+    echo ");\n";
+
+    echo "map.addOverlay(marker)";
 ?>
 
-    GEvent.addListener(map, "click", 
-        function(overlay, point)
+    GEvent.addListener(marker, "dragend", 
+        function()
         {
-            map.clearOverlays();
-            if (point) 
-            {
-                map.addOverlay(new GMarker(point, markeroptions));
-                map.panTo(point);
-                msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ", zoom:" + map.getZoom() + ")";
-                window.status=msg;
-            }
+            var point = marker.getPoint(); 
+            msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
+            window.status=msg;
         }
     );
 

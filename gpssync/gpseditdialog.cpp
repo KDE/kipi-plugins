@@ -215,6 +215,7 @@ void GPSEditDialog::slotGotoLocation()
 {
     if (!checkGPSLocation()) return;
     d->worldMap->setGPSPosition(d->latitudeInput->text(), d->longitudeInput->text());
+    slotUpdateWorldMap();
 }
 
 void GPSEditDialog::slotUpdateWorldMap()
