@@ -267,8 +267,9 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    int id = 0;
-    double alt, lat, lng;
+    int       id = 0;
+    double    alt, lat, lng;
+    QDateTime dt;
     KIPIGPSSyncPlugin::GPSTrackList trackList;
     KUrl::List urls = images.images();
 
@@ -279,8 +280,9 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
         exiv2Iface.load((*it).path());
         if(exiv2Iface.getGPSInfo(alt, lat, lng))
         {
+            dt = exiv2Iface.getImageDateTime();
             KIPIGPSSyncPlugin::GPSDataContainer gpsData(alt, lat, lng, false);
-            KIPIGPSSyncPlugin::GPSTrackListItem trackListItem(id++, *it, gpsData);
+            KIPIGPSSyncPlugin::GPSTrackListItem trackListItem(id++, *it, dt, gpsData);
             trackList.append(trackListItem);
         }
     }

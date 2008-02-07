@@ -44,6 +44,9 @@ class GPSTrackListItem
 {
 public:
 
+    GPSTrackListItem(): m_id(0), m_dateTime(QDateTime()), m_url(KUrl()), m_gpsData(GPSDataContainer())
+    {};
+
     GPSTrackListItem(int id, const KUrl& url, const QDateTime& dt, const GPSDataContainer gpsData)
                    : m_id(id), m_dateTime(dt), m_url(url), m_gpsData(gpsData)
     {};
