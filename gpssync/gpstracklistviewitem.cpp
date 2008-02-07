@@ -52,9 +52,7 @@ GPSTrackListViewItem::GPSTrackListViewItem(K3ListView *view, Q3ListViewItem *aft
                     : K3ListViewItem(view, after)
 {
     d = new GPSTrackListViewItemPriv;
-
-    setEnabled(false);
-    setPixmap(0, SmallIcon( "file_broken", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
+    setPixmap(0, SmallIcon("file_broken", KIconLoader::SizeLarge, KIconLoader::DisabledState));
 }
 
 GPSTrackListViewItem::~GPSTrackListViewItem()
@@ -67,7 +65,6 @@ void GPSTrackListViewItem::setGPSInfo(const GPSTrackListItem& gpsData)
     d->gpsData = gpsData;
     setText(1, d->gpsData.fileName());
     setText(2, QString::number(d->gpsData.id()));
-    repaint();
 }
 
 GPSTrackListItem GPSTrackListViewItem::GPSInfo() const
@@ -78,7 +75,6 @@ GPSTrackListItem GPSTrackListViewItem::GPSInfo() const
 void GPSTrackListViewItem::setThumbnail(const QPixmap& pix)
 {
     setPixmap(0, pix.scaled(64, 64, Qt::KeepAspectRatio));
-    repaint();
 }
 
 QDateTime GPSTrackListViewItem::dateTime() const

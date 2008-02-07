@@ -88,7 +88,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
             this, SLOT(slotGPSEdit()));
     m_action_geolocation->addAction(gpsedit);
 
-    KAction *gpstracklistedit = new KAction(i18n("Track List Edit..."), actionCollection());
+    KAction *gpstracklistedit = new KAction(i18n("Track List Editor..."), actionCollection());
     gpstracklistedit->setObjectName("gpstracklistedit");
     connect(gpstracklistedit, SIGNAL(triggered(bool)), 
             this, SLOT(slotGPSTrackListEdit()));
@@ -287,7 +287,7 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
         }
     }
 
-    KIPIGPSSyncPlugin::GPSTrackListEditDialog dlg(kapp->activeWindow(), trackList);
+    KIPIGPSSyncPlugin::GPSTrackListEditDialog dlg(m_interface, kapp->activeWindow(), trackList);
 
     if (dlg.exec() == KDialog::Accepted)
     {

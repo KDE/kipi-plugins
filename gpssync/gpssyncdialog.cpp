@@ -104,7 +104,7 @@ public:
     GPSDataParser             gpxParser;
 };
 
-GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
+GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
              : KDialog(parent)
 {
     d = new GPSSyncDialogPriv;
