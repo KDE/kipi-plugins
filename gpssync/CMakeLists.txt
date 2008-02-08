@@ -22,8 +22,6 @@ KDE4_ADD_PLUGIN(kipiplugin_gpssync ${kipiplugin_gpssync_PART_SRCS})
 TARGET_LINK_LIBRARIES(kipiplugin_gpssync 
                       ${KDE4_KPARTS_LIBS} 
                       ${KDE4_KHTML_LIBS} 
-                      ${KDE4_KIO_LIBS} 
-                      ${QT_AND_KDECORE_LIBS} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       ${QT_QT3SUPPORT_LIBRARY} 
