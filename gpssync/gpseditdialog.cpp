@@ -152,7 +152,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     d->about = new KIPIPlugins::KPAboutData(ki18n("GPS Sync"),
                    QByteArray(),
                    KAboutData::License_GPL,
-                   ki18n("A Plugin to synchronize pictures metadata with a GPS device"),
+                   ki18n("A Plugin to edit geographical coordinates"),
                    ki18n("(c) 2006-2008, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), 
