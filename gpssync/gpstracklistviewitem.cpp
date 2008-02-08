@@ -22,6 +22,7 @@
 
 // Qt includes.
 
+#include <QDateTime>
 #include <QPainter>
 #include <QFileInfo>
 
@@ -45,6 +46,8 @@ public:
     {
     }
 
+    QDateTime        dateTime;
+
     GPSTrackListItem gpsData;
 };
 
@@ -60,9 +63,10 @@ GPSTrackListViewItem::~GPSTrackListViewItem()
     delete d;
 }
 
-void GPSTrackListViewItem::setGPSInfo(const GPSTrackListItem& gpsData)
+void GPSTrackListViewItem::setData(const QDateTime& dt, const GPSTrackListItem& gpsData)
 {
-    d->gpsData = gpsData;
+    d->dateTime = dt;
+    d->gpsData  = gpsData;
     setText(1, QString::number(d->gpsData.id()));
     setText(2, d->gpsData.fileName());
 }
@@ -79,7 +83,7 @@ void GPSTrackListViewItem::setThumbnail(const QPixmap& pix)
 
 QDateTime GPSTrackListViewItem::dateTime() const
 {
-    return d->gpsData.dateTime();
+    return d->dateTime;
 }
 
 KUrl GPSTrackListViewItem::url() const

@@ -160,8 +160,8 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
          it != d->gpsTrackList.end() ; ++it)
     {
         GPSTrackListViewItem *item = new GPSTrackListViewItem(d->listView, d->listView->lastItem());
-        item->setGPSInfo(*it);
-        urls.append((*it).url());
+        item->setData(it.key(), it.value());
+        urls.append(it.value().url());
     }
     d->interface->thumbnails(urls, 64);
 

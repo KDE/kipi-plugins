@@ -52,15 +52,14 @@ public:
     GPSTrackListViewItem(K3ListView *view, Q3ListViewItem *after);
     ~GPSTrackListViewItem();
 
-    void setGPSInfo(const GPSTrackListItem& gpsData);
-    GPSTrackListItem GPSInfo() const;
-
+    void setData(const QDateTime& dt, const GPSTrackListItem& gpsData);
     void setThumbnail(const QPixmap& pix);
 
-    int       id() const;
-    QDateTime dateTime() const;
-    QString   fileName() const;
-    KUrl      url() const;
+    GPSTrackListItem GPSInfo() const;
+    int              id() const;
+    QDateTime        dateTime() const;
+    QString          fileName() const;
+    KUrl             url() const;
 
 private: 
 

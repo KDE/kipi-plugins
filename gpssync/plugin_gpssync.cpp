@@ -267,7 +267,6 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    int       id = 0;
     double    alt, lat, lng;
     QDateTime dt;
     KIPIGPSSyncPlugin::GPSTrackList trackList;
@@ -282,9 +281,17 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
         {
             dt = exiv2Iface.getImageDateTime();
             KIPIGPSSyncPlugin::GPSDataContainer gpsData(alt, lat, lng, false);
-            KIPIGPSSyncPlugin::GPSTrackListItem trackListItem(id++, *it, dt, gpsData);
-            trackList.append(trackListItem);
+            KIPIGPSSyncPlugin::GPSTrackListItem trackListItem(*it, gpsData);
+            trackList.insert(dt, trackListItem);
         }
+    }
+
+    // Set track list id sorted by datetime.
+    int id = 0;
+    for( KIPIGPSSyncPlugin::GPSTrackList::iterator it = trackList.begin() ; 
+         it != trackList.end() ; ++it)
+    {
+        it.value().setId(id++);
     }
 
     KIPIGPSSyncPlugin::GPSTrackListEditDialog dlg(m_interface, kapp->activeWindow(), trackList);

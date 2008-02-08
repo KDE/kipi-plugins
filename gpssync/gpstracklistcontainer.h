@@ -25,7 +25,7 @@
 
 // Qt includes.
 
-#include <QList>
+#include <QMap>
 #include <QString>
 #include <QDateTime>
 
@@ -44,11 +44,11 @@ class GPSTrackListItem
 {
 public:
 
-    GPSTrackListItem(): m_id(0), m_dateTime(QDateTime()), m_url(KUrl()), m_gpsData(GPSDataContainer())
+    GPSTrackListItem(): m_id(0), m_url(KUrl()), m_gpsData(GPSDataContainer())
     {};
 
-    GPSTrackListItem(int id, const KUrl& url, const QDateTime& dt, const GPSDataContainer gpsData)
-                   : m_id(id), m_dateTime(dt), m_url(url), m_gpsData(gpsData)
+    GPSTrackListItem(const KUrl& url, const GPSDataContainer gpsData)
+                   : m_id(0), m_url(url), m_gpsData(gpsData)
     {};
 
     ~GPSTrackListItem()
@@ -57,19 +57,16 @@ public:
     GPSTrackListItem& operator=(const GPSTrackListItem& data)
     {
         m_id       = data.id();
-        m_dateTime = data.dateTime();
         m_url      = data.url();
         m_gpsData  = data.gpsData();
         return *this;
     };
 
     void setId(int id)                               { m_id       = id;      };
-    void setDateTime(const QDateTime& dt)            { m_dateTime = dt;      };
     void setUrl(const KUrl& url)                     { m_url      = url;     };
     void setGPSData(const GPSDataContainer& gpsData) { m_gpsData  = gpsData; };
 
     int       id()  const            { return m_id;             };
-    QDateTime dateTime() const       { return m_dateTime;       };
     KUrl      url() const            { return m_url;            };
     QString   fileName() const       { return m_url.fileName(); };
     GPSDataContainer gpsData() const { return m_gpsData;        };
@@ -78,14 +75,12 @@ private:
 
     int              m_id;
 
-    QDateTime        m_dateTime;
-    
     KUrl             m_url;
 
     GPSDataContainer m_gpsData;
 };
 
-typedef QList<GPSTrackListItem> GPSTrackList;
+typedef QMap<QDateTime, GPSTrackListItem> GPSTrackList;
 
 } // NameSpace KIPIGPSSyncPlugin
 
