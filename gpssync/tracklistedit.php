@@ -15,13 +15,21 @@
  *         This script must be copied to host kipi-plugins
  *         web project page.
  *         This script accept these values from url:
- *           - 'altitude'  : picture altitude.
- *           - 'longitude' : picture longitude. 
  *           - 'width'     : width of map.
  *           - 'height'    : height of map.
  *           - 'zoom'      : map zoom level.
  *           - 'maptype'   : type of map (G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP)
- *           - 'filename'  : photo file name as string.
+ *           - 'items'     : number of track list items
+ *           - 'lat#1'     : latitude for 1th item
+ *           - 'lng#1'     : longitude for 1th item
+ *           - 'title#1'   : title for 1th item
+ *           - 'lat#2'     : latitude for 2nd item
+ *           - 'lng#2'     : longitude for 2nd item
+ *           - 'title#2'   : title for 2nd item
+ *              ...
+ *           - 'lat#n'     : latitude for item n
+ *           - 'lng#n'     : longitude for item n
+ *           - 'title#n'   : title for item n
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -71,15 +79,6 @@ function loadMap()
       suppressInitialResultSelection : true
     };
 
-    var markeroptions = { 
-      autoPan : true,
-      draggable : true,
-<?php
-      $filename = $_GET['filename'];
-      if ($filename != "") echo "title : \"$filename\""; 
-?>
-    };
-
     map.addControl(new GLargeMapControl());
     map.addControl(new GMapTypeControl());
     map.addControl(new GScaleControl());
@@ -90,23 +89,46 @@ function loadMap()
     if ($maptype == "") $maptype = "G_NORMAL_MAP";
 
     echo "map.setCenter(new GLatLng(";
-    echo $_GET['latitude'];
+    echo $_GET['lat1'];
     echo ", ";
-    echo $_GET['longitude'];
+    echo $_GET['lng1'];
     echo "), ";
     echo $_GET['zoom'];
     echo ", ";
     echo $maptype;
     echo ");\n";
 
-    echo "var marker = new GMarker(new GLatLng(";
-    echo $_GET['latitude'];
-    echo ", ";
-    echo $_GET['longitude'];
-    echo "), markeroptions";
-    echo ");\n";
+    $items = $_GET[items];
 
-    echo "map.addOverlay(marker)";
+    for ($i=1; $i <= $items; $i++)
+    {
+        $lat   = sprintf("lat%d", $i);
+        $lng   = sprintf("lng%d", $i);
+        $title = sprintf("title%d", $i);
+
+        echo "var markeroptions";
+        echo $i;
+        echo " = { ";
+        echo "autoPan : true, ";
+        echo "draggable : true, ";
+        echo "title : \"";
+        echo $_GET[$title];
+        echo "\"}\n";
+
+        echo "var marker";
+        echo $i;
+        echo " = new GMarker(new GLatLng(";
+        echo $_GET[$lat];
+        echo ", ";
+        echo $_GET[$lng];
+        echo "), markeroptions";
+        echo $i;
+        echo ");\n";
+    
+        echo "map.addOverlay(marker";
+        echo $i;
+        echo ")\n";
+    }
 ?>
 
     GEvent.addListener(map, "click", 
@@ -120,7 +142,7 @@ function loadMap()
             }
         }
     );
-
+/*
     GEvent.addListener(marker, "dragend", 
         function()
         {
@@ -137,7 +159,7 @@ function loadMap()
             window.status=msg;
         }
     );
-
+*/
     GEvent.addListener(map, "maptypechanged", 
         function()
         {
