@@ -44,11 +44,14 @@ public:
 
     GPSTrackListViewItemPriv()
     {
+        dirty = false;
     }
+
+    bool             dirty;
 
     QDateTime        dateTime;
 
-    GPSTrackListItem gpsData;
+    GPSTrackListItem data;
 };
 
 GPSTrackListViewItem::GPSTrackListViewItem(K3ListView *view, Q3ListViewItem *after)
@@ -63,22 +66,37 @@ GPSTrackListViewItem::~GPSTrackListViewItem()
     delete d;
 }
 
-void GPSTrackListViewItem::setData(const QDateTime& dt, const GPSTrackListItem& gpsData)
+void GPSTrackListViewItem::setDirty(bool dirty)
 {
-    d->dateTime = dt;
-    d->gpsData  = gpsData;
-    setText(1, QString::number(d->gpsData.id()));
-    setText(2, d->gpsData.fileName());
+    d->dirty = dirty;
+    setText(7, d->dirty ? i18n("Yes") : i18n("No"));
 }
 
-GPSTrackListItem GPSTrackListViewItem::GPSInfo() const
+bool GPSTrackListViewItem::isDirty() const
 {
-    return d->gpsData;
+    return d->dirty;
+}
+
+void GPSTrackListViewItem::setData(const QDateTime& dt, const GPSTrackListItem& data)
+{
+    d->dateTime = dt;
+    d->data     = data;
+    setText(1, QString::number(d->data.id()));
+    setText(2, d->data.fileName());
+    setText(3, d->dateTime.toString(Qt::LocalDate));
+    setText(4, QString::number(d->data.gpsData().latitude(),  'g', 12));
+    setText(5, QString::number(d->data.gpsData().longitude(), 'g', 12));
+    setText(6, QString::number(d->data.gpsData().altitude(),  'g', 12));
+}
+
+GPSTrackListItem GPSTrackListViewItem::gpsInfo() const
+{
+    return d->data;
 }
 
 void GPSTrackListViewItem::setThumbnail(const QPixmap& pix)
 {
-    setPixmap(0, pix.scaled(92, 92, Qt::KeepAspectRatio));
+    setPixmap(0, pix.scaled(64, 64, Qt::KeepAspectRatio));
 }
 
 QDateTime GPSTrackListViewItem::dateTime() const
@@ -88,17 +106,17 @@ QDateTime GPSTrackListViewItem::dateTime() const
 
 KUrl GPSTrackListViewItem::url() const
 {
-    return d->gpsData.url();
+    return d->data.url();
 }
 
 QString GPSTrackListViewItem::fileName() const
 {
-    return d->gpsData.fileName();
+    return d->data.fileName();
 }
 
 int GPSTrackListViewItem::id() const
 {
-    return d->gpsData.id();
+    return d->data.id();
 }
 
 } // NameSpace KIPIGPSSyncPlugin

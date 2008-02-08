@@ -89,7 +89,7 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     QWidget *page = new QWidget( this );
     setMainWidget( page );
 
-    QGridLayout* grid = new QGridLayout(page);
+    QVBoxLayout* vlay = new QVBoxLayout(page);
 
     // ---------------------------------------------------------------
 
@@ -97,11 +97,16 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     d->listView->addColumn( i18n("Thumbnail") );
     d->listView->addColumn( i18n("Id") );
     d->listView->addColumn( i18n("File Name") );
+    d->listView->addColumn( i18n("Date") );
+    d->listView->addColumn( i18n("Latitude") );
+    d->listView->addColumn( i18n("Longitude") );
+    d->listView->addColumn( i18n("Altitude") );
+    d->listView->addColumn( i18n("Dirty") );
     d->listView->setResizeMode(Q3ListView::AllColumns);
     d->listView->setAllColumnsShowFocus(true);
     d->listView->setSorting(-1);
     d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->listView->setSelectionMode(Q3ListView::Single);
+    d->listView->setSelectionMode(Q3ListView::NoSelection);
 
     // ---------------------------------------------------------------
 
@@ -110,12 +115,10 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
 
     // ---------------------------------------------------------------
 
-    grid->addWidget(d->listView,         0, 0, 1, 1);
-    grid->addWidget(d->worldMap->view(), 0, 1, 1, 1);
-    grid->setColumnStretch(0, 3);
-    grid->setColumnStretch(1, 10);
-    grid->setSpacing(spacingHint());
-    grid->setMargin(0);
+    vlay->addWidget(d->worldMap->view(), 10);
+    vlay->addWidget(d->listView, 3);
+    vlay->setSpacing(spacingHint());
+    vlay->setMargin(0);
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -163,7 +166,7 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
         item->setData(it.key(), it.value());
         urls.append(it.value().url());
     }
-    d->interface->thumbnails(urls, 92);
+    d->interface->thumbnails(urls, 64);
 
     readSettings();
     QTimer::singleShot(0, this, SLOT(slotUpdateWorldMap()));
@@ -261,9 +264,16 @@ void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, doubl
         GPSTrackListViewItem *item = dynamic_cast<GPSTrackListViewItem*>(it.current());
         if (item->id() == id)
         {
-            item->GPSInfo().gpsData().setLatitude(lat);
-            item->GPSInfo().gpsData().setLongitude(lng);
-            item->setSelected(true);
+            GPSTrackListItem info = item->gpsInfo();
+            GPSDataContainer data = info.gpsData();
+            data.setLatitude(lat);
+            data.setLongitude(lng);
+            info.setGPSData(data);
+            item->setData(item->dateTime(), info);
+            item->setDirty(true);
+            d->listView->repaintItem(item);
+            d->listView->setCurrentItem(item);
+            d->listView->ensureItemVisible(item);
             kDebug() << id << "::" << lat << "::" << lng << endl;
             return;
         }

@@ -37,9 +37,6 @@
 
 #include "gpstracklistcontainer.h"
 
-class QPainter;
-class QColorGroup;
-
 namespace KIPIGPSSyncPlugin
 {
 class GPSTrackListViewItemPriv;
@@ -52,10 +49,13 @@ public:
     GPSTrackListViewItem(K3ListView *view, Q3ListViewItem *after);
     ~GPSTrackListViewItem();
 
-    void setData(const QDateTime& dt, const GPSTrackListItem& gpsData);
+    void setData(const QDateTime& dt, const GPSTrackListItem& data);
     void setThumbnail(const QPixmap& pix);
 
-    GPSTrackListItem GPSInfo() const;
+    void setDirty(bool dirty);
+    bool isDirty() const;
+
+    GPSTrackListItem gpsInfo() const;
     int              id() const;
     QDateTime        dateTime() const;
     QString          fileName() const;
