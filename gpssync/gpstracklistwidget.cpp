@@ -143,8 +143,22 @@ void GPSTrackListWidget::resized()
     url.append(d->zoomLevel);
     url.append("&maptype=");
     url.append(d->mapType);
+
+    int count = d->gpsTrackList.count();
     url.append("&trackitems=");
-    url.append(d->gpsTrackList.count());
+    url.append(QString::number(count));
+    for( GPSTrackList::iterator it = d->gpsTrackList.begin() ; 
+         it != d->gpsTrackList.end() ; ++it)
+    {
+        int id = it.value().id();
+        url.append(QString("&lat#%1=").arg(id));
+        url.append(QString::number(it.value().gpsData().latitude()));
+        url.append(QString("&lng#%1=").arg(id));
+        url.append(QString::number(it.value().gpsData().longitude()));
+        url.append(QString("&title#%1=").arg(id));
+        url.append(QString("#%1").arg(id));
+    }
+
     openUrl(KUrl(url));
     kDebug( 51001 ) << url << endl;
 }

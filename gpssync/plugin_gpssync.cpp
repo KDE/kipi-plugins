@@ -287,11 +287,12 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
     }
 
     // Set track list id sorted by datetime.
-    int id = 0;
+    int id = 1;
     for( KIPIGPSSyncPlugin::GPSTrackList::iterator it = trackList.begin() ; 
          it != trackList.end() ; ++it)
     {
-        it.value().setId(id++);
+        it.value().setId(id);
+        id++;
     }
 
     KIPIGPSSyncPlugin::GPSTrackListEditDialog dlg(m_interface, kapp->activeWindow(), trackList);
