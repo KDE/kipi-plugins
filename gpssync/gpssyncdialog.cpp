@@ -371,7 +371,7 @@ void GPSSyncDialog::slotLoadGPXFile()
     }
 
     d->gpxFileName->setText(loadGPXFile.fileName());
-    d->gpxPointsLabel->setText(i18n("Points parsed: %1").arg(d->gpxParser.numPoints()));
+    d->gpxPointsLabel->setText(i18n("Points parsed: %1",d->gpxParser.numPoints()));
     enableButton(User1, true);
     slotUser1();
 }
