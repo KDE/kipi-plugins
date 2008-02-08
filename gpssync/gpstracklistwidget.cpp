@@ -106,12 +106,15 @@ void GPSTrackListWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
     {
         status.remove(0, 5);
         status.truncate(status.length()-1);
-        QString id        = status.section(",", 0, 0);
-        QString latitude  = status.section(",", 1, 1);
-        latitude.remove(0, 5);
-        QString longitude = status.section(",", 2, 2);
-        longitude.remove(0, 6);
-        emit signalNewGPSLocationFromMap(id, latitude, longitude);
+        QString idTxt  = status.section(",", 0, 0);
+        QString latTxt = status.section(",", 1, 1);
+        latTxt.remove(0, 5);
+        QString lngTxt = status.section(",", 2, 2);
+        lngTxt.remove(0, 6);
+        int id     = isTxt.toInt();        
+        double lat = latTxt.toDouble():
+        double lng = lngTxt.toDouble():
+        emit signalNewGPSLocationFromMap(id, lat, lng);
     }
 
     // If a new map zoom level have been selected, the Status 
