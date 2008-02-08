@@ -94,8 +94,8 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     // ---------------------------------------------------------------
 
     d->listView = new K3ListView(page);
-    d->listView->addColumn( i18n("Id") );
     d->listView->addColumn( i18n("Thumbnail") );
+    d->listView->addColumn( i18n("Id") );
     d->listView->addColumn( i18n("File Name") );
     d->listView->setResizeMode(Q3ListView::AllColumns);
     d->listView->setAllColumnsShowFocus(true);
@@ -167,6 +167,23 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
 
     readSettings();
     QTimer::singleShot(0, this, SLOT(slotUpdateWorldMap()));
+}
+
+void GPSTrackListEditDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
+{
+    QPixmap pixmap = pix.scaled(64, 64, Qt::KeepAspectRatio);
+    Q3ListViewItemIterator it(d->listView);
+
+    while (it.current())
+    {
+        GPSTrackListViewItem *item = dynamic_cast<GPSTrackListViewItem*>(it.current());
+        if (item->url() == url)
+        {
+            item->setThumbnail(pixmap);
+            return;
+        }
+        ++it;
+    }
 }
 
 GPSTrackListEditDialog::~GPSTrackListEditDialog()
@@ -241,22 +258,6 @@ void GPSTrackListEditDialog::slotOk()
 void GPSTrackListEditDialog::slotNewGPSLocationFromMap(const QString& lat, const QString& lon)
 {
     // TODO
-}
-
-void GPSTrackListEditDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
-{
-    QPixmap pixmap = pix.scaled(64, 64, Qt::KeepAspectRatio);
-    Q3ListViewItemIterator it(d->listView);
-
-    while (it.current())
-    {
-        GPSTrackListViewItem *item = dynamic_cast<GPSTrackListViewItem*>(it.current());
-        if (item->url() == url)
-        {
-            item->setThumbnail(pixmap);
-        }
-        ++it;
-    }
 }
 
 }  // namespace KIPIGPSSyncPlugin

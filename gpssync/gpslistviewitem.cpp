@@ -231,6 +231,11 @@ bool GPSListViewItem::isReadOnly()
     return d->readOnly;
 }
 
+void GPSListViewItem::setThumbnail(const QPixmap& pix)
+{
+    setPixmap(0, pix.scaled(64, 64, Qt::KeepAspectRatio));
+}
+
 void GPSListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
 {
     if (isEnabled() && !isReadOnly())

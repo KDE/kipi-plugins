@@ -337,7 +337,8 @@ void GPSSyncDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
         GPSListViewItem *selItem = dynamic_cast<GPSListViewItem*>(it.current());
         if (selItem->url() == url)
         {
-            selItem->setPixmap(0, pixmap);
+            selItem->setThumbnail(pixmap);
+            return;
         }
         ++it;
     }

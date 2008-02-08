@@ -69,6 +69,8 @@ public:
     KUrl url() const;
     void writeGPSInfoToFile();
 
+    void setThumbnail(const QPixmap& pix);
+
 protected:
 
     void paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment);
