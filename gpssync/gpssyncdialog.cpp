@@ -329,15 +329,13 @@ void GPSSyncDialog::setImages( const KUrl::List& images )
 
 void GPSSyncDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
-    QPixmap pixmap = pix.scaled(64, 64, Qt::KeepAspectRatio);
     Q3ListViewItemIterator it(d->listView);
-
     while (it.current())
     {
         GPSListViewItem *selItem = dynamic_cast<GPSListViewItem*>(it.current());
         if (selItem->url() == url)
         {
-            selItem->setThumbnail(pixmap);
+            selItem->setThumbnail(pix);
             return;
         }
         ++it;

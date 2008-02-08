@@ -78,7 +78,7 @@ GPSTrackListItem GPSTrackListViewItem::GPSInfo() const
 
 void GPSTrackListViewItem::setThumbnail(const QPixmap& pix)
 {
-    setPixmap(0, pix.scaled(64, 64, Qt::KeepAspectRatio));
+    setPixmap(0, pix.scaled(92, 92, Qt::KeepAspectRatio));
 }
 
 QDateTime GPSTrackListViewItem::dateTime() const

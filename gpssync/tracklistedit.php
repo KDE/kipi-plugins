@@ -128,29 +128,17 @@ function loadMap()
         echo "map.addOverlay(marker";
         echo $i;
         echo ")\n";
+
+        echo "GEvent.addListener(marker";
+        echo $i;
+        echo ", \"dragend\", function(){";
+        echo "var point = marker";
+        echo $i;
+        echo ".getPoint();";
+        echo "msg = \"(mkr:\" + $i + \", lat:\" + point.lat() + \", lon:\" + point.lng() + \")\";";
+        echo "window.status=msg;});\n";
     }
 ?>
-
-    GEvent.addListener(map, "click", 
-        function(overlay, point)
-        {
-            if (point)
-            {
-                marker.setPoint(point); 
-                msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
-                window.status=msg;
-            }
-        }
-    );
-/*
-    GEvent.addListener(marker, "dragend", 
-        function()
-        {
-            var point = marker.getPoint(); 
-            msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
-            window.status=msg;
-        }
-    );
 
     GEvent.addListener(map, "zoomend", 
         function(oldLevel, newLevel)
@@ -159,7 +147,7 @@ function loadMap()
             window.status=msg;
         }
     );
-*/
+
     GEvent.addListener(map, "maptypechanged", 
         function()
         {

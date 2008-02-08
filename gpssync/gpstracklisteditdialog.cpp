@@ -163,7 +163,7 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
         item->setData(it.key(), it.value());
         urls.append(it.value().url());
     }
-    d->interface->thumbnails(urls, 64);
+    d->interface->thumbnails(urls, 92);
 
     readSettings();
     QTimer::singleShot(0, this, SLOT(slotUpdateWorldMap()));
@@ -171,15 +171,13 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
 
 void GPSTrackListEditDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
-    QPixmap pixmap = pix.scaled(64, 64, Qt::KeepAspectRatio);
     Q3ListViewItemIterator it(d->listView);
-
     while (it.current())
     {
         GPSTrackListViewItem *item = dynamic_cast<GPSTrackListViewItem*>(it.current());
         if (item->url() == url)
         {
-            item->setThumbnail(pixmap);
+            item->setThumbnail(pix);
             return;
         }
         ++it;
