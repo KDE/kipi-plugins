@@ -61,7 +61,7 @@ public:
 
 signals:
 
-    void signalNewGPSLocationFromMap(const QString&, const QString&);
+    void signalNewGPSLocationFromMap(const QString&, const QString&, const QString&);
 
 protected:
 

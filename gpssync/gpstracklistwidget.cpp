@@ -101,16 +101,18 @@ void GPSTrackListWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
     QString status = jsStatusBarText();
 
     // If a new point to the map have been moved, the Status 
-    // string is like : "(lat:25.5894748, lon:47.6897455478)"
-    if (status.startsWith(QString("(lat:")))
+    // string is like : "(mkr:1, lat:25.5894748, lon:47.6897455478)"
+    if (status.startsWith(QString("(mkr:")))
     {
         status.remove(0, 5);
         status.truncate(status.length()-1);
-/*FIXME        d->latitude  = status.section(",", 0, 0);
-        d->longitude = status.section(",", 1, 1);
-        d->longitude.remove(0, 5);
-        emit signalNewGPSLocationFromMap(d->latitude, d->longitude);
-*/
+        QString id        = status.section(",", 0, 0);
+        QString latitude  = status.section(",", 1, 1);
+        latitude.remove(0, 5);
+        QString longitude = status.section(",", 2, 2);
+        longitude.remove(0, 6);
+        kDebug() << id << "::" << latitude << "::" << longitude << endl;
+        emit signalNewGPSLocationFromMap(id, latitude, longitude);
     }
 
     // If a new map zoom level have been selected, the Status 
