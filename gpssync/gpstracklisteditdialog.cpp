@@ -263,6 +263,7 @@ void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, doubl
         {
             item->GPSInfo().gpsData().setLatitude(lat);
             item->GPSInfo().gpsData().setLongitude(lng);
+            item->setSelected(true);
             kDebug() << id << "::" << lat << "::" << lng << endl;
             return;
         }
