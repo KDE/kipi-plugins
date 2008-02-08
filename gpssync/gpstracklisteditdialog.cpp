@@ -255,7 +255,19 @@ void GPSTrackListEditDialog::slotOk()
 
 void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, double lng)
 {
-    kDebug() << id << "::" << lat << "::" << lng << endl;
+    Q3ListViewItemIterator it(d->listView);
+    while (it.current())
+    {
+        GPSTrackListViewItem *item = dynamic_cast<GPSTrackListViewItem*>(it.current());
+        if (item->id() == id)
+        {
+            item->GPSInfo().gpsData().setLatitude(lat);
+            item->GPSInfo().gpsData().setLongitude(lng);
+            kDebug() << id << "::" << lat << "::" << lng << endl;
+            return;
+        }
+        ++it;
+    }
 }
 
 }  // namespace KIPIGPSSyncPlugin
