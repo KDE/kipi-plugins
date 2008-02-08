@@ -253,7 +253,7 @@ void GPSTrackListEditDialog::slotOk()
     accept();
 }
 
-void GPSTrackListEditDialog::slotNewGPSLocationFromMap(const QString& id, const QString& lat, const QString& lon)
+void GPSTrackListEditDialog::slotNewGPSLocationFromMap(const QString& id, const QString& lat, const QString& lng)
 {
     kDebug() << id << "::" << lat << "::" << lng << endl;
 }
