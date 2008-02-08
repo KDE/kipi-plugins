@@ -147,8 +147,8 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     connect(this, SIGNAL(cancelClicked()),
             this, SLOT(slotCancel()));
 
-    connect(d->worldMap, SIGNAL(signalNewGPSLocationFromMap(const QString&, const QString&)),
-            this, SLOT(slotNewGPSLocationFromMap(const QString&, const QString&)));
+    connect(d->worldMap, SIGNAL(signalNewGPSLocationFromMap(const QString&, const QString&, const QString&)),
+            this, SLOT(slotNewGPSLocationFromMap(const QString&, const QString&, const QString&)));
 
     connect(d->interface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
             this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
@@ -253,9 +253,9 @@ void GPSTrackListEditDialog::slotOk()
     accept();
 }
 
-void GPSTrackListEditDialog::slotNewGPSLocationFromMap(const QString& lat, const QString& lon)
+void GPSTrackListEditDialog::slotNewGPSLocationFromMap(const QString& id, const QString& lat, const QString& lon)
 {
-    // TODO
+    kDebug() << id << "::" << lat << "::" << lng << endl;
 }
 
 }  // namespace KIPIGPSSyncPlugin

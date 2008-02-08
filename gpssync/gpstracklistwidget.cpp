@@ -111,7 +111,6 @@ void GPSTrackListWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
         latitude.remove(0, 5);
         QString longitude = status.section(",", 2, 2);
         longitude.remove(0, 6);
-        kDebug() << id << "::" << latitude << "::" << longitude << endl;
         emit signalNewGPSLocationFromMap(id, latitude, longitude);
     }
 

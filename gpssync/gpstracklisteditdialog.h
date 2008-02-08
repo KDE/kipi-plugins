@@ -53,7 +53,7 @@ protected slots:
 
     void slotOk();
     void slotCancel();
-    void slotNewGPSLocationFromMap(const QString& lat, const QString& lon);
+    void slotNewGPSLocationFromMap(onst QString& id, const QString& lat, const QString& lon);
     void slotUpdateWorldMap();
     void slotHelp();
     void slotThumbnail(const KUrl& url, const QPixmap& pix);
