@@ -232,7 +232,7 @@ void GPSTrackListEditDialog::readSettings()
     d->worldMap->setZoomLevel(group.readEntry("Track List Zoom Level", 8));
     d->worldMap->setMapType(group.readEntry("Track List Map Type", QString("G_MAP_TYPE")));
 
-    d->worldMap->setGPSPosition("0", "0");
+    d->worldMap->setTrackList(d->gpsTrackList);
     d->worldMap->resized();
 }
 

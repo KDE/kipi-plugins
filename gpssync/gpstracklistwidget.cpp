@@ -41,15 +41,14 @@ public:
 
     GPSTrackListWidgetPrivate()
     {
-        gpsLocalorUrl = QString("http://digikam3rdparty.free.fr/gpslocator/tracklistedit.php");
+        gpsTrackListUrl = QString("http://digikam3rdparty.free.fr/gpslocator/tracklistedit.php");
     }
 
-    QString gpsLocalorUrl;
-    QString latitude;
-    QString longitude;
-    QString zoomLevel;
-    QString mapType;
-    QString fileName;
+    QString      gpsTrackListUrl;
+    QString      zoomLevel;
+    QString      mapType;
+
+    GPSTrackList gpsTrackList;
 };
 
 GPSTrackListWidget::GPSTrackListWidget(QWidget* parent)
@@ -72,26 +71,9 @@ GPSTrackListWidget::~GPSTrackListWidget()
     delete d;
 }
 
-void GPSTrackListWidget::setFileName(const QString& fileName)
+void GPSTrackListWidget::setTrackList(const GPSTrackList& gpsTrackList)
 {
-    d->fileName = fileName;
-}
-
-QString GPSTrackListWidget::fileName()
-{
-    return d->fileName;
-}
-
-void GPSTrackListWidget::setGPSPosition(const QString& lat, const QString& lon)
-{
-    d->latitude  = lat;
-    d->longitude = lon;
-}
-
-void GPSTrackListWidget::GPSPosition(QString& lat, QString& lon)
-{
-    lat = d->latitude;
-    lon = d->longitude;
+    d->gpsTrackList = gpsTrackList;
 }
 
 void GPSTrackListWidget::setMapType(const QString& mapType)
@@ -124,10 +106,11 @@ void GPSTrackListWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
     {
         status.remove(0, 5);
         status.truncate(status.length()-1);
-        d->latitude  = status.section(",", 0, 0);
+/*FIXME        d->latitude  = status.section(",", 0, 0);
         d->longitude = status.section(",", 1, 1);
         d->longitude.remove(0, 5);
         emit signalNewGPSLocationFromMap(d->latitude, d->longitude);
+*/
     }
 
     // If a new map zoom level have been selected, the Status 
@@ -151,11 +134,7 @@ void GPSTrackListWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
 
 void GPSTrackListWidget::resized()
 {
-    QString url = d->gpsLocalorUrl;
-    url.append("?latitude=");
-    url.append(d->latitude);
-    url.append("&longitude=");
-    url.append(d->longitude);
+    QString url = d->gpsTrackListUrl;
     url.append("&width=");
     url.append(QString::number(view()->width()));
     url.append("&height=");
@@ -164,8 +143,8 @@ void GPSTrackListWidget::resized()
     url.append(d->zoomLevel);
     url.append("&maptype=");
     url.append(d->mapType);
-    url.append("&filename=");
-    url.append(d->fileName);
+    url.append("&trackitems=");
+    url.append(d->gpsTrackList.count());
     openUrl(KUrl(url));
     kDebug( 51001 ) << url << endl;
 }

@@ -31,6 +31,10 @@
 
 #include <khtml_part.h>
 
+// Local includes.
+
+#include "gpstracklistcontainer.h"
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -45,17 +49,13 @@ public:
     GPSTrackListWidget(QWidget* parent);
     ~GPSTrackListWidget();
 
-    void    setGPSPosition(const QString& lat, const QString& lon);
-    void    GPSPosition(QString& lat, QString& lon);
+    void    setTrackList(const GPSTrackList& trackList);
 
     void    setZoomLevel(int zoomLevel);
     int     zoomLevel();
 
     void    setMapType(const QString& mapType);
     QString mapType();
-
-    void    setFileName(const QString& fileName);
-    QString fileName();
 
     void    resized();
 
