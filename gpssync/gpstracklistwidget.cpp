@@ -111,9 +111,9 @@ void GPSTrackListWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
         latTxt.remove(0, 5);
         QString lngTxt = status.section(",", 2, 2);
         lngTxt.remove(0, 6);
-        int id     = isTxt.toInt();        
-        double lat = latTxt.toDouble():
-        double lng = lngTxt.toDouble():
+        int id     = idTxt.toInt();        
+        double lat = latTxt.toDouble();
+        double lng = lngTxt.toDouble();
         emit signalNewGPSLocationFromMap(id, lat, lng);
     }
 
