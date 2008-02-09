@@ -41,6 +41,7 @@
 
 // Local includes.
 
+#include "pluginsversion.h"
 #include "kpaboutdata.h"
 #include "commentremovedialog.h"
 #include "commentremovedialog.moc"

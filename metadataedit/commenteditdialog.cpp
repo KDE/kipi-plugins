@@ -42,6 +42,7 @@
 
 // Local includes.
 
+#include "pluginsversion.h"
 #include "kpaboutdata.h"
 #include "commenteditdialog.h"
 #include "commenteditdialog.moc"
