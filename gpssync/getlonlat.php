@@ -120,6 +120,15 @@ function loadMap()
             }
         }
     );
+ 
+    GEvent.addListener(marker, "drag", 
+        function()
+        {
+            var point = marker.getPoint(); 
+            msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
+            window.status=msg;
+        }
+    );
 
     GEvent.addListener(marker, "dragend", 
         function()

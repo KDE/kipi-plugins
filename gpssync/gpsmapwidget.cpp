@@ -113,6 +113,29 @@ int GPSMapWidget::GPSMapWidget::zoomLevel()
     return d->zoomLevel.toInt();
 }
 
+void GPSMapWidget::extractGPSPositionfromStatusbar(const QString& txt)
+{
+    QString status = txt;
+    status.remove(0, 5);
+    status.truncate(status.length()-1);
+    d->latitude  = status.section(",", 0, 0);
+    d->longitude = status.section(",", 1, 1);
+    d->longitude.remove(0, 5);
+    emit signalNewGPSLocationFromMap(d->latitude, d->longitude);
+}
+
+void GPSMapWidget::khtmlMouseMoveEvent(khtml::MouseMoveEvent *e)
+{
+    QString status = jsStatusBarText();
+
+    // If a new point to the map have been moved, the Status
+    // string is like : "(lat:25.5894748, lon:47.6897455478)"
+    if (status.startsWith(QString("(lat:")))
+        extractGPSPositionfromStatusbar(status);
+
+    KHTMLPart::khtmlMouseMoveEvent(e);
+}
+
 void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
 {
     QString status = jsStatusBarText();
@@ -120,14 +143,7 @@ void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
     // If a new point to the map have been moved, the Status
     // string is like : "(lat:25.5894748, lon:47.6897455478)"
     if (status.startsWith(QString("(lat:")))
-    {
-        status.remove(0, 5);
-        status.truncate(status.length()-1);
-        d->latitude  = status.section(",", 0, 0);
-        d->longitude = status.section(",", 1, 1);
-        d->longitude.remove(0, 5);
-        emit signalNewGPSLocationFromMap(d->latitude, d->longitude);
-    }
+        extractGPSPositionfromStatusbar(status);
 
     // If a new map zoom level have been selected, the Status 
     // string is like : "newZoomLevel:5"
