@@ -82,7 +82,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
     // About data and help button.
 
     KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("Slide Show"),
-                                        NULL,
+                                        kipiplugins_version,
                                         KAboutData::License_GPL,
                                         I18N_NOOP("A Kipi plugin for image slideshow"),
                                         "(c) 2003-2004, Renchi Raju\n(c) 2007, Valerio Fuoglio");

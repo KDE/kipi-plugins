@@ -57,7 +57,7 @@ CameraSelection::CameraSelection(QWidget* parent)
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("KameraKlient"),
-                                           NULL,
+                                           kipiplugins_version,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Digital camera interface Kipi plugin"),
                                            "(c) 2003-2004, Renchi Raju\n"

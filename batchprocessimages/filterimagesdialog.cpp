@@ -60,7 +60,7 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch image filtering"),
-                                           NULL,
+                                           kipiplugins_version,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to batch filter images\n"
                                                     "This plugin uses the \"convert\" program from \"ImageMagick\" package."),

@@ -61,11 +61,11 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch Image-bordering"),
-                                           NULL,
+                                           kipiplugins_version,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin for batch bordering images\n"
                                                       "This plugin use the \"convert\" program from \"ImageMagick\" package."),
-                                           "(c) 2003-2007, Gilles Caulier");
+                                           "(c) 2003-2008, Gilles Caulier");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at gmail dot com");

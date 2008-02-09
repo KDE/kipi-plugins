@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : Screenshot batch dialog
  *
- * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) Richard J. Moore 1997-2002 from KSnapshot
  * Copyright (C) Matthias Ettrich 2000 from KSnapshot
  * Copyright (C) Aaron J. Seigo 2002 from KSnapshot
@@ -154,7 +154,7 @@ ScreenGrabDialog::ScreenGrabDialog( KIPI::Interface* interface, QWidget *parent,
                                        kipiplugins_version,
                                        I18N_NOOP("A Kipi plugin to acquire images"),
                                        KAboutData::License_GPL,
-                                       "(c) 2003-2004, Gilles Caulier", 
+                                       "(c) 2003-2008, Gilles Caulier", 
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
     

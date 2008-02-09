@@ -87,6 +87,7 @@ extern "C"
 
 // Local includes
 
+#include "pluginsversion.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
 #include "batchprocessimagesdialog.h"

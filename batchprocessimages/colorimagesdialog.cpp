@@ -60,7 +60,7 @@ ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* inter
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch image-color enhancement"),
-                                           NULL,
+                                           kipiplugins_version,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin for batch image-color enhancement\n"
                                                      "This plugin use the \"convert\" program from \"ImageMagick\" package."),

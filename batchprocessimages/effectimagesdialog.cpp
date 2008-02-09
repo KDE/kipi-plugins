@@ -60,7 +60,7 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch image effects"),
-                                           NULL,
+                                           kipiplugins_version,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin for batch image-effect transformations\n"
                                                      "This plugin uses the \"convert\" program from \"ImageMagick\" package."),

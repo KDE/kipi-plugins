@@ -66,7 +66,7 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch convert images"),
-                                           NULL,
+                                           kipiplugins_version,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin for batch converting images\n"
                                                      "This plugin uses the \"convert\" program from \"ImageMagick\" package."),

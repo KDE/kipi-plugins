@@ -127,7 +127,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("RAW Image Converter"),
-                                           NULL,
+                                           kipiplugins_version,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to batch convert Raw images"),
                                            "(c) 2003-2005, Renchi Raju\n"

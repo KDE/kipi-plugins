@@ -53,7 +53,7 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch processes images"),
-                                           NULL,
+                                           kipiplugins_version,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("An interface to show the output of the \"Batch Process "
                                                      "Images\" Kipi plugin.\n"

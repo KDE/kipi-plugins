@@ -244,10 +244,10 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
 
   m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("MPEG Slideshow"),
-                                      NULL,
+                                      kipiplugins_version,
                                       KAboutData::License_GPL,
                                       I18N_NOOP("A Kipi plugin for encoding images to an MPEG file."),
-  "(c) 2003-2004, Gilles Caulier");
+                                                "(c) 2003-2004, Gilles Caulier");
 
   m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author"),
                     "caulier dot gilles at gmail dot com");

@@ -54,7 +54,7 @@ RenameImagesDialog::RenameImagesDialog(const KURL::List& images,
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch-rename images"),
-                                           NULL,
+                                           kipiplugins_version,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to batch-rename images"),
                                            "(c) 2003-2007, Gilles Caulier");

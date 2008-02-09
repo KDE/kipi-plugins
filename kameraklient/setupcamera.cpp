@@ -62,7 +62,7 @@ SetupCamera::SetupCamera(QWidget* parent, const char* name)
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("KameraKlient"),
-                                           NULL,
+                                           kipiplugins_version,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("An Digital camera interface Kipi plugin"),
                                            "(c) 2003-2004, Renchi Raju\n"

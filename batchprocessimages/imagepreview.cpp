@@ -86,7 +86,7 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch process images"),
-                                           NULL,
+                                           kipiplugins_version,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("An interface to preview the \"Batch Process Images\" "
                                                      "Kipi plugin.\n"

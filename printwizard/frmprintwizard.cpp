@@ -101,7 +101,7 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
   // About data and help button.
 
   m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Print Wizard"),
-                                         NULL,
+                                         kipiplugins_version,
                                          KAboutData::License_GPL,
                                          I18N_NOOP("A KIPI plugin to print images"),
                                          "(c) 2003-2004, Todd Shoemaker\n(c) 2007, Angelo Naselli");

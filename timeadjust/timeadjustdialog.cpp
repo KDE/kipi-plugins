@@ -158,7 +158,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     // -- About data and help button ----------------------------------------
 
     d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("Time Adjust"),
-                                           NULL,
+                                           kipiplugins_version,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin for adjusting time stamp of picture files"),
                                            "(c) 2003-2005, Jesper K. Pedersen\n"
