@@ -65,7 +65,7 @@ public :
         addColumn( i18n("Latitude") );
         addColumn( i18n("Longitude") );
         addColumn( i18n("Altitude") );
-        addColumn( i18n("Dirty") );
+        addColumn( i18n("Changed") );
         setResizeMode(Q3ListView::AllColumns);
         setAllColumnsShowFocus(true);
         setSorting(-1);
