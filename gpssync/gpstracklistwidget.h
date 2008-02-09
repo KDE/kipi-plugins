@@ -62,10 +62,16 @@ public:
 signals:
 
     void signalNewGPSLocationFromMap(int, double, double);
+    void signalMarkerSelectedFromMap(int);
 
 protected:
 
-    void khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *);
+    void khtmlMouseMoveEvent(khtml::MouseMoveEvent*);
+    void khtmlMouseReleaseEvent(khtml::MouseReleaseEvent*);
+
+private:
+
+    void extractGPSPositionfromStatusbar(const QString& txt);
 
 private:
 

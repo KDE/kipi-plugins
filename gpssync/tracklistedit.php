@@ -129,6 +129,27 @@ function loadMap()
         echo $i;
         echo ")\n";
 
+        // Post click over marker position event.
+        echo "GEvent.addListener(marker";
+        echo $i;
+        echo ", \"click\", function(){";
+        echo "var point = marker";
+        echo $i;
+        echo ".getPoint();";
+        echo "msg = \"(mkr:\" + $i + \")\";";
+        echo "window.status=msg;});\n";
+
+        // Post drag-move marker position events.
+        echo "GEvent.addListener(marker";
+        echo $i;
+        echo ", \"drag\", function(){";
+        echo "var point = marker";
+        echo $i;
+        echo ".getPoint();";
+        echo "msg = \"(mkr:\" + $i + \", lat:\" + point.lat() + \", lon:\" + point.lng() + \")\";";
+        echo "window.status=msg;});\n";
+
+        // Post drag-end marker position event.
         echo "GEvent.addListener(marker";
         echo $i;
         echo ", \"dragend\", function(){";

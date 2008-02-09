@@ -148,8 +148,8 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
                    ki18n("(c) 2008, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), 
-                       ki18n("Developer and maintainer"),
-                             "caulier dot gilles at gmail dot com");
+                        ki18n("Developer and maintainer"),
+                              "caulier dot gilles at gmail dot com");
 
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));
@@ -170,6 +170,9 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
 
     connect(d->worldMap, SIGNAL(signalNewGPSLocationFromMap(int, double, double)),
             this, SLOT(slotNewGPSLocationFromMap(int, double, double)));
+
+    connect(d->worldMap, SIGNAL(signalMarkerSelectedFromMap(int)),
+            this, SLOT(slotMarkerSelectedFromMap(int)));
 
     connect(d->interface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
             this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
@@ -279,6 +282,22 @@ void GPSTrackListEditDialog::slotOk()
     accept();
 }
 
+void GPSTrackListEditDialog::slotMarkerSelectedFromMap(int id)
+{
+    Q3ListViewItemIterator it(d->listView);
+    while (it.current())
+    {
+        GPSTrackListViewItem *item = dynamic_cast<GPSTrackListViewItem*>(it.current());
+        if (item->id() == id)
+        {
+            d->listView->setCurrentItem(item);
+            d->listView->ensureItemVisible(item);
+            return;
+        }
+        ++it;
+    }
+}
+
 void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, double lng)
 {
     Q3ListViewItemIterator it(d->listView);
@@ -303,8 +322,6 @@ void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, doubl
             d->listView->repaintItem(item);
             d->listView->setCurrentItem(item);
             d->listView->ensureItemVisible(item);
-
-            kDebug() << id << "::" << lat << "::" << lng << endl;
             return;
         }
         ++it;

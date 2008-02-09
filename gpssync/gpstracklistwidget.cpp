@@ -96,26 +96,51 @@ int GPSTrackListWidget::GPSTrackListWidget::zoomLevel()
     return d->zoomLevel.toInt();
 }
 
+void GPSTrackListWidget::extractGPSPositionfromStatusbar(const QString& txt)
+{
+    QString status = txt;
+    status.remove(0, 5);
+    status.truncate(status.length()-1);
+    QString idTxt  = status.section(",", 0, 0);
+    QString latTxt = status.section(",", 1, 1);
+    QString lngTxt = status.section(",", 2, 2);
+    int id         = idTxt.toInt();        
+    if (latTxt.isEmpty() || lngTxt.isEmpty())
+    {
+        // Special case if only marker have been selected but not moved.
+        emit signalMarkerSelectedFromMap(id);
+    }
+    else
+    {
+        latTxt.remove(0, 5);
+        lngTxt.remove(0, 5);
+        double lat = latTxt.toDouble();
+        double lng = lngTxt.toDouble();
+        emit signalNewGPSLocationFromMap(id, lat, lng);
+        kDebug() << id << "::" << lat << "::" << lng << endl;
+    }
+}
+
+void GPSTrackListWidget::khtmlMouseMoveEvent(khtml::MouseMoveEvent *e)
+{
+    QString status = jsStatusBarText();
+
+    // If a new point to the map is dragged around the map, the status bar
+    // string is like : "(mkr:1, lat:25.5894748, lon:47.6897455478)"
+    if (status.startsWith(QString("(mkr:")))
+        extractGPSPositionfromStatusbar(status);
+
+    KHTMLPart::khtmlMouseMoveEvent(e);
+}
+
 void GPSTrackListWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
 {
     QString status = jsStatusBarText();
 
-    // If a new point to the map have been moved, the Status 
+    // If a new point to the map have been moved around the map, the Status 
     // string is like : "(mkr:1, lat:25.5894748, lon:47.6897455478)"
     if (status.startsWith(QString("(mkr:")))
-    {
-        status.remove(0, 5);
-        status.truncate(status.length()-1);
-        QString idTxt  = status.section(",", 0, 0);
-        QString latTxt = status.section(",", 1, 1);
-        latTxt.remove(0, 5);
-        QString lngTxt = status.section(",", 2, 2);
-        lngTxt.remove(0, 5);
-        int id     = idTxt.toInt();        
-        double lat = latTxt.toDouble();
-        double lng = lngTxt.toDouble();
-        emit signalNewGPSLocationFromMap(id, lat, lng);
-    }
+        extractGPSPositionfromStatusbar(status);
 
     // If a new map zoom level have been selected, the Status 
     // string is like : "newZoomLevel:5"
