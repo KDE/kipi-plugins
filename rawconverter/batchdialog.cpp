@@ -7,7 +7,7 @@
  * Description : Raw converter batch dialog
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -194,11 +194,11 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     // About data and help button.
 
     d->about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
-                   QByteArray(),
+                   kipiplugins_version,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to batch convert Raw images"),
                    ki18n("(c) 2003-2005, Renchi Raju\n"
-                         "(c) 2006-2007, Gilles Caulier"));
+                         "(c) 2006-2008, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Renchi Raju"), 
                        ki18n("Author"),

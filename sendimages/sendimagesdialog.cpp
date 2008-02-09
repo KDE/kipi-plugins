@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : a dialog to edit EXIF metadata
  *
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2006 by Tom Albers <tomalbers at kde dot nl>
  * Copyright (C) 2006 by Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
  *
@@ -113,10 +113,10 @@ SendImagesDialog::SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl
     // About data and help button.
 
     d->about = new KIPIPlugins::KPAboutData(ki18n("Send Images"),
-                                            NULL,
+                                            kipiplugins_version,
                                             KAboutData::License_GPL,
                                             ki18n("A Plugin to e-mail pictures"),
-                                            ki18n("(c) 2003-2007, Gilles Caulier"));
+                                            ki18n("(c) 2003-2008, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");

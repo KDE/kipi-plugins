@@ -7,7 +7,7 @@
  * Description : a plugin to set time stamp of picture files.
  *
  * Copyright (C) 2003-2005 by Jesper Pedersen <blackie@kde.org>
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -166,15 +166,15 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     // -- About data and help button ----------------------------------------
 
     d->about = new KIPIPlugins::KPAboutData(ki18n("Time Adjust"),
-                   QByteArray(),
+                   kipiplugins_version,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin for adjusting time stamp of picture files"),
                    ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
-                         "(c) 2006-2007, Gilles Caulier"));
+                         "(c) 2006-2008, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Jesper K. Pedersen"), 
                         ki18n("Author"),
-                        "blackie@kde.org");
+                        "blackie at kde dot org");
 
     d->about->addAuthor(ki18n("Gilles Caulier"), 
                         ki18n("Developer and maintainer"),
