@@ -65,6 +65,7 @@
 
 // Local include files
 
+#include "pluginsversion.h"
 #include "kpaboutdata.h"
 #include "displaycompare.h"
 

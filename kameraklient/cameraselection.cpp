@@ -43,6 +43,7 @@
 
 // Local includes.
 
+#include "pluginsversion.h"
 #include "kpaboutdata.h"
 #include "cameraselection.h"
 #include "gpiface.h"

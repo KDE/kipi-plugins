@@ -45,6 +45,7 @@
 
 // Local includes.
 
+#include "pluginsversion.h"
 #include "kpaboutdata.h"
 #include "setupcamera.h"
 #include "cameraselection.h"
