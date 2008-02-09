@@ -65,7 +65,12 @@ signals:
 
 protected:
 
+    void khtmlMouseMoveEvent(khtml::MouseMoveEvent*);
     void khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *);
+
+private:
+
+    void extractGPSPositionfromStatusbar(const QString& txt);
 
 private:
 
