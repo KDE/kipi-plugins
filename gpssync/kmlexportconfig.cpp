@@ -51,6 +51,7 @@
 
 // Local includes.
 
+#include "pluginsversion.h"
 #include "kmlexportconfig.h"
 #include "kmlexportconfig.moc"
 
@@ -276,7 +277,7 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(ki18n("KML Export"),
-                   QByteArray(),
+                   kipiplugins_version,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin for KML exporting"),
                    ki18n("(c) 2006-2007, Stéphane Pontier"));

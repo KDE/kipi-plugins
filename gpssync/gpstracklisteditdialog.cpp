@@ -142,7 +142,7 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     // About data and help button.
 
     d->about = new KIPIPlugins::KPAboutData(ki18n("GPS Sync"),
-                   QByteArray(),
+                   kipiplugins_version,
                    KAboutData::License_GPL,
                    ki18n("A Plugin to edit GPS track list"),
                    ki18n("(c) 2008, Gilles Caulier"));
