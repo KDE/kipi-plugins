@@ -44,11 +44,11 @@ class GPSTrackListItem
 {
 public:
 
-    GPSTrackListItem(): m_id(0), m_url(KUrl()), m_gpsData(GPSDataContainer())
+    GPSTrackListItem(): m_dirty(false), m_id(0), m_url(KUrl()), m_gpsData(GPSDataContainer())
     {};
 
     GPSTrackListItem(const KUrl& url, const GPSDataContainer gpsData)
-                   : m_id(0), m_url(url), m_gpsData(gpsData)
+                   : m_dirty(false), m_id(0), m_url(url), m_gpsData(gpsData)
     {};
 
     ~GPSTrackListItem()
@@ -56,22 +56,27 @@ public:
 
     GPSTrackListItem& operator=(const GPSTrackListItem& data)
     {
+        m_dirty    = data.isDirty();
         m_id       = data.id();
         m_url      = data.url();
         m_gpsData  = data.gpsData();
         return *this;
     };
 
+    void setDirty(bool dirty)                        { m_dirty    = dirty;   };
     void setId(int id)                               { m_id       = id;      };
     void setUrl(const KUrl& url)                     { m_url      = url;     };
     void setGPSData(const GPSDataContainer& gpsData) { m_gpsData  = gpsData; };
 
+    int       isDirty()  const       { return m_dirty;          };
     int       id()  const            { return m_id;             };
     KUrl      url() const            { return m_url;            };
     QString   fileName() const       { return m_url.fileName(); };
     GPSDataContainer gpsData() const { return m_gpsData;        };
     
 private:
+
+    bool             m_dirty;
 
     int              m_id;
 

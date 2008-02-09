@@ -116,7 +116,7 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     // ---------------------------------------------------------------
 
     vlay->addWidget(d->worldMap->view(), 10);
-    vlay->addWidget(d->listView, 3);
+    vlay->addWidget(d->listView, 4);
     vlay->setSpacing(spacingHint());
     vlay->setMargin(0);
 
@@ -172,6 +172,12 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     QTimer::singleShot(0, this, SLOT(slotUpdateWorldMap()));
 }
 
+GPSTrackListEditDialog::~GPSTrackListEditDialog()
+{
+    delete d->about;
+    delete d;
+}
+
 void GPSTrackListEditDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
     Q3ListViewItemIterator it(d->listView);
@@ -187,15 +193,14 @@ void GPSTrackListEditDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
     }
 }
 
-GPSTrackListEditDialog::~GPSTrackListEditDialog()
-{
-    delete d->about;
-    delete d;
-}
-
 void GPSTrackListEditDialog::slotHelp()
 {
     KToolInvocation::invokeHelp("gpssync", "kipi-plugins");
+}
+
+GPSTrackList GPSTrackListEditDialog::trackList() const
+{
+    return d->gpsTrackList;
 }
 
 void GPSTrackListEditDialog::closeEvent(QCloseEvent *e)
@@ -269,11 +274,18 @@ void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, doubl
             data.setLatitude(lat);
             data.setLongitude(lng);
             info.setGPSData(data);
+            info.setDirty(true);
             item->setData(item->dateTime(), info);
-            item->setDirty(true);
+
+            // Update track list info.
+            d->gpsTrackList.remove(item->dateTime());
+            d->gpsTrackList.insert(item->dateTime(), info);
+
+            // Refresh item in list view
             d->listView->repaintItem(item);
             d->listView->setCurrentItem(item);
             d->listView->ensureItemVisible(item);
+
             kDebug() << id << "::" << lat << "::" << lng << endl;
             return;
         }

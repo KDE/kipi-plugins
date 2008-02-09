@@ -269,13 +269,13 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
 
     double    alt, lat, lng;
     QDateTime dt;
+    KExiv2Iface::KExiv2 exiv2Iface;
     KIPIGPSSyncPlugin::GPSTrackList trackList;
     KUrl::List urls = images.images();
 
     for( KUrl::List::iterator it = urls.begin() ; 
         it != urls.end() ; ++it)
     {
-        KExiv2Iface::KExiv2 exiv2Iface;
         exiv2Iface.load((*it).path());
         if(exiv2Iface.getGPSInfo(alt, lat, lng))
         {
@@ -299,7 +299,56 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
 
     if (dlg.exec() == KDialog::Accepted)
     {
-        // TODO
+        trackList = dlg.trackList();
+        KUrl::List  updatedURLs;
+        QStringList errorFiles;
+
+        for( KIPIGPSSyncPlugin::GPSTrackList::iterator it = trackList.begin() ; 
+            it != trackList.end() ; ++it)
+        {
+            if ((*it).isDirty())
+            {
+                KUrl url = (*it).url();
+    
+                // We only add all JPEG files as R/W because Exiv2 can't yet 
+                // update metadata on others file formats.
+    
+                QFileInfo fi(url.path());
+                QString ext = fi.suffix().toUpper();
+                bool ret    = false;
+                if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
+                {
+                    ret = true;
+                    ret &= exiv2Iface.load(url.path());
+                    if (ret)
+                    {
+                        ret &= exiv2Iface.setGPSInfo((*it).gpsData().altitude(), 
+                                                     (*it).gpsData().latitude(), 
+                                                     (*it).gpsData().longitude());
+                        ret &= exiv2Iface.save(url.path());
+                    }
+                }
+    
+                if (!ret)
+                    errorFiles.append(url.fileName());
+                else 
+                    updatedURLs.append(url);
+            }
+        }
+
+        // We use kipi interface refreshImages() method to tell to host than 
+        // metadata from pictures have changed and need to be re-readed.
+
+        m_interface->refreshImages(updatedURLs);
+
+        if (!errorFiles.isEmpty())
+        {
+            KMessageBox::errorList(
+                        kapp->activeWindow(),
+                        i18n("Unable to save geographical coordinates into:"),
+                        errorFiles,
+                        i18n("Edit Geographical Coordinates"));  
+        }
     }
 }
 

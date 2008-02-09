@@ -44,10 +44,7 @@ public:
 
     GPSTrackListViewItemPriv()
     {
-        dirty = false;
     }
-
-    bool             dirty;
 
     QDateTime        dateTime;
 
@@ -66,15 +63,9 @@ GPSTrackListViewItem::~GPSTrackListViewItem()
     delete d;
 }
 
-void GPSTrackListViewItem::setDirty(bool dirty)
-{
-    d->dirty = dirty;
-    setText(7, d->dirty ? i18n("Yes") : i18n("No"));
-}
-
 bool GPSTrackListViewItem::isDirty() const
 {
-    return d->dirty;
+    return d->data.isDirty();
 }
 
 void GPSTrackListViewItem::setData(const QDateTime& dt, const GPSTrackListItem& data)
@@ -87,6 +78,7 @@ void GPSTrackListViewItem::setData(const QDateTime& dt, const GPSTrackListItem& 
     setText(4, QString::number(d->data.gpsData().latitude(),  'g', 12));
     setText(5, QString::number(d->data.gpsData().longitude(), 'g', 12));
     setText(6, QString::number(d->data.gpsData().altitude(),  'g', 12));
+    setText(7, isDirty() ? i18n("Yes") : i18n("No"));
 }
 
 GPSTrackListItem GPSTrackListViewItem::gpsInfo() const

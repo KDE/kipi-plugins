@@ -48,6 +48,8 @@ public:
 
     GPSTrackListEditDialog(KIPI::Interface *interface, QWidget *parent, const GPSTrackList& gpsTrackList);
     ~GPSTrackListEditDialog();
+    
+    GPSTrackList trackList() const;
 
 protected slots:
 
