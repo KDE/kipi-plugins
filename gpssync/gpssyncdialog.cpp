@@ -23,7 +23,7 @@
 
 // Qt includes.
 
-#include <Q3VGroupBox>
+#include <QGroupBox>
 #include <QComboBox>
 #include <QPainter>
 #include <QLayout>
