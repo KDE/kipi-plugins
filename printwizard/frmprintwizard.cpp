@@ -104,13 +104,15 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
                                          kipiplugins_version,
                                          KAboutData::License_GPL,
                                          I18N_NOOP("A KIPI plugin to print images"),
-                                         "(c) 2003-2004, Todd Shoemaker\n(c) 2007, Angelo Naselli");
+                                         "(c) 2003-2004, Todd Shoemaker\n(c) 2007-2008, Angelo Naselli");
 
   m_about->addAuthor("Todd Shoemaker", I18N_NOOP("Author"),
                      "todd@theshoemakers.net");
-  m_about->addAuthor("Angelo Naselli", I18N_NOOP("Maintainer"),
+  m_about->addAuthor("Angelo Naselli", I18N_NOOP("Developer and maintainer"),
                      "anaselli@linux.it");
-
+  m_about->addAuthor("Valerio Fuoglio", I18N_NOOP("Contributor"),
+                     "valerio.fuoglio@gmail.com");
+  
   // setting-up icons on buttons
   BtnBrowseOutputPath->setText("");
   BtnBrowseOutputPath->setIconSet( SmallIconSet( "fileopen" ) );
