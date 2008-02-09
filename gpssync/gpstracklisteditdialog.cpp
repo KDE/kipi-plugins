@@ -51,6 +51,43 @@
 namespace KIPIGPSSyncPlugin
 {
 
+class GPSTrackListView : public K3ListView
+{
+public :
+
+    GPSTrackListView(QWidget *parent) 
+        : K3ListView(parent)
+    {
+        addColumn( i18n("Thumbnail") );
+        addColumn( i18n("Id") );
+        addColumn( i18n("File Name") );
+        addColumn( i18n("Date") );
+        addColumn( i18n("Latitude") );
+        addColumn( i18n("Longitude") );
+        addColumn( i18n("Altitude") );
+        addColumn( i18n("Dirty") );
+        setResizeMode(Q3ListView::AllColumns);
+        setAllColumnsShowFocus(true);
+        setSorting(-1);
+        setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        setSelectionMode(Q3ListView::Single);
+    }
+    
+    ~GPSTrackListView() 
+    {
+    }
+    
+protected:
+
+    void contentsMousePressEvent(QMouseEvent*)
+    {
+        // Nothing todo. No user interraction are possible with googlemap when 
+        // user select an item from the list. This is a limitation of googlemaps
+        // interface. Only an item is selected from the list when user select a 
+        // marker from a map.
+    }
+};
+
 class GPSTrackListEditDialogPrivate
 {
 
@@ -90,27 +127,8 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     setMainWidget( page );
 
     QVBoxLayout* vlay = new QVBoxLayout(page);
-
-    // ---------------------------------------------------------------
-
-    d->listView = new K3ListView(page);
-    d->listView->addColumn( i18n("Thumbnail") );
-    d->listView->addColumn( i18n("Id") );
-    d->listView->addColumn( i18n("File Name") );
-    d->listView->addColumn( i18n("Date") );
-    d->listView->addColumn( i18n("Latitude") );
-    d->listView->addColumn( i18n("Longitude") );
-    d->listView->addColumn( i18n("Altitude") );
-    d->listView->addColumn( i18n("Dirty") );
-    d->listView->setResizeMode(Q3ListView::AllColumns);
-    d->listView->setAllColumnsShowFocus(true);
-    d->listView->setSorting(-1);
-    d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->listView->setSelectionMode(Q3ListView::NoSelection);
-
-    // ---------------------------------------------------------------
-
-    d->worldMap = new GPSTrackListWidget(page);
+    d->listView       = new GPSTrackListView(page);
+    d->worldMap       = new GPSTrackListWidget(page);
     d->worldMap->show();
 
     // ---------------------------------------------------------------
