@@ -24,10 +24,10 @@
 
 #include <QLayout>
 #include <QTimer>
+#include <QTreeWidget>
 
 // KDE includes.
 
-#include <k3listview.h>
 #include <ktoolinvocation.h>
 #include <klocale.h>
 #include <khelpmenu.h>
@@ -51,40 +51,38 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSTrackListView : public K3ListView
+class GPSTrackListView : public QTreeWidget
 {
 public :
 
     GPSTrackListView(QWidget *parent) 
-        : K3ListView(parent)
+        : QTreeWidget(parent)
     {
-        addColumn( i18n("Thumbnail") );
-        addColumn( i18n("Id") );
-        addColumn( i18n("File Name") );
-        addColumn( i18n("Date") );
-        addColumn( i18n("Latitude") );
-        addColumn( i18n("Longitude") );
-        addColumn( i18n("Altitude") );
-        addColumn( i18n("Changed") );
-        setResizeMode(Q3ListView::AllColumns);
-        setAllColumnsShowFocus(true);
-        setSorting(-1);
+        setColumnCount(8);
+        setIconSize(QSize(64, 64));        
+        setRootIsDecorated(false);
+        setSortingEnabled(false);
+        setSelectionMode(QAbstractItemView::SingleSelection);
         setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        setSelectionMode(Q3ListView::Single);
+        setAllColumnsShowFocus(true);
+
+        QStringList labels;
+        labels.append( i18n("Thumbnail") );
+        labels.append( i18n("Id") );
+        labels.append( i18n("File Name") );
+        labels.append( i18n("Date") );
+        labels.append( i18n("Latitude") );
+        labels.append( i18n("Longitude") );
+        labels.append( i18n("Altitude") );
+        labels.append( i18n("Changed") );
+        setHeaderLabels(labels);
+
+        resizeColumnToContents(0);
+        resizeColumnToContents(1);
     }
     
     ~GPSTrackListView() 
     {
-    }
-    
-protected:
-
-    void contentsMousePressEvent(QMouseEvent*)
-    {
-        // Nothing todo. No user interraction are possible with googlemap when 
-        // user select an item from the list. This is a limitation of googlemaps
-        // interface. Only an item is selected from the list when user select a 
-        // marker from a map.
     }
 };
 
@@ -100,7 +98,7 @@ public:
         listView = 0;
     }
 
-    K3ListView               *listView;
+    GPSTrackListView         *listView;
 
     KIPIPlugins::KPAboutData *about; 
 
@@ -183,8 +181,8 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     for( GPSTrackList::iterator it = d->gpsTrackList.begin() ; 
          it != d->gpsTrackList.end() ; ++it)
     {
-        GPSTrackListViewItem *item = new GPSTrackListViewItem(d->listView, d->listView->lastItem());
-        item->setData(it.key(), it.value());
+        GPSTrackListViewItem *item = new GPSTrackListViewItem(d->listView);
+        item->setGPSInfo(it.key(), it.value());
         urls.append(it.value().url());
     }
     d->interface->thumbnails(urls, 64);
@@ -201,17 +199,20 @@ GPSTrackListEditDialog::~GPSTrackListEditDialog()
 
 void GPSTrackListEditDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
-    Q3ListViewItemIterator it(d->listView);
-    while (it.current())
+    int i                 = 0;
+    QTreeWidgetItem *item = 0;
+    do
     {
-        GPSTrackListViewItem *item = dynamic_cast<GPSTrackListViewItem*>(it.current());
-        if (item->url() == url)
+        item = d->listView->topLevelItem(i);
+        GPSTrackListViewItem *gpsItem = dynamic_cast<GPSTrackListViewItem*>(item);
+        if (gpsItem->url() == url)
         {
-            item->setThumbnail(pix);
+            gpsItem->setThumbnail(pix);
             return;
         }
-        ++it;
+        i++;
     }
+    while (item);
 }
 
 void GPSTrackListEditDialog::slotHelp()
@@ -284,48 +285,52 @@ void GPSTrackListEditDialog::slotOk()
 
 void GPSTrackListEditDialog::slotMarkerSelectedFromMap(int id)
 {
-    Q3ListViewItemIterator it(d->listView);
-    while (it.current())
+    int i                 = 0;
+    QTreeWidgetItem *item = 0;
+    do
     {
-        GPSTrackListViewItem *item = dynamic_cast<GPSTrackListViewItem*>(it.current());
-        if (item->id() == id)
+        item = d->listView->topLevelItem(i);
+        GPSTrackListViewItem *gpsItem = dynamic_cast<GPSTrackListViewItem*>(item);
+        if (gpsItem->id() == id)
         {
-            d->listView->setCurrentItem(item);
-            d->listView->ensureItemVisible(item);
+            d->listView->setCurrentItem(gpsItem);
+            d->listView->scrollToItem(gpsItem);
             return;
         }
-        ++it;
+        i++;
     }
+    while (item);
 }
 
 void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, double lng)
 {
-    Q3ListViewItemIterator it(d->listView);
-    while (it.current())
+    int i                 = 0;
+    QTreeWidgetItem *item = 0;
+    do
     {
-        GPSTrackListViewItem *item = dynamic_cast<GPSTrackListViewItem*>(it.current());
-        if (item->id() == id)
+        item = d->listView->topLevelItem(i);
+        GPSTrackListViewItem *gpsItem = dynamic_cast<GPSTrackListViewItem*>(item);
+        if (gpsItem->id() == id)
         {
-            GPSTrackListItem info = item->gpsInfo();
+            GPSTrackListItem info = gpsItem->gpsInfo();
             GPSDataContainer data = info.gpsData();
             data.setLatitude(lat);
             data.setLongitude(lng);
             info.setGPSData(data);
             info.setDirty(true);
-            item->setData(item->dateTime(), info);
+            gpsItem->setGPSInfo(gpsItem->dateTime(), info);
 
             // Update track list info.
-            d->gpsTrackList.remove(item->dateTime());
-            d->gpsTrackList.insert(item->dateTime(), info);
+            d->gpsTrackList.remove(gpsItem->dateTime());
+            d->gpsTrackList.insert(gpsItem->dateTime(), info);
 
-            // Refresh item in list view
-            d->listView->repaintItem(item);
-            d->listView->setCurrentItem(item);
-            d->listView->ensureItemVisible(item);
+            d->listView->setCurrentItem(gpsItem);
+            d->listView->scrollToItem(gpsItem);
             return;
         }
-        ++it;
+        i++;
     }
+    while (item);
 }
 
 }  // namespace KIPIGPSSyncPlugin

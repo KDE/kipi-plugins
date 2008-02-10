@@ -51,11 +51,11 @@ public:
     GPSTrackListItem data;
 };
 
-GPSTrackListViewItem::GPSTrackListViewItem(K3ListView *view, Q3ListViewItem *after)
-                    : K3ListViewItem(view, after)
+GPSTrackListViewItem::GPSTrackListViewItem(QTreeWidget *view)
+                    : QTreeWidgetItem(view)
 {
     d = new GPSTrackListViewItemPriv;
-    setPixmap(0, SmallIcon("file_broken", KIconLoader::SizeLarge, KIconLoader::DisabledState));
+    setIcon(0, SmallIcon("file_broken", KIconLoader::SizeLarge, KIconLoader::DisabledState));
 }
 
 GPSTrackListViewItem::~GPSTrackListViewItem()
@@ -68,7 +68,7 @@ bool GPSTrackListViewItem::isDirty() const
     return d->data.isDirty();
 }
 
-void GPSTrackListViewItem::setData(const QDateTime& dt, const GPSTrackListItem& data)
+void GPSTrackListViewItem::setGPSInfo(const QDateTime& dt, const GPSTrackListItem& data)
 {
     d->dateTime = dt;
     d->data     = data;
@@ -88,7 +88,7 @@ GPSTrackListItem GPSTrackListViewItem::gpsInfo() const
 
 void GPSTrackListViewItem::setThumbnail(const QPixmap& pix)
 {
-    setPixmap(0, pix.scaled(64, 64, Qt::KeepAspectRatio));
+    setIcon(0, pix.scaled(64, 64, Qt::KeepAspectRatio));
 }
 
 QDateTime GPSTrackListViewItem::dateTime() const

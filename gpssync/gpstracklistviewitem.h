@@ -27,11 +27,11 @@
 
 #include <QDateTime>
 #include <QString>
+#include <QTreeWidgetItem>
 
 // KDE includes.
 
 #include <kurl.h>
-#include <k3listview.h>
 
 // Local includes.
 
@@ -41,21 +41,22 @@ namespace KIPIGPSSyncPlugin
 {
 class GPSTrackListViewItemPriv;
 
-class GPSTrackListViewItem : public K3ListViewItem
+class GPSTrackListViewItem : public QTreeWidgetItem
 {
 
 public:
 
-    GPSTrackListViewItem(K3ListView *view, Q3ListViewItem *after);
+    GPSTrackListViewItem(QTreeWidget *view);
     ~GPSTrackListViewItem();
 
-    void setData(const QDateTime& dt, const GPSTrackListItem& data);
+    void setGPSInfo(const QDateTime& dt, const GPSTrackListItem& data);
+    GPSTrackListItem gpsInfo() const;
+
     void setThumbnail(const QPixmap& pix);
 
     void setDirty(bool dirty);
     bool isDirty() const;
 
-    GPSTrackListItem gpsInfo() const;
     int              id() const;
     QDateTime        dateTime() const;
     QString          fileName() const;
