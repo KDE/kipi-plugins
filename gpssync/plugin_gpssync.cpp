@@ -193,15 +193,33 @@ void Plugin_GPSSync::slotGPSSync()
 void Plugin_GPSSync::slotGPSEdit()
 {
     KIPI::ImageCollection images = m_interface->currentSelection();
-
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KUrl img = images.images().first();
-    KExiv2Iface::KExiv2 exiv2Iface;
-    exiv2Iface.load(img.path());
+    bool hasGPSInfo = false;
     double alt, lat, lng;
-    bool hasGPSInfo = exiv2Iface.getGPSInfo(alt, lat, lng);
+    KExiv2Iface::KExiv2 exiv2Iface;
+    KUrl::List imageURLs = images.images();
+    KUrl img             = images.images().first();
+    QMap<QString, QVariant> attributes;
+    KIPI::ImageInfo info = m_interface->info(img);
+    attributes = info.attributes();
+
+    if (attributes.contains("latitude") &&
+        attributes.contains("longitude") && 
+        attributes.contains("altitude"))   
+    {
+        lat = attributes["latitude"].toDouble();        
+        lng = attributes["longitude"].toDouble();        
+        alt = attributes["altitude"].toDouble();        
+        hasGPSInfo = true;
+    }
+    else
+    {
+        exiv2Iface.load(img.path());
+        hasGPSInfo = exiv2Iface.getGPSInfo(alt, lat, lng);
+    }
+
     KIPIGPSSyncPlugin::GPSDataContainer gpsData(alt, lat, lng, false);
 
     KIPIGPSSyncPlugin::GPSEditDialog dlg(kapp->activeWindow(), 
@@ -210,52 +228,33 @@ void Plugin_GPSSync::slotGPSEdit()
     if (dlg.exec() == KDialog::Accepted)
     {
         gpsData = dlg.getGPSInfo();
-        KUrl::List  imageURLs = images.images();
-        KUrl::List  updatedURLs;
-        QStringList errorFiles;
 
         for( KUrl::List::iterator it = imageURLs.begin() ; 
             it != imageURLs.end(); ++it)
         {
             KUrl url = *it;
 
-            // We only add all JPEG files as R/W because Exiv2 can't yet 
-            // update metadata on others file formats.
-
-            QFileInfo fi(url.path());
-            QString ext = fi.suffix().toUpper();
-            bool ret = false;
-            if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
+            // Set file metadata GPS location.
+            bool ret = exiv2Iface.load(url.path());
+            if (ret)
             {
-                ret = true;
-                ret &= exiv2Iface.load(url.path());
-                if (ret)
-                {
-                    ret &= exiv2Iface.setGPSInfo(gpsData.altitude(), 
-                                                 gpsData.latitude(), 
-                                                 gpsData.longitude());
-                    ret &= exiv2Iface.save(url.path());
-                }
+                ret &= exiv2Iface.setGPSInfo(gpsData.altitude(), 
+                                             gpsData.latitude(), 
+                                             gpsData.longitude());
+                ret &= exiv2Iface.save(url.path());
             }
 
             if (!ret)
-                errorFiles.append(url.fileName());
-            else 
-                updatedURLs.append(url);
-        }
+                kDebug() << "Cannot set GPS location into file metadata from " 
+                         << url.fileName() << endl;
 
-        // We use kipi interface refreshImages() method to tell to host than 
-        // metadata from pictures have changed and need to be re-readed.
-
-        m_interface->refreshImages(updatedURLs);
-
-        if (!errorFiles.isEmpty())
-        {
-            KMessageBox::errorList(
-                        kapp->activeWindow(),
-                        i18n("Unable to save geographical coordinates into:"),
-                        errorFiles,
-                        i18n("Edit Geographical Coordinates"));  
+            // Set kipi host GPS location 
+            attributes.clear();
+            attributes.insert("latitude",  gpsData.latitude());
+            attributes.insert("longitude", gpsData.longitude());
+            attributes.insert("altitude",  gpsData.altitude());
+            KIPI::ImageInfo info = m_interface->info(url);
+            info.addAttributes(attributes);
         }
     }
 }
