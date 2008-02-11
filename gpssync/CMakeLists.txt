@@ -1,7 +1,3 @@
-ADD_DEFINITIONS(-DQT3_SUPPORT 
-                -DQT3_SUPPORT_WARNINGS
-               )
-
 SET(kipiplugin_gpssync_PART_SRCS plugin_gpssync.cpp 
                                  gpslistviewitem.cpp 
                                  gpsbabelbinary.cpp 
@@ -24,7 +20,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_gpssync
                       ${KDE4_KHTML_LIBS} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
-                      ${QT_QT3SUPPORT_LIBRARY} 
                       kipiplugins
                      )
 

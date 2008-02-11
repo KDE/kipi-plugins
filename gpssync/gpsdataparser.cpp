@@ -190,7 +190,7 @@ bool GPSDataParser::loadGPXFile(const KUrl& url)
 {
     QFile gpxfile(url.path());
 
-    if (!gpxfile.open(IO_ReadOnly))
+    if (!gpxfile.open(QIODevice::ReadOnly))
         return false;
 
     QDomDocument gpxDoc("gpx");

@@ -163,7 +163,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     // Load image
     QString path = imageURL.path();
     QFile imageFile(path);
-    if (!imageFile.open(IO_ReadOnly)) 
+    if (!imageFile.open(QIODevice::ReadOnly)) 
     {
         logWarning(i18n("Could not read image '%1'",path));
         return;
@@ -177,7 +177,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
         return;
     }
     imageFile.close();
-    imageFile.open(IO_ReadOnly);
+    imageFile.open(QIODevice::ReadOnly);
 
     QByteArray imageData = imageFile.readAll();
     QImage image;
@@ -193,7 +193,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
         */
     if ( info.angle() != 0 ) 
     {
-        QWMatrix matrix;
+        QMatrix matrix;
         matrix.rotate( info.angle() );
         image = image.transformed( matrix );
     }
@@ -460,7 +460,7 @@ void kmlExport::generate()
     /** @todo change to kml or kmz if compressed */
     QFile file( m_tempDestDir + m_KMLFileName + ".kml");
     /** @todo handle file opening problems */
-    file.open( IO_WriteOnly );
+    file.open( QIODevice::WriteOnly );
     QTextStream stream( &file ); // we will serialize the data into the file
     stream << kmlDocument->toString();
     file.close();
