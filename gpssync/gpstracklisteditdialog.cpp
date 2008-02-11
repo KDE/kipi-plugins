@@ -59,7 +59,7 @@ public :
         : QTreeWidget(parent)
     {
         setColumnCount(8);
-        setIconSize(QSize(64, 64));        
+        setIconSize(QSize(64, 64));
         setRootIsDecorated(false);
         setSortingEnabled(false);
         setSelectionMode(QAbstractItemView::SingleSelection);
@@ -80,7 +80,7 @@ public :
         resizeColumnToContents(0);
         resizeColumnToContents(1);
     }
-    
+
     ~GPSTrackListView() 
     {
     }
@@ -204,11 +204,14 @@ void GPSTrackListEditDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
     do
     {
         item = d->listView->topLevelItem(i);
-        GPSTrackListViewItem *gpsItem = dynamic_cast<GPSTrackListViewItem*>(item);
-        if (gpsItem->url() == url)
+        GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(item);
+        if (lvItem)
         {
-            gpsItem->setThumbnail(pix);
-            return;
+            if (lvItem->url() == url)
+            {
+                lvItem->setThumbnail(pix);
+                return;
+            }
         }
         i++;
     }
@@ -290,12 +293,15 @@ void GPSTrackListEditDialog::slotMarkerSelectedFromMap(int id)
     do
     {
         item = d->listView->topLevelItem(i);
-        GPSTrackListViewItem *gpsItem = dynamic_cast<GPSTrackListViewItem*>(item);
-        if (gpsItem->id() == id)
+        GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(item);
+        if (lvItem)
         {
-            d->listView->setCurrentItem(gpsItem);
-            d->listView->scrollToItem(gpsItem);
-            return;
+            if (lvItem->id() == id)
+            {
+                d->listView->setCurrentItem(lvItem);
+                d->listView->scrollToItem(lvItem);
+                return;
+            }
         }
         i++;
     }
@@ -309,24 +315,27 @@ void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, doubl
     do
     {
         item = d->listView->topLevelItem(i);
-        GPSTrackListViewItem *gpsItem = dynamic_cast<GPSTrackListViewItem*>(item);
-        if (gpsItem->id() == id)
+        GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(item);
+        if (lvItem)
         {
-            GPSTrackListItem info = gpsItem->gpsInfo();
-            GPSDataContainer data = info.gpsData();
-            data.setLatitude(lat);
-            data.setLongitude(lng);
-            info.setGPSData(data);
-            info.setDirty(true);
-            gpsItem->setGPSInfo(gpsItem->dateTime(), info);
+            if (lvItem->id() == id)
+            {
+                GPSTrackListItem info = lvItem->gpsInfo();
+                GPSDataContainer data = info.gpsData();
+                data.setLatitude(lat);
+                data.setLongitude(lng);
+                info.setGPSData(data);
+                info.setDirty(true);
+                lvItem->setGPSInfo(lvItem->dateTime(), info);
 
-            // Update track list info.
-            d->gpsTrackList.remove(gpsItem->dateTime());
-            d->gpsTrackList.insert(gpsItem->dateTime(), info);
+                // Update track list info.
+                d->gpsTrackList.remove(lvItem->dateTime());
+                d->gpsTrackList.insert(lvItem->dateTime(), info);
 
-            d->listView->setCurrentItem(gpsItem);
-            d->listView->scrollToItem(gpsItem);
-            return;
+                d->listView->setCurrentItem(lvItem);
+                d->listView->scrollToItem(lvItem);
+                return;
+            }
         }
         i++;
     }
