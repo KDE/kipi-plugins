@@ -52,6 +52,7 @@ public:
         erase      = false;
         hasGPSInfo = false;
         readOnly   = false;
+        interface  = 0;
     }
 
     bool             enabled;
@@ -64,37 +65,52 @@ public:
 
     KUrl             url;
 
+    KIPI::Interface *interface;
+
     GPSDataContainer gpsData;
 };
 
-GPSListViewItem::GPSListViewItem(K3ListView *view, Q3ListViewItem *after, const KUrl& url)
-               : K3ListViewItem(view, after)
+GPSListViewItem::GPSListViewItem(KIPI::Interface* interface, QTreeWidget *view, const KUrl& url)
+               : QTreeWidgetItem(view)
 {
     d = new GPSListViewItemPriv;
-    d->url = url;
+    d->interface = interface;
+    d->url       = url;
 
     setEnabled(false);
-    setPixmap(0, SmallIcon( "file_broken", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
+    setIcon(0, SmallIcon( "file_broken", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
     setText(1, d->url.fileName());
 
-    // We only add all JPEG files as R/W because Exiv2 can't yet 
-    // update metadata on others file formats.
+    double alt, lat, lng;
+    KExiv2Iface::KExiv2 exiv2Iface;
+    QMap<QString, QVariant> attributes;
+    KIPI::ImageInfo info = d->interface->info(d->url);
+    attributes = info.attributes();
 
-    QFileInfo fi(d->url.path());
-    QString ext = fi.suffix().toUpper();
-    if (ext != QString("JPG") && ext != QString("JPEG") && ext != QString("JPE"))
+    if (attributes.contains("latitude") &&
+        attributes.contains("longitude") && 
+        attributes.contains("altitude"))
     {
-        setText(6, i18n("Read only"));
-        d->readOnly = true;
+        lat = attributes["latitude"].toDouble();
+        lng = attributes["longitude"].toDouble();
+        alt = attributes["altitude"].toDouble();
+        d->hasGPSInfo = true;
+    }
+    else
+    {
+        exiv2Iface.load(d->url.path());
+        d->hasGPSInfo = exiv2Iface.getGPSInfo(alt, lat, lng);
     }
 
-    KExiv2Iface::KExiv2 exiv2Iface;
-    exiv2Iface.load(d->url.path());
-    setDateTime(exiv2Iface.getImageDateTime());
-    double alt, lat, lng;
-    d->hasGPSInfo = exiv2Iface.getGPSInfo(alt, lat, lng);
     if (hasGPSInfo())
         setGPSInfo(GPSDataContainer(alt, lat, lng, false), false);
+
+    QDateTime dt = info.time(KIPI::FromInfo);
+    if (!dt.isValid())
+        dt = exiv2Iface.getImageDateTime();
+
+    if (dt.isValid())
+        setDateTime(dt);
 }
 
 GPSListViewItem::~GPSListViewItem()
@@ -129,8 +145,6 @@ void GPSListViewItem::setGPSInfo(const GPSDataContainer& gpsData, bool dirty, bo
 
         setText(6, status);
     }
-
-    repaint();
 }
 
 GPSDataContainer GPSListViewItem::GPSInfo() const
@@ -145,7 +159,6 @@ void GPSListViewItem::eraseGPSInfo()
         d->erase = true;
         d->dirty = true;
         setText(6, i18n("Deleted!"));
-        repaint();
     }
 }
 
@@ -184,89 +197,63 @@ bool GPSListViewItem::isInterpolated()
 
 void GPSListViewItem::writeGPSInfoToFile()
 {
-    if (isEnabled() && isDirty() && !isReadOnly())
+    QMap<QString, QVariant> attributes;
+
+    if (isEnabled() && isDirty())
     {
-        setPixmap(1, SmallIcon("run"));
         KExiv2Iface::KExiv2 exiv2Iface;
-        bool ret = exiv2Iface.load(d->url.path());
+        exiv2Iface.load(d->url.path());
 
         if (d->erase)
-            ret &= exiv2Iface.removeGPSInfo();
+        {
+            // TODO : remove GPS info from kipi host
+            exiv2Iface.removeGPSInfo();
+        }
         else
         {
-            ret &= exiv2Iface.setGPSInfo(d->gpsData.altitude(), 
-                                         d->gpsData.latitude(), 
-                                         d->gpsData.longitude());
+            // Set file metadata GPS location.
+            exiv2Iface.setGPSInfo(d->gpsData.altitude(), 
+                                  d->gpsData.latitude(), 
+                                  d->gpsData.longitude());
+
+            // Set kipi host GPS location 
+            attributes.clear();
+            attributes.insert("latitude",  d->gpsData.latitude());
+            attributes.insert("longitude", d->gpsData.longitude());
+            attributes.insert("altitude",  d->gpsData.altitude());
+            KIPI::ImageInfo info = d->interface->info(url());
+            info.addAttributes(attributes);
         }
 
-        ret &= exiv2Iface.save(d->url.path());
-
-        if (ret)
-            setPixmap(1, SmallIcon("ok"));
-        else
-            setPixmap(1, SmallIcon("cancel"));
+        exiv2Iface.save(d->url.path());
 
         d->dirty = false;
     }
 }
 
-void GPSListViewItem::setEnabled(bool e)    
+void GPSListViewItem::setEnabled(bool e)
 {
     d->enabled = e;
-    repaint();
 }
 
-bool GPSListViewItem::isEnabled()    
+bool GPSListViewItem::isEnabled()
 {
     return d->enabled;
 }
 
-bool GPSListViewItem::isDirty()    
+bool GPSListViewItem::isDirty()
 {
     return d->dirty;
 }
 
-bool GPSListViewItem::isReadOnly()    
+bool GPSListViewItem::isReadOnly()
 {
     return d->readOnly;
 }
 
 void GPSListViewItem::setThumbnail(const QPixmap& pix)
 {
-    setPixmap(0, pix.scaled(64, 64, Qt::KeepAspectRatio));
-}
-
-void GPSListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
-{
-    if (isEnabled() && !isReadOnly())
-    {
-        if ( isDirty() && !d->erase && column >= 3  && column <= 5 )
-        {
-            QColorGroup _cg( cg );
-            QColor c = _cg.text();
-            _cg.setColor( QColorGroup::Text, Qt::red );
-            K3ListViewItem::paintCell( p, _cg, column, width, alignment );
-            _cg.setColor( QColorGroup::Text, c );
-        }
-        else if ( isDirty() && d->erase && column == 6)
-        {
-            QColorGroup _cg( cg );
-            QColor c = _cg.text();
-            _cg.setColor( QColorGroup::Text, Qt::red );
-            K3ListViewItem::paintCell( p, _cg, column, width, alignment );
-            _cg.setColor( QColorGroup::Text, c );
-        }
-        else
-            K3ListViewItem::paintCell(p, cg, column, width, alignment);
-    }
-    else
-    {
-        QColorGroup _cg( cg );
-        QColor c = _cg.text();
-        _cg.setColor( QColorGroup::Text, Qt::gray );
-        K3ListViewItem::paintCell( p, _cg, column, width, alignment );
-        _cg.setColor( QColorGroup::Text, c );
-    }
+    setIcon(0, pix.scaled(64, 64, Qt::KeepAspectRatio));
 }
 
 } // NameSpace KIPIGPSSyncPlugin

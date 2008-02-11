@@ -25,6 +25,7 @@
 #include <QLayout>
 #include <QTimer>
 #include <QTreeWidget>
+#include <QHeaderView>
 
 // KDE includes.
 
@@ -77,8 +78,7 @@ public :
         labels.append( i18n("Changed") );
         setHeaderLabels(labels);
 
-        resizeColumnToContents(0);
-        resizeColumnToContents(1);
+        header()->setResizeMode(QHeaderView::Stretch);
     }
 
     ~GPSTrackListView() 

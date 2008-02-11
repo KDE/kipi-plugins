@@ -207,11 +207,11 @@ void Plugin_GPSSync::slotGPSEdit()
 
     if (attributes.contains("latitude") &&
         attributes.contains("longitude") && 
-        attributes.contains("altitude"))   
+        attributes.contains("altitude"))
     {
-        lat = attributes["latitude"].toDouble();        
-        lng = attributes["longitude"].toDouble();        
-        alt = attributes["altitude"].toDouble();        
+        lat = attributes["latitude"].toDouble();
+        lng = attributes["longitude"].toDouble();
+        alt = attributes["altitude"].toDouble();
         hasGPSInfo = true;
     }
     else

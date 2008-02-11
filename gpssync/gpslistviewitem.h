@@ -27,29 +27,30 @@
 
 #include <QDateTime>
 #include <QString>
+#include <QTreeWidgetItem>
 
 // KDE includes.
 
 #include <kurl.h>
-#include <k3listview.h>
+
+// LibKipi includes.
+
+#include <libkipi/interface.h>
 
 // Local includes.
 
 #include "gpsdatacontainer.h"
 
-class QPainter;
-class QColorGroup;
-
 namespace KIPIGPSSyncPlugin
 {
 class GPSListViewItemPriv;
 
-class GPSListViewItem : public K3ListViewItem
+class GPSListViewItem : public QTreeWidgetItem
 {
 
 public:
 
-    GPSListViewItem(K3ListView *view, Q3ListViewItem *after, const KUrl& url);
+    GPSListViewItem(KIPI::Interface* interface, QTreeWidget *view, const KUrl& url);
     ~GPSListViewItem();
 
     void setGPSInfo(const GPSDataContainer& gpsData, bool dirty=true, bool addedManually=false);
@@ -70,10 +71,6 @@ public:
     void writeGPSInfoToFile();
 
     void setThumbnail(const QPixmap& pix);
-
-protected:
-
-    void paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment);
 
 private: 
 
