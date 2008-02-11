@@ -51,7 +51,6 @@ public:
         dirty      = false;
         erase      = false;
         hasGPSInfo = false;
-        readOnly   = false;
         interface  = 0;
     }
 
@@ -59,7 +58,6 @@ public:
     bool             dirty;
     bool             erase;
     bool             hasGPSInfo;
-    bool             readOnly;
 
     QDateTime        date;
 
@@ -154,12 +152,9 @@ GPSDataContainer GPSListViewItem::GPSInfo() const
 
 void GPSListViewItem::eraseGPSInfo()
 {
-    if (!isReadOnly())
-    {
-        d->erase = true;
-        d->dirty = true;
-        setText(6, i18n("Deleted!"));
-    }
+    d->erase = true;
+    d->dirty = true;
+    setText(6, i18n("Deleted!"));
 }
 
 void GPSListViewItem::setDateTime(const QDateTime& date)
@@ -244,11 +239,6 @@ bool GPSListViewItem::isEnabled()
 bool GPSListViewItem::isDirty()
 {
     return d->dirty;
-}
-
-bool GPSListViewItem::isReadOnly()
-{
-    return d->readOnly;
 }
 
 void GPSListViewItem::setThumbnail(const QPixmap& pix)
