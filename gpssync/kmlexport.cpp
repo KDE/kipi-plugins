@@ -228,10 +228,27 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     else 
     {
         //logInfo(i18n("Creation of picture '%1'").arg(fullFileName));
-        KExiv2Iface::KExiv2 exiv2Iface;
-        exiv2Iface.load(imageURL.path());
+        
         double alt, lat, lng;
-        exiv2Iface.getGPSInfo(alt, lat, lng);
+        QMap<QString, QVariant> attributes;
+        KExiv2Iface::KExiv2 exiv2Iface;
+        KIPI::ImageInfo info = m_interface->info(imageURL);
+        attributes           = info.attributes();
+    
+        if (attributes.contains("latitude") &&
+            attributes.contains("longitude") && 
+            attributes.contains("altitude"))
+        {
+            lat = attributes["latitude"].toDouble();
+            lng = attributes["longitude"].toDouble();
+            alt = attributes["altitude"].toDouble();
+        }
+        else
+        {
+            exiv2Iface.load(imageURL.path());
+            exiv2Iface.getGPSInfo(alt, lat, lng);
+        }
+
         QDomElement kmlPlacemark = addKmlElement(kmlAlbum, "Placemark");
         addKmlTextElement(kmlPlacemark,"name",fullFileName);
         // location and altitude
@@ -421,6 +438,7 @@ void kmlExport::generate()
         addTrack(kmlAlbum);
     }
 
+    KExiv2Iface::KExiv2 exiv2Iface;
     KUrl::List images = selection.images();
     int defectImage   = 0;
     int pos           = 1;
@@ -428,13 +446,29 @@ void kmlExport::generate()
     KUrl::List::ConstIterator imagesEnd (images.constEnd());
     for( KUrl::List::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos) 
     {
-        KExiv2Iface::KExiv2 exiv2Iface;
-        KIPI::ImageInfo info = m_interface->info( *selIt );
-        // exiv2 load from url not image
         KUrl url = *selIt;
-        exiv2Iface.load(url.path());
+
         double alt, lat, lng;
-        bool hasGPSInfo = exiv2Iface.getGPSInfo(alt, lat, lng);
+        bool hasGPSInfo = false;
+        QMap<QString, QVariant> attributes;
+        KIPI::ImageInfo info = m_interface->info(url);
+        attributes           = info.attributes();
+    
+        if (attributes.contains("latitude") &&
+            attributes.contains("longitude") && 
+            attributes.contains("altitude"))
+        {
+            lat = attributes["latitude"].toDouble();
+            lng = attributes["longitude"].toDouble();
+            alt = attributes["altitude"].toDouble();
+            hasGPSInfo = true;
+        }
+        else
+        {
+            exiv2Iface.load(url.path());
+            hasGPSInfo = exiv2Iface.getGPSInfo(alt, lat, lng);
+        }
+
         if ( hasGPSInfo ) 
         {
             // generation de l'image et de l'icone
