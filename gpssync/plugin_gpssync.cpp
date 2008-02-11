@@ -268,6 +268,7 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
 
     double    alt, lat, lng;
     QDateTime dt;
+    QMap<QString, QVariant> attributes;
     KExiv2Iface::KExiv2 exiv2Iface;
     KIPIGPSSyncPlugin::GPSTrackList trackList;
     KUrl::List urls = images.images();
@@ -275,13 +276,36 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
     for( KUrl::List::iterator it = urls.begin() ; 
         it != urls.end() ; ++it)
     {
-        exiv2Iface.load((*it).path());
-        if(exiv2Iface.getGPSInfo(alt, lat, lng))
+        bool hasGPSInfo = false;
+        KIPI::ImageInfo info = m_interface->info(*it);
+        attributes = info.attributes();
+        if (attributes.contains("latitude") &&
+            attributes.contains("longitude") && 
+            attributes.contains("altitude"))
         {
-            dt = exiv2Iface.getImageDateTime();
-            KIPIGPSSyncPlugin::GPSDataContainer gpsData(alt, lat, lng, false);
-            KIPIGPSSyncPlugin::GPSTrackListItem trackListItem(*it, gpsData);
-            trackList.insert(dt, trackListItem);
+            lat = attributes["latitude"].toDouble();
+            lng = attributes["longitude"].toDouble();
+            alt = attributes["altitude"].toDouble();
+            hasGPSInfo = true;
+        }
+        else
+        {
+            exiv2Iface.load((*it).path());
+            hasGPSInfo = exiv2Iface.getGPSInfo(alt, lat, lng);
+        }
+
+        if(hasGPSInfo)
+        {
+            QDateTime dt = info.time(KIPI::FromInfo);
+            if (!dt.isValid())
+                dt = exiv2Iface.getImageDateTime();
+
+            if (dt.isValid())
+            {
+                KIPIGPSSyncPlugin::GPSDataContainer gpsData(alt, lat, lng, false);
+                KIPIGPSSyncPlugin::GPSTrackListItem trackListItem(*it, gpsData);
+                trackList.insert(dt, trackListItem);
+            }
         }
     }
 
@@ -299,8 +323,6 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
     if (dlg.exec() == KDialog::Accepted)
     {
         trackList = dlg.trackList();
-        KUrl::List  updatedURLs;
-        QStringList errorFiles;
 
         for( KIPIGPSSyncPlugin::GPSTrackList::iterator it = trackList.begin() ; 
             it != trackList.end() ; ++it)
@@ -308,45 +330,26 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
             if ((*it).isDirty())
             {
                 KUrl url = (*it).url();
-    
-                // We only add all JPEG files as R/W because Exiv2 can't yet 
-                // update metadata on others file formats.
-    
-                QFileInfo fi(url.path());
-                QString ext = fi.suffix().toUpper();
-                bool ret    = false;
-                if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
-                {
-                    ret = true;
-                    ret &= exiv2Iface.load(url.path());
-                    if (ret)
-                    {
-                        ret &= exiv2Iface.setGPSInfo((*it).gpsData().altitude(), 
-                                                     (*it).gpsData().latitude(), 
-                                                     (*it).gpsData().longitude());
-                        ret &= exiv2Iface.save(url.path());
-                    }
-                }
+
+                // Set file metadata GPS location.
+                bool ret = exiv2Iface.load(url.path());
+                ret &= exiv2Iface.setGPSInfo((*it).gpsData().altitude(), 
+                                             (*it).gpsData().latitude(), 
+                                             (*it).gpsData().longitude());
+                ret &= exiv2Iface.save(url.path());
     
                 if (!ret)
-                    errorFiles.append(url.fileName());
-                else 
-                    updatedURLs.append(url);
+                    kDebug() << "Cannot set GPS location into file metadata from " 
+                             << url.fileName() << endl;
+
+                // Set kipi host GPS location 
+                attributes.clear();
+                attributes.insert("latitude",  (*it).gpsData().latitude());
+                attributes.insert("longitude", (*it).gpsData().longitude());
+                attributes.insert("altitude",  (*it).gpsData().altitude());
+                KIPI::ImageInfo info = m_interface->info(url);
+                info.addAttributes(attributes);
             }
-        }
-
-        // We use kipi interface refreshImages() method to tell to host than 
-        // metadata from pictures have changed and need to be re-readed.
-
-        m_interface->refreshImages(updatedURLs);
-
-        if (!errorFiles.isEmpty())
-        {
-            KMessageBox::errorList(
-                        kapp->activeWindow(),
-                        i18n("Unable to save geographical coordinates into:"),
-                        errorFiles,
-                        i18n("Edit Geographical Coordinates"));  
         }
     }
 }
@@ -366,47 +369,28 @@ void Plugin_GPSSync::slotGPSRemove()
         return;
 
     KUrl::List  imageURLs = images.images();
-    KUrl::List  updatedURLs;
     QStringList errorFiles;
+    KExiv2Iface::KExiv2 exiv2Iface;
 
     for( KUrl::List::iterator it = imageURLs.begin() ; 
          it != imageURLs.end(); ++it)
     {
         KUrl url = *it;
 
-        // We only add all JPEG files as R/W because Exiv2 can't yet 
-        // update metadata on others file formats.
-
-        QFileInfo fi(url.path());
-        QString ext = fi.suffix().toUpper();
-        bool ret = false;
-        if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
-        {
-            ret = true;
-            KExiv2Iface::KExiv2 exiv2Iface;
-            ret &= exiv2Iface.load(url.path());
-            ret &= exiv2Iface.removeGPSInfo();
-            ret &= exiv2Iface.save(url.path());
-        }
-
+        // Remove file metadata GPS location.
+        bool ret = exiv2Iface.load(url.path());
+        ret &= exiv2Iface.removeGPSInfo();
+        ret &= exiv2Iface.save(url.path());
+        
         if (!ret)
-            errorFiles.append(url.fileName());
-        else 
-            updatedURLs.append(url);
-    }
+            kDebug() << "Cannot remove GPS location into file metadata from " 
+                     << url.fileName() << endl;
 
-    // We use kipi interface refreshImages() method to tell to host than 
-    // metadata from pictures have changed and need to be re-readed.
-
-    m_interface->refreshImages(updatedURLs);
-
-    if (!errorFiles.isEmpty())
-    {
-        KMessageBox::errorList(
-                    kapp->activeWindow(),
-                    i18n("Unable to remove geographical coordinates from:"),
-                    errorFiles,
-                    i18n("Remove Geographical Coordinates"));  
+        // Remove kipi host GPS location 
+        QStringList list;
+        list << "latitude" << "longitude" << "altitude";
+        KIPI::ImageInfo info = m_interface->info(url);
+        info.delAttributes(list);
     }
 }
 
