@@ -15,7 +15,9 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 135451 : GPSSync : Improve the gui of the gpssync plugin.
 002 ==> 135386 : GPSSync : Show track on the google map.
-003 ==> 
+003 ==> 149497 : GPSSync : Geolocalization kipi plugin does not work with non-jpeg file types.
+004 ==> 145746 : GPSSync : Do not recreate thumbs when geolocalizing images.
+005 ==> 
 
 v 0.1.4 beta2
 ----------------------------------------------------------------------------
