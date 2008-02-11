@@ -198,11 +198,17 @@ void GPSListViewItem::writeGPSInfoToFile()
     {
         KExiv2Iface::KExiv2 exiv2Iface;
         exiv2Iface.load(d->url.path());
+        KIPI::ImageInfo info = d->interface->info(url());
 
         if (d->erase)
         {
-            // TODO : remove GPS info from kipi host
+            // Remove file metadata GPS location.
             exiv2Iface.removeGPSInfo();
+
+            // Remove kipi host GPS location 
+            QStringList list;
+            list << "latitude" << "longitude" << "altitude";
+            info.delAttributes(list);
         }
         else
         {
@@ -216,7 +222,6 @@ void GPSListViewItem::writeGPSInfoToFile()
             attributes.insert("latitude",  d->gpsData.latitude());
             attributes.insert("longitude", d->gpsData.longitude());
             attributes.insert("altitude",  d->gpsData.altitude());
-            KIPI::ImageInfo info = d->interface->info(url());
             info.addAttributes(attributes);
         }
 
