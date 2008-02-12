@@ -309,6 +309,12 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
         }
     }
 
+    if (trackList.isEmpty())
+    {
+        KMessageBox::sorry(0, i18n("No GPS location have been found in your pictures."));
+        return;
+    }
+
     // Set track list id sorted by datetime.
     int id = 1;
     for( KIPIGPSSyncPlugin::GPSTrackList::iterator it = trackList.begin() ; 
