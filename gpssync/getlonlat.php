@@ -16,7 +16,7 @@
  *         web project page.
  *         This script accept these values from url:
  *           - 'altitude'  : picture altitude.
- *           - 'longitude' : picture longitude.
+ *           - 'longitude' : picture longitude. 
  *           - 'width'     : width of map.
  *           - 'height'    : height of map.
  *           - 'zoom'      : map zoom level.
@@ -34,47 +34,6 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
-$topoKey = 'COMBBKMQQYCKMMK';
-
-function topoGetAltitudes( $coordinates )
-{
-   global $topoKey;
-   $url = 'http://topocoding.com/api/altitude_v1.php?id=x&key=' . $topoKey . '&l=' . topoEncodeCoordinates( $coordinates );
-   $content = '';
-   if ( ini_get( 'allow_url_fopen' ) == '1' )
-   {
-     $content = file_get_contents( $url );
-   }
-   else if ( function_exists( 'curl_init' ) )
-   {
-     $ch = curl_init();
-     curl_setopt ( $ch, CURLOPT_URL, $url );
-     curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
-     curl_setopt ( $ch, CURLOPT_CONNECTTIMEOUT, 5 );
-     $content = curl_exec( $ch );
-     curl_close( $ch );
-   }
-   else
-   {
-     // see also http://www.php-mysql-tutorial.com/php-tutorial/php-read-remote-file.php
-     die( 'No method to read from remote server was found.' );
-   }
-   if ($content !== false) {
-     $tmp0 = explode( '[', $content );
-     if ( $tmp0[ 0 ] == 'topoCall(x,' )
-     {
-       $tmp1 = explode( ']', $tmp0[ 1 ] );
-       return explode(',',$tmp1[ 0 ]);
-     }
-     else
-     {
-       die( $content );
-     }
-   } else {
-     die( 'Unable to resolve altitudes.' );
-   }
-}
-
 ?>
 <!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -82,7 +41,7 @@ function topoGetAltitudes( $coordinates )
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>GPSSync Kipi-plugin Geographical Location Editor</title>
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAACqNc5NW-rzXvhI1XCqnVQxRtnieHCiNs1OElKlkV1nzv6GHADxTkj1BxT2y0Wurlj-7zT3sRuBCt-w"
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAy_Vv5rc03ctmYvwfsuTH6RSK29CRGKrdb78LNYpP1_riKtR3zRRxy4unyuWAi2vp7m1isLwuHObXDg" 
 type="text/javascript">
 </script>
 <style type="text/css">
@@ -111,13 +70,12 @@ function loadMap()
       suppressInitialResultSelection : true
     };
 
-    var markeroptions = {
+    var markeroptions = { 
       autoPan : true,
       draggable : true,
 <?php
       $filename = $_GET['filename'];
       if ($filename != "") echo "title : \"$filename\"";
-
 ?>
     };
 
@@ -148,7 +106,6 @@ function loadMap()
     echo ");\n";
 
     echo "map.addOverlay(marker)";
-  print_r( topoGetAltitudes( array( array( 50.5678, 17.1234 ), array( 49.3456, 16.6789 ) ) ) );
 ?>
 
     GEvent.addListener(map, "click",
@@ -156,32 +113,32 @@ function loadMap()
         {
             if (point)
             {
-                marker.setPoint(point);
+                marker.setPoint(point); 
                 msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
                 window.status=msg;
             }
         }
     );
-
-    GEvent.addListener(marker, "drag",
+ 
+    GEvent.addListener(marker, "drag", 
         function()
         {
-            var point = marker.getPoint();
+            var point = marker.getPoint(); 
             msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
             window.status=msg;
         }
     );
 
-    GEvent.addListener(marker, "dragend",
+    GEvent.addListener(marker, "dragend", 
         function()
         {
-            var point = marker.getPoint();
+            var point = marker.getPoint(); 
             msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
             window.status=msg;
         }
     );
 
-    GEvent.addListener(map, "zoomend",
+    GEvent.addListener(map, "zoomend", 
         function(oldLevel, newLevel)
         {
             msg = "newZoomLevel:" + newLevel;
@@ -189,20 +146,20 @@ function loadMap()
         }
     );
 
-    GEvent.addListener(map, "maptypechanged",
+    GEvent.addListener(map, "maptypechanged", 
         function()
         {
-            var myMapType = map.getCurrentMapType();
-            if (myMapType == G_SATELLITE_TYPE) {msg = "newMapType:G_SATELLITE_TYPE";}
-            if (myMapType == G_MAP_TYPE)       {msg = "newMapType:G_MAP_TYPE";}
-            if (myMapType == G_HYBRID_TYPE)    {msg = "newMapType:G_HYBRID_TYPE";}
+            var myMapType = map.getCurrentMapType(); 
+            if (myMapType == G_SATELLITE_TYPE) {msg = "newMapType:G_SATELLITE_TYPE";} 
+            if (myMapType == G_MAP_TYPE)       {msg = "newMapType:G_MAP_TYPE";} 
+            if (myMapType == G_HYBRID_TYPE)    {msg = "newMapType:G_HYBRID_TYPE";} 
             window.status=msg;
         }
     );
 }
 {
-    window.addEventListener("load",
-        function()
+    window.addEventListener("load", 
+        function() 
         {
             loadMap(); // Firefox and standard browsers
         }
