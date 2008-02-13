@@ -9,6 +9,7 @@
  *               this script is used by GPSSync kipi-plugin.
  *
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright 2008 by Gerhard Kulzer <gerhard at kulzer dot net>
  *
  * Notes : This script use Google Map API version 2:
  *         http://www.google.com/apis/maps/documentation

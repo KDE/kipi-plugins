@@ -7,6 +7,7 @@
  * Description : a widget to display a GPS web map locator.
  *
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright 2008 by Gerhard Kulzer <gerhard at kulzer dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -88,13 +89,6 @@ void GPSMapWidget::setGPSPosition(const QString& lat, const QString& lon)
     d->longitude = lon;
 }
 
-void GPSMapWidget::GPSPosition(QString& lat, QString& lon, QString& alt)
-{
-    lat = d->latitude;
-    lon = d->longitude;
-    alt = d->altitude;
-}
-
 void GPSMapWidget::setMapType(const QString& mapType)
 {
     d->mapType = mapType;
@@ -125,7 +119,6 @@ void GPSMapWidget::extractGPSPositionfromStatusbar(const QString& txt)
     d->altitude = status.section(",", 2, 2);
     d->longitude.remove(0, 5);
     d->altitude.remove(0, 5);
-//     kdDebug( 51001 ) << "lon:" << d->longitude << "alt:" << d->altitude << endl;
     emit signalNewGPSLocationFromMap(d->latitude, d->longitude, d->altitude);
 }
 
