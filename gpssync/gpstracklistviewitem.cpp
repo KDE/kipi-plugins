@@ -55,7 +55,7 @@ GPSTrackListViewItem::GPSTrackListViewItem(QTreeWidget *view)
                     : QTreeWidgetItem(view)
 {
     d = new GPSTrackListViewItemPriv;
-    setIcon(0, SmallIcon("file_broken", KIconLoader::SizeLarge, KIconLoader::DisabledState));
+    setIcon(0, SmallIcon("image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState));
 }
 
 GPSTrackListViewItem::~GPSTrackListViewItem()

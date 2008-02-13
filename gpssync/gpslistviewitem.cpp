@@ -76,7 +76,7 @@ GPSListViewItem::GPSListViewItem(KIPI::Interface* interface, QTreeWidget *view, 
     d->url       = url;
 
     setEnabled(false);
-    setIcon(0, SmallIcon( "file_broken", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
+    setIcon(0, SmallIcon( "image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
     setText(1, d->url.fileName());
 
     double alt, lat, lng;
