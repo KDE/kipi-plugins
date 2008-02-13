@@ -76,14 +76,14 @@ public:
     KLineEdit                *latitudeInput;
     KLineEdit                *longitudeInput;
 
-    KIPIPlugins::KPAboutData *about; 
+    KIPIPlugins::KPAboutData *about;
 
     GPSDataContainer          gpsData;
 
     GPSMapWidget             *worldMap;
 };
 
-GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData, 
+GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
                              const QString& fileName, bool hasGPSInfo)
              : KDialogBase(Plain, i18n("%1 - Edit Geographical Coordinates").arg(fileName),
                            Help|Ok|Cancel, Ok,
@@ -96,7 +96,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     QGridLayout* grid = new QGridLayout(plainPage(), 8, 3, 0, spacingHint());
 
     QLabel *message   = new QLabel(i18n("<p>Use the map on the right to select the place where "
-                                        "the picture have been taken. Click with right mouse button "
+                                        "the picture have been taken. Click with left mouse button "
                                         "on the map to get the GPS coordinates.<p>"), plainPage());
 
     QLabel *altitudeLabel  = new QLabel(i18n("Altitude:"), plainPage());
@@ -176,8 +176,8 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     connect(d->longitudeInput, SIGNAL(textChanged(const QString&)),
             this, SLOT(slotGPSPositionChanged()));
 
-    connect(d->worldMap, SIGNAL(signalNewGPSLocationFromMap(const QString&, const QString&)),
-            this, SLOT(slotNewGPSLocationFromMap(const QString&, const QString&)));
+    connect(d->worldMap, SIGNAL(signalNewGPSLocationFromMap(const QString&, const QString&, const QString&)),
+            this, SLOT(slotNewGPSLocationFromMap(const QString&, const QString&, const QString&)));
 
     connect(d->goButton, SIGNAL(released()),
             this, SLOT(slotGotoLocation()));
@@ -253,8 +253,8 @@ void GPSEditDialog::readSettings()
         d->altitudeInput->setText(QString::number(d->gpsData.altitude(),   'g', 12));
         d->latitudeInput->setText(QString::number(d->gpsData.latitude(),   'g', 12));
         d->longitudeInput->setText(QString::number(d->gpsData.longitude(), 'g', 12));
-    } 
-    else 
+    }
+    else
     {
         d->altitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Altitude", 0.0),   'g', 12));
         d->latitudeInput->setText(QString::number(config.readDoubleNumEntry("GPS Last Latitude", 0.0),   'g', 12));
@@ -284,7 +284,7 @@ void GPSEditDialog::saveSettings()
 
 GPSDataContainer GPSEditDialog::getGPSInfo()
 {
-    return GPSDataContainer(d->altitudeInput->text().toDouble(), 
+    return GPSDataContainer(d->altitudeInput->text().toDouble(),
                             d->latitudeInput->text().toDouble(),
                             d->longitudeInput->text().toDouble(),
                             false);
@@ -297,7 +297,7 @@ bool GPSEditDialog::checkGPSLocation()
     d->altitudeInput->text().toDouble(&ok);
     if (!ok)
     {
-        KMessageBox::error(this, i18n("Altitude value is not correct!"), 
+        KMessageBox::error(this, i18n("Altitude value is not correct!"),
                            i18n("Edit Geographical Coordinates"));
         return false;
     }
@@ -305,7 +305,7 @@ bool GPSEditDialog::checkGPSLocation()
     d->latitudeInput->text().toDouble(&ok);
     if (!ok)
     {
-        KMessageBox::error(this, i18n("Latitude value is not correct!"), 
+        KMessageBox::error(this, i18n("Latitude value is not correct!"),
                            i18n("Edit Geographical Coordinates"));
         return false;
     }
@@ -313,7 +313,7 @@ bool GPSEditDialog::checkGPSLocation()
     d->longitudeInput->text().toDouble(&ok);
     if (!ok)
     {
-        KMessageBox::error(this, i18n("Longitude value is not correct!"), 
+        KMessageBox::error(this, i18n("Longitude value is not correct!"),
                            i18n("Edit Geographical Coordinates"));
         return false;
     }
@@ -328,10 +328,11 @@ void GPSEditDialog::slotOk()
     accept();
 }
 
-void GPSEditDialog::slotNewGPSLocationFromMap(const QString& lat, const QString& lon)
+void GPSEditDialog::slotNewGPSLocationFromMap(const QString& lat, const QString& lon, const QString& alt)
 {
     d->latitudeInput->setText(lat);
     d->longitudeInput->setText(lon);
+    d->altitudeInput->setText(alt);
     d->goButton->setEnabled(false);
 }
 

@@ -46,7 +46,7 @@ public:
     ~GPSMapWidget();
 
     void    setGPSPosition(const QString& lat, const QString& lon);
-    void    GPSPosition(QString& lat, QString& lon);
+    void    GPSPosition(QString& lat, QString& lon, QString& alt);
 
     void    setZoomLevel(int zoomLevel);
     int     zoomLevel();
@@ -61,7 +61,7 @@ public:
 
 signals:
 
-    void signalNewGPSLocationFromMap(const QString&, const QString&);
+    void signalNewGPSLocationFromMap(const QString&, const QString&, const QString&);
 
 protected:
 

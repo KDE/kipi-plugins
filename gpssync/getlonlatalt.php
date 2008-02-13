@@ -34,46 +34,6 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
-$topoKey = 'COMBBKMQQYCKMMK';
-
-function topoGetAltitudes( $coordinates )
-{
-   global $topoKey;
-   $url = 'http://topocoding.com/api/altitude_v1.php?id=x&key=' . $topoKey . '&l=' . topoEncodeCoordinates( $coordinates );
-   $content = '';
-   if ( ini_get( 'allow_url_fopen' ) == '1' )
-   {
-     $content = file_get_contents( $url );
-   }
-   else if ( function_exists( 'curl_init' ) )
-   {
-     $ch = curl_init();
-     curl_setopt ( $ch, CURLOPT_URL, $url );
-     curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
-     curl_setopt ( $ch, CURLOPT_CONNECTTIMEOUT, 5 );
-     $content = curl_exec( $ch );
-     curl_close( $ch );
-   }
-   else
-   {
-     // see also http://www.php-mysql-tutorial.com/php-tutorial/php-read-remote-file.php
-     die( 'No method to read from remote server was found.' );
-   }
-   if ($content !== false) {
-     $tmp0 = explode( '[', $content );
-     if ( $tmp0[ 0 ] == 'topoCall(x,' )
-     {
-       $tmp1 = explode( ']', $tmp0[ 1 ] );
-       return explode(',',$tmp1[ 0 ]);
-     }
-     else
-     {
-       die( $content );
-     }
-   } else {
-     die( 'Unable to resolve altitudes.' );
-   }
-}
 
 ?>
 <!DOCTYPE html
@@ -82,17 +42,16 @@ function topoGetAltitudes( $coordinates )
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>GPSSync Kipi-plugin Geographical Location Editor</title>
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAACqNc5NW-rzXvhI1XCqnVQxRtnieHCiNs1OElKlkV1nzv6GHADxTkj1BxT2y0Wurlj-7zT3sRuBCt-w"
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAy_Vv5rc03ctmYvwfsuTH6RSK29CRGKrdb78LNYpP1_riKtR3zRRxy4unyuWAi2vp7m1isLwuHObXDg"
 type="text/javascript">
 </script>
+<script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0" type="text/javascript"></script>
+<script src="http://www.google.com/uds/solutions/localsearch/gmlocalsearch.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://topocoding.com/api/getapi_v1.php?key=ILOGFVOBCUOSRHC"></script>
 <style type="text/css">
       @import url("http://www.google.com/uds/css/gsearch.css");
       @import url("http://www.google.com/uds/solutions/localsearch/gmlocalsearch.css");
-</style>
-<script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0" type="text/javascript"></script>
-<script src="http://www.google.com/uds/solutions/localsearch/gmlocalsearch.js" type="text/javascript"></script>
 
-<style type="text/css">
     /*<![CDATA[*/
     body {
         padding: 0px;
@@ -104,6 +63,7 @@ type="text/javascript">
 <script type="text/javascript">
 
 //<![CDATA[
+
 function loadMap()
 {
     var map = new GMap2(document.getElementById("map"));
@@ -115,6 +75,10 @@ function loadMap()
       autoPan : true,
       draggable : true,
 <?php
+$topoKey = 'COMBBKMQQYCKMMK';
+include( 'topocoding.inc' );
+
+      // Gets data from URL parameters
       $filename = $_GET['filename'];
       if ($filename != "") echo "title : \"$filename\"";
 
@@ -146,9 +110,7 @@ function loadMap()
     echo $_GET['longitude'];
     echo "), markeroptions";
     echo ");\n";
-
     echo "map.addOverlay(marker)";
-  print_r( topoGetAltitudes( array( array( 50.5678, 17.1234 ), array( 49.3456, 16.6789 ) ) ) );
 ?>
 
     GEvent.addListener(map, "click",
@@ -157,8 +119,7 @@ function loadMap()
             if (point)
             {
                 marker.setPoint(point);
-                msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
-                window.status=msg;
+                topoGetAltitude( point.lat(), point.lng(), function( altitude ) { window.status = "(lat:" + point.lat() + ", lon:" + point.lng() + ", alt:" + altitude  + ")" ; } );
             }
         }
     );
@@ -167,8 +128,7 @@ function loadMap()
         function()
         {
             var point = marker.getPoint();
-            msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
-            window.status=msg;
+                topoGetAltitude( point.lat(), point.lng(), function( altitude ) { window.status = "(lat:" + point.lat() + ", lon:" + point.lng() + ", alt:" + altitude  + ")" ; } );
         }
     );
 
@@ -176,8 +136,7 @@ function loadMap()
         function()
         {
             var point = marker.getPoint();
-            msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
-            window.status=msg;
+                topoGetAltitude( point.lat(), point.lng(), function( altitude ) { window.status = "(lat:" + point.lat() + ", lon:" + point.lng() + ", alt:" + altitude  + ")" ; } );
         }
     );
 
@@ -214,7 +173,11 @@ function loadMap()
 </head>
 
 <body onLoad="loadMap()">
-
+<div>
+<?php
+// print_r ( topoGetAltitudes( array( array( 'latitude', 'longitude' ) ) ) );
+?>
+</div>
 <?php
     echo "<div id=\"map\" ";
     echo "style=\"width: ";
