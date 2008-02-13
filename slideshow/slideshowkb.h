@@ -50,7 +50,6 @@
 namespace KIPISlideShowPlugin
 {
 
-class SmoothSlideSaver;
 class ImageLoadThread;
 
 // -------------------------------------------------------------------------

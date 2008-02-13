@@ -36,8 +36,6 @@
 #include "emailsettingscontainer.h"
 
 class QCloseEvent;
-class QEvent;
-class QObject;
 
 namespace KIPI
 {

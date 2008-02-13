@@ -33,9 +33,7 @@
 
 #include <libkipi/interface.h>
 
-class QListViewItem;
 
-class KFileItem;
 
 namespace KIPIGPSSyncPlugin
 {
