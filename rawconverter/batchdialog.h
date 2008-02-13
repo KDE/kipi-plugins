@@ -24,9 +24,6 @@
 #ifndef BATCHDIALOG_H
 #define BATCHDIALOG_H
 
-// Qt includes.
-
-
 // KDE includes.
 
 #include <kdialog.h>

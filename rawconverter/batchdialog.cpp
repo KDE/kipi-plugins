@@ -37,6 +37,7 @@ extern "C"
 // Qt includes.
 
 #include <Q3Dict>
+#include <QHeaderView>
 #include <QTimer>
 #include <QFileInfo>
 #include <QCloseEvent>
@@ -120,7 +121,7 @@ public:
 
     QProgressBar                     *progressBar;
 
-    K3ListView                       *listView;
+    QTreeWidget                      *listView;
 
     RawItem                          *currentConvertItem;
 
@@ -152,25 +153,30 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     setButtonIcon(User2, KIcon("list-remove"));
     setButtonText(User2, i18n("&Remove"));
     setButtonToolTip(User2, i18n("<p>Remove selected Raw files from the list"));
-    
+
     d->page = new QWidget( this );
     setMainWidget( d->page );
     QGridLayout *mainLayout = new QGridLayout(d->page);
 
     //---------------------------------------------
 
-    d->listView = new K3ListView(d->page);
-    d->listView->addColumn( i18n("Thumb") );
-    d->listView->addColumn( i18n("Raw File") );
-    d->listView->addColumn( i18n("Target File") );
-    d->listView->addColumn( i18n("Camera") );
-    d->listView->setResizeMode(Q3ListView::AllColumns);
-    d->listView->setAllColumnsShowFocus(true);
-    d->listView->setSorting(-1);
+    d->listView = new QTreeWidget(d->page);
+    d->listView->setColumnCount(3);
+    d->listView->setIconSize(QSize(64, 64));
+    d->listView->setRootIsDecorated(false);
+    d->listView->setSortingEnabled(false);
+    d->listView->setSelectionMode(QAbstractItemView::MultiSelection);
     d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->listView->setSelectionMode(Q3ListView::Multi);
-    d->listView->setFullWidth(true);
+    d->listView->setAllColumnsShowFocus(true);
     d->listView->setMinimumWidth(450);
+
+    QStringList labels;
+    labels.append( i18n("Thumbnail") );
+    labels.append( i18n("Raw File") );
+    labels.append( i18n("Target File") );
+    labels.append( i18n("Camera") );
+    d->listView->setHeaderLabels(labels);
+    d->listView->header()->setResizeMode(QHeaderView::Stretch);
 
     // ---------------------------------------------------------------
 
@@ -389,19 +395,25 @@ void BatchDialog::slotStartStop()
     if (!d->busy)
     {
         d->fileList.clear();
-    
-        Q3ListViewItemIterator it( d->listView );
-        while ( it.current() ) 
+
+        int i                 = 0;
+        QTreeWidgetItem *item = 0;
+        do
         {
-            CListViewItem *item = (CListViewItem*) it.current();
-            if (item->isEnabled())
+            item = d->listView->topLevelItem(i);
+            CListViewItem *lvItem = dynamic_cast<CListViewItem*>(item);
+            if (lvItem)
             {
-                item->setPixmap(1, 0);
-                d->fileList.append(item->rawItem->directory + QString("/") + item->rawItem->src);
+                if (lvItem->isEnabled())
+                {
+                    lvItem->setIcon(1, QIcon());
+                    d->fileList.append(lvItem->rawItem->directory + QString("/") + lvItem->rawItem->src);
+                }
             }
-            ++it;
+            i++;
         }
-    
+        while (item);
+
         if (d->fileList.empty()) 
         {
             KMessageBox::error(this, i18n("There is no Raw file to process in the list!"));
@@ -409,11 +421,11 @@ void BatchDialog::slotStartStop()
             slotAborted();
             return;
         }
-    
+
         d->progressBar->setMaximum(d->fileList.count());
         d->progressBar->setValue(0);
         d->progressBar->show();
-    
+
         KDcrawIface::RawDecodingSettings rawDecodingSettings;
         rawDecodingSettings.sixteenBitsImage           = d->decodingSettingsBox->sixteenBits();
         rawDecodingSettings.cameraColorBalance         = d->decodingSettingsBox->useCameraWB();
@@ -436,7 +448,7 @@ void BatchDialog::slotStartStop()
         rawDecodingSettings.colorBalanceMultipliers[1] = d->decodingSettingsBox->colorMultiplier2();
         rawDecodingSettings.colorBalanceMultipliers[2] = d->decodingSettingsBox->colorMultiplier3();
         rawDecodingSettings.colorBalanceMultipliers[3] = d->decodingSettingsBox->colorMultiplier4();
-    
+
         d->thread->setRawDecodingSettings(rawDecodingSettings, d->saveSettingsBox->fileFormat());
         processOne();
     }
@@ -446,10 +458,10 @@ void BatchDialog::slotStartStop()
         d->fileList.clear();
         d->thread->cancel();
         busy(false);
-    
+
         if (d->currentConvertItem)
-            d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
-    
+            d->currentConvertItem->viewItem->setIcon(1, SmallIcon("dialog-cancel"));
+
         QTimer::singleShot(500, this, SLOT(slotAborted()));
     }
 }
@@ -460,7 +472,7 @@ void BatchDialog::slotAddItems()
     KUrl::List urls = dlg.urls();
     if (!urls.isEmpty())
     {
-        addItems(urls);    
+        addItems(urls);
     }
 }
 
@@ -470,9 +482,9 @@ void BatchDialog::slotRemoveItems()
     do
     {
         find = false;
-        for (int i = 0 ; i < d->listView->childCount(); i++)
+        for (int i = 0 ; i < d->listView->topLevelItemCount(); i++)
         {
-            CListViewItem* item = dynamic_cast<CListViewItem*>(d->listView->itemAtIndex(i));
+            CListViewItem* item = dynamic_cast<CListViewItem*>(d->listView->topLevelItem(i));
             if (item->isSelected())
             {
                 delete item;
@@ -513,7 +525,7 @@ void BatchDialog::addItems(const KUrl::List& itemList)
     KUrl::List urlList;
 
     QPixmap pix(SmallIcon("image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState));
-    
+
     for (KUrl::List::const_iterator  it = itemList.begin();
          it != itemList.end(); ++it) 
     {
@@ -524,7 +536,7 @@ void BatchDialog::addItems(const KUrl::List& itemList)
             item->directory = fi.path();
             item->src       = fi.fileName();
             item->dest      = fi.baseName() + QString(".") + ext;
-            new CListViewItem(d->listView, pix, item, d->listView->lastItem());
+            new CListViewItem(d->listView, pix, item);
             d->itemDict.insert(item->src, item);
             urlList.append(fi.absoluteFilePath());
         }
@@ -575,20 +587,26 @@ void BatchDialog::slotSaveFormatChanged()
             ext = "png";
             break;
     }
-    
-    Q3ListViewItemIterator it( d->listView );
-    while ( it.current() ) 
+
+    int i                 = 0;
+    QTreeWidgetItem *item = 0;
+    do
     {
-        CListViewItem *item = (CListViewItem*) it.current();
-        if (item->isEnabled())
+        item = d->listView->topLevelItem(i);
+        CListViewItem *lvItem = dynamic_cast<CListViewItem*>(item);
+        if (lvItem)
         {
-            RawItem *rawItem = item->rawItem;
-            QFileInfo fi(rawItem->directory + QString("/") + rawItem->src);
-            rawItem->dest = fi.baseName() + QString(".") + ext;
-            item->setText(2, rawItem->dest);
+            if (lvItem->isEnabled())
+            {
+                RawItem *rawItem = lvItem->rawItem;
+                QFileInfo fi(rawItem->directory + QString("/") + rawItem->src);
+                rawItem->dest = fi.baseName() + QString(".") + ext;
+                lvItem->setText(2, rawItem->dest);
+            }
         }
-        ++it;
+        i++;
     }
+    while (item);
 }
 
 void BatchDialog::processOne()
@@ -599,7 +617,7 @@ void BatchDialog::processOne()
         slotAborted();
         return;
     }
-    
+
     QString file(d->fileList.first());
     d->fileList.pop_front();
 
@@ -639,12 +657,12 @@ void BatchDialog::slotConvertBlinkTimerDone()
     if(d->convertBlink)
     {
         if (d->currentConvertItem)
-            d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("arrow-right"));
+            d->currentConvertItem->viewItem->setIcon(1, SmallIcon("arrow-right"));
     }
     else
     {
         if (d->currentConvertItem)
-            d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("arrow-right-double"));
+            d->currentConvertItem->viewItem->setIcon(1, SmallIcon("arrow-right-double"));
     }
 
     d->convertBlink = !d->convertBlink;
@@ -657,8 +675,8 @@ void BatchDialog::processing(const QString& file)
     d->currentConvertItem = d->itemDict.find(filename);
     if (d->currentConvertItem) 
     {
-        d->listView->setSelected(d->currentConvertItem->viewItem, true);
-        d->listView->ensureItemVisible(d->currentConvertItem->viewItem);
+        d->listView->setCurrentItem(d->currentConvertItem->viewItem, true);
+        d->listView->scrollToItem(d->currentConvertItem->viewItem);
     }
 
     d->convertBlink = false;
@@ -687,7 +705,7 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
                 case KIO::R_SKIP:
                 {
                     destFile = QString();
-                    d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
+                    d->currentConvertItem->viewItem->setIcon(1, SmallIcon("dialog-cancel"));
                     break;
                 }
                 case KIO::R_RENAME:
@@ -706,13 +724,13 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));
-            d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-error"));
+            d->currentConvertItem->viewItem->setIcon(1, SmallIcon("dialog-error"));
         }
         else 
         {
             d->currentConvertItem->dest = QFileInfo(destFile).fileName();
             d->currentConvertItem->viewItem->setText(2, d->currentConvertItem->dest);
-            d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-ok"));
+            d->currentConvertItem->viewItem->setIcon(1, SmallIcon("dialog-ok"));
 
             // Assign Kipi host attributes from original RAW image.
 
@@ -729,7 +747,7 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
 void BatchDialog::processingFailed(const QString& file)
 {
     QString filename = QFileInfo(file).fileName();
-    d->currentConvertItem->viewItem->setPixmap(1, SmallIcon("dialog-cancel"));
+    d->currentConvertItem->viewItem->setIcon(1, SmallIcon("dialog-cancel"));
     d->progressBar->setValue(d->progressBar->value()+1);
     d->currentConvertItem = 0;
 }
@@ -758,7 +776,7 @@ void BatchDialog::slotAction(const ActionData& ad)
             }
         }
     }
-    else                 
+    else
     {
         if (!ad.success)        // Something is failed...
         {

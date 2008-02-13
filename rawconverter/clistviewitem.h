@@ -7,7 +7,7 @@
  * Description : Raw file list view used into batch converter.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,12 +26,10 @@
 
 // Qt includes.
 
+#include <QBrush>
+#include <QTreeWidgetItem>
 #include <QPainter>
 #include <QColorGroup>
-
-// KDE includes.
-
-#include <k3listview.h>
 
 class QPixmap;
 
@@ -50,7 +48,7 @@ struct RawItem
     CListViewItem *viewItem;
 };
 
-class CListViewItem : public K3ListViewItem
+class CListViewItem : public QTreeWidgetItem
 {
 
 public:
@@ -59,12 +57,11 @@ public:
 
 public:
 
-    CListViewItem(K3ListView *view, const QPixmap& pixmap, 
-                  RawItem *item, Q3ListViewItem *after)
-                : K3ListViewItem(view, after), rawItem(item) 
+    CListViewItem(QTreeWidget *view, const QPixmap& pixmap, RawItem *item)
+                : QTreeWidgetItem(view), rawItem(item) 
     {
          rawItem->viewItem = this;
-         setThumbnail(pixmap);
+         setIcon(0, pixmap);
          setText(1, rawItem->src);
          setText(2, rawItem->dest);
          setEnabled(true);
@@ -74,36 +71,20 @@ public:
 
     void setThumbnail(const QPixmap& pixmap) 
     {
-        setPixmap(0, pixmap);
+        setIcon(0, pixmap);
     }
 
-    void setEnabled(bool d)    
+    void setEnabled(bool d)
     {
         m_enabled = d;
-        repaint();
+        setForeground(0, QBrush(Qt::gray));
+        setForeground(1, QBrush(Qt::gray));
+        setForeground(2, QBrush(Qt::gray));
     }
 
-    bool isEnabled(void)    
+    bool isEnabled()
     {
         return m_enabled;
-    }
-    
-protected:
-
-    void paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
-    {
-        if (m_enabled)
-        {
-            K3ListViewItem::paintCell(p, cg, column, width, alignment);
-        }
-        else
-        {
-            QColorGroup _cg( cg );
-            QColor c = _cg.text();
-            _cg.setColor( QColorGroup::Text, Qt::gray );
-            K3ListViewItem::paintCell( p, _cg, column, width, alignment );
-            _cg.setColor( QColorGroup::Text, c );
-        }
     }
 
 private: 
