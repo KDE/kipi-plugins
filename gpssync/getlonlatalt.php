@@ -23,6 +23,19 @@
  *           - 'zoom'      : map zoom level.
  *           - 'maptype'   : type of map (G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP)
  *           - 'filename'  : photo file name as string.
+
+ * Notes on the service topocoding :
+ *    here is how topoGetAltitude behaves:
+ *    1. You call *topoGetAltitude*( lat, lon, action, context, timeout )
+ *    2. As soon as the server sends back the altitude, the asynchronous call
+ *       to action(altitude,context) is performed.
+ *       Here you can operate with the altitude information. And the context
+ *       variable contains any useful data that you also want to pass in,
+ *       it can be for example the reference to an element where you want the altitude to be assigned.
+ *       So for example you can pass the marker as a context.
+ *       Note that you can ommit the context if you don't need it.
+ *    3. If the server response does not arrive (timeout), the asynchronous
+ *       call to action(null,context) is performed.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
