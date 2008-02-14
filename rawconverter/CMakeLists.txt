@@ -1,9 +1,5 @@
 SUBDIRS(pics)
 
-ADD_DEFINITIONS(-DQT3_SUPPORT 
-                -DQT3_SUPPORT_WARNINGS
-               )
-
 INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR} ${PNG_PNG_INCLUDE_DIR})
 
 SET(kipiplugin_rawconverter_PART_SRCS plugin_rawconverter.cpp 
@@ -23,7 +19,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_rawconverter
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       ${KDCRAW_LIBRARIES} 
-                      ${QT_QT3SUPPORT_LIBRARY} 
                       kipiplugins
                      )
 

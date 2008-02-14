@@ -28,42 +28,28 @@
 
 #include <QBrush>
 #include <QTreeWidgetItem>
-#include <QPainter>
-#include <QColorGroup>
+#include <QPixmap>
+#include <QString>
+#include <QIcon>
 
-class QPixmap;
+// KDE includes.
+
+#include <kurl.h>
 
 namespace KIPIRawConverterPlugin
 {
-
-class CListViewItem;
-
-struct RawItem 
-{
-    QString        src;
-    QString        dest;
-    QString        directory;
-    QString        identity;
-
-    CListViewItem *viewItem;
-};
 
 class CListViewItem : public QTreeWidgetItem
 {
 
 public:
 
-    struct RawItem *rawItem;
-
-public:
-
-    CListViewItem(QTreeWidget *view, const QPixmap& pixmap, RawItem *item)
-                : QTreeWidgetItem(view), rawItem(item) 
+    CListViewItem(QTreeWidget *view, const QPixmap& pixmap, const KUrl& url, const QString& fileName)
+        : QTreeWidgetItem(view)
     {
-         rawItem->viewItem = this;
-         setIcon(0, pixmap);
-         setText(1, rawItem->src);
-         setText(2, rawItem->dest);
+         setThumbnail(pixmap);
+         setUrl(url);
+         setDestFileName(fileName);
          setEnabled(true);
     }
 
@@ -74,12 +60,57 @@ public:
         setIcon(0, pixmap);
     }
 
+    void setProgressIcon(const QIcon& icon) 
+    {
+        setIcon(1, icon);
+    }
+
+    void setUrl(const KUrl& url) 
+    {
+        m_url = url;
+        setText(1, m_url.fileName());
+    }
+
+    KUrl url() const
+    {
+        return m_url;
+    }
+
+    void setDestFileName(const QString& str) 
+    {
+        m_destFileName = str;
+        setText(2, m_destFileName);
+    }
+
+    QString destFileName() const
+    {
+        return m_destFileName;
+    }
+
+    void setIdentity(const QString& str) 
+    {
+        m_identity = str;
+        setText(3, m_identity);
+    }
+
+    QString identity() const
+    {
+        return m_identity;
+    }
+
+    QString destPath() const
+    {
+        QString path = url().directory() + "/" + destFileName();
+        return path;
+    }
+
     void setEnabled(bool d)
     {
         m_enabled = d;
         setForeground(0, QBrush(Qt::gray));
         setForeground(1, QBrush(Qt::gray));
         setForeground(2, QBrush(Qt::gray));
+        setForeground(3, QBrush(Qt::gray));
     }
 
     bool isEnabled()
@@ -89,7 +120,12 @@ public:
 
 private: 
 
-    bool m_enabled;
+    bool    m_enabled;
+
+    QString m_destFileName;
+    QString m_identity;
+
+    KUrl    m_url;
 };
 
 } // NameSpace KIPIRawConverterPlugin

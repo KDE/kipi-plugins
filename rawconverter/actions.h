@@ -6,7 +6,7 @@
  * Date        : 2006-12-09
  * Description : raw converter plugin action descriptions
  *
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,7 +25,12 @@
 
 // Qt includes.
 
+#include <QString>
 #include <QImage>
+
+// KDE includes.
+
+#include <kurl.h>
 
 namespace KIPIRawConverterPlugin
 {
@@ -54,11 +59,12 @@ public:
     bool    starting;
     bool    success;
 
-    QString filePath;
     QString destPath;
     QString message;
 
     QImage  image;
+
+    KUrl    fileUrl;
 
     Action  action;
 };

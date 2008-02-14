@@ -104,11 +104,12 @@ public:
     bool                              previewBlink;
     bool                              convertBlink;
 
-    QString                           inputFile;
     QString                           inputFileName;
-    
+
     QTimer                           *blinkPreviewTimer;
     QTimer                           *blinkConvertTimer;
+
+    KUrl                              inputFile;
 
     PreviewWidget                    *previewWidget;
 
@@ -198,7 +199,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
                                  "This uses a high-quality adaptive algorithm."));
 
     setButtonToolTip(User3, i18n("<p>Abort the current Raw file conversion"));
-    
+
     setButtonToolTip(Close, i18n("<p>Exit Raw Converter"));
 
     d->blinkPreviewTimer = new QTimer(this);
@@ -209,7 +210,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
 
     connect(d->blinkPreviewTimer, SIGNAL(timeout()),
             this, SLOT(slotPreviewBlinkTimerDone()));
-    
+
     connect(d->blinkConvertTimer, SIGNAL(timeout()),
             this, SLOT(slotConvertBlinkTimerDone()));
 
@@ -388,7 +389,7 @@ void SingleDialog::slotUser1()
     rawDecodingSettings.colorBalanceMultipliers[1] = d->decodingSettingsBox->colorMultiplier2();
     rawDecodingSettings.colorBalanceMultipliers[2] = d->decodingSettingsBox->colorMultiplier3();
     rawDecodingSettings.colorBalanceMultipliers[3] = d->decodingSettingsBox->colorMultiplier4();
-    
+
     d->thread->setRawDecodingSettings(rawDecodingSettings, SaveSettingsWidget::OUTPUT_PNG);
     d->thread->processHalfRawFile(KUrl(d->inputFile));
     if (!d->thread->isRunning())
@@ -458,7 +459,7 @@ void SingleDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
 }
 
 void SingleDialog::busy(bool val)
-{   
+{
     d->decodingSettingsBox->setEnabled(!val);
     d->saveSettingsBox->setEnabled(!val);
     enableButton(User1, !val);
@@ -467,25 +468,25 @@ void SingleDialog::busy(bool val)
     enableButton(Close, !val);
 }
 
-void SingleDialog::setIdentity(const QString& /*file*/, const QString& identity)
+void SingleDialog::setIdentity(const KUrl& /*url*/, const QString& identity)
 {
     d->previewWidget->setIdentity(d->inputFileName + QString(" :\n") + identity, Qt::white);
 }
 
-void SingleDialog::setThumbnail(const QString& file, const QPixmap& thumbnail)
+void SingleDialog::setThumbnail(const KUrl& url, const QPixmap& thumbnail)
 {
-    if (file == d->inputFile)
+    if (url == d->inputFile)
         d->previewWidget->setThumbnail(thumbnail);
 }
 
-void SingleDialog::previewing(const QString& /*file*/)
+void SingleDialog::previewing(const KUrl& /*url*/)
 {
     d->previewBlink = false;
     d->previewWidget->setCursor( Qt::WaitCursor );
     d->blinkPreviewTimer->start(200);
 }
 
-void SingleDialog::previewed(const QString& /*file*/, const QString& tmpFile)
+void SingleDialog::previewed(const KUrl& /*url*/, const QString& tmpFile)
 {
     d->previewWidget->unsetCursor();
     d->blinkPreviewTimer->stop();
@@ -493,21 +494,21 @@ void SingleDialog::previewed(const QString& /*file*/, const QString& tmpFile)
     ::remove(QFile::encodeName(tmpFile));
 }
 
-void SingleDialog::previewFailed(const QString& /*file*/)
+void SingleDialog::previewFailed(const KUrl& /*url*/)
 {
     d->previewWidget->unsetCursor();
     d->blinkPreviewTimer->stop();
     d->previewWidget->setIdentity(i18n("Failed to generate preview"), Qt::red);
 }
 
-void SingleDialog::processing(const QString& /*file*/)
+void SingleDialog::processing(const KUrl& /*url*/)
 {
     d->convertBlink = false;
     d->previewWidget->setCursor( Qt::WaitCursor );
     d->blinkConvertTimer->start(200);
 }
 
-void SingleDialog::processed(const QString& file, const QString& tmpFile)
+void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
 {
     d->previewWidget->unsetCursor();
     d->blinkConvertTimer->stop();
@@ -532,7 +533,7 @@ void SingleDialog::processed(const QString& file, const QString& tmpFile)
     }
 
     filter += ext;
-    QFileInfo fi(d->inputFile);
+    QFileInfo fi(d->inputFile.path());
     QString destFile = fi.absolutePath() + QString("/") + fi.baseName() + QString(".") + ext;
 
     if (d->saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
@@ -573,14 +574,14 @@ void SingleDialog::processed(const QString& file, const QString& tmpFile)
         {
             // Assign Kipi host attributes from original RAW image.
 
-            KIPI::ImageInfo orgInfo = d->iface->info(KUrl(file));
+            KIPI::ImageInfo orgInfo = d->iface->info(url);
             KIPI::ImageInfo newInfo = d->iface->info(KUrl(destFile));
             newInfo.cloneData(orgInfo);
         }
     }
 }
 
-void SingleDialog::processingFailed(const QString& /*file*/)
+void SingleDialog::processingFailed(const KUrl& /*url*/)
 {
     d->previewWidget->unsetCursor();
     d->blinkConvertTimer->stop();
@@ -627,13 +628,13 @@ void SingleDialog::slotAction(const ActionData& ad)
             case(PREVIEW):
             {
                 busy(true);
-                previewing(ad.filePath);
+                previewing(ad.fileUrl);
                 break;
             }
             case(PROCESS):
             {
                 busy(true);
-                processing(ad.filePath);
+                processing(ad.fileUrl);
                 break;
             }
             default: 
@@ -643,7 +644,7 @@ void SingleDialog::slotAction(const ActionData& ad)
             }
         }
     }
-    else                 
+    else
     {
         if (!ad.success)        // Something is failed...
         {
@@ -654,13 +655,13 @@ void SingleDialog::slotAction(const ActionData& ad)
                     break;
                 case(PREVIEW):
                 {
-                    previewFailed(ad.filePath);
+                    previewFailed(ad.fileUrl);
                     busy(false);
                     break;
                 }
                 case(PROCESS):
                 {
-                    processingFailed(ad.filePath);
+                    processingFailed(ad.fileUrl);
                     busy(false);
                     break;
                 }
@@ -677,26 +678,26 @@ void SingleDialog::slotAction(const ActionData& ad)
             {
                 case(IDENTIFY_FULL): 
                 {
-                    setIdentity(ad.filePath, ad.message);
+                    setIdentity(ad.fileUrl, ad.message);
                     busy(false);
                     break;
                 }
                 case(THUMBNAIL): 
                 {
                     QPixmap pix = QPixmap::fromImage(ad.image.scaled(256, 256, Qt::KeepAspectRatio));
-                    setThumbnail(ad.filePath, pix);
+                    setThumbnail(ad.fileUrl, pix);
                     busy(false);
                     break;
                 }
                 case(PREVIEW):
                 {
-                    previewed(ad.filePath, ad.destPath);
+                    previewed(ad.fileUrl, ad.destPath);
                     busy(false);
                     break;
                 }
                 case(PROCESS):
                 {
-                    processed(ad.filePath, ad.destPath);
+                    processed(ad.fileUrl, ad.destPath);
                     busy(false);
                     break;
                 }

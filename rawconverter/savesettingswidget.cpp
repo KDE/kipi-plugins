@@ -6,7 +6,7 @@
  * Date        : 2006-09-13
  * Description : save settings widgets
  *
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -106,16 +106,16 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
     d->conflictButtonGroup->addButton(d->promptButton,    ASKTOUSER);
     d->conflictButtonGroup->setExclusive(true);
     d->overwriteButton->setChecked(true);
-    
+
     vlay->setMargin(KDialog::spacingHint());
     vlay->setSpacing(KDialog::spacingHint());
     vlay->addWidget(d->overwriteButton);
     vlay->addWidget(d->promptButton);
 
-    settingsBoxLayout->addWidget(d->formatLabel, 0, 0, 1, 1);   
-    settingsBoxLayout->addWidget(d->formatComboBox, 0, 1, 1, 1);   
-    settingsBoxLayout->addWidget(d->conflictLabel, 1, 0, 1, 1);   
-    settingsBoxLayout->addWidget(conflictBox, 2, 0, 1, 1);   
+    settingsBoxLayout->addWidget(d->formatLabel,    0, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->formatComboBox, 0, 1, 1, 1);
+    settingsBoxLayout->addWidget(d->conflictLabel,  1, 0, 1, 1);
+    settingsBoxLayout->addWidget(conflictBox,       2, 0, 1, 1);
     settingsBoxLayout->setRowStretch(3, 10);   
     settingsBoxLayout->setMargin(KDialog::spacingHint());
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
@@ -162,7 +162,7 @@ void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
     d->formatComboBox->insertItem( OUTPUT_TIFF, "TIFF" );
 
     if (!sixteenBits)
-    {    
+    {
         d->formatComboBox->insertItem( OUTPUT_JPEG, "JPEG" );
         d->formatComboBox->insertItem( OUTPUT_PPM,  "PPM" );
     }

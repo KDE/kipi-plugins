@@ -45,6 +45,7 @@ namespace KIPIRawConverterPlugin
 
 class ActionData;
 class BatchDialogPriv;
+class CListViewItem;
 
 class BatchDialog : public KDialog
 {
@@ -70,9 +71,11 @@ private:
     void busy(bool busy);
 
     void processOne();
-    void processing(const QString& file);
-    void processed(const QString& file, const QString& tmpFile);
-    void processingFailed(const QString& file);
+    void processing(const KUrl& url);
+    void processed(const KUrl& url, const QString& tmpFile);
+    void processingFailed(const KUrl& url);
+
+    CListViewItem* findItem(const KUrl& url);
 
 private slots:
 

@@ -36,7 +36,6 @@ extern "C"
 
 // Qt includes.
 
-#include <Q3Dict>
 #include <QHeaderView>
 #include <QTimer>
 #include <QFileInfo>
@@ -115,15 +114,13 @@ public:
 
     QWidget                          *page;
 
-    Q3Dict<RawItem>                   itemDict;
-
     QStringList                       fileList;
 
     QProgressBar                     *progressBar;
 
     QTreeWidget                      *listView;
 
-    RawItem                          *currentConvertItem;
+    CListViewItem                    *currentConvertItem;
 
     ActionThread                     *thread;
 
@@ -268,7 +265,6 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
     // ---------------------------------------------------------------
 
-    d->itemDict.setAutoDelete(true);
     busy(false);
     readSettings();
 }
@@ -407,7 +403,7 @@ void BatchDialog::slotStartStop()
                 if (lvItem->isEnabled())
                 {
                     lvItem->setIcon(1, QIcon());
-                    d->fileList.append(lvItem->rawItem->directory + QString("/") + lvItem->rawItem->src);
+                    d->fileList.append(lvItem->url().path());
                 }
             }
             i++;
@@ -460,7 +456,7 @@ void BatchDialog::slotStartStop()
         busy(false);
 
         if (d->currentConvertItem)
-            d->currentConvertItem->viewItem->setIcon(1, SmallIcon("dialog-cancel"));
+            d->currentConvertItem->setIcon(1, SmallIcon("dialog-cancel"));
 
         QTimer::singleShot(500, this, SLOT(slotAborted()));
     }
@@ -529,16 +525,13 @@ void BatchDialog::addItems(const KUrl::List& itemList)
     for (KUrl::List::const_iterator  it = itemList.begin();
          it != itemList.end(); ++it) 
     {
-        QFileInfo fi((*it).path());
-        if (fi.exists() && !d->itemDict.find(fi.fileName())) 
+        KUrl url = *it;
+        QFileInfo fi(url.path());
+        if (fi.exists() && !findItem(url)) 
         {
-            RawItem *item   = new RawItem;
-            item->directory = fi.path();
-            item->src       = fi.fileName();
-            item->dest      = fi.baseName() + QString(".") + ext;
-            new CListViewItem(d->listView, pix, item);
-            d->itemDict.insert(item->src, item);
-            urlList.append(fi.absoluteFilePath());
+            QString dest = fi.baseName() + QString(".") + ext;
+            new CListViewItem(d->listView, pix, url, dest);
+            urlList.append(url);
         }
     }
 
@@ -557,13 +550,13 @@ void BatchDialog::addItems(const KUrl::List& itemList)
 
 void BatchDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
-    RawItem *rawItem = d->itemDict.find(url.fileName());
-    if (rawItem) 
+    CListViewItem *item = findItem(url);
+    if (item) 
     {
         if (!pix.isNull())
         {
             QPixmap pixmap = pix.scaled(64, 64, Qt::KeepAspectRatio);
-            rawItem->viewItem->setThumbnail(pixmap);
+            item->setThumbnail(pixmap);
         }
     }
 }
@@ -598,10 +591,9 @@ void BatchDialog::slotSaveFormatChanged()
         {
             if (lvItem->isEnabled())
             {
-                RawItem *rawItem = lvItem->rawItem;
-                QFileInfo fi(rawItem->directory + QString("/") + rawItem->src);
-                rawItem->dest = fi.baseName() + QString(".") + ext;
-                lvItem->setText(2, rawItem->dest);
+                QFileInfo fi(lvItem->url().path());
+                QString dest = fi.baseName() + QString(".") + ext;
+                lvItem->setDestFileName(dest);
             }
         }
         i++;
@@ -657,37 +649,35 @@ void BatchDialog::slotConvertBlinkTimerDone()
     if(d->convertBlink)
     {
         if (d->currentConvertItem)
-            d->currentConvertItem->viewItem->setIcon(1, SmallIcon("arrow-right"));
+            d->currentConvertItem->setProgressIcon(SmallIcon("arrow-right"));
     }
     else
     {
         if (d->currentConvertItem)
-            d->currentConvertItem->viewItem->setIcon(1, SmallIcon("arrow-right-double"));
+            d->currentConvertItem->setProgressIcon(SmallIcon("arrow-right-double"));
     }
 
     d->convertBlink = !d->convertBlink;
     d->blinkConvertTimer->start(500);
 }
 
-void BatchDialog::processing(const QString& file)
+void BatchDialog::processing(const KUrl& url)
 {
-    QString filename     = QFileInfo(file).fileName();
-    d->currentConvertItem = d->itemDict.find(filename);
+    d->currentConvertItem = findItem(url);
     if (d->currentConvertItem) 
     {
-        d->listView->setCurrentItem(d->currentConvertItem->viewItem, true);
-        d->listView->scrollToItem(d->currentConvertItem->viewItem);
+        d->listView->setCurrentItem(d->currentConvertItem, true);
+        d->listView->scrollToItem(d->currentConvertItem);
     }
 
     d->convertBlink = false;
     d->blinkConvertTimer->start(500);
 }
 
-void BatchDialog::processed(const QString& file, const QString& tmpFile)
+void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 {
     d->blinkConvertTimer->stop();
-    QString filename = QFileInfo(file).fileName();
-    QString destFile(d->currentConvertItem->directory + QString("/") + d->currentConvertItem->dest);
+    QString destFile(d->currentConvertItem->destPath());
 
     if (d->saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
     {
@@ -695,7 +685,7 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0) 
         {
             KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as",
-                                  d->currentConvertItem->src),
+                                  d->currentConvertItem->url().fileName()),
                                   tmpFile, destFile,
                                   KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
 
@@ -705,7 +695,7 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
                 case KIO::R_SKIP:
                 {
                     destFile = QString();
-                    d->currentConvertItem->viewItem->setIcon(1, SmallIcon("dialog-cancel"));
+                    d->currentConvertItem->setProgressIcon(SmallIcon("dialog-cancel"));
                     break;
                 }
                 case KIO::R_RENAME:
@@ -724,17 +714,16 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));
-            d->currentConvertItem->viewItem->setIcon(1, SmallIcon("dialog-error"));
+            d->currentConvertItem->setProgressIcon(SmallIcon("dialog-error"));
         }
         else 
         {
-            d->currentConvertItem->dest = QFileInfo(destFile).fileName();
-            d->currentConvertItem->viewItem->setText(2, d->currentConvertItem->dest);
-            d->currentConvertItem->viewItem->setIcon(1, SmallIcon("dialog-ok"));
+            d->currentConvertItem->setDestFileName(QFileInfo(destFile).fileName());
+            d->currentConvertItem->setProgressIcon(SmallIcon("dialog-ok"));
 
             // Assign Kipi host attributes from original RAW image.
 
-            KIPI::ImageInfo orgInfo = d->iface->info(KUrl(file));
+            KIPI::ImageInfo orgInfo = d->iface->info(url);
             KIPI::ImageInfo newInfo = d->iface->info(KUrl(destFile));
             newInfo.cloneData(orgInfo);
         }
@@ -744,10 +733,9 @@ void BatchDialog::processed(const QString& file, const QString& tmpFile)
     d->currentConvertItem = 0;
 }
 
-void BatchDialog::processingFailed(const QString& file)
+void BatchDialog::processingFailed(const KUrl& /*url*/)
 {
-    QString filename = QFileInfo(file).fileName();
-    d->currentConvertItem->viewItem->setIcon(1, SmallIcon("dialog-cancel"));
+    d->currentConvertItem->setProgressIcon(SmallIcon("dialog-cancel"));
     d->progressBar->setValue(d->progressBar->value()+1);
     d->currentConvertItem = 0;
 }
@@ -766,7 +754,7 @@ void BatchDialog::slotAction(const ActionData& ad)
             case(PROCESS):
             {
                 busy(true);
-                processing(ad.filePath);
+                processing(ad.fileUrl);
                 break;
             }
             default: 
@@ -787,7 +775,7 @@ void BatchDialog::slotAction(const ActionData& ad)
                     break;
                 case(PROCESS):
                 {
-                    processingFailed(ad.filePath);
+                    processingFailed(ad.fileUrl);
                     processOne();
                     break;
                 }
@@ -804,32 +792,29 @@ void BatchDialog::slotAction(const ActionData& ad)
             {
                 case(IDENTIFY): 
                 {
-                    QFileInfo fi(ad.filePath);
-                    RawItem *rawItem = d->itemDict.find(fi.fileName());
-                    if (rawItem) 
+                    CListViewItem *item = findItem(ad.fileUrl);
+                    if (item) 
                     {
-                        rawItem->viewItem->setText(3, ad.message);
-                        rawItem->identity = ad.message;
+                        item->setIdentity(ad.message);
                     }
                     break;
                 }
                 case(THUMBNAIL): 
                 {
-                    QFileInfo fi(ad.filePath);
-                    RawItem *rawItem = d->itemDict.find(fi.fileName());
-                    if (rawItem) 
+                    CListViewItem *item = findItem(ad.fileUrl);
+                    if (item) 
                     {
                         if (!ad.image.isNull())
                         {
                             QPixmap pix = QPixmap::fromImage(ad.image.scaled(64, 64, Qt::KeepAspectRatio));
-                            rawItem->viewItem->setThumbnail(pix);
+                            item->setThumbnail(pix);
                         }
                     }
                     break;
                 }
                 case(PROCESS):
                 {
-                    processed(ad.filePath, ad.destPath);
+                    processed(ad.fileUrl, ad.destPath);
                     processOne();
                     break;
                 }
@@ -841,6 +826,28 @@ void BatchDialog::slotAction(const ActionData& ad)
             }
         }
     }
+}
+
+CListViewItem* BatchDialog::findItem(const KUrl& url)
+{
+    int i                 = 0;
+    QTreeWidgetItem *item = 0;
+    do
+    {
+        item = d->listView->topLevelItem(i);
+        CListViewItem *lvItem = dynamic_cast<CListViewItem*>(item);
+        if (lvItem)
+        {
+            if (lvItem->url() == url)
+            {
+                return lvItem;
+            }
+        }
+        i++;
+    }
+    while (item);
+
+    return 0;
 }
 
 } // NameSpace KIPIRawConverterPlugin

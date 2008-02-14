@@ -7,7 +7,7 @@
  * Description : a class to manage plugin actions using threads
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * NOTE: Do not use kdDebug() in this implementation because 
  *       it will be multithreaded. Use qDebug() instead. 
@@ -63,7 +63,7 @@ public:
     {
         public:
 
-            QString                          filePath;
+            KUrl                             fileUrl;
             Action                           action;
             SaveSettingsWidget::OutputFormat outputFormat;
             KDcrawIface::RawDecodingSettings decodingSettings;
@@ -135,7 +135,7 @@ void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
          it != urlList.end(); ++it ) 
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-        t->filePath               = (*it).path();
+        t->fileUrl                = *it;
         t->action                 = full ? IDENTIFY_FULL : IDENTIFY;
 
         QMutexLocker lock(&d->mutex);
@@ -157,7 +157,7 @@ void ActionThread::thumbRawFiles(const KUrl::List& urlList)
          it != urlList.end(); ++it ) 
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-        t->filePath               = (*it).path();
+        t->fileUrl                = *it;
         t->action                 = THUMBNAIL;
 
         QMutexLocker lock(&d->mutex);
@@ -172,7 +172,7 @@ void ActionThread::processRawFiles(const KUrl::List& urlList)
          it != urlList.end(); ++it ) 
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-        t->filePath               = (*it).path();
+        t->fileUrl                = *it;
         t->outputFormat           = d->outputFormat;
         t->decodingSettings       = d->rawDecodingSettings;
         t->action                 = PROCESS;
@@ -189,7 +189,7 @@ void ActionThread::processHalfRawFiles(const KUrl::List& urlList)
          it != urlList.end(); ++it ) 
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-        t->filePath               = (*it).path(); //deep copy
+        t->fileUrl                = *it;
         t->outputFormat           = d->outputFormat;
         t->decodingSettings       = d->rawDecodingSettings;
         t->action                 = PREVIEW;
@@ -232,8 +232,8 @@ void ActionThread::run()
                 {
                     // Identify Camera model.    
                     KDcrawIface::DcrawInfoContainer info;
-                    d->dcrawIface.rawFileIdentify(info, t->filePath);
-    
+                    d->dcrawIface.rawFileIdentify(info, t->fileUrl.path());
+
                     QString identify = i18n("Cannot identify Raw image");
                     if (info.isDecodable)
                     {
@@ -243,41 +243,41 @@ void ActionThread::run()
                         {
                             identify = i18n("Make: %1\n", info.make); 
                             identify.append(i18n("Model: %1\n", info.model));
-    
+
                             if (info.dateTime.isValid())
                             {
                                 identify.append(i18n("Created: %1\n",
                                         KGlobal::locale()->formatDateTime(info.dateTime,
                                                                         KLocale::ShortDate, true)));
                             }
-    
+
                             if (info.aperture != -1.0)
                             {
                                 identify.append(i18n("Aperture: f/%1\n", QString::number(info.aperture)));
                             }
-    
+
                             if (info.focalLength != -1.0)
                             {
                                 identify.append(i18n("Focal: %1 mm\n", info.focalLength));
-                            }                        
-    
+                            }
+
                             if (info.exposureTime != -1.0)
                             {
                                 identify.append(i18n("Exposure: 1/%1 s\n", info.exposureTime));
                             }
-    
+
                             if (info.sensitivity != -1)
                             {
                                 identify.append(i18n("Sensitivity: %1 ISO", info.sensitivity));
                             }
                         }
                     }
-    
+
                     ActionData ad;
-                    ad.action   = t->action;
-                    ad.filePath = t->filePath;
-                    ad.message  = identify;
-                    ad.success  = true;
+                    ad.action  = t->action;
+                    ad.fileUrl = t->fileUrl;
+                    ad.message = identify;
+                    ad.success = true;
                     emit finished(ad);
                     break;
                 }
@@ -286,59 +286,59 @@ void ActionThread::run()
                 {
                     // Get embedded RAW file thumbnail.
                     QImage image;
-                    d->dcrawIface.loadDcrawPreview(image, t->filePath);
-    
+                    d->dcrawIface.loadDcrawPreview(image, t->fileUrl.path());
+
                     ActionData ad;
-                    ad.action   = t->action;
-                    ad.filePath = t->filePath;
-                    ad.image    = image;
-                    ad.success  = true;
+                    ad.action  = t->action;
+                    ad.fileUrl = t->fileUrl;
+                    ad.image   = image;
+                    ad.success = true;
                     emit finished(ad);
                     break;
                 }
-    
+
                 case PREVIEW: 
                 {
                     ActionData ad1;
                     ad1.action   = PREVIEW;
-                    ad1.filePath = t->filePath;
+                    ad1.fileUrl  = t->fileUrl;
                     ad1.starting = true;
                     emit starting(ad1);
-    
+
                     QString destPath;
-                    bool result = d->dcrawIface.decodeHalfRAWImage(t->filePath, destPath, 
-                                                                  t->outputFormat, t->decodingSettings);
-    
+                    bool result = d->dcrawIface.decodeHalfRAWImage(t->fileUrl.path(), destPath, 
+                                                                   t->outputFormat, t->decodingSettings);
+
                     ActionData ad2;
                     ad2.action   = PREVIEW;
-                    ad2.filePath = t->filePath;
+                    ad2.fileUrl  = t->fileUrl;
                     ad2.destPath = destPath;
                     ad2.success  = result;
                     emit finished(ad2);
                     break;
                 }
-    
+
                 case PROCESS: 
                 {
                     ActionData ad1;
                     ad1.action   = PROCESS;
-                    ad1.filePath = t->filePath;
+                    ad1.fileUrl  = t->fileUrl;
                     ad1.starting = true;
                     emit starting(ad1);
-    
+
                     QString destPath;
-                    bool result = d->dcrawIface.decodeRAWImage(t->filePath, destPath, 
-                                                              t->outputFormat, t->decodingSettings);
-    
+                    bool result = d->dcrawIface.decodeRAWImage(t->fileUrl.path(), destPath, 
+                                                               t->outputFormat, t->decodingSettings);
+
                     ActionData ad2;
                     ad2.action   = PROCESS;
-                    ad2.filePath = t->filePath;
+                    ad2.fileUrl  = t->fileUrl;
                     ad2.destPath = destPath;
                     ad2.success  = result;
                     emit starting(ad2);
                     break;
                 }
-    
+
                 default: 
                 {
                     qCritical() << "KIPIRawConverterPlugin:ActionThread: "

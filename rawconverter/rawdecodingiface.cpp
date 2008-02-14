@@ -7,7 +7,7 @@
  * Description : RAW decoding interface
  *
  * Copyright (C) 2006-2007 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * NOTE: Do not use kdDebug() in this implementation because 
  *       it will be multithreaded. Use qDebug() instead. 
@@ -194,7 +194,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             return false;
         }
     }
-    
+
     if (m_cancel)
     {
         ::remove(QFile::encodeName(destPath));

@@ -6,7 +6,7 @@
  * Date        : 2006-09-13
  * Description : save settings widgets
  *
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -35,7 +35,7 @@ class SaveSettingsWidgetPriv;
 class SaveSettingsWidget : public QWidget
 {
     Q_OBJECT
-    
+
 public:
 
     enum OutputFormat 
@@ -51,7 +51,7 @@ public:
         OVERWRITE = 0,
         ASKTOUSER
     };
-    
+
 public:
 
     SaveSettingsWidget(QWidget *parent);
