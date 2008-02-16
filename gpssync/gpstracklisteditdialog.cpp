@@ -166,8 +166,8 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     connect(this, SIGNAL(cancelClicked()),
             this, SLOT(slotCancel()));
 
-    connect(d->worldMap, SIGNAL(signalNewGPSLocationFromMap(int, double, double)),
-            this, SLOT(slotNewGPSLocationFromMap(int, double, double)));
+    connect(d->worldMap, SIGNAL(signalNewGPSLocationFromMap(int, double, double, double)),
+            this, SLOT(slotNewGPSLocationFromMap(int, double, double, double)));
 
     connect(d->worldMap, SIGNAL(signalMarkerSelectedFromMap(int)),
             this, SLOT(slotMarkerSelectedFromMap(int)));
@@ -308,7 +308,7 @@ void GPSTrackListEditDialog::slotMarkerSelectedFromMap(int id)
     while (item);
 }
 
-void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, double lng)
+void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, double lng, double alt)
 {
     int i                 = 0;
     QTreeWidgetItem *item = 0;
@@ -324,6 +324,7 @@ void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, doubl
                 GPSDataContainer data = info.gpsData();
                 data.setLatitude(lat);
                 data.setLongitude(lng);
+                data.setAltitude(alt);
                 info.setGPSData(data);
                 info.setDirty(true);
                 lvItem->setGPSInfo(lvItem->dateTime(), info);

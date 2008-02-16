@@ -52,15 +52,13 @@
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAy_Vv5rc03ctmYvwfsuTH6RSK29CRGKrdb78LNYpP1_riKtR3zRRxy4unyuWAi2vp7m1isLwuHObXDg" 
 type="text/javascript">
 </script>
+<script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0" type="text/javascript"></script>
+<script src="http://www.google.com/uds/solutions/localsearch/gmlocalsearch.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://topocoding.com/api/getapi_v1.php?key=ILOGFVOBCUOSRHC"></script>
 <style type="text/css">
       @import url("http://www.google.com/uds/css/gsearch.css");
       @import url("http://www.google.com/uds/solutions/localsearch/gmlocalsearch.css");
-      }
-</style>
-<script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0" type="text/javascript"></script>
-<script src="http://www.google.com/uds/solutions/localsearch/gmlocalsearch.js" type="text/javascript"></script>
 
-<style type="text/css">
     /*<![CDATA[*/
     body {
         padding: 0px;
@@ -104,6 +102,7 @@ function loadMap()
     {
         $lat   = sprintf("lat%d", $i);
         $lng   = sprintf("lng%d", $i);
+        $alt   = sprintf("alt%d", $i);
         $title = sprintf("title%d", $i);
 
         echo "var markeroptions";
@@ -136,8 +135,7 @@ function loadMap()
         echo "var point = marker";
         echo $i;
         echo ".getPoint();";
-        echo "msg = \"(mkr:\" + $i + \")\";";
-        echo "window.status=msg;});\n";
+        echo "topoGetAltitude( point.lat(), point.lng(), function( altitude ) { window.status = \"(mkr:\" + $i + \", lat:\" + point.lat() + \", lon:\" + point.lng() + \", alt:\" + altitude  + \")\"; });});\n";
 
         // Post drag-move marker position events.
         echo "GEvent.addListener(marker";

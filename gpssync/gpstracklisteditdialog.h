@@ -58,7 +58,7 @@ protected slots:
     void slotUpdateWorldMap();
     void slotHelp();
     void slotThumbnail(const KUrl& url, const QPixmap& pix);
-    void slotNewGPSLocationFromMap(int id, double lat, double lng);
+    void slotNewGPSLocationFromMap(int id, double lat, double lng, double alt);
     void slotMarkerSelectedFromMap(int id);
 
 protected:

@@ -61,7 +61,7 @@ public:
 
 signals:
 
-    void signalNewGPSLocationFromMap(int, double, double);
+    void signalNewGPSLocationFromMap(int, double, double, double);
     void signalMarkerSelectedFromMap(int);
 
 protected:

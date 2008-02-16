@@ -104,6 +104,7 @@ void GPSTrackListWidget::extractGPSPositionfromStatusbar(const QString& txt)
     QString idTxt  = status.section(",", 0, 0);
     QString latTxt = status.section(",", 1, 1);
     QString lngTxt = status.section(",", 2, 2);
+    QString altTxt = status.section(",", 3, 3);
     int id         = idTxt.toInt();        
     if (latTxt.isEmpty() || lngTxt.isEmpty())
     {
@@ -114,10 +115,12 @@ void GPSTrackListWidget::extractGPSPositionfromStatusbar(const QString& txt)
     {
         latTxt.remove(0, 5);
         lngTxt.remove(0, 5);
+        altTxt.remove(0, 5);
         double lat = latTxt.toDouble();
         double lng = lngTxt.toDouble();
-        emit signalNewGPSLocationFromMap(id, lat, lng);
-        kDebug() << id << "::" << lat << "::" << lng << endl;
+        double alt = altTxt.toDouble();
+        emit signalNewGPSLocationFromMap(id, lat, lng, alt);
+        kDebug() << id << "::" << lat << "::" << lng << "::" << alt << endl;
     }
 }
 
@@ -138,7 +141,7 @@ void GPSTrackListWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
     QString status = jsStatusBarText();
 
     // If a new point to the map have been moved around the map, the Status 
-    // string is like : "(mkr:1, lat:25.5894748, lon:47.6897455478)"
+    // string is like : "(mkr:1, lat:25.5894748, lon:47.6897455478, alt:211)"
     if (status.startsWith(QString("(mkr:")))
         extractGPSPositionfromStatusbar(status);
 
@@ -184,6 +187,8 @@ void GPSTrackListWidget::resized()
         url.append(QString::number(it.value().gpsData().latitude()));
         url.append(QString("&lng%1=").arg(id));
         url.append(QString::number(it.value().gpsData().longitude()));
+        url.append(QString("&alt%1=").arg(id));
+        url.append(QString::number(it.value().gpsData().altitude()));
         url.append(QString("&title%1=").arg(id));
         url.append(QString("%1").arg(id));
     }
