@@ -144,8 +144,7 @@ function loadMap()
         echo "var point = marker";
         echo $i;
         echo ".getPoint();";
-        echo "msg = \"(mkr:\" + $i + \", lat:\" + point.lat() + \", lon:\" + point.lng() + \")\";";
-        echo "window.status=msg;});\n";
+        echo "topoGetAltitude( point.lat(), point.lng(), function( altitude ) { window.status = \"(mkr:\" + $i + \", lat:\" + point.lat() + \", lon:\" + point.lng() + \", alt:\" + altitude  + \")\"; });});\n";
 
         // Post drag-end marker position event.
         echo "GEvent.addListener(marker";
@@ -154,8 +153,7 @@ function loadMap()
         echo "var point = marker";
         echo $i;
         echo ".getPoint();";
-        echo "msg = \"(mkr:\" + $i + \", lat:\" + point.lat() + \", lon:\" + point.lng() + \")\";";
-        echo "window.status=msg;});\n";
+        echo "topoGetAltitude( point.lat(), point.lng(), function( altitude ) { window.status = \"(mkr:\" + $i + \", lat:\" + point.lat() + \", lon:\" + point.lng() + \", alt:\" + altitude  + \")\"; });});\n";
     }
 ?>
 
