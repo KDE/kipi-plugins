@@ -42,7 +42,7 @@ class GPSEditDialog : public KDialog
 
 public:
 
-    GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData, 
+    GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
                   const QString& fileName, bool hasGPSInfo);
     ~GPSEditDialog();
 
@@ -52,7 +52,7 @@ protected slots:
 
     void slotOk();
     void slotCancel();
-    void slotNewGPSLocationFromMap(const QString& lat, const QString& lon);
+    void slotNewGPSLocationFromMap(const QString& lat, const QString& lon, const QString& alt);
     void slotUpdateWorldMap();
     void slotGotoLocation();
     void slotGPSPositionChanged();

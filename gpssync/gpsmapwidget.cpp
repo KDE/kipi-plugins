@@ -7,6 +7,7 @@
  * Description : a widget to display a GPS web map locator.
  *
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright 2008 by Gerhard Kulzer <gerhard at kulzer dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -41,12 +42,13 @@ public:
 
     GPSMapWidgetPrivate()
     {
-        gpsLocalorUrl = QString("http://digikam3rdparty.free.fr/gpslocator/getlonlat.php");
+        gpsLocalorUrl = QString("http://digikam3rdparty.free.fr/gpslocator/getlonlatalt.php");
     }
 
     QString gpsLocalorUrl;
     QString latitude;
     QString longitude;
+    QString altitude;
     QString zoomLevel;
     QString mapType;
     QString fileName;
@@ -88,12 +90,6 @@ void GPSMapWidget::setGPSPosition(const QString& lat, const QString& lon)
     d->longitude = lon;
 }
 
-void GPSMapWidget::GPSPosition(QString& lat, QString& lon)
-{
-    lat = d->latitude;
-    lon = d->longitude;
-}
-
 void GPSMapWidget::setMapType(const QString& mapType)
 {
     d->mapType = mapType;
@@ -121,16 +117,18 @@ void GPSMapWidget::extractGPSPositionfromStatusbar(const QString& txt)
     status.truncate(status.length()-1);
     d->latitude  = status.section(",", 0, 0);
     d->longitude = status.section(",", 1, 1);
+    d->altitude = status.section(",", 2, 2);
     d->longitude.remove(0, 5);
-    emit signalNewGPSLocationFromMap(d->latitude, d->longitude);
+    d->altitude.remove(0, 5);
+    emit signalNewGPSLocationFromMap(d->latitude, d->longitude, d->altitude);
 }
 
 void GPSMapWidget::khtmlMouseMoveEvent(khtml::MouseMoveEvent *e)
 {
     QString status = jsStatusBarText();
 
-    // If a new point to the map have been moved, the Status 
-    // string is like : "(lat:25.5894748, lon:47.6897455478)"
+    // If a new point to the map have been moved, the Status
+    // string is like : "(lat:25.5894748, lon:47.6897455478, alt:211)"
     if (status.startsWith(QString("(lat:")))
         extractGPSPositionfromStatusbar(status);
 
@@ -141,12 +139,12 @@ void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
 {
     QString status = jsStatusBarText();
 
-    // If a new point to the map have been moved, the Status 
-    // string is like : "(lat:25.5894748, lon:47.6897455478)"
+    // If a new point to the map have been moved, the Status
+    // string is like : "(lat:25.5894748, lon:47.6897455478, alt:211)"
     if (status.startsWith(QString("(lat:")))
         extractGPSPositionfromStatusbar(status);
 
-    // If a new map zoom level have been selected, the Status 
+    // If a new map zoom level have been selected, the Status
     // string is like : "newZoomLevel:5"
     if (status.startsWith(QString("newZoomLevel:")))
     {
@@ -154,7 +152,7 @@ void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
         d->zoomLevel = status;
     }
 
-    // If a new map type have been selected, the Status 
+    // If a new map type have been selected, the Status
     // string is like : "newMapType:G_SATELLITE_TYPE"
     if (status.startsWith(QString("newMapType:")))
     {
@@ -172,6 +170,8 @@ void GPSMapWidget::resized()
     url.append(d->latitude);
     url.append("&longitude=");
     url.append(d->longitude);
+    url.append("&altitude=");
+    url.append(d->altitude);
     url.append("&width=");
     url.append(QString::number(view()->width()));
     url.append("&height=");
