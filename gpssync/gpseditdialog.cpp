@@ -95,8 +95,8 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
 
     QGridLayout* grid = new QGridLayout(plainPage(), 8, 3, 0, spacingHint());
 
-    QLabel *message   = new QLabel(i18n("<p>Use the map on the right to select the place where "
-                                        "the picture have been taken. Click with left mouse button "
+    QLabel *message   = new QLabel(i18n("<p>Use the map on the right to select the location where "
+                                        "the picture have been taken. Click with left mouse button or move the marker "
                                         "on the map to get the GPS coordinates.<p>"), plainPage());
 
     QLabel *altitudeLabel  = new QLabel(i18n("Altitude:"), plainPage());
