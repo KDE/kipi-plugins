@@ -210,7 +210,7 @@ GPSSyncDialog::GPSSyncDialog( KIPI::Interface* interface, QWidget* parent)
     QWhatsThis::add(d->timeZoneCB, i18n("<p>Sets the time zone the camera was set to "
                     "during photo shooting, so that the time stamps of the images "
                     "can be converted to GMT to match the GPS time reference.\n"
-                    "Note: negative offsets count eastwards from zero longitude (GMT), "
+                    "Note: positive offsets count eastwards from zero longitude (GMT), "
                     "they are 'ahead of time'."));
 
     d->interpolateBox = new QCheckBox(i18n("Interpolate"), settingsBox);
