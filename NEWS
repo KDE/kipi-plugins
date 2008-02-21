@@ -12,7 +12,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 002 ==> 154849 : GPSSync      : Updates first find only, does not match other than GMT camera time.
 003 ==> 144070 : GPSSync      : Typing coordinates doesn't update the map.
 004 ==> 152526 : GPSSync      : Remember last display options like zoom and map/sattelite/hybrid view.
-005 ==> 
+005 ==> 158176 : SlideShow    : Linking errors in slideshow plugin (missing -lXrandr)
+006 ==> 
 
 v 0.1.5 - RC2
 ---------------------------------------------------------------------------
