@@ -7,7 +7,7 @@
  * Description : Raw converter batch dialog
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -131,7 +131,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to batch convert Raw images"),
                                            "(c) 2003-2005, Renchi Raju\n"
-                                           "(c) 2006-2007, Gilles Caulier");
+                                           "(c) 2006-2008, Gilles Caulier");
 
     m_about->addAuthor("Renchi Raju", I18N_NOOP("Original author"),
                        "renchi at pooh dot tam dot uiuc dot edu");
@@ -203,8 +203,11 @@ void BatchDialog::readSettings()
     KConfig config("kipirc");
     config.setGroup("RawConverter Settings");
 
-    m_decodingSettingsBox->setCameraWB(config.readBoolEntry("Use Camera WB", true));
-    m_decodingSettingsBox->setAutoColorBalance(config.readBoolEntry("Use Auto Color Balance", true));
+    m_decodingSettingsBox->setWhiteBalance((KDcrawIface::RawDecodingSettings::WhiteBalance)
+                                            config.readNumEntry("White Balance",
+                                            KDcrawIface::RawDecodingSettings::CAMERA));
+    m_decodingSettingsBox->setCustomWhiteBalance(config.readNumEntry("Custom White Balance", 6500));
+    m_decodingSettingsBox->setCustomWhiteBalanceGreen(config.readDoubleNumEntry("Custom White Balance Green", 1.0));
     m_decodingSettingsBox->setFourColor(config.readBoolEntry("Four Color RGB", false));
     m_decodingSettingsBox->setUnclipColor(config.readNumEntry("Unclip Color", 0));
     m_decodingSettingsBox->setDontStretchPixels(config.readBoolEntry("Dont Stretch Pixels", false));
@@ -216,11 +219,6 @@ void BatchDialog::readSettings()
     m_decodingSettingsBox->setUseCACorrection(config.readBoolEntry("EnableCACorrection", false));
     m_decodingSettingsBox->setcaRedMultiplier(config.readDoubleNumEntry("caRedMultiplier", 1.0));
     m_decodingSettingsBox->setcaBlueMultiplier(config.readDoubleNumEntry("caBlueMultiplier", 1.0));
-    m_decodingSettingsBox->setUseColorMultipliers(config.readBoolEntry("Use Color Multipliers", false));
-    m_decodingSettingsBox->setcolorMultiplier1(config.readDoubleNumEntry("Color Multiplier1", 1.0));
-    m_decodingSettingsBox->setcolorMultiplier2(config.readDoubleNumEntry("Color Multiplier2", 1.0));
-    m_decodingSettingsBox->setcolorMultiplier3(config.readDoubleNumEntry("Color Multiplier3", 1.0));
-    m_decodingSettingsBox->setcolorMultiplier4(config.readDoubleNumEntry("Color Multiplier4", 1.0));
 
     m_decodingSettingsBox->setQuality(
         (KDcrawIface::RawDecodingSettings::DecodingQuality)config.readNumEntry("Decoding Quality", 
@@ -246,8 +244,9 @@ void BatchDialog::saveSettings()
     KConfig config("kipirc");
     config.setGroup("RawConverter Settings");
 
-    config.writeEntry("Use Camera WB", m_decodingSettingsBox->useCameraWB());
-    config.writeEntry("Use Auto Color Balance", m_decodingSettingsBox->useAutoColorBalance());
+    config.writeEntry("White Balance", m_decodingSettingsBox->whiteBalance());
+    config.writeEntry("Custom White Balance", m_decodingSettingsBox->customWhiteBalance());
+    config.writeEntry("Custom White Balance Green", m_decodingSettingsBox->customWhiteBalanceGreen());
     config.writeEntry("Four Color RGB", m_decodingSettingsBox->useFourColor());
     config.writeEntry("Unclip Color", m_decodingSettingsBox->unclipColor());
     config.writeEntry("Dont Stretch Pixels", m_decodingSettingsBox->useDontStretchPixels());
@@ -261,11 +260,6 @@ void BatchDialog::saveSettings()
     config.writeEntry("caBlueMultiplier", m_decodingSettingsBox->caBlueMultiplier());
     config.writeEntry("Decoding Quality", (int)m_decodingSettingsBox->quality());
     config.writeEntry("Output Color Space", (int)m_decodingSettingsBox->outputColorSpace());
-    config.writeEntry("Use Color Multipliers", m_decodingSettingsBox->useColorMultipliers());
-    config.writeEntry("Color Multiplier1", m_decodingSettingsBox->colorMultiplier1());
-    config.writeEntry("Color Multiplier2", m_decodingSettingsBox->colorMultiplier2());
-    config.writeEntry("Color Multiplier3", m_decodingSettingsBox->colorMultiplier3());
-    config.writeEntry("Color Multiplier4", m_decodingSettingsBox->colorMultiplier4());
 
     config.writeEntry("Output Format", (int)m_saveSettingsBox->fileFormat());
     config.writeEntry("Conflict", (int)m_saveSettingsBox->conflictRule());
@@ -308,8 +302,9 @@ void BatchDialog::slotUser1()
     m_progressBar->show();
 
     KDcrawIface::RawDecodingSettings rawDecodingSettings;
-    rawDecodingSettings.cameraColorBalance         = m_decodingSettingsBox->useCameraWB();
-    rawDecodingSettings.automaticColorBalance      = m_decodingSettingsBox->useAutoColorBalance();
+    rawDecodingSettings.whiteBalance               = m_decodingSettingsBox->whiteBalance();
+    rawDecodingSettings.customWhiteBalance         = m_decodingSettingsBox->customWhiteBalance();
+    rawDecodingSettings.customWhiteBalanceGreen    = m_decodingSettingsBox->customWhiteBalanceGreen();
     rawDecodingSettings.RGBInterpolate4Colors      = m_decodingSettingsBox->useFourColor();
     rawDecodingSettings.unclipColors               = m_decodingSettingsBox->unclipColor();
     rawDecodingSettings.DontStretchPixels          = m_decodingSettingsBox->useDontStretchPixels();
@@ -323,11 +318,6 @@ void BatchDialog::slotUser1()
     rawDecodingSettings.caMultiplier[1]            = m_decodingSettingsBox->caBlueMultiplier();
     rawDecodingSettings.RAWQuality                 = m_decodingSettingsBox->quality();
     rawDecodingSettings.outputColorSpace           = m_decodingSettingsBox->outputColorSpace();
-    rawDecodingSettings.enableColorMultipliers     = m_decodingSettingsBox->useColorMultipliers();
-    rawDecodingSettings.colorBalanceMultipliers[0] = m_decodingSettingsBox->colorMultiplier1();
-    rawDecodingSettings.colorBalanceMultipliers[1] = m_decodingSettingsBox->colorMultiplier2();
-    rawDecodingSettings.colorBalanceMultipliers[2] = m_decodingSettingsBox->colorMultiplier3();
-    rawDecodingSettings.colorBalanceMultipliers[3] = m_decodingSettingsBox->colorMultiplier4();
 
     m_thread->setRawDecodingSettings(rawDecodingSettings, m_saveSettingsBox->fileFormat());
     processOne();
