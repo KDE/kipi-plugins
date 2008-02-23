@@ -288,8 +288,11 @@ void SingleDialog::readSettings()
     KConfigGroup group = config.group(QString("RawConverter Settings"));
 
     d->decodingSettingsBox->setSixteenBits(group.readEntry("Sixteen Bits", false));
-    d->decodingSettingsBox->setCameraWB(group.readEntry("Use Camera WB", true));
-    d->decodingSettingsBox->setAutoColorBalance(group.readEntry("Use Auto Color Balance", true));
+    d->decodingSettingsBox->setWhiteBalance((KDcrawIface::RawDecodingSettings::WhiteBalance)
+                                            group.readEntry("White Balance",
+                                            (int)KDcrawIface::RawDecodingSettings::CAMERA));
+    d->decodingSettingsBox->setCustomWhiteBalance(group.readEntry("Custom White Balance", 6500));
+    d->decodingSettingsBox->setCustomWhiteBalanceGreen(group.readEntry("Custom White Balance Green", 1.0));
     d->decodingSettingsBox->setFourColor(group.readEntry("Four Color RGB", false));
     d->decodingSettingsBox->setUnclipColor(group.readEntry("Unclip Color", 0));
     d->decodingSettingsBox->setDontStretchPixels(group.readEntry("Dont Stretch Pixels", false));
@@ -301,11 +304,6 @@ void SingleDialog::readSettings()
     d->decodingSettingsBox->setUseCACorrection(group.readEntry("EnableCACorrection", false));
     d->decodingSettingsBox->setcaRedMultiplier(group.readEntry("caRedMultiplier", 1.0));
     d->decodingSettingsBox->setcaBlueMultiplier(group.readEntry("caBlueMultiplier", 1.0));
-    d->decodingSettingsBox->setUseColorMultipliers(group.readEntry("Use Color Multipliers", false));
-    d->decodingSettingsBox->setcolorMultiplier1(group.readEntry("Color Multiplier1", 1.0));
-    d->decodingSettingsBox->setcolorMultiplier2(group.readEntry("Color Multiplier2", 1.0));
-    d->decodingSettingsBox->setcolorMultiplier3(group.readEntry("Color Multiplier3", 1.0));
-    d->decodingSettingsBox->setcolorMultiplier4(group.readEntry("Color Multiplier4", 1.0));
 
     d->decodingSettingsBox->setQuality(
         (KDcrawIface::RawDecodingSettings::DecodingQuality)group.readEntry("Decoding Quality", 
@@ -335,8 +333,9 @@ void SingleDialog::saveSettings()
     KConfigGroup group = config.group(QString("RawConverter Settings"));
 
     group.writeEntry("Sixteen Bits", d->decodingSettingsBox->sixteenBits());
-    group.writeEntry("Use Camera WB", d->decodingSettingsBox->useCameraWB());
-    group.writeEntry("Use Auto Color Balance", d->decodingSettingsBox->useAutoColorBalance());
+    group.writeEntry("White Balance", (int)d->decodingSettingsBox->whiteBalance());
+    group.writeEntry("Custom White Balance", d->decodingSettingsBox->customWhiteBalance());
+    group.writeEntry("Custom White Balance Green", d->decodingSettingsBox->customWhiteBalanceGreen());
     group.writeEntry("Four Color RGB", d->decodingSettingsBox->useFourColor());
     group.writeEntry("Unclip Color", d->decodingSettingsBox->unclipColor());
     group.writeEntry("Dont Stretch Pixels", d->decodingSettingsBox->useDontStretchPixels());
@@ -350,12 +349,7 @@ void SingleDialog::saveSettings()
     group.writeEntry("caBlueMultiplier", d->decodingSettingsBox->caBlueMultiplier());
     group.writeEntry("Decoding Quality", (int)d->decodingSettingsBox->quality());
     group.writeEntry("Output Color Space", (int)d->decodingSettingsBox->outputColorSpace());
-    group.writeEntry("Use Color Multipliers", d->decodingSettingsBox->useColorMultipliers());
-    group.writeEntry("Color Multiplier1", d->decodingSettingsBox->colorMultiplier1());
-    group.writeEntry("Color Multiplier2", d->decodingSettingsBox->colorMultiplier2());
-    group.writeEntry("Color Multiplier3", d->decodingSettingsBox->colorMultiplier3());
-    group.writeEntry("Color Multiplier4", d->decodingSettingsBox->colorMultiplier4());
-
+    
     group.writeEntry("Output Format", (int)d->saveSettingsBox->fileFormat());
     group.writeEntry("Conflict", (int)d->saveSettingsBox->conflictRule());
 
@@ -369,8 +363,9 @@ void SingleDialog::slotUser1()
 {
     KDcrawIface::RawDecodingSettings rawDecodingSettings;
     rawDecodingSettings.sixteenBitsImage           = d->decodingSettingsBox->sixteenBits();
-    rawDecodingSettings.cameraColorBalance         = d->decodingSettingsBox->useCameraWB();
-    rawDecodingSettings.automaticColorBalance      = d->decodingSettingsBox->useAutoColorBalance();
+    rawDecodingSettings.whiteBalance               = d->decodingSettingsBox->whiteBalance();
+    rawDecodingSettings.customWhiteBalance         = d->decodingSettingsBox->customWhiteBalance();
+    rawDecodingSettings.customWhiteBalanceGreen    = d->decodingSettingsBox->customWhiteBalanceGreen();
     rawDecodingSettings.RGBInterpolate4Colors      = d->decodingSettingsBox->useFourColor();
     rawDecodingSettings.unclipColors               = d->decodingSettingsBox->unclipColor();
     rawDecodingSettings.DontStretchPixels          = d->decodingSettingsBox->useDontStretchPixels();
@@ -384,11 +379,6 @@ void SingleDialog::slotUser1()
     rawDecodingSettings.caMultiplier[1]            = d->decodingSettingsBox->caBlueMultiplier();
     rawDecodingSettings.RAWQuality                 = d->decodingSettingsBox->quality();
     rawDecodingSettings.outputColorSpace           = d->decodingSettingsBox->outputColorSpace();
-    rawDecodingSettings.enableColorMultipliers     = d->decodingSettingsBox->useColorMultipliers();
-    rawDecodingSettings.colorBalanceMultipliers[0] = d->decodingSettingsBox->colorMultiplier1();
-    rawDecodingSettings.colorBalanceMultipliers[1] = d->decodingSettingsBox->colorMultiplier2();
-    rawDecodingSettings.colorBalanceMultipliers[2] = d->decodingSettingsBox->colorMultiplier3();
-    rawDecodingSettings.colorBalanceMultipliers[3] = d->decodingSettingsBox->colorMultiplier4();
 
     d->thread->setRawDecodingSettings(rawDecodingSettings, SaveSettingsWidget::OUTPUT_PNG);
     d->thread->processHalfRawFile(KUrl(d->inputFile));
@@ -401,8 +391,9 @@ void SingleDialog::slotUser2()
 {
     KDcrawIface::RawDecodingSettings rawDecodingSettings;
     rawDecodingSettings.sixteenBitsImage           = d->decodingSettingsBox->sixteenBits();
-    rawDecodingSettings.cameraColorBalance         = d->decodingSettingsBox->useCameraWB();
-    rawDecodingSettings.automaticColorBalance      = d->decodingSettingsBox->useAutoColorBalance();
+    rawDecodingSettings.whiteBalance               = d->decodingSettingsBox->whiteBalance();
+    rawDecodingSettings.customWhiteBalance         = d->decodingSettingsBox->customWhiteBalance();
+    rawDecodingSettings.customWhiteBalanceGreen    = d->decodingSettingsBox->customWhiteBalanceGreen();
     rawDecodingSettings.RGBInterpolate4Colors      = d->decodingSettingsBox->useFourColor();
     rawDecodingSettings.unclipColors               = d->decodingSettingsBox->unclipColor();
     rawDecodingSettings.DontStretchPixels          = d->decodingSettingsBox->useDontStretchPixels();
@@ -416,11 +407,6 @@ void SingleDialog::slotUser2()
     rawDecodingSettings.caMultiplier[1]            = d->decodingSettingsBox->caBlueMultiplier();
     rawDecodingSettings.RAWQuality                 = d->decodingSettingsBox->quality();
     rawDecodingSettings.outputColorSpace           = d->decodingSettingsBox->outputColorSpace();
-    rawDecodingSettings.enableColorMultipliers     = d->decodingSettingsBox->useColorMultipliers();
-    rawDecodingSettings.colorBalanceMultipliers[0] = d->decodingSettingsBox->colorMultiplier1();
-    rawDecodingSettings.colorBalanceMultipliers[1] = d->decodingSettingsBox->colorMultiplier2();
-    rawDecodingSettings.colorBalanceMultipliers[2] = d->decodingSettingsBox->colorMultiplier3();
-    rawDecodingSettings.colorBalanceMultipliers[3] = d->decodingSettingsBox->colorMultiplier4();
 
     d->thread->setRawDecodingSettings(rawDecodingSettings, d->saveSettingsBox->fileFormat());
     d->thread->processRawFile(KUrl(d->inputFile));

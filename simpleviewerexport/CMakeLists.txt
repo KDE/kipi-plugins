@@ -1,0 +1,27 @@
+SET(kipiplugin_simpleviewer_PART_SRCS plugin_simpleviewer.cpp 
+                                      firstrundlg.cpp
+                                      selectionpage.cpp
+                                      generalpage.cpp
+                                      lookpage.cpp
+                                      svedialog.cpp 
+                                      simpleviewerexport.cpp 
+   )
+
+KDE4_ADD_PLUGIN(kipiplugin_simpleviewer ${kipiplugin_simpleviewer_PART_SRCS})
+
+TARGET_LINK_LIBRARIES(kipiplugin_simpleviewer 
+                      ${KDE4_KPARTS_LIBS} 
+                      ${KDE4_KIO_LIBS} 
+                      ${QT_AND_KDECORE_LIBS} 
+                      ${KIPI_LIBRARIES} 
+                      kipiplugins
+                     )
+
+KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
+
+INSTALL(TARGETS kipiplugin_simpleviewer DESTINATION ${PLUGIN_INSTALL_DIR})
+
+INSTALL(FILES kipiplugin_simpleviewer.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+
+INSTALL(FILES space.png DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_simpleviewerexport/simpleviewer_html)
+INSTALL(FILES index.template DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_simpleviewerexport)
