@@ -26,7 +26,6 @@ kipiplugin_simpleviewer_svtemplatedir = $(kde_datadir)/kipiplugin_simpleviewerex
 kipiplugin_simpleviewer_svtemplate_DATA = index.template
 
 # i18n translation messages 
-#Nota : no need a translation file for this plugin.
-#messages: rc.cpp
-#	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_simpleviewer.pot
+messages: rc.cpp
+	$(XGETTEXT) *.cpp *.h -o $(podir)/kipiplugin_simpleviewer.pot
 
