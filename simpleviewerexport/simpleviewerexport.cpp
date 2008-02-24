@@ -384,8 +384,8 @@ bool SimpleViewerExport::exportImages()
             cfgAddImage(ts, url);
             d->progressDlg->setProgress(++d->action, d->totalActions);
         }
-        cfgCreateFooter(ts);
     }
+    cfgCreateFooter(ts);
     
     return true;
 }
