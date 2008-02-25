@@ -59,7 +59,7 @@ class SimpleViewerExport : public QObject
 public:
 
     static void run( KIPI::Interface* interface, QObject *parent=0 );
- 
+
 private:
 
     SimpleViewerExport( KIPI::Interface* interface, QObject *parent=0 );
@@ -118,22 +118,22 @@ private:
      * Finishes the simpleviewer config file
      */
     void cfgCreateFooter(QTextStream &ts);
-    
+
     /**
      * Creates the index.html file
      */
     bool createIndex();
-    
+
     /**
      * Copies simpleviewers files into the export directory
      */
     bool copySimpleViewer();
-    
+
     /**
      * Is the SimpleViewer flash installed?
      */
     bool checkSimpleViewer() const;
-    
+
     /**
      * Installs the SimpleViewer files for the later export 
      * on the users machine
@@ -141,38 +141,40 @@ private:
     bool installSimpleViewer();
 
     bool upload();
-    
+
     bool unzip(const QString &url);
 
     bool openArchive(KZip &zip);
-    
+
     bool extractArchive(KZip &zip);
-    
+
     bool extractFile(const KArchiveEntry *entry);
-    
+
 public slots:
-    
+
     void slotProcess();
     void slotCancel();
-    
+
 private:
-    
-    SVEDialog                           *m_configDlg;
-    KIPI::Interface                     *m_interface;
-    KIPI::BatchProgressDialog           *m_progressDlg;
-    QValueList<KIPI::ImageCollection>    m_albumsList;
-    QTimer                              *m_timer;
+
     int                                  m_totalActions;
     int                                  m_action;
     bool                                 m_canceled;
+
+    QTimer                              *m_timer;
     QString                              m_dataLocal;
     QStringList                          m_simpleViewerFiles;
     QString                              m_hostName;
     QString                              m_hostURL;
+
     KTempDir                            *m_tempDir;
+
+    SVEDialog                           *m_configDlg;
+    KIPI::Interface                     *m_interface;
+    KIPI::BatchProgressDialog           *m_progressDlg;
+    QValueList<KIPI::ImageCollection>    m_albumsList;
 };
 
 } // namespace KIPISimpleViewerExportPlugin
 
 #endif /* SIMPLEVIEWEREXPORT_H */
-

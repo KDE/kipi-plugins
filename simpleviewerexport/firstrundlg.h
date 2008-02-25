@@ -32,18 +32,19 @@
 
 #include <libkipi/interface.h>
 
-class KURLRequester;
 class QString;
+
+class KURLRequester;
 
 namespace KIPISimpleViewerExportPlugin
 {
-    
+
 /**
  * To avoid licensing problems with some distributions, the SimpleViewer
  * Flash cannot be shipped with the plugin. During the first run of the
  * plugin, the user has to download SimpleViewer from its homepage and point
  * the plugin to that archive to install it. This is done by this dialog.
- */   
+ */
 
 class FirstRunDlg : public KDialogBase
 {
@@ -58,19 +59,19 @@ public:
      * Returns the URL, where the SimpleViewer package is stored
      */
     QString getURL();
-    
+
 private:
-        
+
     KURLRequester       *m_urlRequester;
     QString              m_url;
-    
+
 private slots:
-        
+
     /**
      * Opens the browser with the SimpleViewer download page
      */
     void slotDownload(const QString &url);
-    
+
     /**
      * Starts the installation of SimpleViewer
      */
@@ -80,4 +81,3 @@ private slots:
 } // namespace KIPISimpleViewerExportPlugin
 
 #endif /* FIRSTRUNDLG_H */
-

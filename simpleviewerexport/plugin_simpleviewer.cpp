@@ -22,7 +22,7 @@
  * ============================================================ */
 
 // KDE includes.
-  
+
 #include <klocale.h>
 #include <kaction.h>
 #include <kgenericfactory.h>
@@ -39,16 +39,13 @@
 
 #include "plugin_simpleviewer.h"
 #include "simpleviewerexport.h"
+#include "plugin_simpleviewer.moc"
 
-// A macro from KDE KParts to export the symbols for this plugin and
-// create the factory for it. The first argument is the name of the
-// plugin library and the second is the genericfactory templated from
-// the class for your plugin
 typedef KGenericFactory<Plugin_SimpleViewer> Factory;
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_simpleviewer, Factory("kipiplugin_simpleviewer"))
 
 Plugin_SimpleViewer::Plugin_SimpleViewer(QObject *parent, const char*, const QStringList&)
-    : KIPI::Plugin(Factory::instance(), parent, "SimpleViewer")
+                   : KIPI::Plugin(Factory::instance(), parent, "SimpleViewer")
 {
     kdDebug( 51001 ) << "Plugin_SimpleViewer plugin loaded" << endl;
 }
@@ -56,16 +53,15 @@ Plugin_SimpleViewer::Plugin_SimpleViewer(QObject *parent, const char*, const QSt
 void Plugin_SimpleViewer::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    
-    // action shown in the menubar/toolbar of the mainwindow
-    m_actionSimpleViewer = new KAction (i18n("Export to SimpleViewer ..."),    // menu message
+
+    m_actionSimpleViewer = new KAction (i18n("Flash Export..."),
                                    "www",
                                    0,
                                    this,
                                    SLOT(slotActivate()),
                                    actionCollection(),
                                    "simpleviewer");
-    
+
     addAction( m_actionSimpleViewer );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
@@ -80,7 +76,7 @@ KIPI::Category Plugin_SimpleViewer::category( KAction* action ) const
 {
     if ( action == m_actionSimpleViewer )
        return KIPI::EXPORTPLUGIN;
-    
+
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::EXPORTPLUGIN; // no warning from compiler, please
 }
@@ -92,9 +88,6 @@ void Plugin_SimpleViewer::slotActivate()
         kdError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
-    
+
     KIPISimpleViewerExportPlugin::SimpleViewerExport::run( m_interface, this );
 }
-
-#include "plugin_simpleviewer.moc"
-

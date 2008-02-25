@@ -59,7 +59,7 @@ class SVEDialog : public KDialogBase
     Q_OBJECT
 
 public:
- 
+
     SVEDialog( KIPI::Interface* interface, QWidget *parent=0);
     ~SVEDialog();
 
@@ -110,23 +110,18 @@ public:
 
     QString navPosition() const;
     void setNavPosition(const QString &pos);
-    
+
     QString exportURL() const;
-    
 
 private:
 
     void selectionPage();
     void generalPage();
     void lookPage();
-    
-    KIPIPlugins::KPAboutData* m_about;
-    
-private:
 
-    KIPI::Interface                     *m_interface;
-    KIPI::ImageCollectionSelector       *m_imageCollectionSelector;
-    QValueList<KIPI::ImageCollection>    m_selectedAlbums;
+    KIPIPlugins::KPAboutData* m_about;
+
+private:
 
     QFrame                              *m_selectionPage;
     QFrame                              *m_generalPage;
@@ -134,22 +129,26 @@ private:
 
     QLineEdit                           *m_title;
     QCheckBox                           *m_resizeExportImages;
-    KIntNumInput                        *m_imagesExportSize;
-    KIntNumInput                        *m_maxImageDimension;
     QCheckBox                           *m_showExifComments;
-    KIntNumInput                        *m_thumbnailRows;
-    KIntNumInput                        *m_thumbnailColumns;
     QComboBox                           *m_navPosition;
     QComboBox                           *m_navDirection;
+
+    KIntNumInput                        *m_imagesExportSize;
+    KIntNumInput                        *m_maxImageDimension;
+    KIntNumInput                        *m_thumbnailRows;
+    KIntNumInput                        *m_thumbnailColumns;
     KColorButton                        *m_textColor;
     KColorButton                        *m_backgroundColor;
     KColorButton                        *m_frameColor;
     KIntNumInput                        *m_frameWidth;
     KIntNumInput                        *m_stagePadding;
     KURLRequester                       *m_exportURL;
+
+    KIPI::Interface                     *m_interface;
+    KIPI::ImageCollectionSelector       *m_imageCollectionSelector;
+    QValueList<KIPI::ImageCollection>    m_selectedAlbums;
 };
 
 } // namespace KIPISimpleViewerExportPlugin
 
 #endif /* SVEDIALOG_H */
-

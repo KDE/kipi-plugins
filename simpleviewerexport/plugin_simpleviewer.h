@@ -36,26 +36,20 @@ class Plugin_SimpleViewer : public KIPI::Plugin
 
 public:
 
-    // Notice the constructor
-    // takes three arguments QObject *parent (the parent of this object),
-    // const char* name (the name of this object) and
-    // const QStringList &args (the arguments passed).
-    Plugin_SimpleViewer(QObject *parent,
-                      const char* name,
-                      const QStringList &args);
+    Plugin_SimpleViewer(QObject *parent, const char* name, const QStringList &args);
 
     virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* widget );
 
 private slots:
 
-    //This is an example slot to which your action is connected.
     void slotActivate();
 
 private:
+
     KAction         *m_actionSimpleViewer;
     KIPI::Interface *m_interface;
 };
 
-#endif
+#endif // PLUGIN_SIMPLEVIEWER_H
 
