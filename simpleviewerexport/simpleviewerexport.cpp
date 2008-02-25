@@ -319,7 +319,9 @@ bool SimpleViewerExport::exportImages()
     xmlFile.addPath("/gallery.xml");
     QFile file(xmlFile.path());
     file.open(IO_WriteOnly);
+
     QTextStream ts(&file);
+    ts.setEncoding(QTextStream::UnicodeUTF8);
     cfgCreateHeader(ts);
 
     int maxSize = m_configDlg->imagesExportSize();
