@@ -61,7 +61,7 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch Image-bordering"),
-                                           kipiplugins_version,
+                                           0,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin for batch bordering images\n"
                                                       "This plugin use the \"convert\" program from \"ImageMagick\" package."),

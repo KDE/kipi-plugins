@@ -118,7 +118,7 @@ AcquireImageDialog::AcquireImageDialog( KIPI::Interface* interface, QWidget *par
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Acquire images"),
-                                           kipiplugins_version,
+                                           0,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to acquire images"),
                                            "(c) 2003-2008, Gilles Caulier");

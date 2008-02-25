@@ -82,10 +82,10 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
     // About data and help button.
 
     d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("Edit Metadata"),
-                                            kipiplugins_version,
+                                            0,
                                             KAboutData::License_GPL,
                                             I18N_NOOP("A Plugin to edit pictures metadata"),
-                                            "(c) 2006-2007, Gilles Caulier");
+                                            "(c) 2006-2008, Gilles Caulier");
 
     d->about->addAuthor("Gilles Caulier", I18N_NOOP("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");

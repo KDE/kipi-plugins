@@ -82,7 +82,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Flickr Export"),
-                                           kipiplugins_version,
+                                           0,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to export image collection to Flickr web service."),
                                            "(c) 2005, Vardhman Jain");

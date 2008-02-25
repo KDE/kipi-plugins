@@ -145,7 +145,7 @@ CameraUI::CameraUI() : QWidget()
     mBtnBoxLayout->addWidget(mhelpButton);
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("KameraKlient"),
-                                           kipiplugins_version,
+                                           0,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Digital camera interface Kipi plugin"),
                                            "(c) 2003-2004, Renchi Raju\n"

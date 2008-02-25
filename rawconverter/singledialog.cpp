@@ -107,7 +107,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("RAW Image Converter"),
-                                           kipiplugins_version,
+                                           0,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to convert a Raw image"),
                                            "(c) 2003-2005, Renchi Raju\n"

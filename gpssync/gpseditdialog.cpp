@@ -142,7 +142,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     // About data and help button.
 
     d->about = new KIPIPlugins::KPAboutData(I18N_NOOP("GPS Sync"),
-                                            kipiplugins_version,
+                                            0,
                                             KAboutData::License_GPL,
                                             I18N_NOOP("A Plugin to synchronize pictures metadata with a GPS device"),
                                             "(c) 2006-2008, Gilles Caulier");

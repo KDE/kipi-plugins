@@ -79,7 +79,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Gallery Export"),
-                                           kipiplugins_version,
+                                           0,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to export image collection to remote Gallery server."),
                                            "(c) 2003-2005, Renchi Raju");

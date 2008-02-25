@@ -135,7 +135,7 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Calendar"),
-                                           kipiplugins_version,
+                                           0,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to create a calendar"),
                                            "(c) 2003-2004, Renchi Raju, (c) 2006 Tom Albers");

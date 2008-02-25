@@ -244,7 +244,7 @@ KImg2mpgData::KImg2mpgData(KIPI::Interface* interface, QWidget *parent, const ch
 
 
   m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("MPEG Slideshow"),
-                                      kipiplugins_version,
+                                      0,
                                       KAboutData::License_GPL,
                                       I18N_NOOP("A Kipi plugin for encoding images to an MPEG file."),
                                                 "(c) 2003-2004, Gilles Caulier");

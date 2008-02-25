@@ -173,7 +173,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface, GalleryInfo* info)
 
 	// About data
 	d->mAbout = new KIPIPlugins::KPAboutData(I18N_NOOP("HTML Export"),
-			kipiplugins_version,
+			0,
 			KAboutData::License_GPL,
 			I18N_NOOP("A KIPI plugin to export image collections to HTML pages"),
 			"(c) 2006, Aurelien Gateau");

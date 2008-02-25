@@ -102,7 +102,7 @@ KIGPDialog::KIGPDialog(KIPI::Interface* interface, QWidget *parent)
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Image Gallery"),
-                                           kipiplugins_version,
+                                           0,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin for HTML album export.\n"
                                                      "Based on KimgalleryPlugin implementation."),

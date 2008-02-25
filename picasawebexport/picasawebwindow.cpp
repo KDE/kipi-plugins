@@ -87,13 +87,13 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface,const QString &tmpFo
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Picasaweb Export"),
-                                           kipiplugins_version,
+                                           0,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to export image collection to Picasaweb web service."),
                                            "(c) 2007, Vardhman Jain");
 
     m_about->addAuthor("Vardhman Jain", I18N_NOOP("Author and maintainer"),
-                     "Vardhman at gmail dot com");
+                       "Vardhman at gmail dot com");
 
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);

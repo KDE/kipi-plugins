@@ -87,7 +87,7 @@ FindDuplicateDialog::FindDuplicateDialog( KIPI::Interface* interface, QWidget *p
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Find Duplicate Images"),
-                                           kipiplugins_version,
+                                           0,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to find duplicate images\n"
                                                      "This plugin is based on ShowImg implementation algorithm"),
