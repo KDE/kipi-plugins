@@ -94,18 +94,18 @@ public:
 
     SVEDialog                    *configDlg;
 };
-        
+
 SimpleViewerExport::SimpleViewerExport(KIPI::Interface* interface, QObject *parent)
                   : QObject(parent)
 {
     d = new SimpleViewerExportPriv;
     d->interface = interface;
-    
+
     d->simpleViewerFiles.append(d->viewer);
     d->simpleViewerFiles.append("swfobject.js");
     d->hostName = KGlobal::mainComponent().aboutData()->programName();
     d->hostUrl  = KGlobal::mainComponent().aboutData()->homepage();
-    
+
     if (d->hostUrl.isEmpty())
     {
         d->hostName = QString("Kipi");
@@ -122,7 +122,7 @@ SimpleViewerExport::~SimpleViewerExport()
 void SimpleViewerExport::run(KIPI::Interface* interface, QObject *parent)
 {
     SimpleViewerExport plugin(interface, parent);
- 
+
     if(!plugin.checkSimpleViewer())
     {
         if(!plugin.installSimpleViewer())
@@ -131,7 +131,7 @@ void SimpleViewerExport::run(KIPI::Interface* interface, QObject *parent)
             return;
         }
     }
-    
+
     if(plugin.configure())
         plugin.startExport();
 }
@@ -139,7 +139,7 @@ void SimpleViewerExport::run(KIPI::Interface* interface, QObject *parent)
 bool SimpleViewerExport::configure()
 {
     d->canceled = false;
-    
+
     if(!d->configDlg)
         d->configDlg = new SVEDialog(d->interface, kapp->activeWindow());
 
@@ -148,16 +148,16 @@ bool SimpleViewerExport::configure()
     {
         if(d->configDlg->exec() == QDialog::Rejected)
             return false;
-    
+
         configured = true;
-        
+
         if(KIO::NetAccess::exists(d->configDlg->settings().exportUrl, KIO::NetAccess::DestinationSide, kapp->activeWindow()))
         {
             int ret = KMessageBox::warningYesNoCancel(kapp->activeWindow(),
                                                       i18n("Target folder %1 already exists.\n"
                                                            "Do you want to overwrite it (all data in this folder will be lost)",
                                                            d->configDlg->settings().exportUrl.path()));
-            
+
             switch(ret)
             {
                 case KMessageBox::Yes:
@@ -169,18 +169,18 @@ bool SimpleViewerExport::configure()
                         configured = false;
                     }
                     break;
-                
+
                 case KMessageBox::No:
                     configured = false;
                     break;
-                
+
                 case KMessageBox::Cancel:
                     return false;
                     break;
             };
         }
     }
-    
+
     return true;
 }
 
@@ -188,15 +188,15 @@ void SimpleViewerExport::startExport()
 {
     if(d->canceled)
         return;
-    
+
     d->progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), i18n("Flash Export"));
-        
+
     connect(d->progressDlg, SIGNAL(cancelClicked()),
             this, SLOT(slotCancel()));
 
     d->progressDlg->show();
     kapp->processEvents();
-    
+
     // Estimate the number of actions for the KIPI progress dialog.
     d->progressDlg->addedAction(i18n("Initialising..."), KIPI::StartingMessage);
     d->collectionsList = d->configDlg->settings().collections;
@@ -206,10 +206,10 @@ void SimpleViewerExport::startExport()
     {
         d->totalActions += (*it).images().count();
     }
-    
+
     // +copying SimpleViewer, +creating index.html
     d->totalActions += 2;
-    
+
     d->progressDlg->setProgress(0, d->totalActions);
 
     slotProcess();
@@ -227,7 +227,7 @@ void SimpleViewerExport::slotProcess()
 {
     if(d->canceled)
         return;
-        
+
     if(!d->canceled && !createExportDirectories())
     {
             d->progressDlg->addedAction(i18n("Failed to create export directories"),
@@ -241,12 +241,12 @@ void SimpleViewerExport::slotProcess()
                                    KIPI::ErrorMessage);
         return;
     }
-    
+
     if(!d->canceled && !createIndex())
     {
         d->progressDlg->addedAction(i18n("Failed to create index.html"),
                                    KIPI::ErrorMessage);
-        return;        
+        return;
     }
 
     if(!d->canceled && !copySimpleViewer())
@@ -274,7 +274,7 @@ void SimpleViewerExport::slotProcess()
             KIO::NetAccess::del(d->configDlg->settings().exportUrl, kapp->activeWindow());
         }
     }
-    
+
     if(!d->canceled)
         d->progressDlg->addedAction(i18n("Finished..."), KIPI::SuccessMessage);
 }
@@ -285,7 +285,7 @@ bool SimpleViewerExport::createExportDirectories()
     d->tempDir->setAutoRemove(true);
 
     d->progressDlg->addedAction(i18n("Creating directories..."), KIPI::StartingMessage);    
-    
+
     KUrl root = d->configDlg->settings().exportUrl;
     if(!KIO::NetAccess::mkdir(root, kapp->activeWindow()))
     {
@@ -293,7 +293,7 @@ bool SimpleViewerExport::createExportDirectories()
                                    KIPI::ErrorMessage);
         return(false);
     }
-  
+
     KUrl thumbsDir = d->tempDir->name();
     thumbsDir.addPath("/thumbs");
     if(!KIO::NetAccess::mkdir(thumbsDir, kapp->activeWindow()))
@@ -311,9 +311,9 @@ bool SimpleViewerExport::createExportDirectories()
                                    KIPI::ErrorMessage);
         return(false);
     }
-    
+
     d->progressDlg->setProgress(++d->action, d->totalActions);
-    
+
     return true;
 }
 
@@ -326,7 +326,7 @@ bool SimpleViewerExport::exportImages()
 
     KUrl thumbsDir(d->tempDir->name());
     thumbsDir.addPath("/thumbs");
-    
+
     KUrl imagesDir(d->tempDir->name());
     imagesDir.addPath("/images");
 
@@ -334,7 +334,9 @@ bool SimpleViewerExport::exportImages()
     xmlFile.addPath("/gallery.xml");
     QFile file(xmlFile.path());
     file.open(QIODevice::WriteOnly);
+
     QTextStream ts(&file);
+    ts.setCodec("UTF-8");
     cfgCreateHeader(ts);
 
     int maxSize       = d->configDlg->settings().imagesExportSize;
@@ -386,7 +388,7 @@ bool SimpleViewerExport::exportImages()
         }
     }
     cfgCreateFooter(ts);
-    
+
     return true;
 }
 
@@ -408,9 +410,9 @@ bool SimpleViewerExport::createThumbnail(const QImage &image, QImage &thumbnail)
             maxSize = (int)(double)(h * d->maxThumbSize) / w;
         }
     }
-    
+
     maxSize = (maxSize < d->maxThumbSize) ? d->maxThumbSize : maxSize;
-    
+
     return resizeImage(image, maxSize, thumbnail);
 }
 
@@ -488,7 +490,7 @@ void SimpleViewerExport::cfgCreateFooter(QTextStream &ts)
 {
     if(d->canceled)
         return;
-    
+
     ts << "</simpleviewerGallery>" << endl;
 }
 
@@ -496,7 +498,7 @@ bool SimpleViewerExport::createIndex()
 {
     if(d->canceled)
         return false;
-    
+
     d->progressDlg->addedAction(i18n("Creating index.html..."), KIPI::StartingMessage);
 
     QString indexTemplateName = KStandardDirs::locate("data", "kipiplugin_simpleviewerexport/index.template");
@@ -506,28 +508,28 @@ bool SimpleViewerExport::createIndex()
         kDebug() << "No indexTemplateName" << endl;
         return false;
     }
-    
+
     QFile infile(indexTemplateName);
     infile.open(QIODevice::ReadOnly);
     QTextStream in(&infile);
     QString indexTemplate = in.readAll();
     infile.close();
-    
+
     indexTemplate.replace("{TITLE}",    d->configDlg->settings().title);
     indexTemplate.replace("{COLOR}",    d->configDlg->settings().textColor.name());
     indexTemplate.replace("{BGCOLOR}",  d->configDlg->settings().backgroundColor.name());
     indexTemplate.replace("{HOSTURL}",  d->hostUrl);
     indexTemplate.replace("{HOSTNAME}", d->hostName);
-    
+
     QFile outfile(d->tempDir->name() + "/index.html");
     outfile.open(QIODevice::WriteOnly);
     QTextStream out(&outfile);
     out << indexTemplate;
     outfile.close();
-    
+
     d->progressDlg->setProgress(++d->action, d->totalActions);
     d->progressDlg->addedAction(i18n("index.html created..."), KIPI::SuccessMessage);
-    
+
     return true;
 }
 
@@ -539,25 +541,25 @@ bool SimpleViewerExport::copySimpleViewer()
     d->progressDlg->addedAction(i18n("Copying flash files..."), KIPI::StartingMessage);
 
     QString dataDir;
-    
+
     // Due to its license, simpleviewer is installed in $KDEHOME
     dataDir = KStandardDirs::locate("data", "kipiplugin_simpleviewerexport/simpleviewer/");
     if(dataDir.isEmpty())
         installSimpleViewer();
     if(dataDir.isEmpty())
         return false;
-   
+
     KUrl::List  files;
     QStringList entries;
     QDir        dir;
-    
+
     dir.setPath(dataDir);
     entries = dir.entryList(QDir::Files);
     for(QStringList::Iterator it = entries.begin(); it != entries.end(); ++it) 
     {
         files.append(KUrl(dir.absolutePath() + "/" + *it));
     }
-    
+
     // files distributed with the plugin are installed in $KDEDIRS
     dataDir = KStandardDirs::locate("data", "kipiplugin_simpleviewerexport/simpleviewer_html/");
     dir.setPath(dataDir);
@@ -568,7 +570,7 @@ bool SimpleViewerExport::copySimpleViewer()
     }
     // TODO: catch errors
     KIO::CopyJob *copyJob = KIO::copy(files, d->configDlg->settings().exportUrl, KIO::HideProgressInfo);
-    
+
     d->progressDlg->addedAction(i18n("Flash files copied..."), KIPI::SuccessMessage);
 
     return true;
@@ -585,7 +587,7 @@ bool SimpleViewerExport::upload()
         return false;
 
     d->progressDlg->addedAction(i18n("Gallery uploaded..."), KIPI::SuccessMessage);
-    
+
     return true;
 }
 
@@ -600,7 +602,7 @@ bool SimpleViewerExport::installSimpleViewer()
     if(firstRunDlg.exec() == QDialog::Accepted)
     {
         KUrl url = firstRunDlg.getUrl();
-        
+
         if(unzip(url.path()))
         {
             return true;
@@ -610,19 +612,19 @@ bool SimpleViewerExport::installSimpleViewer()
             kDebug() << "Archive extraction failed\n";
         }
     }
-    
+
     return false;
 }
 
 bool SimpleViewerExport::unzip(const QString &url)
 {
     KZip zip(url);
-    
-    if(!openArchive(zip))    
+
+    if(!openArchive(zip))
     {
         return false;
     }
-    
+
     return extractArchive(zip);
 }
 
@@ -646,7 +648,7 @@ bool SimpleViewerExport::extractArchive(KZip &zip)
         kDebug() << "Content of the archive root folder" << names << endl;
         return false;
     }
-            
+
     // open root directory
     const KArchiveEntry *root = zip.directory()->entry(names[0]);
     if(!root || !root->isDirectory())
@@ -654,9 +656,9 @@ bool SimpleViewerExport::extractArchive(KZip &zip)
         kDebug() << "could not open " << names[0] << " of zipname" << endl;
         return false;
     }
-    
+
     const KArchiveDirectory *dir = dynamic_cast<const KArchiveDirectory*>(root);
-            
+
     // extract the needed files from SimpleViewer archive
     for(QStringList::Iterator it = d->simpleViewerFiles.begin(); 
         it != d->simpleViewerFiles.end(); ++it ) 
@@ -669,7 +671,7 @@ bool SimpleViewerExport::extractArchive(KZip &zip)
             return false;
         }
     }
-    
+
     return true;
 }
 
@@ -677,7 +679,7 @@ bool SimpleViewerExport::extractFile(const KArchiveEntry *entry)
 {
     if( !entry || !entry->isFile() ) 
         return false;
-   
+
     const KArchiveFile *entryFile = dynamic_cast<const KArchiveFile*>(entry);
     QByteArray array = entryFile->data();
 
@@ -688,7 +690,7 @@ bool SimpleViewerExport::extractFile(const KArchiveEntry *entry)
         file.close();
         return ret > 0 ? true : false;
     }
-    
+
     return false;
 }
 
