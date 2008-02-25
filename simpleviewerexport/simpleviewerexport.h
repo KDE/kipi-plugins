@@ -27,6 +27,7 @@
 // QT includes
 
 #include <qobject.h>
+#include <qdom.h>
 
 // KIPI includes
 
@@ -103,21 +104,11 @@ private:
     bool resizeImage(const QImage &image, int maxSize, QImage &resized);
 
     /**
-     * Creates the header of the simpleviewer config file
-     */
-    void cfgCreateHeader(QTextStream &ts);
-
-    /**
      * Adds an image to the simpleviewer config file
      *
      * @param kurl path to the images
      */
-    void cfgAddImage(QTextStream &ts, const KURL &kurl);
-
-    /**
-     * Finishes the simpleviewer config file
-     */
-    void cfgCreateFooter(QTextStream &ts);
+    void cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem, const KURL &kurl);
 
     /**
      * Creates the index.html file

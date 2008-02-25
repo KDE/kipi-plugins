@@ -25,9 +25,10 @@
 
 #include <qtimer.h>
 #include <qimage.h>
-#include <qtextstream.h>
 #include <qfile.h>
 #include <qdir.h>
+#include <qcstring.h>
+#include <qdatastream.h>
 
 // KDE includes
 
@@ -320,11 +321,27 @@ bool SimpleViewerExport::exportImages()
     QFile file(xmlFile.path());
     file.open(IO_WriteOnly);
 
-    QTextStream ts(&file);
-    ts.setEncoding(QTextStream::UnicodeUTF8);
-    cfgCreateHeader(ts);
+    QDomDocument xmlDoc;
+    xmlDoc.appendChild(xmlDoc.createProcessingInstruction( QString::fromLatin1("xml"),
+                       QString::fromLatin1("version=\"1.0\" encoding=\"UTF-8\"") ) );
+    QDomElement galleryElem = xmlDoc.createElement(QString::fromLatin1("simpleviewerGallery")); 
+    xmlDoc.appendChild( galleryElem );
+    galleryElem.setAttribute(QString::fromLatin1("maxImageWidth"),    m_configDlg->maxImageDimension());
+    galleryElem.setAttribute(QString::fromLatin1("maxImageHeight"),   m_configDlg->maxImageDimension());
+    galleryElem.setAttribute(QString::fromLatin1("textColor"),        m_configDlg->textColor().name().replace("#", "0x"));
+    galleryElem.setAttribute(QString::fromLatin1("frameColor"),       m_configDlg->frameColor().name().replace("#", "0x"));
+    galleryElem.setAttribute(QString::fromLatin1("bgColor"),          m_configDlg->backgroundColor().name().replace("#", "0x"));
+    galleryElem.setAttribute(QString::fromLatin1("frameWidth"),       m_configDlg->frameWidth());
+    galleryElem.setAttribute(QString::fromLatin1("stagePadding"),     m_configDlg->stagePadding());
+    galleryElem.setAttribute(QString::fromLatin1("thumbnailColumns"), m_configDlg->thumbnailColumns());
+    galleryElem.setAttribute(QString::fromLatin1("thumbnailRows"),    m_configDlg->thumbnailRows());
+    galleryElem.setAttribute(QString::fromLatin1("navPosition"),      m_configDlg->navPosition());
+    galleryElem.setAttribute(QString::fromLatin1("navDirection"),     m_configDlg->navDirection());
+    galleryElem.setAttribute(QString::fromLatin1("title"),            m_configDlg->title());
+    galleryElem.setAttribute(QString::fromLatin1("imagePath"),        QString());
+    galleryElem.setAttribute(QString::fromLatin1("thumbPath"),        QString());
 
-    int maxSize = m_configDlg->imagesExportSize();
+    int maxSize       = m_configDlg->imagesExportSize();
     bool resizeImages = m_configDlg->resizeExportImages();
     for( QValueList<KIPI::ImageCollection>::Iterator it = m_albumsList.begin() ;
          !m_canceled && (it != m_albumsList.end()) ; ++it )
@@ -369,11 +386,15 @@ bool SimpleViewerExport::exportImages()
             imagePath.addPath(kurl.filename());
             image.save(imagePath.path(), "JPEG");
 
-            cfgAddImage(ts, kurl);
+            cfgAddImage(xmlDoc, galleryElem, url);
             m_progressDlg->setProgress(++m_action, m_totalActions);
         }
     }
-    cfgCreateFooter(ts);
+
+    QCString data(xmlDoc.toCString());
+    QDataStream stream( &file );
+    stream.writeRawBytes(data.data(), data.size());
+    file.close();
 
     m_progressDlg->addedAction(i18n("Images and thumbnails created..."), KIPI::SuccessMessage);
 
@@ -429,29 +450,7 @@ bool SimpleViewerExport::resizeImage(const QImage &image, int maxSize, QImage &r
     return true;
 }
 
-void SimpleViewerExport::cfgCreateHeader(QTextStream &ts)
-{
-    if(m_canceled)
-        return;
-
-    ts << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
-    ts << "<simpleviewerGallery"
-       << " maxImageWidth=\""       << m_configDlg->maxImageDimension() << "\""
-       << " maxImageHeight=\""      << m_configDlg->maxImageDimension() << "\""
-       << " textColor=\""           << m_configDlg->textColor().name().replace("#", "0x") << "\""
-       << " frameColor=\""          << m_configDlg->frameColor().name().replace("#", "0x") << "\""
-       << " bgColor=\""             << m_configDlg->backgroundColor().name().replace("#", "0x") << "\""
-       << " frameWidth=\""          << m_configDlg->frameWidth() << "\""
-       << " stagePadding=\""        << m_configDlg->stagePadding() << "\""
-       << " thumbnailColumns=\""    << m_configDlg->thumbnailColumns() << "\""
-       << " thumbnailRows=\""       << m_configDlg->thumbnailRows() << "\""
-       << " navPosition=\""         << m_configDlg->navPosition() << "\""
-       << " navDirection=\""        << m_configDlg->navDirection() << "\""
-       << " title=\""               << m_configDlg->title() << "\""
-       << " imagePath=\"\" thumbPath=\"\">" << endl;
-}
-
-void SimpleViewerExport::cfgAddImage(QTextStream &ts, const KURL &kurl)
+void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem, const KURL &kurl)
 {
     if(m_canceled)
         return;
@@ -472,14 +471,6 @@ void SimpleViewerExport::cfgAddImage(QTextStream &ts, const KURL &kurl)
     ts << "    <name>" << kurl.filename() << "</name>" << endl;
     ts << "    <caption>" <<  comment  <<  "</caption>" << endl;
     ts << "</image>" << endl;
-}
-
-void SimpleViewerExport::cfgCreateFooter(QTextStream &ts)
-{
-    if(m_canceled)
-        return;
-
-    ts << "</simpleviewerGallery>" << endl;
 }
 
 bool SimpleViewerExport::createIndex()
