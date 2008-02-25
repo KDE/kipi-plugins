@@ -334,12 +334,12 @@ bool SimpleViewerExport::exportImages()
             kapp->processEvents();
 
             KURL kurl = *it;
-            m_progressDlg->addedAction(i18n("Processing %1").arg((*it).url()),
+            m_progressDlg->addedAction(i18n("Processing %1").arg((*it).filename()),
                                        KIPI::StartingMessage);
             QImage image;
             if(!image.load(kurl.path()))
             {
-                m_progressDlg->addedAction(i18n("Could not open image '%1'").arg(kurl.path()),
+                m_progressDlg->addedAction(i18n("Could not open image '%1'").arg(kurl.filename()),
                                            KIPI::WarningMessage);
                 continue;
             }
@@ -347,14 +347,14 @@ bool SimpleViewerExport::exportImages()
             QImage thumbnail;
             if(!createThumbnail(image, thumbnail))
             {
-                m_progressDlg->addedAction(i18n("Could not create thumbnail from '%1'").arg(kurl.path()),
+                m_progressDlg->addedAction(i18n("Could not create thumbnail from '%1'").arg(kurl.filename()),
                                            KIPI::WarningMessage);
                 continue;
             }
 
             if(resizeImages && !resizeImage(image, maxSize, image))
             {
-                m_progressDlg->addedAction(i18n("Could not resize image '%1'").arg(kurl.path()),
+                m_progressDlg->addedAction(i18n("Could not resize image '%1'").arg(kurl.filename()),
                                            KIPI::WarningMessage);
                 continue;
             }
