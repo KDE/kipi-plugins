@@ -27,6 +27,7 @@
 #include <qlayout.h>
 #include <qvbox.h>
 #include <qlabel.h>
+#include <qpushbutton.h>
 
 // KDE include files
 
@@ -34,6 +35,8 @@
 #include <kapplication.h>
 #include <kurllabel.h>
 #include <kurlrequester.h>
+#include <khelpmenu.h>
+#include <kpopupmenu.h>
 
 // KIPI include files
 
@@ -42,6 +45,8 @@
 
 // Local include files
 
+#include "kpaboutdata.h"
+#include "pluginsversion.h"
 #include "firstrundlg.h"
 #include "firstrundlg.moc"
 
@@ -52,48 +57,85 @@ FirstRunDlg::FirstRunDlg( QWidget *parent )
     : KDialogBase( parent, "svefirstrun", true, "BLA",
                    KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true )
 {
-    setCaption(i18n("Simple Viewer Export"));
-    
+    setCaption(i18n("Flash Export"));
+
     enableButtonOK(false);
-    
+
+    // About data and help button.
+
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Flash Export"),
+                                           kipiplugins_version,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin to export images to Flash using Simple Viewer component"),
+                                           "(c) 2005-2006, Joern Ahrens\n"
+                                           "(c) 2008, Gilles Caulier");
+
+    m_about->addAuthor("Joern Ahrens", 
+                       I18N_NOOP("Author and maintainer"),
+                       "joern dot ahrens at kdemail dot net");
+
+    m_about->addAuthor("Gilles Caulier", 
+                       I18N_NOOP("Developer and maintainer"),
+                       "caulier dot gilles at gmail dot com");
+
+    m_about->addCredit("Felix Turner",
+                       "Author of the SimpleViewer flash application",
+                       0,
+                       "http://www.airtightinteractive.com/simpleviewer");
+
+    m_about->addCredit("Mikkel B. Stegmann",
+                       "Basis for the index.html template",
+                       0,
+                       "http://www.stegmann.dk/mikkel/porta");
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Plugin Handbook"),
+                                 this, SLOT(slotHelp()), 0, -1, 0);
+    actionButton(Help)->setPopup( helpMenu->menu() );
+
+    // ---------------------------------------------------------------
+
     QFrame *page = new QFrame(this);
     setMainWidget(page);
-    
+
     QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
-    
+
     QLabel *info = new QLabel( page );
-    info->setText( i18n( "SimpleViewer is free to use, but uses a license which comes into conflict with\n"
-                         "several distributions. Due to the license it is not possible to ship it with this plugin.\n\n"
-                         "You can now download SimpleViewer from its homepage and point the plugin\n"
-                         "to the downloaded archive. The archive will be stored with the plugin configuration,\n"
-                         "so it is available for further use.\n\n"));
-    topLayout->addWidget( info );
-    
-    info = new QLabel(page);
-    info->setText(i18n( "1.) Download SimpleViewer Version 1.7.X (1.8.X is not compatible yet):\n"));
+    info->setText( i18n( "<p>SimpleViewer is a Flash component which is free to use, "
+                         "but uses a license which comes into conflict with several distributions. "
+                         "Due to the license it is not possible to ship it with this plugin.</p>"
+                         "<p>You can now download SimpleViewer from its homepage and point this tool "
+                         "to the downloaded archive. The archive will be stored with the plugin configuration, "
+                         "so it is available for further use.</p>"));
     topLayout->addWidget(info);
-    
+
+    info = new QLabel(page);
+    info->setText(i18n( "<p>1.) Download SimpleViewer Version 1.8.x</p>"));
+    topLayout->addWidget(info);
+
     KURLLabel *link = new KURLLabel(page);
-    link->setText("http://www.airtightinteractive.com/simpleviewer/");
-    link->setURL("http://www.airtightinteractive.com/simpleviewer/");
+    link->setText("http://www.airtightinteractive.com/simpleviewer");
+    link->setURL("http://www.airtightinteractive.com/simpleviewer");
     topLayout->addWidget(link);
     connect(link, SIGNAL(leftClickedURL(const QString &)),
-            SLOT(slotDownload(const QString &)));
-    
+            this, SLOT(slotDownload(const QString &)));
+
     info = new QLabel(page);
-    info->setText(i18n("\n2.) Point the plugin to the downloaded archive\n"));
+    info->setText(i18n("<p>2.) Point this tool to the downloaded archive</p>"));
     topLayout->addWidget( info );
-    
+
     m_urlRequester = new KURLRequester(page);
     topLayout->addWidget(m_urlRequester);
     connect(m_urlRequester, SIGNAL(urlSelected(const QString&)),
-            SLOT(slotURLSelected(const QString&)));
-    
+            this, SLOT(slotURLSelected(const QString&)));
+
     topLayout->addStretch(10);
 }
 
 FirstRunDlg::~FirstRunDlg()
 {
+    delete m_about;
 }
 
 void FirstRunDlg::slotDownload(const QString &url)
@@ -112,4 +154,4 @@ QString FirstRunDlg::getURL()
     return m_url;
 }
 
-}
+} // namespace KIPISimpleViewerExportPlugin

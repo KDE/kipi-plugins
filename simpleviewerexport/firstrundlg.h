@@ -32,6 +32,10 @@
 
 #include <libkipi/interface.h>
 
+// Local includes
+
+#include "kpaboutdata.h"
+
 class QString;
 
 class KURLRequester;
@@ -60,11 +64,6 @@ public:
      */
     QString getURL();
 
-private:
-
-    KURLRequester       *m_urlRequester;
-    QString              m_url;
-
 private slots:
 
     /**
@@ -76,6 +75,14 @@ private slots:
      * Starts the installation of SimpleViewer
      */
     void slotURLSelected(const QString &url);
+
+private:
+
+    QString                   m_url;
+
+    KURLRequester            *m_urlRequester;
+
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 } // namespace KIPISimpleViewerExportPlugin

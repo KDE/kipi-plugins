@@ -86,7 +86,7 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to export images to Flash using Simple Viewer component"),
                                            "(c) 2005-2006, Joern Ahrens\n"
-                                           "(c) 2008, Gilles Caulier"");
+                                           "(c) 2008, Gilles Caulier");
 
     m_about->addAuthor("Joern Ahrens", 
                        I18N_NOOP("Author and maintainer"),
@@ -106,7 +106,7 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
                        0,
                        "http://www.stegmann.dk/mikkel/porta");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Plugin Handbook"),
                                  this, SLOT(slotHelp()), 0, -1, 0);

@@ -36,11 +36,6 @@
 
 #include "kpaboutdata.h"
 
-namespace KIPI
-{
-    class ImageCollectionSelector;
-}
-
 class QFrame;
 class QLineEdit;
 class QCheckBox;
@@ -50,6 +45,11 @@ class KIntNumInput;
 class KColorButton;
 class KURLRequester;
 class KConfig;
+
+namespace KIPI
+{
+    class ImageCollectionSelector;
+}
 
 namespace KIPISimpleViewerExportPlugin
 {
@@ -119,8 +119,6 @@ private:
     void generalPage();
     void lookPage();
 
-    KIPIPlugins::KPAboutData* m_about;
-
 private:
 
     QFrame                              *m_selectionPage;
@@ -146,6 +144,7 @@ private:
 
     KIPI::Interface                     *m_interface;
     KIPI::ImageCollectionSelector       *m_imageCollectionSelector;
+    KIPIPlugins::KPAboutData            *m_about;
     QValueList<KIPI::ImageCollection>    m_selectedAlbums;
 };
 
