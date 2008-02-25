@@ -9,12 +9,14 @@ SimpleViewerExport : plugin is now compatible with SimpleViewer version 1.8.x.
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
-001 ==> 155231 : GPSSync      : Timezones are assumed to be only in hourly increments/decrements of GMT.
-002 ==> 154849 : GPSSync      : Updates first find only, does not match other than GMT camera time.
-003 ==> 144070 : GPSSync      : Typing coordinates doesn't update the map.
-004 ==> 152526 : GPSSync      : Remember last display options like zoom and map/sattelite/hybrid view.
-005 ==> 158176 : SlideShow    : Linking errors in slideshow plugin (missing -lXrandr)
-006 ==> 
+001 ==> 155231 : GPSSync            : Timezones are assumed to be only in hourly increments/decrements of GMT.
+002 ==> 154849 : GPSSync            : Updates first find only, does not match other than GMT camera time.
+003 ==> 144070 : GPSSync            : Typing coordinates doesn't update the map.
+004 ==> 152526 : GPSSync            : Remember last display options like zoom and map/sattelite/hybrid view.
+005 ==> 158176 : SlideShow          : Linking errors in slideshow plugin (missing -lXrandr).
+006 ==> 150393 : SimpleViewerExport : XML file is corrupted if exif comment contains a "<".
+007 ==> 134774 : SimpleViewerExport : Exported simpleviewer gallery fails to load images due to wrong xml file name.
+008 ==> 
 
 v 0.1.5 - RC2
 ---------------------------------------------------------------------------
