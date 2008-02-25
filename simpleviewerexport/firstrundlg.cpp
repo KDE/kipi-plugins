@@ -54,9 +54,9 @@
 namespace KIPISimpleViewerExportPlugin
 {
 
-FirstRunDlg::FirstRunDlg( QWidget *parent )
-    : KDialogBase( parent, "svefirstrun", true, "BLA",
-                   KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true )
+FirstRunDlg::FirstRunDlg(QWidget *parent)
+           : KDialogBase(parent, "svefirstrun", true, "BLA",
+                         KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true)
 {
     setCaption(i18n("Flash Export"));
 
