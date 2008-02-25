@@ -569,7 +569,7 @@ bool SimpleViewerExport::upload()
 
     m_progressDlg->addedAction(i18n("Uploading gallery..."), KIPI::StartingMessage);
 
-    if(!KIO::NetAccess::dircopy(m_tempDir->name() + "./", m_configDlg->exportURL()))
+    if(!KIO::NetAccess::dircopy(m_tempDir->name() + "./", m_configDlg->exportURL(), 0))
         return false;
 
     m_progressDlg->addedAction(i18n("Gallery uploaded..."), KIPI::SuccessMessage);
