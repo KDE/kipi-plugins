@@ -124,21 +124,21 @@ void SVEDialog::readConfig()
 {
     KConfig config("kipirc");
 
-    setThumbnailRows(config->readNumEntry("thumbnailRows", 3));
-    setThumbnailColumns(config->readNumEntry("thumbnailColumns", 3));
-    m_navPosition->setCurrentItem(config->readNumEntry("navPosition", 1));
-    m_navDirection->setCurrentItem(config->readNumEntry("navDirection", 1));
-    setTextColor(QColor(config->readEntry("textColor", "#ffffff")));
-    setBackgroundColor(QColor(config->readEntry("backgroundColor", "#181818")));
-    setFrameColor(QColor(config->readEntry("frameColor", "#ffffff")));
-    setFrameWidth(config->readNumEntry("frameWidth", 1));
-    setStagePadding(config->readNumEntry("stagePadding", 20));
-    setTitle(config->readEntry("title", QString()));
-    m_exportURL->setURL(config->readPathEntry("exporturl",  KGlobalSettings::documentPath() + "simpleviewer"));
-    setResizeExportImages(config->readBoolEntry("resizeExportImages", true));
-    setImagesExportSize(config->readNumEntry("imagesExportSize", 640));
-    setMaxImagesDimension(config->readNumEntry("maxImageDimension", 640));
-    setShowExifComments(config->readBoolEntry("showExifComments", true));
+    setThumbnailRows(config.readNumEntry("thumbnailRows", 3));
+    setThumbnailColumns(config.readNumEntry("thumbnailColumns", 3));
+    m_navPosition->setCurrentItem(config.readNumEntry("navPosition", 1));
+    m_navDirection->setCurrentItem(config.readNumEntry("navDirection", 1));
+    setTextColor(QColor(config.readEntry("textColor", "#ffffff")));
+    setBackgroundColor(QColor(config.readEntry("backgroundColor", "#181818")));
+    setFrameColor(QColor(config.readEntry("frameColor", "#ffffff")));
+    setFrameWidth(config.readNumEntry("frameWidth", 1));
+    setStagePadding(config.readNumEntry("stagePadding", 20));
+    setTitle(config.readEntry("title", QString()));
+    m_exportURL->setURL(config.readPathEntry("exporturl",  KGlobalSettings::documentPath() + "simpleviewer"));
+    setResizeExportImages(config.readBoolEntry("resizeExportImages", true));
+    setImagesExportSize(config.readNumEntry("imagesExportSize", 640));
+    setMaxImagesDimension(config.readNumEntry("maxImageDimension", 640));
+    setShowExifComments(config.readBoolEntry("showExifComments", true));
 
     resize(configDialogSize(config, QString("SimpleViewerExport Dialog")));
 }
@@ -146,24 +146,24 @@ void SVEDialog::readConfig()
 void SVEDialog::writeConfig()
 {
     KConfig config("kipirc");
-    config->writeEntry("thumbnailRows", thumbnailRows());
-    config->writeEntry("thumbnailColumns", thumbnailColumns());
-    config->writeEntry("navPosition", m_navPosition->currentItem());
-    config->writeEntry("navDirection", m_navDirection->currentItem());
-    config->writeEntry("textColor", textColor().name());
-    config->writeEntry("backgroundColor", backgroundColor().name());
-    config->writeEntry("frameColor", frameColor().name());
-    config->writeEntry("frameWidth", frameWidth());
-    config->writeEntry("stagePadding", stagePadding());
-    config->writePathEntry("exporturl", exportURL());
-    config->writeEntry("title", title());
-    config->writeEntry("resizeExportImages", resizeExportImages());
-    config->writeEntry("imagesExportSize", imagesExportSize());
-    config->writeEntry("maxImageDimension", maxImageDimension());
-    config->writeEntry("showExifComments", showExifComments());
+    config.writeEntry("thumbnailRows", thumbnailRows());
+    config.writeEntry("thumbnailColumns", thumbnailColumns());
+    config.writeEntry("navPosition", m_navPosition->currentItem());
+    config.writeEntry("navDirection", m_navDirection->currentItem());
+    config.writeEntry("textColor", textColor().name());
+    config.writeEntry("backgroundColor", backgroundColor().name());
+    config.writeEntry("frameColor", frameColor().name());
+    config.writeEntry("frameWidth", frameWidth());
+    config.writeEntry("stagePadding", stagePadding());
+    config.writePathEntry("exporturl", exportURL());
+    config.writeEntry("title", title());
+    config.writeEntry("resizeExportImages", resizeExportImages());
+    config.writeEntry("imagesExportSize", imagesExportSize());
+    config.writeEntry("maxImageDimension", maxImageDimension());
+    config.writeEntry("showExifComments", showExifComments());
 
     saveDialogSize(config, QString("GPS Sync Dialog"));
-    config->sync();
+    config.sync();
 }
 
 void SVEDialog::selectionPage()
@@ -465,7 +465,7 @@ int SVEDialog::frameWidth() const
 {
     return m_frameWidth->value();
 }
-        
+
 void SVEDialog::setFrameWidth(int width)
 {
     m_frameWidth->setValue(width);
@@ -538,7 +538,7 @@ QString SVEDialog::navPosition() const
     else if(pos == i18n("Left"))
         return "left";
     else //if(direction == i18n("Right"))
-        return "right";   
+        return "right";
 }
 
 void SVEDialog::setNavPosition(const QString &pos)
