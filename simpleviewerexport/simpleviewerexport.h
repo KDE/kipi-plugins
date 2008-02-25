@@ -29,7 +29,8 @@
 #include <QObject>
 #include <QList>
 #include <QImage>
-#include <QTextStream>
+#include <QDomDocument>
+#include <QDomElement>
 
 // KDE includes.
 
@@ -51,7 +52,7 @@ class SimpleViewerExport : public QObject
 public:
 
     static void run(KIPI::Interface *interface, QObject *parent=0);
- 
+
 private:
 
     SimpleViewerExport(KIPI::Interface *interface, QObject *parent=0);
@@ -95,37 +96,27 @@ private:
     bool resizeImage(const QImage &image, int maxSize, QImage &resized);
 
     /**
-     * Creates the header of the simpleviewer config file
-     */
-    void cfgCreateHeader(QTextStream &ts);
-
-    /**
      * Adds an image to the simpleviewer config file
      *
      * @param kurl path to the images
      */
-    void cfgAddImage(QTextStream &ts, const KUrl &kurl);
+    void cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem, const KUrl &kurl);
 
-    /**
-     * Finishes the simpleviewer config file
-     */
-    void cfgCreateFooter(QTextStream &ts);
-    
     /**
      * Creates the index.html file
      */
     bool createIndex();
-    
+
     /**
      * Copies simpleviewers files into the export directory
      */
     bool copySimpleViewer();
-    
+
     /**
      * Is the SimpleViewer flash installed?
      */
     bool checkSimpleViewer() const;
-    
+
     /**
      * Installs the SimpleViewer files for the later export 
      * on the users machine
@@ -133,23 +124,23 @@ private:
     bool installSimpleViewer();
 
     bool upload();
-    
+
     bool unzip(const QString &url);
 
     bool openArchive(KZip &zip);
-    
+
     bool extractArchive(KZip &zip);
-    
+
     bool extractFile(const KArchiveEntry *entry);
-    
+
 public slots:
-    
+
     void slotProcess();
     void slotCancel();
-    
+
 private:
 
-    SimpleViewerExportPriv *d;    
+    SimpleViewerExportPriv *d;
 };
 
 } // namespace KIPISimpleViewerExportPlugin
