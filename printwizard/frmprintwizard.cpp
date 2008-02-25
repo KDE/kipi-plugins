@@ -142,7 +142,7 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
   m_helpButton = helpButton();
   KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
   helpMenu->menu()->removeItemAt(0);
-  helpMenu->menu()->insertItem(i18n("Print Wizard Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+  helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
   m_helpButton->setPopup( helpMenu->menu() );
 
   // NOTE does it work????

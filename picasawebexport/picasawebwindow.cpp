@@ -98,7 +98,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface,const QString &tmpFo
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("Picasaweb Export Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup( helpMenu->menu() );
     m_widget = new PicasawebWidget(this);//new PicasawebWidget( this );
     setMainWidget( m_widget );

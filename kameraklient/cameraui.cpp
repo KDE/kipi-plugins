@@ -159,7 +159,7 @@ CameraUI::CameraUI() : QWidget()
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("KameraKlient Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     mhelpButton->setPopup( helpMenu->menu() );
 
     // create Camera Box-----------------------------------------------------------------------

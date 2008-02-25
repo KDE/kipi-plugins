@@ -121,7 +121,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("RAW Converter Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     actionButton(Help)->setPopup( helpMenu->menu() );
 
     // ---------------------------------------------------------------

@@ -184,7 +184,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface, GalleryInfo* info)
 	// Help button
 	KHelpMenu* helpMenu = new KHelpMenu(this, d->mAbout, false);
 	helpMenu->menu()->removeItemAt(0);
-	helpMenu->menu()->insertItem(i18n("HTML Export Handbook"), this, SLOT(showHelp()), 0, -1, 0);
+	helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(showHelp()), 0, -1, 0);
 	helpButton()->setPopup( helpMenu->menu() );
 	
 	d->mCollectionSelector=new KIPI::ImageCollectionSelector(this, interface);

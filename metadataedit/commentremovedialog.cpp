@@ -92,7 +92,7 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("Edit Metadata Handbook"),
+    helpMenu->menu()->insertItem(i18n("Plugin Handbook"),
                                  this, SLOT(slotHelp()), 0, -1, 0);
     actionButton(Help)->setPopup( helpMenu->menu() );
 

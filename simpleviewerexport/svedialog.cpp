@@ -69,7 +69,7 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
                          parent, "SimpleViewerExportDialog", true, true ),
             m_interface( interface )
 {
-    setCaption(i18n("Simple Viewer Export"));
+    setCaption(i18n("Flash Export"));
 
     selectionPage();
     generalPage();
@@ -81,31 +81,36 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
 
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Simple Viewer"),
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Flash Export"),
                                            kipiplugins_version,
                                            KAboutData::License_GPL,
-                                           I18N_NOOP("A Kipi plugin for Simple Viewer export."),
-                                           "(c) 2005-2006, Joern Ahrens");
+                                           I18N_NOOP("A Kipi plugin to export images to Flash using Simple Viewer component"),
+                                           "(c) 2005-2006, Joern Ahrens\n"
+                                           "(c) 2008, Gilles Caulier"");
 
     m_about->addAuthor("Joern Ahrens", 
                        I18N_NOOP("Author and maintainer"),
                        "joern dot ahrens at kdemail dot net");
-    
+
+    m_about->addAuthor("Gilles Caulier", 
+                       I18N_NOOP("Developer and maintainer"),
+                       "caulier dot gilles at gmail dot com");
+
     m_about->addCredit("Felix Turner",
                        "Author of the SimpleViewer flash application",
                        0,
-                       "http://www.airtightinteractive.com/simpleviewer/");
-    
+                       "http://www.airtightinteractive.com/simpleviewer");
+
     m_about->addCredit("Mikkel B. Stegmann",
                        "Basis for the index.html template",
                        0,
-                       "http://www.stegmann.dk/mikkel/porta/");
+                       "http://www.stegmann.dk/mikkel/porta");
 
-    QPushButton *helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeItemAt(0);
-//    helpMenu->menu()->insertItem(i18n("Image Gallery Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    helpButton->setPopup( helpMenu->menu() );
+    helpMenu->menu()->insertItem(i18n("Plugin Handbook"),
+                                 this, SLOT(slotHelp()), 0, -1, 0);
+    actionButton(Help)->setPopup( helpMenu->menu() );
 }
 
 SVEDialog::~SVEDialog()
