@@ -79,7 +79,7 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Flash Export"),
-                                           kipiplugins_version,
+                                           0,
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to export images to Flash using Simple Viewer component"),
                                            "(c) 2005-2006, Joern Ahrens\n"
@@ -94,7 +94,7 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
                        "caulier dot gilles at gmail dot com");
 
     m_about->addCredit("Felix Turner",
-                       "Author of the SimpleViewer flash application",
+                       "Author of the Simple Viewer Flash component",
                        0,
                        "http://www.airtightinteractive.com/simpleviewer");
 
