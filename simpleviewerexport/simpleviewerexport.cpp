@@ -386,7 +386,7 @@ bool SimpleViewerExport::exportImages()
             imagePath.addPath(kurl.filename());
             image.save(imagePath.path(), "JPEG");
 
-            cfgAddImage(xmlDoc, galleryElem, url);
+            cfgAddImage(xmlDoc, galleryElem, kurl);
             m_progressDlg->setProgress(++m_action, m_totalActions);
         }
     }
@@ -464,13 +464,21 @@ void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryE
     }
     else
     {
-        comment = "";
+        comment = QString();
     }
 
-    ts << "<image>" << endl;
-    ts << "    <name>" << kurl.filename() << "</name>" << endl;
-    ts << "    <caption>" <<  comment  <<  "</caption>" << endl;
-    ts << "</image>" << endl;
+    QDomElement img = xmlDoc.createElement(QString::fromLatin1("image")); 
+    galleryElem.appendChild(img);
+
+    QDomElement name = xmlDoc.createElement(QString::fromLatin1("name")); 
+    img.appendChild(name);
+    QDomText nametxt = xmlDoc.createTextNode(kurl.fileName());
+    name.appendChild(nametxt);
+
+    QDomElement caption = xmlDoc.createElement(QString::fromLatin1("caption")); 
+    img.appendChild(caption);
+    QDomText captiontxt = xmlDoc.createTextNode(comment);
+    caption.appendChild(captiontxt);
 }
 
 bool SimpleViewerExport::createIndex()
