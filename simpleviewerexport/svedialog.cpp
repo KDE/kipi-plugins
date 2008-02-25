@@ -27,7 +27,6 @@
 #include <qpushbutton.h>
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qlineedit.h>
 #include <qlayout.h>
 #include <qwhatsthis.h>
 #include <qcheckbox.h>
@@ -39,6 +38,7 @@
 
 // KDE include files
 
+#include <klineedit.h>
 #include <klocale.h>
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
@@ -171,7 +171,7 @@ void SVEDialog::selectionPage()
     m_selectionPage = addPage(i18n("Selection"), i18n("Album Selection"),
                               BarIcon("folder_image", KIcon::SizeMedium));
 
-    QVBoxLayout *layout = new QVBoxLayout( m_selectionPage, 0, spacingHint() );
+    QVBoxLayout *layout       = new QVBoxLayout( m_selectionPage, 0, spacingHint() );
     m_imageCollectionSelector = new KIPI::ImageCollectionSelector( m_selectionPage, m_interface );
     layout->addWidget(m_imageCollectionSelector);
 }
@@ -186,32 +186,25 @@ void SVEDialog::lookPage()
     QHBox *hbox;
     QLabel *label;
 
-    // ========================================================================
-    // Navigation
-    // ========================================================================
+    // ------------------------------------------------------------------------
+
     vgroupbox = new QVGroupBox(i18n("Navigation"), m_lookPage);
     mainLayout->addWidget(vgroupbox);
 
-    // ------------------------------------------------------------------------
-    // Number of rows of thumbnails
-    // ------------------------------------------------------------------------
     m_thumbnailRows = new KIntNumInput(3, vgroupbox);
     m_thumbnailRows->setRange(1, 10, 1, true);
     m_thumbnailRows->setLabel(i18n("Thumbnail &Rows:"), AlignVCenter);
     QWhatsThis::add(m_thumbnailRows, i18n("<p>Number of thumbnails rows"));
 
     // ------------------------------------------------------------------------
-    // Number of columns of thumbnails
-    // ------------------------------------------------------------------------
+
     m_thumbnailColumns = new KIntNumInput(3, vgroupbox);
     m_thumbnailColumns->setRange(1, 10, 1, true);
     m_thumbnailColumns->setLabel(i18n("Thumbnail &Columns:"), AlignVCenter);
     QWhatsThis::add(m_thumbnailColumns, i18n("<p>Number of thumbnails columns"));
 
     // ------------------------------------------------------------------------
-    // navPosition: Position of thumbnails relative to image. Can be "top",
-    //              "bottom","left" or "right".
-    // ------------------------------------------------------------------------
+
     hbox  = new QHBox(vgroupbox);
     label = new QLabel(i18n("Thumbnail &Position:"), hbox);
     m_navPosition = new QComboBox(false, hbox);
@@ -223,9 +216,7 @@ void SVEDialog::lookPage()
     label->setBuddy(m_navPosition);
 
     // ------------------------------------------------------------------------
-    // navDirection: Direction of navigation. Can be "LTR" (Left to Right)
-    //               or "RTL" (Right to Left)
-    // ------------------------------------------------------------------------
+
     hbox  = new QHBox(vgroupbox);
     label = new QLabel(i18n("&Direction of Navigation:"), hbox);
     m_navDirection = new QComboBox(false, hbox);
@@ -234,54 +225,42 @@ void SVEDialog::lookPage()
     m_navDirection->setCurrentText(i18n("Left to Right"));
     label->setBuddy(m_navDirection);
 
-    // ========================================================================
-    // Colors
-    // ========================================================================
+    // ------------------------------------------------------------------------
+
     vgroupbox = new QVGroupBox(i18n("Colors"), m_lookPage);
     mainLayout->addWidget(vgroupbox);
 
-    // ------------------------------------------------------------------------
-    // textColor: Color of title and caption text
-    // ------------------------------------------------------------------------
     hbox  = new QHBox(vgroupbox);
     label = new QLabel(i18n("&Text Color:"), hbox);
     m_textColor = new KColorButton(QColor("#ffffff"), hbox);
     label->setBuddy(m_textColor);
 
     // ------------------------------------------------------------------------
-    // bgColor: Color of background.
-    // ------------------------------------------------------------------------
+
     hbox  = new QHBox(vgroupbox);
     label = new QLabel(i18n("&Background Color:"), hbox);
     m_backgroundColor = new KColorButton(QColor("#181818"), hbox);
     label->setBuddy(m_backgroundColor);
 
     // ------------------------------------------------------------------------
-    // frameColor: Color of image frame, viewed icon, load bars, thumbnail
-    //             arrows
-    // ------------------------------------------------------------------------
+
     hbox  = new QHBox(vgroupbox);
     label = new QLabel(i18n("&Frame Color:"), hbox);
     m_frameColor = new KColorButton(QColor("#ffffff"), hbox);
     label->setBuddy(m_frameColor);
 
-    // ========================================================================
-    // Style
-    // ========================================================================
+    // ------------------------------------------------------------------------
+
     vgroupbox = new QVGroupBox(i18n("Style"), m_lookPage);
     mainLayout->addWidget(vgroupbox);
 
-    // ------------------------------------------------------------------------
-    // frameWidth: Width of image frame in pixels.
-    // ------------------------------------------------------------------------
     m_frameWidth = new KIntNumInput(3, vgroupbox);
     m_frameWidth->setRange(0, 10, 1, true);
     m_frameWidth->setLabel(i18n("Frame &Width:"), AlignVCenter);
     QWhatsThis::add(m_frameWidth, i18n("<p>Width of image frame in pixels."));
 
     // ------------------------------------------------------------------------
-    // stagePadding: Distance between image and thumbnails in pixels.
-    // ------------------------------------------------------------------------
+
     m_stagePadding = new KIntNumInput(20, vgroupbox);
     m_stagePadding->setRange(1, 100, 1, true);
     m_stagePadding->setLabel(i18n("Stage &Padding:"), AlignVCenter);
@@ -301,26 +280,22 @@ void SVEDialog::generalPage()
     QVGroupBox *vgroupbox;
 
     // ------------------------------------------------------------------------
-    // title: title of the Image Gallery
-    // ------------------------------------------------------------------------
+
     hgroupbox = new QHGroupBox(i18n("Gallery &Title"), m_generalPage);
     mainLayout->addWidget(hgroupbox);
 
-    m_title = new QLineEdit("", hgroupbox);
+    m_title   = new KLineEdit(hgroupbox);
     QWhatsThis::add(m_title, i18n("<p>Enter here the gallery title"));
-    mainLayout->addWidget(m_title);
 
-    // ========================================================================
-    // Save to
-    // ========================================================================
-    vgroupbox = new QVGroupBox(i18n("Save Gallery To"), m_generalPage);
+    // ------------------------------------------------------------------------
+
+    vgroupbox   = new QVGroupBox(i18n("Save Gallery To"), m_generalPage);
     mainLayout->addWidget(vgroupbox);
     m_exportURL = new KURLRequester(KGlobalSettings::documentPath() + "simpleviewer", vgroupbox);
     m_exportURL->setMode(KFile::Directory | KFile::LocalOnly);
 
     // ------------------------------------------------------------------------
-    // resize images before export
-    // ------------------------------------------------------------------------
+
     vgroupbox = new QVGroupBox(i18n("Image Size"), m_generalPage);
     mainLayout->addWidget(vgroupbox);
 
@@ -339,9 +314,7 @@ void SVEDialog::generalPage()
             m_imagesExportSize, SLOT(setEnabled(bool)));
 
     // ------------------------------------------------------------------------
-    // maxImageDimension: largest height or width of your largest image (in pixels).
-    // Images will not be scaled up above this size, to ensure best image quality.
-    // ------------------------------------------------------------------------
+
     m_maxImageDimension = new KIntNumInput(m_imagesExportSize, 640, vgroupbox);
     m_maxImageDimension->setRange(200, 2000, 1, true );
     m_maxImageDimension->setLabel(i18n("&Displayed Images Size:"), AlignVCenter);
@@ -349,18 +322,13 @@ void SVEDialog::generalPage()
                                               "Largest height or width of your largest image (in pixels). "
                                               "Images will not be scaled up above this size, to ensure best image quality."));
 
-    // ========================================================================
-    // Misc
-    // ========================================================================    
+    // ------------------------------------------------------------------------
+
     vgroupbox = new QVGroupBox(i18n("Misc"), m_generalPage);
     mainLayout->addWidget(vgroupbox);
 
-    // ------------------------------------------------------------------------
-    // show EXIF comments
-    // ------------------------------------------------------------------------
     m_showExifComments = new QCheckBox(i18n("Display Captions"), vgroupbox);
     m_showExifComments->setChecked(true);
-    mainLayout->addWidget(m_showExifComments);
     QWhatsThis::add(m_showExifComments, i18n("<p>If you enable this option, "
                                              "the images caption will be shown"));
 
@@ -537,7 +505,7 @@ QString SVEDialog::navPosition() const
         return "bottom";
     else if(pos == i18n("Left"))
         return "left";
-    else //if(direction == i18n("Right"))
+    else
         return "right";
 }
 

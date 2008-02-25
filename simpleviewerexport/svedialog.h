@@ -37,10 +37,10 @@
 #include "kpaboutdata.h"
 
 class QFrame;
-class QLineEdit;
 class QCheckBox;
 class QComboBox;
 
+class KLineEdit;
 class KIntNumInput;
 class KColorButton;
 class KURLRequester;
@@ -129,12 +129,12 @@ private:
     QFrame                              *m_generalPage;
     QFrame                              *m_lookPage;
 
-    QLineEdit                           *m_title;
     QCheckBox                           *m_resizeExportImages;
     QCheckBox                           *m_showExifComments;
     QComboBox                           *m_navPosition;
     QComboBox                           *m_navDirection;
 
+    KLineEdit                           *m_title;
     KIntNumInput                        *m_imagesExportSize;
     KIntNumInput                        *m_maxImageDimension;
     KIntNumInput                        *m_thumbnailRows;
