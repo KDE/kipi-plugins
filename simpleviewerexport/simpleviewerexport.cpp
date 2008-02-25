@@ -104,7 +104,7 @@ SimpleViewerExport::SimpleViewerExport(KIPI::Interface* interface, QObject *pare
     if (m_hostURL.isEmpty())
     {
         m_hostName = "Kipi";
-        m_hostURL  = "http://extragear.kde.org/apps/kipi";
+        m_hostURL  = "http://www.kipi-plugins.org";
     }
 }
 
