@@ -84,26 +84,26 @@ LookPage::LookPage(QWidget* parent)
 
     QGroupBox *box    = new QGroupBox(i18n("Navigation"), this);
     QVBoxLayout *vlay = new QVBoxLayout(box);
-    
+
     d->thumbnailRows = new KIntNumInput(this);
     d->thumbnailRows->setRange(1, 10, 1);
     d->thumbnailRows->setValue(3);
     d->thumbnailRows->setLabel(i18n("Thumbnail &Rows:"), Qt::AlignVCenter);
-    d->thumbnailRows->setWhatsThis(i18n("<p>Number of rows of thumbnails"));
+    d->thumbnailRows->setWhatsThis(i18n("<p>Number of thumbnails rows"));
 
     d->thumbnailColumns = new KIntNumInput(this);
     d->thumbnailColumns->setRange(1, 10, 1);
     d->thumbnailColumns->setValue(3);
     d->thumbnailColumns->setLabel(i18n("Thumbnail &Columns:"), Qt::AlignVCenter);
-    d->thumbnailColumns->setWhatsThis(i18n("<p>Number of columns of thumbnails"));
- 
+    d->thumbnailColumns->setWhatsThis(i18n("<p>Number of thumbnails columns"));
+
     KHBox *hbox          = new KHBox;
     QLabel *label        = new QLabel(i18n("Thumbnail &Position:"), hbox);
     d->thumbnailPosition = new QComboBox(hbox);
     d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::RIGHT,  i18n("Right"));
-    d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::LEFT,   i18n("Left"));    
+    d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::LEFT,   i18n("Left"));
     d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::TOP,    i18n("Top"));
-    d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::BOTTOM, i18n("Bottom"));    
+    d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::BOTTOM, i18n("Bottom"));
     d->thumbnailPosition->setCurrentIndex(SimpleViewerSettingsContainer::RIGHT);
     label->setBuddy(d->thumbnailPosition);
 
@@ -202,7 +202,7 @@ void LookPage::setSettings(const SimpleViewerSettingsContainer& settings)
     d->frameWidth->setValue(settings.frameWidth);
     d->stagePadding->setValue(settings.stagePadding);
 }
-                                    
+
 void LookPage::settings(SimpleViewerSettingsContainer& settings)
 {
     settings.thumbnailRows     = d->thumbnailRows->value();

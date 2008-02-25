@@ -80,7 +80,7 @@ GeneralPage::GeneralPage(QWidget* parent)
     QGroupBox *box    = new QGroupBox(i18n("Gallery &Title"), this);
     QVBoxLayout *vlay = new QVBoxLayout(box);
     d->title          = new KLineEdit(this);
-    d->title->setWhatsThis(i18n("<p>Enter here the title of the gallery"));
+    d->title->setWhatsThis(i18n("<p>Enter here the gallery title"));
 
     vlay->setMargin(KDialog::spacingHint());
     vlay->setSpacing(KDialog::spacingHint());
@@ -120,8 +120,8 @@ GeneralPage::GeneralPage(QWidget* parent)
     d->maxImageDimension = new KIntNumInput(this);
     d->maxImageDimension->setRange(200, 2000, 1);
     d->maxImageDimension->setValue(640);
-    d->maxImageDimension->setLabel(i18n("&Images Size:"), Qt::AlignVCenter);
-    d->maxImageDimension->setWhatsThis(i18n("<p>scales the images to this size. "
+    d->maxImageDimension->setLabel(i18n("&Displayed Images Size:"), Qt::AlignVCenter);
+    d->maxImageDimension->setWhatsThis(i18n("<p>scales the displayed images to this size. "
                                             "Largest height or width of your largest image (in pixels). "
                                             "Images will not be scaled up above this size, to ensure best image quality."));
 
@@ -130,7 +130,7 @@ GeneralPage::GeneralPage(QWidget* parent)
     vlay3->addWidget(d->resizeExportImages);
     vlay3->addWidget(d->imagesExportSize);
     vlay3->addWidget(d->maxImageDimension);
-    
+
     // ------------------------------------------------------------------------
 
     QGroupBox *box4    = new QGroupBox(i18n("Misc"), this);
@@ -139,7 +139,7 @@ GeneralPage::GeneralPage(QWidget* parent)
     d->showExifComments = new QCheckBox(i18n("Display Captions"), this);
     d->showExifComments->setChecked(true);
     d->showExifComments->setWhatsThis(i18n("<p>If you enable this option, "
-                                           "the caption of the images will be shown"));
+                                           "the images caption will be shown"));
 
     vlay4->setMargin(KDialog::spacingHint());
     vlay4->setSpacing(KDialog::spacingHint());
@@ -170,7 +170,7 @@ void GeneralPage::setSettings(const SimpleViewerSettingsContainer& settings)
     d->maxImageDimension->setValue(settings.maxImageDimension);
     d->showExifComments->setChecked(settings.showExifComments);
 }
-                                    
+
 void GeneralPage::settings(SimpleViewerSettingsContainer& settings)
 {
     settings.title              = d->title->text();
