@@ -49,6 +49,7 @@
 #include <kurlrequester.h>
 #include <kglobalsettings.h>
 #include <kconfig.h>
+#include <kapplication.h>
 
 // KIPI include files
 
@@ -65,12 +66,10 @@ namespace KIPISimpleViewerExportPlugin
 {
 
 SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
-          : KDialogBase( IconList, i18n("Configure"), Help|Ok|Cancel, Ok,
+          : KDialogBase( IconList, i18n("Flash Export"), Help|Ok|Cancel, Ok,
                          parent, "SimpleViewerExportDialog", true, true ),
             m_interface( interface )
 {
-    setCaption(i18n("Flash Export"));
-
     selectionPage();
     generalPage();
     lookPage();
@@ -116,6 +115,11 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
 SVEDialog::~SVEDialog()
 {
     delete m_about;
+}
+
+void SVEDialog::slotHelp()
+{
+    KApplication::kApplication()->invokeHelp("simpleviewerexport", "kipi-plugins");
 }
 
 void SVEDialog::readConfig()

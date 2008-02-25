@@ -119,6 +119,10 @@ private:
     void generalPage();
     void lookPage();
 
+private slots:
+
+    void slotHelp();
+
 private:
 
     QFrame                              *m_selectionPage;

@@ -37,6 +37,7 @@
 #include <kurlrequester.h>
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
+#include <kapplication.h>
 
 // KIPI include files
 
@@ -136,6 +137,11 @@ FirstRunDlg::FirstRunDlg( QWidget *parent )
 FirstRunDlg::~FirstRunDlg()
 {
     delete m_about;
+}
+
+void FirstRunDlg::slotHelp()
+{
+    KApplication::kApplication()->invokeHelp("simpleviewerexport", "kipi-plugins");
 }
 
 void FirstRunDlg::slotDownload(const QString &url)

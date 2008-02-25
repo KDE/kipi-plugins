@@ -76,6 +76,8 @@ private slots:
      */
     void slotURLSelected(const QString &url);
 
+    void slotHelp();
+
 private:
 
     QString                   m_url;
