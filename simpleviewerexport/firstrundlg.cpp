@@ -55,11 +55,9 @@ namespace KIPISimpleViewerExportPlugin
 {
 
 FirstRunDlg::FirstRunDlg(QWidget *parent)
-           : KDialogBase(parent, "svefirstrun", true, "BLA",
-                         KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true)
+           : KDialogBase(parent, 0, true, i18n("Flash Export"),
+                         Help|Ok|Cancel, Ok, true)
 {
-    setCaption(i18n("Flash Export"));
-
     enableButtonOK(false);
 
     // About data and help button.
