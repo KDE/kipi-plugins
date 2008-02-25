@@ -76,8 +76,6 @@ SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget *parent)
 
     readConfig();
 
-    resize( 650, 450 );
-
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Flash Export"),
@@ -124,50 +122,48 @@ void SVEDialog::slotHelp()
 
 void SVEDialog::readConfig()
 {
-    KConfig *config = new KConfig("kipisimpleviewerexportrc");
-    
-    setThumbnailRows(config->readNumEntry("thumbnailRows", 1));
-    setThumbnailColumns(config->readNumEntry("thumbnailColumns", 1));
+    KConfig config("kipirc");
+
+    setThumbnailRows(config->readNumEntry("thumbnailRows", 3));
+    setThumbnailColumns(config->readNumEntry("thumbnailColumns", 3));
     m_navPosition->setCurrentItem(config->readNumEntry("navPosition", 1));
     m_navDirection->setCurrentItem(config->readNumEntry("navDirection", 1));
     setTextColor(QColor(config->readEntry("textColor", "#ffffff")));
-    setBackgroundColor(QColor(config->readEntry("backgroundColor", "#181818")));    
-    setFrameColor(QColor(config->readEntry("frameColor", "#ffffff")));    
+    setBackgroundColor(QColor(config->readEntry("backgroundColor", "#181818")));
+    setFrameColor(QColor(config->readEntry("frameColor", "#ffffff")));
     setFrameWidth(config->readNumEntry("frameWidth", 1));
-    setStagePadding(config->readNumEntry("stagePadding", 1));
-    setTitle(config->readEntry("title", ""));
+    setStagePadding(config->readNumEntry("stagePadding", 20));
+    setTitle(config->readEntry("title", QString()));
     m_exportURL->setURL(config->readPathEntry("exporturl",  KGlobalSettings::documentPath() + "simpleviewer"));
     setResizeExportImages(config->readBoolEntry("resizeExportImages", true));
     setImagesExportSize(config->readNumEntry("imagesExportSize", 640));
     setMaxImagesDimension(config->readNumEntry("maxImageDimension", 640));
-    setShowExifComments(config->readBoolEntry("showExifComments", true));    
-        
-    delete config;
+    setShowExifComments(config->readBoolEntry("showExifComments", true));
+
+    resize(configDialogSize(config, QString("SimpleViewerExport Dialog")));
 }
 
 void SVEDialog::writeConfig()
 {
-    KConfig *config = new KConfig("kipisimpleviewerexportrc");
-    
+    KConfig config("kipirc");
     config->writeEntry("thumbnailRows", thumbnailRows());
     config->writeEntry("thumbnailColumns", thumbnailColumns());
     config->writeEntry("navPosition", m_navPosition->currentItem());
     config->writeEntry("navDirection", m_navDirection->currentItem());
     config->writeEntry("textColor", textColor().name());
-    config->writeEntry("backgroundColor", backgroundColor().name());    
+    config->writeEntry("backgroundColor", backgroundColor().name());
     config->writeEntry("frameColor", frameColor().name());
     config->writeEntry("frameWidth", frameWidth());
-    config->writeEntry("stagePadding", stagePadding());            
+    config->writeEntry("stagePadding", stagePadding());
     config->writePathEntry("exporturl", exportURL());
     config->writeEntry("title", title());
     config->writeEntry("resizeExportImages", resizeExportImages());
     config->writeEntry("imagesExportSize", imagesExportSize());
     config->writeEntry("maxImageDimension", maxImageDimension());
     config->writeEntry("showExifComments", showExifComments());
-    
-    config->sync(); 
-    
-    delete config;
+
+    saveDialogSize(config, QString("GPS Sync Dialog"));
+    config->sync();
 }
 
 void SVEDialog::selectionPage()
@@ -202,15 +198,15 @@ void SVEDialog::lookPage()
     m_thumbnailRows = new KIntNumInput(3, vgroupbox);
     m_thumbnailRows->setRange(1, 10, 1, true);
     m_thumbnailRows->setLabel(i18n("Thumbnail &Rows:"), AlignVCenter);
-    QWhatsThis::add(m_thumbnailRows, i18n("<p>Number of rows of thumbnails"));
+    QWhatsThis::add(m_thumbnailRows, i18n("<p>Number of thumbnails rows"));
 
     // ------------------------------------------------------------------------
     // Number of columns of thumbnails
     // ------------------------------------------------------------------------
-    m_thumbnailColumns = new KIntNumInput(m_thumbnailRows, 3, vgroupbox);
+    m_thumbnailColumns = new KIntNumInput(3, vgroupbox);
     m_thumbnailColumns->setRange(1, 10, 1, true);
     m_thumbnailColumns->setLabel(i18n("Thumbnail &Columns:"), AlignVCenter);
-    QWhatsThis::add(m_thumbnailColumns, i18n("<p>Number of columns of thumbnails"));
+    QWhatsThis::add(m_thumbnailColumns, i18n("<p>Number of thumbnails columns"));
 
     // ------------------------------------------------------------------------
     // navPosition: Position of thumbnails relative to image. Can be "top",
@@ -220,9 +216,9 @@ void SVEDialog::lookPage()
     label = new QLabel(i18n("Thumbnail &Position:"), hbox);
     m_navPosition = new QComboBox(false, hbox);
     m_navPosition->insertItem(i18n("Right"));
-    m_navPosition->insertItem(i18n("Left"));    
+    m_navPosition->insertItem(i18n("Left"));
     m_navPosition->insertItem(i18n("Top"));
-    m_navPosition->insertItem(i18n("Bottom"));    
+    m_navPosition->insertItem(i18n("Bottom"));
     m_navPosition->setCurrentText(i18n("Right"));
     label->setBuddy(m_navPosition);
 
@@ -274,11 +270,11 @@ void SVEDialog::lookPage()
     // ========================================================================
     vgroupbox = new QVGroupBox(i18n("Style"), m_lookPage);
     mainLayout->addWidget(vgroupbox);
-    
+
     // ------------------------------------------------------------------------
     // frameWidth: Width of image frame in pixels.
     // ------------------------------------------------------------------------
-    m_frameWidth = new KIntNumInput(m_thumbnailRows, 3, vgroupbox);
+    m_frameWidth = new KIntNumInput(3, vgroupbox);
     m_frameWidth->setRange(0, 10, 1, true);
     m_frameWidth->setLabel(i18n("Frame &Width:"), AlignVCenter);
     QWhatsThis::add(m_frameWidth, i18n("<p>Width of image frame in pixels."));
@@ -286,12 +282,11 @@ void SVEDialog::lookPage()
     // ------------------------------------------------------------------------
     // stagePadding: Distance between image and thumbnails in pixels.
     // ------------------------------------------------------------------------
-    m_stagePadding = new KIntNumInput(m_thumbnailRows, 40, vgroupbox);
+    m_stagePadding = new KIntNumInput(20, vgroupbox);
     m_stagePadding->setRange(1, 100, 1, true);
     m_stagePadding->setLabel(i18n("Stage &Padding:"), AlignVCenter);
-    QWhatsThis::add(m_stagePadding,
-                    i18n("<p>tagePadding: Distance between image and thumbnails in pixels."));
-    
+    QWhatsThis::add(m_stagePadding, i18n("<p>tagePadding: Distance between image and thumbnails in pixels."));
+
     mainLayout->addStretch(1);
 }
 
@@ -304,24 +299,24 @@ void SVEDialog::generalPage()
 
     QHGroupBox *hgroupbox;
     QVGroupBox *vgroupbox;
-    
+
     // ------------------------------------------------------------------------
     // title: title of the Image Gallery
-    // ------------------------------------------------------------------------    
+    // ------------------------------------------------------------------------
     hgroupbox = new QHGroupBox(i18n("Gallery &Title"), m_generalPage);
     mainLayout->addWidget(hgroupbox);
-    
+
     m_title = new QLineEdit("", hgroupbox);
-    QWhatsThis::add(m_title, i18n("<p>Enter here the title of the gallery"));
+    QWhatsThis::add(m_title, i18n("<p>Enter here the gallery title"));
     mainLayout->addWidget(m_title);
 
     // ========================================================================
     // Save to
-    // ========================================================================    
+    // ========================================================================
     vgroupbox = new QVGroupBox(i18n("Save Gallery To"), m_generalPage);
     mainLayout->addWidget(vgroupbox);
     m_exportURL = new KURLRequester(KGlobalSettings::documentPath() + "simpleviewer", vgroupbox);
-    m_exportURL->setMode(KFile::Directory | KFile::LocalOnly/* | KFile::ExistingOnly*/);
+    m_exportURL->setMode(KFile::Directory | KFile::LocalOnly);
 
     // ------------------------------------------------------------------------
     // resize images before export
@@ -349,23 +344,25 @@ void SVEDialog::generalPage()
     // ------------------------------------------------------------------------
     m_maxImageDimension = new KIntNumInput(m_imagesExportSize, 640, vgroupbox);
     m_maxImageDimension->setRange(200, 2000, 1, true );
-    m_maxImageDimension->setLabel(i18n("&SimpleViewer Images Size:"), AlignVCenter);
-    QWhatsThis::add(m_maxImageDimension, i18n("<p>SimpleViewer scales the images to this size"));
-    
+    m_maxImageDimension->setLabel(i18n("&Displayed Images Size:"), AlignVCenter);
+    QWhatsThis::add(m_maxImageDimension, i18n("<p>scales the displayed images to this size. "
+                                              "Largest height or width of your largest image (in pixels). "
+                                              "Images will not be scaled up above this size, to ensure best image quality."));
+
     // ========================================================================
     // Misc
     // ========================================================================    
     vgroupbox = new QVGroupBox(i18n("Misc"), m_generalPage);
     mainLayout->addWidget(vgroupbox);
-    
+
     // ------------------------------------------------------------------------
     // show EXIF comments
     // ------------------------------------------------------------------------
-    m_showExifComments = new QCheckBox(i18n("Display EXIF Captions"), vgroupbox);
+    m_showExifComments = new QCheckBox(i18n("Display Captions"), vgroupbox);
     m_showExifComments->setChecked(true);
     mainLayout->addWidget(m_showExifComments);
     QWhatsThis::add(m_showExifComments, i18n("<p>If you enable this option, "
-                                             "the EXIF caption of the images will be shown"));
+                                             "the images caption will be shown"));
 
     mainLayout->addStretch(1);
 }
