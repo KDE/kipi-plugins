@@ -163,7 +163,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
     // About data and help button.
 
     d->about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
-                   kipiplugins_version,
+                   0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to convert a Raw image"),
                    ki18n("(c) 2003-2005, Renchi Raju\n"

@@ -179,7 +179,7 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     // About data and help button.
 
     d->about = new KIPIPlugins::KPAboutData(ki18n("Edit Metadata"),
-                                            kipiplugins_version,
+                                            0,
                                             KAboutData::License_GPL,
                                             ki18n("A Plugin to edit pictures metadata"),
                                             ki18n("(c) 2006-2008, Gilles Caulier"));

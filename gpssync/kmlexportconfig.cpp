@@ -277,7 +277,7 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(ki18n("KML Export"),
-                   kipiplugins_version,
+                   0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin for KML exporting"),
                    ki18n("(c) 2006-2007, Stéphane Pontier"));

@@ -77,7 +77,7 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
     setButtons(Help | Ok | Cancel);
     setDefaultButton(Ok);
     setModal(true);
-    setCaption(i18n("Flash Export"));  
+    setCaption(i18n("Flash Export"));
     enableButton(Ok, false);
 
     QFrame *page = new QFrame(this);
@@ -87,7 +87,7 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
     // About data and help button.
 
     d->about = new KIPIPlugins::KPAboutData(ki18n("Flash Export"),
-                   kipiplugins_version,
+                   0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to export images to Flash using Simple Viewer component"),
                    ki18n("(c) 2005-2006, Joern Ahrens\n"
@@ -105,7 +105,7 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
                         ki18n("Author of the Simple Viewer Flash component"),
                         0,
                         "http://www.airtightinteractive.com/simpleviewer");
-    
+
     d->about->addCredit(ki18n("Mikkel B. Stegmann"),
                         ki18n("Basis for the index.html template"),
                         0,
@@ -124,7 +124,7 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
     helpButton->setDelayedMenu( helpMenu->menu() );
 
     // ---------------------------------------------------------------
-    
+
     QVBoxLayout *topLayout = new QVBoxLayout(page);
 
     QLabel *info1 = new QLabel(page);
@@ -135,24 +135,24 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
                          "<p>You can now download SimpleViewer from its homepage and point this tool "
                          "to the downloaded archive. The archive will be stored with the plugin configuration, "
                          "so it is available for further use.</p>"));
-    
+
     QLabel *info2 = new QLabel(page);
     info2->setText(i18n("<p>1.) Download SimpleViewer Version 1.8.x</p>"));
-    
+
     KUrlLabel *link = new KUrlLabel(page);
     link->setText("http://www.airtightinteractive.com/simpleviewer");
     link->setUrl("http://www.airtightinteractive.com/simpleviewer");
 
     connect(link, SIGNAL(leftClickedUrl(const KUrl&)),
             this, SLOT(slotDownload(const KUrl&)));
-    
+
     QLabel *info3 = new QLabel(page);
     info3->setText(i18n("<p>2.) Point this tool to the downloaded archive</p>"));
-    
+
     d->urlRequester = new KUrlRequester(page);
     connect(d->urlRequester, SIGNAL(urlSelected(const KUrl&)),
             this, SLOT(slotUrlSelected(const KUrl&)));
-    
+
     topLayout->setMargin(0);
     topLayout->setSpacing(spacingHint());
     topLayout->addWidget(info1);

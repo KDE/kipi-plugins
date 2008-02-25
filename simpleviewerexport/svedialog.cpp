@@ -66,7 +66,7 @@ public:
         generalPage    = 0;
         lookPage       = 0;
         about          = 0;
-        interface      = 0;    
+        interface      = 0;
     }
 
     KPageWidgetItem               *page_selection;
@@ -116,7 +116,7 @@ SVEDialog::SVEDialog(KIPI::Interface *interface, QWidget *parent)
     // About data and help button.
 
     d->about = new KIPIPlugins::KPAboutData(ki18n("Flash Export"),
-                   kipiplugins_version,
+                   0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to export images to Flash using Simple Viewer component"),
                    ki18n("(c) 2005-2006, Joern Ahrens\n"
@@ -134,7 +134,7 @@ SVEDialog::SVEDialog(KIPI::Interface *interface, QWidget *parent)
                        ki18n("Author of the Simple Viewer Flash component"),
                        0,
                        "http://www.airtightinteractive.com/simpleviewer");
-    
+
     d->about->addCredit(ki18n("Mikkel B. Stegmann"),
                        ki18n("Basis for the index.html template"),
                        0,
@@ -241,8 +241,8 @@ void SVEDialog::readSettings()
     d->settings.thumbnailPosition  = (SimpleViewerSettingsContainer::ThumbPosition)group.readEntry("ThumbnailPosition", (int)SimpleViewerSettingsContainer::RIGHT);
     d->settings.navDirection       = (SimpleViewerSettingsContainer::NavDir)group.readEntry("NavDirection", (int)SimpleViewerSettingsContainer::LEFT2RIGHT);
     d->settings.textColor          = group.readEntry("TextColor", QColor("#ffffff"));
-    d->settings.backgroundColor    = group.readEntry("BackgroundColor", QColor("#181818"));    
-    d->settings.frameColor         = group.readEntry("FrameColor", QColor("#ffffff"));    
+    d->settings.backgroundColor    = group.readEntry("BackgroundColor", QColor("#181818"));
+    d->settings.frameColor         = group.readEntry("FrameColor", QColor("#ffffff"));
     d->settings.frameWidth         = group.readEntry("FrameWidth", 1);
     d->settings.stagePadding       = group.readEntry("StagePadding", 20);
     d->settings.title              = group.readEntry("Title", QString());
@@ -250,11 +250,11 @@ void SVEDialog::readSettings()
     d->settings.resizeExportImages = group.readEntry("ResizeExportImages", true);
     d->settings.imagesExportSize   = group.readEntry("ImagesExportSize", 640);
     d->settings.maxImageDimension  = group.readEntry("MaxImageDimension", 640);
-    d->settings.showExifComments   = group.readEntry("ShowExifComments", true);    
+    d->settings.showExifComments   = group.readEntry("ShowExifComments", true);
 
     d->generalPage->setSettings(d->settings);
     d->lookPage->setSettings(d->settings);
-    
+
     KConfigGroup group2 = config.group(QString("SimpleViewerExport Dialog"));
     showPage(group2.readEntry("SimpleViewerExport Page", 0));
     restoreDialogSize(group2);
@@ -292,7 +292,7 @@ void SVEDialog::saveSettings()
 }
 
 SimpleViewerSettingsContainer SVEDialog::settings() const
-{    
+{
     return d->settings;
 }
 

@@ -150,7 +150,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     // About data and help button.
 
     d->about = new KIPIPlugins::KPAboutData(ki18n("GPS Sync"),
-                   kipiplugins_version,
+                   0,
                    KAboutData::License_GPL,
                    ki18n("A Plugin to edit geographical coordinates"),
                    ki18n("(c) 2006-2008, Gilles Caulier"));

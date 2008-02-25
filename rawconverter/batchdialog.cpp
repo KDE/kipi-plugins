@@ -197,7 +197,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     // About data and help button.
 
     d->about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
-                   kipiplugins_version,
+                   0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to batch convert Raw images"),
                    ki18n("(c) 2003-2005, Renchi Raju\n"

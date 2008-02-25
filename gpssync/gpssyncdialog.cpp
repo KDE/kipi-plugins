@@ -262,7 +262,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     // About data and help button.
 
     d->about = new KIPIPlugins::KPAboutData(ki18n("GPS Sync"),
-                   kipiplugins_version,
+                   0,
                    KAboutData::License_GPL,
                    ki18n("A Plugin to synchronize pictures metadata with a GPS device"),
                    ki18n("(c) 2006-2008, Gilles Caulier"));

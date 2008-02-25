@@ -97,10 +97,10 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *sane
     // -- About data and help button ----------------------------------------
 
     d->about = new KIPIPlugins::KPAboutData(ki18n("Acquire images"),
-                   kipiplugins_version,
+                   0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to acquire images using a flat bed scanner"),
-                   ki18n("(c) 2003-2007, Gilles Caulier"));
+                   ki18n("(c) 2003-2008, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"),
                         ki18n("Author"),
