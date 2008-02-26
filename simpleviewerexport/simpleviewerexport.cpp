@@ -50,6 +50,11 @@
 #include <libkipi/batchprogressdialog.h>
 #include <libkipi/imageinfo.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/kdcraw.h>
+
 // Local includes
 
 #include "firstrundlg.h"
@@ -65,7 +70,7 @@ namespace KIPISimpleViewerExportPlugin
 const int maxThumbSize = 45;
 const QString viewer("viewer.swf");
 
-/* static */ void SimpleViewerExport::run(KIPI::Interface* interface, QObject *parent)
+void SimpleViewerExport::run(KIPI::Interface* interface, QObject *parent)
 {
     SimpleViewerExport *plugin = new SimpleViewerExport(interface, parent);
 
@@ -356,7 +361,16 @@ bool SimpleViewerExport::exportImages()
             m_progressDlg->addedAction(i18n("Processing %1").arg((*it).filename()),
                                        KIPI::StartingMessage);
             QImage image;
-            if(!image.load(kurl.path()))
+
+            // Check if RAW file.
+            QString rawFilesExt(raw_file_extentions);
+            QFileInfo fileInfo(kurl.path());
+            if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
+                KDcrawIface::KDcraw::loadDcrawPreview(image, kurl.path());
+            else
+                image.load(kurl.path());
+
+            if(image.isNull())
             {
                 m_progressDlg->addedAction(i18n("Could not open image '%1'").arg(kurl.filename()),
                                            KIPI::WarningMessage);
