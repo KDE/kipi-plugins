@@ -380,6 +380,7 @@ bool SimpleViewerExport::exportImages()
          !d->canceled && (it != d->collectionsList.end()) ; ++it )
     {
         KUrl::List images = (*it).images();
+
         for(KUrl::List::Iterator it = images.begin();
             !d->canceled && (it != images.end()) ; ++it)
         {
