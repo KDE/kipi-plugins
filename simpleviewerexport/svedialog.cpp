@@ -252,6 +252,7 @@ void SVEDialog::readSettings()
     d->settings.maxImageDimension    = group.readEntry("MaxImageDimension", 640);
     d->settings.showComments         = group.readEntry("ShowComments", true);
     d->settings.enableRightClickOpen = group.readEntry("EnableRightClickOpen", false);
+    d->settings.fixOrientation       = group.readEntry("FixOrientation", true);
 
     d->generalPage->setSettings(d->settings);
     d->lookPage->setSettings(d->settings);
@@ -286,6 +287,7 @@ void SVEDialog::saveSettings()
     group.writeEntry("MaxImageDimension", d->settings.maxImageDimension);
     group.writeEntry("ShowComments", d->settings.showComments);
     group.writeEntry("EnableRightClickOpen", d->settings.enableRightClickOpen);
+    group.writeEntry("FixOrientation", d->settings.fixOrientation);
 
     KConfigGroup group2 = config.group(QString("SimpleViewerExport Dialog"));
     group2.writeEntry("SimpleViewerExport Page", activePageIndex());

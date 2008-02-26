@@ -119,6 +119,7 @@ public:
     bool                         enableRightClickOpen;
     bool                         resizeExportImages;
     bool                         showComments;
+    bool                         fixOrientation;
 
     int                          imagesExportSize;
     int                          maxImageDimension;

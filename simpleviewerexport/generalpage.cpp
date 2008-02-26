@@ -56,6 +56,7 @@ public:
         maxImageDimension  = 0;
         exportUrl          = 0;
         rightClick         = 0;
+        fixOrientation     = 0;
     }
 
     KLineEdit     *title;
@@ -63,6 +64,7 @@ public:
     QCheckBox     *resizeExportImages;
     QCheckBox     *showComments;
     QCheckBox     *rightClick;
+    QCheckBox     *fixOrientation;
 
     KIntNumInput  *imagesExportSize;
     KIntNumInput  *maxImageDimension;
@@ -101,12 +103,19 @@ GeneralPage::GeneralPage(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox *box3       = new QGroupBox(i18n("Image Size"), this);
-    QVBoxLayout *vlay3    = new QVBoxLayout(box3);
+    QGroupBox *box3       = new QGroupBox(i18n("Image Properties"), this);
+    QGridLayout *grid     = new QGridLayout(box3);
     d->resizeExportImages = new QCheckBox(i18n("Resize Target Images"), this);
     d->resizeExportImages->setChecked(true);
     d->resizeExportImages->setWhatsThis(i18n("<p>If you enable this option, "
                                              "all target images can be resized.") );
+
+
+    d->fixOrientation = new QCheckBox(i18n("Auto-Rotate/Flip Images"), this);
+    d->fixOrientation->setChecked(true);
+    d->fixOrientation->setWhatsThis(i18n("<p>If you enable this option, "
+                                         "the images orientation will be fixed accordingly "
+                                         "with Exif information"));
 
     d->imagesExportSize = new KIntNumInput(this);
     d->imagesExportSize->setRange(200, 2000, 1);
@@ -119,6 +128,9 @@ GeneralPage::GeneralPage(QWidget* parent)
     connect(d->resizeExportImages, SIGNAL(toggled(bool)),
             d->imagesExportSize, SLOT(setEnabled(bool)));
 
+    connect(d->resizeExportImages, SIGNAL(toggled(bool)),
+            d->fixOrientation, SLOT(setEnabled(bool)));
+
     d->maxImageDimension = new KIntNumInput(this);
     d->maxImageDimension->setRange(200, 2000, 1);
     d->maxImageDimension->setValue(640);
@@ -128,11 +140,13 @@ GeneralPage::GeneralPage(QWidget* parent)
                                             "Images will not be scaled up above this size, to ensure "
                                             "best image quality."));
 
-    vlay3->setMargin(KDialog::spacingHint());
-    vlay3->setSpacing(KDialog::spacingHint());
-    vlay3->addWidget(d->resizeExportImages);
-    vlay3->addWidget(d->imagesExportSize);
-    vlay3->addWidget(d->maxImageDimension);
+    grid->addWidget(d->resizeExportImages, 0, 0, 1, 2);
+    grid->addWidget(d->fixOrientation,     1, 1, 1, 1);
+    grid->addWidget(d->imagesExportSize,   2, 1, 1, 1);
+    grid->addWidget(d->maxImageDimension,  3, 0, 1, 2);
+    grid->setColumnMinimumWidth(0, KDialog::spacingHint());
+    grid->setMargin(KDialog::spacingHint());
+    grid->setSpacing(KDialog::spacingHint());
 
     // ------------------------------------------------------------------------
 
@@ -180,6 +194,7 @@ void GeneralPage::setSettings(const SimpleViewerSettingsContainer& settings)
     d->maxImageDimension->setValue(settings.maxImageDimension);
     d->showComments->setChecked(settings.showComments);
     d->rightClick->setChecked(settings.enableRightClickOpen);
+    d->fixOrientation->setChecked(settings.fixOrientation);
 }
 
 void GeneralPage::settings(SimpleViewerSettingsContainer& settings)
@@ -191,6 +206,7 @@ void GeneralPage::settings(SimpleViewerSettingsContainer& settings)
     settings.maxImageDimension    = d->maxImageDimension->value();
     settings.showComments         = d->showComments->isChecked();
     settings.enableRightClickOpen = d->rightClick->isChecked();
+    settings.fixOrientation       = d->fixOrientation->isChecked();
 }
 
 }  // namespace KIPISimpleViewerExportPlugin

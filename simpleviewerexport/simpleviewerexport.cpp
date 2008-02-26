@@ -54,10 +54,6 @@
 #include <libkdcraw/dcrawbinary.h>
 #include <libkdcraw/kdcraw.h>
 
-// LibKExiv2 includes.
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "pluginsversion.h"
@@ -373,8 +369,9 @@ bool SimpleViewerExport::exportImages()
     QImage              image;
     QImage              thumbnail;
 
-    int maxSize       = d->configDlg->settings().imagesExportSize;
-    bool resizeImages = d->configDlg->settings().resizeExportImages;
+    int maxSize         = d->configDlg->settings().imagesExportSize;
+    bool resizeImages   = d->configDlg->settings().resizeExportImages;
+    bool fixOrientation = d->configDlg->settings().fixOrientation;
 
     for( QList<KIPI::ImageCollection>::Iterator it = d->collectionsList.begin() ;
          !d->canceled && (it != d->collectionsList.end()) ; ++it )
@@ -418,18 +415,25 @@ bool SimpleViewerExport::exportImages()
                 continue;
             }
 
+            meta.load(url.path());
+            bool rotated = false;
+
             KUrl thumbnailPath(thumbsDir);
             thumbnailPath.addPath(url.fileName() + QString(".jpg"));
+            if (resizeImages && fixOrientation)
+                meta.rotateExifQImage(thumbnail, meta.getImageOrientation());
             thumbnail.save(thumbnailPath.path(), "JPEG");
 
             KUrl imagePath(imagesDir);
             imagePath.addPath(url.fileName() + QString(".jpg"));
+            if (resizeImages && fixOrientation)
+                rotated = meta.rotateExifQImage(image, meta.getImageOrientation());
             image.save(imagePath.path(), "JPEG");
 
             // Backup metadata from original image.
-            meta.load(url.path());
             meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
             meta.setImageDimensions(image.size());
+            if (rotated) meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
             meta.save(imagePath.path());
 
             cfgAddImage(xmlDoc, galleryElem, url);

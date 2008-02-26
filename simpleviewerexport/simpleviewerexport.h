@@ -37,6 +37,10 @@
 #include <kurl.h>
 #include <kzip.h>
 
+// LibKExiv2 includes.
+
+#include <libkexiv2/kexiv2.h>
+
 // KIPI includes
 
 #include <libkipi/interface.h>
