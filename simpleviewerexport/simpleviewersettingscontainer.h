@@ -67,6 +67,42 @@ public:
     
     ~SimpleViewerSettingsContainer(){};
 
+    QString thumbPosition() const
+    {
+        switch(thumbnailPosition)
+        {
+            case RIGHT:
+                return QString("right");
+                break;
+
+            case LEFT:
+                return QString("left");
+                break;
+
+            case TOP:
+                return QString("top");
+                break;
+
+            default: // BOTTOM
+                return QString("bottom");
+                break;
+        }
+    };
+
+    QString navDir() const
+    {
+        switch(navDirection)
+        {
+            case LEFT2RIGHT:
+                return QString("LTR");
+                break;
+
+            default: // RIGHT2LEFT
+                return QString("RTL");
+                break;
+        }
+    };
+
 public:
 
     ThumbPosition                thumbnailPosition;

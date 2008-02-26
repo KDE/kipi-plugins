@@ -357,8 +357,8 @@ bool SimpleViewerExport::exportImages()
     galleryElem.setAttribute(QString::fromLatin1("stagePadding"),     d->configDlg->settings().stagePadding);
     galleryElem.setAttribute(QString::fromLatin1("thumbnailColumns"), d->configDlg->settings().thumbnailColumns);
     galleryElem.setAttribute(QString::fromLatin1("thumbnailRows"),    d->configDlg->settings().thumbnailRows);
-    galleryElem.setAttribute(QString::fromLatin1("navPosition"),      d->configDlg->settings().thumbnailPosition);
-    galleryElem.setAttribute(QString::fromLatin1("navDirection"),     d->configDlg->settings().navDirection);
+    galleryElem.setAttribute(QString::fromLatin1("navPosition"),      d->configDlg->settings().thumbPosition());
+    galleryElem.setAttribute(QString::fromLatin1("navDirection"),     d->configDlg->settings().navDir());
     galleryElem.setAttribute(QString::fromLatin1("title"),            d->configDlg->settings().title);
     galleryElem.setAttribute(QString::fromLatin1("imagePath"),        QString());
     galleryElem.setAttribute(QString::fromLatin1("thumbPath"),        QString());
