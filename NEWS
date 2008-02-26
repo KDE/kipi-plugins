@@ -6,6 +6,7 @@ v 0.1.5
 Kipi-plugins NEW FEATURES
 
 SimpleViewerExport : plugin is now compatible with SimpleViewer version 1.8.x.
+SimpleViewerExport : plugin now support RAW files format.
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
