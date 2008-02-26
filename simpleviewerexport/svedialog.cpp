@@ -179,7 +179,7 @@ void SVEDialog::selectionPage()
 void SVEDialog::lookPage()
 {
     m_lookPage = addPage(i18n("Look"), i18n("Page Look"),
-                              BarIcon("html", KIcon::SizeMedium));
+                              BarIcon("colors", KIcon::SizeMedium));
 
     QVBoxLayout *mainLayout = new QVBoxLayout(m_lookPage, 0, spacingHint());
     QVGroupBox *vgroupbox;
