@@ -17,12 +17,12 @@ SET(kipiplugin_jpeglossless_PART_SRCS plugin_jpeglossless.cpp
                                       actionthread.cpp
    )
 
-
 KDE4_ADD_PLUGIN(kipiplugin_jpeglossless ${kipiplugin_jpeglossless_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_jpeglossless 
                       ${KDE4_KPARTS_LIBS} 
                       ${QT_QT3SUPPORT_LIBRARY}
+                      ${KDE4_KDE3SUPPORT_LIBS}
                       ${QT_AND_KDECORE_LIBS} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
