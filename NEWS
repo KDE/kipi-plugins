@@ -9,7 +9,7 @@ MetadataEdit   : XMP metadata support with EXIF, IPTC, and Comments editor to sy
 MetadataEdit   : IPTC Editor dialog is more compliant with IPTC.org recommendations.
 MetadataEdit   : IPTC Editor add the capability to set multiple values for a tag.
 SendImages     : Complete re-write of emailing tool.
-GPSSync        : new tool to edit GPS track list using googlemaps.
+GPSSync        : New tool to edit GPS track list using googlemaps.
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
@@ -17,7 +17,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 002 ==> 135386 : GPSSync            : Show track on the google map.
 003 ==> 149497 : GPSSync            : Geolocalization kipi plugin does not work with non-jpeg file types.
 004 ==> 145746 : GPSSync            : Do not recreate thumbs when geolocalizing images.
-005 ==> 
+005 ==> 134299 : SimpleViewerExport : Read orientation of image from EXIF.
+006 ==> 
 
 v 0.1.4 beta2
 ----------------------------------------------------------------------------
