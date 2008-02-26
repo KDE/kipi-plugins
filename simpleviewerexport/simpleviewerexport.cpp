@@ -49,6 +49,11 @@
 #include <libkipi/batchprogressdialog.h>
 #include <libkipi/imageinfo.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/dcrawbinary.h>
+#include <libkdcraw/kdcraw.h>
+
 // Local includes
 
 #include "firstrundlg.h"
@@ -372,7 +377,16 @@ bool SimpleViewerExport::exportImages()
             d->progressDlg->addedAction(i18n("Processing %1", url.fileName()), KIPI::StartingMessage);
 
             QImage image;
-            if(!image.load(url.path()))
+
+            // Check if RAW file.
+            QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
+            QFileInfo fi(url.path());
+            if (rawFilesExt.toUpper().contains( fi.suffix().toUpper()))
+                KDcrawIface::KDcraw::loadDcrawPreview(image, url.path());
+            else
+                image.load(url.path());
+
+            if(image.isNull())
             {
                 d->progressDlg->addedAction(i18n("Could not open image '%1'", url.fileName()), 
                                            KIPI::WarningMessage);

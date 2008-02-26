@@ -14,6 +14,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_simpleviewer
                       ${KDE4_KIO_LIBS} 
                       ${QT_AND_KDECORE_LIBS} 
                       ${KIPI_LIBRARIES} 
+                      ${KDCRAW_LIBRARIES} 
                       kipiplugins
                      )
 
