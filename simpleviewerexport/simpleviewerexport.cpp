@@ -55,8 +55,13 @@
 #include <libkdcraw/dcrawbinary.h>
 #include <libkdcraw/kdcraw.h>
 
+// LibKExiv2 includes.
+
+#include <libkexiv2/kexiv2.h>
+
 // Local includes
 
+#include "pluginsversion.h"
 #include "firstrundlg.h"
 #include "svedialog.h"
 #include "simpleviewerexport.h"
@@ -346,25 +351,28 @@ bool SimpleViewerExport::exportImages()
     galleryElem.setAttribute(QString::fromLatin1("imagePath"),        QString());
     galleryElem.setAttribute(QString::fromLatin1("thumbPath"),        QString());
 
+    KExiv2Iface::KExiv2 meta;
+    QImage              image;
+    QImage              thumbnail;
     int maxSize       = m_configDlg->imagesExportSize();
     bool resizeImages = m_configDlg->resizeExportImages();
+
     for( QValueList<KIPI::ImageCollection>::Iterator it = m_albumsList.begin() ;
          !m_canceled && (it != m_albumsList.end()) ; ++it )
     {
         KURL::List images = (*it).images();
+
         for(KURL::List::Iterator it = images.begin();
             !m_canceled && (it != images.end()) ; ++it)
         {
             kapp->processEvents();
-
             KURL kurl = *it;
-            m_progressDlg->addedAction(i18n("Processing %1").arg((*it).filename()),
-                                       KIPI::StartingMessage);
-            QImage image;
+            QFileInfo fileInfo(kurl.path());
+
+            m_progressDlg->addedAction(i18n("Processing %1").arg((*it).filename()), KIPI::StartingMessage);
 
             // Check if RAW file.
             QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
-            QFileInfo fileInfo(kurl.path());
             if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
                 KDcrawIface::KDcraw::loadDcrawPreview(image, kurl.path());
             else
@@ -377,7 +385,6 @@ bool SimpleViewerExport::exportImages()
                 continue;
             }
 
-            QImage thumbnail;
             if(!createThumbnail(image, thumbnail))
             {
                 m_progressDlg->addedAction(i18n("Could not create thumbnail from '%1'").arg(kurl.filename()),
@@ -393,12 +400,18 @@ bool SimpleViewerExport::exportImages()
             }
 
             KURL thumbnailPath(thumbsDir);
-            thumbnailPath.addPath(kurl.filename());
+            thumbnailPath.addPath(kurl.filename() + QString(".jpg"));
             thumbnail.save(thumbnailPath.path(), "JPEG");
 
             KURL imagePath(imagesDir);
-            imagePath.addPath(kurl.filename());
+            imagePath.addPath(kurl.filename() + QString(".jpg"));
             image.save(imagePath.path(), "JPEG");
+
+            // Backup metadata from original image.
+            meta.load(kurl.path());
+            meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+            meta.setImageDimensions(image.size());
+            meta.save(imagePath.path());
 
             cfgAddImage(xmlDoc, galleryElem, kurl);
             m_progressDlg->setProgress(++m_action, m_totalActions);
@@ -486,7 +499,7 @@ void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryE
 
     QDomElement name = xmlDoc.createElement(QString::fromLatin1("name")); 
     img.appendChild(name);
-    QDomText nametxt = xmlDoc.createTextNode(kurl.fileName());
+    QDomText nametxt = xmlDoc.createTextNode(kurl.fileName() + QString(".jpg"));
     name.appendChild(nametxt);
 
     QDomElement caption = xmlDoc.createElement(QString::fromLatin1("caption")); 

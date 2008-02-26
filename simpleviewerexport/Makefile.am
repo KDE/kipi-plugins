@@ -1,15 +1,15 @@
-INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(LIBKIPI_CFLAGS) $(LIBKDCRAW_CFLAGS) $(all_includes)
+INCLUDES = $(KIPI_PLUGINS_COMMON_INCLUDE) $(LIBKIPI_CFLAGS) $(LIBKDCRAW_CFLAGS) $(LIBKEXIV2_CFLAGS) $(all_includes)
 
 METASOURCES = AUTO
 
 kde_module_LTLIBRARIES = kipiplugin_simpleviewer.la
 
-kipiplugin_simpleviewer_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKDCRAW_LIBS_DEP)
+kipiplugin_simpleviewer_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKEXIV2_LIBS_DEP) $(LIBKDCRAW_LIBS_DEP)
 
 kipiplugin_simpleviewer_la_SOURCES = plugin_simpleviewer.cpp svedialog.cpp \
 	                                 simpleviewerexport.cpp firstrundlg.cpp
 
-kipiplugin_simpleviewer_la_LIBADD = $(LIBKIPI_LIBS) $(LIBKDCRAW_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
+kipiplugin_simpleviewer_la_LIBADD = $(LIBKIPI_LIBS) $(LIBKDCRAW_LIBS) $(LIBKEXIV2_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 kipiplugin_simpleviewer_la_LDFLAGS = $(KIPI_PLUGINS_COMMON_LDFLAGS) -module $(KDE_PLUGIN) $(all_libraries) -lkipiplugins
 
