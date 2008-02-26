@@ -6,7 +6,7 @@
  * Date        : 2004-02-25
  * Description : a kipi plugin to e-mailing images
  *
- * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2006 by Tom Albers <tomalbers at kde dot nl>
  * Copyright (C) 2006 by Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
  *
@@ -59,7 +59,7 @@
 
 // LibKDcraw includes.
 
-#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/dcrawbinary.h>
 #include <libkdcraw/kdcraw.h>
 
 // Local includes.
@@ -121,7 +121,7 @@ void SendImages::prepare(void)
     m_imageFormat      = m_sendImagesDialog->m_imagesFormat->currentText();
     m_sizeFactor       = getSize( m_sendImagesDialog->m_imagesResize->currentItem() );
     m_imageCompression = m_sendImagesDialog->m_imageCompression->value();
-    
+
     // Base64-encoding needs a lot of space.
     m_attachmentlimit = m_sendImagesDialog->m_attachmentlimit->value()*770000-2000; 
 }
@@ -789,7 +789,7 @@ bool SendImages::resizeImageProcess(const QString &SourcePath, const QString &De
     QImage img;
 
     // Check if RAW file.
-    QString rawFilesExt(raw_file_extentions);
+    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
     QFileInfo fileInfo(SourcePath);
     if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
         KDcrawIface::KDcraw::loadDcrawPreview(img, SourcePath);

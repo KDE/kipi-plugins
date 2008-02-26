@@ -52,7 +52,7 @@
 
 // LibKDcraw includes.
 
-#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/dcrawbinary.h>
 #include <libkdcraw/kdcraw.h>
 
 // Local includes
@@ -363,7 +363,7 @@ bool SimpleViewerExport::exportImages()
             QImage image;
 
             // Check if RAW file.
-            QString rawFilesExt(raw_file_extentions);
+            QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
             QFileInfo fileInfo(kurl.path());
             if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
                 KDcrawIface::KDcraw::loadDcrawPreview(image, kurl.path());
