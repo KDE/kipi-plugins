@@ -348,20 +348,21 @@ bool SimpleViewerExport::exportImages()
                        QString::fromLatin1("version=\"1.0\" encoding=\"UTF-8\"") ) );
     QDomElement galleryElem = xmlDoc.createElement(QString::fromLatin1("simpleviewerGallery")); 
     xmlDoc.appendChild( galleryElem );
-    galleryElem.setAttribute(QString::fromLatin1("maxImageWidth"),    d->configDlg->settings().maxImageDimension);
-    galleryElem.setAttribute(QString::fromLatin1("maxImageHeight"),   d->configDlg->settings().maxImageDimension);
-    galleryElem.setAttribute(QString::fromLatin1("textColor"),        d->configDlg->settings().textColor.name().replace("#", "0x"));
-    galleryElem.setAttribute(QString::fromLatin1("frameColor"),       d->configDlg->settings().frameColor.name().replace("#", "0x"));
-    galleryElem.setAttribute(QString::fromLatin1("bgColor"),          d->configDlg->settings().backgroundColor.name().replace("#", "0x"));
-    galleryElem.setAttribute(QString::fromLatin1("frameWidth"),       d->configDlg->settings().frameWidth);
-    galleryElem.setAttribute(QString::fromLatin1("stagePadding"),     d->configDlg->settings().stagePadding);
-    galleryElem.setAttribute(QString::fromLatin1("thumbnailColumns"), d->configDlg->settings().thumbnailColumns);
-    galleryElem.setAttribute(QString::fromLatin1("thumbnailRows"),    d->configDlg->settings().thumbnailRows);
-    galleryElem.setAttribute(QString::fromLatin1("navPosition"),      d->configDlg->settings().thumbPosition());
-    galleryElem.setAttribute(QString::fromLatin1("navDirection"),     d->configDlg->settings().navDir());
-    galleryElem.setAttribute(QString::fromLatin1("title"),            d->configDlg->settings().title);
-    galleryElem.setAttribute(QString::fromLatin1("imagePath"),        QString());
-    galleryElem.setAttribute(QString::fromLatin1("thumbPath"),        QString());
+    galleryElem.setAttribute(QString::fromLatin1("enableRightClickOpen"), d->configDlg->settings().enableRightClickToOpen());
+    galleryElem.setAttribute(QString::fromLatin1("maxImageWidth"),        d->configDlg->settings().maxImageDimension);
+    galleryElem.setAttribute(QString::fromLatin1("maxImageHeight"),       d->configDlg->settings().maxImageDimension);
+    galleryElem.setAttribute(QString::fromLatin1("textColor"),            d->configDlg->settings().textColor.name().replace("#", "0x"));
+    galleryElem.setAttribute(QString::fromLatin1("frameColor"),           d->configDlg->settings().frameColor.name().replace("#", "0x"));
+    galleryElem.setAttribute(QString::fromLatin1("bgColor"),              d->configDlg->settings().backgroundColor.name().replace("#", "0x"));
+    galleryElem.setAttribute(QString::fromLatin1("frameWidth"),           d->configDlg->settings().frameWidth);
+    galleryElem.setAttribute(QString::fromLatin1("stagePadding"),         d->configDlg->settings().stagePadding);
+    galleryElem.setAttribute(QString::fromLatin1("thumbnailColumns"),     d->configDlg->settings().thumbnailColumns);
+    galleryElem.setAttribute(QString::fromLatin1("thumbnailRows"),        d->configDlg->settings().thumbnailRows);
+    galleryElem.setAttribute(QString::fromLatin1("navPosition"),          d->configDlg->settings().thumbPosition());
+    galleryElem.setAttribute(QString::fromLatin1("navDirection"),         d->configDlg->settings().navDir());
+    galleryElem.setAttribute(QString::fromLatin1("title"),                d->configDlg->settings().title);
+    galleryElem.setAttribute(QString::fromLatin1("imagePath"),            QString());
+    galleryElem.setAttribute(QString::fromLatin1("thumbPath"),            QString());
 
     int maxSize       = d->configDlg->settings().imagesExportSize;
     bool resizeImages = d->configDlg->settings().resizeExportImages;
@@ -485,7 +486,7 @@ void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryE
 
     QString comment;
 
-    if(d->configDlg->settings().showExifComments)
+    if(d->configDlg->settings().showComments)
     {
         KIPI::ImageInfo info = d->interface->info(kurl);
         comment              = info.description();

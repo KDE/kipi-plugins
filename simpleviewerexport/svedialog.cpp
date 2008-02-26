@@ -236,21 +236,22 @@ void SVEDialog::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("SimpleViewerExport Settings");
 
-    d->settings.thumbnailRows      = group.readEntry("ThumbnailRows", 3);
-    d->settings.thumbnailColumns   = group.readEntry("ThumbnailColumns", 3);
-    d->settings.thumbnailPosition  = (SimpleViewerSettingsContainer::ThumbPosition)group.readEntry("ThumbnailPosition", (int)SimpleViewerSettingsContainer::RIGHT);
-    d->settings.navDirection       = (SimpleViewerSettingsContainer::NavDir)group.readEntry("NavDirection", (int)SimpleViewerSettingsContainer::LEFT2RIGHT);
-    d->settings.textColor          = group.readEntry("TextColor", QColor("#ffffff"));
-    d->settings.backgroundColor    = group.readEntry("BackgroundColor", QColor("#181818"));
-    d->settings.frameColor         = group.readEntry("FrameColor", QColor("#ffffff"));
-    d->settings.frameWidth         = group.readEntry("FrameWidth", 1);
-    d->settings.stagePadding       = group.readEntry("StagePadding", 20);
-    d->settings.title              = group.readEntry("Title", QString());
-    d->settings.exportUrl          = group.readEntry("ExportUrl",  KUrl(KGlobalSettings::documentPath() + "simpleviewer"));
-    d->settings.resizeExportImages = group.readEntry("ResizeExportImages", true);
-    d->settings.imagesExportSize   = group.readEntry("ImagesExportSize", 640);
-    d->settings.maxImageDimension  = group.readEntry("MaxImageDimension", 640);
-    d->settings.showExifComments   = group.readEntry("ShowExifComments", true);
+    d->settings.thumbnailRows        = group.readEntry("ThumbnailRows", 3);
+    d->settings.thumbnailColumns     = group.readEntry("ThumbnailColumns", 3);
+    d->settings.thumbnailPosition    = (SimpleViewerSettingsContainer::ThumbPosition)group.readEntry("ThumbnailPosition", (int)SimpleViewerSettingsContainer::RIGHT);
+    d->settings.navDirection         = (SimpleViewerSettingsContainer::NavDir)group.readEntry("NavDirection", (int)SimpleViewerSettingsContainer::LEFT2RIGHT);
+    d->settings.textColor            = group.readEntry("TextColor", QColor("#ffffff"));
+    d->settings.backgroundColor      = group.readEntry("BackgroundColor", QColor("#181818"));
+    d->settings.frameColor           = group.readEntry("FrameColor", QColor("#ffffff"));
+    d->settings.frameWidth           = group.readEntry("FrameWidth", 1);
+    d->settings.stagePadding         = group.readEntry("StagePadding", 20);
+    d->settings.title                = group.readEntry("Title", QString());
+    d->settings.exportUrl            = group.readEntry("ExportUrl",  KUrl(KGlobalSettings::documentPath() + "simpleviewer"));
+    d->settings.resizeExportImages   = group.readEntry("ResizeExportImages", true);
+    d->settings.imagesExportSize     = group.readEntry("ImagesExportSize", 640);
+    d->settings.maxImageDimension    = group.readEntry("MaxImageDimension", 640);
+    d->settings.showComments         = group.readEntry("ShowComments", true);
+    d->settings.enableRightClickOpen = group.readEntry("EnableRightClickOpen", false);
 
     d->generalPage->setSettings(d->settings);
     d->lookPage->setSettings(d->settings);
@@ -274,8 +275,8 @@ void SVEDialog::saveSettings()
     group.writeEntry("ThumbnailPosition", (int)d->settings.thumbnailPosition);
     group.writeEntry("NavDirection", (int)d->settings.navDirection);
     group.writeEntry("TextColor", d->settings.textColor);
-    group.writeEntry("BackgroundColor", d->settings.backgroundColor);    
-    group.writeEntry("FrameColor", d->settings.frameColor);    
+    group.writeEntry("BackgroundColor", d->settings.backgroundColor);
+    group.writeEntry("FrameColor", d->settings.frameColor);
     group.writeEntry("FrameWidth", d->settings.frameWidth);
     group.writeEntry("StagePadding", d->settings.stagePadding);
     group.writeEntry("Title", d->settings.title);
@@ -283,7 +284,8 @@ void SVEDialog::saveSettings()
     group.writeEntry("ResizeExportImages", d->settings.resizeExportImages);
     group.writeEntry("ImagesExportSize", d->settings.imagesExportSize);
     group.writeEntry("MaxImageDimension", d->settings.maxImageDimension);
-    group.writeEntry("ShowExifComments", d->settings.showExifComments);    
+    group.writeEntry("ShowComments", d->settings.showComments);
+    group.writeEntry("EnableRightClickOpen", d->settings.enableRightClickOpen);
 
     KConfigGroup group2 = config.group(QString("SimpleViewerExport Dialog"));
     group2.writeEntry("SimpleViewerExport Page", activePageIndex());

@@ -60,11 +60,11 @@ public:
     };
 
 public:
-    
+
     SimpleViewerSettingsContainer()
     {
     };
-    
+
     ~SimpleViewerSettingsContainer(){};
 
     QString thumbPosition() const
@@ -103,13 +103,22 @@ public:
         }
     };
 
+    QString enableRightClickToOpen() const
+    {
+        if (enableRightClickOpen)
+            return QString("true");
+
+        return QString("false");
+    };
+
 public:
 
     ThumbPosition                thumbnailPosition;
     NavDir                       navDirection;
 
+    bool                         enableRightClickOpen;
     bool                         resizeExportImages;
-    bool                         showExifComments;
+    bool                         showComments;
 
     int                          imagesExportSize;
     int                          maxImageDimension;
@@ -124,7 +133,7 @@ public:
     QColor                       backgroundColor;
     QColor                       frameColor;
 
-    KUrl                         exportUrl;  
+    KUrl                         exportUrl;
 
     QList<KIPI::ImageCollection> collections;
 };

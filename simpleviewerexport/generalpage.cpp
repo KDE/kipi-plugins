@@ -51,21 +51,23 @@ public:
     {
         title              = 0;
         resizeExportImages = 0;
-        showExifComments   = 0;
+        showComments       = 0;
         imagesExportSize   = 0;
         maxImageDimension  = 0;
         exportUrl          = 0;
+        rightClick         = 0;
     }
 
     KLineEdit     *title;
 
     QCheckBox     *resizeExportImages;
-    QCheckBox     *showExifComments;
+    QCheckBox     *showComments;
+    QCheckBox     *rightClick;
 
     KIntNumInput  *imagesExportSize;
     KIntNumInput  *maxImageDimension;
 
-    KUrlRequester *exportUrl;  
+    KUrlRequester *exportUrl;
 };
 
 GeneralPage::GeneralPage(QWidget* parent)
@@ -123,7 +125,8 @@ GeneralPage::GeneralPage(QWidget* parent)
     d->maxImageDimension->setLabel(i18n("&Displayed Images Size:"), Qt::AlignVCenter);
     d->maxImageDimension->setWhatsThis(i18n("<p>scales the displayed images to this size. "
                                             "Largest height or width of your largest image (in pixels). "
-                                            "Images will not be scaled up above this size, to ensure best image quality."));
+                                            "Images will not be scaled up above this size, to ensure "
+                                            "best image quality."));
 
     vlay3->setMargin(KDialog::spacingHint());
     vlay3->setSpacing(KDialog::spacingHint());
@@ -136,14 +139,21 @@ GeneralPage::GeneralPage(QWidget* parent)
     QGroupBox *box4    = new QGroupBox(i18n("Misc"), this);
     QVBoxLayout *vlay4 = new QVBoxLayout(box4);
 
-    d->showExifComments = new QCheckBox(i18n("Display Captions"), this);
-    d->showExifComments->setChecked(true);
-    d->showExifComments->setWhatsThis(i18n("<p>If you enable this option, "
-                                           "the images caption will be shown"));
+    d->showComments = new QCheckBox(i18n("Display Captions"), this);
+    d->showComments->setChecked(true);
+    d->showComments->setWhatsThis(i18n("<p>If you enable this option, "
+                                       "the images caption will be shown"));
+
+    d->rightClick = new QCheckBox(i18n("Open Image with Right Click"), this);
+    d->rightClick->setChecked(true);
+    d->rightClick->setWhatsThis(i18n("<p>If you enable this option, "
+                                     "user will be able to open the target image in a separate window "
+                                     "using right mouse button"));
 
     vlay4->setMargin(KDialog::spacingHint());
     vlay4->setSpacing(KDialog::spacingHint());
-    vlay4->addWidget(d->showExifComments);
+    vlay4->addWidget(d->showComments);
+    vlay4->addWidget(d->rightClick);
 
     // ------------------------------------------------------------------------
 
@@ -168,17 +178,19 @@ void GeneralPage::setSettings(const SimpleViewerSettingsContainer& settings)
     d->resizeExportImages->setChecked(settings.resizeExportImages);
     d->imagesExportSize->setValue(settings.imagesExportSize);
     d->maxImageDimension->setValue(settings.maxImageDimension);
-    d->showExifComments->setChecked(settings.showExifComments);
+    d->showComments->setChecked(settings.showComments);
+    d->rightClick->setChecked(settings.enableRightClickOpen);
 }
 
 void GeneralPage::settings(SimpleViewerSettingsContainer& settings)
 {
-    settings.title              = d->title->text();
-    settings.exportUrl          = d->exportUrl->url();
-    settings.resizeExportImages = d->resizeExportImages->isChecked();
-    settings.imagesExportSize   = d->imagesExportSize->value();
-    settings.maxImageDimension  = d->maxImageDimension->value();
-    settings.showExifComments   = d->showExifComments->isChecked();
+    settings.title                = d->title->text();
+    settings.exportUrl            = d->exportUrl->url();
+    settings.resizeExportImages   = d->resizeExportImages->isChecked();
+    settings.imagesExportSize     = d->imagesExportSize->value();
+    settings.maxImageDimension    = d->maxImageDimension->value();
+    settings.showComments         = d->showComments->isChecked();
+    settings.enableRightClickOpen = d->rightClick->isChecked();
 }
 
 }  // namespace KIPISimpleViewerExportPlugin
