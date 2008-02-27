@@ -102,10 +102,13 @@ private:
     /**
      * Adds an image to the simpleviewer config file
      *
+     * @param xmlDoc main XML document
+     * @param galleryElem gallery XML element
      * @param url path to original image
      * @param newName new image file name used by gallery
      */
-    void cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem, const KUrl &url, const QString& newName);
+    void cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem, 
+                     const KUrl &url, const QString& newName);
 
     /**
      * Creates the index.html file
