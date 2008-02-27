@@ -354,6 +354,10 @@ bool SimpleViewerExport::exportImages()
     KExiv2Iface::KExiv2 meta;
     QImage              image;
     QImage              thumbnail;
+    QString             tmp;
+    QString             newName;
+
+    int index         = 1;
     int maxSize       = m_configDlg->imagesExportSize();
     bool resizeImages = m_configDlg->resizeExportImages();
 
@@ -366,55 +370,58 @@ bool SimpleViewerExport::exportImages()
             !m_canceled && (it != images.end()) ; ++it)
         {
             kapp->processEvents();
-            KURL kurl = *it;
-            QFileInfo fileInfo(kurl.path());
+            KURL url = *it;
+            QFileInfo fileInfo(url.path());
 
-            m_progressDlg->addedAction(i18n("Processing %1").arg((*it).filename()), KIPI::StartingMessage);
+            m_progressDlg->addedAction(i18n("Processing %1").arg(url.filename()), KIPI::StartingMessage);
 
             // Check if RAW file.
             QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
             if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
-                KDcrawIface::KDcraw::loadDcrawPreview(image, kurl.path());
+                KDcrawIface::KDcraw::loadDcrawPreview(image, url.path());
             else
-                image.load(kurl.path());
+                image.load(url.path());
 
             if(image.isNull())
             {
-                m_progressDlg->addedAction(i18n("Could not open image '%1'").arg(kurl.filename()),
+                m_progressDlg->addedAction(i18n("Could not open image '%1'").arg(url.filename()),
                                            KIPI::WarningMessage);
                 continue;
             }
 
             if(!createThumbnail(image, thumbnail))
             {
-                m_progressDlg->addedAction(i18n("Could not create thumbnail from '%1'").arg(kurl.filename()),
+                m_progressDlg->addedAction(i18n("Could not create thumbnail from '%1'").arg(url.filename()),
                                            KIPI::WarningMessage);
                 continue;
             }
 
             if(resizeImages && !resizeImage(image, maxSize, image))
             {
-                m_progressDlg->addedAction(i18n("Could not resize image '%1'").arg(kurl.filename()),
+                m_progressDlg->addedAction(i18n("Could not resize image '%1'").arg(url.filename()),
                                            KIPI::WarningMessage);
                 continue;
             }
 
+            meta.load(url.path());
+            newName = QString("%1.%2").arg(tmp.sprintf("%03i", index)).arg(QString("jpg"));
+
             KURL thumbnailPath(thumbsDir);
-            thumbnailPath.addPath(kurl.filename() + QString(".jpg"));
+            thumbnailPath.addPath(newName);
             thumbnail.save(thumbnailPath.path(), "JPEG");
 
             KURL imagePath(imagesDir);
-            imagePath.addPath(kurl.filename() + QString(".jpg"));
+            imagePath.addPath(newName);
             image.save(imagePath.path(), "JPEG");
 
             // Backup metadata from original image.
-            meta.load(kurl.path());
             meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
             meta.setImageDimensions(image.size());
             meta.save(imagePath.path());
 
-            cfgAddImage(xmlDoc, galleryElem, kurl);
+            cfgAddImage(xmlDoc, galleryElem, url, newName);
             m_progressDlg->setProgress(++m_action, m_totalActions);
+            index++;
         }
     }
 
@@ -477,7 +484,8 @@ bool SimpleViewerExport::resizeImage(const QImage &image, int maxSize, QImage &r
     return true;
 }
 
-void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem, const KURL &kurl)
+void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem, 
+                                     const KURL &url, const QString& newName)
 {
     if(m_canceled)
         return;
@@ -486,7 +494,7 @@ void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryE
 
     if(m_configDlg->showExifComments())
     {
-        KIPI::ImageInfo info = m_interface->info(kurl);
+        KIPI::ImageInfo info = m_interface->info(url);
         comment = info.description();
     }
     else
@@ -499,7 +507,7 @@ void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryE
 
     QDomElement name = xmlDoc.createElement(QString::fromLatin1("name")); 
     img.appendChild(name);
-    QDomText nametxt = xmlDoc.createTextNode(kurl.fileName() + QString(".jpg"));
+    QDomText nametxt = xmlDoc.createTextNode(newName);
     name.appendChild(nametxt);
 
     QDomElement caption = xmlDoc.createElement(QString::fromLatin1("caption")); 
