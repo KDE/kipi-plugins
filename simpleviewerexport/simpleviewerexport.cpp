@@ -420,7 +420,7 @@ bool SimpleViewerExport::exportImages()
 
             meta.load(url.path());
             bool rotated = false;
-            newName = QString("%1.%2").arg(tmp.sprintf("%03i", index)).arg(QString("jpg"));
+            newName      = QString("%1.%2").arg(tmp.sprintf("%03i", index)).arg(QString("jpg"));
 
             KUrl thumbnailPath(thumbsDir);
             thumbnailPath.addPath(newName);

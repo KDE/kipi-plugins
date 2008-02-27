@@ -102,7 +102,7 @@ private:
     /**
      * Adds an image to the simpleviewer config file
      *
-     * @param kurl path to original image
+     * @param url path to original image
      * @param newName new image file name used by gallery
      */
     void cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem, const KUrl &url, const QString& newName);
