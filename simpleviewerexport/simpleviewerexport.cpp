@@ -368,7 +368,10 @@ bool SimpleViewerExport::exportImages()
     KExiv2Iface::KExiv2 meta;
     QImage              image;
     QImage              thumbnail;
+    QString             tmp;
+    QString             newName;
 
+    int index           = 1;
     int maxSize         = d->configDlg->settings().imagesExportSize;
     bool resizeImages   = d->configDlg->settings().resizeExportImages;
     bool fixOrientation = d->configDlg->settings().fixOrientation;
@@ -417,15 +420,16 @@ bool SimpleViewerExport::exportImages()
 
             meta.load(url.path());
             bool rotated = false;
+            newName = QString("%1.%2").arg(tmp.sprintf("%03i", index)).arg(QString("jpg"));
 
             KUrl thumbnailPath(thumbsDir);
-            thumbnailPath.addPath(url.fileName() + QString(".jpg"));
+            thumbnailPath.addPath(newName);
             if (resizeImages && fixOrientation)
                 meta.rotateExifQImage(thumbnail, meta.getImageOrientation());
             thumbnail.save(thumbnailPath.path(), "JPEG");
 
             KUrl imagePath(imagesDir);
-            imagePath.addPath(url.fileName() + QString(".jpg"));
+            imagePath.addPath(newName);
             if (resizeImages && fixOrientation)
                 rotated = meta.rotateExifQImage(image, meta.getImageOrientation());
             image.save(imagePath.path(), "JPEG");
@@ -436,8 +440,9 @@ bool SimpleViewerExport::exportImages()
             if (rotated) meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
             meta.save(imagePath.path());
 
-            cfgAddImage(xmlDoc, galleryElem, url);
+            cfgAddImage(xmlDoc, galleryElem, url, newName);
             d->progressDlg->setProgress(++d->action, d->totalActions);
+            index++;
         }
     }
 
@@ -498,7 +503,8 @@ bool SimpleViewerExport::resizeImage(const QImage &image, int maxSize, QImage &r
     return true;
 }
 
-void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem, const KUrl &kurl)
+void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem, 
+                                     const KUrl &url, const QString& newName)
 {
     if(d->canceled)
         return;
@@ -507,7 +513,7 @@ void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryE
 
     if(d->configDlg->settings().showComments)
     {
-        KIPI::ImageInfo info = d->interface->info(kurl);
+        KIPI::ImageInfo info = d->interface->info(url);
         comment              = info.description();
     }
     else
@@ -520,7 +526,7 @@ void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryE
 
     QDomElement name = xmlDoc.createElement(QString::fromLatin1("name")); 
     img.appendChild(name);
-    QDomText nametxt = xmlDoc.createTextNode(kurl.fileName() + QString(".jpg"));
+    QDomText nametxt = xmlDoc.createTextNode(newName);
     name.appendChild(nametxt);
 
     QDomElement caption = xmlDoc.createElement(QString::fromLatin1("caption")); 
