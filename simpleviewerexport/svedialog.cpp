@@ -246,13 +246,14 @@ void SVEDialog::readSettings()
     d->settings.frameWidth           = group.readEntry("FrameWidth", 1);
     d->settings.stagePadding         = group.readEntry("StagePadding", 20);
     d->settings.title                = group.readEntry("Title", QString());
-    d->settings.exportUrl            = group.readEntry("ExportUrl",  KUrl(KGlobalSettings::documentPath() + "simpleviewer"));
+    d->settings.exportUrl            = group.readEntry("ExportUrl", KUrl(KGlobalSettings::documentPath() + "simpleviewer"));
     d->settings.resizeExportImages   = group.readEntry("ResizeExportImages", true);
     d->settings.imagesExportSize     = group.readEntry("ImagesExportSize", 640);
     d->settings.maxImageDimension    = group.readEntry("MaxImageDimension", 640);
     d->settings.showComments         = group.readEntry("ShowComments", true);
     d->settings.enableRightClickOpen = group.readEntry("EnableRightClickOpen", false);
     d->settings.fixOrientation       = group.readEntry("FixOrientation", true);
+    d->settings.openInKonqueror      = group.readEntry("OpenInKonqueror", true);
 
     d->generalPage->setSettings(d->settings);
     d->lookPage->setSettings(d->settings);
@@ -288,6 +289,7 @@ void SVEDialog::saveSettings()
     group.writeEntry("ShowComments", d->settings.showComments);
     group.writeEntry("EnableRightClickOpen", d->settings.enableRightClickOpen);
     group.writeEntry("FixOrientation", d->settings.fixOrientation);
+    group.writeEntry("OpenInKonqueror", d->settings.openInKonqueror);
 
     KConfigGroup group2 = config.group(QString("SimpleViewerExport Dialog"));
     group2.writeEntry("SimpleViewerExport Page", activePageIndex());

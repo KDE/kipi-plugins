@@ -57,6 +57,7 @@ public:
         exportUrl          = 0;
         rightClick         = 0;
         fixOrientation     = 0;
+        openInKonqueror    = 0;
     }
 
     KLineEdit     *title;
@@ -65,6 +66,7 @@ public:
     QCheckBox     *showComments;
     QCheckBox     *rightClick;
     QCheckBox     *fixOrientation;
+    QCheckBox     *openInKonqueror;
 
     KIntNumInput  *imagesExportSize;
     KIntNumInput  *maxImageDimension;
@@ -159,15 +161,22 @@ GeneralPage::GeneralPage(QWidget* parent)
                                        "the images caption will be shown"));
 
     d->rightClick = new QCheckBox(i18n("Open Image with Right Click"), this);
-    d->rightClick->setChecked(true);
+    d->rightClick->setChecked(false);
     d->rightClick->setWhatsThis(i18n("<p>If you enable this option, "
                                      "user will be able to open the target image in a separate window "
                                      "using right mouse button"));
+
+    d->openInKonqueror = new QCheckBox(i18n("Open gallery in Konqueror"), this);
+    d->openInKonqueror->setChecked(true);
+    d->openInKonqueror->setWhatsThis(i18n("<p>If you enable this option, "
+                                          "gallery will be open in Konqueror automaticaly"));
+
 
     vlay4->setMargin(KDialog::spacingHint());
     vlay4->setSpacing(KDialog::spacingHint());
     vlay4->addWidget(d->showComments);
     vlay4->addWidget(d->rightClick);
+    vlay4->addWidget(d->openInKonqueror);
 
     // ------------------------------------------------------------------------
 
@@ -195,6 +204,7 @@ void GeneralPage::setSettings(const SimpleViewerSettingsContainer& settings)
     d->showComments->setChecked(settings.showComments);
     d->rightClick->setChecked(settings.enableRightClickOpen);
     d->fixOrientation->setChecked(settings.fixOrientation);
+    d->openInKonqueror->setChecked(settings.openInKonqueror);
 }
 
 void GeneralPage::settings(SimpleViewerSettingsContainer& settings)
@@ -207,6 +217,7 @@ void GeneralPage::settings(SimpleViewerSettingsContainer& settings)
     settings.showComments         = d->showComments->isChecked();
     settings.enableRightClickOpen = d->rightClick->isChecked();
     settings.fixOrientation       = d->fixOrientation->isChecked();
+    settings.openInKonqueror      = d->openInKonqueror->isChecked();
 }
 
 }  // namespace KIPISimpleViewerExportPlugin

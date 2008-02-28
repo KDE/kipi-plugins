@@ -42,6 +42,7 @@
 #include <kmessagebox.h>
 #include <kaboutdata.h>
 #include <ktempdir.h>
+#include <ktoolinvocation.h>
 
 // KIPI includes
 
@@ -286,6 +287,9 @@ void SimpleViewerExport::slotProcess()
 
     if(!d->canceled)
         d->progressDlg->addedAction(i18n("Finished..."), KIPI::SuccessMessage);
+
+    if(d->configDlg->settings().openInKonqueror)
+        KToolInvocation::invokeBrowser(d->configDlg->settings().exportUrl.path());
 }
 
 bool SimpleViewerExport::createExportDirectories()
@@ -293,7 +297,7 @@ bool SimpleViewerExport::createExportDirectories()
     d->tempDir = new KTempDir(KStandardDirs::locateLocal("tmp", "simpleviewerexport"));
     d->tempDir->setAutoRemove(true);
 
-    d->progressDlg->addedAction(i18n("Creating directories..."), KIPI::StartingMessage);    
+    d->progressDlg->addedAction(i18n("Creating directories..."), KIPI::StartingMessage);
 
     KUrl root = d->configDlg->settings().exportUrl;
     if(!KIO::NetAccess::mkdir(root, kapp->activeWindow()))

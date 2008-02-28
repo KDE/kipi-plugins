@@ -120,6 +120,7 @@ public:
     bool                         resizeExportImages;
     bool                         showComments;
     bool                         fixOrientation;
+    bool                         openInKonqueror;
 
     int                          imagesExportSize;
     int                          maxImageDimension;
