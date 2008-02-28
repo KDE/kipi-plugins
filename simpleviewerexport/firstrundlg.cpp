@@ -39,7 +39,7 @@
 
 // KIPI include files
 
-#include <libkipi/version.h>
+#include "pluginsversion.h"
 #include <libkipi/imagecollectionselector.h>
 
 // Local include files
