@@ -142,9 +142,9 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
     KUrlLabel *link = new KUrlLabel(page);
     link->setText("http://www.airtightinteractive.com/simpleviewer");
     link->setUrl("http://www.airtightinteractive.com/simpleviewer");
-
-    connect(link, SIGNAL(leftClickedUrl(const KUrl&)),
-            this, SLOT(slotDownload(const KUrl&)));
+    
+    connect(link, SIGNAL(leftClickedUrl(const QString&)),
+            this, SLOT(slotDownload(const QString&)));
 
     QLabel *info3 = new QLabel(page);
     info3->setText(i18n("<p>2.) Point this tool to the downloaded archive</p>"));
@@ -174,9 +174,9 @@ void FirstRunDlg::slotHelp()
     KToolInvocation::invokeHelp("simpleviewerexport", "kipi-plugins");
 }
 
-void FirstRunDlg::slotDownload(const KUrl &url)
+void FirstRunDlg::slotDownload(const QString &url)
 {
-    KToolInvocation::invokeBrowser(url.url());
+    KToolInvocation::invokeBrowser(url);
 }
 
 void FirstRunDlg::slotUrlSelected(const KUrl &url)

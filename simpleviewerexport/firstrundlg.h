@@ -64,7 +64,7 @@ private slots:
     /**
      * Opens the browser with the SimpleViewer download page
      */
-    void slotDownload(const KUrl &url);
+    void slotDownload(const QString &url);
     
     /**
      * Starts the installation of SimpleViewer
