@@ -25,5 +25,5 @@ INSTALL(TARGETS kipiplugin_simpleviewer DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES kipiplugin_simpleviewer.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-INSTALL(FILES space.png DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_simpleviewerexport/simpleviewer_html)
+INSTALL(FILES space.png      DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_simpleviewerexport/simpleviewer_html)
 INSTALL(FILES index.template DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_simpleviewerexport)
