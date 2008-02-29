@@ -36,7 +36,7 @@
 
 // Libkipi includes.
 
-#include <libkipi/libkipi_export.h>
+#include "kipiplugins_export.h"
 
 namespace KIPIPlugins
 {
@@ -51,7 +51,7 @@ class SqueezedComboBoxPriv;
  * possible to show the complete item, it will be shortened
  * and "..." will be prepended.
  */
-class LIBKIPI_EXPORT SqueezedComboBox : public QComboBox
+class KIPIPLUGINS_EXPORT SqueezedComboBox : public QComboBox
 {
     Q_OBJECT
 

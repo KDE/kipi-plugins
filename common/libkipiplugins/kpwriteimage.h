@@ -45,7 +45,7 @@ extern "C"
 
 // Libkipi includes.
 
-#include <libkipi/libkipi_export.h>
+#include "kipiplugins_export.h"
 
 // LibKDcraw includes.
 
@@ -59,7 +59,7 @@ namespace KIPIPlugins
 {
 class KPWriteImagePriv;
 
-class LIBKIPI_EXPORT KPWriteImage
+class KIPIPLUGINS_EXPORT KPWriteImage
 {
 public:
  

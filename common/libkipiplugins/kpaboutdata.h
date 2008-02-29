@@ -29,12 +29,12 @@
 
 // Libkipi includes.
 
-#include <libkipi/libkipi_export.h>
+#include "kipiplugins_export.h"
 
 namespace KIPIPlugins
 {
 
-class LIBKIPI_EXPORT KPAboutData : public KAboutData
+class KIPIPLUGINS_EXPORT KPAboutData : public KAboutData
 {
 
     public:
