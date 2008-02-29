@@ -46,7 +46,6 @@
 
 // KIPI includes
 
-#include <libkipi/version.h>
 #include <libkipi/batchprogressdialog.h>
 #include <libkipi/imageinfo.h>
 
