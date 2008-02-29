@@ -1,3 +1,602 @@
+V 0.1.5 - 2008-02-29
+----------------------------------------------------------------------------
+2008-02-27 07:02  cgilles
+
+	* [r779860] kipi-plugins/simpleviewerexport/simpleviewerexport.cpp,
+	  kipi-plugins/simpleviewerexport/simpleviewerexport.h:
+	  backport commit #779856 from KDE4
+
+2008-02-26 11:21  cgilles
+
+	* [r779519] kipi-plugins/simpleviewerexport/Makefile.am,
+	  kipi-plugins/simpleviewerexport/simpleviewerexport.cpp:
+	  backport commit #779517 from KDE4
+
+2008-02-26 09:19  cgilles
+
+	* [r779484] kipi-plugins/simpleviewerexport/svedialog.cpp:
+	  fix icon
+
+2008-02-26 06:57  cgilles
+
+	* [r779441] kipi-plugins/imageviewer/texture.cpp,
+	  kipi-plugins/jpeglossless/utils.cpp,
+	  kipi-plugins/printwizard/tphoto.cpp,
+	  kipi-plugins/rawconverter/plugin_rawconverter.cpp,
+	  kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/simpleviewerexport/simpleviewerexport.cpp:
+	  backaport from KDE4 : use KDcrawIface::DCrawBinary::rawFiles()
+	  everywhere
+
+2008-02-26 04:36  cgilles
+
+	* [r779427] kipi-plugins/NEWS:
+	  update
+
+2008-02-26 04:35  cgilles
+
+	* [r779425] kipi-plugins/simpleviewerexport/Makefile.am,
+	  kipi-plugins/simpleviewerexport/simpleviewerexport.cpp:
+	  kipi-plugins from KDE3 branch : Flash Export tool now suppor Raw
+	  files
+
+2008-02-25 20:05  cgilles
+
+	* [r779299] kipi-plugins/simpleviewerexport/simpleviewerexport.cpp:
+	  compile
+
+2008-02-25 20:03  cgilles
+
+	* [r779298] kipi-plugins/simpleviewerexport/simpleviewerexport.cpp,
+	  kipi-plugins/simpleviewerexport/simpleviewerexport.h:
+	  backport commit #779285 from KDE4
+
+2008-02-25 13:41  cgilles
+
+	* [r779093] kipi-plugins/NEWS:
+	  update
+
+2008-02-25 13:39  cgilles
+
+	* [r779092] kipi-plugins/simpleviewerexport/simpleviewerexport.cpp:
+	  SimpleViewer Export from KDE3 branch : backport from KDE4 :
+	  handle UTF-8 encoding with XML file
+	  CCBUGS: 150393
+
+2008-02-25 13:06  cgilles
+
+	* [r779082] kipi-plugins/acquireimages/acquireimagedialog.cpp,
+	  kipi-plugins/batchprocessimages/borderimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/colorimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/convertimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/effectimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/filterimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/imagepreview.cpp,
+	  kipi-plugins/batchprocessimages/outputdialog.cpp,
+	  kipi-plugins/batchprocessimages/recompressimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/renameimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/resizeimagesdialog.cpp,
+	  kipi-plugins/calendar/calwizard.cpp,
+	  kipi-plugins/cdarchiving/cdarchivingdialog.cpp,
+	  kipi-plugins/findimages/displaycompare.cpp,
+	  kipi-plugins/findimages/finddupplicatedialog.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/galleryexport/gallerywindow.cpp,
+	  kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpssyncdialog.cpp,
+	  kipi-plugins/gpssync/kmlexportconfig.cpp,
+	  kipi-plugins/htmlexport/wizard.cpp,
+	  kipi-plugins/imagesgallery/imgallerydialog.cpp,
+	  kipi-plugins/kameraklient/cameraselection.cpp,
+	  kipi-plugins/kameraklient/cameraui.cpp,
+	  kipi-plugins/kameraklient/setupcamera.cpp,
+	  kipi-plugins/metadataedit/commenteditdialog.cpp,
+	  kipi-plugins/metadataedit/commentremovedialog.cpp,
+	  kipi-plugins/metadataedit/exifeditdialog.cpp,
+	  kipi-plugins/metadataedit/iptceditdialog.cpp,
+	  kipi-plugins/mpegencoder/kimg2mpg.cpp,
+	  kipi-plugins/picasawebexport/picasawebwindow.cpp,
+	  kipi-plugins/printwizard/frmprintwizard.cpp,
+	  kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  kipi-plugins/slideshow/slideshowconfig.cpp,
+	  kipi-plugins/sync/gallerywindow.cpp,
+	  kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  fix release number
+
+2008-02-25 13:02  cgilles
+
+	* [r779081] kipi-plugins/simpleviewerexport/firstrundlg.cpp,
+	  kipi-plugins/simpleviewerexport/svedialog.cpp:
+	  fix i18n
+
+2008-02-25 12:56  cgilles
+
+	* [r779080] kipi-plugins/simpleviewerexport/simpleviewerexport.cpp:
+	  fix depreciate
+
+2008-02-25 12:52  cgilles
+
+	* [r779075] kipi-plugins/simpleviewerexport/svedialog.cpp,
+	  kipi-plugins/simpleviewerexport/svedialog.h:
+	  polish
+
+2008-02-25 12:37  cgilles
+
+	* [r779068] kipi-plugins/simpleviewerexport/simpleviewerexport.cpp:
+	  polish
+
+2008-02-25 12:21  cgilles
+
+	* [r779060] kipi-plugins/simpleviewerexport/simpleviewerexport.cpp:
+	  polish
+
+2008-02-25 12:14  cgilles
+
+	* [r779058] kipi-plugins/simpleviewerexport/firstrundlg.cpp:
+	  polish
+
+2008-02-25 12:09  cgilles
+
+	* [r779055] kipi-plugins/simpleviewerexport/firstrundlg.cpp,
+	  kipi-plugins/simpleviewerexport/kipiplugin_simpleviewer.desktop:
+	  polish
+
+2008-02-25 12:05  cgilles
+
+	* [r779053] kipi-plugins/NEWS:
+	  update
+
+2008-02-25 11:57  cgilles
+
+	* [r779051] kipi-plugins/simpleviewerexport/Makefile.am,
+	  kipi-plugins/simpleviewerexport/kipiplugin_simpleviewer.desktop,
+	  kipi-plugins/simpleviewerexport/simpleviewerexport.cpp,
+	  kipi-plugins/simpleviewerexport/svedialog.cpp:
+	  SimpleViewerExport kipi-plugin from KDE3 branch : sync with KDE4.
+	  now plugin is compatible with SimpleViewer 1.8.x
+	  CCBUGS:134774
+
+2008-02-25 11:41  cgilles
+
+	* [r779048] kipi-plugins/simpleviewerexport/index.template,
+	  kipi-plugins/simpleviewerexport/svedialog.cpp,
+	  kipi-plugins/simpleviewerexport/upgrade.html:
+	  sync with KDE4
+
+2008-02-25 09:37  cgilles
+
+	* [r779017] kipi-plugins/simpleviewerexport/firstrundlg.cpp,
+	  kipi-plugins/simpleviewerexport/firstrundlg.h,
+	  kipi-plugins/simpleviewerexport/svedialog.cpp,
+	  kipi-plugins/simpleviewerexport/svedialog.h:
+	  sync with KDE4
+
+2008-02-25 09:30  cgilles
+
+	* [r779014] kipi-plugins/simpleviewerexport/firstrundlg.cpp,
+	  kipi-plugins/simpleviewerexport/firstrundlg.h,
+	  kipi-plugins/simpleviewerexport/svedialog.cpp,
+	  kipi-plugins/simpleviewerexport/svedialog.h:
+	  sync with KDE4
+
+2008-02-25 09:20  cgilles
+
+	* [r779012] kipi-plugins/acquireimages/acquireimagedialog.cpp,
+	  kipi-plugins/acquireimages/screenshotdialog.cpp,
+	  kipi-plugins/batchprocessimages/borderimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/colorimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/convertimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/effectimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/filterimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/imagepreview.cpp,
+	  kipi-plugins/batchprocessimages/outputdialog.cpp,
+	  kipi-plugins/batchprocessimages/recompressimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/renameimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/resizeimagesdialog.cpp,
+	  kipi-plugins/calendar/calwizard.cpp,
+	  kipi-plugins/cdarchiving/cdarchivingdialog.cpp,
+	  kipi-plugins/findimages/displaycompare.cpp,
+	  kipi-plugins/findimages/finddupplicatedialog.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/galleryexport/gallerywindow.cpp,
+	  kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpssyncdialog.cpp,
+	  kipi-plugins/gpssync/kmlexportconfig.cpp,
+	  kipi-plugins/htmlexport/wizard.cpp,
+	  kipi-plugins/imagesgallery/imgallerydialog.cpp,
+	  kipi-plugins/kameraklient/cameraselection.cpp,
+	  kipi-plugins/kameraklient/cameraui.cpp,
+	  kipi-plugins/kameraklient/setupcamera.cpp,
+	  kipi-plugins/metadataedit/commenteditdialog.cpp,
+	  kipi-plugins/metadataedit/commentremovedialog.cpp,
+	  kipi-plugins/metadataedit/exifeditdialog.cpp,
+	  kipi-plugins/metadataedit/iptceditdialog.cpp,
+	  kipi-plugins/mpegencoder/kimg2mpg.cpp,
+	  kipi-plugins/picasawebexport/picasawebwindow.cpp,
+	  kipi-plugins/printwizard/frmprintwizard.cpp,
+	  kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  kipi-plugins/simpleviewerexport/svedialog.cpp,
+	  kipi-plugins/slideshow/slideshowconfig.cpp,
+	  kipi-plugins/sync/gallerywindow.cpp,
+	  kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  use "Plugin Handbook" string everywhere (sync with KDE4)
+
+2008-02-25 07:12  cgilles
+
+	* [r778989] kipi-plugins/simpleviewerexport/firstrundlg.h,
+	  kipi-plugins/simpleviewerexport/plugin_simpleviewer.cpp,
+	  kipi-plugins/simpleviewerexport/plugin_simpleviewer.h,
+	  kipi-plugins/simpleviewerexport/simpleviewerexport.h,
+	  kipi-plugins/simpleviewerexport/svedialog.h:
+	  fix coding style again. Fix plugin action name
+
+2008-02-25 07:07  cgilles
+
+	* [r778988] kipi-plugins/simpleviewerexport/firstrundlg.cpp,
+	  kipi-plugins/simpleviewerexport/firstrundlg.h,
+	  kipi-plugins/simpleviewerexport/plugin_simpleviewer.cpp,
+	  kipi-plugins/simpleviewerexport/plugin_simpleviewer.h,
+	  kipi-plugins/simpleviewerexport/simpleviewerexport.cpp,
+	  kipi-plugins/simpleviewerexport/simpleviewerexport.h,
+	  kipi-plugins/simpleviewerexport/svedialog.cpp,
+	  kipi-plugins/simpleviewerexport/svedialog.h:
+	  start to syn KDE3 branch with KDE4 fixes : fix headers and coding
+	  style
+
+2008-02-24 21:33  cgilles
+
+	* [r778912] kipi-plugins/simpleviewerexport/test.txt:
+	  dumy
+
+2008-02-24 21:33  cgilles
+
+	* [r778911] kipi-plugins/simpleviewerexport/index.html:
+	  obsolete
+
+2008-02-24 21:32  cgilles
+
+	* [r778910] kipi-plugins/simpleviewerexport/README:
+	  obsolete
+
+2008-02-24 21:31  cgilles
+
+	* [r778908] kipi-plugins/simpleviewerexport/Makefile.am:
+	  enable i18n
+
+2008-02-22 14:24  vfuoglio
+
+	* [r778103] kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/batchdialog.h,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.h, libkdcraw/NEWS,
+	  libkdcraw/libkdcraw/dcrawsettingswidget.cpp,
+	  libkdcraw/libkdcraw/dcrawsettingswidget.h,
+	  libkdcraw/libkdcraw/kdcraw.cpp, libkdcraw/libkdcraw/kdcraw.h,
+	  libkdcraw/libkdcraw/rawdecodingsettings.h:
+	  White balance with RAW files improvements (related to bug
+	  #142055).
+	  
+	  Patches by Guillaume Castagnino.
+	  
+	  CCMAIL : kde-imaging@kde.org
+	  CCMAIL : casta@xwing.info
+	  CCMAIL : caulier.gilles@gmail.com
+
+2008-02-21 20:22  vfuoglio
+
+	* [r777878] kipi-plugins/NEWS, kipi-plugins/slideshow/Makefile.am:
+	  Fixed linking error in slideshow/Makefile.am (missing -lXrandr).
+	  
+	  Thanks to Rex Dieter for his patch.
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  BUG: 158176
+
+2008-02-16 15:59  gkulzer
+
+	* [r775762] kipi-plugins/gpssync/gpseditdialog.cpp:
+	  add moving the marker
+
+2008-02-16 13:50  gkulzer
+
+	* [r775673] kipi-plugins/gpssync/gpssyncdialog.cpp:
+	  fix i18n: positive time offset is pointing eastwards
+
+2008-02-14 06:43  gkulzer
+
+	* [r774825] kipi-plugins/gpssync/getlonlatalt.php:
+	  add info about topocoding behaviour
+
+2008-02-13 10:45  gkulzer
+
+	* [r774491] kipi-plugins/gpssync/getlonlatalt.php,
+	  kipi-plugins/gpssync/gpsmapwidget.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.h:
+	  unused method remove, copyright update
+
+2008-02-13 09:00  gkulzer
+
+	* [r774421] kipi-plugins/gpssync/getlonlat.php:
+	  revert, this stays lonlat, no alt here
+
+2008-02-13 08:37  gkulzer
+
+	* [r774411] kipi-plugins/gpssync/getlonlat.php,
+	  kipi-plugins/gpssync/getlonlatalt.php,
+	  kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpseditdialog.h,
+	  kipi-plugins/gpssync/gpsmapwidget.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.h:
+	  introduction of altitude service in geolocator
+	  CCMAIL:caulier.gilles@gmail.com
+
+2008-02-09 22:20  anaselli
+
+	* [r773014] kipi-plugins/printwizard/frmprintwizard.cpp,
+	  kipi-plugins/printwizard/frmprintwizardbase.ui:
+	  fixed dialog layout, it was broken with localization
+	  added Valerio Fuoglio as contributor
+	  GUI:
+	  CCMAIL: valerio.fuoglio@gmail.com
+
+2008-02-09 18:26  cgilles
+
+	* [r772916] kipi-plugins/gpssync/getlonlat.php,
+	  kipi-plugins/gpssync/gpsmapwidget.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.h:
+	  sync with trunk
+
+2008-02-09 14:18  cgilles
+
+	* [r772721] kipi-plugins/metadataedit/commenteditdialog.cpp,
+	  kipi-plugins/metadataedit/commentremovedialog.cpp:
+	  compile
+
+2008-02-09 14:17  cgilles
+
+	* [r772719] kipi-plugins/findimages/displaycompare.cpp,
+	  kipi-plugins/kameraklient/cameraselection.cpp,
+	  kipi-plugins/kameraklient/setupcamera.cpp:
+	  compile
+
+2008-02-09 14:15  cgilles
+
+	* [r772717] kipi-plugins/acquireimages/acquireimagedialog.cpp,
+	  kipi-plugins/acquireimages/screenshotdialog.cpp,
+	  kipi-plugins/batchprocessimages/batchprocessimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/borderimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/colorimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/convertimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/effectimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/filterimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/imagepreview.cpp,
+	  kipi-plugins/batchprocessimages/outputdialog.cpp,
+	  kipi-plugins/batchprocessimages/recompressimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/renameimagesdialog.cpp,
+	  kipi-plugins/batchprocessimages/resizeimagesdialog.cpp,
+	  kipi-plugins/calendar/calwizard.cpp,
+	  kipi-plugins/cdarchiving/cdarchivingdialog.cpp,
+	  kipi-plugins/findimages/displaycompare.cpp,
+	  kipi-plugins/findimages/finddupplicatedialog.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/galleryexport/gallerywindow.cpp,
+	  kipi-plugins/htmlexport/wizard.cpp,
+	  kipi-plugins/imagesgallery/imgallerydialog.cpp,
+	  kipi-plugins/kameraklient/cameraselection.cpp,
+	  kipi-plugins/kameraklient/cameraui.cpp,
+	  kipi-plugins/kameraklient/setupcamera.cpp,
+	  kipi-plugins/metadataedit/commenteditdialog.cpp,
+	  kipi-plugins/metadataedit/commentremovedialog.cpp,
+	  kipi-plugins/metadataedit/exifeditdialog.cpp,
+	  kipi-plugins/metadataedit/iptceditdialog.cpp,
+	  kipi-plugins/mpegencoder/kimg2mpg.cpp,
+	  kipi-plugins/picasawebexport/picasawebwindow.cpp,
+	  kipi-plugins/printwizard/frmprintwizard.cpp,
+	  kipi-plugins/rawconverter/batchdialog.cpp,
+	  kipi-plugins/rawconverter/singledialog.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  kipi-plugins/simpleviewerexport/svedialog.cpp,
+	  kipi-plugins/slideshow/slideshowconfig.cpp,
+	  kipi-plugins/sync/gallerywindow.cpp,
+	  kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  set plugins version everywhere
+
+2008-02-09 14:04  cgilles
+
+	* [r772713] kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpssyncdialog.cpp,
+	  kipi-plugins/gpssync/kmlexportconfig.cpp:
+	  set version
+
+2008-02-09 13:40  cgilles
+
+	* [r772703] kipi-plugins/gpssync/gpslistviewitem.cpp,
+	  kipi-plugins/gpssync/gpslistviewitem.h:
+	  polish
+
+2008-02-07 10:29  cgilles
+
+	* [r771961] kipi-plugins/gpssync/getlonlat.php:
+	  restore map click event rules
+
+2008-02-07 10:07  cgilles
+
+	* [r771955] kipi-plugins/gpssync/getlonlat.php,
+	  kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.cpp:
+	  backport commit #771947 from KDE3 branch
+
+2008-02-06 17:31  cgilles
+
+	* [r771669] kipi-plugins/gpssync/getlonlat.php:
+	  polish
+
+2008-02-06 14:48  cgilles
+
+	* [r771624] kipi-plugins/gpssync/getlonlat.php,
+	  kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.h:
+	  backport commit #771622 to KDE3 branch
+
+2008-02-05 14:38  cgilles
+
+	* [r771230] kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpseditdialog.h:
+	  missing slotHelp
+
+2008-02-05 12:30  cgilles
+
+	* [r771172] kipi-plugins/gpssync/plugin_gpssync.cpp:
+	  polish
+
+2008-02-04 19:50  cgilles
+
+	* [r770942] kipi-plugins/gpssync/gpsbabelbinary.cpp:
+	  polish
+
+2008-02-04 19:47  cgilles
+
+	* [r770941] kipi-plugins/gpssync/gpsbabelbinary.cpp:
+	  polish
+
+2008-02-04 14:45  cgilles
+
+	* [r770841] kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpseditdialog.h,
+	  kipi-plugins/gpssync/gpsmapwidget.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.h:
+	  polish
+
+2008-02-04 13:44  cgilles
+
+	* [r770765] kipi-plugins/NEWS:
+	  update
+
+2008-02-04 13:43  cgilles
+
+	* [r770759] kipi-plugins/gpssync/getlonlat.php,
+	  kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.h:
+	  kipi-plugins from KDE3 branch : GPSSync tool : remember google
+	  map type between sessions
+	  BUG: 152526
+
+2008-02-04 11:52  cgilles
+
+	* [r770689] kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.h:
+	  kipi-plugins from KDE3 branch : GPSSync tool : remember google
+	  map zoom level between session
+	  CCBUGS: 152526
+
+2008-02-04 11:17  cgilles
+
+	* [r770676] kipi-plugins/gpssync/kmlexport.cpp,
+	  kipi-plugins/gpssync/kmlexport.h,
+	  kipi-plugins/gpssync/kmlexportconfig.cpp,
+	  kipi-plugins/gpssync/kmlgpsdataparser.cpp,
+	  kipi-plugins/gpssync/kmlgpsdataparser.h:
+	  polish
+
+2008-02-04 11:00  cgilles
+
+	* [r770671] kipi-plugins/gpssync/kmlexport.cpp,
+	  kipi-plugins/gpssync/kmlexport.h,
+	  kipi-plugins/gpssync/kmlexportconfig.cpp,
+	  kipi-plugins/gpssync/kmlexportconfig.h,
+	  kipi-plugins/gpssync/kmlgpsdataparser.cpp,
+	  kipi-plugins/gpssync/kmlgpsdataparser.h,
+	  kipi-plugins/gpssync/plugin_gpssync.cpp:
+	  polish
+
+2008-02-04 10:18  cgilles
+
+	* [r770656] kipi-plugins/NEWS:
+	  update
+
+2008-02-04 10:16  cgilles
+
+	* [r770654] kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpseditdialog.h:
+	  kipi-plugins from KDE3 branch : GPSSync tool: add new button to
+	  Goto a location from map when user change lattitude or longitude
+	  text field.
+	  BUG: 144070
+
+2008-02-04 07:04  cgilles
+
+	* [r770599] kipi-plugins/gpssync/gpsmapwidget.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.h:
+	  new method to set gps position
+
+2008-02-03 19:38  cgilles
+
+	* [r770453] kipi-plugins/NEWS:
+	  update
+
+2008-02-03 17:16  gkulzer
+
+	* [r770409] kipi-plugins/gpssync/gpsdataparser.cpp,
+	  kipi-plugins/gpssync/gpssyncdialog.cpp,
+	  kipi-plugins/gpssync/plugin_gpssync.cpp,
+	  kipi-plugins/gpssync/plugin_gpssync.h:
+	  Bug solved: multiplication by 3600 was performed twice on the
+	  time zone offset. Also polished some i18n. CCBUG:154849
+	  CCMAIL:caulier.gilles@gmail.com
+
+2008-02-02 12:08  cgilles
+
+	* [r769911] kipi-plugins/NEWS:
+	  update
+
+2008-02-02 09:56  cgilles
+
+	* [r769872] kipi-plugins/gpssync/gpsbabelbinary.cpp,
+	  kipi-plugins/gpssync/gpsbabelbinary.h,
+	  kipi-plugins/gpssync/gpsdatacontainer.h,
+	  kipi-plugins/gpssync/gpsdataparser.cpp,
+	  kipi-plugins/gpssync/gpsdataparser.h,
+	  kipi-plugins/gpssync/gpseditdialog.cpp,
+	  kipi-plugins/gpssync/gpseditdialog.h,
+	  kipi-plugins/gpssync/gpslistviewitem.cpp,
+	  kipi-plugins/gpssync/gpslistviewitem.h,
+	  kipi-plugins/gpssync/gpsmapwidget.cpp,
+	  kipi-plugins/gpssync/gpsmapwidget.h,
+	  kipi-plugins/gpssync/gpssyncdialog.cpp,
+	  kipi-plugins/gpssync/gpssyncdialog.h,
+	  kipi-plugins/gpssync/plugin_gpssync.cpp,
+	  kipi-plugins/gpssync/plugin_gpssync.h:
+	  fix (c)
+
+2008-02-02 09:52  cgilles
+
+	* [r769869] kipi-plugins/gpssync/gpsdataparser.cpp,
+	  kipi-plugins/gpssync/gpssyncdialog.cpp:
+	  kipi-plugins from KDE3 branch: fix iterator around list of items
+	  to matches date against GPX file...
+	  I don't know how this bug have been introduce. Just one line have
+	  been changed in gpssyncdialog.cpp...
+	  Gerhard, it's sound work here with 3 images from your Iceland
+	  collection and your GPX file using this settings:
+	  
+	  - no interpolation
+	  - max gap time = 30s
+	  - time zone = GMT+0
+	  
+	  If interpolation is on, another one file is set.
+	  
+	  Please check indeep and report...
+	  
+	  CCBUGS: 154849
+
+----------------------------------------------------------------------------
 V 0.1.5-rc2 - 2008-02-01
 ----------------------------------------------------------------------------
 2008-02-01 21:00  cgilles

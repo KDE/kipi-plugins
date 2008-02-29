@@ -17,7 +17,6 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 005 ==> 158176 : SlideShow          : Linking errors in slideshow plugin (missing -lXrandr).
 006 ==> 150393 : SimpleViewerExport : XML file is corrupted if exif comment contains a "<".
 007 ==> 134774 : SimpleViewerExport : Exported simpleviewer gallery fails to load images due to wrong xml file name.
-008 ==> 
 
 v 0.1.5 - RC2
 ---------------------------------------------------------------------------

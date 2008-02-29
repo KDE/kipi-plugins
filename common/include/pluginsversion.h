@@ -21,7 +21,7 @@
 #ifndef KIPIPLUGINS_VERSION_H
 #define KIPIPLUGINS_VERSION_H
 
-static const char kipiplugins_version[] = "0.1.5-rc2";
+static const char kipiplugins_version[] = "0.1.5";
 
 #endif // KIPIPLUGINS_VERSION_H
 
