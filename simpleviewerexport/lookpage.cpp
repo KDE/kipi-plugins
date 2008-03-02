@@ -49,15 +49,15 @@ public:
 
     LookPagePriv()
     {
-        thumbnailPosition      = 0;
-        navDirection     = 0;
-        textColor        = 0;
-        backgroundColor  = 0;
-        frameColor       = 0;
-        frameWidth       = 0;
-        stagePadding     = 0;
-        thumbnailColumns = 0;
-        thumbnailRows    = 0;
+        thumbnailPosition = 0;
+        navDirection      = 0;
+        textColor         = 0;
+        backgroundColor   = 0;
+        frameColor        = 0;
+        frameWidth        = 0;
+        stagePadding      = 0;
+        thumbnailColumns  = 0;
+        thumbnailRows     = 0;
     }
 
     QComboBox    *thumbnailPosition;

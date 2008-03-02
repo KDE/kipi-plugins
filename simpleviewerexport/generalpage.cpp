@@ -123,7 +123,7 @@ GeneralPage::GeneralPage(QWidget* parent)
     d->imagesExportSize->setRange(200, 2000, 1);
     d->imagesExportSize->setValue(640);
     d->imagesExportSize->setLabel(i18n("&Target Images Size:"), Qt::AlignVCenter);
-    d->imagesExportSize->setWhatsThis(i18n("<p>The new size of the exported images in pixels "
+    d->imagesExportSize->setWhatsThis(i18n("<p>The new size of the exported images in pixels. "
                                            "SimpleViewer resizes the images as well, but this "
                                            "resizes your images before they are uploaded to your server"));
 
