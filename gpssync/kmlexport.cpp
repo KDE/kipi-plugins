@@ -81,7 +81,7 @@ bool kmlExport::createDir(QDir dir)
     bool ok = createDir(parent);
     if (!ok) 
     {
-        logError(i18n("Could not create '%1",parent.path()));
+        logError(i18n("Could not create '%1'",parent.path()));
         return false;
     }
     return parent.mkdir(dir.dirName());
