@@ -264,7 +264,7 @@ void SVEDialog::lookPage()
     m_stagePadding = new KIntNumInput(20, vgroupbox);
     m_stagePadding->setRange(1, 100, 1, true);
     m_stagePadding->setLabel(i18n("Stage &Padding:"), AlignVCenter);
-    QWhatsThis::add(m_stagePadding, i18n("<p>tagePadding: Distance between image and thumbnails in pixels."));
+    QWhatsThis::add(m_stagePadding, i18n("<p>Stage Padding: Distance between image and thumbnails in pixels."));
 
     mainLayout->addStretch(1);
 }
@@ -307,8 +307,8 @@ void SVEDialog::generalPage()
     m_imagesExportSize = new KIntNumInput(640, vgroupbox);
     m_imagesExportSize->setRange(200, 2000, 1, true );
     m_imagesExportSize->setLabel(i18n("&Target Images Size:"), AlignVCenter);
-    QWhatsThis::add(m_imagesExportSize, i18n("<p>The new size of the exported images in pixels"
-                                             "SimpleViewer resizes the images as well, but this"
+    QWhatsThis::add(m_imagesExportSize, i18n("<p>The new size of the exported images in pixels. "
+                                             "SimpleViewer resizes the images as well, but this "
                                              "resizes your images before they are uploaded to your server"));
     connect(m_resizeExportImages, SIGNAL(toggled(bool)),
             m_imagesExportSize, SLOT(setEnabled(bool)));
