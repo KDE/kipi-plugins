@@ -1,5 +1,11 @@
-V 0.1.5 - 2008-02-29
+V 0.1.5 - 2008-03-09
 ----------------------------------------------------------------------------
+
+2008-03-02 08:24  cgilles
+
+	* [r781200] kipi-plugins/simpleviewerexport/svedialog.cpp:
+	  fix i18n
+
 2008-02-27 07:02  cgilles
 
 	* [r779860] kipi-plugins/simpleviewerexport/simpleviewerexport.cpp,
