@@ -2,7 +2,7 @@
 Comment=KIPI plugin to Geolocalize pictures
 Comment[ca]=Connector del KIPI per a geolocalitzar fotografies
 Comment[da]=KIPI-plugin til at lokalisere billeder geografisk
-Comment[de]=Ein KIPI-Modul zum geographischen Zuordnen von Bildern
+Comment[de]=Ein KIPI-Modul zur geographischen Zuordnung von Bildern
 Comment[el]=Πρόσθετο του KIPI για γεωτοποθέτηση εικόνων
 Comment[es]=Complemento de KIPI para geolocalizar imágenes
 Comment[et]=KIPI piltide geolokatsiooni plugin
@@ -25,6 +25,7 @@ Icon=
 Name=GPSSync
 Name[ca]=Sincronització GPS
 Name[da]=GPS-synkronisering
+Name[de]=GPS-Abgleich
 Name[el]=Συγχρονισμός GPS
 Name[fi]=GPS-synkronointi
 Name[pt]=Sincronização GPS

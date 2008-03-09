@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=Sync
 Name[ca]=Sincronització
+Name[de]=Abgleich
 Name[el]=Συγχρονισμός
 Name[et]=Sünkroniseerimine
 Name[fi]=Synkronointi
@@ -16,7 +17,7 @@ Name[zh_CN]=同步
 Comment=KIPI Synchronization Plugin
 Comment[ca]=Connector del KIPI de sincronització
 Comment[da]=KIPI Synkroniserings-plugin
-Comment[de]=Ein KIPI-Modul zur Synchronisation
+Comment[de]=Ein KIPI-Modul zum Abgleichen
 Comment[el]=Πρόσθετο συγχρονισμού του KIPI
 Comment[es]=Complemento de sincronización de KIPI
 Comment[et]=KIPI sünkroniseerimisplugin
