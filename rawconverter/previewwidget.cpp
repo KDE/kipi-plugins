@@ -117,17 +117,21 @@ void PreviewWidget::paintEvent(QPaintEvent*)
     if (!d->text.isEmpty()) 
     {
         QPainter p(&d->pix);
-        p.setPen(QPen(d->textColor));
 
         if (!d->thumbnail.isNull())
         {
             p.drawPixmap(d->pix.width()/2-d->thumbnail.width()/2, d->pix.height()/4-d->thumbnail.height()/2, 
                          d->thumbnail, 0, 0, d->thumbnail.width(), d->thumbnail.height());
+            p.setPen(QPen(Qt::white));
+            p.drawRect(d->pix.width()/2-d->thumbnail.width()/2, d->pix.height()/4-d->thumbnail.height()/2,
+                       d->thumbnail.width()-1, d->thumbnail.height()-1);
+            p.setPen(QPen(d->textColor));
             p.drawText(0, d->pix.height()/2, d->pix.width(), d->pix.height()/2,
                        Qt::AlignCenter|Qt::TextWordWrap, d->text);
         }
         else
         {
+            p.setPen(QPen(d->textColor));
             p.drawText(0, 0, d->pix.width(), d->pix.height(),
                        Qt::AlignCenter|Qt::TextWordWrap, d->text);
         }
@@ -145,7 +149,7 @@ void PreviewWidget::paintEvent(QPaintEvent*)
             QPainter p(&d->pix);
             p.drawImage(x, y, img);
             p.setPen(QPen(Qt::white));
-            p.drawRect(x, y, img.width(), img.height());
+            p.drawRect(x, y, img.width()-1, img.height()-1);
             p.end();
         }
     }
