@@ -37,6 +37,7 @@ extern "C"
 // Qt includes.
 
 #include <QHeaderView>
+#include <QTreeWidgetItemIterator>
 #include <QTimer>
 #include <QFileInfo>
 #include <QCloseEvent>
@@ -386,12 +387,10 @@ void BatchDialog::slotStartStop()
     {
         d->fileList.clear();
 
-        int i                 = 0;
-        QTreeWidgetItem *item = 0;
-        do
+        QTreeWidgetItemIterator it(d->listView);
+        while (*it)
         {
-            item = d->listView->topLevelItem(i);
-            CListViewItem *lvItem = dynamic_cast<CListViewItem*>(item);
+            CListViewItem *lvItem = dynamic_cast<CListViewItem*>(*it);
             if (lvItem)
             {
                 if (lvItem->isEnabled())
@@ -400,9 +399,8 @@ void BatchDialog::slotStartStop()
                     d->fileList.append(lvItem->url().path());
                 }
             }
-            i++;
+            ++it;
         }
-        while (item);
 
         if (d->fileList.empty()) 
         {
@@ -468,15 +466,17 @@ void BatchDialog::slotRemoveItems()
     do
     {
         find = false;
-        for (int i = 0 ; i < d->listView->topLevelItemCount(); i++)
+        QTreeWidgetItemIterator it(d->listView);
+        while (*it)
         {
-            CListViewItem* item = dynamic_cast<CListViewItem*>(d->listView->topLevelItem(i));
+            CListViewItem* item = dynamic_cast<CListViewItem*>(*it);
             if (item->isSelected())
             {
                 delete item;
                 find = true;
                 break;
             }
+        ++it;
         }
     }
     while(find);
@@ -571,12 +571,10 @@ void BatchDialog::slotSaveFormatChanged()
             break;
     }
 
-    int i                 = 0;
-    QTreeWidgetItem *item = 0;
-    do
+    QTreeWidgetItemIterator it(d->listView);
+    while (*it)
     {
-        item = d->listView->topLevelItem(i);
-        CListViewItem *lvItem = dynamic_cast<CListViewItem*>(item);
+        CListViewItem *lvItem = dynamic_cast<CListViewItem*>(*it);
         if (lvItem)
         {
             if (lvItem->isEnabled())
@@ -586,9 +584,8 @@ void BatchDialog::slotSaveFormatChanged()
                 lvItem->setDestFileName(dest);
             }
         }
-        i++;
+        ++it;
     }
-    while (item);
 }
 
 void BatchDialog::processOne()
@@ -820,12 +817,10 @@ void BatchDialog::slotAction(const ActionData& ad)
 
 CListViewItem* BatchDialog::findItem(const KUrl& url)
 {
-    int i                 = 0;
-    QTreeWidgetItem *item = 0;
-    do
+    QTreeWidgetItemIterator it(d->listView);
+    while (*it)
     {
-        item = d->listView->topLevelItem(i);
-        CListViewItem *lvItem = dynamic_cast<CListViewItem*>(item);
+        CListViewItem *lvItem = dynamic_cast<CListViewItem*>(*it);
         if (lvItem)
         {
             if (lvItem->url() == url)
@@ -833,9 +828,8 @@ CListViewItem* BatchDialog::findItem(const KUrl& url)
                 return lvItem;
             }
         }
-        i++;
+        ++it;
     }
-    while (item);
 
     return 0;
 }
