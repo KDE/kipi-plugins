@@ -28,6 +28,7 @@
 // C++ includes.
 
 #include <cstdio> 
+#include <cmath> 
 
 // Qt Includes.
 
@@ -97,11 +98,6 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
                                        QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
                                        const QByteArray& imageData, int width, int height, int rgbmax, bool sixteenBits)
 {
-    // Use a QImage instance to write IPTC preview and Exif thumbnail
-    // and adapt color component order to KPWriteImage data format (RGB ==> BGR)
-
-    QImage img(width, height, QImage::Format_ARGB32);
-    uint*  dptr  = (uint*)img.bits();
     uchar* sptr  = (uchar*)imageData.data();
     float factor = 65535.0 / rgbmax;
     uchar tmp8[2];
@@ -110,10 +106,8 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     // Set RGB color components.
     for (int i = 0 ; i < width * height ; i++)
     {
-        if (!sixteenBits)
+        if (!sixteenBits)   // 8 bits color depth image.
         {
-            *dptr++ = qRgba(sptr[0], sptr[1], sptr[2], 0xFF);
-
             // Swap Red and Blue
             tmp8[0] = sptr[2];
             tmp8[1] = sptr[0];
@@ -122,14 +116,9 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
 
             sptr += 3;
         }
-        else
+        else                // 16 bits color depth image.
         {
-            *dptr++ = qRgba((uchar)(((sptr[0]*256 + sptr[1]) * factor * 255UL)/65535UL),
-                            (uchar)(((sptr[2]*256 + sptr[3]) * factor * 255UL)/65535UL),
-                            (uchar)(((sptr[4]*256 + sptr[5]) * factor * 255UL)/65535UL),
-                            0xFF);
-
-            // Swap Red and Blue and re-ajust color component values?
+            // Swap Red and Blue and re-ajust color component values
             tmp16[0] = (unsigned short)((sptr[4]*256 + sptr[5]) * factor);      // Blue
             tmp16[1] = (unsigned short)((sptr[2]*256 + sptr[3]) * factor);      // Green
             tmp16[2] = (unsigned short)((sptr[0]*256 + sptr[1]) * factor);      // Red
@@ -137,6 +126,90 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             memcpy(&sptr[0], &tmp16[0], 6);
 
             sptr += 6;
+        }
+    }
+
+    // Special case: RAW decoded image is a linear-histogram image with 16 bits color depth. 
+    // No auto white balance and no gamma adjustemnts are performed. Image is a black hole.
+    // We need to reproduce all dcraw 8 bits color depth adjustements here.
+
+    if (sixteenBits)   // 16 bits color depth image.
+    {
+        // Compute histogram.
+
+        unsigned short* image = (unsigned short*)imageData.data();
+        int histogram[3][65536];
+        memset(histogram, 0, sizeof(histogram));
+        for (int i = 0 ; i < width * height ; i++)
+        {
+            for (int c = 0 ; c < 3 ; c++)
+                histogram[c][image[c]]++;
+            image += 3;
+        }
+
+        // Search 99th percentile white level.
+
+        int perc, val, total;
+        float white=0.0, r;
+        unsigned short lut[65536];
+
+        perc = (int)(width * height * 0.01);
+        qDebug() << "White Level: " << perc << endl;
+        for (int c =0  ; c < 3 ; c++)
+        {
+            total = 0;
+            for (val = 65535 ; val > 256 ; --val)
+                if ((total += histogram[c][val]) > perc) 
+                    break;
+
+            if (white < val) white = (float)val;
+        }
+        qDebug() << "White Point: " << white << endl;
+
+        // Compute the Gamma lut accordingly.
+
+        for (int i=0; i < 65536; i++) 
+        {
+            r = i / white;
+            val = 65536 * (r <= 0.018 ? r*4.5 : pow(r,0.45)*1.099-0.099);
+            if (val > 65535) val = 65535;
+            lut[i] = val;
+        }
+
+        //  Apply Gamma lut to the whole image.
+
+        unsigned short *im = (unsigned short *)imageData.data();
+        for (int i = 0; i < width*height; i++)
+        {
+            im[0] = lut[im[0]];      // Blue
+            im[1] = lut[im[1]];      // Green
+            im[2] = lut[im[2]];      // Red
+            im += 3;
+        }
+    }
+
+    // Use a QImage instance to write IPTC preview and Exif thumbnail
+    // and adapt color component order to KPWriteImage data format (RGB ==> BGR)
+
+    QImage img(width, height, QImage::Format_ARGB32);
+    uint*  dptr            = (uint*)img.bits();
+    uchar* sptr8           = (uchar*)imageData.data();
+    unsigned short* sptr16 = (unsigned short*)imageData.data();
+
+    for (int i = 0 ; i < width * height ; i++)
+    {
+        if (!sixteenBits)   // 8 bits color depth image.
+        {
+            *dptr++ = qRgba(sptr8[2], sptr8[1], sptr8[0], 0xFF);
+            sptr8 += 3;
+        }
+        else                // 16 bits color depth image.
+        {
+            *dptr++ = qRgba((uchar)((sptr16[2] * 255UL)/65535UL),
+                            (uchar)((sptr16[1] * 255UL)/65535UL),
+                            (uchar)((sptr16[0] * 255UL)/65535UL),
+                            0xFF);
+            sptr16 += 3;
         }
     }
 
