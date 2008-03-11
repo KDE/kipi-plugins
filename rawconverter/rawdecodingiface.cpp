@@ -6,7 +6,7 @@
  * Date        : 2006-12-09
  * Description : RAW decoding interface
  *
- * Copyright (C) 2006-2007 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
+ * Copyright (C) 2006-2008 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * NOTE: Do not use kdDebug() in this implementation because 
@@ -66,7 +66,7 @@ RawDecodingIface::~RawDecodingIface()
 
 bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath, 
                                           QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
-                                          KDcrawIface::RawDecodingSettings rawDecodingSettings)
+                                          const KDcrawIface::RawDecodingSettings& rawDecodingSettings)
 {
     int width, height, rgbmax;
     QByteArray imageData;
@@ -75,12 +75,12 @@ bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
         return false;
 
     return (loadedFromDcraw(filePath, destPath, outputFileFormat, 
-                            imageData, width, height, rgbmax, rawDecodingSettings.sixteenBitsImage));
+                            imageData, width, height, rgbmax, rawDecodingSettings));
 }
 
 bool RawDecodingIface::decodeRAWImage(const QString& filePath, 
                                       QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
-                                      KDcrawIface::RawDecodingSettings rawDecodingSettings)
+                                      const KDcrawIface::RawDecodingSettings& rawDecodingSettings)
 {
     int width, height, rgbmax;
     QByteArray imageData;
@@ -89,17 +89,19 @@ bool RawDecodingIface::decodeRAWImage(const QString& filePath,
         return false;
 
     return (loadedFromDcraw(filePath, destPath, outputFileFormat, 
-                            imageData, width, height, rgbmax, rawDecodingSettings.sixteenBitsImage));
+                            imageData, width, height, rgbmax, rawDecodingSettings));
 }
 
 // ----------------------------------------------------------------------------------
 
 bool RawDecodingIface::loadedFromDcraw(const QString& filePath, 
                                        QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
-                                       const QByteArray& imageData, int width, int height, int rgbmax, bool sixteenBits)
+                                       const QByteArray& imageData, int width, int height, int rgbmax, 
+                                       const KDcrawIface::RawDecodingSettings& rawDecodingSettings)
 {
-    uchar* sptr  = (uchar*)imageData.data();
-    float factor = 65535.0 / rgbmax;
+    bool sixteenBits = rawDecodingSettings.sixteenBitsImage;
+    uchar* sptr      = (uchar*)imageData.data();
+    float factor     = 65535.0 / rgbmax;
     uchar tmp8[2];
     unsigned short tmp16[3];
 
@@ -133,7 +135,8 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     // No auto white balance and no gamma adjustemnts are performed. Image is a black hole.
     // We need to reproduce all dcraw 8 bits color depth adjustements here.
 
-    if (sixteenBits)   // 16 bits color depth image.
+    if (sixteenBits && 
+        rawDecodingSettings.outputColorSpace != KDcrawIface::RawDecodingSettings::RAWCOLOR)
     {
         // Compute histogram.
 
