@@ -174,7 +174,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         for (int i=0; i < 65536; i++) 
         {
             r = i / white;
-            val = 65536 * (r <= 0.018 ? r*4.5 : pow(r,0.45)*1.099-0.099);
+            val = (int)(65536.0 * (r <= 0.018 ? r*4.5 : pow(r,0.45)*1.099-0.099));
             if (val > 65535) val = 65535;
             lut[i] = val;
         }
