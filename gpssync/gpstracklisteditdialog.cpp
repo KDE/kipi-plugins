@@ -25,6 +25,7 @@
 #include <QLayout>
 #include <QTimer>
 #include <QTreeWidget>
+#include <QTreeWidgetItemIterator>
 #include <QHeaderView>
 
 // KDE includes.
@@ -199,12 +200,10 @@ GPSTrackListEditDialog::~GPSTrackListEditDialog()
 
 void GPSTrackListEditDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
-    int i                 = 0;
-    QTreeWidgetItem *item = 0;
-    do
+    QTreeWidgetItemIterator it(d->listView);
+    while (*it)
     {
-        item = d->listView->topLevelItem(i);
-        GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(item);
+        GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(*it);
         if (lvItem)
         {
             if (lvItem->url() == url)
@@ -213,9 +212,8 @@ void GPSTrackListEditDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
                 return;
             }
         }
-        i++;
+        ++it;
     }
-    while (item);
 }
 
 void GPSTrackListEditDialog::slotHelp()
@@ -288,12 +286,10 @@ void GPSTrackListEditDialog::slotOk()
 
 void GPSTrackListEditDialog::slotMarkerSelectedFromMap(int id)
 {
-    int i                 = 0;
-    QTreeWidgetItem *item = 0;
-    do
+    QTreeWidgetItemIterator it(d->listView);
+    while (*it)
     {
-        item = d->listView->topLevelItem(i);
-        GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(item);
+        GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(*it);
         if (lvItem)
         {
             if (lvItem->id() == id)
@@ -303,19 +299,16 @@ void GPSTrackListEditDialog::slotMarkerSelectedFromMap(int id)
                 return;
             }
         }
-        i++;
+        ++it;
     }
-    while (item);
 }
 
 void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, double lng, double alt)
 {
-    int i                 = 0;
-    QTreeWidgetItem *item = 0;
-    do
+    QTreeWidgetItemIterator it(d->listView);
+    while (*it)
     {
-        item = d->listView->topLevelItem(i);
-        GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(item);
+        GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(*it);
         if (lvItem)
         {
             if (lvItem->id() == id)
@@ -338,9 +331,8 @@ void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, doubl
                 return;
             }
         }
-        i++;
+        ++it;
     }
-    while (item);
 }
 
 }  // namespace KIPIGPSSyncPlugin
