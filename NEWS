@@ -10,6 +10,8 @@ MetadataEdit   : IPTC Editor dialog is more compliant with IPTC.org recommendati
 MetadataEdit   : IPTC Editor add the capability to set multiple values for a tag.
 SendImages     : Complete re-write of emailing tool.
 GPSSync        : New tool to edit GPS track list using googlemaps.
+RAWConverter   : Raw files are decoded in 16 bits color depth using same auto-gamma and auto-white 
+                 methods provided by dcraw with 8 bits color depth RAW image decoding. 
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
