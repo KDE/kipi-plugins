@@ -26,6 +26,7 @@
  * ============================================================ */
 
 // Qt includes.
+
 #include <QtDebug>
 #include <QMutexLocker>
 #include <QMutex>
@@ -230,7 +231,7 @@ void ActionThread::run()
                 case IDENTIFY: 
                 case IDENTIFY_FULL: 
                 {
-                    // Identify Camera model.    
+                    // Identify Camera model.
                     KDcrawIface::DcrawInfoContainer info;
                     d->dcrawIface.rawFileIdentify(info, t->fileUrl.path());
 
@@ -247,8 +248,8 @@ void ActionThread::run()
                             if (info.dateTime.isValid())
                             {
                                 identify.append(i18n("Created: %1\n",
-                                        KGlobal::locale()->formatDateTime(info.dateTime,
-                                                                        KLocale::ShortDate, true)));
+                                         KGlobal::locale()->formatDateTime(info.dateTime,
+                                                                           KLocale::ShortDate, true)));
                             }
 
                             if (info.aperture != -1.0)
