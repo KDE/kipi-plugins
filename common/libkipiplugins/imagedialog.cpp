@@ -94,7 +94,7 @@ ImageDialogPreview::ImageDialogPreview(KIPI::Interface *iface, QWidget *parent)
     vlay->addWidget(d->infoLabel);
 
     setSupportedMimeTypes(KImageIO::mimeTypes());
-    setMinimumWidth(64);
+    setMinimumWidth(128);
 
     connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
             this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
