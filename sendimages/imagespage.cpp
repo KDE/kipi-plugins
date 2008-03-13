@@ -43,10 +43,10 @@
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
-#include <libkipi/imagedialog.h>
 
 // Local includes.
 
+#include "imagedialog.h"
 #include "imagespage.h"
 #include "imagespage.moc"
 
@@ -299,7 +299,7 @@ void ImagesPage::slotThumbnail(const KUrl& url, const QPixmap& pix)
 
 void ImagesPage::slotAddItems()
 {
-    KIPI::ImageDialog dlg(this, d->iface, false);
+    KIPIPlugins::ImageDialog dlg(this, d->iface, false);
     KUrl::List urls = dlg.urls();
     if (!urls.isEmpty())
         slotAddImages(urls);

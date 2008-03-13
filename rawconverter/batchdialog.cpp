@@ -71,12 +71,12 @@ extern "C"
 
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
-#include <libkipi/imagedialog.h>
 
 // Local includes.
 
 #include "actions.h"
 #include "kpaboutdata.h"
+#include "imagedialog.h"
 #include "pluginsversion.h"
 #include "rawdecodingiface.h"
 #include "savesettingswidget.h"
@@ -452,7 +452,7 @@ void BatchDialog::slotStartStop()
 
 void BatchDialog::slotAddItems()
 {
-    KIPI::ImageDialog dlg(this, d->iface, false, true);
+    KIPIPlugins::ImageDialog dlg(this, d->iface, false, true);
     KUrl::List urls = dlg.urls();
     if (!urls.isEmpty())
     {

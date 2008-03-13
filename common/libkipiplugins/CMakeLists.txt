@@ -2,7 +2,7 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/pluginsversion.h.cmake ${CMAKE_CURREN
 INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR} ${PNG_PNG_INCLUDE_DIR})
 
 SET(kipiplugins_LIB_SRCS kpaboutdata.cpp kpwriteimage.cpp iccjpeg.c squeezedcombobox.cpp
-                         batchprogressdialog.cpp)
+                         batchprogressdialog.cpp imagedialog.cpp)
 
 KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})
 
@@ -14,6 +14,8 @@ TARGET_LINK_LIBRARIES(kipiplugins
                       ${TIFF_LIBRARIES}
                       ${PNG_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
+                      ${KDCRAW_LIBRARIES} 
+                      ${KIPI_LIBRARIES} 
                      )
 
 SET_TARGET_PROPERTIES(kipiplugins PROPERTIES VERSION 1.0.0 SOVERSION 1 )
