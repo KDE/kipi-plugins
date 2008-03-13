@@ -38,8 +38,12 @@ class QImage;
 
 namespace KIPI 
 {
-    class BatchProgressDialog;
     class Interface;
+}
+
+namespace KIPIPlugins 
+{
+    class BatchProgressDialog;
 }
 
 namespace KIPIGPSSyncPlugin 
@@ -129,12 +133,12 @@ public:
 private:
 
     /*! the root document, used to create all QDomElements */
-    QDomDocument              *kmlDocument;
+    QDomDocument                     *kmlDocument;
 
     /*! the GPS parsed data */
-    KMLGPSDataParser           m_gpxParser;
+    KMLGPSDataParser                  m_gpxParser;
 
-    KIPI::BatchProgressDialog *m_progressDialog;
+    KIPIPlugins::BatchProgressDialog *m_progressDialog;
 
 private:
 

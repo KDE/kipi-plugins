@@ -7,8 +7,8 @@
  * Description : loss less images transformations plugin.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2008 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -47,11 +47,11 @@
 
 // LibKipi includes.
 
-#include <libkipi/batchprogressdialog.h>
 #include <libkipi/interface.h>
 
 // Local includes.
 
+#include "batchprogressdialog.h"
 #include "actionthread.h"
 #include "plugin_jpeglossless.h"
 #include "plugin_jpeglossless.moc"
@@ -89,7 +89,7 @@ public:
 
     KUrl::List                            images;
 
-    KIPI::BatchProgressDialog            *progressDlg;
+    KIPIPlugins::BatchProgressDialog     *progressDlg;
 
     KIPIJPEGLossLessPlugin::ActionThread *thread;
 };
@@ -221,7 +221,7 @@ void Plugin_JPEGLossless::flip(KIPIJPEGLossLessPlugin::FlipAction action, const 
         d->progressDlg = 0;
     }
 
-    d->progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
+    d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(), 
                         i18n("Flip images %1", title));
 
     connect(d->progressDlg, SIGNAL(cancelClicked()),
@@ -265,7 +265,7 @@ void Plugin_JPEGLossless::rotate(KIPIJPEGLossLessPlugin::RotateAction action, co
         d->progressDlg = 0;
     }
 
-    d->progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
+    d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(), 
                         i18n("Rotate images %1", title));
 
     connect(d->progressDlg, SIGNAL(cancelClicked()),
@@ -298,7 +298,7 @@ void Plugin_JPEGLossless::slotConvert2GrayScale()
         d->progressDlg = 0;
     }
 
-    d->progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), 
+    d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(), 
                         i18n("Convert images to black & white"));
 
     connect(d->progressDlg, SIGNAL(cancelClicked()),
@@ -353,7 +353,7 @@ void Plugin_JPEGLossless::slotStarting(const QString &filePath, int action)
         }
     }
 
-    d->progressDlg->addedAction(text, KIPI::StartingMessage);
+    d->progressDlg->addedAction(text, KIPIPlugins::StartingMessage);
 }
 
 void Plugin_JPEGLossless::slotFinished(const QString &filePath, int action)
@@ -385,7 +385,7 @@ void Plugin_JPEGLossless::slotFinished(const QString &filePath, int action)
         }
     }
 
-    d->progressDlg->addedAction(text, KIPI::SuccessMessage);
+    d->progressDlg->addedAction(text, KIPIPlugins::SuccessMessage);
 
     oneTaskCompleted();
 }
@@ -420,10 +420,10 @@ void Plugin_JPEGLossless::slotFailed(const QString &filePath, int action, const 
         }
     }
 
-    d->progressDlg->addedAction(text, KIPI::WarningMessage);
+    d->progressDlg->addedAction(text, KIPIPlugins::WarningMessage);
 
     if (!errString.isEmpty())
-        d->progressDlg->addedAction(errString, KIPI::WarningMessage);
+        d->progressDlg->addedAction(errString, KIPIPlugins::WarningMessage);
 
     oneTaskCompleted();
 }

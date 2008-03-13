@@ -27,6 +27,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_jpeglossless
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       ${JPEG_LIBRARY}
+                      kipiplugins
                      )
 
 INSTALL(TARGETS kipiplugin_jpeglossless DESTINATION ${PLUGIN_INSTALL_DIR})

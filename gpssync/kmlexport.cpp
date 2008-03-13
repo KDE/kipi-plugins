@@ -48,11 +48,11 @@ extern "C"
 // LibKipi includes
 
 #include <libkipi/plugin.h>
-#include <libkipi/batchprogressdialog.h>
 #include <libkipi/imageinfo.h>
 
 // Local includes.
 
+#include "batchprogressdialog.h"
 #include "kmlexport.h"
 
 namespace KIPIGPSSyncPlugin 
@@ -61,7 +61,7 @@ namespace KIPIGPSSyncPlugin
 kmlExport::kmlExport(KIPI::Interface* interface)
 {
     m_interface      = interface;
-    m_progressDialog = new KIPI::BatchProgressDialog(kapp->activeWindow(), i18n("Generating KML file..."));
+    m_progressDialog = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(), i18n("Generating KML file..."));
 }
 
 kmlExport::~kmlExport()
@@ -228,13 +228,13 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     else 
     {
         //logInfo(i18n("Creation of picture '%1'").arg(fullFileName));
-        
+
         double alt, lat, lng;
         QMap<QString, QVariant> attributes;
         KExiv2Iface::KExiv2 exiv2Iface;
         KIPI::ImageInfo info = m_interface->info(imageURL);
         attributes           = info.attributes();
-    
+
         if (attributes.contains("latitude") &&
             attributes.contains("longitude") && 
             attributes.contains("altitude"))
@@ -453,7 +453,7 @@ void kmlExport::generate()
         QMap<QString, QVariant> attributes;
         KIPI::ImageInfo info = m_interface->info(url);
         attributes           = info.attributes();
-    
+
         if (attributes.contains("latitude") &&
             attributes.contains("longitude") && 
             attributes.contains("altitude"))
@@ -543,17 +543,17 @@ int kmlExport::getConfig()
 
 void kmlExport::logInfo(const QString& msg) 
 {
-    m_progressDialog->addedAction(msg, KIPI::ProgressMessage);
+    m_progressDialog->addedAction(msg, KIPIPlugins::ProgressMessage);
 }
 
 void kmlExport::logError(const QString& msg) 
 {
-    m_progressDialog->addedAction(msg, KIPI::ErrorMessage);
+    m_progressDialog->addedAction(msg, KIPIPlugins::ErrorMessage);
 }
 
 void kmlExport::logWarning(const QString& msg) 
 {
-    m_progressDialog->addedAction(msg, KIPI::WarningMessage);
+    m_progressDialog->addedAction(msg, KIPIPlugins::WarningMessage);
     //	mWarnings=true;
 }
 
