@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2004-05-01
- * Description : an image files selector dialog.
+ * Description : image files selector dialog.
  *
  * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
