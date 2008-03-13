@@ -33,10 +33,15 @@
 #include <kfiledialog.h>
 #include <kimageio.h>
 
+// LibKExiv2 includes.
+
+#include <libkexiv2/kexiv2.h>
+
 // LibKDcraw includes.
 
-#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/kdcraw.h>
 #include <libkdcraw/dcrawbinary.h>
+#include <libkdcraw/dcrawinfocontainer.h>
 
 // Local includes.
 
@@ -54,14 +59,20 @@ public:
     ImageDialogPreviewPrivate()
     {
         imageLabel = 0;
+        infoLabel  = 0;
         iface      = 0;
     }
 
-    QLabel          *imageLabel;
+    QLabel              *imageLabel;
+    QLabel              *infoLabel;
 
-    KUrl             currentURL;
+    KUrl                 currentURL;
 
-    KIPI::Interface *iface;
+    KDcrawIface::KDcraw  dcrawIface;
+
+    KExiv2Iface::KExiv2  exiv2Iface;
+
+    KIPI::Interface     *iface;
 };
 
 ImageDialogPreview::ImageDialogPreview(KIPI::Interface *iface, QWidget *parent)
@@ -75,9 +86,12 @@ ImageDialogPreview::ImageDialogPreview(KIPI::Interface *iface, QWidget *parent)
     d->imageLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     d->imageLabel->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
 
+    d->infoLabel = new QLabel(this);
+
     vlay->setMargin(0);
     vlay->setSpacing(KDialog::spacingHint());
     vlay->addWidget(d->imageLabel);
+    vlay->addWidget(d->infoLabel);
 
     setSupportedMimeTypes(KImageIO::mimeTypes());
     setMinimumWidth(64);
@@ -121,6 +135,102 @@ void ImageDialogPreview::showPreview(const KUrl& url)
         clearPreview();
         d->currentURL = url;
         d->iface->thumbnail(d->currentURL, 256);
+
+        // Try to use libkdcraw interface to identify image.
+
+        KDcrawIface::DcrawInfoContainer info;
+        d->dcrawIface.rawFileIdentify(info, d->currentURL.path());
+        if (info.isDecodable)
+        {
+            QString identify = i18n("Make: %1\n", info.make); 
+            identify.append(i18n("Model: %1\n", info.model));
+
+            if (info.dateTime.isValid())
+                identify.append(i18n("Created: %1\n", KGlobal::locale()->formatDateTime(info.dateTime,
+                                                                         KLocale::ShortDate, true)));
+
+            if (info.aperture != -1.0)
+                identify.append(i18n("Aperture: f/%1\n", QString::number(info.aperture)));
+
+            if (info.focalLength != -1.0)
+                identify.append(i18n("Focal: %1 mm\n", info.focalLength));
+
+            if (info.exposureTime != -1.0)
+                identify.append(i18n("Exposure: 1/%1 s\n", info.exposureTime));
+
+            if (info.sensitivity != -1)
+                identify.append(i18n("Sensitivity: %1 ISO", info.sensitivity));
+
+            d->infoLabel->setText(identify);
+        }
+        else
+        {
+            // Try to use libkexiv2 to identify image.
+
+            d->exiv2Iface.load(d->currentURL.path());
+            if (d->exiv2Iface.hasExif() || d->exiv2Iface.hasXmp())
+            {
+                QString make = d->exiv2Iface.getExifTagString("Exif.Image.Make");
+                if (make.isEmpty())
+                    make = d->exiv2Iface.getXmpTagString("Xmp.tiff.Make");
+                QString identify = i18n("Make: %1\n", make);
+
+                QString model = d->exiv2Iface.getExifTagString("Exif.Image.Model");
+                if (model.isEmpty())
+                    model = d->exiv2Iface.getXmpTagString("Xmp.tiff.Model");
+                identify.append(i18n("Model: %1\n", model));
+
+                if (d->exiv2Iface.getImageDateTime().isValid())
+                    identify.append(i18n("Created: %1\n", KGlobal::locale()->formatDateTime(
+                                    d->exiv2Iface.getImageDateTime(), KLocale::ShortDate, true)));
+
+                QString aperture = d->exiv2Iface.getExifTagString("Exif.Photo.FNumber");
+                if (aperture.isEmpty())
+                {
+                    aperture = d->exiv2Iface.getExifTagString("Exif.Photo.ApertureValue");
+                    if (aperture.isEmpty())
+                    {
+                        aperture = d->exiv2Iface.getXmpTagString("Xmp.exif.FNumber");
+                        if (aperture.isEmpty())
+                            aperture = d->exiv2Iface.getXmpTagString("Xmp.exif.ApertureValue");
+                    }
+                }
+                identify.append(i18n("Aperture: f/%1\n", aperture));
+
+                QString focalLength = d->exiv2Iface.getExifTagString("Exif.Photo.FocalLength");
+                if (focalLength.isEmpty())
+                    focalLength = d->exiv2Iface.getXmpTagString("Xmp.exif.FocalLength");
+                identify.append(i18n("Focal: %1 mm\n", focalLength));
+
+                QString exposureTime = d->exiv2Iface.getExifTagString("Exif.Photo.ExposureTime");
+                if (exposureTime.isEmpty())
+                {
+                    exposureTime = d->exiv2Iface.getExifTagString("Exif.Photo.ShutterSpeedValue");
+                    if (exposureTime.isEmpty())
+                    {
+                        exposureTime = d->exiv2Iface.getXmpTagString("Xmp.exif.ExposureTime");
+                        if (exposureTime.isEmpty())
+                            exposureTime = d->exiv2Iface.getXmpTagString("Xmp.exif.ShutterSpeedValue");
+                    }
+                }
+                identify.append(i18n("Exposure: 1/%1 s\n", exposureTime));
+
+                QString sensitivity = d->exiv2Iface.getExifTagString("Exif.Photo.ISOSpeedRatings");
+                if (sensitivity.isEmpty())
+                {
+                    sensitivity = d->exiv2Iface.getExifTagString("Exif.Photo.ExposureIndex");
+                    if (sensitivity.isEmpty())
+                    {
+                        sensitivity = d->exiv2Iface.getXmpTagString("Xmp.exif.ISOSpeedRatings");
+                        if (sensitivity.isEmpty())
+                            sensitivity = d->exiv2Iface.getXmpTagString("Xmp.exif.ExposureIndex");
+                    }
+                }
+                identify.append(i18n("Sensitivity: %1 ISO", sensitivity));
+
+                d->infoLabel->setText(identify);
+            }
+        }
     }
 }
 
