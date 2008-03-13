@@ -96,4 +96,4 @@ private:
 
 } // namespace KIPIPlugins
 
-#endif /* IMAGECOLLECTIONDIALOG_H */
+#endif /* IMAGEDIALOG_H */
