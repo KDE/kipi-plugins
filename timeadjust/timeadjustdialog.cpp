@@ -460,8 +460,6 @@ void TimeAdjustDialog::slotOk()
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
                         ret &= exiv2Iface.setExifTagString("Exif.Photo.DateTimeOriginal",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
-                        ret &= exiv2Iface.setExifTagString("Exif.Photo.DateTimeDigitized",
-                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
                     }
         
                     if (d->syncIPTCDateCheck->isChecked())
