@@ -222,7 +222,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     
     d->syncEXIFDateCheck = new QCheckBox(i18n("Update EXIF creation date"), d->adjTypeGB);
     d->syncIPTCDateCheck = new QCheckBox(i18n("Update IPTC creation date"), d->adjTypeGB);
-    d->syncXMPDateCheck = new QCheckBox(i18n("Update XMP creation date"), d->adjTypeGB);
+    d->syncXMPDateCheck  = new QCheckBox(i18n("Update XMP creation date"), d->adjTypeGB);
 
     if (!KExiv2Iface::KExiv2::supportXmp())
         d->syncXMPDateCheck->setEnabled(false);
@@ -529,6 +529,8 @@ void TimeAdjustDialog::slotOk()
                     if (d->syncEXIFDateCheck->isChecked())
                     {
                         ret &= exiv2Iface.setExifTagString("Exif.Image.DateTime",
+                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        ret &= exiv2Iface.setExifTagString("Exif.Photo.DateTimeOriginal",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     }
         
