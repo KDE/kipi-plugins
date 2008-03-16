@@ -7,7 +7,7 @@
  * Description : a plugin to set time stamp of picture files.
  *
  * Copyright (C) 2003-2005 by Jesper Pedersen <blackie@kde.org>
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -162,7 +162,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin for adjusting time stamp of picture files"),
                                            "(c) 2003-2005, Jesper K. Pedersen\n"
-                                           "(c) 2006-2007, Gilles Caulier");
+                                           "(c) 2006-2008, Gilles Caulier");
 
     d->about->addAuthor("Jesper K. Pedersen", I18N_NOOP("Author"),
                         "blackie@kde.org");
@@ -457,6 +457,10 @@ void TimeAdjustDialog::slotOk()
                     if (d->syncEXIFDateCheck->isChecked())
                     {
                         ret &= exiv2Iface.setExifTagString("Exif.Image.DateTime",
+                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
+                        ret &= exiv2Iface.setExifTagString("Exif.Photo.DateTimeOriginal",
+                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
+                        ret &= exiv2Iface.setExifTagString("Exif.Photo.DateTimeDigitized",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).ascii());
                     }
         
