@@ -444,12 +444,6 @@ void TimeAdjustDialog::slotOk()
         dateTime             = updateTime(info.path(), info.time());
         info.setTime(dateTime);
 
-        // See B.K.O #138880: set the file acess and modification time.
-        struct utimbuf ut;
-        ut.modtime = dateTime.toTime_t();
-        ut.actime  = dateTime.toTime_t();
-        ::utime(QFile::encodeName(url.path()), &ut);
-
         if (d->syncEXIFDateCheck->isChecked() || d->syncIPTCDateCheck->isChecked())
         {
             bool ret = true;
@@ -492,6 +486,12 @@ void TimeAdjustDialog::slotOk()
             else 
                 updatedURLs.append(url);
         }
+
+        // See B.K.O #138880: set the file acess and modification time (after than Exiv2 play with metadata).
+        struct utimbuf ut;
+        ut.modtime = dateTime.toTime_t();
+        ut.actime  = dateTime.toTime_t();
+        ::utime(QFile::encodeName(url.path()), &ut);
     }
 
     // We use kipi interface refreshImages() method to tell to host than 
