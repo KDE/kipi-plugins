@@ -1,5 +1,16 @@
 Note: for details and info about current version, see ChangeLog.
 
+v 0.1.6
+---------------------------------------------------------------------------
+
+Kipi-plugins NEW FEATURES
+
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
+001 ==> 149890 : TimeAdjust         : adjust date and time from Exif does not work.
+002 ==> 
+
 v 0.1.5
 ---------------------------------------------------------------------------
 
