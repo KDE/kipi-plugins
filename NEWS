@@ -20,7 +20,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 003 ==> 149497 : GPSSync            : Geolocalization kipi plugin does not work with non-jpeg file types.
 004 ==> 145746 : GPSSync            : Do not recreate thumbs when geolocalizing images.
 005 ==> 134299 : SimpleViewerExport : Read orientation of image from EXIF.
-006 ==> 
+006 ==> 158792 : GPSsync            : Plugin do not working with Canon RAW CR2.
+007 ==> 
 
 v 0.1.4 beta2
 ----------------------------------------------------------------------------
