@@ -8,8 +8,9 @@ Kipi-plugins NEW FEATURES
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
-001 ==> 149890 : TimeAdjust         : adjust date and time from Exif does not work.
-002 ==> 
+001 ==> 149890 : TimeAdjust         : Adjust date and time from Exif does not work.
+002 ==> 154273 : RAWConverter       : Quality setting for jpegs saved by raw converter is insanely high.
+003 ==> 
 
 v 0.1.5
 ---------------------------------------------------------------------------
