@@ -6,8 +6,8 @@
  * Date        : 2006-12-09
  * Description : RAW decoding interface
  *
- * Copyright (C) 2006-2007 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * NOTE: Do not use kdDebug() in this implementation because 
  *       it will be multithreaded. Use qDebug() instead. 
@@ -243,7 +243,8 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             cinfo.comp_info[2].h_samp_factor = 1;
             cinfo.comp_info[2].v_samp_factor = 1;
 
-            jpeg_set_quality(&cinfo, 100, true);
+            // B.K.O #154273: use 99 compresion level instead 100 to reduce output JPEG file size.
+            jpeg_set_quality(&cinfo, 99, true);
             jpeg_start_compress(&cinfo, true);
 
             // Write ICC color profil.
