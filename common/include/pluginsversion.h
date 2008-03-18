@@ -3,7 +3,7 @@
  * Date   : 2006-14-09
  * Description : Kipi-Plugins release ID header.
  * 
- * Copyright 2006-2007 by Gilles Caulier <caulier dot gilles at free.fr>
+ * Copyright 2006-2008 by Gilles Caulier <caulier dot gilles at free.fr>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,7 +21,7 @@
 #ifndef KIPIPLUGINS_VERSION_H
 #define KIPIPLUGINS_VERSION_H
 
-static const char kipiplugins_version[] = "0.1.5";
+static const char kipiplugins_version[] = "0.1.6-svn";
 
 #endif // KIPIPLUGINS_VERSION_H
 
