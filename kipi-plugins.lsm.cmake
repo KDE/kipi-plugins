@@ -11,7 +11,7 @@ Author: caulier dot gilles at gmail dot com (Gilles Caulier)
  aurelien dot gateau at free dot fr (Aurelien Gateau)
 Maintained-by:
 Primary-site: http://www.kipi-plugins.org
-Alternate-site:
+Alternate-site: http://www.digikam.org
 Original-site:
 Platforms:
 Copying-policy: GPL
