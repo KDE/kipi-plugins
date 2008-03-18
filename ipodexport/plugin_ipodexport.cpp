@@ -49,7 +49,7 @@ void Plugin_iPodExport::setup( QWidget* widget )
     KIPI::Plugin::setup( widget );
 
     // this is our action shown in the menubar/toolbar of the mainwindow
-    m_actionImageUpload = new KAction( i18n( "Export to iPod..." ), "ipod", 0, this,
+    m_actionImageUpload = new KAction( i18n( "Export to iPod..." ), "ipod_unmount", 0, this,
                                       SLOT( slotImageUpload() ), actionCollection(), "connectipod");
 
     addAction( m_actionImageUpload );
@@ -60,7 +60,7 @@ void Plugin_iPodExport::setup( QWidget* widget )
 KIPI::Category Plugin_iPodExport::category( KAction* action ) const
 {
     if ( action == m_actionImageUpload )
-        return KIPI::TOOLSPLUGIN;
+        return KIPI::EXPORTPLUGIN;
 
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
@@ -73,4 +73,3 @@ void Plugin_iPodExport::slotImageUpload()
     dlg->setMinimumWidth( 460 );
     dlg->show();
 }
-
