@@ -1,6 +1,6 @@
 Begin4
 Title: kipi-plugins
-Version: 0.1.5
+Version: 0.1.6-svn
 Entered-date: 2008-03-09
 Description: Plugins for KIPI, the KDE Image Plugin Interface
 Keywords: kde image plugins, digiKam, photo management
@@ -10,7 +10,7 @@ Author: renchi at pooh.tam.uiuc.edu (Renchi Raju)
  aurelien dot gateau at free.fr (Aurelien Gateau)
 Maintained-by:
 Primary-site: http://www.kipi-plugins.org
-Alternate-site:
+Alternate-site: http://www.digiKam.org
 Original-site:
 Platforms:
 Copying-policy: GPL
