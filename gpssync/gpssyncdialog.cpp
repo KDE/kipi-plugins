@@ -431,7 +431,7 @@ bool GPSSyncDialog::promptUserClose()
     if (dirty > 0)
     {
         QString msg = i18np("1 image from the list is not updated.",
-                           "%n images from the list are not updated.", dirty);
+                           "%1 images from the list are not updated.", dirty);
 
         if (KMessageBox::No == KMessageBox::warningYesNo(this,
                      i18n("<p>%1\n"
@@ -518,7 +518,7 @@ void GPSSyncDialog::slotUser1()
     }
 
     QString msg = i18np("GPS data of 1 image have been updated on the list using the GPX data file.",
-                        "GPS data of %n images have been updated on the list using the GPX data file.",
+                        "GPS data of %1 images have been updated on the list using the GPX data file.",
                         itemsUpdated);
     msg += '\n';
     msg += i18n("Press Apply button to update images metadata.");

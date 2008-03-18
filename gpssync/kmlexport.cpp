@@ -488,7 +488,7 @@ void kmlExport::generate()
         /** @todo if defectImage==count there are no pictures exported, does it worst to continue? */
         KMessageBox::information(kapp->activeWindow(), 
                                  i18np("No position data for 1 picture",
-                                       "No position data for %n pictures", defectImage));
+                                       "No position data for %1 pictures", defectImage));
     }
 
     /** @todo change to kml or kmz if compressed */
