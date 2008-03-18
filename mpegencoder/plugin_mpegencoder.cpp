@@ -42,13 +42,12 @@
 #include "checkbinprog.h"
 #include "kimg2mpg.h"
 #include "plugin_mpegencoder.h"
+#include "plugin_mpegencoder.moc"
 
 typedef KGenericFactory<Plugin_Mpegencoder> Factory;
 
 K_EXPORT_COMPONENT_FACTORY( kipiplugin_mpegencoder,
                             Factory("kipiplugin_mpegencoder"))
-
-// -----------------------------------------------------------
 
 Plugin_Mpegencoder::Plugin_Mpegencoder(QObject *parent, const char*, const QStringList&)
                   : KIPI::Plugin( Factory::instance(), parent, "MPEGEncoder")
@@ -71,23 +70,19 @@ void Plugin_Mpegencoder::setup( QWidget* widget )
     addAction( m_actionMPEGEncoder );
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
 Plugin_Mpegencoder::~Plugin_Mpegencoder()
 {
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////
 
 void Plugin_Mpegencoder::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
 
     if ( !interface )
-       {
+    {
        kdError( 51000 ) << "Kipi interface is null!" << endl;
        return;
-       }
+    }
 
     KIPIMPEGEncoderPlugin::KImg2mpgData *MPEGconverterDialog =
                            new KIPIMPEGEncoderPlugin::KImg2mpgData( interface, kapp->activeWindow() );
@@ -117,10 +112,8 @@ void Plugin_Mpegencoder::slotActivate()
 KIPI::Category Plugin_Mpegencoder::category( KAction* action ) const
 {
     if ( action == m_actionMPEGEncoder )
-       return KIPI::TOOLSPLUGIN;
+       return KIPI::EXPORTPLUGIN;
 
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }
-
-#include "plugin_mpegencoder.moc"
