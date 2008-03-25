@@ -71,7 +71,7 @@ private:
 
 // ------------------------------------------------------------------------
 
-class LIBKIPI_EXPORT ImageDialog
+class KIPIPLUGINS_EXPORT ImageDialog
 {
 
 public:
