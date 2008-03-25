@@ -132,6 +132,7 @@ void ImageDialogPreview::showPreview(const KUrl& url)
     if (url != d->currentURL) 
     {
         QString make, model, dateTime, aperture, focalLength, exposureTime, sensitivity;
+        QString unaviable(i18n("<i>unaviable</i>"));
         clearPreview();
         d->currentURL = url;
         d->iface->thumbnail(d->currentURL, 256);
@@ -145,7 +146,7 @@ void ImageDialogPreview::showPreview(const KUrl& url)
             if (make.isEmpty())
                 make = d->exiv2Iface.getXmpTagString("Xmp.tiff.Make");
 
-            QString model = d->exiv2Iface.getExifTagString("Exif.Image.Model");
+            model = d->exiv2Iface.getExifTagString("Exif.Image.Model");
             if (model.isEmpty())
                 model = d->exiv2Iface.getXmpTagString("Xmp.tiff.Model");
 
@@ -153,7 +154,7 @@ void ImageDialogPreview::showPreview(const KUrl& url)
                 dateTime = KGlobal::locale()->formatDateTime(d->exiv2Iface.getImageDateTime(),
                                                              KLocale::ShortDate, true);
 
-            QString aperture = d->exiv2Iface.getExifTagString("Exif.Photo.FNumber");
+            aperture = d->exiv2Iface.getExifTagString("Exif.Photo.FNumber");
             if (aperture.isEmpty())
             {
                 aperture = d->exiv2Iface.getExifTagString("Exif.Photo.ApertureValue");
@@ -165,11 +166,11 @@ void ImageDialogPreview::showPreview(const KUrl& url)
                 }
             }
 
-            QString focalLength = d->exiv2Iface.getExifTagString("Exif.Photo.FocalLength");
+            focalLength = d->exiv2Iface.getExifTagString("Exif.Photo.FocalLength");
             if (focalLength.isEmpty())
                 focalLength = d->exiv2Iface.getXmpTagString("Xmp.exif.FocalLength");
 
-            QString exposureTime = d->exiv2Iface.getExifTagString("Exif.Photo.ExposureTime");
+            exposureTime = d->exiv2Iface.getExifTagString("Exif.Photo.ExposureTime");
             if (exposureTime.isEmpty())
             {
                 exposureTime = d->exiv2Iface.getExifTagString("Exif.Photo.ShutterSpeedValue");
@@ -181,7 +182,7 @@ void ImageDialogPreview::showPreview(const KUrl& url)
                 }
             }
 
-            QString sensitivity = d->exiv2Iface.getExifTagString("Exif.Photo.ISOSpeedRatings");
+            sensitivity = d->exiv2Iface.getExifTagString("Exif.Photo.ISOSpeedRatings");
             if (sensitivity.isEmpty())
             {
                 sensitivity = d->exiv2Iface.getExifTagString("Exif.Photo.ExposureIndex");
@@ -201,8 +202,11 @@ void ImageDialogPreview::showPreview(const KUrl& url)
             d->dcrawIface.rawFileIdentify(info, d->currentURL.path());
             if (info.isDecodable)
             {
-                make  = info.make; 
-                model = info.model;
+                if (!info.make.isEmpty())
+                    make = info.make; 
+
+                if (!info.model.isEmpty())
+                    model = info.model;
 
                 if (info.dateTime.isValid())
                     dateTime = KGlobal::locale()->formatDateTime(info.dateTime, KLocale::ShortDate, true);
@@ -219,7 +223,28 @@ void ImageDialogPreview::showPreview(const KUrl& url)
                 if (info.sensitivity != -1)
                     sensitivity = info.sensitivity;
             }
+            else
+            {
+                d->infoLabel->clear();
+                return;
+            }
         }
+
+        if (make.isEmpty())     make     = unaviable;
+        if (model.isEmpty())    model    = unaviable;
+        if (dateTime.isEmpty()) dateTime = unaviable;
+
+        if (aperture.isEmpty()) aperture = unaviable; 
+        else aperture = i18n("f/%1", aperture);
+
+        if (focalLength.isEmpty()) focalLength = unaviable; 
+        else focalLength = i18n("%1 mm", focalLength);
+
+        if (exposureTime.isEmpty()) exposureTime = unaviable; 
+        else exposureTime = i18n("1/%1 s", exposureTime);
+
+        if (sensitivity.isEmpty()) sensitivity = unaviable; 
+        else sensitivity = i18n("%1 ISO", sensitivity);
 
         QString identify;
         QString cellBeg("<tr><td><nobr><font size=-1>");
@@ -227,13 +252,13 @@ void ImageDialogPreview::showPreview(const KUrl& url)
         QString cellEnd("</font></nobr></td></tr>");
 
         identify = "<table cellspacing=0 cellpadding=0>";
-        identify += cellBeg + i18n("Make:")        + cellMid + make                         + cellEnd;
-        identify += cellBeg + i18n("Model:")       + cellMid + model                        + cellEnd;
-        identify += cellBeg + i18n("Created:")     + cellMid + dateTime                     + cellEnd;
-        identify += cellBeg + i18n("Aperture:")    + cellMid + i18n("f/%1", aperture)       + cellEnd;
-        identify += cellBeg + i18n("Focal:")       + cellMid + i18n("%1 mm", focalLength)   + cellEnd;
-        identify += cellBeg + i18n("Exposure:")    + cellMid + i18n("1/%1 s", exposureTime) + cellEnd;
-        identify += cellBeg + i18n("Sensitivity:") + cellMid + i18n("%1 ISO", sensitivity)  + cellEnd;
+        identify += cellBeg + i18n("Make:")        + cellMid + make         + cellEnd;
+        identify += cellBeg + i18n("Model:")       + cellMid + model        + cellEnd;
+        identify += cellBeg + i18n("Created:")     + cellMid + dateTime     + cellEnd;
+        identify += cellBeg + i18n("Aperture:")    + cellMid + aperture     + cellEnd;
+        identify += cellBeg + i18n("Focal:")       + cellMid + focalLength  + cellEnd;
+        identify += cellBeg + i18n("Exposure:")    + cellMid + exposureTime + cellEnd;
+        identify += cellBeg + i18n("Sensitivity:") + cellMid + sensitivity  + cellEnd;
         identify += "</table>";
 
         d->infoLabel->setText(identify);
@@ -259,6 +284,7 @@ void ImageDialogPreview::slotThumbnail(const KUrl& url, const QPixmap& pix)
 void ImageDialogPreview::clearPreview()
 {
     d->imageLabel->clear();
+    d->infoLabel->clear();
     d->currentURL = KUrl();
 }
 
