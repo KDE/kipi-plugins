@@ -76,7 +76,7 @@ class KIPIPLUGINS_EXPORT ImageDialog
 
 public:
 
-    ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSelection=false, bool onlyRaw=false);
+    ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSelect=false, bool onlyRaw=false);
     ~ImageDialog();
 
     KUrl       url() const;
