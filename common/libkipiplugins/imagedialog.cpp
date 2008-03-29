@@ -132,7 +132,7 @@ void ImageDialogPreview::showPreview(const KUrl& url)
     if (url != d->currentURL) 
     {
         QString make, model, dateTime, aperture, focalLength, exposureTime, sensitivity;
-        QString unavialable(i18n("<i>unavialable</i>"));
+        QString unavialable(i18n("<i>unavailable</i>"));
         clearPreview();
         d->currentURL = url;
         d->iface->thumbnail(d->currentURL, 256);
