@@ -132,7 +132,7 @@ void ImageDialogPreview::showPreview(const KUrl& url)
     if (url != d->currentURL) 
     {
         QString make, model, dateTime, aperture, focalLength, exposureTime, sensitivity;
-        QString unavialable(i18n("<i>unavailable</i>"));
+        QString unavailable(i18n("<i>unavailable</i>"));
         clearPreview();
         d->currentURL = url;
         d->iface->thumbnail(d->currentURL, 256);
@@ -230,20 +230,20 @@ void ImageDialogPreview::showPreview(const KUrl& url)
             }
         }
 
-        if (make.isEmpty())     make     = unaviable;
-        if (model.isEmpty())    model    = unaviable;
-        if (dateTime.isEmpty()) dateTime = unaviable;
+        if (make.isEmpty())     make     = unavailable;
+        if (model.isEmpty())    model    = unavailable;
+        if (dateTime.isEmpty()) dateTime = unavailable;
 
-        if (aperture.isEmpty()) aperture = unaviable; 
+        if (aperture.isEmpty()) aperture = unavailable; 
         else aperture = i18n("f/%1", aperture);
 
-        if (focalLength.isEmpty()) focalLength = unaviable; 
+        if (focalLength.isEmpty()) focalLength = unavailable; 
         else focalLength = i18n("%1 mm", focalLength);
 
-        if (exposureTime.isEmpty()) exposureTime = unaviable; 
+        if (exposureTime.isEmpty()) exposureTime = unavailable; 
         else exposureTime = i18n("1/%1 s", exposureTime);
 
-        if (sensitivity.isEmpty()) sensitivity = unaviable; 
+        if (sensitivity.isEmpty()) sensitivity = unavailable; 
         else sensitivity = i18n("%1 ISO", sensitivity);
 
         QString identify;
