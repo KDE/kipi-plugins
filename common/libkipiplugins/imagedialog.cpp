@@ -215,13 +215,13 @@ void ImageDialogPreview::showPreview(const KUrl& url)
                     aperture = QString::number(info.aperture);
 
                 if (info.focalLength != -1.0)
-                    focalLength = info.focalLength;
+                    focalLength = QString::number(info.focalLength);
 
                 if (info.exposureTime != -1.0)
-                    exposureTime = info.exposureTime;
+                    exposureTime = QString::number(info.exposureTime);
 
                 if (info.sensitivity != -1)
-                    sensitivity = info.sensitivity;
+                    sensitivity = QString::number(info.sensitivity);
             }
             else
             {
