@@ -41,9 +41,9 @@ public:
 
     QString name()     const;
     QString password() const;
-    QString username() const;    
-    QString setUsername(const QString&);    
-    QString setPassword(const QString&);  
+    QString username() const;
+    void setUsername(const QString&);
+    void setPassword(const QString&);
 private:
 
     QLabel*    m_headerLabel;

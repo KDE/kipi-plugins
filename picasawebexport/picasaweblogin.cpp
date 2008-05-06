@@ -120,14 +120,14 @@ QString PicasawebLogin::username() const
     return m_nameEdit->text();
 }
 
-QString PicasawebLogin::setUsername(const QString& username)
+void PicasawebLogin::setUsername(const QString& username)
 {
     kdDebug()<<" The username passed to me is "<<username <<endl;
     m_nameEdit->setText(username);
     kdDebug()<<" The username passed to me is "<<username <<endl;
 }
 
-QString PicasawebLogin::setPassword(const QString& password)
+void PicasawebLogin::setPassword(const QString& password)
 {
     m_passwdEdit->setText(password);
 }
