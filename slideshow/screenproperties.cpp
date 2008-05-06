@@ -99,6 +99,7 @@ namespace KIPISlideShowPlugin
   
       // For NVidia graphics cards: always use sync-to-vblank
     //  return (setenv("__GL_SYNC_TO_VBLANK", "1", 1) == 0);
+        return false;
   }
 
 }  // NameSpace KIPISlideShowPlugin
