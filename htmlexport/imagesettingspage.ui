@@ -1,0 +1,425 @@
+<ui version="4.0" stdsetdef="1" >
+  <author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>ImageSettingsPage</class>
+  <widget class="QWidget" name="ImageSettingsPage" >
+    <property name="geometry" >
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>381</width>
+        <height>310</height>
+      </rect>
+    </property>
+    <property name="windowTitle" >
+      <string>ImageSettingsPage</string>
+    </property>
+    <layout class="QGridLayout" >
+      <property name="margin" >
+        <number>0</number>
+      </property>
+      <item rowspan="1" row="0" column="0" colspan="3" >
+        <widget class="QLabel" name="textLabel1" >
+          <property name="font" >
+            <font>
+              <bold>true</bold>
+            </font>
+          </property>
+          <property name="text" >
+            <string>Full Image</string>
+          </property>
+          <property name="wordWrap" >
+            <bool>false</bool>
+          </property>
+        </widget>
+      </item>
+      <item row="1" column="3" >
+        <spacer name="spacer2_2" >
+          <property name="sizeHint" >
+            <size>
+              <width>58</width>
+              <height>20</height>
+            </size>
+          </property>
+          <property name="sizeType" >
+            <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+          </property>
+        </spacer>
+      </item>
+      <item row="1" column="0" >
+        <spacer name="spacer2_2_2" >
+          <property name="sizeHint" >
+            <size>
+              <width>16</width>
+              <height>20</height>
+            </size>
+          </property>
+          <property name="sizeType" >
+            <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+          </property>
+        </spacer>
+      </item>
+      <item row="5" column="2" >
+        <spacer name="spacer1" >
+          <property name="sizeHint" >
+            <size>
+              <width>20</width>
+              <height>104</height>
+            </size>
+          </property>
+          <property name="sizeType" >
+            <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+          </property>
+        </spacer>
+      </item>
+      <item rowspan="1" row="3" column="0" colspan="3" >
+        <widget class="QLabel" name="textLabel1_2" >
+          <property name="font" >
+            <font>
+              <bold>true</bold>
+            </font>
+          </property>
+          <property name="text" >
+            <string>Thumbnail</string>
+          </property>
+          <property name="wordWrap" >
+            <bool>false</bool>
+          </property>
+        </widget>
+      </item>
+      <item row="4" column="0" >
+        <spacer name="spacer2_2_2_2" >
+          <property name="sizeHint" >
+            <size>
+              <width>16</width>
+              <height>20</height>
+            </size>
+          </property>
+          <property name="sizeType" >
+            <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+          </property>
+        </spacer>
+      </item>
+      <item row="2" column="1" >
+        <spacer name="spacer4_3" >
+          <property name="sizeHint" >
+            <size>
+              <width>20</width>
+              <height>20</height>
+            </size>
+          </property>
+          <property name="sizeType" >
+            <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+          </property>
+        </spacer>
+      </item>
+      <item rowspan="1" row="1" column="1" colspan="2" >
+        <widget class="KButtonGroup" name="kcfg_useOriginalImageAsFullImage" >
+          <property name="title" >
+            <string/>
+          </property>
+          <layout class="QGridLayout" >
+            <property name="margin" >
+              <number>0</number>
+            </property>
+            <item rowspan="1" row="0" column="0" colspan="2" >
+              <widget class="QRadioButton" name="radioButton3" >
+                <property name="text" >
+                  <string>Save image</string>
+                </property>
+                <property name="checked" >
+                  <bool>true</bool>
+                </property>
+              </widget>
+            </item>
+            <item row="1" column="1" >
+              <widget class="QFrame" name="frame6" >
+                <layout class="QGridLayout" >
+                  <property name="margin" >
+                    <number>0</number>
+                  </property>
+                  <item row="1" column="0" >
+                    <widget class="QCheckBox" name="kcfg_fullResize" >
+                      <property name="text" >
+                        <string>Max size:</string>
+                      </property>
+                      <property name="checked" >
+                        <bool>true</bool>
+                      </property>
+                    </widget>
+                  </item>
+                  <item row="0" column="0" >
+                    <widget class="QLabel" name="textLabel2_2_2_2" >
+                      <property name="text" >
+                        <string>Format:</string>
+                      </property>
+                      <property name="buddy" stdset="0" >
+                        <cstring>kcfg_fullFormat</cstring>
+                      </property>
+                      <property name="wordWrap" >
+                        <bool>false</bool>
+                      </property>
+                    </widget>
+                  </item>
+                  <item row="0" column="4" >
+                    <widget class="QSpinBox" name="kcfg_fullQuality" >
+                      <property name="maximum" >
+                        <number>100</number>
+                      </property>
+                    </widget>
+                  </item>
+                  <item row="0" column="1" >
+                    <widget class="QComboBox" name="kcfg_fullFormat" >
+                      <item>
+                        <property name="text" >
+                          <string>JPEG</string>
+                        </property>
+                      </item>
+                      <item>
+                        <property name="text" >
+                          <string>PNG</string>
+                        </property>
+                      </item>
+                    </widget>
+                  </item>
+                  <item row="0" column="3" >
+                    <widget class="QLabel" name="textLabel4" >
+                      <property name="text" >
+                        <string>Quality:</string>
+                      </property>
+                      <property name="buddy" stdset="0" >
+                        <cstring>kcfg_fullQuality</cstring>
+                      </property>
+                      <property name="wordWrap" >
+                        <bool>false</bool>
+                      </property>
+                    </widget>
+                  </item>
+                  <item row="0" column="2" >
+                    <spacer name="spacer4" >
+                      <property name="sizeHint" >
+                        <size>
+                          <width>20</width>
+                          <height>20</height>
+                        </size>
+                      </property>
+                      <property name="sizeType" >
+                        <enum>QSizePolicy::Expanding</enum>
+                      </property>
+                      <property name="orientation" >
+                        <enum>Qt::Horizontal</enum>
+                      </property>
+                    </spacer>
+                  </item>
+                  <item row="1" column="1" >
+                    <widget class="QSpinBox" name="kcfg_fullSize" >
+                      <property name="maximum" >
+                        <number>9999</number>
+                      </property>
+                      <property name="minimum" >
+                        <number>1</number>
+                      </property>
+                      <property name="value" >
+                        <number>800</number>
+                      </property>
+                    </widget>
+                  </item>
+                  <item rowspan="1" row="2" column="0" colspan="5" >
+                    <widget class="QCheckBox" name="kcfg_copyOriginalImage" >
+                      <property name="text" >
+                        <string>Include full-size original images for download</string>
+                      </property>
+                      <property name="checked" >
+                        <bool>false</bool>
+                      </property>
+                    </widget>
+                  </item>
+                </layout>
+              </widget>
+            </item>
+            <item row="1" column="0" >
+              <spacer name="spacer2_2_2_3" >
+                <property name="sizeHint" >
+                  <size>
+                    <width>16</width>
+                    <height>20</height>
+                  </size>
+                </property>
+                <property name="sizeType" >
+                  <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="orientation" >
+                  <enum>Qt::Horizontal</enum>
+                </property>
+              </spacer>
+            </item>
+            <item row="2" column="1" >
+              <spacer name="spacer4_3_2" >
+                <property name="sizeHint" >
+                  <size>
+                    <width>20</width>
+                    <height>19</height>
+                  </size>
+                </property>
+                <property name="sizeType" >
+                  <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="orientation" >
+                  <enum>Qt::Vertical</enum>
+                </property>
+              </spacer>
+            </item>
+            <item rowspan="1" row="3" column="0" colspan="2" >
+              <widget class="QRadioButton" name="radioButton4" >
+                <property name="text" >
+                  <string>Use original image</string>
+                </property>
+              </widget>
+            </item>
+          </layout>
+        </widget>
+      </item>
+      <item row="4" column="3" >
+        <spacer name="spacer2_2_3" >
+          <property name="sizeHint" >
+            <size>
+              <width>40</width>
+              <height>20</height>
+            </size>
+          </property>
+          <property name="sizeType" >
+            <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+          </property>
+        </spacer>
+      </item>
+      <item rowspan="1" row="4" column="1" colspan="2" >
+        <layout class="QGridLayout" >
+          <item row="1" column="1" >
+            <widget class="QSpinBox" name="kcfg_thumbnailSize" >
+              <property name="maximum" >
+                <number>9999</number>
+              </property>
+              <property name="minimum" >
+                <number>1</number>
+              </property>
+              <property name="value" >
+                <number>160</number>
+              </property>
+            </widget>
+          </item>
+          <item row="0" column="4" >
+            <widget class="QSpinBox" name="kcfg_thumbnailQuality" >
+              <property name="maximum" >
+                <number>100</number>
+              </property>
+            </widget>
+          </item>
+          <item row="0" column="3" >
+            <widget class="QLabel" name="textLabel4_2" >
+              <property name="text" >
+                <string>Quality:</string>
+              </property>
+              <property name="buddy" stdset="0" >
+                <cstring>kcfg_thumbnailQuality</cstring>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+          </item>
+          <item row="0" column="0" >
+            <widget class="QLabel" name="textLabel2_2_2" >
+              <property name="text" >
+                <string>Format:</string>
+              </property>
+              <property name="buddy" stdset="0" >
+                <cstring>kcfg_thumbnailFormat</cstring>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+          </item>
+          <item row="0" column="2" >
+            <spacer name="spacer4_2" >
+              <property name="sizeHint" >
+                <size>
+                  <width>20</width>
+                  <height>20</height>
+                </size>
+              </property>
+              <property name="sizeType" >
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+              </property>
+            </spacer>
+          </item>
+          <item row="0" column="1" >
+            <widget class="QComboBox" name="kcfg_thumbnailFormat" >
+              <item>
+                <property name="text" >
+                  <string>JPEG</string>
+                </property>
+              </item>
+              <item>
+                <property name="text" >
+                  <string>PNG</string>
+                </property>
+              </item>
+            </widget>
+          </item>
+          <item row="1" column="0" >
+            <widget class="QLabel" name="textLabel2_2" >
+              <property name="text" >
+                <string>Size:</string>
+              </property>
+              <property name="buddy" stdset="0" >
+                <cstring>kcfg_thumbnailSize</cstring>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11" />
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <connections>
+    <connection>
+      <sender>kcfg_fullResize</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>kcfg_fullSize</receiver>
+      <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+      <sender>radioButton3</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>frame6</receiver>
+      <slot>setEnabled(bool)</slot>
+    </connection>
+  </connections>
+</ui>

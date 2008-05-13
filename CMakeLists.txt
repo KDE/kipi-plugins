@@ -40,6 +40,8 @@ MACRO_OPTIONAL_FIND_PACKAGE(Sane)    # For AcquireImages
 MACRO_OPTIONAL_FIND_PACKAGE(X11)     # For Slideshow
 MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)  # For Slideshow and ImageViewer
 #MACRO_OPTIONAL_FIND_PACKAGE(Gphoto2)
+MACRO_OPTIONAL_FIND_PACKAGE(LibXml2) # For Htmlexport
+MACRO_OPTIONAL_FIND_PACKAGE(LibXslt) # For Htmlexport
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins 
                     ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins
@@ -94,6 +96,9 @@ ADD_SUBDIRECTORY(simpleviewerexport)
 if(SANE_FOUND)
    ADD_SUBDIRECTORY(acquireimages)
 endif(SANE_FOUND)
+if (LIBXML2_FOUND AND LIBXSLT_FOUND)
+   ADD_SUBDIRECTORY(htmlexport)
+endif(LIBXML2_FOUND AND LIBXSLT_FOUND)
 IF(NOT WIN32)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/kipi-plugins.lsm.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
 ENDIF(NOT WIN32)

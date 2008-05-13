@@ -1,0 +1,43 @@
+<ui version="4.0" >
+ <class>ThemePage</class>
+ <widget class="QWidget" name="ThemePage" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>412</width>
+    <height>247</height>
+   </rect>
+  </property>
+  <layout class="QHBoxLayout" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="KListWidget" name="mThemeList" />
+   </item>
+   <item>
+    <widget class="KTextBrowser" name="mThemeInfo" />
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>KListWidget</class>
+   <extends>QListWidget</extends>
+   <header>klistwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KTextBrowser</class>
+   <extends>QTextBrowser</extends>
+   <header>ktextbrowser.h</header>
+  </customwidget>
+ </customwidgets>
+ <includes>
+  <include location="local" >ktextbrowser.h</include>
+ </includes>
+ <resources/>
+ <connections/>
+</ui>
