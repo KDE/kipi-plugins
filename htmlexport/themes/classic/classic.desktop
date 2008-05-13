@@ -1,0 +1,151 @@
+[Desktop Entry]
+Name=Classic
+Name[da]=Klassisk
+Name[de]=Klassisch
+Name[el]=Κλασικό
+Name[es]=Clásico
+Name[is]=Klassískt
+Name[it]=Classico
+Name[ja]=クラシック
+Name[nl]=Klassiek
+Name[pt]=Clássico
+Name[pt_BR]=Clássico
+Name[sv]=Klassiskt
+Comment=A port of the old HTML Export plugin theme
+Comment[ca]=Un port de l'antic tema del connector d'exportació a HTML
+Comment[da]=En overførsel af det gamle tema for pluginnet HTML-eksport
+Comment[de]=Ein Portierung des Themas des alten HTML-Export-Moduls
+Comment[el]=Το παλιό θέμα προσθέτου εξαγωγής σε HTML
+Comment[es]=Una versión del antiguo tema de la extensión de exportación en HTML
+Comment[fr]=Module externe KIPI pour exporter vers HTML (ancien thème)
+Comment[is]=Gamla íforritið til útflutnings á HTML
+Comment[it]=Un trasferimento del vecchio tema di esportazione HTML
+Comment[ja]=以前の HTML エクスポートプラグインから移植したテーマ
+Comment[nl]=Het klassieke thema van de HTML-exportplugin
+Comment[pt]=Uma versão do antigo tema de Exportação para HTML
+Comment[pt_BR]=Uma versão do antigo tema de Exportação para HTML
+Comment[sv]=En överföring av det gamla temat för insticksprogrammet HTML-export
+
+[X-HTMLExport Author]
+Name=Aurélien Gâteau
+Url=mailto:aurelien.gateau@free.fr
+
+[X-HTMLExport Parameter thumbnailPerRow]
+Name=Thumbnails per row
+Name[da]=Miniaturebilleder per linje
+Name[de]=Vorschaubilder pro Zeile
+Name[el]=Εικόνες επισκόπησης ανά γραμμή
+Name[it]=Miniature per riga
+Name[ja]=横一列あたりのサムネイル数
+Name[pt]=Miniaturas por linha
+Name[pt_BR]=Miniaturas por linha
+Name[sv]=Miniatyrbilder per rad
+Type=int
+Default=4
+Min=1
+Max=100
+
+[X-HTMLExport Parameter bgColor]
+Name=Background Color
+Name[ca]=Color de fons
+Name[da]=Baggrundsfarve
+Name[de]=Hintergrundfarbe
+Name[el]=Χρώμα φόντου
+Name[es]=Color del fondo
+Name[fr]=Couleur d'arrière plan
+Name[is]=Bakgrunnslitur
+Name[it]=Colore di sfondo
+Name[ja]=背景色
+Name[nl]=Achtergrondkleur
+Name[pt]=Cor de Fundo
+Name[pt_BR]=Cor de Fundo
+Name[sv]=Bakgrundsfärg
+Type=color
+Default=#333333
+
+[X-HTMLExport Parameter fgColor]
+Name=Foreground Color
+Name[ca]=Color de primer pla
+Name[da]=Forgrundsfarve
+Name[de]=Vordergrundfarbe
+Name[el]=Χρώμα προσκηνίου
+Name[es]=Color del primer plano
+Name[fr]=Couleur d'avant plan
+Name[is]=Forgrunnslitur
+Name[it]=Colore di primo piano
+Name[ja]=前景色
+Name[nl]=Voorgrondkleur
+Name[pt]=Cor Principal
+Name[pt_BR]=Cor Principal
+Name[sv]=Förgrundsfärg
+Type=color
+Default=#d0ffd0
+
+[X-HTMLExport Parameter fontSize]
+Name=Font Size
+Name[da]=Tegnstørrelse
+Name[de]=Zeichensatzgröße
+Name[el]=Μέγεθος γραμματοσειράς
+Name[it]=Dimensione dei caratteri
+Name[ja]=フォントサイズ
+Name[pt]=Tamanho da Letra
+Name[pt_BR]=Tamanho da Letra
+Name[sv]=Teckenstorlek
+Type=int
+Default=14
+Min=1
+Max=100
+
+[X-HTMLExport Parameter imgBorderSize]
+Name=Image Border Size
+Name[da]=Billedkantstørrelse
+Name[de]=Größe des Bildrahmens
+Name[el]=Μέγεθος περιγράμματος εικόνας
+Name[it]=Dimensione del bordo delle immagini
+Name[ja]=画像の縁取りの幅
+Name[pt]=Tamanho do Contorno da Imagem
+Name[pt_BR]=Tamanho do Contorno da Imagem
+Name[sv]=Bildkantstorlek
+Type=int
+Default=1
+Min=1
+Max=50
+
+[X-HTMLExport Parameter imgBorderColor]
+Name=Image Border Color
+Name[da]=Billedkantfarve
+Name[de]=Farbe des Bildrahmens
+Name[el]=Χρώμα περιγράμματος εικόνας
+Name[it]=Colore del bordo delle immagini
+Name[ja]=画像の縁取りの色
+Name[pt]=Cor do Contorno da Imagem
+Name[pt_BR]=Cor do Contorno da Imagem
+Name[sv]=Bildkantsfärg
+Type=color
+Default=#d0ffd0
+
+[X-HTMLExport Parameter linkColor]
+Name=Link Color
+Name[da]=Linkfarve
+Name[de]=Verknüpfungsfarbe
+Name[el]=Χρώμα δεσμού
+Name[it]=Colore dei collegamenti
+Name[ja]=リンクの色
+Name[pt]=Cor da Hiperligação
+Name[pt_BR]=Cor da Hiperligação
+Name[sv]=Länkfärg
+Type=color
+Default=#b3b3b3
+
+[X-HTMLExport Parameter visitedLinkColor]
+Name=Visited Link Color
+Name[da]=Besøgt linkfarve
+Name[de]=Farbe der besuchten Verknüpfungen
+Name[el]=Χρώμα ακολουθημένου δεσμού
+Name[it]=Colore dei collegamenti visitati
+Name[ja]=訪問済みリンクの色
+Name[pt]=Cor da Ligação Visitada
+Name[pt_BR]=Cor da Ligação Visitada
+Name[sv]=Besökt länkfärg
+Type=color
+Default=#b3b3b3
