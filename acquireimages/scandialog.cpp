@@ -271,7 +271,7 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
     QImage img;
     d->saneWidget->makeQImage(ksane_data, width, height, bytes_per_line,
                               (KSaneIface::KSaneWidget::ImageFormat)ksaneformat, img);
-    QImage prev  = img.scaled(800, 600, Qt::KeepAspectRatio);
+    QImage prev  = img.scaled(1280, 1024, Qt::KeepAspectRatio);
     QImage thumb = img.scaled(160, 120, Qt::KeepAspectRatio);
     QByteArray data((const char*)img.bits(), img.numBytes());
     QByteArray prof = KIPIPlugins::KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::SRGB);

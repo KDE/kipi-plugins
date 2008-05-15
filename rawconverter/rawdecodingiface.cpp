@@ -216,7 +216,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         }
     }
 
-    QImage iptcPreview   = img.scaled(800, 600, Qt::KeepAspectRatio);
+    QImage iptcPreview   = img.scaled(1280, 1024, Qt::KeepAspectRatio);
     QImage exifThumbnail = iptcPreview.scaled(160, 120, Qt::KeepAspectRatio);
 
     // -- Write image data into destination file -------------------------------
