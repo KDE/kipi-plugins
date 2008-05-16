@@ -258,7 +258,7 @@ void Wizard::slotThemeSelectionChanged() {
 			QString("<b>%1</b><br><br>%2<br><br>").arg(theme->name(), theme->comment())
 			+ i18n("Author: %1").arg(author);
 		browser->setText(txt);
-		setValid(currentPage(), true);
+		setValid(d->mThemePage->page(), true);
 
 		// Enable theme parameter page if there is any parameter
 		Theme::ParameterList parameterList = theme->parameterList();
@@ -267,7 +267,7 @@ void Wizard::slotThemeSelectionChanged() {
 		d->fillThemeParametersPage(theme);
 	} else {
 		browser->clear();
-		setValid(currentPage(), false);
+		setValid(d->mThemePage->page(), false);
 	}
 }
 
