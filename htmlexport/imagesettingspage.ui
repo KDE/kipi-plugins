@@ -12,9 +12,6 @@
         <height>310</height>
       </rect>
     </property>
-    <property name="windowTitle" >
-      <string>ImageSettingsPage</string>
-    </property>
     <layout class="QGridLayout" >
       <property name="margin" >
         <number>0</number>
