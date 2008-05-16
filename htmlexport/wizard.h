@@ -24,6 +24,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 // KDE
 #include <kassistantdialog.h>
 
+namespace KIPI {
+class Interface;
+}
+
 namespace KIPIHTMLExport {
 
 class GalleryInfo;
@@ -34,7 +38,7 @@ class GalleryInfo;
 class Wizard : public KAssistantDialog {
 Q_OBJECT
 public:
-	Wizard(QWidget* parent, GalleryInfo* info);
+	Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface*);
 	~Wizard();
 
 protected slots:

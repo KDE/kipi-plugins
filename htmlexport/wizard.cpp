@@ -44,6 +44,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 // KIPI
 #include <libkipi/imagecollectionselector.h>
+#include <libkipi/interface.h>
 
 // Local
 #include "abstractthemeparameter.h"
@@ -183,7 +184,7 @@ struct Wizard::Private {
 	}
 };
 
-Wizard::Wizard(QWidget* parent, GalleryInfo* info)
+Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
 : KAssistantDialog(parent)
 {
 	d=new Private;
@@ -202,7 +203,7 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info)
 		ki18n("Author and Maintainer"),
 		"aurelien.gateau@free.fr");
 
-	d->mCollectionSelector=new KIPI::ImageCollectionSelector(this);
+	d->mCollectionSelector = interface->imageCollectionSelector(this);
 	addPage(d->mCollectionSelector, i18n("Collection Selection"));
 
 	d->mThemePage=new ThemePage(this, i18n("Theme"));

@@ -79,7 +79,7 @@ void Plugin::slotActivate() {
 	GalleryInfo info;
 	info.readConfig();
 	QWidget* parent=QApplication::activeWindow();
-	Wizard wizard(parent, &info);
+	Wizard wizard(parent, &info, interface);
 	if (wizard.exec()==QDialog::Rejected) return;
 	info.writeConfig();
 	
