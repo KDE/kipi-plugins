@@ -171,7 +171,7 @@ struct Generator::Private {
 	bool init() {
 		mTheme=Theme::findByInternalName(mInfo->theme());
 		if (!mTheme) {
-			logError( i18n("Could not find theme in '%1'").arg(mInfo->theme()) );
+			logError( i18n("Could not find theme in '%1'", mInfo->theme()) );
 			return false;
 		}
 		return true;
@@ -199,11 +199,11 @@ struct Generator::Private {
 	bool writeDataToFile(const QByteArray& data, const QString& destPath) {
 		QFile destFile(destPath);
 		if (!destFile.open(QIODevice::WriteOnly)) {
-			logWarning(i18n("Could not open file '%1' for writing").arg(destPath));
+			logWarning(i18n("Could not open file '%1' for writing", destPath));
 			return false;
 		}
 		if (destFile.write(data) != data.size()) {
-			logWarning(i18n("Could not save image to file '%1'").arg(destPath));
+			logWarning(i18n("Could not save image to file '%1'", destPath));
 			return false;
 		}
 		return true;
@@ -232,13 +232,13 @@ struct Generator::Private {
 		QString path=imageURL.path();
 		QFile imageFile(path);
 		if (!imageFile.open(QIODevice::ReadOnly)) {
-			logWarning(i18n("Could not read image '%1'").arg(path));
+			logWarning(i18n("Could not read image '%1'", path));
 			return;
 		}
 		
 		QString imageFormat = QImageReader::imageFormat(&imageFile);
 		if (imageFormat.isEmpty()) {
-			logWarning(i18n("Format of image '%1' is unknown").arg(path));
+			logWarning(i18n("Format of image '%1' is unknown", path));
 			return;
 		}
 		imageFile.close();
@@ -247,7 +247,7 @@ struct Generator::Private {
 		QByteArray imageData = imageFile.readAll();
 		QImage originalImage;
 		if (!originalImage.loadFromData(imageData) ) {
-			logWarning(i18n("Error loading image '%1'").arg(path));
+			logWarning(i18n("Error loading image '%1'", path));
 			return;
 		}
 
@@ -283,7 +283,7 @@ struct Generator::Private {
 			fullFileName = baseFileName + "." + mInfo->fullFormatString().toLower();
 			QString destPath = destDir + "/" + fullFileName;
 			if (!fullImage.save(destPath, mInfo->fullFormatString().toAscii(), mInfo->fullQuality())) {
-				logWarning(i18n("Could not save image '%1' to '%2'").arg(path).arg(destPath));
+				logWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
 				return;
 			}
 		}
@@ -301,7 +301,7 @@ struct Generator::Private {
 		QString thumbnailFileName = "thumb_" + baseFileName + "." + mInfo->thumbnailFormatString().toLower();
 		QString destPath = destDir + "/" + thumbnailFileName;
 		if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().toAscii(), mInfo->thumbnailQuality())) {
-			logWarning(i18n("Could not save thumbnail for image '%1' to '%2'").arg(path).arg(destPath));
+			logWarning(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
 			return;
 		}
 		
@@ -336,7 +336,7 @@ struct Generator::Private {
 		QList<KIPI::ImageCollection>::Iterator collectionEnd=mInfo->mCollectionList.end();
 		for (; collectionIt!=collectionEnd; ++collectionIt) {
 			KIPI::ImageCollection collection=*collectionIt;
-			logInfo( i18n("Generating files for \"%1\"").arg(collection.name()) );
+			logInfo( i18n("Generating files for \"%1\"", collection.name()) );
 
 			QString collectionFileName = webifyFileName(collection.name());
 			QString destDir = baseDestDir + "/" + collectionFileName;
@@ -405,13 +405,13 @@ struct Generator::Private {
 		CWrapper<xsltStylesheetPtr, xsltFreeStylesheet> xslt= xsltParseStylesheetFile( (const xmlChar*) xsltFileName.toLocal8Bit().data() );
 
 		if (!xslt) {
-			logError(i18n("Could not load XSL file '%1'").arg(xsltFileName));
+			logError(i18n("Could not load XSL file '%1'", xsltFileName));
 			return false;
 		}
 		
 		CWrapper<xmlDocPtr, xmlFreeDoc> xmlGallery=xmlParseFile( mXMLFileName.toLocal8Bit().data() );
 		if (!xmlGallery) {
-			logError(i18n("Could not load XML file '%1'").arg(mXMLFileName));
+			logError(i18n("Could not load XML file '%1'", mXMLFileName));
 			return false;
 		}
 		
@@ -450,7 +450,7 @@ struct Generator::Private {
 		QString destFileName=mInfo->destKUrl().path() + "/index.html";
 		FILE* file=fopen(destFileName.toLocal8Bit().data(), "w");
 		if (!file) {
-			logError(i18n("Could not open '%1' for writing").arg(destFileName));
+			logError(i18n("Could not open '%1' for writing", destFileName));
 			return false;
 		}
 		xsltSaveResultToFile(file, xmlOutput, xslt);
@@ -468,7 +468,7 @@ struct Generator::Private {
 			QString part = *it;
 			if (!dir.exists(part)) {
 				if (!dir.mkdir(part)) {
-					logError(i18n("Could not create folder '%1' in '%2'").arg(part).arg(dir.absolutePath()));
+					logError(i18n("Could not create folder '%1' in '%2'", part, dir.absolutePath()));
 					return false;
 				}
 			}
