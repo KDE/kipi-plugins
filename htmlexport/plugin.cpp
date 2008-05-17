@@ -65,7 +65,7 @@ void Plugin::setup( QWidget* widget ) {
 	KIPI::Plugin::setup( widget );
 	d->mAction = actionCollection()->addAction("htmlexport");
 	d->mAction->setText(i18n("HTML Gallery..."));
-	d->mAction->setIcon(KIcon("www"));
+	d->mAction->setIcon(KIcon("applications-internet"));
 	connect(d->mAction, SIGNAL(triggered()),
 		SLOT(slotActivate()) );
 	addAction(d->mAction);
