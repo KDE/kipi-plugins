@@ -1,29 +1,46 @@
 /* ============================================================
- * File  : flickrtalker.cpp
- * Author: Vardhman Jain <vardhman @ gmail.com>
- * Date  : 2005-07-07
- * Description :
  *
- * Copyright 2005 by Vardhman Jain <vardhman @ gmail.com>
-
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2005-07-07
+ * Description : a kipi plugin to export images to Flickr web service
+ *
+ * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
+// C++ includes.
+
+#include <cstring>
+#include <cstdio>
+#include <cstdlib>
+#include <string>
+
+// Qt includes.
 
 #include <qcstring.h>
 #include <qtextstream.h>
 #include <qfile.h>
 #include <qimage.h>
 #include <qstringlist.h>
+#include <qurl.h>
+#include <qlineedit.h>
+#include <qmessagebox.h>
+#include <qdom.h>
+
+// KDE includes.
+
 #include <klocale.h>
 #include <kio/job.h>
 #include <kdebug.h>
@@ -32,20 +49,20 @@
 #include <kmdcodec.h>
 #include <kapp.h>
 #include <kmessagebox.h>
-#include<qurl.h>
-#include<qlineedit.h>
-#include<qmessagebox.h>
-#include <qdom.h>
-#include <cstring>
-#include <cstdio>
-#include <cstdlib>
 
-#include <string>
+// LibKExiv2 includes. 
+
+#include <libkexiv2/kexiv2.h>
+
+// Local includes.
+
+#include "pluginsversion.h"
 #include "flickritem.h"
-#include "exifrestorer.h"
 #include "mpform.h"
-#include "flickrtalker.h"
 #include "flickrwindow.h"
+#include "flickrtalker.h"
+#include "flickrtalker.moc"
+
 namespace KIPIFlickrExportPlugin
 {
 
@@ -304,70 +321,76 @@ namespace KIPIFlickrExportPlugin
 		headers.append("is_friend="+ isfriend);
 
 		QString tags=info.tags.join(" ");
-		if(tags.length()>0){	
+		if(tags.length() > 0)
+        {	
 			form.addPair("tags",tags);
 			headers.append("tags="+ tags);
 		}
 
-		if (!info.title.isEmpty()){
+		if (!info.title.isEmpty())
+        {
 			form.addPair("title", info.title);
 			headers.append("title="+ info.title);
 		}
 
-		if (!info.description.isEmpty()){
+		if (!info.description.isEmpty())
+        {
 			form.addPair("description", info.description);
 			headers.append("description="+ info.description);
-
 		}
 
-		QString md5=getApiSig(m_secret,headers);
+		QString md5 = getApiSig(m_secret,headers);
 		form.addPair("api_sig", md5);
 		headers.append("api_sig="+ md5);
-		QString queryStr=headers.join("&");
-		QString postUrl=url+queryStr;
+		QString queryStr = headers.join("&");
+		QString postUrl  = url+queryStr;
 
 		QImage image(photoPath);
-		kdDebug() << "Add photo query"<<postUrl<<endl;
+		kdDebug() << "Add photo query" << postUrl << endl;
 		if (!image.isNull())
 		{
 			// image file - see if we need to rescale it
 			if (rescale && (image.width() > maxDim || image.height() > maxDim))
 			{
 				image = image.smoothScale(maxDim, maxDim, QImage::ScaleMin);
-				path = locateLocal("tmp", KURL(photoPath).filename());
-				image.save(path, QImageIO::imageFormat(photoPath),imageQuality);
-				//if the image is JPEG:
-				//This resizing code comes mostly as it is from sendimageplugin
-				if (QString(QImageIO::imageFormat(photoPath)).upper() == "JPEG" ){
-					ExifRestorer exifHolder;
-					exifHolder.readFile(photoPath,ExifRestorer::ExifOnly);
+				path  = locateLocal("tmp", KURL(photoPath).filename());
+				image.save(path, QImageIO::imageFormat(photoPath), imageQuality);
 
-					if(exifHolder.hasExif())
-					{
-						ExifRestorer restorer;
-						restorer.readFile(path,ExifRestorer::EntireImage);
-						restorer.insertExifData(exifHolder.exifData());
-						restorer.writeFile(path);
+                // Only try to write Exif if src is JPEG files.
+
+				if (QString(QImageIO::imageFormat(photoPath)).upper() == "JPEG" )
+                {
+                    KExiv2Iface::KExiv2 exiv2Iface;
+
+                    if (exiv2Iface.load(photoPath))
+                    {
+                        exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+                        exiv2Iface.setImageDimensions(image.size());
+                        exiv2Iface.save(path);
 					}
 					else
-						kdWarning(51000)<<"(flickrExport::Image doesn't have exif data)"<<endl;
+                    {
+						kdWarning(51000) << "(flickrExport::Image doesn't have exif data)" << endl;
+                    }
 				}	
 				
 				kdDebug() << "Resizing and saving to temp file: "<< path << endl;
 			}
 		}
 
-		if (!form.addFile("photo",path))
+		if (!form.addFile("photo", path))
 			return false;
 
 		form.finish();
 
 		KIO::TransferJob* job = KIO::http_post(postUrl, form.formData(), false);
 		job->addMetaData("content-type", form.contentType());
+
 		connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-				SLOT(data(KIO::Job*, const QByteArray&)));
+				this, SLOT(data(KIO::Job*, const QByteArray&)));
+
 		connect(job, SIGNAL(result(KIO::Job *)),
-				SLOT(slotResult(KIO::Job *)));
+				this, SLOT(slotResult(KIO::Job *)));
 
 		m_state = FE_ADDPHOTO;
 		m_job   = job;
@@ -833,5 +856,3 @@ namespace KIPIFlickrExportPlugin
 
 	}
 }
-#include "flickrtalker.moc"
-
