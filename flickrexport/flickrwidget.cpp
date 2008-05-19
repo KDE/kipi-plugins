@@ -1,27 +1,26 @@
 /* ============================================================
- * File  : flickrwidget.cpp
- * Author: Vardhman Jain <vardhman @ gmail.com>
- * Date  : 2005-07-07
- * Description :
  *
- * Copyright 2005 by Vardhman Jain <vardhman @ gmail.com>
-
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2005-07-07
+ * Description : a kipi plugin to export images to Flickr web service
+ *
+ * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
 
-#include <klocale.h>
-#include <khtml_part.h>
-#include <khtmlview.h>
+// Qt includes.
 
 #include <qpushbutton.h>
 #include <qlabel.h>
@@ -38,23 +37,33 @@
 #include <qsplitter.h>
 #include <qwhatsthis.h>
 #include <qlineedit.h>
+
+// KDE includes.
+
+#include <klocale.h>
+#include <khtml_part.h>
+#include <khtmlview.h>
+
+// Local includes.
+
 #include "flickrwidget.h"
+#include "flickrwidget.moc"
 
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
-    : QWidget( parent, name, fl )
+FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
+            : QWidget(parent, name, fl)
 {
     if ( !name )
-	setName( "FlickrWidget" );
-    QVBoxLayout*  flickrWidgetLayout
-        = new QVBoxLayout( this, 5, 5, "FlickrWidgetLayout");
+	   setName( "FlickrWidget" );
+
+    QVBoxLayout* flickrWidgetLayout = new QVBoxLayout(this, 5, 5, "FlickrWidgetLayout");
 
     // ------------------------------------------------------------------------
 
-    QLabel*       headerLabel;
-    QFrame*       headerLine;
+    QLabel *headerLabel;
+    QFrame *headerLine;
 
     headerLabel = new QLabel( this, "headerLabel" );
     flickrWidgetLayout->addWidget( headerLabel, 0 );
@@ -95,23 +104,20 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
 	m_fileSrcButtonGroup->setColumnLayout(0, Qt::Vertical );
 	m_fileSrcButtonGroup->layout()->setSpacing( 5 );
 	m_fileSrcButtonGroup->layout()->setMargin( 5 );
-	QVBoxLayout* m_fileSrcButtonGroupLayout = new
-		QVBoxLayout( m_fileSrcButtonGroup->layout());
+	QVBoxLayout* m_fileSrcButtonGroupLayout = new QVBoxLayout( m_fileSrcButtonGroup->layout());
 	m_fileSrcButtonGroupLayout->setAlignment( Qt::AlignTop );
 
 	// ------------------------------------------------------------------
 
 	m_currentSelectionButton = new QRadioButton(m_fileSrcButtonGroup);
-	m_currentSelectionButton->setText( i18n("Upload Currently "
-				"Selected Images" ) );
+	m_currentSelectionButton->setText( i18n("Upload Currently Selected Images" ) );
 	m_currentSelectionButton->setChecked(true);
 	m_fileSrcButtonGroupLayout->addWidget( 	m_currentSelectionButton );
 
 	// ------------------------------------------------------------------
 
 	m_selectImagesButton = new QRadioButton(m_fileSrcButtonGroup);
-	m_selectImagesButton->setText(i18n( "Select Images " 
-				"For uploading" ) );
+	m_selectImagesButton->setText(i18n( "Select Images For uploading" ) );
 	m_selectImagesButton->setEnabled( true );
 	m_fileSrcButtonGroupLayout->addWidget(m_selectImagesButton);
 
@@ -119,28 +125,26 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
     m_addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_fileSrcButtonGroupLayout->addWidget( m_addPhotoBtn/*, *0, Qt::AlignHCenter*/ );
 
-    m_startUploadButton = new QPushButton( this,
-			"m_startUploadButton" );
+    m_startUploadButton = new QPushButton( this, "m_startUploadButton" );
     m_startUploadButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    flickrWidgetLayout->addWidget( m_startUploadButton,0, Qt::AlignHCenter );
+    flickrWidgetLayout->addWidget( m_startUploadButton, 0, Qt::AlignHCenter );
 	
     connect(m_selectImagesButton, SIGNAL(clicked()),
-			SLOT(slotSelectionChecked()));
+			this, SLOT(slotSelectionChecked()));
     
-	QGridLayout* tagsLayout=new QGridLayout(rightButtonGroupLayout,2,2);
-    QLabel* tagsLabel=new QLabel(i18n("Tags:"),rightButtonGroup);
-    tagsLayout->addWidget(tagsLabel,0,0);
-    m_tagsLineEdit=new QLineEdit(rightButtonGroup,"m_tagsLineEdit");
-	m_exportApplicationTags=new QCheckBox(rightButtonGroup);
+	QGridLayout* tagsLayout = new QGridLayout(rightButtonGroupLayout, 2, 2);
+    QLabel* tagsLabel       = new QLabel(i18n("Tags:"),rightButtonGroup);
+    tagsLayout->addWidget(tagsLabel, 0, 0);
+    m_tagsLineEdit          = new QLineEdit(rightButtonGroup,"m_tagsLineEdit");
+	m_exportApplicationTags = new QCheckBox(rightButtonGroup);
 	m_exportApplicationTags->setText(i18n("Use application tags ?"));
-    tagsLayout->addWidget(m_tagsLineEdit,0,1);
-    tagsLayout->addWidget(m_exportApplicationTags,1,1);
+    tagsLayout->addWidget(m_tagsLineEdit, 0, 1);
+    tagsLayout->addWidget(m_exportApplicationTags, 1, 1);
 	
     // ------------------------------------------------------------------------
 
-    QGroupBox* optionsBox = new QGroupBox(i18n("Override Default Options"),
-                                          rightButtonGroup);
-	QGroupBox* loginDetailsBox= new QGroupBox(i18n("User Details"),rightButtonGroup);
+    QGroupBox* optionsBox      = new QGroupBox(i18n("Override Default Options"), rightButtonGroup);
+	QGroupBox* loginDetailsBox = new QGroupBox(i18n("User Details"),rightButtonGroup);
 	
     optionsBox->setColumnLayout(0, Qt::Vertical);
     optionsBox->layout()->setSpacing(5);
@@ -150,49 +154,52 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
     loginDetailsBox->layout()->setSpacing(5);
     loginDetailsBox->layout()->setMargin(5);
     
-	QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout(),3,3);
-	QGridLayout* loginDetailsBoxLayout = new QGridLayout(loginDetailsBox->layout(),3,3);
+	QGridLayout* optionsBoxLayout      = new QGridLayout(optionsBox->layout(), 3, 3);
+	QGridLayout* loginDetailsBoxLayout = new QGridLayout(loginDetailsBox->layout(), 3, 3);
 
     // ------------------------------------------------------------------------
 
     m_publicCheckBox = new QCheckBox(optionsBox);
     m_publicCheckBox->setText(i18n("As in accessible for people", "Public ?"));
- //  m_publicCheckBox->show();
+    //m_publicCheckBox->show();
     optionsBoxLayout->addWidget(m_publicCheckBox, 0, 1);
 
     m_familyCheckBox = new QCheckBox(optionsBox);
     m_familyCheckBox->setText(i18n("Family ?"));
-    optionsBoxLayout->addWidget(m_familyCheckBox, 0,2 );// 0, 0, 0, 3);
+    optionsBoxLayout->addWidget(m_familyCheckBox, 0, 2 );// 0, 0, 0, 3);
 
     m_friendsCheckBox = new QCheckBox(optionsBox);
     m_friendsCheckBox->setText(i18n("Friends ?"));
-   optionsBoxLayout->addWidget(m_friendsCheckBox,0,3);// 0, 0, 0, 4);
+    optionsBoxLayout->addWidget(m_friendsCheckBox, 0, 3);// 0, 0, 0, 4);
 
 
     m_resizeCheckBox = new QCheckBox(optionsBox);
     m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
-  // m_resizeCheckBox->show();
-   optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox, 1,1,0,4,1 );
+    // m_resizeCheckBox->show();
+    optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox, 1, 1, 0, 4, 1);
 
-    m_dimensionSpinBox  = new QSpinBox(0, 5000, 10, optionsBox);
+    m_dimensionSpinBox = new QSpinBox(0, 5000, 10, optionsBox);
     m_dimensionSpinBox->setValue(600);
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    optionsBoxLayout->addWidget(m_dimensionSpinBox, 2,1 );
+    optionsBoxLayout->addWidget(m_dimensionSpinBox, 2, 1);
 
 	QLabel* resizeLabel = new QLabel(i18n("Maximum dimension:"), optionsBox);
     optionsBoxLayout->addWidget(resizeLabel, 2, 0);
     
-	m_imageQualitySpinBox  = new QSpinBox(0, 100, 1, optionsBox);
+	m_imageQualitySpinBox = new QSpinBox(0, 100, 1, optionsBox);
     m_imageQualitySpinBox->setValue(85);
     m_imageQualitySpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    optionsBoxLayout->addWidget(m_imageQualitySpinBox, 3,1 );
+    optionsBoxLayout->addWidget(m_imageQualitySpinBox, 3, 1);
     
-	QLabel* imageQualityLabel = new QLabel(i18n("Image Quality (higher is better):"), optionsBox);//The term Compression factor may be to technical to write in the label
+    //The term Compression factor may be to technical to write in the label	
+    QLabel* imageQualityLabel = new QLabel(i18n("Image Quality (higher is better):"), optionsBox);
     optionsBoxLayout->addWidget(imageQualityLabel, 3, 0);
 
     m_resizeCheckBox->setChecked(false);
     m_dimensionSpinBox->setEnabled(false);
-    connect(m_resizeCheckBox, SIGNAL(clicked()), SLOT(slotResizeChecked()));
+    
+    connect(m_resizeCheckBox, SIGNAL(clicked()),
+            this, SLOT(slotResizeChecked()));
 
     // ------------------------------------------------------------------------
 
@@ -207,20 +214,21 @@ FlickrWidget::FlickrWidget( QWidget* parent, const char* name, WFlags fl )
 
     headerLabel->setText( i18n( "<h2>Flickr Export</h2>" ) );
 	m_tagView->hide();
-//    m_tagView->header()->setLabel( 0, i18n( "Albums" ) );
+    //m_tagView->header()->setLabel( 0, i18n( "Albums" ) );
     //m_newAlbumBtn->setText( i18n( "&New Album" ) );
     m_addPhotoBtn->setText( i18n( "&Add Photos" ) );
 
-	QLabel *userNameLabel=new QLabel(i18n("Username:"),loginDetailsBox);
-	m_userNameDisplayLabel=new QLabel(i18n(" "),loginDetailsBox);
+	QLabel *userNameLabel  = new QLabel(i18n("Username:"), loginDetailsBox);
+	m_userNameDisplayLabel = new QLabel(i18n(" "), loginDetailsBox);
     m_startUploadButton->setText( i18n( "Start Uploading" ));
-	m_changeUserButton=new QPushButton(loginDetailsBox,"m_changeUserButton");
+	m_changeUserButton     = new QPushButton(loginDetailsBox, "m_changeUserButton");
 	m_changeUserButton->setText(i18n("Login with a different account"));
+
     // ------------------------------------------------------------------------
 	
-	loginDetailsBoxLayout->addWidget(userNameLabel,0,1);
-	loginDetailsBoxLayout->addWidget(m_userNameDisplayLabel,0,2);
-	loginDetailsBoxLayout->addWidget(m_changeUserButton,0,3);
+	loginDetailsBoxLayout->addWidget(userNameLabel, 0, 1);
+	loginDetailsBoxLayout->addWidget(m_userNameDisplayLabel, 0, 2);
+	loginDetailsBoxLayout->addWidget(m_changeUserButton, 0, 3);
 	
 	rightButtonGroupLayout->addWidget(loginDetailsBox);
 	
@@ -232,8 +240,9 @@ FlickrWidget::~FlickrWidget()
 {
 }
 
-void FlickrWidget::slotSelectionChecked(){
-	kdDebug()<<"Slot Selection Checked "<<endl;
+void FlickrWidget::slotSelectionChecked()
+{
+	kdDebug() << "Slot Selection Checked" << endl;
 	m_addPhotoBtn->setEnabled(m_selectImagesButton->isChecked());
 }
 
@@ -242,6 +251,4 @@ void FlickrWidget::slotResizeChecked()
     m_dimensionSpinBox->setEnabled(m_resizeCheckBox->isChecked());
 }
 
-}
-
-#include "flickrwidget.moc"
+} // namespace KIPIFlickrExportPlugin
