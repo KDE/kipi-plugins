@@ -1,23 +1,26 @@
 /* ============================================================
- * File  : flickrlogin.cpp
- * Author: Vardhman Jain <vardhman @ gmail.com>
- * Date  : 2005-07-07
- * Description :
  *
- * Copyright 2005 by Vardhman Jain <vardhman @ gmail.com>
-
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2005-07-07
+ * Description : a kipi plugin to export images to Flickr web service
+ *
+ * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
- * Public License as published bythe Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
+// Qt includes.
 
 #include <qlabel.h>
 #include <qframe.h>
@@ -25,25 +28,29 @@
 #include <qpushbutton.h>
 #include <qlayout.h>
 
+// KDE includes.
+
 #include <klocale.h>
 
+// Local includes.
+
 #include "login.h"
+#include "login.moc"
 
 namespace KIPIFlickrExportPlugin
 {
 
 FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
-                           const QString& _name,
-                           const QString& _passwd)
-    : QDialog(parent)
+                         const QString& _name,
+                         const QString& _passwd)
+           : QDialog(parent)
 {
     setSizeGripEnabled( false );
 
-    QVBoxLayout* vbox = new QVBoxLayout( this, 5, 5, "vbox");
+    QVBoxLayout* vbox = new QVBoxLayout(this, 5, 5, "vbox");
 
     m_headerLabel = new QLabel(this);
-    m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum,
-                                             QSizePolicy::Fixed));
+    m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     m_headerLabel->setText(header);
     vbox->addWidget( m_headerLabel );
 
@@ -95,13 +102,16 @@ FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
     m_passwdEdit->setText(_passwd);
 
     // signals and slots connections
-    connect( okBtn, SIGNAL( clicked() ), this, SLOT( accept() ) );
-    connect( cancelBtn, SIGNAL( clicked() ), this, SLOT( reject() ) );
+
+    connect(okBtn, SIGNAL( clicked() ), 
+            this, SLOT( accept() ));
+
+    connect(cancelBtn, SIGNAL( clicked() ), 
+            this, SLOT( reject() ));
 }
 
 FlickrLogin::~FlickrLogin()
 {
-
 }
 
 QString FlickrLogin::name() const
@@ -114,4 +124,4 @@ QString FlickrLogin::password() const
     return m_passwdEdit->text();
 }
 
-}
+} // namespace KIPIFlickrExportPlugin

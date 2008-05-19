@@ -1,29 +1,32 @@
 /* ============================================================
- * File  : plugin_flickrexport.cpp
- * Author: Vardhman Jain <vardhman @ gmail.com> 
- * Date  : 2005-17-06
- * Description :
  *
- * Copyright 2005 by Vardhman Jain <vardhman @ gmail.com>
-
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2005-17-06
+ * Description : a kipi plugin to export images to Flickr web service
+ *
+ * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
- * Public License as published bythe Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 extern "C"
 {
-	#include<unistd.h>
+#include <unistd.h>
 }
 	
 // KDE includes.
+
 #include <klocale.h>
 #include <kaction.h>
 #include <kgenericfactory.h>
@@ -32,28 +35,26 @@ extern "C"
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
+
 // libkipi includes.
+
 #include <libkipi/interface.h>
 
 // Local includes.
+
 #include "flickrwindow.h"
 #include "plugin_flickrexport.h"
+#include "plugin_flickrexport.moc"
 
 typedef KGenericFactory<Plugin_FlickrExport> Factory;
 
-K_EXPORT_COMPONENT_FACTORY(kipiplugin_flickrexport,
-                           Factory("kipiplugin_flickrexport"))
+K_EXPORT_COMPONENT_FACTORY(kipiplugin_flickrexport, Factory("kipiplugin_flickrexport"))
 
-
-Plugin_FlickrExport::Plugin_FlickrExport(QObject *parent,
-                                           const char*,
-                                           const QStringList&)
-    : KIPI::Plugin(Factory::instance(), parent, "FlickrExport")
+Plugin_FlickrExport::Plugin_FlickrExport(QObject *parent, const char*, const QStringList&)
+                   : KIPI::Plugin(Factory::instance(), parent, "FlickrExport")
 {
-    kdDebug(51001) << "Plugin_FlickrExport plugin loaded"
-                   << endl;
+    kdDebug(51001) << "Plugin_FlickrExport plugin loaded" << endl;
 }
-
 
 void Plugin_FlickrExport::setup(QWidget* widget)
 {
@@ -79,11 +80,9 @@ void Plugin_FlickrExport::setup(QWidget* widget)
     addAction(m_action);
 }
 
-
 Plugin_FlickrExport::~Plugin_FlickrExport()
 {
 }
-
 
 void Plugin_FlickrExport::slotActivate()
 {
@@ -106,10 +105,6 @@ KIPI::Category Plugin_FlickrExport::category( KAction* action ) const
     if (action == m_action)
         return KIPI::EXPORTPLUGIN;
     
-    kdWarning(51000) << "Unrecognized action for plugin category identification"
-                     << endl;
+    kdWarning(51000) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::EXPORTPLUGIN;
 }
-
-
-#include "plugin_flickrexport.moc"

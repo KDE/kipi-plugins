@@ -1,35 +1,44 @@
 /* ============================================================
- * File  : mpform.cpp
- * Author: Vardhman Jain <vardhman @ gmail.com> 
- * Date  : 2005-07-07
- * Description : Code is mostly taken from the implementation by Renchi Raju in Gallery Export kipi plugin.
- * 
- * Copyright 2005 by Vardhman Jain <vardhman @ gmail.com>
-
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2005-07-07
+ * Description : a kipi plugin to export images to Flickr web service
+ *
+ * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- * 
+ * either version 2, or (at your option) any later version.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
+
+// C++ includes.
+
+#include <cstring>
+#include <cstdio>
+
+// Qt includes.
+
+#include <qfile.h>
+#include <qfileinfo.h>
+#include <qtextstream.h>
+
+// KDE includes.
 
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kmimetype.h>
 #include <kurl.h>
 
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qtextstream.h>
-
-#include <cstring>
-#include <cstdio>
+// Local includes.
 
 #include "mpform.h"
 
@@ -149,4 +158,4 @@ QByteArray MPForm::formData() const
     return m_buffer;
 }
 
-}
+} // namespace KIPIFlickrExportPlugin

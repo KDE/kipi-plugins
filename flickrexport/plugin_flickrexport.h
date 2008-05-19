@@ -1,20 +1,21 @@
 /* ============================================================
- * File  : plugin_flickrexport.h
- * Author: Vardhman Jain <vardhman @ gmail.com>
- * Date  : 2005-17-06
- * Description :
  *
- * Copyright 2005 by Vardhman Jain <vardhman @ gmail.com>
-
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2005-17-06
+ * Description : a kipi plugin to export images to Flickr web service
+ *
+ * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
- * Public License as published bythe Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -34,21 +35,20 @@ class Plugin_FlickrExport : public KIPI::Plugin
 
 public:
 
-    Plugin_FlickrExport(QObject *parent,
-                         const char* name,
-                         const QStringList &args);
+    Plugin_FlickrExport(QObject *parent, const char* name, const QStringList &args);
     ~Plugin_FlickrExport();
     
-    virtual KIPI::Category category( KAction* action ) const;
-    virtual void setup( QWidget* );
+    virtual KIPI::Category category(KAction* action) const;
+    virtual void setup(QWidget*);
 
 public slots:
 
     void slotActivate();
 
 private:
+
     KIPIFlickrExportPlugin::FlickrWindow *dlg;
-    KAction *m_action;
+    KAction                              *m_action;
 };
 
-#endif
+#endif // PLUGIN_FLICKREXPORT_H
