@@ -741,7 +741,7 @@ void FlickrTalker::parseResponseGetToken(const QByteArray &data)
 
     while( !node.isNull() ) 
     {
-        if ( node.isElement() && node.nodeName() == "auth" ) 
+        if (node.isElement() && node.nodeName() == "auth")
         {
             e                = node.toElement(); // try to convert the node to an element.
             QDomNode details = e.firstChild();
@@ -750,39 +750,40 @@ void FlickrTalker::parseResponseGetToken(const QByteArray &data)
             {
                 if(details.isElement())
                 {
-                    e=details.toElement();
-                    if(details.nodeName()=="token")
+                    e = details.toElement();
+
+                    if(details.nodeName() == "token")
                     {
-                        kdDebug()<<"Token="<<e.text()<<endl; 
-                        m_token=e.text();//this is what is obtained from data.
+                        kdDebug() << "Token=" << e.text() << endl;
+                        m_token = e.text();      //this is what is obtained from data.
                     }
 
-                    if(details.nodeName()=="perms")
+                    if(details.nodeName() == "perms")
                     {
-                        kdDebug()<<"Perms="<<e.text()<<endl; 
-                    }	
+                        kdDebug() << "Perms=" << e.text() << endl;
+                    }
 
-                    if(details.nodeName()=="user")
+                    if(details.nodeName() == "user")
                     {
-                        kdDebug()<<"nsid="<<e.attribute("nsid")<<endl; 
-                        kdDebug()<<"username="<<e.attribute("username")<<endl; 
-                        kdDebug()<<"fullname="<<e.attribute("fullname")<<endl;
-                        m_username=e.attribute("username");
-                        m_userId=e.attribute("nsid");
+                        kdDebug() << "nsid=" << e.attribute("nsid") << endl;
+                        kdDebug() << "username=" << e.attribute("username") << endl;
+                        kdDebug() << "fullname=" << e.attribute("fullname") << endl;
+                        m_username = e.attribute("username");
+                        m_userId   = e.attribute("nsid");
                     }
                 }
 
-                details=details.nextSibling();
+                details = details.nextSibling();
             }
 
-            success=true;
+            success = true;
         }
-        else if ( node.isElement() && node.nodeName() == "err" ) 
+        else if (node.isElement() && node.nodeName() == "err") 
         {
-            kdDebug()<<"Checking Error in response"<<endl;
-            errorString=node.toElement().attribute("code");
-            kdDebug()<<"Error code="<<errorString<<endl;
-            kdDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;	
+            kdDebug() << "Checking Error in response" << endl;
+            errorString = node.toElement().attribute("code");
+            kdDebug() << "Error code="<<errorString << endl;
+            kdDebug() << "Msg="<<node.toElement().attribute("msg") << endl;
             //emit signalError(code);
         }
 
@@ -811,72 +812,75 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray &data)
     QDomElement docElem = doc.documentElement();
     QDomNode node       = docElem.firstChild();
     QDomElement e;
-    QString photoSet_id,photoSet_title,photoSet_description;
+    QString photoSet_id, photoSet_title, photoSet_description;
     QValueList <FPhotoSet> photoSetList;
 
-    while( !node.isNull() ) 
+    while(!node.isNull())
     {
-        if ( node.isElement() && node.nodeName() == "photosets" ) 
+        if (node.isElement() && node.nodeName() == "photosets") 
         {
-            e = node.toElement(); 
-            QDomNode details=e.firstChild();
+            e                = node.toElement(); 
+            QDomNode details = e.firstChild();
             FPhotoSet fps;
-            QDomNode detailsNode=details;
+            QDomNode detailsNode = details;
 
             while(!detailsNode.isNull())
             {
                 if(detailsNode.isElement())
                 {
-                    e=detailsNode.toElement();
-                    if(detailsNode.nodeName()=="photoset")
+                    e = detailsNode.toElement();
+                    if(detailsNode.nodeName() == "photoset")
                     {
-                        kdDebug()<<"id="<<e.attribute("id")<<endl; 
-                        photoSet_id=e.attribute("id");//this is what is obtained from data.
-                        fps.id=photoSet_id;
-                        QDomNode photoSetDetails=detailsNode.firstChild();
+                        kdDebug() << "id=" << e.attribute("id") << endl; 
+                        photoSet_id              = e.attribute("id");           //this is what is obtained from data.
+                        fps.id                   = photoSet_id;
+                        QDomNode photoSetDetails = detailsNode.firstChild();
                         QDomElement e_detail;
 
                         while(!photoSetDetails.isNull())
                         {
-                            e_detail=photoSetDetails.toElement();
-                            if(photoSetDetails.nodeName()=="title")
+                            e_detail = photoSetDetails.toElement();
+
+                            if(photoSetDetails.nodeName() == "title")
                             {
-                                kdDebug()<<"Title="<<e_detail.text()<<endl; 
-                                photoSet_title=e_detail.text();
-                                fps.title=photoSet_title;
+                                kdDebug() << "Title=" << e_detail.text() << endl;
+                                photoSet_title = e_detail.text();
+                                fps.title      = photoSet_title;
                             }
-                            else if(photoSetDetails.nodeName()=="description")
+                            else if(photoSetDetails.nodeName() == "description")
                             {
-                                kdDebug()<<"Description ="<<e_detail.text()<<endl; 
-                                photoSet_description=e_detail.text();
-                                fps.description=photoSet_description;
+                                kdDebug() << "Description =" << e_detail.text() << endl;
+                                photoSet_description = e_detail.text();
+                                fps.description      = photoSet_description;
                             }
 
-                            photoSetDetails=photoSetDetails.nextSibling();
+                            photoSetDetails = photoSetDetails.nextSibling();
                         }
-                    }					
+                    }
                 }
 
-                detailsNode=detailsNode.nextSibling();
+                detailsNode = detailsNode.nextSibling();
             }
 
             photoSetList.append(fps);
-            details=details.nextSibling();
-            success=true;
+            details = details.nextSibling();
+            success = true;
         }
-        if ( node.isElement() && node.nodeName() == "err" ) 
+
+        if (node.isElement() && node.nodeName() == "err")
         {
-            kdDebug()<<"Checking Error in response"<<endl;
-            QString code=node.toElement().attribute("code");
-            kdDebug()<<"Error code="<<code<<endl;
-            kdDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;	
+            kdDebug() << "Checking Error in response" << endl;
+            QString code = node.toElement().attribute("code");
+            kdDebug() << "Error code=" << code << endl;
+            kdDebug() << "Msg=" << node.toElement().attribute("msg") << endl;
             emit signalError(code);
         }
 
         node = node.nextSibling();
     }
 
-    kdDebug()<<"GetPhotoList finished"<<endl;
+    kdDebug() << "GetPhotoList finished" << endl;
+
     if (!success)
     {
         emit signalListPhotoSetsFailed(i18n("Failed to fetch photoSets List"));
@@ -884,7 +888,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray &data)
     else
     {
         emit signalListPhotoSetsSucceeded(photoSetList);
-    }	
+    }
 }
 
 void FlickrTalker::parseResponseListPhotos(const QByteArray &data)
@@ -896,9 +900,9 @@ void FlickrTalker::parseResponseListPhotos(const QByteArray &data)
     }
 
     QDomElement docElem = doc.documentElement();
-    QDomNode node = docElem.firstChild();
+    QDomNode node       = docElem.firstChild();
     //QDomElement e;
-    //To be implemented.
+    //TODO
 }
 
 void FlickrTalker::parseResponseCreateAlbum(const QByteArray &data)
@@ -912,13 +916,13 @@ void FlickrTalker::parseResponseCreateAlbum(const QByteArray &data)
     QDomElement docElem = doc.documentElement();
     QDomNode node       = docElem.firstChild();
     //QDomElement e;
-    //To be implemented.
+    //TODO
 }
 
 void FlickrTalker::parseResponseAddPhoto(const QByteArray &data)
 {
     bool success = false;
-    QString      line;
+    QString line;
     QDomDocument doc( "AddPhoto Response" );
     if ( !doc.setContent( data ) ) 
     {
@@ -933,24 +937,25 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray &data)
     {
         if ( node.isElement() && node.nodeName() == "photoid" ) 
         {
-            e = node.toElement(); // try to convert the node to an element.
-            QDomNode details=e.firstChild();
-            kdDebug()<<"Photoid="<<e.text()<<endl; 
-            success=true;
+            e = node.toElement();           // try to convert the node to an element.
+            QDomNode details = e.firstChild();
+            kdDebug() << "Photoid=" << e.text() << endl; 
+            success = true;
         }
+
         if ( node.isElement() && node.nodeName() == "err" ) 
         {
-            kdDebug()<<"Checking Error in response"<<endl;
-            QString code=node.toElement().attribute("code");
-            kdDebug()<<"Error code="<<code<<endl;
-            kdDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;	
+            kdDebug() << "Checking Error in response" << endl;
+            QString code = node.toElement().attribute("code");
+            kdDebug() << "Error code=" << code << endl;
+            kdDebug() << "Msg=" << node.toElement().attribute("msg") << endl;	
             emit signalError(code);
         }
-        
+
         node = node.nextSibling();
     }
 
-    kdDebug()<<"GetToken finished"<<endl;
+    kdDebug() << "GetToken finished" << endl;
 
     if (!success)
     {
@@ -964,9 +969,10 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray &data)
 }
 void FlickrTalker::parseResponsePhotoProperty(const QByteArray &data)
 {
-    bool success=false;
-    QString     line;
+    bool success = false;
+    QString line;
     QDomDocument doc( "Photos Properties" );
+
     if ( !doc.setContent( data ) ) 
     {
         return;
@@ -976,28 +982,29 @@ void FlickrTalker::parseResponsePhotoProperty(const QByteArray &data)
     QDomNode node       = docElem.firstChild();
     QDomElement e;
 
-    while( !node.isNull() ) 
+    while(!node.isNull()) 
     {
-        if ( node.isElement() && node.nodeName() == "photoid" ) 
+        if (node.isElement() && node.nodeName() == "photoid") 
         {
-            e = node.toElement(); // try to convert the node to an element.
-            QDomNode details=e.firstChild();
-            kdDebug()<<"Photoid="<<e.text()<<endl; 
-            success=true;
+            e = node.toElement();                 // try to convert the node to an element.
+            QDomNode details = e.firstChild();
+            kdDebug() << "Photoid=" << e.text() << endl; 
+            success = true;
         }
 
-        if ( node.isElement() && node.nodeName() == "err" ) {
-            kdDebug()<<"Checking Error in response"<<endl;
-            QString code=node.toElement().attribute("code");
-            kdDebug()<<"Error code="<<code<<endl;
-            kdDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;	
+        if (node.isElement() && node.nodeName() == "err")
+        {
+            kdDebug() << "Checking Error in response" << endl;
+            QString code = node.toElement().attribute("code");
+            kdDebug() << "Error code=" << code << endl;
+            kdDebug() << "Msg=" << node.toElement().attribute("msg") << endl;	
             emit signalError(code);
         }
 
         node = node.nextSibling();
     }
 
-    kdDebug()<<"GetToken finished"<<endl;
+    kdDebug() << "GetToken finished" << endl;
 
     if (!success)
     {
