@@ -42,10 +42,10 @@ namespace KIPIFlickrExportPlugin
 class FlickrWidget : public QWidget
 {
     Q_OBJECT
-    
+
 public:
 
-    FlickrWidget( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    FlickrWidget(QWidget* parent=0, const char* name=0, WFlags fl=0);
     ~FlickrWidget();
 
 private slots:
@@ -68,21 +68,21 @@ private:
     QCheckBox*    m_publicCheckBox;
     QCheckBox*    m_exportApplicationTags;
 
-	QButtonGroup* m_fileSrcButtonGroup;
+    QButtonGroup* m_fileSrcButtonGroup;
 
-	QRadioButton* m_currentSelectionButton;
-	QRadioButton* m_selectImagesButton;
+    QRadioButton* m_currentSelectionButton;
+    QRadioButton* m_selectImagesButton;
 
     QSpinBox*     m_dimensionSpinBox;
     QSpinBox*     m_imageQualitySpinBox;
 
     QLineEdit*    m_tagsLineEdit;
 
-	QLabel*       m_userNameDisplayLabel;
+    QLabel*       m_userNameDisplayLabel;
 
     KHTMLPart*    m_photoView;
 
-	friend class FlickrWindow;
+    friend class FlickrWindow;
 };
 
 } // namespace KIPIFlickrExportPlugin

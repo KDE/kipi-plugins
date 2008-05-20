@@ -64,6 +64,7 @@ class Wallet;
 
 namespace KIPIFlickrExportPlugin
 {
+
 class FlickrWidget;
 class FlickrTalker;
 class GAlbum;
@@ -87,7 +88,7 @@ private:
     unsigned int              m_uploadTotal;
 
     QListView                *m_tagView;
-  
+
 //  QPushButton              *m_newAlbumBtn;
     QPushButton              *m_addPhotoBtn;
     QPushButton              *m_helpButton;
@@ -108,12 +109,12 @@ private:
     QIntDict<GAlbumViewItem>  m_albumDict;
 
     QString                   m_token;
-	QString					  m_username;
-	QString 				  m_userId;
+    QString                   m_username;
+    QString                   m_userId;
     QString                   m_lastSelectedAlbum;
-	QString 				  m_tmp;
+    QString                   m_tmp;
 
-	QLabel 					 *m_userNameDisplayLabel;
+    QLabel                   *m_userNameDisplayLabel;
 
     QProgressDialog          *m_progressDlg;
     QProgressDialog          *m_authProgressDlg;
@@ -128,15 +129,15 @@ private:
     FlickrTalker             *m_talker;
 
     KIPI::Interface          *m_interface;
-    
-    KIPIPlugins::KPAboutData *m_about; 
+
+    KIPIPlugins::KPAboutData *m_about;
 
 private slots:
 
     void slotTokenObtained(const QString& token);
     void slotDoLogin();
-    void slotBusy( bool val );
-    void slotError( const QString& msg );
+    void slotBusy(bool val);
+    void slotError(const QString& msg);
 
 //  void slotLoginFailed( const QString& msg );
 //  void slotAlbums( const QValueList<GAlbum>& albumList );
@@ -148,7 +149,7 @@ private slots:
     void slotUserChangeRequest();
     void slotListPhotoSetsResponse(const QValueList <FPhotoSet>& photoSetList);
     void slotAddPhotos();
-	void slotUploadImages();
+    void slotUploadImages();
     void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
     void slotAddPhotoFailed( const QString& msg );
