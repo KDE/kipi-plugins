@@ -102,13 +102,13 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout(), 5, 3);
 
     m_publicCheckBox = new QCheckBox(optionsBox);
-    m_publicCheckBox->setText(i18n("As in accessible for people", "Shared as Public"));
+    m_publicCheckBox->setText(i18n("As in accessible for people", "Public (anyone can see them)"));
 
     m_familyCheckBox = new QCheckBox(optionsBox);
-    m_familyCheckBox->setText(i18n("Shared for Family"));
+    m_familyCheckBox->setText(i18n("Visible to Family"));
 
     m_friendsCheckBox = new QCheckBox(optionsBox);
-    m_friendsCheckBox->setText(i18n("Shared for Friends"));
+    m_friendsCheckBox->setText(i18n("Visible to Friends"));
 
     m_resizeCheckBox = new QCheckBox(optionsBox);
     m_resizeCheckBox->setText(i18n("Resize photos before uploading"));

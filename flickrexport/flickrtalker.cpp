@@ -38,6 +38,7 @@
 #include <qlineedit.h>
 #include <qmessagebox.h>
 #include <qdom.h>
+#include <qfileinfo.h>
 
 // KDE includes.
 
@@ -53,6 +54,11 @@
 // LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
+
+// LibKDcraw includes.
+
+#include <libkdcraw/dcrawbinary.h>
+#include <libkdcraw/kdcraw.h>
 
 // Local includes.
 
@@ -339,7 +345,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     QString url  = "http://www.flickr.com/services/upload/?";
     QString path = photoPath;
     QStringList headers; 
-    MPForm form;
+    MPForm      form;
     form.addPair("auth_token", m_token);
     headers.append("auth_token=" + m_token);
 
@@ -377,44 +383,49 @@ bool FlickrTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
         headers.append("description=" + info.description);
     }
 
-    QString md5 = getApiSig(m_secret,headers);
+    QString md5 = getApiSig(m_secret, headers);
     form.addPair("api_sig", md5);
     headers.append("api_sig=" + md5);
     QString queryStr = headers.join("&");
     QString postUrl  = url + queryStr;
 
-    QImage image(photoPath);
+    QImage image;
+
+    // Check if RAW file.
+    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
+    QFileInfo fileInfo(photoPath);
+    if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
+        KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
+    else
+        image.load(photoPath);
+
     kdDebug() << "Add photo query" << postUrl << endl;
 
     if (!image.isNull())
     {
-        // image file - see if we need to rescale it
+        path = locateLocal("tmp", QFileInfo(photoPath).baseName().stripWhiteSpace() + ".jpg");
+
         if (rescale && (image.width() > maxDim || image.height() > maxDim))
-        {
             image = image.smoothScale(maxDim, maxDim, QImage::ScaleMin);
-            path  = locateLocal("tmp", KURL(photoPath).filename());
-            image.save(path, QImageIO::imageFormat(photoPath), imageQuality);
 
-            // Only try to write Exif if src is JPEG files.
+        image.save(path, "JPEG", imageQuality);
 
-            if (QString(QImageIO::imageFormat(photoPath)).upper() == "JPEG" )
-            {
-                KExiv2Iface::KExiv2 exiv2Iface;
+        // Restore all metadata.
 
-                if (exiv2Iface.load(photoPath))
-                {
-                    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-                    exiv2Iface.setImageDimensions(image.size());
-                    exiv2Iface.save(path);
-                }
-                else
-                {
-                    kdWarning(51000) << "(flickrExport::Image doesn't have exif data)" << endl;
-                }
-            }
+        KExiv2Iface::KExiv2 exiv2Iface;
 
-            kdDebug() << "Resizing and saving to temp file: "<< path << endl;
+        if (exiv2Iface.load(photoPath))
+        {
+            exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+            exiv2Iface.setImageDimensions(image.size());
+            exiv2Iface.save(path);
         }
+        else
+        {
+            kdWarning(51000) << "(flickrExport::Image doesn't have exif data)" << endl;
+        }
+
+        kdDebug() << "Resizing and saving to temp file: " << path << endl;
     }
 
     if (!form.addFile("photo", path))
@@ -434,7 +445,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     m_state = FE_ADDPHOTO;
     m_job   = job;
     m_buffer.resize(0);
-    emit signalBusy( true );
+    emit signalBusy(true);
     return true;
 }
 
