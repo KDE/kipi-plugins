@@ -91,8 +91,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     m_fileSrcButtonGroup = new QButtonGroup(splitter, "fileSourceButton");
     m_fileSrcButtonGroup->setRadioButtonExclusive(true);
     m_fileSrcButtonGroup->setColumnLayout(0, Qt::Vertical);
-    m_fileSrcButtonGroup->layout()->setSpacing(5);
-    m_fileSrcButtonGroup->layout()->setMargin(5);
+    m_fileSrcButtonGroup->layout()->setSpacing(KDialog::spacingHint());
+    m_fileSrcButtonGroup->layout()->setMargin(KDialog::spacingHint());
 
     QVBoxLayout* m_fileSrcButtonGroupLayout = new QVBoxLayout(m_fileSrcButtonGroup->layout());
 
@@ -119,8 +119,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     // -------------------------------------------------------------------
 
     QGridLayout* tagsLayout = new QGridLayout(rightButtonGroupLayout, 2, 2);
-    QLabel* tagsLabel       = new QLabel(i18n("Tags:"),rightButtonGroup);
-    m_tagsLineEdit          = new QLineEdit(rightButtonGroup,"m_tagsLineEdit");
+    QLabel* tagsLabel       = new QLabel(i18n("Tags:"), rightButtonGroup);
+    m_tagsLineEdit          = new QLineEdit(rightButtonGroup, "m_tagsLineEdit");
     m_exportApplicationTags = new QCheckBox(rightButtonGroup);
     m_exportApplicationTags->setText(i18n("Use application tags ?"));
 
@@ -128,13 +128,13 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
 
     QGroupBox* optionsBox = new QGroupBox(i18n("Override Default Options"), rightButtonGroup);
     optionsBox->setColumnLayout(0, Qt::Vertical);
-    optionsBox->layout()->setSpacing(5);
-    optionsBox->layout()->setMargin(5);
+    optionsBox->layout()->setSpacing(KDialog::spacingHint());
+    optionsBox->layout()->setMargin(KDialog::spacingHint());
 
     QGroupBox* loginDetailsBox = new QGroupBox(i18n("User Details"), rightButtonGroup);
     loginDetailsBox->setColumnLayout(0, Qt::Vertical);
-    loginDetailsBox->layout()->setSpacing(5);
-    loginDetailsBox->layout()->setMargin(5);
+    loginDetailsBox->layout()->setSpacing(KDialog::spacingHint());
+    loginDetailsBox->layout()->setMargin(KDialog::spacingHint());
 
     QGridLayout* optionsBoxLayout      = new QGridLayout(optionsBox->layout(), 3, 3);
     QGridLayout* loginDetailsBoxLayout = new QGridLayout(loginDetailsBox->layout(), 3, 3);
@@ -207,8 +207,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     loginDetailsBoxLayout->addWidget(m_userNameDisplayLabel, 0, 2);
     loginDetailsBoxLayout->addWidget(m_changeUserButton,     0, 3);
 
-    rightButtonGroupLayout->setSpacing(5);
-    rightButtonGroupLayout->setMargin(5);
+    rightButtonGroupLayout->setSpacing(KDialog::spacingHint());
+    rightButtonGroupLayout->setMargin(KDialog::spacingHint());
     rightButtonGroupLayout->addWidget(optionsBox);
     rightButtonGroupLayout->addItem(new QSpacerItem(20, 100, QSizePolicy::Minimum, QSizePolicy::Expanding));
     rightButtonGroupLayout->addWidget(loginDetailsBox);
