@@ -204,9 +204,10 @@ void FlickrTalker::slotAuthenticate()
     QString queryStr          = headers.join("&");
     const QString completeUrl = url + queryStr;
     KApplication::kApplication()->invokeBrowser(completeUrl);
-    int valueOk = KMessageBox::questionYesNo(0, i18n("Please Follow through the instructions in the browser window and "
-                                                     "return back to press ok if you are authenticated or press No"), 
-                                                i18n("Flickr::Kipi Plugin:Web Authorization")); 
+    int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(), 
+                  i18n("Please Follow through the instructions in the browser window and "
+                       "return back to press ok if you are authenticated or press No"), 
+                  i18n("Flickr::Kipi Plugin:Web Authorization")); 
 
     if( valueOk == KMessageBox::Yes)
     {
@@ -541,7 +542,8 @@ void FlickrTalker::slotError(const QString& error)
             break;
     };
 
-    KMessageBox::error( 0, i18n("Error Occured: %1\n We can not proceed further").arg(transError));
+    KMessageBox::error(kapp->activeWindow(), 
+                 i18n("Error Occured: %1\n We can not proceed further").arg(transError));
 
 //  kdDebug() << "Not handling the error now will see it later" << endl;
 }
@@ -715,8 +717,9 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
             kdDebug() << "Error code=" << errorString << endl;
             kdDebug() << "Msg=" << node.toElement().attribute("msg") << endl;	
 
-            int valueOk = KMessageBox::questionYesNo(0, i18n("Your token is invalid. Would you like to "
-                                                             "get a new token to proceed ?\n"));
+            int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(), 
+                                       i18n("Your token is invalid. Would you like to "
+                                            "get a new token to proceed ?\n"));
             if(valueOk == KMessageBox::Yes)
             {
                 getFrob();
