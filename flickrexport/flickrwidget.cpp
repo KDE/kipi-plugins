@@ -91,12 +91,12 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     QGridLayout* tagsLayout = new QGridLayout(1, 1);
     QLabel* tagsLabel       = new QLabel(i18n("Added Tags: "), leftPannelBox);
     m_tagsLineEdit          = new QLineEdit(leftPannelBox, "m_tagsLineEdit");
-    m_exportApplicationTags = new QCheckBox(leftPannelBox);
-    m_exportApplicationTags->setText(i18n("Use Host Application Tags"));
+    m_exportHostTagsCheckBox = new QCheckBox(leftPannelBox);
+    m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
 
     tagsLayout->addWidget(tagsLabel,               0, 0);
     tagsLayout->addWidget(m_tagsLineEdit,          0, 1);
-    tagsLayout->addWidget(m_exportApplicationTags, 1, 1);
+    tagsLayout->addWidget(m_exportHostTagsCheckBox, 1, 1);
 
     // ------------------------------------------------------------------------
 
@@ -182,15 +182,15 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     m_selectImagesButton->setText(i18n("Custom Selection"));
     m_selectImagesButton->setEnabled(true);
 
-    m_addPhotoBtn = new QPushButton(m_fileSrcButtonGroup, "m_addPhotoBtn");
-    m_addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    m_addPhotoBtn->setText(i18n("&Add Photos"));
+    m_addPhotoButton = new QPushButton(m_fileSrcButtonGroup, "m_addPhotoButton");
+    m_addPhotoButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_addPhotoButton->setText(i18n("&Add Photos"));
 
     QVBoxLayout* m_fileSrcButtonGroupLayout = new QVBoxLayout(m_fileSrcButtonGroup->layout());
     m_fileSrcButtonGroupLayout->setAlignment(Qt::AlignTop);
     m_fileSrcButtonGroupLayout->addWidget(m_currentSelectionButton);
     m_fileSrcButtonGroupLayout->addWidget(m_selectImagesButton);
-    m_fileSrcButtonGroupLayout->addWidget(m_addPhotoBtn);
+    m_fileSrcButtonGroupLayout->addWidget(m_addPhotoButton);
 
     // ------------------------------------------------------------------------
 
@@ -228,7 +228,7 @@ FlickrWidget::~FlickrWidget()
 void FlickrWidget::slotSelectionChecked()
 {
     kdDebug() << "Slot Selection Checked" << endl;
-    m_addPhotoBtn->setEnabled(m_selectImagesButton->isChecked());
+    m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
 
 void FlickrWidget::slotResizeChecked()

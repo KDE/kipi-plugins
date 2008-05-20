@@ -83,6 +83,37 @@ public:
     FlickrWindow(KIPI::Interface *interface, const QString &tmpFolder, QWidget *parent);
     ~FlickrWindow();
 
+private slots:
+
+    void slotTokenObtained(const QString& token);
+    void slotDoLogin();
+    void slotBusy(bool val);
+    void slotError(const QString& msg);
+
+//  void slotLoginFailed( const QString& msg );
+//  void slotAlbums( const QValueList<GAlbum>& albumList );
+//  void slotPhotos( const QValueList<GPhoto>& photoList );
+//  void slotTagSelected();
+//  void slotOpenPhoto( const KURL& url );
+
+    void slotNewPhotoSet();
+    void slotUserChangeRequest();
+    void slotListPhotoSetsResponse(const QValueList <FPhotoSet>& photoSetList);
+    void slotAddPhotos();
+    void slotAddPhotoNext();
+    void slotAddPhotoSucceeded();
+    void slotAddPhotoFailed(const QString& msg);
+    void slotAddPhotoCancel();
+    void slotAuthCancel();
+    void slotHelp();
+    void slotClose();
+    void slotUser1();
+
+private:
+
+    void readSettings();
+    void writeSettings();
+
 private:
 
     unsigned int                             m_uploadCount;
@@ -91,14 +122,14 @@ private:
     QListView                               *m_tagView;
 
 //  QPushButton                             *m_newAlbumBtn;
-    QPushButton                             *m_addPhotoBtn;
+    QPushButton                             *m_addPhotoButton;
     QPushButton                             *m_changeUserButton;
 
     QCheckBox                               *m_resizeCheckBox;
     QCheckBox                               *m_publicCheckBox;
     QCheckBox                               *m_familyCheckBox;
     QCheckBox                               *m_friendsCheckBox;
-    QCheckBox                               *m_exportApplicationTags;
+    QCheckBox                               *m_exportHostTagsCheckBox;
 
     QSpinBox                                *m_dimensionSpinBox;
     QSpinBox                                *m_imageQualitySpinBox;
@@ -130,32 +161,6 @@ private:
     KIPI::Interface                         *m_interface;
 
     KIPIPlugins::KPAboutData                *m_about;
-
-private slots:
-
-    void slotTokenObtained(const QString& token);
-    void slotDoLogin();
-    void slotBusy(bool val);
-    void slotError(const QString& msg);
-
-//  void slotLoginFailed( const QString& msg );
-//  void slotAlbums( const QValueList<GAlbum>& albumList );
-//  void slotPhotos( const QValueList<GPhoto>& photoList );
-//  void slotTagSelected();
-//  void slotOpenPhoto( const KURL& url );
-
-    void slotNewPhotoSet();
-    void slotUserChangeRequest();
-    void slotListPhotoSetsResponse(const QValueList <FPhotoSet>& photoSetList);
-    void slotAddPhotos();
-    void slotAddPhotoNext();
-    void slotAddPhotoSucceeded();
-    void slotAddPhotoFailed(const QString& msg);
-    void slotAddPhotoCancel();
-    void slotAuthCancel();
-    void slotHelp();
-    void slotClose();
-    void slotUser1();
 };
 
 } // namespace KIPIFlickrExportPlugin

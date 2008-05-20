@@ -59,14 +59,14 @@ private:
     QListView*    m_tagView;
 
     //QPushButton*  m_newAlbumBtn;
-    QPushButton*  m_addPhotoBtn;
+    QPushButton*  m_addPhotoButton;
     QPushButton*  m_changeUserButton;
 
     QCheckBox*    m_resizeCheckBox;
     QCheckBox*    m_familyCheckBox;
     QCheckBox*    m_friendsCheckBox;
     QCheckBox*    m_publicCheckBox;
-    QCheckBox*    m_exportApplicationTags;
+    QCheckBox*    m_exportHostTagsCheckBox;
 
     QButtonGroup* m_fileSrcButtonGroup;
 

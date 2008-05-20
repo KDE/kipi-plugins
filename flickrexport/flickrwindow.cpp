@@ -77,28 +77,28 @@ namespace KIPIFlickrExportPlugin
 FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, QWidget *parent)
             : KDialogBase(0, 0, false, i18n("Export to Flickr Web Service"),
                           Help|User1|Close, Close, false, i18n("Start Uploading"))
-{
-    m_tmp                   = tmpFolder;
-    m_interface             = interface;
-    m_uploadCount           = 0;
-    m_uploadTotal           = 0;
-//  m_wallet                = 0;
-    m_urls                  = 0;
-    m_widget                = new FlickrWidget(this);
-    m_tagView               = m_widget->m_tagView;
-    m_photoView             = m_widget->m_photoView;
-//  m_newAlbumBtn           = widget->m_newAlbumBtn;
-    m_addPhotoBtn           = m_widget->m_addPhotoBtn;
-    m_resizeCheckBox        = m_widget->m_resizeCheckBox;
-    m_publicCheckBox        = m_widget->m_publicCheckBox;
-    m_familyCheckBox        = m_widget->m_familyCheckBox;
-    m_friendsCheckBox       = m_widget->m_friendsCheckBox;
-    m_dimensionSpinBox      = m_widget->m_dimensionSpinBox;
-    m_imageQualitySpinBox   = m_widget->m_imageQualitySpinBox;
-    m_tagsLineEdit          = m_widget->m_tagsLineEdit;
-    m_exportApplicationTags = m_widget->m_exportApplicationTags;
-    m_changeUserButton      = m_widget->m_changeUserButton;
-    m_userNameDisplayLabel  = m_widget->m_userNameDisplayLabel;
+{ 
+    m_tmp                    = tmpFolder;
+    m_interface              = interface;
+    m_uploadCount            = 0;
+    m_uploadTotal            = 0;
+//  m_wallet                 = 0;
+    m_urls                   = 0;
+    m_widget                 = new FlickrWidget(this);
+    m_tagView                = m_widget->m_tagView;
+    m_photoView              = m_widget->m_photoView;
+//  m_newAlbumBtn            = widget->m_newAlbumBtn;
+    m_addPhotoButton         = m_widget->m_addPhotoButton;
+    m_resizeCheckBox         = m_widget->m_resizeCheckBox;
+    m_publicCheckBox         = m_widget->m_publicCheckBox;
+    m_familyCheckBox         = m_widget->m_familyCheckBox;
+    m_friendsCheckBox        = m_widget->m_friendsCheckBox;
+    m_dimensionSpinBox       = m_widget->m_dimensionSpinBox;
+    m_imageQualitySpinBox    = m_widget->m_imageQualitySpinBox;
+    m_tagsLineEdit           = m_widget->m_tagsLineEdit;
+    m_exportHostTagsCheckBox = m_widget->m_exportHostTagsCheckBox;
+    m_changeUserButton       = m_widget->m_changeUserButton;
+    m_userNameDisplayLabel   = m_widget->m_userNameDisplayLabel;
 
     setMainWidget(m_widget);
     m_widget->setMinimumSize(600, 400);
@@ -106,9 +106,9 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     //m_startUploadButton->setEnabled(false);
     //m_albumView->setRootIsDecorated(true);
     //m_newAlbumBtn->setEnabled(false);
-    m_addPhotoBtn->setEnabled(false);
+    m_addPhotoButton->setEnabled(false);
     //if(!m_interface->hasFeature(KIPI::HostSupportsTags))
-    //    m_exportApplicationTags->setEnabled(false);
+    //    m_exportHostTagsCheckBox->setEnabled(false);
 
     // --------------------------------------------------------------------------
     // About data and help button.
@@ -181,27 +181,12 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     //connect( m_newAlbumBtn, SIGNAL( clicked() ),
     //         SLOT( slotNewAlbum() ) );
 
-    connect(m_addPhotoBtn, SIGNAL( clicked() ),
+    connect(m_addPhotoButton, SIGNAL( clicked() ),
             this, SLOT( slotAddPhotos() ));
 
     // --------------------------------------------------------------------------
-    // read config
 
-    KConfig config("kipirc");
-    config.setGroup("FlickrExport Settings");
-    m_token = config.readEntry("token");
-    if (config.readBoolEntry("Resize", false))
-    {
-        m_resizeCheckBox->setChecked(true);
-        m_dimensionSpinBox->setEnabled(true);
-    }
-    else
-    {
-        m_resizeCheckBox->setChecked(false);
-        m_dimensionSpinBox->setEnabled(false);
-    }
-    m_dimensionSpinBox->setValue(config.readNumEntry("Maximum Width", 1600));
-    m_imageQualitySpinBox->setValue(config.readNumEntry("Image Quality", 85));
+    readSettings();
 
     m_authProgressDlg = new QProgressDialog(this, 0, true);
     m_authProgressDlg->setAutoReset(true);
@@ -223,20 +208,14 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
 
 FlickrWindow::~FlickrWindow()
 {
+    writeSettings();
+
 #if KDE_IS_VERSION(3,2,0)
 //   if (m_wallet)
 //      delete m_wallet;
 #endif
 
-    // write config
-    KConfig config("kipirc");
-    config.setGroup("FlickrExport Settings");
-    config.writeEntry("token", m_token);
-    config.writeEntry("Resize", m_resizeCheckBox->isChecked());
-    config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
-    config.writeEntry("Image Quality",  m_imageQualitySpinBox->value());
-
-    if(m_urls)
+    if (m_urls)
         delete m_urls;
 
     delete m_progressDlg;
@@ -244,6 +223,46 @@ FlickrWindow::~FlickrWindow()
     delete m_talker;
     delete m_widget;
     delete m_about;
+}
+
+void FlickrWindow::readSettings()
+{
+    KConfig config("kipirc");
+    config.setGroup("FlickrExport Settings");
+    m_token = config.readEntry("token");
+
+    if (config.readBoolEntry("Resize", false))
+    {
+        m_resizeCheckBox->setChecked(true);
+        m_dimensionSpinBox->setEnabled(true);
+    }
+    else
+    {
+        m_resizeCheckBox->setChecked(false);
+        m_dimensionSpinBox->setEnabled(false);
+    }
+
+    m_dimensionSpinBox->setValue(config.readNumEntry("Maximum Width", 1600));
+    m_imageQualitySpinBox->setValue(config.readNumEntry("Image Quality", 85));
+    m_exportHostTagsCheckBox->setChecked(config.readBoolEntry("Export Host Tags", false));
+    m_publicCheckBox->setChecked(config.readBoolEntry("Public Sharing", false));
+    m_familyCheckBox->setChecked(config.readBoolEntry("Family Sharing", false));
+    m_friendsCheckBox->setChecked(config.readBoolEntry("Friends Sharing", false));
+}
+
+void FlickrWindow::writeSettings()
+{
+    KConfig config("kipirc");
+    config.setGroup("FlickrExport Settings");
+    config.writeEntry("token", m_token);
+    config.writeEntry("Resize", m_resizeCheckBox->isChecked());
+    config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
+    config.writeEntry("Image Quality",  m_imageQualitySpinBox->value());
+    config.writeEntry("Export Host Tags", m_exportHostTagsCheckBox->isChecked());
+    config.writeEntry("Public Sharing", m_publicCheckBox->isChecked());
+    config.writeEntry("Family Sharing", m_familyCheckBox->isChecked());
+    config.writeEntry("Friends Sharing", m_friendsCheckBox->isChecked());
+    config.sync();
 }
 
 void FlickrWindow::slotHelp()
@@ -276,13 +295,13 @@ void FlickrWindow::slotBusy(bool val)
     {
         setCursor(QCursor::WaitCursor);
 //      m_newAlbumBtn->setEnabled( false );
-//      m_addPhotoBtn->setEnabled( false );
+//      m_addPhotoButton->setEnabled( false );
     }
     else
     {
         setCursor(QCursor::ArrowCursor);
 //      m_newAlbumBtn->setEnabled( loggedIn );
-//      m_addPhotoBtn->setEnabled( loggedIn && m_albumView->selectedItem() );
+//      m_addPhotoButton->setEnabled( loggedIn && m_albumView->selectedItem() );
     }
 }
 
@@ -296,7 +315,7 @@ void FlickrWindow::slotUserChangeRequest()
 {
     kdDebug() << "Slot Change User Request " << endl;
     m_talker->getFrob();
-//  m_addPhotoBtn->setEnabled(m_selectImagesButton->isChecked());
+//  m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
 
 /*
@@ -459,7 +478,7 @@ void FlickrWindow::slotUser1()
         QStringList tagsFromDatabase;
 
         if(/*m_interface->hasFeature(KIPI::HostSupportsTags) && */
-             m_exportApplicationTags->isChecked())
+             m_exportHostTagsCheckBox->isChecked())
         {
             tagsFromDatabase = attribs["tags"].asStringList();
         }
