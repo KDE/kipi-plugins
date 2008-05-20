@@ -61,6 +61,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
     KIPI::Plugin::setup(widget);
 
     m_action = new KAction(i18n("Export to Flickr..."),
+                           "www",
                            0,
                            this,
                            SLOT(slotActivate()),
