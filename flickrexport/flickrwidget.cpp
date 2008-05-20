@@ -144,20 +144,23 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* loginDetailsBox = new QGroupBox(i18n("User Details"), rightButtonGroup);
+    QGroupBox* loginDetailsBox = new QGroupBox(i18n("Login Details"), rightButtonGroup);
     loginDetailsBox->setColumnLayout(0, Qt::Vertical);
     loginDetailsBox->layout()->setSpacing(KDialog::spacingHint());
     loginDetailsBox->layout()->setMargin(KDialog::spacingHint());
-    QGridLayout* loginDetailsBoxLayout = new QGridLayout(loginDetailsBox->layout(), 3, 3);
+    QGridLayout* loginDetailsBoxLayout = new QGridLayout(loginDetailsBox->layout(), 1, 2);
 
     QLabel *userNameLabel  = new QLabel(i18n("User Name: "), loginDetailsBox);
     m_userNameDisplayLabel = new QLabel(QString(), loginDetailsBox);
     m_changeUserButton     = new QPushButton(loginDetailsBox, "m_changeUserButton");
-    m_changeUserButton->setText(i18n("Login with a different account"));
+    m_changeUserButton->setText(i18n("Use a different account"));
 
-    loginDetailsBoxLayout->addWidget(userNameLabel,          0, 1);
-    loginDetailsBoxLayout->addWidget(m_userNameDisplayLabel, 0, 2);
-    loginDetailsBoxLayout->addWidget(m_changeUserButton,     0, 3);
+    loginDetailsBoxLayout->addMultiCellWidget(userNameLabel,          0, 0, 0, 0);
+    loginDetailsBoxLayout->addMultiCellWidget(m_userNameDisplayLabel, 0, 0, 1, 2);
+    loginDetailsBoxLayout->addMultiCellWidget(m_changeUserButton,     1, 1, 0, 2);
+    loginDetailsBoxLayout->setColStretch(2, 10);
+    loginDetailsBoxLayout->setSpacing(KDialog::spacingHint());
+    loginDetailsBoxLayout->setMargin(0);
 
     // ------------------------------------------------------------------
 
