@@ -444,7 +444,7 @@ void FlickrWindow::slotUser1()
 
         QStringList allTags;
 
-        QStringList tagsFromDialog = QStringList::split(" ",m_tagsLineEdit->text(),false); 
+        QStringList tagsFromDialog = QStringList::split(" ", m_tagsLineEdit->text(), false); 
         QStringList::Iterator itTags;
 
         //Tags from the interface	
@@ -462,7 +462,7 @@ void FlickrWindow::slotUser1()
         if(/*m_interface->hasFeature(KIPI::HostSupportsTags) && */
              m_exportApplicationTags->isChecked())
         {
-            tagsFromDatabase=attribs["tags"].asStringList();	
+            tagsFromDatabase = attribs["tags"].asStringList();
         }
 
         itTags = tagsFromDatabase.begin();
@@ -508,7 +508,7 @@ void FlickrWindow::slotAddPhotoNext()
     bool res = m_talker->addPhoto(pathComments.first, //the file path
                                   info,
                                   m_resizeCheckBox->isChecked(),
-                                  m_dimensionSpinBox->value(),m_imageQualitySpinBox->value() );
+                                  m_dimensionSpinBox->value(),m_imageQualitySpinBox->value());
     if (!res)
     {
         slotAddPhotoFailed( "" );
@@ -525,14 +525,14 @@ void FlickrWindow::slotAddPhotoNext()
 void FlickrWindow::slotAddPhotoSucceeded()
 {
     m_uploadCount++;
-    m_progressDlg->setProgress( m_uploadCount, m_uploadTotal );
+    m_progressDlg->setProgress(m_uploadCount, m_uploadTotal);
     slotAddPhotoNext();
 }
 
-void FlickrWindow::slotAddPhotoFailed( const QString& msg )
+void FlickrWindow::slotAddPhotoFailed(const QString& msg)
 {
     if (KMessageBox::warningContinueCancel(this,
-                     i18n("Failed to upload photo into Flickr. %1\nDo you want to continue?").arg( msg )) 
+                     i18n("Failed to upload photo into Flickr. %1\nDo you want to continue?").arg(msg))
                      != KMessageBox::Continue )
     {
         m_uploadQueue.clear();
