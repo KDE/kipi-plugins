@@ -68,66 +68,35 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     QFrame *headerLine  = new QFrame(this, "headerLine");
     QSplitter* splitter = new QSplitter(this);
     m_tagView           = new QListView(splitter, "m_tagView");
+    m_photoView         = 0; //new KHTMLPart( splitter, "m_photoView" );
 
     m_tagView->hide();
-    //m_tagView->addColumn( i18n( "Albums" ) );
-    //m_tagView->setResizeMode( QListView::AllColumns );
-    //m_tagView->header()->setLabel( 0, i18n( "Albums" ) );
+    //m_tagView->addColumn(i18n("Albums"));
+    //m_tagView->setResizeMode(QListView::AllColumns);
+    //m_tagView->header()->setLabel(0, i18n( "Albums"));
 
     headerLine->setFrameShape(QFrame::HLine);
     headerLine->setFrameShadow(QFrame::Sunken );
     headerLabel->setText(i18n("<h2>Flickr Export</h2>"));
 
-    // ------------------------------------------------------------------------
-
-    m_photoView = NULL;//new KHTMLPart( splitter, "m_photoView" );
-
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------
 
     QButtonGroup* rightButtonGroup      = new QButtonGroup(splitter, "rightButtonGroup");
     QVBoxLayout* rightButtonGroupLayout = new QVBoxLayout(rightButtonGroup);
 
-    //m_newAlbumBtn = new QPushButton( rightButtonGroup, "m_newAlbumBtn" );
+    //m_newAlbumBtn = new QPushButton(rightButtonGroup, "m_newAlbumBtn");
     //m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    //m_newAlbumBtn->setText( i18n( "&New Album" ) );
-    //rightButtonGroupLayout->addWidget( m_newAlbumBtn, 0, Qt::AlignHCenter );
-
-    m_fileSrcButtonGroup = new QButtonGroup(splitter, "fileSourceButton");
-    m_fileSrcButtonGroup->setRadioButtonExclusive(true);
-    m_fileSrcButtonGroup->setColumnLayout(0, Qt::Vertical);
-    m_fileSrcButtonGroup->layout()->setSpacing(KDialog::spacingHint());
-    m_fileSrcButtonGroup->layout()->setMargin(KDialog::spacingHint());
-
-    QVBoxLayout* m_fileSrcButtonGroupLayout = new QVBoxLayout(m_fileSrcButtonGroup->layout());
-
-    // ------------------------------------------------------------------
-
-    m_currentSelectionButton = new QRadioButton(m_fileSrcButtonGroup);
-    m_currentSelectionButton->setText(i18n("Use Current Selection"));
-    m_currentSelectionButton->setChecked(true);
-
-    // ------------------------------------------------------------------
-
-    m_selectImagesButton = new QRadioButton(m_fileSrcButtonGroup);
-    m_selectImagesButton->setText(i18n("Custom Selection"));
-    m_selectImagesButton->setEnabled(true);
-
-    m_addPhotoBtn = new QPushButton(m_fileSrcButtonGroup, "m_addPhotoBtn");
-    m_addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    m_addPhotoBtn->setText(i18n("&Add Photos"));
-
-    m_fileSrcButtonGroupLayout->setAlignment(Qt::AlignTop);
-    m_fileSrcButtonGroupLayout->addWidget(m_currentSelectionButton);
-    m_fileSrcButtonGroupLayout->addWidget(m_selectImagesButton);
-    m_fileSrcButtonGroupLayout->addWidget(m_addPhotoBtn);
-
-    // -------------------------------------------------------------------
+    //m_newAlbumBtn->setText(i18n("&New Album"));
 
     QGridLayout* tagsLayout = new QGridLayout(rightButtonGroupLayout, 2, 2);
     QLabel* tagsLabel       = new QLabel(i18n("Tags:"), rightButtonGroup);
     m_tagsLineEdit          = new QLineEdit(rightButtonGroup, "m_tagsLineEdit");
     m_exportApplicationTags = new QCheckBox(rightButtonGroup);
-    m_exportApplicationTags->setText(i18n("Use application tags ?"));
+    m_exportApplicationTags->setText(i18n("Use Host Application Tags"));
+
+    tagsLayout->addWidget(tagsLabel,               0, 0);
+    tagsLayout->addWidget(m_tagsLineEdit,          0, 1);
+    tagsLayout->addWidget(m_exportApplicationTags, 1, 1);
 
     // ------------------------------------------------------------------------
 
@@ -135,16 +104,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     optionsBox->setColumnLayout(0, Qt::Vertical);
     optionsBox->layout()->setSpacing(KDialog::spacingHint());
     optionsBox->layout()->setMargin(KDialog::spacingHint());
-
-    QGroupBox* loginDetailsBox = new QGroupBox(i18n("User Details"), rightButtonGroup);
-    loginDetailsBox->setColumnLayout(0, Qt::Vertical);
-    loginDetailsBox->layout()->setSpacing(KDialog::spacingHint());
-    loginDetailsBox->layout()->setMargin(KDialog::spacingHint());
-
-    QGridLayout* optionsBoxLayout      = new QGridLayout(optionsBox->layout(), 3, 3);
-    QGridLayout* loginDetailsBoxLayout = new QGridLayout(loginDetailsBox->layout(), 3, 3);
-
-    // ------------------------------------------------------------------------
+    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout(), 3, 3);
 
     m_publicCheckBox = new QCheckBox(optionsBox);
     m_publicCheckBox->setText(i18n("As in accessible for people", "Public ?"));
@@ -173,23 +133,6 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     // NOTE: The term Compression factor may be to technical to write in the label    
     QLabel* imageQualityLabel = new QLabel(i18n("Image Quality (higher is better):"), optionsBox);
 
-    // ------------------------------------------------------------------------
-
-    QLabel *userNameLabel  = new QLabel(i18n("User Name: "), loginDetailsBox);
-    m_userNameDisplayLabel = new QLabel(QString(), loginDetailsBox);
-    m_changeUserButton     = new QPushButton(loginDetailsBox, "m_changeUserButton");
-    m_changeUserButton->setText(i18n("Login with a different account"));
-
-    // ------------------------------------------------------------------------
-
-    flickrWidgetLayout->addWidget(headerLabel, 0);
-    flickrWidgetLayout->addWidget(headerLine, 0);
-    flickrWidgetLayout->addWidget(splitter, 5);
-
-    tagsLayout->addWidget(tagsLabel,               0, 0);
-    tagsLayout->addWidget(m_tagsLineEdit,          0, 1);
-    tagsLayout->addWidget(m_exportApplicationTags, 1, 1);
-
     optionsBoxLayout->addWidget(m_publicCheckBox,          0, 1);
     optionsBoxLayout->addWidget(m_familyCheckBox,          0, 2 );
     optionsBoxLayout->addWidget(m_friendsCheckBox,         0, 3);
@@ -199,15 +142,62 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     optionsBoxLayout->addWidget(m_imageQualitySpinBox,     3, 1);
     optionsBoxLayout->addWidget(imageQualityLabel,         3, 0);
 
+    // ------------------------------------------------------------------------
+
+    QGroupBox* loginDetailsBox = new QGroupBox(i18n("User Details"), rightButtonGroup);
+    loginDetailsBox->setColumnLayout(0, Qt::Vertical);
+    loginDetailsBox->layout()->setSpacing(KDialog::spacingHint());
+    loginDetailsBox->layout()->setMargin(KDialog::spacingHint());
+    QGridLayout* loginDetailsBoxLayout = new QGridLayout(loginDetailsBox->layout(), 3, 3);
+
+    QLabel *userNameLabel  = new QLabel(i18n("User Name: "), loginDetailsBox);
+    m_userNameDisplayLabel = new QLabel(QString(), loginDetailsBox);
+    m_changeUserButton     = new QPushButton(loginDetailsBox, "m_changeUserButton");
+    m_changeUserButton->setText(i18n("Login with a different account"));
+
     loginDetailsBoxLayout->addWidget(userNameLabel,          0, 1);
     loginDetailsBoxLayout->addWidget(m_userNameDisplayLabel, 0, 2);
     loginDetailsBoxLayout->addWidget(m_changeUserButton,     0, 3);
+
+    // ------------------------------------------------------------------
+
+    m_fileSrcButtonGroup = new QButtonGroup(splitter, "fileSourceButton");
+    m_fileSrcButtonGroup->setRadioButtonExclusive(true);
+    m_fileSrcButtonGroup->setColumnLayout(0, Qt::Vertical);
+    m_fileSrcButtonGroup->layout()->setSpacing(KDialog::spacingHint());
+    m_fileSrcButtonGroup->layout()->setMargin(KDialog::spacingHint());
+
+    m_currentSelectionButton = new QRadioButton(m_fileSrcButtonGroup);
+    m_currentSelectionButton->setText(i18n("Use Current Selection"));
+    m_currentSelectionButton->setChecked(true);
+
+    m_selectImagesButton = new QRadioButton(m_fileSrcButtonGroup);
+    m_selectImagesButton->setText(i18n("Custom Selection"));
+    m_selectImagesButton->setEnabled(true);
+
+    m_addPhotoBtn = new QPushButton(m_fileSrcButtonGroup, "m_addPhotoBtn");
+    m_addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_addPhotoBtn->setText(i18n("&Add Photos"));
+
+    QVBoxLayout* m_fileSrcButtonGroupLayout = new QVBoxLayout(m_fileSrcButtonGroup->layout());
+    m_fileSrcButtonGroupLayout->setAlignment(Qt::AlignTop);
+    m_fileSrcButtonGroupLayout->addWidget(m_currentSelectionButton);
+    m_fileSrcButtonGroupLayout->addWidget(m_selectImagesButton);
+    m_fileSrcButtonGroupLayout->addWidget(m_addPhotoBtn);
+
+    // ------------------------------------------------------------------------
 
     rightButtonGroupLayout->setSpacing(KDialog::spacingHint());
     rightButtonGroupLayout->setMargin(KDialog::spacingHint());
     rightButtonGroupLayout->addWidget(optionsBox);
     rightButtonGroupLayout->addItem(new QSpacerItem(20, 100, QSizePolicy::Minimum, QSizePolicy::Expanding));
     rightButtonGroupLayout->addWidget(loginDetailsBox);
+
+    flickrWidgetLayout->addWidget(headerLabel, 0);
+    flickrWidgetLayout->addWidget(headerLine, 0);
+    flickrWidgetLayout->addWidget(splitter, 5);
+    flickrWidgetLayout->setSpacing(KDialog::spacingHint());
+    flickrWidgetLayout->setMargin(0);
 
     // ------------------------------------------------------------------------
 
