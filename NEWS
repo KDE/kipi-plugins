@@ -5,13 +5,14 @@ v 0.1.6
 
 Kipi-plugins NEW FEATURES
 
+FlickrExport   : dialog layout re-written to be bore suitable.
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 149890 : TimeAdjust         : Adjust date and time from Exif does not work.
 002 ==> 154273 : RAWConverter       : Quality setting for jpegs saved by raw converter is insanely high.
 003 ==> 157190 : GPSSync            : Misleading description for geotagging images.
-004 ==> 
+004 ==> 154289 : FlickrExport       : Cannot upload RAW images.
 
 v 0.1.5
 ---------------------------------------------------------------------------
@@ -52,14 +53,14 @@ v 0.1.5 - RC1
 Kipi-plugins NEW FEATURES
 
 General        : Added the availability to disable plugins we don't want to build.
-               :   This feature is very useful for source based distros (Matej Laitl)
+               : This feature is very useful for source based distros (Matej Laitl)
 PrintWizard    : Added raw file management, now raw files can be printed.
 SlideShow      : Solved minor issue in filename printing (2D slideshow).
 SlideShow      : New caching mechanism
 SlideShow      : Added Ken Burns effect
 Calendar       : Fixed recurring events not showing (only first date was showed)
-	       : Setting special events only once (before printing), instead of
-	       :   one for every page
+                 Setting special events only once (before printing), instead of
+                 one for every page
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
