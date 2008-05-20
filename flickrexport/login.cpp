@@ -41,59 +41,55 @@ namespace KIPIFlickrExportPlugin
 {
 
 FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
-                         const QString& _name,
-                         const QString& _passwd)
+                         const QString& _name, const QString& _passwd)
            : QDialog(parent)
 {
-    setSizeGripEnabled( false );
+    setSizeGripEnabled(false);
 
     QVBoxLayout* vbox = new QVBoxLayout(this, 5, 5, "vbox");
-
-    m_headerLabel = new QLabel(this);
+    m_headerLabel     = new QLabel(this);
     m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     m_headerLabel->setText(header);
-    vbox->addWidget( m_headerLabel );
 
-    QFrame* hline = new QFrame( this, "hline" );
-    hline->setFrameShape( QFrame::HLine );
-    hline->setFrameShadow( QFrame::Sunken );
-    hline->setFrameShape( QFrame::HLine );
-    vbox->addWidget( hline );
+    QFrame* hline = new QFrame(this, "hline");
+    hline->setFrameShape(QFrame::HLine);
+    hline->setFrameShadow(QFrame::Sunken);
 
     QGridLayout* centerLayout = new QGridLayout(0, 1, 1, 5, 5);
 
-    m_nameEdit = new QLineEdit( this );
-    centerLayout->addWidget(m_nameEdit, 0, 1);
-
-    m_passwdEdit = new QLineEdit( this );
+    m_nameEdit   = new QLineEdit(this);
+    m_passwdEdit = new QLineEdit(this);
     m_passwdEdit->setEchoMode(QLineEdit::Password);
-    centerLayout->addWidget(m_passwdEdit, 1, 1);
 
     QLabel* nameLabel = new QLabel(this);
-    nameLabel->setText(i18n( "Username:" ));
-    centerLayout->addWidget(nameLabel, 0, 0);
+    nameLabel->setText(i18n("Username:"));
 
     QLabel* passwdLabel = new QLabel(this);
-    passwdLabel->setText(i18n( "Password:" ));
-    centerLayout->addWidget(passwdLabel, 1, 0);
+    passwdLabel->setText(i18n("Password:"));
 
-    vbox->addLayout( centerLayout );
+    centerLayout->addWidget(m_nameEdit,   0, 1);
+    centerLayout->addWidget(m_passwdEdit, 1, 1);
+    centerLayout->addWidget(nameLabel,    0, 0);
+    centerLayout->addWidget(passwdLabel,  1, 0);
 
     QHBoxLayout* btnLayout = new QHBoxLayout(0, 0, 5);
-    btnLayout->addItem( new QSpacerItem( 20, 20, QSizePolicy::Expanding,
-                                         QSizePolicy::Minimum ) );
+    btnLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
-    QPushButton *okBtn = new QPushButton( this );
-    okBtn->setAutoDefault( true );
-    okBtn->setDefault( true );
-    okBtn->setText( i18n( "&OK" ) );
+    QPushButton *okBtn = new QPushButton(this);
+    okBtn->setAutoDefault(true);
+    okBtn->setDefault(true);
+    okBtn->setText(i18n("&OK"));
+
+    QPushButton *cancelBtn = new QPushButton(this);
+    cancelBtn->setText(i18n("&Cancel"));
+
     btnLayout->addWidget( okBtn );
-
-    QPushButton *cancelBtn = new QPushButton( this );
-    cancelBtn->setText( i18n( "&Cancel" ) );
     btnLayout->addWidget( cancelBtn );
 
-    vbox->addLayout( btnLayout );
+    vbox->addWidget(m_headerLabel);
+    vbox->addWidget(hline);
+    vbox->addLayout(centerLayout);
+    vbox->addLayout(btnLayout);
 
     resize( QSize(300, 150).expandedTo(minimumSizeHint()) );
     clearWState( WState_Polished );
@@ -101,12 +97,12 @@ FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
     m_nameEdit->setText(_name);
     m_passwdEdit->setText(_passwd);
 
-    // signals and slots connections
+    // ---------------------------------------------------------------
 
-    connect(okBtn, SIGNAL( clicked() ), 
+    connect(okBtn, SIGNAL( clicked() ),
             this, SLOT( accept() ));
 
-    connect(cancelBtn, SIGNAL( clicked() ), 
+    connect(cancelBtn, SIGNAL( clicked() ),
             this, SLOT( reject() ));
 }
 

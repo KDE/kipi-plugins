@@ -38,7 +38,7 @@ class FlickrLogin : public QDialog
     Q_OBJECT
 
 public:
-    
+
     FlickrLogin(QWidget* parent, const QString& header,
                 const QString& _name=QString(),
                 const QString& _passwd=QString());
@@ -46,7 +46,7 @@ public:
 
     QString name()     const;
     QString password() const;
-    
+
 private:
 
     QLabel    *m_headerLabel;
