@@ -7,6 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -91,14 +92,14 @@ FlickrTalker::~FlickrTalker()
         m_job->kill();
 }
 
-QString FlickrTalker::getApiSig(QString secret, QStringList headers)
+QString FlickrTalker::getApiSig(const QString& secret, const QStringList& headers)
 {
     QStringList compressed ;//= new List<string>(headers.Length);
 
-    for ( QStringList::Iterator it = headers.begin(); it != headers.end(); ++it ) 
+    for (QStringList::const_iterator it = headers.begin(); it != headers.end(); ++it)
     {
-        QStringList str = QStringList::split("=",(*it));
-        compressed.append(str[0].stripWhiteSpace()+str[1].stripWhiteSpace());
+        QStringList str = QStringList::split("=", (*it));
+        compressed.append(str[0].stripWhiteSpace() + str[1].stripWhiteSpace());
     }
 
     compressed.sort();
@@ -112,7 +113,7 @@ QString FlickrTalker::getApiSig(QString secret, QStringList headers)
 
 /**get the Api sig and send it to the server server should return a frob.
 */
-void FlickrTalker::getFrob() 
+void FlickrTalker::getFrob()
 {
     if (m_job)
     {
@@ -252,7 +253,7 @@ void FlickrTalker::getToken()
     m_state = FE_GETTOKEN;
     m_job   = job;
     m_buffer.resize(0);
-    emit signalBusy( true );
+    emit signalBusy(true);
     kdDebug() << " url invoked in the browser:\n" << queryStr << endl;
     authProgressDlg->setLabelText(i18n("Getting the Token from the server"));
     authProgressDlg->setProgress(3,4);
@@ -285,7 +286,7 @@ void FlickrTalker::listPhotoSets()
     kdDebug() << "Getting Photo Set List:\n" << queryStr << endl;
 }
 
-void FlickrTalker::getPhotoProperty(const QString& method,const QString& argList)
+void FlickrTalker::getPhotoProperty(const QString& method, const QString& argList)
 {
     if (m_job)
     {
@@ -481,7 +482,7 @@ void FlickrTalker::data(KIO::Job*, const QByteArray& data)
     memcpy(m_buffer.data()+oldSize, data.data(), data.size());
 }
 
-void FlickrTalker::slotError(const QString & error)
+void FlickrTalker::slotError(const QString& error)
 {
     QString transError;
     int errorNo = atoi(error.latin1());
@@ -549,14 +550,14 @@ void FlickrTalker::slotError(const QString & error)
 void FlickrTalker::slotResult(KIO::Job *job)
 {
     m_job = 0;
-    emit signalBusy( false );
+    emit signalBusy(false);
 
-    if ( job->error() )
+    if (job->error())
     {
-        if ( m_state == FE_ADDPHOTO )
-            emit signalAddPhotoFailed( job->errorString() );
+        if (m_state == FE_ADDPHOTO)
+            emit signalAddPhotoFailed( job->errorString());
         else
-            job->showErrorDialog( m_parent );
+            job->showErrorDialog(m_parent);
         return;
     }
 
@@ -597,30 +598,31 @@ void FlickrTalker::slotResult(KIO::Job *job)
     }*/
 }
 
-void FlickrTalker::parseResponseGetFrob(const QByteArray &data)
+void FlickrTalker::parseResponseGetFrob(const QByteArray& data)
 {
     bool success = false;
     QString errorString;
-    QDomDocument doc( "mydocument" );
-    if ( !doc.setContent( data ) ) 
+    QDomDocument doc("mydocument");
+
+    if (!doc.setContent(data)) 
     {
         return;
     }
 
     QDomElement docElem = doc.documentElement();
-    QDomNode node = docElem.firstChild();
+    QDomNode node       = docElem.firstChild();
 
-    while( !node.isNull() )
+    while(!node.isNull())
     {
-        if ( node.isElement() && node.nodeName() == "frob" ) 
+        if (node.isElement() && node.nodeName() == "frob")
         {
             QDomElement e = node.toElement();    // try to convert the node to an element.
             kdDebug() << "Frob is" << e.text() << endl; 
-            m_frob  = e.text();                  // this is what is obtained from data.
-            success = true;
+            m_frob        = e.text();            // this is what is obtained from data.
+            success       = true;
         }
 
-        if ( node.isElement() && node.nodeName() == "err" ) 
+        if (node.isElement() && node.nodeName() == "err")
         {
             kdDebug() << "Checking Error in response" << endl;
             errorString = node.toElement().attribute("code");
@@ -639,15 +641,15 @@ void FlickrTalker::parseResponseGetFrob(const QByteArray &data)
         emit signalError(errorString);
 }
 
-void FlickrTalker::parseResponseCheckToken(const QByteArray &data)
+void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
 {
-    bool success = false;
-    QString errorString;
-    QString username;
-    QString transReturn;
-    QDomDocument doc( "checktoken" );
+    bool         success = false;
+    QString      errorString;
+    QString      username;
+    QString      transReturn;
+    QDomDocument doc("checktoken");
 
-    if ( !doc.setContent( data ) ) 
+    if (!doc.setContent(data)) 
     {
         return;
     }
@@ -655,6 +657,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray &data)
     QDomElement docElem = doc.documentElement();
     QDomNode node       = docElem.firstChild();
     QDomElement e;
+
     while( !node.isNull() ) 
     {
         if ( node.isElement() && node.nodeName() == "auth" ) 
@@ -706,7 +709,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray &data)
             success = true;
         }
 
-        if ( node.isElement() && node.nodeName() == "err" ) 
+        if (node.isElement() && node.nodeName() == "err") 
         {
             kdDebug() << "Checking Error in response" << endl;
             errorString = node.toElement().attribute("code");
@@ -736,7 +739,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray &data)
     kdDebug() << "CheckToken finished" << endl;
 }
 
-void FlickrTalker::parseResponseGetToken(const QByteArray &data)
+void FlickrTalker::parseResponseGetToken(const QByteArray& data)
 {
     bool success = false;
     QString errorString;
@@ -750,7 +753,7 @@ void FlickrTalker::parseResponseGetToken(const QByteArray &data)
     QDomNode node       = docElem.firstChild();
     QDomElement e;
 
-    while( !node.isNull() ) 
+    while(!node.isNull()) 
     {
         if (node.isElement() && node.nodeName() == "auth")
         {
@@ -810,12 +813,12 @@ void FlickrTalker::parseResponseGetToken(const QByteArray &data)
     else
         emit signalError(errorString);
 }
-void FlickrTalker::parseResponseListPhotoSets(const QByteArray &data)
+void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
 {
     bool success = false;
     QDomDocument doc( "getListPhotoSets" );
 
-    if ( !doc.setContent( data ) ) 
+    if (!doc.setContent(data)) 
     {
         return;
     }
@@ -902,7 +905,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray &data)
     }
 }
 
-void FlickrTalker::parseResponseListPhotos(const QByteArray &data)
+void FlickrTalker::parseResponseListPhotos(const QByteArray& data)
 {
     QDomDocument doc( "getPhotosList" );
     if ( !doc.setContent( data ) ) 
@@ -916,10 +919,10 @@ void FlickrTalker::parseResponseListPhotos(const QByteArray &data)
     //TODO
 }
 
-void FlickrTalker::parseResponseCreateAlbum(const QByteArray &data)
+void FlickrTalker::parseResponseCreateAlbum(const QByteArray& data)
 {
-    QDomDocument doc( "getCreateAlbum" );
-    if ( !doc.setContent( data ) ) 
+    QDomDocument doc("getCreateAlbum");
+    if (!doc.setContent(data)) 
     {
         return;
     }
@@ -932,10 +935,10 @@ void FlickrTalker::parseResponseCreateAlbum(const QByteArray &data)
 
 void FlickrTalker::parseResponseAddPhoto(const QByteArray &data)
 {
-    bool success = false;
+    bool    success = false;
     QString line;
-    QDomDocument doc( "AddPhoto Response" );
-    if ( !doc.setContent( data ) ) 
+    QDomDocument doc("AddPhoto Response");
+    if (!doc.setContent(data))
     {
         return;
     }
@@ -946,7 +949,7 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray &data)
 
     while( !node.isNull() ) 
     {
-        if ( node.isElement() && node.nodeName() == "photoid" ) 
+        if (node.isElement() && node.nodeName() == "photoid") 
         {
             e = node.toElement();           // try to convert the node to an element.
             QDomNode details = e.firstChild();
@@ -954,7 +957,7 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray &data)
             success = true;
         }
 
-        if ( node.isElement() && node.nodeName() == "err" ) 
+        if (node.isElement() && node.nodeName() == "err") 
         {
             kdDebug() << "Checking Error in response" << endl;
             QString code = node.toElement().attribute("code");
@@ -978,13 +981,13 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray &data)
     }
 
 }
-void FlickrTalker::parseResponsePhotoProperty(const QByteArray &data)
+void FlickrTalker::parseResponsePhotoProperty(const QByteArray& data)
 {
-    bool success = false;
-    QString line;
-    QDomDocument doc( "Photos Properties" );
+    bool         success = false;
+    QString      line;
+    QDomDocument doc("Photos Properties");
 
-    if ( !doc.setContent( data ) ) 
+    if (!doc.setContent(data))
     {
         return;
     }
@@ -995,7 +998,7 @@ void FlickrTalker::parseResponsePhotoProperty(const QByteArray &data)
 
     while(!node.isNull()) 
     {
-        if (node.isElement() && node.nodeName() == "photoid") 
+        if (node.isElement() && node.nodeName() == "photoid")
         {
             e = node.toElement();                 // try to convert the node to an element.
             QDomNode details = e.firstChild();

@@ -7,6 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -73,11 +74,11 @@ public:
     FlickrTalker(QWidget* parent);
     ~FlickrTalker();
 
-    QString getApiSig(QString, QStringList);
-    void getFrob();
-    void getToken();
-    void checkToken(const QString& token);
-    void getPhotoProperty(const QString& method,const QString& argList);
+    QString getApiSig(const QString&, const QStringList&);
+    void    getFrob();
+    void    getToken();
+    void    checkToken(const QString& token);
+    void    getPhotoProperty(const QString& method, const QString& argList);
 
     void listPhotoSets();
     void listPhotos(const QString& albumName);
@@ -87,7 +88,7 @@ public:
                      const QString& albumCaption);
 
     bool addPhoto(const QString& photoPath, FPhotoInfo& info,
-                  bool rescale=false, int maxDim=600 , int imageQuality=85);
+                  bool rescale=false, int maxDim=600, int imageQuality=85);
 
     QString getUserName();
     QString getUserId();
@@ -99,16 +100,16 @@ public:
 
 signals:
 
-    void signalError( const QString& msg );
+    void signalError(const QString& msg);
 //  void signalLoginFailed( const QString& msg );
-    void signalBusy( bool val );
-    void signalAlbums( const QValueList<GAlbum>& albumList );
-    void signalPhotos( const QValueList<GPhoto>& photoList );
-    void signalAddPhotoSucceeded( );
+    void signalBusy(bool val);
+    void signalAlbums(const QValueList<GAlbum>& albumList);
+    void signalPhotos(const QValueList<GPhoto>& photoList);
+    void signalAddPhotoSucceeded();
     void signalListPhotoSetsSucceeded(const QValueList <FPhotoSet>& photoSetList);
-    void signalAddPhotoFailed( const QString& msg );
-    void signalListPhotoSetsFailed( const QString& msg );
-    void signalAuthenticate();     
+    void signalAddPhotoFailed(const QString& msg);
+    void signalListPhotoSetsFailed(const QString& msg);
+    void signalAuthenticate();
     void signalTokenObtained(const QString& token);
 
 private:
@@ -125,10 +126,10 @@ private:
 
 private slots:
 
-    void slotError( const QString& msg );
+    void slotError(const QString& msg);
     void slotAuthenticate();
     void data(KIO::Job *job, const QByteArray &data);
-    void slotResult (KIO::Job *job);
+    void slotResult(KIO::Job *job);
 
 private:
 
