@@ -24,7 +24,7 @@ extern "C"
 {
 #include <unistd.h>
 }
-	
+
 // KDE includes.
 
 #include <klocale.h>
@@ -59,7 +59,7 @@ Plugin_FlickrExport::Plugin_FlickrExport(QObject *parent, const char*, const QSt
 void Plugin_FlickrExport::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
-    
+
     m_action = new KAction(i18n("Export to Flickr..."),
                            0,
                            this,
@@ -68,7 +68,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
                            "flickrexport");
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-    
+
     if (!interface) 
     {
         kdError( 51000 ) << "Kipi interface is null!" << endl;
@@ -92,8 +92,9 @@ void Plugin_FlickrExport::slotActivate()
         kdError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
-	KStandardDirs dir;
-	QString Tmp = dir.saveLocation("tmp", "kipi-flickrexportplugin-" + QString::number(getpid()) + "/");
+
+    KStandardDirs dir;
+    QString Tmp = dir.saveLocation("tmp", "kipi-flickrexportplugin-" + QString::number(getpid()) + "/");
 
     //We clean it up in the close button
     dlg = new KIPIFlickrExportPlugin::FlickrWindow(interface,Tmp,kapp->activeWindow());
@@ -104,7 +105,7 @@ KIPI::Category Plugin_FlickrExport::category( KAction* action ) const
 {
     if (action == m_action)
         return KIPI::EXPORTPLUGIN;
-    
+
     kdWarning(51000) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::EXPORTPLUGIN;
 }

@@ -129,7 +129,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
     str += "Content-Type: ";
     str +=  mime.ascii();
     str += "\r\n\r\n";
-    
+
     QTextStream ts(m_buffer, IO_Append|IO_WriteOnly);
     ts.setEncoding(QTextStream::UnicodeUTF8);
     ts << str;
@@ -139,7 +139,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
     memcpy(m_buffer.data()+oldSize, imageData.data(), imageData.size());
     m_buffer[m_buffer.size()-2] = '\r';
     m_buffer[m_buffer.size()-1] = '\n';
-    
+
     return true;
 }
 

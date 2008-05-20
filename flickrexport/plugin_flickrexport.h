@@ -37,7 +37,7 @@ public:
 
     Plugin_FlickrExport(QObject *parent, const char* name, const QStringList &args);
     ~Plugin_FlickrExport();
-    
+
     virtual KIPI::Category category(KAction* action) const;
     virtual void setup(QWidget*);
 

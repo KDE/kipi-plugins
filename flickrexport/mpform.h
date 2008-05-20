@@ -50,7 +50,7 @@ public:
     QString    contentType() const;
     QByteArray formData()    const;
     QString    boundary()    const;
-    
+
 private:
 
     QByteArray m_buffer;
