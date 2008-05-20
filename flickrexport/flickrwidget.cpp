@@ -69,11 +69,14 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     QSplitter* splitter = new QSplitter(this);
     m_tagView           = new QListView(splitter, "m_tagView");
 
+    m_tagView->hide();
     //m_tagView->addColumn( i18n( "Albums" ) );
     //m_tagView->setResizeMode( QListView::AllColumns );
+    //m_tagView->header()->setLabel( 0, i18n( "Albums" ) );
 
     headerLine->setFrameShape(QFrame::HLine);
     headerLine->setFrameShadow(QFrame::Sunken );
+    headerLabel->setText(i18n("<h2>Flickr Export</h2>"));
 
     // ------------------------------------------------------------------------
 
@@ -86,6 +89,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
 
     //m_newAlbumBtn = new QPushButton( rightButtonGroup, "m_newAlbumBtn" );
     //m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    //m_newAlbumBtn->setText( i18n( "&New Album" ) );
     //rightButtonGroupLayout->addWidget( m_newAlbumBtn, 0, Qt::AlignHCenter );
 
     m_fileSrcButtonGroup = new QButtonGroup(splitter, "fileSourceButton");
@@ -99,17 +103,18 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     // ------------------------------------------------------------------
 
     m_currentSelectionButton = new QRadioButton(m_fileSrcButtonGroup);
-    m_currentSelectionButton->setText(i18n("Upload Currently Selected Images"));
+    m_currentSelectionButton->setText(i18n("Use Current Selection"));
     m_currentSelectionButton->setChecked(true);
 
     // ------------------------------------------------------------------
 
     m_selectImagesButton = new QRadioButton(m_fileSrcButtonGroup);
-    m_selectImagesButton->setText(i18n("Select Images For uploading"));
-    m_selectImagesButton->setEnabled( true );
+    m_selectImagesButton->setText(i18n("Custom Selection"));
+    m_selectImagesButton->setEnabled(true);
 
     m_addPhotoBtn = new QPushButton(m_fileSrcButtonGroup, "m_addPhotoBtn");
     m_addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_addPhotoBtn->setText(i18n("&Add Photos"));
 
     m_fileSrcButtonGroupLayout->setAlignment(Qt::AlignTop);
     m_fileSrcButtonGroupLayout->addWidget(m_currentSelectionButton);
@@ -143,7 +148,6 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
 
     m_publicCheckBox = new QCheckBox(optionsBox);
     m_publicCheckBox->setText(i18n("As in accessible for people", "Public ?"));
-    //m_publicCheckBox->show();
 
     m_familyCheckBox = new QCheckBox(optionsBox);
     m_familyCheckBox->setText(i18n("Family ?"));
@@ -153,11 +157,12 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
 
     m_resizeCheckBox = new QCheckBox(optionsBox);
     m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
-    // m_resizeCheckBox->show();
+    m_resizeCheckBox->setChecked(false);
 
     m_dimensionSpinBox = new QSpinBox(0, 5000, 10, optionsBox);
     m_dimensionSpinBox->setValue(600);
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_dimensionSpinBox->setEnabled(false);
 
     QLabel* resizeLabel = new QLabel(i18n("Maximum dimension:"), optionsBox);
 
@@ -165,22 +170,13 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     m_imageQualitySpinBox->setValue(85);
     m_imageQualitySpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    //The term Compression factor may be to technical to write in the label    
+    // NOTE: The term Compression factor may be to technical to write in the label    
     QLabel* imageQualityLabel = new QLabel(i18n("Image Quality (higher is better):"), optionsBox);
-
-    m_resizeCheckBox->setChecked(false);
-    m_dimensionSpinBox->setEnabled(false);
 
     // ------------------------------------------------------------------------
 
-    headerLabel->setText(i18n("<h2>Flickr Export</h2>"));
-    m_tagView->hide();
-    //m_tagView->header()->setLabel( 0, i18n( "Albums" ) );
-    //m_newAlbumBtn->setText( i18n( "&New Album" ) );
-    m_addPhotoBtn->setText(i18n("&Add Photos"));
-
-    QLabel *userNameLabel  = new QLabel(i18n("Username:"), loginDetailsBox);
-    m_userNameDisplayLabel = new QLabel(i18n(" "), loginDetailsBox);
+    QLabel *userNameLabel  = new QLabel(i18n("User Name: "), loginDetailsBox);
+    m_userNameDisplayLabel = new QLabel(QString(), loginDetailsBox);
     m_changeUserButton     = new QPushButton(loginDetailsBox, "m_changeUserButton");
     m_changeUserButton->setText(i18n("Login with a different account"));
 
