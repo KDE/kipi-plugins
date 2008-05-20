@@ -74,9 +74,9 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, QWidget *parent)
+FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, QWidget */*parent*/)
             : KDialogBase(0, 0, false, i18n("Export to Flickr Web Service"),
-                          Help|User1|Close, Close, false, i18n("Start Uploading"))
+                          Help|User1|Close, Close, false)
 { 
     m_tmp                    = tmpFolder;
     m_interface              = interface;
@@ -100,6 +100,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_changeUserButton       = m_widget->m_changeUserButton;
     m_userNameDisplayLabel   = m_widget->m_userNameDisplayLabel;
 
+    setButtonGuiItem(User1, KGuiItem(i18n("Start Uploading"), SmallIcon("network")));
     setMainWidget(m_widget);
     m_widget->setMinimumSize(600, 400);
 
@@ -408,9 +409,10 @@ void FlickrWindow::slotOpenPhoto( const KURL& url )
 }
 */
 
-void FlickrWindow::slotListPhotoSetsResponse(const QValueList <FPhotoSet>& photoSetList)
+void FlickrWindow::slotListPhotoSetsResponse(const QValueList <FPhotoSet>& /*photoSetList*/)
 {
-   kdDebug() << "SlotListPhotoSetsResponse invoked" << endl;
+    kdDebug() << "SlotListPhotoSetsResponse invoked" << endl;
+    // TODO
 }
 
 void FlickrWindow::slotNewPhotoSet()

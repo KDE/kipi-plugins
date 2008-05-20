@@ -159,7 +159,7 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     m_userNameDisplayLabel = new QLabel(loginDetailsBox);
     m_changeUserButton     = new QPushButton(loginDetailsBox);
     m_changeUserButton->setText(i18n("Use a different account"));
-    m_changeUserButton->setIconSet(SmallIcon("edit_user"));
+    m_changeUserButton->setIconSet(SmallIcon("switchuser"));
 
     loginDetailsBoxLayout->addMultiCellWidget(userNameLabel,          0, 0, 0, 0);
     loginDetailsBoxLayout->addMultiCellWidget(m_userNameDisplayLabel, 0, 0, 1, 2);
@@ -184,9 +184,10 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     m_selectImagesButton->setText(i18n("Custom Selection"));
     m_selectImagesButton->setEnabled(true);
 
-    m_addPhotoButton = new QPushButton(m_fileSrcButtonGroup, "m_addPhotoButton");
+    m_addPhotoButton = new QPushButton(m_fileSrcButtonGroup);
     m_addPhotoButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_addPhotoButton->setText(i18n("&Add Photos"));
+    m_addPhotoButton->setIconSet(SmallIcon("add"));
 
     QVBoxLayout* m_fileSrcButtonGroupLayout = new QVBoxLayout(m_fileSrcButtonGroup->layout());
     m_fileSrcButtonGroupLayout->setAlignment(Qt::AlignTop);
