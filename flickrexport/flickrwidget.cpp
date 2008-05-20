@@ -46,6 +46,7 @@
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <kseparator.h>
+#include <kiconloader.h>
 
 // Local includes.
 
@@ -88,9 +89,9 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     //m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     //m_newAlbumBtn->setText(i18n("&New Album"));
 
-    QGridLayout* tagsLayout = new QGridLayout(1, 1);
-    QLabel* tagsLabel       = new QLabel(i18n("Added Tags: "), leftPannelBox);
-    m_tagsLineEdit          = new QLineEdit(leftPannelBox, "m_tagsLineEdit");
+    QGridLayout* tagsLayout  = new QGridLayout(1, 1);
+    QLabel* tagsLabel        = new QLabel(i18n("Added Tags: "), leftPannelBox);
+    m_tagsLineEdit           = new QLineEdit(leftPannelBox, "m_tagsLineEdit");
     m_exportHostTagsCheckBox = new QCheckBox(leftPannelBox);
     m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
 
@@ -100,7 +101,7 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* optionsBox = new QGroupBox(i18n("Override Default Options"), leftPannelBox);
+    QGroupBox* optionsBox         = new QGroupBox(i18n("Override Default Options"), leftPannelBox);
     optionsBox->setColumnLayout(0, Qt::Vertical);
     optionsBox->layout()->setSpacing(KDialog::spacingHint());
     optionsBox->layout()->setMargin(KDialog::spacingHint());
@@ -156,8 +157,9 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
     QLabel *userNameLabel  = new QLabel(i18n("User Name: "), loginDetailsBox);
     m_userNameDisplayLabel = new QLabel(loginDetailsBox);
-    m_changeUserButton     = new QPushButton(loginDetailsBox, "m_changeUserButton");
+    m_changeUserButton     = new QPushButton(loginDetailsBox);
     m_changeUserButton->setText(i18n("Use a different account"));
+    m_changeUserButton->setIconSet(SmallIcon("edit_user"));
 
     loginDetailsBoxLayout->addMultiCellWidget(userNameLabel,          0, 0, 0, 0);
     loginDetailsBoxLayout->addMultiCellWidget(m_userNameDisplayLabel, 0, 0, 1, 2);
