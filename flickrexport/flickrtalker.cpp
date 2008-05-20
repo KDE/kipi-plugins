@@ -122,7 +122,7 @@ void FlickrTalker::getFrob()
     }
 
     QString url = "http://www.flickr.com/services/rest/?";
-    QStringList headers ;
+    QStringList headers;
     headers.append("method=flickr.auth.getFrob");
     headers.append("api_key=" + m_apikey);
     QString md5 = getApiSig(m_secret,headers);
@@ -132,7 +132,7 @@ void FlickrTalker::getFrob()
     QByteArray tmp;
     KIO::TransferJob* job = KIO::http_post(postUrl,tmp,false);
 
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );	
+    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");	
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -202,7 +202,7 @@ void FlickrTalker::slotAuthenticate()
     headers.append("api_sig=" + md5);
 
     QString queryStr          = headers.join("&");
-    const QString completeUrl = url+queryStr;
+    const QString completeUrl = url + queryStr;
     KApplication::kApplication()->invokeBrowser(completeUrl);
     int valueOk = KMessageBox::questionYesNo(0, i18n("Please Follow through the instructions in the browser window and "
                                                      "return back to press ok if you are authenticated or press No"), 
@@ -213,15 +213,14 @@ void FlickrTalker::slotAuthenticate()
         getToken(); 
         authProgressDlg->setLabelText(i18n("Authenticating the User on web"));
         authProgressDlg->setProgress(2, 4);
-        emit signalBusy( false );
+        emit signalBusy(false);
     }
     else 
     {
         kdDebug() << "User didn't proceed with getToken Authorization, cannot proceed further, aborting" << endl;
-        cancel();	
+        cancel();
     }
 }
-
 
 void FlickrTalker::getToken()
 {
