@@ -142,7 +142,7 @@ void FlickrTalker::getFrob()
 
     m_state = FE_GETFROB;
     authProgressDlg->setLabelText(i18n("Getting the Frob"));
-    authProgressDlg->setProgress(1,4);
+    authProgressDlg->setProgress(1, 4);
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy( true );
@@ -179,7 +179,7 @@ void FlickrTalker::checkToken(const QString& token)
 
     m_state = FE_CHECKTOKEN;
     authProgressDlg->setLabelText(i18n("Checking if previous token is still valid"));
-    authProgressDlg->setProgress(1,4);
+    authProgressDlg->setProgress(1, 4);
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy( true );
@@ -212,7 +212,7 @@ void FlickrTalker::slotAuthenticate()
     {
         getToken(); 
         authProgressDlg->setLabelText(i18n("Authenticating the User on web"));
-        authProgressDlg->setProgress(2,4);
+        authProgressDlg->setProgress(2, 4);
         emit signalBusy( false );
     }
     else 
@@ -256,7 +256,7 @@ void FlickrTalker::getToken()
     emit signalBusy(true);
     kdDebug() << " url invoked in the browser:\n" << queryStr << endl;
     authProgressDlg->setLabelText(i18n("Getting the Token from the server"));
-    authProgressDlg->setProgress(3,4);
+    authProgressDlg->setProgress(3, 4);
 }
 
 void FlickrTalker::listPhotoSets()
@@ -633,7 +633,7 @@ void FlickrTalker::parseResponseGetFrob(const QByteArray& data)
     }
 
     kdDebug() <<  "GetFrob finished" << endl;
-    authProgressDlg->setProgress(2,4);
+    authProgressDlg->setProgress(2, 4);
     m_state = FE_GETAUTHORIZED;
     if(success)
         emit signalAuthenticate();
