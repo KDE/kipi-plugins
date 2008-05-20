@@ -62,10 +62,10 @@
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
+#include "login.h"
 #include "flickrtalker.h"
 #include "flickritem.h"
 #include "flickrviewitem.h"
-#include "login.h"
 #include "flickrwidget.h"
 #include "flickralbumdialog.h"
 #include "flickrwindow.h"
@@ -78,12 +78,35 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
             : KDialogBase(0, 0, false, i18n("Flickr Export"), Help|User1|Close, Close, 
                           false, i18n("Start Uploading"))
 {
-    m_tmp         = tmpFolder;
-    m_interface   = interface;
-    m_uploadCount = 0;
-    m_uploadTotal = 0;
-//  m_wallet      = 0;
+    m_tmp                   = tmpFolder;
+    m_interface             = interface;
+    m_uploadCount           = 0;
+    m_uploadTotal           = 0;
+//  m_wallet                = 0;
+    m_urls                  = 0;
+    m_tagView               = m_widget->m_tagView;
+    m_photoView             = m_widget->m_photoView;
+//  m_newAlbumBtn           = widget->m_newAlbumBtn;
+    m_addPhotoBtn           = m_widget->m_addPhotoBtn;
+    m_resizeCheckBox        = m_widget->m_resizeCheckBox;
+    m_publicCheckBox        = m_widget->m_publicCheckBox;
+    m_familyCheckBox        = m_widget->m_familyCheckBox;
+    m_friendsCheckBox       = m_widget->m_friendsCheckBox;
+    m_dimensionSpinBox      = m_widget->m_dimensionSpinBox;
+    m_imageQualitySpinBox   = m_widget->m_imageQualitySpinBox;
+    m_tagsLineEdit          = m_widget->m_tagsLineEdit;
+    m_exportApplicationTags = m_widget->m_exportApplicationTags;
+    m_changeUserButton      = m_widget->m_changeUserButton;
+    m_userNameDisplayLabel  = m_widget->m_userNameDisplayLabel;
 
+    //m_startUploadButton->setEnabled(false);
+    //m_albumView->setRootIsDecorated(true);
+    //m_newAlbumBtn->setEnabled(false);
+    m_addPhotoBtn->setEnabled(false);
+    //if(!m_interface->hasFeature(KIPI::HostSupportsTags))
+    //    m_exportApplicationTags->setEnabled(false);
+
+    // --------------------------------------------------------------------------
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Flickr Export"),
@@ -109,28 +132,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     setMainWidget(m_widget);
     m_widget->setMinimumSize(600, 400);
 
-    m_urls                  = NULL;
-    m_tagView               = m_widget->m_tagView;
-    m_photoView             = m_widget->m_photoView;
-    //m_newAlbumBtn           = widget->m_newAlbumBtn;
-    m_addPhotoBtn           = m_widget->m_addPhotoBtn;
-    m_resizeCheckBox        = m_widget->m_resizeCheckBox;
-    m_publicCheckBox	    = m_widget->m_publicCheckBox;
-    m_familyCheckBox        = m_widget->m_familyCheckBox;
-    m_friendsCheckBox       = m_widget->m_friendsCheckBox;
-    m_dimensionSpinBox      = m_widget->m_dimensionSpinBox;
-    m_imageQualitySpinBox   = m_widget->m_imageQualitySpinBox;
-    m_tagsLineEdit          = m_widget->m_tagsLineEdit;
-    m_exportApplicationTags = m_widget->m_exportApplicationTags;
-    m_changeUserButton      = m_widget->m_changeUserButton;
-    m_userNameDisplayLabel  = m_widget->m_userNameDisplayLabel;
-
-    //m_startUploadButton->setEnabled(false);
-    //m_albumView->setRootIsDecorated( true );
-    //m_newAlbumBtn->setEnabled( false );
-    m_addPhotoBtn->setEnabled(false);
-    //if(!m_interface->hasFeature(KIPI::HostSupportsTags))
-    //    m_exportApplicationTags->setEnabled(false);
+    // --------------------------------------------------------------------------
 
     m_talker = new FlickrTalker(this);
 
@@ -154,6 +156,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
 
     connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded( const QValueList<FPhotoSet>& ) ),
             this, SLOT( slotListPhotoSetsResponse( const QValueList<FPhotoSet>& ) ));
+
+    // --------------------------------------------------------------------------
 
     m_progressDlg = new QProgressDialog(this, 0, true);
     m_progressDlg->setAutoReset(true);
@@ -180,7 +184,9 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     connect(m_addPhotoBtn, SIGNAL( clicked() ),
             this, SLOT( slotAddPhotos() ));
 
+    // --------------------------------------------------------------------------
     // read config
+
     KConfig config("kipirc");
     config.setGroup("FlickrExport Settings");
     m_token = config.readEntry("token");
@@ -230,7 +236,7 @@ FlickrWindow::~FlickrWindow()
     config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
     config.writeEntry("Image Quality",  m_imageQualitySpinBox->value());
 
-    if(m_urls!=NULL)
+    if(m_urls)
         delete m_urls;
 
     delete m_progressDlg;
@@ -266,7 +272,7 @@ void FlickrWindow::slotTokenObtained( const QString& token )
 
 void FlickrWindow::slotBusy(bool val)
 {
-    if ( val )
+    if (val)
     {
         setCursor(QCursor::WaitCursor);
 //      m_newAlbumBtn->setEnabled( false );
@@ -410,13 +416,13 @@ void FlickrWindow::slotUser1()
     {
         kdDebug() << "Using Selection" << endl;
 
-        if (m_urls != NULL)
+        if (m_urls)
             delete m_urls;
 
         m_urls = new KURL::List(m_interface->currentSelection().images());
     }
 
-    if (m_urls == NULL || m_urls->isEmpty())
+    if (!m_urls || m_urls->isEmpty())
         return;
 
     typedef QPair<QString,FPhotoInfo> Pair;
