@@ -1,20 +1,21 @@
 /* ============================================================
- * File  : plugin_picasawebexport.h
- * Author: Vardhman Jain <vardhman @ gmail.com>
- * Date  : 2007-16-07
- * Description :
  *
- * Copyright 2007 by Vardhman Jain <vardhman @ gmail.com>
-
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2007-17-07
+ * Description : a kipi plugin to export images to Picasa web service
+ *
+ * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
- * Public License as published bythe Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -22,34 +23,38 @@
 #ifndef PLUGIN_PICASAWEBEXPORT_H
 #define PLUGIN_PICASAWEBEXPORT_H
 
+// Libkipi includes.
+
+#include <libkipi/plugin.h>
+
+// Local includes.
+
 #include "picasawebwindow.h"
 
-// libKIPI includes.
-#include <libkipi/plugin.h>
 class KAction;
 
 using namespace KIPIPicasawebExportPlugin;
+
 class Plugin_PicasawebExport : public KIPI::Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_PicasawebExport(QObject *parent,
-                         const char* name,
-                         const QStringList &args);
+    Plugin_PicasawebExport(QObject *parent, const char* name, const QStringList &args);
     ~Plugin_PicasawebExport();
-    
-    virtual KIPI::Category category( KAction* action ) const;
-    virtual void setup( QWidget* );
+
+    virtual KIPI::Category category(KAction* action) const;
+    virtual void setup(QWidget*);
 
 public slots:
 
     void slotActivate();
 
 private:
-    PicasawebWindow *dlg;
-    KAction *m_action;
+
+    PicasawebWindow *m_dlg;
+    KAction         *m_action;
 };
 
-#endif
+#endif // PLUGIN_PICASAWEBEXPORT_H
