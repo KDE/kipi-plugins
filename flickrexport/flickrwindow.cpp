@@ -7,6 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -74,7 +75,7 @@ namespace KIPIFlickrExportPlugin
 {
 
 FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, QWidget *parent)
-            : KDialogBase(0, 0, false, i18n( "FlickrUploadr" ), Help|Close, Close, false)
+            : KDialogBase(0, 0, false, i18n("Flickr Export"), Help|Close, Close, false)
 {
     m_tmp         = tmpFolder;
     m_interface   = interface;
@@ -89,19 +90,23 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
                                            KAboutData::License_GPL,
                                            I18N_NOOP("A Kipi plugin to export image collection to "
                                                      "Flickr web service."),
-                                           "(c) 2005-2008, Vardhman Jain");
+                                           "(c) 2005-2008, Vardhman Jain\n"
+                                           "(c) 2008, Gilles Caulier");
 
     m_about->addAuthor("Vardhman Jain", I18N_NOOP("Author and maintainer"),
                        "Vardhman at gmail dot com");
 
-    m_helpButton = actionButton( Help );
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Developer"),
+                       "caulier dot gilles at gmail dot com");
+
+    m_helpButton        = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    m_helpButton->setPopup( helpMenu->menu() );
-    m_widget = new FlickrWidget( this );
-    setMainWidget( m_widget );
-    m_widget->setMinimumSize( 600, 400 );
+    m_helpButton->setPopup(helpMenu->menu());
+    m_widget = new FlickrWidget(this);
+    setMainWidget(m_widget);
+    m_widget->setMinimumSize(600, 400);
 
     m_urls                  = NULL;
     m_tagView               = m_widget->m_tagView;
@@ -123,11 +128,11 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     //m_startUploadButton->setEnabled(false);
     //m_albumView->setRootIsDecorated( true );
     //m_newAlbumBtn->setEnabled( false );
-    m_addPhotoBtn->setEnabled( false );
+    m_addPhotoBtn->setEnabled(false);
     //if(!m_interface->hasFeature(KIPI::HostSupportsTags))
     //    m_exportApplicationTags->setEnabled(false);
 
-    m_talker = new FlickrTalker( this );
+    m_talker = new FlickrTalker(this);
 
     connect(m_talker, SIGNAL( signalError( const QString& ) ),
             m_talker, SLOT( slotError( const QString& ) ));
@@ -150,9 +155,9 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded( const QValueList<FPhotoSet>& ) ),
             this, SLOT( slotListPhotoSetsResponse( const QValueList<FPhotoSet>& ) ));
 
-    m_progressDlg = new QProgressDialog( this, 0, true );
-    m_progressDlg->setAutoReset( true );
-    m_progressDlg->setAutoClose( true );
+    m_progressDlg = new QProgressDialog(this, 0, true);
+    m_progressDlg->setAutoReset(true);
+    m_progressDlg->setAutoClose(true);
 
     connect(m_progressDlg, SIGNAL( canceled() ),
             this, SLOT( slotAddPhotoCancel() ));
@@ -195,9 +200,9 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_dimensionSpinBox->setValue(config.readNumEntry("Maximum Width", 1600));
     m_imageQualitySpinBox->setValue(config.readNumEntry("Image Quality", 85));
 
-    m_authProgressDlg = new QProgressDialog( this, 0, true );
-    m_authProgressDlg->setAutoReset( true );
-    m_authProgressDlg->setAutoClose( true );
+    m_authProgressDlg = new QProgressDialog(this, 0, true);
+    m_authProgressDlg->setAutoReset(true);
+    m_authProgressDlg->setAutoClose(true);
 
     connect(m_authProgressDlg, SIGNAL( canceled() ),
             this, SLOT( slotAuthCancel() ));
