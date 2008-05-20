@@ -261,11 +261,11 @@ void FlickrWindow::slotClose()
     delete this;
 }
 
-void FlickrWindow::slotTokenObtained( const QString& token )
+void FlickrWindow::slotTokenObtained(const QString& token)
 {
-    m_token=token;
-    m_username=m_talker->getUserName();
-    m_userId=m_talker->getUserId();
+    m_token    = token;
+    m_username = m_talker->getUserName();
+    m_userId   = m_talker->getUserId();
     kdDebug() << "SlotTokenObtained invoked setting user Display name to " << m_username << endl;
     m_userNameDisplayLabel->setText(m_username);
     m_widget->setEnabled(true);
@@ -297,7 +297,7 @@ void FlickrWindow::slotUserChangeRequest()
 {
     kdDebug()<<"Slot Change User Request "<<endl;
     m_talker->getFrob();
-    //m_addPhotoBtn->setEnabled(m_selectImagesButton->isChecked());
+//  m_addPhotoBtn->setEnabled(m_selectImagesButton->isChecked());
 }
 
 /*
@@ -476,12 +476,12 @@ void FlickrWindow::slotUser1()
 
         while( itTags != allTags.end() ) 
         {
-            kdDebug()<<"TAGS"<< ( *itTags )<<endl;
+            kdDebug() << "TAGS" << ( *itTags ) << endl;
             ++itTags;
         }
 
         temp.tags = allTags; 
-        m_uploadQueue.append( Pair( (*it).path(), temp) );
+        m_uploadQueue.append(Pair( (*it).path(), temp));
     }
 
     m_uploadTotal = m_uploadQueue.count();
