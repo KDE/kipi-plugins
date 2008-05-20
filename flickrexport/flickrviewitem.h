@@ -40,22 +40,19 @@ class GAlbumViewItem : public QListViewItem
 
 public:
 
-    GAlbumViewItem(QListView* parent, const QString& name, const GAlbum& _album)
-        : QListViewItem(parent, name), album(_album) {}
-
-    GAlbumViewItem(QListViewItem* parent, const QString& name, const GAlbum& _album)
-        : QListViewItem(parent, name), album(_album) {}
-
-    void paintCell(QPainter *p, const QColorGroup& cg, int column, int width, int);
-    void paintFocus (QPainter*, const QColorGroup&, const QRect&) {}
-
-public:
-
-    GAlbum album;
+    GAlbumViewItem(QListView* parent, const QString& name, const GAlbum& album);
+    GAlbumViewItem(QListViewItem* parent, const QString& name, const GAlbum& album);
+    ~GAlbumViewItem();
 
 protected:
 
+    void paintCell(QPainter *p, const QColorGroup& cg, int column, int width, int);
+    void paintFocus(QPainter*, const QColorGroup&, const QRect&);
     void setup();
+
+private:
+
+    GAlbum m_album;
 };
 
 } // namespace KIPIFlickrExportPlugin

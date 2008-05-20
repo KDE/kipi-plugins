@@ -33,8 +33,23 @@
 namespace KIPIFlickrExportPlugin
 {
 
-void GAlbumViewItem::paintCell(QPainter * p, const QColorGroup & cg,
-                               int column, int width, int )
+GAlbumViewItem::GAlbumViewItem(QListView* parent, const QString& name, const GAlbum& album)
+              : QListViewItem(parent, name)
+{
+    m_album = album;
+}
+
+GAlbumViewItem::GAlbumViewItem(QListViewItem* parent, const QString& name, const GAlbum& album)
+              : QListViewItem(parent, name) 
+{
+    m_album = album;
+}
+
+GAlbumViewItem::~GAlbumViewItem()
+{
+}
+
+void GAlbumViewItem::paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int)
 {
     if (!p)
         return;
@@ -68,14 +83,14 @@ void GAlbumViewItem::paintCell(QPainter * p, const QColorGroup & cg,
 
     int r = lv->itemMargin() + iconWidth;
     int h = lv->fontMetrics().height() + 2;
-    p->drawText(r, 0, width-r, h, Qt::AlignVCenter, album.title);
+    p->drawText(r, 0, width-r, h, Qt::AlignVCenter, m_album.title);
 
     QFont fn(lv->font());
     fn.setPointSize(fn.pointSize()-2);
     fn.setItalic(true);
     p->setFont(fn);
     p->setPen(isSelected() ? cg.highlightedText() : Qt::gray);
-    p->drawText(r, h, width-r, h, Qt::AlignVCenter, album.name);
+    p->drawText(r, h, width-r, h, Qt::AlignVCenter, m_album.name);
 }
 
 void GAlbumViewItem::setup()
@@ -83,6 +98,10 @@ void GAlbumViewItem::setup()
     int h      = listView()->fontMetrics().height();
     int margin = 4;
     setHeight( QMAX(2*h + margin, 32) );
+}
+
+void GAlbumViewItem::paintFocus(QPainter*, const QColorGroup&, const QRect&)
+{
 }
 
 } // namespace KIPIFlickrExportPlugin
