@@ -150,7 +150,7 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     QGridLayout* loginDetailsBoxLayout = new QGridLayout(loginDetailsBox->layout(), 1, 2);
 
     QLabel *userNameLabel  = new QLabel(i18n("User Name: "), loginDetailsBox);
-    m_userNameDisplayLabel = new QLabel(QString(), loginDetailsBox);
+    m_userNameDisplayLabel = new QLabel(loginDetailsBox);
     m_changeUserButton     = new QPushButton(loginDetailsBox, "m_changeUserButton");
     m_changeUserButton->setText(i18n("Use a different account"));
 

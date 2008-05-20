@@ -267,7 +267,7 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     m_username = m_talker->getUserName();
     m_userId   = m_talker->getUserId();
     kdDebug() << "SlotTokenObtained invoked setting user Display name to " << m_username << endl;
-    m_userNameDisplayLabel->setText(m_username);
+    m_userNameDisplayLabel->setText(QString("<qt><b>%1</b></qt>").arg(m_username));
     m_widget->setEnabled(true);
 }
 
@@ -287,7 +287,7 @@ void FlickrWindow::slotBusy(bool val)
     }
 }
 
-void FlickrWindow::slotError( const QString& msg )
+void FlickrWindow::slotError(const QString& msg)
 {
     //m_talker->slotError(msg);
     KMessageBox::error( this, msg );
@@ -295,7 +295,7 @@ void FlickrWindow::slotError( const QString& msg )
 
 void FlickrWindow::slotUserChangeRequest()
 {
-    kdDebug()<<"Slot Change User Request "<<endl;
+    kdDebug() << "Slot Change User Request " << endl;
     m_talker->getFrob();
 //  m_addPhotoBtn->setEnabled(m_selectImagesButton->isChecked());
 }
@@ -432,7 +432,7 @@ void FlickrWindow::slotUser1()
 
     for (KURL::List::iterator it = m_urls->begin(); it != m_urls->end(); ++it)
     {
-        KIPI::ImageInfo info = m_interface->info( *it );
+        KIPI::ImageInfo info = m_interface->info(*it);
         kdDebug() <<" Adding images to the list" << endl;
         FPhotoInfo temp;
 
@@ -466,17 +466,18 @@ void FlickrWindow::slotUser1()
         }
 
         itTags = tagsFromDatabase.begin();
-        while( itTags != tagsFromDatabase.end() ) 
+
+        while(itTags != tagsFromDatabase.end()) 
         {
-            allTags.append( *itTags );
+            allTags.append(*itTags);
             ++itTags;
         }
 
         itTags = allTags.begin();
 
-        while( itTags != allTags.end() ) 
+        while(itTags != allTags.end()) 
         {
-            kdDebug() << "TAGS" << ( *itTags ) << endl;
+            kdDebug() << "TAGS" << (*itTags) << endl;
             ++itTags;
         }
 
@@ -493,7 +494,7 @@ void FlickrWindow::slotUser1()
 
 void FlickrWindow::slotAddPhotoNext()
 {
-    if ( m_uploadQueue.isEmpty() )
+    if (m_uploadQueue.isEmpty())
     {
         m_progressDlg->reset();
         m_progressDlg->hide();
@@ -511,12 +512,12 @@ void FlickrWindow::slotAddPhotoNext()
                                   m_dimensionSpinBox->value(),m_imageQualitySpinBox->value());
     if (!res)
     {
-        slotAddPhotoFailed( "" );
+        slotAddPhotoFailed("");
         return;
     }
 
     m_progressDlg->setLabelText(i18n("Uploading file %1 ")
-                                .arg( KURL(pathComments.first).filename() ));
+                                .arg(KURL(pathComments.first).filename()));
 
     if (m_progressDlg->isHidden())
         m_progressDlg->show();
@@ -533,7 +534,7 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
 {
     if (KMessageBox::warningContinueCancel(this,
                      i18n("Failed to upload photo into Flickr. %1\nDo you want to continue?").arg(msg))
-                     != KMessageBox::Continue )
+                     != KMessageBox::Continue)
     {
         m_uploadQueue.clear();
         m_progressDlg->reset();
@@ -544,7 +545,7 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
     else
     {
         m_uploadTotal--;
-        m_progressDlg->setProgress( m_uploadCount, m_uploadTotal );
+        m_progressDlg->setProgress(m_uploadCount, m_uploadTotal);
         slotAddPhotoNext();
     }
 }
