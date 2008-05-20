@@ -84,7 +84,7 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     //m_newAlbumBtn->setText(i18n("&New Album"));
 
     QGridLayout* tagsLayout = new QGridLayout(1, 1);
-    QLabel* tagsLabel       = new QLabel(i18n("Tags:"), rightButtonGroup);
+    QLabel* tagsLabel       = new QLabel(i18n("Added Tags: "), rightButtonGroup);
     m_tagsLineEdit          = new QLineEdit(rightButtonGroup, "m_tagsLineEdit");
     m_exportApplicationTags = new QCheckBox(rightButtonGroup);
     m_exportApplicationTags->setText(i18n("Use Host Application Tags"));
@@ -126,16 +126,16 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     m_imageQualitySpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     // NOTE: The term Compression factor may be to technical to write in the label
-    QLabel* imageQualityLabel = new QLabel(i18n("Image Quality (higher is better):"), optionsBox);
+    QLabel* imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"), optionsBox);
 
     optionsBoxLayout->addMultiCellWidget(m_publicCheckBox,      0, 0, 0, 3);
     optionsBoxLayout->addMultiCellWidget(m_familyCheckBox,      1, 1, 0, 3);
     optionsBoxLayout->addMultiCellWidget(m_friendsCheckBox,     2, 2, 0, 3);
-    optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox,      3, 3, 0, 3);
-    optionsBoxLayout->addMultiCellWidget(resizeLabel,           4, 4, 1, 2);
-    optionsBoxLayout->addMultiCellWidget(m_dimensionSpinBox,    4, 4, 3, 3);
-    optionsBoxLayout->addMultiCellWidget(imageQualityLabel,     5, 5, 1, 2);
-    optionsBoxLayout->addMultiCellWidget(m_imageQualitySpinBox, 5, 5, 3, 3);
+    optionsBoxLayout->addMultiCellWidget(imageQualityLabel,     3, 3, 0, 2);
+    optionsBoxLayout->addMultiCellWidget(m_imageQualitySpinBox, 3, 3, 3, 3);
+    optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox,      4, 4, 0, 3);
+    optionsBoxLayout->addMultiCellWidget(resizeLabel,           5, 5, 1, 2);
+    optionsBoxLayout->addMultiCellWidget(m_dimensionSpinBox,    5, 5, 3, 3);
     optionsBoxLayout->setColSpacing(0, KDialog::spacingHint());
     optionsBoxLayout->setColStretch(1, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
