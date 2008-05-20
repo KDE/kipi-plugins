@@ -29,6 +29,8 @@
 
 class KAction;
 
+using namespace KIPIFlickrExportPlugin;
+
 class Plugin_FlickrExport : public KIPI::Plugin
 {
     Q_OBJECT
@@ -47,8 +49,8 @@ public slots:
 
 private:
 
-    KIPIFlickrExportPlugin::FlickrWindow *dlg;
-    KAction                              *m_action;
+    KAction      *m_action;
+    FlickrWindow *m_dlg;
 };
 
 #endif // PLUGIN_FLICKREXPORT_H
