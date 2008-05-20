@@ -94,7 +94,7 @@ FlickrTalker::~FlickrTalker()
 
 QString FlickrTalker::getApiSig(const QString& secret, const QStringList& headers)
 {
-    QStringList compressed ;//= new List<string>(headers.Length);
+    QStringList compressed ; //= new List<string>(headers.Length);
 
     for (QStringList::const_iterator it = headers.begin(); it != headers.end(); ++it)
     {
@@ -106,7 +106,7 @@ QString FlickrTalker::getApiSig(const QString& secret, const QStringList& header
     QString merged   = compressed.join("");
     QString final    = secret + merged;
     const char *test = final.ascii();
-    KMD5 context (test);
+    KMD5 context(test);
     //kdDebug() << "Test Hex Digest output: " << context.hexDigest().data() << endl;
     return context.hexDigest().data();
 }
@@ -130,9 +130,9 @@ void FlickrTalker::getFrob()
     QString queryStr = headers.join("&");
     QString postUrl  = url+queryStr;
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(postUrl,tmp,false);
+    KIO::TransferJob* job = KIO::http_post(postUrl, tmp, false);
 
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");	
+    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -165,9 +165,9 @@ void FlickrTalker::checkToken(const QString& token)
     headers.append("api_sig=" + md5);
     QString queryStr = headers.join("&");
     QString postUrl  = url+queryStr;
-    kdDebug() << "Check token url " << postUrl << endl;
+    kdDebug() << "Check token url: " << postUrl << endl;
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(postUrl,tmp,false);
+    KIO::TransferJob* job = KIO::http_post(postUrl, tmp, false);
 
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");	
 
@@ -241,7 +241,7 @@ void FlickrTalker::getToken()
     QString postUrl  = url+queryStr;
     QByteArray tmp;
     KIO::TransferJob* job = KIO::http_post(postUrl, tmp, false);
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );	
+    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -253,7 +253,7 @@ void FlickrTalker::getToken()
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
-    kdDebug() << " url invoked in the browser:\n" << queryStr << endl;
+    kdDebug() << "Url invoked in the browser: " << queryStr << endl;
     authProgressDlg->setLabelText(i18n("Getting the Token from the server"));
     authProgressDlg->setProgress(3, 4);
 }
@@ -269,8 +269,8 @@ void FlickrTalker::listPhotoSets()
     QString queryStr = headers.join("&");
     QString postUrl  = url+queryStr;
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(postUrl,tmp,false);
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );	
+    KIO::TransferJob* job = KIO::http_post(postUrl, tmp, false);
+    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -304,8 +304,8 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QString& argLis
     QString queryStr = headers.join("&");
     QString postUrl = url+queryStr;
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(postUrl,tmp,false);
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );	
+    KIO::TransferJob* job = KIO::http_post(postUrl, tmp, false);
+    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -399,7 +399,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     else
         image.load(photoPath);
 
-    kdDebug() << "Add photo query" << postUrl << endl;
+    kdDebug() << "Add photo query: " << postUrl << endl;
 
     if (!image.isNull())
     {
