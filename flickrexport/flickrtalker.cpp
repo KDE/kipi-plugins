@@ -50,7 +50,7 @@
 #include <kapp.h>
 #include <kmessagebox.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -67,16 +67,17 @@ namespace KIPIFlickrExportPlugin
 {
 
 FlickrTalker::FlickrTalker( QWidget* parent )
-            : m_parent( parent ),  m_job( 0 )
-    {
-        m_apikey = "49d585bafa0758cb5c58ab67198bf632";
-        m_secret = "34b39925e6273ffd";
+{
+    m_parent = parent;
+    m_job    = 0;
+    m_apikey = "49d585bafa0758cb5c58ab67198bf632";
+    m_secret = "34b39925e6273ffd";
 
-        connect(this, SIGNAL(signalAuthenticate()),
-                this, SLOT(slotAuthenticate()));
+    connect(this, SIGNAL(signalAuthenticate()),
+            this, SLOT(slotAuthenticate()));
 
-        authProgressDlg = new QProgressDialog();
-    }
+    authProgressDlg = new QProgressDialog();
+}
 
 FlickrTalker::~FlickrTalker()
 {
@@ -99,11 +100,12 @@ QString FlickrTalker::getApiSig(QString secret, QStringList headers)
     QString final    = secret + merged;
     const char *test = final.ascii();
     KMD5 context (test);
-    //kdDebug()<< "Test Hex Digest output: " << context.hexDigest().data() << endl;
+    //kdDebug() << "Test Hex Digest output: " << context.hexDigest().data() << endl;
     return context.hexDigest().data();
 }
 
-//get the Api sig and send it to the server server should return a frob.
+/**get the Api sig and send it to the server server should return a frob.
+*/
 void FlickrTalker::getFrob() 
 {
     if (m_job)
@@ -113,11 +115,11 @@ void FlickrTalker::getFrob()
     }
 
     QString url = "http://www.flickr.com/services/rest/?";
-    QStringList headers ;//
+    QStringList headers ;
     headers.append("method=flickr.auth.getFrob");
-    headers.append("api_key="+ m_apikey);
+    headers.append("api_key=" + m_apikey);
     QString md5 = getApiSig(m_secret,headers);
-    headers.append("api_sig="+ md5);
+    headers.append("api_sig=" + md5);
     QString queryStr = headers.join("&");
     QString postUrl  = url+queryStr;
     QByteArray tmp;
@@ -148,12 +150,12 @@ void FlickrTalker::checkToken(const QString& token)
     }
 
     QString url="http://www.flickr.com/services/rest/?";
-    QStringList headers ;//
+    QStringList headers ;
     headers.append("method=flickr.auth.checkToken");
-    headers.append("api_key="+ m_apikey);
-    headers.append("auth_token="+ token);
+    headers.append("api_key=" + m_apikey);
+    headers.append("auth_token=" + token);
     QString md5 = getApiSig(m_secret, headers);
-    headers.append("api_sig="+ md5);
+    headers.append("api_sig=" + md5);
     QString queryStr = headers.join("&");
     QString postUrl  = url+queryStr;
     kdDebug() << "Check token url " << postUrl << endl;
@@ -184,13 +186,13 @@ void FlickrTalker::slotAuthenticate()
         m_job = 0;
     }
 
-    QString url="http://www.flickr.com/services/auth/?";
-    QStringList headers ;//
-    headers.append("api_key="+ m_apikey);
-    headers.append("frob="+ m_frob);
+    QString url = "http://www.flickr.com/services/auth/?";
+    QStringList headers ;
+    headers.append("api_key=" + m_apikey);
+    headers.append("frob=" + m_frob);
     headers.append("perms=write");
     QString md5 = getApiSig(m_secret,headers);
-    headers.append("api_sig="+ md5);
+    headers.append("api_sig=" + md5);
 
     QString queryStr          = headers.join("&");
     const QString completeUrl = url+queryStr;
@@ -223,22 +225,22 @@ void FlickrTalker::getToken()
     }
 
     QString url = "http://www.flickr.com/services/rest/?";
-    QStringList headers ;//
-    headers.append("api_key="+ m_apikey);
+    QStringList headers;
+    headers.append("api_key=" + m_apikey);
     headers.append("method=flickr.auth.getToken");
-    headers.append("frob="+ m_frob);
+    headers.append("frob=" + m_frob);
     QString md5 = getApiSig(m_secret,headers);
-    headers.append("api_sig="+ md5);
+    headers.append("api_sig=" + md5);
     QString queryStr = headers.join("&");
     QString postUrl  = url+queryStr;
-    QByteArray tmp;	
-    KIO::TransferJob* job = KIO::http_post(postUrl,tmp,false);
+    QByteArray tmp;
+    KIO::TransferJob* job = KIO::http_post(postUrl, tmp, false);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );	
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)), 
+    connect(job, SIGNAL(result(KIO::Job *)),
             this, SLOT(slotResult(KIO::Job *)));
 
     m_state = FE_GETTOKEN;
@@ -249,24 +251,25 @@ void FlickrTalker::getToken()
     authProgressDlg->setLabelText(i18n("Getting the Token from the server"));
     authProgressDlg->setProgress(3,4);
 }
+
 void FlickrTalker::listPhotoSets()
 {
     QString url    = "http://www.flickr.com/services/rest/?";
     QString method = "flickr.photosets.getList";
-    QStringList headers ;//
-    headers.append("api_key="+ m_apikey);
-    headers.append("method="+method);
-    headers.append("user_id="+m_userId);
+    QStringList headers ;
+    headers.append("api_key=" + m_apikey);
+    headers.append("method=" + method);
+    headers.append("user_id=" + m_userId);
     QString queryStr = headers.join("&");
     QString postUrl  = url+queryStr;
-    QByteArray tmp;	
+    QByteArray tmp;
     KIO::TransferJob* job = KIO::http_post(postUrl,tmp,false);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );	
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)), 
+    connect(job, SIGNAL(result(KIO::Job *)),
             this, SLOT(slotResult(KIO::Job *)));
 
     m_state = FE_LISTPHOTOSETS;
@@ -285,23 +288,23 @@ void FlickrTalker::getPhotoProperty(const QString& method,const QString& argList
     }
 
     QString url = "http://www.flickr.com/services/rest/?";
-    QStringList headers ;//
-    headers.append("api_key="+ m_apikey);
-    headers.append("method="+method);
-    headers.append("frob="+ m_frob);
+    QStringList headers ;
+    headers.append("api_key=" + m_apikey);
+    headers.append("method=" + method);
+    headers.append("frob=" + m_frob);
     headers.append(argList);
     QString md5 = getApiSig(m_secret,headers);
-    headers.append("api_sig="+ md5);
+    headers.append("api_sig=" + md5);
     QString queryStr = headers.join("&");
     QString postUrl = url+queryStr;
-    QByteArray tmp;	
+    QByteArray tmp;
     KIO::TransferJob* job = KIO::http_post(postUrl,tmp,false);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );	
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)), 
+    connect(job, SIGNAL(result(KIO::Job *)),
             this, SLOT(slotResult(KIO::Job *)));
 
     m_state = FE_GETPHOTOPROPERTY;
@@ -309,20 +312,18 @@ void FlickrTalker::getPhotoProperty(const QString& method,const QString& argList
     m_buffer.resize(0);
     emit signalBusy( true );
     kdDebug() << "Getting Photo Properties:\n" << queryStr << endl;
-    //authProgressDlg->setLabelText("Getting the Token from the server");
-    //authProgressDlg->setProgress(3,4);
+
+//  authProgressDlg->setLabelText("Getting the Token from the server");
+//  authProgressDlg->setProgress(3,4);
 }
-void FlickrTalker::listPhotos( const QString& albumName )
+void FlickrTalker::listPhotos( const QString& /*albumName*/ )
 {
-    QString temp=albumName;//just for avoiding warning.
-    //To be implemented
+    // TODO
 }
 
-void FlickrTalker::createAlbum(const QString& parentAlbumName, const QString& albumName,
-                               const QString& albumTitle, const QString& albumCaption)
+void FlickrTalker::createAlbum(const QString& /*parentAlbumName*/, const QString& /*albumName*/,
+                               const QString& /*albumTitle*/, const QString& /*albumCaption*/)
 {
-    QString temp = parentAlbumName+albumName+albumTitle+albumCaption;//for avoing warnings.
-    
     //TODO: The equivalent for Album is sets.
 }
 
@@ -340,24 +341,24 @@ bool FlickrTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     QStringList headers; 
     MPForm form;
     form.addPair("auth_token", m_token);
-    headers.append("auth_token="+ m_token);
+    headers.append("auth_token=" + m_token);
 
     form.addPair("api_key", m_apikey);
-    headers.append("api_key="+ m_apikey);
+    headers.append("api_key=" + m_apikey);
 
-    QString ispublic=(info.is_public==1)?"1":"0";
-    form.addPair("is_public",ispublic);
-    headers.append("is_public="+ ispublic);
+    QString ispublic = (info.is_public==1) ? "1" : "0";
+    form.addPair("is_public", ispublic);
+    headers.append("is_public=" + ispublic);
 
-    QString isfamily=(info.is_family==1)?"1":"0";
-    form.addPair("is_family",isfamily);
-    headers.append("is_family="+ isfamily);
+    QString isfamily = (info.is_family==1) ? "1" : "0";
+    form.addPair("is_family", isfamily);
+    headers.append("is_family=" + isfamily);
 
-    QString isfriend=(info.is_friend==1)?"1":"0";
-    form.addPair("is_friend",isfriend);
-    headers.append("is_friend="+ isfriend);
+    QString isfriend = (info.is_friend==1) ? "1" : "0";
+    form.addPair("is_friend", isfriend);
+    headers.append("is_friend=" + isfriend);
 
-    QString tags=info.tags.join(" ");
+    QString tags = info.tags.join(" ");
     if(tags.length() > 0)
     {	
         form.addPair("tags",tags);
@@ -367,23 +368,24 @@ bool FlickrTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     if (!info.title.isEmpty())
     {
         form.addPair("title", info.title);
-        headers.append("title="+ info.title);
+        headers.append("title=" + info.title);
     }
 
     if (!info.description.isEmpty())
     {
         form.addPair("description", info.description);
-        headers.append("description="+ info.description);
+        headers.append("description=" + info.description);
     }
 
     QString md5 = getApiSig(m_secret,headers);
     form.addPair("api_sig", md5);
-    headers.append("api_sig="+ md5);
+    headers.append("api_sig=" + md5);
     QString queryStr = headers.join("&");
-    QString postUrl  = url+queryStr;
+    QString postUrl  = url + queryStr;
 
     QImage image(photoPath);
     kdDebug() << "Add photo query" << postUrl << endl;
+
     if (!image.isNull())
     {
         // image file - see if we need to rescale it
@@ -409,8 +411,8 @@ bool FlickrTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
                 {
                     kdWarning(51000) << "(flickrExport::Image doesn't have exif data)" << endl;
                 }
-            }	
-            
+            }
+
             kdDebug() << "Resizing and saving to temp file: "<< path << endl;
         }
     }
@@ -456,7 +458,7 @@ void FlickrTalker::cancel()
 
     if (authProgressDlg && !authProgressDlg->isHidden()) 
         authProgressDlg->hide();
-}	
+}
 
 void FlickrTalker::data(KIO::Job*, const QByteArray& data)
 {
@@ -472,6 +474,7 @@ void FlickrTalker::slotError(const QString & error)
 {
     QString transError;
     int errorNo = atoi(error.latin1());
+
     switch (errorNo)
     {
         case 2: 
@@ -503,23 +506,23 @@ void FlickrTalker::slotError(const QString & error)
             break;
         case 105:
             transError = i18n("Service currently unavailable");
-            break;		
+            break;
         case 108:
             transError = i18n("Invalid Frob");
-            break;		
+            break;
         case 111: 
             transError = i18n("Format \"xxx\" not found"); 
             break;
-        case 112: 
+        case 112:
             transError = i18n("Method \"xxx\" not found"); 
             break;
-        case 114: 
+        case 114:
             transError = i18n("Invalid SOAP envelope");
             break;
-        case 115: 
+        case 115:
             transError = i18n("Invalid XML-RPC Method Call");
             break;
-        case 116: 
+        case 116:
             transError = i18n("The POST method is now required for all setters"); 
             break;
         default:
@@ -528,7 +531,8 @@ void FlickrTalker::slotError(const QString & error)
     };
 
     KMessageBox::error( 0, i18n("Error Occured: %1\n We can not proceed further").arg(transError));
-    //kdDebug() << "Not handling the error now will see it later" << endl;
+
+//  kdDebug() << "Not handling the error now will see it later" << endl;
 }
 
 void FlickrTalker::slotResult(KIO::Job *job)
@@ -594,20 +598,21 @@ void FlickrTalker::parseResponseGetFrob(const QByteArray &data)
 
     QDomElement docElem = doc.documentElement();
     QDomNode node = docElem.firstChild();
-    while( !node.isNull() ) 
+
+    while( !node.isNull() )
     {
         if ( node.isElement() && node.nodeName() == "frob" ) 
         {
-            QDomElement e = node.toElement(); // try to convert the node to an element.
+            QDomElement e = node.toElement();    // try to convert the node to an element.
             kdDebug() << "Frob is" << e.text() << endl; 
-            m_frob=e.text();//this is what is obtained from data.
-            success=true;
+            m_frob  = e.text();                  // this is what is obtained from data.
+            success = true;
         }
 
         if ( node.isElement() && node.nodeName() == "err" ) 
         {
             kdDebug() << "Checking Error in response" << endl;
-            errorString=node.toElement().attribute("code");
+            errorString = node.toElement().attribute("code");
             kdDebug() << "Error code=" << errorString << endl;
             kdDebug() << "Msg=" << node.toElement().attribute("msg") << endl;	
         }
@@ -625,85 +630,88 @@ void FlickrTalker::parseResponseGetFrob(const QByteArray &data)
 
 void FlickrTalker::parseResponseCheckToken(const QByteArray &data)
 {
-    bool success=false;
+    bool success = false;
     QString errorString;
     QString username;
     QString transReturn;
     QDomDocument doc( "checktoken" );
+
     if ( !doc.setContent( data ) ) 
     {
         return;
     }
 
     QDomElement docElem = doc.documentElement();
-    QDomNode node = docElem.firstChild();
+    QDomNode node       = docElem.firstChild();
     QDomElement e;
     while( !node.isNull() ) 
     {
         if ( node.isElement() && node.nodeName() == "auth" ) 
         {
-            e = node.toElement(); // try to convert the node to an element.
-            QDomNode details=e.firstChild();
+            e                = node.toElement(); // try to convert the node to an element.
+            QDomNode details = e.firstChild();
+
             while(!details.isNull())
             {
                 if(details.isElement())
                 {
                     e = details.toElement();
 
-                    if(details.nodeName()=="token")
+                    if(details.nodeName() == "token")
                     {
-                        kdDebug()<<"Token="<<e.text()<<endl; 
-                        m_token=e.text();//this is what is obtained from data.
+                        kdDebug() << "Token=" << e.text() << endl; 
+                        m_token = e.text();//this is what is obtained from data.
                     }
 
-                    if(details.nodeName()=="perms")
+                    if(details.nodeName() == "perms")
                     {
-                        kdDebug()<<"Perms="<<e.text()<<endl; 
-                        QString	perms=e.text();//this is what is obtained from data.
-                        if(perms=="write")
-                            transReturn=i18n("As in the persmission to", "write");
-                        else if(perms=="read")
-                            transReturn=i18n("As in the permission to", "read");
-                        else if(perms=="delete")
-                            transReturn=i18n("As in the permission to", "delete");
+                        kdDebug() << "Perms=" << e.text() << endl; 
+                        QString	perms = e.text();//this is what is obtained from data.
+
+                        if(perms == "write")
+                            transReturn = i18n("As in the persmission to", "write");
+                        else if(perms == "read")
+                            transReturn = i18n("As in the permission to", "read");
+                        else if(perms == "delete")
+                            transReturn = i18n("As in the permission to", "delete");
                     }
 
                     if(details.nodeName()=="user")
                     {
-                        kdDebug()<<"nsid="<<e.attribute("nsid")<<endl; 
-                        m_userId=e.attribute("nsid");
-                        username=e.attribute("username");
-                        m_username=username;
-                        kdDebug()<<"username="<<e.attribute("username")<<endl; 
-                        kdDebug()<<"fullname="<<e.attribute("fullname")<<endl; 
+                        kdDebug() << "nsid=" << e.attribute("nsid") << endl; 
+                        m_userId   = e.attribute("nsid");
+                        username   = e.attribute("username");
+                        m_username = username;
+                        kdDebug() << "username=" << e.attribute("username") << endl; 
+                        kdDebug() << "fullname=" << e.attribute("fullname") << endl; 
                     }
-                }	
+                }
 
-                details=details.nextSibling();
+                details = details.nextSibling();
             }
-            
+
             authProgressDlg->hide();
             emit signalTokenObtained(m_token);
-            success=true;
+            success = true;
         }
 
         if ( node.isElement() && node.nodeName() == "err" ) 
         {
-            kdDebug()<<"Checking Error in response"<<endl;
-            errorString=node.toElement().attribute("code");
-            kdDebug()<<"Error code="<<errorString<<endl;
-            kdDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;	
-            int valueOk=KMessageBox::questionYesNo(0, i18n("Your token is invalid. Would you like to "
-                        "get a new token to proceed ?\n"));
-            if(valueOk==KMessageBox::Yes)
+            kdDebug() << "Checking Error in response" << endl;
+            errorString = node.toElement().attribute("code");
+            kdDebug() << "Error code=" << errorString << endl;
+            kdDebug() << "Msg=" << node.toElement().attribute("msg") << endl;	
+
+            int valueOk = KMessageBox::questionYesNo(0, i18n("Your token is invalid. Would you like to "
+                                                             "get a new token to proceed ?\n"));
+            if(valueOk == KMessageBox::Yes)
             {
-                getFrob(); 
+                getFrob();
                 return;
             }
             else
-            {	
-                authProgressDlg->hide();//will popup the result for 
-                //the checktoken failure below 
+            {
+                authProgressDlg->hide(); //will popup the result for the checktoken failure below 
             }
 
         }
@@ -716,6 +724,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray &data)
 
     kdDebug() << "CheckToken finished" << endl;
 }
+
 void FlickrTalker::parseResponseGetToken(const QByteArray &data)
 {
     bool success = false;
@@ -727,15 +736,16 @@ void FlickrTalker::parseResponseGetToken(const QByteArray &data)
     }
 
     QDomElement docElem = doc.documentElement();
-    QDomNode node = docElem.firstChild();
+    QDomNode node       = docElem.firstChild();
     QDomElement e;
 
     while( !node.isNull() ) 
     {
         if ( node.isElement() && node.nodeName() == "auth" ) 
         {
-            e = node.toElement(); // try to convert the node to an element.
-            QDomNode details=e.firstChild();
+            e                = node.toElement(); // try to convert the node to an element.
+            QDomNode details = e.firstChild();
+
             while(!details.isNull())
             {
                 if(details.isElement())
@@ -746,7 +756,7 @@ void FlickrTalker::parseResponseGetToken(const QByteArray &data)
                         kdDebug()<<"Token="<<e.text()<<endl; 
                         m_token=e.text();//this is what is obtained from data.
                     }
-                    
+
                     if(details.nodeName()=="perms")
                     {
                         kdDebug()<<"Perms="<<e.text()<<endl; 

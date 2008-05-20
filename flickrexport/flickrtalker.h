@@ -74,11 +74,11 @@ public:
     ~FlickrTalker();
 
     QString getApiSig(QString, QStringList);
-    void getFrob();	    
-    void getToken();	   
-    void checkToken(const QString& token);	   
-    void getPhotoProperty(const QString& method,const QString& argList);	   
-  
+    void getFrob();
+    void getToken();
+    void checkToken(const QString& token);
+    void getPhotoProperty(const QString& method,const QString& argList);
+
     void listPhotoSets();
     void listPhotos(const QString& albumName);
     void createAlbum(const QString& parentAlbumName,
@@ -89,18 +89,18 @@ public:
     bool addPhoto(const QString& photoPath, FPhotoInfo& info,
                   bool rescale=false, int maxDim=600 , int imageQuality=85);
 
-	QString getUserName();
-	QString getUserId();
+    QString getUserName();
+    QString getUserId();
     void cancel();
 
 public:
-    
+
     QProgressDialog *authProgressDlg;
 
 signals:
 
     void signalError( const QString& msg );
-    //void signalLoginFailed( const QString& msg );
+//  void signalLoginFailed( const QString& msg );
     void signalBusy( bool val );
     void signalAlbums( const QValueList<GAlbum>& albumList );
     void signalPhotos( const QValueList<GPhoto>& photoList );
@@ -113,7 +113,7 @@ signals:
 
 private:
 
- //   void parseResponseLogin(const QByteArray &data);
+//  void parseResponseLogin(const QByteArray &data);
     void parseResponseListPhotoSets(const QByteArray &data);
     void parseResponseListPhotos(const QByteArray &data);
     void parseResponseCreateAlbum(const QByteArray &data);
@@ -122,19 +122,19 @@ private:
     void parseResponseGetToken(const QByteArray &data);
     void parseResponseCheckToken(const QByteArray &data);
     void parseResponsePhotoProperty(const QByteArray &data);
-   	
+
 private slots:
 
     void slotError( const QString& msg );
-    void slotAuthenticate();	    
+    void slotAuthenticate();
     void data(KIO::Job *job, const QByteArray &data);
     void slotResult (KIO::Job *job);
 
 private:
 
     QWidget*   m_parent;
-    
-    //QString    m_cookie;
+
+//  QString    m_cookie;
     QByteArray m_buffer;
 
     QString    m_apikey;
@@ -144,7 +144,7 @@ private:
     QString    m_username;
     QString    m_userId;
 
-    //KURL       m_url;
+//  KURL       m_url;
     KIO::Job*  m_job;
 
     State      m_state;
