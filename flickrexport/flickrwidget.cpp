@@ -54,14 +54,9 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
-            : QWidget(parent, name, fl)
+FlickrWidget::FlickrWidget(QWidget* parent)
+            : QWidget(parent)
 {
-    if ( !name )
-        setName( "FlickrWidget" );
-
-    // ------------------------------------------------------------------------
-
     QVBoxLayout* flickrWidgetLayout = new QVBoxLayout(this, 5, 5, "FlickrWidgetLayout");
 
     QLabel *headerLabel = new QLabel(this, "headerLabel");
@@ -216,6 +211,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
 
     // ------------------------------------------------------------------------
 
+    setName("FlickrWidget");
     resize( QSize(600, 400).expandedTo(minimumSizeHint()) );
     clearWState(WState_Polished);
 }
