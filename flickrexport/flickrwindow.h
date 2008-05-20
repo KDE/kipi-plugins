@@ -68,10 +68,10 @@ namespace KIPIFlickrExportPlugin
 
 class FlickrWidget;
 class FlickrTalker;
-class GAlbum;
-class GPhoto;
 class FPhotoInfo;
 class FPhotoSet;
+class GPhoto;
+class GAlbum;
 class GAlbumViewItem;
 
 class FlickrWindow : public KDialogBase
@@ -85,52 +85,51 @@ public:
 
 private:
 
-    unsigned int              m_uploadCount;
-    unsigned int              m_uploadTotal;
+    unsigned int                             m_uploadCount;
+    unsigned int                             m_uploadTotal;
 
-    QListView                *m_tagView;
+    QListView                               *m_tagView;
 
-//  QPushButton              *m_newAlbumBtn;
-    QPushButton              *m_addPhotoBtn;
-    QPushButton              *m_helpButton;
-    QPushButton              *m_changeUserButton;
+//  QPushButton                             *m_newAlbumBtn;
+    QPushButton                             *m_addPhotoBtn;
+    QPushButton                             *m_changeUserButton;
 
-    QCheckBox                *m_resizeCheckBox;
-    QCheckBox                *m_publicCheckBox;
-    QCheckBox                *m_familyCheckBox;
-    QCheckBox                *m_friendsCheckBox;
-    QCheckBox                *m_exportApplicationTags;
+    QCheckBox                               *m_resizeCheckBox;
+    QCheckBox                               *m_publicCheckBox;
+    QCheckBox                               *m_familyCheckBox;
+    QCheckBox                               *m_friendsCheckBox;
+    QCheckBox                               *m_exportApplicationTags;
 
-    QSpinBox                 *m_dimensionSpinBox;
-    QSpinBox                 *m_imageQualitySpinBox;
+    QSpinBox                                *m_dimensionSpinBox;
+    QSpinBox                                *m_imageQualitySpinBox;
 
-    QLineEdit                *m_tagsLineEdit;
+    QLineEdit                               *m_tagsLineEdit;
 
-    QIntDict<GAlbumViewItem>  m_albumDict;
+    QIntDict<GAlbumViewItem>                 m_albumDict;
 
-    QString                   m_token;
-    QString                   m_username;
-    QString                   m_userId;
-    QString                   m_lastSelectedAlbum;
-    QString                   m_tmp;
+    QString                                  m_token;
+    QString                                  m_username;
+    QString                                  m_userId;
+    QString                                  m_lastSelectedAlbum;
+    QString                                  m_tmp;
 
-    QLabel                   *m_userNameDisplayLabel;
+    QLabel                                  *m_userNameDisplayLabel;
 
-    QProgressDialog          *m_progressDlg;
-    QProgressDialog          *m_authProgressDlg;
+    QProgressDialog                         *m_progressDlg;
+    QProgressDialog                         *m_authProgressDlg;
 
     QValueList< QPair<QString,FPhotoInfo> >  m_uploadQueue;
 
-//  KWallet::Wallet          *m_wallet;
-    KHTMLPart                *m_photoView;
-    KURL::List *m_urls;
+//  KWallet::Wallet                         *m_wallet;
+    KHTMLPart                               *m_photoView;
+    KURL::List                              *m_urls;
 
-    FlickrWidget             *m_widget;
-    FlickrTalker             *m_talker;
+    FlickrWidget                            *m_widget;
+    FlickrTalker                            *m_talker;
 
-    KIPI::Interface          *m_interface;
+    KIPI::Interface                         *m_interface;
 
-    KIPIPlugins::KPAboutData *m_about;
+    KIPIPlugins::KPAboutData                *m_about;
 
 private slots:
 

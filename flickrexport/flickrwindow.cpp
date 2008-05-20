@@ -127,11 +127,10 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Developer"),
                        "caulier dot gilles at gmail dot com");
 
-    m_helpButton        = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    m_helpButton->setPopup(helpMenu->menu());
+    actionButton(Help)->setPopup(helpMenu->menu());
 
     // --------------------------------------------------------------------------
 
@@ -211,7 +210,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     connect(m_authProgressDlg, SIGNAL( canceled() ),
             this, SLOT( slotAuthCancel() ));
 
-    m_talker->authProgressDlg=m_authProgressDlg; 
+    m_talker->authProgressDlg = m_authProgressDlg; 
     m_widget->setEnabled(false); 
 
     kdDebug() << "Calling auth methods" << endl; 
