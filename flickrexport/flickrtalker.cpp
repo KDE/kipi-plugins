@@ -344,7 +344,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
 
     QString url  = "http://www.flickr.com/services/upload/?";
     QString path = photoPath;
-    QStringList headers; 
+    QStringList headers;
     MPForm      form;
     form.addPair("auth_token", m_token);
     headers.append("auth_token=" + m_token);
@@ -366,9 +366,9 @@ bool FlickrTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
 
     QString tags = info.tags.join(" ");
     if(tags.length() > 0)
-    {	
-        form.addPair("tags",tags);
-        headers.append("tags="+ tags);
+    {
+        form.addPair("tags", tags);
+        headers.append("tags=" + tags);
     }
 
     if (!info.title.isEmpty())
@@ -394,7 +394,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     // Check if RAW file.
     QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
     QFileInfo fileInfo(photoPath);
-    if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
+    if (rawFilesExt.upper().contains(fileInfo.extension(false).upper()))
         KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
     else
         image.load(photoPath);
