@@ -45,6 +45,7 @@
 #include <klocale.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
+#include <kseparator.h>
 
 // Local includes.
 
@@ -59,34 +60,38 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 {
     QVBoxLayout* flickrWidgetLayout = new QVBoxLayout(this, 5, 5, "FlickrWidgetLayout");
 
-    QLabel *headerLabel = new QLabel(this, "headerLabel");
-    QFrame *headerLine  = new QFrame(this, "headerLine");
+    m_photoView         = 0; //new KHTMLPart( splitter, "m_photoView" );
+    KSeparator *line    = new KSeparator(Horizontal, this);
     QSplitter* splitter = new QSplitter(this);
     m_tagView           = new QListView(splitter, "m_tagView");
-    m_photoView         = 0; //new KHTMLPart( splitter, "m_photoView" );
+    QLabel *headerLabel = new QLabel(this, "headerLabel");
+    headerLabel->setText(i18n("<qt><b><h2>"
+                              "<font color=\"#0065DE\">flick</font>"
+                              "<font color=\"#FF0084\">r</font>"
+                              " Export"
+                              "</h2></b></qt>"));
 
     m_tagView->hide();
     //m_tagView->addColumn(i18n("Albums"));
     //m_tagView->setResizeMode(QListView::AllColumns);
     //m_tagView->header()->setLabel(0, i18n( "Albums"));
 
-    headerLine->setFrameShape(QFrame::HLine);
-    headerLine->setFrameShadow(QFrame::Sunken );
-    headerLabel->setText(i18n("<h2>Flickr Export</h2>"));
-
     // -------------------------------------------------------------------
 
-    QButtonGroup* rightButtonGroup      = new QButtonGroup(splitter, "rightButtonGroup");
-    QVBoxLayout* rightButtonGroupLayout = new QVBoxLayout(rightButtonGroup);
+    QGroupBox* leftPannelBox         = new QGroupBox(i18n("Upload Options"), splitter);
+    leftPannelBox->setColumnLayout(0, Qt::Vertical);
+    leftPannelBox->layout()->setSpacing(KDialog::spacingHint());
+    leftPannelBox->layout()->setMargin(0);
+    QVBoxLayout* leftPannelBoxLayout = new QVBoxLayout(leftPannelBox->layout());
 
-    //m_newAlbumBtn = new QPushButton(rightButtonGroup, "m_newAlbumBtn");
+    //m_newAlbumBtn = new QPushButton(leftPannelBox, "m_newAlbumBtn");
     //m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     //m_newAlbumBtn->setText(i18n("&New Album"));
 
     QGridLayout* tagsLayout = new QGridLayout(1, 1);
-    QLabel* tagsLabel       = new QLabel(i18n("Added Tags: "), rightButtonGroup);
-    m_tagsLineEdit          = new QLineEdit(rightButtonGroup, "m_tagsLineEdit");
-    m_exportApplicationTags = new QCheckBox(rightButtonGroup);
+    QLabel* tagsLabel       = new QLabel(i18n("Added Tags: "), leftPannelBox);
+    m_tagsLineEdit          = new QLineEdit(leftPannelBox, "m_tagsLineEdit");
+    m_exportApplicationTags = new QCheckBox(leftPannelBox);
     m_exportApplicationTags->setText(i18n("Use Host Application Tags"));
 
     tagsLayout->addWidget(tagsLabel,               0, 0);
@@ -95,7 +100,7 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* optionsBox = new QGroupBox(i18n("Override Default Options"), rightButtonGroup);
+    QGroupBox* optionsBox = new QGroupBox(i18n("Override Default Options"), leftPannelBox);
     optionsBox->setColumnLayout(0, Qt::Vertical);
     optionsBox->layout()->setSpacing(KDialog::spacingHint());
     optionsBox->layout()->setMargin(KDialog::spacingHint());
@@ -119,7 +124,7 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_dimensionSpinBox->setEnabled(false);
 
-    QLabel* resizeLabel = new QLabel(i18n("Maximum dimension:"), optionsBox);
+    QLabel* resizeLabel = new QLabel(i18n("Maximum dimension (pixels):"), optionsBox);
 
     m_imageQualitySpinBox = new QSpinBox(0, 100, 1, optionsBox);
     m_imageQualitySpinBox->setValue(85);
@@ -143,7 +148,7 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* loginDetailsBox = new QGroupBox(i18n("Login Details"), rightButtonGroup);
+    QGroupBox* loginDetailsBox = new QGroupBox(i18n("Login"), leftPannelBox);
     loginDetailsBox->setColumnLayout(0, Qt::Vertical);
     loginDetailsBox->layout()->setSpacing(KDialog::spacingHint());
     loginDetailsBox->layout()->setMargin(KDialog::spacingHint());
@@ -163,7 +168,7 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
     // ------------------------------------------------------------------
 
-    m_fileSrcButtonGroup = new QButtonGroup(splitter, "fileSourceButton");
+    m_fileSrcButtonGroup = new QButtonGroup(i18n("Files List"), splitter);
     m_fileSrcButtonGroup->setRadioButtonExclusive(true);
     m_fileSrcButtonGroup->setColumnLayout(0, Qt::Vertical);
     m_fileSrcButtonGroup->layout()->setSpacing(KDialog::spacingHint());
@@ -189,14 +194,14 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    rightButtonGroupLayout->addLayout(tagsLayout);
-    rightButtonGroupLayout->addWidget(optionsBox);
-    rightButtonGroupLayout->addWidget(loginDetailsBox);
-    rightButtonGroupLayout->setSpacing(KDialog::spacingHint());
-    rightButtonGroupLayout->setMargin(KDialog::spacingHint());
+    leftPannelBoxLayout->addLayout(tagsLayout);
+    leftPannelBoxLayout->addWidget(optionsBox);
+    leftPannelBoxLayout->addWidget(loginDetailsBox);
+    leftPannelBoxLayout->setSpacing(KDialog::spacingHint());
+    leftPannelBoxLayout->setMargin(KDialog::spacingHint());
 
-    flickrWidgetLayout->addWidget(headerLabel, 0);
-    flickrWidgetLayout->addWidget(headerLine, 0);
+    flickrWidgetLayout->addWidget(headerLabel);
+    flickrWidgetLayout->addWidget(line);
     flickrWidgetLayout->addWidget(splitter, 5);
     flickrWidgetLayout->setSpacing(KDialog::spacingHint());
     flickrWidgetLayout->setMargin(0);
