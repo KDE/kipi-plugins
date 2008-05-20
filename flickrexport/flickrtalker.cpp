@@ -73,7 +73,7 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrTalker::FlickrTalker( QWidget* parent )
+FlickrTalker::FlickrTalker(QWidget* parent)
 {
     m_parent = parent;
     m_job    = 0;
@@ -82,8 +82,6 @@ FlickrTalker::FlickrTalker( QWidget* parent )
 
     connect(this, SIGNAL(signalAuthenticate()),
             this, SLOT(slotAuthenticate()));
-
-    authProgressDlg = new QProgressDialog();
 }
 
 FlickrTalker::~FlickrTalker()
@@ -141,8 +139,8 @@ void FlickrTalker::getFrob()
             this, SLOT(slotResult(KIO::Job *)));
 
     m_state = FE_GETFROB;
-    authProgressDlg->setLabelText(i18n("Getting the Frob"));
-    authProgressDlg->setProgress(1, 4);
+    m_authProgressDlg->setLabelText(i18n("Getting the Frob"));
+    m_authProgressDlg->setProgress(1, 4);
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy( true );
@@ -178,8 +176,8 @@ void FlickrTalker::checkToken(const QString& token)
             this, SLOT(slotResult(KIO::Job *)));
 
     m_state = FE_CHECKTOKEN;
-    authProgressDlg->setLabelText(i18n("Checking if previous token is still valid"));
-    authProgressDlg->setProgress(1, 4);
+    m_authProgressDlg->setLabelText(i18n("Checking if previous token is still valid"));
+    m_authProgressDlg->setProgress(1, 4);
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy( true );
@@ -212,8 +210,8 @@ void FlickrTalker::slotAuthenticate()
     if( valueOk == KMessageBox::Yes)
     {
         getToken(); 
-        authProgressDlg->setLabelText(i18n("Authenticating the User on web"));
-        authProgressDlg->setProgress(2, 4);
+        m_authProgressDlg->setLabelText(i18n("Authenticating the User on web"));
+        m_authProgressDlg->setProgress(2, 4);
         emit signalBusy(false);
     }
     else 
@@ -255,8 +253,8 @@ void FlickrTalker::getToken()
     m_buffer.resize(0);
     emit signalBusy(true);
     kdDebug() << "Url invoked in the browser: " << queryStr << endl;
-    authProgressDlg->setLabelText(i18n("Getting the Token from the server"));
-    authProgressDlg->setProgress(3, 4);
+    m_authProgressDlg->setLabelText(i18n("Getting the Token from the server"));
+    m_authProgressDlg->setProgress(3, 4);
 }
 
 void FlickrTalker::listPhotoSets()
@@ -320,8 +318,8 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QString& argLis
     emit signalBusy( true );
     kdDebug() << "Getting Photo Properties:\n" << queryStr << endl;
 
-//  authProgressDlg->setLabelText("Getting the Token from the server");
-//  authProgressDlg->setProgress(3,4);
+//  m_authProgressDlg->setLabelText("Getting the Token from the server");
+//  m_authProgressDlg->setProgress(3,4);
 }
 void FlickrTalker::listPhotos( const QString& /*albumName*/ )
 {
@@ -468,8 +466,8 @@ void FlickrTalker::cancel()
         m_job = 0;
     }
 
-    if (authProgressDlg && !authProgressDlg->isHidden()) 
-        authProgressDlg->hide();
+    if (m_authProgressDlg && !m_authProgressDlg->isHidden()) 
+        m_authProgressDlg->hide();
 }
 
 void FlickrTalker::data(KIO::Job*, const QByteArray& data)
@@ -634,7 +632,7 @@ void FlickrTalker::parseResponseGetFrob(const QByteArray& data)
     }
 
     kdDebug() <<  "GetFrob finished" << endl;
-    authProgressDlg->setProgress(2, 4);
+    m_authProgressDlg->setProgress(2, 4);
     m_state = FE_GETAUTHORIZED;
     if(success)
         emit signalAuthenticate();
@@ -705,7 +703,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
                 details = details.nextSibling();
             }
 
-            authProgressDlg->hide();
+            m_authProgressDlg->hide();
             emit signalTokenObtained(m_token);
             success = true;
         }
@@ -727,7 +725,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
             }
             else
             {
-                authProgressDlg->hide(); //will popup the result for the checktoken failure below 
+                m_authProgressDlg->hide(); //will popup the result for the checktoken failure below 
             }
 
         }
@@ -808,7 +806,7 @@ void FlickrTalker::parseResponseGetToken(const QByteArray& data)
 
     kdDebug() << "GetToken finished" << endl;
     //emit signalBusy( false );
-    authProgressDlg->hide();
+    m_authProgressDlg->hide();
 
     if(success)
         emit signalTokenObtained(m_token);

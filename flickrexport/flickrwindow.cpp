@@ -195,7 +195,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     connect(m_authProgressDlg, SIGNAL( canceled() ),
             this, SLOT( slotAuthCancel() ));
 
-    m_talker->authProgressDlg = m_authProgressDlg; 
+    m_talker->m_authProgressDlg = m_authProgressDlg; 
     m_widget->setEnabled(false); 
 
     kdDebug() << "Calling auth methods" << endl; 

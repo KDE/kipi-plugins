@@ -96,7 +96,7 @@ public:
 
 public:
 
-    QProgressDialog *authProgressDlg;
+    QProgressDialog *m_authProgressDlg;
 
 signals:
 
