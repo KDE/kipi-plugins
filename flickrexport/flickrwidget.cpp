@@ -104,16 +104,16 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     optionsBox->setColumnLayout(0, Qt::Vertical);
     optionsBox->layout()->setSpacing(KDialog::spacingHint());
     optionsBox->layout()->setMargin(KDialog::spacingHint());
-    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout(), 3, 3);
+    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout(), 5, 3);
 
     m_publicCheckBox = new QCheckBox(optionsBox);
-    m_publicCheckBox->setText(i18n("As in accessible for people", "Public ?"));
+    m_publicCheckBox->setText(i18n("As in accessible for people", "Shared as Public"));
 
     m_familyCheckBox = new QCheckBox(optionsBox);
-    m_familyCheckBox->setText(i18n("Family ?"));
+    m_familyCheckBox->setText(i18n("Shared for Family"));
 
     m_friendsCheckBox = new QCheckBox(optionsBox);
-    m_friendsCheckBox->setText(i18n("Friends ?"));
+    m_friendsCheckBox->setText(i18n("Shared for Friends"));
 
     m_resizeCheckBox = new QCheckBox(optionsBox);
     m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
@@ -133,14 +133,18 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     // NOTE: The term Compression factor may be to technical to write in the label    
     QLabel* imageQualityLabel = new QLabel(i18n("Image Quality (higher is better):"), optionsBox);
 
-    optionsBoxLayout->addWidget(m_publicCheckBox,          0, 1);
-    optionsBoxLayout->addWidget(m_familyCheckBox,          0, 2 );
-    optionsBoxLayout->addWidget(m_friendsCheckBox,         0, 3);
-    optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox, 1, 1, 0, 4, 1);
-    optionsBoxLayout->addWidget(m_dimensionSpinBox,        2, 1);
-    optionsBoxLayout->addWidget(resizeLabel,               2, 0);
-    optionsBoxLayout->addWidget(m_imageQualitySpinBox,     3, 1);
-    optionsBoxLayout->addWidget(imageQualityLabel,         3, 0);
+    optionsBoxLayout->addMultiCellWidget(m_publicCheckBox,      0, 0, 0, 3);
+    optionsBoxLayout->addMultiCellWidget(m_familyCheckBox,      1, 1, 0, 3);
+    optionsBoxLayout->addMultiCellWidget(m_friendsCheckBox,     2, 2, 0, 3);
+    optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox,      3, 3, 0, 3);
+    optionsBoxLayout->addMultiCellWidget(resizeLabel,           4, 4, 1, 2);
+    optionsBoxLayout->addMultiCellWidget(m_dimensionSpinBox,    4, 4, 3, 3);
+    optionsBoxLayout->addMultiCellWidget(imageQualityLabel,     5, 5, 1, 2);
+    optionsBoxLayout->addMultiCellWidget(m_imageQualitySpinBox, 5, 5, 3, 3);
+    optionsBoxLayout->setColSpacing(0, KDialog::spacingHint());
+    optionsBoxLayout->setColStretch(1, 10);
+    optionsBoxLayout->setSpacing(KDialog::spacingHint());
+    optionsBoxLayout->setMargin(0);
 
     // ------------------------------------------------------------------------
 
