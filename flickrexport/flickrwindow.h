@@ -93,7 +93,6 @@ private:
 //  QPushButton              *m_newAlbumBtn;
     QPushButton              *m_addPhotoBtn;
     QPushButton              *m_helpButton;
-    QPushButton              *m_startUploadButton;
     QPushButton              *m_changeUserButton;
 
     QCheckBox                *m_resizeCheckBox;
@@ -150,14 +149,14 @@ private slots:
     void slotUserChangeRequest();
     void slotListPhotoSetsResponse(const QValueList <FPhotoSet>& photoSetList);
     void slotAddPhotos();
-    void slotUploadImages();
     void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
-    void slotAddPhotoFailed( const QString& msg );
+    void slotAddPhotoFailed(const QString& msg);
     void slotAddPhotoCancel();
     void slotAuthCancel();
     void slotHelp();
     void slotClose();
+    void slotUser1();
 };
 
 } // namespace KIPIFlickrExportPlugin

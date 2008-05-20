@@ -7,6 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -117,10 +118,6 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
 
     // -------------------------------------------------------------------
 
-    m_startUploadButton = new QPushButton(this, "m_startUploadButton");
-    m_startUploadButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    m_startUploadButton->setText(i18n("Start Uploading"));
-
     QGridLayout* tagsLayout = new QGridLayout(rightButtonGroupLayout, 2, 2);
     QLabel* tagsLabel       = new QLabel(i18n("Tags:"),rightButtonGroup);
     m_tagsLineEdit          = new QLineEdit(rightButtonGroup,"m_tagsLineEdit");
@@ -192,7 +189,6 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     flickrWidgetLayout->addWidget(headerLabel, 0);
     flickrWidgetLayout->addWidget(headerLine, 0);
     flickrWidgetLayout->addWidget(splitter, 5);
-    flickrWidgetLayout->addWidget(m_startUploadButton, 0, Qt::AlignHCenter);
 
     tagsLayout->addWidget(tagsLabel,               0, 0);
     tagsLayout->addWidget(m_tagsLineEdit,          0, 1);

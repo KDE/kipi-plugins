@@ -75,7 +75,8 @@ namespace KIPIFlickrExportPlugin
 {
 
 FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, QWidget *parent)
-            : KDialogBase(0, 0, false, i18n("Flickr Export"), Help|Close, Close, false)
+            : KDialogBase(0, 0, false, i18n("Flickr Export"), Help|User1|Close, Close, 
+                          false, i18n("Start Uploading"))
 {
     m_tmp         = tmpFolder;
     m_interface   = interface;
@@ -121,7 +122,6 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_imageQualitySpinBox   = m_widget->m_imageQualitySpinBox;
     m_tagsLineEdit          = m_widget->m_tagsLineEdit;
     m_exportApplicationTags = m_widget->m_exportApplicationTags;
-    m_startUploadButton     = m_widget->m_startUploadButton;
     m_changeUserButton      = m_widget->m_changeUserButton;
     m_userNameDisplayLabel  = m_widget->m_userNameDisplayLabel;
 
@@ -179,9 +179,6 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
 
     connect(m_addPhotoBtn, SIGNAL( clicked() ),
             this, SLOT( slotAddPhotos() ));
-
-    connect(m_startUploadButton, SIGNAL( clicked() ),
-            this, SLOT( slotUploadImages() ));
 
     // read config
     KConfig config("kipirc");
@@ -403,7 +400,9 @@ void FlickrWindow::slotAddPhotos()
     m_urls = new KURL::List(KIPI::ImageDialog::getImageURLs(this, m_interface));
 }
 
-void FlickrWindow::slotUploadImages()
+/** This slot is call when 'Start Uploading' button is pressed.
+*/
+void FlickrWindow::slotUser1()
 {
     kdDebug() << "SlotUploadImages invoked" << endl;
 
