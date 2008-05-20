@@ -88,7 +88,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     //m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     //m_newAlbumBtn->setText(i18n("&New Album"));
 
-    QGridLayout* tagsLayout = new QGridLayout(rightButtonGroupLayout, 2, 2);
+    QGridLayout* tagsLayout = new QGridLayout(1, 1);
     QLabel* tagsLabel       = new QLabel(i18n("Tags:"), rightButtonGroup);
     m_tagsLineEdit          = new QLineEdit(rightButtonGroup, "m_tagsLineEdit");
     m_exportApplicationTags = new QCheckBox(rightButtonGroup);
@@ -130,7 +130,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
     m_imageQualitySpinBox->setValue(85);
     m_imageQualitySpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    // NOTE: The term Compression factor may be to technical to write in the label    
+    // NOTE: The term Compression factor may be to technical to write in the label
     QLabel* imageQualityLabel = new QLabel(i18n("Image Quality (higher is better):"), optionsBox);
 
     optionsBoxLayout->addMultiCellWidget(m_publicCheckBox,      0, 0, 0, 3);
@@ -194,11 +194,11 @@ FlickrWidget::FlickrWidget(QWidget* parent, const char* name, WFlags fl)
 
     // ------------------------------------------------------------------------
 
+    rightButtonGroupLayout->addLayout(tagsLayout);
+    rightButtonGroupLayout->addWidget(optionsBox);
+    rightButtonGroupLayout->addWidget(loginDetailsBox);
     rightButtonGroupLayout->setSpacing(KDialog::spacingHint());
     rightButtonGroupLayout->setMargin(KDialog::spacingHint());
-    rightButtonGroupLayout->addWidget(optionsBox);
-    rightButtonGroupLayout->addItem(new QSpacerItem(20, 100, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    rightButtonGroupLayout->addWidget(loginDetailsBox);
 
     flickrWidgetLayout->addWidget(headerLabel, 0);
     flickrWidgetLayout->addWidget(headerLine, 0);
