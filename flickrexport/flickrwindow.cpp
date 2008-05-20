@@ -84,6 +84,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_uploadTotal           = 0;
 //  m_wallet                = 0;
     m_urls                  = 0;
+    m_widget                = new FlickrWidget(this);
     m_tagView               = m_widget->m_tagView;
     m_photoView             = m_widget->m_photoView;
 //  m_newAlbumBtn           = widget->m_newAlbumBtn;
@@ -98,6 +99,9 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_exportApplicationTags = m_widget->m_exportApplicationTags;
     m_changeUserButton      = m_widget->m_changeUserButton;
     m_userNameDisplayLabel  = m_widget->m_userNameDisplayLabel;
+
+    setMainWidget(m_widget);
+    m_widget->setMinimumSize(600, 400);
 
     //m_startUploadButton->setEnabled(false);
     //m_albumView->setRootIsDecorated(true);
@@ -128,9 +132,6 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
     m_helpButton->setPopup(helpMenu->menu());
-    m_widget = new FlickrWidget(this);
-    setMainWidget(m_widget);
-    m_widget->setMinimumSize(600, 400);
 
     // --------------------------------------------------------------------------
 
