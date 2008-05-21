@@ -7,7 +7,7 @@ kde_module_LTLIBRARIES = kipiplugin_flickrexport.la
 
 kipiplugin_flickrexport_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKEXIV2_LIBS_DEP) $(LIBKDCRAW_LIBS_DEP)
 
-kipiplugin_flickrexport_la_SOURCES = plugin_flickrexport.cpp \
+kipiplugin_flickrexport_la_SOURCES = plugin_flickrexport.cpp imageslist.cpp \
 		                             flickrwindow.cpp login.cpp flickrtalker.cpp \
 		                             flickrwidget.cpp mpform.cpp flickralbumdialog.ui \
 		                             flickrviewitem.cpp  
