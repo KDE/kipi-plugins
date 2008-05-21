@@ -26,21 +26,16 @@
 
 // Qt includes.
 
+#include <qstring.h>
+#include <qvaluelist.h>
 #include <qobject.h>
 #include <qprogressdialog.h>
 
 // KDE includes.
 
-#include <kurl.h>
+#include <kio/job.h>
 
-namespace KIO
-{
-    class Job;
-}
-
-class KURL;
-
-template <class T> class QValueList;
+class QProgressDialog;
 
 namespace KIPIFlickrExportPlugin
 {
@@ -145,7 +140,6 @@ private:
     QString    m_username;
     QString    m_userId;
 
-//  KURL       m_url;
     KIO::Job*  m_job;
 
     State      m_state;

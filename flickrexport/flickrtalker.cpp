@@ -35,16 +35,15 @@
 #include <qfile.h>
 #include <qimage.h>
 #include <qstringlist.h>
-#include <qurl.h>
 #include <qlineedit.h>
 #include <qmessagebox.h>
 #include <qdom.h>
 #include <qfileinfo.h>
+#include <qprogressdialog.h>
 
 // KDE includes.
 
 #include <klocale.h>
-#include <kio/job.h>
 #include <kdebug.h>
 #include <kmimetype.h>
 #include <kstandarddirs.h>
@@ -64,8 +63,8 @@
 // Local includes.
 
 #include "pluginsversion.h"
-#include "flickritem.h"
 #include "mpform.h"
+#include "flickritem.h"
 #include "flickrwindow.h"
 #include "flickrtalker.h"
 #include "flickrtalker.moc"
