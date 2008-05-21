@@ -51,6 +51,7 @@
 
 // Local includes.
 
+#include "imageslist.h"
 #include "flickrwidget.h"
 #include "flickrwidget.moc"
 
@@ -186,11 +187,14 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     m_addPhotoButton->setText(i18n("&Add Photos"));
     m_addPhotoButton->setIconSet(SmallIcon("add"));
 
+    ImagesList *imglst = new ImagesList(m_fileSrcButtonGroup, 0);
+
     QVBoxLayout* m_fileSrcButtonGroupLayout = new QVBoxLayout(m_fileSrcButtonGroup->layout());
     m_fileSrcButtonGroupLayout->setAlignment(Qt::AlignTop);
     m_fileSrcButtonGroupLayout->addWidget(m_currentSelectionButton);
     m_fileSrcButtonGroupLayout->addWidget(m_selectImagesButton);
     m_fileSrcButtonGroupLayout->addWidget(m_addPhotoButton);
+    m_fileSrcButtonGroupLayout->addWidget(imglst);
 
     // ------------------------------------------------------------------------
 

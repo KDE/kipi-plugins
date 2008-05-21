@@ -151,23 +151,23 @@ ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
 
     // --------------------------------------------------------
 
-    QGridLayout* grid = new QGridLayout(this);
+    QGridLayout* grid = new QGridLayout(this, 2, 3);
     d->listView       = new ImagesListView(this);
 
     // --------------------------------------------------------
 
     d->addButton    = new QPushButton(this);
     d->removeButton = new QPushButton(this);
-    d->addButton->setText( i18n( "&Add" ) );
-    d->addButton->setIcon(SmallIcon("list-add"));
-    d->removeButton->setText( i18n( "&Remove" ) );
-    d->removeButton->setIcon(SmallIcon("list-remove"));
+    d->addButton->setText(i18n("&Add"));
+    d->addButton->setIcon(SmallIcon("add"));
+    d->removeButton->setText(i18n("&Remove"));
+    d->removeButton->setIcon(SmallIcon("remove"));
 
     // --------------------------------------------------------
 
-    grid->addMultiCellWidget(d->listView,     0, 0, 3, 1);
-    grid->addMultiCellWidget(d->addButton,    0, 1, 1, 1);
-    grid->addMultiCellWidget(d->removeButton, 1, 1, 1, 1);
+    grid->addMultiCellWidget(d->listView,     0, 2, 0, 2);
+    grid->addMultiCellWidget(d->addButton,    0, 0, 3, 3);
+    grid->addMultiCellWidget(d->removeButton, 1, 1, 3, 3);
     grid->setColStretch(0, 10);
     grid->setRowStretch(2, 10);
     grid->setMargin(0);
@@ -184,8 +184,8 @@ ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
     connect(d->removeButton, SIGNAL(clicked()),
             this, SLOT(slotRemoveItems()));
 
-    connect(d->iface, SIGNAL(gotThumbnail( const KURL&, const QPixmap& )),
-            this, SLOT(slotThumbnail(const KURL&, const QPixmap&)));
+/*    connect(d->iface, SIGNAL(gotThumbnail( const KURL&, const QPixmap& )),
+            this, SLOT(slotThumbnail(const KURL&, const QPixmap&)));*/
 }
 
 ImagesList::~ImagesList()
