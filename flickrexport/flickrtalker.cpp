@@ -110,23 +110,6 @@ QString FlickrTalker::getApiSig(const QString& secret, const KURL& url)
     return context.hexDigest().data();
 }
 
-QString FlickrTalker::getApiSig(const QString& secret, const QStringList& headers)
-{
-    QStringList compressed;
-
-    for (QStringList::const_iterator it = headers.begin(); it != headers.end(); ++it)
-    {
-    }
-
-    compressed.sort();
-    QString merged   = compressed.join("");
-    QString final    = secret + merged;
-    const char *test = final.ascii();
-    KMD5 context(test);
-    //kdDebug() << "Test Hex Digest output: " << context.hexDigest().data() << endl;
-    return context.hexDigest().data();
-}
-
 /**get the Api sig and send it to the server server should return a frob.
 */
 void FlickrTalker::getFrob()

@@ -70,25 +70,23 @@ public:
     FlickrTalker(QWidget* parent);
     ~FlickrTalker();
 
-    QString getApiSig(const QString&, const QStringList&);
+    QString getUserName();
+    QString getUserId();
     void    getFrob();
     void    getToken();
     void    checkToken(const QString& token);
     void    getPhotoProperty(const QString& method, const QStringList& argList);
+    void    cancel();
 
-    void listPhotoSets();
-    void listPhotos(const QString& albumName);
-    void createAlbum(const QString& parentAlbumName,
-                     const QString& albumName,
-                     const QString& albumTitle,
-                     const QString& albumCaption);
+    void    listPhotoSets();
+    void    listPhotos(const QString& albumName);
+    void    createAlbum(const QString& parentAlbumName,
+                        const QString& albumName,
+                        const QString& albumTitle,
+                        const QString& albumCaption);
 
-    bool addPhoto(const QString& photoPath, const FPhotoInfo& info,
-                  bool rescale=false, int maxDim=600, int imageQuality=85);
-
-    QString getUserName();
-    QString getUserId();
-    void cancel();
+    bool    addPhoto(const QString& photoPath, const FPhotoInfo& info,
+                     bool rescale=false, int maxDim=600, int imageQuality=85);
 
 public:
 
